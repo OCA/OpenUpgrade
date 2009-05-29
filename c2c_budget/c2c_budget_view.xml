@@ -231,9 +231,9 @@
 		    <field name="priority" eval="4"/>
 			<field name="arch" type="xml">
 				<tree string="Budgets Items">	
+					<field name="sequence" />
 					<field name="name"/>
 					<field name="code"/>
-					<field name="sequence" />
 					<field name="type" />					
 					<field name="active" />
 				</tree>
@@ -311,7 +311,7 @@
 					<field name="period_id" select="1"/>
 					<field name="budget_item_id"  domain="[('type', '=', 'normal')]" select="1"/>
 					<field name="name" select="1" />
-					<field name="analytic_account_id"/>
+					<field name="analytic_account_id" select="1"/>
 					<field name="amount" />
 					<field name="currency_id" />
 				</form>

@@ -35,8 +35,10 @@ import pooler
 
 
 class c2c_budget_wizard_abstraction(osv.osv):
-    """ This object define parts of wizards forms and process that can be override. 
-        It is used to replace analytic_account by projects for some of ours customers """
+    """ This object define parts of wizards forms 
+    and process that can be override. 
+    It is used to replace analytic_account by 
+    projects for some of ours customers """
     
     _name = "c2c_budget.wizard_abstraction"
     _description = "Wizard Abstraction"
@@ -47,60 +49,91 @@ class c2c_budget_wizard_abstraction(osv.osv):
     def budget_vs_real_get_form(self, cr, uid, data, context={}):
         """ return a piece of form used in the budget_vs_real wizard """
 
-        return """<separator string="Select Analytic Accounts (leave empty to get all accounts in use)" colspan="4"/>    
-                  <field name="split_by_aa" />
-                  <newline/> 
-                  <field name="analytic_accounts" colspan="4" nolabel="1" width="600" height="200"/>
-                  <newline/> 
-               """
+        return """<separator string="Select Analytic Accounts 
+        (leave empty to get all accounts in use)" 
+        colspan="4"/>    
+        <field name="split_by_aa" />
+        <newline/> 
+        <field name="analytic_accounts" 
+            colspan="4" nolabel="1" width="600" height="200"/>
+        <newline/> 
+        """
                
                
     def budget_vs_real_get_fields(self, cr, uid, data, context={}):
         """ return some fields of form used in the budget_vs_real wizard """
  
         fields = {}
-        fields['analytic_accounts'] = {'string':'Analytic Accounts', 'type':'many2many', 'relation':'account.analytic.account'}        
-        fields['split_by_aa'] = {'string':'Split by Analytic Accounts', 'type':'boolean'}        
+        fields['analytic_accounts'] = {
+                                        'string':'Analytic Accounts', 
+                                        'type':'many2many', 
+                                        'relation':'account.analytic.account'
+                                      }        
+        fields['split_by_aa'] = {
+                                    'string':'Split by Analytic Accounts', 
+                                    'type':'boolean'
+                                }        
         return fields
 
 
     def budget_by_period_get_form(self, cr, uid, data, context={}):
         """ return a piece of form used in the budget_by_period wizard """
 
-        return """<separator string="Select Analytic Accounts (leave empty to get all accounts in use)" colspan="4"/>    
-                  <field name="split_by_aa" />
-                  <newline/> 
-                  <field name="analytic_accounts" colspan="4" nolabel="1" width="600" height="200"/>
-                  <newline/> 
-               """
+        return """<separator string="Select Analytic Accounts 
+        (leave empty to get all accounts in use)" colspan="4"/>    
+        <field name="split_by_aa" />
+        <newline/> 
+        <field name="analytic_accounts" 
+            colspan="4" nolabel="1" width="600" height="200"/>
+        <newline/> 
+        """
                
                
     def budget_by_period_get_fields(self, cr, uid, data, context={}):
         """ return some fields of form used in the budget_by_period wizard """
  
         fields = {}
-        fields['analytic_accounts'] = {'string':'Analytic Accounts', 'type':'many2many', 'relation':'account.analytic.account'}        
-        fields['split_by_aa'] = {'string':'Split by Analytic Accounts', 'type':'boolean'}        
+        fields['analytic_accounts'] = {
+                                        'string':'Analytic Accounts', 
+                                        'type':'many2many', 
+                                        'relation':'account.analytic.account'
+                                    }        
+        fields['split_by_aa'] = {
+                                    'string':'Split by Analytic Accounts', 
+                                    'type':'boolean'
+                                }        
         return fields
     
     
     def advanced_search_get_form(self, cr, uid, data, context={}):
         """ return a piece of form used in the advanced_search """
         
-        return """<separator string="Choose Analytic Accounts (leave empty to not filter)" colspan="2"/>
-                  <separator string="Choose versions (leave empty to not filter)" colspan="2"/>
-                  <field name="analytic_accounts" nolabel="1" colspan="2" width="400"/>
-                  <field name="versions" nolabel="1" colspan="2" width="400" height="150"/>
-                  <field name="empty_aa_too" colspan="2"/>"""
+        return """<separator string="Choose Analytic Accounts 
+              (leave empty to not filter)" colspan="2"/>
+              <separator string="Choose versions (leave empty to not filter)" colspan="2"/>
+              <field name="analytic_accounts" nolabel="1" colspan="2" width="400"/>
+              <field name="versions" nolabel="1" colspan="2" width="400" height="150"/>
+              <field name="empty_aa_too" colspan="2"/>"""
         
         
     def advanced_search_get_fields(self, cr, uid, data, context={}):
         """ return some fields of form used in the advanced_search wizard """
         
         fields = {}
-        fields['analytic_accounts'] = {'string':'Analytic Accounts', 'type':'many2many', 'relation':'account.analytic.account'}
-        fields['empty_aa_too'] = {'string':'Include Lines Without Analytic Account', 'type':'boolean'}
-        fields['versions'] = {'string':'Versions', 'type':'many2many', 'relation':'c2c_budget.version'}
+        fields['analytic_accounts'] = {
+                                        'string':'Analytic Accounts', 
+                                        'type':'many2many', 
+                                        'relation':'account.analytic.account'
+                                    }
+        fields['empty_aa_too'] = {
+                                    'string':'Include Lines Without Analytic Account', 
+                                    'type':'boolean'
+                                }
+        fields['versions'] = {
+                                'string':'Versions', 
+                                'type':'many2many', 
+                                'relation':'c2c_budget.version'
+                            }
         return fields
 
     

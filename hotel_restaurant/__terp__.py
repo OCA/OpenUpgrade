@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 {
     "name" : "Hotel Restaurant",
     "version" : "1.0",
@@ -36,11 +37,19 @@
     """,
     "depends" : ["base","hotel"],
     "init_xml" : [],
-    "demo_xml" : ["hotel_restaurant_data.xml",],
-    "update_xml" : ["security/ir.model.access.csv","hotel_restaurant_view.xml","hotel_restaurant_report.xml","hotel_restaurant_workflow.xml","hotel_restaurant_wizard.xml","hotel_restaurant_sequence.xml",
+    "demo_xml" : ["hotel_restaurant_data.xml",
+    ],
+    "update_xml" : [
+                    "hotel_restaurant_view.xml",
+                    "hotel_restaurant_report.xml",
+                    "hotel_restaurant_workflow.xml",
+                    "hotel_restaurant_wizard.xml",
+                    "hotel_restaurant_sequence.xml",
+                    "security/ir.model.access.csv",
     ],
     "active": False,
     "installable": True
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -10,6 +10,13 @@
 					<field name="name" select="1"/>
 					<field name="code" />
                     <field name="connector_type_id" colspan="4" select="1" />
+                    <field name="added"/>
+                    <separator string="Fields Mapped to this type of Component" colspan="4" />
+                    <field name="field_ids"  colspan="4" nolabel="1"/>
+                    <group col="1" colspan="4">
+                        <button name="add_type_view" string="Add to Components View"
+                                                type="object" icon="gtk-justify-fill"/>
+                    </group>
 				</form>
 			</field>
 		</record>
@@ -22,61 +29,51 @@
 				<tree string="Component Type">
 					<field name="name" />
 					<field name="code" />
-
 				</tree>
 			</field>
 		</record>
 
 		<record id="action_etl_component_type_tree"
 			model="ir.actions.act_window">
-			<field name="name">ETL Component</field>
+			<field name="name">Component Type</field>
 			<field name="res_model">etl.component.type</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="view_etl_component_type_tree" />
 		</record>
 
-		<!--
-			<menuitem name="Component types"
+	<menuitem name="Component types"
 			parent="menu_etl_configure"
 			action="action_etl_component_type_tree" sequence="10"
-			id="menu_action_etl_component_types" /> -->
-
+			id="menu_action_etl_component_types" /> 
+			
 
 		<record id="etl_component_form" model="ir.ui.view">
 			<field name="name">view.etl.component.form</field>
 			<field name="model">etl.component</field>
 			<field name="type">form</field>
+			<field name="priority">10</field>
 			<field name="arch" type="xml">
 				<form string="Component">
 					<group col="6" colspan="4">
-						<field name="name" select="1" />
-						<field name="type_id" select="1" />
-						<field name="job_id" select="1" />
+						<field name="name" select="1" required="1"/>
+						<field name="type_id" select="1"/>
+						<field name="job_id" select="1"/>
+						<field name="connector_id" context="{'comp_type':type_id}" colspan="4" select="1" />
 					</group>
 					<notebook colspan="4">
 						<page string="Property">
-							<field name="connector_id" context="{'comp_type':type_id}" colspan="4" select="1" />
+						</page>
+						<page string="Other Information">
                         	<field name="transformer_id"/>
                         	<field name="row_limit"/>
                         	<field name ="encoding"/>
-						</page>
-
-						<page string="Transitions Detail">
-							<separator string="Incomming Transitions"
-								colspan="4" />
-							<field name="trans_in_ids" nolabel="1"
-								colspan="4" readonly="1" />
-							<separator string="Outgoing Transitions"
-								colspan="4" />
-							<field name="trans_out_ids" nolabel="1"
-								colspan="4" readonly="1" />
 						</page>
 					</notebook>
 				</form>
 			</field>
 		</record>
-
+		
 		<record id="etl_component_tree" model="ir.ui.view">
 			<field name="name">view.etl.component.tree</field>
 			<field name="model">etl.component</field>
@@ -118,13 +115,14 @@
 
 		<menuitem name="Components"
 			parent="etl_interface.menu_etl_configure"
+			action="action_etl_component_tree"
 			id="menu_etl_job_def_components" />
 
 		<menuitem name="Input Component" sequence="1"
 			parent="menu_etl_job_def_components" id="menu_etl_component_input_form" />
 
 		<menuitem name="Output Component"
-			parent="menu_etl_job_def_components" id="menu_etl_jd_c_oc_form" />
+			parent="menu_etl_job_def_components" id="menu_etl_component_output_form" />
 
 		<menuitem name="Transform ETL Component"
 			parent="menu_etl_job_def_components" id="menu_etl_jd_c_pec_form" />

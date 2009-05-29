@@ -60,6 +60,7 @@ class dm_event_case(osv.osv_memory):
         'source' : fields.selection([('case_id','CRM Cases')], 'Source', required=True),
         'case_id' : fields.many2one('crm.case','CRM Case'),
         'trigger_type_id' : fields.many2one('dm.offer.step.transition.trigger','Trigger Condition',required=True),
+        'action_time': fields.datetime('Action Time'),
     }
     _defaults = {
         'source': lambda *a: 'case_id',
@@ -70,16 +71,31 @@ class dm_event_case(osv.osv_memory):
         obj = self.browse(cr, uid ,id)
         tr_ids = self.pool.get('dm.offer.step.transition').search(cr, uid, [('step_from_id','=',obj.step_id.id),
             ('condition_id','=',obj.trigger_type_id.id)])
-        for tr in self.pool.get('dm.offer.step.transition').browse(cr, uid, tr_ids):
-            wi_action_time = datetime.datetime.now()
-            kwargs = {(tr.delay_type+'s'): tr.delay}
-            next_action_time = wi_action_time + datetime.timedelta(**kwargs)
-            netsvc.Logger().notifyChannel('dm event case', netsvc.LOG_DEBUG, "Creating Workitem with action at %s"% next_action_time.strftime('%Y-%m-%d  %H:%M:%S'))
-            netsvc.Logger().notifyChannel('dm event case', netsvc.LOG_DEBUG, "Workitem : %s"% vals)
+        if not tr_ids:
+            netsvc.Logger().notifyChannel('dm event case', netsvc.LOG_WARNING, "There is no transition %s at this step : %s"% (obj.trigger_type_id.name, obj.step_id.code))
+            osv.except_osv('Warning', "There is no transition %s at this step : %s"% (obj.trigger_type_id.name, obj.step_id.code))
+            return False
 
-            wi_id = self.pool.get('dm.workitem').create(cr, uid, {'step_id':tr.step_to_id.id or False, 'segment_id':obj.segment_id.id or False,
-                (obj.source):obj[obj.source].id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'), 'source':obj.source})
-            if not wi_id:
+        for tr in self.pool.get('dm.offer.step.transition').browse(cr, uid, tr_ids):
+            if obj.action_time:
+                next_action_time = datetime.datetime.strptime(obj.action_time, '%Y-%m-%d  %H:%M:%S')
+            else:
+                wi_action_time = datetime.datetime.now()
+                kwargs = {(tr.delay_type+'s'): tr.delay}
+                next_action_time = wi_action_time + datetime.timedelta(**kwargs)
+
+                if tr.action_hour:
+                    hour_str =  str(tr.action_hour).split('.')[0] + ':' + str(int(int(str(tr.action_hour).split('.')[1]) * 0.6))
+                    act_hour = datetime.datetime.strptime(hour_str,'%H:%M')
+                    next_action_time = next_action_time.replace(hour=act_hour.hour)
+                    next_action_time = next_action_time.replace(minute=act_hour.minute)
+
+            try:
+                wi_id = self.pool.get('dm.workitem').create(cr, uid, {'step_id':tr.step_to_id.id or False, 'segment_id':obj.segment_id.id or False,
+                    'case_id':obj.case_id.id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'), 'source':obj.source})
+                netsvc.Logger().notifyChannel('dm event case', netsvc.LOG_DEBUG, "Creating Workitem with action at %s"% next_action_time.strftime('%Y-%m-%d  %H:%M:%S'))
+                netsvc.Logger().notifyChannel('dm event case', netsvc.LOG_DEBUG, "Workitem : %s"% vals)
+            except:
                 netsvc.Logger().notifyChannel('dm event case', netsvc.LOG_ERROR, "Event cannot create Workitem")
         return super(dm_event_case,self).create(cr,uid,vals,context)
 

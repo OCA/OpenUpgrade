@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="57.0" y1="57.0" width="481" height="728"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <blockBackground colorName="#c0c0c0" start="0,0" stop="0,0"/>
+      <blockBackground colorName="#c0c0c0" start="1,0" stop="1,0"/>
+      <blockBackground colorName="#c0c0c0" start="2,0" stop="2,0"/>
+      <blockBackground colorName="#c0c0c0" start="3,0" stop="3,0"/>
+      <blockBackground colorName="#c0c0c0" start="4,0" stop="4,0"/>
+      <blockBackground colorName="#c0c0c0" start="5,0" stop="5,0"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Times-Roman" fontSize="15.0" leading="19" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P2" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P3" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P4" fontName="Times-Roman" fontSize="10.0" leading="13" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P5" fontName="Times-Roman" fontSize="10.0" leading="13" alignment="CENTER"/>
+    <paraStyle name="P6" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="CENTER"/>
+    <paraStyle name="P7" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="CENTER"/>
+    <paraStyle name="P8" fontName="Times-Roman" fontSize="10.0" leading="13" alignment="LEFT"/>
+    <paraStyle name="P9" fontName="Times-Roman" fontSize="10.0" leading="13" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Times-Italic" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman"/>
+    <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER"/>
+  </stylesheet>
+  <story>
+    <para style="P4">[[repeatIn('objects','o')]]</para>
+    <para style="P3">Room Activities Report</para>
+    <blockTable colWidths="482.0" style="Table2">
+      <tr>
+        <td>
+          <para style="P8">From [[ data['form']['date_start'] ]] to [[ data['form']['date_end'] ]] </para>
+          <para style="P9">
+            <font face="Times-Roman">For Room :</font>
+            <font face="Times-Roman" size="10.0">[[ get_room_no(data['form']['room_no']) ]]</font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="110.0,80.0,88.0,68.0,63.0,72.0" style="Table1">
+      <tr>
+        <td>
+          <para style="P5">Date</para>
+        </td>
+        <td>
+          <para style="P5">Activities</para>
+        </td>
+        <td>
+          <para style="P5">Housekeeper Name</para>
+        </td>
+        <td>
+          <para style="P5">Clean Start Time</para>
+        </td>
+        <td>
+          <para style="P5">Clean End Time</para>
+        </td>
+        <td>
+          <para style="P5">Duration</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P2">[[repeatIn(get_activity_detail(data['form']['date_start'],data['form']['date_end'],data['form']['room_no']),'o')]]</para>
+          <para style="P2">[[o['current_date'] ]]</para>
+        </td>
+        <td>
+          <para style="P6">[[o['activity'] ]]</para>
+        </td>
+        <td>
+          <para style="P6">[[o['login'] ]]</para>
+        </td>
+        <td>
+          <para style="P6">[[o['clean_start_time'] ]]</para>
+        </td>
+        <td>
+          <para style="P6">[[o['clean_end_time'] ]]</para>
+        </td>
+        <td>
+          <para style="P7">[[o['duration'] ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P1">
+      <font color="white"> </font>
+    </para>
+  </story>
+</document>
+

@@ -21,10 +21,10 @@
 ##############################################################################
 
 """
-Provide sugarcrm API
+ Provide Sugarcrm API.
 
  Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
- GNU General Public License
+ GNU General Public License.
 """
 from sugarsoap_services_types import *
 from sugarsoap_services import *

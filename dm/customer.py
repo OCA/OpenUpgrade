@@ -83,82 +83,11 @@ class res_partner(osv.osv):
 res_partner()
 
 
-class dm_customer_order(osv.osv):
-    _name = "dm.customer.order"
-    _inherit = "sale.order"
-    _table = "sale_order"
-    _columns ={
-        'customer_id' : fields.many2one('res.partner', 'Customer', ondelete='cascade'),
-        'segment_id' : fields.many2one('dm.campaign.proposition.segment','Segment'),
-        'offer_step_id' : fields.many2one('dm.offer.step','Offer Step'),
-#        'note' : fields.text('Notes'),
-        'state' : fields.selection([('draft','Draft'),('done','Done')], 'Status', readonly=True),
-    }
-    _defaults = {
-        'picking_policy': lambda *a: 'one',
-#        'state': lambda *a: 'draft',
-    }
-    def set_confirm(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {'state': 'done'})
-        return True
-
-dm_customer_order()
-
-class dm_customer_gender(osv.osv):
-    _name = "dm.customer.gender"
-    def _customer_gender_code(self, cr, uid, ids, name, args, context={}):
-        result ={}
-        for id in ids:
-            code=""
-            cust_gender = self.browse(cr,uid,[id])[0]
-            if cust_gender.lang_id:
-                if not cust_gender.from_gender_id:
-                    code='_'.join([cust_gender.lang_id.code, cust_gender.to_gender_id.name])
-                else:
-                    code='_'.join([cust_gender.lang_id.code, 'from', cust_gender.from_gender_id.name, 'to', cust_gender.to_gender_id.name])
-            else:
-                if not cust_gender.from_gender_id:
-                    code=cust_gender.to_gender_id.name
-                else:
-                    code='_'.join(['from', cust_gender.from_gender_id.name, 'to', cust_gender.to_gender_id.name])
-            result[id]=code
-        return result
-
-    _columns = {
-        'name' : fields.char('Name', size=16),
-        'code' : fields.function(_customer_gender_code,string='Code',type='char',method=True,readonly=True),
-        'from_gender_id' : fields.many2one('res.partner.title', 'From Gender', domain="[('domain','=','contact')]"),
-        'to_gender_id' : fields.many2one('res.partner.title', 'To Gender', required=True, domain="[('domain','=','contact')]"),
-        'lang_id' : fields.many2one('res.lang', 'Language'),
-        'description' : fields.text('Description'),
-    }
-dm_customer_gender()
-
 class dm_workitem(osv.osv):
     _name = "dm.workitem"
     _description = "workitem"
     _SOURCES = [('address_id','Partner Address')]
     SELECTION_LIST = [('pending','Pending'),('error','Error'),('cancel','Cancelled'),('done','Done')]
-    """
-    def create(self,cr,uid,vals,context={}):
-        if 'action_time' in vals and vals['action_time']:
-            return super(dm_workitem, self).create(cr, uid, vals, context)
-        if 'tr_from_id' in vals and vals['tr_from_id']:
-            tr = self.pool.get('dm.offer.step.transition').browse(cr, uid, vals['tr_from_id'])
-            print "Delay Type: ",tr.delay_type
-
-            wi_action_time = datetime.datetime.now()
-            kwargs = {(tr.delay_type+'s'): tr.delay}
-            next_action_time = wi_action_time + datetime.timedelta(**kwargs)
-            print "Next action date : ",next_action_time
-            vals['action_time'] = next_action_time
-            print "Vals : ",vals
-        else:
-            vals['action_time'] = datetime.datetime.now()
-            print "Vals : ",vals
-
-        return super(dm_workitem, self).create(cr, uid, vals, context)
-    """
 
     _columns = {
         'step_id' : fields.many2one('dm.offer.step', 'Offer Step', select="1", ondelete="cascade"),
@@ -168,7 +97,9 @@ class dm_workitem(osv.osv):
         'source' : fields.selection(_SOURCES, 'Source', required=True),
         'error_msg' : fields.text('System Message'),
         'is_global': fields.boolean('Global Workitem'),
-        'tr_from_id' : fields.many2one('dm.offer.step.transition', 'Source Transition'),
+        'tr_from_id' : fields.many2one('dm.offer.step.transition', 'Source Transition', select="1", ondelete="cascade"),
+        'sale_order_id' : fields.many2one('sale.order','Sale Order'),
+        'mail_service_id' : fields.many2one('dm.mail_service','Mail Service'),
         'state' : fields.selection(SELECTION_LIST, 'Status'),
     }
     _defaults = {
@@ -183,7 +114,7 @@ class dm_workitem(osv.osv):
         done = False
         try:
             server_obj = self.pool.get('ir.actions.server')
-            print "Calling run for : ",wi.step_id.action_id.server_action_id.name
+            print "Calling run for : ",wi.step_id.action_id.name
             res = True
 
             """ Check if action must be done or cancelled """
@@ -213,6 +144,8 @@ class dm_workitem(osv.osv):
             """
             """ Check Incoming transitions Action condition """
 #            if not res:
+
+            """ Check condition code of incoming transitions """
             for tr in wi.step_id.incoming_transition_ids:
                 eval_context = {
                     'pool' : self.pool,
@@ -223,51 +156,110 @@ class dm_workitem(osv.osv):
                 }
                 val = {}
                 print "Incoming Transition : ",tr.condition_id.name
+                print "Origin Transition : ",wi.tr_from_id.id
                 print "Incoming Action Condition : ",tr.condition_id.in_act_cond
+                """ Evaluate condition code """
+                exec tr.condition_id.in_act_cond.replace('\r','') in eval_context,val
+                print "Val in get purchase_trig_id: ",val.get('purchase_trig_id',False)
+                print "Val in get step_to_check: ",val.get('step_ids',False)
+                print "Val in get wi_ids : ",val.get('wi_ids',False)
+                print "Tr Condition return code : ",val.get('result',False)
+                """
                 try:
                     exec tr.condition_id.in_act_cond.replace('\r','') in eval_context,val
-                    print "Val in get step_to_check: ",val.get('step_to_check',False)
-                    print "Val in get wid_ids : ",val.get('wi_ids',False)
-                    print "Val in get res : ",val.get('result',False)
+                    print "Val in get purchase_trig_id: ",val.get('purchase_trig_id',False)
+                    print "Val in get step_to_check: ",val.get('step_ids',False)
+                    print "Val in get wi_ids : ",val.get('wi_ids',False)
+                    print "Tr Condition return code : ",val.get('result',False)
                 except Exception,e:
-                    netsvc.Logger().notifyChannel('dm', netsvc.LOG_ERROR, 'Invalid code in Incoming Action Condition: %s'% tr.condition_id.in_act_cond)
-                    netsvc.Logger().notifyChannel('dm', netsvc.LOG_ERROR, e)
+                    netsvc.Logger().notifyChannel('dm action', netsvc.LOG_ERROR, 'Invalid code in Incoming Action Condition: %s'% tr.condition_id.in_act_cond)
+                    netsvc.Logger().notifyChannel('dm action', netsvc.LOG_ERROR, e)
                     continue
+                """
                 if not val.get('result',False):
+                    """ If result is False """
                     res = False
                     act_step = tr.step_from_id.name or False
                     break
 
             if res:
-                res = server_obj.run(cr, uid, [wi.step_id.action_id.server_action_id.id], context)
+                """ Execute Action """
+                res = server_obj.run(cr, uid, [wi.step_id.action_id.id], context)
                 self.write(cr, uid, [wi.id], {'state': 'done','error_msg':""})
                 done = True
             else:
+                """ Dont Execute Action """
                 self.write(cr, uid, [wi.id], {'state': 'cancel','error_msg':'Cancelled by : %s'% act_step})
                 done = False
-        except :
-            self.write(cr, uid, [wi.id], {'state': 'error','error_msg':sys.exc_info()})
+        except Exception, exception:
+            import traceback
+            tb = sys.exc_info()
+            print "@@@@ tb :",tb
+            tb_s = "".join(traceback.format_exception(*tb))
+            print "@@@@ tb_s :",tb_s
+            self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'Exception: %s\n%s' % (str(exception), tb_s)})
+            netsvc.Logger().notifyChannel('dm action', netsvc.LOG_ERROR, 'Exception: %s\n%s' % (str(exception), tb_s))
 
         if done:
-            """ Create next auto workitems """
+            """ Check to create next auto workitems """
             for tr in wi.step_id.outgoing_transition_ids:
-                print "Delay Type: ",tr.delay_type
+                if tr.condition_id.gen_next_wi:
 
-                wi_action_time = datetime.datetime.strptime(wi.action_time, '%Y-%m-%d  %H:%M:%S')
-                kwargs = {(tr.delay_type+'s'): tr.delay}
-                next_action_time = wi_action_time + datetime.timedelta(**kwargs)
-                print "Next action date : ",next_action_time
+                    """ Compute action time """
+                    wi_action_time = datetime.datetime.strptime(wi.action_time, '%Y-%m-%d  %H:%M:%S')
+                    kwargs = {(tr.delay_type+'s'): tr.delay}
+                    next_action_time = wi_action_time + datetime.timedelta(**kwargs)
 
-                aw_id = self.copy(cr, uid, wi.id, {'step_id':tr.step_to_id.id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S')})
-                print "auto wi : ",aw_id
+                    if tr.action_hour:
+                        """ If a static action hour is set, use it """
+                        hour_str =  str(tr.action_hour).split('.')[0] + ':' + str(int(int(str(tr.action_hour).split('.')[1]) * 0.6))
+                        act_hour = datetime.datetime.strptime(hour_str,'%H:%M')
+                        next_action_time = next_action_time.replace(hour=act_hour.hour)
+                        next_action_time = next_action_time.replace(minute=act_hour.minute)
+
+                    """
+                    if tr.action_day:
+                        nxt_act_time = next_action_time.timetuple()
+                        print "Next time timetuple :",nxt_act_time
+                        act_day = int(tr.action_day)
+                        print "Action Day :",act_day
+                    """
+
+                    try:
+                        aw_id = self.copy(cr, uid, wi.id, {'step_id':tr.step_to_id.id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S')})
+                        netsvc.Logger().notifyChannel('dm action', netsvc.LOG_DEBUG, "Creating Auto Workitem %d with action at %s"% (aw_id,next_action_time.strftime('%Y-%m-%d  %H:%M:%S')))
+                    except:
+                        netsvc.Logger().notifyChannel('dm action', netsvc.LOG_ERROR, "Cannot create Auto Workitem")
+
         return True
 
     def __init__(self, *args):
         self.is_running = False
         return super(dm_workitem, self).__init__(*args)
 
+    def mail_service_run(self, cr, uid, camp_doc, context={}):
+        print "Calling camp doc run for :", camp_doc.id
+        context['active_id'] = camp_doc.id
+        try:
+            server_obj = self.pool.get('ir.actions.server')
+            if not camp_doc.mail_service_id.action_id :
+                return False
+            res = server_obj.run(cr, uid, [camp_doc.mail_service_id.action_id.id], context)
+            camp_res = self.pool.get('dm.campaign.document').read(cr, uid, [camp_doc.id], ['state'])[0]
+            print "Camp doc State : ", camp_res['state']
+            if camp_res['state'] != 'error':
+                self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state': 'done','error_msg':""})
+        except Exception, exception:
+            import traceback
+            tb = sys.exc_info()
+            tb_s = "".join(traceback.format_exception(*tb))
+            self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state': 'error','error_msg':'Exception: %s\n%s' % (str(exception), tb_s)})
+            netsvc.Logger().notifyChannel('dm campaign document', netsvc.LOG_ERROR, 'Exception: %s\n%s' % (str(exception), tb_s))
+        return True
+
     def check_all(self, cr, uid, context={}):
         print "Calling check all"
+        """ Check if the action engine is already running """
         if not self.is_running:
             self.is_running = True
             ids = self.search(cr, uid, [('state','=','pending'),
@@ -276,7 +268,17 @@ class dm_workitem(osv.osv):
             for wi in self.browse(cr, uid, ids, context=context):
                 self.run(cr, uid, wi, context=context)
             self.is_running = False
+
+        """ dm.campaign.document process """
+        camp_doc_obj = self.pool.get('dm.campaign.document')
+        time_now = time.strftime('%Y-%m-%d %H:%M:%S')
+        camp_doc_ids = camp_doc_obj.search(cr,uid,[('state','=','pending'),('delivery_time','<',time_now)])
+        print camp_doc_ids
+        for camp_doc in camp_doc_obj.browse(cr, uid, camp_doc_ids, context=context):
+            print "Sending : ",camp_doc.name
+            self.mail_service_run(cr, uid, camp_doc, context=context)
         return True
+
 dm_workitem()
 
 class dm_customer_segmentation(osv.osv):
@@ -509,36 +511,63 @@ dm_offer_history()
 
 class dm_event(osv.osv_memory):
     _name = "dm.event"
-    _rec_name = "campaign_id"
+    _rec_name = "segment_id"
 
     _columns = {
-        'campaign_id' : fields.many2one('dm.campaign', 'Campaign'),
-        'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segment', required=True,context="{'dm_camp_id':campaign_id}"),
-        'step_id' : fields.many2one('dm.offer.step', 'Offer Step', required=True,context="{'dm_camp_id':campaign_id}"),
+        'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segment', required=True),
+        'step_id' : fields.many2one('dm.offer.step', 'Offer Step', required=True),
         'source' : fields.selection([('address_id','Addresses')], 'Source', required=True),
         'address_id' : fields.many2one('res.partner.address', 'Address'),
         'trigger_type_id' : fields.many2one('dm.offer.step.transition.trigger','Trigger Condition',required=True),
+        'sale_order_id' : fields.many2one('sale.order', 'Sale Order'),
+        'mail_service_id' : fields.many2one('dm.mail_service','Mail Service'),
+        'action_time': fields.datetime('Action Time'),
     }
     _defaults = {
         'source': lambda *a: 'address_id',
+        'sale_order_id' : lambda *a : False,
     }
 
-    def create(self,cr,uid,vals,context={}):
+    def create(self,cr,uid,vals,context):
         id = super(dm_event,self).create(cr,uid,vals,context)
         obj = self.browse(cr, uid ,id)
         tr_ids = self.pool.get('dm.offer.step.transition').search(cr, uid, [('step_from_id','=',obj.step_id.id),
                 ('condition_id','=',obj.trigger_type_id.id)])
-        for tr in self.pool.get('dm.offer.step.transition').browse(cr, uid, tr_ids):
-            wi_action_time = datetime.datetime.now()
-            kwargs = {(tr.delay_type+'s'): tr.delay}
-            next_action_time = wi_action_time + datetime.timedelta(**kwargs)
-            netsvc.Logger().notifyChannel('dm event', netsvc.LOG_DEBUG, "Creating Workitem with action at %s"% next_action_time.strftime('%Y-%m-%d  %H:%M:%S'))
-            netsvc.Logger().notifyChannel('dm event', netsvc.LOG_DEBUG, "Workitem : %s"% vals)
+        if not tr_ids:
+            netsvc.Logger().notifyChannel('dm event case', netsvc.LOG_WARNING, "There is no transition %s at this step : %s"% (obj.trigger_type_id.name, obj.step_id.code))
+            osv.except_osv('Warning', "There is no transition %s at this step : %s"% (obj.trigger_type_id.name, obj.step_id.code))
+            return False
 
-            wi_id = self.pool.get('dm.workitem').create(cr, uid, {'step_id':tr.step_to_id.id or False, 'segment_id':obj.segment_id.id or False,
-            (obj.source):obj[obj.source].id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'), 'source':obj.source})
-            if not wi_id:
+        for tr in self.pool.get('dm.offer.step.transition').browse(cr, uid, tr_ids):
+            if obj.action_time:
+                next_action_time = datetime.datetime.strptime(obj.action_time, '%Y-%m-%d  %H:%M:%S')
+            else:
+                wi_action_time = datetime.datetime.now()
+                kwargs = {(tr.delay_type+'s'): tr.delay}
+                next_action_time = wi_action_time + datetime.timedelta(**kwargs)
+
+                if tr.action_hour:
+                    hour_str =  str(tr.action_hour).split('.')[0] + ':' + str(int(int(str(tr.action_hour).split('.')[1]) * 0.6))
+                    act_hour = datetime.datetime.strptime(hour_str,'%H:%M')
+                    next_action_time = next_action_time.replace(hour=act_hour.hour)
+                    next_action_time = next_action_time.replace(minute=act_hour.minute)
+
+            try:
+                wi_id = self.pool.get('dm.workitem').create(cr, uid, {'step_id':tr.step_to_id.id or False, 'segment_id':obj.segment_id.id or False,
+                'address_id':obj.address_id.id, 'mail_service_id':obj.mail_service_id.id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'),
+                'tr_from_id':tr.id,'source':obj.source, 'sale_order_id':obj.sale_order_id.id})
+                netsvc.Logger().notifyChannel('dm event', netsvc.LOG_DEBUG, "Creating Workitem with action at %s"% next_action_time.strftime('%Y-%m-%d  %H:%M:%S'))
+            except:
                 netsvc.Logger().notifyChannel('dm event', netsvc.LOG_ERROR, "Event cannot create Workitem")
+
         return id
 
 dm_event()
+
+class sale_order(osv.osv):
+    _name = "sale.order"
+    _inherit = "sale.order"
+    _columns ={
+        'offer_step_id' : fields.many2one('dm.offer.step','Offer Step'),
+    }
+sale_order()

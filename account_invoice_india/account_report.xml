@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
 	<data>
+		<report id="report_account_invoice"
+				string="Invoice - Exice"
+				model="account.invoice"
+				name="tax.retail.account.invoice"
+				rml="account_invoice_india/report/invoice.rml"
+				auto="False"
+				header = "False"
+				menu="True"/>
+
 	    <menuitem 
 	        parent="account.menu_finance_legal_statement" 
 	        id="indian_accounting_reports2"
@@ -19,7 +28,8 @@
 			model="account.journal.period"
 			name="account.journal.period.print.custom"
 			rml="account_invoice_india/report/account_journal.rml"
-			auto="False"/>
+			auto="False"
+			header="False"/>
 			
 		<report id="account_general_ledger_custom"
 			string="Custom General Ledger"
@@ -74,6 +84,6 @@
 			type="wizard"
 			icon="STOCK_PRINT"
 			id="menu_partner_new_balance"/>
-			
+	
 	</data>
 </openerp>

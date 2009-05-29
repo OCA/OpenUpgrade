@@ -30,11 +30,9 @@ class etl_component_gmail_in(osv.osv):
 
     def create_instance(self, cr, uid, id, context={}, data={}):
         val = super(etl_component_gmail_in, self).create_instance(cr, uid, id, context, data)
-        obj = self.browse(cr, uid, id)
-        if obj.type_id.name=='input.gmail_in':
-            usr = obj.user
-            passwd = obj.passwd
-            val = etl.component.input.gmail_in(usr, passwd, 'component.input.gmail_in'  or {})
+        cmp = self.browse(cr, uid, id)
+        if cmp.type_id.name=='input.gmail_in':
+            val = etl.component.input.gmail_in(cmp.user, cmp.passwd, cmp.name, trans_instance, cmp.row_limit)
         return val
 
 etl_component_gmail_in()

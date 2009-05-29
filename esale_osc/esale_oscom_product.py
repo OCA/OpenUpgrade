@@ -37,7 +37,6 @@ class esale_oscom_product_manufacturer(osv.osv):
                 'name':fields.char('Name', size=64, required=True, select="1"),
                 'manufacturer_url':fields.char('URL', size=128, select="2", translate=True),
                 }
-#class esale_oscom_product_manyfacture(osv.osv):
 esale_oscom_product_manufacturer()
 
 
@@ -60,25 +59,60 @@ class esale_oscom_product_inherit(osv.osv):
                  'in_out_stock' : lambda *a:'0',
                  'spe_price_status':lambda *a:'0',
                  }
-    def write(self, cr, user, ids, vals, context=None):
-        ret_write = super(esale_oscom_product_inherit,self).write(cr, user, ids, vals, context)
-        esale_product_ids = self.pool.get('esale.oscom.product').search(cr, user, [('product_id','in',ids)])
-        category_id = vals.get('categ_id', False)
-        if len(esale_product_ids) and category_id and ret_write:
-            category_maping_ids = self.pool.get('esale.oscom.category').search(cr, user, [('category_id','=',category_id)])
+
+    def create(self, cr, uid, vals, context=None):
+        esale_web_obj = self.pool.get('esale.oscom.web')
+        esale_category_obj = self.pool.get('esale.oscom.category')
+
+        ret_create = super(esale_oscom_product_inherit,self).create(cr, uid, vals, context)
+        if ret_create:
+            category_id = self.browse(cr, uid, ret_create).categ_id.id
+            category_maping_ids = esale_category_obj.search(cr, uid, [('category_id','=',category_id)])
             if len(category_maping_ids):
-                esale_product_datas = self.pool.get('esale.oscom.product').read(cr, user, esale_product_ids, ['product_id'])
-                product_ids = [x.get('product_id')[0] for x in esale_product_datas]
-                self.oscom_export(cr, user, product_ids=product_ids, context=context)
+                #print "Product CREATED. New category is mapped to OScommerce => update OScommerce products"
+                self.oscom_export(cr, uid, product_ids=[ret_create], context=context)
+        return ret_create
+
+    def write(self, cr, uid, ids, vals, context=None):
+        esale_category_obj = self.pool.get('esale.oscom.category')
+        esale_product_obj = self.pool.get('esale.oscom.product')
+
+        ret_write = super(esale_oscom_product_inherit,self).write(cr, uid, ids, vals, context)
+        esale_product_ids = esale_product_obj.search(cr, uid, [('product_id','in',ids)])
+        esale_products = esale_product_obj.browse(cr, uid, esale_product_ids)
+        category_id = vals.get('categ_id', False)
+
+        # OpenERP products mapped to OScommerce
+        product_ids = [x.product_id.id for x in esale_products]
+        if len(product_ids) and ret_write:
+            if category_id: # Updated product category field
+                category_maping_ids = esale_category_obj.search(cr, uid, [('category_id','=',category_id)])
+                if len(category_maping_ids):
+                    #print "New category is mapped to OScommerce => update OScommerce products"
+                    self.oscom_export(cr, uid, product_ids=product_ids, context=context)
+                else:
+                    #print "New category is not mapped to OScommerce => delete OScommerce products"
+                    esale_product_obj.unlink(cr, uid, esale_product_ids, context)
             else:
-                self.pool.get('esale.oscom.product').unlink(cr, user, esale_product_ids, context)
+                #print "No updated product category field (same category => update OScommerce products)"
+                self.oscom_export(cr, uid, product_ids=product_ids, context=context)
+
+        # OpenERP products not mapped to OScommerce
+        product_no_ids = [x for x in ids if x not in product_ids]
+        if len(product_no_ids) and ret_write:
+            if category_id: # Updated product category field
+                category_maping_ids = esale_category_obj.search(cr, uid, [('category_id','=',category_id)])
+                if len(category_maping_ids):
+                    #print "Previously NOT MAPPED. New category is mapped to OScommerce => update OScommerce products"
+                    self.oscom_export(cr, uid, product_ids=product_no_ids, context=context)
         return ret_write
 
     def unlink(self, cr, uid, ids, context=None):
-        esale_product_ids = self.pool.get('esale.oscom.product').search(cr, uid, [('product_id','in',ids)])
+        esale_product_obj = self.pool.get('esale.oscom.product')
+        esale_product_ids = esale_product_obj.search(cr, uid, [('product_id','in',ids)])
+        if len(esale_product_ids):
+            esale_product_obj.unlink(cr, uid, esale_product_ids, context)
         ret_del = super(esale_oscom_product_inherit,self).unlink(cr, uid, ids, context)
-        if len(esale_product_ids) and ret_del:
-            self.pool.get('esale.oscom.product').unlink(cr, uid, esale_product_ids, context)
         return ret_del
 
     def _check_spe_price(self, cr, uid, ids):
@@ -91,12 +125,8 @@ class esale_oscom_product_inherit(osv.osv):
                         float(spe_price[0:-1])
                     else:
                         float(spe_price)
-                    #end if spe_price.find('%'):
-                #end if spe_price:
             except:
                 return False
-            #end try:
-        #end for p in products:
         return True
 
     _constraints = [
@@ -105,42 +135,58 @@ class esale_oscom_product_inherit(osv.osv):
 
     def oscom_export(self, cr, uid, website=None, product_ids=[], context={}):
         """Export product_ids to OScommerce website (all the websites where there are product_ids if website is not defined)"""
+        esale_web_obj = self.pool.get('esale.oscom.web')
+        esale_category_obj = self.pool.get('esale.oscom.category')
+        esale_product_obj = self.pool.get('esale.oscom.product')
+        category_obj = self.pool.get('product.category')
+        product_obj = self.pool.get('product.product')
+        attach_obj = self.pool.get('ir.attachment')
+        pricelist_obj = self.pool.get('product.pricelist')
+        tax_obj = self.pool.get('account.tax')
+        manufacturer_obj = self.pool.get('product.manufacturer')
+
         prod_new = 0
         prod_update = 0
+        prod_delete = 0
         websites_objs = []
         websites = {}
         if not website:
-            products_datas = self.pool.get('product.product').read(cr, uid, product_ids, ['categ_id'])
-            category_ids = [x.get('categ_id')[0] for x in products_datas]
-            category_maping_ids = self.pool.get('esale.oscom.category').search(cr, uid, [('category_id','in',category_ids)])
-            category_maping_datas = self.pool.get('esale.oscom.category').read(cr, uid, category_maping_ids, ['web_id'])
-            web_ids = [x.get('web_id')[0] for x in category_maping_datas]
+            products = product_obj.browse(cr, uid, product_ids)
+            category_ids = [x.categ_id.id for x in products]
+            category_maping_ids = esale_category_obj.search(cr, uid, [('category_id','in',category_ids)])
+            category_mapings = esale_category_obj.browse(cr, uid, category_maping_ids)
+            web_ids = [x.web_id.id for x in category_mapings]
             for web_id in web_ids:
                 websites[web_id] = product_ids
-            #end for web_id in web_ids:
         else:
             websites[website.id] = product_ids
-        #end if not website:
-        websites_objs = self.pool.get('esale.oscom.web').browse(cr, uid, websites.keys())
+
+        # Main loop for the web shops
+        websites_objs = esale_web_obj.browse(cr, uid, websites.keys())
         for website in websites_objs:
+            # print "%s/openerp-synchro.php" % website.url
+            server = xmlrpclib.ServerProxy("%s/openerp-synchro.php" % website.url)
+            website_url = website.url.split("/")
+
+            # Pricelist of the web shop
             pricelist = website.shop_id.pricelist_id.id
             if not pricelist:
                 raise osv.except_osv(_('User Error'), _('You must define a pricelist in the sale shop associated to the web shop!'))
-            esale_products_ids = []
-            # print "%s/openerp-synchro.php" % website.url
-            server = xmlrpclib.ServerProxy("%s/openerp-synchro.php" % website.url)
 
+            # Taxes of the web shop
             tax_maping = {}
             for oscom_tax in website.tax_ids:
                 tiny_tax_id = oscom_tax.tax_id and oscom_tax.tax_id.id
                 if tiny_tax_id:
                     tax_maping[oscom_tax.esale_oscom_id] = tiny_tax_id
-                #end if tax_ids:
-            #end for oscom_tax in website.tax_ids:
+
+            # Loop for the OpenERP products
+            esale_products_ids = []
             web_product_ids = websites.get(website.id, False)
-            product_objs = self.pool.get('product.product').browse(cr, uid, web_product_ids)
-            for product in product_objs:
-                exist_esale_products_ids = self.pool.get('esale.oscom.product').search(cr, uid, [('web_id','=',website.id), ('product_id','=',product.id)])
+            products = product_obj.browse(cr, uid, web_product_ids)
+            #print website.id, web_product_ids
+            for product in products:
+                exist_esale_products_ids = esale_product_obj.search(cr, uid, [('web_id','=',website.id), ('product_id','=',product.id)])
                 if not len(exist_esale_products_ids):
                     create_dict = {
                                 'web_id':website.id,
@@ -148,116 +194,100 @@ class esale_oscom_product_inherit(osv.osv):
                                 'product_id':product.id,
                                 'esale_oscom_id':0
                                 }
-                    new_esale_product_id = self.pool.get('esale.oscom.product').create(cr, uid, create_dict)
+                    new_esale_product_id = esale_product_obj.create(cr, uid, create_dict)
                     esale_products_ids.append(new_esale_product_id)
                 else:
                     esale_products_ids.append(exist_esale_products_ids[0])
-                #end if not len(esale_products):
-            #end for product in product_objs:
 
-            esale_products_objs = self.pool.get('esale.oscom.product').browse(cr, uid, esale_products_ids)
-
-            for oscom_product in esale_products_objs:
-                attachs = self.pool.get('ir.attachment').search(cr, uid, [('res_model','=','product.product'), ('res_id', '=',oscom_product.product_id.id)])
-                data = self.pool.get('ir.attachment').read(cr, uid, attachs)
-                category_id = False
-                if type(oscom_product.product_id.categ_id) == type(1):
-                    category_id = self.pool.get('product.category').browse(cr, uid, oscom_product.product_id.categ_id).id
+            # Loop for the web shop products
+            esale_products = esale_product_obj.browse(cr, uid, esale_products_ids)
+            for esale_product in esale_products:
+                # Get category
+                category_id = esale_product.product_id.categ_id.id
+                category_ids = esale_category_obj.search(cr, uid, [('web_id','=', website.id), ('category_id', '=', category_id)])
+                if len(category_ids) > 0:
+                    category_id = esale_category_obj.browse(cr, uid, category_ids[0]).esale_oscom_id
                 else:
-                    category_id = oscom_product.product_id.categ_id.id
-                category_ids=self.pool.get('esale.oscom.category').search(cr, uid, [('web_id','=', website.id), ('category_id', '=', category_id)])
+                    category_id = 0
 
-                if len(category_ids)>0:
-                    category_id= self.pool.get('esale.oscom.category').read(cr, uid, category_ids, ['esale_oscom_id'])[0]['esale_oscom_id']
-                else:
-                    category_id=0
-
-                print [pricelist], oscom_product.id, 1, 'list'
-
-                tax_ids = []
-                for x in oscom_product.product_id.taxes_id:
-                    if type(x) == type(1):
-                        tax_ids.append(x)
-                    else:
-                        tax_ids.append(x.id)
-
+                # Get tax
+                tax_ids = [x.id for x in esale_product.product_id.taxes_id]
                 tax_class_id = 0
                 if tax_ids:
                     if tax_ids[0] in tax_maping.values():
                         tax_class_id = tax_maping.keys()[tax_maping.values().index(tax_ids[0])]
-                    #end if tax_ids in tax_maping.values():
-                #end if tax_ids:
-                webproduct={
-                    'product_id'      : oscom_product.esale_oscom_id,
-                    'quantity'        : self.pool.get('product.product')._product_available(cr, uid, [oscom_product.product_id.id], ['virtual_available'], False, {'shop':website.shop_id.id})[oscom_product.product_id.id]['virtual_available'],
-                    'model'           : oscom_product.product_id.code,
-                    #'price'           : self.pool.get('product.pricelist').price_get(cr, uid, [pricelist], oscom_product.product_id.id, 1, 'list')[pricelist].__str__(),
-                    'weight'          : float(oscom_product.product_id.weight),
-                    #'tax_class_id'    : oscom_product.esale_oscom_tax_id,
-                    'status'          : int(oscom_product.product_id.in_out_stock),
+                webproduct = {
+                    'product_id'      : esale_product.esale_oscom_id,
+                    'quantity'        : product_obj._product_available(cr, uid, [esale_product.product_id.id], ['virtual_available'], False, {'shop':website.shop_id.id})[esale_product.product_id.id]['virtual_available'],
+                    'model'           : esale_product.product_id.code,
+                    'weight'          : float(esale_product.product_id.weight),
+                    'status'          : int(esale_product.product_id.in_out_stock),
                     'tax_class_id'    : tax_class_id,
                     'category_id'     : category_id,
-                    'date_available'  : oscom_product.product_id.date_available or 'NULL',
-                    'exp_date'        : oscom_product.product_id.exp_date or 'NULL',
-                    'spe_price'       : oscom_product.product_id.spe_price,
-                    'spe_price_status': oscom_product.product_id.spe_price_status
+                    'date_available'  : esale_product.product_id.date_available or 'NULL',
+                    'exp_date'        : esale_product.product_id.exp_date or 'NULL',
+                    'spe_price'       : esale_product.product_id.spe_price,
+                    'spe_price_status': esale_product.product_id.spe_price_status
                 }
-                print "webproduct:::::::::::",webproduct
-                oscom_prod_obj = self.pool.get('esale.oscom.product')
-                oscom_prod_ids = oscom_prod_obj.search(cr, uid, [('id','=',oscom_product.id)])
-                oscom_prod_data = oscom_prod_obj.read(cr, uid, oscom_prod_ids)
+
+                # Get price
                 if website.price_type == '0':
-                    #print"HERE"
-                    webproduct['price'] = self.pool.get('product.pricelist').price_get(cr, uid, [pricelist], oscom_product.product_id.id, 1, 'list')[pricelist].__str__()
+                    webproduct['price'] = pricelist_obj.price_get(cr, uid, [pricelist], esale_product.product_id.id, 1, 'list')[pricelist].__str__()
                     #print "LIST PRICE:::::::::::::::::::",webproduct['price']
                 else:
-                    #print"HERE2"
-                    tax_ids = oscom_product.product_id.taxes_id
+                    tax_ids = esale_product.product_id.taxes_id
                     #print "\TAX_IDS:::::::::::::::::",tax_ids
                     if tax_ids:
-                        tax_amount = self.pool.get('account.tax').browse(cr, uid, tax_ids[0]).amount
+                        tax_amount = tax_obj.browse(cr, uid, tax_ids[0]).amount
                     else:
                         tax_amount = 0
                     #print"\TAX BROWSE:::::::::::::::::::",tax_amount
-                    t_price = (self.pool.get('product.pricelist').price_get(cr, uid, [pricelist], oscom_product.product_id.id, 1, 'list')[pricelist]) / (1 + tax_amount)
+                    t_price = (pricelist_obj.price_get(cr, uid, [pricelist], esale_product.product_id.id, 1, 'list')[pricelist]) / (1 + tax_amount)
                     webproduct['price'] = round(t_price,5).__str__()
-
                     #print "FROM TAX PRICE:::::::::::::", webproduct['price']
 
-                if len(data):
+                # Get attachment
+                attach_ids = attach_obj.search(cr, uid, [('res_model','=','product.product'), ('res_id', '=',esale_product.product_id.id)])
+                attachs = attach_obj.browse(cr, uid, attach_ids)
+                if len(attachs):
                     webproduct['haspic'] = 1
-                    webproduct['picture'] = data[0]['datas']
-                    webproduct['fname'] = data[0]['datas_fname']
-                elif oscom_product.product_id.product_picture:
+                    webproduct['picture'] = attachs[0].datas
+                    webproduct['fname'] = attachs[0].datas_fname
+                elif esale_product.product_id.product_picture:
                     webproduct['haspic'] = 2
-                    webproduct['fname'] = oscom_product.product_id.product_picture
+                    webproduct['fname'] = esale_product.product_id.product_picture
                 else:
                     webproduct['haspic'] =0
 
-                langs={}
+                # Get multi language attributes
+                langs = {}
                 manufacturer_langs = {}
-                products_pool=self.pool.get('product.product')
                 for lang in website.language_ids:
                     if lang.language_id and lang.language_id.translatable:
+                        product = product_obj.browse(cr, uid, esale_product.product_id.id, {'lang': lang.language_id.code})
                         langs[str(lang.esale_oscom_id)] = {
-                            'name': products_pool.read(cr, uid, [oscom_product.product_id.id], ['name'], {'lang': lang.language_id.code})[0]['name'] or '',
-                            'description': products_pool.read(cr, uid, [oscom_product.product_id.id], ['description_sale'], {'lang': lang.language_id.code})[0]['description_sale'] or '',
-                            'url':products_pool.read(cr, uid, [oscom_product.product_id.id], ['product_url'],{'lang': lang.language_id.code})[0]['product_url'] or '',
+                            'name': product.name or '',
+                            'description': product.description_sale or '',
+                            'url': product.product_url or '',
                         }
-                        if oscom_product.product_id.manufacturer_id:
+                        if esale_product.product_id.manufacturer_id:
+                            manufacturer = manufacturer_obj.browse(cr, uid, esale_product.product_id.manufacturer_id.id, {'lang': lang.language_id.code})
                             manufacturer_langs[str(lang.esale_oscom_id)] = {
-                            'manufacturers_url':self.pool.get('product.manufacturer').read(cr, uid, [oscom_product.product_id.manufacturer_id.id], ['manufacturer_url'], {'lang': lang.language_id.code})[0]['manufacturer_url'] or '',
+                                'manufacturers_url': manufacturer.manufacturer_url or '',
                             }
 
                 webproduct['langs'] = langs
-                webproduct['name'] = oscom_product.product_id.name
-                webproduct['description'] = oscom_product.product_id.description_sale or ''
-                webproduct['url'] = oscom_product.product_id.product_url or ''
+                webproduct['name'] = esale_product.product_id.name
+                webproduct['description'] = esale_product.product_id.description_sale or ''
+                webproduct['url'] = esale_product.product_id.product_url or ''
 
-                if oscom_product.product_id.manufacturer_id:
-                    webproduct['manufacturers_name'] = oscom_product.product_id.manufacturer_id.name
-                    webproduct['manufacturers_url'] = oscom_product.product_id.manufacturer_id.manufacturer_url or ''
+                if esale_product.product_id.manufacturer_id:
+                    webproduct['manufacturers_name'] = esale_product.product_id.manufacturer_id.name
+                    webproduct['manufacturers_url'] = esale_product.product_id.manufacturer_id.manufacturer_url or ''
                     webproduct['manufacturer_langs'] = manufacturer_langs
+                #print "webproduct:::::::::::",webproduct
+
+                # Sends product to web shop
                 prod_id = webproduct['product_id']
                 if (prod_id != 0):
                     if webproduct['spe_price']:
@@ -267,97 +297,81 @@ class esale_oscom_product_inherit(osv.osv):
                             spe_price = spe_price[0:-1]
                             spe_price = "%.4f" % (price - (price*float(spe_price)/100))
                             webproduct['spe_price'] = spe_price
-                        oscom_id=server.set_product_spe(webproduct)
+                        oscom_id = server.set_product_spe(webproduct)
                     elif not webproduct['spe_price']:
-                        oscom_id=server.set_product_classical(webproduct)
+                        oscom_id = server.set_product_classical(webproduct)
                         server.del_spe_price(prod_id)
                 elif (prod_id == 0):
                     if (webproduct['spe_price'] == 0):
-                        oscom_id=server.set_product_classical(webproduct)
+                        oscom_id = server.set_product_classical(webproduct)
                     elif (webproduct['spe_price'] != 0):
-                        oscom_id=server.set_product_spe(webproduct)
+                        oscom_id = server.set_product_spe(webproduct)
 
-                if oscom_id!=oscom_product.esale_oscom_id:
-                    self.pool.get('esale.oscom.product').write(cr, uid, [oscom_product.id], {'esale_oscom_id': oscom_id})
+                if oscom_id != esale_product.esale_oscom_id:
+                    esale_product_obj.write(cr, uid, [esale_product.id], {'esale_oscom_id': oscom_id})
                     cr.commit()
                     prod_new += 1
                 else:
                     prod_update += 1
 
                 #####################PRODUCT URL IN OSCOMMERCE###################
-                esale_prod_obj = self.pool.get('esale.oscom.product')
-                esale_prod_ids = esale_prod_obj.search(cr, uid, [('esale_oscom_id','=',oscom_id)])
-                esale_prod_data = esale_prod_obj.read(cr,uid,esale_prod_ids)
-                #print ":::::::::::::::::::::::::::::::::::::::::::::::::::::"
-                #print "ESALE PROD DATA:::::::::::",esale_prod_data
+                esale_prod_ids = esale_product_obj.search(cr, uid, [('esale_oscom_id','=',oscom_id)])
+                esale_prod = esale_product_obj.browse(cr, uid, esale_prod_ids[0])
+                #print "ESALE PROD DATA (id, web, product, category):",esale_prod.id, esale_prod.web_id.id, esale_prod.product_id.id, esale_prod.product_id.categ_id.id
+                prod_url = website_url[0] + "//" + website_url[2] + "/" + website_url[3] + "/" + website_url[4] + "/" +"categories.php?cPath=" + str(category_id) + "&pID=" + str(oscom_id) + "&action=new_product"
+                super(esale_oscom_product_inherit, self).write(cr, uid, esale_prod.product_id.id, {'oscom_url': prod_url})
 
-                prod_obj = self.pool.get('product.product')
-                prod_ids = prod_obj.search(cr, uid, [('id','=',esale_prod_data[0]['product_id'][0])])
-                prod_data = prod_obj.read(cr, uid, prod_ids)
-                #print "PROD DATA:::::::::::",prod_data
-                cat_map_obj = self.pool.get('esale.oscom.category')
-                cat_id = prod_data[0]['categ_id'][0]
-                cat_ids = cat_map_obj.search(cr, uid, [('category_id','=',cat_id)])
-                cat_data = cat_map_obj.read(cr, uid, cat_ids)
-                esale_cat_id = str(cat_data[0]['esale_oscom_id'])
-                web_prod = self.pool.get ('esale.oscom.web')
-                web_prod_ids = web_prod.search(cr, uid, [('id','=',esale_prod_data[0]['web_id'][0])])
-                web_data = web_prod.read(cr, uid, web_prod_ids)
-                prod_url = web_data [0]['url'].split("/")
-                prod_url = prod_url[0] + "//" + prod_url[2] + "/" + prod_url[3] + "/" + prod_url[4] + "/" +"categories.php?cPath=" + esale_cat_id + "&pID=" + str(oscom_id) + "&action=new_product"
-                prod_obj.write(cr, uid, [prod_data[0]['id']], {'oscom_url': prod_url})
+            # Remove delete products
+            delete_esale_products_ids = esale_product_obj.search(cr, uid, [('web_id','=',website.id),('product_id','=',False)])
+            #esale_products = esale_product_obj.browse(cr, uid, delete_esale_products_ids)
+            #delete_oscom_ids = tuple([x.esale_oscom_id for x in esale_products])
+            prod_delete = len(delete_esale_products_ids)
+            if prod_delete:
+                #ret_delete = server.remove_product({'oscom_product_ids' : delete_oscom_ids})
+                #if ret_delete:
+                esale_product_obj.unlink(cr, uid, delete_esale_products_ids)
 
-            delete_esale_products_ids = self.pool.get('esale.oscom.product').search(cr, uid, [('web_id','=',website.id),('product_id','=',False)])
-            esale_product_ids = self.pool.get('esale.oscom.product').read(cr, uid, delete_esale_products_ids, ['esale_oscom_id'])
-            delete_oscom_ids = tuple([x['esale_oscom_id'] for x in esale_product_ids])
-            if len(delete_oscom_ids):
-                ret_delete = server.remove_product({'oscom_product_ids' : delete_oscom_ids})
-                if ret_delete:
-                    self.pool.get('esale.oscom.product').unlink(cr, uid, delete_esale_products_ids)
-                #end if ret_delete:
-            #end if len(delete_oscom_ids):
-
-        return {'prod_new':prod_new, 'prod_update':prod_update}
+        return {'prod_new':prod_new, 'prod_update':prod_update, 'prod_delete': prod_delete}
 
 
     def oscom_update_stock(self, cr, uid, website = None, product_ids=[], context={}):
         """Update stock for product_ids to OScommerce website (all the websites where there are product_ids if website  is not defined)"""
+        esale_web_obj = self.pool.get('esale.oscom.web')
+        esale_product_obj = self.pool.get('esale.oscom.product')
+        product_obj = self.pool.get('product.product')
+
         websites_objs = []
         websites = {}
         if not website:
             cr.execute('select distinct(web_id) from esale_oscom_product where product_id in (%s)'%','.join([str(x) for x in product_ids]))
-            web_data = cr.fetchall()
-            web_ids = []
-            for web in web_data:
-                web_ids.append(web[0])
-            #end for web in web data
-            websites_objs = self.pool.get('esale.oscom.web').browse(cr,uid,web_ids)
+            web_ids = [web[0] for web in cr.fetchall()]
+            websites_objs = esale_web_obj.browse(cr, uid, web_ids)
         else:
             websites_objs.append(website)
         for website in websites_objs:
             server = xmlrpclib.ServerProxy("%s/openerp-synchro.php" % website.url)
             if not product_ids:
-                oscom_products = website.product_ids
+                esale_products = website.product_ids
             else:
-                oscom_product_ids = self.pool.get('esale.oscom.product').search(cr, uid, [('web_id','=',website.id), ('product_id','in',product_ids)])
-                oscom_products = self.pool.get('esale.oscom.product').browse(cr, uid, oscom_product_ids)
-            for oscom_product in oscom_products:
-                webproduct={
-                        'product_id': oscom_product.esale_oscom_id,
-                        'quantity': self.pool.get('product.product')._product_available(cr, uid, [oscom_product.product_id.id], ['virtual_available'], False, {'shop':website.shop_id.id})[oscom_product.product_id.id]['virtual_available']
+                esale_product_ids = esale_product_obj.search(cr, uid, [('web_id','=',website.id), ('product_id','in',product_ids)])
+                esale_products = esale_product_obj.browse(cr, uid, esale_product_ids)
+            for esale_product in esale_products:
+                webproduct = {
+                    'product_id': esale_product.esale_oscom_id,
+                    'quantity': product_obj._product_available(cr, uid, [esale_product.product_id.id], ['virtual_available'], False, {'shop':website.shop_id.id})[esale_product.product_id.id]['virtual_available']
                 }
-                oscom_id=server.set_product_stock(webproduct)
+                oscom_id = server.set_product_stock(webproduct)
 
         return {}
 
 ##    def on_change_gross_price(self, cr, uid, ids, list_price):
 ##        if list_price:
 ##            if ids:
-##                product=self.pool.get('product.product').browse(cr, uid, ids[0])
+##                product = self.pool.get('product.product').browse(cr, uid, ids[0])
 ##                if not product.taxes_id:
-##                    VAT=0
+##                    VAT = 0
 ##                else:
-##                    VAT=product.taxes_id[0].amount
+##                    VAT = product.taxes_id[0].amount
 ##                gr_pr = list_price *(1 + VAT)
 ##            else:
 ##                raise osv.except_osv(
@@ -373,11 +387,11 @@ class esale_oscom_product_inherit(osv.osv):
 ##    def on_change_list_price(self, cr, uid, ids, gross_price):
 ##        if gross_price:
 ##            if ids:
-##                product=self.pool.get('product.product').browse(cr, uid, ids[0])
+##                product = self.pool.get('product.product').browse(cr, uid, ids[0])
 ##                if not product.taxes_id:
-##                    VAT=0
+##                    VAT = 0
 ##                else:
-##                    VAT=product.taxes_id[0].amount
+##                    VAT = product.taxes_id[0].amount
 ##                l_pr = gross_price / (1 + VAT)
 ##            else:
 ##                raise osv.except_osv(
@@ -389,13 +403,11 @@ class esale_oscom_product_inherit(osv.osv):
 ##
 ##        return {'value':{'list_price':l_pr, 'gross_price':gross_price}}
 
-
-#end class esale_oscom_product(osv.osv):
 esale_oscom_product_inherit()
-#
-#class oscom_res_corrency(osv.osv):
+
+
+#class oscom_res_currency(osv.osv):
 #    _inherit='res.currency'
 #    def compute(self, cr, uid, from_currency_id, to_currency_id, from_amount, round=False, context={}):
 #        return super(oscom_res_corrency,self).compute(cr, uid, from_currency_id, to_currency_id, from_amount, round,context)
-##end class oscom_res_corrency(osv.osv):
-#oscom_res_corrency()
+#oscom_res_currency()

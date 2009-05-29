@@ -59,11 +59,28 @@ _timezone_fields = {
         },
         }
 
+_timezone_form =  '''<?xml version="1.0"?>
+        <form string="Export">
+        <separator string="Select Timezone" colspan="4"/>
+        <field name="timezone_select"/>
+        </form> '''
+
+_timezone_fields = {
+            'timezone_select': {
+            'string': 'Time Zone',
+            'type': 'selection',
+            'selection': [(x, x) for x in pytz.all_timezones],
+            'required': True,
+        },
+        }
+
+
 def _tz_get(self, cr, uid, data, context={}):
     if 'tz' in context and context['tz']:
-        return'synch'
+        return 'synch'
     else:
         return 'timezone'
+
 
 class google_calendar_wizard(wizard.interface):
 
@@ -95,7 +112,7 @@ class google_calendar_wizard(wizard.interface):
             new_event = calendar_service.InsertEvent(event, '/calendar/feeds/default/private/full')
             return new_event
         except Exception, e:
-            raise osv.except_osv('Error !',e )
+            raise osv.except_osv('Error !', e )
 
     def _synch_events(self, cr, uid, data, context={}):
 
@@ -124,7 +141,6 @@ class google_calendar_wizard(wizard.interface):
             time_zone = context['tz']
         else:
             time_zone = data['form']['timezone_select']
-
         au_tz = timezone(time_zone)
         try :
             self.calendar_service = gdata.calendar.service.CalendarService()
@@ -153,7 +169,6 @@ class google_calendar_wizard(wizard.interface):
                 tiny_event_dict[event.google_event_id] = event
             for i, an_event in enumerate(feed.entry):
                 google_id = an_event.id.text
-
                 if google_id in tiny_event_dict.keys():
                     event = tiny_event_dict[google_id]
                     google_up = an_event.updated.text # google event modify date
@@ -166,7 +181,7 @@ class google_calendar_wizard(wizard.interface):
                         # tiny events => google
                         an_event.title.text = event.name
                         an_event.content.text = event.name
-                        an_event.where.insert(0,gdata.calendar.Where(value_string=location))
+                        an_event.where.insert(0, gdata.calendar.Where(value_string=location))
                         time_format = "%Y-%m-%d %H:%M:%S"
                         # convert event start date into gmtime format
                         timestring = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(event.date_begin, "%Y-%m-%d %H:%M:%S"))))
@@ -239,23 +254,22 @@ class google_calendar_wizard(wizard.interface):
 
             return {}
         except Exception, e:
-            raise osv.except_osv('Error !',e )
+            raise osv.except_osv('Error !', e )
 
     states = {
-
         'init': {
             'actions': [],
-            'result': {'type': 'form', 'arch':_google_form, 'fields':_google_fields,  'state':[('end','Cancel'),('synch1','Synchronize')]}
+            'result': {'type': 'form', 'arch': _google_form, 'fields': _google_fields, 'state': [('end', 'Cancel'),('tz', 'Synchronize')]}
         },
 
-        'synch1': {
+        'tz': {
             'actions': [],
             'result': {'type': 'choice', 'next_state': _tz_get }
             },
 
         'timezone': {
             'actions': [],
-            'result': {'type': 'form', 'arch':_timezone_form, 'fields':_timezone_fields,  'state':[('synch','Synchronize')]}
+            'result': {'type': 'form', 'arch': _timezone_form, 'fields': _timezone_fields, 'state': [('synch', 'Synchronize')]}
         },
 
         'synch': {

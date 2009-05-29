@@ -229,7 +229,8 @@ class SmtpClient(osv.osv):
         smtp_server = self.browse(cr, uid, server_id)
         if smtp_server.state != 'confirm':
             raise osv.except_osv(_('SMTP Server Error !'), 'Server is not Verified, Please Verify the Server !')
-            
+
+        subject = unicode(subject, 'utf-8') # Email subject could have non-ascii characters
         if type(emailto) == type([]):
             for to in emailto:
                 msg = MIMEMultipart()

@@ -37,7 +37,7 @@ class etl_component_control_sleep(osv.osv):
         val=super(etl_component_control_sleep, self).create_instance(cr, uid, id, context, data)
         cmp=self.browse(cr, uid, id)
         if cmp.type_id.name == 'control.sleep':
-            val = etl.component.control.sleep(cmp.delay)
+            val = etl.component.control.sleep(cmp.delay, cmp.name)
         return val
 
 etl_component_control_sleep()

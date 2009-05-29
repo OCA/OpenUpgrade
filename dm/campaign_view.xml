@@ -3,10 +3,10 @@
 <data>
 
     <menuitem name="Campaigns" id="menu_dm_config_campaign" parent="dm.menu_dm_config" groups="res_groups_offeradmin,res_groups_campaignadmin" sequence="1"/>
-    <menuitem name="Customers Lists" id="menu_dm_config_custlist" parent="dm.menu_dm_config" groups="res_groups_offeradmin,res_groups_campaignadmin" sequence="1"/>
+    <menuitem name="Customers Lists and Files" id="menu_dm_config_custlist" parent="dm.menu_dm_config" groups="res_groups_offeradmin,res_groups_campaignadmin" sequence="1"/>
     <menuitem name="Campaigns" id="menu_dm_campaign" parent="menu_dm" sequence="4"/>
     <menuitem name="Low Level" id="menu_dm_config_lowlevel" parent="dm.menu_dm_config" groups="res_groups_dmadmin" sequence="0"/>
-    <menuitem name="Campaign Documents" id="menu_dm_config_lowlevel_campaign_doc" parent="dm.menu_dm_config_lowlevel" groups="res_groups_dmadmin" sequence="1"/>
+
 
     <!--
     =======================================================
@@ -863,7 +863,8 @@
                 <notebook colspan="4">
                     <page string="General">
                         <separator string="Segment Origin" colspan="4"/>
-                        <field name="proposition_id" />
+                        <field name="campaign_id" select="1" />
+                        <field name="proposition_id" select="1"/>
                         <field name="active" />
                         <field name="split_id" />
                         <field name="reuse_id" />
@@ -1407,90 +1408,6 @@
     <menuitem id="menu_action_dm_customers_list_recruit_origin" parent="dm.menu_dm_config_custlist" action="action_dm_customers_list_recruit_origin" sequence="1" />
 
     <!--
-    =======================================================
-    CAMPAIGN DOCUMENT TYPE
-    =======================================================
-    -->
-
-    <record model="ir.ui.view" id="view_dm_campaign_document_type_form">
-        <field name="name">dm.campaign.document.type.form</field>
-        <field name="model">dm.campaign.document.type</field>
-        <field name="type">form</field>
-        <field name="arch" type="xml">
-            <form string="Campaign Document Type">
-                <separator string="Campaign Document Type" colspan="4"/>
-                <field name="name" select="1"/>
-                <field name="code" select="1"/>
-            </form>
-        </field>
-    </record>
-
-    <record model="ir.ui.view" id="view_dm_campaign_document_type_tree">
-        <field name="name">dm.campaign.document.type.tree</field>
-        <field name="model">dm.campaign.document.type</field>
-        <field name="type">tree</field>
-        <field name="arch" type="xml">
-            <tree string="Campaign Document Types">
-                <field name="name"/>
-                <field name="code"/>
-            </tree>
-        </field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_dm_campaign_document_type">
-        <field name="name">All Campaign Document Types</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">dm.campaign.document.type</field>
-        <field name="view_type">form</field>
-        <field name="view_id" ref="view_dm_campaign_document_type_tree"/>
-    </record>
-
-    <menuitem id="menu_action_dm_campaign_document_type" parent="menu_dm_config_lowlevel_campaign_doc" action="action_dm_campaign_document_type" sequence="0" />
-
-    <!--
-    =======================================================
-    CAMPAIGN DOCUMENT
-    =======================================================
-    -->
-
-    <record model="ir.ui.view" id="view_dm_campaign_document_form">
-        <field name="name">dm.campaign.document.form</field>
-        <field name="model">dm.campaign.document</field>
-        <field name="type">form</field>
-        <field name="arch" type="xml">
-            <form string="Campaign Document">
-                <separator string="Campaign Document" colspan="4"/>
-                <field name="name" select="1"/>
-                <field name="type_id" select="2"/>
-                <field name="segment_id" select="2"/>
-            </form>
-        </field>
-    </record>
-
-    <record model="ir.ui.view" id="view_dm_campaign_document_tree">
-        <field name="name">dm.campaign.document.tree</field>
-        <field name="model">dm.campaign.document</field>
-        <field name="type">tree</field>
-        <field name="arch" type="xml">
-            <tree string="Campaign Documents">
-                <field name="name"/>
-                <field name="type_id"/>
-                <field name="segment_id"/>
-            </tree>
-        </field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_dm_campaign_document">
-        <field name="name">All Campaign Documents</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">dm.campaign.document</field>
-        <field name="view_type">form</field>
-        <field name="view_id" ref="view_dm_campaign_document_tree"/>
-    </record>
-
-    <menuitem id="menu_action_dm_campaign_document" parent="menu_dm_config_lowlevel_campaign_doc" action="action_dm_campaign_document" sequence="1" />
-
-    <!--
         =======================================================
         customer file source
          =======================================================
@@ -1651,7 +1568,11 @@
         <field name="arch" type="xml">
             <notebook colspan="4" position="inside">
                 <page string="Direct Marketing">
-                    <field name="dm_contact_id" colspan="4"/>
+                	<separator colspan="4"/>
+                	<field name="deceased"/>
+                	<group attrs="{'invisible':[('deceased','!=',True)]}">
+                		<field name="deceased_date" />
+                	</group>
                     <separator string="Allowed Countries" colspan="4"/>
                     <field name="country_ids" colspan="4" nolabel="1"/>
                     <separator string="Allowed States" colspan="4"/>

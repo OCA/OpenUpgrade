@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,18 +19,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 {
     "name" : "Restaurant Management - Reporting",
     "version" : "1.0",
     "author" : "Tiny",
     "depends" : ["hotel_restaurant"],
     "category" : "Generic Modules/Hotel Restaurant",
-    "description": "A module that adds new reports based on Reservation cases.",
+    "description": """
+    Module shows the status of resturant reservation
+     * Current status of reserved tables
+     * List status of tables as draft or done state
+    """,
+
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ["security/ir.model.access.csv","report_hotel_restaurant_view.xml"],
     "active": False,
     "installable": True
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

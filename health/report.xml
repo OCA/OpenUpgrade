@@ -1,61 +1,83 @@
-<?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<?xml version="1.0"?>
+<terp>
 	<data>
+		<delete model="ir.actions.report.xml" search="[('model','like','health.')]"/>
     <!-- Présents -->
 	<report id="health_presence"
-			string="Present" model="health.patient" name="health.presence"
-			rml="health/report/presence.rml"
-            auto="True"
-            menu="True"/>
-
-	<wizard  id="wizard_health_presence_report" string="Present" model="health.patient"
+              string="Présents"
+             model="health.patient"
+              name="health.presence"
+             rml="health/report/presence.rml"
+             auto="True"
+            menu="True"
+        />
+		<wizard  id="wizard_health_presence_report"
+			string="Présents" 
+			model="health.patient"
 			name="health.presence.report"
-			keyword="client_print_multi"/>
+			keyword="client_print_multi"
+			/>
 
     <!--  ENTREE SORTIE -->
-	<report id="health_entreesortie" string="Entry Exit" model="health.patient"
-          	name="health.entreesortie"
-            rml="health/report/entresortie.rml"
-            auto="True"
-            menu="True"/>
-
-	<wizard  id="wizard_health_entreesortie_report"
-			string="Entry Exit"
+	<report id="health_entreesortie"
+              string="Entrée Sortie"
+             model="health.patient"
+              name="health.entreesortie"
+             rml="health/report/entresortie.rml"
+             auto="True"
+            menu="True"
+        />
+		<wizard  id="wizard_health_entreesortie_report"
+			string="Entrée Sortie" 
 			model="health.patient"
 			name="health.entreesortie.report"
-			keyword="client_print_multi"/>
-
+			keyword="client_print_multi"
+			/>
         <!--  Mouvement semestriel -->
-	<report id="health_mouvementsemestriel" string="Semester Movement" model="health.patient"
-          	name="health.mouvementsemestriel"
-            rml="health/report/mouvementsemestriel.rml"
-            auto="True"
-            menu="True"/>
-
-	<wizard  id="wizard_health_mouvementsemestriel_report" string="Semester Movement" model="health.patient"
+	<report id="health_mouvementsemestriel"
+              string="Mouvement Semestriel"
+             model="health.patient"
+              name="health.mouvementsemestriel"
+             rml="health/report/mouvementsemestriel.rml"
+             auto="True"
+            menu="True"
+        />
+		<wizard  id="wizard_health_mouvementsemestriel_report"
+			string="Mouvement Semestriel" 
+			model="health.patient"
 			name="health.mouvementsemestriel.report"
-			keyword="client_print_multi"/>
-
+			keyword="client_print_multi"
+			/>
         <!--  ANNIVERSAIRES -->
-    <report id="health_anniversaire" string="Birthday" model="health.patient"
-          	name="health.anniversaire"
-            rml="health/report/anniversaire.rml"
-            auto="True"
-            menu="True"/>
-
-	<wizard  id="wizard_health_anniversaire_report"	string="Birthday" model="health.patient"
+	    <report id="health_anniversaire"
+              string="Anniversaire"
+             model="health.patient"
+              name="health.anniversaire"
+             rml="health/report/anniversaire.rml"
+             auto="True"
+            menu="True"
+        />
+		<wizard  id="wizard_health_anniversaire_report"
+			string="Anniversaire" 
+			model="health.patient"
 			name="health.anniversaire.report"
-			keyword="client_print_multi"/>
-
-	  <!--  REGIMES-->
-	 <report id="health_regime" string="Fund Regime" model="health.patient"
-          	name="health.regimecaisse"
-            rml="health/report/regimecaisse.rml"
-            auto="True"
-            menu="True"/>
-
-	<wizard  id="wizard_health_regime_report" string="Fund Regime" model="health.patient"
+			keyword="client_print_multi"
+			/>
+	  <!--  REGIMES-->		
+	 <report id="health_regime"
+              string="Regime Caisse"
+             model="health.patient"
+              name="health.regimecaisse"
+             rml="health/report/regimecaisse.rml"
+             auto="True"
+            menu="True"
+        />
+		<wizard  id="wizard_health_regime_report"
+			string="Regime Caisse" 
+			model="health.patient"
 			name="health.regimecaisse.report"
-			keyword="client_print_multi"/>
+			keyword="client_print_multi"
+			/>
+		<report string="Print Patient" model="health.patient" name="health.patient.list" xml="health/report/patient.xml" xsl="health/report/patient.xsl"/>
 	</data>
-</openerp>
+</terp>

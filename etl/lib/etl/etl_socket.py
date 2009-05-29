@@ -20,7 +20,7 @@
 #
 ##############################################################################
 """
-        Class of ETL socket.
+    Class of ETL socket.
 """
 import socket
 import cPickle
@@ -61,7 +61,7 @@ class etl_socket:
 
     def myreceive(self):
         def read(socket, size):
-            buf=''
+            buf = ''
             while len(buf) < size:
                 chunk = self.sock.recv(size - len(buf))
                 if chunk == '':

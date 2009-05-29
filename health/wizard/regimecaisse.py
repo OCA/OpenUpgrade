@@ -1,7 +1,7 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2007 EVI All Rights Reserved.
+# Copyright (c) 2009 EVERLIBRE All Rights Reserved.
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -30,12 +30,12 @@ import wizard
 import pooler
 
 dates_form = '''<?xml version="1.0"?>
-<form string="Select Date">
+<form string="Select period">
     <field name="date" colspan="4"/>
 </form>'''
 
 dates_fields = {
-    'date': {'string': 'Start', 'type': 'date', 'required': True},
+    'date': {'string': 'Début', 'type': 'date', 'required': True},
 }
 
 class wizard_report(wizard.interface):

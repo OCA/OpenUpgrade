@@ -69,6 +69,18 @@
             multi="1"
             id="workitem_wiz"/>
 
+        <wizard
+            string="Show Segments"
+            model="res.partner.address"
+            name="wizard_address_segments"
+            id="wizard_address_segments"/>
+            
+		<wizard
+            string="After-Sale Action"
+            model="res.partner.address"
+            name="wizard_after_sale_action"
+            id="wizard_after_sale_action"/>
+
 <!--         <wizard
             string="Duplicate"
             model="dm.campaign.proposition"

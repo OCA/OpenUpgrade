@@ -21,53 +21,84 @@
 ##############################################################################
 
 """
-To provide connectivity with Local File 
+ To provide connectivity with Local File .
 
-Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
-GNU General Public License
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+ GNU General Public License.
 """
 from etl.connector import connector
 
 class localfile(connector):
     """
-    This is an ETL connector that use to provide connectivity with Local File.
-    """ 
-    def __init__(self,uri,bufsize=-1,encoding='utf-8',name='localfile'):
-        """ 
-        Required Parameters ::
-        uri      : Path of file
-                
-        Extra Parameters ::
-        bufsize  : Bufsize for reading data
-        encoding : Encoding format
-        name     : Name of connector
-        """    
+    This is an ETL connector that is used to provide connectivity with Local File.
+    """
+    def __init__(self, uri, mode='r', bufsize=-1, encoding='utf-8', name='localfile'):
+        """
+        Required Parameters
+        uri      : Path of file.
+
+        Extra Parameters
+        bufsize   : Buffer size for reading data.
+        encoding  : Encoding format.
+        name      : Name of connector.
+        """
         super(localfile, self).__init__(name)
         self._type = 'connector.localfile'
-        self.bufsize=bufsize
-        self.encoding=encoding
+        self.bufsize = bufsize
+        self.mode = mode
+        self.encoding = encoding
         self.uri = uri
 
-    def open(self, mode='r'):
+    def open(self, mode=False):
         """
-        Opens a file connection
+        Opens a file connection.
         """
         # TODO : pass encoding in file
         super(localfile, self).open()
+        if not mode:
+            mode = self.mode
+        if not mode in ['r','w','a','b','r+','w+','a+','rb','wb','ab','rb+','wb+','ab+']:
+            mode = 'ab+'
+
+#        try:
         return file(self.uri, mode)
+#        except:
+#            return
         #self.file.encoding=self.encoding
+
+    def __getstate__(self):
+        res = super(localfile, self).__getstate__()
+        res.update({'mode':self.mode,'bufsize':self.bufsize, 'encoding':self.encoding, 'uri':self.uri })#
+        return res
+
+    def __setstate__(self, state):
+        super(localfile, self).__setstate__(state)
+        self.__dict__ = state
 
     def close(self,connector):
         """
-        Closes a file connection
+        Closes a file connection.
         """
         super(localfile, self).close()
         if connector:
             connector.close()
 
-    def __copy__(self): 
+    def __copy__(self):
         """
-        Overrides copy method
+        Overrides copy method.
         """
-        res=localfile(self.uri, self.bufsize, self.encoding, self.name)        
+        res = localfile(self.uri, self.bufsize, self.encoding, self.name)
         return res
+def test():
+
+    from etl_test import etl_test
+    import etl
+    file_conn=localfile('../../demo/input/partner1.csv')
+    test = etl_test.etl_component_test(etl.component.input.csv_in(file_conn, name='csv test'))
+    test.check_output([{'tel': '+32.81.81.37.00', 'id': '11', 'name': 'Fabien'}])
+    res=test.output()
+    print res
+
+if __name__ == '__main__':
+    test()
+

@@ -24,21 +24,11 @@ import etl
 import tools
 from osv import osv, fields
 
-class etl_component_openobject_lines(osv.osv):
-    _name='etl.component.openobject.lines'
-    _columns={
-          'source_field' : fields.char('Source Field', size=124),
-          'dest_field' : fields.char('Destination Field', size=124),
-          'component_id' : fields.many2one('etl.component', 'Model'),
-    }
-
-etl_component_openobject_lines()
-
 class etl_component_open_object_out(osv.osv):
     _name='etl.component'
     _inherit = 'etl.component'
     _columns = {
-          'openobject_field_ids' : fields.one2many('etl.component.openobject.lines', 'component_id', 'Fields'),
+          'openobject_field_ids' : fields.one2many('etl.component.field', 'component_id', 'Fields'),
           'model_id' : fields.many2one('ir.model', 'Model'),
               }
 

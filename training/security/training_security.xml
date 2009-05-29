@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+        <!-- "Training" Group -->
+        <record id="group_training" model="res.groups">
+            <field name="name">Training</field>
+        </record>
+
+        <!-- "Training / Course Manager" Group -->
+        <record id="group_course_manager" model="res.groups">
+            <field name="name">Training / Course Manager</field>
+        </record>
+
+        <!-- "Training / Course User" Group -->
+        <record id="group_course_user" model="res.groups">
+            <field name="name">Training / Course User</field>
+        </record>
+
+        <!-- "Training / Support Course Manager" Group -->
+        <record id="group_support_course_manager" model="res.groups">
+            <field name="name">Training / Support Course Manager</field>
+        </record>
+
+        <!-- "Training / Offer Manager" Group -->
+        <record id="group_offer_manager" model="res.groups">
+            <field name="name">Training / Offer Manager</field>
+        </record>
+
+        <!-- "Training / Offer User" Group -->
+        <record id="group_offer_user" model="res.groups">
+            <field name="name">Training / Offer User</field>
+        </record>
+
+        <!-- "Training / Session Manager" Group -->
+        <record id="group_session_manager" model="res.groups">
+            <field name="name">Training / Session Manager</field>
+        </record>
+
+        <!-- "Training / Session User" Group -->
+        <record id="group_session_user" model="res.groups">
+            <field name="name">Training / Session User</field>
+        </record>
+
+        <!-- "Training / Seance Manager" Group -->
+        <record id="group_seance_manager" model="res.groups">
+            <field name="name">Training / Seance Manager</field>
+        </record>
+
+        <!-- "Training / Seance User" Group -->
+        <record id="group_seance_user" model="res.groups">
+            <field name="name">Training / Seance User</field>
+        </record>
+
+        <!-- "Training / Library Consultant" Group -->
+        <record id="group_library_consultant" model="res.groups">
+            <field name="name">Training / Library Consultant</field>
+        </record>
+
+        <!-- "Training / Subscription Manager" Group -->
+        <record id="group_subscription_manager" model="res.groups">
+            <field name="name">Training / Subscription Manager</field>
+        </record>
+
+        <!-- "Training / Subscription User" Group -->
+        <record id="group_subscription_user" model="res.groups">
+            <field name="name">Training / Subscription User</field>
+        </record>
+
+        <!--
+        <record id="group_supplier_portal" model="res.groups">
+            <field name="name">Training / Supplier Portal</field>
+        </record>
+        <record id="group_client_portal" model="res.groups">
+            <field name="name">Training / Client Portal</field>
+        </record>
+        -->
+
+        <!-- "Training / Course Manager" Group -->
+        <record id="role_course_manager" model="res.roles">
+            <field name="name">Training / Course Manager</field>
+        </record>
+
+        <record id="role_subscription_manager" model="res.roles">
+            <field name="name">Training / Subscription Manager</field>
+        </record>
+
+        <!--
+        Rights on the menus
+        -->
+        <!--
+        <record model="ir.ui.menu" id="training_mi">
+            <field eval="[(6,0,[ref('group_training')])]" name="groups_id"/>
+        </record>
+        <record model="ir.ui.menu" id="training_config_mi">
+            <field eval="[(6,0,[ref('group_training')])]" name="groups_id"/>
+        </record>
+        <record model="ir.ui.menu" id="training_config_library_mi">
+            <field eval="[(6,0,[ref('group_training')])]" name="groups_id"/>
+        </record>
+        <record model="ir.ui.menu" id="training_config_library_course_type_mi">
+        </record>
+        <record model="ir.ui.menu" id="training_config_library_product_line_mi">
+        </record>
+        <record model="ir.ui.menu" id="training_config_locations_mi">
+        </record>
+        <record model="ir.ui.menu" id="training_config_locations_new_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_library_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_library_course_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_library_course_course_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_library_course_course_current_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_library_course_course_draft_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_library_course_course_mature_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_library_course_course_new_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_library_course_category_course_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_offer_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_offer_open_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_offer_new_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_catalog_mi">
+        </record>
+        <record model="ir.ui.menu" id="training_offer_catalog_all_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_offer_catalog_old_mi">
+        </record>
+        <record model="ir.ui.menu" id="training_offer_catalog_current_mi">
+        </record>
+        <record model="ir.ui.menu" id="training_offer_catalog_new_mi">
+        </record>
+        <record model="ir.ui.menu" id="training_planning_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_planning_session_all_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_planning_session_draft_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_planning_session_validate_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_planning_session_duplicate_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_planning_session_new_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_planning_seances_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_planning_seances_planning_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_planning_seances_confirm_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_planning_seances_deduplicate_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_subscription_management_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_subscription_management_subscription_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_subscription_management_subscription_validate_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_subscription_management_subscription_invoice_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_subscription_management_subscription_new_mi">
+        </record> 
+        <record model="ir.ui.menu" id="training_subscription_management_subscription_mass_mi">
+        </record> 
+
+        <record id="menu_finance_configuration" model="ir.ui.menu">
+            <field eval="[(6,0,[ref('group_account_manager')])]" name="groups_id"/>
+        </record>
+
+        <record id="menu_finance_reporting" model="ir.ui.menu">
+            <field eval="[(6,0,[ref('group_account_manager')])]" name="groups_id"/>
+        </record>
+        -->
+
+    </data>
+</openerp>

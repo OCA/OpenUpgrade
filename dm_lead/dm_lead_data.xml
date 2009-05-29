@@ -2,15 +2,28 @@
 <openerp>
 
     <!-- Transition Trigger -->
-    <data>
+    <data noupdate="1">
         <record id="dm_offer_step_transition_new_crm_lead" model="dm.offer.step.transition.trigger">
             <field eval="&quot;&quot;&quot;New CRM Lead&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;crm_lead&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;False&quot;&quot;&quot;" name="gen_next_wi"/>
             <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
+            <field eval="&quot;&quot;&quot;offer&quot;&quot;&quot;" name="type"/>
 <!--            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="out_act_cond"/>-->
         </record>
     </data>
+
+    <data noupdate="1">
+        <record id="dm_offer_step_transition_plan_to_sell" model="dm.offer.step.transition.trigger">
+            <field eval="&quot;&quot;&quot;Plan to Sell&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;plan_to_sell&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;False&quot;&quot;&quot;" name="gen_next_wi"/>
+            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
+            <field eval="&quot;&quot;&quot;offer&quot;&quot;&quot;" name="type"/>
+<!--            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="out_act_cond"/>-->
+        </record>
+    </data>
+
 <!--
     <data>
         <record id="dm_customers_file_source_crm_case" model="dm.customers_file.source">
@@ -28,4 +41,58 @@
    </data>
    -->
 
+	<!-- PLUGINS -->
+	<data noupdate="1">
+		<record id="dm_dtp_plugin_case_prospect_name" model="dm.dtp.plugin">
+            <field eval="&quot;&quot;&quot;case_prospect_name&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;Case Prospect Name&quot;&quot;&quot;" name="name"/>
+            <field eval="0" name="store_value"/>
+            <field name="model_id" ref="crm.model_crm_case"/>
+            <field eval="&quot;&quot;&quot;Case Prospect's Name&quot;&quot;&quot;" name="note"/>
+            <field name="field_id" ref="crm_configuration.field_crm_case_partner_name"/> 
+            <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+        </record>
+        <record id="dm_dtp_plugin_case_contact_name" model="dm.dtp.plugin">
+            <field eval="&quot;&quot;&quot;case_contact_name&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;Case Contact Name&quot;&quot;&quot;" name="name"/>
+            <field eval="0" name="store_value"/>
+            <field name="model_id" ref="crm.model_crm_case"/>
+            <field eval="&quot;&quot;&quot;Case Contact's Name&quot;&quot;&quot;" name="note"/>
+            <field name="field_id" ref="crm_configuration.field_crm_case_partner_name2"/> 
+            <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+        </record>
+        <record id="dm_dtp_plugin_case_phone" model="dm.dtp.plugin">
+            <field eval="&quot;&quot;&quot;case_phone&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;Case Phone&quot;&quot;&quot;" name="name"/>
+            <field eval="0" name="store_value"/>
+            <field name="model_id" ref="crm.model_crm_case"/>
+            <field eval="&quot;&quot;&quot;Case Phone&quot;&quot;&quot;" name="note"/>
+            <field name="field_id" ref="crm_configuration.field_crm_case_partner_phone"/> 
+            <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+        </record>
+        <record id="dm_dtp_plugin_case_mobile" model="dm.dtp.plugin">
+            <field eval="&quot;&quot;&quot;case_mobile&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;Case Mobile&quot;&quot;&quot;" name="name"/>
+            <field eval="0" name="store_value"/>
+            <field name="model_id" ref="crm.model_crm_case"/>
+            <field eval="&quot;&quot;&quot;Case Mobile&quot;&quot;&quot;" name="note"/>
+            <field name="field_id" ref="crm_configuration.field_crm_case_partner_mobile"/> 
+            <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+        </record>
+        <record id="dm_dtp_plugin_case_email" model="dm.dtp.plugin">
+            <field eval="&quot;&quot;&quot;case_email&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;Case Email&quot;&quot;&quot;" name="name"/>
+            <field eval="0" name="store_value"/>
+            <field name="model_id" ref="crm.model_crm_case"/>
+            <field eval="&quot;&quot;&quot;Case Email&quot;&quot;&quot;" name="note"/>
+            <field name="field_id" ref="crm.field_crm_case_email_from"/> 
+            <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+        </record>
+        
+        <!-- TEMPLATE -->
+        <record id="dm_document_template_crm_case0" model="dm.document.template">
+            <field model="dm.dtp.plugin" search="[('model_id.model','=','crm.case')]" name="plugin_ids"/>
+            <field eval="&quot;&quot;&quot;CRM Case&quot;&quot;&quot;" name="name"/>
+        </record>
+	</data>
 </openerp>

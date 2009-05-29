@@ -24,7 +24,7 @@
     "name" : "Accounting Base Configuration and Properties",
     "version" : "1.0",
     "depends" : [
-        "base",
+        "account_base",
         "account",
     ],
     "author" : 'Tiny & Axelor',
@@ -40,8 +40,10 @@
     "demo_xml" : [
     ],
     "update_xml" : [
-        "account_report.xml",
-       "account_wizard.xml"
+        "account_sequence.xml",
+       "account_report.xml",
+       "account_wizard.xml",
+       "account_invoice_view.xml"
     ],
     "active": False,
     "installable": True

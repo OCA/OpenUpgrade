@@ -27,7 +27,7 @@
     "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Base",
     "description": "Multi Currency for the Multi company Supported Module",
-    "depends" : ['base', 'multi_company'],
+    "depends" : ['base'],
     "init_xml" : [
     ],
     "demo_xml" : [

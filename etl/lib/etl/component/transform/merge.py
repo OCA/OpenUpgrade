@@ -22,8 +22,8 @@
 """
  To merge all input flows.
 
- Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
- GNU General Public License
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+ GNU General Public License.
 """
 
 from etl.component import component
@@ -31,16 +31,21 @@ import sys
 
 class merge(component):
     """
-        This is an ETL Component that merge all input flows into only one ouput flow.
+        This is an ETL Component that merge all input flows into only one output flow.
 
-        Type: Data Component
-        Computing Performance: Streamline
-        Input Flows: 0-x
-        * .* : the main data flow with input data
-        Output Flows: 1
-        * .* : return the main flow 
-    """    
+        Type                   : Data Component.
+        Computing Performance  : Streamline.
+        Input Flows            : 0-x.
+        * .*                   : The main data flow with input data.
+        Output Flows           : 1.
+        * .*                   : Returns the main flow.
+    """
 
+    def __getstate__(self):
+        pass
+
+    def __setstate__(self, state):
+        pass
 
     def process(self):
         my_gen_list = []
@@ -56,7 +61,7 @@ class merge(component):
                 del my_gen_list[p]
                 p = 0
 
-if __name__=='__main__':
+if __name__ == '__main__':
     # implement blackbox test
     # Input:
     #   'main': [{'name':'test'}], 'second': [{'name':'test2'}]

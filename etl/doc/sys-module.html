@@ -1,0 +1,1561 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>sys</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="etl-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Module&nbsp;sys
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="sys-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module sys</h1><br /><br />
+<pre class="literalblock">
+This module provides access to some objects used or maintained by the
+interpreter and to functions that interact strongly with the interpreter.
+
+Dynamic objects:
+
+argv -- command line arguments; argv[0] is the script pathname if known
+path -- module search path; path[0] is the script directory, else ''
+modules -- dictionary of loaded modules
+
+displayhook -- called to show results in an interactive session
+excepthook -- called to handle any uncaught exception other than SystemExit
+  To customize printing in an interactive session or to install a custom
+  top-level exception handler, assign other functions to replace these.
+
+exitfunc -- if sys.exitfunc exists, this routine is called when Python exits
+  Assigning to sys.exitfunc is deprecated; use the atexit module instead.
+
+stdin -- standard input file object; used by raw_input() and input()
+stdout -- standard output file object; used by the print statement
+stderr -- standard error object; used for error messages
+  By assigning other file objects (or objects that behave like files)
+  to these, it is possible to redirect all of the interpreter's I/O.
+
+last_type -- type of last uncaught exception
+last_value -- value of last uncaught exception
+last_traceback -- traceback of last uncaught exception
+  These three are only available in an interactive session after a
+  traceback has been printed.
+
+exc_type -- type of exception currently being handled
+exc_value -- value of exception currently being handled
+exc_traceback -- traceback of exception currently being handled
+  The function exc_info() should be used instead of these three,
+  because it is thread-safe.
+
+Static objects:
+
+maxint -- the largest supported integer (the smallest is -maxint-1)
+maxunicode -- the largest supported character
+builtin_module_names -- tuple of module names built into this interpreter
+version -- the version of this interpreter as a string
+version_info -- version information as a tuple
+hexversion -- version information encoded as a single integer
+copyright -- copyright notice pertaining to this interpreter
+platform -- platform identifier
+executable -- pathname of this Python interpreter
+prefix -- prefix used to find the Python library
+exec_prefix -- prefix used to find the machine-specific Python library
+__stdin__ -- the original stdin; don't touch!
+__stdout__ -- the original stdout; don't touch!
+__stderr__ -- the original stderr; don't touch!
+__displayhook__ -- the original displayhook; don't touch!
+__excepthook__ -- the original excepthook; don't touch!
+
+Functions:
+
+displayhook() -- print an object to the screen, and save it in __builtin__._
+excepthook() -- print an exception and its traceback to sys.stderr
+exc_info() -- return thread-safe information about the current exception
+exc_clear() -- clear the exception state for the current thread
+exit() -- exit the interpreter by raising SystemExit
+getdlopenflags() -- returns flags to be used for dlopen() calls
+getrefcount() -- return the reference count for an object (plus one :-)
+getrecursionlimit() -- return the max recursion depth for the interpreter
+setcheckinterval() -- control how often the interpreter checks for events
+setdlopenflags() -- set the flags to be used for dlopen() calls
+setprofile() -- set the global profiling function
+setrecursionlimit() -- set the max recursion depth for the interpreter
+settrace() -- set the global debug tracing function
+
+</pre><br /><br />
+
+<!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Functions</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Functions"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="sys-module.html#__displayhook__" class="summary-sig-name">__displayhook__</a>(<span class="summary-sig-arg">object</span>)</span><br />
+      Print an object to sys.stdout and also save it in __builtin__.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="sys-module.html#__excepthook__" class="summary-sig-name">__excepthook__</a>(<span class="summary-sig-arg">exctype</span>,
+        <span class="summary-sig-arg">value</span>,
+        <span class="summary-sig-arg">traceback</span>)</span><br />
+      Handle an exception by displaying it with a traceback on 
+      sys.stderr.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="sys-module.html#_current_frames" class="summary-sig-name">_current_frames</a>()</span><br />
+      Return a dictionary mapping each current thread T's thread id to 
+      T's current stack frame.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="sys-module.html#_getframe" class="summary-sig-name">_getframe</a>(<span class="summary-sig-arg">depth</span>=<span class="summary-sig-default">...</span>)</span><br />
+      Return a frame object from the call stack.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="sys-module.html#call_tracing" class="summary-sig-name">call_tracing</a>(<span class="summary-sig-arg">func</span>,
+        <span class="summary-sig-arg">args</span>)</span><br />
+      Call func(*args), while tracing is enabled.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="sys-module.html#callstats" class="summary-sig-name">callstats</a>()</span><br />
+      Return a tuple of function call statistics, if CALL_PROFILE was defined
+when Python was built.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="sys-module.html#displayhook" class="summary-sig-name">displayhook</a>(<span class="summary-sig-arg">object</span>)</span><br />
+      Print an object to sys.stdout and also save it in __builtin__.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="sys-module.html#exc_clear" class="summary-sig-name">exc_clear</a>()</span><br />
+      Clear global information on the current exception.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="sys-module.html#exc_info" class="summary-sig-name">exc_info</a>()</span><br />
+      Return information about the most recent exception caught by an 
+      except clause in the current stack frame or in an older stack 
+      frame.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="sys-module.html#exit" class="summary-sig-name">exit</a>(<span class="summary-sig-arg">status</span>=<span class="summary-sig-default">...</span>)</span><br />
+      Exit the interpreter by raising SystemExit(status).</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="sys-module.html#getcheckinterval" class="summary-sig-name">getcheckinterval</a>()</span><br />
+      Returns:
+current check interval; see setcheckinterval().</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="sys-module.html#getdefaultencoding" class="summary-sig-name">getdefaultencoding</a>()</span><br />
+      Return the current default string encoding used by the Unicode 
+      implementation.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="sys-module.html#getdlopenflags" class="summary-sig-name">getdlopenflags</a>()</span><br />
+      Return the current value of the flags that are used for dlopen() 
+      calls.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="sys-module.html#getfilesystemencoding" class="summary-sig-name">getfilesystemencoding</a>()</span><br />
+      Return the encoding used to convert Unicode filenames in operating
+      system filenames.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="sys-module.html#getrecursionlimit" class="summary-sig-name">getrecursionlimit</a>()</span><br />
+      Return the current value of the recursion limit, the maximum depth
+      of the Python interpreter stack.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="sys-module.html#getrefcount" class="summary-sig-name">getrefcount</a>(<span class="summary-sig-arg">object</span>)</span><br />
+      Return the reference count of object.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="sys-module.html#setcheckinterval" class="summary-sig-name">setcheckinterval</a>(<span class="summary-sig-arg">n</span>)</span><br />
+      Tell the Python interpreter to check for asynchronous events every
+      n instructions.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="sys-module.html#setdlopenflags" class="summary-sig-name">setdlopenflags</a>(<span class="summary-sig-arg">n</span>)</span><br />
+      Set the flags that will be used for dlopen() calls.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="sys-module.html#setprofile" class="summary-sig-name">setprofile</a>(<span class="summary-sig-arg">function</span>)</span><br />
+      Set the profiling function.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="sys-module.html#setrecursionlimit" class="summary-sig-name">setrecursionlimit</a>(<span class="summary-sig-arg">n</span>)</span><br />
+      Set the maximum depth of the Python interpreter stack to n.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="sys-module.html#settrace" class="summary-sig-name">settrace</a>(<span class="summary-sig-arg">function</span>)</span><br />
+      Set the global debug tracing function.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__egginsert"></a><span class="summary-name">__egginsert</span> = <code title="7">7</code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__plen"></a><span class="summary-name">__plen</span> = <code title="10">10</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__stderr__"></a><span class="summary-name">__stderr__</span> = <code title="&lt;open file '&lt;stderr&gt;', mode 'w' at 0x7f806f469210&gt;">&lt;open file '&lt;stderr&gt;', mode 'w' at 0x7f806f469210&gt;</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__stdin__"></a><span class="summary-name">__stdin__</span> = <code title="&lt;open file '&lt;stdin&gt;', mode 'r' at 0x7f806f469120&gt;">&lt;open file '&lt;stdin&gt;', mode 'r' at 0x7f806f469120&gt;</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__stdout__"></a><span class="summary-name">__stdout__</span> = <code title="&lt;open file '&lt;stdout&gt;', mode 'w' at 0x7f806f469198&gt;">&lt;open file '&lt;stdout&gt;', mode 'w' at 0x7f806f469198&gt;</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="api_version"></a><span class="summary-name">api_version</span> = <code title="1013">1013</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="argv"></a><span class="summary-name">argv</span> = <code title="['/usr/bin/epydoc', '-o', 'doc', 'etl']"><code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">/usr/bin/epydoc</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">-o</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">doc</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">etl</code><code class="variable-quote">'</code><code class="variable-group">]</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="sys-module.html#builtin_module_names" class="summary-name">builtin_module_names</a> = <code title="('__builtin__',
+ '__main__',
+ '_ast',
+ '_codecs',
+ '_sre',
+ '_symtable',
+ '_types',
+ 'errno',
+..."><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">__builtin__</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">__main__</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">_ast</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">_c</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="byteorder"></a><span class="summary-name">byteorder</span> = <code title="'little'"><code class="variable-quote">'</code><code class="variable-string">little</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="sys-module.html#copyright" class="summary-name">copyright</a> = <code title="'''Copyright (c) 2001-2008 Python Software Foundation.
+All Rights Reserved.
+
+Copyright (c) 2000 BeOpen.com.
+All Rights Reserved.
+
+Copyright (c) 1995-2001 Corporation for National Research Initiatives.
+All Rights Reserved.
+..."><code class="variable-quote">'</code><code class="variable-string">Copyright (c) 2001-2008 Python Software Foundatio</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="exc_type"></a><span class="summary-name">exc_type</span> = <code title="None">None</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="exec_prefix"></a><span class="summary-name">exec_prefix</span> = <code title="'/usr'"><code class="variable-quote">'</code><code class="variable-string">/usr</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="executable"></a><span class="summary-name">executable</span> = <code title="'/usr/bin/python'"><code class="variable-quote">'</code><code class="variable-string">/usr/bin/python</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="hexversion"></a><span class="summary-name">hexversion</span> = <code title="33882864">33882864</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="maxint"></a><span class="summary-name">maxint</span> = <code title="9223372036854775807">9223372036854775807</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="maxunicode"></a><span class="summary-name">maxunicode</span> = <code title="1114111">1114111</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="meta_path"></a><span class="summary-name">meta_path</span> = <code title="[]"><code class="variable-group">[</code><code class="variable-group">]</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="sys-module.html#modules" class="summary-name">modules</a> = <code title="{'BaseHTTPServer': &lt;module 'BaseHTTPServer' from '/usr/lib/python2.5/B\
+aseHTTPServer.pyc'&gt;,
+ 'ConfigParser': &lt;module 'ConfigParser' from '/usr/lib/python2.5/Confi\
+gParser.pyc'&gt;,
+ 'Cookie': &lt;module 'Cookie' from '/usr/lib/python2.5/Cookie.pyc'&gt;,
+ 'SimpleXMLRPCServer': &lt;module 'SimpleXMLRPCServer' from '/usr/lib/pyt\
+hon2.5/SimpleXMLRPCServer.pyc'&gt;,
+ 'SocketServer': &lt;module 'SocketServer' from '/usr/lib/python2.5/Socke\
+..."><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">BaseHTTPServer</code><code class="variable-quote">'</code><code class="variable-op">: </code>&lt;module 'BaseHTTPServer' from '/u<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="sys-module.html#path" class="summary-name">path</a> = <code title="[u'/home/hmo/Office/Projects/OpenERP/trunk-extra-addons/etl/lib',
+ '/usr/bin',
+ '/usr/lib/python2.5/site-packages/ZSI-2.1_a1-py2.5.egg',
+ '/usr/lib/python2.5/site-packages/paramiko-1.7.4-py2.5.egg',
+ '/usr/lib/python2.5/site-packages/docutils-0.5-py2.5.egg',
+ '/usr/lib/python2.5/site-packages/setuptools-0.6c9-py2.5.egg',
+ '/usr/lib/python2.5/site-packages/Sphinx-0.5.2dev_20090429-py2.5.egg'\
+,
+..."><code class="variable-group">[</code><code class="variable-quote">u'</code><code class="variable-string">/home/hmo/Office/Projects/OpenERP/trunk-extra-addons</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="path_hooks"></a><span class="summary-name">path_hooks</span> = <code title="[&lt;type 'zipimport.zipimporter'&gt;]"><code class="variable-group">[</code>&lt;type 'zipimport.zipimporter'&gt;<code class="variable-group">]</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="sys-module.html#path_importer_cache" class="summary-name">path_importer_cache</a> = <code title="{'': None,
+ '/home/hmo/Office/Projects/OpenERP/trunk-extra-addons/etl/lib': None,
+ '/home/hmo/Office/Projects/OpenERP/trunk-extra-addons/etl/lib/': None\
+,
+ '/home/hmo/Office/Projects/OpenERP/trunk-extra-addons/etl/lib/etl': N\
+one,
+ '/home/hmo/Office/Projects/OpenERP/trunk-extra-addons/etl/lib/etl/com\
+ponent': None,
+..."><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code><code class="variable-op">: </code>None<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">/home/hmo/Office/Projects/Op</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="platform"></a><span class="summary-name">platform</span> = <code title="'linux2'"><code class="variable-quote">'</code><code class="variable-string">linux2</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="prefix"></a><span class="summary-name">prefix</span> = <code title="'/usr'"><code class="variable-quote">'</code><code class="variable-string">/usr</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="pydebug"></a><span class="summary-name">pydebug</span> = <code title="False">False</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="stderr"></a><span class="summary-name">stderr</span> = <code title="&lt;open file '&lt;stderr&gt;', mode 'w' at 0x7f806f469210&gt;">&lt;open file '&lt;stderr&gt;', mode 'w' at 0x7f806f469210&gt;</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="stdin"></a><span class="summary-name">stdin</span> = <code title="&lt;open file '&lt;stdin&gt;', mode 'r' at 0x7f806f469120&gt;">&lt;open file '&lt;stdin&gt;', mode 'r' at 0x7f806f469120&gt;</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="stdout"></a><span class="summary-name">stdout</span> = <code title="&lt;open file '&lt;stdout&gt;', mode 'w' at 0x7f806f469198&gt;">&lt;open file '&lt;stdout&gt;', mode 'w' at 0x7f806f469198&gt;</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="subversion"></a><span class="summary-name">subversion</span> = <code title="('CPython', 'tags/r252', '60911')"><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">CPython</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">tags/r252</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">60911</code><code class="variable-quote">'</code><code class="variable-group">)</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="sys-module.html#version" class="summary-name">version</a> = <code title="'''2.5.2 (r252:60911, Jul 31 2008, 17:31:22) 
+[GCC 4.2.3 (Ubuntu 4.2.3-2ubuntu7)]'''"><code class="variable-quote">'</code><code class="variable-string">2.5.2 (r252:60911, Jul 31 2008, 17:31:22) \n[GCC 4.</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="version_info"></a><span class="summary-name">version_info</span> = <code title="(2, 5, 2, 'final', 0)"><code class="variable-group">(</code>2<code class="variable-op">, </code>5<code class="variable-op">, </code>2<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">final</code><code class="variable-quote">'</code><code class="variable-op">, </code>0<code class="variable-group">)</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="warnoptions"></a><span class="summary-name">warnoptions</span> = <code title="[]"><code class="variable-group">[</code><code class="variable-group">]</code></code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Function Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-FunctionDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__displayhook__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__displayhook__</span>(<span class="sig-arg">object</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </table>
+  
+  Print an object to sys.stdout and also save it in __builtin__.
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><pre class="literalblock">
+None
+
+</pre></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__excepthook__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__excepthook__</span>(<span class="sig-arg">exctype</span>,
+        <span class="sig-arg">value</span>,
+        <span class="sig-arg">traceback</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </table>
+  
+  Handle an exception by displaying it with a traceback on 
+  sys.stderr.
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><pre class="literalblock">
+None
+
+</pre></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_current_frames"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_current_frames</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </table>
+  
+  <p>Return a dictionary mapping each current thread T's thread id to T's 
+  current stack frame.</p>
+  This function should be used for specialized purposes only.
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><pre class="literalblock">
+dictionary
+
+</pre></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_getframe"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_getframe</span>(<span class="sig-arg">depth</span>=<span class="sig-default">...</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </table>
+  
+  <p>Return a frame object from the call stack.  If optional integer depth 
+  is given, return the frame object that many calls below the top of the 
+  stack. If that is deeper than the call stack, ValueError is raised.  The 
+  default for depth is zero, returning the frame at the top of the call 
+  stack.</p>
+  This function should be used for internal and specialized purposes 
+  only.
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><pre class="literalblock">
+frameobject
+
+</pre></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="call_tracing"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">call_tracing</span>(<span class="sig-arg">func</span>,
+        <span class="sig-arg">args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </table>
+  
+  Call func(*args), while tracing is enabled.  The tracing state is 
+  saved, and restored afterwards.  This is intended to be called from a 
+  debugger from a checkpoint, to recursively debug some other code.
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><pre class="literalblock">
+object
+
+</pre></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="callstats"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">callstats</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </table>
+  
+  <pre class="literalblock">
+Return a tuple of function call statistics, if CALL_PROFILE was defined
+when Python was built.  Otherwise, return None.
+
+When enabled, this function returns detailed, implementation-specific
+details about the number of function calls executed. The return value is
+a 11-tuple where the entries in the tuple are counts of:
+0. all function calls
+1. calls to PyFunction_Type objects
+2. PyFunction calls that do not create an argument tuple
+3. PyFunction calls that do not create an argument tuple
+   and bypass PyEval_EvalCodeEx()
+4. PyMethod calls
+5. PyMethod calls on bound methods
+6. PyType calls
+7. PyCFunction calls
+8. generator calls
+9. All other calls
+10. Number of stack pops performed by call_function()
+
+</pre>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><pre class="literalblock">
+tuple of integers
+
+</pre></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="displayhook"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">displayhook</span>(<span class="sig-arg">object</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </table>
+  
+  Print an object to sys.stdout and also save it in __builtin__.
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><pre class="literalblock">
+None
+
+</pre></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="exc_clear"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">exc_clear</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </table>
+  
+  Clear global information on the current exception.  Subsequent calls 
+  to exc_info() will return (None,None,None) until another exception is 
+  raised in the current thread or the execution stack returns to a frame 
+  where another exception is being handled.
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><pre class="literalblock">
+None
+
+</pre></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="exc_info"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">exc_info</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </table>
+  
+  Return information about the most recent exception caught by an except
+  clause in the current stack frame or in an older stack frame.
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><pre class="literalblock">
+(type, value, traceback)
+
+</pre></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="exit"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">exit</span>(<span class="sig-arg">status</span>=<span class="sig-default">...</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </table>
+  
+  Exit the interpreter by raising SystemExit(status). If the status is 
+  omitted or None, it defaults to zero (i.e., success). If the status is 
+  numeric, it will be used as the system exit status. If it is another kind
+  of object, it will be printed and the system exit status will be one 
+  (i.e., failure).
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getcheckinterval"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getcheckinterval</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><pre class="literalblock">
+current check interval; see setcheckinterval().
+
+</pre></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getdefaultencoding"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getdefaultencoding</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </table>
+  
+  Return the current default string encoding used by the Unicode 
+  implementation.
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><pre class="literalblock">
+string
+
+</pre></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getdlopenflags"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getdlopenflags</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </table>
+  
+  Return the current value of the flags that are used for dlopen() 
+  calls. The flag constants are defined in the dl module.
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><pre class="literalblock">
+int
+
+</pre></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getfilesystemencoding"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getfilesystemencoding</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </table>
+  
+  Return the encoding used to convert Unicode filenames in operating 
+  system filenames.
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><pre class="literalblock">
+string
+
+</pre></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getrecursionlimit"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getrecursionlimit</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </table>
+  
+  Return the current value of the recursion limit, the maximum depth of 
+  the Python interpreter stack.  This limit prevents infinite recursion 
+  from causing an overflow of the C stack and crashing Python.
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getrefcount"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getrefcount</span>(<span class="sig-arg">object</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </table>
+  
+  Return the reference count of object.  The count returned is generally
+  one higher than you might expect, because it includes the (temporary) 
+  reference as an argument to getrefcount().
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><pre class="literalblock">
+integer
+
+</pre></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setcheckinterval"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setcheckinterval</span>(<span class="sig-arg">n</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </table>
+  
+  Tell the Python interpreter to check for asynchronous events every n 
+  instructions.  This also affects how often thread switches occur.
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setdlopenflags"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setdlopenflags</span>(<span class="sig-arg">n</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </table>
+  
+  Set the flags that will be used for dlopen() calls. Among other 
+  things, this will enable a lazy resolving of symbols when importing a 
+  module, if called as sys.setdlopenflags(0) To share symbols across 
+  extension modules, call as 
+  sys.setdlopenflags(dl.RTLD_NOW|dl.RTLD_GLOBAL)
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><pre class="literalblock">
+None
+
+</pre></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setprofile"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setprofile</span>(<span class="sig-arg">function</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </table>
+  
+  Set the profiling function.  It will be called on each function call 
+  and return.  See the profiler chapter in the library manual.
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setrecursionlimit"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setrecursionlimit</span>(<span class="sig-arg">n</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </table>
+  
+  Set the maximum depth of the Python interpreter stack to n.  This 
+  limit prevents infinite recursion from causing an overflow of the C stack
+  and crashing Python.  The highest possible limit is platform- 
+  dependent.
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="settrace"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">settrace</span>(<span class="sig-arg">function</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </table>
+  
+  Set the global debug tracing function.  It will be called on each 
+  function call.  See the debugger chapter in the library manual.
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-VariablesDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="builtin_module_names"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">builtin_module_names</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">__builtin__</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">__main__</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">_ast</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">_codecs</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">_sre</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">_symtable</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">_types</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">errno</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="copyright"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">copyright</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-quote">'''</code><code class="variable-string">Copyright (c) 2001-2008 Python Software Foundation.</code>
+<code class="variable-string">All Rights Reserved.</code>
+<code class="variable-string"></code>
+<code class="variable-string">Copyright (c) 2000 BeOpen.com.</code>
+<code class="variable-string">All Rights Reserved.</code>
+<code class="variable-string"></code>
+<code class="variable-string">Copyright (c) 1995-2001 Corporation for National Research Initiatives.</code>
+<code class="variable-string">All Rights Reserved.</code>
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="modules"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">modules</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">BaseHTTPServer</code><code class="variable-quote">'</code><code class="variable-op">: </code>&lt;module 'BaseHTTPServer' from '/usr/lib/python2.5/B<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+aseHTTPServer.pyc'&gt;<code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">ConfigParser</code><code class="variable-quote">'</code><code class="variable-op">: </code>&lt;module 'ConfigParser' from '/usr/lib/python2.5/Confi<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+gParser.pyc'&gt;<code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">Cookie</code><code class="variable-quote">'</code><code class="variable-op">: </code>&lt;module 'Cookie' from '/usr/lib/python2.5/Cookie.pyc'&gt;<code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">SimpleXMLRPCServer</code><code class="variable-quote">'</code><code class="variable-op">: </code>&lt;module 'SimpleXMLRPCServer' from '/usr/lib/pyt<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+hon2.5/SimpleXMLRPCServer.pyc'&gt;<code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">SocketServer</code><code class="variable-quote">'</code><code class="variable-op">: </code>&lt;module 'SocketServer' from '/usr/lib/python2.5/Socke<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="path"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">path</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">[</code><code class="variable-quote">u'</code><code class="variable-string">/home/hmo/Office/Projects/OpenERP/trunk-extra-addons/etl/lib</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">/usr/bin</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">/usr/lib/python2.5/site-packages/ZSI-2.1_a1-py2.5.egg</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">/usr/lib/python2.5/site-packages/paramiko-1.7.4-py2.5.egg</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">/usr/lib/python2.5/site-packages/docutils-0.5-py2.5.egg</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">/usr/lib/python2.5/site-packages/setuptools-0.6c9-py2.5.egg</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">/usr/lib/python2.5/site-packages/Sphinx-0.5.2dev_20090429-py2.5.egg</code><code class="variable-quote">'</code><code class="variable-op"></code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-op">,</code>
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="path_importer_cache"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">path_importer_cache</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code><code class="variable-op">: </code>None<code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">/home/hmo/Office/Projects/OpenERP/trunk-extra-addons/etl/lib</code><code class="variable-quote">'</code><code class="variable-op">: </code>None<code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">/home/hmo/Office/Projects/OpenERP/trunk-extra-addons/etl/lib/</code><code class="variable-quote">'</code><code class="variable-op">: </code>None<code class="variable-op"></code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">/home/hmo/Office/Projects/OpenERP/trunk-extra-addons/etl/lib/etl</code><code class="variable-quote">'</code><code class="variable-op">: </code>N<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+one<code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">/home/hmo/Office/Projects/OpenERP/trunk-extra-addons/etl/lib/etl/com</code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-string">ponent</code><code class="variable-quote">'</code><code class="variable-op">: </code>None<code class="variable-op">,</code>
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="version"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">version</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-quote">'''</code><code class="variable-string">2.5.2 (r252:60911, Jul 31 2008, 17:31:22) </code>
+<code class="variable-string">[GCC 4.2.3 (Ubuntu 4.2.3-2ubuntu7)]</code><code class="variable-quote">'''</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="etl-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0beta1 on Wed Apr 29 20:37:21 2009
+    </td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

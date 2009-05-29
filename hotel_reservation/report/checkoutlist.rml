@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="57.0" y1="57.0" width="481" height="728"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+      <blockBackground colorName="#9999cc" start="0,0" stop="0,0"/>
+      <blockBackground colorName="#9999cc" start="1,0" stop="1,0"/>
+      <blockBackground colorName="#9999cc" start="2,0" stop="2,0"/>
+      <blockBackground colorName="#9999cc" start="3,0" stop="3,0"/>
+      <blockBackground colorName="#9999cc" start="4,0" stop="4,0"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table4">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Helvetica" fontSize="12.0" leading="15" alignment="RIGHT"/>
+    <paraStyle name="P2" fontName="Helvetica" fontSize="14.0" leading="17" alignment="CENTER"/>
+    <paraStyle name="P3" fontName="Helvetica" fontSize="10.0" leading="14" alignment="CENTER"/>
+    <paraStyle name="P4" fontName="Helvetica" fontSize="8.0" leading="11" alignment="CENTER"/>
+    <paraStyle name="P5" fontName="Helvetica" fontSize="8.0" leading="11" alignment="LEFT"/>
+    <paraStyle name="P6" fontName="Helvetica" fontSize="8.0" leading="11" alignment="CENTER"/>
+    <paraStyle name="P7" fontName="Helvetica" fontSize="8.0" leading="15" alignment="LEFT"/>
+    <paraStyle name="P8" fontName="Times-Bold" fontSize="11.0" leading="14" alignment="CENTER" backColor="#9999cc"/>
+    <paraStyle name="Standard" fontName="Helvetica"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Times-Italic" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Helvetica"/>
+    <paraStyle name="Table Contents" fontName="Helvetica"/>
+    <paraStyle name="Table Heading" fontName="Helvetica" alignment="CENTER"/>
+  </stylesheet>
+  <story>
+    <blockTable colWidths="482.0" style="Table2">
+      <tr>
+        <td>
+          <para style="P1">CheckOut Guest List</para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="63.0,147.0,106.0,72.0,92.0" style="Table1">
+      <tr>
+        <td>
+          <para style="P3">#No</para>
+        </td>
+        <td>
+          <para style="P3">Guest Name</para>
+        </td>
+        <td>
+          <para style="P3">Check-Out-Date</para>
+        </td>
+        <td>
+          <para style="P3">Room Type</para>
+        </td>
+        <td>
+          <para style="P3">Room No</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P6">[[ repeatIn(get_checkout(data['form']['date_start'],data['form']['date_end']) ,'o') ]]</para>
+          <para style="P6">[[o.reservation_no]]</para>
+        </td>
+        <td>
+          <para style="P4">[[o.partner_id.name]]</para>
+        </td>
+        <td>
+          <para style="P4">[[o.checkout]]</para>
+        </td>
+        <td>
+          <blockTable colWidths="79.0,79.0" style="Table3">
+            <tr>
+              <td>
+                <para style="P7">[[repeatIn(o.reservation_line,'r')]]<font face="Helvetica">[[r.categ_id.name]]</font></para>
+              </td>
+              <td>
+                <blockTable colWidths="74.0" style="Table4">
+                  <tr>
+                    <td>
+                      <para style="P7">[[repeatIn(r.reserve,'p')]]<font face="Helvetica">[[p.name]]</font></para>
+                    </td>
+                  </tr>
+                </blockTable>
+              </td>
+            </tr>
+          </blockTable>
+        </td>
+      </tr>
+    </blockTable>
+  </story>
+</document>
+

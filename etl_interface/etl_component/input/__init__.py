@@ -26,3 +26,7 @@ import xml_in
 import openobject_in
 import gmail_in
 import facebook_in
+import xmlrpc_in
+import sugarcrm_in
+import gcalendar_in
+import gdoc_in

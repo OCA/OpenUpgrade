@@ -2,10 +2,12 @@
 <openerp>
 	<data>
 		<wizard
-			string="Translation"
+			string="Google Translation"
 			name="google.translate.wizard"
 			model="ir.translation"
 			id="google_translation_wizard"
-			multi="True" />
+			multi="False"
+			menu="True"
+			 />
 		</data>
 </openerp>

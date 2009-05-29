@@ -31,7 +31,7 @@
     "depends" : ["dm"],
     "init_xml" : [
     ],
-    "demo_xml" : [],
+    "demo_xml" : ["dm_simulator_demo.xml"],
     "update_xml" : [
                     "dm_simulator_view.xml",
                     "dm_simulator_data.xml",

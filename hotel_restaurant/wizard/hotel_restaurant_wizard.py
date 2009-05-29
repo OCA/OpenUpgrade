@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 from osv import fields
 from osv import osv
 import time
@@ -68,28 +69,6 @@ result_form = """<?xml version="1.0"?>
 
 result_fields = {}
 
-
-
-def _makeKot(self, cr, uid, data, context):
-
-
-#    order_obj = pooler.get_pool(cr.dbname).get('hotel.reservation')
-#    newinv = []
-#    for o in order_obj.browse(cr, uid, data['ids'], context):
-#        for i in o.folio_id:
-#           newinv.append(i.id)
-#    return {
-#        'domain': "[('id','in', ["+','.join(map(str,newinv))+"])]",
-#        'name': 'Folios',
-#        'view_type': 'form',
-#        'view_mode': 'tree,form',
-#        'res_model': 'hotel_reservation.folio',
-#        'view_id': False,
-#        'type': 'ir.actions.act_window'
-#
-#    }
-    return {}
-
 class make_kot(wizard.interface):
     states = {
         'init' : {
@@ -100,9 +79,8 @@ class make_kot(wizard.interface):
                     'state' : [('end', 'Cancel'),('kot', 'Create Kots') ]}
         },
         'kot' : {
-            'actions' : [_makeKot],
+            'actions' : [],
             'result' : {'type' : 'action',
-                    'action' : _makeKot,
                     'state' : 'end'}
         },
     }
@@ -126,5 +104,6 @@ class get_reservation_list(wizard.interface):
         },
     }
 get_reservation_list("hotel.table.reservation")
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

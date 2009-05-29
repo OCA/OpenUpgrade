@@ -52,40 +52,27 @@ def graph_get(cr, uid, graph, offer_id):
     step_type = pooler.get_pool(cr.dbname).get('dm.offer.step.type')
     type_ids = step_type.search(cr,uid,[])
     type = step_type.read(cr,uid,type_ids,['code'])
-    type_seq = {}
-    for t in type :
-        type_seq[t['code']]=1
     for step in offer.step_ids:
         args = {}
 
-        # Get user language
+        """ Get user language """
         usr_obj = pooler.get_pool(cr.dbname).get('res.users')
         user = usr_obj.browse(cr, uid, [uid])[0]
         user_lang = user.context_lang
 
+        """ Get Code Translation """
         trans_obj =  pooler.get_pool(cr.dbname).get('ir.translation')
-        type_trans = trans_obj._get_ids(cr, uid, 'dm.offer.step.type,code', 'model',
-                           user_lang or 'en_US',[step.type_id.id])
-#        media_trans = trans_obj._get_ids(cr, uid, 'dm.media,code', 'model',
-#                           user_lang or 'en_US',[step.media_id.id])
-        type_code = type_trans[step.type_id.id] or step.type_id.code
-#        media_code = media_trans[step.media_id.id] or step.media_id.code
+        type_trans = trans_obj._get_ids(cr, uid, 'dm.offer.step,code', 'model',
+                           user_lang or 'en_US',[step.id])
+        type_code = type_trans[step.id] or step.code
+        args['label'] = translate_accent(type_code +'\\n' + step.media_id.code)
 
-#        args['label'] = type_code + '\\n' + media_code
-#        args['label'] = translate_accent(type_code + str(type_seq[step.type_id.code]) +'\\n' + step.media_id.code)
-        args['label'] = translate_accent(type_code + str(step.seq) +'\\n' + step.media_id.code)
-        type_seq[step.type_id.code] = type_seq[step.type_id.code] +1
         graph.add_node(pydot.Node(step.id, **args))
 
     for step in offer.step_ids:
         for transition in step.outgoing_transition_ids:
-#            tr_cond_trans = trans_obj._get_ids(cr, uid, 'dm.offer.transition,condition', 'model',
-#                                       user_lang or 'en_US',[step.type.id])
 
-#           Wainting for analysis to be completed
             trargs = {
-#                'label': transition.condition + ' - ' + transition.media_id.name  + '\\n' + str(transition.delay) + ' days'
-#                'label': transition.condition.name + ' - ' + transition.step_to.media_id.name  + '\\n' + str(transition.delay) + ' ' +transition.delay_type
                 'label': translate_accent(transition.condition_id.name + '\\n' + str(transition.delay) + ' ' + transition.delay_type)
             }
             if step.split_mode=='and':

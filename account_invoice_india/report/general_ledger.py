@@ -26,7 +26,7 @@ from report import report_sxw
 class GeneralLedger(report_sxw.rml_parse):
 	def __init__(self, cr, uid, name, context):
 		super(GeneralLedger, self).__init__(cr, uid, name, context)
-		self.localcontext.update( {
+		self.localcontext.update({
 			'time': time,
 			'lines': self.lines,
 			'sum_debit_account': self._sum_debit_account,
@@ -40,33 +40,32 @@ class GeneralLedger(report_sxw.rml_parse):
 		datas = form
 		ctx = self.context.copy()
 		ctx['fiscalyear'] = form['fiscalyear']
-		#ctx['periods'] = form['periods'][0][2]
 		query = self.pool.get('account.move.line')._query_get(self.cr, self.uid, context=ctx)
 		
-		sSQL = "SELECT l.date, j.code, m.name as jv_name, p.name as pname, a.name as aname, l.ref, l.name, l.debit, l.credit "\
-			"FROM  account_journal j, account_account a, account_move m, account_move_line l "\
-            "LEFT JOIN res_partner p " \
-            "ON (l.partner_id = p.id) " \
-			"WHERE l.journal_id = j.id AND l.account_id = a.id AND m.id = l.move_id "\
-			"AND l.date >= '" + datas['date1'] + "'"\
-            "AND l.date <= '" + datas['date2'] + "' " \
-			"AND account_id = " + str(account.id) +  " AND " + query + " "\
-			"ORDER by l.date,l.move_id,pname "
+		sSQL = "SELECT m.id as mid, l.id as lid, l.date, j.code, m.name as jv_name, p.name as pname, a.name as name, l.ref, l.name as aname, m.narration, " \
+	        "l.debit, l.credit "\
+		    "FROM  account_journal j, account_account a, account_move m, account_move_line l "\
+	        "LEFT JOIN res_partner p " \
+	        "ON (l.partner_id = p.id) " \
+		    "WHERE l.journal_id = j.id AND l.account_id = a.id AND m.id = l.move_id "\
+		    "AND l.date >= '" + datas['date1'] + "'"\
+	        "AND l.date <= '" + datas['date2'] + "' " \
+		    "AND account_id = " + str(account.id) + " AND " + query + " "\
+		    "ORDER by l.date,l.move_id, pname"
 		self.cr.execute(sSQL)
 		res = self.cr.dictfetchall()
-
-		sum = 0.0
-		for l in res:
-			ans = l['debit'] - l ['credit']
-			sum += ans
-			ans = sum
-			if ans > 0:
-			    ans = str(ans) + " Dr."
-			else:
-			    ans = ans * -1
-			    ans = str(ans) + " Cr."
-			
-			l['progress'] = ans
+		if res:
+			for rs in res:
+				sSQL = "SELECT a.name from account_move m, account_move_line l, account_account a WHERE m.id = l.move_id AND l.account_id = a.id and m.id = %s and l.id <> %s" % (rs['mid'], rs['lid'])
+				self.cr.execute(sSQL)
+				namers = self.cr.dictfetchall()
+				name = namers[0]['name']
+				if rs['debit'] > 0:
+					rs['name'] = "By " + rs['name']
+					rs['jv_name'] = "Receipt"
+				elif rs['credit'] > 0:
+					rs['name'] = "To " + rs['name']
+					rs['jv_name'] = "Payment"
 		return res
 
 	def _sum_debit_account(self, account, form):
@@ -76,10 +75,10 @@ class GeneralLedger(report_sxw.rml_parse):
 		query = self.pool.get('account.move.line')._query_get(self.cr, self.uid, context=ctx)
 		self.cr.execute("SELECT sum(debit) "\
 				"FROM account_move_line l "\
-				"WHERE l.account_id = %d " \
+				"WHERE l.account_id = %s " \
 				"AND l.date >= '" + form['date1'] + "' "\
                 "AND l.date <= '" + form['date2'] + "' " \
-                "AND "+query, (account.id,))
+                "AND " + query, (account.id,))
 		return self.cr.fetchone()[0] or 0.0
 
 	def _sum_credit_account(self, account, form):
@@ -89,10 +88,10 @@ class GeneralLedger(report_sxw.rml_parse):
 		query = self.pool.get('account.move.line')._query_get(self.cr, self.uid, context=ctx)
 		self.cr.execute("SELECT sum(credit) "\
 				"FROM account_move_line l "\
-				"WHERE l.account_id = %d "\
+				"WHERE l.account_id = %s "\
 				"AND l.date >= '" + form['date1'] + "' "\
                 "AND l.date <= '" + form['date2'] + "' " \
-                "AND "+query, (account.id,))
+                "AND " + query, (account.id,))
 		return self.cr.fetchone()[0] or 0.0
 
 	def _sum_debit(self, form):
@@ -104,10 +103,10 @@ class GeneralLedger(report_sxw.rml_parse):
 		query = self.pool.get('account.move.line')._query_get(self.cr, self.uid, context=ctx)
 		self.cr.execute("SELECT sum(debit) "\
 				"FROM account_move_line l "\
-				"WHERE l.account_id in ("+','.join(map(str, self.ids))+") " \
+				"WHERE l.account_id in (" + ','.join(map(str, self.ids)) + ") " \
 				"AND l.date >= '" + form['date1'] + "' "\
                 "AND l.date <= '" + form['date2'] + "' " \
-                "AND "+query )
+                "AND " + query)
 		return self.cr.fetchone()[0] or 0.0
 
 	def _sum_credit(self, form):
@@ -119,15 +118,15 @@ class GeneralLedger(report_sxw.rml_parse):
 		query = self.pool.get('account.move.line')._query_get(self.cr, self.uid, context=ctx)
 		self.cr.execute("SELECT sum(credit) "\
 				"FROM account_move_line l "\
-				"WHERE l.account_id in ("+','.join(map(str, self.ids))+") "\
+				"WHERE l.account_id in (" + ','.join(map(str, self.ids)) + ") "\
 				"AND l.date >= '" + form['date1'] + "' "\
-                "AND l.date <= '" + form['date2'] + "' AND " +query)
+                "AND l.date <= '" + form['date2'] + "' AND " + query)
 		return self.cr.fetchone()[0] or 0.0
 
 report_sxw.report_sxw(
 	'report.account.general.ledger.custom.print',
-	'account.account', 
-	'addons/account_invoice_india/report/general_ledger.rml', 
-	parser=GeneralLedger, 
+	'account.account',
+	'addons/account_invoice_india/report/general_ledger.rml',
+	parser=GeneralLedger,
 	header=False
 )

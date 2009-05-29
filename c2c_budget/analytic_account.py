@@ -2,7 +2,7 @@
 ##############################################################################
 #
 # Copyright (c) Camptocamp SA - http://www.camptocamp.com
-# Author: Arnaud Wüst
+# Author: Arnaud Wüst ported by nicolas Bessi 
 #
 #    This file is part of the c2c_budget module
 #
@@ -35,12 +35,14 @@ from copy import copy
 
 
 class analytic_account(osv.osv):
-    """ add new methods to the base analytic_account object """
+    """ add new methods to the base 
+        analytic_account object """
 
     _inherit = "account.analytic.account"
     
     def get_children_map(self, cr, uid, context={}):
-        """ return a dictionnary mapping the parent relation between accounts and their children """
+        """ return a dictionnary mapping the parent relation 
+            between accounts and their children """
 
         #build a dictionnary {parent_id -> [children_ids]}
         children_ids =  {}
@@ -58,7 +60,8 @@ class analytic_account(osv.osv):
     
     
     def get_children_flat_list(self, cr, uid, ids, context={}):            
-        """return a flat list of all accounts'ids above the ones given in the account structure (included the one given in params)"""
+        """return a flat list of all accounts'ids above the ones 
+        given in the account structure (included the one given in params)"""
         
         result= [] 
         

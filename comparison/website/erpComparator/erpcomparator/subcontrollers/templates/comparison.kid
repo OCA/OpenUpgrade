@@ -7,7 +7,7 @@
     
 </head>
 <body>
-	<div id="bodybackground">
+	<div id="bodybackground" width="100%">
 		<div style="height: 46px; width: 890px; float: left;">
 			<div style="float:left;width:9;">
 				<img src="/static/images/whitebg.gif" alt="" width="9" height="46"/>
@@ -67,8 +67,8 @@
 			</table>
 		</div>
     	
-	    <div style="padding: 4px; margin: auto; width: 840px;">
-			<span id="comparison_tree"/>
+	    <div style="padding: 4px; margin: auto; width:96%;" >
+			<span id="comparison_tree" width="100%"/>
 			<script type="text/javascript">
 	        	var comparison_tree = new TreeGrid('comparison_tree');
 	        	

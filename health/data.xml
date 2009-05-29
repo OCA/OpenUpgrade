@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-	<data>
+<terp>
+	<data  >
 		<record id="res_partner_title_madam" model="res.partner.title">
 			<field name="domain">contact</field>
 			<field name="name">Madame</field>
@@ -59,7 +59,7 @@
 		<record id="res_partner_category_0" model="res.partner.category">
 			<field name="name">Client</field>
 		</record>
-
+		
 		<record id="res_partner_category_1" model="res.partner.category">
 			<field name="name">Postulant</field>
 		</record>
@@ -82,7 +82,7 @@
 			<field name="name">Fournisseurs</field>
 		</record>
 		<record id="res_partner_category_3" model="res.partner.category">
-			<field name="name">Resident</field>
+			<field name="name">Résident</field>
 			<field name="parent_id" ref="res_partner_category_0"/>
 		</record>
 		<record id="res_partner_category_8" model="res.partner.category">
@@ -128,58 +128,47 @@
 		<record id="res_partner_category_as" model="res.partner.category">
 			<field name="name">AIDES SOCIALES</field>
 			<field name="parent_id" ref="res_partner_category_2"/>
-		</record>
+		</record>		
 		<record id="res_partner_category_al" model="res.partner.category">
 			<field name="name">AIDES LOGEMENT</field>
 			<field name="parent_id" ref="res_partner_category_2"/>
-		</record>
+		</record>		
 		<record id="res_partner_category_apa" model="res.partner.category">
 			<field name="name">APA DEPARTEMENTS</field>
 			<field name="parent_id" ref="res_partner_category_2"/>
-		</record>
+		</record>		
 		<record id="res_partner_function_0" model="res.partner.function">
 			<field name="name">Dirigeant</field>
-			<field name="code">DG</field>
 		</record>
 		<record id="res_partner_function_1" model="res.partner.function">
 			<field name="name">Comptable</field>
-			<field name="code">COMP</field>
 		</record>
 		<record id="res_partner_function_2" model="res.partner.function">
 			<field name="name">Commercial</field>
-			<field name="code">COM</field>
 		</record>
 		<record id="res_partner_function_3" model="res.partner.function">
 			<field name="name">Responsable Informatique</field>
-			<field name="code">RI</field>
 		</record>
 		<record id="res_partner_function_4" model="res.partner.function">
 			<field name="name">Gérant</field>
-			<field name="code">GT</field>
 		</record>
 		<record id="res_partner_function_5" model="res.partner.function">
 			<field name="name">Econome</field>
-			<field name="code">EC</field>
 		</record>
 		<record id="res_partner_function_6" model="res.partner.function">
 			<field name="name">D.R.H.</field>
-			<field name="code">DRH</field>
 		</record>
 		<record id="res_partner_function_7" model="res.partner.function">
 			<field name="name">Assistante de Direction</field>
-			<field name="code">AD</field>
 		</record>
 		<record id="res_partner_function_8" model="res.partner.function">
 			<field name="name">Responsable Achats</field>
-			<field name="code">RA</field>
 		</record>
 		<record id="res_partner_function_9" model="res.partner.function">
 			<field name="name">Responsable Logistique</field>
-			<field name="code">RL</field>
 		</record>
 		<record id="res_partner_function_10" model="res.partner.function">
 			<field name="name">Président</field>
-			<field name="code">PR</field>
 		</record>
 
 		<record id="res_partner_apa_1" model="res.partner">
@@ -1718,5 +1707,7 @@
 			<field name="name">C.A.F. - Val-d'Oise</field>
 			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
 		</record>
-	</data>
-</openerp>
+            
+    
+</data>
+</terp>

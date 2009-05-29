@@ -2,8 +2,8 @@
 ##############################################################################
 #
 # Copyright (c) Camptocamp SA - http://www.camptocamp.com
-# Author: Arnaud Wüst
-#
+# Author: Arnaud Wüst ported by nbessi
+# 
 #    This file is part of the c2c_budget module
 #
 # WARNING: This program as such is intended to be used by professional
@@ -42,9 +42,17 @@
 
     This module is for real advanced budget use, otherwise prefer to use the Tiny one.
     """,
-    "depends" : ["base","account","c2c_reporting_tools"],
+    "depends" : [
+                    "base",
+                    "account",
+                    "c2c_reporting_tools"
+                ],
     "init_xml" : [],
-    "update_xml" : ["c2c_budget_view.xml","c2c_budget_wizard.xml","security/ir.model.access.csv"],
+    "update_xml" : [
+                        "c2c_budget_view.xml",
+                        "c2c_budget_wizard.xml",
+                        "security/ir.model.access.csv"
+                    ],
     "active": False,
     "installable": True
 }

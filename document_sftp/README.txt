@@ -8,6 +8,4 @@
 * Require python module : 
         - paramiko lib (http://www.lag.net/paramiko/?ref=darwinports.com) 
 
-To be done:
------------
-* handle encoding problem
+

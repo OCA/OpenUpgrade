@@ -835,7 +835,6 @@ rkJggg==
             <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
             <field name="model_id" ref="dm.model_dm_offer_step"/>
             <field eval="[(6,0,[])]" name="child_ids"/>
-            <field eval="1" name="dm_action"/>
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>-->
 		</record>
 		
@@ -849,21 +848,6 @@ rkJggg==
             <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
             <field name="model_id" ref="dm.model_dm_offer_step"/>
             <field eval="[(6,0,[])]" name="child_ids"/>
-            <field eval="1" name="dm_action"/>
-            <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>-->
-		</record>
-		
-		<record id="dm_mail_service_email0" model="dm.mail_service">
-			<field eval="&quot;&quot;&quot;Print and Send for Email&quot;&quot;&quot;" name="name"/>
-			<field name="partner_id" ref="res_partner_print_send0"/>
-			<field name="media_id" ref="dm.media_email"/>
-			<field eval="1" name="default_for_media"/>
-<!--            <field eval="5" name="sequence"/>
-            <field eval="&quot;&quot;&quot;dummy&quot;&quot;&quot;" name="state"/>
-            <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
-            <field name="model_id" ref="dm.model_dm_offer_step"/>
-            <field eval="[(6,0,[])]" name="child_ids"/>
-            <field eval="1" name="dm_action"/>
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>-->
 		</record>
 	</data>
@@ -1341,6 +1325,7 @@ rkJggg==
         </record>
 	</data>
 	<!-- Customer Orders -->
+	<!--
 	<data noupdate="1">
 		<record id="dm_customer_order_so0" model="dm.customer.order">
 			<field name="offer_step_id" ref="dm.dm_offer_step_smforopenerpondemandfreetrial2010"/>
@@ -1394,13 +1379,14 @@ rkJggg==
 			<field name="shop_id" ref="dm.shop1"/>
 		</record>
 	</data>
+	-->
     <data noupdate="1">
         <record id="dm_offer_document_paperdocumentforondemand0" model="dm.offer.document">
             <field name="copywriter_id" ref="base.main_partner"/>
             <field eval="&quot;&quot;&quot;Phone Document for OnDemand-10&quot;&quot;&quot;" name="name"/>
-            <field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0'),ref('dm.dm_ddf_plugin_code0'),ref('dm.dm_ddf_plugin_language0')])]" name="document_template_plugin_ids"/>
+            <field eval="[(6,0,[ref('dm.dm_dtp_plugin_name0'),ref('dm.dm_dtp_plugin_code0'),ref('dm.dm_dtp_plugin_language0')])]" name="document_template_plugin_ids"/>
             <field name="lang_id" ref="base.lang_en"/>
-            <field name="gender_id" ref="dm.dm_customer_gender_sir0"/>
+            <field name="gender_id" ref="base_partner_gender.partner_gender_male"/>
             <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
             <field eval="&quot;&quot;&quot;paper_ondemand10&quot;&quot;&quot;" name="code"/>
             <field name="document_template_id" ref="dm.dm_document_template_partner0"/>
@@ -1408,20 +1394,62 @@ rkJggg==
             <field name="category_id" ref="dm.dm_offer_document_category_production0"/>
         </record>
     </data>
+
+	<!-- Dynamic Text -->
+    <data>
+        <record model="dm.dynamic_text" id="dm_dynamic_text_dear_en">
+            <field name="language_id" ref="base.lang_en"/>
+            <field name="previous_step_id" ref="dm.dm_offer_step_smforopenerpondemandfreetrial2009"/>
+            <field name="content">Dear</field>
+        </record>
+        <record model="dm.dynamic_text" id="dm_dynamic_text_dear_fr0">
+            <field name="language_id" ref="base_language.res_lang_French_France0"/>
+            <field name="gender_id" ref="base_partner_gender.partner_gender_male"/>
+            <field name="ref_text_id" ref="dm_dynamic_text_dear_en"/>
+            <field name="previous_step_id" ref="dm.dm_offer_step_imforopenerpondemandfreetrial2009"/>
+            <field name="content">Cher</field>
+        </record>
+        <record model="dm.dynamic_text" id="dm_dynamic_text_dear_fr1">
+            <field name="language_id" ref="base_language.res_lang_French_France0"/>
+            <field name="gender_id" ref="base_partner_gender.partner_gender_female"/>
+            <field name="ref_text_id" ref="dm_dynamic_text_dear_en"/>
+            <field name="previous_step_id" ref="dm.dm_offer_step_piforopenerpondemandfreetrial2009"/>
+            <field name="content">Chère</field>
+        </record>
+    </data>
     
+    <!-- Plugin - Dynamic Text -->
+    <data>
+        <record id="dm_dtp_plugin_dynamic_text0" model="dm.dtp.plugin">
+			<field eval="&quot;&quot;&quot;dynamic_text&quot;&quot;&quot;" name="code"/>
+			<field eval="&quot;&quot;&quot;Dynamic text&quot;&quot;&quot;" name="name"/>
+			<field eval="0" name="store_value"/>
+			<field name="ref_text_id" ref="dm.dm_dynamic_text_dear_en"/>
+			<field eval="&quot;&quot;&quot;dynamic_text&quot;&quot;&quot;" name="type"/>
+		</record>
+		<record id="dm_plugin_argument_previous_segment0" model="dm.plugin.argument">
+			<field name="plugin_id" ref="dm.dm_dtp_plugin_dynamic_text0"/>
+			<field eval="1" name="stored_plugin"/>
+			<field eval="&quot;&quot;&quot;Previous Segment&quot;&quot;&quot;" name="name"/>
+			<field name="custome_plugin_id" ref="dm.dm_dtp_plugin_wi_tr_from_id"/>
+		</record>
+	</data>
+   
     <!-- Documents for Offer-09  -->
     <data noupdate="1">
 		<record id="dm_offer_document_startingmailingdocument0" model="dm.offer.document">
 			<field name="copywriter_id" ref="base.main_partner"/>
 			<field eval="&quot;&quot;&quot;Starting Mailing Document-09&quot;&quot;&quot;" name="name"/>
-			<field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0')])]" name="document_template_plugin_ids"/>
+			<field eval="[(6,0,[ref('dm.dm_dtp_plugin_name0'),ref('dm.dm_dtp_plugin_lastname0'),ref('dm.dm_dtp_plugin_street0'),ref('dm.dm_dtp_plugin_street2'),ref('dm.dm_dtp_plugin_city0'),ref('dm.dm_dtp_plugin_country0')])]" name="document_template_plugin_ids"/>
 			<field name="lang_id" ref="base.lang_en"/>
-			<field name="gender_id" ref="dm.dm_customer_gender_sir0"/>
+			<field name="gender_id" ref="base_partner_gender.partner_gender_male"/>
 			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
 			<field eval="&quot;&quot;&quot;start_mail_doc09&quot;&quot;&quot;" name="code"/>
 			<field name="document_template_id" ref="dm.dm_document_template_partner0"/>
 			<field name="step_id" ref="dm.dm_offer_step_smforopenerpondemandfreetrial2009"/>
 			<field name="category_id" ref="dm.dm_offer_document_category_production0"/>
+			<field eval="&quot;&quot;&quot;Test&quot;&quot;&quot;" name="subject"/>
+			<field eval="&quot;&quot;&quot;oord&quot;&quot;&quot;" name="editor"/>
 		</record>
 	</data>
 	
@@ -1429,9 +1457,9 @@ rkJggg==
 		<record id="dm_offer_document_packageinsertdocument0" model="dm.offer.document">
 			<field name="copywriter_id" ref="base.main_partner"/>
 			<field eval="&quot;&quot;&quot;Package Insert Document&quot;&quot;&quot;" name="name"/>
-			<field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0')])]" name="document_template_plugin_ids"/>
+			<field eval="[(6,0,[ref('dm.dm_dtp_plugin_name0'),ref('dm.dm_dtp_plugin_email0'),ref('dm.dm_dtp_plugin_phone0')])]" name="document_template_plugin_ids"/>
 			<field name="lang_id" ref="base.lang_en"/>
-			<field name="gender_id" ref="dm.dm_customer_gender_sir0"/>
+			<field name="gender_id" ref="base_partner_gender.partner_gender_male"/>
 			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
 			<field eval="&quot;&quot;&quot;pkg_insert_doc09&quot;&quot;&quot;" name="code"/>
 			<field name="document_template_id" ref="dm.dm_document_template_partner0"/>
@@ -1443,28 +1471,32 @@ rkJggg==
 		<record id="dm_offer_document_accompanyingletterdocument0" model="dm.offer.document">
 			<field name="copywriter_id" ref="base.main_partner"/>
 			<field eval="&quot;&quot;&quot;Accompanying Letter Document-09&quot;&quot;&quot;" name="name"/>
-			<field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0')])]" name="document_template_plugin_ids"/>
+			<field eval="[(6,0,[ref('dm.dm_dtp_plugin_name0'),ref('dm_dtp_plugin_partner_address_id')])]" name="document_template_plugin_ids"/>
 			<field name="lang_id" ref="base.lang_en"/>
-			<field name="gender_id" ref="dm.dm_customer_gender_sir0"/>
+			<field name="gender_id" ref="base_partner_gender.partner_gender_male"/>
 			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
 			<field eval="&quot;&quot;&quot;acc_letter_doc09&quot;&quot;&quot;" name="code"/>
 			<field name="document_template_id" ref="dm.dm_document_template_partner0"/>
 			<field name="step_id" ref="dm.dm_offer_step_alpiforopenerpondemandfreetrial2009"/>
 			<field name="category_id" ref="dm.dm_offer_document_category_production0"/>
+			<field eval="&quot;&quot;&quot;Test&quot;&quot;&quot;" name="subject"/>
+			<field eval="&quot;&quot;&quot;oord&quot;&quot;&quot;" name="editor"/>
 		</record>
 	</data>
 	<data noupdate="1">
 		<record id="dm_offer_document_accompanyingletterforopenerpbookdocument0" model="dm.offer.document">
 			<field name="copywriter_id" ref="base.main_partner"/>
 			<field eval="&quot;&quot;&quot;Accompanying Letter for OpenERP book Document&quot;&quot;&quot;" name="name"/>
-			<field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0')])]" name="document_template_plugin_ids"/>
+			<field eval="[(6,0,[ref('dm.dm_dtp_plugin_name0'),ref('dm.dm_dtp_plugin_code0')])]" name="document_template_plugin_ids"/>
 			<field name="lang_id" ref="base.lang_en"/>
-			<field name="gender_id" ref="dm.dm_customer_gender_sir0"/>
+			<field name="gender_id" ref="base_partner_gender.partner_gender_male"/>
 			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
 			<field eval="&quot;&quot;&quot;acc_let_oerp_doc&quot;&quot;&quot;" name="code"/>
 			<field name="document_template_id" ref="dm.dm_document_template_partner0"/>
 			<field name="step_id" ref="dm.dm_offer_step_alimforopenerpondemandfreetrial2009"/>
 			<field name="category_id" ref="dm.dm_offer_document_category_production0"/>
+			<field eval="&quot;&quot;&quot;Test&quot;&quot;&quot;" name="subject"/>
+			<field eval="&quot;&quot;&quot;oord&quot;&quot;&quot;" name="editor"/>
 		</record>
 	</data>
 	
@@ -1475,10 +1507,9 @@ rkJggg==
 			<field name="type">ir.actions.report.xml</field>
 			<field name="model">dm.offer.document</field>
 			<field name="report_name">dm.offer.document.pdf</field>
-			<field name="report_rml">dm/reportdm/Package Insert Document-09.rml</field>
+			<field name="report_rml">dm/reportdm/pkg_insert_doc09_report.rml</field>
 			<field name="report_type">pdf</field>
 			<field name="document_id" ref="dm_offer_document_packageinsertdocument0"/>
 		</record>
 	</data>
-
 </openerp>

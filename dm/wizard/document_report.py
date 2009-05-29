@@ -27,7 +27,8 @@ class wizard_document_report(wizard.interface):
     report_list_form = '''<?xml version="1.0"?>
     <form string="Select Report">
         <field name="report" colspan="4"/>
-        <field name="customer_id" colspan="4"/>
+        <field name="address_id" colspan="4"/>
+        <field name="trademark_id" colspan="4"/>
     </form>'''
     def execute(self, db, uid, data, state='init', context=None):
         self.dm_wiz_data = data
@@ -50,8 +51,8 @@ class wizard_document_report(wizard.interface):
     report_list_fields = {
                     
         'report': {'string': 'Select Report', 'type': 'selection', 'selection':_get_reports, },
-        'customer_id': {'string': 'Select Customer', 'type': 'many2one','relation':'res.partner', 'selection':_get_reports, 'domain':[('category_id','=','DTP Preview Customers')] }
-        
+        'address_id': {'string': 'Select Customer Address', 'type': 'many2one','relation':'res.partner.address', 'selection':_get_reports, 'domain':[('partner_id.category_id','=','DTP Preview Customers')] },
+        'trademark_id':{'string': 'Select Trademark', 'type': 'many2one','relation':'dm.trademark'}
         }
     
     states = {

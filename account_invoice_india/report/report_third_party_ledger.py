@@ -40,16 +40,50 @@ class third_party_ledger(report_sxw.rml_parse):
             'balance_partner':self.balance_partner
         })
 
+    def partners(self, form):
+        data = {'form':form}
+        account_move_line_obj = pooler.get_pool(self.cr.dbname).get('account.move.line')
+        line_query = account_move_line_obj._query_get(self.cr, self.uid, obj='line',
+                context={'fiscalyear': data['form']['fiscalyear']})
+        self.cr.execute(
+                "SELECT DISTINCT line.partner_id " \
+                "FROM account_move_line AS line, account_account AS account " \
+                "WHERE line.partner_id IS NOT NULL " \
+                    "AND line.date >= %s " \
+                    "AND line.date <= %s " \
+                    "AND " + line_query + " " \
+                    "AND line.account_id = account.id " \
+                    "AND account.company_id = %s " \
+                    "AND account.active",
+                (data['form']['date1'], data['form']['date2'],
+                    data['form']['company_id']))
+        new_ids = form['partners'][0][2] #[id for (id,) in self.cr.fetchall()]
+#        self.cr.execute(
+#            "SELECT a.id " \
+#            "FROM account_account a " \
+#            "LEFT JOIN account_account_type t " \
+#                "ON (a.type=t.code) " \
+#            "WHERE t.partner_account=TRUE " \
+#                "AND a.company_id = %d " \
+#                "AND a.active", (data['form']['company_id'],))
+        self.cr.execute('SELECT a.id ' \
+            'FROM account_account a ' \
+                'WHERE a.company_id = %s ' \
+                'AND a.active', (form['company_id'],))
+        self.account_ids = ','.join([str(a) for (a,) in self.cr.fetchall()])
+        self.partner_ids = ','.join(map(str, new_ids))
+        objects = self.pool.get('res.partner').browse(self.cr, self.uid, new_ids)
+
+        objects = self.pool.get('res.partner').browse(self.cr, self.uid, form['partners'][0][2])
+        return objects
+
     def lines(self, partner):
-        
         partner_id = self.data['partners'][0][2]
         if not partner.id in partner_id:
             return {}
-        
         account_move_line_obj = pooler.get_pool(self.cr.dbname).get('account.move.line')
         line_query = account_move_line_obj._query_get(self.cr, self.uid, obj='l',
                 context={'fiscalyear': self.datas['form']['fiscalyear']})
-        
         sSQL = "SELECT m.id as id, l.date, j.code, m.name as ref, l.name, a.name as aname,l.ref, l.debit, l.credit " \
                 "FROM account_account a, account_move m, account_move_line l " \
                 "LEFT JOIN account_journal j " \
@@ -63,27 +97,27 @@ class third_party_ledger(report_sxw.rml_parse):
         self.cr.execute(sSQL)
         res = self.cr.dictfetchall()
         sum = 0.0
-        for r in res:
-            ans = r['debit'] - r['credit']
-            name = ""
-            if r['debit'] > 0:
-                aids = account_move_line_obj.search(self.cr, self.uid,[('debit','=','0'), ('move_id','=',r['id'])])
-                name = account_move_line_obj.browse(self.cr, self.uid, aids[0]).account_id.name
-            elif r['credit'] > 0:
-                aids = account_move_line_obj.search(self.cr, self.uid,[('credit','=','0'), ('move_id','=',r['id'])])
-                name = account_move_line_obj.browse(self.cr, self.uid, aids[0]).account_id.name
-
-            r['aname'] = name
-            sum += ans
-            ans = sum
-            if ans > 0:
-                ans = str(ans) + " Dr."
-            else:
-                ans = ans * -1
-                ans = str(ans) + " Cr."
-               
-            r['progress'] = ans
-            
+        if res:
+            for r in res:
+                ans = r['debit'] - r['credit']
+                name = ""
+                if r['debit'] > 0:
+                    aids = account_move_line_obj.search(self.cr, self.uid,[('debit','=','0'), ('move_id','=',r['id'])])
+                    name = account_move_line_obj.browse(self.cr, self.uid, aids[0]).account_id.name
+                elif r['credit'] > 0:
+                    aids = account_move_line_obj.search(self.cr, self.uid,[('credit','=','0'), ('move_id','=',r['id'])])
+                    name = account_move_line_obj.browse(self.cr, self.uid, aids[0]).account_id.name
+    
+                r['aname'] = name
+                sum += ans
+                ans = sum
+                if ans > 0:
+                    ans = str(ans) + " Dr."
+                else:
+                    ans = ans * -1
+                    ans = str(ans) + " Cr."
+                   
+                r['progress'] = ans
         return res
 
     def _sum_debit_partner(self, partner):
@@ -94,7 +128,7 @@ class third_party_ledger(report_sxw.rml_parse):
         self.cr.execute(
                 "SELECT sum(debit) " \
                 "FROM account_move_line " \
-                "WHERE partner_id = %d " \
+                "WHERE partner_id = %s " \
                     "AND account_id IN (" + self.account_ids + ") " \
                     "AND date >= %s " \
                     "AND date <= %s " \
@@ -117,7 +151,7 @@ class third_party_ledger(report_sxw.rml_parse):
         self.cr.execute(
                 "SELECT sum(credit) " \
                 "FROM account_move_line " \
-                "WHERE partner_id=%d " \
+                "WHERE partner_id=%s " \
                     "AND account_id IN (" + self.account_ids + ") " \
                     "AND date >= %s " \
                     "AND date <= %s " \
@@ -182,42 +216,6 @@ class third_party_ledger(report_sxw.rml_parse):
         ans = self.cr.fetchone()[0]
         return ans or 0.0
 
-    def partners(self, form):
-        data = {'form':form}
-        account_move_line_obj = pooler.get_pool(self.cr.dbname).get('account.move.line')
-        line_query = account_move_line_obj._query_get(self.cr, self.uid, obj='line',
-                context={'fiscalyear': data['form']['fiscalyear']})
-        self.cr.execute(
-                "SELECT DISTINCT line.partner_id " \
-                "FROM account_move_line AS line, account_account AS account " \
-                "WHERE line.partner_id IS NOT NULL " \
-                    "AND line.date >= %s " \
-                    "AND line.date <= %s " \
-                    "AND " + line_query + " " \
-                    "AND line.account_id = account.id " \
-                    "AND account.company_id = %d " \
-                    "AND account.active",
-                (data['form']['date1'], data['form']['date2'],
-                    data['form']['company_id']))
-        new_ids = form['partners'][0][2] #[id for (id,) in self.cr.fetchall()]
-#        self.cr.execute(
-#            "SELECT a.id " \
-#            "FROM account_account a " \
-#            "LEFT JOIN account_account_type t " \
-#                "ON (a.type=t.code) " \
-#            "WHERE t.partner_account=TRUE " \
-#                "AND a.company_id = %d " \
-#                "AND a.active", (data['form']['company_id'],))
-        self.cr.execute('SELECT a.id ' \
-            'FROM account_account a ' \
-                'WHERE a.company_id = %d ' \
-                'AND a.active', (form['company_id'],))
-        self.account_ids = ','.join([str(a) for (a,) in self.cr.fetchall()])
-        self.partner_ids = ','.join(map(str, new_ids))
-        objects = self.pool.get('res.partner').browse(self.cr, self.uid, new_ids)
-
-        objects = self.pool.get('res.partner').browse(self.cr, self.uid, form['partners'][0][2])
-        return objects
     
     def _get_company(self, form):
         self.data = form

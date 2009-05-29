@@ -1,0 +1,118 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+        <record id="process_process_courseprocess0" model="process.process">
+            <field name="model_id" ref="training.model_training_course"/>
+            <field eval="&quot;&quot;&quot;Course Process&quot;&quot;&quot;" name="name"/>
+            <field eval="1" name="active"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_node_createcourse0" model="process.node">
+            <field name="model_id" ref="training.model_training_course"/>
+            <field name="process_id" ref="process_process_courseprocess0"/>
+            <field eval="1" name="flow_start"/>
+            <field eval="&quot;&quot;&quot;state&quot;&quot;&quot;" name="kind"/>
+            <field eval="&quot;&quot;&quot;Create Course&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_node_offers0" model="process.node">
+            <field name="model_id" ref="training.model_training_offer"/>
+            <field name="process_id" ref="process_process_courseprocess0"/>
+            <field eval="0" name="flow_start"/>
+            <field eval="&quot;&quot;&quot;state&quot;&quot;&quot;" name="kind"/>
+            <field eval="&quot;&quot;&quot;Offers&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_node_sessions0" model="process.node">
+            <field name="model_id" ref="training.model_training_session"/>
+            <field name="process_id" ref="process_process_courseprocess0"/>
+            <field eval="0" name="flow_start"/>
+            <field eval="&quot;&quot;&quot;state&quot;&quot;&quot;" name="kind"/>
+            <field eval="&quot;&quot;&quot;Sessions&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_node_invoices0" model="process.node">
+            <field name="model_id" ref="account.model_account_invoice"/>
+            <field name="process_id" ref="process_process_courseprocess0"/>
+            <field eval="0" name="flow_start"/>
+            <field eval="&quot;&quot;&quot;state&quot;&quot;&quot;" name="kind"/>
+            <field eval="&quot;&quot;&quot;Invoices&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_node_seances0" model="process.node">
+            <field name="model_id" ref="training.model_training_seance"/>
+            <field name="process_id" ref="process_process_courseprocess0"/>
+            <field eval="0" name="flow_start"/>
+            <field eval="&quot;&quot;&quot;state&quot;&quot;&quot;" name="kind"/>
+            <field eval="&quot;&quot;&quot;Seances&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_node_supplierorders0" model="process.node">
+            <field name="model_id" ref="mrp.model_mrp_procurement"/>
+            <field name="process_id" ref="process_process_courseprocess0"/>
+            <field eval="0" name="flow_start"/>
+            <field eval="&quot;&quot;&quot;state&quot;&quot;&quot;" name="kind"/>
+            <field eval="&quot;&quot;&quot;Supplier Orders&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_transition_creatingoffer0" model="process.transition">
+            <field eval="[(6,0,[])]" name="role_ids"/>
+            <field eval="[(6,0,[])]" name="transition_ids"/>
+            <field eval="&quot;&quot;&quot;Creating Offer&quot;&quot;&quot;" name="name"/>
+            <field name="target_node_id" ref="process_node_offers0"/>
+            <field name="source_node_id" ref="process_node_createcourse0"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_transition_plan0" model="process.transition">
+            <field eval="[(6,0,[])]" name="role_ids"/>
+            <field eval="[(6,0,[])]" name="transition_ids"/>
+            <field eval="&quot;&quot;&quot;Plan&quot;&quot;&quot;" name="name"/>
+            <field name="target_node_id" ref="process_node_sessions0"/>
+            <field name="source_node_id" ref="process_node_offers0"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_transition_invoicing0" model="process.transition">
+            <field eval="[(6,0,[])]" name="role_ids"/>
+            <field eval="[(6,0,[])]" name="transition_ids"/>
+            <field eval="&quot;&quot;&quot;Invoicing&quot;&quot;&quot;" name="name"/>
+            <field name="target_node_id" ref="process_node_invoices0"/>
+            <field name="source_node_id" ref="process_node_sessions0"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_transition_creatingseances0" model="process.transition">
+            <field eval="[(6,0,[])]" name="role_ids"/>
+            <field eval="[(6,0,[])]" name="transition_ids"/>
+            <field eval="&quot;&quot;&quot;Creating Seances&quot;&quot;&quot;" name="name"/>
+            <field name="target_node_id" ref="process_node_seances0"/>
+            <field name="source_node_id" ref="process_node_sessions0"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_transition_linktoseances0" model="process.transition">
+            <field eval="[(6,0,[])]" name="role_ids"/>
+            <field eval="[(6,0,[])]" name="transition_ids"/>
+            <field eval="&quot;&quot;&quot;Link to Seances&quot;&quot;&quot;" name="name"/>
+            <field name="target_node_id" ref="process_node_seances0"/>
+            <field name="source_node_id" ref="process_node_sessions0"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_transition_ordermanagement0" model="process.transition">
+            <field eval="[(6,0,[])]" name="role_ids"/>
+            <field eval="[(6,0,[])]" name="transition_ids"/>
+            <field eval="&quot;&quot;&quot;Order Management&quot;&quot;&quot;" name="name"/>
+            <field name="target_node_id" ref="process_node_supplierorders0"/>
+            <field name="source_node_id" ref="process_node_seances0"/>
+        </record>
+    </data>
+</openerp>

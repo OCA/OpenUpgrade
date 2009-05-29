@@ -95,7 +95,7 @@ class use_control_db_block(osv.osv):
     _description = "Containt the blocking message"
 
     _columns = {
-        'name': fields.text('Block message'),
+        'name': fields.text('Block message', required=True),
     }
 
     def create(self, cr, uid, values, context=None):

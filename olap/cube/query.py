@@ -1,3 +1,5 @@
+import locale
+
 
 import mdx_input
 import sqlalchemy
@@ -5,7 +7,6 @@ import common
 import slicer
 import datetime
 import pooler
-
 import copy
 
 class mapper(object):
@@ -35,7 +36,7 @@ class query(object):
             cube_data = newcube
         return cube_data
 
-    def run(self):
+    def run(self,currency):
         db = sqlalchemy.create_engine(self.object.schema_id.database_id.connection_url,encoding='utf-8')
         metadata = sqlalchemy.MetaData(db)
         print 'Connected to database...', self.object.schema_id.database_id.connection_url
@@ -73,10 +74,14 @@ class query(object):
                     flag = False
                     make_where = []
                     temp_where = []
+                    temp_column = []
                     if 'whereclause' in data[0]['query'].keys():
                         flag = True
                         temp_where = data[0]['query']['whereclause'][0] 
                         data[0]['query']['whereclause']=str(data[0]['query']['whereclause'][0])
+                    if isinstance(type(data[0]['query']['column'][0]),type(sqlalchemy.sql.expression._Function)):
+                        temp_column = data[0]['query']['column'][0]
+                        data[0]['query']['column'][0] = str(data[0]['query']['column'][0])
                     data_temp = copy.deepcopy(data[0])
                     if 'whereclause' in data[1]['query'].keys():
                         if 'whereclause' in data_temp['query'].keys():
@@ -99,6 +104,9 @@ class query(object):
                             data_temp['query']['whereclause'].append(make_where[0])
                         else:
                             data_temp['query']['whereclause'] = make_where
+                    if temp_column:
+                        data[0]['query']['column'] = [temp_column]
+                        data_temp['query']['column'] = [temp_column]
                     final_axis.append(data_temp)
                 axis[-1] = []
                 axis[-1] = final_axis
@@ -125,6 +133,7 @@ class query(object):
                 for key,val in s['query'].items():
                     for v in val:
                         if key=='column':
+                            print "This is the value >>>>",val , v
                             v = v.label('p_%d' % (position,))
                             position += 1
                             select.append_column(v)
@@ -137,12 +146,35 @@ class query(object):
 #            metadata.bind.echo = True
             query = select.execute()
             result = query.fetchall()
-            
             for record in result:
                 cube = cube_data
                 r = list(record)
                 value = False
                 for s in subset:
+                    if s.has_key('format'):
+                        # To make use of the format string if specified for the measure
+                        # Its set to static for a testing
+                        print " This the the r[0]"
+                        if not currency:
+                            currency = "EUR"
+                        if isinstance(r[0],float) or isinstance(r[0],int) or isinstance(r[0],long):
+                            a = {'data':r[0]}
+                            r[0] = str(r[0])
+                        else:
+                            r[0] = '0.0'
+                            a = {'data':0.0}
+                        if s['format'] == 'cr_prefix':
+                            r[0] = currency + " "  + "%.2f"%a['data']
+                        elif s['format'] == 'cr_postfix':
+                            r[0] = "%.2f"%a['data'] + " " + currency
+                        elif s['format'] == 'comma_sep':
+                            r[0] = locale.format("%(data).2f", a, 1)
+                        elif s['format'] == 'cr_prefix_comma':
+                            r[0] = locale.format("%(data).2f", a, 1)
+                            r[0] = currency + " "  + str(r[0])
+                        elif s['format'] == 'cr_postfix_comma':
+                            r[0] = locale.format("%(data).2f", a, 1)
+                            r[0] = str(r[0]) + " " + currency
                     cube = s['axis_mapping'].cube_set(cube, r, s['delta'])
                     value = s['axis_mapping'].value_set(r) or value
                 for s in slice:
@@ -185,14 +217,24 @@ class query(object):
 
     def log(self,cr,uid,cube,query,context={}):
         if not context==False:
-            print "Logging Query..."
-            logentry={}
-            logentry['user_id']=uid
-            logentry['cube_id']=cube.id
-            logentry['query']=query
-            logentry['time']= str(datetime.datetime.now())
-            logentry['result_size']=0
-            log_id = pooler.get_pool(cr.dbname).get('olap.query.logs').create(cr,uid,logentry)
-            return log_id
+            log_ids = pooler.get_pool(cr.dbname).get('olap.query.logs').search( cr, uid, [('query','=', query), ('user_id','=', uid)])
+            if log_ids:
+                count = pooler.get_pool(cr.dbname).get('olap.query.logs').browse(cr, uid, log_ids, context)[0]
+                pooler.get_pool(cr.dbname).get('olap.query.logs').write(cr, uid, log_ids, {'count':count.count+1})
+                if count.count>=3:
+                    print "Write IN TABLE:>>>>"
+                return True
+            else:
+                logentry={}
+                logentry['user_id']=uid
+                logentry['cube_id']=cube.id
+                logentry['query']=query
+                logentry['time']= str(datetime.datetime.now())
+                logentry['result_size']=0
+                logentry['count']=1
+                log_id = pooler.get_pool(cr.dbname).get('olap.query.logs').create(cr,uid,logentry)
+#                count = pooler.get_pool(cr.dbname).get('olap.query.logs').browse(cr, uid, log_id, context)
+#                pooler.get_pool(cr.dbname).get('olap.query.logs').write(cr, uid, log_id, {'count':count.count+1})
+                return log_id
         return -1
 # vim: ts=4 sts=4 sw=4 si et

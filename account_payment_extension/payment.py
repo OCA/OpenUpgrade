@@ -67,7 +67,7 @@ class res_partner_bank(osv.osv):
         if 'default_bank' in vals and vals['default_bank'] == True:
             partner_bank = self.pool.get('res.partner.bank').browse(cr, uid, ids)[0]
             partner_id = partner_bank.partner_id.id
-            if vals['state']:
+            if 'state' in vals and vals['state']:
                 state = vals['state']
             else:
                 state = partner_bank.state

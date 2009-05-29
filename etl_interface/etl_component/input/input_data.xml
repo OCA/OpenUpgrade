@@ -42,6 +42,25 @@
 			<field name="code">input.xml_in</field>
 		</record>
 
+		<record id="comp_input_xmlrpc_in" model="etl.component.type">
+			<field name="name">input.xmlrpc_in</field>
+			<field name="code">input.xmlrpc_in</field>
+		</record>
+
+		<record id="comp_input_sugarcrm_in" model="etl.component.type">
+			<field name="name">input.sugarcrm_in</field>
+			<field name="code">input.sugarcrm_in</field>
+		</record>
+
+		<record id="comp_input_gcalendar_in" model="etl.component.type">
+			<field name="name">input.gcalendar_in</field>
+			<field name="code">input.gcalendar_in</field>
+		</record>
+
+		<record id="comp_input_gdoc_in" model="etl.component.type">
+			<field name="name">input.gdoc_in</field>
+			<field name="code">input.gdoc_in</field>
+		</record>
 
     </data>
 </openerp>

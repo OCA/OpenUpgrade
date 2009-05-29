@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
 <openerp>
 	<data>
-		<menuitem id="menu_translate" name="Google Translation"/>
-		<menuitem id="review_translate" name="Translation" parent="menu_translate"/>
 
 		<record model="ir.ui.view" id="view_translation_form_inherit">
 			<field name="name">ir.translation.inherit.form</field>
@@ -23,7 +21,7 @@
             <field name="view_id" ref="base.view_translation_tree"/>
             <field name="domain">[('need_review', '=', True)]</field>
         </record>
-        <menuitem action="action_translation_need_review" id="menu_action_translation_review" parent="review_translate"/>
+        <menuitem action="action_translation_need_review" id="menu_action_translation_review" parent="base.menu_action_translation"/>
 
 	</data>
 </openerp>

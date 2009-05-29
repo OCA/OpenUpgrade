@@ -90,7 +90,8 @@
                         <field name="type_id" select="2" widget="selection" on_change="onchange_code(type_id,context)"/>
 <!--                        <field name="type_id" select="2"/>-->
                         <field name="media_id" select="1"/>
-                        <field name="action_id" select="1" domain="[('media_id','=',media_id)]"/>
+<!--                        <field name="action_id" select="1" domain="[('media_id','=',media_id)]"/>-->
+                        <field name="action_id" select="1" />
                         <field name="quotation" select="2" groups="base.group_extended"/>
                         <field name="legal_state" select="2" groups="base.group_extended"/>
                         <separator string="Description" colspan="4"/>
@@ -107,13 +108,19 @@
                     <page string="Transitions">
                         <field name="outgoing_transition_ids" colspan="4" nolabel="1" default_get="{'type_id':'step_from_id','step_id':active_id or False}">
                             <form string="Transition">
+                                <separator string="Origin and Destination" colspan="4"/>
                                 <field name="step_from_id" colspan="4" readonly="1"/>
                                 <field name="step_to_id" colspan="4" domain="[('offer_id','=',parent.offer_id)]"/>
-                                <field name="condition_id" select="1"/>
+                                <separator string="Action Condition and Time" colspan="4"/>
+                                <field name="condition_id" select="1" domain="[('type','=','offer')]"/>
                                 <label align="1.0" string="Delay After Trigger Date:"/>
                                 <group col="2" colspan="1">
                                     <field name="delay" nolabel="1"/>
                                     <field name="delay_type" nolabel="1" select="2"/>
+                                </group>
+                                <group col="2" colspan="2">
+                                    <field name="action_hour" widget="float_time" select="2"/>
+<!--                                    <field name="action_day" select="2"/>-->
                                 </group>
                             </form>
                             <tree string="Outgoing Transitions">
@@ -126,14 +133,19 @@
                         </field>
                         <field name="incoming_transition_ids" colspan="4" nolabel="1">
                             <form string="Transition">
+                                <separator string="Origin and Destination" colspan="4"/>
                                 <field name="step_from_id" domain="[('offer_id','=',parent.offer_id)]"/>
                                 <field name="step_to_id" readonly="1"/>
-<!--                                <field name="condition" select="1" widget="selection"/>-->
-                                <field name="condition_id" select="1"/>
+                                <separator string="Action Condition and Time" colspan="4"/>
+                                <field name="condition_id" select="1" domain="[('type','=','offer')]"/>
                                 <label align="1.0" string="Delay After Trigger Date:"/>
                                 <group col="2" colspan="1">
                                     <field name="delay" nolabel="1"/>
                                     <field name="delay_type" nolabel="1" select="2"/>
+                                </group>
+                                <group col="2" colspan="2">
+                                    <field name="action_hour" widget="float_time" select="2"/>
+<!--                                    <field name="action_day" select="2"/>-->
                                 </group>
                             </form>
                             <tree string="Incoming Transitions">
@@ -203,9 +215,10 @@
                 <field name="type">form</field>
                 <field name="arch" type="xml">
                         <form string="Transition Trigger">
-                                <field name="name"/>
-                                <field name="code"/>
+                                <field name="name" select="1"/>
+                                <field name="code" select="2"/>
                                 <field name="gen_next_wi"/>
+                                <field name="type" select="1"/>
                                 <separator string="Action Condition" colspan="4"/>
                                 <field name="in_act_cond" nolabel="1" colspan="4"/>
 <!--                                <separator string="Outgoing Action Condition" colspan="4"/>
@@ -347,24 +360,6 @@
         </field>
     </record>
 
-    <!--
-    =======================================================
-    SERVER ACTION EXTENSIONS
-    =======================================================
-    -->
-
-    <record id="view_server_action_form" model="ir.ui.view">
-        <field name="name">ir.actions.server.inherit</field>
-        <field name="model">ir.actions.server</field>
-        <field name="type">form</field>
-        <field name="inherit_id" ref="base.view_server_action_form"/>
-        <field name="arch" type="xml">
-            <field name="condition" position="after">
-                <field name="dm_action"/>
-            </field>
-        </field>
-    </record>
-        
         
     <!--
     =======================================================
@@ -425,7 +420,7 @@
         id="act_workitem_opened"
         domain = "[('step_id','=',active_id)]"/>
 -->
-
+<!--
     <record id="view_dm_offer_step_action_form" model="ir.ui.view">
         <field name="name">dm.offer.step.action.form</field>
         <field name="model">dm.offer.step.action</field>
@@ -433,73 +428,9 @@
         <field name="arch" type="xml">
              <form string="Offer Action">
                 <group col="6" colspan="4">
-                    <field name="name" />
+                    <field name="server_action_id" />
                     <field name="media_id"/>
-                    <field name="state" />
-                    <field name="condition" />
-                    <field name="model_id" />
                 </group>
-                <notebook colspan="4">
-                    <page string="Action to Launch" attrs="{'invisible':[('state','!=','client_action')]}">
-                           <separator colspan="4" string="Client Action Configuration"/>
-                        <field name="action_id" select="2" attrs="{'required':[('state','=','client_action')]}"/>
-                    </page>
-                    <page string="Python Code" attrs="{'invisible':[('state','!=','code')]}">
-                        <separator colspan="4" string="Python Code"/>
-                        <field name="code" colspan="4" nolabel="1"/>
-                    </page>
-                    <page string="Trigger" attrs="{'invisible':[('state','!=','trigger')]}">
-                        <separator colspan="4" string="Trigger Configuration"/>
-                        <field name="wkf_model_id" attrs="{'required':[('state','=','trigger')]}"/>
-                        <field name="trigger_obj_id" select="2" context="{'key':''}" domain="[('model_id','=',model_id)]" attrs="{'required':[('state','=','trigger')]}"/>
-                        <field name="trigger_name" select="2" attrs="{'required':[('state','=','trigger')]}"/>
-                    </page>
-                    <page string="Email Configuration" attrs="{'invisible':[('state','!=','email')]}">
-                        <separator colspan="4" string="Email Configuration"/>
-                        <field name="email" domain="[('model_id','=',model_id)]" attrs="{'required':[('state','=','email')]}"/>
-                        <field name="subject" colspan="4" attrs="{'required':[('state','=','email')]}"/>
-                        <field name="message" select="2" colspan="4" attrs="{'required':[('state','=','email')]}"/>
-                        <newline/>
-                        <label colspan="4" string="Access all the fields related to the current object using expression in double brackets, i.e.[[ object.partner_id.name ]]" align="0.0"/>
-                    </page>
-                    <page string="SMS Configuration" attrs="{'invisible':[('state','!=','sms')]}">
-                        <separator colspan="4" string="SMS Configuration"/>
-                        <field name="mobile" domain="[('model_id','=',model_id)]" attrs="{'required':[('state','=','sms')]}"/>
-                        <field name="sms" colspan="4" attrs="{'required':[('state','=','sms')]}"/>
-                        <newline/>
-                        <label colspan="4" string="Access all the fields related to the current object using expression in double brackets, i.e. [[ object.partner_id.name ]]" align="0.0"/>
-                    </page>
-                    <page string="Create / Write" attrs="{'invisible':[('state','!=','object_create'),('state','!=','object_write')]}">
-                         <separator colspan="4" string="Fields Mapping"/>
-                        <field name="srcmodel_id" select="2" attrs="{'required':[('state','!=','dummy'), ('state','!=','sms'), ('state','!=','code'), ('state','!=','loop'),('state','!=','trigger'), ('state','!=','client_action'), ('state','!=','email'), ('state','!=','sms'), ('state','!=','other')]}"/>
-                        <field name="fields_lines" nolabel="1" select="2" colspan="4">
-                           <tree string="Field Mappings" editable="top">
-                                <field name="col1" domain="[('model_id','=',parent.srcmodel_id or parent.model_id)]"/>
-                                <field name="type"/>
-                                <field name="value" colspan="4"/>
-                           </tree>
-                           <form string="Field Mapping"> 
-                                <field name="col1" domain="[('model_id','=',parent.srcmodel_id or parent.model_id)]"/>
-                                <field name="type"/>
-                                <field name="value" colspan="4"/>
-                           </form>
-                        </field>
-                           <field name="record_id" attrs="{'readonly':[('state','!=','object_create')]}" domain="[('model_id','in',[model_id])]"/>
-                           <field name="write_id" attrs="{'readonly':[('state','!=','object_write')]}"/>
-                           <label colspan="4" string="If you use a formula type, use a python expression using the variable 'object'." align="0.0"/>
-                    </page>
-                    <page string="Iteration Actions" attrs="{'invisible':[('state','!=','loop')]}">
-                        <separator colspan="4" string="Iteration Action Configuration"/>
-                        <field name="expression" attrs="{'required':[('state','=','loop')]}"/>
-                        <field name="loop_action" domain="[('state','!=','loop')]" attrs="{'required':[('state','=','loop')]}"/>
-                    </page>
-                    <page string="Multi Actions" attrs="{'invisible':[('state','!=','other')]}">
-                        <separator colspan="4" string="Other Actions Configuration"/>
-                        <field name="child_ids" nolabel="1" colspan="4"/>
-                        <label colspan="4" string="Only one client action will be execute, last
-                                clinent action will be consider in case of multiples clients actions" align="0.0"/>
-                    </page>
-                </notebook>
             </form>
         </field>
     </record>
@@ -511,10 +442,7 @@
         <field name="arch" type="xml">
             <tree string="Offer Action">
                 <field name="media_id"/>
-                <field name="name" />
-                <field name="condition" />
-                <field name="state" />
-                <field name="model_id" />
+                <field name="server_action_id" />
             </tree>
         </field>
     </record>
@@ -528,7 +456,7 @@
     </record>
 
 <menuitem id="menu_action_dm_offer_step_action_form" parent="dm.menu_dm_config_offer_offer_steps" action="action_dm_offer_step_action_form" sequence="2" />
-
+-->
 
 </data>
 </openerp>

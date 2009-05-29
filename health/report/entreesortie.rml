@@ -13,12 +13,10 @@
     <blockTableStyle id="Tableau4">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
-      <blockBackground colorName="#e6e6e6" start="0,0" stop="0,0"/>
     </blockTableStyle>
     <blockTableStyle id="Tableau2">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
-      <blockBackground colorName="#e6e6e6" start="0,0" stop="0,0"/>
     </blockTableStyle>
     <blockTableStyle id="Tableau1">
       <blockAlignment value="LEFT"/>
@@ -48,8 +46,6 @@
     <paraStyle name="P8" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P9" fontName="Times-Roman" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P10" fontName="Times-Roman" fontSize="14.0" leading="17" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P11" fontName="Times-Roman" fontSize="18.0" leading="22" alignment="CENTER"/>
-    <paraStyle name="P12" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="CENTER"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -67,11 +63,11 @@
         </td>
       </tr>
     </blockTable>
-    <para style="P11">List of Changes</para>
+    <para style="P3">Liste des Mouvements</para>
     <blockTable colWidths="482.0" repeatRows="1" style="Tableau2">
       <tr>
         <td>
-          <para style="P5">From [[ data['form']['datedebut'] ]] To [[ data['form']['datefin'] ]]</para>
+          <para style="P5">du [[ data['form']['datedebut'] ]] au [[ data['form']['datefin'] ]]</para>
           <para style="P4">
             <font color="white"> </font>
           </para>
@@ -79,23 +75,23 @@
       </tr>
     </blockTable>
     <section>
-      <para style="P10">Inputs</para>
+      <para style="P10">Entrées</para>
       <blockTable colWidths="90.0,80.0,60.0,64.0,62.0,90.0,36.0" style="Tableau1">
         <tr>
           <td>
-            <para style="P8">Name</para>
+            <para style="P8">Nom</para>
           </td>
           <td>
-            <para style="P8">Room</para>
+            <para style="P8">Chambre</para>
           </td>
           <td>
-            <para style="P12">Entry</para>
+            <para style="P8">Entrée</para>
           </td>
           <td>
             <para style="P8">Provenance</para>
           </td>
           <td>
-            <para style="P8">Release</para>
+            <para style="P8">Sortie</para>
           </td>
           <td>
             <para style="P8">Destination</para>
@@ -169,23 +165,23 @@
       <para style="P1">
         <font color="white"> </font>
       </para>
-      <para style="P10">Outputs</para>
+      <para style="P10">Sorties</para>
       <blockTable colWidths="90.0,80.0,60.0,64.0,62.0,90.0,36.0" style="Tableau3">
         <tr>
           <td>
-            <para style="P8">Name</para>
+            <para style="P8">Nom</para>
           </td>
           <td>
-            <para style="P8">Room</para>
+            <para style="P8">Chambre</para>
           </td>
           <td>
-            <para style="P12">Entry</para>
+            <para style="P8">Entrée</para>
           </td>
           <td>
             <para style="P8">Provenance</para>
           </td>
           <td>
-            <para style="P8">Release</para>
+            <para style="P8">Sortie</para>
           </td>
           <td>
             <para style="P8">Destination</para>
@@ -263,22 +259,19 @@
       <blockTable colWidths="90.0,80.0,60.0,88.0,72.0,91.0" style="Tableau5">
         <tr>
           <td>
-            <para style="P8">Name</para>
+            <para style="P8">Nom</para>
           </td>
           <td>
-            <para style="P8">Room</para>
+            <para style="P8">Chambre</para>
           </td>
           <td>
             <para style="P8">Debut </para>
           </td>
           <td>
-            <para style="P12">Absences Reason </para>
-            <para style="P8">
-              <font color="white"> </font>
-            </para>
+            <para style="P8">Motif absences</para>
           </td>
           <td>
-            <para style="P12">End</para>
+            <para style="P8">Fin</para>
           </td>
           <td>
             <para style="P8">Gir </para>

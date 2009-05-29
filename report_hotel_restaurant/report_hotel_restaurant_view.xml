@@ -37,11 +37,11 @@
 			<graph string="States By restaurant" type="pie">
 				<field name="state"/>
 				<field name="nbr" operator="+"/>
-				
+
 			</graph>
 		</field>
 	</record>
-	
+
 	<record model="ir.ui.view" id="view_hotel_restaurant_status_graph_bar">
 		<field name="name">report.hotel.restaurant.status.graph</field>
 		<field name="model">report.hotel.restaurant.status</field>
@@ -50,23 +50,20 @@
 			<graph string="States By restaurant" type="bar" orientation="verticle">
 				<field name="state"/>
 				<field name="nbr" operator="+"/>
-				
+
 			</graph>
 		</field>
 	</record>
-	
+
 	<record model="ir.actions.act_window" id="action_report_hotel_restaurant_status_tree_graph">
 		<field name="name">States By Restaurant</field>
 		<field name="res_model">report.hotel.restaurant.status</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
-		
-	</record>
 
-	<menuitem name="Hotel Restaurant" id="menu_hotel_restaurant"/>
-	<menuitem name="Reporting" id="menu_hotel_restaurant_reporting" parent="menu_hotel_restaurant"/>
-	<menuitem name="This Month" id="menu_hotel_restaurant_reporting_this" parent="menu_hotel_restaurant_reporting"/>
-	<menuitem name="States By restaurant" id="menu_hotel_restaurant_reporting_this_restaurant" parent="menu_hotel_restaurant_reporting_this" action="action_report_hotel_restaurant_status_tree_graph"/>
+	</record>
+	<menuitem name = "Hotel Management/Reports/This Month"
+			  id = "menu_hotel_restaurant_this_month"/>
 
 	<record model="ir.actions.act_window" id="action_report_hotel_restaurant_status_tree_graph_bar">
 			<field name="name">States By Restaurant</field>
@@ -74,10 +71,13 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">graph,tree</field>
 			<field name = "view_id" ref="view_hotel_restaurant_status_graph_bar"/>
-			
+
 		</record>
-		
-	<menuitem name="States By Restaurant" id="menu_hotel_restaurant_reporting_this_Restaurant" parent="menu_hotel_restaurant_reporting_this" action="action_report_hotel_restaurant_status_tree_graph_bar"/>	
-		
+
+		<menuitem name="States By Restaurant"
+		          action="action_report_hotel_restaurant_status_tree_graph_bar"
+		          id="menu_hotel_restaurant_status_tree_graph_bar"
+		          sequence="33"
+		          parent = "menu_hotel_restaurant_this_month"/>
 </data>
 </openerp>

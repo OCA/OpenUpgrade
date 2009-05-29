@@ -22,6 +22,10 @@
 
 from osv import osv
 from tools.translate import _
+import netsvc
+
+if netsvc.service_exist('wizard.base.module.import'):
+    del netsvc.SERVICES['wizard.base.module.import']
 
 class module(osv.osv):
     _inherit = 'ir.module.module'
@@ -32,4 +36,31 @@ class module(osv.osv):
         return super(module, self).button_uninstall(cr, uid, ids, context)
 
 module()
+
+class repository(osv.osv):
+    _inherit = 'ir.module.repository'
+
+    def search(self, cr, user, args, offset=0, limit=None, order=None, context=None, count=False):
+        if count:
+            return 0
+        return []
+    
+    def read(self, cr, uid, ids, *args):
+        if isinstance(ids, (int, long)):
+            return False
+        return []
+
+    def create(self, cr, uid, *args):
+        raise osv.except_osv(_('Error'), _("You are not authorized to create module repositories"))
+
+    def write(self, cr, uid, *args):
+        raise osv.except_osv(_('Error'), _("You are not authorized to write module repositories"))
+
+    def copy(self, cr, uid, *args):
+        raise osv.except_osv(_('Error'), _("You are not authorized to copy module repositories"))
+
+    def unlink(self, cr, uid, *args):
+        raise osv.except_osv(_('Error'), _("You are not authorized to unlink module repositories"))
+
+repository()
 

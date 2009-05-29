@@ -21,6 +21,7 @@
                 <field name="partner_id" select="1"/>
                 <field name="media_id" select="1"/>
                 <field name="default_for_media" on_change="_check_unique_mail_service(media_id,default_for_media)"/>
+                <field name="type_id" widget="selection"/>
                 <separator string="Mailing Action" colspan="4"/>
                 <group colspan="4" col="4">
                 <field name="action_id" select="1"/>

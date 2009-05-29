@@ -45,64 +45,64 @@
 		</div>
 	
 		<div id="checkboxtext" style="margin: auto; width: 850px; font-family: Verdana, Geneva, sans-serif; font-style: normal; font-size: 12px;">
-			<b style="color: #021677;">Introduction</b><br/>
+			<b style="color: #021677;">${_("Introduction")}</b><br/>
 			
 			<p style="text-align: justify; color: #252a28;">
-				Evaluation-Matrix is a collaborative platform dedicated to evaluate current
+				${_("""Evaluation-Matrix is a collaborative platform dedicated to evaluate current
 				best enterprise management softwares. We focus on a pragmatic approach based
-				on reliable and quantifiable criteria.
+				on reliable and quantifiable criteria.""")}
 			</p>
 			<p style="text-align: justify; color: #252a28;">
-				Evaluation-Matrix follows two different objectives:<br/>
-				* Building a rated features list reflecting users' most common needs and,<br/>
-				* Having a way to evaluate available softwares on the market.
+				${_("Evaluation-Matrix follows two different objectives:")}<br/>
+				${_("* Building a rated features list reflecting users' most common needs and,")}<br/>
+				${_("* Having a way to evaluate available softwares on the market.")}
 			</p>
 			<p style="text-align: justify; color: #252a28;">
-				Our first goal is to precisely define the list of criteria most requested on
+				${_("""Our first goal is to precisely define the list of criteria most requested on
 				the market. This list is hierarchised based on users' most common needs. A
 				ponderation is defined on each criteria to reflect the demand on each
 				particular feature. The highest the ponderation is, the most requested the
-				feature is.
+				feature is.""")}
 			</p>
 			<p style="text-align: justify; color: #252a28;">	
-				Based on this list of criteria, our second goal is to evaluate the
+				${_("""Based on this list of criteria, our second goal is to evaluate the
 				functional and technical coverage of the most used softwares. This allows
 				us to display the result as an evaluation matrix, comparing the different
-				solutions.
+				solutions.""")}
 			</p>
 			<p style="text-align: justify; color: #252a28;">
-				As to maintain and constantly improve the criteria and features list,
+				${_("""As to maintain and constantly improve the criteria and features list,
 				Evaluation-Matrix is based on a collaborative approach. Each user can propose
 				new criteria, vote for the ponderation of a criteria or help to evaluate
-				a particular software.
+				a particular software.""")}
 			</p>
 			
-			<b style="color: #021677;">Methodology</b><br/>
+			<b style="color: #021677;">${_("Methodology")}</b><br/>
 			
 			<p style="text-align: justify; color: #252a28;">
-				Evaluating a software is not an easy task as much of the features are present
+				${_("""Evaluating a software is not an easy task as much of the features are present
 				in several softwares in different forms: from the simplest and easiest one to
 				the complete but complex ones. As to avoid subjectiveness of contributors, we
-				decided to base our evaluation criteria based on factual data.
+				decided to base our evaluation criteria based on factual data.""")}
 			</p>
 			<p style="text-align: justify; color: #252a28;">
-				For example, we do not try to judge or vote on the quality of a feature because
+				${_("""For example, we do not try to judge or vote on the quality of a feature because
 				it depends too much on the need of a user. So, we perfer to compute the quality
-				of a feature based on the availability of sub-features, whether they appear or not.
+				of a feature based on the availability of sub-features, whether they appear or not.""")}
 			</p>
 			<p style="text-align: justify;">
-				<ul><u><i style="color: #062a1e;">Bad criteria :</i></u>
-				<li style="color: #252a28;">Does the software have a good multi-warehouse stock management system ? <br/>
-					- Adjectives like 'good' are too subjective, you should only focus on the
-					  existence of some features whether they exist or not.</li>
-				<li style="color: #252a28;">Does the software have an analytic accounting module ?<br/>
-					- This question is not precise. All accounting softwares have analytic
+				<ul><u><i style="color: #062a1e;">${_("Bad criteria :")}</i></u>
+				<li style="color: #252a28;">${_("Does the software have a good multi-warehouse stock management system ?")} <br/>
+					${_("""- Adjectives like 'good' are too subjective, you should only focus on the
+					  existence of some features whether they exist or not.""")}</li>
+				<li style="color: #252a28;">${_("Does the software have an analytic accounting module ?")}<br/>
+					${("""- This question is not precise. All accounting softwares have analytic
 					  accounting features. So this should be features with several children
-					  criteria to compute the quality of the analytic accounting solution.</li>
-				<li style="color: #252a28;">Ability to create a product form ?<br/>
-					- This question is not useful as all softwares will fit this criteria.</li></ul>
-				<ul><u><i style="color: #062a1e;">Good criteria :</i></u>
-				<li style="color: #252a28;">Can you define an unlimited number of warehouses for stock management ?</li></ul>
+					  criteria to compute the quality of the analytic accounting solution.""")}</li>
+				<li style="color: #252a28;">${_("Ability to create a product form ?")}<br/>
+					${_("- This question is not useful as all softwares will fit this criteria.")}</li></ul>
+				<ul><u><i style="color: #062a1e;">${_("Good criteria :")}</i></u>
+				<li style="color: #252a28;">${_("Can you define an unlimited number of warehouses for stock management ?")}</li></ul>
 			</p>
 					
 			<!--<b style="color: #021677;">How to propose a new application ?</b><br/>
@@ -128,29 +128,29 @@
 	  			evaluation (empty column)<br/>
 			</p>-->
 	
-			<b style="color: #021677;">About Us</b><br/>
+			<b style="color: #021677;">${_("About Us")}</b><br/>
 	
 			<p style="text-align: justify; color: #252a28;">
-				Evaluation-Matrix has been made by a group of people sharing the same
+				${_("""Evaluation-Matrix has been made by a group of people sharing the same
 				interests in enterprise management softwares. We often have to compare
 				different softwares or to find the software that fits best to the customer need.
 				As to avoid redoing each time the same study or comparisons, we decided to
-				setup this platform.
+				setup this platform.""")}
 			</p>
 			<p style="text-align: justify; color: #252a28;">
-				In January 2009, we launched evaluation-matrix starting with the current 5 most
+				${_("""In January 2009, we launched evaluation-matrix starting with the current 5 most
 				important ERP softwares in the world: SAP, Microsoft Navision, Sage L100, Open
-				ERP and Open Bravo.
+				ERP and Open Bravo.""")}
 			</p>
 			<p style="text-align: justify; color: #252a28;">
-				To start with a complete content, we sub-contracted evaluations for the softwares
+				${_("""To start with a complete content, we sub-contracted evaluations for the softwares
 				we did not have any specific knowledge. It allowed us to launch evaluation-matrix
 				with about 950 criteria and the evaluation of these criteria for the
-				selected softwares.
+				selected softwares.""")}
 			</p>
 			<p style="text-align: justify; color: #252a28;">
-				We plan to extend the evaluation matrix to new applications. Feel free to contact
-				us to send us a suggestion.
+				${_("""We plan to extend the evaluation matrix to new applications. Feel free to contact
+				us to send us a suggestion.""")}
 			</p>
 		</div>
 	</div>

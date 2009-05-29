@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2007 EVI.  All Rights Reserved.
+# Copyright (c) 2007 EVERLIBRE.  All Rights Reserved.
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -55,19 +55,20 @@ class anniversaire(report_sxw.rml_parse):
                 moisperiodefin=int(form['datefin'][5:7])
                 jourperiodedebut = int(form['datedebut'][8:10])
                 jourperiodefin = int(form['datefin'][8:10])
-                periodefin=datetime.datetime(anneeperiodefin,moisperiodefin,jourperiodefin)
-                periodedebut=datetime.datetime(anneeperiodefin,moisperiodedebut,jourperiodedebut)
-                anniv=datetime.datetime(anneeperiodefin,moisanniv,jouranniv)
+                periodefin=datetime.datetime(anneeperiodefin,moisperiodefin,jourperiodefin) 
+                periodedebut=datetime.datetime(anneeperiodefin,moisperiodedebut,jourperiodedebut) 
+                anniv=datetime.datetime(anneeperiodefin,moisanniv,jouranniv) 
+                print anniv,periodefin,periodedebut
                 if (anniv <= periodefin) and (anniv >=periodedebut):
                     age= self.age(form['datedebut'],a['birthdaydate'])
                     res.append({'name':a['name'],'datenaissance':a['birthdaydate'],'age':age})
             res.sort(lambda x, y: cmp(x['name'],y['name']))
             return res
-
+    
     def age(self,annee,annee2):
         return int(annee[0:4])-int(annee2[0:4])
 
-
+    
 
 report_sxw.report_sxw('report.health.anniversaire.report', 'health.patient','addons/health/report/anniversaire.rml', parser=anniversaire, header=False)
 

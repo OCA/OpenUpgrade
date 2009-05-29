@@ -78,6 +78,8 @@ class wizard_proposition_products(wizard.interface):
                     if prop_obj.force_sm_price :
                         pu = prop_obj.sm_price
                     else :
+                        if not prop_obj.customer_pricelist_id:
+                            raise wizard.except_wizard('Error !', 'Select a product pricelist !')
                         pu = pool.get('product.pricelist').price_get(cr, uid,
                             [prop_obj.customer_pricelist_id.id], item.id,1.0,
                             context=context)[prop_obj.customer_pricelist_id.id]

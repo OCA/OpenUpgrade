@@ -24,3 +24,5 @@ import openobject_out
 import excel_out
 import xml_out
 import vcard_out
+import xmlrpc_out
+import gdoc_out

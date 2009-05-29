@@ -45,3 +45,4 @@ tran=etl.transition(count, log2)
 
 job1=etl.job([vcard_in1,oo_out,oo_out2, log2,count])
 job1.run()
+print job1.get_statitic_info()

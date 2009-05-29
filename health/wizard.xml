@@ -1,14 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
-<openerp>
-	<data>
-		<wizard id="wizard_facturation"
-		   string="Charge"
-		   model="res.partner"
-		   name="facturer" />
+﻿<?xml version="1.0"?>
+<terp>
+<data>
+<wizard id="wizard_facturation"
+   string="Facturer"
+   model="res.partner" 
+   name="facturer" />
 
-		<wizard id="wizard_facturer"
-		   string="Generate Invoice"
-		   model="health.facturation"
-		   name="facturation" />
-	</data>
-</openerp>
+<wizard id="wizard_facturer"
+   string="Génerer Facture"
+   model="health.facturation"
+   name="facturation" />
+
+
+</data>
+</terp>

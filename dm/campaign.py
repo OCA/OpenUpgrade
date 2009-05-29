@@ -1020,16 +1020,6 @@ class dm_customers_list(osv.osv):
     }
 dm_customers_list()
 
-#class dm_customers_file_source(osv.osv):
-#    _name = "dm.customers_file.source"
-#    _description = "Customer File Source"
-#    _columns = {
-#            'name' : fields.char('Name', size=64 ,required=True),
-#            'code' : fields.char('code', size=64 ,required=True),
-#            'desc' : fields.text('Description'),
-#            }
-#dm_customers_file_source()
-
 
 class dm_customers_file(osv.osv):
     _name = "dm.customers_file"
@@ -1046,7 +1036,6 @@ class dm_customers_file(osv.osv):
         'delivery_date' : fields.date('Delivery Date'),
         'address_ids' : fields.many2many('res.partner.address','dm_cust_file_address_rel','cust_file_id','address_id','Customers File Addresses'),
         'segment_ids' : fields.one2many('dm.campaign.proposition.segment', 'customers_file_id', 'Segments', readonly=True),
-#        'source_id' :fields.many2one('dm.customers_file.source', 'Customers File Source'),
         'source' : fields.selection(_FILE_SOURCES, 'Source', required=True),
         'note' : fields.text('Notes'),
     }
@@ -1072,7 +1061,7 @@ class dm_campaign_proposition_segment(osv.osv):
         proposition_id = self.pool.get('dm.campaign.proposition').browse(cr, uid, vals['proposition_id'])
         vals['parent_id'] = self.pool.get('account.analytic.account').search(cr,uid,[('id','=',proposition_id.analytic_account_id.id)])[0]
         return super(dm_campaign_proposition_segment, self).create(cr, uid, vals, context)
-        
+  
     def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
         if context and 'dm_camp_id' in context:
             if not context['dm_camp_id']:
@@ -1135,6 +1124,7 @@ class dm_campaign_proposition_segment(osv.osv):
 
     _columns = {
         'code1' : fields.function(_segment_code, string='Code', type="char", size=64, method=True, readonly=True),
+        'campaign_id' : fields.related('proposition_id', 'camp_id', type='many2one', relation='dm.campaign', string='Campaign'),
         'proposition_id' : fields.many2one('dm.campaign.proposition','Proposition', ondelete='cascade'),
         'type_src' : fields.selection([('internal','Internal'),('external','External')], 'Type'),
         'customers_list_id': fields.many2one('dm.customers_list','Customers List'),
@@ -2002,23 +1992,6 @@ class dm_campaign_proposition_prices_progression(osv.osv):
     }
 dm_campaign_proposition_prices_progression()
 
-class dm_campaign_document_type(osv.osv):
-    _name = 'dm.campaign.document.type'
-    _columns = {
-        'name' : fields.char('Name', size=64, required=True),
-        'code' : fields.char('Code', size=64, required=True),
-    }
-dm_campaign_document_type()
-
-class dm_campaign_document(osv.osv):
-    _name = 'dm.campaign.document'
-    _columns = {
-        'name' : fields.char('Name', size=64, required=True),
-        'type_id' : fields.many2one('dm.campaign.document.type','Format',required=True),
-        'segment_id' : fields.many2one('dm.campaign.proposition.segment','Segment',required=True),
-    }
-dm_campaign_document()
-
 class Country(osv.osv):
     _name = 'res.country'
     _inherit = 'res.country'
@@ -2036,7 +2009,8 @@ class res_partner(osv.osv):
     _columns = {
         'country_ids' : fields.many2many('res.country', 'partner_country_rel', 'partner_id', 'country_id', 'Allowed Countries'),
         'state_ids' : fields.many2many('res.country.state','partner_state_rel', 'partner_id', 'state_id', 'Allowed States'),
-        'dm_contact_id' : fields.many2one('res.partner.address', 'Address To Use', ondelete='cascade'),
+        'deceased' : fields.boolean('Deceased'),
+        'deceased_date' : fields.datetime('Deceased Date'),
     }
     def _default_category(self, cr, uid, context={}):
         if 'category_id' in context and context['category_id']:
@@ -2061,6 +2035,7 @@ class res_partner(osv.osv):
     }
 res_partner()
 
+"""
 class purchase_order(osv.osv):
     _name = 'purchase.order'
     _inherit = 'purchase.order'
@@ -2068,6 +2043,7 @@ class purchase_order(osv.osv):
         'dm_campaign_purchase_line' : fields.many2one('dm.campaign.purchase_line','DM Campaign Purchase Line'),
     }
 purchase_order()
+"""
 
 class project_task(osv.osv):
     _name = "project.task"

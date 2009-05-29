@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
+
+	<record model="ir.ui.view" id="view_account_move_line_form_inherit">
+		<field name="name">account.move.line.form.inherit</field>
+		<field name="model">account.move.line</field>
+		<field name="inherit_id" ref="account.view_move_line_form"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<field name="credit" position="after">
+				<newline/>
+				<field name="company_id" required="1"/>
+			</field>
+		</field>
+	</record>
+	
+	
+	<record model="ir.ui.view" id="view_account_move_form_inherit">
+		<field name="name">account.move.form.inherit</field>
+		<field name="model">account.move</field>
+		<field name="inherit_id" ref="account.view_move_form"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<field name="journal_id" position="after">
+				<field name="company_id" required="1"/>
+			</field>
+		</field>
+	</record>
         
         <record id="view_account_journal_form_multi_company" model="ir.ui.view">
             <field name="name">account.journal.form</field>
@@ -32,7 +58,7 @@
             <field name="type">form</field>
             <field name="inherit_id" ref="account_budget.view_budget_post_form"/>
             <field name="arch" type="xml">
-                <field name="sens" position="after">
+                <field name="code" position="after">
                     <field name="company_id"/>
                 </field>
             </field>
@@ -136,6 +162,20 @@
                 </field>
             </field>
         </record>
-
+        
+        <record id="view_journal_period_tree_new" model="ir.ui.view">
+            <field name="name">account.journal.period.tree</field>
+            <field name="model">account.journal.period</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="account.view_journal_period_tree"/>
+            <field name="arch" type="xml">
+                <field name="state" position="after">
+                    <field name="company_id"/>
+                </field>
+            </field>
+        </record>
+        
+        <wizard id="account.action_move_journal_line_form" menu="False" model="account.move.line" name="account.move.journal.multicompany" string="Entries Encoding by Line"/>
+        
     </data>
 </openerp>

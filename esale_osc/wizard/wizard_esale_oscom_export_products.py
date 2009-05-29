@@ -34,23 +34,29 @@ _export_done_form = '''<?xml version="1.0" encoding="utf-8"?>
     <field name="prod_new"/>
     <newline/>
     <field name="prod_update"/>
+    <newline/>
+    <field name="prod_delete"/>
 </form>'''
 
 _export_done_fields = {
     'prod_new': {'string':'New products', 'type':'float', 'readonly': True},
     'prod_update': {'string':'Updated products', 'type':'float', 'readonly': True},
+    'prod_delete': {'string':'Deleted products', 'type':'float', 'readonly': True},
 }
 
 def _do_export(self, cr, uid, data, context):
     self.pool = pooler.get_pool(cr.dbname)
+    esale_web_obj = self.pool.get('esale.oscom.web')
+    esale_category_obj = self.pool.get('esale.oscom.category')
+    product_obj = self.pool.get('product.product')
 
     if data['model'] == 'ir.ui.menu':
-        website_ids = self.pool.get('esale.oscom.web').search(cr, uid, [('active', '=', True)])
+        website_ids = esale_web_obj.search(cr, uid, [('active', '=', True)])
     else:
         website_ids = []
         website_not = []
         for id in data['ids']:
-            exportable_website = self.pool.get('esale.oscom.web').search(cr, uid, [('id', '=', id), ('active', '=', True)])
+            exportable_website = esale_web_obj.search(cr, uid, [('id', '=', id), ('active', '=', True)])
             if exportable_website:
                 website_ids.append(exportable_website[0])
             else:
@@ -61,19 +67,21 @@ def _do_export(self, cr, uid, data, context):
 
     prod_new = 0
     prod_update = 0
+    prod_delete = 0
     for website_id in website_ids:
-        website = self.pool.get('esale.oscom.web').browse(cr, uid, website_id)
-        esale_category_ids = self.pool.get('esale.oscom.category').search(cr, uid, [('web_id','=', website.id), ('category_id', '!=', False)])
-        esale_category_objs = self.pool.get('esale.oscom.category').browse(cr,uid,esale_category_ids)
+        website = esale_web_obj.browse(cr, uid, website_id)
+        esale_category_ids = esale_category_obj.search(cr, uid, [('web_id','=', website.id), ('category_id', '!=', False)])
+        esale_categories = esale_category_obj.browse(cr, uid, esale_category_ids)
         product_ids = []
-        for esale_category_obj in esale_category_objs:
-            product_ids.extend(self.pool.get('product.product').search(cr,uid,[('categ_id','=',esale_category_obj.category_id.id)]))
-        #end for esale_category_id in esale_category_ids:
-        res = self.pool.get('product.product').oscom_export(cr, uid, website=website, product_ids=product_ids, context=context)
+        for esale_category in esale_categories:
+            product_ids.extend(product_obj.search(cr, uid, [('categ_id','=',esale_category.category_id.id)]))
+
+        res = product_obj.oscom_export(cr, uid, website=website, product_ids=product_ids, context=context)
         prod_new = prod_new + res['prod_new']
         prod_update = prod_update + res['prod_update']
+        prod_delete = prod_delete + res['prod_delete']
 
-    return {'prod_new':prod_new, 'prod_update':prod_update}
+    return {'prod_new':prod_new, 'prod_update':prod_update, 'prod_delete':prod_delete}
 
 
 class wiz_esale_oscom_products(wizard.interface):
