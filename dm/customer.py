@@ -523,9 +523,10 @@ class dm_event(osv.osv_memory):
     }
     _defaults = {
         'source': lambda *a: 'address_id',
+        'sale_order_id' : lambda *a : False,
     }
 
-    def create(self,cr,uid,vals,context={}):
+    def create(self,cr,uid,vals,context):
         id = super(dm_event,self).create(cr,uid,vals,context)
         obj = self.browse(cr, uid ,id)
         tr_ids = self.pool.get('dm.offer.step.transition').search(cr, uid, [('step_from_id','=',obj.step_id.id),
