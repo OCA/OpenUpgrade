@@ -197,7 +197,7 @@ def _create_kml(self, cr, uid, data, context={}):
             coorElement.appendChild(kmlDoc.createTextNode(coordinates2))
             coorElement.appendChild(kmlDoc.createTextNode(coordinates1))
 #            coordinates2 = geocode(customer_city)
-            coorElement.appendChild(kmlDoc.createTextNode(coordinates2))
+#            coorElement.appendChild(kmlDoc.createTextNode(coordinates2))
         else:
             for s in steps:
                 coorText = '%s, %s, %s \n' % (s[0], s[1], s[2])

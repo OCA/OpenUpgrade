@@ -298,7 +298,7 @@ def create_kml(self, cr, uid, data, context={}):
         documentElement.appendChild(folderElement)
 
     out = base64.encodestring(kmlDoc.toxml())
-    fname = 'partner_region' + '.kml'
+    fname = 'region' + '.kml'
     return {'kml_file': out, 'name': fname}
 
 class customer_on_map(wizard.interface):
