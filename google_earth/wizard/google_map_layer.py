@@ -106,7 +106,7 @@ def create_kml(self, cr, uid, data, context={}):
     map(lambda x:res.setdefault(x, 0.0), country_list)
     # fetch turnover by country (should be corect)
 #    cr.execute('select sum(l.credit), c.name from account_move_line as l join res_partner_address as a on l.partner_id=a.partner_id left join res_country as c on c.id=a.country_id group by c.name')
-    cr.execute("select sum(l.credit), c.name from account_move_line l, res_country c, res_partner_address a, account_account act where l.partner_id = a.partner_id and c.id=a.country_id and l.account_id = act.id and act.type = 'receivable' group by c.name")
+    cr.execute("select sum(l.debit-l.credit), c.name from account_move_line l, res_country c, res_partner_address a, account_account act where l.partner_id = a.partner_id and c.id=a.country_id and l.account_id = act.id and act.type = 'receivable' group by c.name")
     res_partner = cr.fetchall()
     list_to = []
     for part in res_partner:
