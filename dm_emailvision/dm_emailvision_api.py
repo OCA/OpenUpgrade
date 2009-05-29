@@ -52,6 +52,7 @@ def send_email(cr,uid,obj,context):
     ev_random = obj.mail_service_id.ev_random
 
     email_dest = obj.address_id.email
+    email_subject = obj.document_id.subject
 
     pool = pooler.get_pool(cr.dbname)
     ir_att_obj = pool.get('ir.attachment')
@@ -66,6 +67,18 @@ def send_email(cr,uid,obj,context):
         "Composing XML"
         msg = etree.Element("MultiSendRequest")
         sendrequest = etree.SubElement(msg, "sendrequest")
+
+        dyn = etree.SubElement(sendrequest, "dyn")
+        dynentry1 = etree.SubElement(dyn, "entry")
+        dynkey1 = etree.SubElement(dynentry1, "key")
+        dynkey1.text = "EMAIL_DEST"
+        dynvalue1 = etree.SubElement(dynentry1, "value")
+        dynvalue1.text = email_dest
+        dynentry2 = etree.SubElement(dyn, "entry")
+        dynkey2 = etree.SubElement(dynentry2, "key")
+        dynkey2.text = "SUBJECT"
+        dynvalue2 = etree.SubElement(dynentry2, "value")
+        dynvalue2.text = email_subject
 
         content = etree.SubElement(sendrequest, "content")
         entry1 = etree.SubElement(content, "entry")
@@ -88,7 +101,7 @@ def send_email(cr,uid,obj,context):
         senddate = etree.SubElement(sendrequest, "senddate")
         senddate.text = "2008-05-06T00:00:00.000+01:00"
         synchrotype = etree.SubElement(sendrequest, "synchrotype")
-        synchrotype.text = "OTHING"
+        synchrotype.text = "NOTHING"
 
         print("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "\n" + etree.tostring(msg, method="xml", encoding='utf-8', pretty_print=True))
 
