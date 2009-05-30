@@ -25,13 +25,6 @@
 		<field name="split_mode">OR</field>
 	</record>
 
-	<record model="workflow.activity" id="act_set_to_draft">
-		<field name="wkf_id" ref="wkf_table_resrvation" />
-		<field name="name">settodraft</field>
-		<field name="kind">function</field>
-		<field name="action">action_set_to_draft()</field>
-	</record>
-
 	<record model="workflow.activity" id="act_cancel">
 		<field name="wkf_id" ref="wkf_table_resrvation" />
 		<field name="name">cancel</field>

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -24,7 +24,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "category" : "Interfaces/CMS & eCommerce",
-    "website" : "http://tinyerp.com",
+    "website" : "http://www.openerp.com",
     "depends" : ["product", "stock", "sale", "account", "account_tax_include",],
     "description": """Joomla (Virtuemart) eCommerce interface synchronisation.
 Users can order on the website, orders are automatically imported in Tiny
@@ -37,10 +37,10 @@ If you product has an image attched, it send the image to the Joomla website."""
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-            #"security/esale_joomla_security.xml",
-            #"security/ir.model.access.csv",
-            #"esale_joomla_view.xml",
-            #"esale_joomla_wizard.xml",
+            "security/esale_joomla_security.xml",
+           # "security/ir.model.access.csv",
+            "esale_joomla_view.xml",
+            "esale_joomla_wizard.xml",
     ],
     "active": False,
     "installable": True

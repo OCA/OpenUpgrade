@@ -24,7 +24,7 @@
     "version" : "0.1",
     "author" : "Tiny",
     "category" : "Generic Modules/Sales & Purchases",
-    "website" : "http://tinyerp.com/",
+    "website" : "http://www.openerp.com",
     "description": """This module allow you to use the Sale Management to encode your advertising sales ... TODO
 """,
     "depends" : ["sale"],

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -54,7 +54,9 @@ class make_sale(wizard.interface):
                 ['invoice', 'delivery', 'contact'])
         default_pricelist = partner_obj.browse(cr, uid, partner_id,
                     context).property_product_pricelist.id
-
+        fpos = partner_obj.browse(cr, uid, partner_id,
+                    context).property_account_position
+        fpos_id = fpos and fpos.id or False
 
         for purchase in purchase_obj.browse(cr, uid, data['ids']):
             vals = {
@@ -68,12 +70,13 @@ class make_sale(wizard.interface):
                 'partner_shipping_id': partner_addr['delivery'],
                 'order_policy': 'manual',
                 'date_order': now(),
+                'fiscal_position': fpos_id
             }
             new_id = sale_obj.create(cr, uid, vals)
-
+            fpos = user.company_id.partner_id.property_account_position and user.company_id.partner_id.property_account_position.id or False
             for line in purchase.order_line:
                 value = sale_line_obj.product_id_change(cr, uid, [], default_pricelist,
-                        line.product_id.id, qty=line.product_qty, partner_id=partner_id)['value']
+                        line.product_id.id, qty=line.product_qty, partner_id=partner_id, fiscal_position=fpos)['value']
                 value['price_unit'] = line.price_unit
                 value['product_id'] = line.product_id.id
                 value['product_uos'] = value.get('product_uos', [False,False])[0]

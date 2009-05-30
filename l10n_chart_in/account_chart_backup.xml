@@ -1,544 +1,861 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <openerp>
-	<data noupdate="1">
-<record id="chart0" model="account.account">
-	<field name="code">0</field>
-	<field name="name">Account Chart</field>
-
-	<field name="parent_id" eval="[]"/>
-	<field name="type">view</field>
-
-</record>
-<record id="chart1000" model="account.account">
-	<field name="code">1000</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">view</field>
-	<field name="name">AKTIVA LANCAR</field>
-
-</record>
-<record id="account.a_cash" model="account.account">
-	<field name="code">1060</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">asset</field>
-	<field name="name">Bank</field>
-
-</record>
-<record id="chart1065" model="account.account">
-	<field name="code">1065</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">asset</field>
-	<field name="name">Kas Kecil</field>
-
-</record>
-<record id="chart1200" model="account.account">
-	<field name="code">1200</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">asset</field>
-	<field name="name">Piutang</field>
-
-</record>
-<record id="chart1500" model="account.account">
-	<field name="code">1500</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">view</field>
-	<field name="name">INVENTORY</field>
-
-</record>
-<record id="chart1520" model="account.account">
-	<field name="code">1520</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">asset</field>
-	<field name="name">Inventory / Umum</field>
-
-</record>
-<record id="chart1530" model="account.account">
-	<field name="code">1530</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">asset</field>
-	<field name="name">Inventory / Aftermarket Parts</field>
-
-</record>
-<record id="chart1800" model="account.account">
-	<field name="code">1800</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">view</field>
-	<field name="name">AKTIVA TETAP</field>
-
-</record>
-<record id="chart1820" model="account.account">
-	<field name="code">1820</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">asset</field>
-	<field name="name">Perabot Kantor &amp; Peralatan</field>
-
-</record>
-<record id="chart1825" model="account.account">
-	<field name="code">1825</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">asset</field>
-	<field name="name">Akumulasi Amort. Perabot &amp; Peralatan</field>
-
-</record>
-<record id="chart1840" model="account.account">
-	<field name="code">1840</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">asset</field>
-	<field name="name">Kendaraan</field>
-
-</record>
-<record id="chart1845" model="account.account">
-	<field name="code">1845</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">asset</field>
-	<field name="name">Akumulasi Amort. Kendaraan</field>
-
-</record>
-<record id="chart2000" model="account.account">
-	<field name="code">2000</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">view</field>
-	<field name="name">HUTANG LANCAR</field>
-
-</record>
-<record id="chart2100" model="account.account">
-	<field name="code">2100</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">cash</field>
-	<field name="name">Hutang Dagang</field>
-
-</record>
-<record id="chart2160" model="account.account">
-	<field name="code">2160</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">cash</field>
-	<field name="name">Hutang Pajak</field>
-
-</record>
-<record id="chart2250" model="account.account">
-	<field name="code">2250</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">cash</field>
-	<field name="name">Hutang Rencana Pensiun</field>
-
-</record>
-<record id="chart2260" model="account.account">
-	<field name="code">2260</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">cash</field>
-	<field name="name">Hutang Asuransi Karyawan</field>
-
-</record>
-<record id="chart2280" model="account.account">
-	<field name="code">2280</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">cash</field>
-	<field name="name">Hutang Pajak Gaji</field>
-
-</record>
-<record id="chart2310" model="account.account">
-	<field name="code">2310</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">cash</field>
-	<field name="name">PPn (10%)</field>
-
-</record>
-<record id="chart2600" model="account.account">
-	<field name="code">2600</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">view</field>
-	<field name="name">HUTANG JANGKA PANJANG</field>
-
-</record>
-<record id="chart2620" model="account.account">
-	<field name="code">2620</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">cash</field>
-	<field name="name">Hutang Bank</field>
-
-</record>
-<record id="chart2680" model="account.account">
-	<field name="code">2680</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">cash</field>
-	<field name="name">Hutang ke Pemegang Saham</field>
-
-</record>
-<record id="chart3300" model="account.account">
-	<field name="code">3300</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">view</field>
-	<field name="name">MODAL</field>
-
-</record>
-<record id="chart3350" model="account.account">
-	<field name="code">3350</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">tax</field>
-	<field name="name">Modal Umum</field>
-
-</record>
-<record id="chart4000" model="account.account">
-	<field name="code">4000</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">view</field>
-	<field name="name">PENDAPATAN PENJUALAN</field>
-
-</record>
-<record id="account.a_income" model="account.account">
-	<field name="code">4020</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">income</field>
-	<field name="name">Penjualan / General</field>
-
-</record>
-<record id="chart4030" model="account.account">
-	<field name="code">4030</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">income</field>
-	<field name="name">Penjualan / Aftermarket Parts</field>
-
-</record>
-<record id="chart4300" model="account.account">
-	<field name="code">4300</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">view</field>
-	<field name="name">PENDAPATAN KONSULTASI</field>
-
-</record>
-<record id="chart4320" model="account.account">
-	<field name="code">4320</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">income</field>
-	<field name="name">Jasa Konsultasi</field>
-
-</record>
-<record id="chart4400" model="account.account">
-	<field name="code">4400</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">view</field>
-	<field name="name">PENDAPATAN LAIN</field>
-
-</record>
-<record id="chart4430" model="account.account">
-	<field name="code">4430</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">income</field>
-	<field name="name">Jasa Pengiriman dan Pengepakan</field>
-
-</record>
-<record id="chart4440" model="account.account">
-	<field name="code">4440</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">income</field>
-	<field name="name">Bunga</field>
-
-</record>
-<record id="account.a_recv" model="account.account">
-	<field name="code">4450</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">income</field>
-	<field name="name">Keuntungan Selisih Kurs</field>
-
-</record>
-<record id="chart5000" model="account.account">
-	<field name="code">5000</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">view</field>
-	<field name="name">BIAYA PENJUALAN</field>
-
-</record>
-<record id="account.a_expense" model="account.account">
-	<field name="code">5010</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">expense</field>
-	<field name="name">Pembelian</field>
-
-</record>
-<record id="chart5020" model="account.account">
-	<field name="code">5020</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">expense</field>
-	<field name="name">COGS / General</field>
-
-</record>
-<record id="chart5030" model="account.account">
-	<field name="code">5030</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">expense</field>
-	<field name="name">COGS / Aftermarket Parts</field>
-
-</record>
-<record id="chart5100" model="account.account">
-	<field name="code">5100</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">expense</field>
-	<field name="name">Ongkos Kirim</field>
-
-</record>
-<record id="chart5400" model="account.account">
-	<field name="code">5400</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">view</field>
-	<field name="name">BIAYA GAJI</field>
-
-</record>
-<record id="chart5410" model="account.account">
-	<field name="code">5410</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">expense</field>
-	<field name="name">Biaya Gaji</field>
-
-</record>
-<record id="chart5420" model="account.account">
-	<field name="code">5420</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">expense</field>
-	<field name="name">Biaya Asuransi Karyawan</field>
-
-</record>
-<record id="chart5430" model="account.account">
-	<field name="code">5430</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">expense</field>
-	<field name="name">Biaya Rencana Pensiun</field>
-
-</record>
-<record id="chart5600" model="account.account">
-	<field name="code">5600</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">view</field>
-	<field name="name">BIAYA UMUM DAN ADMINISTRASI</field>
-
-</record>
-<record id="chart5610" model="account.account">
-	<field name="code">5610</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">expense</field>
-	<field name="name">Akunting dan Legalitas</field>
-
-</record>
-<record id="chart5615" model="account.account">
-	<field name="code">5615</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">expense</field>
-	<field name="name">Iklan dan Promosi</field>
-
-</record>
-<record id="chart5650" model="account.account">
-	<field name="code">5650</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">expense</field>
-	<field name="name">Capital Cost Allowance Expense</field>
-
-</record>
-<record id="chart5660" model="account.account">
-	<field name="code">5660</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">expense</field>
-	<field name="name">Biaya Amortisasi</field>
-
-</record>
-<record id="chart5680" model="account.account">
-	<field name="code">5680</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">expense</field>
-	<field name="name">Biaya Pajak Pendapatan</field>
-
-</record>
-<record id="chart5685" model="account.account">
-	<field name="code">5685</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">expense</field>
-	<field name="name">Asuransi</field>
-
-</record>
-<record id="chart5690" model="account.account">
-	<field name="code">5690</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">expense</field>
-	<field name="name">Biaya Bank dan Bunga</field>
-
-</record>
-<record id="chart5700" model="account.account">
-	<field name="code">5700</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">expense</field>
-	<field name="name">Biaya Keperluan Kantor</field>
-
-</record>
-<record id="chart5760" model="account.account">
-	<field name="code">5760</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">expense</field>
-	<field name="name">Biaya Sewa</field>
-
-</record>
-<record id="chart5765" model="account.account">
-	<field name="code">5765</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">expense</field>
-	<field name="name">Reparasi &amp; Maintenance</field>
-
-</record>
-<record id="chart5780" model="account.account">
-	<field name="code">5780</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">expense</field>
-	<field name="name">Telephone</field>
-
-</record>
-<record id="chart5785" model="account.account">
-	<field name="code">5785</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">expense</field>
-	<field name="name">Perjalanan dan Entertainment</field>
-
-</record>
-<record id="chart5790" model="account.account">
-	<field name="code">5790</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">expense</field>
-	<field name="name">Utilitas</field>
-
-</record>
-<record id="chart5795" model="account.account">
-	<field name="code">5795</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">expense</field>
-	<field name="name">Registrasi</field>
-
-</record>
-<record id="chart5800" model="account.account">
-	<field name="code">5800</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">expense</field>
-	<field name="name">Licensi</field>
-
-</record>
-<record id="account.a_pay" model="account.account">
-	<field name="code">5810</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
-	<field name="type">expense</field>
-	<field name="name">Rugi Selisih Kurs</field>
-
-</record>
-</data>
+	<data noupdate="True">
+
+		<record model="res.currency" id="base.IDR">
+			<field name="name">Rs</field>
+			<field name="code">INR</field>
+			<field name="rounding">0.01</field>
+			<field name="accuracy">4</field>
+		</record>
+		<record model="res.currency.rate" id="rateRUP">
+			<field name="rate">1.0</field>
+			<field name="currency_id" ref="base.IDR" />
+		</record>
+
+		## account chart
+		<record model="account.account" id="root">
+			<field name="name">Account Chart-India</field>
+			<field name="code">0</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+		</record>
+
+		# type of accounts
+
+		<record model="account.account" id="IA_AC0">
+			<field name="name">Balance Sheet</field>
+			<field name="code">AC0</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="root"/>
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC01">
+			<field name="name">Application of Funds</field>
+			<field name="code">AC01</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC0"/>
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC011">
+			<field name="name">Fixed Assets</field>
+			<field name="code">AC011</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC01"/>
+		</record>
+		# Accounts
+
+		<record model="account.account" id="IA_AC0111">
+			<field name="name">Tangible Assets</field>
+			<field name="code">AC0111</field>
+			<field name="type">asset</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC011" />
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC01111">
+			<field name="name">Land and Building Account</field>
+			<field name="code">AC01111</field>
+			<field name="type">asset</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC0111" />
+		</record>
+
+		<record model="account.account" id="IA_AC01112">
+			<field name="name">Furniture Account</field>
+			<field name="code">AC01112</field>
+			<field name="type">asset</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC0111" />
+		</record>
+
+		<record model="account.account" id="IA_AC01113">
+			<field name="name">Machine Account</field>
+			<field name="code">AC01113</field>
+			<field name="type">asset</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC0111" />
+		</record>
+
+		<record model="account.account" id="IA_AC0112">
+			<field name="name">Intangible Assets</field>
+			<field name="code">AC0112</field>
+			<field name="type">asset</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC011" />
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC01121">
+			<field name="name">Goodwill Account</field>
+			<field name="code">AC01121</field>
+			<field name="type">asset</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC0112" />
+		</record>
+
+		<record model="account.account" id="IA_AC01122">
+			<field name="name">Patent Account</field>
+			<field name="code">AC01122</field>
+			<field name="type">asset</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC0112" />
+		</record>
+
+		<record model="account.account" id="IA_AC01123">
+			<field name="name">Trade Mark Account</field>
+			<field name="code">AC01123</field>
+			<field name="type">asset</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC0112" />
+		</record>
+		<record model="account.account" id="IA_AC012">
+			<field name="name">Investment</field>
+			<field name="code">AC012</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC01" />
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC0121">
+			<field name="name">Trading Investment</field>
+			<field name="code">AC0121</field>
+			<field name="type">asset</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC012" />
+		</record>
+
+		<record model="account.account" id="IA_AC0122">
+			<field name="name">Non-Trading Investment</field>
+			<field name="code">AC0122</field>
+			<field name="type">asset</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC012" />
+		</record>
+
+		<record model="account.account" id="IA_AC013">
+			<field name="name">Net Current Assets</field>
+			<field name="code">AC013</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC01" />
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC0131">
+			<field name="name">Current Assets</field>
+			<field name="code">AC0131</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC013" />
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC01311">
+			<field name="name">Debtors</field>
+			<field name="code">AC01311</field>
+			<field name="type">receivable</field>
+
+			<field name="reconcile" eval="True" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC0131"/>
+		</record>
+
+		<record model="account.account" id="IA_AC01312">
+			<field name="name">Cash / Bank Account</field>
+			<field name="code">AC01312</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC0131"/>
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC013121">
+			<field name="name">Cash Balance Account</field>
+			<field name="code">AC013121</field>
+			<field name="type">cash</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC01312" />
+		</record>
+
+		<record model="account.account" id="IA_AC013122">
+			<field name="name">Bank Balance Account</field>
+			<field name="code">AC013122</field>
+			<field name="type">cash</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC01312" />
+		</record>
+
+		<record model="account.account" id="IA_AC01313">
+			<field name="name">Inventory</field>
+			<field name="code">AC01313</field>
+			<field name="type">asset</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC0131"/>
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC013131">
+			<field name="name">Raw Material Stock</field>
+			<field name="code">AC013131</field>
+			<field name="type">asset</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC01313"/>
+		</record>
+
+		<record model="account.account" id="IA_AC013132">
+			<field name="name">Work-In-Progress Stock</field>
+			<field name="code">AC013132</field>
+			<field name="type">asset</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC01313" />
+		</record>
+
+		<record model="account.account" id="IA_AC013133">
+			<field name="name">Finished Good Stock</field>
+			<field name="code">AC013133</field>
+			<field name="type">asset</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC01313" />
+		</record>
+
+		<record model="account.account" id="IA_AC01314">
+			<field name="name">Loan and Advances</field>
+			<field name="code">AC01314</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC0131"/>
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC013141">
+			<field name="name">Loan Account</field>
+			<field name="code">AC013141</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC01314"/>
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC0131411">
+			<field name="name">Loan to Employees</field>
+			<field name="code">AC0131411</field>
+			<field name="type">receivable</field>
+
+			<field name="reconcile" eval="True" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC013141"/>
+		</record>
+
+		<record model="account.account" id="IA_AC0131412">
+			<field name="name">Loan to Other Parties</field>
+			<field name="code">AC0131412</field>
+			<field name="type">receivable</field>
+
+			<field name="reconcile" eval="True" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC013141"/>
+		</record>
+
+		<record model="account.account" id="IA_AC013142">
+			<field name="name">Advances</field>
+			<field name="code">AC013142</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC01314"/>
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC0131421">
+			<field name="name">OutPut VAT</field>
+			<field name="code">AC0131421</field>
+			<field name="type">tax</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC013142"/>
+		</record>
+
+		<record model="account.account" id="IA_AC0131422">
+			<field name="name">Bill Receivable</field>
+			<field name="code">AC0131422</field>
+			<field name="type">receivable</field>
+
+			<field name="reconcile" eval="True" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC013142"/>
+		</record>
+
+
+		<record model="account.account" id="IA_AC0131423">
+			<field name="name">Prepaid Expenses</field>
+			<field name="code">AC0131423</field>
+			<field name="type">receivable</field>
+
+			<field name="reconcile" eval="True" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC013142"/>
+		</record>
+
+		<record model="account.account" id="IA_AC0131424">
+			<field name="name">Tax Deduct At Sources</field>
+			<field name="code">AC0131424</field>
+			<field name="type">tax</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC013142"/>
+		</record>
+
+		<record model="account.account" id="IA_AC0132">
+			<field name="name">Current Liabilities</field>
+			<field name="code">AC0132</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC013" />
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC01321">
+			<field name="name">Creditors</field>
+			<field name="code">AC01321</field>
+			<field name="type">payable</field>
+
+			<field name="reconcile" eval="True" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC0132"/>
+		</record>
+
+		<record model="account.account" id="IA_AC01322">
+			<field name="name">Provisions</field>
+			<field name="code">AC01322</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC0132"/>
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC013221">
+			<field name="name">InPut VAT</field>
+			<field name="code">AC013221</field>
+			<field name="type">tax</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC01322"/>
+		</record>
+
+		<record model="account.account" id="IA_AC013222">
+			<field name="name">Provident Fund</field>
+			<field name="code">AC013222</field>
+			<field name="type">payable</field>
+
+			<field name="reconcile" eval="True" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC01322"/>
+		</record>
+
+		<record model="account.account" id="IA_AC013223">
+			<field name="name">Pension Fund</field>
+			<field name="code">AC013223</field>
+			<field name="type">payable</field>
+
+			<field name="reconcile" eval="True" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC01322"/>
+		</record>
+
+		<record model="account.account" id="IA_AC013224">
+			<field name="name">Workman Profit Sharing Fund</field>
+			<field name="code">AC013224</field>
+			<field name="type">payable</field>
+
+			<field name="reconcile" eval="True" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC01322"/>
+		</record>
+
+		<record model="account.account" id="IA_AC013225">
+			<field name="name">Tax Deduct At Source</field>
+			<field name="code">AC013225</field>
+			<field name="type">tax</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC01322"/>
+		</record>
+
+		<record model="account.account" id="IA_AC013226">
+			<field name="name">Provision For Taxation</field>
+			<field name="code">AC013226</field>
+			<field name="type">tax</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC01322"/>
+		</record>
+
+		<record model="account.account" id="IA_AC01323">
+			<field name="name">Out Standing Expenditure</field>
+			<field name="code">AC01323</field>
+			<field name="type">payable</field>
+
+			<field name="reconcile" eval="True" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC0132"/>
+		</record>
+
+		<record model="account.account" id="IA_AC01324">
+			<field name="name">Bank Over Draft / Cash Credit</field>
+			<field name="code">AC01324</field>
+			<field name="type">payable</field>
+
+			<field name="reconcile" eval="True" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC0132"/>
+		</record>
+
+		<record model="account.account" id="IA_AC014">
+			<field name="name">Miscellaneous Expenditure</field>
+			<field name="code">AC014</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC01" />
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC0141">
+			<field name="name">
+				Preliminary and Pre-oprating Expenses
+			</field>
+			<field name="code">AC0141</field>
+			<field name="type">asset</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC014"/>
+		</record>
+
+		<record model="account.account" id="IA_AC0142">
+			<field name="name">Research and Development Expenses</field>
+			<field name="code">AC0142</field>
+			<field name="type">asset</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC014"/>
+		</record>
+
+		<record model="account.account" id="IA_AC0143">
+			<field name="name">Share Issue Expenses</field>
+			<field name="code">AC0143</field>
+			<field name="type">asset</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC014"/>
+		</record>
+
+		<record model="account.account" id="IA_AC02">
+			<field name="name">Sources of Fund</field>
+			<field name="code">AC02</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC0"/>
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC021">
+			<field name="name">Share Holders Fund</field>
+			<field name="code">AC021</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC02"/>
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC0211">
+			<field name="name">Share Capital / Capital</field>
+			<field name="code">AC0211</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC021"/>
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC02111">
+			<field name="name">Equity Share Capital</field>
+			<field name="code">AC02111</field>
+			<field name="type">equity</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC0211"/>
+		</record>
+
+		<record model="account.account" id="IA_AC02112">
+			<field name="name">Preference Share Capital</field>
+			<field name="code">AC02112</field>
+			<field name="type">equity</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC0211"/>
+		</record>
+
+		<record model="account.account" id="IA_AC0212">
+			<field name="name">Reserve and surplus</field>
+			<field name="code">AC0212</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC021"/>
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC02121">
+			<field name="name">General Reserve</field>
+			<field name="code">AC02121</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC0212"/>
+		</record>
+
+		<record model="account.account" id="IA_AC02122">
+			<field name="name">Sinking Fund</field>
+			<field name="code">AC02122</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC0212"/>
+		</record>
+
+		<record model="account.account" id="IA_AC022">
+			<field name="name">Long Term Loan</field>
+			<field name="code">AC022</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC02"/>
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC0221">
+			<field name="name">Secured Loan</field>
+			<field name="code">AC0221</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC022"/>
+		</record>
+
+		<record model="account.account" id="IA_AC0222">
+			<field name="name">Unsecured Loan</field>
+			<field name="code">AC0222</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC022"/>
+		</record>
+
+
+		<record model="account.account" id="IA_AC1">
+			<field name="name">Profit and Loss</field>
+			<field name="code">AC1</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="root"/>
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC11">
+			<field name="name">Incomes / Revenue</field>
+			<field name="code">AC11</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC1"/>
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC111">
+			<field name="name">Product Sales</field>
+			<field name="code">AC111</field>
+			<field name="type">income</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC11"/>
+		</record>
+
+		<record model="account.account" id="IA_AC112">
+			<field name="name">Other Income</field>
+			<field name="code">AC112</field>
+			<field name="type">income</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC11"/>
+		</record>
+
+		<record model="account.account" id="IA_AC12">
+			<field name="name">Expenditure</field>
+			<field name="code">AC12</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC1"/>
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC121">
+			<field name="name">Cost of Sales</field>
+			<field name="code">AC121</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC12"/>
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC1211">
+			<field name="name">Opening Stock</field>
+			<field name="code">AC1211</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC121"/>
+		</record>
+
+		<record model="account.account" id="IA_AC1212">
+			<field name="name">Purchase of Product</field>
+			<field name="code">AC1212</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC121"/>
+		</record>
+
+		<record model="account.account" id="IA_AC1213">
+			<field name="name">Purchase Expenses</field>
+			<field name="code">AC1213</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC121"/>
+		</record>
+
+		<record model="account.account" id="IA_AC1214">
+			<field name="name">Closing Stock</field>
+			<field name="code">AC1214</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC121"/>
+		</record>
+
+		<record model="account.account" id="IA_AC122">
+			<field name="name">Operating Overheads</field>
+			<field name="code">AC122</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC12"/>
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC0233">
+			<field name="name">Write Off Expanse</field>
+			<field name="code">AC0233</field>
+			<field name="type">expense</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC122"/>
+		</record>
+
+		<record model="account.account" id="IA_AC1221">
+			<field name="name">Administrative Expenses</field>
+			<field name="code">AC1221</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC122"/>
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC12211">
+			<field name="name">Direct Expenses</field>
+			<field name="code">AC12211</field>
+			<field name="type">expense</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC1221"/>
+		</record>
+
+		<record model="account.account" id="IA_AC12212">
+			<field name="name">Indirect Expenses</field>
+			<field name="code">AC12212</field>
+			<field name="type">expense</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC1221"/>
+		</record>
+
+		<record model="account.account" id="IA_AC1222">
+			<field name="name">Selling Expenses</field>
+			<field name="code">AC1222</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC122"/>
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC12221">
+			<field name="name">Direct Expenses</field>
+			<field name="code">AC12221</field>
+			<field name="type">expense</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC1222"/>
+		</record>
+
+		<record model="account.account" id="IA_AC12222">
+			<field name="name">Indirect Expenses</field>
+			<field name="code">AC12222</field>
+			<field name="type">expense</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC1222"/>
+		</record>
+
+		<record model="account.account" id="IA_AC1223">
+			<field name="name">Financial Expenses</field>
+			<field name="code">AC1223</field>
+			<field name="type">view</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC122"/>
+		</record>
+		# sub type
+
+		<record model="account.account" id="IA_AC12231">
+			<field name="name">Direct Expenses</field>
+			<field name="code">AC12231</field>
+			<field name="type">expense</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC1223"/>
+		</record>
+
+		<record model="account.account" id="IA_AC12232">
+			<field name="name">Indirect Expenses</field>
+			<field name="code">AC12232</field>
+			<field name="type">expense</field>
+
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC1223"/>
+		</record>
+
+	</data>
 </openerp>

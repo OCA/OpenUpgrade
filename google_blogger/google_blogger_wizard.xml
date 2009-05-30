@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+	<menuitem id="menu_blogger" name="Blogger" parent="project.menu_main"/>
+
+	<wizard id="wizard_google_blogger"  name="google.blogger" string="Export to Blog"/>
+	<menuitem name="Export to Blog" id="menu_tools_google_blogger" parent="menu_blogger" action="wizard_google_blogger" type="wizard"/>
+	</data>
+</openerp>

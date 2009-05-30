@@ -41,27 +41,31 @@ This test checks if the module classes are raising exception when calling basic 
         pool = pooler.get_pool(cr.dbname)
         module_name = module_path.split('/')[-1]
         obj_list = self.get_objects(cr, uid, module_name)
+        result_dict = {}
+        if not obj_list:
+            self.error = True
+            self.result = _("Module has no objects")
+            return None
         ok_count = 0
         ex_count = 0
-        result_dict = {}
         for obj in obj_list:
             temp = [obj]
             try:
-                res = pool.get(obj).search(cr, uid, [])
+                pool.get(obj).search(cr, uid, [])
                 temp.append(_('Ok'))
                 ok_count += 1
             except:
                 temp.append(_('Exception'))
                 ex_count += 1
             try:
-                res1 = pool.get(obj).fields_view_get(cr, uid,)
+                pool.get(obj).fields_view_get(cr, uid,)
                 temp.append(_('Ok'))
                 ok_count += 1
             except:
                 temp.append(_('Exception'))
                 ex_count += 1
             try:
-                res2 = pool.get(obj).read(cr, uid, [])
+                pool.get(obj).read(cr, uid, [])
                 temp.append(_('Ok'))
                 ok_count += 1
             except:
@@ -72,13 +76,11 @@ This test checks if the module classes are raising exception when calling basic 
         self.result = self.get_result(result_dict)
         return None
 
-
-    def get_result(self, dict):
+    def get_result(self, dict_method):
         header = ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n! %-16s \n! %-20s \n! %-16s ', [_('Object Name'), 'search()', 'fields_view_get()', 'read()'])
         detail = ""
         if not self.error:
-            detail += self.format_table(header, dict)
+            detail += self.format_table(header, dict_method)
         return detail
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

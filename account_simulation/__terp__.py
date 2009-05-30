@@ -25,7 +25,7 @@
     "depends" : ["account"],
     "author" : "Tiny",
     "description": """Accounting simulation plan.""",
-    "website" : "http://tinyerp.com/module_account.html",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Accounting",
     "init_xml" : [
     ],

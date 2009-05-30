@@ -20,31 +20,46 @@
 #
 ##############################################################################
 """
-   This is ETL Component to put job process in sleep.
+ Puts job process in sleep.
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+ GNU General Public License.
+
 """
-from etl import etl
+
+from etl.component import component
 import time
 
-class sleep(etl.component):
+class sleep(component):
     """
-       put job process in sleep.
+    Puts job process in sleep.
     """
-    _name='etl.component.control.sleep'  
-    _description='This is ETL Component to put job process in sleep.'   
-    _author='tiny'
-
-    def __init__(self, delay=1, *args, **argv):
+    def __init__(self, delay=1, name='component.control.sleep'):
+        """
+        Parameters
+        delay        : Delay in Seconds
+        name         : Name of Component.
+        """
+        super(sleep, self).__init__(name)
+        self._type = 'component.control.sleep'
         self.delay = delay
-        super(sleep, self).__init__(*args, **argv)
+
+    def __copy__(self):
+        res = sleep(self.delay, self.name)
+        return res
 
     def process(self):
-        for channel,trans in self.input_get().items():
+        for channel, trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:
                     time.sleep(self.delay)
                     yield d, 'main'
-            for stat in self.statitics.values():                
-                yield stat,'statistics'  
-	        for error in self.errors:                
-	            yield error,'error'
+    def __getstate__(self):
+        res = super(sleep, self).__getstate__()
+        res.update({'delay':self.delay})
+        return res
+
+    def __setstate__(self, state):
+        super(sleep, self).__setstate__(state)
+        self.__dict__ = state
 

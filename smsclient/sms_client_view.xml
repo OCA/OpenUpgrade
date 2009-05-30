@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="sms_smsclient_form">
+			<field name="name">sms.smsclient.form</field>
+			<field name="model">sms.smsclient</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="name"/>
+				<field name="code"/>
+				<field name="property_ids" colspan="4" nolabel="1">
+					<tree string="Gateway Parameters">
+						<field name="name"/>
+						<field name="value"/>
+					</tree>
+					<form string="Gateway Parameters">
+						<field name="name"/>
+						<field name="value"/>
+					</form>
+				</field>
+				
+				<field name="history_line" select="2" colspan="4" nolabel="1">
+					<tree string="Gateway History">
+						<field name="user_id"/>
+						<field name="date_create"/>
+						<field name="name"/>
+						<field name="email"/>
+						<field name="model"/>
+						<field name="resource_id"/>
+					</tree>
+					<form string="Gateway History">
+						<field name="user_id"/>
+						<field name="date_create"/>
+						<field name="name" colspan="4"/>
+						<field name="email"/>
+						<newline/>
+						<field name="model"/>
+						<field name="resource_id"/>
+					</form>
+				</field>
+			</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="action_sms_smsclient_tree">
+			<field name="name">SMS Gateway</field>
+			<field name="res_model">sms.smsclient</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="sms_smsclient_form" />
+		</record>
+		
+		<menuitem name="SMS Gateway" id="menu_smsclient_administration_server" parent="base.menu_config"/>
+		<menuitem name="New Gateway" id="menu_smsclient_administration_sms_server" parent="menu_smsclient_administration_server" action="action_sms_smsclient_tree"/>
+	</data>
+</openerp>

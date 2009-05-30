@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<report id="report_account_invoice"
+				string="Invoice - Exice"
+				model="account.invoice"
+				name="tax.retail.account.invoice"
+				rml="account_invoice_india/report/invoice.rml"
+				auto="False"
+				header = "False"
+				menu="True"/>
+
+	    <menuitem 
+	        parent="account.menu_finance_legal_statement" 
+	        id="indian_accounting_reports2"
+	        name="Miscellaneous Reports"/>
+	        
+		<report id="account_3party_ledger"
+			string="Partner ledger"
+			model="res.partner"
+			name="report.account.third_party_wise_ledger"
+			rml="account_invoice_india/report/third_party_ledger.rml"
+			auto="False"
+			menu="False"/>
+			
+		<report id="account_journal"
+			string="Custom Journal Print"
+			model="account.journal.period"
+			name="account.journal.period.print.custom"
+			rml="account_invoice_india/report/account_journal.rml"
+			auto="False"
+			header="False"/>
+			
+		<report id="account_general_ledger_custom"
+			string="Custom General Ledger"
+			model="account.account" 
+			name="account.general.ledger.custom.print"
+			rml="account_invoice_india/report/general_ledger.rml"
+			auto="False"
+			menu="False"/>
+
+		<wizard 
+			string="Custom General ledger"
+			model="account.account"
+			name="account.general.ledger.report.custom"
+			keyword="client_print_multi"
+			id="wizard_account_general_ledger_custom"/>
+		
+		<wizard 
+			string="Aged partner balance"
+			model="res.partner"
+			name="account.aged.trial.balance1"
+			menu="False"
+			id="wizard_aged_trial_balance"/>
+		
+		<menuitem
+		    parent="indian_accounting_reports2"
+			name="Aged Partner Balance"
+			action="wizard_aged_trial_balance"
+			type="wizard"
+			icon="STOCK_PRINT"
+			id="menu_aged_trial_balance"/>
+		
+		<report id="account_3rdparty_account_balance_new"
+			string="Partner balance"
+			model="account.account"
+			name="account.partner.balance.new"
+			rml="account_invoice_india/report/partner_balance.rml"
+			auto="False"
+			menu="False"/>
+		
+		<!-- report-related wizards -->
+		<wizard 
+			string="Partner balance"
+			model="res.partner"
+			name="account.partner.balance.new.report"
+			menu="False"
+			id="wizard_partner_balance_new_report"/>
+		
+		<menuitem
+		    parent="indian_accounting_reports2"
+			name="Partner Balance"
+			action="wizard_partner_balance_new_report"
+			type="wizard"
+			icon="STOCK_PRINT"
+			id="menu_partner_new_balance"/>
+	
+	</data>
+</openerp>

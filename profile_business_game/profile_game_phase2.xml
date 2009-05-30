@@ -9,7 +9,7 @@
             <field name="name">HR Budgets</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">account.budget.post</field>
-           <field name="view_type">tree</field>
+           <field name="view_type">form</field>
             <field name="view_id" ref="account_budget.view_budget_post_tree"/>
         </record>
 
@@ -18,7 +18,7 @@
             <field name="name">Sale Forecast</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">stock.planning.sale.prevision</field>
-            <field name="domain">[('user_id','=',uid)</field>
+            <field name="domain">[('user_id','=',uid)]</field>
            <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="stock_planning.view_stock_planning_prevision_tree"/>
@@ -239,7 +239,7 @@
         </record>
 
         <menuitem id="business_game" name="Business Game" parent="board.dashboard_menu"/>
-        <menuitem name="Business Game Details" parent="business_game" id="menu_game_Detail_form" action="action_game_detail_form"/>
+       <!-- <menuitem name="Business Game Details" parent="business_game" id="menu_game_Detail_form" action="action_game_detail_form"/>-->
 
          <record id="view_confirm_wizard_form" model="ir.ui.view">
             <field name="name">Configuration of Business Game</field>

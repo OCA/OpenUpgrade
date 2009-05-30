@@ -1,22 +1,28 @@
+#!/usr/bin/python
+
+import sys
+sys.path.append('..')
+
 import etl
-from etl import etl
-from etl import component
 
 
-in1 = component.csv_in('data/partner.csv')
-in2 = component.csv_in('data/partner2.csv')
-diff1 = component.diff(['id'])
+fileconnector_partner=etl.connector.localfile('input/partner.csv')
+fileconnector_partner2=etl.connector.localfile('input/partner2.csv')
 
-log_1 = component.logger_bloc(name="Original Data")
-log_2 = component.logger_bloc(name="Modified Data")
+in1 = etl.component.input.csv_in(fileconnector_partner,name='Partner Data')
+in2 = etl.component.input.csv_in(fileconnector_partner2,name='Partner Data2')
+diff1 = etl.component.transform.diff(['id'])
 
-log1 = component.logger(name="Log Same")
-log2 = component.logger(name="Log Add")
-log3 = component.logger(name="Log Remove")
-log4 = component.logger(name="Log Update")
+log_1 = etl.component.transform.logger_bloc(name="Original Data")
+log_2 = etl.component.transform.logger_bloc(name="Modified Data")
 
+log1 = etl.component.transform.logger(name="Log Same")
+log2 = etl.component.transform.logger(name="Log Add")
+log3 = etl.component.transform.logger(name="Log Remove")
+log4 = etl.component.transform.logger(name="Log Update")
 
-csv_out1 = component.csv_out('data/add.csv')
+fileconnector_output=etl.connector.localfile('output/test2_add.csv', 'w+')
+csv_out1 = etl.component.output.csv_out(fileconnector_output,name='Output')
 
 etl.transition(in1, log_1)
 etl.transition(in2, log_2)
@@ -30,6 +36,7 @@ etl.transition(diff1, log2, channel_source="add")
 etl.transition(diff1, csv_out1, channel_source="add")
 etl.transition(diff1, log4, channel_source="update")
 
-job = etl.job([log_1,log_2,diff1,log1,log2,log3,log4,csv_out1])
+job = etl.job([in1,in2,log_1,log_2,diff1,log1,log2,log3,log4,csv_out1])
+print job
 job.run()
-
+print job.get_statitic_info()

@@ -134,6 +134,7 @@ TreeGrid.prototype = {
             	var th = MochiKit.DOM.TH(null, header.code);
             	if (header.type == 'image') {
             		MochiKit.DOM.setNodeAttribute(th, 'width', '5px');
+            		MochiKit.DOM.setNodeAttribute(th, 'style', 'border-right: 2px solid #99CCCC;');
             	}
             	else if (header.name == 'ponderation') {
             		MochiKit.DOM.setNodeAttribute(th, 'width', '5px');
@@ -270,8 +271,6 @@ TreeNode.prototype = {
         this.element = MochiKit.DOM.TR({'class' : 'row'});
         this.element.style.display = this.parentNode ? (this.parentNode.expanded ? "" : "none") : "";
         
-        ctree = this.tree;
-        
         var record = this.record;
         var indent = this.getPath().length - 1;
 
@@ -281,14 +280,31 @@ TreeNode.prototype = {
             
             var key = header.name;
             var value = this.record.items[key];
-            
             var td = MochiKit.DOM.TD({'class': header.type || null});
-            
+            if(td.className == 'image' && key == 'add_factor')
+            	MochiKit.DOM.setNodeAttribute(td, 'title', 'Propose a new criterion');
+            if(td.className == 'image' && key == 'show_graph')
+            	MochiKit.DOM.setNodeAttribute(td, 'title', 'View Graph');
+            if(td.className == 'image' && key == 'incr')
+            	MochiKit.DOM.setNodeAttribute(td, 'title', 'Increase importance for this criterion');
+            if(td.className == 'image' && key == 'decr')
+            	MochiKit.DOM.setNodeAttribute(td, 'title', 'Decrease importance for this criterion');
+            	
+            if(key == 'name')
+            	MochiKit.DOM.setNodeAttribute(td, 'style', 'border-right: 2px solid #99CCCC;');
+            if(td.className == 'image') {
+            	if(key == 'show_graph' || key == 'decr') {
+            		MochiKit.DOM.setNodeAttribute(td, 'style', 'border-right: 2px solid #99CCCC;');	
+            	}
+            	
+            	MochiKit.DOM.setNodeAttribute(td,'width','2px');
+            }
+            if(td.className == 'url')
+            	MochiKit.DOM.setNodeAttribute(td,'width','5px');
             if (i == 0) { // first column
     
                 var tds = [];
-                log(value);
-                title = value;
+                
                 /*if (value.length > 15) {
             		title = value;
             		value = value.substring(0, 15) + '...'
@@ -313,11 +329,11 @@ TreeNode.prototype = {
                 }
     
                 if (arrow.className != 'indent') {
-	                value = A({'href': 'javascript: void(0)', 'title': title}, value);
+	                value = A({'href': 'javascript: void(0)'}, value);
     	            this.element_a = value;
                 }
                 else {
-                	value = SPAN({'style': 'color: black; display: block; max-width: 250px; white-space: normal; cursor: normal;', 'title': title}, value);
+                	value = DIV({'href': '#', 'style': 'color: black; display: block; text-decoration: none; max-width: 300px; white-space: normal; cursor: normal;'}, value);
     	            this.element_a = value;
                 }
                 
@@ -349,8 +365,33 @@ TreeNode.prototype = {
             
             if (i > 0) {
                 if (header.type == 'url' && value) {
+                	// For min and max values...
+                	var j = i;
+                	var min_fact = 101;
+		        	var max_fact = -1;
+                	
+		        	if (j >= 6) {
+		        		var min_fact = 101;
+		        		var max_fact = -1;
+		            	var fields = new Array();
+						for (j=6; j<this.tree.headers.length; j++){
+							var h = this.tree.headers[j];
+							
+				            var k = h.name;
+							var v = this.record.items[k];
+							if (v=='No Vote') {
+								v='0%';
+							}
+							v = v.split('%')[0];
+							fields[j-6] = v;
+							min_fact = Math.min(min_fact, v);
+							max_fact = Math.max(max_fact, v);
+						}
+		        	}
+                	
+                	title = '';
                 	if (header.name == 'ponderation') {
-                		title = "Suggest ponderation";
+                		title = "Suggest Ponderation";
                 	}
                 	else {
                 		title = "Vote for Item: " +header.name + ", Factor: ";
@@ -359,22 +400,73 @@ TreeNode.prototype = {
                 	if (value.indexOf('|') != -1) {
 	                	var vals = value.split('|');
 	                	value = vals[0];
+	                	
+	                	var background = '#FFFFFF';
+	                	if (min_fact || max_fact) {
+	                		if ((value.split('%')[0])==min_fact.toString()){
+		                		background = '#f3dfd9';
+		                	}
+	    	            	if ((value.split('%')[0])==max_fact.toString()){
+	        	        		background = '#def3d9';
+	            	    	}
+	                		if (min_fact == max_fact) {
+                				background = '#FFFFFF';
+                			}
+	                	}
+	                	
 	                	record.action = vals[1];
+	                	
 	                	t = vals[2];
-	                    value = [MochiKit.DOM.A({title: title + t, 'style': 'color: black'}, value)];
-	                    value = value.concat(MochiKit.DOM.IMG({'src': '/static/images/treegrid/gtk-edit.png', 'style': 'text-align: right; cursor: pointer;', 'onclick': record.action, 'width' : 16, 'height' : 16}));
+	                    value = [MochiKit.DOM.A({title: title + t, 'style': 'color: black;'}, value)];
+	                    value = value.concat(MochiKit.DOM.IMG({'src': '/static/images/treegrid/gtk-edit.png', 'style': 'text-align: right; cursor: pointer;', 'onclick':record.action,'width' : 16, 'height' : 16, 'title': 'Vote for these criterions'}));
+	                    
+	                    td.style.background = background;
+	                    
                 	}
                 	else if (value.indexOf('-') != -1) {
                 		var vals = value.split('-');
 	                	value = vals[0];
+	                	
+	                	var background = '#FFFFFF';
+	                	if (min_fact || max_fact) {
+	                		if ((value.split('%')[0])==min_fact.toString()){
+		                		background = '#f3dfd9';
+		                	}
+	    	            	if ((value.split('%')[0])==max_fact.toString()){
+	        	        		background = '#def3d9';
+	            	    	}
+	                		if (min_fact == max_fact) {
+                				background = '#FFFFFF';
+                			}
+	                	}
+	                	
 	                	t = vals[1];
-	                	value = MochiKit.DOM.DIV({title: title + t, style: 'font-weight: bold'}, value);
+	                	value = MochiKit.DOM.DIV({title: title + t}, value); // style: 'font-weight: bold;'
+	                	td.style.background = background;
                 	}
+                	else if (value.indexOf('@') != -1){
+                		var vals = value.split('@');
+	                	value = vals[0];
+                		value = MochiKit.DOM.DIV(value);
+                 	}
                 	else {
-                		value = MochiKit.DOM.DIV({title: title}, value);
+                		var background = '#FFFFFF';
+	                	if (min_fact || max_fact) {
+	                		if ((value.split('%')[0])==min_fact.toString()){
+		                		background = '#f3dfd9';
+		                	}
+	    	            	if ((value.split('%')[0])==max_fact.toString()){
+	        	        		background = '#def3d9';
+	            	    	}
+	                		if (min_fact == max_fact) {
+                				background = '#FFFFFF';
+                			}
+	                	}
+                		value = MochiKit.DOM.DIV(value);
+                		td.style.background = background;
                 	}    
                 }
-                
+              
                 if (header.type == 'email' && value) {
                     value = MochiKit.DOM.A({href: 'mailto:' + (record.action || value), target: record.target || '_blank'}, value);    
                 }
@@ -387,14 +479,12 @@ TreeNode.prototype = {
                 if (header.type == 'button' && value) {
                     value = MochiKit.DOM.BUTTON({name: header.name, style: 'cursor: pointer'}, value);
                     value.onclick = MochiKit.Base.bind(this.onButtonClick, this);
-                }
-                
+                } 
             }
-
             MochiKit.DOM.appendChildNodes(td, value);
-            if (header.type == "image" || header.type == 'url') {
-            	MochiKit.DOM.setNodeAttribute(td, 'width', '5px');
-            }
+//            if (header.type == "image" || header.type == 'url') {
+//            	MochiKit.DOM.setNodeAttribute(td, 'width', '5px');
+//            }
             MochiKit.DOM.appendChildNodes(this.element, td);
         }
         
@@ -427,8 +517,6 @@ TreeNode.prototype = {
             		value = value.substring(0, 15) + '...'
             	}*/
             	
-            	title = value;
-            	
                 if (record.icon && this.element_i) {
                     this.element_i.src = record.icon;
                 }
@@ -436,8 +524,15 @@ TreeNode.prototype = {
                 this.element_a.innerHTML = MochiKit.DOM.escapeHTML(value);
                 
                 if (record.action) {
-                    MochiKit.DOM.setNodeAttribute(this.element_a, 'href', record.action);
+                    MochiKit.DOM.setNodeAttribute(this.element_a, 'href', 'javascript: void(0)');
+                } else {
+                    value.onclick = MochiKit.Base.bind(function(){
+                        this.toggle();
+                    }, this);
                 }
+//                if (record.action) {
+//                    MochiKit.DOM.setNodeAttribute(this.element_a, 'href', record.action);
+//                }
                 
                 if (record.target) {
                     MochiKit.DOM.setNodeAttribute(this.element_a, 'target', record.target);
@@ -471,6 +566,12 @@ TreeNode.prototype = {
                 		var vals = value.split('-');
 	                	value = vals[0];
 	                	
+	                	div.innerHTML = MochiKit.DOM.escapeHTML(value);
+                	}
+                	else if (value.indexOf('@') != -1){
+                		var div = MochiKit.DOM.getElementsByTagAndClassName('div', null, td)[0];
+                		var vals = value.split('@');
+	                	value = vals[0];
 	                	div.innerHTML = MochiKit.DOM.escapeHTML(value);
                 	}
                 	else {

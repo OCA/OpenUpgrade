@@ -24,7 +24,7 @@
     "version" : "0.1",
     "author" : "Tiny",
     "category" : "Generic Modules/Human Resources",
-    "website": "http://www.tinyerp.com",
+    "website": "http://www.openerp.com",
     "depends" : ["hr"],
     "description": "Generic and powerfull skill management system. This module allows you to manage your company and employees skills, interviews, ...",
 #   "demo_xml" : ["hr_skill.weight.category.csv","hr_skill.weight.csv","hr_skill.skill.csv",\

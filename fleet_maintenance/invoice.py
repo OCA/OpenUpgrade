@@ -1,9 +1,5 @@
 from osv import fields,osv
-import tools
-import ir
-import pooler
-from mx.DateTime import RelativeDateTime, DateTime, localtime, RelativeDateTimeDiff
-import time
+from mx.DateTime import RelativeDateTime, DateTime
 from mx import DateTime
 
 
@@ -86,8 +82,7 @@ class account_move_line(osv.osv):
             print move_line.invoice
             print move_line.invoice.id
             
-            #FIXME: no analytic line creation detection, why -> thought that was created!
-            if move_line.analytic_lines and len(move_line.analytic_lines) == 1: #TODO and product maintenance
+            if move_line.analytic_lines and len(move_line.analytic_lines) == 1:
                 print "native analytic line creation"
                 print move_line
                 analytic_line = move_line.analytic_lines[0] #we assume their is only one analytic line for a maintenance product

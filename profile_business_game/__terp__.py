@@ -19,33 +19,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
+
 {
-    "name":"Bussiness Game",
-    "version":"1.0",
-    "author":"Tiny",
-    "category":"Profile",
-    "depends":[
-        "board",
-        "base",
-        "account",
-        "game_scenario",
-        "purchase_approve",
-        "sale",
-        "sale_wo_production",
-        "stock_planning",
-        "crm_configuration",
-        "mrp_jit",
-        "l10n_fr",
-        "account_budget",
-        "sale_forecast",
-        "product_margin"
-    ],
-    "init_xml":[
-        "profile_game_data.xml",
-        "profile_game_scenario.xml",
-    ],
-    "demo_xml":[],
-    "description": """
+    'name': 'Bussiness Game',
+    'version': '1.0',
+    'category': 'Profile',
+    'description': """
     This business game will help you to discover Open ERP and it's enterprise management processes.
 The game is based on a company called 'GoodSound' selling audio and video hardware and organising sonorisation events.
 
@@ -55,20 +35,33 @@ The game is structured into two phases:
       within a few turns of one year each.
 
     """,
-    "update_xml":[
-        "wizard_game_phase2.xml",
-        "profile_game_phase2.xml",
-        "profile_game_config.xml",
-        "profile_game_account_data.xml",
-        "profile_game_partner.xml",
-        "profile_game_phase1.xml",
-        "profile_game_product.xml",
-        "security/ir.model.access.csv"
-    ],
-    "active":False,
-    "installable":True,
-    "certificate": '9274472924045',
-
+    'author': 'Tiny',
+    'depends': [   'board',
+    'base',
+    'account',
+    'game_scenario',
+    'purchase_approve',
+    'sale',
+    'sale_wo_production',
+    'stock_planning',
+    'crm_configuration',
+    'mrp_jit',
+    'l10n_fr',
+    'account_budget',
+    'sale_forecast',
+    'product_margin'],
+    'init_xml': ['profile_game_data.xml', 'profile_game_scenario.xml'],
+    'update_xml': [   'wizard_game_phase2.xml',
+    'profile_game_phase2.xml',
+    'profile_game_config.xml',
+    'profile_game_account_data.xml',
+    'profile_game_partner.xml',
+    'profile_game_phase1.xml',
+    'profile_game_product.xml',
+    'security/ir.model.access.csv'],
+    'demo_xml': [],
+    'installable': True,
+    'active': False,
+    'certificate': '019274472924045',
 }
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

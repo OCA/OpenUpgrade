@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+
+		<wizard
+			string="Activity Details"
+			model="hotel.housekeeping"
+			name="hotel.housekeeping.activity_list"
+			menu="False"
+			id="wizard_hotel_housekeeping_activity_report"/>
+		
+		<menuitem
+			name="Hotel Management/Reports/Activity Report" 
+			action="wizard_hotel_housekeeping_activity_report" 
+			type="wizard"
+			menu="False"
+			id="wizard_activity_menu"
+			sequence="29"/>
+	</data>
+</openerp>

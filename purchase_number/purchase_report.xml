@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<report id="report_purchase_order_india"
+			name="purchase.order.india"
+			string="Print Purchase Order"
+			model="purchase.order"
+			rml="purchase_number/report/purchase_order.rml"
+			auto="False"/>
+	</data>
+</openerp>

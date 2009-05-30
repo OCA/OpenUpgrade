@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -25,10 +25,12 @@ from osv import fields,osv
 
 class account_invoice_line(osv.osv):
     _inherit = 'account.invoice.line'
-    _columns = { 
+    _columns = {
         'production_lot_id':fields.many2one('stock.production.lot', 'Production Lot'),
         'customer_ref': fields.char('Customer reference', size=64),
     }
+
 account_invoice_line()
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

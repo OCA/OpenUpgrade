@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+	
+	<!-- Documents for Offer-09  -->
+
+		<record id="dm_offer_document_intermediatemailingdocument0" model="dm.offer.document">
+			<field name="copywriter_id" ref="base.main_partner"/>
+			<field eval="&quot;&quot;&quot;Intermediate Mailing Document-09&quot;&quot;&quot;" name="name"/>
+			<field eval="[(6,0,[ref('dm_website.dm_dtp_plugin_phpurl0'),ref('dm.dm_dtp_plugin_wi_segment_id'),ref('dm.dm_dtp_plugin_wi_step_id'),ref('dm.dm_dtp_plugin_partner_id'),ref('dm_website.dm_dtp_plugin_campaign_website')])]" name="document_template_plugin_ids"/>
+			<field name="lang_id" ref="base.lang_en"/>
+			<field name="gender_id" ref="base.res_partner_title_sir"/>
+			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;intermediate_mail_doc09&quot;&quot;&quot;" name="code"/>
+			<field name="document_template_id" ref="dm.dm_document_template_website0"/>
+			<field name="step_id" ref="dm.dm_offer_step_imforopenerpondemandfreetrial2009"/>
+			<field name="category_id" ref="dm.dm_offer_document_category_production0"/>
+		</record>
+	</data>
+</openerp>

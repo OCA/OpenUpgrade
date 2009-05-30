@@ -281,7 +281,7 @@ class profile_game_phase_one(osv.osv):
          acc_obj = self.pool.get('account.account')
          inc_acc_id = acc_obj.search(cr, uid, [('code','ilike','701000')])[0]
          exp_acc_id = acc_obj.search(cr, uid, [('code','ilike','601000')])[0]
-         close_acc = acc_obj.search(cr, uid, [('code','ilike','911000')])[0]
+         close_acc = acc_obj.search(cr, uid, [('code','ilike','891000')])[0]
          acc_obj.write(cr ,uid, close_acc, {'type':'other'})
 
          acc_journal = self.pool.get('account.journal')
@@ -289,13 +289,13 @@ class profile_game_phase_one(osv.osv):
          for journal in acc_journal.browse(cr, uid, journal_ids):
             if journal.code in ('JB','SAJ','EXJ','JC'):
                  if journal.code == 'JB':
-                     code = '512000'
+                     code = '512100'
                  if journal.code == 'SAJ':
                      code = '411100'
                  if journal.code == 'EXJ':
                     code = '401100'
                  if journal.code == 'JC':
-                     code = '911000'
+                     code = '891000'
                  account = acc_obj.search(cr, uid, [('code','ilike',code)])[0]
                  acc_journal.write(cr, uid, journal.id, {'default_debit_account_id':account,
                                                                  'default_credit_account_id':account})

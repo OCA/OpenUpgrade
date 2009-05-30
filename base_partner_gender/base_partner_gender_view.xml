@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+	<!--
+    =======================================================
+    GENDER VIEWS
+    =======================================================
+    -->
+	<record model="ir.ui.view" id="view_partner_gender_form">
+        <field name="name">partner.gender.form</field>
+        <field name="model">partner.gender</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+			<form string="Gender">
+            	<field name="name" select="1"/>
+            	<field name="code" select="2"/>
+            </form>
+        </field>
+	</record>
+	<record model="ir.ui.view" id="view_partner_gender_tree">
+        <field name="name">partner.gender.tree</field>
+        <field name="model">partner.gender</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+			<tree string="Gender">
+            	<field name="name"/>
+            	<field name="code"/>
+            </tree>
+        </field>
+	</record>
+	
+	<!--
+    =======================================================
+    PARTNER TITLE EXTENSIONS
+    =======================================================
+    -->
+	<record id="view_partner_title_form_inherit" model="ir.ui.view">
+           <field name="name">res.partner.title.inherit</field>
+           <field name="model">res.partner.title</field>
+           <field name="type">form</field>
+           <field name="inherit_id" ref="base.view_partner_title_form"/>
+           <field name="arch" type="xml">
+               <field name="domain" position="after">
+                  <field name="gender_id" select="1"/>
+               </field>
+           </field>
+	</record>
+	
+</data>
+</openerp>

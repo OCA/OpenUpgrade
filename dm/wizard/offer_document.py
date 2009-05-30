@@ -26,15 +26,13 @@ def _offer_documents(self, cr, uid, data, context):
     offer_id = data['id']
     pool = pooler.get_pool(cr.dbname)
     step_id = pool.get('dm.offer.step').search(cr,uid,[('offer_id','=',offer_id)])
-    offer_document = pool.get('ir.attachment').search(cr,uid,[('res_id','=',offer_id),('res_model','=','dm.offer')])
-    document_ids =pool.get('ir.attachment').search(cr,uid,[('res_id','in',step_id),('res_model','=','dm.offer.step')])
-    document_ids.extend(offer_document)
+#    document_ids =pool.get('dm.offer.document').search(cr,uid,[('step_id','in',step_id)])
     value = {
-        'domain': [('id', 'in',document_ids)],
+        'domain': [('step_id','in',step_id)],
         'name': 'Documents',
         'view_type': 'form',
         'view_mode': 'tree,form',
-        'res_model': 'ir.attachment',
+        'res_model': 'dm.offer.document',
         'context': { },
         'type': 'ir.actions.act_window'
     }

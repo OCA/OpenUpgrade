@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+		<record id="comp_transform_filter" model="etl.component.type">
+			<field name="name">transform.filter</field>
+			<field name="code">transform.filter</field>
+		</record>
+
+		<record id="comp_transform_logger_bloc" model="etl.component.type">
+			<field name="name">transform.logger_bloc</field>
+			<field name="code">transform.logger_bloc</field>
+		</record>
+
+		<record id="comp_transform_logger" model="etl.component.type">
+			<field name="name">transform.logger</field>
+			<field name="code">transform.logger</field>
+		</record>
+
+		<record id="comp_transform_map" model="etl.component.type">
+			<field name="name">transform.map</field>
+			<field name="code">transform.map</field>
+		</record>
+
+		 <record id="comp_transform_merge" model="etl.component.type">
+			<field name="name">transform.merge</field>
+			<field name="code">transform.merge</field>
+		</record>
+
+		<record id="comp_transform_schema_validation" model="etl.component.type">
+			<field name="name">schema.validation</field>
+			<field name="code">schema.validation</field>
+		</record>
+
+		<record id="comp_transform_sort" model="etl.component.type">
+			<field name="name">transform.sort</field>
+			<field name="code">transform.sort</field>
+		</record>
+
+		 <record id="comp_transform_unique" model="etl.component.type">
+			<field name="name">transform.unique</field>
+			<field name="code">transform.unique</field>
+		</record>
+    </data>
+</openerp>

@@ -736,6 +736,9 @@ class profile_game_phase_two(osv.osv):
                                 ['invoice', 'delivery', 'contact'])
                 pricelist = self.pool.get('res.partner').browse(cr, uid, partner_ids[partner],
                                 context).property_product_pricelist.id
+                fpos = self.pool.get('res.partner').browse(cr, uid, partner_ids[partner],
+                                context).property_account_position
+                fpos_id = fpos and fpos.id or False
                 od = self.get_date(cr, uid, context)
                 vals = {
                         'shop_id': shop[0],
@@ -745,13 +748,14 @@ class profile_game_phase_two(osv.osv):
                         'partner_order_id': partner_addr['contact'],
                         'partner_shipping_id': partner_addr['delivery'],
                         'order_policy': 'postpaid',
-                        'date_order':od
+                        'date_order':od,
+                        'fiscal_position': fpos_id
                     }
                 new_id = self.pool.get('sale.order').create(cr, uid, vals)
                 for j in range(0,random.randrange(1,5)):
                     product = random.randrange(len(prod_ids))
                     value = self.pool.get('sale.order.line').product_id_change(cr, uid, [], pricelist,
-                                    prod_ids[product], qty=i, partner_id=partner_ids[partner])['value']
+                                    prod_ids[product], qty=i, partner_id=partner_ids[partner], fiscal_position=fpos_id)['value']
                     value['product_id'] = prod_ids[product]
                     value['product_uom_qty'] = j + 100
                     value['order_id'] = new_id

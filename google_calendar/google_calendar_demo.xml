@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+<!-- Demo Data for Calendar Product -->
+
+	<record id="calendar_product" model="product.product">
+		<field name="name">Calendar Product</field>
+		<field name="categ_id" ref="product.cat0"/>
+		<field name="type">service</field>
+	</record>
+
+	</data>
+</openerp>

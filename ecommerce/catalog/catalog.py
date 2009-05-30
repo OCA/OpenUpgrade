@@ -19,78 +19,75 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import datetime
-import time
-import netsvc
-from osv import fields,osv
-import ir
-import pooler
-import tools
 
+from osv import fields, osv
+import time
 
 class product_product(osv.osv):
     _inherit = "product.product"
     _columns = {
-                'product_logo': fields.binary('Product Logo'),
-                'url': fields.char('Image URL', size=56, help="Add Product Image URL.")
-}
+        'product_logo': fields.binary('Product Logo')
+    }
 product_product()
 
-class specail_offer(osv.osv):
+class ecommerce_specail_offer(osv.osv):
     _inherit = "product.pricelist.version"
     _columns = {
-                'offer_name': fields.char('OfferName',size=64,translate=True)
-	}
-
-specail_offer()
+        'offer_name': fields.char('Offer Name', size=64, translate=True)
+    }
+ecommerce_specail_offer()
 
 class ecommerce_search(osv.osv):
-        _name = "ecommerce.search"
-        _description = "search parameters"
-        _columns = {
-                'name': fields.char('Search Parameter Name', size=56),
-                'code': fields.char('Search Parameter Code', size=28)
-                    }
-        
-        def searchProduct_ids(self, cr, uid, search_code):
-            prd_ids =[]
-            final_list = []
-            obj = self.pool.get('product.product')
+    _name = "ecommerce.search"
+    _description = "search parameters"
+    _columns = {
+        'name': fields.char('Name', size=56, required= True, help="Search parameter name which you want to display at website"),
+        'code': fields.many2one('ir.model.fields','Product fields', required=True, domain=[('model','=','product.template')])
+    }
           
-            for i in search_code.items():
-                args = []
-                if(i[1] != ''):
-                    if(i[0] == 'name'):
-                        final_list = (i[0],'ilike',str(i[1]))
-                        args.append(final_list)
-                        ids = obj.search(cr, uid, args)
-                        prd_ids.extend(ids)
-                       
-                    else:
-                        final_list = (i[0],'=',str(i[1]))
-                        args.append(final_list)
-                        ids = obj.search(cr, uid, args)
-                        prd_ids.extend(ids)
-       
-            return prd_ids
-       
+    def searchproducts(self, cr, uid, search_code):
+
+        prd_ids = []
+        final_list = []
+        send_ids = []
+        obj = self.pool.get('product.product')
+        for i in search_code.items():
+            args = []
+            if(i[1] != ''):
+                if(i[0] == 'name'):
+                    final_list = (i[0], 'ilike', str(i[1]))
+                    args.append(final_list)
+                    ids = obj.search(cr, uid, args)
+                    prd_ids.extend(ids)
+                else:
+                    final_list = (i[0], '=', str(i[1]))
+                    args.append(final_list)
+                    ids = obj.search(cr, uid, args)
+                    prd_ids.extend(ids)
+        for item in prd_ids:
+            if not item in send_ids:
+                send_ids.append(item) 
+        return send_ids
+    
 ecommerce_search()
 
-class reviews(osv.osv):
-    _name="ecommerce.product.reviews"
-    _rec_name="product"
-    _description="Reviews about product"
-    _columns={
-              'product_id':fields.many2one('product.product','Product', required=True, ondelete='cascade'),
-              'customer_id':fields.many2one('ecommerce.partner','Customer', required=True, ondelete='cascade'),
-              'reviewdate':fields.date('Review Date'),
-              'rating':fields.integer('Rating'),
-              'review':fields.text('Review')
-              }
+class ecommerce_reviews(osv.osv):
+    _name = "ecommerce.product.reviews"
+    _rec_name = "product_id"
+    _description = "Reviews about product"
+    _columns = {
+        'product_id': fields.many2one('product.product','Product',
+                                       required=True, ondelete='cascade'),
+        'customer_id': fields.many2one('ecommerce.partner','Customer',
+                                        required=True, ondelete='cascade'),
+        'reviewdate': fields.date('Review Date'),
+        'rating': fields.integer('Rating'),
+        'review': fields.text('Review')
+    }
     
     _defaults = {
         'reviewdate': lambda *a: time.strftime('%Y-%m-%d'),
     }
     
-reviews()
+ecommerce_reviews()
 

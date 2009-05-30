@@ -24,7 +24,7 @@
     "version" : "0.1",
     "author" : "Tiny",
     "category" : "Generic Modules/Sales & Purchases",
-    "website" : "http://tinyerp.com/",
+    "website" : "http://www.openerp.com",
     "description": """
      * add one field on sale order line
 """,

@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+    <menuitem name="Mail Service" id="menu_dm_config_mail_service" parent="dm.menu_dm_config" sequence="7"/>
+
+
+    <!--
+    ======================
+    Mail Service
+    ======================
+    -->
+
+    <record model="ir.ui.view" id="view_dm_mail_service_form">
+        <field name="name">dm.mail_service.form</field>
+        <field name="model">dm.mail_service</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Mail Service">
+                <field name="name" select="1"/>
+                <field name="partner_id" select="1"/>
+                <field name="media_id" select="1"/>
+                <field name="default_for_media" on_change="_check_unique_mail_service(media_id,default_for_media)"/>
+                <field name="type_id" widget="selection"/>
+                <separator string="Mailing Action" colspan="4"/>
+                <group colspan="4" col="4">
+                <field name="action_id" select="1"/>
+                <field name="time_mode"/>
+                <field name="action_hour" widget="float_time" attrs="{'invisible':[('time_mode','!=','hour')]}"/>
+                <field name="action_date" attrs="{'invisible':[('time_mode','!=','date')]}"/>
+                <group colspan="4" attrs="{'invisible':[('time_mode','!=','interval')]}">
+                <field name="action_interval" />
+                <field name="unit_interval" />
+                </group>
+<!--                <field name="condition" />
+                <field name="state" />
+                <field name="model_id" />-->
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_dm_mail_service_tree">
+        <field name="name">dm.mail_service.tree</field>
+        <field name="model">dm.mail_service</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Mail Services">
+                <field name="name" />
+                <field name="partner_id" />
+                <field name="media_id" />
+                <field name="action_id" />
+                <field name="default_for_media"/>
+<!--                <field name="condition" />
+                <field name="state" />
+                <field name="model_id" />-->
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_dm_mail_service_form">
+        <field name="name">All Mail Services</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.mail_service</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_dm_mail_service_tree"/>
+    </record>
+
+    <menuitem id="menu_dm_mail_service_form" parent="dm.menu_dm_config_mail_service" action="action_dm_mail_service_form" sequence="1" />
+</data>
+</openerp>

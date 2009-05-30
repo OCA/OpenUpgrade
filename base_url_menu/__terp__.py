@@ -25,7 +25,7 @@
     "version" : "1.1",
     "author" : "Tiny",
     "category" : "Generic Modules/Others",
-    "website": "http://www.tinyerp.com",
+    "website": "http://www.openerp.com",
     "description": "Module for creating URL menus. Work only with eTiny",
     "depends" : ["base"],
     "init_xml" : [],

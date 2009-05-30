@@ -30,30 +30,29 @@ class wizard_proposition_products(wizard.interface):
         <field name="fixed_prog"/>
         <field name="percent_prog"/>
     </form>'''
-    
+
     prices_prog_form = '''<?xml version="1.0"?>
     <form string="">
         <field name="prices_progression" colspan="4"/>
     </form>'''
-    
+
     message ='''<?xml version="1.0"?>
     <form string="Create Prices Progression">
         <label align="0.0" colspan="4" string="Price Progresson Assigned"/>
     </form>'''
-    
+
     error_message = '''<?xml version="1.0"?>
     <form string="Error!!!">
         <label align="0.0" colspan="4" string="error test"/>
     </form>'''
-    
-    
+
+
     new_prices_prog_fields = {
         'prices_prog_name': {'string': 'Name', 'type': 'char', 'size':64, 'required':True },
         'fixed_prog': {'string': 'Fixed Progression', 'type': 'float', 'digits':(16,2)},
         'percent_prog': {'string': 'Percent Progression Name', 'type': 'float', 'digits':(16,2)},
         }
-
-
+    
     def _select_prices_prog(self, cr, uid, data, context):
         if context.has_key('prices_prog_id'):
             prices_prog_id = context['prices_prog_id']
@@ -68,34 +67,35 @@ class wizard_proposition_products(wizard.interface):
         pprog_obj=pool.get('dm.campaign.proposition.prices_progression').browse(cr, uid, prices_prog_id)
         if prop_obj.item_ids:
             for p in prop_obj.item_ids:
-                pool.get('dm.item').unlink(cr, uid, p.id)
+                pool.get('dm.campaign.proposition.item').unlink(cr, uid, p.id)
 
         stp=0
 
-        # Creates proposition items
+        """Creates proposition items"""
         for step in step_obj:
-            item_ids=pool.get('dm.offer.step.item').search(cr, uid, [('offer_step_id','=',step.id)])
-            item_obj=pool.get('dm.offer.step.item').browse(cr, uid, item_ids)
-            for item in item_obj:
+            for item in step.item_ids:
                 if item:
                     if prop_obj.force_sm_price :
                         pu = prop_obj.sm_price
                     else :
+                        if not prop_obj.customer_pricelist_id:
+                            raise wizard.except_wizard('Error !', 'Select a product pricelist !')
                         pu = pool.get('product.pricelist').price_get(cr, uid,
-                            [prop_obj.customer_pricelist_id.id], item.product_id.id,1.0,
+                            [prop_obj.customer_pricelist_id.id], item.id,1.0,
                             context=context)[prop_obj.customer_pricelist_id.id]
 
                     price = pu * (1 + (stp * pprog_obj.percent_prog)) + (stp * pprog_obj.fixed_prog)
-
-                    vals = {'product_id':item.product_id.id,
+                    vals = {'product_id':item.id,
                             'proposition_id':data['ids'][0],
-                            'item_type':item.item_type,
-                            'price':price,
-                            'offer_step_type':item.offer_step_id.type
+                            'offer_step_type_id':step.type_id.id,
+                            'qty_planned':item.virtual_available,
+                            'qty_real':item.qty_available,
+                            'price':item.list_price,
+                            'notes':item.description,
+                            'forecasted_yield' : step.forecasted_yield,
                             }
-                    new_id=pool.get('dm.item').create(cr, uid, vals)
+                    new_id=pool.get('dm.campaign.proposition.item').create(cr, uid, vals)
             stp=stp+1
-
         """
         pool=pooler.get_pool(cr.dbname)
         prop_obj = pool.get('dm.campaign.proposition')
@@ -126,6 +126,14 @@ class wizard_proposition_products(wizard.interface):
         if not data['form']['prices_progression']:
             return 'error'
         return 'select'
+    
+    def check_price_prog(self, cr, uid, data, context):
+        res = pooler.get_pool(cr.dbname).get('dm.campaign.proposition').browse(cr, uid, data['ids'])[0]
+        if not res.price_prog_use:
+            data['form'] = {'prices_progression': 1}
+            return 'select'
+        else:
+            return 'open'
 
     prices_prog_fields = {
         'prices_progression': {'string': 'Select Prices Progression', 'type': 'selection', 'selection':_get_prices_progs},
@@ -134,6 +142,10 @@ class wizard_proposition_products(wizard.interface):
 
     states = {
         'init': {
+            'actions': [],
+            'result': {'type':'choice', 'next_state':check_price_prog}
+            },
+        'open': {
             'actions': [],
             'result': {'type':'form', 'arch':prices_prog_form, 'fields':prices_prog_fields, 'state':[('end','Cancel'),('name_prices_prog','Create New Prices Progression'),('next','Assign Prices Progression'),]}
             },
@@ -152,11 +164,11 @@ class wizard_proposition_products(wizard.interface):
         'error': {
             'actions': [],
             'result': {'type': 'form', 'arch': error_message, 'fields':{} ,'state': [('end','Cancel'),('init','Select Prices Progression')]}
-        },        
+        },
         'select': {
             'actions': [_select_prices_prog],
             'result': {'type': 'form', 'arch': message, 'fields':{} ,'state': [('end', 'Ok', 'gtk-ok', True)]}
         },
         }
-wizard_proposition_items("wizard_proposition_items")
+wizard_proposition_products("wizard_proposition_products")
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -9,8 +9,9 @@
       <field name="arch" type="xml">
 	        <notebook position="inside">
 	        	<page string="Fleets">
+							<field name="fleets" invisible="1" />
 							<field colspan="4" mode="tree, form" context="{'fleet_type':'sub_fleet'}" name="sub_fleets" nolabel="1">
-								<tree string="Sub Fleets" colors="red:is_expired;blue:fleet_type=='fleet'">
+								<tree string="Sub Fleets" colors="red:is_expired">
 									<field name="location_id" string="Fleet"/>
 									<field name="name" string="Sub Fleet"/>
 									<field name="is_expired" />
@@ -18,14 +19,15 @@
 									<field name="expire_time" />
 								</tree>
 
-								<!-- FIXME: the following form is supposed to be exactly the stock.location.fleet.form.sub_fleet_maintenance arch
+								<!-- FIXME: the following form is supposed to be almost exactly the stock.location.fleet.form.sub_fleet_maintenance arch
 								but due to an OpenERP v5 GTK client limitation where the context is not passed in one2many widgets,
 								we couldn't let the server appropriately select the right view so we just wrapped it here to make it work anyway -->
 								<form string="Sub Fleet">
+									<field name="usage" invisible="1"/>
 									<field name="fleet_type" invisible="1" />
 									<field name="name" select="1" string="Name" />
-									<field name="location_id" context="{'fleet_type':'fleet', 'partner_id':context.get('partner_id', False)}"
-													domain="[('fleet_type','=','fleet')]" required="1" />
+									<field name="location_id" context="{'fleet_type':'fleet'}"
+													domain="[('fleet_type','=','fleet'),('partner_id','=',parent.id)]" required="1" />
 									<field name="address_id" context="{'context_display':'partner'}" />
 									<field name="active" select="2" />
 									<separator string="Maintenance Dates" colspan="4" />

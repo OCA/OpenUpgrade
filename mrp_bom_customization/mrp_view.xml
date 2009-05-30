@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<record id="mrp_bom_customization.mrp_production_form_view" model="ir.ui.view">
+			<field name="name">mrp_bom_customization.mrp.production.form</field>
+			<field name="model">mrp.production</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="mrp.mrp_production_form_view" />
+			<field name="arch" type="xml">
+				<field name="sale_ref" position="after">
+					<field name="sale_order_line_id" />
+				</field>
+			</field>
+		</record>
+		
+		<record id="mrp_bom_customization.mrp_production_form_view2" model="ir.ui.view">
+			<field name="name">mrp_bom_customization.mrp.production.form2</field>
+			<field name="model">mrp.production</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="mrp.mrp_production_form_view" />
+			<field name="arch" type="xml">
+				<field name="product_uos" position="after">
+					<field name="dimension_customizations" nolabel="1" widget="one2many_list" colspan="4">
+						<form string="Dimension / Value">
+							<field name="dimension_type_id"/>
+							<field name="custom_value"/>
+						</form>
+						<tree string="Dimension / Value">
+							<field name="dimension_type_id"/>
+							<field name="custom_value"/>
+						</tree>
+					</field>
+				</field>
+			</field>
+		</record>
+
+	</data>
+</openerp>

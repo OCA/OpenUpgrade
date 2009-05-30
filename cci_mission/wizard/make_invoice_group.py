@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -232,7 +232,7 @@ def _group_invoice(self, cr, uid, data, context):
     #            If we want to cancel ==> obj_inv.write(cr,uid,invoice.id,{'state':'cancel'}) here
     #            If we want to delete ==> obj_inv.unlink(cr,uid,list_invoice_ids) after new invoice creation.
 
-            line_obj.write(cr,uid,id_note,{'name':customer_ref})
+            line_obj.write(cr,uid,[id_note],{'name':customer_ref})
             id_note1=line_obj.create(cr,uid,{'name':notes,'state':'text','sequence':count})# a new line of type 'note' with all the old invoice note
             count=count+1
             list_inv_lines.append(id_note1)
@@ -257,7 +257,8 @@ def _group_invoice(self, cr, uid, data, context):
                 'comment': "",
                 'payment_term':invoice.payment_term.id,
                 'date_invoice':date_inv or today_date,
-                'period_id':force_period or False
+                'period_id':force_period or False,
+                'fiscal_position': invoice.partner_id.property_account_position.id
             }
         inv_id = obj_inv.create(cr, uid, inv)
         for item in self.invoice_info:
@@ -274,14 +275,15 @@ class mission_group_invoice(wizard.interface):
         pool_obj = pooler.get_pool(cr.dbname)
         model_data_ids = pool_obj.get('ir.model.data').search(cr,uid,[('model','=','ir.ui.view'),('name','=','invoice_form')])
         resource_id = pool_obj.get('ir.model.data').read(cr,uid,model_data_ids,fields=['res_id'])[0]['res_id']
+        print "ici"
         return {
             'domain': "[('id','in', ["+','.join(map(str,data['form']['invoice_ids']))+"])]",
             'name': 'Invoices',
             'view_type': 'form',
-            'view_mode': 'tree,form',
+            'view_mode': 'form,tree',
             'res_model': 'account.invoice',
-            'views': [(False,'tree'),(resource_id,'form')],
-            'context': "{'type':'out_invoice'}",
+            'views': [(resource_id,'form')],
+            'context': "{'type':'out_invoice',}",
             'type': 'ir.actions.act_window'
         }
     states = {

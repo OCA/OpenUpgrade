@@ -20,83 +20,80 @@
 #
 ##############################################################################
 """
-This is an ETL Component that use to read data from csv file.
+ To read data from csv file.
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+ GNU General Public License.
 """
+from etl.component import component
 
-from etl import etl
-from etl.connector import file_connector
-import csv
-import datetime
-
-class csv_in(etl.component):
+class csv_in(component):
     """
-        This is an ETL Component that use to read data from csv file.
-       
-        Type: Data Component
-        Computing Performance: Streamline
-        Input Flows: 0
-        * .* : nothing
-        Output Flows: 0-x
-        * .* : return the main flow with data from csv file
+    This is an ETL Component that is used to read data from csv file. Its type is data component.
+    Its computing peformance is streamline.
+    It has two flows
+        Input Flows    : 0.
+        * .*           : Nothing.
+        Output Flows   : 0-x.
+        * .*           : Returns the main flow with data from csv file.
     """
-    _name='etl.component.input.csv_in'  
-    _description='This is an ETL Component that use to read data from csv file.'   
-    _author='tiny'
 
-    def __init__(self,filename=None,fileconnector=None,transformer=None,row_limit=0,bufsize=-1, csv_params={}):
-        super(csv_in, self).__init__(transformer=transformer)      
-          
-        self.fileconnector = fileconnector
-        self.filename = filename
-        self.row_limit=row_limit 
-        self.row_count=0        
-        self.bufsize=bufsize        
-        self.csv_params=csv_params
-        self.fp=None
-        self.reader=None
+    def __init__(self, fileconnector, csv_params={}, name='component.input.csv_in', transformer=None, row_limit=0):
+        """
+        Required  Parameters
+        fileconnector   : Localfile connector.
 
-    def action_start(self,key,singal_data={},data={}):
-        try:
-            super(csv_in, self).action_start(key,singal_data,data)
-            if not self.reader:
-                if self.fileconnector:
-                    self.fp=self.fileconnector.open('r',bufsize=self.bufsize)        
-                else:
-                    self.fp=open(self.filename,'r',self.bufsize)
-                self.reader=csv.DictReader(self.fp,**self.csv_params)                
-                self.reader.fieldnames
-        except Exception,e:                                                                    
-            self.signal('error',{'error_msg': 'Error from start signal :'+str(e),'error_date':datetime.datetime.today()})
+        Extra Parameters
+        name            : Name of Component.
+        transformer     : Transformer object to transform string data into  particular object.
+        row_limit       : Limited records are sent to destination if row limit is specified. If row limit is 0, all records are sent.
+        csv_param       : To specify other csv parameter like fieldnames , restkey , restval etc.
+        """
+        super(csv_in, self).__init__(name=name, connector=fileconnector, transformer=transformer, row_limit=row_limit)
+        self._type = 'component.input.csv_in'
+        self.csv_params = csv_params
 
-    def action_end(self,key,singal_data={},data={}):
-        try:
-            super(csv_in, self).action_end(key,singal_data,data)
-            if self.fp:     
-                 self.fp.close() 
-            if self.fileconnector:    
-                 self.fileconnector.close() 
-        except Exception,e:                                                                    
-            self.signal('error',{'error_msg': 'Error from end signal :'+str(e),'error_date':datetime.datetime.today()})
+    def __copy__(self):
+        res = csv_in(self.connector , self.csv_params, self.name, self.transformer, self.row_limit)
+        return res
+
+    def end(self):
+        super(csv_in, self).end()
+        if self.fp:
+            self.connector.close(self.fp)
+            self.fp = False
+
+    def __getstate__(self):
+        res = super(csv_in, self).__getstate__()
+        res.update({'csv_params':self.csv_params})#
+        return res
+
+    def __setstate__(self, state):
+        super(csv_in, self).__setstate__(state)
+#        state['mode'] = ''
+#        state['encoding'] = 'utf-8'
+#        state['bufsize'] = 0
+#        state['uri'] = ''
+        self.__dict__ = state
 
     def process(self):
-        try:                         
-            for data in self.reader:
-                self.row_count+=1
-                if self.row_limit and self.row_count > self.row_limit:
-                     raise StopIteration
-                try:
-                    if self.transformer:
-                        self.transformer.transform(data)
-                except Exception,e:                                                                    
-                    self.signal('error',{'error_msg':'Error from transform process :'+str(e),'error_date':datetime.datetime.today()})              
-                yield data,'main'
-            for stat in self.statitics.values():                
-                yield stat,'statistics'  
-            for error in self.errors:                
-                yield error,'error'             
-                               
-        except Exception,e:                                                                    
-            self.signal('error',{'error_msg':'Error from process :'+str(e),'error_date':datetime.datetime.today()})              
-               
-        
+        if self.is_end():
+            self.warning('No any Output attached')
+        import csv
+        self.fp = self.connector.open()
+        reader = csv.DictReader(self.fp, **self.csv_params)
+        for data in reader:
+            if data:
+                yield data, 'main'
 
+def test():
+    from etl_test import etl_test
+    import etl
+    file_conn = etl.connector.localfile('../../../demo/input/partner1.csv')
+    test = etl_test.etl_component_test(csv_in(file_conn, name='csv test'))
+    test.check_output([{'tel': '+32.81.81.37.00', 'id': '11', 'name': 'Fabien'}])
+    res = test.output()
+    print res
+
+if __name__ == '__main__':
+    test()

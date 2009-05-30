@@ -23,7 +23,7 @@
     "name" : "Sales Without production",
     "version" : "0.1",
     "author" : "Tiny",
-    "website" : "http://tinyerp.com/",
+    "website" : "http://www.openerp.com",
     "depends" : ["sale","mrp"],
     "category" : "Generic Modules/Sales & Purchases",
     "description": """Provide the scheduler wizard, the procurement and

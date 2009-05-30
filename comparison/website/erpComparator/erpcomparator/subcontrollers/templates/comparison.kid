@@ -7,7 +7,7 @@
     
 </head>
 <body>
-	<div id="bodybackground">
+	<div id="bodybackground" width="100%">
 		<div style="height: 46px; width: 890px; float: left;">
 			<div style="float:left;width:9;">
 				<img src="/static/images/whitebg.gif" alt="" width="9" height="46"/>
@@ -18,7 +18,7 @@
 		    	</a>
 		    </div>
 		    <div style="float:left; width:175; height:46;">
-		    	<a href="#" onclick="window.location.href='/graph'" onmouseover="document.graph_image.src='/static/images/graphs_hover.jpg'" onmouseout="document.graph_image.src='/static/images/graphs.jpg'">
+		    	<a href="#" onclick="window.location.href='/graph'" onmouseover="document.graph_image.src='/static/images/graphs_hover.png'" onmouseout="document.graph_image.src='/static/images/graphs.jpg'">
 		    		<img src="/static/images/graphs.jpg" name="graph_image" alt="" border="0" width="175" height="46"/>
 		    	</a>
 		    </div>
@@ -28,12 +28,12 @@
 		    	</a>
 		    </div>
 		    <div style="float:left;width:176;">
-		    	<a href="#" onclick="window.location.href='/document'" onmouseover="document.document_image.src='/static/images/document_hover.jpg'" onmouseout="document.document_image.src='/static/images/document.jpg'">
-		    		<img src="/static/images/document.jpg" name="document_image" alt="" border="0" width="176" height="46"/>
+		    	<a href="#" onclick="window.location.href='/news'" onmouseover="document.news_image.src='/static/images/news_hover.jpg'" onmouseout="document.news_image.src='/static/images/news.jpg'">
+		    		<img src="/static/images/news.jpg" name="news_image" alt="" border="0" width="176" height="46"/>
 		    	</a>
 		    </div>
 		    <div style="float:left;width:173;">
-		    	<a href="#" onclick="window.location.href='/about'" onmouseover="document.about_image.src='/static/images/about_hover.jpg'" onmouseout="document.about_image.src='/static/images/about.jpg'">
+		    	<a href="#" onclick="window.location.href='/about'" onmouseover="document.about_image.src='/static/images/about_hover.png'" onmouseout="document.about_image.src='/static/images/about.jpg'">
 		    		<img src="/static/images/about.jpg" name="about_image" alt="" border="0" width="173" height="46"/>
 		    	</a>
 		    </div>
@@ -49,7 +49,7 @@
 			<table name="item_list" id="item_list">
 				<tr py:if="selected_items">
 					<td py:for="label in titles">
-						<input id="${label['id']}" type="checkbox" checked="${tg.selector(label['sel'])}" class="grid-record-selector">${label['name']}</input>
+						<input id="${label['id']}" type="checkbox" checked="${tg.selector(label['sel'])}" class="grid-record-selector">${label['name']}(${label['code']})</input>
 					</td>
 					<td>
 						<img src="/static/images/load.jpg" style="cursor: pointer" onclick="getRecords()"/>
@@ -57,7 +57,8 @@
 				</tr>
 				<tr py:if="not selected_items">
 					<td py:for="label in titles">
-						<input id="${label['id']}" type="checkbox" checked="true" class="grid-record-selector">${label['name']}</input>
+						<input py:if="label['load'] is True" id="${label['id']}" checked="true" type="checkbox" class="grid-record-selector">${label['name']} (${label['code']})</input>
+						<input py:if="label['load'] is False" id="${label['id']}" type="checkbox" class="grid-record-selector">${label['name']} (${label['code']})</input>
 					</td>
 					<td>
 						<img src="/static/images/load.jpg" style="cursor: pointer" onclick="getRecords()"/>
@@ -66,8 +67,8 @@
 			</table>
 		</div>
     	
-	    <div style="padding: 4px; margin: auto; width: 840px;">
-			<span id="comparison_tree"/>
+	    <div style="padding: 4px; margin: auto; width:96%;" >
+			<span id="comparison_tree" width="100%"/>
 			<script type="text/javascript">
 	        	var comparison_tree = new TreeGrid('comparison_tree');
 	        	

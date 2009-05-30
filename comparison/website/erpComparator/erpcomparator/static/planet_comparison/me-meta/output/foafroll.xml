@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<rdf:RDF
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xmlns:foaf="http://xmlns.com/foaf/0.1/"
+	xmlns:rss="http://purl.org/rss/1.0/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+>
+<foaf:Group>
+	<foaf:name>ERP Comparator News</foaf:name>
+	<foaf:homepage>http://www.evaluation-matrix.com/</foaf:homepage>
+	<rdfs:seeAlso rdf:resource="http://www.evaluation-matrix.com/foafroll.xml" />
+
+	<foaf:member>
+		<foaf:Agent>
+			<foaf:name>Microsoft Dynamic Nav</foaf:name>
+			<foaf:weblog>
+				<foaf:Document rdf:about="http://msdynamicsworld.com/news">
+					<dc:title>NEWS</dc:title>
+					<rdfs:seeAlso>
+						<rss:channel rdf:about="http://msdynamicsworld.com/news/feed" />
+					</rdfs:seeAlso>
+				</foaf:Document>
+			</foaf:weblog>
+		</foaf:Agent>
+	</foaf:member>
+	<foaf:member>
+		<foaf:Agent>
+			<foaf:name>OpenERP</foaf:name>
+			<foaf:weblog>
+				<foaf:Document rdf:about="http://www.openerp.com/planet/">
+					<dc:title>Planet Open ERP</dc:title>
+					<rdfs:seeAlso>
+						<rss:channel rdf:about="http://www.openerp.com/planet/atom.xml" />
+					</rdfs:seeAlso>
+				</foaf:Document>
+			</foaf:weblog>
+		</foaf:Agent>
+	</foaf:member>
+	<foaf:member>
+		<foaf:Agent>
+			<foaf:name>Openbravo</foaf:name>
+			<foaf:weblog>
+				<foaf:Document rdf:about="http://planet.openbravo.com/">
+					<dc:title>Planet Openbravo</dc:title>
+					<rdfs:seeAlso>
+						<rss:channel rdf:about="http://feeds2.feedburner.com/openbravo-blogs" />
+					</rdfs:seeAlso>
+				</foaf:Document>
+			</foaf:weblog>
+		</foaf:Agent>
+	</foaf:member>
+	<foaf:member>
+		<foaf:Agent>
+			<foaf:name>SAP</foaf:name>
+			<foaf:weblog>
+				<foaf:Document rdf:about="http://searchsap.techtarget.com?track=sy191">
+					<dc:title>SearchSAP: SAP news, tips and expert advice</dc:title>
+					<rdfs:seeAlso>
+						<rss:channel rdf:about="http://feeds.feedburner.com/techtarget/searchsap/sapnews" />
+					</rdfs:seeAlso>
+				</foaf:Document>
+			</foaf:weblog>
+		</foaf:Agent>
+	</foaf:member>
+	<foaf:member>
+		<foaf:Agent>
+			<foaf:name>SAP</foaf:name>
+			<foaf:weblog>
+				<foaf:Document rdf:about="http://www.sap.com/about/press/index.epx">
+					<dc:title>SAP - Press Room</dc:title>
+					<rdfs:seeAlso>
+						<rss:channel rdf:about="http://www.sap.com/about/newsroom/rss.epx" />
+					</rdfs:seeAlso>
+				</foaf:Document>
+			</foaf:weblog>
+		</foaf:Agent>
+	</foaf:member>
+
+</foaf:Group>
+</rdf:RDF>

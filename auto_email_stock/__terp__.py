@@ -29,7 +29,7 @@
     Customer or supplier by Email 
     when the Picking order confirm
     """,
-    "website" : "http://tinyerp.com",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules",
     "init_xml" : [
         

@@ -1,7 +1,4 @@
 from osv import fields,osv
-import tools
-import ir
-import pooler
 from mx import DateTime
 
 #TODO make this configurable parameters:
@@ -17,8 +14,8 @@ class stock_location(osv.osv):
             view_id = self.pool.get('ir.ui.view').search(cr,uid,[('name','=','stock.location.fleet.form.sub_fleet_maintenance')])[0]
         elif view_type == 'form' and context.get('fleet_type', False) == 'fleet':
             view_id = self.pool.get('ir.ui.view').search(cr,uid,[('name','=','stock.location.fleet.form.fleet_maintenance')])[0]
-        #elif view_type == 'tree' and context.get('fleet_type', False) == 'sub_fleet':
-        #    pass
+        elif view_type == 'tree' and context.get('fleet_type', False) == 'sub_fleet':
+            view_id = self.pool.get('ir.ui.view').search(cr,uid,[('name','=','sub_fleet.tree')])[0]
         #elif view_type == 'tree' and context.get('fleet_type', False) == 'fleet':
         #    pass
         return  super(stock_location, self).fields_view_get(cr, uid, view_id, view_type, context, toolbar)
@@ -89,7 +86,16 @@ class stock_location(osv.osv):
                 result['value'] = {'intrinsic_anniversary_time': anniversary_time.strftime('%Y-%m-%d')}
                 result['warning'] = {'title':'Incorrect Anniversary Time', 'message':"- Anniversary date should should ideally start at day %s of the month; corrected to day %s\n" % (fixed_month_init_day, fixed_month_init_day)}
         return result
-                
+    
+    #FIXME: this call back is due to a current OpenERP limitation:
+    #currently (v5, March 2009), it's not possible to use the orm create method to create a hierarchy of objects all together within a single call.
+    #this is due to a bug/limitation of the Modified Pre-orderered Tree Traversal algorithm.
+    def sub_fleet_change(self, cr, uid, ids, fleet_id):
+        result = {}
+        if not fleet_id:
+            result['warning'] = {'title': 'Save PARENT FLEET first please!', 'message':'Due to a current OpenERP limitation, you should please close the SUBFLEET popup and save the form BEFORE adding any subfleet'}
+            result['value'] = {'child_ids':[]}
+        return result
     
     
     def _default_usage(self, cr, uid, context={}):
@@ -132,6 +138,7 @@ class stock_picking(osv.osv):
         if view_type == 'form' and context.get('view', False) == 'incident':
             view_id = self.pool.get('ir.ui.view').search(cr,uid,[('name','=','stock.picking.incident.form')])[0]
         return  super(stock_picking, self).fields_view_get(cr, uid, view_id, view_type, context, toolbar)
+
     
     #copy extra invoice line info when invoicing on delivery, if the "delivery" module is installed, it should be a dependence of this module for this to
     #work properly! 
@@ -149,7 +156,8 @@ class stock_picking(osv.osv):
                             self.pool.get('account.invoice.line').write(cr, uid, invoice_line.id, {'maintenance_start_date':order_line.maintenance_start_date, \
                                                                                                    'maintenance_end_date':order_line.maintenance_end_date, \
                                                                                                    'maintenance_product_qty':order_line.maintenance_product_qty, \
-                                                                                                   })
+                                                                                                   'account_analytic_id':order_line.product_id.maintenance_analytic_id.id \
+                                                                                                   }) #TODO, we could use product categories to retrieve the maintenance_analytic_id
                         if order_line.fleet_id: #product sent to fleet but not maintenance -> we copy the information too
                             self.pool.get('account.invoice.line').write(cr, uid, invoice_line.id, {'fleet_id':order_line.fleet_id.id})
                     
@@ -157,4 +165,35 @@ class stock_picking(osv.osv):
         return create_ids
     
 stock_picking()
+
+
+
+class stock_move(osv.osv):
+    _inherit = "stock.move"
+
+    def _default_product_id(self, cr, uid, context={}):
+        return context.get('product_id', False)
+    
+    def _default_prodlot_id(self, cr, uid, context={}):
+        return context.get('prodlot_id', False)
+    
+    def _default_location_id(self, cr, uid, context={}):
+        return context.get('location_id', False) or super(stock_move, self)._default_location_source(cr, uid, context)
+    
+    def _default_location_dest_id(self, cr, uid, context={}):
+        return context.get('location_dest_id', False) or super(stock_move, self)._default_location_destination(cr, uid, context)
+    
+    def _default_name(self, cr, uid, context={}):
+        return "RMA_move"
+    
+    
+    _defaults = {
+        'product_id': _default_product_id,
+        'prodlot_id': _default_prodlot_id,
+        'location_id': _default_location_id,
+        'location_dest_id': _default_location_dest_id,
+        'name': _default_name,
+    }
+
+stock_move()
     

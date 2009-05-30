@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<!-- 
+##############################################################################
+#
+# Copyright (c) Camptocamp SA - http://www.camptocamp.com
+# Author: Arnaud Wüst
+#
+#    This file is part of the c2c_budget module
+#
+# WARNING: This program as such is intended to be used by professional
+# programmers who take the whole responsability of assessing all potential
+# consequences resulting from its eventual inadequacies and bugs
+# End users who are looking for a ready-to-use solution with commercial
+# garantees and support are strongly adviced to contract a Free Software
+# Service Company
+#
+# This program is Free Software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#
+##############################################################################
+-->
+<openerp>
+    <data>   
+    	<!-- an action to validate a budget structure by dbl click on a budget item in the budget structure-->
+        <wizard string="Validate Budget Structure" 
+                model="c2c_budget.item" 
+                name="c2c_budget.validate_budget_structure" 
+                id="wizard_validate_budget_structure"/>
+        
+        <!-- add an action in analytic accounts to open the related budget lines -->
+		<wizard string="Open Budgets Lines" 
+				model="account.analytic.account"
+				id="act_budgetlines_from_aa"
+				name="budgetlines.from.aa"/>        
+        
+        <!-- add a print item in budgets objects to print budget -->
+        <wizard string="Budget By Periods" 
+                model="c2c_budget" 
+                name="budget.by.periods" 
+                id="wizard_budget_by_period" 
+                keyword="client_print_multi"/>
+                
+        <!-- add a print item in versions objects to print budget -->
+        <wizard string="Budget By Periods" 
+                model="c2c_budget.version" 
+                name="budget.by.periods" 
+                id="wizard_budget_by_period" 
+                keyword="client_print_multi"/>
+                
+        <!-- add a print item in lines objects to print budget -->
+        <wizard string="Budget By Periods" 
+                model="c2c_budget.line" 
+                name="budget.by.periods" 
+                id="wizard_budget_by_period" 
+                keyword="client_print_multi"/>
+
+        <!-- add an item in menu to open the advanced wizard char -->
+        <wizard string="Budget Lines Search" 
+                model="c2c_budget.line" 
+                name="budget.advanced_search" 
+    			menu="False"                
+                id="wizard_search_budget_lines" />
+        <menuitem
+			name="Financial Management/Budgets/Budget Lines Search"
+			id="menu_wizard_search_budget_lines"
+			action="wizard_search_budget_lines"
+			type="wizard" />
+   
+   
+           <!-- add a print item in budgets objects to compare versions -->
+        <wizard string="Versions Comparing" 
+                model="c2c_budget" 
+                name="compare.budget.versions" 
+                id="wizard_compare_versions" 
+                keyword="client_print_multi"/>
+                
+           <!-- add a print item in versions objects to compare versions -->
+        <wizard string="Versions Comparing" 
+                model="c2c_budget.version" 
+                name="compare.budget.versions" 
+                id="wizard_compare_versions" 
+                keyword="client_print_multi"/>
+   
+
+           <!-- add a print item in budgets objects to consolidate a budget -->
+        <wizard string="Budget Consolidation" 
+                model="c2c_budget" 
+                name="budget.consolidation" 
+                id="wizard_budget_consolidation" 
+                keyword="client_print_multi"/>
+                
+           <!-- add a print item in versions objects to consolidate a budget -->
+        <wizard string="Budget Consolidation" 
+                model="c2c_budget.version" 
+                name="budget.consolidation" 
+                id="wizard_budget_consolidation" 
+                keyword="client_print_multi"/>
+             
+
+           <!-- add a print item in budgets objects to compare it with reality -->
+        <wizard string="Budget vs. Reality" 
+                model="c2c_budget" 
+                name="budget.vs.reality" 
+                id="wizard_budget_vs_reality" 
+                keyword="client_print_multi"/>
+                
+           <!-- add a print item in versions objects to compare it with reality -->
+        <wizard string="Budget vs. Reality" 
+                model="c2c_budget.version" 
+                name="budget.vs.reality" 
+                id="wizard_budget_vs_reality" 
+                keyword="client_print_multi"/>
+
+
+                
+    </data>
+</openerp>

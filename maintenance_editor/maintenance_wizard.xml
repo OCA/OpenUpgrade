@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+		<wizard id="maintenance_maintenance_module_refresh_wizard" model="maintenance.maintenance.module" name="maintenance.maintenance.module.refresh" string="Refresh Module List" multi='True'/>
+        <menuitem action="maintenance_maintenance_module_refresh_wizard" id="menu_maintenace_module_refresh_wizard" parent="menu_maintenance_module" type="wizard"/>		
+        <wizard id="wizard_print_maintenance_contract" model="maintenance.maintenance" name="wizard.print.maintenance.contract" string="Maintenance Contract" keyword="client_print_multi"/>
+    </data>
+</openerp>

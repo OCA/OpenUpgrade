@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<report id="hotel_reservation_details"
+			string="Reservation Detail"
+			model="hotel.reservation"
+			name="reservation.detail"
+			rml="hotel_reservation/report/room_res.rml"
+			auto="False"
+			menu="False"/>
+			
+		<report id="hotel_checkin_details"
+			string="CheckIn Detail"
+			model="hotel.reservation"
+			name="checkin.detail"
+			rml="hotel_reservation/report/checkinlist.rml"
+			menu="False"
+			auto="False"/>
+			
+		<report id="hotel_checkin_details"
+			string="CheckOut Detail"
+			model="hotel.reservation"
+			name="checkout.detail"
+			rml="hotel_reservation/report/checkoutlist.rml"
+			menu="False"
+			auto="False"/>
+		
+		<report id="max_hotel_room"
+			string="Max Room Detail"
+			model="hotel.reservation"
+			name="maxroom.detail"
+			rml="hotel_reservation/report/maxroom.rml"
+			menu="False"
+			auto="False"/>
+		
+	</data>
+</openerp>

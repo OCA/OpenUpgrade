@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+	<!-- Product Series Form And Tree View -->
+
+		<record id="product_series_form_view" model="ir.ui.view">
+            <field name="name">product.series.form</field>
+            <field name="model">product.series</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Product series">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="description"/>
+                </form>
+            </field>
+        </record>
+
+         <record id="product_series_tree_view" model="ir.ui.view">
+            <field name="name">product.series.tree</field>
+            <field name="model">product.series</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Product Series">
+                    <field name="code" select="1"/>
+                    <field name="name" select="1"/>
+                </tree>
+            </field>
+        </record>
+
+ 		<record id="product_series_action_form" model="ir.actions.act_window">
+            <field name="name">Products Series</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.series</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem action="product_series_action_form" id="menu_product_series_action_form" parent="product.menu_config_product"/>
+
+		<!-- Inherited Product -->
+
+		<record model="ir.ui.view" id="view_product_series_form">
+			<field name="name">product.normal.form</field>
+			<field name="model">product.product</field>
+			<field name="inherit_id" ref="product.product_normal_form_view" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="variants" position="before">
+				<field name="series" select="1"/>
+				</field>
+			</field>
+		</record>
+
+	</data>
+</openerp>

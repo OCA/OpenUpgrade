@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+		<record id="product_variant_configurator.sale_order_form_view_dimensions" model="ir.ui.view">
+			<field name="name">product_variant_configurator.sale_order_form_view</field>
+			<field name="model">sale.order</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="sale_product_multistep_configurator.sale_order_form_configurator2" />
+			<field name="arch" type="xml">
+			
+				<field name="property_ids" position='after'>
+					<separator colspan="4" string="Dimension Customizations"/>
+					<field name="dimension_custom_value_ids" nolabel="1" colspan="4" widget="one2many_list">
+						<form string="Dimension / Value">
+							<field name="dimension_type_id"/>
+							<field name="custom_value"/>
+						</form>
+						<tree string="Dimension / Value">
+							<field name="dimension_type_id"/>
+							<field name="custom_value"/>
+						</tree>
+					</field>
+				</field>
+				
+			</field>
+		</record>
+		
+		<record id="product_variant_configurator.sale_order_line_form_view_dimensions" model="ir.ui.view">
+			<field name="name">product_variant_configurator.sale_order_line_form_view</field>
+			<field name="model">sale.order.line</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="sale_product_multistep_configurator.sale_order_line_form_configurator" />
+			<field name="arch" type="xml">
+			
+				<field name="property_ids" position='after'>
+					<separator colspan="4" string="Dimension Customizations"/>
+					<field name="dimension_custom_value_ids" nolabel="1" colspan="4" widget="one2many_list">
+						<form string="Dimension / Value">
+							<field name="dimension_type_id"/>
+							<field name="custom_value"/>
+						</form>
+						<tree string="Dimension / Value">
+							<field name="dimension_type_id"/>
+							<field name="custom_value"/>
+						</tree>
+					</field>
+				</field>
+				
+			</field>
+		</record>
+		
+	</data>
+</openerp>

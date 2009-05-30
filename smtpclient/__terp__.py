@@ -30,7 +30,7 @@
     Multi Threading
     Multi Attachment
     """,
-    "website" : "http://tinyerp.com",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules",
     "init_xml" : [
     ],
@@ -38,8 +38,10 @@
     ],
     "update_xml" : [
         "smtpclient_view.xml",
+        "serveraction_view.xml",
         "smtpclient_wizard.xml",
         "security/ir.model.access.csv",
+        "smtpclient_data.xml",
     ],
     "active": False,
     "installable": True

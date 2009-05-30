@@ -1,0 +1,612 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+	<menuitem name="ETL" id="menu_etl_root" icon="STOCK_PROPERTIES" />
+
+	<menuitem name="Configuration" parent="menu_etl_root"
+		sequence="5" id="menu_etl_configure" />
+
+	<wizard
+          id="wizard_launch_job_process"
+            keyword="client_action_multi"
+            model="etl.job"
+            name="etl.launch.job.process"
+            multi="True"
+            string="Launch Process"/>
+
+	<wizard id="wizard_run_scheduled_process" model="etl.job.process" multi="True"
+			string="Run All Scheduled Processes" name="etl.run.scheduled.job.processes" />
+
+	<menuitem action="wizard_run_scheduled_process" id="etl_run_process_scheduler"
+		parent="menu_etl_root" type="wizard" sequence="100" />
+
+	<!-- Project -->
+
+		<record id="etl_proj_form" model="ir.ui.view">
+			<field name="name">view_etl_proj_form</field>
+			<field name="model">etl.project</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Project">
+					<field name="name" select="1" />
+					<separator string="Jobs" colspan="4" />
+					<field name="job_ids"  colspan="4" nolabel="1"/>
+				</form>
+			</field>
+		</record>
+
+
+		<record id="etl_proj_tree" model="ir.ui.view">
+			<field name="name">view_etl_proj_tree</field>
+			<field name="model">etl.project</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Projects">
+					<field name="name" select="1" />
+					<field name="job_ids" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_etl_proj_tree"
+			model="ir.actions.act_window">
+			<field name="name">Projects</field>
+			<field name="res_model">etl.project</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="etl_proj_tree" />
+		</record>
+
+
+		<record id="action_etl_proj_form"
+			model="ir.actions.act_window">
+			<field name="name">New Project</field>
+			<field name="res_model">etl.project</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="etl_proj_form" />
+		</record>
+
+
+
+		<menuitem name="Projects" parent="etl_interface.menu_etl_root"
+			sequence="10" action="action_etl_proj_tree"
+			id="menu_etl_project_all_form" />
+
+
+		<menuitem name="Current Projects"
+			parent="menu_etl_project_all_form" action="action_etl_proj_tree"
+			id="menu_etl_project_current_form" />
+
+
+		<menuitem name="New Project" parent="menu_etl_project_all_form"
+			action="action_etl_proj_form" id="menu_etl_project_new_form" />
+
+
+		<!--	Channel  -->
+
+
+		<record id="etl_channel_form" model="ir.ui.view">
+			<field name="name">view_etl_channel_form</field>
+			<field name="model">etl.channel</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Channel">
+					<field name="name" colspan="4" select="1" />
+					<field name="code" select="1" />
+					<field name="type" select="1" />
+				</form>
+			</field>
+		</record>
+
+		<record id="etl_channel_tree" model="ir.ui.view">
+			<field name="name">view_etl_channel_tree</field>
+			<field name="model">etl.channel</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Channels">
+					<field name="name" select="1" />
+					<field name="code" select="1" />
+					<field name="type" select="1" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_etl_channel_log_tree"
+			model="ir.actions.act_window">
+			<field name="name">Log Channels</field>
+			<field name="res_model">etl.channel</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="etl_channel_tree" />
+			<field name="domain">[('type','=','logger')]</field>
+		</record>
+
+		<record id="action_etl_channel_trans_tree"
+			model="ir.actions.act_window">
+			<field name="name">Transition Channels</field>
+			<field name="res_model">etl.channel</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="etl_channel_tree" />
+			<field name="domain">[('type','=','transition')]</field>
+		</record>
+
+		<record id="action_etl_channel_form"
+			model="ir.actions.act_window">
+			<field name="name">New Channel</field>
+			<field name="res_model">etl.channel</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="etl_channel_form" />
+		</record>
+
+		<menuitem name="Channels" parent="menu_etl_configure"
+			sequence="6"
+			id="menu_etl_channel_def" />
+
+		<menuitem name="Log Channels" parent="menu_etl_channel_def"
+			action="action_etl_channel_log_tree" id="menu_etl_log_channel_form" />
+
+		<menuitem name="Transition Channels"
+			action="action_etl_channel_trans_tree" parent="menu_etl_channel_def"
+			id="etl_menu_trans_channel" />
+
+
+		<menuitem name="New Channel" parent="menu_etl_channel_def"
+			sequence="11" action="action_etl_channel_form"
+			id="etl_menu_new_log_channel" />
+
+		<!--	Jobs -->
+
+		<record id="view_etl_job_form" model="ir.ui.view">
+			<field name="name">view_etl_job_form</field>
+			<field name="model">etl.job</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Job">
+					<field name="name" select="1" />
+					<field name="project_id" select="1" />
+					<field name="user_id" select="1" />
+					<newline />
+					<notebook colspan="4">
+						<page string="Job's Components">
+							<field name="component_ids" nolabel="1" readonly="1"/>
+						</page>
+						<page string="Other Info">
+							<separator string="Processes" colspan="4" />
+							<field name="running_process" />
+							<field name="total_process" />
+							<separator string="Notes" colspan="4" />
+							<field name="notes" colspan="4" nolabel="1"/>
+						</page>
+					</notebook>
+					<separator string="Status" colspan="4" />
+					<field name="state" select="1" />
+					<group colspan="2">
+						<button name="action_open_job" string="Open"
+							type="object" states="draft" icon="gtk-yes"/>
+						<button name="%(wizard_launch_job_process)d"
+							string="Launch a Process" type="action" states="open" icon="gtk-go-forward"/>
+						<button name="action_run_all_processes" string="Run All Open Processes"
+						                            type="object" states="open" icon="gtk-media-play"/>
+						<button name="action_close_job" string="Close"
+							type="object" states="open" icon="gtk-cancel"/>
+						<button name="action_set_to_draft" string="Reset to draft"
+							type="object" states="close" icon="gtk-convert"/>
+					</group>
+				</form>
+			</field>
+		</record>
+
+
+		<record id="view_etl_job_all_tree" model="ir.ui.view">
+			<field name="name">view_etl_job_tree</field>
+			<field name="model">etl.job</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Jobs">
+					<field name="name" select="1" />
+					<field name="state" select="1" />
+					<field name="component_ids"/>
+					<field name="user_id" select="1" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_etl_job_all_tree"
+			model="ir.actions.act_window">
+			<field name="name">Jobs</field>
+			<field name="res_model">etl.job</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_etl_job_all_tree" />
+		</record>
+
+		<record id="action_etl_job_open_tree"
+			model="ir.actions.act_window">
+			<field name="name">Jobs</field>
+			<field name="res_model">etl.job</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_etl_job_all_tree" />
+			<field name="domain">[('state','=','open')]</field>
+		</record>
+
+		<menuitem name="Jobs" parent="menu_etl_root"
+			action="action_etl_job_all_tree" sequence="11" id="menu_etl_job_def" />
+
+		<menuitem name="Open Jobs" parent="menu_etl_job_def"
+			action="action_etl_job_open_tree" id="menu_etl_jd_j_rj_form" />
+
+		<record id="action_etl_job_form"
+			model="ir.actions.act_window">
+			<field name="name">New Job</field>
+			<field name="res_model">etl.job</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="view_etl_job_form" />
+		</record>
+
+
+		<menuitem name="New Job" parent="menu_etl_job_def" sequence="11"
+			action="action_etl_job_form" id="menu_etl_jd_j_nj_form" />
+
+		<!--  Transitions -->
+
+		<record id="view_etl_transition_form" model="ir.ui.view">
+			<field name="name">view_etl_transition</field>
+			<field name="model">etl.transition</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Transition">
+					<field name="name" select="1" />
+					<field name="type" select="1" />
+					<separator string="Transition property" colspan="4" />
+					<newline />
+					<field name="source_component_id" select="1" />
+					<field name="destination_component_id" select="1" />
+					<field name="channel_source" select="1" />
+					<field name="channel_destination" select="1" />
+					<separator string="Status" colspan="4" />
+					<newline />
+					<field name="state" select="1" />
+					<group col="2" colspan="2">
+						<button name="action_close_transition"
+							string="Close Transition" type="object" states="open" />
+						<button name="action_open_transition"
+							string="Open Transition" type="object" states="close" />
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_etl_transition_tree" model="ir.ui.view">
+			<field name="name">view_etl_transition_tree</field>
+			<field name="model">etl.transition</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Transitions">
+					<field name="name" select="1" />
+					<field name="type" select="1" />
+					<field name="source_component_id" select="1" />
+					<field name="destination_component_id" select="1" />
+					<field name="channel_source" select="1" />
+					<field name="channel_destination" select="1" />
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_etl_trans_data_tree"
+			model="ir.actions.act_window">
+			<field name="name">Data Transitions</field>
+			<field name="res_model">etl.transition</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type','=','data')]</field>
+			<field name="view_id" ref="view_etl_transition_tree" />
+		</record>
+
+		<record id="action_etl_trans_trigger_tree"
+			model="ir.actions.act_window">
+			<field name="name">Trigger Transitions</field>
+			<field name="res_model">etl.transition</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type','=','trigger')]</field>
+			<field name="view_id" ref="view_etl_transition_tree" />
+		</record>
+
+		<menuitem name="Transitions" parent="menu_etl_configure"
+			sequence="12" id="menu_etl_t_form" />
+
+
+		<menuitem name="Data Transitions" parent="menu_etl_t_form"
+			action="action_etl_trans_data_tree" id="menu_etl_t_dt_form" />
+
+		<menuitem name="Trigger Transitions" parent="menu_etl_t_form"
+			action="action_etl_trans_trigger_tree" id="menu_etl_t_tt_form" />
+
+		<record id="view_etl_job_process_component_form"
+			model="ir.ui.view">
+			<field name="name">etl.job.process.statistics.form</field>
+			<field name="model">etl.job.process.statistics</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Component">
+					<group colspan="4">
+						<field name="name" select="1" />
+					</group>
+					<notebook colspan="4">
+						<page string="Details">
+							<separator string="Status" colspan="4" />
+							<field name="start_date" />
+							<field name="end_date" />
+							<field name="compute_time" />
+							<field name="input_records" />
+							<field name="output_records" />
+							<field name="state" />
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_etl_job_process_tree" model="ir.ui.view">
+			<field name="name">etl.job.process.statistics.tree</field>
+			<field name="model">etl.job.process.statistics</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Jobs">
+					<field name="name" select="1" />
+					<field name="state" />
+					<field name="input_records" />
+					<field name="output_records" />
+					<field name="start_date" select="1" />
+					<field name="end_date" select="1" />
+					<field name="compute_time" />
+					<field name="seconds_par_record" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_etl_job_process_log_form"
+			model="ir.ui.view">
+			<field name="name">etl.job.process.log.form</field>
+			<field name="model">etl.job.process.log</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Logs/Messages">
+					<field name="name" select="1" />
+					<field name="component_id" />
+					<field name="date_time" />
+					<separator string="Description" colspan="4" />
+					<field name="desc" colspan="4" nolabel="1" />
+				</form>
+			</field>
+		</record>
+
+		<record id="view_etl_job_process_tree" model="ir.ui.view">
+			<field name="name">etl.job.process.log.tree</field>
+			<field name="model">etl.job.process.log</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Jobs">
+					<field name="name" select="1" />
+					<field name="component_id" />
+					<field name="date_time" />
+					<field name="desc" />
+				</tree>
+			</field>
+		</record>
+		<!-- Job  Process	 -->
+
+		<record id="view_etl_job_process_form" model="ir.ui.view">
+			<field name="name">etl.job.process.form</field>
+			<field name="model">etl.job.process</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Job Process">
+						<field name="name" select="1"/>
+						<field name="job_id" attrs="{'readonly':[('state','!=','draft')]}" select="1"/>
+						<field name="schedule_date" select="1"/>
+						<newline/>
+						<group colspan="2" col="4">
+							<field name="statistics" />
+							<field name="log" />
+						</group>
+					<notebook colspan="4">
+						<page string="Statistics" attrs="{'invisible':[('statistics','=',False)]}">
+							<separator string="Statistics" colspan="4" />
+							<group colspan="4" col="6">
+								<field name="start_date" />
+								<field name="end_date" />
+								<field name="compute_time" />
+								<field name="input_records" />
+								<field name="output_records" />
+							</group>
+							<field name="component_ids" colspan="4"
+								nolabel="1" widget="one2many_list">
+								<tree string="Component's Statistics"  editable="bottom">
+									<field name="name" select="1" />
+									<field name="signal" />
+									<field name="start_date" select="1" />
+									<field name="end_date" select="1" />
+									<field name="compute_time" />
+									<field name="records_in" />
+									<field name="records_out" />
+									<field name="seconds_par_record" />
+									<field name="state" />
+								</tree>
+								<form string="Component">
+									<group colspan="4">
+										<field name="name" select="1" />
+										<field name="signal" />
+									</group>
+									<notebook colspan="4">
+										<page string="Details">
+											<separator string="Status"
+												colspan="4" />
+											<field name="start_date" />
+											<field name="end_date" />
+											<field name="compute_time" />
+											<field name="records_in" />
+											<field name="records_out" />
+											<field name="state" />
+										</page>
+									</notebook>
+								</form>
+							</field>
+						</page>
+						<page string="Log Details" attrs="{'invisible':[('log','=',False)]}">
+							<field name="log_ids" colspan="4"	 nolabel="1" widget="one2many_list">
+								<tree string="Logs" editable="bottom">
+									<field name="date_time" />
+									<field name="desc" />
+								</tree>
+								<form string="Logs/Messages">
+									<field name="date_time" />
+									<separator string="Description"
+										colspan="4" />
+									<field name="desc" colspan="4"
+										nolabel="1" />
+								</form>
+							</field>
+						</page>
+					<page string="Other Details">
+							<separator string="Error Message" colspan="4" />
+							<field name="error_msg" nolabel="1"/>
+					</page>
+					</notebook>
+					<separator string="Status" colspan="4" />
+						<group colspan="4" col="11" >
+						<field name="state"/>
+							<button name="action_open"	string="Open" states="draft" icon="gtk-yes"/>
+							<button name="action_cancel_draft"	string="Set to Draft" states="cancel" type="object" icon="gtk-convert"/>
+							<button name="start_process" string="Start" states="open,pause" icon="gtk-execute"/>
+							<button name="action_pause" string="Pause" states="start" icon="gtk-media-pause"/>
+							<button name="start_process"	string="Retry" states="exception" icon="gtk-ok"/>
+							<button name="action_stop" string="Stop" states="start,pause" icon="gtk-no"/>
+							<button name="action_restart_process"	string="Restart" type="object" states="stop" icon="gtk-refresh"/>
+							<button name="cancel" string="Cancel" states="draft,open,exception,pause" icon="gtk-cancel"/>
+						</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_etl_job_process_tree" model="ir.ui.view">
+			<field name="name">etl.job.process.tree</field>
+			<field name="model">etl.job.process</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Jobs">
+					<field name="name" select="1" />
+					<field name="job_id" select="1" />
+					<field name="start_date" select="1" />
+					<field name="end_date" select="1" />
+					<field name="state" select="1" />
+					<field name="compute_time" />
+					<field name="input_records" />
+					<field name="output_records" />
+				</tree>
+			</field>
+		</record>
+
+
+		<record id="action_etl_job_process_tree"
+			model="ir.actions.act_window">
+			<field name="name">Job Processes</field>
+			<field name="res_model">etl.job.process</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_etl_job_process_tree" />
+		</record>
+
+		<record id="action_etl_job_process_running_tree"
+			model="ir.actions.act_window">
+			<field name="name">Running Processes</field>
+			<field name="res_model">etl.job.process</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_etl_job_process_tree" />
+			<field name="domain">[('state','=','start')]</field>
+		</record>
+
+		<act_window
+			domain="[('job_id','=',active_id),('state','=','open')]"
+			id="action_open_job_process_tree" name="Open Process"
+			res_model="etl.job.process" src_model="etl.job" />
+		<act_window
+			domain="[('job_id','=',active_id),('state','=','start')]"
+			id="action_running_job_process_tree" name="Running Process"
+			res_model="etl.job.process" src_model="etl.job" />
+
+		<record id="action_etl_job_process_draft_tree"
+			model="ir.actions.act_window">
+			<field name="name">Draft Processes</field>
+			<field name="res_model">etl.job.process</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_etl_job_process_tree" />
+			<field name="domain">[('state','=','draft')]</field>
+		</record>
+
+
+		<menuitem name="Job Process" parent="menu_etl_root"
+			sequence="15" action="action_etl_job_process_tree"
+			id="menu_etl_job_processes" />
+
+		<menuitem name="Draft Process" parent="menu_etl_job_processes"
+			action="action_etl_job_process_draft_tree"
+			id="menu_etl_proc_dp_form" />
+
+		<menuitem name="Running Process" parent="menu_etl_job_processes"
+			action="action_etl_job_process_running_tree"
+			id="menu_etl_proc_rp_form" />
+
+		<!--Transformer-->
+
+		<record id="view_etl_transformer_form" model="ir.ui.view">
+			<field name="name">etl.transformer.form</field>
+			<field name="model">etl.transformer</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Transformer">
+					<field name="name" />
+					<field name="tranformer_line_ids" colspan="4" nolabel="1" widget="one2many_list">
+						<tree string="Transformers">
+							<field name="name"/>
+							<field name="type"/>
+						</tree>
+						<form string="Transformers">
+							<field name="name"/>
+							<field name="type"/>
+						</form>
+					</field>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_etl_transformer_tree" model="ir.ui.view">
+			<field name="name">etl.transformer.tree</field>
+			<field name="model">etl.transformer</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Transformer">
+					<field name="name" select="1" />
+					<field name="tranformer_line_ids" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_etl_transformer_tree" model="ir.actions.act_window">
+			<field name="name">Transformer</field>
+			<field name="res_model">etl.transformer</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+	</data>
+</openerp>

@@ -10,13 +10,13 @@
 				<notebook position="inside">
 					<page string="Maintenance">
 						<group>
-	     			<field name="fleet_id" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}" domain="[('fleet_type','=','sub_fleet'), ('parent_partner_id','=',parent.partner_id)]"/>
+	     			<field name="fleet_id" string="Sub Fleet" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}" domain="[('fleet_type','=','sub_fleet'), ('parent_partner_id','=',parent.partner_id)]"/>
 	     			<field name="maintenance_month_qty" readonly="1" />
 						<field name="maintenance_product_qty" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}"/>
 	     			<field name="maintenance_start_date" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}"/>
 	     			<field name="maintenance_end_date" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}"/>
 	     			</group>
-	     			<separator string="Analytice Accounting" />
+	     			<separator string="Analytic Accounting" />
 	     			<field colspan="4" name="account_analytic_lines" attrs="{'readonly':[('is_maintenance','=',False)]}" nolabel="1"/>
 	     		</page>
 				</notebook>

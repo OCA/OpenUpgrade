@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<record model="ir.actions.wizard" id="wiz_mrp_procf">
+			<field name="name">Fashion help</field>
+			<field name="wiz_name">fashion.help.wizard</field>
+		</record>
+		<menuitem name="Fashion help" action="wiz_mrp_procf" type="wizard" parent="menu_production"/>
+	</data>
+</openerp>
+

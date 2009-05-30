@@ -20,31 +20,34 @@
 #
 ##############################################################################
 """
-    ETL Data Count Control Component:
-    * calculate total of tranfering data
+ Calculate total count of data while transferring.
 
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+ GNU General Public License.
 """
 
-from etl import etl
+from etl.component import component
 
-class control_count(etl.component):
+class data_count(component):
     """
-    ETL Data Count Control Component:
-    * calculate total of tranfering data
+     Calculate total of data being transferred.
 
-    """
-    _name='etl.component.control.data_count'  
-    _description='calculate total of tranfering data.'   
-    _author='tiny'
+    """   
+    def __init__(self, name='component.control.data_count'):        
+        super(data_count, self).__init__(name=name)
+        self._type = 'component.control.data_count'
+
+    def __copy__(self):        
+        res = data_count(name=self.name)
+        return res
 
     def process(self):
         datas = {}
-        for channel,trans in self.input_get().items():
+        for channel, trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:
                     datas.setdefault(channel, 0)
-                    datas[channel] += 1
-
+                    datas[channel] += 1 
         for d in datas:
             yield {'channel': d, 'count': datas[d]}, 'main'
 

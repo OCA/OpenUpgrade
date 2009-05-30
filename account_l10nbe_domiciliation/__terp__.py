@@ -23,7 +23,7 @@
     "name" : "Account l10nbe Domiciliation",
     "version" : "1.0",
     "author" : "Tiny",
-    "website" : "http://tinyerp.com",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Account l10nbe Domiciliation",
     "description": """
         Related with l10n_be module.

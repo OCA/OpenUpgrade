@@ -1,0 +1,515 @@
+<?xml version="1.0" ?>
+ <openerp>
+
+    <!-- OFFER -->
+
+    <data noupdate="1">
+        <record id="dm_offer_CSDF-1HOUR" model="dm.offer">
+            <field eval="&quot;&quot;&quot;CSDF-1HOUR&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;Simulator Demo (hour)&quot;&quot;&quot;" name="keywords"/>
+            <field eval="&quot;&quot;&quot;new&quot;&quot;&quot;" name="preoffer_type"/>
+            <field name="copywriter_id" ref="base.main_partner"/>
+            <field name="lang_orig_id" ref="base.lang_en"/>
+            <field eval="[(6,0,[])]" name="forbidden_state_ids"/>
+            <field eval="[(6,0,[ref('dm.dm_offer_category_ondemandoffer0')])]" name="category_ids"/>
+            <field eval="&quot;&quot;&quot;open&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;8.5&quot;&quot;&quot;" name="quotation"/>
+            <field eval="&quot;&quot;&quot;new&quot;&quot;&quot;" name="type"/>
+            <field eval="1" name="active"/>
+            <field eval="1.00" name="version"/>
+            <field eval="&quot;&quot;&quot;validated&quot;&quot;&quot;" name="legal_state"/>
+            <field name="offer_responsible_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Campaign Simulator Demo Offer (1 hour)&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;This is a demo offer for the delay of 1 hour.&quot;&quot;&quot;" name="notes"/>
+            <field eval="[(6,0,[ref('base.fj')])]" name="forbidden_country_ids"/>
+        </record>
+        <workflow action="state_open_set" model="dm.offer" ref="dm_offer_CSDF-1HOUR"/>
+        <record id="dm_offer_step_smforCSDF-1HOUR" model="dm.offer.step">
+            <field eval="0" name="floating_date"/>
+            <field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
+            <field eval="0" name="mailing_at_dates"/>
+            <field eval="&quot;&quot;&quot;Propose a 1 month free trial for an OnDemand offer&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;open&quot;&quot;&quot;" name="state"/>
+            <field name="media_id" ref="dm.media_paper"/>
+            <field eval="&quot;&quot;&quot;
+The Starting Mailing proposes to the prospect to subscribe for a 1 month free trial for an OnDemand offer.&quot;&quot;&quot;" name="desc"/>
+            <field name="type_id" ref="dm.dm_offer_step_type_startingmailing0"/>
+            <field name="offer_id" ref="dm_offer_CSDF-1HOUR"/>
+            <field eval="0" name="interactive"/>
+            <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
+            <field eval="[(6,0,[ref('dm.product_product_papermailingus0')])]" name="item_ids"/>
+            <field eval="&quot;&quot;&quot;SM&quot;&quot;&quot;" name="code"/>
+            <field eval="1" name="doc_number"/>
+            <field eval="&quot;&quot;&quot;Use the new OnDemand logo in the mailing&quot;&quot;&quot;" name="dtp_note"/>
+            <field eval="&quot;&quot;&quot;Check with the SysAdmin if the several OnDemand profiles are installed and tested&quot;&quot;&quot;" name="planning_note"/>
+        </record>
+        <record id="dm_offer_step_imforCSDF-1HOUR" model="dm.offer.step">
+            <field eval="1" name="doc_number"/>
+            <field eval="0" name="floating_date"/>
+            <field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
+            <field eval="&quot;&quot;&quot;Check availibility of the commercials for the phone calls&quot;&quot;&quot;" name="planning_note"/>
+            <field eval="0" name="mailing_at_dates"/>
+            <field name="media_id" ref="dm.media_paper"/>
+            <field eval="&quot;&quot;&quot;Propose to buy the Open ERP Book&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;open&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;The Intermediate mail thanks the client to have subscribed to the offer and propose to buy the OpenERP Book&quot;&quot;&quot;" name="desc"/>
+            <field name="type_id" ref="dm.dm_offer_step_type_intermediatemailing0"/>
+            <field name="offer_id" ref="dm_offer_CSDF-1HOUR"/>
+            <field eval="0" name="interactive"/>
+            <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
+            <field eval="[(6,0,[ref('dm.product_product_openerpuserbook0')])]" name="item_ids"/>
+            <field eval="&quot;&quot;&quot;IM&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;The Intermediate mailing is a phone by a commercial call to thank the client to have subscribed to the offer and propose to buy the OpenERP Book&quot;&quot;&quot;" name="desc"/>
+            <field name="media_id" ref="dm.media_paper"/>
+            <field eval="&quot;&quot;&quot;Check availability of the commercials for the phone calls&quot;&quot;&quot;" name="planning_note"/>
+        </record>
+        <record id="dm_offer_step_piforCSDF-1HOUR" model="dm.offer.step">
+            <field eval="2" name="doc_number"/>
+            <field eval="0" name="floating_date"/>
+            <field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
+            <field eval="&quot;&quot;&quot;Get confirmation of the OpenERP Discovery Day&quot;&quot;&quot;" name="planning_note"/>
+            <field eval="0" name="mailing_at_dates"/>
+            <field name="media_id" ref="dm.media_paper"/>
+            <field eval="&quot;&quot;&quot;Propose to subscribe to the Open ERP Discovery Day on May 2009&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;open&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;The Package Insert that join the OpenERP Book proposes to subscribe to the next OpenERP Discovery Day in Paris on May 2009.&quot;&quot;&quot;" name="desc"/>
+            <field name="type_id" ref="dm.dm_offer_step_type_packageinsert0"/>
+            <field name="offer_id" ref="dm_offer_CSDF-1HOUR"/>
+            <field eval="0" name="interactive"/>
+            <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
+            <field eval="[(6,0,[ref('dm.product_product_openerpdiscoverydayonmay0')])]" name="item_ids"/>
+            <field eval="&quot;&quot;&quot;PI&quot;&quot;&quot;" name="code"/>
+        </record>
+        <record id="dm_offer_step_alpiforCSDF-1HOUR" model="dm.offer.step">
+            <field eval="1" name="doc_number"/>
+            <field eval="0" name="floating_date"/>
+            <field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
+            <field eval="0" name="mailing_at_dates"/>
+            <field name="media_id" ref="dm.media_paper"/>
+            <field eval="&quot;&quot;&quot;Thanks for subscribing to the Open ERP Discovery Day&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;open&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;The Accompanying Letter of the Package Insert thanks the client to have subscribed to the OpenERP Discovery Day.&quot;&quot;&quot;" name="desc"/>
+            <field name="type_id" ref="dm.dm_offer_step_type_accompanyingletterofthepackageinsert0"/>
+            <field name="offer_id" ref="dm_offer_CSDF-1HOUR"/>
+            <field eval="0" name="interactive"/>
+            <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
+            <field eval="[(6,0,[ref('dm.product_product_openerpdiscoverydayonmay0')])]" name="item_ids"/>
+            <field eval="&quot;&quot;&quot;ALPI&quot;&quot;&quot;" name="code"/>
+        </record>
+        <record id="dm_offer_step_alimforCSDF-1HOUR" model="dm.offer.step">
+            <field eval="1" name="doc_number"/>
+            <field eval="0" name="floating_date"/>
+            <field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
+            <field eval="0" name="mailing_at_dates"/>
+            <field name="media_id" ref="dm.media_paper"/>
+            <field eval="&quot;&quot;&quot;Thanks for buying the Open ERP book&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;open&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;The Accompanying Letter of the Intermediate mailing thanks the client to have bought to OpenERP Book and confirm that it will be delivered shortly.&quot;&quot;&quot;" name="desc"/>
+            <field name="type_id" ref="dm.dm_offer_step_type_accompanyingletteroftheintermediatemailing0"/>
+            <field name="offer_id" ref="dm_offer_CSDF-1HOUR"/>
+            <field eval="0" name="interactive"/>
+            <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
+            <field eval="[(6,0,[ref('dm.product_product_openerpuserbook0')])]" name="item_ids"/>
+            <field eval="&quot;&quot;&quot;ALIM&quot;&quot;&quot;" name="code"/>
+        </record>
+        <record id="dm_offer_step_transition_CSDF-1HOUR_0" model="dm.offer.step.transition">
+            <field eval="4" name="delay"/>
+            <field name="step_to_id" ref="dm_offer_step_piforCSDF-1HOUR"/>
+            <field name="step_from_id" ref="dm_offer_step_imforCSDF-1HOUR"/>
+	    	<field name="condition_id" ref="dm.dm_offer_step_transition_purchase"/>
+	    	<field eval="&quot;&quot;&quot;hour&quot;&quot;&quot;" name="delay_type"/>
+        </record>
+        <record id="dm_offer_step_transition_CSDF-1HOUR_1" model="dm.offer.step.transition">
+            <field name="step_to_id" ref="dm_offer_step_imforCSDF-1HOUR"/>
+            <field name="step_from_id" ref="dm_offer_step_smforCSDF-1HOUR"/>
+	    	<field name="condition_id" ref="dm.dm_offer_step_transition_purchase"/>
+            <field eval="0" name="delay"/>
+            <field eval="&quot;&quot;&quot;hour&quot;&quot;&quot;" name="delay_type"/>
+        </record>
+        <record id="dm_offer_step_transition_CSDF-1HOUR_2" model="dm.offer.step.transition">
+            <field name="step_to_id" ref="dm_offer_step_alimforCSDF-1HOUR"/>
+            <field name="step_from_id" ref="dm_offer_step_imforCSDF-1HOUR"/>
+	    	<field name="condition_id" ref="dm.dm_offer_step_transition_not_purchase"/>
+            <field eval="0" name="delay"/>
+            <field eval="&quot;&quot;&quot;hour&quot;&quot;&quot;" name="delay_type"/>
+        </record>
+        <record id="dm_offer_step_transition_3" model="dm.offer.step.transition">
+            <field name="step_to_id" ref="dm_offer_step_alpiforCSDF-1HOUR"/>
+            <field name="step_from_id" ref="dm_offer_step_piforCSDF-1HOUR"/>
+	    	<field name="condition_id" ref="dm.dm_offer_step_transition_automatic"/>
+            <field eval="0" name="delay"/>
+            <field eval="&quot;&quot;&quot;hour&quot;&quot;&quot;" name="delay_type"/>
+        </record>
+    </data>
+
+	<data noupdate="1">
+        <record id="dm_offer_CSDF-1DAY" model="dm.offer">
+            <field eval="&quot;&quot;&quot;CSDF-1DAY&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;Simulator Demo (day)&quot;&quot;&quot;" name="keywords"/>
+            <field eval="&quot;&quot;&quot;new&quot;&quot;&quot;" name="preoffer_type"/>
+            <field name="copywriter_id" ref="base.main_partner"/>
+            <field name="lang_orig_id" ref="base.lang_en"/>
+            <field eval="[(6,0,[])]" name="forbidden_state_ids"/>
+            <field eval="[(6,0,[ref('dm.dm_offer_category_ondemandoffer0')])]" name="category_ids"/>
+            <field eval="&quot;&quot;&quot;open&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;8.5&quot;&quot;&quot;" name="quotation"/>
+            <field eval="&quot;&quot;&quot;new&quot;&quot;&quot;" name="type"/>
+            <field eval="1" name="active"/>
+            <field eval="1.00" name="version"/>
+            <field eval="&quot;&quot;&quot;validated&quot;&quot;&quot;" name="legal_state"/>
+            <field name="offer_responsible_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Campaign Simulator Demo Offer (1 day)&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;This is a demo offer for the delay of 1 day.&quot;&quot;&quot;" name="notes"/>
+            <field eval="[(6,0,[ref('base.fj')])]" name="forbidden_country_ids"/>
+        </record>
+        <workflow action="state_open_set" model="dm.offer" ref="dm_offer_CSDF-1DAY"/>
+        <record id="dm_offer_step_smforCSDF-1DAY" model="dm.offer.step">
+            <field eval="0" name="floating_date"/>
+            <field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
+            <field eval="0" name="mailing_at_dates"/>
+            <field eval="&quot;&quot;&quot;Propose a 1 month free trial for an OnDemand offer&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;open&quot;&quot;&quot;" name="state"/>
+            <field name="media_id" ref="dm.media_paper"/>
+            <field eval="&quot;&quot;&quot;
+The Starting Mailing proposes to the prospect to subscribe for a 1 month free trial for an OnDemand offer.&quot;&quot;&quot;" name="desc"/>
+            <field name="type_id" ref="dm.dm_offer_step_type_startingmailing0"/>
+            <field name="offer_id" ref="dm_offer_CSDF-1DAY"/>
+            <field eval="0" name="interactive"/>
+            <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
+            <field eval="[(6,0,[ref('dm.product_product_papermailingus0')])]" name="item_ids"/>
+            <field eval="&quot;&quot;&quot;SM&quot;&quot;&quot;" name="code"/>
+            <field eval="1" name="doc_number"/>
+            <field eval="&quot;&quot;&quot;Use the new OnDemand logo in the mailing&quot;&quot;&quot;" name="dtp_note"/>
+            <field eval="&quot;&quot;&quot;Check with the SysAdmin if the several OnDemand profiles are installed and tested&quot;&quot;&quot;" name="planning_note"/>
+        </record>
+        <record id="dm_offer_step_imforCSDF-1DAY" model="dm.offer.step">
+            <field eval="1" name="doc_number"/>
+            <field eval="0" name="floating_date"/>
+            <field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
+            <field eval="&quot;&quot;&quot;Check availibility of the commercials for the phone calls&quot;&quot;&quot;" name="planning_note"/>
+            <field eval="0" name="mailing_at_dates"/>
+            <field name="media_id" ref="dm.media_paper"/>
+            <field eval="&quot;&quot;&quot;Propose to buy the Open ERP Book&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;open&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;The Intermediate mail thanks the client to have subscribed to the offer and propose to buy the OpenERP Book&quot;&quot;&quot;" name="desc"/>
+            <field name="type_id" ref="dm.dm_offer_step_type_intermediatemailing0"/>
+            <field name="offer_id" ref="dm_offer_CSDF-1DAY"/>
+            <field eval="0" name="interactive"/>
+            <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
+            <field eval="[(6,0,[ref('dm.product_product_openerpuserbook0')])]" name="item_ids"/>
+            <field eval="&quot;&quot;&quot;IM&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;The Intermediate mailing is a phone by a commercial call to thank the client to have subscribed to the offer and propose to buy the OpenERP Book&quot;&quot;&quot;" name="desc"/>
+            <field name="media_id" ref="dm.media_paper"/>
+            <field eval="&quot;&quot;&quot;Check availability of the commercials for the phone calls&quot;&quot;&quot;" name="planning_note"/>
+        </record>
+        <record id="dm_offer_step_piforCSDF-1DAY" model="dm.offer.step">
+            <field eval="2" name="doc_number"/>
+            <field eval="0" name="floating_date"/>
+            <field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
+            <field eval="&quot;&quot;&quot;Get confirmation of the OpenERP Discovery Day&quot;&quot;&quot;" name="planning_note"/>
+            <field eval="0" name="mailing_at_dates"/>
+            <field name="media_id" ref="dm.media_paper"/>
+            <field eval="&quot;&quot;&quot;Propose to subscribe to the Open ERP Discovery Day on May 2009&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;open&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;The Package Insert that join the OpenERP Book proposes to subscribe to the next OpenERP Discovery Day in Paris on May 2009.&quot;&quot;&quot;" name="desc"/>
+            <field name="type_id" ref="dm.dm_offer_step_type_packageinsert0"/>
+            <field name="offer_id" ref="dm_offer_CSDF-1DAY"/>
+            <field eval="0" name="interactive"/>
+            <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
+            <field eval="[(6,0,[ref('dm.product_product_openerpdiscoverydayonmay0')])]" name="item_ids"/>
+            <field eval="&quot;&quot;&quot;PI&quot;&quot;&quot;" name="code"/>
+        </record>
+        <record id="dm_offer_step_alpiforCSDF-1DAY" model="dm.offer.step">
+            <field eval="1" name="doc_number"/>
+            <field eval="0" name="floating_date"/>
+            <field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
+            <field eval="0" name="mailing_at_dates"/>
+            <field name="media_id" ref="dm.media_paper"/>
+            <field eval="&quot;&quot;&quot;Thanks for subscribing to the Open ERP Discovery Day&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;open&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;The Accompanying Letter of the Package Insert thanks the client to have subscribed to the OpenERP Discovery Day.&quot;&quot;&quot;" name="desc"/>
+            <field name="type_id" ref="dm.dm_offer_step_type_accompanyingletterofthepackageinsert0"/>
+            <field name="offer_id" ref="dm_offer_CSDF-1DAY"/>
+            <field eval="0" name="interactive"/>
+            <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
+            <field eval="[(6,0,[ref('dm.product_product_openerpdiscoverydayonmay0')])]" name="item_ids"/>
+            <field eval="&quot;&quot;&quot;ALPI&quot;&quot;&quot;" name="code"/>
+        </record>
+        <record id="dm_offer_step_alimforCSDF-1DAY" model="dm.offer.step">
+            <field eval="1" name="doc_number"/>
+            <field eval="0" name="floating_date"/>
+            <field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
+            <field eval="0" name="mailing_at_dates"/>
+            <field name="media_id" ref="dm.media_paper"/>
+            <field eval="&quot;&quot;&quot;Thanks for buying the Open ERP book&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;open&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;The Accompanying Letter of the Intermediate mailing thanks the client to have bought to OpenERP Book and confirm that it will be delivered shortly.&quot;&quot;&quot;" name="desc"/>
+            <field name="type_id" ref="dm.dm_offer_step_type_accompanyingletteroftheintermediatemailing0"/>
+            <field name="offer_id" ref="dm_offer_CSDF-1DAY"/>
+            <field eval="0" name="interactive"/>
+            <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
+            <field eval="[(6,0,[ref('dm.product_product_openerpuserbook0')])]" name="item_ids"/>
+            <field eval="&quot;&quot;&quot;ALIM&quot;&quot;&quot;" name="code"/>
+        </record>
+        <record id="dm_offer_step_transition_CSDF-1DAY_0" model="dm.offer.step.transition">
+            <field eval="4" name="delay"/>
+            <field name="step_to_id" ref="dm_offer_step_piforCSDF-1DAY"/>
+            <field name="step_from_id" ref="dm_offer_step_imforCSDF-1DAY"/>
+	    	<field name="condition_id" ref="dm.dm_offer_step_transition_purchase"/>
+	    	<field eval="&quot;&quot;&quot;day&quot;&quot;&quot;" name="delay_type"/>
+        </record>
+        <record id="dm_offer_step_transition_CSDF-1DAY_1" model="dm.offer.step.transition">
+            <field name="step_to_id" ref="dm_offer_step_imforCSDF-1DAY"/>
+            <field name="step_from_id" ref="dm_offer_step_smforCSDF-1DAY"/>
+	    	<field name="condition_id" ref="dm.dm_offer_step_transition_purchase"/>
+            <field eval="0" name="delay"/>
+            <field eval="&quot;&quot;&quot;day&quot;&quot;&quot;" name="delay_type"/>
+        </record>
+        <record id="dm_offer_step_transition_CSDF-1DAY_2" model="dm.offer.step.transition">
+            <field name="step_to_id" ref="dm_offer_step_alimforCSDF-1DAY"/>
+            <field name="step_from_id" ref="dm_offer_step_imforCSDF-1DAY"/>
+	    	<field name="condition_id" ref="dm.dm_offer_step_transition_not_purchase"/>
+            <field eval="0" name="delay"/>
+            <field eval="&quot;&quot;&quot;day&quot;&quot;&quot;" name="delay_type"/>
+        </record>
+        <record id="dm_offer_step_transition_3" model="dm.offer.step.transition">
+            <field name="step_to_id" ref="dm_offer_step_alpiforCSDF-1DAY"/>
+            <field name="step_from_id" ref="dm_offer_step_piforCSDF-1DAY"/>
+	    	<field name="condition_id" ref="dm.dm_offer_step_transition_automatic"/>
+            <field eval="0" name="delay"/>
+            <field eval="&quot;&quot;&quot;day&quot;&quot;&quot;" name="delay_type"/>
+        </record>
+    </data>
+
+	<data noupdate="1">
+        <record id="dm_offer_CSDF-1WEEK" model="dm.offer">
+            <field eval="&quot;&quot;&quot;CSDF-1WEEK&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;Simulator Demo (week)&quot;&quot;&quot;" name="keywords"/>
+            <field eval="&quot;&quot;&quot;new&quot;&quot;&quot;" name="preoffer_type"/>
+            <field name="copywriter_id" ref="base.main_partner"/>
+            <field name="lang_orig_id" ref="base.lang_en"/>
+            <field eval="[(6,0,[])]" name="forbidden_state_ids"/>
+            <field eval="[(6,0,[ref('dm.dm_offer_category_ondemandoffer0')])]" name="category_ids"/>
+            <field eval="&quot;&quot;&quot;open&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;8.5&quot;&quot;&quot;" name="quotation"/>
+            <field eval="&quot;&quot;&quot;new&quot;&quot;&quot;" name="type"/>
+            <field eval="1" name="active"/>
+            <field eval="1.00" name="version"/>
+            <field eval="&quot;&quot;&quot;validated&quot;&quot;&quot;" name="legal_state"/>
+            <field name="offer_responsible_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Campaign Simulator Demo Offer (1 week)&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;This is a demo offer for the delay of 1 week.&quot;&quot;&quot;" name="notes"/>
+            <field eval="[(6,0,[ref('base.fj')])]" name="forbidden_country_ids"/>
+        </record>
+        <workflow action="state_open_set" model="dm.offer" ref="dm_offer_CSDF-1WEEK"/>
+        <record id="dm_offer_step_smforCSDF-1WEEK" model="dm.offer.step">
+            <field eval="0" name="floating_date"/>
+            <field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
+            <field eval="0" name="mailing_at_dates"/>
+            <field eval="&quot;&quot;&quot;Propose a 1 month free trial for an OnDemand offer&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;open&quot;&quot;&quot;" name="state"/>
+            <field name="media_id" ref="dm.media_paper"/>
+            <field eval="&quot;&quot;&quot;
+The Starting Mailing proposes to the prospect to subscribe for a 1 month free trial for an OnDemand offer.&quot;&quot;&quot;" name="desc"/>
+            <field name="type_id" ref="dm.dm_offer_step_type_startingmailing0"/>
+            <field name="offer_id" ref="dm_offer_CSDF-1WEEK"/>
+            <field eval="0" name="interactive"/>
+            <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
+            <field eval="[(6,0,[ref('dm.product_product_papermailingus0')])]" name="item_ids"/>
+            <field eval="&quot;&quot;&quot;SM&quot;&quot;&quot;" name="code"/>
+            <field eval="1" name="doc_number"/>
+            <field eval="&quot;&quot;&quot;Use the new OnDemand logo in the mailing&quot;&quot;&quot;" name="dtp_note"/>
+            <field eval="&quot;&quot;&quot;Check with the SysAdmin if the several OnDemand profiles are installed and tested&quot;&quot;&quot;" name="planning_note"/>
+        </record>
+        <record id="dm_offer_step_imforCSDF-1WEEK" model="dm.offer.step">
+            <field eval="1" name="doc_number"/>
+            <field eval="0" name="floating_date"/>
+            <field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
+            <field eval="&quot;&quot;&quot;Check availibility of the commercials for the phone calls&quot;&quot;&quot;" name="planning_note"/>
+            <field eval="0" name="mailing_at_dates"/>
+            <field name="media_id" ref="dm.media_paper"/>
+            <field eval="&quot;&quot;&quot;Propose to buy the Open ERP Book&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;open&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;The Intermediate mail thanks the client to have subscribed to the offer and propose to buy the OpenERP Book&quot;&quot;&quot;" name="desc"/>
+            <field name="type_id" ref="dm.dm_offer_step_type_intermediatemailing0"/>
+            <field name="offer_id" ref="dm_offer_CSDF-1WEEK"/>
+            <field eval="0" name="interactive"/>
+            <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
+            <field eval="[(6,0,[ref('dm.product_product_openerpuserbook0')])]" name="item_ids"/>
+            <field eval="&quot;&quot;&quot;IM&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;The Intermediate mailing is a phone by a commercial call to thank the client to have subscribed to the offer and propose to buy the OpenERP Book&quot;&quot;&quot;" name="desc"/>
+            <field name="media_id" ref="dm.media_paper"/>
+            <field eval="&quot;&quot;&quot;Check availability of the commercials for the phone calls&quot;&quot;&quot;" name="planning_note"/>
+        </record>
+        <record id="dm_offer_step_piforCSDF-1WEEK" model="dm.offer.step">
+            <field eval="2" name="doc_number"/>
+            <field eval="0" name="floating_date"/>
+            <field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
+            <field eval="&quot;&quot;&quot;Get confirmation of the OpenERP Discovery Day&quot;&quot;&quot;" name="planning_note"/>
+            <field eval="0" name="mailing_at_dates"/>
+            <field name="media_id" ref="dm.media_paper"/>
+            <field eval="&quot;&quot;&quot;Propose to subscribe to the Open ERP Discovery Day on May 2009&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;open&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;The Package Insert that join the OpenERP Book proposes to subscribe to the next OpenERP Discovery Day in Paris on May 2009.&quot;&quot;&quot;" name="desc"/>
+            <field name="type_id" ref="dm.dm_offer_step_type_packageinsert0"/>
+            <field name="offer_id" ref="dm_offer_CSDF-1WEEK"/>
+            <field eval="0" name="interactive"/>
+            <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
+            <field eval="[(6,0,[ref('dm.product_product_openerpdiscoverydayonmay0')])]" name="item_ids"/>
+            <field eval="&quot;&quot;&quot;PI&quot;&quot;&quot;" name="code"/>
+        </record>
+        <record id="dm_offer_step_alpiforCSDF-1WEEK" model="dm.offer.step">
+            <field eval="1" name="doc_number"/>
+            <field eval="0" name="floating_date"/>
+            <field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
+            <field eval="0" name="mailing_at_dates"/>
+            <field name="media_id" ref="dm.media_paper"/>
+            <field eval="&quot;&quot;&quot;Thanks for subscribing to the Open ERP Discovery Day&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;open&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;The Accompanying Letter of the Package Insert thanks the client to have subscribed to the OpenERP Discovery Day.&quot;&quot;&quot;" name="desc"/>
+            <field name="type_id" ref="dm.dm_offer_step_type_accompanyingletterofthepackageinsert0"/>
+            <field name="offer_id" ref="dm_offer_CSDF-1WEEK"/>
+            <field eval="0" name="interactive"/>
+            <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
+            <field eval="[(6,0,[ref('dm.product_product_openerpdiscoverydayonmay0')])]" name="item_ids"/>
+            <field eval="&quot;&quot;&quot;ALPI&quot;&quot;&quot;" name="code"/>
+        </record>
+        <record id="dm_offer_step_alimforCSDF-1WEEK" model="dm.offer.step">
+            <field eval="1" name="doc_number"/>
+            <field eval="0" name="floating_date"/>
+            <field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
+            <field eval="0" name="mailing_at_dates"/>
+            <field name="media_id" ref="dm.media_paper"/>
+            <field eval="&quot;&quot;&quot;Thanks for buying the Open ERP book&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;open&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;The Accompanying Letter of the Intermediate mailing thanks the client to have bought to OpenERP Book and confirm that it will be delivered shortly.&quot;&quot;&quot;" name="desc"/>
+            <field name="type_id" ref="dm.dm_offer_step_type_accompanyingletteroftheintermediatemailing0"/>
+            <field name="offer_id" ref="dm_offer_CSDF-1WEEK"/>
+            <field eval="0" name="interactive"/>
+            <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
+            <field eval="[(6,0,[ref('dm.product_product_openerpuserbook0')])]" name="item_ids"/>
+            <field eval="&quot;&quot;&quot;ALIM&quot;&quot;&quot;" name="code"/>
+        </record>
+        <record id="dm_offer_step_transition_CSDF-1WEEK_0" model="dm.offer.step.transition">
+            <field eval="4" name="delay"/>
+            <field name="step_to_id" ref="dm_offer_step_piforCSDF-1WEEK"/>
+            <field name="step_from_id" ref="dm_offer_step_imforCSDF-1WEEK"/>
+	    	<field name="condition_id" ref="dm.dm_offer_step_transition_purchase"/>
+	    	<field eval="&quot;&quot;&quot;week&quot;&quot;&quot;" name="delay_type"/>
+        </record>
+        <record id="dm_offer_step_transition_CSDF-1WEEK_1" model="dm.offer.step.transition">
+            <field name="step_to_id" ref="dm_offer_step_imforCSDF-1WEEK"/>
+            <field name="step_from_id" ref="dm_offer_step_smforCSDF-1WEEK"/>
+	    	<field name="condition_id" ref="dm.dm_offer_step_transition_purchase"/>
+            <field eval="0" name="delay"/>
+            <field eval="&quot;&quot;&quot;week&quot;&quot;&quot;" name="delay_type"/>
+        </record>
+        <record id="dm_offer_step_transition_CSDF-1WEEK_2" model="dm.offer.step.transition">
+            <field name="step_to_id" ref="dm_offer_step_alimforCSDF-1WEEK"/>
+            <field name="step_from_id" ref="dm_offer_step_imforCSDF-1WEEK"/>
+	    	<field name="condition_id" ref="dm.dm_offer_step_transition_not_purchase"/>
+            <field eval="0" name="delay"/>
+            <field eval="&quot;&quot;&quot;week&quot;&quot;&quot;" name="delay_type"/>
+        </record>
+        <record id="dm_offer_step_transition_3" model="dm.offer.step.transition">
+            <field name="step_to_id" ref="dm_offer_step_alpiforCSDF-1WEEK"/>
+            <field name="step_from_id" ref="dm_offer_step_piforCSDF-1WEEK"/>
+	    	<field name="condition_id" ref="dm.dm_offer_step_transition_automatic"/>
+            <field eval="0" name="delay"/>
+            <field eval="&quot;&quot;&quot;week&quot;&quot;&quot;" name="delay_type"/>
+        </record>
+    </data>
+
+    <!-- CAMPAIGN -->
+    <data noupdate="1">
+        <record id="dm_campaign_SDC-1HOUR" model="dm.campaign">
+            <field name="trademark_id" ref="dm.dm_trademark_openerp0"/>
+            <field name="currency_id" ref="base.USD"/>
+            <field ref="dm.dm_campaign_type_loyalty" name="campaign_type_id"/>
+            <field eval="&quot;&quot;&quot;pending&quot;&quot;&quot;" name="manufacturing_state"/>
+            <field name="dealer_id" ref="base.main_partner"/>
+            <field name="country_id" ref="base.us"/>
+            <field eval="time.strftime('%Y-%m-%d')" name="date_start"/>
+            <field eval="&quot;&quot;&quot;pending&quot;&quot;&quot;" name="translation_state"/>
+            <field name="offer_id" ref="dm_offer_CSDF-1HOUR"/>
+            <field name="responsible_id" ref="base.user_root"/>
+            <field eval=" str(time.localtime()[0] + 1) + time.strftime('-%m-%d')" name="date"/>
+            <field eval="&quot;&quot;&quot;pending&quot;&quot;&quot;" name="customer_file_state"/>
+            <field eval="&quot;&quot;&quot;Simulator Demo Campaign (1 hour)&quot;&quot;&quot;" name="name"/>
+            <field name="lang_id" ref="base.lang_en"/>
+            <field eval="&quot;&quot;&quot;pending&quot;&quot;&quot;" name="items_state"/>
+            <field eval="&quot;&quot;&quot;This is the Simulator Demo Campaign - HOUR.&quot;&quot;&quot;" name="notes"/>
+        </record>
+    </data>
+
+    <data noupdate="1">
+        <record id="dm_campaign_SDC-1DAY" model="dm.campaign">
+            <field name="trademark_id" ref="dm.dm_trademark_openerp0"/>
+            <field name="currency_id" ref="base.USD"/>
+            <field ref="dm.dm_campaign_type_loyalty" name="campaign_type_id"/>
+            <field eval="&quot;&quot;&quot;pending&quot;&quot;&quot;" name="manufacturing_state"/>
+            <field name="dealer_id" ref="base.main_partner"/>
+            <field name="country_id" ref="base.us"/>
+            <field eval="time.strftime('%Y-%m-%d')" name="date_start"/>
+            <field eval="&quot;&quot;&quot;pending&quot;&quot;&quot;" name="translation_state"/>
+            <field name="offer_id" ref="dm_offer_CSDF-1DAY"/>
+            <field name="responsible_id" ref="base.user_root"/>
+            <field eval=" str(time.localtime()[0] + 1) + time.strftime('-%m-%d')" name="date"/>
+            <field eval="&quot;&quot;&quot;pending&quot;&quot;&quot;" name="customer_file_state"/>
+            <field eval="&quot;&quot;&quot;Simulator Demo Campaign (1 day)&quot;&quot;&quot;" name="name"/>
+            <field name="lang_id" ref="base.lang_en"/>
+            <field eval="&quot;&quot;&quot;pending&quot;&quot;&quot;" name="items_state"/>
+            <field eval="&quot;&quot;&quot;This is the Simulator Demo Campaign - DAY.&quot;&quot;&quot;" name="notes"/>
+        </record>
+	</data>
+
+	<data noupdate="1">
+        <record id="dm_campaign_SDC-1WEEK" model="dm.campaign">
+            <field name="trademark_id" ref="dm.dm_trademark_openerp0"/>
+            <field name="currency_id" ref="base.USD"/>
+            <field ref="dm.dm_campaign_type_loyalty" name="campaign_type_id"/>
+            <field eval="&quot;&quot;&quot;pending&quot;&quot;&quot;" name="manufacturing_state"/>
+            <field name="dealer_id" ref="base.main_partner"/>
+            <field name="country_id" ref="base.us"/>
+            <field eval="time.strftime('%Y-%m-%d')" name="date_start"/>
+            <field eval="&quot;&quot;&quot;pending&quot;&quot;&quot;" name="translation_state"/>
+            <field name="offer_id" ref="dm_offer_CSDF-1WEEK"/>
+            <field name="responsible_id" ref="base.user_root"/>
+            <field eval=" str(time.localtime()[0] + 1) + time.strftime('-%m-%d')" name="date"/>
+            <field eval="&quot;&quot;&quot;pending&quot;&quot;&quot;" name="customer_file_state"/>
+            <field eval="&quot;&quot;&quot;Simulator Demo Campaign (1 week)&quot;&quot;&quot;" name="name"/>
+            <field name="lang_id" ref="base.lang_en"/>
+            <field eval="&quot;&quot;&quot;pending&quot;&quot;&quot;" name="items_state"/>
+            <field eval="&quot;&quot;&quot;This is the Simulator Demo Campaign - WEEK.&quot;&quot;&quot;" name="notes"/>
+        </record>
+    </data>
+
+    <!-- SIMULATOR -->
+	<data noupdate="1">
+        <record id="dm_simulator_1HOUR" model="dm.simulator">
+        	<field eval="&quot;&quot;&quot;Demo Campaign 1 hour Simulation&quot;&quot;&quot;" name="name"/>
+        	<field name="campaign_id" ref="dm_campaign_SDC-1HOUR"/>
+        	<field eval="&quot;&quot;&quot;1&quot;&quot;&quot;" name="duration"/>
+        	<field eval="&quot;&quot;&quot;hours&quot;&quot;&quot;" name="duration_unit"/>
+        </record>
+	</data>
+
+	<data noupdate="1">
+        <record id="dm_simulator_1DAY" model="dm.simulator">
+        	<field eval="&quot;&quot;&quot;Demo Campaign 1 day Simulation&quot;&quot;&quot;" name="name"/>
+        	<field name="campaign_id" ref="dm_campaign_SDC-1DAY"/>
+        	<field eval="&quot;&quot;&quot;1&quot;&quot;&quot;" name="duration"/>
+        	<field eval="&quot;&quot;&quot;days&quot;&quot;&quot;" name="duration_unit"/>
+        </record>
+	</data>
+	
+	<data noupdate="1">
+        <record id="dm_simulator_1WEEK" model="dm.simulator">
+        	<field eval="&quot;&quot;&quot;Demo Campaign 1 week Simulation&quot;&quot;&quot;" name="name"/>
+        	<field name="campaign_id" ref="dm_campaign_SDC-1WEEK"/>
+        	<field eval="&quot;&quot;&quot;1&quot;&quot;&quot;" name="duration"/>
+        	<field eval="&quot;&quot;&quot;weeks&quot;&quot;&quot;" name="duration_unit"/>
+        </record>
+	</data>
+
+ </openerp>

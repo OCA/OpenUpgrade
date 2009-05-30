@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>etl</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th bgcolor="#70b0f0" class="navbar-select"
+          >&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;etl
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="etl-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PACKAGE DESCRIPTION ==================== -->
+<h1 class="epydoc">Package etl</h1><span class="codelink"><a href="etl-pysrc.html">source&nbsp;code</a></span><br /><br />
+<pre class="literalblock">
+
+ETL (Extract, transform, and load) is a module for python 2.4 or greater 
+that implements ETL concepts for data import, export and also performs some operations 
+beween import/export.  
+
+This package has different sub-packages for defining  ETL job process, 
+ETL components (Input/Source, transform/process, control, Output/Destination),
+ETL connectors and ETL transition.
+
+ETL job means to define etl process which can run, stop, pause.
+
+ETL components means to define components which are used in etl job like 
+- Input Component     : to get data from external sources.
+- Output Component    : to store data to external destination.
+- Transform Component : to perform a series of rules or functions to the extracted data 
+from the source to derive the data for loading into the end target.
+
+ETL connectors means to connect with external systems or server which are used by ETL Components.
+
+ETL transition means to define data flow with different transition channels between 
+source etl components and destination etl components.
+
+ETL is written entirely in python and is released under the GNU General Public License.
+
+Website: U{http://www.openerp.com/}.
+
+@version: 1.0.0a1
+@author: Tiny SPRL
+@contact: support@tinyerp.com
+@license: GNU General Public License
+
+</pre><br /><br />
+
+<hr />
+<div class="fields">      <p><strong>Version:</strong>
+        1.0.0a1
+      </p>
+      <p><strong>Date:</strong>
+        01 May 2009
+      </p>
+      <p><strong>Author:</strong>
+        Tiny SPRL
+      </p>
+      <p><strong>License:</strong>
+        GNU General Public License
+      </p>
+</div><!-- ==================== SUBMODULES ==================== -->
+<a name="section-Submodules"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Submodules</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Submodules"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr><td class="summary">
+  <ul class="nomargin">
+    <li> <strong class="uidlink"><a href="etl.component-module.html">etl.component</a></strong>: <em class="summary">Used to fetch data from any sources like files, database, 
+        etc..,transform data and store in any destinations like files, 
+        database etc.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="etl.component.component%27-module.html">etl.component.component'</a></strong>: <em class="summary">ETL Component.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.component.control-module.html">etl.component.control</a></strong>: <em class="summary">ETL Control components.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="etl.component.control.data_count%27-module.html">etl.component.control.data_count'</a></strong>: <em class="summary">Calculate total count of data while transferring.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.component.control.sleep%27-module.html">etl.component.control.sleep'</a></strong>: <em class="summary">Puts job process in sleep.</em>    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="etl.component.input-module.html">etl.component.input</a></strong>: <em class="summary">To extract data from the source systems.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="etl.component.input.csv_in%27-module.html">etl.component.input.csv_in'</a></strong>: <em class="summary">To read data from csv file.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.component.input.data%27-module.html">etl.component.input.data'</a></strong>: <em class="summary">This component is used to read data.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.component.input.facebook_in%27-module.html">etl.component.input.facebook_in'</a></strong>: <em class="summary">This is an ETL Component that is used to read data from facebook.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.component.input.gmail_in%27-module.html">etl.component.input.gmail_in'</a></strong>    </li>
+    <li> <strong class="uidlink"><a href="etl.component.input.openobject_in%27-module.html">etl.component.input.openobject_in'</a></strong>: <em class="summary">Reads data from Open Object model.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.component.input.sql_in%27-module.html">etl.component.input.sql_in'</a></strong>: <em class="summary">To read data from SQL database.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.component.input.sugarcrm_in%27-module.html">etl.component.input.sugarcrm_in'</a></strong>: <em class="summary">This is an ETL Component that reads data from SugarCRM.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.component.input.vcard_in%27-module.html">etl.component.input.vcard_in'</a></strong>: <em class="summary">To import data from vcard.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.component.input.xmlrpc_in%27-module.html">etl.component.input.xmlrpc_in'</a></strong>: <em class="summary">To run xmlrpc server.</em>    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="etl.component.output-module.html">etl.component.output</a></strong>: <em class="summary">To load/store data into destination system.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="etl.component.output.csv_out%27-module.html">etl.component.output.csv_out'</a></strong>: <em class="summary">To write data to csv file.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.component.output.facebook_out%27-module.html">etl.component.output.facebook_out'</a></strong>: <em class="summary">This is an ETL Component that writes data to facebook.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.component.output.openobject_out%27-module.html">etl.component.output.openobject_out'</a></strong>: <em class="summary">To write data into open object model.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.component.output.sql_out%27-module.html">etl.component.output.sql_out'</a></strong>: <em class="summary">To write data into SQL table.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.component.output.xmlrpc_out%27-module.html">etl.component.output.xmlrpc_out'</a></strong>: <em class="summary">To get the response for the request made to xmlrpc server.</em>    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="etl.component.transform-module.html">etl.component.transform</a></strong>: <em class="summary">To transform string data into particular type.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="etl.component.transform.data_filter%27-module.html">etl.component.transform.data_filter'</a></strong>: <em class="summary">Data filter component.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.component.transform.data_map-module.html">etl.component.transform.data_map</a></strong>: <em class="summary">Data Map component.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.component.transform.diff%27-module.html">etl.component.transform.diff'</a></strong>: <em class="summary">Used to find difference between Data.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.component.transform.join%27-module.html">etl.component.transform.join'</a></strong>: <em class="summary">Data Join component.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.component.transform.logger%27-module.html">etl.component.transform.logger'</a></strong>: <em class="summary">To display log detail in streamline.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.component.transform.logger_bloc%27-module.html">etl.component.transform.logger_bloc'</a></strong>: <em class="summary">To display log detail in end of process.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.component.transform.merge%27-module.html">etl.component.transform.merge'</a></strong>: <em class="summary">To merge all input flows.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.component.transform.schema_validator%27-module.html">etl.component.transform.schema_validator'</a></strong>: <em class="summary">To perform Schema Validation.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.component.transform.sort%27-module.html">etl.component.transform.sort'</a></strong>: <em class="summary">To perform sort operation.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.component.transform.unique%27-module.html">etl.component.transform.unique'</a></strong>: <em class="summary">To perform unique operation.</em>    </li>
+    </ul>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="etl.connector-module.html">etl.connector</a></strong>: <em class="summary">Use to provide connection with any resources like localfile, 
+        database, openerp server etc..</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="etl.connector.connector%27-module.html">etl.connector.connector'</a></strong>: <em class="summary">ETL Connector.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.connector.facebook_connector%27-module.html">etl.connector.facebook_connector'</a></strong>: <em class="summary">To provide connectivity with Facebook</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.connector.file_connector-module.html">etl.connector.file_connector</a></strong>: <em class="summary">To provide connectivity with file.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.connector.localfile%27-module.html">etl.connector.localfile'</a></strong>: <em class="summary">To provide connectivity with Local File .</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.connector.openobject_connector%27-module.html">etl.connector.openobject_connector'</a></strong>: <em class="summary">To provide connectivity with OpenERP server.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.connector.sql_connector%27-module.html">etl.connector.sql_connector'</a></strong>: <em class="summary">To provide connectivity with SQL database server.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.connector.sugarcrm-module.html">etl.connector.sugarcrm</a></strong>: <em class="summary">Provide Sugarcrm API.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="etl.connector.sugarcrm.sugarsoap_services-module.html">etl.connector.sugarcrm.sugarsoap_services</a></strong>    </li>
+    <li> <strong class="uidlink"><a href="etl.connector.sugarcrm.sugarsoap_services_types-module.html">etl.connector.sugarcrm.sugarsoap_services_types</a></strong>    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="etl.connector.sugarcrm_connector%27-module.html">etl.connector.sugarcrm_connector'</a></strong>    </li>
+    <li> <strong class="uidlink"><a href="etl.connector.url_connector-module.html">etl.connector.url_connector</a></strong>: <em class="summary">To provide connectivity with URL Access like  http, ftp, https, 
+        gopher</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.connector.xmlrpc_connector%27-module.html">etl.connector.xmlrpc_connector'</a></strong>: <em class="summary">To provide connectivity with XMLRPC Server.</em>    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="etl.etl-module.html">etl.etl</a></strong>: <em class="summary">ETL Process.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.etl_socket-module.html">etl.etl_socket</a></strong>: <em class="summary">Class of ETL socket.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.job%27-module.html">etl.job'</a></strong>: <em class="summary">Defines ETL job with ETL components.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.logger-module.html">etl.logger</a></strong>: <em class="summary">To  provide internal logging system.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.signal%27-module.html">etl.signal'</a></strong>: <em class="summary">To handle ETL signal.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.tools-module.html">etl.tools</a></strong>    </li>
+    <li> <strong class="uidlink"><a href="etl.transformer%27-module.html">etl.transformer'</a></strong>: <em class="summary">ETL Process.</em>    </li>
+    <li> <strong class="uidlink"><a href="etl.transition%27-module.html">etl.transition'</a></strong>: <em class="summary">ETL transition.</em>    </li>
+  </ul></td></tr>
+</table>
+
+<br />
+<!-- ==================== CLASSES ==================== -->
+<a name="section-Classes"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Classes</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Classes"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="etl.signal-class.html" class="summary-name">signal</a><br />
+      ETL Signal.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="etl.job-class.html" class="summary-name">job</a><br />
+      Base class of ETL job.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="etl.transition-class.html" class="summary-name">transition</a><br />
+      Base class of ETL transition.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="etl.transformer-class.html" class="summary-name">transformer</a><br />
+      Transfer data into different type.
+    </td>
+  </tr>
+</table>
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__version_info__"></a><span class="summary-name">__version_info__</span> = <code title="(1, 0, 0)"><code class="variable-group">(</code>1<code class="variable-op">, </code>0<code class="variable-op">, </code>0<code class="variable-group">)</code></code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th bgcolor="#70b0f0" class="navbar-select"
+          >&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0beta1 on Wed Apr 29 20:37:20 2009
+    </td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

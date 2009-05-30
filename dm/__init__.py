@@ -20,15 +20,19 @@
 #
 ##############################################################################
 
+import plugin
 import trademark
 import offer
 import offer_step
 import campaign
 import customer
+import mail_service
 import document
 import reportdm
 import wizard
 import dm_print_offer_graph
+import dm_document_report
+import dm_ir_action_report
 import report_design
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

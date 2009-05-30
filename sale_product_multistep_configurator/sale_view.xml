@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+	
+	<!--  Sale Order Views -->
+	
+		<record model="ir.ui.view" id="sale_order_form_configurator">
+			<field name="name">sale.order.form.configurator.inherit</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="order_line" position="before">
+					<button colspan="4" icon="gtk-ok" name="%(action_product_configure_from_sale_order)d" string="Configure new product" type="action" states="draft" />
+				</field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="sale_order_form_configurator2">
+			<field name="name">sale.order.form.configurator.inherit2</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale_order_form_configurator" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="product_id" position="after">
+					<button colspan="4" icon="gtk-ok" name="%(action_product_configure_from_sale_order_line)d" string="Configure new product" type="action" states="draft" />
+				</field>
+			</field>
+		</record>
+		
+		<!--  Sale Order Line Views -->
+
+		<record model="ir.ui.view" id="sale_order_line_form_configurator">
+			<field name="name">sale.order.form.configurator.inherit2</field>
+			<field name="model">sale.order.line</field>
+			<field name="inherit_id" ref="sale.view_order_line_form2" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="product_id" position="after">
+					<button colspan="4" icon="gtk-ok" name="%(action_product_configure_from_sale_order_line)d" string="Reconfigure product" type="action" states="draft" />
+				</field>
+			</field>
+		</record>
+		
+		<record model="ir.ui.view" id="sale_order_line_form_configurator2">
+			<field name="name">sale_order_line_form_configurator</field>
+			<field name="model">sale.order.line</field>
+			<field name="inherit_id" ref="sale.view_order_line_form2" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="product_uom_qty" position="replace">
+					<field name="product_uom_qty" select="2"/>
+				</field>
+			</field>
+		</record>
+		
+		<record model="ir.ui.view" id="sale_order_line_form_configurator3">
+			<field name="name">sale_order_line_form_configurator</field>
+			<field name="model">sale.order.line</field>
+			<field name="inherit_id" ref="sale.view_order_line_form2" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="state" position="after">
+					<button icon="gtk-cancel" special="cancel" string="Cancel"/>
+          <button icon="gtk-ok" name="configurator_line_write" string="Validate" type="object"/>
+				</field>
+			</field>
+		</record>
+		
+	</data>
+</openerp>

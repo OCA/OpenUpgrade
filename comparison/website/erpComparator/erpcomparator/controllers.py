@@ -9,6 +9,7 @@ from erpcomparator import rpc
 from erpcomparator import common
 from erpcomparator import stdvars
 from erpcomparator import subcontrollers
+from erpcomparator.tinyres import TinyResource
 
 host = config.get('host', path="erpcomparator")
 port = config.get('port', path="erpcomparator")
@@ -20,9 +21,9 @@ password = config.get('password', path="admin")
 
 rpc.session = rpc.RPCSession(host, port, protocol, storage=cherrypy.session)
 
-class Root(controllers.RootController):
+class Root(controllers.RootController, TinyResource):
     @expose(template="erpcomparator.templates.index")
-    def index(self):
+    def index(self, **kw):
         
         res = rpc.session.login(database, user_name, password)
         userinfo = cherrypy.session.get('user_info', '')
@@ -34,5 +35,5 @@ class Root(controllers.RootController):
     about = subcontrollers.about.About()
     login = subcontrollers.login.Login()
     graph = subcontrollers.graph.Graph()
-    document = subcontrollers.document.Document()
+    news = subcontrollers.news.News()
     

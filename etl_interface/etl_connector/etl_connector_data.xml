@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data noupdate="1">
+        <record id="conn_localfile" model="etl.connector.type">
+			<field name="name">Localfile</field>
+			<field name="code">localfile</field>
+		</record>
+        <record id="conn_openobject_connector" model="etl.connector.type">
+			<field name="name">Openobject</field>
+			<field name="code">openobject</field>
+		</record>
+		<record id="conn_facebook" model="etl.connector.type">
+			<field name="name">Facebook</field>
+			<field name="code">facebook</field>
+		</record>
+        <record id="conn_sql_connector" model="etl.connector.type">
+			<field name="name">SQL</field>
+			<field name="code">sql</field>
+		</record>
+        <record id="conn_sugarcrm_connector" model="etl.connector.type">
+			<field name="name">SugarCRM</field>
+			<field name="code">sugarcrm</field>
+		</record>
+        <record id="conn_gcalendar_connector" model="etl.connector.type">
+			<field name="name">GCalendar</field>
+			<field name="code">gcalendar</field>
+		</record>
+        <record id="conn_gdoc_connector" model="etl.connector.type">
+			<field name="name">GDoc</field>
+			<field name="code">gdoc</field>
+		</record>
+	</data>
+</openerp>
+

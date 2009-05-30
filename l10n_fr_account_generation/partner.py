@@ -39,8 +39,8 @@ class res_partner(osv.osv):
         for id in ids:
             nbcar=config['nbcar']
             partner=self.pool.get('res.partner').read(cr, uid,[id])
-            acct_customer='411'+partner[0]['name'][:nbcar]
-            acct_supplier='401'+partner[0]['name'][:nbcar]
+            acct_customer='411'+partner[0]['name'].replace(' ','')[:nbcar]
+            acct_supplier='401'+partner[0]['name'].replace(' ','')[:nbcar]
             query="select count(id) from account_account where substring(code,0,7)='"+acct_customer+"'"
             cr.execute(query)
             nbcpt=cr.fetchone()[0]

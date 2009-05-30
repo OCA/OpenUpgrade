@@ -16,7 +16,7 @@ class product_product(osv.osv):
     def _is_direct_delivery_from_product(self, cr, uid, ids, name, arg, context=None):
         res = {}
         def is_direct_delivery_from_suppliers(product):
-            cr.execute('select direct_delivery_flag from product_supplierinfo inner join res_partner on product_supplierinfo.name = res_partner.id where product_id=%d and active=true order by sequence ASC LIMIT 1;' % product.id)
+            cr.execute('select direct_delivery_flag from product_supplierinfo inner join res_partner on product_supplierinfo.name = res_partner.id where product_id=%d and active=true order by sequence ASC LIMIT 1;' %  product.product_tmpl_id)
             result = cr.fetchone()
             if result and result[0]:
                 return True

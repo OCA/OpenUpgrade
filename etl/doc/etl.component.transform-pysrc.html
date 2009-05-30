@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>etl.component.transform</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="etl-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="etl-module.html">Package&nbsp;etl</a> ::
+        <a href="etl.component-module.html">Package&nbsp;component</a> ::
+        Package&nbsp;transform
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="etl.component.transform-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="etl.component.transform-module.html">Package etl.component.transform</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-comment"># -*- encoding: utf-8 -*-</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">##############################################################################</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#</tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#    ETL system- Extract Transfer Load system</tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#    Copyright (C) 2004-2009 Tiny SPRL (&lt;http://tiny.be&gt;). All Rights Reserved</tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#    $Id$</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#    This program is free software: you can redistribute it and/or modify</tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#    it under the terms of the GNU General Public License as published by</tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#    the Free Software Foundation, either version 3 of the License, or</tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#    (at your option) any later version.</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#    This program is distributed in the hope that it will be useful,</tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#    but WITHOUT ANY WARRANTY; without even the implied warranty of</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#    GNU General Public License for more details.</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#    You should have received a copy of the GNU General Public License</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">##############################################################################</tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"><tt class="py-comment"></tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"><tt class="py-docstring"> To transform string data into particular type.</tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"><tt class="py-docstring"> Copyright (C) 2004-2009 Tiny SPRL (&lt;http://tiny.be&gt;).</tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"><tt class="py-docstring"> GNU General Public License</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Class etl.component.transform.diff'.diff=etl.component.transform.diff%27.diff-class.html"><a title="etl.component.transform.diff'.diff" class="py-name" href="#" onclick="return doclink('link-0', 'diff', 'link-0');">diff</a></tt> <tt class="py-keyword">import</tt> <tt id="link-1" class="py-name"><a title="etl.component.transform.diff'.diff" class="py-name" href="#" onclick="return doclink('link-1', 'diff', 'link-0');">diff</a></tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-2" class="py-name" targets="Class etl.component.transform.sort'.sort=etl.component.transform.sort%27.sort-class.html"><a title="etl.component.transform.sort'.sort" class="py-name" href="#" onclick="return doclink('link-2', 'sort', 'link-2');">sort</a></tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name"><a title="etl.component.transform.sort'.sort" class="py-name" href="#" onclick="return doclink('link-3', 'sort', 'link-2');">sort</a></tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-4" class="py-name" targets="Class etl.component.transform.merge'.merge=etl.component.transform.merge%27.merge-class.html"><a title="etl.component.transform.merge'.merge" class="py-name" href="#" onclick="return doclink('link-4', 'merge', 'link-4');">merge</a></tt> <tt class="py-keyword">import</tt> <tt id="link-5" class="py-name"><a title="etl.component.transform.merge'.merge" class="py-name" href="#" onclick="return doclink('link-5', 'merge', 'link-4');">merge</a></tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-6" class="py-name" targets="Class etl.component.transform.logger_bloc'.logger_bloc=etl.component.transform.logger_bloc%27.logger_bloc-class.html"><a title="etl.component.transform.logger_bloc'.logger_bloc" class="py-name" href="#" onclick="return doclink('link-6', 'logger_bloc', 'link-6');">logger_bloc</a></tt> <tt class="py-keyword">import</tt> <tt id="link-7" class="py-name"><a title="etl.component.transform.logger_bloc'.logger_bloc" class="py-name" href="#" onclick="return doclink('link-7', 'logger_bloc', 'link-6');">logger_bloc</a></tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-8" class="py-name" targets="Class etl.component.transform.logger'.logger=etl.component.transform.logger%27.logger-class.html,Module etl.logger=etl.logger-module.html,Class etl.logger.logger=etl.logger.logger-class.html"><a title="etl.component.transform.logger'.logger
+etl.logger
+etl.logger.logger" class="py-name" href="#" onclick="return doclink('link-8', 'logger', 'link-8');">logger</a></tt> <tt class="py-keyword">import</tt> <tt id="link-9" class="py-name"><a title="etl.component.transform.logger'.logger
+etl.logger
+etl.logger.logger" class="py-name" href="#" onclick="return doclink('link-9', 'logger', 'link-8');">logger</a></tt> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-10" class="py-name" targets="Class etl.component.transform.data_filter'.data_filter=etl.component.transform.data_filter%27.data_filter-class.html"><a title="etl.component.transform.data_filter'.data_filter" class="py-name" href="#" onclick="return doclink('link-10', 'data_filter', 'link-10');">data_filter</a></tt> <tt class="py-keyword">import</tt> <tt id="link-11" class="py-name"><a title="etl.component.transform.data_filter'.data_filter" class="py-name" href="#" onclick="return doclink('link-11', 'data_filter', 'link-10');">data_filter</a></tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-12" class="py-name" targets="Module etl.component.transform.data_map=etl.component.transform.data_map-module.html"><a title="etl.component.transform.data_map" class="py-name" href="#" onclick="return doclink('link-12', 'data_map', 'link-12');">data_map</a></tt> <tt class="py-keyword">import</tt> <tt id="link-13" class="py-name" targets="Class etl.component.transform.data_map.map=etl.component.transform.data_map.map-class.html"><a title="etl.component.transform.data_map.map" class="py-name" href="#" onclick="return doclink('link-13', 'map', 'link-13');">map</a></tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-14" class="py-name" targets="Class etl.component.transform.join'.join=etl.component.transform.join%27.join-class.html"><a title="etl.component.transform.join'.join" class="py-name" href="#" onclick="return doclink('link-14', 'join', 'link-14');">join</a></tt> <tt class="py-keyword">import</tt> <tt id="link-15" class="py-name"><a title="etl.component.transform.join'.join" class="py-name" href="#" onclick="return doclink('link-15', 'join', 'link-14');">join</a></tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-16" class="py-name" targets="Class etl.component.transform.schema_validator'.schema_validator=etl.component.transform.schema_validator%27.schema_validator-class.html"><a title="etl.component.transform.schema_validator'.schema_validator" class="py-name" href="#" onclick="return doclink('link-16', 'schema_validator', 'link-16');">schema_validator</a></tt> <tt class="py-keyword">import</tt> <tt id="link-17" class="py-name"><a title="etl.component.transform.schema_validator'.schema_validator" class="py-name" href="#" onclick="return doclink('link-17', 'schema_validator', 'link-16');">schema_validator</a></tt> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-18" class="py-name" targets="Class etl.component.transform.unique'.unique=etl.component.transform.unique%27.unique-class.html"><a title="etl.component.transform.unique'.unique" class="py-name" href="#" onclick="return doclink('link-18', 'unique', 'link-18');">unique</a></tt> <tt class="py-keyword">import</tt> <tt id="link-19" class="py-name"><a title="etl.component.transform.unique'.unique" class="py-name" href="#" onclick="return doclink('link-19', 'unique', 'link-18');">unique</a></tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="etl-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0beta1 on Wed Apr 29 20:37:23 2009
+    </td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

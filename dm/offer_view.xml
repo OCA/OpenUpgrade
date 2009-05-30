@@ -3,17 +3,16 @@
 <data>
 
     <menuitem name="Direct Marketing" icon="terp-crm" id="menu_dm"/>
-    <menuitem name="Configuration" id="menu_dm_config" parent="menu_dm" groups="res_groups_offeradmin,res_groups_offermanager,res_groups_campaignadmin,res_groups_campaignmanager" sequence="0"/>
+    <menuitem name="Configuration" id="menu_dm_config" parent="menu_dm" groups="res_groups_offeradmin,res_groups_offermanager,res_groups_campaignadmin,res_groups_campaignmanager,res_groups_dtpmanager" sequence="0"/>
     <menuitem name="Offers" id="menu_dm_offer" parent="menu_dm" sequence="2"/>
     <menuitem name="Offers" id="menu_dm_config_offer" parent="dm.menu_dm_config" sequence="2"/>
-<!--    <menuitem name="Customers" id="menu_dm_config_customer" parent="dm.menu_dm_config" sequence="7"/>-->
 
     <!--
     =======================================================
     OFFER VIEWS
     =======================================================
     -->
-    <record model="ir.ui.view" id="view_offer_list">
+    <!-- record model="ir.ui.view" id="view_offer_list">
         <field name="name">dm.offer.list</field>
         <field name="model">dm.offer</field>
         <field name="type">tree</field>
@@ -23,7 +22,7 @@
                 <field name="name"/>
             </tree>
         </field>
-    </record>
+    </record -->
 
     <record model="ir.ui.view" id="view_offer_tree">
         <field name="name">dm.offer.tree</field>
@@ -56,29 +55,33 @@
                             <separator string="Global Information" colspan="2"/>
                             <field name="type" select="1"  />
                             <field name="copywriter_id"  select="2" />
-                            <field name="recommended_trademark" select="2"/>
+                            <field name="recommended_trademark_id" select="2"/>
                             <field name="offer_responsible_id" select="2"/>
-                            <field name="version" select="2"/>
-                            <field name="quotation" select="2"/>
                         </group>
                         <group colspan="2" col="2">
                             <separator string="Origin" colspan="2"/>
+                            <group attrs="{'invisible':[('type','!=','rewrite')]}" colspan="2">
                             <field name="offer_origin_id" select="2"/>
-                            <field name="preoffer_original_id"  select="2" context="{'offer_type':'Preoffer'}"/>
-                            <field name="lang_orig" select="2"/>
+                            <newline />
+                            <field name="version" select="2"/>
+                            </group>
+                            <field name="preoffer_original_id"  select="2" context="{'type':'preoffer'}"/>
+                            <field name="lang_orig_id" select="2"/>
                             <newline />
                             <separator string="" colspan="2"/>
-                            <field name="legal_state" select="2"/>
+                            <field name="legal_state" select="2" groups="base.group_extended"/>
+                            <field name="quotation" select="2"/>
                             <field name="active" select="2"/>
                         </group>
                         <separator string="Categories" colspan="4"/>
                         <field name="category_ids" colspan="4" nolabel="1" select="1"/>
                         <separator string="Notes" colspan="4"/>
-                        <field name="notes" colspan="4"  nolabel="1"/>
+                        <field name="notes" colspan="4"  nolabel="1" widget="text_wiki"/>
                         <separator string="Offer Status" colspan="4"/>
                         <group col="8" colspan="4">
                             <field name="state" nolabel="1" select="1"/>
-                            <button name="state_open_set" string="Open" states="draft,freeze"/>
+                            <button name="state_ready_set" string="Ready To Plan" states="draft,freeze"/>
+                            <button name="state_open_set" string="Open" states="draft,ready,freeze"/>
                             <button name="state_freeze_set" string="Freeze" states="open"/>
                             <button name="state_close_set" string="Close" states="open,draft,freeze"/>
                             <button name="state_draft_set" string="Reset to Draft" states="closed" type="object"/>
@@ -92,7 +95,7 @@
                                 <field name="language_id"/>
                                 <field name="translator_id"/>
                                 <field name="date"/>
-                                <field name="notes" nolabel="1" colspan="4"/>
+                                <field name="notes" nolabel="1" colspan="4" widget="text_wiki"/>
                             </form>
                             <tree string="Translations">
                                 <field name="language_id"/>
@@ -101,7 +104,7 @@
                             </tree>
                         </field>
                     </page>
-                    <page string="Dates">
+                    <page string="Dates" groups="base.group_extended">
                         <group colspan="2" col="2">
                             <separator string="Order Dates" colspan="2"/>
                             <field name="order_date" select="2"/>
@@ -123,9 +126,6 @@
                         <separator string="Keywords" colspan="4"/>
                         <field name="keywords" colspan="4"  nolabel="1" select="1"/>
                     </page>
-<!--                    <page string="Statistics" >-->
-<!--                        still not define -->
-<!--                    </page>-->
                 </notebook>
             </form>
         </field>
@@ -385,18 +385,8 @@
                         <field name="code" colspan="2"/>
                         </group>
                         <separator string="Notes" colspan="4"/>
-                        <field name="notes" colspan="4"  nolabel="1"/>
+                        <field name="notes" colspan="4"  nolabel="1" widget="text_wiki"/>
                         <button name="go_to_offer" string="Create Offers" type="object"/>
-                    </page>
-                    <!--
-                    <page string="Description">
-                        <separator string="Description" colspan="4"/>
-                        <field name="desc" nolabel="1"/>
-                    </page>
-                    -->
-                    <page string="History">
-                        <separator string="History" />
-                        <field name="history_ids" nolabel="1" colspan="4"/>
                     </page>
                 </notebook>
             </form>
@@ -457,10 +447,10 @@
                     <page string="General">
                         <field name="name" select="1"/>
                         <field name="code"/>
-                        <field name="lang_orig"/>
+                        <field name="lang_orig_id"/>
 <!--                        <field name="copywriter_id"  select="2" on_change="change_code(preoffer_type,copywriter_id)"/>-->
                         <field name="copywriter_id" select="2"/>
-                        <field name="recommended_trademark"/>
+                        <field name="recommended_trademark_id"/>
                         <field name="preoffer_type" select="2"/>
                         <field name="preoffer_offer_id" select="2"/>
                         <field name="offer_responsible_id"/>
@@ -469,7 +459,7 @@
                         <separator string="Categories" colspan="4"/>
                         <field name="category_ids" colspan="4" nolabel="1"/>
                         <separator string="Notes" colspan="4"/>
-                        <field name="notes" colspan="4"  nolabel="1"/>
+                        <field name="notes" colspan="4"  nolabel="1" widget="text_wiki"/>
                         <separator string="Status" colspan="4"/>
                         <group col="8" colspan="4">
                             <field name="state" nolabel="1" select="1"/>
@@ -480,12 +470,6 @@
 <!--                        <button name="go_to_offer" string="Create Offers" states="draft" type="object"/> -->
                         </group>
                     </page>
-                    <!--
-                    <page string="Description">
-                        <separator string="Description" colspan="4"/>
-                        <field name="desc" nolabel="1"/>
-                    </page>
-                    -->
                     <page string="Keywords" >
                         <separator string="Keywords" colspan="4"/>
                         <field name="keywords" colspan="4"  nolabel="1" select="1"/>
@@ -496,8 +480,6 @@
                         <field name="planned_delivery_date"/>
                         <field name="delivery_date"/>
                         <newline />
-<!--                        <field name="fixed_date"/>-->
-<!--                        <field name="buffer_delay"/>-->
                     </page>
                 </notebook>
             </form>
@@ -608,7 +590,7 @@
         <field name="view_type">form</field>
     </record>
 
-    <menuitem id="menu_action_offer_categ_main_form" parent="dm.menu_dm_config_offer" action="action_offer_categ_form" sequence="1"/>
+    <menuitem id="menu_action_offer_categ_main_form" parent="dm.menu_dm_config_offer" action="action_offer_categ_form" sequence="2"/>
 
     <record model="ir.actions.act_window" id="action_offer_by_category">
         <field name="name">Offers by Category</field>

@@ -43,10 +43,10 @@ class sale_order_line(osv.osv):
 
     def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
             uom=False, qty_uos=0, uos=False, name='', partner_id=False,
-            lang=False, update_tax=True,date_order=False,packaging=False,fp=False):
+            lang=False, update_tax=True,date_order=False,packaging=False,fiscal_position=False):
         res=super(sale_order_line, self).product_id_change(cr, uid, ids, pricelist, product, qty,
             uom, qty_uos, uos, name, partner_id,
-            lang, update_tax,date_order,fiscal_position=fp)
+            lang, update_tax,date_order,fiscal_position=fiscal_position)
 
         context = {'lang': lang, 'partner_id': partner_id}
         result=res['value']
@@ -80,8 +80,8 @@ class account_invoice_line(osv.osv):
     _name = "account.invoice.line"
     _inherit = "account.invoice.line"
 
-    def product_id_change(self, cr, uid, ids, product, uom, qty=0, name='', type='out_invoice', partner_id=False, fp=False, price_unit=False, address_invoice_id=False, context={}):
-        res=super(account_invoice_line, self).product_id_change(cr, uid, ids, product, uom, qty, name, type, partner_id, fp, price_unit, address_invoice_id, context)
+    def product_id_change(self, cr, uid, ids, product, uom, qty=0, name='', type='out_invoice', partner_id=False, fposition_id=False, price_unit=False, address_invoice_id=False, context={}):
+        res=super(account_invoice_line, self).product_id_change(cr, uid, ids, product, uom, qty, name, type, partner_id, fposition_id, price_unit, address_invoice_id, context)
 
 
         def get_real_price(pricelist_id, product_id):

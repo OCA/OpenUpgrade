@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+	
+	<record model="ir.actions.act_window" id="action_personal_base_action_login_list">
+		<field name="name">Actions After Login</field>
+		<field name="res_model">personal.base.action.login</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<menuitem id="menu_action_personal_base_action_login_list" parent="personal_administration_menu" action="action_personal_base_action_login_list"/>
+	
+</data>
+</openerp>

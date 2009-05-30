@@ -1,0 +1,163 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+        <record id="training_course_type_technicaltraining0" model="training.course_type">
+            <field eval="10" name="max_limit"/>
+            <field eval="&quot;&quot;&quot;Technical Training&quot;&quot;&quot;" name="name"/>
+            <field eval="5" name="min_limit"/>
+        </record>
+    </data>
+    <data>
+        <record id="training_course_type_functionaltraining0" model="training.course_type">
+            <field eval="15" name="max_limit"/>
+            <field eval="&quot;&quot;&quot;Functional Training&quot;&quot;&quot;" name="name"/>
+            <field eval="8" name="min_limit"/>
+        </record>
+    </data>
+    <data>
+        <record id="training_course_category_technicaltraining0" model="training.course_category">
+            <field eval="&quot;&quot;&quot;Technical Training&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+    <data>
+        <record id="training_course_category_functionaltraining0" model="training.course_category">
+            <field eval="&quot;&quot;&quot;Functional Training&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+    <data>
+        <record id="res_partner_contact_stphane0" model="res.partner.contact">
+            <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;Wirtel&quot;&quot;&quot;" name="first_name"/>
+            <field eval="&quot;&quot;&quot;Stéphane&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;M.&quot;&quot;&quot;" name="title"/>
+            <field eval="[(6,0,[])]" name="technical_skill_ids"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="training_course_openerptechnicaltraining0" model="training.course">
+            <field eval="&quot;&quot;&quot;OE5TT&quot;&quot;&quot;" name="code"/>
+            <field name="course_type_id" ref="training_course_type_technicaltraining0"/>
+            <field eval="[(6,0,[])]" name="preliminary_course_ids"/>
+            <field eval="[(6,0,[ref('res_partner_contact_stphane0')])]" name="lecturer_ids"/>
+            <field eval="&quot;&quot;&quot;Novice&quot;&quot;&quot;" name="target_public"/>
+            <field eval="&quot;&quot;&quot;OpenERP 5.0 - Technical Training &quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state_course"/>
+            <field model="account.analytic.account" name="parent_id" search="[('name','=','Technical Training')]"/>
+            <field name="lang_id" ref="base.lang_en"/>
+            <field eval="[(6,0,[])]" name="complementary_course_ids"/>
+        </record>
+        <record id="training_course_0" model="training.course">
+            <field name="name">OpenERP - Install</field>
+            <field name="course_type_id" ref="training_course_type_technicaltraining0"/>
+            <field name="p_id" ref="training_course_openerptechnicaltraining0"/>
+            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state_course"/>
+            <field name="lang_id" ref="base.lang_en"/>
+            <field eval="2.0" name="duration"/>
+        </record>
+        <record id="training_course_1" model="training.course">
+            <field name="name">OpenERP - Administration</field>
+            <field name="course_type_id" ref="training_course_type_technicaltraining0"/>
+            <field name="p_id" ref="training_course_openerptechnicaltraining0"/>
+            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state_course"/>
+            <field name="lang_id" ref="base.lang_en"/>
+            <field eval="4.0" name="duration"/>
+        </record>
+        <record id="training_course_2" model="training.course">
+            <field name="name">OpenERP - Object</field>
+            <field name="course_type_id" ref="training_course_type_technicaltraining0"/>
+            <field name="p_id" ref="training_course_openerptechnicaltraining0"/>
+            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state_course"/>
+            <field name="lang_id" ref="base.lang_en"/>
+            <field eval="8.0" name="duration"/>
+        </record>
+        <record id="training_course_3" model="training.course">
+            <field name="name">OpenERP - View</field>
+            <field name="course_type_id" ref="training_course_type_technicaltraining0"/>
+            <field name="p_id" ref="training_course_openerptechnicaltraining0"/>
+            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state_course"/>
+            <field name="lang_id" ref="base.lang_en"/>
+            <field eval="8.0" name="duration"/>
+        </record>
+        <record id="training_course_4" model="training.course">
+            <field name="name">OpenERP - Workflow</field>
+            <field name="course_type_id" ref="training_course_type_technicaltraining0"/>
+            <field name="p_id" ref="training_course_openerptechnicaltraining0"/>
+            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state_course"/>
+            <field name="lang_id" ref="base.lang_en"/>
+            <field eval="4.0" name="duration"/>
+        </record>
+        <record id="training_course_5" model="training.course">
+            <field name="name">OpenERP - Report</field>
+            <field name="course_type_id" ref="training_course_type_technicaltraining0"/>
+            <field name="p_id" ref="training_course_openerptechnicaltraining0"/>
+            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state_course"/>
+            <field name="lang_id" ref="base.lang_en"/>
+            <field eval="4.0" name="duration"/>
+        </record>
+        <record id="training_course_6" model="training.course">
+            <field name="name">OpenERP - Wizard</field> 
+            <field name="course_type_id" ref="training_course_type_technicaltraining0"/>
+            <field name="p_id" ref="training_course_openerptechnicaltraining0"/>
+            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state_course"/>
+            <field name="lang_id" ref="base.lang_en"/>
+            <field eval="4.0" name="duration"/>
+        </record>
+        <record id="training_course_7" model="training.course">
+            <field name="name">OpenERP - RAD</field>
+            <field name="course_type_id" ref="training_course_type_technicaltraining0"/>
+            <field name="p_id" ref="training_course_openerptechnicaltraining0"/>
+            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state_course"/>
+            <field name="lang_id" ref="base.lang_en"/>
+            <field eval="6.0" name="duration"/>
+        </record>
+    </data>
+    <data>
+        <workflow action="signal_pending" model="training.course" ref="training_course_openerptechnicaltraining0"/>
+    </data>
+    <data>
+        <workflow action="signal_inprogress" model="training.course" ref="training_course_openerptechnicaltraining0"/>
+    </data>
+    <data>
+        <workflow action="signal_validate" model="training.course" ref="training_course_openerptechnicaltraining0"/>
+    </data>
+    <data>
+        <record id="training_offer_openerptechnicaltraining0" model="training.offer">
+            <field eval="[(6,0,[ref('training_course_openerptechnicaltraining0')])]" name="course_ids"/>
+            <field eval="&quot;&quot;&quot;OpenERP 5.0 - Technical Training&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+        </record>
+    </data>
+    <data>
+        <workflow action="signal_validate" model="training.offer" ref="training_offer_openerptechnicaltraining0"/>
+    </data>
+    <data>
+        <record id="training_session_openerptechnicaltraining0" model="training.session">
+            <field eval="&quot;&quot;&quot;OpenERP 5.0 - Technical Training&quot;&quot;&quot;" name="name"/>
+            <field name="offer_id" ref="training_offer_openerptechnicaltraining0"/>
+            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;2009-04-20 08:30:00&quot;&quot;&quot;" name="date"/>
+        </record>
+    </data>
+    <data>
+        <record id="training_catalog_0" model="training.catalog">
+            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+            <field eval="2010" name="year"/>
+        </record>
+    </data>
+    <data>
+        <record id="training_session_openerptechnicaltraining0" model="training.session">
+            <field name="catalog_id" ref="training_catalog_0"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="training_subscription_sub0" model="training.subscription">
+            <field name="address_id" ref="base.main_address"/>
+            <field eval="&quot;&quot;&quot;SUB/0002&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+            <field name="partner_id" ref="base.main_partner"/>
+        </record>
+    </data>
+    <data>
+        <workflow action="signal_confirm" model="training.subscription" ref="training_subscription_sub0"/>
+    </data>
+</openerp>

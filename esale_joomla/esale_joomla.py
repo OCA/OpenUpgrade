@@ -35,6 +35,13 @@ from tools import config
 
 import urllib2
 
+class product_product(osv.osv):
+    _inherit = "product.product"
+    _columns = {
+        'exportable' : fields.boolean('Exportable')
+    }
+    
+product_product()
 
 class esale_joomla_web(osv.osv):
     _name = "esale_joomla.web"
@@ -287,8 +294,9 @@ class esale_joomla_order(osv.osv):
                     'product_uom': line.product_uom_id.id,
                     'price_unit': line.price_unit,
                 }
+                fpos = order.partner_id.property_account_position and order.partner_id.property_account_position.id or False
                 val_new = self.pool.get('sale.order.line').product_id_change(cr, uid, None, pricelist_id, line.product_id.id, line.product_qty,
-                                                                             line.product_uom_id.id, name=line.name)['value']
+                                                                             line.product_uom_id.id, name=line.name, partner_id=order.partner_id.id, fiscal_position=fpos)['value']
                 del val_new['price_unit']
                 #del val_new['weight']
                 del val_new['th_weight']
@@ -308,7 +316,8 @@ class esale_joomla_order(osv.osv):
                 'partner_order_id': order.partner_invoice_id.id,
                 'partner_shipping_id': order.partner_shipping_id.id,
                 'pricelist_id': pricelist_id,
-                'order_line': order_lines
+                'order_line': order_lines,
+                'fiscal_position': order.partner_id.property_account_position.id
             })
             self.write(cr, uid, [order.id], {'state': 'done', 'order_id': order_id})
 #           wf_service = netsvc.LocalService("workflow")

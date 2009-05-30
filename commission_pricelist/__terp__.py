@@ -24,7 +24,7 @@
     'version': '0.1',
     'author' : 'Tiny',
     "category": "Generic Modules/Sales & Purchases",
-    'depends' : ['base','product'],
+    'depends' : ['base','product', 'sale'],
     'description': 'Sale agent Info',
     'init_xml' : [],
     'update_xml':['security/ir.model.access.csv','saleagent_view.xml','partner_view.xml','commission_view.xml','saleagent_report.xml'],

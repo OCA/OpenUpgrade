@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<config>
+	<!-- turn on our module, required for install support -->
+	<modules>
+    		<Smile_OpenERPSync>
+        		<version>0.1.0</version>
+				<depends>
+						<Mage_Customer />
+						<Mage_Checkout />
+				</depends>
+    		</Smile_OpenERPSync>
+	</modules>
+	<global>
+		<!-- turn on models -->
+		<models>
+			<openerpsync>
+			   <class>Smile_OpenERPSync_Model</class>
+		    </openerpsync>
+		</models>
+		<helpers>
+			<openerpsync>
+			   <class>Smile_OpenERPSync_Helper</class>
+		    </openerpsync>
+		</helpers>
+		<!-- turn on blocks -->
+		<blocks>
+			<openerpsync>
+			   <class>Smile_OpenERPSync_Model</class>
+			</openerpsync>
+		</blocks>
+		<!-- turn on database connections -->
+		<resources>
+			<!-- setup is needed for automatic installation -->
+			<openerpsync_setup>
+			       <use>default_setup</use>
+			</openerpsync_setup>
+			<openerpsync_write>
+			       <use>default_write</use>
+			</openerpsync_write>
+			<openerpsync_read>
+			       <use>default_read</use>
+			</openerpsync_read>
+		</resources>
+	</global>
+	<adminhtml>
+			<menu></menu>
+			<events></events>
+			<translate></translate>
+			<acl>
+				<resources>
+					<admin>
+						<children>
+							<system>
+								<children>
+									<config>
+										<children>
+											<openerpsync>
+												<title>OpenERP Integration</title>
+											</openerpsync>
+										</children>
+									</config>
+								</children>
+							</system>
+						</children>
+					</admin>
+				</resources>
+			</acl>
+	</adminhtml>
+	<frontend>
+			<events>
+				<!-- <sales_order_place_after> -->
+				<checkout_type_onepage_save_order_after>
+					<observers>
+						<exportorder>
+							<type>model</type>
+							<class>openerpsync/observer</class>
+							<method>exportOnOrderEvent</method>
+						</exportorder>
+					</observers>
+				</checkout_type_onepage_save_order_after>
+			</events>
+			<routers></routers>
+			<translate></translate>
+			<layout></layout>
+	</frontend>
+	<default>
+			<config_vars><!-- config values --></config_vars>
+			<openerpsync>
+				<settings>
+					<enabled>0</enabled>
+					<debug_flag>1</debug_flag>
+					<api_password backend_model="adminhtml/system_config_backend_encrypted"/>
+					<api_username backend_model="adminhtml/system_config_backend_encrypted"/>
+				</settings>
+			</openerpsync>
+	</default>
+
+</config>
+

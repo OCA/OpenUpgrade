@@ -10,7 +10,7 @@
 			<tree string="Server Configuration">
 				<field name="name"/>
 				<field name="user_name"/>
-				<field name="password"/>				
+				<field name="password" password="True"/>				
 				<field name="iserver_name"/>
 				<field name="iserver_type"/>
 				<field name="iconn_type"/>
@@ -31,7 +31,7 @@
 				<field name="name" colspan="2"/>
 				<newline/>
 				<field name="user_name"/>				
-				<field name="password"/>
+				<field name="password" password="True"/>
 				<separator string="Incoming Server Setting" colspan="4"/>
 				<group col="4" colspan="4">
 					<field name="iserver_name"/>

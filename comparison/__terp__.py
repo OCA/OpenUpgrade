@@ -27,22 +27,27 @@
         "website" : "http://www.openerp.com",
         "category" : "Tools",
         "description": """
-        This module lets you compare famous ERP systems and lets you vote their respective facilities(e.g. accounting, BOM Support, etc.) provided by them.
+This module manages the backend of a collaborative comparison website amongst
+different products.
         """, 
         "depends" : ['base'],
         "init_xml" : [ ],
-        "demo_xml" : [ ],
+        "demo_xml" : [ 
+         'data/comparison.factor.csv',
+         'data/comparison.item.csv',
+         'data/comparison.user.csv',
+         'data/comparison.vote.values.csv',
+         'data/comparison.vote.csv',
+#         'data/comparison.factor.result.csv', 
+            ],
         "update_xml" : [
             'comparison_view.xml',
-            'data/comparison.factor.csv',
-            'data/comparison.item.csv',
-            'data/comparison.user.csv',
-            'data/comparison.vote.values.csv',
             'security/comparison_security.xml',
             'security/ir.model.access.csv',
             ],
         "active" : False,
-        "installable": True
+        "installable": True,
+        "certificate": '',
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

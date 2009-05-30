@@ -28,7 +28,7 @@
         - Mail server configuration.
         - Sending and Receiving mail
     """,
-    "website" : "http://tinyerp.com",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules",
     "init_xml" : [],
     "demo_xml" : [],
