@@ -30,6 +30,12 @@ class wizard_document_report(wizard.interface):
         <field name="address_id" colspan="4"/>
         <field name="trademark_id" colspan="4"/>
     </form>'''
+
+    report_send_form = '''<?xml version="1.0"?>
+    <form string="Send Report">
+        <field name="mail_service_id" colspan="4"/>
+    </form>'''
+
     def execute(self, db, uid, data, state='init', context=None):
         self.dm_wiz_data = data
         return super(wizard_document_report,self).execute(db, uid, data, state, context)
@@ -37,6 +43,17 @@ class wizard_document_report(wizard.interface):
     def _print_report(self, cr, uid, data , context):
         report = pooler.get_pool(cr.dbname).get('ir.actions.report.xml').browse(cr, uid, data['form']['report'])
         self.states['print_report']['result']['report']=report.report_name
+        return {}
+
+    def _send_report(self, cr, uid, data , context):
+        import time
+        doc = pooler.get_pool(cr.dbname).get('dm.offer.document').browse(cr, uid, self.dm_wiz_data['id'])
+        vals = {
+            'address_id' : data['form']['address_id'],
+            'step_id' : doc.step_id.id,
+            'mail_service_id' : data['form']['mail_service_id'],
+        }
+        pooler.get_pool(cr.dbname).get('dm.workitem').create(cr, uid, vals)
         return {}
 
     def _get_reports(self, cr, uid, context):
@@ -49,21 +66,34 @@ class wizard_document_report(wizard.interface):
         return res    
     
     report_list_fields = {
-                    
         'report': {'string': 'Select Report', 'type': 'selection', 'selection':_get_reports, },
         'address_id': {'string': 'Select Customer Address', 'type': 'many2one','relation':'res.partner.address', 'selection':_get_reports, 'domain':[('partner_id.category_id','=','DTP Preview Customers')] },
         'trademark_id':{'string': 'Select Trademark', 'type': 'many2one','relation':'dm.trademark'}
         }
     
+    report_send_fields = {
+        'mail_service_id': {'string': 'Select Mail Service', 'type': 'many2one','relation':'dm.mail_service',},
+        }
+
     states = {
         'init': {
             'actions': [],
-            'result': {'type':'form', 'arch':report_list_form, 'fields':report_list_fields, 'state':[('end','Cancel'),('print_report','Print Report'),]}
+            'result': {'type':'form', 'arch':report_list_form, 'fields':report_list_fields,
+                'state':[('end','Cancel'),('print_report','Print Report'),('select_ms','Send Report'),]}
             },
         'print_report': {
             'actions': [_print_report],
             'result': {'type': 'print', 'report':'', 'state':'end'}
-            },        
+            },
+        'select_ms': {
+            'actions': [],
+            'result': {'type':'form', 'arch':report_send_form, 'fields':report_send_fields,
+                'state':[('send_report','Send Report')]}
+            },
+        'send_report': {
+            'actions': [_send_report],
+            'result' : {'type':'state', 'state':'end'}
+            },
         }
 wizard_document_report("wizard_document_report")
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

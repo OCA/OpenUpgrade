@@ -106,6 +106,7 @@ class dm_workitem(osv.osv):
         'source': lambda *a: 'address_id',
         'state': lambda *a: 'pending',
         'is_global': lambda *a: False,
+        'action_time' : lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
 
     def _check_unique_so(self, cr, uid, ids, sale_order_id):

@@ -35,8 +35,13 @@ parameter_fields = {
 def search_wi(self,cr,uid,data,context):
     pool = pooler.get_pool(cr.dbname)
     wi_obj = pool.get('dm.workitem')
-    workitem = wi_obj.search(cr,uid,[('sale_order_id','=',data['id'])])[0]
-    return wi_obj.browse(cr,uid,workitem)
+    workitem = wi_obj.search(cr,uid,[('sale_order_id','=',data['id'])])
+    if not workitem:
+         raise osv.except_osv(
+          _('Cannot perfom After-Sale Action'),
+          _('This sale order doesnt seem to originate from a Direct Marketing campaign'))
+
+    return wi_obj.browse(cr,uid,workitem[0])
     
 def search_criteria(self, cr, uid, data, context):
     wi_browse_id = search_wi(self,cr,uid,data,context)
