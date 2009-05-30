@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-# 	* project_gtd
+#	* project_gtd
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-05-16 20:02:15+0000\n"
-"PO-Revision-Date: 2009-05-16 20:02:15+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
+"PO-Revision-Date: 2009-05-30 15:14:08+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,31 +16,13 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: project_gtd
-#: model:ir.module.module,shortdesc:project_gtd.module_meta_information
-msgid "Getting Things Done - Time Management Module"
-msgstr ""
-
-#. module: project_gtd
-#: code:addons/project_gtd/wizard/project_gtd_daily.py:0
-#, python-format
-msgid "No timebox of the type \"%s\" defined !"
-msgstr ""
-
-#. module: project_gtd
-#: code:addons/project_gtd/project_gtd.py:0
-#, python-format
-msgid "Eff. Hours"
-msgstr ""
-
-#. module: project_gtd
 #: view:project.gtd.timebox:0
 msgid "Visible Columns"
 msgstr ""
 
 #. module: project_gtd
 #: constraint:ir.model:0
-msgid ""
-"The Object name must start with x_ and not contain any special character !"
+msgid "The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: project_gtd
@@ -69,9 +51,8 @@ msgid "Invalid XML for View Architecture!"
 msgstr ""
 
 #. module: project_gtd
-#: code:addons/project_gtd/wizard/project_gtd_empty.py:0
-#, python-format
-msgid "No timebox child of this one !"
+#: wizard_field:project.gtd.timebox.fill,init,task_ids:0
+msgid "Tasks selection"
 msgstr ""
 
 #. module: project_gtd
@@ -111,26 +92,25 @@ msgid "Other"
 msgstr ""
 
 #. module: project_gtd
-#: field:project.gtd.timebox,col_effective_hours:0
-msgid "Effective Hours"
+#: model:ir.actions.act_window,name:project_gtd.open_gtd_task_inbox
+msgid "Inbox Tasks"
 msgstr ""
 
 #. module: project_gtd
-#: view:project.gtd.timebox:0 field:project.gtd.timebox,name:0
+#: view:project.gtd.timebox:0
+#: field:project.gtd.timebox,name:0
 #: field:project.task,timebox_id:0
 msgid "Timebox"
 msgstr ""
 
 #. module: project_gtd
-#: model:ir.actions.act_window,name:project_gtd.act_timebox_tasks
-msgid "Timebox Tasks"
+#: model:ir.module.module,shortdesc:project_gtd.module_meta_information
+msgid "Getting Things Done - Time Management Module"
 msgstr ""
 
 #. module: project_gtd
-#: code:addons/project_gtd/wizard/project_gtd_daily.py:0
-#: code:addons/project_gtd/wizard/project_gtd_empty.py:0
-#, python-format
-msgid "Error !"
+#: model:ir.actions.act_window,name:project_gtd.act_timebox_tasks
+msgid "Timebox Tasks"
 msgstr ""
 
 #. module: project_gtd
@@ -144,8 +124,8 @@ msgid "Type"
 msgstr ""
 
 #. module: project_gtd
-#: model:ir.actions.act_window,name:project_gtd.open_gtd_task_inbox
-msgid "Inbox Tasks"
+#: field:project.gtd.timebox,col_effective_hours:0
+msgid "Effective Hours"
 msgstr ""
 
 #. module: project_gtd
@@ -251,7 +231,8 @@ msgid "Planned"
 msgstr ""
 
 #. module: project_gtd
-#: view:project.gtd.context:0 field:project.gtd.context,name:0
+#: view:project.gtd.context:0
+#: field:project.gtd.context,name:0
 #: field:project.task,context_id:0
 msgid "Context"
 msgstr ""
@@ -259,11 +240,6 @@ msgstr ""
 #. module: project_gtd
 #: model:ir.actions.act_window,name:project_gtd.act_timebox_tasks_my_open
 msgid "My Open Tasks"
-msgstr ""
-
-#. module: project_gtd
-#: wizard_field:project.gtd.timebox.fill,init,task_ids:0
-msgid "Tasks selection"
 msgstr ""
 
 #. module: project_gtd
@@ -278,10 +254,14 @@ msgid "Getting Things Done"
 msgstr ""
 
 #. module: project_gtd
-#: field:project.gtd.timebox,task1_ids:0 field:project.gtd.timebox,task2_ids:0
-#: field:project.gtd.timebox,task3_ids:0 field:project.gtd.timebox,task4_ids:0
-#: field:project.gtd.timebox,task5_ids:0 field:project.gtd.timebox,task6_ids:0
-#: field:project.gtd.timebox,task_ids:0 view:project.task:0
+#: field:project.gtd.timebox,task1_ids:0
+#: field:project.gtd.timebox,task2_ids:0
+#: field:project.gtd.timebox,task3_ids:0
+#: field:project.gtd.timebox,task4_ids:0
+#: field:project.gtd.timebox,task5_ids:0
+#: field:project.gtd.timebox,task6_ids:0
+#: field:project.gtd.timebox,task_ids:0
+#: view:project.task:0
 msgid "Tasks"
 msgstr ""
 
@@ -329,3 +309,4 @@ msgstr ""
 #: selection:project.gtd.timebox,type:0
 msgid "Weekly"
 msgstr ""
+

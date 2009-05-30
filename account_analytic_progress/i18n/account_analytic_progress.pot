@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-05-16 20:02:15+0000\n"
-"PO-Revision-Date: 2009-05-16 20:02:15+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
+"PO-Revision-Date: 2009-05-30 15:14:08+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,25 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_analytic_progress
+#: model:ir.actions.act_window,name:account_analytic_progress.action_account_analytic_progress_graph
+#: model:ir.ui.menu,name:account_analytic_progress.menu_account_analytic_progress_graph
+msgid "Remainging turnover by account"
+msgstr ""
+
+#. module: account_analytic_progress
 #: model:ir.module.module,shortdesc:account_analytic_progress.module_meta_information
 msgid "account_analytic_progress"
+msgstr ""
+
+#. module: account_analytic_progress
+#: model:ir.module.module,description:account_analytic_progress.module_meta_information
+msgid "Progress bar for analytic accounts.\n"
+"This is the module used for displaying the shared funded\n"
+"development projects on the Tiny ERP website."
+msgstr ""
+
+#. module: account_analytic_progress
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
 msgstr ""
 

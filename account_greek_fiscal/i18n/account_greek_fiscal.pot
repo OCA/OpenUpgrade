@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-05-16 20:02:15+0000\n"
-"PO-Revision-Date: 2009-05-16 20:02:15+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
+"PO-Revision-Date: 2009-05-30 15:14:08+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,10 +16,338 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_greek_fiscal
+#: model:ir.actions.report.xml,name:account_greek_fiscal.account_fiscalgr_invoices_report
+msgid "Fiscal Invoice"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: help:res.partner,vat_taxauth:0
+msgid "Select the local tax service branch, where the partner is registered."
+msgstr ""
+
+#. module: account_greek_fiscal
+#: constraint:ir.model:0
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: field:account.invoice,fiscalgr_print:0
+msgid "Fiscal print"
+msgstr ""
+
+#. module: account_greek_fiscal
 #: model:ir.module.module,description:account_greek_fiscal.module_meta_information
 msgid "This enables the greek fiscal printing of reports (invoices). \n"
 "    When an invoice is settled, it is marked by the (legal) fiscal machine and locked\n"
 "    down. Then, it is printed according to the law.\n"
 "    "
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Tax"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Disc. (%)"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: field:ir.actions.report.xml,copies:0
+msgid "Copies"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: view:account.invoice:0
+msgid "Print"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Unit Price"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: view:account.fiscalgr.occup:0
+#: model:ir.actions.act_window,name:account_greek_fiscal.view_account_fiscalgr_occup_tf
+#: model:ir.ui.menu,name:account_greek_fiscal.menu_account_fiscalgr_occup_tf
+msgid "Tax occupations"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.print,total_no:0
+msgid "Total sequence"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.print,day_no:0
+msgid "Daily sequence"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "VAT :"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Document"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "PRO-FORMA"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Taxes:"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: model:ir.ui.menu,name:account_greek_fiscal.menu_account_fiscalgr
+msgid "Fiscal prints"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: help:account.fiscalgr.tauth,descr:0
+msgid "Any notes for this authority"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.occup,descr:0
+#: field:account.fiscalgr.tauth,descr:0
+#: rml:account.invoice.fiscalgr:0
+msgid "Description"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Price"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Invoice Date"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Canceled Invoice"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Tel. :"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: field:res.partner,vat_taxauth:0
+msgid "Tax authority"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.print,cups_jobid:0
+msgid "Job ID"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Base"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.print,name:0
+msgid "Title"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.print,report:0
+msgid "Report"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: model:ir.model,name:account_greek_fiscal.model_account_fiscalgr_tauth
+msgid "account.fiscalgr.tauth"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: view:account.fiscalgr.tauth:0
+#: model:ir.actions.act_window,name:account_greek_fiscal.view_account_fiscalgr_tauth_tf
+#: model:ir.ui.menu,name:account_greek_fiscal.menu_account_fiscalgr_tauth_tf
+msgid "Tax authorities"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Partner Ref."
+msgstr ""
+
+#. module: account_greek_fiscal
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: help:ir.actions.report.xml,copies:0
+msgid "Default number of copies."
+msgstr ""
+
+#. module: account_greek_fiscal
+#: field:account.invoice,property_fiscalgr_invoice_report:0
+msgid "Fiscal report template"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Invoice"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Total:"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.tauth,country_id:0
+msgid "Country"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Taxes"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: help:account.fiscalgr.print,cups_msg:0
+msgid "This is the message returned by cups, if the printing fails."
+msgstr ""
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.print,cups_msg:0
+msgid "CUPS message"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Amount"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: field:ir.actions.report.xml,printer:0
+msgid "Printer"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: help:ir.actions.report.xml,printer:0
+msgid "Preferred printer for this report. Useful for server-side printing."
+msgstr ""
+
+#. module: account_greek_fiscal
+#: help:account.fiscalgr.print,cups_jobid:0
+msgid "CUPS job id"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: model:ir.model,name:account_greek_fiscal.model_account_fiscalgr_print
+msgid "account.fiscalgr.print"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.print,date:0
+msgid "Print date"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Quantity"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Refund"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: model:ir.model,name:account_greek_fiscal.model_account_fiscalgr_occup
+msgid "account.fiscalgr.occup"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: view:account.fiscalgr.print:0
+msgid "Prints"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.occup,code:0
+#: field:account.fiscalgr.tauth,code:0
+msgid "Code"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Supplier Invoice"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.print,machine_id:0
+msgid "Machine ID"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: help:res.partner,vat_occup:0
+msgid "Select the corresponding occupation of the partner, as registered with tax authorities."
+msgstr ""
+
+#. module: account_greek_fiscal
+#: field:res.partner,vat_occup:0
+msgid "VAT Occupation"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Net Total:"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.print,hash:0
+msgid "Secure hash"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Fax :"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: help:account.fiscalgr.print,name:0
+msgid "Title of the CUPS job, typically the invoice reference."
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Supplier Refund"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.occup,name:0
+#: field:account.fiscalgr.tauth,name:0
+msgid "Name"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: model:ir.module.module,shortdesc:account_greek_fiscal.module_meta_information
+msgid "Greek Fiscal printing"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: model:ir.actions.act_window,name:account_greek_fiscal.view_account_fiscalgr_print_tree_form
+msgid "Fiscal Prints"
 msgstr ""
 

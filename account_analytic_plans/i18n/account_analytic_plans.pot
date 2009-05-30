@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-# 	* account_analytic_plans
+#	* account_analytic_plans
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-05-16 20:02:15+0000\n"
-"PO-Revision-Date: 2009-05-16 20:02:15+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
+"PO-Revision-Date: 2009-05-30 15:14:08+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,49 +16,13 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_analytic_plans
-#: model:ir.module.module,description:account_analytic_plans.module_meta_information
-msgid ""
-"This module allows to use several analytic plans, according to the general "
-"journal,\n"
-"so that multiple analytic lines are created when the invoice or the entries\n"
-"are confirmed.\n"
-"\n"
-"For example, you can define the following analytic structure:\n"
-"  Projects\n"
-"      Project 1\n"
-"          SubProj 1.1\n"
-"          SubProj 1.2\n"
-"      Project 2\n"
-"  Salesman\n"
-"      Eric\n"
-"      Fabien\n"
-"\n"
-"Here, we have two plans: Projects and Salesman. An invoice line must\n"
-"be able to write analytic entries in the 2 plans: SubProj 1.1 and\n"
-"Fabien. The amount can also be split. The following example is for\n"
-"an invoice that touches the two subproject and assigned to one salesman:\n"
-"\n"
-"Plan1:\n"
-"    SubProject 1.1 : 50%\n"
-"    SubProject 1.2 : 50%\n"
-"Plan2:\n"
-"    Eric: 100%\n"
-"\n"
-"So when this line of invoice will be confirmed, it will generate 3 analytic "
-"lines,\n"
-"for one account entry.\n"
-"        "
-msgstr ""
-
-#. module: account_analytic_plans
 #: field:account.analytic.plan.instance,account4_ids:0
 msgid "Account4 Id"
 msgstr ""
 
 #. module: account_analytic_plans
 #: constraint:ir.model:0
-msgid ""
-"The Object name must start with x_ and not contain any special character !"
+msgid "The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: account_analytic_plans
@@ -79,17 +43,13 @@ msgid "End Date"
 msgstr ""
 
 #. module: account_analytic_plans
-#: field:account.analytic.plan.instance,account3_ids:0
-msgid "Account3 Id"
-msgstr ""
-
-#. module: account_analytic_plans
 #: field:account.analytic.plan.instance.line,rate:0
 msgid "Rate (%)"
 msgstr ""
 
 #. module: account_analytic_plans
-#: view:account.analytic.plan:0 field:account.analytic.plan,name:0
+#: view:account.analytic.plan:0
+#: field:account.analytic.plan,name:0
 #: field:account.analytic.plan.line,plan_id:0
 #: model:ir.actions.act_window,name:account_analytic_plans.account_analytic_plan_form_action
 #: model:ir.ui.menu,name:account_analytic_plans.menu_account_analytic_plan_action
@@ -162,9 +122,8 @@ msgid "Select Information"
 msgstr ""
 
 #. module: account_analytic_plans
-#: code:addons/account_analytic_plans/account_analytic_plans.py:0
-#, python-format
-msgid "A model having this name and code already exists !"
+#: field:account.analytic.plan.instance,account3_ids:0
+msgid "Account3 Id"
 msgstr ""
 
 #. module: account_analytic_plans
@@ -198,12 +157,6 @@ msgid "Analytic Plan Line"
 msgstr ""
 
 #. module: account_analytic_plans
-#: code:addons/account_analytic_plans/wizard/create_model.py:0
-#, python-format
-msgid "No analytic plan defined !"
-msgstr ""
-
-#. module: account_analytic_plans
 #: rml:account.analytic.account.crossovered.analytic:0
 msgid "Analytic Account Reference:"
 msgstr ""
@@ -224,23 +177,11 @@ msgid "to"
 msgstr ""
 
 #. module: account_analytic_plans
-#: code:addons/account_analytic_plans/account_analytic_plans.py:0
-#: code:addons/account_analytic_plans/wizard/create_model.py:0
-#, python-format
-msgid "Error"
-msgstr ""
-
-#. module: account_analytic_plans
-#: view:account.analytic.plan:0 field:account.analytic.plan,plan_ids:0
+#: view:account.analytic.plan:0
+#: field:account.analytic.plan,plan_ids:0
 #: field:account.journal,plan_id:0
 #: model:ir.model,name:account_analytic_plans.model_account_analytic_plan
 msgid "Analytic Plans"
-msgstr ""
-
-#. module: account_analytic_plans
-#: code:addons/account_analytic_plans/wizard/wizard_crossovered_analytic.py:0
-#, python-format
-msgid "User Error"
 msgstr ""
 
 #. module: account_analytic_plans
@@ -274,6 +215,38 @@ msgid "Distribution Models"
 msgstr ""
 
 #. module: account_analytic_plans
+#: model:ir.module.module,description:account_analytic_plans.module_meta_information
+msgid "This module allows to use several analytic plans, according to the general journal,\n"
+"so that multiple analytic lines are created when the invoice or the entries\n"
+"are confirmed.\n"
+"\n"
+"For example, you can define the following analytic structure:\n"
+"  Projects\n"
+"      Project 1\n"
+"          SubProj 1.1\n"
+"          SubProj 1.2\n"
+"      Project 2\n"
+"  Salesman\n"
+"      Eric\n"
+"      Fabien\n"
+"\n"
+"Here, we have two plans: Projects and Salesman. An invoice line must\n"
+"be able to write analytic entries in the 2 plans: SubProj 1.1 and\n"
+"Fabien. The amount can also be split. The following example is for\n"
+"an invoice that touches the two subproject and assigned to one salesman:\n"
+"\n"
+"Plan1:\n"
+"    SubProject 1.1 : 50%\n"
+"    SubProject 1.2 : 50%\n"
+"Plan2:\n"
+"    Eric: 100%\n"
+"\n"
+"So when this line of invoice will be confirmed, it will generate 3 analytic lines,\n"
+"for one account entry.\n"
+"        "
+msgstr ""
+
+#. module: account_analytic_plans
 #: model:ir.module.module,shortdesc:account_analytic_plans.module_meta_information
 msgid "Multiple-plans management in Analytic Accounting"
 msgstr ""
@@ -297,18 +270,6 @@ msgstr ""
 #. module: account_analytic_plans
 #: field:account.analytic.plan.instance,account2_ids:0
 msgid "Account2 Id"
-msgstr ""
-
-#. module: account_analytic_plans
-#: code:addons/account_analytic_plans/account_analytic_plans.py:0
-#, python-format
-msgid "The Total Should be Between %s and %s"
-msgstr ""
-
-#. module: account_analytic_plans
-#: code:addons/account_analytic_plans/wizard/create_model.py:0
-#, python-format
-msgid "Please put a name and a code before saving the model !"
 msgstr ""
 
 #. module: account_analytic_plans
@@ -372,12 +333,6 @@ msgid "Analytic Account"
 msgstr ""
 
 #. module: account_analytic_plans
-#: code:addons/account_analytic_plans/account_analytic_plans.py:0
-#, python-format
-msgid "Value Error"
-msgstr ""
-
-#. module: account_analytic_plans
 #: rml:account.analytic.account.crossovered.analytic:0
 msgid "Printing date:"
 msgstr ""
@@ -389,8 +344,7 @@ msgstr ""
 
 #. module: account_analytic_plans
 #: wizard_view:create.model,info:0
-msgid ""
-"This distribution model has been saved. You will be able to reuse it later."
+msgid "This distribution model has been saved. You will be able to reuse it later."
 msgstr ""
 
 #. module: account_analytic_plans
@@ -407,3 +361,4 @@ msgstr ""
 #: rml:account.analytic.account.crossovered.analytic:0
 msgid "at"
 msgstr ""
+

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-05-16 20:02:15+0000\n"
-"PO-Revision-Date: 2009-05-16 20:02:15+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
+"PO-Revision-Date: 2009-05-30 15:14:08+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,74 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_simulation
+#: field:account.journal,state:0
+msgid "Status"
+msgstr ""
+
+#. module: account_simulation
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr ""
+
+#. module: account_simulation
+#: field:account.journal,child_ids:0
+msgid "Parent journal"
+msgstr ""
+
+#. module: account_simulation
+#: constraint:ir.model:0
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr ""
+
+#. module: account_simulation
+#: model:ir.actions.act_window,name:account_simulation.action_view_account_journal_simulation_form
+#: model:ir.ui.menu,name:account_simulation.menu_action_view_account_journal_simulation_form
+msgid "Journal Simulations"
+msgstr ""
+
+#. module: account_simulation
+#: model:ir.model,name:account_simulation.model_account_journal_simulation
+msgid "Simulation level"
+msgstr ""
+
+#. module: account_simulation
+#: model:ir.module.module,shortdesc:account_simulation.module_meta_information
+msgid "Accounting simulation journal"
+msgstr ""
+
+#. module: account_simulation
+#: field:account.journal.simulation,code:0
+msgid "Simulation code"
+msgstr ""
+
+#. module: account_simulation
 #: model:ir.module.module,description:account_simulation.module_meta_information
 msgid "Accounting simulation plan."
+msgstr ""
+
+#. module: account_simulation
+#: view:account.journal.simulation:0
+msgid "Journal simulation"
+msgstr ""
+
+#. module: account_simulation
+#: field:account.journal.simulation,name:0
+msgid "Simulation name"
+msgstr ""
+
+#. module: account_simulation
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
+
+#. module: account_simulation
+#: field:account.journal,parent_ids:0
+msgid "Childs journal"
+msgstr ""
+
+#. module: account_simulation
+#: model:ir.actions.act_window,name:account_simulation.action_account_journal_tree
+#: model:ir.ui.menu,name:account_simulation.menu_action_account_journal_tree
+msgid "Account Journal"
 msgstr ""
 
