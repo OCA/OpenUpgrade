@@ -80,6 +80,12 @@
             model="res.partner.address"
             name="wizard_after_sale_action"
             id="wizard_after_sale_action"/>
+            
+		<wizard
+            string="After-Sale Action"
+            model="sale.order"
+            name="wizard_so_after_sale_action"
+            id="wizard_so_after_sale_action"/>
 
 <!--         <wizard
             string="Duplicate"

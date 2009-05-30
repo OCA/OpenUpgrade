@@ -30,6 +30,7 @@ FORM = UpdateableStr()
 parameter_fields = {
     'segment_id':{'string':'Segment', 'type':'many2one', 'relation':'dm.campaign.proposition.segment', 'required':True},
     'action_id':{'string':'Action', 'type':'many2one', 'relation':'dm.offer.step.transition.trigger', 'required':True , 'domain':[('type','=','as')]},
+    'mail_service_id':{'string':'Mail Service', 'type':'many2one', 'relation':'dm.mail_service', 'required':True},
 }
 
 def search_segment(self, cr, uid, data, context):
@@ -37,11 +38,15 @@ def search_segment(self, cr, uid, data, context):
     wi_obj = pool.get('dm.workitem')
     workitems = wi_obj.search(cr,uid,[('address_id','=',data['id'])])
     ids = [wi.segment_id.id for wi in wi_obj.browse(cr,uid,workitems)]
+    step_obj = pool.get('dm.offer.step')
+    step = step_obj.search(cr,uid,[('type_id.code','=','ASEVENT'),('name','=','After-Sale Event (email)')])[0]
+    browse_id = step_obj.browse(cr,uid,step)
     FORM.string = """<?xml version="1.0" ?>
     <form string="After-Sale Action">
-    <field name="segment_id" colspan="4" domain="[('id', 'in', [%s])]"/>
+        <field name="segment_id" colspan="4" domain="[('id', 'in', [%s])]"/>
         <field name="action_id" colspan="4"/>
-        </form>"""%','.join([str(x) for x in ids])
+        <field name="mail_service_id" colspan="4" domain="[('media_id','=',%d)]"/>
+    </form>"""%(','.join([str(x) for x in ids]),browse_id.media_id.id)
     return {}
 
 def _create_event(self,cr,uid,data,context):
@@ -50,7 +55,8 @@ def _create_event(self,cr,uid,data,context):
         'segment_id' : data['form']['segment_id'],
         'step_id' : pool.get('dm.offer.step').search(cr,uid,[('type_id.code','=','ASEVENT'),('name','=','After-Sale Event (email)')])[0],
         'address_id' : data['id'],
-        'trigger_type_id' : data['form']['action_id']
+        'trigger_type_id' : data['form']['action_id'],
+        'mail_service_id' : data['form']['mail_service_id']
     }
     id = pool.get('dm.event').create(cr,uid,vals,context)
     return {}
