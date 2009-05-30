@@ -23,7 +23,7 @@
     "name" : "Auction Management - Reporting",
     "version" : "1.0",
     "author" : "Tiny",
-    "website" : "http://tinyerp.com/module_auction.html",
+    "website" : "http://www.openerp.com",
     "depends" : ["auction", "hr_timesheet_sheet"],
     "category" : "Generic Modules/Auction",
     "description": "A module that adds new reports based on Auction.",

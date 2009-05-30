@@ -43,21 +43,22 @@ class etl_component_test(object):
         self.output_data={}
         self.datas=[]
         self.output_channel='main'
-        self.test_input=component.component('test input')
-        self.test_output=component.component('test output')  
+        self.test_input=component()
+        self.test_output=component()
         self.test_input.generator=self.input_generator_get()
-        self.test_output.generator=self.output_generator_get()     
- 
-    def check_input(self,input_data):       
+        self.test_output.generator=self.output_generator_get()
+
+    def check_input(self,input_data):
         self.input_data=input_data
+
     def check_output(self,output_data,channel='main'):
         self.output_data=output_data
         self.output_channel=channel
 
     def input_generator_get(self):
         for chan in self.input_data:
-		    for d in self.input_data[chan]:
-		        yield d,chan
+            for d in self.input_data[chan]:
+                yield d,chan
 
     def output_generator_get(self):
         self.datas={}
@@ -66,22 +67,25 @@ class etl_component_test(object):
             for iterator in trans:
                 for d in iterator:
                     data.append(d)
-            self.datas[channel]=data 
+            self.datas[channel]=data
         for chan in self.datas:
-		    for d in self.datas[chan]:
-		        yield d,chan
-    
- 
-    def output(self):        
-        tran=transition.transition(self.test_input,self.component)        
-        tran1=transition.transition(self.component,self.test_output)                
-        job1=job.job('test job',[self.test_output])
-        job1.run() 
+            for d in self.datas[chan]:
+                yield d,chan
+
+
+    def output(self):
+        tran=transition(self.test_input,self.component)
+        tran1=transition(self.component,self.test_output)
+        job1=job([self.test_output])
+        job1.run()
         if self.output_channel not in self.datas:
             raise etl_test_exception('expected output channel does not has actual data.')
         act_datas=self.datas[self.output_channel]
-        if len(act_datas)!=len(self.output_data):
-            raise etl_test_exception('lengths of actual output and expected output are different')
+        if self.output_data:
+            if len(act_datas)!=len(self.output_data):
+                raise etl_test_exception('lengths of actual output and expected output are different')
+        else:
+             return self.datas
         count=0
         while count<len(act_datas):
             exp_r=self.output_data[count]
@@ -91,7 +95,7 @@ class etl_component_test(object):
             if len(exp_keys)!=len(act_keys):
                 raise etl_test_exception('key length of actual output and expected output are different')
             key_count=0
-            
+
             while key_count<len(act_keys):
                 exp_key=exp_keys[key_count]
                 act_key=act_keys[key_count]
@@ -109,15 +113,4 @@ class etl_component_test(object):
                     raise etl_test_exception('values of actual output and expected output are different')
                 value_count+=1
             count+=1
-
-            
-               
-
-
-
-
-
-
-
-
 

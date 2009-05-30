@@ -1,0 +1,1285 @@
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="training_course_category_form">
+            <field name="name">training.course_category.form</field>
+            <field name="model">training.course_category</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Product Line">
+                    <separator string="Product Line Description" colspan="4" />
+                    <field name="name" string="Code" select="1" />
+                    <field name="parent_id" string="Parent" />
+                    <separator string="Description" colspan="4" />
+                    <field name="description" nolabel="4" colspan="4"/>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="training_course_category_tree">
+            <field name="name">training.course_category.tree</field>
+            <field name="model">training.course_category</field>
+            <field name="type">tree</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Product Lines">
+                    <field name="name" string="Code" />
+                    <field name="description" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="open_training_course_by_category_all_act">
+            <field name="name">Courses</field>
+            <field name="res_model">training.course</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('parent_id', '=', active_id)]</field>
+        </record>
+
+        <record model="ir.values" id="ir_action_course_by_category">
+            <field name="key2" eval="'tree_but_open'" />
+            <field name="model" eval="'training.course_category'" />
+            <field name="name">Courses By Category</field>
+            <field name="value" eval="'ir.actions.act_window,%d'%open_training_course_by_category_all_act" />
+            <field name="object" eval="True" />
+        </record>
+
+        <record model="ir.actions.act_window" id="training_course_by_category_all_act">
+            <field name="name">Courses By Category</field>
+            <field name="res_model">training.course_category</field>
+            <field name="view_type">tree</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('parent_id', '=', False)]</field>
+        </record>
+
+        <!-- Création d'une vue en arbre pour charger tous les cours appartenant à une catégorie -->
+        <record model="ir.actions.act_window" id="training_course_category_all_act">
+            <field name="name">Product Lines</field>
+            <field name="res_model">training.course_category</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+        </record>
+
+        <!--
+        <record model="ir.actions.act_window" id="training_course_category_new_act">
+            <field name="name">New Product Line</field>
+            <field name="res_model">training.course_category</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+        -->
+
+        <record model="ir.ui.view" id="training_course_type_form">
+            <field name="name">training.course_type.form</field>
+            <field name="model">training.course_type</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Type">
+                    <separator string="Course Type Description" colspan="4" />
+                    <field name="name" />
+                    <separator string="Limits" colspan="4" />
+                    <field name="min_limit" />
+                    <field name="max_limit" />
+                    <separator string="Description" colspan="4"/>
+                    <field name="description" nolabel="1" colspan="4"/>
+                    <separator string="Objective" colspan="4"/>
+                    <field name="objective" nolabel="1" colspan="4"/>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="training_course_type_tree">
+            <field name="name">training.course_type.tree</field>
+            <field name="model">training.course_type</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Types">
+                    <field name="name" />
+                    <field name="min_limit" />
+                    <field name="max_limit" />
+                    <field name="description" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="training_course_type_all_act">
+            <field name="name">Types</field>
+            <field name="res_model">training.course_type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.ui.view" id="training_course_form">
+            <field name="name">training.course.form</field>
+            <field name="model">training.course</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Course">
+                    <separator string="Course Description" colspan="4" />
+                    <group colspan="4" col='6'>
+                        <field name="name" string="Designation" select="1" required="True"/>
+                        <field name="parent_id" string="Product Line" required="True" />
+                        <field name="course_type_id" />
+                        <field name="display_name" />
+                        <field name="code" string="Code" select="1" />
+                        <field name="total_duration" widget="float_time"/>
+                        <field name="lang_id" />
+                        <field name="target_public" />
+                        <field name="reference_id" />
+                        <field name="duration" widget="float_time" />
+                        <field name="p_id" />
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Offers">
+                            <field name="offer_ids" widget="one2many" nolabel="1" mode="tree" view_mode="tree,form">
+                                <tree string="Offers">
+                                    <field name="name" />
+                                    <field name="objective" />
+                                    <field name="description" />
+                                </tree>
+                                <form string="Offer">
+                                    <field name="name" />
+                                    <newline />
+                                    <separator string="Objective" colspan="4" />
+                                    <field name="objective" colspan="4" nolabel="1" />
+                                    <separator string="Content Course" colspan="4" />
+                                    <field name="description" colspan="4" nolabel="1" />
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Sub Courses">
+                            <field name="children" nolabel="1" colspan="4" context="{'default_parent_id':parent_id, 'default_course_type_id': course_type_id, 'default_lang_id':lang_id}">
+                                <form string="Sub Course">
+                                    <group colspan="4" col='6'>
+                                        <field name="name" string="Designation" select="1" required="True"/>
+                                        <field name="parent_id" string="Product Line" required="True" readonly="True"/>
+                                        <field name="course_type_id" />
+                                        <field name="code" string="Code" select="1" />
+                                        <field name="lang_id" />
+                                        <field name="target_public" />
+                                        <!-- <field name="reference_id" /> -->
+                                        <field name="duration" widget="float_time"/>
+                                    </group>
+                                    <separator string="Note" colspan="4" />
+                                    <field name="internal_note" nolabel="1" colspan="4"/>
+                                </form>
+                                <tree string="Sub Courses">
+                                    <field name="sequence" />
+                                    <field name="name" string="Designation" />
+                                    <field name="duration" widget="float_time" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Lecturers">
+                            <field name="lecturer_ids" nolabel="1" colspan="4"/>
+                        </page>
+                        <page string="Pedagogical Suggestion">
+                            <separator string="Preliminary Courses" colspan="4" />
+                            <field name="preliminary_course_ids" nolabel="1" colspan="4" />
+                            <separator string="Complementary Courses" colspan="4" />
+                            <field name="complementary_course_ids" nolabel="1" colspan="4" />
+                        </page>
+                        <page string="Supplier Orders">
+                            <field name="purchase_line_ids" nolabel="1" colspan="4">
+                                <form string="Command">
+                                    <field name="product_id" />
+                                    <field name="product_qty" />
+                                    <field name="product_uom_id" />
+                                </form>
+                                <tree string="Command" editable="bottom">
+                                    <field name="product_id" />
+                                    <field name="product_qty" />
+                                    <field name="product_uom_id" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Note">
+                            <field name="internal_note" nolabel="1" colspan="4" />
+                        </page>
+                    </notebook>
+                    <group colspan="4" col="7">
+                        <field name="state_course" />
+                        <button string="Draft" type="workflow" name="signal_draft" attrs="{'invisible':[('state_course', '!=', 'pending')]}"/>
+                        <button string="Pending" type="workflow" name="signal_pending" attrs="{'invisible' : [('state_course', '!=', 'draft')]}" />
+                        <button string="In Progress" type="workflow" name="signal_inprogress" attrs="{'invisible' : [('state_course', '!=', 'pending')]}" />
+                        <button string="Deprecate" type="workflow" name="signal_deprecate" attrs="{'invisible' : [('state_course', '!=', 'inprogress')]}" />
+                        <button string="Validate" type="workflow" name="signal_validate" attrs="{'invisible' : [('state_course', '!=', 'inprogress')]}" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <act_window 
+            src_model="training.course" 
+            res_model="ir.attachment" 
+            domain="[('res_id', '=', active_id)]" 
+            name="Attachments" 
+            id="training_course_attachment" />
+
+        <act_window 
+            src_model="training.course" 
+            res_model="training.seance" 
+            domain="[('course_id', '=', active_id),('date', '>=', time.strftime('%Y-%m-%d'))]" 
+            name="Planned Courses" 
+            id="training_course_planned" />
+
+        <record model="ir.ui.view" id="training_course_list">
+            <field name="name">training.course.list</field>
+            <field name="model">training.course</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml"> 
+                <tree string="Courses" colors="blue:state_course=='validated'">
+                    <field name="sequence" />
+                    <field name="code" string="Code" />
+                    <field name="name" string="Designation" />
+                    <field name="description" />
+                    <field name="duration" widget="float_time" />
+                    <field name="state_course" />
+                    <field name="has_support" />
+                    <field name="p_id" />
+                </tree>
+            </field>
+        </record>
+
+        <!--
+        <record model="ir.ui.view" id="training_course_tree">
+            <field name="name">training.course.tree</field>
+            <field name="model">training.course</field>
+            <field name="type">tree</field>
+            <field name="field_parent">children</field>
+            <field name="arch" type="xml">
+                <tree string="Courses">
+                    <field name="name" string="Designation" />
+                    <field name="state_course" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="course_by_active_id_act">
+            <field name="res_model">training.course</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="domain">[('id', '=', active_id)]</field>
+        </record>
+
+        <record model="ir.values" id="training_course_tree_line_act">
+            <field name="key2">tree_but_open</field>
+            <field name="model">training.course</field>
+            <field name="name">Courses</field>
+            <field name="value" eval="'ir.actions.act_window,%d'%course_by_active_id_act" />
+            <field name="object" eval="True" />
+        </record>
+
+        <record model="ir.actions.act_window" id="training_course_tree_act">
+            <field name="name">Courses</field>
+            <field name="res_model">training.course</field>
+            <field name="view_type">tree</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="training_course_tree" />
+            <field name="domain">[('p_id', '=', False)]</field>
+        </record>
+        -->
+
+        <record model="ir.actions.act_window" id="training_course_all_act">
+            <field name="name">Courses</field>
+            <field name="res_model">training.course</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="training_course_current_all_act">
+            <field name="name">Current Courses</field>
+            <field name="res_model">training.course</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state_course', '=', 'validated')]</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="training_course_draft_all_act">
+            <field name="name">Draft Courses</field>
+            <field name="res_model">training.course</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state_course', '=', 'draft')]</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="training_course_mature_all_act">
+            <field name="name">Deprecated Courses</field>
+            <field name="res_model">training.course</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state_course', '=', 'deprecated')]</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="training_course_new_act">
+            <field name="name">New course</field>
+            <field name="res_model">training.course</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+
+        <record model="ir.ui.view" id="training_catalog_form">
+            <field name="name">training.catalog.form</field>
+            <field name="model">training.catalog</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Catalog">
+                    <separator string="Catalog Description" colspan="4" />
+                    <field name="year" />
+                    <notebook colspan="4">
+                        <page string="Sessions">
+                            <field name="session_ids" colspan="4" nolabel="1">
+                                <tree string="Sessions">
+                                    <field name="name" />
+                                    <field name="date" />
+                                    <field name="state" />
+                                    <field name="offer_id" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Note">
+                            <field name="note" nolabel="1" />
+                        </page>
+                    </notebook>
+                    <group colspan="4" col="7">
+                        <field name="state" />
+                        <button name="draft" string="Draft" type="workflow" states="validated" />
+                        <button name="signal_validate" string="Validate" type="workflow" states="draft"/>
+                        <button name="signal_cancel" string="Cancel" type="workflow" states="validated,inprogress"/>
+                        <button name="signal_inprogress" string="In Progress" type="workflow" states="validated"/>
+                        <button name="signal_deprecate" string="Deprecate" type="workflow" states="inprogress" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="training_catalog_tree">
+            <field name="name">training.catalog.tree</field>
+            <field name="model">training.catalog</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Catalogs">
+                    <field name="year" widget="char" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="training_catalog_all_act">
+            <field name="name">Catalogs</field>
+            <field name="res_model">training.catalog</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="training_catalog_new_act">
+            <field name="name">New Catalog</field>
+            <field name="res_model">training.catalog</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="training_catalog_old_act">
+            <field name="name">Old Catalogs</field>
+            <field name="res_model">training.catalog</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('year', '&lt;', time.strftime('%Y'))]</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="training_catalog_current_act">
+            <field name="name">Current Catalogs</field>
+            <field name="res_model">training.catalog</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('year', '=', time.strftime('%Y'))]</field>
+        </record>
+
+        <record model="ir.ui.view" id="training_session_form">
+            <field name="name">training.session.form</field>
+            <field name="model">training.session</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Session">
+                    <separator string="Session Description" colspan="4" />
+                    <field name="name" />
+                    <field name="user_id" />
+                    <field name="date" />
+                    <newline />
+                    <field name="offer_id" /> 
+                    <field name="catalog_id" />
+                    <field name="available_seats" />
+                    <field name="draft_seats" />
+                    <newline />
+                    <notebook colspan="4">
+                        <page string="Seances">
+                            <field name="seance_ids" readonly="true" colspan="4" nolabel="1">
+                                <tree string="Seances">
+                                    <field name="name" />
+                                    <field name="date" />
+                                    <field name="duration" widget="float_time" />
+                                    <field name="support_received" />
+                                    <field name="state" />
+                                </tree>
+                            </field>
+                            <button name="" string="Create the Seances" type="object" />
+                        </page>
+                        <page string="Supplier Commands">
+                            <field name="purchase_line_ids" nolabel="1" colspan="4">
+                                <form string="Command">
+                                    <field name="product_id" />
+                                    <field name="product_qty" />
+                                    <field name="product_uom_id" />
+                                </form>
+                                <tree string="Command" editable="bottom">
+                                    <field name="product_id" />
+                                    <field name="product_qty" />
+                                    <field name="product_uom_id" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <group colspan="4" col="8">
+                        <field name="state" />
+                        <button name="signal_open" string="Open" type="workflow" states="draft" />
+                        <button name="signal_open_confirm" string="Open &amp; Confirm" type="workflow" states="opened" />
+                        <button name="signal_close_confirm" string="Close &amp; Confirm" type="workflow" states="opened_confirmed" />
+                        <button name="signal_inprogress" string="In Progress" type="workflow" states="closed_confirmed"/>
+                        <button name="signal_close" string="Close" type="workflow" states="inprogress" />
+                        <button name="signal_cancel" string="Cancel" type="workflow" states="draft,opened,opened_confirmed,closed_confirmed"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <act_window 
+            name="Participants" 
+            id="training_session_participants_act"
+            src_model="training.session"
+            domain="[('session_id', '=', active_id)]"
+            res_model="training.subscription" />
+
+        <act_window 
+            name="Seances" 
+            id="training_session_seances_act"
+            src_model="training.session"
+            context="{'session_id' : active_id}"
+            res_model="training.seance" />
+
+        <record model="ir.ui.view" id="training_session_tree">
+            <field name="name">training.session.tree</field>
+            <field name="model">training.session</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Sessions">
+                    <field name="name" />
+                    <field name="state" />
+                    <field name="offer_id" />
+                    <field name="catalog_id" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="training_session_tree_resume">
+            <field name="name">training.session.tree</field>
+            <field name="model">training.session</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Sessions">
+                    <field name="date" />
+                    <field name="catalog_id" />
+                    <field name="name" />
+                    <field name="state" />
+                    <field name="available_seats" />
+                    <field name="draft_seats" />
+                    <field name="user_id" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="training_session_tree_without_state">
+            <field name="name">training.session.tree</field>
+            <field name="model">training.session</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Sessions">
+                    <field name="name" />
+                    <field name="offer_id" />
+                    <field name="catalog_id" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="training_session_calendar">
+            <field name="name">training.session.calendar</field>
+            <field name="model">training.session</field>
+            <field name="type">calendar</field>
+            <field name="arch" type="xml">
+                <calendar string="Session" date_start="date">
+                    <field name="name" />
+                    <field name="state" />
+                    <field name="offer_id" />
+                </calendar>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="training_session_all_act">
+            <field name="name">Sessions</field>
+            <field name="res_model">training.session</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+        </record>
+        <record model="ir.actions.act_window" id="training_session_validate_act">
+            <field name="name">Sessions to Confirm</field>
+            <field name="res_model">training.session</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="view_id" ref="training_session_tree_without_state" />
+            <field name="domain">[('state', '=', 'opened')]</field>
+        </record>
+        <record model="ir.actions.act_window" id="training_session_new_act">
+            <field name="name">New Session</field>
+            <field name="res_model">training.session</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+        <record model="ir.actions.act_window" id="training_session_draft_act">
+            <field name="name">Draft Sessions</field>
+            <field name="res_model">training.session</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="training_session_tree_without_state" />
+            <field name="domain">[('state', '=', 'draft')]</field>
+        </record>
+        <record model="ir.actions.act_window" id="training_session_resume_act">
+            <field name="name">Sessions - Report</field>
+            <field name="res_model">training.session</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="training_session_tree_resume" />
+        </record>
+
+
+        <record model="ir.ui.view" id="training_seance_form">
+            <field name="name">training.seance.form</field>
+            <field name="model">training.seance</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Seance">
+                    <group colspan="4" col="4">
+                        <separator string="Seance Description" colspan="4" />
+                        <field name="name" />
+                        <field name="course_id" />
+                        <field name="date" />
+                        <field name="duration" widget="float_time" />
+                    </group>
+                    <notebook colspan="4">
+                        <page string="General">
+                            <group col="2" colspan="2">
+                                <separator string="Presence Form" colspan="2"/>
+                                <field name="presence_form" />
+                            </group>
+                            <group col="2" colspan="2">
+                                <separator string="Responsible" colspan="2" />
+                                <field name="user_id" />
+                            </group>
+                            <separator string="Location" colspan="4" />
+                            <field name="location" />
+                            <field name="room" />
+                            <field name="layout" />
+                            <field name="reserved" />
+                            <separator string="Supplier Commands" colspan="4" />
+                            <field name="purchase_line_ids" nolabel="1" colspan="4">
+                                <form string="Command">
+                                    <field name="product_id" />
+                                    <field name="product_qty" />
+                                    <field name="product_uom_id" />
+                                </form>
+                                <tree string="Command" editable="bottom">
+                                    <field name="product_id" />
+                                    <field name="product_qty" />
+                                    <field name="product_uom_id" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Sessions">
+                            <separator string="Sessions" colspan="4" />
+                            <field name="session_ids" colspan="4" nolabel="1">
+                                <tree string="Sessions">
+                                    <field name="name" />
+                                    <field name="state" />
+                                    <field name="offer_id" />
+                                    <field name="catalog_id" />
+                                    <field name="is_intra" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Participants">
+                            <group col="2" colspan="4">
+                                <group col="2">
+                                    <separator string="Limits" colspan="2" />
+                                    <field name="min_limit" />
+                                    <field name="max_limit" />
+                                </group>
+                                <group col="2">
+                                    <separator string="Group" colspan="2" />
+                                    <field name="group_id" />
+                                    <field name="participant_count" />
+                                </group>
+                            </group>
+                            <separator string="Participants" colspan="4" />
+                            <field name="participant_ids" 
+                                colspan="4" 
+                                nolabel="1" 
+                                domain="[('group_id', '=', group_id)]" />
+                        </page>
+                        <page string="StakeHolders">
+                            <separator string="StakeHolders" colspan="4" />
+                            <field name="partner_ids" nolabel="1"/>
+                        </page>
+                    </notebook>
+                    <group colspan="4" col="8">
+                        <field name="state" />
+                        <button name="signal_open" string="Open" type="workflow" states="draft" />
+                        <button name="signal_open_confirm" string="Open &amp; Confirm" type="workflow" states="opened" />
+                        <button name="signal_close_confirm" string="Close &amp; Confirm" type="workflow" states="opened_confirmed" />
+                        <button name="signal_inprogress" string="In Progress" type="workflow" states="closed_confirmed"/>
+                        <button name="signal_close" string="Close" type="workflow" states="inprogress" />
+                        <button name="signal_cancel" string="Cancel" type="workflow" states="draft,opened,opened_confirmed,closed_confirmed"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <act_window 
+            src_model="training.seance" 
+            res_model="ir.attachment" 
+            domain="[('res_id', '=', active_id)]" 
+            name="Attachments" 
+            id="training_seance_attachment" />
+
+        <record model="ir.ui.view" id="training_seance_tree">
+            <field name="name">training.seance.tree</field>
+            <field name="model">training.seance</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Seances">
+                    <field name="name" />
+                    <field name="date" />
+                    <field name="duration" widget="float_time" />
+                    <field name="state" />
+                    <field name="presence_form" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="training_seance_tree_resume">
+            <field name="name">training.seance.tree</field>
+            <field name="model">training.seance</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="seances">
+                    <field name="date" />
+                    <field name="name" />
+                    <field name="state" />
+                    <field name="partner_ids" />
+                    <field name="invoice" />
+                    <field name="evaluation" />
+                    <field name="available_seats" />
+                    <field name="draft_seats" />
+                    <field name="user_id" />
+                    <field name="location" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="training_seance_calendar">
+            <field name="name">training.seance.calendar</field>
+            <field name="model">training.seance</field>
+            <field name="type">calendar</field>
+            <field name="arch" type="xml">
+                <calendar string="Seances">
+                    <field name="name" />
+                    <field name="partner_id" />
+                    <field name="date" />
+                    <field name="duration" widget="float_time" />
+                    <field name="state" />
+                    <!--<field name="session_ids" />-->
+                </calendar>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="training_seance_all_act">
+            <field name="name">Seances</field>
+            <field name="res_model">training.seance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record model="ir.actions.act_window" id="training_seance_resume_act">
+            <field name="name">Seances - Report</field>
+            <field name="res_model">training.seance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="training_seance_tree_resume" />
+        </record>
+        <record model="ir.actions.act_window" id="training_seance_calendar_all_act">
+            <field name="name">Calendar of Seances</field>
+            <field name="res_model">training.seance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">calendar</field>
+        </record>
+        <!--
+        <record model="ir.actions.act_window" id="training_seance_new_act">
+            <field name="name">New Seance</field>
+            <field name="res_model">training.seance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+        -->
+        <record model="ir.actions.act_window" id="training_seance_to_confirm_act">
+            <field name="name">Seances to Confirm</field>
+            <field name="res_model">training.seance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('state', '=', 'draft')]</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="training_seance_new_act">
+            <field name="name">New Seance</field>
+            <field name="res_model">training.seance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+        </record>
+
+        <record model="ir.ui.view" id="training_subscription_form">
+            <field name="name">training.subscription.form</field>
+            <field name="model">training.subscription</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="subscription">
+                    <separator string="Subscription Description" colspan="4" />
+                    <field name="name" />
+                    <field name="create_date" />
+                    <notebook colspan="4">
+                        <page string="Subscription">
+                            <field name="partner_id" on_change="on_change_partner(partner_id)"/>
+                            <field name="address_id" domain="[('partner_id','=', partner_id),('type', '=', 'invoice')]"/>
+                            <field name="pricelist_id" />
+                            <field name="payment_term_id" />
+                            <field name="subscription_line_ids" colspan="4" nolabel="1" view_mode="tree">
+                                <tree string="Participants" editable="bottom">
+                                    <field name="session_id" />
+                                    <field name="contact_id" />
+                                    <field name="contact_email" readonly="1" />
+                                    <field name="group_id" />
+                                    <field name="invoiced" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Other Data">
+                            <field name="responsible_id" />
+                            <field name="origin" />
+                            <separator string="Notification" colspan="4" />
+                            <field name="notification_active" />
+                            <field name="notification_text" />
+                        </page>
+                    </notebook>
+                    <group colspan="4" col="6">
+                        <field name="state" />
+                        <button string="Confirm" type="workflow" name="signal_confirm" states="draft,cancelled" />
+                        <button string="Cancel" type="workflow" name="signal_cancel" states="confirmed" />
+                        <button string="Cancel to Invoice" type="workflow" name="signal_confirm_to_cancel_with_invoice" states="confirmed" />
+                        <button string="Done" type="workflow" name="signal_done" states="confirmed" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="training_subscription_tree">
+            <field name="name">training.subscription.tree</field>
+            <field name="model">training.subscription</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Subscriptions">
+                    <field name="create_date" />
+                    <!--
+                    <field name="contact_id" />
+                    <field name="session_id" />
+                    <field name="group_id" />
+                    -->
+                    <field name="partner_id" />
+                    <field name="state" />
+                    <!--
+                    <field name="paid" />
+                    <field name="invoiced" />
+                    -->
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="training_subscription_tree_with_problem">
+            <field name="name">training.subscription.tree</field>
+            <field name="model">training.subscription</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Subscriptions">
+                    <field name="name" />
+                    <!--
+                    <field name="contact_id" />
+                    -->
+                    <field name="partner_id" />
+                    <!-- <field name="session_id" />-->
+                    <field name="rest_seats" />
+                    <field name="max_seats" />
+                    <field name="draft_seats" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="training_subscription_all_act">
+            <field name="name">Subscriptions</field>
+            <field name="res_model">training.subscription</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="training_subscription_to_validate_act">
+            <field name="name">Subscriptions to Validate</field>
+            <field name="res_model">training.subscription</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state', '=', 'draft')]</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="training_subscription_problematic_act">
+            <field name="name">Subscriptions to Treat</field>
+            <field name="res_model">training.subscription</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="training_subscription_tree_with_problem" />
+            <field name="domain">[('state', '=', 'draft'),('date', '>=', time.strftime("%Y-%m-%d"))]</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="training_subscription_to_invoice_act">
+            <field name="name">Subscriptions to Invoice</field>
+            <field name="res_model">training.subscription</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state', '=', 'confirmed')]</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="training_subscription_new_act">
+            <field name="name">New Subscription</field>
+            <field name="res_model">training.subscription</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+
+        <record model="ir.ui.view" id="training_subscription_line_tree">
+            <field name="name">training.subscription.line.tree</field>
+            <field name="model">training.subscription.line</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Subscription Lines" colors="red:invoiced==False">
+                    <field name="subscription_id" />
+                    <field name="session_id" />
+                    <field name="partner_id" />
+                    <field name="contact_id" />
+                    <field name="with_exam" />
+                    <field name="invoiced" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="training_subscription_line_all_act">
+            <field name="name">Subscription Lines</field>
+            <field name="res_model">training.subscription.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window"
+            id="training_subscription_line_uninvoiced_act">
+            <field name="name">Uninvoiced Subscription Lines</field>
+            <field name="res_model">training.subscription.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('invoiced', '=', False)]</field>
+        </record>
+
+        <record model="ir.ui.view" id="training_offer_form">
+            <field name="name">training.offer.form</field>
+            <field name="model">training.offer</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Offer" col="4">
+                    <separator string="Offer Description" colspan="4" />
+                    <field name="name" />
+                    <field name="product_id" />
+                    <field name="kind" />
+                    <notebook colspan="4">
+                        <page string="Description">
+                            <separator string="Objective" colspan="4" />
+                            <field name="objective" nolabel="1" colspan="4" />
+                            <separator string="Course Content" colspan="4" />
+                            <field name="description" nolabel="1" colspan="4" />
+                        </page>
+                        <page string="Courses">
+                            <field name="course_ids" colspan="4" widget="many2many" nolabel="1" />
+                        </page>
+                        <page string="Intra" attrs="{'invisible':[('kind', '=', 'standard')]}">
+                            <field name="analytic_account_id" />
+                            <field name="costs" />
+                            <label string="" colspan="2" />
+                            <field name="revenues" />
+                            <!--
+                            <field name="sale_price" />
+                            <field name="total_cost" />
+                            -->
+                            <separator string="Margins" colspan="4" />
+                            <field name="profit" />
+                            <field name="profit_margin" />
+                            <!--
+                            <field name="margin" />
+                            <field name="margin_rate" />
+                            -->
+                        </page>
+                    </notebook>
+                    <group col="5" colspan="4">
+                        <field name="state" />
+                        <button name="signal_validate" string="Validate" type="workflow" states="draft" /> 
+                        <button name="signal_deprecate" string="Deprecate" type="workflow" states="validated" />
+                        <button name="signal_draft" string="Draft" type="workflow" states="deprecated" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="training_offer_tree">
+            <field name="name">training.offer.tree</field>
+            <field name="model">training.offer</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Offers">
+                    <field name="name" />
+                </tree>
+            </field>
+        </record>
+
+        <!--
+        <record model="ir.actions.act_window" id="training_offer_all_act">
+            <field name="name">Offers</field>
+            <field name="res_model">training.offer</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        -->
+
+        <record model="ir.actions.act_window" id="training_offer_open_act">
+            <field name="name">Open Offers</field>
+            <field name="res_model">training.offer</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="training_offer_new_act">
+            <field name="name">New Offer</field>
+            <field name="res_model">training.offer</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+
+    </data>
+
+    <data>
+        <menuitem 
+            id="training_mi" 
+            name="Training Management" sequence="2" />
+        <menuitem id="training_config_mi" 
+            parent="training_mi" 
+            name="Configuration" 
+            sequence="1"/>
+        <menuitem id="training_config_library_mi" 
+            parent="training_config_mi" 
+            name="Library" />
+        <menuitem id="training_config_library_course_type_mi" 
+            parent="training_config_library_mi" 
+            action="training_course_type_all_act" />
+        <menuitem 
+            id="training_config_library_product_line_mi" 
+            parent="training_config_library_mi" 
+            action="training_course_category_all_act" />
+
+        <menuitem 
+            id="training_library_mi" 
+            parent="training_mi" 
+            name="Library" 
+            sequence="2" />
+        <menuitem 
+            id="training_library_course_mi" 
+            parent="training_library_mi" 
+            name="Courses" />
+        <menuitem 
+            id="training_library_course_course_mi" 
+            parent="training_library_course_mi" 
+            action="training_course_all_act" />
+        <!--
+        <menuitem 
+            id="training_library_course_course_tree_mi"
+            parent="training_library_course_mi"
+            action="training_course_tree_act" />
+        -->
+        <menuitem 
+            id="training_library_course_course_current_mi" 
+            parent="training_library_course_course_mi" 
+            action="training_course_current_all_act" />
+        <menuitem 
+            id="training_library_course_course_draft_mi" 
+            parent="training_library_course_course_mi" 
+            action="training_course_draft_all_act" />
+        <menuitem 
+            id="training_library_course_course_mature_mi" 
+            parent="training_library_course_course_mi" 
+            action="training_course_mature_all_act" />
+        <menuitem 
+            id="training_library_course_course_new_mi" 
+            parent="training_library_course_course_mi" 
+            action="training_course_new_act" />
+        <menuitem 
+            id="training_library_course_category_course_mi" 
+            parent="training_library_course_mi" 
+            action="training_course_by_category_all_act" />
+
+        <menuitem 
+            id="training_offer_mi" 
+            parent="training_library_mi" 
+            name="Offers" />
+        <menuitem 
+            id="training_offer_open_mi" 
+            parent="training_offer_mi" 
+            action="training_offer_open_act" />
+        <menuitem 
+            id="training_offer_new_mi" 
+            parent="training_offer_mi" 
+            action="training_offer_new_act" />
+
+        <menuitem
+            id="training_catalog_mi"
+            parent="training_mi"
+            name="Catalogs" />
+        <menuitem 
+            id="training_offer_catalog_all_mi" 
+            parent="training_catalog_mi" 
+            action="training_catalog_all_act" />
+        <menuitem 
+            id="training_offer_catalog_old_mi" 
+            parent="training_offer_catalog_all_mi" 
+            action="training_catalog_old_act" /> 
+        <menuitem 
+            id="training_offer_catalog_current_mi" 
+            parent="training_offer_catalog_all_mi" 
+            action="training_catalog_current_act" />
+        <menuitem 
+            id="training_offer_catalog_new_mi" 
+            parent="training_offer_catalog_all_mi" 
+            action="training_catalog_new_act" />
+
+        <menuitem 
+            id="training_planning_mi" 
+            parent="training_mi" 
+            name="Plannings" 
+            sequence="30" />
+
+        <menuitem 
+            id="training_planning_session_all_mi" 
+            parent="training_planning_mi" 
+            action="training_session_all_act" />
+        <menuitem 
+            id="training_planning_session_draft_mi" 
+            parent="training_planning_session_all_mi" 
+            action="training_session_draft_act" />
+        <menuitem 
+            id="training_planning_session_resume_mi" 
+            parent="training_planning_session_all_mi" 
+            action="training_session_resume_act" 
+            sequence="1" />
+        <menuitem 
+            id="training_planning_session_validate_mi" 
+            parent="training_planning_session_all_mi" 
+            action="training_session_validate_act" />
+        <menuitem 
+            id="training_planning_session_duplicate_mi" 
+            parent="training_planning_session_all_mi" 
+            name="Sessions to Deduplicate" />
+        <menuitem 
+            id="training_planning_session_new_mi" 
+            parent="training_planning_session_all_mi" 
+            action="training_session_new_act" />
+
+        <menuitem 
+            id="training_planning_seances_mi" 
+            parent="training_planning_mi" 
+            action="training_seance_all_act" />
+        <menuitem 
+            id="training_planning_seances_resume_mi" 
+            parent="training_planning_seances_mi" 
+            action="training_seance_resume_act" 
+            sequence="1"
+            />
+        <menuitem 
+            id="training_planning_seances_planning_mi" 
+            parent="training_planning_seances_mi" 
+            action="training_seance_calendar_all_act" />
+        <menuitem 
+            id="training_planning_seances_confirm_mi" 
+            parent="training_planning_seances_mi" 
+            action="training_seance_to_confirm_act" />
+        <menuitem 
+            id="training_planning_seances_deduplicate_mi" 
+            parent="training_planning_seances_mi" 
+            name="Seances to Deduplicate" />
+        <menuitem 
+            id="training_planning_seances_new_mi" 
+            parent="training_planning_seances_mi" 
+            action="training_seance_new_act" />
+
+        <menuitem 
+            id="training_subscription_management_mi" 
+            parent="training_mi" 
+            name="Subscriptions" 
+            sequence="50" />
+        <menuitem 
+            id="training_subscription_management_subscription_mi" 
+            parent="training_subscription_management_mi" 
+            action="training_subscription_all_act" />
+        <menuitem 
+            id="training_subscription_management_subscription_validate_mi" 
+            parent="training_subscription_management_subscription_mi" 
+            action="training_subscription_to_validate_act" />
+
+        <menuitem 
+            id="training_subscription_management_subscription_problematic_mi" 
+            parent="training_subscription_management_mi" 
+            action="training_subscription_problematic_act" />
+
+        <menuitem 
+            id="training_subscription_management_subscription_invoice_mi" 
+            parent="training_subscription_management_subscription_mi" 
+            action="training_subscription_to_invoice_act" />
+
+        <menuitem 
+            id="training_subscription_management_subscription_new_mi" 
+            parent="training_subscription_management_mi" 
+            action="training_subscription_new_act" />
+
+        <menuitem 
+            id="training_subscription_management_subscription_line_all_mi"
+            parent="training_subscription_management_mi"
+            action="training_subscription_line_all_act" />
+
+        <menuitem 
+            id="training_subscription_management_subscription_line_uninvoiced_mi"
+            parent="training_subscription_management_subscription_line_all_mi"
+            action="training_subscription_line_uninvoiced_act" />
+
+    </data>
+
+    <data>
+        <record model="ir.ui.view" id="view_training_participation_form">
+            <field name="name">training.participation.form</field>
+            <field name="model">training.participation</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Participation">
+                    <separator string="Participation Description" colspan="4"/>
+                    <field name="seance_id" />
+                    <field name="date" />
+                    <field name="subscription_id" />
+                    <separator string="Contact Information" colspan="4" />
+                    <field name="contact_id" />
+                    <field name="partner_id" />
+                    <field name="present" />
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_training_participation_tree">
+            <field name="name">training.participation.tree</field>
+            <field name="model">training.participation</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Participation" editable="bottom">
+                    <field name="partner_id" />
+                    <field name="contact_id" />
+                    <field name="seance_id" />
+                    <field name="date" />
+                    <field name="present" />
+                    <field name="subscription_id" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_training_participation_all">
+            <field name="name">Participations of the Participants</field>
+            <field name="res_model">training.participation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Participation" id="training_participation_mi" parent="training_mi"
+            sequence="50" />
+        <menuitem 
+            id="training_participation_all_mi"
+            action="action_training_participation_all"
+            parent="training_participation_mi" />
+
+        <record model="ir.ui.view" id="view_training_participation_skateholder_form">
+            <field name="name">training.participation.skateholder.form</field>
+            <field name="model">training.participation.skateholder</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Participation">
+                    <separator string="Participation Description" colspan="4"/>
+                    <field name="skateholder_id" />
+                    <field name="partner_id" />
+                    <separator string="Seance Information" colspan="4" />
+                    <field name="seance_id" />
+                    <field name="course_id" />
+                    <field name="date" />
+                    <field name="evaluation" />
+                    <separator string="Payment Mode" colspan="4" />
+                    <field name="payment_mode" />
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_training_participation_skateholder_tree">
+            <field name="name">training.participation.skateholder.tree</field>
+            <field name="model">training.participation.skateholder</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Participation">
+                    <field name="skateholder_id" />
+                    <field name="partner_id" />
+                    <field name="seance_id" />
+                    <field name="course_id" />
+                    <field name="date" />
+                    <field name="evaluation" />
+                    <field name="payment_mode" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_training_participation_skateholder_all">
+            <field name="name">Evaluation Form</field>
+            <field name="res_model">training.participation.skateholder</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem action="action_training_participation_skateholder_all"
+            id="training_participation_skateholder_mi"
+            parent="training_participation_mi" />
+    </data>
+</openerp>

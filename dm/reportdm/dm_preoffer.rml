@@ -41,7 +41,7 @@
           <para style="P3">Name : [[o.name]]</para>
           <para style="P3">Code : [[o.code]]</para>
           <para style="P3">Type : [[o.preoffer_type]]</para>
-          <para style="P3">Recommended Trademark : [[o.recommended_trademark and o.recommended_trademark.name]]</para>
+          <para style="P3">Recommended Trademark : [[o.recommended_trademark_id and o.recommended_trademark_id.name]]</para>
           <para style="P5">
             <font color="white"> </font>
           </para>
@@ -55,7 +55,7 @@
           <para style="P3">Fixed Date : [[o.fixed_date]]</para>
         </td>
         <td>
-          <para style="P4">Original Language: [[o.lang_orig and o.lang_orig.name]]</para>
+          <para style="P4">Original Language: [[o.lang_orig_id and o.lang_orig_id.name]]</para>
           <para style="P4">Copywriter : [[o.copywriter_id and o.copywriter_id.name]]</para>
           <para style="P4">Categories : [[ ','.join(map(lambda x:x['name'],o.category_ids)) ]]</para>
           <para style="P4">

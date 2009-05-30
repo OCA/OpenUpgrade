@@ -24,7 +24,7 @@
     "version" : "0.1",
     "author" : "Tiny",
     "category" : "Generic Modules/Human Resources",
-    "website" : "http://tinyerp.com/module_hr.html",
+    "website" : "http://www.openerp.com",
     "description": "Import iCal events (for eg, Outlook) to auto-complete timesheets.",
     "depends" : ["hr_timesheet"],
     "init_xml" : [],

@@ -82,7 +82,7 @@ class mrp_procurement(osv.osv):
         for procurement in self.browse(cr, uid, ids):
             res_id = procurement.move_id.id
             loc_id = procurement.location_id.id
-            newdate = DateTime.strptime(procurement.date_planned, '%Y-%m-%d') - DateTime.RelativeDateTime(days=procurement.product_id.product_tmpl_id.produce_delay or 0.0)
+            newdate = DateTime.strptime(procurement.date_planned, '%Y-%m-%d %H:%M:%S') - DateTime.RelativeDateTime(days=procurement.product_id.product_tmpl_id.produce_delay or 0.0)
             produce_id = self.pool.get('mrp.production').create(cr, uid, {
                 'origin': procurement.origin,
                 'product_id': procurement.product_id.id,

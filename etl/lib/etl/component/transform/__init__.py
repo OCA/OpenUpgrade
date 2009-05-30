@@ -21,15 +21,22 @@
 ##############################################################################
 
 """
-ETL Components:
-* diff
-* sort
-* logger_bloc
-* logger
+ To transform string data into particular type.
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+ GNU General Public License
 """
-import diff
-import sort
-import logger_bloc
-import logger
-import data_filter
-import data_map
+from diff import diff
+from sort import sort
+from merge import merge
+
+from logger_bloc import logger_bloc
+from logger import logger
+from data_filter import data_filter
+from data_map import map
+from join import join
+from schema_validator import schema_validator
+from unique import unique
+from subjob import subjob
+
+from data_exist import data_exist

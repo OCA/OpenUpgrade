@@ -23,7 +23,7 @@
         "name" : "Online Demo Setup Module",
         "version" : "1.0",
         "author" : "Tiny",
-        "website" : "http://tinyerp.com",
+        "website" : "http://www.openerp.com",
         "category" : "Vertical Modules/Parametrization",
         "description": """Module to set the configuration of the online demo of Tiny ERP.""",
         "depends" : ["base"],

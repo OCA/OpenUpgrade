@@ -21,23 +21,8 @@
 ##############################################################################
 
 from osv import osv, fields
-import tools
+import tools 
 
-# class library_editor_supplier(osv.osv):
-#   _name = "library.editor.supplier"
-#   _description = "Suppliers associated to an editor"
-#   _auto = False
-#   _columns = {
-#       'name': fields.many2one('res.partner', 'Editor', readonly= True),
-#       'supplier_ids' : fields.many2many('res.partner','editor_supplier_rel','editor_id','supplier_id', 'Suppliers',readonly= True),
-#   }
-#   def init(self, cr):
-#       cr.execute("""
-#           create or replace view library_editor_supplier as (
-#               select editor as id, editor as name from product_product group by editor
-#               )
-#           """)
-# library_editor_supplier()
 
 class library_editor_supplier(osv.osv):
     _name = "library.editor.supplier"

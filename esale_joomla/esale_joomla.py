@@ -35,6 +35,13 @@ from tools import config
 
 import urllib2
 
+class product_product(osv.osv):
+    _inherit = "product.product"
+    _columns = {
+        'exportable' : fields.boolean('Exportable')
+    }
+    
+product_product()
 
 class esale_joomla_web(osv.osv):
     _name = "esale_joomla.web"
@@ -309,7 +316,8 @@ class esale_joomla_order(osv.osv):
                 'partner_order_id': order.partner_invoice_id.id,
                 'partner_shipping_id': order.partner_shipping_id.id,
                 'pricelist_id': pricelist_id,
-                'order_line': order_lines
+                'order_line': order_lines,
+                'fiscal_position': order.partner_id.property_account_position.id
             })
             self.write(cr, uid, [order.id], {'state': 'done', 'order_id': order_id})
 #           wf_service = netsvc.LocalService("workflow")

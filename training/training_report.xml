@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <report
+            id="training_seance_booking_support"
+            model="training.seance"
+            name="training.seance.booking.support"
+            string="Support Booking"
+            rml="training/report/in_construction.rml"
+            header="False"
+            />
+         <report
+            id="training_seance_presence_report"
+            model="training.seance"
+            name="training.seance.presence"
+            string="Presence List"
+            rml="training/report/training_presence.rml"
+            header="True"
+            />
+        <report
+            id="training_seance_booking_classroom"
+            model="training.seance"
+            name="training.seance.booking.classroom"
+            string="Classroom Booking"
+            rml="training/report/in_construction.rml"
+            header="False"
+            />
+        <report
+            id="training_subscription_cancel_report"
+            model="training.subscription"
+            name="training.subscription.cancel"
+            string="Cancellation Letter"
+            rml="training/report/training_subscription_cancel.rml"
+            header="True"
+            />
+        <report
+            id="training_subscription_confirm_report"
+            model="training.subscription"
+            name="training.subscription.confirm"
+            string="Validation Letter"
+            rml="training/report/training_subscription_confirm.rml"
+            header="True"
+            />
+        <report
+            id="training_subscription_presence_certificate_report"
+            model="training.subscription"
+            name="training.subscription.presence.certificate"
+            string="Presence Certificate"
+            rml="training/report/training_presence_certificate.rml"
+            header="True"
+            />
+
+        <report
+            id="training_course_material_report"
+            model="training.course"
+            name="training.course.material.report"
+            string="Course Description"
+            rml="training/report/training_course.rml"
+            header="True" />
+        <report
+            id="training_course_financial_report"
+            model="training.course"
+            name="training.course.financial.report"
+            string="Financial Statistics"
+            rml="training/report/in_construction.rml" />
+
+        <report
+            id="training_dummy_support_delivery_report"
+            model="dummy.support.delivery"
+            name="dummy.support.delivery.report"
+            string="Support Delivery"
+            rml="training/report/delivery_support.rml" />
+
+        <report
+            id="training_seance_cancel_report"
+            model="training.seance"
+            name="training.seance.cancel.report"
+            string="Seance - Cancellation"
+            rml="training/report/training_seance_cancel.rml" />
+
+        <report
+            id="training_session_cancel_report"
+            model="training.session"
+            name="training.session.cancel.report"
+            string="Session - Cancellation"
+            rml="training/report/training_session_cancel.rml" />
+
+        <report
+            id="training_dummy_training_hiring_form_report"
+            model="dummy.support.delivery"
+            name="dummy.training.hiring.form.report"
+            string="Training Hiring Form"
+            rml="training/report/training_hiring_form.rml" />
+
+       <report
+            id="training_dummy_training_evaluation_skateholder_report"
+            model="dummy.support.delivery"
+            name="dummy.training.evaluation.skateholder.report"
+            string="Evaluation From SkateHolder"
+            rml="training/report/evaluation_from_skateholder.rml" />
+
+       <report
+            id="training_dummy_training_evaluation_participant_report"
+            model="dummy.support.delivery"
+            name="dummy.training.evaluation.participant.report"
+            string="Evaluation From Participant"
+            rml="training/report/evaluation_from_participant.rml" />
+
+    </data>
+</openerp>
+

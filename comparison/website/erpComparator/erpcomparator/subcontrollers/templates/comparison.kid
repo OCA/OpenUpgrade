@@ -7,7 +7,7 @@
     
 </head>
 <body>
-	<div id="bodybackground">
+	<div id="bodybackground" width="100%">
 		<div style="height: 46px; width: 890px; float: left;">
 			<div style="float:left;width:9;">
 				<img src="/static/images/whitebg.gif" alt="" width="9" height="46"/>
@@ -57,8 +57,8 @@
 				</tr>
 				<tr py:if="not selected_items">
 					<td py:for="label in titles">
-						<input py:if="label['load'] is True" id="${label['id']}" checked="true" type="checkbox" class="grid-record-selector">${label['name']}(${label['code']})</input>
-						<input py:if="label['load'] is False" id="${label['id']}" type="checkbox" class="grid-record-selector">${label['name']}(${label['code']})</input>
+						<input py:if="label['load'] is True" id="${label['id']}" checked="true" type="checkbox" class="grid-record-selector">${label['name']} (${label['code']})</input>
+						<input py:if="label['load'] is False" id="${label['id']}" type="checkbox" class="grid-record-selector">${label['name']} (${label['code']})</input>
 					</td>
 					<td>
 						<img src="/static/images/load.jpg" style="cursor: pointer" onclick="getRecords()"/>
@@ -67,8 +67,8 @@
 			</table>
 		</div>
     	
-	    <div style="padding: 4px; margin: auto; width: 840px;">
-			<span id="comparison_tree"/>
+	    <div style="padding: 4px; margin: auto; width:96%;" >
+			<span id="comparison_tree" width="100%"/>
 			<script type="text/javascript">
 	        	var comparison_tree = new TreeGrid('comparison_tree');
 	        	

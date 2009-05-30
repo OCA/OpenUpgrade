@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="view_project_contact_form">
+            <field name="name">Project Contact Form Inherited</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page/field[@name='contact_id']" position="replace">
+                    <field name="contact_id2" domain="[('partner_id','=',partner_id)]" />
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</openerp>

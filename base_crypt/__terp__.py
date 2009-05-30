@@ -23,7 +23,7 @@
     "name" : "Base",
     "version" : "1.0",
     "author" : "FS3 , Review Tiny",
-    "website" : "http://tinyerp.com",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Base",
     "description": "Module for password encryption.",
     "depends" : ["base"],

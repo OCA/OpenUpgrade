@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<terp>
+<data>
+<!--	<record model="ir.ui.view" id="view_partner_thunderbird_form">-->
+<!--		<field name="name">tinythunderbird.partner.form</field>-->
+<!--		<field name="model">tinythunderbird.partner</field>-->
+<!--		<field name="type">form</field>-->
+<!--		<field name="arch" type="xml">-->
+<!--			<form string="Thunderbird Mail Interface">-->
+<!--			  <notebook>-->
+<!--				  <page string="Thunderbird Interface">-->
+<!--						<field name="sender" select="1" colspan="4" />-->
+<!---->
+<!--						<separator string="Receiver" colspan="4"/>-->
+<!--						<field name="receiver" colspan="4" nolabel="1" />-->
+<!---->
+<!--						<separator string="Copy To" colspan="4" />-->
+<!--						<field name="copy_to" colspan="4" nolabel="1" />-->
+<!---->
+<!--						<field name="title" select="1" colspan="4" />-->
+<!--						<field name="res_user_id" />-->
+<!--						<field name="date" select="1" />-->
+<!--						<field name="reference" colspan="4" />-->
+<!---->
+<!--						<separator string="Description" colspan="4"/>-->
+<!--						<field name="description" colspan="4" nolabel="1" />-->
+<!--						<separator string="Attached File(s)" colspan="4" />-->
+<!--						<field name="attachments" nolabel="1" colspan="4"/>-->
+<!--					</page>-->
+<!--			  </notebook>-->
+<!--			</form>-->
+<!--		</field>-->
+<!--	</record>-->
+<!---->
+<!--	<record model="ir.ui.view" id="view_partner_thunderbird_tree">-->
+<!--		<field name="name">tinythunderbird.partner.tree</field>-->
+<!--		<field name="model">tinythunderbird.partner</field>-->
+<!--		<field name="type">tree</field>-->
+<!--		<field name="arch" type="xml">-->
+<!--			<tree string="Thunderbird Mail Contact">-->
+<!--				<field name="sender" />-->
+<!--				<field name="title"  />-->
+<!--				<field name="date"  />-->
+<!--			</tree>-->
+<!--		</field>-->
+<!--	</record>-->
+<!---->
+<!--	<record model="ir.actions.act_window" id="action_tinythunderbird_form">-->
+<!--		<field name="name">tinythunderbird.partner.form</field>-->
+<!--		<field name="type">ir.actions.act_window</field>-->
+<!--		<field name="res_model">tinythunderbird.partner</field>-->
+<!--		<field name="view_mode">form,tree</field>-->
+<!--		<field name="view_type">form</field>-->
+<!--		<field name="view_id" ref="view_partner_thunderbird_form"/>-->
+<!--	</record>-->
+
+<!--	<menuitem name="Partners/Thunderbird Contact" id="menu_action_tinythunderbird_form" action = "action_tinythunderbird_form" />-->
+<!---->
+<!--	<act_window name="Thunderbird mails"-->
+<!--                domain="[('reference', '=','res.partner,%d'%active_id )]"-->
+<!--                res_model="tinythunderbird.partner"-->
+<!--                src_model="res.partner"-->
+<!--                id="tinythunderbird1"/>-->
+<!---->
+<!--        <act_window name="Thunderbird mails"-->
+<!--                domain="[('reference', '=','sale.order,%d'%active_id )]"-->
+<!--                res_model="tinythunderbird.partner"-->
+<!--                src_model="sale.order"-->
+<!--                id="tinythunderbird2"/>-->
+<!---->
+<!--        <act_window name="Thunderbird mails"-->
+<!--                domain="[('reference', '=','product.product,%d'%active_id )]"-->
+<!--                res_model="tinythunderbird.partner"-->
+<!--                src_model="product.product"-->
+<!--                id="tinythunderbird3"/>-->
+<!---->
+<!--        <act_window name="Thunderbird mails"-->
+<!--                domain="[('reference', '=','res.partner.address,%d'%active_id )]"-->
+<!--                res_model="tinythunderbird.partner"-->
+<!--                src_model="res.partner.address"-->
+<!--                id="tinythunderbird4"/>-->
+<!---->
+<!--				<act_window name="Thunderbird mails"-->
+<!--                domain="[('reference', '=','account.invoice,%d'%active_id )]"-->
+<!--                res_model="tinythunderbird.partner"-->
+<!--                src_model="account.invoice"-->
+<!--                id="tinythunderbird5"/>-->
+<!---->
+<!--        <act_window name="Thunderbird mails"-->
+<!--                domain="[('reference', '=','crm.case,%d'%active_id )]"-->
+<!--                res_model="tinythunderbird.partner"-->
+<!--                src_model="crm.case"-->
+<!--                id="tinythunderbird6"/>-->
+<!---->
+<!--				<act_window name="Thunderbird mails"-->
+<!--                domain="[('reference', '=','project.project,%d'%active_id )]"-->
+<!--                res_model="tinythunderbird.partner"-->
+<!--                src_model="project.project"-->
+<!--                id="tinythunderbird7"/>-->
+<!---->
+<!--        <act_window name="Thunderbird mails"-->
+<!--                domain="[('reference', '=','project.task,%d'%active_id )]"-->
+<!--                res_model="tinythunderbird.partner"-->
+<!--                src_model="project.task"-->
+<!--                id="tinythunderbird8"/>-->
+<!---->
+<!--       <act_window name="Thunderbird mails"-->
+<!--                domain="[('reference', '=','account.analytic.line,%d'%active_id )]"-->
+<!--                res_model="tinythunderbird.partner"-->
+<!--                src_model="account.analytic.line"-->
+<!--                id="tinythunderbird9"/>-->
+</data>
+</terp>

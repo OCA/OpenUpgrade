@@ -20,33 +20,46 @@
 #
 ##############################################################################
 """
-   This is an ETL Component that use to display log detail in streamline.
+ To display log detail in streamline.
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+ GNU General Public License.
 """
 
 from etl.component import component
 import sys
-class logger(component.component):
+class logger(component):
     """
         This is an ETL Component that use to display log detail in streamline.
- 
-	    Type: Data Component
-		Computing Performance: Streamline
-		Input Flows: 0-x
-		* .* : the main data flow with input data
-		Output Flows: 0-y
-		* .* : return the main flow 
-    """    
-    def __init__(self, name, output=sys.stdout):        
+
+	    Type                   : Data Component.
+		Computing Performance  : Streamline.
+		Input Flows            : 0-x.
+		* .*                   : The main data flow with input data.
+		Output Flows           : 0-y.
+		* .*                   : Returns the main flow.
+    """
+    def __init__(self, output=sys.stdout, name='component.transfer.logger'):
+        super(logger, self).__init__(name=name)
+        self._type = 'component.transfer.logger'
         self.output = output
-        self.is_end = 'main'
-        super(logger, self).__init__('(etl.component.output.logger) '+name)
+
+    def __getstate__(self):
+        res = super(logger, self).__getstate__()
+        return res
+
+    def __setstate__(self, state):
+        super(logger, self).__setstate__(state)
+        self.__dict__ = state
+
+    def __copy__(self):
+        res = logger(self.output, self.name)
+        return res
 
     def process(self):
-        #TODO : proper handle exception
         for channel,trans in self.input_get().items():
             for iterator in trans:
-                for d in iterator:                    
-                    self.output.write('\tLog '+self.name+str(d)+'\n')
+                for d in iterator:
+                    self.output.write('Log ' + self.name + ' ' + str(d) + '\n')
                     yield d, 'main'
-        super(logger, self).process()
 

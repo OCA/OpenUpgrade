@@ -1,0 +1,97 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* account_reverse
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-03-31 19:00:02+0000\n"
+"PO-Revision-Date: 2009-04-01 01:19+0100\n"
+"Last-Translator: Évitrum <sistemas@evitrum.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: account_reverse
+#: wizard_field:account.move.reverse,init,repeat_param:0
+msgid "Repeat params"
+msgstr "Repetir parámetros"
+
+#. module: account_reverse
+#: wizard_field:account.move.reverse,init,reconcile:0
+msgid "Reconcile"
+msgstr "Reconciliar"
+
+#. module: account_reverse
+#: wizard_view:account.move.reverse,init:0
+msgid "Select period and date"
+msgstr "Seleccionar periodo y fecha"
+
+#. module: account_reverse
+#: model:ir.module.module,description:account_reverse.module_meta_information
+msgid " This module adds a wizard to help reversing moves. This can be used to correct mistakes where it's not possible to cancel moves or even for creating close/open moves for periods or fiscalyears. "
+msgstr " Este módulo añade un asistente que ayuda a revertir movimientos. Puede ser usado para corregir probleas donde no es posible cancelar movimientos o incluso para crear movimientos de apertura/cierre para periodos o años fiscales. "
+
+#. module: account_reverse
+#: help:account.move.reverse,init,date:0
+msgid "Date for the move."
+msgstr "Fecha para el movimiento"
+
+#. module: account_reverse
+#: wizard_field:account.move.reverse,init,journal_id:0
+msgid "Journal"
+msgstr "Diario"
+
+#. module: account_reverse
+#: help:account.move.reverse,init,reconcile:0
+msgid "Reconcile Moves?"
+msgstr "¿Reconciliar movimientos?"
+
+#. module: account_reverse
+#: help:account.move.reverse,init,period_id:0
+msgid "Period for the reversion move"
+msgstr "Periodo para movimiento de reversión"
+
+#. module: account_reverse
+#: wizard_field:account.move.reverse,init,date:0
+msgid "Date"
+msgstr "Fecha"
+
+#. module: account_reverse
+#: model:ir.module.module,shortdesc:account_reverse.module_meta_information
+msgid "Account Move Reverse"
+msgstr "Cuenta movimiento revertido"
+
+#. module: account_reverse
+#: help:account.move.reverse,init,journal_id:0
+msgid "Journal for the reversion move"
+msgstr "Diario para el movimiento de reversión"
+
+#. module: account_reverse
+#: wizard_button:account.move.reverse,init,end:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: account_reverse
+#: wizard_field:account.move.reverse,init,period_id:0
+msgid "Move Period"
+msgstr "Periodo del movimiento"
+
+#. module: account_reverse
+#: model:ir.actions.wizard,name:account_reverse.account_move_reverse
+msgid "Reverse and reconcile move"
+msgstr "Revertir y reconciliar movimiento"
+
+#. module: account_reverse
+#: help:account.move.reverse,init,repeat_param:0
+msgid "Reverse each move on the same date and period as the original move"
+msgstr "Revertir cada movimiento en la misma fecha y periodo que el original"
+
+#. module: account_reverse
+#: wizard_button:account.move.reverse,init,reverse:0
+msgid "Reverse"
+msgstr "Revertir"
+

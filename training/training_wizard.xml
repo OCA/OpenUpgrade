@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<openerp>
+    <data>
+        <!--
+        <wizard 
+            string="Invoice" 
+            model="training.subscription" 
+            name="wizard_not_implemented" 
+            id="wizard_training_subscription_invoice" 
+            />
+        -->
+        <wizard
+            id="wizard_training_subscription_line_invoice"
+            keyword="client_action_multi"
+            model="training.subscription.line"
+            name="training.subscription.line.make_invoice"
+            multi="True"
+            string="Make invoices"/>
+
+    </data>
+</openerp>

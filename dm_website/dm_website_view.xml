@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+	
+	<!--
+     =======================================================
+     CAMPAIGN EXTENSIONS
+     =======================================================
+     -->
+     <record id="view_campaign_form_inherit" model="ir.ui.view">
+         <field name="name">dm.campaign.inherit</field>
+         <field name="model">dm.campaign</field>
+         <field name="type">form</field>
+         <field name="inherit_id" ref="dm.view_campaign_form"/>
+         <field name="arch" type="xml">
+             <field name="offer_id" select="1" position="after">
+                 <field name="website"/>
+             </field>
+         </field>
+     </record>
+     
+    </data>
+</openerp>
+    

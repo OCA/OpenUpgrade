@@ -25,16 +25,25 @@
     'name': 'Base module quality',
     'version': '1.0',
     'category': 'Tiny Specific Modules/Base module quality',
-    'description': """This module's aim is to check the quality of other modules.
+    'description': """
+This module's aim is to check the quality of other modules.
 
-    It defines a wizard on the list of modules in OpenERP, which allow you to evaluate them on different criteria such as: the respect of OpenERP coding standards, the speed efficiency...
+It defines a wizard on the list of modules in OpenERP, which allow you to
+evaluate them on different criteria such as: the respect of OpenERP coding
+standards, the speed efficiency...
 
-    This module also provides generic framework to define your own quality test. For further info, coders may take a look into base_module_quality\README.txt
-""",
+This module also provides generic framework to define your own quality test.
+For further info, coders may take a look into base_module_quality\README.txt
+
+WARNING: This module can not work as a ZIP file, you must unzip it before
+using it, otherwise it may crash.
+    """,
     'author': 'Tiny',
+    'website': 'http://www.openerp.com',
     'depends': ['base'],
     'init_xml': [],
     'update_xml': ['base_module_quality_wizard.xml', 'security/ir.model.access.csv'],
+    'demo_xml': [],
     'installable': True,
     'active': False,
     'certificate': '0175119475677',

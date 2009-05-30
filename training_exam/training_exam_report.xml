@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <report
+            id="training_planned_exam_cancel_report"
+            model="training.planned_exam"
+            name="training.planned_exam.cancel"
+            string="Training Cancellation"
+            rml="training_exam/report/training_exam_cancel.rml" />
+
+        <report
+            id="training_planned_exam_confirm_report"
+            model="training.planned_exam"
+            name="training.planned_exam.report"
+            string="Training Confirmation"
+            rml="training_exam/report/training_exam_confirm.rml" />
+
+    </data>
+</openerp>
+

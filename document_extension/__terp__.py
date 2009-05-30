@@ -26,7 +26,7 @@
     'version': '1.0',
     'category': 'Generic Modules/Others',
     'description': """This is an extension module of document management system with
-    * Implementation of Versioning and lock system
+    * Implementation of Versioning and lock system
 """,
     'author': 'Tiny',
     'website': 'http://www.openerp.com',
@@ -36,6 +36,6 @@
     'demo_xml': [],
     'installable': True,
     'active': False,
-    'certificate': '0123638762444717',
+    'certificate': '',
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

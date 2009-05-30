@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!--
+(c) 2008 Sednacom <http://www.sednacom.fr>
+
+ authors :
+  - Brice < brice@sednacom.fr >
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+-->
+<openerp>
+<data>
+
+    <record model="ir.actions.act_window" id="open_module_tree_sednacom">
+            <field name="name">Modules by Sednacom</field>
+            <field name="res_model">ir.module.module</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('author','=','Sednacom')]</field>
+    </record>
+    <menuitem name="Administration/Modules Management/Modules by Sednacom" action="open_module_tree_sednacom" id="menu_module_tree_sednacom"/>
+
+    <record model="ir.ui.view" id="base.shortcut_tree">
+        <field name="name">ir.ui.view_sc</field>
+        <field name="model">ir.ui.view_sc</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Shortcuts" editable="bottom">
+                <field name="sequence"/>
+                <field name="name"/>
+                <field name="res_id"/>
+                <field name="resource"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_ir_ui_view_sc_tree">
+        <field name="name">Shortcuts</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ir.ui.view_sc</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="base.shortcut_tree"/>
+        <field name="domain">[('user_id','=',uid),]</field>
+    </record>
+    <menuitem name="Tools/Shortcuts" action="action_ir_ui_view_sc_tree" id="menu_sednacom_shortcuts" />
+
+</data>
+</openerp>

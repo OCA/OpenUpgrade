@@ -15,6 +15,9 @@ class crm_case(osv.osv):
         'picking_id': fields.many2one('stock.picking', 'Repair Picking', required = False, select = True),
         'incoming_picking_id': fields.many2one('stock.picking', 'Incoming Picking', required = False, select = 1),
         'outgoing_picking_id': fields.many2one('stock.picking', 'Outgoing Picking', required = False, select = True),
+        'related_picking_state': fields.related('picking_id', 'state', type="char", string="Related Picking State", readonly=True),
+        'related_incoming_picking_state': fields.related('incoming_picking_id', 'state', type="char", string="Related Picking State", readonly=True),
+        'related_outgoing_picking_state': fields.related('outgoing_picking_id', 'state', type="char", string="Related Picking State", readonly=True),
         'in_supplier_picking_id': fields.many2one('stock.picking', 'Return To Supplier Picking', required = False, select = True),
         'out_supplier_picking_id': fields.many2one('stock.picking', 'Return From Supplier Picking', required = False, select = True),
         'prodlot_id': fields.many2one('stock.production.lot', 'Serial Number', required = False, select = 1),
@@ -42,7 +45,7 @@ class crm_case(osv.osv):
             return result
 
         #TODO: will that work with a product return for repair?
-        cr.execute("select stock_location.id from stock_location left join stock_move on location_dest_id = stock_location.id where stock_move.prodlot_id = %s and fleet_type = 'sub_fleet' order by stock_move.date ASC LIMIT 1 " % prodlot_id)
+        cr.execute("select stock_location.id from stock_location left join stock_move on location_dest_id = stock_location.id where stock_move.prodlot_id = %s and fleet_type = 'sub_fleet' order by stock_move.date_planned ASC LIMIT 1 " % prodlot_id)
         
         results = cr.fetchone()
 

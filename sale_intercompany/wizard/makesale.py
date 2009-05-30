@@ -54,7 +54,9 @@ class make_sale(wizard.interface):
                 ['invoice', 'delivery', 'contact'])
         default_pricelist = partner_obj.browse(cr, uid, partner_id,
                     context).property_product_pricelist.id
-
+        fpos = partner_obj.browse(cr, uid, partner_id,
+                    context).property_account_position
+        fpos_id = fpos and fpos.id or False
 
         for purchase in purchase_obj.browse(cr, uid, data['ids']):
             vals = {
@@ -68,6 +70,7 @@ class make_sale(wizard.interface):
                 'partner_shipping_id': partner_addr['delivery'],
                 'order_policy': 'manual',
                 'date_order': now(),
+                'fiscal_position': fpos_id
             }
             new_id = sale_obj.create(cr, uid, vals)
             fpos = user.company_id.partner_id.property_account_position and user.company_id.partner_id.property_account_position.id or False

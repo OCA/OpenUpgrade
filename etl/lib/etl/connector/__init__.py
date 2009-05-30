@@ -21,12 +21,18 @@
 ##############################################################################
 
 """
-ETL Connectors:
-* File Access
-* DB Connection
-* Open Object Interfaces
+
+ Use to provide connection with any resources like localfile, database, openerp server etc..
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved.
+ GNU General Public License.
 """
-import connector
-import file_connector
-import sql_connector
-import openobject_connector
+from connector import connector
+from localfile import localfile
+from sql_connector import sql_connector
+from openobject_connector import openobject_connector
+from facebook_connector import facebook_connector
+from sugarcrm_connector import sugarcrm_connector
+from xmlrpc_connector import xmlrpc_connector
+from gcalendar_connector import gcalendar_connector
+from gdoc_connector import gdoc_connector

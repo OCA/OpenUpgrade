@@ -18,33 +18,33 @@
 		}
 		
 		function view_erp_detail(id, key, parent) {
-		 if(key) {
-		 	var table = getElement('checkboxtext');
-		 	var tr = table.rows[0];
-		 	var td = MochiKit.DOM.getElementsByTagAndClassName('td', null, tr)[0];
-		 	td.style.color = "#990033";
-		 	table.rows[1].style.display = '';
-		 	
-		 }
-		 else {
-		    var p_id = parent.id;
-			var ids = p_id.split(',');
-			for(i in ids)
-			{
-				if(id == ids[i]) {
+			 if(key) {
+			 	var table = getElement('checkboxtext');
+			 	var tr = table.rows[0];
+			 	var td = MochiKit.DOM.getElementsByTagAndClassName('td', null, tr)[0];
+			 	td.style.color = "#990033";
+			 	table.rows[1].style.display = '';
+			 	
+			 }
+			 
+			 else {
+				    var p_id = parent.id;
+					var ids = p_id.split(',');
 					
-					getElement(ids[i]).style.display='';
-					var elem = MochiKit.DOM.getElementsByTagAndClassName('td', null, parent)[i];
-					elem.style.color = "#990033";
-				}
-				else {
-					getElement(ids[i]).style.display='none';
-					var elem = MochiKit.DOM.getElementsByTagAndClassName('td', null, parent)[i]
-					elem.style.color = "#021677";
-				}
-			}
-		 }
-					
+					for(i in ids)
+					{
+						if(id == ids[i]) {
+							getElement(ids[i]).style.display='';
+							var elem = MochiKit.DOM.getElementsByTagAndClassName('td', null, parent)[i];
+							elem.style.color = "#990033";
+						}
+						else {
+							getElement(ids[i]).style.display='none';
+							var elem = MochiKit.DOM.getElementsByTagAndClassName('td', null, parent)[i]
+							elem.style.color = "#021677";
+						}
+					}
+			 	}		
 		}
 	</script>
     
@@ -95,8 +95,8 @@
 						id=str(res[i]['id'])
 					else:
 						id=id+','+str(res[i]['id'])
-						
 			?>
+			
 			<tr id="${id}" width="100%" class="toolbar">
 				<td py:for="r in res" id="'${r['id']}'" onclick="view_erp_detail(${r['id']},false,this.parentNode)" align="center" style="color: #021677; border: 1px solid gray; padding: 2px; white-space:nowrap; font-family: Verdana, Geneva, sans-serif; float: center; width: fixed; cursor: pointer; font-size: 12px;"> 
 					<b>
@@ -107,7 +107,8 @@
 			<tr py:for="r in res" id="${r['id']}" style="display:none;">
 				<td colspan="${len(res)}">
 					<div id="${r['name']}" style="color: #252a28; padding-left: 5px; overflow-y: hidden; overflow-x: auto; width: 830px;">
-						<pre style="white-space: default;">${r['note'] or 'No Description...'}</pre>
+							<pre py:if="r['note']" py:content="XML(r['note'])">content</pre>
+							<pre py:if="not r['note']">No Description...</pre>
 					</div>
 				</td>
 			</tr>

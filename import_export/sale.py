@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
+#    OpenERP, Open Source Management Solution	
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -25,7 +25,7 @@ from osv import fields, osv
 
 class sale_order_line(osv.osv):
     _inherit = "sale.order.line"
-
+ 
     def invoice_line_create(self, cr, uid, ids, context={}):
         def _get_line_qty(line):
             if (line.order_id.invoice_quantity=='order') or not line.procurement_id:
@@ -69,8 +69,6 @@ class sale_order_line(osv.osv):
 
                 uosqty = _get_line_qty(line)
                 uos_id = (line.product_uos and line.product_uos.id) or False
-                fpos = line.order_id.fiscal_position or False
-                a = self.pool.get('account.fiscal.position').map_account(cr, uid, fpos, a)
                 inv_id = self.pool.get('account.invoice.line').create(cr, uid, {
                     'name': line.name,
                     'account_id': a,

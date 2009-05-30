@@ -33,44 +33,30 @@ class sale_order_line(osv.osv):
         for line in self.browse(cr, uid, ids):
             res[line.id] = 0
             if line.product_id:
-                res[line.id] = round((line.price_unit*line.product_uos_qty*(100.0-line.discount)/100.0) -(line.product_id.standard_price*line.product_uos_qty),2)
-                print res
+                if line.purchase_price:
+                    res[line.id] = round((line.price_unit*line.product_uos_qty*(100.0-line.discount)/100.0) -(line.purchase_price*line.product_uos_qty),2)
+                else:
+                    res[line.id] = round((line.price_unit*line.product_uos_qty*(100.0-line.discount)/100.0) -(line.product_id.standard_price*line.product_uos_qty),2)
         return res
 
     _columns = {
-        'margin': fields.function(_product_margin, method=True, string='Margin'),
+        'margin': fields.function(_product_margin, method=True, string='Margin', store=True),
+        'purchase_price': fields.float('Cost Price', digits=(16,2))
     }
 sale_order_line()
 
 class sale_order(osv.osv):
-    _name = "sale.order"
     _inherit = "sale.order"
-
     def _product_margin(self, cr, uid, ids, field_name, arg, context):
-        # need to check with new requirement
-        id_set = ",".join(map(str, ids))
-        cr.execute("""
-            SELECT
-                s.id,
-        COALESCE(SUM((l.price_unit*l.product_uos_qty*(100-l.discount)/100.0)- (t.standard_price * l.product_uos_qty))
-         - CASE
-         WHEN i.amount_untaxed IS NULL THEN 0
-         ELSE i.amount_untaxed END) ::decimal(16,2) AS amount
-             FROM
-                sale_order s
-            LEFT OUTER JOIN sale_order_line l ON (s.id=l.order_id)
-            LEFT JOIN product_product p ON (p.id=l.product_id)
-            LEFT JOIN product_template t ON (t.id=p.product_tmpl_id)
-            LEFT JOIN stock_picking sp on (s.id = sp.sale_id)
-            LEFT JOIN picking_invoice_rel r on (sp.id = r.picking_id)
-            LEFT JOIN account_invoice i on (i.id = r.invoice_id)
-            WHERE
-                s.id IN ("""+id_set+""") GROUP BY s.id,i.amount_untaxed """)
-        res = dict(cr.fetchall())
-        return res
+        result = {}
+        for sale in self.browse(cr, uid, ids, context=context):
+            result[sale.id] = 0.0
+            for line in sale.order_line:
+                result[sale.id] += line.margin or 0.0
+        return result
 
     _columns = {
-        'margin': fields.function(_product_margin, method=True, string='Margin'),
+        'margin': fields.function(_product_margin, method=True, string='Margin', store=True),
     }
 sale_order()
 

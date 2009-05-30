@@ -20,35 +20,50 @@
 #
 ##############################################################################
 """
-This is an ETL Component that use to display log detail in end of process.
+ To display log detail in end of process.
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+ GNU General Public License.
 """
 
 from etl.component import component
 import sys
-class logger_bloc(component.component):
+class logger_bloc(component):
     """
-        This is an ETL Component that use to display log detail in end of process.
-       
-	    Type: Data Component
-		Computing Performance: Bloc
-		Input Flows: 0-x
-		* .* : the main data flow with input data
-		Output Flows: 0-y
-		* .* : return the main flow 
-    """    
-    def __init__(self, name, output=sys.stdout):
-        self.name = name
+        This is an ETL Component that displays log detail at the end of process.
+
+	    Type                   : Data Component.
+		Computing Performance  : Bloc.
+		Input Flows            : 0-x.
+		* .*                   : The main data flow with input data.
+		Output Flows           : 0-y.
+		* .*                   : Returns the main flow.
+    """
+    def __init__(self, output=sys.stdout, name='component.output.logger_bloc'):
+        super(logger_bloc, self).__init__(name=name)
+        self._type = 'component.transfer.logger_bloc'
         self.output = output
-        self.is_end = 'main'
-        super(logger_bloc, self).__init__('(etl.component.output.logger_bloc) '+name)
+
+    def __copy__(self):
+        res = logger_bloc(self.output, self.name)
+        return res
+
+    def __getstate__(self):
+        res = super(logger_bloc, self).__getstate__()
+        res.update({'output':self.output})
+        return res
+
+    def __setstate__(self, state):
+        super(logger_bloc, self).__setstate__(state)
+        self.__dict__ = state
 
     def process(self):
-        #TODO : proper handle exception
-        datas=[]
-        for channel,trans in self.input_get().items():
+        datas = []
+        for channel, trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:
                     datas.append(d)
         for d in datas:
-            self.output.write('\tBloc Log '+self.name+str(d)+'\n')
+            self.output.write('\tBloc Log ' + self.name + str(d) + '\n')
             yield d, 'main'
+

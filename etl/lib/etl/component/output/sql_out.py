@@ -20,53 +20,85 @@
 #
 ##############################################################################
 """
-This is an ETL Component that use to write data into sql table.
+ To write data into SQL table.
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+ GNU General Public License.
+
 """
 
 from etl.component import component
 import datetime
 
-class sql_out(component.component):
+class sql_out(component):
     """
-        This is an ETL Component that use to write data into sql table.
+        This is an ETL Component that writes data in SQL table.
 
-        Type: Data Component
-        Computing Performance: Streamline
-        Input Flows: 0-x
-        * .* : the main data flow with input data
-        Output Flows: 0-1
-        * main : return all data
-    """   
+        Type                   : Data Component.
+        Computing Performance  : Streamline.
+        Input Flows            : 0-x.
+        * .*                   : The main data flow with input data.
+        Output Flows           : 0-1.
+        * main                 : Return all data.
+    """
 
-    def __init__(self,name,sqlconnector,sqltable,transformer=None,row_limit=0):
-        super(sql_out, self).__init__('(etl.component.output.sql_out) '+name,transformer=transformer)      
-          
-        self.sqlconnector = sqlconnector 
-        self.sqltable=sqltable    
-        self.row_limit=row_limit 
-        self.row_count=0                                
-         
+    def __init__(self, sqlconnector, sqltable, name='component.output.sql_out', transformer=None, row_limit=0):
 
-    def action_end(self,key,singal_data={},data={}):        
-        super(sql_out, self).action_end(key,singal_data,data)        
-        if self.sqlconnector:    
-             self.sqlconnector.close()        
+        """
+        Required  Parameters
+        sql_connector  : SQL connector.
+        sqltable       : The name of the SQL table.
 
-    def process(self):  
-        #TODO : proper handle exception. not use generic Exception class      
-        datas = []        
-        for channel,trans in self.input_get().items():
+        Extra Parameters
+        name           : Name of Component.
+        transformer    : Transformer object to transform string data into   particular object.
+        row_limit      : Limited records are sent to destination if row limit is specified. If row limit is 0, all records are sent.
+        """
+        super(sql_out, self).__init__(name=name, connector=sqlconnector, transformer=transformer, row_limit=row_limit)
+        self._type = 'component.output.sql_out'
+        self.sqltable = sqltable
+
+    def __copy__(self):
+        res = sql_out(self.connector, self.sqlquery, self.name, self.transformer, self.row_limit)
+        return res
+
+    def end(self):
+        super(sql_out, self).end()
+        if self.sqlconnector:
+             self.connector.close(self.sqlconnector)
+
+    def __getstate__(self):
+        res = super(sql_out, self).__getstate__()
+        res.update({'sqltable':self.sqltable})
+        return res
+
+    def __setstate__(self, state):
+        super(sql_out, self).__setstate__(state)
+        self.__dict__ = state
+
+    def process(self):
+        datas = []
+        self.sqlconnector = False
+        for channel, trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:
-                    try:                    
-                        if not self.connector:
-                            self.connector=self.sqlconnector.open()
-                        if self.transformer:
-                            d=self.transformer.transform(d)
-                        insert_query=' INSERT into %s (%s) VALUES (%s)' % (self.sqltable,','.join(d.keys()),','.join(d.values()))
-                        self.connector.cursor.execute(insert_query)                      
-                        
-                        yield d, 'main'
-                    except Exception,e:  
-                        print e
-                        self.action_error(e)
+                    if not self.sqlconnector:
+                        self.sqlconnector = self.connector.open()
+                    insert_query = " INSERT into %s (%s) VALUES (%s)" % (self.sqltable, ','.join(d.keys()), ','.join(map(lambda x: (type(x) in (int, long, float, complex)) and x or repr(str(x)), d.values())))
+                    cr = self.sqlconnector.cursor()
+                    cr.execute(insert_query)
+                    self.sqlconnector.commit()
+                    yield d, 'main'
+
+def test():
+    from etl_test import etl_test
+    import etl
+    sql_conn = etl.connector.sql_connector('localhost', 5432, 'trunk', 'postgres', 'postgres')
+    test = etl_test.etl_component_test(sql_out(sql_conn, 'res_partner'))
+    test.check_input({'main': [{'name': 'tinyerp belgium'}]})
+    test.check_output([{'name': 'tinyerp belgium'}], 'main')
+    res = test.output()
+    print res
+
+if __name__ == '__main__':
+    test()

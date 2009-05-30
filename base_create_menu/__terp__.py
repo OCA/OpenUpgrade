@@ -26,7 +26,7 @@
     "author" : "Tiny",
     "description": """
     """,
-    "website" : "http://tinyerp.com",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Base",
     "init_xml" : [
     ],

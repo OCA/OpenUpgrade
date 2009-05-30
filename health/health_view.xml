@@ -1,0 +1,1318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<terp>
+	<data>
+	<record model="ir.ui.view" id="view_health_semestre_form">
+		<field name="name">health.semestre.form</field>
+		<field name="model">health.semestre</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Semestre">
+				<field name="name" select="1"/>
+				<field name="code" select="1"/>
+				<field name="date_start"/>
+				<field name="date_stop"/>
+				<field name="fiscalyear_id"/>
+			</form>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_health_semestre_tree">
+		<field name="name">health.semestre.tree</field>
+		<field name="model">health.semestre</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Semestre">
+				<field name="code"/>
+				<field name="name"/>
+				<field name="date_start"/>
+				<field name="date_stop"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_health_semestre_form">
+		<field name="name">Semestres</field>
+		<field name="res_model">health.semestre</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	
+
+		<record model="ir.ui.view" id="view_health_absences_fiche-simple">
+			<field name="name">health.absences.fiche-simple</field>
+			<field name="model">health.absences</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Absences">
+						<field name="du" required="True" select="1"/>
+						<field name="au" select="1" />
+						<field name="categorie" required="True" select="1" />
+						<field name="partner_id" select="1"/>
+						<field name="facture" select="1"/>
+						<newline/>
+						<field name="commentaire"  colspan="4"/>
+					</form>
+				</field>
+		</record>
+        <record model="ir.ui.view" id="view_health_absences_arbre_simple">
+			<field name="name">health.absences.arbre-simple</field>
+			<field name="model">health.absences</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Absences">
+						<field name="du" select="1" />
+						<field name="au" select="1" />
+						<field name="categorie" string="Categorie"/>
+						<field name="nbrjour"/>
+						<field name="partner_id" select="1"/>
+						<field name="facture" select="1"/>
+				</tree>
+				</field>
+		</record> 
+		
+                <record model="ir.ui.view" id="view_health_tarif_absences_tree">
+			<field name="name">health.tarif.absences.tree</field>
+			<field name="model">health.tarif.absences</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Tarif Absences">
+						<field name="name"/>
+						<field name="montant"/>
+				</tree>
+				</field>
+		</record>
+		<record model="ir.ui.view" id="view_health_tarif_absences_form">
+			<field name="name">health.tarif.absences.form</field>
+			<field name="model">health.tarif.absences</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Absences">
+						<field name="name"/>
+						<field name="montant"/>
+					</form>
+				</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_health_tarif_absences_form">
+			<field name="name">Tarif Absences</field>
+			<field name="res_model">health.tarif.absences</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+                
+        <record model="ir.ui.view" id="view_health_absences_tree">
+			<field name="name">health.absences.tree</field>
+			<field name="model">health.absences</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Absences">
+						<field name="partner_id"/>
+						<field name="user_id"/>
+						<newline/>
+						<field name="du"/>
+						<field name="au"/>
+						<field name="categorie"/>
+						<field name="facture" select="1"/>
+				</tree>
+				</field>
+		</record>
+		<record model="ir.ui.view" id="view_health_absences_form">
+			<field name="name">health.absences.form</field>
+			<field name="model">health.absences</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Absences">
+						<field name="partner_id" required="True" />
+						<field name="user_id"/>
+						<newline/>
+						<field name="du" required="True"/>
+						<field name="au"/>
+						<field name="categorie" required="True" />
+						<newline/>
+						<field name="commentaire"  colspan="4"/>
+						<field name="facture" select="1"/>
+					</form>
+				</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_health_absences_form">
+			<field name="name">Absences</field>
+			<field name="res_model">health.absences</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<record model="ir.ui.view" id="view_health_prescription_fiche-simple">
+			<field name="name">health.prescription.fiche-simple</field>
+			<field name="model">health.prescription</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Prescription">
+						<field name="du"/>
+						<field name="au"/>
+						<field name="heure"/>
+						<field name="nbrprise"/>
+						<field name="medicament"/>
+						<field name="prescripteur"/>
+						<newline/>
+						<field name="commentaire"  colspan="4"/>
+
+				</form>
+			</field>
+		</record>
+            <record model="ir.ui.view" id="view_health_prescription_arbre_simple">
+			<field name="name">health.prescription.arbre-simple</field>
+			<field name="model">health.prescription</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Prescription">
+						<field name="du"/>
+						<field name="au"/>
+						<field name="heure"/>
+						<field name="nbrprise"/>
+						<field name="medicament"/>
+						<field name="prescripteur"/>
+				</tree>
+				</field>
+		</record>
+                <record model="ir.ui.view" id="view_health_facturation_tree">
+			<field name="name">health.facturation.tree</field>
+			<field name="model">health.facturation</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="facturation">
+					<field name="period_id"/>
+                    <field name="name" select="1" />
+                    <field name="chambre" select="1"/>
+                    <field name="hebergement"/>
+                    <field name="decomptes"/>
+                    <field name="hospitalisation"/>
+                    <field name="absences"/>
+                    <field name="dependance"/>
+                    <field name="ticketmoderateur"/>
+                    <field name="apa"/>
+                   <field name="allocation"/>
+                  <field name="aidesociale"/>
+				</tree>
+				</field>
+		</record>
+		<record model="ir.ui.view" id="view_health_facturation_form">
+			<field name="name">health.facturation.form</field>
+			<field name="model">health.facturation</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Facturation">
+						<field name="period_id" select="1"/>
+                                                <field name="name"  on_change="on_change_resident(name)" select="1"/>
+                                                <field name="chambre"/>
+                                                <newline/>
+                                                <field name="hebergement"/>
+                                                <field name="decomptes"/>
+                                                <field name="hospitalisation"/>
+                                                <field name="absences"/>
+                                                <field name="dependance"/>
+                                                <field name="ticketmoderateur"/>
+                                                <field name="apa"/>
+                                                <field name="allocation"/>
+                                                <field name="aidesociale"/>
+                                                <field name="datefacturation"/>
+                                                <field name="commentaire" colspan="4"/>
+						                        
+					</form>
+				</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_health_facturation_form">
+			<field name="name">facturation</field>
+			<field name="res_model">health.facturation</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+            <field name="limit">500</field>
+			
+		</record>
+	<record model="ir.ui.view" id="view_health_prescription_tree">
+			<field name="name">health.prescription.tree</field>
+			<field name="model">health.prescription</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Prescription">
+						<field name="partner_id"/>
+						<field name="du"/>
+						<field name="au"/>
+						<field name="heure"/>
+						<field name="nbrprise"/>
+						<field name="medicament"/>
+						<field name="prescripteur"/>
+						<field name="user_id"/>
+				</tree>
+				</field>
+		</record>
+		<record model="ir.ui.view" id="view_health_prescription_form">
+			<field name="name">health.prescription.form</field>
+			<field name="model">health.prescription</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Prescription">
+						<field name="partner_id"/>
+						<newline/>
+						<field name="du"/>
+						<field name="au"/>
+						<newline/>
+						<field name="heure"/>
+						<field name="nbrprise"/>
+						<newline/>
+						<field name="medicament"/>
+						<field name="prescripteur"/>
+						<field name="user_id"/>
+						<newline/>
+						<field name="commentaire"  colspan="4"/>
+					</form>
+				</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_health_prescription_form">
+			<field name="name">Prescriptions</field>
+			<field name="res_model">health.prescription</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			
+		</record>
+             
+
+	<record model="ir.ui.view" id="view_health_aggir_tree">
+			<field name="name">health.aggir.tree</field>
+			<field name="model">health.aggir</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Grille AG GIR">
+							<field name="name"/>
+							<field name="coherence"/>
+							<field name="orientation"/>
+							<field name="toilette"/>
+							<field name="habillage"/>
+							<field name="alimentation"/>
+							<field name="elimination"/>
+							<field name="transferts"/>
+							<field name="moveint"/>
+							<field name="deplacementexterieur"/>
+							<field name="communication"/>
+							<field name="gir"/>							 
+						</tree>
+				</field>
+		</record>
+		<record model="ir.ui.view" id="view_health_aggir_form">
+			<field name="name">health.aggir.form</field>
+			<field name="model">health.aggir</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Grille AG GIR">
+					<notebook>
+						<page string="DISCRIMINANTES">
+							<field name="name"  select="1"/>
+							<newline/>
+							<field name="coherence"  required="1"/>
+							<field name="orientation" required="1"/>
+							<field name="toilette" required="1"/>
+							<field name="habillage" required="1"/>
+							<field name="alimentation" required="1"/>
+							<field name="elimination" required="1"/>
+							<field name="transferts" required="1"/>
+							<field name="moveint" required="1"/>
+							<field name="deplacementexterieur"/>
+							<field name="communication"/>
+							<field name="gir"  select="1"/>							 
+							<button name="calcul_gir" string="Calcule AG-GIR" colspan="4"  type="object"/>				
+						</page>
+						<page string="DEPENDANCE DOMESTIQUE ET SOCIALE">
+							<field name="gestion"/>
+							<field name="cuisine"/>
+							<field name="menage"/>
+							<field name="transports"/>
+							<field name="achats"/>
+							<field name="traitement"/>
+							<field name="activite"/>
+						</page>
+					</notebook>
+					</form>
+				</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_health_aggir">
+			<field name="name">Grille GIR</field>
+			<field name="res_model">health.aggir</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+	
+	
+	<record model="ir.ui.view" id="view_health_evenement_type_tree">
+			<field name="name">health.evenement.type.tree</field>
+			<field name="model">health.evenement.type</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Type Evenements">
+					<field name="name"/>
+					<field name="creator"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_health_evenement_type_form">
+			<field name="name">health.evenement.type.form</field>
+			<field name="model">health.evenement.type</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Type Evenements">
+					<notebook>
+						<page string="General Informations">
+							<field name="name" select="1"/>
+							<field name="creator" select="1"/>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_health_evenement_type">
+			<field name="name">Type Evenements</field>
+			<field name="res_model">health.evenement.type</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			</record>
+		
+
+		
+
+		<record model="ir.ui.view" id="view_health_patient_evenement_tree">
+			<field name="name">health.patient.evenement.tree</field>
+			<field name="model">health.patient.evenement</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Type Evenements">
+					<field name="date"/>
+					<field name="user_id"/>
+					<field name="type_evenements"/>
+					<field name="partner_id"/>
+					<field name="description"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_health_patient_evenement_view">
+			<field name="name">health.patient.evenement.tree-simple</field>
+			<field name="model">health.patient.evenement</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Type Evenements">
+					<field name="date"/>
+					<field name="user_id"/>
+					<field name="type_evenements"/>
+					<field name="description"/>
+				</tree>
+			</field>
+		</record> 
+		<record model="ir.ui.view" id="view_health_patient_evenement_form">
+			<field name="name">health.patient.evenement.form</field>
+			<field name="model">health.patient.evenement</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Evenement">
+					<notebook>
+						<page string="General Informations">
+							<field name="date" select="1"/>
+							<field name="user_id" select="1"/>
+							<field name="partner_id"/>
+							<newline/>
+							<field name = "type_evenements"   select="1"/>
+							<newline/>
+							<field name="description" colspan="4" select="1"/>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="health.patient_evenement_view">
+			<field name="name">health.patient.evenement.form-simple</field>
+			<field name="model">health.patient.evenement</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Evenement">
+					<notebook>
+						<page string="General Informations">
+							<field name="date" select="1"/>
+							<field name="user_id" select="1"/>
+							<newline/>
+							<field name = "type_evenements"   select="1"/>
+							<newline/>
+							<field name="description" colspan="4" select="1"/>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_health_patient_evenement">
+			<field name="name">Evenements</field>
+			<field name="res_model">health.patient.evenement</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		
+		
+
+		
+	<record model="ir.ui.view" id="view_health_droits_tree">
+			<field name="name">health.droits.tree</field>
+			<field name="model">health.droits</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Droits">
+					<field name="name"/>
+					<field name="informations"/>
+					<field name="du"/>
+					<field name="au"/>
+				</tree>
+			</field>
+		</record>
+	<record model="ir.ui.view" id="view_health_droits_form">
+			<field name="name">health.droits.form</field>
+			<field name="model">health.droits</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Droits">
+					<field name="name"/>
+					<field name="informations"/>
+					<field name="du"/>
+					<field name="au"/>
+				</form>
+			</field>
+		</record>
+		
+-	<record model="ir.ui.view" id="view_health_aide_tree">
+			<field name="name">health.aide.tree</field>
+			<field name="model">health.aide</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Aides">
+					<field name="name"/>
+					<field name="type"/>
+					<field name="resident"/>
+					<field name="montant"/>
+					<field name="destinataire"/>
+					<field name="du"/>
+					<field name="au"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_health_aide_form">
+			<field name="name">health.aide.form</field>
+			<field name="model">health.aide</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Aides">
+					<notebook>
+						<page string="General Informations">
+					<field name="name"/>
+					<field name="resident"/>
+					<field name="type"/>
+					<field name="montant"/>
+					<field name="destinataire"/>
+					<field name="du"/>
+					<field name="au"/>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_health_aide">
+			<field name="name">Aide</field>
+			<field name="res_model">health.aide</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>			
+		</record> 
+		
+		
+		<record model="ir.ui.view" id="view_health_religion_tree">
+			<field name="name">health.religion.tree</field>
+			<field name="model">health.religion</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="category">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_health_religion_form">
+			<field name="name">health.religion.form</field>
+			<field name="model">health.religion</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="All religions">
+					<notebook>
+						<page string="General Informations">
+							<field name="name"/>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_health_religion">
+			<field name="name">Religion</field>
+			<field name="res_model">health.religion</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>			
+		</record>
+		
+		
+		<record model="ir.ui.view" id="view_health_situation_tree">
+			<field name="name">health.situation.tree</field>
+			<field name="model">health.situation</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="situation">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_health_situation_form">
+			<field name="name">health.situation.form</field>
+			<field name="model">health.situation</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="All situations">
+					<notebook>
+						<page string="General Informations">
+							<field name="name"/>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_health_situation">
+			<field name="name">Situation</field>
+			<field name="res_model">health.situation</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>			
+		</record>
+		
+		
+		<record model="ir.ui.view" id="view_health_care_tree">
+			<field name="name">health.care.tree</field>
+			<field name="model">health.care</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="care">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_health_care_form">
+			<field name="name">health.care.form</field>
+			<field name="model">health.care</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="All care">
+					<notebook>
+						<page string="General Informations">
+							<field name="name" select="1"/>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_health_care">
+			<field name="name">Soins</field>
+			<field name="res_model">health.care</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>			
+		</record>
+		
+		
+		<record model="ir.actions.act_window" id="action_health_care_op">
+			<field name="name">Soins</field>
+			<field name="res_model">health.care</field>
+			<field name="view_type">tree</field>
+			<field name="view_mode">tree,form</field>			
+		</record>
+		
+
+        <record model="ir.ui.view" id="view_health_drug_form">
+			<field name="name">health.drug.form</field>
+			<field name="model">health.drug</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="All drug">
+					<notebook>
+						<page string="General Informations">
+							<field name="name" select="1"/>
+							<field name="forme" select="1"/>
+							<field name="famille" select="1"/>
+							<field name="categ_id" select="1"/>
+							<field name="cip" select="1"/>
+							<field name="ucd" select="1"/>
+							<field name="atc" select="1"/>
+							<field name="vidal" select="1"/>
+							<field name="volume"/>
+							<field name="uom_id"/>
+						</page>
+						<page string="Descriptions">
+							<field name="description" colspan="4" nolabel="1" />
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_health_drug_tree">
+			<field name="name">health.drug.tree</field>
+			<field name="model">health.drug</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="drug">
+					<field name="name" string="Names"/>
+					<field name="famille"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_health_drug">
+			<field name="name">Medicaments</field>
+			<field name="res_model">health.drug</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>			
+		</record>
+		
+		
+        
+		
+		
+    	<record model="ir.ui.view" id="view_health_drugfrom_tree">
+			<field name="name">health.drugform.tree</field>
+			<field name="model">health.drugform</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Drug Form">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_health_drugfrom_form">
+			<field name="name">health.drugform.form</field>
+			<field name="model">health.drugform</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="All Drug Forms">
+					<notebook>
+						<page string="General Informations">
+							<field name="name"/>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_health_drugform">
+			<field name="name">Forme Medicaments</field>
+			<field name="res_model">health.drugform</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>			
+		</record>
+    	<record model="ir.ui.view" id="view_health_tarifdependance_tree">
+			<field name="name">health.tarif.dependance.tree</field>
+			<field name="model">health.tarif.dependance</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Tarif Dependance">
+					<field name="name"/>
+					<field name="montant"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_health_tarifdependance_form">
+			<field name="name">health.tarif.apa.form</field>
+			<field name="model">health.tarif.apa</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Tarif Dependance">
+					<notebook>
+						<page string="General Informations">
+							<field name="name"/>
+					        <field name="montant"/>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_health_coutdependance">
+			<field name="name">Tarif Dependance</field>
+			<field name="res_model">health.tarif.dependance</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>			
+		</record>
+		
+		
+
+		<record model="ir.ui.view" id="view_health_patient_tree">
+			<field name="name">health.patient.tree</field>
+			<field name="model">health.patient</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree  string="patient">
+					<field name="name" select="1" />
+					<field name="situation" select="1" />
+					<field name="medecin" select="1" />
+                    <field name="room_id" select="1" />
+                    <field name="girage" select="1" />
+                    <field name="regime" select="1" />
+					<field name="admission_date" select="1"/>
+                    <field name="date_sortie" select="1"/>
+                    <field name="numerosecu" select="1" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_health_patient_form">
+			<field name="name">health.patient.form</field>
+			<field name="model">health.patient</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+			<form string="Patient">
+			<field name="name" string="Designation" select="1"/>
+			<notebook>
+				<page string="General">
+					<separator colspan="4" string="General Information"/>
+					<field name="nom" select="1" on_change="set_name(nom,prenom)" />
+					<field name="nomusage" select="1"/>
+					<field name="prenom" on_change="set_name(nom,prenom)" select="1"/>
+					<field name="nomreligieux" select="1"/>
+					<field domain="[('domain', '=', 'partner')]" name="title"/>
+					<field name="ref" select="1"/>
+					<field name="lang" />
+					<field name="numerosecu" select="1"/>
+					<field name="birthdaydate"  select="2" required="True" />
+					<field name="admission_date" select="1"  required="True" />
+                    <field name="date_sortie" select="1" on_change="desactive(name)"/>
+					<newline/>
+                    <field name="motif_sortie" select="1"/>
+                    <field name="date_liberation" select="1"/>
+					<field  name="girage"  select="1"/>
+					<field colspan="4" name="room_id"/>
+					<field name="congregation" select="1"/>
+                    <field name="hospitalisation" select="1" />
+                    <field name="active" select="1" />
+                    </page>
+                <page string = "Adresses">
+                     <field colspan="4" mode="form,tree" name="address" nolabel="1" select="1">
+						<form string="Adresses">
+							<field name="name" select="1"/>
+							<field domain="[('domain', '=', 'contact')]" name="title"/>
+							<field name="function"/>
+							<field name="type" select="1"/>
+							<field name="street" select="1"/>
+							<field name="street2"/>
+							<newline/>
+							<field name="zip" select="1"/>
+							<field name="city" select="1"/>
+							<newline/>
+							<field completion="1" name="country_id" select="1"/>
+							<field name="state_id" select="1"/>
+							<newline/>
+							<field name="phone"/>
+							<field name="fax"/>
+							<newline/>
+							<field name="mobile"/>
+							<field name="email"  widget="email"/>
+						</form>
+					</field>
+
+                </page>
+				<page string="details">
+					<field name="religion"/>
+					<field name="photo" widget="image"/>
+					<field name="lieunaissance"/>
+					<field name="situation"/>
+					<field name="livretremis"/>
+					<field name="provenance" />
+					<field name="hopitalant" />
+					<field name="obseque"/>
+					<field name="obsinformations"/>
+					<field name="incineration"/>
+					<field name="pacemaker"/>
+					<field name="doncorps"/>
+					<field name="donorganes"/>
+					<newline/>
+                                        <separator colspan="4"/>
+					<field name="invalidite"/>
+					<newline/>
+				        <field  name="invadu" />
+				        <field  name="invaau" />
+                                       <separator colspan="4"/>
+					<field name="respcivil"/>
+					<newline/>
+					<field  name="respdu" />
+				         <field  name="respau" />
+					
+					<newline/>
+					<separator colspan="4" string="Assuré(e)"/>
+				       <field colspan="4" name="assure" />
+                   <properties /> 
+					<newline/>
+				</page>
+				<page string="Souhaits">
+					<field name="medecin" select="1"/>
+					<field name="pharmacie" />
+					<field name="kine"/>
+					<field name="psy" />
+					<field name="ergo" />
+					<field name="laboratoire" />
+					<field name="hopital" />
+					<field name="ambulance" />
+					<field name="livretremis" />
+				</page>
+				<page string="Caisses">
+						<field  name="regime" />
+						<newline/>
+						<field  name="caisse" />
+						<field  name="ncpaiement" />
+						<newline/>
+						<field  name="caissedu" />
+						<field  name="caisseau" />
+						<newline/>
+						<field  name="aldtaux" />
+                        <field  name="alddu" />
+						<field  name="aldau" />
+						<newline/>
+						<separator colspan="4" string="Mutuelle"/>
+						<field name="mutuelle"/>
+						<field name="mutndossier"/>
+						<newline/>
+						<field  name="mutdu" />
+						<field  name="mutau" />
+						<newline/>
+						<separator colspan="4" string="C.M.U"/>
+						<field name="cmu"/>
+						<field name="cmundossier"/>
+						<newline/>
+						<field  name="cmudu" />
+						<field  name="cmuau" />
+						<separator colspan="4" string="Aide Sociale"/>
+                        			<field name="aidesociale" />
+                                                <field name="aidesocialedestinataire" />
+                                                <newline/>
+                                                <field name="aidesocialemontant" />
+                                                <field name="aidesocialendossier" />
+                                                <newline/>
+                                                <field name="aidesocialedu" />
+                                                <field name="aidesocialeau" />
+                                                <separator colspan="4" string="Aide Logement"/>
+						                        <field name="aidelogement" />
+                                                <field name="aidelogementdestinataire" />
+                                                <newline/>
+                                                <field name="aidelogementmontant" />
+                                                <field name="aidelogementndossier" />
+                                                <newline/>
+                                                <field name="aidelogementdu" />
+                                                <field name="aidelogementau" />
+                                                <separator colspan="4" string="APA"/>
+                                                <field name="apa" />
+                                                <field name="apadestinataire" />
+                                                <newline/>
+                                                <field name="apamontant" />                                                
+                                                <field name="apandossier" />                                                
+                                                <newline/>
+                                                <field name="apadu" />
+                                                <field name="apaau" />
+                                                
+				</page>
+				 <page string="Absences">
+				<field colspan="4" name="absences" nolabel="1" view="health.absences.fiche-simple" view_tree="health.absences.arbre-simple" widget="one2many_list"/>
+				</page> 
+				 <page string="Dossier de Prescription">
+				<field colspan="4" name="prescriptions" nolabel="1" view="health.prescription.fiche-simple" view_tree="health.prescription.arbre-simple" widget="one2many_list"/>
+				</page> 
+				<!--<page string="Dossier Medical"/> -->
+				<page string="Plan de Soins">
+					<field colspan="4" name="care" nolabel="1" select="1"/>
+				</page>
+				<page string="Evenements">
+                                    <field name="evenements" string="" view="health.patient.evenement.form-simple" view_tree="health.patient.evenement.tree-simple" widget="one2many_list"/>
+				</page>
+				<page string="commentaire">
+					<field name="note" nolabel="1" colspan="4"/>
+                    <field name="category_id"/>
+				</page>
+					</notebook>
+				</form>
+
+			
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_health_patient">
+			<field name="name">Résidents</field>
+			<field name="res_model">health.patient</field>
+			<field name="domain">[('category_id','=', id_resident())]</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>			
+            <field name="limit">500</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_health_postulant">
+			<field name="name">Postulants</field>
+			<field name="res_model">health.patient</field>
+			<field name="domain">[('category_id','=',id_postulant())]</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>			
+		</record>		
+
+        <record model="ir.ui.view" id="view_health_room_tarif_tree">
+			<field name="name">health.room.tarif.tree</field>
+			<field name="model">health.room.tarif</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Tarif Chambres">
+				    <field name="name" select="1"/>
+				    <field name="ref" select="1"/>
+				    <field name="type" select="1"/>
+				    <field name="age" select="1"/>
+  				    <field name="prix" select="1"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_health_room_tarif_form">
+			<field name="name">health.room.tarif.form</field>
+			<field name="model">health.room.tarif</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Tarif Chambres">
+					<notebook>
+						<page string="General Informations">
+							<field name="name" select="1"/>
+				    <field name="ref" select="1"/>
+				            <field name="type" select="1"/>
+        				    <field name="age" select="1"/>
+        				    <field name="prix" select="1"/>
+						</page>
+	 				</notebook>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_health_room_tarif">
+			<field name="name">Tarif Chambres</field>
+			<field name="res_model">health.room.tarif</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>			
+		</record>
+
+
+        <record model="ir.ui.view" id="view_health_room_localisation_tree">
+			<field name="name">health.room.localisation.tree</field>
+			<field name="model">health.room.localisation</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Localisation">
+				    <field name="name" select="1"/>
+                                    <field name="designation" select="1"/>
+                                    <field name="nbrchambre" select="1"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_health_room_localisation_form">
+			<field name="name">health.room.localisation.form</field>
+			<field name="model">health.room.localisation</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Localisation">
+					<notebook>
+						<page string="General Informations">
+							<field name="name" select="1"/>
+                                                        <field name="designation" select="1"/>                                                        
+ 	        	                                <field name="nbrchambre" select="1"/>
+						</page>
+	 				</notebook>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_health_room_localisation">
+			<field name="name">Localisation</field>
+			<field name="res_model">health.room.localisation</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>			
+		</record>
+
+
+        <record model="ir.ui.view" id="view_health_room_tree">
+			<field name="name">health.room.tree</field>
+			<field name="model">health.room</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Chambres">
+				    <field name="name" select="1"/>
+				    <field name="localisation" select="1"/>
+                                    <field name="type" select="1"/>
+				    <field name="bed"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_health_room_form">
+			<field name="name">health.room.form</field>
+			<field name="model">health.room</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="All rooms">
+					<notebook>
+						<page string="General Informations">
+							<field name="name" select="1"/>
+				    			<field name="localisation" select="1"/>
+			                                <field name="type" select="1"/>
+						        <field name="bed"/>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_health_room">
+			<field name="name">Chambres</field>
+			<field name="res_model">health.room</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>			
+		</record>
+		
+		
+		<record model="ir.ui.view" id="view_health_pathosprofils_tree">
+			<field name="name">health.pathosprofils.tree</field>
+			<field name="model">health.pathosprofils</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Profils Pathos">
+				    <field name="name" select="1"/>
+				    <field name="description" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_health_pathosprofils_form">
+			<field name="name">health.pathosprofils.form</field>
+			<field name="model">health.pathosprofils</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Profils Pathos">
+					<notebook>
+						<page string="General Informations">
+							<field name="name" select="1"/>
+							<field name="description" />
+							<field name="definition" colspan="4" />
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_health_pathosprofils">
+			<field name="name">Profils Pathos</field>
+			<field name="res_model">health.pathosprofils</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>			
+		</record>
+
+		
+		
+		<record model="ir.ui.view" id="view_health_pathosetatspatho_tree">
+			<field name="name">health.pathosetatspatho.tree</field>
+			<field name="model">health.pathosetatspatho</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Etat Pathologique Pathos">
+							<field name="name" select="1"/>
+							<field name="description" />
+							<field name="categorie"  />
+							<field name="profils" />
+
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_health_pathosetatspatho_form">
+			<field name="name">health.pathosetatspatho.form</field>
+			<field name="model">health.pathosetatspatho</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Etat Pathologique Pathos">
+					<notebook>
+						<page string="General Informations">
+							<field name="name" select="1"/>
+							<field name="description" />
+							<field name="categorie"  />
+							<newline/>
+							<field name="profils"  />
+							
+							<field name="definition"  colspan="4" />
+
+							
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_health_pathosetatspatho">
+			<field name="name">Etat Pathologique Pathos</field>
+			<field name="res_model">health.pathosetatspatho</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>			
+		</record>
+	
+		<record model="ir.ui.view" id="view_health_pathoscategetats_tree">
+			<field name="name">health.pathoscategetats.tree</field>
+			<field name="model">health.pathoscategetats</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Categorie Etat Pathologique Pathos">
+							<field name="name" select="1"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_health_pathoscategetats_form">
+			<field name="name">health.pathoscategetats.form</field>
+			<field name="model">health.pathoscategetats</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Categorie Etat Pathologique Pathos">
+							<field name="name" select="1"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_health_pathoscategetats">
+			<field name="name">Etat Pathologique Pathos</field>
+			<field name="res_model">health.pathoscategetats</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>			
+		</record>
+		   <record model="ir.ui.view" id="view_health_tarif_absences_tree">
+			<field name="name">health.tarif.absences.tree</field>
+			<field name="model">health.tarif.absences</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Tarif Absences">
+						<field name="name"/>
+						<field name="montant"/>
+				</tree>
+				</field>
+		</record>
+		<record model="ir.ui.view" id="view_health_tarif_absences_form">
+			<field name="name">health.tarif.absences.form</field>
+			<field name="model">health.tarif.absences</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Absences">
+						<field name="name"/>
+						<field name="montant"/>
+					</form>
+				</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_health_tarif_absences_form">
+			<field name="name">Tarif Absences</field>
+			<field name="res_model">health.tarif.absences</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		   <record model="ir.ui.view" id="view_health_regime_arbre">
+			<field name="name">health.regime.tree</field>
+			<field name="model">health.regime</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Regime">
+						<field name="name"/>
+						<field name="code" select="1"/>
+						<field name="parent_id" select="1"/>
+				</tree>
+				</field>
+		</record>
+
+		   <record model="ir.ui.view" id="view_health_regime_tree">
+			<field name="name">health.regime.tree</field>
+			<field name="model">health.regime</field>
+            <field name="field_parent">child_ids</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Regime">
+						<field name="name"/>
+				</tree>
+				</field>
+		</record>
+		<record model="ir.ui.view" id="view_health_regime_form">
+			<field name="name">health.regime.form</field>
+			<field name="model">health.regime</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Regime">
+						<field name="name" select="1" />
+						<field name="code" select="1"/>
+						<field name="parent_id" select="1"/>
+					</form>
+				</field>
+		</record>
+		 <record model="ir.actions.act_window" id="action_regime">
+			<field name="name">Regime Caisse</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">health.regime</field>
+			<field name="view_type">tree</field>
+			<field name="view_id" ref="view_health_regime_tree"/>
+			<field name="domain">[('parent_id','=',False)]</field>
+		</record>
+
+		  <record model="ir.actions.act_window" id="action_regime_arbre">
+			<field name="res_model">health.patient</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('regime','child_of', [active_id])]</field>
+		</record>
+	<record model="ir.values" id="ir_action_regime_arbre">
+		<field name="key2" eval="'tree_but_open'"/>
+		<field name="model" eval="'health.regime'"/>
+		<field name="name">Regime</field>
+		<field name="value" eval="'ir.actions.act_window,%d'%action_regime_arbre"/>
+		<field name="object" eval="True"/>
+	</record>
+
+		<record model="ir.actions.act_window" id="action_health_regime_form">
+			<field name="name">Regime</field>
+			<field name="res_model">health.regime</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<menuitem
+        name="EHPAD/Regime Caisse" 
+        sequence="1"
+        action="action_regime" 
+        id="menu_regime_main"/>
+
+
+		<menuitem name="EHPAD" sequence="0" icon="terp-partner" id="menu_ehpad"/>
+		<menuitem name="EHPAD/Configuration" sequence="0" id="menu_config_health"/>
+		<menuitem name="EHPAD/Résidents" id="menu_patient" sequence="1" action="action_health_patient"/>
+		<menuitem name="EHPAD/Postulants" id="menu_postulant" sequence="1" action="action_health_postulant"/>
+		<menuitem name="EHPAD/Medicaments" id="menu_drug" action="action_health_drug"/>
+		<menuitem name="EHPAD/Evenements" id="menu_event"  action="action_health_patient_evenement"/>
+		<menuitem name="EHPAD/AGGIR" id="menu_health_agir"  action="action_health_aggir" groups="admin"/>
+		<menuitem name="EHPAD/Prescriptions" id="menu_health_prescription_tree" action="action_health_prescription_form"  /> 
+        <menuitem name="EHPAD/Facturation" id="menu_health_facturation_tree" action="action_health_facturation_form"  /> 
+        <menuitem name="EHPAD/Absences" id="menu_health_absences_tree" action="action_health_absences_form"  /> 
+		<menuitem name="EHPAD/Chambres" id="menu_chambres" action="action_health_room"/>
+		<menuitem name="EHPAD/Configuration/Tarif Chambres" id="menu_tarif_chambres" action="action_health_room_tarif"/>
+		<menuitem name="EHPAD/Configuration/Regime Caisse" id="menu_regime" action="action_health_regime_form"/>
+        <menuitem name="EHPAD/Configuration/Localisation" id="menu_chambres_localisation" action="action_health_room_localisation"/>
+		<menuitem name="EHPAD/Soins" id="menu_soins2" action="action_health_care_op"/>
+		<menuitem name="EHPAD/Configuration/Forme Medicament" id="menu_drug_form" action="action_health_drugform"/>
+		<menuitem name="EHPAD/Configuration/Soins" id="menu_soins"  action="action_health_care"/>
+		<menuitem name="EHPAD/Configuration/Tarif Dependance" id="menu_dependance"  action="action_health_coutdependance"/>
+		<menuitem name="EHPAD/Configuration/Situations" id="menu_situation" action="action_health_situation"/>
+		<menuitem name="EHPAD/Configuration/Religions" id="menu_religion" action="action_health_religion"/>
+		<menuitem name="EHPAD/Configuration/Aides" id="menu_aides" action="action_health_aide"/>
+		<menuitem name="EHPAD/Configuration/TypeEvenements"  id="menu_type_event" action="action_health_evenement_type"/>
+		<menuitem name="EHPAD/Configuration/Pathos" id="menu_pathos" />
+		<menuitem name="EHPAD/Configuration/Pathos/Etats Pathologique" id="menu_pathos_etats" action="action_health_pathosetatspatho"/>
+		<menuitem name="EHPAD/Configuration/Pathos/profils" id="menu_pathos_profils" action="action_health_pathosprofils"/>
+		<menuitem name="EHPAD/Configuration/Pathos/Categoerie Etats" id="menu_pathos_categ_etats" action="action_health_pathoscategetats"/>
+        <menuitem name="EHPAD/Configuration/Absences" id="menu_health_tarif_absences_tree" action="action_health_tarif_absences_form"  />
+        <menuitem name="EHPAD/Configuration/Semestres" id="menu_action_health_semestre_form" action="action_health_semestre_form"/> 
+		<act_window name="Facturation"
+			    domain="[('name', '=', active_id)]"
+			    res_model="health.facturation"
+			    src_model="health.patient"
+			    id="act_facturation"/>
+		<act_window name="Factures"
+			    domain="[('partner_id', '=', name)]"
+			    res_model="account.invoice"
+			    src_model="health.facturation"
+			    id="act_factures"/>
+     
+		
+		
+	</data>
+</terp>
+

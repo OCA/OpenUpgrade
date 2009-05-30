@@ -47,7 +47,9 @@ class purchase_order(osv.osv):
                         ['invoice', 'delivery', 'contact'])
                 default_pricelist = partner_obj.browse(cr, uid, partner_id,
                             {}).property_product_pricelist.id
-
+                fpos = partner_obj.browse(cr, uid, partner_id,
+                            {}).property_account_position
+                fpos_id = fpos and fpos.id or False
                 vals = {
                     'origin': 'PO:%s' % str(po.name),
                     'picking_policy': 'direct',
@@ -59,7 +61,8 @@ class purchase_order(osv.osv):
                     'partner_shipping_id': partner_addr['delivery'],
                     'order_policy': 'manual',
                     'date_order': time.strftime('%Y-%m-%d'),
-                    'order_policy': po.invoice_method=='picking' and 'picking' or 'manual'
+                    'order_policy': po.invoice_method=='picking' and 'picking' or 'manual',
+                    'fiscal_position': fpos_id
                 }
                 new_id = sale_obj.create(cr, uid, vals)
                 fpos = user.company_id.partner_id.property_account_position and user.company_id.partner_id.property_account_position.id or False

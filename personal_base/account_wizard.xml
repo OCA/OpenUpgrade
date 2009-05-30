@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+    
+    	<!--
+    	TODO: Delete from wizards folder
+		<wizard 
+			string="Return Entry"
+			model="personal.base.account.entry.line"
+			name="personal.wizard_return_entry"
+			keyword="tree_but_action"
+			id="wizard_return_entry_id"/>
+		-->
+		
+		<wizard 
+			string="Open Line Entry"
+			model="personal.base.account.entry.line"
+			name="personal.base.account.open_line_entry"
+			id="wizard_open_line_entry"/>
+		
+		<wizard 
+			string="Create Account Types"
+			model="personal.base.account.type"
+			name="personal.base.account.create_account_types"
+			id="wizard_create_account_types"/>
+			
+		<menuitem 
+			name="Create Account Types"
+			id="menu_wizard_create_account_types"
+			action="wizard_create_account_types"
+			parent="personal_administration_menu"
+			type="wizard"/>
+		
+		<wizard 
+			string = "After Login"
+			name="personal.base.wizard.after_login"
+			model="personal.base.action.login"
+			id="wizard_after_login"/>
+    </data>
+</openerp>

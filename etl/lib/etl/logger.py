@@ -20,9 +20,11 @@
 #
 ##############################################################################
 
-""" 
+"""
+ To  provide internal logging system.
 
-    The module provides internal logging system.
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+ GNU General Public License.
 
 """
 import logging
@@ -38,34 +40,40 @@ LOG_ERROR = 'error'
 def init_logger():
     logger = logging.getLogger()
     # create a format for log messages and dates
-    formatter = logging.Formatter('[%(asctime)s] %(levelname)s:%(name)s:%(message)s', '%a %b %d %Y %H:%M:%S')
-    
-    logf='/tmp/etl_log.out' 
-    handler = logging.handlers.TimedRotatingFileHandler(logf,'D',1,30)
-     
+    formatter = logging.Formatter('[%(asctime)s] %(levelname)s: %(name)s: %(message)s', '%a %b %d %Y %H:%M:%S')
+
+    logf = '/tmp/etl_log.out'
+    handler = logging.handlers.TimedRotatingFileHandler(logf, 'D', 1, 30)
+
     # tell the handler to use this format
     handler.setFormatter(formatter)
     # add the handler to the root logger
     logger.addHandler(handler)
-    logger.setLevel(logging.INFO)   
+    logger.setLevel(logging.INFO)
 
 
 class logger(object):
-    def notifyChannel(self, name, level, msg):        
+
+    def __getstate__(self):
+        pass
+
+    def __setstate__(self, state):
+        pass
+
+    def notifyChannel(self, name, level, msg):
         log = logging.getLogger(name)
-        level_method = getattr(log, level)        
+        level_method = getattr(log, level)
         msg = unicode(msg)
 
         result = msg.strip().split('\n')
-        if len(result)>1:
+        if len(result) > 1:
             for idx, s in enumerate(result):
-                level_method('[%02d]: %s' % (idx+1, s,))
+                level_method('[%02d]: %s' % (idx + 1, s,))
         elif result:
             level_method(result[0])
 
     def shutdown(self):
         logging.shutdown()
-
 
 init_logger()
 

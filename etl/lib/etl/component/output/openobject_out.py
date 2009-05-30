@@ -20,64 +20,85 @@
 #
 ##############################################################################
 """
-This is an ETL Component that use to write data into openobject model.
-"""
+ To write data into open object model.
 
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+ GNU General Public License.
+"""
 from etl.component import component
 import datetime
 
-class openobject_out(component.component):
+class openobject_out(component):
     """
-        This is an ETL Component that use to write data into sql table.
+    This is an ETL Component that writes data in open object model.
 
-        Type: Data Component
-        Computing Performance: Streamline
-        Input Flows: 0-x
-        * .* : the main data flow with input data
-        Output Flows: 0-1
-        * main : return all data
-    """   
+    Type                  : Data Component.
+    Computing Performance : Streamline.
+    Fields                : A mapping {OpenObject Field Name : Flow Name}.
+    Input Flows           : 0-x.
+    * .*                  : The main data flow with input data.
+    Output Flows          : 0-1.
+    * main                : Returns all data.
+    """
 
-    def __init__(self,name,openobject_connector,model,transformer=None,row_limit=0):
-        super(openobject_out, self).__init__('(etl.component.output.openobject_out) '+name,transformer=transformer)      
-          
-        self.openobject_connector = openobject_connector 
-        self.model=model    
-        self.row_limit=row_limit 
-        self.row_count=0                                
-        self.connector=False 
+    def __init__(self, openobject_connector, model, fields=None, name='component.output.openobject_out', transformer=None, row_limit=0):
+        """
+        Parameters
+        openobject_connector : Open object connector to connect with OpenERP server.
+        model                : Open object model name.
 
-    def action_end(self,key,singal_data={},data={}):        
-        super(openobject_out, self).action_end(key,singal_data,data)        
-        if self.openobject_connector:  
-             self.openobject_connector.logout()  
-             self.openobject_connector.close()        
+        Extra Parameters
+        name                 : Name of Component.
+        transformer          : Transformer object to transform string data into particular object.
+        fields               : Fields of open object model.
+        model                : Open object model name.
+        """
+        super(openobject_out, self).__init__(name=name, connector=openobject_connector, transformer=transformer, row_limit=row_limit)
+        self._type = 'component.output.openobject_out'
+        self.fields = fields
+        self.model = model
 
-    def process(self):  
-        #TODO : proper handle exception. not use generic Exception class      
-        datas = []        
-        for channel,trans in self.input_get().items():
+    def __copy__(self):
+        res = openobject_out(self.connector, self.model, self.fields, self.name, self.transformer, self.row_limit)
+        return res
+
+    def __getstate__(self):
+        res = super(openobject_out, self).__getstate__()
+        res.update({'fields':self.fields, 'model':self.model})
+        return res
+
+    def __setstate__(self, state):
+        super(openobject_out, self).__setstate__(state)
+        self.__dict__ = state
+
+    def process(self):
+        datas = []
+        self.fields_keys = None
+        self.op_oc = False
+        for channel, trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:
-                    try:                    
-                        if not self.connector:
-                            self.connector=self.openobject_connector.open()
-                            self.openobject_connector.login()
-                        if self.transformer:
-                            d=self.transformer.transform(d)                        
-                        self.openobject_connector.execute('execute', self.model, 'import_data', d.keys(), [d.values()])                 
-                        
-                        yield d, 'main'
-                    except Exception,e:  
-                        print e
-                        self.action_error(e)
+                    if not self.fields:
+                        self.fields = dict(map(lambda x: (x, x), d.keys()))
+                    if type(self.fields) == type([]):
+                        self.fields_keys = self.fields
+                        self.fields = dict(map(lambda x: (x, x), self.fields))
+                    if not self.fields_keys:
+                        self.fields_keys = self.fields.keys()
+                    op_oc = self.connector.open()
+                    self.connector.execute(op_oc, 'execute', self.model, 'import_data', self.fields_keys, [map(lambda x: d[self.fields[x]], self.fields_keys)])
+                    self.connector.close(op_oc)
+                    yield d, 'main'
 
-
-if __name__ == '__main__':    
+def test():
     from etl_test import etl_test
     import etl
-    openobject_conn=etl.connector.openobject_connector.openobject_connector('http://localhost:8069', 'dms_20090204', 'admin', 'admin',con_type='xmlrpc')
-    test=etl_test.etl_component_test(openobject_out('test',openobject_conn,'res.partner'))
-    test.check_input({'main':[{'name':'OpenERP1'},{'name':'Fabien1'}]})
-    test.check_output([{'name':'OpenERP1'},{'name':'Fabien1'}],'main')
-    res=test.output()
+    openobject_conn = etl.connector.openobject_connector('http://localhost:8069', 'etl_test', 'admin', 'admin', con_type='xmlrpc')
+    test = etl_test.etl_component_test(openobject_out(openobject_conn, 'res.country'))
+    test.check_input({'main': [{'name': 'India_test', 'code':'India_test'}]})
+    test.check_output([{'name': 'India_test', 'code':'India_test'}], 'main')
+    res = test.output()
+
+if __name__ == '__main__':
+    test()
+

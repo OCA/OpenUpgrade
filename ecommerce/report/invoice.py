@@ -31,15 +31,13 @@ class account_invoice(report_sxw.rml_parse):
         super(account_invoice, self).__init__(cr, uid, name, context)
         self.localcontext.update({
             'time': time,
-            'get_shipp_charge' : self._get_shipping  
+            'get_shipp_charge': self._get_shipping  
         })
         
     def _get_shipping(self):
        
         if 'price' in self.context and self.context.has_key('price'):
-            
-           return self.context['price']
-        
+            return self.context['price']       
         return 0.0
      
 report_sxw.report_sxw(

@@ -4,44 +4,44 @@
 import copy
 
 def decimal_to_float(cube):
-	# Note FP: I think the decimal > float conversion should be done more
-	# in upstream
-	if type(cube)==type([]) and len(cube):
-		if type(cube[0])==type([]):
-			for b in cube:
-				decimal_to_float(b)
-		else:
-			for l in range(len(cube)):
-				cube[l] = str(float(cube[l]))
+# Note FP: I think the decimal > float conversion should be done more
+# in upstream
+    if type(cube)==type([]) and len(cube):
+        if type(cube[0])==type([]):
+            for b in cube:
+                decimal_to_float(b)
+        else:
+            for l in range(len(cube)):
+                cube[l] = str(float(cube[l]))
 
 def sort_apply(cube, axis_pos):
-	cube2 = copy.copy(cube)
-	for i in range(len(axis_pos)):
-		cube[i] = cube2[axis_pos[i]]
-	return cube
+    cube2 = copy.copy(cube)
+    for i in range(len(axis_pos)):
+        cube[i] = cube2[axis_pos[i]]
+    return cube
 
 def sort_axis(data):
-	for axis_id in range(len(data[0])):
-		axis_pos = []
-		for i in range(len(data[0][axis_id])):
-			axis_pos.append((data[0][axis_id][i], i))
-		axis_pos.sort()
-		data[0][axis_id] = map(lambda x: x[0], axis_pos)
-		axis_pos2 = map(lambda x: x[1], axis_pos)
-		cubes = [ data[1] ]
-		for i in range(axis_id):
-			cubes2 = []
-			for cube in cubes:
-				cubes2 += cube
-			cubes = cubes2
-		for cube in cubes:
-			sort_apply(cube, axis_pos2)
+    for axis_id in range(len(data[0])):
+        axis_pos = []
+        for i in range(len(data[0][axis_id])):
+            axis_pos.append((data[0][axis_id][i], i))
+        axis_pos.sort()
+        data[0][axis_id] = map(lambda x: x[0], axis_pos)
+        axis_pos2 = map(lambda x: x[1], axis_pos)
+        cubes = [ data[1] ]
+        for i in range(axis_id):
+            cubes2 = []
+            for cube in cubes:
+                cubes2 += cube
+            cubes = cubes2
+        for cube in cubes:
+            sort_apply(cube, axis_pos2)
 
 def mdx_output(data):
-	print 'DATA',  data
-	decimal_to_float(data[1])
-	sort_axis(data) 
-	return data
+    print 'DATA',  data
+#    decimal_to_float(data[1])
+#    sort_axis(data) 
+    return data
 
 if __name__=='__main__':
 	print 'Testing Code'

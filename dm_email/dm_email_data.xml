@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<openerp>
+
+	<!-- Transition Triggers -->
+	
+	<data>
+    <record id="dm_offer_step_transition_mail_unsubscribe" model="dm.offer.step.transition.trigger">
+         <field eval="&quot;&quot;&quot;Unsubscribe&quot;&quot;&quot;" name="name"/>
+         <field eval="&quot;&quot;&quot;unsubscribe&quot;&quot;&quot;" name="code"/>
+         <field eval="&quot;&quot;&quot;False&quot;&quot;&quot;" name="gen_next_wi"/>
+         <field eval="&quot;&quot;&quot;offer&quot;&quot;&quot;" name="type"/>
+         <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
+    </record>
+	</data>
+
+	<!-- OFFER STEP ACTION -->
+    <data noupdate="0">
+        <record id="ir_actions_server_html_doc_generate0" model="ir.actions.server">
+            <field eval="5" name="sequence"/>
+            <field eval="&quot;&quot;&quot;code&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
+            <field name="model_id" ref="dm.model_dm_workitem"/>
+            <field eval="[(6,0,[])]" name="child_ids"/>
+            <field eval="1" name="dm_action"/>
+            <field eval="&quot;&quot;&quot;from dm import report_design \nreport_design.generate_reports(cr,uid,obj,'html2html',context)&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
+            <field eval="&quot;&quot;&quot;Generate HTML Document&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+<!--
+    <data noupdate="0">
+        <record id="dm_offer_step_action_html_doc_generate0" model="dm.offer.step.action">
+            <field name="media_id" ref="dm.media_email"/>
+            <field name="server_action_id" ref="ir_actions_server_html_doc_generate0"/>
+        </record>
+    </data>
+-->
+    <data noupdate="0">
+        <record id="ir_actions_server_email_queue_generate" model="ir.actions.server">
+            <field eval="5" name="sequence"/>
+            <field eval="&quot;&quot;&quot;code&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
+            <field name="model_id" ref="dm.model_dm_campaign_document"/>
+            <field eval="[(6,0,[])]" name="child_ids"/>
+            <field eval="&quot;&quot;&quot;from dm_email import dm_email_document\ndm_email_document.create_email_queue(cr,uid,obj,context)&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
+            <field eval="&quot;&quot;&quot;Generate Email Queue&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+
+
+	<!-- Campaign Document Types -->
+	<data>
+        <record id="dm_campaign_document_type_html0" model="dm.campaign.document.type">
+            <field eval="&quot;&quot;&quot;HTML&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;html&quot;&quot;&quot;" name="code"/>
+        </record>
+    </data>
+    
+	<!-- Offer Step type -->
+    <data noupdate="1">
+        <record id="offer_step_type_generate0" model="dm.offer.step.type">
+            <field eval="&quot;&quot;&quot;Acknowledgement of Delivered Email&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;ACKEMAIL&quot;&quot;&quot;" name="code"/>              
+        </record>
+    </data>
+
+    <!-- Mail Service Type -->
+    <data>
+        <record model="dm.mail_service.type" id="dm_mail_service_type_smtp">
+            <field name="name" eval="&quot;SMTP Server&quot;"/>
+            <field name="code" eval="&quot;smtp&quot;"/>
+        </record>
+    </data>   
+</openerp>

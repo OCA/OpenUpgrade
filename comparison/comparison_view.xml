@@ -16,6 +16,28 @@
                     <field name="password" password="True"/>
                     <field name="email" widget="email" select="1"/>
                     <field name="active"/>
+                    <field name="factor_ids" colspan="4" widget="one2many_list">
+                    	<tree string="Factors">
+	                    	<field name="name"/>
+		                    <field name="parent_id"/>
+		                    <field name="ponderation"/>
+		                    <field name="state"/>
+	                    </tree>
+	                    <form string="Factors">
+	                    	<field name="name"/>
+		                    <field name="parent_id"/>
+		                    <field name="ponderation"/>
+		                    <field name="state"/>
+	                    </form>
+                    </field>
+                    <field name="suggestion_ids" colspan="4" widget="one2many_list">
+                    	<tree string="Suggested Ponderations">
+		                    <field name="factor_id" select="1"/>
+		                    <field name="ponderation" select="1"/>
+		                    <field name="state" select="2"/>
+	                	</tree>
+	               	</field> 	
+                    <field name="vote_ids" colspan="4"/>
                 </form>
             </field>
         </record>
@@ -55,7 +77,19 @@
                     <field name="version"/>
                     <field name="user_id" select="1"/>
                     <field name="load_default" />
-                    <field name="result_ids" colspan="4" widget="one2many_list" readonly="1"/>
+                    <field name="sequence" />
+                    <field name="result_ids" colspan="4" widget="one2many_list" >
+                    	<tree string="Results">
+                    		<field name="factor_id"/>
+                    		<field name="result"/>
+                    		<field name="votes"/>
+                    	</tree>
+                    	<form string="Results">
+                    		<field name="factor_id"/>
+                    		<field name="result"/>
+                    		<field name="votes"/>
+                    	</form>
+                    </field>
                     <newline/>
                     <field name="note" colspan="4"/>
                     <newline/>
@@ -101,11 +135,24 @@
                             <field name="name" select="1"/>
                             <field name="parent_id" select="2"/>
                             <newline/>
-                            <field name="user_id" select="1"/>
-                            <field name="ponderation" select="2"/>
+	                        <field name="user_id" select="1"/>
+	                        <field name="ponderation" select="2"/>
+                            <newline/>
                             <field name="type" select="1"/>
                             <field name="pond_computed" />
-                            <field name="result_ids" colspan="4" widget="one2many_list" readonly="1"/>
+                            <field name="sequence" />
+                            <field name="result_ids" colspan="4" widget="one2many_list" >
+                            	<tree string="Results">
+		                    		<field name="item_id"/>
+		                    		<field name="result"/>
+		                    		<field name="votes"/>
+                    			</tree>
+		                    	<form string="Results">
+		                    		<field name="item_id"/>
+		                    		<field name="result"/>
+		                    		<field name="votes"/>
+		                    	</form>
+                            </field>
                             <newline/>
                             <field name="state" select="2"/>
                             <button name="export_csv" string="Export to CSV" type="object"/>
@@ -140,7 +187,7 @@
             <field name="field_parent">child_ids</field>
             <field name="priority">100</field>
             <field name="arch" type="xml">
-                <tree string="Criterions' Structure">
+                <tree string="Criterias' Structure">
                     <field name="name"/>
                     <field name="ponderation"/>
                     <field name="state"/>
@@ -149,16 +196,17 @@
         </record>
 
         <record id="action_comparison_factor_list" model="ir.actions.act_window">
-            <field name="name">Criterions</field>
+            <field name="name">Criterias</field>
             <field name="res_model">comparison.factor</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
+        
         <menuitem action="action_comparison_factor_list" id="menu_action_comparison_factor_list" parent="menu_config_comparison"/>
 
 
         <record id="action_comparison_factor_tree" model="ir.actions.act_window">
-            <field name="name">Criterions Structure</field>
+            <field name="name">Criterias Structure</field>
             <field name="res_model">comparison.factor</field>
             <field name="view_type">tree</field>
             <field name="view_id" ref="view_comparison_factor_tree"/>
@@ -256,8 +304,12 @@
                     <field name="user_id" select="2"/>
                     <field name="factor_id" select="1"/>
                     <field name="score_id" select="1"/>
-<!--                    <field name="ponderation" select="2"/>-->
                     <field colspan="4" name="note" />
+                     <field name="state" colspan="2" select="2"/>
+                    <group col="2" colspan="2">
+                    <button name="accept_vote" states="draft" string="Accept" type="object"/>
+                    <button name="cancel_vote" states="draft,valid" string="Reject" type="object"/>
+                    </group>
                 </form>
             </field>
         </record>
@@ -271,6 +323,7 @@
                     <field name="item_id"/>
                     <field name="factor_id"/>
                     <field name="score_id"/>
+                    <field name="state"/>
 <!--                    <field name="ponderation"/>-->
                 </tree>
             </field>
@@ -306,6 +359,7 @@
                     <field name="factor_id" select="1"/>
                     <field name="user_id" />
                     <field name="ponderation" select="1"/>
+                    <field name="effect" select="2"/>
                        <newline/>
                     <field colspan="4" name="note" />
                     <field name="state" colspan="2" select="2"/>
@@ -326,7 +380,8 @@
                     <field name="factor_id" select="1"/>
                     <field name="user_id" />
                     <field name="ponderation" select="1"/>
-                       <field name="state" select="2"/>
+                    <field name="effect" />
+                    <field name="state" select="2"/>
                 </tree>
             </field>
         </record>
@@ -382,6 +437,74 @@
         </record>
         
         <menuitem action="action_evaluation_pack_tree" id="menu_action_evaluation_pack_tree" parent="menu_config_comparison"/>
+        
+        <menuitem id="menu_periodical" name="Periodical Processing" parent="menu_comparison" sequence="2"/>
+        <menuitem id="menu_periodical_criterias" name="Criterias" parent="menu_periodical" sequence="1"/>
+        <menuitem id="menu_periodical_votes" name="Votes" parent="menu_periodical" sequence="3"/>
+        <menuitem id="menu_periodical_suggestions" name="Ponderation Suggestions" parent="menu_periodical" sequence="2"/>
+        
+        <!-- Criterias -->
+        
+        <record id="action_criterias_draft" model="ir.actions.act_window">
+            <field name="name">Draft Criterias</field>
+            <field name="res_model">comparison.factor</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','=','draft')]</field>
+        </record>
+        <menuitem action="action_criterias_draft" id="menu_action_criterias_draft" parent="menu_periodical_criterias"/>
+        
+        <record id="action_criterias_cancel" model="ir.actions.act_window">
+            <field name="name">Cancelled Criterias</field>
+            <field name="res_model">comparison.factor</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','=','cancel')]</field>
+        </record>
+        <menuitem action="action_criterias_cancel" id="menu_action_criterias_cancel" parent="menu_periodical_criterias"/>
+        
+        <!-- Votes -->
+        
+        <record id="action_votes_draft" model="ir.actions.act_window">
+            <field name="name">Draft Votes</field>
+            <field name="res_model">comparison.vote</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','=','draft')]</field>
+        </record>
+        <menuitem action="action_votes_draft" id="menu_action_votes_draft" parent="menu_periodical_votes"/>
+        
+        <record id="action_votes_cancel" model="ir.actions.act_window">
+            <field name="name">Cancelled Votes</field>
+            <field name="res_model">comparison.vote</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','=','cancel')]</field>
+        </record>
+        <menuitem action="action_votes_cancel" id="menu_action_votes_cancel" parent="menu_periodical_votes"/>
+        
+        <!-- Ponderation Suggestions -->
+        
+        <record id="action_ponderation_draft" model="ir.actions.act_window">
+            <field name="name">Draft Suggestions</field>
+            <field name="res_model">comparison.ponderation.suggestion</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','=','draft')]</field>
+        </record>
+        <menuitem action="action_ponderation_draft" id="menu_action_ponderation_draft" parent="menu_periodical_suggestions"/>
+        
+        <record id="action_ponderation_cancel" model="ir.actions.act_window">
+            <field name="name">Cancelled Suggestions</field>
+            <field name="res_model">comparison.ponderation.suggestion</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','=','cancel')]</field>
+        </record>
+        <menuitem action="action_ponderation_cancel" id="menu_action_ponderation_cancel" parent="menu_periodical_suggestions"/>
+        
+        <wizard id="wizard_recompute_evaluations" menu="False" name="recompute.evaluations" string="Recompute All Evaluations"/>
+        <menuitem action="wizard_recompute_evaluations" id="menu_wizard_recompute_evaluations" parent="menu_periodical" type="wizard"/>
         
     </data>
 </openerp>

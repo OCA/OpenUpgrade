@@ -2,7 +2,20 @@ import sqlalchemy
 from sqlalchemy import *
 import common
 
-
+def measure_sql_exp_col(metadata,col):
+    temp = col.split(".")
+    table_name =  filter(lambda x: x.name==temp[0],metadata.table_iterator(reverse=False))
+    if table_name:
+        if not col  in table_name[0].c:
+            col = sqlalchemy.Column(temp[1], sqlalchemy.Float)
+            table_name[0].append_column(col)
+            return col
+        else:
+            for k in table_name[0].c:
+                if temp[1] == k.name:
+                    return k
+    else:
+        print "The table %s  do not exist or match to cube fact table"%(temp[0])
 # To be Improved
 # I am sure it exist something better in SA
 def col_get(table, col_obj):
@@ -75,7 +88,6 @@ def table_get(metadata, table):
         else:
             result = sqlalchemy.Table(table.column_link_id.table_id.table_db_name,metadata)
 
-    print "\n\n============= this is the result from table_get ========\n\n",result,"\n\n"
     return result
 
 def xcombine(*seqin):

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <!--
+        <record model="ir.ui.view" id="training_event_form_with_location">
+            <field name="name">training.event.form</field>
+            <field name="model">training.event</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="training.training_event_form" />
+            <field name="arch" type="xml">
+                <field name="duration" position="after">
+                    <field name="location_id" />
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="training_event_tree_with_location">
+            <field name="name">training.event.tree</field>
+            <field name="model">training.event</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="training.training_event_tree" />
+            <field name="arch" type="xml">
+                <field name="duration" position="after">
+                    <field name="location_id" />
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="training_event_all_calendar_with_location">
+            <field name="name">training.event.all.calendar</field>
+            <field name="model">training.event</field>
+            <field name="type">calendar</field>
+            <field name="inherit_id" ref="training.training_event_all_calendar" />
+            <field name="arch" type="xml">
+                <field name="session_ids" position="after">
+                    <field name="location_id" />
+                </field>
+            </field>
+        </record>
+        -->
+
+        <record model="ir.ui.view" id="view_training_location_form">
+            <field name="name">view.training.location.form</field>
+            <field name="model">training.location</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Location">
+                    <separator string="Location Description" colspan="4" />
+                    <field name="name" />
+                    <field name="address_id" />
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_training_location_tree">
+            <field name="name">view.training.location.tree</field>
+            <field name="model">training.location</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Locations">
+                    <field name="name" />
+                    <field name="address_id" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="training_location_all_act">
+            <field name="name">Locations</field>
+            <field name="res_model">training.location</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="training_location_new_act">
+            <field name="name">New Location</field>
+            <field name="res_model">training.location</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+
+        <menuitem 
+            id="training_config_locations_mi" 
+            parent="training.training_config_mi" 
+            action="training_location_all_act"/>
+        <menuitem 
+            id="training_config_locations_new_mi" 
+            parent="training_config_locations_mi" 
+            action="training_location_new_act" />
+    </data>
+</openerp>

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+		<menuitem id="menu_google" name="Google Import-Export" parent="event.menu_event_main"/>
+
+		<wizard id="wizard_google_calendar_synch"  name="google.calendar.synch" string="Synchronize Events"/>
+		<menuitem name="Synchronize Events" id="menu_tools_google_calendar_synch" parent="menu_google" action="wizard_google_calendar_synch" type="wizard"/>
+
+	</data>
+</openerp>

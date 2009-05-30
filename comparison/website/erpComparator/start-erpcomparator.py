@@ -1,4 +1,4 @@
-#!/usr/bin/python2.5
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 """Start script for the erpComparator TurboGears project.
 

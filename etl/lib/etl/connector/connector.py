@@ -20,21 +20,54 @@
 #
 ##############################################################################
 """
-        Base class of ETL Connector.
+ ETL Connector.
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+ GNU General Public License.
 """
-class connector(object):
+from etl import signal
+import datetime
+class connector(signal):
     """
-        Base class of ETL Connector.
+    Base class of ETL Connector.
     """
-    def __init__(self,uri):        
-        self.uri=uri  
-        self.connector=None      
+
+    def __init__(self,name='connector'):
+        """
+        Parameters
+        name : Name of the connector.
+        """
+        self._type = 'connector'
+        super(connector, self).__init__()
+        self.name = name or ''
+        self.status = 'close'
+
+    def __copy__(self):
+        res = connector(name=self.name)
+        return res
+
+    def __str__(self):
+    	return '<Connector name = "%s" type = "%s">'%(self.name, self._type)
+
+    def __getstate__(self):
+        return {'name' : self.name, 'status': self.status , '_type' :self._type}
+
+    def __setstate__(self, state):
+        state['_signal__connects'] = {}
+        self.__dict__ = state
+
     def open(self):
-        pass
-    def close(self):
-        pass 
+        self.status = 'open'
+        self.signal('open', {'date': datetime.datetime.today()})
+
+    def close(self, connector=False):
+        """
+        Parameters
+        connector : Connector that is to be closed.
+        """
+        self.status = 'close'
+        self.signal('close', {'date': datetime.datetime.today()})
+
     def execute(self):
-        pass   
-    def __str__(self):        
-        return self.uri
-    
+        return True
+

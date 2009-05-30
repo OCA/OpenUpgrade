@@ -20,7 +20,7 @@
 #
 ##############################################################################
 {
-    "name":"Manage the maintenance contracts of a product fleet",
+    "name":"Help managing maintenance contracts related to product fleet",
     'description': """
 Manage the maintenance contracts of a product fleet (streaming servers originally).
 
@@ -55,7 +55,8 @@ if movements are properly entered in the crm incident. For a better tracking exp
 advised to use it along with the mrp_prodlot_autosplit module. 
     """,
     "version":"0.3",
-    "author":"Smile.fr for Anevia.com",
+    "author":"Smile for Anevia (Anevia.com)",
+    "website": "http://www.smile.fr",
     "category":"Custom",
     "depends":["base", "product", "stock", "sale", "crm_configuration", "account", "delivery"],#the delivery dependence is important
     #because if delivery is installed, then declaring the dependence controls where our stock.picking.action_invoice_create action is called

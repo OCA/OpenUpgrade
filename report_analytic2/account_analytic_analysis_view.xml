@@ -1,0 +1,111 @@
+<terp>
+	<data>
+		<record model="ir.ui.view" id="view_report_camount_tree">
+			<field name="name">Amounts by year</field>
+			<field name="model">report.analytic.by.year</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Amount by year">
+					<field name="year"/>
+					<field name="amount" sum="Total Amount" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_report_camount_form">
+			<field name="name">Amounts by year</field>
+			<field name="model">report.analytic.by.year</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Analytics Amount by year">
+					<field name="year" select="1"/>
+					<field name="amount" select="1" />
+				</form>
+			</field>
+		</record>
+
+
+		<record model="ir.actions.act_window" id="action_report_analytics_amount_tree">
+			<field name="name">Amounts by year</field>
+			<field name="res_model">report.analytic.by.year</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem name="Financial Management/Reporting/Analytic/All Months/Analytic Amount by year" action="action_report_analytics_amount_tree" id="menu_report_amount_tree"/>
+
+		<record model="ir.ui.view" id="view_report_analytics_amount_tree_m">
+			<field name="name">Amounts by months</field>
+			<field name="model">report.analytic.by.month</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Amount by month">
+					<field name="month"/>
+					<field name="year"/>
+					<field name="amount" sum="Total Amount" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_report_analytics_amount_form_m">
+			<field name="name">Amounts by month</field>
+			<field name="model">report.analytic.by.month</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Analytics Amount by month">
+					<field name="month" select="1"/>
+					<field name="year" select="1"/>
+					<field name="amount" select="1" />
+				</form>
+			</field>
+		</record>
+
+
+		<record model="ir.actions.act_window" id="action_report_analytics_amount_tree_m">
+			<field name="name">Amounts by month</field>
+			<field name="res_model">report.analytic.by.month</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem name="Financial Management/Reporting/Analytic/All Months/Analytic Amounts by month" action="action_report_analytics_amount_tree_m" id="menu_report_amount_tree_m"/>
+
+
+		<record model="ir.ui.view" id="view_report_analytics_amount_tree_p">
+			<field name="name">Amounts By products</field>
+			<field name="model">report.analytic.by.product</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Amount by product">
+					<field name="name"/>
+					<field name="year"/>
+					<field name="amount" sum="Total Amount" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_report_analytics_amount_form_p">
+			<field name="name">Amounts by products</field>
+			<field name="model">report.analytic.by.product</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Analytics Amount by Product">
+					<field name="name" select="1"/>
+					<field name="year" select="1"/>
+					<field name="amount" select="1" />
+				</form>
+			</field>
+		</record>
+
+
+		<record model="ir.actions.act_window" id="action_report_analytics_amount_tree_p">
+			<field name="name">Analytics amounts</field>
+			<field name="res_model">report.analytic.by.product</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem name="Financial Management/Reporting/Analytic/All Months/Analytic Amounts by product" action="action_report_analytics_amount_tree_p" id="menu_report_amount_tree_p"/>
+
+	</data>
+</terp>

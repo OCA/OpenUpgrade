@@ -98,16 +98,14 @@ class sale_order_1(report_sxw.rml_parse):
         info=[]
         order_lines=[]
         res={}
-        list_in_seq={}
+        list_in_seq=[]
         ids = self.pool.get('sale.order.line').search(self.cr, self.uid, [('order_id', '=', sale_order.id)])
-        ids.sort()
         for id in range(0,len(ids)):
-            info = self.pool.get('sale.order.line').browse(self.cr, self.uid,ids[id], self.context.copy())
-            list_in_seq[info]=info.sequence
+            order = self.pool.get('sale.order.line').browse(self.cr, self.uid,ids[id], self.context.copy())
+            order_lines.append(order)
+        
         i=1
         j=0
-        final=sorted(list_in_seq.items(), lambda x, y: cmp(x[1], y[1]))
-        order_lines=[x[0] for x in final]
         sum_flag={}
         sum_flag[j]=-1
         for entry in order_lines:
@@ -167,13 +165,13 @@ class sale_order_1(report_sxw.rml_parse):
                     res['price_subtotal']=''
                     res['currency']=''
                 elif entry.layout_type=='line':
-                    res['product_uom_qty']='____________'
+                    res['product_uom_qty']='__________'
                     res['price_unit']='______________'
-                    res['discount']='____________'
+                    res['discount']='___________'
                     res['tax_id']='_________________'
                     res['product_uom']='_____'
-                    res['name']='________________________________________'
-                    res['price_subtotal']='_______________________'
+                    res['name']='_______________________________________'
+                    res['price_subtotal']='_________'
                     res['currency']='_______'
                 elif entry.layout_type=='break':
                     res['layout_type']=entry.layout_type
@@ -189,4 +187,5 @@ class sale_order_1(report_sxw.rml_parse):
         return result
 report_sxw.report_sxw('report.sale.order.layout', 'sale.order', 'addons/sale_layout/report/report_sale_layout.rml', parser=sale_order_1)
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+
 

@@ -1,44 +1,29 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
-#
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
 {
-    "name" : "OScommerce Interface / ZenCart",
-    "version" : "1.0",
-    "author" : "Tiny / modified by Lucien Moerkamp",
-    "category" : "Interfaces/CMS & eCommerce",
-    "website" : "http://www.tinyerp.com",
-    "depends" : ["product", "stock", "sale"],
-    "description": """OSCommerce (Zencart) eCommerce interface synchronisation.
-Users can order on the website, orders are automatically imported in Tiny
-ERP.
+	"name" : "OScommerce Interface / ZenCart",
+	"version" : "1.0",
+	"author" : "Axelor/Zikzakmedia",
+	"category" : "Interface OScommerce",
+	"website" : "http://www.zikzakmedia.com",
+	"depends" : ["product", "stock", "sale", "account_payment"],
+	"description": """OSCommerce (Zencart) eCommerce interface synchronisation.
+Users can order on the website, orders are automatically imported in OpenERP.
 
 You can export products, stock level and create links between
 categories of products, taxes and languages.
 
-If you product has an image attched, it send the image to the Joomla website.""",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : ["security/esale_osc_security.xml","security/ir.model.access.csv","esale_osc_view.xml", "esale_osc_wizard.xml"],
-    "active": False,
-    "installable": True
-}
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+If you product has an image attached, it sends the image to the OScommerce website.
 
+Developed by Tiny, Axelor and Zikzakmedia""",
+	"init_xml" : [],
+	"demo_xml" : [],
+	"update_xml" : [
+		"security/esale_oscom_security.xml",
+		"security/ir.model.access.csv",
+		"esale_oscom_view.xml",
+		"esale_oscom_wizard.xml",
+		"esale_oscom_product_view.xml",
+		"shipping_product_data.xml"
+	],
+	"active": False,
+	"installable": True
+}

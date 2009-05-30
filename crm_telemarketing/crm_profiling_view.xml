@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_questionnaire_form_inherit">
+            <field name="name">Questionnaires form inherited</field>
+            <field name="model">crm_profiling.questionnaire</field>
+            <field name="inherit_id" ref="crm_profiling.view_questionnaire_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <newline/>
+                    <field name="first" />
+                </field>
+    			<!-- field name="questions_ids" position="replace"/ -->
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_question_form_tree">
+            <field name="name">Questions from inherited</field>
+            <field name="model">crm_profiling.question</field>
+            <field name="inherit_id" ref="crm_profiling.view_question_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <xpath expr="/form/field[@name='answers_ids']/tree/field[@name='name']" position="after">
+                    <field name="next"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_question_form_form">
+            <field name="name">Questions from inherited</field>
+            <field name="model">crm_profiling.question</field>
+            <field name="inherit_id" ref="crm_profiling.view_question_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <xpath expr="/form/field[@name='answers_ids']/form/field[@name='name']" position="after">
+                    <field name="next"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

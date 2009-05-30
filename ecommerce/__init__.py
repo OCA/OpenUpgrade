@@ -19,10 +19,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import tools
+import wizard
 import partner
 import catalog
-import basic_info
+import ecommerce
 import sale_order
 import report 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

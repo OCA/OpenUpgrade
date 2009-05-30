@@ -1,0 +1,65 @@
+<openerp>
+<data>
+      <record model="ir.ui.view" id="view_document_directory_form">
+        <field name="name">document.rule</field>
+        <field name="model">document.rule</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+			<form string="Document Rules">
+				<field name="name" string="Rule Name"/>
+        		<field name="active" />
+				<notebook colspan="4">
+				<page string="Conditions">
+					<separator colspan="4" string="Conditions on States"/>
+						<field name="resource_object"/>
+						<field name="author"/>
+						<field name="partner_id"/>
+						<field name="directory_id"/>
+						<field name="date_type"/>
+						<field name="filename"/>
+
+		  		</page>
+		  		<page string="Actions">
+		  			<separator colspan="4" string="Directory Actions"/>
+					<field name="act_copy_directory_id" />
+					<field name="act_move_directory_id"/>
+					<separator colspan="4" string="Assign To"/>
+					<field name="act_assign_user_id"/>
+					<field name="act_assign_partner_id"/>
+					<separator colspan="4" string="Server Action"/>
+					<field name="server_act"/>
+		  		</page>
+		</notebook>
+		</form>
+
+		</field>
+
+	</record>
+    <record model="ir.ui.view" id="view_document_rule_tree">
+        <field name="name">document.rule</field>
+        <field name="model">document.rule</field>
+        <field name="type">tree</field>
+        <field name="field_parent">child_ids</field>
+        <field name="arch" type="xml">
+            <tree string="Document Rules" toolbar="1">
+	            <field name="name" select="1" string="Rule Name"/>
+	            <field name="active" />
+			</tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_document_rule_form">
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">document.rule</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        name="Document Rules"
+        action="action_document_rule_form"
+        id="menu_document_rules"
+        parent="document.menu_document_configuration"/>
+
+</data>
+</openerp>

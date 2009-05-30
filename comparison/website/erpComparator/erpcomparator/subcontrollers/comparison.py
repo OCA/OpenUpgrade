@@ -19,47 +19,50 @@ class Comparison(controllers.Controller, TinyResource):
     @expose(template="erpcomparator.subcontrollers.templates.comparison")
     def default(self, args=None, **kw):
         
-        user_name = kw.get('user_name')
-        password = kw.get('password')
+        lang_proxy = rpc.RPCProxy('res.lang')
+        if(kw.get('lang_code')):
+            language = kw['lang_code']
+            context = rpc.session.context
+              
+            context['lang'] = language
+            lang_id = lang_proxy.search([])
+            lang_data = lang_proxy.read(lang_id, [], rpc.session.context)
+            cherrypy.session['language'] = context['lang']
+            cherrypy.session['lang_data'] = lang_data
+        else:
+            search_lang = lang_proxy.search([])
+            lang_data = lang_proxy.read(search_lang, [], rpc.session.context)
+            language  = 'en_US'
+            context = rpc.session.context
+            context['lang'] = language
         
+        if(cherrypy.session.has_key('language')):
+             cherrypy.session['language']
+             cherrypy.session['lang_data']
+        else:
+            cherrypy.session['language'] = context['lang']
+            cherrypy.session['lang_data'] = lang_data
+      
         selected_items = kw.get('ids', [])
         selected_items = selected_items and eval(str(selected_items))
         
         if args and not selected_items:
             pack_proxy = rpc.RPCProxy('evaluation.pack')
-            packs = pack_proxy.search([('name', '=', args)])
-            item_ids = pack_proxy.read(packs, ['item_ids'])
+            packs = pack_proxy.search([('name', '=', args)], 0, 0, 0, rpc.session.context)
+            item_ids = pack_proxy.read(packs, ['item_ids'], rpc.session.context)
             selected_items = item_ids[0].get('item_ids')
         
         user_info = cherrypy.session.get('login_info', '')
         
-        if not user_info:
-            if user_name and password:
-                model = 'comparison.user'
-        
-                proxy = rpc.RPCProxy(model)
-                uids = proxy.search([])
-                ures = proxy.read(uids, ['name', 'password'])
-                
-                for r in ures:
-                    if r['name'] == user_name and r['password'] == password:
-                        login_info = {}
-                        login_info['name'] = user_name
-                        login_info['password'] = password
-                        
-                        cherrypy.session['login_info'] = user_name
-        
-        model = 'comparison.factor'
         context = rpc.session.context
-        
+        model = 'comparison.factor'
         proxy = rpc.RPCProxy(model)
         
         domain = [('parent_id', '=', False)]
-        
         ids = proxy.search(domain, 0, 0, 0, context)
         
         view = proxy.fields_view_get(False, 'tree', context)
-        fields = proxy.fields_get(False, rpc.session.context)
+        fields = proxy.fields_get(False, context)
         
         field_parent = view.get("field_parent") or 'child_ids'
         
@@ -105,20 +108,20 @@ class Comparison(controllers.Controller, TinyResource):
         self.headers += [decr]
         
         fields = []
-        
+     
         item_model = 'comparison.item'
-        
         proxy_item = rpc.RPCProxy(item_model)
-        item_ids = proxy_item.search([])
+        item_ids = proxy_item.search([], 0, 0, 0, context)
         
         res = proxy_item.read(item_ids, ['name', 'code', 'load_default'])
         
         titles = []
-        
+        ses_id = []
         for r in res:
             title = {}
-            title['sel'] = None
+            title['sel'] = False
             if selected_items:
+                ses_id = selected_items
                 item = {}
                 for s in selected_items:
                     if r['id'] == s:
@@ -141,20 +144,37 @@ class Comparison(controllers.Controller, TinyResource):
                 item['name'] = r['name']
                 item['code'] = r['code']
                 self.headers += [item]
-            
+                ses_id.append(r['id'])
+            cherrypy.session['selected_items'] = ses_id
             title['name'] = r['name']
             title['id'] = r['id']
             title['code'] = r['code']
             title['load'] = r['load_default']
             titles += [title]
             
+        sel_ids=[]
+        for t in titles:
+            if t['load'] or t['sel']:
+                sel_ids += [t['id']]
+        
+#        cherrypy.response.simple_cookie['selected_items'] = sel_ids
+        
         for field in self.headers:
             if field['name'] == 'name' or field['name'] == 'ponderation':
                 fields += [field['name']]
         
         fields = jsonify.encode(fields)
         icon_name = self.headers[0].get('icon')
-        
+#        if kw.has_key('all'):
+#            self.url = '/comparison/data'
+#            self.url_params = dict(model=model, 
+#                                    ids=ids,
+#                                    fields=ustr(fields), 
+#                                    domain=ustr(domain), 
+##                                    context=ustr(context), 
+#                                    field_parent=field_parent,
+#                                    icon_name=icon_name,all = kw.get('all'))
+#        else:
         self.url = '/comparison/data'
         self.url_params = dict(model=model, 
                                 ids=ids,
@@ -173,7 +193,6 @@ class Comparison(controllers.Controller, TinyResource):
         
         self.url_params = _jsonify(self.url_params)
         self.headers = jsonify.encode(self.headers)
-        
         return dict(headers=self.headers, url_params=self.url_params, url=self.url, titles=titles, selected_items=selected_items)
     
     def check_data(self):
@@ -206,7 +225,7 @@ class Comparison(controllers.Controller, TinyResource):
         model = "comparison.factor"
         
         proxy = rpc.RPCProxy(model)
-        res = proxy.read([id], ['name', 'parent_id', 'child_ids'])
+        res = proxy.read([id], ['name', 'parent_id', 'child_ids'], rpc.session.context)
             
         parent = res[0].get('name')
         p_id = id
@@ -234,7 +253,7 @@ class Comparison(controllers.Controller, TinyResource):
         
         model = "comparison.factor"
         proxy = rpc.RPCProxy(model)
-        res = proxy.read([id], ['name', 'ponderation'])
+        res = proxy.read([id], ['name', 'ponderation'], rpc.session.context)
         name = res[0]['name']
         pond = res[0]['ponderation']
         
@@ -244,16 +263,18 @@ class Comparison(controllers.Controller, TinyResource):
         if pond_val == 'incr':
             if pond > 0.0:
                 pond = pond + 0.1
+                effect = 'positive'
         else:
             if pond > 0.0:
                 pond = pond - 0.1
+                effect = 'negative'
         
         user_proxy = rpc.RPCProxy('comparison.user')
         user_id = user_proxy.search([('name', '=', user_info)])
         user_id = user_id[0]
         
         try:
-            value = sproxy.create({'factor_id': id, 'user_id': user_id, 'ponderation': pond})
+            value = sproxy.create({'factor_id': id, 'user_id': user_id, 'ponderation': pond, 'effect':effect})
         except Exception, e:
             return dict(value=value, error=str(e))
         
@@ -268,11 +289,11 @@ class Comparison(controllers.Controller, TinyResource):
         item = kw.get('header')
         
         iproxy = rpc.RPCProxy('comparison.item')
-        item_id = iproxy.search([('name', '=', item)])[0]
+        item_id = iproxy.search([('name', '=', item)], 0, 0, 0, rpc.session.context)[0]
         
         fmodel = "comparison.factor"
         proxy = rpc.RPCProxy(fmodel)
-        fres = proxy.read([id])
+        fres = proxy.read([id], [], rpc.session.context)
         
         factor_id = fres[0]['name']
         child_ids =  fres[0]['child_ids']
@@ -280,7 +301,7 @@ class Comparison(controllers.Controller, TinyResource):
         child = []
         for ch in child_ids:
             chid = {}
-            chd = proxy.read([ch])
+            chd = proxy.read([ch], [], rpc.session.context)
             chid['name'] = chd[0]['name']
             chid['id'] = ch
             chid['type'] = chd[0]['type']
@@ -288,8 +309,8 @@ class Comparison(controllers.Controller, TinyResource):
                 child += [chid]
         
         vproxy = rpc.RPCProxy('comparison.vote.values')
-        val = vproxy.search([])
-        value_name = vproxy.read(val, ['name'])
+        val = vproxy.search([], 0, 0, 0, rpc.session.context)
+        value_name = vproxy.read(val, ['name'], rpc.session.context)
         
         if not user_info:
             return dict(item_id=item_id, item=item, child=child, factor_id=factor_id, value_name=value_name, id=id, error="You are not logged in...")
@@ -328,8 +349,8 @@ class Comparison(controllers.Controller, TinyResource):
                 
         vproxy = rpc.RPCProxy('comparison.vote.values')
         
-        vid = vproxy.search([])
-        value_name = vproxy.read(vid, ['name'])
+        vid = vproxy.search([], 0, 0, 0, rpc.session.context)
+        value_name = vproxy.read(vid, ['name'], rpc.session.context)
                 
         smodel = "comparison.vote"
         sproxy = rpc.RPCProxy(smodel)
@@ -345,16 +366,15 @@ class Comparison(controllers.Controller, TinyResource):
     
     @expose('json')
     def data(self, model, ids=[], fields=[], field_parent=None, icon_name=None, domain=[], context={}, sort_by=None, sort_order="asc",
-             factor_id=None, ponderation=None, parent_id=None, parent_name=None, ftype=''):
+             factor_id=None, ponderation=None, parent_id=None, parent_name=None, ftype='',all = None):
 
         ids = ids or []
-            
+        
         if isinstance(ids, basestring):
             ids = [int(id) for id in ids.split(',')]
             
         res = None
         user_info = cherrypy.session.get('login_info', '')
-        
         if parent_id:
             
             if not user_info:
@@ -388,25 +408,23 @@ class Comparison(controllers.Controller, TinyResource):
         
         ctx = context or {}
         ctx.update(rpc.session.context.copy())
-
         if icon_name:
             fields.append(icon_name)
         
         if not fields:
             fields = ['name', 'ponderation', 'child_ids']
         
+        fact_proxy = rpc.RPCProxy('comparison.factor')      
         fields_info = proxy.fields_get(fields, ctx)
         result = proxy.read(ids, fields, ctx)
-        
         prx = rpc.RPCProxy('comparison.factor.result')
-        rids = prx.search([('factor_id', 'in', ids)])            
-        factor_res = prx.read(rids)
+        rids = prx.search([('factor_id', 'in', ids)], 0, 0, 0, ctx)            
+        factor_res = prx.read(rids, [], ctx)
         
-        fact_proxy = rpc.RPCProxy('comparison.factor')
-        c_ids = fact_proxy.search([('type', '!=', 'view'), ('id', 'in', ids)])
-        p_ids = fact_proxy.search([('type', '!=', 'view'), ('parent_id', 'in', ids)])
-        parent_ids = fact_proxy.read(p_ids, ['parent_id'])
-        child_ids = fact_proxy.read(c_ids, ['id'])
+        c_ids = fact_proxy.search([('type', '!=', 'view'), ('id', 'in', ids)], 0, 0, 0, ctx)
+        p_ids = fact_proxy.search([('type', '!=', 'view'), ('parent_id', 'in', ids)], 0, 0, 0, ctx)
+        parent_ids = fact_proxy.read(p_ids, ['parent_id'], ctx)
+        child_ids = fact_proxy.read(c_ids, ['id'], ctx)
         
         if sort_by:
             result.sort(lambda a,b: self.sort_callback(a, b, sort_by, sort_order))
@@ -442,14 +460,15 @@ class Comparison(controllers.Controller, TinyResource):
                         x[field] = dict(fields_info[field]['selection']).get(x[field], '')
 
         records = []
+
         for item in result:
+         
             # empty string instead of bool and None
             for k, v in item.items():
                 if v==None or (v==False and type(v)==bool):
                     item[k] = ''
                     
             record = {}
-            
             for i, j in item.items():
                 for r in factor_res:
                     if j == r.get('factor_id')[1]:
@@ -458,8 +477,7 @@ class Comparison(controllers.Controller, TinyResource):
                         else:
                             item[r.get('item_id')[1]] = "No Vote"
                         if r.get('factor_id')[0] in [v.get('parent_id')[0] for v in parent_ids]:
-                            item[r.get('item_id')[1]] += '|' + "open_item_vote(id=%s, header='%s');" % (r.get('factor_id')[0], r.get('item_id')[1]) + '|' + r.get('factor_id')[1]
-                        
+                            item[r.get('item_id')[1]] += '|' + "open_item_vote(%s, '%s');" % (r.get('factor_id')[0], r.get('item_id')[1]) + '|' + r.get('factor_id')[1]
                         if r.get('factor_id')[0] in [v1.get('id') for v1 in child_ids]:
                             item[r.get('item_id')[1]] += '-' + r.get('factor_id')[1]
                         else:
@@ -468,6 +486,7 @@ class Comparison(controllers.Controller, TinyResource):
             
                     item['incr'] = '/static/images/increase.png'
                     item['decr'] = '/static/images/decrease.png'
+            
                     
             if res:
                 record['id'] = res
@@ -477,8 +496,10 @@ class Comparison(controllers.Controller, TinyResource):
             record['target'] = None
 
             if item['ponderation']:
-                item['ponderation'] = (item['ponderation'] or ponderation) + '@'
-                
+                item['ponderation'] = '%.2f' % float(item['ponderation'] or ponderation) + '@'
+            else:
+                item['ponderation'] = '0.00'
+                    
             if icon_name and item.get(icon_name):
                 icon = item.pop(icon_name)
                 record['icon'] = icons.get_icon(icon)
@@ -496,7 +517,7 @@ class Comparison(controllers.Controller, TinyResource):
             
             record['items'] = item
             records += [record]
-        
+            
         return dict(records=records)
     
     def parse(self, root, fields=None):
@@ -516,4 +537,3 @@ class Comparison(controllers.Controller, TinyResource):
                     field['colspan'] = 3
                     
                 self.head += [field]
-        

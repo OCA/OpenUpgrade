@@ -24,12 +24,14 @@
 						<page string="Maintenance">
 							<separator string="Fleet" col="4" colspan="4"/>
 		     			<field name="fleet_id" string="Sub Fleet" context="{'fleet_type':'sub_fleet'}" attrs="{'required':[('is_maintenance','=',True)], 'readonly':[('product_id','=',False)]}" domain="[('fleet_type','=','sub_fleet'), ('parent_partner_id','=',parent.partner_id)]" on_change="fleet_id_change(parent.fleet_id, fleet_id, product_id, maintenance_start_date, maintenance_product_qty)"/>
-		     			<separator string="Maintenance Dates" col="4" colspan="4"/>
-		     			<field name="maintenance_month_qty" readonly="1" />
-		    			<field name="maintenance_product_qty" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}" on_change="maintenance_qty_change(maintenance_product_qty, maintenance_month_qty, maintenance_start_date, maintenance_end_date, is_maintenance)" />
-		     			<field name="maintenance_start_date" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}" on_change="maintenance_qty_change(maintenance_product_qty, maintenance_month_qty, maintenance_start_date, maintenance_end_date, is_maintenance)"/>
-		    			<field name="maintenance_end_date" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}" on_change="maintenance_qty_change(maintenance_product_qty, maintenance_month_qty, maintenance_start_date, maintenance_end_date, is_maintenance)" />
-							<field name="is_maintenance" invisible="1" readonly="1"/>
+		     			<group attrs="{'invisible':[('is_maintenance','=',False)]}" >
+			     			<separator string="Maintenance Dates" col="4" colspan="4"/>
+			     			<field name="maintenance_month_qty" readonly="1" />
+			    			<field name="maintenance_product_qty" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}" on_change="maintenance_qty_change(maintenance_product_qty, maintenance_month_qty, maintenance_start_date, maintenance_end_date, is_maintenance, fleet_id)" />
+			     			<field name="maintenance_start_date" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}" on_change="maintenance_qty_change(maintenance_product_qty, maintenance_month_qty, maintenance_start_date, maintenance_end_date, is_maintenance, fleet_id)"/>
+			    			<field name="maintenance_end_date" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}" on_change="maintenance_qty_change(maintenance_product_qty, maintenance_month_qty, maintenance_start_date, maintenance_end_date, is_maintenance, fleet_id)" />
+								<field name="is_maintenance" invisible="1" readonly="1"/>
+							</group>
 						</page>
 				</xpath>
 	    </field>
@@ -58,7 +60,6 @@
 			<field name="type">form</field>
       <field name="arch" type="xml">
 				<xpath expr="/form/notebook/page/field/form/notebook/page/field[@name='product_uom_qty']" position="replace">
-						<!-- TODO adapt to new fiscal_position parameter -->
             <field
                 context="partner_id=parent.partner_id,quantity=product_uom_qty,pricelist=parent.pricelist_id,shop=parent.shop_id,uom=product_uom"
                 name="product_uom_qty"
@@ -75,7 +76,6 @@
 			<field name="type">form</field>
       <field name="arch" type="xml">
 				<xpath expr="/form/notebook/page/field/form/notebook/page/field[@name='product_id']" position="replace">
-					<!-- TODO adapt to new fiscal_position parameter -->
 	        <field colspan="4"
 	            context="partner_id=parent.partner_id,quantity=product_uom_qty,pricelist=parent.pricelist_id,shop=parent.shop_id,uom=product_uom"
 	            name="product_id"

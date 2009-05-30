@@ -53,7 +53,7 @@ class abstract_quality_check(object):
         #Used to provide more details if necessary.
         self.result_details = ""
 
-        #This bool defines if the test can be run only if the module 
+        #This bool defines if the test can be run only if the module
         #is installed.
         #True => the module have to be installed.
         #False => the module can be uninstalled.
@@ -66,33 +66,32 @@ class abstract_quality_check(object):
         #Specify test got an error on module
         self.error = False
 
-        #The tests have to subscribe itselfs in this list, that contains 
+        #The tests have to subscribe itselfs in this list, that contains
         #all the test that have to be performed.
         self.tests = []
-        self.list_folders = os.listdir(config['addons_path'] + 
+        self.list_folders = os.listdir(config['addons_path'] +
             '/base_module_quality/')
         for item in self.list_folders:
             self.item = item
             path = config['addons_path']+'/base_module_quality/'+item
             if os.path.exists(path + '/' + item + '.py') and item not in ['report', 'wizard', 'security']:
                 item2 = 'base_module_quality.' + item +'.' + item
-                x = __import__(item2)
-                x2 = getattr(x, item)
-                x3 = getattr(x2, item)
-                self.tests.append(x3)
+                x_module = __import__(item2)
+                x_file = getattr(x_module, item)
+                x_obj = getattr(x_file, item)
+                self.tests.append(x_obj)
 #        raise 'Not Implemented'
 
     def run_test(self, cr, uid, module_path=""):
         '''
         this method should do the test and fill the score, result and result_details var
         '''
-
         raise osv.except_osv(_('Programming Error'), _('Test Is Not Implemented'))
 
     def get_objects(self, cr, uid, module):
         # This function returns all object of the given module..
         pool = pooler.get_pool(cr.dbname)
-        ids2 = pool.get('ir.model.data').search(cr, uid, 
+        ids2 = pool.get('ir.model.data').search(cr, uid,
             [('module', '=', module), ('model', '=', 'ir.model')])
         model_list = []
         model_data = pool.get('ir.model.data').browse(cr, uid, ids2)
@@ -103,16 +102,24 @@ class abstract_quality_check(object):
             obj_list.append(str(mod.model))
         return obj_list
 
+    def get_model_ids(self, cr, uid, models=[]):
+        # This function returns all ids of the given objects..
+        if not models:
+            return []
+        pool = pooler.get_pool(cr.dbname)
+        return pool.get('ir.model').search(cr, uid, [('model', 'in', models)])
+
     def get_ids(self, cr, uid, object_list):
         #This method return dictionary with ids of records of object for module
         pool = pooler.get_pool(cr.dbname)
         result_ids = {}
         for obj in object_list:
             ids = pool.get(obj).search(cr, uid, [])
+            ids = filter(lambda id: id != None, ids)
             result_ids[obj] = ids
         return result_ids
 
-    def format_table(self, header=[], data_list=[]): #This function can work forwidget="text_wiki"
+    def format_table(self, header=[], data_list={}): #This function can work forwidget="text_wiki"
         detail = ""
         detail += (header[0]) % tuple(header[1])
         frow = '\n|-'
@@ -135,8 +142,8 @@ class abstract_quality_check(object):
             detail += (frow) % tuple(value)
         return detail
 
-    def add_quatation(self, x, y):
-        return x/y
+    def add_quatation(self, x_no, y_no):
+        return x_no/y_no
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

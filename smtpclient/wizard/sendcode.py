@@ -23,14 +23,8 @@
 import wizard
 import pooler
 from osv import osv
-
 import time
 import sys
-if sys.version[0:3] > '2.4':
-    from hashlib import md5
-else:
-    from md5 import md5
-
 
 form = '''<?xml version="1.0"?>
 <form string="Send Code">
@@ -44,14 +38,10 @@ fields = {
 class sendcode(wizard.interface):
 
     def send_code(self, cr, uid, data, context):
-
-        key = md5(time.strftime('%Y-%m-%d %H:%M:%S') + data['form']['emailto']).hexdigest();
-
-        state = pooler.get_pool(cr.dbname).get('email.smtpclient').test_verify_email(cr, uid, [data['id']], data['form']['emailto'], code=key)
+        state = pooler.get_pool(cr.dbname).get('email.smtpclient').test_verify_email(cr, uid, [data['id']], data['form']['emailto'])
         if not state:
             raise osv.except_osv(_('Error'), _('Verification Failed. Please check the Server Configuration!'))
 
-        pooler.get_pool(cr.dbname).get('email.smtpclient').write(cr, uid, [data['id']], {'state':'waiting', 'code':key})
         return {}
 
     states = {

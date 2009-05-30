@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    	
+    	<record model="ir.rule.group" id="project_rule_group">
+			<field name="name">Portal project rule</field>
+			<field name="model_id" search="[('model','=','project.project')]" model="ir.model"/>
+			<field name="global" eval="False"/>
+		</record>
+		
+		<record model="ir.rule.group" id="project_task_rule_group">
+			<field name="name">Portal task rule</field>
+			<field name="model_id" search="[('model','=','project.task')]" model="ir.model"/>
+			<field name="global" eval="False"/>
+		</record>
+		
+		<record model="ir.rule.group" id="project_case_rule_group">
+			<field name="name">Portal case rule</field>
+			<field name="model_id" search="[('model','=','crm.case')]" model="ir.model"/>
+			<field name="global" eval="False"/>
+		</record>
+		
+		<record model="ir.rule" id="task_rule">
+			<field name="field_id" search="[('model','=','project.task'),('name','=','project_id')]" model="ir.model.fields"/>
+			<field name="operator">=</field>
+			<field name="operand">user.id</field>
+			<field eval="'[(\'project_id.members\',\'in\',[user.id])]'" name="domain_force"/>
+			<field name="rule_group" ref="project_task_rule_group"/>
+		</record>
+		
+		<record model="ir.rule" id="project_rule">
+			<field name="field_id" search="[('model','=','project.project'),('name','=','members')]" model="ir.model.fields"/>
+			<field name="operator">in</field>
+			<field name="operand">user.id</field>
+			<field eval="'[(\'members\',\'in\',[user.id])]'" name="domain_force"/>
+			<field name="rule_group" ref="project_rule_group"/>
+		</record>
+		
+		<record model="ir.rule" id="case_rule">
+			<field name="field_id" search="[('model','=','crm.case'),('name','=','project_id')]" model="ir.model.fields"/>
+			<field name="operator">in</field>
+			<field name="operand">user.id</field>
+			<field eval="'[(\'project_id.members\',\'in\',[user.id])]'" name="domain_force"/>
+			<field name="rule_group" ref="project_case_rule_group"/>
+		</record>
+		
+		<record model="res.groups" id="portal_project_group">
+			<field name="name">Portal Project group</field>
+			<field name="rule_groups" eval="[(4,ref('project_rule_group'),ref('project_task_rule_group'),ref('project_case_rule_group'))]"/>
+<!--			<field name="menu_access" eval="[(6,0,[ref('menu_portal_project_project'),ref('menu_portal_project_project_all'),ref('menu_portal_project_task_all'),ref('menu_portal_project_case_all')])]"/>-->
+		</record>
+		
+		<record model="ir.model.access" id="model_access_project_project">
+			<field name="name">Project Access</field>
+			<field name="perm_read">True</field>
+			<field name="group_id" ref="portal_project_group"/>
+			<field name="model_id" search="[('model','=','project.project')]"/>
+		</record>
+		
+		<record model="ir.model.access" id="model_access_project_task">
+			<field name="name">Task Access</field>
+			<field name="perm_read">True</field>
+			<field name="group_id" ref="portal_project_group"/>
+			<field name="model_id" search="[('model','=','project.task')]"/>
+		</record>
+		
+		<record model="ir.model.access" id="model_access_project_case">
+			<field name="name">Case Access</field>
+			<field name="perm_read">True</field>
+			<field name="group_id" ref="portal_project_group"/>
+			<field name="model_id" search="[('model','=','crm.case')]"/>
+		</record>
+
+
+        <record model="project.event.type" id="project_event_type_case">
+			<field name="name">Case</field>
+			<field name="code">case</field>			
+		</record>
+        
+		
+	</data>
+</openerp>

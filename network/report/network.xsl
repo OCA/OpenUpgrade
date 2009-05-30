@@ -3,7 +3,7 @@
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:fo="http://www.w3.org/1999/XSL/Format">
 
-	<xsl:import href="../../custom/corporate_defaults.xsl"/>
+	<xsl:import href="../../base/report/corporate_defaults.xsl"/>
 	<xsl:import href="../../base/report/rml_template.xsl"/>
 	<xsl:variable name="page_format">a4_letter</xsl:variable>
 
@@ -42,7 +42,7 @@
 			<xsl:value-of select="partner/address/street"/>
 		</para>
 		<para>
-			<xsl:value-of select="partner/address/postcode"/> 
+			<xsl:value-of select="partner/address/postcode"/>
 			<xsl:value-of select="partner/address/city"/>
 		</para>
 		<para>
@@ -58,17 +58,17 @@
 		<spacer length="1cm" />
 		<xsl:apply-templates select="materials/material" />
 	</xsl:template>
-	
+
 	<xsl:template match="materials">
 		<xsl:apply-templates select="material"/>
 	</xsl:template>
-	
+
 	<xsl:template match="material">
 		<blockTable colWidths="16cm">
 			<tr>
 				<td>
 					<para>
-						<b t="1">Name</b>: 
+						<b t="1">Name</b>:
 						<i><xsl:value-of select="material-name"/></i>
 					</para>
 					<para>

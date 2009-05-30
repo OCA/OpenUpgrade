@@ -19,27 +19,69 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+"""
+ To provide connectivity with file.
 
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+ GNU General Public License.
 """
-ETL Connectors:
-* File Access
-"""
+
 from etl.connector import connector
 
-class file_connector(connector.connector):
-    def __init__(self,uri,bufsize=-1,encoding='utf-8'):
-        super(file_connector, self).__init__(uri)               
-        self.bufsize=bufsize
-        self.encoding=encoding
-        
-    def open(self,mode='r'):
-        # TODO : pass encoding in file
-        super(file_connector, self).open()
-        self.connector=open(self.uri,mode,self.bufsize)    
-        #self.file.encoding=self.encoding
-        return self.connector
-        
+class file_connector(connector):
+    """
+    This is an ETL connector that is used to provide connectivity with file.
+    """
+    def __init__(self, uri, bufsize=-1, encoding='utf-8', name='file_connector'):
+        """
+        Required Parameters
+        uri      : Path of file.
 
-    def close(self):
-        super(file_connector, self).close()
-        self.connector.close()    
+        Extra Parameters
+        bufsize  : Buffer size for reading data.
+        encoding : Encoding format.
+        name     : Name of connector.
+        """
+        super(file_connector, self).__init__(name)
+        self._type = 'connector.file_connector'
+        self.bufsize = bufsize
+        self.encoding = encoding
+        self.uri = uri
+
+    def open(self, mode='r'):
+        """
+        Opens file connections.
+        """
+        super(file_connector, self).open()
+        return file(self.uri, mode)
+
+    def __getstate__(self):
+        res = super(file_connector, self).__getstate__()
+        res.update({'bufsize':self.bufsize, 'encoding':self.encoding, 'uri':self.uri})
+        return res
+
+    def __setstate__(self, state):
+        super(file_connector, self).__setstate__(state)
+        self.__dict__ = state
+
+    def close(self, connector):
+        """
+        Closes file connections.
+        """
+        super(file_connector, self).close(connector)
+        return connector.close()
+
+    def __copy__(self):
+        """
+        Overrides copy method.
+        """
+        res = file_connector(self.uri, self.bufsize, self.encoding, self.name)
+        return res
+
+def test():
+    file_conn = file_connector('test.txt')
+    con = file_conn.open()
+    file_conn.close(con)
+
+if __name__ == '__main__':
+    test()

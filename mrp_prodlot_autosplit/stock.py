@@ -26,12 +26,17 @@ class stock_move(osv.osv):
         if isinstance(ids, (int, long)):
             ids = [ids]
             
-        for move in self.browse(cr, uid, ids):            
-            prodlot_id = self.pool.get('stock.production.lot').create(cr, uid, {
-                'name': value,
-                'product_id': move.product_id.id,
-            })
-            self.write(cr, uid, ids, {'prodlot_id': prodlot_id})
+        for move in self.browse(cr, uid, ids):
+            product_id = move.product_id.id
+            existing_prodlot = move.prodlot_id
+            if existing_prodlot: #avoid creating a prodlot twice
+                self.pool.get('stock.production.lot').write(cr, uid, existing_prodlot.id, {'name': value})
+            else:
+                prodlot_id = self.pool.get('stock.production.lot').create(cr, uid, {
+                    'name': value,
+                    'product_id': product_id,
+                })
+                self.write(cr, uid, ids, {'prodlot_id': prodlot_id})
             
 
     _columns = {        
@@ -86,3 +91,24 @@ class stock_picking(osv.osv):
         return result
         
 stock_picking()
+
+
+class stock_production_lot(osv.osv):
+    _inherit = "stock.production.lot"
+
+    def _last_location_id(self, cr, uid, ids, field_name, arg, context={}):
+        res = {}
+        for prodlot_id in ids:
+            cr.execute("select location_dest_id from stock_move where stock_move.prodlot_id = %s and stock_move.state='done' order by stock_move.date_planned ASC LIMIT 1" % prodlot_id)
+            results = cr.fetchone()
+            if results and len(results) > 0:
+                res[prodlot_id] = results[0]#TODO return tuple to avoid name_get being requested by the GTK client
+            else:
+                res[prodlot_id] = False
+        return res
+    
+    _columns = {
+        'last_location_id': fields.function(_last_location_id, method=True, type="many2one", relation="stock.location", string="Last Location"),
+    }
+
+stock_production_lot()

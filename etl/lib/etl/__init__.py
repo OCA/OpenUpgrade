@@ -17,21 +17,75 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
 ##############################################################################
-
 """
-This package use for ETL system
+ETL (Extract, transform, and load) is a module for python 2.4 or greater 
+that implements ETL concepts for data import, export and also performs some operations 
+beween import/export.  
+
+This package has different sub-packages for defining  ETL job process, 
+ETL components (Input/Source, transform/process, control, Output/Destination),
+ETL connectors and ETL transition.
+
+ETL job means to define etl process which can run, stop, pause.
+
+ETL components means to define components which are used in etl job like 
+- Input Component     : to get data from external sources.
+- Output Component    : to store data to external destination.
+- Transform Component : to perform a series of rules or functions to the extracted data 
+from the source to derive the data for loading into the end target.
+
+ETL connectors means to connect with external systems or server which are used by ETL Components.
+
+ETL transition means to define data flow with different transition channels between 
+source etl components and destination etl components.
+
+ETL is written entirely in python and is released under the GNU General Public License.
+
+Website: U{http://www.openerp.com/}.
+
+@version: 1.0.0a1
+@author: Tiny SPRL
+@contact: support@tinyerp.com
+@license: GNU General Public License
 """
+import sys
+if sys.version_info < (2, 4):
+    raise RuntimeError('You need python 2.4 for this module.')
 
 
-import signal
+__author__ = "Tiny SPRL"
+__date__ = "01 May 2009"
+__version__ = "1.0.0a1"
+__version_info__ = (1, 0, 0)
+__license__ = "GNU General Public License"
+
+from signal import signal
+from job import job
+from transition import transition
+from transformer import transformer
+
 import logger
-import statistic
-import transformer
-import job
-import transition
 import component
 import connector
+import tools
+
+# fix module names for epydoc
+for c in locals().values():
+    if issubclass(type(c), type) or type(c).__name__ == 'classobj':
+        # classobj for exceptions :/
+        c.__module__ = __name__
+del c
+
+
+__all__ = [ 'signal',            
+            'job',
+            'transition',
+            'transformer',
+            'logger',
+            'component',
+            'connector',
+            'tools' 
+           ]
 
 

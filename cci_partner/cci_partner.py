@@ -239,7 +239,7 @@ class res_partner(osv.osv):
         'dir_date_publication':fields.date('Publication Date'),
         'dir_exclude':fields.boolean('Dir. exclude',help='Exclusion from the Members directory'),
 
-        'magazine_subscription':fields.selection( [('never','Never'),('prospect','Prospect'),('personal','Personnal'), ('postal','Postal')], "Magazine subscription"),
+        'magazine_subscription':fields.selection( [('never','Never'),('prospect','Prospect'),('personal','Personal'), ('postal','Postal')], "Magazine subscription"),
         'magazine_subscription_source':fields.char('Mag. Subscription Source',size=30),
         'country_relation':fields.one2many('res.partner.country.relation','partner_id','Country Relation'),
         'address': fields.one2many('res.partner.address', 'partner_id', 'Addresses'),# overridden just to change the name with "Addresses" instead of "Contacts"

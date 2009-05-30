@@ -6,6 +6,7 @@
 			<field name="name">crm.case.form.fleet_maintenance</field>
 			<field name="model">crm.case</field>
 			<field name="type">form</field>
+			<field name="priority">20</field>
 			<field name="arch" type="xml">
 
 				<form string="Fleet Incident">
@@ -21,10 +22,14 @@
 						<field name="is_fleet_expired" readonly="1" />
 					</group>
 					<separator string="Moves" />
-					<group col="6" colspan="4">
-						<field name="incoming_picking_id" mode="form" domain="[('type','=','customer')]" context="{'partner_id':partner_id, 'type':'customer'}" />
-						<field name="picking_id" domain="[('type','=','internal')]" context="{'partner_id':partner_id, 'type':'internal'}" />
-						<field name="outgoing_picking_id" domain="[('type','=','customer')]" context="{'partner_id':partner_id, 'type':'customer'}" />
+					<group col="4" colspan="4">
+						<field name="related_incoming_picking_state" nolabel="1"/><field name="incoming_picking_id" mode="form" domain="[('type','=','in')]" context="{'partner_id':partner_id,'view':'incident','location_id_usage':'customer','location_dest_id_usage':'internal','product_id':product_id,'location_id':fleet_id,'prodlot_id':prodlot_id}" />
+					</group>
+					<group col="4" colspan="4">
+						<field name="related_picking_state" nolabel="1"/><field name="picking_id" domain="[('type','=','internal')]" context="{'partner_id':partner_id,'view':'incident','location_id_usage':'internal','location_dest_id_usage':'internal','product_id':product_id,'prodlot_id':prodlot_id}" />
+					</group>
+					<group col="4" colspan="4">
+						<field name="related_outgoing_picking_state" nolabel="1"/><field name="outgoing_picking_id" domain="[('type','=','out')]" context="{'partner_id':partner_id,'view':'incident','location_id_usage':'internal','location_dest_id_usage':'customer','product_id':product_id,'location_dest_id':fleet_id,'prodlot_id':prodlot_id}" />
 					</group>
 					<separator string="Qualification" />
 					<group col="6" colspan="4">
@@ -114,8 +119,8 @@
 							</field>
 						</page>
 						<page string="Supplier Return?">
-							<field name="in_supplier_picking_id" />
-							<field name="out_supplier_picking_id" />
+							<field name="in_supplier_picking_id" domain="[('type','=','out')]" context="{'partner_id':partner_id,'view':'incident','location_id_usage':'internal','location_dest_id_usage':'supplier','product_id':product_id,'prodlot_id':prodlot_id}" />
+							<field name="out_supplier_picking_id" domain="[('type','=','in')]" context="{'partner_id':partner_id,'view':'incident','location_id_usage':'supplier','location_dest_id_usage':'internal','product_id':product_id,'prodlot_id':prodlot_id}" />
 						</page>
 						<page string="Money">
 							<field name="planned_cost" string="Incident Cost" />
@@ -133,17 +138,15 @@
 			<field name="model">crm.case</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-
 				<tree>
 					<field name="incident_ref" />
-					<field name="partner_id" />
+					<field name="partner_id" select="1"/>
 					<field name="fleet_id" />
 					<field name="prodlot_id" />
 					<field name="section_id" />
 					<field name="state" />
 					<field name="name" />
 				</tree>
-
 			</field>
 		</record>
 
@@ -153,22 +156,23 @@
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">crm.case</field>
 			<field name="view_type">form</field>
+			<field name="domain">[('prodlot_id','!=',False)]</field>
 			<field name="view_mode">tree,form,calendar</field>
 		</record>
 
 		<menuitem icon="terp-crm" id="menu_fleet_incidents" name="Fleet Incidents" parent="menu_main_fleets" />
-		<menuitem action="fleet_incident_action" id="all_fleet_incidents" name="All Fleet Incidents" parent="menu_fleet_incidents" />
+		<menuitem icon="STOCK_JUSTIFY_FILL" action="fleet_incident_action" id="all_fleet_incidents" name="All Fleet Incidents" parent="menu_fleet_incidents" />
 
 		<record id="ir_actions_act_window_view_crm_incident_form" model="ir.actions.act_window.view">
 			<field name="act_window_id" ref="fleet_incident_action" />
-			<field eval="1" name="multi" />
+			<field eval="1" name="sequence" />
 			<field name="view_id" ref="fleet_maintenance.view_crm_case_form_fleet_maintenance" />
 			<field eval="&quot;&quot;&quot;form&quot;&quot;&quot;" name="view_mode" />
 		</record>
 
 		<record id="ir_actions_act_window_view_crm_incident_tree" model="ir.actions.act_window.view">
 			<field name="act_window_id" ref="fleet_incident_action" />
-			<field eval="1" name="multi" />
+			<field eval="0" name="sequence" />
 			<field name="view_id" ref="fleet_maintenance.view_crm_case_tree_fleet_maintenance" />
 			<field eval="&quot;&quot;&quot;tree&quot;&quot;&quot;" name="view_mode" />
 		</record>

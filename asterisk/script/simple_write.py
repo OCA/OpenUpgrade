@@ -20,13 +20,34 @@
 #
 ##############################################################################
 
+import rpc
 import xmlrpclib
 import sys
+import time
 
-sock = xmlrpclib.ServerProxy('http://%s:%s/xmlrpc/object' % (sys.argv[3],sys.argv[4]))
+DB = 'terp5'
+sock = xmlrpclib.ServerProxy('http://%s:%s/xmlrpc/object' % ('localhost',8069))
 
-ids = sock.execute(sys.argv[5], 3, 'admin', 'asterisk.phone', 'search', [('phoneid','=',sys.argv[1])])
-sock.execute(sys.argv[5], 3, 'admin', 'asterisk.phone', 'write', ids, {'current_callerid': sys.argv[2]})
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+t = time.time()
+
+#sock.execute('terp5', 1, 'a', 'ir.values', 'get', 'action', 'tree_but_open', [('ir.ui.menu', 111)], False, {'lang': u'en_US', 'tz': u'America/Aruba'})
+#print time.time() - t
+#sock.execute('terp5', 1, 'a', u'board.note', 'fields_view_get', False, u'form', {'lang': u'en_US', 'tz': u'America/Aruba', 'active_ids': [111], 'active_id': 111}, True)
+#print time.time() - t
+#sock.execute('terp5', 1, 'a', 'board.note', 'default_get', ['note', 'date', 'user_id', 'name', 'type'], {'lang': u'en_US', 'tz': u'America/Aruba', 'active_ids': [111], 'active_id': 111})
+#print time.time() - t
+#sock.execute('terp5', 1, 'a', 'res.users', 'name_get', [1], {'lang': u'en_US', 'tz': u'America/Aruba'})
+#print time.time() - t
+#
+t = time.time()
+sock2 = rpc.tiny_sock('socket://%s:%s' % ('localhost',8070), 'terp5', 1, 'a')
+sock2.exec_auth('execute', 'ir.values', 'get', 'action', 'tree_but_open', [('ir.ui.menu', 111)], False, {'lang': u'en_US', 'tz': u'America/Aruba'})
+print time.time() - t
+sock2 = rpc.tiny_sock('socket://%s:%s' % ('localhost',8070), 'terp5', 1, 'a')
+sock2.exec_auth('execute', u'sale.order', 'fields_view_get', False, u'form', {'lang': u'en_US', 'tz': u'America/Aruba', 'active_ids': [111], 'active_id': 111}, True)
+print time.time() - t
+sock2 = rpc.tiny_sock('socket://%s:%s' % ('localhost',8070), 'terp5', 1, 'a')
+sock2.exec_auth('execute', 'sale.order', 'default_get', ['note', 'date', 'user_id', 'name', 'type'], {'lang': u'en_US', 'tz': u'America/Aruba', 'active_ids': [111], 'active_id': 111})
+print time.time() - t
 

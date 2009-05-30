@@ -21,14 +21,13 @@
 ##############################################################################
 
 """
-ETL Components:
-* Input Components
-* Output Components
-* Transform Components
-* Control Components
+ Used to fetch data from any sources like files, database, etc..,transform data and store in any destinations like files, database etc.
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License.
 """
-from etl.component import component
-from etl.component import input
-from etl.component import output
-from etl.component import transform
-from etl.component import control
+from component import component
+import input
+import output
+import transform
+import control

@@ -10,7 +10,7 @@
     CUSTOMER
     ======================
     -->
-
+<!--
     <record model="ir.ui.view" id="view_dm_customer_form">
         <field name="name">dm.customer.form</field>
         <field name="model">res.partner</field>
@@ -19,50 +19,40 @@
             <form string="Customer">
                 <group colspan="3" col="4">
                     <separator string="Customer Description" colspan="5"/>
-                    <field name="name" select="1" string="First Name"/>
-                    <field name="lastname" select="1"/>
+                    <field name="name" select="1"/>
                     <field name="ref" select="1"/>
-<!--                    <field name="code" select="1"/>-->
                     <field name="lang" select="2"/>
                 </group>
             <notebook>
                 <page string="Address">
                     <separator string="Address Infos" colspan="4"/>
-                    <!--<field name="add1" select="2"/>
-                    <field name="add2" select="2"/>
-                    <field name="add3" select="2"/>
-                    <field name="add4" select="2"/>
-                    <field name="zip" select="2"/>
-                    <field name="zip_summary" select="2"/>
-                    <field name="country_id" select="1"/>
-                    <field name="distribution_office" select="2"/>-->
-                	<field colspan="4" mode="form,tree" name="address" nolabel="1" select="1">
-	                    <form string="Partner contacts">
-	                        <field name="name" select="2"/>
-	                        <field domain="[('domain', '=', 'contact')]" name="title" string="Type"/>
-	                        <field name="function"/>
-	                        <field name="type" select="2"/>
-	                        <field name="street" select="2"/>
-	                        <field name="street2"/>
-	                        <newline/>
-	                        <field name="zip" select="2"/>
-	                        <field name="city" select="2"/>
-	                        <newline/>
-	                        <field completion="1" name="country_id" select="2"/>
-	                        <field name="state_id" select="2"/>
-	                        <newline/>
-	                        <field name="phone"/>
-	                        <field name="fax"/>
-	                        <newline/>
-	                        <field name="mobile"/>
-	                        <field name="email" select="2" widget="email"/>
-	                    </form>
-	                    <tree string="Partner contacts">
-	                        <field name="name"/>
-	                        <field name="zip"/>
-	                        <field name="city"/>
-	                        <field name="country_id"/>
-	                    </tree>
+                    <field colspan="4" mode="form,tree" name="address" nolabel="1" select="1">
+                        <form string="Partner contacts">
+                            <field name="name" select="2"/>
+                            <field domain="[('domain', '=', 'contact')]" name="title" string="Type"/>
+                            <field name="function"/>
+                            <field name="type" select="2"/>
+                            <field name="street" select="2"/>
+                            <field name="street2"/>
+                            <newline/>
+                            <field name="zip" select="2"/>
+                            <field name="city" select="2"/>
+                            <newline/>
+                            <field completion="1" name="country_id" select="2"/>
+                            <field name="state_id" select="2"/>
+                            <newline/>
+                            <field name="phone"/>
+                            <field name="fax"/>
+                            <newline/>
+                            <field name="mobile"/>
+                            <field name="email" select="2" widget="email"/>
+                        </form>
+                        <tree string="Partner contacts">
+                            <field name="name"/>
+                            <field name="zip"/>
+                            <field name="city"/>
+                            <field name="country_id"/>
+                        </tree>
                     </field>
                 </page>
                 <page string="Decoy Address">
@@ -82,7 +72,6 @@
                 </page>
                 <page string="Extra Infos">
                     <group colspan="2" col="2">
-<!--                        <field name="language_id" nolabel="1" select="2"/>-->
                         <separator string="Other Languages" colspan="2"/>
                         <field name="language_ids" nolabel="1" select="2"/>
                     </group>
@@ -93,12 +82,12 @@
                         <field name="client_media_ids" nolabel="1" select="2"/>
                     </group>
                     <group colspan="2" col="2">
-                    	<separator string="Allowed Countries" colspan="2"/>
-                    	<field name="country_ids" nolabel="1" select="2"/>
+                        <separator string="Allowed Countries" colspan="2"/>
+                        <field name="country_ids" nolabel="1" select="2"/>
                     </group>
                     <group colspan="2" col="2">
-                    	<separator string="Allowed States" colspan="2"/>
-                    	<field name="state_ids" nolabel="1" select="2"/>
+                        <separator string="Allowed States" colspan="2"/>
+                        <field name="state_ids" nolabel="1" select="2"/>
                     </group>
                 </page>
             </notebook>
@@ -112,13 +101,10 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="Customers">
-            	<field name="ref"/>
-<!--                <field name="code"/>-->
+                <field name="ref"/>
                 <field name="name" colspan="4"/>
-                <field name="lastname" colspan="4"/>
                 <field name="country"/>
                 <field name="lang"/>
-<!--                <field name="language_id"/>-->
             </tree>
         </field>
     </record>
@@ -131,7 +117,7 @@
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_dm_customer_tree"/>
     </record>
-	<record model="ir.actions.act_window.view" id="dm_customer_tree_act_view0">
+    <record model="ir.actions.act_window.view" id="dm_customer_tree_act_view0">
         <field name="sequence" eval="1"/>
         <field name="view_mode">tree</field>
         <field name="view_id" ref="view_dm_customer_tree"/>
@@ -144,13 +130,13 @@
         <field name="act_window_id" ref="action_dm_customer_form"/>
     </record>
     <menuitem id="menu_dm_customer_form" parent="dm.menu_dm_config_customer" action="action_dm_customer_form" sequence="1" />
-
+-->
     <!--
     =======================================================
     CUSTOMER ORDER VIEWS
     =======================================================
     -->
- 
+<!--
     <record model="ir.ui.view" id="view_dm_customer_order_form">
         <field name="name">dm.customer.order.form</field>
         <field name="model">dm.customer.order</field>
@@ -175,7 +161,7 @@
                 <field name="order_policy" on_change="shipping_policy_change(order_policy)"/>
                 <field name="invoice_quantity" attrs="{'readonly':[('order_policy','=','prepaid'),('order_policy','=','picking')]}"/>
                 <separator string="Note" colspan="4"/>
-                <field name="note" colspan="4" nolabel="1"/>
+                <field name="note" colspan="4" nolabel="1" widget="text_wiki"/>
                 <field name="state"/>
                 <button string="Confirm" name="set_confirm" type="object" states="draft" colspan="2"/>
             </form>
@@ -206,7 +192,7 @@
     </record>
 
     <menuitem id="menu_action_dm_customer_order_form" parent="dm.menu_dm_config_customer" action="action_dm_customer_order_form" sequence="2" />
-
+-->
     <!--
     =======================================================
     ORDER VIEWS
@@ -273,6 +259,58 @@
 
     <!--
     =======================================================
+    WORKITEM VIEWS
+    =======================================================
+    -->
+
+    <record model="ir.ui.view" id="view_dm_workitem_form">
+        <field name="name">dm.worktitem.form</field>
+        <field name="model">dm.workitem</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Workitem">
+                <field name="address_id" select="1"/>
+                <field name="step_id" select="1"/>
+                <field name="segment_id" select="1"/>
+                <field name="source" select="1"/>
+                <field name="error_msg" select="2" colspan="4"/>
+                <field name="tr_from_id" select="1"/>
+                <field name="sale_order_id" select="2"/>
+                <field name="state" select="1"/>
+                <field name="action_time" select="2"/>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_dm_workitem_tree">
+        <field name="name">dm.workitem.tree</field>
+        <field name="model">dm.workitem</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Workitems">
+                <field name="address_id" />
+                <field name="source" />
+                <field name="step_id" />
+                <field name="segment_id" />
+                <field name="action_time" />
+                <field name="state" />
+                <field name="error_msg" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_dm_workitem_form">
+        <field name="name">All Workitems</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.workitem</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_dm_workitem_tree"/>
+    </record>
+
+    <menuitem id="menu_action_view_dm_workitem_form" parent="dm.menu_dm_config_lowlevel" action="action_dm_workitem_form"/>
+
+    <!--
+    =======================================================
     SEGMENTATION VIEWS
     =======================================================
     -->
@@ -289,58 +327,53 @@
                 <notebook colspan="4">
                     <page string="General">
                         <separator string="Description" colspan="4"/>
-                        <field name="notes" nolabel="1" select="2" colspan="4"/>
+                        <field name="notes" nolabel="1" select="2" colspan="4" widget="text_wiki"/>
                     </page>
                     <page string="Customers">
                         <field name="customer_text_criteria_ids" colspan="2" nolabel="1" select="2">
                             <form string="Customer Textual Criteria">
-<!--                            <group col="3">-->
-<!--                                <separator string="Customer Textual Field"/>-->
-<!--                                <separator string="Operator"/>-->
-<!--                                <separator string="Value"/>-->
-<!--                            </group>-->
-                            <field name="field"/>
-                            <field name="operator" nolabel="1"/>
-                            <field name="value" nolabel="1"/>
+                                <field name="field_id"/>
+                                <field name="operator" nolabel="1"/>
+                                <field name="value" nolabel="1"/>
                             </form>
                             <tree string="Customer Textual Criteria">
-                                <field name="field"/>
+                                <field name="field_id"/>
                                 <field name="operator"/>
                                 <field name="value"/>
                             </tree>
                         </field>
                         <field name="customer_numeric_criteria_ids" colspan="2" nolabel="1" select="2">
                             <form string="Customer Numeric Criteria">
-                                <field name="field"/>
+                                <field name="field_id"/>
                                 <field name="operator" nolabel="1"/>
                                 <field name="value" nolabel="1"/>
                             </form>
                             <tree string="Customer Numeric Criteria">
-                                <field name="field"/>
+                                <field name="field_id"/>
                                 <field name="operator"/>
                                 <field name="value"/>
                             </tree>
                         </field>
                         <field name="customer_boolean_criteria_ids" colspan="2" nolabel="1" select="2">
                             <form string="Customer Boolean Criteria">
-                                <field name="field"/>
+                                <field name="field_id"/>
                                 <field name="operator" nolabel="1"/>
                                 <field name="value" nolabel="1"/>
                             </form>
                             <tree string="Customer Boolean Criteria">
-                                <field name="field"/>
+                                <field name="field_id"/>
                                 <field name="operator"/>
                                 <field name="value"/>
                             </tree>
                         </field>
                         <field name="customer_date_criteria_ids" colspan="2" nolabel="1" select="2">
                             <form string="Customer Date Criteria">
-                                <field name="field"/>
+                                <field name="field_id"/>
                                 <field name="operator" nolabel="1"/>
                                 <field name="value" nolabel="1"/>
                             </form>
                             <tree string="Customer Date Criteria">
-                                <field name="field"/>
+                                <field name="field_id"/>
                                 <field name="operator"/>
                                 <field name="value"/>
                             </tree>
@@ -349,48 +382,48 @@
                     <page string="Customer Orders">
                         <field name="order_text_criteria_ids" colspan="2" nolabel="1" select="2">
                             <form string="Customer Order Textual Criteria">
-	                            <field name="field"/>
-	                            <field name="operator" nolabel="1"/>
-	                            <field name="value" nolabel="1"/>
+                                <field name="field_id"/>
+                                <field name="operator" nolabel="1"/>
+                                <field name="value" nolabel="1"/>
                             </form>
                             <tree string="Customer Order Textual Criteria">
-                                <field name="field"/>
+                                <field name="field_id"/>
                                 <field name="operator"/>
                                 <field name="value"/>
                             </tree>
                         </field>
                         <field name="order_numeric_criteria_ids" colspan="2" nolabel="1" select="2">
                             <form string="Customer Order Numeric Criteria">
-                                <field name="field"/>
+                                <field name="field_id"/>
                                 <field name="operator" nolabel="1"/>
                                 <field name="value" nolabel="1"/>
                             </form>
                             <tree string="Customer Order Numeric Criteria">
-                                <field name="field"/>
+                                <field name="field_id"/>
                                 <field name="operator"/>
                                 <field name="value"/>
                             </tree>
                         </field>
                         <field name="order_boolean_criteria_ids" colspan="2" nolabel="1" select="2">
                             <form string="Customer Order Boolean Criteria">
-                                <field name="field"/>
+                                <field name="field_id"/>
                                 <field name="operator" nolabel="1"/>
                                 <field name="value" nolabel="1"/>
                             </form>
                             <tree string="Customer Order Boolean Criteria">
-                                <field name="field"/>
+                                <field name="field_id"/>
                                 <field name="operator"/>
                                 <field name="value"/>
                             </tree>
                         </field>
                         <field name="order_date_criteria_ids" colspan="2" nolabel="1" select="2">
                             <form string="Customer Order Date Criteria">
-                                <field name="field"/>
+                                <field name="field_id"/>
                                 <field name="operator" nolabel="1"/>
                                 <field name="value" nolabel="1"/>
                             </form>
                             <tree string="Customer Order Date Criteria">
-                                <field name="field"/>
+                                <field name="field_id"/>
                                 <field name="operator"/>
                                 <field name="value"/>
                             </tree>
@@ -428,6 +461,51 @@
     </record>
 
     <menuitem id="menu_action_dm_customer_segmentation_form" parent="dm.menu_dm_config_customer" action="action_dm_customer_segmentation_form" sequence="0" />
+
+    <!--
+    =======================================================
+    EVENT VIEWS
+    =======================================================
+    -->
+
+    <record id="view_dm_event_tree" model="ir.ui.view">
+        <field name="name">dm.event.tree</field>
+        <field name="model">dm.event</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom" string="Events">
+                <field name="segment_id"/>
+                <field name="step_id"/>
+                <field name="address_id" required="1"/>
+                <field name="trigger_type_id" widget="selection"/>
+                <field name="sale_order_id"/>
+                <field name="action_time"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_dm_event_form" model="ir.ui.view">
+        <field name="name">dm.event.form</field>
+        <field name="model">dm.event</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Events">
+                <field name="segment_id"/>
+                <field name="step_id" select="2"/>
+                <field name="address_id" required="1"/>
+                <field name="trigger_type_id" select="1"/>
+                <field name="sale_order_id"/>
+                <field name="action_time"/>
+            </form>
+        </field>
+    </record>
+    <record id="act_dm_event_form" model="ir.actions.act_window">
+        <field name="name">Edit Customer Events</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.event</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem action="act_dm_event_form" id="menu_act_dm_event_form" parent="dm.menu_dm_config_lowlevel"/>
 
     </data>
 </openerp>

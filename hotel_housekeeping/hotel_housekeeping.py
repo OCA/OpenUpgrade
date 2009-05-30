@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -30,6 +30,51 @@ import pooler
 from tools import config
 import netsvc
 
+class product_category(osv.osv):
+    _inherit="product.category"
+    _columns = {
+        'isactivitytype':fields.boolean('Is Activity Type'),
+    }
+product_category()
+
+class hotel_housekeeping_activity_type(osv.osv):
+    _name='hotel.housekeeping.activity.type'
+    _description='Activity Type'
+    _inherits = {'product.category':'activity_id'}
+    _columns = {
+        'activity_id':fields.many2one('product.category','category',required=True),
+       }
+    _defaults = {
+        'isactivitytype': lambda *a: 1,
+
+    }
+hotel_housekeeping_activity_type()
+
+
+class product_product(osv.osv):
+    _inherit="product.product"
+    _columns = {
+        'isact':fields.boolean('Is Activity'),
+                
+    }
+product_product()
+
+
+class h_activity(osv.osv):
+  
+    _name='h.activity'
+    _inherits={'product.product':'h_id'}
+   
+    _description='Housekeeping Activity'
+    _columns = {
+        'h_id': fields.many2one('product.product','Product_id'),
+       }
+    _defaults = {
+        'isact': lambda *a: 1,
+       }
+h_activity()
+
+
 class hotel_housekeeping(osv.osv):
     _name = "hotel.housekeeping"
     _description = "Reservation"
@@ -39,7 +84,6 @@ class hotel_housekeeping(osv.osv):
         'room_no':fields.many2one('hotel.room','Room No',required=True),
         'activity_lines':fields.one2many('hotel.housekeeping.activities','a_list','Activities'),
         'room_no':fields.many2one('product.product','Room No',required=True),
-        'activity_lines':fields.one2many('hotel.housekeeping.activities','a_list','Activities'),
         'inspector':fields.many2one('res.users','Inspector',required=True),
         'inspect_date_time':fields.datetime('Inspect Date Time',required=True),
         'quality':fields.selection([('good','Good'),('ok','Ok')],'Quality',required=True),
@@ -58,14 +102,13 @@ class hotel_housekeeping(osv.osv):
         return True
     
     def room_cancel(self, cr, uid, ids, *args):
-
         self.write(cr, uid, ids, {
             'state':'cancel'
         })
+        
         return True
 
     def room_done(self, cr, uid, ids, *args):
-
         self.write(cr, uid, ids, {
             'state':'done'
         })
@@ -83,80 +126,25 @@ class hotel_housekeeping(osv.osv):
         self.write(cr, uid, ids, {
             'state':'clean'
         })
+        
         return True
-    
-    
-    
-    
-#end class
+   
 hotel_housekeeping()  
-
-class product_category(osv.osv):
-    _inherit="product.category"
-    _columns = {
-        'isactivitytype':fields.boolean('Is Activity Type'),
-    }
-product_category()
-
-class hotel_housekeeping_activity_type(osv.osv):
-    _name='hotel.housekeeping.activity.type'
-    _description='Activity Type'
-    _inherits = {'product.category':'activity_id'}
-    _columns = {
-        'activity_id':fields.many2one('product.category','category',required=True),
-       }
-    _defaults = {
-        'isactivitytype': lambda *a: 1,
-
-    }
-#end class
-hotel_housekeeping_activity_type()
-  
-class housekeeping_activity(osv.osv):
-    _name = "housekeeping.activity"
-    _description = "Housekeeping Activity List"
-    _columns = {
-        'name':fields.char('Activity Name',size=64,required=True),
-        'categ_id':fields.many2one('product.category','Category', required=True, change_default=True),
-        }
-#end class
-housekeeping_activity()
 
 class hotel_housekeeping_activities(osv.osv):
     _name = "hotel.housekeeping.activities"
     _description = "Housekeeping Activities "
     _columns = {
         'a_list':fields.many2one('hotel.housekeeping'),
-        'activity_name':fields.many2one('housekeeping.activity','Housekeeping Activity'),
-        'housekeeper':fields.many2one('res.users','Housekeeper'),
+        'activity_name':fields.many2one('h.activity','Housekeeping Activity'),
+        'housekeeper':fields.many2one('res.users','Housekeeper',required=True),
         'clean_start_time':fields.datetime('Clean Start Time',required=True),
         'clean_end_time':fields.datetime('Clean End Time',required=True),
         'dirty':fields.boolean('Dirty'),
         'clean':fields.boolean('Clean'),
  
         }
-#end class
 hotel_housekeeping_activities()
 
-class product_category(osv.osv):
-    _inherit="product.category"
-    _columns = {
-        'isactivitytype':fields.boolean('Is Activity Type'),
-    }
-product_category()
 
-class hotel_housekeeping_activity_type(osv.osv):
-    _name='hotel.housekeeping.activity.type'
-    _description='Activity Type'
-    _inherits = {'product.category':'activity_id'}
-    _columns = {
-        'activity_id':fields.many2one('product.category','category',required=True),
-       }
-    _defaults = {
-        'isactivitytype': lambda *a: 1,
-
-    }
-#end class
-hotel_housekeeping_activity_type()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

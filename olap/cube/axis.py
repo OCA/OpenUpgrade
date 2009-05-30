@@ -5,22 +5,22 @@ import common
 
 
 class axis(object):
-	def __init__(self, axis, name=None):
-		self.axis = axis
-		self.name = name
+    def __init__(self, axis, name=None):
+        self.axis = axis
+        self.name = name
 
-	def validate(self, cube):
-		self.object = cube
-		self.axis.validate(cube)
+    def validate(self, cube):
+        self.object = cube
+        self.axis.validate(cube)
 
-	def name_set(self, name):
-		self.name = name
+    def name_set(self, name):
+        self.name = name
 
-	def __repr__(self):
-		res = '\t<olap.axis ['+str(self.name)+']\n'
-		res += str(self.axis)
-		res += '\t>'
-		return res
+    def __repr__(self):
+        res = '\t<olap.axis ['+str(self.name)+']\n'
+        res += str(self.axis)
+        res += '\t>'
+        return res
 
 	#
 	# Output:
@@ -36,10 +36,8 @@ class axis(object):
 	#   ]
 	#
 
-
-
-	def run(self, metadata):
-		result = self.axis.run(metadata)
-		return result
+    def run(self, metadata):
+        result = self.axis.run(metadata)
+        return result
 
 # vim: ts=4 sts=4 sw=4 si et

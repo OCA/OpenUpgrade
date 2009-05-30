@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        
+		    <record forcecreate="True" id="ir_cron_profroma_action" model="ir.cron">
+		            <field name="name">Run Proforma Followups</field>
+		            <field eval="True" name="active"/>
+		            <field name="user_id" ref="base.user_root"/>
+		            <field name="interval_number">1</field>
+		            <field name="interval_type">days</field>
+		            <field name="numbercall">10</field>
+		            <field eval="True" name="doall"/>
+		            <field eval="'proforma.followup_step'" name="model"/>
+		            <field eval="'run_followups'" name="function"/>
+		            <field eval="'(uid,)'" name="args"/>
+        </record>        
+        
+    </data>
+</openerp>

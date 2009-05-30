@@ -23,7 +23,7 @@
     "name" : "Discount on Marketing Campaigns",
     "version" : "1.0",
     "author" : "Tiny",
-    "website" : "http://tinyerp.com/module_crm_marketing.html",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Others",
     "depends" : ["base","sale"],
     "description": "Marketing management module",

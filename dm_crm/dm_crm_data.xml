@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<openerp>
+	<data noupdate="1">
+    <!--
+    Case Sections
+    -->
+    <record model="crm.case.section" id="section_support">
+        <field name="name">Direct Maketing Campaigns</field>
+        <field name="code">DM</field>
+    </record>
+	</data>
+
+	
+	<!-- OFFER STEP ACTION -->
+	<data noupdate="0">
+        <record id="ir_actions_server_crm_case_create0" model="ir.actions.server">
+            <field name="model_id" ref="dm.model_dm_workitem"/>
+			<field eval="&quot;&quot;&quot;# You can use the following variables
+#    - object
+#    - object2
+#    - time
+#    - cr
+#    - uid
+#    - ids
+# If you plan to return an action, assign: action = {...}
+&quot;&quot;&quot;" name="code"/>
+			<field eval="[(6,0,[])]" name="child_ids"/>
+			<field name="srcmodel_id" ref="crm.model_crm_case"/>
+			<field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
+			<field eval="&quot;&quot;&quot;Create CRM Case&quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;object_create&quot;&quot;&quot;" name="state"/>
+			<field name="record_id" ref="dm.field_dm_workitem_error_msg"/>
+        </record>
+        <record id="ir_server_object_lines_0" model="ir.server.object.lines">
+			<field name="server_id"  model="ir.actions.server" search="[('name','=','Create CRM Case')]"/>
+			<field eval="&quot;&quot;&quot;value&quot;&quot;&quot;" name="type"/>
+            <field model="crm.case.section" name="value" search="[('code','=','DM')]"/>
+			<field name="col1" ref="crm.field_crm_case_section_id"/>
+		</record>
+		<record id="ir_server_object_lines_1" model="ir.server.object.lines">
+			<field name="server_id"  model="ir.actions.server" search="[('name','=','Create CRM Case')]"/>
+			<field eval="&quot;&quot;&quot;value&quot;&quot;&quot;" name="type"/>
+			<field eval="&quot;&quot;&quot;CRM Test&quot;&quot;&quot;" name="value"/>
+			<field name="col1" ref="crm.field_crm_case_name"/>
+		</record>
+    </data>
+<!--
+    <data noupdate="0">
+        <record id="dm_offer_step_action_crm_case_create0" model="dm.offer.step.action">
+            <field name="media_id" ref="dm.media_phone"/>
+            <field name="server_action_id" ref="ir_actions_server_crm_case_create0"/>
+        </record>
+    </data>
+-->
+
+    <!-- OFFER -->
+    <data noupdate="1">
+        <record id="dm_offer_after_sale_service" model="dm.offer">
+            <field eval="&quot;&quot;&quot;ASS&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;After-Sale Service&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;as&quot;&quot;&quot;" name="type"/>
+        </record>
+    </data>
+    
+    <!-- OFFER STEP TYPES -->
+	<data noupdate="1">
+        <record id="dm_offer_step_type_after_sale_event" model="dm.offer.step.type">
+            <field eval="&quot;&quot;&quot;ASEVENT&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;After-Sale Event&quot;&quot;&quot;" name="name"/>
+            <field eval="0" name="flow_stop"/>
+            <field eval="0" name="flow_start"/>
+        </record>
+        <record id="dm_offer_step_type_after_sale_action" model="dm.offer.step.type">
+            <field eval="&quot;&quot;&quot;ASACTION&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;After-Sale Action&quot;&quot;&quot;" name="name"/>
+            <field eval="0" name="flow_stop"/>
+            <field eval="0" name="flow_start"/>
+        </record>
+	</data>
+
+    <!-- OFFER STEP -->
+    <data noupdate="1">
+        <record id="dm_offer_step_ASEVENT-EMAIL" model="dm.offer.step">
+            <field eval="0" name="floating_date"/>
+            <field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
+            <field eval="0" name="mailing_at_dates"/>
+            <field eval="&quot;&quot;&quot;After-Sale Event (email)&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+            <field name="media_id" ref="dm.media_email"/>
+            <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="flow_start"/>
+            <field name="type_id" ref="dm_offer_step_type_after_sale_event"/>
+            <field name="offer_id" ref="dm_offer_after_sale_service"/>
+            <field eval="0" name="interactive"/>
+            <field name="action_id" ref="dm_email.ir_actions_server_html_doc_generate0"/>
+            <field eval="&quot;&quot;&quot;ASEVENT-EMAIL&quot;&quot;&quot;" name="code"/>
+        </record>
+        <record id="dm_offer_step_ASREPAY-EMAIL" model="dm.offer.step">
+            <field eval="0" name="floating_date"/>
+            <field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
+            <field eval="0" name="mailing_at_dates"/>
+            <field eval="&quot;&quot;&quot;After-Sale - Repay (email)&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+            <field name="media_id" ref="dm.media_email"/>
+            <field name="type_id" ref="dm_offer_step_type_after_sale_event"/>
+            <field name="offer_id" ref="dm_offer_after_sale_service"/>
+            <field eval="0" name="interactive"/>
+            <field name="action_id" ref="dm_email.ir_actions_server_html_doc_generate0"/>
+            <field eval="&quot;&quot;&quot;ASREPAY-EMAIL&quot;&quot;&quot;" name="code"/>
+        </record>
+        <record id="dm_offer_step_ASWAIT-EMAIL" model="dm.offer.step">
+            <field eval="0" name="floating_date"/>
+            <field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
+            <field eval="0" name="mailing_at_dates"/>
+            <field eval="&quot;&quot;&quot;After-Sale - Wait (email)&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+            <field name="media_id" ref="dm.media_email"/>
+            <field name="type_id" ref="dm_offer_step_type_after_sale_event"/>
+            <field name="offer_id" ref="dm_offer_after_sale_service"/>
+            <field eval="0" name="interactive"/>
+            <field name="action_id" ref="dm_email.ir_actions_server_html_doc_generate0"/>
+            <field eval="&quot;&quot;&quot;ASWAIT-EMAIL&quot;&quot;&quot;" name="code"/>
+        </record>
+    </data>
+    
+    <!-- TRIGGERS -->
+    <data noupdate="1">
+        <record id="dm_offer_step_transition_ASREPAY" model="dm.offer.step.transition.trigger">
+            <field eval="&quot;&quot;&quot;After-Sale - Repay&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;ASREPAY&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;False&quot;&quot;&quot;" name="gen_next_wi"/>
+            <field eval="&quot;&quot;&quot;as&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
+        </record>
+        <record id="dm_offer_step_transition_ASWAIT" model="dm.offer.step.transition.trigger">
+            <field eval="&quot;&quot;&quot;After-Sale - Wait&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;ASWAIT&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;False&quot;&quot;&quot;" name="gen_next_wi"/>
+            <field eval="&quot;&quot;&quot;as&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
+        </record>
+    </data>
+
+    <!-- TRANSITION -->
+    <data noupdate="1">
+		<record id="dm_offer_step_after_sale_event_repay" model="dm.offer.step.transition">
+            <field name="step_to_id" ref="dm_offer_step_ASREPAY-EMAIL"/>
+            <field name="step_from_id" ref="dm_offer_step_ASEVENT-EMAIL"/>
+	    	<field name="condition_id" ref="dm_offer_step_transition_ASREPAY"/>
+            <field eval="0" name="delay"/>
+            <field eval="&quot;&quot;&quot;day&quot;&quot;&quot;" name="delay_type"/>
+        </record>
+        <record id="dm_offer_step_after_sale_event_wait" model="dm.offer.step.transition">
+            <field name="step_to_id" ref="dm_offer_step_ASWAIT-EMAIL"/>
+            <field name="step_from_id" ref="dm_offer_step_ASEVENT-EMAIL"/>
+	    	<field name="condition_id" ref="dm_offer_step_transition_ASWAIT"/>
+            <field eval="0" name="delay"/>
+            <field eval="&quot;&quot;&quot;day&quot;&quot;&quot;" name="delay_type"/>
+        </record>
+    </data>
+
+</openerp>
