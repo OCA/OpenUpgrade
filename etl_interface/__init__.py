@@ -19,12 +19,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-import sys
-import os.path
-import tools
-sys.path.append(os.path.join(tools.config['addons_path'],"etl/lib"))
-print "path is:", sys.path
 import etl_interface
 import etl_component
 import etl_connector
