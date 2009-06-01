@@ -62,26 +62,28 @@ class gdoc_out(component):
         import gdata.docs.service
         ms = gdata.MediaSource(file_path=self.path, content_type=gdata.docs.service.SUPPORTED_FILETYPES[self.doc_type])
         entry = gdoc_service.UploadDocument(ms, self.title)
+        return True
 
     def upload_ppt(self, gdoc_service):
         import gdata.docs.service
         ms = gdata.MediaSource(file_path=self.path, content_type=gdata.docs.service.SUPPORTED_FILETYPES['PPT'])
         entry = gdoc_service.UploadPresentation(ms, self.title)
+        return True
 
     def upload_spreadsheet(self, gdoc_service):
         import gdata.docs.service
         ms = gdata.MediaSource(file_path=self.path, content_type=gdata.docs.service.SUPPORTED_FILETYPES['XLS'])
         entry = gdoc_service.UploadSpreadsheet(ms, self.title)
+        return True
 
     def process(self):
         gdoc_service = self.connector.open()
-
-        if self.doc_type == 'DOC':
-            self.upload_doc(gdoc_service)
-        elif self.doc_type == 'PPT':
+        if self.doc_type == 'PPT':
             self.upload_ppt(gdoc_service)
         elif self.doc_type == 'XLS':
             self.upload_spreadsheet(gdoc_service)
+        else:
+            self.upload_doc(gdoc_service)
 
         for channel, trans in self.input_get().items():
             for iterator in trans:
@@ -97,7 +99,7 @@ def test():
     doc_conn=etl.connector.gdoc_connector(user, password)
 #    out_doc = gdoc_out(doc_conn, '', '/home/tiny/Desktop/1st Review.ppt','PPT')
 #    out_doc = gdoc_out(doc_conn, '', '/home/tiny/Desktop/changes.doc','DOC')
-    out_doc = gdoc_out(doc_conn, '', '/home/tiny/Desktop/SDP-II group allocation.xls','XLS')
+    out_doc = gdoc_out(doc_conn, '', '/home/tiny/Desktop/NAME_IN_FULL.doc','DOC')
     test = etl_test.etl_component_test(out_doc)
 #    test.check_output([{'phone_numbers': [''], 'postal_addresses': [''], 'emails': [''], 'title': ''}], 'main')
     res = test.output()
