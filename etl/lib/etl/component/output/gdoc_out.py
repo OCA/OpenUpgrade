@@ -31,7 +31,7 @@ class gdoc_out(component):
     This is an ETL Component that writes data to google doc.
     """
 
-    def __init__(self, gdoc_connector, method, path, doc_type='DOC', title='Document', name='component.input.gdoc_out', transformer=None, row_limit=0):
+    def __init__(self, gdoc_connector, method, path, doc_type='DOC', title='Document', name='component.output.gdoc_out', transformer=None, row_limit=0):
         super(gdoc_out, self).__init__(name=name, connector=gdoc_connector, transformer=transformer, row_limit=row_limit)
         self._type = 'component.output.gdoc_out'
         self.method = method
@@ -75,10 +75,17 @@ class gdoc_out(component):
 
     def process(self):
         gdoc_service = self.connector.open()
+
+        if self.doc_type == 'DOC':
+            self.upload_doc(gdoc_service)
+        elif self.doc_type == 'PPT':
+            self.upload_ppt(gdoc_service)
+        elif self.doc_type == 'XLS':
+            self.upload_spreadsheet(gdoc_service)
+
         for channel, trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:
-                    # call method
                     yield d, 'main'
 
 def test():
@@ -88,7 +95,9 @@ def test():
     user = raw_input('Enter gmail username: ')
     password = getpass.unix_getpass("Enter your password:")
     doc_conn=etl.connector.gdoc_connector(user, password)
-    out_doc = gdoc_out(doc_conn, '', 'home/tiny/Desktop/1.png')
+#    out_doc = gdoc_out(doc_conn, '', '/home/tiny/Desktop/1st Review.ppt','PPT')
+#    out_doc = gdoc_out(doc_conn, '', '/home/tiny/Desktop/changes.doc','DOC')
+    out_doc = gdoc_out(doc_conn, '', '/home/tiny/Desktop/SDP-II group allocation.xls','XLS')
     test = etl_test.etl_component_test(out_doc)
 #    test.check_output([{'phone_numbers': [''], 'postal_addresses': [''], 'emails': [''], 'title': ''}], 'main')
     res = test.output()
