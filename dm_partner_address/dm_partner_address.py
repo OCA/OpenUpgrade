@@ -27,6 +27,7 @@ from osv import osv
 class res_partner_address(osv.osv):
     _inherit = 'res.partner.address'
     _columns = {
+        'id': fields.integer('ID', readonly=True),
         'firstname' : fields.char('First Name',size=64),
         'name_complement' : fields.char('Name Complement',size=64),
         'street3' : fields.char('Street3',size=32),
