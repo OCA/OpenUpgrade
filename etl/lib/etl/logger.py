@@ -39,8 +39,11 @@ LOG_ERROR = 'error'
 
 def init_logger():
     logger = logging.getLogger()
+    # If this lib is run inside the server, logging is already setup
+    if len(logger.handlers):
+	    return
     # create a format for log messages and dates
-    formatter = logging.Formatter('[%(asctime)s] %(levelname)s: %(name)s: %(message)s', '%a %b %d %Y %H:%M:%S')
+    formatter = logging.Formatter('[%(asctime)s] %(levelname)s: %(name)s: %(message)s')
 
     logf = '/tmp/etl_log.out'
     handler = logging.handlers.TimedRotatingFileHandler(logf, 'D', 1, 30)
