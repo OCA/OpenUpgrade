@@ -40,7 +40,6 @@ class purchase_order(osv.osv):
     _order = "create_date desc"
 
     def action_picking_create(self, cr, uid, ids, *args):
-
         picking_id = False
         for order in self.browse(cr, uid, ids):
             loc_id = order.partner_id.property_stock_supplier.id
@@ -79,7 +78,10 @@ class purchase_order(osv.osv):
 
                     if order_line.move_dest_id:
                         self.pool.get('stock.move').write(cr, uid, [order_line.move_dest_id.id], {'location_id': order.location_id.id})
-            self.write(cr, uid, [order.id], {'picking_id': picking_id})
+            purchase_order_dict = {
+                'picking_ids': [(0, 0, {'purchase_id': [picking_id]})]
+            }
+            self.write(cr, uid, [order.id], purchase_order_dict)
             wf_service = netsvc.LocalService("workflow")
             wf_service.trg_validate(uid, 'stock.picking', picking_id, 'button_confirm', cr)
         return picking_id
@@ -92,9 +94,11 @@ class purchase_order(osv.osv):
                 if line.production_lot_id:
                     continue
                 l_id += 1
-                production_lot_id = self.pool.get('stock.production.lot').create(cr, uid, {
-                    'name': line.order_id and (str(line.order_id.name)+'/Line'+str(l_id)) or False
-                    })
+                production_lot_dict = {
+                    'product_id': line.product_id.id,
+                    'name': line.order_id and (str(line.order_id.name)+'/Line'+str(l_id)) or False,
+                }
+                production_lot_id = self.pool.get('stock.production.lot').create(cr, uid, production_lot_dict )
                 self.pool.get('purchase.order.line').write(cr, uid, [line.id], {'production_lot_id': production_lot_id})
 
         super(purchase_order, self).wkf_confirm_order(cr, uid, ids, context)
