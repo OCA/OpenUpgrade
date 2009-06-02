@@ -94,7 +94,7 @@ except:
 								<td id="loginbg" py:if="user_info" style="padding-right:0px; padding-bottom: 5px; padding-left: 10px;">
 									<table width="100%">
 										<tr>
-											<td  width="100%" style="padding-top: 0px; padding-bottom: 15px; padding-left: 5px; font-size: 12px; font-weight: bold;">
+											<td  width="100%" style="padding-top: 0px; padding-bottom: 15px; padding-left: 5px; padding-right: 10px; font-size: 12px; font-weight: bold; text-align:right;">
 												Welcome ${user_info}
 												<button type="button" style="margin-bottom: 5px; margin-left: 5px; margin-right:5px; text-align: right" class="button" onclick="window.location.href='/login/logout'" name="logout">Logout</button>
 											</td>
