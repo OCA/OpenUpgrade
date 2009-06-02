@@ -270,12 +270,10 @@ class olap_schema(osv.osv ):
         raise 'Not implemented !'
 
     def request(self,cr,uid,name,request,context = {}):
-        ids = self.search(cr,uid,[('name','=',name)],context)
+        ids = self.search(cr,uid,[('name','=',name)])
         if not len(ids):
             raise 'Schema not found !'
         schema = self.browse(cr,uid,ids[0],context)
-
-
         print 'Parsing MDX...'
         print '\t',request
         mdx_parser = cube.mdx_parser()
@@ -290,11 +288,30 @@ class olap_schema(osv.osv ):
         res_comp = self.pool.get('res.company').browse(cr,uid,res_comp)
         currency = res_comp[0].currency_id.name
         print " Default Currency",currency
-        data = mdx.run(currency)
+        warehouse = cube.warehouse()
+        qry_obj = self.pool.get('olap.query.logs')
+        qry_id = qry_obj.search(cr, uid, [('query','=', request)])
+        flag = True
+        if qry_id:
+            qry = qry_obj.browse(cr, uid, qry_id)[0]
+            
+            if qry.count >=3:
+                data = warehouse.run(currency, qry)
+                flag = False
+                qry.count = qry.count +1
+                qry_obj.write(cr, uid, qry_id, {'count': qry.count})
+            else:
+                data = mdx.run(currency)
+        else:
+            data = mdx.run(currency)
         print 'Running Done...'
         print 'Formatting Output...'
-        if cubex.query_log:
-            mdx.log(cr,uid,cubex,request,context)
+        if cubex.query_log and flag:
+            log = context.get('log')
+            if log:
+                connection = schema.database_id.connection_url
+                warehouse.log(cr,uid,cubex,request,data,connection,context)
+#                mdx.log(cr,uid,cubex,request,context)
         return cube.mdx_output(data)
 olap_schema()
 
@@ -729,7 +746,14 @@ class olap_query_logs(osv.osv):
         'time':fields.datetime('Time',required = True),
         'result_size':fields.integer('Result Size',readonly = True),
         'cube_id': fields.many2one('olap.cube','Cube',required = True),
+        'count': fields.integer('Count', readonly=True),
+        'schema_id': fields.many2one('olap.schema','Schema',readonly = True),
+        'table_name': fields.char('Table Name', size=164, readonly = True),
     }
+    
+    _defaults = {
+                 'count':lambda * args: 0
+                 }
 olap_query_logs()
 
 
@@ -1124,7 +1148,8 @@ class bi_load_db_wizard(osv.osv_memory):
                 if tables_id:
                     cr.execute('select column_db_name,id,table_id from olap_database_columns where table_id in (' + ','.join(tables_id) + ')')
                 else:
-                    cr.execute('select column_db_name,id,table_id from olap_database_columns')
+#                    cr.execute('select column_db_name,id,table_id from olap_database_columns ')
+                    cr.execute("select olap_database_columns.column_db_name, olap_database_columns.id, olap_database_columns.table_id from olap_database_columns join olap_database_tables on olap_database_columns.table_id = olap_database_tables.id where olap_database_tables.fact_database_id=%d",(id_db,))
                 table_col = {}
                 cols_name = {}
                 for x in tables:
@@ -1416,23 +1441,23 @@ class bi_load_db_wizard(osv.osv_memory):
                     id_to_write = filter(lambda x:(int(cols[x][1]) == int(tables[constraint[0]])and (constraint[1] == cols[x][0])),cols)
                     col_id = tcol.write(cr,uid,int(id_to_write[0]),val,context)
 
-            pooler.get_pool(cr.dbname).get('olap.fact.database').write(cr,uid,[id_db],{'loaded':True})
+            temp = pooler.get_pool(cr.dbname).get('olap.fact.database').write(cr,uid,[id_db],{'loaded':True})
             wf_service = netsvc.LocalService('workflow')
             wf_service.trg_validate(uid,'olap.schema',context['active_id'],'dbload',cr)
             model_data_ids = self.pool.get('ir.model.data').search(cr,uid,[('model','=','ir.ui.view'),('name','=','view_olap_schema_form')])
             resource_id = self.pool.get('ir.model.data').read(cr,uid,model_data_ids,fields = ['res_id'])[0]['res_id']
 
             return {'type':'ir.actions.act_window_close' }
-#           return{
-#           'domain': "[]",
-#           'name': 'Olap Schema',
+#            return{
+#           'domain': [],
+#           'name': 'view_olap_schema_form',
 #           'view_type': 'form',
 #           'view_mode': 'form,tree',
 #           'res_id': context['active_id'],
 #           'res_model': 'olap.schema',
 #           'view': [(resource_id,'form')],
-#           'type': 'ir.actions.act_window'
-#       }
+#           'type': 'ir.actions.act_window_close'
+#            }
 #
 
     def action_cancel(self,cr,uid,ids,context = None):
@@ -1592,6 +1617,34 @@ class bi_auto_configure_wizard(osv.osv_memory):
 
 bi_auto_configure_wizard()
 
+
+class olap_warehouse_wizard(osv.osv_memory):
+    _name = "olap.warehouse.wizard"
+    _description = "Olap Warehouse"
+    
+    def _get_queries(self, cr, uid, context = {}):
+        query_obj = self.pool.get('olap.query.logs')
+        qry_ids = query_obj.search(cr, uid, [('user_id','=',uid),('count','>=',3)])
+        if qry_ids:
+            query = ''
+            for id in query_obj.browse(cr,uid,qry_ids,context):
+                if query == '':
+                    query = id.query
+                else:
+                    query = query + '\n'+id.query
+            return query
+        else:
+            return ''
+    def action_ok(self, cr, uid, ids, context = {}):
+        return {'type':'ir.actions.act_window_close' }
+    
+    _columns = {
+                'query': fields.text('Query', readonly=True),
+                }
+    _defaults = {
+        'query': _get_queries,
+        }
+olap_warehouse_wizard()
 class olap_parameters_config_wizard(osv.osv_memory):
     _name = "olap.parameters.config.wizard"
     _description = "Olap Server Parameters"

@@ -1,25 +1,21 @@
 from osv import fields
 from osv import osv
 import pooler
-import sys
-from report.report_sxw import report_sxw,browse_record_list,_fields_process,rml_parse
-from StringIO import StringIO
-import base64
 import tools
-from base_report_designer.wizard.tiny_sxw2rml import sxw2rml
-import os
 import netsvc
-from report import interface ,report_sxw
-import time
-import dm.plugin 
-print dir()
-from plugin import customer_function
+
 from plugin.customer_function import customer_function
 from plugin.dynamic_text import dynamic_text
 from plugin.php_url import php_url
+from plugin.current_time import current_time
+
 import re
+import time
 import datetime
-from lxml import etree
+import base64
+import os
+import sys
+
 internal_html_report = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
@@ -60,11 +56,11 @@ def merge_message(cr, uid, keystr, context):
     message = com.sub(merge, keystr)
     return message
 
-
 def generate_reports(cr,uid,obj,report_type,context):
 
     print "Calling generate_reports from wi : ", obj.id
     print "Calling generate_reports source code : ", obj.source
+    """ Set addess_id depending of the source : partner address or crm case """
     address_id = getattr(obj, obj.source).id
     print "address_id : ",address_id
     address_ids = []
@@ -88,259 +84,181 @@ def generate_reports(cr,uid,obj,report_type,context):
     r_type = report_type
     if report_type=='html2html':
         r_type = 'html'
+
     for address_id in address_ids:
-        camp_id = obj.segment_id.proposition_id.camp_id.id
+        
+        if obj.segment_id:
+            camp_id = obj.segment_id.proposition_id.camp_id.id
         type_id = pool.get('dm.campaign.document.type').search(cr,uid,[('code','=',r_type)])
-        camp_mail_service_obj = pool.get('dm.campaign.mail_service')
-        camp_mail_service_id = camp_mail_service_obj.search(cr,uid,[('campaign_id','=',camp_id),('offer_step_id','=',step_id)])
+
+        """ Get mail service """
+        if obj.mail_service_id : 
+            """ If a mail service is specified in the workitem, use it """
+            camp_mail_service_id = [obj.mail_service_id.id]
+        else : 
+            """ Use the mail service defined in the campaign """
+            camp_mail_service_id = camp_mail_service_obj.search(cr,uid,[('campaign_id','=',camp_id),('offer_step_id','=',step_id)])
         print "camp_mail_service_id",camp_mail_service_id
+        camp_mail_service_obj = pool.get('dm.campaign.mail_service')
         camp_mail_service = camp_mail_service_obj.browse(cr,uid,camp_mail_service_id)[0]
         print "camp_mail_service.mail_service_id",camp_mail_service.mail_service_id.time_mode
+
+        """ Compute document delivery date """
         if camp_mail_service.mail_service_id.time_mode=='interval' :
+            # To check : What is interval
             kwargs =  {(camp_mail_service.mail_service_id.unit_interval):camp_mail_service.mail_service_id.action_interval}
             delivery_time = datetime.datetime.now() + datetime.timedelta(**kwargs)
         elif camp_mail_service.mail_service_id.time_mode=='date' :
+            """ If the document must be send at a specific date, use it """
             delivery_time = camp_mail_service.mail_service_id.action_date
         elif camp_mail_service.mail_service_id.time_mode=='hour' :
+            """ If the document must be send at a specific hour, use it """
             temp_time = str(camp_mail_service.mail_service_id.action_hour)
             if time.strftime('%H.%M:') > temp_time:
+                # To check : seems strange
                 date = datetime.datetime.now() + datetime.timedelta(days=1).strftime('%Y-%m-%d')
             else : 
+                # To check : seems strange
                 date = time.strftime('%Y-%m-%d')
             delivery_time = date+' '+temp_time.replace('.',':')+':00'
         else :
+            """ If nothing specified then deliver now """
             delivery_time=time.strftime('%Y-%m-%d %H:%M:%S')
         print "delivery_time",delivery_time
 
+        """ Get offer step documents to process """
         document_id = dm_doc_obj.search(cr,uid,[('step_id','=',obj.step_id.id),('category_id','=','Production')])
         print "Doc id : ",document_id
-        print report_type
+        if not document_id : 
+            # TO Improve : if no docs then log in wi error
+            return False
 
-        vals={  'segment_id': obj.segment_id.id,
+        vals={
+            'segment_id': obj.segment_id.id or False,
             'name': obj.step_id.code + "_" +str(address_id),
             'type_id': type_id[0],
             'mail_service_id':camp_mail_service.mail_service_id.id,
             'delivery_time' : delivery_time,
             'document_id' : document_id[0],
-            'address_id' : obj.address_id.id
+            'address_id' : address_id,
             }
+
+        """ Create campaign document """
         camp_doc  = pool.get('dm.campaign.document').create(cr,uid,vals)
         print "camp_doc",camp_doc
 
-        if document_id :
-            report_ids = report_xml.search(cr,uid,[('document_id','=',document_id[0]),('report_type','=',report_type)])
-            print "report_ids : ",report_ids
-            print dm_doc_obj.read(cr,uid,document_id,['name','editor','content','subject'])[0]
+        """ Get reports to process """
+        report_ids = report_xml.search(cr,uid,[('document_id','=',document_id[0]),('report_type','=',report_type)])
+        print "report_ids : ",report_ids
 
-            document_data = dm_doc_obj.read(cr,uid,document_id,['name','editor','content','subject'])[0]
-            print "Doc name : ",document_data['name']
-            context['address_id'] = address_id
-            context['document_id'] = document_id[0]
-            attachment_obj = pool.get('ir.attachment')
-            if report_type=='html' and document_data['editor'] and document_data['editor']=='internal' and document_data['content']:
-                report_data = internal_html_report +str(document_data['content'])+"</BODY></HTML>"
-                report_data = merge_message(cr, uid, report_data, context)
-                attach_vals={'name' : document_data['name'] + "_" + str(address_id),
-                            'datas_fname' : 'report_test' + report_type ,
-                            'res_model' : 'dm.campaign.document',
-                            'res_id' : camp_doc,
-                            'datas': base64.encodestring(report_data),
-                            'file_type':'html'
-                            }
-                attach_id = attachment_obj.create(cr,uid,attach_vals)
-                print "Attachment id and campaign doc id" , attach_id,camp_doc
-            if report_ids :
-                for report in pool.get('ir.actions.report.xml').browse(cr, uid, report_ids) :
-                    srv = netsvc.LocalService('report.' + report.report_name)
-                    report_data,report_type = srv.create(cr, uid, [], {},context)
-                    attach_vals={'name' : document_data['name'] + "_" + str(address_id)+str(report.id),
-                                 'datas_fname' : 'report.' + report.report_name + '.' + report_type ,
-                                 'res_model' : 'dm.campaign.document',
-                                 'res_id' : camp_doc,
-                                 'datas': base64.encodestring(report_data),
-                                 'file_type':report_type
-                                 }
-                    attach_id = attachment_obj.create(cr,uid,attach_vals)
-                    print "Attachement : ",attach_id
+        document_data = dm_doc_obj.read(cr,uid,document_id,['name','editor','content','subject'])[0]
+        print "Doc name : ",document_data['name']
+        context['address_id'] = address_id
+        context['document_id'] = document_id[0]
+        attachment_obj = pool.get('ir.attachment')
+        if report_type=='html' and document_data['editor'] and document_data['editor']=='internal' and document_data['content']:
+            report_data = internal_html_report +str(document_data['content'])+"</BODY></HTML>"
+            report_data = merge_message(cr, uid, report_data, context)
+            attach_vals={'name' : document_data['name'] + "_" + str(address_id),
+                        'datas_fname' : 'report_test' + report_type ,
+                        'res_model' : 'dm.campaign.document',
+                        'res_id' : camp_doc,
+                        'datas': base64.encodestring(report_data),
+                        'file_type':'html'
+                        }
+            attach_id = attachment_obj.create(cr,uid,attach_vals)
+            print "Attachment id and campaign doc id" , attach_id,camp_doc
+        if report_ids :
+            for report in pool.get('ir.actions.report.xml').browse(cr, uid, report_ids) :
+                srv = netsvc.LocalService('report.' + report.report_name)
+                report_data,report_type = srv.create(cr, uid, [], {},context)
+                attach_vals={'name' : document_data['name'] + "_" + str(address_id)+str(report.id),
+                             'datas_fname' : 'report.' + report.report_name + '.' + report_type ,
+                             'res_model' : 'dm.campaign.document',
+                             'res_id' : camp_doc,
+                             'datas': base64.encodestring(report_data),
+                             'file_type':report_type
+                             }
+            attach_id = attachment_obj.create(cr,uid,attach_vals)
+            print "Attachement : ",attach_id
 
+def compute_customer_plugin(cr, uid, **args):
+    res  = pool.get('ir.model').browse(cr, uid, args['plugin_obj'].model_id.id)    
+    args['model_name'] = res.model
+    args['field_name'] = str(args['plugin_obj'].field_id.name)
+    args['field_type'] = str(args['plugin_obj'].field_id.ttype)
+    args['field_relation'] = str(args['plugin_obj'].field_id.relation)
+    return customer_function(cr, uid, **args)
 
+def _generate_value(cr,uid,plugin_obj,localcontext,**args):
+    pool = pooler.get_pool(cr.dbname)
+    localcontext['plugin_obj'] = plugin_obj
+    plugin_args = {}
+    plugin_value = ''
+    if plugin_obj.python_code : 
+        exec plugin_obj.python_code.replace('\r','') in localcontext
+        plugin_value =  localcontext['plugin_value']
+    elif plugin_obj.type in ('fields','image'):
+        res  = pool.get('ir.model').browse(cr, uid, plugin_obj.model_id.id)    
+        args['model_name'] = res.model
+        args['field_name'] = str(plugin_obj.field_id.name)
+        args['field_type'] = str(plugin_obj.field_id.ttype)
+        args['field_relation'] = str(plugin_obj.field_id.relation)
+        plugin_value = customer_function(cr, uid, **args)
+    else :
+        arg_ids = pool.get('dm.plugin.argument').search(cr,uid,[('plugin_id','=',plugin_obj.id)])
+        for arg in pool.get('dm.plugin.argument').browse(cr,uid,arg_ids):
+            if not arg.stored_plugin :
+                plugin_args[str(arg.name)]=arg.value
+            else :
+                plugin_args[str(arg.name)] = _generate_value(cr,uid,arg.custome_plugin_id,localcontext,**args)
+        if plugin_obj.type == 'dynamic_text' :
+            plugin_args['ref_text_id'] = plugin_obj.ref_text_id.id
+            args.update(plugin_args)
+            plugin_value = dynamic_text(cr, uid, **args)
+        elif plugin_obj.type == 'url' :
+            plugin_args['encode'] = plugin_obj.encode
+            plugin_value = php_url(cr, uid,**plugin_args)
+        else :
+            path = os.path.join(os.getcwd(), "addons/dm/dm_dtp_plugins", cr.dbname)
+            plugin_name = plugin_obj.file_fname.split('.')[0]
+            sys.path.append(path)
+            X =  __import__(plugin_name)
+            plugin_func = getattr(X, plugin_name)
+            plugin_value = plugin_func(cr, uid,**args)
+    return plugin_value
 
-def generate_plugin_value(cr, uid, document_id, address_id,workitem_id=None, context={}):
-    if not document_id :
+def generate_plugin_value(cr, uid,**args):
+    if not 'doc_id' in args and not args['doc_id'] :
         return False
-    if not address_id :
+    if not 'addr_id' in args and not args['addr_id'] :
+        return False
+    if not 'wi_id' in args and not args['wi_id'] :
         return False
     vals = {}
+    localcontext = {'cr':cr,'uid':uid}
+    localcontext.update(args)
 
     pool = pooler.get_pool(cr.dbname)
-    def compute_customer_plugin(cr, uid, p, cid,wi_id=None):
-        args = {}
-        res  = pool.get('ir.model').browse(cr, uid, p.model_id.id)
-        args['model_name'] = res.model
-        if wi_id:
-            args['wi_id'] = wi_id    
-        args['field_name'] = str(p.field_id.name)
-        args['field_type'] = str(p.field_id.ttype)
-        args['field_relation'] = str(p.field_id.relation)
-        return customer_function(cr,uid, [cid], **args)
 
     dm_document = pool.get('dm.offer.document')
     dm_plugins_value = pool.get('dm.plugins.value')
 
-    plugins = dm_document.browse(cr, uid, document_id, ['document_template_plugin_ids' ])['document_template_plugin_ids']
-
-    for p in plugins :
-        args = {}
-        args['document_id'] = document_id
-        if p.type == 'fields':
-            plugin_value = compute_customer_plugin(cr, uid, p, address_id,workitem_id)
-        else :
-            arg_ids = pool.get('dm.plugin.argument').search(cr,uid,[('plugin_id','=',p.id)])
-            for a in pool.get('dm.plugin.argument').browse(cr,uid,arg_ids):
-                if not a.stored_plugin :
-                    args[str(a.name)]=str(a.value)
-                else :
-                    args[str(a.custome_plugin_id.code)]=compute_customer_plugin(cr, uid, a.custome_plugin_id, address_id,workitem_id)
-            if p.type == 'dynamic_text' :
-                plugin_value = dynamic_text(cr, uid, p.ref_text_id.id, **args)
-            elif p.type == 'url' :
-                plugin_value = php_url(cr, uid, p.ref_text_id.id, **args)
-            else :
-                path = os.path.join(os.getcwd(), "addons/dm/dm_dtp_plugins", cr.dbname)
-                plugin_name = p.file_fname.split('.')[0]
-                sys.path.append(path)
-                X =  __import__(plugin_name)
-                plugin_func = getattr(X, plugin_name)
-                plugin_value = plugin_func(cr, uid, address_id, **args)
-
-        if p.store_value :
+    plugins = dm_document.browse(cr, uid, args['doc_id'], ['document_template_plugin_ids' ])
+    if 'plugin_list' in args and args['plugin_list'] :
+        p_ids = pool.get('dm.dtp.plugin').search(cr,uid,[('code','in',args['plugin_list'])])
+        plugin_ids = pool.get('dm.dtp.plugin').browse(cr,uid,p_ids)
+    else :
+        plugins = dm_document.browse(cr, uid, args['doc_id'], ['document_template_plugin_ids' ])
+        plugin_ids = plugins['document_template_plugin_ids']
+    for plugin_obj in plugin_ids :
+        plugin_value = _generate_value(cr,uid,plugin_obj,localcontext,**args)
+        if plugin_obj.store_value :
             dm_plugins_value.create(cr, uid,{'date':time.strftime('%Y-%m-%d'),
-                                             'address_id':address_id,
-                                             'plugin_id':p.id,
+                                             'address_id':args['addr_id'],
+                                             'plugin_id':plugin_obj.id,
                                              'value' : plugin_value})
-        vals[str(p.code)] = plugin_value
+        vals[str(plugin_obj.code)] = plugin_value
     return vals
-
-class offer_document(rml_parse):
-    def __init__(self, cr, uid, name, context):
-        print "Calling offer_document __init__"
-        super(offer_document, self).__init__(cr, uid, name, context)
-        print "Calling offer_document super"
-        self.localcontext.update({
-            'time': time,
-            'document':self.document,
-        })
-        print "Calling offer_document localcontext"
-        self.context = context
-
-    def document(self):
-        print "Calling document"
-        if 'form' not in self.datas :
-            address_id = self.context['address_id']
-            document_id = self.context['document_id']
-            workitem_id = self.context['active_id']
-        else :
-
-            address_id = self.datas['form']['address_id']
-            document_id = self.ids[0]
-
-            dm_workitem_obj = self.pool.get('dm.workitem')
-            workitem_data=dm_workitem_obj.search(self.cr,self.uid,[])
-
-            if not workitem_data:
-                document = self.pool.get('dm.offer.document').browse(self.cr,self.uid,document_id)
-
-                dm_segment_obj = self.pool.get('dm.campaign.proposition.segment')
-                segment_data_id=dm_segment_obj.search(self.cr,self.uid,[])
-
-                workitem_id = dm_workitem_obj.create(self.cr, self.uid,{'address_id':address_id,
-                                             'step_id':document.step_id.id,
-                                             'segment_id' : segment_data_id[0]})
-            else :
-                workitem_id = workitem_data[0]
-        values = generate_plugin_value(self.cr,self.uid,document_id,address_id,workitem_id)
-        return [values]
-
-from report.report_sxw import report_sxw
-
-#class my_report_sxw(report_sxw):
-#    print "Tessssssssssssssssssssssss"
-#    def create_single(self, cr, uid, ids, data, report_xml, context={}):
-#        print "----------------------------my method"
-#        report_sxw.create_single(self, cr, uid, ids, data, report_xml, context)
-
-def my_register_all(db,report=False):
-    opj = os.path.join
-    cr = db.cursor()
-    result=''
-    cr.execute("SELECT * FROM ir_act_report_xml WHERE model=%s ORDER BY id", ('dm.offer.document',))
-    result = cr.dictfetchall()
-    for r in result:
-        if netsvc.service_exist('report.'+r['report_name']):
-            continue
-        if r['report_rml'] or r['report_rml_content_data']:
-            report_sxw('report.'+r['report_name'], r['model'],
-                    opj('addons',r['report_rml'] or '/'), header=r['header'],parser=offer_document)
-    cr.execute("SELECT * FROM ir_act_report_xml WHERE auto=%s ORDER BY id", (True,))
-    result = cr.dictfetchall()
-    cr.close()
-    for r in result:
-        if netsvc.service_exist('report.'+r['report_name']):
-            continue
-        if r['report_rml'] or r['report_rml_content_data']:
-            report_sxw('report.'+r['report_name'], r['model'],
-                    opj('addons',r['report_rml'] or '/'), header=r['header'])
-        if r['report_xsl']:
-            interface.report_rml('report.'+r['report_name'], r['model'],
-                    opj('addons',r['report_xml']),
-                    r['report_xsl'] and opj('addons',r['report_xsl']))
-interface.register_all =  my_register_all
-
-class report_xml(osv.osv):
-    _inherit = 'ir.actions.report.xml'
-    _columns = {
-#        'actual_model':fields.char('Report Object', size=64),
-        'document_id':fields.integer('Document'),
-        }
-    def upload_report(self, cr, uid, report_id, file_sxw,file_type, context):
-        '''
-        Untested function
-        '''
-        pool = pooler.get_pool(cr.dbname)
-        sxwval = StringIO(base64.decodestring(file_sxw))
-        if file_type=='sxw':
-            fp = tools.file_open('normalized_oo2rml.xsl',
-                    subdir='addons/base_report_designer/wizard/tiny_sxw2rml')
-            rml_content = str(sxw2rml(sxwval, xsl=fp.read()))
-        if file_type=='odt':
-            fp = tools.file_open('normalized_odt2rml.xsl',
-                    subdir='addons/base_report_designer/wizard/tiny_sxw2rml')
-            rml_content = str(sxw2rml(sxwval, xsl=fp.read()))
-        if file_type=='html':
-            rml_content = base64.decodestring(file_sxw)
-        report = pool.get('ir.actions.report.xml').write(cr, uid, [report_id], {
-            'report_sxw_content': base64.decodestring(file_sxw),
-            'report_rml_content': rml_content,
-        })
-        cr.commit()
-        db = pooler.get_db_only(cr.dbname)
-        interface.register_all(db)
-        return True
-
-    def set_image_email(self,cr,uid,report_id):
-        list_image_id = []
-        def process_tag(node,list_image_id):
-            if not node.getchildren():
-                if  node.tag=='img' and node.get('name') and node.get('name').find('[[setHtmlImage')>=0:
-                    res_id= _regex.split(node.get('name'))[1]
-                    list_image_id.append((res_id,node.get('src')))
-            else :
-                for n in node.getchildren():
-                    process_tag(n,list_image_id)
-        datas = self.report_get(cr, uid, report_id)['report_sxw_content']
-        root = etree.HTML(base64.decodestring(datas))
-        process_tag(root,list_image_id)
-        return list_image_id
-report_xml()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

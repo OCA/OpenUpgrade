@@ -30,6 +30,10 @@
 from csv_out import csv_out
 from sql_out import sql_out
 from openobject_out import openobject_out
+from openobject_out_create import openobject_out_create
 from facebook_out import facebook_out
+from gcalendar_out import gcalendar_out
 from xmlrpc_out import xmlrpc_out
-
+from xmlrpc_out_block import xmlrpc_out_block
+from gdoc_out import gdoc_out
+from gblog_out import gblog_out

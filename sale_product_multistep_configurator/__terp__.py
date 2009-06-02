@@ -22,7 +22,7 @@
 
 {
     "name" : "MultiStep Product Configurator",
-    "description" : "TODO WORK IN PROGRESS!!!! DO NOT USE IN PRODUCTION YET!",
+    "description" : "Generic Multistep configurator",
     "version" : "0.5",
     "author" : "Smile",
     "website": "http://www.smile.fr",
@@ -30,7 +30,7 @@
     "depends" : ["sale"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : [
+    "update_xml" : [    "security/ir.model.access.csv",
                         "sale_product_multistep_configurator.xml",
                         "sale_product_multistep_configurator_wizard.xml",
                         "sale_view.xml"

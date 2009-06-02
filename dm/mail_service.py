@@ -33,7 +33,7 @@ dm_mail_service_type()
 
 class dm_mail_service(osv.osv):
     _name = "dm.mail_service"
-#    _inherits = {'ir.actions.server':'mail_action_id'}
+
     def _default_name(self, cr, uid, ids, name, args, context={}):
         res = {}
         for rec in self.browse(cr, uid, ids):

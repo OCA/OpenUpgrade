@@ -10,11 +10,11 @@
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
     </blockTableStyle>
-    <blockTableStyle id="Taula2">
+    <blockTableStyle id="Taula1">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
     </blockTableStyle>
-    <blockTableStyle id="Taula1">
+    <blockTableStyle id="Taula2">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
     </blockTableStyle>
@@ -24,9 +24,13 @@
     <paraStyle name="P1" fontName="Helvetica" fontSize="6.0" leading="8" alignment="JUSTIFY"/>
     <paraStyle name="P2" fontName="Helvetica" fontSize="11.0" leading="14" alignment="JUSTIFY"/>
     <paraStyle name="P3" fontName="Helvetica" fontSize="11.0" leading="14" alignment="LEFT"/>
-    <paraStyle name="P4" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT"/>
-    <paraStyle name="P5" fontName="Helvetica" fontSize="11.0" leading="14" alignment="JUSTIFY"/>
-    <paraStyle name="P6" fontName="Helvetica" fontSize="11.0" leading="14" alignment="CENTER"/>
+    <paraStyle name="P4" fontName="Helvetica" fontSize="11.0" leading="14" alignment="CENTER"/>
+    <paraStyle name="P5" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT"/>
+    <paraStyle name="P6" fontName="Helvetica" fontSize="6.0" leading="8" alignment="JUSTIFY"/>
+    <paraStyle name="P7" fontName="Helvetica" fontSize="11.0" leading="14" alignment="JUSTIFY"/>
+    <paraStyle name="P8" fontName="Helvetica" fontSize="11.0" leading="14" alignment="CENTER"/>
+    <paraStyle name="P9" fontName="Helvetica" fontSize="11.0" leading="14" alignment="LEFT"/>
+    <paraStyle name="P10" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT"/>
     <paraStyle name="Standard" fontName="Helvetica" fontSize="11.0" leading="14"/>
     <paraStyle name="Text body" fontName="Helvetica" fontSize="11.0" leading="14" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
@@ -39,41 +43,43 @@
   <images/>
   <story>
     <para style="P2">[[repeatIn(objects, 'p')]]</para>
-    <para style="P2">[[repeatIn(p.address, 'o')]]</para>
-    <blockTable colWidths="122.0,122.0" style="Taula2">
-      <tr>
-        <td>
-          <para style="P2">[[ setTag('para','image',{'width':'100.0','height':'33.3'}) ]][[ company.logo or setTag('image','para') ]]</para>
-        </td>
-        <td>
-          <para style="P4">
-            <font color="white"> </font>
-          </para>
-          <para style="P6">[[company.name]]</para>
-        </td>
-      </tr>
-    </blockTable>
-    <para style="P1">
-      <font color="white"> </font>
-    </para>
-    <blockTable colWidths="164.0,80.0" style="Taula1">
-      <tr>
-        <td>
-          <para style="P3">[[o.name or o.partner_id.name]]</para>
-          <para style="P3">
-            <font color="white"> </font>
-          </para>
-          <para style="P3">Num: [[o.partner_id.ref]]</para>
-          <para style="P3">[[ setTag('para','barCode',{'width':'100.0','height':'25.0'}) ]][[ o.partner_id.ref or setTag('barCode','para') ]]</para>
-        </td>
-        <td>
-          <para style="P2">[[ setTag('para','image',{'width':'55.0','height':'55.0'}) ]][[ o.photo or setTag('image','para') ]]</para>
-        </td>
-      </tr>
-    </blockTable>
-    <para style="P1">
-      <font color="white"> </font>
-    </para>
+    <section>
+      <para style="P2">[[repeatIn(p.address, 'o')]]</para>
+      <blockTable colWidths="122.0,122.0" style="Taula1">
+        <tr>
+          <td>
+            <para style="P2">[[ setTag('para','image',{'width':'100.0','height':'33.3'}) ]][[ company.logo or setTag('image','para') ]]</para>
+          </td>
+          <td>
+            <para style="P5">
+              <font color="white"> </font>
+            </para>
+            <para style="P4">[[company.name]]</para>
+          </td>
+        </tr>
+      </blockTable>
+      <para style="P1">
+        <font color="white"> </font>
+      </para>
+      <blockTable colWidths="164.0,80.0" style="Taula2">
+        <tr>
+          <td>
+            <para style="P3">[[o.name or o.partner_id.name]]</para>
+            <para style="P3">
+              <font color="white"> </font>
+            </para>
+            <para style="P3">Num: [[o.partner_id.ref]]</para>
+            <para style="P3">[[ setTag('para','barCode',{'width':'100.0','height':'25.0'}) ]][[ o.partner_id.ref or setTag('barCode','para') ]]</para>
+          </td>
+          <td>
+            <para style="P2">[[ setTag('para','image',{'width':'55.0','height':'55.0'}) ]][[ o.photo or setTag('image','para') ]]</para>
+          </td>
+        </tr>
+      </blockTable>
+      <para style="P1">
+        <font color="white"> </font>
+      </para>
+    </section>
   </story>
 </document>
 

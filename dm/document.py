@@ -34,7 +34,7 @@ class dm_dynamic_text(osv.osv):
     _rec_name = 'content'
     _columns = {
         'language_id' : fields.many2one('res.lang','Language',ondelete='cascade'),
-        'gender_id' : fields.many2one('res.partner.title', 'Gender', domain="[('domain','=','contact')]"),
+        'gender_id' : fields.many2one('partner.gender', 'Gender'),
         'content' : fields.text('Content'),
         'previous_step_id' : fields.many2one('dm.offer.step','Previous Step',ondelete='cascade'),
         'ref_text_id' : fields.many2one('dm.dynamic_text', 'Reference Text'),
@@ -44,6 +44,13 @@ dm_dynamic_text()
 
 class dm_dtp_plugin(osv.osv):
     _name = "dm.dtp.plugin"
+
+    def copy(self, cr, uid, id, default=None, context={}):
+        if not default:
+            default = {}
+        data = self.browse(cr, uid, id, context)
+        default['code'] = (data['code'] or '') + '(copy)'
+        return super(dm_dtp_plugin, self).copy(cr, uid, id, default, context=context)
 
     def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
         if context and 'dm_template_id' in context:
@@ -116,12 +123,14 @@ class dm_dtp_plugin(osv.osv):
         'file_fname': fields.char('Filename',size=64),
         'argument_ids' : fields.one2many('dm.plugin.argument', 'plugin_id', 'Argument List'),
         'note' : fields.text('Description'),
-        'type' : fields.selection([('fields','Customer'),('dynamic','Dynamic'),('url','URL'),('dynamic_text','Dynamic Text')], 'Type', required=True),
+        'type' : fields.selection([('fields','Customer'),('dynamic','Dynamic'),('url','URL'),('dynamic_text','Dynamic Text'),('image','Trademark Image')], 'Type', required=True),
         'model_id' : fields.many2one('ir.model','Object'),
         'field_id' : fields.many2one('ir.model.fields','Customers Field'),
         'encode' : fields.boolean('Encode Url Parameters'),
+        'python_code' :fields.text('Python Code', help="Python code to be executed"),
 #        'key' : fields.char('DES Key',size=64),
         'ref_text_id' : fields.many2one('dm.dynamic_text','Reference Text'),
+        'preview_value' :fields.char('Preview Text',size=64),
      }
     _sql_constraints = [
         ('code_uniq', 'UNIQUE(code)', 'The code must be unique!'),
@@ -138,7 +147,7 @@ class dm_plugin_argument(osv.osv):
         'plugin_id' : fields.many2one('dm.dtp.plugin','Plugin'),
         'note' : fields.text('Description',readonly=True),
         'stored_plugin' : fields.boolean('Value from plugin'),
-        'custome_plugin_id' : fields.many2one('dm.dtp.plugin','Plugin For Value' ,domain=[('type','=','fields')]),
+        'custome_plugin_id' : fields.many2one('dm.dtp.plugin','Plugin For Value'),
         }
 dm_plugin_argument()
 
@@ -226,7 +235,7 @@ class dm_offer_document(osv.osv):
         'code' : fields.char('Code', size=16, required=True),
         'lang_id' : fields.many2one('res.lang', 'Language', required=True),
         'copywriter_id' : fields.many2one('res.partner', 'Copywriter', domain=[('category_id','ilike','Copywriter')], context={'category':'Copywriter'}),
-        'category_id' : fields.many2one('dm.offer.document.category', 'Category'),
+        'category_id' : fields.many2one('dm.offer.document.category', 'Category', required=True),
         'step_id': fields.many2one('dm.offer.step', 'Offer Step'),
         'has_attachment' : fields.function(_has_attchment_fnc, method=True, type='char', string='Has Attachment'),
         'document_template_id' : fields.many2one('dm.document.template', 'Document Template',),
@@ -234,7 +243,8 @@ class dm_offer_document(osv.osv):
               'document_id','document_template_plugin_id','Dynamic Plugins',),
         'state' : fields.selection([('draft','Draft'),('validate','Validated')], 'Status', readonly=True),
         'note' : fields.text('Description'),
-        'gender_id' : fields.many2one('res.partner.title', 'Gender' ,domain=[('domain','=','contact')]),
+#        'gender_id' : fields.many2one('res.partner.title', 'Gender' ,domain=[('domain','=','contact')]),
+        'gender_id' : fields.many2one('partner.gender', 'Gender', ondelete="cascade"),
     }
     _defaults = {
         'state': lambda *a: 'draft',
@@ -258,7 +268,7 @@ class dm_campaign_document(osv.osv):
     _columns = {
         'name' : fields.char('Name', size=64, required=True),
         'type_id' : fields.many2one('dm.campaign.document.type','Format',required=True),
-        'segment_id' : fields.many2one('dm.campaign.proposition.segment','Segment',required=True),
+        'segment_id' : fields.many2one('dm.campaign.proposition.segment','Segment'),
         'delivery_time': fields.datetime('Delivery Time', readonly=True),
         'mail_service_id' : fields.many2one('dm.mail_service','Mail Service',ondelete='cascade',),
         'state' : fields.selection([('pending','Pending'),('done','Done'),('error','Error'),],'State'),

@@ -303,7 +303,7 @@ class account_invoice(osv.osv):
                     rec_line_data = self.pool.get('ir.property').read(cr,uid,rec_pro_id,['name','value','res_id'])
                     pay_line_data = self.pool.get('ir.property').read(cr,uid,pay_pro_id,['name','value','res_id'])
                     rec_res_id = int(rec_line_data[0]['value'].split(',')[1]) or False
-                    rec_res_id = int(pay_line_data[0]['value'].split(',')[1]) or False
+                    pay_res_id = int(pay_line_data[0]['value'].split(',')[1]) or False
                     if not rec_res_id and not rec_res_id:
                         raise osv.except_osv(_('Configration Error !'),
                             _('Can not find account chart for this company, Please Create account.'))

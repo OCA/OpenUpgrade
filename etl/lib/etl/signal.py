@@ -44,11 +44,11 @@ class signal(object):
         self.__connects = {}
 
     def __getstate__(self):
-        return {'__connects' : self.__connects}
+       return {'__connects' : {}}
 
     def __setstate__(self, state):
-        state['__connects'] = pickle.loads(state['__connects'])
-        self.__dict__ = state
+        self.__dict__['__connects'] = state['__connects']
+
 
     def signal(self, signal, signal_data=None):
         for fnct, data, key in self.__connects.get(signal, []):

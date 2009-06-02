@@ -88,7 +88,7 @@ email_send_fields = {
     'delivery': {'string':'Delivery', 'type':'boolean'},
     'contact':  {'string':'Contact', 'type':'boolean'},
     'other':    {'string':'Other', 'type':'boolean'},
-    'text': {'string':'Message', 'type':'text_tag', 'required':True},
+    'text': {'string':'Message', 'type':'text', 'required':True}, #'type':'text_tag' disable because GTK editor has many problems
     'name1': {'string':"File name 1", 'type':'char', 'size':64},
     'name2': {'string':"File name 2", 'type':'char', 'size':64},
     'name3': {'string':"File name 3", 'type':'char', 'size':64},
@@ -125,6 +125,19 @@ def attach_file(name, content):
     return name
 
 
+def conv_ascii(text):
+    """Convert accented vowels, ñ and ç to their equivalent ASCII characters and removes special chars"""
+    import string
+    old_chars = ['á','é','í','ó','ú','à','è','ì','ò','ù','ä','ë','ï','ö','ü','â','ê','î','ô','û','Á','É','Í','Ú','Ó','À','È','Ì','Ò','Ù','Ä','Ë','Ï','Ö','Ü','Â','Ê','Î','Ô','Û','ñ','Ñ','ç','Ç','ª','º',',',';',':']
+    new_chars = ['a','e','i','o','u','a','e','i','o','u','a','e','i','o','u','a','e','i','o','u','A','E','I','O','U','A','E','I','O','U','A','E','I','O','U','A','E','I','O','U','n','N','c','C','a','o','','','']
+    for old, new in zip(old_chars, new_chars):
+        text = text.replace(unicode(old,'UTF-8'), new)
+
+    final_chars = string.letters + string.digits + " .$%&/='{}?-_|#"
+    text = ''.join([c for c in text if c in final_chars])
+    return text
+
+
 def _mass_mail_send(cr, uid, data, context, adr):
     import re
     # change the [[field]] tags with the partner address values
@@ -142,11 +155,13 @@ def _mass_mail_send(cr, uid, data, context, adr):
     mail = pattern.sub('%s', mail)
     mail = mail % tuple(texts)
     mail = mail.replace('%%', '%')
+    mail = mail.replace('\n', '</br>') # With 'text_tag' widget is not necessary
     #print mail
 
     # The adr.email field can contain several email addresses separated by ,
     name = adr.name or adr.partner_id.name
-    to = ['%s <%s>' % (name, email) for email in adr.email.split(',')]
+    # Some emails smtp accounts has problems with non english characters in name
+    to = ['%s <%s>' % (conv_ascii(name), email) for email in adr.email.split(',')]
     #print to
 
     # List of attached files: List of tuples with (file_name, file_content)

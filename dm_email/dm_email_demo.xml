@@ -26,12 +26,14 @@
 			<field eval="&quot;&quot;&quot;Email Document Ondemand Offer-10&quot;&quot;&quot;" name="name"/>
 			<field eval="[(6,0,[ref('dm.dm_dtp_plugin_name0'),ref('dm.dm_dtp_plugin_code0'),ref('dm.dm_dtp_plugin_language0')])]" name="document_template_plugin_ids"/>
 			<field name="lang_id" ref="base.lang_en"/>
-			<field name="gender_id" ref="base.res_partner_title_sir"/>
+			<field name="gender_id" ref="base_partner_gender.partner_gender_male"/>
 			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
 			<field eval="&quot;&quot;&quot;email_ondemand10&quot;&quot;&quot;" name="code"/>
 			<field name="document_template_id" ref="dm.dm_document_template_partner0"/>
 			<field name="step_id" ref="dm_offer_step_emailstartingmailingofferforanondemandoffer0"/>
 			<field name="category_id" ref="dm.dm_offer_document_category_production0"/>
+			<field eval="&quot;&quot;&quot;Test&quot;&quot;&quot;" name="subject"/>
+			<field eval="&quot;&quot;&quot;oord&quot;&quot;&quot;" name="editor"/>
 		</record>
 	</data>
 	

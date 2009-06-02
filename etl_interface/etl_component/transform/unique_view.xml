@@ -94,6 +94,57 @@
     	    </field>
 	</record>
 
+    	
+	<record id="etl_component_unique_key_form" model="ir.ui.view">
+    	    <field name="name">view.etl.component.unique_key.form</field>
+    	    <field name="model">etl.component.unique</field>
+    	    <field name="type">form</field>
+    	    <field name="arch" type="xml">
+        	    <form string="Key">
+        	        <field name="key"/>
+                </form>
+    	    </field>
+    	</record>
+	
+	    	
+	<record id="etl_component_unique_key_tree" model="ir.ui.view">
+    	    <field name="name">view.etl.component.unique_key.tree</field>
+    	    <field name="model">etl.component.unique</field>
+    	    <field name="type">tree</field>
+    	    <field name="arch" type="xml">
+        	    <tree string="Key" editable="bottom">
+        	        <field name="key"/>
+                </tree>
+    	    </field>
+    	</record>
+	
+	
+    <record id="etl_component_unique_form1" model="ir.ui.view">
+        <field name="name">view.etl.component.transform.unique</field>
+        <field name="model">etl.component</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+        <form string="Unique">
+                <group col="4" colspan="4">
+                    <field name="name" select="1" required="1"/>
+                    <field name="type_id" select="1" required="0" readonly="1"/>
+                    <field name="connector_id"/>
+               <field name="transformer_id"/>
+                </group>
+                <notebook colspan="4">
+                    <page string="Property">
+                        <separator string="Unique Keys" colspan="4"/>
+                        <field name="properties" colspan="4" nolabel="1"/>
+                    </page>
+                    <page string="Other Information">
+                        <field name="row_limit"/>
+                <field name ="encoding"/>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
 	<record id="action_etl_component_unique_tree" model="ir.actions.act_window">
             <field name="name">Unique component</field>
 			<field name="res_model">etl.component</field>

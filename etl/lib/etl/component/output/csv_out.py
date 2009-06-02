@@ -46,7 +46,7 @@ class csv_out(component):
         Required  Parameters
         fileconnector   :  Localfile connector.
 
-        Extra Parameters 
+        Extra Parameters
         name            : Name of Component.
         transformer     : Transformer object to transform string data into  particular object.
         row_limit       : Limited records are sent to destination if row limit is specified. If row limit is 0, all records are sent.
@@ -66,6 +66,15 @@ class csv_out(component):
             self.connector.close(self.fp)
             self.fp = False
 
+    def __getstate__(self):
+        res = super(csv_out, self).__getstate__()
+        res.update({'csv_params':self.csv_params})
+        return res
+
+    def __setstate__(self, state):
+        super(csv_out, self).__setstate__(state)
+        self.__dict__ = state
+
     def process(self):
         if self.is_start():
             self.warning('No any Input attached')
@@ -78,10 +87,11 @@ class csv_out(component):
                 for d in iterator:
                     if not self.fp:
                         self.fp = self.connector.open()
+                        print self.fp
                         fieldnames = d.keys()
                         writer = csv.DictWriter(self.fp, fieldnames)
                         writer.writerow(dict(map(lambda x: (x, x), fieldnames)))
-                    writer.writerow(d)
+                    writer.writerow(d) # fix me
                     yield d, 'main'
 
 def test():

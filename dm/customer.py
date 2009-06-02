@@ -97,14 +97,23 @@ class dm_workitem(osv.osv):
         'source' : fields.selection(_SOURCES, 'Source', required=True),
         'error_msg' : fields.text('System Message'),
         'is_global': fields.boolean('Global Workitem'),
-        'tr_from_id' : fields.many2one('dm.offer.step.transition', 'Source Transition'),
+        'tr_from_id' : fields.many2one('dm.offer.step.transition', 'Source Transition', select="1", ondelete="cascade"),
+        'sale_order_id' : fields.many2one('sale.order','Sale Order'),
+        'mail_service_id' : fields.many2one('dm.mail_service','Mail Service'),
         'state' : fields.selection(SELECTION_LIST, 'Status'),
     }
     _defaults = {
         'source': lambda *a: 'address_id',
         'state': lambda *a: 'pending',
         'is_global': lambda *a: False,
+        'action_time' : lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
+
+    def _check_unique_so(self, cr, uid, ids, sale_order_id):
+        if self.search(cr,uid,[('sale_order_id','=',sale_order_id)]):
+            raise osv.except_osv("Error!","You cannot create more than 1 workitem for the same sale order !")
+        else :
+            return sale_order_id
 
     def run(self, cr, uid, wi, context={}):
         print "Calling run"
@@ -112,38 +121,11 @@ class dm_workitem(osv.osv):
         done = False
         try:
             server_obj = self.pool.get('ir.actions.server')
-            print "Calling run for : ",wi.step_id.action_id.server_action_id.name
+            print "Calling run for : ",wi.step_id.action_id.name
             res = True
 
-            """ Check if action must be done or cancelled """
-            """
-            for tr in wi.step_id.outgoing_transition_ids:
-                eval_context = {
-                    'pool' : self.pool,
-                    'cr' : cr,
-                    'uid' : uid,
-                    'wi': wi,
-                    'tr':tr,
-                }
-                val = {}
-                print "Outgoing Action Condition : ",tr.condition_id.out_act_cond
-                try:
-                    exec tr.condition_id.out_act_cond.replace('\r','') in eval_context,val
-                    print "Val out get wi_ids : ",val.get('wi_ids',False)
-                    print "Val out get res : ",val.get('result',False)
-                except Exception,e:
-                    netsvc.Logger().notifyChannel('dm', netsvc.LOG_ERROR, 'Invalid code in Outgoing Action Condition: %s'% tr.condition_id.out_act_cond)
-                    netsvc.Logger().notifyChannel('dm', netsvc.LOG_ERROR, e)
-                    continue
-                if not val.get('result',False):
-                    res = False
-                    act_step = tr.step_to_id.name or False
-                    break
-            """
-            """ Check Incoming transitions Action condition """
-#            if not res:
-
-            """ Check condition code of incoming transitions """
+            """ Check if action must be done or cancelled by"""
+            """ checking the condition code of incoming transitions """
             for tr in wi.step_id.incoming_transition_ids:
                 eval_context = {
                     'pool' : self.pool,
@@ -162,31 +144,25 @@ class dm_workitem(osv.osv):
                 print "Val in get step_to_check: ",val.get('step_ids',False)
                 print "Val in get wi_ids : ",val.get('wi_ids',False)
                 print "Tr Condition return code : ",val.get('result',False)
-                """
-                try:
-                    exec tr.condition_id.in_act_cond.replace('\r','') in eval_context,val
-                    print "Val in get purchase_trig_id: ",val.get('purchase_trig_id',False)
-                    print "Val in get step_to_check: ",val.get('step_ids',False)
-                    print "Val in get wi_ids : ",val.get('wi_ids',False)
-                    print "Tr Condition return code : ",val.get('result',False)
-                except Exception,e:
-                    netsvc.Logger().notifyChannel('dm action', netsvc.LOG_ERROR, 'Invalid code in Incoming Action Condition: %s'% tr.condition_id.in_act_cond)
-                    netsvc.Logger().notifyChannel('dm action', netsvc.LOG_ERROR, e)
-                    continue
-                """
+
                 if not val.get('result',False):
-                    """ If result is False """
+                    """ If result of server action is False """
                     res = False
                     act_step = tr.step_from_id.name or False
                     break
 
             if res:
-                """ Execute Action """
-                res = server_obj.run(cr, uid, [wi.step_id.action_id.server_action_id.id], context)
-                self.write(cr, uid, [wi.id], {'state': 'done','error_msg':""})
-                done = True
+                """ Execute server action """
+                res = server_obj.run(cr, uid, [wi.step_id.action_id.id], context)
+                if res :
+                    self.write(cr, uid, [wi.id], {'state': 'done','error_msg':""})
+                    done = True
+                else :
+                    self.write(cr, uid, [wi.id], {'state': 'cancel','error_msg':':Document is not assigned-create 1 document 1st'})
+                    done = False
+
             else:
-                """ Dont Execute Action """
+                """ Dont Execute Action if workitem not to be processed """
                 self.write(cr, uid, [wi.id], {'state': 'cancel','error_msg':'Cancelled by : %s'% act_step})
                 done = False
         except Exception, exception:
@@ -197,7 +173,7 @@ class dm_workitem(osv.osv):
             netsvc.Logger().notifyChannel('dm action', netsvc.LOG_ERROR, 'Exception: %s\n%s' % (str(exception), tb_s))
 
         if done:
-            """ Check to create next auto workitems """
+            """ Check if it has to create next auto workitems """
             for tr in wi.step_id.outgoing_transition_ids:
                 if tr.condition_id.gen_next_wi:
 
@@ -234,20 +210,27 @@ class dm_workitem(osv.osv):
         return super(dm_workitem, self).__init__(*args)
 
     def mail_service_run(self, cr, uid, camp_doc, context={}):
-        print "Calling camp doc run"
+        print "Calling camp doc run for :", camp_doc.id
         context['active_id'] = camp_doc.id
         try:
             server_obj = self.pool.get('ir.actions.server')
             if not camp_doc.mail_service_id.action_id :
+                # To improve : log no action for mail service
                 return False
             res = server_obj.run(cr, uid, [camp_doc.mail_service_id.action_id.id], context)
-            self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state': 'done','error_msg':""})
+            camp_res = self.pool.get('dm.campaign.document').read(cr, uid, [camp_doc.id], ['state'])[0]
+            print "Camp doc State : ", camp_res['state']
+            """ If no error occured during the document generation set state to done """
+            if camp_res['state'] != 'error':
+                self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state': 'done','error_msg':""})
+
         except Exception, exception:
             import traceback
             tb = sys.exc_info()
             tb_s = "".join(traceback.format_exception(*tb))
             self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state': 'error','error_msg':'Exception: %s\n%s' % (str(exception), tb_s)})
             netsvc.Logger().notifyChannel('dm campaign document', netsvc.LOG_ERROR, 'Exception: %s\n%s' % (str(exception), tb_s))
+
         return True
 
     def check_all(self, cr, uid, context={}):
@@ -255,22 +238,32 @@ class dm_workitem(osv.osv):
         """ Check if the action engine is already running """
         if not self.is_running:
             self.is_running = True
+            """ Get workitems to process """
             ids = self.search(cr, uid, [('state','=','pending'),
                 ('action_time','<=',time.strftime('%Y-%m-%d %H:%M:%S'))])
-            print "WI to process : ",ids
-            for wi in self.browse(cr, uid, ids, context=context):
-                self.run(cr, uid, wi, context=context)
-            self.is_running = False
+            print "Workitems to process : ",ids
 
-        """ dm.campaign.document process """
-        camp_doc_obj = self.pool.get('dm.campaign.document')
-        time_now = time.strftime('%Y-%m-%d %H:%M:%S')
-        camp_doc_ids = camp_doc_obj.search(cr,uid,[('state','=','pending'),('delivery_time','<',time_now)])
-        print camp_doc_ids
-        for camp_doc in camp_doc_obj.browse(cr, uid, camp_doc_ids, context=context):
-            print "Sending : ",camp_doc.name
-            self.mail_service_run(cr, uid, camp_doc, context=context)
-        return True
+            """ Run workitem action """
+            for wi in self.browse(cr, uid, ids, context=context):
+                # To improve : get result from action
+                self.run(cr, uid, wi, context=context)
+
+            """ Campaign documents processing """
+            camp_doc_obj = self.pool.get('dm.campaign.document')
+            time_now = time.strftime('%Y-%m-%d %H:%M:%S')
+
+            """ Get campaign documents to process """
+            camp_doc_ids = camp_doc_obj.search(cr,uid,[('state','=','pending'),('delivery_time','<',time_now)])
+            print camp_doc_ids
+            for camp_doc in camp_doc_obj.browse(cr, uid, camp_doc_ids, context=context):
+                print "Sending : ",camp_doc.name
+                """ Run campaign document action """
+                # To improve : Get result from mail_service_run
+                self.mail_service_run(cr, uid, camp_doc, context=context)
+                
+            self.is_running = False
+            return True
+        return False
 
 dm_workitem()
 
@@ -387,7 +380,7 @@ class dm_customer_numeric_criteria(osv.osv):
         'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
         'field_id' : fields.many2one('ir.model.fields','Customers Field',
                domain=[('model_id.model','=','res.partner'),
-               (('ttype','like','integer') or ('ttype','like','float'))],
+               ('ttype','in',['integer','float'])],
                context={'model':'res.partner'}),
         'operator' : fields.selection(NUMERIC_OPERATORS, 'Operator', size=32),
         'value' : fields.float('Value', digits=(16,2)),
@@ -419,7 +412,7 @@ class dm_customer_date_criteria(osv.osv):
         'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
         'field_id' : fields.many2one('ir.model.fields','Customers Field',
                domain=[('model_id.model','=','res.partner'),
-               (('ttype','like','date') or ('ttype','like','datetime'))],
+               ('ttype','in',['date','datetime'])],
                context={'model':'res.partner'}),
         'operator' : fields.selection(DATE_OPERATORS, 'Operator', size=32),
         'value' : fields.date('Date'),
@@ -451,7 +444,7 @@ class dm_customer_order_numeric_criteria(osv.osv):
         'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
         'field_id' : fields.many2one('ir.model.fields','Customers Field',
                domain=[('model_id.model','=','dm.customer.order'),
-               (('ttype','like','integer') or ('ttype','like','float'))],
+               ('ttype','in',['integer','float'])],
                context={'model':'dm.customer.order'}),
         'operator' : fields.selection(NUMERIC_OPERATORS, 'Operator', size=32),
         'value' : fields.float('Value', digits=(16,2)),
@@ -483,7 +476,7 @@ class dm_customer_order_date_criteria(osv.osv):
         'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
         'field_id' : fields.many2one('ir.model.fields','Customers Field',
                domain=[('model_id.model','=','dm.customer.order'),
-               (('ttype','like','date') or ('ttype','like','datetime'))],
+               ('ttype','in',['date','datetime'])],
                context={'model':'dm.customer.order'}),
         'operator' : fields.selection(DATE_OPERATORS, 'Operator', size=32),
         'value' : fields.date('Date'),
@@ -506,20 +499,28 @@ class dm_event(osv.osv_memory):
     _name = "dm.event"
     _rec_name = "segment_id"
 
+    def onchange_trigger(self,cr,uid,ids,step_id):
+        if not step_id:
+            return {}
+        step = self.pool.get('dm.offer.step').browse(cr,uid,[step_id])[0]
+        return {'value':value}
+
     _columns = {
-        'campaign_id' : fields.many2one('dm.campaign', 'Campaign'),
-        'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segment', required=True,context="{'dm_camp_id':campaign_id}"),
-        'step_id' : fields.many2one('dm.offer.step', 'Offer Step', required=True,context="{'dm_camp_id':campaign_id}"),
+        'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segment', required=True),
+        'step_id' : fields.many2one('dm.offer.step', 'Offer Step', required=True),
         'source' : fields.selection([('address_id','Addresses')], 'Source', required=True),
         'address_id' : fields.many2one('res.partner.address', 'Address'),
         'trigger_type_id' : fields.many2one('dm.offer.step.transition.trigger','Trigger Condition',required=True),
+        'sale_order_id' : fields.many2one('sale.order', 'Sale Order'),
+        'mail_service_id' : fields.many2one('dm.mail_service','Mail Service'),
         'action_time': fields.datetime('Action Time'),
     }
     _defaults = {
         'source': lambda *a: 'address_id',
+        'sale_order_id' : lambda *a : False,
     }
 
-    def create(self,cr,uid,vals,context={}):
+    def create(self,cr,uid,vals,context):
         id = super(dm_event,self).create(cr,uid,vals,context)
         obj = self.browse(cr, uid ,id)
         tr_ids = self.pool.get('dm.offer.step.transition').search(cr, uid, [('step_from_id','=',obj.step_id.id),
@@ -545,8 +546,8 @@ class dm_event(osv.osv_memory):
 
             try:
                 wi_id = self.pool.get('dm.workitem').create(cr, uid, {'step_id':tr.step_to_id.id or False, 'segment_id':obj.segment_id.id or False,
-                'address_id':obj.address_id.id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'),
-                'tr_from_id':tr.id,'source':obj.source})
+                'address_id':obj.address_id.id, 'mail_service_id':obj.mail_service_id.id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'),
+                'tr_from_id':tr.id,'source':obj.source, 'sale_order_id':obj.sale_order_id.id})
                 netsvc.Logger().notifyChannel('dm event', netsvc.LOG_DEBUG, "Creating Workitem with action at %s"% next_action_time.strftime('%Y-%m-%d  %H:%M:%S'))
             except:
                 netsvc.Logger().notifyChannel('dm event', netsvc.LOG_ERROR, "Event cannot create Workitem")

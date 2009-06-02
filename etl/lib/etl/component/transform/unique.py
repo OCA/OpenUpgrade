@@ -41,12 +41,20 @@ class unique(component):
     """
 
     def __init__(self, name='component.transform.unique'):
-        super(unique, self).__init__(name=name )
+        super(unique, self).__init__(name=name)
         self._type = 'component.transfer.unique'
 
     def __copy__(self):
         res = sort(self.name)
         return res
+
+    def __getstate__(self):
+        res = super(unique, self).__getstate__()
+        return res
+
+    def __setstate__(self, state):
+        super(unique, self).__setstate__(state)
+        self.__dict__ = state
 
     def process(self):
         unique_datas = []

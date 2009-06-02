@@ -81,11 +81,37 @@
 		                </page>
 		                <page string="Other Information">
 		                    <field name="row_limit"/>
-		                            <field name ="encoding"/>
+                            <field name ="encoding"/>
 		                </page>
 		            </notebook>
 		        </form>
 			</field>
+		</record>
+		
+		
+		<record id="etl_component_transform_sort_form1" model="ir.ui.view">
+		    <field name="name">view.etl.component.transform.sort</field>
+		    <field name="model">etl.component</field>
+		    <field name="type">form</field>
+		    <field name="arch" type="xml">
+		    <form string="Sort">
+		            <group col="4" colspan="4">
+		                <field name="name" select="1" required="1"/>
+		                <field name="type_id" select="1" required="0" readonly="1"/>
+		                <field name="connector_id"/>
+		           <field name="transformer_id"/>
+		            </group>
+		            <notebook colspan="4">
+		                <page string="Property">
+    		                <field name="field_to_sort" required="1"/>
+		                </page>
+		                <page string="Other Information">
+		                    <field name="row_limit"/>
+		            		<field name ="encoding"/>
+		                </page>
+		            </notebook>
+		        </form>
+		    </field>
 		</record>
 		
 		<record id="action_etl_component_sort_tree"

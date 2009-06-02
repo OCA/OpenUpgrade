@@ -5,11 +5,12 @@ sys.path.append('..')
 
 import etl
 
+
 fileconnector_partner=etl.connector.localfile('input/partner.csv')
 
 fileconnector_partner1=etl.connector.localfile('input/partner1.csv')
 fileconnector_partner3=etl.connector.localfile('input/partner3.csv')
-fileconnector_output=etl.connector.localfile('output/test1_partner.csv','r+')
+fileconnector_output=etl.connector.localfile('output/test1_partner11.csv','r+')
 
 csv_in1= etl.component.input.csv_in(fileconnector_partner,name='Partner Data')
 csv_in2= etl.component.input.csv_in(fileconnector_partner1,name='Partner Data1')
@@ -27,7 +28,7 @@ tran4=etl.transition(sleep1,log2)
 tran5=etl.transition(sort1,csv_out1)
 
 
-job1=etl.job([csv_in1,csv_in2,csv_out1,sort1,log1,log2,sleep1], name="vvvvvvvv")
+job1=etl.job([csv_in1,csv_in2,csv_out1,sort1,log1,log2,sleep1], name="job_test")
 
 
 
@@ -37,7 +38,7 @@ class etl_server(threading.Thread):
     job = False
 
     # Todo:
-    #    1. make data on pickle object
+    #    1. make data on pickle object with rowcount
     #    2. use row_count/row_index in pickle for restarting ...
     #    3. check server done same concept for stoping...
     #    4. pause and restart function on job should be modify
@@ -73,6 +74,7 @@ class etl_server(threading.Thread):
     def run(self):
         try:
             obj = self.read()
+            print "obj",obj
             if obj:
                 if self.job.job_id == obj.job_id:
                     if obj.status == 'end':
@@ -80,9 +82,16 @@ class etl_server(threading.Thread):
                         #self.write()
                         pass
                     elif obj.status == 'pause':
+                        print "!!!!!!!!!!!"
+                        self.job = False
                         self.job = obj
-                        self.job.run() # or run
-                        self.write()
+                        try:
+                            print "=============="
+                            self.job.run()
+                            print "<<<<<<<<<<<<<<<<<<<"
+                            self.write()
+                        except Exception,e:
+                            print e
                     else:
                         pass
                 else:
@@ -92,7 +101,7 @@ class etl_server(threading.Thread):
                 self.job.run()
                 self.write()
         except Exception,e:
-            #self.job.pause()
+            self.job.pause()
             self.write()
 
 server = etl_server()
