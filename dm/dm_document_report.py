@@ -69,8 +69,9 @@ class offer_document(report_sxw.rml_parse):
             addr_id = self.context['address_id']
             doc_id = self.context['document_id']
             wi_id = self.context['active_id']
+            type = 'email_doc'
         else :
-
+            type = 'preview'
             addr_id = self.datas['form']['address_id']
             doc_id = self.ids[0]
 
@@ -89,7 +90,7 @@ class offer_document(report_sxw.rml_parse):
 
             else :
                 wi_id = wi_data[0]
-        values = generate_plugin_value(self.cr,self.uid,doc_id=doc_id,addr_id=addr_id,wi_id=wi_id,plugin_list=self._plugin_list())
+        values = generate_plugin_value(self.cr,self.uid,doc_id=doc_id,addr_id=addr_id,wi_id=wi_id,plugin_list=self._plugin_list(),type=type)
         return [values]
         
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:        

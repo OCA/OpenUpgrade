@@ -733,7 +733,7 @@ class dm_campaign_proposition(osv.osv):#{{{
 
     def default_get(self, cr, uid, fields, context=None):
         value = super(dm_campaign_proposition, self).default_get(cr, uid, fields, context)
-        if 'camp_id' in context:
+        if 'camp_id' in context and context['camp_id']:
             campaign = self.pool.get('dm.campaign').browse(cr, uid, context['camp_id'])
             value['date_start'] = campaign.date_start
         return value
