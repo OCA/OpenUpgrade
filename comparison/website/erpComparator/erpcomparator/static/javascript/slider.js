@@ -47,7 +47,6 @@ var aSlider = {
                     jQuery(".container",p).animate({left: animateLeft}, s.newsSpeed, function() {
                         jQuery(this).css("left",animateLeft);
                         if (parseInt(jQuery(".container",p).css("left")) + parseInt(jQuery(".container",p).css("width")) > aSlider.itemWidth * 2) {
-                        	alert("at here imm")
                             jQuery(".next",p).css("display","none");
                         }
                         jQuery(".next",p).css("display","none");

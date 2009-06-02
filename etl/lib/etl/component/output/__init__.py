@@ -36,3 +36,4 @@ from gcalendar_out import gcalendar_out
 from xmlrpc_out import xmlrpc_out
 from xmlrpc_out_block import xmlrpc_out_block
 from gdoc_out import gdoc_out
+from gblog_out import gblog_out
