@@ -115,7 +115,7 @@ def create_kml(self, cr, uid, data, context={}):
             list_to.append(part[0])
 
 #    avg_to = min(list_to) + max(list_to) / 2 or 0.0
-    avg_to = sum(list_to) / len(list_to) or 0.0
+    avg_to = list_to and (sum(list_to) / len(list_to)) or 0
 
     map(lambda x:res_inv.setdefault(x, 0), country_list)
     # fetch invoice by country
