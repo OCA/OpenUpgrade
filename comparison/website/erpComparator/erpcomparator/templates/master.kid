@@ -18,7 +18,7 @@
     <link href="/static/css/new_style.css" rel="stylesheet" type="text/css"/>
     <link href="/static/css/modalbox.css" rel="stylesheet" type="text/css"/>
     <link href="/static/css/planet.css" rel="stylesheet" type="text/css"/>
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 	   	function lang_change(val) {
 			lang_code = val.value;
 			
@@ -26,7 +26,7 @@
 			lang_code = get_language.value;
 			window.location.href=getURL('/comparison', {'lang_code': lang_code});
 		}
-    </script>
+    </script> -->
 	<meta py:replace="item[:]"/>
     <!--[if lt IE 7]>
         <link href="/static/css/iepngfix.css" rel="stylesheet" type="text/css"/>
@@ -71,38 +71,39 @@ except:
 				<div id="site">
 					<div id="header"></div>
 					
-					<div id="header_bar"> 
+					<div id="header_bar" class="header_bar"> 
 						<table width="99%">
 							<tr>
-								<td style="padding-top:5px; padding-left:10px; width: 36%; float: left;">
+								<td style="padding-top:5px; padding-left:15px; width: 35%; float: left; font-size: 11px; padding-bottom:15px;">
 									Based on<font color="#FF3300"><b> ${criterions} </b></font>
 									criteria,<font color="#FF3300"><b> ${feedbacks} </b></font>
 									users' feedbacks
 								</td>
 									
-								<td id="loginbg" py:if="not user_info" style="float: left; padding-top: 0px; padding-bottom: 5px; padding-left: 10px; padding-right: 5px; width: 60%;"> 
-							    	<div style="padding-right:5px; padding-left: 2px; width: 100%;">
+								<td id="loginbg" py:if="not user_info" style="padding-right:0px; padding-bottom: 5px; padding-left: 10px;"> 
+							    	<div style="padding-right:5px; padding-left: 35px; width: 100%; padding-top:0px; padding-bottom:10px;">
 							    			Login : <input type="text" name="user_name" id="user_name" class="textInput"/> 
 							    			Password : <input type="password" name="password" id="password" class="textInput"/>
-							      		<button type="button" class="button" onclick="do_login()" name="continue">Login</button>
+							      		<button type="button" style="padding-left:5px;" class="button" onclick="do_login()" name="continue">Login</button>
 							      		<button type="button" class="button" onclick="register()" name="registration">Registration</button>
-										<select id="language" onchange="lang_change(this)" style="height: 20px; width: 70px; ">
-											<option py:for="lang in rpc.session.lang_data" value="${lang['code']}" selected="${tg.selector(lang['code']==rpc.session.language)}">${lang['name']}</option>
-										</select>
+<!--										<select id="language" onchange="lang_change(this)" style="height: 20px; width: 70px; ">-->
+<!--											<option py:for="lang in rpc.session.lang_data" value="${lang['code']}" selected="${tg.selector(lang['code']==rpc.session.language)}">${lang['name']}</option>-->
+<!--										</select>-->
 							    	</div>
 								</td>
-								<td id="loginbg" py:if="user_info" style="padding-top: 0px; padding-left: 10px; padding-right: 20px; width: 65%;">
+								<td id="loginbg" py:if="user_info" style="padding-right:0px; padding-bottom: 5px; padding-left: 10px;">
 									<table width="100%">
 										<tr>
-											<td style="align: left; padding-top: 0px; padding-left: 5px; padding-right: 20px; font-size: 12px; font-weight: bold;">
+											<td  width="100%" style="padding-top: 0px; padding-bottom: 15px; padding-left: 5px; font-size: 12px; font-weight: bold;">
 												Welcome ${user_info}
+												<button type="button" style="margin-bottom: 5px; margin-left: 5px; margin-right:5px; text-align: right" class="button" onclick="window.location.href='/login/logout'" name="logout">Logout</button>
 											</td>
-											<td style="float: right; padding-top: 6px;">
-												<button type="button" style="text-align: right" class="button" onclick="window.location.href='/login/logout'" name="logout">Logout</button>
-												<select id="language" onchange="lang_change(this)" style="height: 18px; width: 70px;">
-													<option py:for="lang in rpc.session.lang_data" value="${lang['code']}" selected="${tg.selector(lang['code']==rpc.session.language)}">${lang['name']}</option>
-												</select>
-											</td>
+<!--											<td style="float: right; padding-top: 6px;">-->
+												
+<!--												<select id="language" onchange="lang_change(this)" style="height: 18px; width: 70px;">-->
+<!--													<option py:for="lang in rpc.session.lang_data" value="${lang['code']}" selected="${tg.selector(lang['code']==rpc.session.language)}">${lang['name']}</option>-->
+<!--												</select>-->
+<!--											</td>-->
 										</tr>
 									</table>
 								</td>

@@ -225,6 +225,7 @@
         <field name="arch" type="xml">
             <tree string="DTP Plugins">
                 <field name="name" select="1"/>
+                <field name="code" select="1"/>
                 <field name="note"/>
             </tree>
         </field>
@@ -359,6 +360,7 @@
                 <field name="name"/>
                 <field name="type_id"/>
                 <field name="segment_id"/>
+                <field name="address_id"/>
                 <field name="delivery_time" select="1"/>
                 <field name="state" select="2"/>
                 <field name="error_msg"/>
