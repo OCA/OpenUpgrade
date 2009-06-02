@@ -24,6 +24,7 @@ class Softwares(controllers.Controller, TinyResource):
         for note in res:
             files = []
             file_names = [] 
+            
             if note['note']:
                 notes = str(note['note'])
                 note['note'] = re.sub(r'<','less than',notes) or re.sub(r'>', 'greater than', notes)
@@ -35,11 +36,12 @@ class Softwares(controllers.Controller, TinyResource):
                 note['note'] = note['note'].replace('&','&amp;')
                 
             for d in lst_folder: 
-                if d.startswith(note['code']):
+                key = d.split("_")[0]
+                if key == note['code']:
                     files.append(d)
                     lst = d.split('_')[1].split('.')[0]
                     file_names.append(lst)
-          
-            note['code'] = {note['code']: [files, file_names]}
             
+            note['code'] = {note['code']: [files, file_names]}
+
         return dict(res=res)
