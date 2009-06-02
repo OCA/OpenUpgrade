@@ -268,7 +268,7 @@ class dm_campaign_document(osv.osv):
     _columns = {
         'name' : fields.char('Name', size=64, required=True),
         'type_id' : fields.many2one('dm.campaign.document.type','Format',required=True),
-        'segment_id' : fields.many2one('dm.campaign.proposition.segment','Segment',required=True),
+        'segment_id' : fields.many2one('dm.campaign.proposition.segment','Segment'),
         'delivery_time': fields.datetime('Delivery Time', readonly=True),
         'mail_service_id' : fields.many2one('dm.mail_service','Mail Service',ondelete='cascade',),
         'state' : fields.selection([('pending','Pending'),('done','Done'),('error','Error'),],'State'),

@@ -99,13 +99,21 @@ class dm_workitem(osv.osv):
         'is_global': fields.boolean('Global Workitem'),
         'tr_from_id' : fields.many2one('dm.offer.step.transition', 'Source Transition', select="1", ondelete="cascade"),
         'sale_order_id' : fields.many2one('sale.order','Sale Order'),
+        'mail_service_id' : fields.many2one('dm.mail_service','Mail Service'),
         'state' : fields.selection(SELECTION_LIST, 'Status'),
     }
     _defaults = {
         'source': lambda *a: 'address_id',
         'state': lambda *a: 'pending',
         'is_global': lambda *a: False,
+        'action_time' : lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
+
+    def _check_unique_so(self, cr, uid, ids, sale_order_id):
+        if self.search(cr,uid,[('sale_order_id','=',sale_order_id)]):
+            raise osv.except_osv("Error!","You cannot create more than 1 workitem for the same sale order !")
+        else :
+            return sale_order_id
 
     def run(self, cr, uid, wi, context={}):
         print "Calling run"
@@ -184,8 +192,13 @@ class dm_workitem(osv.osv):
             if res:
                 """ Execute Action """
                 res = server_obj.run(cr, uid, [wi.step_id.action_id.id], context)
-                self.write(cr, uid, [wi.id], {'state': 'done','error_msg':""})
-                done = True
+                if res :
+                    self.write(cr, uid, [wi.id], {'state': 'done','error_msg':""})
+                    done = True
+                else :
+                    self.write(cr, uid, [wi.id], {'state': 'cancel','error_msg':':Document is not assigned-create 1 document 1st'})
+                    done = False
+
             else:
                 """ Dont Execute Action """
                 self.write(cr, uid, [wi.id], {'state': 'cancel','error_msg':'Cancelled by : %s'% act_step})
@@ -512,6 +525,12 @@ class dm_event(osv.osv_memory):
     _name = "dm.event"
     _rec_name = "segment_id"
 
+    def onchange_trigger(self,cr,uid,ids,step_id):
+        if not step_id:
+            return {}
+        step = self.pool.get('dm.offer.step').browse(cr,uid,[step_id])[0]
+        return {'value':value}
+
     _columns = {
         'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segment', required=True),
         'step_id' : fields.many2one('dm.offer.step', 'Offer Step', required=True),
@@ -519,6 +538,7 @@ class dm_event(osv.osv_memory):
         'address_id' : fields.many2one('res.partner.address', 'Address'),
         'trigger_type_id' : fields.many2one('dm.offer.step.transition.trigger','Trigger Condition',required=True),
         'sale_order_id' : fields.many2one('sale.order', 'Sale Order'),
+        'mail_service_id' : fields.many2one('dm.mail_service','Mail Service'),
         'action_time': fields.datetime('Action Time'),
     }
     _defaults = {
@@ -552,7 +572,7 @@ class dm_event(osv.osv_memory):
 
             try:
                 wi_id = self.pool.get('dm.workitem').create(cr, uid, {'step_id':tr.step_to_id.id or False, 'segment_id':obj.segment_id.id or False,
-                'address_id':obj.address_id.id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'),
+                'address_id':obj.address_id.id, 'mail_service_id':obj.mail_service_id.id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'),
                 'tr_from_id':tr.id,'source':obj.source, 'sale_order_id':obj.sale_order_id.id})
                 netsvc.Logger().notifyChannel('dm event', netsvc.LOG_DEBUG, "Creating Workitem with action at %s"% next_action_time.strftime('%Y-%m-%d  %H:%M:%S'))
             except:

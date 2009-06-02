@@ -196,6 +196,7 @@ dm_offer_step()
 
 class dm_offer_step_transition_trigger(osv.osv):
     _name = "dm.offer.step.transition.trigger"
+    _rec_name = "name"
     _columns = {
         'name' : fields.char('Trigger Name', size=64, required=True, translate=True),
         'code' : fields.char('Code' , size=64, required=True, translate=True),

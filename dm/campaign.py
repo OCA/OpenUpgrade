@@ -2035,7 +2035,6 @@ class res_partner(osv.osv):
     }
 res_partner()
 
-"""
 class purchase_order(osv.osv):
     _name = 'purchase.order'
     _inherit = 'purchase.order'
@@ -2043,7 +2042,6 @@ class purchase_order(osv.osv):
         'dm_campaign_purchase_line' : fields.many2one('dm.campaign.purchase_line','DM Campaign Purchase Line'),
     }
 purchase_order()
-"""
 
 class project_task(osv.osv):
     _name = "project.task"
