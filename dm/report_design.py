@@ -44,7 +44,8 @@ def merge_message(cr, uid, keystr, context):
         id = context.get('document_id')
         obj = dm_obj.browse(cr, uid, id)
         exp = str(match.group()[2:-2]).strip()
-        plugin_values = generate_plugin_value(cr, uid, id, context.get('address_id'), context)
+        args = {'doc_id' : context['document_id'],'addr_id':context['address_id'],'wi_id':context['wi_id']}
+        plugin_values = generate_plugin_value(cr, uid,**args)
         context.update(plugin_values)
         context.update({'object':obj,'time':time})
         result = eval(exp,context)
@@ -155,6 +156,7 @@ def generate_reports(cr,uid,obj,report_type,context):
         print "Doc name : ",document_data['name']
         context['address_id'] = address_id
         context['document_id'] = document_id[0]
+        context['wi_id'] = obj.id
         attachment_obj = pool.get('ir.attachment')
         if report_type=='html' and document_data['editor'] and document_data['editor']=='internal' and document_data['content']:
             report_data = internal_html_report +str(document_data['content'])+"</BODY></HTML>"
@@ -195,7 +197,7 @@ def _generate_value(cr,uid,plugin_obj,localcontext,**args):
     localcontext['plugin_obj'] = plugin_obj
     plugin_args = {}
     plugin_value = ''
-    if plugin_obj.python_code : 
+    if plugin_obj.python_code :
         exec plugin_obj.python_code.replace('\r','') in localcontext
         plugin_value =  localcontext['plugin_value']
     elif plugin_obj.type in ('fields','image'):
@@ -205,6 +207,8 @@ def _generate_value(cr,uid,plugin_obj,localcontext,**args):
         args['field_type'] = str(plugin_obj.field_id.ttype)
         args['field_relation'] = str(plugin_obj.field_id.relation)
         plugin_value = customer_function(cr, uid, **args)
+        if not plugin_value :
+            plugin_value = plugin_obj.preview_value
     else :
         arg_ids = pool.get('dm.plugin.argument').search(cr,uid,[('plugin_id','=',plugin_obj.id)])
         for arg in pool.get('dm.plugin.argument').browse(cr,uid,arg_ids):

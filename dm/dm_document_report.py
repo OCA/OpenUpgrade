@@ -44,7 +44,6 @@ class offer_document(report_sxw.rml_parse):
 
     def _plugin_list(self):
         ir_obj = self.pool.get('ir.actions.report.xml')
-        print self.name
         report_xml_ids = ir_obj.search(self.cr, self.uid,[('report_name', '=', self.name)])
         if report_xml_ids:
             report_xml = ir_obj.browse(self.cr, self.uid, report_xml_ids[0])
