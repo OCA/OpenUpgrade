@@ -124,35 +124,8 @@ class dm_workitem(osv.osv):
             print "Calling run for : ",wi.step_id.action_id.name
             res = True
 
-            """ Check if action must be done or cancelled """
-            """
-            for tr in wi.step_id.outgoing_transition_ids:
-                eval_context = {
-                    'pool' : self.pool,
-                    'cr' : cr,
-                    'uid' : uid,
-                    'wi': wi,
-                    'tr':tr,
-                }
-                val = {}
-                print "Outgoing Action Condition : ",tr.condition_id.out_act_cond
-                try:
-                    exec tr.condition_id.out_act_cond.replace('\r','') in eval_context,val
-                    print "Val out get wi_ids : ",val.get('wi_ids',False)
-                    print "Val out get res : ",val.get('result',False)
-                except Exception,e:
-                    netsvc.Logger().notifyChannel('dm', netsvc.LOG_ERROR, 'Invalid code in Outgoing Action Condition: %s'% tr.condition_id.out_act_cond)
-                    netsvc.Logger().notifyChannel('dm', netsvc.LOG_ERROR, e)
-                    continue
-                if not val.get('result',False):
-                    res = False
-                    act_step = tr.step_to_id.name or False
-                    break
-            """
-            """ Check Incoming transitions Action condition """
-#            if not res:
-
-            """ Check condition code of incoming transitions """
+            """ Check if action must be done or cancelled by"""
+            """ checking the condition code of incoming transitions """
             for tr in wi.step_id.incoming_transition_ids:
                 eval_context = {
                     'pool' : self.pool,
@@ -171,26 +144,15 @@ class dm_workitem(osv.osv):
                 print "Val in get step_to_check: ",val.get('step_ids',False)
                 print "Val in get wi_ids : ",val.get('wi_ids',False)
                 print "Tr Condition return code : ",val.get('result',False)
-                """
-                try:
-                    exec tr.condition_id.in_act_cond.replace('\r','') in eval_context,val
-                    print "Val in get purchase_trig_id: ",val.get('purchase_trig_id',False)
-                    print "Val in get step_to_check: ",val.get('step_ids',False)
-                    print "Val in get wi_ids : ",val.get('wi_ids',False)
-                    print "Tr Condition return code : ",val.get('result',False)
-                except Exception,e:
-                    netsvc.Logger().notifyChannel('dm action', netsvc.LOG_ERROR, 'Invalid code in Incoming Action Condition: %s'% tr.condition_id.in_act_cond)
-                    netsvc.Logger().notifyChannel('dm action', netsvc.LOG_ERROR, e)
-                    continue
-                """
+
                 if not val.get('result',False):
-                    """ If result is False """
+                    """ If result of server action is False """
                     res = False
                     act_step = tr.step_from_id.name or False
                     break
 
             if res:
-                """ Execute Action """
+                """ Execute server action """
                 res = server_obj.run(cr, uid, [wi.step_id.action_id.id], context)
                 if res :
                     self.write(cr, uid, [wi.id], {'state': 'done','error_msg':""})
@@ -200,20 +162,18 @@ class dm_workitem(osv.osv):
                     done = False
 
             else:
-                """ Dont Execute Action """
+                """ Dont Execute Action if workitem not to be processed """
                 self.write(cr, uid, [wi.id], {'state': 'cancel','error_msg':'Cancelled by : %s'% act_step})
                 done = False
         except Exception, exception:
             import traceback
             tb = sys.exc_info()
-            print "@@@@ tb :",tb
             tb_s = "".join(traceback.format_exception(*tb))
-            print "@@@@ tb_s :",tb_s
             self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'Exception: %s\n%s' % (str(exception), tb_s)})
             netsvc.Logger().notifyChannel('dm action', netsvc.LOG_ERROR, 'Exception: %s\n%s' % (str(exception), tb_s))
 
         if done:
-            """ Check to create next auto workitems """
+            """ Check if it has to create next auto workitems """
             for tr in wi.step_id.outgoing_transition_ids:
                 if tr.condition_id.gen_next_wi:
 
@@ -255,18 +215,22 @@ class dm_workitem(osv.osv):
         try:
             server_obj = self.pool.get('ir.actions.server')
             if not camp_doc.mail_service_id.action_id :
+                # To improve : log no action for mail service
                 return False
             res = server_obj.run(cr, uid, [camp_doc.mail_service_id.action_id.id], context)
             camp_res = self.pool.get('dm.campaign.document').read(cr, uid, [camp_doc.id], ['state'])[0]
             print "Camp doc State : ", camp_res['state']
+            """ If no error occured during the document generation set state to done """
             if camp_res['state'] != 'error':
                 self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state': 'done','error_msg':""})
+
         except Exception, exception:
             import traceback
             tb = sys.exc_info()
             tb_s = "".join(traceback.format_exception(*tb))
             self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state': 'error','error_msg':'Exception: %s\n%s' % (str(exception), tb_s)})
             netsvc.Logger().notifyChannel('dm campaign document', netsvc.LOG_ERROR, 'Exception: %s\n%s' % (str(exception), tb_s))
+
         return True
 
     def check_all(self, cr, uid, context={}):
@@ -274,22 +238,32 @@ class dm_workitem(osv.osv):
         """ Check if the action engine is already running """
         if not self.is_running:
             self.is_running = True
+            """ Get workitems to process """
             ids = self.search(cr, uid, [('state','=','pending'),
                 ('action_time','<=',time.strftime('%Y-%m-%d %H:%M:%S'))])
-            print "WI to process : ",ids
-            for wi in self.browse(cr, uid, ids, context=context):
-                self.run(cr, uid, wi, context=context)
-            self.is_running = False
+            print "Workitems to process : ",ids
 
-        """ dm.campaign.document process """
-        camp_doc_obj = self.pool.get('dm.campaign.document')
-        time_now = time.strftime('%Y-%m-%d %H:%M:%S')
-        camp_doc_ids = camp_doc_obj.search(cr,uid,[('state','=','pending'),('delivery_time','<',time_now)])
-        print camp_doc_ids
-        for camp_doc in camp_doc_obj.browse(cr, uid, camp_doc_ids, context=context):
-            print "Sending : ",camp_doc.name
-            self.mail_service_run(cr, uid, camp_doc, context=context)
-        return True
+            """ Run workitem action """
+            for wi in self.browse(cr, uid, ids, context=context):
+                # To improve : get result from action
+                self.run(cr, uid, wi, context=context)
+
+            """ Campaign documents processing """
+            camp_doc_obj = self.pool.get('dm.campaign.document')
+            time_now = time.strftime('%Y-%m-%d %H:%M:%S')
+
+            """ Get campaign documents to process """
+            camp_doc_ids = camp_doc_obj.search(cr,uid,[('state','=','pending'),('delivery_time','<',time_now)])
+            print camp_doc_ids
+            for camp_doc in camp_doc_obj.browse(cr, uid, camp_doc_ids, context=context):
+                print "Sending : ",camp_doc.name
+                """ Run campaign document action """
+                # To improve : Get result from mail_service_run
+                self.mail_service_run(cr, uid, camp_doc, context=context)
+                
+            self.is_running = False
+            return True
+        return False
 
 dm_workitem()
 
