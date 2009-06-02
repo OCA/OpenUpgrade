@@ -114,10 +114,10 @@ def create_kml(self, cr, uid, data, context={}):
             res[string.upper(part[1])] = part[0]
             list_to.append(part[0])
 
-    avg_to = min(list_to) + max(list_to) / 2 or 0.0
+#    avg_to = min(list_to) + max(list_to) / 2 or 0.0
+    avg_to = sum(list_to) / len(list_to) or 0.0
 
     map(lambda x:res_inv.setdefault(x, 0), country_list)
-
     # fetch invoice by country
     cr.execute(''' select count(i.id),c.name from account_invoice as i left join res_partner_address as a on i.partner_id=a.partner_id left join res_country as c on a.country_id=c.id where i.type in ('out_invoice','in_invoice') group by c.name ''')
     invoice_partner = cr.fetchall()
@@ -298,7 +298,7 @@ def create_kml(self, cr, uid, data, context={}):
         documentElement.appendChild(folderElement)
 
     out = base64.encodestring(kmlDoc.toxml())
-    fname = 'partner_region' + '.kml'
+    fname = 'region' + '.kml'
     return {'kml_file': out, 'name': fname}
 
 class customer_on_map(wizard.interface):
