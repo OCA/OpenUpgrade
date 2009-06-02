@@ -20,7 +20,7 @@
 #
 ##############################################################################
 """
-To provide connectivity with Facebook
+To provide connectivity with google calendar
 
 Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 GNU General Public License
@@ -37,7 +37,7 @@ class gcalendar_connector(connector):
         """
         Required Parameters
         email : Google email.
-        password        : password for gmail user
+        password        : password for google user
 
         Extra Parameters
         delay_time  : Time in sec which is use to wait for login while opening login page in browser.
