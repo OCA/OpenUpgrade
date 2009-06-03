@@ -85,7 +85,7 @@ def _mergeOrders(self, cr, uid, data, context):
                 'pricelist_id': porder.pricelist_id.id,
                 'state': 'draft',
                 'order_line': {},
-                'notes': '%s' % (porder.notes or "",),
+                'notes': '%s' % (porder.notes or '',),
             })
         else:
             #order_infos['name'] += ', %s' % porder.name
@@ -108,7 +108,6 @@ def _mergeOrders(self, cr, uid, data, context):
                 o_line['uom_factor'] = order_line.product_uom and order_line.product_uom.factor or 1.0
 
     wf_service = netsvc.LocalService("workflow")
-
 
     allorders = []
     for order_key, (order_data, old_ids) in new_orders.iteritems():
