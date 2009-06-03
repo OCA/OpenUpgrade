@@ -75,7 +75,7 @@ def _mergeOrders(self, cr, uid, data, context):
         order_infos = new_order[0]
         if not order_infos:
             order_infos.update({
-                'origin': porder.origin,
+                'origin': porder.origin or '',
                 'date_order': time.strftime('%Y-%m-%d'),
                 'partner_id': porder.partner_id.id,
                 'partner_address_id': porder.partner_address_id.id,
@@ -86,12 +86,11 @@ def _mergeOrders(self, cr, uid, data, context):
                 'state': 'draft',
                 'order_line': {},
                 'notes': '%s' % (porder.notes or "",),
-                'origin': porder.origin,
             })
         else:
             #order_infos['name'] += ', %s' % porder.name
             order_infos['notes'] += ('\n%s' % (porder.notes or "",))
-            order_infos['origin'] = order_infos['origin'] +' - '+ porder.origin
+            order_infos['origin'] = "%s - %s" % (order_infos['origin'] or '', porder.origin or '')
 
         for order_line in porder.order_line:
             line_key = make_key(order_line, ('name', 'date_planned', 'taxes_id', 'price_unit', 'notes', 'product_id', 'move_dest_id','production_lot_id','customer_ref'))
@@ -154,6 +153,6 @@ class merge_orders(wizard.interface):
             'result' : {'type':'action', 'action':_mergeOrders, 'state':'end'}
         },
     }
+
 merge_orders("purchase.order.merge.library")
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
