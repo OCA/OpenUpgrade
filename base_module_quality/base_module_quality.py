@@ -22,8 +22,8 @@
 import pooler
 import os
 import osv
-from tools import config
 from tools.translate import _
+from addons import get_module_path
 
 class abstract_quality_check(object):
     '''
@@ -69,12 +69,12 @@ class abstract_quality_check(object):
         #The tests have to subscribe itselfs in this list, that contains
         #all the test that have to be performed.
         self.tests = []
-        self.list_folders = os.listdir(config['addons_path'] +
-            '/base_module_quality/')
+        mq_modpath=get_module_path('base_module_quality')
+        self.list_folders = os.listdir(mq_modpath)
         for item in self.list_folders:
             self.item = item
-            path = config['addons_path']+'/base_module_quality/'+item
-            if os.path.exists(path + '/' + item + '.py') and item not in ['report', 'wizard', 'security']:
+            path = os.path.join(mq_modpath,item)
+            if os.path.exists(os.path.join(path, item + '.py')) and item not in ['report', 'wizard', 'security']:
                 item2 = 'base_module_quality.' + item +'.' + item
                 x_module = __import__(item2)
                 x_file = getattr(x_module, item)

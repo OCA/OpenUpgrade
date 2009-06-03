@@ -25,6 +25,7 @@ from osv import osv, fields
 
 import tools
 import os
+from addons import get_module_path
 
 from base_module_quality import base_module_quality
 
@@ -69,10 +70,7 @@ class create_quality_check(wizard.interface):
             ponderation_sum = 0.0
             create_ids = []
             for test in abstract_obj.tests:
-                ad = tools.config['addons_path']
-                if module_data.name == 'base':
-                    ad = tools.config['root_path']+'/addons'
-                module_path = os.path.join(ad, module_data.name)
+                module_path = get_module_path(module_data.name)
                 val = test.quality_test()
                 if not val.bool_installed_only or module_data.state == "installed":
                     val.run_test(cr, uid, str(module_path))

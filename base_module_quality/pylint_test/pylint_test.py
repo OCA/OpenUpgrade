@@ -22,8 +22,9 @@
 
 
 import os
-from tools import config
+# from tools import config
 from tools.translate import _
+from addons import get_module_path
 
 from base_module_quality import base_module_quality
 
@@ -41,7 +42,7 @@ class quality_test(base_module_quality.abstract_quality_check):
         return None
 
     def run_test(self, cr, uid, module_path):
-        config_file_path = config['addons_path']+'/base_module_quality/pylint_test/pylint_test_config.txt'
+        config_file_path = os.path.join(get_module_path('base_module_quality'),'pylint_test','pylint_test_config.txt')
         list_files = os.listdir(module_path)
         for i in list_files:
             path = os.path.join(module_path, i)
