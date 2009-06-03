@@ -184,13 +184,13 @@ def create_kml(self, cr, uid, data, context={}):
             add = address_obj.browse(cr, uid, par_address_id, context)
 
         if add:
-            if add.street:
-                address += str(add.street)
-            if add.street2:
-                address += ', '
-                address += str(add.street2)
+#            if add.street:
+#                address += str(add.street)
+#            if add.street2:
+#                address += ', '
+#                address += str(add.street2)
             if add.city:
-                address += ', '
+                address += ''
                 address += str(add.city)
             if add.state_id:
                 address += ', '
