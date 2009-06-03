@@ -112,22 +112,28 @@ class Smile_OpenERPSync_Model_Observer
 		catch (Zend_XmlRpc_Exception $e ) 
 		{
 			Mage::Log("My_XmlRpc_Client execute Failed: " . $e->getMessage());
-			Mage::getSingleton('checkout/session')->addError($e->getMessage());
+			if ( $this->debugEnabled() )
+                        {
+				Mage::getSingleton('checkout/session')->addError($e->getMessage());
+			}
 			return false;
 		}
 		catch (Mage_Core_Exception $e) 
 		{
 			Mage::Log("Core Exception: " . $e->getMessage());
-			Mage::getSingleton('checkout/session')->addError($e->getMessage());
+			if ( $this->debugEnabled() )
+                        {
+				Mage::getSingleton('checkout/session')->addError($e->getMessage());
+                        }
 			return false;
 		}
 		catch (Exception $e) 
 		{
 			Mage::Log("Exception: " . $e->getMessage());
-			Mage::getSingleton('checkout/session')->addException(
-				$e,
-				Mage::helper('checkout')->__('OpenERP Sync Error')
-			);
+			if ( $this->debugEnabled() )
+			{
+				Mage::getSingleton('checkout/session')->addError($e->getMessage());
+                        }
 			return false;
 		}
 		

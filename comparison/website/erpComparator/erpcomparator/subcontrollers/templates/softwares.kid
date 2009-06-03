@@ -16,6 +16,7 @@
     	});
     
 	    function view_detail(id) {
+	    	
 	    	var elem = document.getElementById(id);
 	        elem.style.display = elem.style.display == 'none' ? '' : 'none';
 		}
@@ -36,6 +37,7 @@
 				var td = MochiKit.DOM.getElementsByTagAndClassName('td', null, tr)[0];
 				td.style.color = "#990033";
 				table.rows[1].style.display = '';
+				getElement('img_'+table.rows[1].id).style.display = '';
 			}
 			
 			else {

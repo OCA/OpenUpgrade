@@ -174,7 +174,7 @@
             	    <field name="code" select="1" />                    
             	    <field name="type" select="1" />
             	    <field name="store_value" />
-		    <field name="preview_value" />
+		    <field name="preview_value" attrs="{'required':[('type','!=','image')]}"/>
                 </group>
                 <newline/>
         		<separator string="Description" colspan="4"/>
