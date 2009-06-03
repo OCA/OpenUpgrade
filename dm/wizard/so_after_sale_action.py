@@ -68,6 +68,7 @@ def _create_dm_event(self,cr,uid,data,context):
         'trigger_type_id' : data['form']['action_id'],
         'mail_service_id' : mail_service_id
     }
+    pool = pooler.get_pool(cr.dbname)
     id = pool.get('dm.event').create(cr,uid,vals,context)
     return {}
 

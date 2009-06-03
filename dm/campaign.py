@@ -733,7 +733,7 @@ class dm_campaign_proposition(osv.osv):#{{{
 
     def default_get(self, cr, uid, fields, context=None):
         value = super(dm_campaign_proposition, self).default_get(cr, uid, fields, context)
-        if 'camp_id' in context:
+        if 'camp_id' in context and context['camp_id']:
             campaign = self.pool.get('dm.campaign').browse(cr, uid, context['camp_id'])
             value['date_start'] = campaign.date_start
         return value
@@ -1062,8 +1062,9 @@ class dm_campaign_proposition_segment(osv.osv):#{{{
         return super(dm_campaign_proposition_segment,self).write(cr, uid, ids, vals, context)
 
     def create(self,cr,uid,vals,context={}):
-        proposition_id = self.pool.get('dm.campaign.proposition').browse(cr, uid, vals['proposition_id'])
-        vals['parent_id'] = self.pool.get('account.analytic.account').search(cr,uid,[('id','=',proposition_id.analytic_account_id.id)])[0]
+        if 'proposition_id' in vals and vals['proposition_id'] :
+            proposition_id = self.pool.get('dm.campaign.proposition').browse(cr, uid, vals['proposition_id'])
+            vals['parent_id'] = self.pool.get('account.analytic.account').search(cr,uid,[('id','=',proposition_id.analytic_account_id.id)])[0]
         return super(dm_campaign_proposition_segment, self).create(cr, uid, vals, context)
   
     def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):

@@ -154,13 +154,12 @@ class dm_workitem(osv.osv):
             if res:
                 """ Execute server action """
                 res = server_obj.run(cr, uid, [wi.step_id.action_id.id], context)
-                if res :
+                if res=='document' :
+                    self.write(cr, uid, [wi.id], {'state': 'cancel','error_msg':'Document is not assigned-create 1 document 1st'})
+                    done = False
+                else:
                     self.write(cr, uid, [wi.id], {'state': 'done','error_msg':""})
                     done = True
-                else :
-                    self.write(cr, uid, [wi.id], {'state': 'cancel','error_msg':':Document is not assigned-create 1 document 1st'})
-                    done = False
-
             else:
                 """ Dont Execute Action if workitem not to be processed """
                 self.write(cr, uid, [wi.id], {'state': 'cancel','error_msg':'Cancelled by : %s'% act_step})

@@ -122,12 +122,12 @@ def create_kml(self, cr, uid, data, context={}):
 
         if add:
             address += ''
-            if add.street:
-                address += '  '
-                address += str(add.street)
-            if add.street2:
-                address += '  '
-                address += str(add.street2)
+#            if add.street:
+#                address += '  '
+#                address += str(add.street)
+#            if add.street2:
+#                address += '  '
+#                address += str(add.street2)
             if add.city:
                 address += '  '
                 address += str(add.city)

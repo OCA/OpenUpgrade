@@ -90,7 +90,7 @@ class dm_dtp_plugin(osv.osv):
         fp.write(v)
         fp.close()
         plugin_res = self.browse(cr,uid,id)
-        print plugin_res
+        print "Plugin result :", plugin_res
         sys.path.append(path)
         X =  __import__(filename.split('.')[0])
         args = []

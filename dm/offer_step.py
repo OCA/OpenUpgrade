@@ -107,8 +107,7 @@ class dm_offer_step(osv.osv):
         'doc_number' : fields.integer('Number of documents of the mailing', states={'closed':[('readonly',True)]}),
         'manufacturing_constraint_ids' : fields.many2many('product.product','dm_offer_step_manufacturing_product_rel','product_id','offer_step_id','Mailing Manufacturing Products',domain=[('categ_id', 'ilike', 'Mailing Manufacturing')], states={'closed':[('readonly',True)]}),
         'forecasted_yield' : fields.float('Forecasted Yield'),
-#	'action_id' : fields.many2one('dm.offer.step.action', string='Action', required=True)
-	'action_id' : fields.many2one('ir.actions.server', string='Action', required=True)
+        'action_id' : fields.many2one('ir.actions.server', string='Action', required=True)
     }
 
     _defaults = {
@@ -150,7 +149,7 @@ class dm_offer_step(osv.osv):
         return super(dm_offer_step,self).create(cr,uid,vals,context)
 
     def write(self,cr,uid,ids,vals,context={}):
-        if 'type_id' in vals :
+        if 'type_id' in vals and vals['type_id']:
             step  = self.browse(cr,uid,ids)[0]
             if vals['type_id'] != step.type_id.id :
                 type_seq = self.search(cr,uid,[('type_id','=',vals['type_id']),('offer_id','=',step.offer_id.id)])
