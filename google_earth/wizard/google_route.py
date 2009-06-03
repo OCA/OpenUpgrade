@@ -53,12 +53,12 @@ def geocode(address):
 def get_directions(source, destination):
     steps = []
     res = False
-    try:
-        from google.directions import GoogleDirections
-        gd = GoogleDirections('ABQIAAAAUbF6J26EmcC_0QgBXb9xvhRoz3DfI4MsQy-vo3oSCnT9jW1JqxQfs5OWnaBY9or_pyEGfvnnRcWEhA')
-        res = gd.query(source,destination)
-    except:
-        raise wizard.except_wizard('Warning!','Please install Google direction package from http://pypi.python.org/pypi/google.directions/0.3 ')
+#    try:
+    from google.directions import GoogleDirections
+    gd = GoogleDirections('ABQIAAAAUbF6J26EmcC_0QgBXb9xvhRoz3DfI4MsQy-vo3oSCnT9jW1JqxQfs5OWnaBY9or_pyEGfvnnRcWEhA')
+    res = gd.query(source,destination)
+#    except:
+#        raise wizard.except_wizard('Warning!','Please install Google direction package from http://pypi.python.org/pypi/google.directions/0.3 ')
 
     if res:
         if res.status != 200:
