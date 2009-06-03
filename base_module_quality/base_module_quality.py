@@ -114,9 +114,15 @@ class abstract_quality_check(object):
         pool = pooler.get_pool(cr.dbname)
         result_ids = {}
         for obj in object_list:
-            ids = pool.get(obj).search(cr, uid, [])
-            ids = filter(lambda id: id != None, ids)
-            result_ids[obj] = ids
+            pobj = pool.get(obj)
+	    if not pobj:
+                # raise Exception(_("Cannot get object %s from pool. Is that properly implemented?")%obj)
+		#better:
+		result_ids[obj] = []
+	    else:
+                ids = pobj.search(cr, uid, [])
+                ids = filter(lambda id: id != None, ids)
+                result_ids[obj] = ids
         return result_ids
 
     def format_table(self, header=[], data_list={}): #This function can work forwidget="text_wiki"
