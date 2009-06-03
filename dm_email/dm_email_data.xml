@@ -27,14 +27,6 @@
             <field eval="&quot;&quot;&quot;Generate HTML Document&quot;&quot;&quot;" name="name"/>
         </record>
     </data>
-<!--
-    <data noupdate="0">
-        <record id="dm_offer_step_action_html_doc_generate0" model="dm.offer.step.action">
-            <field name="media_id" ref="dm.media_email"/>
-            <field name="server_action_id" ref="ir_actions_server_html_doc_generate0"/>
-        </record>
-    </data>
--->
     <data noupdate="0">
         <record id="ir_actions_server_email_queue_generate" model="ir.actions.server">
             <field eval="5" name="sequence"/>

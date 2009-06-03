@@ -107,8 +107,7 @@ class dm_offer_step(osv.osv):
         'doc_number' : fields.integer('Number of documents of the mailing', states={'closed':[('readonly',True)]}),
         'manufacturing_constraint_ids' : fields.many2many('product.product','dm_offer_step_manufacturing_product_rel','product_id','offer_step_id','Mailing Manufacturing Products',domain=[('categ_id', 'ilike', 'Mailing Manufacturing')], states={'closed':[('readonly',True)]}),
         'forecasted_yield' : fields.float('Forecasted Yield'),
-#	'action_id' : fields.many2one('dm.offer.step.action', string='Action', required=True)
-	'action_id' : fields.many2one('ir.actions.server', string='Action', required=True)
+        'action_id' : fields.many2one('ir.actions.server', string='Action', required=True)
     }
 
     _defaults = {

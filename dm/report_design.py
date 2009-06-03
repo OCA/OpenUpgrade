@@ -99,6 +99,7 @@ def generate_reports(cr,uid,obj,report_type,context):
         type_id = pool.get('dm.campaign.document.type').search(cr,uid,[('code','=',r_type)])
 
         """ Get mail service """
+        camp_mail_service_obj = pool.get('dm.campaign.mail_service')
         if obj.mail_service_id : 
             """ If a mail service is specified in the workitem, use it """
             camp_mail_service_id = [obj.mail_service_id.id]
@@ -106,7 +107,6 @@ def generate_reports(cr,uid,obj,report_type,context):
             """ Use the mail service defined in the campaign """
             camp_mail_service_id = camp_mail_service_obj.search(cr,uid,[('campaign_id','=',camp_id),('offer_step_id','=',step_id)])
         print "camp_mail_service_id",camp_mail_service_id
-        camp_mail_service_obj = pool.get('dm.campaign.mail_service')
         camp_mail_service = camp_mail_service_obj.browse(cr,uid,camp_mail_service_id)[0]
         print "camp_mail_service.mail_service_id",camp_mail_service.mail_service_id.time_mode
 
@@ -159,7 +159,7 @@ def generate_reports(cr,uid,obj,report_type,context):
         print "report_ids : ",report_ids
 
         document_data = dm_doc_obj.read(cr,uid,document_id,['name','editor','content','subject'])[0]
-        print "Doc name : ",document_data['name']
+#        print "Doc name : ",document_data['name']
         context['address_id'] = address_id
         context['document_id'] = document_id[0]
         context['wi_id'] = obj.id
