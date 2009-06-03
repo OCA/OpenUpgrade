@@ -119,5 +119,17 @@
             </form>
         </field>
 	</record>
+
+    <record id="view_partner_address_form_inherit6" model="ir.ui.view">
+	    <field name="name">res.partner.address.form.inherit</field>
+	    <field name="model">res.partner.address</field>
+	    <field name="type">form</field>
+	    <field name="inherit_id" ref="base.view_partner_address_form1"/>
+	    <field name="arch" type="xml">
+	     <field name="moved" position="before">
+	     	<field name="id" colspan="4" select="1"/>
+	     </field>
+	    </field>
+    </record>
 </data>
 </openerp>

@@ -34,11 +34,11 @@ class xml_connector(connector):
     This is an ETL connector that is used to provide connectivity with OpenERP server.
     """
     def __init__(self, tree, name='xml_connector'):
-        
+
        super(xml_connector, self).__init__()
        self._type = 'connector.xml_connector'
        self.tree = tree
-      
+
     def open(self,node):
         res = {}
         res[node.tag] = []
@@ -55,7 +55,7 @@ class xml_connector(connector):
                 rep[node.tag] = []
                 value = self.xmltodict(n,rep[node.tag])
                 if len(n):
-                    
+
                     value = {'value':rep[node.tag],'attributes':n.attrib}
                     res.append({n.tag:value})
                 else :
@@ -65,14 +65,14 @@ class xml_connector(connector):
             value = {'value':node.text,'attributes':node.attrib}
             res.append({node.tag:value})
         return res
-        
-    
-    
+
 def main():
-    tree = etree.parse('/home/tiny/Desktop/xml-dict-xml/XMLtest.xml')
-    res = open(tree.getroot())
+    tree = etree.parse('/home/tiny/Desktop/test.xml')
+    obj = xml_connector(connector)
+    res = obj.open(tree.getroot())
+    print res
 
 if __name__ == '__main__' :
     main()
-    
-    
+
+

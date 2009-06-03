@@ -228,7 +228,8 @@ class dm_offer(osv.osv):
                             result['toolbar']['print'] =new_print
             else : 
                 if result.has_key('toolbar'):
-                    if result['toolbar'].has_key('print'):
+                     if result['toolbar'].has_key('print') and 'report' in result['toolbar'] and result['toolbar']['report'] :
+#                     if result['toolbar'].has_key('print') :
                         new_print = filter(lambda x : x['report_name'] not in ['offer.model.report','preoffer.report'],result['toolbar']['print'])
                         result['toolbar']['print'] =new_print
         return result

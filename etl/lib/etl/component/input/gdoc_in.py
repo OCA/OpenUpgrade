@@ -55,8 +55,13 @@ class gdoc_in(component):
         documents_feed = gdoc_service.GetDocumentListFeed()
         for document_entry in documents_feed.entry:
             # need  install gdata 1.3.2 version!
+            data={}
+            data['name']=document_entry.title.text
+            for link in document_entry.link:
+                if link.rel=='alternate':
+                    data['link']=link.href
             a = gdoc_service.DownloadDocument(document_entry, self.file_path + document_entry.title.text + '.doc')
-            yield {}, 'main'
+            yield data, 'main'
 
 def test():
     from etl_test import etl_test

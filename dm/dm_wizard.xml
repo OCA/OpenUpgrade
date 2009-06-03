@@ -61,7 +61,13 @@
             name="wizard_document_report"
             keyword="client_print_multi"
             id="wizard_document_report"/>
-            
+<!--
+        <wizard
+            string="All Document Report"
+            model="dm.offer"
+            name="wizard_all_document_report"
+            id="wizard_all_document_report"/>
+-->
         <wizard
         	string="Modify Workitem"
             model="dm.workitem"
@@ -80,6 +86,12 @@
             model="res.partner.address"
             name="wizard_after_sale_action"
             id="wizard_after_sale_action"/>
+            
+		<wizard
+            string="After-Sale Action"
+            model="sale.order"
+            name="wizard_so_after_sale_action"
+            id="wizard_so_after_sale_action"/>
 
 <!--         <wizard
             string="Duplicate"

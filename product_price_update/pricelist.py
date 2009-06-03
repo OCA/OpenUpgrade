@@ -19,7 +19,7 @@
 #
 ##############################################################################
 from osv import fields, osv
-from tools.misc import debug
+from tools import config
 
 class product_price_update_wizard(osv.osv_memory):
     """This is the main part of the module. After filling in the form, a
@@ -60,15 +60,18 @@ class product_price_update_wizard(osv.osv_memory):
             #the child categories would be computed twice because of the recursion
             if categ_id not in done:
                 prod_ids = prod_obj.search(cr, uid, [('categ_id', '=', categ_id),])
-                for prod_id in prod_ids:
-                    price = pricelist_obj.price_get(cr, uid, \
-                        [wiz.pricelist_id.id], prod_id, 1)
-                    prod_obj.write(cr, uid, [prod_id], {
-                        wiz.price_type_id.field: price[wiz.pricelist_id.id]})
-                    self.updated_products += 1
+                for prod in prod_obj.browse(cr, uid, prod_ids):
+                    price_old = getattr(prod, wiz.price_type_id.field)
+                    price_new = pricelist_obj.price_get(cr, uid, \
+                        [wiz.pricelist_id.id], prod.id, 1)[wiz.pricelist_id.id]
+                    if round(price_old, int(config['price_accuracy'])) != \
+                        round(price_new, int(config['price_accuracy'])):
+                        prod_obj.write(cr, uid, [prod.id], {
+                            wiz.price_type_id.field: price_new})
+                        self.updated_products += 1
                 done.add(categ_id)
-        for categ_id in (br.id for br in wiz.categ_ids):
-            _update(categ_id)
+        for categ in wiz.categ_ids:
+            _update(categ.id)
         return {
                 "context"  : {'updated_field': wiz.price_type_id.name,
                               'updated_products': self.updated_products,},
