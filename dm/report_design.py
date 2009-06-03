@@ -44,7 +44,12 @@ def merge_message(cr, uid, keystr, context):
         id = context.get('document_id')
         obj = dm_obj.browse(cr, uid, id)
         exp = str(match.group()[2:-2]).strip()
-        args = {'doc_id' : context['document_id'],'addr_id':context['address_id'],'wi_id':context['wi_id']}
+        wi_id = None
+        if 'wi_id' in context :
+            wi_id = context['wi_id']
+        args = {'doc_id' : context['document_id'],'addr_id':context['address_id'],'wi_id':wi_id}
+        if 'plugin_list' in context :
+            args['plugin_list']=context['plugin_list']
         plugin_values = generate_plugin_value(cr, uid,**args)
         context.update(plugin_values)
         context.update({'object':obj,'time':time})
@@ -82,6 +87,7 @@ def generate_reports(cr,uid,obj,report_type,context):
     pool = pooler.get_pool(cr.dbname)
     dm_doc_obj = pool.get('dm.offer.document') 
     report_xml = pool.get('ir.actions.report.xml')
+    camp_mail_service_obj = pool.get('dm.campaign.mail_service')
     r_type = report_type
     if report_type=='html2html':
         r_type = 'html'
@@ -132,7 +138,7 @@ def generate_reports(cr,uid,obj,report_type,context):
         print "Doc id : ",document_id
         if not document_id : 
             # TO Improve : if no docs then log in wi error
-            return False
+            return "document"
 
         vals={
             'segment_id': obj.segment_id.id or False,

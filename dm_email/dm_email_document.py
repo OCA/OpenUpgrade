@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- en:wqcoding: utf-8 -*-
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution····
@@ -25,6 +25,8 @@ import pooler
 from lxml import etree
 import time 
 import base64
+import string 
+from random import Random
 
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText
@@ -32,7 +34,9 @@ from email.MIMEImage import MIMEImage
 
 from dm.report_design import merge_message
 import re
+
 _regex = re.compile('\[\[setHtmlImage\((.+?)\)\]\]')
+_regexp1 = re.compile('(\[\[.+?\]\])')
 
 class dm_offer_document(osv.osv):
     _inherit = "dm.offer.document"
@@ -62,18 +66,17 @@ class dm_mail_service(osv.osv):
 
 dm_mail_service()
 
-def set_image_email(node,msg,counter):
+def set_image_email(node,msg):
     if not node.getchildren():
         if  node.tag=='img' and node.get('src') and node.get('src').find('data:image/gif;base64,')>=0:
-            counter = counter + 1
             msgImage = MIMEImage(base64.decodestring(node.get('src').replace('data:image/gif;base64,','')))
-            image_name = "image%d"%counter
+            image_name = ''.join( Random().sample(string.letters+string.digits, 12) )
             msgImage.add_header('Content-ID','<%s>'%image_name)
             msg.attach(msgImage)
             node.set('src',"cid:%s"%image_name)
     else :
         for n in node.getchildren():
-            set_image_email(n,msg,counter)
+            set_image_email(n,msg)
 
 def create_email_queue(cr,uid,obj,context):
     pool = pooler.get_pool(cr.dbname)
@@ -88,19 +91,24 @@ def create_email_queue(cr,uid,obj,context):
 
         context['document_id'] = obj.document_id.id
         context['address_id'] = obj.address_id.id
+        plugin_list = [] 
+        if obj.document_id.subject and _regexp1.findall(obj.document_id.subject) :
+            raw_plugin_list = _regexp1.findall(obj.document_id.subject)
+            for p in raw_plugin_list :
+                plugin_list.append(p[2:-2])
+        context['plugin_list'] = plugin_list
         subject =  merge_message(cr, uid, obj.document_id.subject, context)
         msgRoot['Subject'] = subject
         msgRoot['From'] = str(obj.mail_service_id.smtp_server_id.email)
         msgRoot['To'] = str(obj.address_id.email)
         msgRoot.preamble = 'This is a multi-part message in MIME format.'
-
+    
         msg = MIMEMultipart('alternative')
         msgRoot.attach(msg)
 
-        set_image_email(body,msgRoot,counter=0)
+        set_image_email(body,msgRoot)
         msgText = MIMEText(etree.tostring(body), 'html')
         msg.attach(msgText)
-
         if message :
             vals = {
                 'to':str(obj.address_id.email),
