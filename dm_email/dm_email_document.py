@@ -91,12 +91,13 @@ def create_email_queue(cr,uid,obj,context):
 
         context['document_id'] = obj.document_id.id
         context['address_id'] = obj.address_id.id
-        plugin_list = [] 
-        if obj.document_id.subject and _regexp1.findall(obj.document_id.subject) :
-            raw_plugin_list = _regexp1.findall(obj.document_id.subject)
-            for p in raw_plugin_list :
-                plugin_list.append(p[2:-2])
-        context['plugin_list'] = plugin_list
+#        plugin_list = [] 
+#        No need as it is set in the function
+#        if obj.document_id.subject and _regexp1.findall(obj.document_id.subject) :
+#            raw_plugin_list = _regexp1.findall(obj.document_id.subject)
+#            for p in raw_plugin_list :
+#                plugin_list.append(p[2:-2])
+#        context['plugin_list'] = plugin_list'''
         subject =  merge_message(cr, uid, obj.document_id.subject, context)
         msgRoot['Subject'] = subject
         msgRoot['From'] = str(obj.mail_service_id.smtp_server_id.email)

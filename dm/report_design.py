@@ -50,6 +50,8 @@ def merge_message(cr, uid, keystr, context):
         args = {'doc_id' : context['document_id'],'addr_id':context['address_id'],'wi_id':wi_id}
         if 'plugin_list' in context :
             args['plugin_list']=context['plugin_list']
+        else :
+            args['plugin_list']=[exp]
         plugin_values = generate_plugin_value(cr, uid,**args)
         context.update(plugin_values)
         context.update({'object':obj,'time':time})
@@ -99,7 +101,6 @@ def generate_reports(cr,uid,obj,report_type,context):
         type_id = pool.get('dm.campaign.document.type').search(cr,uid,[('code','=',r_type)])
 
         """ Get mail service """
-        camp_mail_service_obj = pool.get('dm.campaign.mail_service')
         if obj.mail_service_id : 
             """ If a mail service is specified in the workitem, use it """
             camp_mail_service_id = [obj.mail_service_id.id]
@@ -164,7 +165,8 @@ def generate_reports(cr,uid,obj,report_type,context):
         context['document_id'] = document_id[0]
         context['wi_id'] = obj.id
         attachment_obj = pool.get('ir.attachment')
-        if report_type=='html' and document_data['editor'] and document_data['editor']=='internal' and document_data['content']:
+        print report_type,document_data['editor'],document_data['content']
+        if report_type=='html2html' and document_data['editor'] and document_data['editor']=='internal' and document_data['content']:
             report_data = internal_html_report +str(document_data['content'])+"</BODY></HTML>"
             report_data = merge_message(cr, uid, report_data, context)
             attach_vals={'name' : document_data['name'] + "_" + str(address_id),
