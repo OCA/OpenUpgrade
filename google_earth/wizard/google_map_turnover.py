@@ -88,7 +88,7 @@ def create_kml(self, cr, uid, data, context={}):
     cr.execute(''' select count(i.id),i.type, i.partner_id from account_invoice as i left join res_partner_address as a on i.partner_id=a.partner_id where i.type in ('out_invoice','in_invoice') group by i.type, i.partner_id ''')
     invoice_partner = cr.fetchall()
 
-    cr.execute("select min(aml.id) as id, sum(aml.credit) as turnover, aml.partner_id as partner_id from account_move_line aml, account_account ac, account_account_type actype where aml.account_id = ac.id and ac.user_type = actype.id and (ac.type = 'receivable') group by aml.partner_id")
+    cr.execute("select min(aml.id) as id, sum(aml.debit - aml.credit) as turnover, aml.partner_id as partner_id from account_move_line aml, account_account ac, account_account_type actype where aml.account_id = ac.id and ac.user_type = actype.id and (ac.type = 'receivable') group by aml.partner_id")
     res_partner = cr.fetchall()
     for part in partner_data:
         res[part.id]= 0
@@ -103,7 +103,7 @@ def create_kml(self, cr, uid, data, context={}):
     documentElementname = kmlDoc.createElement('name')
     documentElementname.appendChild(kmlDoc.createTextNode('partners'))
     documentElementdesc = kmlDoc.createElement('description')
-    documentElementdesc.appendChild(kmlDoc.createTextNode('You can see Partner information by clicking Partner'))
+    documentElementdesc.appendChild(kmlDoc.createTextNode('You can see Partner Information (Name, Code, Type, Partner Address, Turnover Partner, ....., Website) by clicking Partner'))
     documentElement.appendChild(documentElementname)
     documentElement.appendChild(documentElementdesc)
     line = '<font color="blue">--------------------------------------------</font>'

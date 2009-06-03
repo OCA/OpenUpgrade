@@ -5,7 +5,7 @@
     "author" : "Tiny",
     "category" : "Generic Modules/Others",
     "website" : "http://www.openerp.com",
-    "depends" : ["sale"],
+    "depends" : ["stock"],
     "description": """
             This Module will includes following :
 

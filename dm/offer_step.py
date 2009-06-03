@@ -150,7 +150,7 @@ class dm_offer_step(osv.osv):
         return super(dm_offer_step,self).create(cr,uid,vals,context)
 
     def write(self,cr,uid,ids,vals,context={}):
-        if 'type_id' in vals :
+        if 'type_id' in vals and vals['type_id']:
             step  = self.browse(cr,uid,ids)[0]
             if vals['type_id'] != step.type_id.id :
                 type_seq = self.search(cr,uid,[('type_id','=',vals['type_id']),('offer_id','=',step.offer_id.id)])

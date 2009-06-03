@@ -68,35 +68,32 @@ class gcalendar_out(component):
         calendar_service = self.connector.open()
         event = gdata.calendar.CalendarEventEntry()
 
-        ooconnector=openobject_connector('http://localhost:8069', 'trunk_mra', 'admin', 'admin',con_type='xmlrpc')
-        oo_in_event = etl_test.etl_component_test(etl.component.input.openobject_in(
-                         ooconnector,'event.event',
-                         fields=['name', 'date_begin', 'date_end'],
-        ))
-        res = oo_in_event.output()
-        for d in res['main']:
-            event.title = atom.Title(text=d['name'])
-            event.content = atom.Content(text=d['name'])
+        for channel, trans in self.input_get().items():
+            for iterator in trans:
+                for d in iterator:
+                    event.title = atom.Title(text=d['name'])
+                    event.content = atom.Content(text=d['name'])
 
-            start_time = d['date_begin']
-            timestring = time.strftime(self.datetime_format, time.gmtime(time.mktime(time.strptime(start_time, self.datetime_format))))
-            starttime = time.strptime(timestring, self.datetime_format)
-            start_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', starttime)
+                    start_time = d['date_begin']
+                    timestring = time.strftime(self.datetime_format, time.gmtime(time.mktime(time.strptime(start_time, self.datetime_format))))
+                    starttime = time.strptime(timestring, self.datetime_format)
+                    start_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', starttime)
 
-            end_time = d['date_end']
-            timestring_end = time.strftime(self.datetime_format, time.gmtime(time.mktime(time.strptime(end_time, self.datetime_format))))
-            endtime = time.strptime(timestring_end, self.datetime_format)
-            end_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', endtime)
+                    end_time = d['date_end']
+                    timestring_end = time.strftime(self.datetime_format, time.gmtime(time.mktime(time.strptime(end_time, self.datetime_format))))
+                    endtime = time.strptime(timestring_end, self.datetime_format)
+                    end_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', endtime)
 
-            if start_time is None:
-                  start_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', time.gmtime())
-                  end_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', time.gmtime(time.time() + 3600))
+                    if start_time is None:
+                          start_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', time.gmtime())
+                          end_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', time.gmtime(time.time() + 3600))
 
-            event.when = []
-            event.when.append(gdata.calendar.When(start_time=start_time, end_time=end_time))
-            new_event = calendar_service.InsertEvent(event, "/calendar/feeds/default/private/full")
+                    event.when = []
+                    event.when.append(gdata.calendar.When(start_time=start_time, end_time=end_time))
+                    new_event = calendar_service.InsertEvent(event, "/calendar/feeds/default/private/full")
+                    d.update({'calendar':new_event})
 
-            yield new_event, 'main'
+                    yield d, 'main'
 
 def test():
     from etl_test import etl_test
@@ -110,13 +107,11 @@ def test():
     out_calendar = gcalendar_out(cal_conn,'%Y-%m-%d %H:%M:%S')
 
     test = etl_test.etl_component_test(out_calendar)
-
-#    ooconnector=openobject_connector('http://localhost:8069', 'test', 'admin', 'admin',con_type='xmlrpc')
-#    oo_in_event = etl_test.etl_component_test(etl.component.input.openobject_in(
-#                     ooconnector,'event.event',
-#                     fields=['name', 'date_begin', 'date_end'],
-#    ))
-
+    ooconnector=openobject_connector('http://localhost:8069', 'trunk_mra', 'admin', 'admin',con_type='xmlrpc')
+    oo_in_event = etl_test.etl_component_test(etl.component.input.openobject_in(
+                     ooconnector,'event.event',
+                     fields=['name', 'date_begin', 'date_end'],
+    ))
     res = test.output()
 
 if __name__ == '__main__':

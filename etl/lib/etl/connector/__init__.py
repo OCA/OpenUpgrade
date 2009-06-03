@@ -36,3 +36,4 @@ from sugarcrm_connector import sugarcrm_connector
 from xmlrpc_connector import xmlrpc_connector
 from gcalendar_connector import gcalendar_connector
 from gdoc_connector import gdoc_connector
+from gblog_connector import gblog_connector
