@@ -114,10 +114,10 @@ def create_kml(self, cr, uid, data, context={}):
             res[string.upper(part[1])] = part[0]
             list_to.append(part[0])
 
-    avg_to = min(list_to) + max(list_to) / 2 or 0.0
+#    avg_to = min(list_to) + max(list_to) / 2 or 0.0
+    avg_to = list_to and (sum(list_to) / len(list_to)) or 0
 
     map(lambda x:res_inv.setdefault(x, 0), country_list)
-
     # fetch invoice by country
     cr.execute(''' select count(i.id),c.name from account_invoice as i left join res_partner_address as a on i.partner_id=a.partner_id left join res_country as c on a.country_id=c.id where i.type in ('out_invoice','in_invoice') group by c.name ''')
     invoice_partner = cr.fetchall()
@@ -136,7 +136,7 @@ def create_kml(self, cr, uid, data, context={}):
 
     # fetch turnover by individual partner
 #    cr.execute('select min(id) as id, sum(credit) as turnover, partner_id as partner_id from account_move_line group by partner_id')
-    cr.execute("select min(aml.id) as id, sum(aml.credit) as turnover, aml.partner_id as partner_id from account_move_line aml, account_account ac, account_account_type actype where aml.account_id = ac.id and ac.user_type = actype.id and (ac.type = 'receivable') group by aml.partner_id")
+    cr.execute("select min(aml.id) as id, sum(aml.debit - aml.credit) as turnover, aml.partner_id as partner_id from account_move_line aml, account_account ac, account_account_type actype where aml.account_id = ac.id and ac.user_type = actype.id and (ac.type = 'receivable') group by aml.partner_id")
     res_partner = cr.fetchall()
     for part in partners:
         res[part.id]= 0
@@ -298,7 +298,7 @@ def create_kml(self, cr, uid, data, context={}):
         documentElement.appendChild(folderElement)
 
     out = base64.encodestring(kmlDoc.toxml())
-    fname = 'partner_region' + '.kml'
+    fname = 'region' + '.kml'
     return {'kml_file': out, 'name': fname}
 
 class customer_on_map(wizard.interface):

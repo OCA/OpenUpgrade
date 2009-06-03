@@ -37,8 +37,8 @@ _regex = re.compile('\[\[setHtmlImage\((.+?)\)\]\]')
 class dm_offer_document(osv.osv):
     _inherit = "dm.offer.document"
     _columns = {
-                'subject' : fields.char('Subject',size=64,),
-                'editor' : fields.selection([('internal','Internal'),('oord','DM Open Office Report Design')],'Editor'),
+                'subject' : fields.char('Object',size=128),
+                'editor' : fields.selection([('internal','Internal'),('oord','DM Open Office Report Design')],'Editor',required=True),
                 'content' : fields.text('Content'),
                 'media_id':fields.related('step_id','media_id','name',type='char', relation='dm.media', string='Media'),
             }

@@ -20,53 +20,47 @@
 #
 ##############################################################################
 """
-To provide connectivity with google calendar
+To provide connectivity with blogger
 
 Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 GNU General Public License
 """
-import datetime
-import time
 from etl.connector import connector
 
-class gcalendar_connector(connector):
+class gblog_connector(connector):
     """
-    This is an ETL connector that is used to provide connectivity with google calendar server.
+    This is an ETL connector that is used to provide connectivity with blog server.
     """
-    def __init__(self, email, password, delay_time=20, name='calendar_connector'):
+    def __init__(self, email, password, delay_time=20, name='gblog_connector'):
         """
         Required Parameters
-        email : Google email.
-        password        : password for google user
+        email : blogger email.
+        password        : password for blogger user
 
         Extra Parameters
         delay_time  : Time in sec which is use to wait for login while opening login page in browser.
         name        : Name of connector.
         """
-        super(gcalendar_connector, self).__init__(name)
-        self._type = 'connector.calendar_connector'
+        super(gblog_connector, self).__init__(name)
+        self._type = 'connector.gblog_connector'
         self.email = email
         self.password = password
         self.delay_time = delay_time
-        self.calendar_service = False
+        self.gblog_service = False
 
     def open(self):
         """
-        Opens connection to google calendar.
+        Opens connection to blogger.
         """
         from gdata import service
-        import gdata.calendar.service
-        import gdata.calendar
-        import atom
 
-        super(gcalendar_connector, self).open()
-        self.calendar_service = gdata.calendar.service.CalendarService()
-        self.calendar_service.email = self.email
-        self.calendar_service.password = self.password
-        self.calendar_service.source = 'Tiny'
-        self.calendar_service.max_results = 500 # to be check
-        self.calendar_service.ProgrammaticLogin()
-        return self.calendar_service
+        super(gblog_connector, self).open()
+        self.gblog_service = service.GDataService(self.email, self.password)
+        self.gblog_service.source = 'Tiny'
+        self.gblog_service.service = 'blogger'
+        self.gblog_service.server = 'www.blogger.com'
+        self.gblog_service.ProgrammaticLogin()
+        return self.gblog_service
 
     def execute(self, facebook, method, fields):
         """
@@ -77,34 +71,31 @@ class gcalendar_connector(connector):
         return rows
 
     def __getstate__(self):
-        res = super(gcalendar_connector, self).__getstate__()
-        res.update({'email':self.email, 'password':self.password, 'delay_time':self.delay_time, 'calendar_service':self.calendar_service})
+        res = super(gblog_connector, self).__getstate__()
+        res.update({'email':self.email, 'password':self.password, 'delay_time':self.delay_time, 'gblog_service':self.gblog_service})
         return res
 
     def __setstate__(self, state):
-        super(gcalendar_connector, self).__setstate__(state)
-        state['_signal__connects'] = {}
+        super(gblog_connector, self).__setstate__(state)
         self.__dict__ = state
 
     def __copy__(self):
         """
         Overrides copy method.
         """
-        res = gcalendar_connector(self.email, self.password, self.delay_time, self.name)
-
+        res = gblog_connector(self.email, self.password, self.delay_time, self.name)
         return res
 
-
 def test():
-    """
-    Test function.
-    """
     from etl_test import etl_test
     import etl
-    cal_conn=gcalendar_connector('username','password')
-    cal_service = cal_conn.open()
-    print cal_service
+    import getpass
+
+    user = raw_input('Enter blogger username: ')
+    password = getpass.unix_getpass("Enter your password:")
+    gblog_conn = gblog_connector(user, password)
+    gblog_service = gblog_conn.open()
+    print gblog_service
 
 if __name__ == '__main__':
     test()
-

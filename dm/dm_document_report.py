@@ -44,7 +44,6 @@ class offer_document(report_sxw.rml_parse):
 
     def _plugin_list(self):
         ir_obj = self.pool.get('ir.actions.report.xml')
-        print self.name
         report_xml_ids = ir_obj.search(self.cr, self.uid,[('report_name', '=', self.name)])
         if report_xml_ids:
             report_xml = ir_obj.browse(self.cr, self.uid, report_xml_ids[0])
@@ -70,8 +69,9 @@ class offer_document(report_sxw.rml_parse):
             addr_id = self.context['address_id']
             doc_id = self.context['document_id']
             wi_id = self.context['active_id']
+            type = 'email_doc'
         else :
-
+            type = 'preview'
             addr_id = self.datas['form']['address_id']
             doc_id = self.ids[0]
 
@@ -90,7 +90,7 @@ class offer_document(report_sxw.rml_parse):
 
             else :
                 wi_id = wi_data[0]
-        values = generate_plugin_value(self.cr,self.uid,doc_id=doc_id,addr_id=addr_id,wi_id=wi_id,plugin_list=self._plugin_list())
+        values = generate_plugin_value(self.cr,self.uid,doc_id=doc_id,addr_id=addr_id,wi_id=wi_id,plugin_list=self._plugin_list(),type=type)
         return [values]
         
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:        
