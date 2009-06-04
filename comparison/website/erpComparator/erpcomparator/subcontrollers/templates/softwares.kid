@@ -23,7 +23,12 @@
 		
 		function view_erp_detail(id, key, parent) {
 			
-			$(function() {
+			if(key) {
+				var table = getElement('checkboxtext');
+				id = table.rows[1].id
+			}
+			
+			$(function() {			
 				$(".latest_listing_"+id).access({
 			        Headline: "Latest Listing",
 			        Speed: "normal"
@@ -37,7 +42,8 @@
 				var td = MochiKit.DOM.getElementsByTagAndClassName('td', null, tr)[0];
 				td.style.color = "#990033";
 				table.rows[1].style.display = '';
-				getElement('img_'+table.rows[1].id).style.display = '';
+				var first_init = getElement('img_'+table.rows[1].id) 
+				first_init.style.display = '';
 			}
 			
 			else {
@@ -133,11 +139,11 @@
 		
 		<div width="800px" id="scr_title" style="padding-left: 15px; padding-right: 15px;">
 			<h3 style="padding:0px;">
-				<b style="padding-left: 15px;"> Screen Shots</b>
+				<b style="padding-left: 15px;"> Screen Gallery</b>
 			</h3>
 		</div>
 		
-		<div id="screenshots">
+		<div id="screenshots" class="checkboxtext">
 			<div py:for="r in res" id="${r['id']}">
 				<div class="slider latest_listing_${r['id']}" width="850px">
 					<div class="messaging" style="display: none;">Please Note: You may have disabled JavaScript and/or CSS.</div>
