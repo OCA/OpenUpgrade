@@ -79,7 +79,6 @@ def _calc_dates(self, cr, uid, data, context):
 				'start' : stop.strftime('%Y-%m-%d'),
 			}
 			start = stop - RelativeDateTime(days=1)
-	print 'res',res
 	return res
 
 class wizard_report(wizard.interface):
