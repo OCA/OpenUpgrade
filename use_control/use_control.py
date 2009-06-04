@@ -32,7 +32,8 @@ class use_control_time(osv.osv):
         'user_id': fields.many2one('res.users', 'User', ondelete='set null'),
         'date': fields.datetime('Date'),
         'duration': fields.float('Duration'),
-        'uploaded': fields.boolean('Uploaded')
+        'uploaded': fields.boolean('Uploaded'),
+        'active': fields.boolean('Active'), # inactive lines are old ones, before a migration, i.e.
     }
     def write(self, cr, uid, ids, data, context={}):
         return True
@@ -60,10 +61,11 @@ class use_control_time_month_user(osv.osv):
                     sum(duration) as duration
                 from
                     use_control_time
+                WHERE active = %s
                 group by
                     user_id,
                     to_char(date, 'YYYY-MM-01')
-            )""")
+            )""", (True,))
 use_control_time_month_user()
 
 
@@ -85,9 +87,10 @@ class use_control_time_month(osv.osv):
                     sum(duration) as duration
                 from
                     use_control_time
+                WHERE active = %s
                 group by
                     to_char(date, 'YYYY-MM-01')
-            )""")
+            )""", (True,))
 use_control_time_month()
 
 class use_control_db_block(osv.osv):

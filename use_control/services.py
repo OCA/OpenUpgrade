@@ -50,8 +50,8 @@ def check(chk_fnct):
 
             if (uid not in data[db]) or (data[db][uid] < time.time()):
                 data[db][uid] = time.time() + 3600 * HOUR_MINI
-                cr.execute('insert into use_control_time (user_id, date, duration) values (%s,%s,%s)', 
-                                (int(uid), time.strftime('%Y-%m-%d %H:%M:%S'), HOUR_MINI))
+                cr.execute('INSERT INTO use_control_time (user_id, date, duration, active) VALUES (%s,%s,%s)', 
+                                (int(uid), time.strftime('%Y-%m-%d %H:%M:%S'), HOUR_MINI, True))
                 cr.commit()
         finally:
             cr.close()
@@ -92,31 +92,30 @@ class use_control_service(netsvc.Service):
     def data_get(self, password, db):
         security.check_super(password)
         cr = pooler.get_db(db).cursor()
-        cr.execute('''select
-                to_char(t.date, 'YYYY-MM-DD') as date,
-                u.name as username,
-                u.login as login,
-                sum(t.duration) as hours
-            from
-                use_control_time t
-            left join
-                res_users u on (u.id = t.user_id)
-            where (uploaded = %s) or (uploaded is null)
-            group by
-                to_char(t.date, 'YYYY-MM-DD'),
-                u.name,
-                u.login
-           ''', (False,))
+        cr.execute('''SELECT to_char(t.date, 'YYYY-MM-DD') as date,
+                             u.name as username,
+                             u.login as login,
+                             sum(t.duration) as hours
+                        FROM use_control_time t,
+                             res_users u,
+                       WHERE u.id = t.user_id
+                         AND active = %s
+                         AND (uploaded = %s OR uploaded IS NULL)
+                    GROUP BY to_char(t.date, 'YYYY-MM-DD'),
+                             u.name,
+                             u.login
+                   ''', (True, False)
+                   )
         data = cr.fetchall()
-        cr.execute('update use_control_time set uploaded=%s where (uploaded = %s) or (uploaded is null)', (True, False))
-        cr.execute('select name from ir_module_module where state=%s', ('installed',))
+        cr.execute('UPDATE use_control_time SET uploaded=%s WHERE active = %s AND (uploaded = %s OR uploaded IS NULL)', (True, True, False))
+        cr.execute('SELECT name FROM ir_module_module WHERE state=%s', ('installed',))
         modules = map(lambda x: x[0], cr.fetchall())
 
         hours = reduce(lambda x, y: x+y[3], data, 0.0)
 
-        cr.execute('select count(id) from res_users where active')
+        cr.execute('SELECT count(id) FROM res_users WHERE active = %s', (True,))
         users = cr.fetchone()[0]
-        cr.execute('select max(date) from use_control_time')
+        cr.execute('SELECT max(date) FROM use_control_time WHERE active = %s', (True,))
         maxdate = cr.fetchone()[0]
         result = {
             'details': data,
@@ -128,7 +127,6 @@ class use_control_service(netsvc.Service):
         }
         cr.commit()
         cr.close()
-        print result
         return result
 
     def block(self, password, dbname, message):
@@ -155,6 +153,15 @@ class use_control_service(netsvc.Service):
             cr.close()
         return True
         
+    def clean(self, password, dbname):
+        security.check_super(password)
+        cr = pooler.get_db(dbname).cursor()
+        try:
+            cr.execute('UPDATE use_control_time SET active = %s', (False,))
+        finally:
+            cr.commit()
+            cr.close()
+        return True
 
 use_control_service()
 
