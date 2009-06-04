@@ -74,6 +74,7 @@ class use_control_service(netsvc.Service):
         self.exportMethod(self.data_get)
         self.exportMethod(self.block)
         self.exportMethod(self.unblock)
+        self.exportMethod(self.clean)
 
     def _get_size(self, cr, dbname):
         """Return the size of the system in Mb."""
