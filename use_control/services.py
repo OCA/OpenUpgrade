@@ -98,9 +98,9 @@ class use_control_service(netsvc.Service):
                              u.login as login,
                              sum(t.duration) as hours
                         FROM use_control_time t,
-                             res_users u,
+                             res_users u
                        WHERE u.id = t.user_id
-                         AND active = %s
+                         AND t.active = %s
                          AND (uploaded = %s OR uploaded IS NULL)
                     GROUP BY to_char(t.date, 'YYYY-MM-DD'),
                              u.name,
