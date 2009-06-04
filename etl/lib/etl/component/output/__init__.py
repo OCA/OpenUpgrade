@@ -32,6 +32,8 @@ from sql_out import sql_out
 from openobject_out import openobject_out
 from openobject_out_create import openobject_out_create
 from openobject_out_copy import openobject_out_copy
+from openobject_out_write import openobject_out_write
+
 from facebook_out import facebook_out
 from gcalendar_out import gcalendar_out
 from xmlrpc_out import xmlrpc_out
