@@ -35,6 +35,11 @@ class use_control_time(osv.osv):
         'uploaded': fields.boolean('Uploaded'),
         'active': fields.boolean('Active'), # inactive lines are old ones, before a migration, i.e.
     }
+    _defaults = {
+        'active': lambda *a: True,
+        'uploaded': lambda *a: False,
+    }
+
     def write(self, cr, uid, ids, data, context={}):
         return True
     def unlink(self, cr, uid, ids, context={}):

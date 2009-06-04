@@ -50,7 +50,7 @@ def check(chk_fnct):
 
             if (uid not in data[db]) or (data[db][uid] < time.time()):
                 data[db][uid] = time.time() + 3600 * HOUR_MINI
-                cr.execute('INSERT INTO use_control_time (user_id, date, duration, active) VALUES (%s,%s,%s)', 
+                cr.execute('INSERT INTO use_control_time (user_id, date, duration, active) VALUES (%s,%s,%s,%s)', 
                                 (int(uid), time.strftime('%Y-%m-%d %H:%M:%S'), HOUR_MINI, True))
                 cr.commit()
         finally:
