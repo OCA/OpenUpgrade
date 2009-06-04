@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* project_gtd
+# 	* project_gtd
 #
 msgid ""
 msgstr ""
@@ -22,7 +22,8 @@ msgstr ""
 
 #. module: project_gtd
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: project_gtd
@@ -97,8 +98,7 @@ msgid "Inbox Tasks"
 msgstr ""
 
 #. module: project_gtd
-#: view:project.gtd.timebox:0
-#: field:project.gtd.timebox,name:0
+#: view:project.gtd.timebox:0 field:project.gtd.timebox,name:0
 #: field:project.task,timebox_id:0
 msgid "Timebox"
 msgstr ""
@@ -231,8 +231,7 @@ msgid "Planned"
 msgstr ""
 
 #. module: project_gtd
-#: view:project.gtd.context:0
-#: field:project.gtd.context,name:0
+#: view:project.gtd.context:0 field:project.gtd.context,name:0
 #: field:project.task,context_id:0
 msgid "Context"
 msgstr ""
@@ -254,14 +253,10 @@ msgid "Getting Things Done"
 msgstr ""
 
 #. module: project_gtd
-#: field:project.gtd.timebox,task1_ids:0
-#: field:project.gtd.timebox,task2_ids:0
-#: field:project.gtd.timebox,task3_ids:0
-#: field:project.gtd.timebox,task4_ids:0
-#: field:project.gtd.timebox,task5_ids:0
-#: field:project.gtd.timebox,task6_ids:0
-#: field:project.gtd.timebox,task_ids:0
-#: view:project.task:0
+#: field:project.gtd.timebox,task1_ids:0 field:project.gtd.timebox,task2_ids:0
+#: field:project.gtd.timebox,task3_ids:0 field:project.gtd.timebox,task4_ids:0
+#: field:project.gtd.timebox,task5_ids:0 field:project.gtd.timebox,task6_ids:0
+#: field:project.gtd.timebox,task_ids:0 view:project.task:0
 msgid "Tasks"
 msgstr ""
 
@@ -310,3 +305,27 @@ msgstr ""
 msgid "Weekly"
 msgstr ""
 
+#. module: project_gtd
+#: code:addons/project_gtd/wizard/project_gtd_daily.py:0
+#, python-format
+msgid "No timebox of the type \"%s\" defined !"
+msgstr ""
+
+#. module: project_gtd
+#: code:addons/project_gtd/project_gtd.py:0
+#, python-format
+msgid "Eff. Hours"
+msgstr ""
+
+#. module: project_gtd
+#: code:addons/project_gtd/wizard/project_gtd_empty.py:0
+#, python-format
+msgid "No timebox child of this one !"
+msgstr ""
+
+#. module: project_gtd
+#: code:addons/project_gtd/wizard/project_gtd_daily.py:0
+#: code:addons/project_gtd/wizard/project_gtd_empty.py:0
+#, python-format
+msgid "Error !"
+msgstr ""

@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* hr
+# 	* hr
 #
 msgid ""
 msgstr ""
@@ -74,8 +74,7 @@ msgid "Group name"
 msgstr ""
 
 #. module: hr
-#: field:hr.department,company_id:0
-#: field:hr.employee,company_id:0
+#: field:hr.department,company_id:0 field:hr.employee,company_id:0
 msgid "Company"
 msgstr ""
 
@@ -90,9 +89,7 @@ msgid "Parent Department"
 msgstr ""
 
 #. module: hr
-#: view:hr.department:0
-#: view:hr.employee:0
-#: field:hr.employee,notes:0
+#: view:hr.department:0 view:hr.employee:0 field:hr.employee,notes:0
 msgid "Notes"
 msgstr ""
 
@@ -153,8 +150,7 @@ msgid "Office Location"
 msgstr ""
 
 #. module: hr
-#: view:hr.employee:0
-#: field:hr.employee,name:0
+#: view:hr.employee:0 field:hr.employee,name:0
 #: model:ir.model,name:hr.model_hr_employee
 #: model:process.node,name:hr.process_node_employee0
 msgid "Employee"
@@ -260,8 +256,7 @@ msgid "Related User"
 msgstr ""
 
 #. module: hr
-#: field:hr.employee,category_id:0
-#: field:hr.employee.category,name:0
+#: field:hr.employee,category_id:0 field:hr.employee.category,name:0
 msgid "Category"
 msgstr ""
 
@@ -369,12 +364,12 @@ msgstr ""
 
 #. module: hr
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: hr
-#: view:hr.timesheet:0
-#: field:hr.timesheet.group,timesheet_id:0
+#: view:hr.timesheet:0 field:hr.timesheet.group,timesheet_id:0
 #: model:ir.model,name:hr.model_hr_timesheet_group
 msgid "Working Time"
 msgstr ""
@@ -457,8 +452,7 @@ msgid "Fill up employee's contact information"
 msgstr ""
 
 #. module: hr
-#: field:hr.department,manager_id:0
-#: field:hr.employee,parent_id:0
+#: field:hr.department,manager_id:0 field:hr.employee,parent_id:0
 msgid "Manager"
 msgstr ""
 
@@ -479,3 +473,12 @@ msgstr ""
 msgid "New Employee"
 msgstr ""
 
+#. module: hr
+#: constraint:hr.department:0
+msgid "Error! You can not create recursive departments."
+msgstr ""
+
+#. module: hr
+#: constraint:hr.employee:0
+msgid "Error ! You cannot create recursive Hierarchy of Employees."
+msgstr ""
