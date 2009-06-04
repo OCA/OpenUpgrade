@@ -62,11 +62,11 @@ def graph_get(cr, uid, graph, offer_id):
 
         """ Get Code Translation """
         trans_obj =  pooler.get_pool(cr.dbname).get('ir.translation')
-        type_trans = trans_obj._get_ids(cr, uid, 'dm.offer.step.type,code', 'model',
-                           user_lang or 'en_US',[step.type_id.id])
-        type_code = type_trans[step.type_id.id] or step.type_id.code
-
+        type_trans = trans_obj._get_ids(cr, uid, 'dm.offer.step,code', 'model',
+                           user_lang or 'en_US',[step.id])
+        type_code = type_trans[step.id] or step.code
         args['label'] = translate_accent(type_code +'\\n' + step.media_id.code)
+
         graph.add_node(pydot.Node(step.id, **args))
 
     for step in offer.step_ids:

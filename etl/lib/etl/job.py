@@ -25,11 +25,15 @@
  Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
  GNU General Public License.
 """
-from signal import signal
 import time
 import logger
 import pickle
 import datetime
+import cProfile
+import pstats
+import os
+
+from signal import signal
 
 class job(signal):
     """
@@ -47,12 +51,6 @@ class job(signal):
         self.pickle = False
         self.logger = logger.logger()
         self.job_id = name
-
-#    def job_id(self, prefix='job'):
-#        import random
-#        result =prefix + random.choice('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890')
-#        print "job nameeee",result
-#        return result
 
     def __str__(self):
         res = '<Job name="%s" status="%s">' % (self.name, self.status)
@@ -92,6 +90,7 @@ class job(signal):
         return self.__copy__()
 
     def __getstate__(self):
+        res = super(job, self).__getstate__()
         _components = self.__dict__.get('_components')
         components = []
         for comp in _components:
@@ -100,9 +99,11 @@ class job(signal):
         transitions = []
         for transition in self.get_transitions():
             transitions.append(pickle.dumps(transition))
+        res.update({'job_id': self.job_id, 'name' :self.name, 'status':self.status , 'single_components':components, 'transitions' : transitions})
+        return res
 
-        return {'job_id': self.job_id, 'name' :self.name, 'status':self.status , 'single_components':components, 'transitions' : transitions}
     def __setstate__(self, state):
+        super(job, self).__setstate__(state)
         components = []
         for component in state.get('single_components',[]):
             _cmp = pickle.loads(component)
@@ -118,8 +119,16 @@ class job(signal):
         for _cmp in components:
             _cmp.__dict__['job'] = self
 
+#        connects = '__connects' in state and state['__connects'] or {}
+#        state['__connects'] = connects
+
         state['_components'] = components
+#        self.__dict__ = state
+        state['_signal__connects'] = {}
         self.__dict__ = state
+        self.logger = logger.logger()
+        self._cache = {}
+        self.register_actions()
         return
 
 
@@ -143,7 +152,6 @@ class job(signal):
 
 
     def pause(self):
-        print "job is pausing..........................."
         for tran in self.get_transitions():
             tran.pause()
         self.status = 'pause'
@@ -151,13 +159,14 @@ class job(signal):
 
 
     def restart(self):
-        print "job is restarted now......................."
-        for tran in self.get_transitions():
-            tran.restart()
-        self.status = 'start'
-        self.signal('restart', {'date': datetime.datetime.today()})
+        if not self.status == 'end':
+            for tran in self.get_transitions():
+                tran.restart()
+            self.status = 'start'
+            self.signal('restart', {'date': datetime.datetime.today()})
 
     def start(self):
+        #if not self.status == 'end':
         self.status = 'start'
         self.signal('start', {'date': datetime.datetime.today()})
         for c in self.get_end_components():
@@ -205,15 +214,18 @@ class job(signal):
         return pickle.load(value)
 
     def run(self):
-        print "job is running now.............................."
         self.register_actions()
-        if self.pickle:
-            job = self.read(self.pickle)
-            job.restart()
-            job.end()
-        else:
-            self.start()
-            self.end()
+        # now pickle will handle from thread server
+#        if self.pickle:
+#            job = self.read(self.pickle)
+#            job.restart()
+#            job.end()
+#        else:
+        path_profile = os.path.realpath('test_cprofile')
+        cProfile.runctx('self.start()', globals(), locals(), path_profile)
+        stats = pstats.Stats(path_profile)
+        #to print statstics use: stats.print_stats(10)
+        self.end()
 
     def get_statitic_info(self):
         stat_info =  'Statistical Information (process time in microsec):\n'
@@ -440,16 +452,16 @@ class job(signal):
 
     def action_transition_pause(self, key, signal_data={}, data={}):
         self.logger.notifyChannel("transition", logger.LOG_INFO,
-                     'the <%s> to <%s>  has started now...'%(key.source.name, key.destination.name))
+                     'the <%s> to <%s>  has pause now...'%(key.source.name, key.destination.name))
         return True
 
     def action_transition_stop(self, key, signal_data={}, data={}):
         self.logger.notifyChannel("transition", logger.LOG_INFO,
-                     'the <%s> to <%s>  has started now...'%(key.source.name, key.destination.name))
+                     'the <%s> to <%s>  has stop now...'%(key.source.name, key.destination.name))
         return True
 
     def action_transition_end(self, key, signal_data={}, data={}):
         self.logger.notifyChannel("transition", logger.LOG_INFO,
-                     'the <%s> to <%s>  has started now...'%(key.source.name, key.destination.name))
+                     'the <%s> to <%s>  has end now...'%(key.source.name, key.destination.name))
         return True
 

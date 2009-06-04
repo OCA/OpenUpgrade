@@ -26,10 +26,11 @@ from osv import osv, fields
 
 class etl_component_field(osv.osv):
     _name='etl.component.field'
+    _rec_name = 'source_field'
     _columns = {
           'source_field': fields.char('Source Field', size=124),
           'dest_field': fields.char('Destination Field', size=124),
-          'component_id': fields.many2one('etl.component', 'Model'),
+          'component_id': fields.many2one('etl.component', 'Component'),
               }
 
 etl_component_field()

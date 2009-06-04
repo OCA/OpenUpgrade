@@ -57,6 +57,14 @@ class sql_connector(connector):
         self.con_type = con_type
         self.passwd = passwd
 
+    def __getstate__(self):
+        res = super(sql_connector, self).__getstate__()
+        res.update({'uri':self.uri, 'host':self.host, 'port':self.port, 'sslmode':self.sslmode, 'db':self.db, 'uid':self.uid, 'con_type':self.con_type, 'passwd':self.passwd})
+        return res
+
+    def __setstate__(self, state):
+        super(sql_connector, self).__setstate__(state)
+        self.__dict__ = state
 
     def open(self):
         """
@@ -75,6 +83,10 @@ class sql_connector(connector):
             import cx_Oracle
             dsn_tns = cx_Oracle.makedsn(self.host, self.port, self.db)
             connector = cx_Oracle.connect(self.uid, self.passwd, dsn_tns)
+        elif self.con_type == 'sybase':# to be test
+            import Sybase
+            db = Sybase.connect(self.host, self.uid, self.passwd)
+            db.execute('use %s' % (self.db))
         else:
             raise Exception('Not Supported')
         return connector
@@ -92,6 +104,7 @@ class sql_connector(connector):
         """
         res = sql_connector(self.host, self.port, self.db, self.uid, self.passwd, self.sslmode, self.con_type, self.name)
         return res
+
 
 def test():
 

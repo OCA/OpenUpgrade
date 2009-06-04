@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
 	<data>
+	
 		<record id="etl_transform_filter_form" model="ir.ui.view">
 			<field name="name">etl.component.filter.form</field>
 			<field name="model">etl.component</field>
@@ -17,7 +18,7 @@
 			    <notebook colspan="4">
 			        <page string="Property">
 			            <field name="criteria_ids" colspan="4" nolabel="1" widget="one2many_list">
-									<tree string="Criteria"  editable="bottom">
+									<tree string="Criterias"  editable="bottom">
 										<field name="sequence" />
 										<field name="field_name" />
 										<field name="operator" />
@@ -101,7 +102,64 @@
 		        </form>
 			</field>
 		</record>
-
+		
+    	<record id="etl_component_criteria_form" model="ir.ui.view">
+    	    <field name="name">view.etl.component.criteria.form</field>
+    	    <field name="model">etl.component.filter.criteria</field>
+    	    <field name="type">form</field>
+    	    <field name="priority">10</field>
+    	    <field name="arch" type="xml">
+        	    <form string="Criteria">
+        	        <field name="sequence"/>
+        	        <field name="field_name"/>
+        	        <field name="operator"/>
+        	        <field name="operand"/>
+        	        <field name="condition"/>
+                </form>
+    	    </field>
+    	</record>
+    	
+    	<record id="etl_component_criteria_tree" model="ir.ui.view">
+    	    <field name="name">view.etl.component.criteria.tree</field>
+    	    <field name="model">etl.component.filter.criteria</field>
+    	    <field name="type">tree</field>
+    	    <field name="priority">10</field>
+    	    <field name="arch" type="xml">
+        	    <tree string="Criteria" editable="bottom">
+        	        <field name="sequence"/>
+        	        <field name="field_name"/>
+        	        <field name="operator"/>
+        	        <field name="operand"/>
+        	        <field name="condition"/>
+                </tree>
+    	    </field>
+    	</record>
+	
+        <record id="etl_component_data_filter_form1" model="ir.ui.view">
+            <field name="name">view.etl.component.transform.filter</field>
+            <field name="model">etl.component</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+            <form string="Filter">
+                    <group col="4" colspan="4">
+                        <field name="name" select="1" required="1"/>
+                        <field name="type_id" select="1" required="0" readonly="1"/>
+                        <field name="connector_id"/>
+                        <field name="transformer_id"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Property">
+                            <field name="criteria_ids" colspan="4" nolabel="1"/>
+                        </page>
+                        <page string="Other Information">
+                            <field name="row_limit"/>
+                    <field name ="encoding"/>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+        
 		<record id="action_etl_component_filter_tree" model="ir.actions.act_window">
             <field name="name">Filter component</field>
 			<field name="res_model">etl.component</field>

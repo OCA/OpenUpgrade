@@ -56,7 +56,14 @@ class data(component):
         for d in self.datas:
             yield d, 'main'
 
+    def __getstate__(self):
+        res = super(data, self).__getstate__()
+        res.update({'datas':self.datas})
+        return res
 
+    def __setstate__(self, state):
+        super(data, self).__setstate__(state)
+        self.__dict__ = state
 
 def test():
     from etl_test import etl_test

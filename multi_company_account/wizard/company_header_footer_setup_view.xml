@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="wizard_company_header_footer_setup_form">
+			<field name="name">wizard.company.header.footer.setup.form</field>
+			<field name="model">wizard.company.header.footer.setup</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Company Header Footer Detail">
+					<separator string="Company" colspan="4"/>
+					<field name="company_id" colspan="4" nolabel="1"/>
+					<separator string="Header/Footer" colspan="4"/>
+					<field name="rml_header" colspan="2" nolabel="1"/>
+					<field name="rml_header2" colspan="2" nolabel="1"/>
+					<group col="2" colspan="4">
+						<button icon="gtk-cancel" special="cancel" type="object" name="action_cancel" string="Cancel"/>
+						<button icon="gtk-ok" name="action_create" string="Create" type="object"/>
+					</group>
+				</form>
+			</field>
+		</record>
+		
+        <record id="action_wizard_company_header_footer_setup_form" model="ir.actions.act_window">
+            <field name="name">Company Header Footer Detail</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wizard.company.header.footer.setup</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <!-- register configuration wizard -->
+
+        <record id="config_wizard_company_header_footer_setup_form" model="ir.actions.todo">
+            <field name="name">Company Header/Footer Setup</field>
+            <field name="note">Define Company Header/Footer Detail</field>
+            <field name="action_id" ref="action_wizard_company_header_footer_setup_form"/>
+        </record>
+
+	</data>
+</openerp>

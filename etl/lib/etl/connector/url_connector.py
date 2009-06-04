@@ -32,22 +32,31 @@ import urllib
 class url_connector(connector):
     """
     This is an ETL connector that is used to provide connectivity URL Access like  http, ftp, https, gopher.
-    """ 
+    """
     def __init__(self, uri, bufsize=-1, encoding='utf-8', name='url_connector'):
-        """ 
+        """
         Required Parameters
         uri      : Path of file.
-                
-        Extra Parameters 
+
+        Extra Parameters
         bufsize  : Buffer size for reading data.
         encoding : Encoding format.
         name     : Name of connector.
-        """ 
+        """
         super(url_connector, self).__init__(name)
         self._type = 'connector.url_connector'
         self.bufsize = bufsize
         self.encoding = encoding
         self.uri = uri
+
+    def __getstate__(self):
+        res = super(url_connector, self).__getstate__()
+        res.update({'bufsize':self.bufsize, 'encoding':self.encoding, 'uri':self.uri})
+        return res
+
+    def __setstate__(self, state):
+        super(url_connector, self).__setstate__(state)
+        self.__dict__ = state
 
     def open(self):
         """
@@ -63,7 +72,7 @@ class url_connector(connector):
         super(url_connector, self).close()
         connector.close()
 
-    def __copy__(self): 
-        res = url_connector(self.uri, self.bufsize, self.encoding, self.name)        
+    def __copy__(self):
+        res = url_connector(self.uri, self.bufsize, self.encoding, self.name)
         return res
- 
+

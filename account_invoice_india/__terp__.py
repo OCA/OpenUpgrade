@@ -24,7 +24,7 @@
     "name" : "Accounting Base Configuration and Properties",
     "version" : "1.0",
     "depends" : [
-        "base",
+        "account_base",
         "account",
         "account_base",
     ],

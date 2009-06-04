@@ -22,7 +22,7 @@
 """
  To provide connectivity with file.
 
- Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
  GNU General Public License.
 """
 
@@ -33,15 +33,15 @@ class file_connector(connector):
     This is an ETL connector that is used to provide connectivity with file.
     """
     def __init__(self, uri, bufsize=-1, encoding='utf-8', name='file_connector'):
-        """ 
+        """
         Required Parameters
         uri      : Path of file.
-                
+
         Extra Parameters
         bufsize  : Buffer size for reading data.
         encoding : Encoding format.
         name     : Name of connector.
-        """    
+        """
         super(file_connector, self).__init__(name)
         self._type = 'connector.file_connector'
         self.bufsize = bufsize
@@ -53,8 +53,16 @@ class file_connector(connector):
         Opens file connections.
         """
         super(file_connector, self).open()
-        return file(self.uri, mode)        
-        
+        return file(self.uri, mode)
+
+    def __getstate__(self):
+        res = super(file_connector, self).__getstate__()
+        res.update({'bufsize':self.bufsize, 'encoding':self.encoding, 'uri':self.uri})
+        return res
+
+    def __setstate__(self, state):
+        super(file_connector, self).__setstate__(state)
+        self.__dict__ = state
 
     def close(self, connector):
         """
@@ -62,8 +70,8 @@ class file_connector(connector):
         """
         super(file_connector, self).close(connector)
         return connector.close()
-    
-    def __copy__(self): 
+
+    def __copy__(self):
         """
         Overrides copy method.
         """

@@ -53,15 +53,24 @@ class transition(signal):
         return res
 
     def __getstate__(self):
-        return {'type' : self.type,'status' : self.status, 'source' : pickle.dumps(self.source), 'destination': pickle.dumps(self.destination), 'trigger' : self.trigger, 'channel_source' : self.channel_source, 'channel_destination' : self.channel_destination}
+        res = super(transition, self).__getstate__()
+        res.update({ 'type' : self.type,'status' : self.status, 'source' : pickle.dumps(self.source), 'destination': pickle.dumps(self.destination), 'trigger' : self.trigger, 'channel_source' : self.channel_source, 'channel_destination' : self.channel_destination})
+        return res
 
     def __setstate__(self, state):
+        super(transition, self).__setstate__(state)
         source = pickle.loads(state['source'])
         destination = pickle.loads(state['destination'])
         destination.__dict__['trans_in'].append((state['channel_destination'],self))
+#        source.__dict__['trans_out'].append((state['channel_source'],self))
+##        self.__connects.__dict__['__connects'].append((state['__connects'],self))
+#
+#        connects = '__connects' in state and state['__connects'] or {}
         source.__dict__['trans_out'].append((state['channel_source'],self))
         state['source'] = source
+
         state['destination'] = destination
+        state['_signal__connects'] = {}
         self.__dict__ = state
 
     def copy(self):
@@ -74,7 +83,7 @@ class transition(signal):
         self.status = 'close'
 
     def stop(self):
-        self.status = 'stop'
+#        self.status = 'stop'
         self.signal('stop')
 
     def end(self):
@@ -82,13 +91,19 @@ class transition(signal):
         self.signal('end', {'date': datetime.datetime.today()})
 
     def start(self):
+#        if self.status == 'end':
+#            print "Transition::::::::;; already end::"
+#            pass
         self.status = 'start'
         self.signal('start', {'date': datetime.datetime.today()})
 
     def pause(self):
         self.status = 'pause'
-        self.signal('pause')
+        self.signal('pause') #today
 
     def restart(self):
+#        if self.status == 'end':
+#            print "Transition::::::::;; already end::"
+#            pass
         self.status = 'start'
         self.signal('restart')

@@ -46,7 +46,7 @@ def _run_scheduled_processes(self, cr, uid, data, context):
     threaded_calculation.start()
     return {}
 
-class procurement_compute(wizard.interface):
+class run_scheduled_job_processes(wizard.interface):
     states = {
         'init': {
             'actions': [],
@@ -57,7 +57,7 @@ class procurement_compute(wizard.interface):
             'result': {'type': 'state', 'state':'end'}
         },
     }
-procurement_compute('etl.run.scheduled.job.processes')
+run_scheduled_job_processes('etl.run.scheduled.job.processes')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -25,6 +25,13 @@ from osv import fields, osv
 class project(osv.osv):
     _inherit = "project.project"
     _columns = {
-                'idea_id' : fields.many2one('idea.idea', 'Idea', size=64),
+                "idea_ids": fields.one2many('idea.idea', 'project_id', 'Ideas'),                
         }
 project()
+
+class idea_idea(osv.osv):
+    _inherit = "idea.idea"
+    _columns = {                
+                'project_id': fields.many2one('project.project', 'Project', select=True),
+    }
+idea_idea()

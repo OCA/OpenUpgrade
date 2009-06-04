@@ -41,32 +41,42 @@ class facebook_in(component):
     """
 
     def __init__(self, facebook_connector, method, domain=[], fields=['name'], name='component.input.facebook_in', transformer=None, row_limit=0):
-        """ 
-        Required  Parameters 
+        """
+        Required  Parameters
         facebook_connector : Facebook connector.
         method             : Name of the method which is going to be called to connector to fetch data from facebook.
         domain             : Domain List to put domain.
         fields             : Fields List.
-        
-        Extra Parameters 
+
+        Extra Parameters
         name               : Name of Component.
         transformer        : Transformer object to transform string data into  particular object.
         row_limit          : Limited records are sent to destination if row limit is specified. If row limit is 0, all records are sent.
         """
-        super(facebook_in, self).__init__(name=name, connector=facebook_connector, transformer=transformer, row_limit=row_limit)        
+        super(facebook_in, self).__init__(name=name, connector=facebook_connector, transformer=transformer, row_limit=row_limit)
         self._type = 'component.input.facebook_in'
         self.method = method
         self.domain = domain
         self.fields = fields
-       
-    def __copy__(self):        
+
+    def __copy__(self):
         res = facebook_in(self.connector, self.method, self.domain, self.fields, self.name, self.transformer, self.row_limit)
         return res
 
-    def process(self):        
+
+    def __getstate__(self):
+        res = super(facebook_in, self).__getstate__()
+        res.update({'method':self.method, 'domain':self.domain, 'fields':self.fields})
+        return res
+
+    def __setstate__(self, state):
+        super(facebook_in, self).__setstate__(state)
+        self.__dict__ = state
+
+    def process(self):
         facebook = self.connector.open()
         rows = self.connector.execute(facebook, self.method, fields=self.fields)
-        for row in rows:           
+        for row in rows:
             if row:
                 yield row, 'main'
 

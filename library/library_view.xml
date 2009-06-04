@@ -2,21 +2,20 @@
 <openerp>
 <data>
 
-        <record model="ir.ui.view" id="product_product_tree_view">
-            <field name="name">product.product.tree</field>
-            <field name="model">product.product</field>
-            <field name="type">tree</field>
-            <field name="arch" type="xml">
-                <tree string="Products" colors="red:state in ['draft', 'end', 'obsolete']">
-                    <field name="virtual_available"/>
-                    <field name="name"/>
-                    <field name="ean13"/>
-                    <field name="state" />
-                    <field name="default_code"/>
-                </tree>
-            </field>
-        </record>
-
+    <record model="ir.ui.view" id="product_product_tree_view">
+        <field name="name">product.product.tree</field>
+        <field name="model">product.product</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Products" colors="red:state in ['draft', 'end', 'obsolete']">
+                <field name="virtual_available"/>
+                <field name="name"/>
+                <field name="ean13"/>
+                <field name="state" />
+                <field name="default_code"/>
+            </tree>
+        </field>
+    </record>
 
     <record model="ir.ui.view" id="author_form">
         <field name="name">library.author.form</field>
@@ -26,20 +25,19 @@
             <form string="Authors">
                 <notebook>
                     <page string="General Informations">
-
-                    <field name="name" select="1"/>
-                     <field name="first_name" select="1"/> 
-                    <separator string="Books" colspan="4"/>
-                    <field name="book_ids" nolabel="1" colspan="4" select="1"/>
+                        <field name="name" select="1"/>
+                        <field name="first_name" select="1"/> 
+                        <separator string="Books" colspan="4"/>
+                        <field name="book_ids" nolabel="1" colspan="4" select="1"/>
                     </page>
 
                     <page string="More info">
-                    <separator string="Editors" colspan="4"/>
-                    <field name="editor_ids"  nolabel="1" colspan="4" select="1"/>
-                    <separator string="Notes" colspan="4"/>
-                    <field name="note"  nolabel="1" colspan="4"/>
-                    <separator string="Biography" colspan="4"/>
-                    <field name="biography" nolabel="1"   colspan="4"/>
+                        <separator string="Editors" colspan="4"/>
+                        <field name="editor_ids"  nolabel="1" colspan="4" select="1"/>
+                        <separator string="Notes" colspan="4"/>
+                        <field name="note"  nolabel="1" colspan="4"/>
+                        <separator string="Biography" colspan="4"/>
+                        <field name="biography" nolabel="1"   colspan="4"/>
                     </page>
                 </notebook>
             </form>
@@ -52,8 +50,8 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="Authors">
-        <field name="name" select="1"/>
-        <field name="first_name" select="1"/> 
+                <field name="name" select="1"/>
+                <field name="first_name" select="1"/> 
             </tree>
         </field>
     </record>
@@ -64,9 +62,9 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="Authors">
-        <field name="name" select="1"/>
-        <field name="code" select="1"/> 
-        <field name="active" select="1"/> 
+                <field name="name" select="1"/>
+                <field name="code" select="1"/> 
+                <field name="active" select="1"/> 
             </form>
         </field>
     </record>
@@ -86,7 +84,7 @@
     <record model="ir.ui.menu" id="author_menu">
         <field name="name">Authors</field>
         <field name="parent_id" ref="product.menu_main_product"/>
-        <field name="icon">STOCK_INDENT</field>
+        <field name="icon">STOCK_JUSTIFY_FILL</field>
         <field name="sequence">6</field>
         <field name="action" eval="'ir.actions.act_window,'+str(ref('action_author_form'))"/>
     </record>
@@ -98,7 +96,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">form,tree</field>
     </record>
-
 
     <record model="ir.ui.view" id="view_product_book_tree">
         <field name="name">product.book.tree.view</field>
@@ -117,7 +114,6 @@
        </field>
     </record>
 
-
     <record model="ir.ui.view" id="view_product_book_form">
         <field name="name">product.book.form.view</field>
         <field name="type">form</field>
@@ -125,90 +121,90 @@
         <field name="priority" eval="1"/> <!-- ?? -->
         <field name="arch" type="xml">
         <form string="Books">
-                    <notebook>
-                        <page string="Information">
-                            <field name="name" select="1" colspan="4" />
-                            <field name="default_code" select="2"/>
-                            <field name="ean13" select="1"/>
-                            <field name="catalog_num" select="2"/>
-                            <field name="isbn" select="2"/>
-                            <field name="rack" select="2"/>
+            <notebook>
+                <page string="Information">
+                    <field name="name" select="1" colspan="4" />
+                    <field name="default_code" select="2"/>
+                    <field name="ean13" select="1"/>
+                    <field name="catalog_num" select="2"/>
+                    <field name="isbn" select="2"/>
+                    <field name="rack" select="2"/>
 
-                             <field name="categ_id" select="2"/> 
-                            <field name="editor" select="1"/>
-                            <field name="online" select="2"/>
-                            <field name="collection" select="2"/>
-                            <field name="num_pocket"/>
-                            <newline/>
-                             <field name="author_om_ids" colspan="1" select="1">
-                                 <tree string="Authors" editable="bottom">
-                                    <field name="author_id"/>
-                                </tree>
-                             </field>
-                            <group colspan="2" col="2">
-                            <field name="list_price" select="2"/>
-                             <field name="virtual_available"/>
-                             <field name="qty_available"/>
-                            </group>
-                        </page>
-                        <page string="Details">
-                            <field name="state"/>
-                            <field name="nbpage"/>
-                            <field name="date_parution" select="2"/>
-                            <field name="creation_date" select="2"/>
-                            <field name="date_retour" select="2"/>
-                            <field name="tome"/>
-                            <field name="format"/>
-                            <field name="weight"/>
-                            <field name="back"/>
-                            <field name="num_edition"/>
-                              <field name="intrastat_id"/>
-                            <field name="price_cat" select="2"/>
-                            <newline/>
-                            <field name="lang"/>
-                            <field name="link_ids" colspan="1" />
-                            <field name="taxes_id" colspan="1"/>
-                            <field name="supplier_taxes_id" colspan="1"/>
-                        </page>
-                        <page string="Descriptions">
-                            <separator string="Description" />
-                            <field name="description" colspan="4" nolabel="1" />
-                            <separator string="Sale Description"/>
-                            <field name="description_sale" colspan="4" nolabel="1"/>
-                            <separator string="Purchase Description"/>
-                            <field name="description_purchase" colspan="4" nolabel="1"/>
-                        </page>
+                     <field name="categ_id" select="2"/> 
+                    <field name="editor" select="1"/>
+                    <field name="online" select="2"/>
+                    <field name="collection" select="2"/>
+                    <field name="num_pocket"/>
+                    <newline/>
+                     <field name="author_om_ids" colspan="1" select="1">
+                         <tree string="Authors" editable="bottom">
+                            <field name="author_id"/>
+                        </tree>
+                     </field>
+                    <group colspan="2" col="2">
+                    <field name="list_price" select="2"/>
+                     <field name="virtual_available"/>
+                     <field name="qty_available"/>
+                    </group>
+                </page>
+                <page string="Details">
+                    <field name="state"/>
+                    <field name="nbpage"/>
+                    <field name="date_parution" select="2"/>
+                    <field name="creation_date" select="2"/>
+                    <field name="date_retour" select="2"/>
+                    <field name="tome"/>
+                    <field name="format"/>
+                    <field name="weight"/>
+                    <field name="back"/>
+                    <field name="num_edition"/>
+                      <field name="intrastat_id"/>
+                    <field name="price_cat" select="2"/>
+                    <newline/>
+                    <field name="lang"/>
+                    <field name="link_ids" colspan="1" />
+                    <field name="taxes_id" colspan="1"/>
+                    <field name="supplier_taxes_id" colspan="1"/>
+                </page>
+                <page string="Descriptions">
+                    <separator string="Description" />
+                    <field name="description" colspan="4" nolabel="1" />
+                    <separator string="Sale Description"/>
+                    <field name="description_sale" colspan="4" nolabel="1"/>
+                    <separator string="Purchase Description"/>
+                    <field name="description_purchase" colspan="4" nolabel="1"/>
+                </page>
 
-                        <page string="Procurement (days)">
-                            <field name="supply_method" />
-                            <field name="active" select="2"/>
-                            <newline/>
-                            <field name="sale_delay" />
-                            <field name="sale_ok" />
-                            <field name="produce_delay" />
-                            <field name="purchase_ok" />
-                            <field name="warranty"/>
-                            <field name="rental" />
-                            <!-- 
-                            <field name="price_margin"/>
-                            <field name="price_extra"/>
-                            -->
-                            <field name="uos_id" />
-                            <field name="uos_coeff" />
-                            <field name="cost_method"/>
-                            <field name="procure_method" />
-                            <field name="standard_price"/>
-                            <newline />
-                            <field name="seller_ids" colspan="4" select="2" nolabel="1"  widget="one2many_list"/>
-                        </page>
-                        <page string="Other">
-                            <field name="type" />
-                            <field name="uom_id"/>
-                            <field name="uom_po_id"/>
-                            <field name="product_manager"/>
-                            <properties/>
-                        </page>
-                    </notebook>
+                <page string="Procurement (days)">
+                    <field name="supply_method" />
+                    <field name="active" select="2"/>
+                    <newline/>
+                    <field name="sale_delay" />
+                    <field name="sale_ok" />
+                    <field name="produce_delay" />
+                    <field name="purchase_ok" />
+                    <field name="warranty"/>
+                    <field name="rental" />
+                    <!-- 
+                    <field name="price_margin"/>
+                    <field name="price_extra"/>
+                    -->
+                    <field name="uos_id" />
+                    <field name="uos_coeff" />
+                    <field name="cost_method"/>
+                    <field name="procure_method" />
+                    <field name="standard_price"/>
+                    <newline />
+                    <field name="seller_ids" colspan="4" select="2" nolabel="1"  widget="one2many_list"/>
+                </page>
+                <page string="Other">
+                    <field name="type" />
+                    <field name="uom_id"/>
+                    <field name="uom_po_id"/>
+                    <field name="product_manager"/>
+                    <properties/>
+                </page>
+            </notebook>
          </form>
        </field>
     </record>
@@ -237,8 +233,6 @@
         <field name="view_mode">form,tree</field>
     </record>
 
-
-
     <record model="ir.actions.act_window.view" id="action_view_book">
       <field name="sequence" eval="2"/>
       <field name="view_mode">form</field>
@@ -251,7 +245,6 @@
       <field name="view_id" ref="view_product_book_tree"/>
       <field name="act_window_id" ref="action_product_book_form"/>
     </record>
-
 
     <record model="ir.actions.act_window" id="action_product_book_30days">
         <field name="name">product.book.form.view</field>
@@ -316,8 +309,6 @@
     </record>
 
     <menuitem name="My orders of the day" action="action_order_today_user_tree" id="order_today_user_Menuitem" parent="sale_order_day"/>
-
-
 
     <record model="ir.ui.view" id="invoice_tree">
         <field name="name">account.invoice.tree</field>
@@ -546,28 +537,15 @@
         </field>
     </record>
 
-
-
-        <record model="ir.ui.view" id="product_supplierinfo_form_view">
-            <field name="name">product.supplierinfo.form.view</field>
-            <field name="inherit_id" ref="product.product_supplierinfo_form_view"/>
-            <field name="model">product.supplierinfo</field>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-            <field name="name" position="replace">
-                <field name="name" domain="[('category_id','=','Fournisseur')]" />
-            </field>
-            </field>
-        </record>
-
-
-    <record model="ir.ui.view" id="purchase_order_line_tree">
-        <field name="name">purchase.order.line.tree</field>
-        <field name="inherit_id" ref="purchase.purchase_order_line_tree"/>
-        <field name="model">purchase.order.line</field>
-        <field name="type">tree</field>
+    <record model="ir.ui.view" id="product_supplierinfo_form_view">
+        <field name="name">product.supplierinfo.form.view</field>
+        <field name="inherit_id" ref="product.product_supplierinfo_form_view"/>
+        <field name="model">product.supplierinfo</field>
+        <field name="type">form</field>
         <field name="arch" type="xml">
-            <field name="product_id" position="replace"/>
+        <field name="name" position="replace">
+            <field name="name" domain="[('category_id','=','Fournisseur')]" />
+        </field>
         </field>
     </record>
 

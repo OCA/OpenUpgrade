@@ -19,30 +19,30 @@ class Comparison(controllers.Controller, TinyResource):
     @expose(template="erpcomparator.subcontrollers.templates.comparison")
     def default(self, args=None, **kw):
         
-        lang_proxy = rpc.RPCProxy('res.lang')
-        if(kw.get('lang_code')):
-            language = kw['lang_code']
-            context = rpc.session.context
-              
-            context['lang'] = language
-            lang_id = lang_proxy.search([])
-            lang_data = lang_proxy.read(lang_id, [], rpc.session.context)
-            cherrypy.session['language'] = context['lang']
-            cherrypy.session['lang_data'] = lang_data
-        else:
-            search_lang = lang_proxy.search([])
-            lang_data = lang_proxy.read(search_lang, [], rpc.session.context)
-            language  = 'en_US'
-            context = rpc.session.context
-            context['lang'] = language
-        
-        if(cherrypy.session.has_key('language')):
-             cherrypy.session['language']
-             cherrypy.session['lang_data']
-        else:
-            cherrypy.session['language'] = context['lang']
-            cherrypy.session['lang_data'] = lang_data
-      
+#        lang_proxy = rpc.RPCProxy('res.lang')
+#        if(kw.get('lang_code')):
+#            language = kw['lang_code']
+#            context = rpc.session.context
+#              
+#            context['lang'] = language
+#            lang_id = lang_proxy.search([])
+#            lang_data = lang_proxy.read(lang_id, [], rpc.session.context)
+#            cherrypy.session['language'] = context['lang']
+#            cherrypy.session['lang_data'] = lang_data
+#        else:
+#            search_lang = lang_proxy.search([])
+#            lang_data = lang_proxy.read(search_lang, [], rpc.session.context)
+#            language  = 'en_US'
+#            context = rpc.session.context
+#            context['lang'] = language
+#        
+#        if(cherrypy.session.has_key('language')):
+#             cherrypy.session['language']
+#             cherrypy.session['lang_data']
+#        else:
+#            cherrypy.session['language'] = context['lang']
+#            cherrypy.session['lang_data'] = lang_data
+#      
         selected_items = kw.get('ids', [])
         selected_items = selected_items and eval(str(selected_items))
         

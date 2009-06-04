@@ -59,36 +59,27 @@ class dm_offer_step_type(osv.osv):
 
 dm_offer_step_type()
 
+"""
 class dm_offer_step_action(osv.osv):
     _name = 'dm.offer.step.action'
-    _inherits = {'ir.actions.server':'server_action_id'}
+#    _inherits = {'ir.actions.server':'server_action_id'}
+    _rec_name = 'server_action_id'
     _columns = {
         'server_action_id' : fields.many2one('ir.actions.server','Server Action'),
         'media_id' : fields.many2one('dm.media','Media',required=True)
     }
 dm_offer_step_action()
+"""
 
 class dm_offer_step(osv.osv):
     _name = "dm.offer.step"
 
-#    def _offer_step_code(self, cr, uid, ids, name, args, context={}):
-#        result ={}
-#        for id in ids:
-#            offer_step = self.browse(cr,uid,[id])[0]
-#            step_code = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer.step.type,code', 'model', context.get('lang', False) or 'en_US',[offer_step.type_id.id])
-#            type_code = (step_code[offer_step.type_id.id] or offer_step.type_id.code) + str(offer_step.seq)
-#            offer_code = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer,code', 'model', context.get('lang', False) or 'en_US',[offer_step.offer_id.id])
-#            code = (offer_code[offer_step.offer_id.id] or offer_step.offer_id.code) + '_' + type_code
-#            result[id] = str(code)
-#        return result
-
     _columns = {
-        'seq' : fields.integer('Step Type Sequence'),
+        'seq' : fields.integer('Sequence'),
         'name' : fields.char('Name',size=64, required=True, states={'closed':[('readonly',True)]}),
         'offer_id' : fields.many2one('dm.offer', 'Offer',required=True, ondelete="cascade", states={'closed':[('readonly',True)]}),
         'parent_id' : fields.many2one('dm.offer', 'Parent'),
         'legal_state' : fields.char('Legal State', size=32, states={'closed':[('readonly',True)]}),
-#        'code' : fields.function(_offer_step_code,string='Code',type="char",method=True,size=64),
         'code' : fields.char('Code',size=64,required=True,translate=True),
         'quotation' : fields.char('Quotation', size=16, states={'closed':[('readonly',True)]}),
         'media_id' : fields.many2one('dm.media', 'Media', ondelete="cascade",required=True, states={'closed':[('readonly',True)]}),
@@ -115,8 +106,8 @@ class dm_offer_step(osv.osv):
         'split_mode' : fields.selection([('and','And'),('or','Or'),('xor','Xor')],'Split mode'),
         'doc_number' : fields.integer('Number of documents of the mailing', states={'closed':[('readonly',True)]}),
         'manufacturing_constraint_ids' : fields.many2many('product.product','dm_offer_step_manufacturing_product_rel','product_id','offer_step_id','Mailing Manufacturing Products',domain=[('categ_id', 'ilike', 'Mailing Manufacturing')], states={'closed':[('readonly',True)]}),
-        'action_id' : fields.many2one('dm.offer.step.action', string="Action", required=True, domain="[('dm_action','=',True)]"),
         'forecasted_yield' : fields.float('Forecasted Yield'),
+        'action_id' : fields.many2one('ir.actions.server', string='Action', required=True)
     }
 
     _defaults = {
@@ -158,7 +149,7 @@ class dm_offer_step(osv.osv):
         return super(dm_offer_step,self).create(cr,uid,vals,context)
 
     def write(self,cr,uid,ids,vals,context={}):
-        if 'type_id' in vals :
+        if 'type_id' in vals and vals['type_id']:
             step  = self.browse(cr,uid,ids)[0]
             if vals['type_id'] != step.type_id.id :
                 type_seq = self.search(cr,uid,[('type_id','=',vals['type_id']),('offer_id','=',step.offer_id.id)])
@@ -204,16 +195,19 @@ dm_offer_step()
 
 class dm_offer_step_transition_trigger(osv.osv):
     _name = "dm.offer.step.transition.trigger"
+    _rec_name = "name"
     _columns = {
         'name' : fields.char('Trigger Name', size=64, required=True, translate=True),
         'code' : fields.char('Code' , size=64, required=True, translate=True),
         'gen_next_wi' : fields.boolean('Auto Generate Next Workitems'),
         'in_act_cond' : fields.text('Action Condition', required=True),
 #        'out_act_cond' : fields.text('Outgoing Action Condition', required=True),
+        'type' : fields.selection([('offer','Offer'),('as','After-Sale')],'Type', required=True),
     }
     _defaults = {
         'gen_next_wi': lambda *a: 'False',
         'in_act_cond': lambda *a: 'result = False',
+        'type' : lambda *a: 'offer',
 #        'out_act_cond': lambda *a: 'result = False',
     }
 dm_offer_step_transition_trigger()

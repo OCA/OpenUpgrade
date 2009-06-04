@@ -41,14 +41,14 @@ class openobject_in(component):
 
     def __init__(self, openobject_connector, model, domain=[], fields=[], context={}, name='component.input.openerp_in', transformer=None, row_limit=0):
         """
-        Required Parameters 
+        Required Parameters
         openobject_connector : Object of Openobject connector.
         model                : Name of Open Object model.
         domain               : Domain List to put domain.
         fields               : Fields List.
         context              : Context Values.
 
-        Extra Parameters 
+        Extra Parameters
         row_limit            : Row Limit.If row limit is 0,all records are fetched.
         name                 : Name of Component.
         transformer          : Transformer object to transform string data into particular type.
@@ -64,6 +64,15 @@ class openobject_in(component):
         res = openobject_in(self.connector, self.model, self.domain, self.fields, self.context, self.name, self.transformer, self.row_limit)
         return res
 
+    def __getstate__(self):
+        res = super(openobject_in, self).__getstate__()
+        res.update({'user':self.model, 'pwd':self.domain,'context':self.context, 'fields':self.fields})
+        return res
+
+    def __setstate__(self, state):
+        super(openobject_in, self).__setstate__(state)
+        self.__dict__ = state
+
     def process(self):
         import socket
         import xmlrpclib
@@ -72,7 +81,7 @@ class openobject_in(component):
         connector = self.connector.open()
         ids = self.connector.execute(connector, 'execute', self.model, 'search', self.domain, 0, self.row_limit, False, self.context, False)
         rows = self.connector.execute(connector, 'execute', self.model, 'read', ids, self.fields, self.context)
-        self.connector.close(connector)
+        connector = False
         for row in rows:
             if row:
                 yield row, 'main'

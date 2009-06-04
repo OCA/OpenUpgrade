@@ -56,6 +56,15 @@ class sort(component):
         res = sort(self.fieldname, self.name)
         return res
 
+    def __getstate__(self):
+        res = super(sort, self).__getstate__()
+        res.update({'fieldname':self.fieldname})#
+        return res
+
+    def __setstate__(self, state):
+        super(sort, self).__setstate__(state)
+        self.__dict__ = state
+
     # Read all input channels, sort and write to 'main' channel
     def process(self):
         if self.is_start():

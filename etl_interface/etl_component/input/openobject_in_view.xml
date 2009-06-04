@@ -98,6 +98,59 @@
 			</field>
 		</record>
 
+	
+	<record id="etl_component_field_form" model="ir.ui.view">
+			<field name="name">view.etl.component.field.form</field>
+			<field name="model">etl.component.field</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+			<form string="Fields">
+				<field name="channel"/>
+				<field name="source_field"/>
+                <field name="dest_field"/>
+			</form>
+			</field>
+		</record>
+		
+		<record id="etl_component_field_tree" model="ir.ui.view">
+			<field name="name">view.etl.component.field.tree</field>
+			<field name="model">etl.component.field</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+			<tree string="Fields" editable="bottom">
+				<field name="channel"/>
+				<field name="source_field"/>
+                 <field name="dest_field"/>
+			</tree>
+			</field>
+		</record>
+		        
+        <record id="etl_component_openobject_in_form1" model="ir.ui.view">
+            <field name="name">view.etl.component.input.openobject_in</field>
+            <field name="model">etl.component</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+            <form string="OpenObject In">
+                    <group col="4" colspan="4">
+                        <field name="name" select="1" required="1"/>
+                        <field name="type_id" select="1" required="0" readonly="1"/>
+                        <field name="connector_id" required="1" select="1" domain="[('type','=','openobject')]"/>
+                   <field name="transformer_id"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Property">
+                            <field name="model_id" />
+						    <field name="field_ids" colspan="4" nolabel="1"/>
+                        </page>
+                        <page string="Other Information">
+                            <field name="row_limit"/>
+                    <field name ="encoding"/>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+        
 		<record id="action_etl_component_openobject_in_tree"
 			model="ir.actions.act_window">
 			<field name="name">Open-Object In Component</field>

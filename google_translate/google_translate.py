@@ -27,6 +27,8 @@ class ir_translation(osv.osv):
     _description = 'ir.translation'
 
     _columns = {
-        'need_review': fields.boolean('Need review')
+        'need_review': fields.boolean('Need review', help="If its ticked then you can use wizard to translate the source term")
                 }
 ir_translation()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

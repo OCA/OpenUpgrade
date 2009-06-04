@@ -49,9 +49,9 @@ class xmlrpc_server_thread(threading.Thread):
         server = SimpleXMLRPCServer((self.host, self.port))
         server.register_introspection_functions()
         for fun in self.get_register_functions():
-            server.register_function(fun)            
+            server.register_function(fun)
         server.serve_forever()
-        return server    
+        return server
 
 class xmlrpc_connector(connector):
     """
@@ -67,6 +67,14 @@ class xmlrpc_connector(connector):
         self.host = host
         self.port = port
 
+    def __getstate__(self):
+        res = super(xmlrpc_connector, self).__getstate__()
+        res.update({'host':self.host, 'port':self.port})
+        return res
+
+    def __setstate__(self, state):
+        super(xmlrpc_connector, self).__setstate__(state)
+        self.__dict__ = state
 
     def start(self,funs):
         xml_server = xmlrpc_server_thread()

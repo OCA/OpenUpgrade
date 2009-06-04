@@ -65,6 +65,15 @@ class diff(component):
         res = diff(self.key, self.name, self.transformer, self.row_limit)
         return res
 
+    def __getstate__(self):
+        res = super(diff, self).__getstate__()
+        res.update({'keys':self.keys})# to be chk for other values in init
+        return res
+
+    def __setstate__(self, state):
+        super(diff, self).__setstate__(state)
+        self.__dict__ = state
+
     # Return the key of a row
     def key_get(self, row):
         result = []

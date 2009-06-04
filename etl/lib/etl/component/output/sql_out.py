@@ -67,6 +67,15 @@ class sql_out(component):
         if self.sqlconnector:
              self.connector.close(self.sqlconnector)
 
+    def __getstate__(self):
+        res = super(sql_out, self).__getstate__()
+        res.update({'sqltable':self.sqltable})
+        return res
+
+    def __setstate__(self, state):
+        super(sql_out, self).__setstate__(state)
+        self.__dict__ = state
+
     def process(self):
         datas = []
         self.sqlconnector = False

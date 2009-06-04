@@ -39,7 +39,8 @@ AVAILABLE_TYPE = [
     ('new','New'),
     ('standart','Standart'),
     ('rewrite','Rewrite'),
-    ('preoffer','Offer Idea')
+    ('preoffer','Offer Idea'),
+    ('as','After-Sale')
 ]
 
 
@@ -121,7 +122,7 @@ class dm_offer(osv.osv):
     _columns = {
         'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=16, required=True),
-        'lang_orig_id' : fields.many2one('res.lang', 'Original Language'),
+        'lang_orig_id' : fields.many2one('res.lang', 'Original Language', required=True),
         'copywriter_id' : fields.many2one('res.partner', 'Copywriter',domain=[('category_id','ilike','Copywriter')], context={'category':'Copywriter'}),
         'step_ids' : fields.one2many('dm.offer.step','offer_id','Offer Steps'),
         'offer_responsible_id' : fields.many2one('res.users','Responsible',ondelete="cascade"),
@@ -227,7 +228,8 @@ class dm_offer(osv.osv):
                             result['toolbar']['print'] =new_print
             else : 
                 if result.has_key('toolbar'):
-                    if result['toolbar'].has_key('print'):
+                     if result['toolbar'].has_key('print') and 'report' in result['toolbar'] and result['toolbar']['report'] :
+#                     if result['toolbar'].has_key('print') :
                         new_print = filter(lambda x : x['report_name'] not in ['offer.model.report','preoffer.report'],result['toolbar']['print'])
                         result['toolbar']['print'] =new_print
         return result
@@ -235,7 +237,7 @@ class dm_offer(osv.osv):
     def fields_get(self, cr, uid, fields=None, context=None):
         res = super(dm_offer, self).fields_get(cr, uid, fields, context)
         if context and not context.has_key('type') and res.has_key('type'):
-            res['type']['selection'] = [('new','New'),('standart','Standart'),('rewrite','Rewrite')]
+            res['type']['selection'] = [('new','New'),('standart','Standart'),('rewrite','Rewrite'),('as','After-Sale')]
         return res
     
     def default_get(self, cr, uid, fields, context=None):

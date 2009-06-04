@@ -863,7 +863,8 @@
                 <notebook colspan="4">
                     <page string="General">
                         <separator string="Segment Origin" colspan="4"/>
-                        <field name="proposition_id" />
+                        <field name="campaign_id" select="1" />
+                        <field name="proposition_id" select="1"/>
                         <field name="active" />
                         <field name="split_id" />
                         <field name="reuse_id" />
@@ -1567,7 +1568,11 @@
         <field name="arch" type="xml">
             <notebook colspan="4" position="inside">
                 <page string="Direct Marketing">
-                    <field name="dm_contact_id" colspan="4"/>
+                	<separator colspan="4"/>
+                	<field name="deceased"/>
+                	<group attrs="{'invisible':[('deceased','!=',True)]}">
+                		<field name="deceased_date" />
+                	</group>
                     <separator string="Allowed Countries" colspan="4"/>
                     <field name="country_ids" colspan="4" nolabel="1"/>
                     <separator string="Allowed States" colspan="4"/>

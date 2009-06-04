@@ -1,2 +1,0 @@
-import report_generalize_horizontal
-import report_generalize_vertical

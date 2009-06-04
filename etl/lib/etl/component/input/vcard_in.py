@@ -36,27 +36,33 @@ class vcard_in(component):
     	Required Parameters
     	fileconnector : Local file connector to connect with file.
 
-        Extra Parameters 
+        Extra Parameters
         name          : Name of Component.
         """
         super(vcard_in, self).__init__(name=name, connector=fileconnector, transformer=transformer, row_limit=row_limit)
         self._type = 'component.input.vcard_in'
-            
 
-    def __copy__(self):        
+    def __copy__(self):
         res = vcard_in(self.connector, self.name, self.transformer, self.row_limit)
-        return res   
-    
+        return res
+
     def end(self):
         super(vcard_in, self).end()
         if self.fp:
             self.connector.close(self.fp)
             self.fp = False
-    
-    
-    def process(self):        
-        import vobject 
-        self.fp = self.connector.open('r')        
+
+    def __getstate__(self):
+        res = super(vcard_in, self).__getstate__()
+        return res
+
+    def __setstate__(self, state):
+        super(vcard_in, self).__setstate__(state)
+        self.__dict__ = state
+
+    def process(self):
+        import vobject
+        self.fp = self.connector.open('r')
         s = "".join(self.fp.readlines())
         reader = vobject.readComponents(s)
         while True:
@@ -64,7 +70,7 @@ class vcard_in(component):
             data = reader.next()
             for d in data.contents:
                 row[unicode(d)] = eval('data.' + unicode(d) + '.value')
-            yield row, 'main'           
+            yield row, 'main'
 
 def test():
     from etl_test import etl_test
@@ -74,6 +80,6 @@ def test():
     test.check_output([{u'tel': u'(111) 555-1212', u'title': u'Shrimp Man', u'rev': u'20080424T195243Z', u'version': u'3.0', u'org': [u'BubbaGumpShrimp'], u'label': u'100 Waters Edge\\nBaytown, LA 30314\\nUnited States of America', u'email': u'forrestgump@example.com', u'fn': u'ForrestGump'}], 'main')
     res = test.output()
     print res
-    
+
 if __name__ == '__main__':
-    test() 
+    test()

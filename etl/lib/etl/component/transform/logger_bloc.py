@@ -22,7 +22,7 @@
 """
  To display log detail in end of process.
 
- Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
  GNU General Public License.
 """
 
@@ -31,24 +31,33 @@ import sys
 class logger_bloc(component):
     """
         This is an ETL Component that displays log detail at the end of process.
-       
+
 	    Type                   : Data Component.
 		Computing Performance  : Bloc.
 		Input Flows            : 0-x.
 		* .*                   : The main data flow with input data.
 		Output Flows           : 0-y.
 		* .*                   : Returns the main flow.
-    """    
+    """
     def __init__(self, output=sys.stdout, name='component.output.logger_bloc'):
         super(logger_bloc, self).__init__(name=name)
         self._type = 'component.transfer.logger_bloc'
-        self.output = output 
+        self.output = output
 
-    def __copy__(self):       
+    def __copy__(self):
         res = logger_bloc(self.output, self.name)
-        return res 
+        return res
 
-    def process(self):        
+    def __getstate__(self):
+        res = super(logger_bloc, self).__getstate__()
+        res.update({'output':self.output})
+        return res
+
+    def __setstate__(self, state):
+        super(logger_bloc, self).__setstate__(state)
+        self.__dict__ = state
+
+    def process(self):
         datas = []
         for channel, trans in self.input_get().items():
             for iterator in trans:
@@ -57,4 +66,4 @@ class logger_bloc(component):
         for d in datas:
             self.output.write('\tBloc Log ' + self.name + str(d) + '\n')
             yield d, 'main'
-        
+

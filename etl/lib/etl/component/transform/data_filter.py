@@ -49,6 +49,15 @@ class data_filter(component):
         res = data_filter(self.filter_criteria, self.name, self.transformer, self.row_limit)
         return res
 
+    def __getstate__(self):
+        res = super(data_filter, self).__getstate__()
+        res.update({'filter_criteria':self.filter_criteria})
+        return res
+
+    def __setstate__(self, state):
+        super(data_filter, self).__setstate__(state)
+        self.__dict__ = state
+
     def process(self):
         datas = []
         for channel, trans in self.input_get().items():

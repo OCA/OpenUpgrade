@@ -100,6 +100,34 @@
 			</field>
 		</record>
 
+	<record id="etl_component_facebook_in_form1" model="ir.ui.view">
+			<field name="name">view.etl.component.input.facebook_in</field>
+			<field name="model">etl.component</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+			<form string="Facebook In">
+					<group col="4" colspan="4">
+						<field name="name" select="1" required="1"/>
+						<field name="type_id" select="1" required="0" readonly="1"/>
+						<field name="connector_id" required="1" select="1" domain="[('type','=','facebook')]"/>
+                       	<field name="transformer_id"/>
+					</group>
+					<notebook colspan="4">
+						<page string="Property">
+							<field name="method" attrs="{'required':[('type_id','=','input.facebook_in')]}"/>
+    						<field name="domain"/>
+    						<separator string="Fields Mapping" colspan="4" />
+    						<field name="field_ids" colspan="4" nolabel="1"/>
+						</page>
+						<page string="Other Information">
+							<field name="row_limit"/>
+                        	<field name ="encoding"/>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+		
 		<record id="action_etl_component_facebook_in_tree"
 			model="ir.actions.act_window">
 			<field name="name">facebook In component</field>

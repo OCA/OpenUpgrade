@@ -44,7 +44,7 @@ class join(map):
         join_keys     :
         transformer   : Transformer object to transform string data into  particular object.
         """
-        super(map, self).__init__(name=name, transformer=transformer, row_limit=0)
+        super(join, self).__init__(map_criteria, None, name, transformer, row_limit)
         self._type = 'component.transfer.join'
         self.map_criteria = map_criteria
         self.join_keys = join_keys
@@ -60,14 +60,18 @@ class join(map):
             return res
         self.preprocess = preprocess
 
+    def __getstate__(self):
+        res = super(join, self).__getstate__()
+        res.update({'map_criteria':self.map_criteria, 'join_keys':self.join_keys})
+        return res
+
+    def __setstate__(self, state):
+        super(join, self).__setstate__(state)
+        self.__dict__ = state
+
     def __copy__(self):
         res = join(self.map_criteria, self.join_keys, self.name, self.transformer, self.row_limit)
         return res
-
-    def process(self):
-        # to be chak process not defined
-        pass
-
 
 def test():
     from etl_test import etl_test

@@ -19,11 +19,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-""" 
+"""
  ETL Process.
- 
+
  The class provides transformeration process.
- 
+
  Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
  GNU General Public License.
 
@@ -33,7 +33,7 @@ import logger
 
 DATE_FORMAT = '%Y-%m-%d'
 TIME_FORMAT = '%H:%M:%S'
-DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'    
+DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 class transformer(object):
     """
@@ -72,33 +72,40 @@ class transformer(object):
         'float': float,
         'long': long,
         'complex': complex,
-        'bool': bool 
+        'bool': bool
     }
 
     def __init__(self, description):
-        self.description = description 
+        self.description = description
         self.logger = logger.logger()
+
+    def __getstate__(self):
+       pass
+
+    def __setstate__(self, state):
+        pass
+
 
     def action_error(self, e):
         print e
-        self.logger.notifyChannel("transformer", logger.LOG_ERROR, 
+        self.logger.notifyChannel("transformer", logger.LOG_ERROR,
                      str(self) + ' : ' + str(e))
         return None
 
-    def transform(self, data):               
-        # TODO : TO check : data and description should have same keys.        
-        try:                   
-            for column in data:               
+    def transform(self, data):
+        # TODO : TO check : data and description should have same keys.
+        try:
+            for column in data:
                 if column in self.description:
-                    transform_method = self.description[column] and self._transform_method[self.description[column]]                    
-                    data[column] = data[column] and transform_method(data[column]) or data[column]                   
+                    transform_method = self.description[column] and self._transform_method[self.description[column]]
+                    data[column] = data[column] and transform_method(data[column]) or data[column]
             return data
         except UnicodeEncodeError, e:
             return self.action_error(e)
         except UnicodeDecodeError, e:
-            return self.action_error(e)            
+            return self.action_error(e)
         except TypeError, e:
             return self.action_error(e)
         except ValueError, e:
-            return self.action_error(e)        
+            return self.action_error(e)
 

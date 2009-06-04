@@ -24,14 +24,23 @@
     "version" : "1.0",
     "author" : "Tiny",
     "category" : "Generic Modules/CRM",
-    "description": """ Synchronize between :
-                  - Project
-                  - Analytic Account
-                  - CRM Section Project task and CRM Case.""",
-    "depends" : ["base", "project", "crm_configuration"],
+    "description": """This module allow customers to connect on Project Portal and
+manage their projects very easily. Customers can be able to manage everything
+related to a project:
+  - Tasks 
+  - Timesheets
+  - Bugs (bugtracker) 
+  - Feature Requests 
+  - Wiki Page 
+  - Financial Data
+  - Invoices 
+  - Documents 
+  - Dashboard
+""",
+    "depends" : ["base", "crm_configuration", "portal", "project", "project_event", "hr_timesheet_sheet", "wiki", "report_analytic_planning"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["portal_project_view.xml"],
+    "update_xml" : ["portal_project_wizard.xml", "portal_project_view.xml", "portal_project_data.xml"],
     "active": False,
     "installable": True,
 }
