@@ -38,9 +38,7 @@ from lxml import etree
 _regex = re.compile('\[\[setHtmlImage\((.+?)\)\]\]')
 
 #class my_report_sxw(report_sxw):
-#    print "Tessssssssssssssssssssssss"
 #    def create_single(self, cr, uid, ids, data, report_xml, context={}):
-#        print "----------------------------my method"
 #        report_sxw.create_single(self, cr, uid, ids, data, report_xml, context)
 
 def my_register_all(db,report=False):
@@ -90,7 +88,6 @@ class report_xml(osv.osv):
             fp = tools.file_open('normalized_odt2rml.xsl',
                     subdir='addons/base_report_designer/wizard/tiny_sxw2rml')
             rml_content = str(sxw2rml(sxwval, xsl=fp.read()))
-        print file_type
         if file_type=='html':
             rml_content = base64.decodestring(file_sxw)
         report = pool.get('ir.actions.report.xml').write(cr, uid, [report_id], {
