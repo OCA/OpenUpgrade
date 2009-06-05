@@ -46,4 +46,7 @@ def posprint_report(report, pdict,context={}):
 		sections[d]= re
 		
 	dict2.update(sections)
+	for (k,v) in dict2.items():
+		if isinstance(v,bool) and v == False:
+			dict2[k] = ''
 	return Template(main_section).substitute(dict2)
