@@ -34,6 +34,11 @@ class report_postxt(osv.osv):
 	'code': fields.char('Code', size=32, help="This code is used so that modules can lookup some specific report"),
         'multi': fields.boolean('On multiple doc.', help="If set to true, the action will not be displayed on the right toolbar of a form view."),
         'groups_id': fields.many2many('res.groups', 'res_groups_report_rel', 'uid', 'gid', 'Groups'),
+	'encoding': fields.selection([
+            ('utf8', 'UTF-8'),
+            ('latin_1', 'ISO-8859-1'),
+            ('iso8859_7', 'ISO-8859-7'),
+            ('cp1253','Win-1253')],'Encoding'),
 	'printer': fields.char('Printer', size=50, help="Preferred printer for this report. Useful for server-side printing."),
 	'copies': fields.integer('Copies', help="Default number of copies."),
 	'soft_copies': fields.boolean('Soft copies', help="If set to true, copies will be done through the\"num_copies\" variable of the content. Else, by the printing system."),
@@ -44,7 +49,8 @@ class report_postxt(osv.osv):
         'multi': lambda *a: False,
         'type': lambda *a: 'ir.actions.report.postxt',
 	'copies': lambda  *a: 1,
-	'soft_copies': lambda *a: False
+	'soft_copies': lambda *a: False,
+	'encoding': lambda *a: None
     }
     
     def pprint(self, cr,uid, report , data, context):
@@ -71,7 +77,10 @@ class report_postxt(osv.osv):
 		(fileno, fp_name) = tempfile.mkstemp('.raw', 'openerp_')
 		fp = file(fp_name, 'wb+')
 		#fp.write(content.encode('iso8859-7'))
-		fp.write(str_report)
+		if (report['encoding']):
+			fp.write(str_report.encode(report['encoding']))
+		else:
+			fp.write(str_report.encode())
 		fp.close()
 		os.close(fileno)
 		if report['soft_copies']:
