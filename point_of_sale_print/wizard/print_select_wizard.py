@@ -68,6 +68,7 @@ def _pos_print(self, cr, uid, data, context):
     mobjs= mod_obj.read(cr,uid,data['ids'])
     
     for obj in mobjs:
+	obj['this'] = mod_obj.browse(cr,uid,obj['id'])
 	for pobj in pos_prints:
 		if pobj['model'] != data['model']:
 			raise wizard.except_wizard(_('UserError'), _('Incorrect report for this model !'))
