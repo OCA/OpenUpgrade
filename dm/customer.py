@@ -115,7 +115,7 @@ class dm_workitem(osv.osv):
         if self.search(cr,uid,[('sale_order_id','=',sale_order_id)]):
             raise osv.except_osv("Error!","You cannot create more than 1 workitem for the same sale order !")
         else :
-            return sale_order_id
+            return {'value':{'sale_order_id':sale_order_id}}
 
     def run(self, cr, uid, wi, context={}):
         print "Calling run"
