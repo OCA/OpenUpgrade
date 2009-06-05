@@ -138,9 +138,9 @@
 		</table>
 		
 		<div id="scr_title" style="padding-left: 25px; padding-right: 25px;" >
-			<h3 style="padding:1px;">
-				<b style="padding-left: 15px; color:#021677;"> Screen Gallery</b>
-			</h3>
+			<div style="padding:1px; border: 1px solid grey; background-color: #F6F6F6;">
+				<b style="padding-left: 15px; color:#021677;">Screen Gallery</b>
+			</div>
 		</div>
 		
 		<div id="screenshots" class="checkboxtext">
