@@ -137,9 +137,9 @@
 			</tr>
 		</table>
 		
-		<div width="800px" id="scr_title" style="padding-left: 15px; padding-right: 15px;">
-			<h3 style="padding:0px;">
-				<b style="padding-left: 15px;"> Screen Gallery</b>
+		<div id="scr_title" style="padding-left: 25px; padding-right: 25px;" >
+			<h3 style="padding:1px;">
+				<b style="padding-left: 15px; color:#021677;"> Screen Gallery</b>
 			</h3>
 		</div>
 		
