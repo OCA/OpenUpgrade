@@ -281,33 +281,48 @@ class profile_game_phase_one(osv.osv):
          acc_obj = self.pool.get('account.account')
          inc_acc_id = acc_obj.search(cr, uid, [('code','ilike','701000')])[0]
          exp_acc_id = acc_obj.search(cr, uid, [('code','ilike','601000')])[0]
-         close_acc = acc_obj.search(cr, uid, [('code','ilike','891000')])[0]
-         acc_obj.write(cr ,uid, close_acc, {'type':'other'})
+         opening_acc = acc_obj.search(cr, uid, [('code','ilike','890000')])[0]
+      #   acc_obj.write(cr ,uid, close_acc, {'type':'other'})
 
          acc_journal = self.pool.get('account.journal')
          journal_ids = acc_journal.search(cr, uid, [])
          for journal in acc_journal.browse(cr, uid, journal_ids):
-            if journal.code in ('JB','SAJ','EXJ','JC'):
+            if journal.code in ('JB','SAJ','EXJ','JO'):
                  if journal.code == 'JB':
                      code = '512100'
                  if journal.code == 'SAJ':
                      code = '411100'
                  if journal.code == 'EXJ':
                     code = '401100'
-                 if journal.code == 'JC':
-                     code = '891000'
+                 if journal.code == 'JO':
+                     code = '890000'
+                     op_journal = journal
                  account = acc_obj.search(cr, uid, [('code','ilike',code)])[0]
                  acc_journal.write(cr, uid, journal.id, {'default_debit_account_id':account,
                                                                  'default_credit_account_id':account})
+#create Opening Balance for the First Fiscal Year.
+         period = self.pool.get('account.period').search(cr, uid, [])[0]
+         period_obj = self.pool.get('account.period').browse(cr,uid,period)
+
+         for bal in [{'debit':50000,'credit':0.0},{'debit':0.0,'credit':50000.0}]:
+             self.pool.get('account.move.line').create(cr, uid, {
+                        'debit': bal['debit'],
+                        'credit':bal['credit'],
+                        'name': 'Opening Balance Entries',
+                        'date': period_obj.date_start,
+                        'journal_id': op_journal.id,
+                        'period_id': period,
+                        'account_id': opening_acc,
+                    }, {'journal_id': op_journal.id, 'period_id':period})
          for product in self.pool.get('product.product').search(cr, uid, []):
              self.pool.get('product.product').write(cr, uid, product,
                           {'property_account_income':inc_acc_id,'property_account_expense':exp_acc_id})
          return True
 
     def confirm(self, cr, uid, ids, context={}):
-        self.generate_account_chart(cr, uid, ids, context)
         phase2_obj = self.pool.get('profile.game.phase2')
         phase2_obj.create_fiscalyear_and_period(cr, uid, ids, context)
+        self.generate_account_chart(cr, uid, ids, context)
         self.write(cr, uid, ids, {'state':'quotation'})
         sid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_business_game', 'retail_phase1')
         sid = self.pool.get('ir.model.data').browse(cr, uid, sid, context=context).res_id

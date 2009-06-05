@@ -522,12 +522,12 @@ class profile_game_phase_two(osv.osv):
         data = data1 = {}
         data['form'] = {}
         data1['form'] = {}
-        closing_journal = self.pool.get('account.journal').search(cr, uid, [('code','ilike','JC')])[0]
+        opening_journal = self.pool.get('account.journal').search(cr, uid, [('code','ilike','JO')])[0]
         period_id = self.pool.get('account.period').search(cr, uid, [('fiscalyear_id', '=', new_fy)])[0]
         from account.wizard import wizard_fiscalyear_close,wizard_fiscalyear_close_state
         data['form']['period_id'] = period_id
         data['form']['report_name'] = 'End of Fiscal Year Entry'
-        data['form']['journal_id'] = closing_journal
+        data['form']['journal_id'] = opening_journal
         data['form']['fy_id'] = close_fy
         data['form']['fy2_id'] = new_fy
         data['form']['sure'] = True
