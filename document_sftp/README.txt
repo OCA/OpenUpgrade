@@ -14,6 +14,6 @@ if you want to change allowed authetication type like 'password' or 'none', you 
 if you want to change host/ port for SFTP server, you have to change it from 'document_sftp / sftp_server / __init__.py'.
 
 
-we have to install paramiko-1.7.4 python module before install this module. you can download paramiko lib from (http://www.lag.net/paramiko/?ref=darwinports.com) 
+you have to install paramiko-1.7.4 python module before install this module. you can download paramiko lib from (http://www.lag.net/paramiko/?ref=darwinports.com) 
 
 
