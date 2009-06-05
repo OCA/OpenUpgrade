@@ -46,6 +46,7 @@ class document_file(osv.osv):
     _defaults={
         'lock':lambda *a:0,}
     def write(self, cr, uid, ids, vals, context=None):
+        result=False
         for document in self.browse(cr,uid,ids,context=context):
             if document.lock:
                 raise osv.except_osv(_('Invalid action !'), _('You Cannot modify  record! Document is Locked'))
