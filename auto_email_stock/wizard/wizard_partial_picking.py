@@ -206,7 +206,7 @@ def send_mail(self, cr, uid, data, context):
             raise osv.except_osv(_('Error'), _('Verification failed. No Server has been defined!'))
         smtpserver_id = stock_smtpserver_id or default_smtpserver_id
         body= _("Your picking is validated.\nPlease, see the attachment.")
-        state = pooler.get_pool(cr.dbname).get('email.smtpclient').send_email(cr, uid, smtpserver_id, email,_("OpenERP : Picking Validated"),data['id'],body,'sale.shipping',_('Delivery_Order'))
+        state = pooler.get_pool(cr.dbname).get('email.smtpclient').send_email(cr, uid, smtpserver_id[0], email,_("OpenERP : Picking Validated"),body,[],[('report.sale.shipping',data['ids'])])
         if not state:
             raise osv.except_osv(_('Error'), _('Verification failed. Please check the Server Configuration!'))
         return {}
