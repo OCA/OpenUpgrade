@@ -3,12 +3,10 @@
 #
 #    OpenERP, Open Source Management Solution	
 #    Copyright (C) 2009 P. Christeas. All Rights Reserved
-#    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    the Free Software Foundation, version 2 of the License.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -24,47 +22,67 @@ import wizard
 # import datetime
 import pooler
 from tools.translate import _
+from tools.misc import UpdateableStr, UpdateableDict
 
 # This code is a dirty hack around the openerp base modules, so that 
 # a pos print can be carried without interfering with the core ir_actions
 # classes. Ideally, the ir.actions.report.postxt should behave like all
 # other actions.
 
-select_form = """<?xml version="1.0"?>
-<form string="Select print">
-    <field name="pos_action_id"/>
+_select_form = UpdateableStr("""<?xml version="1.0"?>
+<form string="%s">
+    <label string="%s" colspan="4" />
+    <field name="pos_action_ids" colspan="4"/>
+    <field name="copies"/>
 </form>
-"""
+""" %( _("Select print"), _("Select labels to print")))
 
-select_fields = {
-	'pos_action_id': {'relation':'ir.actions.report.postxt', 'type': 'many2one',
-		'string':'Report', 'required':True },
-	}
+_select_fields = UpdateableDict({
+	'pos_action_ids': {'type': 'many2many',
+		'string':_('Labels'), 'required':True, 'relation': 'ir.actions.report.postxt', 
+		'domain': []},
+	'copies': {'type': 'integer',
+		'string':_('Number of copies'), 'required':False, 'help': _('Number of copies for each kind of labels. If left blank, default number will be used') },
+	})
+
+def _update_wizard(self, cr, uid, data, context):
+	_select_fields['pos_action_ids']['domain'] = [ ('model','=',data['model'])]
+	return {}
+
 
 def _pos_print(self, cr, uid, data, context):
     #wf_service = netsvc.LocalService('workflow')
     pool = pooler.get_pool(cr.dbname)
-    # print "Data:",  data['form']['pos_action_id']
+    pos_ids=data['form']['pos_action_ids'][0][2]
     pos_pobj = pool.get('ir.actions.report.postxt')
-    pos_print = pos_pobj.read(cr,uid,data['form']['pos_action_id'], [])
+    if not len(pos_ids):
+        raise wizard.except_wizard(_('No report found'), _('Cannot locate the reports') )
+    #print "pos_id:", pos_id
+    pos_prints = pos_pobj.read(cr,uid,pos_ids, [])
     # print "print:", pos_print
-    if pos_print['model'] != data['model']:
-	raise wizard.except_wizard(_('UserError'), _('Incorrect report for this model !'))
     
+    if data['form']['copies']:
+	for pobj in pos_prints:
+		pobj['copies'] = data['form']['copies']
     mod_obj = pool.get(data['model'])
     mobjs= mod_obj.read(cr,uid,data['ids'])
     
     for obj in mobjs:
-    	pos_pobj.pprint(cr,uid,pos_print, obj, context)
+	for pobj in pos_prints:
+		if pobj['model'] != data['model']:
+			raise wizard.except_wizard(_('UserError'), _('Incorrect report for this model !'))
+    		pos_pobj.pprint(cr,uid,pobj, obj, context)
     return {}
+
 
 class wizard_report(wizard.interface):
 
     states = {
         'init': {
-            'actions': [],
-            'result': {'type':'form', 'arch':select_form, 'fields':select_fields, 
-	    	'state':[('end','Cancel'),('print','Print')]},
+            'actions': [ _update_wizard],
+            'result': {'type':'form', 'arch': _select_form, 
+		'fields': _select_fields, 
+	    'state':[('end','Cancel'),('print','Print')]},
         },
         'print': {
             'actions': [_pos_print],

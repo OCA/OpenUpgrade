@@ -52,10 +52,21 @@
 	
         <menuitem action="ir_action_report_postxt" id="menu_ir_action_report_postxt" parent="base.next_id_6"/>
 	
-	<wizard	string="POS print"
+	<wizard string="Print POS Labels"
 			name="wizard.point_of_sale_print.print"
 			id="wizard_pos_print_print"
+			model="res.partner.address"
 			keyword="client_print_multi"
 			/>
+
+	<wizard id="wizard_pos_print_labels_product" model="product.product" 
+			name="wizard.point_of_sale_print.print" string="Print POS labels" 
+			keyword="client_print_multi"/>
+
+	<!-- <wizard id="wizard_pos_print_labels_prodlot" model="product.product" 
+			name="wizard.point_of_sale_print.print" string="Print labels" 
+			keyword="client_print_multi"/>
+	-->
+
 	</data>
 </openerp>
