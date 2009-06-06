@@ -39,5 +39,5 @@ You can not uninstall or delete it.
     ],
     "demo_xml" : [],
     "installable": True,
-    "active" : True,
+    "active" : False,
 }
