@@ -6,17 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-04-09 17:23+0000\n"
-"PO-Revision-Date: 2009-05-16 08:14+0000\n"
+"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"PO-Revision-Date: 2009-05-18 02:09+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-05-28 09:21+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
-"X-Poedit-Country: GREECE\n"
 "X-Poedit-Language: Greek\n"
+"X-Poedit-Country: GREECE\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. module: hr_contract
@@ -31,10 +29,8 @@ msgstr "Μεικτό"
 
 #. module: hr_contract
 #: constraint:ir.model:0
-msgid ""
-"The Object name must start with x_ and not contain any special character !"
-msgstr ""
-"Το όνομα πρέπει να ξεκινάει με x_ και να μην περιέχει ειδικούς χαρακτήρες"
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr "Το όνομα πρέπει να ξεκινάει με x_ και να μην περιέχει ειδικούς χαρακτήρες"
 
 #. module: hr_contract
 #: view:hr.contract:0
@@ -56,6 +52,11 @@ msgstr "Παράγοντας ωριαίου κόστους"
 #: view:hr.contract.wage.type:0
 msgid "Wage Types"
 msgstr "Τύποι Αποδοχών"
+
+#. module: hr_contract
+#: field:hr.employee,soc_security:0
+msgid "Social security number"
+msgstr "Αρ. Κοινωνικής Ασφάλισης"
 
 #. module: hr_contract
 #: field:hr.contract,employee_id:0
@@ -184,6 +185,11 @@ msgid "Wage Period"
 msgstr "Περίοδος Μισθοδοσίας"
 
 #. module: hr_contract
+#: field:hr.employee,nationality:0
+msgid "Nationality"
+msgstr "Εθνικότητα"
+
+#. module: hr_contract
 #: field:hr.employee,audiens_num:0
 msgid "AUDIENS Number"
 msgstr "AUDIENS Number"
@@ -224,12 +230,8 @@ msgstr "Περίοδος Μισθοδοσίας"
 #. module: hr_contract
 #: help:hr.contract.wage.type,factor_type:0
 #: help:hr.contract.wage.type.period,factor_days:0
-msgid ""
-"This field is used by the timesheet system to compute the price of an hour "
-"of work wased on the contract of the employee"
-msgstr ""
-"Αυτό το πεδίο χρησιμοποιείται από το σύστημα Xρόνου Eργασίας για τον "
-"υπολογισμό του ωρομισθίου με βάση τη σύμβαση του εργαζομένου"
+msgid "This field is used by the timesheet system to compute the price of an hour of work wased on the contract of the employee"
+msgstr "Αυτό το πεδίο χρησιμοποιείται από το σύστημα Xρόνου Eργασίας για τον υπολογισμό του ωρομισθίου με βάση τη σύμβαση του εργαζομένου"
 
 #. module: hr_contract
 #: field:hr.contract,wage:0
@@ -242,21 +244,18 @@ msgid "Start Date"
 msgstr "Αρχή"
 
 #. module: hr_contract
-#: field:hr.employee.marital.status,description:0
-msgid "Status Description"
-msgstr "Περιγραφή Κατάστασης"
-
-#. module: hr_contract
 #: view:hr.contract:0
 #: view:hr.employee:0
 msgid "Contract Duration"
 msgstr "Διάρκεια Σύμβασης"
 
-#~ msgid "Social security number"
-#~ msgstr "Αρ. Κοινωνικής Ασφάλισης"
+#. module: hr_contract
+#: field:hr.employee.marital.status,description:0
+msgid "Status Description"
+msgstr "Περιγραφή Κατάστασης"
 
-#~ msgid "Nationality"
-#~ msgstr "Εθνικότητα"
+#. module: hr_contract
+#: field:hr.employee,birth_date:0
+msgid "Birth Date"
+msgstr "Ημερ/νία Γέννησης"
 
-#~ msgid "Birth Date"
-#~ msgstr "Ημερ/νία Γέννησης"

@@ -6,17 +6,87 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-03-23 08:50:46+0000\n"
-"PO-Revision-Date: 2009-03-23 08:50:46+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"PO-Revision-Date: 2009-06-07 20:28+0200\n"
+"Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+
+#. module: board_account
+#: view:board.board:0
+msgid "Analytic accounts to close"
+msgstr "Αναλυτικοί λογαριασμοί για κλείσιμο"
+
+#. module: board_account
+#: view:board.board:0
+msgid "Draft invoices"
+msgstr "Πρόχειρα τιμολόγια"
+
+#. module: board_account
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr "Invalid XML for View Architecture!"
+
+#. module: board_account
+#: model:ir.actions.act_window,name:board_account.open_board_account
+#: model:ir.ui.menu,name:board_account.menu_board_account
+msgid "Accounting Dashboard"
+msgstr "Πίνακας Αναφορών Λογιστικής"
+
+#. module: board_account
+#: model:ir.actions.act_window,name:board_account.action_aged_receivable
+msgid "Receivable Accounts"
+msgstr "Λογαριασμοί Εισπρακτέοι"
+
+#. module: board_account
+#: view:board.board:0
+#: model:ir.actions.act_window,name:board_account.act_my_account
+msgid "Accounts to invoice"
+msgstr "Λογαριασμοί για τιμολόγηση"
+
+#. module: board_account
+#: view:board.board:0
+#: model:ir.actions.act_window,name:board_account.action_account_analytic_line_to_invoice
+msgid "Costs to invoice"
+msgstr "Κόστη για τιμολόγηση"
+
+#. module: board_account
+#: view:board.board:0
+#, fuzzy
+msgid "Aged receivables"
+msgstr "Εισπρακτέα μεγάλης ηλικίας"
 
 #. module: board_account
 #: model:ir.module.module,shortdesc:board_account.module_meta_information
 msgid "Board for accountant"
-msgstr ""
+msgstr "Πίνακας Λογιστηρίου"
+
+#. module: board_account
+#: model:ir.actions.act_window,name:board_account.action_aged_income
+msgid "Income Accounts"
+msgstr "Λογαριασμοί Εσόδων"
+
+#. module: board_account
+#: view:board.board:0
+msgid "My indicators"
+msgstr "Οι δείκτες μου"
+
+#. module: board_account
+#: model:ir.ui.menu,name:board_account.next_id_68
+msgid "Accounting"
+msgstr "Λογιστική"
+
+#. module: board_account
+#: view:board.board:0
+msgid "Account Board"
+msgstr "Πίνακας Λογαριασμού"
+
+#. module: board_account
+#: view:board.board:0
+#, fuzzy
+msgid "Aged income"
+msgstr "'Εσοδα μεγάλης ηλικίας"
 

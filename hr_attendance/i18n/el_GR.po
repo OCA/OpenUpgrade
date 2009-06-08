@@ -6,18 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-04-09 17:23+0000\n"
-"PO-Revision-Date: 2009-05-16 08:06+0000\n"
+"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"PO-Revision-Date: 2009-05-16 01:44+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
-"Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-05-28 09:26+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
-"X-Poedit-Country: GREECE\n"
-"X-Poedit-Language: Greek\n"
-"X-Poedit-SourceCharset: utf-8\n"
+"Plural-Forms: \n"
 
 #. module: hr_attendance
 #: field:hr.employee,state:0
@@ -27,10 +23,8 @@ msgstr "Παρουσίες"
 
 #. module: hr_attendance
 #: constraint:ir.model:0
-msgid ""
-"The Object name must start with x_ and not contain any special character !"
-msgstr ""
-"Το όνομα πρέπει να ξεκινάει με x_ και να μην περιέχει ειδικούς χαρακτήρες!"
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr "Το όνομα πρέπει να ξεκινάει με x_ και να μην περιέχει ειδικούς χαρακτήρες!"
 
 #. module: hr_attendance
 #: wizard_view:hr.si_so,init:0
@@ -53,11 +47,8 @@ msgstr ""
 
 #. module: hr_attendance
 #: rml:report.hr.timesheet.attendance.error:0
-msgid ""
-"(*) A positive delay means that the employee worked less than recorded."
-msgstr ""
-"(*) Θετική καθυστέρηση σημάινει ότι ο υπάλληλος εργάστηκε λιγότερο από ό,τι "
-"καταγράφηκε."
+msgid "(*) A positive delay means that the employee worked less than recorded."
+msgstr "(*) Θετική καθυστέρηση σημάινει ότι ο υπάλληλος εργάστηκε λιγότερο από ό,τι καταγράφηκε."
 
 #. module: hr_attendance
 #: view:hr.attendance:0
@@ -72,15 +63,14 @@ msgstr "Invalid XML for View Architecture!"
 #. module: hr_attendance
 #: wizard_view:hr.si_so,init:0
 msgid "You are now ready to sign in or out of the attendance follow up"
-msgstr ""
-"Είστε έτοιμοι να εισαχθείτε ή να εξέλθετε από την Επαλήθευση Παρουσιών"
+msgstr "Είστε έτοιμοι να εισαχθείτε ή να εξέλθετε από την Επαλήθευση Παρουσιών"
 
 #. module: hr_attendance
 #: selection:hr.action.reason,action_type:0
 #: wizard_button:hr.si_so,init,so_test:0
 #: wizard_button:hr.si_so,so_ask_si,so:0
 msgid "Sign out"
-msgstr "Αναχώρηση"
+msgstr "Αναχώρηση "
 
 #. module: hr_attendance
 #: rml:report.hr.timesheet.attendance.error:0
@@ -95,8 +85,8 @@ msgid "Employee's name"
 msgstr "Όνομα Υπαλλήλου"
 
 #. module: hr_attendance
-#: wizard_button:hr.attendance.print_month,init,print:0
-#: wizard_button:hr.attendance.print_week,init,print:0
+#: wizard_button:hr.print_month,init,print:0
+#: wizard_button:hr.print_week,init,print:0
 msgid "Print Timesheet"
 msgstr "Εκτύπωση Φύλλου Xρόνου Eργασίας"
 
@@ -116,8 +106,8 @@ msgid "Employee"
 msgstr "Υπάλληλος"
 
 #. module: hr_attendance
-#: wizard_view:hr.attendance.print_week,init:0
-#: wizard_view:hr.attendance.report,init:0
+#: wizard_view:hr.print_week,init:0
+#: wizard_view:hr.timesheet.attendance.report,init:0
 msgid "Select a time span"
 msgstr "Επιλέξτε εύρος χρόνου"
 
@@ -154,17 +144,17 @@ msgid "Action reason"
 msgstr "Αιτιολογία ενέργειας"
 
 #. module: hr_attendance
-#: selection:hr.attendance.print_month,init,month:0
+#: selection:hr.print_month,init,month:0
 msgid "March"
 msgstr "Μάρτιος"
 
 #. module: hr_attendance
-#: selection:hr.attendance.print_month,init,month:0
+#: selection:hr.print_month,init,month:0
 msgid "August"
 msgstr "Αύγουστος"
 
 #. module: hr_attendance
-#: selection:hr.attendance.print_month,init,month:0
+#: selection:hr.print_month,init,month:0
 msgid "May"
 msgstr "Μάιος"
 
@@ -175,7 +165,7 @@ msgid "A sign-out must be right after a sign-in !"
 msgstr "Η Αναχώρηση πρέπει να είναι μετά από την Προσέλευση!"
 
 #. module: hr_attendance
-#: selection:hr.attendance.print_month,init,month:0
+#: selection:hr.print_month,init,month:0
 msgid "June"
 msgstr "Ιούνιος"
 
@@ -188,7 +178,7 @@ msgstr "Εκτύπωση Μηνιαίου Φύλλου Xρόνου Eργασία
 #: selection:hr.attendance,action:0
 #: view:hr.employee:0
 msgid "Sign Out"
-msgstr "Αναχώρηση"
+msgstr "Αναχώρηση "
 
 #. module: hr_attendance
 #: model:ir.module.module,shortdesc:hr_attendance.module_meta_information
@@ -203,9 +193,7 @@ msgstr "Αιτιολογία"
 #. module: hr_attendance
 #: constraint:hr.attendance:0
 msgid "Error: Sign in (resp. Sign out) must follow Sign out (resp. Sign in)"
-msgstr ""
-"Σφάλμα: Η Προσέλευση (ή Αναχώρηση ) ακολουθείται μόνο από Αναχώρηση "
-"(Προσέλευση)"
+msgstr "Σφάλμα: Η Προσέλευση (ή Αναχώρηση ) ακολουθείται μόνο από Αναχώρηση (Προσέλευση)"
 
 #. module: hr_attendance
 #: code:addons/hr_attendance/wizard/sign_in_out.py:0
@@ -224,18 +212,14 @@ msgid "Date"
 msgstr "Ημερομηνία"
 
 #. module: hr_attendance
-#: selection:hr.attendance.print_month,init,month:0
+#: selection:hr.print_month,init,month:0
 msgid "July"
 msgstr "Ιούλιος"
 
 #. module: hr_attendance
 #: wizard_view:hr.si_so,si_ask_so:0
-msgid ""
-"You did not signed out the last time. Please enter the date and time you "
-"signed out."
-msgstr ""
-"Δεν έχετε εξέλθει από το σύστημα. Παρακαλώ καταχωρήστε την Ημερ/νία και ώρα "
-"Αναχώρησής σας."
+msgid "You did not signed out the last time. Please enter the date and time you signed out."
+msgstr "Δεν έχετε εξέλθει από το σύστημα. Παρακαλώ καταχωρήστε την Ημερ/νία και ώρα Αναχώρησής σας."
 
 #. module: hr_attendance
 #: view:hr.action.reason:0
@@ -243,8 +227,8 @@ msgid "Attendance reasons"
 msgstr "Αιτιολογίες Παρουσιολογίου"
 
 #. module: hr_attendance
-#: wizard_field:hr.attendance.print_week,init,init_date:0
-#: wizard_field:hr.attendance.report,init,init_date:0
+#: wizard_field:hr.print_week,init,init_date:0
+#: wizard_field:hr.timesheet.attendance.report,init,init_date:0
 msgid "Starting Date"
 msgstr "Ημερομηνία Εκκίνησης"
 
@@ -259,12 +243,12 @@ msgid "Absent"
 msgstr "Απών/ούσα"
 
 #. module: hr_attendance
-#: selection:hr.attendance.print_month,init,month:0
+#: selection:hr.print_month,init,month:0
 msgid "February"
 msgstr "Φεβρουάριος"
 
 #. module: hr_attendance
-#: selection:hr.attendance.print_month,init,month:0
+#: selection:hr.print_month,init,month:0
 msgid "October"
 msgstr "Οκτώβριος"
 
@@ -280,7 +264,7 @@ msgid "The Sign-in date must be in the past"
 msgstr "Η ημερ/νία Προσέλευσης πρέπει να είναι παρελθοντική"
 
 #. module: hr_attendance
-#: wizard_field:hr.attendance.print_month,init,year:0
+#: wizard_field:hr.print_month,init,year:0
 msgid "Year"
 msgstr "Έτος"
 
@@ -307,7 +291,7 @@ msgid "Sign in"
 msgstr "Προσέλευση"
 
 #. module: hr_attendance
-#: wizard_view:hr.attendance.report,init:0
+#: wizard_view:hr.timesheet.attendance.report,init:0
 msgid "Analysis Information"
 msgstr "Πληροφορίες Ανάλυσης"
 
@@ -317,12 +301,12 @@ msgid "Current state"
 msgstr "Παρούσα κατάσταση"
 
 #. module: hr_attendance
-#: selection:hr.attendance.print_month,init,month:0
+#: selection:hr.print_month,init,month:0
 msgid "January"
 msgstr "Ιανουάριος"
 
 #. module: hr_attendance
-#: selection:hr.attendance.print_month,init,month:0
+#: selection:hr.print_month,init,month:0
 msgid "April"
 msgstr "Απρίλιος"
 
@@ -345,7 +329,7 @@ msgid "Action"
 msgstr "Κίνηση"
 
 #. module: hr_attendance
-#: wizard_button:hr.attendance.report,init,print:0
+#: wizard_button:hr.timesheet.attendance.report,init,print:0
 msgid "Print Attendance Report"
 msgstr "Εκτύπωση Παρουσιολογίου"
 
@@ -356,12 +340,12 @@ msgid "Attendance Reasons"
 msgstr "Αιτιολογίες Παρουσιολογίου"
 
 #. module: hr_attendance
-#: selection:hr.attendance.print_month,init,month:0
+#: selection:hr.print_month,init,month:0
 msgid "November"
 msgstr "Νοέμβριος"
 
 #. module: hr_attendance
-#: wizard_view:hr.attendance.report,init:0
+#: wizard_view:hr.timesheet.attendance.report,init:0
 msgid "Bellow this delay, the error is considered to be voluntary"
 msgstr "Πέραν αυτής της καθυστέρησης, το σφάλμα θεωρείται εκούσιο"
 
@@ -372,32 +356,28 @@ msgid "UserError"
 msgstr "UserError"
 
 #. module: hr_attendance
-#: wizard_field:hr.attendance.report,init,max_delay:0
+#: wizard_field:hr.timesheet.attendance.report,init,max_delay:0
 msgid "Max. Delay (Min)"
 msgstr "Μέγιστη Καθυστέρηση"
 
 #. module: hr_attendance
-#: wizard_view:hr.attendance.print_week,init:0
+#: wizard_view:hr.print_week,init:0
 msgid "Select a starting and a end date"
 msgstr "Επιλέξτε Ημερ/νία έναρξης και λήξης"
 
 #. module: hr_attendance
-#: wizard_field:hr.attendance.print_week,init,end_date:0
-#: wizard_field:hr.attendance.report,init,end_date:0
+#: wizard_field:hr.print_week,init,end_date:0
+#: wizard_field:hr.timesheet.attendance.report,init,end_date:0
 msgid "Ending Date"
 msgstr "Λήξη"
 
 #. module: hr_attendance
 #: wizard_view:hr.si_so,so_ask_si:0
-msgid ""
-"You did not signed in the last time. Please enter the date and time you "
-"signed in."
-msgstr ""
-"Δεν έχετε εισαχθεί στο σύστημα. Παρακαλώ καταχωρήστε την Ημερ/νία και ώρα "
-"Προσέλευσής σας."
+msgid "You did not signed in the last time. Please enter the date and time you signed in."
+msgstr "Δεν έχετε εισαχθεί στο σύστημα. Παρακαλώ καταχωρήστε την Ημερ/νία και ώρα Προσέλευσής σας."
 
 #. module: hr_attendance
-#: selection:hr.attendance.print_month,init,month:0
+#: selection:hr.print_month,init,month:0
 msgid "September"
 msgstr "Σεπτέμβριος"
 
@@ -412,12 +392,12 @@ msgid "Employee attendance"
 msgstr "Παρουσίες Υπαλλήλων"
 
 #. module: hr_attendance
-#: wizard_view:hr.attendance.print_month,init:0
+#: wizard_view:hr.print_month,init:0
 msgid "Select a month"
 msgstr "Επιλέξτε μήνα"
 
 #. module: hr_attendance
-#: wizard_field:hr.attendance.print_month,init,month:0
+#: wizard_field:hr.print_month,init,month:0
 msgid "Month"
 msgstr "Μήνας"
 
@@ -433,17 +413,17 @@ msgid "Warning"
 msgstr "Warning"
 
 #. module: hr_attendance
-#: selection:hr.attendance.print_month,init,month:0
+#: selection:hr.print_month,init,month:0
 msgid "December"
 msgstr "Δεκέμβριος"
 
 #. module: hr_attendance
-#: wizard_button:hr.attendance.print_month,init,end:0
-#: wizard_button:hr.attendance.print_week,init,end:0
-#: wizard_button:hr.attendance.report,init,end:0
+#: wizard_button:hr.print_month,init,end:0
+#: wizard_button:hr.print_week,init,end:0
 #: wizard_button:hr.si_so,init,end:0
 #: wizard_button:hr.si_so,si_ask_so,end:0
 #: wizard_button:hr.si_so,so_ask_si,end:0
+#: wizard_button:hr.timesheet.attendance.report,init,end:0
 msgid "Cancel"
 msgstr "Ακύρωση"
 
@@ -472,3 +452,4 @@ msgstr "Τελευταία Προσέλευση:"
 #, python-format
 msgid "A sign-in must be right after a sign-out !"
 msgstr "Προσέλευση αμέσως μετά την Αναχώρηση !"
+
