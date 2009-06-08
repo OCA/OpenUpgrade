@@ -6,18 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-04-09 17:23+0000\n"
-"PO-Revision-Date: 2009-05-16 08:50+0000\n"
+"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"PO-Revision-Date: 2009-05-16 01:37+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
-"Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-05-28 09:18+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
-"X-Poedit-Country: GREECE\n"
-"X-Poedit-Language: Greek\n"
-"X-Poedit-SourceCharset: utf-8\n"
+"Plural-Forms: \n"
 
 #. module: hr_timesheet_invoice
 #: view:hr_timesheet_invoice.factor:0
@@ -31,14 +27,16 @@ msgstr "Κέρδος"
 
 #. module: hr_timesheet_invoice
 #: code:addons/hr_timesheet_invoice/wizard/hr_timesheet_final_invoice_create.py:0
+#: code:addons/hr_timesheet_invoice/wizard/hr_timesheet_invoice_create.py:0
 #, python-format
 msgid "Analytic account incomplete"
 msgstr "Ο Αναλυτικός Λογαριασμός είναι ημιτελής"
 
 #. module: hr_timesheet_invoice
-#: wizard_view:hr.timesheet.invoice.create,init:0
-msgid "Force to use a specific product"
-msgstr "Χρήση συγκεκριμένου προϊόντος"
+#: model:ir.actions.wizard,name:hr_timesheet_invoice.account_analytic_profit
+#: model:ir.ui.menu,name:hr_timesheet_invoice.print_account_analytic_profit
+msgid "Timesheet profit"
+msgstr "Κέρδος Xρόνου Eργασίας"
 
 #. module: hr_timesheet_invoice
 #: rml:account.analytic.profit:0
@@ -57,12 +55,8 @@ msgstr "Έναρξη Περιόδου"
 
 #. module: hr_timesheet_invoice
 #: help:hr.timesheet.invoice.create,init,price:0
-msgid ""
-"The cost of each work done will be displayed on the invoice. You probably "
-"don't want to check this."
-msgstr ""
-"Το κόστος κάθε δεδουλευμένης εργασίας θα αναγράφεται στο τιμολόγιο. Μάλλον "
-"δεν θέλετε να το τσεκάρετε αυτό..."
+msgid "The cost of each work done will be displayed on the invoice. You probably don't want to check this."
+msgstr "Το κόστος κάθε δεδουλευμένης εργασίας θα αναγράφεται στο τιμολόγιο. Μάλλον δεν θέλετε να το τσεκάρετε αυτό..."
 
 #. module: hr_timesheet_invoice
 #: model:ir.actions.wizard,name:hr_timesheet_invoice.hr_timesheet_invoice_create
@@ -93,15 +87,8 @@ msgstr "Αξία Τιμολογίου"
 
 #. module: hr_timesheet_invoice
 #: help:account.analytic.account,to_invoice:0
-msgid ""
-"Check this field if you plan to automatically generate invoices based on the "
-"costs in this analytic account: timesheets, expenses, ...You can configure "
-"an automatic invoice rate on analytic accounts."
-msgstr ""
-"Επιλέξτε το πεδίο αυτό αν σχεδιάζετε να δημιουργείτε τιμολόγια αυτόματα, "
-"βασισμένα στο κόστος αυτού του Αναλυτικού Λοαγριασμού: Φύλλα Xρόνου "
-"Eργασίας, έξοδα, κλπ. Μπορείτε να θέσετε ένα αυτόματο ποσό τιμολόγησης στους "
-"Αναλυτικούς Λογαριασμούς."
+msgid "Check this field if you plan to automatically generate invoices based on the costs in this analytic account: timesheets, expenses, ...You can configure an automatic invoice rate on analytic accounts."
+msgstr "Επιλέξτε το πεδίο αυτό αν σχεδιάζετε να δημιουργείτε τιμολόγια αυτόματα, βασισμένα στο κόστος αυτού του Αναλυτικού Λοαγριασμού: Φύλλα Xρόνου Eργασίας, έξοδα, κλπ. Μπορείτε να θέσετε ένα αυτόματο ποσό τιμολόγησης στους Αναλυτικούς Λογαριασμούς."
 
 #. module: hr_timesheet_invoice
 #: code:addons/hr_timesheet_invoice/wizard/hr_timesheet_invoice_create.py:0
@@ -112,8 +99,7 @@ msgstr "Συνεργάτης ημιτελής"
 #. module: hr_timesheet_invoice
 #: help:hr.timesheet.invoice.create,init,name:0
 msgid "The detail of each work done will be displayed on the invoice"
-msgstr ""
-"Οι λεπτομέρειες κάθε ολοκληρωμένης εργασίας θα αναγράφονται στο τιμολόγιο"
+msgstr "Οι λεπτομέρειες κάθε ολοκληρωμένης εργασίας θα αναγράφονται στο τιμολόγιο"
 
 #. module: hr_timesheet_invoice
 #: wizard_view:hr.timesheet.invoice.account.analytic.account.cost_ledger.report,init:0
@@ -123,18 +109,12 @@ msgstr "Επιλογή περιόδου"
 #. module: hr_timesheet_invoice
 #: rml:account.analytic.profit:0
 msgid "Period to enddate"
-msgstr "Ως τη λήξη περιόδου"
+msgstr "Ως τη λήξη περιόδου "
 
 #. module: hr_timesheet_invoice
-#: wizard_button:hr.timesheet.invoice.create,init,create:0
-msgid "Create Invoices"
-msgstr ""
-
-#. module: hr_timesheet_invoice
-#: code:addons/hr_timesheet_invoice/wizard/hr_timesheet_invoice_create.py:0
-#, python-format
-msgid "Analytic Account incomplete"
-msgstr ""
+#: wizard_view:hr.timesheet.invoice.create,init:0
+msgid "Force to use a specific product"
+msgstr "Χρήση συγκεκριμένου προϊόντος"
 
 #. module: hr_timesheet_invoice
 #: rml:account.analytic.profit:0
@@ -167,10 +147,10 @@ msgid "Date or Code"
 msgstr "Ημερ/νία ή Κωδικός"
 
 #. module: hr_timesheet_invoice
-#: code:addons/hr_timesheet_invoice/wizard/account_analytic_profit.py:0
-#, python-format
-msgid "Data Insufficient!"
-msgstr ""
+#: model:ir.actions.act_window,name:hr_timesheet_invoice.action_hr_analytic_timesheet_open_tree
+#: model:ir.ui.menu,name:hr_timesheet_invoice.menu_hr_analytic_timesheet_tree
+msgid "Entries to invoice"
+msgstr "Εγγραφές σε τιμολόγιο"
 
 #. module: hr_timesheet_invoice
 #: wizard_view:account.analytic.profit,init:0
@@ -207,8 +187,6 @@ msgstr "Φίλτρο Λογαριασμών"
 
 #. module: hr_timesheet_invoice
 #: model:ir.actions.report.xml,name:hr_timesheet_invoice.report_analytical_profit
-#: model:ir.actions.wizard,name:hr_timesheet_invoice.account_analytic_profit
-#: model:ir.ui.menu,name:hr_timesheet_invoice.print_account_analytic_profit
 msgid "Timesheet Profit"
 msgstr "Κέρδος Xρόνου Eργασίας"
 
@@ -284,13 +262,8 @@ msgstr "Νόμισμα"
 
 #. module: hr_timesheet_invoice
 #: help:hr.timesheet.invoice.create,init,product:0
-msgid ""
-"Complete this field only if you want to force to use a specific product. "
-"Keep empty to use the real product that comes from the cost."
-msgstr ""
-"Συμπληρώστε αυτό το πεδίο μόνο αν επιθυμείτε να χρησιμοποιείται ένα "
-"συγκεκριμένο προϊόν. Αν επιθυμείτε να χρησιμοποιέιτε το πραγματικό προϊόν "
-"που εξάγεται από το κόστος, αφήστε το κενό."
+msgid "Complete this field only if you want to force to use a specific product. Keep empty to use the real product that comes from the cost."
+msgstr "Συμπληρώστε αυτό το πεδίο μόνο αν επιθυμείτε να χρησιμοποιείται ένα συγκεκριμένο προϊόν. Αν επιθυμείτε να χρησιμοποιέιτε το πραγματικό προϊόν που εξάγεται από το κόστος, αφήστε το κενό."
 
 #. module: hr_timesheet_invoice
 #: model:ir.actions.act_window,name:hr_timesheet_invoice.action_hr_analytic_timesheet_tree_invoiced
@@ -299,7 +272,14 @@ msgid "Uninvoiced Entries"
 msgstr "Μη Τιμολογημένες Εγγραφές"
 
 #. module: hr_timesheet_invoice
+#: code:addons/hr_timesheet_invoice/wizard/hr_timesheet_invoice_create.py:0
+#, python-format
+msgid "At least on line have no product !"
+msgstr "Τουλάχιστον μία γραμμή δεν έχει προίόν!"
+
+#. module: hr_timesheet_invoice
 #: wizard_button:hr.timesheet.final.invoice.create,init,create:0
+#: wizard_button:hr.timesheet.invoice.create,init,create:0
 msgid "Create invoices"
 msgstr "Δημιουργία Τιμολογίων"
 
@@ -357,12 +337,6 @@ msgid "Date"
 msgstr "Ημερ/νία"
 
 #. module: hr_timesheet_invoice
-#: code:addons/hr_timesheet_invoice/wizard/hr_timesheet_invoice_create.py:0
-#, python-format
-msgid "Please fill in the Address field in the Partner: %s."
-msgstr ""
-
-#. module: hr_timesheet_invoice
 #: field:hr_timesheet_invoice.factor,factor:0
 msgid "Discount (%)"
 msgstr "Έκπτωση (%)"
@@ -383,9 +357,9 @@ msgid "Total:"
 msgstr "Σύνολο:"
 
 #. module: hr_timesheet_invoice
-#: field:account.analytic.account,amount_max:0
-msgid "Max. Invoice Price"
-msgstr "Μέγιστη Τιμή Τιμολογίου"
+#: rml:hr.timesheet.invoice.account.analytic.account.cost_ledger:0
+msgid "Credit"
+msgstr "Πίστωση"
 
 #. module: hr_timesheet_invoice
 #: code:addons/hr_timesheet_invoice/wizard/hr_timesheet_invoice_create.py:0
@@ -424,9 +398,24 @@ msgid "Do you want to show details of work in invoice ?"
 msgstr "Επιθυμείτε την εμφάνιση λεπτομερειών εργασίας στο τιμολόγιο;"
 
 #. module: hr_timesheet_invoice
+#: code:addons/hr_timesheet_invoice/wizard/hr_timesheet_invoice_create.py:0
+#, python-format
+msgid ""
+"Please fill in the partner and pricelist field in the analytic account:\n"
+"%s"
+msgstr ""
+"Παρακαλώ συμπληρώστε τα πεδία συνεργάτη και τιμοκαταλόγου στον Αναλυτικό Λογαριασμό:\n"
+"%s"
+
+#. module: hr_timesheet_invoice
 #: rml:hr.timesheet.invoice.account.analytic.account.cost_ledger:0
 msgid "Period from"
 msgstr "Από"
+
+#. module: hr_timesheet_invoice
+#: field:account.analytic.account,amount_max:0
+msgid "Max. Invoice Price"
+msgstr "Μέγιστη Τιμή Τιμολογίου"
 
 #. module: hr_timesheet_invoice
 #: field:account.analytic.line,invoice_id:0
@@ -442,23 +431,15 @@ msgid "Cancel"
 msgstr "Ακύρωση"
 
 #. module: hr_timesheet_invoice
-#: model:ir.actions.act_window,name:hr_timesheet_invoice.action_hr_analytic_timesheet_open_tree
-#: model:ir.ui.menu,name:hr_timesheet_invoice.menu_hr_analytic_timesheet_tree
-msgid "Entries to invoice"
-msgstr "Εγγραφές σε τιμολόγιο"
-
-#. module: hr_timesheet_invoice
 #: code:addons/hr_timesheet_invoice/wizard/hr_timesheet_final_invoice_create.py:0
 #, python-format
 msgid "Balance product needed"
-msgstr "Χρειάζεται προϊόν υπολοίπου"
+msgstr "Χρειάζεται προϊόν υπολοίπου "
 
 #. module: hr_timesheet_invoice
 #: constraint:ir.model:0
-msgid ""
-"The Object name must start with x_ and not contain any special character !"
-msgstr ""
-"Το όνομα πρέπει να ξεκινάει με x_ και να μην περιέχει ειδικούς χαρακτήρες!"
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr "Το όνομα πρέπει να ξεκινάει με x_ και να μην περιέχει ειδικούς χαρακτήρες!"
 
 #. module: hr_timesheet_invoice
 #: wizard_field:account.analytic.profit,init,employee_ids:0
@@ -466,20 +447,14 @@ msgid "Employee"
 msgstr "Υπάλληλος"
 
 #. module: hr_timesheet_invoice
-#: help:hr.timesheet.final.invoice.create,init,price:0
-msgid "Display cost of the item you reinvoice"
-msgstr "Εμφάνιση κόστους ειδών προς ανατιμολόγηση"
-
-#. module: hr_timesheet_invoice
 #: help:hr.timesheet.invoice.create,init,date:0
 msgid "The real date of each work will be displayed on the invoice"
 msgstr "Η πραγματική ημερ/νία κάθε εργασίας θα αναγράφεται στο τιμολόγιο"
 
 #. module: hr_timesheet_invoice
-#: code:addons/hr_timesheet_invoice/wizard/hr_timesheet_invoice_create.py:0
-#, python-format
-msgid "At least one line has no product !"
-msgstr ""
+#: help:hr.timesheet.final.invoice.create,init,price:0
+msgid "Display cost of the item you reinvoice"
+msgstr "Εμφάνιση κόστους ειδών προς ανατιμολόγηση"
 
 #. module: hr_timesheet_invoice
 #: wizard_view:hr.timesheet.invoice.create,init:0
@@ -505,21 +480,6 @@ msgstr "Εσωτερικό όνομα"
 #: wizard_field:account.analytic.profit,init,journal_ids:0
 msgid "Journal"
 msgstr "Ημερολόγιο"
-
-#. module: hr_timesheet_invoice
-#: code:addons/hr_timesheet_invoice/wizard/account_analytic_profit.py:0
-#, python-format
-msgid "No Records Found for Report!"
-msgstr ""
-
-#. module: hr_timesheet_invoice
-#: code:addons/hr_timesheet_invoice/wizard/hr_timesheet_invoice_create.py:0
-#, python-format
-msgid ""
-"Please fill in the Associate Partner and Sale Pricelist fields in the "
-"Analytic Account:\n"
-"%s"
-msgstr ""
 
 #. module: hr_timesheet_invoice
 #: rml:account.analytic.profit:0
@@ -559,11 +519,6 @@ msgid "Invoicing"
 msgstr "Τιμολόγηση"
 
 #. module: hr_timesheet_invoice
-#: rml:hr.timesheet.invoice.account.analytic.account.cost_ledger:0
-msgid "Credit"
-msgstr "Πίστωση"
-
-#. module: hr_timesheet_invoice
 #: model:ir.actions.act_window,name:hr_timesheet_invoice.action_open_invoice_analytic_accounts
 #: model:ir.ui.menu,name:hr_timesheet_invoice.menu_action_open_invoice_analytic_accounts
 msgid "Unclosed Invoiceable Accounts"
@@ -582,5 +537,9 @@ msgstr "Παρακαλώ συμπληρώστε ένα Εξισορροποιη�
 msgid "Cost"
 msgstr "Κόστος"
 
-#~ msgid "Timesheet profit"
-#~ msgstr "Κέρδος Xρόνου Eργασίας"
+#. module: hr_timesheet_invoice
+#: code:addons/hr_timesheet_invoice/wizard/hr_timesheet_invoice_create.py:0
+#, python-format
+msgid "Please fill in the address field in the partner: %s."
+msgstr "Παρακλώ συμπληρώστε τη διεύθυνση του συνεργάτη: %s."
+
