@@ -64,10 +64,10 @@
 			name="wizard.point_of_sale_print.print" string="Print POS labels" 
 			keyword="client_print_multi"/>
 
-	<!-- <wizard id="wizard_pos_print_labels_prodlot" model="product.product" 
-			name="wizard.point_of_sale_print.print" string="Print labels" 
+	<wizard id="wizard_pos_print_labels_prodlot" model="stock.production.lot" 
+			name="wizard.point_of_sale_print.print" string="Product Lot labels" 
 			keyword="client_print_multi"/>
-	-->
+
 
 	</data>
 </openerp>

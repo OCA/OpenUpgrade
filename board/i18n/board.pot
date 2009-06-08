@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-# 	* board
+#	* board
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Project-Id-Version: OpenERP Server 5.0.1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
-"PO-Revision-Date: 2009-05-30 15:14:08+0000\n"
+"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
+"PO-Revision-Date: 2009-06-08 21:23:39+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,8 +17,7 @@ msgstr ""
 
 #. module: board
 #: constraint:ir.model:0
-msgid ""
-"The Object name must start with x_ and not contain any special character !"
+msgid "The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: board
@@ -37,7 +36,8 @@ msgid "Dashboard main module"
 msgstr ""
 
 #. module: board
-#: view:board.note:0 field:board.note,note:0
+#: view:board.note:0
+#: field:board.note,note:0
 msgid "Note"
 msgstr ""
 
@@ -124,7 +124,8 @@ msgid "board.note.type"
 msgstr ""
 
 #. module: board
-#: view:board.board:0 field:board.board,name:0
+#: view:board.board:0
+#: field:board.board,name:0
 #: field:board.board.line,board_id:0
 msgid "Dashboard"
 msgstr ""
@@ -175,7 +176,8 @@ msgid "Sequence"
 msgstr ""
 
 #. module: board
-#: view:board.board:0 wizard_button:board.board.menu.create,init,create_menu:0
+#: view:board.board:0
+#: wizard_button:board.board.menu.create,init,create_menu:0
 msgid "Create Menu"
 msgstr ""
 
@@ -214,14 +216,3 @@ msgstr ""
 msgid "Subject"
 msgstr ""
 
-#. module: board
-#: code:addons/board/wizard/board_wizard.py:0
-#, python-format
-msgid "User Error!"
-msgstr ""
-
-#. module: board
-#: code:addons/board/wizard/board_wizard.py:0
-#, python-format
-msgid "Please Insert Dashboard View(s) !"
-msgstr ""

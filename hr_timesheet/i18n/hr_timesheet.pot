@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-# 	* hr_timesheet
+#	* hr_timesheet
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Project-Id-Version: OpenERP Server 5.0.1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
-"PO-Revision-Date: 2009-05-30 15:14:08+0000\n"
+"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
+"PO-Revision-Date: 2009-06-08 21:23:39+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -30,8 +30,7 @@ msgstr ""
 
 #. module: hr_timesheet
 #: constraint:ir.model:0
-msgid ""
-"The Object name must start with x_ and not contain any special character !"
+msgid "The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: hr_timesheet
@@ -172,7 +171,8 @@ msgid "Total time"
 msgstr ""
 
 #. module: hr_timesheet
-#: xsl:hr.analytical.timesheet:0 xsl:hr.analytical.timesheet_users:0
+#: xsl:hr.analytical.timesheet:0
+#: xsl:hr.analytical.timesheet_users:0
 #: model:ir.ui.menu,name:hr_timesheet.next_id_48
 msgid "Timesheet"
 msgstr ""
@@ -327,7 +327,8 @@ msgid "Stop Working"
 msgstr ""
 
 #. module: hr_timesheet
-#: xsl:hr.analytical.timesheet:0 xsl:hr.analytical.timesheet_users:0
+#: xsl:hr.analytical.timesheet:0
+#: xsl:hr.analytical.timesheet_users:0
 msgid "Total"
 msgstr ""
 
@@ -433,253 +434,3 @@ msgstr ""
 msgid "Timesheets"
 msgstr ""
 
-#. module: hr_timesheet
-#: code:addons/hr_timesheet/report/user_timesheet.py:0
-#: code:addons/hr_timesheet/report/users_timesheet.py:0
-#, python-format
-msgid "Wed"
-msgstr ""
-
-#. module: hr_timesheet
-#: code:addons/hr_timesheet/wizard/sign_in_out.py:0
-#, python-format
-msgid "No employee defined for your user !"
-msgstr ""
-
-#. module: hr_timesheet
-#: code:addons/hr_timesheet/report/user_timesheet.py:0
-#: code:addons/hr_timesheet/report/users_timesheet.py:0
-#, python-format
-msgid "Mon"
-msgstr ""
-
-#. module: hr_timesheet
-#: code:addons/hr_timesheet/hr_timesheet.py:0
-#, python-format
-msgid "UnknownError"
-msgstr ""
-
-#. module: hr_timesheet
-#: model:product.uom,name:hr_timesheet.uom_day
-msgid "Day"
-msgstr ""
-
-#. module: hr_timesheet
-#: code:addons/hr_timesheet/wizard/sign_in_out.py:0
-#, python-format
-msgid "UserError"
-msgstr ""
-
-#. module: hr_timesheet
-#: code:addons/hr_timesheet/wizard/sign_in_out.py:0
-#, python-format
-msgid "No cost unit defined for this employee !"
-msgstr ""
-
-#. module: hr_timesheet
-#: code:addons/hr_timesheet/hr_timesheet.py:0
-#, python-format
-msgid "ValidateError"
-msgstr ""
-
-#. module: hr_timesheet
-#: code:addons/hr_timesheet/report/user_timesheet.py:0
-#: code:addons/hr_timesheet/report/users_timesheet.py:0
-#, python-format
-msgid "Sat"
-msgstr ""
-
-#. module: hr_timesheet
-#: code:addons/hr_timesheet/report/user_timesheet.py:0
-#: code:addons/hr_timesheet/report/users_timesheet.py:0
-#, python-format
-msgid "Sun"
-msgstr ""
-
-#. module: hr_timesheet
-#: model:product.template,name:hr_timesheet.product_consultant_product_template
-msgid "Consultancy - Senior Developer"
-msgstr ""
-
-#. module: hr_timesheet
-#: code:addons/hr_timesheet/hr_timesheet.py:0
-#, python-format
-msgid ""
-"No analytic journal available for this employee.\n"
-"Define an employee for the selected user and assign an analytic journal."
-msgstr ""
-
-#. module: hr_timesheet
-#: model:product.uom,name:hr_timesheet.uom_hour
-msgid "Hour"
-msgstr ""
-
-#. module: hr_timesheet
-#: code:addons/hr_timesheet/report/user_timesheet.py:0
-#: code:addons/hr_timesheet/report/users_timesheet.py:0
-#: selection:hr.analytical.timesheet,init,month:0
-#: selection:hr.analytical.timesheet.my,init,month:0
-#: selection:hr.analytical.timesheet_users,init,month:0
-#, python-format
-msgid "July"
-msgstr ""
-
-#. module: hr_timesheet
-#: code:addons/hr_timesheet/report/user_timesheet.py:0
-#: code:addons/hr_timesheet/report/users_timesheet.py:0
-#, python-format
-msgid "Tue"
-msgstr ""
-
-#. module: hr_timesheet
-#: constraint:product.template:0
-msgid "Error: UOS must be in a different category than the UOM"
-msgstr ""
-
-#. module: hr_timesheet
-#: code:addons/hr_timesheet/report/user_timesheet.py:0
-#: code:addons/hr_timesheet/report/users_timesheet.py:0
-#: selection:hr.analytical.timesheet,init,month:0
-#: selection:hr.analytical.timesheet.my,init,month:0
-#: selection:hr.analytical.timesheet_users,init,month:0
-#, python-format
-msgid "March"
-msgstr ""
-
-#. module: hr_timesheet
-#: code:addons/hr_timesheet/report/user_timesheet.py:0
-#: code:addons/hr_timesheet/report/users_timesheet.py:0
-#: selection:hr.analytical.timesheet,init,month:0
-#: selection:hr.analytical.timesheet.my,init,month:0
-#: selection:hr.analytical.timesheet_users,init,month:0
-#, python-format
-msgid "September"
-msgstr ""
-
-#. module: hr_timesheet
-#: code:addons/hr_timesheet/report/user_timesheet.py:0
-#: code:addons/hr_timesheet/report/users_timesheet.py:0
-#: selection:hr.analytical.timesheet,init,month:0
-#: selection:hr.analytical.timesheet.my,init,month:0
-#: selection:hr.analytical.timesheet_users,init,month:0
-#, python-format
-msgid "December"
-msgstr ""
-
-#. module: hr_timesheet
-#: code:addons/hr_timesheet/report/user_timesheet.py:0
-#: code:addons/hr_timesheet/report/users_timesheet.py:0
-#, python-format
-msgid "Fri"
-msgstr ""
-
-#. module: hr_timesheet
-#: constraint:product.template:0
-msgid ""
-"Error: The default UOM and the purchase UOM must be in the same category."
-msgstr ""
-
-#. module: hr_timesheet
-#: code:addons/hr_timesheet/report/user_timesheet.py:0
-#: code:addons/hr_timesheet/report/users_timesheet.py:0
-#: selection:hr.analytical.timesheet,init,month:0
-#: selection:hr.analytical.timesheet.my,init,month:0
-#: selection:hr.analytical.timesheet_users,init,month:0
-#, python-format
-msgid "August"
-msgstr ""
-
-#. module: hr_timesheet
-#: code:addons/hr_timesheet/report/user_timesheet.py:0
-#: code:addons/hr_timesheet/report/users_timesheet.py:0
-#: selection:hr.analytical.timesheet,init,month:0
-#: selection:hr.analytical.timesheet.my,init,month:0
-#: selection:hr.analytical.timesheet_users,init,month:0
-#, python-format
-msgid "June"
-msgstr ""
-
-#. module: hr_timesheet
-#: code:addons/hr_timesheet/report/user_timesheet.py:0
-#: code:addons/hr_timesheet/report/users_timesheet.py:0
-#: selection:hr.analytical.timesheet,init,month:0
-#: selection:hr.analytical.timesheet.my,init,month:0
-#: selection:hr.analytical.timesheet_users,init,month:0
-#, python-format
-msgid "November"
-msgstr ""
-
-#. module: hr_timesheet
-#: code:addons/hr_timesheet/report/user_timesheet.py:0
-#: code:addons/hr_timesheet/report/users_timesheet.py:0
-#: selection:hr.analytical.timesheet,init,month:0
-#: selection:hr.analytical.timesheet.my,init,month:0
-#: selection:hr.analytical.timesheet_users,init,month:0
-#, python-format
-msgid "October"
-msgstr ""
-
-#. module: hr_timesheet
-#: code:addons/hr_timesheet/hr_timesheet.py:0
-#, python-format
-msgid ""
-"No analytic account defined on the project.\n"
-"Please set one or we can not automatically fill the timesheet."
-msgstr ""
-
-#. module: hr_timesheet
-#: code:addons/hr_timesheet/report/user_timesheet.py:0
-#: code:addons/hr_timesheet/report/users_timesheet.py:0
-#: selection:hr.analytical.timesheet,init,month:0
-#: selection:hr.analytical.timesheet.my,init,month:0
-#: selection:hr.analytical.timesheet_users,init,month:0
-#, python-format
-msgid "January"
-msgstr ""
-
-#. module: hr_timesheet
-#: model:product.uom.categ,name:hr_timesheet.uom_categ_wtime
-msgid "Working Time"
-msgstr ""
-
-#. module: hr_timesheet
-#: code:addons/hr_timesheet/report/user_timesheet.py:0
-#: code:addons/hr_timesheet/report/users_timesheet.py:0
-#: selection:hr.analytical.timesheet,init,month:0
-#: selection:hr.analytical.timesheet.my,init,month:0
-#: selection:hr.analytical.timesheet_users,init,month:0
-#, python-format
-msgid "May"
-msgstr ""
-
-#. module: hr_timesheet
-#: code:addons/hr_timesheet/report/user_timesheet.py:0
-#: code:addons/hr_timesheet/report/users_timesheet.py:0
-#: selection:hr.analytical.timesheet,init,month:0
-#: selection:hr.analytical.timesheet.my,init,month:0
-#: selection:hr.analytical.timesheet_users,init,month:0
-#, python-format
-msgid "February"
-msgstr ""
-
-#. module: hr_timesheet
-#: code:addons/hr_timesheet/report/user_timesheet.py:0
-#: code:addons/hr_timesheet/report/users_timesheet.py:0
-#, python-format
-msgid "Thu"
-msgstr ""
-
-#. module: hr_timesheet
-#: code:addons/hr_timesheet/report/user_timesheet.py:0
-#: code:addons/hr_timesheet/report/users_timesheet.py:0
-#: selection:hr.analytical.timesheet,init,month:0
-#: selection:hr.analytical.timesheet.my,init,month:0
-#: selection:hr.analytical.timesheet_users,init,month:0
-#, python-format
-msgid "April"
-msgstr ""
-
-#. module: hr_timesheet
-#: constraint:product.product:0
-msgid "Error: Invalid ean code"
-msgstr ""
