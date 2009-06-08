@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-    
+
 <!--    	User Form-->
     	 <record id="view_portal_users_form_simple" model="ir.ui.view">
             <field name="name">res.users.portal.form1</field>
@@ -15,7 +15,7 @@
                 </field>
             </field>
         </record>
-    
+
     	<record id="view_portal_users_form_simple_modif" model="ir.ui.view">
             <field name="name">res.users.portal.form.modif</field>
             <field name="model">res.users</field>
@@ -28,7 +28,7 @@
                 </field>
             </field>
         </record>
-        
+
 <!--    	Project Form-->
     	<record id="view_project_portal_form" model="ir.ui.view">
 			<field name="name">project.portal.form</field>
@@ -59,7 +59,7 @@
                 </field>
             </field>
         </record>
-		
+
 <!--		Announce View-->
 		<record model="ir.ui.view" id="crm_case_announce_tree_view">
 	        <field name="name">CRM - Announce Tree</field>
@@ -89,7 +89,7 @@
                 </form>
             </field>
 	    </record>
-	    
+
 <!--	    Announce Menus-->
 	    <menuitem parent="crm.menu_crm" id="menu_crm_case_announce" name="Announce"/>
 	    <record model="ir.actions.act_window" id="crm_case_categ_announce">
@@ -104,7 +104,7 @@
 	        <field name="view_mode">tree</field>
 	        <field name="view_id" ref="crm_case_announce_tree_view"/>
 	        <field name="act_window_id" ref="crm_case_categ_announce"/>
-	    </record>    
+	    </record>
 	    <record model="ir.actions.act_window.view" id="action_crm_tag_calendar_announce">
 	        <field name="sequence" eval="2"/>
 	        <field name="view_mode">form</field>
@@ -112,7 +112,7 @@
 	        <field name="act_window_id" ref="crm_case_categ_announce"/>
 	    </record>
 	    <menuitem id="menu_crm_announce" parent="menu_crm_case_announce" action="crm_case_categ_announce"/>
-	    
+
 	    <record model="ir.actions.act_window" id="crm_case_category_announce_my">
 	        <field name="name">My Announces</field>
 	        <field name="res_model">crm.case</field>
@@ -134,7 +134,7 @@
 	        <field name="act_window_id" ref="crm_case_category_announce_my"/>
 	    </record>
 	    <menuitem parent="menu_crm_case_announce" id="menu_crm_case_category_announce_my" action="crm_case_category_announce_my"/>
-	    
+
 	    <record model="ir.actions.act_window" id="crm_case_categ_announce_new">
 	        <field name="name">New Announce</field>
 	        <field name="res_model">crm.case</field>
@@ -143,7 +143,7 @@
 	        <field name="view_id" ref="crm_case_announce_form_view"/>
 	    </record>
 		<menuitem id="menu_announce_new" parent="menu_crm_case_announce" action="crm_case_categ_announce_new"/>
-		
+
 <!--		Wiki Page-->
 		<record id="portal_view_wiki_form" model="ir.ui.view">
             <field name="name">wiki.wiki.form.inherit</field>
@@ -156,7 +156,7 @@
                 </field>
             </field>
         </record>
-        
+
         <record model="ir.actions.act_window" id="action_portal_project_wiki">
             <field name="name">Search a Pages</field>
             <field name="res_model">wiki.wiki</field>
@@ -165,7 +165,7 @@
             <field name="view_id" ref="wiki.view_wiki_tree"/>
             <field name="domain">[('project_id','=',active_id)]</field>
         </record>
-		
+
 <!--		Working hours-->
 		<record id="view_project_analytic_graph" model="ir.ui.view">
             <field name="name">report.hr.analytic.form</field>
@@ -178,7 +178,7 @@
                 </graph>
             </field>
         </record>
-		
+
 		<record id="act_hr_timesheet_line_portal_form" model="ir.actions.act_window">
             <field name="name">Working Hours</field>
             <field name="type">ir.actions.act_window</field>
@@ -186,7 +186,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree,form</field>
         </record>
-        
+
 <!--        Financial Data-->
         <record id="view_portal_financial_entries_tree" model="ir.ui.view">
             <field name="name">report.project.working.hours.tree</field>
@@ -203,7 +203,7 @@
                 </tree>
             </field>
         </record>
-        
+
         <record id="view_portal_financial_entries_form" model="ir.ui.view">
             <field name="name">report.project.working.hours.form</field>
             <field name="model">report.project.working.hours</field>
@@ -219,7 +219,7 @@
                 </form>
             </field>
         </record>
-        
+
         <record id="act_financial_portal_form" model="ir.actions.act_window">
             <field name="name">Analytic Accounts</field>
             <field name="type">ir.actions.act_window</field>
@@ -228,7 +228,7 @@
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="view_portal_financial_entries_tree"/>
         </record>
-        
+
 <!--        Timesheet Sheet-->
         <record id="view_project_timesheet_sheet_tree" model="ir.ui.view">
             <field name="name">report.project.working.hours.timesheets.tree</field>
@@ -245,7 +245,7 @@
                 </tree>
             </field>
         </record>
-        
+
         <record id="view_project_timesheet_sheet_form" model="ir.ui.view">
             <field name="name">report.project.working.hours.timesheets.form</field>
             <field name="model">report.project.working.hours</field>
@@ -262,7 +262,7 @@
                 </form>
             </field>
         </record>
-		
+
 		<record id="act_hr_timesheet_sheet_portal_form" model="ir.actions.act_window">
             <field name="name">Timesheets</field>
             <field name="type">ir.actions.act_window</field>
@@ -271,7 +271,7 @@
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="view_project_timesheet_sheet_tree"/>
         </record>
-        
+
 <!--        Bugs By State-->
         <record model="ir.ui.view" id="view_crm_bugs_graph">
             <field name="name">Bugs by State - Graph</field>
@@ -308,16 +308,16 @@
                 </form>
             </field>
         </record>
-        
+
         <record model="ir.actions.act_window" id="act_crm_bugs_state">
 			<field name="res_model">report.crm.case.bugs</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">graph,tree,form</field>
 			<field name="view_id" ref="view_crm_bugs_graph"/>
 		</record>
-		
-		<menuitem name="sss form" id="menu_projectss_portal" action="act_crm_bugs_state" parent="project.menu_main"/>-->
-		
+
+		<menuitem name="Bugs by State" id="menu_projectss_portal" action="act_crm_bugs_state" parent="project.menu_main"/>
+
 <!--		Gantt Planning-->
 		<record id="portal_project_planning_view_gantt" model="ir.ui.view">
             <field name="name">report.account.analytic.planning.gantt</field>
@@ -332,7 +332,7 @@
 	            </gantt>
             </field>
         </record>
-        
+
         <record id="act_project_planning_portal_form" model="ir.actions.act_window">
             <field name="name">Gantt Planning</field>
             <field name="type">ir.actions.act_window</field>
@@ -340,7 +340,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,gantt,form</field>
         </record>
-        
+
 <!--		Event Configuration-->
         <record model="ir.actions.act_window" id="portal_project_event_configuration_action">
 	        <field name="name">Project Event Configuration</field>
@@ -350,7 +350,7 @@
 	        <field name="view_id" ref="project_event.project_event_configuration_tree_view"/>
 	        <field name="domain">[('project_id','=',active_id)]</field>
 	    </record>
-        
+
 <!--	    Portal Project Form-->
 	    <record model="ir.ui.view" id="project_portal_form_view">
 	        <field name="name">Project Form</field>
@@ -391,7 +391,7 @@
 	                </group>
 	                </child1>
 	                <child2>
-	                <group colspan="2"> 
+	                <group colspan="2">
 			            <separator string="Shortcuts" colspan="2"/>
 			            <newline/>
 			            <group colspan="2" col="3">
@@ -406,7 +406,7 @@
 	                    </group>
 	                </group>
 	                <newline/>
-                 	<action colspan="2" name="%(act_hr_timesheet_line_portal_form)d" string="Working hours per Day"/> 
+                 	<action colspan="2" name="%(act_hr_timesheet_line_portal_form)d" string="Working hours per Day"/>
                  	<newline/>
                  	<action colspan="2" name="%(act_crm_bugs_state)d" string="Bugs by State" />
 	                </child2>
@@ -425,7 +425,7 @@
                     <field icon="icon" name="name"/>
                 </tree>
             </field>
-	    </record>    	    
+	    </record>
 
 	    <record model="ir.actions.act_window" id="view_project_project_portal">
 	        <field name="name">Project Form</field>
@@ -447,7 +447,7 @@
 	        <field name="act_window_id" ref="view_project_project_portal"/>
 	    </record>
 	    <menuitem  id="menu_view_project_project_portal" action="view_project_project_portal" parent="project.menu_main"/>
-			
+
 <!--		Bugs By User-->
 		<record model="ir.ui.view" id="view_crm_case_bugs_user">
             <field name="name">report.crm.case.bugs.form</field>
@@ -460,7 +460,7 @@
                 </graph>
             </field>
         </record>
-        
+
         <record id="act_crm_bugs_user_form" model="ir.actions.act_window">
             <field name="name">Bugs by User</field>
             <field name="type">ir.actions.act_window</field>
@@ -468,8 +468,8 @@
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree,form</field>
             <field name="view_id" ref="view_crm_case_bugs_user"/>
-        </record>   
-		
+        </record>
+
 <!--		Portal Crm Bug Form-->
 		<record id="portal_crm_bug_tree_view" model="ir.ui.view">
             <field name="name">portal.crm.bugs.tree</field>
@@ -484,7 +484,7 @@
                 </tree>
             </field>
         </record>
-		
+
 		<record model="ir.ui.view" id="portal_crm_bug_form_view">
 	        <field name="name">Bugs Form</field>
 	        <field name="model">crm.case</field>
@@ -536,8 +536,8 @@
 	            </hpaned>
 	           	</form>
 	        </field>
-	    </record> 
-	    
+	    </record>
+
 	    <record model="ir.actions.act_window" id="action_crm_bug_portal">
 	        <field name="name">Bug Form</field>
 	        <field name="res_model">crm.case</field>
@@ -557,9 +557,9 @@
 	        <field name="view_id" ref="portal_crm_bug_form_view"/>
 	        <field name="act_window_id" ref="action_crm_bug_portal"/>
 	    </record>
-	    
+
 	    <menuitem  id="menu_view_portal_crm_bug_view" action="action_crm_bug_portal" parent="project.menu_main"/>
-	    
+
 	    <record model="ir.ui.view" id="view_crm_case_features_user">
             <field name="name">report.crm.case.features.user.graph</field>
             <field name="model">report.crm.case.features.user</field>
@@ -571,7 +571,7 @@
                 </graph>
             </field>
         </record>
-        
+
         <record model="ir.ui.view" id="view_crm_case_features_user_tree">
             <field name="name">report.crm.case.features.user.tree</field>
             <field name="model">report.crm.case.features.user</field>
@@ -583,7 +583,7 @@
                 </tree>
             </field>
         </record>
-        
+
         <record model="ir.ui.view" id="view_crm_case_features_user_form">
             <field name="name">report.crm.case.features.user.form</field>
             <field name="model">report.crm.case.features.user</field>
@@ -595,7 +595,7 @@
                 </form>
             </field>
         </record>
-        
+
         <record id="act_crm_features_user_form" model="ir.actions.act_window">
             <field name="name">Features by User</field>
             <field name="type">ir.actions.act_window</field>
@@ -603,7 +603,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree,form</field>
         </record>
-	    
+
 <!--		Portal Crm Feature Form-->
 
 		<record id="portal_crm_feature_tree_view" model="ir.ui.view">
@@ -673,7 +673,7 @@
 	           	</form>
 	        </field>
 	    </record>
-	    
+
 	    <record model="ir.actions.act_window" id="view_crm_feature_portal">
 	        <field name="name">Feature Form</field>
 	        <field name="res_model">crm.case</field>
@@ -694,7 +694,7 @@
 	        <field name="act_window_id" ref="view_crm_feature_portal"/>
 	    </record>
 	    <menuitem  id="menu_view_portal_crm_feature_view" action="view_crm_feature_portal" parent="project.menu_main"/>
-	    
+
 	    <record model="ir.ui.view" id="view_crm_case_support_user">
             <field name="name">report.crm.case.support.user.graph</field>
             <field name="model">report.crm.case.support.user</field>
@@ -728,7 +728,7 @@
                 </form>
             </field>
         </record>
-        
+
         <record id="act_crm_support_user_form" model="ir.actions.act_window">
             <field name="name">Supports by User</field>
             <field name="type">ir.actions.act_window</field>
@@ -736,9 +736,9 @@
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree,form</field>
         </record>
-	    
+
 <!--		Portal Crm Support Form-->
-		
+
 		<record id="portal_crm_support_tree_view" model="ir.ui.view">
             <field name="name">portal.crm.support.tree</field>
             <field name="model">crm.case</field>
@@ -752,7 +752,7 @@
                 </tree>
             </field>
         </record>
-	    
+
 	    <record model="ir.ui.view" id="portal_crm_support_form_view">
 	        <field name="name">Support Form</field>
 	        <field name="model">crm.case</field>
@@ -806,7 +806,7 @@
 	           	</form>
 	        </field>
 	    </record>
-	    
+
 	    <record model="ir.actions.act_window" id="view_crm_support_portal">
 	        <field name="name">Support Form</field>
 	        <field name="res_model">crm.case</field>
@@ -827,7 +827,7 @@
 	        <field name="act_window_id" ref="view_crm_support_portal"/>
 	    </record>
 	    <menuitem  id="menu_view_portal_crm_support_view" action="view_crm_support_portal" parent="project.menu_main"/>
-	    
+
 		<record model="ir.ui.view" id="view_crm_case_announce_user">
             <field name="name">report.crm.case.announce.user.graph</field>
             <field name="model">report.crm.case.announce.user</field>
@@ -861,15 +861,15 @@
                 </form>
             </field>
         </record>
-        
+
         <record id="act_crm_announce_user_form" model="ir.actions.act_window">
             <field name="name">Announces by User</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">report.crm.case.announce.user</field>
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree,form</field>
-        </record>	    
-	    
+        </record>
+
 <!--		Portal Crm Announce  Form-->
 
 		<record id="portal_crm_announce_tree_view" model="ir.ui.view">
@@ -939,7 +939,7 @@
 	           	</form>
 	        </field>
 	    </record>
-	    
+
 	    <record model="ir.actions.act_window" id="view_crm_announce_portal">
 	        <field name="name">Announce Form</field>
 	        <field name="res_model">crm.case</field>
@@ -960,6 +960,6 @@
 	        <field name="act_window_id" ref="view_crm_announce_portal"/>
 	    </record>
 	    <menuitem  id="menu_view_portal_crm_announce_view" action="view_crm_announce_portal" parent="project.menu_main"/>
-		
+
     </data>
 </openerp>
