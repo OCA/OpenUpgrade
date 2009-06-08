@@ -23,6 +23,102 @@
 from osv import fields, osv
 import pooler
 
+class profile_game_config_wizard(osv.osv_memory):
+    _name='profile.game.config.wizard'
+    _columns = {
+        'state':fields.selection([('3','3'),('4','4')],'Number of Players',required=True),
+        'finance_name':fields.char('Name of Financial Manager',size='64', required=True),
+        'finance_email':fields.char('Email of Financial Manager',size='64'),
+        'hr_name':fields.char('Name of Human Resource Manager',size='64', readonly=True,required=False,states={'4':[('readonly',False),('required',True)]}),
+        'hr_email':fields.char('Email of Human Resource Manager',size='64',readonly=True,required=False,states={'4':[('readonly',False),('required',False)]}),
+        'logistic_name':fields.char('Name of Logistic Manager',size='64', required=True),
+        'logistic_email':fields.char('Email of Logistic Manager',size='64'),
+        'sale_name':fields.char('Name of Sales Manager',size='64', required=True),
+        'sale_email':fields.char('Email of Sales Manager',size='64'),
+        'objectives':fields.selection([
+            ('on_max_turnover','Maximise Turnover of Last Year'),
+            ('on_max_cumulative','Maximise Cumulative Benefit'),
+            ('on_max_products_sold','Maximise Number of Products Sold')],'Objectives',required=True),
+        'years':fields.selection([
+            ('3','3 Years (40 minutes)'),
+            ('5','5 Years (1 hour)'),
+            ('7','7 Years (1 hours and 20 minutes)')],'Number of Turns',required=True),
+        'difficulty':fields.selection([
+            ('easy','Easy'),
+            ('medium','Medium'),
+            ('hard','Hard')],'Difficulty',required=True),
+    }
+    _defaults = {
+        'difficulty': lambda *args: 'medium',
+        'years': lambda *args: '5',
+        'objectives': lambda *args: 'on_max_turnover',
+        'state': lambda *args: '3',
+    }
+
+
+    def action_run(self, cr, uid, ids, context = None):
+        game_obj = self.pool.get('profile.game.phase2')
+        fiscal_obj = self.pool.get('account.fiscalyear')
+        user_obj = self.pool.get('res.users')
+        emp_obj = self.pool.get('hr.employee')
+        for res in self.read(cr, uid, ids, context = context):
+            if res.get('id',False):
+                del res['id']
+            game_vals = {
+                'state':res['state'],
+                'objectives':res['objectives'],
+                'years':res['years'],
+                'difficulty':res['difficulty'],
+            }
+            players = int(res['state'])
+            game_id = game_obj.create(cr,uid,game_vals,context=context)
+            for user_name in ['finance','sale','logistic','hr']:
+                if user_name == 'hr' and players < 4:
+                    continue
+                user_ids = user_obj.name_search(cr, uid, user_name)
+                user_id = len(user_ids) and user_ids[0][0] or False
+                if user_name == 'finance':
+                    game_vals['finance_user_id'] = user_id
+                if user_name == 'sale':
+                    game_vals['sales_user_id'] = user_id
+                if user_name == 'logistic':
+                    game_vals['logistic_user_id'] = user_id
+                if user_name == 'hr':
+                    game_vals['hr_user_id'] = user_id
+                game_obj.write(cr, uid, game_id, game_vals)
+                name = res.get(user_name+'_name','')
+                if name:
+                    email = res.get(user_name+'_email','')
+                    emp_ids = emp_obj.search(cr,uid,[('user_id','=',user_id)])
+                    if not len(emp_ids):
+                        emp_obj.create(cr,uid,{
+                                'name':name.strip(),
+                                'work_email':email
+                        })
+                    else:
+                        emp_obj.write(cr,uid,emp_ids,{
+                                'name':name.strip(),
+                                'work_email':email
+                        })
+                    user_obj.write(cr,uid,[user_id],{'name':name.strip()})
+
+        mod_obj = self.pool.get('ir.model.data')
+        result = mod_obj._get_id(cr, uid, 'profile_business_game', 'phase1')
+        id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
+
+        value = {
+            'name': 'Business Game',
+            'view_type': 'form',
+            'view_mode': 'form,tree',
+            'res_model': 'profile.game.phase1',
+            'view_id': False,
+            'res_id' : id,
+            'type': 'ir.actions.act_window'
+        }
+        return value
+
+profile_game_config_wizard()
+
 class profile_game_phase_one(osv.osv):
     _name="profile.game.phase1"
     _rec_name = 'state'
@@ -273,19 +369,23 @@ class profile_game_phase_one(osv.osv):
         return False
 
     def generate_account_chart(self, cr, uid, ids, context={}):
+         acc_obj = self.pool.get('account.account')
+         acc_journal = self.pool.get('account.journal')
          company_id = self.pool.get('res.users').browse(cr, uid, [uid])[0].company_id.id
-         chart = self.pool.get('account.chart.template').search(cr, uid, [])
+
+         cr.execute("select id from account_chart_template ")
+         chart = map(lambda x: x[0], cr.fetchall())
+
          wiz_id = self.pool.get('wizard.multi.charts.accounts').create(cr, uid, {'company_id':company_id,
                                                                         'chart_template_id':chart[0],'code_digits':6})
          self.pool.get('wizard.multi.charts.accounts').action_create(cr, uid, [wiz_id], context)
-         acc_obj = self.pool.get('account.account')
-         inc_acc_id = acc_obj.search(cr, uid, [('code','ilike','701000')])[0]
-         exp_acc_id = acc_obj.search(cr, uid, [('code','ilike','601000')])[0]
-         opening_acc = acc_obj.search(cr, uid, [('code','ilike','890000')])[0]
-      #   acc_obj.write(cr ,uid, close_acc, {'type':'other'})
 
-         acc_journal = self.pool.get('account.journal')
-         journal_ids = acc_journal.search(cr, uid, [])
+         cr.execute("select id from account_account where code in ('601000','701000','890000')")
+         accounts = cr.fetchall()
+
+         cr.execute('select id from account_journal')
+         journal_ids = map(lambda x: x[0], cr.fetchall())
+
          for journal in acc_journal.browse(cr, uid, journal_ids):
             if journal.code in ('JB','SAJ','EXJ','JO'):
                  if journal.code == 'JB':
@@ -312,23 +412,24 @@ class profile_game_phase_one(osv.osv):
                         'date': period_obj.date_start,
                         'journal_id': op_journal.id,
                         'period_id': period,
-                        'account_id': opening_acc,
+                        'account_id': accounts[2][0],
                     }, {'journal_id': op_journal.id, 'period_id':period})
          for product in self.pool.get('product.product').search(cr, uid, []):
              self.pool.get('product.product').write(cr, uid, product,
-                          {'property_account_income':inc_acc_id,'property_account_expense':exp_acc_id})
+                          {'property_account_income':accounts[1][0],'property_account_expense':accounts[0][0]})
          return True
 
     def confirm(self, cr, uid, ids, context={}):
         phase2_obj = self.pool.get('profile.game.phase2')
+        model_obj = self.pool.get('ir.model.data')
         phase2_obj.create_fiscalyear_and_period(cr, uid, ids, context)
         self.generate_account_chart(cr, uid, ids, context)
         self.write(cr, uid, ids, {'state':'quotation'})
-        sid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_business_game', 'retail_phase1')
-        sid = self.pool.get('ir.model.data').browse(cr, uid, sid, context=context).res_id
+        sid = model_obj._get_id(cr, uid, 'profile_business_game', 'retail_phase1')
+        sid = model_obj.browse(cr, uid, sid, context=context).res_id
         self.pool.get('game.scenario').write(cr, uid, [sid], {'state':'running'})
-        sid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_business_game', 'step_quotation')
-        sid = self.pool.get('ir.model.data').browse(cr, uid, sid, context=context).res_id
+        sid = model_obj._get_id(cr, uid, 'profile_business_game', 'step_quotation')
+        sid = model_obj.browse(cr, uid, sid, context=context).res_id
         return self.pool.get('game.scenario.step').write(cr, uid, [sid], {'state':'running'})
 
     def check_state(self, cr, uid, context = {}):
