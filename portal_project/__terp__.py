@@ -37,7 +37,7 @@ related to a project:
   - Documents 
   - Dashboard
 """,
-    "depends" : ["base", "crm_configuration", "portal", "project", "project_event", "hr_timesheet_sheet", "wiki"],
+    "depends" : ["base", "crm_configuration", "portal", "project", "project_event", "hr_timesheet_sheet", "wiki", "report_analytic_planning"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ["portal_project_wizard.xml", "portal_project_view.xml", "portal_project_data.xml"],
