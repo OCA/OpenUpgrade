@@ -13,7 +13,7 @@
         </record>
         <record id="bilan_journal" model="account.journal">
             <field name="name">Journal d'ouverture</field>
-            <field name="code">Ouverture</field>
+            <field name="code">JO</field>
             <field name="type">situation</field>
             <field name="centralisation">True</field>
             <field name="view_id" ref="account.account_journal_view"/>

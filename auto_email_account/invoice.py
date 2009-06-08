@@ -53,20 +53,19 @@ class Invoice(osv.osv):
             body= smtpserver.body
             name = self.pool.get('res.partner.address').read(cr, uid, [address['address_invoice_id'][0]], ['name'])[0]['name'] or _('Customer')
             user = self.pool.get('res.users').read(cr, uid, [uid], ['name'])[0]['name'] or _('OpenERP')
-            body = body.replace('__name__', name)
-            body = body.replace('__user__', user)
-            body = body.replace('__number__', str(address['number']))
+            body = body and body.replace('__name__', name)
+            body = body and body.replace('__user__', user)
+            body = body and body.replace('__number__', str(address['number']))
 
             state = self.pool.get('email.smtpclient').send_email(
                         cr, 
                         uid, 
-                        [smtpserver_id], 
+                        smtpserver_id, 
                         email, 
                         _("Invoice  : ") + str(address['number']),
-                        ids,
                         body,
-                        'account.invoice',
-                        _('Invoice')
+                        [],
+                        [('report.account.invoice',ids)]
                     )
 
             inv_data = self.read(cr, uid, ids ,['partner_id', 'amount_total'],context=None)
@@ -74,7 +73,7 @@ class Invoice(osv.osv):
             total = inv_data[0]['amount_total']
 
             event_obj = self.pool.get('res.partner.event')
-            event_obj.create(cr, uid, {'name': _('Invoice: ')+ str(address['number']),\
+            event_obj.create(cr, uid, {'name': _('OpenERP - Invoice: ')+ str(address['number']),\
                     'partner_id': partner_ids[0],\
                     'date': time.strftime('%Y-%m-%d %H:%M:%S'),\
                     'user_id': uid,\
@@ -97,7 +96,7 @@ class Invoice(osv.osv):
                     {
                         'date_create':time.strftime('%Y-%m-%d %H:%M:%S'),
                         'server_id' : smtpserver_id,
-                        'name':_('The Email is not sent because the Partner have no Email'),
+                        'name':_('The Email is not sent because the Partner has no Email ID Specified.'),
                         'email':'',
                         'model':model_id,
                         'resource_id':ids[0]

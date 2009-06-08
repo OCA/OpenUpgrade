@@ -224,13 +224,31 @@ class SmtpClient(osv.osv):
             return False
         
         return ids[0]
-
-    def send_email(self, cr, uid, server_id, emailto, subject, body=False, attachments=[]):
+    
+    # Reports is a list of tuples,where first arguement of tuple is the name of the report,second is the list of ids of the object
+    def send_email(self, cr, uid, server_id, emailto, subject, body=False, attachments=[], reports=[]):
+        
+        def createReport(cr, uid, report, ids):
+            files = []
+            for id in ids:
+                try:
+                    service = netsvc.LocalService(report)
+                    (result, format) = service.create(cr, uid, [id], {}, {})
+                    report_file = '/tmp/reports'+ str(id) + '.pdf'
+                    fp = open(report_file,'wb+')
+                    fp.write(result);
+                    fp.close();
+                    files += [report_file]    
+                except Exception,e:
+                    continue        
+            return files
+        
         smtp_server = self.browse(cr, uid, server_id)
         if smtp_server.state != 'confirm':
             raise osv.except_osv(_('SMTP Server Error !'), 'Server is not Verified, Please Verify the Server !')
-
+        
         subject = unicode(subject, 'utf-8') # Email subject could have non-ascii characters
+        
         if type(emailto) == type([]):
             for to in emailto:
                 msg = MIMEMultipart()
@@ -239,6 +257,10 @@ class SmtpClient(osv.osv):
                 msg['From'] = smtp_server.from_email
                 msg.attach(MIMEText(body or '', _charset='utf-8', _subtype="html"))
                 
+                for rpt in reports:
+                    rpt_file = createReport(cr, uid, rpt[0], rpt[1])
+                    attachments += rpt_file
+                    
                 for file in attachments:
                     part = MIMEBase('application', "octet-stream")
                     part.set_payload(open(file,"rb").read())
@@ -265,6 +287,10 @@ class SmtpClient(osv.osv):
             msg['From'] = smtp_server.from_email
             msg.attach(MIMEText(body or '', _charset='utf-8', _subtype="html"))
             
+            for rpt in reports:
+                rpt_file = createReport(cr, uid, rpt[0], rpt[1])
+                attachments += rpt_file
+                    
             for file in attachments:
                 part = MIMEBase('application', "octet-stream")
                 part.set_payload(open(file,"rb").read())
@@ -384,6 +410,8 @@ class report_smtp_server(osv.osv):
                    select min(h.id) as id, c.id as server_id, h.name as history, h.name as name, count(h.name) as no  from email_smtpclient c inner join email_smtpclient_history h on c.id=h.server_id group by h.name, c.id
                               )
          """)
+         
 report_smtp_server()
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

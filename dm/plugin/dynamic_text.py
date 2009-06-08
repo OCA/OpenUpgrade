@@ -20,6 +20,7 @@ def dynamic_text(cr,uid,**args):
     if 'previous_step_id' in args :
         criteria.append(('previous_step_id','=',args['previous_step_id']))
     dynamic_text_id = pool.get('dm.dynamic_text').search(cr,uid,criteria)
+    print "DDDDD id ", dynamic_text_id
     if dynamic_text_id :
         dynamic_text = pool.get('dm.dynamic_text').read(cr,uid,dynamic_text_id[0],['content'])['content']
         return dynamic_text

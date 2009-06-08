@@ -26,6 +26,7 @@ import time
 from mx.DateTime import RelativeDateTime, now, DateTime, localtime
 import threading
 import tools
+import netsvc
 
 class proforma_followup_step(osv.osv):
     _name = 'proforma.followup_step'
@@ -69,7 +70,20 @@ class proforma_followup_step(osv.osv):
             tools.email_send(src,to,followup.subject,body)
         return
     
-    def run_followups(self, cr, uid, automatic=False, use_new_cursor=False, context=None):
+    def action_run(self, cr, uid, id, context={}):
+        self.write(cr, uid, id, {'state' : 'running'})
+        return True
+        
+    def action_cancel(self, cr, uid, id, context={}):
+        self.write(cr, uid, id, {'state' : 'cancel'})
+        return True
+    
+    def action_draft(self, cr, uid, id, context={}):
+        self.write(cr, uid, id, {'state' : 'draft'})
+        return True
+      
+        
+    def action_done(self, cr, uid, id, context={}):
         pro_fol_line = self.pool.get('proforma.followup.line')
         invoice_obj = self.pool.get('account.invoice')
         cr.execute("select l.id from proforma_followup_line l left join proforma_followup_step s on (l.followup_id=s.id)  where s.state='running'")
@@ -80,18 +94,21 @@ class proforma_followup_step(osv.osv):
             now = mx.DateTime.strptime(time.strftime('%Y-%m-%d'), '%Y-%m-%d')
             next_days = RelativeDateTime(days= line.days)
             for inv in invoice_obj.browse(cr,uid,invoice_ids):
-                due_date = mx.DateTime.strptime(inv.date_invoice, '%Y-%m-%d') + next_days
-                if now == due_date:
-                    if line.send_email:
-                        mail_thread = threading.Thread( target=self.send_mail , args=( cr, uid, line,inv,))
-                        mail_thread.run()
-                    if line.call_function:
-                        self._callback( cr, uid, line.model, line.function, line.args)
-                    if line.cancel_invoice:
-                        invoice_obj.write(cr,uid,[inv.id],{'state':'cancel'})
-                    
+                if inv.date_invoice:
+                    due_date = mx.DateTime.strptime(inv.date_invoice, '%Y-%m-%d') + next_days
+                    if now >= due_date:
+                        if line.send_email:
+                            mail_thread = threading.Thread( target=self.send_mail , args=( cr, uid, line,inv,))
+                            mail_thread.run()
+                        if line.call_function:
+                            self._callback( cr, uid, line.model, line.function, line.args)
+                        if line.cancel_invoice:
+                            wf_service = netsvc.LocalService('workflow')
+                            wf_service.trg_validate(uid, 'account.invoice', inv.id, 'invoice_cancel', cr)
                 else:
                     pass
+        self.write(cr, uid, id, {'state' : 'done'})
+        return True
                     
 proforma_followup_step()
 

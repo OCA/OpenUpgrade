@@ -62,7 +62,8 @@ class offer_document(report_sxw.rml_parse):
             res = self.pool.get('dm.workitem').browse(self.cr,self.uid,workitem_id)
             return res.segment_id.proposition_id.camp_id.trademark_id
         else:
-            return self.datas['form']['trademark_id']	
+            print "FFFFFF form :",self.datas['form']
+            return self.datas['form']['trademark_id']
 
     def document(self):
         if 'form' not in self.datas :
@@ -75,6 +76,7 @@ class offer_document(report_sxw.rml_parse):
             addr_id = self.datas['form']['address_id']
             doc_id = self.ids[0]
 
+            # !!! To change, it takes any workitem so can send any data
             dm_workitem_obj = self.pool.get('dm.workitem')
             wi_data=dm_workitem_obj.search(self.cr,self.uid,[])
 
@@ -92,5 +94,5 @@ class offer_document(report_sxw.rml_parse):
                 wi_id = wi_data[0]
         values = generate_plugin_value(self.cr,self.uid,doc_id=doc_id,addr_id=addr_id,wi_id=wi_id,plugin_list=self._plugin_list(),type=type)
         return [values]
-        
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:        
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

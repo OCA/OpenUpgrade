@@ -44,7 +44,14 @@ def merge_message(cr, uid, keystr, context):
         id = context.get('document_id')
         obj = dm_obj.browse(cr, uid, id)
         exp = str(match.group()[2:-2]).strip()
-        args = {'doc_id' : context['document_id'],'addr_id':context['address_id'],'wi_id':context['wi_id']}
+        wi_id = None
+        if 'wi_id' in context :
+            wi_id = context['wi_id']
+        args = {'doc_id' : context['document_id'],'addr_id':context['address_id'],'wi_id':wi_id}
+        if 'plugin_list' in context :
+            args['plugin_list']=context['plugin_list']
+        else :
+            args['plugin_list']=[exp]
         plugin_values = generate_plugin_value(cr, uid,**args)
         context.update(plugin_values)
         context.update({'object':obj,'time':time})
@@ -82,12 +89,13 @@ def generate_reports(cr,uid,obj,report_type,context):
     pool = pooler.get_pool(cr.dbname)
     dm_doc_obj = pool.get('dm.offer.document') 
     report_xml = pool.get('ir.actions.report.xml')
+    camp_mail_service_obj = pool.get('dm.campaign.mail_service')
     r_type = report_type
     if report_type=='html2html':
         r_type = 'html'
 
     for address_id in address_ids:
-        
+
         if obj.segment_id:
             camp_id = obj.segment_id.proposition_id.camp_id.id
         type_id = pool.get('dm.campaign.document.type').search(cr,uid,[('code','=',r_type)])
@@ -100,7 +108,6 @@ def generate_reports(cr,uid,obj,report_type,context):
             """ Use the mail service defined in the campaign """
             camp_mail_service_id = camp_mail_service_obj.search(cr,uid,[('campaign_id','=',camp_id),('offer_step_id','=',step_id)])
         print "camp_mail_service_id",camp_mail_service_id
-        camp_mail_service_obj = pool.get('dm.campaign.mail_service')
         camp_mail_service = camp_mail_service_obj.browse(cr,uid,camp_mail_service_id)[0]
         print "camp_mail_service.mail_service_id",camp_mail_service.mail_service_id.time_mode
 
@@ -131,8 +138,7 @@ def generate_reports(cr,uid,obj,report_type,context):
         document_id = dm_doc_obj.search(cr,uid,[('step_id','=',obj.step_id.id),('category_id','=','Production')])
         print "Doc id : ",document_id
         if not document_id : 
-            # TO Improve : if no docs then log in wi error
-            return False
+            return "no_document"
 
         vals={
             'segment_id': obj.segment_id.id or False,
@@ -153,12 +159,13 @@ def generate_reports(cr,uid,obj,report_type,context):
         print "report_ids : ",report_ids
 
         document_data = dm_doc_obj.read(cr,uid,document_id,['name','editor','content','subject'])[0]
-        print "Doc name : ",document_data['name']
+#        print "Doc name : ",document_data['name']
         context['address_id'] = address_id
         context['document_id'] = document_id[0]
         context['wi_id'] = obj.id
         attachment_obj = pool.get('ir.attachment')
-        if report_type=='html' and document_data['editor'] and document_data['editor']=='internal' and document_data['content']:
+        print report_type,document_data['editor'],document_data['content']
+        if report_type=='html2html' and document_data['editor'] and document_data['editor']=='internal' and document_data['content']:
             report_data = internal_html_report +str(document_data['content'])+"</BODY></HTML>"
             report_data = merge_message(cr, uid, report_data, context)
             attach_vals={'name' : document_data['name'] + "_" + str(address_id),
@@ -183,6 +190,8 @@ def generate_reports(cr,uid,obj,report_type,context):
                              }
             attach_id = attachment_obj.create(cr,uid,attach_vals)
             print "Attachement : ",attach_id
+
+    return True
 
 def compute_customer_plugin(cr, uid, **args):
     res  = pool.get('ir.model').browse(cr, uid, args['plugin_obj'].model_id.id)    

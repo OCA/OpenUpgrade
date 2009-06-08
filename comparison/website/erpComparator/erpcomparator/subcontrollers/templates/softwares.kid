@@ -16,13 +16,19 @@
     	});
     
 	    function view_detail(id) {
+	    	
 	    	var elem = document.getElementById(id);
 	        elem.style.display = elem.style.display == 'none' ? '' : 'none';
 		}
 		
 		function view_erp_detail(id, key, parent) {
 			
-			$(function() {
+			if(key) {
+				var table = getElement('checkboxtext');
+				id = table.rows[1].id
+			}
+			
+			$(function() {			
 				$(".latest_listing_"+id).access({
 			        Headline: "Latest Listing",
 			        Speed: "normal"
@@ -36,6 +42,8 @@
 				var td = MochiKit.DOM.getElementsByTagAndClassName('td', null, tr)[0];
 				td.style.color = "#990033";
 				table.rows[1].style.display = '';
+				var first_init = getElement('img_'+table.rows[1].id) 
+				first_init.style.display = '';
 			}
 			
 			else {
@@ -129,13 +137,13 @@
 			</tr>
 		</table>
 		
-		<div width="800px" id="scr_title" style="padding-left: 15px; padding-right: 15px;">
-			<h3 style="padding:0px;">
-				<b style="padding-left: 15px;"> Screen Shots</b>
-			</h3>
+		<div id="scr_title" style="padding-left: 25px; padding-right: 25px;" >
+			<div style="padding:1px; border: 1px solid grey; background-color: #F6F6F6;">
+				<b style="padding-left: 15px; color:#021677;">Screen Gallery</b>
+			</div>
 		</div>
 		
-		<div id="screenshots">
+		<div id="screenshots" class="checkboxtext">
 			<div py:for="r in res" id="${r['id']}">
 				<div class="slider latest_listing_${r['id']}" width="850px">
 					<div class="messaging" style="display: none;">Please Note: You may have disabled JavaScript and/or CSS.</div>
