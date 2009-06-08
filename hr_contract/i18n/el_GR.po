@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2008-11-15 08:33:16+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
 "Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: \n"
@@ -17,9 +17,14 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: hr_contract
-#: field:hr.contract,wage:0
-msgid "Wage"
-msgstr "Μισθός"
+#: model:ir.module.module,shortdesc:hr_contract.module_meta_information
+msgid "Human Resources Contracts"
+msgstr "Συμβάσεις Ανθρώπινου Δυναμικού"
+
+#. module: hr_contract
+#: view:hr.contract.wage.type:0
+msgid "Hourly cost computation"
+msgstr "Υπολογισμός ωριαίου κόστους"
 
 #. module: hr_contract
 #: selection:hr.contract.wage.type,type:0
@@ -54,6 +59,11 @@ msgid "Wage Types"
 msgstr "Τύποι Αποδοχών"
 
 #. module: hr_contract
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
+
+#. module: hr_contract
 #: field:hr.contract,employee_id:0
 msgid "Employee"
 msgstr "Υπάλληλος"
@@ -62,11 +72,6 @@ msgstr "Υπάλληλος"
 #: selection:hr.contract.wage.type,type:0
 msgid "Net"
 msgstr "Καθαρό"
-
-#. module: hr_contract
-#: field:hr.contract.wage.type,type:0
-msgid "Type"
-msgstr "Τύπος"
 
 #. module: hr_contract
 #: field:hr.contract.wage.type.period,factor_days:0
@@ -93,6 +98,11 @@ msgstr "Διάφορα"
 #: view:hr.contract:0 view:hr.employee:0 field:hr.employee,contract_ids:0
 msgid "Contracts"
 msgstr "Συμβάσεις"
+
+#. module: hr_contract
+#: field:hr.contract.wage.type,type:0
+msgid "Type"
+msgstr "Τύπος"
 
 #. module: hr_contract
 #: field:hr.contract,wage_type_id:0 view:hr.contract.wage.type:0
@@ -141,7 +151,7 @@ msgid "Invalid XML for View Architecture!"
 msgstr "Invalid XML for View Architecture!"
 
 #. module: hr_contract
-#: field:hr.contract,notes:0 view:hr.contract:0 view:hr.employee:0
+#: view:hr.contract:0 field:hr.contract,notes:0 view:hr.employee:0
 msgid "Notes"
 msgstr "Σημειώσεις"
 
@@ -164,11 +174,6 @@ msgstr "Τύπος Σύμβασης"
 #: model:ir.model,name:hr_contract.model_hr_contract_wage_type_period
 msgid "Wage Period"
 msgstr "Περίοδος Μισθοδοσίας"
-
-#. module: hr_contract
-#: view:hr.contract.wage.type:0
-msgid "Hourly cost computation"
-msgstr "Υπολογισμός ωριαίου κόστους"
 
 #. module: hr_contract
 #: field:hr.employee,audiens_num:0
@@ -221,14 +226,14 @@ msgstr ""
 "υπολογισμό του ωρομισθίου με βάση τη σύμβαση του εργαζομένου"
 
 #. module: hr_contract
+#: field:hr.contract,wage:0
+msgid "Wage"
+msgstr "Μισθός"
+
+#. module: hr_contract
 #: field:hr.contract,date_start:0
 msgid "Start Date"
 msgstr "Αρχή"
-
-#. module: hr_contract
-#: view:hr.contract:0 view:hr.employee:0
-msgid "Contract Duration"
-msgstr "Διάρκεια Σύμβασης"
 
 #. module: hr_contract
 #: field:hr.employee.marital.status,description:0
@@ -236,9 +241,9 @@ msgid "Status Description"
 msgstr "Περιγραφή Κατάστασης"
 
 #. module: hr_contract
-#: model:ir.module.module,shortdesc:hr_contract.module_meta_information
-msgid "Human Resources Contracts"
-msgstr "Συμβάσεις Ανθρώπινου Δυναμικού"
+#: view:hr.contract:0 view:hr.employee:0
+msgid "Contract Duration"
+msgstr "Διάρκεια Σύμβασης"
 
 #~ msgid "Social security number"
 #~ msgstr "Αρ. Κοινωνικής Ασφάλισης"

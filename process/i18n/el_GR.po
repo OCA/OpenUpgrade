@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file containt the translation of the following modules:
-#	* process
+# 	* process
 #
 # Copyright (C) 2008,2009 P. Christeas <p_christ@hol.gr>
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2008-11-15 08:33:16+0000\n"
+"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
 "PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
 "Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: \n"
@@ -17,20 +17,23 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: process
-#: view:process.process:0
-#: view:process.node:0
+#: view:process.node:0 view:process.process:0
 msgid "Process Node"
 msgstr ""
 
 #. module: process
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: process
-#: view:process.process:0
-#: view:process.node:0
-#: view:process.transition:0
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
+
+#. module: process
+#: view:process.node:0 view:process.process:0 view:process.transition:0
 msgid "Roles from Workflow"
 msgstr ""
 
@@ -40,9 +43,8 @@ msgid "Related Menu"
 msgstr ""
 
 #. module: process
+#: view:process.node:0 view:process.process:0
 #: field:process.transition,action_ids:0
-#: view:process.process:0
-#: view:process.node:0
 msgid "Buttons"
 msgstr ""
 
@@ -52,9 +54,7 @@ msgid "State"
 msgstr "Κατάσταση Λογαριασμού"
 
 #. module: process
-#: view:process.process:0
-#: view:process.node:0
-#: view:process.transition:0
+#: view:process.node:0 view:process.process:0 view:process.transition:0
 msgid "Details"
 msgstr ""
 
@@ -66,22 +66,19 @@ msgstr ""
 #. module: process
 #: model:ir.actions.act_window,name:process.action_process_node_form
 #: model:ir.model,name:process.model_process_node
-#: model:ir.ui.menu,name:process.menu_process_node_form
+#: model:ir.ui.menu,name:process.menu_process_node_form view:process.node:0
 #: view:process.process:0
-#: view:process.node:0
 msgid "Process Nodes"
 msgstr ""
 
 #. module: process
-#: field:process.process,node_ids:0
-#: view:process.process:0
+#: view:process.process:0 field:process.process,node_ids:0
 msgid "Nodes"
 msgstr ""
 
 #. module: process
-#: field:process.node,condition_ids:0
+#: view:process.node:0 field:process.node,condition_ids:0
 #: view:process.process:0
-#: view:process.node:0
 msgid "Conditions"
 msgstr ""
 
@@ -106,8 +103,8 @@ msgid "Process Transitions Actions"
 msgstr ""
 
 #. module: process
-#: field:process.condition,model_id:0
-#: field:process.node,model_id:0
+#: field:process.condition,model_id:0 field:process.node,model_id:0
+#: field:process.process,model_id:0
 msgid "Object"
 msgstr "Αντικείμενο"
 
@@ -122,19 +119,18 @@ msgid "Workflow Transitions"
 msgstr ""
 
 #. module: process
-#: field:process.process,active:0
-msgid "Active"
-msgstr "Ενεργός"
-
-#. module: process
-#: field:process.node,model_states:0
-msgid "States Expression"
+#: field:process.transition.action,action:0
+msgid "Action ID"
 msgstr ""
 
 #. module: process
-#: model:ir.model,name:process.model_process_condition
+#: view:process.transition:0
+msgid "Process Transition"
+msgstr ""
+
+#. module: process
+#: model:ir.model,name:process.model_process_condition view:process.node:0
 #: view:process.process:0
-#: view:process.node:0
 msgid "Condition"
 msgstr "Όρος"
 
@@ -149,11 +145,9 @@ msgid "Invalid XML for View Architecture!"
 msgstr ""
 
 #. module: process
-#: field:process.condition,name:0
-#: field:process.node,name:0
-#: field:process.process,name:0
+#: field:process.condition,name:0 field:process.node,name:0
+#: field:process.process,name:0 field:process.transition,name:0
 #: field:process.transition.action,name:0
-#: field:process.transition,name:0
 msgid "Name"
 msgstr "Ονομασία"
 
@@ -168,42 +162,36 @@ msgid "Starting Transitions"
 msgstr ""
 
 #. module: process
-#: field:process.node,note:0
-#: field:process.process,note:0
+#: field:process.node,note:0 field:process.process,note:0
 #: view:process.transition:0
 msgid "Notes"
 msgstr "Σημειώσεις"
 
 #. module: process
+#: view:process.node:0 view:process.process:0
 #: field:process.transition.action,transition_id:0
-#: view:process.process:0
-#: view:process.node:0
 msgid "Transition"
 msgstr ""
 
 #. module: process
-#: view:process.process:0
-#: view:process.node:0
-#: view:process.transition:0
+#: view:process.node:0 view:process.process:0 view:process.transition:0
 msgid "Roles Required"
 msgstr ""
 
 #. module: process
-#: selection:process.node,kind:0
-#: field:process.node,subflow_id:0
-msgid "Subflow"
-msgstr ""
-
-#. module: process
-#: view:process.process:0
-#: view:process.node:0
+#: view:process.node:0 view:process.process:0
 msgid "Extra Information"
 msgstr ""
 
 #. module: process
-#: field:process.transition.action,action:0
-msgid "Action ID"
+#: selection:process.node,kind:0 field:process.node,subflow_id:0
+msgid "Subflow"
 msgstr ""
+
+#. module: process
+#: field:process.process,active:0
+msgid "Active"
+msgstr "Ενεργός"
 
 #. module: process
 #: selection:process.transition.action,state:0
@@ -226,13 +214,31 @@ msgid "Type"
 msgstr "Είδος ημερολογίου"
 
 #. module: process
-#: view:process.transition:0
-msgid "Process Transition"
+#: field:process.node,transition_out:0
+msgid "Ending Transitions"
 msgstr ""
 
 #. module: process
-#: field:process.node,transition_out:0
-msgid "Ending Transitions"
+#: model:ir.actions.act_window,name:process.action_process_form
+#: model:ir.model,name:process.model_process_process
+#: model:ir.ui.menu,name:process.menu_process_form
+#: field:process.node,process_id:0 view:process.process:0
+msgid "Process"
+msgstr ""
+
+#. module: process
+#: model:ir.module.module,shortdesc:process.module_meta_information
+msgid "Enterprise Process"
+msgstr ""
+
+#. module: process
+#: view:process.node:0 view:process.process:0 view:process.transition:0
+msgid "Actions"
+msgstr ""
+
+#. module: process
+#: field:process.node,model_states:0
+msgid "States Expression"
 msgstr ""
 
 #. module: process
@@ -240,26 +246,6 @@ msgstr ""
 #: model:ir.model,name:process.model_process_transition
 #: model:ir.ui.menu,name:process.menu_process_transition_form
 msgid "Process Transitions"
-msgstr ""
-
-#. module: process
-#: model:ir.ui.menu,name:process.menu_process
-msgid "Enterprise Process"
-msgstr ""
-
-#. module: process
-#: view:process.process:0
-#: view:process.node:0
-#: view:process.transition:0
-msgid "Actions"
-msgstr ""
-
-#. module: process
-#: model:ir.model,name:process.model_process_process
-#: field:process.node,process_id:0
-#: model:ir.ui.menu,name:process.menu_process_form
-#: view:process.process:0
-msgid "Process"
 msgstr ""
 
 #. module: process
@@ -273,14 +259,17 @@ msgid "Kind of Node"
 msgstr ""
 
 #. module: process
-#: view:process.process:0
-#: view:process.node:0
+#: view:process.node:0 view:process.process:0
 msgid "Outgoing Transitions"
 msgstr ""
 
 #. module: process
-#: view:process.process:0
-#: view:process.node:0
+#: model:ir.ui.menu,name:process.menu_process
+msgid "Enterprise Processes"
+msgstr ""
+
+#. module: process
+#: view:process.node:0 view:process.process:0
 msgid "Transitions"
 msgstr ""
 
@@ -288,4 +277,3 @@ msgstr ""
 #: selection:process.transition.action,state:0
 msgid "Object Method"
 msgstr ""
-

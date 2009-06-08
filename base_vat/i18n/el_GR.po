@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2008-11-15 08:33:16+0000\n"
+"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
 "PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
 "Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: \n"
@@ -17,29 +17,17 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: base_vat
-#: help:res.partner,vat_subjected:0
-msgid ""
-"Check this box if the partner is subjected to the VAT. It will be used for "
-"the VAT legal statement."
-msgstr ""
-
-#. module: base_vat
-#: view:res.partner:0
-msgid "VAT :"
-msgstr ""
-
-#. module: base_vat
-#: constraint:ir.ui.view:0
-msgid "Invalid XML for View Architecture!"
-msgstr "Άκυρο XML για την αρχιτεκτονική όψης!"
-
-#. module: base_vat
 #: model:ir.module.module,description:base_vat.module_meta_information
 msgid ""
 "Enable the VAT Number for the partner. Check the validity of that VAT Number."
 msgstr ""
 "Ενεργοποιήστε τον αριθμό ΦΠΑ για τον συνεργάτη. Ελέγξτε την ορθότητα του "
 "αριθμού ΦΠΑ."
+
+#. module: base_vat
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr "Άκυρο XML για την αρχιτεκτονική όψης!"
 
 #. module: base_vat
 #: field:res.partner,vat_subjected:0

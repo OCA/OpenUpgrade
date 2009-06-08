@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2008-11-15 08:33:16+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
 "Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: \n"
@@ -15,6 +15,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: board_account
+#: model:ir.module.module,shortdesc:board_account.module_meta_information
+msgid "Board for accountant"
+msgstr "Πίνακας Λογιστηρίου"
 
 #. module: board_account
 #: view:board.board:0
@@ -70,6 +75,11 @@ msgid "My indicators"
 msgstr "Οι δείκτες μου"
 
 #. module: board_account
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
+
+#. module: board_account
 #: model:ir.ui.menu,name:board_account.next_id_68
 msgid "Accounting"
 msgstr "Λογιστικά"
@@ -83,8 +93,3 @@ msgstr "Πίνακας Λογαριασμού"
 #: view:board.board:0
 msgid "Aged income"
 msgstr ""
-
-#. module: board_account
-#: model:ir.module.module,shortdesc:board_account.module_meta_information
-msgid "Board for accountant"
-msgstr "Πίνακας Λογιστηρίου"

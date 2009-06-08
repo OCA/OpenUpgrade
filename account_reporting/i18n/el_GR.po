@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file containt the translation of the following modules:
-#	* account_reporting
+# 	* account_reporting
 #
 # Copyright (C) 2008,2009 P. Christeas <p_christ@hol.gr>
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2008-11-15 08:33:16+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
 "Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: \n"
@@ -17,13 +17,19 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_reporting
+#: model:ir.module.module,shortdesc:account_reporting.module_meta_information
+msgid "Reporting of Balancesheet for accounting"
+msgstr ""
+
+#. module: account_reporting
 #: field:color.rml,code:0
 msgid "code"
 msgstr ""
 
 #. module: account_reporting
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: account_reporting
@@ -34,11 +40,6 @@ msgstr ""
 #. module: account_reporting
 #: selection:account.report.bs,font_style:0
 msgid "Helvetica"
-msgstr ""
-
-#. module: account_reporting
-#: model:ir.actions.wizard,name:account_reporting.wizard_balance_report
-msgid "Account balance"
 msgstr ""
 
 #. module: account_reporting
@@ -58,6 +59,11 @@ msgid "Balance Sheet Report"
 msgstr ""
 
 #. module: account_reporting
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
+
+#. module: account_reporting
 #: selection:account.report.bs,font_style:0
 msgid "Courier"
 msgstr ""
@@ -68,18 +74,30 @@ msgid "Courier-BoldOblique"
 msgstr ""
 
 #. module: account_reporting
-#: model:ir.ui.menu,name:account_reporting.bs_report_action_form
-msgid "Balance Sheet Rrport Form"
+#: wizard_button:account.account.balancesheet.report,init,report:0
+msgid "Print BalanceSheet"
 msgstr ""
 
 #. module: account_reporting
-#: wizard_button:account.account.balancesheet.report,init,end:0
-msgid "Cancel"
+#: help:account.account.balancesheet.report,init,periods:0
+msgid "All periods if empty"
+msgstr ""
+
+#. module: account_reporting
+#: field:account.report.bs,color_font:0
+msgid "Font Color"
 msgstr ""
 
 #. module: account_reporting
 #: selection:account.report.bs,report_type:0
 msgid "Report Objects With Accounts and child of Accounts"
+msgstr ""
+
+#. module: account_reporting
+#: model:ir.module.module,description:account_reporting.module_meta_information
+msgid ""
+"Financial and accounting reporting\n"
+"    Balance Sheet Report"
 msgstr ""
 
 #. module: account_reporting
@@ -98,8 +116,7 @@ msgid "Invalid XML for View Architecture!"
 msgstr ""
 
 #. module: account_reporting
-#: field:account.report.bs,name:0
-#: field:color.rml,name:0
+#: field:account.report.bs,name:0 field:color.rml,name:0
 msgid "Name"
 msgstr "Ονομασία"
 
@@ -109,8 +126,8 @@ msgid "Account reporting"
 msgstr ""
 
 #. module: account_reporting
-#: field:account.report.bs,color_font:0
-msgid "Font Color"
+#: model:ir.ui.menu,name:account_reporting.bs_report_action_form
+msgid "Balance Sheet Report Form"
 msgstr ""
 
 #. module: account_reporting
@@ -119,14 +136,19 @@ msgid "Notes"
 msgstr "Σημειώσεις"
 
 #. module: account_reporting
-#: wizard_button:account.account.balancesheet.report,init,report:0
-msgid "Print BalanceSheet"
+#: selection:account.report.bs,font_style:0
+msgid "Times-BoldItalic"
 msgstr ""
 
 #. module: account_reporting
-#: field:account.report.bs,code:0
-msgid "Code"
-msgstr "Κωδικός"
+#: model:ir.model,name:account_reporting.model_account_report_bs
+msgid "Account reporting for Balance Sheet"
+msgstr ""
+
+#. module: account_reporting
+#: selection:account.report.bs,font_style:0
+msgid "Courier-Bold"
+msgstr ""
 
 #. module: account_reporting
 #: selection:account.report.bs,font_style:0
@@ -144,14 +166,9 @@ msgid "Rml Colors"
 msgstr ""
 
 #. module: account_reporting
-#: selection:account.report.bs,font_style:0
-msgid "Times-BoldItalic"
-msgstr ""
-
-#. module: account_reporting
-#: field:account.report.bs,child_id:0
-msgid "Childs"
-msgstr ""
+#: field:account.report.bs,code:0
+msgid "Code"
+msgstr "Κωδικός"
 
 #. module: account_reporting
 #: field:account.report.bs,parent_id:0
@@ -179,15 +196,14 @@ msgid "Fiscal year"
 msgstr ""
 
 #. module: account_reporting
-#: selection:account.report.bs,font_style:0
-msgid "Courier-Bold"
-msgstr ""
-
-#. module: account_reporting
-#: field:account.report.bs,account_id:0
-#: view:account.report.bs:0
+#: view:account.report.bs:0 field:account.report.bs,account_id:0
 msgid "Accounts"
 msgstr "Λογαριασμoί"
+
+#. module: account_reporting
+#: wizard_field:account.account.balancesheet.report,init,periods:0
+msgid "Periods"
+msgstr ""
 
 #. module: account_reporting
 #: field:account.report.bs,color_back:0
@@ -195,8 +211,13 @@ msgid "Back Color"
 msgstr ""
 
 #. module: account_reporting
-#: model:ir.model,name:account_reporting.model_account_report_bs
-msgid "Account reporting for Balance Sheet"
+#: field:account.report.bs,child_id:0
+msgid "Children"
+msgstr ""
+
+#. module: account_reporting
+#: wizard_button:account.account.balancesheet.report,init,end:0
+msgid "Cancel"
 msgstr ""
 
 #. module: account_reporting
@@ -218,4 +239,3 @@ msgstr ""
 #: wizard_view:account.account.balancesheet.report,init:0
 msgid "Customize Report"
 msgstr ""
-

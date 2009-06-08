@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2009-01-23 14:23+0000\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2009-05-18 21:43+0000\n"
 "Last-Translator: Makis Nicolaou <mark.nicolaou@gmail.com>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -18,9 +18,20 @@ msgstr ""
 "X-Generator: Launchpad (build Unknown)\n"
 
 #. module: analytic_user_function
+#: model:ir.module.module,shortdesc:analytic_user_function.module_meta_information
+msgid "Analytic User Function"
+msgstr ""
+
+#. module: analytic_user_function
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
 msgstr "Άκυρο XML για Αρχιτεκτονική Όψης!"
+
+#. module: analytic_user_function
+#: code:addons/analytic_user_function/analytic_user_function.py:0
+#, python-format
+msgid "Error !"
+msgstr ""
 
 #. module: analytic_user_function
 #: constraint:ir.model:0
@@ -36,6 +47,11 @@ msgid "Product"
 msgstr "Προϊόν"
 
 #. module: analytic_user_function
+#: field:analytic_user_funct_grid,account_id:0
+msgid "Analytic Account"
+msgstr ""
+
+#. module: analytic_user_function
 #: view:account.analytic.account:0
 #: field:account.analytic.account,user_product_ids:0
 msgid "Users/Products Rel."
@@ -49,8 +65,7 @@ msgstr "Χρήστης"
 #. module: analytic_user_function
 #: model:ir.model,name:analytic_user_function.model_analytic_user_funct_grid
 msgid "Relation table between users and products on a analytic account"
-msgstr ""
-"Πίνακας Σχέσεων μεταξύ χρηστών και προϊόντων στον αναλυτικό λογαριασμό"
+msgstr "Πίνακας Σχέσεων μεταξύ χρηστών και προϊόντων στον αναλυτικό λογαριασμό"
 
 #. module: analytic_user_function
 #: view:analytic_user_funct_grid:0

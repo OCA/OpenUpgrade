@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2008-11-15 08:33:16+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
 "Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: \n"
@@ -15,6 +15,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: report_analytic
+#: model:ir.module.module,shortdesc:report_analytic.module_meta_information
+msgid "Analytic Account Reporting"
+msgstr "Αναφορές Αναλυτικού Λογαριασμού"
 
 #. module: report_analytic
 #: model:ir.model,name:report_analytic.model_report_analytic_account_close
@@ -55,6 +60,11 @@ msgid "Deadline"
 msgstr "Χρονικό Όριο"
 
 #. module: report_analytic
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
+
+#. module: report_analytic
 #: field:report.analytic.account.close,partner_id:0
 msgid "Partner"
 msgstr "Συνέταιρος"
@@ -75,8 +85,3 @@ msgstr "Ληγμένοι αναλυτικοί λογαριασμοί"
 #: field:report.analytic.account.close,quantity:0
 msgid "Quantity"
 msgstr "Ποσότητα"
-
-#. module: report_analytic
-#: model:ir.module.module,shortdesc:report_analytic.module_meta_information
-msgid "Analytic Account Reporting"
-msgstr "Αναφορές Αναλυτικού Λογαριασμού"

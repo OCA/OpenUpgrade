@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2009-04-09 17:23+0000\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2009-05-18 21:46+0000\n"
 "Last-Translator: Makis Nicolaou <mark.nicolaou@gmail.com>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -16,6 +16,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2009-05-28 09:26+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
+
+#. module: analytic_journal_billing_rate
+#: model:ir.module.module,shortdesc:analytic_journal_billing_rate.module_meta_information
+msgid "Analytic Journal Billing Rate"
+msgstr "Ποσό Τιμολόγησης Ημερολόγιου Αναλυτικής"
 
 #. module: analytic_journal_billing_rate
 #: constraint:ir.ui.view:0
@@ -38,8 +43,7 @@ msgstr ""
 #. module: analytic_journal_billing_rate
 #: view:analytic_journal_rate_grid:0
 msgid "Billing Rate per Journal for this Analytic Account"
-msgstr ""
-"Ποσοστό Τιμολόγησης ανα Ημερολόγιο για αυτόν τον Αναλυτικό Λογαριασμό"
+msgstr "Ποσοστό Τιμολόγησης ανα Ημερολόγιο για αυτόν τον Αναλυτικό Λογαριασμό"
 
 #. module: analytic_journal_billing_rate
 #: field:analytic_journal_rate_grid,account_id:0
@@ -55,11 +59,6 @@ msgstr "Πίνακας σχέσεων μεταξύ ημερολογίων και
 #: field:account.analytic.account,journal_rate_ids:0
 msgid "Invoicing Rate per Journal"
 msgstr "Ποσό Τιμολόγησης ανα Ημερολόγιο"
-
-#. module: analytic_journal_billing_rate
-#: model:ir.module.module,shortdesc:analytic_journal_billing_rate.module_meta_information
-msgid "Analytic Journal Billing Rate"
-msgstr "Ποσό Τιμολόγησης Ημερολόγιου Αναλυτικής"
 
 #. module: analytic_journal_billing_rate
 #: field:analytic_journal_rate_grid,rate_id:0

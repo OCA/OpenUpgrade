@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2008-11-15 08:33:16+0000\n"
+"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
 "PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
 "Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: \n"
@@ -25,6 +25,19 @@ msgstr "Αριθμός ημερών για να γίνει η συναλλαγή
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
 msgstr "Invalid XML for View Architecture!"
+
+#. module: stock_location
+#: model:ir.module.module,shortdesc:stock_location.module_meta_information
+msgid "Stock Location Paths"
+msgstr "Διαδρομή Τοποθεσίας Αποθηκευμένων Προϊόντων"
+
+#. module: stock_location
+#: constraint:ir.model:0
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
+msgstr ""
+"Το όνομα του Αντικειμένου πρέπει να ξεκινά με x_ και δεν πρέπει να περιέχει "
+"ειδικούς χαρακτήρες!"
 
 #. module: stock_location
 #: selection:stock.location.path,auto:0
@@ -53,11 +66,6 @@ msgstr "Τοποθεσία προορισμού"
 #: field:stock.location.path,auto:0 selection:stock.location.path,auto:0
 msgid "Automatic Move"
 msgstr "Αυτόματη Μετακίνηση"
-
-#. module: stock_location
-#: view:product.product:0
-msgid "Procurement & Locations"
-msgstr "Προμήθειες & Τοποθεσίες"
 
 #. module: stock_location
 #: field:stock.location.path,product_id:0
@@ -93,6 +101,11 @@ msgstr ""
 "από την αρχική μετακίνηση."
 
 #. module: stock_location
+#: field:stock.location.path,name:0
+msgid "Operation"
+msgstr "Λειτουργία"
+
+#. module: stock_location
 #: view:product.product:0 field:product.product,path_ids:0
 #: view:stock.location.path:0
 msgid "Location Paths"
@@ -104,19 +117,6 @@ msgid "Delay (days)"
 msgstr "Καθυστέρηση (ημέρες)"
 
 #. module: stock_location
-#: field:stock.location.path,name:0
-msgid "Operation"
-msgstr "Λειτουργία"
-
-#. module: stock_location
-#: model:ir.module.module,shortdesc:stock_location.module_meta_information
-msgid "Stock Location Paths"
-msgstr "Διαδρομή Τοποθεσίας Αποθηκευμένων Προϊόντων"
-
-#. module: stock_location
-#: constraint:ir.model:0
-msgid ""
-"The Object name must start with x_ and not contain any special character !"
-msgstr ""
-"Το όνομα του Αντικειμένου πρέπει να ξεκινά με x_ και δεν πρέπει να περιέχει "
-"ειδικούς χαρακτήρες!"
+#: view:product.product:0
+msgid "Procurement & Locations"
+msgstr "Προμήθειες & Τοποθεσίες"

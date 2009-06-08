@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2008-11-15 08:33:16+0000\n"
+"POT-Creation-Date: 2009-06-08 21:23:38+0000\n"
 "PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
 "Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: \n"
@@ -15,6 +15,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: report_analytic_line
+#: model:ir.actions.act_window,name:report_analytic_line.act_acc_analytic_acc_2_report_acc_analytic_line_to_invoice
+msgid "Lines to Invoice"
+msgstr "Γραμμές προς τιμολόγηση"
+
+#. module: report_analytic_line
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr "Άκυρο XML για Αρχιτεκτονική Όψης!"
 
 #. module: report_analytic_line
 #: field:report.account.analytic.line.to.invoice,product_id:0
@@ -42,9 +52,9 @@ msgid "Sale price"
 msgstr "Τιμή Πώλησης"
 
 #. module: report_analytic_line
-#: constraint:ir.ui.view:0
-msgid "Invalid XML for View Architecture!"
-msgstr "Άκυρο XML για Αρχιτεκτονική Όψης!"
+#: model:ir.module.module,shortdesc:report_analytic_line.module_meta_information
+msgid "Analytic lines - Reporting"
+msgstr "Γραμμές αναλυτικής - Αναφορές"
 
 #. module: report_analytic_line
 #: field:report.account.analytic.line.to.invoice,name:0
@@ -67,6 +77,11 @@ msgid "Analytic lines to invoice report"
 msgstr "Αναφορά Γραμμών Αναλυτικής Προς Τιμολόγηση"
 
 #. module: report_analytic_line
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
+
+#. module: report_analytic_line
 #: field:report.account.analytic.line.to.invoice,unit_amount:0
 msgid "Units"
 msgstr "Μονάδες"
@@ -75,13 +90,3 @@ msgstr "Μονάδες"
 #: field:report.account.analytic.line.to.invoice,product_uom_id:0
 msgid "UoM"
 msgstr "Μονάδα Μέτρησης"
-
-#. module: report_analytic_line
-#: model:ir.actions.act_window,name:report_analytic_line.act_acc_analytic_acc_2_report_acc_analytic_line_to_invoice
-msgid "Lines to Invoice"
-msgstr "Γραμμές προς τιμολόγηση"
-
-#. module: report_analytic_line
-#: model:ir.module.module,shortdesc:report_analytic_line.module_meta_information
-msgid "Analytic lines - Reporting"
-msgstr "Γραμμές αναλυτικής - Αναφορές"

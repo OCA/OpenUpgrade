@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2008-11-15 08:33:16+0000\n"
+"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
 "PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
 "Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: \n"
@@ -26,12 +26,14 @@ msgstr ""
 "τιμολογηθεί"
 
 #. module: account_analytic_analysis
-#: constraint:ir.model:0
-msgid ""
-"The Object name must start with x_ and not contain any special character !"
-msgstr ""
-"Το όνομα του αντικειμένου θα πρέπει να ξεκινάει με x_ και να μην περιέχει "
-"ειδικούς χαρακτήρες!"
+#: model:ir.model,name:account_analytic_analysis.model_account_analytic_analysis_summary_user
+msgid "Hours summary by user"
+msgstr "Περίληψη ωρών ανα χρήστη"
+
+#. module: account_analytic_analysis
+#: field:account.analytic.account,last_invoice_date:0
+msgid "Last Invoice Date"
+msgstr "Τελευταία Ημερομηνία Τιμολογίου"
 
 #. module: account_analytic_analysis
 #: help:account.analytic.account,remaining_ca:0
@@ -41,12 +43,12 @@ msgstr ""
 "Τιμολογημένο Ποσό."
 
 #. module: account_analytic_analysis
-#: field:account.analytic.account,hours_quantity:0
-msgid "Hours Tot"
-msgstr "Συν. Ώρες"
+#: help:account.analytic.account,remaining_hours:0
+msgid "Computed using the formula: Maximum Quantity - Hours Tot."
+msgstr ""
+"Υπολογισμός χρησιμοποιώντας την φόρμουλα: Μεγιστη Ποσότητα - Συνολικές Ώρες."
 
 #. module: account_analytic_analysis
-#: model:ir.actions.act_window,name:account_analytic_analysis.action_account_analytic_all
 #: model:ir.ui.menu,name:account_analytic_analysis.menu_action_account_analytic_all
 msgid "All Analytic Accounts"
 msgstr "Όλοι οι Αναλυτικοί Λογαριασμοί"
@@ -75,9 +77,9 @@ msgid "Theorical Revenue"
 msgstr "Θεωρητικά Έσοδα"
 
 #. module: account_analytic_analysis
-#: field:account.analytic.account,last_invoice_date:0
-msgid "Last Invoice Date"
-msgstr "Τελευταία Ημερομηνία Τιμολογίου"
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
 
 #. module: account_analytic_analysis
 #: help:account.analytic.account,theorical_margin:0
@@ -86,9 +88,12 @@ msgstr ""
 "Υπολογισμός χρησιμοποιώντας την φόρμουλα: Θεωρητικά Έσοδα - Συνολικά Κόστη"
 
 #. module: account_analytic_analysis
-#: model:ir.model,name:account_analytic_analysis.model_account_analytic_analysis_summary_user
-msgid "Hours summary by user"
-msgstr "Περίληψη ωρών ανα χρήστη"
+#: constraint:ir.model:0
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
+msgstr ""
+"Το όνομα του αντικειμένου θα πρέπει να ξεκινάει με x_ και να μην περιέχει "
+"ειδικούς χαρακτήρες!"
 
 #. module: account_analytic_analysis
 #: model:ir.actions.act_window,name:account_analytic_analysis.action_account_analytic_new
@@ -129,9 +134,9 @@ msgstr ""
 "have been invoiced."
 
 #. module: account_analytic_analysis
-#: field:account.analytic.account,remaining_hours:0
-msgid "Remaining Hours"
-msgstr "Υπολειπόμενες Ώρες"
+#: model:ir.ui.menu,name:account_analytic_analysis.menu_invoicing
+msgid "Invoicing"
+msgstr "Τιμολόγηση"
 
 #. module: account_analytic_analysis
 #: field:account.analytic.account,last_worked_date:0
@@ -151,6 +156,11 @@ msgid ""
 msgstr ""
 "Αριθμός ωρών που δαπανήθηκαν σε αυτόν τον αναλυτικό λογαριασμό (απο "
 "χρονοδιάγραμμα). Υπολογίζει όλα τα ημερολόγια που έχουν τύπο 'γενικό'."
+
+#. module: account_analytic_analysis
+#: field:account.analytic.account,remaining_hours:0
+msgid "Remaining Hours"
+msgstr "Υπολειπόμενες Ώρες"
 
 #. module: account_analytic_analysis
 #: help:account.analytic.account,ca_theorical:0
@@ -176,9 +186,10 @@ msgid "My Pending Accounts"
 msgstr "Οι Αναμενόμενοι Λογαριασμοί Μου"
 
 #. module: account_analytic_analysis
-#: field:account.analytic.account,ca_to_invoice:0
-msgid "Uninvoiced Amount"
-msgstr "Μή Τιμολογημένο Ποσό"
+#: model:ir.actions.act_window,name:account_analytic_analysis.action_hr_tree_invoiced_my
+#: model:ir.ui.menu,name:account_analytic_analysis.menu_action_hr_tree_invoiced_my
+msgid "My Uninvoiced Entries"
+msgstr "Οι Μή Τιμολογημένες Εγγραφές Μου"
 
 #. module: account_analytic_analysis
 #: help:account.analytic.account,real_margin:0
@@ -193,20 +204,32 @@ msgid "My Accounts"
 msgstr "Οι Λογαριασμοί Μου"
 
 #. module: account_analytic_analysis
+#: model:ir.module.module,description:account_analytic_analysis.module_meta_information
+msgid ""
+"Modify account analytic view to show\n"
+"important data for project manager of services companies.\n"
+"Add menu to show relevant information for each manager."
+msgstr ""
+
+#. module: account_analytic_analysis
 #: field:account.analytic.account,hours_qtt_non_invoiced:0
 msgid "Uninvoiced Hours"
 msgstr "Μή Τιμολογημένες Ώρες"
 
 #. module: account_analytic_analysis
-#: model:ir.actions.act_window,name:account_analytic_analysis.action_account_analytic_managed_overpassed
-#: model:ir.ui.menu,name:account_analytic_analysis.menu_action_account_analytic_managed_overpassed
-msgid "Overpassed Accounts"
-msgstr "Overpassed Accounts"
+#: field:account.analytic.account,hours_quantity:0
+msgid "Hours Tot"
+msgstr "Συν. Ώρες"
 
 #. module: account_analytic_analysis
 #: model:ir.ui.menu,name:account_analytic_analysis.menu_account
 msgid "Analytic Accounts"
 msgstr "Αναλυτικοί Λογαριασμοί"
+
+#. module: account_analytic_analysis
+#: model:ir.module.module,shortdesc:account_analytic_analysis.module_meta_information
+msgid "report_account_analytic"
+msgstr ""
 
 #. module: account_analytic_analysis
 #: field:account.analytic.account,ca_invoiced:0
@@ -219,22 +242,20 @@ msgid "Financial Project Management"
 msgstr "Οικονομική Διαχείριση Έργου"
 
 #. module: account_analytic_analysis
-#: model:ir.actions.act_window,name:account_analytic_analysis.action_hr_tree_invoiced_my
-#: model:ir.ui.menu,name:account_analytic_analysis.menu_action_hr_tree_invoiced_my
-msgid "My Uninvoiced Entries"
-msgstr "Οι Μή Τιμολογημένες Εγγραφές Μου"
+#: field:account.analytic.account,last_worked_invoiced_date:0
+msgid "Date of Last Invoiced Cost"
+msgstr "Ημερομηνία Τελευταίου Τιμολογημένου Κόστους"
+
+#. module: account_analytic_analysis
+#: field:account.analytic.account,ca_to_invoice:0
+msgid "Uninvoiced Amount"
+msgstr "Μή Τιμολογημένο Ποσό"
 
 #. module: account_analytic_analysis
 #: model:ir.actions.act_window,name:account_analytic_analysis.action_account_analytic_all_pending
 #: model:ir.ui.menu,name:account_analytic_analysis.menu_action_account_analytic_all_pending
 msgid "Pending Analytic Accounts"
 msgstr "Αναμενόμενοι Αναλυτικοί Λογαριασμοί"
-
-#. module: account_analytic_analysis
-#: help:account.analytic.account,remaining_hours:0
-msgid "Computed using the formula: Maximum Quantity - Hours Tot."
-msgstr ""
-"Υπολογισμός χρησιμοποιώντας την φόρμουλα: Μεγιστη Ποσότητα - Συνολικές Ώρες."
 
 #. module: account_analytic_analysis
 #: field:account.analytic.account,hours_qtt_invoiced:0
@@ -257,17 +278,6 @@ msgid "Hours summary by month"
 msgstr "Περίληψη Ωρών ανα μήνα"
 
 #. module: account_analytic_analysis
-#: code:addons/account_analytic_analysis/account_analytic_analysis.py:0
-#, python-format
-msgid "AccessError"
-msgstr ""
-
-#. module: account_analytic_analysis
-#: model:ir.ui.menu,name:account_analytic_analysis.menu_invoicing
-msgid "Invoicing"
-msgstr "Τιμολόγηση"
-
-#. module: account_analytic_analysis
 #: help:account.analytic.account,real_margin_rate:0
 msgid "Computes using the formula: (Real Margin / Total Costs) * 100."
 msgstr ""
@@ -287,11 +297,6 @@ msgstr ""
 #: view:account.analytic.account:0
 msgid "Analytic accounts"
 msgstr "Αναλυτικοί λογαριασμοί"
-
-#. module: account_analytic_analysis
-#: field:account.analytic.account,last_worked_invoiced_date:0
-msgid "Date of Last Invoiced Cost"
-msgstr "Ημερομηνία Τελευταίου Τιμολογημένου Κόστους"
 
 #. module: account_analytic_analysis
 #: field:account.analytic.account,remaining_ca:0
@@ -325,13 +330,6 @@ msgid "Total Time"
 msgstr "Συνολικός Χρόνος"
 
 #. module: account_analytic_analysis
-#: code:addons/account_analytic_analysis/account_analytic_analysis.py:0
-#, python-format
-msgid "You try to bypass an access rule (Document type: %s)."
-msgstr ""
-"Προσπαθείτε να προσπεράσετε έναν κανόνα πρόσβασης (Τύπος Εγγράφου: %s)."
-
-#. module: account_analytic_analysis
 #: field:account.analytic.account,month_ids:0
 #: field:account_analytic_analysis.summary.month,month:0
 msgid "Month"
@@ -342,6 +340,12 @@ msgstr "Μήνας"
 #: field:account_analytic_analysis.summary.user,account_id:0
 msgid "Analytic Account"
 msgstr "Αναλυτικός Λογαριασμός"
+
+#. module: account_analytic_analysis
+#: model:ir.actions.act_window,name:account_analytic_analysis.action_account_analytic_managed_overpassed
+#: model:ir.ui.menu,name:account_analytic_analysis.menu_action_account_analytic_managed_overpassed
+msgid "Overpassed Accounts"
+msgstr "Overpassed Accounts"
 
 #. module: account_analytic_analysis
 #: model:ir.actions.act_window,name:account_analytic_analysis.action_hr_tree_invoiced_all
@@ -357,3 +361,7 @@ msgid ""
 msgstr ""
 "Συνολικά κόστη για τον λογαριασμό. Περιλαμβάνει τα πραγματικά κόστη (απο "
 "τιμολόγια) και έμεσα κοστη, όπως χρόνος που δαπανήθηκε σε χρονοδιαγράμματα."
+
+#~ msgid "You try to bypass an access rule (Document type: %s)."
+#~ msgstr ""
+#~ "Προσπαθείτε να προσπεράσετε έναν κανόνα πρόσβασης (Τύπος Εγγράφου: %s)."

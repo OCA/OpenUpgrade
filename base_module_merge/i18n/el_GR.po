@@ -1,12 +1,12 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* base_module_merge
+# 	* base_module_merge
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2009-05-29 23:55+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: \n"
@@ -14,6 +14,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+
+#. module: base_module_merge
+#: model:ir.module.module,shortdesc:base_module_merge.module_meta_information
+msgid "Module Merger"
+msgstr "Συγχωνευτής Υπό-Προγραμμάτων"
 
 #. module: base_module_merge
 #: wizard_field:base_module_merge.module_merge,info,category:0
@@ -94,11 +99,6 @@ msgid "Module .zip File"
 msgstr "Αρχείο .zip Υπό-Προγράμματος"
 
 #. module: base_module_merge
-#: model:ir.module.module,shortdesc:base_module_merge.module_meta_information
-msgid "Module Merger"
-msgstr "Συγχωνευτής Υπό-Προγραμμάτων"
-
-#. module: base_module_merge
 #: wizard_view:base_module_merge.module_merge,save:0
 msgid "Module successfully created !"
 msgstr "Το Υπό-Πρόγραμμα δημιουργήθηκε επιτυχώς!"
@@ -132,8 +132,15 @@ msgstr "Κανονικά Δεδομένα"
 
 #. module: base_module_merge
 #: wizard_view:base_module_merge.module_merge,save:0
-msgid "If you think your module could interrest others people, we'd like you to publish it on OpenERP.com, in the 'Modules' section. You can do it through the website or using features of the 'base_module_publish' module."
-msgstr "Αν νομίζετε ότι το Υπό-Πρόγραμμά σας μπορεί να ενδιαφέρει και άλλους, σας παροτρύνουμε να το δημοσιεύσετε στο OpenERP.com, στο 'Modules' section. Μπορείτε να το κάνετε μέσω της ιστοσελίδας ή χρησιμοποιώντας τις λειτουργίες του Υπό-Προγράμματος 'base_module_publish'."
+msgid ""
+"If you think your module could interrest others people, we'd like you to "
+"publish it on OpenERP.com, in the 'Modules' section. You can do it through "
+"the website or using features of the 'base_module_publish' module."
+msgstr ""
+"Αν νομίζετε ότι το Υπό-Πρόγραμμά σας μπορεί να ενδιαφέρει και άλλους, σας "
+"παροτρύνουμε να το δημοσιεύσετε στο OpenERP.com, στο 'Modules' section. "
+"Μπορείτε να το κάνετε μέσω της ιστοσελίδας ή χρησιμοποιώντας τις λειτουργίες "
+"του Υπό-Προγράμματος 'base_module_publish'."
 
 #. module: base_module_merge
 #: help:base_module_merge.module_merge,init,modules_list:0
@@ -160,4 +167,3 @@ msgstr "Ακύρωση"
 #: wizard_button:base_module_merge.module_merge,save,end:0
 msgid "Close"
 msgstr "Κλείσιμο"
-

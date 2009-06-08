@@ -1,12 +1,12 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* board_manufacturing
+# 	* board_manufacturing
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
 "PO-Revision-Date: 2009-06-07 21:10+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: \n"
@@ -32,6 +32,11 @@ msgstr "Invalid XML for View Architecture!"
 
 #. module: board_manufacturing
 #: view:board.board:0
+msgid "Deliveries (Out packing)"
+msgstr "Παραδόσεις (Εξερχόμενα)"
+
+#. module: board_manufacturing
+#: view:board.board:0
 msgid "Manufacturing board"
 msgstr "Πίνακας  παρασκευής"
 
@@ -41,9 +46,9 @@ msgid "Production"
 msgstr "Παραγωγή"
 
 #. module: board_manufacturing
-#: view:board.board:0
-msgid "Deliveries (Out packing)"
-msgstr "Παραδόσεις (Εξερχόμενα)"
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
 
 #. module: board_manufacturing
 #: model:ir.actions.act_window,name:board_manufacturing.open_board_manufacturing
@@ -65,4 +70,3 @@ msgstr "Απόκλιση αξίας αποθέματος"
 #: view:board.board:0
 msgid "Workcenter futur load"
 msgstr "Μελλοντικά φορτία Κέντρου εργασιών"
-

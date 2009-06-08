@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2008-11-15 08:33:16+0000\n"
+"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
 "PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
 "Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: \n"
@@ -42,9 +42,9 @@ msgid "Account5 Id"
 msgstr "Account5 Id"
 
 #. module: account_analytic_plans
-#: model:ir.model,name:account_analytic_plans.model_account_analytic_plan_instance
-msgid "Analytic Plan Instance"
-msgstr "Υπόδειξη Πλάνου Αναλυτικής"
+#: wizard_field:wizard.crossovered.analytic,init,date2:0
+msgid "End Date"
+msgstr "Ημερομηνία Λήξης"
 
 #. module: account_analytic_plans
 #: field:account.analytic.plan.instance.line,rate:0
@@ -52,9 +52,12 @@ msgid "Rate (%)"
 msgstr "Ποσοστό (%)"
 
 #. module: account_analytic_plans
-#: view:account.analytic.plan.instance.line:0
-msgid "Analytic Distribution Line"
-msgstr "Γραμμή Διανομής Αναλυτικής"
+#: view:account.analytic.plan:0 field:account.analytic.plan,name:0
+#: field:account.analytic.plan.line,plan_id:0
+#: model:ir.actions.act_window,name:account_analytic_plans.account_analytic_plan_form_action
+#: model:ir.ui.menu,name:account_analytic_plans.menu_account_analytic_plan_action
+msgid "Analytic Plan"
+msgstr "Πλάνο Αναλυτικής"
 
 #. module: account_analytic_plans
 #: model:ir.model,name:account_analytic_plans.model_account_analytic_plan_instance_line
@@ -67,14 +70,14 @@ msgid "Analytic Distribution Lines"
 msgstr "Γραμμές Διανομής Αναλυτικής"
 
 #. module: account_analytic_plans
-#: wizard_button:wizard.crossovered.analytic,init,print:0
-msgid "Print"
-msgstr "Εκτύπωση"
+#: field:account.analytic.plan.instance,code:0
+msgid "Distribution Code"
+msgstr "Κώδικας Διανομής"
 
 #. module: account_analytic_plans
-#: rml:account.analytic.account.crossovered.analytic:0
-msgid "Printing date:"
-msgstr "Ημερομηνία εκτύπωσης:"
+#: field:account.analytic.plan.instance.line,plan_id:0
+msgid "Plan Id"
+msgstr "Κωδ Πλάνου"
 
 #. module: account_analytic_plans
 #: model:ir.actions.act_window,name:account_analytic_plans.account_analytic_plan_instance_action
@@ -87,12 +90,9 @@ msgid "Account Name"
 msgstr "Ονομασία λογαριασμού"
 
 #. module: account_analytic_plans
-#: view:account.analytic.plan:0 field:account.analytic.plan,name:0
-#: field:account.analytic.plan.line,plan_id:0
-#: model:ir.actions.act_window,name:account_analytic_plans.account_analytic_plan_form_action
-#: model:ir.ui.menu,name:account_analytic_plans.menu_account_analytic_plan_action
-msgid "Analytic Plan"
-msgstr "Πλάνο Αναλυτικής"
+#: view:account.analytic.plan.instance.line:0
+msgid "Analytic Distribution Line"
+msgstr "Γραμμή Διανομής Αναλυτικής"
 
 #. module: account_analytic_plans
 #: rml:account.analytic.account.crossovered.analytic:0
@@ -100,14 +100,19 @@ msgid "Currency:"
 msgstr "Νόμισμα:"
 
 #. module: account_analytic_plans
-#: rml:account.analytic.account.crossovered.analytic:0
-msgid "Percentage"
-msgstr "Ποσοστό"
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
 
 #. module: account_analytic_plans
 #: field:account.analytic.plan.line,name:0
 msgid "Plan Name"
 msgstr "Όνομα Πλάνου"
+
+#. module: account_analytic_plans
+#: rml:account.analytic.account.crossovered.analytic:0
+msgid "Percentage"
+msgstr "Ποσοστό"
 
 #. module: account_analytic_plans
 #: wizard_field:wizard.crossovered.analytic,init,empty_line:0
@@ -120,19 +125,15 @@ msgid "Select Information"
 msgstr "Επιλογή Πληροφοριών"
 
 #. module: account_analytic_plans
-#: field:account.analytic.plan.instance.line,analytic_account_id:0
-msgid "Analytic Account"
-msgstr "Αναλυτικός Λογαριασμός"
+#: field:account.analytic.plan.instance,account3_ids:0
+msgid "Account3 Id"
+msgstr "Account3 Id"
 
 #. module: account_analytic_plans
-#: field:account.analytic.plan.instance,code:0
-msgid "Distribution Code"
-msgstr "Κώδικας Διανομής"
-
-#. module: account_analytic_plans
-#: rml:account.analytic.account.crossovered.analytic:0
-msgid "%"
-msgstr ""
+#: field:account.analytic.plan.instance,journal_id:0
+#: wizard_field:wizard.crossovered.analytic,init,journal_ids:0
+msgid "Analytic Journal"
+msgstr "Ημερολόγιο Αναλυτικής"
 
 #. module: account_analytic_plans
 #: rml:account.analytic.account.crossovered.analytic:0
@@ -201,154 +202,14 @@ msgid "Distribution Model Saved"
 msgstr "Μοντέλο Διανομής Αποθηκεύτηκε"
 
 #. module: account_analytic_plans
-#: wizard_field:wizard.crossovered.analytic,init,date2:0
-msgid "End Date"
-msgstr "Ημερομηνία Λήξης"
+#: model:ir.model,name:account_analytic_plans.model_account_analytic_plan_instance
+msgid "Analytic Plan Instance"
+msgstr "Υπόδειξη Πλάνου Αναλυτικής"
 
 #. module: account_analytic_plans
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
 msgstr "Άκυρο XML για Αρχιτεκτονική Όψης!"
-
-#. module: account_analytic_plans
-#: view:account.analytic.plan.line:0
-#: model:ir.model,name:account_analytic_plans.model_account_analytic_plan_line
-msgid "Analytic Plan Lines"
-msgstr "Γραμμές Πλάνου Αναλυτικής"
-
-#. module: account_analytic_plans
-#: field:account.analytic.plan.line,min_required:0
-msgid "Minimum Allowed (%)"
-msgstr "Ελάχιστη Επιτρεπόμενη (%)"
-
-#. module: account_analytic_plans
-#: field:account.analytic.plan.instance,plan_id:0
-msgid "Model's Plan"
-msgstr "Πλάνο Μοντέλου"
-
-#. module: account_analytic_plans
-#: field:account.analytic.plan.instance,account2_ids:0
-msgid "Account2 Id"
-msgstr "Account2 Id"
-
-#. module: account_analytic_plans
-#: rml:account.analytic.account.crossovered.analytic:0
-msgid "Amount"
-msgstr "Ποσό"
-
-#. module: account_analytic_plans
-#: help:account.analytic.plan.line,root_analytic_id:0
-msgid "Root account of this plan."
-msgstr "Κύριος λογαριασμός για αυτό το πλάνο."
-
-#. module: account_analytic_plans
-#: field:account.analytic.plan.instance,account6_ids:0
-msgid "Account6 Id"
-msgstr "Account6 Id"
-
-#. module: account_analytic_plans
-#: field:account.analytic.plan.instance,journal_id:0
-#: wizard_field:wizard.crossovered.analytic,init,journal_ids:0
-msgid "Analytic Journal"
-msgstr "Ημερολόγιο Αναλυτικής"
-
-#. module: account_analytic_plans
-#: rml:account.analytic.account.crossovered.analytic:0
-msgid "Quantity"
-msgstr "Ποσότητα"
-
-#. module: account_analytic_plans
-#: field:account.analytic.plan.instance,account_ids:0
-msgid "Account Id"
-msgstr "Account Id"
-
-#. module: account_analytic_plans
-#: rml:account.analytic.account.crossovered.analytic:0
-msgid "Code"
-msgstr "Κωδικός"
-
-#. module: account_analytic_plans
-#: wizard_button:create.model,info,end:0
-msgid "OK"
-msgstr "ΟΚ"
-
-#. module: account_analytic_plans
-#: field:account.analytic.plan.line,root_analytic_id:0
-msgid "Root Account"
-msgstr "Κύριος Λογαριασμός"
-
-#. module: account_analytic_plans
-#: wizard_view:create.model,info:0
-msgid ""
-"This distribution model has been saved. You will be able to reuse it later."
-msgstr ""
-"Αυτό το μοντέλο διανομής έχει αποθηκευτεί. Θα μπορείτε να το "
-"χρησιμοποιείσετε ξανα αργότερα."
-
-#. module: account_analytic_plans
-#: field:account.analytic.plan.line,sequence:0
-msgid "Sequence"
-msgstr "Ακολουθία"
-
-#. module: account_analytic_plans
-#: rml:account.analytic.account.crossovered.analytic:0
-msgid "Period from"
-msgstr "Περίοδος απο"
-
-#. module: account_analytic_plans
-#: field:account.analytic.plan.instance,account3_ids:0
-msgid "Account3 Id"
-msgstr "Account3 Id"
-
-#. module: account_analytic_plans
-#: field:account.analytic.plan.instance.line,plan_id:0
-msgid "Plan Id"
-msgstr "Κωδ Πλάνου"
-
-#. module: account_analytic_plans
-#: model:ir.ui.menu,name:account_analytic_plans.menu_account_analytic_plan_instance_action
-msgid "Analytic Distribution's models"
-msgstr "Μοντέλα Διανομών Αναλυτικής"
-
-#. module: account_analytic_plans
-#: wizard_button:wizard.crossovered.analytic,init,end:0
-msgid "Cancel"
-msgstr "Άκυρο"
-
-#. module: account_analytic_plans
-#: wizard_field:wizard.crossovered.analytic,init,date1:0
-msgid "Start Date"
-msgstr "Ημερομηνία Από"
-
-#. module: account_analytic_plans
-#: rml:account.analytic.account.crossovered.analytic:0
-msgid "at"
-msgstr "σε"
-
-#. module: account_analytic_plans
-#: code:addons/account_analytic_plans/account_analytic_plans.py:0
-#, python-format
-msgid "A model having this name and code already exists !"
-msgstr "Ένα μοντέλο που έχει αυτό το όνομα και κωδικό υπάρχει ήδη!"
-
-#. module: account_analytic_plans
-#: code:addons/account_analytic_plans/wizard/create_model.py:0
-#, python-format
-msgid "No analytic plan defined !"
-msgstr "Κανένα πλάνο αναλυτικής δεν προσδιορίστηκε!"
-
-#. module: account_analytic_plans
-#: code:addons/account_analytic_plans/account_analytic_plans.py:0
-#: code:addons/account_analytic_plans/wizard/create_model.py:0
-#, python-format
-msgid "Error"
-msgstr "Σφάλμα"
-
-#. module: account_analytic_plans
-#: code:addons/account_analytic_plans/wizard/wizard_crossovered_analytic.py:0
-#, python-format
-msgid "User Error"
-msgstr "Σφάλμα Χρήστη"
 
 #. module: account_analytic_plans
 #: model:ir.actions.act_window,name:account_analytic_plans.account_analytic_instance_model_open
@@ -426,14 +287,134 @@ msgid "Multiple-plans management in Analytic Accounting"
 msgstr "Διαχείριση Πολλαπλών πλάνων στην Αναλυτική Λογιστική"
 
 #. module: account_analytic_plans
-#: code:addons/account_analytic_plans/wizard/create_model.py:0
-#, python-format
-msgid "Please put a name and a code before saving the model !"
-msgstr ""
-"Παρακαλώ εισάγετε ένα όνομα και έναν κωδικό πριν αποθηκεύσετε το μοντέλο!"
+#: view:account.analytic.plan.line:0
+#: model:ir.model,name:account_analytic_plans.model_account_analytic_plan_line
+msgid "Analytic Plan Lines"
+msgstr "Γραμμές Πλάνου Αναλυτικής"
 
 #. module: account_analytic_plans
-#: code:addons/account_analytic_plans/account_analytic_plans.py:0
-#, python-format
-msgid "Value Error"
-msgstr "Σφάλμα Αξίας"
+#: field:account.analytic.plan.line,min_required:0
+msgid "Minimum Allowed (%)"
+msgstr "Ελάχιστη Επιτρεπόμενη (%)"
+
+#. module: account_analytic_plans
+#: field:account.analytic.plan.instance,plan_id:0
+msgid "Model's Plan"
+msgstr "Πλάνο Μοντέλου"
+
+#. module: account_analytic_plans
+#: field:account.analytic.plan.instance,account2_ids:0
+msgid "Account2 Id"
+msgstr "Account2 Id"
+
+#. module: account_analytic_plans
+#: rml:account.analytic.account.crossovered.analytic:0
+msgid "Amount"
+msgstr "Ποσό"
+
+#. module: account_analytic_plans
+#: help:account.analytic.plan.line,root_analytic_id:0
+msgid "Root account of this plan."
+msgstr "Κύριος λογαριασμός για αυτό το πλάνο."
+
+#. module: account_analytic_plans
+#: field:account.analytic.plan.instance,account6_ids:0
+msgid "Account6 Id"
+msgstr "Account6 Id"
+
+#. module: account_analytic_plans
+#: rml:account.analytic.account.crossovered.analytic:0
+msgid "Quantity"
+msgstr "Ποσότητα"
+
+#. module: account_analytic_plans
+#: field:account.analytic.plan.instance,account_ids:0
+msgid "Account Id"
+msgstr "Account Id"
+
+#. module: account_analytic_plans
+#: rml:account.analytic.account.crossovered.analytic:0
+msgid "Code"
+msgstr "Κωδικός"
+
+#. module: account_analytic_plans
+#: wizard_button:create.model,info,end:0
+msgid "OK"
+msgstr "ΟΚ"
+
+#. module: account_analytic_plans
+#: field:account.analytic.plan.line,root_analytic_id:0
+msgid "Root Account"
+msgstr "Κύριος Λογαριασμός"
+
+#. module: account_analytic_plans
+#: wizard_button:wizard.crossovered.analytic,init,print:0
+msgid "Print"
+msgstr "Εκτύπωση"
+
+#. module: account_analytic_plans
+#: field:account.analytic.plan.line,sequence:0
+msgid "Sequence"
+msgstr "Ακολουθία"
+
+#. module: account_analytic_plans
+#: rml:account.analytic.account.crossovered.analytic:0
+msgid "Period from"
+msgstr "Περίοδος απο"
+
+#. module: account_analytic_plans
+#: field:account.analytic.plan.instance.line,analytic_account_id:0
+msgid "Analytic Account"
+msgstr "Αναλυτικός Λογαριασμός"
+
+#. module: account_analytic_plans
+#: rml:account.analytic.account.crossovered.analytic:0
+msgid "Printing date:"
+msgstr "Ημερομηνία εκτύπωσης:"
+
+#. module: account_analytic_plans
+#: model:ir.ui.menu,name:account_analytic_plans.menu_account_analytic_plan_instance_action
+msgid "Analytic Distribution's models"
+msgstr "Μοντέλα Διανομών Αναλυτικής"
+
+#. module: account_analytic_plans
+#: wizard_view:create.model,info:0
+msgid ""
+"This distribution model has been saved. You will be able to reuse it later."
+msgstr ""
+"Αυτό το μοντέλο διανομής έχει αποθηκευτεί. Θα μπορείτε να το "
+"χρησιμοποιείσετε ξανα αργότερα."
+
+#. module: account_analytic_plans
+#: wizard_button:wizard.crossovered.analytic,init,end:0
+msgid "Cancel"
+msgstr "Άκυρο"
+
+#. module: account_analytic_plans
+#: wizard_field:wizard.crossovered.analytic,init,date1:0
+msgid "Start Date"
+msgstr "Ημερομηνία Από"
+
+#. module: account_analytic_plans
+#: rml:account.analytic.account.crossovered.analytic:0
+msgid "at"
+msgstr "σε"
+
+#~ msgid "A model having this name and code already exists !"
+#~ msgstr "Ένα μοντέλο που έχει αυτό το όνομα και κωδικό υπάρχει ήδη!"
+
+#~ msgid "No analytic plan defined !"
+#~ msgstr "Κανένα πλάνο αναλυτικής δεν προσδιορίστηκε!"
+
+#~ msgid "Error"
+#~ msgstr "Σφάλμα"
+
+#~ msgid "User Error"
+#~ msgstr "Σφάλμα Χρήστη"
+
+#~ msgid "Please put a name and a code before saving the model !"
+#~ msgstr ""
+#~ "Παρακαλώ εισάγετε ένα όνομα και έναν κωδικό πριν αποθηκεύσετε το μοντέλο!"
+
+#~ msgid "Value Error"
+#~ msgstr "Σφάλμα Αξίας"

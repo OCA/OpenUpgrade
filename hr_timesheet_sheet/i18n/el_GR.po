@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2008-11-15 08:33:16+0000\n"
+"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
 "PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
 "Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: \n"
@@ -29,15 +29,9 @@ msgid "Sheet"
 msgstr "Φύλλο"
 
 #. module: hr_timesheet_sheet
-#: model:process.transition,note:hr_timesheet_sheet.process_transition_validatetimesheet0
-msgid "Timesheet is validate by project manager."
-msgstr "Το Φύλλο Xρόνου Eργασίας επικυρώνεται από τη Διεύθυνση Έργου"
-
-#. module: hr_timesheet_sheet
-#: code:addons/hr_timesheet_sheet/wizard/wizard_timesheet_current.py:0
-#, python-format
-msgid "No employee defined for your user !"
-msgstr "Δεν έχει οριστεί υπάλληλος για το χρήστη σας!"
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: field:hr_timesheet_sheet.sheet,total_attendance:0
@@ -81,9 +75,9 @@ msgid "Set to Draft"
 msgstr "Ορισμός ως Πρόχειρο"
 
 #. module: hr_timesheet_sheet
-#: field:hr_timesheet_sheet.sheet,date_to:0
-msgid "Date to"
-msgstr "Έως ημερ/νία"
+#: model:process.node,note:hr_timesheet_sheet.process_node_attendance0
+msgid "Defines employee's timesheet entry"
+msgstr "Ορίζει τις εγγραφές Φύλλου Xρόνου Eργασίας"
 
 #. module: hr_timesheet_sheet
 #: model:process.node,name:hr_timesheet_sheet.process_node_drafttimesheetsheet0
@@ -112,12 +106,6 @@ msgid "Present"
 msgstr "Παρών/ούσα"
 
 #. module: hr_timesheet_sheet
-#: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:0
-#, python-format
-msgid "UserError"
-msgstr "UserError"
-
-#. module: hr_timesheet_sheet
 #: view:hr_timesheet_sheet.sheet:0
 #: model:process.transition.action,name:hr_timesheet_sheet.process_transition_action_refusetimesheet0
 msgid "Refuse"
@@ -129,32 +117,19 @@ msgid "Validated Timesheet"
 msgstr "Επικυρωμένο Φύλλο Xρόνου Eργασίας"
 
 #. module: hr_timesheet_sheet
-#: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:0
-#, python-format
-msgid "You can not sign in from an other date than today"
-msgstr ""
-"Δεν μπορέιτε να προσέλθετε για εργασία σε άλλη ημερ/νία από τη σημερινή"
-
-#. module: hr_timesheet_sheet
 #: view:hr_timesheet_sheet.sheet.day:0
 msgid "Total Difference"
 msgstr "Σύνολο Διαφοράς"
 
 #. module: hr_timesheet_sheet
-#: model:process.node,name:hr_timesheet_sheet.process_node_timesheetconfirming0
-msgid "Timesheet Confirming"
-msgstr ""
+#: model:process.transition,name:hr_timesheet_sheet.process_transition_phonecallencoding0
+msgid "Phone call encoding"
+msgstr "Κωδικοποίηση τηλεφωνημάτων"
 
 #. module: hr_timesheet_sheet
 #: model:ir.actions.act_window,name:hr_timesheet_sheet.act_hr_timesheet_sheet_sheet_by_account
 msgid "Timesheet by Day"
 msgstr "Φύλλο Xρόνου Eργασίας ανά Ημέρα"
-
-#. module: hr_timesheet_sheet
-#: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:0
-#, python-format
-msgid "Warning !"
-msgstr "Προσοχή!"
 
 #. module: hr_timesheet_sheet
 #: model:process.node,note:hr_timesheet_sheet.process_node_timesheet0
@@ -196,9 +171,9 @@ msgid "Date from"
 msgstr "Από ημ/νία"
 
 #. module: hr_timesheet_sheet
-#: model:process.node,note:hr_timesheet_sheet.process_node_confirmedtimesheet0
-msgid "At the end of the period (week/month)"
-msgstr "Στο τέλος περιόδου (εβδομάδα/μήνας)"
+#: model:process.process,name:hr_timesheet_sheet.process_process_hrtimesheetprocess0
+msgid "Hr Timesheet Process"
+msgstr "Διαδικασία Χρόνου Εργασίας Ανθρώπινου Δυναμικού"
 
 #. module: hr_timesheet_sheet
 #: model:process.node,name:hr_timesheet_sheet.process_node_analyticcost0
@@ -254,13 +229,6 @@ msgid "Timesheet sheet confirm at the end of the period"
 msgstr "Επιβεβαίωση Φύλλου Xρόνου Eργασίας στο τέλος της περιόδου"
 
 #. module: hr_timesheet_sheet
-#: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:0
-#: code:addons/hr_timesheet_sheet/wizard/wizard_timesheet_current.py:0
-#, python-format
-msgid "Error !"
-msgstr "Σφάλμα!"
-
-#. module: hr_timesheet_sheet
 #: field:hr_timesheet_sheet.sheet.account,total:0
 msgid "Total Time"
 msgstr "Συνολικός Χρόνος"
@@ -269,15 +237,6 @@ msgstr "Συνολικός Χρόνος"
 #: model:ir.actions.act_window,name:hr_timesheet_sheet.act_hr_timesheet_sheet_sheet_2_hr_analytic_timesheet
 msgid "Timesheet Lines"
 msgstr "Γραμμές Φύλλου Xρόνου Eργασίας"
-
-#. module: hr_timesheet_sheet
-#: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:0
-#, python-format
-msgid ""
-"Please verify that the total difference of the sheet is lower than %.2f !"
-msgstr ""
-"Παρακαλώ επιβεβαιώστε ότι η συνολική διαφορά του φύλλου είναι μικρότερη από "
-"%.2f !"
 
 #. module: hr_timesheet_sheet
 #: model:process.transition,note:hr_timesheet_sheet.process_transition_confirmtimesheetsheet0
@@ -290,9 +249,9 @@ msgid "No employee defined"
 msgstr "Δεν ορίστηκε υπάλληλος!"
 
 #. module: hr_timesheet_sheet
-#: selection:hr_timesheet_sheet.sheet,state:0
-msgid "Done"
-msgstr "Έγινε"
+#: model:process.node,name:hr_timesheet_sheet.process_node_confirmedtimesheet0
+msgid "Confirmed Timesheet"
+msgstr "Επιβεβαιωμένο Φύλλο Xρόνου Eργασίας"
 
 #. module: hr_timesheet_sheet
 #: view:res.company:0
@@ -395,20 +354,14 @@ msgid "Timesheets To Confirm"
 msgstr "Φύλλα Xρόνου Eργασίας προς Επιβεβαίωση"
 
 #. module: hr_timesheet_sheet
-#: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:0
-#, python-format
-msgid "You can not sign out from an other date than today"
-msgstr "Δεν μπορείτε να αποχωρήσετε άλλη ημέρα παρά μόνο σήμερα!"
-
-#. module: hr_timesheet_sheet
 #: field:hr_timesheet_sheet.sheet,state:0
 msgid "Status"
 msgstr "Κατάσταση"
 
 #. module: hr_timesheet_sheet
-#: model:process.node,note:hr_timesheet_sheet.process_node_attendance0
-msgid "Defines employee's timesheet entry"
-msgstr "Ορίζει τις εγγραφές Φύλλου Xρόνου Eργασίας"
+#: field:hr_timesheet_sheet.sheet,date_to:0
+msgid "Date to"
+msgstr "Έως ημερ/νία"
 
 #. module: hr_timesheet_sheet
 #: field:hr_timesheet_sheet.sheet,state_attendance:0
@@ -421,9 +374,9 @@ msgid "Invoice on timesheet"
 msgstr "Τιμολόγιο στο Φύλλο Xρόνου Eργασίας"
 
 #. module: hr_timesheet_sheet
-#: field:hr_timesheet_sheet.sheet,user_id:0
-msgid "User"
-msgstr "Χρήστης"
+#: model:process.node,note:hr_timesheet_sheet.process_node_invoiceonwork0
+msgid "Invoice based on timesheet"
+msgstr "Τιμολόγιο με βάση το Φύλλο Xρόνου Eργασίας"
 
 #. module: hr_timesheet_sheet
 #: model:ir.actions.act_window,name:hr_timesheet_sheet.act_hr_timesheet_sheet_sheet_by_day
@@ -436,21 +389,9 @@ msgid "Date"
 msgstr "Ημερομηνία"
 
 #. module: hr_timesheet_sheet
-#: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:0
-#, python-format
-msgid "You can not modify an entry in a confirmed timesheet !"
-msgstr ""
-"Δεν μπορείτε να κάνετε τροποποιήσεις σε επιβεβαιωμένους Xρόνους Eργασίας!"
-
-#. module: hr_timesheet_sheet
-#: model:process.node,note:hr_timesheet_sheet.process_node_invoiceonwork0
-msgid "Invoice based on timesheet"
-msgstr "Τιμολόγιο με βάση το Φύλλο Xρόνου Eργασίας"
-
-#. module: hr_timesheet_sheet
-#: model:process.transition,note:hr_timesheet_sheet.process_transition_reviewofwork0
-msgid "Review of your work at the end of the day"
-msgstr "Επισκόπηση της εργασίας σας στο τέλος ημέρας"
+#: field:hr_timesheet_sheet.sheet,user_id:0
+msgid "User"
+msgstr "Χρήστης"
 
 #. module: hr_timesheet_sheet
 #: model:process.transition,note:hr_timesheet_sheet.process_transition_invoiceontimesheet0
@@ -464,24 +405,19 @@ msgid "Timesheets To Validate"
 msgstr "Φύλλα Xρόνου Eργασίας για Επικύρωση"
 
 #. module: hr_timesheet_sheet
-#: model:process.process,name:hr_timesheet_sheet.process_process_hrtimesheetworkflow0
-msgid "Hr Timesheet Workflow"
-msgstr ""
-
-#. module: hr_timesheet_sheet
 #: field:res.company,timesheet_max_difference:0
 msgid "Timesheet allowed difference"
 msgstr "Επιτρεπόμενη διαφορά Φύλλου Xρόνου Eργασίας"
 
 #. module: hr_timesheet_sheet
-#: field:hr_timesheet_sheet.sheet,period_ids:0 view:hr_timesheet_sheet.sheet:0
+#: view:hr_timesheet_sheet.sheet:0 field:hr_timesheet_sheet.sheet,period_ids:0
 msgid "Period"
 msgstr "Περίοδος"
 
 #. module: hr_timesheet_sheet
-#: model:process.node,name:hr_timesheet_sheet.process_node_confirmedtimesheet0
-msgid "Confirmed Timesheet"
-msgstr "Επιβεβαιωμένο Φύλλο Xρόνου Eργασίας"
+#: selection:hr_timesheet_sheet.sheet,state:0
+msgid "Done"
+msgstr "Έγινε"
 
 #. module: hr_timesheet_sheet
 #: model:process.transition,note:hr_timesheet_sheet.process_transition_attendancetimesheet0
@@ -511,10 +447,9 @@ msgstr ""
 "Το όνομα πρέπει να ξεκινάει με x_ και να μην περιέχει ειδικούς χαρακτήρες!"
 
 #. module: hr_timesheet_sheet
-#: model:ir.actions.act_window,name:hr_timesheet_sheet.act_hr_timesheet_sheet_unvalidate
-#: model:ir.ui.menu,name:hr_timesheet_sheet.menu_hr_timesheet_sheet_unvalidate
-msgid "Unvalidated Timesheets"
-msgstr "Μη επικυρωμένα Φύλλα Xρόνου Eργασίας"
+#: model:process.transition,note:hr_timesheet_sheet.process_transition_validatetimesheet0
+msgid "Timesheet is validate by project manager."
+msgstr "Το Φύλλο Xρόνου Eργασίας επικυρώνεται από τη Διεύθυνση Έργου"
 
 #. module: hr_timesheet_sheet
 #: model:process.node,note:hr_timesheet_sheet.process_node_phonecall0
@@ -577,6 +512,11 @@ msgid "Absent"
 msgstr "Απών"
 
 #. module: hr_timesheet_sheet
+#: model:process.node,note:hr_timesheet_sheet.process_node_confirmedtimesheet0
+msgid "At the end of the period (week/month)"
+msgstr "Στο τέλος περιόδου (εβδομάδα/μήνας)"
+
+#. module: hr_timesheet_sheet
 #: model:process.transition,note:hr_timesheet_sheet.process_transition_timesheetdraft0
 msgid "timesheet entry is into draft state."
 msgstr "η εγγραφή Χρόνου Εργασίας είναι Πρόχειρη"
@@ -597,9 +537,9 @@ msgid "Encode how much time u spent on phone call"
 msgstr "Κωδικοποίηση χρόνου ομιλίας στο τηλέφωνο"
 
 #. module: hr_timesheet_sheet
-#: model:process.transition,name:hr_timesheet_sheet.process_transition_phonecallencoding0
-msgid "Phone call encoding"
-msgstr "Κωδικοποίηση τηλεφωνημάτων"
+#: model:process.transition,note:hr_timesheet_sheet.process_transition_reviewofwork0
+msgid "Review of your work at the end of the day"
+msgstr "Επισκόπηση της εργασίας σας στο τέλος ημέρας"
 
 #. module: hr_timesheet_sheet
 #: field:hr_timesheet_sheet.sheet,account_ids:0
@@ -613,11 +553,6 @@ msgid "My timesheets"
 msgstr "Τα Φύλλα Xρόνου Eργασίας μου"
 
 #. module: hr_timesheet_sheet
-#: model:process.process,note:hr_timesheet_sheet.process_process_hrtimesheetworkflow0
-msgid "Hr Timesheet flow for services companies."
-msgstr ""
-
-#. module: hr_timesheet_sheet
 #: view:hr_timesheet_sheet.sheet:0
 msgid "Accept"
 msgstr "Αποδοχή"
@@ -626,6 +561,12 @@ msgstr "Αποδοχή"
 #: field:hr_timesheet_sheet.sheet,date_current:0
 msgid "Current date"
 msgstr "Τρέχουσα ημερ/νία"
+
+#. module: hr_timesheet_sheet
+#: model:ir.actions.act_window,name:hr_timesheet_sheet.act_hr_timesheet_sheet_unvalidate
+#: model:ir.ui.menu,name:hr_timesheet_sheet.menu_hr_timesheet_sheet_unvalidate
+msgid "Unvalidated Timesheets"
+msgstr "Μη επικυρωμένα Φύλλα Xρόνου Eργασίας"
 
 #. module: hr_timesheet_sheet
 #: selection:res.company,timesheet_range:0
@@ -643,48 +584,53 @@ msgstr "Σύνολο"
 msgid "My Department's Timesheet to Validate"
 msgstr "Τα Φύλλα Xρόνου Eργασίας του Τμήματός μου για Επικύρωση"
 
-#. module: hr_timesheet_sheet
-#: constraint:hr_timesheet_sheet.sheet:0
-msgid ""
-"You can not have 2 timesheets that overlaps !\n"
-"Please use the menu 'My Current Timesheet' to avoid this problem."
-msgstr ""
-"Τα Φύλλα Xρόνου Eργασίας δεν μπορούν να περιέχουν ίδιους χρόνους!\n"
-"Παρακαλώ επιλέξτε το μενού 'Τρέχον Φύλλο Χρόνου Εργασίας μου' για να "
-"αποφύγετε αυτό το πρόβλημα."
+#~ msgid "No employee defined for your user !"
+#~ msgstr "Δεν έχει οριστεί υπάλληλος για το χρήστη σας!"
 
-#. module: hr_timesheet_sheet
-#: constraint:hr_timesheet_sheet.sheet:0
-msgid "You must select a Current date wich is in the timesheet dates !"
-msgstr ""
-"Πρέπει να επιλέξετε τρέχουσα ημερ/νία που να περιέχεται στο Φύλλο Xρόνου "
-"Eργασίας!"
+#~ msgid "UserError"
+#~ msgstr "UserError"
 
-#. module: hr_timesheet_sheet
-#: model:process.process,name:hr_timesheet_sheet.process_process_hrtimesheetprocess0
-msgid "Hr Timesheet Process"
-msgstr "Διαδικασία Χρόνου Εργασίας Ανθρώπινου Δυναμικού"
+#~ msgid "You can not sign in from an other date than today"
+#~ msgstr ""
+#~ "Δεν μπορέιτε να προσέλθετε για εργασία σε άλλη ημερ/νία από τη σημερινή"
 
-#. module: hr_timesheet_sheet
-#: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:0
-#, python-format
-msgid "Invalid action !"
-msgstr "Μη επιτρεπόμενη ενέργεια!"
+#~ msgid "Warning !"
+#~ msgstr "Προσοχή!"
 
-#. module: hr_timesheet_sheet
-#: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:0
-#, python-format
-msgid "You cannot modify an entry in a confirmed timesheet !"
-msgstr ""
+#~ msgid "Error !"
+#~ msgstr "Σφάλμα!"
 
-#. module: hr_timesheet_sheet
-#: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:0
-#, python-format
-msgid "Cannot delete Sheet(s) which are already confirmed !"
-msgstr "Τα επιβεβαιωμένα φύλλα δεν μπορούν να διαγραφούν!"
+#~ msgid ""
+#~ "Please verify that the total difference of the sheet is lower than %.2f !"
+#~ msgstr ""
+#~ "Παρακαλώ επιβεβαιώστε ότι η συνολική διαφορά του φύλλου είναι μικρότερη "
+#~ "από %.2f !"
 
-#. module: hr_timesheet_sheet
-#: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:0
-#, python-format
-msgid "You can not duplicate a timesheet !"
-msgstr "Το Φύλλο υπάρχει ήδη!"
+#~ msgid "You can not sign out from an other date than today"
+#~ msgstr "Δεν μπορείτε να αποχωρήσετε άλλη ημέρα παρά μόνο σήμερα!"
+
+#~ msgid "You can not modify an entry in a confirmed timesheet !"
+#~ msgstr ""
+#~ "Δεν μπορείτε να κάνετε τροποποιήσεις σε επιβεβαιωμένους Xρόνους Eργασίας!"
+
+#~ msgid ""
+#~ "You can not have 2 timesheets that overlaps !\n"
+#~ "Please use the menu 'My Current Timesheet' to avoid this problem."
+#~ msgstr ""
+#~ "Τα Φύλλα Xρόνου Eργασίας δεν μπορούν να περιέχουν ίδιους χρόνους!\n"
+#~ "Παρακαλώ επιλέξτε το μενού 'Τρέχον Φύλλο Χρόνου Εργασίας μου' για να "
+#~ "αποφύγετε αυτό το πρόβλημα."
+
+#~ msgid "You must select a Current date wich is in the timesheet dates !"
+#~ msgstr ""
+#~ "Πρέπει να επιλέξετε τρέχουσα ημερ/νία που να περιέχεται στο Φύλλο Xρόνου "
+#~ "Eργασίας!"
+
+#~ msgid "Invalid action !"
+#~ msgstr "Μη επιτρεπόμενη ενέργεια!"
+
+#~ msgid "Cannot delete Sheet(s) which are already confirmed !"
+#~ msgstr "Τα επιβεβαιωμένα φύλλα δεν μπορούν να διαγραφούν!"
+
+#~ msgid "You can not duplicate a timesheet !"
+#~ msgstr "Το Φύλλο υπάρχει ήδη!"

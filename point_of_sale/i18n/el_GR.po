@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2009-04-09 17:23+0000\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2009-05-09 23:43+0000\n"
 "Last-Translator: Makis Nicolaou <mark.nicolaou@gmail.com>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -18,14 +18,17 @@ msgstr ""
 "X-Generator: Launchpad (build Unknown)\n"
 
 #. module: point_of_sale
-#: rml:pos.details:0
-#: rml:pos.details_summary:0
+#: model:ir.module.module,shortdesc:point_of_sale.module_meta_information
+msgid "Point Of Sale"
+msgstr "Σημείο Πώλησης"
+
+#. module: point_of_sale
+#: rml:pos.details:0 rml:pos.details_summary:0
 msgid "Total paid"
 msgstr "Πληρωμένο Σύνολο"
 
 #. module: point_of_sale
-#: rml:pos.details:0
-#: rml:pos.details_summary:0
+#: rml:pos.details:0 rml:pos.details_summary:0
 msgid "Qty of product"
 msgstr "Ποσότητα Είδους"
 
@@ -48,6 +51,11 @@ msgstr "Έκπτωση :"
 #: wizard_field:pos.payment,ask_pay,payment_nb:0
 msgid "Piece number"
 msgstr "Αριθμός κομματιού"
+
+#. module: point_of_sale
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
 
 #. module: point_of_sale
 #: field:pos.order,name:0
@@ -147,8 +155,7 @@ msgid "Ok"
 msgstr "Ok"
 
 #. module: point_of_sale
-#: view:pos.order:0
-#: field:pos.order,note:0
+#: view:pos.order:0 field:pos.order,note:0
 msgid "Notes"
 msgstr "Σημειώσεις"
 
@@ -158,15 +165,12 @@ msgid "Pos order"
 msgstr "Εντολή Pos"
 
 #. module: point_of_sale
-#: rml:pos.details:0
-#: rml:pos.details_summary:0
+#: rml:pos.details:0 rml:pos.details_summary:0
 msgid "Detail of Sales"
 msgstr "Λεπτομέρειες Πώλησης"
 
 #. module: point_of_sale
-#: rml:pos.invoice:0
-#: rml:pos.lines:0
-#: field:pos.order,amount_tax:0
+#: rml:pos.invoice:0 rml:pos.lines:0 field:pos.order,amount_tax:0
 msgid "Taxes"
 msgstr "Φόροι"
 
@@ -199,8 +203,7 @@ msgid "Operation N° :"
 msgstr "Αρ. Λειτουργίας:"
 
 #. module: point_of_sale
-#: rml:pos.details:0
-#: rml:pos.lines:0
+#: rml:pos.details:0 rml:pos.lines:0
 msgid "VAT"
 msgstr "ΦΠΑ"
 
@@ -281,14 +284,12 @@ msgid "POS Orders"
 msgstr "Παραγγελίες POS"
 
 #. module: point_of_sale
-#: rml:pos.invoice:0
-#: rml:pos.lines:0
+#: rml:pos.invoice:0 rml:pos.lines:0
 msgid "Disc. (%)"
 msgstr "Εκπτ. (%)"
 
 #. module: point_of_sale
-#: rml:pos.details:0
-#: rml:pos.details_summary:0
+#: rml:pos.details:0 rml:pos.details_summary:0
 msgid "Sales total"
 msgstr "Σύνολο πωλήσεων"
 
@@ -324,15 +325,9 @@ msgid "Order Lines"
 msgstr "Γραμμές Παραγγελίας"
 
 #. module: point_of_sale
-#: rml:pos.details:0
-#: rml:pos.receipt:0
+#: rml:pos.details:0 rml:pos.receipt:0
 msgid "Qty"
 msgstr "Ποσ."
-
-#. module: point_of_sale
-#: model:ir.module.module,shortdesc:point_of_sale.module_meta_information
-msgid "Point Of Sale"
-msgstr "Σημείο Πώλησης"
 
 #. module: point_of_sale
 #: code:addons/point_of_sale/pos.py:0
@@ -409,9 +404,7 @@ msgid "Configuration"
 msgstr "Ρύθμιση"
 
 #. module: point_of_sale
-#: rml:pos.invoice:0
-#: rml:pos.lines:0
-#: field:pos.order.line,price_unit:0
+#: rml:pos.invoice:0 rml:pos.lines:0 field:pos.order.line,price_unit:0
 msgid "Unit Price"
 msgstr "Τιμή Μονάδας"
 
@@ -477,8 +470,7 @@ msgid "Define default journals"
 msgstr "Καθορισμός προκαθορισμένων ημερολογίων"
 
 #. module: point_of_sale
-#: field:pos.order,amount_paid:0
-#: field:pos.order,amount_return:0
+#: field:pos.order,amount_paid:0 field:pos.order,amount_return:0
 msgid "unknown"
 msgstr "άγνωστο"
 
@@ -498,8 +490,7 @@ msgid "Salesman"
 msgstr "Πωλητής"
 
 #. module: point_of_sale
-#: rml:pos.details:0
-#: selection:pos.order,state:0
+#: rml:pos.details:0 selection:pos.order,state:0
 msgid "Invoiced"
 msgstr "Τιμολογημένο"
 
@@ -565,8 +556,7 @@ msgid "E-mail :"
 msgstr "E-mail :"
 
 #. module: point_of_sale
-#: rml:pos.details:0
-#: rml:pos.details_summary:0
+#: rml:pos.details:0 rml:pos.details_summary:0
 msgid "Total invoiced"
 msgstr "Σύνολο τιμολογημένων"
 
@@ -612,8 +602,7 @@ msgid "Payment Name"
 msgstr "Όνομα Πληρωμής"
 
 #. module: point_of_sale
-#: rml:pos.details:0
-#: field:report.transaction.pos,date_create:0
+#: rml:pos.details:0 field:report.transaction.pos,date_create:0
 msgid "Date"
 msgstr "Ημερομηνία"
 
@@ -625,8 +614,7 @@ msgid "Sales by user"
 msgstr "Πωλήσεις κατα χρήστη"
 
 #. module: point_of_sale
-#: wizard_button:pos.add_product,init,add:0
-#: view:pos.order:0
+#: wizard_button:pos.add_product,init,add:0 view:pos.order:0
 msgid "_Add product"
 msgstr "_Προσθήκη προϊόντος"
 
@@ -636,8 +624,7 @@ msgid "Apply Discount"
 msgstr "Εφαρμογή Έκπτωσης"
 
 #. module: point_of_sale
-#: rml:pos.details:0
-#: rml:pos.details_summary:0
+#: rml:pos.details:0 rml:pos.details_summary:0
 msgid "Period:"
 msgstr "Περίοδος:"
 
@@ -657,8 +644,7 @@ msgid "Total:"
 msgstr "Σύνολο:"
 
 #. module: point_of_sale
-#: view:pos.order:0
-#: field:pos.order,pickings:0
+#: view:pos.order:0 field:pos.order,pickings:0
 msgid "Picking"
 msgstr "Συλλογή"
 
@@ -681,10 +667,8 @@ msgid "Create _Invoice"
 msgstr "Δημιουργία _Τιμολογίου"
 
 #. module: point_of_sale
-#: wizard_field:pos.add_product,init,quantity:0
-#: rml:pos.invoice:0
-#: rml:pos.lines:0
-#: field:pos.order.line,qty:0
+#: wizard_field:pos.add_product,init,quantity:0 rml:pos.invoice:0
+#: rml:pos.lines:0 field:pos.order.line,qty:0
 msgid "Quantity"
 msgstr "Ποσότητα"
 
@@ -694,8 +678,7 @@ msgid "Refund"
 msgstr "Πίστωση"
 
 #. module: point_of_sale
-#: rml:pos.details:0
-#: rml:pos.details_summary:0
+#: rml:pos.details:0 rml:pos.details_summary:0
 msgid "Mode of payment"
 msgstr "Κατάσταση των πληρωμών"
 
@@ -705,8 +688,7 @@ msgid "Ma_ke payment"
 msgstr "Δη_μιουργία πληρωμής"
 
 #. module: point_of_sale
-#: field:pos.config.journal,code:0
-#: rml:pos.details:0
+#: field:pos.config.journal,code:0 rml:pos.details:0
 msgid "Code"
 msgstr "Κωδικός"
 
@@ -764,8 +746,7 @@ msgstr "Εκπληρωμένο"
 
 #. module: point_of_sale
 #: model:ir.actions.report.xml,name:point_of_sale.pos_invoice_report
-#: rml:pos.invoice:0
-#: field:pos.order,invoice_id:0
+#: rml:pos.invoice:0 field:pos.order,invoice_id:0
 #: wizard_field:pos.payment,ask_pay,invoice_wanted:0
 #: field:report.transaction.pos,invoice_id:0
 msgid "Invoice"
@@ -774,10 +755,8 @@ msgstr "Τιμολόγιο"
 #. module: point_of_sale
 #: wizard_button:pos.add_product,init,end:0
 #: wizard_button:pos.config.journal,init,end:0
-#: wizard_button:pos.discount,init,end:0
-#: view:pos.order:0
-#: selection:pos.order,state:0
-#: wizard_button:pos.payment,ask_pay,end:0
+#: wizard_button:pos.discount,init,end:0 view:pos.order:0
+#: selection:pos.order,state:0 wizard_button:pos.payment,ask_pay,end:0
 #: wizard_button:pos.refund_order,init,end:0
 #: wizard_button:pos.sale.get,init,end:0
 #: wizard_button:pos.scan_product,init,end:0
@@ -795,8 +774,7 @@ msgid "Order lines"
 msgstr "Γραμμές εντολών"
 
 #. module: point_of_sale
-#: field:pos.order.line,order_id:0
-#: field:pos.payment,order_id:0
+#: field:pos.order.line,order_id:0 field:pos.payment,order_id:0
 msgid "Order Ref"
 msgstr "Σχετ Εντολή"
 
@@ -814,8 +792,7 @@ msgstr ""
 "ειδικούς χαρακτήρες!"
 
 #. module: point_of_sale
-#: rml:pos.details:0
-#: rml:pos.details_summary:0
+#: rml:pos.details:0 rml:pos.details_summary:0
 msgid "Total of the day"
 msgstr "Σύνολο της ημέρας"
 
@@ -825,8 +802,7 @@ msgid "Pos Payment"
 msgstr "POS Πληρωμή"
 
 #. module: point_of_sale
-#: rml:pos.details:0
-#: rml:pos.details_summary:0
+#: rml:pos.details:0 rml:pos.details_summary:0
 msgid "Total discount"
 msgstr "Σύνολο έκπτωσης"
 
@@ -851,14 +827,12 @@ msgid "Taxes:"
 msgstr "Φόροι:"
 
 #. module: point_of_sale
-#: view:pos.order:0
-#: view:report.transaction.pos:0
+#: view:pos.order:0 view:report.transaction.pos:0
 msgid "Amount total"
 msgstr "Σύνολο ποσού"
 
 #. module: point_of_sale
-#: wizard_field:pos.add_product,init,product:0
-#: rml:pos.details:0
+#: wizard_field:pos.add_product,init,product:0 rml:pos.details:0
 #: field:pos.order.line,product_id:0
 msgid "Product"
 msgstr "Προϊόν"
@@ -874,10 +848,8 @@ msgid ":"
 msgstr ":"
 
 #. module: point_of_sale
-#: field:pos.config.journal,journal_id:0
-#: field:pos.order,sale_journal:0
-#: wizard_field:pos.payment,ask_pay,journal:0
-#: field:pos.payment,journal_id:0
+#: field:pos.config.journal,journal_id:0 field:pos.order,sale_journal:0
+#: wizard_field:pos.payment,ask_pay,journal:0 field:pos.payment,journal_id:0
 #: field:report.transaction.pos,journal_id:0
 msgid "Journal"
 msgstr "Ημερολόγιο"
@@ -918,8 +890,7 @@ msgid "Default gift journal"
 msgstr "Προκαθορισμένο ημερολόγιο δώρων"
 
 #. module: point_of_sale
-#: model:ir.actions.wizard,name:point_of_sale.pos_payment
-#: view:pos.order:0
+#: model:ir.actions.wizard,name:point_of_sale.pos_payment view:pos.order:0
 msgid "Payment"
 msgstr "Πληρωμή"
 
@@ -970,17 +941,13 @@ msgid "UserError"
 msgstr "Σφάλμα Χρήστη"
 
 #. module: point_of_sale
-#: rml:pos.details:0
-#: rml:pos.details_summary:0
+#: rml:pos.details:0 rml:pos.details_summary:0
 msgid "Summary"
 msgstr "Σύνολο"
 
 #. module: point_of_sale
-#: field:pos.config.journal,name:0
-#: rml:pos.invoice:0
-#: rml:pos.lines:0
-#: field:pos.payment,name:0
-#: rml:pos.receipt:0
+#: field:pos.config.journal,name:0 rml:pos.invoice:0 rml:pos.lines:0
+#: field:pos.payment,name:0 rml:pos.receipt:0
 msgid "Description"
 msgstr "Περιγραφή"
 
@@ -1001,8 +968,7 @@ msgid "Payment Term"
 msgstr "Όρος Πληρωμής"
 
 #. module: point_of_sale
-#: rml:pos.invoice:0
-#: field:pos.payment,amount:0
+#: rml:pos.invoice:0 field:pos.payment,amount:0
 #: wizard_field:pos.payment,ask_pay,amount:0
 #: field:report.transaction.pos,amount:0
 msgid "Amount"
@@ -1014,20 +980,17 @@ msgid "Actions"
 msgstr "Ενέργειες"
 
 #. module: point_of_sale
-#: rml:pos.details:0
-#: rml:pos.details_summary:0
+#: rml:pos.details:0 rml:pos.details_summary:0
 msgid "Mode of Taxes"
 msgstr "Κατάσταση Των Φόρων"
 
 #. module: point_of_sale
-#: rml:pos.details:0
-#: rml:pos.details_summary:0
+#: rml:pos.details:0 rml:pos.details_summary:0
 msgid "Print Date:"
 msgstr "Ημερομηνία Εκτύπωσης:"
 
 #. module: point_of_sale
-#: rml:pos.details:0
-#: rml:pos.details_summary:0
+#: rml:pos.details:0 rml:pos.details_summary:0
 msgid "Company:"
 msgstr "Εταιρία"
 
@@ -1037,15 +1000,11 @@ msgid "Print Date"
 msgstr "Ημερομηνία Εκτύπωσης"
 
 #. module: point_of_sale
-#: rml:pos.lines:0
-#: field:pos.order,amount_total:0
+#: rml:pos.lines:0 field:pos.order,amount_total:0
 msgid "Total"
 msgstr "Σύνολο"
 
 #. module: point_of_sale
-#: rml:pos.details:0
-#: rml:pos.invoice:0
-#: rml:pos.lines:0
-#: rml:pos.receipt:0
+#: rml:pos.details:0 rml:pos.invoice:0 rml:pos.lines:0 rml:pos.receipt:0
 msgid "Price"
 msgstr "Τιμή"

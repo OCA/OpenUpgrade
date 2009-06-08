@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2008-11-15 08:33:16+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
 "Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: \n"
@@ -17,14 +17,20 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: board_crm_configuration
+#: model:ir.module.module,shortdesc:board_crm_configuration.module_meta_information
+msgid "Dashboard for CRM Configuration"
+msgstr "Πίνακας Ρυθμίσεων CRM"
+
+#. module: board_crm_configuration
+#: view:board.board:0
+#: model:ir.ui.menu,name:board_crm_configuration.menu_board_statistics_dash
+msgid "Statistics Dashboard"
+msgstr "Πίνακας Στατιστικών Μεγεθών"
+
+#. module: board_crm_configuration
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
 msgstr "Invalid XML for View Architecture!"
-
-#. module: board_crm_configuration
-#: view:report.crm.case.categ:0
-msgid "Cases by Sections and Categories"
-msgstr "Θέματα ανά Τμήμα και Κατηγορίες"
 
 #. module: board_crm_configuration
 #: view:board.board:0
@@ -37,11 +43,6 @@ msgstr "Ευκαιρίες ανά Κατηγορίες"
 #: model:ir.actions.act_window,name:board_crm_configuration.act_my_cases
 msgid "My Cases"
 msgstr "Τα Θέματά μου"
-
-#. module: board_crm_configuration
-#: view:board.board:0
-msgid "My Sales Pipeline"
-msgstr "Το Κανάλι Πωλήσεών μου"
 
 #. module: board_crm_configuration
 #: model:ir.actions.act_window,name:board_crm_configuration.open_board_crm
@@ -61,9 +62,9 @@ msgid "Leads Of The Month By User"
 msgstr "Σύνδεσμοι Μηνός ανά Χρήστη"
 
 #. module: board_crm_configuration
-#: view:report.crm.case.user:0
-msgid "Cases by User and Section"
-msgstr "Θέματα ανά Χρήστη και Τμήμα"
+#: view:board.board:0 view:report.crm.case.section.stage:0
+msgid "Leads By Stage"
+msgstr "Σύνδεσμοι ανά Στάδιο"
 
 #. module: board_crm_configuration
 #: view:board.board:0
@@ -82,25 +83,29 @@ msgid "Jobs Requests Of The Month by Applied Job"
 msgstr "Αιτήσεις Εργασίας του Μήνα ανά Θέση Αίτησης"
 
 #. module: board_crm_configuration
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
+
+#. module: board_crm_configuration
+#: view:board.board:0
+msgid "My Sales Pipeline"
+msgstr "Το Κανάλι Πωλήσεών μου"
+
+#. module: board_crm_configuration
+#: view:report.crm.case.user:0
+msgid "Cases by User and Section"
+msgstr "Θέματα ανά Χρήστη και Τμήμα"
+
+#. module: board_crm_configuration
 #: view:board.board:0
 msgid "My Leads By Stage"
 msgstr "Οι Σύνδεσμοί μου ανά Στάδιο"
 
 #. module: board_crm_configuration
-#: view:board.board:0 view:report.crm.case.section.stage:0
-msgid "Leads By Stage"
-msgstr "Σύνδεσμοι ανά Στάδιο"
-
-#. module: board_crm_configuration
-#: view:board.board:0
-#: model:ir.ui.menu,name:board_crm_configuration.menu_board_statistics_dash
-msgid "Statistics Dashboard"
-msgstr "Πίνακας Στατιστικών Μεγεθών"
-
-#. module: board_crm_configuration
-#: view:board.board:0
-msgid "My Leads"
-msgstr "Οι Σύνδεσμοί μου"
+#: view:report.crm.case.categ:0
+msgid "Cases by Sections and Categories"
+msgstr "Θέματα ανά Τμήμα και Κατηγορίες"
 
 #. module: board_crm_configuration
 #: model:ir.actions.act_window,name:board_crm_configuration.open_board_statistical_dash
@@ -109,10 +114,5 @@ msgstr "CRM - Πίνακας Στατιστικών Μεγεθών"
 
 #. module: board_crm_configuration
 #: view:board.board:0
-msgid "My Jobs Requests"
-msgstr ""
-
-#. module: board_crm_configuration
-#: model:ir.module.module,shortdesc:board_crm_configuration.module_meta_information
-msgid "Dashboard for CRM Configuration"
-msgstr "Πίνακας Ρυθμίσεων CRM"
+msgid "My Leads"
+msgstr "Οι Σύνδεσμοί μου"

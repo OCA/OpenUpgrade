@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2008-11-15 08:33:16+0000\n"
+"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
 "PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
 "Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: \n"
@@ -22,15 +22,24 @@ msgid "Show Debit/Credit Information"
 msgstr "Προβολή Πληροφοριών Χρέωσης/Πίστωσης"
 
 #. module: account_balance
+#: selection:account.balance.account.balance.report,init,account_choice:0
+msgid "All accounts"
+msgstr "Όλοι οι λογαριασμοί"
+
+#. module: account_balance
 #: wizard_field:account.balance.account.balance.report,init,period_manner:0
 msgid "Entries Selection Based on"
 msgstr "Επιλογή Εγγραφών Βασισμένων σε"
 
 #. module: account_balance
-#: wizard_view:account.balance.account.balance.report,backtoinit:0
-#: wizard_view:account.balance.account.balance.report,zero_years:0
-msgid "Notification"
-msgstr "Υπενθύμιση"
+#: help:account.balance.account.balance.report,init,select_account:0
+msgid "Keep empty for comparision to its parent"
+msgstr "Διατηρήστε κενα για σύγκριση με κατηγορίες"
+
+#. module: account_balance
+#: selection:account.balance.account.balance.report,init,period_manner:0
+msgid "Financial Period"
+msgstr "Οικονομική Περίοδος"
 
 #. module: account_balance
 #: rml:account.account.balance.landscape:0
@@ -58,8 +67,8 @@ msgid "at"
 msgstr "σε"
 
 #. module: account_balance
-#: rml:account.balance.account.balance:0
 #: rml:account.account.balance.landscape:0
+#: rml:account.balance.account.balance:0
 msgid "Account Name"
 msgstr "Ονομασία λογαριασμού"
 
@@ -73,6 +82,11 @@ msgstr "Νόμισμα:"
 #: wizard_view:account.balance.account.balance.report,init:0
 msgid "Select Period(s)"
 msgstr "Επιλέξτε Περίοδο(ους)"
+
+#. module: account_balance
+#: selection:account.balance.account.balance.report,init,compare_pattern:0
+msgid "Percentage"
+msgstr "Ποσοστό"
 
 #. module: account_balance
 #: wizard_field:account.balance.account.balance.report,init,compare_pattern:0
@@ -90,6 +104,28 @@ msgid "Account balance-Compare Years"
 msgstr "Ισοζύγιο Λογαριασμού-Σύγκριση Ετών"
 
 #. module: account_balance
+#: model:ir.module.module,description:account_balance.module_meta_information
+msgid ""
+"Account Balance Module is an added functionality to the Financial Management "
+"module.\n"
+"\n"
+"    This module gives you the various options for printing balance sheet.\n"
+"\n"
+"    1. You can compare the balance sheet for different years.\n"
+"\n"
+"    2. You can set the cash or percentage comparison between two years.\n"
+"\n"
+"    3. You can set the referential account for the percentage comparison for "
+"particular years.\n"
+"\n"
+"    4. You can select periods as an actual date or periods as creation "
+"date.\n"
+"\n"
+"    5. You have an option to print the desired report in Landscape format.\n"
+"    "
+msgstr ""
+
+#. module: account_balance
 #: wizard_view:account.balance.account.balance.report,backtoinit:0
 msgid "You have to select 'Landscape' option. Please Check it."
 msgstr "Θα πρέπει να επιλέξτε την επιλογή 'Landscape'. Παρακαλώ επιλέξτε την."
@@ -100,9 +136,14 @@ msgid "Show Report in Landscape Form"
 msgstr "Εμφάνση Αναφοράς σε Φόρμα Landscape"
 
 #. module: account_balance
-#: wizard_view:account.balance.account.balance.report,backtoinit:0
-msgid "You can select maximum 3 years. Please check again."
-msgstr "Μπορείτε να επιλέξετε το πολύ 3 έτη. Παρακαλώ ελέγξτε ξανά."
+#: help:account.balance.account.balance.report,init,periods:0
+msgid "All periods if empty"
+msgstr "Όλες οι περίοδοι άν είναι κενό"
+
+#. module: account_balance
+#: selection:account.balance.account.balance.report,init,account_choice:0
+msgid "With balance is not equal to 0"
+msgstr "Με ισοζύγιο που δεν είναι ίσο με 0"
 
 #. module: account_balance
 #: wizard_field:account.balance.account.balance.report,init,format_perc:0
@@ -110,14 +151,20 @@ msgid "Show Comparision in %"
 msgstr "Εμφάνιση Σύγκρισης σε %"
 
 #. module: account_balance
-#: wizard_view:account.balance.account.balance.report,init:0
-msgid "Select Period"
-msgstr "Επιλογή Περιόδου"
+#: wizard_view:account.balance.account.balance.report,backtoinit:0
+#: wizard_view:account.balance.account.balance.report,zero_years:0
+msgid "Notification"
+msgstr "Υπενθύμιση"
 
 #. module: account_balance
-#: wizard_field:account.balance.account.balance.report,init,periods:0
-msgid "Periods"
-msgstr "Περίοδος"
+#: wizard_view:account.balance.account.balance.report,init:0
+msgid "Report Options"
+msgstr "Επιλογές Αναφοράς"
+
+#. module: account_balance
+#: selection:account.balance.account.balance.report,init,account_choice:0
+msgid "With movements"
+msgstr "Με κινήσεις"
 
 #. module: account_balance
 #: wizard_button:account.balance.account.balance.report,backtoinit,end:0
@@ -130,6 +177,16 @@ msgstr "ΟΚ"
 #: rml:account.balance.account.balance:0
 msgid "Total:"
 msgstr "Σύνολο:"
+
+#. module: account_balance
+#: selection:account.balance.account.balance.report,init,compare_pattern:0
+msgid "Cash"
+msgstr "Μετρητά"
+
+#. module: account_balance
+#: selection:account.balance.account.balance.report,init,compare_pattern:0
+msgid "Don't Compare"
+msgstr "Χωρίς Σύγκριση"
 
 #. module: account_balance
 #: wizard_field:account.balance.account.balance.report,init,account_choice:0
@@ -153,14 +210,14 @@ msgid "1. You have selected more than 3 years in any case."
 msgstr "1. Έχετε επιλέξτε περισσότερα απο 3 έτη σε κάθε περίπτωση."
 
 #. module: account_balance
-#: wizard_view:account.balance.account.balance.report,zero_years:0
-msgid "You have to select at least 1 Fiscal Year. Try again."
-msgstr "Θα πρέπει να επιλέξετε τουλάχιστον 1 λογιστικό έτος. Προσπαθήστε ξανά."
+#: model:ir.module.module,shortdesc:account_balance.module_meta_information
+msgid "Accounting and financial management-Compare Accounts"
+msgstr ""
 
 #. module: account_balance
-#: wizard_view:account.balance.account.balance.report,init:0
-msgid "(If you do not select Fiscal year it will take all open fiscal year)"
-msgstr ""
+#: wizard_view:account.balance.account.balance.report,backtoinit:0
+msgid "You can select maximum 3 years. Please check again."
+msgstr "Μπορείτε να επιλέξετε το πολύ 3 έτη. Παρακαλώ ελέγξτε ξανά."
 
 #. module: account_balance
 #: wizard_field:account.balance.account.balance.report,init,select_account:0
@@ -177,8 +234,8 @@ msgstr ""
 "επιλέξει διάταξη landscape."
 
 #. module: account_balance
-#: rml:account.balance.account.balance:0
 #: rml:account.account.balance.landscape:0
+#: rml:account.balance.account.balance:0
 msgid "Code"
 msgstr "Κωδικός"
 
@@ -197,6 +254,11 @@ msgid "Account Information"
 msgstr "Πληροφορίες Λογαριασμού"
 
 #. module: account_balance
+#: selection:account.balance.account.balance.report,init,period_manner:0
+msgid "Creation Date"
+msgstr "Ημερομηνία Δημιουργίας"
+
+#. module: account_balance
 #: wizard_field:account.balance.account.balance.report,init,fiscalyear:0
 msgid "Fiscal year"
 msgstr "Λογιστικό έτος"
@@ -210,9 +272,9 @@ msgstr ""
 "2. Δεν έχετε επιλέξει 'Ποσοστό', αλλα έχετε επιλέξει περισσότερο απο 2 έτη."
 
 #. module: account_balance
-#: wizard_view:account.balance.account.balance.report,init:0
-msgid "Report Options"
-msgstr "Επιλογές Αναφοράς"
+#: wizard_field:account.balance.account.balance.report,init,periods:0
+msgid "Periods"
+msgstr "Περίοδος"
 
 #. module: account_balance
 #: wizard_button:account.balance.account.balance.report,init,end:0
@@ -220,56 +282,16 @@ msgid "Cancel"
 msgstr "Άκυρο"
 
 #. module: account_balance
+#: wizard_view:account.balance.account.balance.report,zero_years:0
+msgid "You have to select at least 1 Fiscal Year. Try again."
+msgstr "Θα πρέπει να επιλέξετε τουλάχιστον 1 λογιστικό έτος. Προσπαθήστε ξανά."
+
+#. module: account_balance
+#: wizard_view:account.balance.account.balance.report,init:0
+msgid "Select Period"
+msgstr "Επιλογή Περιόδου"
+
+#. module: account_balance
 #: wizard_view:account.balance.account.balance.report,init:0
 msgid "Customize Report"
 msgstr "Παραμετροποίηση Αναφοράς"
-
-#. module: account_balance
-#: selection:account.balance.account.balance.report,init,account_choice:0
-msgid "All accounts"
-msgstr "Όλοι οι λογαριασμοί"
-
-#. module: account_balance
-#: selection:account.balance.account.balance.report,init,period_manner:0
-msgid "Financial Period"
-msgstr "Οικονομική Περίοδος"
-
-#. module: account_balance
-#: selection:account.balance.account.balance.report,init,compare_pattern:0
-msgid "Percentage"
-msgstr "Ποσοστό"
-
-#. module: account_balance
-#: help:account.balance.account.balance.report,init,periods:0
-msgid "All periods if empty"
-msgstr "Όλες οι περίοδοι άν είναι κενό"
-
-#. module: account_balance
-#: selection:account.balance.account.balance.report,init,account_choice:0
-msgid "With balance is not equal to 0"
-msgstr "Με ισοζύγιο που δεν είναι ίσο με 0"
-
-#. module: account_balance
-#: selection:account.balance.account.balance.report,init,account_choice:0
-msgid "With movements"
-msgstr "Με κινήσεις"
-
-#. module: account_balance
-#: selection:account.balance.account.balance.report,init,compare_pattern:0
-msgid "Cash"
-msgstr "Μετρητά"
-
-#. module: account_balance
-#: selection:account.balance.account.balance.report,init,compare_pattern:0
-msgid "Don't Compare"
-msgstr "Χωρίς Σύγκριση"
-
-#. module: account_balance
-#: help:account.balance.account.balance.report,init,select_account:0
-msgid "Keep empty for comparision to its parent"
-msgstr "Διατηρήστε κενα για σύγκριση με κατηγορίες"
-
-#. module: account_balance
-#: selection:account.balance.account.balance.report,init,period_manner:0
-msgid "Creation Date"
-msgstr "Ημερομηνία Δημιουργίας"

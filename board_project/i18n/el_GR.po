@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2008-11-15 08:33:16+0000\n"
+"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
 "PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
 "Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: \n"
@@ -18,8 +18,74 @@ msgstr ""
 
 #. module: board_project
 #: view:board.board:0
-msgid "My user's pipeline"
-msgstr "Το κανάλι μου"
+msgid "My project's planning"
+msgstr "Σχεδιασμός Έργων μου"
+
+#. module: board_project
+#: view:hr_timesheet_sheet.sheet:0
+#: model:ir.actions.act_window,name:board_project.act_hr_timesheet_sheet
+msgid "Timesheets"
+msgstr "Φύλλα Χρόνου Εργασίας"
+
+#. module: board_project
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
+
+#. module: board_project
+#: view:board.board:0
+#: model:ir.actions.act_window,name:board_project.act_my_project
+msgid "My projects"
+msgstr "Τα Έργα μου"
+
+#. module: board_project
+#: model:ir.actions.act_window,name:board_project.action_view_task_tree_deadline
+msgid "My Task's Deadlines"
+msgstr "Προθεσμίες Αναθέσεών μου"
+
+#. module: board_project
+#: view:project.task:0
+msgid "My Tasks"
+msgstr "Οι Αναθέσεις μου"
+
+#. module: board_project
+#: view:board.board:0
+#: model:ir.actions.act_window,name:board_project.action_view_board_note_tree
+msgid "Public Notes"
+msgstr "Κοινοποιημένες Σημειώσεις"
+
+#. module: board_project
+#: model:ir.actions.act_window,name:board_project.open_board_project
+#: model:ir.ui.menu,name:board_project.menu_board_project
+msgid "Project Dashboard"
+msgstr "Πίνακας Έργων"
+
+#. module: board_project
+#: model:ir.module.module,shortdesc:board_project.module_meta_information
+msgid "Board for project users"
+msgstr "Πίνακας Χρηστών Έργου"
+
+#. module: board_project
+#: model:ir.actions.act_window,name:board_project.action_project_pipeline_user
+msgid "Pipeline of tasks"
+msgstr "Κανάλι Αναθέσεων"
+
+#. module: board_project
+#: view:board.board:0
+msgid "My Planning"
+msgstr "Ο Σχεδιασμός μου"
+
+#. module: board_project
+#: view:board.board:0
+#: model:ir.actions.act_window,name:board_project.act_my_account
+msgid "My accounts to invoice"
+msgstr "Οι λογαριασμοί μου προς τιμολόγηση"
+
+#. module: board_project
+#: model:ir.actions.act_window,name:board_project.open_board_project_manager
+#: model:ir.ui.menu,name:board_project.menu_board_project_manager
+msgid "Project Manager Dashboard"
+msgstr "Πίνακας Αναφορών Διευθυντή Έργου"
 
 #. module: board_project
 #: view:board.board:0
@@ -37,69 +103,14 @@ msgid "User's timesheets"
 msgstr "Φύλλα χρόνου χρηστών"
 
 #. module: board_project
-#: view:hr_timesheet_sheet.sheet:0
-#: model:ir.actions.act_window,name:board_project.act_hr_timesheet_sheet
-msgid "Timesheets"
-msgstr "Φύλλα Χρόνου Εργασίας"
-
-#. module: board_project
-#: view:project.task:0
-msgid "My Tasks"
-msgstr "Οι Αναθέσεις μου"
-
-#. module: board_project
-#: view:board.board:0
-msgid "My Timesheet"
-msgstr "Το Φύλλο Χρόνου μου"
-
-#. module: board_project
-#: view:board.board:0
-msgid "My project's planning"
-msgstr "Σχεδιασμός Έργων μου"
-
-#. module: board_project
-#: view:board.board:0
-#: model:ir.actions.act_window,name:board_project.action_view_board_note_tree
-msgid "Public Notes"
-msgstr "Κοινοποιημένες Σημειώσεις"
-
-#. module: board_project
-#: model:ir.actions.act_window,name:board_project.open_board_project
-#: model:ir.ui.menu,name:board_project.menu_board_project
-msgid "Project Dashboard"
-msgstr "Πίνακας Έργων"
-
-#. module: board_project
 #: model:ir.ui.menu,name:board_project.next_id_86
 msgid "Project"
 msgstr "Έργο"
 
 #. module: board_project
-#: model:ir.actions.act_window,name:board_project.action_project_pipeline_user
-msgid "Pipeline of tasks"
-msgstr "Κανάλι Αναθέσεων"
-
-#. module: board_project
 #: view:board.board:0
 msgid "Project manager board"
 msgstr "Πίνακας διευθυντή έργου"
-
-#. module: board_project
-#: view:board.board:0
-msgid "My tasks board"
-msgstr "Ο πίνακας αναθέσεών μου"
-
-#. module: board_project
-#: view:board.board:0
-#: model:ir.actions.act_window,name:board_project.act_my_account
-msgid "My accounts to invoice"
-msgstr "Οι λογαριασμοί μου προς τιμολόγηση"
-
-#. module: board_project
-#: view:board.board:0
-#: model:ir.actions.act_window,name:board_project.act_my_project
-msgid "My projects"
-msgstr "Τα Έργα μου"
 
 #. module: board_project
 #: view:board.board:0
@@ -113,22 +124,16 @@ msgid "My Board"
 msgstr "Ο Πίνακάς μου"
 
 #. module: board_project
-#: model:ir.actions.act_window,name:board_project.action_view_task_tree_deadline
-msgid "My Task's Deadlines"
-msgstr "Προθεσμίες Αναθέσεών μου"
+#: view:board.board:0
+msgid "My tasks board"
+msgstr "Ο πίνακας αναθέσεών μου"
 
 #. module: board_project
 #: view:board.board:0
-msgid "My Planning"
-msgstr "Ο Σχεδιασμός μου"
+msgid "My user's pipeline"
+msgstr "Το κανάλι μου"
 
 #. module: board_project
-#: model:ir.actions.act_window,name:board_project.open_board_project_manager
-#: model:ir.ui.menu,name:board_project.menu_board_project_manager
-msgid "Project Manager Dashboard"
-msgstr "Πίνακας Αναφορών Διευθυντή Έργου"
-
-#. module: board_project
-#: model:ir.module.module,shortdesc:board_project.module_meta_information
-msgid "Board for project users"
-msgstr "Πίνακας Χρηστών Έργου"
+#: view:board.board:0
+msgid "My Timesheet"
+msgstr "Το Φύλλο Χρόνου μου"

@@ -1,12 +1,12 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* base_module_publish
+# 	* base_module_publish
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2009-05-30 01:16+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: \n"
@@ -14,6 +14,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+
+#. module: base_module_publish
+#: model:ir.module.module,shortdesc:base_module_publish.module_meta_information
+msgid "Module publisher"
+msgstr "Εκδότης Υπό-Προγραμμάτων"
 
 #. module: base_module_publish
 #: wizard_field:base_module_publish.module_publish,step1,category:0
@@ -48,6 +53,7 @@ msgstr "Εισαγωγή"
 
 #. module: base_module_publish
 #: code:addons/base_module_publish/wizard/base_module_publish.py:0
+#: code:addons/base_module_publish/wizard/base_module_publish_all.py:0
 #: code:addons/base_module_publish/wizard/module_zip.py:0
 #, python-format
 msgid "Error"
@@ -63,11 +69,6 @@ msgstr "Δημοσίευση"
 #: wizard_field:base_module_publish.module_export,zip,module_filename:0
 msgid "Filename"
 msgstr "Όνομα Αρχείου"
-
-#. module: base_module_publish
-#: model:ir.module.module,shortdesc:base_module_publish.module_meta_information
-msgid "Module publisher"
-msgstr "Εκδότης Υπό-Προγραμμάτων"
 
 #. module: base_module_publish
 #: wizard_field:base_module_publish.module_publish,step1,demourl:0
@@ -135,7 +136,9 @@ msgstr "Περιγραφή"
 #: wizard_view:base_module_publish.module_publish,step2:0
 #: wizard_view:base_module_publish.module_publish_all,login:0
 msgid "If you don't have an access, you can create one http://www.openerp.com/"
-msgstr "Αν δεν έχετε πρόσβαση μπορείτε να δημιουργήσετε λογαριασμό στο http://www.openerp.com/"
+msgstr ""
+"Αν δεν έχετε πρόσβαση μπορείτε να δημιουργήσετε λογαριασμό στο http://www."
+"openerp.com/"
 
 #. module: base_module_publish
 #: wizard_view:base_module_publish.module_publish,init:0
@@ -190,6 +193,7 @@ msgstr "Password"
 
 #. module: base_module_publish
 #: code:addons/base_module_publish/wizard/base_module_publish.py:0
+#: code:addons/base_module_publish/wizard/base_module_publish_all.py:0
 #, python-format
 msgid "Login failed!"
 msgstr "Αποτυχία σύνδεσης!"
@@ -280,7 +284,8 @@ msgstr "GPL-2"
 #: code:addons/base_module_publish/wizard/base_module_publish.py:0
 #, python-format
 msgid "You could not publish a module that is not installed!"
-msgstr "Δεν μπορείτε να δημοσιεύσετε ένα Υπό-Πρόγραμμα που δεν έχει εγκατασταθεί!"
+msgstr ""
+"Δεν μπορείτε να δημοσιεύσετε ένα Υπό-Πρόγραμμα που δεν έχει εγκατασταθεί!"
 
 #. module: base_module_publish
 #: wizard_view:base_module_publish.module_publish_all,publish:0
@@ -359,4 +364,3 @@ msgstr "Δημοσίευση Υπό-Προγράμματος"
 #: wizard_button:base_module_publish.module_publish,step2,step1:0
 msgid "Previous"
 msgstr "Προηγούμενο"
-

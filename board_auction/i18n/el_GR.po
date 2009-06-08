@@ -1,12 +1,12 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* board_auction
+# 	* board_auction
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2009-06-07 20:43+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: \n"
@@ -14,6 +14,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+
+#. module: board_auction
+#: model:ir.module.module,shortdesc:board_auction.module_meta_information
+msgid "Board for Auction"
+msgstr "Πίνακας Δημοπρασίας"
 
 #. module: board_auction
 #: constraint:ir.ui.view:0
@@ -61,11 +66,6 @@ msgid "Auction manager "
 msgstr "Υπεύθυνος Δημοπρασίας"
 
 #. module: board_auction
-#: model:ir.module.module,shortdesc:board_auction.module_meta_information
-msgid "Board for Auction"
-msgstr "Πίνακας Δημοπρασίας"
-
-#. module: board_auction
 #: view:board.board:0
 msgid "Estimations/Adjudication"
 msgstr "Εκτιμήσεις/Κατακυρώσεις"
@@ -86,9 +86,9 @@ msgid "Latest deposits"
 msgstr "Τελευταίες καταθέσεις"
 
 #. module: board_auction
-#: view:board.board:0
-msgid "Min/Adj/Max"
-msgstr "Ελαχ./Επικ./Μέγ."
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
 
 #. module: board_auction
 #: view:board.board:0
@@ -112,6 +112,10 @@ msgstr "Πίνακας Υπεύθυνου Δημοπρασίας"
 
 #. module: board_auction
 #: view:board.board:0
+msgid "Min/Adj/Max"
+msgstr "Ελαχ./Επικ./Μέγ."
+
+#. module: board_auction
+#: view:board.board:0
 msgid "My Latest Objects"
 msgstr "Τα Τελευταία μου Αντικείμενα"
-

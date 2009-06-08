@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file containt the translation of the following modules:
-#	* asterisk
+# 	* asterisk
 #
 # Copyright (C) 2008,2009 P. Christeas <p_christ@hol.gr>
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2008-11-15 08:33:16+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
 "Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: \n"
@@ -17,145 +17,11 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: asterisk
-#: wizard_button:asterisk.partner.get,no_call,init:0
-msgid "Retry"
+#: model:ir.module.module,description:asterisk.module_meta_information
+msgid ""
+"Manages a list of asterisk servers and IP phones.\n"
+"This module implements a system to popup the partner form based on phone "
+"calls.\n"
+"This is still a proof of concept, that have been made during Tiny ERP's\n"
+"technical training session."
 msgstr ""
-
-#. module: asterisk
-#: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
-msgstr ""
-
-#. module: asterisk
-#: constraint:ir.ui.view:0
-msgid "Invalid XML for View Architecture!"
-msgstr ""
-
-#. module: asterisk
-#: field:asterisk.phone,state:0
-msgid "State"
-msgstr ""
-
-#. module: asterisk
-#: wizard_button:asterisk.partner.get,no_partner,end:0
-#: wizard_button:asterisk.partner.get,no_call,end:0
-msgid "Exit"
-msgstr ""
-
-#. module: asterisk
-#: field:asterisk.phone,ip:0
-msgid "Phone IP"
-msgstr ""
-
-#. module: asterisk
-#: selection:asterisk.phone,state:0
-msgid "Not Connected"
-msgstr ""
-
-#. module: asterisk
-#: wizard_view:asterisk.partner.get,no_partner:0
-msgid "No partner defined for this phone number !"
-msgstr ""
-
-#. module: asterisk
-#: wizard_button:asterisk.partner.get,no_partner,create:0
-msgid "Create a New Partner"
-msgstr ""
-
-#. module: asterisk
-#: model:ir.actions.act_window,name:asterisk.action_asterisk_server
-#: field:asterisk.phone,asterisk_id:0
-#: field:asterisk.server,name:0
-#: model:ir.ui.menu,name:asterisk.menu_asterisk_server
-#: view:asterisk.server:0
-msgid "Asterisk Server"
-msgstr ""
-
-#. module: asterisk
-#: selection:asterisk.phone,state:0
-msgid "Connected"
-msgstr ""
-
-#. module: asterisk
-#: field:asterisk.phone,user_id:0
-msgid "User"
-msgstr ""
-
-#. module: asterisk
-#: wizard_view:asterisk.partner.get,no_call:0
-msgid "User not on the phone !"
-msgstr ""
-
-#. module: asterisk
-#: field:asterisk.server,password:0
-msgid "Password"
-msgstr ""
-
-#. module: asterisk
-#: field:asterisk.server,port:0
-msgid "Server Port"
-msgstr ""
-
-#. module: asterisk
-#: field:asterisk.server,host:0
-msgid "Server Host"
-msgstr ""
-
-#. module: asterisk
-#: model:ir.model,name:asterisk.model_asterisk_phone
-#: view:asterisk.phone:0
-msgid "IP Phone"
-msgstr ""
-
-#. module: asterisk
-#: model:ir.actions.wizard,name:asterisk.wizard_partner_get
-#: model:ir.ui.menu,name:asterisk.menu_wizard_partner_get
-msgid "Get Partner From Call"
-msgstr ""
-
-#. module: asterisk
-#: field:asterisk.server,login:0
-msgid "Login"
-msgstr ""
-
-#. module: asterisk
-#: model:ir.ui.menu,name:asterisk.menu_asterisk_phone
-msgid "IP Phones"
-msgstr ""
-
-#. module: asterisk
-#: field:asterisk.phone,current_callerid:0
-msgid "Current Caller"
-msgstr ""
-
-#. module: asterisk
-#: wizard_view:asterisk.partner.get,no_partner:0
-#: wizard_view:asterisk.partner.get,no_call:0
-msgid "Open Partner Info"
-msgstr ""
-
-#. module: asterisk
-#: model:ir.ui.menu,name:asterisk.menu_asterisk_server_config
-msgid "Configuration"
-msgstr ""
-
-#. module: asterisk
-#: model:ir.ui.menu,name:asterisk.menu_asterisk_server_main
-msgid "Sys Admin"
-msgstr ""
-
-#. module: asterisk
-#: field:asterisk.phone,name:0
-msgid "Phone Name"
-msgstr ""
-
-#. module: asterisk
-#: model:ir.model,name:asterisk.model_asterisk_server
-msgid "asterisk.server"
-msgstr ""
-
-#. module: asterisk
-#: field:asterisk.phone,phoneid:0
-msgid "Phone ID"
-msgstr ""
-

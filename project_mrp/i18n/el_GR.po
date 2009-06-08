@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2008-11-15 08:33:16+0000\n"
+"POT-Creation-Date: 2009-06-08 21:23:38+0000\n"
 "PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
 "Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: \n"
@@ -17,13 +17,14 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: project_mrp
-#: model:process.transition,note:project_mrp.process_transition_createtask0
-msgid "Product type is service, then its creates the task."
+#: model:process.node,note:project_mrp.process_node_procuretasktask0
+msgid "For each product, on type service and on order"
 msgstr ""
 
 #. module: project_mrp
-#: model:process.node,name:project_mrp.process_node_tasks0
-msgid "Tasks"
+#: model:process.node,name:project_mrp.process_node_mrptask0
+#: model:process.node,name:project_mrp.process_node_procuretasktask0
+msgid "Task"
 msgstr ""
 
 #. module: project_mrp
@@ -32,28 +33,34 @@ msgid "If procure method is Make to order and supply method is produce"
 msgstr ""
 
 #. module: project_mrp
-#: model:process.transition.action,name:project_mrp.process_transition_action_orderconfirmtask0
-msgid "Confirm"
+#: model:process.transition,note:project_mrp.process_transition_procuretask0
+msgid "if product type is 'service' then it creates the task."
 msgstr ""
 
 #. module: project_mrp
-#: model:process.node,note:project_mrp.process_node_procuretask0
-msgid "If Procure method is produce"
+#: field:project.task,procurement_id:0
+msgid "Procurement"
 msgstr ""
 
 #. module: project_mrp
-#: model:process.node,name:project_mrp.process_node_procuretask0
-msgid "Procure task"
+#: model:process.transition,note:project_mrp.process_transition_createtask0
+msgid "Product type is service, then its creates the task."
 msgstr ""
 
 #. module: project_mrp
-#: model:process.transition.action,name:project_mrp.process_transition_action_taskrunprocurement0
-msgid "Run Procurement"
+#: model:ir.module.module,shortdesc:project_mrp.module_meta_information
+msgid "Project Management - MRP and Sale Integration"
+msgstr ""
+"Διαχείριση Πρότζεκτ - Ενοποίηση Σχεδιασμού Αναγκών Υλικού (MRP) και πωλήσεων"
+
+#. module: project_mrp
+#: model:process.transition,name:project_mrp.process_transition_procuretask0
+msgid "Procure Task"
 msgstr ""
 
 #. module: project_mrp
-#: model:process.transition,name:project_mrp.process_transition_task0
-msgid "Task"
+#: model:process.node,note:project_mrp.process_node_mrptask0
+msgid "A task is created to provide the service."
 msgstr ""
 
 #. module: project_mrp
@@ -62,35 +69,16 @@ msgid "Order Task"
 msgstr ""
 
 #. module: project_mrp
+#: model:process.node,name:project_mrp.process_node_saleordertask0
+msgid "Sale Order Task"
+msgstr ""
+
+#. module: project_mrp
 #: model:process.transition,name:project_mrp.process_transition_createtask0
 msgid "Create Task"
 msgstr ""
 
 #. module: project_mrp
-#: model:process.transition.action,name:project_mrp.process_transition_action_ordercanceltask0
-msgid "Cancel"
-msgstr ""
-
-#. module: project_mrp
-#: model:process.transition,note:project_mrp.process_transition_task0
-msgid ""
-"When you select any product's type as a 'service' after confiming sale "
-"order, it will create a task of product."
-msgstr ""
-
-#. module: project_mrp
 #: model:process.node,note:project_mrp.process_node_saleordertask0
-#: model:process.node,note:project_mrp.process_node_tasks0
-msgid "In case you sell services on sale order (task subflow)"
+msgid "In case you sell services on sale order"
 msgstr ""
-
-#. module: project_mrp
-#: model:process.node,name:project_mrp.process_node_saleordertask0
-msgid "Sale_Order_Task"
-msgstr ""
-
-#. module: project_mrp
-#: model:ir.module.module,shortdesc:project_mrp.module_meta_information
-msgid "Project Management - MRP and Sale Integration"
-msgstr ""
-"Διαχείριση Πρότζεκτ - Ενοποίηση Σχεδιασμού Αναγκών Υλικού (MRP) και πωλήσεων"

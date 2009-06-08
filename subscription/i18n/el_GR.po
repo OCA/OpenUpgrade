@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file containt the translation of the following modules:
-#	* subscription
+# 	* subscription
 #
 # Copyright (C) 2008,2009 P. Christeas <p_christ@hol.gr>
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2008-11-15 08:33:16+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
 "Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: \n"
@@ -17,19 +17,27 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: subscription
+#: model:ir.module.module,shortdesc:subscription.module_meta_information
+msgid "Subscription and recurring operations"
+msgstr ""
+
+#. module: subscription
 #: field:subscription.subscription,doc_source:0
 #: field:subscription.subscription.history,document_id:0
 msgid "Source Document"
 msgstr "Πηγαίο Έγγραφο"
 
 #. module: subscription
-#: field:subscription.subscription,interval_number:0
-msgid "Interval Qty"
-msgstr ""
+#: field:subscription.document,model:0
+msgid "Object"
+msgstr "Αντικείμενο"
 
 #. module: subscription
-#: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+#: code:addons/subscription/subscription.py:0
+#, python-format
+msgid ""
+"Please provide another source document.\n"
+"This one does not exist !"
 msgstr ""
 
 #. module: subscription
@@ -58,9 +66,14 @@ msgid "Current Date"
 msgstr "Τρέχουσα Ημερομηνία"
 
 #. module: subscription
-#, python-format
-#: code:addons/subscription/subscription.py:0
-msgid "Please provide another source document.\nThis one does not exist !"
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
+
+#. module: subscription
+#: constraint:ir.model:0
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: subscription
@@ -74,15 +87,14 @@ msgid "Status"
 msgstr ""
 
 #. module: subscription
-#: model:ir.ui.menu,name:subscription.next_id_45
-#: view:subscription.subscription:0
-msgid "Subscriptions"
+#: model:ir.model,name:subscription.model_subscription_document_fields
+msgid "Subscription document fields"
 msgstr ""
 
 #. module: subscription
-#: field:subscription.document,model:0
-msgid "Object"
-msgstr "Αντικείμενο"
+#: field:subscription.subscription,interval_number:0
+msgid "Interval Qty"
+msgstr ""
 
 #. module: subscription
 #: view:subscription.subscription:0
@@ -95,8 +107,9 @@ msgid "Set to Draft"
 msgstr ""
 
 #. module: subscription
-#: model:ir.model,name:subscription.model_subscription_document_fields
-msgid "Subscription document fields"
+#: model:ir.module.module,description:subscription.module_meta_information
+msgid ""
+"Module allows to create new documents and add subscription on that document."
 msgstr ""
 
 #. module: subscription
@@ -140,13 +153,12 @@ msgid "Invalid XML for View Architecture!"
 msgstr ""
 
 #. module: subscription
-#: selection:subscription.subscription,interval_type:0
-msgid "Months"
+#: selection:subscription.subscription.history,document_id:0
+msgid "Sale Order"
 msgstr ""
 
 #. module: subscription
-#: field:subscription.document,name:0
-#: field:subscription.subscription,name:0
+#: field:subscription.document,name:0 field:subscription.subscription,name:0
 msgid "Name"
 msgstr "Ονομασία"
 
@@ -161,15 +173,9 @@ msgid "Notes"
 msgstr "Σημειώσεις"
 
 #. module: subscription
-#: selection:subscription.subscription.history,document_id:0
-msgid "Sale Order"
+#: selection:subscription.subscription,interval_type:0
+msgid "Months"
 msgstr ""
-
-#. module: subscription
-#: model:ir.model,name:subscription.model_subscription_subscription
-#: field:subscription.subscription.history,subscription_id:0
-msgid "Subscription"
-msgstr "Εγγραφή"
 
 #. module: subscription
 #: selection:subscription.subscription,interval_type:0
@@ -177,15 +183,25 @@ msgid "Days"
 msgstr "Ημέρες"
 
 #. module: subscription
-#: field:subscription.document,active:0
 #: field:subscription.subscription,active:0
 msgid "Active"
 msgstr "Ενεργός"
 
 #. module: subscription
+#: model:ir.model,name:subscription.model_subscription_document
+msgid "Subscription document"
+msgstr ""
+
+#. module: subscription
 #: field:subscription.subscription,cron_id:0
 msgid "Cron Job"
 msgstr ""
+
+#. module: subscription
+#: model:ir.model,name:subscription.model_subscription_subscription
+#: field:subscription.subscription.history,subscription_id:0
+msgid "Subscription"
+msgstr "Εγγραφή"
 
 #. module: subscription
 #: field:subscription.subscription,partner_id:0
@@ -198,14 +214,9 @@ msgid "Subsription Data"
 msgstr ""
 
 #. module: subscription
-#: field:subscription.document.fields,document_id:0
 #: view:subscription.document:0
+#: field:subscription.document.fields,document_id:0
 msgid "Subscription Document"
-msgstr ""
-
-#. module: subscription
-#: view:subscription.subscription:0
-msgid "Process"
 msgstr ""
 
 #. module: subscription
@@ -214,8 +225,8 @@ msgid "False"
 msgstr "Ψευδές"
 
 #. module: subscription
-#: model:ir.model,name:subscription.model_subscription_document
-msgid "Subscription document"
+#: view:subscription.subscription:0
+msgid "Process"
 msgstr ""
 
 #. module: subscription
@@ -225,13 +236,20 @@ msgid "All Subscriptions"
 msgstr ""
 
 #. module: subscription
+#: model:ir.ui.menu,name:subscription.next_id_45
+#: view:subscription.subscription:0
+msgid "Subscriptions"
+msgstr ""
+
+#. module: subscription
+#: model:ir.actions.act_window,name:subscription.action_document_form
 #: model:ir.ui.menu,name:subscription.menu_action_document_form
 msgid "Document Types"
 msgstr ""
 
 #. module: subscription
-#, python-format
 #: code:addons/subscription/subscription.py:0
+#, python-format
 msgid "Wrong Source Document !"
 msgstr ""
 
@@ -256,8 +274,8 @@ msgid "Default Value"
 msgstr ""
 
 #. module: subscription
-#: field:subscription.subscription,doc_lines:0
 #: view:subscription.subscription:0
+#: field:subscription.subscription,doc_lines:0
 msgid "Documents created"
 msgstr ""
 
@@ -265,4 +283,3 @@ msgstr ""
 #: model:ir.ui.menu,name:subscription.menu_tools
 msgid "Tools"
 msgstr ""
-

@@ -1,12 +1,12 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* crm_profiling
+# 	* crm_profiling
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2009-06-01 00:13+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: \n"
@@ -16,8 +16,14 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: crm_profiling
+#: model:ir.module.module,shortdesc:crm_profiling.module_meta_information
+msgid "crm_profiling management"
+msgstr ""
+
+#. module: crm_profiling
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: crm_profiling
@@ -38,8 +44,8 @@ msgid "Child Profiles"
 msgstr ""
 
 #. module: crm_profiling
-#: model:ir.module.module,shortdesc:crm_profiling.module_meta_information
-msgid "crm_profiling management"
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
 msgstr ""
 
 #. module: crm_profiling
@@ -64,8 +70,7 @@ msgid "Excluded Answers"
 msgstr ""
 
 #. module: crm_profiling
-#: view:crm_profiling.answer:0
-#: view:crm_profiling.question:0
+#: view:crm_profiling.answer:0 view:crm_profiling.question:0
 #: field:res.partner,answers_ids:0
 msgid "Answers"
 msgstr ""
@@ -112,8 +117,7 @@ msgid "Use The Profiling Rules"
 msgstr ""
 
 #. module: crm_profiling
-#: view:crm_profiling.question:0
-#: field:crm_profiling.question,answers_ids:0
+#: view:crm_profiling.question:0 field:crm_profiling.question,answers_ids:0
 msgid "Avalaible answers"
 msgstr ""
 
@@ -124,7 +128,9 @@ msgstr ""
 
 #. module: crm_profiling
 #: help:crm.segmentation,profiling_active:0
-msgid "Check this box if you want to use this tab as part of the segmentation rule. If not checked, the criteria beneath will be ignored"
+msgid ""
+"Check this box if you want to use this tab as part of the segmentation rule. "
+"If not checked, the criteria beneath will be ignored"
 msgstr ""
 
 #. module: crm_profiling
@@ -160,4 +166,3 @@ msgstr ""
 #: wizard_button:open_questionnaire,open,compute:0
 msgid "Save Data"
 msgstr ""
-

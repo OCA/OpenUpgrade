@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2008-11-15 08:33:16+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
 "Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: \n"
@@ -15,6 +15,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: account_payment
+#: model:ir.module.module,shortdesc:account_payment.module_meta_information
+msgid "Payment Management"
+msgstr "Διαχείριση Πληρωμών"
 
 #. module: account_payment
 #: field:payment.order,date_planned:0
@@ -28,8 +33,8 @@ msgstr "Νόμισμα Συνεργάτη"
 
 #. module: account_payment
 #: view:payment.order:0
-msgid "Total in Company Currency"
-msgstr "Σύνολο σε Νόμισμα Εταιρίας"
+msgid "Set to draft"
+msgstr "Ρύθμιση σε πρόχειρο"
 
 #. module: account_payment
 #: help:payment.order,mode:0
@@ -37,20 +42,14 @@ msgid "Select the Payment Mode to be applied."
 msgstr "Επιλέξτε την Κατάσταση Πληρωμής που θα εφαρμοστεί."
 
 #. module: account_payment
-#: field:payment.order,line_ids:0
-msgid "Payment lines"
-msgstr "Γραμμές Πληρωμής"
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
 
 #. module: account_payment
 #: view:payment.line:0 field:payment.line,info_owner:0 view:payment.order:0
 msgid "Owner Account"
 msgstr "Λογαριασμός Κατόχου"
-
-#. module: account_payment
-#: model:ir.actions.act_window,name:account_payment.action_payment_order_open
-#: model:ir.ui.menu,name:account_payment.menu_action_payment_order_open
-msgid "Payment orders to validate"
-msgstr ""
 
 #. module: account_payment
 #: help:account.invoice,amount_to_pay:0
@@ -60,6 +59,20 @@ msgid ""
 msgstr ""
 "Το ποσό που θα πρέπει να πληρωθεί στην τρέχουσα ημερομηνία\n"
 "μείον το ποσό που είναι ήδη σε εντολή πληρωμής"
+
+#. module: account_payment
+#: help:payment.line,date:0
+msgid ""
+"If no payment date is specified, the bank will treat this payment line "
+"directly"
+msgstr ""
+"Εάν δεν υπάρχει καθορισμένη ημερομηνία πληρωμής, η τράπεζα θα αντιμετωπίσει "
+"αυτήν την γραμμή πληρωμής άμεσα"
+
+#. module: account_payment
+#: field:payment.order,date_prefered:0
+msgid "Preferred date"
+msgstr "Προτιμώμενη ημερομηνία"
 
 #. module: account_payment
 #: selection:payment.line,state:0
@@ -87,7 +100,7 @@ msgid "_Add to payment order"
 msgstr "_Προσθήκη σε εντολή πληρωμής"
 
 #. module: account_payment
-#: rml:payement.order:0 view:payment.order:0
+#: rml:payment.order:0 view:payment.order:0
 msgid "Amount"
 msgstr "Ποσό"
 
@@ -98,8 +111,8 @@ msgstr "Ημερομηνία εκτέλεσης:"
 
 #. module: account_payment
 #: view:payment.order:0
-msgid "Set to draft"
-msgstr "Ρύθμιση σε πρόχειρο"
+msgid "Total in Company Currency"
+msgstr "Σύνολο σε Νόμισμα Εταιρίας"
 
 #. module: account_payment
 #: selection:payment.order,state:0
@@ -107,21 +120,21 @@ msgid "Cancelled"
 msgstr "Ακυρωμένο"
 
 #. module: account_payment
-#: help:payment.line,communication:0
-msgid ""
-"Used as the message between ordering customer and current company.Depicts "
-"'What do you want to say to the receipent about this oder?'"
-msgstr ""
+#: model:ir.actions.act_window,name:account_payment.action_payment_order_tree_new
+#: model:ir.ui.menu,name:account_payment.menu_action_payment_order_form_new
+msgid "New Payment Order"
+msgstr "Νέα Εντολή Πληρωμής"
 
 #. module: account_payment
-#: rml:payement.order:0 field:payment.order,reference:0
+#: rml:payment.order:0 field:payment.order,reference:0
 msgid "Reference"
 msgstr "Αναφορά"
 
 #. module: account_payment
-#: field:payment.line,ml_date_created:0
-msgid "Effective Date"
-msgstr "Ημερομηνία Εφαρμογής"
+#: model:ir.actions.act_window,name:account_payment.action_payment_order_tree
+#: model:ir.ui.menu,name:account_payment.menu_action_payment_order_form
+msgid "Payment Orders"
+msgstr "Εντολές Πληρωμής"
 
 #. module: account_payment
 #: selection:payment.order,date_prefered:0
@@ -129,9 +142,11 @@ msgid "Directly"
 msgstr "Άμεσα"
 
 #. module: account_payment
-#: selection:payment.order,state:0
-msgid "Draft"
-msgstr "Πρόχειρο"
+#: model:ir.actions.act_window,name:account_payment.action_payment_line_form
+#: model:ir.model,name:account_payment.model_payment_line view:payment.line:0
+#: view:payment.order:0
+msgid "Payment Line"
+msgstr "Γραμμή Πληρωμής"
 
 #. module: account_payment
 #: field:payment.type,suitable_bank_types:0
@@ -152,6 +167,11 @@ msgstr "Επιβεβαιωμένο"
 #: help:payment.line,ml_date_created:0
 msgid "Invoice Effective Date"
 msgstr "Ημερομηνία Εφαρμογής Τιμολογίου"
+
+#. module: account_payment
+#: field:payment.order,line_ids:0
+msgid "Payment lines"
+msgstr "Γραμμές Πληρωμής"
 
 #. module: account_payment
 #: help:payment.order,date_planned:0
@@ -176,20 +196,43 @@ msgid "Transaction Information"
 msgstr "Πληροφορίες Συναλλαγής"
 
 #. module: account_payment
-#: view:account.move.line:0
-msgid "Total debit"
-msgstr "Συνολική χρέωση"
+#: model:ir.actions.act_window,name:account_payment.action_payment_mode_form
+#: model:ir.ui.menu,name:account_payment.menu_action_payment_mode_form
+#: view:payment.mode:0
+msgid "Payment Mode"
+msgstr "Κατάσταση Πληρωμής"
 
 #. module: account_payment
-#: field:payment.line,move_line_id:0
-msgid "Entry line"
-msgstr "Γραμμή εγγραφής"
+#: field:payment.line,ml_date_created:0
+msgid "Effective Date"
+msgstr "Ημερομηνία Εφαρμογής"
+
+#. module: account_payment
+#: field:payment.line,ml_inv_ref:0
+msgid "Invoice Ref."
+msgstr "Σχετ. Τιμολόγιο"
+
+#. module: account_payment
+#: help:payment.order,date_prefered:0
+msgid ""
+"Choose an option for the Payment Order:'Fixed' stands for a date specified "
+"by you.'Directly' stands for the direct execution.'Due date' stands for the "
+"scheduled date of execution."
+msgstr ""
+"Επιλέξτε μία επιλογή για την Εντολή Πληρωμής:\"Καθορισμένο\" σημαίνει "
+"ημερομηνία που καθορίζεται απο εσάς. \"Άμεσα\" σημαίνει την άμεση εκτέλεση. "
+"\"Ημερομηνία Λήξης\" σημαίνει την καθορισμένη ημερομηνία εκτέλεσης."
 
 #. module: account_payment
 #: code:addons/account_payment/account_move_line.py:0
 #, python-format
 msgid "Error !"
 msgstr "Σφάλμα!"
+
+#. module: account_payment
+#: view:account.move.line:0
+msgid "Total debit"
+msgstr "Συνολική χρέωση"
 
 #. module: account_payment
 #: field:payment.order,date_done:0
@@ -239,14 +282,14 @@ msgid "Currency Amount Total"
 msgstr "Συνολικό Ποσό Νομίσματος"
 
 #. module: account_payment
+#: view:payment.order:0
+msgid "Make Payments"
+msgstr "Εκτελέστε Πληρωμές"
+
+#. module: account_payment
 #: field:payment.line,state:0
 msgid "Communication Type"
 msgstr "Τύπος Επικοινωνίας"
-
-#. module: account_payment
-#: rml:payement.order:0 field:payment.line,partner_id:0
-msgid "Partner"
-msgstr "Συνέταιρος"
 
 #. module: account_payment
 #: selection:payment.order,date_prefered:0
@@ -254,9 +297,9 @@ msgid "Due date"
 msgstr "Ημερομηνία λήξης"
 
 #. module: account_payment
-#: field:payment.line,communication:0
-msgid "Communication"
-msgstr "Επικοινωνία"
+#: field:account.invoice,amount_to_pay:0
+msgid "Amount to be paid"
+msgstr "Ποσό προς πληρωμή"
 
 #. module: account_payment
 #: help:payment.line,info_owner:0
@@ -264,9 +307,9 @@ msgid "Address of the Main Partner"
 msgstr "Διεύθυνση του κύριου Συνεργάτη"
 
 #. module: account_payment
-#: view:payment.line:0 view:payment.order:0
-msgid "Information"
-msgstr "Πληροφορίες"
+#: help:payment.mode,name:0
+msgid "Mode of Payment"
+msgstr "Κατάσταση των Πληρωμών"
 
 #. module: account_payment
 #: view:payment.type:0 help:payment.type,name:0
@@ -279,17 +322,14 @@ msgid "Payment amount in the partner currency"
 msgstr "Ποσό Πληρωμής στο νόμισμα του συνεργάτη"
 
 #. module: account_payment
-#: model:ir.actions.act_window,name:account_payment.action_payment_order_draft
-#: model:ir.ui.menu,name:account_payment.menu_action_payment_order_draft
-msgid "Draft payment order"
-msgstr ""
+#: selection:payment.order,state:0
+msgid "Draft"
+msgstr "Πρόχειρο"
 
 #. module: account_payment
-#: model:ir.actions.act_window,name:account_payment.action_payment_line_form
-#: model:ir.model,name:account_payment.model_payment_line view:payment.line:0
-#: view:payment.order:0
-msgid "Payment Line"
-msgstr "Γραμμή Πληρωμής"
+#: field:payment.line,partner_id:0 rml:payment.order:0
+msgid "Partner"
+msgstr "Συνέταιρος"
 
 #. module: account_payment
 #: help:payment.line,communication2:0
@@ -329,7 +369,7 @@ msgid "Payment Lines"
 msgstr "Γραμμές Πληρωμής"
 
 #. module: account_payment
-#: rml:payement.order:0
+#: rml:payment.order:0
 msgid "Date"
 msgstr "Ημερομηνία"
 
@@ -388,11 +428,6 @@ msgid "The Ordering Customer"
 msgstr "Ο Πελάτης Παραγγελίας"
 
 #. module: account_payment
-#: field:payment.line,ml_inv_ref:0
-msgid "Invoice Ref"
-msgstr "Αναφ. Τιμολογίου"
-
-#. module: account_payment
 #: field:payment.type,code:0
 msgid "Code"
 msgstr "Κωδικός"
@@ -418,9 +453,9 @@ msgid "Done"
 msgstr "Εκπληρωμένο"
 
 #. module: account_payment
-#: field:account.invoice,amount_to_pay:0
-msgid "Amount to be paid"
-msgstr "Ποσό προς πληρωμή"
+#: field:payment.line,communication:0
+msgid "Communication"
+msgstr "Επικοινωνία"
 
 #. module: account_payment
 #: view:payment.order:0
@@ -428,14 +463,9 @@ msgid "Cancel"
 msgstr "Άκυρο"
 
 #. module: account_payment
-#: view:payment.order:0
-msgid "Open"
-msgstr ""
-
-#. module: account_payment
-#: help:payment.mode,name:0
-msgid "Mode of Payment"
-msgstr "Κατάσταση των Πληρωμών"
+#: view:payment.line:0 view:payment.order:0
+msgid "Information"
+msgstr "Πληροφορίες"
 
 #. module: account_payment
 #: constraint:ir.model:0
@@ -455,6 +485,12 @@ msgstr "Πληρωμή"
 #: model:ir.model,name:account_payment.model_payment_order
 msgid "Payment Order"
 msgstr "Διάταξη Πληρωμής"
+
+#. module: account_payment
+#: model:ir.actions.act_window,name:account_payment.action_payment_order_draft
+#: model:ir.ui.menu,name:account_payment.menu_action_payment_order_draft
+msgid "Draft Payment Order"
+msgstr "Διάταξη Πρόχειρων Πληρωμών"
 
 #. module: account_payment
 #: help:payment.line,amount:0
@@ -492,16 +528,14 @@ msgid "Bank account"
 msgstr "Λογαριασμός τράπεζας"
 
 #. module: account_payment
+#: view:payment.order:0
+msgid "Confirm Payments"
+msgstr "Επιβεβαίωση Πληρωμών"
+
+#. module: account_payment
 #: field:payment.line,company_currency:0
 msgid "Company Currency"
 msgstr "Νόμισμα Εταιρίας"
-
-#. module: account_payment
-#: help:payment.line,date:0
-msgid ""
-"If no payment date is specified, the bank will treat this payment line "
-"direclty"
-msgstr ""
 
 #. module: account_payment
 #: model:ir.ui.menu,name:account_payment.menu_main
@@ -511,15 +545,19 @@ msgid "Payment"
 msgstr "Πληρωμή"
 
 #. module: account_payment
-#: help:payment.order,date_prefered:0
+#: field:payment.line,move_line_id:0
+msgid "Entry line"
+msgstr "Γραμμή εγγραφής"
+
+#. module: account_payment
+#: help:payment.line,communication:0
 msgid ""
-"Choose an option for the Payment Order:'Fixed' stands for a date specified "
-"by you.'Directly' stands for the direct execution.'Due date' stands for the "
-"scheduled date of execution."
+"Used as the message between ordering customer and current company. Depicts "
+"'What do you want to say to the recipient about this order ?'"
 msgstr ""
-"Επιλέξτε μία επιλογή για την Εντολή Πληρωμής:\"Καθορισμένο\" σημαίνει "
-"ημερομηνία που καθορίζεται απο εσάς. \"Άμεσα\" σημαίνει την άμεση εκτέλεση. "
-"\"Ημερομηνία Λήξης\" σημαίνει την καθορισμένη ημερομηνία εκτέλεσης."
+"Χρησιμοποιείται ως μήνυμα μεταξύ του πελάτη παραγγελίας και της τρέχουσας "
+"εταιρίας. Απεικονίζει \"Τί θέλετε να πείτε στον λήπτη για αυτήν την "
+"παραγγελία;\""
 
 #. module: account_payment
 #: field:payment.mode,name:0 field:payment.type,name:0
@@ -555,20 +593,21 @@ msgid "Order"
 msgstr "Εντολή"
 
 #. module: account_payment
+#: model:ir.actions.act_window,name:account_payment.action_payment_order_open
+#: model:ir.ui.menu,name:account_payment.menu_action_payment_order_open
+msgid "Payment Orders to Validate"
+msgstr "Εντολές Πληρωμής Προς Έλεγχο"
+
+#. module: account_payment
 #: model:ir.model,name:account_payment.model_payment_type
 #: field:payment.mode,type:0
 msgid "Payment type"
 msgstr "Τύπος πληρωμής"
 
 #. module: account_payment
-#: help:payment.mode,bank_id:0
-msgid "Bank Account for the Payment Mode"
-msgstr "Λογαριασμός Τραπέζης για την Κατάσταση Πληρωμής"
-
-#. module: account_payment
-#: view:payment.order:0
-msgid "Make Payment"
-msgstr ""
+#: field:payment.order,total:0
+msgid "Total"
+msgstr "Σύνολο"
 
 #. module: account_payment
 #: wizard_button:populate_statement,init,add:0
@@ -581,97 +620,20 @@ msgid "Select the Payment Type for the Payment Mode."
 msgstr "Επιλέξτε τον Τύπο Πληρωμής για την Κατάσταση Πληρωμής."
 
 #. module: account_payment
-#: field:payment.order,date_prefered:0
-msgid "Prefered date"
-msgstr ""
-
-#. module: account_payment
 #: model:ir.model,name:account_payment.model_payment_mode
 #: field:payment.order,mode:0
 msgid "Payment mode"
 msgstr "Κατάσταση πληρωμής"
 
 #. module: account_payment
-#: field:payment.order,total:0
-msgid "Total"
-msgstr "Σύνολο"
+#: help:payment.mode,bank_id:0
+msgid "Bank Account for the Payment Mode"
+msgstr "Λογαριασμός Τραπέζης για την Κατάσταση Πληρωμής"
 
 #. module: account_payment
 #: field:payment.mode,journal:0
 msgid "Journal"
 msgstr "Ημερολόγιο"
 
-#. module: account_payment
-#: help:payment.line,date:0
-msgid ""
-"If no payment date is specified, the bank will treat this payment line "
-"directly"
-msgstr ""
-"Εάν δεν υπάρχει καθορισμένη ημερομηνία πληρωμής, η τράπεζα θα αντιμετωπίσει "
-"αυτήν την γραμμή πληρωμής άμεσα"
-
-#. module: account_payment
-#: field:payment.order,date_prefered:0
-msgid "Preferred date"
-msgstr "Προτιμώμενη ημερομηνία"
-
-#. module: account_payment
-#: model:ir.actions.act_window,name:account_payment.action_payment_order_tree_new
-#: model:ir.ui.menu,name:account_payment.menu_action_payment_order_form_new
-msgid "New Payment Order"
-msgstr "Νέα Εντολή Πληρωμής"
-
-#. module: account_payment
-#: model:ir.actions.act_window,name:account_payment.action_payment_order_tree
-#: model:ir.ui.menu,name:account_payment.menu_action_payment_order_form
-msgid "Payment Orders"
-msgstr "Εντολές Πληρωμής"
-
-#. module: account_payment
-#: model:ir.actions.act_window,name:account_payment.action_payment_mode_form
-#: model:ir.ui.menu,name:account_payment.menu_action_payment_mode_form
-#: view:payment.mode:0
-msgid "Payment Mode"
-msgstr "Κατάσταση Πληρωμής"
-
-#. module: account_payment
-#: field:payment.line,ml_inv_ref:0
-msgid "Invoice Ref."
-msgstr "Σχετ. Τιμολόγιο"
-
-#. module: account_payment
-#: view:payment.order:0
-msgid "Make Payments"
-msgstr "Εκτελέστε Πληρωμές"
-
-#. module: account_payment
-#: model:ir.module.module,shortdesc:account_payment.module_meta_information
-msgid "Payment Management"
-msgstr "Διαχείριση Πληρωμών"
-
-#. module: account_payment
-#: model:ir.actions.act_window,name:account_payment.action_payment_order_draft
-#: model:ir.ui.menu,name:account_payment.menu_action_payment_order_draft
-msgid "Draft Payment Order"
-msgstr "Διάταξη Πρόχειρων Πληρωμών"
-
-#. module: account_payment
-#: view:payment.order:0
-msgid "Confirm Payments"
-msgstr "Επιβεβαίωση Πληρωμών"
-
-#. module: account_payment
-#: help:payment.line,communication:0
-msgid ""
-"Used as the message between ordering customer and current company. Depicts "
-"'What do you want to say to the recipient about this order ?'"
-msgstr ""
-"Χρησιμοποιείται ως μήνυμα μεταξύ του πελάτη παραγγελίας και της τρέχουσας "
-"εταιρίας. Απεικονίζει \"Τί θέλετε να πείτε στον λήπτη για αυτήν την "
-"παραγγελία;\""
-
-#. module: account_payment
-#: model:ir.actions.act_window,name:account_payment.action_payment_order_open
-#: model:ir.ui.menu,name:account_payment.menu_action_payment_order_open
-msgid "Payment Orders to Validate"
-msgstr "Εντολές Πληρωμής Προς Έλεγχο"
+#~ msgid "Invoice Ref"
+#~ msgstr "Αναφ. Τιμολογίου"
