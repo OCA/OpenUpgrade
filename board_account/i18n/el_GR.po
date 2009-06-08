@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file containt the translation of the following modules:
-#	* board_account
+# 	* board_account
 #
 # Copyright (C) 2008,2009 P. Christeas <p_christ@hol.gr>
 msgid ""
@@ -19,39 +19,40 @@ msgstr ""
 #. module: board_account
 #: view:board.board:0
 msgid "Analytic accounts to close"
-msgstr ""
+msgstr "Αναλυτικοί λογαριασμοί για κλείσιμο"
 
 #. module: board_account
 #: view:board.board:0
 msgid "Draft invoices"
-msgstr ""
+msgstr "Πρόχειρα τιμολόγια"
 
 #. module: board_account
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
-msgstr ""
+msgstr "Invalid XML for View Architecture!"
 
 #. module: board_account
 #: model:ir.actions.act_window,name:board_account.open_board_account
 #: model:ir.ui.menu,name:board_account.menu_board_account
 msgid "Accounting Dashboard"
-msgstr ""
+msgstr "Πίνακας Αναφορών Λογιστικής"
 
 #. module: board_account
 #: model:ir.actions.act_window,name:board_account.action_aged_receivable
 msgid "Receivable Accounts"
-msgstr ""
+msgstr "Λογαριασμοί Εισπρακτέοι"
 
 #. module: board_account
 #: view:board.board:0
+#: model:ir.actions.act_window,name:board_account.act_my_account
 msgid "Accounts to invoice"
-msgstr ""
+msgstr "Λογαριασμοί για τιμολόγηση"
 
 #. module: board_account
-#: model:ir.actions.act_window,name:board_account.action_account_analytic_line_to_invoice
 #: view:board.board:0
+#: model:ir.actions.act_window,name:board_account.action_account_analytic_line_to_invoice
 msgid "Costs to invoice"
-msgstr ""
+msgstr "Κόστη για τιμολόγηση"
 
 #. module: board_account
 #: view:board.board:0
@@ -61,12 +62,12 @@ msgstr ""
 #. module: board_account
 #: model:ir.actions.act_window,name:board_account.action_aged_income
 msgid "Income Accounts"
-msgstr ""
+msgstr "Λογαριασμοί Εσόδων"
 
 #. module: board_account
 #: view:board.board:0
 msgid "My indicators"
-msgstr ""
+msgstr "Οι δείκτες μου"
 
 #. module: board_account
 #: model:ir.ui.menu,name:board_account.next_id_68
@@ -76,10 +77,14 @@ msgstr "Λογιστικά"
 #. module: board_account
 #: view:board.board:0
 msgid "Account Board"
-msgstr ""
+msgstr "Πίνακας Λογαριασμού"
 
 #. module: board_account
 #: view:board.board:0
 msgid "Aged income"
 msgstr ""
 
+#. module: board_account
+#: model:ir.module.module,shortdesc:board_account.module_meta_information
+msgid "Board for accountant"
+msgstr "Πίνακας Λογιστηρίου"

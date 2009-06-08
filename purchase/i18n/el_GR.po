@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file containt the translation of the following modules:
-#	* purchase
+# 	* purchase
 #
 # Copyright (C) 2008,2009 P. Christeas <p_christ@hol.gr>
 msgid ""
@@ -19,78 +19,94 @@ msgstr ""
 #. module: purchase
 #: field:purchase.order,invoiced:0
 msgid "Invoiced & Paid"
-msgstr ""
+msgstr "Τιμολογημένες και Πληρωμένες"
 
 #. module: purchase
 #: field:purchase.order,location_id:0
 msgid "Destination"
-msgstr ""
+msgstr "Προορισμός"
 
 #. module: purchase
 #: selection:purchase.order,invoice_method:0
 msgid "From Picking"
-msgstr ""
+msgstr "Από Συλλογή"
 
 #. module: purchase
 #: rml:purchase.order:0
 msgid "Validated By"
-msgstr ""
+msgstr "Επικυρωμένο Από"
 
 #. module: purchase
 #: field:purchase.order,partner_id:0
 msgid "Supplier"
-msgstr ""
+msgstr "Προμηθευτής"
 
 #. module: purchase
 #: model:process.transition,name:purchase.process_transition_confirmingpurchaseorder0
 msgid "Confirming Purchase Order"
-msgstr ""
+msgstr "Επιβεβαίωση Παραγγελιών Αγοράς"
 
 #. module: purchase
 #: wizard_view:purchase.order.merge,init:0
-msgid "Please note that orders will only be merged if they are to the same partner and going to the same location, and lines will only be merged if they are exactly the same except for the quantity and unit."
+msgid ""
+"Please note that orders will only be merged if they are to the same partner "
+"and going to the same location, and lines will only be merged if they are "
+"exactly the same except for the quantity and unit."
 msgstr ""
+"Παρακαλώ, σημειώστε ότι οι παραγγελίες θα συγχωνευθούν μόνο αν προέρχονται "
+"από τον ίδιο προμηθευτή και έχουν τον ίδιο προορισμό. Οι γραμμές θα "
+"συγχωνευθούν μόνο αν είναι ολόιδιες, με εξαίρεση τις ποσότητες και τις "
+"μονάδες μέτρησης."
 
 #. module: purchase
-#, python-format
 #: code:addons/purchase/purchase.py:0
+#, python-format
 msgid "No Pricelist !"
-msgstr ""
+msgstr "Δεν υπάρχει Τιμοκατάλογος!"
 
 #. module: purchase
 #: view:purchase.order:0
 msgid "Set to Draft"
-msgstr ""
+msgstr "Ορισμός σε Πρόχειρη"
 
 #. module: purchase
 #: model:ir.model,name:purchase.model_purchase_order
 msgid "Purchase order"
-msgstr ""
+msgstr "Παραγγελία Αγοράς"
 
 #. module: purchase
 #: model:product.pricelist,name:purchase.list0
 msgid "Default Purchase Pricelist"
-msgstr ""
+msgstr "Προεπιλεγμένος Τιμοκατάλογος Αγορών"
 
 #. module: purchase
 #: model:ir.actions.wizard,name:purchase.purchase_order_merge
 msgid "Merge purchases"
-msgstr ""
+msgstr "Συγχώνευση παραλαβών"
 
 #. module: purchase
 #: help:res.partner,property_product_pricelist_purchase:0
-msgid "This pricelist will be used, instead of the default one, for purchases from the current partner"
+msgid ""
+"This pricelist will be used, instead of the default one, for purchases from "
+"the current partner"
 msgstr ""
+"Αυτός ο τιμοκατάλογος θα χρησιμοποιείται για αγορές από το συγκεκριμένο "
+"προμηθευτή αντί του προεπιλεγμένου"
 
 #. module: purchase
 #: rml:purchase.order:0
 msgid "Fax :"
-msgstr ""
+msgstr "Φαξ:"
 
 #. module: purchase
 #: help:purchase.order,pricelist_id:0
-msgid "The pricelist sets the currency used for this purchase order. It also computes the supplier price for the selected products/quantities."
+msgid ""
+"The pricelist sets the currency used for this purchase order. It also "
+"computes the supplier price for the selected products/quantities."
 msgstr ""
+"Το νόμισμα που χρησιμοποιείται στην παραγγελία ορίζεταο στον τιμοκατάλογο "
+"αγορών. Υπολογίζει επίσης την τιμή του προμηθευτή για τα επιλέγμένα προϊόντα/"
+"ποσότητες."
 
 #. module: purchase
 #: model:process.node,name:purchase.process_node_draftpurchaseorder0
@@ -100,23 +116,23 @@ msgstr ""
 #. module: purchase
 #: model:process.transition,name:purchase.process_transition_invoicefrompackinglist0
 msgid "Invoice from Packing list"
-msgstr ""
+msgstr "Τιμολόγηση από Κατάσταση Συσκευασίας"
 
 #. module: purchase
 #: field:purchase.order.line,price_subtotal:0
 msgid "Subtotal"
-msgstr ""
+msgstr "Σύνολο"
 
 #. module: purchase
 #: selection:purchase.order,state:0
 msgid "Approved"
-msgstr ""
+msgstr "Εγκεκριμένη"
 
 #. module: purchase
 #: model:ir.actions.act_window,name:purchase.purchase_form_action4
 #: model:ir.ui.menu,name:purchase.menu_purchase_form_action4
 msgid "Purchase Orders in Progress"
-msgstr ""
+msgstr "Παραγγελίες Αγορών σε Εξέλιξη"
 
 #. module: purchase
 #: model:process.node,note:purchase.process_node_invoiceafterpacking0
@@ -124,53 +140,62 @@ msgid "In case you control based on delivery"
 msgstr ""
 
 #. module: purchase
-#: field:purchase.order.line,notes:0
-#: field:purchase.order,notes:0
-#: view:purchase.order:0
-#: view:purchase.order.line:0
+#: field:purchase.order.line,notes:0 field:purchase.order,notes:0
+#: view:purchase.order:0 view:purchase.order.line:0
 msgid "Notes"
 msgstr "Σημειώσεις"
 
 #. module: purchase
 #: rml:purchase.order:0
 msgid "N°"
-msgstr ""
+msgstr "N°"
 
 #. module: purchase
-#: rml:purchase.order:0
-#: field:purchase.order,amount_tax:0
+#: rml:purchase.order:0 field:purchase.order,amount_tax:0
 #: field:purchase.order.line,taxes_id:0
 msgid "Taxes"
 msgstr "Φόροι"
 
 #. module: purchase
 #: model:ir.actions.report.xml,name:purchase.report_purchase_order
-#: field:stock.picking,purchase_id:0
-#: view:purchase.order:0
 #: model:process.node,name:purchase.process_node_purchaseorder0
+#: view:purchase.order:0
 #: model:res.request.link,name:purchase.req_link_purchase_order
+#: field:stock.picking,purchase_id:0
 msgid "Purchase Order"
-msgstr ""
+msgstr "Παραγγελία Αγοράς"
 
 #. module: purchase
 #: rml:purchase.quotation:0
 msgid "Regards,"
-msgstr ""
+msgstr "Με εκτίμηση,"
 
 #. module: purchase
 #: rml:purchase.order:0
 msgid "Net Total :"
-msgstr ""
+msgstr "Καθαρό Σύνολο"
 
 #. module: purchase
 #: selection:purchase.order,state:0
 msgid "Cancelled"
-msgstr ""
+msgstr "Ακυρωμένη"
 
 #. module: purchase
 #: help:purchase.order,state:0
-msgid "The state of the purchase order or the quotation request. A quotation is a purchase order in a 'Draft' state. Then the order has to be confirmed by the user, the state switch to 'Confirmed'. Then the supplier must confirm the order to change the state to 'Approved'. When the purchase order is paid and received, the state becomes 'Done'. If a cancel action occurs in the invoice or in the reception of goods, the state becomes in exception."
+msgid ""
+"The state of the purchase order or the quotation request. A quotation is a "
+"purchase order in a 'Draft' state. Then the order has to be confirmed by the "
+"user, the state switch to 'Confirmed'. Then the supplier must confirm the "
+"order to change the state to 'Approved'. When the purchase order is paid and "
+"received, the state becomes 'Done'. If a cancel action occurs in the invoice "
+"or in the reception of goods, the state becomes in exception."
 msgstr ""
+"Το στάδιο της παραγγελίας αγοράς ή της αίτησης για προσφορά. Η προσφορά "
+"είναι παραγγελία αγοράς σε στάδιο 'Πρόχειρη'. Η παραγγελία, μετά, πρέπει να "
+"επιβεβαιωθεί από το χρήστη. Το στάδιο αλλάζει σε 'Επιβεβαιωμένη'. Αφού "
+"εγκριθεί από τον προμηθευτή, το στάδιο αλλάζει σε 'Εγκεκριμένη'. Όταν "
+"πληρωθεί και παραληφθεί, το στάδιο αλλάζει σε 'Ολοκληρώθηκε'. Αν προκύψει "
+"ακύρωση κατά την παραλαβή ή την τιμολόγηση, το στάδιο αλλάζει σε εξαίρεση."
 
 #. module: purchase
 #: field:purchase.order,origin:0
@@ -178,16 +203,18 @@ msgid "Origin"
 msgstr "Προέλευση"
 
 #. module: purchase
-#, python-format
 #: code:addons/purchase/purchase.py:0
+#, python-format
 msgid "Could not cancel purchase order !"
-msgstr ""
+msgstr "Η Παραγγελία δεν μπορεί να ακυρωθεί!"
 
 #. module: purchase
-#, python-format
 #: code:addons/purchase/purchase.py:0
+#, python-format
 msgid "You must first cancel all invoices attached to this purchase order."
 msgstr ""
+"Πρέπει πρώτα να ακυρώσετε όλα τα τιμολόγια που συνδέονται με την Παραγγελία "
+"Αγοράς."
 
 #. module: purchase
 #: view:purchase.order:0
@@ -197,7 +224,7 @@ msgstr "Αναφορά"
 #. module: purchase
 #: rml:purchase.order:0
 msgid "TVA :"
-msgstr ""
+msgstr "ΦΠΑ:"
 
 #. module: purchase
 #: model:process.process,name:purchase.process_process_purchaseworkflow0
@@ -207,7 +234,7 @@ msgstr ""
 #. module: purchase
 #: rml:purchase.quotation:0
 msgid "Tel.:"
-msgstr ""
+msgstr "Τηλ:"
 
 #. module: purchase
 #: view:purchase.order:0
@@ -222,46 +249,60 @@ msgstr "Αναλυτικός Λογαριασμός"
 #. module: purchase
 #: model:ir.model,name:purchase.model_purchase_order_line
 msgid "Purchase Order lines"
-msgstr ""
+msgstr "Γραμμές Παραγγελίας Αγοράς"
 
 #. module: purchase
 #: field:purchase.order,validator:0
 msgid "Validated by"
-msgstr ""
+msgstr "Επικυρωμένο από"
 
 #. module: purchase
 #: help:purchase.order,invoice_method:0
-msgid "From Order: a draft invoice will be pre-generated based on the purchase order. The accountant will just have to validate this invoice for control.\n"
-"From Picking: a draft invoice will be pre-genearted based on validated receptions.\n"
-"Manual: no invoice will be pre-generated. The accountant will have to encode manually."
+msgid ""
+"From Order: a draft invoice will be pre-generated based on the purchase "
+"order. The accountant will just have to validate this invoice for control.\n"
+"From Picking: a draft invoice will be pre-genearted based on validated "
+"receptions.\n"
+"Manual: no invoice will be pre-generated. The accountant will have to encode "
+"manually."
 msgstr ""
+"Από Παραγγελία: ένα πρόχειρο τιμολόγιο θα δημιουργηθεί από την παραγγελία "
+"αγοράς. Το λογιστήριο απλά επικυρώνει το τιμολόγιο για έλεγχο.\n"
+"Από Συλλογή: ένα πρόχειρο τιμολόγιο θα δημιουργηθεί από την επικυρωμένη "
+"παραλαβή.\n"
+"Μη Αυτόματη: δε δημιουργείται κανένα τιμολόγιο. Το λογιστήριο θα πρέπει να "
+"τα κωδικοποιήσει χειροκίνητα."
 
 #. module: purchase
 #: rml:purchase.order:0
 msgid "Net Price"
-msgstr ""
+msgstr "Καθαρή Τιμή"
 
 #. module: purchase
 #: view:purchase.order.line:0
 msgid "Order Line"
-msgstr ""
+msgstr "Γραμμή Παραγγελίας"
 
 #. module: purchase
-#, python-format
 #: code:addons/purchase/purchase.py:0
-msgid "You have to select a pricelist in the purchase form !\nPlease set one before choosing a product."
+#, python-format
+msgid ""
+"You have to select a pricelist in the purchase form !\n"
+"Please set one before choosing a product."
 msgstr ""
+"Πρέπει να επιλέξετε εναν τιμοκατάλογο στη φόρμα αγορών!\n"
+"Παρακαλώ επιλέξτε έναν πριν την επιλογη του προϊόντος."
 
 #. module: purchase
-#, python-format
 #: code:addons/purchase/purchase.py:0
+#, python-format
 msgid "Wrong Product UOM !"
-msgstr ""
+msgstr "Λάθος ΜΟΜ Προϊόντος"
 
 #. module: purchase
 #: selection:purchase.order,state:0
 msgid "Confirmed"
-msgstr ""
+msgstr "Επιβεβαιωμένη"
 
 #. module: purchase
 #: model:process.process,note:purchase.process_process_purchaseworkflow0
@@ -271,88 +312,88 @@ msgstr ""
 #. module: purchase
 #: model:process.transition.action,name:purchase.process_transition_action_confirmpurchaseorder0
 msgid "Confirm"
-msgstr ""
+msgstr "Επιβεβαίωση"
 
 #. module: purchase
 #: view:purchase.order:0
-#: model:process.node,name:purchase.process_node_invoicecontrol0
 msgid "Invoice Control"
-msgstr ""
+msgstr "Έλεγχος Τιμολογίων"
 
 #. module: purchase
 #: selection:purchase.order,state:0
 msgid "Waiting"
-msgstr ""
+msgstr "Σε αναμονή"
 
 #. module: purchase
 #: field:purchase.order,picking_ids:0
 msgid "Picking List"
-msgstr ""
+msgstr "Λίστα Συλλογής"
 
 #. module: purchase
 #: field:purchase.order,warehouse_id:0
 msgid "Warehouse"
-msgstr ""
+msgstr "Αποθήκη"
 
 #. module: purchase
 #: field:purchase.order,order_line:0
 msgid "Order Lines"
-msgstr ""
+msgstr "Γραμμές Παραγγελίας"
 
 #. module: purchase
 #: rml:purchase.quotation:0
 msgid "Fax:"
-msgstr ""
+msgstr "Φαξ:"
 
 #. module: purchase
 #: view:purchase.order:0
 msgid "Untaxed amount"
-msgstr ""
+msgstr "Καθαρό ποσό"
 
 #. module: purchase
 #: rml:purchase.quotation:0
 msgid "Expected Date"
-msgstr ""
+msgstr "Αναμενόμενη Ημερ/νία"
 
 #. module: purchase
 #: rml:purchase.order:0
 msgid "Shipping address :"
-msgstr ""
+msgstr "Διεύθυνση Αποστολής"
 
 #. module: purchase
+#: model:product.pricelist.type,name:purchase.pricelist_type_purchase
 #: field:res.partner,property_product_pricelist_purchase:0
 msgid "Purchase Pricelist"
-msgstr ""
+msgstr "Τιμοκατάλογος Αγορών"
 
 #. module: purchase
 #: field:purchase.order,minimum_planned_date:0
 msgid "Planned Date"
-msgstr ""
+msgstr "Προγραμματισμένη Ημερ/νία"
 
 #. module: purchase
 #: view:purchase.order:0
 msgid "Approved by Supplier"
-msgstr ""
+msgstr "Εγκεκριμένη από Προμηθευτή"
 
 #. module: purchase
 #: selection:purchase.order,invoice_method:0
 msgid "From Order"
-msgstr ""
+msgstr "Από Παραγγελία"
 
 #. module: purchase
 #: rml:purchase.order:0
 msgid "Total :"
-msgstr ""
+msgstr "Σύνολο:"
 
 #. module: purchase
 #: field:purchase.order.line,move_dest_id:0
 msgid "Reservation Destination"
-msgstr ""
+msgstr "Προορσιμός Κράτησης"
 
 #. module: purchase
 #: field:purchase.order,name:0
 msgid "Order Reference"
-msgstr ""
+msgstr "Παραπομπή Παραγγελίας"
 
 #. module: purchase
 #: model:process.node,name:purchase.process_node_invoiceafterpacking0
@@ -362,7 +403,7 @@ msgstr ""
 #. module: purchase
 #: field:purchase.order,pricelist_id:0
 msgid "Pricelist"
-msgstr ""
+msgstr "Τιμοκατάλογος"
 
 #. module: purchase
 #: model:process.node,name:purchase.process_node_approvepurchaseorder0
@@ -372,12 +413,12 @@ msgstr ""
 #. module: purchase
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
-msgstr ""
+msgstr "Invalid XML for View Architecture!"
 
 #. module: purchase
 #: model:process.transition,name:purchase.process_transition_invoicefrompurchase0
 msgid "Invoice from Purchase"
-msgstr ""
+msgstr "Τιμολόγηση από Παραλαβή"
 
 #. module: purchase
 #: selection:purchase.order,invoice_method:0
@@ -387,54 +428,65 @@ msgstr "Εγχειρίδιο"
 #. module: purchase
 #: model:process.transition,note:purchase.process_transition_approvingpurchaseorder0
 msgid "Approve Purchase order after Confirming"
-msgstr ""
+msgstr "Έγκριση Παραγγελίας Αγοράς μετά την Επιβεβαίωση"
 
 #. module: purchase
 #: selection:purchase.order,state:0
 msgid "Shipping Exception"
-msgstr ""
+msgstr "Εξαίρεση Αποστολής"
 
 #. module: purchase
 #: help:purchase.order,minimum_planned_date:0
-msgid "This is computed as the minimum scheduled date of all purchase order lines' products."
+msgid ""
+"This is computed as the minimum scheduled date of all purchase order lines' "
+"products."
 msgstr ""
+"Αυτή είναι η υπολογισμένη συντομότερη ημερ/νία όλων των προϊόντων στις "
+"γραμμές παραγγελίας."
 
 #. module: purchase
 #: model:ir.actions.act_window,name:purchase.act_res_partner_2_purchase_order
 msgid "Purchase orders"
-msgstr ""
+msgstr "Παραγγελίες αγοράς"
 
 #. module: purchase
 #: help:purchase.order,dest_address_id:0
-msgid "Put an address if you want to deliver directly from the supplier to the customer.In this case, it will remove the warehouse link and set the customer location."
+msgid ""
+"Put an address if you want to deliver directly from the supplier to the "
+"customer.In this case, it will remove the warehouse link and set the "
+"customer location."
 msgstr ""
+"Συμπληρώστε τη διεύθυνση αν επιθυμείτε να παραδώσετε από τον προμηθευτή "
+"απ΄ευθείας στον πελάτη. Στην περίπτωση αυτή, η σύνδεση με την αποθήκη θα "
+"ανικατασταθεί από την τοποθεσία του πελάτη."
 
 #. module: purchase
 #: rml:purchase.quotation:0
 msgid "Request for Quotation :"
-msgstr ""
+msgstr "Αίτηση για Προσφορά"
 
 #. module: purchase
 #: model:ir.actions.act_window,name:purchase.purchase_form_action3
 #: model:ir.ui.menu,name:purchase.menu_purchase_form_action3
 msgid "Purchase Order Waiting Approval"
-msgstr ""
+msgstr "Παραγγελίες για Έγκριση"
 
 #. module: purchase
 #: model:process.transition.action,name:purchase.process_transition_action_invoicefrompurchaseorder0
 msgid "Create invoice"
-msgstr ""
+msgstr "Δημιουργία Τιμολογίου"
 
 #. module: purchase
 #: view:purchase.order:0
-#: model:process.node,name:purchase.process_node_confirmpurchaseorder0
 msgid "Confirm Purchase Order"
-msgstr ""
+msgstr "Επιβεβαίωση Παραγγελίας Αγοράς"
 
 #. module: purchase
 #: help:purchase.order,picking_ids:0
-msgid "This is the list of picking list that have been generated for this purchase"
+msgid ""
+"This is the list of picking list that have been generated for this purchase"
 msgstr ""
+"Αυτή έιναι η κατάσταση Λιστών Συλλογής που δημιουργήθηκαν για την αγορά αυτή."
 
 #. module: purchase
 #: field:purchase.order,partner_ref:0
@@ -444,34 +496,37 @@ msgstr "Εταιρική Αναφ."
 #. module: purchase
 #: rml:purchase.order:0
 msgid "Taxes :"
-msgstr ""
+msgstr "Φόροι:"
 
 #. module: purchase
 #: field:purchase.order,invoiced_rate:0
 msgid "Invoiced"
-msgstr ""
+msgstr "Τιμολογημένα"
 
 #. module: purchase
-#, python-format
 #: code:addons/purchase/purchase.py:0
-msgid "You have to select a product UOM in the same category than the purchase UOM of the product"
+#, python-format
+msgid ""
+"You have to select a product UOM in the same category than the purchase UOM "
+"of the product"
 msgstr ""
+"Πρέπει να επιλέξετε ΜΟΜ προϊόντος από την ίδια κατηγορία με την ΜΟΜ αγοράς "
+"του προϊόντος"
 
 #. module: purchase
 #: field:purchase.order,dest_address_id:0
 msgid "Destination Address"
-msgstr ""
+msgstr "Διεύθυνση Προορισμού"
 
 #. module: purchase
-#: field:stock.move,purchase_line_id:0
-#: view:purchase.order.line:0
+#: view:purchase.order.line:0 field:stock.move,purchase_line_id:0
 msgid "Purchase Order Line"
-msgstr ""
+msgstr "Γραμμή Παραγγελίας Αγοράς"
 
 #. module: purchase
 #: view:purchase.order:0
 msgid "Calendar View"
-msgstr ""
+msgstr "Ημερολογιακή Προβολή"
 
 #. module: purchase
 #: model:process.node,note:purchase.process_node_purchaseorder0
@@ -481,28 +536,28 @@ msgstr ""
 #. module: purchase
 #: selection:purchase.order,state:0
 msgid "Invoice Exception"
-msgstr ""
+msgstr "Εξαίρεση Τιμολογίου"
 
 #. module: purchase
 #: model:process.transition,note:purchase.process_transition_invoicefrompackinglist0
 msgid "Creates invoice from packin list"
-msgstr ""
+msgstr "Δημιουργεί τιμολόγιο από την Κατάσταση Συσκευασίας"
 
 #. module: purchase
 #: view:purchase.order:0
 msgid "Delivery & Invoices"
-msgstr ""
+msgstr "Παραλαβή και Τιμολόγηση"
 
 #. module: purchase
 #: help:purchase.order,origin:0
 msgid "Reference of the document that generated this purchase order request."
-msgstr ""
+msgstr "Παραπομπή στο έγγραφο που δημιούργησε την αίτηση παραγγελίας."
 
 #. module: purchase
-#, python-format
 #: code:addons/purchase/purchase.py:0
+#, python-format
 msgid "There is no expense account defined for this product: \"%s\" (id:%d)"
-msgstr ""
+msgstr "Δεν έχει δηλωθεί λογαριασμός εξόδων για το προϊόν: \"%s\" (id:%d)"
 
 #. module: purchase
 #: model:process.node,note:purchase.process_node_packinglist0
@@ -512,37 +567,37 @@ msgstr ""
 #. module: purchase
 #: model:process.transition,note:purchase.process_transition_purchaseinvoice0
 msgid "After Purchase order , Create invoice."
-msgstr ""
+msgstr "Δημιουργία τιμολογίου μετά την Παραγγελία αγοράς."
 
 #. module: purchase
 #: field:purchase.order.line,date_planned:0
 msgid "Scheduled date"
-msgstr ""
+msgstr "Προγραμματισμένη Ημερ/νία"
 
 #. module: purchase
 #: rml:purchase.quotation:0
 msgid "TVA:"
-msgstr ""
+msgstr "ΦΠΑ:"
 
 #. module: purchase
 #: view:purchase.order:0
 msgid "Compute"
-msgstr ""
+msgstr "Υπολογισμός"
 
 #. module: purchase
 #: view:purchase.order:0
 msgid "Cancel Purchase Order"
-msgstr ""
+msgstr "Ακύρωση Παραγγελίας Αγοράς"
 
 #. module: purchase
 #: model:process.transition,name:purchase.process_transition_approvingpurchaseorder0
 msgid "Approving Purchase Order"
-msgstr ""
+msgstr "Έγκριση Παραγγελιών Αγοράς"
 
 #. module: purchase
 #: model:process.transition,name:purchase.process_transition_createpackinglist0
 msgid "Create Packing list"
-msgstr ""
+msgstr "Δημιουργία Κατάστασης Συσκευασίας"
 
 #. module: purchase
 #: field:purchase.order.line,product_qty:0
@@ -552,7 +607,7 @@ msgstr "Ποσότητα"
 #. module: purchase
 #: field:purchase.order,state:0
 msgid "Order Status"
-msgstr ""
+msgstr "Στάδιο Παραγγελίας"
 
 #. module: purchase
 #: model:process.node,note:purchase.process_node_invoicecontrol0
@@ -562,7 +617,7 @@ msgstr ""
 #. module: purchase
 #: view:purchase.order:0
 msgid "Approve Purchase"
-msgstr ""
+msgstr "Έγκριση Αγοράς"
 
 #. module: purchase
 #: model:process.node,note:purchase.process_node_draftpurchaseorder0
@@ -575,21 +630,19 @@ msgid "The supplier confirms he can deliver"
 msgstr ""
 
 #. module: purchase
-#: rml:purchase.order:0
-#: rml:purchase.quotation:0
+#: rml:purchase.order:0 rml:purchase.quotation:0
 msgid "Qty"
-msgstr ""
+msgstr "Ποσ."
 
 #. module: purchase
-#: rml:purchase.order:0
-#: field:purchase.order.line,price_unit:0
+#: rml:purchase.order:0 field:purchase.order.line,price_unit:0
 msgid "Unit Price"
 msgstr "Τιμή ανά Μονάδα"
 
 #. module: purchase
 #: selection:purchase.order,state:0
 msgid "Done"
-msgstr ""
+msgstr "Ολοκληρώθηκε"
 
 #. module: purchase
 #: field:purchase.order,invoice_id:0
@@ -597,77 +650,79 @@ msgid "Invoice"
 msgstr "Τιμολόγιο"
 
 #. module: purchase
-#: wizard_button:purchase.order.merge,init,end:0
 #: model:process.transition.action,name:purchase.process_transition_action_approvingcancelpurchaseorder0
 #: model:process.transition.action,name:purchase.process_transition_action_cancelpurchaseorder0
+#: wizard_button:purchase.order.merge,init,end:0
 msgid "Cancel"
-msgstr ""
+msgstr "Ακύρωση"
 
 #. module: purchase
 #: view:res.partner:0
 msgid "Purchases Properties"
-msgstr ""
+msgstr "Χαρακτηριστικά Παραλαβών"
 
 #. module: purchase
 #: field:purchase.order.line,order_id:0
 msgid "Order Ref"
-msgstr ""
+msgstr "Παρ. Παραγγελίας"
 
 #. module: purchase
 #: model:ir.actions.act_window,name:purchase.purchase_form_action
 #: model:ir.ui.menu,name:purchase.menu_purchase_form_action
 msgid "Purchase Orders"
-msgstr ""
+msgstr "Παραγγελίες Αγοράς"
 
 #. module: purchase
 #: wizard_view:purchase.order.merge,init:0
 #: wizard_button:purchase.order.merge,init,merge:0
 msgid "Merge orders"
-msgstr ""
+msgstr "Συγχώνευση Παραγγελιών"
 
 #. module: purchase
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
+"Το όνομα του αντικειμένου πρέπει να ξεκινάει από x_ και να μην περιέχει "
+"ειδικούς χαρακτήρες!"
 
 #. module: purchase
 #: model:ir.actions.act_window,name:purchase.purchase_form_action_new
 #: model:ir.ui.menu,name:purchase.menu_purchase_form_action_new
 msgid "New Purchase Order"
-msgstr ""
+msgstr "Νέα Παραγγελία Αγοράς"
 
 #. module: purchase
-#: field:purchase.order,shipped:0
-#: field:purchase.order,shipped_rate:0
+#: field:purchase.order,shipped:0 field:purchase.order,shipped_rate:0
 msgid "Received"
-msgstr ""
+msgstr "Παραλήφθηκε"
 
 #. module: purchase
 #: model:ir.actions.report.xml,name:purchase.report_purchase_quotation
 #: selection:purchase.order,state:0
 msgid "Request for Quotation"
-msgstr ""
+msgstr "Αίτηση Προσφοράς"
 
 #. module: purchase
 #: rml:purchase.order:0
 msgid "Tél. :"
-msgstr ""
+msgstr "Τηλ. :"
 
 #. module: purchase
 #: rml:purchase.order:0
 msgid "Date Req."
-msgstr ""
+msgstr "Ημερ/νία Αίτησης"
 
 #. module: purchase
 #: field:purchase.order,date_approve:0
 msgid "Date Approved"
-msgstr ""
+msgstr "Ημερ/νία Έγκρισης"
 
 #. module: purchase
-#, python-format
 #: code:addons/purchase/purchase.py:0
+#, python-format
 msgid "Could not cancel this purchase order !"
-msgstr ""
+msgstr "Η Παραγγελία δεν μπορεί να ακυρωθεί!"
 
 #. module: purchase
 #: field:purchase.order.line,product_id:0
@@ -675,8 +730,7 @@ msgid "Product"
 msgstr "Προϊόν"
 
 #. module: purchase
-#: rml:purchase.order:0
-#: rml:purchase.quotation:0
+#: rml:purchase.order:0 rml:purchase.quotation:0
 #: field:purchase.order.line,name:0
 msgid "Description"
 msgstr "Περιγραφή"
@@ -684,22 +738,22 @@ msgstr "Περιγραφή"
 #. module: purchase
 #: rml:purchase.quotation:0
 msgid "Expected Delivery address:"
-msgstr ""
+msgstr "Αναμενόμενη Διεύθυνση παραλαβής:"
 
 #. module: purchase
 #: model:process.transition,note:purchase.process_transition_confirmingpurchaseorder0
 msgid "Confirm Purchase order from Request for quotation"
-msgstr ""
+msgstr "Επιβεβαίωση Παραγγελίας από την Αίτηση για Προσφορά"
 
 #. module: purchase
 #: view:purchase.order:0
 msgid "Delivery"
-msgstr ""
+msgstr "Παραλαβή"
 
 #. module: purchase
 #: field:purchase.order.line,product_uom:0
 msgid "Product UOM"
-msgstr ""
+msgstr "ΜΟΜ Προϊόντων"
 
 #. module: purchase
 #: field:purchase.order,partner_address_id:0
@@ -709,28 +763,29 @@ msgstr ""
 #. module: purchase
 #: field:purchase.order.line,move_id:0
 msgid "Reservation"
-msgstr ""
+msgstr "Κράτηση"
 
 #. module: purchase
 #: model:process.transition,note:purchase.process_transition_createpackinglist0
 msgid "When purchase order is approved , it creates its packing list."
 msgstr ""
+"Όταν η Παραγγελία Αγοράς εγκριθεί, δημιουργείται η Κατάσταση Συσκευασίας της."
 
 #. module: purchase
 #: model:process.transition,name:purchase.process_transition_purchaseinvoice0
 msgid "Purchase Invoice"
-msgstr ""
+msgstr "Τιμολόγιο Αγοράς"
 
 #. module: purchase
-#, python-format
 #: code:addons/purchase/purchase.py:0
+#, python-format
 msgid "You must first cancel all packings attached to this purchase order."
 msgstr ""
 
 #. module: purchase
 #: rml:purchase.order:0
 msgid "Your Order Reference"
-msgstr ""
+msgstr "Η Παραπομπή της παραγγελίας σας"
 
 #. module: purchase
 #: view:purchase.order:0
@@ -740,35 +795,34 @@ msgstr ""
 #. module: purchase
 #: view:purchase.order:0
 msgid "Total amount"
-msgstr ""
+msgstr "Σύνολικό ποσό"
 
 #. module: purchase
-#: rml:purchase.order:0
-#: field:purchase.order,date_order:0
+#: rml:purchase.order:0 field:purchase.order,date_order:0
 msgid "Date Ordered"
-msgstr ""
+msgstr "Ημερ/νία Παραγγελίας"
 
 #. module: purchase
 #: view:purchase.order:0
 msgid "Purchase Control"
-msgstr ""
+msgstr "Έλεγχος Αγορών"
 
 #. module: purchase
 #: model:ir.actions.act_window,name:purchase.purchase_form_action2
 #: model:ir.ui.menu,name:purchase.menu_purchase_order_draft
 msgid "Request For Quotations"
-msgstr ""
+msgstr "Αίτηση Προσφορών"
 
 #. module: purchase
-#, python-format
 #: code:addons/purchase/purchase.py:0
+#, python-format
 msgid "Error !"
-msgstr ""
+msgstr "Σφάλμα:"
 
 #. module: purchase
 #: field:purchase.order,invoice_method:0
 msgid "Invoicing Control"
-msgstr ""
+msgstr "Έλεγχος Τιμολογήσεων"
 
 #. module: purchase
 #: model:process.node,name:purchase.process_node_packinglist0
@@ -778,12 +832,13 @@ msgstr ""
 #. module: purchase
 #: model:process.transition.action,name:purchase.process_transition_action_approvingpurchaseorder0
 msgid "Approve"
-msgstr ""
+msgstr "Έγκριση"
 
 #. module: purchase
+#: model:ir.module.module,shortdesc:purchase.module_meta_information
 #: model:ir.ui.menu,name:purchase.menu_purchase_root
 msgid "Purchase Management"
-msgstr ""
+msgstr "Διαχείριση Παραγγελιών "
 
 #. module: purchase
 #: field:purchase.order,amount_total:0
@@ -793,12 +848,12 @@ msgstr "Σύνολο"
 #. module: purchase
 #: constraint:product.pricelist.version:0
 msgid "You can not have 2 pricelist version that overlaps!"
-msgstr ""
+msgstr "Δεν μπορείτε να έχετε 2 εκδόσεις τιμοκαταλόγου που αλληλοκαλύπτονται!"
 
 #. module: purchase
 #: wizard_view:purchase.order.merge,init:0
 msgid "Are you sure you want to merge these orders ?"
-msgstr ""
+msgstr "Είστε σίγουροι ότι θέλετε να συγχωνεύσετε αυτές τις παραγγελίες;"
 
 #. module: purchase
 #: model:process.node,note:purchase.process_node_confirmpurchaseorder0
@@ -809,9 +864,196 @@ msgstr ""
 #: model:process.transition,note:purchase.process_transition_invoicefrompurchase0
 msgid "After approved purchase order , it comes into the supplier invoice"
 msgstr ""
+"Αφού εγκριθεί η Παραγγελία Αγοράς συμπεριλαμβάνεται στο τιμολόγιο προμηθευτή"
 
 #. module: purchase
 #: field:purchase.order,amount_untaxed:0
 msgid "Untaxed Amount"
 msgstr "Αφορολόγητο Ποσό"
 
+#. module: purchase
+#: model:process.node,note:purchase.process_node_invoiceafterpacking0
+msgid "Supplier Invoice pre-generated on receptions for control"
+msgstr "Τιμολόγιο Προμηθευτή προ-δημιουργημένο για έλεγχο κατά την παραλάβη"
+
+#. module: purchase
+#: model:ir.actions.act_window,name:purchase.act_purchase_order_2_stock_picking
+msgid "Packing"
+msgstr "Συσκευασία"
+
+#. module: purchase
+#: model:process.node,name:purchase.process_node_confirmpurchaseorder0
+msgid "Confirmed Purchase"
+msgstr "Επιβεβαιωμένη Αγορά"
+
+#. module: purchase
+#: model:process.transition,note:purchase.process_transition_productrecept0
+msgid "Create invoice from product recept"
+msgstr "Δημιουργία τιμολογίου από την παραλάβή προϊόντων"
+
+#. module: purchase
+#: model:process.process,name:purchase.process_process_purchaseprocess0
+msgid "Purchase Process"
+msgstr "Διαδικασία Αγορών"
+
+#. module: purchase
+#: model:process.node,name:purchase.process_node_packinglist0
+msgid "Incoming Products"
+msgstr "Εισερχόμενα Προϊόντα"
+
+#. module: purchase
+#: model:process.node,note:purchase.process_node_confirmpurchaseorder0
+msgid "Purchase order is confirmed by the user."
+msgstr "Η Παραγγελία Αγοράς επιβεβαιώθηκε από το χρήστη"
+
+#. module: purchase
+#: view:purchase.order:0
+msgid "Manually Corrected"
+msgstr "Διορθωμένη Χειροκίνητα"
+
+#. module: purchase
+#: model:process.node,note:purchase.process_node_packinginvoice0
+msgid "Invoice based on deliveries"
+msgstr "Τιμολόγηση με βάση τις παραλαβές"
+
+#. module: purchase
+#: model:process.node,name:purchase.process_node_productrecept0
+msgid "Product Receipt"
+msgstr "Παραλάβή Προϊόντων"
+
+#. module: purchase
+#: model:process.node,name:purchase.process_node_draftpurchaseorder0
+#: model:process.node,name:purchase.process_node_draftpurchaseorder1
+msgid "RFQ"
+msgstr "ΑΓΠ"
+
+#. module: purchase
+#: model:process.transition,note:purchase.process_transition_confirmingpurchaseorder1
+msgid "Confirm Purchase order from Request for quotation without origin"
+msgstr "Επιβεβαίωση Παραγγελίας Αγοράς από Αίτηση προσφοράς χωρίς προέλευση "
+
+#. module: purchase
+#: code:addons/purchase/purchase.py:0
+#, python-format
+msgid "Invalid action !"
+msgstr "Άκυρη Ενέργεια!"
+
+#. module: purchase
+#: model:process.node,note:purchase.process_node_purchaseorder0
+msgid "When controlling invoice from orders"
+msgstr "Κατά τον έλεγχο τιμολογίων από παραγγελίες"
+
+#. module: purchase
+#: model:process.node,note:purchase.process_node_invoicecontrol0
+msgid "Pre-generated supplier invoice to control based on order"
+msgstr ""
+"Τιμολόγιο Προμηθευτή προ-δημιουργημένο για έλεγχο με βάση την παραγγελία"
+
+#. module: purchase
+#: model:process.node,note:purchase.process_node_packinglist0
+msgid "Packing is created for the products reception control."
+msgstr "Η συσκευασία δημιουργείται για τον έλεγχο παραλαβής προϊόντων."
+
+#. module: purchase
+#: model:process.transition,name:purchase.process_transition_confirmingpurchaseorder1
+msgid "Confirming Purchase"
+msgstr "Επιβεβαίωση Παραλάβων"
+
+#. module: purchase
+#: model:process.node,note:purchase.process_node_draftpurchaseorder1
+msgid "Encoded manually by the user."
+msgstr "Κωδικοποιημένα από το χρήστη."
+
+#. module: purchase
+#: code:addons/purchase/purchase.py:0
+#, python-format
+msgid ""
+"You have to select a partner in the purchase form !\n"
+"Please set one partner before choosing a product."
+msgstr ""
+"Πρέπει να επιλέξετε συνεργάτη!\n"
+"Παρακαλώ επιλέξτε συνεργάτη πριν επιλέξετε προϊόν."
+
+#. module: purchase
+#: model:process.node,note:purchase.process_node_approvepurchaseorder0
+msgid "Purchase order is approved by supplier."
+msgstr "Η αγορά έχει εγκριθεί από τον Προμηθευτή."
+
+#. module: purchase
+#: model:process.node,name:purchase.process_node_invoiceafterpacking0
+#: model:process.node,name:purchase.process_node_invoicecontrol0
+msgid "Draft Invoice"
+msgstr "Πρόχειρο Τιμολόγιο"
+
+#. module: purchase
+#: model:process.node,note:purchase.process_node_draftpurchaseorder0
+msgid "Request for quotation is proposed by the system."
+msgstr "Η Αίτηση προσφοράς προτείνεται από το σύστημα"
+
+#. module: purchase
+#: model:process.transition,name:purchase.process_transition_packinginvoice0
+msgid "Packing Invoice"
+msgstr "Τιμολόγιο Συσκευασίας"
+
+#. module: purchase
+#: rml:purchase.order:0
+msgid "Our Order Reference"
+msgstr "Η Παραπομπή μας στην Παραγγελία"
+
+#. module: purchase
+#: model:product.pricelist.version,name:purchase.ver0
+msgid "Default Purchase Pricelist Version"
+msgstr "Έκδοση (Version) Προεπιλεμένου Τιμοκαταλόγου Αγορών"
+
+#. module: purchase
+#: field:purchase.order,fiscal_position:0
+msgid "Fiscal Position"
+msgstr ""
+
+#. module: purchase
+#: model:process.node,name:purchase.process_node_packinginvoice0
+msgid "Out Packing"
+msgstr "Συσκευασία Out"
+
+#. module: purchase
+#: model:process.node,note:purchase.process_node_productrecept0
+msgid "Control invoices on receptions"
+msgstr "Έλεγχος τιμολογίων κατά την παραλαβή"
+
+#. module: purchase
+#: model:ir.module.module,description:purchase.module_meta_information
+msgid ""
+"Module for purchase management\n"
+"    Request for quotation, Create Supplier Invoice, Print Order..."
+msgstr ""
+"Module for purchase management\n"
+"    Request for quotation, Create Supplier Invoice, Print Order..."
+
+#. module: purchase
+#: code:addons/purchase/purchase.py:0
+#, python-format
+msgid "No Partner!"
+msgstr "Δεν υπάρχει Συνεργάτης!"
+
+#. module: purchase
+#: model:process.transition,name:purchase.process_transition_productrecept0
+msgid "Product recept invoice"
+msgstr "Τιμολόγιο παραλάβής προϊόντων"
+
+#. module: purchase
+#: code:addons/purchase/purchase.py:0
+#, python-format
+msgid "You must first cancel all packing attached to this purchase order."
+msgstr ""
+"Πρέπει πρώτα να ακυρώσετε όλες τις συσκευασίες που σχετίζονται με την "
+"παραγγελία αγοράς."
+
+#. module: purchase
+#: model:process.node,name:purchase.process_node_approvepurchaseorder0
+msgid "Approved Purchase"
+msgstr "Εγκεκριμένη Αγορά"
+
+#. module: purchase
+#: model:process.transition,note:purchase.process_transition_packinginvoice0
+msgid "From Packing list, Create invoice."
+msgstr "Δημιουργία Τιμολογίου από Κατάσταση Συσκευασίας"

@@ -246,7 +246,7 @@ msgstr "Μη Τιμολογημένες Εγγραφές"
 #: code:addons/hr_timesheet_invoice/wizard/hr_timesheet_invoice_create.py:0
 #, python-format
 msgid "At least on line have no product !"
-msgstr ""
+msgstr "Τουλάχιστον μία γραμμή δεν έχει προίόν!"
 
 #. module: hr_timesheet_invoice
 #: wizard_button:hr.timesheet.final.invoice.create,init,create:0
@@ -631,6 +631,23 @@ msgstr ""
 #: model:ir.module.module,shortdesc:hr_timesheet_invoice.module_meta_information
 msgid "Invoice on analytic lines"
 msgstr "Τιμολόγηση σε αναλυτικές γραμμές"
+
+#. module: hr_timesheet_invoice
+#: code:addons/hr_timesheet_invoice/wizard/hr_timesheet_invoice_create.py:0
+#, python-format
+msgid ""
+"Please fill in the partner and pricelist field in the analytic account:\n"
+"%s"
+msgstr ""
+"Παρακαλώ συμπληρώστε τα πεδία συνεργάτη και τιμοκαταλόγου στον Αναλυτικό "
+"Λογαριασμό:\n"
+"%s"
+
+#. module: hr_timesheet_invoice
+#: code:addons/hr_timesheet_invoice/wizard/hr_timesheet_invoice_create.py:0
+#, python-format
+msgid "Please fill in the address field in the partner: %s."
+msgstr "Παρακλώ συμπληρώστε τη διεύθυνση του συνεργάτη: %s."
 
 #~ msgid "Timesheet profit"
 #~ msgstr "Κέρδος Xρόνου Eργασίας"

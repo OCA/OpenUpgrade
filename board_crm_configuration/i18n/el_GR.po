@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file containt the translation of the following modules:
-#	* board_crm_configuration
+# 	* board_crm_configuration
 #
 # Copyright (C) 2008,2009 P. Christeas <p_christ@hol.gr>
 msgid ""
@@ -19,96 +19,100 @@ msgstr ""
 #. module: board_crm_configuration
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
-msgstr ""
+msgstr "Invalid XML for View Architecture!"
 
 #. module: board_crm_configuration
 #: view:report.crm.case.categ:0
 msgid "Cases by Sections and Categories"
-msgstr ""
+msgstr "Θέματα ανά Τμήμα και Κατηγορίες"
 
 #. module: board_crm_configuration
+#: view:board.board:0
 #: model:ir.actions.act_window,name:board_crm_configuration.act_oppor_categ
-#: view:board.board:0
 msgid "Opportunities By Categories"
-msgstr ""
+msgstr "Ευκαιρίες ανά Κατηγορίες"
 
 #. module: board_crm_configuration
-#: model:ir.actions.act_window,name:board_crm_configuration.act_my_cases
 #: view:board.board:0
+#: model:ir.actions.act_window,name:board_crm_configuration.act_my_cases
 msgid "My Cases"
-msgstr ""
+msgstr "Τα Θέματά μου"
 
 #. module: board_crm_configuration
 #: view:board.board:0
 msgid "My Sales Pipeline"
-msgstr ""
+msgstr "Το Κανάλι Πωλήσεών μου"
 
 #. module: board_crm_configuration
 #: model:ir.actions.act_window,name:board_crm_configuration.open_board_crm
 msgid "CRM Dashboard"
-msgstr ""
+msgstr "Πίνακας Αναφορών CRM"
 
 #. module: board_crm_configuration
+#: view:board.board:0
 #: model:ir.ui.menu,name:board_crm_configuration.menu_board_crm
-#: view:board.board:0
 msgid "Connecting Dashboard"
-msgstr ""
+msgstr "Σύνδεση Πινάκων Αναφορών"
 
 #. module: board_crm_configuration
-#: model:ir.actions.act_window,name:board_crm_configuration.act_leads_month_user
 #: view:board.board:0
+#: model:ir.actions.act_window,name:board_crm_configuration.act_leads_month_user
 msgid "Leads Of The Month By User"
-msgstr ""
+msgstr "Σύνδεσμοι Μηνός ανά Χρήστη"
 
 #. module: board_crm_configuration
 #: view:report.crm.case.user:0
 msgid "Cases by User and Section"
-msgstr ""
+msgstr "Θέματα ανά Χρήστη και Τμήμα"
 
 #. module: board_crm_configuration
 #: view:board.board:0
 msgid "My Meetings"
-msgstr ""
+msgstr "Οι Συσκέψεις μου"
 
 #. module: board_crm_configuration
 #: model:ir.ui.menu,name:board_crm_configuration.menu_board_crm_config
 msgid "CRM Configuration"
-msgstr ""
+msgstr "Ρυθμίσεις CRM"
 
 #. module: board_crm_configuration
 #: view:board.board:0
+#: model:ir.actions.act_window,name:board_crm_configuration.act_jobs_categ
 msgid "Jobs Requests Of The Month by Applied Job"
-msgstr ""
+msgstr "Αιτήσεις Εργασίας του Μήνα ανά Θέση Αίτησης"
 
 #. module: board_crm_configuration
 #: view:board.board:0
 msgid "My Leads By Stage"
-msgstr ""
+msgstr "Οι Σύνδεσμοί μου ανά Στάδιο"
 
 #. module: board_crm_configuration
-#: view:board.board:0
-#: view:report.crm.case.section.stage:0
+#: view:board.board:0 view:report.crm.case.section.stage:0
 msgid "Leads By Stage"
-msgstr ""
+msgstr "Σύνδεσμοι ανά Στάδιο"
 
 #. module: board_crm_configuration
-#: model:ir.ui.menu,name:board_crm_configuration.menu_board_statistics_dash
 #: view:board.board:0
+#: model:ir.ui.menu,name:board_crm_configuration.menu_board_statistics_dash
 msgid "Statistics Dashboard"
-msgstr ""
+msgstr "Πίνακας Στατιστικών Μεγεθών"
 
 #. module: board_crm_configuration
 #: view:board.board:0
 msgid "My Leads"
-msgstr ""
+msgstr "Οι Σύνδεσμοί μου"
 
 #. module: board_crm_configuration
 #: model:ir.actions.act_window,name:board_crm_configuration.open_board_statistical_dash
 msgid "CRM - Statistics Dashboard"
-msgstr ""
+msgstr "CRM - Πίνακας Στατιστικών Μεγεθών"
 
 #. module: board_crm_configuration
 #: view:board.board:0
 msgid "My Jobs Requests"
 msgstr ""
 
+#. module: board_crm_configuration
+#: model:ir.module.module,shortdesc:board_crm_configuration.module_meta_information
+msgid "Dashboard for CRM Configuration"
+msgstr "Πίνακας Ρυθμίσεων CRM"

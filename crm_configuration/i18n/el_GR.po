@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file containt the translation of the following modules:
-#	* crm_configuration
+# 	* crm_configuration
 #
 # Copyright (C) 2008,2009 P. Christeas <p_christ@hol.gr>
 msgid ""
@@ -19,54 +19,56 @@ msgstr ""
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_lead5
 msgid "Web"
-msgstr ""
+msgstr "Διαδίκτυο"
 
 #. module: crm_configuration
 #: model:ir.model,name:crm_configuration.model_report_crm_case_section_categ_stage
 msgid "Cases by section, Category and stage"
-msgstr ""
+msgstr "Θέματα ανά Τμήμα, Κατηγορία και Στάδιο"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Severity"
-msgstr ""
+msgstr "Σημαντικότητα"
 
 #. module: crm_configuration
 #: field:crm.menu.config_wizard,jobs:0
 msgid "Jobs Hiring Process"
-msgstr ""
+msgstr "Διαδικασία Προσλήψεων"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Add Last Mail for Replying"
-msgstr ""
+msgstr "Προσθήκη Τελευταίου, Μη Απαντημένου Mail "
 
 #. module: crm_configuration
-#, python-format
 #: code:addons/crm_configuration/wizard/wizard_partner_create.py:0
+#, python-format
 msgid "A partner is already defined on this lead."
 msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
+#: model:crm.case.section,name:crm_configuration.section_support3
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_opp
 #: model:process.node,name:crm_configuration.process_node_opportunities0
 msgid "Opportunities"
-msgstr ""
+msgstr "Ευκαιρίες"
 
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_job1
 msgid "Graduate"
-msgstr ""
+msgstr "Απόφοιτος"
 
 #. module: crm_configuration
 #: model:ir.model,name:crm_configuration.model_report_crm_case_section_categ2
 msgid "Cases by section and category2"
-msgstr ""
+msgstr "Θέματα ανά Τμήμα και Κατηγορία2"
 
 #. module: crm_configuration
 #: view:crm.menu.config_wizard:0
 msgid "Configure CRM Sections"
-msgstr ""
+msgstr "Ρυθμίσεις Τμημάτων CRM"
 
 #. module: crm_configuration
 #: wizard_field:crm.case.partner_create,init,close:0
@@ -96,12 +98,12 @@ msgstr ""
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Direction"
-msgstr ""
+msgstr "Κατεύθυνση"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Funds Form"
-msgstr ""
+msgstr "Φόρμα Χρηματοδότησης"
 
 #. module: crm_configuration
 #: help:crm.menu.config_wizard,helpdesk:0
@@ -111,32 +113,37 @@ msgstr ""
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Action Information"
-msgstr ""
+msgstr "Πληροφορίες Ενέργειας"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Title"
-msgstr ""
+msgstr "Τίτλοι"
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_categ0_act11
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act11
 msgid "My Jobs Requests"
-msgstr ""
+msgstr "Οι Αιτήσεις Εργασίας μου"
 
 #. module: crm_configuration
 #: field:crm.case.stage,name:0
 msgid "Stage Name"
-msgstr ""
+msgstr "Όνομα Σταδίου"
 
 #. module: crm_configuration
 #: help:crm.menu.config_wizard,document_ics:0
-msgid " Will allow you to synchronise your Open ERP calendars with your phone, outlook, Sunbird, ical, ..."
+msgid ""
+" Will allow you to synchronise your Open ERP calendars with your phone, "
+"outlook, Sunbird, ical, ..."
 msgstr ""
+"Θα σας επιτρέψει να συγχρονίσετε τα ημερολόγια του Open ERP με το τηλέφωνο, "
+"outlook, Sunbird, ical κλπ"
 
 #. module: crm_configuration
 #: view:crm.menu.config_wizard:0
 msgid "Calendar Sharing"
-msgstr ""
+msgstr "Κοινή Χρήση Ημερολογίου"
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_meetall1
@@ -148,17 +155,17 @@ msgstr ""
 #: wizard_button:crm.case.partner_create,init,confirm:0
 #: model:ir.actions.wizard,name:crm_configuration.wizard_crm_partner_create
 msgid "Create Partner"
-msgstr ""
+msgstr "Δημιουργία Συνεργάτη"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Contract Data"
-msgstr ""
+msgstr "Δεδομένα Συμβολαίου"
 
 #. module: crm_configuration
 #: field:crm.case,partner_mobile:0
 msgid "Mobile"
-msgstr ""
+msgstr "Κινητό"
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -177,106 +184,113 @@ msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_categ0_act111
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act111
 msgid "All Jobs Requests"
-msgstr ""
+msgstr "Όλες οι Αιτήσεις Εργασίας"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Expected Salary"
-msgstr ""
+msgstr "Αναμενόμενος Μισθός"
 
 #. module: crm_configuration
 #: field:crm.menu.config_wizard,document_ics:0
 msgid "Shared Calendar"
-msgstr ""
+msgstr "Κοινό Ημερολόγιο"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Applied Job"
-msgstr ""
+msgstr "Θέση Αίτησης"
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage2
+#: model:crm.case.stage,name:crm_configuration.stage_claim2
 #: model:crm.case.stage,name:crm_configuration.stage_meet1
 msgid "Fixed"
-msgstr ""
+msgstr "Διορθώθηκε"
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_job1
 msgid "Initial Jobs Demand"
-msgstr ""
+msgstr "Αρχική Ζήτηση Εργασίας"
 
 #. module: crm_configuration
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_section_categ_tree
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_section_categ_tree_month
 #: view:report.crm.case.section.categ2:0
 msgid "Cases by Section and Category2"
-msgstr ""
+msgstr "Θέματα ανά Τμήμα και Κατηγορία2"
 
 #. module: crm_configuration
 #: model:ir.model,name:crm_configuration.model_crm_case_category2
 msgid "Category2 of case"
-msgstr ""
+msgstr "Θεματική Κατηγορία2"
 
 #. module: crm_configuration
-#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_meetings
 #: view:crm.case:0
+#: model:crm.case.section,name:crm_configuration.section_support1
 msgid "Meetings"
-msgstr ""
+msgstr "Συσκέψεις"
 
 #. module: crm_configuration
 #: field:crm.case.category2,name:0
 msgid "Case Category2 Name"
-msgstr ""
+msgstr "Όνομα Θεματικής Κατηγορίας2"
 
 #. module: crm_configuration
 #: wizard_view:crm.case.opportunity_set,init:0
 #: model:ir.actions.wizard,name:crm_configuration.wizard_crm_opportunity_set
 msgid "Convert To Opportunity"
-msgstr ""
+msgstr "Μετατροπή σε Ευκαιρία"
 
 #. module: crm_configuration
 #: wizard_field:crm.case.meeting,init,duration:0
 msgid "Duration (Hours)"
-msgstr ""
+msgstr "Διάρκεια"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Availability (weeks)"
-msgstr ""
+msgstr "Διαθεσιμότητα (εβδομάδες)"
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_oppor1
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_oppor1
 msgid "All Open Opportunities"
-msgstr ""
+msgstr "Όλες οι Ανοικτές Ευκαιρίες"
 
 #. module: crm_configuration
 #: wizard_field:crm.case.opportunity_set,init,probability:0
 msgid "Success Probability"
-msgstr ""
+msgstr "Πιθανότητα Επιτυχίας"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Extra Info"
-msgstr ""
+msgstr "Επιπλέον Πληροφορίες"
 
 #. module: crm_configuration
-#: field:report.crm.case.section.categ2,nbr:0
 #: field:report.crm.case.section.categ.categ2,nbr:0
 #: field:report.crm.case.section.categ.stage,nbr:0
+#: field:report.crm.case.section.categ2,nbr:0
 #: field:report.crm.case.section.stage,nbr:0
 msgid "# of Cases"
-msgstr ""
+msgstr "# Θεμάτων"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Campaign Type"
-msgstr ""
+msgstr "Τύπος Προσέγγισης"
 
 #. module: crm_configuration
 #: wizard_view:crm.case.meeting,init:0
-msgid "Note that you can also use the calendar view to graphically schedule your next meeting."
+msgid ""
+"Note that you can also use the calendar view to graphically schedule your "
+"next meeting."
 msgstr ""
+"Μπορείτε επίσης να χρησιμοποιήσετε και την ημερολογιακή προβολή για τον "
+"προγραμματισμό της επόμενης σύσκεψής σας."
 
 #. module: crm_configuration
 #: model:process.node,note:crm_configuration.process_node_accord0
@@ -289,43 +303,42 @@ msgid "Related to"
 msgstr ""
 
 #. module: crm_configuration
-#: field:crm.case.category2,section_id:0
-#: field:crm.case.stage,section_id:0
+#: field:crm.case.category2,section_id:0 field:crm.case.stage,section_id:0
 msgid "Case Section"
-msgstr ""
+msgstr "Τμήμα Θεμάτων"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Estimates"
-msgstr ""
+msgstr "Εκτιμήσεις"
 
 #. module: crm_configuration
-#: selection:report.crm.case.section.categ2,state:0
 #: selection:report.crm.case.section.categ.categ2,state:0
 #: selection:report.crm.case.section.categ.stage,state:0
+#: selection:report.crm.case.section.categ2,state:0
 #: selection:report.crm.case.section.stage,state:0
 msgid "Closed"
-msgstr ""
+msgstr "Έκλεισε"
 
 #. module: crm_configuration
 #: wizard_view:crm.case.partner_create,init:0
 msgid "Convert To Partner"
-msgstr ""
+msgstr "Μετατροπή σε Συενργάτη"
 
 #. module: crm_configuration
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_section_stage_tree
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_section_stage_tree_month
 #: view:report.crm.case.section.stage:0
 msgid "Cases by Section and Stage"
-msgstr ""
+msgstr "Θέματα ανά Τμήμα και Στάδιο"
 
 #. module: crm_configuration
-#: field:report.crm.case.section.categ2,section_id:0
 #: field:report.crm.case.section.categ.categ2,section_id:0
 #: field:report.crm.case.section.categ.stage,section_id:0
+#: field:report.crm.case.section.categ2,section_id:0
 #: field:report.crm.case.section.stage,section_id:0
 msgid "Section"
-msgstr ""
+msgstr "Τμήμα"
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -340,12 +353,12 @@ msgstr "Επόμενο"
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Priority"
-msgstr ""
+msgstr "Προτεραιότητα"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Source"
-msgstr ""
+msgstr "Πηγή"
 
 #. module: crm_configuration
 #: field:report.crm.case.section.categ2,state:0
@@ -358,58 +371,58 @@ msgstr "Κατάσταση Λογαριασμού"
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Version"
-msgstr ""
+msgstr "Έκδοση"
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_categ0_act_my2
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_myjobs2
 msgid "My Jobs Propositions to Review"
-msgstr ""
+msgstr "Επισκόπηση των Προτάσεων Εργασίας μου"
 
 #. module: crm_configuration
-#: selection:report.crm.case.section.categ2,state:0
 #: selection:report.crm.case.section.categ.categ2,state:0
 #: selection:report.crm.case.section.categ.stage,state:0
+#: selection:report.crm.case.section.categ2,state:0
 #: selection:report.crm.case.section.stage,state:0
 msgid "Draft"
-msgstr ""
+msgstr "Πρόχειρα"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Payment Mode"
-msgstr ""
+msgstr "Τρόπος Πληρωμής"
 
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_lead4
 msgid "Print"
-msgstr ""
+msgstr "Εκτύπωση"
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_lead1
 msgid "New"
-msgstr ""
+msgstr "Νέο"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "General"
-msgstr ""
+msgstr "Γενικά"
 
 #. module: crm_configuration
 #: field:report.crm.case.section.categ2,category2_id:0
-#: field:report.crm.case.section.categ.categ2,category2_id:0
-#: view:crm.case:0
+#: field:report.crm.case.section.categ.categ2,category2_id:0 view:crm.case:0
 msgid "Type"
 msgstr "Είδος ημερολογίου"
 
 #. module: crm_configuration
-#: model:crm.case.category2,name:crm_configuration.category_lead3
 #: view:crm.case:0
+#: model:crm.case.category2,name:crm_configuration.category_lead3
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Candidate Refused"
-msgstr ""
+msgstr "Ο Υποψήφιος Απορρίφθηκε"
 
 #. module: crm_configuration
 #: model:process.transition,name:crm_configuration.process_transition_opportunitiesaccord0
@@ -422,35 +435,36 @@ msgid "Tracks identified business opportunities for your sales pipeline."
 msgstr ""
 
 #. module: crm_configuration
-#, python-format
 #: code:addons/crm_configuration/wizard/wizard_opportunity_set.py:0
+#, python-format
 msgid "Error !"
-msgstr ""
+msgstr "Σφάλμα!"
 
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_lead1
 msgid "Telesales"
-msgstr ""
+msgstr "Τηλεπωλήσεις"
 
 #. module: crm_configuration
 #: field:crm.menu.config_wizard,fund:0
 msgid "Fund Raising Operations"
-msgstr ""
+msgstr "Διαδικασίες Χρηματοδότησης"
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_categ0_act_my1
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_myjobs1
 msgid "My Pending Jobs Requests"
-msgstr ""
+msgstr "Οι Αιτήσεις Εργασίας μου σε Εκκρεμότητα"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Appreciation"
-msgstr ""
+msgstr "Εκτίμηση"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Reset to Draft"
-msgstr ""
+msgstr "Επαναφορά σε Πρόχειρο"
 
 #. module: crm_configuration
 #: model:process.node,note:crm_configuration.process_node_leads0
@@ -460,22 +474,22 @@ msgstr ""
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_job3
 msgid "Second Interview"
-msgstr ""
+msgstr "Δεύτερη Συνέντευξη"
 
 #. module: crm_configuration
 #: model:ir.model,name:crm_configuration.model_report_crm_case_section_categ_categ2
 msgid "Cases by section, Category and Category2"
-msgstr ""
+msgstr "Θέματα ανά Τμήμα, Κατηγορία και Κατηγορία2"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Contact Name"
-msgstr ""
+msgstr "Όνομα Επαφής"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "References"
-msgstr ""
+msgstr "Συστάσεις"
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_oppor1
@@ -483,13 +497,13 @@ msgid "Prospecting"
 msgstr ""
 
 #. module: crm_configuration
-#: field:crm.case,stage_id:0
-#: field:report.crm.case.section.categ2,stage_id:0
+#: field:crm.case,stage_id:0 view:crm.case.stage:0
 #: field:report.crm.case.section.categ.categ2,stage_id:0
 #: field:report.crm.case.section.categ.stage,stage_id:0
+#: field:report.crm.case.section.categ2,stage_id:0
 #: field:report.crm.case.section.stage,stage_id:0
 msgid "Stage"
-msgstr ""
+msgstr "Στάδιο"
 
 #. module: crm_configuration
 #: field:crm.menu.config_wizard,claims:0
@@ -499,22 +513,22 @@ msgstr ""
 #. module: crm_configuration
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
-msgstr ""
+msgstr "Invalid XML for View Architecture!"
 
 #. module: crm_configuration
 #: field:crm.case,partner_name2:0
 msgid "Employee Email"
-msgstr ""
+msgstr "Email Υπαλλήλου"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Description Information"
-msgstr ""
+msgstr "Πληροφορίες Περιγραφής"
 
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_job3
 msgid " > Bac +5"
-msgstr ""
+msgstr " > Λύκειο +5"
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_categ0_act_all2
@@ -527,22 +541,27 @@ msgid "Accord"
 msgstr ""
 
 #. module: crm_configuration
-#: field:report.crm.case.section.categ.categ2,categ_id:0
+#: view:crm.case:0 field:report.crm.case.section.categ.categ2,categ_id:0
 #: field:report.crm.case.section.categ.stage,categ_id:0
 #: field:report.crm.case.section.stage,categ_id:0
-#: view:crm.case:0
 msgid "Category"
-msgstr ""
+msgstr "Κατηγορία"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Convert to Opportunity"
-msgstr ""
+msgstr "Μετατροπή σε Ευκαιρία"
 
 #. module: crm_configuration
 #: view:crm.menu.config_wizard:0
-msgid "The CRM module of OpenERP is able to manage any kind of relationship. But, as to help you to start quickly on the system, we configured a few of them for you."
+msgid ""
+"The CRM module of OpenERP is able to manage any kind of relationship. But, "
+"as to help you to start quickly on the system, we configured a few of them "
+"for you."
 msgstr ""
+"Η ενότητα CRM του Open ERP μπορεί να διαχειρστεί οποιοδήποτε είδος σχέσεων, "
+"Αλλά, για τη δική σας διευκόλυνση στη γνωριμία σας με το σύστημα, έχουμε "
+"προετοιμάσει μερικές για εσάς."
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -552,7 +571,7 @@ msgstr "Στοιχεία επικοινωνίας"
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Next Interview"
-msgstr ""
+msgstr "Επόμενη Συνέντευξη"
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -562,53 +581,59 @@ msgstr ""
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_meet3
 msgid "Customer Office"
-msgstr ""
+msgstr "Γραφείο Πελάτη"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Resolution history"
-msgstr ""
+msgstr "Ιστορικό Λύσεων"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Candidate Name2"
-msgstr ""
+msgstr "Ονομα2 Υποψηφίου"
 
 #. module: crm_configuration
-#: field:crm.menu.config_wizard,phonecall:0
 #: view:crm.case:0
+#: model:crm.case.section,name:crm_configuration.section_support_phone
+#: field:crm.menu.config_wizard,phonecall:0
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_categ_phone0
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_phone
 msgid "Phone Calls"
-msgstr ""
+msgstr "Τηλεφωνήματα"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Type of Action"
-msgstr ""
+msgstr "Τύπος Ενέργειας"
 
 #. module: crm_configuration
 #: wizard_view:crm.case.partner_create,init:0
 msgid "You may have to verify that this partner does not exist already."
 msgstr ""
+"Μπορεί να χρειαστεί να επιβεβαιώσετε ότι αυτός ο συνεργάτης δεν υπάρχει ήδη."
 
 #. module: crm_configuration
 #: wizard_field:crm.case.opportunity_set,init,planned_revenue:0
 msgid "Expected Revenue"
-msgstr ""
+msgstr "Αναμενόμενα Έσοδα"
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_oppor22
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_oppor22
 msgid "My Opportunities"
-msgstr ""
+msgstr "Οι Ευκαιρίες μου"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Meeting With Candidates"
-msgstr ""
+msgstr "Σύσκεψη με Υποψηφίους"
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_oppor11
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_oppor11
 msgid "All Opportunities"
-msgstr ""
+msgstr "Όλες οι Ευκαιρίες"
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -623,60 +648,59 @@ msgstr ""
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Subject"
-msgstr ""
+msgstr "Αντικείμενο"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Convert to Partner"
-msgstr ""
+msgstr "Μετατροπή σε Συνεργάτη"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Communication history"
-msgstr ""
+msgstr "Ιστορικό Επικοινωνίας"
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_lead6
 msgid "Dead"
-msgstr ""
+msgstr "Τελειωμένη"
 
 #. module: crm_configuration
-#: field:report.crm.case.section.categ2,name:0
 #: field:report.crm.case.section.categ.categ2,name:0
 #: field:report.crm.case.section.categ.stage,name:0
+#: field:report.crm.case.section.categ2,name:0
 #: field:report.crm.case.section.stage,name:0
 msgid "Month"
-msgstr ""
+msgstr "Μήνας"
 
 #. module: crm_configuration
-#: field:crm.menu.config_wizard,lead:0
-#: view:crm.case:0
+#: field:crm.menu.config_wizard,lead:0 view:crm.case:0
 #: model:process.node,name:crm_configuration.process_node_leads0
 msgid "Leads"
 msgstr ""
 
 #. module: crm_configuration
-#: selection:report.crm.case.section.categ2,state:0
 #: selection:report.crm.case.section.categ.categ2,state:0
 #: selection:report.crm.case.section.categ.stage,state:0
+#: selection:report.crm.case.section.categ2,state:0
 #: selection:report.crm.case.section.stage,state:0
 msgid "Canceled"
-msgstr ""
+msgstr "Ακυρώθηκε"
 
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_oppor1
 msgid "Existing Business"
-msgstr ""
+msgstr "Υπάρχουσα Συνεργασία"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Job Info"
-msgstr ""
+msgstr "Πληροφορίες Θέσης"
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_job2
 msgid "First Interview"
-msgstr ""
+msgstr "Πρώτη Συνέντευξη"
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_meetall2
@@ -686,13 +710,14 @@ msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_oppor_my2
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_oppor_my2
 msgid "My Pending Opportunities"
-msgstr ""
+msgstr "Οι Εκκρεμείς Ευκαιρίες μου"
 
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_meet2
 msgid "Home"
-msgstr ""
+msgstr "Κεντρική"
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -702,35 +727,38 @@ msgstr ""
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Proposed Salary"
-msgstr ""
+msgstr "Προτεινόμενος Μισθός"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Jobs - Recruitment Tree"
-msgstr ""
+msgstr "Εργασία - Σχεδιάγραμμα Προσλήψεων"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Send Prospect & Historize"
-msgstr ""
+msgstr "Αποστολή Προοπτικής & Αρχειοθέτηση"
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_categ0_act_all0
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_myjobs_all0
 msgid "All Open Jobs Requests"
-msgstr ""
+msgstr "Όλες οι Ανοικτές Αιτήσεις Εργασίας"
 
 #. module: crm_configuration
-#: model:ir.actions.wizard,name:crm_configuration.wizard_crm_meeting
 #: view:crm.case:0
+#: model:ir.actions.wizard,name:crm_configuration.wizard_crm_meeting
 msgid "Schedule Meeting"
-msgstr ""
+msgstr "Προγραμματισμός Σύσκεψης"
 
 #. module: crm_configuration
+#: model:ir.ui.menu,name:crm_configuration.menu_action_report_crm_case_lead_categ_stage
+#: model:ir.ui.menu,name:crm_configuration.menu_action_report_crm_case_oppor_categ_stage
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_section_categ_stage_tree
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_section_categ_stage_tree_month
 #: view:report.crm.case.section.categ.stage:0
 msgid "Cases by Section, Category and Stage"
-msgstr ""
+msgstr "Θέματα ανά Τμήμα, Κατηγορία και Στάδιο"
 
 #. module: crm_configuration
 #: model:process.node,note:crm_configuration.process_node_contractpricelist0
@@ -745,7 +773,7 @@ msgstr ""
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Meetings Form"
-msgstr ""
+msgstr "Φόρμα Συσκέψεων"
 
 #. module: crm_configuration
 #: model:process.transition,note:crm_configuration.process_transition_accordanalytic0
@@ -755,22 +783,22 @@ msgstr ""
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_lead3
 msgid "In Process"
-msgstr ""
+msgstr "Σε εξέλιξη"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Historize"
-msgstr ""
+msgstr "Αρχειοθέτηση"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Cancel Meeting"
-msgstr ""
+msgstr "Ακύρωση Σύσκεψης"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Send Candidate & Historize"
-msgstr ""
+msgstr "Αποστολή Υποψηφίου & Αρχειοθέτηση"
 
 #. module: crm_configuration
 #: field:crm.case,note:0
@@ -780,30 +808,30 @@ msgstr "Σημείωση"
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Candidate Email"
-msgstr ""
+msgstr "Email Υποψηφίου"
 
 #. module: crm_configuration
-#: field:report.crm.case.section.categ2,delay_close:0
 #: field:report.crm.case.section.categ.categ2,delay_close:0
 #: field:report.crm.case.section.categ.stage,delay_close:0
+#: field:report.crm.case.section.categ2,delay_close:0
 #: field:report.crm.case.section.stage,delay_close:0
 msgid "Delay Close"
-msgstr ""
+msgstr "Καθυστέρηση Κλεισίματος"
 
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category1
 msgid "Version 4.2"
-msgstr ""
+msgstr "Έκδοση 4.2"
 
 #. module: crm_configuration
 #: field:crm.case,category2_id:0
 msgid "Category Name"
-msgstr ""
+msgstr "Όνομα Κατηγορίας"
 
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category2
 msgid "Version 4.4"
-msgstr ""
+msgstr "Έκδοση 4.4"
 
 #. module: crm_configuration
 #: help:crm.menu.config_wizard,phonecall:0
@@ -812,88 +840,92 @@ msgstr ""
 
 #. module: crm_configuration
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Reminder"
-msgstr ""
+msgstr "Υπενθύμιση"
 
 #. module: crm_configuration
 #: field:crm.case,partner_name:0
 msgid "Employee Name"
-msgstr ""
+msgstr "Όνομα Υπαλλήλου"
 
 #. module: crm_configuration
 #: help:crm.menu.config_wizard,lead:0
-msgid "Allows you to track and manage leads which are pre-sales requests or contacts, the very first contact with a customer request."
+msgid ""
+"Allows you to track and manage leads which are pre-sales requests or "
+"contacts, the very first contact with a customer request."
 msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Status"
-msgstr ""
+msgstr "Κατάσταση"
 
 #. module: crm_configuration
 #: wizard_button:crm.case.opportunity_set,init,confirm:0
 msgid "Create Opportunity"
-msgstr ""
+msgstr "Δημιουργία Ευκαιρίας"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Jobs - Recruitment Form"
-msgstr ""
+msgstr "Εργασία - Φόρμα Πρόσληψης"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Degree"
-msgstr ""
+msgstr "Βαθμός"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Meetings Tree"
-msgstr ""
+msgstr "Σχεδιάγραμμα Συσκέψεων"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Escalate"
-msgstr ""
+msgstr "Διαβάθμιση"
 
 #. module: crm_configuration
 #: view:crm.case:0
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_fund1
 msgid "Funds"
-msgstr ""
+msgstr "Χρηματοδοτήσεις"
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_oppor6
 msgid "Closed Won"
-msgstr ""
+msgstr "Έκλεισε με Επιτυχία"
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage6
 msgid "Works For Me"
-msgstr ""
+msgstr "Εργάζεται για Εμένα"
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_job7
 msgid "Refused by Company"
-msgstr ""
+msgstr "Απορρίφθηκε από την Εταιρεία"
 
 #. module: crm_configuration
 #: field:crm.case,partner_phone:0
 msgid "Phone"
-msgstr ""
+msgstr "Τηλέφωνο"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Qualication"
-msgstr ""
+msgstr "Προσόντα"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Prospect Name"
-msgstr ""
+msgstr "Όνομα Προοπτικής"
 
 #. module: crm_configuration
 #: field:report.crm.case.section.categ2,user_id:0
@@ -905,19 +937,20 @@ msgstr "Χρήστης"
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage5
+#: model:crm.case.stage,name:crm_configuration.stage_claim5
 #: model:crm.case.stage,name:crm_configuration.stage_meet4
 msgid "Awaiting Response"
-msgstr ""
+msgstr "Σε αναμονή Ανταπόκρισης"
 
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.categ2_fund2
 msgid "Cheque"
-msgstr ""
+msgstr "Επιταγή"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Candidate Hired"
-msgstr ""
+msgstr "Ο Υποψήφιος Προσλήφθηκε"
 
 #. module: crm_configuration
 #: model:process.transition,name:crm_configuration.process_transition_leadopportunity0
@@ -932,17 +965,18 @@ msgstr ""
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_job2
 msgid "Licenced"
-msgstr ""
+msgstr "Εξουσιοδοτημένα"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Candidate Name"
-msgstr ""
+msgstr "Όνομα Υποψηφίου"
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_categ0_act_my0
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_myjobs0
 msgid "My Open Jobs Requests"
-msgstr ""
+msgstr "Οι Ανοικτές μου Αιτήσεις Εργασίας"
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_oppor3
@@ -952,12 +986,12 @@ msgstr ""
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Meeting Date"
-msgstr ""
+msgstr "Ημερομηνία Σύσκεψης"
 
 #. module: crm_configuration
 #: help:crm.menu.config_wizard,meeting:0
 msgid "Manages the calendar of meetings of the users."
-msgstr ""
+msgstr "Διαχειρίζεται το ημερολόγιο συσκέψεεων των χρηστών."
 
 #. module: crm_configuration
 #: model:process.transition,note:crm_configuration.process_transition_leadopportunity0
@@ -972,12 +1006,13 @@ msgstr ""
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_oppor2
 msgid "New Business"
-msgstr ""
+msgstr "Νέα Συνεργασία"
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage3
+#: model:crm.case.stage,name:crm_configuration.stage_claim3
 msgid "Won't fix"
-msgstr ""
+msgstr "Δε φτιάχνεται"
 
 #. module: crm_configuration
 #: model:process.process,note:crm_configuration.process_process_contractworkflow0
@@ -992,12 +1027,13 @@ msgstr ""
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_lead4
 msgid "Converted"
-msgstr ""
+msgstr "Μετατράπηκε"
 
 #. module: crm_configuration
-#: model:ir.actions.act_window,name:crm_configuration.crm_case_categ0_act_all3
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_helpdesk_act_all3
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_helpdesk_act_myhelpdesk_all3
 msgid "All Unclosed Requests"
-msgstr ""
+msgstr "Όλες οι Ανοικτές Αιτήσεις"
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage1
@@ -1012,12 +1048,12 @@ msgstr ""
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Deadlines"
-msgstr ""
+msgstr "Προθεσμίες"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Resolution"
-msgstr ""
+msgstr "Λύση"
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -1027,32 +1063,32 @@ msgstr "Ιστορικό"
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Assigned to"
-msgstr ""
+msgstr "Ανατέθηκε σε "
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Reset to Unconfirmed"
-msgstr ""
+msgstr "Επαναφορά σε Μη Επιβεβαιωμένη"
 
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_meet1
 msgid "Office"
-msgstr ""
+msgstr "Γραφείο"
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_job4
 msgid "Contract Proposed"
-msgstr ""
+msgstr "Προτάθηκε Συμβόλαιο"
 
 #. module: crm_configuration
 #: model:ir.model,name:crm_configuration.model_crm_case_stage
 msgid "Stage of case"
-msgstr ""
+msgstr "Στάδιο Θέματος"
 
 #. module: crm_configuration
 #: model:ir.model,name:crm_configuration.model_report_crm_case_section_stage
 msgid "Cases by section and stage"
-msgstr ""
+msgstr "Θέματα ανά Τμήμα και Στάδιο"
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -1062,12 +1098,12 @@ msgstr ""
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_lead2
 msgid "Assigned"
-msgstr ""
+msgstr "Ανατέθηκαν"
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_lead5
 msgid "Recycled"
-msgstr ""
+msgstr "Ανακυκλώθηκε"
 
 #. module: crm_configuration
 #: model:process.node,name:crm_configuration.process_node_contractanalytic0
@@ -1077,63 +1113,63 @@ msgstr ""
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Done"
-msgstr ""
+msgstr "Ολοκληρώθηκε"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Communication"
-msgstr ""
+msgstr "Επικοινωνία"
 
 #. module: crm_configuration
-#: wizard_button:crm.case.meeting,init,end:0
+#: view:crm.case:0 wizard_button:crm.case.meeting,init,end:0
 #: wizard_button:crm.case.opportunity_set,init,end:0
 #: wizard_button:crm.case.partner_create,init,end:0
-#: view:crm.case:0
 #: view:crm.menu.config_wizard:0
 msgid "Cancel"
-msgstr ""
+msgstr "Ακύρωση"
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_categ0_act_all1
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_myjobs_all1
 msgid "All Pending Jobs Requests"
-msgstr ""
+msgstr "Εκκρεμείς Αιτήσεις Εργασίας"
 
 #. module: crm_configuration
-#: selection:report.crm.case.section.categ2,state:0
-#: selection:report.crm.case.section.categ.categ2,state:0
+#: view:crm.case:0 selection:report.crm.case.section.categ.categ2,state:0
 #: selection:report.crm.case.section.categ.stage,state:0
+#: selection:report.crm.case.section.categ2,state:0
 #: selection:report.crm.case.section.stage,state:0
-#: view:crm.case:0
 msgid "Open"
-msgstr ""
+msgstr "Ανοικτή"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Location"
-msgstr ""
+msgstr "Τοποθεσία"
 
 #. module: crm_configuration
 #: wizard_field:crm.case.meeting,init,date:0
 msgid "Meeting date"
-msgstr ""
+msgstr "Ημερ/νία σύσκεψης"
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_oppor5
 msgid "Negotiation/Review"
-msgstr ""
+msgstr "Διαπραγματεύσεις/Επισκόπηση"
 
 #. module: crm_configuration
+#: model:ir.ui.menu,name:crm_configuration.menu_action_report_crm_case_lead_categ_categ2
+#: model:ir.ui.menu,name:crm_configuration.menu_action_report_crm_case_oppor_categ_categ2
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_section_categ_categ2_tree
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_section_categ_categ2_tree_month
 #: view:report.crm.case.section.categ.categ2:0
 msgid "Cases by Section, Category and Category2"
-msgstr ""
+msgstr "Θέματα ανά Τμήμα, Κατηγορία και Κατηγορία2"
 
 #. module: crm_configuration
 #: field:crm.menu.config_wizard,opportunity:0
-#: model:process.node,note:crm_configuration.process_node_opportunities0
 msgid "Business Opportunities"
-msgstr ""
+msgstr "Ευκαιρίες Συνεργασίας"
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -1143,17 +1179,17 @@ msgstr ""
 #. module: crm_configuration
 #: field:crm.menu.config_wizard,helpdesk:0
 msgid "Helpdesk"
-msgstr ""
+msgstr "Γραμμή Υποστήριξης"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Responsible"
-msgstr ""
+msgstr "Υπεύθυνος"
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_meet2
 msgid "Not fixed"
-msgstr ""
+msgstr "Δε διορθώθηκε"
 
 #. module: crm_configuration
 #: model:process.node,note:crm_configuration.process_node_contractanalytic0
@@ -1162,34 +1198,36 @@ msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage4
+#: model:crm.case.stage,name:crm_configuration.stage_claim4
 #: model:crm.case.stage,name:crm_configuration.stage_meet3
 msgid "Invalid"
-msgstr ""
+msgstr "Άκυρο"
 
 #. module: crm_configuration
 #: wizard_button:crm.case.meeting,init,order:0
 msgid "Set Meeting"
-msgstr ""
+msgstr "Ορισμός Σύσκεψης"
 
 #. module: crm_configuration
 #: field:crm.menu.config_wizard,meeting:0
 msgid "Calendar of Meetings"
-msgstr ""
+msgstr "Ημερολόγιο Συσκέψεων"
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_oppor2
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_oppor2
 msgid "My Open Opportunities"
-msgstr ""
+msgstr "Οι Ανοικτές Ευκαιρίες μου"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Funds Tree"
-msgstr ""
+msgstr "Διάγραμμα Χρηματοδοτήσεων"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Cases By Stage and Estimates"
-msgstr ""
+msgstr "Θέματα ανά Στάδιο και Εκτιμήσεις"
 
 #. module: crm_configuration
 #: help:crm.menu.config_wizard,bugs:0
@@ -1199,12 +1237,12 @@ msgstr ""
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_lead2
 msgid "Mail"
-msgstr ""
+msgstr "Mail"
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.action_view_config_crm_menu
 msgid "Configure Menu for CRM case Section"
-msgstr ""
+msgstr "Ρυθμίσεις Μενού για τα Τμήματα Θεμάτων CRM"
 
 #. module: crm_configuration
 #: model:process.process,name:crm_configuration.process_process_contractworkflow0
@@ -1213,8 +1251,12 @@ msgstr ""
 
 #. module: crm_configuration
 #: help:crm.menu.config_wizard,jobs:0
-msgid "Help you to organise the jobs hiring process: evaluation, meetings, email integration..."
+msgid ""
+"Help you to organise the jobs hiring process: evaluation, meetings, email "
+"integration..."
 msgstr ""
+"Σας βοηθάει στην οργάνωση της διαδικασίας προσλήψεων: αποτίμηση, "
+"συναντήσεις, ενσωμάτωση email κλπ."
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -1229,27 +1271,28 @@ msgstr ""
 #. module: crm_configuration
 #: constraint:crm.case.section:0
 msgid "Error ! You can not create recursive sections."
-msgstr ""
+msgstr "Σφάλμα! Υπάρχει τμήμα με την ίδια περιγραφή."
 
 #. module: crm_configuration
 #: view:crm.case:0
+#: model:process.node,name:crm_configuration.process_node_meeting0
 msgid "Meeting"
-msgstr ""
+msgstr "Σύσκεψη"
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_job5
 msgid "Contract Signed"
-msgstr ""
+msgstr "Υπογράφηκε Συμβόλαιο"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Internal Notes"
-msgstr ""
+msgstr "Εσωτερικές Σημειώσεις"
 
 #. module: crm_configuration
-#: model:ir.actions.act_window,name:crm_configuration.crm_case_categ0_act_my3
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_helpdesk_act_my_helpdesk
 msgid "My Unclosed Requests"
-msgstr ""
+msgstr "Οι Ανοικτές Αιτήσεις μου"
 
 #. module: crm_configuration
 #: wizard_view:crm.case.partner_create,init:0
@@ -1259,12 +1302,12 @@ msgstr ""
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Prospect Email"
-msgstr ""
+msgstr "Email Προοπτικής"
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_job6
 msgid "Refused by Employee"
-msgstr ""
+msgstr "Απορρίφθηκε από Υπάλληλο"
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -1274,15 +1317,16 @@ msgstr ""
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Confirm Meeting"
-msgstr ""
+msgstr "Επιβεβαίωση Σύσκεψης"
 
 #. module: crm_configuration
-#, python-format
-#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_oppor
-#: view:crm.case:0
 #: code:addons/crm_configuration/wizard/wizard_opportunity_set.py:0
+#: view:crm.case:0
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_oppor
+#: model:ir.ui.menu,name:crm_configuration.menu_action_report_crm_case_oppor
+#, python-format
 msgid "Opportunity"
-msgstr ""
+msgstr "Ευκαιρία"
 
 #. module: crm_configuration
 #: wizard_view:crm.case.meeting,init:0
@@ -1292,16 +1336,15 @@ msgstr ""
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Opportunities Tree"
-msgstr ""
+msgstr "Σχεδιάγραμμα Ευκαιριών"
 
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_lead7
 msgid "Television"
-msgstr ""
+msgstr "Τηλεόραση"
 
 #. module: crm_configuration
-#: field:crm.menu.config_wizard,name:0
-#: view:crm.case:0
+#: field:crm.menu.config_wizard,name:0 view:crm.case:0
 msgid "Name"
 msgstr "Ονομασία"
 
@@ -1313,22 +1356,22 @@ msgstr ""
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Sales Stage"
-msgstr ""
+msgstr "Σάδιο Πώλησης"
 
 #. module: crm_configuration
 #: field:crm.case,case_id:0
 msgid "Related Case"
-msgstr ""
+msgstr "Σχετικό Θέμα"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Send Partner & Historize"
-msgstr ""
+msgstr "Αποστολή Συνεργάτη & Αρχειοθέτηση"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Funds by Categories"
-msgstr ""
+msgstr "Χρηματοδοτήσεις ανά Κατηγορία"
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -1338,32 +1381,31 @@ msgstr ""
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Next Meeting"
-msgstr ""
+msgstr "Επόμενη Σύσκεψη"
 
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.categ2_fund3
 msgid "Credit Card"
-msgstr ""
+msgstr "Πιστωτική Κάρτα"
 
 #. module: crm_configuration
-#: selection:report.crm.case.section.categ2,state:0
-#: selection:report.crm.case.section.categ.categ2,state:0
+#: view:crm.case:0 selection:report.crm.case.section.categ.categ2,state:0
 #: selection:report.crm.case.section.categ.stage,state:0
+#: selection:report.crm.case.section.categ2,state:0
 #: selection:report.crm.case.section.stage,state:0
-#: view:crm.case:0
 msgid "Pending"
-msgstr ""
+msgstr "Εκκρεμεί"
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage7
 #: model:crm.case.stage,name:crm_configuration.stage_meet5
 msgid "Future"
-msgstr ""
+msgstr "Μελλοντικά"
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_oppor7
 msgid "Closed Lost"
-msgstr ""
+msgstr "Έκλεισε Ανεπιτυχώς"
 
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.categ2_fund4
@@ -1378,17 +1420,17 @@ msgstr ""
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_oppor2
 msgid "Needs Analysis"
-msgstr ""
+msgstr "Χρήζει Ανάλυσης"
 
 #. module: crm_configuration
 #: wizard_field:crm.case.opportunity_set,init,name:0
 msgid "Opportunity Summary"
-msgstr ""
+msgstr "Περίληψη Ευκαιρίας"
 
 #. module: crm_configuration
 #: model:ir.model,name:crm_configuration.model_crm_menu_config_wizard
 msgid "crm.menu.config_wizard"
-msgstr ""
+msgstr "crm.menu.config_wizard"
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -1419,7 +1461,7 @@ msgstr ""
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Actions"
-msgstr ""
+msgstr "Ενέργειες"
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -1429,22 +1471,24 @@ msgstr "Περιγραφή"
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_lead6
 msgid "Radio"
-msgstr ""
+msgstr "Ραδιόφωνο"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Prospect Information"
-msgstr ""
+msgstr "Πληροφορίες Προοπτικής"
 
 #. module: crm_configuration
-#: view:crm.case:0
+#: view:crm.case:0 model:crm.case.categ,name:crm_configuration.categ_lead4
+#: model:crm.case.categ,name:crm_configuration.categ_oppor4
+#: model:process.node,name:crm_configuration.process_node_partner0
 msgid "Partner"
-msgstr ""
+msgstr "Συνεργάτης"
 
 #. module: crm_configuration
 #: field:crm.case,duration:0
 msgid "Duration"
-msgstr ""
+msgstr "Διάρκεια"
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -1454,10 +1498,807 @@ msgstr ""
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_lead8
 msgid "Newsletter"
-msgstr ""
+msgstr "Newsletter"
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_oppor4
 msgid "Proposal/Price Quote"
+msgstr "Πρόταση/Προσφορά"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_all1
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_all1
+msgid "Bugs Waiting Approval"
 msgstr ""
 
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_categ0_act_all3
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_myjobs_all3
+msgid "Current Requests"
+msgstr "Τρέχουσες Αιτήσεις"
+
+#. module: crm_configuration
+#: view:crm.case:0
+msgid "Claim Description"
+msgstr ""
+
+#. module: crm_configuration
+#: model:crm.case.categ,name:crm_configuration.categ_oppor5
+msgid "Campaign"
+msgstr "Προσέγγιση"
+
+#. module: crm_configuration
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_fund
+msgid "New Fund Opportunity"
+msgstr "Νέα Ευκαιρία Χρηματοδότησης"
+
+#. module: crm_configuration
+#: model:crm.case.categ,name:crm_configuration.categ_meet3
+msgid "Phone Call"
+msgstr "Τηλεφώνημα"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_categ0_act_my_new3
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_my_new3
+msgid "New Job Request"
+msgstr "Νέα Αίτηση Εργασίας"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_all2
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_all2
+msgid "Open Bugs"
+msgstr ""
+
+#. module: crm_configuration
+#: model:process.transition,name:crm_configuration.process_transition_opportunitymeeting0
+msgid "Opportunity Meeting"
+msgstr "Σύσκεψη με Ευκαιρία"
+
+#. module: crm_configuration
+#: model:ir.module.module,shortdesc:crm_configuration.module_meta_information
+msgid "Customer Relationship Management"
+msgstr "Διαχείριση Πελατειακών Σχέσεων (CRM)"
+
+#. module: crm_configuration
+#: model:crm.case.stage,name:crm_configuration.stage_claim1
+msgid "Accepted as Claim"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_categ_phone_incoming2
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_categ_phone_outgoing2
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ_phone_incoming2
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ_phone_outgoing2
+msgid "Planned Calls"
+msgstr "Προγραμματισμένα Τηλεφωνήματα"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_helpdesk_act_all0
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_helpdesk_act_myhelpdesk_all0
+msgid "All Open Helpdesk Requests"
+msgstr "Όλες οι Ανοικτές Αιτήσεις Γραμμής Υποστήριξης"
+
+#. module: crm_configuration
+#: model:crm.case.categ,name:crm_configuration.categ3
+msgid "Feature Requests"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_categ_phone_incoming1
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ_phone_incoming1
+msgid "New Incoming Call"
+msgstr "Νέα Εισερχόμενη Κλήση"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_categ0_act_my3
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_myjobs3
+msgid "My Current Jobs Requests"
+msgstr "Οι Τρέχουσες Αιτήσεις Εργασίας μου"
+
+#. module: crm_configuration
+#: model:process.transition,note:crm_configuration.process_transition_opportunitymeeting0
+msgid "Normal or phone meeting for opportunity"
+msgstr "Σύσκεψη κανονική ή τηλεφωνική για ευκαιρία"
+
+#. module: crm_configuration
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ_meet
+msgid "All Meetings"
+msgstr "Όλες οι Συσκέψεις"
+
+#. module: crm_configuration
+#: model:crm.case.section,name:crm_configuration.section_support_help
+msgid "HelpDesk"
+msgstr "Γραμμή Υποστήριξης"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_oppor_all2
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_oppor_all2
+msgid "All Unassigned Opportunities"
+msgstr "Όλες οι Ευκαιρίες χωρίς Ανάθεση"
+
+#. module: crm_configuration
+#: model:ir.ui.menu,name:crm_configuration.menu_action_report_crm_case_lead_categ
+msgid "Cases by Leads and Category2"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_helpdesk_act111
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_helpdesk_act_all
+msgid "All Helpdesk Requests"
+msgstr "Όλες οι Αιτήσεις Γραμμής Υποστήριξης"
+
+#. module: crm_configuration
+#: help:crm.menu.config_wizard,phonecall:0
+msgid ""
+"Help you to encode the result of a phone call or to planify a list of phone "
+"calls to process."
+msgstr ""
+"Σας βοηθάει να κωδικοποιήσετε το αποτέλεσμα μιας κλήσης ή να προγραμματίσετε "
+"μια λίστα κλήσεων."
+
+#. module: crm_configuration
+#: model:crm.case.categ,name:crm_configuration.categ_claim3
+msgid "Policy Claims"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_job_req_main
+msgid "Jobs - Hiring Process"
+msgstr "Εργασία - Διαδικασία Πρόσληψης"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_categ0_act_alljobs
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_myjobs_alljobs
+msgid "Calendar Of Interviews"
+msgstr "Ημερολόγιο Συνεντεύξεων"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_my2
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_my2
+msgid "My Bugs With Patches"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_categ_phone_outgoing4
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ_phone_outgoing4
+msgid "Calls Not Held"
+msgstr "Μη Κρατημένες Κλήσεις"
+
+#. module: crm_configuration
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_claim
+msgid "New Claim"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.ui.menu,name:crm_configuration.menu_action_report_crm_case_oppor_stage
+msgid "Cases by Opportunities and Stage"
+msgstr "Θέματα ανά Ευκαιρία και Στάδιο"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_leads_all
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_leads_all
+msgid "All Leads"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_all3
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_all3
+msgid "Bugs With Patches Waiting Approval"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_claim_all2
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_claim_all2
+msgid "All Unclosed Claims"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_categ_phone_create_partner
+msgid "Schedule Phone Call"
+msgstr "Προγραμματισμός Τηλεφωνημάτων"
+
+#. module: crm_configuration
+#: model:ir.ui.menu,name:crm_configuration.menu_help_support_main
+msgid "Helpdesk and Support"
+msgstr "Γραμμή Υποστήριξης"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_leads_my4
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_leads_my4
+msgid "My Pending Leads"
+msgstr ""
+
+#. module: crm_configuration
+#: model:crm.case.categ,name:crm_configuration.categ2
+msgid "Patches"
+msgstr ""
+
+#. module: crm_configuration
+#: view:crm.case:0
+msgid "Action Description"
+msgstr "Περιγραφή Ενέργειας"
+
+#. module: crm_configuration
+#: model:ir.ui.menu,name:crm_configuration.menu_action_report_crm_case_lead_user
+msgid "Cases by Leads and User"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.ui.menu,name:crm_configuration.menu_action_report_crm_case_oppor_user
+msgid "Cases by Opportunities and User"
+msgstr "Θέματα ανά Ευκαιρία και Χρήστη"
+
+#. module: crm_configuration
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_oppor
+msgid "New Opportunity"
+msgstr "Νέα Ευκαιρία"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_fund_my1
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_category_act_fund_my1
+msgid "My Funds"
+msgstr "Οι Χρηματοδοτήσεις μου"
+
+#. module: crm_configuration
+#: model:crm.case.categ,name:crm_configuration.categ_job2
+msgid "Junior Developer"
+msgstr "Junior Developer"
+
+#. module: crm_configuration
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ_meet_my
+msgid "My Meetings"
+msgstr "Οι Συσκέψεις μου"
+
+#. module: crm_configuration
+#: model:crm.case.category2,name:crm_configuration.category_claim2
+msgid "Preventive"
+msgstr "Προληπτικά"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_leads_my3
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_leads_my3
+msgid "My Open Leads"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_leads_all4
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_leads_all4
+msgid "All Pending Leads"
+msgstr ""
+
+#. module: crm_configuration
+#: model:process.transition,note:crm_configuration.process_transition_leadpartner0
+msgid "Prospect is converting to business partner"
+msgstr "Η προοπτική μετατρέπεται σε συνεργάτη"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_f3
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_f3
+msgid "Open Feature Requests"
+msgstr ""
+
+#. module: crm_configuration
+#: model:crm.case.categ,name:crm_configuration.categ_fund2
+msgid "Learning And Education"
+msgstr "Μάθηση & Εκπαίδευση"
+
+#. module: crm_configuration
+#: view:crm.case.stage:0
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_stage_act
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_stage_act
+msgid "Stages"
+msgstr "Στάδια"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_meetall3
+msgid "Next Meetings"
+msgstr "Επόμενες Συσκέψεις"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_leads_all1
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_leads_all1
+msgid "Current Leads"
+msgstr ""
+
+#. module: crm_configuration
+#: model:crm.case.categ,name:crm_configuration.categ_claim2
+msgid "Value Claims"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_helpdesk_act_allhelpdesk
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_helpdesk_act_myhelpdesk
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_helpdesk_act_myhelpdesk
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_helpdesk_act_myhelpdesk_allhelpdesk
+msgid "Calendar of Helpdesk"
+msgstr "Ημερολόγιο Γραμμής Υποστήριξης"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_fund_my2
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_fund_my2
+msgid "My Funds Waiting Validation"
+msgstr "Χρηματοδοτήσεις μου για Επικύρωση"
+
+#. module: crm_configuration
+#: model:crm.case.categ,name:crm_configuration.categ_lead6
+#: model:crm.case.categ,name:crm_configuration.categ_oppor6
+msgid "Website"
+msgstr "Ιστοσελίδα"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_all6
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_f5
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_all6
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_f5
+msgid "Planned For Future Release"
+msgstr "Προγραμματισμένο για μελλοντική έκδοση"
+
+#. module: crm_configuration
+#: view:crm.case:0
+msgid "Date"
+msgstr "Ημερομηνία"
+
+#. module: crm_configuration
+#: model:crm.case.categ,name:crm_configuration.categ_lead2
+#: model:crm.case.categ,name:crm_configuration.categ_oppor2
+msgid "Self Generated"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_categ_act_new
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ_act_new
+msgid "New Bug"
+msgstr ""
+
+#. module: crm_configuration
+#: view:crm.case:0
+msgid "Claim Revenue"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_categ_phone_outgoing1
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ_phone_outgoing1
+msgid "New Outgoing Call"
+msgstr "Νέα Εξερχόμενη Κλήση"
+
+#. module: crm_configuration
+#: model:crm.case.categ,name:crm_configuration.categ_lead8
+#: model:crm.case.categ,name:crm_configuration.categ_oppor8
+msgid "Other"
+msgstr "Άλλο"
+
+#. module: crm_configuration
+#: model:process.process,name:crm_configuration.process_process_contractprocess0
+msgid "Contract Process"
+msgstr "Διαδικασία Συμβολαίου"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_claim_my2_open
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_claim_my2_open
+msgid "My Open Claims"
+msgstr ""
+
+#. module: crm_configuration
+#: model:process.node,note:crm_configuration.process_node_partner0
+msgid "Convert to prospect to business partner"
+msgstr "Μετατροπή προοπτικής σε συνεργάτη"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_fund_all2
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_fund_all2
+msgid "All Funds Waiting Validation"
+msgstr "Χρηματοδοτήσεις για Επικύρωση"
+
+#. module: crm_configuration
+#: model:ir.ui.menu,name:crm_configuration.menu_hr
+msgid "Human Resources"
+msgstr "Ανθρώπινο Δυναμικό"
+
+#. module: crm_configuration
+#: model:crm.case.categ,name:crm_configuration.categ_phone1
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_categ_phone_incoming0
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ_phone_incoming0
+msgid "Inbound"
+msgstr "Εισερχόμενα"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_f7
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_f7
+msgid "Old Feature Requests"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_helpdesk_act_my2
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_helpdesk_act_myhelpdesk2
+msgid "My helpdesk Propositions to Review"
+msgstr "Επισκόπηση των Προτάσεών μου για τη Γραμμή Υποστήριξης"
+
+#. module: crm_configuration
+#: model:crm.case.categ,name:crm_configuration.categ_claim1
+msgid "Factual Claims"
+msgstr ""
+
+#. module: crm_configuration
+#: model:process.transition,name:crm_configuration.process_transition_leadpartner0
+msgid "Lead Partner"
+msgstr ""
+
+#. module: crm_configuration
+#: field:report.crm.case.section.categ2,amount_revenue:0
+#: field:report.crm.case.section.stage,amount_revenue:0
+msgid "Est.Revenue"
+msgstr "Εκτιμ. Έσοδα"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_my0
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_my0
+msgid "My Bugs"
+msgstr ""
+
+#. module: crm_configuration
+#: view:crm.case:0 model:crm.case.stage,name:crm_configuration.stage_phone2
+msgid "Held"
+msgstr "Κρατήθηκε"
+
+#. module: crm_configuration
+#: model:crm.case.section,name:crm_configuration.section_support4
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_fund_raise
+msgid "Fund Raising"
+msgstr "Εύρεση Χρηματοδοτήσεων"
+
+#. module: crm_configuration
+#: view:crm.case:0
+msgid "Stage: "
+msgstr "Στάδιο:"
+
+#. module: crm_configuration
+#: model:process.node,note:crm_configuration.process_node_meeting0
+msgid "Schedule a normal or phone meeting"
+msgstr "Προγραμματισμός σύσκεψης, κανονικής ή τηλεφωνικής"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_claim_my2
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_claim_my2
+msgid "My Unclosed Claims"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_my1
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_my1
+msgid "My Open Bugs"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_categ_help_act
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_helpdesk_my_act
+msgid "My Helpdesk"
+msgstr "Η Γραμμή Υποστήτιξής μου"
+
+#. module: crm_configuration
+#: model:crm.case.category2,name:crm_configuration.categ2_fund1
+msgid "Cash"
+msgstr "Μετρητά"
+
+#. module: crm_configuration
+#: view:crm.case:0 model:crm.case.stage,name:crm_configuration.stage_phone3
+msgid "Not Held"
+msgstr "Μη Κρατημένες"
+
+#. module: crm_configuration
+#: model:crm.case.category2,name:crm_configuration.category_claim1
+msgid "Corrective"
+msgstr "Διορθωτική"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_meetings
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_category_act_meetings_new
+msgid "New Meeting"
+msgstr "Νέα Σύσκεψη"
+
+#. module: crm_configuration
+#: view:crm.case:0
+msgid "Resolution: "
+msgstr "Λύση:"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_f0
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_category_act_f0
+msgid "All Feature Request"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_all4
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_all4
+msgid "Bugs Not Fixed"
+msgstr ""
+
+#. module: crm_configuration
+#: model:crm.case.categ,name:crm_configuration.categ_meet2
+msgid "Internal Meeting"
+msgstr "Εσωτερική Σύσκεψη"
+
+#. module: crm_configuration
+#: model:crm.case.categ,name:crm_configuration.categ_meet1
+msgid "Customer Meeting"
+msgstr "Σύσκεψη με Πελάτη"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_leads_all3
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_leads_all3
+msgid "All Open Leads"
+msgstr ""
+
+#. module: crm_configuration
+#: code:addons/crm_configuration/wizard/meeting_planify.py:0
+#, python-format
+msgid "meeting"
+msgstr "σύσκεψη"
+
+#. module: crm_configuration
+#: model:process.node,note:crm_configuration.process_node_opportunities0
+msgid "When a real project/opportunity is detected"
+msgstr "Όταν εντοπίζεται ένα πραγματικό έργο/ευκαιρία"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_categ_act0
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ_act0
+msgid "All Bugs"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.ui.menu,name:crm_configuration.menu_presale
+msgid "Sales"
+msgstr "Πωλήσεις"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_leads_my1
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_leads_my1
+msgid "My Current Leads"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_leads_my_new
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_category_act_leads_my_new
+msgid "New Lead"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_helpdesk_act_my1
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_helpdesk_act_myhelpdesk1
+msgid "My Pending helpdesk Requests"
+msgstr "Οι Αιτήσεις Υποστήριξής μου σε Εκκρεμότητα"
+
+#. module: crm_configuration
+#: model:crm.case.categ,name:crm_configuration.categ_lead1
+#: model:crm.case.categ,name:crm_configuration.categ_oppor1
+msgid "Existing Customer"
+msgstr "Υπάρχων Πελάτης"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_f1
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_category_act_f1
+msgid "New Feature Request"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_categ0_act_all2
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_myjobs_all2
+msgid "All Jobs Propositions to Review"
+msgstr "Επισκόπηση Όλων των Προτάσεων Εργασίας"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_categ_help_new_act
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ_help_new_act
+msgid "New Helpdesk"
+msgstr "Νέα Γραμμή Υποστήριξης"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_my3
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_my3
+msgid "My Bugs Not Fixed"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_claim_my1
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_category_act_claim_my1
+msgid "My Claims"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_fund_all3
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_fund_all3
+msgid "All Funds To Be Processed"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_leads_unassigned
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_leads_unassigned
+msgid "Unassigned Leads"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.ui.menu,name:crm_configuration.menu_aftersale
+msgid "After-Sale Services"
+msgstr "Υπηρεσίες After-Sale"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_leads_all2
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_leads_all2
+msgid "All Draft Leads"
+msgstr ""
+
+#. module: crm_configuration
+#: view:crm.case:0
+msgid "Relevant"
+msgstr "Σχετικά"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_leads_my
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_leads_my
+msgid "My Leads"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_helpdesk_act_all2
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_helpdesk_act_myhelpdesk_all2
+msgid "All Helpdesk Propositions"
+msgstr "Όλες οι Προτάσεις της Γραμμής Υποστήριξης"
+
+#. module: crm_configuration
+#: model:crm.case.categ,name:crm_configuration.categ_fund1
+msgid "Social Rehabilitation And Rural Upliftment"
+msgstr "Κοινωνική Ανάπλαση και Αγροτική Ανάπτυξη"
+
+#. module: crm_configuration
+#: model:crm.case.categ,name:crm_configuration.categ_lead3
+#: model:crm.case.categ,name:crm_configuration.categ_oppor3
+msgid "Employee"
+msgstr "Υπάλληλος"
+
+#. module: crm_configuration
+#: model:ir.ui.menu,name:crm_configuration.menu_action_report_crm_case_lead_stage
+msgid "Cases by Leads and Stage"
+msgstr ""
+
+#. module: crm_configuration
+#: model:process.node,note:crm_configuration.process_node_leads0
+msgid "Very first contact with new prospect"
+msgstr "Πρώτο συμβόλαιο με νέα προοπτική"
+
+#. module: crm_configuration
+#: model:ir.ui.menu,name:crm_configuration.menu_action_report_crm_case_oppor_categ
+msgid "Cases by Opportunities and Category2"
+msgstr "Θέματα ανά Ευκαιρία και Κατηγορία2"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_fund_my3
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_fund_my3
+msgid "My Funds To Be Processed"
+msgstr ""
+
+#. module: crm_configuration
+#: model:crm.case.categ,name:crm_configuration.categ_lead7
+#: model:crm.case.categ,name:crm_configuration.categ_oppor7
+msgid "Word of mouth"
+msgstr "Προφορικά"
+
+#. module: crm_configuration
+#: help:crm.menu.config_wizard,claims:0
+msgid ""
+"Manages the supplier and customers claims, including your corrective or "
+"preventive actions."
+msgstr ""
+
+#. module: crm_configuration
+#: model:crm.case.stage,name:crm_configuration.stage_phone1
+msgid "Planned"
+msgstr "Προγραμματίστηκε"
+
+#. module: crm_configuration
+#: view:crm.case:0
+msgid "Sales Stage: "
+msgstr "Στάδιο Πώλησης:"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_categ0_act_myjobs
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_myjobs_myjobs
+msgid "Calendar Of My Interviews"
+msgstr "Ημερολόγιο των Συνεντεύξεών μου"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_fund_all1
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_fund_all1
+msgid "All Funds"
+msgstr "Όλες οι Χρηματοδοτήσεις"
+
+#. module: crm_configuration
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_category_act_meetings
+msgid "Calendar"
+msgstr "Ημερολογιο"
+
+#. module: crm_configuration
+#: model:crm.case.categ,name:crm_configuration.categ_job1
+msgid "Salesman"
+msgstr "Πωλητής"
+
+#. module: crm_configuration
+#: model:crm.case.categ,name:crm_configuration.categ_fund4
+msgid "Arts And Culture"
+msgstr "Τέχνη Και Πολιτισμός"
+
+#. module: crm_configuration
+#: model:crm.case.categ,name:crm_configuration.categ_phone2
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_categ_phone_outgoing0
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ_phone_outgoing0
+msgid "Outbound"
+msgstr "Εξερχόμενα"
+
+#. module: crm_configuration
+#: model:ir.actions.todo,note:crm_configuration.config_wizard_step_case_section_menu
+msgid "This Configuration step use to create Menu for Case Sections"
+msgstr "Βήμα Ρυθμίσεων για δημιουργία Μενού για Τμήματα Θεμάτων"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_f2
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_f2
+msgid "Feature Requests Waiting Approval"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_helpdesk_act_all1
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_helpdesk_act_myhelpdesk_all1
+msgid "All Pending Helpdesk Requests"
+msgstr "Εκκρεμείς Αιτήσεις Υποστήριξης"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_all5
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_all5
+msgid "Pending Bugs"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_helpdesk_act_my0
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_helpdesk_act_myhelpdesk0
+msgid "My Open Helpdesk Requests"
+msgstr "Οι Ανοικτές Αιτήσεις Υποστήριξής μου"
+
+#. module: crm_configuration
+#: model:crm.case.categ,name:crm_configuration.categ_fund3
+msgid "Healthcare"
+msgstr "Περίθαλψη"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_f4
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_f4
+msgid "Pending Feature Requests"
+msgstr ""
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_all7
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_f6
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_all7
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_f6
+msgid "Waiting For Reporter Response"
+msgstr "Σε Αναμονή Ανταπόκρισης"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_categ_claim0
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ_claim0
+msgid "All Claims"
+msgstr ""
+
+#. module: crm_configuration
+#: model:crm.case.section,name:crm_configuration.section_support0
+msgid "Jobs"
+msgstr "Θέσεις"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_categ_meet_create_partner
+msgid "Schedule a Meeting"
+msgstr "Προγραμματισμός Σύσκεψης"
+
+#. module: crm_configuration
+#: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_all8
+#: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_all8
+msgid "Old Bugs"
+msgstr ""
