@@ -1,0 +1,43 @@
+<config>
+	<api>
+		<resources>
+			<core_store translate="title" module="core">
+				<title>Website, Store and Storeview enumeration</title>
+				<model>openerpsync/store_api</model>
+				<acl>core/store</acl>
+				<methods>
+					<websites translate="title" module="core">
+						<title>Enumerate websites</title>
+					</websites>
+					<stores translate="title" module="core">
+						<title>Enumerate stores</title>
+					</stores>
+					<groups translate="title" module="core">
+						<title>Enumerate groups</title>
+					</groups>
+					<tree translate="title" module="core">
+						<title>
+							Enumerate websites, groups and stores
+						</title>
+					</tree>
+				</methods>
+				<faults module="core">
+					<store_not_exists>
+						<code>100</code>
+						<message>
+							Requested store view not found.
+						</message>
+					</store_not_exists>
+					<website_not_exists>
+						<code>101</code>
+						<message>Requested website not found.</message>
+					</website_not_exists>
+					<group_not_exists>
+						<code>102</code>
+						<message>Requested group not found.</message>
+					</group_not_exists>
+				</faults>
+			</core_store>
+		</resources>
+	</api>
+</config>
