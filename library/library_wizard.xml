@@ -6,12 +6,6 @@
 		string="Update prices" 
 		model="library.price.category" 
 		name="library.update.prices" />
-		<wizard string="Merge purchases" 
-				multi="True" 
-				model="purchase.order" 
-				name="purchase.order.merge.library"  
-				id="purchase_order_merge"
-				/>
 
 	</data>
 </openerp>
