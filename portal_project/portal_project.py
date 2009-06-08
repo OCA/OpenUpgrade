@@ -79,16 +79,6 @@ class project_project(osv.osv):
                 'announce_ids' : fields.one2many('crm.case', 'case_id', 'Announces'),
                 'member_ids': fields.one2many('res.users', 'user_id', 'Project Members', help="Project's member. Not used in any computation, just for information purpose."),                
     }
-    
-    def get_timesheet(self, cr, uid, ids, context):
-        if context['project_id']:
-            cr.execute("select id from hr_timesheet_sheet_sheet where project_id=%s" (context['project_id']))
-            print "RES", cr.fetchall()
-        return True
-    
-    def get_ids(self, cr, uid, ids, context):
-        print "ids", ids
-    
 project_project()
 
 class Wiki(osv.osv):
