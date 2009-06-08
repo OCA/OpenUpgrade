@@ -1,5 +1,51 @@
 from osv import fields,osv
 
+
+class sale_order_line(osv.osv):
+    _inherit = "sale.order.line"
+    
+    def _is_supplier_direct_delivery_advised(self, cr, uid, ids, name, arg, context={}):
+        res = {}
+        for so_line in self.browse(cr, uid, ids):
+            if so_line.product_id:
+                product_id = so_line.product_id.id #we do that to pass the qty in context properly; we can't use the order_line directly since product_id_change doesn't have a sale.order line reference
+                if context == None:
+                    context = {}
+                
+                context.update({'qty': so_line.product_uos_qty})
+                product_obj = self.pool.get('product.product').browse(cr, uid, product_id, context=context)
+                res[so_line.id] = product_obj.is_direct_delivery_from_product
+            else:
+                res[so_line.id] = False
+        return res
+            
+    
+    _columns = {
+        'is_supplier_direct_delivery': fields.boolean('Is Direct Delivery?'),
+        'is_supplier_direct_delivery_advised': fields.function(_is_supplier_direct_delivery_advised, method=True, type='boolean', string="Is Supplier Direct Delivery Advised?"),
+        'purchase_order_line':fields.many2one('purchase.order.line', 'Related Purchase Order Line', required=False),
+        'purchase_order': fields.related('purchase_order_line', 'order_id', type='many2one', relation='purchase.order', string='Related Purchase Order'),
+        'purchase_order_state': fields.related('purchase_order', 'state', type='char', size=64, string='Purchase Order State'),
+    }
+    
+    def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
+            uom=False, qty_uos=0, uos=False, name='', partner_id=False,
+            lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False):
+        #TODO added flag arg -> toss Tiny!!!
+
+        result = super(sale_order_line, self).product_id_change(cr, uid, ids, pricelist, product, qty,
+            uom, qty_uos, uos, name, partner_id, lang, update_tax, date_order, packaging, fiscal_position)
+        
+        if product:
+            context = {'lang': lang, 'partner_id': partner_id, 'qty': qty}
+            product_obj = self.pool.get('product.product').browse(cr, uid, product, context=context)
+            if product_obj.is_direct_delivery_from_product:
+                result['value'].update({'type': 'make_to_order', 'is_supplier_direct_delivery': True})
+        return result
+    
+sale_order_line()
+
+
 class sale_order(osv.osv):
     _inherit = "sale.order"
     
@@ -48,55 +94,19 @@ class sale_order(osv.osv):
                     #we remove the associated moves from Stock -> Customers as it will be replaced by moves Suppliers -> Customers
                     #see purchase_order.action_picking_create for more details
                     for move in so_line.move_ids:
-                        self.pool.get('stock.move').write(cr, uid, move.id, {'state': 'draft'})
-                        self.pool.get('stock.move').unlink(cr, uid, [move.id])
+                        move_id = move.id
+                        picking_id = move.picking_id.id
+                        # delete the move
+                        self.pool.get('stock.move').action_cancel(cr, uid, [move_id])
+                        self.pool.get('stock.move').write(cr, uid, move_id, {'state': 'draft'})
+                        self.pool.get('stock.move').unlink(cr, uid, [move_id])
+                        # check if picking is empty. if yes, delete the picking
+                        move_ids = self.pool.get('stock.move').search(cr, uid, [('picking_id','=',picking_id)] )
+                        if not move_ids:
+                            self.pool.get('stock.picking').action_cancel(cr, uid, [picking_id])
+                            self.pool.get('stock.picking').unlink(cr, uid, [picking_id])
 
         return True
 
 
 sale_order()
-
-
-
-class sale_order_line(osv.osv):
-    _inherit = "sale.order.line"
-    
-    def _is_supplier_direct_delivery_advised(self, cr, uid, ids, name, arg, context={}):
-        res = {}
-        for so_line in self.browse(cr, uid, ids):
-            if so_line.product_id:
-                product_id = so_line.product_id.id #we do that to pass the qty in context properly; we can't use the order_line directly since product_id_change doesn't have a sale.order line reference
-                if context == None:
-                    context = {}
-                
-                context.update({'qty': so_line.product_uos_qty})
-                product_obj = self.pool.get('product.product').browse(cr, uid, product_id, context=context)
-                res[so_line.id] = product_obj.is_direct_delivery_from_product
-            else:
-                res[so_line.id] = False
-        return res
-            
-    
-    _columns = {
-        'is_supplier_direct_delivery': fields.boolean('Is Direct Delivery?'),
-        'is_supplier_direct_delivery_advised': fields.function(_is_supplier_direct_delivery_advised, method=True, type='boolean', string="Is Supplier Direct Delivery Advised?"),
-        'purchase_order_line':fields.many2one('purchase.order.line', 'Related Purchase Order Line', required=False),
-        'purchase_order': fields.related('purchase_order_line', 'order_id', type='many2one', relation='purchase.order', string='Related Purchase Order'),
-        'purchase_order_state': fields.related('purchase_order', 'state', type='char', size=64, string='Purchase Order State'),
-    }
-    
-    def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
-            uom=False, qty_uos=0, uos=False, name='', partner_id=False,
-            lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False):
-
-        result = super(sale_order_line, self).product_id_change(cr, uid, ids, pricelist, product, qty,
-            uom, qty_uos, uos, name, partner_id, lang, update_tax, date_order, packaging, fiscal_position)
-        
-        if product:
-            context = {'lang': lang, 'partner_id': partner_id, 'qty': qty}
-            product_obj = self.pool.get('product.product').browse(cr, uid, product, context=context)
-            if product_obj.is_direct_delivery_from_product:
-                result['value'].update({'type': 'make_to_order', 'is_supplier_direct_delivery': True})
-        return result
-    
-sale_order_line()
