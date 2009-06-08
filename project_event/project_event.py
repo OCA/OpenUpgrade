@@ -143,10 +143,10 @@ project_event_configuration()
 class project_task(osv.osv):
     _inherit = 'project.task'
     
-    def create(self, cr, uid, values, *args, **kwargs):
-        res = super(project_task, self).create(cr, uid, values, *args, **kwargs)
-        cr.commit()
-        task = self.browse(cr, uid, res)
+    def create(self, cr, uid, values, context={}):
+        res = super(project_task, self).create(cr, uid, values, context=context)
+        cr.commit()        
+        task = self.browse(cr, uid, res, context=context)
         if task.project_id:         
             self.pool.get('project.project')._log_event(cr, uid, task.project_id.id, {
                                 'res_id' : task.id,
@@ -160,15 +160,15 @@ class project_task(osv.osv):
     def write(self, cr, uid, ids, vals, context={}):
         res = super(project_task, self).write(cr, uid, ids, vals, context={})
         cr.commit()
-        task = self.browse(cr, uid, res)
-        if task.project_id:         
-            self.pool.get('project.project')._log_event(cr, uid, task.project_id.id, {
-                                'res_id' : task.id,
-                                'name' : task.name, 
-                                'description' : task.description, 
-                                'user_id': uid, 
-                                'action' : 'write',
-                                'type' : 'task'})
+        for task in self.browse(cr, uid, ids, context=context):
+            if task.project_id:         
+                self.pool.get('project.project')._log_event(cr, uid, task.project_id.id, {
+                                    'res_id' : task.id,
+                                    'name' : task.name, 
+                                    'description' : task.description, 
+                                    'user_id': uid, 
+                                    'action' : 'write',
+                                    'type' : 'task'})
         return res
 project_task()
 

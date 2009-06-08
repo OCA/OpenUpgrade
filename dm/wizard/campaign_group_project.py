@@ -39,7 +39,6 @@ parameter_fields = {
 }
 
 def _create_duplicate(self, cr, uid, data, context):
-    print context,"---------------------------------------------------------------------"
     campaign_group_obj=pooler.get_pool(cr.dbname).get('dm.campaign.group')
     project_obj = pooler.get_pool(cr.dbname).get('project.project')
     campaign = campaign_group_obj.browse(cr, uid, data['id'])

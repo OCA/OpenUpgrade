@@ -45,7 +45,7 @@ def _project_get(self, cr, uid, context={}):
     
 class users(osv.osv):
     _inherit = 'res.users'
-    
+
     _columns = {
           'user_id' : fields.many2one('project.project', 'portal', ondelete='cascade'),
           'context_project_id': fields.selection(_project_get, 'Project',size=128),
@@ -67,10 +67,10 @@ class project_project(osv.osv):
         return {}
     
     _columns = {
-                "section_bug_id": fields.many2one('crm.case.section','Bug Section'),
-                "section_feature_id": fields.many2one('crm.case.section','Feature Section'),
-                "section_support_id": fields.many2one('crm.case.section','Support Section'),
-                "section_annouce_id": fields.many2one('crm.case.section','Announce Section'),
+                'section_bug_id': fields.many2one('crm.case.section','Bug Section'),
+                'section_feature_id': fields.many2one('crm.case.section','Feature Section'),
+                'section_support_id': fields.many2one('crm.case.section','Support Section'),
+                'section_annouce_id': fields.many2one('crm.case.section','Announce Section'),
                 'tasks': fields.function(_get_details , type='float', method=True, store=True, string='Tasks', multi='tasks'),
                 'bugs' : fields.function(_get_details, type='float', method=True, store=True, string='Bugs', multi='tasks'), 
                 'features' : fields.function(_get_details, type='float', method=True, store=True, string='Features',multi='tasks'),
@@ -79,8 +79,14 @@ class project_project(osv.osv):
                 'announce_ids' : fields.one2many('crm.case', 'case_id', 'Announces'),
                 'member_ids': fields.one2many('res.users', 'user_id', 'Project Members', help="Project's member. Not used in any computation, just for information purpose."),                
     }
-    
 project_project()
+
+class Wiki(osv.osv):
+    _inherit="wiki.wiki"
+    _columns={
+        'project_id' : fields.many2one('project.project', 'Project')      
+        }
+Wiki()
 
 class crm_case(osv.osv):
     _inherit = 'crm.case'
@@ -89,6 +95,25 @@ class crm_case(osv.osv):
                 'bug_ids' : fields.one2many('crm.case', 'case_id', 'Latest Bugs'),
                 'section_id' : fields.many2one('crm.case.section', 'Section', required=False)
                 }
+    
+    def search(self, cr, uid, args, offset=0, limit=None, order=None,
+            context=None, count=False):
+        if context is None:
+            context = {}
+        if 'section' in context and context['section']=='Bug Tracking':
+            cr.execute('select c.id from crm_case c left join project_project p on p.id=c.project_id where c.section_id=p.section_bug_id')
+            return map(lambda x: x[0], cr.fetchall())
+        elif 'section' in context and context['section']=='Feature':
+            cr.execute('select c.id from crm_case c left join project_project p on p.id=c.project_id where c.section_id=p.section_feature_id')
+            return map(lambda x: x[0], cr.fetchall())
+        elif 'section' in context and context['section']=='Support':
+            cr.execute('select c.id from crm_case c left join project_project p on p.id=c.project_id where c.section_id=p.section_support_id')
+            return map(lambda x: x[0], cr.fetchall())
+        elif 'section' in context and context['section']=='Announce':
+            cr.execute('select c.id from crm_case c left join project_project p on p.id=c.project_id where c.section_id=p.section_annouce_id')
+            return map(lambda x: x[0], cr.fetchall())
+        return super(crm_case, self).search(cr, uid, args, offset, limit,
+                order, context=context, count=count) 
     
     def create(self, cr, uid, values, *args, **kwargs):
         case_id = super(crm_case, self).create(cr, uid, values, *args, **kwargs)
@@ -158,15 +183,10 @@ class report_project_working_hours(osv.osv):
         'name': fields.date('Day', readonly=True),
         'user_id':fields.many2one('res.users', 'User', readonly=True),
         'hours': fields.float('Timesheet Hours'),
-        'analytic_id' : fields.many2one('account.analytic.account', 'Analytic Account')
+        'analytic_id' : fields.many2one('account.analytic.account', 'Analytic Account'),
+        'description' : fields.text('Description'),
+        'amount' : fields.float('Amount', required=True),
     }
-    
-    def search(self, cr, user, args, offset=0, limit=None, order=None,
-            context={}, count=False):
-        print "ARGS", args
-        print "Context", context
-        return super(report_project_working_hours, self).search(cr, user, args, offset=0, limit=None, order=None,
-                                                        context=context, count=False)
     
     def init(self, cr):
         cr.execute("""
@@ -176,59 +196,84 @@ class report_project_working_hours(osv.osv):
                     to_char(c.date, 'YYYY-MM-01') as name,
                     c.user_id as user_id,
                     c.unit_amount as hours,
-                    c.account_id as analytic_id
+                    c.amount as amount,
+                    c.account_id as analytic_id,
+                    c.name as description
                 from
                     account_analytic_line c
                 where 
-                    c.account_id in (select category_id from project_project)
-                group by c.user_id, c.date, c.unit_amount, c.account_id
-            )""")
+                    c.account_id in (select category_id from project_project where id = '2')
+                group by c.user_id, c.date, c.unit_amount, c.account_id, c.amount, c.name
+           )""")
 report_project_working_hours()
 
-#class report_crm_case_bugs_user(osv.osv):
-#    _name = "report.crm.case.bugs.user"
-#    _description = "Bugs by User"
-#    _auto = False
-#    _rec_name = 'user_id'
-#    _columns = {
-#        'nbr': fields.integer('# of Cases', readonly=True),
-#        'user_id': fields.many2one('res.users', 'User', size=16, readonly=True),
-#    }
-#    def init(self, cr):
-#        cr.execute("""
-#            create or replace view report_crm_case_bugs_user as (
-#                select
-#                    min(c.id) as id,
-#                    c.user_id,
-#                    count(*) as nbr
-#                from
-#                    crm_case c left join project_project p on p.id = c.project_id
-#                where c.section_id = p.section_bug_id
-#                group by c.user_id, c.name
-#            )""")
-#report_crm_case_bugs_user()
-#
-#class report_crm_case_features_user(osv.osv):
-#    _name = "report.crm.case.features.user"
-#    _description = "Features by User"
-#    _auto = False
-#    _rec_name = 'user_id'
-#    _columns = {
-#        'nbr': fields.integer('# of Cases', readonly=True),
-#        'user_id': fields.many2one('res.users', 'User', size=16, readonly=True),
-#    }
-#    def init(self, cr):
-#        cr.execute("""
-#            create or replace view report_crm_case_features_user as (
-#                select
-#                    min(c.id) as id,
-#                    c.user_id,
-#                    count(*) as nbr
-#                from
-#                    crm_case c left join project_project p on p.id = c.project_id
-#                where c.section_id = p.section_feature_id
-#                group by c.user_id, c.name
-#            )""")
-#report_crm_case_features_user()
+class report_crm_case_features_user(osv.osv):
+    _name = "report.crm.case.features.user"
+    _description = "Features by User"
+    _auto = False
+    _rec_name = 'user_id'
+    _columns = {
+        'nbr': fields.integer('# of Cases', readonly=True),
+        'user_id': fields.many2one('res.users', 'User', size=16, readonly=True),
+    }
+    def init(self, cr):
+        cr.execute("""
+            create or replace view report_crm_case_features_user as (
+                select
+                    min(c.id) as id,
+                    c.user_id,
+                    count(*) as nbr
+                from
+                    crm_case c left join project_project p on p.id = c.project_id
+                where c.section_id = p.section_feature_id
+                group by c.user_id, c.name
+            )""")
+report_crm_case_features_user()
+
+class report_crm_case_support_user(osv.osv):
+    _name = "report.crm.case.support.user"
+    _description = "Support by User"
+    _auto = False
+    _rec_name = 'user_id'
+    _columns = {
+        'nbr': fields.integer('# of Cases', readonly=True),
+        'user_id': fields.many2one('res.users', 'User', size=16, readonly=True),
+    }
+    def init(self, cr):
+        cr.execute("""
+            create or replace view report_crm_case_support_user as (
+                select
+                    min(c.id) as id,
+                    c.user_id,
+                    count(*) as nbr
+                from
+                    crm_case c left join project_project p on p.id = c.project_id
+                where c.section_id = p.section_support_id
+                group by c.user_id, c.name
+            )""")
+report_crm_case_support_user()
+
+class report_crm_case_announce_user(osv.osv):
+    _name = "report.crm.case.announce.user"
+    _description = "Announces by User"
+    _auto = False
+    _rec_name = 'user_id'
+    _columns = {
+        'nbr': fields.integer('# of Cases', readonly=True),
+        'user_id': fields.many2one('res.users', 'User', size=16, readonly=True),
+    }
+    def init(self, cr):
+        cr.execute("""
+            create or replace view report_crm_case_announce_user as (
+                select
+                    min(c.id) as id,
+                    c.user_id,
+                    count(*) as nbr
+                from
+                    crm_case c left join project_project p on p.id = c.project_id
+                where c.section_id = p.section_annouce_id
+                group by c.user_id, c.name
+            )""")
+report_crm_case_announce_user()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

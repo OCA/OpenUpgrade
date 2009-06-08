@@ -97,6 +97,7 @@ class dm_workitem(osv.osv):
         'source' : fields.selection(_SOURCES, 'Source', required=True),
         'error_msg' : fields.text('System Message'),
         'is_global': fields.boolean('Global Workitem'),
+        'is_preview': fields.boolean('Document Preview Workitem'),
         'tr_from_id' : fields.many2one('dm.offer.step.transition', 'Source Transition', select="1", ondelete="cascade"),
         'sale_order_id' : fields.many2one('sale.order','Sale Order'),
         'mail_service_id' : fields.many2one('dm.mail_service','Mail Service'),
@@ -106,6 +107,7 @@ class dm_workitem(osv.osv):
         'source': lambda *a: 'address_id',
         'state': lambda *a: 'pending',
         'is_global': lambda *a: False,
+        'is_preview': lambda *a: False,
         'action_time' : lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
 
@@ -113,7 +115,7 @@ class dm_workitem(osv.osv):
         if self.search(cr,uid,[('sale_order_id','=',sale_order_id)]):
             raise osv.except_osv("Error!","You cannot create more than 1 workitem for the same sale order !")
         else :
-            return sale_order_id
+            return {'value':{'sale_order_id':sale_order_id}}
 
     def run(self, cr, uid, wi, context={}):
         print "Calling run"
@@ -138,15 +140,23 @@ class dm_workitem(osv.osv):
                 print "Incoming Transition : ",tr.condition_id.name
                 print "Origin Transition : ",wi.tr_from_id.id
                 print "Incoming Action Condition : ",tr.condition_id.in_act_cond
-                """ Evaluate condition code """
-                exec tr.condition_id.in_act_cond.replace('\r','') in eval_context,val
+
+                """ Evaluate condition code (for non preview worlitems only)"""
+                if wi.is_preview:
+                    val['result'] = True
+#                    val['action'] = True
+                else:
+                    exec tr.condition_id.in_act_cond.replace('\r','') in eval_context,val
+
                 print "Val in get purchase_trig_id: ",val.get('purchase_trig_id',False)
                 print "Val in get step_to_check: ",val.get('step_ids',False)
                 print "Val in get wi_ids : ",val.get('wi_ids',False)
                 print "Tr Condition return code : ",val.get('result',False)
+#                print "Tr Condition return code : ",val.get('action',False)
 
                 if not val.get('result',False):
-                    """ If result of server action is False """
+#                if not val.get('action',False):
+                    """ If action returned by the trigger code is False """
                     res = False
                     act_step = tr.step_from_id.name or False
                     break
@@ -154,8 +164,9 @@ class dm_workitem(osv.osv):
             if res:
                 """ Execute server action """
                 res = server_obj.run(cr, uid, [wi.step_id.action_id.id], context)
-                if res=='document' :
-                    self.write(cr, uid, [wi.id], {'state': 'cancel','error_msg':'Document is not assigned-create 1 document 1st'})
+                """ Check returned value and set workitem log """
+                if res=='no_document' :
+                    self.write(cr, uid, [wi.id], {'state': 'cancel','error_msg':'No production document is assigned to this offer step'})
                     done = False
                 else:
                     self.write(cr, uid, [wi.id], {'state': 'done','error_msg':""})
@@ -171,10 +182,10 @@ class dm_workitem(osv.osv):
             self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'Exception: %s\n%s' % (str(exception), tb_s)})
             netsvc.Logger().notifyChannel('dm action', netsvc.LOG_ERROR, 'Exception: %s\n%s' % (str(exception), tb_s))
 
-        if done:
+        if done and not wi.is_preview:
             """ Check if it has to create next auto workitems """
             for tr in wi.step_id.outgoing_transition_ids:
-                if tr.condition_id.gen_next_wi:
+                if tr.condition_id and tr.condition_id.gen_next_wi:
 
                     """ Compute action time """
                     wi_action_time = datetime.datetime.strptime(wi.action_time, '%Y-%m-%d  %H:%M:%S')
@@ -217,6 +228,7 @@ class dm_workitem(osv.osv):
                 # To improve : log no action for mail service
                 return False
             res = server_obj.run(cr, uid, [camp_doc.mail_service_id.action_id.id], context)
+            print "Campaign Doc action :",res
             camp_res = self.pool.get('dm.campaign.document').read(cr, uid, [camp_doc.id], ['state'])[0]
             print "Camp doc State : ", camp_res['state']
             """ If no error occured during the document generation set state to done """
@@ -259,7 +271,7 @@ class dm_workitem(osv.osv):
                 """ Run campaign document action """
                 # To improve : Get result from mail_service_run
                 self.mail_service_run(cr, uid, camp_doc, context=context)
-                
+
             self.is_running = False
             return True
         return False

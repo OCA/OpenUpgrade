@@ -95,7 +95,7 @@ def generate_reports(cr,uid,obj,report_type,context):
         r_type = 'html'
 
     for address_id in address_ids:
-        
+
         if obj.segment_id:
             camp_id = obj.segment_id.proposition_id.camp_id.id
         type_id = pool.get('dm.campaign.document.type').search(cr,uid,[('code','=',r_type)])
@@ -138,8 +138,7 @@ def generate_reports(cr,uid,obj,report_type,context):
         document_id = dm_doc_obj.search(cr,uid,[('step_id','=',obj.step_id.id),('category_id','=','Production')])
         print "Doc id : ",document_id
         if not document_id : 
-            # TO Improve : if no docs then log in wi error
-            return "document"
+            return "no_document"
 
         vals={
             'segment_id': obj.segment_id.id or False,
@@ -191,6 +190,8 @@ def generate_reports(cr,uid,obj,report_type,context):
                              }
             attach_id = attachment_obj.create(cr,uid,attach_vals)
             print "Attachement : ",attach_id
+
+    return True
 
 def compute_customer_plugin(cr, uid, **args):
     res  = pool.get('ir.model').browse(cr, uid, args['plugin_obj'].model_id.id)    

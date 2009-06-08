@@ -39,7 +39,7 @@ class wizard_document_report(wizard.interface):
     def execute(self, db, uid, data, state='init', context=None):
         self.dm_wiz_data = data
         return super(wizard_document_report,self).execute(db, uid, data, state, context)
-    
+
     def _print_report(self, cr, uid, data , context):
         report = pooler.get_pool(cr.dbname).get('ir.actions.report.xml').browse(cr, uid, data['form']['report'])
         self.states['print_report']['result']['report']=report.report_name
@@ -52,8 +52,10 @@ class wizard_document_report(wizard.interface):
             'address_id' : data['form']['address_id'],
             'step_id' : doc.step_id.id,
             'mail_service_id' : data['form']['mail_service_id'],
+            'is_preview' : True,
         }
         pooler.get_pool(cr.dbname).get('dm.workitem').create(cr, uid, vals)
+        print "Send doc form :",data['form']
         return {}
 
     def _get_reports(self, cr, uid, context):
@@ -63,14 +65,14 @@ class wizard_document_report(wizard.interface):
         ids=group_obj.search(cr, uid, [('document_id','=',document_id)])
         res=[(group.id, group.name) for group in group_obj.browse(cr, uid, ids)]
         res.sort(lambda x,y: cmp(x[1],y[1]))
-        return res    
-    
+        return res
+
     report_list_fields = {
         'report': {'string': 'Select Report', 'type': 'selection', 'selection':_get_reports, },
         'address_id': {'string': 'Select Customer Address', 'type': 'many2one','relation':'res.partner.address', 'selection':_get_reports, 'domain':[('partner_id.category_id','=','DTP Preview Customers')] },
         'trademark_id':{'string': 'Select Trademark', 'type': 'many2one','relation':'dm.trademark'}
         }
-    
+
     report_send_fields = {
         'mail_service_id': {'string': 'Select Mail Service', 'type': 'many2one','relation':'dm.mail_service',},
         }

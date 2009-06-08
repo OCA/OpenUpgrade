@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
@@ -19,26 +20,20 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import etl
+import tools
+from osv import osv, fields
 
-{
-    "name" : "On Demand Open Object - Subscription Control",
-    "version" : "1.1",
-    "author" : "Tiny",
-    "category" : "Tools",
-    "description": """
-This module provides reports to control your on demand subscription.
-You can not uninstall or delete it.
-""",
-    "website": "http://www.openerp.com",
-    "depends" : ["base"],
-    "init_xml" : [],
-    "update_xml" : [
-        "use_control_view.xml",
-        "module.xml",
-        "security/ir.model.access.csv",
-    ],
-    "demo_xml" : [],
-    "installable": True,
-    "active" : True,
-    "certificate": '00812981973518421629',
-}
+class gdoc_connector(osv.osv):
+    _name = 'etl.connector'
+    _inherit = 'etl.connector'
+
+    def create_instance(self, cr, uid, id , context={}, data={}):
+        val =  super(gdoc_connector, self).create_instance(cr, uid, id, context, data)
+        con = self.browse(cr, uid, id)
+        if con.type == 'gdoc':
+            val =  etl.connector.gcalendar_connector(con.uid, con.passwd, con.delay, con.name)
+        return val
+
+gdoc_connector()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
