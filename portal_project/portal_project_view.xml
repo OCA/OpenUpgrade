@@ -2,6 +2,7 @@
 <openerp>
     <data>
 
+		<menuitem parent="project.menu_main" id="menu_portal" name="Portal"/>
 <!--    	User Form-->
     	 <record id="view_portal_users_form_simple" model="ir.ui.view">
             <field name="name">res.users.portal.form1</field>
@@ -316,7 +317,7 @@
 			<field name="view_id" ref="view_crm_bugs_graph"/>
 		</record>
 
-		<menuitem name="Bugs by State" id="menu_projectss_portal" action="act_crm_bugs_state" parent="project.menu_main"/>
+<!--		<menuitem name="Bugs by State" id="menu_projectss_portal" action="act_crm_bugs_state" parent="project.menu_main"/>-->
 
 <!--		Gantt Planning-->
 		<record id="portal_project_planning_view_gantt" model="ir.ui.view">
@@ -446,7 +447,7 @@
 	        <field name="view_id" ref="project_portal_form_view"/>
 	        <field name="act_window_id" ref="view_project_project_portal"/>
 	    </record>
-	    <menuitem  id="menu_view_project_project_portal" action="view_project_project_portal" parent="project.menu_main"/>
+	    <menuitem  id="menu_view_project_project_portal" action="view_project_project_portal" parent="menu_portal"/>
 
 <!--		Bugs By User-->
 		<record model="ir.ui.view" id="view_crm_case_bugs_user">
@@ -499,7 +500,7 @@
 	            		<group colspan="2">
             				<field name="name" string="Bug Summary" colspan="2"/>
             				<field name="section_id" invisible="1" colspan="2"/>
-            				<field name="category2_id" widget="selection" colspan="2"/>
+            				<field name="category2_id" colspan="2" string="Version"/>
             			</group>
             			<newline/>
             			<field name="description" nolabel="1" colspan="2"/>
@@ -558,7 +559,7 @@
 	        <field name="act_window_id" ref="action_crm_bug_portal"/>
 	    </record>
 
-	    <menuitem  id="menu_view_portal_crm_bug_view" action="action_crm_bug_portal" parent="project.menu_main"/>
+	    <menuitem  id="menu_view_portal_crm_bug_view" action="action_crm_bug_portal" parent="menu_portal"/>
 
 	    <record model="ir.ui.view" id="view_crm_case_features_user">
             <field name="name">report.crm.case.features.user.graph</field>
@@ -634,7 +635,7 @@
 	            		<group colspan="2">
             				<field name="name" string="Feature Summary" colspan="2"/>
             				<field name="section_id" invisible="1" colspan="2"/>
-            				<field name="category2_id" widget="selection" colspan="2"/>
+            				<field name="category2_id" string="Version" colspan="2"/>
             			</group>
             			<newline/>
             			<field name="description" nolabel="1" colspan="2"/>
@@ -693,7 +694,7 @@
 	        <field name="view_id" ref="portal_crm_feature_form_view"/>
 	        <field name="act_window_id" ref="view_crm_feature_portal"/>
 	    </record>
-	    <menuitem  id="menu_view_portal_crm_feature_view" action="view_crm_feature_portal" parent="project.menu_main"/>
+	    <menuitem  id="menu_view_portal_crm_feature_view" action="view_crm_feature_portal" parent="menu_portal"/>
 
 	    <record model="ir.ui.view" id="view_crm_case_support_user">
             <field name="name">report.crm.case.support.user.graph</field>
@@ -767,7 +768,7 @@
 	            		<group colspan="2">
             				<field name="name" string="Support Summary" colspan="2"/>
             				<field name="section_id" invisible="1" colspan="2"/>
-            				<field name="category2_id" widget="selection" colspan="2"/>
+            				<field name="category2_id" string="Version" colspan="2"/>
             			</group>
             			<newline/>
             			<field name="description" nolabel="1" colspan="2"/>
@@ -826,7 +827,7 @@
 	        <field name="view_id" ref="portal_crm_support_form_view"/>
 	        <field name="act_window_id" ref="view_crm_support_portal"/>
 	    </record>
-	    <menuitem  id="menu_view_portal_crm_support_view" action="view_crm_support_portal" parent="project.menu_main"/>
+	    <menuitem  id="menu_view_portal_crm_support_view" action="view_crm_support_portal" parent="menu_portal"/>
 
 		<record model="ir.ui.view" id="view_crm_case_announce_user">
             <field name="name">report.crm.case.announce.user.graph</field>
@@ -900,7 +901,7 @@
 	            		<group colspan="2">
             				<field name="name" string="Support Summary" colspan="2"/>
             				<field name="section_id" invisible="1" colspan="2"/>
-            				<field name="category2_id" widget="selection" colspan="2"/>
+            				<field name="category2_id" string="Version" colspan="2"/>
             			</group>
             			<newline/>
             			<field name="description" nolabel="1" colspan="2"/>
