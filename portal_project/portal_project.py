@@ -65,9 +65,10 @@ class project_project(osv.osv):
     def _get_details(self, cr, uid, ids, context={}, *arg):
         return {}
     
-    def _get_hours(self, cr, uid, ids, context={}, *arg):
-        print "CON", context
-        return {}
+#    TO DO
+#    def _get_hours(self, cr, uid, ids, context={}, *arg):
+#        print "CON", context
+#        return {}
 
     _columns = {
         'section_bug_id': fields.many2one('crm.case.section', 'Bug Section'),
@@ -82,8 +83,9 @@ class project_project(osv.osv):
         'announce_ids': fields.one2many('crm.case', 'case_id', 'Announces'),
         'member_ids': fields.one2many('res.users', 'user_id', 'Project Members', help="Project's member. Not used in any computation, just for information purpose."),
         'bugs_ids':fields.one2many('report.crm.case.bugs', 'project_id', 'Bugs'),
-#        'hours_ids' : fields.one2many('report.project.working.hours', 'project_id', 'Working Hours')
-        'hours_ids' : fields.function(_get_hours, type='float', method=True, store=True, string='Hours'),
+        'hours_ids' : fields.one2many('report.project.working.hours', 'project_id', 'Working Hours'),
+#        TO DO
+#        'hours_ids' : fields.function(_get_hours, type='float', method=True, store=True, string='Hours'),
         }
 project_project()
 
