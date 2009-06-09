@@ -3,38 +3,38 @@
 
 	<!-- Transition Triggers -->
 	
-	<data>
-    <record id="dm_offer_step_transition_mail_unsubscribe" model="dm.offer.step.transition.trigger">
-         <field eval="&quot;&quot;&quot;Unsubscribe&quot;&quot;&quot;" name="name"/>
-         <field eval="&quot;&quot;&quot;unsubscribe&quot;&quot;&quot;" name="code"/>
-         <field eval="&quot;&quot;&quot;False&quot;&quot;&quot;" name="gen_next_wi"/>
-         <field eval="&quot;&quot;&quot;offer&quot;&quot;&quot;" name="type"/>
-         <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
-    </record>
-	</data>
+    <data>
+	    <record id="dm_offer_step_transition_mail_unsubscribe" model="dm.offer.step.transition.trigger">
+		 <field eval="&quot;&quot;&quot;Unsubscribe&quot;&quot;&quot;" name="name"/>
+		 <field eval="&quot;&quot;&quot;unsubscribe&quot;&quot;&quot;" name="code"/>
+		 <field eval="&quot;&quot;&quot;False&quot;&quot;&quot;" name="gen_next_wi"/>
+		 <field eval="&quot;&quot;&quot;offer&quot;&quot;&quot;" name="type"/>
+		 <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
+	    </record>
+    </data>
 
-	<!-- OFFER STEP ACTION -->
+    <!-- OFFER STEP ACTION -->
     <data noupdate="1">
-        <record id="ir_actions_server_html_doc_generate0" model="ir.actions.server">
+	<record id="ir_actions_server_html_doc_generate0" model="ir.actions.server">
             <field eval="5" name="sequence"/>
             <field eval="&quot;&quot;&quot;code&quot;&quot;&quot;" name="state"/>
             <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
             <field name="model_id" ref="dm.model_dm_workitem"/>
             <field eval="[(6,0,[])]" name="child_ids"/>
             <field eval="1" name="dm_action"/>
-            <field eval="&quot;&quot;&quot;from dm import report_design \nreport_design.generate_reports(cr,uid,obj,'html2html',context)&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;from dm import report_design \naction = report_design.generate_reports(cr,uid,obj,'html2html',context)&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
             <field eval="&quot;&quot;&quot;Generate HTML Document&quot;&quot;&quot;" name="name"/>
         </record>
     </data>
-    <data noupdate="0">
+    <data noupdate="1">
         <record id="ir_actions_server_email_queue_generate" model="ir.actions.server">
             <field eval="5" name="sequence"/>
             <field eval="&quot;&quot;&quot;code&quot;&quot;&quot;" name="state"/>
             <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
             <field name="model_id" ref="dm.model_dm_campaign_document"/>
             <field eval="[(6,0,[])]" name="child_ids"/>
-            <field eval="&quot;&quot;&quot;from dm_email import dm_email_document\ndm_email_document.create_email_queue(cr,uid,obj,context)&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;from dm_email import dm_email_document\naction = dm_email_document.create_email_queue(cr,uid,obj,context)&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
             <field eval="&quot;&quot;&quot;Generate Email Queue&quot;&quot;&quot;" name="name"/>
         </record>

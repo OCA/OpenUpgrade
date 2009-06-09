@@ -28,8 +28,7 @@ import os
 import base64
 import tools
 
-
-class dm_dynamic_text(osv.osv):
+class dm_dynamic_text(osv.osv): # {{{
     _name = 'dm.dynamic_text'
     _rec_name = 'content'
     _columns = {
@@ -39,10 +38,9 @@ class dm_dynamic_text(osv.osv):
         'previous_step_id' : fields.many2one('dm.offer.step','Previous Step',ondelete='cascade'),
         'ref_text_id' : fields.many2one('dm.dynamic_text', 'Reference Text'),
         }
-dm_dynamic_text()
+dm_dynamic_text() # }}}
 
-
-class dm_dtp_plugin(osv.osv):
+class dm_dtp_plugin(osv.osv): # {{{
     _name = "dm.dtp.plugin"
 
     def copy(self, cr, uid, id, default=None, context={}):
@@ -136,9 +134,9 @@ class dm_dtp_plugin(osv.osv):
         ('code_uniq', 'UNIQUE(code)', 'The code must be unique!'),
     ]
 
-dm_dtp_plugin()
+dm_dtp_plugin() # }}}
 
-class dm_plugin_argument(osv.osv):
+class dm_plugin_argument(osv.osv): # {{{
     _name = "dm.plugin.argument"
     _description = "Argument List"
     _columns = {
@@ -149,9 +147,9 @@ class dm_plugin_argument(osv.osv):
         'stored_plugin' : fields.boolean('Value from plugin'),
         'custome_plugin_id' : fields.many2one('dm.dtp.plugin','Plugin For Value'),
         }
-dm_plugin_argument()
+dm_plugin_argument() # }}}
 
-class dm_document_template(osv.osv):
+class dm_document_template(osv.osv): # {{{
     _name = "dm.document.template"
     _columns = {
         'name' : fields.char('Template Name', size=128),
@@ -159,9 +157,9 @@ class dm_document_template(osv.osv):
         'note' : fields.text('Description')
         }
     
-dm_document_template()
+dm_document_template() # }}}
 
-class dm_plugins_value(osv.osv):
+class dm_plugins_value(osv.osv): # {{{
     _name = "dm.plugins.value"
     _columns = {
         'address_id' : fields.many2one('res.partner.address', 'Customer Address', ondelete="cascade"),
@@ -170,9 +168,9 @@ class dm_plugins_value(osv.osv):
         'date' : fields.date('Date'),
     }
     
-dm_plugins_value()
+dm_plugins_value() # }}}
 
-class dm_offer_document_category(osv.osv):
+class dm_offer_document_category(osv.osv): # {{{
     _name = "dm.offer.document.category"
     _rec_name = "name"
     def name_get(self, cr, uid, ids, context={}):
@@ -197,9 +195,9 @@ class dm_offer_document_category(osv.osv):
         'parent_id' : fields.many2one('dm.offer.document.category', 'Parent'),
     }
 
-dm_offer_document_category()
+dm_offer_document_category() # }}}
 
-class dm_offer_document(osv.osv):
+class dm_offer_document(osv.osv): # {{{
     _name = "dm.offer.document"
     _rec_name = 'name'
 
@@ -253,17 +251,17 @@ class dm_offer_document(osv.osv):
         self.write(cr, uid, ids, {'state':'validate'})
         return True
   
-dm_offer_document()
+dm_offer_document() # }}}
 
-class dm_campaign_document_type(osv.osv):
+class dm_campaign_document_type(osv.osv): # {{{
     _name = 'dm.campaign.document.type'
     _columns = {
             'name' : fields.char('Name', size=64, required=True),
             'code' : fields.char('Code', size=64, required=True),
             }
-dm_campaign_document_type()
+dm_campaign_document_type() # }}}
 
-class dm_campaign_document(osv.osv):
+class dm_campaign_document(osv.osv): # {{{
     _name = 'dm.campaign.document'
     _columns = {
         'name' : fields.char('Name', size=64, required=True),
@@ -280,6 +278,6 @@ class dm_campaign_document(osv.osv):
         'state': lambda *a : 'pending',
         }
         
-dm_campaign_document()
+dm_campaign_document() # }}}
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

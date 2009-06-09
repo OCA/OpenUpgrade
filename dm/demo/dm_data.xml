@@ -2,7 +2,7 @@
 <openerp>
     <data noupdate="1">
     
-        <!-- Countries -->
+        <!-- Countries --> # {{{
 
         <record id="base.be" model="res.country">
             <field name="main_language" ref="base.lang_en"/>
@@ -20,8 +20,9 @@
             <field name="main_language" ref="base.lang_en"/>
             <field name="main_currency" ref="base.USD"/>
         </record>
-        
-        <!-- Partner Categories -->
+         # }}}
+
+        <!-- Partner Categories --> # {{{
 
         <record id="res_partner_category_directmarketing0" model="res.partner.category">
             <field eval="&quot;&quot;&quot;Direct Marketing&quot;&quot;&quot;" name="name"/>
@@ -82,9 +83,9 @@
         <record id="dtp_preview_customers" model="res.partner.category">
             <field name="parent_id" ref="dm.res_partner_category_directmarketing0"/>
             <field eval="&quot;&quot;&quot;DTP Preview Customers&quot;&quot;&quot;" name="name"/>
-        </record>
+        </record> # }}}
 
-        <!-- Media -->
+        <!-- Media --> # {{{
 
         <record model="dm.media" id="media_paper">
             <field name="name" eval="&quot;Paper&quot;"/>
@@ -98,10 +99,9 @@
         <record model="dm.media" id="media_phone">
             <field name="name" eval="&quot;Phone&quot;"/>
             <field name="code" eval="&quot;Phone&quot;"/>
-        </record>
+        </record> # }}}
 
-
-        <!-- Campaign Types -->
+        <!-- Campaign Types --> # {{{
 
         <record id="dm_campaign_type_loyalty" model="dm.campaign.type">
             <field name="code">loyalty</field>
@@ -122,9 +122,9 @@
         <record id="dm_campaign_type_model" model="dm.campaign.type">
             <field name="code">model</field>
             <field name="name">Model</field>
-        </record>
+        </record> # }}}
 
-        <!-- RP Project Task Types-->
+        <!-- RP Project Task Types--> # {{{
 
         <record id="project_task_type_dtp0" model="project.task.type">
             <field eval="&quot;&quot;&quot;DTP&quot;&quot;&quot;" name="name"/>
@@ -141,9 +141,9 @@
         <record id="project_task_type_items0" model="project.task.type">
             <field eval="&quot;&quot;&quot;Items Procurement&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;Direct Marketing -  Items Procurement Task&quot;&quot;&quot;" name="description"/>
-        </record>
+        </record> # }}}
 
-        <!-- Product Categories -->
+        <!-- Product Categories --> # {{{
 
         <record id="product_category_directmarketing0" model="product.category">
             <field name="property_stock_journal" ref="stock.stock_journal"/>
@@ -178,9 +178,9 @@
             <field name="property_stock_journal" ref="stock.stock_journal"/>
             <field eval="&quot;&quot;&quot;DTP&quot;&quot;&quot;" name="name"/>
             <field name="parent_id" ref="product_category_directmarketing0"/>
-        </record>
+        </record> # }}}
 
-        <!-- Offer Step Types -->
+        <!-- Offer Step Types --> # {{{
 
         <record id="dm_offer_step_type_startingmailing0" model="dm.offer.step.type">
             <field eval="&quot;&quot;&quot;SM&quot;&quot;&quot;" name="code"/>
@@ -238,9 +238,9 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
 &quot;&quot;&quot;" name="description"/>
         </record>
 
-    </data>
+    </data> # }}}
 
-    <!-- RP Projects -->
+    <!-- RP Projects --> # {{{
 
     <data noupdate="1">
         <record id="project_project_directmarketingretroplanning0" model="project.project">
@@ -269,9 +269,9 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="[(6,0,[])]" name="members"/>
             <field eval="&quot;&quot;&quot;Default Retro-Planning&quot;&quot;&quot;" name="name"/>
         </record>
-    </data>
+    </data> # }}}
 
-    <!--  RP Projects Tasks -->
+    <!-- RP Projects Tasks --> # {{{
 
     <data noupdate="1">
         <record id="project_task_dtprequest0" model="project.task">
@@ -448,9 +448,9 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="1.0" name="remaining_hours"/>
             <field eval="&quot;&quot;&quot;2009-09-10 09:00:00&quot;&quot;&quot;" name="date_start"/>
         </record>
-    </data>
+    </data> # }}}
 
-    <!-- Default Products -->
+    <!-- Default Products --> # {{{
 
     <data noupdate="1">
         <record id="product_product_defaultpapermailing0" model="product.product">
@@ -598,9 +598,9 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="product_id" ref="product_product_defaulttranslation0"/>
         </record>
         -->
-    </data>
+    </data> # }}}
 
-    <!-- Offer Document Categories -->
+    <!-- Offer Document Categories --> # {{{
 
     <data>
         <record id="dm_offer_document_category_test0" model="dm.offer.document.category">
@@ -611,18 +611,18 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
         <record id="dm_offer_document_category_production0" model="dm.offer.document.category">
             <field eval="&quot;&quot;&quot;Production&quot;&quot;&quot;" name="name"/>
         </record>
-    </data>
+    </data> # }}}
 
-    <!-- Campaign Document Types -->
+    <!-- Campaign Document Types --> # {{{
 
     <data>
         <record id="dm_campaign_document_type_pdf0" model="dm.campaign.document.type">
             <field eval="&quot;&quot;&quot;PDF&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;pdf&quot;&quot;&quot;" name="code"/>
         </record>
-    </data>
+    </data> # }}}
 
-    <!-- DMS Directories -->
+    <!-- DMS Directories --> # {{{
 
     <!-- Offers -->
 
@@ -761,9 +761,9 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="ressource_type_id" ref="dm.model_dm_campaign_document"/>
         </record>
     </data>
-    -->
+    --> # }}}
 
-    <!-- Default Shop in Customer Order -->
+    <!-- Default Shop in Customer Order --> # {{{
     
     <data noupdate="1">
         <record id="shop1" model="sale.shop">
@@ -771,15 +771,15 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field model="account.payment.term" name="payment_default_id" search="[]"/>
         </record>
         <function eval="('default',False,'shop_id', [('dm.customer.order', False)], shop1, True, False, False, False, True)" id="shop_default_set" model="ir.values" name="set"/>
-    </data>
+    </data> # }}}
 
-    <!-- Default Category in DTP Documents -->
+    <!-- Default Category in DTP Documents --> # {{{
     
     <data noupdate="1">
         <function eval="('default',False,'category_id', [('dm.offer.document', False)], dm_offer_document_category_production0, True, False, False, False, True)" id="category_default_set" model="ir.values" name="set"/>
-    </data>
+    </data> # }}}
     
-    <!-- Server Action -->
+    <!-- Server Action --> # {{{
     
     <data noupdate="0">
         <record id="ir_actions_server_pdf_doc_generate0" model="ir.actions.server">
@@ -788,7 +788,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
             <field name="model_id" ref="dm.model_dm_workitem"/>
             <field eval="[(6,0,[])]" name="child_ids"/>
-            <field eval="&quot;&quot;&quot;from dm import report_design \nreport_design.generate_reports(cr,uid,obj,'pdf',context)&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;from dm import report_design \naction = report_design.generate_reports(cr,uid,obj,'pdf',context)&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
             <field eval="&quot;&quot;&quot;Generate PDF Document&quot;&quot;&quot;" name="name"/>
         </record>
@@ -800,8 +800,9 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="server_action_id" ref="ir_actions_server_pdf_doc_generate0"/>
         </record>
     </data>
--->
-    <!-- ACCOUNT JOURNAL -->
+--> # }}}
+
+    <!-- ACCOUNT JOURNAL --> # {{{
 <!--
     <data noupdate="1">
         <record id="paypal_journal" model="account.journal">
@@ -845,9 +846,9 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="user_id" ref="base.user_root"/>
         </record>
     </data>
--->    
+-->     # }}}
 
-    <!-- PLUGINS -->
+    <!-- PLUGINS --> # {{{
 
     <data noupdate="1">
         <record id="dm_dtp_plugin_name0" model="dm.dtp.plugin">
@@ -1043,9 +1044,9 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="0" name="encode"/>
             <field eval="&quot;&quot;&quot;dynamic&quot;&quot;&quot;" name="type"/>
         </record>
-    </data>
+    </data> # }}}
 
-    <!-- TEMPLATE -->
+    <!-- TEMPLATE --> # {{{
 
     <data noupdate="1">
         <record id="dm_document_template_partner0" model="dm.document.template">
@@ -1056,9 +1057,9 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field model="dm.dtp.plugin" search="[('model_id.model','like','dm.workitem')]" name="plugin_ids"/>
             <field eval="&quot;&quot;&quot;Website&quot;&quot;&quot;" name="name"/>
         </record>
-    </data>
+    </data> # }}}
 
-    <!-- TRIGGER -->
+    <!-- TRIGGER --> # {{{
 
     <data noupdate="1">
         <record id="dm_offer_step_transition_purchase" model="dm.offer.step.transition.trigger">
@@ -1066,26 +1067,29 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;purchase&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;False&quot;&quot;&quot;" name="gen_next_wi"/>
             <field eval="&quot;&quot;&quot;offer&quot;&quot;&quot;" name="type"/>
-            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
-<!--            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="out_act_cond"/>-->
+            <field eval="&quot;&quot;&quot;action = True&quot;&quot;&quot;" name="in_act_cond"/>
+<!--            <field eval="&quot;&quot;&quot;action = True&quot;&quot;&quot;" name="out_act_cond"/>-->
         </record>
         <record id="dm_offer_step_transition_not_purchase" model="dm.offer.step.transition.trigger">
             <field eval="&quot;&quot;&quot;Not Purchase&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;notpurchase&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="gen_next_wi"/>
             <field eval="&quot;&quot;&quot;offer&quot;&quot;&quot;" name="type"/>
-            <field eval="&quot;&quot;&quot;purchase_trig_id = pool.get('dm.offer.step.transition.trigger').search(cr, uid, [('code','=','purchase')])[0]\nstep_ids = []\nfor x in wi.tr_from_id.step_from_id.outgoing_transition_ids:\n    if x.condition_id.id == purchase_trig_id:\n         step_ids.append(x.step_to_id.id)\nwi_ids = pool.get('dm.workitem').search(cr, uid, [('step_id','in',step_ids),('address_id','=',wi.address_id.id)])\nif wi_ids:\n    result = False\nelse:\n    result = True&quot;&quot;&quot;" name="in_act_cond"/>
-<!--            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="out_act_cond"/>-->
+            <field eval="&quot;&quot;&quot;purchase_trig_id = pool.get('dm.offer.step.transition.trigger').search(cr, uid, [('code','=','purchase')])[0]\nstep_ids = []\nfor x in wi.tr_from_id.step_from_id.outgoing_transition_ids:\n    if x.condition_id.id == purchase_trig_id:\n         step_ids.append(x.step_to_id.id)\nwi_ids = pool.get('dm.workitem').search(cr, uid, [('step_id','in',step_ids),('address_id','=',wi.address_id.id)])\nif wi_ids:\n    action = False\nelse:\n    action = True&quot;&quot;&quot;" name="in_act_cond"/>
+<!--            <field eval="&quot;&quot;&quot;action = True&quot;&quot;&quot;" name="out_act_cond"/>-->
         </record>
         <record id="dm_offer_step_transition_automatic" model="dm.offer.step.transition.trigger">
             <field eval="&quot;&quot;&quot;Automatic&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;automatic&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="gen_next_wi"/>
             <field eval="&quot;&quot;&quot;offer&quot;&quot;&quot;" name="type"/>
-            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
-<!--            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="out_act_cond"/>-->
+            <field eval="&quot;&quot;&quot;action = True&quot;&quot;&quot;" name="in_act_cond"/>
+<!--            <field eval="&quot;&quot;&quot;action = True&quot;&quot;&quot;" name="out_act_cond"/>-->
         </record>
-    </data>
+    </data> # }}}
+
+    <!-- Cron --> # {{{
+
     <data noupdate="1">
         <record model="ir.cron" id="ir_cron_campaign_proposition">
             <field name="name">Check  Workitem</field>
@@ -1097,7 +1101,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="function" eval="'check_all'"/>
             <field name="args" eval="'()'"/>
         </record>
-    </data>
+    </data> # }}}
 
 <!--
     <data>
@@ -1114,7 +1118,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
     </data>
 -->
 
-    <!-- Workitem Source -->
+    <!-- Workitem Source --> # {{{
 <!--
     <data>
         <record model="dm.workitem.source" id="wi_source_address">
@@ -1122,9 +1126,9 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="code" eval="&quot;address_id&quot;"/>
         </record>
     </data>
--->
+--> # }}}
 
-    <!-- Mail Service Type -->
+    <!-- Mail Service Type --> # {{{
     <data>
         <record model="dm.mail_service.type" id="dm_mail_service_type_dummy">
             <field name="name" eval="&quot;Dummy&quot;"/>
@@ -1135,5 +1139,6 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
     <!-- Default Type in Mail Service -->
     <data noupdate="1">
         <function eval="('default',False,'type_id', [('dm.mail_service', False)], dm_mail_service_type_dummy, True, False, False, False, True)" id="type_dummy_default_set" model="ir.values" name="set"/>
-    </data>
+    </data> # }}}
+
 </openerp>

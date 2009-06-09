@@ -449,7 +449,7 @@ class dm_campaign(osv.osv):#{{{
     def state_close_set(self, cr, uid, ids, *args):
         for camp in self.browse(cr,uid,ids):
             if (camp.date > time.strftime('%Y-%m-%d')):
-                raise osv.except_osv("Error!!","Campaign cannot be closed before end date!!!")
+                raise osv.except_osv("Error","Campaign cannot be closed before end date")
         self.write(cr, uid, ids, {'state':'close'})
         return True
 
@@ -473,15 +473,15 @@ class dm_campaign(osv.osv):#{{{
     def state_open_set(self, cr, uid, ids, *args):
         camp = self.browse(cr,uid,ids)[0]
         if not camp.date_start or not camp.dealer_id or not camp.trademark_id or not camp.lang_id or not camp.currency_id:
-            raise osv.except_osv("Error!!","Informations are missing. Check Drop Date, Dealer, Trademark, Language and Currency")
+            raise osv.except_osv("Error","Informations are missing. Check Drop Date, Dealer, Trademark, Language and Currency")
 
         if ((camp.manufacturing_state != 'done') or (camp.dtp_state != 'done') or (camp.customer_file_state != 'done') or (camp.items_state != 'done')):
             raise osv.except_osv(
-                _('Could not open this Campaign !'),
+                _('Could not open this Campaign'),
                 _('You must first close all states related to this campaign.'))
 
         if (camp.date_start > time.strftime('%Y-%m-%d')):
-            raise osv.except_osv("Error!!","Campaign cannot be opened before drop date!!!")
+            raise osv.except_osv("Error!!","Campaign cannot be opened before drop date")
 
         """ Create Flow Start Workitems """
         print "Starting Campaign"
@@ -518,7 +518,7 @@ class dm_campaign(osv.osv):#{{{
             if (id.state == 'draft') or (id.state == 'pending'):
                 self.write(cr, uid, ids, {'manufacturing_state':'inprogress'})
             else:
-                raise osv.except_osv("Error!!","You cannot be set back to 'In Progress' once the campaign is opened!!!")
+                raise osv.except_osv("Error","This state cannot be set back to 'In Progress' once the campaign is opened")
         return True
 
     def dtp_state_inprogress_set(self, cr, uid, ids, *args):
@@ -526,7 +526,7 @@ class dm_campaign(osv.osv):#{{{
             if (id.state == 'draft') or (id.state == 'pending'):
                 self.write(cr, uid, ids, {'dtp_state':'inprogress'})
             else:
-                raise osv.except_osv("Error!!","You cannot be set back to 'In Progress' once the campaign is opened!!!")
+                raise osv.except_osv("Error","This state cannot be set back to 'In Progress' once the campaign is opened")
         return True
  
     def customer_file_state_inprogress_set(self, cr, uid, ids, *args):
@@ -534,7 +534,7 @@ class dm_campaign(osv.osv):#{{{
             if (id.state == 'draft') or (id.state == 'pending'):
                 self.write(cr, uid, ids, {'customer_file_state':'inprogress'})
             else:
-                raise osv.except_osv("Error!!","You cannot be set back to 'In Progress' once the campaign is opened!!!")
+                raise osv.except_osv("Error","This state cannot be set back to 'In Progress' once the campaign is opened")
         return True       
     
     def items_state_inprogress_set(self, cr, uid, ids, *args):
@@ -542,7 +542,7 @@ class dm_campaign(osv.osv):#{{{
             if (id.state == 'draft') or (id.state == 'pending'):
                 self.write(cr, uid, ids, {'items_state':'inprogress'})
             else:
-                raise osv.except_osv("Error!!","You cannot be set back to 'In Progress' once the campaign is opened!!!")
+                raise osv.except_osv("Error!!","This state cannot be set back to 'In Progress' once the campaign is opened")
         return True 
     
     def manufacturing_state_done_set(self, cr, uid, ids, *args):
@@ -564,7 +564,7 @@ class dm_campaign(osv.osv):#{{{
     def write(self, cr, uid, ids, vals, context=None):
         camp = self.pool.get('dm.campaign').browse(cr,uid,ids)[0]
         if not self.check_forbidden_country(cr, uid, camp.offer_id.id,camp.country_id.id):
-            raise osv.except_osv("Error!!","You cannot use this offer in this country")        
+            raise osv.except_osv("Error","You cannot use this offer in this country")        
 
         # In campaign, if no forwarding_charge is given, it gets the 'forwarding_charge' from offer
 #        if not camp.forwarding_charge:
@@ -627,7 +627,7 @@ class dm_campaign(osv.osv):#{{{
         id_camp = super(dm_campaign,self).create(cr,uid,vals,context)
         data_cam = self.browse(cr, uid, id_camp)
         if not self.check_forbidden_country(cr, uid, data_cam.offer_id.id,data_cam.country_id.id):
-            raise osv.except_osv("Error!!","You cannot use this offer in this country")        
+            raise osv.except_osv("Error","You cannot use this offer in this country")        
         ''' create campaign mail service '''
 
 #        mail_service_id = for each step in the offer the system should :
@@ -1090,6 +1090,7 @@ class dm_campaign_proposition_segment(osv.osv):#{{{
             result[segment.id]=segment.quantity_delivered - segment.quantity_usable
         return result
 
+    """
     def _segment_code(self, cr, uid, ids, name, args, context={}):
         result ={}
         for id in ids:
@@ -1116,6 +1117,25 @@ class dm_campaign_proposition_segment(osv.osv):#{{{
             else :
                 result[seg.id]=seg.type_src+'%d'%id
         return result
+    """
+
+    def _segment_code(self, cr, uid, ids, name, args, context={}):
+        result ={}
+        for id in ids:
+            seg = self.browse(cr,uid,[id])[0]
+            if seg.customers_list_id:
+                segment_list = self.search(cr,uid,[('customers_list_id','=',seg.customers_list_id.id)])
+                i = 1 
+                for s in segment_list:
+                    country_code = seg.customers_list_id.country_id.code or ''
+                    cust_list_code =  seg.customers_list_id.code
+                    seq = '%%0%sd' % 2 % i
+                    code1='-'.join([country_code[:3], cust_list_code[:3], seq[:4]])
+                    result[s]=code1
+                    i +=1
+            else :
+                result[seg.id]=seg.type_src+'%d'%id
+        return result
 
     def onchange_list(self, cr, uid, ids, customers_list, start_census, end_census):
         if customers_list:
@@ -1130,6 +1150,7 @@ class dm_campaign_proposition_segment(osv.osv):#{{{
     _columns = {
         'code1' : fields.function(_segment_code, string='Code', type="char", size=64, method=True, readonly=True),
         'campaign_id' : fields.related('proposition_id', 'camp_id', type='many2one', relation='dm.campaign', string='Campaign'),
+        'country_id' : fields.many2one('res.country','Country'),
         'proposition_id' : fields.many2one('dm.campaign.proposition','Proposition', ondelete='cascade'),
         'type_src' : fields.selection([('internal','Internal'),('external','External')], 'Type'),
         'customers_list_id': fields.many2one('dm.customers_list','Customers List'),
@@ -1243,7 +1264,7 @@ class dm_campaign_purchase_line(osv.osv):#{{{
 
     def default_get(self, cr, uid, fields, context=None):
         if context.has_key('product_category'):
-            raise osv.except_osv('Warning', "Purchase order generation is not yet implemented !!!")
+            raise osv.except_osv('Warning', "Purchase order generation is not yet implemented")
         return super(dm_campaign_purchase_line, self).default_get(cr, uid, fields, context)
 
     def _get_uom_id(self, cr, uid, *args):
@@ -1259,7 +1280,7 @@ class dm_campaign_purchase_line(osv.osv):#{{{
             if pline.state == 'pending':
                 """if in a group, obj = 1st campaign of the group, if not it's the campaing"""
                 if not (pline.campaign_group_id or pline.campaign_id):
-                    raise  osv.except_osv('Warning', "There's no campaign or campaign group defined for this purchase line .")
+                    raise  osv.except_osv('Warning', "There's no campaign or campaign group defined for this purchase line")
 
                 if pline.campaign_group_id:
                     if not pline.campaign_group_id.campaign_ids:
@@ -1325,11 +1346,11 @@ class dm_campaign_purchase_line(osv.osv):#{{{
 
                             address_id = self.pool.get('res.partner').address_get(cr, uid, [partner.id], ['default'])['default']
                             if not address_id:
-                                raise osv.except_osv('Warning', "There's no default address defined for this partner : %s" % (partner.name,) )
+                                raise osv.except_osv('Warning', "There is no default address defined for this partner : %s" % (partner.name,) )
                             delivery_address = address_id
                             pricelist_id = partner.property_product_pricelist_purchase.id
                             if not pricelist_id:
-                                raise osv.except_osv('Warning', "There's no purchase pricelist defined for this partner : %s" % (partner.name,) )
+                                raise osv.except_osv('Warning', "There is no purchase pricelist defined for this partner : %s" % (partner.name,) )
                             price = self.pool.get('product.pricelist').price_get(cr, uid, [pricelist_id], pline.product_id.id, pline.quantity, False, {'uom': pline.uom_id.id})[pricelist_id]
                             newdate = DateTime.strptime(pline.date_planned, '%Y-%m-%d %H:%M:%S') - DateTime.RelativeDateTime(days=pline.product_id.product_tmpl_id.seller_delay or 0.0)
 
@@ -1451,11 +1472,11 @@ class dm_campaign_purchase_line(osv.osv):#{{{
 
                         address_id = self.pool.get('res.partner').address_get(cr, uid, [supplier.id], ['default'])['default']
                         if not address_id:
-                            raise osv.except_osv('Warning', "There's no default address defined for this partner : %s" % (supplier.name,) )
+                            raise osv.except_osv('Warning', "There is no default address defined for this partner : %s" % (supplier.name,) )
                         delivery_address = address_id
                         pricelist_id = supplier.property_product_pricelist_purchase.id
                         if not pricelist_id:
-                            raise osv.except_osv('Warning', "There's no purchase pricelist defined for this partner : %s" % (supplier.name,) )
+                            raise osv.except_osv('Warning', "There is no purchase pricelist defined for this partner : %s" % (supplier.name,) )
                         price = self.pool.get('product.pricelist').price_get(cr, uid, [pricelist_id], pline.product_id.id, pline.quantity, False, {'uom': pline.uom_id.id})[pricelist_id]
                         newdate = DateTime.strptime(pline.date_planned, '%Y-%m-%d %H:%M:%S') - DateTime.RelativeDateTime(days=pline.product_id.product_tmpl_id.seller_delay or 0.0)
 
