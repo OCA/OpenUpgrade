@@ -290,7 +290,7 @@
             <field name="model">report.crm.case.bugs</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Bugs by User">
+                <tree string="Bugs by State">
                     <field name="state"/>
                     <field name="nbr" />
                 </tree>
@@ -301,7 +301,7 @@
             <field name="model">report.crm.case.bugs</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Bugs by User">
+                <form string="Bugs by State">
                     <field name="state"/>
                     <field name="nbr"/>
                     <field name="project_id"/>
@@ -315,13 +315,15 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">graph,tree,form</field>
 			<field name="view_id" ref="view_crm_bugs_graph"/>
+			<field name="domain">[('project_id','=',active_id)]</field>
 		</record>
 
 <!--		<menuitem name="Bugs by State" id="menu_projectss_portal" action="act_crm_bugs_state" parent="project.menu_main"/>-->
 
 <!--		Gantt Planning-->
-		<record id="portal_project_planning_view_gantt" model="ir.ui.view">
-            <field name="name">report.account.analytic.planning.gantt</field>
+        
+        <record id="view_portal_account_analytic_planning_gantt" model="ir.ui.view">
+            <field name="name">Portal Analytic Planning - Gantt</field>
             <field name="model">report_account_analytic.planning</field>
             <field name="type">gantt</field>
             <field name="arch" type="xml">
@@ -333,14 +335,13 @@
 	            </gantt>
             </field>
         </record>
-
-        <record id="act_project_planning_portal_form" model="ir.actions.act_window">
-            <field name="name">Gantt Planning</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">report_account_analytic.planning</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,gantt,form</field>
-        </record>
+        
+        <record model="ir.actions.act_window" id="act_portal_account_analytic_planning">
+			<field name="res_model">report_account_analytic.planning</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,gantt</field>
+			<field name="view_id" ref="report_analytic_planning.account_analytic_planning_view_tree"/>
+		</record>
 
 <!--		Event Configuration-->
         <record model="ir.actions.act_window" id="portal_project_event_configuration_action">
@@ -397,7 +398,7 @@
 			            <newline/>
 			            <group colspan="2" col="3">
 		                <button icon="terp-partner" name="%(action_portal_project_wiki)d" string="Project Wiki" type="action"/>
-		                <button icon="terp-partner" name="%(act_project_planning_portal_form)d" string="Gantt Planning" type="action"/>
+		                <button icon="terp-partner" name="%(act_portal_account_analytic_planning)d" string="Gantt Planning" type="action"/>
 						<button icon="terp-partner" name="%(act_hr_timesheet_sheet_portal_form)d" string="Timesheets" type="action"/>
 						</group>
 						<newline/>
@@ -407,9 +408,9 @@
 	                    </group>
 	                </group>
 	                <newline/>
-                 	<action colspan="2" name="%(act_hr_timesheet_line_portal_form)d" string="Working hours per Day"/>
+                 	<action colspan="2" name="%(act_hr_timesheet_line_portal_form)d" string="Working hours per Day" context="{'id':active_id}"/>
                  	<newline/>
-                 	<action colspan="2" name="%(act_crm_bugs_state)d" string="Bugs by State" />
+                 	<field colspan="2" name="bugs_ids" string="Bugs by State" nolabel="1" widget="one2many_list" mode="graph,tree,form" readonly="1"/>
 	                </child2>
 	                </hpaned>
                 </form>

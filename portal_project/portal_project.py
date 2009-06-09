@@ -64,12 +64,16 @@ class project_project(osv.osv):
 
     def _get_details(self, cr, uid, ids, context={}, *arg):
         return {}
+    
+    def _get_hours(self, cr, uid, ids, context={}, *arg):
+        print "CON", context
+        return {}
 
     _columns = {
-        'section_bug_id': fields.many2one('crm.case.section','Bug Section'),
-        'section_feature_id': fields.many2one('crm.case.section','Feature Section'),
-        'section_support_id': fields.many2one('crm.case.section','Support Section'),
-        'section_annouce_id': fields.many2one('crm.case.section','Announce Section'),
+        'section_bug_id': fields.many2one('crm.case.section', 'Bug Section'),
+        'section_feature_id': fields.many2one('crm.case.section', 'Feature Section'),
+        'section_support_id': fields.many2one('crm.case.section', 'Support Section'),
+        'section_annouce_id': fields.many2one('crm.case.section', 'Announce Section'),
         'tasks': fields.function(_get_details , type='float', method=True, store=True, string='Tasks', multi='tasks'),
         'bugs': fields.function(_get_details, type='float', method=True, store=True, string='Bugs', multi='tasks'),
         'features': fields.function(_get_details, type='float', method=True, store=True, string='Features',multi='tasks'),
@@ -77,6 +81,9 @@ class project_project(osv.osv):
         'doc': fields.function(_get_details, type='float', method=True, store=True,multi='tasks', string='Documents'),
         'announce_ids': fields.one2many('crm.case', 'case_id', 'Announces'),
         'member_ids': fields.one2many('res.users', 'user_id', 'Project Members', help="Project's member. Not used in any computation, just for information purpose."),
+        'bugs_ids':fields.one2many('report.crm.case.bugs', 'project_id', 'Bugs'),
+#        'hours_ids' : fields.one2many('report.project.working.hours', 'project_id', 'Working Hours')
+        'hours_ids' : fields.function(_get_hours, type='float', method=True, store=True, string='Hours'),
         }
 project_project()
 
@@ -93,7 +100,7 @@ class crm_case(osv.osv):
         'project_id' : fields.many2one('project.project', 'Project', size=64),
         'bug_ids' : fields.one2many('crm.case', 'case_id', 'Latest Bugs'),
         'section_id' : fields.many2one('crm.case.section', 'Section', required=False)
-            }
+    }
 
     def search(self, cr, uid, args, offset=0, limit=None, order=None,
             context=None, count=False):
@@ -144,6 +151,56 @@ class crm_case(osv.osv):
 
 crm_case()
 
+class portal_account_analytic_planning(osv.osv):
+    _inherit = 'report_account_analytic.planning'
+    
+    def search(self, cr, uid, args, offset=0, limit=None, order=None,
+            context=None, count=False):
+        if context is None:
+            context = {}
+        if 'active_id' in context and context['active_id']:
+            cr.execute("""select rp.id from report_account_analytic_planning rp \
+                          where id in (select planning_id from project_task where project_id in (select id from project_project where id = %s))""" %(context['active_id']))
+            return map(lambda x: x[0], cr.fetchall())
+        return super(portal_account_analytic_planning, self).search(cr, uid, args, offset, limit,
+                order, context=context, count=count)
+    
+portal_account_analytic_planning()
+
+class report_project_working_hours(osv.osv):
+    _name = "report.project.working.hours"
+    _description = "Working hours of the day"
+    _auto = False
+    _columns = {
+        'name': fields.date('Day', readonly=True),
+        'user_id':fields.many2one('res.users', 'User', readonly=True),
+        'hours': fields.float('Timesheet Hours'),
+        'analytic_id' : fields.many2one('account.analytic.account', 'Analytic Account'),
+        'description' : fields.text('Description'),
+        'amount' : fields.float('Amount', required=True),
+        'project_id' : fields.many2one('project.project', 'Project', size=64),
+    }
+    
+    def init(self, cr):
+        cr.execute("""
+            create or replace view report_project_working_hours as (
+                select
+                    min(c.id) as id,
+                    to_char(c.date, 'YYYY-MM-01') as name,
+                    c.user_id as user_id,
+                    c.unit_amount as hours,
+                    c.amount as amount,
+                    c.account_id as analytic_id,
+                    c.name as description
+                from
+                    account_analytic_line c
+                where
+                    c.account_id in (select category_id from project_project where id = '2')
+                group by c.user_id, c.date, c.unit_amount, c.account_id, c.amount, c.name
+           )""")
+
+report_project_working_hours()
+
 class report_crm_case_bugs(osv.osv):
     _name = "report.crm.case.bugs"
     _description = "Bugs by State"
@@ -174,39 +231,6 @@ class report_crm_case_bugs(osv.osv):
             )""")
 
 report_crm_case_bugs()
-
-class report_project_working_hours(osv.osv):
-    _name = "report.project.working.hours"
-    _description = "Working hours of the day"
-    _auto = False
-    _columns = {
-        'name': fields.date('Day', readonly=True),
-        'user_id':fields.many2one('res.users', 'User', readonly=True),
-        'hours': fields.float('Timesheet Hours'),
-        'analytic_id' : fields.many2one('account.analytic.account', 'Analytic Account'),
-        'description' : fields.text('Description'),
-        'amount' : fields.float('Amount', required=True),
-    }
-
-    def init(self, cr):
-        cr.execute("""
-            create or replace view report_project_working_hours as (
-                select
-                    min(c.id) as id,
-                    to_char(c.date, 'YYYY-MM-01') as name,
-                    c.user_id as user_id,
-                    c.unit_amount as hours,
-                    c.amount as amount,
-                    c.account_id as analytic_id,
-                    c.name as description
-                from
-                    account_analytic_line c
-                where
-                    c.account_id in (select category_id from project_project where id = '2')
-                group by c.user_id, c.date, c.unit_amount, c.account_id, c.amount, c.name
-           )""")
-
-report_project_working_hours()
 
 class report_crm_case_features_user(osv.osv):
     _name = "report.crm.case.features.user"
