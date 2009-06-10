@@ -117,7 +117,26 @@ class project_project(osv.osv):
         cr.execute('select count(i.id), p.id, p.name from project_project as p left join ir_attachment as i on i.res_id=p.id where p.id in ('+ids+') and i.res_model=%s group by p.id, p.name',(model,))
         for doc in cr.dictfetchall():
             result[doc['id']]['doc'] = str(doc['count'])
+        cr.execute('select count(i.id), p.id, p.name, i.datas as datas from project_project as p left join ir_attachment as i on i.res_id=p.id where p.id in ('+ids+') and i.res_model=%s group by p.id, p.name, i.datas',(model,))
+        dict_size = {}
+        for id in ids_project:
+            dict_size.setdefault(id, 0)
+        for doc in cr.dictfetchall():
+            dict_size[doc['id']] += len(doc['datas'])
 
+        for s in dict_size:
+            size = ''
+            if dict_size[s] >= 1073741824:
+                size = str((dict_size[s]) / 1024 / 1024 / 1024) + ' GB'
+            elif dict_size[s] >= 1048576:
+                size = str((dict_size[s]) / 1024 / 1024) + ' MB'
+            elif dict_size[s] >= 1024:
+                size = str((dict_size[s]) / 1024) + ' KB'
+            elif dict_size[s] < 1024:
+                size = str(dict_size[s]) + ' bytes'
+            if result[s]['doc'] == '':
+                result[s]['doc'] = '0'
+            result[s]['doc'] = result[s]['doc'] + ' for ' +  size
         return result
 
     _columns = {
