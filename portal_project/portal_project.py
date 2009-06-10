@@ -61,32 +61,67 @@ users()
 
 class project_project(osv.osv):
     _inherit = "project.project"
+    _description = "Project"
 
     def _get_details(self, cr, uid, ids, context={}, *arg):
-        return {}
-    
-#    TO DO
-#    def _get_hours(self, cr, uid, ids, context={}, *arg):
-#        print "CON", context
-#        return {}
+        if not ids:
+            return {}
+
+        result = {}
+        for id in ids:
+            result[id] = {
+                  'tasks': 0.0,
+                  'bugs': 0.0,
+                  'features': 0.0,
+                  'support_req': 0.0,
+                  'doc': 0.0
+                          }
+        ids = ",".join(map(str, ids))
+
+        cr.execute('select count(t.id), p.id, p.name from project_project as p left join project_task as t on p.id=t.project_id \
+                    where p.id in ('+ids+') group by p.id, p.name')
+        for proj in cr.dictfetchall():
+            result[proj['id']]['tasks'] = proj['count']
+
+        cr.execute('select p.id, count(c.id), p.name from project_project as  p, crm_case as c where p.id=c.project_id and p.section_bug_id=c.section_id \
+                    and p.id in ('+ids+') group by p.id,p.name')
+        for bug in cr.dictfetchall():
+            result[bug['id']]['bugs'] = bug['count']
+
+        cr.execute('select p.id, count(c.id), p.name from project_project as  p, crm_case as c where p.id=c.project_id and p.section_feature_id=c.section_id \
+                    and p.id in ('+ids+') group by p.id,p.name')
+        for feature in cr.dictfetchall():
+            result[feature['id']]['features'] = feature['count']
+
+        cr.execute('select p.id, count(c.id), p.name from project_project as  p, crm_case as c where p.id=c.project_id and p.section_support_id=c.section_id \
+                    and p.id in ('+ids+') group by p.id,p.name')
+        for support in cr.dictfetchall():
+            result[support['id']]['support_req'] = support['count']
+
+        model = 'project.project'
+        cr.execute('select count(i.id), p.id, p.name from project_project as p left join ir_attachment as i on i.res_id=p.id where p.id in ('+ids+') and i.res_model=%s group by p.id, p.name',(model,))
+        for doc in cr.dictfetchall():
+            result[doc['id']]['doc'] = doc['count']
+
+        return result
 
     _columns = {
         'section_bug_id': fields.many2one('crm.case.section', 'Bug Section'),
         'section_feature_id': fields.many2one('crm.case.section', 'Feature Section'),
         'section_support_id': fields.many2one('crm.case.section', 'Support Section'),
         'section_annouce_id': fields.many2one('crm.case.section', 'Announce Section'),
-        'tasks': fields.function(_get_details , type='float', method=True, store=True, string='Tasks', multi='tasks'),
-        'bugs': fields.function(_get_details, type='float', method=True, store=True, string='Bugs', multi='tasks'),
-        'features': fields.function(_get_details, type='float', method=True, store=True, string='Features',multi='tasks'),
-        'support_req': fields.function(_get_details, type='float', method=True,multi='tasks', store=True, string='Support Requests'),
-        'doc': fields.function(_get_details, type='float', method=True, store=True,multi='tasks', string='Documents'),
+        'tasks': fields.function(_get_details , type='float', method=True, string='Tasks', multi='project'),
+        'bugs': fields.function(_get_details, type='float', method=True, string='Bugs', multi='project'),
+        'features': fields.function(_get_details, type='float', method=True, string='Features',multi='project'),
+        'support_req': fields.function(_get_details, type='float', method=True,multi='project', string='Support Requests'),
+        'doc': fields.function(_get_details, type='float', method=True, multi='project', string='Documents'),
         'announce_ids': fields.one2many('crm.case', 'case_id', 'Announces'),
         'member_ids': fields.one2many('res.users', 'user_id', 'Project Members', help="Project's member. Not used in any computation, just for information purpose."),
         'bugs_ids':fields.one2many('report.crm.case.bugs', 'project_id', 'Bugs'),
         'hours_ids' : fields.one2many('report.project.working.hours', 'project_id', 'Working Hours'),
-#        TO DO
 #        'hours_ids' : fields.function(_get_hours, type='float', method=True, store=True, string='Hours'),
         }
+
 project_project()
 
 class Wiki(osv.osv):
@@ -94,6 +129,7 @@ class Wiki(osv.osv):
     _columns = {
         'project_id': fields.many2one('project.project', 'Project')
         }
+
 Wiki()
 
 class crm_case(osv.osv):
@@ -155,7 +191,7 @@ crm_case()
 
 class portal_account_analytic_planning(osv.osv):
     _inherit = 'report_account_analytic.planning'
-    
+
     def search(self, cr, uid, args, offset=0, limit=None, order=None,
             context=None, count=False):
         if context is None:
@@ -166,7 +202,7 @@ class portal_account_analytic_planning(osv.osv):
             return map(lambda x: x[0], cr.fetchall())
         return super(portal_account_analytic_planning, self).search(cr, uid, args, offset, limit,
                 order, context=context, count=count)
-    
+
 portal_account_analytic_planning()
 
 class report_project_working_hours(osv.osv):
@@ -182,7 +218,7 @@ class report_project_working_hours(osv.osv):
         'amount' : fields.float('Amount', required=True),
         'project_id' : fields.many2one('project.project', 'Project', size=64),
     }
-    
+
     def init(self, cr):
         cr.execute("""
             create or replace view report_project_working_hours as (
