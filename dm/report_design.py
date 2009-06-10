@@ -167,12 +167,12 @@ def generate_reports(cr,uid,obj,report_type,context): # {{{
         """ Get reports to process """
         report_ids = report_xml.search(cr,uid,[('document_id','=',document_id[0]),('report_type','=',report_type)])
 
-    if not report_ids:
-        document_data = dm_doc_obj.read(cr,uid,document_id,['name','editor','content','subject'])[0]
-        context['address_id'] = address_id
-        context['document_id'] = document_id[0]
-        context['wi_id'] = obj.id
-        attachment_obj = pool.get('ir.attachment')
+        if not report_ids:
+            document_data = dm_doc_obj.read(cr,uid,document_id,['name','editor','content','subject'])[0]
+            context['address_id'] = address_id
+            context['document_id'] = document_id[0]
+            context['wi_id'] = obj.id
+            attachment_obj = pool.get('ir.attachment')
 
         if report_type=='html2html' and document_data['editor'] and document_data['editor']=='internal' and document_data['content']:
             """ Check if to use the internal editor report """
