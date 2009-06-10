@@ -68,13 +68,14 @@ def generate_reports(cr,uid,obj,report_type,context): # {{{
 
     print "Calling generate_reports from wi : ", obj.id
     print "Calling generate_reports source code : ", obj.source
+
     """ Set addess_id depending of the source : partner address or crm case """
     address_id = getattr(obj, obj.source).id
     print "address_id : ",address_id
     address_ids = []
 
     if obj.is_global:
-        """ if segment workitem """
+        """ if internal segment workitem """
         print "source fields : ",getattr(obj.segment_id.customers_file_id, obj.source + "s")
         for cust_id in getattr(obj.segment_id.customers_file_id, obj.source + "s"):
             print "cust_id : ",cust_id
@@ -94,29 +95,32 @@ def generate_reports(cr,uid,obj,report_type,context): # {{{
     dm_doc_obj = pool.get('dm.offer.document') 
     report_xml = pool.get('ir.actions.report.xml')
     camp_mail_service_obj = pool.get('dm.campaign.mail_service')
+
     r_type = report_type
     if report_type=='html2html':
         r_type = 'html'
 
     for address_id in address_ids:
-	
-	""" Check if there is a segment for non preview workitem """
-        if not obj.segment_id and not obj.is_preview:
-	    return "no_segment"
-	else:
-            camp_id = obj.segment_id.proposition_id.camp_id.id
-        type_id = pool.get('dm.campaign.document.type').search(cr,uid,[('code','=',r_type)])
-
-        """ Get mail service """
-        if obj.mail_service_id : 
-            """ If a mail service is specified in the workitem, use it """
-            camp_mail_service_id = [obj.mail_service_id.id]
-        else : 
-            """ Use the mail service defined in the campaign """
-            camp_mail_service_id = camp_mail_service_obj.search(cr,uid,[('campaign_id','=',camp_id),('offer_step_id','=',step_id)])
-	    if not camp_mail_service_id:
-                return "no_mail_service"
-        camp_mail_service = camp_mail_service_obj.browse(cr,uid,camp_mail_service_id)[0]
+        """ Check for segment for non preview workitem and set mail service to use"""
+        if obj.segment_id and not obj.is_preview:
+            if not obj.segment.id.proposition_id:
+                return "no_proposition"
+            elif not obj.segment.id.proposition_id.camp_id:
+                return "no_campaign"
+            else:
+                """ Use the mail service defined in the campaign """
+                camp_id = obj.segment_id.proposition_id.camp_id.id
+                camp_mail_service_id = camp_mail_service_obj.search(cr,uid,[('campaign_id','=',camp_id),('offer_step_id','=',step_id)])
+                if not camp_mail_service_id:
+                    return "no_mail_service_for_campaign"
+                else:
+                    camp_mail_service = camp_mail_service_obj.browse(cr, uid, camp_mail_service_id)[0]
+    	elif obj.is_preview:
+            if obj.mail_service_id:
+                """ If a mail service is specified in the workitem, use it """
+                camp_mail_service = camp_mail_service_obj.browse(cr, uid, [obj.mail_service_id.id])[0]
+            else:
+                return "no_mail_service_for_preview"
 
         """ Compute document delivery date """
         if camp_mail_service.mail_service_id.time_mode=='interval' :
@@ -145,6 +149,8 @@ def generate_reports(cr,uid,obj,report_type,context): # {{{
         if not document_id : 
             return "no_document"
 
+        type_id = pool.get('dm.campaign.document.type').search(cr,uid,[('code','=',r_type)])
+
         vals={
             'segment_id': obj.segment_id.id or False,
             'name': obj.step_id.code + "_" +str(address_id),
@@ -156,19 +162,20 @@ def generate_reports(cr,uid,obj,report_type,context): # {{{
             }
 
         """ Create campaign document """
-        camp_doc  = pool.get('dm.campaign.document').create(cr,uid,vals)
+        camp_doc = pool.get('dm.campaign.document').create(cr,uid,vals)
 
         """ Get reports to process """
         report_ids = report_xml.search(cr,uid,[('document_id','=',document_id[0]),('report_type','=',report_type)])
-	if not report_ids:
-		return "no_report"
 
+    if not report_ids:
         document_data = dm_doc_obj.read(cr,uid,document_id,['name','editor','content','subject'])[0]
         context['address_id'] = address_id
         context['document_id'] = document_id[0]
         context['wi_id'] = obj.id
         attachment_obj = pool.get('ir.attachment')
+
         if report_type=='html2html' and document_data['editor'] and document_data['editor']=='internal' and document_data['content']:
+            """ Check if to use the internal editor report """
             report_data = internal_html_report +str(document_data['content'])+"</BODY></HTML>"
             report_data = merge_message(cr, uid, report_data, context)
             attach_vals={'name' : document_data['name'] + "_" + str(address_id),
@@ -207,6 +214,8 @@ def _generate_value(cr,uid,plugin_obj,localcontext,**args): # {{{
     localcontext['plugin_obj'] = plugin_obj
     plugin_args = {}
     plugin_value = ''
+
+    # why not : if plugin_obj.type = 
     if plugin_obj.python_code :
         exec plugin_obj.python_code.replace('\r','') in localcontext
         plugin_value =  localcontext['plugin_value']
@@ -265,6 +274,7 @@ def generate_plugin_value(cr, uid,**args): # {{{
     else :
         plugins = dm_document.browse(cr, uid, args['doc_id'], ['document_template_plugin_ids' ])
         plugin_ids = plugins['document_template_plugin_ids']
+        
     for plugin_obj in plugin_ids :
         plugin_value = _generate_value(cr,uid,plugin_obj,localcontext,**args)
         if plugin_obj.store_value :

@@ -49,17 +49,16 @@ class wizard_document_report(wizard.interface):
     def _send_report(self, cr, uid, data , context): # {{{
         if not data['form']['mail_service_id']:
                 raise osv.except_osv("Error","You must choose a mail service for sending preview documents")
-            import time
-            doc = pooler.get_pool(cr.dbname).get('dm.offer.document').browse(cr, uid, self.dm_wiz_data['id'])
-            vals = {
-                'address_id' : data['form']['address_id'],
-                'step_id' : doc.step_id.id,
-                'mail_service_id' : data['form']['mail_service_id'],
-                'is_preview' : True,
-            }
-            pooler.get_pool(cr.dbname).get('dm.workitem').create(cr, uid, vals)
-            print "Send doc form :",data['form']
-            return {} # }}}
+        doc = pooler.get_pool(cr.dbname).get('dm.offer.document').browse(cr, uid, self.dm_wiz_data['id'])
+        vals = {
+            'address_id' : data['form']['address_id'],
+            'step_id' : doc.step_id.id,
+            'mail_service_id' : data['form']['mail_service_id'],
+            'is_preview' : True,
+        }
+        pooler.get_pool(cr.dbname).get('dm.workitem').create(cr, uid, vals)
+        print "Send doc form :",data['form']
+        return {} # }}}
 
     def _get_reports(self, cr, uid, context): # {{{
         document_id = self.dm_wiz_data['id']

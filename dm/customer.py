@@ -161,10 +161,16 @@ class dm_workitem(osv.osv): # {{{
                     self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no offer step for this workitem'})
                 elif res=='no_segment':
                     self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no segment for this workitem'})
+                elif res=='no_proposition':
+                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no campaign proposition for this workitem'})
+                elif res=='no_campaign':
+                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no campaign for this workitem'})
                 elif res=='no_report':
                     self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no report for this offer step document'})
-                elif res=='no_mail_service':
+                elif res=='no_mail_service_for_campaign':
                     self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no mail service for this offer step in the campaign'})
+                elif res=='no_mail_service_for_preview':
+                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no mail service defined for this preview document'})
                 else:
                     self.write(cr, uid, [wi.id], {'state': 'done','error_msg':""})
                     done = True
