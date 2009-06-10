@@ -28,17 +28,17 @@ from osv import fields
 from osv import osv
 from tools import translate 
 
-AVAILABLE_STATES = [ # {{{
+AVAILABLE_STATES = [
     ('draft','Draft'),
     ('open','Open'),
     ('freeze', 'Freeze'),
     ('closed', 'Close')
-] # }}}
+]
 
-AVAILABLE_ITEM_TYPES = [ # {{{
+AVAILABLE_ITEM_TYPES = [
     ('main','Main Item'),
     ('standart','Standart Item'),
-] # }}}
+]
 
 class dm_offer_step_type(osv.osv): # {{{
     _name="dm.offer.step.type"

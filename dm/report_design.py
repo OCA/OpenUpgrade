@@ -103,9 +103,9 @@ def generate_reports(cr,uid,obj,report_type,context): # {{{
     for address_id in address_ids:
         """ Check for segment for non preview workitem and set mail service to use"""
         if obj.segment_id and not obj.is_preview:
-            if not obj.segment.id.proposition_id:
+            if not obj.segment_id.proposition_id:
                 return "no_proposition"
-            elif not obj.segment.id.proposition_id.camp_id:
+            elif not obj.segment_id.proposition_id.camp_id:
                 return "no_campaign"
             else:
                 """ Use the mail service defined in the campaign """
