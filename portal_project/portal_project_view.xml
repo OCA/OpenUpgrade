@@ -321,7 +321,7 @@
 <!--		<menuitem name="Bugs by State" id="menu_projectss_portal" action="act_crm_bugs_state" parent="project.menu_main"/>-->
 
 <!--		Gantt Planning-->
-        
+
         <record id="view_portal_account_analytic_planning_gantt" model="ir.ui.view">
             <field name="name">Portal Analytic Planning - Gantt</field>
             <field name="model">report_account_analytic.planning</field>
@@ -335,7 +335,7 @@
 	            </gantt>
             </field>
         </record>
-        
+
         <record model="ir.actions.act_window" id="act_portal_account_analytic_planning">
 			<field name="res_model">report_account_analytic.planning</field>
 			<field name="view_type">form</field>
@@ -961,7 +961,7 @@
 	        <field name="view_id" ref="portal_crm_announce_form_view"/>
 	        <field name="act_window_id" ref="view_crm_announce_portal"/>
 	    </record>
-	    <menuitem  id="menu_view_portal_crm_announce_view" action="view_crm_announce_portal" parent="project.menu_main"/>
+	    <menuitem  id="menu_view_portal_crm_announce_view" action="view_crm_announce_portal" parent="menu_portal"/>
 
     </data>
 </openerp>
