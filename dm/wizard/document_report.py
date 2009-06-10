@@ -25,17 +25,17 @@ import osv
 
 class wizard_document_report(wizard.interface):
 
-    report_list_form = '''<?xml version="1.0"?> # {{{
+    report_list_form = '''<?xml version="1.0"?>
     <form string="Select Report">
         <field name="report" colspan="4"/>
         <field name="address_id" colspan="4"/>
         <field name="trademark_id" colspan="4"/>
-    </form>''' # }}}
+    </form>'''
 
-    report_send_form = '''<?xml version="1.0"?> # {{{
+    report_send_form = '''<?xml version="1.0"?>
     <form string="Send Report">
         <field name="mail_service_id" colspan="4"/>
-    </form>''' # }}}
+    </form>'''
 
     def execute(self, db, uid, data, state='init', context=None): # {{{
         self.dm_wiz_data = data
