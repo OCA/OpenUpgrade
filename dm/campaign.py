@@ -1202,10 +1202,10 @@ class dm_campaign_proposition_segment(osv.osv):#{{{
 
 dm_campaign_proposition_segment()#}}}
 
-AVAILABLE_ITEM_TYPES = [#{{{
+AVAILABLE_ITEM_TYPES = [#
     ('main','Main Item'),
     ('standart','Standart Item'),
-]#}}}
+]#
 
 class dm_campaign_proposition_item(osv.osv):#{{{
     _name = "dm.campaign.proposition.item"
@@ -1223,22 +1223,22 @@ class dm_campaign_proposition_item(osv.osv):#{{{
     }
 dm_campaign_proposition_item()#}}}
 
-PURCHASE_LINE_TRIGGERS = [#{{{
+PURCHASE_LINE_TRIGGERS = [
     ('draft','At Draft'),
     ('open','At Open'),
     ('planned','At Planning'),
     ('close','At Close'),
     ('manual','Manual'),
-]#}}}
+]
 
-PURCHASE_LINE_STATES = [#{{{
+PURCHASE_LINE_STATES = [
     ('pending','Pending'),
     ('requested','Quotations Requested'),
     ('ordered','Ordered'),
     ('delivered','Delivered'),
-]#}}}
+]
 
-PURCHASE_LINE_TYPES = [#{{{
+PURCHASE_LINE_TYPES = [
     ('manufacturing','Manufacturing'),
     ('items','Items'),
     ('customer_file','Customer Files'),
@@ -1251,12 +1251,12 @@ QTY_TYPES = [
     ('quantity_wanted','Wanted Quantity'),
     ('quantity_delivered','Delivered Quantity'),
     ('quantity_usable','Usable Quantity'),
-]#}}}
+]
 
-DOC_TYPES = [#{{{
+DOC_TYPES = [
     ('po','Purchase Order'),
     ('rfq','Request For Quotation'),
-]#}}}
+]
 
 class dm_campaign_purchase_line(osv.osv):#{{{
     _name = 'dm.campaign.purchase_line'

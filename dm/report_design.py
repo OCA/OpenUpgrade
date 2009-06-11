@@ -16,7 +16,7 @@ import base64
 import os
 import sys
 
-internal_html_report = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"> # {{{
+internal_html_report = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
 <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
@@ -35,7 +35,7 @@ internal_html_report = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transition
 </HEAD>
 <BODY LANG="en-IN" DIR="LTR">
 '''
-_regex = re.compile('\[\[setHtmlImage\((.+?)\)\]\]') # }}}
+_regex = re.compile('\[\[setHtmlImage\((.+?)\)\]\]')
 
 def merge_message(cr, uid, keystr, context): # {{{
     logger = netsvc.Logger()
@@ -167,12 +167,11 @@ def generate_reports(cr,uid,obj,report_type,context): # {{{
         """ Get reports to process """
         report_ids = report_xml.search(cr,uid,[('document_id','=',document_id[0]),('report_type','=',report_type)])
 
-        if not report_ids:
-            document_data = dm_doc_obj.read(cr,uid,document_id,['name','editor','content','subject'])[0]
-            context['address_id'] = address_id
-            context['document_id'] = document_id[0]
-            context['wi_id'] = obj.id
-            attachment_obj = pool.get('ir.attachment')
+        document_data = dm_doc_obj.read(cr,uid,document_id,['name','editor','content','subject'])[0]
+        context['address_id'] = address_id
+        context['document_id'] = document_id[0]
+        context['wi_id'] = obj.id
+        attachment_obj = pool.get('ir.attachment')
 
         if report_type=='html2html' and document_data['editor'] and document_data['editor']=='internal' and document_data['content']:
             """ Check if to use the internal editor report """
@@ -187,17 +186,17 @@ def generate_reports(cr,uid,obj,report_type,context): # {{{
                         }
             attach_id = attachment_obj.create(cr,uid,attach_vals)
 
-	for report in pool.get('ir.actions.report.xml').browse(cr, uid, report_ids) :
-	    srv = netsvc.LocalService('report.' + report.report_name)
-	    report_data,report_type = srv.create(cr, uid, [], {},context)
-	    attach_vals={'name' : document_data['name'] + "_" + str(address_id)+str(report.id),
-		     'datas_fname' : 'report.' + report.report_name + '.' + report_type ,
-		     'res_model' : 'dm.campaign.document',
-		     'res_id' : camp_doc,
-		     'datas': base64.encodestring(report_data),
-		     'file_type':report_type
-		     }
-        attach_id = attachment_obj.create(cr,uid,attach_vals)
+        for report in pool.get('ir.actions.report.xml').browse(cr, uid, report_ids) :
+            srv = netsvc.LocalService('report.' + report.report_name)
+            report_data,report_type = srv.create(cr, uid, [], {},context)
+            attach_vals={'name' : document_data['name'] + "_" + str(address_id)+str(report.id),
+                 'datas_fname' : 'report.' + report.report_name + '.' + report_type ,
+                 'res_model' : 'dm.campaign.document',
+                 'res_id' : camp_doc,
+                 'datas': base64.encodestring(report_data),
+                 'file_type':report_type
+                 }
+            attach_id = attachment_obj.create(cr,uid,attach_vals)
 
     return True # }}}
 
