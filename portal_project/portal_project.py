@@ -180,6 +180,19 @@ class project_project(osv.osv):
             list_announce = map(lambda x: x[0], cr.fetchall())
             res[announce.id] = list_announce
         return res
+    
+    def _get_hours(self, cr, uid, ids, context={}, *arg):
+        res = {}
+        if not ids:
+            return {}
+        for id in ids:
+            for acc in self.browse(cr, uid, ids, context):
+                cr.execute("""select id from account_analytic_line where \
+                        account_id in (select category_id from project_project where id = %s)""" %id)
+                line_id = map(lambda x: x[0], cr.fetchall())
+                res[acc.id] = line_id
+        return res
+    
     _columns = {
         'section_bug_id': fields.many2one('crm.case.section', 'Bug Section'),
         'section_feature_id': fields.many2one('crm.case.section', 'Feature Section'),
@@ -193,8 +206,7 @@ class project_project(osv.osv):
         'announce_ids': fields.function(_get_announces , type='one2many' , relation='crm.case', method=True , string='Announces'),
         'member_ids': fields.function(_get_users, type='one2many', relation='res.users' , method=True , string='Project Members'),
         'bugs_ids':fields.one2many('report.crm.case.bugs', 'project_id', 'Bugs'),
-        'hours_ids' : fields.one2many('account.analytic.line', 'project_id', 'Working Hours'),
-#        'hours_ids' : fields.function(_get_hours, type='float', method=True, store=True, string='Hours'),
+        'hours': fields.function(_get_hours, type='one2many', relation='account.analytic.line', method=True, string="Hours", size=64)
         }
 
 project_project()
@@ -204,7 +216,6 @@ class Wiki(osv.osv):
     _columns = {
         'project_id': fields.many2one('project.project', 'Project')
         }
-
 Wiki()
 
 class crm_case(osv.osv):
@@ -264,19 +275,6 @@ class crm_case(osv.osv):
 
 crm_case()
 
-class portal_account_analytic_line(osv.osv):
-    _inherit = 'account.analytic.line'
-    _columns = {
-        'project_id' : fields.many2one('project.project', 'Project', size=64),
-    }
-
-    def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
-        if context is None:
-            context = {}
-        return super(portal_account_analytic_line, self).search(cr, uid, args, offset, limit, order, context, count)
-
-portal_account_analytic_line()
-
 class report_account_analytic_planning(osv.osv):
     _inherit = 'report_account_analytic.planning'
     _description = "Planning of tasks related portal project"
@@ -297,16 +295,15 @@ class hr_timesheet_sheet(osv.osv):
     _inherit = 'hr_timesheet_sheet.sheet'
     _description = "Timesheet related portal project"
 
-    def search(self, cr, uid, args, offset=0, limit=None, order=None,
-            context=None, count=False):
+    def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
         if context is None:
             context = {}
+            
         if context.has_key('portal_sheet') and context['portal_sheet'] == 'timesheet' and context.has_key('active_id') and context['active_id']:
             cr.execute("select aal.id from account_analytic_line aal, hr_analytic_timesheet hat where hat.id = aal.id and aal.account_id in (select category_id from project_project where id = %s)" %context['active_id'])
             line_ids = map(lambda x: x[0], cr.fetchall())
-            sheet_ids = self.pool.get('hr.analytic.timesheet').read(cr, uid, line_ids, ['sheet_id'])
-            sheet_ids = list(set(map(lambda x:x['sheet_id'][0], sheet_ids)))
-            return sheet_ids
+            sheet = self.pool.get('hr.analytic.timesheet').read(cr, uid, line_ids, ['sheet_id'])
+            return list(set(map(lambda x:x['sheet_id'][0], sheet)))
         return super(hr_timesheet_sheet, self).search(cr, uid, args, offset, limit, order, context, count)
 
 hr_timesheet_sheet()
@@ -325,41 +322,6 @@ class account_analytic_account(osv.osv):
         return super(account_analytic_account, self).search(cr, uid, args, offset, limit, order, context, count)
 
 account_analytic_account()
-
-class report_project_working_hours(osv.osv):
-    _name = "report.project.working.hours"
-    _description = "Working hours of the day"
-    _auto = False
-    _columns = {
-        'name': fields.date('Day', readonly=True),
-        'user_id':fields.many2one('res.users', 'User', readonly=True),
-        'hours': fields.float('Timesheet Hours'),
-        'analytic_id' : fields.many2one('account.analytic.account', 'Analytic Account'),
-        'description' : fields.text('Description'),
-        'amount' : fields.float('Amount', required=True),
-        'project_id' : fields.many2one('project.project', 'Project', size=64),
-    }
-
-    def init(self, cr):
-        cr.execute("""
-            create or replace view report_project_working_hours as (
-                select
-                    min(c.id) as id,
-                    to_char(c.date, 'YYYY-MM-01') as name,
-                    c.user_id as user_id,
-                    c.unit_amount as hours,
-                    c.amount as amount,
-                    c.account_id as analytic_id,
-                    c.name as description,
-                    c.project_id as project_id
-                from
-                    account_analytic_line c
-                where
-                    c.account_id in (select category_id from project_project where id = '2')
-                group by c.user_id, c.date, c.unit_amount, c.account_id, c.amount, c.name, c.project_id
-           )""")
-
-report_project_working_hours()
 
 class report_crm_case_bugs(osv.osv):
     _name = "report.crm.case.bugs"
@@ -449,8 +411,6 @@ class report_crm_case_announce_user(osv.osv):
         'name': fields.char('Description',size=64,required=True),
         'nbr': fields.integer('# of Cases', readonly=True),
         'user_id': fields.many2one('res.users', 'User', size=16, readonly=True),
-       
-        
     }
     def init(self, cr):
         cr.execute("""

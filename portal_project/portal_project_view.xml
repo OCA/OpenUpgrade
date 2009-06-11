@@ -175,8 +175,9 @@
             <field name="type">graph</field>
             <field name="arch" type="xml">
                 <graph orientation="horizontal" string="Working hours per day" type="bar">
-                    <field name="name"/>
+                    <field name="date"/>
                     <field name="unit_amount" operator="+"/>
+                    <field group="True" name="user_id"/>
                 </graph>
             </field>
         </record>
@@ -314,7 +315,7 @@
 				        <field name="support_req" colspan="2"/>
 				        <field name="doc" colspan="2"/>
 				        <newline/>
-				        <field name="announce_ids" nolabel="1" colspan="2" readonly="1">
+				        <field name="announce_ids" nolabel="1" colspan="2" height="200" readonly="1">
 	                		<tree string="Latests Announces" editable="top">
                                   <field name="date"/>
                                   <field name="user_id"/>
@@ -328,7 +329,7 @@
                             </form>
                         </field>
                         <newline/>
-	                    <field name="member_ids" nolabel="1" colspan="2" />
+	                    <field name="member_ids" nolabel="1" colspan="2" height="200" readonly="1"/>
 	                </group>
 	                </child1>
 	                <child2>
@@ -347,7 +348,7 @@
 	                    </group>
 	                </group>
 	                <newline/>
-                 	<field colspan="2" name="hours_ids" string="Working hours per Day" nolabel="1" widget="one2many_list" mode="graph,tree,form" readonly="1"/>
+                 	<field colspan="2" name="hours" string="Working hours per Day" nolabel="1" mode="graph,tree,form" readonly="1"/>
                  	<newline/>
                  	<field colspan="2" name="bugs_ids" string="Bugs by State" nolabel="1" widget="one2many_list" mode="graph,tree,form" readonly="1"/>
 	                </child2>
