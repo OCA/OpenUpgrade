@@ -64,9 +64,10 @@ class project_project(osv.osv):
     _description = "Project"
 
     def _get_details(self, cr, uid, ids_project, context={}, *arg):
+        # Todo: 1. Reload button gives error for project
+        #       2. Test/Check
         if not ids_project:
             return {}
-
         result = {}
         for id in ids_project:
             result[id] = {
@@ -78,11 +79,13 @@ class project_project(osv.osv):
                           }
         ids = ",".join(map(str, ids_project))
 
+        # Number of tasks
         cr.execute('select count(t.id), p.id, p.name , sum(t.remaining_hours) as hours from project_project as p left join project_task as t on p.id=t.project_id \
                     where p.id in ('+ids+') and t.state=%s group by p.id, p.name', ('open',))
         for proj in cr.dictfetchall():
             result[proj['id']]['tasks'] = str(proj['count']) + ' opens, ' + str(proj['hours']) + ' remaining'
 
+        #======================================Bug, Features ,support request====================================================
         cr.execute('select p.id, count(c.id), p.name from project_project as  p, crm_case as c where p.id=c.project_id and p.section_bug_id=c.section_id \
                     and p.id in ('+ids+') group by p.id,p.name')
         for bug in cr.dictfetchall():
@@ -112,18 +115,35 @@ class project_project(osv.osv):
         res_sup = cr.dictfetchall()
         for support in res_sup:
             result[support['id']]['support_req'] = result[support['id']]['support_req'] + str(support['count']) + ' open'
+        #==========================================================================================
 
+        # Number of doument attach in project and its tasks
         model = 'project.project'
         cr.execute('select count(i.id), p.id, p.name from project_project as p left join ir_attachment as i on i.res_id=p.id where p.id in ('+ids+') and i.res_model=%s group by p.id, p.name',(model,))
         for doc in cr.dictfetchall():
-            result[doc['id']]['doc'] = str(doc['count'])
+            result[doc['id']]['doc'] = doc['count']#str(doc['count'])
         cr.execute('select count(i.id), p.id, p.name, i.file_size as datas from project_project as p left join ir_attachment as i on i.res_id=p.id where p.id in ('+ids+') and i.res_model=%s group by p.id, p.name, i.file_size',(model,))
+        res_size_proj = cr.dictfetchall()
+        cr.execute('select count(i.id) as task_docs, p.id as project from project_task t left join project_project p on p.id=t.project_id \
+                    left join ir_attachment i on i.res_id=t.id where p.id in ('+ids+') and i.res_model=%s \
+                    group by p.id',('project.task',))
+        task_res = cr.dictfetchall()
+        for doc in task_res:
+            if result[doc['project']]['doc'] == '': result[doc['project']]['doc'] = 0
+            result[doc['project']]['doc'] = str(result[doc['project']]['doc'] +  doc['task_docs'])#str(doc['count'])
+
+        cr.execute('select t.id as task_id, count(i.id) as task_docs, p.id as project, i.file_size from project_task t left join project_project p on p.id=t.project_id \
+                    left join ir_attachment i on i.res_id=t.id where p.id in (1,2,3,4) and i.res_model=%s \
+                    group by p.id, i.file_size, t.id', ('project.task',))
+        res_size_task = cr.dictfetchall()
+
         dict_size = {}
         for id in ids_project:
             dict_size.setdefault(id, 0)
-        for doc in cr.dictfetchall():
+        for doc in res_size_proj:
             dict_size[doc['id']] += doc['datas'] # To be test
-
+        for doc in res_size_task:
+            dict_size[doc['project']] += doc['file_size'] # To be test
         for s in dict_size:
             size = ''
             if dict_size[s] >= 1073741824:
