@@ -21,7 +21,6 @@
 ##############################################################################
 
 import time
-
 from osv import fields, osv
 import pooler
 import tools
@@ -158,7 +157,29 @@ class project_project(osv.osv):
                 result[s]['doc'] = '0'
             result[s]['doc'] = str(result[s]['doc']) + ' for ' +  size
         return result
-
+    
+    def _get_users(self,cr,uid,ids,context={},*arg):
+        if not ids:
+            return {}
+        res = {}
+        list_user=[]
+        for data_project in self.browse(cr, uid, ids, context):
+                for user in data_project.members:
+                    list_user.append(user.id)
+                res[data_project.id] = list_user
+        return res
+  
+    def _get_announces(self, cr, uid, ids, context={}, *arg):
+        if not ids:
+            return {}
+        res = {}
+        for announce in self.browse(cr, uid, ids, context):
+            cr.execute("""select c.id from crm_case c \
+                        left join project_project p on %s = c.project_id \
+                       where c.section_id = p.section_annouce_id and c.date >= %s """, (announce.id, time.strftime('%Y-%m-01'),))
+            list_announce = map(lambda x: x[0], cr.fetchall())
+            res[announce.id] = list_announce
+        return res
     _columns = {
         'section_bug_id': fields.many2one('crm.case.section', 'Bug Section'),
         'section_feature_id': fields.many2one('crm.case.section', 'Feature Section'),
@@ -169,8 +190,8 @@ class project_project(osv.osv):
         'features': fields.function(_get_details, type='char', size=64, method=True, string='Features',multi='project'),
         'support_req': fields.function(_get_details, type='char', size=64, method=True,multi='project', string='Support Requests'),
         'doc': fields.function(_get_details, type='char', method=True, size=64, multi='project', string='Documents'),
-        'announce_ids': fields.one2many('crm.case', 'case_id', 'Announces'),
-        'member_ids': fields.one2many('res.users', 'user_id', 'Project Members', help="Project's member. Not used in any computation, just for information purpose."),
+        'announce_ids': fields.function(_get_announces , type='one2many' , relation='crm.case', method=True , string='Announces'),
+        'member_ids': fields.function(_get_users, type='one2many', relation='res.users' , method=True , string='Project Members'),
         'bugs_ids':fields.one2many('report.crm.case.bugs', 'project_id', 'Bugs'),
         'hours_ids' : fields.one2many('account.analytic.line', 'project_id', 'Working Hours'),
 #        'hours_ids' : fields.function(_get_hours, type='float', method=True, store=True, string='Hours'),
@@ -425,8 +446,11 @@ class report_crm_case_announce_user(osv.osv):
     _auto = False
     _rec_name = 'user_id'
     _columns = {
+        'name': fields.char('Description',size=64,required=True),
         'nbr': fields.integer('# of Cases', readonly=True),
         'user_id': fields.many2one('res.users', 'User', size=16, readonly=True),
+       
+        
     }
     def init(self, cr):
         cr.execute("""
@@ -434,6 +458,7 @@ class report_crm_case_announce_user(osv.osv):
                 select
                     min(c.id) as id,
                     c.user_id,
+                    c.name as name,
                     count(*) as nbr
                 from
                     crm_case c left join project_project p on p.id = c.project_id

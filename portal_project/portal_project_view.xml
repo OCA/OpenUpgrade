@@ -199,7 +199,15 @@
             <field name="view_id" ref="account.view_account_analytic_account_tree"/>
             <field name="context">{'portal_account':'financial'}</field>
         </record>
-
+    
+	<record id="act_financial_portal_form" model="ir.actions.act_window">
+            <field name="name">Analytic Accounts</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.analytic.account</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="account.view_account_analytic_account_tree"/>
+        </record>
 <!--        Timesheet Sheet-->
 		<record id="act_hr_timesheet_sheet_portal_form" model="ir.actions.act_window">
             <field name="name">Timesheets</field>
@@ -282,6 +290,8 @@
 			<field name="context">{'portal_gantt':'planning'}</field>
 		</record>
 
+
+
 <!--		Event Configuration-->
         <record model="ir.actions.act_window" id="portal_project_event_configuration_action">
 	        <field name="name">Project Event Configuration</field>
@@ -312,23 +322,21 @@
 				        <field name="support_req" colspan="2"/>
 				        <field name="doc" colspan="2"/>
 				        <newline/>
-				        <field name="announce_ids" nolabel="1" colspan="2">
+				        <field name="announce_ids" nolabel="1" colspan="2" readonly="1">
 	                		<tree string="Latests Announces" editable="top">
-                                  <field name="date" />
-                                  <field name="user_id" />
+                                  <field name="date"/>
+                                  <field name="user_id"/>
                                   <field name="name"/>
                             </tree>
                             <form string="Latests Announces" editable="top">
-                                <field name="name" string="Subject"/>
-			                    <field name="section_id" invisible="1"/>
+                               <field name="name" string="Subject"/>
+                                <field name="date"/>
 			                    <field name="user_id" string="Responsible"/>
 			                    <newline/>
-			                    <separator colspan="4" string="Description"/>
-			                    <field name="description" colspan="4" nolabel="1"/>
                             </form>
                         </field>
                         <newline/>
-	                    <field name="member_ids" nolabel="1" colspan="2"/>
+	                    <field name="member_ids" nolabel="1" colspan="2" />
 	                </group>
 	                </child1>
 	                <child2>
