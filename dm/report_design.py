@@ -58,7 +58,7 @@ def merge_message(cr, uid, keystr, context): # {{{
         result = eval(exp,context)
         if result in (None, False):
             return str("--------")
-        return str(result)
+        return result
 
     com = re.compile('(\[\[.+?\]\])')
     message = com.sub(merge, keystr)
