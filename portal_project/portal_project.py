@@ -156,7 +156,7 @@ class project_project(osv.osv):
                 size = str(dict_size[s]) + ' bytes'
             if result[s]['doc'] == '':
                 result[s]['doc'] = '0'
-            result[s]['doc'] = result[s]['doc'] + ' for ' +  size
+            result[s]['doc'] = str(result[s]['doc']) + ' for ' +  size
         return result
 
     _columns = {
