@@ -114,6 +114,16 @@
 	            	<page string="Direct Marketing">
 	            		<field name="moved"/>
 	            		<field name="quotation"/>
+	            		<newline/>
+	            		<group colspan = "4">
+	            		<separator string="Origin Information" colspan = "4"/>
+	            		<newline/>
+	            			<field name="origin_partner"/>
+	            			<field name="origin_support"/>
+	            			<field name="origin_keyword"/>
+	            			<field name="origin_campaign_id"/>
+	            			<field name="origin_country_id"/>
+	            		</group>
 	            	</page>
 	            </notebook>
             </form>
