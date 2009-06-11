@@ -133,7 +133,7 @@ class project_project(osv.osv):
             result[doc['project']]['doc'] = str(result[doc['project']]['doc'] +  doc['task_docs'])#str(doc['count'])
 
         cr.execute('select t.id as task_id, count(i.id) as task_docs, p.id as project, i.file_size from project_task t left join project_project p on p.id=t.project_id \
-                    left join ir_attachment i on i.res_id=t.id where p.id in (1,2,3,4) and i.res_model=%s \
+                    left join ir_attachment i on i.res_id=t.id where p.id in ('+ids+') and i.res_model=%s \
                     group by p.id, i.file_size, t.id', ('project.task',))
         res_size_task = cr.dictfetchall()
 
@@ -248,18 +248,18 @@ class portal_account_analytic_line(osv.osv):
     _columns = {
         'project_id' : fields.many2one('project.project', 'Project', size=64),
     }
-    
+
     def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
         if context is None:
             context = {}
         return super(portal_account_analytic_line, self).search(cr, uid, args, offset, limit, order, context, count)
-    
+
 portal_account_analytic_line()
 
 class report_account_analytic_planning(osv.osv):
     _inherit = 'report_account_analytic.planning'
     _description = "Planning of tasks related portal project"
-    
+
     def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
         if context is None:
             context = {}
@@ -268,14 +268,14 @@ class report_account_analytic_planning(osv.osv):
                           where rp.id in (select planning_id from project_task where project_id in (select id from project_project where id = %s))""" %(context['active_id']))
             return map(lambda x: x[0], cr.fetchall())
         return super(report_account_analytic_planning, self).search(cr, uid, args, offset, limit, order, context, count)
-    
+
 report_account_analytic_planning()
 
 class hr_timesheet_sheet(osv.osv):
     _table = 'hr_timesheet_sheet_sheet'
     _inherit = 'hr_timesheet_sheet.sheet'
     _description = "Timesheet related portal project"
-    
+
     def search(self, cr, uid, args, offset=0, limit=None, order=None,
             context=None, count=False):
         if context is None:
@@ -287,13 +287,13 @@ class hr_timesheet_sheet(osv.osv):
             sheet_ids = list(set(map(lambda x:x['sheet_id'][0], sheet_ids)))
             return sheet_ids
         return super(hr_timesheet_sheet, self).search(cr, uid, args, offset, limit, order, context, count)
-        
+
 hr_timesheet_sheet()
 
 class account_analytic_account(osv.osv):
     _inherit = 'account.analytic.account'
     _description = "Analytic accounts with analysis summary related portal project"
-    
+
     def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
         if context is None:
             context = {}
@@ -302,7 +302,7 @@ class account_analytic_account(osv.osv):
                           where id in (select category_id from project_project where id = %s)""" %(context['active_id']))
             return map(lambda x: x[0], cr.fetchall())
         return super(account_analytic_account, self).search(cr, uid, args, offset, limit, order, context, count)
-        
+
 account_analytic_account()
 
 class report_project_working_hours(osv.osv):
