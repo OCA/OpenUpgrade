@@ -152,7 +152,7 @@ class project_project(osv.osv):
         'announce_ids': fields.one2many('crm.case', 'case_id', 'Announces'),
         'member_ids': fields.one2many('res.users', 'user_id', 'Project Members', help="Project's member. Not used in any computation, just for information purpose."),
         'bugs_ids':fields.one2many('report.crm.case.bugs', 'project_id', 'Bugs'),
-        'hours_ids' : fields.one2many('report.project.working.hours', 'project_id', 'Working Hours'),
+        'hours_ids' : fields.one2many('account.analytic.line', 'project_id', 'Working Hours'),
 #        'hours_ids' : fields.function(_get_hours, type='float', method=True, store=True, string='Hours'),
         }
 
@@ -223,21 +223,67 @@ class crm_case(osv.osv):
 
 crm_case()
 
-class portal_account_analytic_planning(osv.osv):
-    _inherit = 'report_account_analytic.planning'
+class portal_account_analytic_line(osv.osv):
+    _inherit = 'account.analytic.line'
+    _columns = {
+        'project_id' : fields.many2one('project.project', 'Project', size=64),
+    }
+    
+    def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
+        if context is None:
+            context = {}
+        return super(portal_account_analytic_line, self).search(cr, uid, args, offset, limit, order, context, count)
+    
+portal_account_analytic_line()
 
+class report_account_analytic_planning(osv.osv):
+    _inherit = 'report_account_analytic.planning'
+    _description = "Planning of tasks related portal project"
+    
+    def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
+        if context is None:
+            context = {}
+        if context.has_key('portal_gantt') and context['portal_gantt'] == 'planning' and context.has_key('active_id') and context['active_id']:
+            cr.execute("""select rp.id from report_account_analytic_planning rp \
+                          where rp.id in (select planning_id from project_task where project_id in (select id from project_project where id = %s))""" %(context['active_id']))
+            return map(lambda x: x[0], cr.fetchall())
+        return super(report_account_analytic_planning, self).search(cr, uid, args, offset, limit, order, context, count)
+    
+report_account_analytic_planning()
+
+class hr_timesheet_sheet(osv.osv):
+    _table = 'hr_timesheet_sheet_sheet'
+    _inherit = 'hr_timesheet_sheet.sheet'
+    _description = "Timesheet related portal project"
+    
     def search(self, cr, uid, args, offset=0, limit=None, order=None,
             context=None, count=False):
         if context is None:
             context = {}
-        if 'active_id' in context and context['active_id']:
-            cr.execute("""select rp.id from report_account_analytic_planning rp \
-                          where id in (select planning_id from project_task where project_id in (select id from project_project where id = %s))""" %(context['active_id']))
-            return map(lambda x: x[0], cr.fetchall())
-        return super(portal_account_analytic_planning, self).search(cr, uid, args, offset, limit,
-                order, context=context, count=count)
+        if context.has_key('portal_sheet') and context['portal_sheet'] == 'timesheet' and context.has_key('active_id') and context['active_id']:
+            cr.execute("select aal.id from account_analytic_line aal, hr_analytic_timesheet hat where hat.id = aal.id and aal.account_id in (select category_id from project_project where id = %s)" %context['active_id'])
+            line_ids = map(lambda x: x[0], cr.fetchall())
+            sheet_ids = self.pool.get('hr.analytic.timesheet').read(cr, uid, line_ids, ['sheet_id'])
+            sheet_ids = list(set(map(lambda x:x['sheet_id'][0], sheet_ids)))
+            return sheet_ids
+        return super(hr_timesheet_sheet, self).search(cr, uid, args, offset, limit, order, context, count)
+        
+hr_timesheet_sheet()
 
-portal_account_analytic_planning()
+class account_analytic_account(osv.osv):
+    _inherit = 'account.analytic.account'
+    _description = "Analytic accounts with analysis summary related portal project"
+    
+    def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
+        if context is None:
+            context = {}
+        if context.has_key('portal_account') and context['portal_account'] == 'financial' and context.has_key('active_id') and context['active_id']:
+            cr.execute("""select id from account_analytic_account \
+                          where id in (select category_id from project_project where id = %s)""" %(context['active_id']))
+            return map(lambda x: x[0], cr.fetchall())
+        return super(account_analytic_account, self).search(cr, uid, args, offset, limit, order, context, count)
+        
+account_analytic_account()
 
 class report_project_working_hours(osv.osv):
     _name = "report.project.working.hours"
@@ -263,12 +309,13 @@ class report_project_working_hours(osv.osv):
                     c.unit_amount as hours,
                     c.amount as amount,
                     c.account_id as analytic_id,
-                    c.name as description
+                    c.name as description,
+                    c.project_id as project_id
                 from
                     account_analytic_line c
                 where
                     c.account_id in (select category_id from project_project where id = '2')
-                group by c.user_id, c.date, c.unit_amount, c.account_id, c.amount, c.name
+                group by c.user_id, c.date, c.unit_amount, c.account_id, c.amount, c.name, c.project_id
            )""")
 
 report_project_working_hours()

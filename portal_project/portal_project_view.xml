@@ -3,6 +3,7 @@
     <data>
 
 		<menuitem parent="project.menu_main" id="menu_portal" name="Portal"/>
+		
 <!--    	User Form-->
     	 <record id="view_portal_users_form_simple" model="ir.ui.view">
             <field name="name">res.users.portal.form1</field>
@@ -169,13 +170,13 @@
 
 <!--		Working hours-->
 		<record id="view_project_analytic_graph" model="ir.ui.view">
-            <field name="name">report.hr.analytic.form</field>
-            <field name="model">report.project.working.hours</field>
+            <field name="name">Working hours per Day - Graph</field>
+            <field name="model">account.analytic.line</field>
             <field name="type">graph</field>
             <field name="arch" type="xml">
                 <graph orientation="horizontal" string="Working hours per day" type="bar">
                     <field name="name"/>
-                    <field name="hours" operator="+"/>
+                    <field name="unit_amount" operator="+"/>
                 </graph>
             </field>
         </record>
@@ -183,94 +184,31 @@
 		<record id="act_hr_timesheet_line_portal_form" model="ir.actions.act_window">
             <field name="name">Working Hours</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">report.project.working.hours</field>
+            <field name="res_model">account.analytic.line</field>
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree,form</field>
         </record>
 
 <!--        Financial Data-->
-        <record id="view_portal_financial_entries_tree" model="ir.ui.view">
-            <field name="name">report.project.working.hours.tree</field>
-            <field name="model">report.project.working.hours</field>
-            <field name="type">tree</field>
-            <field name="arch" type="xml">
-                <tree string="Analytic Entries" >
-                    <field name="name" string="Date"/>
-                    <field name="hours" string="Quantity"/>
-                    <field name="analytic_id"/>
-                    <field name="amount"/>
-                    <field name="user_id"/>
-                    <field name="description"/>
-                </tree>
-            </field>
-        </record>
-
-        <record id="view_portal_financial_entries_form" model="ir.ui.view">
-            <field name="name">report.project.working.hours.form</field>
-            <field name="model">report.project.working.hours</field>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-                <form string="Analytic Entries" >
-                    <field name="name" string="Date"/>
-                    <field name="hours" string="Quantity"/>
-                    <field name="analytic_id"/>
-                    <field name="amount"/>
-                    <field name="user_id"/>
-                    <field name="description" colspan="4"/>
-                </form>
-            </field>
-        </record>
-
         <record id="act_financial_portal_form" model="ir.actions.act_window">
             <field name="name">Analytic Accounts</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">report.project.working.hours</field>
+            <field name="res_model">account.analytic.account</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="view_portal_financial_entries_tree"/>
+            <field name="view_id" ref="account.view_account_analytic_account_tree"/>
+            <field name="context">{'portal_account':'financial'}</field>
         </record>
 
 <!--        Timesheet Sheet-->
-        <record id="view_project_timesheet_sheet_tree" model="ir.ui.view">
-            <field name="name">report.project.working.hours.timesheets.tree</field>
-            <field name="model">report.project.working.hours</field>
-            <field name="type">tree</field>
-            <field name="arch" type="xml">
-                <tree string="Timesheets" >
-                    <field name="name"/>
-                    <field name="user_id"/>
-                    <field name="hours"/>
-                    <field name="analytic_id"/>
-                    <field name="amount"/>
-                    <field name="description"/>
-                </tree>
-            </field>
-        </record>
-
-        <record id="view_project_timesheet_sheet_form" model="ir.ui.view">
-            <field name="name">report.project.working.hours.timesheets.form</field>
-            <field name="model">report.project.working.hours</field>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-                <form string="Timesheets" >
-                    <field name="name"/>
-                    <field name="user_id"/>
-                    <field name="hours"/>
-                    <field name="amount"/>
-                    <field name="analytic_id"/>
-                    <newline/>
-                    <field name="description" colspan="4"/>
-                </form>
-            </field>
-        </record>
-
 		<record id="act_hr_timesheet_sheet_portal_form" model="ir.actions.act_window">
             <field name="name">Timesheets</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">report.project.working.hours</field>
+            <field name="res_model">hr_timesheet_sheet.sheet</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="view_project_timesheet_sheet_tree"/>
+            <field name="view_id" ref="hr_timesheet_sheet.hr_timesheet_sheet_tree"/>
+            <field name="context">{'portal_sheet':'timesheet'}</field>
         </record>
 
 <!--        Bugs By State-->
@@ -341,6 +279,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form,gantt</field>
 			<field name="view_id" ref="report_analytic_planning.account_analytic_planning_view_tree"/>
+			<field name="context">{'portal_gantt':'planning'}</field>
 		</record>
 
 <!--		Event Configuration-->
@@ -408,7 +347,7 @@
 	                    </group>
 	                </group>
 	                <newline/>
-                 	<action colspan="2" name="%(act_hr_timesheet_line_portal_form)d" string="Working hours per Day" context="{'id':active_id}"/>
+                 	<field colspan="2" name="hours_ids" string="Working hours per Day" nolabel="1" widget="one2many_list" mode="graph,tree,form" readonly="1"/>
                  	<newline/>
                  	<field colspan="2" name="bugs_ids" string="Bugs by State" nolabel="1" widget="one2many_list" mode="graph,tree,form" readonly="1"/>
 	                </child2>
