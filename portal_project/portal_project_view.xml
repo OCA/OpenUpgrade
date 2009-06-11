@@ -200,14 +200,6 @@
             <field name="context">{'portal_account':'financial'}</field>
         </record>
     
-	<record id="act_financial_portal_form" model="ir.actions.act_window">
-            <field name="name">Analytic Accounts</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">account.analytic.account</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="account.view_account_analytic_account_tree"/>
-        </record>
 <!--        Timesheet Sheet-->
 		<record id="act_hr_timesheet_sheet_portal_form" model="ir.actions.act_window">
             <field name="name">Timesheets</field>
