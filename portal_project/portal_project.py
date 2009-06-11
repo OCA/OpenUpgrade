@@ -117,12 +117,12 @@ class project_project(osv.osv):
         cr.execute('select count(i.id), p.id, p.name from project_project as p left join ir_attachment as i on i.res_id=p.id where p.id in ('+ids+') and i.res_model=%s group by p.id, p.name',(model,))
         for doc in cr.dictfetchall():
             result[doc['id']]['doc'] = str(doc['count'])
-        cr.execute('select count(i.id), p.id, p.name, i.datas as datas from project_project as p left join ir_attachment as i on i.res_id=p.id where p.id in ('+ids+') and i.res_model=%s group by p.id, p.name, i.datas',(model,))
+        cr.execute('select count(i.id), p.id, p.name, i.file_size as datas from project_project as p left join ir_attachment as i on i.res_id=p.id where p.id in ('+ids+') and i.res_model=%s group by p.id, p.name, i.file_size',(model,))
         dict_size = {}
         for id in ids_project:
             dict_size.setdefault(id, 0)
         for doc in cr.dictfetchall():
-            dict_size[doc['id']] += len(doc['datas'])
+            dict_size[doc['id']] += doc['datas'] # To be test
 
         for s in dict_size:
             size = ''
