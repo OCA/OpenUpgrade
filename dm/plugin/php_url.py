@@ -25,7 +25,7 @@ def php_url(cr,uid,**plugin_args):
     if url_name.find('http://')<0:
         url_name = 'http://' + url_name
         if arguments :
-            url_name = url_name+"?"+ arguments
+            url_name = url_name+"?data="+ arguments
     value = "<a href= '" + url_name + "' target='_blank'>" + plugin_args['text_display'] + "</a>"
     return value
 

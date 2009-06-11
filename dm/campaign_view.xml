@@ -704,7 +704,8 @@
                         <group colspan="4">
                             <separator string="Segment Description" colspan="4"/>
                             <field name="name" string="Name" select="1"/>
-                            <field name="code1" string="Code" select="1"/>
+<!--                            <field name="code1" string="Code" select="1"/>-->
+                            <field name="code" string="Code" select="1"/>
 							<group colspan="2">
 								<field name="type_src"/>
 							</group>
@@ -764,7 +765,8 @@
                    <tree string="Segments">
                         <field name="name" string="Name" />
                         <field name="deduplication_level" />
-                        <field name="code1" string="Code" />
+                        <field name="code" string="Code" />
+<!--                        <field name="code1" string="Code" />-->
                         <field name="quantity_planned" />
                         <field name="quantity_wanted" />
                         <field name="quantity_delivered" />
@@ -849,7 +851,8 @@
                 <group colspan="4">
                     <separator string="Segment Description" colspan="4"/>
                     <field name="name" string="Name" select="1"/>
-                    <field name="code1" string="Code" select="1"/>
+                    <field name="code" string="Code" select="1"/>
+<!--                    <field name="code1" string="Code" select="1"/>-->
                     <group colspan="2">
                         <field name="type_src"/>
                     </group>
@@ -917,7 +920,8 @@
         <field name="arch" type="xml">
             <tree string="Segments">
                 <field name="name" string="Name"/>
-                <field name="code1" string="Code"/>
+                <field name="code" string="Code"/>
+<!--                <field name="code1" string="Code"/>-->
                 <field name="type_src"/>
                 <field name="quantity_planned" select="2"/>
                 <field name="quantity_wanted" select="2"/>

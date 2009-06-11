@@ -3,7 +3,7 @@
 
 	<!-- Transition Triggers -->
 	
-    <data>
+    <data noupdate="1">
 	    <record id="dm_offer_step_transition_mail_unsubscribe" model="dm.offer.step.transition.trigger">
 		 <field eval="&quot;&quot;&quot;Unsubscribe&quot;&quot;&quot;" name="name"/>
 		 <field eval="&quot;&quot;&quot;unsubscribe&quot;&quot;&quot;" name="code"/>
@@ -42,7 +42,7 @@
 
 
 	<!-- Campaign Document Types -->
-	<data>
+	<data noupdate="1">
         <record id="dm_campaign_document_type_html0" model="dm.campaign.document.type">
             <field eval="&quot;&quot;&quot;HTML&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;html&quot;&quot;&quot;" name="code"/>
@@ -58,7 +58,7 @@
     </data>
 
     <!-- Mail Service Type -->
-    <data>
+    <data noupdate="1">
         <record model="dm.mail_service.type" id="dm_mail_service_type_smtp">
             <field name="name" eval="&quot;SMTP Server&quot;"/>
             <field name="code" eval="&quot;smtp&quot;"/>
