@@ -781,7 +781,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
     
     <!-- Server Action -->
     
-    <data noupdate="0">
+    <data noupdate="1">
         <record id="ir_actions_server_pdf_doc_generate0" model="ir.actions.server">
             <field eval="5" name="sequence"/>
             <field eval="&quot;&quot;&quot;code&quot;&quot;&quot;" name="state"/>
@@ -793,14 +793,6 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;Generate PDF Document&quot;&quot;&quot;" name="name"/>
         </record>
     </data>
-<!--
-    <data noupdate="0">
-        <record id="dm_offer_step_action_pdf_doc_generate0" model="dm.offer.step.action">
-            <field name="media_id" ref="dm.media_paper"/>
-            <field name="server_action_id" ref="ir_actions_server_pdf_doc_generate0"/>
-        </record>
-    </data>
--->
 
     <!-- ACCOUNT JOURNAL -->
 <!--
