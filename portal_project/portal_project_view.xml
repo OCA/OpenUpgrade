@@ -257,10 +257,7 @@
 			<field name="domain">[('project_id','=',active_id)]</field>
 		</record>
 
-<!--		<menuitem name="Bugs by State" id="menu_projectss_portal" action="act_crm_bugs_state" parent="project.menu_main"/>-->
-
 <!--		Gantt Planning-->
-
         <record id="view_portal_account_analytic_planning_gantt" model="ir.ui.view">
             <field name="name">Portal Analytic Planning - Gantt</field>
             <field name="model">report_account_analytic.planning</field>
@@ -282,8 +279,6 @@
 			<field name="view_id" ref="report_analytic_planning.account_analytic_planning_view_tree"/>
 			<field name="context">{'portal_gantt':'planning'}</field>
 		</record>
-
-
 
 <!--		Event Configuration-->
         <record model="ir.actions.act_window" id="portal_project_event_configuration_action">
@@ -411,6 +406,24 @@
             <field name="view_mode">graph,tree,form</field>
             <field name="view_id" ref="view_crm_case_bugs_user"/>
         </record>
+        
+        <record model="ir.actions.act_window" id="crm_case_categ_act_new_portal">
+	        <field name="name">New Bug</field>
+	        <field name="res_model">crm.case</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">form,tree</field>
+	        <field name="view_id" ref="crm.crm_case-view"/>
+	        <field name="context" eval="{'default_state':'open'}"/>
+	    </record>
+	    
+	    <record id="act_crm_bug_search_form" model="ir.actions.act_window">
+            <field name="name">All Bugs</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.case</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'case_search':'bug'}</field>
+        </record>
 
 <!--		Portal Crm Bug Form-->
 		<record id="portal_crm_bug_tree_view" model="ir.ui.view">
@@ -426,16 +439,7 @@
                 </tree>
             </field>
         </record>
-		<record model="ir.actions.act_window" id="crm_case_categ_act_new_portal">
-	        <field name="name">New Bug</field>
-	        <field name="res_model">crm.case</field>
-	        <field name="view_type">form</field>
-	        <field name="view_mode">form,tree</field>
-	        <field name="view_id" ref="crm.crm_case-view"/>
-
-	        <field name="context" eval="{'default_state':'open'}"/>
-	    </record>
-
+        
 		<record model="ir.ui.view" id="portal_crm_bug_form_view">
 	        <field name="name">Bugs Form</field>
 	        <field name="model">crm.case</field>
@@ -468,7 +472,7 @@
 	            	<child2>
 	            	<group colspan="2" col="2">
 	            		<button name="%(crm_case_categ_act_new_portal)d" string="Report a Bug" type="action"/>
-	            		<button name="%(crm.crm_case_categ0-act)d" string="Search a Bug" type="action"/>
+	            		<button name="%(act_crm_bug_search_form)d" string="Search a Bug" type="action"/>
 	            	</group>
 	            	<newline/>
 	            	<group colspn="2">
@@ -563,6 +567,15 @@
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree,form</field>
         </record>
+        
+        <record id="act_crm_feature_search_form" model="ir.actions.act_window">
+            <field name="name">All Features</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.case</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'case_search':'feature'}</field>
+        </record>
 
 <!--		Portal Crm Feature Form-->
 
@@ -612,7 +625,7 @@
 	            	<child2>
 	            	<group colspan="2" col="2">
 	            		<button name="%(crm_case_categ_act_new_portal)d" string="New Feature" type="action"/>
-	            		<button name="%(crm.crm_case_categ0-act)d" string="Search Feature" type="action"/>
+	            		<button name="%(act_crm_feature_search_form)d" string="Search Feature" type="action"/>
 	            	</group>
 	            	<newline/>
 	            	<group colspn="2">
@@ -705,6 +718,15 @@
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree,form</field>
         </record>
+        
+        <record id="act_crm_support_search_form" model="ir.actions.act_window">
+            <field name="name">All Supports</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.case</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'case_search':'support'}</field>
+        </record>
 
 <!--		Portal Crm Support Form-->
 
@@ -754,7 +776,7 @@
 	            	<child2>
 	            	<group colspan="2" col="2">
 	            		<button name="%(crm_case_categ_act_new_portal)d" string="New Support Request" type="action"/>
-	            		<button name="%(crm.crm_case_categ0-act)d" string="Search Support Request" type="action"/>
+	            		<button name="%(act_crm_support_search_form)d" string="Search Support Request" type="action"/>
 	            	</group>
 	            	<newline/>
 	            	<group colspn="2">
@@ -847,6 +869,15 @@
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree,form</field>
         </record>
+        
+        <record id="act_crm_announce_search_form" model="ir.actions.act_window">
+            <field name="name">All Announces</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.case</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'case_search':'announce'}</field>
+        </record>
 
 <!--		Portal Crm Announce  Form-->
 
@@ -896,7 +927,7 @@
 	            	<child2>
 	            	<group colspan="2" col="2">
 	            		<button name="%(crm_case_categ_announce_new)d" string="New Announce" type="action"/>
-	            		<button name="%(crm_case_categ_announce)d" string="Search Announce" type="action"/>
+	            		<button name="%(act_crm_announce_search_form)d" string="Search Announce" type="action"/>
 	            	</group>
 	            	<newline/>
 	            	<group colspn="2">

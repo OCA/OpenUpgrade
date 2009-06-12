@@ -260,27 +260,26 @@ class crm_case(osv.osv):
         return result
    
     _columns = {
-       'project_id' : fields.many2one('project.project', 'Project'),
+        'project_id' : fields.many2one('project.project', 'Project'),
         'bug_ids' : fields.function(_get_latest_cases,type='one2many', relation='crm.case', method=True , string= 'Latest Bugs', multi='case'),
         'feature_ids' : fields.function(_get_latest_cases,type='one2many', relation='crm.case', method=True , string='Latest Features', multi='case'),
         'support_ids' : fields.function(_get_latest_cases,type='one2many', relation='crm.case', method=True , string='Latest Supports', multi='case'),
         'announce_ids' : fields.function(_get_latest_cases,type='one2many', relation='crm.case', method=True , string= 'Latest Announces', multi='case'),
      }
 
-    def search(self, cr, uid, args, offset=0, limit=None, order=None,
-            context=None, count=False):
+    def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
         if context is None:
             context = {}
-        if 'section' in context and context['section']=='Bug Tracking':
+        if context.has_key('section') and context['section']=='Bug Tracking' or context.has_key('case_search') and context['case_search']=='bug':
             cr.execute('select c.id from crm_case c left join project_project p on p.id=c.project_id where c.section_id=p.section_bug_id')
             return map(lambda x: x[0], cr.fetchall())
-        elif 'section' in context and context['section']=='Feature':
+        elif context.has_key('section') and context['section']=='Feature' or context.has_key('case_search') and context['case_search']=='feature':
             cr.execute('select c.id from crm_case c left join project_project p on p.id=c.project_id where c.section_id=p.section_feature_id')
             return map(lambda x: x[0], cr.fetchall())
-        elif 'section' in context and context['section']=='Support':
+        elif context.has_key('section') and context['section']=='Support' or context.has_key('case_search') and context['case_search']=='support':
             cr.execute('select c.id from crm_case c left join project_project p on p.id=c.project_id where c.section_id=p.section_support_id')
             return map(lambda x: x[0], cr.fetchall())
-        elif 'section' in context and context['section']=='Announce':
+        elif context.has_key('section') and context['section']=='Announce' or context.has_key('case_search') and context['case_search']=='announce':
             cr.execute('select c.id from crm_case c left join project_project p on p.id=c.project_id where c.section_id=p.section_annouce_id')
             return map(lambda x: x[0], cr.fetchall())
         return super(crm_case, self).search(cr, uid, args, offset, limit, order, context, count)
@@ -332,7 +331,6 @@ class report_account_analytic_planning(osv.osv):
 report_account_analytic_planning()
 
 class hr_timesheet_sheet(osv.osv):
-    _table = 'hr_timesheet_sheet_sheet'
     _inherit = 'hr_timesheet_sheet.sheet'
     _description = "Timesheet related portal project"
 
