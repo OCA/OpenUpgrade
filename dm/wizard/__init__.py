@@ -31,7 +31,7 @@ import campaign_group_tasks
 import document_report
 import workitem_wizard
 import partner_address_segments
-import address_after_sale_action
+#import address_after_sale_action
 import so_after_sale_action
 import all_document_report
 #import proposition_copy

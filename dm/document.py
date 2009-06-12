@@ -201,6 +201,17 @@ class dm_offer_document(osv.osv): # {{{
     _name = "dm.offer.document"
     _rec_name = 'name'
 
+    def _check_unique_category(self, cr, uid, ids, step_id, category_id):
+        if not (step_id and category_id):
+            return {}
+        browse_step_id = self.pool.get('dm.offer.step').browse(cr,uid,step_id)
+        categ_name = self.pool.get('dm.offer.document.category').browse(cr,uid,category_id).name
+        if categ_name == 'After-Sale Document Template' and browse_step_id.type_id.name in ['After-Sale Event','After-Sale Action']:
+            if self.search(cr,uid,[('step_id','=',step_id),('category_id','=',category_id)]):
+                raise osv.except_osv(_('Error'),
+                                 _("You cannot create more than 1 document with the After-Sale step and category - '%s'") % (categ_name,))
+        return {'value':{'category_id':category_id}}
+
     def default_get(self, cr, uid, fields, context=None):
         value = super(dm_offer_document, self).default_get(cr, uid, fields, context)
         if 'step_id' in context and context['step_id']:

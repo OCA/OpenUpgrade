@@ -110,6 +110,8 @@ class dm_workitem(osv.osv): # {{{
     }
 
     def _check_unique_so(self, cr, uid, ids, sale_order_id):
+        if not sale_order_id:
+            return {}
         if self.search(cr,uid,[('sale_order_id','=',sale_order_id)]):
             raise osv.except_osv("Error!","You cannot create more than 1 workitem for the same sale order !")
         else :

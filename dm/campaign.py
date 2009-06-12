@@ -1066,8 +1066,9 @@ class dm_campaign_proposition_segment(osv.osv):#{{{
             proposition_id = self.pool.get('dm.campaign.proposition').browse(cr, uid, vals['proposition_id'])
             vals['parent_id'] = self.pool.get('account.analytic.account').search(cr,uid,[('id','=',proposition_id.analytic_account_id.id)])[0]
         return super(dm_campaign_proposition_segment, self).create(cr, uid, vals, context)
-  
+
     def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
+        print "11111111111111111111"
         if context and 'dm_camp_id' in context:
             if not context['dm_camp_id']:
                 return []
@@ -1146,6 +1147,18 @@ class dm_campaign_proposition_segment(osv.osv):#{{{
                 file_name = list.name + '-' + str(start_census) + '/' + str(end_census)
             return {'value':{'name':file_name}}
         return False
+    
+    def fields_view_get(self, cr, user, view_id=None, view_type='tree', context=None, toolbar=False):
+        result = super(dm_campaign_proposition_segment,self).fields_view_get(cr, user, view_id, view_type, context, toolbar)
+        print "context", context
+        print result['view_id']
+        print "----"
+        if 'address_id' in context and context['address_id']:
+            cr.execute("select distinct segment_id from dm_workitem where address_id = %d"%(context['address_id']))
+            query = cr.fetchall()
+            print query
+            ids = map(lambda x: x[0], query)
+        return result
 
     _columns = {
         'code1' : fields.function(_segment_code, string='Code', type="char", size=64, method=True, readonly=True),
