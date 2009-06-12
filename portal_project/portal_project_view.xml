@@ -3,7 +3,7 @@
     <data>
 
 		<menuitem parent="project.menu_main" id="menu_portal" name="Portal"/>
-		
+
 <!--    	User Form-->
     	 <record id="view_portal_users_form_simple" model="ir.ui.view">
             <field name="name">res.users.portal.form1</field>
@@ -83,7 +83,7 @@
 	        <field name="arch" type="xml">
 	            <form string="Announces">
                     <field name="name" string="Subject"/>
-                    <field name="section_id" invisible="1"/>
+                    <field name="section_id" invisible="0"/>
                     <field name="user_id" string="Responsible"/>
                     <newline/>
                     <separator colspan="4" string="Description"/>
@@ -200,7 +200,7 @@
             <field name="view_id" ref="account.view_account_analytic_account_tree"/>
             <field name="context">{'portal_account':'financial'}</field>
         </record>
-    
+
 <!--        Timesheet Sheet-->
 		<record id="act_hr_timesheet_sheet_portal_form" model="ir.actions.act_window">
             <field name="name">Timesheets</field>
@@ -426,6 +426,15 @@
                 </tree>
             </field>
         </record>
+		<record model="ir.actions.act_window" id="crm_case_categ_act_new_portal">
+	        <field name="name">New Bug</field>
+	        <field name="res_model">crm.case</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">form,tree</field>
+	        <field name="view_id" ref="crm.crm_case-view"/>
+
+	        <field name="context" eval="{'default_state':'open'}"/>
+	    </record>
 
 		<record model="ir.ui.view" id="portal_crm_bug_form_view">
 	        <field name="name">Bugs Form</field>
@@ -440,13 +449,13 @@
 	            		<newline/>
 	            		<group colspan="2">
             				<field name="name" string="Bug Summary" colspan="2"/>
-            				<field name="section_id" invisible="1" colspan="2"/>
+            				<field name="section_id" invisible="0" colspan="2"/>
             				<field name="category2_id" colspan="2" string="Version"/>
             			</group>
             			<newline/>
             			<field name="description" nolabel="1" colspan="2"/>
             			<newline/>
-            			<button name="%(crm_configuration.crm_case_categ_act_new)d" string="Save New Bug" type="action"/>
+            			<button name="%(crm_case_categ_act_new_portal)d" string="Save New Bug" type="action"/>
 	            		<newline/>
 	            		<separator string="Information" colspan="2"/>
 	            		<newline/>
@@ -458,8 +467,8 @@
 	            	</child1>
 	            	<child2>
 	            	<group colspan="2" col="2">
-	            		<button name="%(crm_configuration.crm_case_categ_act_new)d" string="Report a Bug" type="action"/>
-	            		<button name="%(crm_configuration.crm_case_categ_act0)d" string="Search a Bug" type="action"/>
+	            		<button name="%(crm_case_categ_act_new_portal)d" string="Report a Bug" type="action"/>
+	            		<button name="%(crm.crm_case_categ0-act)d" string="Search a Bug" type="action"/>
 	            	</group>
 	            	<newline/>
 	            	<group colspn="2">
@@ -575,13 +584,13 @@
 	            		<newline/>
 	            		<group colspan="2">
             				<field name="name" string="Feature Summary" colspan="2"/>
-            				<field name="section_id" invisible="1" colspan="2"/>
+            				<field name="section_id" invisible="0" colspan="2"/>
             				<field name="category2_id" string="Version" colspan="2"/>
             			</group>
             			<newline/>
             			<field name="description" nolabel="1" colspan="2"/>
             			<newline/>
-            			<button name="%(crm_configuration.crm_case_category_act_f1)d" string="Save Feature" type="action"/>
+            			<button name="%(crm_case_categ_act_new_portal)d" string="Save Feature" type="action"/>
 	            		<newline/>
 	            		<separator string="Information" colspan="2"/>
 	            		<newline/>
@@ -593,8 +602,8 @@
 	            	</child1>
 	            	<child2>
 	            	<group colspan="2" col="2">
-	            		<button name="%(crm_configuration.crm_case_category_act_f1)d" string="New Feature" type="action"/>
-	            		<button name="%(crm_configuration.crm_case_category_act_f0)d" string="Search Feature" type="action"/>
+	            		<button name="%(crm_case_categ_act_new_portal)d" string="New Feature" type="action"/>
+	            		<button name="%(crm.crm_case_categ0-act)d" string="Search Feature" type="action"/>
 	            	</group>
 	            	<newline/>
 	            	<group colspn="2">
@@ -708,13 +717,13 @@
 	            		<newline/>
 	            		<group colspan="2">
             				<field name="name" string="Support Summary" colspan="2"/>
-            				<field name="section_id" invisible="1" colspan="2"/>
+            				<field name="section_id" invisible="0" colspan="2"/>
             				<field name="category2_id" string="Version" colspan="2"/>
             			</group>
             			<newline/>
             			<field name="description" nolabel="1" colspan="2"/>
             			<newline/>
-            			<button name="%(crm_configuration.crm_case_category_act_f1)d" string="Save Support Request" type="action"/>
+            			<button name="%(crm_case_categ_act_new_portal)d" string="Save Support Request" type="action"/>
 	            		<newline/>
 	            		<separator string="Information" colspan="2"/>
 	            		<newline/>
@@ -726,8 +735,8 @@
 	            	</child1>
 	            	<child2>
 	            	<group colspan="2" col="2">
-	            		<button name="%(crm_configuration.crm_case_category_act_f1)d" string="New Support Request" type="action"/>
-	            		<button name="%(crm_configuration.crm_case_category_act_f0)d" string="Search Support Request" type="action"/>
+	            		<button name="%(crm_case_categ_act_new_portal)d" string="New Support Request" type="action"/>
+	            		<button name="%(crm.crm_case_categ0-act)d" string="Search Support Request" type="action"/>
 	            	</group>
 	            	<newline/>
 	            	<group colspn="2">
@@ -841,7 +850,7 @@
 	            		<newline/>
 	            		<group colspan="2">
             				<field name="name" string="Support Summary" colspan="2"/>
-            				<field name="section_id" invisible="1" colspan="2"/>
+            				<field name="section_id" invisible="0" colspan="2"/>
             				<field name="category2_id" string="Version" colspan="2"/>
             			</group>
             			<newline/>

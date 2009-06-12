@@ -157,7 +157,7 @@ class project_project(osv.osv):
                 result[s]['doc'] = '0'
             result[s]['doc'] = str(result[s]['doc']) + ' for ' +  size
         return result
-    
+
     def _get_users(self,cr,uid,ids,context={},*arg):
         if not ids:
             return {}
@@ -168,7 +168,7 @@ class project_project(osv.osv):
                     list_user.append(user.id)
                 res[data_project.id] = list_user
         return res
-  
+
     def _get_announces(self, cr, uid, ids, context={}, *arg):
         if not ids:
             return {}
@@ -180,7 +180,7 @@ class project_project(osv.osv):
             list_announce = map(lambda x: x[0], cr.fetchall())
             res[announce.id] = list_announce
         return res
-    
+
     def _get_hours(self, cr, uid, ids, context={}, *arg):
         res = {}
         if not ids:
@@ -192,7 +192,7 @@ class project_project(osv.osv):
                 line_id = map(lambda x: x[0], cr.fetchall())
                 res[acc.id] = line_id
         return res
-    
+
     _columns = {
         'section_bug_id': fields.many2one('crm.case.section', 'Bug Section'),
         'section_feature_id': fields.many2one('crm.case.section', 'Feature Section'),
@@ -223,7 +223,7 @@ class crm_case(osv.osv):
     _columns = {
         'project_id' : fields.many2one('project.project', 'Project', size=64),
         'bug_ids' : fields.one2many('crm.case', 'case_id', 'Latest Bugs'),
-        'section_id' : fields.many2one('crm.case.section', 'Section', required=False)
+#        'section_id' : fields.many2one('crm.case.section', 'Section')
     }
 
     def search(self, cr, uid, args, offset=0, limit=None, order=None,
@@ -298,7 +298,7 @@ class hr_timesheet_sheet(osv.osv):
     def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
         if context is None:
             context = {}
-            
+
         if context.has_key('portal_sheet') and context['portal_sheet'] == 'timesheet' and context.has_key('active_id') and context['active_id']:
             cr.execute("select aal.id from account_analytic_line aal, hr_analytic_timesheet hat where hat.id = aal.id and aal.account_id in (select category_id from project_project where id = %s)" %context['active_id'])
             line_ids = map(lambda x: x[0], cr.fetchall())
