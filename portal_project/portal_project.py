@@ -220,11 +220,52 @@ Wiki()
 
 class crm_case(osv.osv):
     _inherit = 'crm.case'
+    
+    def _get_latest_cases(self, cr, uid, ids_cases, context={}, *arg):
+        if not ids_cases:
+            return {}
+        result = {}
+        for id in ids_cases:
+            result[id] = {
+                  'bug_ids': '',
+                  'feature_ids': '',
+                  'support_ids': '',
+                  'announce_ids': '',
+                          }
+
+        for case in self.browse(cr, uid, ids_cases, context):
+            cr.execute("""select c.id from crm_case c \
+                        left join project_project p on p.id = c.project_id \
+                        where c.section_id = p.section_bug_id and c.date >= %s """, (time.strftime('%Y-%m-01'),))
+            list_case = map(lambda x: x[0], cr.fetchall())
+            result[case.id]['bug_ids'] = list_case
+
+            cr.execute("""select c.id from crm_case c \
+                        left join project_project p on p.id = c.project_id \
+                        where c.section_id = p.section_feature_id and c.date >= %s """, (time.strftime('%Y-%m-01'),))
+            list_case = map(lambda x: x[0], cr.fetchall())
+            result[case.id]['feature_ids'] = list_case
+
+            cr.execute("""select c.id from crm_case c \
+                        left join project_project p on p.id = c.project_id \
+                        where c.section_id = p.section_support_id and c.date >= %s """, (time.strftime('%Y-%m-01'),))
+            list_case = map(lambda x: x[0], cr.fetchall())
+            result[case.id]['support_ids'] = list_case
+
+            cr.execute("""select c.id from crm_case c \
+                        left join project_project p on p.id = c.project_id \
+                        where c.section_id = p.section_annouce_id and c.date >= %s """, (time.strftime('%Y-%m-01'),))
+            list_case = map(lambda x: x[0], cr.fetchall())
+            result[case.id]['announce_ids'] = list_case
+        return result
+   
     _columns = {
-        'project_id' : fields.many2one('project.project', 'Project', size=64),
-        'bug_ids' : fields.one2many('crm.case', 'case_id', 'Latest Bugs'),
-#        'section_id' : fields.many2one('crm.case.section', 'Section')
-    }
+       'project_id' : fields.many2one('project.project', 'Project'),
+        'bug_ids' : fields.function(_get_latest_cases,type='one2many', relation='crm.case', method=True , string= 'Latest Bugs', multi='case'),
+        'feature_ids' : fields.function(_get_latest_cases,type='one2many', relation='crm.case', method=True , string='Latest Features', multi='case'),
+        'support_ids' : fields.function(_get_latest_cases,type='one2many', relation='crm.case', method=True , string='Latest Supports', multi='case'),
+        'announce_ids' : fields.function(_get_latest_cases,type='one2many', relation='crm.case', method=True , string= 'Latest Announces', multi='case'),
+     }
 
     def search(self, cr, uid, args, offset=0, limit=None, order=None,
             context=None, count=False):

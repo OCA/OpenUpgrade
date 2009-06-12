@@ -478,10 +478,19 @@
 	            </hpaned>
 	            <hpaned>
 	            	<child1>
-	            		<field name="bug_ids" nolabel="1" widget="one2many" readonly="True" >
+	            		<field name="bug_ids" nolabel="1" readonly="True" >
 	            			<tree string="Latest Bugs Reported">
 	            				<field name="name"/>
+                                <field name="date"/>
+			                    <field name="user_id" string="Responsible"/>
+			                    <field name="project_id"/>
 	            			</tree>
+	            			 <form string="Latest Bugs Reported">
+                              	<field name="name"/>
+                                <field name="date"/>
+			                    <field name="user_id" string="Responsible"/>
+			                    <field name="project_id"/>
+                            </form>
 	            		</field>
 	            	</child1>
 	            </hpaned>
@@ -614,10 +623,19 @@
 	            </hpaned>
 	            <hpaned>
 	            	<child1>
-	            		<field name="bug_ids" nolabel="1" widget="one2many" readonly="True">
+	            		<field name="feature_ids" nolabel="1" widget="one2many" readonly="True">
 	            			<tree string="Latest Features">
 	            				<field name="name"/>
+                                <field name="date"/>
+			                    <field name="user_id" string="Responsible"/>
+			                    <field name="project_id"/>
 	            			</tree>
+	            			 <form string="Latest Features">
+                              	<field name="name"/>
+                                <field name="date"/>
+			                    <field name="user_id" string="Responsible"/>
+			                    <field name="project_id"/>
+                            </form>
 	            		</field>
 	            	</child1>
 	            </hpaned>
@@ -747,10 +765,19 @@
 	            </hpaned>
 	            <hpaned>
 	            	<child1>
-	            		<field name="bug_ids" nolabel="1" widget="one2many" readonly="True" >
+	            		<field name="support_ids" nolabel="1" widget="one2many" readonly="True" >
 	            			<tree string="Latest Supports">
 	            				<field name="name"/>
+                                <field name="date"/>
+			                    <field name="user_id" string="Responsible"/>
+			                    <field name="project_id"/>
 	            			</tree>
+	            			 <form string="Latest Supports">
+                              	<field name="name"/>
+                                <field name="date"/>
+			                    <field name="user_id" string="Responsible"/>
+			                    <field name="project_id"/>
+                            </form>
 	            		</field>
 	            	</child1>
 	            </hpaned>
@@ -880,10 +907,19 @@
 	            </hpaned>
 	            <hpaned>
 	            	<child1>
-	            		<field name="bug_ids" nolabel="1" widget="one2many" readonly="True">
+	            		<field name="announce_ids" nolabel="1" widget="one2many" readonly="True">
 	            			<tree string="Latest Announces">
 	            				<field name="name"/>
+                                <field name="date"/>
+			                    <field name="user_id" string="Responsible"/>
+			                    <field name="project_id"/>
 	            			</tree>
+	            			 <form string="Latest Announces">
+                              	<field name="name"/>
+                                <field name="date"/>
+			                    <field name="user_id" string="Responsible"/>
+			                    <field name="project_id"/>
+                            </form>
 	            		</field>
 	            	</child1>
 	            </hpaned>
