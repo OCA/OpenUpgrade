@@ -19,22 +19,23 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import project_wizard
-import campaign_tasks
-import campaign_pos
-import campaign_group_pos
-import offer_document
-import campaign_group
-import proposition_products
-import campaign_group_project
-import campaign_group_tasks
-import document_report
-import workitem_wizard
-import partner_address_segments
-import address_after_sale_action
-import so_after_sale_action
-import all_document_report
-#import proposition_copy
-#import campaign_copy
+{
+    "name" : "Direct Marketing For After-Sale",
+    "version" : "1.0",
+    "author" : "Tiny",
+    "website" : "http://www.openerp.com",
+    "category" : "Generic Modules/Direct Marketing",
+    "description": """
+            This module manages after-sale wizard.
+            """,
+    "depends" : ["dm_email"],
+    "init_xml" : [],
+    "demo_xml" : [],
+    "update_xml" : [
+                    "dm_after_sale_view.xml",
+                    ],
+    "active": False,
+    "installable": True,
+}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
