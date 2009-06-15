@@ -50,7 +50,7 @@
 		</record>
 
 <!--		CRM Case-->
-		<record id="portal_crm_case-view" model="ir.ui.view">
+		<!--<record id="portal_crm_case-view" model="ir.ui.view">
             <field name="name">portal crm case</field>
             <field name="model">crm.case</field>
             <field name="type">form</field>
@@ -60,7 +60,7 @@
                     <field name="project_id"/>
                 </field>
             </field>
-        </record>
+        </record>-->
 
 <!--		Announce View-->
 		<record model="ir.ui.view" id="crm_case_announce_tree_view">
@@ -406,7 +406,7 @@
             <field name="view_mode">graph,tree,form</field>
             <field name="view_id" ref="view_crm_case_bugs_user"/>
         </record>
-        
+
         <record model="ir.actions.act_window" id="crm_case_categ_act_new_portal">
 	        <field name="name">New Bug</field>
 	        <field name="res_model">crm.case</field>
@@ -415,7 +415,7 @@
 	        <field name="view_id" ref="crm.crm_case-view"/>
 	        <field name="context" eval="{'default_state':'open'}"/>
 	    </record>
-	    
+
 	    <record id="act_crm_bug_search_form" model="ir.actions.act_window">
             <field name="name">All Bugs</field>
             <field name="type">ir.actions.act_window</field>
@@ -439,7 +439,7 @@
                 </tree>
             </field>
         </record>
-        
+
 		<record model="ir.ui.view" id="portal_crm_bug_form_view">
 	        <field name="name">Bugs Form</field>
 	        <field name="model">crm.case</field>
@@ -487,13 +487,13 @@
 	            				<field name="name"/>
                                 <field name="date"/>
 			                    <field name="user_id" string="Responsible"/>
-			                    <field name="project_id"/>
+			                    <!--<field name="project_id"/>-->
 	            			</tree>
 	            			 <form string="Latest Bugs Reported">
                               	<field name="name"/>
                                 <field name="date"/>
 			                    <field name="user_id" string="Responsible"/>
-			                    <field name="project_id"/>
+			                    <!--<field name="project_id"/>-->
                             </form>
 	            		</field>
 	            	</child1>
@@ -567,7 +567,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree,form</field>
         </record>
-        
+
         <record id="act_crm_feature_search_form" model="ir.actions.act_window">
             <field name="name">All Features</field>
             <field name="type">ir.actions.act_window</field>
@@ -641,13 +641,13 @@
 	            				<field name="name"/>
                                 <field name="date"/>
 			                    <field name="user_id" string="Responsible"/>
-			                    <field name="project_id"/>
+			                    <!--<field name="project_id"/>-->
 	            			</tree>
 	            			 <form string="Latest Features">
                               	<field name="name"/>
                                 <field name="date"/>
 			                    <field name="user_id" string="Responsible"/>
-			                    <field name="project_id"/>
+			                    <!--<field name="project_id"/>-->
                             </form>
 	            		</field>
 	            	</child1>
@@ -718,7 +718,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree,form</field>
         </record>
-        
+
         <record id="act_crm_support_search_form" model="ir.actions.act_window">
             <field name="name">All Supports</field>
             <field name="type">ir.actions.act_window</field>
@@ -792,13 +792,13 @@
 	            				<field name="name"/>
                                 <field name="date"/>
 			                    <field name="user_id" string="Responsible"/>
-			                    <field name="project_id"/>
+			                    <!--<field name="project_id"/>-->
 	            			</tree>
 	            			 <form string="Latest Supports">
                               	<field name="name"/>
                                 <field name="date"/>
 			                    <field name="user_id" string="Responsible"/>
-			                    <field name="project_id"/>
+			                    <!--<field name="project_id"/>-->
                             </form>
 	            		</field>
 	            	</child1>
@@ -869,7 +869,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree,form</field>
         </record>
-        
+
         <record id="act_crm_announce_search_form" model="ir.actions.act_window">
             <field name="name">All Announces</field>
             <field name="type">ir.actions.act_window</field>
@@ -943,13 +943,13 @@
 	            				<field name="name"/>
                                 <field name="date"/>
 			                    <field name="user_id" string="Responsible"/>
-			                    <field name="project_id"/>
+			                    <!--<field name="project_id"/>-->
 	            			</tree>
 	            			 <form string="Latest Announces">
                               	<field name="name"/>
                                 <field name="date"/>
 			                    <field name="user_id" string="Responsible"/>
-			                    <field name="project_id"/>
+			                    <!--<field name="project_id"/>-->
                             </form>
 	            		</field>
 	            	</child1>
