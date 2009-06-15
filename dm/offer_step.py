@@ -40,8 +40,7 @@ AVAILABLE_ITEM_TYPES = [
     ('standart','Standart Item'),
 ]
 
-
-class dm_offer_step_type(osv.osv):
+class dm_offer_step_type(osv.osv): # {{{
     _name="dm.offer.step.type"
     _rec_name = 'name'
 
@@ -57,21 +56,9 @@ class dm_offer_step_type(osv.osv):
         ('code_uniq', 'UNIQUE(code)', 'The code must be unique!'),
     ]
 
-dm_offer_step_type()
+dm_offer_step_type() # }}}
 
-"""
-class dm_offer_step_action(osv.osv):
-    _name = 'dm.offer.step.action'
-#    _inherits = {'ir.actions.server':'server_action_id'}
-    _rec_name = 'server_action_id'
-    _columns = {
-        'server_action_id' : fields.many2one('ir.actions.server','Server Action'),
-        'media_id' : fields.many2one('dm.media','Media',required=True)
-    }
-dm_offer_step_action()
-"""
-
-class dm_offer_step(osv.osv):
+class dm_offer_step(osv.osv): # {{{
     _name = "dm.offer.step"
 
     _columns = {
@@ -107,8 +94,7 @@ class dm_offer_step(osv.osv):
         'doc_number' : fields.integer('Number of documents of the mailing', states={'closed':[('readonly',True)]}),
         'manufacturing_constraint_ids' : fields.many2many('product.product','dm_offer_step_manufacturing_product_rel','product_id','offer_step_id','Mailing Manufacturing Products',domain=[('categ_id', 'ilike', 'Mailing Manufacturing')], states={'closed':[('readonly',True)]}),
         'forecasted_yield' : fields.float('Forecasted Yield'),
-#	'action_id' : fields.many2one('dm.offer.step.action', string='Action', required=True)
-	'action_id' : fields.many2one('ir.actions.server', string='Action', required=True)
+        'action_id' : fields.many2one('ir.actions.server', string='Action', required=True)
     }
 
     _defaults = {
@@ -192,9 +178,9 @@ class dm_offer_step(osv.osv):
         return super(dm_offer_step, self).search(cr, uid, args, offset, limit, order, context, count)
 
 
-dm_offer_step()
+dm_offer_step() # }}}
 
-class dm_offer_step_transition_trigger(osv.osv):
+class dm_offer_step_transition_trigger(osv.osv): # {{{
     _name = "dm.offer.step.transition.trigger"
     _rec_name = "name"
     _columns = {
@@ -211,11 +197,12 @@ class dm_offer_step_transition_trigger(osv.osv):
         'type' : lambda *a: 'offer',
 #        'out_act_cond': lambda *a: 'result = False',
     }
-dm_offer_step_transition_trigger()
+dm_offer_step_transition_trigger() # }}}
 
-class dm_offer_step_transition(osv.osv):
+class dm_offer_step_transition(osv.osv): # {{{
     _name = "dm.offer.step.transition"
-    _rec_name = 'condition_id'
+#    _rec_name = 'condition_id'
+    _rec_name = 'step_from_id'
     _columns = {
         'condition_id' : fields.many2one('dm.offer.step.transition.trigger','Trigger Condition',required=True,ondelete="cascade"),
         'delay' : fields.integer('Offer Delay' ,required=True),
@@ -235,9 +222,9 @@ class dm_offer_step_transition(osv.osv):
             data[context['type_id']] = context['step_id']
         return data
 
-dm_offer_step_transition()
+dm_offer_step_transition() # }}}
 
-class product_product(osv.osv):
+class product_product(osv.osv): # {{{
     _name = "product.product"
     _inherit = "product.product"
     _columns = {
@@ -268,15 +255,15 @@ class product_product(osv.osv):
                     for item in step.item_ids:
                         result.append(item.id)
             return result
-product_product()
+product_product() # }}}
 
-class actions_server(osv.osv):
+class actions_server(osv.osv): # {{{
     _name = 'ir.actions.server'
     _inherit = 'ir.actions.server'
     _columns = {
         'dm_action' : fields.boolean('Action')
     }
-actions_server()
+actions_server() # }}}
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

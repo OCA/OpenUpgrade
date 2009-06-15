@@ -21,6 +21,7 @@
             <field name="main_currency" ref="base.USD"/>
         </record>
         
+
         <!-- Partner Categories -->
 
         <record id="res_partner_category_directmarketing0" model="res.partner.category">
@@ -99,7 +100,6 @@
             <field name="name" eval="&quot;Phone&quot;"/>
             <field name="code" eval="&quot;Phone&quot;"/>
         </record>
-
 
         <!-- Campaign Types -->
 
@@ -271,7 +271,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
         </record>
     </data>
 
-    <!--  RP Projects Tasks -->
+    <!-- RP Projects Tasks -->
 
     <data noupdate="1">
         <record id="project_task_dtprequest0" model="project.task">
@@ -606,10 +606,11 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
         <record id="dm_offer_document_category_test0" model="dm.offer.document.category">
             <field eval="&quot;&quot;&quot;Test&quot;&quot;&quot;" name="name"/>
         </record>
-    </data>
-    <data>
         <record id="dm_offer_document_category_production0" model="dm.offer.document.category">
             <field eval="&quot;&quot;&quot;Production&quot;&quot;&quot;" name="name"/>
+        </record>
+        <record id="dm_offer_document_category_assdoc0" model="dm.offer.document.category">
+            <field eval="&quot;&quot;&quot;After-Sale Document Template&quot;&quot;&quot;" name="name"/>
         </record>
     </data>
 
@@ -781,26 +782,19 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
     
     <!-- Server Action -->
     
-    <data noupdate="0">
+    <data noupdate="1">
         <record id="ir_actions_server_pdf_doc_generate0" model="ir.actions.server">
             <field eval="5" name="sequence"/>
             <field eval="&quot;&quot;&quot;code&quot;&quot;&quot;" name="state"/>
             <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
             <field name="model_id" ref="dm.model_dm_workitem"/>
             <field eval="[(6,0,[])]" name="child_ids"/>
-            <field eval="&quot;&quot;&quot;from dm import report_design \nreport_design.generate_reports(cr,uid,obj,'pdf',context)&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;from dm import report_design \naction = report_design.generate_reports(cr,uid,obj,'pdf',context)&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
             <field eval="&quot;&quot;&quot;Generate PDF Document&quot;&quot;&quot;" name="name"/>
         </record>
     </data>
-<!--
-    <data noupdate="0">
-        <record id="dm_offer_step_action_pdf_doc_generate0" model="dm.offer.step.action">
-            <field name="media_id" ref="dm.media_paper"/>
-            <field name="server_action_id" ref="ir_actions_server_pdf_doc_generate0"/>
-        </record>
-    </data>
--->
+
     <!-- ACCOUNT JOURNAL -->
 <!--
     <data noupdate="1">
@@ -1066,26 +1060,29 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;purchase&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;False&quot;&quot;&quot;" name="gen_next_wi"/>
             <field eval="&quot;&quot;&quot;offer&quot;&quot;&quot;" name="type"/>
-            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
-<!--            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="out_act_cond"/>-->
+            <field eval="&quot;&quot;&quot;action = True&quot;&quot;&quot;" name="in_act_cond"/>
+<!--            <field eval="&quot;&quot;&quot;action = True&quot;&quot;&quot;" name="out_act_cond"/>-->
         </record>
         <record id="dm_offer_step_transition_not_purchase" model="dm.offer.step.transition.trigger">
             <field eval="&quot;&quot;&quot;Not Purchase&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;notpurchase&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="gen_next_wi"/>
             <field eval="&quot;&quot;&quot;offer&quot;&quot;&quot;" name="type"/>
-            <field eval="&quot;&quot;&quot;purchase_trig_id = pool.get('dm.offer.step.transition.trigger').search(cr, uid, [('code','=','purchase')])[0]\nstep_ids = []\nfor x in wi.tr_from_id.step_from_id.outgoing_transition_ids:\n    if x.condition_id.id == purchase_trig_id:\n         step_ids.append(x.step_to_id.id)\nwi_ids = pool.get('dm.workitem').search(cr, uid, [('step_id','in',step_ids),('address_id','=',wi.address_id.id)])\nif wi_ids:\n    result = False\nelse:\n    result = True&quot;&quot;&quot;" name="in_act_cond"/>
-<!--            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="out_act_cond"/>-->
+            <field eval="&quot;&quot;&quot;purchase_trig_id = pool.get('dm.offer.step.transition.trigger').search(cr, uid, [('code','=','purchase')])[0]\nstep_ids = []\nfor x in wi.tr_from_id.step_from_id.outgoing_transition_ids:\n    if x.condition_id.id == purchase_trig_id:\n         step_ids.append(x.step_to_id.id)\nwi_ids = pool.get('dm.workitem').search(cr, uid, [('step_id','in',step_ids),('address_id','=',wi.address_id.id)])\nif wi_ids:\n    action = False\nelse:\n    action = True&quot;&quot;&quot;" name="in_act_cond"/>
+<!--            <field eval="&quot;&quot;&quot;action = True&quot;&quot;&quot;" name="out_act_cond"/>-->
         </record>
         <record id="dm_offer_step_transition_automatic" model="dm.offer.step.transition.trigger">
             <field eval="&quot;&quot;&quot;Automatic&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;automatic&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="gen_next_wi"/>
             <field eval="&quot;&quot;&quot;offer&quot;&quot;&quot;" name="type"/>
-            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
-<!--            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="out_act_cond"/>-->
+            <field eval="&quot;&quot;&quot;action = True&quot;&quot;&quot;" name="in_act_cond"/>
+<!--            <field eval="&quot;&quot;&quot;action = True&quot;&quot;&quot;" name="out_act_cond"/>-->
         </record>
     </data>
+
+    <!-- Cron -->
+
     <data noupdate="1">
         <record model="ir.cron" id="ir_cron_campaign_proposition">
             <field name="name">Check  Workitem</field>
@@ -1136,4 +1133,5 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
     <data noupdate="1">
         <function eval="('default',False,'type_id', [('dm.mail_service', False)], dm_mail_service_type_dummy, True, False, False, False, True)" id="type_dummy_default_set" model="ir.values" name="set"/>
     </data>
+
 </openerp>

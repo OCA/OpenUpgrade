@@ -31,17 +31,14 @@ import time
 class project_project(osv.osv):
     _inherit = "project.project"
     _columns = {                
-                "event_ids": fields.one2many('project.event', 'project_id', 'Events', readonly=True),
-                "event_configuration_ids": fields.one2many('project.event.configuration', 'project_id', 'Event Configuration'),
-                
+        "event_ids": fields.one2many('project.event', 'project_id', 'Events', readonly=True),
+        "event_configuration_ids": fields.one2many('project.event.configuration', 'project_id', 'Event Configuration'),
     }
+    
     def _log_event(self, cr, uid, project_id, values={}, context={}):
         obj_project_event = self.pool.get('project.event') 
         values['project_id'] = project_id      
         obj_project_event.create(cr, uid, values)
-        
-        
-        
         
 project_project()
 
@@ -63,7 +60,7 @@ def _links_get(self, cr, uid, context={}):
 class project_event(osv.osv):
     _name = "project.event"
     _columns = {
-        'name': fields.char('Events',size=64, required=True),        
+        'name': fields.char('Events', size=64, required=True),        
         'description': fields.text('Description'), 
         'res_id': fields.integer('Resource Id'),       
         'project_id': fields.many2one('project.project', 'Project', select=True, required=True),
@@ -76,6 +73,7 @@ class project_event(osv.osv):
     _defaults = {
         'date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
+    
     def create(self, cr, uid, values, *args, **kwargs):
         attach = False 
         new_values = {}
@@ -89,7 +87,9 @@ class project_event(osv.osv):
             obj_configuration = self.pool.get('project.event.configuration')
             config_ids = obj_configuration.search(cr, uid, [('project_id','=',project_id)])
             obj_configuration.run(cr, uid, config_ids, values)
+            
 project_event()
+
 class project_event_configuration(osv.osv):
     _name = "project.event.configuration"
     _columns = {        
@@ -143,10 +143,10 @@ project_event_configuration()
 class project_task(osv.osv):
     _inherit = 'project.task'
     
-    def create(self, cr, uid, values, *args, **kwargs):
-        res = super(project_task, self).create(cr, uid, values, *args, **kwargs)
-        cr.commit()
-        task = self.browse(cr, uid, res)
+    def create(self, cr, uid, values, context={}):
+        res = super(project_task, self).create(cr, uid, values, context=context)
+        cr.commit()        
+        task = self.browse(cr, uid, res, context=context)
         if task.project_id:         
             self.pool.get('project.project')._log_event(cr, uid, task.project_id.id, {
                                 'res_id' : task.id,
@@ -160,16 +160,17 @@ class project_task(osv.osv):
     def write(self, cr, uid, ids, vals, context={}):
         res = super(project_task, self).write(cr, uid, ids, vals, context={})
         cr.commit()
-        task = self.browse(cr, uid, res)
-        if task.project_id:         
-            self.pool.get('project.project')._log_event(cr, uid, task.project_id.id, {
-                                'res_id' : task.id,
-                                'name' : task.name, 
-                                'description' : task.description, 
-                                'user_id': uid, 
-                                'action' : 'write',
-                                'type' : 'task'})
+        for task in self.browse(cr, uid, ids, context=context):
+            if task.project_id:         
+                self.pool.get('project.project')._log_event(cr, uid, task.project_id.id, {
+                                    'res_id' : task.id,
+                                    'name' : task.name, 
+                                    'description' : task.description, 
+                                    'user_id': uid, 
+                                    'action' : 'write',
+                                    'type' : 'task'})
         return res
+    
 project_task()
 
 class document_file(osv.osv):
@@ -189,7 +190,6 @@ class document_file(osv.osv):
                                 'action' : 'create',
                                 'type' : 'document'})        
         return res  
-    
     
 document_file()
 

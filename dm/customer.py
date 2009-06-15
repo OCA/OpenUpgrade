@@ -28,7 +28,7 @@ import sys
 import datetime
 import netsvc
 
-class dm_order(osv.osv):
+class dm_order(osv.osv): # {{{
     _name = "dm.order"
     _columns = {
         'raw_datas' : fields.char('Raw Datas', size=128),
@@ -64,10 +64,9 @@ class dm_order(osv.osv):
         value = dict(zip(key,value))
         return {'value':value}
 
-dm_order()
+dm_order() # }}}
 
-
-class res_partner(osv.osv):
+class res_partner(osv.osv): # {{{
     _inherit = "res.partner"
     _columns = {
         'language_ids' : fields.many2many('res.lang','dm_customer_langs','lang_id','customer_id','Other Languages'),
@@ -80,10 +79,9 @@ class res_partner(osv.osv):
         'decoy_for_campaign': fields.boolean('Used for Campaigns', help='Define if this decoy address can be used with campaigns'),
         'decoy_for_renting': fields.boolean('Used for File Renting', help='Define if this decoy address can be used with used with customers files renting'),
     }
-res_partner()
+res_partner() # }}}
 
-
-class dm_workitem(osv.osv):
+class dm_workitem(osv.osv): # {{{
     _name = "dm.workitem"
     _description = "workitem"
     _SOURCES = [('address_id','Partner Address')]
@@ -97,6 +95,7 @@ class dm_workitem(osv.osv):
         'source' : fields.selection(_SOURCES, 'Source', required=True),
         'error_msg' : fields.text('System Message'),
         'is_global': fields.boolean('Global Workitem'),
+        'is_preview': fields.boolean('Document Preview Workitem'),
         'tr_from_id' : fields.many2one('dm.offer.step.transition', 'Source Transition', select="1", ondelete="cascade"),
         'sale_order_id' : fields.many2one('sale.order','Sale Order'),
         'mail_service_id' : fields.many2one('dm.mail_service','Mail Service'),
@@ -106,22 +105,24 @@ class dm_workitem(osv.osv):
         'source': lambda *a: 'address_id',
         'state': lambda *a: 'pending',
         'is_global': lambda *a: False,
+        'is_preview': lambda *a: False,
         'action_time' : lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
 
     def _check_unique_so(self, cr, uid, ids, sale_order_id):
+        if not sale_order_id:
+            return {}
         if self.search(cr,uid,[('sale_order_id','=',sale_order_id)]):
             raise osv.except_osv("Error!","You cannot create more than 1 workitem for the same sale order !")
         else :
-            return sale_order_id
+            return {'value':{'sale_order_id':sale_order_id}}
 
     def run(self, cr, uid, wi, context={}):
-        print "Calling run"
+        print "Calling run for : ",wi.step_id.action_id.name
         context['active_id'] = wi.id
         done = False
         try:
             server_obj = self.pool.get('ir.actions.server')
-            print "Calling run for : ",wi.step_id.action_id.name
             res = True
 
             """ Check if action must be done or cancelled by"""
@@ -135,18 +136,17 @@ class dm_workitem(osv.osv):
                     'tr':tr,
                 }
                 val = {}
-                print "Incoming Transition : ",tr.condition_id.name
-                print "Origin Transition : ",wi.tr_from_id.id
-                print "Incoming Action Condition : ",tr.condition_id.in_act_cond
-                """ Evaluate condition code """
-                exec tr.condition_id.in_act_cond.replace('\r','') in eval_context,val
-                print "Val in get purchase_trig_id: ",val.get('purchase_trig_id',False)
-                print "Val in get step_to_check: ",val.get('step_ids',False)
-                print "Val in get wi_ids : ",val.get('wi_ids',False)
-                print "Tr Condition return code : ",val.get('result',False)
 
-                if not val.get('result',False):
-                    """ If result of server action is False """
+                """ Evaluate condition code (for non preview worlitems only)"""
+                if wi.is_preview:
+                    val['action'] = True
+                else:
+                    exec tr.condition_id.in_act_cond.replace('\r','') in eval_context,val
+
+                print "Tr Condition return code : ",val.get('action',False)
+
+                if not val.get('action',False):
+                    """ If action returned by the trigger code is False """
                     res = False
                     act_step = tr.step_from_id.name or False
                     break
@@ -154,17 +154,33 @@ class dm_workitem(osv.osv):
             if res:
                 """ Execute server action """
                 res = server_obj.run(cr, uid, [wi.step_id.action_id.id], context)
-                if res :
+
+                """ Check returned value and set workitem log """
+		done = False
+                if res=='no_document':
+                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'No production document is assigned to this offer step'})
+                elif res=='no_step':
+                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no offer step for this workitem'})
+                elif res=='no_segment':
+                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no segment for this workitem'})
+                elif res=='no_proposition':
+                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no campaign proposition for this workitem'})
+                elif res=='no_campaign':
+                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no campaign for this workitem'})
+                elif res=='no_report':
+                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no report for this offer step document'})
+                elif res=='no_mail_service_for_campaign':
+                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no mail service for this offer step in the campaign'})
+                elif res=='no_mail_service_for_preview':
+                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no mail service defined for this preview document'})
+                else:
                     self.write(cr, uid, [wi.id], {'state': 'done','error_msg':""})
                     done = True
-                else :
-                    self.write(cr, uid, [wi.id], {'state': 'cancel','error_msg':':Document is not assigned-create 1 document 1st'})
-                    done = False
-
             else:
                 """ Dont Execute Action if workitem not to be processed """
                 self.write(cr, uid, [wi.id], {'state': 'cancel','error_msg':'Cancelled by : %s'% act_step})
                 done = False
+
         except Exception, exception:
             import traceback
             tb = sys.exc_info()
@@ -172,10 +188,10 @@ class dm_workitem(osv.osv):
             self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'Exception: %s\n%s' % (str(exception), tb_s)})
             netsvc.Logger().notifyChannel('dm action', netsvc.LOG_ERROR, 'Exception: %s\n%s' % (str(exception), tb_s))
 
-        if done:
+        if done and not wi.is_preview:
             """ Check if it has to create next auto workitems """
             for tr in wi.step_id.outgoing_transition_ids:
-                if tr.condition_id.gen_next_wi:
+                if tr.condition_id and tr.condition_id.gen_next_wi:
 
                     """ Compute action time """
                     wi_action_time = datetime.datetime.strptime(wi.action_time, '%Y-%m-%d  %H:%M:%S')
@@ -198,7 +214,8 @@ class dm_workitem(osv.osv):
                     """
 
                     try:
-                        aw_id = self.copy(cr, uid, wi.id, {'step_id':tr.step_to_id.id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S')})
+                        aw_id = self.copy(cr, uid, wi.id, {'step_id':tr.step_to_id.id, 'tr_from_id':tr.id,
+                            'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S')})
                         netsvc.Logger().notifyChannel('dm action', netsvc.LOG_DEBUG, "Creating Auto Workitem %d with action at %s"% (aw_id,next_action_time.strftime('%Y-%m-%d  %H:%M:%S')))
                     except:
                         netsvc.Logger().notifyChannel('dm action', netsvc.LOG_ERROR, "Cannot create Auto Workitem")
@@ -218,6 +235,7 @@ class dm_workitem(osv.osv):
                 # To improve : log no action for mail service
                 return False
             res = server_obj.run(cr, uid, [camp_doc.mail_service_id.action_id.id], context)
+            print "Campaign Doc action :",res
             camp_res = self.pool.get('dm.campaign.document').read(cr, uid, [camp_doc.id], ['state'])[0]
             print "Camp doc State : ", camp_res['state']
             """ If no error occured during the document generation set state to done """
@@ -260,14 +278,14 @@ class dm_workitem(osv.osv):
                 """ Run campaign document action """
                 # To improve : Get result from mail_service_run
                 self.mail_service_run(cr, uid, camp_doc, context=context)
-                
+
             self.is_running = False
             return True
         return False
 
-dm_workitem()
+dm_workitem() # }}}
 
-class dm_customer_segmentation(osv.osv):
+class dm_customer_segmentation(osv.osv): # {{{
     _name = "dm.customer.segmentation"
     _description = "Segmentation"
 
@@ -331,31 +349,31 @@ class dm_customer_segmentation(osv.osv):
             self.set_customer_criteria(cr, uid, i)
         return id
 
-dm_customer_segmentation()
+dm_customer_segmentation() # }}}
 
-TEXT_OPERATORS = [
+TEXT_OPERATORS = [ # {{{
     ('like','like'),
     ('ilike','ilike'),
-]
+] # }}}
 
-NUMERIC_OPERATORS = [
+NUMERIC_OPERATORS = [ # {{{
     ('=','equals'),
     ('<','smaller then'),
     ('>','bigger then'),
-]
+] # }}}
 
-BOOL_OPERATORS = [
+BOOL_OPERATORS = [ # {{{
     ('is','is'),
     ('isnot','is not'),
-]
+] # }}}
 
-DATE_OPERATORS = [
+DATE_OPERATORS = [ # {{{
     ('=','equals'),
     ('<','before'),
     ('>','after'),
-]
+] # }}}
 
-class dm_customer_text_criteria(osv.osv):
+class dm_customer_text_criteria(osv.osv): # {{{
     _name = "dm.customer.text_criteria"
     _description = "Customer Segmentation Textual Criteria"
     _rec_name = "segmentation_id"
@@ -369,9 +387,9 @@ class dm_customer_text_criteria(osv.osv):
         'operator' : fields.selection(TEXT_OPERATORS, 'Operator', size=32),
         'value' : fields.char('Value', size=128),
     }
-dm_customer_text_criteria()
+dm_customer_text_criteria() # }}}
 
-class dm_customer_numeric_criteria(osv.osv):
+class dm_customer_numeric_criteria(osv.osv): # {{{
     _name = "dm.customer.numeric_criteria"
     _description = "Customer Segmentation Numeric Criteria"
     _rec_name = "segmentation_id"
@@ -385,9 +403,9 @@ class dm_customer_numeric_criteria(osv.osv):
         'operator' : fields.selection(NUMERIC_OPERATORS, 'Operator', size=32),
         'value' : fields.float('Value', digits=(16,2)),
     }
-dm_customer_numeric_criteria()
+dm_customer_numeric_criteria() # }}}
 
-class dm_customer_boolean_criteria(osv.osv):
+class dm_customer_boolean_criteria(osv.osv): # {{{
     _name = "dm.customer.boolean_criteria"
     _description = "Customer Segmentation Boolean Criteria"
     _rec_name = "segmentation_id"
@@ -401,9 +419,9 @@ class dm_customer_boolean_criteria(osv.osv):
         'operator' : fields.selection(BOOL_OPERATORS, 'Operator', size=32),
         'value' : fields.selection([('true','True'),('false','False')],'Value'),
     }
-dm_customer_boolean_criteria()
+dm_customer_boolean_criteria() # }}}
 
-class dm_customer_date_criteria(osv.osv):
+class dm_customer_date_criteria(osv.osv): # {{{
     _name = "dm.customer.date_criteria"
     _description = "Customer Segmentation Date Criteria"
     _rec_name = "segmentation_id"
@@ -417,9 +435,9 @@ class dm_customer_date_criteria(osv.osv):
         'operator' : fields.selection(DATE_OPERATORS, 'Operator', size=32),
         'value' : fields.date('Date'),
     }
-dm_customer_date_criteria()
+dm_customer_date_criteria() # }}}
 
-class dm_customer_order_text_criteria(osv.osv):
+class dm_customer_order_text_criteria(osv.osv): # {{{
     _name = "dm.customer.order.text_criteria"
     _description = "Customer Order Segmentation Textual Criteria"
     _rec_name = "segmentation_id"
@@ -433,9 +451,9 @@ class dm_customer_order_text_criteria(osv.osv):
         'operator' : fields.selection(TEXT_OPERATORS, 'Operator', size=32),
         'value' : fields.char('Value', size=128),
     }
-dm_customer_order_text_criteria()
+dm_customer_order_text_criteria() # }}}
 
-class dm_customer_order_numeric_criteria(osv.osv):
+class dm_customer_order_numeric_criteria(osv.osv): # {{{
     _name = "dm.customer.order.numeric_criteria"
     _description = "Customer Order Segmentation Numeric Criteria"
     _rec_name = "segmentation_id"
@@ -449,9 +467,9 @@ class dm_customer_order_numeric_criteria(osv.osv):
         'operator' : fields.selection(NUMERIC_OPERATORS, 'Operator', size=32),
         'value' : fields.float('Value', digits=(16,2)),
     }
-dm_customer_order_numeric_criteria()
+dm_customer_order_numeric_criteria() # }}}
 
-class dm_customer_order_boolean_criteria(osv.osv):
+class dm_customer_order_boolean_criteria(osv.osv): # {{{
     _name = "dm.customer.order.boolean_criteria"
     _description = "Customer Order Segmentation Boolean Criteria"
     _rec_name = "segmentation_id"
@@ -465,9 +483,9 @@ class dm_customer_order_boolean_criteria(osv.osv):
         'operator' : fields.selection(BOOL_OPERATORS, 'Operator', size=32),
         'value' : fields.selection([('true','True'),('false','False')],'Value'),
     }
-dm_customer_order_boolean_criteria()
+dm_customer_order_boolean_criteria() # }}}
 
-class dm_customer_order_date_criteria(osv.osv):
+class dm_customer_order_date_criteria(osv.osv): # {{{
     _name = "dm.customer.order.date_criteria"
     _description = "Customer Order Segmentation Date Criteria"
     _rec_name = "segmentation_id"
@@ -481,9 +499,9 @@ class dm_customer_order_date_criteria(osv.osv):
         'operator' : fields.selection(DATE_OPERATORS, 'Operator', size=32),
         'value' : fields.date('Date'),
     }
-dm_customer_order_date_criteria()
+dm_customer_order_date_criteria() # }}}
 
-class dm_offer_history(osv.osv):
+class dm_offer_history(osv.osv): # {{{
     _name = "dm.offer.history"
     _order = 'date'
     _columns = {
@@ -493,9 +511,9 @@ class dm_offer_history(osv.osv):
         'code' : fields.char('Code', size=16),
         'responsible_id' : fields.many2one('res.users','Responsible'),
     }
-dm_offer_history()
+dm_offer_history() # }}}
 
-class dm_event(osv.osv_memory):
+class dm_event(osv.osv_memory): # {{{
     _name = "dm.event"
     _rec_name = "segment_id"
 
@@ -520,7 +538,7 @@ class dm_event(osv.osv_memory):
         'sale_order_id' : lambda *a : False,
     }
 
-    def create(self,cr,uid,vals,context):
+    def create(self,cr,uid,vals,context={}):
         id = super(dm_event,self).create(cr,uid,vals,context)
         obj = self.browse(cr, uid ,id)
         tr_ids = self.pool.get('dm.offer.step.transition').search(cr, uid, [('step_from_id','=',obj.step_id.id),
@@ -554,12 +572,13 @@ class dm_event(osv.osv_memory):
 
         return id
 
-dm_event()
+dm_event() # }}}
 
-class sale_order(osv.osv):
+class sale_order(osv.osv): # {{{
     _name = "sale.order"
     _inherit = "sale.order"
     _columns ={
         'offer_step_id' : fields.many2one('dm.offer.step','Offer Step'),
+        'lines_number' : fields.integer('Number of sale order lines'),
     }
-sale_order()
+sale_order() # }}}

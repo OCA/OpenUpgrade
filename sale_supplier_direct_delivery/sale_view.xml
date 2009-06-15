@@ -30,6 +30,25 @@
 			</field>
 		</record>
 
+		<record model="ir.ui.view" id="view_sale_order_line_form_direct_delivery2">
+			<field name="name">sale.order.line.form.direct_delivery2</field>
+			<field name="model">sale.order.line</field>
+			<field name="inherit_id" ref="sale.view_order_line_form2" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<page string="Invoice Lines" position="after">
+					<page string="History">
+						<separator colspan="4" string="Supplier Direct Delivery" />
+						<field name="is_supplier_direct_delivery" />
+						<field name="is_supplier_direct_delivery_advised" />
+						<field name="purchase_order" readonly="1" />
+						<field name="purchase_order_line" readonly="1" />
+						<field name="purchase_order_state" readonly="1" />
+					</page>
+				</page>
+			</field>
+		</record>
+
 		<record model="ir.ui.view" id="view_sale_order_line_tree_direct_delivery">
 			<field name="name">sale.order.line.tree.direct_delivery</field>
 			<field name="model">sale.order</field>

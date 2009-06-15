@@ -26,7 +26,6 @@
 			<field name="name">start</field>
 			<field name="kind">function</field>
 			<field name="action">action_start_process()</field>
-			
 		</record>
 
 		<record id="act_pause" model="workflow.activity">
@@ -47,7 +46,7 @@
 			<field name="wkf_id" ref="wkf_job_process" />
 			<field name="name">exception</field>
 			<field name="kind">function</field>
-			<field name="action">test_process()</field>
+			<field name="action">action_open_process()</field>
 		</record>
 
 		<record id="act_stop" model="workflow.activity">
@@ -63,8 +62,7 @@
 			<field name="flow_stop">True</field>
 		</record>
 
-		<!-- TRANSISTIONS -->
-
+		<!--TRANSITIONS-->
 
 		<record id="trans_draft_open" model="workflow.transition">
 			<field name="act_from" ref="act_draft" />
@@ -78,25 +76,12 @@
 			<field name="signal">cancel</field>
 		</record>
 
-		<record id="trans_cancel_draft" model="workflow.transition">
-			<field name="act_from" ref="act_cancel" />
-			<field name="act_to" ref="act_draft" />
-		</record>
-
 		<record id="trans_open_start" model="workflow.transition">
 			<field name="act_from" ref="act_open" />
 			<field name="act_to" ref="act_start" />
 			<field name="signal">start_process</field>
-            <field name="condition">True</field>
 		</record>
 
-	<record id="trans_open_exception" model="workflow.transition">
-			<field name="act_from" ref="act_open" />
-			<field name="act_to" ref="act_exception" />
-			<field name="condition">not(test_process())</field>
-			
-		</record>
-		
 		<record id="trans_open_cancel" model="workflow.transition">
 			<field name="act_from" ref="act_open" />
 			<field name="act_to" ref="act_cancel" />
@@ -107,18 +92,6 @@
 			<field name="act_from" ref="act_start" />
 			<field name="act_to" ref="act_pause" />
 			<field name="signal">action_pause</field>
-		</record>
-
-		<record id="trans_start_end" model="workflow.transition">
-			<field name="act_from" ref="act_start" />
-			<field name="act_to" ref="act_end" />
-			<field name="condition">test_process()</field>
-		</record>
-		
-		<record id="trans_start_exception" model="workflow.transition">
-			<field name="act_from" ref="act_start" />
-			<field name="act_to" ref="act_exception" />
-			<field name="condition">not(test_process())</field>
 		</record>
 
 		<record id="trans_start_stop" model="workflow.transition">
@@ -133,6 +106,18 @@
 			<field name="signal">cancel</field>
 		</record>
 
+		<record id="trans_pause_exception" model="workflow.transition">
+			<field name="act_from" ref="act_pause" />
+			<field name="act_to" ref="act_exception" />
+			<field name="signal">action_pause</field>
+		</record>
+
+		<record id="trans_cancel_open" model="workflow.transition">
+			<field name="act_from" ref="act_cancel" />
+			<field name="act_to" ref="act_open" />
+			<field name="signal">restart_process</field>
+		</record>
+
 		<record id="trans_pause_stop" model="workflow.transition">
 			<field name="act_from" ref="act_pause" />
 			<field name="act_to" ref="act_stop" />
@@ -141,6 +126,24 @@
 
 		<record id="trans_pause_start" model="workflow.transition">
 			<field name="act_from" ref="act_pause" />
+			<field name="act_to" ref="act_start" />
+			<field name="signal">restart_process</field>
+		</record>
+
+		<record id="trans_start_exception" model="workflow.transition">
+			<field name="act_from" ref="act_start" />
+			<field name="act_to" ref="act_exception" />
+			<field name="condition">not(test_process())</field>
+		</record>
+
+		<record id="trans_exception_stop" model="workflow.transition">
+			<field name="act_from" ref="act_exception" />
+			<field name="act_to" ref="act_stop" />
+			<field name="signal">action_stop</field>
+		</record>
+
+		<record id="trans_exception_restart" model="workflow.transition">
+			<field name="act_from" ref="act_exception" />
 			<field name="act_to" ref="act_start" />
 			<field name="signal">start_process</field>
 		</record>
@@ -151,10 +154,22 @@
 			<field name="signal">cancel</field>
 		</record>
 
-		<record id="trans_exception_start" model="workflow.transition">
-			<field name="act_from" ref="act_exception" />
+		<record id="trans_start_end" model="workflow.transition">
+			<field name="act_from" ref="act_start" />
+			<field name="act_to" ref="act_end" />
+			<field name="condition">test_process()</field>
+		</record>
+
+		<record id="trans_stop_restart" model="workflow.transition">
+			<field name="act_from" ref="act_stop" />
 			<field name="act_to" ref="act_start" />
-			<field name="signal">start_process</field>
+			<field name="signal">restart_process</field>
+		</record>
+
+		<record id="trans_cancel_end" model="workflow.transition">
+			<field name="act_from" ref="act_cancel" />
+			<field name="act_to" ref="act_end" />
+			<field name="signal">action_stop</field>
 		</record>
 
 	</data>

@@ -38,6 +38,76 @@ class wiz_quality_check(osv.osv):
         'final_score': fields.char('Final Score (%)', size=10,),
         'test_ids' : fields.one2many('quality.check.detail', 'quality_check_id', 'Tests',)
     }
+
+    def check_quality(self, cr, uid, module_name, module_state=None):
+        '''
+        This function will calculate score of openerp module
+        It will return data in below format:
+            Format: {'final_score':'80.50', 'name': 'sale',
+                    'test_ids':
+                        [(0,0,{'name':'workflow_test', 'score':'100', 'ponderation':'0', 'summary': text_wiki format data, 'detail': html format data, 'state':'done', 'note':'XXXX'}),
+                        ((0,0,{'name':'terp_test', 'score':'60', 'ponderation':'1', 'summary': text_wiki format data, 'detail': html format data, 'state':'done', 'note':'terp desctioption'}),
+                         ..........]}
+        So here the detail result is in html format and summary will be in text_wiki format.
+        '''
+        #list_folders = os.listdir(config['addons_path']+'/base_module_quality/')
+        pool = pooler.get_pool(cr.dbname)
+        obj_module = pool.get('ir.module.module')
+        if not module_state:
+            module_id = obj_module.search(cr, uid, [('name', '=', module_name)])
+            if module_id:
+                module_state = obj_module.browse(cr, uid, module_id[0]).state
+
+        abstract_obj = base_module_quality.abstract_quality_check()
+        score_sum = 0.0
+        ponderation_sum = 0.0
+        create_ids = []
+        for test in abstract_obj.tests:
+            ad = tools.config['addons_path']
+            if module_name == 'base':
+                ad = tools.config['root_path']+'/addons'
+            module_path = os.path.join(ad, module_name)
+            val = test.quality_test()
+            if not val.bool_installed_only or module_state == "installed":
+                val.run_test(cr, uid, str(module_path))
+                if not val.error:
+                    data = {
+                        'name': val.name,
+                        'score': val.score * 100,
+                        'ponderation': val.ponderation,
+                        'summary': val.result,
+                        'detail': val.result_details,
+                        'state': 'done',
+                        'note': val.note,
+                    }
+                    score_sum += val.score * val.ponderation
+                    ponderation_sum += val.ponderation
+                else:
+                    data = {
+                        'name': val.name,
+                        'score': 0,
+                        'summary': val.result,
+                        'state': 'skipped',
+                        'note': val.note,
+                    }
+            else:
+                data = {
+                    'name': val.name,
+                    'note': val.note,
+                    'score': 0,
+                    'state': 'skipped',
+                    'summary': _("The module has to be installed before running this test.")
+                }
+            create_ids.append((0, 0, data))
+
+        final_score = '%.2f' % (score_sum / ponderation_sum * 100)
+        data = {
+            'name': module_name,
+            'final_score': final_score,
+            'test_ids' : create_ids,
+        }
+        return data
+
 wiz_quality_check()
 
 
@@ -60,59 +130,12 @@ class create_quality_check(wizard.interface):
 
     def _create_quality_check(self, cr, uid, data, context={}):
         pool = pooler.get_pool(cr.dbname)
+        obj_quality = pool.get('wizard.quality.check')
         objs = []
         for id in data['ids']:
             module_data = pool.get('ir.module.module').browse(cr, uid, id)
-            #list_folders = os.listdir(config['addons_path']+'/base_module_quality/')
-            abstract_obj = base_module_quality.abstract_quality_check()
-            score_sum = 0.0
-            ponderation_sum = 0.0
-            create_ids = []
-            for test in abstract_obj.tests:
-                ad = tools.config['addons_path']
-                if module_data.name == 'base':
-                    ad = tools.config['root_path']+'/addons'
-                module_path = os.path.join(ad, module_data.name)
-                val = test.quality_test()
-                if not val.bool_installed_only or module_data.state == "installed":
-                    val.run_test(cr, uid, str(module_path))
-                    if not val.error:
-                        data = {
-                            'name': val.name,
-                            'score': val.score * 100,
-                            'ponderation': val.ponderation,
-                            'summary': val.result,
-                            'detail': val.result_details,
-                            'state': 'done',
-                            'note': val.note,
-                        }
-                        score_sum += val.score * val.ponderation
-                        ponderation_sum += val.ponderation
-                    else:
-                        data = {
-                            'name': val.name,
-                            'score': 0,
-                            'summary': val.result,
-                            'state': 'skipped',
-                            'note': val.note,
-                        }
-                else:
-                    data = {
-                        'name': val.name,
-                        'note': val.note,
-                        'score': 0,
-                        'state': 'skipped',
-                        'summary': _("The module has to be installed before running this test.")
-                    }
-                create_ids.append((0, 0, data))
-
-            final_score = '%.2f' % (score_sum / ponderation_sum * 100)
-            data = {
-                'name': module_data.name,
-                'final_score': final_score,
-                'test_ids' : create_ids,
-            }
-            obj = pool.get('wizard.quality.check').create(cr, uid, data, context)
+            data = obj_quality.check_quality(cr, uid, module_data.name, module_data.state)
+            obj = obj_quality.create(cr, uid, data, context)
             objs.append(obj)
         return objs
 

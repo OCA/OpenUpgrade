@@ -26,6 +26,7 @@
     "depends" : [
         "account_base",
         "account",
+        "account_base",
     ],
     "author" : 'Tiny & Axelor',
     "description": """Accounting Base Properties Reports and Wizards,
@@ -40,7 +41,7 @@
     "demo_xml" : [
     ],
     "update_xml" : [
-        "account_sequence.xml",
+       "account_sequence.xml",
        "account_report.xml",
        "account_wizard.xml",
        "account_invoice_view.xml"

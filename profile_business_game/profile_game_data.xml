@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data noupdate="1">
+	    <record id="group_hr_invoice" model="res.groups">
+	        <field name="name">HR / Invoice</field>
+	    </record>
         <record id="account.user_finance" model="res.users">
             <field name="name">Financial Manager</field>
             <field name="login">finance</field>
@@ -12,7 +15,7 @@
             <field name="name">Human Resource Manager</field>
             <field name="login">hr</field>
             <field name="password">hr</field>
-            <field name="groups_id" eval="[(6,0,[ref('hr.group_hr_manager'),ref('purchase.group_purchase_manager'),ref('purchase.group_purchase_user'),ref('base.group_user'),ref('account.group_account_user'),ref('account.group_account_invoice')])]"/>
+            <field name="groups_id" eval="[(6,0,[ref('hr.group_hr_manager'),ref('purchase.group_purchase_manager'),ref('purchase.group_purchase_user'),ref('base.group_user'),ref('account.group_account_user'),ref('group_hr_invoice')])]"/>
             <field name="roles_id" eval="[(6,0,[ref('purchase.res_roles_purchase0'),ref('account.res_roles_invoice0')])]"/>
         </record>
         <record id="stock.user_logistic" model="res.users">
@@ -83,6 +86,7 @@
             <field name="model">purchase.order</field>
             <field name="value">S'manual'p0.</field>
         </record>
+<!-- Menus -->
 
     </data>
 </openerp>
