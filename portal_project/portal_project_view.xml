@@ -337,8 +337,8 @@
 						<button icon="terp-partner" name="%(act_hr_timesheet_sheet_portal_form)d" string="Timesheets" type="action"/>
 						</group>
 						<newline/>
-						<group  colspan="2" col="2">
-							<button icon="terp-partner" name="%(act_financial_portal_form)d" string="Financial Data" type="action"/>
+						<group colspan="2" col="2">
+							<button icon="terp-partner" name="%(act_financial_portal_form)d" string="Financial Data" type="action" groups="account.group_account_manager"/>
 	                    	<button icon="terp-partner" name="%(portal_project_event_configuration_action)d" string="Configuration" type="action"/>
 	                    </group>
 	                </group>
@@ -978,6 +978,37 @@
 	        <field name="act_window_id" ref="view_crm_announce_portal"/>
 	    </record>
 	    <menuitem  id="menu_view_portal_crm_announce_view" action="view_crm_announce_portal" parent="menu_portal"/>
+	    
+	    
+	    <record id="open_portal_user_project" model="ir.actions.act_window">
+            <field name="name">All Projects</field>
+            <field name="res_model">project.project</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="project.view_project"/>
+            <field name="search_view_id" ref="project.view_project_project_filter"/>
+        </record>
+	    <menuitem name="All Projects" id="menu_view_portal_user_project" action="open_portal_user_project" parent="menu_portal"/>
+	    
+	    <record id="open_portal_user_project_task" model="ir.actions.act_window">
+            <field name="name">All Tasks</field>
+            <field name="res_model">project.task</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="project.view_task_tree2"/>
+            <field name="search_view_id" ref="project.view_task_search_form"/>
+        </record>
+	    <menuitem name="All Tasks" id="menu_view_portal_user_project_task" action="open_portal_user_project_task" parent="menu_portal"/>
+	    
+	    <record id="open_portal_user_case" model="ir.actions.act_window">
+            <field name="name">All Cases</field>
+            <field name="res_model">crm.case</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="crm.crm_case_tree-view"/>
+            <field name="search_view_id" ref="crm.view_crm_case_filter"/>
+        </record>
+	    <menuitem name="All Cases" id="menu_view_portal_user_case" action="open_portal_user_case" parent="menu_portal"/>
 
     </data>
 </openerp>
