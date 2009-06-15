@@ -14,12 +14,6 @@
 			<field name="global" eval="False"/>
 		</record>
 
-		<record model="ir.rule.group" id="project_case_rule_group">
-			<field name="name">Portal case rule</field>
-			<field name="model_id" search="[('model','=','crm.case')]" model="ir.model"/>
-			<field name="global" eval="False"/>
-		</record>
-
 		<record model="ir.rule" id="task_rule">
 			<field name="field_id" search="[('model','=','project.task'),('name','=','project_id')]" model="ir.model.fields"/>
 			<field name="operator">=</field>
@@ -36,17 +30,9 @@
 			<field name="rule_group" ref="project_rule_group"/>
 		</record>
 
-		<record model="ir.rule" id="case_rule">
-			<field name="field_id" search="[('model','=','crm.case'),('name','=','project_id')]" model="ir.model.fields"/>
-			<field name="operator">in</field>
-			<field name="operand">user.id</field>
-			<field eval="'[(\'project_id.members\',\'in\',[user.id])]'" name="domain_force"/>
-			<field name="rule_group" ref="project_case_rule_group"/>
-		</record>
-
 		<record model="res.groups" id="portal_project_group">
 			<field name="name">Portal Project group</field>
-			<field name="rule_groups" eval="[(4,ref('project_rule_group'),ref('project_task_rule_group'),ref('project_case_rule_group'))]"/>
+			<field name="rule_groups" eval="[(4,ref('project_rule_group'),ref('project_task_rule_group'))]"/>
 <!--			<field name="menu_access" eval="[(6,0,[ref('menu_portal_project_project'),ref('menu_portal_project_project_all'),ref('menu_portal_project_task_all'),ref('menu_portal_project_case_all')])]"/>-->
 		</record>
 
