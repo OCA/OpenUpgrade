@@ -30,8 +30,15 @@ def next_step(context):
     model = 'sale.order.line'
     if index and model_list and index < len(model_list):
         model = model_list[index]
-    
-    if model == 'sale.order.line':
+        return {
+                'view_type': 'form',
+                "view_mode": 'form',
+                'res_model': model,
+                'type': 'ir.actions.act_window',
+                'target':'new',
+                'context': context,
+            }
+    else:
         if context.get('active_id_object_type', False) == 'sale.order.line':
             return {
                     'type': 'ir.actions.act_window_close',
@@ -40,22 +47,14 @@ def next_step(context):
             return {
                     'view_type': 'form',
                     "view_mode": 'form',
-                    'res_model': model,
+                    'res_model': 'sale.order.line',
                     'type': 'ir.actions.act_window',
                     'target':'new',
                     'res_id': context.get('sol_id', False),
                     'buttons': True,
                     'context': context,
                 }
-    else:
-        return {
-                'view_type': 'form',
-                "view_mode": 'form',
-                'res_model': model,#'sale_product_multistep_configurator', #'ir.actions.configuration.wizard',
-                'type': 'ir.actions.act_window',
-                'target':'new',
-                'context': context,
-            }
+        
 
 
 class sale_product_multistep_configurator_configurator(osv.osv_memory):
