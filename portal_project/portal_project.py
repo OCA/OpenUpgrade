@@ -87,49 +87,48 @@ class project_project(osv.osv):
             result[proj['id']]['tasks'] = str(proj['count']) + ' opens, ' + str(proj['hours']) + ' remaining'
 
         #======================================Bug, Features ,support request====================================================
-        cr.execute('select p.id, count(c.id), p.name from project_project as p, \
-                    crm_case as c, project_task as t where t.case_id=c.id \
-                    and p.id=t.project_id and p.section_bug_id=c.section_id \
-                    and p.id in ('+ids+') group by p.id,p.name')
-        for bug in cr.dictfetchall():
-            result[bug['id']]['bugs'] = str(bug['count']) + ' Total '
         cr.execute('select p.id, count(c.id),c.state,p.name from project_project as  p, \
                     crm_case as c, project_task as t where t.case_id=c.id and p.id=t.project_id \
                     and p.section_bug_id=c.section_id and p.id in ('+ids+') and c.state=%s  \
                     group by p.id,p.name,c.state', ('open',))
         res_bug = cr.dictfetchall()
         for bug in res_bug:
-            result[bug['id']]['bugs'] = result[bug['id']]['bugs'] + str(bug['count']) + ' open'
-
-
+            result[bug['id']]['bugs'] = result[bug['id']]['bugs'] + str(bug['count']) + ' Open '
         cr.execute('select p.id, count(c.id), p.name from project_project as p, \
-                    crm_case as c, project_task as t where t.case_id=c.id  \
-                    and p.id=t.project_id and p.section_feature_id=c.section_id \
+                    crm_case as c, project_task as t where t.case_id=c.id \
+                    and p.id=t.project_id and p.section_bug_id=c.section_id \
                     and p.id in ('+ids+') group by p.id,p.name')
-        for feature in cr.dictfetchall():
-            result[feature['id']]['features'] = str(feature['count']) + ' Total '
+        for bug in cr.dictfetchall():
+            result[bug['id']]['bugs'] = result[bug['id']]['bugs'] +  str(bug['count'])  +  ' Total'
+        
         cr.execute('select p.id, count(c.id),c.state,p.name from project_project as  p, \
                     crm_case as c, project_task as t where t.case_id=c.id  \
                     and p.id=t.project_id and p.section_feature_id=c.section_id \
                     and p.id in ('+ids+') and c.state=%s group by p.id,p.name,c.state', ('open',))
         res_fet = cr.dictfetchall()
         for feature in res_fet:
-            result[feature['id']]['features'] = result[feature['id']]['features'] + str(feature['count']) + ' open'
-
-
+            result[feature['id']]['features'] = result[feature['id']]['features'] + str(feature['count']) + ' Open '
         cr.execute('select p.id, count(c.id), p.name from project_project as p, \
-                    crm_case as c, project_task as t where t.case_id=c.id \
-                    and p.id=t.project_id and p.section_support_id=c.section_id \
+                    crm_case as c, project_task as t where t.case_id=c.id  \
+                    and p.id=t.project_id and p.section_feature_id=c.section_id \
                     and p.id in ('+ids+') group by p.id,p.name')
-        for support in cr.dictfetchall():
-            result[support['id']]['support_req'] = str(support['count']) + ' Total '
+        for feature in cr.dictfetchall():
+            result[feature['id']]['features'] = result[feature['id']]['features'] + str(feature['count']) + ' Total'
+                    
         cr.execute('select p.id, count(c.id),c.state,p.name from project_project as  p, \
                     crm_case as c, project_task as t where t.case_id=c.id \
                     and p.id=t.project_id and p.section_support_id=c.section_id \
                     and p.id in ('+ids+') and c.state=%s group by p.id,p.name,c.state', ('open',))
         res_sup = cr.dictfetchall()
         for support in res_sup:
-            result[support['id']]['support_req'] = result[support['id']]['support_req'] + str(support['count']) + ' open'
+            result[support['id']]['support_req'] = result[support['id']]['support_req'] + str(support['count']) + ' Open '
+        cr.execute('select p.id, count(c.id), p.name from project_project as p, \
+                    crm_case as c, project_task as t where t.case_id=c.id \
+                    and p.id=t.project_id and p.section_support_id=c.section_id \
+                    and p.id in ('+ids+') group by p.id,p.name')
+        for support in cr.dictfetchall():
+            result[support['id']]['support_req'] = result[support['id']]['support_req'] + str(support['count']) + ' Total'
+        
         #==========================================================================================
 
         # Number of doument attach in project and its tasks
