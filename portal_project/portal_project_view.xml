@@ -324,7 +324,16 @@
                             </form>
                         </field>
                         <newline/>
-	                    <field name="member_ids" nolabel="1" colspan="2" height="200" readonly="1"/>
+                        <field name="member_ids" nolabel="1" colspan="2" height="200" readonly="1">
+                  			<tree string="Members" editable="top">
+                  				<field name="name"/>
+                            	<field name="login"/>
+	                		</tree>
+	                		<form string="Members" editable="top">
+	                			<field name="name"/>
+                            	<field name="login"/>
+	                		</form>
+	                	</field>
 	                </group>
 	                </child1>
 	                <child2>
@@ -457,9 +466,13 @@
             				<field name="category2_id" colspan="2" string="Version"/>
             			</group>
             			<newline/>
+            			<group colspan="2">
             			<field name="description" nolabel="1" colspan="2"/>
+            			</group>
             			<newline/>
-            			<button name="%(crm_case_categ_act_new_portal)d" string="Save New Bug" type="action"/>
+            			<group col="100" colspan="2">
+            			<button name="%(crm_case_categ_act_new_portal)d" string="Save New Bug" type="action" />
+	            		</group>
 	            		<newline/>
 	            		<separator string="Information" colspan="2"/>
 	            		<newline/>
@@ -482,7 +495,7 @@
 	            </hpaned>
 	            <hpaned>
 	            	<child1>
-	            		<field name="bug_ids" nolabel="1" readonly="True" >
+	            		<field name="bug_ids" nolabel="1" colspan="2" height="200" readonly="True" >
 	            			<tree string="Latest Bugs Reported">
 	            				<field name="name"/>
                                 <field name="date"/>
@@ -612,7 +625,9 @@
             			<newline/>
             			<field name="description" nolabel="1" colspan="2"/>
             			<newline/>
+            			<group col="100" colspan="2">
             			<button name="%(crm_case_categ_act_new_portal)d" string="Save Feature" type="action"/>
+	            		</group>
 	            		<newline/>
 	            		<separator string="Information" colspan="2"/>
 	            		<newline/>
@@ -636,7 +651,7 @@
 	            </hpaned>
 	            <hpaned>
 	            	<child1>
-	            		<field name="feature_ids" nolabel="1" widget="one2many" readonly="True">
+	            		<field name="feature_ids" nolabel="1" colspan="2" height="200" readonly="True">
 	            			<tree string="Latest Features">
 	            				<field name="name"/>
                                 <field name="date"/>
@@ -763,7 +778,9 @@
             			<newline/>
             			<field name="description" nolabel="1" colspan="2"/>
             			<newline/>
+            			<group col="100" colspan="2">
             			<button name="%(crm_case_categ_act_new_portal)d" string="Save Support Request" type="action"/>
+	            		</group>
 	            		<newline/>
 	            		<separator string="Information" colspan="2"/>
 	            		<newline/>
@@ -787,7 +804,7 @@
 	            </hpaned>
 	            <hpaned>
 	            	<child1>
-	            		<field name="support_ids" nolabel="1" widget="one2many" readonly="True" >
+	            		<field name="support_ids" nolabel="1" colspan="2" height="200" readonly="True" >
 	            			<tree string="Latest Supports">
 	            				<field name="name"/>
                                 <field name="date"/>
@@ -914,7 +931,9 @@
             			<newline/>
             			<field name="description" nolabel="1" colspan="2"/>
             			<newline/>
+            			<group col="100" colspan="2">
             			<button name="%(crm_case_categ_announce_new)d" string="Save Announce" type="action"/>
+	            		</group>
 	            		<newline/>
 	            		<separator string="Information" colspan="2"/>
 	            		<newline/>
@@ -938,7 +957,7 @@
 	            </hpaned>
 	            <hpaned>
 	            	<child1>
-	            		<field name="announce_ids" nolabel="1" widget="one2many" readonly="True">
+	            		<field name="announce_ids" nolabel="1" colspan="2" height="200" readonly="True">
 	            			<tree string="Latest Announces">
 	            				<field name="name"/>
                                 <field name="date"/>
