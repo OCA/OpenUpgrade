@@ -21,7 +21,10 @@
 ##############################################################################
 {
     "name" : "BoM Customization",
-    "description":"""TODO!""",
+    "description":"""Allows to customize BoM lines keys from the sale order level to the production order.
+An example usage is custom color painting once the product is assembled.
+Might not work well in the web-client due to web-client current limitations.
+""",
     "version" : "0.5",
     "author" : "Smile.fr",
     "website": "http://www.smile.fr",
