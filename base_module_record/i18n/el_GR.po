@@ -1,4 +1,3 @@
-# Translation of OpenERP Server.
 # This file contains the translation of the following modules:
 # 	* base_module_record
 #
@@ -6,19 +5,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
-"PO-Revision-Date: 2009-05-30 01:44+0200\n"
+"POT-Creation-Date: 2009-02-06 15:20:37+0000\n"
+"PO-Revision-Date: 2009-06-13 03:36+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
-"Language-Team: \n"
+"Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-
-#. module: base_module_record
-#: model:ir.module.module,shortdesc:base_module_record.module_meta_information
-msgid "Module Recorder"
-msgstr "Αντιγραφέας Υπο-Προγραμμάτων"
+"X-Poedit-Language: Greek\n"
+"X-Poedit-Country: GREECE\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #. module: base_module_record
 #: wizard_field:base_module_record.module_record_objects,intro,category:0
@@ -116,13 +112,13 @@ msgstr "Στάδιο"
 #: wizard_view:base_module_record.module_save,init:0
 #: wizard_view:base_module_record.module_save,save:0
 msgid "Module Recording"
-msgstr "Εγγραφή Υπο-Προγράμματος"
+msgstr "Εγγραφή Αρθρώματος"
 
 #. module: base_module_record
 #: model:ir.actions.wizard,name:base_module_record.wizard_base_module_record_objects
 #: model:ir.ui.menu,name:base_module_record.menu_wizard_base_module_record_objects
 msgid "Export Customizations As a Module"
-msgstr "Εξαγωγή Προσαρμογών σαν Υπο-Πρόγραμμα"
+msgstr "Αποθήκευση Προσαρμογών σε μορφή Αρθρώματος"
 
 #. module: base_module_record
 #: wizard_view:base_module_record.module_record_objects,save:0
@@ -156,7 +152,7 @@ msgstr "Πλήρης Περιγραφή"
 #: wizard_field:base_module_record.module_record_objects,intro,name:0
 #: wizard_field:base_module_record.module_save,info,name:0
 msgid "Module Name"
-msgstr "Όνομα Υπό-Προγράμματος"
+msgstr "Όνομα Αρθρώματος"
 
 #. module: base_module_record
 #: wizard_field:base_module_record.module_record_objects,init,objects:0
@@ -167,7 +163,7 @@ msgstr "Αντικείμενα"
 #: wizard_field:base_module_record.module_record_objects,save,module_file:0
 #: wizard_field:base_module_record.module_save,save,module_file:0
 msgid "Module .zip File"
-msgstr "Αρχείο .zip Υπό-Προγράμματος"
+msgstr "Αρχείο .zip Αρθρώματος"
 
 #. module: base_module_record
 #: wizard_view:base_module_record.module_record,start:0
@@ -178,7 +174,7 @@ msgstr "Πληροφορίες εγγραφής"
 #: wizard_view:base_module_record.module_record_objects,save:0
 #: wizard_view:base_module_record.module_save,save:0
 msgid "Module successfully created !"
-msgstr "Το Υπό-Πρόγραμμα δημιουργήθηκε επιτυχώς!"
+msgstr "Το Άρθρωμα δημιουργήθηκε επιτυχώς!"
 
 #. module: base_module_record
 #: wizard_view:base_module_record.module_record,start:0
@@ -194,7 +190,7 @@ msgstr "Δημιουργημένο"
 #: wizard_view:base_module_record.module_record_objects,end:0
 #: wizard_view:base_module_record.module_save,end:0
 msgid "Thanks For using Module Recorder"
-msgstr "Ευχαριστούμε που χρησιμοποιήσατε το Αντιγραφέα Υπο-Προγραμμάτων"
+msgstr "Ευχαριστούμε που χρησιμοποιήσατε τον Αντιγραφέα Αρθρώματος"
 
 #. module: base_module_record
 #: wizard_field:base_module_record.module_record,start,continue:0
@@ -231,6 +227,12 @@ msgid "Continue"
 msgstr "Συνέχεια"
 
 #. module: base_module_record
+#: model:ir.module.module,shortdesc:base_module_record.module_meta_information
+#: model:ir.ui.menu,name:base_module_record.menu_wizard_base_mod_rec_rec
+msgid "Module Recorder"
+msgstr "Αντιγραφέας Αρθρώματος"
+
+#. module: base_module_record
 #: selection:base_module_record.module_record_objects,intro,data_kind:0
 #: selection:base_module_record.module_save,info,data_kind:0
 msgid "Normal Data"
@@ -250,10 +252,10 @@ msgid ""
 "publish it on OpenERP.com, in the 'Modules' section. You can do it through "
 "the website or using features of the 'base_module_publish' module."
 msgstr ""
-"Αν νομίζετε ότι το Υπό-Πρόγραμμά σας μπορεί να ενδιαφέρει και άλλους, σας "
-"παροτρύνουμε να το δημοσιεύσετε στο OpenERP.com, στο 'Modules' section. "
+"Αν νομίζετε ότι το Άρθρωμά σας μπορεί να ενδιαφέρει και άλλους, σας "
+"παροτρύνουμε να τη δημοσιεύσετε στο OpenERP.com, στο 'Modules' section. "
 "Μπορείτε να το κάνετε μέσω της ιστοσελίδας ή χρησιμοποιώντας τις λειτουργίες "
-"του Υπό-Προγράμματος 'base_module_publish'."
+"της Ενότητας 'base_module_publish'."
 
 #. module: base_module_record
 #: wizard_view:base_module_record.module_record,start:0
@@ -262,21 +264,20 @@ msgid ""
 "ERP client and save them as a module. You will be able to install this "
 "module on any database to reuse and/or publish it."
 msgstr ""
-"Ο Αντιγραφέας Υπο-Προγραμμάτων σας επιτρέπει να αντιγράψετε κάθε εργασία που "
-"γίνεται μέσω του Open ERP και να το αποθηκεύσετε σαν Υπό-Πρόγραμμα. "
-"Μπορείτε, μετά, να εγκαταστήσετε αυτό το Υπό-Πρόγραμμα σε οποιαδήποτε άλλη "
-"βάση δεδομένων του Open ERP για να τα χρησιμοποιείτε ή/και να το "
-"δημοσιεύσετε."
+"Ο Αντιγραφέας Αρθρώματος σας επιτρέπει να αντιγράψετε κάθε εργασία που "
+"γίνεται μέσω του Open ERP και να την αποθηκεύσετε σαν Άρθρωμα. Μπορείτε, "
+"μετά, να εγκαταστήσετε αυτό το Άρθρωμά σας σε οποιαδήποτε άλλη βάση "
+"δεδομένων του Open ERP για να τη χρησιμοποιείσετε ή/και να το δημοσιεύσετε."
 
 #. module: base_module_record
 #: model:ir.actions.wizard,name:base_module_record.wizard_base_module_record
 msgid "Record module"
-msgstr "Εγγραφή Υπό-Προγράμματος"
+msgstr "Εγγραφή Αρθρώματος"
 
 #. module: base_module_record
 #: model:ir.ui.menu,name:base_module_record.menu_wizard_base_mod_rec
 msgid "Module Creation"
-msgstr "Δημιουργία Υπό-Προγράμματος"
+msgstr "Δημιουργία Αρθρώματος"
 
 #. module: base_module_record
 #: wizard_view:base_module_record.module_record,stop:0
@@ -295,21 +296,20 @@ msgstr "Τύπος Δεδομένων"
 #: wizard_view:base_module_record.module_record_objects,intro:0
 #: wizard_view:base_module_record.module_save,info:0
 msgid "Module Information"
-msgstr "Πληροφορίες Υπό-Προγράμματος"
+msgstr "Πληροφορίες Αρθρώματος"
 
 #. module: base_module_record
 #: model:ir.actions.wizard,name:base_module_record.wizard_base_module_save
 #: model:ir.ui.menu,name:base_module_record.menu_wizard_base_module_save
 msgid "Save Recorded Module"
-msgstr "Αποθήκευση Εγγεγραμένου Υπό-Προγράμματος"
+msgstr "Αποθήκευση Εγγεγραμένου Αρθρώματος "
 
 #. module: base_module_record
 #: wizard_view:base_module_record.module_record,stop:0
 msgid ""
 "Open ERP recording is stopped. Don't forget to save the recorded module."
 msgstr ""
-"Η εγγραφή έχει σταματήσει. Μπορείτε να αποθηκεύσετε το αντεγραμμένο Υπό-"
-"Πρόγραμμα."
+"Η εγγραφή έχει σταματήσει. Μπορείτε να αποθηκεύσετε το Εγγεγραμένο Άρθρωμα ."
 
 #. module: base_module_record
 #: wizard_button:base_module_record.module_record,start,end:0

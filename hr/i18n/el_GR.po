@@ -1,20 +1,21 @@
 # Translation of OpenERP Server.
-# This file containt the translation of the following modules:
+# This file contains the translation of the following modules:
 # 	* hr
 #
-# Copyright (C) 2008,2009 P. Christeas <p_christ@hol.gr>
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
+"Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
-"PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
-"Last-Translator: P. Christeas <p_christ@hol.gr>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"PO-Revision-Date: 2009-06-15 02:48+0200\n"
+"Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
+"Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Greek\n"
+"X-Poedit-Country: GREECE\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #. module: hr
 #: model:process.node,name:hr.process_node_openerpuser0
@@ -29,6 +30,11 @@ msgid "Working Time Categories"
 msgstr "Ωράρια Εργασίας"
 
 #. module: hr
+#: constraint:hr.department:0
+msgid "Error! You can not create recursive departments."
+msgstr "Σφάλμα! Υπάρχει ήδη τμήμα με την ίδια περιγραφή! "
+
+#. module: hr
 #: field:hr.employee,sinid:0
 msgid "SIN No"
 msgstr "Αριθμός Ασφαλισμένου"
@@ -37,22 +43,12 @@ msgstr "Αριθμός Ασφαλισμένου"
 #: model:ir.module.module,shortdesc:hr.module_meta_information
 #: model:ir.ui.menu,name:hr.menu_hr_root
 msgid "Human Resources"
-msgstr "Ανθρώπινο Δυναμικό"
+msgstr "Διαχείριση Ανθρωπίνων Πόρων"
 
 #. module: hr
 #: selection:hr.timesheet,dayofweek:0
 msgid "Sunday"
 msgstr "Κυριακή"
-
-#. module: hr
-#: view:res.users:0
-msgid "Parents"
-msgstr ""
-
-#. module: hr
-#: constraint:ir.actions.act_window:0
-msgid "Invalid model name in the action definition."
-msgstr ""
 
 #. module: hr
 #: view:hr.department:0
@@ -155,7 +151,7 @@ msgstr "Τοποθεσία γραφείου"
 #: model:ir.model,name:hr.model_hr_employee
 #: model:process.node,name:hr.process_node_employee0
 msgid "Employee"
-msgstr "Εργαζόμενος"
+msgstr "Υπάλληλος"
 
 #. module: hr
 #: field:hr.timesheet.group,manager:0
@@ -190,7 +186,7 @@ msgstr "Συμπληρώστε στοιχεία επαφής"
 #. module: hr
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
-msgstr "Invalid XML for View Architecture!"
+msgstr "Άκυρο XML για Αρχιτεκτονική Όψης!"
 
 #. module: hr
 #: selection:hr.employee,marital:0
@@ -300,7 +296,12 @@ msgstr "Ημερ/νία Γέννησης"
 #. module: hr
 #: field:hr.employee,active:0
 msgid "Active"
-msgstr "Ενεργός"
+msgstr "Ενεργό"
+
+#. module: hr
+#: constraint:hr.employee:0
+msgid "Error ! You cannot create recursive Hierarchy of Employees."
+msgstr "Σφάλμα! Υπάρχει ήδη ιεραρχία με την ίδια περιγραφή! "
 
 #. module: hr
 #: model:process.process,name:hr.process_process_employeecontractprocess0
@@ -336,12 +337,7 @@ msgstr "Κατηγορίες Υπαλλήλων"
 #. module: hr
 #: field:hr.timesheet,date_from:0
 msgid "Starting date"
-msgstr "Ημερομηνία έναρξης"
-
-#. module: hr
-#: field:res.users,parent_id:0
-msgid "Parent Users"
-msgstr ""
+msgstr "Ημερ/νία Εκκίνησης"
 
 #. module: hr
 #: field:hr.employee,address_id:0
@@ -351,7 +347,7 @@ msgstr "Διεύθυνση Εργασίας"
 #. module: hr
 #: field:hr.employee,marital:0
 msgid "Marital Status"
-msgstr "Οικογενειακή Κατάσταση"
+msgstr "Έγγαμος/η; "
 
 #. module: hr
 #: model:ir.model,name:hr.model_hr_timesheet
@@ -419,7 +415,7 @@ msgstr "Άλλα έγγραφα"
 #. module: hr
 #: field:hr.timesheet,name:0
 msgid "Name"
-msgstr "Ονομασία"
+msgstr "Όνομα"
 
 #. module: hr
 #: field:hr.employee,gender:0
@@ -475,8 +471,17 @@ msgstr "Σάββατο"
 msgid "New Employee"
 msgstr "Νέος Υπάλληλος"
 
-#~ msgid "Error! You can not create recursive departments."
-#~ msgstr "Σφάλμα! Υπάρχει ήδη τμήμα με την ίδια περιγραφή!"
+#. module: hr
+#: view:res.users:0
+msgid "Parents"
+msgstr ""
 
-#~ msgid "Error ! You cannot create recursive Hierarchy of Employees."
-#~ msgstr "Σφάλμα! Υπάρχει ήδη ιεραρχία με την ίδια περιγραφή!"
+#. module: hr
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
+
+#. module: hr
+#: field:res.users,parent_id:0
+msgid "Parent Users"
+msgstr ""

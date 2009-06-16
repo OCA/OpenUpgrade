@@ -1,19 +1,21 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-# 	* hr_holidays
+#	* hr_holidays
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
-"PO-Revision-Date: 2009-05-18 01:38+0200\n"
+"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"PO-Revision-Date: 2009-06-15 02:49+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
-"Language-Team: \n"
+"Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"X-Poedit-Language: Greek\n"
+"X-Poedit-Country: GREECE\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #. module: hr_holidays
 #: model:ir.ui.menu,name:hr_holidays.menu_open_ask_holidays_new
@@ -24,11 +26,6 @@ msgstr "Νέα αίτηση Αδείας"
 #: model:ir.ui.menu,name:hr_holidays.menu_action_all_holiday
 msgid "All Holidays Requests"
 msgstr "Όλες οι Αίτήσεις Αδείας"
-
-#. module: hr_holidays
-#: constraint:ir.actions.act_window:0
-msgid "Invalid model name in the action definition."
-msgstr ""
 
 #. module: hr_holidays
 #: field:hr.holidays.per.user,remaining_leaves:0
@@ -61,10 +58,16 @@ msgid "Off-Days' Summary"
 msgstr "Ρεπό Συνοπτικά"
 
 #. module: hr_holidays
-#: view:hr.holidays:0 view:hr.holidays.per.user:0
+#: view:hr.holidays:0
 #: model:process.transition,name:hr_holidays.process_transition_employeeholidays0
 msgid "Employee Holidays"
 msgstr "Άδειες Υπαλλήλων"
+
+#. module: hr_holidays
+#: code:addons/hr_holidays/hr.py:0
+#, python-format
+msgid "Warning !"
+msgstr "Προσοχή!"
 
 #. module: hr_holidays
 #: view:hr.holidays:0
@@ -72,7 +75,6 @@ msgid "Set to Draft"
 msgstr "Ορισμός ως Πρόχειρο"
 
 #. module: hr_holidays
-#: view:hr.holidays.per.user:0 field:hr.holidays.per.user,holiday_ids:0
 #: model:ir.model,name:hr_holidays.model_hr_holidays
 #: model:process.node,name:hr_holidays.process_node_holidays0
 msgid "Holidays"
@@ -99,7 +101,8 @@ msgid "Employee Declaration"
 msgstr "Δήλωση Υπαλλήλου"
 
 #. module: hr_holidays
-#: view:hr.holidays:0 selection:hr.holidays,state:0
+#: view:hr.holidays:0
+#: selection:hr.holidays,state:0
 #: model:process.transition.action,name:hr_holidays.process_transition_action_validate0
 msgid "Validate"
 msgstr "Επικύρωση"
@@ -136,12 +139,14 @@ msgid "My Holidays Requests"
 msgstr "Οι Αιτήσεις Αδείας μου"
 
 #. module: hr_holidays
-#: field:hr.holidays,notes:0 field:hr.holidays.per.user,notes:0
+#: field:hr.holidays,notes:0
+#: field:hr.holidays.per.user,notes:0
 msgid "Notes"
 msgstr "Σημειώσεις"
 
 #. module: hr_holidays
-#: field:hr.holidays,holiday_status:0 field:hr.holidays.log,holiday_status:0
+#: field:hr.holidays,holiday_status:0
+#: field:hr.holidays.log,holiday_status:0
 #: field:hr.holidays.per.user,holiday_status:0
 msgid "Holiday's Status"
 msgstr "Κατάσταση Αδειών"
@@ -212,6 +217,7 @@ msgid "Define holiday status"
 msgstr "Ορισμός κατάστασης άδειας"
 
 #. module: hr_holidays
+#: selection:hr.holidays,state:0
 #: selection:hr.holidays.summary,init,holiday_type:0
 #: selection:hr.holidays.summary.employee,init,holiday_type:0
 msgid "Confirmed"
@@ -230,7 +236,6 @@ msgid "Confirm"
 msgstr "Επιβεβαίωση"
 
 #. module: hr_holidays
-#: model:ir.actions.act_window,name:hr_holidays.action_my_holiday_waiting
 #: model:ir.ui.menu,name:hr_holidays.menu_action_my_holiday_waiting
 msgid "My Awaiting Confirmation Holidays Requests"
 msgstr "Οι Αιτήσεις Αδείας μου προς επιβεβαίωση "
@@ -246,16 +251,11 @@ msgid "Encoding of annual available holidays."
 msgstr "Κωδικοποίηση διαθέσιμων ετησίων αδειών."
 
 #. module: hr_holidays
-#: field:hr.holidays,employee_id:0 field:hr.holidays.log,employee_id:0
+#: field:hr.holidays,employee_id:0
+#: field:hr.holidays.log,employee_id:0
 #: field:hr.holidays.per.user,employee_id:0
 msgid "Employee"
 msgstr "Υπάλληλος"
-
-#. module: hr_holidays
-#: selection:hr.holidays,state:0
-#, fuzzy
-msgid "Waiting Validation"
-msgstr "Αιτήσεις προς επικύρωση"
 
 #. module: hr_holidays
 #: model:process.transition,note:hr_holidays.process_transition_employeeholidays0
@@ -283,7 +283,7 @@ msgid "My Holiday Requests"
 msgstr "Οι Αιτήσεις μου "
 
 #. module: hr_holidays
-#: view:hr.holidays:0 view:hr.holidays.per.user:0
+#: view:hr.holidays:0
 msgid "Number of Days"
 msgstr "Ημέρες"
 
@@ -303,7 +303,7 @@ msgstr "Επιλογές Αναφοράς"
 #. module: hr_holidays
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
-msgstr "Invalid XML for View Architecture!"
+msgstr "Άκυρο XML για Αρχιτεκτονική Όψης!"
 
 #. module: hr_holidays
 #: model:process.node,note:hr_holidays.process_node_approved0
@@ -454,67 +454,40 @@ msgstr "Χρώμα Κατάστασης"
 msgid ""
 "Human Ressources: Holidays tracking and workflow\n"
 "\n"
-"    This module allows you to manage holidays and holidays requests. For "
-"each employee, you can also define a number of available holidays per "
-"holiday status.\n"
+"    This module allows you to manage holidays and holidays requests. For each employee, you can also define a number of available holidays per holiday status.\n"
 "\n"
 "    Note that:\n"
-"    - A synchronisation with an internal agenda (use of the CRM module) is "
-"possible: in order to automatically create a case when an holiday request is "
-"accepted, you have to link the holidays status to a case section. You can "
-"set up this info and your colour preferences in\n"
+"    - A synchronisation with an internal agenda (use of the CRM module) is possible: in order to automatically create a case when an holiday request is accepted, you have to link the holidays status to a case section. You can set up this info and your colour preferences in\n"
 "                HR / Configuration / Holidays Status\n"
-"    - An employee can make a negative holiday request (holiday request of -2 "
-"days for example), this is considered by the system as an ask for more off-"
-"days. It will increase his total of that holiday status available (if the "
-"request is accepted).\n"
+"    - An employee can make a negative holiday request (holiday request of -2 days for example), this is considered by the system as an ask for more off-days. It will increase his total of that holiday status available (if the request is accepted).\n"
 "    - There are two ways to print the employee's holidays:\n"
-"        * The first will allow to choose employees by department and is used "
-"by clicking the menu item located in\n"
+"        * The first will allow to choose employees by department and is used by clicking the menu item located in\n"
 "                HR / Holidays Request / Print Summary of Holidays\n"
-"        * The second will allow you to choose the holidays report for "
-"specific employees. Go on the list\n"
+"        * The second will allow you to choose the holidays report for specific employees. Go on the list\n"
 "                HR / Employees / Employees\n"
-"            then select the ones you want to choose, click on the print icon "
-"and select the option\n"
+"            then select the ones you want to choose, click on the print icon and select the option\n"
 "                'Print Summary of Employee's Holidays'\n"
-"    - The wizard allows you to choose if you want to print either the "
-"Confirmed & Validated holidays or only the Validated ones. These states must "
-"be set up by a user from the group 'HR' and with the role 'holidays'. You "
-"can define these features in the security tab from the user data in\n"
+"    - The wizard allows you to choose if you want to print either the Confirmed & Validated holidays or only the Validated ones. These states must be set up by a user from the group 'HR' and with the role 'holidays'. You can define these features in the security tab from the user data in\n"
 "                Administration / Users / Users\n"
 "            for example, you maybe will do it for the user 'admin'.\n"
 msgstr ""
 "Διεύθυνση Προσωπικού: Διαχείριση Αδειών\n"
 "\n"
-"    Το module αυτό σας επιτρέπει να διαχειρίζεστε άδειες και αιτήσεις "
-"αδείας. Για κάθε υπάλληλο μπορείτε να ορίσετε έναν αριθμό διαθέσιμων αδειών "
-"ανά τύπο άδειας.\n"
+"    Το Άρθρωμα αυτό σας επιτρέπει να διαχειρίζεστε άδειες και αιτήσεις αδείας. Για κάθε υπάλληλο μπορείτε να ορίσετε έναν αριθμό διαθέσιμων αδειών ανά τύπο άδειας.\n"
 "\n"
 "    Σημείωση:\n"
-"    - Είναι δυνατός ο συγχρονισμός με εσωτερική ατζέντα (CRM module): για να "
-"δημιουργείται αυτόματα ένα case όταν μια αίτηση αδείας εγκρίνεται, πρέπει "
-"να   συνδέσετε τον τύπο αδείας με το case section. Αυτό μπορείτε να το "
-"ρυθμίσετε μαζί με τις χρωματικές σας προτιμήσεις στο\n"
+"    - Είναι δυνατός ο συγχρονισμός με εσωτερική ατζέντα (Άρθρωμα CRM): αν επιθυμείτε να δημιουργείται αυτόματα ένα θέμα όταν μια αίτηση αδείας εγκρίνεται, πρέπει να συνδέσετε τον τύπο αδείας με το τμήμα θεμάτων. Αυτό μπορείτε να το ρυθμίσετε μαζί με τις χρωματικές σας προτιμήσεις στο\n"
 "              Διοίκηση Ανθρωπίνων Πόρων / Ρυθμίσεις / Τύποι Αδειών\n"
-"    - Ένας υπάλληλος μπορέι να αιτηθεί αρνητικό αριθμό ημερών αδείας, π.χ. -"
-"2 ημέρες. Το σύστημα εκλαμβάνει αυτό ως ρεπό.\n"
+"    - Ένας υπάλληλος μπορέι να αιτηθεί αρνητικό αριθμό ημερών αδείας, π.χ. -2 ημέρες. Το σύστημα εκλαμβάνει αυτό ως ρεπό.\n"
 "    - Υπάρχουν δύο τρόποι να εκτυπώσετε τις άδειες ενός εργαζομένου:\n"
-"         * Ο πρώτος σας επιτρέπει να επιλέξετε υπαλλήλους ανά τμήμα και "
-"είναι προσβάσιμο στο\n"
-"              Διοίκηση Ανθρωπίνων Πόρων / Αίτηση Αδείας / Εκτύπωση Αδειών "
-"Συνοπτικά\n"
-"         * Ο δεύτερος σας επιτρέπει να επιλέξετε μια αναφορά για "
-"συγκεκριμένους υπαλλήλους:\n"
+"         * Ο πρώτος σας επιτρέπει να επιλέξετε υπαλλήλους ανά τμήμα και είναι προσβάσιμο στο\n"
+"              Διοίκηση Ανθρωπίνων Πόρων / Αίτηση Αδείας / Εκτύπωση Αδειών Συνοπτικά\n"
+"         * Ο δεύτερος σας επιτρέπει να επιλέξετε μια αναφορά για συγκεκριμένους υπαλλήλους:\n"
 "              Διοίκηση Ανθρωπίνων Πόρων / Υπάλληλοι / Όλοι οι Υπάλληλοι\n"
-"            ύστερα επιλέξτε εκείνους που επιθυμείτε, κάντε κλικ στο "
-"εικονίδιο της εκτύπωσης και επιλέξτε\n"
+"            ύστερα επιλέξτε εκείνους που επιθυμείτε, κάντε κλικ στο εικονίδιο της εκτύπωσης και επιλέξτε\n"
 "                   'Εκτύπωση Αδειών Υπαλλήλων Συνοπτικά'\n"
-"   - Το σύστημα σας επιτρέπει να επιλέξετε για εκτύπωση είτε τις "
-"Επιβεβαιωμένες και Επικυρωμένες Άδειες ή μόνο τις Επικυρωμένες. Αυτές οι "
-"ρυθμίσεις πρέπει να γίνουν από ένα χρήστη της Διοίκησης Ανθρωπίνων Πόρων και "
-"με το ρόλο \"Άδειες\". Μπορείτε να ορίσετε τα δικαιώματα αυτά στο\n"
-"                Σύστημα / Χρήστες / Χρήστες \n"
+"   - Το σύστημα σας επιτρέπει να επιλέξετε για εκτύπωση είτε τις Επιβεβαιωμένες και Επικυρωμένες Άδειες ή μόνο τις Επικυρωμένες. Αυτές οι ρυθμίσεις πρέπει να γίνουν από ένα χρήστη της Διοίκησης Ανθρωπίνων Πόρων και με το ρόλο 'Άδειες'. Μπορείτε να ορίσετε τα δικαιώματα αυτά στο\n"
+"                Σύστημα / Χρήστες / Χρήστες"
 
 #. module: hr_holidays
 #: selection:hr.holidays.summary,init,holiday_type:0
@@ -562,12 +535,18 @@ msgid "Section"
 msgstr "Τομέας"
 
 #. module: hr_holidays
+#: model:ir.actions.act_window,name:hr_holidays.action_my_holiday_waiting
+msgid "My Holidays Request Waiting confirmation"
+msgstr "Αιτήσεις μου προς επιβεβαίωση"
+
+#. module: hr_holidays
 #: field:hr.holidays,manager_id:0
 msgid "Holiday manager"
 msgstr "Διαχειριστής Αδειών"
 
 #. module: hr_holidays
-#: field:hr.holidays.per.user,active:0 field:hr.holidays.status,active:0
+#: field:hr.holidays.per.user,active:0
+#: field:hr.holidays.status,active:0
 msgid "Active"
 msgstr "Ενεργό"
 
@@ -577,9 +556,21 @@ msgid "My Holidays Request Draft"
 msgstr "Οι Αιτήσεις Αδείας μου (Πρόχειρα)"
 
 #. module: hr_holidays
+#: code:addons/hr_holidays/hr.py:0
+#, python-format
+msgid "You can not cancel this holiday request. first You have to make its case in draft state."
+msgstr "Δεν μπορείτε να ακυρώσετε αυτή την αίτηση. Πρέπει πρώτα να να μετατρέψετε το case σε πρόχειρο."
+
+#. module: hr_holidays
 #: model:process.transition,name:hr_holidays.process_transition_approvedrequest0
 msgid "Approved Request"
 msgstr "Εγκεκριμένη Αίτηση"
+
+#. module: hr_holidays
+#: view:hr.holidays.per.user:0
+#: field:hr.holidays.per.user,history:0
+msgid "History"
+msgstr "Ιστορικό"
 
 #. module: hr_holidays
 #: model:process.node,name:hr_holidays.process_node_holidaysrequest0
@@ -602,7 +593,8 @@ msgid "General Information"
 msgstr "Γενικές Πληροφορίες"
 
 #. module: hr_holidays
-#: view:hr.holidays:0 selection:hr.holidays,state:0
+#: view:hr.holidays:0
+#: selection:hr.holidays,state:0
 #: wizard_button:hr.holidays.summary,init,end:0
 #: wizard_button:hr.holidays.summary.employee,init,end:0
 msgid "Cancel"
@@ -626,10 +618,8 @@ msgstr "Αιτήσεις Αδείας μου Απορριφθείσες"
 
 #. module: hr_holidays
 #: constraint:ir.model:0
-msgid ""
-"The Object name must start with x_ and not contain any special character !"
-msgstr ""
-"Το όνομα πρέπει να ξεκινάει με x_ και να μην περιέχει ειδικούς χαρακτήρες"
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr "Το όνομα πρέπει να ξεκινάει με x_ και να μην περιέχει ειδικούς χαρακτήρες"
 
 #. module: hr_holidays
 #: wizard_button:hr.holidays.summary,init,checkdept:0
@@ -642,6 +632,11 @@ msgstr "Εκτύπωση"
 #: model:ir.ui.menu,name:hr_holidays.menu_holidays_summary
 msgid "Print Summary of Holidays"
 msgstr "Εκτύπωση Αδειών Συνοπτικά"
+
+#. module: hr_holidays
+#: view:hr.holidays.log:0
+msgid "Log Holidays"
+msgstr "Log Holidays"
 
 #. module: hr_holidays
 #: wizard_field:hr.holidays.summary,init,depts:0
@@ -679,12 +674,6 @@ msgstr "Επιλογή Τύπου Αδείας"
 #: field:hr.holidays,case_id:0
 msgid "Case"
 msgstr "Case"
-
-#. module: hr_holidays
-#: field:hr.holidays,holiday_user_id:0
-#, fuzzy
-msgid "Holiday per user"
-msgstr "Άδειες ανά Χρήστη"
 
 #. module: hr_holidays
 #: model:process.node,note:hr_holidays.process_node_holidays0
@@ -746,21 +735,3 @@ msgstr "Ροζ"
 msgid "His manager refuses the request"
 msgstr "Ο Προϊστάμενός του απορρίπτει την αίτηση"
 
-#~ msgid "Warning !"
-#~ msgstr "Προσοχή!"
-
-#~ msgid "My Holidays Request Waiting confirmation"
-#~ msgstr "Αιτήσεις μου προς επιβεβαίωση"
-
-#~ msgid ""
-#~ "You can not cancel this holiday request. first You have to make its case "
-#~ "in draft state."
-#~ msgstr ""
-#~ "Δεν μπορείτε να ακυρώσετε αυτή την αίτηση. Πρέπει πρώτα να να μετατρέψετε "
-#~ "το case σε πρόχειρο."
-
-#~ msgid "History"
-#~ msgstr "Ιστορικό"
-
-#~ msgid "Log Holidays"
-#~ msgstr "Log Holidays"

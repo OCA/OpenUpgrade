@@ -2,49 +2,45 @@
 # This file contains the translation of the following modules:
 # 	* l10n_chart_gr
 #
-# Copyright (C) 2008,2009 P. Christeas <p_christ@hol.gr>
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
-"PO-Revision-Date: 2009-01-29 07:54:58+0000\n"
-"Last-Translator: P. Christeas <p_christ@hol.gr>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2009-01-29 07:54:58+0000\n"
+"PO-Revision-Date: 2009-06-15 02:55+0200\n"
+"Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
+"Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Greek\n"
+"X-Poedit-Country: GREECE\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #. module: l10n_chart_gr
 #: model:account.account.type,name:l10n_chart_gr.account_type_receivable
 msgid "Receivable"
-msgstr ""
-
-#. module: l10n_chart_gr
-#: model:ir.module.module,description:l10n_chart_gr.module_meta_information
-msgid "This is the base module to manage the accounting chart for Greece."
-msgstr ""
+msgstr "Εισπρακτέα"
 
 #. module: l10n_chart_gr
 #: constraint:account.account.template:0
 msgid "Error ! You can not create recursive account templates."
-msgstr ""
+msgstr "Σφάλμα! Υπάρχει πρότυπο λογαριασμού με την ίδια περιγραφή."
 
 #. module: l10n_chart_gr
 #: model:account.account.type,name:l10n_chart_gr.account_type_income
 msgid "Income"
-msgstr ""
+msgstr "Έσοδο"
 
 #. module: l10n_chart_gr
 #: model:account.account.type,name:l10n_chart_gr.account_type_tax
 msgid "Tax"
-msgstr ""
+msgstr "Φόροι"
 
 #. module: l10n_chart_gr
 #: model:account.account.type,name:l10n_chart_gr.account_type_cash
 msgid "Cash"
-msgstr ""
+msgstr "Ταμείο"
 
 #. module: l10n_chart_gr
 #: model:ir.actions.todo,note:l10n_chart_gr.config_call_account_template_gr
@@ -57,38 +53,50 @@ msgid ""
 "Financial Accounting/Financial Accounts/Generate Chart of Accounts from a "
 "Chart Template."
 msgstr ""
-
-#. module: l10n_chart_gr
-#: model:ir.module.module,shortdesc:l10n_chart_gr.module_meta_information
-msgid "Greece - minimal"
-msgstr ""
+"Δημιουργήστε το Λογιστικό Σχέδιο από πρότυπο. Θα πρέπει να καταχωρήσετε το "
+"όνομα της εταιρείας, το πρότυπο σχεδίου για εφαργμογή, αριθμό ψηφίων "
+"τραπεζικών & λογιστικών λογαριασμών, καθώς και το νόμισμα για δημιουργία "
+"ημερολογίων. Έτσι δημιουργείται το καθαρό αντίγραφο του πρότυπου σχεδίου.\n"
+"\tΑυτός είναι ο ίδιος Αυτόματος Οδηγός με αυτόν που βρίσκεται στην "
+"Οικονομική Διαχείριση/Οικονομική Λογιστική/Οικονομικοί Λογαριασμοί/"
+"Δημιουργία Λογιστικού Σχεδίου από Πρότυπο Σχεδίου"
 
 #. module: l10n_chart_gr
 #: model:account.account.type,name:l10n_chart_gr.account_type_payable
 msgid "Payable"
-msgstr ""
+msgstr "Πληρωτέα"
 
 #. module: l10n_chart_gr
 #: model:account.account.type,name:l10n_chart_gr.account_type_other
 msgid "Other"
-msgstr ""
+msgstr "Άλλο"
 
 #. module: l10n_chart_gr
 #: model:account.account.type,name:l10n_chart_gr.account_type_equity
 msgid "Equity"
-msgstr ""
+msgstr "Ίδια Κεφάλαια"
 
 #. module: l10n_chart_gr
 #: constraint:account.tax.code.template:0
 msgid "Error ! You can not create recursive Tax Codes."
-msgstr ""
+msgstr "Σφάλμα! Υπάρχει Κωδικός Φόρου με την ίδια περιγραφή."
 
 #. module: l10n_chart_gr
 #: model:account.account.type,name:l10n_chart_gr.account_type_expense
 msgid "Expense"
-msgstr ""
+msgstr "Έξοδο"
 
 #. module: l10n_chart_gr
 #: model:account.account.type,name:l10n_chart_gr.account_type_view
 msgid "View"
+msgstr "Προβολή"
+
+#. module: l10n_chart_gr
+#: model:ir.module.module,description:l10n_chart_gr.module_meta_information
+msgid "This is the base module to manage the accounting chart for Greece."
+msgstr ""
+
+#. module: l10n_chart_gr
+#: model:ir.module.module,shortdesc:l10n_chart_gr.module_meta_information
+msgid "Greece - minimal"
 msgstr ""

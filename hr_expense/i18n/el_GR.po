@@ -1,20 +1,21 @@
 # Translation of OpenERP Server.
-# This file containt the translation of the following modules:
+# This file contains the translation of the following modules:
 # 	* hr_expense
 #
-# Copyright (C) 2008,2009 P. Christeas <p_christ@hol.gr>
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
+"Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
-"PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
-"Last-Translator: P. Christeas <p_christ@hol.gr>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"PO-Revision-Date: 2009-06-15 02:49+0200\n"
+"Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
+"Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Greek\n"
+"X-Poedit-Country: GREECE\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #. module: hr_expense
 #: model:process.node,name:hr_expense.process_node_confirmedexpenses0
@@ -36,11 +37,6 @@ msgstr "Το Λογιστήριο αποδίδει τα έξοδα"
 #: model:ir.ui.menu,name:hr_expense.menu_expense_all_confirm
 msgid "Expenses waiting validation"
 msgstr "Έξοδα προς επικύρωση"
-
-#. module: hr_expense
-#: constraint:ir.actions.act_window:0
-msgid "Invalid model name in the action definition."
-msgstr ""
 
 #. module: hr_expense
 #: field:hr.expense.expense,date_confirm:0
@@ -77,7 +73,7 @@ msgstr "Εγκρίθηκε"
 #. module: hr_expense
 #: field:hr.expense.line,uom_id:0
 msgid "UoM"
-msgstr "Μονάδα Μέτρησης"
+msgstr "UoM"
 
 #. module: hr_expense
 #: view:hr.expense.expense:0
@@ -91,31 +87,25 @@ msgid "Notes"
 msgstr "Σημειώσεις"
 
 #. module: hr_expense
-#: selection:hr.expense.expense,state:0
-msgid "Cancelled"
-msgstr ""
-
-#. module: hr_expense
 #: view:hr.expense.expense:0
 msgid "Validation"
 msgstr "Επικύρωση"
 
 #. module: hr_expense
-#: help:product.product,hr_expense_ok:0
-msgid ""
-"Determine if the product can be visible in the list of product within a "
-"selection from an HR expense sheet line."
+#: rml:hr.expense:0
+msgid "This document must be dated and signed for reimbursment"
 msgstr ""
+"Αυτό το έγγραφο πρέπει να πρωτοκολληθεί και να υπογραφεί για αποπληρωμή"
 
 #. module: hr_expense
 #: selection:hr.expense.expense,state:0
 msgid "Accepted"
-msgstr "Αποδεκτό"
+msgstr "Αποδεχθείς"
 
 #. module: hr_expense
 #: rml:hr.expense:0 field:hr.expense.expense,ref:0 field:hr.expense.line,ref:0
 msgid "Reference"
-msgstr "Αναφορά"
+msgstr "Παραπομπή"
 
 #. module: hr_expense
 #: rml:hr.expense:0
@@ -157,12 +147,17 @@ msgstr "Τιμολόγιο Προμηθευτή"
 #. module: hr_expense
 #: field:hr.expense.expense,state:0
 msgid "State"
-msgstr "Κατάσταση Λογαριασμού"
+msgstr "Νομός"
+
+#. module: hr_expense
+#: field:hr.expense.expense,date_valid:0
+msgid "Date Valided"
+msgstr "Ημερ/νία Επικύρωσης"
 
 #. module: hr_expense
 #: rml:hr.expense:0 field:hr.expense.expense,employee_id:0
 msgid "Employee"
-msgstr "Εργαζόμενος"
+msgstr "Υπάλληλος"
 
 #. module: hr_expense
 #: rml:hr.expense:0
@@ -178,6 +173,12 @@ msgstr "Σύνολο Τιμής"
 #: model:process.node,note:hr_expense.process_node_reinvoicing0
 msgid "Some costs may be reinvoices to the customer"
 msgstr "Κάποια έξοδα μπορεί να είναι ανατιμολογήσεις στον πελάτη"
+
+#. module: hr_expense
+#: code:addons/hr_expense/hr_expense.py:0
+#, python-format
+msgid "Error !"
+msgstr "Σφάλμα!"
 
 #. module: hr_expense
 #: model:ir.actions.act_window,name:hr_expense.expense_my
@@ -197,8 +198,9 @@ msgstr "Απόδοση Εξόδων"
 
 #. module: hr_expense
 #: field:hr.expense.expense,journal_id:0
+#, fuzzy
 msgid "Force Journal"
-msgstr ""
+msgstr "Force Journal"
 
 #. module: hr_expense
 #: model:ir.actions.act_window,name:hr_expense.expense_my_new
@@ -219,13 +221,19 @@ msgstr "Απόδοση"
 #. module: hr_expense
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
-msgstr "Invalid XML for View Architecture!"
+msgstr "Άκυρο XML για Αρχιτεκτονική Όψης!"
+
+#. module: hr_expense
+#: code:addons/hr_expense/hr_expense.py:0
+#, python-format
+msgid "The employee must have a contact address"
+msgstr "Ο υπάλληλος πρέπει να έχει Διεύθυνση κατοικίας"
 
 #. module: hr_expense
 #: field:hr.expense.line,expense_id:0
 #: model:ir.model,name:hr_expense.model_hr_expense_expense
 msgid "Expense"
-msgstr "Δαπάνη"
+msgstr "Έξοδο"
 
 #. module: hr_expense
 #: view:hr.expense.expense:0 field:hr.expense.expense,line_ids:0
@@ -278,7 +286,7 @@ msgstr ""
 #. module: hr_expense
 #: view:hr.expense.expense:0
 msgid "Accounting data"
-msgstr "Λογιστικά δεδομένα"
+msgstr "Λογιστικά Δεδομένα"
 
 #. module: hr_expense
 #: model:process.transition,note:hr_expense.process_transition_approveexpense0
@@ -304,7 +312,7 @@ msgstr "Χρήστης"
 #: rml:hr.expense:0 field:hr.expense.expense,date:0
 #: field:hr.expense.line,date_value:0
 msgid "Date"
-msgstr "Ημερομηνία"
+msgstr "Ηεμρ/νία"
 
 #. module: hr_expense
 #: rml:hr.expense:0
@@ -314,12 +322,7 @@ msgstr "Σύνολο:"
 #. module: hr_expense
 #: rml:hr.expense:0
 msgid "HR Expenses"
-msgstr "Έξοδα ΑΔ"
-
-#. module: hr_expense
-#: field:hr.expense.expense,date_valid:0
-msgid "Date Validated"
-msgstr ""
+msgstr "Έξοδα HR"
 
 #. module: hr_expense
 #: field:hr.expense.expense,account_move_id:0
@@ -408,11 +411,6 @@ msgid "Accept"
 msgstr "Αποδοχή"
 
 #. module: hr_expense
-#: rml:hr.expense:0
-msgid "This document must be dated and signed for reimbursement"
-msgstr ""
-
-#. module: hr_expense
 #: model:process.transition,note:hr_expense.process_transition_refuseexpense0
 msgid "Expense is refused."
 msgstr "Η δαπάνη έχει απορριφθεί"
@@ -420,7 +418,7 @@ msgstr "Η δαπάνη έχει απορριφθεί"
 #. module: hr_expense
 #: rml:hr.expense:0 field:hr.expense.line,unit_amount:0
 msgid "Unit Price"
-msgstr "Τιμή ανά Μονάδα"
+msgstr "Τιμή Μονάδας"
 
 #. module: hr_expense
 #: model:ir.actions.act_window,name:hr_expense.expense_all_valid
@@ -439,6 +437,11 @@ msgid "Description"
 msgstr "Περιγραφή"
 
 #. module: hr_expense
+#: selection:hr.expense.expense,state:0
+msgid "Canceled"
+msgstr "Ακυρωμένο"
+
+#. module: hr_expense
 #: view:hr.expense.expense:0 field:hr.expense.expense,name:0
 msgid "Expense Sheet"
 msgstr "Εξοδολόγιο"
@@ -454,14 +457,9 @@ msgid "Refused"
 msgstr "Απορριφθέντα"
 
 #. module: hr_expense
-#: field:product.product,hr_expense_ok:0
-msgid "Can be Expensed"
-msgstr ""
-
-#. module: hr_expense
 #: rml:hr.expense:0
 msgid "Ref."
-msgstr "Αναφ."
+msgstr "Ref."
 
 #. module: hr_expense
 #: field:hr.expense.expense,user_valid:0
@@ -476,7 +474,7 @@ msgstr "(Ημερ/νία και Υπογραφή)"
 #. module: hr_expense
 #: rml:hr.expense:0
 msgid "Name"
-msgstr "Ονομασία"
+msgstr "Όνομα"
 
 #. module: hr_expense
 #: field:hr.expense.line,name:0
@@ -496,7 +494,7 @@ msgstr "Ο άμεσος Προϊστάμενος εγκρίνει το φύλλ�
 #. module: hr_expense
 #: field:hr.expense.line,sequence:0
 msgid "Sequence"
-msgstr "Ακολουθία"
+msgstr "Αρίθμηση"
 
 #. module: hr_expense
 #: model:process.transition,note:hr_expense.process_transition_confirmexpense0
@@ -506,7 +504,7 @@ msgstr "Η δαπάνη είναι επιβεβαιωμένη."
 #. module: hr_expense
 #: view:hr.expense.expense:0 model:ir.ui.menu,name:hr_expense.next_id_49
 msgid "Expenses"
-msgstr "Δαπάνες"
+msgstr "Έξοδα"
 
 #. module: hr_expense
 #: field:hr.expense.line,total_amount:0
@@ -518,18 +516,34 @@ msgstr "Σύνολο"
 msgid "Reinvoicing"
 msgstr "Ανατιμολόγηση"
 
-#~ msgid "Date Valided"
-#~ msgstr "Ημερ/νία Επικύρωσης"
+#. module: hr_expense
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
 
-#~ msgid "Error !"
-#~ msgstr "Σφάλμα!"
+#. module: hr_expense
+#: selection:hr.expense.expense,state:0
+msgid "Cancelled"
+msgstr ""
 
-#~ msgid "Canceled"
-#~ msgstr "Ακυρωμένο"
+#. module: hr_expense
+#: help:product.product,hr_expense_ok:0
+msgid ""
+"Determine if the product can be visible in the list of product within a "
+"selection from an HR expense sheet line."
+msgstr ""
 
-#~ msgid "The employee must have a contact address"
-#~ msgstr "Ο υπάλληλος πρέπει να έχει Διεύθυνση κατοικίας"
+#. module: hr_expense
+#: field:hr.expense.expense,date_valid:0
+msgid "Date Validated"
+msgstr ""
 
-#~ msgid "This document must be dated and signed for reimbursment"
-#~ msgstr ""
-#~ "Αυτό το έγγραφο πρέπει να πρωτοκολληθεί και να υπογραφεί για αποπληρωμή"
+#. module: hr_expense
+#: rml:hr.expense:0
+msgid "This document must be dated and signed for reimbursement"
+msgstr ""
+
+#. module: hr_expense
+#: field:product.product,hr_expense_ok:0
+msgid "Can be Expensed"
+msgstr ""

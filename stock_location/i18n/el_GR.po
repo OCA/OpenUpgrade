@@ -1,71 +1,72 @@
 # Translation of OpenERP Server.
-# This file containt the translation of the following modules:
+# This file contains the translation of the following modules:
 # 	* stock_location
 #
-# Copyright (C) 2008,2009 P. Christeas <p_christ@hol.gr>
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
+"Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
-"PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
-"Last-Translator: P. Christeas <p_christ@hol.gr>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2009-02-06 15:20:39+0000\n"
+"PO-Revision-Date: 2009-06-15 03:07+0200\n"
+"Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
+"Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Greek\n"
+"X-Poedit-Country: GREECE\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #. module: stock_location
 #: help:stock.location.path,delay:0
 msgid "Number of days to do this transition"
-msgstr "Αριθμός ημερών για να γίνει η συναλλαγή"
+msgstr "Αριθμός ημερών για πραγματοποίηση κίνησης"
 
 #. module: stock_location
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
-msgstr "Invalid XML for View Architecture!"
+msgstr "Άκυρο XML για Αρχιτεκτονική Όψης!"
 
 #. module: stock_location
 #: model:ir.module.module,shortdesc:stock_location.module_meta_information
 msgid "Stock Location Paths"
-msgstr "Διαδρομή Τοποθεσίας Αποθηκευμένων Προϊόντων"
+msgstr "Διαδρομές Τοποθεσιών Αποθήκευσης"
 
 #. module: stock_location
 #: constraint:ir.model:0
 msgid ""
 "The Object name must start with x_ and not contain any special character !"
 msgstr ""
-"Το όνομα του Αντικειμένου πρέπει να ξεκινά με x_ και δεν πρέπει να περιέχει "
+"Το όνομα του αντικειμένου πρέπει να ξεκινάει από x_ και να μην περιέχει "
 "ειδικούς χαρακτήρες!"
 
 #. module: stock_location
 #: selection:stock.location.path,auto:0
 msgid "Automatic No Step Added"
-msgstr "Αυτόματα Δεν Προστίθεται Επιπλέον Βήμα"
+msgstr "Βήμα Αυτόματης Αρίιθμησης προστέθηκε"
 
 #. module: stock_location
 #: help:product.product,path_ids:0
 msgid ""
 "These rules set the right path of the product in the whole location tree."
 msgstr ""
-"Αυτοί οι κανόνες θέτουν την σωστή διαδρομή του προϊόντος σε όλο το δεντρο "
-"τοποθεσιών."
+"Αυτοί οι κανόνες ορίζουν τη σωστή διαδρομή του προϊόντος ανάμεσα στις "
+"Τοποθεσίες"
 
 #. module: stock_location
 #: field:stock.location.path,location_from_id:0
 msgid "Source Location"
-msgstr "Τοποθεσία προέλευσης"
+msgstr "Τοποθεσία Προέλευσης"
 
 #. module: stock_location
 #: field:stock.location.path,location_dest_id:0
 msgid "Destination Location"
-msgstr "Τοποθεσία προορισμού"
+msgstr "Τοποθεσία Προορισμού"
 
 #. module: stock_location
 #: field:stock.location.path,auto:0 selection:stock.location.path,auto:0
 msgid "Automatic Move"
-msgstr "Αυτόματη Μετακίνηση"
+msgstr "Αυτόματη Κίνηση"
 
 #. module: stock_location
 #: field:stock.location.path,product_id:0
@@ -75,12 +76,12 @@ msgstr "Προϊόντα"
 #. module: stock_location
 #: selection:stock.location.path,auto:0
 msgid "Manual Operation"
-msgstr "Χειρωκίνητη Λειτουργία"
+msgstr "Μη Αυτοματοποιημένη Διαδικασία"
 
 #. module: stock_location
 #: model:ir.model,name:stock_location.model_stock_location_path
 msgid "stock.location.path"
-msgstr "διαδρομή.τοποθεσίας.αποθηκευμένων.προϊόντων"
+msgstr "stock.location.path"
 
 #. module: stock_location
 #: help:stock.location.path,auto:0
@@ -92,24 +93,24 @@ msgid ""
 "move has to be validated by a worker. With 'Automatic No Step Added', the "
 "location is replaced in the original move."
 msgstr ""
-"Αυτό χρησιμοποιήται για να ορίσει την διαδρομή που πρέπει το προϊόν να "
-"ακολουθήσει στο δέντρο τοποθεσιών.\n"
-"Η τιμή της \"Αυτόματης Μετακίνησης\" θα δημιουργήσει ένα απόθεμα μετά την "
-"τρέχουσα που ενημερωθεί αυτόματα. Με την \"Χειρωκίνητη Λειτουργία\", η "
-"μετακίνηση  του αποθέματος θα πρέπει να εγκριθεί από κάποιον υπάλληλο. Με "
-"την \"Αυτόματα Δεν Προστίθεται Επιπλέον Βήμα\", η τοποθεσία αντικαθίσταται "
-"από την αρχική μετακίνηση."
+"Χρησιμοποιείται για τον ορισμό διαδρομών που το προϊόν πρέπει να ακολουθήσει "
+"μέσα στη δομή τοποθεσιών.\n"
+"Η 'Αυτόματη Κίνηση' θα δημιουργήσει μια κίνηση αποθεμάτων μετά από την "
+"παρούσα κίνηση, η οποία θα επικυρωθεί αυτόματα. Με τη 'Μη Αυτοματοποιημένη "
+"Διαδικασία' η κίνηση αποθεμάτων θα πρέπει να επικυρωθεί από κάποιον "
+"υπάλληλο. Με το 'Βήμα Αυτόματης Αρίιθμησης' αντκαθίσταται η τοποθεσία στην "
+"αρχική κίνηση."
 
 #. module: stock_location
 #: field:stock.location.path,name:0
 msgid "Operation"
-msgstr "Λειτουργία"
+msgstr "Διαδικασία"
 
 #. module: stock_location
 #: view:product.product:0 field:product.product,path_ids:0
 #: view:stock.location.path:0
 msgid "Location Paths"
-msgstr "Διαδρομές Τοποθεσίας"
+msgstr "Διαδρομές Τοποθεσιών"
 
 #. module: stock_location
 #: field:stock.location.path,delay:0
@@ -119,4 +120,4 @@ msgstr "Καθυστέρηση (ημέρες)"
 #. module: stock_location
 #: view:product.product:0
 msgid "Procurement & Locations"
-msgstr "Προμήθειες & Τοποθεσίες"
+msgstr "Προμήθειες και Τοποθεσίες"
