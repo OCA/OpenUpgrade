@@ -7,13 +7,15 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
-"PO-Revision-Date: 2009-06-01 02:02+0200\n"
+"PO-Revision-Date: 2009-06-15 02:45+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
-"Language-Team: \n"
+"Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"X-Poedit-Language: Greek\n"
+"X-Poedit-Country: GREECE\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #. module: crm
 #: view:crm.case.rule:0
@@ -67,7 +69,7 @@ msgstr "Κατηγορία Συνεργάτη"
 #. module: crm
 #: field:crm.segmentation,sales_purchase_active:0
 msgid "Use The Sales Purchase Rules"
-msgstr ""
+msgstr "Χρήση Κανόνων Αγορών Πωλήσεων"
 
 #. module: crm
 #: wizard_field:crm.case.section.menu,design_menu,menu13:0
@@ -371,6 +373,24 @@ msgid ""
 "The CRM module has a email gateway for the synchronisation interface\n"
 "between mails and Open ERP."
 msgstr ""
+"Το βασικό σύστημα Διαχείρισης Πελατειακών Σχέσεων του Open ERP\n"
+"δίνει τη δυνατότητα σε μια ομάδα να διαχειριστεί έξυπνα και αποτελεσματικά\n"
+"συνδέσμους, ευκαιρίες, αιτήσεις, αναθέσεις, μεθόδους προσέγγισης κ.α.\n"
+"Διαχειρίζεται επίσης ζητήματα-κλειδιά όπως η επικοινωνία, η ιεράρχηση ενεργειών,\n"
+"ανάθεση, επίλυση και γνωστοποίηση.\n"
+"\n"
+"Το Open ERP διασφαλίζει ότι όλα τα θέματα παρακολουθούνται επιτυχώς από τους \n"
+"χρήστες, τους πελάτες και τους προμηθευτές. Μπορεί να στέλνει αυτόματες υπενθυμίσεις,\n"
+"να αναβαθμίζει τις αιτήσεις, να εκκινεί διάφορες διαδικασίες και ενέργειες, βασισμένες \n"
+"στους κανόνες που θέτετε εσείς.\n"
+"\n"
+"Το πιο εκπληκτικό από όλα είναι ότι οι χρήστες δε χρειάζεται να κάνουν τίποτα εξαιρετικό.\n"
+"Μπορούν να στείλουν ένα email στον υπεύθυνο μιας αίτησης. Το Σύστημα θα φροντίσει να\n"
+"τους ευχαριστήσει, θα το διανείμει στους ενδιαφερόμενους και θα φροντίσει όλη η\n"
+"μελλοντική αλληλογραφία θα σταλεί στα σωστά άτομα.\n"
+"\n"
+"Το Άρθρωμα CRM έχει email gateway για το συγχρονισμό μεταξύ του προγράμματος\n"
+"και της ηλεκτρονικής αλληλογραφίας."
 
 #. module: crm
 #: wizard_field:crm.case.section.menu,design_menu,menu5:0
@@ -381,7 +401,7 @@ msgstr "Οι Ανοικτές μου"
 #. module: crm
 #: wizard_view:crm.case.section.menu,init:0
 msgid "Select Views (empty for default)"
-msgstr ""
+msgstr "Επιλογή Προβολών (κενό για προεπιλογές)"
 
 #. module: crm
 #: field:crm.case.rule,trg_state_from:0
@@ -403,7 +423,7 @@ msgstr "Αποστολη στα email"
 #. module: crm
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
-msgstr "Invalid XML for View Architecture!"
+msgstr "Άκυρο XML για Αρχιτεκτονική Όψης!"
 
 #. module: crm
 #: code:addons/crm/crm.py:0
@@ -674,7 +694,7 @@ msgstr "Επικοινωνία"
 #. module: crm
 #: field:crm.segmentation,partner_id:0
 msgid "Max Partner ID processed"
-msgstr ""
+msgstr "Μέγιστη ID Συνεργάτη που επεξεργάστηκε"
 
 #. module: crm
 #: view:crm.case.rule:0
@@ -1525,14 +1545,13 @@ msgstr "Συνεργάτης"
 
 #. module: crm
 #: view:crm.case.rule:0
-#, fuzzy
 msgid "Conditions on States"
-msgstr "Όροι Σταδίων"
+msgstr "Ορισμοί Καταστάσεων"
 
 #. module: crm
 #: view:crm.segmentation:0
 msgid "Sales Purchase"
-msgstr ""
+msgstr "Αγορά Πωλήσεων"
 
 #. module: crm
 #: field:crm.case.rule,trg_date_type:0

@@ -7,13 +7,15 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2009-02-06 15:20:39+0000\n"
-"PO-Revision-Date: 2009-05-29 18:05+0200\n"
+"PO-Revision-Date: 2009-06-15 03:03+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
-"Language-Team: \n"
+"Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"X-Poedit-Language: Greek\n"
+"X-Poedit-Country: GREECE\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #. module: sale
 #: selection:sale.order,picking_policy:0
@@ -232,7 +234,7 @@ msgstr "Αναλυτικός Λογαριασμός"
 #. module: sale
 #: rml:sale.order:0
 msgid "TVA :"
-msgstr ""
+msgstr "ΦΠΑ:"
 
 #. module: sale
 #: field:sale.order.line,type:0
@@ -406,8 +408,9 @@ msgstr "Ολοκληρωμένη Παράδοση "
 
 #. module: sale
 #: view:sale.order:0
+#, fuzzy
 msgid "Manual Description"
-msgstr ""
+msgstr "Περιγραφή Χειρονακτικών"
 
 #. module: sale
 #: field:sale.order.line,product_uom_qty:0
@@ -484,7 +487,7 @@ msgstr "Τιμολόγηση μετά την Παράδοση με βάση τη
 #. module: sale
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
-msgstr "Invalid XML for View Architecture!"
+msgstr "Άκυρο XML για Αρχιτεκτονική Όψης!"
 
 #. module: sale
 #: field:sale.order,picking_ids:0
@@ -631,7 +634,7 @@ msgstr "Πωλητής"
 #. module: sale
 #: model:process.transition,note:sale.process_transition_saleorderprocurement0
 msgid "In sale order , procuerement for each line and it comes into the procurement order"
-msgstr ""
+msgstr "In sale order , procuerement for each line and it comes into the procurement order"
 
 #. module: sale
 #: rml:sale.order:0
@@ -785,13 +788,14 @@ msgstr "Πωλητής μας"
 
 #. module: sale
 #: wizard_button:sale.advance_payment_inv,init,create:0
+#, fuzzy
 msgid "Create Advance Invoice"
-msgstr ""
+msgstr "Δημιουργία Τιμολογίου Προκαταβολής"
 
 #. module: sale
 #: model:process.node,note:sale.process_node_saleprocurement0
 msgid "One procurement for each product."
-msgstr ""
+msgstr "Μια προμήθεια για κάθε προϊόν"
 
 #. module: sale
 #: model:ir.actions.act_window,name:sale.action_order_form
@@ -833,8 +837,9 @@ msgstr "Προσφορά"
 
 #. module: sale
 #: model:product.template,name:sale.advance_product_0_product_template
+#, fuzzy
 msgid "Advance Product"
-msgstr ""
+msgstr "Προϊόν Προκαταβολής"
 
 #. module: sale
 #: model:process.transition,note:sale.process_transition_invoice0
@@ -920,7 +925,7 @@ msgstr "Ποσ."
 #. module: sale
 #: model:process.node,note:sale.process_node_packinglist0
 msgid "Packing OUT is created for stockable products."
-msgstr ""
+msgstr "H Συσκευασία ΟUT δημιουργείται για αποθηεκύσιμα προϊόντα."
 
 #. module: sale
 #: view:sale.order:0
@@ -936,8 +941,9 @@ msgstr "Τιμή Μονάδας"
 
 #. module: sale
 #: field:sale.order,fiscal_position:0
+#, fuzzy
 msgid "Fiscal Position"
-msgstr ""
+msgstr "Φορολογική Θέση"
 
 #. module: sale
 #: rml:sale.order:0
@@ -976,8 +982,9 @@ msgstr "ΜοΜ"
 
 #. module: sale
 #: field:sale.order.line,number_packages:0
+#, fuzzy
 msgid "Number Packages"
-msgstr ""
+msgstr "Αρίθμηση Συσκευασιών"
 
 #. module: sale
 #: model:process.transition,note:sale.process_transition_deliver0
@@ -1075,8 +1082,9 @@ msgstr "Προϊόν"
 
 #. module: sale
 #: wizard_button:sale.advance_payment_inv,create,open:0
+#, fuzzy
 msgid "Open Advance Invoice"
-msgstr ""
+msgstr "Άνοιγμα Τιμολογίου Προκαταβολής"
 
 #. module: sale
 #: field:sale.order,partner_order_id:0
@@ -1177,7 +1185,7 @@ msgstr "'Ονομα"
 #. module: sale
 #: field:sale.order,invoice_quantity:0
 msgid "Invoice on"
-msgstr ""
+msgstr "Τιμολόγηση κατά"
 
 #. module: sale
 #: model:ir.actions.act_window,name:sale.action_order_tree_new
@@ -1203,8 +1211,9 @@ msgstr "ΜοΠ Προϊόντος"
 
 #. module: sale
 #: selection:sale.order,state:0
+#, fuzzy
 msgid "Manual In Progress"
-msgstr ""
+msgstr "Χειρονακτικές σε Εξέλιξη"
 
 #. module: sale
 #: field:sale.order.line,product_uom:0
@@ -1233,9 +1242,8 @@ msgstr "Όροι Πληρωμής"
 
 #. module: sale
 #: view:sale.order:0
-#, fuzzy
 msgid "Invoice Corrected"
-msgstr "Διορθωμένο Τιμολόγιο"
+msgstr "Διορθωμένα Τιμολόγια"
 
 #. module: sale
 #: field:sale.order.line,delay:0

@@ -1,29 +1,26 @@
-# Greek translation for openobject-addons
-# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
-# This file is distributed under the same license as the openobject-addons package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* delivery
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: openobject-addons\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2009-04-09 17:23+0000\n"
-"PO-Revision-Date: 2009-05-13 21:39+0000\n"
-"Last-Translator: Makis Nicolaou <mark.nicolaou@gmail.com>\n"
-"Language-Team: Greek <el@li.org>\n"
+"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"PO-Revision-Date: 2009-06-15 02:48+0200\n"
+"Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
+"Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-05-28 09:07+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Poedit-Language: Greek\n"
+"X-Poedit-Country: GREECE\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #. module: delivery
 #: constraint:ir.model:0
-msgid ""
-"The Object name must start with x_ and not contain any special character !"
-msgstr ""
-"Το όνομα του αντικειμένου θα πρέπει να ξεκινάει με x_ και να μην περιέχει "
-"ειδικούς χαρακτήρες!"
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr "Το όνομα πρέπει να ξεκινάει με x_ και να μην περιέχει ειδικούς χαρακτήρες!"
 
 #. module: delivery
 #: selection:delivery.grid.line,operator:0
@@ -33,7 +30,7 @@ msgstr ">="
 #. module: delivery
 #: view:res.partner:0
 msgid "Sales & Purchases"
-msgstr "Πωλήσεις & Αγορές"
+msgstr "Αγορές & Πωλήσεις"
 
 #. module: delivery
 #: view:delivery.grid:0
@@ -43,68 +40,66 @@ msgstr "Προορισμός"
 #. module: delivery
 #: model:product.template,name:delivery.delivery_product_product_template
 msgid "Delivery by Poste"
-msgstr "Παράδοση μέσω Ταχυδρομείου"
+msgstr "Ταχυδρομική Αποστολή"
 
 #. module: delivery
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
-msgstr "Άκυρο XML για την αρχιτεκτονική όψης!"
+msgstr "Άκυρο XML για Αρχιτεκτονική Όψης!"
 
 #. module: delivery
 #: constraint:res.partner:0
 msgid "Error ! You can not create recursive associated members."
-msgstr "Σφάλμα! Δεν επιτρέπεται η δημιουργία μελών σε κυκλικό συσχετισμό"
+msgstr "Σφάλμα: Υπάρχει σχετιζόμενο μέλος με την ίδια περιγραφή!"
 
 #. module: delivery
 #: field:delivery.grid,state_ids:0
+#, fuzzy
 msgid "States"
 msgstr "Καταστάσεις"
 
 #. module: delivery
 #: help:res.partner,property_delivery_carrier:0
 msgid "This delivery method will be used when invoicing from packing."
-msgstr ""
-"Αυτή η μέθοδος παράδοσης θα χρησιμοποιείται όταν τιμολογείτε απο φόρτωση."
+msgstr "Αυτή η μέθοδος αποστολής θα χρησιμοποιηθεί κατά την τιμολόγηση από συσκευασία."
 
 #. module: delivery
 #: model:ir.model,name:delivery.model_delivery_grid
 msgid "Delivery Grid"
-msgstr "Πίνακας Παραδόσεων"
+msgstr "Διάγραμμα Αποστολών"
 
 #. module: delivery
 #: field:delivery.grid,zip_from:0
 msgid "Start Zip"
-msgstr "Έναρξη ΤΚ"
+msgstr "Από ΤΚ"
 
 #. module: delivery
 #: selection:delivery.grid.line,price_type:0
 msgid "Fixed"
-msgstr "Σταθερό"
+msgstr "Σταθεροποιήθηκε"
 
 #. module: delivery
 #: code:addons/delivery/wizard/delivery_sale_order.py:0
 #, python-format
 msgid "The order state have to be draft to add delivery lines."
-msgstr ""
-"Η κατάσταση εντολής θα πρέπει να είναι πρόχειρη για να προστεθούν επιπλέον "
-"γραμμές παράδοσης"
+msgstr "Η παραγγελία πρέπει να είναι πρόχειρη για να προσθέσετε γραμμές αποστολής"
 
 #. module: delivery
 #: field:delivery.grid,line_ids:0
 msgid "Grid Line"
-msgstr "Γραμμή Πίνακα"
+msgstr "Γραμμή Διαγράμματος "
 
 #. module: delivery
 #: model:ir.actions.act_window,name:delivery.action_delivery_grid_form
 #: model:ir.ui.menu,name:delivery.menu_action_delivery_grid_form
 msgid "Delivery Pricelist"
-msgstr "Τιμοκατάλογος Παραδόσεων"
+msgstr "Τιμοκατάλογος Αποστολής"
 
 #. module: delivery
 #: model:ir.actions.act_window,name:delivery.action_picking_tree5
 #: model:ir.ui.menu,name:delivery.menu_action_picking_tree5
 msgid "Generate Draft Invoices On Receptions"
-msgstr "Δημιουργία Πρόχειρων Τιμολογίων Απο Παραλαβές"
+msgstr "Δημιουργία Πρόχειρων Τιμολογίων κατά την Παραλαβή"
 
 #. module: delivery
 #: selection:delivery.grid.line,price_type:0
@@ -116,32 +111,32 @@ msgstr "Μεταβλητή"
 #: code:addons/delivery/wizard/delivery_sale_order.py:0
 #, python-format
 msgid "No grid matching for this carrier !"
-msgstr "Κανένας πίνακας δεν ταιριάζει με αυτόν τον μεταφορέα!"
+msgstr "Καμμιά γραμμή δεν ταιριάζει σε αυτόν το μεταφορέα!"
 
 #. module: delivery
 #: model:ir.model,name:delivery.model_delivery_grid_line
 msgid "Delivery line of grid"
-msgstr "Γραμμή Παράδοσης του πίνακα"
+msgstr "Γραμμή αποστολής Διαγράμματος"
 
 #. module: delivery
 #: model:ir.ui.menu,name:delivery.menu_delivery
 msgid "Delivery"
-msgstr "Παράδοση"
+msgstr "Αποστολή"
 
 #. module: delivery
 #: view:delivery.grid.line:0
 msgid "Grid Lines"
-msgstr "Γραμμές Πίνακα"
+msgstr "Γραμμές Διαγράμματος"
 
 #. module: delivery
 #: field:delivery.grid.line,grid_id:0
 msgid "Grid"
-msgstr "Πίνακας"
+msgstr "Διάγραμμα"
 
 #. module: delivery
 #: view:res.partner:0
 msgid "Deliveries Properties"
-msgstr "Ιδιότητες Παραδόσεων"
+msgstr "Χαρακτηριστικά Αποστολής"
 
 #. module: delivery
 #: field:delivery.carrier,active:0
@@ -152,13 +147,13 @@ msgstr "Ενεργό"
 #. module: delivery
 #: view:delivery.grid:0
 msgid "Grid definition"
-msgstr "Ορισμός πίνακα"
+msgstr "Ορισμός Διαγράμματος"
 
 #. module: delivery
 #: selection:delivery.grid.line,type:0
 #: selection:delivery.grid.line,variable_factor:0
 msgid "Weight * Volume"
-msgstr "Βάρος * Όγκος"
+msgstr "Όγκος Χ Βάρος"
 
 #. module: delivery
 #: selection:delivery.grid.line,operator:0
@@ -168,17 +163,17 @@ msgstr "="
 #. module: delivery
 #: field:delivery.carrier,product_id:0
 msgid "Delivery Product"
-msgstr "Προϊόν Παράδοσης"
+msgstr "Προϊόν Αποστολής"
 
 #. module: delivery
 #: view:delivery.grid.line:0
 msgid "Condition"
-msgstr "Κατάσταση"
+msgstr "Συνθήκη"
 
 #. module: delivery
 #: model:ir.model,name:delivery.model_delivery_carrier
 msgid "Carrier and delivery grids"
-msgstr "Μεταφορέας και πίνακας παραδόσεων"
+msgstr "Μεταφορέας και διάγραμμα αποστολών"
 
 #. module: delivery
 #: field:delivery.grid.line,standard_price:0
@@ -193,8 +188,7 @@ msgstr "Όνομα"
 #. module: delivery
 #: constraint:product.template:0
 msgid "Error: UOS must be in a different category than the UOM"
-msgstr ""
-"Σφάλμα: η 2η ΜΜ θα πρέπει να είναι σε διαφορετική κατηγορία απο την 1η ΜΜ"
+msgstr "Σφάλμα: η ΜοΠ πρέπει να ανήκει σε διαφορετική κατηγορία από τη ΜοΜ"
 
 #. module: delivery
 #: field:delivery.grid,country_ids:0
@@ -203,11 +197,8 @@ msgstr "Χώρες"
 
 #. module: delivery
 #: constraint:product.template:0
-msgid ""
-"Error: The default UOM and the purchase UOM must be in the same category."
-msgstr ""
-"Σφάλμα: Η προκαθορισμένη 1η ΜΜ και η 1η ΜΜ αγορών θα πρέπει να ανήκουν στην "
-"ίδια κατηγορία."
+msgid "Error: The default UOM and the purchase UOM must be in the same category."
+msgstr "Σφάλμα: Η προεπιλεγμένη ΜοΜ και η ΜοΜ αγοράς πρέπει να ανήκουν στην ίδια κατηγορία."
 
 #. module: delivery
 #: view:sale.order:0
@@ -217,18 +208,18 @@ msgstr "Σημειώσεις"
 #. module: delivery
 #: field:delivery.grid.line,variable_factor:0
 msgid "Variable Factor"
-msgstr "Παράγοντας Μεταβλητής"
+msgstr "Μεταβλητός Παράγοντας "
 
 #. module: delivery
 #: code:addons/delivery/wizard/delivery_sale_order.py:0
 #, python-format
 msgid "No grid avaible !"
-msgstr "Κανένα διαθέσιμο πλέγμα!"
+msgstr "Δεν υπάρχει διάγραμμα!"
 
 #. module: delivery
 #: field:delivery.grid,name:0
 msgid "Grid Name"
-msgstr "Όνομα Πλέγματος"
+msgstr "Όνομα Διαγράμματος"
 
 #. module: delivery
 #: view:delivery.carrier:0
@@ -253,7 +244,7 @@ msgstr "Μέγιστη Τιμή"
 #. module: delivery
 #: wizard_button:delivery.sale.order,init,delivery:0
 msgid "Add Delivery Costs"
-msgstr "Προσθήκη Κόστους Παράδοσης"
+msgstr "Προσθήκη Κόστους Αποστολής"
 
 #. module: delivery
 #: wizard_field:delivery.sale.order,init,carrier_id:0
@@ -261,7 +252,7 @@ msgstr "Προσθήκη Κόστους Παράδοσης"
 #: model:ir.ui.menu,name:delivery.menu_action_delivery_carrier_form
 #: field:res.partner,property_delivery_carrier:0
 msgid "Delivery Method"
-msgstr "Μέθοδος Παράδοσης"
+msgstr "Μέθοδος Αποστολής"
 
 #. module: delivery
 #: field:sale.order,id:0
@@ -270,24 +261,25 @@ msgstr "ID"
 
 #. module: delivery
 #: field:delivery.grid.line,operator:0
+#, fuzzy
 msgid "Operator"
-msgstr "Λειτουργός"
+msgstr "Περαιωτής"
 
 #. module: delivery
 #: model:ir.module.module,shortdesc:delivery.module_meta_information
 msgid "Carriers and deliveries"
-msgstr "Μεταφορείς και παραδόσεις"
+msgstr "Μεταφορείς και αποστολές"
 
 #. module: delivery
 #: code:addons/delivery/wizard/delivery_sale_order.py:0
 #, python-format
 msgid "Order not in draft state !"
-msgstr "Η εντολή δεν βρίσκεται σε πρόχειρη κατάσταση!"
+msgstr "Η παραγγελία δεν είναι πρόχειρη!"
 
 #. module: delivery
 #: field:delivery.carrier,grids_id:0
 msgid "Delivery Grids"
-msgstr "Πλέγμα Παράδοσης"
+msgstr "Διαγράμματα Αποστολών"
 
 #. module: delivery
 #: selection:delivery.grid.line,type:0
@@ -299,7 +291,7 @@ msgstr "Βάρος"
 #. module: delivery
 #: field:delivery.grid,sequence:0
 msgid "Sequence"
-msgstr "Αλληλουχία"
+msgstr "Ιεράρχηση"
 
 #. module: delivery
 #: field:delivery.carrier,partner_id:0
@@ -308,53 +300,41 @@ msgstr "Συνεργάτης Μεταφορέας"
 
 #. module: delivery
 #: model:ir.module.module,description:delivery.module_meta_information
-msgid ""
-"Allows you to add delivery methods in sales orders and packing. You can "
-"define your own carrier and delivery grids for prices. When creating "
-"invoices from picking, Open ERP is able to add and compute the shipping line."
-msgstr ""
-"Σας επιτρέπει να προσθέτετε μεθόδους παραδόσεων σε εντολές πωλήσεων και "
-"παραδόσεων. Μπορείτε να ορίσετε τον δικό σας μεταφορέα και τους πίνακες "
-"παραδόσεων για τιμές. Όταν δημιουργείτε ένα τιμολόγιιο απο φορτώσεις, το "
-"Open ERP είναι ικανό να προσθέτει και να υπολογίζει την μεταφορά."
+msgid "Allows you to add delivery methods in sales orders and packing. You can define your own carrier and delivery grids for prices. When creating invoices from picking, Open ERP is able to add and compute the shipping line."
+msgstr "Σας επιτρέπει να προσθέσετε μεθόδους αποστολής στις παραγγελίες πώλησης και στη συσκευασία. μπορείτε να ορίσετε τους δικούς σας μεταφορείς και διαγράμματα αποστολής για τιμολόγηση. Αν χρησιμοποιέιτε τιμολόγηση από συσκευασία, το πρόγραμμα μπορεί να προσθέτει και να υπολογίζει τη γραμμή αποστολής."
 
 #. module: delivery
 #: field:delivery.grid,zip_to:0
 msgid "To Zip"
-msgstr "Έως ΤΚ"
+msgstr "Προς ΤΚ "
 
 #. module: delivery
 #: code:addons/delivery/delivery.py:0
 #, python-format
 msgid "No line matched this order in the choosed delivery grids !"
-msgstr ""
-"Καμία γραμμή δεν ταιριάζει με αυτήν την εντολή για τον επιλεγμένο πίνακα "
-"παραδόσεων!"
+msgstr "Καμμιά γραμμή στο διάγραμμα δεν ταιριάζει με την παραγγελία!"
 
 #. module: delivery
 #: model:ir.actions.act_window,name:delivery.action_picking_tree4
 #: model:ir.ui.menu,name:delivery.menu_action_picking_tree3
 msgid "Packing to be invoiced"
-msgstr "Φορτώσεις που περιμένουν να τιμολογηθούν"
+msgstr "Συσκευασία για τιμολόγηση"
 
 #. module: delivery
 #: code:addons/delivery/delivery.py:0
 #, python-format
 msgid "No price available !"
-msgstr "Καμία διαθέσιμη τιμή!"
+msgstr "Δεν υπάρχει τιμή!"
 
 #. module: delivery
 #: help:sale.order,carrier_id:0
-msgid ""
-"Complete this field if you plan to invoice the shipping based on packing."
-msgstr ""
-"Συμπληρώστε αυτό το πεδίο εάν σχεδιάζετε να τιμολογείτε την μεταφορά "
-"βασιζόμενη στην φόρτωση."
+msgid "Complete this field if you plan to invoice the shipping based on packing."
+msgstr "Συμπληρώστε αυτό το πεδίο αν σχεδιάζετε να τιμολογήσετε την αποστολή βάσει συσκευασίας"
 
 #. module: delivery
 #: model:ir.actions.wizard,name:delivery.wizard_deliver_line_add
 msgid "Delivery Costs"
-msgstr "Κόστη Παραδόσεων"
+msgstr "Κόστος Αποστολής"
 
 #. module: delivery
 #: field:delivery.grid.line,list_price:0
@@ -364,18 +344,18 @@ msgstr "Τιμή Πώλησης"
 #. module: delivery
 #: constraint:product.product:0
 msgid "Error: Invalid ean code"
-msgstr "Σφάλμα: Άκυρος κωδικός EAN"
+msgstr "Σφάλμα: άκυρος κωδικός ΕΑΝ"
 
 #. module: delivery
 #: view:delivery.grid:0
 msgid "Delivery grids"
-msgstr "Πίνακες Παραδόσεων"
+msgstr "Διαγράμματα Αποστολών"
 
 #. module: delivery
 #: code:addons/delivery/stock.py:0
 #, python-format
 msgid "The carrier %s (id: %d) has no delivery grid!"
-msgstr "Ο μεταφορέας %s (κωδ: %d) δεν έχει πίνακα παραδόσεων!"
+msgstr "Ο αποστολέας %s (id: %d) δεν έχει διάγραμμα αποστολής!"
 
 #. module: delivery
 #: wizard_button:delivery.sale.order,init,end:0
@@ -386,12 +366,12 @@ msgstr "Άκυρο"
 #: code:addons/delivery/stock.py:0
 #, python-format
 msgid "Warning"
-msgstr "Προειδοποίηση"
+msgstr "Προσοχή"
 
 #. module: delivery
 #: field:sale.order,carrier_id:0
 msgid "Delivery method"
-msgstr "Μέθοδος Παραδόσεων"
+msgstr "Μέθοδος Αποστολής"
 
 #. module: delivery
 #: field:delivery.carrier,price:0
@@ -403,9 +383,10 @@ msgstr "Τιμή"
 #. module: delivery
 #: constraint:res.partner:0
 msgid "The VAT doesn't seem to be correct."
-msgstr "Ο ΦΠΑ φαίνεται να μην είναι σωστός."
+msgstr "Ο ΦΠΑ δε φαίνεται σωστός."
 
 #. module: delivery
 #: field:delivery.grid.line,price_type:0
 msgid "Price Type"
 msgstr "Τύπος Τιμής"
+
