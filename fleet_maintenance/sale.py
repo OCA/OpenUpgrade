@@ -33,7 +33,7 @@ class sale_order_line(osv.osv):
         'maintenance_start_date':fields.date('Maintenance Start Date', required=False),
         'maintenance_end_date':fields.date('Maintenance End Date', required=False),
         'order_fleet_id': fields.related('order_id', 'fleet_id', type='many2one', relation='stock.location', string='Default Sale Order Sub Fleet'),
-        'is_maintenance': fields.related('product_id', 'is_maintenance', type='boolean', string='Is Maintenance'),
+        'is_maintenance': fields.related('product_id', 'is_maintenance', type='boolean', string='Is Maintenance', readonly=True),
     }
     
     def maintenance_qty_change(self, cr, uid, ids, maintenance_product_qty=False, maintenance_month_qty=False, maintenance_start_date=False, maintenance_end_date=False, is_maintenance=False, fleet_id=False):
