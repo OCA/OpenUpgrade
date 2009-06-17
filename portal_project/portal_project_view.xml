@@ -379,6 +379,7 @@
 	        <field name="view_type">form</field>
 	        <field name="view_mode">tree,form</field>
 	        <field name="view_id" ref="project_portal_tree_view"/>
+	        <field name="context" eval="{'action_portal':'project'}"/>
 	    </record>
 	    <record model="ir.actions.act_window.view" id="action_crm_tag_form_view_all1">
 	        <field name="sequence" eval="1"/>

@@ -66,7 +66,7 @@ class project_project(osv.osv):
     def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
         if context is None:
             context = {}
-        if context.has_key('project_id') and context['project_id']:
+        if context.has_key('action_portal') and context['action_portal']=='project' and context.has_key('project_id') and context['project_id']:
             return [context['project_id']]
         return super(project_project, self).search(cr, uid, args, offset, limit, order, context, count)
 
@@ -248,7 +248,7 @@ Wiki()
 class crm_case(osv.osv):
     _inherit = 'crm.case'
 
-    def _get_latest_cases(self, cr, uid, ids_cases, context={}, *arg):
+    def _get_latest_cases(self, cr, uid, ids_cases, name, args, context={}):
         if not ids_cases:
             return {}
         result = {}
@@ -263,28 +263,32 @@ class crm_case(osv.osv):
         date_back = datetime.date.today() +  datetime.timedelta(days=-31)
         date_back = date_back.strftime('%Y-%m-%d')
 
+        if context.has_key('project_id') and context['project_id']:
+            project_id = context['project_id']
+
+
         for case in self.browse(cr, uid, ids_cases, context):
             cr.execute("""select c.id from crm_case c \
                         left join  project_task t on c.id=t.case_id left join project_project p on p.id = t.project_id \
-                        where c.section_id = p.section_bug_id and c.date >= %s """, (date_back,))
+                        where c.section_id = p.section_bug_id and c.date >= %s and p.id=%s """, (date_back,project_id,))
             list_case = map(lambda x: x[0], cr.fetchall())
             result[case.id]['bug_ids'] = list_case
 
             cr.execute("""select c.id from crm_case c \
                         left join  project_task t on c.id=t.case_id left join project_project p on p.id = t.project_id \
-                        where c.section_id = p.section_feature_id and c.date >= %s """, (date_back,))
+                        where c.section_id = p.section_feature_id and c.date >= %s and p.id=%s """, (date_back, project_id,))
             list_case = map(lambda x: x[0], cr.fetchall())
             result[case.id]['feature_ids'] = list_case
 
             cr.execute("""select c.id from crm_case c \
                         left join  project_task t on c.id=t.case_id left join project_project p on p.id = t.project_id \
-                        where c.section_id = p.section_support_id and c.date >= %s """, (date_back,))
+                        where c.section_id = p.section_support_id and c.date >= %s and p.id=%s """, (date_back, project_id,))
             list_case = map(lambda x: x[0], cr.fetchall())
             result[case.id]['support_ids'] = list_case
 
             cr.execute("""select c.id from crm_case c \
                         left join  project_task t on c.id=t.case_id left join project_project p on p.id = t.project_id \
-                        where c.section_id = p.section_annouce_id and c.date >= %s """, (date_back,))
+                        where c.section_id = p.section_annouce_id and c.date >= %s and p.id=%s """, (date_back, project_id,))
             list_case = map(lambda x: x[0], cr.fetchall())
             result[case.id]['announce_ids'] = list_case
         return result
