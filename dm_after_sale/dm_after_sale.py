@@ -59,10 +59,12 @@ class dm_after_sale_action(osv.osv_memory):
         "Create workitem and document"
         lang_id = self.pool.get('res.lang').search(cr,uid,[('code','=',args[0]['lang'])])[0]
         doc_categ_id = self.pool.get('dm.offer.document.category').search(cr,uid,[('name','=','Production')])[0]
+        # to improve : not multimedia
+        as_event_step_id = self.pool.get('dm.offer.step').search(cr,uid,[('code','=','ASEVENT-EMAIL')])[0]
         for i in self.browse(cr,uid,ids):
             vals = {
                 'segment_id' : i.segment_id.id,
-                'step_id' : i.document_id.step_id.id,
+                'step_id' : as_event_step_id,
                 'address_id' : args[0]['address_id'],
                 'trigger_type_id' : i.action_id.id,
                 'mail_service_id' : i.mail_service_id.id,

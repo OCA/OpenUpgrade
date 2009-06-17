@@ -156,7 +156,6 @@ class dm_workitem(osv.osv): # {{{
                 res = server_obj.run(cr, uid, [wi.step_id.action_id.id], context)
 
                 """ Check returned value and set workitem log """
-		done = False
                 if res=='no_document':
                     self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'No production document is assigned to this offer step'})
                 elif res=='no_step':
