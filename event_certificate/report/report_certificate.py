@@ -37,16 +37,12 @@ class event_certificate(rml_parse.rml_parse):
         
     def get_date(self,st_date,end_date):
         date_res = ''
-        print "st_date::end_date",str(st_date),str(end_date)
         try:
             d1 = mx.DateTime.strptime(str(st_date),'%d/%m/%Y %H:%M:%S')
             d2 = mx.DateTime.strptime(str(end_date),'%d/%m/%Y %H:%M:%S')
-            print "d1:::d2",d1,d2
             new_d1 = d1.strftime('%d %B %Y %H:%M:%S')
             new_d2 = d2.strftime('%d %B %Y %H:%M:%S')
-            print "new_d1:::new_d2",new_d1,new_d2
             date_res = str(new_d1) +" "+ 'To' +" "+ str(new_d2)
-            print "date_res:::",date_res
         except Exception,e:
             print "e:::",e
             pass
