@@ -1,12 +1,12 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* profile_accounting
+# 	* profile_accounting
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2009-06-15 02:58+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
@@ -18,14 +18,27 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. module: profile_accounting
+#: model:ir.module.module,description:profile_accounting.module_meta_information
+msgid "Profile for Accounting"
+msgstr "Προφίλ Λογιστικής"
+
+#. module: profile_accounting
 #: model:ir.actions.todo,note:profile_accounting.config_install_wizard
-msgid "Install more modules. A few modules are proposed according to the Account Profile you selected. You will be able to install them based on our requirements."
-msgstr "Εγκαταστήστε περισσότερα Αρθρώματα. Κάποια σας προτείνονται ανάλογα με το Προφίλ Λογιστικής που επιλέξατε. Μπορείτε να τα εγκαταστήσετε ανάλογα με τις ανάγκες σας."
+msgid ""
+"Install more modules. A few modules are proposed according to the Account "
+"Profile you selected. You will be able to install them based on our "
+"requirements."
+msgstr ""
+"Εγκαταστήστε περισσότερα Αρθρώματα. Κάποια σας προτείνονται ανάλογα με το "
+"Προφίλ Λογιστικής που επιλέξατε. Μπορείτε να τα εγκαταστήσετε ανάλογα με τις "
+"ανάγκες σας."
 
 #. module: profile_accounting
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
-msgstr "Το όνομα πρέπει να ξεκινάει με x_ και να μην περιέχει ειδικούς χαρακτήρες!"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
+msgstr ""
+"Το όνομα πρέπει να ξεκινάει με x_ και να μην περιέχει ειδικούς χαρακτήρες!"
 
 #. module: profile_accounting
 #: view:profile.accounting.config.install_modules_wizard:0
@@ -34,8 +47,21 @@ msgstr "Διαχείριση Υπηρεσιών"
 
 #. module: profile_accounting
 #: help:profile.accounting.config.install_modules_wizard,board_document:0
-msgid "The Document Management System of Open ERP allows you to store, browse, automatically index, search and preview all kind of documents (internal documents, printed reports, calendar system). It opens an FTP access for the users to easily browse association's document."
-msgstr "Το Σύστημα Διαχείρισης Εγγράφων του Open ERP σας επιτρέπει να ανοίγετε, να αποθηκεύετε, να εντοπίζετε και να ευρετηροποιείτε κάθε είδος εγγράφου (εσωτερικά έγγραφα, εκτυπωμένες αναφορές, ημερολόγια). Ανοίγει μια πρόσβαση FTP ώστε οι χρήστες να πλοηγούνται εύκολα στα σχετικά έγγραφα."
+msgid ""
+"The Document Management System of Open ERP allows you to store, browse, "
+"automatically index, search and preview all kind of documents (internal "
+"documents, printed reports, calendar system). It opens an FTP access for the "
+"users to easily browse association's document."
+msgstr ""
+"Το Σύστημα Διαχείρισης Εγγράφων του Open ERP σας επιτρέπει να ανοίγετε, να "
+"αποθηκεύετε, να εντοπίζετε και να ευρετηροποιείτε κάθε είδος εγγράφου "
+"(εσωτερικά έγγραφα, εκτυπωμένες αναφορές, ημερολόγια). Ανοίγει μια πρόσβαση "
+"FTP ώστε οι χρήστες να πλοηγούνται εύκολα στα σχετικά έγγραφα."
+
+#. module: profile_accounting
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
 
 #. module: profile_accounting
 #: view:profile.accounting.config.install_modules_wizard:0
@@ -67,11 +93,6 @@ msgstr "Προφίλ Λογιστικής: Εγκατάσταση Επιπλέο
 #: field:profile.accounting.config.install_modules_wizard,hr_timesheet_invoice:0
 msgid "Invoice on Analytic Entries"
 msgstr "Τιμολόγηση στις Αναλυτικές Εγγραφές"
-
-#. module: profile_accounting
-#: model:ir.module.module,description:profile_accounting.module_meta_information
-msgid "Profile for Accounting"
-msgstr "Προφίλ Λογιστικής"
 
 #. module: profile_accounting
 #: help:profile.accounting.config.install_modules_wizard,account_budget:0
@@ -128,4 +149,3 @@ msgstr "profile.accounting.config.install_modules_wizard"
 #: view:profile.accounting.config.install_modules_wizard:0
 msgid "Cancel"
 msgstr "Ακύρωση"
-

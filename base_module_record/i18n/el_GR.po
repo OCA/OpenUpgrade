@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 15:20:37+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2009-06-13 03:36+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
@@ -15,6 +15,11 @@ msgstr ""
 "X-Poedit-Language: Greek\n"
 "X-Poedit-Country: GREECE\n"
 "X-Poedit-SourceCharset: utf-8\n"
+
+#. module: base_module_record
+#: model:ir.module.module,shortdesc:base_module_record.module_meta_information
+msgid "Module Recorder"
+msgstr "Αντιγραφέας Αρθρώματος"
 
 #. module: base_module_record
 #: wizard_field:base_module_record.module_record_objects,intro,category:0
@@ -225,12 +230,6 @@ msgstr "Εγγραφή"
 #: wizard_button:base_module_record.module_save,init,check:0
 msgid "Continue"
 msgstr "Συνέχεια"
-
-#. module: base_module_record
-#: model:ir.module.module,shortdesc:base_module_record.module_meta_information
-#: model:ir.ui.menu,name:base_module_record.menu_wizard_base_mod_rec_rec
-msgid "Module Recorder"
-msgstr "Αντιγραφέας Αρθρώματος"
 
 #. module: base_module_record
 #: selection:base_module_record.module_record_objects,intro,data_kind:0

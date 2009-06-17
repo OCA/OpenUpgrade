@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2009-06-15 02:45+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
@@ -84,6 +84,11 @@ msgid "Jobs Requests Of The Month by Applied Job"
 msgstr "Αιτήσεις Εργασίας του Μήνα ανά Θέση Αίτησης"
 
 #. module: board_crm_configuration
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
+
+#. module: board_crm_configuration
 #: view:board.board:0
 msgid "My Sales Pipeline"
 msgstr "Το Κανάλι Πωλήσεών μου"
@@ -112,8 +117,3 @@ msgstr "CRM - Πίνακας Στατιστικών Μεγεθών"
 #: view:board.board:0
 msgid "My Leads"
 msgstr "Οι Σύνδεσμοί μου"
-
-#. module: board_crm_configuration
-#: constraint:ir.actions.act_window:0
-msgid "Invalid model name in the action definition."
-msgstr ""

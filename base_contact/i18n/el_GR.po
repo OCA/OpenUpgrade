@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2009-06-15 02:42+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
@@ -16,6 +16,11 @@ msgstr ""
 "X-Poedit-Language: Greek\n"
 "X-Poedit-Country: GREECE\n"
 "X-Poedit-SourceCharset: utf-8\n"
+
+#. module: base_contact
+#: model:ir.module.module,shortdesc:base_contact.module_meta_information
+msgid "Base Contact"
+msgstr "Κύρια Επαφή"
 
 #. module: base_contact
 #: field:res.partner.job,sequence_contact:0
@@ -33,6 +38,11 @@ msgid ""
 "The Object name must start with x_ and not contain any special character !"
 msgstr ""
 "Το όνομα πρέπει να ξεκινάει με x_ και να μην περιέχει ειδικούς χαρακτήρες!"
+
+#. module: base_contact
+#: field:res.partner.job,function_id:0
+msgid "Partner Function"
+msgstr "Θέση στο Συνεργάτη"
 
 #. module: base_contact
 #: model:ir.actions.act_window,name:base_contact.action_partner_contact_form
@@ -64,14 +74,19 @@ msgid "Contact Partner Function"
 msgstr "Θέση Επαφής στο Συνεργάτη"
 
 #. module: base_contact
+#: field:res.partner.job,other:0
+msgid "Other"
+msgstr ""
+
+#. module: base_contact
 #: model:process.transition,name:base_contact.process_transition_contacttofunction0
 msgid "Contact to function"
 msgstr "Επαφή θέσης"
 
 #. module: base_contact
-#: field:res.partner.job,function_id:0
-msgid "Partner Function"
-msgstr "Θέση στο Συνεργάτη"
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
 
 #. module: base_contact
 #: model:process.transition,name:base_contact.process_transition_partnertoaddress0
@@ -84,14 +99,24 @@ msgid "# of Contacts"
 msgstr "# Επαφών"
 
 #. module: base_contact
+#: help:res.partner.job,other:0
+msgid "Additional phone field"
+msgstr ""
+
+#. module: base_contact
 #: model:process.node,name:base_contact.process_node_function0
 msgid "Function"
 msgstr "Λειτουργία"
 
 #. module: base_contact
-#: field:res.partner.contact,function_id:0
-msgid "Main Job"
-msgstr "Κύρια Εργασία"
+#: field:res.partner.job,fax:0
+msgid "Fax"
+msgstr ""
+
+#. module: base_contact
+#: field:res.partner.contact,lang_id:0
+msgid "Language"
+msgstr "Γλώσσα"
 
 #. module: base_contact
 #: field:res.partner.job,phone:0
@@ -114,11 +139,6 @@ msgid "Contact Functions"
 msgstr "Θέσεις Επαφής"
 
 #. module: base_contact
-#: model:ir.module.module,shortdesc:base_contact.module_meta_information
-msgid "Base Contact"
-msgstr "Κύρια Επαφή"
-
-#. module: base_contact
 #: help:res.partner.job,sequence_partner:0
 msgid ""
 "Order of importance of this job title in the list of job title of the linked "
@@ -126,7 +146,7 @@ msgid ""
 msgstr "Σπουδαιότητα της θέσης στην κατάσταση θέσεων εργασίας του συνεργάτη"
 
 #. module: base_contact
-#: field:res.partner.job,email:0
+#: field:res.partner.contact,email:0 field:res.partner.job,email:0
 msgid "E-Mail"
 msgstr "E-Mail"
 
@@ -159,9 +179,20 @@ msgid ""
 msgstr "Σπουδαιότητα της διεύθυνσηςστην κατάσταση διευθύνσεων του συνεργάτη"
 
 #. module: base_contact
+#: field:res.partner.address,job_id:0 field:res.partner.contact,job_id:0
+msgid "Main Job"
+msgstr "Κύρια Εργασία"
+
+#. module: base_contact
 #: view:res.partner:0
 msgid "Categories"
 msgstr "Κατηγορίες"
+
+#. module: base_contact
+#: field:res.partner.contact,function_id:0
+#, fuzzy
+msgid "Main Function"
+msgstr "Καθήκοντα"
 
 #. module: base_contact
 #: model:process.transition,note:base_contact.process_transition_partnertoaddress0
@@ -184,14 +215,19 @@ msgid "Seq."
 msgstr "Ιεράρχ."
 
 #. module: base_contact
-#: field:res.partner.contact,lang_id:0
-msgid "Language"
-msgstr "Γλώσσα"
+#: field:res.partner.job,extension:0
+msgid "Extension"
+msgstr ""
 
 #. module: base_contact
 #: field:res.partner.contact,mobile:0
 msgid "Mobile"
 msgstr "Κινητό"
+
+#. module: base_contact
+#: help:res.partner.job,extension:0
+msgid "Internal/External extension phone number"
+msgstr ""
 
 #. module: base_contact
 #: model:process.node,note:base_contact.process_node_contacts0
@@ -313,39 +349,3 @@ msgstr "Ιστοσελίδα"
 #: field:res.partner.contact,birthdate:0
 msgid "Birth Date"
 msgstr "Ημερ/νία Γέννησης"
-
-#. module: base_contact
-#: field:res.partner.job,other:0
-msgid "Other"
-msgstr ""
-
-#. module: base_contact
-#: constraint:ir.actions.act_window:0
-msgid "Invalid model name in the action definition."
-msgstr ""
-
-#. module: base_contact
-#: help:res.partner.job,other:0
-msgid "Additional phone field"
-msgstr ""
-
-#. module: base_contact
-#: field:res.partner.job,fax:0
-msgid "Fax"
-msgstr ""
-
-#. module: base_contact
-#: field:res.partner.contact,function_id:0
-#, fuzzy
-msgid "Main Function"
-msgstr "Καθήκοντα"
-
-#. module: base_contact
-#: field:res.partner.job,extension:0
-msgid "Extension"
-msgstr ""
-
-#. module: base_contact
-#: help:res.partner.job,extension:0
-msgid "Internal/External extension phone number"
-msgstr ""

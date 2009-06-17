@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 15:20:37+0000\n"
+"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
 "PO-Revision-Date: 2009-06-15 02:45+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
@@ -27,6 +27,11 @@ msgstr "Σχεδιασμός Έργων μου"
 #: model:ir.actions.act_window,name:board_project.act_hr_timesheet_sheet
 msgid "Timesheets"
 msgstr "Φύλλα Χρόνου Εργασίας"
+
+#. module: board_project
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
 
 #. module: board_project
 #: view:board.board:0
@@ -133,8 +138,3 @@ msgstr "Το κανάλι μου"
 #: view:board.board:0
 msgid "My Timesheet"
 msgstr "Το Φύλλο Χρόνου μου"
-
-#. module: board_project
-#: constraint:ir.actions.act_window:0
-msgid "Invalid model name in the action definition."
-msgstr ""

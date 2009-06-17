@@ -1,20 +1,21 @@
-# Translation of OpenERP Server.
-# This file containt the translation of the following modules:
-# 	* product
+# Greek translation for openobject-addons
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the openobject-addons package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
 #
-# Copyright (C) 2008,2009 P. Christeas <p_christ@hol.gr>
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
+"Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
-"PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
-"Last-Translator: P. Christeas <p_christ@hol.gr>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2009-05-08 23:18+0000\n"
+"Last-Translator: Makis Nicolaou <mark.nicolaou@gmail.com>\n"
+"Language-Team: Greek <el@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2009-05-10 00:04+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 
 #. module: product
 #: view:product.pricelist.item:0
@@ -346,7 +347,7 @@ msgstr "Βασισμένο στο"
 #. module: product
 #: field:product.supplierinfo,name:0
 msgid "Partner"
-msgstr "Συνέταιρος"
+msgstr "Συνεργάτης"
 
 #. module: product
 #: field:product.template,sale_delay:0
@@ -434,7 +435,7 @@ msgstr "Πληροφορίες Προμηθευτή"
 #. module: product
 #: field:product.ul,type:0
 msgid "Type"
-msgstr "Είδος ημερολογίου"
+msgstr "Τύπος"
 
 #. module: product
 #: view:product.product:0 view:product.template:0
@@ -823,7 +824,7 @@ msgstr "Το πλάτος της συσκευασίας"
 #. module: product
 #: field:product.packaging,qty:0
 msgid "Quantity by Package"
-msgstr "Ποσότητα κατά Πακέτο"
+msgstr "Ποσότητα κατα συσκευασία"
 
 #. module: product
 #: help:product.template,uos_id:0
@@ -926,7 +927,7 @@ msgstr "Πληροφορίες για έναν προμηθευτή προϊόν
 #: field:product.pricelist.version,active:0 field:product.product,active:0
 #: field:product.uom,active:0
 msgid "Active"
-msgstr "Ενεργός"
+msgstr "Ενεργό"
 
 #. module: product
 #: field:product.product,price_margin:0
@@ -1184,7 +1185,7 @@ msgstr "Παλέτα"
 #. module: product
 #: field:pricelist.partnerinfo,price:0
 msgid "Unit Price"
-msgstr "Τιμή ανά Μονάδα"
+msgstr "Τιμή Μονάδας"
 
 #. module: product
 #: field:product.template,warranty:0
@@ -1337,7 +1338,7 @@ msgstr "Αποθηκευτικές Μονάδες"
 #: field:product.template,name:0 field:product.ul,name:0
 #: field:product.uom,name:0 field:product.uom.categ,name:0
 msgid "Name"
-msgstr "Ονομασία"
+msgstr "Όνομα"
 
 #. module: product
 #: help:product.template,uos_coeff:0
@@ -1512,50 +1513,14 @@ msgstr "KGM"
 msgid "Price Discount"
 msgstr "Έκπτωση Τιμής"
 
-#~ msgid "PriceList"
-#~ msgstr "Τιμοκατάλογος"
-
-#~ msgid "Products: "
-#~ msgstr "Προϊόντα: "
-
-#~ msgid "Warning !"
-#~ msgstr "Προσοχή!"
-
-#~ msgid "Price Min. Margin"
-#~ msgstr "Ελάχιστο Περιθώριο Τιμής"
-
-#~ msgid "Print"
-#~ msgstr "Εκτύπωση"
-
-#~ msgid "Price list"
-#~ msgstr "Τιμοκατάλογος"
-
-#~ msgid "The weight in Kg."
-#~ msgstr "Το βάρος σε Κιλά."
-
-#~ msgid "Packagings"
-#~ msgstr "Συσκευασίας"
-
-#~ msgid "Cancel"
-#~ msgstr "Άκυρο"
-
-#~ msgid "Quantity-2"
-#~ msgstr "Ποσότητα-2"
-
-#~ msgid "Quantity-3"
-#~ msgstr "Ποσότητα-3"
-
-#~ msgid "Quantity-1"
-#~ msgstr "Ποσότητα-1"
-
-#~ msgid "Quantity-4"
-#~ msgstr "Ποσότητα-4"
-
-#~ msgid "Quantity-5"
-#~ msgstr "Ποσότητα-5"
-
-#~ msgid "Price Max. Margin"
-#~ msgstr "Μέγιστο Περιθώριο Τιμής"
+#~ msgid ""
+#~ "This is the average time between the confirmation of the customer order "
+#~ "and the delivery of the finnished products. It's the time you promise to "
+#~ "your customers."
+#~ msgstr ""
+#~ "Αυτός είναι ο μέσος χρόνος μεταξύ της επιβεβαίωσης της παραγγελίας του "
+#~ "πελάτη και της παράδοσης των τελικών προϊόντων. Είναι ο υποσχόμενος "
+#~ "χρόνος παράδοσης στον πελάτη σας."
 
 #~ msgid "DDR 512MB PC400"
 #~ msgstr "DDR 512MB PC400"
@@ -1563,14 +1528,27 @@ msgstr "Έκπτωση Τιμής"
 #~ msgid "Onsite Senior Intervention"
 #~ msgstr "Onsite Senior Intervention"
 
+#~ msgid "Products: "
+#~ msgstr "Προϊόντα: "
+
 #~ msgid "Sellable"
 #~ msgstr "Πωλείται"
 
 #~ msgid "Kit Keyboard + Mouse"
 #~ msgstr "Kit Keyboard + Mouse"
 
+#~ msgid "The mode of computation of the price for this rule."
+#~ msgstr "Η κατάσταση υπολογισμού για την τιμή για αυτόν τον κανόνα"
+
+#~ msgid "Supplier of Product"
+#~ msgstr "Προμηθευτής του Προϊόντος"
+
 #~ msgid "Services"
 #~ msgstr "Υπηρεσίες"
+
+#~ msgid "Starting date for validity of this pricelist version."
+#~ msgstr ""
+#~ "Ημερομηνία έναρξης για την ενεργοποίηση αυτής της έκδοσης τιμοκαταλόγου."
 
 #~ msgid "Partner section of the product form"
 #~ msgstr "Τομέας συνεργάτη στην φόρμα προϊόντος"
@@ -1578,11 +1556,41 @@ msgstr "Έκπτωση Τιμής"
 #~ msgid "Processor AMD Athlon XP 2200+"
 #~ msgstr "Processor AMD Athlon XP 2200+"
 
+#~ msgid "Childs Categories"
+#~ msgstr "Υποκατηγορίες"
+
+#~ msgid "Rentable product"
+#~ msgstr "Ενοικιαζόμενο προϊόν"
+
 #~ msgid "Silent fan"
 #~ msgstr "Αθόρυβος ανεμιστήρας"
 
+#~ msgid ""
+#~ "Will change the way procurements are processed, consumable are stockable "
+#~ "products with infinite stock, or without a stock management in the system."
+#~ msgstr ""
+#~ "Θα αλλάξει τον τρόπο που επεξεργαζονται οι προμήθειες, τα αναλώσιμα είναι "
+#~ "αποθηκευόμενα προϊόντα με απεριόριστο στόκ ή χωρίς διαχείριση αποθήκευσης "
+#~ "στο σύστημα."
+
+#~ msgid "Price Max. Margin"
+#~ msgstr "Μέγιστο Περιθώριο Τιμής"
+
+#~ msgid "Palette Dimension"
+#~ msgstr "Διαστάσεις Παλέτας"
+
 #~ msgid "Error ! You can not create recursive categories."
 #~ msgstr "Σφάλμα! Δεν μπορείτε να δημιουργήσετε επαναλαμβανόμενες κατηγορίες"
+
+#~ msgid ""
+#~ "Sets the price so that it is a multiple of this value.\n"
+#~ "Rounding is applied after the discount and before the surcharge.\n"
+#~ "To have prices that ends by 9.99, set rounding 10, surcharge -0.01"
+#~ msgstr ""
+#~ "Καθορίζει την τιμή ώστε να είναι πολλαπλάσια αυτής της αξίας.\n"
+#~ "Η στρογγυλοποίηση εφαρμόζεται μετά την έκπτωση και πριν την προσαύξηση.\n"
+#~ "Για να δημιουργηθούν τιμές που καταλήγουν σε 9.99, καθορίστε την "
+#~ "στρογγυλοποίηση σε 10, προσαύξηση -0.01"
 
 #~ msgid "Keyboard"
 #~ msgstr "Πληκτρολόγιο"
@@ -1599,11 +1607,38 @@ msgstr "Έκπτωση Τιμής"
 #~ msgid "HDD on demand"
 #~ msgstr "HDD κατ'απαίτηση"
 
+#~ msgid "Print"
+#~ msgstr "Εκτύπωση"
+
+#~ msgid "Palet"
+#~ msgstr "Παλέτα"
+
+#~ msgid "PriceList"
+#~ msgstr "Τιμοκατάλογος"
+
 #~ msgid "PC"
 #~ msgstr "PC"
 
+#~ msgid "Price Min. Margin"
+#~ msgstr "Ελάχιστο Περιθώριο Τιμής"
+
 #~ msgid "Other Pricelist"
 #~ msgstr "Άλλος Τιμοκατάλογος"
+
+#~ msgid ""
+#~ "The cost of the product for accounting stock valorisation. It can serves "
+#~ "as a base price for supplier price."
+#~ msgstr ""
+#~ "Το κόστος του προϊόντος που θα αξιολογηθεί λογιστικά το απόθεμα. Μπορεί "
+#~ "να χρησιμοποιηθεί ως τιμή χονδρικής του προμηθευτή."
+
+#~ msgid "You can see the list of supplier for that product."
+#~ msgstr "Μπορείτε να δείτε την λίστα των προμηθευτών για εκείνο το προϊόν."
+
+#~ msgid ""
+#~ "Unit of Measure of the same category can be converted between each others."
+#~ msgstr ""
+#~ "Η Μονάδα Μέτρησης της ίδιας κατηγορίας μπορούν να μετατραπούν μεταξύ τους"
 
 #~ msgid "Error: UOS must be in a different category than the UOM"
 #~ msgstr ""
@@ -1620,6 +1655,13 @@ msgstr "Έκπτωση Τιμής"
 
 #~ msgid "IT components kits"
 #~ msgstr "IT components kits"
+
+#~ msgid ""
+#~ "The coefficient for the formula:\n"
+#~ "coef (base unit) = 1 (this unit)"
+#~ msgstr ""
+#~ "Ο συντελεστής για αυτήν την φόρμουλα:\n"
+#~ "συντ (βασική μονάδα) = 1 (αυτή η μονάδα)"
 
 #~ msgid "Regular processor config"
 #~ msgstr "Regular processor config"
@@ -1642,6 +1684,15 @@ msgstr "Έκπτωση Τιμής"
 #~ msgid "Mainboard ASUStek A7V8X-X"
 #~ msgstr "Mainboard ASUStek A7V8X-X"
 
+#~ msgid ""
+#~ "'Make to Stock': When needed, take from the stock or wait until "
+#~ "refurnishing. 'Make to Order': When needed, purchase or produce for the "
+#~ "procurement request."
+#~ msgstr ""
+#~ "'Make to Stock': When needed, take from the stock or wait until "
+#~ "refurnishing. 'Make to Order': When needed, purchase or produce for the "
+#~ "procurement request."
+
 #~ msgid "%d unit"
 #~ msgstr "%d μονάδα"
 
@@ -1651,11 +1702,17 @@ msgstr "Έκπτωση Τιμής"
 #~ msgid "Regular case fan 80mm"
 #~ msgstr "Regular case fan 80mm"
 
+#~ msgid "Price list"
+#~ msgstr "Τιμοκατάλογος"
+
 #~ msgid "Medium PC"
 #~ msgstr "Medium PC"
 
 #~ msgid "Dello Computer"
 #~ msgstr "Dello Computer"
+
+#~ msgid "Packagings"
+#~ msgstr "Συσκευασίας"
 
 #~ msgid "Computer Stuff"
 #~ msgstr "Είδη Ηλεκτρονικών Υπολογιστών"
@@ -1672,17 +1729,52 @@ msgstr "Έκπτωση Τιμής"
 #~ msgid "All products"
 #~ msgstr "Όλα τα προϊόντα"
 
+#~ msgid "Cancel"
+#~ msgstr "Άκυρο"
+
 #~ msgid "RAM on demand"
 #~ msgstr "RAM κατ'απαίτηση"
 
 #~ msgid "HDD Seagate 7200.8 120GB"
 #~ msgstr "HDD Seagate 7200.8 120GB"
 
+#~ msgid "Quantity-2"
+#~ msgstr "Ποσότητα-2"
+
 #~ msgid "%d units"
 #~ msgstr "%d μονάδες"
 
+#~ msgid "Quantity-4"
+#~ msgstr "Ποσότητα-4"
+
+#~ msgid "Quantity-5"
+#~ msgstr "Ποσότητα-5"
+
+#~ msgid ""
+#~ "The rule only apply if the partner buys/sells more than this quantity."
+#~ msgstr ""
+#~ "Ο κανόνας αυτός εφαρμόζεται μόνον εάν ο συνεργάτης πουλάει/αγοράζει "
+#~ "περισσότερο απο αυτήν την ποσότητα."
+
+#~ msgid ""
+#~ "The coefficient for the formula:\n"
+#~ "1 (base unit) = coef (this unit)"
+#~ msgstr ""
+#~ "Ο συντελεστής για αυτήν την φόρμουλα:\n"
+#~ "1 (βασική μονάδα) = συντ (αυτή η μονάδα)"
+
+#~ msgid "Quantity-3"
+#~ msgstr "Ποσότητα-3"
+
 #~ msgid "Mainboard ASUStek A7N8X"
 #~ msgstr "Mainboard ASUStek A7N8X"
+
+#~ msgid ""
+#~ "The computed quantity will be a multiple of this value. Use 1.0 for "
+#~ "products that can not be splitted."
+#~ msgstr ""
+#~ "Η υπολογιζόμενη ποσότητα θα είναι πολλαπλάσια αυτής της αξίας. "
+#~ "Χρησιμοποιήστε 1.0 για προϊόντα που δεν μπορούν να χωριστούν."
 
 #~ msgid "High speed processor config"
 #~ msgstr "High speed processor config"
@@ -1690,11 +1782,31 @@ msgstr "Έκπτωση Τιμής"
 #~ msgid "Basic+ PC (assembly on order)"
 #~ msgstr "Basic+ PC (assembly on order)"
 
+#~ msgid "Ending date for validity of this pricelist version."
+#~ msgstr "Ημερομηνία λήξης για τον καθορισμό αυτής της έκδοσης τιμοκαταλόγου"
+
+#~ msgid "Warning !"
+#~ msgstr "Προσοχή!"
+
+#~ msgid "Paletization"
+#~ msgstr "Παλετοποίηση"
+
+#~ msgid "You can not have 2 pricelist version that overlaps!"
+#~ msgstr ""
+#~ "Δεν μπορείτε να έχετε 2 εκδόσεις τιμοκαταλόγουν που να συμπίπτουν ο ένας "
+#~ "με τον άλλον!"
+
 #~ msgid "ATX Mid-size Tower"
 #~ msgstr "ATX Mid-size Tower"
+
+#~ msgid "Quantity-1"
+#~ msgstr "Ποσότητα-1"
 
 #~ msgid "Private"
 #~ msgstr "Private"
 
 #~ msgid "Error: Invalid ean code"
 #~ msgstr "Σφάλμα: Λανθασμένος κωδικός ΕΑΝ"
+
+#~ msgid "The weight in Kg."
+#~ msgstr "Το βάρος σε Κιλά."

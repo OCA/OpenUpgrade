@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2009-06-15 02:44+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
@@ -16,6 +16,11 @@ msgstr ""
 "X-Poedit-Language: Greek\n"
 "X-Poedit-Country: GREECE\n"
 "X-Poedit-SourceCharset: utf-8\n"
+
+#. module: board_account
+#: model:ir.module.module,shortdesc:board_account.module_meta_information
+msgid "Board for accountant"
+msgstr "Πίνακας Λογιστηρίου"
 
 #. module: board_account
 #: view:board.board:0
@@ -62,11 +67,6 @@ msgid "Aged receivables"
 msgstr "Εισπρακτέα μεγάλης ηλικίας"
 
 #. module: board_account
-#: model:ir.module.module,shortdesc:board_account.module_meta_information
-msgid "Board for accountant"
-msgstr "Πίνακας Λογιστηρίου"
-
-#. module: board_account
 #: model:ir.actions.act_window,name:board_account.action_aged_income
 msgid "Income Accounts"
 msgstr "Λογαριασμοί Εσόδων"
@@ -75,6 +75,11 @@ msgstr "Λογαριασμοί Εσόδων"
 #: view:board.board:0
 msgid "My indicators"
 msgstr "Οι δείκτες μου"
+
+#. module: board_account
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
 
 #. module: board_account
 #: model:ir.ui.menu,name:board_account.next_id_68
@@ -91,8 +96,3 @@ msgstr "Πίνακας Λογαριασμού"
 #, fuzzy
 msgid "Aged income"
 msgstr "'Εσοδα μεγάλης ηλικίας"
-
-#. module: board_account
-#: constraint:ir.actions.act_window:0
-msgid "Invalid model name in the action definition."
-msgstr ""

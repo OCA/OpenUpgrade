@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"POT-Creation-Date: 2009-06-08 21:23:38+0000\n"
 "PO-Revision-Date: 2009-06-15 02:49+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
@@ -28,17 +28,14 @@ msgid "Profit"
 msgstr "Κέρδος"
 
 #. module: hr_timesheet_invoice
-#: code:addons/hr_timesheet_invoice/wizard/hr_timesheet_final_invoice_create.py:0
-#: code:addons/hr_timesheet_invoice/wizard/hr_timesheet_invoice_create.py:0
-#, python-format
-msgid "Analytic account incomplete"
-msgstr "Ο Αναλυτικός Λογαριασμός είναι ημιτελής"
+#: wizard_view:hr.timesheet.invoice.create,init:0
+msgid "Force to use a specific product"
+msgstr "Χρήση συγκεκριμένου προϊόντος"
 
 #. module: hr_timesheet_invoice
-#: model:ir.actions.wizard,name:hr_timesheet_invoice.account_analytic_profit
-#: model:ir.ui.menu,name:hr_timesheet_invoice.print_account_analytic_profit
-msgid "Timesheet profit"
-msgstr "Κέρδος Xρόνου Eργασίας"
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
 
 #. module: hr_timesheet_invoice
 #: rml:account.analytic.profit:0
@@ -104,12 +101,6 @@ msgstr ""
 "Αναλυτικούς Λογαριασμούς."
 
 #. module: hr_timesheet_invoice
-#: code:addons/hr_timesheet_invoice/wizard/hr_timesheet_invoice_create.py:0
-#, python-format
-msgid "Partner incomplete"
-msgstr "Συνεργάτης ημιτελής"
-
-#. module: hr_timesheet_invoice
 #: help:hr.timesheet.invoice.create,init,name:0
 msgid "The detail of each work done will be displayed on the invoice"
 msgstr ""
@@ -126,9 +117,9 @@ msgid "Period to enddate"
 msgstr "Ως τη λήξη περιόδου "
 
 #. module: hr_timesheet_invoice
-#: wizard_view:hr.timesheet.invoice.create,init:0
-msgid "Force to use a specific product"
-msgstr "Χρήση συγκεκριμένου προϊόντος"
+#: wizard_button:hr.timesheet.invoice.create,init,create:0
+msgid "Create Invoices"
+msgstr ""
 
 #. module: hr_timesheet_invoice
 #: rml:account.analytic.profit:0
@@ -189,18 +180,14 @@ msgid "Open Analytic Accounts"
 msgstr "Άνοιγμα Αναλυτικών Λογαριασμών"
 
 #. module: hr_timesheet_invoice
-#: code:addons/hr_timesheet_invoice/hr_timesheet_invoice.py:0
-#, python-format
-msgid "Error !"
-msgstr "Σφάλμα!"
-
-#. module: hr_timesheet_invoice
 #: wizard_view:hr.timesheet.invoice.create,init:0
 msgid "Filter on Accounts"
 msgstr "Φίλτρο Λογαριασμών"
 
 #. module: hr_timesheet_invoice
 #: model:ir.actions.report.xml,name:hr_timesheet_invoice.report_analytical_profit
+#: model:ir.actions.wizard,name:hr_timesheet_invoice.account_analytic_profit
+#: model:ir.ui.menu,name:hr_timesheet_invoice.print_account_analytic_profit
 msgid "Timesheet Profit"
 msgstr "Κέρδος Xρόνου Eργασίας"
 
@@ -247,12 +234,6 @@ msgid "My Uninvoiced Entries"
 msgstr "Οι Εγγραφές μου (μη Τιμολογημένες)"
 
 #. module: hr_timesheet_invoice
-#: code:addons/hr_timesheet_invoice/hr_timesheet_invoice.py:0
-#, python-format
-msgid "You can not modify an invoiced analytic line!"
-msgstr "Δεν μπορείτε να τροποποιήσετε μια τιμολογημένη αναλυτική γραμμή!"
-
-#. module: hr_timesheet_invoice
 #: wizard_field:hr.timesheet.final.invoice.create,init,name:0
 #: wizard_field:hr.timesheet.invoice.create,init,name:0
 msgid "Name of entry"
@@ -262,12 +243,6 @@ msgstr "Όνομα εγγραφής"
 #: rml:account.analytic.profit:0
 msgid "Employee or Journal Name"
 msgstr "Υπάλληλος ή Όνομα Ημερολογίου"
-
-#. module: hr_timesheet_invoice
-#: code:addons/hr_timesheet_invoice/wizard/hr_timesheet_invoice_create.py:0
-#, python-format
-msgid "Invoices"
-msgstr "Τιμολόγια"
 
 #. module: hr_timesheet_invoice
 #: rml:account.analytic.profit:0
@@ -291,14 +266,7 @@ msgid "Uninvoiced Entries"
 msgstr "Μη Τιμολογημένες Εγγραφές"
 
 #. module: hr_timesheet_invoice
-#: code:addons/hr_timesheet_invoice/wizard/hr_timesheet_invoice_create.py:0
-#, python-format
-msgid "At least on line have no product !"
-msgstr "Τουλάχιστον μία γραμμή δεν έχει προίόν!"
-
-#. module: hr_timesheet_invoice
 #: wizard_button:hr.timesheet.final.invoice.create,init,create:0
-#: wizard_button:hr.timesheet.invoice.create,init,create:0
 msgid "Create invoices"
 msgstr "Δημιουργία Τιμολογίων"
 
@@ -381,12 +349,6 @@ msgid "Credit"
 msgstr "Πίστωση"
 
 #. module: hr_timesheet_invoice
-#: code:addons/hr_timesheet_invoice/wizard/hr_timesheet_invoice_create.py:0
-#, python-format
-msgid "Error"
-msgstr "Σφάλμα"
-
-#. module: hr_timesheet_invoice
 #: wizard_field:hr.timesheet.invoice.account.analytic.account.cost_ledger.report,init,date2:0
 msgid "End of period"
 msgstr "Τέλος Περιόδου"
@@ -417,17 +379,6 @@ msgid "Do you want to show details of work in invoice ?"
 msgstr "Επιθυμείτε την εμφάνιση λεπτομερειών εργασίας στο τιμολόγιο;"
 
 #. module: hr_timesheet_invoice
-#: code:addons/hr_timesheet_invoice/wizard/hr_timesheet_invoice_create.py:0
-#, python-format
-msgid ""
-"Please fill in the partner and pricelist field in the analytic account:\n"
-"%s"
-msgstr ""
-"Παρακαλώ συμπληρώστε τα πεδία συνεργάτη και τιμοκαταλόγου στον Αναλυτικό "
-"Λογαριασμό:\n"
-"%s"
-
-#. module: hr_timesheet_invoice
 #: rml:hr.timesheet.invoice.account.analytic.account.cost_ledger:0
 msgid "Period from"
 msgstr "Από"
@@ -449,12 +400,6 @@ msgstr "Τιμολόγιο"
 #: wizard_button:hr.timesheet.invoice.create,init,end:0
 msgid "Cancel"
 msgstr "Ακύρωση"
-
-#. module: hr_timesheet_invoice
-#: code:addons/hr_timesheet_invoice/wizard/hr_timesheet_final_invoice_create.py:0
-#, python-format
-msgid "Balance product needed"
-msgstr "Χρειάζεται προϊόν υπολοίπου "
 
 #. module: hr_timesheet_invoice
 #: constraint:ir.model:0
@@ -547,30 +492,49 @@ msgid "Unclosed Invoiceable Accounts"
 msgstr "Ανοικτοί Λογαριασμοί προς Τιμολόγηση"
 
 #. module: hr_timesheet_invoice
-#: code:addons/hr_timesheet_invoice/wizard/hr_timesheet_final_invoice_create.py:0
-#, python-format
-msgid "Please fill a Balance product in the wizard"
-msgstr "Παρακαλώ συμπληρώστε ένα Εξισορροποιητικό Προϊόν"
-
-#. module: hr_timesheet_invoice
 #: rml:account.analytic.profit:0
 #: wizard_field:hr.timesheet.final.invoice.create,init,price:0
 #: wizard_field:hr.timesheet.invoice.create,init,price:0
 msgid "Cost"
 msgstr "Κόστος"
 
-#. module: hr_timesheet_invoice
-#: code:addons/hr_timesheet_invoice/wizard/hr_timesheet_invoice_create.py:0
-#, python-format
-msgid "Please fill in the address field in the partner: %s."
-msgstr "Παρακλώ συμπληρώστε τη διεύθυνση του συνεργάτη: %s."
+#~ msgid "Analytic account incomplete"
+#~ msgstr "Ο Αναλυτικός Λογαριασμός είναι ημιτελής"
 
-#. module: hr_timesheet_invoice
-#: constraint:ir.actions.act_window:0
-msgid "Invalid model name in the action definition."
-msgstr ""
+#~ msgid "Timesheet profit"
+#~ msgstr "Κέρδος Xρόνου Eργασίας"
 
-#. module: hr_timesheet_invoice
-#: wizard_button:hr.timesheet.invoice.create,init,create:0
-msgid "Create Invoices"
-msgstr ""
+#~ msgid "Partner incomplete"
+#~ msgstr "Συνεργάτης ημιτελής"
+
+#~ msgid "Error !"
+#~ msgstr "Σφάλμα!"
+
+#~ msgid "You can not modify an invoiced analytic line!"
+#~ msgstr "Δεν μπορείτε να τροποποιήσετε μια τιμολογημένη αναλυτική γραμμή!"
+
+#~ msgid "Invoices"
+#~ msgstr "Τιμολόγια"
+
+#~ msgid "At least on line have no product !"
+#~ msgstr "Τουλάχιστον μία γραμμή δεν έχει προίόν!"
+
+#~ msgid "Error"
+#~ msgstr "Σφάλμα"
+
+#~ msgid ""
+#~ "Please fill in the partner and pricelist field in the analytic account:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Παρακαλώ συμπληρώστε τα πεδία συνεργάτη και τιμοκαταλόγου στον Αναλυτικό "
+#~ "Λογαριασμό:\n"
+#~ "%s"
+
+#~ msgid "Balance product needed"
+#~ msgstr "Χρειάζεται προϊόν υπολοίπου "
+
+#~ msgid "Please fill a Balance product in the wizard"
+#~ msgstr "Παρακαλώ συμπληρώστε ένα Εξισορροποιητικό Προϊόν"
+
+#~ msgid "Please fill in the address field in the partner: %s."
+#~ msgstr "Παρακλώ συμπληρώστε τη διεύθυνση του συνεργάτη: %s."

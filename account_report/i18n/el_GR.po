@@ -1,20 +1,21 @@
-# Translation of OpenERP Server.
-# This file containt the translation of the following modules:
-# 	* account_report
+# Greek translation for openobject-addons
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the openobject-addons package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
 #
-# Copyright (C) 2008,2009 P. Christeas <p_christ@hol.gr>
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
+"Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
-"PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
-"Last-Translator: P. Christeas <p_christ@hol.gr>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2009-05-15 22:58+0000\n"
+"Last-Translator: Makis Nicolaou <mark.nicolaou@gmail.com>\n"
+"Language-Team: Greek <el@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2009-05-16 10:36+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 
 #. module: account_report
 #: model:ir.module.module,shortdesc:account_report.module_meta_information
@@ -45,7 +46,7 @@ msgstr "Χρήστες:"
 #. module: account_report
 #: field:account.report.report,parent_id:0
 msgid "Parent"
-msgstr "Γονέας"
+msgstr "Κατηγορία"
 
 #. module: account_report
 #: field:account.report.report,disp_graph:0
@@ -163,7 +164,7 @@ msgstr "Εκτύπωση"
 #. module: account_report
 #: field:account.report.report,type:0
 msgid "Type"
-msgstr "Είδος ημερολογίου"
+msgstr "Τύπος"
 
 #. module: account_report
 #: model:ir.actions.report.xml,name:account_report.report_indicator_pdf
@@ -270,7 +271,7 @@ msgstr ""
 #. module: account_report
 #: field:account.report.report,active:0
 msgid "Active"
-msgstr "Ενεργός"
+msgstr "Ενεργό"
 
 #. module: account_report
 #: field:account.report.report,disp_tree:0
@@ -321,7 +322,7 @@ msgstr "New Reporting Item Formula"
 #. module: account_report
 #: field:account.report.report,code:0 rml:accounting.report:0
 msgid "Code"
-msgstr "Κωδικός"
+msgstr "Κώδικας"
 
 #. module: account_report
 #: field:account.report.history,tmp:0
@@ -457,7 +458,7 @@ msgstr "Αναφορές δεικτών"
 #: field:account.report.report,name:0 rml:accounting.report:0
 #: rml:print.indicators:0
 msgid "Name"
-msgstr "Ονομασία"
+msgstr "Όνομα"
 
 #. module: account_report
 #: wizard_field:print.indicators,next,base_selection:0
@@ -530,7 +531,7 @@ msgstr "Τιμή επιστροφής για κατάσταση"
 #. module: account_report
 #: field:account.report.report,sequence:0
 msgid "Sequence"
-msgstr "Ακολουθία"
+msgstr "Αλληλουχία"
 
 #. module: account_report
 #: rml:accounting.report:0

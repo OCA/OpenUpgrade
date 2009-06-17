@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
 "PO-Revision-Date: 2009-06-15 03:02+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
@@ -43,6 +43,11 @@ msgid "Validated By"
 msgstr "Επικυρωμένο Από"
 
 #. module: purchase
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
+
+#. module: purchase
 #: field:purchase.order,partner_id:0
 msgid "Supplier"
 msgstr "Προμηθευτής"
@@ -65,15 +70,9 @@ msgstr ""
 "μονάδες μέτρησης."
 
 #. module: purchase
-#: code:addons/purchase/purchase.py:0
-#, python-format
-msgid "No Pricelist !"
-msgstr "Δεν υπάρχει Τιμοκατάλογος!"
-
-#. module: purchase
-#: model:ir.actions.act_window,name:purchase.act_purchase_order_2_stock_picking
-msgid "Packing"
-msgstr "Συσκευασία"
+#: selection:purchase.order,invoice_method:0
+msgid "From Order"
+msgstr "Από Παραγγελία"
 
 #. module: purchase
 #: model:process.node,name:purchase.process_node_confirmpurchaseorder0
@@ -182,9 +181,9 @@ msgid "Purchase Order"
 msgstr "Παραγγελία Αγοράς"
 
 #. module: purchase
-#: field:purchase.order,name:0
-msgid "Order Reference"
-msgstr "Παραπομπή Παραγγελίας"
+#: rml:purchase.quotation:0
+msgid "Regards,"
+msgstr "Με εκτίμηση,"
 
 #. module: purchase
 #: rml:purchase.order:0
@@ -224,22 +223,14 @@ msgid "Incoming Products"
 msgstr "Εισερχόμενα Προϊόντα"
 
 #. module: purchase
-#: model:process.node,note:purchase.process_node_confirmpurchaseorder0
-msgid "Purchase order is confirmed by the user."
-msgstr "Η Παραγγελία Αγοράς επιβεβαιώθηκε από το χρήστη"
+#: rml:purchase.order:0 rml:purchase.quotation:0
+msgid "Qty"
+msgstr "Ποσ."
 
 #. module: purchase
 #: view:purchase.order:0
 msgid "Manually Corrected"
 msgstr "Διορθωμένη Χειροκίνητα"
-
-#. module: purchase
-#: code:addons/purchase/purchase.py:0
-#, python-format
-msgid "You must first cancel all invoices attached to this purchase order."
-msgstr ""
-"Πρέπει πρώτα να ακυρώσετε όλα τα τιμολόγια που συνδέονται με την Παραγγελία "
-"Αγοράς."
 
 #. module: purchase
 #: view:purchase.order:0
@@ -302,22 +293,6 @@ msgstr "Καθαρή Τιμή"
 #: view:purchase.order.line:0
 msgid "Order Line"
 msgstr "Γραμμή Παραγγελίας"
-
-#. module: purchase
-#: code:addons/purchase/purchase.py:0
-#, python-format
-msgid ""
-"You have to select a pricelist in the purchase form !\n"
-"Please set one before choosing a product."
-msgstr ""
-"Πρέπει να επιλέξετε εναν τιμοκατάλογο στη φόρμα αγορών!\n"
-"Παρακαλώ επιλέξτε έναν πριν την επιλογη του προϊόντος."
-
-#. module: purchase
-#: code:addons/purchase/purchase.py:0
-#, python-format
-msgid "Wrong Product UOM !"
-msgstr "Λάθος ΜΟΜ Προϊόντος"
 
 #. module: purchase
 #: selection:purchase.order,state:0
@@ -391,10 +366,10 @@ msgid "Shipping address :"
 msgstr "Διεύθυνση Αποστολής"
 
 #. module: purchase
-#: code:addons/purchase/purchase.py:0
-#, python-format
-msgid "Error !"
-msgstr "Σφάλμα:"
+#: model:product.pricelist.type,name:purchase.pricelist_type_purchase
+#: field:res.partner,property_product_pricelist_purchase:0
+msgid "Purchase Pricelist"
+msgstr "Τιμοκατάλογος Αγορών"
 
 #. module: purchase
 #: field:purchase.order,minimum_planned_date:0
@@ -407,9 +382,9 @@ msgid "Approved by Supplier"
 msgstr "Εγκεκριμένη από Προμηθευτή"
 
 #. module: purchase
-#: selection:purchase.order,invoice_method:0
-msgid "From Order"
-msgstr "Από Παραγγελία"
+#: model:ir.actions.act_window,name:purchase.act_purchase_order_2_stock_picking
+msgid "Packing"
+msgstr "Συσκευασία"
 
 #. module: purchase
 #: model:ir.actions.wizard,name:purchase.purchase_order_merge
@@ -422,10 +397,9 @@ msgid "Reservation Destination"
 msgstr "Προορσιμός Κράτησης"
 
 #. module: purchase
-#: code:addons/purchase/purchase.py:0
-#, python-format
-msgid "Invalid action !"
-msgstr "Άκυρη Ενέργεια!"
+#: field:purchase.order,name:0
+msgid "Order Reference"
+msgstr "Παραπομπή Παραγγελίας"
 
 #. module: purchase
 #: selection:purchase.order,state:0
@@ -487,11 +461,6 @@ msgstr "Εξαίρεση Αποστολής"
 #: model:process.node,note:purchase.process_node_draftpurchaseorder1
 msgid "Encoded manually by the user."
 msgstr "Κωδικοποιημένα από το χρήστη."
-
-#. module: purchase
-#: rml:purchase.order:0 rml:purchase.quotation:0
-msgid "Qty"
-msgstr "Ποσ."
 
 #. module: purchase
 #: help:purchase.order,minimum_planned_date:0
@@ -562,16 +531,6 @@ msgid "Invoiced"
 msgstr "Τιμολογημένα"
 
 #. module: purchase
-#: code:addons/purchase/purchase.py:0
-#, python-format
-msgid ""
-"You have to select a product UOM in the same category than the purchase UOM "
-"of the product"
-msgstr ""
-"Πρέπει να επιλέξετε ΜΟΜ προϊόντος από την ίδια κατηγορία με την ΜΟΜ αγοράς "
-"του προϊόντος"
-
-#. module: purchase
 #: field:purchase.order,dest_address_id:0
 msgid "Destination Address"
 msgstr "Διεύθυνση Προορισμού"
@@ -580,16 +539,6 @@ msgstr "Διεύθυνση Προορισμού"
 #: view:purchase.order.line:0 field:stock.move,purchase_line_id:0
 msgid "Purchase Order Line"
 msgstr "Γραμμή Παραγγελίας Αγοράς"
-
-#. module: purchase
-#: code:addons/purchase/purchase.py:0
-#, python-format
-msgid ""
-"You have to select a partner in the purchase form !\n"
-"Please set one partner before choosing a product."
-msgstr ""
-"Πρέπει να επιλέξετε συνεργάτη!\n"
-"Παρακαλώ επιλέξτε συνεργάτη πριν επιλέξετε προϊόν."
 
 #. module: purchase
 #: view:purchase.order:0
@@ -633,20 +582,25 @@ msgid "Creates invoice from packin list"
 msgstr "Δημιουργεί τιμολόγιο από την Κατάσταση Συσκευασίας"
 
 #. module: purchase
+#: help:purchase.order,date_order:0
+msgid "Date on which this document has been created."
+msgstr ""
+
+#. module: purchase
 #: view:purchase.order:0
 msgid "Delivery & Invoices"
 msgstr "Παραλαβή και Τιμολόγηση"
 
 #. module: purchase
+#: field:purchase.order,date_order:0
+#, fuzzy
+msgid "Date"
+msgstr "Ημερ/νία Αίτησης"
+
+#. module: purchase
 #: help:purchase.order,origin:0
 msgid "Reference of the document that generated this purchase order request."
 msgstr "Παραπομπή στο έγγραφο που δημιούργησε την αίτηση παραγγελίας."
-
-#. module: purchase
-#: code:addons/purchase/purchase.py:0
-#, python-format
-msgid "There is no expense account defined for this product: \"%s\" (id:%d)"
-msgstr "Δεν έχει δηλωθεί λογαριασμός εξόδων για το προϊόν: \"%s\" (id:%d)"
 
 #. module: purchase
 #: rml:purchase.order:0
@@ -677,6 +631,12 @@ msgstr "ΦΠΑ:"
 #: view:purchase.order:0
 msgid "Compute"
 msgstr "Υπολογισμός"
+
+#. module: purchase
+#: constraint:product.pricelist.version:0
+#, fuzzy
+msgid "You cannot have 2 pricelist versions that overlap!"
+msgstr "Δεν μπορείτε να έχετε 2 εκδόσεις τιμοκαταλόγου που αλληλοκαλύπτονται!"
 
 #. module: purchase
 #: view:purchase.order:0
@@ -810,12 +770,6 @@ msgid "Date Approved"
 msgstr "Ημερ/νία Έγκρισης"
 
 #. module: purchase
-#: code:addons/purchase/purchase.py:0
-#, python-format
-msgid "Could not cancel this purchase order !"
-msgstr "Η Παραγγελία δεν μπορεί να ακυρωθεί!"
-
-#. module: purchase
 #: model:ir.module.module,description:purchase.module_meta_information
 msgid ""
 "Module for purchase management\n"
@@ -828,12 +782,6 @@ msgstr ""
 #: field:purchase.order.line,product_id:0
 msgid "Product"
 msgstr "Προϊόν"
-
-#. module: purchase
-#: code:addons/purchase/purchase.py:0
-#, python-format
-msgid "No Partner!"
-msgstr "Δεν υπάρχει Συνεργάτης!"
 
 #. module: purchase
 #: rml:purchase.order:0 field:purchase.order.line,name:0
@@ -868,33 +816,19 @@ msgid "Product UOM"
 msgstr "ΜΟΜ Προϊόντων"
 
 #. module: purchase
-#: rml:purchase.quotation:0
-msgid "Regards,"
-msgstr "Με εκτίμηση,"
-
-#. module: purchase
 #: field:purchase.order.line,move_id:0
 msgid "Reservation"
 msgstr "Κράτηση"
 
 #. module: purchase
-#: code:addons/purchase/purchase.py:0
-#, python-format
-msgid "Could not cancel purchase order !"
-msgstr "Η Παραγγελία δεν μπορεί να ακυρωθεί!"
+#: model:process.node,note:purchase.process_node_confirmpurchaseorder0
+msgid "Purchase order is confirmed by the user."
+msgstr "Η Παραγγελία Αγοράς επιβεβαιώθηκε από το χρήστη"
 
 #. module: purchase
 #: model:process.transition,name:purchase.process_transition_purchaseinvoice0
 msgid "Purchase Invoice"
 msgstr "Τιμολόγιο Αγοράς"
-
-#. module: purchase
-#: code:addons/purchase/purchase.py:0
-#, python-format
-msgid "You must first cancel all packing attached to this purchase order."
-msgstr ""
-"Πρέπει πρώτα να ακυρώσετε όλες τις συσκευασίες που σχετίζονται με την "
-"παραγγελία αγοράς."
 
 #. module: purchase
 #: rml:purchase.order:0
@@ -907,7 +841,7 @@ msgid "Total amount"
 msgstr "Σύνολικό ποσό"
 
 #. module: purchase
-#: rml:purchase.order:0 field:purchase.order,date_order:0
+#: rml:purchase.order:0
 msgid "Date Ordered"
 msgstr "Ημερ/νία Παραγγελίας"
 
@@ -921,12 +855,6 @@ msgstr "Έλεγχος Αγορών"
 #: model:ir.ui.menu,name:purchase.menu_purchase_order_draft
 msgid "Request For Quotations"
 msgstr "Αίτηση Προσφορών"
-
-#. module: purchase
-#: model:product.pricelist.type,name:purchase.pricelist_type_purchase
-#: field:res.partner,property_product_pricelist_purchase:0
-msgid "Purchase Pricelist"
-msgstr "Τιμοκατάλογος Αγορών"
 
 #. module: purchase
 #: field:purchase.order,invoice_method:0
@@ -949,11 +877,6 @@ msgid "From Packing list, Create invoice."
 msgstr "Δημιουργία Τιμολογίου από Κατάσταση Συσκευασίας"
 
 #. module: purchase
-#: constraint:product.pricelist.version:0
-msgid "You can not have 2 pricelist version that overlaps!"
-msgstr "Δεν μπορείτε να έχετε 2 εκδόσεις τιμοκαταλόγου που αλληλοκαλύπτονται!"
-
-#. module: purchase
 #: wizard_view:purchase.order.merge,init:0
 msgid "Are you sure you want to merge these orders ?"
 msgstr "Είστε σίγουροι ότι θέλετε να συγχωνεύσετε αυτές τις παραγγελίες;"
@@ -974,24 +897,61 @@ msgstr ""
 msgid "Total"
 msgstr "Σύνολο"
 
-#. module: purchase
-#: constraint:ir.actions.act_window:0
-msgid "Invalid model name in the action definition."
-msgstr ""
+#~ msgid "No Pricelist !"
+#~ msgstr "Δεν υπάρχει Τιμοκατάλογος!"
 
-#. module: purchase
-#: help:purchase.order,date_order:0
-msgid "Date on which this document has been created."
-msgstr ""
+#~ msgid "You must first cancel all invoices attached to this purchase order."
+#~ msgstr ""
+#~ "Πρέπει πρώτα να ακυρώσετε όλα τα τιμολόγια που συνδέονται με την "
+#~ "Παραγγελία Αγοράς."
 
-#. module: purchase
-#: field:purchase.order,date_order:0
-#, fuzzy
-msgid "Date"
-msgstr "Ημερ/νία Αίτησης"
+#~ msgid ""
+#~ "You have to select a pricelist in the purchase form !\n"
+#~ "Please set one before choosing a product."
+#~ msgstr ""
+#~ "Πρέπει να επιλέξετε εναν τιμοκατάλογο στη φόρμα αγορών!\n"
+#~ "Παρακαλώ επιλέξτε έναν πριν την επιλογη του προϊόντος."
 
-#. module: purchase
-#: constraint:product.pricelist.version:0
-#, fuzzy
-msgid "You cannot have 2 pricelist versions that overlap!"
-msgstr "Δεν μπορείτε να έχετε 2 εκδόσεις τιμοκαταλόγου που αλληλοκαλύπτονται!"
+#~ msgid "Wrong Product UOM !"
+#~ msgstr "Λάθος ΜΟΜ Προϊόντος"
+
+#~ msgid "Error !"
+#~ msgstr "Σφάλμα:"
+
+#~ msgid "Invalid action !"
+#~ msgstr "Άκυρη Ενέργεια!"
+
+#~ msgid ""
+#~ "You have to select a product UOM in the same category than the purchase "
+#~ "UOM of the product"
+#~ msgstr ""
+#~ "Πρέπει να επιλέξετε ΜΟΜ προϊόντος από την ίδια κατηγορία με την ΜΟΜ "
+#~ "αγοράς του προϊόντος"
+
+#~ msgid ""
+#~ "You have to select a partner in the purchase form !\n"
+#~ "Please set one partner before choosing a product."
+#~ msgstr ""
+#~ "Πρέπει να επιλέξετε συνεργάτη!\n"
+#~ "Παρακαλώ επιλέξτε συνεργάτη πριν επιλέξετε προϊόν."
+
+#~ msgid "There is no expense account defined for this product: \"%s\" (id:%d)"
+#~ msgstr "Δεν έχει δηλωθεί λογαριασμός εξόδων για το προϊόν: \"%s\" (id:%d)"
+
+#~ msgid "Could not cancel this purchase order !"
+#~ msgstr "Η Παραγγελία δεν μπορεί να ακυρωθεί!"
+
+#~ msgid "No Partner!"
+#~ msgstr "Δεν υπάρχει Συνεργάτης!"
+
+#~ msgid "Could not cancel purchase order !"
+#~ msgstr "Η Παραγγελία δεν μπορεί να ακυρωθεί!"
+
+#~ msgid "You must first cancel all packing attached to this purchase order."
+#~ msgstr ""
+#~ "Πρέπει πρώτα να ακυρώσετε όλες τις συσκευασίες που σχετίζονται με την "
+#~ "παραγγελία αγοράς."
+
+#~ msgid "You can not have 2 pricelist version that overlaps!"
+#~ msgstr ""
+#~ "Δεν μπορείτε να έχετε 2 εκδόσεις τιμοκαταλόγου που αλληλοκαλύπτονται!"

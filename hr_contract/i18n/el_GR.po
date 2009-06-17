@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2009-06-15 02:49+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
@@ -16,6 +16,11 @@ msgstr ""
 "X-Poedit-Language: Greek\n"
 "X-Poedit-Country: GREECE\n"
 "X-Poedit-SourceCharset: utf-8\n"
+
+#. module: hr_contract
+#: model:ir.module.module,shortdesc:hr_contract.module_meta_information
+msgid "Human Resources Contracts"
+msgstr "Συμβάσεις Ανθρώπινου Δυναμικού"
 
 #. module: hr_contract
 #: view:hr.contract.wage.type:0
@@ -55,9 +60,9 @@ msgid "Wage Types"
 msgstr "Τύποι Αποδοχών"
 
 #. module: hr_contract
-#: field:hr.employee,soc_security:0
-msgid "Social security number"
-msgstr "Αρ. Κοινωνικής Ασφάλισης"
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
 
 #. module: hr_contract
 #: field:hr.contract,employee_id:0
@@ -70,11 +75,6 @@ msgid "Net"
 msgstr "Καθαρό"
 
 #. module: hr_contract
-#: model:ir.module.module,shortdesc:hr_contract.module_meta_information
-msgid "Human Resources Contracts"
-msgstr "Συμβάσεις Ανθρώπινου Δυναμικού"
-
-#. module: hr_contract
 #: field:hr.contract.wage.type.period,factor_days:0
 msgid "Hours in the period"
 msgstr "Ώρες στη περίοδο"
@@ -85,12 +85,10 @@ msgid "Function"
 msgstr "Λειτουργία"
 
 #. module: hr_contract
-#: field:hr.employee,marital_status:0 view:hr.employee.marital.status:0
-#: field:hr.employee.marital.status,name:0
-#: model:ir.actions.act_window,name:hr_contract.action_hr_marital_status
-#: model:ir.ui.menu,name:hr_contract.hr_menu_marital_status
-msgid "Marital Status"
-msgstr "Συζυγική Κατάσταση"
+#: model:ir.actions.act_window,name:hr_contract.action_hr_contract_wage_type
+#: model:ir.ui.menu,name:hr_contract.hr_menu_contract_wage_type
+msgid "Contract Wage Type"
+msgstr "Τύπος αποδοχών Σύμβασης"
 
 #. module: hr_contract
 #: view:hr.employee:0
@@ -179,11 +177,6 @@ msgid "Wage Period"
 msgstr "Περίοδος Μισθοδοσίας"
 
 #. module: hr_contract
-#: field:hr.employee,nationality:0
-msgid "Nationality"
-msgstr "Εθνικότητα"
-
-#. module: hr_contract
 #: field:hr.employee,audiens_num:0
 msgid "AUDIENS Number"
 msgstr "AUDIENS Number"
@@ -199,10 +192,12 @@ msgid "Contract Name"
 msgstr "Όνομα Σύμβασης"
 
 #. module: hr_contract
-#: model:ir.actions.act_window,name:hr_contract.action_hr_contract_wage_type
-#: model:ir.ui.menu,name:hr_contract.hr_menu_contract_wage_type
-msgid "Contract Wage Type"
-msgstr "Τύπος αποδοχών Σύμβασης"
+#: field:hr.employee,marital_status:0 view:hr.employee.marital.status:0
+#: field:hr.employee.marital.status,name:0
+#: model:ir.actions.act_window,name:hr_contract.action_hr_marital_status
+#: model:ir.ui.menu,name:hr_contract.hr_menu_marital_status
+msgid "Marital Status"
+msgstr "Συζυγική Κατάσταση"
 
 #. module: hr_contract
 #: field:hr.employee,place_of_birth:0
@@ -242,21 +237,20 @@ msgid "Start Date"
 msgstr "Αρχή"
 
 #. module: hr_contract
-#: view:hr.contract:0 view:hr.employee:0
-msgid "Contract Duration"
-msgstr "Διάρκεια Σύμβασης"
-
-#. module: hr_contract
 #: field:hr.employee.marital.status,description:0
 msgid "Status Description"
 msgstr "Περιγραφή Κατάστασης"
 
 #. module: hr_contract
-#: field:hr.employee,birth_date:0
-msgid "Birth Date"
-msgstr "Ημερ/νία Γέννησης"
+#: view:hr.contract:0 view:hr.employee:0
+msgid "Contract Duration"
+msgstr "Διάρκεια Σύμβασης"
 
-#. module: hr_contract
-#: constraint:ir.actions.act_window:0
-msgid "Invalid model name in the action definition."
-msgstr ""
+#~ msgid "Social security number"
+#~ msgstr "Αρ. Κοινωνικής Ασφάλισης"
+
+#~ msgid "Nationality"
+#~ msgstr "Εθνικότητα"
+
+#~ msgid "Birth Date"
+#~ msgstr "Ημερ/νία Γέννησης"
