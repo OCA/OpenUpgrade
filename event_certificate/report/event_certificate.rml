@@ -7,7 +7,7 @@
 				<setFont name="Helvetica-Bold" size="9"/>
 				<!--COL 1-->
 				<drawString x="1.50cm" y="20.20cm">[[ company.name ]]</drawString>
-				<image x="28.0cm" y="20.20cm" width="25" height="25" >[[company.logo]] </image>
+				<image x="28.0cm" y="20.20cm" width="25" height="25" >[[ company.logo or removeParentNode('image') ]] </image>
 				<!--COL 2-->
 				<setFont name="Helvetica" size="9"/>
 				<drawString x="1.50cm" y="1.00cm"> [[ formatLang(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),date_time = True) ]]</drawString>
@@ -80,15 +80,6 @@
   </stylesheet>
   <images/>
   <story>
-    <para style="terp_default_8">
-      <font color="white"> </font>
-    </para>
-    <para style="terp_default_8">
-      <font color="white"> </font>
-    </para>
-    <para style="terp_default_8">
-      <font color="white"> </font>
-    </para>
     <para style="terp_default_8">[[repeatIn(objects,'event')]]</para>
     <blockTable colWidths="757.0" style="Table_header_certificate">
       <tr>
