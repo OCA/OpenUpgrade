@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Project-Id-Version: OpenERP Server 5.0.1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
-"PO-Revision-Date: 2009-05-30 15:14:08+0000\n"
+"POT-Creation-Date: 2009-06-17 14:57:52+0000\n"
+"PO-Revision-Date: 2009-06-17 14:57:52+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,5 +18,35 @@ msgstr ""
 #. module: document_lock
 #: model:ir.module.module,description:document_lock.module_name_translation
 msgid "The document_lock adds a status on the attachment, allowing you to lock attachments or not."
+msgstr ""
+
+#. module: document_lock
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr ""
+
+#. module: document_lock
+#: selection:ir.attachment,state:0
+msgid "Locked"
+msgstr ""
+
+#. module: document_lock
+#: selection:ir.attachment,state:0
+msgid "Unlocked"
+msgstr ""
+
+#. module: document_lock
+#: view:ir.attachment:0
+msgid "Lock"
+msgstr ""
+
+#. module: document_lock
+#: field:ir.attachment,state:0
+msgid "State"
+msgstr ""
+
+#. module: document_lock
+#: view:ir.attachment:0
+msgid "Unlock"
 msgstr ""
 

@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-# 	* report_account
+#	* report_account
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Project-Id-Version: OpenERP Server 5.0.1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
-"PO-Revision-Date: 2009-05-30 15:14:08+0000\n"
+"POT-Creation-Date: 2009-06-17 14:57:52+0000\n"
+"PO-Revision-Date: 2009-06-17 14:57:52+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,19 +16,13 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: report_account
-#: model:ir.module.module,shortdesc:report_account.module_meta_information
-msgid "Account Reporting - Reporting"
-msgstr ""
-
-#. module: report_account
 #: selection:report.invoice.created,type:0
 msgid "Customer Refund"
 msgstr ""
 
 #. module: report_account
 #: constraint:ir.model:0
-msgid ""
-"The Object name must start with x_ and not contain any special character !"
+msgid "The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: report_account
@@ -178,6 +172,11 @@ msgid "Balance"
 msgstr ""
 
 #. module: report_account
+#: model:ir.module.module,shortdesc:report_account.module_meta_information
+msgid "Account Reporting - Reporting"
+msgstr ""
+
+#. module: report_account
 #: field:report.invoice.created,origin:0
 msgid "Origin"
 msgstr ""
@@ -238,3 +237,4 @@ msgstr ""
 #: view:report.invoice.created:0
 msgid "Untaxed Amount"
 msgstr ""
+

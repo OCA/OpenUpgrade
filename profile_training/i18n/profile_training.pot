@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Project-Id-Version: OpenERP Server 5.0.1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
-"PO-Revision-Date: 2009-05-30 15:14:08+0000\n"
+"POT-Creation-Date: 2009-06-17 14:57:53+0000\n"
+"PO-Revision-Date: 2009-06-17 14:57:53+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,9 +16,90 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: profile_training
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr ""
+
+#. module: profile_training
+#: constraint:ir.model:0
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr ""
+
+#. module: profile_training
+#: view:profile.training.config.install_modules_wizard:0
+msgid "Install"
+msgstr ""
+
+#. module: profile_training
 #: model:ir.module.module,description:profile_training.module_name_translation
 msgid "Profile for the training management.\n"
 "With this profile the training management will be installed and you can have \n"
 "the choice to install the examn management and the room management"
+msgstr ""
+
+#. module: profile_training
+#: model:ir.actions.act_window,name:profile_training.action_config_install_module
+msgid "Training Profile : Install Extra Modules"
+msgstr ""
+
+#. module: profile_training
+#: view:profile.training.config.install_modules_wizard:0
+msgid "Training Management"
+msgstr ""
+
+#. module: profile_training
+#: model:ir.actions.todo,note:profile_training.config_install_wizard
+msgid "Install more modules. A few modules are proposed according to the Training Profile you selected. You will be able to install them based on our requirements."
+msgstr ""
+
+#. module: profile_training
+#: field:profile.training.config.install_modules_wizard,training_exam:0
+msgid "Training Exams"
+msgstr ""
+
+#. module: profile_training
+#: model:ir.model,name:profile_training.model_profile_training_config_install_modules_wizard
+msgid "profile.training.config.install_modules_wizard"
+msgstr ""
+
+#. module: profile_training
+#: view:profile.training.config.install_modules_wizard:0
+msgid "Portal"
+msgstr ""
+
+#. module: profile_training
+#: model:ir.actions.act_window,name:profile_training.contact_by_team_act
+#: model:ir.ui.menu,name:profile_training.contact_by_team_mi
+msgid "Contacts By Team"
+msgstr ""
+
+#. module: profile_training
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
+
+#. module: profile_training
+#: field:profile.training.config.install_modules_wizard,portal_training:0
+msgid "Portal Training"
+msgstr ""
+
+#. module: profile_training
+#: field:profile.training.config.install_modules_wizard,training_room:0
+msgid "Training Rooms"
+msgstr ""
+
+#. module: profile_training
+#: model:ir.module.module,shortdesc:profile_training.module_name_translation
+msgid "Profile Training"
+msgstr ""
+
+#. module: profile_training
+#: view:profile.training.config.install_modules_wizard:0
+msgid "Install Extra Module"
+msgstr ""
+
+#. module: profile_training
+#: field:profile.training.config.install_modules_wizard,name:0
+msgid "Name"
 msgstr ""
 

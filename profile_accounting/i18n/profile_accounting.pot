@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-# 	* profile_accounting
+#	* profile_accounting
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Project-Id-Version: OpenERP Server 5.0.1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
-"PO-Revision-Date: 2009-05-30 15:14:08+0000\n"
+"POT-Creation-Date: 2009-06-17 14:57:53+0000\n"
+"PO-Revision-Date: 2009-06-17 14:57:53+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,22 +16,13 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: profile_accounting
-#: model:ir.module.module,description:profile_accounting.module_meta_information
-msgid "Profile for Accounting"
-msgstr ""
-
-#. module: profile_accounting
 #: model:ir.actions.todo,note:profile_accounting.config_install_wizard
-msgid ""
-"Install more modules. A few modules are proposed according to the Account "
-"Profile you selected. You will be able to install them based on our "
-"requirements."
+msgid "Install more modules. A few modules are proposed according to the Account Profile you selected. You will be able to install them based on our requirements."
 msgstr ""
 
 #. module: profile_accounting
 #: constraint:ir.model:0
-msgid ""
-"The Object name must start with x_ and not contain any special character !"
+msgid "The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: profile_accounting
@@ -41,11 +32,7 @@ msgstr ""
 
 #. module: profile_accounting
 #: help:profile.accounting.config.install_modules_wizard,board_document:0
-msgid ""
-"The Document Management System of Open ERP allows you to store, browse, "
-"automatically index, search and preview all kind of documents (internal "
-"documents, printed reports, calendar system). It opens an FTP access for the "
-"users to easily browse association's document."
+msgid "The Document Management System of Open ERP allows you to store, browse, automatically index, search and preview all kind of documents (internal documents, printed reports, calendar system). It opens an FTP access for the users to easily browse association's document."
 msgstr ""
 
 #. module: profile_accounting
@@ -81,6 +68,11 @@ msgstr ""
 #. module: profile_accounting
 #: field:profile.accounting.config.install_modules_wizard,hr_timesheet_invoice:0
 msgid "Invoice on Analytic Entries"
+msgstr ""
+
+#. module: profile_accounting
+#: model:ir.module.module,description:profile_accounting.module_meta_information
+msgid "Profile for Accounting"
 msgstr ""
 
 #. module: profile_accounting
@@ -137,3 +129,4 @@ msgstr ""
 #: view:profile.accounting.config.install_modules_wizard:0
 msgid "Cancel"
 msgstr ""
+

@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-# 	* report_analytic
+#	* report_analytic
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Project-Id-Version: OpenERP Server 5.0.1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
-"PO-Revision-Date: 2009-05-30 15:14:08+0000\n"
+"POT-Creation-Date: 2009-06-17 14:57:53+0000\n"
+"PO-Revision-Date: 2009-06-17 14:57:53+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,19 +16,13 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: report_analytic
-#: model:ir.module.module,shortdesc:report_analytic.module_meta_information
-msgid "Analytic Account Reporting"
-msgstr ""
-
-#. module: report_analytic
 #: model:ir.model,name:report_analytic.model_report_analytic_account_close
 msgid "Analytic account to close"
 msgstr ""
 
 #. module: report_analytic
 #: constraint:ir.model:0
-msgid ""
-"The Object name must start with x_ and not contain any special character !"
+msgid "The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: report_analytic
@@ -62,6 +56,11 @@ msgid "Invalid model name in the action definition."
 msgstr ""
 
 #. module: report_analytic
+#: model:ir.module.module,shortdesc:report_analytic.module_meta_information
+msgid "Analytic Account Reporting"
+msgstr ""
+
+#. module: report_analytic
 #: field:report.analytic.account.close,partner_id:0
 msgid "Partner"
 msgstr ""
@@ -82,3 +81,4 @@ msgstr ""
 #: field:report.analytic.account.close,quantity:0
 msgid "Quantity"
 msgstr ""
+

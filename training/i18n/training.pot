@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Project-Id-Version: OpenERP Server 5.0.1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
-"PO-Revision-Date: 2009-05-30 15:14:08+0000\n"
+"POT-Creation-Date: 2009-06-17 14:57:53+0000\n"
+"PO-Revision-Date: 2009-06-17 14:57:53+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,2149 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: training
+#: view:training.course:0
+#: field:training.course,lecturer_ids:0
+msgid "Lecturers"
+msgstr ""
+
+#. module: training
+#: help:training.catalog,session_ids:0
+msgid "The sessions in the catalog"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.hiring.form.report:0
+msgid "Terms of Payment"
+msgstr ""
+
+#. module: training
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.action_training_participation_all
+#: model:ir.ui.menu,name:training.training_participation_all_mi
+msgid "Participations of the Participants"
+msgstr ""
+
+#. module: training
+#: help:training.course_type,name:0
+msgid "The course type's name"
+msgstr ""
+
+#. module: training
+#: view:training.course_category:0
+msgid "Parent"
+msgstr ""
+
+#. module: training
+#: selection:training.offer,kind:0
+msgid "Standard"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.report.xml,name:training.training_session_cancel_report
+#: rml:training.session.cancel.report:0
+msgid "Session - Cancellation"
+msgstr ""
+
+#. module: training
+#: field:training.offer,profit:0
+msgid "Profit"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.hiring.form.report:0
+msgid "TVA (taux : %)"
+msgstr ""
+
+#. module: training
+#: view:training.subscription:0
+msgid "subscription"
+msgstr ""
+
+#. module: training
+#: field:training.participation,present:0
+msgid "Present"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.action_training_participation_skateholder_all
+#: model:ir.ui.menu,name:training.training_participation_skateholder_mi
+msgid "Evaluation Form"
+msgstr ""
+
+#. module: training
+#: help:training.session,purchase_line_ids:0
+msgid "The supplier commands will create a purchase order for each command for the session"
+msgstr ""
+
+#. module: training
+#: view:res.partner:0
+#: rml:training.seance.presence:0
+#: rml:training.subscription.cancel:0
+msgid "Training"
+msgstr ""
+
+#. module: training
+#: model:ir.model,name:training.model_res_partner_contact_technical_skill
+msgid "res.partner.contact_technical_skill"
+msgstr ""
+
+#. module: training
+#: model:ir.model,name:training.model_training_seance
+msgid "training.seance"
+msgstr ""
+
+#. module: training
+#: rml:training.course.financial.report:0
+#: rml:training.seance.booking.classroom:0
+#: rml:training.seance.booking.support:0
+msgid "This report is in construction !"
+msgstr ""
+
+#. module: training
+#: help:training.course,target_public:0
+msgid "Allows to the participants to select a course whose can participate"
+msgstr ""
+
+#. module: training
+#: rml:training.subscription.cancel:0
+msgid "Motif"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_course_attachment
+#: model:ir.actions.act_window,name:training.training_seance_attachment
+msgid "Attachments"
+msgstr ""
+
+#. module: training
+#: field:training.subscription,origin:0
+msgid "Origin"
+msgstr ""
+
+#. module: training
+#: rml:training.course.financial.report:0
+#: rml:training.seance.booking.classroom:0
+#: rml:training.seance.booking.support:0
+msgid "1cm 28cm 20cm 28cm"
+msgstr ""
+
+#. module: training
+#: field:training.subscription,name:0
+msgid "Reference"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.participant.report:0
+#: rml:dummy.training.evaluation.skateholder.report:0
+msgid "INSRUCTOR :"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.participant.report:0
+msgid "Evaluate the following statements on a scale of 1 to 5."
+msgstr ""
+
+#. module: training
+#: field:training.course_category,analytic_account_id:0
+#: field:training.offer,analytic_account_id:0
+msgid "Analytic Account"
+msgstr ""
+
+#. module: training
+#: view:training.course:0
+#: rml:training.course.material.report:0
+#: field:training.participation.skateholder,course_id:0
+#: field:training.seance,course_id:0
+#: rml:training.seance.cancel.report:0
+msgid "Course"
+msgstr ""
+
+#. module: training
+#: field:training.offer,profit_margin:0
+msgid "Profit Margin"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.hiring.form.report:0
+msgid "No:"
+msgstr ""
+
+#. module: training
+#: field:training.seance,available_seats:0
+#: field:training.session,available_seats:0
+msgid "Available Seats"
+msgstr ""
+
+#. module: training
+#: field:training.participation,partner_id:0
+#: field:training.participation.skateholder,partner_id:0
+#: rml:training.seance.presence:0
+#: field:training.subscription,partner_id:0
+#: rml:training.subscription.presence.certificate:0
+msgid "Partner"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.participant.report:0
+msgid "APPRECIATION DE L’ORGANISATION :"
+msgstr ""
+
+#. module: training
+#: model:process.node,name:training.process_node_createcourse0
+msgid "Create Course"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.report.xml,name:training.training_subscription_cancel_report
+msgid "Cancellation Letter"
+msgstr ""
+
+#. module: training
+#: field:res.partner,notif_participant:0
+#: rml:training.seance.presence:0
+#: rml:training.subscription.cancel:0
+#: rml:training.subscription.confirm:0
+#: rml:training.subscription.presence.certificate:0
+msgid "Participant"
+msgstr ""
+
+#. module: training
+#: rml:training.seance.cancel.report:0
+#: rml:training.seance.presence:0
+#: rml:training.session.cancel.report:0
+msgid "Date:"
+msgstr ""
+
+#. module: training
+#: help:training.session,offer_id:0
+msgid "Allows to select a validated offer for the session"
+msgstr ""
+
+#. module: training
+#: field:training.catalog,state:0
+#: field:training.course,state_course:0
+#: field:training.offer,state:0
+#: field:training.seance,state:0
+#: field:training.session,state:0
+#: field:training.subscription,state:0
+msgid "State"
+msgstr ""
+
+#. module: training
+#: help:res.partner.team,specialisation_id:0
+msgid "A Quality Team has a particularity"
+msgstr ""
+
+#. module: training
+#: model:ir.model,name:training.model_training_participation
+#: model:ir.ui.menu,name:training.training_participation_mi
+#: view:training.participation:0
+#: view:training.participation.skateholder:0
+msgid "Participation"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.res_partner_subscription_act
+#: model:ir.actions.act_window,name:training.training_subscription_all_act
+#: model:ir.ui.menu,name:training.training_subscription_management_mi
+#: model:ir.ui.menu,name:training.training_subscription_management_subscription_mi
+#: model:process.node,name:training.process_node_subscriptions0
+#: view:training.subscription:0
+msgid "Subscriptions"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.participant.report:0
+msgid "APPRECIATION DU COURS :"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.participant.report:0
+msgid "Remarks on the Insructor"
+msgstr ""
+
+#. module: training
+#: field:res.partner.job,departments:0
+msgid "Departments"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.action_support_delivery_all
+#: model:ir.ui.menu,name:training.support_delivery_mi
+msgid "Support Deliveries"
+msgstr ""
+
+#. module: training
+#: field:training.participation,contact_id:0
+#: field:training.participation.skateholder,skateholder_id:0
+#: field:training.subscription.line,contact_id:0
+msgid "Contact"
+msgstr ""
+
+#. module: training
+#: help:training.session,seance_ids:0
+msgid "List of the events in the session"
+msgstr ""
+
+#. module: training
+#: model:ir.model,name:training.model_training_course_type
+msgid "The type of a course"
+msgstr ""
+
+#. module: training
+#: model:ir.model,name:training.model_training_session
+#: view:training.session:0
+#: rml:training.session.cancel.report:0
+#: field:training.session.purchase_line,session_id:0
+#: rml:training.subscription.confirm:0
+#: field:training.subscription.line,session_id:0
+#: rml:training.subscription.presence.certificate:0
+msgid "Session"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.hiring.form.report:0
+msgid "Category"
+msgstr ""
+
+#. module: training
+#: help:training.course,p_id:0
+msgid "The parent course"
+msgstr ""
+
+#. module: training
+#: model:ir.model,name:training.model_training_group
+#: view:training.seance:0
+#: field:training.seance,group_id:0
+#: field:training.subscription.line,group_id:0
+msgid "Group"
+msgstr ""
+
+#. module: training
+#: rml:training.subscription.cancel:0
+msgid "For more information for a course or for the next seance of this course, you can consult our web site"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_subscription_line_uninvoiced_act
+#: model:ir.ui.menu,name:training.training_subscription_management_subscription_line_uninvoiced_mi
+msgid "Uninvoiced Subscription Lines"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.participant.report:0
+msgid "Thank you for your comment answers!"
+msgstr ""
+
+#. module: training
+#: field:training.participation.skateholder,evaluation:0
+#: field:training.seance,evaluation:0
+msgid "Evaluation"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.report.xml,name:training.training_seance_booking_classroom
+msgid "Classroom Booking"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.participant.report:0
+#: rml:dummy.training.evaluation.skateholder.report:0
+msgid "DATE (S) OF TRAINING:"
+msgstr ""
+
+#. module: training
+#: field:training.participation,seance_id:0
+#: field:training.participation.skateholder,seance_id:0
+#: view:training.seance:0
+#: rml:training.seance.cancel.report:0
+#: rml:training.seance.presence:0
+#: field:training.seance.purchase_line,seance_id:0
+msgid "Seance"
+msgstr ""
+
+#. module: training
+#: view:training.participation.skateholder:0
+msgid "Seance Information"
+msgstr ""
+
+#. module: training
+#: help:training.session.purchase_line,product_id:0
+msgid "The product for the purchase order"
+msgstr ""
+
+#. module: training
+#: rml:dummy.support.delivery.report:0
+msgid "Count"
+msgstr ""
+
+#. module: training
+#: help:training.participation,present:0
+msgid "Allows to know if a participant was present or not"
+msgstr ""
+
+#. module: training
+#: view:training.course_type:0
+#: view:training.seance:0
+msgid "Limits"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.participant.report:0
+msgid "TITLE OF TRAINING"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.participant.report:0
+msgid "SERVICE / FUNCTION"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_catalog_old_act
+#: model:ir.ui.menu,name:training.training_offer_catalog_old_mi
+msgid "Old Catalogs"
+msgstr ""
+
+#. module: training
+#: rml:training.course.financial.report:0
+#: rml:training.seance.booking.classroom:0
+#: rml:training.seance.booking.support:0
+msgid "Training Module"
+msgstr ""
+
+#. module: training
+#: field:training.course.purchase_line,product_qty:0
+#: field:training.seance.purchase_line,product_qty:0
+#: field:training.session.purchase_line,product_qty:0
+msgid "Quantity"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.report.xml,name:training.training_course_material_report
+#: view:training.course:0
+#: rml:training.course.material.report:0
+msgid "Course Description"
+msgstr ""
+
+#. module: training
+#: model:ir.ui.menu,name:training.training_config_library_mi
+#: model:ir.ui.menu,name:training.training_library_mi
+msgid "Library"
+msgstr ""
+
+#. module: training
+#: model:process.node,name:training.process_node_invoices0
+msgid "Invoices"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.hiring.form.report:0
+msgid "Instractor"
+msgstr ""
+
+#. module: training
+#: field:training.course,children:0
+#: field:training.course_category,child_ids:0
+msgid "Children"
+msgstr ""
+
+#. module: training
+#: view:training.catalog:0
+#: selection:training.catalog,state:0
+#: view:training.course:0
+#: selection:training.course,state_course:0
+#: view:training.seance:0
+#: selection:training.seance,state:0
+#: view:training.session:0
+#: selection:training.session,state:0
+msgid "In Progress"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.report.xml,name:training.training_subscription_confirm_report
+msgid "Validation Letter"
+msgstr ""
+
+#. module: training
+#: rml:training.course.financial.report:0
+#: rml:training.seance.booking.classroom:0
+#: rml:training.seance.booking.support:0
+msgid "ERP"
+msgstr ""
+
+#. module: training
+#: rml:dummy.support.delivery.report:0
+#: rml:dummy.training.hiring.form.report:0
+msgid "Remark"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.hiring.form.report:0
+msgid "I accept the terms above and I am familiar with the general conditions:"
+msgstr ""
+
+#. module: training
+#: view:training.course:0
+#: view:training.course_type:0
+#: field:training.course_type,objective:0
+#: view:training.offer:0
+#: field:training.offer,objective:0
+msgid "Objective"
+msgstr ""
+
+#. module: training
+#: field:training.seance,draft_seats:0
+#: field:training.session,draft_seats:0
+#: field:training.subscription,draft_seats:0
+msgid "Draft Seats"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.skateholder.report:0
+msgid "Comments:"
+msgstr ""
+
+#. module: training
+#: help:training.course,reference_id:0
+msgid "The master course is necessary if the user wants to link certain courses together to easy the managment"
+msgstr ""
+
+#. module: training
+#: model:ir.model,name:training.model_wizard_training_mass_subscription
+msgid "Mass Subscription Wizard"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.hiring.form.report:0
+msgid "Your Contact"
+msgstr ""
+
+#. module: training
+#: help:training.course,internal_note:0
+msgid "The user can write some internal note for this course"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_session_draft_act
+#: model:ir.ui.menu,name:training.training_planning_session_draft_mi
+msgid "Draft Sessions"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.participant.report:0
+#: rml:dummy.training.evaluation.skateholder.report:0
+msgid "ADRESSE E-MAIL"
+msgstr ""
+
+#. module: training
+#: field:training.course,reference_id:0
+msgid "Master Course"
+msgstr ""
+
+#. module: training
+#: field:training.seance,reserved:0
+msgid "Reserved"
+msgstr ""
+
+#. module: training
+#: view:training.session:0
+msgid "Session Description"
+msgstr ""
+
+#. module: training
+#: help:training.group,name:0
+msgid "The group's name"
+msgstr ""
+
+#. module: training
+#: field:training.seance,participant_count:0
+msgid "Number of Participants"
+msgstr ""
+
+#. module: training
+#: rml:dummy.support.delivery.report:0
+msgid "Course Support Deposit"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.hiring.form.report:0
+msgid "Duaration(hrs)"
+msgstr ""
+
+#. module: training
+#: field:training.course.purchase_line,course_id:0
+msgid "course"
+msgstr ""
+
+#. module: training
+#: rml:training.subscription.confirm:0
+msgid "Divers"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.hiring.form.report:0
+#: rml:training.seance.presence:0
+msgid "Schedule"
+msgstr ""
+
+#. module: training
+#: field:training.session,is_intra:0
+msgid "Is Intra"
+msgstr ""
+
+#. module: training
+#: view:training.seance:0
+#: view:training.session:0
+msgid "Open & Confirm"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.hiring.form.report:0
+msgid "TOTAL"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.report.xml,name:training.training_dummy_training_evaluation_skateholder_report
+msgid "Evaluation From SkateHolder"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_subscription_line_all_act
+#: model:ir.ui.menu,name:training.training_subscription_management_subscription_line_all_mi
+#: field:training.subscription,subscription_line_ids:0
+#: view:training.subscription.line:0
+msgid "Subscription Lines"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.hiring.form.report:0
+msgid "€"
+msgstr ""
+
+#. module: training
+#: wizard_view:training.subscription.line.make_invoice,init:0
+msgid "Do you really want to create the invoices ?"
+msgstr ""
+
+#. module: training
+#: model:ir.model,name:training.model_training_course_purchase_line
+msgid "training.course.purchase_line"
+msgstr ""
+
+#. module: training
+#: field:training.subscription,address_id:0
+msgid "Invoice Address"
+msgstr ""
+
+#. module: training
+#: model:ir.model,name:training.model_dummy_support_delivery
+msgid "dummy.support.delivery"
+msgstr ""
+
+#. module: training
+#: model:process.transition,name:training.process_transition_manualsubscription0
+msgid "Manual Subscription"
+msgstr ""
+
+#. module: training
+#: view:training.seance:0
+#: view:training.session:0
+msgid "Close & Confirm"
+msgstr ""
+
+#. module: training
+#: model:ir.model,name:training.model_training_course_category
+msgid "training.course_category"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.participant.report:0
+msgid "Support Course"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.hiring.form.report:0
+msgid "Subject"
+msgstr ""
+
+#. module: training
+#: model:process.node,name:training.process_node_partnerportal0
+msgid "Partner Portal"
+msgstr ""
+
+#. module: training
+#: field:res.partner,notif_contact_id:0
+msgid "Contact RH"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.skateholder.report:0
+msgid "INTITULE DE LA FORMATION :"
+msgstr ""
+
+#. module: training
+#: field:training.course_type,min_limit:0
+msgid "Minimum Threshold"
+msgstr ""
+
+#. module: training
+#: field:training.subscription,create_date:0
+msgid "Creation Date"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_seance_all_act
+#: model:ir.actions.act_window,name:training.training_session_seances_act
+#: model:ir.ui.menu,name:training.training_planning_seances_mi
+#: model:process.node,name:training.process_node_seances0
+#: view:training.seance:0
+#: view:training.session:0
+#: field:training.session,seance_ids:0
+#: rml:training.session.cancel.report:0
+#: rml:training.subscription.confirm:0
+msgid "Seances"
+msgstr ""
+
+#. module: training
+#: help:training.course,purchase_line_ids:0
+msgid "The purchase line helps to create a purchase order for the seance"
+msgstr ""
+
+#. module: training
+#: field:training.subscription,pricelist_id:0
+msgid "Pricelist"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.participant.report:0
+msgid "EVALUATION FORM"
+msgstr ""
+
+#. module: training
+#: model:ir.ui.menu,name:training.dummy_mi
+msgid "Dummy"
+msgstr ""
+
+#. module: training
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr ""
+
+#. module: training
+#: help:training.session,date:0
+msgid "The date of the planned session"
+msgstr ""
+
+#. module: training
+#: rml:training.seance.presence:0
+msgid "# Participants"
+msgstr ""
+
+#. module: training
+#: help:training.offer,objective:0
+msgid "Allows to write the objectives of the course"
+msgstr ""
+
+#. module: training
+#: view:training.catalog:0
+msgid "Catalog Description"
+msgstr ""
+
+#. module: training
+#: model:ir.model,name:training.model_training_offer
+msgid "training.offer"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_course_mature_all_act
+#: model:ir.ui.menu,name:training.training_library_course_course_mature_mi
+msgid "Deprecated Courses"
+msgstr ""
+
+#. module: training
+#: model:ir.model,name:training.model_training_participation_skateholder
+msgid "training.participation.skateholder"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_course_by_category_all_act
+#: model:ir.ui.menu,name:training.training_library_course_category_course_mi
+msgid "Courses By Category"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_subscription_new_act
+#: model:ir.ui.menu,name:training.training_subscription_management_subscription_new_mi
+msgid "New Subscription"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_course_draft_all_act
+#: model:ir.ui.menu,name:training.training_library_course_course_draft_mi
+msgid "Draft Courses"
+msgstr ""
+
+#. module: training
+#: field:res.partner.contact,matricule:0
+#: field:res.partner.job,external_matricule:0
+msgid "Matricule"
+msgstr ""
+
+#. module: training
+#: model:process.transition,name:training.process_transition_portalsubscription0
+msgid "Portal Subscription"
+msgstr ""
+
+#. module: training
+#: view:res.partner:0
+#: view:training.subscription:0
+msgid "Notification"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.participant.report:0
+msgid "E-MAIL ADDRESS (Optional )"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_session_participants_act
+#: view:training.seance:0
+#: field:training.seance,participant_ids:0
+#: view:training.subscription:0
+msgid "Participants"
+msgstr ""
+
+#. module: training
+#: model:ir.model,name:training.model_training_session_purchase_line
+msgid "training.session.purchase_line"
+msgstr ""
+
+#. module: training
+#: model:process.transition,name:training.process_transition_ecommerceonlinepayment0
+msgid "eCommerce Online Payment"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.hiring.form.report:0
+msgid "Signature :"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_catalog_all_act
+#: model:ir.ui.menu,name:training.training_catalog_mi
+#: model:ir.ui.menu,name:training.training_offer_catalog_all_mi
+#: view:training.catalog:0
+msgid "Catalogs"
+msgstr ""
+
+#. module: training
+#: field:training.seance.purchase_line,procurement_id:0
+#: field:training.subscription.line,partner_id:0
+msgid "unknown"
+msgstr ""
+
+#. module: training
+#: help:training.subscription,name:0
+msgid "The unique identifier is generated by the system (customizable)"
+msgstr ""
+
+#. module: training
+#: help:training.course_category,description:0
+msgid "Description of the course category"
+msgstr ""
+
+#. module: training
+#: rml:dummy.support.delivery.report:0
+#: rml:dummy.training.hiring.form.report:0
+#: field:training.participation,date:0
+#: field:training.participation.skateholder,date:0
+#: field:training.seance,date:0
+#: rml:training.seance.cancel.report:0
+#: field:training.session,date:0
+#: rml:training.session.cancel.report:0
+#: rml:training.subscription.cancel:0
+#: rml:training.subscription.confirm:0
+#: rml:training.subscription.presence.certificate:0
+msgid "Date"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.hiring.form.report:0
+msgid "Form Of Appointment"
+msgstr ""
+
+#. module: training
+#: help:training.offer,product_id:0
+msgid "An offer can be a product for invoicing"
+msgstr ""
+
+#. module: training
+#: model:process.transition,name:training.process_transition_creatingseances0
+msgid "Creating Seances"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.skateholder.report:0
+msgid "COMMENTS FROM THE SKATEHOLDER"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.participant.report:0
+msgid "Other comments or suggestions:"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.res_partner_contact_technical_skill_all_act
+#: model:ir.ui.menu,name:training.partner_config_contact_technical_skill_all
+#: view:res.partner.contact:0
+msgid "Technical Skills"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.hiring.form.report:0
+#: field:training.course,lang_id:0
+#: rml:training.course.material.report:0
+#: rml:training.subscription.presence.certificate:0
+msgid "Language"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_catalog_new_act
+#: model:ir.ui.menu,name:training.training_offer_catalog_new_mi
+msgid "New Catalog"
+msgstr ""
+
+#. module: training
+#: selection:training.catalog,state:0
+#: selection:training.course,state_course:0
+#: selection:training.offer,state:0
+msgid "Deprecated"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.participant.report:0
+#: view:training.offer:0
+msgid "Course Content"
+msgstr ""
+
+#. module: training
+#: field:res.partner.contact,technical_skill_ids:0
+#: view:res.partner.contact_technical_skill:0
+msgid "Technical Skill"
+msgstr ""
+
+#. module: training
+#: rml:training.seance.presence:0
+msgid "Instructor(s)"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.participant.report:0
+msgid "Remarks about the course:"
+msgstr ""
+
+#. module: training
+#: field:res.partner.job,orientation:0
+msgid "Orientation"
+msgstr ""
+
+#. module: training
+#: view:dummy.support.delivery:0
+#: model:ir.actions.report.xml,name:training.training_dummy_support_delivery_report
+msgid "Support Delivery"
+msgstr ""
+
+#. module: training
 #: model:ir.module.module,shortdesc:training.module_name_translation
+#: model:ir.ui.menu,name:training.training_mi
 msgid "Training Management"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_offer_new_act
+#: model:ir.ui.menu,name:training.training_offer_new_mi
+msgid "New Offer"
+msgstr ""
+
+#. module: training
+#: rml:training.subscription.confirm:0
+msgid "We have the pleasure to confirm the following session:"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.report.xml,name:training.training_course_financial_report
+msgid "Financial Statistics"
+msgstr ""
+
+#. module: training
+#: view:training.catalog:0
+#: view:training.seance:0
+#: view:training.session:0
+#: view:training.subscription:0
+#: wizard_button:training.subscription.line.make_invoice,init,end:0
+msgid "Cancel"
+msgstr ""
+
+#. module: training
+#: view:training.offer:0
+#: selection:training.offer,kind:0
+msgid "Intra"
+msgstr ""
+
+#. module: training
+#: view:training.course:0
+#: field:training.course,preliminary_course_ids:0
+#: rml:training.course.material.report:0
+msgid "Preliminary Courses"
+msgstr ""
+
+#. module: training
+#: help:training.course_type,min_limit:0
+msgid "The minimum threshold is the minimum for this type of course"
+msgstr ""
+
+#. module: training
+#: model:process.node,name:training.process_node_planseances0
+msgid "Plan Seances"
+msgstr ""
+
+#. module: training
+#: view:training.course:0
+#: rml:training.course.material.report:0
+msgid "Designation"
+msgstr ""
+
+#. module: training
+#: field:training.course,purchase_line_ids:0
+#: view:training.seance:0
+#: field:training.seance,purchase_line_ids:0
+#: view:training.session:0
+#: field:training.session,purchase_line_ids:0
+msgid "Supplier Commands"
+msgstr ""
+
+#. module: training
+#: model:process.process,name:training.process_process_courseprocess0
+msgid "Course Process"
+msgstr ""
+
+#. module: training
+#: help:training.offer,name:0
+msgid "The name's offer"
+msgstr ""
+
+#. module: training
+#: field:training.course,has_support:0
+msgid "Has Support"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.hiring.form.report:0
+msgid "Total (Hors TVA)"
+msgstr ""
+
+#. module: training
+#: field:dummy.support.delivery,name:0
+#: field:res.partner.contact_technical_skill,name:0
+#: field:training.course_type,name:0
+#: field:training.group,name:0
+#: field:training.offer,name:0
+#: field:training.seance,name:0
+#: field:training.session,name:0
+#: rml:training.session.cancel.report:0
+#: rml:training.subscription.confirm:0
+#: rml:training.subscription.presence.certificate:0
+msgid "Name"
+msgstr ""
+
+#. module: training
+#: view:training.seance:0
+msgid "seances"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.skateholder.report:0
+msgid "Motivation of participants:"
+msgstr ""
+
+#. module: training
+#: selection:training.participation.skateholder,payment_mode:0
+msgid "Contract"
+msgstr ""
+
+#. module: training
+#: help:training.course.purchase_line,product_qty:0
+msgid "The quantity of this product"
+msgstr ""
+
+#. module: training
+#: model:ir.ui.menu,name:training.training_planning_session_duplicate_mi
+msgid "Sessions to Deduplicate"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_seance_resume_act
+#: model:ir.ui.menu,name:training.training_planning_seances_resume_mi
+msgid "Seances - Report"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.participant.report:0
+msgid "Technical Knowledge"
+msgstr ""
+
+#. module: training
+#: field:training.subscription,max_seats:0
+msgid "Maximum Seats"
+msgstr ""
+
+#. module: training
+#: help:training.course_type,max_limit:0
+msgid "The maximum threshold is the maximum for this type of course"
+msgstr ""
+
+#. module: training
+#: help:training.offer,course_ids:0
+msgid "An offer can contain some courses"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_catalog_current_act
+#: model:ir.ui.menu,name:training.training_offer_catalog_current_mi
+msgid "Current Catalogs"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.hiring.form.report:0
+msgid "€ 600,00"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.skateholder.report:0
+msgid "Organization:"
+msgstr ""
+
+#. module: training
+#: model:ir.model,name:training.model_training_seance_purchase_line
+msgid "training.seance.purchase_line"
+msgstr ""
+
+#. module: training
+#: field:training.course,display_name:0
+msgid "Display Name"
+msgstr ""
+
+#. module: training
+#: rml:training.course.material.report:0
+msgid "Public"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_subscription_to_invoice_act
+#: model:ir.ui.menu,name:training.training_subscription_management_subscription_invoice_mi
+msgid "Subscriptions to Invoice"
+msgstr ""
+
+#. module: training
+#: model:process.transition,name:training.process_transition_creatingoffer0
+msgid "Creating Offer"
+msgstr ""
+
+#. module: training
+#: help:training.course_type,objective:0
+msgid "Allows to the user to write the objectives of the course type"
+msgstr ""
+
+#. module: training
+#: help:training.course,offer_ids:0
+msgid "The offers containing the course"
+msgstr ""
+
+#. module: training
+#: view:training.catalog:0
+#: view:training.course:0
+#: view:training.offer:0
+msgid "Validate"
+msgstr ""
+
+#. module: training
+#: field:training.course,analytic_account_id:0
+msgid "Account"
+msgstr ""
+
+#. module: training
+#: help:training.course,sequence:0
+msgid "The sequence can help the user to reorganize the order of the courses"
+msgstr ""
+
+#. module: training
+#: model:ir.ui.menu,name:training.training_planning_mi
+msgid "Plannings"
+msgstr ""
+
+#. module: training
+#: view:training.course:0
+#: rml:training.course.material.report:0
+#: view:training.course_category:0
+#: rml:training.subscription.presence.certificate:0
+msgid "Code"
+msgstr ""
+
+#. module: training
+#: help:training.session.purchase_line,product_uom_id:0
+msgid "The unit of mesure for the product"
+msgstr ""
+
+#. module: training
+#: model:process.transition,name:training.process_transition_linktoseances0
+msgid "Link to Seances"
+msgstr ""
+
+#. module: training
+#: field:training.course,target_public:0
+msgid "Target Public"
+msgstr ""
+
+#. module: training
+#: help:training.course.purchase_line,product_id:0
+msgid "The product for this purchase line"
+msgstr ""
+
+#. module: training
+#: model:process.transition,name:training.process_transition_groupstoduplicate0
+msgid "Groups to Duplicate"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.report.xml,name:training.training_seance_presence_report
+#: rml:training.seance.presence:0
+msgid "Presence List"
+msgstr ""
+
+#. module: training
+#: model:process.transition,name:training.process_transition_ecommercesubscription0
+msgid "eCommerce Subscription"
+msgstr ""
+
+#. module: training
+#: field:wizard.training.mass.subscription,partner_ids:0
+msgid "Partners"
+msgstr ""
+
+#. module: training
+#: rml:training.seance.presence:0
+msgid "Attendance"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.hiring.form.report:0
+#: view:training.seance:0
+#: field:training.seance,location:0
+#: rml:training.seance.presence:0
+msgid "Location"
+msgstr ""
+
+#. module: training
+#: view:training.participation.skateholder:0
+#: field:training.participation.skateholder,payment_mode:0
+msgid "Payment Mode"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.report.xml,name:training.training_dummy_training_evaluation_participant_report
+msgid "Evaluation From Participant"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_course_new_act
+#: model:ir.ui.menu,name:training.training_library_course_course_new_mi
+msgid "New course"
+msgstr ""
+
+#. module: training
+#: field:training.participation,subscription_id:0
+#: view:training.subscription:0
+#: field:training.subscription.line,subscription_id:0
+msgid "Subscription"
+msgstr ""
+
+#. module: training
+#: model:process.transition,name:training.process_transition_ordermanagement0
+msgid "Order Management"
+msgstr ""
+
+#. module: training
+#: field:training.offer,kind:0
+#: field:training.subscription,notification_text:0
+msgid "Kind"
+msgstr ""
+
+#. module: training
+#: rml:training.subscription.cancel:0
+msgid "Pour des raisons indépendantes de notre volonté, nous nous voyons dans l'obligation d'annuler le cours suivant:"
+msgstr ""
+
+#. module: training
+#: help:training.course,display_name:0
+msgid "Allows to show a short name for this course"
+msgstr ""
+
+#. module: training
+#: wizard_field:training.subscription.line.make_invoice,init,grouped:0
+msgid "Group the invoices"
+msgstr ""
+
+#. module: training
+#: field:training.offer,revenues:0
+msgid "Revenues"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.participant.report:0
+msgid "Remarks on the organization:"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_seance_new_act
+#: model:ir.ui.menu,name:training.training_planning_seances_new_mi
+msgid "New Seance"
+msgstr ""
+
+#. module: training
+#: help:training.course,duration:0
+msgid "The duration for a standalone course"
+msgstr ""
+
+#. module: training
+#: help:training.session,name:0
+msgid "The session's name"
+msgstr ""
+
+#. module: training
+#: field:training.course,course_type_id:0
+#: rml:training.course.material.report:0
+#: view:training.course_type:0
+#: rml:training.session.cancel.report:0
+#: rml:training.subscription.confirm:0
+#: rml:training.subscription.presence.certificate:0
+msgid "Type"
+msgstr ""
+
+#. module: training
+#: view:training.course:0
+#: rml:training.course.material.report:0
+#: view:training.course_category:0
+msgid "Product Line"
+msgstr ""
+
+#. module: training
+#: view:training.session:0
+msgid "Create the Seances"
+msgstr ""
+
+#. module: training
+#: wizard_view:training.subscription.line.make_invoice,init:0
+#: wizard_button:training.subscription.line.make_invoice,init,invoice:0
+msgid "Create invoices"
+msgstr ""
+
+#. module: training
+#: rml:training.seance.presence:0
+msgid "The attendance record and evaluation forms are completed"
+msgstr ""
+
+#. module: training
+#: help:training.catalog,state:0
+msgid "The status of the catalog"
+msgstr ""
+
+#. module: training
+#: selection:training.seance,state:0
+#: selection:training.session,state:0
+msgid "Closed"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.skateholder.report:0
+msgid "Thank you for your cooperation!"
+msgstr ""
+
+#. module: training
+#: help:training.course,total_duration:0
+msgid "The total duration is computed if there is any subcourse"
+msgstr ""
+
+#. module: training
+#: view:training.course:0
+#: selection:training.course,state_course:0
+msgid "Pending"
+msgstr ""
+
+#. module: training
+#: help:training.course,lecturer_ids:0
+msgid "The lecturers who give the course"
+msgstr ""
+
+#. module: training
+#: field:training.subscription.line,paid:0
+msgid "Paid"
+msgstr ""
+
+#. module: training
+#: model:process.transition,name:training.process_transition_plan0
+msgid "Plan"
+msgstr ""
+
+#. module: training
+#: field:training.subscription,notification_active:0
+msgid "Active"
+msgstr ""
+
+#. module: training
+#: view:training.course_type:0
+msgid "Course Type Description"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.open_training_course_by_category_all_act
+#: model:ir.actions.act_window,name:training.training_course_all_act
+#: model:ir.ui.menu,name:training.training_library_course_course_mi
+#: model:ir.ui.menu,name:training.training_library_course_mi
+#: view:training.course:0
+#: view:training.offer:0
+#: field:training.offer,course_ids:0
+#: rml:training.subscription.presence.certificate:0
+msgid "Courses"
+msgstr ""
+
+#. module: training
+#: rml:training.subscription.confirm:0
+msgid "Subscription – Confirmation :"
+msgstr ""
+
+#. module: training
+#: view:training.seance:0
+msgid "Seance Description"
+msgstr ""
+
+#. module: training
+#: model:process.node,name:training.process_node_cancellation0
+#: model:process.transition,name:training.process_transition_cancellation0
+#: model:process.transition,name:training.process_transition_cancellation1
+msgid "Cancellation"
+msgstr ""
+
+#. module: training
+#: model:process.node,name:training.process_node_supplierorders0
+#: view:training.course:0
+msgid "Supplier Orders"
+msgstr ""
+
+#. module: training
+#: help:training.course,lang_id:0
+msgid "The language of the course"
+msgstr ""
+
+#. module: training
+#: view:training.participation:0
+#: view:training.participation.skateholder:0
+msgid "Participation Description"
+msgstr ""
+
+#. module: training
+#: view:training.seance:0
+msgid "General"
+msgstr ""
+
+#. module: training
+#: view:training.subscription:0
+#: selection:training.subscription,state:0
+msgid "Done"
+msgstr ""
+
+#. module: training
+#: selection:training.participation.skateholder,payment_mode:0
+#: field:training.seance,invoice:0
+#: field:training.subscription.line,invoice_id:0
+msgid "Invoice"
+msgstr ""
+
+#. module: training
+#: view:training.offer:0
+msgid "Margins"
+msgstr ""
+
+#. module: training
+#: selection:training.catalog,state:0
+#: selection:training.course,state_course:0
+#: selection:training.offer,state:0
+msgid "Validated"
+msgstr ""
+
+#. module: training
+#: rml:training.course.financial.report:0
+#: view:training.seance:0
+#: rml:training.seance.booking.classroom:0
+#: rml:training.seance.booking.support:0
+#: view:training.session:0
+msgid "Open"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.participant.report:0
+msgid "DATE (S) OF TRAINING"
+msgstr ""
+
+#. module: training
+#: view:training.course:0
+msgid "Content Course"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_session_validate_act
+#: model:ir.ui.menu,name:training.training_planning_session_validate_mi
+msgid "Sessions to Confirm"
+msgstr ""
+
+#. module: training
+#: constraint:ir.model:0
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr ""
+
+#. module: training
+#: view:training.seance:0
+#: field:training.seance,user_id:0
+#: field:training.session,user_id:0
+#: field:training.subscription,responsible_id:0
+msgid "Responsible"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.hiring.form.report:0
+msgid "Bank:"
+msgstr ""
+
+#. module: training
+#: help:training.session.purchase_line,product_qty:0
+msgid "The quantity of the product for the purchase order"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_course_category_all_act
+#: model:ir.ui.menu,name:training.training_config_library_product_line_mi
+#: view:training.course_category:0
+msgid "Product Lines"
+msgstr ""
+
+#. module: training
+#: model:process.transition,name:training.process_transition_subscriptionseancesdup0
+msgid "Subscription - Seances - Dup"
+msgstr ""
+
+#. module: training
+#: field:res.partner.contact,education_level:0
+msgid "Education Level"
+msgstr ""
+
+#. module: training
+#: field:training.course.purchase_line,product_id:0
+#: field:training.offer,product_id:0
+#: field:training.seance.purchase_line,product_id:0
+#: field:training.session.purchase_line,product_id:0
+msgid "Product"
+msgstr ""
+
+#. module: training
+#: model:process.transition,name:training.process_transition_invoicing0
+msgid "Invoicing"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_seance_to_confirm_act
+#: model:ir.ui.menu,name:training.training_planning_seances_confirm_mi
+msgid "Seances to Confirm"
+msgstr ""
+
+#. module: training
+#: model:process.node,name:training.process_node_penaltyinvoice0
+msgid "Penalty Invoice"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.report.xml,name:training.training_subscription_presence_certificate_report
+#: rml:training.subscription.presence.certificate:0
+msgid "Presence Certificate"
+msgstr ""
+
+#. module: training
+#: rml:training.subscription.confirm:0
+msgid "Address"
+msgstr ""
+
+#. module: training
+#: help:training.catalog,note:0
+msgid "Allows to write a note for the catalog"
+msgstr ""
+
+#. module: training
+#: help:training.course.purchase_line,course_id:0
+msgid "The course attached to this purchase line"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_seance_calendar_all_act
+#: model:ir.ui.menu,name:training.training_planning_seances_planning_mi
+msgid "Calendar of Seances"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.wizard,name:training.wizard_training_subscription_line_invoice
+msgid "Make invoices"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.hiring.form.report:0
+msgid "Name:"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_course_type_all_act
+#: model:ir.ui.menu,name:training.training_config_library_course_type_mi
+#: view:training.course_type:0
+msgid "Types"
+msgstr ""
+
+#. module: training
+#: view:training.seance:0
+#: field:training.seance,partner_ids:0
+msgid "StakeHolders"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.participant.report:0
+msgid "APPRECIATION DU FORMATEUR :"
+msgstr ""
+
+#. module: training
+#: rml:dummy.support.delivery.report:0
+#: field:training.seance,room:0
+#: rml:training.seance.presence:0
+msgid "Room"
+msgstr ""
+
+#. module: training
+#: selection:training.seance,state:0
+#: selection:training.session,state:0
+msgid "Closed Confirmed"
+msgstr ""
+
+#. module: training
+#: field:training.course.purchase_line,product_uom_id:0
+#: field:training.seance.purchase_line,product_uom_id:0
+#: field:training.session.purchase_line,product_uom_id:0
+msgid "Product UoM"
+msgstr ""
+
+#. module: training
+#: model:ir.model,name:training.model_training_subscription_line
+msgid "Subscription Line"
+msgstr ""
+
+#. module: training
+#: help:training.course,state_course:0
+msgid "The state of the course"
+msgstr ""
+
+#. module: training
+#: selection:training.seance,state:0
+#: selection:training.session,state:0
+msgid "Opened Confirmed"
+msgstr ""
+
+#. module: training
+#: view:training.subscription:0
+msgid "Cancel to Invoice"
+msgstr ""
+
+#. module: training
+#: field:training.course,duration:0
+#: rml:training.course.material.report:0
+#: field:training.seance,duration:0
+#: rml:training.session.cancel.report:0
+#: rml:training.subscription.confirm:0
+msgid "Duration"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_course_current_all_act
+#: model:ir.ui.menu,name:training.training_library_course_course_current_mi
+msgid "Current Courses"
+msgstr ""
+
+#. module: training
+#: field:res.partner.team,specialisation_id:0
+msgid "Specialisation"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.report.xml,name:training.training_seance_cancel_report
+#: rml:training.seance.cancel.report:0
+msgid "Seance - Cancellation"
+msgstr ""
+
+#. module: training
+#: rml:training.subscription.cancel:0
+msgid "Your  contact"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.skateholder.report:0
+msgid "Home & Coaching:"
+msgstr ""
+
+#. module: training
+#: field:training.seance,support_received:0
+msgid "Support Received"
+msgstr ""
+
+#. module: training
+#: view:training.course:0
+#: view:training.offer:0
+#: field:training.session,offer_id:0
+msgid "Offer"
+msgstr ""
+
+#. module: training
+#: field:training.course,p_id:0
+msgid "Parent Course"
+msgstr ""
+
+#. module: training
+#: model:ir.model,name:training.model_training_subscription
+msgid "training.subscription"
+msgstr ""
+
+#. module: training
+#: help:training.course_type,description:0
+msgid "Allows to the user to write the description of the course type"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.report.xml,name:training.training_seance_booking_support
+msgid "Support Booking"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.participant.report:0
+msgid "NAME, FIRST NAME OF PARTICIPANT (optional)"
+msgstr ""
+
+#. module: training
+#: field:training.subscription,rest_seats:0
+msgid "Rest Seats"
+msgstr ""
+
+#. module: training
+#: selection:training.catalog,state:0
+#: selection:training.seance,state:0
+#: selection:training.session,state:0
+#: selection:training.subscription,state:0
+msgid "Cancelled"
+msgstr ""
+
+#. module: training
+#: help:training.course.purchase_line,product_uom_id:0
+msgid "The unit of mesure for this product"
+msgstr ""
+
+#. module: training
+#: view:training.course:0
+#: field:training.course,complementary_course_ids:0
+#: rml:training.course.material.report:0
+msgid "Complementary Courses"
+msgstr ""
+
+#. module: training
+#: view:training.course:0
+msgid "Sub Course"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.skateholder.report:0
+msgid "Orientation of participants"
+msgstr ""
+
+#. module: training
+#: selection:training.subscription,state:0
+msgid "Confirmed"
+msgstr ""
+
+#. module: training
+#: view:training.subscription:0
+msgid "Confirm"
+msgstr ""
+
+#. module: training
+#: view:training.subscription:0
+msgid "Other Data"
+msgstr ""
+
+#. module: training
+#: model:ir.ui.menu,name:training.training_offer_mi
+#: model:process.node,name:training.process_node_offers0
+#: view:training.course:0
+#: field:training.course,offer_ids:0
+#: view:training.offer:0
+msgid "Offers"
+msgstr ""
+
+#. module: training
+#: field:training.subscription.line,contact_email:0
+msgid "Email"
+msgstr ""
+
+#. module: training
+#: field:training.seance,max_limit:0
+msgid "Maximum Limit"
+msgstr ""
+
+#. module: training
+#: rml:training.subscription.cancel:0
+msgid "Subscription - Cancellation :"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_subscription_problematic_act
+#: model:ir.ui.menu,name:training.training_subscription_management_subscription_problematic_mi
+msgid "Subscriptions to Treat"
+msgstr ""
+
+#. module: training
+#: model:process.node,name:training.process_node_onlinepayment0
+msgid "Online Payment"
+msgstr ""
+
+#. module: training
+#: model:ir.model,name:training.model_training_catalog
+#: view:training.catalog:0
+#: field:training.session,catalog_id:0
+msgid "Catalog"
+msgstr ""
+
+#. module: training
+#: help:training.session,catalog_id:0
+msgid "Allows to select a published catalog"
+msgstr ""
+
+#. module: training
+#: model:ir.ui.menu,name:training.training_config_mi
+msgid "Configuration"
+msgstr ""
+
+#. module: training
+#: model:process.transition,name:training.process_transition_sessionstovalidate0
+msgid "Sessions to Validate"
+msgstr ""
+
+#. module: training
+#: view:training.offer:0
+msgid "Offer Description"
+msgstr ""
+
+#. module: training
+#: model:ir.model,name:training.model_training_course
+msgid "training.course"
+msgstr ""
+
+#. module: training
+#: view:training.course:0
+#: view:training.seance:0
+#: view:training.session:0
+msgid "Command"
+msgstr ""
+
+#. module: training
+#: field:training.course,total_duration:0
+msgid "Total Duration"
+msgstr ""
+
+#. module: training
+#: model:process.node,name:training.process_node_faxtelmaildirect0
+msgid "Fax - Tel - Mail - Direct"
+msgstr ""
+
+#. module: training
+#: field:training.subscription.line,invoiced:0
+msgid "Invoiced"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_session_new_act
+#: model:ir.ui.menu,name:training.training_planning_session_new_mi
+msgid "New Session"
+msgstr ""
+
+#. module: training
+#: view:training.course:0
+#: rml:training.course.material.report:0
+msgid "Sub Courses"
+msgstr ""
+
+#. module: training
+#: rml:dummy.support.delivery.report:0
+msgid "Transmit by"
+msgstr ""
+
+#. module: training
+#: selection:training.seance,state:0
+#: selection:training.session,state:0
+msgid "Opened"
+msgstr ""
+
+#. module: training
+#: model:ir.ui.menu,name:training.partner_config_contact
+msgid "Contacts"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_subscription_to_validate_act
+#: model:ir.ui.menu,name:training.training_subscription_management_subscription_validate_mi
+msgid "Subscriptions to Validate"
+msgstr ""
+
+#. module: training
+#: view:training.seance:0
+#: field:training.seance,presence_form:0
+msgid "Presence Form"
+msgstr ""
+
+#. module: training
+#: view:training.catalog:0
+#: selection:training.catalog,state:0
+#: view:training.course:0
+#: selection:training.course,state_course:0
+#: view:training.offer:0
+#: selection:training.offer,state:0
+#: selection:training.seance,state:0
+#: selection:training.session,state:0
+#: selection:training.subscription,state:0
+msgid "Draft"
+msgstr ""
+
+#. module: training
+#: view:training.participation:0
+msgid "Contact Information"
+msgstr ""
+
+#. module: training
+#: field:training.course_type,max_limit:0
+msgid "Maximum Threshold"
+msgstr ""
+
+#. module: training
+#: rml:training.subscription.cancel:0
+msgid "Cancellation Fees"
+msgstr ""
+
+#. module: training
+#: view:training.course:0
+msgid "Pedagogical Suggestion"
+msgstr ""
+
+#. module: training
+#: help:training.offer,description:0
+msgid "Allows to write the description of the course"
+msgstr ""
+
+#. module: training
+#: view:training.catalog:0
+#: view:training.course:0
+#: view:training.offer:0
+msgid "Deprecate"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.report.xml,name:training.training_dummy_training_hiring_form_report
+msgid "Training Hiring Form"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_offer_open_act
+#: model:ir.ui.menu,name:training.training_offer_open_mi
+msgid "Open Offers"
+msgstr ""
+
+#. module: training
+#: rml:training.subscription.presence.certificate:0
+msgid "Number of Seances"
+msgstr ""
+
+#. module: training
+#: model:process.node,name:training.process_node_ecommerceweb0
+msgid "eCommerce Web"
+msgstr ""
+
+#. module: training
+#: view:training.catalog:0
+#: field:training.catalog,note:0
+#: view:training.course:0
+#: field:training.course,internal_note:0
+msgid "Note"
+msgstr ""
+
+#. module: training
+#: field:training.seance,min_limit:0
+msgid "Minimum Limit"
+msgstr ""
+
+#. module: training
+#: rml:dummy.support.delivery.report:0
+msgid "Support Name"
+msgstr ""
+
+#. module: training
+#: field:res.partner.contact,birthplace:0
+msgid "BirthPlace"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.participant.report:0
+#: rml:dummy.training.evaluation.skateholder.report:0
+msgid "Thank you input your comments on the following points:"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.participant.report:0
+msgid "Teaching skills"
+msgstr ""
+
+#. module: training
+#: help:training.catalog,year:0
+msgid "The year when the catalog has been published"
+msgstr ""
+
+#. module: training
+#: help:training.course,children:0
+msgid "A course can be completed with some subcourses"
+msgstr ""
+
+#. module: training
+#: view:training.seance:0
+#: view:training.session:0
+msgid "Close"
+msgstr ""
+
+#. module: training
+#: help:training.offer,state:0
+msgid "The status of the course"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.evaluation.participant.report:0
+msgid "BANK / COMPANY"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_course_planned
+msgid "Planned Courses"
+msgstr ""
+
+#. module: training
+#: field:training.seance,layout:0
+msgid "Layout"
+msgstr ""
+
+#. module: training
+#: view:training.course_category:0
+msgid "Product Line Description"
+msgstr ""
+
+#. module: training
+#: help:training.session,state:0
+msgid "The status of the session"
+msgstr ""
+
+#. module: training
+#: rml:dummy.training.hiring.form.report:0
+msgid "Name :"
+msgstr ""
+
+#. module: training
+#: help:training.session.purchase_line,session_id:0
+msgid "The session for this purchase order"
+msgstr ""
+
+#. module: training
+#: view:training.course_category:0
+#: field:training.course_category,description:0
+#: view:training.course_type:0
+#: field:training.course_type,description:0
+#: view:training.offer:0
+#: field:training.offer,description:0
+msgid "Description"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_session_all_act
+#: model:ir.ui.menu,name:training.training_planning_session_all_mi
+#: model:process.node,name:training.process_node_sessions0
+#: view:training.catalog:0
+#: field:training.catalog,session_ids:0
+#: view:training.seance:0
+#: field:training.seance,session_ids:0
+#: view:training.session:0
+#: field:wizard.training.mass.subscription,session_ids:0
+msgid "Sessions"
+msgstr ""
+
+#. module: training
+#: model:ir.ui.menu,name:training.training_planning_seances_deduplicate_mi
+#: model:process.node,name:training.process_node_seancestodeduplicate0
+msgid "Seances to Deduplicate"
+msgstr ""
+
+#. module: training
+#: rml:training.seance.presence:0
+msgid "5"
+msgstr ""
+
+#. module: training
+#: view:training.subscription:0
+msgid "Subscription Description"
+msgstr ""
+
+#. module: training
+#: field:training.offer,costs:0
+msgid "Costs"
+msgstr ""
+
+#. module: training
+#: model:process.process,name:training.process_process_subscriptionprocess0
+msgid "Course Subscription Process"
+msgstr ""
+
+#. module: training
+#: field:training.course,sequence:0
+msgid "Sequence"
+msgstr ""
+
+#. module: training
+#: field:training.subscription,payment_term_id:0
+msgid "Payment Term"
+msgstr ""
+
+#. module: training
+#: model:ir.actions.act_window,name:training.training_session_resume_act
+#: model:ir.ui.menu,name:training.training_planning_session_resume_mi
+msgid "Sessions - Report"
+msgstr ""
+
+#. module: training
+#: field:training.catalog,year:0
+msgid "Year"
 msgstr ""
 
