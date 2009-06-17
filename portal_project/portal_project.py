@@ -63,6 +63,14 @@ class project_project(osv.osv):
     _inherit = "project.project"
     _description = "Project"
 
+    def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
+        if context is None:
+            context = {}
+        if context.has_key('project_id') and context['project_id']:
+            return [context['project_id']]
+        return super(project_project, self).search(cr, uid, args, offset, limit, order, context, count)
+
+
     def _get_details(self, cr, uid, ids_project, context={}, *arg):
         # Todo: 1. Reload button gives error for project
         #       2. Test/Check
@@ -291,17 +299,21 @@ class crm_case(osv.osv):
     def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
         if context is None:
             context = {}
+
+        if context.has_key('project_id') and context['project_id']:
+            project_id = context['project_id']
+
         if context.has_key('section') and context['section']=='Bug Tracking' or context.has_key('case_search') and context['case_search']=='bug':
-            cr.execute('select c.id from crm_case c left join project_task t on c.id=t.case_id left join project_project p on p.id=t.project_id where c.section_id=p.section_bug_id')
+            cr.execute('select c.id from crm_case c left join project_task t on c.id=t.case_id left join project_project p on p.id=t.project_id where c.section_id=p.section_bug_id and p.id=%s',(project_id,))
             return map(lambda x: x[0], cr.fetchall())
         elif context.has_key('section') and context['section']=='Feature' or context.has_key('case_search') and context['case_search']=='feature':
-            cr.execute('select c.id from crm_case c left join project_task t on c.id=t.case_id left join project_project p on p.id=t.project_id where c.section_id=p.section_feature_id')
+            cr.execute('select c.id from crm_case c left join project_task t on c.id=t.case_id left join project_project p on p.id=t.project_id where c.section_id=p.section_feature_id and p.id=%s',(project_id,))
             return map(lambda x: x[0], cr.fetchall())
         elif context.has_key('section') and context['section']=='Support' or context.has_key('case_search') and context['case_search']=='support':
-            cr.execute('select c.id from crm_case c left join project_task t on c.id=t.case_id left join project_project p on p.id=t.project_id where c.section_id=p.section_support_id')
+            cr.execute('select c.id from crm_case c left join project_task t on c.id=t.case_id left join project_project p on p.id=t.project_id where c.section_id=p.section_support_id and p.id=%s',(project_id,))
             return map(lambda x: x[0], cr.fetchall())
         elif context.has_key('section') and context['section']=='Announce' or context.has_key('case_search') and context['case_search']=='announce':
-            cr.execute('select c.id from crm_case c left join project_task t on c.id=t.case_id left join project_project p on p.id=t.project_id where c.section_id=p.section_annouce_id')
+            cr.execute('select c.id from crm_case c left join project_task t on c.id=t.case_id left join project_project p on p.id=t.project_id where c.section_id=p.section_annouce_id and p.id=%s',(project_id,))
             return map(lambda x: x[0], cr.fetchall())
         return super(crm_case, self).search(cr, uid, args, offset, limit, order, context, count)
 
