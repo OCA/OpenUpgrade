@@ -46,41 +46,42 @@ class dm_after_sale_action(osv.osv_memory):
         'as_report' : fields.text('Report Content'),
         'document_id' : fields.many2one('dm.offer.document','Document'),
         'state': fields.selection([('draft','Draft'),('set','Set'),('done','Done')],"State",size=10),
+        'display_info':fields.text('Info'),
     }
 
     def set_cancel(self, cr, uid, ids, *args):
         return True
     _defaults = {
-             'draft' : lambda *a : 'draft',
+             'state' : lambda *a : 'draft',
     }
 
     def send_document(self, cr, uid, ids, *args):
-        "Creaste workitem and document"
+        "Create workitem and document"
         lang_id = self.pool.get('res.lang').search(cr,uid,[('code','=',args[0]['lang'])])[0]
         doc_categ_id = self.pool.get('dm.offer.document.category').search(cr,uid,[('name','=','Production')])[0]
-        for i in self.read(cr,uid,ids):
-            document_id = self.pool.get('dm.offer.document').browse(cr,uid,i['document_id'])
-            print i['as_report']
+        for i in self.browse(cr,uid,ids):
             vals = {
-                'segment_id' : i['segment_id'],
-                'step_id' : document_id.step_id.id,
+                'segment_id' : i.segment_id.id,
+                'step_id' : i.document_id.step_id.id,
                 'address_id' : args[0]['address_id'],
-                'trigger_type_id' : i['action_id'],
-                'mail_service_id' : i['mail_service_id'],
+                'trigger_type_id' : i.action_id.id,
+                'mail_service_id' : i.mail_service_id.id,
             }
             id = self.pool.get('dm.event').create(cr,uid,vals)
-            production_doc_id = self.pool.get('dm.offer.document').search(cr,uid,[('step_id','=',document_id.step_id.id),('category_id','=','Production')])
+            production_doc_id = self.pool.get('dm.offer.document').search(cr,uid,[('step_id','=',i.document_id.step_id.id),('category_id','=','Production')])
             if not production_doc_id :
                 vals = {'name':'From AS wizard production',
                         'code':'ASW Production',
-                        'lang_id':lang_id,
-                        'category_id':doc_categ_id,
-                        'content' :i['as_report'],
-                        'step_id':document_id.step_id.id,
+                        'lang_id' : lang_id,
+                        'category_id': doc_categ_id,
+                        'content' : i.as_report,
+                        'step_id': i.document_id.step_id.id,
                 }
                 doc_id = self.pool.get('dm.offer.document').create(cr,uid,vals)
             else :
-                self.pool.get('dm.offer.document').write(cr,uid,[production_doc_id[0]],{'content':i['as_report']})
+                self.pool.get('dm.offer.document').write(cr,uid,[production_doc_id[0]],{'content':i.as_report})
+            display_info ="Event is created for the above information and internal report is changed for the '%s' document"%i.document_id.name
+            self.write(cr,uid,[i.id],{'state':'done','display_info':display_info})
         return True
 
     def set_content(self,cr,uid,ids,*args):
