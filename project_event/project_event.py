@@ -19,7 +19,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 import time
 
 from osv import fields, osv
@@ -28,6 +27,7 @@ import tools
 from tools.config import config
 from tools.translate import _
 import netsvc
+
 
 class project_project(osv.osv):
     _inherit = "project.project"
@@ -148,15 +148,15 @@ class project_task(osv.osv):
         cr.commit()
         task = self.browse(cr, uid, res, context=context)
         if task.project_id:
-            desc = ''' The Project Name: %s \n Task Summary: %s \n Assigned to: %s \n Deadline: %s \n Task Detail: %s \n
-                       Planned hours: %s \n Remaining hours: %s ''' \
-                       %(task.project_id.name, task.name, task.user_id.name, \
+            desc = ''' Hello %s,\n  This Mail is send to inform you about the new task created.\n The Project Name is: %s \n Task Summary is : %s \n Created on : %s \n It is Assigned to: %s \n Deadline is : %s \n Task's Detail Description is : %s \n Its Planned hours is: %s \n and its Remaining hours is: %s ''' \
+                       %(task.user_id.name,task.project_id.name,\
+                          task.name, task.date_start,task.user_id.name, \
                          task.date_deadline or '', task.description or '', \
-                         task.planned_hours or 0, task.planned_hours or 0)
+                         task.planned_hours or 0, task.remaining_hours or 0)
             self.pool.get('project.project')._log_event(cr, uid, task.project_id.id, {
                                 'res_id' : task.id,
                                 'name' : task.name,
-                                'description' : desc,#task.description,
+                                'description' : desc,
                                 'user_id': uid,
                                 'action' : 'create',
                                 'type' : 'task'})
@@ -165,15 +165,16 @@ class project_task(osv.osv):
     def write(self, cr, uid, ids, vals, context={}):
         res = super(project_task, self).write(cr, uid, ids, vals, context={})
         cr.commit()
-        for task in self.browse(cr, uid, ids, context=context):
-            if task.project_id:
-                self.pool.get('project.project')._log_event(cr, uid, task.project_id.id, {
-                                    'res_id' : task.id,
-                                    'name' : task.name,
-                                    'description' : task.description,
-                                    'user_id': uid,
-                                    'action' : 'write',
-                                    'type' : 'task'})
+        desc = "Hello ,\n\n  This Mail is send to inform you about the task Updated.\n "
+        for val in vals:
+            desc += val + ':' + str(vals[val]) + "\n"
+        self.pool.get('project.project')._log_event(cr, uid, ids, {
+                                                                    'res_id' : ids[0],
+                                                                    'name' : vals['name'],
+                                                                    'description' : desc,
+                                                                    'user_id': uid,
+                                                                    'action' : 'write',
+                                                                    'type' : 'task'})
         return res
 
 project_task()
@@ -186,10 +187,13 @@ class document_file(osv.osv):
         cr.commit()
         document = self.browse(cr, uid, res)
         if document.res_model == 'project.project' and document.res_id:
+            desc = ''' Hello %s,\n \n  This Mail is send to inform you about the new Document uploaded\n The Project Name is: %s \n Document attached is : %s \n Attachment name: %s \n Document owned by :%s \n Its size is : %s \n''' \
+                       %(document.user_id.name,document.title,document.datas_fname,document.name,
+                          document.user_id.name,document.file_size)
             self.pool.get('project.project')._log_event(cr, uid, document.res_id, {
                                 'res_id' : document.id,
                                 'name' : document.name,
-                                'description' : document.description,
+                                'description' :desc,#document description,
                                 'user_id': uid,
                                 'attach' : [(document.datas_fname, document.datas)],
                                 'action' : 'create',
