@@ -2,20 +2,23 @@
 # This file contains the translation of the following modules:
 # 	* stock
 #
+# P. Christeas <p_christ@hol.gr>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
-"PO-Revision-Date: 2009-06-15 03:06+0200\n"
-"Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
-"Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
+"PO-Revision-Date: 2009-06-17 22:53+0300\n"
+"Last-Translator: P. Christeas <p_christ@hol.gr>\n"
+"Language-Team: Greek <nls@hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Greek\n"
 "X-Poedit-Country: GREECE\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"X-Generator: Lokalize 0.3\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock
 #: selection:stock.location,allocation_method:0
@@ -364,7 +367,7 @@ msgstr "Παραλήπτης"
 #. module: stock
 #: model:ir.actions.wizard,name:stock.track_line
 msgid "Track line"
-msgstr "Ανίχνευση γραμμής"
+msgstr "Παρακολούθηση γραμμής"
 
 #. module: stock
 #: field:stock.location,child_ids:0
@@ -510,7 +513,7 @@ msgstr "Ημερολόγιο Παραλαβών"
 #. module: stock
 #: field:product.product,track_incoming:0
 msgid "Track Incomming Lots"
-msgstr "Ανίχενυση Εισερχομένων Παρτίδων"
+msgstr "Παρακολούθηση Εισερχομένων Παρτίδων"
 
 #. module: stock
 #: model:ir.actions.act_window,name:stock.act_stock_product_location_open
@@ -788,7 +791,7 @@ msgstr "STOCK_GO_DOWN"
 #: field:res.partner,property_stock_customer:0
 #: selection:stock.location,usage:0
 msgid "Customer Location"
-msgstr "Τοποεθεσία Πελάτη"
+msgstr "Τοποθεσία Πελάτη"
 
 #. module: stock
 #: selection:stock.location,icon:0
@@ -1122,7 +1125,7 @@ msgstr "Κατάσταση Συσκευασίας"
 #: field:product.category,property_stock_account_input_categ:0
 #: field:product.template,property_stock_account_input:0
 msgid "Stock Input Account"
-msgstr "Λογαριασμός Εισερχομένων Αποθεμάτων"
+msgstr "Λογαριασμός Εισερχομένων"
 
 #. module: stock
 #: selection:stock.invoice_onshipping,init,type:0
@@ -1188,7 +1191,7 @@ msgstr "STOCK_STOP"
 #. module: stock
 #: wizard_view:stock.move.track,init:0
 msgid "Tracking a move"
-msgstr "Ανίχνευση κίνησης"
+msgstr "Παρακολούθηση κίνησης"
 
 #. module: stock
 #: selection:stock.location,icon:0
@@ -1369,7 +1372,7 @@ msgstr ""
 #. module: stock
 #: selection:stock.location,chained_location_type:0
 msgid "Fixed Location"
-msgstr "Μόνιμη Τοποεθσία"
+msgstr "Μόνιμη Τοποθεσία"
 
 #. module: stock
 #: constraint:ir.model:0
@@ -1588,7 +1591,7 @@ msgstr "STOCK_ZOOM_OUT"
 #. module: stock
 #: wizard_field:stock.move.track,init,tracking_prefix:0
 msgid "Tracking prefix"
-msgstr "Αίχνευση προθεμάτων"
+msgstr "Παρακολούθηση προθεμάτων"
 
 #. module: stock
 #: selection:stock.location,allocation_method:0
@@ -1809,7 +1812,7 @@ msgstr "Όλα αμέσως"
 #. module: stock
 #: field:product.product,track_outgoing:0
 msgid "Track Outging Lots"
-msgstr "Ανίχνευση Εξερχομένων ΠΑρτίδων"
+msgstr "Παρακολούθηση Εξερχομένων Παρτίδων"
 
 #. module: stock
 #: model:ir.actions.act_window,name:stock.action_stock_line_date
@@ -1857,7 +1860,7 @@ msgstr "Εικονίδιο"
 #. module: stock
 #: field:stock.tracking,name:0
 msgid "Tracking"
-msgstr "Ανίχνευση"
+msgstr "Παρακολούθηση"
 
 #. module: stock
 #: wizard_button:stock.move.track,init,track:0
@@ -1966,7 +1969,7 @@ msgid ""
 "This account will be used, instead of the default one, to value output stock"
 msgstr ""
 "Ο λογαρσιασμός αυτός θα χρησιμοποιηθεί για αποτίμηση των εξερχομένων "
-"προϊόντων αντί του πρεπιλεγμένου"
+"προϊόντων αντί του προεπιλεγμένου."
 
 #. module: stock
 #: view:stock.picking:0
@@ -1976,7 +1979,7 @@ msgstr "Επιβεβαίωση (Μη Εκκίνηση Επεξεργασίας)"
 #. module: stock
 #: field:stock.tracking,move_ids:0
 msgid "Moves Tracked"
-msgstr "Κινήσεις που ανιχνεύθηκαν"
+msgstr "Κινήσεις που παρακολουθούνται"
 
 #. module: stock
 #: model:ir.ui.menu,name:stock.next_id_61
@@ -2122,7 +2125,7 @@ msgstr "STOCK_REVERT_TO_SAVED"
 #. module: stock
 #: field:product.product,track_production:0
 msgid "Track Production Lots"
-msgstr "Ανίχνευση Παρτίδων Παραγωγής"
+msgstr "Παρακολούθηση Παρτίδων Παραγωγής"
 
 #. module: stock
 #: view:stock.picking:0

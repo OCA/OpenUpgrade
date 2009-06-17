@@ -1,21 +1,23 @@
 # Greek translation for openobject-addons
 # Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
 # This file is distributed under the same license as the openobject-addons package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
 #
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+# P. Christeas <p_christ@hol.gr>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
-"PO-Revision-Date: 2009-05-08 23:18+0000\n"
-"Last-Translator: Makis Nicolaou <mark.nicolaou@gmail.com>\n"
-"Language-Team: Greek <el@li.org>\n"
+"PO-Revision-Date: 2009-06-17 22:57+0300\n"
+"Last-Translator: P. Christeas <p_christ@hol.gr>\n"
+"Language-Team: Greek <nls@hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2009-05-10 00:04+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Generator: Lokalize 0.3\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: product
 #: view:product.pricelist.item:0
@@ -48,7 +50,7 @@ msgid ""
 "Determine if the product is visible in the list of products within a "
 "selection from a purchase order line."
 msgstr ""
-"Διευκρινήστε αν το προϊόν είναι ορατό στην λίστα των προϊόντων μέσα στις "
+"Διευκρινίστε αν το προϊόν είναι ορατό στην λίστα των προϊόντων μέσα στις "
 "επιλογές μιάς γραμμής αγοράς."
 
 #. module: product
@@ -62,13 +64,13 @@ msgid ""
 "The minimal quantity to purchase for this supplier, expressed in the default "
 "unit of measure."
 msgstr ""
-"Η μικρότερη ποσότητα αγοράς απο αυτόν τον προμηθευτή, εκφρασμένο στην "
-"προκαθορισμένη μονάδα μέτρησης."
+"Η ελάχιστη ποσότητα αγοράς απο αυτόν τον προμηθευτή, εκφρασμένη στην "
+"προεπιλεγμένη μονάδα μέτρησης."
 
 #. module: product
 #: field:product.template,weight_net:0
 msgid "Net weight"
-msgstr "Καραρό βάρος"
+msgstr "Καθαρό βάρος"
 
 #. module: product
 #: help:product.product,incoming_qty:0
@@ -166,9 +168,8 @@ msgstr "Εταιρία"
 
 #. module: product
 #: field:product.template,rental:0
-#, fuzzy
 msgid "Rentable Product"
-msgstr "Ενοικιαζόμενο προϊόν"
+msgstr "Προς ενοικίαση"
 
 #. module: product
 #: field:product.product,lst_price:0
@@ -223,8 +224,8 @@ msgid ""
 "Produce will generate production order or tasks, according to the product "
 "type. Purchase will trigger purchase orders when requested."
 msgstr ""
-"Η παραγωγή θα δημιουργήσει μιά εντολή παραγωγής ή εργασίες σύμφωνα με τον "
-"τύπο προϊόντος. Η Αγορές θα ενεργοποιήσουν εντολές αγοράς όταν ζητηθούν."
+"Η παραγωγή θα δημιουργήσει μιά εντολή παραγωγής ή εργασίας σύμφωνα με τον "
+"τύπο προϊόντος. Οι Αγορές θα ενεργοποιήσουν εντολές αγοράς όταν ζητηθούν."
 
 #. module: product
 #: help:product.packaging,rows:0
@@ -258,7 +259,7 @@ msgstr "Νέα Τιμή ="
 #. module: product
 #: field:product.product,virtual_available:0
 msgid "Virtual Stock"
-msgstr "Εικονικό Απόθεμα"
+msgstr "Λογιστικό Απόθεμα"
 
 #. module: product
 #: selection:product.template,mes_type:0
@@ -298,7 +299,7 @@ msgstr "Ονομασία Κανόνα"
 #. module: product
 #: model:ir.ui.menu,name:product.menu_config_product
 msgid "Configuration"
-msgstr "Παραμετροποίηση"
+msgstr "Ρυθμίσεις"
 
 #. module: product
 #: field:product.packaging,rows:0
@@ -321,12 +322,12 @@ msgstr ""
 #. module: product
 #: field:product.template,uom_id:0
 msgid "Default UoM"
-msgstr "Προκαθορισμένη ΜΜ"
+msgstr "Προεπιλεγμένη ΜΜ"
 
 #. module: product
 #: field:product.template,produce_delay:0
 msgid "Manufacturing Lead Time"
-msgstr "Προηγμένος χρόνος παραγωγής"
+msgstr "Χρόνος Παραγωγής"
 
 #. module: product
 #: field:product.supplierinfo,pricelist_ids:0
@@ -352,7 +353,7 @@ msgstr "Συνεργάτης"
 #. module: product
 #: field:product.template,sale_delay:0
 msgid "Customer Lead Time"
-msgstr "Προηγμένος χρόνος πελάτη"
+msgstr "Χρόνος Εκτέλεσης"
 
 #. module: product
 #: help:product.template,cost_method:0
@@ -496,20 +497,20 @@ msgid ""
 "is used by the scheduler to order requests based on reordering delays."
 msgstr ""
 "Αυτή είναι η μέση καθυστέρηση σε ημέρες μεταξύ της επιβεβαίωσης της εντολής "
-"αγοράς και της παραλαβής των αγαθών απο τον προκαθορισμένο προμηθευτή. "
-"Χρησιμοποιείται απο τον scheduler για αιτήσεις παραγγελιών που βασίζονται σε "
+"αγοράς και της παραλαβής των αγαθών απο τον προεπιλεγμένο προμηθευτή. "
+"Χρησιμοποιείται απο το χρονοδιάγραμμα για αιτήσεις παραγγελιών που "
+"βασίζονται σε "
 "καθυστερήσεις επαναπαραγγελίας."
 
 #. module: product
 #: field:product.template,seller_delay:0
 msgid "Supplier Lead Time"
-msgstr "Προηγμένος χρόνος προμηθευτή"
+msgstr "Χρόνος Παράδοσης Προμηθευτή"
 
 #. module: product
 #: model:product.pricelist.version,name:product.ver0
-#, fuzzy
 msgid "Default Public Pricelist Version"
-msgstr "Έκδοση Τιμοκαταλόγου"
+msgstr "Έκδοση (Version) Προεπιλεμένου Τιμοκαταλόγου"
 
 #. module: product
 #: field:product.pricelist.type,key:0
@@ -532,7 +533,7 @@ msgid ""
 "This pricelist will be used, instead of the default one,                     "
 "for sales to the current partner"
 msgstr ""
-"Αυτός ο τιμοκατάλογος θα χρησιμοποιηθεί αντί για τον προκαθορισμένο για "
+"Αυτός ο τιμοκατάλογος θα χρησιμοποιηθεί αντί για τον προεπιλεγμένο για "
 "πωλήσεις στον τρέχοντα συνεργάτη."
 
 #. module: product
@@ -578,7 +579,7 @@ msgstr ""
 #. module: product
 #: field:product.category,parent_id:0
 msgid "Parent Category"
-msgstr "Γονική Κατηγορία"
+msgstr "Μητρική Κατηγορία"
 
 #. module: product
 #: selection:product.template,state:0
@@ -610,15 +611,14 @@ msgstr "Συνολικό βάρος δέματος"
 
 #. module: product
 #: help:product.template,procure_method:0
-#, fuzzy
 msgid ""
 "'Make to Stock': When needed, take from the stock or wait until re-"
 "supplying. 'Make to Order': When needed, purchase or produce for the "
 "procurement request."
 msgstr ""
-"'Make to Stock': When needed, take from the stock or wait until "
-"refurnishing. 'Make to Order': When needed, purchase or produce for the "
-"procurement request."
+"'Κατά Απόθεμα': Λήψη από το απόθεμα όταν χρειαστεί ή αναμονή μέχρι την "
+"ανανέωση του απόθεματος. 'Κατά Παραγγελία': Αγορά ή παραγωγή όταν χρειαστεί "
+"για το αίτημα προμήθειας."
 
 #. module: product
 #: view:product.product:0 view:product.template:0
@@ -647,7 +647,7 @@ msgstr ""
 #. module: product
 #: view:product.product:0
 msgid "Product Variant"
-msgstr "Μεταβλητή Προϊόντος"
+msgstr "Παραλλαγή Προϊόντος"
 
 #. module: product
 #: field:product.packaging,ul:0
@@ -657,7 +657,7 @@ msgstr "Τύπος Δέματος"
 #. module: product
 #: field:product.template,loc_rack:0
 msgid "Rack"
-msgstr "Rack"
+msgstr "Ράφι"
 
 #. module: product
 #: selection:product.ul,type:0
@@ -697,7 +697,7 @@ msgstr ""
 #. module: product
 #: field:product.template,supply_method:0
 msgid "Supply method"
-msgstr "Μέθοδος Προμήθειας"
+msgstr "Μέθοδος Απόκτησης"
 
 #. module: product
 #: view:product.uom.categ:0
@@ -794,7 +794,7 @@ msgstr "Μονάδα Μέτρησης Προϊόντος"
 #. module: product
 #: field:product.template,sale_ok:0
 msgid "Can be sold"
-msgstr "Πωλουμενο"
+msgstr "Προς πώληση"
 
 #. module: product
 #: view:product.product:0 view:product.template:0
@@ -804,7 +804,7 @@ msgstr "Βάρη"
 #. module: product
 #: field:product.uom,factor:0
 msgid "Rate"
-msgstr "Βαθμός"
+msgstr "Αναλογία"
 
 #. module: product
 #: view:product.pricelist.item:0
@@ -824,7 +824,7 @@ msgstr "Το πλάτος της συσκευασίας"
 #. module: product
 #: field:product.packaging,qty:0
 msgid "Quantity by Package"
-msgstr "Ποσότητα κατα συσκευασία"
+msgstr "Ποσότητα ανά Συσκευασία"
 
 #. module: product
 #: help:product.template,uos_id:0
@@ -833,10 +833,10 @@ msgid ""
 "management. For example, in food industries, you will manage a stock of ham "
 "but invoice in Kg. Keep empty to use the default UOM."
 msgstr ""
-"Χρησιμοποιείται απο εταιρίες που διαχειρίζονται δύο μονάδες μέτρησης: "
-"τιμολογήσεις και διαχείρησης αποθεμάτων. Για παράδειγμα, σε εταιρίες "
+"Χρησιμοποιείται από εταιρίες που διαχειρίζονται δύο μονάδες μέτρησης: "
+"τιμολόγησης και διαχείρισης αποθεμάτων. Για παράδειγμα, σε εταιρίες "
 "τροφίμων, θα διαχειριζόσασταν ένα απόθεμα ζαμπόν αλλα θα τιμολογούσατε σε "
-"κιλά. Διατηρήστε κενό για προκαθορισμένη μονάδα μέτρησης."
+"κιλά. Διατηρήστε κενό για προεπιλεγμένη μονάδα μέτρησης."
 
 #. module: product
 #: view:product.product:0 view:product.template:0
@@ -873,7 +873,7 @@ msgstr "Στρογγυλοποίηση Τιμής"
 #. module: product
 #: model:product.price.type,name:product.list_price
 msgid "Public Price"
-msgstr "Λιανική Τιμή"
+msgstr "Επίσημη Τιμή"
 
 #. module: product
 #: field:product.pricelist.item,price_max_margin:0
@@ -915,7 +915,7 @@ msgstr "Διαχειριστής Προϊόντων"
 #. module: product
 #: field:product.product,price_extra:0
 msgid "Variant Price Extra"
-msgstr "Επιπλέον τιμή μεταβλητής"
+msgstr "Επιβάρυνση Παραλλαγής"
 
 #. module: product
 #: model:ir.model,name:product.model_product_supplierinfo
@@ -932,7 +932,7 @@ msgstr "Ενεργό"
 #. module: product
 #: field:product.product,price_margin:0
 msgid "Variant Price Margin"
-msgstr "Περιθώριο τιμής μεταβλητής"
+msgstr "Περιθώριο Τιμής Παραλλαγής"
 
 #. module: product
 #: model:ir.model,name:product.model_pricelist_partnerinfo
@@ -974,9 +974,8 @@ msgstr "Το μήκος της συσκευασίας"
 
 #. module: product
 #: field:product.pricelist.item,price_min_margin:0
-#, fuzzy
 msgid "Min. Price Margin"
-msgstr "Περιθώριο τιμής μεταβλητής"
+msgstr "Ελάχιστο Περιθώριο Τιμής Παραλλαγής "
 
 #. module: product
 #: help:product.packaging,ean:0
@@ -1044,7 +1043,7 @@ msgstr ""
 #. module: product
 #: view:product.supplierinfo:0
 msgid "Seq"
-msgstr "Ακολουθία"
+msgstr "Ακολ."
 
 #. module: product
 #: selection:product.template,mes_type:0
@@ -1055,7 +1054,7 @@ msgstr "Μεταβλητή"
 #: help:product.template,uom_id:0
 msgid "Default Unit of Measure used for all stock operation."
 msgstr ""
-"Προκαθορισμένη Μονάδα Μέτρησης που χρησιμοποιείται απο όλες τις λειτουργίες "
+"Προεπιλεγμένη Μονάδα Μέτρησης που χρησιμοποιείται απο όλες τις λειτουργίες "
 "αποθήκευσης"
 
 #. module: product
@@ -1109,7 +1108,7 @@ msgstr "Τιμοκατάλογος"
 #. module: product
 #: model:product.pricelist,name:product.list0
 msgid "Public Pricelist"
-msgstr "Τιμοκατάλογος Λιανικής"
+msgstr "Επίσημος Τιμοκατάλογος"
 
 #. module: product
 #: selection:product.ul,type:0
@@ -1304,7 +1303,7 @@ msgstr "Μέθοδος Στρογγυλοποίησης"
 #. module: product
 #: field:product.product,variants:0
 msgid "Variants"
-msgstr "Μεταβλητές"
+msgstr "Παραλλαγές"
 
 #. module: product
 #: view:product.pricelist.item:0
@@ -1314,7 +1313,7 @@ msgstr "Υπολογισμός Τιμής"
 #. module: product
 #: field:product.template,loc_case:0
 msgid "Case"
-msgstr "Case"
+msgstr "Κιβώτιο"
 
 #. module: product
 #: field:product.pricelist.version,date_end:0
@@ -1352,7 +1351,7 @@ msgstr ""
 #. module: product
 #: field:product.template,purchase_ok:0
 msgid "Can be Purchased"
-msgstr "Μπορεί να αγοραστεί"
+msgstr "Προς αγορά"
 
 #. module: product
 #: field:product.template,uos_coeff:0
@@ -1438,7 +1437,7 @@ msgstr "Ακολουθία"
 #. module: product
 #: field:product.template,list_price:0
 msgid "Sale Price"
-msgstr "Τιμή Λιανικής"
+msgstr "Τιμή Πώλησης"
 
 #. module: product
 #: help:product.template,produce_delay:0
@@ -1475,7 +1474,7 @@ msgid ""
 "Default Unit of Measure used for purchase orders. It must in the same "
 "category than the default unit of measure."
 msgstr ""
-"Προκαθορισμένη Μονάδα Μέτρησης που χρησιμοποιείται στις εντολές αγοράς. Θα "
+"Προεπιλεγμένη Μονάδα Μέτρησης που χρησιμοποιείται στις εντολές αγοράς. Θα "
 "πρέπει να είναι στην ίδια κατηγορια με την προκαθορισμένη μονάδα μέτρησης."
 
 #. module: product

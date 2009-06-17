@@ -1,21 +1,23 @@
 # Greek translation for openobject-addons
 # Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
 # This file is distributed under the same license as the openobject-addons package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
 #
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+# P. Christeas <p_christ@hol.gr>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
-"PO-Revision-Date: 2009-06-17 09:28+0200\n"
-"Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
-"Language-Team: Greek <el@li.org>\n"
+"PO-Revision-Date: 2009-06-17 22:57+0300\n"
+"Last-Translator: P. Christeas <p_christ@hol.gr>\n"
+"Language-Team: Greek <nls@hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2009-06-17 00:48+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Generator: Lokalize 0.3\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account
 #: field:account.tax.template,description:0
@@ -597,8 +599,8 @@ msgid ""
 "The sequence field is used to order the resources from lower sequences to "
 "higher ones"
 msgstr ""
-"Το πεδίο Ιεράρχησης χρησιμοποιείται για να κατατάξει τους πόρους απο τη "
-"χαμηλότερη Ιεράρχηση στην υψηλότερη"
+"Το πεδίο Ακολουθίας χρησιμοποιείται για να κατατάξει τους πόρους απο τη "
+"χαμηλότερη Ακολουθία στην υψηλότερη"
 
 #. module: account
 #: wizard_view:account.analytic.account.chart,init:0
@@ -1053,7 +1055,7 @@ msgstr "Επιλογή Λογιστικής Χρήσης"
 #. module: account
 #: field:account.sequence.fiscalyear,sequence_main_id:0
 msgid "Main Sequence"
-msgstr "Κύρια Ιεράρχηση"
+msgstr "Κύρια Ακολουθία"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_account_analytic_journal_tree
@@ -1067,7 +1069,7 @@ msgid ""
 "The sequence field is used to order the payment term lines from the lowest "
 "sequences to the higher ones"
 msgstr ""
-"Το πεδίο Ιεράρχησης χρησιμοποιείται για να κατατάξει τις γραμμές των τρόπων "
+"Το πεδίο Ακολουθίας χρησιμοποιείται για να κατατάξει τις γραμμές των τρόπων "
 "πληρωμής απο τη χαμηλότερη στην υψηλότερη"
 
 #. module: account
@@ -1362,7 +1364,7 @@ msgstr "Γραμμές Φόρου"
 #. module: account
 #: field:ir.sequence,fiscal_ids:0
 msgid "Sequences"
-msgstr "Ιεραρχήσεις"
+msgstr "Ακολουθίες"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_account_type_form
@@ -1553,7 +1555,7 @@ msgstr "Εισπρακτέοι και Πληρωτέοι Λογαριασμοί"
 #. module: account
 #: view:account.subscription:0 field:account.subscription,lines_id:0
 msgid "Subscription Lines"
-msgstr "Γραμμές Εγγραφής"
+msgstr "Γραμμές συνδρομής"
 
 #. module: account
 #: selection:account.analytic.journal,type:0 selection:account.journal,type:0
@@ -1658,7 +1660,7 @@ msgstr ""
 #: help:account.account.type,sequence:0
 msgid "Gives the sequence order when displaying a list of account types."
 msgstr ""
-"Δίνει την κατάταξη Ιεράρχησης όταν προβάλλεται η λίστα των τύπων λογαριασμών."
+"Δίνει την κατάταξη Ακολουθίας όταν προβάλλεται η λίστα των τύπων λογαριασμών."
 
 #. module: account
 #: view:account.invoice:0
@@ -1996,7 +1998,7 @@ msgstr "Πρόχειρο Τιμολόγιο"
 #. module: account
 #: field:account.journal,invoice_sequence_id:0
 msgid "Invoice Sequence"
-msgstr "Ιεράρχηση Τιμολογίου"
+msgstr "Ακολουθία Τιμολογίου"
 
 #. module: account
 #: wizard_view:account.automatic.reconcile,init:0
@@ -2162,7 +2164,7 @@ msgstr "Λογιστικό Σχέδιο"
 #: model:ir.actions.wizard,name:account.wizard_generate_subscription
 #: model:ir.ui.menu,name:account.menu_generate_subscription
 msgid "Create subscription entries"
-msgstr "Δημιουργήστε τις καταχωρήσεις συνδρομής"
+msgstr "Δημιουργία καταχωρήσεων συνδρομής"
 
 #. module: account
 #: wizard_field:account.fiscalyear.close,init,journal_id:0
@@ -2346,7 +2348,7 @@ msgstr "Γραμμές Εγγραφής"
 #. module: account
 #: view:account.tax:0 view:account.tax.template:0
 msgid "Applicable Code (if type=code)"
-msgstr "Applicable Code (if type=code)"
+msgstr ""
 
 #. module: account
 #: wizard_button:account.move.journal,init,open:0
@@ -2689,8 +2691,8 @@ msgid ""
 "higher ones. The order is important if you have a tax that has several tax "
 "children. In this case, the evaluation order is important."
 msgstr ""
-"Το πεδίο Ιεράρχησης χρησιμοποιείται για να κατατάξει τις γραμμές των φόρων "
-"απο τη χαμηλότερη Ιεράρχηση στην υψηλότερη. Η Ιεράρχηση είναι σημαντική όταν "
+"Το πεδίο Ακολουθίας χρησιμοποιείται για να κατατάξει τις γραμμές των φόρων "
+"απο τη χαμηλότερη Ακολουθία στην υψηλότερη. Η Ακολουθία είναι σημαντική όταν "
 "έχετε φόρους που περιέχεουν άλλους φόρους σαν υποκατηγορίες."
 
 #. module: account
@@ -3407,7 +3409,7 @@ msgstr "Λογιστικό Σχέδιο"
 #. module: account
 #: field:account.subscription.line,subscription_id:0
 msgid "Subscription"
-msgstr "Προεγγραφή"
+msgstr "Συνδρομή"
 
 #. module: account
 #: field:account.analytic.journal,code:0
@@ -3482,7 +3484,7 @@ msgstr ""
 #: field:account.tax,sequence:0 field:account.tax.template,sequence:0
 #: field:fiscalyear.seq,sequence_id:0
 msgid "Sequence"
-msgstr "Ιεράρχηση"
+msgstr "Ακολουθία"
 
 #. module: account
 #: model:ir.model,name:account.model_account_fiscal_position_template
@@ -3537,9 +3539,8 @@ msgstr "Μήνας"
 
 #. module: account
 #: model:ir.model,name:account.model_account_subscription
-#, fuzzy
 msgid "Account Subscription"
-msgstr "Καταχώρηση Λογαριασμού"
+msgstr "Συνδρομή Λογαριασμού"
 
 #. module: account
 #: field:account.model.line,date_maturity:0
@@ -3550,7 +3551,7 @@ msgstr "Ημερ/νία Λήξης"
 #. module: account
 #: view:account.subscription:0
 msgid "Entry Subscription"
-msgstr "Καταχώρηση Εγγραφής"
+msgstr "Καταχώρηση Συνδρομής"
 
 #. module: account
 #: selection:account.print.journal.report,init,sort_selection:0
@@ -3630,7 +3631,7 @@ msgstr ""
 #. module: account
 #: field:account.journal,sequence_id:0
 msgid "Entry Sequence"
-msgstr "Ιεράρχηση Εγγραφών"
+msgstr "Ακολουθία Καταχώρησης"
 
 #. module: account
 #: selection:account.account,type:0 selection:account.account.template,type:0
@@ -3953,7 +3954,7 @@ msgstr "Συναλλαγή Πίστωσης"
 #. module: account
 #: field:wizard.multi.charts.accounts,seq_journal:0
 msgid "Separated Journal Sequences"
-msgstr "Διαχωρισμένες Ιεραρχήσεις Ημερολογίου"
+msgstr "Διαχωρισμένες Ακολουθίες Ημερολογίου"
 
 #. module: account
 #: help:account.bank.statement.reconcile,total_second_currency:0
@@ -4065,7 +4066,7 @@ msgstr "Προέλευση από Αριστερά"
 #: help:account.journal,sequence_id:0
 msgid "The sequence gives the display order for a list of journals"
 msgstr ""
-"Η Ιεράρχηση χρησιμοποιείται για να ταξινομήσει τη σειρά εμφάνισης "
+"Η Ακολουθία χρησιμοποιείται για να ταξινομήσει τη σειρά εμφάνισης "
 "ημερολογίων σε μια λίστα"
 
 #. module: account
@@ -4232,8 +4233,8 @@ msgid ""
 "to the higher ones. The order is important if you have a tax with several "
 "tax children. In this case, the evaluation order is important."
 msgstr ""
-"Το πεδίο Ιεράρχησης χρησιμοποιείται για να κατατάξει τις γραμμές των φόρων "
-"απο τη χαμηλότερη Ιεράρχηση στην υψηλότερη. Η Ιεράρχηση είναι σημαντική όταν "
+"Το πεδίο Ακολουθίας χρησιμοποιείται για να κατατάξει τις γραμμές των φόρων "
+"απο τη χαμηλότερη Ακολουθία στην υψηλότερη. Η Ακολουθία είναι σημαντική όταν "
 "έχετε φόρους που περιέχεουν άλλους φόρους σαν υποκατηγορίες."
 
 #. module: account
@@ -4249,7 +4250,7 @@ msgstr "Δήλωση αρχείων"
 #. module: account
 #: view:ir.sequence:0
 msgid "Fiscal Year Sequences"
-msgstr "Ιεραρχήσεις Λογιστικής Χρήσης"
+msgstr "Ακολουθίες Λογιστικής Χρήσης"
 
 #. module: account
 #: view:account.model.line:0
@@ -4439,7 +4440,7 @@ msgstr "Φίλτρο στους Συνεργάτες"
 #. module: account
 #: field:account.tax,price_include:0
 msgid "Tax Included in Price"
-msgstr "Ο Φόρος Περιέχεται στην Τιμή"
+msgstr "Περιέχεται στην Τιμή"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_account_analytic_journal_tree2
@@ -4909,8 +4910,8 @@ msgid ""
 "Check this box if you want to use a different sequence for each created "
 "journal. Otherwise, all will use the same sequence."
 msgstr ""
-"Επιλέξτε αυτό αν επιθυμείτε τη χρήση διαφορετικής Ιεράρχησης για κάθε "
-"ημερολόγιο που δημιουργείται. Διαφορετικά, η ίδια Ιεράρχηση θα "
+"Επιλέξτε αυτό αν επιθυμείτε τη χρήση διαφορετικής Ακολουθίας για κάθε "
+"ημερολόγιο που δημιουργείται. Διαφορετικά, η ίδια Ακολουθία θα "
 "χρησιμοποιηθεί σε όλα."
 
 #. module: account
@@ -4934,7 +4935,7 @@ msgstr "Ακύρωση Συμφωνίας"
 #. module: account
 #: model:ir.model,name:account.model_fiscalyear_seq
 msgid "Maintains Invoice sequences with Fiscal Year"
-msgstr "Αντιστοιχεί τις ιεραρχίες Τιμολογίων με τη Λογιστική Χρήση"
+msgstr "Αντιστοιχεί τις Ακολουθίες Τιμολογίων με τη Λογιστική Χρήση"
 
 #. module: account
 #: selection:account.account.balance.report,checktype,display_account:0
@@ -5315,7 +5316,7 @@ msgstr "Σύνολο Εισπρακτέων"
 #: help:account.journal,invoice_sequence_id:0
 msgid "The sequence used for invoice numbers in this journal."
 msgstr ""
-"Η Ιεράρχηση που χρησιμοποιείται για την αρίθμηση των τιμολογίων σε αυτό το "
+"Η Ακολουθία που χρησιμοποιείται για την αρίθμηση των τιμολογίων σε αυτό το "
 "ημερολόγιο"
 
 #. module: account
@@ -5746,7 +5747,7 @@ msgstr ""
 #: wizard_field:account.fiscalyear.close.state,init,sure:0
 #: wizard_field:account.period.close,init,sure:0
 msgid "Check this box"
-msgstr "Check this box"
+msgstr "Επιλέξτε αυτό το πεδίο"
 
 #. module: account
 #: help:account.tax,price_include:0
