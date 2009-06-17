@@ -20,7 +20,7 @@
 #
 ##############################################################################
 
-import time
+import datetime
 
 from osv import fields, osv
 import pooler
@@ -100,7 +100,7 @@ class project_project(osv.osv):
                     and p.id in ('+ids+') group by p.id,p.name')
         for bug in cr.dictfetchall():
             result[bug['id']]['bugs'] = result[bug['id']]['bugs'] +  str(bug['count'])  +  ' Total'
-        
+
         cr.execute('select p.id, count(c.id),c.state,p.name from project_project as  p, \
                     crm_case as c, project_task as t where t.case_id=c.id  \
                     and p.id=t.project_id and p.section_feature_id=c.section_id \
@@ -114,7 +114,7 @@ class project_project(osv.osv):
                     and p.id in ('+ids+') group by p.id,p.name')
         for feature in cr.dictfetchall():
             result[feature['id']]['features'] = result[feature['id']]['features'] + str(feature['count']) + ' Total'
-                    
+
         cr.execute('select p.id, count(c.id),c.state,p.name from project_project as  p, \
                     crm_case as c, project_task as t where t.case_id=c.id \
                     and p.id=t.project_id and p.section_support_id=c.section_id \
@@ -128,7 +128,7 @@ class project_project(osv.osv):
                     and p.id in ('+ids+') group by p.id,p.name')
         for support in cr.dictfetchall():
             result[support['id']]['support_req'] = result[support['id']]['support_req'] + str(support['count']) + ' Total'
-        
+
         #==========================================================================================
 
         # Number of doument attach in project and its tasks
@@ -190,10 +190,12 @@ class project_project(osv.osv):
         if not ids:
             return {}
         res = {}
+        date_back = datetime.date.today() +  datetime.timedelta(days=-31)
+        date_back = date_back.strftime('%Y-%m-%d')
         for announce in self.browse(cr, uid, ids, context):
             cr.execute("""select c.id from crm_case c \
                         left join project_task t on t.case_id=c.id left join project_project p on %s = t.project_id \
-                       where c.section_id = p.section_annouce_id and c.date >= %s """, (announce.id, time.strftime('%Y-%m-01'),))
+                       where c.section_id = p.section_annouce_id and c.date >= %s """, (announce.id, date_back))
             list_announce = map(lambda x: x[0], cr.fetchall())
             res[announce.id] = list_announce
         return res
@@ -250,28 +252,31 @@ class crm_case(osv.osv):
                   'announce_ids': '',
                           }
 
+        date_back = datetime.date.today() +  datetime.timedelta(days=-31)
+        date_back = date_back.strftime('%Y-%m-%d')
+
         for case in self.browse(cr, uid, ids_cases, context):
             cr.execute("""select c.id from crm_case c \
                         left join  project_task t on c.id=t.case_id left join project_project p on p.id = t.project_id \
-                        where c.section_id = p.section_bug_id and c.date >= %s """, (time.strftime('%Y-%m-01'),))
+                        where c.section_id = p.section_bug_id and c.date >= %s """, (date_back,))
             list_case = map(lambda x: x[0], cr.fetchall())
             result[case.id]['bug_ids'] = list_case
 
             cr.execute("""select c.id from crm_case c \
                         left join  project_task t on c.id=t.case_id left join project_project p on p.id = t.project_id \
-                        where c.section_id = p.section_feature_id and c.date >= %s """, (time.strftime('%Y-%m-01'),))
+                        where c.section_id = p.section_feature_id and c.date >= %s """, (date_back,))
             list_case = map(lambda x: x[0], cr.fetchall())
             result[case.id]['feature_ids'] = list_case
 
             cr.execute("""select c.id from crm_case c \
                         left join  project_task t on c.id=t.case_id left join project_project p on p.id = t.project_id \
-                        where c.section_id = p.section_support_id and c.date >= %s """, (time.strftime('%Y-%m-01'),))
+                        where c.section_id = p.section_support_id and c.date >= %s """, (date_back,))
             list_case = map(lambda x: x[0], cr.fetchall())
             result[case.id]['support_ids'] = list_case
 
             cr.execute("""select c.id from crm_case c \
                         left join  project_task t on c.id=t.case_id left join project_project p on p.id = t.project_id \
-                        where c.section_id = p.section_annouce_id and c.date >= %s """, (time.strftime('%Y-%m-01'),))
+                        where c.section_id = p.section_annouce_id and c.date >= %s """, (date_back,))
             list_case = map(lambda x: x[0], cr.fetchall())
             result[case.id]['announce_ids'] = list_case
         return result

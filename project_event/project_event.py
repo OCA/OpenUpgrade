@@ -20,13 +20,14 @@
 #
 ##############################################################################
 
+import time
+
 from osv import fields, osv
 import pooler
 import tools
 from tools.config import config
 from tools.translate import _
 import netsvc
-import time
 
 class project_project(osv.osv):
     _inherit = "project.project"
@@ -36,9 +37,8 @@ class project_project(osv.osv):
     }
 
     def _log_event(self, cr, uid, project_id, values={}, context={}):
-        obj_project_event = self.pool.get('project.event')
         values['project_id'] = project_id
-        obj_project_event.create(cr, uid, values)
+        self.pool.get('project.event').create(cr, uid, values, context)
 
 project_project()
 
@@ -148,10 +148,15 @@ class project_task(osv.osv):
         cr.commit()
         task = self.browse(cr, uid, res, context=context)
         if task.project_id:
+            desc = ''' The Project Name: %s \n Task Summary: %s \n Assigned to: %s \n Deadline: %s \n Task Detail: %s \n
+                       Planned hours: %s \n Remaining hours: %s ''' \
+                       %(task.project_id.name, task.name, task.user_id.name, \
+                         task.date_deadline or '', task.description or '', \
+                         task.planned_hours or 0, task.planned_hours or 0)
             self.pool.get('project.project')._log_event(cr, uid, task.project_id.id, {
                                 'res_id' : task.id,
                                 'name' : task.name,
-                                'description' : task.description,
+                                'description' : desc,#task.description,
                                 'user_id': uid,
                                 'action' : 'create',
                                 'type' : 'task'})
