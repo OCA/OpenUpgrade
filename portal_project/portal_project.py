@@ -37,8 +37,6 @@ AVAILABLE_STATES = [
     ('pending','Pending')
 ]
 
-project = False
-
 def _project_get(self, cr, uid, context={}):
     obj = self.pool.get('project.project')
     ids = obj.search(cr, uid, [])
@@ -309,8 +307,6 @@ class crm_case(osv.osv):
         if context.has_key('project_id') and context['project_id']:
             project_id = context['project_id']
 
-        global project
-
         if context.has_key('section') and context['section']=='Bug Tracking' or context.has_key('case_search') and context['case_search']=='bug':
             cr.execute('select c.id from crm_case c left join project_task t on c.id=t.case_id left join project_project p on p.id=t.project_id where c.section_id=p.section_bug_id and p.id=%s',(project_id,))
             return map(lambda x: x[0], cr.fetchall())
@@ -417,39 +413,21 @@ class report_crm_case_bugs(osv.osv):
     }
 
     def init(self, cr):
-        global project
-        if project:
-            cr.execute("""
-                create or replace view report_crm_case_bugs as (
-                    select
-                        min(c.id) as id,
-                        c.user_id,
-                        t.project_id as project_id,
-                        c.section_id as section_id,
-                        count(*) as nbr,
-                        c.state
-                    from
-                        crm_case c left join project_task t on t.case_id = c.id
-                        left join project_project p on p.id = t.project_id
-                    where c.section_id = p.section_bug_id and p.id=%s
-                    group by c.user_id, t.project_id, c.section_id, c.state
-                )""",(project,))
-        else:
-            cr.execute("""
-                create or replace view report_crm_case_bugs as (
-                    select
-                        min(c.id) as id,
-                        c.user_id,
-                        t.project_id as project_id,
-                        c.section_id as section_id,
-                        count(*) as nbr,
-                        c.state
-                    from
-                        crm_case c left join project_task t on t.case_id = c.id
-                        left join project_project p on p.id = t.project_id
-                    where c.section_id = p.section_bug_id
-                    group by c.user_id, t.project_id, c.section_id, c.state
-                )""")
+        cr.execute("""
+            create or replace view report_crm_case_bugs as (
+                select
+                    min(c.id) as id,
+                    c.user_id,
+                    t.project_id as project_id,
+                    c.section_id as section_id,
+                    count(*) as nbr,
+                    c.state
+                from
+                    crm_case c left join project_task t on t.case_id = c.id
+                    left join project_project p on p.id = t.project_id
+                where c.section_id = p.section_bug_id
+                group by c.user_id, t.project_id, c.section_id, c.state
+            )""")
 
 
 report_crm_case_bugs()
@@ -463,34 +441,29 @@ class report_crm_case_features_user(osv.osv):
         'nbr': fields.integer('# of Cases', readonly=True),
         'user_id': fields.many2one('res.users', 'User', size=16, readonly=True),
     }
+
+    def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
+        if context is None:
+            context = {}
+        if context['project_id']:
+            cr.execute('select id from report_crm_case_features_user where project_id=%s',(context['project_id']))
+            return map(lambda x: x[0], cr.fetchall())
+        return super(report_crm_case_features_user, self).search(cr, uid, args, offset, limit, order, context, count)
+
+
     def init(self, cr):
-        global project
-        if project:
-            cr.execute("""
-                create or replace view report_crm_case_features_user as (
-                    select
-                        min(c.id) as id,
-                        c.user_id,
-                        count(*) as nbr
-                    from
-                        crm_case c left join project_task t on  t.case_id=c.id
-                        left join project_project p on p.id = t.project_id
-                    where c.section_id = p.section_feature_id and p.id=%s
-                    group by c.user_id, c.name
-                )""",(project,))
-        else:
-            cr.execute("""
-                create or replace view report_crm_case_features_user as (
-                    select
-                        min(c.id) as id,
-                        c.user_id,
-                        count(*) as nbr
-                    from
-                        crm_case c left join project_task t on  t.case_id=c.id
-                        left join project_project p on p.id = t.project_id
-                    where c.section_id = p.section_feature_id
-                    group by c.user_id, c.name
-                )""")
+        cr.execute("""
+            create or replace view report_crm_case_features_user as (
+                select
+                    min(c.id) as id,
+                    c.user_id,
+                    count(*) as nbr
+                from
+                    crm_case c left join project_task t on  t.case_id=c.id
+                    left join project_project p on p.id = t.project_id
+                where c.section_id = p.section_feature_id
+                group by c.user_id, c.name
+            )""")
 
 
 report_crm_case_features_user()
@@ -504,34 +477,28 @@ class report_crm_case_support_user(osv.osv):
         'nbr': fields.integer('# of Cases', readonly=True),
         'user_id': fields.many2one('res.users', 'User', size=16, readonly=True),
     }
+
+    def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
+        if context is None:
+            context = {}
+        if context['project_id']:
+            cr.execute('select id from report_crm_case_support_user where project_id=%s',(context['project_id']))
+            return map(lambda x: x[0], cr.fetchall())
+        return super(report_crm_case_support_user, self).search(cr, uid, args, offset, limit, order, context, count)
+
     def init(self, cr):
-        global project
-        if project:
-            cr.execute("""
-                create or replace view report_crm_case_support_user as (
-                    select
-                        min(c.id) as id,
-                        c.user_id,
-                        count(*) as nbr
-                    from
-                        crm_case c left join project_task t on c.id=t.case_id
-                        left join project_project p on p.id = t.project_id
-                    where c.section_id = p.section_support_id and p.id=%s
-                    group by c.user_id, c.name
-                )""",(project,))
-        else:
-            cr.execute("""
-                create or replace view report_crm_case_support_user as (
-                    select
-                        min(c.id) as id,
-                        c.user_id,
-                        count(*) as nbr
-                    from
-                        crm_case c left join project_task t on c.id=t.case_id
-                        left join project_project p on p.id = t.project_id
-                    where c.section_id = p.section_support_id
-                    group by c.user_id, c.name
-                )""")
+        cr.execute("""
+            create or replace view report_crm_case_support_user as (
+                select
+                    min(c.id) as id,
+                    c.user_id,
+                    count(*) as nbr
+                from
+                    crm_case c left join project_task t on c.id=t.case_id
+                    left join project_project p on p.id = t.project_id
+                where c.section_id = p.section_support_id
+                group by c.user_id, c.name
+            )""")
 
 
 report_crm_case_support_user()
@@ -545,37 +512,32 @@ class report_crm_case_announce_user(osv.osv):
         'name': fields.char('Description',size=64,required=True),
         'nbr': fields.integer('# of Cases', readonly=True),
         'user_id': fields.many2one('res.users', 'User', size=16, readonly=True),
+        'project_id': fields.many2one('project.project', 'Project')
     }
+
+    def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
+        if context is None:
+            context = {}
+        if context['project_id']:
+            cr.execute('select id from report_crm_case_announce_user where project_id=%s',(context['project_id']))
+            return map(lambda x: x[0], cr.fetchall())
+        return super(report_crm_case_announce_user, self).search(cr, uid, args, offset, limit, order, context, count)
+
     def init(self, cr):
-        global project
-        if project:
-            cr.execute("""
-                create or replace view report_crm_case_announce_user as (
-                    select
-                        min(c.id) as id,
-                        c.user_id,
-                        c.name as name,
-                        count(*) as nbr
-                    from
-                        crm_case c left join project_task t on t.case_id = c.id
-                        left join project_project p on p.id = t.project_id
-                    where c.section_id = p.section_annouce_id and p.id=%s
-                    group by c.user_id, c.name
-                )""",(project,))
-        else:
-            cr.execute("""
-                create or replace view report_crm_case_announce_user as (
-                    select
-                        min(c.id) as id,
-                        c.user_id,
-                        c.name as name,
-                        count(*) as nbr
-                    from
-                        crm_case c left join project_task t on t.case_id = c.id
-                        left join project_project p on p.id = t.project_id
-                    where c.section_id = p.section_annouce_id
-                    group by c.user_id, c.name
-                )""")
+        cr.execute("""
+            create or replace view report_crm_case_announce_user as (
+                select
+                    min(c.id) as id,
+                    c.user_id,
+                    c.name as name,
+                    count(*) as nbr,
+                    p.id as project_id
+                from
+                    crm_case c left join project_task t on t.case_id = c.id
+                    left join project_project p on p.id = t.project_id
+                where c.section_id = p.section_annouce_id
+                group by c.user_id, c.name, p.id
+            )""")
 
 
 report_crm_case_announce_user()
