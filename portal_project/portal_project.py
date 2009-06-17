@@ -306,7 +306,6 @@ class crm_case(osv.osv):
 
         if context.has_key('project_id') and context['project_id']:
             project_id = context['project_id']
-
         if context.has_key('section') and context['section']=='Bug Tracking' or context.has_key('case_search') and context['case_search']=='bug':
             cr.execute('select c.id from crm_case c left join project_task t on c.id=t.case_id left join project_project p on p.id=t.project_id where c.section_id=p.section_bug_id and p.id=%s',(project_id,))
             return map(lambda x: x[0], cr.fetchall())
@@ -401,7 +400,7 @@ account_analytic_account()
 
 class report_crm_case_bugs(osv.osv):
     _name = "report.crm.case.bugs"
-    _description = "Bugs by State"
+    _description = "Bugs by state & user"
     _auto = False
     _rec_name = 'user_id'
     _columns = {
@@ -411,6 +410,19 @@ class report_crm_case_bugs(osv.osv):
         'project_id' : fields.many2one('project.project', 'Project', size=64),
         'section_id' : fields.many2one('crm.case.section', 'Section', required=False)
     }
+    
+    def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
+        if context is None:
+            context = {}
+        if context.has_key('bugs_user') and context['bugs_user']=='bug_form' and context.has_key('project_id') and context['project_id']:
+            cr.execute('select id from report_crm_case_bugs where project_id=%s',(context['project_id']))
+            a = map(lambda x: x[0], cr.fetchall())
+            return a
+        cr.execute('select id from report_crm_case_bugs where project_id=%s',(context['project_id']))
+        a = map(lambda x: x[0], cr.fetchall())
+        return a
+
+        return super(report_crm_case_bugs, self).search(cr, uid, args, offset, limit, order, context, count)
 
     def init(self, cr):
         cr.execute("""
@@ -440,12 +452,13 @@ class report_crm_case_features_user(osv.osv):
     _columns = {
         'nbr': fields.integer('# of Cases', readonly=True),
         'user_id': fields.many2one('res.users', 'User', size=16, readonly=True),
+        'project_id': fields.many2one('project.project', 'Project')
     }
 
     def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
         if context is None:
             context = {}
-        if context['project_id']:
+        if context.has_key('project_id') and context['project_id']:
             cr.execute('select id from report_crm_case_features_user where project_id=%s',(context['project_id']))
             return map(lambda x: x[0], cr.fetchall())
         return super(report_crm_case_features_user, self).search(cr, uid, args, offset, limit, order, context, count)
@@ -457,12 +470,13 @@ class report_crm_case_features_user(osv.osv):
                 select
                     min(c.id) as id,
                     c.user_id,
-                    count(*) as nbr
+                    count(*) as nbr,
+                    p.id as project_id
                 from
                     crm_case c left join project_task t on  t.case_id=c.id
                     left join project_project p on p.id = t.project_id
                 where c.section_id = p.section_feature_id
-                group by c.user_id, c.name
+                group by c.user_id, c.name, p.id
             )""")
 
 
@@ -476,12 +490,13 @@ class report_crm_case_support_user(osv.osv):
     _columns = {
         'nbr': fields.integer('# of Cases', readonly=True),
         'user_id': fields.many2one('res.users', 'User', size=16, readonly=True),
+        'project_id': fields.many2one('project.project', 'Project')
     }
 
     def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
         if context is None:
             context = {}
-        if context['project_id']:
+        if context.has_key('project_id') and context['project_id']:
             cr.execute('select id from report_crm_case_support_user where project_id=%s',(context['project_id']))
             return map(lambda x: x[0], cr.fetchall())
         return super(report_crm_case_support_user, self).search(cr, uid, args, offset, limit, order, context, count)
@@ -492,12 +507,13 @@ class report_crm_case_support_user(osv.osv):
                 select
                     min(c.id) as id,
                     c.user_id,
-                    count(*) as nbr
+                    count(*) as nbr,
+                    p.id as project_id
                 from
                     crm_case c left join project_task t on c.id=t.case_id
                     left join project_project p on p.id = t.project_id
                 where c.section_id = p.section_support_id
-                group by c.user_id, c.name
+                group by c.user_id, c.name, p.id
             )""")
 
 
@@ -518,7 +534,7 @@ class report_crm_case_announce_user(osv.osv):
     def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
         if context is None:
             context = {}
-        if context['project_id']:
+        if context.has_key('project_id') and context['project_id']:
             cr.execute('select id from report_crm_case_announce_user where project_id=%s',(context['project_id']))
             return map(lambda x: x[0], cr.fetchall())
         return super(report_crm_case_announce_user, self).search(cr, uid, args, offset, limit, order, context, count)
