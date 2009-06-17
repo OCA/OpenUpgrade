@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2009-04-09 17:23+0000\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2009-05-15 22:58+0000\n"
 "Last-Translator: Makis Nicolaou <mark.nicolaou@gmail.com>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -16,6 +16,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2009-05-16 10:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
+
+#. module: account_report
+#: model:ir.module.module,shortdesc:account_report.module_meta_information
+msgid "Reporting for accounting"
+msgstr "Αναφορές για λογιστική"
 
 #. module: account_report
 #: field:account.report.history,name:0 selection:account.report.report,type:0
@@ -27,6 +32,11 @@ msgstr "Δείκτης"
 #: wizard_field:print.indicators.pdf,init,file:0
 msgid "Select a PDF File"
 msgstr "Επιλέξτε ένα Αρχείο PDF"
+
+#. module: account_report
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
 
 #. module: account_report
 #: view:account.report.report:0
@@ -144,11 +154,6 @@ msgstr "Οικονομικές Δηλώσεις"
 #: wizard_button:print.indicators,init,next:0
 msgid "Next"
 msgstr "Επόμενο"
-
-#. module: account_report
-#: model:ir.module.module,shortdesc:account_report.module_meta_information
-msgid "Reporting for accounting"
-msgstr "Αναφορές για λογιστική"
 
 #. module: account_report
 #: wizard_button:print.indicators,next,print:0
@@ -555,8 +560,3 @@ msgstr ""
 #: selection:account.report.report,type:0
 msgid "Fiscal Statement"
 msgstr "Λογιστική Δήλωση"
-
-#. module: account_report
-#: constraint:ir.actions.act_window:0
-msgid "Invalid model name in the action definition."
-msgstr ""

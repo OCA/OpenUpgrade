@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2009-06-13 02:09+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
@@ -16,6 +16,11 @@ msgstr ""
 "X-Poedit-Language: Greek\n"
 "X-Poedit-Country: GREECE\n"
 "X-Poedit-SourceCharset: utf-8\n"
+
+#. module: base_module_publish
+#: model:ir.module.module,shortdesc:base_module_publish.module_meta_information
+msgid "Module publisher"
+msgstr "Module publisher"
 
 #. module: base_module_publish
 #: wizard_field:base_module_publish.module_publish,step1,category:0
@@ -50,6 +55,7 @@ msgstr "Εισαγωγή"
 
 #. module: base_module_publish
 #: code:addons/base_module_publish/wizard/base_module_publish.py:0
+#: code:addons/base_module_publish/wizard/base_module_publish_all.py:0
 #: code:addons/base_module_publish/wizard/module_zip.py:0
 #, python-format
 msgid "Error"
@@ -65,11 +71,6 @@ msgstr "Δημοσίευση"
 #: wizard_field:base_module_publish.module_export,zip,module_filename:0
 msgid "Filename"
 msgstr "Όνομα Αρχείου"
-
-#. module: base_module_publish
-#: model:ir.module.module,shortdesc:base_module_publish.module_meta_information
-msgid "Module publisher"
-msgstr "Module publisher"
 
 #. module: base_module_publish
 #: wizard_field:base_module_publish.module_publish,step1,demourl:0
@@ -194,6 +195,7 @@ msgstr "Password"
 
 #. module: base_module_publish
 #: code:addons/base_module_publish/wizard/base_module_publish.py:0
+#: code:addons/base_module_publish/wizard/base_module_publish_all.py:0
 #, python-format
 msgid "Login failed!"
 msgstr "Αποτυχία σύνδεσης!"

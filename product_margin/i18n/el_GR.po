@@ -1,12 +1,12 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* product_margin
+# 	* product_margin
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
 "PO-Revision-Date: 2009-06-15 03:38+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
@@ -29,8 +29,11 @@ msgstr "Από"
 
 #. module: product_margin
 #: help:product.product,sale_expected:0
-msgid "Sum of Multification of Sale Catalog price and quantity of Customer Invoices"
-msgstr "Άθροισμα των Γινομένων του Τιμοκαταλόγου Πωλήσεων και των ποσοτήτων στα Τιμολόγια Πώλησης"
+msgid ""
+"Sum of Multification of Sale Catalog price and quantity of Customer Invoices"
+msgstr ""
+"Άθροισμα των Γινομένων του Τιμοκαταλόγου Πωλήσεων και των ποσοτήτων στα "
+"Τιμολόγια Πώλησης"
 
 #. module: product_margin
 #: wizard_field:product.margins,init,to_date:0
@@ -71,8 +74,11 @@ msgstr "Περιθώρια στα Προϊόντα"
 
 #. module: product_margin
 #: help:product.product,total_cost:0
-msgid "Sum of Multification of Invoice price and quantity of Supplier Invoices "
-msgstr "Άθροισμα των Γινομένων των Τιμολογημένων τιμών και των ποσοτήτων στα Τιμολόγια Αγοράς"
+msgid ""
+"Sum of Multification of Invoice price and quantity of Supplier Invoices "
+msgstr ""
+"Άθροισμα των Γινομένων των Τιμολογημένων τιμών και των ποσοτήτων στα "
+"Τιμολόγια Αγοράς"
 
 #. module: product_margin
 #: view:product.product:0
@@ -108,11 +114,12 @@ msgstr "Άθροισμα των ποσοτήτων στα Τιμολόγια Α�
 #. module: product_margin
 #: help:product.product,normal_cost:0
 msgid "Sum of Multification of Cost price and quantity of Supplier Invoices"
-msgstr "Άθροισμα των Γινομένων των τιμών Κόστους και των ποσοτήτων στα Τιμολόγια Αγοράς"
+msgstr ""
+"Άθροισμα των Γινομένων των τιμών Κόστους και των ποσοτήτων στα Τιμολόγια "
+"Αγοράς"
 
 #. module: product_margin
-#: view:product.product:0
-#: field:product.product,turnover:0
+#: view:product.product:0 field:product.product,turnover:0
 msgid "Turnover"
 msgstr "Ανατροπή"
 
@@ -123,8 +130,7 @@ msgid "# Invoiced"
 msgstr "# Τιμολογημένων"
 
 #. module: product_margin
-#: view:product.product:0
-#: field:product.product,total_cost:0
+#: view:product.product:0 field:product.product,total_cost:0
 msgid "Total Cost"
 msgstr "Σύνολο Κόστους"
 
@@ -157,7 +163,9 @@ msgstr "#Αγορών"
 #. module: product_margin
 #: help:product.product,turnover:0
 msgid "Sum of Multification of Invoice price and quantity of Customer Invoices"
-msgstr "Άθροισμα των Γινομένων των Τιμολογημένων τιμών και των ποσοτήτων στα Τιμολόγια Πώλησης"
+msgstr ""
+"Άθροισμα των Γινομένων των Τιμολογημένων τιμών και των ποσοτήτων στα "
+"Τιμολόγια Πώλησης"
 
 #. module: product_margin
 #: help:product.product,expected_margin_rate:0
@@ -186,8 +194,7 @@ msgid "Normal Cost - Total Cost"
 msgstr "(Κανονικό Κόστος) - (Συνολικό Κόστος)"
 
 #. module: product_margin
-#: view:product.product:0
-#: field:product.product,sales_gap:0
+#: view:product.product:0 field:product.product,sales_gap:0
 msgid "Sales Gap"
 msgstr "Κενό Πωλήσεων"
 
@@ -233,11 +240,9 @@ msgid "Sales"
 msgstr "Πωλήσεις"
 
 #. module: product_margin
-#: code:addons/product_margin/wizard/wizard_product_margin.py:0
 #: model:ir.actions.wizard,name:product_margin.action_open_margin
 #: model:ir.ui.menu,name:product_margin.menu_action_product_margin
 #: view:product.product:0
-#, python-format
 msgid "Product Margins"
 msgstr "Περιθώρια Προϊόντων"
 
@@ -275,4 +280,3 @@ msgstr "Άθροισμα Ποσοτήτων στα Τιμολόγια Πελάτ
 #: wizard_view:product.margins,init:0
 msgid "View Stock of Products"
 msgstr "Προβολή Αποθεμάτων Προϊόντων"
-

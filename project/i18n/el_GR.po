@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
 "PO-Revision-Date: 2009-06-15 03:01+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
@@ -33,16 +33,6 @@ msgid "New title of the task delegated to the user."
 msgstr "Νέος τίτλος της εργασίας που ορίστηκε στο χρήστη."
 
 #. module: project
-#: code:addons/project/wizard/close_task.py:0
-#, python-format
-msgid ""
-"Couldn't send mail because the contact for this task (%s) has no email "
-"address!"
-msgstr ""
-"Το mail δεν μπόρεσε να σταλλεί διότι η επαφή για την εργασία (%s) δεν έχει "
-"διεύθυνση email!"
-
-#. module: project
 #: view:config.compute.remaining:0
 msgid "Change Remaining Hours"
 msgstr "Αλλαγή Εναπομείναντων Ωρών"
@@ -58,20 +48,14 @@ msgid "Project Tasks"
 msgstr "Εργασίες"
 
 #. module: project
-#: code:addons/project/project.py:0
-#, python-format
-msgid "Operation Not Permitted !"
-msgstr "Μη Επιτρεπτή Λειτουργία!"
-
-#. module: project
 #: model:process.transition,name:project.process_transition_opendonetask0
 msgid "Open Done Task"
 msgstr "Άνοιγμα Ολοκληρωμένης Εργασίας"
 
 #. module: project
-#: view:project.task:0
-msgid "Delegations"
-msgstr "Αρμοδιότητες"
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
 
 #. module: project
 #: wizard_field:project.task.delegate,init,planned_hours_me:0
@@ -144,23 +128,14 @@ msgid "User you want to delegate this task to."
 msgstr "Ο χρήστης που επιθυμείτε να αναθέσετε αυτή την εργασία."
 
 #. module: project
-#: help:project.project,members:0
-msgid ""
-"Project's member. Not used in any computation, just for information purpose."
+#: model:ir.actions.wizard,name:project.wizard_attachment_task
+msgid "All Attachments"
 msgstr ""
-"Μέλος του έργου. Μόνο για πληροφόρηση, δε χρησιμοποιείται σε κανέναν "
-"υπολογισμό."
 
 #. module: project
 #: model:process.transition.action,name:project.process_transition_action_openpendingtask0
 msgid "Set pending"
 msgstr "Ορισμός ως εκκρεμότητα"
-
-#. module: project
-#: model:ir.actions.act_window,name:project.action_view_task7
-#: model:ir.ui.menu,name:project.menu_action_view_task7
-msgid "Unassigned Tasks"
-msgstr "Μη Ανατεθειμένες Εργασίες"
 
 #. module: project
 #: model:process.node,note:project.process_node_drafttask0
@@ -246,13 +221,8 @@ msgid "Days"
 msgstr "Ημέρες"
 
 #. module: project
-#: model:project.task.type,name:project.project_tt_analysis
-msgid "Analysis"
-msgstr "Ανάλυση"
-
-#. module: project
 #: model:ir.model,name:project.model_project_project view:project.project:0
-#: field:project.task,project_id:0
+#: field:project.task,project_id:0 field:project.task.work,project_id:0
 #: model:res.request.link,name:project.req_link_project
 msgid "Project"
 msgstr "Έργο"
@@ -300,16 +270,6 @@ msgid "Delegates tasks to the other user"
 msgstr "Αναθέτει εργασίες στον άλλο χρήστη."
 
 #. module: project
-#: code:addons/project/project.py:0
-#, python-format
-msgid ""
-"A new project has been created !\n"
-"We suggest you to close this one and work on this new project."
-msgstr ""
-"Ένα νέο έργο δημιουργήθηκε!\n"
-"Σας προτείνουμε να κλείσετε αυτό και να εργαστείτε στο νέο."
-
-#. module: project
 #: help:project.task,effective_hours:0
 msgid "Computed using the sum of the task work done."
 msgstr "Υπολογισμένο βάσει της συνολικής εργασίας που έχει γίνει."
@@ -324,7 +284,7 @@ msgstr ""
 "σύστημα θα του προτείνει να ενημερώνει τον πελάτη, μέσω email."
 
 #. module: project
-#: help:project.task.delegate,init,include_info:0
+#: help:project.task.delegate,init,new_task_description:0
 msgid "Reinclude the description of the task in the task of the user."
 msgstr "Να συμπεριληφθεί ξανά η περιγραφή στις Εργασίες του χρήστη."
 
@@ -377,14 +337,17 @@ msgid "Reset as Project"
 msgstr "Επαναφορά σαν Έργο"
 
 #. module: project
-#: selection:project.project,state:0
-msgid "Template"
-msgstr "Πρότυπο"
+#: view:project.task:0
+msgid "Delegations"
+msgstr "Αρμοδιότητες"
 
 #. module: project
-#: wizard_button:project.task.close,mail_ask,mail_send:0
-msgid "Send Message"
-msgstr "Αποστολή Μηνύματος"
+#: help:project.project,members:0
+msgid ""
+"Project's member. Not used in any computation, just for information purpose."
+msgstr ""
+"Μέλος του έργου. Μόνο για πληροφόρηση, δε χρησιμοποιείται σε κανέναν "
+"υπολογισμό."
 
 #. module: project
 #: view:project.project:0
@@ -411,6 +374,12 @@ msgstr "Ανατεθειμένη Εργασία"
 #: help:project.project,progress_rate:0
 msgid "Percent of tasks closed according to the total of tasks todo."
 msgstr "Ποσοστό κλεισμένων εργασιών σε σχέση με το σύνολο."
+
+#. module: project
+#: wizard_field:project.task.delegate,init,new_task_description:0
+#, fuzzy
+msgid "New Task Description"
+msgstr "Περιγραφή"
 
 #. module: project
 #: help:project.project,notes:0
@@ -472,7 +441,7 @@ msgid "Planned Time"
 msgstr "Προγραμματισμένος Χρόνος"
 
 #. module: project
-#: model:ir.model,name:project.model_project_task_work
+#: model:ir.model,name:project.model_project_task_work view:project.task:0
 #: view:project.task.work:0
 #, fuzzy
 msgid "Task Work"
@@ -490,17 +459,10 @@ msgid "My Pending Tasks"
 msgstr "Εκκρεμείς Εργασίες μου"
 
 #. module: project
-#: model:ir.actions.act_window,name:project.act_project_project_2_project_task_opened
-#: model:ir.actions.act_window,name:project.action_view_task6_prog
-#: model:ir.ui.menu,name:project.menu_action_view_task6_prog
-msgid "Tasks in Progress"
-msgstr "Εργασίες σε Εξέλιξη"
-
-#. module: project
-#: code:addons/project/project.py:0
-#, python-format
-msgid "Operation Done"
-msgstr "Λειτουργία Ολοκληρώθηκε"
+#: model:ir.actions.act_window,name:project.action_view_task7
+#: model:ir.ui.menu,name:project.menu_action_view_task7
+msgid "Unassigned Tasks"
+msgstr "Μη Ανατεθειμένες Εργασίες"
 
 #. module: project
 #: wizard_field:project.task.delegate,init,name:0
@@ -518,6 +480,11 @@ msgstr "Τα Έργα μου"
 #: help:project.task.delegate,init,planned_hours:0
 msgid "Estimated time to close this task by the delegated user."
 msgstr "Εκτίμηση του χρόνου κλεισίματος της εργασίας από τον αρμόδιο χρήστη."
+
+#. module: project
+#: selection:project.project,state:0
+msgid "Template"
+msgstr "Πρότυπο"
 
 #. module: project
 #: model:ir.ui.menu,name:project.menu_definitions view:res.company:0
@@ -722,9 +689,14 @@ msgid "Project Time Unit"
 msgstr "Μονάδα Χρόνου Έργου"
 
 #. module: project
-#: field:project.project,name:0
+#: field:project.project,complete_name:0 field:project.project,name:0
 msgid "Project Name"
 msgstr "Όνομα Έργου"
+
+#. module: project
+#: wizard_button:project.task.close,mail_ask,mail_send:0
+msgid "Send Message"
+msgstr "Αποστολή Μηνύματος"
 
 #. module: project
 #: field:project.project,total_hours:0
@@ -732,24 +704,16 @@ msgid "Total Time"
 msgstr "Σύνολο Χρόνου"
 
 #. module: project
-#: wizard_field:project.task.delegate,init,include_info:0
-msgid "Copy Description"
-msgstr "Αντιγραφή Περιγραφής"
-
-#. module: project
-#: field:project.project,active:0 field:project.task,active:0
+#: field:project.task,active:0
 msgid "Active"
 msgstr "Ενεργό"
 
 #. module: project
-#: model:project.task.type,name:project.project_tt_bug
-msgid "Bug"
-msgstr "Σφάλμα"
-
-#. module: project
-#: model:project.task.type,name:project.project_tt_quote
-msgid "Quotation"
-msgstr "Προσφορά"
+#: model:ir.actions.act_window,name:project.act_project_project_2_project_task_opened
+#: model:ir.actions.act_window,name:project.action_view_task6_prog
+#: model:ir.ui.menu,name:project.menu_action_view_task6_prog
+msgid "Tasks in Progress"
+msgstr "Εργασίες σε Εξέλιξη"
 
 #. module: project
 #: view:project.task:0
@@ -804,12 +768,6 @@ msgstr ""
 "μην ξεχάσετε να ρυθμίσετε τη σωστή μονάδα μέτρησης στους υπαλλήλους."
 
 #. module: project
-#: code:addons/project/wizard/close_task.py:0
-#, python-format
-msgid "Error"
-msgstr "Σφάλμα"
-
-#. module: project
 #: model:ir.actions.act_window,name:project.act_res_users_2_project_project
 msgid "User's projects"
 msgstr "Έργα Χρήστη"
@@ -825,16 +783,14 @@ msgid "Urgent"
 msgstr "Επείγον"
 
 #. module: project
-#: code:addons/project/wizard/close_task.py:0
-#, python-format
-msgid "Couldn't send mail because your email address is not configured!"
-msgstr ""
-"Δεν έχετε ρυθμίσει τη διεύθυνση email  σας! Αδύνατη η αποστολή μηνύματος."
-
-#. module: project
 #: wizard_view:project.task.delegate,init:0
 msgid "Delegate this task to a user"
 msgstr "Ανάθεση Εργασίας σε χρήστη."
+
+#. module: project
+#: field:project.task,delegated_user_id:0
+msgid "Delegated To"
+msgstr ""
 
 #. module: project
 #: field:project.task,date_close:0
@@ -946,15 +902,6 @@ msgid "Open"
 msgstr "Άνοιγμα"
 
 #. module: project
-#: code:addons/project/project.py:0
-#, python-format
-msgid ""
-"You can not delete a project with tasks. I suggest you to deactivate it."
-msgstr ""
-"Έργα που περιέχουν Εργασίες δεν μπορούν να διαγραφούν. Μπορούν, όμως, να "
-"απενεργοποιηθούν."
-
-#. module: project
 #: view:project.project:0
 msgid "ID: %(task_id)s"
 msgstr "ID: %(task_id)s"
@@ -1005,11 +952,6 @@ msgstr "Ενημέρωση Υπευθύνου"
 #: model:ir.model,name:project.model_config_compute_remaining
 msgid "config.compute.remaining"
 msgstr "config.compute.remaining"
-
-#. module: project
-#: wizard_button:project.task.close,mail_ask,close:0
-msgid "Quiet close"
-msgstr "Βουβό κλείσιμο"
 
 #. module: project
 #: help:project.task.delegate,init,prefix:0
@@ -1083,11 +1025,6 @@ msgstr ""
 "μια Εργασία ολοκληρώνεται από την ομάδα."
 
 #. module: project
-#: model:project.task.type,name:project.project_tt_feature
-msgid "New Feature"
-msgstr "Νέα Λειτουργία"
-
-#. module: project
 #: model:process.node,note:project.process_node_opentask0
 msgid "Encode your working hours."
 msgstr "Κωδικοποίηση ωρών εργασίας."
@@ -1148,9 +1085,9 @@ msgid "Validation State"
 msgstr "Στάδιο Επικύρωσης"
 
 #. module: project
-#: constraint:project.project:0
-msgid "Error ! You can not create recursive projects."
-msgstr "Σφάλμα! Υπάρχει ήδη Έργο με αυτή την περιγραφή."
+#: wizard_button:project.task.close,mail_ask,close:0
+msgid "Quiet close"
+msgstr "Βουβό κλείσιμο"
 
 #. module: project
 #: field:project.task,date_deadline:0
@@ -1193,23 +1130,53 @@ msgstr "Υποσέλιδο Mail"
 msgid "Running projects"
 msgstr "Έργα σε εξέλιξη"
 
-#. module: project
-#: constraint:ir.actions.act_window:0
-msgid "Invalid model name in the action definition."
-msgstr ""
+#~ msgid ""
+#~ "Couldn't send mail because the contact for this task (%s) has no email "
+#~ "address!"
+#~ msgstr ""
+#~ "Το mail δεν μπόρεσε να σταλλεί διότι η επαφή για την εργασία (%s) δεν "
+#~ "έχει διεύθυνση email!"
 
-#. module: project
-#: model:ir.actions.wizard,name:project.wizard_attachment_task
-msgid "All Attachments"
-msgstr ""
+#~ msgid "Operation Not Permitted !"
+#~ msgstr "Μη Επιτρεπτή Λειτουργία!"
 
-#. module: project
-#: wizard_field:project.task.delegate,init,new_task_description:0
-#, fuzzy
-msgid "New Task Description"
-msgstr "Περιγραφή"
+#~ msgid "Analysis"
+#~ msgstr "Ανάλυση"
 
-#. module: project
-#: field:project.task,delegated_user_id:0
-msgid "Delegated To"
-msgstr ""
+#~ msgid ""
+#~ "A new project has been created !\n"
+#~ "We suggest you to close this one and work on this new project."
+#~ msgstr ""
+#~ "Ένα νέο έργο δημιουργήθηκε!\n"
+#~ "Σας προτείνουμε να κλείσετε αυτό και να εργαστείτε στο νέο."
+
+#~ msgid "Operation Done"
+#~ msgstr "Λειτουργία Ολοκληρώθηκε"
+
+#~ msgid "Copy Description"
+#~ msgstr "Αντιγραφή Περιγραφής"
+
+#~ msgid "Bug"
+#~ msgstr "Σφάλμα"
+
+#~ msgid "Quotation"
+#~ msgstr "Προσφορά"
+
+#~ msgid "Error"
+#~ msgstr "Σφάλμα"
+
+#~ msgid "Couldn't send mail because your email address is not configured!"
+#~ msgstr ""
+#~ "Δεν έχετε ρυθμίσει τη διεύθυνση email  σας! Αδύνατη η αποστολή μηνύματος."
+
+#~ msgid ""
+#~ "You can not delete a project with tasks. I suggest you to deactivate it."
+#~ msgstr ""
+#~ "Έργα που περιέχουν Εργασίες δεν μπορούν να διαγραφούν. Μπορούν, όμως, να "
+#~ "απενεργοποιηθούν."
+
+#~ msgid "New Feature"
+#~ msgstr "Νέα Λειτουργία"
+
+#~ msgid "Error ! You can not create recursive projects."
+#~ msgstr "Σφάλμα! Υπάρχει ήδη Έργο με αυτή την περιγραφή."

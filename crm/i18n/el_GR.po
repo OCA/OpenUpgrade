@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
 "PO-Revision-Date: 2009-06-15 02:45+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
@@ -46,14 +46,14 @@ msgid "All Cases"
 msgstr "Όλα τα Θέματα"
 
 #. module: crm
+#: wizard_view:crm.case.section.menu,init:0
+msgid "this wizard will create all sub-menus, within the selected menu."
+msgstr ""
+
+#. module: crm
 #: field:crm.case.rule,act_remind_partner:0
 msgid "Remind Partner"
 msgstr "Υπενθύμιση Συνεργάτη"
-
-#. module: crm
-#: wizard_view:crm.case.section.menu,design_menu:0
-msgid "Update The Proposed Menus To Be Created"
-msgstr "Ενημέρωση Προταθέντων Μενού για Δημιουργία"
 
 #. module: crm
 #: wizard_view:crm.case.section.menu,init:0
@@ -65,6 +65,11 @@ msgstr "Βασικές Πληροφορίες"
 #: field:crm.segmentation,categ_id:0
 msgid "Partner Category"
 msgstr "Κατηγορία Συνεργάτη"
+
+#. module: crm
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
 
 #. module: crm
 #: field:crm.segmentation,sales_purchase_active:0
@@ -86,6 +91,11 @@ msgstr ""
 "Προεπιλεγμένη Προδιάθεση για περιόδους προηγούμενες του υπολογισμού 'Μέγ. "
 "Διαστήματος'. Αυτή είναι η Προδιάθεση με την οποία ξεκινάει κάθε συνεργάτης "
 "που δεν έχει συμβάντα."
+
+#. module: crm
+#: selection:crm.segmentation,state:0
+msgid "Running"
+msgstr "Σε κίνηση"
 
 #. module: crm
 #: field:crm.case.history,email:0
@@ -114,12 +124,6 @@ msgid "Button Pressed"
 msgstr "Πατημένο"
 
 #. module: crm
-#: code:addons/crm/crm.py:0
-#, python-format
-msgid "Warning !"
-msgstr "Προσοχή!"
-
-#. module: crm
 #: view:crm.case:0
 msgid "Planned costs"
 msgstr "Προγραμματισμένο κόστος"
@@ -138,6 +142,11 @@ msgstr "Περιγραφή Καταμερισμού"
 #: view:crm.case.rule:0
 msgid "%(case_user)s = Responsible name"
 msgstr "%(case_user) = Όνομα υπευθύνου"
+
+#. module: crm
+#: field:crm.case.section,allow_unlink:0
+msgid "Allow Delete"
+msgstr ""
 
 #. module: crm
 #: field:crm.case.rule,act_email_cc:0
@@ -178,16 +187,6 @@ msgstr ""
 "καταμερισμού."
 
 #. module: crm
-#: code:addons/crm/crm.py:0
-#, python-format
-msgid ""
-"You can not escalate this case.\n"
-"You are already at the top level."
-msgstr ""
-"Δεν μπορείτε να αναβαθμίσετε αυτό το θέμα.\n"
-"Βρίσκεται ήδη στο ανώτατο επίπεδο."
-
-#. module: crm
 #: field:crm.case,email_cc:0
 msgid "Watchers Emails"
 msgstr "Emails Κοινοποιήσεων"
@@ -217,12 +216,6 @@ msgstr "Προγραμματισμένο Κόστος"
 #: model:ir.model,name:crm.model_crm_case_history
 msgid "Case history"
 msgstr "Ιστορικό θέματος"
-
-#. module: crm
-#: code:addons/crm/crm.py:0
-#, python-format
-msgid "Error!"
-msgstr "Σφάλμα!"
 
 #. module: crm
 #: field:crm.case.rule,act_state:0
@@ -269,21 +262,6 @@ msgstr "Σημείωση"
 #: field:crm.case.rule,name:0 field:crm.segmentation.line,name:0
 msgid "Rule Name"
 msgstr "Όνομα Κανόνα"
-
-#. module: crm
-#: help:crm.segmentation,som_interval:0
-msgid ""
-"A period is the average number of days between two cycle of sale or purchase "
-"for this segmentation. It's mainly used to detect if a partner has not "
-"purchased or buy for a too long time, so we suppose that his state of mind "
-"has decreased because he probably bought goods to another supplier. Use this "
-"functionnality for recurring businesses."
-msgstr ""
-"Μια περίοδος είναι ο μέσος αριθμός ημερών ανάμεσα σε δύο κύκλους πωλήσεων ή "
-"αγορών στην κατηγορία. Χρησιμοποιείται κυρίως για να ανιχνεύσουμε αν ένας "
-"συνεργάτης έχει καιρό να συνεργαστεί μαζί μας. Έτσι διαπιστώνουμε αν η "
-"προδιάθεσή του έχει μειωθεί. Χρησιμοποιείστε αυτή τη λειτουργία για "
-"τακτικούς πελάτες."
 
 #. module: crm
 #: help:crm.case.rule,act_remind_partner:0
@@ -335,11 +313,9 @@ msgid "Operator"
 msgstr "Τηλεφωνητής"
 
 #. module: crm
-#: code:addons/crm/crm.py:0 selection:crm.case,state:0
-#: selection:crm.case.rule,act_state:0
+#: selection:crm.case,state:0 selection:crm.case.rule,act_state:0
 #: selection:crm.case.rule,trg_state_from:0
 #: selection:crm.case.rule,trg_state_to:0
-#, python-format
 msgid "Draft"
 msgstr "Πρόχειρη"
 
@@ -456,12 +432,6 @@ msgid "Invalid XML for View Architecture!"
 msgstr "Άκυρο XML για Αρχιτεκτονική Όψης!"
 
 #. module: crm
-#: code:addons/crm/crm.py:0
-#, python-format
-msgid "Send"
-msgstr "Αποστολή"
-
-#. module: crm
 #: view:crm.case.rule:0
 msgid "Special Keywords to Be Used in The Body"
 msgstr "Ειδικές Λέξεις-Κλειδιά για Χρήση στο Κυρίως Κείμενο"
@@ -493,9 +463,9 @@ msgid "Your action"
 msgstr "Η ενέργειά σας"
 
 #. module: crm
-#: view:crm.segmentation:0
-msgid "Excluded Answers :"
-msgstr "Εξαιρούμενες Απαντήσεις:"
+#: field:crm.case.rule,act_mail_to_watchers:0
+msgid "Mail to watchers (Cc)"
+msgstr "Cc Mail"
 
 #. module: crm
 #: model:ir.actions.act_window,name:crm.crm_case_section_act
@@ -531,25 +501,14 @@ msgid "E-Mail Reminders (includes the content of the case)"
 msgstr "Υπενθυμίσεις E-Mail (συμπεριλαμβάνει τα περιεχόμενα του θέματος)"
 
 #. module: crm
-#: view:crm.segmentation:0
-msgid "Profiling"
-msgstr "Ανάθεση Προφίλ"
-
-#. module: crm
-#: code:addons/crm/crm.py:0
-#, python-format
-msgid "Error !"
-msgstr "Σφάλμα!"
-
-#. module: crm
 #: view:crm.case.rule:0
 msgid "Fields to Change"
 msgstr "Πεδία για Αλλαγή"
 
 #. module: crm
-#: selection:crm.case.rule,trg_date_type:0
-msgid "Creation Date"
-msgstr "Ημερ/νία Δημιουργίας"
+#: model:ir.ui.menu,name:crm.menu_crm_case_history-act_main
+msgid "Cases Histories"
+msgstr "Ιστορικά Θεμάτων"
 
 #. module: crm
 #: model:ir.actions.act_window,name:crm.crm_case_categ0-act_my
@@ -667,11 +626,6 @@ msgid "Mail to responsible"
 msgstr "Αποστολή Mail στον υπεύθυνο"
 
 #. module: crm
-#: view:crm.segmentation:0
-msgid "Profiling Options"
-msgstr "Επιλογές Ανάθεσης Προφίλ"
-
-#. module: crm
 #: wizard_field:crm.case.section.menu,design_menu,menu6:0
 #: wizard_field:crm.case.section.menu,design_menu,menu6_option:0
 msgid "My Pending "
@@ -735,6 +689,12 @@ msgstr "Μέγιστη ID Συνεργάτη που επεξεργάστηκε"
 
 #. module: crm
 #: view:crm.case.rule:0
+#, fuzzy
+msgid "Condition on Communication History"
+msgstr "Ιστορικό Επικοινωνίας του Θέματος"
+
+#. module: crm
+#: view:crm.case.rule:0
 msgid "%(email_from)s = Partner email"
 msgstr "%(email_from)s = Εmail συνεργλάτη"
 
@@ -761,19 +721,6 @@ msgstr "Μέθοδος Κλήσης Αντικειμένου"
 #: view:crm.segmentation:0 field:crm.segmentation.line,segmentation_id:0
 msgid "Segmentation"
 msgstr "Καταμερισμός"
-
-#. module: crm
-#: code:addons/crm/crm.py:0
-#, python-format
-msgid "You can not delete this case. You should better cancel it."
-msgstr ""
-"Δεν μπορείτε να διαγράψετε αυτό το θέμα. Προσπαθείστε να την ακυρώσετε."
-
-#. module: crm
-#: code:addons/crm/crm.py:0
-#, python-format
-msgid "done"
-msgstr "ολοκληρώθηκε"
 
 #. module: crm
 #: field:crm.segmentation,som_interval:0
@@ -812,9 +759,9 @@ msgid "Reference 2"
 msgstr "Παραπομπή 2"
 
 #. module: crm
-#: field:crm.segmentation.line,operator:0
-msgid "Mandatory / Optionnal"
-msgstr "Υποχρεωτικό / Προαιρετικό"
+#: view:crm.segmentation:0
+msgid "Sales Purchase"
+msgstr "Αγορά Πωλήσεων"
 
 #. module: crm
 #: field:crm.case,categ_id:0 field:crm.case.rule,trg_categ_id:0
@@ -836,8 +783,7 @@ msgstr ""
 "επικοινωνίας ανάμεσα στους χρήστες και το συνεργάτη."
 
 #. module: crm
-#: code:addons/crm/crm.py:0 view:crm.case:0
-#, python-format
+#: view:crm.case:0
 msgid "Historize"
 msgstr "Καταχώρηση στο Ιστορικό"
 
@@ -946,13 +892,18 @@ msgid "Open Cases"
 msgstr "Ανοικτά Θέματα"
 
 #. module: crm
-#: code:addons/crm/crm.py:0 view:crm.case:0 selection:crm.case,state:0
+#: view:crm.case:0 selection:crm.case,state:0
 #: selection:crm.case.rule,act_state:0
 #: selection:crm.case.rule,trg_state_from:0
 #: selection:crm.case.rule,trg_state_to:0
-#, python-format
 msgid "Pending"
 msgstr "Εκκρεμμή"
+
+#. module: crm
+#: wizard_view:crm.case.section.menu,init:0
+msgid ""
+"You may want to create a new parent menu to put all the created menus in."
+msgstr ""
 
 #. module: crm
 #: field:crm.case,state:0
@@ -975,6 +926,22 @@ msgid "Execution Status"
 msgstr "Στάδιο Εκτέλεσης"
 
 #. module: crm
+#: help:crm.segmentation,som_interval:0
+#, fuzzy
+msgid ""
+"A period is the average number of days between two cycle of sale or purchase "
+"for this segmentation. It's mainly used to detect if a partner has not "
+"purchased or buy for a too long time, so we suppose that his state of mind "
+"has decreased because he probably bought goods to another supplier. Use this "
+"functionality for recurring businesses."
+msgstr ""
+"Μια περίοδος είναι ο μέσος αριθμός ημερών ανάμεσα σε δύο κύκλους πωλήσεων ή "
+"αγορών στην κατηγορία. Χρησιμοποιείται κυρίως για να ανιχνεύσουμε αν ένας "
+"συνεργάτης έχει καιρό να συνεργαστεί μαζί μας. Έτσι διαπιστώνουμε αν η "
+"προδιάθεσή του έχει μειωθεί. Χρησιμοποιείστε αυτή τη λειτουργία για "
+"τακτικούς πελάτες."
+
+#. module: crm
 #: selection:crm.case,priority:0 selection:crm.case.rule,act_priority:0
 #: selection:crm.case.rule,trg_priority_from:0
 #: selection:crm.case.rule,trg_priority_to:0
@@ -982,20 +949,10 @@ msgid "Normal"
 msgstr "Κανονικά"
 
 #. module: crm
-#: code:addons/crm/crm.py:0 view:crm.case:0
-#: selection:crm.case.rule,trg_state_from:0
+#: view:crm.case:0 selection:crm.case.rule,trg_state_from:0
 #: selection:crm.case.rule,trg_state_to:0
-#, python-format
 msgid "Escalate"
 msgstr "Αναβάθμιση Θέματος"
-
-#. module: crm
-#: code:addons/crm/crm.py:0
-#, python-format
-msgid "You must put a Partner eMail to use this action!"
-msgstr ""
-"Πρέπει να συμπληρώσετε ένα email συνεργάτη για να χρησιμοποιήσετε αυτή τη "
-"λειτουργία!"
 
 #. module: crm
 #: model:ir.module.module,shortdesc:crm.module_meta_information
@@ -1023,12 +980,6 @@ msgid "Planned Revenue"
 msgstr "Προγραμματισμένα Έσοδα"
 
 #. module: crm
-#: code:addons/crm/crm.py:0
-#, python-format
-msgid "draft"
-msgstr "πρόχειρη"
-
-#. module: crm
 #: field:crm.case,active:0 field:crm.case.rule,active:0
 #: field:crm.case.section,active:0
 msgid "Active"
@@ -1054,12 +1005,6 @@ msgid "Mandatory Expression"
 msgstr "Υποχρεωτική Έκφραση"
 
 #. module: crm
-#: code:addons/crm/crm.py:0
-#, python-format
-msgid "cancel"
-msgstr "ακύρωση"
-
-#. module: crm
 #: selection:crm.segmentation.line,expr_operator:0
 msgid ">"
 msgstr ">"
@@ -1080,26 +1025,14 @@ msgid "Exclusive"
 msgstr "Αποκλειστικά"
 
 #. module: crm
-#: code:addons/crm/crm.py:0
-#, python-format
-msgid ""
-"Can not send mail with empty body,you should have description in the body"
-msgstr "Το κυρίως κείμενο είναι κενό, παρακαλώ συμπληρώστε την περιγραφή"
-
-#. module: crm
-#: view:crm.segmentation:0
-msgid "Included Answers :"
-msgstr "Συμπεριλαμβανόμενες Απαντήσεις"
-
-#. module: crm
 #: view:crm.case.rule:0
 msgid "%(case_id)s = Case ID"
 msgstr "%(case_id)s = ID Θέματος"
 
 #. module: crm
-#: selection:crm.case.rule,trg_date_range_type:0
-msgid "Months"
-msgstr "Μήνες"
+#: selection:crm.case.rule,trg_date_type:0
+msgid "Creation Date"
+msgstr "Ημερ/νία Δημιουργίας"
 
 #. module: crm
 #: selection:crm.case.section.menu,design_menu,menu10_option:0
@@ -1211,22 +1144,20 @@ msgid "Communication history"
 msgstr "Ιστορικό επικοινωνίας"
 
 #. module: crm
-#: code:addons/crm/crm.py:0 view:crm.case:0 selection:crm.case,state:0
+#: view:crm.case:0 selection:crm.case,state:0
 #: selection:crm.case.rule,act_state:0
 #: selection:crm.case.rule,trg_state_from:0
 #: selection:crm.case.rule,trg_state_to:0
 #: wizard_button:crm.case.section.menu,design_menu,end:0
 #: wizard_button:crm.case.section.menu,init,end:0
-#, python-format
 msgid "Cancel"
 msgstr "Ακύρωση"
 
 #. module: crm
-#: code:addons/crm/crm.py:0 view:crm.case:0 selection:crm.case,state:0
+#: view:crm.case:0 selection:crm.case,state:0
 #: selection:crm.case.rule,act_state:0
 #: selection:crm.case.rule,trg_state_from:0
 #: selection:crm.case.rule,trg_state_to:0
-#, python-format
 msgid "Close"
 msgstr "Κλείσιμο"
 
@@ -1236,11 +1167,10 @@ msgid "Business Opportunities"
 msgstr "Ευκαιρίες Συνδιαλλαγής"
 
 #. module: crm
-#: code:addons/crm/crm.py:0 view:crm.case:0 selection:crm.case,state:0
+#: view:crm.case:0 selection:crm.case,state:0
 #: selection:crm.case.rule,act_state:0
 #: selection:crm.case.rule,trg_state_from:0
 #: selection:crm.case.rule,trg_state_to:0
-#, python-format
 msgid "Open"
 msgstr "Ανοικτά"
 
@@ -1325,10 +1255,10 @@ msgid "Description"
 msgstr "Περιγραφή"
 
 #. module: crm
-#: code:addons/crm/crm.py:0
-#, python-format
-msgid "open"
-msgstr "ανοικτά"
+#: field:crm.case.rule,trg_max_history:0
+#, fuzzy
+msgid "Maximum Communication History"
+msgstr "Ιστορικό Επικοινωνίας του Θέματος"
 
 #. module: crm
 #: wizard_field:crm.case.section.menu,design_menu,menu11:0
@@ -1368,15 +1298,10 @@ msgid "Segmentations"
 msgstr "Καταμερισμός"
 
 #. module: crm
-#: selection:crm.segmentation,state:0
-msgid "Running"
-msgstr "Σε κίνηση"
-
-#. module: crm
-#: model:ir.actions.act_window,name:crm.crm_case_section_act_tree
-#: model:ir.ui.menu,name:crm.menu_crm_case_section_act_tree
-msgid "Cases by section"
-msgstr "Θέματα ανά τμήμα"
+#: field:crm.segmentation.line,operator:0
+#, fuzzy
+msgid "Mandatory / Optional"
+msgstr "Υποχρεωτικό / Προαιρετικό"
 
 #. module: crm
 #: selection:crm.segmentation.line,expr_name:0
@@ -1404,12 +1329,15 @@ msgid "="
 msgstr "="
 
 #. module: crm
-#: code:addons/crm/crm.py:0 field:crm.case.log,case_id:0
-#: model:ir.model,name:crm.model_crm_case
+#: field:crm.case.log,case_id:0 model:ir.model,name:crm.model_crm_case
 #: model:res.request.link,name:crm.req_link_case
-#, python-format
 msgid "Case"
 msgstr "Θέμα"
+
+#. module: crm
+#: selection:crm.case.rule,trg_date_range_type:0
+msgid "Months"
+msgstr "Μήνες"
 
 #. module: crm
 #: view:crm.case.rule:0
@@ -1484,6 +1412,11 @@ msgid "All Histories"
 msgstr "Όλατ Ιστορικά"
 
 #. module: crm
+#: help:crm.case.section,allow_unlink:0
+msgid "Allows to delete non draft cases"
+msgstr ""
+
+#. module: crm
 #: wizard_field:crm.case.section.menu,design_menu,menu4:0
 #: wizard_field:crm.case.section.menu,design_menu,menu4_option:0
 msgid "My Canceled "
@@ -1546,11 +1479,6 @@ msgid "Case Description"
 msgstr "Περιγραφή Θέματος"
 
 #. module: crm
-#: field:crm.case.rule,act_mail_to_watchers:0
-msgid "Mail to watchers (Cc)"
-msgstr "Cc Mail"
-
-#. module: crm
 #: model:ir.actions.act_window,name:crm.crm_case_section_open_act
 msgid "crm.case.section.open"
 msgstr "crm.case.section.open"
@@ -1573,9 +1501,10 @@ msgid "Control Variable"
 msgstr "Παράμετρος Ελέγχου"
 
 #. module: crm
-#: model:ir.ui.menu,name:crm.menu_crm_case_history-act_main
-msgid "Cases Histories"
-msgstr "Ιστορικά Θεμάτων"
+#: model:ir.actions.act_window,name:crm.crm_case_section_act_tree
+#: model:ir.ui.menu,name:crm.menu_crm_case_section_act_tree
+msgid "Cases by section"
+msgstr "Θέματα ανά τμήμα"
 
 #. module: crm
 #: field:crm.case,date_action_last:0
@@ -1593,71 +1522,83 @@ msgid "Conditions on States"
 msgstr "Ορισμοί Καταστάσεων"
 
 #. module: crm
-#: view:crm.segmentation:0
-msgid "Sales Purchase"
-msgstr "Αγορά Πωλήσεων"
+#: wizard_view:crm.case.section.menu,design_menu:0
+msgid "Update The Proposed Menus To Be Created"
+msgstr "Ενημέρωση Προταθέντων Μενού για Δημιουργία"
 
 #. module: crm
 #: field:crm.case.rule,trg_date_type:0
 msgid "Trigger Date"
 msgstr "Ημερ/νία Εκκιίνησης"
 
-#. module: crm
-#: wizard_view:crm.case.section.menu,init:0
-msgid "this wizard will create all sub-menus, within the selected menu."
-msgstr ""
+#~ msgid "Warning !"
+#~ msgstr "Προσοχή!"
 
-#. module: crm
-#: constraint:ir.actions.act_window:0
-msgid "Invalid model name in the action definition."
-msgstr ""
+#~ msgid ""
+#~ "You can not escalate this case.\n"
+#~ "You are already at the top level."
+#~ msgstr ""
+#~ "Δεν μπορείτε να αναβαθμίσετε αυτό το θέμα.\n"
+#~ "Βρίσκεται ήδη στο ανώτατο επίπεδο."
 
-#. module: crm
-#: field:crm.case.section,allow_unlink:0
-msgid "Allow Delete"
-msgstr ""
+#~ msgid "Error!"
+#~ msgstr "Σφάλμα!"
 
-#. module: crm
-#: view:crm.case.rule:0
-#, fuzzy
-msgid "Condition on Communication History"
-msgstr "Ιστορικό Επικοινωνίας του Θέματος"
+#~ msgid ""
+#~ "A period is the average number of days between two cycle of sale or "
+#~ "purchase for this segmentation. It's mainly used to detect if a partner "
+#~ "has not purchased or buy for a too long time, so we suppose that his "
+#~ "state of mind has decreased because he probably bought goods to another "
+#~ "supplier. Use this functionnality for recurring businesses."
+#~ msgstr ""
+#~ "Μια περίοδος είναι ο μέσος αριθμός ημερών ανάμεσα σε δύο κύκλους πωλήσεων "
+#~ "ή αγορών στην κατηγορία. Χρησιμοποιείται κυρίως για να ανιχνεύσουμε αν "
+#~ "ένας συνεργάτης έχει καιρό να συνεργαστεί μαζί μας. Έτσι διαπιστώνουμε αν "
+#~ "η προδιάθεσή του έχει μειωθεί. Χρησιμοποιείστε αυτή τη λειτουργία για "
+#~ "τακτικούς πελάτες."
 
-#. module: crm
-#: wizard_view:crm.case.section.menu,init:0
-msgid ""
-"You may want to create a new parent menu to put all the created menus in."
-msgstr ""
+#~ msgid "Send"
+#~ msgstr "Αποστολή"
 
-#. module: crm
-#: help:crm.segmentation,som_interval:0
-#, fuzzy
-msgid ""
-"A period is the average number of days between two cycle of sale or purchase "
-"for this segmentation. It's mainly used to detect if a partner has not "
-"purchased or buy for a too long time, so we suppose that his state of mind "
-"has decreased because he probably bought goods to another supplier. Use this "
-"functionality for recurring businesses."
-msgstr ""
-"Μια περίοδος είναι ο μέσος αριθμός ημερών ανάμεσα σε δύο κύκλους πωλήσεων ή "
-"αγορών στην κατηγορία. Χρησιμοποιείται κυρίως για να ανιχνεύσουμε αν ένας "
-"συνεργάτης έχει καιρό να συνεργαστεί μαζί μας. Έτσι διαπιστώνουμε αν η "
-"προδιάθεσή του έχει μειωθεί. Χρησιμοποιείστε αυτή τη λειτουργία για "
-"τακτικούς πελάτες."
+#~ msgid "Excluded Answers :"
+#~ msgstr "Εξαιρούμενες Απαντήσεις:"
 
-#. module: crm
-#: field:crm.case.rule,trg_max_history:0
-#, fuzzy
-msgid "Maximum Communication History"
-msgstr "Ιστορικό Επικοινωνίας του Θέματος"
+#~ msgid "Profiling"
+#~ msgstr "Ανάθεση Προφίλ"
 
-#. module: crm
-#: field:crm.segmentation.line,operator:0
-#, fuzzy
-msgid "Mandatory / Optional"
-msgstr "Υποχρεωτικό / Προαιρετικό"
+#~ msgid "Error !"
+#~ msgstr "Σφάλμα!"
 
-#. module: crm
-#: help:crm.case.section,allow_unlink:0
-msgid "Allows to delete non draft cases"
-msgstr ""
+#~ msgid "Profiling Options"
+#~ msgstr "Επιλογές Ανάθεσης Προφίλ"
+
+#~ msgid "You can not delete this case. You should better cancel it."
+#~ msgstr ""
+#~ "Δεν μπορείτε να διαγράψετε αυτό το θέμα. Προσπαθείστε να την ακυρώσετε."
+
+#~ msgid "done"
+#~ msgstr "ολοκληρώθηκε"
+
+#~ msgid "Mandatory / Optionnal"
+#~ msgstr "Υποχρεωτικό / Προαιρετικό"
+
+#~ msgid "You must put a Partner eMail to use this action!"
+#~ msgstr ""
+#~ "Πρέπει να συμπληρώσετε ένα email συνεργάτη για να χρησιμοποιήσετε αυτή τη "
+#~ "λειτουργία!"
+
+#~ msgid "draft"
+#~ msgstr "πρόχειρη"
+
+#~ msgid "cancel"
+#~ msgstr "ακύρωση"
+
+#~ msgid ""
+#~ "Can not send mail with empty body,you should have description in the body"
+#~ msgstr "Το κυρίως κείμενο είναι κενό, παρακαλώ συμπληρώστε την περιγραφή"
+
+#~ msgid "Included Answers :"
+#~ msgstr "Συμπεριλαμβανόμενες Απαντήσεις"
+
+#~ msgid "open"
+#~ msgstr "ανοικτά"

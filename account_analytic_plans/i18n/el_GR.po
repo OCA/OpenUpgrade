@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2009-04-09 17:23+0000\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
 "PO-Revision-Date: 2009-05-17 21:11+0000\n"
 "Last-Translator: Makis Nicolaou <mark.nicolaou@gmail.com>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -46,11 +46,6 @@ msgstr "Account5 Id"
 #: wizard_field:wizard.crossovered.analytic,init,date2:0
 msgid "End Date"
 msgstr "Ημερομηνία Λήξης"
-
-#. module: account_analytic_plans
-#: field:account.analytic.plan.instance,account3_ids:0
-msgid "Account3 Id"
-msgstr "Account3 Id"
 
 #. module: account_analytic_plans
 #: field:account.analytic.plan.instance.line,rate:0
@@ -106,14 +101,19 @@ msgid "Currency:"
 msgstr "Νόμισμα:"
 
 #. module: account_analytic_plans
-#: rml:account.analytic.account.crossovered.analytic:0
-msgid "Percentage"
-msgstr "Ποσοστό"
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
 
 #. module: account_analytic_plans
 #: field:account.analytic.plan.line,name:0
 msgid "Plan Name"
 msgstr "Όνομα Πλάνου"
+
+#. module: account_analytic_plans
+#: rml:account.analytic.account.crossovered.analytic:0
+msgid "Percentage"
+msgstr "Ποσοστό"
 
 #. module: account_analytic_plans
 #: wizard_field:wizard.crossovered.analytic,init,empty_line:0
@@ -126,10 +126,9 @@ msgid "Select Information"
 msgstr "Επιλογή Πληροφοριών"
 
 #. module: account_analytic_plans
-#: code:addons/account_analytic_plans/account_analytic_plans.py:0
-#, python-format
-msgid "A model having this name and code already exists !"
-msgstr "Ένα μοντέλο που έχει αυτό το όνομα και κωδικό υπάρχει ήδη!"
+#: field:account.analytic.plan.instance,account3_ids:0
+msgid "Account3 Id"
+msgstr "Account3 Id"
 
 #. module: account_analytic_plans
 #: field:account.analytic.plan.instance,journal_id:0
@@ -162,12 +161,6 @@ msgid "Analytic Plan Line"
 msgstr "Πλάνο Γραμμής Αναλυτικής"
 
 #. module: account_analytic_plans
-#: code:addons/account_analytic_plans/wizard/create_model.py:0
-#, python-format
-msgid "No analytic plan defined !"
-msgstr "Κανένα πλάνο αναλυτικής δεν προσδιορίστηκε!"
-
-#. module: account_analytic_plans
 #: rml:account.analytic.account.crossovered.analytic:0
 msgid "Analytic Account Reference:"
 msgstr "Σχετικός Αναλυτικός Λογαριασμός:"
@@ -188,24 +181,11 @@ msgid "to"
 msgstr "έως"
 
 #. module: account_analytic_plans
-#: code:addons/account_analytic_plans/account_analytic_plans.py:0
-#: code:addons/account_analytic_plans/wizard/create_model.py:0
-#, python-format
-msgid "Error"
-msgstr "Σφάλμα"
-
-#. module: account_analytic_plans
 #: view:account.analytic.plan:0 field:account.analytic.plan,plan_ids:0
 #: field:account.journal,plan_id:0
 #: model:ir.model,name:account_analytic_plans.model_account_analytic_plan
 msgid "Analytic Plans"
 msgstr "Πλάνα Αναλυτικής"
-
-#. module: account_analytic_plans
-#: code:addons/account_analytic_plans/wizard/wizard_crossovered_analytic.py:0
-#, python-format
-msgid "User Error"
-msgstr "Σφάλμα Χρήστη"
 
 #. module: account_analytic_plans
 #: field:account.analytic.plan.instance,account1_ids:0
@@ -329,13 +309,6 @@ msgid "Account2 Id"
 msgstr "Account2 Id"
 
 #. module: account_analytic_plans
-#: code:addons/account_analytic_plans/wizard/create_model.py:0
-#, python-format
-msgid "Please put a name and a code before saving the model !"
-msgstr ""
-"Παρακαλώ εισάγετε ένα όνομα και έναν κωδικό πριν αποθηκεύσετε το μοντέλο!"
-
-#. module: account_analytic_plans
 #: rml:account.analytic.account.crossovered.analytic:0
 msgid "Amount"
 msgstr "Ποσό"
@@ -396,12 +369,6 @@ msgid "Analytic Account"
 msgstr "Λογαριασμος Αναλυτικής"
 
 #. module: account_analytic_plans
-#: code:addons/account_analytic_plans/account_analytic_plans.py:0
-#, python-format
-msgid "Value Error"
-msgstr "Σφάλμα Αξίας"
-
-#. module: account_analytic_plans
 #: rml:account.analytic.account.crossovered.analytic:0
 msgid "Printing date:"
 msgstr "Ημερομηνία εκτύπωσης:"
@@ -434,7 +401,21 @@ msgstr "Ημερομηνία Από"
 msgid "at"
 msgstr "σε"
 
-#. module: account_analytic_plans
-#: constraint:ir.actions.act_window:0
-msgid "Invalid model name in the action definition."
-msgstr ""
+#~ msgid "A model having this name and code already exists !"
+#~ msgstr "Ένα μοντέλο που έχει αυτό το όνομα και κωδικό υπάρχει ήδη!"
+
+#~ msgid "No analytic plan defined !"
+#~ msgstr "Κανένα πλάνο αναλυτικής δεν προσδιορίστηκε!"
+
+#~ msgid "Error"
+#~ msgstr "Σφάλμα"
+
+#~ msgid "User Error"
+#~ msgstr "Σφάλμα Χρήστη"
+
+#~ msgid "Please put a name and a code before saving the model !"
+#~ msgstr ""
+#~ "Παρακαλώ εισάγετε ένα όνομα και έναν κωδικό πριν αποθηκεύσετε το μοντέλο!"
+
+#~ msgid "Value Error"
+#~ msgstr "Σφάλμα Αξίας"

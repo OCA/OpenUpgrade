@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
 "PO-Revision-Date: 2009-06-15 02:48+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
@@ -40,24 +40,19 @@ msgid "Destination"
 msgstr "Προορισμός"
 
 #. module: delivery
-#: model:product.template,name:delivery.delivery_product_product_template
-msgid "Delivery by Poste"
-msgstr "Ταχυδρομική Αποστολή"
-
-#. module: delivery
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
 msgstr "Άκυρο XML για Αρχιτεκτονική Όψης!"
 
 #. module: delivery
-#: constraint:res.partner:0
-msgid "Error ! You can not create recursive associated members."
-msgstr "Σφάλμα: Υπάρχει σχετιζόμενο μέλος με την ίδια περιγραφή!"
-
-#. module: delivery
 #: field:delivery.grid,state_ids:0
 msgid "States"
 msgstr "Καταστάσεις"
+
+#. module: delivery
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
 
 #. module: delivery
 #: help:res.partner,property_delivery_carrier:0
@@ -82,13 +77,6 @@ msgid "Fixed"
 msgstr "Σταθεροποιήθηκε"
 
 #. module: delivery
-#: code:addons/delivery/wizard/delivery_sale_order.py:0
-#, python-format
-msgid "The order state have to be draft to add delivery lines."
-msgstr ""
-"Η παραγγελία πρέπει να είναι πρόχειρη για να προσθέσετε γραμμές αποστολής"
-
-#. module: delivery
 #: field:delivery.grid,line_ids:0
 msgid "Grid Line"
 msgstr "Γραμμή Διαγράμματος "
@@ -106,17 +94,6 @@ msgid "Generate Draft Invoices On Receptions"
 msgstr "Δημιουργία Πρόχειρων Τιμολογίων κατά την Παραλαβή"
 
 #. module: delivery
-#: selection:delivery.grid.line,price_type:0 field:delivery.grid.line,type:0
-msgid "Variable"
-msgstr "Μεταβλητή"
-
-#. module: delivery
-#: code:addons/delivery/wizard/delivery_sale_order.py:0
-#, python-format
-msgid "No grid matching for this carrier !"
-msgstr "Καμμιά γραμμή δεν ταιριάζει σε αυτόν το μεταφορέα!"
-
-#. module: delivery
 #: model:ir.model,name:delivery.model_delivery_grid_line
 msgid "Delivery line of grid"
 msgstr "Γραμμή αποστολής Διαγράμματος"
@@ -125,11 +102,6 @@ msgstr "Γραμμή αποστολής Διαγράμματος"
 #: model:ir.ui.menu,name:delivery.menu_delivery
 msgid "Delivery"
 msgstr "Αποστολή"
-
-#. module: delivery
-#: view:delivery.grid.line:0
-msgid "Grid Lines"
-msgstr "Γραμμές Διαγράμματος"
 
 #. module: delivery
 #: field:delivery.grid.line,grid_id:0
@@ -188,22 +160,14 @@ msgid "Name"
 msgstr "Όνομα"
 
 #. module: delivery
-#: constraint:product.template:0
-msgid "Error: UOS must be in a different category than the UOM"
-msgstr "Σφάλμα: η ΜοΠ πρέπει να ανήκει σε διαφορετική κατηγορία από τη ΜοΜ"
-
-#. module: delivery
 #: field:delivery.grid,country_ids:0
 msgid "Countries"
 msgstr "Χώρες"
 
 #. module: delivery
-#: constraint:product.template:0
-msgid ""
-"Error: The default UOM and the purchase UOM must be in the same category."
-msgstr ""
-"Σφάλμα: Η προεπιλεγμένη ΜοΜ και η ΜοΜ αγοράς πρέπει να ανήκουν στην ίδια "
-"κατηγορία."
+#: field:delivery.grid.line,operator:0
+msgid "Operator"
+msgstr "Λειτουργός"
 
 #. module: delivery
 #: view:sale.order:0
@@ -216,10 +180,9 @@ msgid "Variable Factor"
 msgstr "Μεταβλητός Παράγοντας "
 
 #. module: delivery
-#: code:addons/delivery/wizard/delivery_sale_order.py:0
-#, python-format
-msgid "No grid avaible !"
-msgstr "Δεν υπάρχει διάγραμμα!"
+#: selection:delivery.grid.line,price_type:0 field:delivery.grid.line,type:0
+msgid "Variable"
+msgstr "Μεταβλητή"
 
 #. module: delivery
 #: field:delivery.grid,name:0
@@ -262,20 +225,9 @@ msgid "ID"
 msgstr "ID"
 
 #. module: delivery
-#: field:delivery.grid.line,operator:0
-msgid "Operator"
-msgstr "Λειτουργός"
-
-#. module: delivery
 #: model:ir.module.module,shortdesc:delivery.module_meta_information
 msgid "Carriers and deliveries"
 msgstr "Μεταφορείς και αποστολές"
-
-#. module: delivery
-#: code:addons/delivery/wizard/delivery_sale_order.py:0
-#, python-format
-msgid "Order not in draft state !"
-msgstr "Η παραγγελία δεν είναι πρόχειρη!"
 
 #. module: delivery
 #: field:delivery.carrier,grids_id:0
@@ -317,22 +269,10 @@ msgid "To Zip"
 msgstr "Προς ΤΚ "
 
 #. module: delivery
-#: code:addons/delivery/delivery.py:0
-#, python-format
-msgid "No line matched this order in the choosed delivery grids !"
-msgstr "Καμμιά γραμμή στο διάγραμμα δεν ταιριάζει με την παραγγελία!"
-
-#. module: delivery
 #: model:ir.actions.act_window,name:delivery.action_picking_tree4
 #: model:ir.ui.menu,name:delivery.menu_action_picking_tree3
 msgid "Packing to be invoiced"
 msgstr "Συσκευασία για τιμολόγηση"
-
-#. module: delivery
-#: code:addons/delivery/delivery.py:0
-#, python-format
-msgid "No price available !"
-msgstr "Δεν υπάρχει τιμή!"
 
 #. module: delivery
 #: help:sale.order,carrier_id:0
@@ -353,9 +293,9 @@ msgid "Sale Price"
 msgstr "Τιμή Πώλησης"
 
 #. module: delivery
-#: constraint:product.product:0
-msgid "Error: Invalid ean code"
-msgstr "Σφάλμα: άκυρος κωδικός ΕΑΝ"
+#: view:delivery.grid.line:0
+msgid "Grid Lines"
+msgstr "Γραμμές Διαγράμματος"
 
 #. module: delivery
 #: view:delivery.grid:0
@@ -363,21 +303,9 @@ msgid "Delivery grids"
 msgstr "Διαγράμματα Αποστολών"
 
 #. module: delivery
-#: code:addons/delivery/stock.py:0
-#, python-format
-msgid "The carrier %s (id: %d) has no delivery grid!"
-msgstr "Ο αποστολέας %s (id: %d) δεν έχει διάγραμμα αποστολής!"
-
-#. module: delivery
 #: wizard_button:delivery.sale.order,init,end:0
 msgid "Cancel"
 msgstr "Άκυρο"
-
-#. module: delivery
-#: code:addons/delivery/stock.py:0
-#, python-format
-msgid "Warning"
-msgstr "Προσοχή"
 
 #. module: delivery
 #: field:sale.order,carrier_id:0
@@ -391,19 +319,55 @@ msgid "Price"
 msgstr "Τιμή"
 
 #. module: delivery
-#: constraint:res.partner:0
-msgid "The VAT doesn't seem to be correct."
-msgstr "Ο ΦΠΑ δε φαίνεται σωστός."
-
-#. module: delivery
 #: field:delivery.grid.line,price_type:0
 msgid "Price Type"
 msgstr "Τύπος Τιμής"
 
-#. module: delivery
-#: constraint:ir.actions.act_window:0
-msgid "Invalid model name in the action definition."
-msgstr ""
+#~ msgid "Delivery by Poste"
+#~ msgstr "Ταχυδρομική Αποστολή"
+
+#~ msgid "Error ! You can not create recursive associated members."
+#~ msgstr "Σφάλμα: Υπάρχει σχετιζόμενο μέλος με την ίδια περιγραφή!"
+
+#~ msgid "The order state have to be draft to add delivery lines."
+#~ msgstr ""
+#~ "Η παραγγελία πρέπει να είναι πρόχειρη για να προσθέσετε γραμμές αποστολής"
+
+#~ msgid "No grid matching for this carrier !"
+#~ msgstr "Καμμιά γραμμή δεν ταιριάζει σε αυτόν το μεταφορέα!"
+
+#~ msgid "Error: UOS must be in a different category than the UOM"
+#~ msgstr "Σφάλμα: η ΜοΠ πρέπει να ανήκει σε διαφορετική κατηγορία από τη ΜοΜ"
+
+#~ msgid ""
+#~ "Error: The default UOM and the purchase UOM must be in the same category."
+#~ msgstr ""
+#~ "Σφάλμα: Η προεπιλεγμένη ΜοΜ και η ΜοΜ αγοράς πρέπει να ανήκουν στην ίδια "
+#~ "κατηγορία."
+
+#~ msgid "No grid avaible !"
+#~ msgstr "Δεν υπάρχει διάγραμμα!"
+
+#~ msgid "Order not in draft state !"
+#~ msgstr "Η παραγγελία δεν είναι πρόχειρη!"
+
+#~ msgid "No line matched this order in the choosed delivery grids !"
+#~ msgstr "Καμμιά γραμμή στο διάγραμμα δεν ταιριάζει με την παραγγελία!"
+
+#~ msgid "No price available !"
+#~ msgstr "Δεν υπάρχει τιμή!"
+
+#~ msgid "Error: Invalid ean code"
+#~ msgstr "Σφάλμα: άκυρος κωδικός ΕΑΝ"
+
+#~ msgid "The carrier %s (id: %d) has no delivery grid!"
+#~ msgstr "Ο αποστολέας %s (id: %d) δεν έχει διάγραμμα αποστολής!"
+
+#~ msgid "Warning"
+#~ msgstr "Προσοχή"
+
+#~ msgid "The VAT doesn't seem to be correct."
+#~ msgstr "Ο ΦΠΑ δε φαίνεται σωστός."
 
 #~ msgid "<="
 #~ msgstr "<="

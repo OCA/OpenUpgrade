@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 15:20:37+0000\n"
+"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
 "PO-Revision-Date: 2009-06-15 02:43+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
@@ -49,6 +49,11 @@ msgstr "Σημείωση"
 #: field:board.board.line,width:0
 msgid "Width"
 msgstr "Πλάτος"
+
+#. module: board
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
 
 #. module: board
 #: field:board.board.line,name:0
@@ -212,11 +217,6 @@ msgstr "board.board.line"
 #: field:board.note,name:0
 msgid "Subject"
 msgstr "Αντικείμενο"
-
-#. module: board
-#: constraint:ir.actions.act_window:0
-msgid "Invalid model name in the action definition."
-msgstr ""
 
 #~ msgid "Action"
 #~ msgstr "Ενέργεια"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2009-06-15 02:45+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
@@ -18,15 +18,19 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. module: board_document
+#: model:ir.module.module,shortdesc:board_document.module_meta_information
+msgid "Dashboard for Document Management"
+msgstr "Πίνακας Διαχείρισης Εγγραφών"
+
+#. module: board_document
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
 msgstr "Άκυρο XML για Αρχιτεκτονική Όψης!"
 
 #. module: board_document
-#: model:ir.actions.act_window,name:board_document.open_board_document_manager1
-#: model:ir.ui.menu,name:board_document.menu_board_document_manager1
-msgid "Statistics by User"
-msgstr "Στατιστικά ανά Χρήστη"
+#: view:board.board:0
+msgid "New Files"
+msgstr "Νέα Αρχεία"
 
 #. module: board_document
 #: model:ir.actions.act_window,name:board_document.open_board_document_manager
@@ -50,19 +54,20 @@ msgid "Files by Month"
 msgstr "Αρχεία ανά Μήνα"
 
 #. module: board_document
+#: model:ir.actions.act_window,name:board_document.open_board_document_manager1
+#: model:ir.ui.menu,name:board_document.menu_board_document_manager1
+msgid "Statistics by User"
+msgstr "Στατιστικά ανά Χρήστη"
+
+#. module: board_document
 #: view:board.board:0
 msgid "Files by Resource Type"
 msgstr "Αρχεία ανά Τύπο Προέλευσης"
 
 #. module: board_document
-#: view:board.board:0
-msgid "New Files"
-msgstr "Νέα Αρχεία"
-
-#. module: board_document
-#: model:ir.module.module,shortdesc:board_document.module_meta_information
-msgid "Dashboard for Document Management"
-msgstr "Πίνακας Διαχείρισης Εγγραφών"
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
 
 #. module: board_document
 #: view:board.board:0
@@ -83,8 +88,3 @@ msgstr "Αρχεία ανά Χρήστη"
 #: view:board.board:0
 msgid "Document board"
 msgstr "Πίνακας εγγράφου"
-
-#. module: board_document
-#: constraint:ir.actions.act_window:0
-msgid "Invalid model name in the action definition."
-msgstr ""

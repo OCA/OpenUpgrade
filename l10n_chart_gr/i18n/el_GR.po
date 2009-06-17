@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-01-29 07:54:58+0000\n"
+"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
 "PO-Revision-Date: 2009-06-15 02:55+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
@@ -21,6 +21,11 @@ msgstr ""
 #: model:account.account.type,name:l10n_chart_gr.account_type_receivable
 msgid "Receivable"
 msgstr "Εισπρακτέα"
+
+#. module: l10n_chart_gr
+#: model:ir.module.module,description:l10n_chart_gr.module_meta_information
+msgid "This is the base module to manage the accounting chart for Greece."
+msgstr ""
 
 #. module: l10n_chart_gr
 #: constraint:account.account.template:0
@@ -62,6 +67,11 @@ msgstr ""
 "Δημιουργία Λογιστικού Σχεδίου από Πρότυπο Σχεδίου"
 
 #. module: l10n_chart_gr
+#: model:ir.module.module,shortdesc:l10n_chart_gr.module_meta_information
+msgid "Greece - minimal"
+msgstr ""
+
+#. module: l10n_chart_gr
 #: model:account.account.type,name:l10n_chart_gr.account_type_payable
 msgid "Payable"
 msgstr "Πληρωτέα"
@@ -90,13 +100,3 @@ msgstr "Έξοδο"
 #: model:account.account.type,name:l10n_chart_gr.account_type_view
 msgid "View"
 msgstr "Προβολή"
-
-#. module: l10n_chart_gr
-#: model:ir.module.module,description:l10n_chart_gr.module_meta_information
-msgid "This is the base module to manage the accounting chart for Greece."
-msgstr ""
-
-#. module: l10n_chart_gr
-#: model:ir.module.module,shortdesc:l10n_chart_gr.module_meta_information
-msgid "Greece - minimal"
-msgstr ""

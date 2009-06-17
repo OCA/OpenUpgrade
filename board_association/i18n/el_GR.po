@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2009-06-15 02:44+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
@@ -18,14 +18,14 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. module: board_association
-#: model:ir.ui.menu,name:board_association.menu_board_associations_manager
-msgid "Associations"
-msgstr "Συνεταιρισμοί"
-
-#. module: board_association
 #: model:ir.module.module,shortdesc:board_association.module_meta_information
 msgid "Dashboard for Associations"
 msgstr "Πίνακας για Συνεταιρισμούς"
+
+#. module: board_association
+#: model:ir.ui.menu,name:board_association.menu_board_associations_manager
+msgid "Associations"
+msgstr "Συνεταιρισμοί"
 
 #. module: board_association
 #: constraint:ir.ui.view:0
@@ -54,6 +54,11 @@ msgid "Unpaid Invoices"
 msgstr "Απλήρωτα Τιμολόγια"
 
 #. module: board_association
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
+
+#. module: board_association
 #: view:board.board:0
 msgid "Next Events"
 msgstr "Επόμενα Συμβάντα"
@@ -62,8 +67,3 @@ msgstr "Επόμενα Συμβάντα"
 #: view:board.board:0
 msgid "Registrations by Events"
 msgstr "Καταχωρήσεις ανά Συμβάν"
-
-#. module: board_association
-#: constraint:ir.actions.act_window:0
-msgid "Invalid model name in the action definition."
-msgstr ""

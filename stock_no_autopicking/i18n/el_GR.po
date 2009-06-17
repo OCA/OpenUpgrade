@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2009-06-15 03:08+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
@@ -16,6 +16,11 @@ msgstr ""
 "X-Poedit-Language: Greek\n"
 "X-Poedit-Country: GREECE\n"
 "X-Poedit-SourceCharset: utf-8\n"
+
+#. module: stock_no_autopicking
+#: model:ir.module.module,shortdesc:stock_no_autopicking.module_meta_information
+msgid "Stock No Auto-Picking"
+msgstr "Αριθμός Αυτόματης Επιλογής Αποθέματος"
 
 #. module: stock_no_autopicking
 #: constraint:ir.ui.view:0
@@ -31,8 +36,3 @@ msgstr "Αυτόματη Επιλογή"
 #: help:product.product,auto_pick:0
 msgid "Auto picking for raw materials of production orders."
 msgstr "Αυτόματη επιλογή α' υλών κατά την Εντολή Παραγωγής."
-
-#. module: stock_no_autopicking
-#: model:ir.module.module,shortdesc:stock_no_autopicking.module_meta_information
-msgid "Stock No Auto-Picking"
-msgstr "Αριθμός Αυτόματης Επιλογής Αποθέματος"

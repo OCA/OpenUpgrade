@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
 "PO-Revision-Date: 2009-06-13 03:28+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
@@ -15,6 +15,11 @@ msgstr ""
 "X-Poedit-Language: Greek\n"
 "X-Poedit-Country: GREECE\n"
 "X-Poedit-SourceCharset: utf-8\n"
+
+#. module: base_module_merge
+#: model:ir.module.module,shortdesc:base_module_merge.module_meta_information
+msgid "Module Merger"
+msgstr "Συγχωνευτής Αρθρωμάτων"
 
 #. module: base_module_merge
 #: wizard_field:base_module_merge.module_merge,info,category:0
@@ -93,11 +98,6 @@ msgstr "Συγχώνευση Αρθρώματος"
 #: wizard_field:base_module_merge.module_merge,save,module_file:0
 msgid "Module .zip File"
 msgstr "Αρχείο .zip Αρθρώματος"
-
-#. module: base_module_merge
-#: model:ir.module.module,shortdesc:base_module_merge.module_meta_information
-msgid "Module Merger"
-msgstr "Συγχωνευτής Αρθρωμάτων"
 
 #. module: base_module_merge
 #: wizard_view:base_module_merge.module_merge,save:0

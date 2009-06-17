@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 15:20:38+0000\n"
+"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
 "PO-Revision-Date: 2009-06-15 03:01+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
@@ -75,6 +75,11 @@ msgid "Default Project"
 msgstr "Προεπιλεγμένο Έργο"
 
 #. module: project_gtd
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
+
+#. module: project_gtd
 #: field:project.gtd.timebox,context4_id:0
 msgid "Context 4"
 msgstr "Περιβάλλον 4"
@@ -90,9 +95,9 @@ msgid "Other"
 msgstr "Άλλο"
 
 #. module: project_gtd
-#: field:project.gtd.timebox,col_effective_hours:0
-msgid "Effective Hours"
-msgstr "Αποδοτικές Ώρες"
+#: model:ir.actions.act_window,name:project_gtd.open_gtd_task_inbox
+msgid "Inbox Tasks"
+msgstr "Εργασίες Εισερχομένων"
 
 #. module: project_gtd
 #: view:project.gtd.timebox:0 field:project.gtd.timebox,name:0
@@ -106,10 +111,9 @@ msgid "Getting Things Done - Time Management Module"
 msgstr "Getting Things Done - Άρθρωμα Διαχείορισης Χρόνου"
 
 #. module: project_gtd
-#: model:ir.actions.act_window,name:project_gtd.open_gtd_context_tree_my
-#: model:ir.ui.menu,name:project_gtd.menu_open_gtd_time_my_contexts
-msgid "My Contexts"
-msgstr "Τα Περιβάλλοντά μου"
+#: model:ir.actions.act_window,name:project_gtd.act_timebox_tasks
+msgid "Timebox Tasks"
+msgstr "Εργασίες Χρονοπλαισίου"
 
 #. module: project_gtd
 #: wizard_view:project.gtd.timebox.fill,init:0
@@ -122,9 +126,9 @@ msgid "Type"
 msgstr "Τύπος"
 
 #. module: project_gtd
-#: model:ir.actions.act_window,name:project_gtd.open_gtd_task_inbox
-msgid "Inbox Tasks"
-msgstr "Εργασίες Εισερχομένων"
+#: field:project.gtd.timebox,col_effective_hours:0
+msgid "Effective Hours"
+msgstr "Αποδοτικές Ώρες"
 
 #. module: project_gtd
 #: model:ir.actions.wizard,name:project_gtd.open_gtd_timebox_empty
@@ -188,11 +192,6 @@ msgid "Context 6"
 msgstr "Περιβάλλον 6"
 
 #. module: project_gtd
-#: model:ir.actions.act_window,name:project_gtd.act_timebox_tasks
-msgid "Timebox Tasks"
-msgstr "Εργασίες Χρονοπλαισίου"
-
-#. module: project_gtd
 #: model:ir.actions.act_window,name:project_gtd.open_gtd_context_tree
 #: model:ir.ui.menu,name:project_gtd.menu_open_gtd_time_contexts
 #: view:project.gtd.timebox:0
@@ -227,6 +226,12 @@ msgstr "Τα Χρονοπλαίσιά μου"
 #: view:project.gtd.timebox:0
 msgid "Timeboxes"
 msgstr "Χρονοπλαίσια"
+
+#. module: project_gtd
+#: view:project.task:0
+#, fuzzy
+msgid "Planned"
+msgstr "Προγραμματισμένες ώρες"
 
 #. module: project_gtd
 #: view:project.gtd.context:0 field:project.gtd.context,name:0
@@ -279,11 +284,6 @@ msgid "Deadline"
 msgstr "Προθεσμία"
 
 #. module: project_gtd
-#: view:project.task:0
-msgid "Est. Hours"
-msgstr "Εκτιμ. Ώρες"
-
-#. module: project_gtd
 #: wizard_field:project.gtd.timebox.fill,init,timebox_id:0
 msgid "Get from Timebox"
 msgstr "Φέρε από Χρονοπλαίσιο"
@@ -308,13 +308,8 @@ msgstr "Προγραμματισμένες Ώρες"
 msgid "Weekly"
 msgstr "Εβδομαδιαία"
 
-#. module: project_gtd
-#: constraint:ir.actions.act_window:0
-msgid "Invalid model name in the action definition."
-msgstr ""
+#~ msgid "My Contexts"
+#~ msgstr "Τα Περιβάλλοντά μου"
 
-#. module: project_gtd
-#: view:project.task:0
-#, fuzzy
-msgid "Planned"
-msgstr "Προγραμματισμένες ώρες"
+#~ msgid "Est. Hours"
+#~ msgstr "Εκτιμ. Ώρες"

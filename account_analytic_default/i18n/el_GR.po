@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2009-04-09 17:23+0000\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
 "PO-Revision-Date: 2009-05-17 20:44+0000\n"
 "Last-Translator: Makis Nicolaou <mark.nicolaou@gmail.com>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -83,6 +83,11 @@ msgid "User"
 msgstr "Χρήστης"
 
 #. module: account_analytic_default
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
+
+#. module: account_analytic_default
 #: model:ir.actions.act_window,name:account_analytic_default.act_account_acount_move_line_open
 msgid "Entries"
 msgstr "Εγγραφές"
@@ -108,8 +113,3 @@ msgstr "Συνθήκες"
 #: model:ir.actions.act_window,name:account_analytic_default.analytic_rule_action_user
 msgid "Analytic Rules"
 msgstr "Κανόνες Αναλυτικής"
-
-#. module: account_analytic_default
-#: constraint:ir.actions.act_window:0
-msgid "Invalid model name in the action definition."
-msgstr ""
