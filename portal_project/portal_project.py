@@ -243,6 +243,27 @@ class Wiki(osv.osv):
     _columns = {
         'project_id': fields.many2one('project.project', 'Project')
         }
+
+    def write(self, cr, uid, ids, vals, context={}):
+        wiki = self.browse(cr, uid, ids[0])
+        res = super(Wiki, self).write(cr, uid, ids, vals, context={})
+        cr.commit()
+        task_data = self.browse(cr, uid, ids[0], context)
+        desc = '''Hello,\n\n  The wiki information is updated for the project: %s\n\nModified Datas are:\n''' %(str(wiki.project_id.name),)
+        for val in vals:
+            if val.endswith('id') or val.endswith('ids'):
+                continue
+            desc += '========\n' +val + ':' + str(vals[val]) + "\n"
+        desc += '\nThanks,\n' + 'Project Manager\n' + (task_data.project_id.manager and task_data.project_id.manager.name) or ''
+        self.pool.get('project.project')._log_event(cr, uid, wiki.project_id.id, {
+                                                                'res_id' : ids[0],
+                                                                'name' : wiki.name or '',
+                                                                'description' : desc,
+                                                                'user_id': uid,
+                                                                'action' : 'write',
+                                                                'type' : 'task'})
+        return res
+
 Wiki()
 
 class crm_case(osv.osv):

@@ -130,7 +130,7 @@ class project_event_configuration(osv.osv):
                         action = 'Modified'
                     elif config.unlink:
                         action = 'Deleted'
-                    subject = '[%s] %s - %d : %s (%s)' %(config.project_id.name, config.type, values.get('res_id',False), values.get('name',False), action)
+                    subject = '[%s] %s - %d : %s ' %(config.project_id.name, config.type, values.get('res_id',False), values.get('name',False))
                     body = values.get('description',False)
                     self.send_mail(action_to, subject, body, attach=values.get('attach',False))
                 elif config.action_type == 'sms':
@@ -150,11 +150,13 @@ class project_task(osv.osv):
         cr.commit()
         task = self.browse(cr, uid, res, context=context)
         if task.project_id:
-            desc = ''' Hello %s, \n \n \t This Mail is send to inform you about the new task created. \n \n Project: %s \n Task: %s \n Created on: %s \n Assigned to: %s \n Deadline: %s \n Planned hours: %s \n Remaining hours: %s \n Total Hours: %s \n Task Summary: %s \n \n Thanks,''' \
-                       %(task.user_id.name, task.project_id.name,\
+            desc = ''' Hello, \n \t The new task is created for the Project: %s \n\n And its Details are: \n \n Task: %s \n Created on: %s \n Assigned to: %s \n Deadline: %s \n Planned hours: %s \n Remaining hours: %s \n Total Hours: %s \n For Partner: %s \n Task Summary: \n ====== \n %s \n \n ======= \n \nThanks,\nProject Manager \n%s''' \
+                       %(task.project_id.name,\
                          task.name, task.date_start, task.user_id.name, \
                          task.date_deadline or '', task.planned_hours or 0, \
-                         task.remaining_hours or 0, task.total_hours or 0, task.description or '')
+                         task.remaining_hours or 0, task.total_hours or 0,\
+                         task.partner_id and task.partner_id.name or '',\
+                         task.description or '',task.project_id.manager and task.project_id.manager.name or '')
             self.pool.get('project.project')._log_event(cr, uid, task.project_id.id, {
                                 'res_id' : task.id,
                                 'name' : task.name,
@@ -165,14 +167,17 @@ class project_task(osv.osv):
         return res
 
     def write(self, cr, uid, ids, vals, context={}):
-        tasks = self.read(cr, uid, ids[0], ['project_id'])
-        task = self.browse(cr, uid, [tasks['id']])[0]
+        task = self.browse(cr, uid, ids)[0]
         res = super(project_task, self).write(cr, uid, ids, vals, context={})
         cr.commit()
-        desc = "Hello ,\n\n  This Mail is send to inform you about the task Updated.\n "
+        task_data = self.browse(cr, uid, ids[0], context)
+        desc = '''Hello ,\n\n  The task is updated for the project: %s\n\nModified Datas are:\n''' %(str(task.project_id.name),)
         for val in vals:
+            if val.endswith('id') or val.endswith('ids'):
+                continue
             desc += val + ':' + str(vals[val]) + "\n"
-        self.pool.get('project.project')._log_event(cr, uid, tasks['project_id'][0], {
+        desc += '\nThanks,\n' + 'Project Manager\n' + (task_data.project_id.manager and task_data.project_id.manager.name) or ''
+        self.pool.get('project.project')._log_event(cr, uid, task.project_id.id, {
                                                                 'res_id' : ids[0],
                                                                 'name' : task.name or '',
                                                                 'description' : desc,
@@ -198,10 +203,10 @@ class document_file(osv.osv):
             size = str((document.file_size) / 1024) + ' KB'
         elif document.file_size < 1024:
             size = str(document.file_size) + ' bytes'
-            
+
         if document.res_model == 'project.project' and document.res_id:
-            desc = ''' Hello %s, \n \n \t This Mail is send to inform you about the new Document uploaded. \n \n Project: %s \n Document attached: %s \n Attachment name: %s \n Owner: %s \n Size: %s \n Creator: %s \n Date Created: %s \n Document Summary: %s \n \n Thanks,''' \
-                       %(document.user_id.name, document.title, document.datas_fname, document.name, \
+            desc = ''' Hello, \n \n \t The new document is uploaded on the Project: %s \n\n Document attached: %s \n Attachment name: %s \n Owner: %s \n Size: %s \n Creator: %s \n Date Created: %s \n Document Summary: %s \n \n Thanks,\n Project Manager\n''' \
+                       %(document.title, document.datas_fname, document.name, \
                          document.user_id.name, size, document.create_uid.name, document.create_date, document.description or '')
             self.pool.get('project.project')._log_event(cr, uid, document.res_id, {
                                 'res_id' : document.id,
