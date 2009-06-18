@@ -101,26 +101,25 @@ def generate_reports(cr,uid,obj,report_type,context): # {{{
         r_type = 'html'
 
     for address_id in address_ids:
-        """ Check for segment for non preview workitem and set mail service to use"""
-        if obj.segment_id and not obj.is_preview:
-            if not obj.segment_id.proposition_id:
-                return "no_proposition"
-            elif not obj.segment_id.proposition_id.camp_id:
-                return "no_campaign"
-            else:
-                """ Use the mail service defined in the campaign """
-                camp_id = obj.segment_id.proposition_id.camp_id.id
-                camp_mail_service_id = camp_mail_service_obj.search(cr,uid,[('campaign_id','=',camp_id),('offer_step_id','=',step_id)])
-                if not camp_mail_service_id:
-                    return "no_mail_service_for_campaign"
+        """ Check for segment to set mail service to use"""
+        if obj.mail_service_id:
+            """ If a mail service is specified in the workitem, use it """
+            camp_mail_service = camp_mail_service_obj.browse(cr, uid, [obj.mail_service_id.id])[0]
+        else:
+            if obj.segment_id :
+                if not obj.segment_id.proposition_id:
+                    return "no_proposition"
+                elif not obj.segment_id.proposition_id.camp_id:
+                    return "no_campaign"
                 else:
-                    camp_mail_service = camp_mail_service_obj.browse(cr, uid, camp_mail_service_id)[0]
-    	elif obj.is_preview:
-            if obj.mail_service_id:
-                """ If a mail service is specified in the workitem, use it """
-                camp_mail_service = camp_mail_service_obj.browse(cr, uid, [obj.mail_service_id.id])[0]
-            else:
-                return "no_mail_service_for_preview"
+                    """ Use the mail service defined in the campaign """
+                    camp_id = obj.segment_id.proposition_id.camp_id.id
+                    camp_mail_service_id = camp_mail_service_obj.search(cr,uid,[('campaign_id','=',camp_id),('offer_step_id','=',step_id)])
+                    if not camp_mail_service_id:
+                        return "no_mail_service_for_campaign"
+                    else:
+                        camp_mail_service = camp_mail_service_obj.browse(cr, uid, camp_mail_service_id)[0]
+
 
         """ Compute document delivery date """
         if camp_mail_service.mail_service_id.time_mode=='interval' :

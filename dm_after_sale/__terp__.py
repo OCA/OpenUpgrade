@@ -20,7 +20,7 @@
 #
 ##############################################################################
 {
-    "name" : "Direct Marketing For After-Sale",
+    "name" : "After-Sale Service wizards for DM",
     "version" : "1.0",
     "author" : "Tiny",
     "website" : "http://www.openerp.com",
