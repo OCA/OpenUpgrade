@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
-"PO-Revision-Date: 2009-05-29 19:04+0300\n"
+"PO-Revision-Date: 2009-06-18 10:10+0300\n"
 "Last-Translator: P. Christeas <p_christ@hol.gr>\n"
-"Language-Team: Greek <kde-i18n-doc@kde.org>\n"
+"Language-Team: Greek <nls@hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -54,12 +54,12 @@ msgstr ""
 #. module: account_greek_fiscal
 #: rml:account.invoice.fiscalgr:0
 msgid "Tax"
-msgstr ""
+msgstr "Φόρος"
 
 #. module: account_greek_fiscal
 #: rml:account.invoice.fiscalgr:0
 msgid "Disc. (%)"
-msgstr ""
+msgstr "Εκπτ. (%)"
 
 #. module: account_greek_fiscal
 #: field:ir.actions.report.xml,copies:0
@@ -74,29 +74,31 @@ msgstr "Εκτύπωση"
 #. module: account_greek_fiscal
 #: rml:account.invoice.fiscalgr:0
 msgid "Unit Price"
-msgstr ""
+msgstr "Τιμή Μονάδας"
 
 #. module: account_greek_fiscal
 #: view:account.fiscalgr.occup:0
 #: model:ir.actions.act_window,name:account_greek_fiscal.view_account_fiscalgr_occup_tf
 #: model:ir.ui.menu,name:account_greek_fiscal.menu_account_fiscalgr_occup_tf
 msgid "Tax occupations"
-msgstr ""
+msgstr "Επαγγέλματα"
 
 #. module: account_greek_fiscal
 #: constraint:ir.actions.act_window:0
 msgid "Invalid model name in the action definition."
-msgstr ""
+msgstr "Μη έγκυρο μοντέλο στον ορισμό ενέργειας."
 
 #. module: account_greek_fiscal
 #: field:account.fiscalgr.print,total_no:0
+#, fuzzy
 msgid "Total sequence"
-msgstr ""
+msgstr "Σύνολο εκτυπώσεων"
 
 #. module: account_greek_fiscal
 #: field:account.fiscalgr.print,day_no:0
+#, fuzzy
 msgid "Daily sequence"
-msgstr ""
+msgstr "Ημερήσιο σύνολο"
 
 #. module: account_greek_fiscal
 #: rml:account.invoice.fiscalgr:0
@@ -121,12 +123,12 @@ msgstr "Φόροι:"
 #. module: account_greek_fiscal
 #: model:ir.ui.menu,name:account_greek_fiscal.menu_account_fiscalgr
 msgid "Fiscal prints"
-msgstr ""
+msgstr "Θεωρημένες Εκτυπώσεις"
 
 #. module: account_greek_fiscal
 #: help:account.fiscalgr.tauth,descr:0
 msgid "Any notes for this authority"
-msgstr ""
+msgstr "Σημειώσεις για τη ΔΟΥ."
 
 #. module: account_greek_fiscal
 #: field:account.fiscalgr.occup,descr:0 field:account.fiscalgr.tauth,descr:0
@@ -137,27 +139,27 @@ msgstr "Περιγραφή"
 #. module: account_greek_fiscal
 #: rml:account.invoice.fiscalgr:0
 msgid "Price"
-msgstr ""
+msgstr "Τιμή"
 
 #. module: account_greek_fiscal
 #: rml:account.invoice.fiscalgr:0
 msgid "Invoice Date"
-msgstr ""
+msgstr "Ημερομηνία Τιμολόγησης"
 
 #. module: account_greek_fiscal
 #: rml:account.invoice.fiscalgr:0
 msgid "Canceled Invoice"
-msgstr ""
+msgstr "Ακυρωμένο Τιμολόγιο"
 
 #. module: account_greek_fiscal
 #: rml:account.invoice.fiscalgr:0
 msgid "Tel. :"
-msgstr ""
+msgstr "Τηλ:"
 
 #. module: account_greek_fiscal
 #: field:res.partner,vat_taxauth:0
 msgid "Tax authority"
-msgstr ""
+msgstr "Δ.Ο.Υ."
 
 #. module: account_greek_fiscal
 #: field:account.fiscalgr.print,cups_jobid:0
@@ -189,12 +191,12 @@ msgstr ""
 #: model:ir.actions.act_window,name:account_greek_fiscal.view_account_fiscalgr_tauth_tf
 #: model:ir.ui.menu,name:account_greek_fiscal.menu_account_fiscalgr_tauth_tf
 msgid "Tax authorities"
-msgstr ""
+msgstr "Πίνακας Δ.Ο.Υ."
 
 #. module: account_greek_fiscal
 #: rml:account.invoice.fiscalgr:0
 msgid "Partner Ref."
-msgstr ""
+msgstr "Εταιρική Αναφ."
 
 #. module: account_greek_fiscal
 #: constraint:ir.ui.view:0
@@ -204,37 +206,37 @@ msgstr "Άκυρο XML για αρχιτεκτονική Προβολής!"
 #. module: account_greek_fiscal
 #: help:ir.actions.report.xml,copies:0
 msgid "Default number of copies."
-msgstr ""
+msgstr "Αριθμός αντιγράφων"
 
 #. module: account_greek_fiscal
 #: field:account.invoice,property_fiscalgr_invoice_report:0
 msgid "Fiscal report template"
-msgstr ""
+msgstr "Πρότυπο λογιστικού εγγράφου"
 
 #. module: account_greek_fiscal
 #: rml:account.invoice.fiscalgr:0
 msgid "Invoice"
-msgstr ""
+msgstr "Τιμολόγιο"
 
 #. module: account_greek_fiscal
 #: rml:account.invoice.fiscalgr:0
 msgid "Total:"
-msgstr ""
+msgstr "Σύνολο:"
 
 #. module: account_greek_fiscal
 #: field:account.fiscalgr.tauth,country_id:0
 msgid "Country"
-msgstr ""
+msgstr "Χώρα"
 
 #. module: account_greek_fiscal
 #: rml:account.invoice.fiscalgr:0
 msgid "Taxes"
-msgstr ""
+msgstr "Φόροι"
 
 #. module: account_greek_fiscal
 #: help:account.fiscalgr.print,cups_msg:0
 msgid "This is the message returned by cups, if the printing fails."
-msgstr ""
+msgstr "Αυτό είναι το μήνυμα από το σύστημα CUPS, αν αποτύχει η εκτύπωση."
 
 #. module: account_greek_fiscal
 #: field:account.fiscalgr.print,cups_msg:0
@@ -244,7 +246,7 @@ msgstr "Μήνυμα CUPS"
 #. module: account_greek_fiscal
 #: rml:account.invoice.fiscalgr:0
 msgid "Amount"
-msgstr ""
+msgstr "Ποσό"
 
 #. module: account_greek_fiscal
 #: field:ir.actions.report.xml,printer:0
@@ -276,12 +278,12 @@ msgstr "Ημ/νία εκτύπωσης"
 #. module: account_greek_fiscal
 #: rml:account.invoice.fiscalgr:0
 msgid "Quantity"
-msgstr ""
+msgstr "Ποσότητα"
 
 #. module: account_greek_fiscal
 #: rml:account.invoice.fiscalgr:0
 msgid "Refund"
-msgstr ""
+msgstr "Επιστροφή"
 
 #. module: account_greek_fiscal
 #: model:ir.model,name:account_greek_fiscal.model_account_fiscalgr_occup
@@ -302,12 +304,12 @@ msgstr "Αντίγραφα"
 #. module: account_greek_fiscal
 #: rml:account.invoice.fiscalgr:0
 msgid "Supplier Invoice"
-msgstr ""
+msgstr "Τιμολόγιο Προμηθευτή"
 
 #. module: account_greek_fiscal
 #: field:account.fiscalgr.print,machine_id:0
 msgid "Machine ID"
-msgstr ""
+msgstr "ID Μηχανής"
 
 #. module: account_greek_fiscal
 #: help:res.partner,vat_occup:0
@@ -324,7 +326,7 @@ msgstr ""
 #. module: account_greek_fiscal
 #: rml:account.invoice.fiscalgr:0
 msgid "Net Total:"
-msgstr ""
+msgstr "Καθαρό σύνολο:"
 
 #. module: account_greek_fiscal
 #: field:account.fiscalgr.print,hash:0
@@ -334,7 +336,7 @@ msgstr "ΠΑΗΨΣ"
 #. module: account_greek_fiscal
 #: rml:account.invoice.fiscalgr:0
 msgid "Fax :"
-msgstr ""
+msgstr "Fax :"
 
 #. module: account_greek_fiscal
 #: help:account.fiscalgr.print,name:0
@@ -344,19 +346,22 @@ msgstr ""
 #. module: account_greek_fiscal
 #: rml:account.invoice.fiscalgr:0
 msgid "Supplier Refund"
-msgstr ""
+msgstr "Επιστροφή Χρημάτων Προμηθευτή"
 
 #. module: account_greek_fiscal
 #: field:account.fiscalgr.occup,name:0 field:account.fiscalgr.tauth,name:0
 msgid "Name"
-msgstr ""
+msgstr "Όνομα"
 
 #. module: account_greek_fiscal
 #: model:ir.module.module,shortdesc:account_greek_fiscal.module_meta_information
+#, fuzzy
 msgid "Greek Fiscal printing"
-msgstr ""
+msgstr "Ελληνικές Φορολογικές Εκτυπώσεις"
 
 #. module: account_greek_fiscal
 #: model:ir.actions.act_window,name:account_greek_fiscal.view_account_fiscalgr_print_tree_form
+#, fuzzy
 msgid "Fiscal Prints"
-msgstr ""
+msgstr "Φορολογικές εκτυπώσεις"
+

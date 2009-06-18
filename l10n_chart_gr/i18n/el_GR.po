@@ -2,20 +2,23 @@
 # This file contains the translation of the following modules:
 # 	* l10n_chart_gr
 #
+# P. Christeas <p_christ@hol.gr>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
-"PO-Revision-Date: 2009-06-15 02:55+0200\n"
-"Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
-"Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
+"PO-Revision-Date: 2009-06-18 10:11+0300\n"
+"Last-Translator: P. Christeas <p_christ@hol.gr>\n"
+"Language-Team: Greek <nls@hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Greek\n"
 "X-Poedit-Country: GREECE\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"X-Generator: Lokalize 0.3\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: l10n_chart_gr
 #: model:account.account.type,name:l10n_chart_gr.account_type_receivable
@@ -25,7 +28,7 @@ msgstr "Εισπρακτέα"
 #. module: l10n_chart_gr
 #: model:ir.module.module,description:l10n_chart_gr.module_meta_information
 msgid "This is the base module to manage the accounting chart for Greece."
-msgstr ""
+msgstr "Αυτό είναι το άρθρωμα που προσφέρει το Ελληνικό Λογιστικό Σχέδιο."
 
 #. module: l10n_chart_gr
 #: constraint:account.account.template:0
@@ -60,7 +63,8 @@ msgid ""
 msgstr ""
 "Δημιουργήστε το Λογιστικό Σχέδιο από πρότυπο. Θα πρέπει να καταχωρήσετε το "
 "όνομα της εταιρείας, το πρότυπο σχεδίου για εφαργμογή, αριθμό ψηφίων "
-"τραπεζικών & λογιστικών λογαριασμών, καθώς και το νόμισμα για δημιουργία "
+"τραπεζικών & λογιστικών λογαριασμών (=1), καθώς και το νόμισμα για "
+"δημιουργία "
 "ημερολογίων. Έτσι δημιουργείται το καθαρό αντίγραφο του πρότυπου σχεδίου.\n"
 "\tΑυτός είναι ο ίδιος Αυτόματος Οδηγός με αυτόν που βρίσκεται στην "
 "Οικονομική Διαχείριση/Οικονομική Λογιστική/Οικονομικοί Λογαριασμοί/"
@@ -100,3 +104,4 @@ msgstr "Έξοδο"
 #: model:account.account.type,name:l10n_chart_gr.account_type_view
 msgid "View"
 msgstr "Προβολή"
+
