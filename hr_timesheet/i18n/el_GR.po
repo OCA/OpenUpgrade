@@ -2,20 +2,23 @@
 # This file contains the translation of the following modules:
 # 	* hr_timesheet
 #
+# P. Christeas <p_christ@hol.gr>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
-"PO-Revision-Date: 2009-06-15 02:49+0200\n"
-"Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
-"Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
+"PO-Revision-Date: 2009-06-18 16:05+0300\n"
+"Last-Translator: P. Christeas <p_christ@hol.gr>\n"
+"Language-Team: Greek <nls@hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Greek\n"
 "X-Poedit-Country: GREECE\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"X-Generator: Lokalize 0.3\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: hr_timesheet
 #: selection:hr.analytical.timesheet,init,month:0
@@ -40,7 +43,7 @@ msgstr ""
 #. module: hr_timesheet
 #: model:ir.actions.report.xml,name:hr_timesheet.report_user_timesheet
 msgid "Employee timesheet"
-msgstr "Φύλλο Xρόνου Eργασίας Υπαλλήλου"
+msgstr "Φύλλο Xρόνου Υπαλλήλου"
 
 #. module: hr_timesheet
 #: model:ir.actions.wizard,name:hr_timesheet.si_so
@@ -149,9 +152,8 @@ msgstr "Το Ημερήσιο Ωράριό μου"
 #. module: hr_timesheet
 #: model:ir.actions.wizard,name:hr_timesheet.wizard_hr_timesheet
 #: model:ir.ui.menu,name:hr_timesheet.menu_wizard_hr_timesheet
-#, fuzzy
 msgid "Employee Timesheet"
-msgstr "Φύλλο Xρόνου Eργασίας Υπαλλήλου"
+msgstr "Φύλλο Xρόνου Υπαλλήλου"
 
 #. module: hr_timesheet
 #: view:account.analytic.account:0
@@ -168,7 +170,7 @@ msgstr "Ώρες Εργασίας"
 #. module: hr_timesheet
 #: view:hr.analytic.timesheet:0
 msgid "Timesheet Lines"
-msgstr "Γραμμές Φύλλων Xρόνου Eργασίας"
+msgstr "Γραμμές Φύλλων Xρόνου"
 
 #. module: hr_timesheet
 #: view:hr.analytic.timesheet:0
@@ -179,7 +181,7 @@ msgstr "Σύνολο Χρόνου"
 #: xsl:hr.analytical.timesheet:0 xsl:hr.analytical.timesheet_users:0
 #: model:ir.ui.menu,name:hr_timesheet.next_id_48
 msgid "Timesheet"
-msgstr "Φύλλo Xρόνου Eργασίας"
+msgstr "Φύλλo Xρόνου"
 
 #. module: hr_timesheet
 #: wizard_button:hr.analytical.timesheet,init,end:0
@@ -192,10 +194,10 @@ msgstr "Ακύρωση"
 
 #. module: hr_timesheet
 #: model:ir.actions.wizard,name:hr_timesheet.wizard_hr_timesheet_my
-#: model:ir.ui.menu,name:hr_timesheet.menu_wizard_hr_timesheet_my
 #, fuzzy
+#: model:ir.ui.menu,name:hr_timesheet.menu_wizard_hr_timesheet_my
 msgid "Print My Timesheet"
-msgstr "Εκτύπωση Φύλλου Xρόνου Eργασίας μου"
+msgstr "Εκτύπωση Φύλλου Xρόνου μου"
 
 #. module: hr_timesheet
 #: wizard_field:hr.analytical.timesheet,init,user_id:0
@@ -319,7 +321,7 @@ msgstr "Το Ωράριο Εργασίας μου"
 #. module: hr_timesheet
 #: model:ir.model,name:hr_timesheet.model_hr_analytic_timesheet
 msgid "Timesheet line"
-msgstr "Γραμμή Φύλλου Xρόνου Eργασίας"
+msgstr "Γραμμή Φύλλου Xρόνου"
 
 #. module: hr_timesheet
 #: xsl:hr.analytical.timesheet:0
@@ -345,9 +347,8 @@ msgstr "Έναρξη Εργασίας"
 #: model:ir.actions.report.xml,name:hr_timesheet.report_users_timesheet
 #: model:ir.actions.wizard,name:hr_timesheet.wizard_hr_timesheet_users
 #: model:ir.ui.menu,name:hr_timesheet.menu_wizard_hr_timesheet_users
-#, fuzzy
 msgid "Employees Timesheet"
-msgstr "Φύλλο Xρόνου Eργασίας Υπαλλήλου"
+msgstr "Φύλλο Xρόνου Υπαλλήλου"
 
 #. module: hr_timesheet
 #: selection:hr.analytical.timesheet,init,month:0
@@ -382,7 +383,7 @@ msgstr "Γενικές Πληροφορίες"
 #. module: hr_timesheet
 #: model:process.process,name:hr_timesheet.process_process_timesheetprocess0
 msgid "Timesheet Process"
-msgstr "Διαδικασία Xρόνου Eργασίας"
+msgstr "Διεργασία Φύλλου Xρόνου"
 
 #. module: hr_timesheet
 #: selection:hr.analytical.timesheet,init,month:0
@@ -399,7 +400,7 @@ msgstr "Στατιστικά ανά Χρήστη"
 #. module: hr_timesheet
 #: view:hr.analytic.timesheet:0
 msgid "Timesheet Line"
-msgstr "Γραμμή Φύλλου Xρόνου Eργασίας"
+msgstr "Γραμμή Φύλλου Xρόνου"
 
 #. module: hr_timesheet
 #: view:account.analytic.account:0
@@ -416,7 +417,7 @@ msgstr "Έτος"
 #. module: hr_timesheet
 #: model:ir.module.module,shortdesc:hr_timesheet.module_meta_information
 msgid "Human Resources (Timesheet encoding)"
-msgstr "Ανθρώπινο Δυναμικό (Κωδικοποίηση Φύλλων Xρόνου Eργασίας)"
+msgstr "Ανθρώπινο Δυναμικό (Κωδικοποίηση Φύλλων Xρόνου)"
 
 #. module: hr_timesheet
 #: view:account.analytic.account:0
@@ -437,7 +438,7 @@ msgstr "Αλλαγή Εργασίας"
 #. module: hr_timesheet
 #: view:hr.employee:0
 msgid "Timesheets"
-msgstr "Φύλλα Xρόνου Eργασίας"
+msgstr "Φύλλα Xρόνου"
 
 #~ msgid "Wed"
 #~ msgstr "Τετ"
