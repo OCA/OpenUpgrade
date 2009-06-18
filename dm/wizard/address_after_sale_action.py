@@ -39,21 +39,29 @@ def search_segment(self, cr, uid, data, context):
     workitems = wi_obj.search(cr,uid,[('address_id','=',data['id'])])
     ids = [wi.segment_id.id for wi in wi_obj.browse(cr,uid,workitems)]
     step_obj = pool.get('dm.offer.step')
-    step = step_obj.search(cr,uid,[('type_id.code','=','ASEVENT'),('name','=','After-Sale Event (email)')])[0]
-    browse_id = step_obj.browse(cr,uid,step)
+    step = step_obj.search(cr,uid,[('type_id.code','=','ASEVENT'),('name','=','After-Sale Event (email)')])
+    if step:
+        step_id = step_obj.browse(cr,uid,step[0]).media_id.id
+    else:
+        step_id = False
     FORM.string = """<?xml version="1.0" ?>
     <form string="After-Sale Action">
         <field name="segment_id" colspan="4" domain="[('id', 'in', [%s])]"/>
         <field name="action_id" colspan="4"/>
         <field name="mail_service_id" colspan="4" domain="[('media_id','=',%d)]"/>
-    </form>"""%(','.join([str(x) for x in ids]),browse_id.media_id.id)
+    </form>"""%(','.join([str(x) for x in ids]),step_id)
     return {}
 
 def _create_event(self,cr,uid,data,context):
     pool = pooler.get_pool(cr.dbname)
+    step = pool.get('dm.offer.step').search(cr,uid,[('type_id.code','=','ASEVENT'),('name','=','After-Sale Event (email)')])
+    if step:
+        step_id = step[0]
+    else:
+        step_id = False
     vals = {
         'segment_id' : data['form']['segment_id'],
-        'step_id' : pool.get('dm.offer.step').search(cr,uid,[('type_id.code','=','ASEVENT'),('name','=','After-Sale Event (email)')])[0],
+        'step_id' : step_id,
         'address_id' : data['id'],
         'trigger_type_id' : data['form']['action_id'],
         'mail_service_id' : data['form']['mail_service_id']
