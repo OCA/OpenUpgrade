@@ -55,7 +55,9 @@ class dm_trademark(osv.osv):
         'signature' : fields.binary('Signature'),
         'banner_top' : fields.binary('Top Banner'),
         'banner_bottom' : fields.binary('Bottom Banner'),
-        'media_id' : fields.many2one('dm.media', 'Media')
+        'media_id' : fields.many2one('dm.media', 'Media'),
+        'email' : fields.char('Email', size=64),
+        'website' : fields.char('Website', size=64),
     }
 
 dm_trademark()
