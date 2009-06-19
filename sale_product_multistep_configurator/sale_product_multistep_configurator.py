@@ -55,6 +55,35 @@ class sale_product_multistep_configurator_configurator_step(osv.osv):
                         'type': 'ir.actions.act_window_close',
                     }
             else:
+                
+                #fake the product_id_change event occuring when manually selecting the product
+                uid = user
+                order_line = self.pool.get('sale.order.line').browse(cr, uid, context.get('sol_id', False), {})
+                sale_order = order_line.order_id
+                pricelist = sale_order.pricelist_id.id
+                date_order = sale_order.date_order
+                fiscal_position = sale_order.fiscal_position.id
+                qty_uos = order_line.product_uos_qty
+                uos = order_line.product_uos.id
+                partner_id = sale_order.partner_id.id
+                packaging = order_line.product_packaging.id
+                product = order_line.product_id.id
+                qty = order_line.product_uom_qty
+                uom = order_line.product_uom.id
+                qty_uos = order_line.product_uos_qty
+                uos = order_line.product_uos.id
+                name = order_line.name
+                lang = context.get('lang', False)
+                update_tax = True
+                flag = True #TODO sure?
+                
+                
+                on_change_result = self.pool.get('sale.order.line').product_id_change(cr, uid, [order_line.id], pricelist, product, qty,
+                    uom, qty_uos, uos, name, partner_id, lang, update_tax, date_order, packaging, fiscal_position, flag)
+                
+                on_change_result['value']['tax_id'] = [(6, 0, on_change_result['value']['tax_id'])] #deal with many2many and sucking geek Tiny API
+                self.pool.get('sale.order.line').write(cr, uid, [order_line.id], on_change_result['value'])
+                
                 return {
                         'view_type': 'form',
                         "view_mode": 'form',
