@@ -31,13 +31,13 @@
 					<field colspan="4" name="dimension_configuration_line_ids">
 						<tree string="Dimension" editable="bottom">
 							<field name="dimension_type_id" readonly="1" on_change="onchange_dimension_type_id(dimension_type_id)" context="{'product_tmpl_id':parent.product_tmpl_id}" />
-							<field name="dimension_type_value_id" widget="selection" on_change="onchange_dimension_type_value_id(dimension_type_value_id)" />
+							<field name="dimension_type_value_id" on_change="onchange_dimension_type_value_id(dimension_type_value_id)" />
 							<field name="dimension_custom_value" on_change="onchange_dimension_custom_value(dimension_custom_value, allow_custom_value)" attrs="{'readonly':[('allow_custom_value','=',False)]}" />
 							<field name="allow_custom_value" readonly="1"/>
 						</tree>
 						<form string="Dimension">
 							<field name="dimension_type_id" readonly="1" on_change="onchange_dimension_type_id(dimension_type_id)" context="{'product_tmpl_id':parent.product_tmpl_id}" />
-							<field name="dimension_type_value_id" widget="selection" on_change="onchange_dimension_type_value_id(dimension_type_value_id)" />
+							<field name="dimension_type_value_id" on_change="onchange_dimension_type_value_id(dimension_type_value_id)" />
 							<field name="dimension_custom_value" on_change="onchange_dimension_custom_value(dimension_custom_value, allow_custom_value)" attrs="{'readonly':[('allow_custom_value','=',False)]}" />
 							<field name="allow_custom_value" readonly="1"/>
 						</form>
