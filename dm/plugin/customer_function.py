@@ -69,7 +69,7 @@ def customer_function(cr, uid, **args):
         if (model_name == 'dm.workitem'):
             if args['field_name'] == 'tr_from_id':
                 if res['tr_from_id']:
-                    previous_step_id = pool.get('dm.offer.step.transition').browse(cr,uid,[res['tr_from_id'][0]])[0]
+                    previous_step_id = pool.get('dm.offer.step.transition').browse(cr,uid,res['tr_from_id'][0])
                     return previous_step_id.step_from_id.id
                 else : return False
             else : 

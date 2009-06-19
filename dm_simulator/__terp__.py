@@ -20,7 +20,7 @@
 #
 ##############################################################################
 {
-    "name" : "Simulation",
+    "name" : "Direct Marketing Campaign Simulator",
     "version" : "1.0",
     "author" : "Tiny",
     "website" : "http://www.openerp.com",

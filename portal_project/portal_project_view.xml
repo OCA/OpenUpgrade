@@ -2,7 +2,7 @@
 <openerp>
     <data>
 
-		<menuitem parent="project.menu_main" id="menu_portal" name="Portal"/>
+		<menuitem parent="portal.menu_portal_root" id="menu_portal" name="Portal For Project"/>
 
 <!--    	User Form-->
     	 <record id="view_portal_users_form_simple" model="ir.ui.view">
@@ -316,7 +316,7 @@
                                   <field name="user_id"/>
                                   <field name="name"/>
                             </tree>
-                            <form string="Latests Announces" editable="top">
+                            <form string="Latests Announces">
                                <field name="name" string="Subject"/>
                                 <field name="date"/>
 			                    <field name="user_id" string="Responsible"/>
@@ -329,7 +329,7 @@
                   				<field name="name"/>
                             	<field name="login"/>
 	                		</tree>
-	                		<form string="Members" editable="top">
+	                		<form string="Members">
 	                			<field name="name"/>
                             	<field name="login"/>
 	                		</form>
@@ -379,6 +379,7 @@
 	        <field name="view_type">form</field>
 	        <field name="view_mode">tree,form</field>
 	        <field name="view_id" ref="project_portal_tree_view"/>
+	        <field name="context" eval="{'action_portal':'project'}"/>
 	    </record>
 	    <record model="ir.actions.act_window.view" id="action_crm_tag_form_view_all1">
 	        <field name="sequence" eval="1"/>
@@ -414,6 +415,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree,form</field>
             <field name="view_id" ref="view_crm_case_bugs_user"/>
+            <field name="context" eval="{'bugs_user':'bug_form'}"/>
         </record>
 
         <record model="ir.actions.act_window" id="crm_case_categ_act_new_portal">
@@ -455,62 +457,60 @@
 	        <field name="type">form</field>
 	        <field name="arch" type="xml">
 	            <form string="Bugs">
-	            <hpaned>
-	            	<child1>
-	            	<group colspan="2">
-	            		<separator string="Quick Report a New Bug" colspan="2"/>
-	            		<newline/>
-	            		<group colspan="2">
-            				<field name="name" string="Bug Summary" colspan="2"/>
-            				<field name="section_id" invisible="0" colspan="2"/>
-            				<field name="category2_id" colspan="2" string="Version"/>
-            			</group>
-            			<newline/>
-            			<group colspan="2">
-            			<field name="description" nolabel="1" colspan="2"/>
-            			</group>
-            			<newline/>
-            			<group col="100" colspan="2">
-            			<button name="%(crm_case_categ_act_new_portal)d" string="Save New Bug" type="action" />
-	            		</group>
-	            		<newline/>
-	            		<separator string="Information" colspan="2"/>
-	            		<newline/>
-	            		<group colspan="2">
-	            			<label align="0.0" colspan="2">Bugs can be reported by sending an email to the bug email gateway:</label>
-	            			<field name="email_from" readonly="1" string="EMail" colspan="2"/>
-	            		</group>
-	            	</group>
-	            	</child1>
-	            	<child2>
-	            	<group colspan="2" col="2">
-	            		<button name="%(crm_case_categ_act_new_portal)d" string="Report a Bug" type="action"/>
-	            		<button name="%(act_crm_bug_search_form)d" string="Search a Bug" type="action"/>
-	            	</group>
-	            	<newline/>
-	            	<group colspn="2">
-          				<action name="%(act_crm_bugs_user_form)d" string="Bugs by User" colspan="2" height="300"/>
-          			</group>
-	            	</child2>
-	            </hpaned>
-	            <hpaned>
-	            	<child1>
-	            		<field name="bug_ids" nolabel="1" colspan="2" height="200" readonly="True" >
-	            			<tree string="Latest Bugs Reported">
-	            				<field name="name"/>
-                                <field name="date"/>
-			                    <field name="user_id" string="Responsible"/>
-			                    <!--<field name="project_id"/>-->
-	            			</tree>
-	            			 <form string="Latest Bugs Reported">
-                              	<field name="name"/>
-                                <field name="date"/>
-			                    <field name="user_id" string="Responsible"/>
-			                    <!--<field name="project_id"/>-->
-                            </form>
-	            		</field>
-	            	</child1>
-	            </hpaned>
+					<hpaned>
+						<child1>
+		            	<group colspan="2">
+		            		<separator string="Quick Report a New Bug" colspan="2"/>
+		            		<newline/>
+		            		<group colspan="2">
+	            				<field name="name" string="Bug Summary" colspan="2"/>
+	            				<field name="section_id" invisible="0" colspan="2"/>
+	            				<field name="category2_id" colspan="2" string="Version"/>
+	            			</group>
+	            			<newline/>
+	            			<group colspan="2">
+	            				<field name="description" nolabel="1" colspan="2"/>
+	            			</group>
+	            			<newline/>
+	            			<group col="100" colspan="2">
+	            				<button name="%(crm_case_categ_act_new_portal)d" colspan="2" string="Save New Bug" type="action" />
+		            		</group>
+		            		<newline/>
+		            		<separator string="Information" colspan="2"/>
+		            		<newline/>
+		            		<group colspan="2">
+		            			<label align="0.0" colspan="2" string="Bugs can be reported by sending an email to the bug email gateway:"></label>
+		            			<field name="email_from" readonly="1" string="EMail" colspan="2"/>
+		            		</group>
+			            </group>
+						</child1>
+		            	<child2>
+		            	<group>
+			            	<group colspan="2" col="2">
+			            		<button name="%(crm_case_categ_act_new_portal)d" string="Report a Bug" type="action"/>
+			            		<button name="%(act_crm_bug_search_form)d" string="Search a Bug" type="action"/>
+			            		<newline/>
+			        			<separator string="Bugs by User" colspan="2"/>
+			            		<newline/>
+				          		<action name="%(act_crm_bugs_user_form)d" string="Bugs by User" colspan="2" height="300"/>
+							</group>
+						</group>
+		          		</child2>
+	          		</hpaned>
+	          		<group colspan="4">
+            		<field name="bug_ids" nolabel="1" colspan="2" height="200" readonly="True" >
+            			<tree string="Latest Bugs Reported">
+            				<field name="name"/>
+                            <field name="date"/>
+		                    <field name="user_id" string="Responsible"/>
+            			</tree>
+            			<form string="Latest Bugs Reported">
+                          	<field name="name"/>
+                            <field name="date"/>
+		                    <field name="user_id" string="Responsible"/>
+                        </form>
+            		</field>
+            		</group>
 	           	</form>
 	        </field>
 	    </record>
@@ -614,59 +614,57 @@
 	            <form string="Features">
 	            <hpaned>
 	            	<child1>
-	            	<group colspan="2">
-	            		<separator string="New Feature" colspan="2"/>
-	            		<newline/>
-	            		<group colspan="2">
-            				<field name="name" string="Feature Summary" colspan="2"/>
-            				<field name="section_id" invisible="0" colspan="2"/>
-            				<field name="category2_id" string="Version" colspan="2"/>
-            			</group>
-            			<newline/>
-            			<field name="description" nolabel="1" colspan="2"/>
-            			<newline/>
-            			<group col="100" colspan="2">
-            			<button name="%(crm_case_categ_act_new_portal)d" string="Save Feature" type="action"/>
-	            		</group>
-	            		<newline/>
-	            		<separator string="Information" colspan="2"/>
-	            		<newline/>
-	            		<group colspan="2">
-	            			<label align="0.0" colspan="2">Features can be reported by sending an email to the feature email gateway:</label>
-	            			<field name="email_from" readonly="1" string="EMail" colspan="2"/>
-	            		</group>
-	            	</group>
+		            	<group colspan="2">
+		            		<separator string="New Feature" colspan="2"/>
+		            		<newline/>
+		            		<group colspan="2">
+	            				<field name="name" string="Feature Summary" colspan="2"/>
+	            				<field name="section_id" invisible="0" colspan="2"/>
+	            				<field name="category2_id" string="Version" colspan="2"/>
+	            			</group>
+	            			<newline/>
+	            			<field name="description" nolabel="1" colspan="2"/>
+	            			<newline/>
+	            			<group col="100" colspan="2">
+	            				<button name="%(crm_case_categ_act_new_portal)d" string="Save Feature" type="action"/>
+		            		</group>
+		            		<newline/>
+		            		<separator string="Information" colspan="2"/>
+		            		<newline/>
+		            		<group colspan="2">
+		            			<label align="0.0" colspan="2">Features can be reported by sending an email to the feature email gateway:</label>
+		            			<field name="email_from" readonly="1" string="EMail" colspan="2"/>
+		            		</group>
+		            	</group>
 	            	</child1>
 	            	<child2>
-	            	<group colspan="2" col="2">
-	            		<button name="%(crm_case_categ_act_new_portal)d" string="New Feature" type="action"/>
-	            		<button name="%(act_crm_feature_search_form)d" string="Search Feature" type="action"/>
-	            	</group>
-	            	<newline/>
-	            	<group colspn="2">
-          				<action name="%(act_crm_features_user_form)d" string="Features by User" colspan="2" height="300"/>
-          			</group>
+		            	<group>
+	                        <group colspan="2" col="2">
+			            		<button name="%(crm_case_categ_act_new_portal)d" string="New Feature" type="action"/>
+			            		<button name="%(act_crm_feature_search_form)d" string="Search Feature" type="action"/>
+		            			<newline/>
+			        			<separator string="Features by User" colspan="2"/>
+			            		<newline/>
+	          					<action name="%(act_crm_features_user_form)d" string="Features by User" colspan="2" height="300"/>
+	                    	</group>
+	                    </group>
 	            	</child2>
 	            	<newline/>
 	            </hpaned>
-	            <hpaned>
-	            	<child1>
-	            		<field name="feature_ids" nolabel="1" colspan="2" height="200" readonly="True">
-	            			<tree string="Latest Features">
-	            				<field name="name"/>
-                                <field name="date"/>
-			                    <field name="user_id" string="Responsible"/>
-			                    <!--<field name="project_id"/>-->
-	            			</tree>
-	            			 <form string="Latest Features">
-                              	<field name="name"/>
-                                <field name="date"/>
-			                    <field name="user_id" string="Responsible"/>
-			                    <!--<field name="project_id"/>-->
-                            </form>
-	            		</field>
-	            	</child1>
-	            </hpaned>
+                <group colspan="4">
+            		<field name="feature_ids" nolabel="1" colspan="2" height="200" readonly="True">
+            			<tree string="Latest Features">
+            				<field name="name"/>
+                            <field name="date"/>
+		                    <field name="user_id" string="Responsible"/>
+            			</tree>
+            			<form string="Latest Features">
+                          	<field name="name"/>
+                            <field name="date"/>
+		                    <field name="user_id" string="Responsible"/>
+                        </form>
+            		</field>
+                </group>
 	           	</form>
 	        </field>
 	    </record>
@@ -765,61 +763,57 @@
 	        <field name="type">form</field>
 	        <field name="arch" type="xml">
 	            <form string="Supports">
-	            <hpaned>
+				<hpaned>
 	            	<child1>
-	            	<group colspan="2">
-	            		<separator string="New Support Request" colspan="2"/>
-	            		<newline/>
-	            		<group colspan="2">
-            				<field name="name" string="Support Summary" colspan="2"/>
-            				<field name="section_id" invisible="0" colspan="2"/>
-            				<field name="category2_id" string="Version" colspan="2"/>
-            			</group>
-            			<newline/>
-            			<field name="description" nolabel="1" colspan="2"/>
-            			<newline/>
-            			<group col="100" colspan="2">
-            			<button name="%(crm_case_categ_act_new_portal)d" string="Save Support Request" type="action"/>
-	            		</group>
-	            		<newline/>
-	            		<separator string="Information" colspan="2"/>
-	            		<newline/>
-	            		<group colspan="2">
-	            			<label align="0.0" colspan="2">Supports can be reported by sending an email to the support email gateway:</label>
-	            			<field name="email_from" readonly="1" string="EMail" colspan="2"/>
-	            		</group>
-	            	</group>
+		            	<group colspan="2">
+		            		<separator string="New Support Request" colspan="2"/>
+		            		<newline/>
+		            		<group colspan="2">
+	            				<field name="name" string="Support Summary" colspan="2"/>
+	            				<field name="section_id" invisible="0" colspan="2"/>
+	            				<field name="category2_id" string="Version" colspan="2"/>
+	            			</group>
+	            			<newline/>
+	            			<field name="description" nolabel="1" colspan="2"/>
+	            			<newline/>
+	            			<group col="100" colspan="2">
+	            			<button name="%(crm_case_categ_act_new_portal)d" string="Save Support Request" type="action"/>
+		            		</group>
+		            		<newline/>
+		            		<separator string="Information" colspan="2"/>
+		            		<newline/>
+		            		<group colspan="2">
+		            			<label align="0.0" colspan="2">Supports can be reported by sending an email to the support email gateway:</label>
+		            			<field name="email_from" readonly="1" string="EMail" colspan="2"/>
+		            		</group>
+		            	</group>
 	            	</child1>
 	            	<child2>
-	            	<group colspan="2" col="2">
-	            		<button name="%(crm_case_categ_act_new_portal)d" string="New Support Request" type="action"/>
-	            		<button name="%(act_crm_support_search_form)d" string="Search Support Request" type="action"/>
-	            	</group>
-	            	<newline/>
-	            	<group colspn="2">
-          				<action name="%(act_crm_support_user_form)d" string="Supports by User" colspan="2" height="300"/>
-          			</group>
+		            	<group>
+		            		<button name="%(crm_case_categ_act_new_portal)d" string="New Support Request" type="action"/>
+		            		<button name="%(act_crm_support_search_form)d" string="Search Support Request" type="action"/>
+		            		<newline/>
+			        		<separator string="Supports by User" colspan="2"/>
+			            	<newline/>
+	          				<action name="%(act_crm_support_user_form)d" string="Supports by User" colspan="2" height="300"/>
+	                    </group>
 	            	</child2>
 	            	<newline/>
 	            </hpaned>
-	            <hpaned>
-	            	<child1>
-	            		<field name="support_ids" nolabel="1" colspan="2" height="200" readonly="True" >
-	            			<tree string="Latest Supports">
-	            				<field name="name"/>
-                                <field name="date"/>
-			                    <field name="user_id" string="Responsible"/>
-			                    <!--<field name="project_id"/>-->
-	            			</tree>
-	            			 <form string="Latest Supports">
-                              	<field name="name"/>
-                                <field name="date"/>
-			                    <field name="user_id" string="Responsible"/>
-			                    <!--<field name="project_id"/>-->
-                            </form>
-	            		</field>
-	            	</child1>
-	            </hpaned>
+                <group colspan="4">
+            		<field name="support_ids" nolabel="1" colspan="2" height="200" readonly="True" >
+            			<tree string="Latest Supports">
+            				<field name="name"/>
+                            <field name="date"/>
+		                    <field name="user_id" string="Responsible"/>
+            			</tree>
+            			 <form string="Latest Supports">
+                          	<field name="name"/>
+                            <field name="date"/>
+		                    <field name="user_id" string="Responsible"/>
+                        </form>
+            		</field>
+                </group>
 	           	</form>
 	        </field>
 	    </record>
@@ -918,62 +912,58 @@
 	        <field name="type">form</field>
 	        <field name="arch" type="xml">
 	            <form string="Announces">
-	            <hpaned>
-	            	<child1>
-	            	<group colspan="2">
-	            		<separator string="New Announce" colspan="2"/>
-	            		<newline/>
-	            		<group colspan="2">
-            				<field name="name" string="Support Summary" colspan="2"/>
-            				<field name="section_id" invisible="0" colspan="2"/>
-            				<field name="category2_id" string="Version" colspan="2"/>
-            			</group>
-            			<newline/>
-            			<field name="description" nolabel="1" colspan="2"/>
-            			<newline/>
-            			<group col="100" colspan="2">
-            			<button name="%(crm_case_categ_announce_new)d" string="Save Announce" type="action"/>
-	            		</group>
-	            		<newline/>
-	            		<separator string="Information" colspan="2"/>
-	            		<newline/>
-	            		<group colspan="2">
-	            			<label align="0.0" colspan="2">Announces can be reported by sending an email to the announce email gateway:</label>
-	            			<field name="email_from" readonly="1" string="EMail" colspan="2"/>
-	            		</group>
-	            	</group>
-	            	</child1>
-	            	<child2>
-	            	<group colspan="2" col="2">
-	            		<button name="%(crm_case_categ_announce_new)d" string="New Announce" type="action"/>
-	            		<button name="%(act_crm_announce_search_form)d" string="Search Announce" type="action"/>
-	            	</group>
-	            	<newline/>
-	            	<group colspn="2">
-          				<action name="%(act_crm_announce_user_form)d" string="Announces by User" colspan="2" height="300"/>
-          			</group>
-	            	</child2>
-	            	<newline/>
-	            </hpaned>
-	            <hpaned>
-	            	<child1>
+		            <hpaned>
+		            	<child1>
+			            	<group colspan="2">
+			            		<separator string="New Announce" colspan="2"/>
+			            		<newline/>
+			            		<group colspan="2">
+		            				<field name="name" string="Support Summary" colspan="2"/>
+		            				<field name="section_id" invisible="0" colspan="2"/>
+		            				<field name="category2_id" string="Version" colspan="2"/>
+		            			</group>
+		            			<newline/>
+		            			<field name="description" nolabel="1" colspan="2"/>
+		            			<newline/>
+		            			<group col="100" colspan="2">
+		            			<button name="%(crm_case_categ_announce_new)d" string="Save Announce" type="action"/>
+			            		</group>
+			            		<newline/>
+			            		<separator string="Information" colspan="2"/>
+			            		<newline/>
+			            		<group colspan="2">
+			            			<label align="0.0" colspan="2">Announces can be reported by sending an email to the announce email gateway:</label>
+			            			<field name="email_from" readonly="1" string="EMail" colspan="2"/>
+			            		</group>
+			            	</group>
+		            	</child1>
+		            	<child2>
+			            	<group>
+			            		<button name="%(crm_case_categ_announce_new)d" string="New Announce" type="action"/>
+			            		<button name="%(act_crm_announce_search_form)d" string="Search Announce" type="action"/>
+				            	<newline/>
+				            	<separator string="Announces by User" colspan="2"/>
+				            	<newline/>
+		          				<action name="%(act_crm_announce_user_form)d" string="Announces by User" colspan="2" height="300"/>
+			            	</group>
+		            	</child2>
+		            	<newline/>
+		            </hpaned>
+	                <group colspan="4">
 	            		<field name="announce_ids" nolabel="1" colspan="2" height="200" readonly="True">
 	            			<tree string="Latest Announces">
 	            				<field name="name"/>
-                                <field name="date"/>
+	                            <field name="date"/>
 			                    <field name="user_id" string="Responsible"/>
-			                    <!--<field name="project_id"/>-->
 	            			</tree>
 	            			 <form string="Latest Announces">
-                              	<field name="name"/>
-                                <field name="date"/>
+	                          	<field name="name"/>
+	                            <field name="date"/>
 			                    <field name="user_id" string="Responsible"/>
-			                    <!--<field name="project_id"/>-->
-                            </form>
+	                        </form>
 	            		</field>
-	            	</child1>
-	            </hpaned>
-	           	</form>
+	                </group>
+                </form>
 	        </field>
 	    </record>
 
