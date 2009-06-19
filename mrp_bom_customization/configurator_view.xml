@@ -31,12 +31,12 @@
 						<form string="Key / Value" >
 							<field name="customization_group_id" readonly="1" required="0" />
 							<field name="customization_key_id" readonly="1" on_change="onchange_customization_key_id(customization_key_id)"/>
-							<field name="customization_value_id" widget="selection" required="1"/>
+							<field name="customization_value_id" required="1"/>
 						</form>
 						<tree string="Key / Value" editable="bottom">
 							<field name="customization_group_id" readonly="1" required="0"/>
 							<field name="customization_key_id" readonly="1" />
-							<field name="customization_value_id" widget="selection" required="1"/>
+							<field name="customization_value_id" required="1"/>
 						</tree>
 					</field>
 					<newline/>
