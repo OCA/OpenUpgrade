@@ -32,7 +32,15 @@ class sale_product_multistep_configurator_configurator_step(osv.osv):
             sol_id = context.get('sol_id', False)
             if sol_id:
                 bom_ids = self.pool.get('mrp.bom').search(cr, user, [('product_id', '=', self.pool.get('sale.order.line').browse(cr, user, sol_id).product_id.id)])
-                if (not bom_ids) or len(bom_ids) < 2:
+                if bom_ids:
+                    req = """ SELECT rel.property_id, prop.name 
+                            FROM mrp_bom_property_rel rel, mrp_property prop
+                            WHERE rel.bom_id IN %s AND prop.id=rel.property_id """ % ("("+",".join(map(str,bom_ids))+")")
+                    cr.execute(req)
+                    list_property_values = cr.fetchall()
+                    if len(list_property_values) == 0:
+                        context.update({'next_step': index+1 })
+                else:
                     context.update({'next_step': index+1 })
         return super(sale_product_multistep_configurator_configurator_step, self).update_context_before_step(cr, user, context)
     
