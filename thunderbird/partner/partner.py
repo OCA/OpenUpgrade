@@ -34,6 +34,9 @@ class tinythunderbird_partner(osv.osv):
 
     def thunderbird_mailcreate(self,cr,user,vals):
         dictcreate = dict(vals)
+        import email
+        header_name = email.Header.decode_header(dictcreate['name'])
+        dictcreate['name'] = header_name and header_name[0] and header_name[0][0] 
         add_obj=self.pool.get('res.partner.address')
         case_pool=self.pool.get('crm.case')
         partner_ids=add_obj.search(cr,user,[('email','=',dictcreate['email_from'])])

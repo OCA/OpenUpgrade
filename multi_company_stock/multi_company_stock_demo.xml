@@ -1,0 +1,230 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        <record id="res_partner_tinyshop0" model="res.partner">
+            <field name="property_stock_customer" ref="stock.stock_location_customers"/>
+            <field name="property_product_pricelist" ref="product.list0"/>
+            <field model="account.account" name="property_account_receivable" search="[('name','=','Effets à recevoir')]"/>
+            <field model="account.account" name="property_account_payable" search="[('name','=','Entreprises liées')]"/>
+            <field name="property_stock_supplier" ref="stock.stock_location_suppliers"/>
+            <field eval="0" name="customer"/>
+            <field eval="0" name="vat_subjected"/>
+            <field eval="0" name="supplier"/>
+            <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;Tiny Shop 1&quot;&quot;&quot;" name="name"/>
+            <field name="property_product_pricelist_purchase" ref="purchase.list0"/>
+            <field eval="[(6,0,[])]" name="category_id"/>
+        </record>
+        <record id="res_partner_address_fabien0" model="res.partner.address">
+            <field eval="&quot;&quot;&quot;Fabien&quot;&quot;&quot;" name="name"/>
+            <field name="partner_id" ref="res_partner_tinyshop0"/>
+            <field eval="1" name="active"/>
+        </record>
+        <record id="res_company_shop0" model="res.company">
+            <field eval="&quot;&quot;&quot;
+    &lt;header&gt;
+    &lt;pageTemplate&gt;
+        &lt;frame id=&quot;first&quot; x1=&quot;1.3cm&quot; y1=&quot;2.5cm&quot; height=&quot;23.0cm&quot; width=&quot;19cm&quot;/&gt;
+        &lt;pageGraphics&gt;
+            &lt;!-- You Logo - Change X,Y,Width and Height --&gt;
+        &lt;image x=&quot;1.3cm&quot; y=&quot;27.6cm&quot; height=&quot;40.0&quot; &gt;[[company.logo]]&lt;/image&gt;
+            &lt;setFont name=&quot;Helvetica&quot; size=&quot;8&quot;/&gt;
+            &lt;fill color=&quot;black&quot;/&gt;
+            &lt;stroke color=&quot;black&quot;/&gt;
+            &lt;lines&gt;1.3cm 27.7cm 20cm 27.7cm&lt;/lines&gt;
+
+            &lt;drawRightString x=&quot;20cm&quot; y=&quot;27.8cm&quot;&gt;[[ company.rml_header1 ]]&lt;/drawRightString&gt;
+
+
+            &lt;drawString x=&quot;1.3cm&quot; y=&quot;27.2cm&quot;&gt;[[ company.partner_id.name ]]&lt;/drawString&gt;
+            &lt;drawString x=&quot;1.3cm&quot; y=&quot;26.8cm&quot;&gt;[[ company.partner_id.address and company.partner_id.address[0].street or  '' ]]&lt;/drawString&gt;
+            &lt;drawString x=&quot;1.3cm&quot; y=&quot;26.4cm&quot;&gt;[[ company.partner_id.address and company.partner_id.address[0].zip or '' ]] [[ company.partner_id.address and company.partner_id.address[0].city or '' ]] - [[ company.partner_id.address and company.partner_id.address[0].country_id and company.partner_id.address[0].country_id.name  or '']]&lt;/drawString&gt;
+            &lt;drawString x=&quot;1.3cm&quot; y=&quot;26.0cm&quot;&gt;Phone:&lt;/drawString&gt;
+            &lt;drawRightString x=&quot;7cm&quot; y=&quot;26.0cm&quot;&gt;[[ company.partner_id.address and company.partner_id.address[0].phone or '' ]]&lt;/drawRightString&gt;
+            &lt;drawString x=&quot;1.3cm&quot; y=&quot;25.6cm&quot;&gt;Mail:&lt;/drawString&gt;
+            &lt;drawRightString x=&quot;7cm&quot; y=&quot;25.6cm&quot;&gt;[[ company.partner_id.address and company.partner_id.address[0].email or '' ]]&lt;/drawRightString&gt;
+            &lt;lines&gt;1.3cm 25.5cm 7cm 25.5cm&lt;/lines&gt;
+
+            &lt;!--page bottom--&gt;
+
+            &lt;lines&gt;1.2cm 2.15cm 19.9cm 2.15cm&lt;/lines&gt;
+
+            &lt;drawCentredString x=&quot;10.5cm&quot; y=&quot;1.7cm&quot;&gt;[[ company.rml_footer1 ]]&lt;/drawCentredString&gt;
+            &lt;drawCentredString x=&quot;10.5cm&quot; y=&quot;1.25cm&quot;&gt;[[ company.rml_footer2 ]]&lt;/drawCentredString&gt;
+            &lt;drawCentredString x=&quot;10.5cm&quot; y=&quot;0.8cm&quot;&gt;Contact : [[ user.name ]] - Page: &lt;pageNumber/&gt;&lt;/drawCentredString&gt;
+        &lt;/pageGraphics&gt;
+    &lt;/pageTemplate&gt;
+&lt;/header&gt;&quot;&quot;&quot;" name="rml_header"/>
+            <field eval="5.0" name="security_lead"/>
+            <field name="currency_id" ref="base.EUR"/>
+            <field eval="1.0" name="po_lead"/>
+            <field name="partner_id" ref="res_partner_tinyshop0"/>
+            <field eval="1.0" name="manufacturing_lead"/>
+            <field eval="&quot;&quot;&quot;month&quot;&quot;&quot;" name="timesheet_range"/>
+            <field name="parent_id" ref="base.main_company"/>
+            <field eval="&quot;&quot;&quot;
+        &lt;header&gt;
+        &lt;pageTemplate&gt;
+        &lt;frame id=&quot;first&quot; x1=&quot;1.3cm&quot; y1=&quot;1.5cm&quot; width=&quot;18.4cm&quot; height=&quot;26.5cm&quot;/&gt;
+        &lt;pageGraphics&gt;
+        &lt;fill color=&quot;black&quot;/&gt;
+        &lt;stroke color=&quot;black&quot;/&gt;
+        &lt;setFont name=&quot;Helvetica&quot; size=&quot;8&quot;/&gt;
+        &lt;drawString x=&quot;1.3cm&quot; y=&quot;28.3cm&quot;&gt; [[ formatLang(time.strftime(&quot;%Y-%m-%d&quot;), date=True) ]]  [[ time.strftime(&quot;%H:%M&quot;) ]]&lt;/drawString&gt;
+        &lt;setFont name=&quot;Helvetica-Bold&quot; size=&quot;10&quot;/&gt;
+        &lt;drawString x=&quot;9.8cm&quot; y=&quot;28.3cm&quot;&gt;[[ company.partner_id.name ]]&lt;/drawString&gt;
+        &lt;setFont name=&quot;Helvetica&quot; size=&quot;8&quot;/&gt;
+        &lt;drawRightString x=&quot;19.7cm&quot; y=&quot;28.3cm&quot;&gt;&lt;pageNumber/&gt; /  &lt;/drawRightString&gt;
+        &lt;drawString x=&quot;19.8cm&quot; y=&quot;28.3cm&quot;&gt;&lt;pageCount/&gt;&lt;/drawString&gt;
+        &lt;stroke color=&quot;#000000&quot;/&gt;
+        &lt;lines&gt;1.3cm 28.1cm 20cm 28.1cm&lt;/lines&gt;
+        &lt;/pageGraphics&gt;
+        &lt;/pageTemplate&gt;
+&lt;/header&gt;&quot;&quot;&quot;" name="rml_header2"/>
+            <field eval="&quot;&quot;&quot;hours&quot;&quot;&quot;" name="project_time_mode"/>
+            <field eval="80.0" name="schedule_range"/>
+            <field eval="&quot;&quot;&quot;Shop 1&quot;&quot;&quot;" name="name"/>
+        </record>
+        <record id="res_partner_tinyshop1" model="res.partner">
+            <field name="property_stock_customer" ref="stock.stock_location_customers"/>
+            <field name="property_product_pricelist" ref="product.list0"/>
+            <field model="account.account" name="property_account_receivable" search="[('name','=','Effets à recevoir')]"/>
+            <field model="account.account" name="property_account_payable" search="[('name','=','Entreprises liées')]"/>
+            <field name="property_stock_supplier" ref="stock.stock_location_suppliers"/>
+            <field eval="1" name="customer"/>
+            <field eval="0" name="vat_subjected"/>
+            <field eval="0" name="supplier"/>
+            <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;Tiny Shop 2&quot;&quot;&quot;" name="name"/>
+            <field name="property_product_pricelist_purchase" ref="purchase.list0"/>
+            <field eval="[(6,0,[])]" name="category_id"/>
+        </record>
+        <record id="res_partner_address_eric0" model="res.partner.address">
+            <field eval="&quot;&quot;&quot;Eric&quot;&quot;&quot;" name="name"/>
+            <field name="partner_id" ref="res_partner_tinyshop1"/>
+            <field eval="1" name="active"/>
+        </record>
+        <record id="res_company_tinyshop0" model="res.company">
+            <field eval="&quot;&quot;&quot;
+    &lt;header&gt;
+    &lt;pageTemplate&gt;
+        &lt;frame id=&quot;first&quot; x1=&quot;1.3cm&quot; y1=&quot;2.5cm&quot; height=&quot;23.0cm&quot; width=&quot;19cm&quot;/&gt;
+        &lt;pageGraphics&gt;
+            &lt;!-- You Logo - Change X,Y,Width and Height --&gt;
+        &lt;image x=&quot;1.3cm&quot; y=&quot;27.6cm&quot; height=&quot;40.0&quot; &gt;[[company.logo]]&lt;/image&gt;
+            &lt;setFont name=&quot;Helvetica&quot; size=&quot;8&quot;/&gt;
+            &lt;fill color=&quot;black&quot;/&gt;
+            &lt;stroke color=&quot;black&quot;/&gt;
+            &lt;lines&gt;1.3cm 27.7cm 20cm 27.7cm&lt;/lines&gt;
+
+            &lt;drawRightString x=&quot;20cm&quot; y=&quot;27.8cm&quot;&gt;[[ company.rml_header1 ]]&lt;/drawRightString&gt;
+
+
+            &lt;drawString x=&quot;1.3cm&quot; y=&quot;27.2cm&quot;&gt;[[ company.partner_id.name ]]&lt;/drawString&gt;
+            &lt;drawString x=&quot;1.3cm&quot; y=&quot;26.8cm&quot;&gt;[[ company.partner_id.address and company.partner_id.address[0].street or  '' ]]&lt;/drawString&gt;
+            &lt;drawString x=&quot;1.3cm&quot; y=&quot;26.4cm&quot;&gt;[[ company.partner_id.address and company.partner_id.address[0].zip or '' ]] [[ company.partner_id.address and company.partner_id.address[0].city or '' ]] - [[ company.partner_id.address and company.partner_id.address[0].country_id and company.partner_id.address[0].country_id.name  or '']]&lt;/drawString&gt;
+            &lt;drawString x=&quot;1.3cm&quot; y=&quot;26.0cm&quot;&gt;Phone:&lt;/drawString&gt;
+            &lt;drawRightString x=&quot;7cm&quot; y=&quot;26.0cm&quot;&gt;[[ company.partner_id.address and company.partner_id.address[0].phone or '' ]]&lt;/drawRightString&gt;
+            &lt;drawString x=&quot;1.3cm&quot; y=&quot;25.6cm&quot;&gt;Mail:&lt;/drawString&gt;
+            &lt;drawRightString x=&quot;7cm&quot; y=&quot;25.6cm&quot;&gt;[[ company.partner_id.address and company.partner_id.address[0].email or '' ]]&lt;/drawRightString&gt;
+            &lt;lines&gt;1.3cm 25.5cm 7cm 25.5cm&lt;/lines&gt;
+
+            &lt;!--page bottom--&gt;
+
+            &lt;lines&gt;1.2cm 2.15cm 19.9cm 2.15cm&lt;/lines&gt;
+
+            &lt;drawCentredString x=&quot;10.5cm&quot; y=&quot;1.7cm&quot;&gt;[[ company.rml_footer1 ]]&lt;/drawCentredString&gt;
+            &lt;drawCentredString x=&quot;10.5cm&quot; y=&quot;1.25cm&quot;&gt;[[ company.rml_footer2 ]]&lt;/drawCentredString&gt;
+            &lt;drawCentredString x=&quot;10.5cm&quot; y=&quot;0.8cm&quot;&gt;Contact : [[ user.name ]] - Page: &lt;pageNumber/&gt;&lt;/drawCentredString&gt;
+        &lt;/pageGraphics&gt;
+    &lt;/pageTemplate&gt;
+&lt;/header&gt;&quot;&quot;&quot;" name="rml_header"/>
+            <field eval="5.0" name="security_lead"/>
+            <field name="currency_id" ref="base.EUR"/>
+            <field eval="1.0" name="po_lead"/>
+            <field name="partner_id" ref="res_partner_tinyshop1"/>
+            <field eval="1.0" name="manufacturing_lead"/>
+            <field eval="&quot;&quot;&quot;month&quot;&quot;&quot;" name="timesheet_range"/>
+            <field name="parent_id" ref="base.main_company"/>
+            <field eval="&quot;&quot;&quot;
+        &lt;header&gt;
+        &lt;pageTemplate&gt;
+        &lt;frame id=&quot;first&quot; x1=&quot;1.3cm&quot; y1=&quot;1.5cm&quot; width=&quot;18.4cm&quot; height=&quot;26.5cm&quot;/&gt;
+        &lt;pageGraphics&gt;
+        &lt;fill color=&quot;black&quot;/&gt;
+        &lt;stroke color=&quot;black&quot;/&gt;
+        &lt;setFont name=&quot;Helvetica&quot; size=&quot;8&quot;/&gt;
+        &lt;drawString x=&quot;1.3cm&quot; y=&quot;28.3cm&quot;&gt; [[ formatLang(time.strftime(&quot;%Y-%m-%d&quot;), date=True) ]]  [[ time.strftime(&quot;%H:%M&quot;) ]]&lt;/drawString&gt;
+        &lt;setFont name=&quot;Helvetica-Bold&quot; size=&quot;10&quot;/&gt;
+        &lt;drawString x=&quot;9.8cm&quot; y=&quot;28.3cm&quot;&gt;[[ company.partner_id.name ]]&lt;/drawString&gt;
+        &lt;setFont name=&quot;Helvetica&quot; size=&quot;8&quot;/&gt;
+        &lt;drawRightString x=&quot;19.7cm&quot; y=&quot;28.3cm&quot;&gt;&lt;pageNumber/&gt; /  &lt;/drawRightString&gt;
+        &lt;drawString x=&quot;19.8cm&quot; y=&quot;28.3cm&quot;&gt;&lt;pageCount/&gt;&lt;/drawString&gt;
+        &lt;stroke color=&quot;#000000&quot;/&gt;
+        &lt;lines&gt;1.3cm 28.1cm 20cm 28.1cm&lt;/lines&gt;
+        &lt;/pageGraphics&gt;
+        &lt;/pageTemplate&gt;
+&lt;/header&gt;&quot;&quot;&quot;" name="rml_header2"/>
+            <field eval="&quot;&quot;&quot;hours&quot;&quot;&quot;" name="project_time_mode"/>
+            <field eval="80.0" name="schedule_range"/>
+            <field eval="&quot;&quot;&quot;Tiny Shop 2&quot;&quot;&quot;" name="name"/>
+        </record>
+        <record id="stock_location_shop0" model="stock.location">
+            <field model="res.partner.address" name="address_id" search="[('name','=','Fabien')]"/>
+            <field eval="&quot;&quot;&quot;fifo&quot;&quot;&quot;" name="allocation_method"/>
+            <field name="location_id" ref="stock.stock_location_company"/>
+            <field name="company_id" ref="res_company_shop0"/>
+            <field eval="&quot;&quot;&quot;internal&quot;&quot;&quot;" name="usage"/>
+            <field eval="&quot;&quot;&quot;none&quot;&quot;&quot;" name="chained_location_type"/>
+            <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;Shop 1&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;manual&quot;&quot;&quot;" name="chained_auto_packing"/>
+        </record>
+        <record id="stock_location_shop1" model="stock.location">
+            <field model="res.partner.address" name="address_id" search="[('name','=','Eric')]"/>
+            <field eval="&quot;&quot;&quot;fifo&quot;&quot;&quot;" name="allocation_method"/>
+            <field name="company_id" ref="res_company_tinyshop0"/>
+            <field eval="&quot;&quot;&quot;internal&quot;&quot;&quot;" name="usage"/>
+            <field eval="&quot;&quot;&quot;none&quot;&quot;&quot;" name="chained_location_type"/>
+            <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;Shop 2&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;manual&quot;&quot;&quot;" name="chained_auto_packing"/>
+        </record>
+        <record id="res_users_shopuser0" model="res.users">
+            <field model="ir.actions.actions" name="menu_id" search="[('name','=','Menu')]"/>
+            <field eval="[(6,0,[ref('base.group_user'),ref('mrp.group_mrp_manager'),ref('mrp.group_mrp_user'),ref('purchase.group_purchase_manager'),ref('purchase.group_purchase_user'),ref('sale.group_sale_manager'),ref('sale.group_sale_user'),ref('stock.group_stock_manager'),ref('stock.group_stock_user')])]" name="groups_id"/>
+            <field model="res.partner.address" name="address_id" search="[('name','=','Fabien')]"/>
+            <field eval="[(6,0,[])]" name="roles_id"/>
+            <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;shop1&quot;&quot;&quot;" name="password"/>
+            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
+            <field eval="&quot;&quot;&quot;Shop 1 User&quot;&quot;&quot;" name="name"/>
+            <field name="company_id" ref="res_company_shop0"/>
+            <field eval="&quot;&quot;&quot;shop1&quot;&quot;&quot;" name="login"/>
+            <field model="ir.actions.actions" name="action_id" search="[('name','=','Menu')]"/>
+        </record>
+        <record id="res_users_shopuser1" model="res.users">
+            <field model="ir.actions.actions" name="menu_id" search="[('name','=','Menu')]"/>
+            <field eval="[(6,0,[ref('base.group_user'),ref('mrp.group_mrp_manager'),ref('mrp.group_mrp_user'),ref('product.group_product_manager'),ref('project.group_project_finance'),ref('project.group_project_manager'),ref('project.group_project_user'),ref('purchase.group_purchase_manager'),ref('purchase.group_purchase_user'),ref('sale.group_sale_manager'),ref('sale.group_sale_user'),ref('stock.group_stock_manager'),ref('stock.group_stock_user')])]" name="groups_id"/>
+            <field model="res.partner.address" name="address_id" search="[('name','=','Eric')]"/>
+            <field eval="[(6,0,[])]" name="roles_id"/>
+            <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;shop2&quot;&quot;&quot;" name="password"/>
+            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
+            <field eval="&quot;&quot;&quot;Shop 2 User&quot;&quot;&quot;" name="name"/>
+            <field name="company_id" ref="res_company_tinyshop0"/>
+            <field eval="&quot;&quot;&quot;shop2&quot;&quot;&quot;" name="login"/>
+            <field model="ir.actions.actions" name="action_id" search="[('name','=','Menu')]"/>
+        </record>
+        <record id="stock_location_intermediatelocation0" model="stock.location">
+            <field name="address_id" ref="base.main_address"/>
+            <field eval="&quot;&quot;&quot;fifo&quot;&quot;&quot;" name="allocation_method"/>
+            <field name="location_id" ref="stock.stock_location_company"/>
+            <field eval="&quot;&quot;&quot;internal&quot;&quot;&quot;" name="usage"/>
+            <field eval="&quot;&quot;&quot;none&quot;&quot;&quot;" name="chained_location_type"/>
+            <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;Intermediate Location&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;manual&quot;&quot;&quot;" name="chained_auto_packing"/>
+        </record>
+    </data>
+</openerp>

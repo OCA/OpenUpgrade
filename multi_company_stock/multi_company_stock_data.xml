@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record model="ir.rule.group" id="stock_picking_rule_group">
+            <field name="name">stock_picking multi-company</field>
+            <field name="model_id" search="[('model','=','stock.picking')]" model="ir.model"/>
+            <field name="global" eval="True"/>
+        </record>
+        <record model="ir.rule" id="stock_picking_rule">
+            <field name="field_id" search="[('model','=','stock.picking'),('name','=','company_id')]" model="ir.model.fields"/>
+            <field name="operator">child_of</field>
+            <field name="operand">user.company_id.id</field>
+            <field name="rule_group" ref="stock_picking_rule_group"/>
+        </record>
+
+        <record model="ir.rule.group" id="stock_warehouse_rule_group">
+            <field name="name">stock_warehouse multi-company</field>
+            <field name="model_id" search="[('model','=','stock.warehouse')]" model="ir.model"/>
+            <field name="global" eval="True"/>
+        </record>
+        <record model="ir.rule" id="stock_warehouse_rule">
+            <field name="field_id" search="[('model','=','stock.warehouse'),('name','=','company_id')]" model="ir.model.fields"/>
+            <field name="operator">child_of</field>
+            <field name="operand">user.company_id.id</field>
+            <field name="rule_group" ref="stock_warehouse_rule_group"/>
+        </record>
+
+        <record model="ir.rule.group" id="stock_location_rule_group">
+            <field name="name">stock_location multi-company</field>
+            <field name="model_id" search="[('model','=','stock.location')]" model="ir.model"/>
+            <field name="global" eval="True"/>
+        </record>
+        <record model="ir.rule" id="stock_location_rule">
+            <field name="field_id" search="[('model','=','stock.location'),('name','=','company_id')]" model="ir.model.fields"/>
+            <field name="operator">child_of</field>
+            <field name="operand">user.company_id.id</field>
+            <field name="rule_group" ref="stock_location_rule_group"/>
+        </record>
+
+        <record model="ir.rule.group" id="stock_move_rule_group">
+            <field name="name">stock_move multi-company</field>
+            <field name="model_id" search="[('model','=','stock.move')]" model="ir.model"/>
+            <field name="global" eval="True"/>
+        </record>
+        <record model="ir.rule" id="stock_move_rule">
+            <field name="field_id" search="[('model','=','stock.move'),('name','=','company_id')]" model="ir.model.fields"/>
+            <field name="operator">child_of</field>
+            <field name="operand">user.company_id.id</field>
+            <field name="rule_group" ref="stock_move_rule_group"/>
+        </record>
+
+        <record model="ir.rule.group" id="mrp_procurement_rule_group">
+            <field name="name">mrp_procurement multi-company</field>
+            <field name="model_id" search="[('model','=','mrp.procurement')]" model="ir.model"/>
+            <field name="global" eval="True"/>
+        </record>
+        <record model="ir.rule" id="mrp_procurement_rule">
+            <field name="field_id" search="[('model','=','mrp.procurement'),('name','=','company_id')]" model="ir.model.fields"/>
+            <field name="operator">child_of</field>
+            <field name="operand">user.company_id.id</field>
+            <field name="rule_group" ref="mrp_procurement_rule_group"/>
+        </record>
+
+        <record model="ir.rule.group" id="stock_inventory_rule_group">
+            <field name="name">stock_inventory multi-company</field>
+            <field name="model_id" search="[('model','=','stock.inventory')]" model="ir.model"/>
+            <field name="global" eval="True"/>
+        </record>
+        <record model="ir.rule" id="stock_inventory_rule">
+            <field name="field_id" search="[('model','=','stock.inventory'),('name','=','company_id')]" model="ir.model.fields"/>
+            <field name="operator">child_of</field>
+            <field name="operand">user.company_id.id</field>
+            <field name="rule_group" ref="stock_inventory_rule_group"/>
+        </record>
+
+        <record model="ir.rule.group" id="stock_warehouse_orderpoint_rule_group">
+            <field name="name">stock_warehouse.orderpoint multi-company</field>
+            <field name="model_id" search="[('model','=','stock.warehouse.orderpoint')]" model="ir.model"/>
+            <field name="global" eval="True"/>
+        </record>
+        <record model="ir.rule" id="stock_warehouse_orderpoint_rule">
+            <field name="field_id" search="[('model','=','stock.warehouse.orderpoint'),('name','=','company_id')]" model="ir.model.fields"/>
+            <field name="operator">child_of</field>
+            <field name="operand">user.company_id.id</field>
+            <field name="rule_group" ref="stock_warehouse_orderpoint_rule_group"/>
+        </record>
+
+        <record model="ir.rule.group" id="mrp_production_rule_group">
+            <field name="name">mrp_production multi-company</field>
+            <field name="model_id" search="[('model','=','mrp.production')]" model="ir.model"/>
+            <field name="global" eval="True"/>
+        </record>
+        <record model="ir.rule" id="mrp_production_rule">
+            <field name="field_id" search="[('model','=','mrp.production'),('name','=','company_id')]" model="ir.model.fields"/>
+            <field name="operator">child_of</field>
+            <field name="operand">user.company_id.id</field>
+            <field name="rule_group" ref="mrp_production_rule_group"/>
+        </record>
+
+        <record model="ir.rule.group" id="mrp_workcenter_rule_group">
+            <field name="name">mrp_workcenter multi-company</field>
+            <field name="model_id" search="[('model','=','mrp.workcenter')]" model="ir.model"/>
+            <field name="global" eval="True"/>
+        </record>
+        <record model="ir.rule" id="mrp_workcenter_rule">
+            <field name="field_id" search="[('model','=','mrp.workcenter'),('name','=','company_id')]" model="ir.model.fields"/>
+            <field name="operator">child_of</field>
+            <field name="operand">user.company_id.id</field>
+            <field name="rule_group" ref="mrp_workcenter_rule_group"/>
+        </record>
+
+        <record model="ir.rule.group" id="mrp_bom_rule_group">
+            <field name="name">mrp_bom multi-company</field>
+            <field name="model_id" search="[('model','=','mrp.bom')]" model="ir.model"/>
+            <field name="global" eval="True"/>
+        </record>
+        <record model="ir.rule" id="mrp_bom_rule">
+            <field name="field_id" search="[('model','=','mrp.bom'),('name','=','company_id')]" model="ir.model.fields"/>
+            <field name="operator">child_of</field>
+            <field name="operand">user.company_id.id</field>
+            <field name="rule_group" ref="mrp_bom_rule_group"/>
+        </record>
+
+    </data>
+</openerp>

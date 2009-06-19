@@ -50,7 +50,7 @@
 		</record>
 
 <!--		CRM Case-->
-		<record id="portal_crm_case-view" model="ir.ui.view">
+		<!--<record id="portal_crm_case-view" model="ir.ui.view">
             <field name="name">portal crm case</field>
             <field name="model">crm.case</field>
             <field name="type">form</field>
@@ -60,7 +60,7 @@
                     <field name="project_id"/>
                 </field>
             </field>
-        </record>
+        </record>-->
 
 <!--		Announce View-->
 		<record model="ir.ui.view" id="crm_case_announce_tree_view">
@@ -316,7 +316,7 @@
                                   <field name="user_id"/>
                                   <field name="name"/>
                             </tree>
-                            <form string="Latests Announces" editable="top">
+                            <form string="Latests Announces">
                                <field name="name" string="Subject"/>
                                 <field name="date"/>
 			                    <field name="user_id" string="Responsible"/>
@@ -324,7 +324,16 @@
                             </form>
                         </field>
                         <newline/>
-	                    <field name="member_ids" nolabel="1" colspan="2" height="200" readonly="1"/>
+                        <field name="member_ids" nolabel="1" colspan="2" height="200" readonly="1">
+                  			<tree string="Members" editable="top">
+                  				<field name="name"/>
+                            	<field name="login"/>
+	                		</tree>
+	                		<form string="Members">
+	                			<field name="name"/>
+                            	<field name="login"/>
+	                		</form>
+	                	</field>
 	                </group>
 	                </child1>
 	                <child2>
@@ -337,8 +346,8 @@
 						<button icon="terp-partner" name="%(act_hr_timesheet_sheet_portal_form)d" string="Timesheets" type="action"/>
 						</group>
 						<newline/>
-						<group  colspan="2" col="2">
-							<button icon="terp-partner" name="%(act_financial_portal_form)d" string="Financial Data" type="action"/>
+						<group colspan="2" col="2">
+							<button icon="terp-partner" name="%(act_financial_portal_form)d" string="Financial Data" type="action" groups="account.group_account_manager"/>
 	                    	<button icon="terp-partner" name="%(portal_project_event_configuration_action)d" string="Configuration" type="action"/>
 	                    </group>
 	                </group>
@@ -370,6 +379,7 @@
 	        <field name="view_type">form</field>
 	        <field name="view_mode">tree,form</field>
 	        <field name="view_id" ref="project_portal_tree_view"/>
+	        <field name="context" eval="{'action_portal':'project'}"/>
 	    </record>
 	    <record model="ir.actions.act_window.view" id="action_crm_tag_form_view_all1">
 	        <field name="sequence" eval="1"/>
@@ -405,8 +415,9 @@
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree,form</field>
             <field name="view_id" ref="view_crm_case_bugs_user"/>
+            <field name="context" eval="{'bugs_user':'bug_form'}"/>
         </record>
-        
+
         <record model="ir.actions.act_window" id="crm_case_categ_act_new_portal">
 	        <field name="name">New Bug</field>
 	        <field name="res_model">crm.case</field>
@@ -415,7 +426,7 @@
 	        <field name="view_id" ref="crm.crm_case-view"/>
 	        <field name="context" eval="{'default_state':'open'}"/>
 	    </record>
-	    
+
 	    <record id="act_crm_bug_search_form" model="ir.actions.act_window">
             <field name="name">All Bugs</field>
             <field name="type">ir.actions.act_window</field>
@@ -439,7 +450,7 @@
                 </tree>
             </field>
         </record>
-        
+
 		<record model="ir.ui.view" id="portal_crm_bug_form_view">
 	        <field name="name">Bugs Form</field>
 	        <field name="model">crm.case</field>
@@ -457,9 +468,13 @@
             				<field name="category2_id" colspan="2" string="Version"/>
             			</group>
             			<newline/>
+            			<group colspan="2">
             			<field name="description" nolabel="1" colspan="2"/>
+            			</group>
             			<newline/>
-            			<button name="%(crm_case_categ_act_new_portal)d" string="Save New Bug" type="action"/>
+            			<group col="100" colspan="2">
+            			<button name="%(crm_case_categ_act_new_portal)d" string="Save New Bug" type="action" />
+	            		</group>
 	            		<newline/>
 	            		<separator string="Information" colspan="2"/>
 	            		<newline/>
@@ -482,18 +497,18 @@
 	            </hpaned>
 	            <hpaned>
 	            	<child1>
-	            		<field name="bug_ids" nolabel="1" readonly="True" >
+	            		<field name="bug_ids" nolabel="1" colspan="2" height="200" readonly="True" >
 	            			<tree string="Latest Bugs Reported">
 	            				<field name="name"/>
                                 <field name="date"/>
 			                    <field name="user_id" string="Responsible"/>
-			                    <field name="project_id"/>
+			                    <!--<field name="project_id"/>-->
 	            			</tree>
 	            			 <form string="Latest Bugs Reported">
                               	<field name="name"/>
                                 <field name="date"/>
 			                    <field name="user_id" string="Responsible"/>
-			                    <field name="project_id"/>
+			                    <!--<field name="project_id"/>-->
                             </form>
 	            		</field>
 	            	</child1>
@@ -567,7 +582,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree,form</field>
         </record>
-        
+
         <record id="act_crm_feature_search_form" model="ir.actions.act_window">
             <field name="name">All Features</field>
             <field name="type">ir.actions.act_window</field>
@@ -612,7 +627,9 @@
             			<newline/>
             			<field name="description" nolabel="1" colspan="2"/>
             			<newline/>
+            			<group col="100" colspan="2">
             			<button name="%(crm_case_categ_act_new_portal)d" string="Save Feature" type="action"/>
+	            		</group>
 	            		<newline/>
 	            		<separator string="Information" colspan="2"/>
 	            		<newline/>
@@ -636,18 +653,18 @@
 	            </hpaned>
 	            <hpaned>
 	            	<child1>
-	            		<field name="feature_ids" nolabel="1" widget="one2many" readonly="True">
+	            		<field name="feature_ids" nolabel="1" colspan="2" height="200" readonly="True">
 	            			<tree string="Latest Features">
 	            				<field name="name"/>
                                 <field name="date"/>
 			                    <field name="user_id" string="Responsible"/>
-			                    <field name="project_id"/>
+			                    <!--<field name="project_id"/>-->
 	            			</tree>
 	            			 <form string="Latest Features">
                               	<field name="name"/>
                                 <field name="date"/>
 			                    <field name="user_id" string="Responsible"/>
-			                    <field name="project_id"/>
+			                    <!--<field name="project_id"/>-->
                             </form>
 	            		</field>
 	            	</child1>
@@ -718,7 +735,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree,form</field>
         </record>
-        
+
         <record id="act_crm_support_search_form" model="ir.actions.act_window">
             <field name="name">All Supports</field>
             <field name="type">ir.actions.act_window</field>
@@ -763,7 +780,9 @@
             			<newline/>
             			<field name="description" nolabel="1" colspan="2"/>
             			<newline/>
+            			<group col="100" colspan="2">
             			<button name="%(crm_case_categ_act_new_portal)d" string="Save Support Request" type="action"/>
+	            		</group>
 	            		<newline/>
 	            		<separator string="Information" colspan="2"/>
 	            		<newline/>
@@ -787,18 +806,18 @@
 	            </hpaned>
 	            <hpaned>
 	            	<child1>
-	            		<field name="support_ids" nolabel="1" widget="one2many" readonly="True" >
+	            		<field name="support_ids" nolabel="1" colspan="2" height="200" readonly="True" >
 	            			<tree string="Latest Supports">
 	            				<field name="name"/>
                                 <field name="date"/>
 			                    <field name="user_id" string="Responsible"/>
-			                    <field name="project_id"/>
+			                    <!--<field name="project_id"/>-->
 	            			</tree>
 	            			 <form string="Latest Supports">
                               	<field name="name"/>
                                 <field name="date"/>
 			                    <field name="user_id" string="Responsible"/>
-			                    <field name="project_id"/>
+			                    <!--<field name="project_id"/>-->
                             </form>
 	            		</field>
 	            	</child1>
@@ -869,7 +888,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree,form</field>
         </record>
-        
+
         <record id="act_crm_announce_search_form" model="ir.actions.act_window">
             <field name="name">All Announces</field>
             <field name="type">ir.actions.act_window</field>
@@ -914,7 +933,9 @@
             			<newline/>
             			<field name="description" nolabel="1" colspan="2"/>
             			<newline/>
+            			<group col="100" colspan="2">
             			<button name="%(crm_case_categ_announce_new)d" string="Save Announce" type="action"/>
+	            		</group>
 	            		<newline/>
 	            		<separator string="Information" colspan="2"/>
 	            		<newline/>
@@ -938,18 +959,18 @@
 	            </hpaned>
 	            <hpaned>
 	            	<child1>
-	            		<field name="announce_ids" nolabel="1" widget="one2many" readonly="True">
+	            		<field name="announce_ids" nolabel="1" colspan="2" height="200" readonly="True">
 	            			<tree string="Latest Announces">
 	            				<field name="name"/>
                                 <field name="date"/>
 			                    <field name="user_id" string="Responsible"/>
-			                    <field name="project_id"/>
+			                    <!--<field name="project_id"/>-->
 	            			</tree>
 	            			 <form string="Latest Announces">
                               	<field name="name"/>
                                 <field name="date"/>
 			                    <field name="user_id" string="Responsible"/>
-			                    <field name="project_id"/>
+			                    <!--<field name="project_id"/>-->
                             </form>
 	            		</field>
 	            	</child1>
