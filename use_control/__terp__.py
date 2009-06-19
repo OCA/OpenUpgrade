@@ -38,7 +38,7 @@ You can not uninstall or delete it.
         "security/ir.model.access.csv",
     ],
     "demo_xml" : [],
-    "installable": True,
-    "active" : True,
+    "installable": False,
+    "active" : False,
     "certificate": '00812981973518421629',
 }
