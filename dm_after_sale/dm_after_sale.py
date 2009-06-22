@@ -27,11 +27,18 @@ class dm_campaign_proposition_segment(osv.osv):
     _inherit = "dm.campaign.proposition.segment"
 
     def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
+        criteria=[]
         if context and 'address_id' in context:
             if not context['address_id']:
                 return []
+            criteria.append(('address_id','=',context['address_id']))
+        if context and 'sale_order_id' in context:
+            if not context['sale_order_id']:
+                return []
+            criteria.append(('sale_order_id','=',context['sale_order_id']))
+        if criteria:
             wi_obj = self.pool.get('dm.workitem')
-            workitems = wi_obj.search(cr,uid,[('address_id','=',context['address_id'])])
+            workitems = wi_obj.search(cr,uid,criteria)
             ids = [wi.segment_id.id for wi in wi_obj.browse(cr,uid,workitems)]
             return ids
         return super(dm_campaign_proposition_segment, self).search(cr, uid, args, offset, limit, order, context, count)
@@ -41,13 +48,22 @@ class dm_after_sale_action(osv.osv_memory):
     _name = "dm.after.sale.action"
     _columns = {
         'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segment', required=True),
-        'action_id' : fields.many2one('dm.offer.step.transition.trigger', 'Action', required=True),
-        'mail_service_id' : fields.many2one('dm.mail_service', 'Mail Service', required=True),
+        'action_id' : fields.many2one('dm.offer.step.transition.trigger', 'Action', domain=[('type','=','as')], required=True),
+        'mail_service_id' : fields.many2one('dm.mail_service', 'Mail Service'),
         'as_report' : fields.text('Report Content'),
         'document_id' : fields.many2one('dm.offer.document','Document'),
         'state': fields.selection([('draft','Draft'),('set','Set'),('done','Done')],"State",size=10),
         'display_info':fields.text('Info'),
     }
+
+    def default_get(self, cr, uid, fields, context=None):
+        if context.has_key('sale_order_id'):
+            workitem = self.pool.get('dm.workitem').search(cr,uid,[('sale_order_id','=',context['sale_order_id'])])
+            if not workitem:
+                 raise osv.except_osv(
+                  _('Cannot perform After-Sale Action'),
+                  _('This sale order doesnt seem to originate from a Direct Marketing campaign'))
+        return super(dm_after_sale_action, self).default_get(cr, uid, fields, context)
 
     def set_cancel(self, cr, uid, ids, *args):
         return True
@@ -58,16 +74,35 @@ class dm_after_sale_action(osv.osv_memory):
     def send_document(self, cr, uid, ids, *args):
         "Create workitem and document"
         lang_id = self.pool.get('res.lang').search(cr,uid,[('code','=',args[0]['lang'])])[0]
-        doc_categ_id = self.pool.get('dm.offer.document.category').search(cr,uid,[('name','=','Production')])[0]
+        doc_categ_id = self.pool.get('dm.offer.document.category').search(cr,uid,[('name','=','Production')])
         # to improve : not multimedia
-        as_event_step_id = self.pool.get('dm.offer.step').search(cr,uid,[('code','=','ASEVENT-EMAIL')])[0]
+        step = address = mail_service = sale_order = False
+        if args and 'sale_order_id' in args[0] and args[0]['sale_order_id']:
+            workitem = self.pool.get('dm.workitem').search(cr,uid,[('sale_order_id','=',args[0]['sale_order_id'])])
+            if workitem:
+                wi_browse_id = self.pool.get('dm.workitem').browse(cr, uid, workitem[0])
+                for camp_mail_service in wi_browse_id.segment_id.proposition_id.camp_id.mail_service_ids:
+                    if wi_browse_id.step_id.id == camp_mail_service.offer_step_id.id:
+                        mail_service = camp_mail_service.mail_service_id.id
+                step = wi_browse_id.step_id.id
+                address = wi_browse_id.address_id.id
+                sale_order = args[0]['sale_order_id']
+
+        if args and 'address_id' in args[0] and args[0]['address_id']:
+            step_id = self.pool.get('dm.offer.step').search(cr,uid,[('code','=','ASEVENT-EMAIL')])
+            if step_id:
+                step = step_id[0]
+            address = args[0]['address_id']
+            mail_service = self.browse(cr,uid,ids[0]).mail_service_id.id
+
         for i in self.browse(cr,uid,ids):
             vals = {
                 'segment_id' : i.segment_id.id,
-                'step_id' : as_event_step_id,
-                'address_id' : args[0]['address_id'],
+                'step_id' : step,
+                'address_id' : address,
+                'sale_order_id' : sale_order,
                 'trigger_type_id' : i.action_id.id,
-                'mail_service_id' : i.mail_service_id.id,
+                'mail_service_id' : mail_service,
             }
             id = self.pool.get('dm.event').create(cr,uid,vals)
             production_doc_id = self.pool.get('dm.offer.document').search(cr,uid,[('step_id','=',i.document_id.step_id.id),('category_id','=','Production')])
@@ -75,9 +110,11 @@ class dm_after_sale_action(osv.osv_memory):
                 vals = {'name':'From AS wizard production',
                         'code':'ASW Production',
                         'lang_id' : lang_id,
-                        'category_id': doc_categ_id,
+                        'category_id': doc_categ_id and doc_categ_id[0] or False,
                         'content' : i.as_report,
                         'step_id': i.document_id.step_id.id,
+                        'subject' : 'After-Sale Document',
+                        'editor' : 'internal',
                 }
                 doc_id = self.pool.get('dm.offer.document').create(cr,uid,vals)
             else :
@@ -89,7 +126,7 @@ class dm_after_sale_action(osv.osv_memory):
     def set_content(self,cr,uid,ids,*args):
         result = []
         lang_id = self.pool.get('res.lang').search(cr,uid,[('code','=',args[0]['lang'])])[0]
-        doc_categ_id = self.pool.get('dm.offer.document.category').search(cr,uid,[('name','=','After-Sale Document Template')])[0]
+        doc_categ_id = self.pool.get('dm.offer.document.category').search(cr,uid,[('name','=','After-Sale Document Template')])
         for i in self.browse(cr,uid,ids):
             transition_ids = self.pool.get('dm.offer.step.transition').search(cr,uid,[('condition_id','=',i.action_id.id)])
             step_id = self.pool.get('dm.offer.step').search(cr,uid,[('incoming_transition_ids','in',transition_ids)])[0]
@@ -97,10 +134,11 @@ class dm_after_sale_action(osv.osv_memory):
                 vals = {'name':'From AS wizard',
                         'code':'ASW',
                         'lang_id':lang_id,
-                        'category_id':doc_categ_id,
+                        'category_id':doc_categ_id and doc_categ_id[0] or False,
                         'content' :i.as_report,
                         'step_id' : step_id,
-
+                        'subject' : 'After-Sale Document',
+                        'editor' : 'internal',
                 }
                 doc_id = self.pool.get('dm.offer.document').create(cr,uid,vals)
                 result.append((i.id,{'state':'set','document_id':doc_id}))

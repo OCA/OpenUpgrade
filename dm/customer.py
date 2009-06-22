@@ -516,12 +516,6 @@ class dm_event(osv.osv_memory): # {{{
     _name = "dm.event"
     _rec_name = "segment_id"
 
-    def onchange_trigger(self,cr,uid,ids,step_id):
-        if not step_id:
-            return {}
-        step = self.pool.get('dm.offer.step').browse(cr,uid,[step_id])[0]
-        return {'value':value}
-
     _columns = {
         'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segment', required=True),
         'step_id' : fields.many2one('dm.offer.step', 'Offer Step', required=True),
@@ -562,6 +556,8 @@ class dm_event(osv.osv_memory): # {{{
                     next_action_time = next_action_time.replace(minute=act_hour.minute)
 
             try:
+                if self.pool.get('dm.workitem').search(cr,uid,[('sale_order_id','=',obj.sale_order_id.id)]):
+                    raise osv.except_osv("Error!","You cannot create more than 1 workitem for the same sale order !")
                 wi_id = self.pool.get('dm.workitem').create(cr, uid, {'step_id':tr.step_to_id.id or False, 'segment_id':obj.segment_id.id or False,
                 'address_id':obj.address_id.id, 'mail_service_id':obj.mail_service_id.id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'),
                 'tr_from_id':tr.id,'source':obj.source, 'sale_order_id':obj.sale_order_id.id})

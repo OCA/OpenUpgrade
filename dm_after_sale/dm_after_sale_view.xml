@@ -8,21 +8,21 @@
     =======================================================
     -->
     
-    <record model="ir.ui.view" id="view_after_sale_action_tree">
-        <field name="name">dm.after.sale.action.tree</field>
+    <record model="ir.ui.view" id="view_after_sale_action_form1">
+        <field name="name">dm.after.sale.action.form1</field>
         <field name="model">dm.after.sale.action</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="After-Sale Action">
-                <group attrs="{'invisible':[('state','==','done')]}" >
+                <group attrs="{'invisible':[('state','==','done')]}" colspan="4">
                     <field name="segment_id" colspan="4" context="{'address_id': context.get('address_id',False)}" />
-                    <field name="action_id" colspan="4" domain="[('type','=','as')]"/>
-                    <field name="mail_service_id" colspan="4" domain="[('media_id.name','=','Email')]"/>
+                    <field name="action_id" colspan="4"/>
+                    <field name="mail_service_id" colspan="4" domain="[('media_id.name','=','Email')]" required="1"/>
                     <separator string="Report Content" colspan="4" />
                     <field name="as_report" widget="text_html" nolabel="1" colspan="4"/>
                     <field name="state" invisible="1" />
                 </group>
-                <group attrs="{'invisible':[('state','!=','done')],'readonly':[('state','==','done')]}">
+                <group attrs="{'invisible':[('state','!=','done')],'readonly':[('state','==','done')]}" colspan="4">
                     <field name ='display_info'/>
                 </group>
                 <group colspan="4">
@@ -35,15 +35,41 @@
         </field>
     </record>
 
-    <record id="dm_after_sale_action_form" model="ir.actions.act_window">
-        <field name="name">After-Sale Action</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">dm.after.sale.action</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">form</field>
-        <field name="target">new</field>
-        <field name="context">{'address_id':active_id}</field>
-    </record> 
+	<record model="ir.ui.view" id="view_after_sale_action_form2">
+        <field name="name">dm.after.sale.action.form2</field>
+        <field name="model">dm.after.sale.action</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="After-Sale Action">
+                <group attrs="{'invisible':[('state','==','done')]}" colspan="4">
+                    <field name="segment_id" colspan="4" context="{'sale_order_id': context.get('sale_order_id',False)}" />
+                    <field name="action_id" colspan="4"/>
+                    <separator string="Report Content" colspan="4" />
+                    <field name="as_report" widget="text_html" nolabel="1" colspan="4"/>
+                    <field name="state" invisible="1" />
+                </group>
+                <group attrs="{'invisible':[('state','!=','done')],'readonly':[('state','==','done')]}" colspan="4">
+                    <field name ='display_info'/>
+                </group>
+                <group colspan="4">
+                <button string="Cancel" special="cancel" attrs="{'invisible':[('state','==','done')]}" />
+                <button name="send_document" string="Send Document" icon='gtk-ok' type="object" attrs="{'invisible':[('state','!=','set')]}" />
+                <button string="Ok" icon='gtk-ok' special="cancel" attrs="{'invisible':[('state','!=','done')]}"/>
+                <button name="set_content" string="Set Content" icon='gtk-ok' type="object" attrs="{'invisible':[('state','!=','draft')]}" />
+                </group>
+            </form>
+        </field>
+    </record>
+	
+<!--    <record id="dm_after_sale_action_form" model="ir.actions.act_window">-->
+<!--        <field name="name">After-Sale Action</field>-->
+<!--        <field name="type">ir.actions.act_window</field>-->
+<!--        <field name="res_model">dm.after.sale.action</field>-->
+<!--        <field name="view_type">form</field>-->
+<!--        <field name="view_mode">form</field>-->
+<!--        <field name="target">new</field>-->
+<!--        <field name="context">{'address_id':active_id}</field>-->
+<!--    </record> -->
  
     <act_window context="{'address_id': active_id}"
     			id="address_after_sale_action"
@@ -52,6 +78,26 @@
     			src_model="res.partner.address"
     			target="new"
     			view_mode="form"
-     />
+    />
+	<record model="ir.actions.act_window.view" id="action_so_ass">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_after_sale_action_form1"/>
+        <field name="act_window_id" ref="address_after_sale_action"/>
+    </record>     
+    <act_window context="{'sale_order_id': active_id}"
+    			id="address_after_sale_action2"
+    			name="After-Sale Action"
+    			res_model="dm.after.sale.action"
+    			src_model="sale.order"
+    			target="new"
+    			view_mode="form"
+    />
+	<record model="ir.actions.act_window.view" id="action_so_ass">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_after_sale_action_form2"/>
+        <field name="act_window_id" ref="address_after_sale_action2"/>
+    </record>
 </data>
 </openerp>
