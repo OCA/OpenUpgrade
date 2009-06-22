@@ -6,7 +6,7 @@
 
         <record id="view_wizard_quality_check_tree" model="ir.ui.view">
             <field name="name">Results of Quality Checks</field>
-            <field name="model">wizard.quality.check</field>
+            <field name="model">module.quality.check</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Result">
@@ -18,20 +18,20 @@
 
         <record id="view_wizard_quality_check_form" model="ir.ui.view">
             <field name="name">Results of Quality Checks</field>
-            <field name="model">wizard.quality.check</field>
+            <field name="model">module.quality.check</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Result">
                     <field name="name" readonly="1" search="1"/>
                     <field name="final_score" readonly="1" search="1"/>
                     <separator colspan="4" string="Tests"/>
-                    <field name="test_ids" nolabel="1" colspan="4" height="350" width="800" readonly="1"/>
+                    <field name="check_detail_ids" nolabel="1" colspan="4" height="350" width="800" readonly="1"/>
                 </form>
             </field>
         </record>
         <record id="view_wizard_quality_detail_form" model="ir.ui.view">
             <field name="name">Results of Quality Checks with detail</field>
-            <field name="model">quality.check.detail</field>
+            <field name="model">module.quality.detail</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Result">
@@ -56,7 +56,7 @@
 
         <record id="view_wizard_quality_detail_tree" model="ir.ui.view">
             <field name="name">Results of Quality Checks with detail</field>
-            <field name="model">quality.check.detail</field>
+            <field name="model">module.quality.detail</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Result">

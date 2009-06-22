@@ -19,11 +19,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import pooler
 import os
+
+import pooler
 import osv
+import tools
 from tools import config
 from tools.translate import _
+from osv import osv, fields
 
 class abstract_quality_check(object):
     '''
@@ -145,5 +148,98 @@ class abstract_quality_check(object):
     def add_quatation(self, x_no, y_no):
         return x_no/y_no
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+class module_quality_check(osv.osv):
+    _name = 'module.quality.check'
+    _columns = {
+        'name': fields.char('Rated Module', size=64, ),
+        'final_score': fields.char('Final Score (%)', size=10,),
+        'check_detail_ids': fields.one2many('module.quality.detail', 'quality_check_id', 'Tests',)
+    }
 
+    def check_quality(self, cr, uid, module_name, module_state=None):
+        '''
+        This function will calculate score of openerp module
+        It will return data in below format:
+            Format: {'final_score':'80.50', 'name': 'sale',
+                    'check_detail_ids':
+                        [(0,0,{'name':'workflow_test', 'score':'100', 'ponderation':'0', 'summary': text_wiki format data, 'detail': html format data, 'state':'done', 'note':'XXXX'}),
+                        ((0,0,{'name':'terp_test', 'score':'60', 'ponderation':'1', 'summary': text_wiki format data, 'detail': html format data, 'state':'done', 'note':'terp desctioption'}),
+                         ..........]}
+        So here the detail result is in html format and summary will be in text_wiki format.
+        '''
+        #list_folders = os.listdir(config['addons_path']+'/base_module_quality/')
+        pool = pooler.get_pool(cr.dbname)
+        obj_module = pool.get('ir.module.module')
+        if not module_state:
+            module_id = obj_module.search(cr, uid, [('name', '=', module_name)])
+            if module_id:
+                module_state = obj_module.browse(cr, uid, module_id[0]).state
+
+        abstract_obj = abstract_quality_check()
+        score_sum = 0.0
+        ponderation_sum = 0.0
+        create_ids = []
+        for test in abstract_obj.tests:
+            ad = tools.config['addons_path']
+            if module_name == 'base':
+                ad = tools.config['root_path']+'/addons'
+            module_path = os.path.join(ad, module_name)
+            val = test.quality_test()
+            if not val.bool_installed_only or module_state == "installed":
+                val.run_test(cr, uid, str(module_path))
+                if not val.error:
+                    data = {
+                        'name': val.name,
+                        'score': val.score * 100,
+                        'ponderation': val.ponderation,
+                        'summary': val.result,
+                        'detail': val.result_details,
+                        'state': 'done',
+                        'note': val.note,
+                    }
+                    score_sum += val.score * val.ponderation
+                    ponderation_sum += val.ponderation
+                else:
+                    data = {
+                        'name': val.name,
+                        'score': 0,
+                        'summary': val.result,
+                        'state': 'skipped',
+                        'note': val.note,
+                    }
+            else:
+                data = {
+                    'name': val.name,
+                    'note': val.note,
+                    'score': 0,
+                    'state': 'skipped',
+                    'summary': _("The module has to be installed before running this test.")
+                }
+            create_ids.append((0, 0, data))
+
+        final_score = '%.2f' % (score_sum / ponderation_sum * 100)
+        data = {
+            'name': module_name,
+            'final_score': final_score,
+            'check_detail_ids' : create_ids,
+        }
+        return data
+
+module_quality_check()
+
+class module_quality_detail(osv.osv):
+    _name = 'module.quality.detail'
+    _columns = {
+        'quality_check_id': fields.many2one('module.quality.check', 'Quality'),
+        'name': fields.char('Name',size=128,),
+        'score': fields.float('Score (%)',),
+        'ponderation': fields.float('Ponderation',help='Some tests are more critical than others, so they have a bigger weight in the computation of final rating'),
+        'note': fields.text('Note',),
+        'summary': fields.text('Summary',),
+        'detail': fields.text('Details',),
+        'state': fields.selection([('done','Done'),('skipped','Skipped'),], 'State', size=6, help='The test will be completed only if the module is installed or if the test may be processed on uninstalled module.'),
+    }
+
+module_quality_detail()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
