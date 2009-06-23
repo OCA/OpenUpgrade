@@ -68,7 +68,8 @@ class product_pulled_flow(osv.osv):
     _defaults = {
         'cancel_cascade': lambda *arg: False,
         'procure_method': lambda *args: 'make_to_stock',
-        'type_proc': lambda *args: 'move'
+        'type_proc': lambda *args: 'move',
+        'picking_type':lambda *args:'out',
     }
 product_pulled_flow()
 
