@@ -26,7 +26,7 @@
     "category" : "Generic Modules/Stock",
     "depends" : ['mrp','multi_company_account'],
     "init_xml" : [],
-    "demo_xml" : [],
+    "demo_xml" : ['multi_company_stock_demo.xml'],
     "update_xml": ['multi_company_stock_view.xml','multi_company_stock_data.xml',],
     "active": False,
     "installable": True

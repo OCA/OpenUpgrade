@@ -28,7 +28,10 @@ from lxml import etree
 import httplib
 import base64
 import time
-
+from dm_email.dm_email_document import set_image_email
+from email.MIMEMultipart import MIMEMultipart
+from email.MIMEText import MIMEText
+from email.MIMEImage import MIMEImage
 
 class dm_mail_service(osv.osv):
      _inherit = "dm.mail_service"
@@ -44,7 +47,17 @@ class dm_mail_service(osv.osv):
     }
 dm_mail_service()
 
+def _email_body(body):
+    msgRoot = MIMEMultipart('related')
+    msgRoot.preamble = 'This is a multi-part message in MIME format.'
 
+    msg = MIMEMultipart('alternative')
+    msgRoot.attach(msg)
+
+    set_image_email(body,msgRoot)
+    msgText = MIMEText(etree.tostring(body), 'html')
+    msg.attach(msgText)
+    return  msgRoot.as_string()
 def send_email(cr,uid,obj,context):
 
     """ Get Emailmvision connection infos """
@@ -53,12 +66,11 @@ def send_email(cr,uid,obj,context):
     ev_encrypt = obj.mail_service_id.ev_encrypt
     ev_random = obj.mail_service_id.ev_random
 
-    email_dest = obj.address_id.email
-    email_reply = obj.segment_id.campaign_id.trademark_id.email
-    email_subject = obj.document_id.subject
-    name_from = obj.segment_id.campaign_id.trademark_id.name
-    name_reply = obj.segment_id.campaign_id.trademark_id.name
-
+    email_dest = obj.address_id.email or ''
+    email_reply = obj.segment_id.campaign_id.trademark_id.email or ''
+    email_subject = obj.document_id.subject or ''
+    name_from = obj.segment_id.campaign_id.trademark_id.name or ''
+    name_reply = obj.segment_id.campaign_id.trademark_id.name or ''
 
     pool = pooler.get_pool(cr.dbname)
     ir_att_obj = pool.get('ir.attachment')
@@ -70,15 +82,15 @@ def send_email(cr,uid,obj,context):
 
         print "message :", message
 
-        html_content = ''.join([ etree.tostring(x) for x in body.getchildren()])
-        print "body :", html_content
+#        html_content = ''.join([ etree.tostring(x) for x in body.getchildren()])
+#        print "body :", html_content
+        html_content = _email_body(body)
         text_content = "This is a test"
-
+        print "Test"
 
         "Composing XML"
         msg = etree.Element("MultiSendRequest")
         sendrequest = etree.SubElement(msg, "sendrequest")
-
         dyn = etree.SubElement(sendrequest, "dyn")
 
         dynentry1 = etree.SubElement(dyn, "entry")
@@ -139,20 +151,20 @@ def send_email(cr,uid,obj,context):
 
         xml_msg = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + etree.tostring(msg, encoding="utf-8")
 
-
         "Sending to Emailvision NMSXML API"
-        ev_api = httplib.HTTP(ev_host +":80")
+        ev_api = httplib.HTTP( ev_host +":80")
         ev_api.putrequest("POST", "/" + ev_service)
         ev_api.putheader("Content-type", "text/xml; charset=\"UTF-8\"")
         ev_api.putheader("Content-length", str(len(xml_msg)))
         ev_api.endheaders()
         ev_api.send(xml_msg)
-
+    
         "Get Emailvision Reply"
         statuscode, statusmessage, header = ev_api.getreply()
         res = ev_api.getfile().read()
-
+    
         if statuscode != 200:
+            print "E"*50
             error_msg = "This document cannot be sent to Emailvision NMS API\nStatus Code : " + str(statuscode) + "\nStatus Message : " + statusmessage + "\nHeader : " + str(header) + "\nResult : " + res
             pool.get('dm.campaign.document').write(cr, uid, [obj.id], {'state':'error','error_msg':error_msg})
             return False

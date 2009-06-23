@@ -53,6 +53,7 @@ class SmtpClient(osv.osv):
         'user' : fields.char('User Name', size=256, required=True, readonly=True, states={'new':[('readonly',False)]}),
         'password' : fields.char('Password', size=256, required=True, invisible=True, readonly=True, states={'new':[('readonly',False)]}),
         'server' : fields.char('SMTP Server', size=256, required=True, readonly=True, states={'new':[('readonly',False)]}),
+        'auth' : fields.boolean("Use Auth", readonly=True, states={'new':[('readonly',False)]}),
         'port' : fields.char('SMTP Port', size=256, required=True, readonly=True, states={'new':[('readonly',False)]}),
         'ssl' : fields.boolean("Use SSL?", readonly=True, states={'new':[('readonly',False)]}),
         'users_id': fields.many2many('res.users', 'res_smtpserver_group_rel', 'sid', 'uid', 'Users Allowed'),
@@ -75,24 +76,27 @@ class SmtpClient(osv.osv):
     _defaults = {
         'date_create': lambda *a: time.strftime('%Y-%m-%d'),
         'state': lambda *a: 'new',
+        'port': lambda *a: '25',
+        'auth': lambda *a: True,
+        'active': lambda *a: True,
         'verify_email': lambda *a: _("Verification Message. This is the code\n\n__code__\n\nyou must copy in the OpenERP Email Server (Verify Server wizard).\n\nCreated by user __user__"),
     }
     server = {}
     smtpServer = {}
     
-#    def read(self,cr, uid, ids, fields=None, context=None, load='_classic_read'):
-#        def override_password(o):
-#            for field in o[0]:
-#                if field == 'password':
-#                    o[0][field] = '********'
-#            return o
-#        
-#        result = super(SmtpClient, self).read(cr, uid, ids, fields, context, load)
-#        result = override_password(result)
-#        return result
+    def read(self,cr, uid, ids, fields=None, context=None, load='_classic_read'):
+        def override_password(o):
+            for field in o[0]:
+                if field == 'password':
+                    o[0][field] = '********'
+            return o
+        
+        result = super(SmtpClient, self).read(cr, uid, ids, fields, context, load)
+        result = override_password(result)
+        return result
         
     def change_email(self, cr, uid, ids, email):
-        if len(email) > 0 and email.index('@') > 0:
+        if len(email) > 0 and email.find('@') > -1 and email.index('@') > 0:
             user = email[0:email.index('@')]
             return {'value':{'user':user}}
         else:
@@ -190,7 +194,9 @@ class SmtpClient(osv.osv):
                     self.smtpServer[serverid].starttls()
                     self.smtpServer[serverid].ehlo()
                     
-                self.smtpServer[serverid].login(str(self.server[serverid]['user']),str(self.server[serverid]['password']))
+                if self.server[serverid]['auth']:
+                    self.smtpServer[serverid].login(str(self.server[serverid]['user']),str(self.server[serverid]['password']))
+
             except Exception, e:
                 raise osv.except_osv(_('SMTP Server Error!'), e)
             
