@@ -59,7 +59,6 @@ class stock_location(osv.osv):
         'company_id': fields.many2one('res.company', 'Company'),
     }
     _defaults = {
-        'company_id': lambda self,cr,uid,c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id
     }
 stock_location()
 
@@ -129,7 +128,6 @@ class mrp_bom(osv.osv):
         'company_id': fields.many2one('res.company', 'Company'),
     }
     _defaults = {
-        'company_id': lambda self,cr,uid,c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id
     }
 mrp_bom()
 
