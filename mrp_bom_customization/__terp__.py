@@ -32,14 +32,14 @@ Might not work well in the web-client due to web-client current limitations.
     #TODO not sure it should really depend on product_variant_multi (while demo data currently depend on it)
     "depends" : ["mrp", "sale", "product_variant_multi", "sale_product_multistep_configurator"],
     "init_xml" : [],
-    "demo_xml" : [],
+    "demo_xml" : ['demo_data.xml',],
     "update_xml" : ['security/ir.model.access.csv',
                     'mrp_bom_customization_view.xml',
                     'configurator_view.xml',
                     'sale_view.xml',
                     'stock_view.xml',
                     'mrp_view.xml',
-                    'demo_data.xml',],
+                    ],
     "active": False,
     "installable": True
 }
