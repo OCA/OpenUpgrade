@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
+#    OpenERP, Open Source Management Solution	
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -19,17 +19,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    'name' : 'Sale agent Information',
-    'version': '0.1',
-    'author' : 'Tiny',
-    "category": "Generic Modules/Sales & Purchases",
-    'depends' : ['base','product', 'sale'],
-    'description': 'Sale agent Info',
-    'init_xml' : [],
-    'update_xml':['security/ir.model.access.csv','saleagent_view.xml','partner_view.xml','commission_view.xml','saleagent_report.xml'],
-    'active': False,
-    'installable': True
-}
+
+
+import saleagent_info_wizard
+
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

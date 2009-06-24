@@ -9,8 +9,8 @@
         <field name="type">form</field>
         <field name="inherit_id" ref="product.product_pricelist_view"/>
         <field name="arch" type="xml">
-            <field name="active" position="after">
-                <field name="comrate"/>
+            <field name="active" select="1" position="after">
+                <field name="commrate"/>
             </field>
         </field>
 

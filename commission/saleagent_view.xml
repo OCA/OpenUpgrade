@@ -13,12 +13,10 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="Saleagent">
-
                          <field name="name"  select="1"/>
                          <field name="active" select="1"/>
                            <field name="partner_id" select="1" />
                            <field name="comprice_id" select="1"/>
-
             </tree>
         </field>
     </record>
@@ -30,39 +28,41 @@
             <form string="Saleagent">
             <notebook>
                 <page string="Basic Info">
-                                        <separator string="General Information" colspan="4"/>
-
+                            <separator string="General Information" colspan="4"/>
                             <field name="name" select="1"/>
                             <field name="partner_id"  select="1"/>
                             <field name="comprice_id" select="1"/>
                             <field name="active"/>
+                            <field name="commission_rate"/>
                             <!--field name="customer" mode="form,tree" widget="one2many_list" colspan="4" nolabel="1" select="1" readonly="1" mode="tree,graph-->
                             <field name="customer" widget="one2many_list" colspan="4" nolabel="1" mode="tree,graph"  readonly="1">
                         <tree string="Sale agent customers">
                         <field name="name"/>
-
                     </tree>
                     </field>
-
-
-
                 </page>
             </notebook>
             </form>
         </field>
     </record>
-
-
+    <record model="ir.actions.act_window" id="action_saleagent_tree">
+        <field name="name">saleagent.info.form</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.agent</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_saleagent_tree"/>
+    </record>
     <record model="ir.actions.act_window" id="action_saleagent_form">
         <field name="name">saleagent.info.form</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">sale.agent</field>
         <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_saleagent_form"/>
-
     </record>
-    <menuitem name="Sales Management/Commissions" sequence="1"/>
-    <menuitem name="Sales Management/Commissions/Sales agent"  id="saleagent_id_new" action="action_saleagent_form"/>
-
+	<menuitem name="Commissions" id="menu_sale_commisions" parent="sale.menu_sale_root"/>
+	<menuitem name="Sales agent" id="menu_sale_commisions_agent" parent="menu_sale_commisions" action="action_saleagent_tree"/>
+	<menuitem name="New Sales agent" id="menu_new_sale_commisions_agent" parent="menu_sale_commisions_agent" action="action_saleagent_form"/>    
 </data>
 </openerp>

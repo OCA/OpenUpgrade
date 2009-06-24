@@ -26,65 +26,63 @@ from report import report_sxw
 class saleagent_info(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
         super(saleagent_info, self).__init__(cr, uid, name, context)
+        am_tot=0
+        com_tot=0
         self.localcontext.update({
             'time': time,
             'compute':self.compute,
-            
         })
     
-    
-    def compute(self,sale_agent_id):
+    def compute(self,sale_agent_id,*args):
         result=[];
         res=[];
+        state = args[0]
         sale_obj = self.pool.get('sale.agent').read(self.cr,self.uid,[sale_agent_id])[0];
-        print "SALE_OBJECT",sale_obj;
-        customes_ids = sale_obj['customer'];        
-        print "Customer ids::",customes_ids
+        customes_ids = sale_obj['customer'];  
         ret_list = [];
-        
-        print "IN THE COMPUTE FUNCTION",customes_ids        
         append_list = []
         for cust_id in customes_ids:
             ret_dict = {}
             custmer_obj = self.pool.get('res.partner').browse(self.cr,self.uid,cust_id);
             ret_dict['name']= custmer_obj.name;
-            pricelist_obj = self.pool.get('product.pricelist').browse(self.cr,self.uid,custmer_obj.property_product_pricelist[0]);
+            pricelist_obj = self.pool.get('product.pricelist').browse(self.cr,self.uid,custmer_obj.property_product_pricelist.id);
             ret_dict['commrate']= pricelist_obj.commrate;
-            print "before append";
-            ret_dict['invoices'] = self.partner_invoices(custmer_obj);
-            print "\nafter append",ret_dict;
+            ret_dict['invoices'] = self.partner_invoices(custmer_obj,state);
+            ret_dict['total_ammount'] = self.am_tot
+            ret_dict['total_commission']=self.com_tot
+            ret_dict['state']=state
             ret_list.append(ret_dict);          
         #End for        
-        
-        print "Ret list of partner::",ret_list;
+      
         return ret_list
 #       return True
 
 
-    def partner_invoices(self,partner_obj):
+    def partner_invoices(self,partner_obj,state):
         ret_list = [];
-        invoice_ids = self.pool.get('account.invoice').search(self.cr,self.uid,[('partner_id','=',partner_obj.id)]);
-        print "Invoices ::",invoice_ids;
-        
+        if state == "open" or state =="paid"  :
+            invoice_ids = self.pool.get('account.invoice').search(self.cr,self.uid,[('partner_id','=',partner_obj.id),('type','=','out_invoice'),('state','=',state)]);
+        else :
+            invoice_ids = self.pool.get('account.invoice').search(self.cr,self.uid,[('partner_id','=',partner_obj.id),('type','=','out_invoice'), '|',('state','=','open'),('state','=','paid')]);
+            
+        self.am_tot = 0
+        self.com_tot = 0
         for invoice_id in invoice_ids:
             ret_dict = {};
             invoice = self.pool.get('account.invoice').read(self.cr,self.uid,[invoice_id])[0];
-            #print "Invoice ::",invoice;
             ret_dict['invoice_name'] = invoice['name'];
             ret_dict['date_invoice'] = invoice['date_invoice']
             ret_dict['number'] = invoice['number'];
             ret_dict['amount_total'] = invoice['amount_total'];
-            ret_dict['state'] = invoice['state'];
-            pricelist_obj = self.pool.get('product.pricelist').browse(self.cr,self.uid,partner_obj.property_product_pricelist[0]);
-            
+            pricelist_obj = self.pool.get('product.pricelist').browse(self.cr,self.uid,partner_obj.property_product_pricelist.id);
             ret_dict['comm'] = str(((int(invoice['amount_total']) * int(pricelist_obj.commrate))/100))                      
             ret_list.append(ret_dict);
+            self.am_tot = self.am_tot + int(ret_dict['amount_total'])
+            self.com_tot= self.com_tot + int(ret_dict['comm'])
         #end for invoice_id in invoice_ids:
-        
-        print "\n List in invoice::",ret_list;
         return ret_list;
     #end def partner_invoices(self,partner_obj):
-report_sxw.report_sxw('report.saleagent.info', 'sale.agent', 'addons/saleagent/report/saleagent_info.rml', parser=saleagent_info)
+report_sxw.report_sxw('report.saleagent.info', 'sale.agent', 'addons/commission/report/saleagent_info.rml', parser=saleagent_info)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
