@@ -32,6 +32,8 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
+                    "security/dm_after_sale_security.xml",
+                    "security/ir.model.access.csv",
                     "dm_after_sale_view.xml",
                     ],
     "active": False,

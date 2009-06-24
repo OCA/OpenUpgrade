@@ -556,7 +556,7 @@ class dm_event(osv.osv_memory): # {{{
                     next_action_time = next_action_time.replace(minute=act_hour.minute)
 
             try:
-                if self.pool.get('dm.workitem').search(cr,uid,[('sale_order_id','=',obj.sale_order_id.id)]):
+                if (obj.sale_order_id.id != False) and self.pool.get('dm.workitem').search(cr,uid,[('sale_order_id','=',obj.sale_order_id.id)]):
                     raise osv.except_osv("Error!","You cannot create more than 1 workitem for the same sale order !")
                 wi_id = self.pool.get('dm.workitem').create(cr, uid, {'step_id':tr.step_to_id.id or False, 'segment_id':obj.segment_id.id or False,
                 'address_id':obj.address_id.id, 'mail_service_id':obj.mail_service_id.id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'),
