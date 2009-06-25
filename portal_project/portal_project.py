@@ -79,7 +79,7 @@ class project_project(osv.osv):
         result = {}
         for id in ids_project:
             result[id] = {
-                  'tasks': '',
+                  'tasks_detail': '',
                   'bugs': '',
                   'features': '',
                   'support_req': '',
@@ -92,7 +92,7 @@ class project_project(osv.osv):
                     from project_project as p left join project_task as t on p.id=t.project_id \
                     where p.id in ('+ids+') and t.state=%s group by p.id, p.name', ('open',))
         for proj in cr.dictfetchall():
-            result[proj['id']]['tasks'] = str(proj['count']) + ' opens, ' + str(proj['hours']) + ' hours remaining'
+            result[proj['id']]['tasks_detail'] = str(proj['count']) + ' opens, ' + str(proj['hours']) + ' hours remaining'
 
         #======================================Bug, Features ,support request====================================================
         cr.execute('select p.id, count(c.id),c.state,p.name from project_project as  p, \
@@ -225,7 +225,7 @@ class project_project(osv.osv):
         'section_feature_id': fields.many2one('crm.case.section', 'Feature Section'),
         'section_support_id': fields.many2one('crm.case.section', 'Support Section'),
         'section_annouce_id': fields.many2one('crm.case.section', 'Announce Section'),
-        'tasks': fields.function(_get_details, type='char', size=64, method=True, string='Tasks', multi='project'),
+        'tasks_detail': fields.function(_get_details, type='char', size=64, method=True, string='Tasks', multi='project'),
         'bugs': fields.function(_get_details, type='char', size=64, method=True, string='Bugs', multi='project'),
         'features': fields.function(_get_details, type='char', size=64, method=True, string='Features',multi='project'),
         'support_req': fields.function(_get_details, type='char', size=64, method=True,multi='project', string='Support Requests'),
