@@ -23,7 +23,7 @@
 			<field name="field_id" search="[('model','=','project.task'),('name','=','project_id')]" model="ir.model.fields"/>
 			<field name="operator">in</field>
 			<field name="operand">user.id</field>
-			<field eval="'[(\'project_id.members\',\'in\',[user.id])]'" name="domain_force"/>
+			<field eval="'[(\'project_id.members\',\'in\',[user.id]),(\'project_id.manager\',\'=\',user.id)]'" name="domain_force"/>
 			<field name="rule_group" ref="project_task_rule_group"/>
 		</record>
 		
@@ -38,7 +38,7 @@
 			<field name="field_id" search="[('model','=','project.project'),('name','=','members')]" model="ir.model.fields"/>
 			<field name="operator">in</field>
 			<field name="operand">user.id</field>
-			<field eval="'[(\'members\',\'in\',[user.id])]'" name="domain_force"/>
+			<field eval="'[(\'members\',\'in\',[user.id]),(\'manager\',\'=\',user.id)]'" name="domain_force"/>
 			<field name="rule_group" ref="project_rule_group"/>
 		</record>
 
