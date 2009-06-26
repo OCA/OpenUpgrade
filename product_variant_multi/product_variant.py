@@ -83,6 +83,13 @@ class product_template(osv.osv):
         'dimension_type_ids':fields.one2many('product.variant.dimension.type', 'product_tmpl_id', 'Dimension Types'),
         'variant_ids':fields.one2many('product.product', 'product_tmpl_id', 'Variants'),
     }
+    
+    def copy(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        default = default.copy()
+        default.update({'variant_ids':False,})
+        return super(product_template, self).copy(cr, uid, id, default, context)
 
     def button_generate_variants(self, cr, uid, ids, context={}):
         def cartesian_product(args):
