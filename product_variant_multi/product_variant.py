@@ -63,7 +63,7 @@ class product_variant_dimension_value(osv.osv):
         'name' : fields.char('Dimension Value', size=64, required=True),
         'sequence' : fields.integer('Sequence'),
         'price_extra' : fields.float('Price Extra', size=64),
-        'price_margin' : fields.float('Price Margin', size=64),
+        'price_margin' : fields.float('Price Margin', size=64), #TODO: this field is not implemented yet
         'dimension_id' : fields.many2one('product.variant.dimension.type', 'Dimension Type', required=True, ondelete='cascade'),
         'product_tmpl_id': fields.related('dimension_id', 'product_tmpl_id', type="many2one", relation="product.template", string="Product Template", store=True),
         'dimension_sequence': fields.related('dimension_id', 'sequence', string="Related Dimension Sequence",#used for ordering purposes in the "variants"
