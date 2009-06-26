@@ -52,12 +52,14 @@ import fields
 import tools
 
 import sys
+
 try:
     from xml import dom, xpath
 except ImportError:
     sys.stderr.write("ERROR: Import xpath module\n")
     sys.stderr.write("ERROR: Try to install the old python-xml package\n")
-    sys.exit(2)
+    sys.stderr.write('On Ubuntu Jaunty, try this: sudo cp /usr/lib/python2.6/dist-packages/oldxml/_xmlplus/utils/boolean.so /usr/lib/python2.5/site-packages/oldxml/_xmlplus/utils\n')
+    raise
 
 from tools.config import config
 
@@ -2283,9 +2285,16 @@ class orm(orm_template):
 
         # call the 'set' method of fields which are not classic_write
         upd_todo.sort(lambda x, y: self._columns[x].priority-self._columns[y].priority)
+
+        # default element in context must be remove when call a one2many or many2many
+        rel_context = context.copy()
+        for c in context.items():
+            if c[0].startswith('default_'):
+                del rel_context[c[0]]
+
         for field in upd_todo:
             for id in ids:
-                self._columns[field].set(cr, self, id, field, vals[field], user, context=context)
+                self._columns[field].set(cr, self, id, field, vals[field], user, context=rel_context)
 
         for table in self._inherits:
             col = self._inherits[table]
@@ -2484,8 +2493,15 @@ class orm(orm_template):
                 cr.execute('update '+self._table+' set parent_left=parent_left+2 where parent_left>%s', (pleft,))
                 cr.execute('update '+self._table+' set parent_right=parent_right+2 where parent_right>%s', (pleft,))
                 cr.execute('update '+self._table+' set parent_left=%s,parent_right=%s where id=%s', (pleft+1,pleft+2,id_new))
+                
+        # default element in context must be remove when call a one2many or many2many
+        rel_context = context.copy()
+        for c in context.items():
+            if c[0].startswith('default_'):
+                del rel_context[c[0]]
+
         for field in upd_todo:
-            self._columns[field].set(cr, self, id_new, field, vals[field], user, context)
+            self._columns[field].set(cr, self, id_new, field, vals[field], user, rel_context)
         self._validate(cr, user, [id_new], context)
 
         result = self._store_get_values(cr, user, [id_new], vals.keys(), context)
