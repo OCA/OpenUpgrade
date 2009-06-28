@@ -40,6 +40,8 @@ class portal_portal(osv.osv):
         """
         Create default menu for the users of the portal.
         """
+        mod_obj = self.pool.get('ir.model.data')
+        result = mod_obj._get_id(cr, uid, 'base', 'view_menu')
         menu_action_id = self.pool.get('ir.actions.act_window').create(cr,uid, {
             'name': action_name+ ' main menu',
             'usage': 'menu',
@@ -47,7 +49,7 @@ class portal_portal(osv.osv):
             'res_model': "ir.ui.menu",
             'domain': "[('parent_id','=',"+str(action_id)+")]",
             'view_type': 'tree',
-            'view_id': self.pool.get('ir.model.data')._get_id(cr, uid, 'base', 'view_menu')
+            'view_id': mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
             })
         return menu_action_id
 
