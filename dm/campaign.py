@@ -2119,4 +2119,13 @@ class project_task(osv.osv):#{{{
 
 project_task()#}}}
 
+class sale_order(osv.osv):#{{{
+    _name = "sale.order"
+    _inherit="sale.order"
+    _columns = {
+        'offer_step_id': fields.many2one('dm.offer.step','Offer Step'),
+        'journal_id': fields.many2one('account.journal', 'Journal'),
+    }
+    
+sale_order()#}}}
 #vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

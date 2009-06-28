@@ -1584,6 +1584,28 @@
         </field>
     </record>
     
+    <!--
+    =======================================================
+    SALE ORDER EXTENSIONS
+    =======================================================
+    -->
+
+    <record id="view_order_form_inherit1" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <notebook colspan="4" position="inside">
+                <page string="Direct Marketing">
+                	<separator colspan="4"/>
+                	<field name="offer_step_id" colspan="4"/>
+                    <field name="journal_id" colspan="4"/>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
 <!--
     =======================================================
         OVERLAY PAYMENT RULE

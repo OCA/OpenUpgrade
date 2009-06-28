@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution    
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -19,25 +19,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name" : "After-Sale Service wizards for DM",
-    "version" : "1.0",
-    "author" : "Tiny",
-    "website" : "http://www.openerp.com",
-    "category" : "Generic Modules/Direct Marketing",
-    "description": """
-            This module manages after-sale wizard.
-            """,
-    "depends" : ["dm_email"],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-                    "security/dm_after_sale_security.xml",
-                    "security/ir.model.access.csv",
-                    "dm_after_sale_view.xml",
-                    ],
-    "active": False,
-    "installable": True,
-}
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
+from osv import fields
+from osv import osv
+
+class sale_order_line(osv.osv):
+    _inherit = 'sale.order.line'
+    _columns = {
+        'production_lot_id' : fields.many2one('stock.production.lot', 'Production Lot'),
+        'tracking_lot_id' : fields.many2one('stock.tracking', 'Tracking Lot'),
+    }
+    
+sale_order_line()

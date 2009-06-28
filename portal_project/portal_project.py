@@ -79,7 +79,7 @@ class project_project(osv.osv):
         result = {}
         for id in ids_project:
             result[id] = {
-                  'tasks': '',
+                  'tasks_detail': '',
                   'bugs': '',
                   'features': '',
                   'support_req': '',
@@ -92,48 +92,47 @@ class project_project(osv.osv):
                     from project_project as p left join project_task as t on p.id=t.project_id \
                     where p.id in ('+ids+') and t.state=%s group by p.id, p.name', ('open',))
         for proj in cr.dictfetchall():
-            result[proj['id']]['tasks'] = str(proj['count']) + ' opens, ' + str(proj['hours']) + ' hours remaining'
+            result[proj['id']]['tasks_detail'] = str(proj['count']) + ' opens, ' + str(proj['hours']) + ' hours remaining'
 
         #======================================Bug, Features ,support request====================================================
         cr.execute('select p.id, count(c.id),c.state,p.name from project_project as  p, \
-                    crm_case as c, project_task as t where t.case_id=c.id and p.id=t.project_id \
+                    crm_case as c where p.id=c.project_id \
                     and p.section_bug_id=c.section_id and p.id in ('+ids+') and c.state=%s  \
                     group by p.id,p.name,c.state', ('open',))
         res_bug = cr.dictfetchall()
         for bug in res_bug:
             result[bug['id']]['bugs'] = result[bug['id']]['bugs'] + str(bug['count']) + ' Open '
         cr.execute('select p.id, count(c.id), p.name from project_project as p, \
-                    crm_case as c, project_task as t where t.case_id=c.id \
-                    and p.id=t.project_id and p.section_bug_id=c.section_id \
+                    crm_case as c where p.id=c.project_id and p.section_bug_id=c.section_id \
                     and p.id in ('+ids+') group by p.id,p.name')
         for bug in cr.dictfetchall():
             result[bug['id']]['bugs'] = result[bug['id']]['bugs'] +  str(bug['count'])  +  ' Total'
 
         cr.execute('select p.id, count(c.id),c.state,p.name from project_project as  p, \
-                    crm_case as c, project_task as t where t.case_id=c.id  \
-                    and p.id=t.project_id and p.section_feature_id=c.section_id \
+                    crm_case as c where \
+                    p.id=c.project_id and p.section_feature_id=c.section_id \
                     and p.id in ('+ids+') and c.state=%s group by p.id,p.name,c.state', ('open',))
         res_fet = cr.dictfetchall()
         for feature in res_fet:
             result[feature['id']]['features'] = result[feature['id']]['features'] + str(feature['count']) + ' Open '
         cr.execute('select p.id, count(c.id), p.name from project_project as p, \
-                    crm_case as c, project_task as t where t.case_id=c.id  \
-                    and p.id=t.project_id and p.section_feature_id=c.section_id \
+                    crm_case as c where  \
+                    p.id=c.project_id and p.section_feature_id=c.section_id \
                     and p.id in ('+ids+') group by p.id,p.name')
         for feature in cr.dictfetchall():
             result[feature['id']]['features'] = result[feature['id']]['features'] + str(feature['count']) + ' Total'
 
         cr.execute('select p.id, count(c.id),c.state,p.name from project_project as  p, \
-                    crm_case as c, project_task as t where t.case_id=c.id \
-                    and p.id=t.project_id and p.section_support_id=c.section_id \
+                    crm_case as c where \
+                    p.id=c.project_id and p.section_support_id=c.section_id \
                     and p.id in ('+ids+') and c.state=%s group by p.id,p.name,c.state', ('open',))
         res_sup = cr.dictfetchall()
         for support in res_sup:
             result[support['id']]['support_req'] = result[support['id']]['support_req'] + str(support['count']) + ' Open '
         cr.execute('select p.id, count(c.id), p.name from project_project as p, \
-                    crm_case as c, project_task as t where t.case_id=c.id \
-                    and p.id=t.project_id and p.section_support_id=c.section_id \
-                    and p.id in ('+ids+') group by p.id,p.name')
+                    crm_case as c where \
+                    p.id=c.project_id and p.section_support_id=c.section_id \
+                    and p.id in ('+ids+') group by p.id,p.name ')
         for support in cr.dictfetchall():
             result[support['id']]['support_req'] = result[support['id']]['support_req'] + str(support['count']) + ' Total'
 
@@ -183,7 +182,7 @@ class project_project(osv.osv):
             result[s]['doc'] = str(result[s]['doc']) + ' for ' +  size
         return result
 
-    def _get_users(self,cr,uid,ids,context={},*arg):
+    def _get_users(self, cr, uid, ids, context={}, *arg):
         if not ids:
             return {}
         res = {}
@@ -202,7 +201,7 @@ class project_project(osv.osv):
         date_back = date_back.strftime('%Y-%m-%d')
         for announce in self.browse(cr, uid, ids, context):
             cr.execute("""select c.id from crm_case c \
-                        left join project_task t on t.case_id=c.id left join project_project p on %s = t.project_id \
+                        left join project_project p on %s = c.project_id \
                        where c.section_id = p.section_annouce_id and c.date >= %s """, (announce.id, date_back))
             list_announce = map(lambda x: x[0], cr.fetchall())
             res[announce.id] = list_announce
@@ -225,7 +224,7 @@ class project_project(osv.osv):
         'section_feature_id': fields.many2one('crm.case.section', 'Feature Section'),
         'section_support_id': fields.many2one('crm.case.section', 'Support Section'),
         'section_annouce_id': fields.many2one('crm.case.section', 'Announce Section'),
-        'tasks': fields.function(_get_details, type='char', size=64, method=True, string='Tasks', multi='project'),
+        'tasks_detail': fields.function(_get_details, type='char', size=64, method=True, string='Tasks', multi='project', help='Show open tasks for Project with remaining hours'),
         'bugs': fields.function(_get_details, type='char', size=64, method=True, string='Bugs', multi='project'),
         'features': fields.function(_get_details, type='char', size=64, method=True, string='Features',multi='project'),
         'support_req': fields.function(_get_details, type='char', size=64, method=True,multi='project', string='Support Requests'),
@@ -292,25 +291,25 @@ class crm_case(osv.osv):
 
         for case in self.browse(cr, uid, ids_cases, context):
             cr.execute("""select c.id from crm_case c \
-                        left join  project_task t on c.id=t.case_id left join project_project p on p.id = t.project_id \
+                        left join project_project p on p.id = c.project_id \
                         where c.section_id = p.section_bug_id and c.date >= %s and p.id=%s """, (date_back,project_id,))
             list_case = map(lambda x: x[0], cr.fetchall())
             result[case.id]['bug_ids'] = list_case
 
             cr.execute("""select c.id from crm_case c \
-                        left join  project_task t on c.id=t.case_id left join project_project p on p.id = t.project_id \
+                        left join project_project p on p.id = c.project_id \
                         where c.section_id = p.section_feature_id and c.date >= %s and p.id=%s """, (date_back, project_id,))
             list_case = map(lambda x: x[0], cr.fetchall())
             result[case.id]['feature_ids'] = list_case
 
             cr.execute("""select c.id from crm_case c \
-                        left join  project_task t on c.id=t.case_id left join project_project p on p.id = t.project_id \
+                        left join project_project p on p.id = c.project_id \
                         where c.section_id = p.section_support_id and c.date >= %s and p.id=%s """, (date_back, project_id,))
             list_case = map(lambda x: x[0], cr.fetchall())
             result[case.id]['support_ids'] = list_case
 
             cr.execute("""select c.id from crm_case c \
-                        left join  project_task t on c.id=t.case_id left join project_project p on p.id = t.project_id \
+                        left join project_project p on p.id = c.project_id \
                         where c.section_id = p.section_annouce_id and c.date >= %s and p.id=%s """, (date_back, project_id,))
             list_case = map(lambda x: x[0], cr.fetchall())
             result[case.id]['announce_ids'] = list_case
@@ -321,6 +320,7 @@ class crm_case(osv.osv):
         'feature_ids' : fields.function(_get_latest_cases,type='one2many', relation='crm.case', method=True , string='Latest Features', multi='case'),
         'support_ids' : fields.function(_get_latest_cases,type='one2many', relation='crm.case', method=True , string='Latest Supports', multi='case'),
         'announce_ids' : fields.function(_get_latest_cases,type='one2many', relation='crm.case', method=True , string= 'Latest Announces', multi='case'),
+        'project_id': fields.many2one('project.project', 'Project')
      }
 
     def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
@@ -333,16 +333,16 @@ class crm_case(osv.osv):
             project_id = project_ids and project_ids[0]
 
         if context.has_key('section') and context['section']=='Bug Tracking' or context.has_key('case_search') and context['case_search']=='bug':
-            cr.execute('select c.id from crm_case c left join project_task t on c.id=t.case_id left join project_project p on p.id=t.project_id where c.section_id=p.section_bug_id and p.id=%s',(project_id,))
+            cr.execute('select c.id from crm_case c left join project_project p on p.id=c.project_id where c.section_id=p.section_bug_id and p.id=%s',(project_id,))
             return map(lambda x: x[0], cr.fetchall())
         elif context.has_key('section') and context['section']=='Feature' or context.has_key('case_search') and context['case_search']=='feature':
-            cr.execute('select c.id from crm_case c left join project_task t on c.id=t.case_id left join project_project p on p.id=t.project_id where c.section_id=p.section_feature_id and p.id=%s',(project_id,))
+            cr.execute('select c.id from crm_case c left join project_project p on p.id=c.project_id where c.section_id=p.section_feature_id and p.id=%s',(project_id,))
             return map(lambda x: x[0], cr.fetchall())
         elif context.has_key('section') and context['section']=='Support' or context.has_key('case_search') and context['case_search']=='support':
-            cr.execute('select c.id from crm_case c left join project_task t on c.id=t.case_id left join project_project p on p.id=t.project_id where c.section_id=p.section_support_id and p.id=%s',(project_id,))
+            cr.execute('select c.id from crm_case c left join project_project p on p.id=c.project_id where c.section_id=p.section_support_id and p.id=%s',(project_id,))
             return map(lambda x: x[0], cr.fetchall())
         elif context.has_key('section') and context['section']=='Announce' or context.has_key('case_search') and context['case_search']=='announce':
-            cr.execute('select c.id from crm_case c left join project_task t on c.id=t.case_id left join project_project p on p.id=t.project_id where c.section_id=p.section_annouce_id and p.id=%s',(project_id,))
+            cr.execute('select c.id from crm_case c left join project_project p on p.id=c.project_id where c.section_id=p.section_annouce_id and p.id=%s',(project_id,))
             return map(lambda x: x[0], cr.fetchall())
         return super(crm_case, self).search(cr, uid, args, offset, limit, order, context, count)
 
@@ -456,8 +456,8 @@ class report_crm_case_bugs(osv.osv):
                     count(*) as nbr,
                     c.state
                 from
-                    crm_case c left join project_task t on t.case_id = c.id
-                    left join project_project p on p.id = t.project_id
+                    crm_case c
+                    left join project_project p on p.id = c.project_id
                 where c.section_id = p.section_bug_id
                 group by c.user_id, t.project_id, c.section_id, c.state
             )""")
@@ -494,8 +494,8 @@ class report_crm_case_features_user(osv.osv):
                     count(*) as nbr,
                     p.id as project_id
                 from
-                    crm_case c left join project_task t on  t.case_id=c.id
-                    left join project_project p on p.id = t.project_id
+                    crm_case c
+                    left join project_project p on p.id = c.project_id
                 where c.section_id = p.section_feature_id
                 group by c.user_id, c.name, p.id
             )""")
@@ -531,8 +531,8 @@ class report_crm_case_support_user(osv.osv):
                     count(*) as nbr,
                     p.id as project_id
                 from
-                    crm_case c left join project_task t on c.id=t.case_id
-                    left join project_project p on p.id = t.project_id
+                    crm_case c
+                    left join project_project p on p.id = c.project_id
                 where c.section_id = p.section_support_id
                 group by c.user_id, c.name, p.id
             )""")
@@ -570,8 +570,8 @@ class report_crm_case_announce_user(osv.osv):
                     count(*) as nbr,
                     p.id as project_id
                 from
-                    crm_case c left join project_task t on t.case_id = c.id
-                    left join project_project p on p.id = t.project_id
+                    crm_case c
+                    left join project_project p on p.id = c.project_id
                 where c.section_id = p.section_annouce_id
                 group by c.user_id, c.name, p.id
             )""")

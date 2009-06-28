@@ -19,25 +19,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name" : "After-Sale Service wizards for DM",
-    "version" : "1.0",
-    "author" : "Tiny",
-    "website" : "http://www.openerp.com",
-    "category" : "Generic Modules/Direct Marketing",
-    "description": """
-            This module manages after-sale wizard.
-            """,
-    "depends" : ["dm_email"],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-                    "security/dm_after_sale_security.xml",
-                    "security/ir.model.access.csv",
-                    "dm_after_sale_view.xml",
-                    ],
-    "active": False,
-    "installable": True,
-}
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+import math
+from osv import fields,osv
+import tools
+import ir
+import pooler
 
+class sale_agent(osv.osv):
+	_name = "sale.agent"
+        _description = "Sale agent sale info"
+	_columns = {
+			    'name': fields.char('Saleagent Name', size=25, required=True),
+			    'partner_id': fields.many2one('res.partner','Partner',required=True,ondelete='cascade'),
+			    'customer':fields.one2many('res.partner','agent_id','Customer'),
+			    'comprice_id': fields.many2one('product.pricelist','commission price list',  required=True,ondelete='cascade'),
+			    'active': fields.boolean('Active'),
+                'commission_rate':fields.float('Commission Rate',require=True),
+	}
+	_defaults = {
+               	'active': lambda *a: True,
+                }
+sale_agent()
+
+#
+# En Sale_agent class
+#

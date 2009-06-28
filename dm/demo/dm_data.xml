@@ -1079,6 +1079,13 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;action = True&quot;&quot;&quot;" name="in_act_cond"/>
 <!--            <field eval="&quot;&quot;&quot;action = True&quot;&quot;&quot;" name="out_act_cond"/>-->
         </record>
+        <record id="dm_offer_step_transition_dummy" model="dm.offer.step.transition.trigger">
+            <field eval="&quot;&quot;&quot;Dummy&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;dummy&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;False&quot;&quot;&quot;" name="gen_next_wi"/>
+            <field eval="&quot;&quot;&quot;as&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;action = True&quot;&quot;&quot;" name="in_act_cond"/>
+        </record>
     </data>
 
     <!-- Cron -->

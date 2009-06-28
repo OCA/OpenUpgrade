@@ -49,9 +49,9 @@
 			</field>
 		</record>
 
-<!--		CRM Case-->
-		<!--<record id="portal_crm_case-view" model="ir.ui.view">
-            <field name="name">portal crm case</field>
+<!--		case with project-->
+        <record id="portal_crm_case-view" model="ir.ui.view">
+            <field name="name">crm.case.portal.form</field>
             <field name="model">crm.case</field>
             <field name="type">form</field>
             <field name="inherit_id" ref="crm.crm_case-view"/>
@@ -60,7 +60,7 @@
                     <field name="project_id"/>
                 </field>
             </field>
-        </record>-->
+        </record>
 
 <!--		Announce View-->
 		<record model="ir.ui.view" id="crm_case_announce_tree_view">
@@ -304,7 +304,7 @@
 	            	<child1>
 	            	<group colspan="2">
 	            		<separator string="Statistics" colspan="2"/>
-			            <field name="tasks" colspan="2"/>
+			            <field name="tasks_detail" colspan="2"/>
 			            <field name="bugs" colspan="2"/>
 				        <field name="features" colspan="2"/>
 				        <field name="support_req" colspan="2"/>

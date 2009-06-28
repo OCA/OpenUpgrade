@@ -20,21 +20,19 @@
 #
 ##############################################################################
 {
-    "name" : "After-Sale Service wizards for DM",
+    "name" : "Carriers and deliveries for DM",
     "version" : "1.0",
     "author" : "Tiny",
     "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Direct Marketing",
     "description": """
-            This module manages after-sale wizard.
+            "Allows you to add delivery methods in sales orders and packing.
             """,
-    "depends" : ["dm_email"],
+    "depends" : ["delivery","dm"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-                    "security/dm_after_sale_security.xml",
-                    "security/ir.model.access.csv",
-                    "dm_after_sale_view.xml",
+                    "dm_delivery_view.xml",
                     ],
     "active": False,
     "installable": True,
