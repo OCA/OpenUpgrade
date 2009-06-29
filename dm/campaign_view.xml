@@ -704,16 +704,15 @@
                         <group colspan="4">
                             <separator string="Segment Description" colspan="4"/>
                             <field name="name" string="Name" select="1"/>
-                            <field name="code1" string="Code" select="1"/>
+<!--                            <field name="code1" string="Code" select="1"/>-->
+                            <field name="code" string="Code" select="1"/>
 							<group colspan="2">
 								<field name="type_src"/>
 							</group>
 							<group colspan="2" col="2">
-								<field name="customers_list_id" select="1" on_change="onchange_list(customers_list_id,start_census,end_census)" attrs="{'invisible':[('type_src','=','internal')],'readonly':[('type_src','=','internal')]}" />
-								<field name="customers_file_id" select="1" groups="base.group_extended" attrs="{'invisible':[('type_src','=','external')],'readonly':[('type_src','=','external')]}"/>
+                                <field name="customers_list_id" select="1" on_change="onchange_list(customers_list_id,start_census,end_census)"/>
+                                <field name="customers_file_id" select="1"/>
 							</group>
-<!--                            <field name="customers_list_id" select="1" on_change="onchange_list(customers_list_id,start_census,end_census)"/>
-                            <field name="customers_file_id" select="1" groups="base.group_extended"/>-->
                         </group>
                         <notebook colspan="4">
                             <page string="General">
@@ -766,7 +765,8 @@
                    <tree string="Segments">
                         <field name="name" string="Name" />
                         <field name="deduplication_level" />
-                        <field name="code1" string="Code" />
+                        <field name="code" string="Code" />
+<!--                        <field name="code1" string="Code" />-->
                         <field name="quantity_planned" />
                         <field name="quantity_wanted" />
                         <field name="quantity_delivered" />
@@ -851,13 +851,14 @@
                 <group colspan="4">
                     <separator string="Segment Description" colspan="4"/>
                     <field name="name" string="Name" select="1"/>
-                    <field name="code1" string="Code" select="1"/>
+                    <field name="code" string="Code" select="1"/>
+<!--                    <field name="code1" string="Code" select="1"/>-->
                     <group colspan="2">
                         <field name="type_src"/>
                     </group>
                     <group colspan="2" col="2">
-                        <field name="customers_list_id" select="1" on_change="onchange_list(customers_list_id,start_census,end_census)" attrs="{'invisible':[('type_src','=','internal')],'readonly':[('type_src','=','internal')]}" />
-                        <field name="customers_file_id" select="1" groups="base.group_extended" attrs="{'invisible':[('type_src','=','external')],'readonly':[('type_src','=','external')]}"/>
+                        <field name="customers_list_id" select="1" on_change="onchange_list(customers_list_id,start_census,end_census)"/>
+                        <field name="customers_file_id" select="1"/>
                     </group>
                 </group>
                 <notebook colspan="4">
@@ -919,7 +920,8 @@
         <field name="arch" type="xml">
             <tree string="Segments">
                 <field name="name" string="Name"/>
-                <field name="code1" string="Code"/>
+                <field name="code" string="Code"/>
+<!--                <field name="code1" string="Code"/>-->
                 <field name="type_src"/>
                 <field name="quantity_planned" select="2"/>
                 <field name="quantity_wanted" select="2"/>
@@ -1582,6 +1584,28 @@
         </field>
     </record>
     
+    <!--
+    =======================================================
+    SALE ORDER EXTENSIONS
+    =======================================================
+    -->
+
+    <record id="view_order_form_inherit1" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <notebook colspan="4" position="inside">
+                <page string="Direct Marketing">
+                	<separator colspan="4"/>
+                	<field name="offer_step_id" colspan="4"/>
+                    <field name="journal_id" colspan="4"/>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
 <!--
     =======================================================
         OVERLAY PAYMENT RULE

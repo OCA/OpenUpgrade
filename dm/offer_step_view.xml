@@ -165,7 +165,7 @@
                                 <field name="step_from_id" colspan="4" readonly="1"/>
                                 <field name="step_to_id" colspan="4" domain="[('offer_id','=',parent.offer_id)]"/>
                                 <separator string="Action Condition and Time" colspan="4"/>
-                                <field name="condition_id" select="1" domain="[('type','=','offer')]"/>
+                                <field name="condition_id" select="1" />
                                 <label align="1.0" string="Delay After Trigger Date:"/>
                                 <group col="2" colspan="1">
                                     <field name="delay" nolabel="1"/>
@@ -190,7 +190,7 @@
                                 <field name="step_from_id" domain="[('offer_id','=',parent.offer_id)]"/>
                                 <field name="step_to_id" readonly="1"/>
                                 <separator string="Action Condition and Time" colspan="4"/>
-                                <field name="condition_id" select="1" domain="[('type','=','offer')]"/>
+                                <field name="condition_id" select="1" />
                                 <label align="1.0" string="Delay After Trigger Date:"/>
                                 <group col="2" colspan="1">
                                     <field name="delay" nolabel="1"/>

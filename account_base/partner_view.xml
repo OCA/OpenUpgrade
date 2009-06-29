@@ -7,8 +7,8 @@
 			<field name="model">res.partner</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<field name="bank_ids" select="2" position="before">
-					<separator string="Exise, Service Tax, and PAN Details" colspan="4"/>
+				<field colspan="4" context="address=address" name="bank_ids" nolabel="1" select="2" position="before">
+					<separator string="Excise, Service Tax, and PAN Details" colspan="4"/>
 					<field name="excise" select="2"/>
 					<field name="range" select="2"/>
 					<field name="div" select="2"/>

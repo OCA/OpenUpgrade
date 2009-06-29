@@ -191,13 +191,13 @@ def create_kml(self, cr, uid, data, context={}):
 #                address += str(add.street2)
             if add.city:
                 address += ''
-                address += str(add.city)
+                address += str(tools.ustr(add.city.encode('ascii','replace')))
             if add.state_id:
                 address += ', '
-                address += str(add.state_id.name)
+                address += str(tools.ustr(add.state_id.name.encode('ascii','replace')))
             if add.country_id:
                 address += ', '
-                address += str(add.country_id.name)
+                address += str(tools.ustr(add.country_id.name.name.encode('ascii','replace')))
         type = ''
         if part.customer:
             type += 'Customer '
@@ -213,8 +213,8 @@ def create_kml(self, cr, uid, data, context={}):
 
 #        desc_text = ' <html><head> <font color="red"> <b> Partner Name : ' + str(part.name) + '<br/>' + line +'<br /> Partner Code : ' + str(part.ref or '') + '<br/>' + line + ' <br />Type : ' + type + ' <br/>' +line+ '<br /> Partner Address: ' +  address + '<br/>' +line+ '<br /> Turnover of partner : ' + str(res[part.id]) + '<br/>' +line+ ' <br /> Main comapny : ' + str(part.parent_id and part.parent_id.name) + '<br/>' + line+  ' <br />Credit Limit : ' + str(part.credit_limit) + '<br/>' \
 #                    + line +  ' <br /> Number of customer invoice : ' + str(number_customer or 0 ) + '<br/>' + line+' <br /> Number of supplier invoice : ' + str(number_supplier or 0)  + '<br/>' +line +'<br />Total Receivable : ' + str(part.credit) + '<br/>' + line+' <br/>Total Payable : ' + str(part.debit) + '<br/>' + line+ '<br/>Website : ' + str(part.website or '') + '<br/>' +line+ ' </b> </font> </head></html>'
-        desc_text = '<html><head> <font size=1.9 color="red"> <b><table width=400 border=5 bordercolor="red"><tr><td> Partner Name</td><td>' + str(part.name) + '</td></tr><tr>' + '<td> Partner Code</td><td> ' + str(part.ref or '') + '</td></tr>' + '<tr><td>Type:</td><td>' + type + '</td></tr><tr><td>' + 'Partner Address</td><td>' \
-                    + address + '</td></tr>' + '<tr><td>Turnover of partner:</td><td> ' + str(res[part.id]) + '</td></tr>' + ' <tr><td> Main comapny</td><td>' + str(part.parent_id and part.parent_id.name) + '</td></tr>' + '<tr><td>Credit Limit</td><td>' + str(part.credit_limit) + '</td></tr>' \
+        desc_text = '<html><head> <font size=1.9 color="red"> <b><table width=400 border=5 bordercolor="red"><tr><td> Partner Name</td><td>' + str(tools.ustr(part.name.encode('ascii','replace'))) + '</td></tr><tr>' + '<td> Partner Code</td><td> ' + str(part.ref or '') + '</td></tr>' + '<tr><td>Type:</td><td>' + type + '</td></tr><tr><td>' + 'Partner Address</td><td>' \
+                    + tools.ustr(address.encode('ascii','replace')) + '</td></tr>' + '<tr><td>Turnover of partner:</td><td> ' + str(res[part.id]) + '</td></tr>' + ' <tr><td> Main comapny</td><td>' + str(part.parent_id and part.parent_id.name) + '</td></tr>' + '<tr><td>Credit Limit</td><td>' + str(part.credit_limit) + '</td></tr>' \
                     + '<tr><td>Number of customer invoice</td><td>' + str(number_customer or 0 ) + '</td><tr>' +' <tr><td>Number of supplier invoice</td><td>' + str(number_supplier or 0) + '</td></tr>'  + '<tr><td>' +'Total Receivable</td><td> ' + str(part.credit) + '</td></tr>' +' <tr><td>Total Payable</td><td>' \
                     + str(part.debit) + '</td></tr>' + '<tr><td>Website</td><td>' + str(part.website or '') + '</td></tr>'+ '</table> </b> </font> </head></html>'
 
@@ -297,7 +297,7 @@ def create_kml(self, cr, uid, data, context={}):
         folderElement.appendChild(placemarkElement)
         documentElement.appendChild(folderElement)
 
-    out = base64.encodestring(kmlDoc.toxml())
+    out = base64.encodestring(kmlDoc.toxml().encode('ascii','replace'))
     fname = 'region' + '.kml'
     return {'kml_file': out, 'name': fname}
 

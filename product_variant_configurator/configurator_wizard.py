@@ -36,7 +36,6 @@ class product_variant_configurator_line(osv.osv_memory):
     
     def onchange_dimension_type_id(self, cr, uid, ids, dimension_type_id):
         dim_allow = self.pool.get('product.variant.dimension.type').read(cr, uid, dimension_type_id, ['allow_custom_value'])
-        print dim_allow
         if dim_allow:
             allow_custom = dim_allow['allow_custom_value']
         
@@ -81,19 +80,6 @@ class product_variant_configurator_configurator(osv.osv_memory):
             if res_sol:
                 res_product = self.pool.get('product.product').read(cr, uid, res_sol['product_id'][0], ['product_tmpl_id', 'dimension_value_ids'])
 
-#                dim_val_obj = self.pool.get('product.variant.dimension.value')
-#                dim_values = res_product['dimension_value_ids']
-#                dim_types = []
-#                for val in res_product['dimension_value_ids']:
-#                    dim_types.append(dim_val_obj.read(cr, uid, val, ['dimension_id'])['dimension_id'][0])
-#
-#                
-#                dim_customs = []
-#                for dim_type in dim_types:
-#                    for custom_val in res_sol['dimension_custom_value_ids']:
-#                        pass
-#                        
-#                line_ids = []
                 vals = {'product_variant_id': res_sol['product_id'],
                       'product_tmpl_id': res_product['product_tmpl_id'], }
                 return vals
@@ -101,7 +87,6 @@ class product_variant_configurator_configurator(osv.osv_memory):
         return super(osv.osv_memory, self).default_get(cr, uid, fields_list, context)
     
     def onchange_product_tmpl_id(self, cr, uid, ids, product_tmpl_id=False):
-        print "onchange_product_tmpl_id"
         result = {}
         if not product_tmpl_id:
             return result
@@ -129,12 +114,11 @@ class product_variant_configurator_configurator(osv.osv_memory):
             prod_id = False 
 
         result['value'] = {'dimension_configuration_line_ids': line_ids, 'product_variant_id': prod_id}
-        print result
         return result
     
     def onchange_product_variant_id(self, cr, uid, ids, product_variant_id=False, dimension_configuration_line_ids=False):
-        print "onchange_product_variant_id"
         result = {}
+        result['value'] = {}
         if not product_variant_id:
             return result
         
@@ -142,16 +126,31 @@ class product_variant_configurator_configurator(osv.osv_memory):
         
         dim_value_ids = self.pool.get('product.product').read(cr, uid, product_variant_id)['dimension_value_ids']
         dim_couple = [(dim_id, self.pool.get('product.variant.dimension.value').read(cr, uid, dim_id)['dimension_id']) for dim_id in dim_value_ids]
-        print "dimension_configuration_line_ids", dimension_configuration_line_ids
-        for line in dimension_configuration_line_ids:
-            for couple in dim_couple:
-                if line[2] and line[2]['dimension_type_id'] == couple[1][0]:
-                    vals = {'dimension_type_value_id':couple[0], 'dimension_custom_value':line[2]['dimension_custom_value']}
-                    line_obj.write(cr, uid, [line[1]], vals)
+        if dimension_configuration_line_ids:
+            for line in dimension_configuration_line_ids:
+                for couple in dim_couple:
+                    if line[2] and line[2]['dimension_type_id'] == couple[1][0]:
+                        vals = {'dimension_type_value_id':couple[0], 'dimension_custom_value':line[2]['dimension_custom_value']}
+                        line_obj.write(cr, uid, [line[1]], vals)
+    
+            line_ids = [line[1] for line in dimension_configuration_line_ids]
+            result['value'].update({'dimension_configuration_line_ids': line_ids})
+        
+        else:
+            product_template = self.pool.get('product.product').browse(cr, uid, product_variant_id).product_tmpl_id
+            dim_ids = product_template.dimension_type_ids
+            result['value'].update({'product_tmpl_id': product_template.id})
+            
+            #TODO would be great to load the dimension lines from the template + eventual custom values
+#            line_ids = []
+#            for dim in dim_ids:
+#                dim_allow = self.pool.get('product.variant.dimension.type').read(cr, uid, dim.id, ['allow_custom_value'])
+#                if dim_allow:
+#                    allow_custom = dim_allow['allow_custom_value']
+#                vals = {'dimension_type_id':dim.id, 'dimension_type_value_id':None, 'allow_custom_value': allow_custom}
+#                line_ids.append(self.pool.get('product_variant_configurator.line').create(cr, uid, vals))
+#            result['value'].update({'dimension_configuration_line_ids': line_ids})
 
-        line_ids = [line[1] for line in dimension_configuration_line_ids]
-
-        result['value'] = {'dimension_configuration_line_ids': line_ids}
         return result
     
     def configure_line(self, cr, uid, ids, context={}):
@@ -161,11 +160,12 @@ class product_variant_configurator_configurator(osv.osv_memory):
         sol_id = False
         
         if active_id_object_type == 'sale.order':
-            print "Creating Line"
-            
+
             order_id = context.get('active_id', False)
             
             for res in self.read(cr, uid, ids):
+                if res['product_variant_id'] and not res['product_tmpl_id']:
+                    res['product_tmpl_id'] = self.pool.get('product.product').browse(cr, uid, res['product_variant_id']).product_tmpl_id.id
                 if res['product_tmpl_id']:
                     tmpl_obj = self.pool.get('product.template')
                     tmpl_infos = tmpl_obj.read(cr, uid, res['product_tmpl_id'], ['name', 'uom_id'])
@@ -198,7 +198,6 @@ class product_variant_configurator_configurator(osv.osv_memory):
                                 cust_lines_obj.create(cr, uid, cust_vals, context=context)
         
         elif active_id_object_type == 'sale.order.line':
-            print "Modifying Line"
             
             sol_id = context.get('active_id', False)
             
@@ -231,7 +230,7 @@ class product_variant_configurator_configurator(osv.osv_memory):
         if sol_id :
             context.update({'sol_id': sol_id})
 
-            return sale_product_multistep_configurator.sale_product_multistep_configurator.next_step(context)
+            return self.pool.get('sale_product_multistep_configurator.configurator.step').next_step(cr, uid, context)
             
         else:
             return True

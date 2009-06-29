@@ -20,7 +20,7 @@
 #
 ##############################################################################
 {
-    "name" : "Direct Marketing For CRM",
+    "name" : "CRM Cases management for DM",
     "version" : "1.0",
     "author" : "Tiny",
     "website" : "http://www.openerp.com",

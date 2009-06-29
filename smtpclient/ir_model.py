@@ -26,7 +26,7 @@ class EmailAddress(osv.osv):
     _columns = {
         'company_id' : fields.many2one('res.company', 'Company' , required=True),
         'email': fields.many2one('email.smtpclient', 'Email Address',  required=True),
-        'name' : fields.selection([("default", "Default"),("inoice", "Invoice"),("sale","Sale"),("delivery","Delivery")], "Address Type",required=True)
+        'name' : fields.selection([("default", "Default"),("invoice", "Invoice"),("sale","Sale"),("delivery","Delivery")], "Address Type",required=True)
     }
 EmailAddress()
 

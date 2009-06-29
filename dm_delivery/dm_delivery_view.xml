@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+    <!--
+    =======================================================
+    SALE ORDER LINE EXTENSIONS
+    =======================================================
+    -->
+
+    <record id="view_order_line_form2_inherit1" model="ir.ui.view">
+        <field name="name">sale.order.line.form.inherit</field>
+        <field name="model">sale.order.line</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sale.view_order_line_form2"/>
+        <field name="arch" type="xml">
+            <field name="price_subtotal" position="after">
+            	<field name="production_lot_id"/>
+            	<field name="tracking_lot_id"/>
+            </field>
+        </field>
+    </record>
+
+</data>
+</openerp>

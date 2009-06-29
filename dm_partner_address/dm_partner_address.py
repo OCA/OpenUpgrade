@@ -34,6 +34,11 @@ class res_partner_address(osv.osv):
         'street4' : fields.char('Street4',size=32),
         'moved' : fields.boolean('Moved'),
         'quotation' : fields.float('Quotation',digits=(16,2)),
+        'origin_partner':fields.char('Origin Partner',size=64),
+        'origin_support':fields.char('Origin Support',size=64),
+        'origin_keyword':fields.char('Origin Keyword',size=64), 
+        'origin_campaign_id':fields.many2one('dm.campaign','Origin Campaign'),
+        'origin_country_id':fields.many2one('res.country','Origin Country')  
     }
 res_partner_address()
 

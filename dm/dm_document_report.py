@@ -29,6 +29,7 @@ import base64
 
 _regexp1 = re.compile('(\[\'.+?\'\])')
 _regexp2 = re.compile('\'.+?\'')
+
 class offer_document(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
         print "Calling offer_document __init__"
@@ -76,23 +77,26 @@ class offer_document(report_sxw.rml_parse):
             addr_id = self.datas['form']['address_id']
             doc_id = self.ids[0]
 
-            # !!! To change, it takes any workitem so can send any data
             dm_workitem_obj = self.pool.get('dm.workitem')
-            wi_data=dm_workitem_obj.search(self.cr,self.uid,[])
+            wi_data = dm_workitem_obj.search(self.cr,self.uid,[])
 
             if not wi_data:
                 document = self.pool.get('dm.offer.document').browse(self.cr,self.uid,doc_id)
 
                 dm_segment_obj = self.pool.get('dm.campaign.proposition.segment')
-                segment_data_id=dm_segment_obj.search(self.cr,self.uid,[])
+                segment_data_id = dm_segment_obj.search(self.cr,self.uid,[])
 
                 wi_id = dm_workitem_obj.create(self.cr, self.uid,{'address_id':addr_id,
                                              'step_id':document.step_id.id,
                                              'segment_id' : segment_data_id[0]})
 
             else :
+                # !!! To change, it takes any workitem so can send any data
                 wi_id = wi_data[0]
-        values = generate_plugin_value(self.cr,self.uid,doc_id=doc_id,addr_id=addr_id,wi_id=wi_id,plugin_list=self._plugin_list(),type=type)
+        # to fix : should be able to generate value with no workitems (preview)
+        values = generate_plugin_value(self.cr, self.uid, doc_id=doc_id, addr_id=addr_id, 
+            wi_id=wi_id, plugin_list=self._plugin_list(), type=type)
+
         return [values]
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

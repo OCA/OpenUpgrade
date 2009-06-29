@@ -41,7 +41,7 @@ class openobject_out_copy(openobject_out):
     * main                : Returns all data.
     """
 
-    def __init__(self, openobject_connector, model, fields=[], key='id', new_key='new_id', name='component.output.openobject_out_copy', transformer=None, row_limit=0):
+    def __init__(self, openobject_connector, model, fields=[], key='id', new_key='new_id', name='component.output.openobject_out_copy', transformer=None, row_limit=0,raw_copy=True):
         """
         Parameters
         openobject_connector : Open object connector to connect with OpenERP server.
@@ -57,9 +57,7 @@ class openobject_out_copy(openobject_out):
         self._type = 'component.output.openobject_out_copy'
         self.key = key
         self.new_key = new_key
-
-
-    
+        self.raw_copy = raw_copy
 
     def process(self):
         datas = []
@@ -75,7 +73,10 @@ class openobject_out_copy(openobject_out):
                         self.fields = dict(map(lambda x: (x, x), self.fields))
                     if not self.fields_keys:
                         self.fields_keys = self.fields.keys()
-                    values = dict(map(lambda x: (x,d[self.fields[x]]), self.fields_keys))
+                    if self.raw_copy:
+                        values = {}
+                    else:
+                        values = dict(map(lambda x: (x,d[self.fields[x]]), self.fields_keys))
                     op_oc = self.connector.open()
                     res = self.connector.execute(op_oc, 'execute', self.model, 'copy', d[self.key], values)
                     self.connector.close(op_oc)

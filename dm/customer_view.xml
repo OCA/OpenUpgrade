@@ -97,6 +97,8 @@
                     </tree>
                 </field>
                 <field name="sale_order_id" select="2" on_change="_check_unique_so(sale_order_id)"/>
+                <field name="mail_service_id" select="2"/>
+                <newline/>
                 <field name="state" select="1"/>
                 <field name="action_time" select="2"/>
                 <field name="is_global" select="2"/>
@@ -313,7 +315,7 @@
         <field name="arch" type="xml">
             <form string="Events">
                 <field name="segment_id"/>
-                <field name="step_id" select="2" on_change="onchange_trigger(step_id)"/>
+                <field name="step_id" select="2"/>
                 <field name="address_id" required="1"/>
                 <field name="trigger_type_id" select="1"/>
                 <field name="sale_order_id"/>
