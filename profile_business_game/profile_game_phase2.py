@@ -148,8 +148,8 @@ bank_loan()
 class profile_game_phase_two(osv.osv):
     _name="profile.game.phase2"
 
-    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context={}, toolbar=False):
-        res = super(profile_game_phase_two, self).fields_view_get(cr, uid, view_id, view_type, context=context, toolbar=toolbar)
+    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context={}, toolbar=False, submenu=False):
+        res = super(profile_game_phase_two, self).fields_view_get(cr, uid, view_id, view_type, context=context, toolbar=toolbar, submenu=submenu)
         p_id = self.search(cr, uid, [])
         p_br = self.browse(cr, uid, p_id)
         for rec in p_br:
