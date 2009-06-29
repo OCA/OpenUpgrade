@@ -63,7 +63,7 @@
                     <field name="copywriter_id" select="1"/>
                     <field name="step_id" select="1"/>
                     <field name="gender_id" select="1"/>
-                    <field name="category_id" colspan="4"/>
+                    <field name="category_id" colspan="4" on_change="_check_unique_category(step_id,category_id)"/>
                     <separator string="Description" colspan="4"/>
                     <field name="note" colspan="4" nolabel="1" widget="text_wiki"/>
                     <separator string="Status" colspan="4"/>

@@ -1324,62 +1324,6 @@ rkJggg==
             <field eval="&quot;&quot;&quot;daisy@disnep.com&quot;&quot;&quot;" name="email"/>
         </record>
 	</data>
-	<!-- Customer Orders -->
-	<!--
-	<data noupdate="1">
-		<record id="dm_customer_order_so0" model="dm.customer.order">
-			<field name="offer_step_id" ref="dm.dm_offer_step_smforopenerpondemandfreetrial2010"/>
-			<field eval="&quot;&quot;&quot;manual&quot;&quot;&quot;" name="order_policy"/>
-			<field eval="&quot;&quot;&quot;order&quot;&quot;&quot;" name="invoice_quantity"/>
-			<field eval="time.strftime('%Y-%m-21')" name="date_order"/>
-			<field name="partner_id" ref="dm.dm_customer_1"/>
-			<field name="user_id" ref="base.user_root"/>
-			<field eval="&quot;&quot;&quot;one&quot;&quot;&quot;" name="picking_policy"/>
-			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
-			<field name="pricelist_id" ref="product.list0"/>
-			<field name="customer_id" ref="dm.dm_customer_1"/>
-			<field name="partner_order_id" ref="dm.res_partner_address_dm_customer_1"/>
-			<field name="partner_invoice_id" ref="dm.res_partner_address_dm_customer_1"/>
-			<field eval="&quot;&quot;&quot;SO006&quot;&quot;&quot;" name="name"/>
-			<field name="partner_shipping_id" ref="dm.res_partner_address_dm_customer_1"/>
-			<field name="shop_id" ref="dm.shop1"/>
-		</record>
-		<record id="dm_customer_order_so1" model="dm.customer.order">
-			<field name="offer_step_id" ref="dm.dm_offer_step_smforopenerpondemandfreetrial2010"/>
-			<field eval="&quot;&quot;&quot;manual&quot;&quot;&quot;" name="order_policy"/>
-			<field eval="&quot;&quot;&quot;order&quot;&quot;&quot;" name="invoice_quantity"/>
-			<field eval="time.strftime('%Y-%m-12')" name="date_order"/>
-			<field name="partner_id" ref="dm.dm_customer_2"/>
-			<field name="user_id" ref="base.user_root"/>
-			<field eval="&quot;&quot;&quot;one&quot;&quot;&quot;" name="picking_policy"/>
-			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
-			<field name="pricelist_id" ref="product.list0"/>
-			<field name="customer_id" ref="dm.dm_customer_2"/>
-			<field name="partner_order_id" ref="dm.res_partner_address_dm_customer_2"/>
-			<field name="partner_invoice_id" ref="dm.res_partner_address_dm_customer_2"/>
-			<field eval="&quot;&quot;&quot;SO007&quot;&quot;&quot;" name="name"/>
-			<field name="partner_shipping_id" ref="dm.res_partner_address_dm_customer_2"/>
-			<field name="shop_id" ref="dm.shop1"/>
-		</record>
-		<record id="dm_customer_order_so2" model="dm.customer.order">
-			<field name="offer_step_id" ref="dm.dm_offer_step_smforopenerpondemandfreetrial2010"/>
-			<field eval="&quot;&quot;&quot;manual&quot;&quot;&quot;" name="order_policy"/>
-			<field eval="&quot;&quot;&quot;order&quot;&quot;&quot;" name="invoice_quantity"/>
-			<field eval="time.strftime('%Y-%m-08')" name="date_order"/>
-			<field name="partner_id" ref="dm.dm_customer_2"/>
-			<field name="user_id" ref="base.user_root"/>
-			<field eval="&quot;&quot;&quot;one&quot;&quot;&quot;" name="picking_policy"/>
-			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
-			<field name="pricelist_id" ref="product.list0"/>
-			<field name="customer_id" ref="dm.dm_customer_0"/>
-			<field name="partner_order_id" ref="dm.res_partner_address_dm_customer_0"/>
-			<field name="partner_invoice_id" ref="dm.res_partner_address_dm_customer_0"/>
-			<field eval="&quot;&quot;&quot;SO008&quot;&quot;&quot;" name="name"/>
-			<field name="partner_shipping_id" ref="dm.res_partner_address_dm_customer_0"/>
-			<field name="shop_id" ref="dm.shop1"/>
-		</record>
-	</data>
-	-->
     <data noupdate="1">
         <record id="dm_offer_document_paperdocumentforondemand0" model="dm.offer.document">
             <field name="copywriter_id" ref="base.main_partner"/>

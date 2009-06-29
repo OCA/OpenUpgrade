@@ -20,7 +20,7 @@
 #
 ##############################################################################
 {
-    "name" : "Direct Marketing For EmailVision",
+    "name" : "EmailVision(c) API for DM",
     "version" : "1.0",
     "author" : "Tiny",
     "website" : "http://www.openerp.com",

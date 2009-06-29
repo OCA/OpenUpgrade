@@ -84,8 +84,10 @@
 							<field name="email" select="1"
 								on_change="change_email(email)" />
 							<newline />
+							<field name="auth" select="1" />
+							<newline />
 							<field name="user" select="1" />
-							<field name="password" select="2" />
+							<field name="password" select="2" password="True"/>
 							<newline />
 							<separator string="Server Information"
 								colspan="4" />

@@ -221,6 +221,7 @@ class profile_game_phase_one(osv.osv):
         return False
 
     def pre_process_sale(self,cr,uid,step_id,object, method,type,*args):
+        print "object, method,type,*args",object, method,type,args
         if (type=='execute') and (method in ('create','unlink')):
             self.error(cr, uid, step_id)
         if (type=='execute') and (object not in ("sale.order",'sale.order.line')) and (method=='write'):
@@ -241,6 +242,7 @@ class profile_game_phase_one(osv.osv):
         return False
 
     def pre_process_print_rfq(self, cr,uid,step_id, object, method,type, *args):
+      #  print "object, method,type, *args",object, method,type, args
         if type == 'wizard':
             return False
         if (type=='execute') and ((object not in ("purchase.order", 'purchase.order.line')) and (method in ('create','write','unlink'))):
@@ -419,11 +421,44 @@ class profile_game_phase_one(osv.osv):
                           {'property_account_income':accounts[1][0],'property_account_expense':accounts[0][0]})
          return True
 
+    def assign_limited_menus(self,cr,uid,ids,context={}):
+        user_obj = self.pool.get('res.users')
+        menus = ['Sales Management','Sales Orders','New Quotation','Purchase Management','Purchase Orders','Request For Quotations','Stock Management','Incoming Products','Outgoing Products','Financial Management','Invoices','Customer Invoices','Draft Customer Invoices']
+        menu_obj = self.pool.get('ir.ui.menu')
+
+        sale_menu_ids = menu_obj.search(cr,uid,['|','|',('name','like','Sales Management'),('name','like','New Quotation'),('name','like','Sales Orders')])
+        hr_menu_ids = menu_obj.search(cr,uid,['|','|',('name','like','Request For Quotations'),('name','like','Purchase Management'),('name','like','Purchase Orders')])
+        log_menu_ids = menu_obj.search(cr,uid,['|','|',('name','like','Incoming Products'),('name','like','Outgoing Products'),('name','like','Stock Management')])
+        fin_menu_ids = menu_obj.search(cr,uid,['|','|','|',('name','like','Draft Customer Invoices'),('name','like','Financial Management'),('name','like','Invoices'),('name','like','Customer Invoices')])
+
+        gp = self.pool.get('res.groups')
+        admin_gp = gp.search(cr,uid,[('name','like','Administrator / Access Rights')])
+        all_menus = menu_obj.search(cr,uid,[])
+
+        user_name = ['sale','logistic','hr','finance']
+        user_ids = user_obj.search(cr, uid, [('login','in',user_name)])
+        for user in user_obj.browse(cr, uid, user_ids):
+            for group in user.groups_id:
+                gp.write(cr,uid,group.id,{'menu_access':[[6,0,[]]]})
+                if group.name == 'Finance / Invoice':
+                    gp.write(cr,uid,group.id,{'menu_access':[[6,0,fin_menu_ids]]})
+                if group.name in ('Purchase / User','HR / Invoice'):
+                    gp.write(cr,uid,group.id,{'menu_access':[[6,0,hr_menu_ids]]})
+                if group.name == 'Stock / Worker' :
+                    gp.write(cr,uid,group.id,{'menu_access':[[6,0,log_menu_ids]]})
+                if group.name == 'Sale / Salesman':
+                    gp.write(cr,uid,group.id,{'menu_access':[[6,0,sale_menu_ids]]})
+        for menu in menu_obj.browse(cr,uid,all_menus):
+            if not menu.name in menus:
+                menu_obj.write(cr,uid,menu.id,{'groups_id':[[6,0,admin_gp]]})
+        return
+
     def confirm(self, cr, uid, ids, context={}):
         phase2_obj = self.pool.get('profile.game.phase2')
         model_obj = self.pool.get('ir.model.data')
         phase2_obj.create_fiscalyear_and_period(cr, uid, ids, context)
         self.generate_account_chart(cr, uid, ids, context)
+        self.assign_limited_menus(cr,uid,ids,context)
         self.write(cr, uid, ids, {'state':'quotation'})
         sid = model_obj._get_id(cr, uid, 'profile_business_game', 'retail_phase1')
         sid = model_obj.browse(cr, uid, sid, context=context).res_id

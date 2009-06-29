@@ -74,13 +74,11 @@ _timezone_fields = {
         },
         }
 
-
 def _tz_get(self, cr, uid, data, context={}):
     if 'tz' in context and context['tz']:
         return 'synch'
     else:
         return 'timezone'
-
 
 class google_calendar_wizard(wizard.interface):
 
@@ -150,12 +148,15 @@ class google_calendar_wizard(wizard.interface):
             self.calendar_service.max_results = 500 # to be check
             self.calendar_service.ProgrammaticLogin()
             tiny_events = obj_event.search(cr, uid, [])
-            city = google_auth_details.company_id.partner_id.address[0].city or ''
-            street =  google_auth_details.company_id.partner_id.address[0].street or ''
-            street2 = google_auth_details.company_id.partner_id.address[0].street2 or ''
-            zip = google_auth_details.company_id.partner_id.address[0].zip or ''
-            country = google_auth_details.company_id.partner_id.address[0].country_id.name or ''
-            location = street + " " +street2 + " " + city + " " + zip + " " + country
+            location = ''
+            if google_auth_details.company_id.partner_id.address:
+                add = google_auth_details.company_id.partner_id.address[0]
+                city = add.city or ''
+                street = add.street or ''
+                street2 = add.street2 or ''
+                zip = add.zip or ''
+                country = add.country_id and add.country_id.name or ''
+                location = street + " " +street2 + " " + city + " " + zip + " " + country
             tiny_events = obj_event.browse(cr, uid, tiny_events)
             feed = self.calendar_service.GetCalendarEventFeed()
             tiny_event_dict = {}
@@ -223,7 +224,6 @@ class google_calendar_wizard(wizard.interface):
 
                     elif event.write_date == google_up:
                         pass
-
                 else:
                     google_id = an_event.id.text
                     utime = dateutil.parser.parse(an_event.updated.text)

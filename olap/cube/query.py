@@ -120,8 +120,7 @@ class query(object):
                     axis_result2 += map(lambda x: (map(lambda y: y or False,x[0]),x[1] or False), r['value'])
                 axis_result.append(axis_result2)
                 axis.append(result)
-                cube_size.append(length)
-            
+                cube_size.append(length)    
         cube_data = self._cube_create(cube_size)
         cr = []
         slice = self.slicer.run(metadata)
