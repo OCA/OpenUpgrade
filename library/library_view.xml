@@ -462,6 +462,8 @@
     </record>
     -->
 
+    <delete model="ir.ui.view" id="view_picking_form_library2"/>
+
     <record model="ir.ui.view" id="stock.view_move_tree">
         <field name="name">stock.move.tree</field>
         <field name="model">stock.move</field>
