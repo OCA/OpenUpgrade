@@ -346,33 +346,44 @@ class crm_case(osv.osv):
             return map(lambda x: x[0], cr.fetchall())
         return super(crm_case, self).search(cr, uid, args, offset, limit, order, context, count)
 
-    def create(self, cr, uid, values, *args, **kwargs): # to be check
-        case_id = super(crm_case, self).create(cr, uid, values, *args, **kwargs)
-#        cr.commit()
-#        case = self.browse(cr, uid, case_id)
-#        if case.project_id:
-#            self.pool.get('project.project')._log_event(cr, uid, case.project_id.id, {
-#                                'res_id' : case.id,
-#                                'name' : case.name,
-#                                'description' : case.description,
-#                                'user_id': uid,
-#                                'action' : 'create',
-#                                'type'   : 'case'})
-        return case_id
+    def create(self, cr, uid, values, context={}): # to be check
+        res = super(crm_case, self).create(cr, uid, values, context=context)
+        cr.commit()
+        case = self.browse(cr, uid, res, context=context)
+        if case.project_id:
+            desc = ''' Hello, \n \t The new case is created for the Project: %s \n\n And its Details are: \n \n Case: %s \n Created on: %s \n Responsible: %s \n Deadline: %s \n Section: %s \n For Partner: %s \n Case Summary: \n ====== \n %s \n \n ======= \n \nThanks,\nProject Manager \n%s''' \
+                       %(case.project_id.name,\
+                         case.name, case.create_date, case.user_id.name, \
+                         case.date_deadline or '', case.section_id.name, \
+                         case.partner_id and case.partner_id.name or '',\
+                         case.description or '',case.project_id.manager and case.project_id.manager.name or '')
+            self.pool.get('project.project')._log_event(cr, uid, case.project_id.id, {
+                                'res_id' : case.id,
+                                'name' : case.name,
+                                'description' : desc,
+                                'user_id': uid,
+                                'action' : 'create',
+                                'type' : 'case'})
+        return res
 
-    def write(self, cr, uid, ids, vals, context={}): # to be check
+    def write(self, cr, uid, ids, vals, context={}):
+        case = self.browse(cr, uid, ids)[0]
         res = super(crm_case, self).write(cr, uid, ids, vals, context={})
-#        cr.commit()
-#        cases = self.browse(cr, uid, ids)
-#        for case in cases:
-#            if case.project_id:
-#                self.pool.get('project.project')._log_event(cr, uid, case.project_id.id, {
-#                                    'res_id' : case.id,
-#                                    'name' : case.name,
-#                                    'description' : case.description,
-#                                    'user_id': uid,
-#                                    'action' : 'write',
-#                                    'type' : 'case'})
+        cr.commit()
+        case_data = self.browse(cr, uid, ids[0], context)
+        desc = '''Hello ,\n\n  The case is updated for the project: %s\n\nModified Datas are:\n''' %(str(case.project_id.name),)
+        for val in vals:
+            if val.endswith('id') or val.endswith('ids'):
+                continue
+            desc += val + ':' + str(vals[val]) + "\n"
+        desc += '\nThanks,\n' + 'Project Manager\n' + (case_data.project_id.manager and case_data.project_id.manager.name) or ''
+        self.pool.get('project.project')._log_event(cr, uid, case.project_id.id, {
+                                                                'res_id' : ids[0],
+                                                                'name' : case.name or '',
+                                                                'description' : desc,
+                                                                'user_id': uid,
+                                                                'action' : 'write',
+                                                                'type' : 'case'})
         return res
 
 crm_case()
@@ -451,7 +462,7 @@ class report_crm_case_bugs(osv.osv):
                 select
                     min(c.id) as id,
                     c.user_id,
-                    t.project_id as project_id,
+                    c.project_id as project_id,
                     c.section_id as section_id,
                     count(*) as nbr,
                     c.state
@@ -459,7 +470,7 @@ class report_crm_case_bugs(osv.osv):
                     crm_case c
                     left join project_project p on p.id = c.project_id
                 where c.section_id = p.section_bug_id
-                group by c.user_id, t.project_id, c.section_id, c.state
+                group by c.user_id, c.project_id, c.section_id, c.state
             )""")
 
 
