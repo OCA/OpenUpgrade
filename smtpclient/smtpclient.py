@@ -84,16 +84,16 @@ class SmtpClient(osv.osv):
     server = {}
     smtpServer = {}
 
-#    def read(self,cr, uid, ids, fields=None, context=None, load='_classic_read'):
-#        def override_password(o):
-#            for field in o[0]:
-#                if field == 'password':
-#                    o[0][field] = '********'
-#            return o
-#
-#        result = super(SmtpClient, self).read(cr, uid, ids, fields, context, load)
-#        result = override_password(result)
-#        return result
+    def read(self,cr, uid, ids, fields=None, context=None, load='_classic_read'):
+        def override_password(o):
+            for field in o[0]:
+                if field == 'password':
+                    o[0][field] = '********'
+            return o
+
+        result = super(SmtpClient, self).read(cr, uid, ids, fields, context, load)
+        result = override_password(result)
+        return result
 
     def change_email(self, cr, uid, ids, email):
         if len(email) > 0 and email.find('@') > -1 and email.index('@') > 0:
@@ -172,7 +172,7 @@ class SmtpClient(osv.osv):
             })
         self.write(cr, uid, ids, {'state':'waiting', 'code':key})
         return True
-        
+    
     def open_connection(self, cr, uid, ids, serverid=False, permission=True):
         if serverid:
             self.server[serverid] = self.read(cr, uid, [serverid])[0]
@@ -195,6 +195,7 @@ class SmtpClient(osv.osv):
                     self.smtpServer[serverid].ehlo()
                     
                 if self.server[serverid]['auth']:
+                    
                     self.smtpServer[serverid].login(str(self.server[serverid]['user']),str(self.server[serverid]['password']))
 
             except Exception, e:
