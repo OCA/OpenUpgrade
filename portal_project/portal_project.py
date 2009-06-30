@@ -56,7 +56,7 @@ class users(osv.osv):
 
     def context_get(self, cr, uid, context=None):
         return super(users, self).context_get(cr, uid, context)
-
+    
 users()
 
 class project_project(osv.osv):
@@ -440,6 +440,23 @@ class hr_timesheet_sheet(osv.osv):
         return super(hr_timesheet_sheet, self).search(cr, uid, args, offset, limit, order, context, count)
 
 hr_timesheet_sheet()
+
+class account_invoice(osv.osv):
+    _inherit = 'account.invoice'
+    _description = "Invoices related portal project"
+
+    def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
+        if context is None:
+            context = {}
+        if context.has_key('portal_invoice') and context['portal_invoice'] == 'invoice' and context.has_key('project_activeid') and context['project_activeid']:
+            cr.execute("""select id from account_invoice_line where account_analytic_id in \
+                        (select category_id from project_project where id = %s)""" %(context['project_activeid']))
+            invoice_line_ids = map(lambda x: x[0], cr.fetchall())
+            invoice = self.pool.get('account.invoice.line').read(cr, uid, invoice_line_ids, ['invoice_id'])
+            return list(set(map(lambda x:x['invoice_id'][0], invoice)))
+        return super(account_invoice, self).search(cr, uid, args, offset, limit, order, context, count)
+
+account_invoice()
 
 class account_analytic_account(osv.osv):
     _inherit = 'account.analytic.account'
