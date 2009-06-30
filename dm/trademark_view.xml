@@ -36,12 +36,16 @@
 					<separator string="Layout" colspan="4"/>
 					<field name="header" colspan="4" />
 					<separator string="Signature" colspan="4"/>
-					<field name="signature" widget="image" nolabel="1" colspan="4"/>
+					<field name="signature" widget="image" nolabel="1" colspan="2"/>
+					<field name="signature_url"/>
 					<separator string="Logo" colspan="4"/>
-					<field name="logo" widget="image" nolabel="1" colspan="4"/>
+					<field name="logo" widget="image" nolabel="1" colspan="2"/>
+					<field name="logo_url"/>
 					<separator string="Banners" colspan="4"/>
-					<field name="banner_top" widget="image" nolabel="0" colspan="4"/>
-					<field name="banner_bottom" widget="image" nolabel="0" colspan="4"/>
+					<field name="banner_top" widget="image" nolabel="0" colspan="2"/>
+					<field name="banner_top_url"/>
+					<field name="banner_bottom" widget="image" nolabel="0" colspan="2"/>
+					<field name="banner_bottom_url"/>
 			</form>
 		</field>
 	</record>
