@@ -189,6 +189,17 @@
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree,form</field>
         </record>
+        
+<!--        Attachments-->
+        <record id="act_portal_attachment_form" model="ir.actions.act_window">
+            <field name="name">Attachments</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ir.attachment</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="base.view_attachment_tree"/>
+            <field name="context">{'portal_attachment':'attachment', 'project_activeid':active_id}</field>
+        </record>
 
 <!--        Financial Data-->
         <record id="act_financial_portal_form" model="ir.actions.act_window">
@@ -198,7 +209,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="account.view_account_analytic_account_tree"/>
-            <field name="context">{'portal_account':'financial'}</field>
+            <field name="context">{'portal_account':'financial', 'project_activeid':active_id}</field>
         </record>
 
 <!--        Timesheet Sheet-->
@@ -209,7 +220,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="hr_timesheet_sheet.hr_timesheet_sheet_tree"/>
-            <field name="context">{'portal_sheet':'timesheet'}</field>
+            <field name="context">{'portal_sheet':'timesheet', 'project_activeid':active_id}</field>
         </record>
 
 <!--        Bugs By State-->
@@ -372,29 +383,16 @@
                 </tree>
             </field>
 	    </record>
-
-	    <record model="ir.actions.act_window" id="view_project_project_portal">
-	        <field name="name">Project Form</field>
-	        <field name="res_model">project.project</field>
-	        <field name="view_type">form</field>
-	        <field name="view_mode">tree,form</field>
-	        <field name="view_id" ref="project_portal_tree_view"/>
-	        <field name="context" eval="{'action_portal':'project'}"/>
-	    </record>
-	    <record model="ir.actions.act_window.view" id="action_crm_tag_form_view_all1">
-	        <field name="sequence" eval="1"/>
-	        <field name="view_mode">tree</field>
-	        <field name="view_id" ref="project_portal_tree_view"/>
-	        <field name="act_window_id" ref="view_project_project_portal"/>
-	    </record>
-	    <record model="ir.actions.act_window.view" id="action_crm_tag_form_view_all2">
-	        <field name="sequence" eval="2"/>
-	        <field name="view_mode">form</field>
-	        <field name="view_id" ref="project_portal_form_view"/>
-	        <field name="act_window_id" ref="view_project_project_portal"/>
-	    </record>
-	    <menuitem  id="menu_view_project_project_portal" action="view_project_project_portal" parent="menu_portal"/>
-
+	    
+	    <record model="ir.actions.act_window" id="action_portal_project_task">
+            <field name="name">Tasks</field>
+            <field name="res_model">project.task</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="project.view_task_tree3"/>
+            <field name="domain">[('project_id','=',active_id)]</field>
+        </record>
+        
 <!--		Bugs By User-->
 		<record model="ir.ui.view" id="view_crm_case_bugs_user">
             <field name="name">report.crm.case.bugs.form</field>
@@ -987,6 +985,31 @@
 	        <field name="act_window_id" ref="view_crm_announce_portal"/>
 	    </record>
 	    <menuitem  id="menu_view_portal_crm_announce_view" action="view_crm_announce_portal" parent="menu_portal"/>
+	    
+	    <record model="ir.actions.act_window" id="view_project_project_portal">
+	        <field name="name">Project Form</field>
+	        <field name="res_model">project.project</field>
+	        <field name="type">ir.actions.submenu</field>
+	        <field name="view_type">form</field>
+	        <field name="context" eval="{'action_portal':'project'}"/>
+	        <field name="menus">[{'name':'Tasks','action_id':'action_portal_project_task'},{'name':'Timesheets','action_id':'act_hr_timesheet_sheet_portal_form'},
+	        		{'name':'Bugs (bugtracker)','action_id':'action_crm_bug_portal'},{'name':'Feature Requests','action_id':'view_crm_feature_portal'},
+	        		{'name':'Wiki Page','action_id':'action_portal_project_wiki'},{'name':'Financial Data','action_id':'act_financial_portal_form'},
+	        		{'name':'Invoices','action_id':'action_partner_form_view1'},{'name':'Documents','action_id':'act_portal_attachment_form'},{'name':'Dashboard','action_id':'action_partner_form_view1'}]</field>
+	    </record>
+	    <record model="ir.actions.act_window.view" id="action_crm_tag_form_view_all1">
+	        <field name="sequence" eval="1"/>
+	        <field name="view_mode">tree</field>
+	        <field name="view_id" ref="project_portal_tree_view"/>
+	        <field name="act_window_id" ref="view_project_project_portal"/>
+	    </record>
+	    <record model="ir.actions.act_window.view" id="action_crm_tag_form_view_all2">
+	        <field name="sequence" eval="2"/>
+	        <field name="view_mode">form</field>
+	        <field name="view_id" ref="project_portal_form_view"/>
+	        <field name="act_window_id" ref="view_project_project_portal"/>
+	    </record>
+	    <menuitem  id="menu_view_project_project_portal" action="view_project_project_portal" parent="menu_portal"/>
 
     </data>
 </openerp>
