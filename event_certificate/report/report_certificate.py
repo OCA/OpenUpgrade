@@ -32,21 +32,28 @@ class event_certificate(rml_parse.rml_parse):
         super(event_certificate, self).__init__(cr, uid, name, context)
         self.localcontext.update({
             'time': time,
-            'get_date':self.get_date,
+            #'get_date':self.get_date,
         })
         
-    def get_date(self,st_date,end_date):
-        date_res = ''
-        try:
-            d1 = mx.DateTime.strptime(str(st_date),'%d/%m/%Y %H:%M:%S')
-            d2 = mx.DateTime.strptime(str(end_date),'%d/%m/%Y %H:%M:%S')
-            new_d1 = d1.strftime('%d %B %Y %H:%M:%S')
-            new_d2 = d2.strftime('%d %B %Y %H:%M:%S')
-            date_res = str(new_d1) +" "+ 'To' +" "+ str(new_d2)
-        except Exception,e:
-            print "e:::",e
-            pass
-        return date_res
+#    def get_date(self, st_date, end_date):
+#        date_res = ''
+#        date_time_format = ''
+#        user_lang_dict = pooler.get_pool(self.cr.dbname).get('res.users').read(self.cr,self.uid, self.uid,['context_lang'])
+#        lang_obj = pooler.get_pool(self.cr.dbname).get('res.lang')
+#        lang_id = lang_obj.search(self.cr,self.uid,[('code','=',user_lang_dict['context_lang'])])[0]
+#        self.cr.execute('select date_format, time_format from res_lang where id = '+str(lang_id)+'')
+#        date_time_l = self.cr.dictfetchall()
+#        date_time_format = date_time_l[0]['date_format']+ " " +date_time_l[0]['time_format']
+#        try:
+#            d1 = mx.DateTime.strptime(st_date,date_time_format)
+#            d2 = mx.DateTime.strptime(end_date,date_time_format)
+#            new_d1 = d1.strftime('%d %B %Y %H:%M:%S')
+#            new_d2 = d2.strftime('%d %B %Y %H:%M:%S')
+#            date_res = str(new_d1) +" "+ 'To' +" "+ str(new_d2)
+#        except Exception,e:
+#            print "Exception::::e",e
+#            pass
+#        return date_res
             
     
 report_sxw.report_sxw('report.event.certificate','event.registration','event_certificate/report/event_certificate.rml',parser=event_certificate)
