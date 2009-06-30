@@ -83,33 +83,33 @@ class SmtpClient(osv.osv):
     }
     server = {}
     smtpServer = {}
-    
-    def read(self,cr, uid, ids, fields=None, context=None, load='_classic_read'):
-        def override_password(o):
-            for field in o[0]:
-                if field == 'password':
-                    o[0][field] = '********'
-            return o
-        
-        result = super(SmtpClient, self).read(cr, uid, ids, fields, context, load)
-        result = override_password(result)
-        return result
-        
+
+#    def read(self,cr, uid, ids, fields=None, context=None, load='_classic_read'):
+#        def override_password(o):
+#            for field in o[0]:
+#                if field == 'password':
+#                    o[0][field] = '********'
+#            return o
+#
+#        result = super(SmtpClient, self).read(cr, uid, ids, fields, context, load)
+#        result = override_password(result)
+#        return result
+
     def change_email(self, cr, uid, ids, email):
         if len(email) > 0 and email.find('@') > -1 and email.index('@') > 0:
             user = email[0:email.index('@')]
             return {'value':{'user':user}}
         else:
             return {'value':{'user':email}}
-        
+
     def check_permissions(self, cr, uid, ids):
         cr.execute('select * from res_smtpserver_group_rel where sid=%s and uid=%s' % (ids[0], uid))
         data = cr.fetchall()
         if len(data) <= 0:
             return False
-        
+
         return True
-    
+
     def gen_private_key(self, cr, uid, ids):
         new_key = []
         for i in time.strftime('%Y-%m-%d %H:%M:%S'):
@@ -118,7 +118,7 @@ class SmtpClient(osv.osv):
                 keys = random.random()
                 key = str(keys).split('.')[1]
                 ky = key
-                
+
             new_key.append(ky)
         new_key.sort()
         key = ''.join(new_key)
