@@ -99,11 +99,11 @@ class SmtpClient(osv.osv):
         
     def change_servertype(self, cr, uid, ids, server):
         if server == 'gmail':
-            return {'value':{'server':'smtp.gmail.com', 'port':25, 'ssl':True, 'auth':True}}
+            return {'value':{'server':'smtp.gmail.com', 'port':'25', 'ssl':True, 'auth':True}}
         elif server== 'yahoo':
-            return {'value':{'server':'smtp.mail.yahoo.co.in', 'ssl':False, 'port':587, 'auth':True}}
+            return {'value':{'server':'smtp.mail.yahoo.co.in', 'ssl':False, 'port':'587', 'auth':True}}
         else:
-            return {'value':{'server':'localhost', 'port':25, 'ssl':False, 'auth':False}}
+            return {'value':{'server':'localhost', 'port':'25', 'ssl':False, 'auth':False}}
     
     def change_email(self, cr, uid, ids, email):
         email_from = self.pool.get('res.users').browse(cr, uid, uid).name
