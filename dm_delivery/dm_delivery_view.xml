@@ -17,6 +17,7 @@
             <field name="price_subtotal" position="after">
             	<field name="production_lot_id"/>
             	<field name="tracking_lot_id"/>
+                <field name="carrier_delivery_type"/>
             </field>
         </field>
     </record>
@@ -30,6 +31,7 @@
             <field name="delay" select="2" position="after">
             	<field name="production_lot_id"/>
             	<field name="tracking_lot_id"/>
+                <field name="carrier_delivery_type"/>
             </field>
         </field>
     </record>

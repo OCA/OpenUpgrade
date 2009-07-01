@@ -193,7 +193,7 @@ def generate_reports(cr,uid,obj,report_type,context): # {{{
             for line in obj.sale_order_id.order_line :
                 """ get tnt report form sale order_line """
                 if line.tracking_lot_id:
-                    carrier_delivery_type = line.carrier_delivery_type or 'JZ'
+                    carrier_delivery_type = line.carrier_delivery_type or 'J'
                     print 'TNT Reports - %s'%carrier_delivery_type
                     tnt_report_id = report_xml.search(cr,uid,[('name','=','TNT Reports - %s'%carrier_delivery_type)])
                     print tnt_report_id
