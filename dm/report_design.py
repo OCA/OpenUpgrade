@@ -174,26 +174,42 @@ def generate_reports(cr,uid,obj,report_type,context): # {{{
         attachment_obj = pool.get('ir.attachment')
 
         """ Create TNT Stickers as attachment of campaign document"""
-        for line in obj.sale_order_id.order_line :
-            """ get tnt report form sale order_line """
-            if line.tracking_lot_id:
-                carrier_delivery_type = line.carrier_delivery_type or 'JZ'
-                print 'TNT Reports - %s'%carrier_delivery_type
-                tnt_report_id = report_xml.search(cr,uid,[('name','=','TNT Reports - %s'%carrier_delivery_type)])
-                print tnt_report_id
-                if tnt_report_id :
-                    tnt_report = pool.get('ir.actions.report.xml').browse(cr, uid, tnt_report_id[0])
-                    srv = netsvc.LocalService('report.' + tnt_report.report_name)
-                    context['dm_so_line_id'] = line.id
-                    report_data,report_type = srv.create(cr, uid, [], {},context)
-                    attach_vals={'name' : document_data['name'] + "_" + str(address_id)+str(line.id),
-                         'datas_fname' : tnt_report.name.replace(' ','_').replace('-','')+ str(line.id) + '.pdf' ,
-                         'res_model' : 'dm.campaign.document',
-                         'res_id' : camp_doc,
-                         'datas': base64.encodestring(report_data),
-                         'file_type':report_type
-                         }
-                    attach_id = attachment_obj.create(cr,uid,attach_vals)
+
+        if obj.sale_order_id and obj.sale_order_id.order_line:
+
+            """ Create campaign document for sticker """
+
+            vals2={
+                'segment_id': obj.segment_id.id or False,
+                'name': obj.step_id.code + "_" +str(address_id),
+                'type_id': type_id[0],
+                'mail_service_id':camp_mail_service.mail_service_id.id,
+                'delivery_time' : delivery_time,
+                'address_id' : address_id,
+                }
+
+            so_camp_doc = pool.get('dm.campaign.document').create(cr,uid,vals2)
+
+            for line in obj.sale_order_id.order_line :
+                """ get tnt report form sale order_line """
+                if line.tracking_lot_id:
+                    carrier_delivery_type = line.carrier_delivery_type or 'JZ'
+                    print 'TNT Reports - %s'%carrier_delivery_type
+                    tnt_report_id = report_xml.search(cr,uid,[('name','=','TNT Reports - %s'%carrier_delivery_type)])
+                    print tnt_report_id
+                    if tnt_report_id :
+                        tnt_report = pool.get('ir.actions.report.xml').browse(cr, uid, tnt_report_id[0])
+                        srv = netsvc.LocalService('report.' + tnt_report.report_name)
+                        context['dm_so_line_id'] = line.id
+                        report_data,report_type = srv.create(cr, uid, [], {},context)
+                        attach_vals={'name' : document_data['name'] + "_" + str(address_id)+str(line.id),
+                             'datas_fname' : tnt_report.name.replace(' ','_').replace('-','')+ str(line.id) + '.pdf' ,
+                             'res_model' : 'dm.campaign.document',
+                             'res_id' : so_camp_doc,
+                             'datas': base64.encodestring(report_data),
+                             'file_type':report_type
+                             }
+                        attach_id = attachment_obj.create(cr,uid,attach_vals)
 
 
         """ Get reports to process """
