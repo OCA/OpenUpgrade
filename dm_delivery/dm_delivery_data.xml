@@ -1,0 +1,136 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record id="dm_dtp_plugin_sodeliverystreet0" model="dm.dtp.plugin">
+			<field eval="&quot;&quot;&quot;so_delivery_street&quot;&quot;&quot;" name="code"/>
+			<field eval="0" name="store_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Street &quot;&quot;&quot;" name="preview_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Street &quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Address - Street&quot;&quot;&quot;" name="note"/>
+			<field eval="&quot;&quot;&quot;wi_obj  = pool.get('dm.workitem').browse(cr,uid,wi_id)\nso_delivery_street = wi_obj.sale_order_id.partner_shipping_id.street&quot;&quot;&quot;" name="python_code"/>
+			<field eval="0" name="encode"/>
+			<field eval="&quot;&quot;&quot;dynamic&quot;&quot;&quot;" name="type"/>
+		</record>
+		<record id="dm_dtp_plugin_sodeliverystreet2" model="dm.dtp.plugin">
+			<field eval="&quot;&quot;&quot;so_delivery_street2&quot;&quot;&quot;" name="code"/>
+			<field eval="0" name="store_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Street2 &quot;&quot;&quot;" name="preview_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Street2 &quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Address - Street2&quot;&quot;&quot;" name="note"/>
+			<field eval="&quot;&quot;&quot;wi_obj  = pool.get('dm.workitem').browse(cr,uid,wi_id)\nso_delivery_street2 = wi_obj.sale_order_id.partner_shipping_id.street2&quot;&quot;&quot;" name="python_code"/>
+			<field eval="0" name="encode"/>
+			<field eval="&quot;&quot;&quot;dynamic&quot;&quot;&quot;" name="type"/>
+		</record>
+		<record id="dm_dtp_plugin_sodeliverycity" model="dm.dtp.plugin">
+			<field eval="&quot;&quot;&quot;so_delivery_city&quot;&quot;&quot;" name="code"/>
+			<field eval="0" name="store_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery City &quot;&quot;&quot;" name="preview_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery City &quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Address - City&quot;&quot;&quot;" name="note"/>
+			<field eval="&quot;&quot;&quot;wi_obj  = pool.get('dm.workitem').browse(cr,uid,wi_id)\nso_delivery_city = wi_obj.sale_order_id.partner_shipping_id.city&quot;&quot;&quot;" name="python_code"/>
+			<field eval="0" name="encode"/>
+			<field eval="&quot;&quot;&quot;dynamic&quot;&quot;&quot;" name="type"/>
+		</record>		
+		<record id="dm_dtp_plugin_sodeliverycountry" model="dm.dtp.plugin">
+			<field eval="&quot;&quot;&quot;so_delivery_country&quot;&quot;&quot;" name="code"/>
+			<field eval="0" name="store_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Country &quot;&quot;&quot;" name="preview_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Country &quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Address - Country&quot;&quot;&quot;" name="note"/>
+			<field eval="&quot;&quot;&quot;wi_obj  = pool.get('dm.workitem').browse(cr,uid,wi_id)\nso_delivery_country = wi_obj.sale_order_id.partner_shipping_id.state_id.name and wi_obj.sale_order_id.partner_shipping_id.country_id.name or ''&quot;&quot;&quot;" name="python_code"/>
+			<field eval="0" name="encode"/>
+			<field eval="&quot;&quot;&quot;dynamic&quot;&quot;&quot;" name="type"/>
+		</record>		
+		<record id="dm_dtp_plugin_sodeliveryzip" model="dm.dtp.plugin">
+			<field eval="&quot;&quot;&quot;so_delivery_zip&quot;&quot;&quot;" name="code"/>
+			<field eval="0" name="store_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery City &quot;&quot;&quot;" name="preview_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery City &quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Address - City&quot;&quot;&quot;" name="note"/>
+			<field eval="&quot;&quot;&quot;wi_obj  = pool.get('dm.workitem').browse(cr,uid,wi_id)\nso_delivery_zip = wi_obj.sale_order_id.partner_shipping_id.zip&quot;&quot;&quot;" name="python_code"/>
+			<field eval="0" name="encode"/>
+			<field eval="&quot;&quot;&quot;dynamic&quot;&quot;&quot;" name="type"/>
+		</record>				
+		<record id="dm_dtp_plugin_sodeliverycountrycode" model="dm.dtp.plugin">
+			<field eval="&quot;&quot;&quot;so_delivery_country_code&quot;&quot;&quot;" name="code"/>
+			<field eval="0" name="store_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Country Code&quot;&quot;&quot;" name="preview_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Country Code&quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Address - Country Code&quot;&quot;&quot;" name="note"/>
+			<field eval="&quot;&quot;&quot;wi_obj  = pool.get('dm.workitem').browse(cr,uid,wi_id)\ncode = wi_obj.sale_order_id.partner_shipping_id.country_id.code\nif code == 'fr' :\n    so_delivery_country_code = wi_obj.sale_order_id.partner_shipping_id.state_id.code\nelse :\n    so_delivery_country_code = wi_obj.sale_order_id.partner_shipping_id.country_id.code&quot;&quot;&quot;" name="python_code"/>
+			<field eval="0" name="encode"/>
+			<field eval="&quot;&quot;&quot;dynamic&quot;&quot;&quot;" name="type"/>
+		</record>		
+		
+		<record id="dm_dtp_plugin_sodeliveryphone" model="dm.dtp.plugin">
+			<field eval="&quot;&quot;&quot;so_delivery_phone&quot;&quot;&quot;" name="code"/>
+			<field eval="0" name="store_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Phone &quot;&quot;&quot;" name="preview_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Phone &quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Address - Phone&quot;&quot;&quot;" name="note"/>
+			<field eval="&quot;&quot;&quot;wi_obj  = pool.get('dm.workitem').browse(cr,uid,wi_id)\nso_delivery_phone = wi_obj.sale_order_id.partner_shipping_id.phone&quot;&quot;&quot;" name="python_code"/>
+			<field eval="0" name="encode"/>
+			<field eval="&quot;&quot;&quot;dynamic&quot;&quot;&quot;" name="type"/>
+		</record>						
+		<record id="dm_dtp_plugin_sodeliverylastname" model="dm.dtp.plugin">
+			<field eval="&quot;&quot;&quot;so_delivery_lname&quot;&quot;&quot;" name="code"/>
+			<field eval="0" name="store_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Last Name &quot;&quot;&quot;" name="preview_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Last Name &quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Address - Name&quot;&quot;&quot;" name="note"/>
+			<field eval="&quot;&quot;&quot;wi_obj  = pool.get('dm.workitem').browse(cr,uid,wi_id)\nso_delivery_lname = wi_obj.sale_order_id.partner_shipping_id.name&quot;&quot;&quot;" name="python_code"/>
+			<field eval="0" name="encode"/>
+			<field eval="&quot;&quot;&quot;dynamic&quot;&quot;&quot;" name="type"/>
+		</record>
+		<record id="dm_dtp_plugin_sodeliveryfirstname" model="dm.dtp.plugin">
+			<field eval="&quot;&quot;&quot;so_delivery_fname&quot;&quot;&quot;" name="code"/>
+			<field eval="0" name="store_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery First Name &quot;&quot;&quot;" name="preview_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery First Name &quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Address - First Name&quot;&quot;&quot;" name="note"/>
+			<field eval="&quot;&quot;&quot;wi_obj  = pool.get('dm.workitem').browse(cr,uid,wi_id)\nso_delivery_fname = wi_obj.sale_order_id.partner_shipping_id.firstname&quot;&quot;&quot;" name="python_code"/>
+			<field eval="0" name="encode"/>
+			<field eval="&quot;&quot;&quot;dynamic&quot;&quot;&quot;" name="type"/>
+		</record>		
+		<record id="dm_dtp_plugin_sodeliverystate" model="dm.dtp.plugin">
+			<field eval="&quot;&quot;&quot;so_delivery_state&quot;&quot;&quot;" name="code"/>
+			<field eval="0" name="store_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery State &quot;&quot;&quot;" name="preview_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery State &quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Address - State&quot;&quot;&quot;" name="note"/>
+			<field eval="&quot;&quot;&quot;wi_obj  = pool.get('dm.workitem').browse(cr,uid,wi_id)\nso_delivery_state = wi_obj.sale_order_id.partner_shipping_id.state_id and wi_obj.sale_order_id.partner_shipping_id.state_id.name or ''&quot;&quot;&quot;" name="python_code"/>
+			<field eval="0" name="encode"/>
+			<field eval="&quot;&quot;&quot;dynamic&quot;&quot;&quot;" name="type"/>
+		</record>
+		<record id="dm_dtp_plugin_sodeliverycolis" model="dm.dtp.plugin">
+			<field eval="&quot;&quot;&quot;so_delivery_line_number&quot;&quot;&quot;" name="code"/>
+			<field eval="0" name="store_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Colis &quot;&quot;&quot;" name="preview_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Colis &quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Address - Colis - Line Number&quot;&quot;&quot;" name="note"/>
+			<field eval="&quot;&quot;&quot;wi_obj  = pool.get('dm.workitem').browse(cr,uid,wi_id)\nso_delivery_ref = wi_obj.sale_order_id\nso_delivery_line_number= 'remian \ %d'%len(wi_obj.sale_order_id.order_line)&quot;&quot;&quot;" name="python_code"/>
+			<field eval="0" name="encode"/>
+			<field eval="&quot;&quot;&quot;dynamic&quot;&quot;&quot;" name="type"/>
+		</record>
+		<record id="dm_dtp_plugin_sodeliveryref" model="dm.dtp.plugin">
+			<field eval="&quot;&quot;&quot;so_delivery_ref&quot;&quot;&quot;" name="code"/>
+			<field eval="0" name="store_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Order Name &quot;&quot;&quot;" name="preview_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Order Name &quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Address - Order Name&quot;&quot;&quot;" name="note"/>
+			<field eval="&quot;&quot;&quot;wi_obj  = pool.get('dm.workitem').browse(cr,uid,wi_id)\nso_delivery_ref = wi_obj.sale_order_id.name&quot;&quot;&quot;" name="python_code"/>
+			<field eval="0" name="encode"/>
+			<field eval="&quot;&quot;&quot;dynamic&quot;&quot;&quot;" name="type"/>
+		</record>
+		<record id="dm_dtp_plugin_sodeliveryzip" model="dm.dtp.plugin">
+			<field eval="&quot;&quot;&quot;so_delivery_zip&quot;&quot;&quot;" name="code"/>
+			<field eval="0" name="store_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery City &quot;&quot;&quot;" name="preview_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery City &quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Address - City&quot;&quot;&quot;" name="note"/>
+			<field eval="&quot;&quot;&quot;wi_obj  = pool.get('dm.workitem').browse(cr,uid,wi_id)\nso_delivery_zip = wi_obj.sale_order_id.partner_shipping_id.zip&quot;&quot;&quot;" name="python_code"/>
+			<field eval="0" name="encode"/>
+			<field eval="&quot;&quot;&quot;dynamic&quot;&quot;&quot;" name="type"/>
+		</record>						
+	</data>
+</openerp>
