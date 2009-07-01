@@ -37,6 +37,7 @@
     <blockTableStyle id="Table3">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
+      <blockBackground colorName="#000000" start="0,0" stop="0,-1"/>
     </blockTableStyle>
     <blockTableStyle id="Table4">
       <blockAlignment value="LEFT"/>
@@ -54,21 +55,21 @@
     <initialize>
       <paraStyle name="all" alignment="justify"/>
     </initialize>
-    <paraStyle name="P1" fontName="Times-Roman" fontSize="18.0" leading="20.0" backColor="#ffffff"/>
-    <paraStyle name="P2" fontName="Times-Roman" fontSize="6.0" leading="8"/>
-    <paraStyle name="P3" fontName="Times-Bold" fontSize="50.0" leading="5"/>
+    <paraStyle name="P1" fontName="Courier" fontSize="18.0" leading="20.0" />
+    <paraStyle name="P2" fontName="Courier" fontSize="6.0" leading="8"/>
+    <paraStyle name="P3" fontName="Times-Bold" fontSize="50.0" leading="5" textColor="#ffffff"/>
     <paraStyle name="Pjd" fontName="Times-Bold" fontSize="50.0" leading="5"/>    
-    <paraStyle name="P4" fontName="Times-Bold" fontSize="6" leading="8"/>
-    <paraStyle name="P5" fontName="Times-Roman" fontSize="6" leading="7" />
-    <paraStyle name="P6" fontName="Times-Roman" fontSize="7" leading="7" />
-    <paraStyle name="P7" fontName="Times-Roman" fontSize="7" leading="7" />
-    <paraStyle name="P8" fontName="Times-Roman" fontSize="7" leading="7" alignment="RIGHT"/>
-    <paraStyle name="P9" fontName="Times-Bold" fontSize="6.5" leading="7" />
-    <paraStyle name="P10" fontName="Times-Roman" fontSize="6.5" leading="8"/>
-    <paraStyle name="P11" fontName="Times-Roman" fontSize="7"/>
-    <paraStyle name="P12" fontName="Times-Roman" fontSize="15.0" textColor="#ffffff" leading="1"/>
-    <paraStyle name="P13" fontName="Times-Roman" fontSize="10.0" leading="12"/>
-    <paraStyle name="P14" fontName="Times-Roman" fontSize="24.0" leading="26" backColor="#ffffff"/>    
+    <paraStyle name="P4" fontName="Courier-Bold" fontSize="6" leading="8"/>
+    <paraStyle name="P5" fontName="Courier" fontSize="6" leading="7" />
+    <paraStyle name="P6" fontName="Courier" fontSize="7" leading="7" />
+    <paraStyle name="P7" fontName="Courier" fontSize="7" leading="7" />
+    <paraStyle name="P8" fontName="Courier" fontSize="7" leading="7" alignment="RIGHT"/>
+    <paraStyle name="P9" fontName="" fontSize="6.5" leading="7" />
+    <paraStyle name="P10" fontName="Courier" fontSize="6.5" leading="8"/>
+    <paraStyle name="P11" fontName="Courier" fontSize="7"/>
+    <paraStyle name="P12" fontName="Courier" fontSize="15.0" textColor="#ffffff" leading="1"/>
+    <paraStyle name="P13" fontName="Courier" fontSize="10.0" leading="12"/>
+    <paraStyle name="P14" fontName="Courier" fontSize="24.0" leading="26" backColor="#ffffff"/>    
     <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text_20_body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -2067,10 +2068,10 @@ UUAFFFFAH//Z
         </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="200.0,107.0" style="Table9">
+    <blockTable colWidths="230.0,75.0" style="Table9">
       <tr>
         <td>
-          <para style="P4">----ACCORDING TO GENERAL TERMS OF TRANSPORT----</para>
+          <para style="P4">-----------ACCORDING TO GENERAL TERMS OF TRANSPORT----------</para>
           <blockTable colWidths="45.0,154.0" style="Table10">
             <tr>
               <td>
@@ -2102,17 +2103,17 @@ UUAFFFFAH//Z
           </blockTable>
         </td>
         <td>
-          <para style="Pjd">JD</para>
+          <para style="Pjd">J</para>
         </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="70.0,227.0" style="Table3">
+    <blockTable colWidths="80.0,227.0" rowHeights="65" style="Table3">
       <tr>
         <td>
           <para style="P3">[[ document['so_delivery_country_code'] ]]</para>
         </td>
         <td>
-        <barCode checksum='0' barWidth='1.2' stop='1' bearers='0' code="i2of5" height="40" barHeight="30">
+        <barCode checksum='0' barWidth='1.2' stop='1' quite="0" bearers='0' code="i2of5" height="40" barHeight="30">
             [[ document['so_delivery_barcode'] ]]
         </barCode>
           <para style="P9">[[ document['so_delivery_barcode'] ]]</para>
@@ -2124,8 +2125,7 @@ UUAFFFFAH//Z
         <td>
           <para style="P9">[[ document['so_delivery_zip'] ]]</para>
         </td>
-        <td>
-        </td>
+        <td>        </td>
         <td>
           <para style="P9">Tel :[[ document['so_delivery_phone'] ]]</para>
         </td>
@@ -2153,22 +2153,29 @@ UUAFFFFAH//Z
       </tr>
       <tr>
         <td>
-          <para style="P9">222222222</para>
-        </td>
-        <td>
-          <para style="P9">111111</para>
-        </td>
-        <td>        </td>
-      </tr>
-      <tr>
-        <td>
-          <para style="P9">3333333333</para>
+          <para style="P9">1 line</para>
         </td>
         <td>        </td>
         <td>        </td>
       </tr>
       <tr>
+        <td>
+          <para style="P9">2 line</para>
+        </td>
         <td>        </td>
+        <td>        </td>
+      </tr>
+      <tr>
+        <td>        
+           <para style="P9">3 line</para>
+        </td>
+        <td>        </td>
+        <td>        </td>
+      </tr>
+      <tr>
+        <td>        
+           <para style="P9">4 line</para>
+        </td>
         <td>        </td>
         <td>        </td>
       </tr>
@@ -2187,15 +2194,6 @@ UUAFFFFAH//Z
         </td>
         <td>        </td>
         <td>        </td>
-      </tr>
-    </blockTable>
-    <blockTable colWidths="140,166.0" rowHeights="20.0" style="Table8">
-      <tr>
-        <td>
-          <para style="P12">Relais Colis</para>
-        </td>
-        <td>
-        </td>
       </tr>
     </blockTable>
     <blockTable colWidths="65.0,100.0,97.0,44.0" style="Table7">

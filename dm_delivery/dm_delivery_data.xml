@@ -131,6 +131,16 @@
 			<field eval="&quot;&quot;&quot;wi_obj  = pool.get('dm.workitem').browse(cr,uid,wi_id)\nso_delivery_zip = wi_obj.sale_order_id.partner_shipping_id.zip&quot;&quot;&quot;" name="python_code"/>
 			<field eval="0" name="encode"/>
 			<field eval="&quot;&quot;&quot;dynamic&quot;&quot;&quot;" name="type"/>
-		</record>						
+		</record>
+		<record id="dm_dtp_plugin_sodeliverybarcode" model="dm.dtp.plugin">
+			<field eval="&quot;&quot;&quot;so_delivery_barcode&quot;&quot;&quot;" name="code"/>
+			<field eval="0" name="store_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Barcode &quot;&quot;&quot;" name="preview_value"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Barcode &quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;SO Delivery Barcode &quot;&quot;&quot;" name="note"/>
+			<field eval="&quot;&quot;&quot;so_line = pool.get('sale.order.line').browse(cr,uid,dm_so_line_id)\nso_delivery_barcode=so_line.tracking_lot_id.serial&quot;&quot;&quot;" name="python_code"/>
+			<field eval="0" name="encode"/>
+			<field eval="&quot;&quot;&quot;dynamic&quot;&quot;&quot;" name="type"/>
+		</record>
 	</data>
 </openerp>

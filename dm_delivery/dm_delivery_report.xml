@@ -8,7 +8,29 @@
             <field name="report_name">dm.offer.document.tnt.reports.jd</field>
             <field name="report_rml">dm_delivery/report/dm_tnt_reports_jd.rml</field>
             <field name="report_type">pdf</field>
-            <field name="header">False</field>
+            <field name="header" eval="0" />
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="dm_offer_document_tnt_J_report" model="ir.actions.report.xml">
+            <field name="name">TNT Reports - J</field>
+            <field name="type">ir.actions.report.xml</field>
+            <field name="model">dm.offer.document</field>
+            <field name="report_name">dm.offer.document.tnt.reports.j</field>
+            <field name="report_rml">dm_delivery/report/dm_tnt_reports_j.rml</field>
+            <field name="report_type">pdf</field>
+            <field name="header" eval="0" />
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="dm_offer_document_tnt_JZ_report" model="ir.actions.report.xml">
+            <field name="name">TNT Reports - JZ</field>
+            <field name="type">ir.actions.report.xml</field>
+            <field name="model">dm.offer.document</field>
+            <field name="report_name">dm.offer.document.tnt.reports.jz</field>
+            <field name="report_rml">dm_delivery/report/dm_tnt_reports_jz.rml</field>
+            <field name="report_type">pdf</field>
+            <field name="header" eval="0"/>
         </record>
     </data>
 </openerp>

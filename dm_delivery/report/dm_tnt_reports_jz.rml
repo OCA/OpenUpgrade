@@ -56,7 +56,8 @@
     </initialize>
     <paraStyle name="P1" fontName="Times-Roman" fontSize="18.0" leading="20.0" backColor="#ffffff"/>
     <paraStyle name="P2" fontName="Times-Roman" fontSize="6.0" leading="8"/>
-    <paraStyle name="P3" fontName="Times-Bold" fontSize="50.0" leading="5"/>
+    <paraStyle name="P3" fontName="Times-Bold" fontSize="50.0" />
+    <paraStyle name="Pl" fontName="Times-Bold" fontSize="10" leading="5"/>
     <paraStyle name="Pjd" fontName="Times-Bold" fontSize="50.0" leading="5"/>    
     <paraStyle name="P4" fontName="Times-Bold" fontSize="6" leading="8"/>
     <paraStyle name="P5" fontName="Times-Roman" fontSize="6" leading="7" />
@@ -2102,7 +2103,7 @@ UUAFFFFAH//Z
           </blockTable>
         </td>
         <td>
-          <para style="Pjd">JD</para>
+          <para style="Pjd">JZ</para>
         </td>
       </tr>
     </blockTable>
@@ -2122,7 +2123,7 @@ UUAFFFFAH//Z
     <blockTable colWidths="128.0,60.0,119.0" rowHeights="8" style="Table4">
       <tr>
         <td>
-          <para style="P9">[[ document['so_delivery_zip'] ]]</para>
+          <para style="P9">-----Address 1----</para>
         </td>
         <td>
         </td>
@@ -2153,16 +2154,16 @@ UUAFFFFAH//Z
       </tr>
       <tr>
         <td>
-          <para style="P9">222222222</para>
+          <para style="P9">========Street 3======</para>
         </td>
         <td>
-          <para style="P9">111111</para>
+          <para style="P9"></para>
         </td>
         <td>        </td>
       </tr>
       <tr>
         <td>
-          <para style="P9">3333333333</para>
+          <para style="P9">[[ document['so_delivery_phone'] ]]</para>
         </td>
         <td>        </td>
         <td>        </td>
@@ -2177,7 +2178,7 @@ UUAFFFFAH//Z
           <para style="P9">[[ document['so_delivery_zip'] ]]</para>
         </td>
         <td>
-          <para style="P9">[[ document['so_delivery_state'] ]]</para>
+          <para style="P9">[[ document['so_delivery_city'] ]]</para>
         </td>
         <td>        </td>
       </tr>
@@ -2187,15 +2188,6 @@ UUAFFFFAH//Z
         </td>
         <td>        </td>
         <td>        </td>
-      </tr>
-    </blockTable>
-    <blockTable colWidths="140,166.0" rowHeights="20.0" style="Table8">
-      <tr>
-        <td>
-          <para style="P12">Relais Colis</para>
-        </td>
-        <td>
-        </td>
       </tr>
     </blockTable>
     <blockTable colWidths="65.0,100.0,97.0,44.0" style="Table7">

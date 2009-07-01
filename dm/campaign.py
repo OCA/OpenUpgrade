@@ -407,7 +407,7 @@ class dm_campaign(osv.osv):#{{{
         'currency_id' : fields.many2one('res.currency','Currency',ondelete='cascade'),
         'manufacturing_cost_ids': fields.one2many('dm.campaign.manufacturing_cost','campaign_id','Manufacturing Costs'),
         'manufacturing_product_id': fields.many2one('product.product','Manufacturing Product'),
-#        'overlay_id': fields.many2one('dm.overlay', 'Overlay'),
+        'overlay_id': fields.many2one('dm.overlay', 'Overlay'),
         'router_id' : fields.many2one('res.partner', 'Router',domain=[('category_id','ilike','Router')], context={'category':'Router'},
             help="The router is the partner who will send the mailing to the final customer"),
         'dtp_task_ids': one2many_mod_task('project.task', 'project_id', "DTP tasks",

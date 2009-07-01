@@ -172,22 +172,26 @@ def generate_reports(cr,uid,obj,report_type,context): # {{{
         """ Create TNT Stickers as attachment of campaign document"""
         for line in obj.sale_order_id.order_line :
             """ get tnt report form sale order_line """
-            carrier_delivery_type = line.carrier_delivery_type or 'JD'
-            tnt_report_id = report_xml.search(cr,uid,[('name','ilike','TNT Reports - %s'%carrier_delivery_type)])
-            if tnt_report_id :
-                tnt_report = pool.get('ir.actions.report.xml').browse(cr, uid, tnt_report_id[0])
-                srv = netsvc.LocalService('report.' + tnt_report.report_name)
-                report_data,report_type = srv.create(cr, uid, [], {},context)
-                attach_vals={'name' : document_data['name'] + "_" + str(address_id)+str(line.id),
-                     'datas_fname' : tnt_report.name.replace(' ','_').replace('-','')+ str(line.id) + '.pdf' ,
-                     'res_model' : 'dm.campaign.document',
-                     'res_id' : camp_doc,
-                     'datas': base64.encodestring(report_data),
-                     'file_type':report_type
-                     }
-                attach_id = attachment_obj.create(cr,uid,attach_vals)
+            if line.tracking_lot_id:
+                carrier_delivery_type = line.carrier_delivery_type or 'JZ'
+                print 'TNT Reports - %s'%carrier_delivery_type
+                tnt_report_id = report_xml.search(cr,uid,[('name','=','TNT Reports - %s'%carrier_delivery_type)])
+                print tnt_report_id
+                if tnt_report_id :
+                    tnt_report = pool.get('ir.actions.report.xml').browse(cr, uid, tnt_report_id[0])
+                    srv = netsvc.LocalService('report.' + tnt_report.report_name)
+                    context['dm_so_line_id'] = line.id
+                    report_data,report_type = srv.create(cr, uid, [], {},context)
+                    attach_vals={'name' : document_data['name'] + "_" + str(address_id)+str(line.id),
+                         'datas_fname' : tnt_report.name.replace(' ','_').replace('-','')+ str(line.id) + '.pdf' ,
+                         'res_model' : 'dm.campaign.document',
+                         'res_id' : camp_doc,
+                         'datas': base64.encodestring(report_data),
+                         'file_type':report_type
+                         }
+                    attach_id = attachment_obj.create(cr,uid,attach_vals)
 
-        
+
         """ Get reports to process """
         report_ids = report_xml.search(cr,uid,[('document_id','=',document_id[0]),('report_type','=',report_type)])
 
@@ -249,10 +253,8 @@ def _generate_value(cr,uid,plugin_obj,localcontext,**args): # {{{
                 plugin_args[str(arg.name)] = _generate_value(cr,uid,arg.custome_plugin_id,localcontext,**args)
         if plugin_obj.type=='dynamic' and plugin_obj.python_code :
     #        Set in localcontext ['addr_id','uid','wi_id','cr','plugin_obj','type','doc_id':,'plugin_list']
-            print plugin_args
             localcontext.update(plugin_args)
             localcontext['pool']=pool
-            print plugin_obj.name
             exec plugin_obj.python_code.replace('\r','') in localcontext
             plugin_value =  plugin_obj.code in localcontext and localcontext[plugin_obj.code] or ''
         elif plugin_obj.type == 'dynamic_text' :
