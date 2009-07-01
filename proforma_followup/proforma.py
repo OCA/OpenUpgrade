@@ -31,6 +31,8 @@ def str2dict(s):
 class proforma_followup_action(osv.osv):
     _name = 'proforma.followup.action'
     _description = 'PRO-Forma Followup Action'
+    _order = 'sequence'
+
     _columns = {
         'name': fields.char('Name', size=64, required=True, select=1),
         'sequence': fields.integer('Step',select=1),
@@ -67,6 +69,7 @@ proforma_followup_action()
 
 class proforma_followup_history(osv.osv):
     _name = 'proforma.followup.history'
+    _order = 'create_date,step'
     
     _columns = {
         'name': fields.char('Name', size=132, required=True),   
@@ -92,6 +95,7 @@ class proforma_followup_history(osv.osv):
 proforma_followup_history()
 
 class proforma_followup_scheduler(osv.osv):
+    # TODO filter on customer invoices ?
     _name = 'proforma.followup.scheduler'
     _auto = False
     _rec_name = 'date'
