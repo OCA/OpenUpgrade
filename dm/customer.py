@@ -117,18 +117,18 @@ class dm_workitem(osv.osv): # {{{
         else :
             return {'value':{'sale_order_id':sale_order_id}}
 
-    def _sale_order_process(self, cr, uid, ids, sale_order_id):
+    def _sale_order_process(self, cr, uid, sale_order_id):
         so = self.pool.get('sale.order').browse(cr, uid, sale_order_id)
         wf_service = netsvc.LocalService('workflow')
         if so.so_confirm_do:
             wf_service.trg_validate(uid, 'sale.order', sale_order_id, 'order_confirm', cr)
         if so.invoice_create_do:
             inv_id = self.pool.get('sale.order').action_invoice_create(cr, uid, [sale_order_id])
-            if journal_id:
+            if so.journal_id:
                 self.pool.get('account.invoice').write(cr, uid, inv_id, {'journal_id': so.journal_id.id, 'account_id': so.journal_id.default_credit_account_id.id})
         if so.invoice_validate_do:
             wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
-        if so.invoice_pay:
+        if so.invoice_pay_do:
             pass
 
 
@@ -236,7 +236,7 @@ class dm_workitem(osv.osv): # {{{
         
         """ Processing sale orders """
         if wi.sale_order_id:
-            so_res = _sale_order_process(wi.sale_order_id)
+            so_res = self._sale_order_process(cr, uid, wi.sale_order_id.id)
 
         return True
 

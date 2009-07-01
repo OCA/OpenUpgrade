@@ -149,6 +149,9 @@ def generate_reports(cr,uid,obj,report_type,context): # {{{
             return "no_document"
 
         type_id = pool.get('dm.campaign.document.type').search(cr,uid,[('code','=',r_type)])
+        
+        if obj.sale_order_id:
+            so = obj.sale_order_id.name
 
         vals={
             'segment_id': obj.segment_id.id or False,
@@ -158,6 +161,7 @@ def generate_reports(cr,uid,obj,report_type,context): # {{{
             'delivery_time' : delivery_time,
             'document_id' : document_id[0],
             'address_id' : address_id,
+            'origin' : so or False,
             }
 
         """ Create campaign document """

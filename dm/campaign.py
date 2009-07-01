@@ -606,7 +606,7 @@ class dm_campaign(osv.osv):#{{{
         else:
             country_id = camp.country_id.id
             
-#        check if an overlay exists else create it
+        #check if an overlay exists else create it
         overlay_country_ids=[] 
         if trademark_id and dealer_id and country_id:
             overlay_obj = self.pool.get('dm.overlay')
