@@ -580,7 +580,7 @@ class dm_campaign(osv.osv):#{{{
             vals['payment_method_ids'] = [[6,0,payment_methods]]
             
         # Set campaign end date at one year after start date if end date does not exist
-        if 'date_start' in vals and vals['date_start']:
+        if 'date' not in vals and not camp.date and 'date_start' in vals and vals['date_start'] :
             time_format = "%Y-%m-%d"
             d = time.strptime(vals['date_start'],time_format)
             d = datetime.date(d[0], d[1], d[2])
