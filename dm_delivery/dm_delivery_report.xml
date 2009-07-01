@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="dm_offer_document_tnt_JD_report" model="ir.actions.report.xml">
+            <field name="name">TNT Reports - JD</field>
+            <field name="type">ir.actions.report.xml</field>
+            <field name="model">dm.offer.document</field>
+            <field name="report_name">dm.offer.document.tnt.reports.jd</field>
+            <field name="report_rml">dm_delivery/report/dm_tnt_reports_jd.rml</field>
+            <field name="report_type">pdf</field>
+            <field name="header">False</field>
+        </record>
+    </data>
+</openerp>
+
