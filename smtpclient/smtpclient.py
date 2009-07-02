@@ -183,10 +183,16 @@ class SmtpClient(osv.osv):
             })
         self.write(cr, uid, ids, {'state':'waiting', 'code':key})
         return True
-    
+         
+    def getpassword(self,cr,uid,ids):
+        data = {}
+        cr.execute("select * from email_smtpclient where id =%s" , str(ids[0]) )
+        data = cr.dictfetchall()
+        return data
+
     def open_connection(self, cr, uid, ids, serverid=False, permission=True):
         if serverid:
-            self.server[serverid] = self.read(cr, uid, [serverid])[0]
+            self.server[serverid] = self.getpassword(cr, uid, [serverid])[0]
         else:
             raise osv.except_osv(_('Read Error!'), _('Unable to read Server Settings'))
         
