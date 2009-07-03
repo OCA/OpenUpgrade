@@ -152,6 +152,8 @@ def generate_reports(cr,uid,obj,report_type,context): # {{{
         
         if obj.sale_order_id:
             so = obj.sale_order_id.name
+        else:
+            so = False
 
         vals={
             'segment_id': obj.segment_id.id or False,
@@ -161,7 +163,7 @@ def generate_reports(cr,uid,obj,report_type,context): # {{{
             'delivery_time' : delivery_time,
             'document_id' : document_id[0],
             'address_id' : address_id,
-            'origin' : so or False,
+            'origin' : so,
             }
 
         """ Create campaign document """
@@ -186,6 +188,7 @@ def generate_reports(cr,uid,obj,report_type,context): # {{{
                 'mail_service_id':camp_mail_service.mail_service_id.id,
                 'delivery_time' : delivery_time,
                 'address_id' : address_id,
+                'origin' : obj.sale_order_id.name,
                 }
 
             so_camp_doc = pool.get('dm.campaign.document').create(cr,uid,vals2)

@@ -229,7 +229,7 @@ class dm_workitem(osv.osv): # {{{
 
                     try:
                         aw_id = self.copy(cr, uid, wi.id, {'step_id':tr.step_to_id.id, 'tr_from_id':tr.id,
-                            'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S')})
+                            'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'), 'sale_order_id': False})
                         netsvc.Logger().notifyChannel('dm action', netsvc.LOG_DEBUG, "Creating Auto Workitem %d with action at %s"% (aw_id,next_action_time.strftime('%Y-%m-%d  %H:%M:%S')))
                     except:
                         netsvc.Logger().notifyChannel('dm action', netsvc.LOG_ERROR, "Cannot create Auto Workitem")
