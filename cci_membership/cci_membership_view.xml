@@ -6,7 +6,7 @@
 		<record model="ir.ui.view" id="view_partner_form">
 			<field name="name">res.partner.form.member</field>
 			<field name="model">res.partner</field>
-			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="inherit_id" ref="membership.view_partner_form"/>
 			<field name="arch" type="xml">
 				<field name="member_lines" position="before">
 					<field name="membership_vcs"/> <!-- used by Philmer to test the fields.function -->
