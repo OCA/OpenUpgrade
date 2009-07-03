@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data noupdate="1">
-        
-		    <record forcecreate="True" id="ir_cron_profroma_action" model="ir.cron">
-		            <field name="name">Run Proforma Followups</field>
-		            <field eval="True" name="active"/>
-		            <field name="user_id" ref="base.user_root"/>
-		            <field name="interval_number">1</field>
-		            <field name="interval_type">days</field>
-		            <field name="numbercall">10</field>
-		            <field eval="True" name="doall"/>
-		            <field eval="'proforma.followup_step'" name="model"/>
-		            <field eval="'run_followups'" name="function"/>
-		            <field eval="'(uid,)'" name="args"/>
+        <record forcecreate="True" id="cron_action" model="ir.cron">
+            <field name="name">Run Proforma Followups</field>
+            <field eval="True" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="True" name="doall"/>
+            <field eval="'proforma.followup.scheduler'" name="model"/>
+            <field eval="'execute'" name="function"/>
+            <field eval="'tuple()'" name="args"/>
         </record>        
-        
+
+
+        <record forcecreate="True" model='ir.actions.server' id='action_server_cancel_invoice'>
+            <field name='name'>Cancel Invoice</field>
+            <field name='type'>ir.actions.server</field>
+            <field name='condition'>True</field>
+            <field name='model_id' ref='account.model_account_invoice'/>
+            <!-- we can't use the "trigger" state because server actions are coded with knees -->
+            <field name='state'>code</field>
+            <field name='code'>
+import netsvc
+wkf_service = netsvc.LocalService('workflow')
+wkf_service.trg_validate(uid, 'account.invoice', obj.id, 'invoice_cancel', cr)
+            </field>
+        </record>
     </data>
 </openerp>

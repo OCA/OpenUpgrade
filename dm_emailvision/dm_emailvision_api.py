@@ -47,6 +47,18 @@ class dm_mail_service(osv.osv):
     }
 dm_mail_service()
 
+def set_image_email(node,msg):
+    if not node.getchildren():
+        if  node.tag=='img' and node.get('src') and node.get('src').find('data:image/gif;base64,')>=0:
+            msgImage = MIMEImage(base64.decodestring(node.get('src').replace('data:image/gif;base64,','')))
+            image_name = ''.join( Random().sample(string.letters+string.digits, 12) )
+            msgImage.add_header('Content-ID','<%s>'%image_name)
+            msg.attach(msgImage)
+            node.set('src',"cid:%s"%image_name)
+        else :
+            for n in node.getchildren():
+                set_image_email(n,msg)
+
 def _email_body(body):
     msgRoot = MIMEMultipart('related')
     msgRoot.preamble = 'This is a multi-part message in MIME format.'
@@ -58,6 +70,7 @@ def _email_body(body):
     msgText = MIMEText(etree.tostring(body), 'html')
     msg.attach(msgText)
     return  msgRoot.as_string()
+
 def send_email(cr,uid,obj,context):
 
     """ Get Emailmvision connection infos """

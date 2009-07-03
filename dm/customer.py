@@ -117,6 +117,21 @@ class dm_workitem(osv.osv): # {{{
         else :
             return {'value':{'sale_order_id':sale_order_id}}
 
+    def _sale_order_process(self, cr, uid, sale_order_id):
+        so = self.pool.get('sale.order').browse(cr, uid, sale_order_id)
+        wf_service = netsvc.LocalService('workflow')
+        if so.so_confirm_do:
+            wf_service.trg_validate(uid, 'sale.order', sale_order_id, 'order_confirm', cr)
+        if so.invoice_create_do:
+            inv_id = self.pool.get('sale.order').action_invoice_create(cr, uid, [sale_order_id])
+            if so.journal_id:
+                self.pool.get('account.invoice').write(cr, uid, inv_id, {'journal_id': so.journal_id.id, 'account_id': so.journal_id.default_credit_account_id.id})
+        if so.invoice_validate_do:
+            wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
+        if so.invoice_pay_do:
+            pass
+
+
     def run(self, cr, uid, wi, context={}):
         print "Calling run for : ",wi.step_id.action_id.name
         context['active_id'] = wi.id
@@ -218,6 +233,10 @@ class dm_workitem(osv.osv): # {{{
                         netsvc.Logger().notifyChannel('dm action', netsvc.LOG_DEBUG, "Creating Auto Workitem %d with action at %s"% (aw_id,next_action_time.strftime('%Y-%m-%d  %H:%M:%S')))
                     except:
                         netsvc.Logger().notifyChannel('dm action', netsvc.LOG_ERROR, "Cannot create Auto Workitem")
+        
+        """ Processing sale orders """
+        if wi.sale_order_id:
+            so_res = self._sale_order_process(cr, uid, wi.sale_order_id.id)
 
         return True
 
@@ -230,13 +249,21 @@ class dm_workitem(osv.osv): # {{{
         context['active_id'] = camp_doc.id
         try:
             server_obj = self.pool.get('ir.actions.server')
-            if not camp_doc.mail_service_id.action_id :
-                # To improve : log no action for mail service
+            if not camp_doc.mail_service_id:
+                self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state': 'error',
+                    'error_msg':'There is no mail service for this document'})
                 return False
+                
+            if not camp_doc.mail_service_id.action_id :
+                self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state': 'error',
+                    'error_msg':'There is no action defined for this mail service : %s' % camp_doc.mail_service_id.name})
+                return False
+
             res = server_obj.run(cr, uid, [camp_doc.mail_service_id.action_id.id], context)
             print "Campaign Doc action :",res
             camp_res = self.pool.get('dm.campaign.document').read(cr, uid, [camp_doc.id], ['state'])[0]
             print "Camp doc State : ", camp_res['state']
+
             """ If no error occured during the document generation set state to done """
             if camp_res['state'] != 'error':
                 self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state': 'done','error_msg':""})
@@ -575,5 +602,9 @@ class sale_order(osv.osv): # {{{
     _columns ={
         'offer_step_id' : fields.many2one('dm.offer.step','Offer Step'),
         'lines_number' : fields.integer('Number of sale order lines'),
+        'so_confirm_do' : fields.boolean('Auto confirm sale order'),
+        'invoice_create_do' : fields.boolean('Auto create invoice'),
+        'invoice_validate_do' : fields.boolean('Auto validate invoice'),
+        'invoice_pay_do' : fields.boolean('Auto pay invoice'),
     }
 sale_order() # }}}

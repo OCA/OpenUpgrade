@@ -28,7 +28,8 @@ from mx import DateTime
 from osv import fields
 from osv import osv
 
-class dm_overlay_payment_rule(osv.osv):#{{{
+"""
+class dm_overlay_payment_rule(osv.osv):
     _name = 'dm.overlay.payment_rule'
     _rec_name = 'journal_id'
     _columns = {
@@ -40,7 +41,8 @@ class dm_overlay_payment_rule(osv.osv):#{{{
         'country_default':fields.boolean('Default for Country')
     }
 
-dm_overlay_payment_rule()#}}}
+dm_overlay_payment_rule()
+"""
 
 class dm_campaign_group(osv.osv):#{{{
     _name = "dm.campaign.group"
@@ -170,7 +172,8 @@ class dm_campaign_type(osv.osv):#{{{
     }
 dm_campaign_type()#}}}
 
-class dm_overlay(osv.osv):#{{{
+
+class dm_overlay(osv.osv):
     _name = 'dm.overlay'
     _rec_name = 'trademark_id'
 
@@ -191,9 +194,10 @@ class dm_overlay(osv.osv):#{{{
         'dealer_id' : fields.many2one('res.partner', 'Dealer', domain=[('category_id','ilike','Dealer')], context={'category':'Dealer'}, required=True),
         'country_ids' : fields.many2many('res.country', 'overlay_country_rel', 'overlay_id', 'country_id', 'Country', required=True),
         'bank_account_id' : fields.many2one('account.account', 'Account'),
-        'payment_method_rule_ids':fields.many2many('dm.overlay.payment_rule','overlay_payment_method_rule_rel','overlay_id','payment_rule_id','Payment Method Rules')
+#        'payment_method_rule_ids':fields.many2many('dm.overlay.payment_rule','overlay_payment_method_rule_rel','overlay_id','payment_rule_id','Payment Method Rules')
     }
-dm_overlay()#}}}
+dm_overlay()
+
 
 class one2many_mod_task(fields.one2many):#{{{
     def get(self, cr, obj, ids, name, user=None, offset=0, context=None, values=None):
@@ -576,7 +580,7 @@ class dm_campaign(osv.osv):#{{{
             vals['payment_method_ids'] = [[6,0,payment_methods]]
             
         # Set campaign end date at one year after start date if end date does not exist
-        if 'date_start' in vals and vals['date_start']:
+        if 'date' not in vals and not camp.date and 'date_start' in vals and vals['date_start'] :
             time_format = "%Y-%m-%d"
             d = time.strptime(vals['date_start'],time_format)
             d = datetime.date(d[0], d[1], d[2])
@@ -602,7 +606,7 @@ class dm_campaign(osv.osv):#{{{
         else:
             country_id = camp.country_id.id
             
-#        check if an overlay exists else create it
+        #check if an overlay exists else create it
         overlay_country_ids=[] 
         if trademark_id and dealer_id and country_id:
             overlay_obj = self.pool.get('dm.overlay')

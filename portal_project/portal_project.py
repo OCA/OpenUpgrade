@@ -56,7 +56,7 @@ class users(osv.osv):
 
     def context_get(self, cr, uid, context=None):
         return super(users, self).context_get(cr, uid, context)
-
+    
 users()
 
 class project_project(osv.osv):
@@ -96,9 +96,8 @@ class project_project(osv.osv):
 
         #======================================Bug, Features ,support request====================================================
         cr.execute('select p.id, count(c.id),c.state,p.name from project_project as  p, \
-                    crm_case as c where p.id=c.project_id \
-                    and p.section_bug_id=c.section_id and p.id in ('+ids+') and c.state=%s  \
-                    group by p.id,p.name,c.state', ('open',))
+                    crm_case as c where p.id=c.project_id and p.section_bug_id=c.section_id \
+                    and p.id in ('+ids+') and c.state=%s group by p.id,p.name,c.state', ('open',))
         res_bug = cr.dictfetchall()
         for bug in res_bug:
             result[bug['id']]['bugs'] = result[bug['id']]['bugs'] + str(bug['count']) + ' Open '
@@ -109,29 +108,25 @@ class project_project(osv.osv):
             result[bug['id']]['bugs'] = result[bug['id']]['bugs'] +  str(bug['count'])  +  ' Total'
 
         cr.execute('select p.id, count(c.id),c.state,p.name from project_project as  p, \
-                    crm_case as c where \
-                    p.id=c.project_id and p.section_feature_id=c.section_id \
+                    crm_case as c where p.id=c.project_id and p.section_feature_id=c.section_id \
                     and p.id in ('+ids+') and c.state=%s group by p.id,p.name,c.state', ('open',))
         res_fet = cr.dictfetchall()
         for feature in res_fet:
             result[feature['id']]['features'] = result[feature['id']]['features'] + str(feature['count']) + ' Open '
         cr.execute('select p.id, count(c.id), p.name from project_project as p, \
-                    crm_case as c where  \
-                    p.id=c.project_id and p.section_feature_id=c.section_id \
+                    crm_case as c where p.id=c.project_id and p.section_feature_id=c.section_id \
                     and p.id in ('+ids+') group by p.id,p.name')
         for feature in cr.dictfetchall():
             result[feature['id']]['features'] = result[feature['id']]['features'] + str(feature['count']) + ' Total'
 
         cr.execute('select p.id, count(c.id),c.state,p.name from project_project as  p, \
-                    crm_case as c where \
-                    p.id=c.project_id and p.section_support_id=c.section_id \
+                    crm_case as c where p.id=c.project_id and p.section_support_id=c.section_id \
                     and p.id in ('+ids+') and c.state=%s group by p.id,p.name,c.state', ('open',))
         res_sup = cr.dictfetchall()
         for support in res_sup:
             result[support['id']]['support_req'] = result[support['id']]['support_req'] + str(support['count']) + ' Open '
         cr.execute('select p.id, count(c.id), p.name from project_project as p, \
-                    crm_case as c where \
-                    p.id=c.project_id and p.section_support_id=c.section_id \
+                    crm_case as c where p.id=c.project_id and p.section_support_id=c.section_id \
                     and p.id in ('+ids+') group by p.id,p.name ')
         for support in cr.dictfetchall():
             result[support['id']]['support_req'] = result[support['id']]['support_req'] + str(support['count']) + ' Total'
@@ -140,15 +135,18 @@ class project_project(osv.osv):
 
         # Number of doument attach in project and its tasks
         model = 'project.project'
-        cr.execute('select count(i.id), p.id, p.name from project_project as p left join ir_attachment as i on i.res_id=p.id where p.id in ('+ids+') and i.res_model=%s group by p.id, p.name',(model,))
+        cr.execute('select count(i.id), p.id, p.name from project_project as p \
+                    left join ir_attachment as i on i.res_id=p.id where p.id in ('+ids+') \
+                    and i.res_model=%s group by p.id, p.name',(model,))
         for doc in cr.dictfetchall():
             result[doc['id']]['doc'] = doc['count']#str(doc['count'])
-        cr.execute('select count(i.id), p.id, p.name, i.file_size as datas from project_project as p left join ir_attachment as i on i.res_id=p.id where p.id in ('+ids+') and i.res_model=%s group by p.id, p.name, i.file_size',(model,))
+        cr.execute('select count(i.id), p.id, p.name, i.file_size as datas from project_project as p \
+                    left join ir_attachment as i on i.res_id=p.id where p.id in ('+ids+') and \
+                    i.res_model=%s group by p.id, p.name, i.file_size',(model,))
         res_size_proj = cr.dictfetchall()
-        cr.execute('select count(i.id) as task_docs, p.id as project \
-                    from project_task t left join project_project p on p.id=t.project_id \
-                    left join ir_attachment i on i.res_id=t.id where p.id in ('+ids+') and i.res_model=%s \
-                    group by p.id',('project.task',))
+        cr.execute('select count(i.id) as task_docs, p.id as project from project_task t \
+                    left join project_project p on p.id=t.project_id left join ir_attachment i on \
+                    i.res_id=t.id where p.id in ('+ids+') and i.res_model=%s group by p.id',('project.task',))
         task_res = cr.dictfetchall()
         for doc in task_res:
             if result[doc['project']]['doc'] == '': result[doc['project']]['doc'] = 0
@@ -200,8 +198,7 @@ class project_project(osv.osv):
         date_back = datetime.date.today() +  datetime.timedelta(days=-31)
         date_back = date_back.strftime('%Y-%m-%d')
         for announce in self.browse(cr, uid, ids, context):
-            cr.execute("""select c.id from crm_case c \
-                        left join project_project p on %s = c.project_id \
+            cr.execute("""select c.id from crm_case c left join project_project p on %s = c.project_id \
                        where c.section_id = p.section_annouce_id and c.date >= %s """, (announce.id, date_back))
             list_announce = map(lambda x: x[0], cr.fetchall())
             res[announce.id] = list_announce
@@ -213,8 +210,8 @@ class project_project(osv.osv):
             return {}
         for id in ids:
             for acc in self.browse(cr, uid, ids, context):
-                cr.execute("""select id from account_analytic_line where \
-                        account_id in (select category_id from project_project where id = %s)""" %id)
+                cr.execute("""select id from account_analytic_line where account_id in \
+                            (select category_id from project_project where id = %s)""" %id)
                 line_id = map(lambda x: x[0], cr.fetchall())
                 res[acc.id] = line_id
         return res
@@ -290,26 +287,22 @@ class crm_case(osv.osv):
             project_id = project_ids and project_ids[0]
 
         for case in self.browse(cr, uid, ids_cases, context):
-            cr.execute("""select c.id from crm_case c \
-                        left join project_project p on p.id = c.project_id \
+            cr.execute("""select c.id from crm_case c left join project_project p on p.id = c.project_id \
                         where c.section_id = p.section_bug_id and c.date >= %s and p.id=%s """, (date_back,project_id,))
             list_case = map(lambda x: x[0], cr.fetchall())
             result[case.id]['bug_ids'] = list_case
 
-            cr.execute("""select c.id from crm_case c \
-                        left join project_project p on p.id = c.project_id \
+            cr.execute("""select c.id from crm_case c left join project_project p on p.id = c.project_id \
                         where c.section_id = p.section_feature_id and c.date >= %s and p.id=%s """, (date_back, project_id,))
             list_case = map(lambda x: x[0], cr.fetchall())
             result[case.id]['feature_ids'] = list_case
 
-            cr.execute("""select c.id from crm_case c \
-                        left join project_project p on p.id = c.project_id \
+            cr.execute("""select c.id from crm_case c left join project_project p on p.id = c.project_id \
                         where c.section_id = p.section_support_id and c.date >= %s and p.id=%s """, (date_back, project_id,))
             list_case = map(lambda x: x[0], cr.fetchall())
             result[case.id]['support_ids'] = list_case
 
-            cr.execute("""select c.id from crm_case c \
-                        left join project_project p on p.id = c.project_id \
+            cr.execute("""select c.id from crm_case c left join project_project p on p.id = c.project_id \
                         where c.section_id = p.section_annouce_id and c.date >= %s and p.id=%s """, (date_back, project_id,))
             list_case = map(lambda x: x[0], cr.fetchall())
             result[case.id]['announce_ids'] = list_case
@@ -333,16 +326,20 @@ class crm_case(osv.osv):
             project_id = project_ids and project_ids[0]
 
         if context.has_key('section') and context['section']=='Bug Tracking' or context.has_key('case_search') and context['case_search']=='bug':
-            cr.execute('select c.id from crm_case c left join project_project p on p.id=c.project_id where c.section_id=p.section_bug_id and p.id=%s',(project_id,))
+            cr.execute('select c.id from crm_case c left join project_project p on p.id=c.project_id \
+                        where c.section_id=p.section_bug_id and p.id=%s',(project_id,))
             return map(lambda x: x[0], cr.fetchall())
         elif context.has_key('section') and context['section']=='Feature' or context.has_key('case_search') and context['case_search']=='feature':
-            cr.execute('select c.id from crm_case c left join project_project p on p.id=c.project_id where c.section_id=p.section_feature_id and p.id=%s',(project_id,))
+            cr.execute('select c.id from crm_case c left join project_project p on p.id=c.project_id \
+                        where c.section_id=p.section_feature_id and p.id=%s',(project_id,))
             return map(lambda x: x[0], cr.fetchall())
         elif context.has_key('section') and context['section']=='Support' or context.has_key('case_search') and context['case_search']=='support':
-            cr.execute('select c.id from crm_case c left join project_project p on p.id=c.project_id where c.section_id=p.section_support_id and p.id=%s',(project_id,))
+            cr.execute('select c.id from crm_case c left join project_project p on p.id=c.project_id \
+                        where c.section_id=p.section_support_id and p.id=%s',(project_id,))
             return map(lambda x: x[0], cr.fetchall())
         elif context.has_key('section') and context['section']=='Announce' or context.has_key('case_search') and context['case_search']=='announce':
-            cr.execute('select c.id from crm_case c left join project_project p on p.id=c.project_id where c.section_id=p.section_annouce_id and p.id=%s',(project_id,))
+            cr.execute('select c.id from crm_case c left join project_project p on p.id=c.project_id \
+                        where c.section_id=p.section_annouce_id and p.id=%s',(project_id,))
             return map(lambda x: x[0], cr.fetchall())
         return super(crm_case, self).search(cr, uid, args, offset, limit, order, context, count)
 
@@ -396,12 +393,35 @@ class report_account_analytic_planning(osv.osv):
         if context is None:
             context = {}
         if context.has_key('portal_gantt') and context['portal_gantt'] == 'planning' and context.has_key('active_id') and context['active_id']:
-            cr.execute("""select rp.id from report_account_analytic_planning rp \
-                          where rp.id in (select planning_id from project_task where project_id in (select id from project_project where id = %s))""" %(context['active_id']))
+            cr.execute("""select rp.id from report_account_analytic_planning rp where rp.id in \
+                            (select planning_id from project_task where project_id in \
+                            (select id from project_project where id = %s))""" %(context['active_id']))
             return map(lambda x: x[0], cr.fetchall())
         return super(report_account_analytic_planning, self).search(cr, uid, args, offset, limit, order, context, count)
 
 report_account_analytic_planning()
+
+class ir_attachment(osv.osv):
+     _inherit = 'ir.attachment'
+     _description = 'Attachments related project and task'
+     
+     def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
+         prj_model = 'project.project'
+         task_model = 'project.task'
+         if context is None:
+             context = {}
+         if context.has_key('portal_attachment') and context['portal_attachment'] == 'attachment' and context.has_key('project_activeid') and context['project_activeid']:
+             cr.execute("""select i.id from project_project as p left join ir_attachment as i on i.res_id=p.id \
+                             where p.id=%s and i.res_model=%s""", (context['project_activeid'],prj_model))
+             prj_attach_ids = map(lambda x: x[0], cr.fetchall())
+             cr.execute("""select i.id from project_task t left join project_project p \
+                            on p.id=t.project_id left join ir_attachment i on i.res_id=t.id \
+                            where p.id=%s and i.res_model=%s""", (context['project_activeid'],task_model))
+             task_attach_ids = map(lambda x: x[0], cr.fetchall())
+             return prj_attach_ids + task_attach_ids
+         return super(ir_attachment, self).search(cr, uid, args, offset, limit, order, context, count)
+
+ir_attachment()
 
 class hr_timesheet_sheet(osv.osv):
     _inherit = 'hr_timesheet_sheet.sheet'
@@ -410,15 +430,33 @@ class hr_timesheet_sheet(osv.osv):
     def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
         if context is None:
             context = {}
-
-        if context.has_key('portal_sheet') and context['portal_sheet'] == 'timesheet' and context.has_key('active_id') and context['active_id']:
-            cr.execute("select aal.id from account_analytic_line aal, hr_analytic_timesheet hat where hat.id = aal.id and aal.account_id in (select category_id from project_project where id = %s)" %context['active_id'])
+        if context.has_key('portal_sheet') and context['portal_sheet'] == 'timesheet' and context.has_key('project_activeid') and context['project_activeid']:
+            cr.execute("select aal.id from account_analytic_line aal, hr_analytic_timesheet hat \
+                        where hat.id = aal.id and aal.account_id in (select category_id from \
+                        project_project where id = %s)" %context['project_activeid'])
             line_ids = map(lambda x: x[0], cr.fetchall())
             sheet = self.pool.get('hr.analytic.timesheet').read(cr, uid, line_ids, ['sheet_id'])
             return list(set(map(lambda x:x['sheet_id'][0], sheet)))
         return super(hr_timesheet_sheet, self).search(cr, uid, args, offset, limit, order, context, count)
 
 hr_timesheet_sheet()
+
+class account_invoice(osv.osv):
+    _inherit = 'account.invoice'
+    _description = "Invoices related portal project"
+
+    def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
+        if context is None:
+            context = {}
+        if context.has_key('portal_invoice') and context['portal_invoice'] == 'invoice' and context.has_key('project_activeid') and context['project_activeid']:
+            cr.execute("""select id from account_invoice_line where account_analytic_id in \
+                        (select category_id from project_project where id = %s)""" %(context['project_activeid']))
+            invoice_line_ids = map(lambda x: x[0], cr.fetchall())
+            invoice = self.pool.get('account.invoice.line').read(cr, uid, invoice_line_ids, ['invoice_id'])
+            return list(set(map(lambda x:x['invoice_id'][0], invoice)))
+        return super(account_invoice, self).search(cr, uid, args, offset, limit, order, context, count)
+
+account_invoice()
 
 class account_analytic_account(osv.osv):
     _inherit = 'account.analytic.account'
@@ -427,9 +465,9 @@ class account_analytic_account(osv.osv):
     def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
         if context is None:
             context = {}
-        if context.has_key('portal_account') and context['portal_account'] == 'financial' and context.has_key('active_id') and context['active_id']:
-            cr.execute("""select id from account_analytic_account \
-                          where id in (select category_id from project_project where id = %s)""" %(context['active_id']))
+        if context.has_key('portal_account') and context['portal_account'] == 'financial' and context.has_key('project_activeid') and context['project_activeid']:
+            cr.execute("""select id from account_analytic_account where id in (select category_id from \
+                            project_project where id = %s)""" %(context['project_activeid']))
             return map(lambda x: x[0], cr.fetchall())
         return super(account_analytic_account, self).search(cr, uid, args, offset, limit, order, context, count)
 

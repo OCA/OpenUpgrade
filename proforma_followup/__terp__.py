@@ -40,6 +40,7 @@ Also, at each steps, we should be able to call several functions.
     'update_xml': [
         'proforma_followup_view.xml',
         'proforma_followup_data.xml',
+        'invoice.xml',
     ],
     'demo_xml': ['proforma_followup_demo.xml',],
     'installable': True,

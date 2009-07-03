@@ -48,10 +48,10 @@ class SmtpClient(osv.osv):
     _description = 'Email Client'
     _columns = {
         'name' : fields.char('Server Name', size=256, required=True),
-        'from_email' : fields.char('Email From', size=256, required=True, readonly=True, states={'new':[('readonly',False)]}),
+        'from_email' : fields.char('Email From', size=256, readonly=True, states={'new':[('readonly',False)]}),
         'email' : fields.char('Email Address', size=256, required=True, readonly=True, states={'new':[('readonly',False)]}),
-        'user' : fields.char('User Name', size=256, required=True, readonly=True, states={'new':[('readonly',False)]}),
-        'password' : fields.char('Password', size=256, required=True, invisible=True, readonly=True, states={'new':[('readonly',False)]}),
+        'user' : fields.char('User Name', size=256, readonly=True, states={'new':[('readonly',False)]}),
+        'password' : fields.char('Password', size=256, invisible=True, readonly=True, states={'new':[('readonly',False)]}),
         'server' : fields.char('SMTP Server', size=256, required=True, readonly=True, states={'new':[('readonly',False)]}),
         'auth' : fields.boolean("Use Auth", readonly=True, states={'new':[('readonly',False)]}),
         'port' : fields.char('SMTP Port', size=256, required=True, readonly=True, states={'new':[('readonly',False)]}),
@@ -62,6 +62,7 @@ class SmtpClient(osv.osv):
             ('waiting','Waiting for Verification'),
             ('confirm','Verified'),
         ],'Server Status', select=True, readonly=True),
+        'auth_type':fields.selection([('gmail','Google Server'), ('yahoo','Yahoo!!! Server'), ('unknown','Other Mail Servers')], string="Server Type"),
         'active' : fields.boolean("Active"),
         'date_create': fields.date('Date Create', required=True, readonly=True, states={'new':[('readonly',False)]}),
         'test_email' : fields.text('Test Message'),
@@ -76,6 +77,7 @@ class SmtpClient(osv.osv):
     _defaults = {
         'date_create': lambda *a: time.strftime('%Y-%m-%d'),
         'state': lambda *a: 'new',
+        'type': lambda *a: 'default',
         'port': lambda *a: '25',
         'auth': lambda *a: True,
         'active': lambda *a: True,
@@ -83,33 +85,42 @@ class SmtpClient(osv.osv):
     }
     server = {}
     smtpServer = {}
-    
+
     def read(self,cr, uid, ids, fields=None, context=None, load='_classic_read'):
         def override_password(o):
             for field in o[0]:
                 if field == 'password':
                     o[0][field] = '********'
             return o
-        
+
         result = super(SmtpClient, self).read(cr, uid, ids, fields, context, load)
         result = override_password(result)
         return result
         
+    def change_servertype(self, cr, uid, ids, server):
+        if server == 'gmail':
+            return {'value':{'server':'smtp.gmail.com', 'port':'25', 'ssl':True, 'auth':True}}
+        elif server== 'yahoo':
+            return {'value':{'server':'smtp.mail.yahoo.co.in', 'ssl':False, 'port':'587', 'auth':True}}
+        else:
+            return {'value':{'server':'localhost', 'port':'25', 'ssl':False, 'auth':False}}
+    
     def change_email(self, cr, uid, ids, email):
+        email_from = self.pool.get('res.users').browse(cr, uid, uid).name
         if len(email) > 0 and email.find('@') > -1 and email.index('@') > 0:
             user = email[0:email.index('@')]
-            return {'value':{'user':user}}
+            return {'value':{'user':user, 'from_email':email_from+' <'+email+'>'}}
         else:
-            return {'value':{'user':email}}
-        
+            return {'value':{'user':email, 'from_email':email_from+' <'+email+'>'}}
+
     def check_permissions(self, cr, uid, ids):
         cr.execute('select * from res_smtpserver_group_rel where sid=%s and uid=%s' % (ids[0], uid))
         data = cr.fetchall()
         if len(data) <= 0:
             return False
-        
+
         return True
-    
+
     def gen_private_key(self, cr, uid, ids):
         new_key = []
         for i in time.strftime('%Y-%m-%d %H:%M:%S'):
@@ -118,7 +129,7 @@ class SmtpClient(osv.osv):
                 keys = random.random()
                 key = str(keys).split('.')[1]
                 ky = key
-                
+
             new_key.append(ky)
         new_key.sort()
         key = ''.join(new_key)
@@ -172,10 +183,16 @@ class SmtpClient(osv.osv):
             })
         self.write(cr, uid, ids, {'state':'waiting', 'code':key})
         return True
-        
+         
+    def getpassword(self,cr,uid,ids):
+        data = {}
+        cr.execute("select * from email_smtpclient where id =%s" , str(ids[0]) )
+        data = cr.dictfetchall()
+        return data
+
     def open_connection(self, cr, uid, ids, serverid=False, permission=True):
         if serverid:
-            self.server[serverid] = self.read(cr, uid, [serverid])[0]
+            self.server[serverid] = self.getpassword(cr, uid, [serverid])[0]
         else:
             raise osv.except_osv(_('Read Error!'), _('Unable to read Server Settings'))
         

@@ -17,9 +17,25 @@
             <field name="price_subtotal" position="after">
             	<field name="production_lot_id"/>
             	<field name="tracking_lot_id"/>
+                <field name="carrier_delivery_type"/>
             </field>
         </field>
     </record>
+
+    <record id="view_order_line_form2_inherit2" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="delay" select="2" position="after">
+            	<field name="production_lot_id"/>
+            	<field name="tracking_lot_id"/>
+                <field name="carrier_delivery_type"/>
+            </field>
+        </field>
+    </record>
+
 
 </data>
 </openerp>
