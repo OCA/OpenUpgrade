@@ -194,9 +194,7 @@ def generate_reports(cr,uid,obj,report_type,context): # {{{
                 """ get tnt report form sale order_line """
                 if line.tracking_lot_id:
                     carrier_delivery_type = line.carrier_delivery_type or 'J'
-                    print 'TNT Reports - %s'%carrier_delivery_type
                     tnt_report_id = report_xml.search(cr,uid,[('name','=','TNT Reports - %s'%carrier_delivery_type)])
-                    print tnt_report_id
                     if tnt_report_id :
                         tnt_report = pool.get('ir.actions.report.xml').browse(cr, uid, tnt_report_id[0])
                         srv = netsvc.LocalService('report.' + tnt_report.report_name)

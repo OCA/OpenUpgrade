@@ -102,7 +102,7 @@ class report_xml(osv.osv):
         list_image_id = []
         def process_tag(node,list_image_id):
             if not node.getchildren():
-                if  node.tag=='img' and node.get('name') and node.get('name').find('[[setHtmlImage')>=0:
+                if  node.tag=='img' and node.get('name') and node.get('name').find('setHtmlImage')>=0:
                     res_id= _regex.split(node.get('name'))[1]
                     list_image_id.append((res_id,node.get('src')))
             else :
@@ -111,7 +111,6 @@ class report_xml(osv.osv):
         datas = self.report_get(cr, uid, report_id)['report_sxw_content']
         root = etree.HTML(base64.decodestring(datas))
         process_tag(root,list_image_id)
-        return list_image_id 
-
+        return list_image_id
 report_xml()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:               

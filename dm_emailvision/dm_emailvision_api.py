@@ -47,6 +47,7 @@ class dm_mail_service(osv.osv):
     }
 dm_mail_service()
 
+#Dont need any more (for the moment)
 def set_image_email(node,msg):
     if not node.getchildren():
         if  node.tag=='img' and node.get('src') and node.get('src').find('data:image/gif;base64,')>=0:
@@ -94,11 +95,11 @@ def send_email(cr,uid,obj,context):
         body = root.find('body')
 
         print "message :", message
-
-#        html_content = ''.join([ etree.tostring(x) for x in body.getchildren()])
-#        print "body :", html_content
-        html_content = _email_body(body)
-        text_content = "This is a test"
+        # I think html_content = message should wrk
+        html_content = ''.join([ etree.tostring(x) for x in body.getchildren()])
+        print "body :", html_content
+#        html_content = _email_body(body)
+#        text_content = "This is a test"
         print "Test"
 
         "Composing XML"
