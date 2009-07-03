@@ -99,7 +99,7 @@ def send_email(cr,uid,obj,context):
         html_content = ''.join([ etree.tostring(x) for x in body.getchildren()])
         print "body :", html_content
 #        html_content = _email_body(body)
-#        text_content = "This is a test"
+        text_content = "This is a test"
         print "Test"
 
         "Composing XML"
