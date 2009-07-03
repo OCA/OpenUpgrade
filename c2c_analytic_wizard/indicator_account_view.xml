@@ -1,0 +1,16 @@
+<openerp>
+	<data>
+	    # add a checkbox "downpayment" in the product form
+		<record model="ir.ui.view" id="product_with_downpayment">
+			<field name="name">indicator.account.detail.form</field>
+			<field name="model">product.product</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="product.product_normal_form_view"/>
+			<field name="arch" type="xml">
+				<field name="product_manager" select="2" position="after">
+					<field name="downpayment" select="2" />
+				</field>
+			</field>
+		</record>
+	</data>
+</openerp>

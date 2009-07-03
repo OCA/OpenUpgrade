@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        #---------------------------------------------------------------------------------------------------------
+        # account.condition_text
+        #---------------------------------------------------------------------------------------------------------
+            <record model="ir.ui.view" id="view_invoice_condition">
+            <field name="name">account.condition_text.form</field>
+            <field name="model">account.condition_text</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Invoice condition text">
+                    <field name="name" select="1"/>
+                    <field name="type" select="1"/>
+                    <field name="text" colspan="4"/>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_invoice_condition_list">
+            <field name="name">account.condition_text.list</field>
+            <field name="model">account.condition_text</field>
+            <field name="type">tree</field>
+            <field name="priority" eval="6"/>
+            <field name="arch" type="xml">
+                <tree string="Invoice condition text">
+                    <field name="name" select="1"/>
+                    <field name="type" select="1"/>
+                    <field name="text"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_invoice_condition">
+            <field name="name">account.condition_text</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.condition_text</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_invoice_condition_list"/>
+        </record>
+        <record model="ir.actions.act_window" id="action_invoice_condition_form">
+            <field name="name">account.condition_text</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.condition_text</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_invoice_condition"/>
+        </record>
+        <menuitem name="Financial Management/Configuration/Invoice Condition/Conditions"
+            id="menu_invoice_condition_list" action="action_invoice_condition"/>
+        <menuitem name="Financial Management/Configuration/Invoice Condition/Edit Conditions"
+            id="menu_invoice_condition" action="action_invoice_condition_form"/>
+        #------------------------------------------------------ # Modification de la facture
+        #------------------------------------------------------ <record model="ir.ui.view"
+            id="invoice_form_add_date_sent_methode">
+            <field name="name">account.invoice.form.date_sent</field>
+            <field name="model">account.invoice</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+
+                <field name="currency_id" position="after" select="2">
+                    <separator string="Header and footer" colspan="6"/>
+					<newline />
+                    <field name="text_condition1" domain="[('type','=','header')]"
+                        on_change="set_comment(text_condition1)" colspan="2"/>
+
+                    <field name="text_condition2" domain="[('type','=','footer')]"
+                        on_change="set_note(text_condition2)" colspan="2"/>
+					<separator string="" colspan="6"/>
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="invoice_form_add_note2">
+            <field name="name">account.invoice.form.date_sent</field>
+            <field name="model">account.invoice</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+
+                <field name="comment" colspan="4" nolabel="1" position="replace">
+                    <field name="comment" colspan="4"/>
+                    <field name="note1" colspan="4"/>
+                    <field name="note2" colspan="4"/>
+
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>
