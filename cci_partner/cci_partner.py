@@ -376,7 +376,7 @@ class res_partner_job(osv.osv):
 
     _inherit = 'res.partner.job'
     _columns = {
-        'function_label':fields.char('Function Label',size=128, required=True),
+        'function_label':fields.char('Function Label',size=128),
         'function_code_label':fields.char('Codes',size=128,),
         'date_start':fields.date('Date start'),
         'date_end':fields.date('Date end'),
