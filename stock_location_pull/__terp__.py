@@ -19,8 +19,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-
 {
     'name': 'Stock Location Paths',
     'version': '1.0',
@@ -44,7 +42,6 @@ This module may be useful for different purposes:
     'demo_xml': [],
     'installable': True,
     'active': False,
-    'certificate': '0046505115101',
+    'certificate': '9872448400349',
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
