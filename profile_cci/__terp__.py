@@ -52,7 +52,7 @@
         "cci_timesheet",
         "cci_audittrail",
         "cci_data_csv",
-        "cci_security"
+#        "cci_security"
     ],
     "demo_xml":[],
     "update_xml":[],

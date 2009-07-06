@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -19,21 +19,21 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import time
 
 import netsvc
-import time
 from osv import fields, osv
 
 class purchase_order(osv.osv):
     _inherit = 'purchase.order'
     _decription = 'purchase order'
 
-    def wkf_temp_order0(self ,cr, uid, ids,context={}):
+    def wkf_temp_order0(self, cr, uid, ids, context={}):
         for po in self.browse(cr, uid, ids):
             self.write(cr, uid, [po.id], {'state' : 'wait_approve'})
         return True
 
-    def button_purchase_temp(self ,cr, uid, ids,context={}):
+    def button_purchase_temp(self, cr, uid, ids, context={}):
         wf_service = netsvc.LocalService('workflow')
         for po in self.browse(cr, uid, ids):
             if po.amount_total < 10000:
@@ -42,12 +42,22 @@ class purchase_order(osv.osv):
                 wf_service.trg_validate(uid, 'purchase.order', po.id, 'purchase_tempo', cr)
         return True
 
-    def wkf_write_approvator(self ,cr, uid, ids,context={}):
-        wf_service = netsvc.LocalService('workflow')
+#    def wkf_write_approvator(self, cr, uid, ids, context={}):
+#        wf_service = netsvc.LocalService('workflow')
+#        for po in self.browse(cr, uid, ids):
+#            self.write(cr, uid, [po.id], { 'validator' : uid})
+#            wf_service.trg_validate(uid, 'purchase.order', po.id, 'purchase_dummy_confirmed', cr)
+#        return True
+
+    def wkf_confirm_order(self, cr, uid, ids, context={}):
         for po in self.browse(cr, uid, ids):
-            self.write(cr, uid, [po.id], { 'validator' : uid})
-            wf_service.trg_validate(uid, 'purchase.order', po.id, 'purchase_dummy_confirmed', cr)
+            if self.pool.get('res.partner.event.type').check(cr, uid, 'purchase_open'):
+                self.pool.get('res.partner.event').create(cr, uid, {'name':'Purchase Order: '+po.name, 'partner_id':po.partner_id.id, 'date':time.strftime('%Y-%m-%d %H:%M:%S'), 'user_id':uid, 'partner_type':'retailer', 'probability': 1.0, 'planned_cost':po.amount_untaxed})
+        current_name = self.name_get(cr, uid, ids)[0][1]
+        for id in ids:
+            self.write(cr, uid, [id], {'state' : 'confirmed', 'validator' : uid}) #'approvator' : uid
         return True
+
 
     _columns = {
         'internal_notes': fields.text('Internal Note'),

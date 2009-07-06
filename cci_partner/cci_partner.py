@@ -358,7 +358,8 @@ class res_partner_job(osv.osv):
                 if res:
                     temp += self.pool.get('res.partner.function').browse(cr, uid,res)[0].code
             vals['function_code_label'] = temp or vals['function_code_label']
-        vals['function_id'] = self.pool.get('res.partner.function').search(cr, uid, [])[0]
+        if 'function_id' in vals and not vals['function_id']:
+            vals['function_id'] = self.pool.get('res.partner.function').search(cr, uid, [])[0]
         return super(res_partner_job,self).create(cr, uid, vals, *args, **kwargs)
 
     def write(self, cr, uid, ids,vals, *args, **kwargs):
@@ -369,7 +370,8 @@ class res_partner_job(osv.osv):
                 if res:
                     temp += self.pool.get('res.partner.function').browse(cr, uid,res)[0].code
             vals['function_code_label'] = temp or vals['function_code_label']
-        vals['function_id'] = self.pool.get('res.partner.function').search(cr, uid, [])[0]
+        if 'function_id' in vals and not vals['function_id']:
+            vals['function_id'] = self.pool.get('res.partner.function').search(cr, uid, [])[0]
         return super(res_partner_job,self).write(cr, uid, ids,vals, *args, **kwargs)
 
     _inherit = 'res.partner.job'
