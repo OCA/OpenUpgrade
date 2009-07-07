@@ -1063,7 +1063,6 @@
     DM OVERLAY
     =======================================================
     -->
-
     <record model="ir.ui.view" id="view_dm_overlay_form">
         <field name="name">dm.overlay.form</field>
         <field name="model">dm.overlay</field>
@@ -1074,8 +1073,8 @@
                 <field name="trademark_id" select="1"/>
                 <field name="dealer_id" select="2"/>
                 <field name="bank_account_id" select="2"/>
-                <separator string="Payment Method Rules" colspan="4"/>
-                <field name="payment_method_rule_ids" colspan="4" nolabel="1"/>
+<!--                <separator string="Payment Method Rules" colspan="4"/>
+                <field name="payment_method_rule_ids" colspan="4" nolabel="1"/>-->
                 <separator string="Countries" colspan="4"/>
                 <field name="country_ids" colspan="4" nolabel="1"/>
             </form>
@@ -1091,7 +1090,7 @@
                 <field name="trademark_id"/>
                 <field name="dealer_id"/>
                 <field name="bank_account_id"/>
-                <field name="payment_method_rule_ids"/>
+<!--                <field name="payment_method_rule_ids"/>-->
             </tree>
         </field>
     </record>
@@ -1104,7 +1103,6 @@
         <field name="view_id" ref="view_dm_overlay_tree"/>
     </record>
     <menuitem id="menu_action_dm_overlay_form" parent="dm.menu_dm_config_campaign" action="action_dm_overlay_form"/>
-
 
     <record model="ir.actions.act_window" id="action_campaign_dealer_form">
         <field name="name">All Dealers</field>
@@ -1601,6 +1599,14 @@
                 	<separator colspan="4"/>
                 	<field name="offer_step_id" colspan="4"/>
                     <field name="journal_id" colspan="4"/>
+                    <group colspan="2" col="2">
+                        <separator string="Automatic actions"/>
+                        <field name="so_confirm_do" />
+                        <field name="invoice_create_do" />
+                        <field name="invoice_validate_do" />
+                        <field name="invoice_pay_do" />
+                    </group>
+
                 </page>
             </notebook>
         </field>
@@ -1611,7 +1617,7 @@
         OVERLAY PAYMENT RULE
     =======================================================
     -->
-
+<!--
     <record model="ir.ui.view" id="view_overlay_payment_rule_form">
         <field name="name">dm.overlay.payment_rule.form</field>
         <field name="model">dm.overlay.payment_rule</field>
@@ -1655,7 +1661,7 @@
 
     <menuitem id="menu_action_overlay_payment_rule_form" parent="dm.menu_dm_config_campaign" action="action_overlay_payment_rule_form"/>
 
-
+-->
     <!--
     =======================================================
         RELATES

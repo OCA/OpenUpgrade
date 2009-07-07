@@ -149,6 +149,11 @@ def generate_reports(cr,uid,obj,report_type,context): # {{{
             return "no_document"
 
         type_id = pool.get('dm.campaign.document.type').search(cr,uid,[('code','=',r_type)])
+        
+        if obj.sale_order_id:
+            so = obj.sale_order_id.name
+        else:
+            so = False
 
         vals={
             'segment_id': obj.segment_id.id or False,
@@ -158,19 +163,58 @@ def generate_reports(cr,uid,obj,report_type,context): # {{{
             'delivery_time' : delivery_time,
             'document_id' : document_id[0],
             'address_id' : address_id,
+            'origin' : so,
             }
 
         """ Create campaign document """
         camp_doc = pool.get('dm.campaign.document').create(cr,uid,vals)
-
-        """ Get reports to process """
-        report_ids = report_xml.search(cr,uid,[('document_id','=',document_id[0]),('report_type','=',report_type)])
 
         document_data = dm_doc_obj.read(cr,uid,document_id,['name','editor','content','subject'])[0]
         context['address_id'] = address_id
         context['document_id'] = document_id[0]
         context['wi_id'] = obj.id
         attachment_obj = pool.get('ir.attachment')
+
+        """ Create TNT Stickers as attachment of campaign document"""
+
+        if obj.sale_order_id and obj.sale_order_id.order_line:
+
+            """ Create campaign document for sticker """
+
+            vals2={
+                'segment_id': obj.segment_id.id or False,
+                'name': obj.step_id.code + "_" +str(address_id),
+                'type_id': type_id[0],
+                'mail_service_id':camp_mail_service.mail_service_id.id,
+                'delivery_time' : delivery_time,
+                'address_id' : address_id,
+                'origin' : obj.sale_order_id.name,
+                }
+
+            so_camp_doc = pool.get('dm.campaign.document').create(cr,uid,vals2)
+
+            for line in obj.sale_order_id.order_line :
+                """ get tnt report form sale order_line """
+                if line.tracking_lot_id:
+                    carrier_delivery_type = line.carrier_delivery_type or 'J'
+                    tnt_report_id = report_xml.search(cr,uid,[('name','=','TNT Reports - %s'%carrier_delivery_type)])
+                    if tnt_report_id :
+                        tnt_report = pool.get('ir.actions.report.xml').browse(cr, uid, tnt_report_id[0])
+                        srv = netsvc.LocalService('report.' + tnt_report.report_name)
+                        context['dm_so_line_id'] = line.id
+                        report_data,report_type = srv.create(cr, uid, [], {},context)
+                        attach_vals={'name' : document_data['name'] + "_" + str(address_id)+str(line.id),
+                             'datas_fname' : tnt_report.name.replace(' ','_').replace('-','')+ str(line.id) + '.pdf' ,
+                             'res_model' : 'dm.campaign.document',
+                             'res_id' : so_camp_doc,
+                             'datas': base64.encodestring(report_data),
+                             'file_type':report_type
+                             }
+                        attach_id = attachment_obj.create(cr,uid,attach_vals)
+
+
+        """ Get reports to process """
+        report_ids = report_xml.search(cr,uid,[('document_id','=',document_id[0]),('report_type','=',report_type)])
 
         if report_type=='html2html' and document_data['editor'] and document_data['editor']=='internal' and document_data['content']:
             """ Check if to use the internal editor report """
@@ -210,14 +254,9 @@ def compute_customer_plugin(cr, uid, **args): # {{{
 def _generate_value(cr,uid,plugin_obj,localcontext,**args): # {{{
     pool = pooler.get_pool(cr.dbname)
     localcontext['plugin_obj'] = plugin_obj
-    plugin_args = {}
+    plugin_args={}
     plugin_value = ''
-
-    # why not : if plugin_obj.type = 
-    if plugin_obj.python_code :
-        exec plugin_obj.python_code.replace('\r','') in localcontext
-        plugin_value =  localcontext['plugin_value']
-    elif plugin_obj.type in ('fields','image'):
+    if plugin_obj.type in ('fields','image'):
         res  = pool.get('ir.model').browse(cr, uid, plugin_obj.model_id.id)    
         args['model_name'] = res.model
         args['field_name'] = str(plugin_obj.field_id.name)
@@ -233,7 +272,13 @@ def _generate_value(cr,uid,plugin_obj,localcontext,**args): # {{{
                 plugin_args[str(arg.name)]=arg.value
             else :
                 plugin_args[str(arg.name)] = _generate_value(cr,uid,arg.custome_plugin_id,localcontext,**args)
-        if plugin_obj.type == 'dynamic_text' :
+        if plugin_obj.type=='dynamic' and plugin_obj.python_code :
+    #        Set in localcontext ['addr_id','uid','wi_id','cr','plugin_obj','type','doc_id':,'plugin_list']
+            localcontext.update(plugin_args)
+            localcontext['pool']=pool
+            exec plugin_obj.python_code.replace('\r','') in localcontext
+            plugin_value =  plugin_obj.code in localcontext and localcontext[plugin_obj.code] or ''
+        elif plugin_obj.type == 'dynamic_text' :
             plugin_args['ref_text_id'] = plugin_obj.ref_text_id.id
             args.update(plugin_args)
             plugin_value = dynamic_text(cr, uid, **args)
@@ -275,6 +320,10 @@ def generate_plugin_value(cr, uid,**args): # {{{
         
     for plugin_obj in plugin_ids :
         plugin_value = _generate_value(cr,uid,plugin_obj,localcontext,**args)
+#       dnt remove this comment it s for url changes
+#        if plugin_obj.type == 'url' :
+#            vals['%s_text_display'%str(plugin_obj.code)] = plugin_value[-1]
+#            plugin_value = plugin_value[0]
         if plugin_obj.store_value :
             dm_plugins_value.create(cr, uid,{'date':time.strftime('%Y-%m-%d'),
                                              'address_id':args['addr_id'],

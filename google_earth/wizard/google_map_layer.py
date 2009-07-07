@@ -197,7 +197,7 @@ def create_kml(self, cr, uid, data, context={}):
                 address += str(tools.ustr(add.state_id.name.encode('ascii','replace')))
             if add.country_id:
                 address += ', '
-                address += str(tools.ustr(add.country_id.name.name.encode('ascii','replace')))
+                address += str(tools.ustr(add.country_id.name.encode('ascii','replace')))
         type = ''
         if part.customer:
             type += 'Customer '

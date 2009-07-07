@@ -1,0 +1,447 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* c2c_analytic_wizard
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-05-01 13:54:40+0000\n"
+"PO-Revision-Date: 2009-05-01 13:54:40+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: c2c_analytic_wizard
+#: model:ir.actions.wizard,name:c2c_analytic_wizard.associate_analytic_line_from
+msgid "Associate to invoice"
+msgstr "Lié à la facture"
+
+#. module: c2c_analytic_wizard
+#: wizard_view:open.specified.invoices,init:0
+msgid "Get customer invoices from project"
+msgstr "Créer une facture client de puis les projets"
+
+#. module: c2c_analytic_wizard
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr "Modèle invalide"
+
+#. module: c2c_analytic_wizard
+#: wizard_view:open.specified.invoices,init:0
+msgid "Choose projects you want to get invoices from"
+msgstr "Choissisez les projet dont vous voulez les factures"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Maximal Hours:"
+msgstr "Nombre d'heures maximum"
+
+#. module: c2c_analytic_wizard
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr "XML non valide pour l'architecture de la vue"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Indicators"
+msgstr "Indicateurs"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "State"
+msgstr "Etat"
+
+#. module: c2c_analytic_wizard
+#: wizard_view:dissociate.aal.from.invoice,init:0
+msgid "Are you sure you want to      dissociate those lines from invoice ?"
+msgstr "Etes-vous sûr de vouloir dissocier ces lignes des factures ?"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Details"
+msgstr "Détails"
+
+#. module: c2c_analytic_wizard
+#: wizard_view:blank.invoice,init:0
+msgid "Choose analytic accounts          you want to create a blank invoice"
+msgstr "Choisissez le compte pour générer une facture vierge"
+
+#. module: c2c_analytic_wizard
+#: wizard_view:associate.analytic.line.from,init:0
+msgid "Choose invoice you want to assign to"
+msgstr "Choissisez la facture à la quelle vous voulez assigner les lignes"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Description"
+msgstr ""
+
+#. module: c2c_analytic_wizard
+#: model:ir.module.module,shortdesc:c2c_analytic_wizard.module_name_translation
+msgid "Analytic wizard and tools for services companies"
+msgstr "Outils analytiques pour les compagnies de service"
+
+#. module: c2c_analytic_wizard
+#: wizard_field:indicator.account.detail,init,open_only:0
+msgid "Open Invoices Only"
+msgstr "Factures ouvertes uniquement"
+
+#. module: c2c_analytic_wizard
+#: wizard_field:indicator.account.detail,init,supplier_too:0
+msgid "Display Suppliers Invoices"
+msgstr "Afficher les factures fournisseurs"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Name:"
+msgstr "Nom"
+
+#. module: c2c_analytic_wizard
+#: wizard_view:blank.invoice,init:0
+#: wizard_button:blank.invoice,init,create:0
+msgid "Create blank invoice"
+msgstr "Créer facture vierge"
+
+#. module: c2c_analytic_wizard
+#: wizard_field:associate.analytic.line.toinvoice,init,lines:0
+msgid "Analytic Accounts Lines"
+msgstr "Lignes Analytiques"
+
+#. module: c2c_analytic_wizard
+#: model:ir.actions.act_window,name:c2c_analytic_wizard.act_get_aa
+msgid "Get analytic lines"
+msgstr "Obtenir les lignes"
+
+#. module: c2c_analytic_wizard
+#: wizard_button:associate.analytic.line.from,init,create:0
+#: wizard_button:associate.analytic.line.toinvoice,init,create:0
+msgid "Assign those lines"
+msgstr "Assigner les lignes"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Ref"
+msgstr ""
+
+#. module: c2c_analytic_wizard
+#: wizard_field:open.specified.invoices,init,open_only:0
+msgid "Open invoice only"
+msgstr "Factures ouvertes uniquement"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Manager:"
+msgstr ""
+
+#. module: c2c_analytic_wizard
+#: wizard_view:associate.analytic.line.toinvoice,init:0
+msgid "Associate selected line to the invoice"
+msgstr "Associer les lignes sélectionnées à la facture"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Parent Project:"
+msgstr "Projet parent"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Invoiced Amount:"
+msgstr "Montant facturé"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Last Worked Date:"
+msgstr "Dernière date travaillée"
+
+#. module: c2c_analytic_wizard
+#: wizard_view:associate.analytic.line.from,init:0
+msgid "Associate lines to the selected invoice"
+msgstr "Associer les lignes à la facture sélectionnée"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Date"
+msgstr ""
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Invoiced Hours:"
+msgstr "Heures facturées"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Max Invoice Price:"
+msgstr "Prix de facturation maximum"
+
+#. module: c2c_analytic_wizard
+#: wizard_view:dissociate.aal.from.invoice,dissociate:0
+#: wizard_view:dissociate.aal.from.invoice,message:0
+msgid "The selected analytic lines      have been dissociated from their invoice."
+msgstr "Les lignes sélectionnées ont été dissociées des factures"
+
+#. module: c2c_analytic_wizard
+#: model:ir.actions.wizard,name:c2c_analytic_wizard.open_specified_invoices
+msgid "Get customer related invoices"
+msgstr "Obtenir les factures client"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Theorical Revenue:"
+msgstr "Revenus Théoriques"
+
+#. module: c2c_analytic_wizard
+#: wizard_button:open.specified.invoices,init,showlines:0
+msgid "Get invoices"
+msgstr "Obtenir les factures"
+
+#. module: c2c_analytic_wizard
+#: wizard_view:indicator.account.detail,init:0
+msgid "Filter Options"
+msgstr "Options de filtre"
+
+#. module: c2c_analytic_wizard
+#: wizard_button:dissociate.aal.from.invoice,init,dissociate:0
+msgid "Dissociate lines"
+msgstr "lignes dissociées"
+
+#. module: c2c_analytic_wizard
+#: model:ir.actions.wizard,name:c2c_analytic_wizard.associate_analytic_line_toinvoice
+msgid "Associate analytic line"
+msgstr "Associer les lignes analytiques"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Due Date"
+msgstr "Date d'échéance"
+
+#. module: c2c_analytic_wizard
+#: model:ir.module.module,description:c2c_analytic_wizard.module_name_translation
+msgid "\n"
+"Add wizard to manage analytic account and invoicing :\n"
+" - Associate Analytic Lines to invoice (from an invoice or from analytic line directly)\n"
+" - Dissociate Analytic Lines from an invoice\n"
+" - Create blank invoice from Analytic Account (with all informations completed)\n"
+" - Create invoice from Analytic Lines\n"
+" - Get all invoice from Analytic Account (with recurssion in child account)\n"
+" - Get Analytic Lines from Analytic Account (with recurssion in child account)\n"
+" - Get Analytic Lines from an invoice for controlling\n"
+"Add report for on analytic account showing the indicators et open invoice.\n"
+"\n"
+"-----------------------------------------------------------------------------------------------\n"
+"\n"
+"Ce module comprend un set de wizard pour faciliter la gestion des entreprises de service travaillant avec les comptes analytiques,\n"
+"par exemple pour la gestion de projet. Il apporte une réelle plus-value en terme d'ergonomie. Ces wizards améliorent la facturation du travail\n"
+"effectué depuis un projet (compte analytique), permettent d'associer / dissocier des lignes analytiques d'une facture ou encore d'obtenir \n"
+"la liste des factures relatives à un projet.\n"
+"Ajoute egalement un rapport affichant le détails d'un compte analytique et ses factures ouvertes\n"
+"	"
+msgstr ""
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Code:"
+msgstr ""
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Customers Invoices"
+msgstr "Factures client"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Contact:"
+msgstr ""
+
+#. module: c2c_analytic_wizard
+#: wizard_view:dissociate.aal.from.invoice,dissociate:0
+#: wizard_view:dissociate.aal.from.invoice,message:0
+msgid "Analytic lines dissociated"
+msgstr "Lignes analytiques dissociées"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Amount"
+msgstr "Montant"
+
+#. module: c2c_analytic_wizard
+#: wizard_view:indicator.account.detail,init:0
+msgid "Filter By Project"
+msgstr "Filtrer par projet"
+
+#. module: c2c_analytic_wizard
+#: field:product.product,downpayment:0
+msgid "Is a downpayment"
+msgstr "Est un downpayement"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Uninvoiced Amount:"
+msgstr "Montant non facturé"
+
+#. module: c2c_analytic_wizard
+#: wizard_view:indicator.account.detail,init:0
+msgid "Get projects details"
+msgstr "Obtenir les détails du projets"
+
+#. module: c2c_analytic_wizard
+#: wizard_button:indicator.account.detail,init,print:0
+msgid "Open Report"
+msgstr "Ouvrir le rapport"
+
+#. module: c2c_analytic_wizard
+#: wizard_view:associate.analytic.line.toinvoice,init:0
+msgid "Choose AA. lines you want to invoice"
+msgstr "Sélectionner les lignes à facturer"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Suppliers Invoices"
+msgstr "Factures fournisseurs"
+
+#. module: c2c_analytic_wizard
+#: wizard_field:blank.invoice,init,accounts:0
+msgid "Analytic accounts"
+msgstr "Comptes analytiques"
+
+#. module: c2c_analytic_wizard
+#: model:ir.actions.wizard,name:c2c_analytic_wizard.create_blank_invoice
+msgid "Create Blank Invoice"
+msgstr "Créer factures vierge"
+
+#. module: c2c_analytic_wizard
+#: wizard_button:dissociate.aal.from.invoice,dissociate,end:0
+#: wizard_button:dissociate.aal.from.invoice,message,end:0
+msgid "OK"
+msgstr ""
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Uninvoiced Hours:"
+msgstr "Heures non facturées"
+
+#. module: c2c_analytic_wizard
+#: wizard_view:dissociate.aal.from.invoice,init:0
+msgid "Dissociate selected analytic lines"
+msgstr "Dissocier les lignes analytiques"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Hours Tot:"
+msgstr "Heures tot.:"
+
+#. module: c2c_analytic_wizard
+#: model:ir.actions.wizard,name:c2c_analytic_wizard.dissociate_aal
+msgid "Dissociate analytic line from invoice"
+msgstr "Dissocier les lignes analytiques des factures"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Customer:"
+msgstr "Client"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Last Invoiced Worked Date:"
+msgstr "Dernière date de travail facturé"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#: model:ir.actions.report.xml,name:c2c_analytic_wizard.indicator_account_detail
+#: model:ir.actions.wizard,name:c2c_analytic_wizard.account_detail
+#, python-format
+msgid "Indicator Report"
+msgstr ""
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Down Payments"
+msgstr ""
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Remaining Hours:"
+msgstr "Heures restantes"
+
+#. module: c2c_analytic_wizard
+#: wizard_field:open.specified.invoices,init,supplier_too:0
+msgid "Supplier invoice too"
+msgstr "Inclure les factures fournisseurs"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Remaining Revenue:"
+msgstr "Revenu restant"
+
+#. module: c2c_analytic_wizard
+#: wizard_field:indicator.account.detail,init,projects:0
+#: wizard_field:open.specified.invoices,init,projects:0
+msgid "Projects"
+msgstr "Projet"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#: wizard_field:associate.analytic.line.from,init,invoice:0
+#, python-format
+msgid "Invoice"
+msgstr "Facture"
+
+#. module: c2c_analytic_wizard
+#: wizard_view:open.specified.invoices,init:0
+msgid "Do you want only open invoice ?"
+msgstr "Facture ouvertes uniquement"
+
+#. module: c2c_analytic_wizard
+#: wizard_button:associate.analytic.line.from,init,end:0
+#: wizard_button:associate.analytic.line.toinvoice,init,end:0
+#: wizard_button:blank.invoice,init,end:0
+#: wizard_button:dissociate.aal.from.invoice,init,end:0
+#: wizard_button:indicator.account.detail,init,end:0
+#: wizard_button:open.specified.invoices,init,end:0
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Partner"
+msgstr "Partenaire"
+
+#. module: c2c_analytic_wizard
+#: code:addons/c2c_analytic_wizard/report/indicator_account_detail.py:0
+#, python-format
+msgid "Last Invoice Date:"
+msgstr "Dernière date de facturation"
+

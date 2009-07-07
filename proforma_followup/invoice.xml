@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model='ir.ui.view' id='invoice_form_inherit'>
+            <field name='name'>proforma.followup.history on invoice form</field>
+            <field name='model'>account.invoice</field>
+            <field name='type'>form</field>
+            <field name='inherit_id' ref='account.invoice_form'/>
+            <field name='arch' type='xml'>
+                <notebook colspan="4" position='inside'>
+                    <page string='Followups' attrs="{'invisible': [('state', '!=', 'proforma2')]}">
+                        <field name='proforma_next_followup_action_id'/> 
+                        <field name='proforma_next_followup_scheduled_at'/> 
+                        <field name='proforma_followup_history_ids' colspan='4' nolabel='1'>
+                            <tree string='Folowup history'>
+                                <field name='create_date'/>
+                                <field name='name'/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+    </data>
+</openerp>

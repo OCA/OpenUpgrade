@@ -129,7 +129,7 @@
       </tr>
       <tr>
         <td>
-          <para style="terp_tblheader_Details_Centre"> [[ get_date( formatLang(event.event_id.date_begin, date_time=True), formatLang(event.event_id.date_end, date_time=True) ) ]] </para>
+          <para style="terp_tblheader_Details_Centre"> [[ formatLang(event.event_id.date_begin, date_time=True) ]]  To  [[ formatLang(event.event_id.date_end, date_time=True)  ]] </para>
         </td>
       </tr>
     </blockTable>

@@ -33,6 +33,8 @@
     "demo_xml" : [],
     "update_xml" : [
                     "dm_delivery_view.xml",
+                    "dm_delivery_report.xml",
+                    "dm_delivery_data.xml",
                     ],
     "active": False,
     "installable": True,

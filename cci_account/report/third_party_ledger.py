@@ -38,14 +38,14 @@ class third_party_ledger(report_sxw.rml_parse):
             'get_currency': self._get_currency,
         })
 
-    def preprocess(self, objects, data, ids):
-
+    def set_context(self, objects, data, ids, report_type = None):
+        partner_category_obj = pooler.get_pool(self.cr.dbname).get('res.partner.category')
         if data['form']['category'] == 'Customer' or data['form']['category'] == 'Supplier' :
-            cat_id=pooler.get_pool(self.cr.dbname).get('res.partner.category').search(self.cr,self.uid,[('name','=',data['form']['category'])])
-            cat_id+=pooler.get_pool(self.cr.dbname).get('res.partner.category').search(self.cr,self.uid,[('parent_id','child_of',cat_id)])
+            cat_id=partner_category_obj.search(self.cr,self.uid,[('name','=',data['form']['category'])])
+            cat_id+=partner_category_obj.search(self.cr,self.uid,[('parent_id','child_of',cat_id)])
         else:
-            cat_id=pooler.get_pool(self.cr.dbname).get('res.partner.category').search(self.cr,self.uid,[('name','in',['Customer','Supplier'])])
-            cat_id+=pooler.get_pool(self.cr.dbname).get('res.partner.category').search(self.cr,self.uid,[('parent_id','child_of',cat_id)])
+            cat_id = partner_category_obj.search(self.cr,self.uid,[('name','in',('Supplier','Costomer'))])
+            cat_id+=partner_category_obj.search(self.cr,self.uid,[('parent_id','child_of',cat_id)])
 
         self.cr.execute('SELECT partner_id from res_partner_category_rel where category_id in ('+','.join(map(str,cat_id))+')')
         data_parner=self.cr.fetchall()
@@ -63,24 +63,31 @@ class third_party_ledger(report_sxw.rml_parse):
                     "AND line.date <= %s " \
                     "AND " + line_query + " " \
                     "AND line.account_id = account.id " \
-                    "AND account.company_id = %d " \
+                    "AND account.company_id = %s " \
                     "AND partner_id in ("+','.join(map(str,self.par_ids))+")" \
                     "AND account.active",
                 (data['form']['date1'], data['form']['date2'],
                     data['form']['company_id']))
         new_ids = [id for (id,) in self.cr.fetchall()]
-        self.cr.execute(
-            "SELECT a.id " \
-            "FROM account_account a " \
-            "LEFT JOIN account_account_type t " \
-                "ON (a.type=t.code) " \
-            "WHERE t.partner_account=TRUE " \
-                "AND a.company_id = %d " \
-                "AND a.active", (data['form']['company_id'],))
+        #
+        if (data['form']['category'] == 'Customer' ):
+            self.ACCOUNT_TYPE = "('receivable')"
+        elif (data['form']['category'] == 'Supplier'):
+            self.ACCOUNT_TYPE = "('payable')"
+        else:
+            self.ACCOUNT_TYPE = "('payable','receivable')"
+        #
+        self.cr.execute("SELECT a.id " \
+                "FROM account_account a " \
+                "LEFT JOIN account_account_type t " \
+                    "ON (a.type = t.code) " \
+                "WHERE a.company_id = %s " \
+                    "AND a.type IN " + self.ACCOUNT_TYPE + " " \
+                    "AND a.active", (data['form']['company_id'],))
         self.account_ids = ','.join([str(a) for (a,) in self.cr.fetchall()])
         self.partner_ids = ','.join(map(str, new_ids))
         objects = self.pool.get('res.partner').browse(self.cr, self.uid, new_ids)
-        super(third_party_ledger, self).preprocess(objects, data, new_ids)
+        super(third_party_ledger, self).set_context(objects, data, new_ids, report_type)
 
     def lines(self, partner):
         account_move_line_obj = pooler.get_pool(self.cr.dbname).get('account.move.line')
@@ -91,7 +98,7 @@ class third_party_ledger(report_sxw.rml_parse):
                 "FROM account_move_line l " \
                 "LEFT JOIN account_journal j " \
                     "ON (l.journal_id = j.id) " \
-                "WHERE l.partner_id = %d " \
+                "WHERE l.partner_id = %s " \
                     "AND l.account_id IN (" + self.account_ids + ") " \
                     "AND l.date >= %s " \
                     "AND l.date <= %s "
@@ -113,7 +120,7 @@ class third_party_ledger(report_sxw.rml_parse):
         self.cr.execute(
                 "SELECT sum(debit) " \
                 "FROM account_move_line " \
-                "WHERE partner_id = %d " \
+                "WHERE partner_id = %s " \
                     "AND account_id IN (" + self.account_ids + ") " \
                     "AND date >= %s " \
                     "AND date <= %s " \
@@ -129,7 +136,7 @@ class third_party_ledger(report_sxw.rml_parse):
         self.cr.execute(
                 "SELECT sum(credit) " \
                 "FROM account_move_line " \
-                "WHERE partner_id=%d " \
+                "WHERE partner_id=%s " \
                     "AND account_id IN (" + self.account_ids + ") " \
                     "AND date >= %s " \
                     "AND date <= %s " \

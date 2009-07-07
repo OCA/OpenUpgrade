@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -28,6 +28,7 @@
         "project_retro_planning",
         "purchase_tender",
         "base_module_record",
+        "base_module_recorder",
         "base_report_creator",
         "account_analytic_package",
         "sale_expected_invoice_date",
@@ -49,6 +50,9 @@
         "cci_translation",
         "cci_crm",
         "cci_timesheet",
+        "cci_audittrail",
+        "cci_data_csv",
+#        "cci_security"
     ],
     "demo_xml":[],
     "update_xml":[],

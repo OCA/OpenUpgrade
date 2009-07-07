@@ -63,9 +63,9 @@ class cci_count_invoices(report_sxw.rml_parse):
 
                 if find_ids:
                     res[state] +=len(find_ids)
-
             res['proforma'] +=res['proforma2']
             result.append(res)
+        print "result:::",result
         return result
 
 

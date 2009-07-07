@@ -43,3 +43,5 @@ class event_event(osv.osv):
         'create_date': fields.datetime('Date created', readonly=True, help='tiny event create date'),
                 }
 event_event()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

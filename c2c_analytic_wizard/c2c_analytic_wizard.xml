@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+			<wizard
+				string="Create Blank Invoice"
+				id="create_blank_invoice"
+				model="account.analytic.account"
+				name="blank.invoice"
+                groups="project.group_project_finance,project.group_project_manager,base.group_system,base.group_erp_manager"/>
+			<wizard
+				string="Associate analytic line"
+				id="associate_analytic_line_toinvoice"
+				model="account.invoice"
+				name="associate.analytic.line.toinvoice"
+                groups="project.group_project_finance,project.group_project_manager,base.group_system,base.group_erp_manager"/>		
+			<wizard
+				string="Associate to invoice"
+				id="associate_analytic_line_from"
+				model="account.analytic.line"
+				name="associate.analytic.line.from"
+                groups="project.group_project_finance,project.group_project_manager,base.group_system,base.group_erp_manager"/>
+			<wizard
+				string="Get analytic line for invoicing"
+				id="hr_timesheet_invoice.hr_timesheet_final_invoice_create"
+				model="account.analytic.account"
+				name="open.specified.analytic.line"
+                groups="project.group_project_finance,project.group_project_manager,base.group_system,base.group_erp_manager"/>
+			<wizard
+				string="Get customer related invoices"
+				id="open_specified_invoices"
+				model="account.analytic.account"
+				name="open.specified.invoices"
+                groups="project.group_project_finance,project.group_project_manager,base.group_system,base.group_erp_manager"/>
+<!--			<wizard
+				string="Create invoice from"
+				id="hr_timesheet_invoice.hr_timesheet_invoice_create"
+				model="account.analytic.line"
+				name="invoice.create"
+                groups="project.group_project_finance,project.group_project_manager,base.group_system,base.group_erp_manager"/> -->
+			<wizard
+				string="Dissociate analytic line from invoice"
+				id="dissociate_aal"
+				model="account.analytic.line"
+				name="dissociate.aal.from.invoice"
+                groups="project.group_project_finance,project.group_project_manager,base.group_system,base.group_erp_manager"/>
+	        <wizard 
+	        	string="Indicator Report" 
+                id="account_detail"
+                model="account.analytic.account" 
+                name="indicator.account.detail" 
+                keyword="client_print_multi"
+                groups="project.group_project_finance,project.group_project_manager,base.group_system,base.group_erp_manager" />
+	</data>
+</openerp>

@@ -28,6 +28,8 @@ class sale_order_line(osv.osv):
     _columns = {
         'production_lot_id' : fields.many2one('stock.production.lot', 'Production Lot'),
         'tracking_lot_id' : fields.many2one('stock.tracking', 'Tracking Lot'),
+        'carrier_delivery_type' : fields.char('Delivery Type',size=16),
+
     }
     
 sale_order_line()

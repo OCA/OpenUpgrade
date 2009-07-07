@@ -19,13 +19,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from osv import osv, fields
-import pooler
-from copy import deepcopy
 from mx import DateTime
 import time
 import datetime
+
+from osv import osv, fields
+import pooler
 
 class hr_holidays_note(osv.osv):
     _name='hr.holidays.note'
@@ -45,7 +44,7 @@ class hr_holidays_note(osv.osv):
 
 
     _columns = {
-        'holiday_per_user_id':fields.many2one('hr.holidays.per.user','Holiday Status', required=True),
+        'holiday_per_user_id':fields.many2one('hr.holidays','Holiday Status', required=True),
         'date' : fields.char('Date', size=64, required=True),
         'employee_id': fields.related('holiday_per_user_id','user_id',type='many2one', relation='hr.employee', string='Employee Name'),
         'prev_number': fields.float('Previous Holiday Number'),
@@ -53,13 +52,6 @@ class hr_holidays_note(osv.osv):
         'diff': fields.function(_compute_diff, method=True, string='Difference', type='float'),
     } 
 hr_holidays_note()
-
-class hr_holidays_per_user(osv.osv):
-    _inherit = "hr.holidays.per.user"
-    _columns = {
-        'note_ids': fields.one2many('hr.holidays.note','holiday_per_user_id','Holiday Evaluation History'),
-    }
-hr_holidays_per_user()
 
 class wizard_hr_holidays_evaluation(osv.osv_memory):
     _name = 'wizard.hr.holidays.evaluation'
@@ -80,24 +72,24 @@ class wizard_hr_holidays_evaluation(osv.osv_memory):
         value = {}
         my_dict = {}
         bjs = []
-        obj_contract = self.pool.get('hr.contract')
-        obj_self = self.browse(cr, uid, ids, context = context)[0]
-        group_ids = obj_self.hr_timesheet_group_id.id
-        obj_ids = obj_contract.search(cr, uid, [('working_hours_per_day_id', '=', group_ids)])
+        contract_obj = self.pool.get('hr.contract')
+        evaluation_obj = self.browse(cr, uid, ids, context = context)[0]
+        group_id = evaluation_obj.hr_timesheet_group_id.id
+        contract_ids = contract_obj.search(cr, uid, [('working_hours_per_day_id', '=', group_id)])
 
-        for rec_con in obj_contract.browse(cr,uid,obj_ids):
-            emp_id = rec_con.employee_id.id
-            start_date = rec_con.date_start
+        for contract in contract_obj.browse(cr,uid,contract_ids):
+            emp_id = contract.employee_id.id
+            start_date = contract.date_start
 
             cr.execute("""SELECT distinct(ht.dayofweek), sum(ht.hour_to - ht.hour_from) 
                         FROM hr_timesheet_group as htg, hr_timesheet as ht 
                         WHERE ht.tgroup_id = htg.id AND htg.id = %s 
-                        GROUP BY ht.dayofweek""" %obj_self.hr_timesheet_group_id.id)
+                        GROUP BY ht.dayofweek""" %evaluation_obj.hr_timesheet_group_id.id)
 
-            tsg = cr.fetchall()
-            alldays = map(lambda x: x[0],tsg)
+            timesheet_grp = cr.fetchall()
+            alldays = map(lambda x: x[0],timesheet_grp)
             nod = len(alldays)
-            alltime = map(lambda x: x[1],tsg)
+            alltime = map(lambda x: x[1],timesheet_grp)
             how = 0
             for k in alltime:
                 how += k
@@ -111,12 +103,12 @@ class wizard_hr_holidays_evaluation(osv.osv_memory):
                             AND (to_date(to_char(ha.name, 'YYYY-MM-dd'),'YYYY-MM-dd'))=(to_date(to_char(ha2.name, 'YYYY-MM-dd'),'YYYY-MM-dd')) 
                             AND (to_date(to_char(ha.name, 'YYYY-MM-dd'),'YYYY-MM-dd') <= %s)  
                             AND (to_date(to_char(ha.name, 'YYYY-MM-dd'),'YYYY-MM-dd') >= %s) 
-                            AND ha.employee_id = %s """, (obj_self.date_current, start_date, emp_id))
+                            AND ha.employee_id = %s """, (evaluation_obj.date_current, start_date, emp_id))
 
             results = cr.fetchall()
             all_dates = map(lambda x: x[0],results)
             days = len(all_dates)
-            hrss = days * obj_self.float_time
+            hrss = days * evaluation_obj.float_time
 
             if hrss < hpd:
                 x = 0
@@ -126,22 +118,22 @@ class wizard_hr_holidays_evaluation(osv.osv_memory):
                 y = day - x
                 if y >= 0.5:
                     x += 0.5
-
-            holiday_p_user_obj = self.pool.get('hr.holidays.per.user')
-            holiday_p_user_ids = holiday_p_user_obj.search(cr, uid, [('employee_id', '=', emp_id),('holiday_status', '=', obj_self.holiday_status_id.id)])
-            if len(holiday_p_user_ids) == 0:
+                    
+            holiday_obj = self.pool.get('hr.holidays')
+            holiday_ids = holiday_obj.search(cr, uid, [('employee_id', '=', emp_id),('holiday_status_id', '=', evaluation_obj.holiday_status_id.id)])
+            if len(holiday_ids) == 0:
                 old_leave = False
-                data = {'employee_id': emp_id, 'holiday_status': obj_self.holiday_status_id.id, 'max_leaves' : x}
-                holiday_p_user_id = holiday_p_user_obj.create(cr, uid, data, context)
+                data = {'employee_id': emp_id, 'holiday_status_id': evaluation_obj.holiday_status_id.id, 'number_of_days_temp' : x}
+                holiday_id = holiday_obj.create(cr, uid, data, context)
 
             else:
-                holiday_p_user_id = holiday_p_user_ids[0]
-                old_leave = holiday_p_user_obj.browse(cr, uid, holiday_p_user_id, context).max_leaves
-                ser_obj = holiday_p_user_obj.write(cr, uid, [holiday_p_user_id], {'max_leaves':x})
+                holiday_id = holiday_ids[0]
+                old_leave = holiday_obj.browse(cr, uid, holiday_id, context).number_of_days_temp
+                holidays = holiday_obj.write(cr, uid, [holiday_id], {'number_of_days_temp':x})
 
             value = {
                 'date': str(DateTime.now()),
-                'holiday_per_user_id': holiday_p_user_id,
+                'holiday_per_user_id': holiday_id,
                 'prev_number': old_leave, 
                 'new_number': x,
             }
