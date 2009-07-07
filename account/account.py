@@ -635,7 +635,6 @@ class account_period(osv.osv):
 account_period()
 
 class account_journal_period(osv.osv):
-<<<<<<< TREE
     _name = "account.journal.period"
     _description = "Journal - Period"
 
@@ -688,60 +687,6 @@ class account_journal_period(osv.osv):
     }
     _order = "period_id"
 
-=======
-    _name = "account.journal.period"
-    _description = "Journal - Period"
-
-    def _icon_get(self, cr, uid, ids, field_name, arg=None, context={}):
-        result = {}.fromkeys(ids, 'STOCK_NEW')
-        for r in self.read(cr, uid, ids, ['state']):
-            result[r['id']] = {
-                'draft': 'STOCK_NEW',
-                'printed': 'STOCK_PRINT_PREVIEW',
-                'done': 'STOCK_DIALOG_AUTHENTICATION',
-            }.get(r['state'], 'STOCK_NEW')
-        return result
-
-    _columns = {
-        'name': fields.char('Journal-Period Name', size=64, required=True),
-        'journal_id': fields.many2one('account.journal', 'Journal', required=True, ondelete="cascade"),
-        'period_id': fields.many2one('account.period', 'Period', required=True, ondelete="cascade"),
-        'icon': fields.function(_icon_get, method=True, string='Icon', type='char', size=32),
-        'active': fields.boolean('Active', required=True),
-        'state': fields.selection([('draft','Draft'), ('printed','Printed'), ('done','Done')], 'Status', required=True, readonly=True),
-        'fiscalyear_id': fields.related('period_id', 'fiscalyear_id', string='Fiscal Year', type='many2one', relation='account.fiscalyear'),
-    }
-
-    def _check(self, cr, uid, ids, context={}):
-        for obj in self.browse(cr, uid, ids, context):
-            cr.execute('select * from account_move_line where journal_id=%s and period_id=%s limit 1', (obj.journal_id.id, obj.period_id.id))
-            res = cr.fetchall()
-            if res:
-                raise osv.except_osv(_('Error !'), _('You can not modify/delete a journal with entries for this period !'))
-        return True
-
-    def write(self, cr, uid, ids, vals, context={}):
-        self._check(cr, uid, ids, context)
-        return super(account_journal_period, self).write(cr, uid, ids, vals, context)
-
-    def create(self, cr, uid, vals, context={}):
-        period_id=vals.get('period_id',False)
-        if period_id:
-            period = self.pool.get('account.period').browse(cr, uid,period_id)
-            vals['state']=period.state
-        return super(account_journal_period, self).create(cr, uid, vals, context)
-
-    def unlink(self, cr, uid, ids, context={}):
-        self._check(cr, uid, ids, context)
-        return super(account_journal_period, self).unlink(cr, uid, ids, context)
-
-    _defaults = {
-        'state': lambda *a: 'draft',
-        'active': lambda *a: True,
-    }
-    _order = "period_id"
-
->>>>>>> MERGE-SOURCE
 account_journal_period()
 
 class account_fiscalyear(osv.osv):
