@@ -60,8 +60,6 @@ class wiz_analytic_line_from_proj(wizard.interface):
                         'Select only one project to obtain analytic lines\
                          (takes the parent project)'
                                     )
-        res = {'projects': [x[0] for x in projects_ids]}
-        projects_ids = [x[0] for x in projects_ids]
         users_ids = data['form']['users'][0][2]
         ## Generating where clause data
         if users_ids:
