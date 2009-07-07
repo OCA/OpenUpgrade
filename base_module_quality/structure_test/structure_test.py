@@ -34,7 +34,6 @@ class quality_test(base_module_quality.abstract_quality_check):
 This test checks if the module satisfy tiny structure
 """)
         self.bool_installed_only = False
-        self.ponderation = 1.0
         self.result_dict = {}
         self.module_score = 0.0
         self.count = 0
@@ -138,13 +137,13 @@ This test checks if the module satisfy tiny structure
         self.result = self.get_result({ module_name: [module_name, int(self.score*100)]})
 #        self.result_details += self.get_result_details(self.result_dict)
         return None
-    
+
     def run_test(self, cr, uid, module_path):
         self.run_test_struct(cr, uid, module_path)
         if self.score != 1:
             self.result_details = self.get_result_details(self.result_dict)
         return None
-    
+
 
     def get_result(self, dict_struct):
         header = ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n! %-10s \n', [_('Module Name'), _('Result in %')])

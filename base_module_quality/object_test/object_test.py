@@ -24,7 +24,6 @@ import os
 import re
 
 from tools.translate import _
-
 from base_module_quality import base_module_quality
 import pooler
 
@@ -37,7 +36,6 @@ class quality_test(base_module_quality.abstract_quality_check):
 Test checks for fields, views, security rules, dependancy level
 """)
         self.bool_installed_only = True
-        self.ponderation = 1.0
         return None
 
     def run_test(self, cr, uid, module_path):

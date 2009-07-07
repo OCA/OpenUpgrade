@@ -34,7 +34,6 @@ class quality_test(base_module_quality.abstract_quality_check):
 PEP-8 Test , copyright of py files check, method can not call from loops
 """)
         self.bool_installed_only = False
-        self.ponderation = 1.0
         self.bad_standard = 0
         self.good_standard = 0
         self.result_py = {}

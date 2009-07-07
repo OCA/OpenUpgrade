@@ -26,7 +26,6 @@ from tools.translate import _
 from base_module_quality import base_module_quality
 import pooler
 
-
 class quality_test(base_module_quality.abstract_quality_check):
 
     def __init__(self):
@@ -34,7 +33,6 @@ class quality_test(base_module_quality.abstract_quality_check):
         self.name = _("Workflow Test")
         self.note = _("This test checks where object has workflow or not on it if there is a state field and several buttons on it and also checks validity of workflow xml file")
         self.bool_installed_only = True
-        self.ponderation = 1
         return None
 
     def run_test(self, cr, uid, module_path):

@@ -19,15 +19,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-
 import os
 # from tools import config
 from tools.translate import _
 from addons import get_module_path
 
 from base_module_quality import base_module_quality
-
 
 class quality_test(base_module_quality.abstract_quality_check):
 
@@ -36,9 +33,6 @@ class quality_test(base_module_quality.abstract_quality_check):
         self.name = _("Pylint Test")
         self.note = _("""This test uses Pylint and checks if the module satisfies the coding standard of Python. See http://www.logilab.org/project/name/pylint for further info.\n """)
         self.bool_installed_only = False
-        self.ponderation = 1.0
-        self.result = ""
-        self.result_details = ""
         return None
 
     def run_test(self, cr, uid, module_path):
@@ -65,10 +59,14 @@ class quality_test(base_module_quality.abstract_quality_check):
                     flag = True
                 file_path = os.path.join(module_path, file_py)
                 try:
+                    import pylint
                     res = os.popen('pylint --rcfile=' + config_file_path + ' ' + file_path).read()
                 except:
-                    self.result += _("Error. Is pylint correctly installed?")+"\n"
-                    break
+                    self.error = True
+                    import netsvc
+                    netsvc.Logger().notifyChannel('Pylint:', netsvc.LOG_WARNING, "Is pylint correctly installed? (http://pypi.python.org/pypi/pylint)")
+                    self.result += _("Error. Is pylint correctly installed? (http://pypi.python.org/pypi/pylint)")+"\n"
+                    return None
                 count += 1
 #                leftchar = -1
 #                while res[leftchar:leftchar+1] != ' ' and leftchar-1 <= 0:

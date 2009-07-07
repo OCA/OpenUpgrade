@@ -41,7 +41,7 @@ fields_rep = {
 }
 
 def get_detail(self, cr, uid, datas, context={}):
-    data = pooler.get_pool(cr.dbname).get('quality.check.detail').browse(cr, uid, datas['id'])
+    data = pooler.get_pool(cr.dbname).get('module.quality.detail').browse(cr, uid, datas['id'])
     if not data.detail:
         raise wizard.except_wizard(_('Warning'), _('No report to save!'))
     buf = cStringIO.StringIO(data.detail)

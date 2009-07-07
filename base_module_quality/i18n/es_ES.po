@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file containt the translation of the following modules:
-#	* base_module_quality
+# 	* base_module_quality
 #
 msgid ""
 msgstr ""
@@ -32,12 +32,14 @@ msgstr "¡XML inválido para la definición de la vista!"
 
 #. module: base_module_quality
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
-msgstr "¡El nombre del objeto debe empezar con x_ y no contener ningún carácter especial!"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
+msgstr ""
+"¡El nombre del objeto debe empezar con x_ y no contener ningún carácter "
+"especial!"
 
 #. module: base_module_quality
-#: field:quality.check.detail,detail:0
-#: view:quality.check.detail:0
+#: field:quality.check.detail,detail:0 view:quality.check.detail:0
 msgid "Detail"
 msgstr ""
 
@@ -52,8 +54,7 @@ msgid "quality.check.detail"
 msgstr ""
 
 #. module: base_module_quality
-#: view:wizard.quality.check:0
-#: view:quality.check.detail:0
+#: view:wizard.quality.check:0 view:quality.check.detail:0
 msgid "Result"
 msgstr ""
 
@@ -72,3 +73,12 @@ msgstr ""
 msgid "Quality"
 msgstr ""
 
+#. module: base_module_quality
+#: model:ir.model,name:base_module_quality.model_quality_check_detail
+msgid "module.quality.detail"
+msgstr ""
+
+#. module: base_module_quality
+#: model:ir.model,name:base_module_quality.model_wizard_quality_check
+msgid "module.quality.check"
+msgstr ""

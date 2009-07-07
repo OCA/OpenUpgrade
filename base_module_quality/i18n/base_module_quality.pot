@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* base_module_quality
+# 	* base_module_quality
 #
 msgid ""
 msgstr ""
@@ -20,3 +20,58 @@ msgstr ""
 msgid "Base module quality"
 msgstr ""
 
+#. module: base_module_quality
+#: field:quality.check.detail,general_info:0
+msgid "General Info"
+msgstr ""
+
+#. module: base_module_quality
+#: view:quality.check.detail:0
+msgid "Summary"
+msgstr ""
+
+#. module: base_module_quality
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr ""
+
+#. module: base_module_quality
+#: constraint:ir.model:0
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
+msgstr ""
+
+#. module: base_module_quality
+#: field:quality.check.detail,detail:0 view:quality.check.detail:0
+msgid "Detail"
+msgstr ""
+
+#. module: base_module_quality
+#: field:wizard.quality.check,verbose_detail:0
+msgid "Verbose Detail"
+msgstr ""
+
+#. module: base_module_quality
+#: model:ir.model,name:base_module_quality.model_quality_check_detail
+msgid "quality.check.detail"
+msgstr ""
+
+#. module: base_module_quality
+#: view:wizard.quality.check:0 view:quality.check.detail:0
+msgid "Result"
+msgstr ""
+
+#. module: base_module_quality
+#: model:ir.model,name:base_module_quality.model_wizard_quality_check
+msgid "wizard.quality.check"
+msgstr ""
+
+#. module: base_module_quality
+#: view:wizard.quality.check:0
+msgid "Verbose detail"
+msgstr ""
+
+#. module: base_module_quality
+#: field:quality.check.detail,quality_check:0
+msgid "Quality"
+msgstr ""

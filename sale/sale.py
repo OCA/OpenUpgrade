@@ -193,7 +193,7 @@ class sale_order(osv.osv):
             ('shipping_except','Shipping Exception'),
             ('invoice_except','Invoice Exception'),
             ('done','Done'),
-            ('cancel','Cancel')
+            ('cancel','Cancelled')
             ], 'Order State', readonly=True, help="Gives the state of the quotation or sale order. The exception state is automatically set when a cancel operation occurs in the invoice validation (Invoice Exception) or in the packing list process (Shipping Exception). The 'Waiting Schedule' state is set when the invoice is confirmed but waiting for the scheduler to run on the date 'Date Ordered'.", select=True),
         'date_order':fields.date('Date Ordered', required=True, readonly=True, states={'draft':[('readonly',False)]}),
 
@@ -359,7 +359,7 @@ class sale_order(osv.osv):
         else:
             pay_term = False
         for preinv in order.invoice_ids:
-            if preinv.state in ('open','paid','proforma'):
+            if preinv.state not in ('cancel',):
                 for preline in preinv.invoice_line:
                     inv_line_id = self.pool.get('account.invoice.line').copy(cr, uid, preline.id, {'invoice_id':False, 'price_unit':-preline.price_unit})
                     lines.append(inv_line_id)
@@ -893,10 +893,10 @@ class sale_order_line(osv.osv):
                 ean = pack.ean
                 qty_pack = pack.qty
                 type_ul = pack.ul
-                warn_msg = "You selected a quantity of %d Units.\nBut it's not compatible with the selected packaging.\nHere is a proposition of quantities according to the packaging: " % (qty)
-                warn_msg = warn_msg + "\n\nEAN: " + str(ean) + " Quantity: " + str(qty_pack) + " Type of ul: " + str(type_ul.name)
+                warn_msg = _("You selected a quantity of %d Units.\nBut it's not compatible with the selected packaging.\nHere is a proposition of quantities according to the packaging: ") % (qty)
+                warn_msg = warn_msg + "\n\n"+_("EAN: ") + str(ean) + _(" Quantity: ") + str(qty_pack) + _(" Type of ul: ") + str(type_ul.name)
                 warning={
-                    'title':'Packing Information !',
+                    'title':_('Packing Information !'),
                     'message': warn_msg
                     }
             result['product_uom_qty'] = qty
@@ -998,15 +998,6 @@ class sale_order_line(osv.osv):
 sale_order_line()
 
 
-
-_policy_form = '''<?xml version="1.0"?>
-<form string="Select Bank Account">
-    <field name="picking_policy" colspan="4"/>
-</form>'''
-
-_policy_fields = {
-    'picking_policy': {'string': 'Packing Policy', 'type': 'selection','selection': [('direct','Direct Delivery'),('one','All at once')],'required': True,}
-}
 class sale_config_picking_policy(osv.osv_memory):
     _name='sale.config.picking_policy'
     _columns = {

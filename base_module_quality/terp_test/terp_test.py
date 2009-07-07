@@ -21,12 +21,12 @@
 ##############################################################################
 
 import os
+import re
+
 import tools
 from tools.translate import _
-
 from base_module_quality import base_module_quality
 import pooler
-import re
 
 class quality_test(base_module_quality.abstract_quality_check):
 
@@ -141,23 +141,5 @@ class quality_test(base_module_quality.abstract_quality_check):
                 res = str_html + self.format_html_table(header, data_list=dict_terp) + '</table><newline/></body></html>'
                 return res
         return ""
-
-    #~ def get_result(self, cr, uid, module_path, module_state):
-#~ #        self.run_test(cr, uid, module_path)
-#~ #        summary = "\n===TERP Test===:\n"
-        #~ if self.no_terp:
-           #~ summary += """
-#~ The module does not contain the __terp__.py file.\n\n """
-#~ #        else:
-#~ #            summary += """
-#~ #    This test checks if the module satisfies the current coding standard for __terp__.py file used by OpenERP.
-#~ #    """ + "Score: " + str(self.score) + "/10\n"
-        #~ return summary
-
-    #~ def get_result_details(self):
-        #~ detail = "\n===TERP Test===\n" + self.result
-        #~ return detail
-
-
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

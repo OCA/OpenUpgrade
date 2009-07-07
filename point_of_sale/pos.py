@@ -27,6 +27,7 @@ from mx import DateTime
 from tools.translate import _
 import tools
 from wizard import except_wizard
+from decimal import Decimal
 
 
 class pos_config_journal(osv.osv):
@@ -151,18 +152,18 @@ class pos_order(osv.osv):
             states={'draft': [('readonly', False)]}, readonly=True),
         'shop_id': fields.many2one('sale.shop', 'Shop', required=True,
             states={'draft': [('readonly', False)]}, readonly=True),
-        'date_order': fields.date('Date Ordered', readonly=True),
+        'date_order': fields.datetime('Date Ordered', readonly=True),
         'date_validity': fields.date('Validity Date', required=True),
-        'user_id': fields.many2one('res.users', 'Salesman',
-            readonly=True),
+        'user_id': fields.many2one('res.users', 'Logged in User', readonly=True,
+            help="This is the logged in user (not necessarily the salesman)."),
+        'salesman_id': fields.many2one('res.users', 'Salesman',
+            help="This is the salesman actually making the order."),
         'amount_tax': fields.function(_amount_tax, method=True, string='Taxes'),
-        'amount_total': fields.function(_amount_total, method=True,
-            string='Total'),
+        'amount_total': fields.function(_amount_total, method=True, string='Total'),
         'amount_paid': fields.function(_total_payment, 'Paid',
             states={'draft': [('readonly', False)]}, readonly=True,
             method=True),
-        'amount_return': fields.function(_total_return, 'Returned',
-                                        method=True),
+        'amount_return': fields.function(_total_return, 'Returned', method=True),
         'lines': fields.one2many('pos.order.line', 'order_id',
             'Order Lines', states={'draft': [('readonly', False)]},
             readonly=True),
@@ -180,10 +181,8 @@ class pos_order(osv.osv):
             ('paid', 'Paid'), ('done', 'Done'), ('invoiced', 'Invoiced')], 'State',
             readonly=True, ),
         'invoice_id': fields.many2one('account.invoice', 'Invoice', readonly=True),
-        'account_move': fields.many2one('account.move', 'Account Entry',
-            readonly=True),
-        'pickings': fields.one2many('stock.picking', 'pos_order', 'Picking',
-            readonly=True),
+        'account_move': fields.many2one('account.move', 'Account Entry', readonly=True),
+        'pickings': fields.one2many('stock.picking', 'pos_order', 'Picking', readonly=True),
         'last_out_picking': fields.many2one('stock.picking',
                                             'Last Output Picking',
                                             readonly=True),
@@ -207,10 +206,11 @@ class pos_order(osv.osv):
 
     _defaults = {
         'user_id': lambda self, cr, uid, context: uid,
+        'salesman_id': lambda self, cr, uid, context: uid,
         'state': lambda *a: 'draft',
         'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence')\
             .get(cr, uid, 'pos.order'),
-        'date_order': lambda *a: time.strftime('%Y-%m-%d'),
+        'date_order': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
         'date_validity': lambda *a: (DateTime.now() + DateTime.RelativeDateTime(months=+6)).strftime('%Y-%m-%d'),
         'nb_print': lambda *a: 0,
         'sale_journal': _sale_journal_get,
@@ -230,11 +230,14 @@ class pos_order(osv.osv):
         return True
 
     def test_paid(self, cr, uid, ids, context=None):
+        def deci(val):
+            return Decimal(str(val))
+
         for order in self.browse(cr, uid, ids, context):
             if order.lines and not order.amount_total:
                 return True
             if (not order.lines) or (not order.payments) or \
-                (order.amount_paid != order.amount_total):
+                (deci(order.amount_paid) != deci(order.amount_total)):
                 return False
         return True
 
@@ -319,7 +322,10 @@ class pos_order(osv.osv):
                 self.write(cr, uid, [order.id], {'last_out_picking': picking_id})
             else:
                 picking_id = order.last_out_picking.id
-                picking_obj.write(cr, uid, [picking_id], {'auto_picking': True})
+                picking_obj.write(cr, uid, [picking_id], {
+                    'auto_picking': True,
+                    'invoice_state': '2binvoiced',
+                })
                 picking = picking_obj.browse(cr, uid, [picking_id], context)[0]
                 new = False
 
@@ -413,7 +419,6 @@ class pos_order(osv.osv):
 
     def add_payment(self, cr, uid, order_id, data, context=None):
         """Create a new payment for the order"""
-
         order = self.browse(cr, uid, order_id, context)
         if order.invoice_wanted and not order.partner_id:
             raise osv.except_osv(_('Error'), _('Cannot create invoice without a partner.'))
@@ -476,11 +481,14 @@ class pos_order(osv.osv):
                 'payments': False,
                 })
             clone_list.append(clone_id)
+            self.write(cr, uid, clone_id, {
+                'partner_id': order.partner_id.id,
+            })
 
         for clone in self.browse(cr, uid, clone_list):
             for order_line in clone.lines:
                 line_obj.write(cr, uid, [order_line.id], {
-                    'qty': -order_line.qty
+                    'qty': -order_line.qty,
                     })
         return clone_list
 
@@ -943,14 +951,14 @@ class report_transaction_pos(osv.osv):
                     count(pp.id) as no_trans,
                     sum(amount) as amount,
                     pp.journal_id,
-                    date_trunc('day',pp.create_date)::text as date_create,
+                    to_char(pp.create_date, 'YYYY-MM-DD') as date_create,
                     ps.user_id,
                     ps.invoice_id
                 from
                     pos_payment pp, pos_order ps
                 WHERE ps.id = pp.order_id
                 group by
-                    pp.journal_id, date_trunc('day',pp.create_date), ps.user_id, ps.invoice_id
+                    pp.journal_id, date_create, ps.user_id, ps.invoice_id
             )
             """)
 report_transaction_pos()

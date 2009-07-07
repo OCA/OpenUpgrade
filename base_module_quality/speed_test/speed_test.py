@@ -26,13 +26,11 @@ import pooler
 
 from base_module_quality import base_module_quality
 
-
 class quality_test(base_module_quality.abstract_quality_check):
 
     def __init__(self):
         super(quality_test, self).__init__()
         self.bool_installed_only = True
-        self.ponderation = 1.0
         self.name = _("Speed Test")
         self.note = _("""
 This test checks the speed of the module. Note that at least 5 demo data is needed in order to run it.
@@ -45,13 +43,13 @@ This test checks the speed of the module. Note that at least 5 demo data is need
         module_name = module_path.split('/')[-1]
         obj_list = self.get_objects(cr, uid, module_name)
 
-	print "Objects:",obj_list
         # remove osv_memory class becaz it does not have demo data
-        cr.execute('select w.res_model from ir_actions_todo as t left join ir_act_window as w on t.action_id=w.id where w.res_model in %s',(tuple(obj_list),))
-        res = cr.fetchall()
-        for remove_obj in res:
-            if remove_obj and (remove_obj[0] in obj_list):
-                obj_list.remove(remove_obj[0])
+        if obj_list:
+            cr.execute("select w.res_model from ir_actions_todo as t left join ir_act_window as w on t.action_id=w.id where w.res_model in ('%s')"% ("','".join(obj_list)))
+            res = cr.fetchall()
+            for remove_obj in res:
+                if remove_obj and (remove_obj[0] in obj_list):
+                    obj_list.remove(remove_obj[0])
 
         result_dict2 = {}
         if not obj_list:

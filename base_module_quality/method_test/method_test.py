@@ -34,7 +34,6 @@ class quality_test(base_module_quality.abstract_quality_check):
 This test checks if the module classes are raising exception when calling basic methods or not.
 """)
         self.bool_installed_only = True
-        self.ponderation = 1.0
         return None
 
     def run_test(self, cr, uid, module_path):

@@ -42,7 +42,7 @@ using it, otherwise it may crash.
     'website': 'http://www.openerp.com',
     'depends': ['base'],
     'init_xml': [],
-    'update_xml': ['base_module_quality_wizard.xml', 'security/ir.model.access.csv'],
+    'update_xml': ['base_module_quality_wizard.xml', 'base_module_quality_view.xml', 'security/ir.model.access.csv'],
     'demo_xml': [],
     'installable': True,
     'active': False,
