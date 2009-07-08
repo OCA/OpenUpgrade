@@ -48,7 +48,7 @@ class SmtpClient(osv.osv):
     _description = 'Email Client'
     _columns = {
         'name' : fields.char('Server Name', size=256, required=True),
-        'from_email' : fields.char('Email From', size=256, readonly=True, states={'new':[('readonly',False)]}),
+        'from_email' : fields.char('Email From', size=256),
         'email' : fields.char('Email Address', size=256, required=True, readonly=True, states={'new':[('readonly',False)]}),
         'user' : fields.char('User Name', size=256, readonly=True, states={'new':[('readonly',False)]}),
         'password' : fields.char('Password', size=256, invisible=True, readonly=True, states={'new':[('readonly',False)]}),
