@@ -990,20 +990,25 @@ class stock_move(osv.osv):
                     ON stock_move (location_id, location_dest_id, product_id, state)')
             cursor.commit()
 
-    def onchange_lot_id(self, cr, uid, ids, prodlot_id=False, product_qty=False, loc_id=False, context=None):
-        if not prodlot_id or not loc_id:
+    def onchange_lot_id(self, cr, uid, ids, prodlot_id=False, product_qty=False, loc_id=False,product_id=True, context=None):
+        if not prodlot_id:
             return {}
         ctx = context and context.copy() or {}
-        ctx['location_id'] = loc_id 
+        ctx['location_id'] = loc_id
         prodlot = self.pool.get('stock.production.lot').browse(cr, uid, prodlot_id, ctx)
+	ret = {}
+	if not product_id:
+		ret['value']= { 'product_id': prodlot.product_id.id }
+	if not loc_id:
+		return ret
         location=self.pool.get('stock.location').browse(cr,uid,loc_id)
-        warning={}
         if (location.usage == 'internal') and (product_qty > (prodlot.stock_available or 0.0)):
-            warning={
+            ret['warning']={
                 'title':'Bad Lot Assignation !',
                 'message':'You are moving %.2f products but only %.2f available in this lot.' % (product_qty,prodlot.stock_available or 0.0)
             }
-        return {'warning':warning}
+	    
+        return ret
 
     def onchange_product_id(self, cr, uid, context, prod_id=False, loc_id=False, loc_dest_id=False):
         if not prod_id:
