@@ -216,7 +216,24 @@ class google_calendar_wizard(wizard.interface):
                         timestring_update = datetime.datetime(*au_dt.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
                         name_event = an_event.title.text or ''
                         if an_event and not an_event.when:
-                            summary_dict['Error in Event While try to modify in Tiny'] += 1
+#                            summary_dict['Error in Event While try to modify in Tiny'] += 1
+                            x = an_event.recurrence.text.split(';')
+                            repeat_start = x[1].split('\n')[0].split(':')[1]
+                            repeat_end = x[2].split('\n')[0].split(':')[1]
+                            o = repeat_start.split('T')
+                            repeat_start = str(o[0][:4]) + '-' + str(o[0][4:6]) + '-' + str(o[0][6:8])
+                            if len(o) == 2:
+                                repeat_start += ' ' + str(o[1][:2]) + ':' + str(o[1][2:4]) + ':' + str(o[1][4:6])
+                            else:
+                                repeat_start += ' ' + '00' + ':' + '00' + ':' + '00'
+                            p = repeat_end.split('T')
+                            repeat_end = str(p[0][:4]) + '-' + str(p[0][4:6]) + '-' + str(p[0][6:8])
+                            if len(p) == 2:
+                                repeat_end += ' ' + str(p[1][:2]) + ':' + str(p[1][2:4]) + ':' + str(p[1][4:6])
+                            else:
+                                repeat_end += ' ' + '00' + ':' + '00' + ':' + '00'
+                            timestring = datetime.datetime.strptime(repeat_start, "%Y-%m-%d %H:%M:%S").strftime('%Y-%m-%d %H:%M:%S')
+                            timestring_end = datetime.datetime.strptime(repeat_end, "%Y-%m-%d %H:%M:%S").strftime('%Y-%m-%d %H:%M:%S')
                         else:
                             stime = an_event.when[0].start_time
                             etime = an_event.when[0].end_time
@@ -234,7 +251,8 @@ class google_calendar_wizard(wizard.interface):
                                'name': name_event,
                                'date_begin': timestring,
                                'date_end': timestring_end,
-                               'event_modify_date': timestring_update
+                               'event_modify_date': timestring_update,
+                               'repeat_status':'norepeat' # To be chk
                                }
                             obj_event.write(cr, uid, [event.id], val)
                             summary_dict['Event Modified In Tiny'] += 1
@@ -248,30 +266,48 @@ class google_calendar_wizard(wizard.interface):
                     timestring_update = datetime.datetime(*au_dt.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
                     name_event = an_event.title.text or ''
                     if an_event and not an_event.when:
-                        summary_dict['Error in Event While try to create in Tiny'] += 1
+#                        summary_dict['Error in Event While try to create in Tiny'] += 1
+                        x = an_event.recurrence.text.split(';')
+                        repeat_start = x[1].split('\n')[0].split(':')[1]
+                        repeat_end = x[2].split('\n')[0].split(':')[1]
+                        o = repeat_start.split('T')
+                        repeat_start = str(o[0][:4]) + '-' + str(o[0][4:6]) + '-' + str(o[0][6:8])
+                        if len(o) == 2:
+                            repeat_start += ' ' + str(o[1][:2]) + ':' + str(o[1][2:4]) + ':' + str(o[1][4:6])
+                        else:
+                            repeat_start += ' ' + '00' + ':' + '00' + ':' + '00'
+                        p = repeat_end.split('T')
+                        repeat_end = str(p[0][:4]) + '-' + str(p[0][4:6]) + '-' + str(p[0][6:8])
+                        if len(p) == 2:
+                            repeat_end += ' ' + str(p[1][:2]) + ':' + str(p[1][2:4]) + ':' + str(p[1][4:6])
+                        else:
+                            repeat_end += ' ' + '00' + ':' + '00' + ':' + '00'
+                        timestring = datetime.datetime.strptime(repeat_start, "%Y-%m-%d %H:%M:%S").strftime('%Y-%m-%d %H:%M:%S')
+                        timestring_end = datetime.datetime.strptime(repeat_end, "%Y-%m-%d %H:%M:%S").strftime('%Y-%m-%d %H:%M:%S')
                     else:
                         stime = an_event.when[0].start_time
                         etime = an_event.when[0].end_time
                         stime = dateutil.parser.parse(stime)
                         etime = dateutil.parser.parse(etime)
-                        try :
+                        try:
                             au_dt = au_tz.normalize(stime.astimezone(au_tz))
                             timestring = datetime.datetime(*au_dt.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
                             au_dt = au_tz.normalize(etime.astimezone(au_tz))
                             timestring_end = datetime.datetime(*au_dt.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
-                        except :
+                        except:
                             timestring = datetime.datetime(*stime.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
                             timestring_end = datetime.datetime(*etime.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
-                        val = {
-                           'name': name_event,
-                           'date_begin': timestring,
-                           'date_end': timestring_end,
-                           'product_id': product and product[0] or 1,
-                           'google_event_id': an_event.id.text,
-                           'event_modify_date': timestring_update
-                            }
-                        obj_event.create(cr, uid, val)
-                        summary_dict['Event Created In Tiny'] += 1
+                    val = {
+                       'name': name_event,
+                       'date_begin': timestring,
+                       'date_end': timestring_end,
+                       'product_id': product and product[0] or 1,
+                       'google_event_id': an_event.id.text,
+                       'event_modify_date': timestring_update,
+                       'repeat_status':'norepeat' # To be chk
+                        }
+                    obj_event.create(cr, uid, val)
+                    summary_dict['Event Created In Tiny'] += 1
             final_summary = '************Summary************ \n'
             for sum in summary_dict:
                 final_summary += '\n' + str(sum) + ' : ' + str(summary_dict[sum]) + '\n'
