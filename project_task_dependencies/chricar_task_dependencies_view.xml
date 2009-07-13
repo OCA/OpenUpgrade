@@ -1,0 +1,32 @@
+<terp>
+	
+	
+  <data>
+
+<!--
+==============================================
+Modification of Task - Adding Tab for Task Relations
+==============================================
+-->
+        <record model="ir.ui.view" id="view_task_form2_relation">
+                <field name="name">project.task.form</field>
+                <field name="model">project.task</field>
+                <field name="inherit_id" ref="project.view_task_form2"/>
+                <field name="arch" type="xml">
+		  <!--
+                  <page string="Extra Info" position="after" >
+		  -->
+		  <notebook>
+                    <page string="Task Dependences">
+		       <field name="prior_task_ids" colspan="4" />
+                       <field name="next_task_ids"  colspan="4" />       
+                     </page>
+		  </notebook>
+		     <!--
+                   </page>
+		   -->
+                </field>
+        </record>
+      
+    </data>
+</terp>
