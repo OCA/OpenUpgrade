@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -274,7 +274,7 @@ class product_template(osv.osv):
         'loc_case': fields.char('Case', size=16),
         'company_id': fields.many2one('res.company', 'Company'),
     }
-    
+
     def _get_uom_id(self, cr, uid, *args):
         cr.execute('select id from product_uom order by id limit 1')
         res = cr.fetchone()
@@ -295,9 +295,7 @@ class product_template(osv.osv):
         return False
 
     _defaults = {
-        'company_id': lambda self, cr, uid, context: \
-                self.pool.get('res.users').browse(cr, uid, uid,
-                    context=context).company_id.id,
+        'company_id': lambda self, cr, uid, context: False, # Visible by all
         'type': lambda *a: 'product',
         'list_price': lambda *a: 1,
         'cost_method': lambda *a: 'standard',
@@ -385,6 +383,7 @@ class product_product(osv.osv):
                         uom.id, product.list_price, context['uom'])
             else:
                 res[product.id] = product.list_price
+            res[product.id] =  (res[product.id] or 0.0) * product.price_margin + product.price_extra
         return res
 
     def _get_partner_code_name(self, cr, uid, ids, product_id, partner_id, context={}):
@@ -405,7 +404,7 @@ class product_product(osv.osv):
         for p in self.browse(cr, uid, ids, context):
             data = self._get_partner_code_name(cr, uid, [], p.id, context.get('partner_id', None), context)
             if not data['code']:
-                data['name'] = p.code
+                data['code'] = p.code
             if not data['name']:
                 data['name'] = p.name
             res[p.id] = (data['code'] and ('['+data['code']+'] ') or '') + \
@@ -497,12 +496,15 @@ class product_product(osv.osv):
             args=[]
         if not context:
             context={}
-        ids = self.search(cr, user, [('default_code','=',name)]+ args, limit=limit, context=context)
-        if not len(ids):
-            ids = self.search(cr, user, [('ean13','=',name)]+ args, limit=limit, context=context)
-        if not len(ids):
-            ids = self.search(cr, user, [('default_code',operator,name)]+ args, limit=limit, context=context)
-            ids += self.search(cr, user, [('name',operator,name)]+ args, limit=limit, context=context)
+        if name:
+            ids = self.search(cr, user, [('default_code','=',name)]+ args, limit=limit, context=context)
+            if not len(ids):
+                ids = self.search(cr, user, [('ean13','=',name)]+ args, limit=limit, context=context)
+            if not len(ids):
+                ids = self.search(cr, user, [('default_code',operator,name)]+ args, limit=limit, context=context)
+                ids += self.search(cr, user, [('name',operator,name)]+ args, limit=limit, context=context)
+        else:
+            ids = self.search(cr, user, args, limit=limit, context=context)
         result = self.name_get(cr, user, ids, context)
         return result
 

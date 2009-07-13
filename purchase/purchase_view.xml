@@ -185,6 +185,10 @@
                         <page string="Notes">
                             <field colspan="4" name="notes" nolabel="1"/>
                         </page>
+                        <page string="History" groups="base.group_extended">
+                               <separator colspan="4" string="Stock Moves"/>
+                               <field colspan="4" name="move_ids" nolabel="1" widget="many2many"/>
+                        </page>                        
                     </notebook>
                 </form>
             </field>
@@ -198,6 +202,7 @@
                 <tree colors="red:date_planned&lt;=current_date" string="Purchase Order Line">
                     <field name="date_planned"/>
                     <field name="name"/>
+                    <field name="product_id"/>
                     <field name="product_qty"/>
                     <field name="product_uom"/>
                     <field name="price_unit"/>

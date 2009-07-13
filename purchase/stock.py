@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -47,6 +47,12 @@ class stock_picking(osv.osv):
         'purchase_id': lambda *a: False,
     }
 
+    def get_currency_id(self, cursor, user, picking):
+        if picking.purchase_id:
+            return picking.purchase_id.pricelist_id.currency_id.id
+        else:
+            return super(stock_picking, self).get_currency_id(cursor, user, picking)
+
     def _get_comment_invoice(self, cursor, user, picking):
         if picking.purchase_id and picking.purchase_id.notes:
             if picking.note:
@@ -87,8 +93,7 @@ class stock_picking(osv.osv):
     def _invoice_hook(self, cursor, user, picking, invoice_id):
         purchase_obj = self.pool.get('purchase.order')
         if picking.purchase_id:
-            purchase_obj.write(cursor, user, [picking.purchase_id.id], {'invoiced':True,
-                'invoice_id': invoice_id,
+            purchase_obj.write(cursor, user, [picking.purchase_id.id], {'invoice_id': invoice_id,
                 })
         return super(stock_picking, self)._invoice_hook(cursor, user,
                 picking, invoice_id)

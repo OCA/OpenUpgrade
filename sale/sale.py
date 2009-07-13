@@ -127,8 +127,9 @@ class sale_order(osv.osv):
             for invoice in sale.invoice_ids:
                 if invoice.state not in ('draft','cancel'):
                     tot += invoice.amount_untaxed
+
             if tot:
-                res[sale.id] = min(100.0, tot * 100.0 / sale.amount_untaxed)
+                res[sale.id] = min(100.0, tot * 100.0 / (sale.amount_untaxed or 1.00))
             else:
                 res[sale.id] = 0.0
         return res
@@ -192,7 +193,7 @@ class sale_order(osv.osv):
             ('shipping_except','Shipping Exception'),
             ('invoice_except','Invoice Exception'),
             ('done','Done'),
-            ('cancel','Cancel')
+            ('cancel','Cancelled')
             ], 'Order State', readonly=True, help="Gives the state of the quotation or sale order. The exception state is automatically set when a cancel operation occurs in the invoice validation (Invoice Exception) or in the packing list process (Shipping Exception). The 'Waiting Schedule' state is set when the invoice is confirmed but waiting for the scheduler to run on the date 'Date Ordered'.", select=True),
         'date_order':fields.date('Date Ordered', required=True, readonly=True, states={'draft':[('readonly',False)]}),
 
@@ -358,7 +359,7 @@ class sale_order(osv.osv):
         else:
             pay_term = False
         for preinv in order.invoice_ids:
-            if preinv.state in ('open','paid','proforma'):
+            if preinv.state not in ('cancel',):
                 for preline in preinv.invoice_line:
                     inv_line_id = self.pool.get('account.invoice.line').copy(cr, uid, preline.id, {'invoice_id':False, 'price_unit':-preline.price_unit})
                     lines.append(inv_line_id)
@@ -764,6 +765,7 @@ class sale_order_line(osv.osv):
                         line.procurement_id.id, context)
 
         create_ids = []
+        sales = {}
         for line in self.browse(cr, uid, ids, context):
             if not line.invoiced:
                 if line.product_id:
@@ -802,7 +804,14 @@ class sale_order_line(osv.osv):
                 })
                 cr.execute('insert into sale_order_line_invoice_rel (order_line_id,invoice_id) values (%s,%s)', (line.id, inv_id))
                 self.write(cr, uid, [line.id], {'invoiced':True})
+
+                sales[line.order_id.id] = True
                 create_ids.append(inv_id)
+
+        # Trigger workflow events
+        wf_service = netsvc.LocalService("workflow")
+        for sid in sales.keys():
+            wf_service.trg_write(uid, 'sale.order', sid, cr)
         return create_ids
 
     def button_cancel(self, cr, uid, ids, context={}):
@@ -880,14 +889,14 @@ class sale_order_line(osv.osv):
             pack = self.pool.get('product.packaging').browse(cr, uid, packaging, context)
             q = product_uom_obj._compute_qty(cr, uid, uom, pack.qty, default_uom)
 #            qty = qty - qty % q + q
-            if not (qty % q) == 0 :
+            if qty and (q and not (qty % q) == 0):
                 ean = pack.ean
                 qty_pack = pack.qty
                 type_ul = pack.ul
-                warn_msg = "You selected a quantity of %d Units.\nBut it's not compatible with the selected packaging.\nHere is a proposition of quantities according to the packaging: " % (qty)
-                warn_msg = warn_msg + "\n\nEAN: " + str(ean) + " Quantiny: " + str(qty_pack) + " Type of ul: " + str(type_ul.name)
+                warn_msg = _("You selected a quantity of %d Units.\nBut it's not compatible with the selected packaging.\nHere is a proposition of quantities according to the packaging: ") % (qty)
+                warn_msg = warn_msg + "\n\n"+_("EAN: ") + str(ean) + _(" Quantity: ") + str(qty_pack) + _(" Type of ul: ") + str(type_ul.name)
                 warning={
-                    'title':'Packing Information !',
+                    'title':_('Packing Information !'),
                     'message': warn_msg
                     }
             result['product_uom_qty'] = qty
@@ -989,15 +998,6 @@ class sale_order_line(osv.osv):
 sale_order_line()
 
 
-
-_policy_form = '''<?xml version="1.0"?>
-<form string="Select Bank Account">
-    <field name="picking_policy" colspan="4"/>
-</form>'''
-
-_policy_fields = {
-    'picking_policy': {'string': 'Packing Policy', 'type': 'selection','selection': [('direct','Direct Delivery'),('one','All at once')],'required': True,}
-}
 class sale_config_picking_policy(osv.osv_memory):
     _name='sale.config.picking_policy'
     _columns = {

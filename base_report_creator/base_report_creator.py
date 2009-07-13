@@ -47,6 +47,7 @@ from tools.translate import _
 #       return super(ir_model_fields, self).search(cr, uid, args, offset, limit, order, context)
 #ir_model_fields()
 
+
 class report_creator(osv.osv):
     _name = "base_report_creator.report"
     _description = "Report"
@@ -229,7 +230,13 @@ class report_creator(osv.osv):
             filter_list.append(' ')
             filter_list.append(filter_id.condition)
         
-        ret_str = ",\n".join(from_list)
+        if len(from_list) == 1 and filter_ids:
+            from_list.append(' ')
+            ret_str = "\n where \n".join(from_list)
+        else:
+            ret_str = ",\n".join(from_list)
+        
+            
         if where_list:
             ret_str+="\n where \n"+" and\n".join(where_list)
             ret_str = ret_str.strip()
@@ -261,30 +268,35 @@ class report_creator(osv.osv):
                     fields.append('\t'+f.group_method+'('+t+'.'+f.field_id.name+')'+' as field'+str(i))
                 i+=1
             models = self._path_get(cr, uid, obj.model_ids, obj.filter_ids)
-            check=self._id_get(cr, uid, ids[0], context)
+            check = self._id_get(cr, uid, ids[0], context)
             if check<>False:
                 fields.insert(0,(check+' as id'))
-            result[obj.id] = """select
-%s
-from
-%s
-            """ % (',\n'.join(fields), models)
-            if groupby:
-                result[obj.id] += "group by\n\t"+', '.join(groupby)
-            if where_plus:
-                result[obj.id] += "\nhaving \n\t"+"\n\t and ".join(where_plus)
-            if limit:
-                result[obj.id] += " limit "+str(limit)
-            if offset:
-                result[obj.id] += " offset "+str(offset)
+            
+            if models:
+                result[obj.id] = """select
+    %s
+    from
+    %s
+                """ % (',\n'.join(fields), models)
+                if groupby:
+                    result[obj.id] += "group by\n\t"+', '.join(groupby)
+                if where_plus:
+                    result[obj.id] += "\nhaving \n\t"+"\n\t and ".join(where_plus)
+                if limit:
+                    result[obj.id] += " limit "+str(limit)
+                if offset:
+                    result[obj.id] += " offset "+str(offset)
+            else:
+                result[obj.id] = False
         return result
+    
     _columns = {
         'name': fields.char('Report Name',size=64, required=True),
         'type': fields.selection([('list','Rows And Columns Report'),], 'Report Type',required=True),#('sum','Summation Report')
         'active': fields.boolean('Active'),
-        'view_type1': fields.selection([('tree','Tree'),('graph','Graph'),('calendar','Calendar')], 'First View', required=True),
-        'view_type2': fields.selection([('','/'),('tree','Tree'),('graph','Graph'),('calendar','Calendar')], 'Second View'),
-        'view_type3': fields.selection([('','/'),('tree','Tree'),('graph','Graph'),('calendar','Calendar')], 'Third View'),
+        'view_type1': fields.selection([('form','Form'),('tree','Tree'),('graph','Graph'),('calendar','Calendar')], 'First View', required=True),
+        'view_type2': fields.selection([('','/'),('form','Form'),('tree','Tree'),('graph','Graph'),('calendar','Calendar')], 'Second View'),
+        'view_type3': fields.selection([('','/'),('form','Form'),('tree','Tree'),('graph','Graph'),('calendar','Calendar')], 'Third View'),
         'view_graph_type': fields.selection([('pie','Pie Chart'),('bar','Bar Chart')], 'Graph Type', required=True),
         'view_graph_orientation': fields.selection([('horz','Horizontal'),('vert','Vertical')], 'Graph Orientation', required=True),
         'model_ids': fields.many2many('ir.model', 'base_report_creator_report_model_rel', 'report_id','model_id', 'Reported Objects'),
@@ -343,8 +355,8 @@ from
     
     _constraints = [
         (_function_field, 'You can not display field which are not stored in Database.', ['field_ids']),
-        (_aggregation_error, 'You can apply agregate function to the non calculated field.', ['field_ids']),
-        (_calander_view_error, "You must have to give calander view's color,start date and delay.", ['field_ids']),
+        (_aggregation_error, 'You can apply aggregate function to the non calculated field.', ['field_ids']),
+        (_calander_view_error, "You must have to give calendar view's color,start date and delay.", ['field_ids']),
     ]
 report_creator()
 

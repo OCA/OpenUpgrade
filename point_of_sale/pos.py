@@ -26,6 +26,8 @@ from osv import fields, osv
 from mx import DateTime
 from tools.translate import _
 import tools
+from wizard import except_wizard
+from decimal import Decimal
 
 
 class pos_config_journal(osv.osv):
@@ -44,11 +46,11 @@ class pos_order(osv.osv):
     _name = "pos.order"
     _description = "Point of Sale"
     _order = "date_order, create_date desc"
-    _order = "date_order desc"
+    _order = "date_order desc, name desc"
 
     def unlink(self, cr, uid, ids, context={}):
         for rec in self.browse(cr, uid, ids, context=context):
-            if rec.state<>'draft':
+            if rec.state != 'draft':
                 raise osv.except_osv(_('Invalid action !'), _('Cannot delete a point of sale which is already confirmed !'))
         return super(pos_order, self).unlink(cr, uid, ids, context=context)
 
@@ -56,7 +58,7 @@ class pos_order(osv.osv):
         if not part:
             return {}
         pricelist = self.pool.get('res.partner').browse(cr, uid, part).property_product_pricelist.id
-        return {'value':{'pricelist_id': pricelist}}
+        return {'value': {'pricelist_id': pricelist}}
 
     def _amount_total(self, cr, uid, ids, field_name, arg, context):
         id_set = ",".join(map(str, ids))
@@ -68,7 +70,7 @@ class pos_order(osv.osv):
                 ) AS amount
         FROM pos_order p
             LEFT OUTER JOIN pos_order_line l ON (p.id=l.order_id)
-        WHERE p.id IN (""" + id_set  +""") GROUP BY p.id """)
+        WHERE p.id IN (""" + id_set +""") GROUP BY p.id """)
         res = dict(cr.fetchall())
 
         for rec in self.browse(cr, uid, ids, context):
@@ -150,18 +152,18 @@ class pos_order(osv.osv):
             states={'draft': [('readonly', False)]}, readonly=True),
         'shop_id': fields.many2one('sale.shop', 'Shop', required=True,
             states={'draft': [('readonly', False)]}, readonly=True),
-        'date_order': fields.date('Date Ordered', readonly=True),
+        'date_order': fields.datetime('Date Ordered', readonly=True),
         'date_validity': fields.date('Validity Date', required=True),
-        'user_id': fields.many2one('res.users', 'Salesman',
-            readonly=True),
+        'user_id': fields.many2one('res.users', 'Logged in User', readonly=True,
+            help="This is the logged in user (not necessarily the salesman)."),
+        'salesman_id': fields.many2one('res.users', 'Salesman',
+            help="This is the salesman actually making the order."),
         'amount_tax': fields.function(_amount_tax, method=True, string='Taxes'),
-        'amount_total': fields.function(_amount_total, method=True,
-            string='Total'),
+        'amount_total': fields.function(_amount_total, method=True, string='Total'),
         'amount_paid': fields.function(_total_payment, 'Paid',
             states={'draft': [('readonly', False)]}, readonly=True,
             method=True),
-        'amount_return': fields.function(_total_return, 'Returned',
-                                        method=True),
+        'amount_return': fields.function(_total_return, 'Returned', method=True),
         'lines': fields.one2many('pos.order.line', 'order_id',
             'Order Lines', states={'draft': [('readonly', False)]},
             readonly=True),
@@ -179,10 +181,8 @@ class pos_order(osv.osv):
             ('paid', 'Paid'), ('done', 'Done'), ('invoiced', 'Invoiced')], 'State',
             readonly=True, ),
         'invoice_id': fields.many2one('account.invoice', 'Invoice', readonly=True),
-        'account_move': fields.many2one('account.move', 'Account Entry',
-            readonly=True),
-        'pickings': fields.one2many('stock.picking', 'pos_order', 'Picking',
-            readonly=True),
+        'account_move': fields.many2one('account.move', 'Account Entry', readonly=True),
+        'pickings': fields.one2many('stock.picking', 'pos_order', 'Picking', readonly=True),
         'last_out_picking': fields.many2one('stock.picking',
                                             'Last Output Picking',
                                             readonly=True),
@@ -206,10 +206,11 @@ class pos_order(osv.osv):
 
     _defaults = {
         'user_id': lambda self, cr, uid, context: uid,
+        'salesman_id': lambda self, cr, uid, context: uid,
         'state': lambda *a: 'draft',
         'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence')\
             .get(cr, uid, 'pos.order'),
-        'date_order': lambda *a: time.strftime('%Y-%m-%d'),
+        'date_order': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
         'date_validity': lambda *a: (DateTime.now() + DateTime.RelativeDateTime(months=+6)).strftime('%Y-%m-%d'),
         'nb_print': lambda *a: 0,
         'sale_journal': _sale_journal_get,
@@ -229,11 +230,14 @@ class pos_order(osv.osv):
         return True
 
     def test_paid(self, cr, uid, ids, context=None):
+        def deci(val):
+            return Decimal(str(val))
+
         for order in self.browse(cr, uid, ids, context):
             if order.lines and not order.amount_total:
                 return True
             if (not order.lines) or (not order.payments) or \
-                (order.amount_paid != order.amount_total):
+                (deci(order.amount_paid) != deci(order.amount_total)):
                 return False
         return True
 
@@ -281,21 +285,21 @@ class pos_order(osv.osv):
                     # delete this product from old picking:
                     for old_line in old_picking.move_lines:
                         if old_line.product_id.id == p_id:
-                            old_line.write(cr, uid, [old_line.id], {'state': 'draft'}) # cannot delete if not draft
-                            old_line.unlink(cr, uid, [old_line.id], context)
+                            old_line.write({'state': 'draft'}, context=context) # cannot delete if not draft
+                            old_line.unlink(context=context)
                 elif qty_to_del > 0: # product qty has been modified (customer took less than the ordered quantity):
                     # subtract qty from old picking:
                     for old_line in old_picking.move_lines:
                         if old_line.product_id.id == p_id:
-                            old_line.write(cr, uid, [old_line.id], {'product_qty': old_line.product_qty - qty_to_del})
+                            old_line.write({'product_qty': old_line.product_qty - qty_to_del}, context=context)
                     # add qty to new picking:
-                    line.write(cr, uid, [line.id], {'product_qty': qty_to_del})
+                    line.write({'product_qty': qty_to_del}, context=context)
                 else: # product hasn't changed (customer took it without any change):
                     # delete this product from new picking:
-                    line.unlink(cr, uid, [line.id], context)
+                    line.unlink(context=context)
             else:
                 # delete it in the new picking:
-                line.unlink(cr, uid, [line.id], context)
+                line.unlink(context=context)
 
     def create_picking(self, cr, uid, ids, context={}):
         """Create a picking for each order and validate it."""
@@ -318,7 +322,10 @@ class pos_order(osv.osv):
                 self.write(cr, uid, [order.id], {'last_out_picking': picking_id})
             else:
                 picking_id = order.last_out_picking.id
-                picking_obj.write(cr, uid, [picking_id], {'auto_picking': True})
+                picking_obj.write(cr, uid, [picking_id], {
+                    'auto_picking': True,
+                    'invoice_state': '2binvoiced',
+                })
                 picking = picking_obj.browse(cr, uid, [picking_id], context)[0]
                 new = False
 
@@ -412,7 +419,6 @@ class pos_order(osv.osv):
 
     def add_payment(self, cr, uid, order_id, data, context=None):
         """Create a new payment for the order"""
-
         order = self.browse(cr, uid, order_id, context)
         if order.invoice_wanted and not order.partner_id:
             raise osv.except_osv(_('Error'), _('Cannot create invoice without a partner.'))
@@ -434,7 +440,7 @@ class pos_order(osv.osv):
         payment_id = self.pool.get('pos.payment').create(cr, uid, args )
 
         wf_service = netsvc.LocalService("workflow")
-        wf_service.trg_validate(uid, 'pos.order', order_id, 'payment', cr)
+        wf_service.trg_validate(uid, 'pos.order', order_id, 'paid', cr)
         wf_service.trg_write(uid, 'pos.order', order_id, cr)
         return payment_id
 
@@ -475,12 +481,14 @@ class pos_order(osv.osv):
                 'payments': False,
                 })
             clone_list.append(clone_id)
-
+            self.write(cr, uid, clone_id, {
+                'partner_id': order.partner_id.id,
+            })
 
         for clone in self.browse(cr, uid, clone_list):
             for order_line in clone.lines:
                 line_obj.write(cr, uid, [order_line.id], {
-                    'qty': -order_line.qty
+                    'qty': -order_line.qty,
                     })
         return clone_list
 
@@ -507,6 +515,10 @@ class pos_order(osv.osv):
                 'price_type': 'tax_included'
             }
             inv.update(inv_ref.onchange_partner_id(cr, uid, [], 'out_invoice', order.partner_id.id)['value'])
+
+            if not self.pool.get('res.partner').browse(cr, uid, inv['partner_id']).address:
+                raise osv.except_osv(_('Error'), _('Unable to create invoice (partner has no address).'))
+
             inv_id = inv_ref.create(cr, uid, inv, context)
 
             self.write(cr, uid, [order.id], {'invoice_id': inv_id, 'state': 'invoiced'})
@@ -690,12 +702,18 @@ class pos_order(osv.osv):
 
             for payment in order.payments:
 
+                if not payment.journal_id.default_debit_account_id:
+                    raise osv.except_osv(_('No Default Debit Account !'),
+                        _('You have to define a Default Debit Account for your Financial Journals!\n'))
+
+                if not payment.journal_id.default_credit_account_id:
+                    raise osv.except_osv(_('No Default Credit Account !'),
+                        _('You have to define a Default Credit Account for your Financial Journals!\n'))
+
                 if payment.amount > 0:
-                    payment_account = \
-                        payment.journal_id.default_debit_account_id.id
+                    payment_account = payment.journal_id.default_debit_account_id.id
                 else:
-                    payment_account = \
-                        payment.journal_id.default_credit_account_id.id
+                    payment_account = payment.journal_id.default_credit_account_id.id
 
                 if payment.amount > 0:
                     order_account = \
@@ -823,7 +841,7 @@ class pos_order_line(osv.osv):
 
         product_id = self.pool.get('product.product').search(cr, uid, [('ean13','=', ean)])
         if not product_id:
-           return False
+            return False
 
         # search price product
         product = self.pool.get('product.product').read(cr, uid, product_id)
@@ -845,7 +863,7 @@ class pos_order_line(osv.osv):
                    }
             line_id = self.create(cr, uid, vals)
             if not line_id:
-                raise wizard.except_wizard(_('Error'), _('Create line failed !'))
+                raise except_wizard(_('Error'), _('Create line failed !'))
         else:
             vals = {
                 'qty': qty,
@@ -853,7 +871,7 @@ class pos_order_line(osv.osv):
             }
             line_id = self.write(cr, uid, order_line_id, vals)
             if not line_id:
-                raise wizard.except_wizard(_('Error'), _('Modify line failed !'))
+                raise except_wizard(_('Error'), _('Modify line failed !'))
             line_id = order_line_id
 
         price_line = float(qty)*float(price)
@@ -933,14 +951,14 @@ class report_transaction_pos(osv.osv):
                     count(pp.id) as no_trans,
                     sum(amount) as amount,
                     pp.journal_id,
-                    date_trunc('day',pp.create_date)::text as date_create,
+                    to_char(pp.create_date, 'YYYY-MM-DD') as date_create,
                     ps.user_id,
                     ps.invoice_id
                 from
                     pos_payment pp, pos_order ps
                 WHERE ps.id = pp.order_id
                 group by
-                    pp.journal_id, date_trunc('day',pp.create_date), ps.user_id, ps.invoice_id
+                    pp.journal_id, date_create, ps.user_id, ps.invoice_id
             )
             """)
 report_transaction_pos()

@@ -273,8 +273,8 @@ class crm_case_rule(osv.osv):
 
     def _check(self, cr, uid, ids=False, context={}):
         '''
-        Function called by the sceduler to proccess cases for date actions
-        Only works on not done and canceled cases
+        Function called by the scheduler to process cases for date actions
+        Only works on not done and cancelled cases
         '''
         cr.execute('select * from crm_case \
                 where (date_action_last<%s or date_action_last is null) \
@@ -389,7 +389,7 @@ class crm_case(osv.osv):
         'partner_id': _get_default_partner,
         'partner_address_id': _get_default_partner_address,
         'email_from': _get_default_email,
-        'state': lambda *a: 'open',
+        'state': lambda *a: 'draft',
         'priority': lambda *a: AVAILABLE_PRIORITIES[2][0],
         'date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
@@ -500,11 +500,12 @@ class crm_case(osv.osv):
                         if action.act_mail_to_partner:
                             emails.append(case.email_from)
                         if action.act_mail_to_watchers:
-                            emails += (case.email_cc or '').split(',')
+                            emails += (action.act_email_cc or '').split(',')
                         if action.act_mail_to_email:
                             emails += (action.act_mail_to_email or '').split(',')
                         emails = filter(None, emails)
                         if len(emails) and action.act_mail_body:
+                            emails = list(set(emails))                            
                             self.email_send(cr, uid, case, emails, action.act_mail_body)
                         break
             action_ids = newactions
@@ -541,7 +542,7 @@ class crm_case(osv.osv):
         if reply_to: reply_to = reply_to.encode('utf8')
         if not emailfrom:
             raise osv.except_osv(_('Error!'),
-                    _("No E-Mail ID Found for the Responsible user !"))
+                    _("No E-Mail ID Found for your Company address or missing reply address in section!"))
         tools.email_send(emailfrom, emails, name, body, reply_to=reply_to, tinycrm=str(case.id))
         return True
     def __log(self, cr, uid, cases, keyword, context={}):
@@ -611,7 +612,7 @@ class crm_case(osv.osv):
                 
                 if not src:
                     raise osv.except_osv(_('Error!'),
-                        _("No E-Mail ID Found for the Responsible user !"))
+                        _("No E-Mail ID Found for the Responsible Partner or missing reply address in section!"))
                     
                 dest = case.section_id.reply_to
                 body = case.email_last or case.description
@@ -684,7 +685,7 @@ class crm_case(osv.osv):
             emailfrom = case.user_id.address_id and case.user_id.address_id.email or False
             if not emailfrom:
                 raise osv.except_osv(_('Error!'),
-                        _("No E-Mail ID Found for the Responsible user !"))
+                        _("No E-Mail ID Found for your Company address!"))
                 
             tools.email_send(
                 emailfrom,

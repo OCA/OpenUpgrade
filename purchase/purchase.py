@@ -135,13 +135,22 @@ class purchase_order(osv.osv):
             result[line.order_id.id] = True
         return result.keys()
 
+    def _invoiced(self, cursor, user, ids, name, arg, context=None):
+        res = {}
+        for purchase in self.browse(cursor, user, ids, context=context):
+            if purchase.invoice_id.reconciled:
+                res[purchase.id] = purchase.invoice_id.reconciled
+            else:
+                res[purchase.id] = False
+        return res
+
     _columns = {
         'name': fields.char('Order Reference', size=64, required=True, select=True),
         'origin': fields.char('Origin', size=64,
             help="Reference of the document that generated this purchase order request."
         ),
         'partner_ref': fields.char('Partner Ref.', size=64),
-        'date_order':fields.date('Date Ordered', required=True, states={'confirmed':[('readonly',True)], 'approved':[('readonly',True)]}),
+        'date_order':fields.date('Date', required=True, states={'confirmed':[('readonly',True)], 'approved':[('readonly',True)]}, help="Date on which this document has been created."),
         'date_approve':fields.date('Date Approved', readonly=1),
         'partner_id':fields.many2one('res.partner', 'Supplier', required=True, states={'confirmed':[('readonly',True)], 'approved':[('readonly',True)]}, change_default=True),
         'partner_address_id':fields.many2one('res.partner.address', 'Address', required=True, states={'posted':[('readonly',True)]}),
@@ -163,7 +172,7 @@ class purchase_order(osv.osv):
         'picking_ids': fields.one2many('stock.picking', 'purchase_id', 'Picking List', readonly=True, help="This is the list of picking list that have been generated for this purchase"),
         'shipped':fields.boolean('Received', readonly=True, select=True),
         'shipped_rate': fields.function(_shipped_rate, method=True, string='Received', type='float'),
-        'invoiced':fields.boolean('Invoiced & Paid', readonly=True, select=True),
+        'invoiced': fields.function(_invoiced, method=True, string='Invoiced & Paid', type='boolean'),
         'invoiced_rate': fields.function(_invoiced_rate, method=True, string='Invoiced', type='float'),
         'invoice_method': fields.selection([('manual','Manual'),('order','From Order'),('picking','From Picking')], 'Invoicing Control', required=True,
             help="From Order: a draft invoice will be pre-generated based on the purchase order. The accountant " \
@@ -423,13 +432,13 @@ class purchase_order_line(osv.osv):
         return res
 
     _columns = {
-        'name': fields.char('Description', size=64, required=True),
+        'name': fields.char('Description', size=256, required=True),
         'product_qty': fields.float('Quantity', required=True, digits=(16,2)),
         'date_planned': fields.datetime('Scheduled date', required=True),
         'taxes_id': fields.many2many('account.tax', 'purchase_order_taxe', 'ord_id', 'tax_id', 'Taxes'),
         'product_uom': fields.many2one('product.uom', 'Product UOM', required=True),
         'product_id': fields.many2one('product.product', 'Product', domain=[('purchase_ok','=',True)], change_default=True),
-        'move_id': fields.many2one('stock.move', 'Reservation', ondelete='set null'),
+        'move_ids': fields.one2many('stock.move', 'purchase_line_id', 'Reservation', readonly=True, ondelete='set null'),
         'move_dest_id': fields.many2one('stock.move', 'Reservation Destination', ondelete='set null'),
         'price_unit': fields.float('Unit Price', required=True, digits=(16, int(config['price_accuracy']))),
         'price_subtotal': fields.function(_amount_line, method=True, string='Subtotal'),
@@ -446,7 +455,7 @@ class purchase_order_line(osv.osv):
     def copy_data(self, cr, uid, id, default=None,context={}):
         if not default:
             default = {}
-        default.update({'state':'draft', 'move_id':False})
+        default.update({'state':'draft', 'move_id':[]})
         return super(purchase_order_line, self).copy_data(cr, uid, id, default, context)
 
     def product_id_change(self, cr, uid, ids, pricelist, product, qty, uom,

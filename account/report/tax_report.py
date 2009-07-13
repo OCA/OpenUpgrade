@@ -43,22 +43,8 @@ class tax_report(rml_parse.rml_parse):
 		})
 
 		
-	def comma_me(self,amount):
-		
-		if  type(amount) is float :
-			amount = str('%.2f'%amount)
-		else :
-			amount = str(amount)
-		if (amount == '0'):
-		     return ' '
-		orig = amount
-		new = re.sub("^(-?\d+)(\d{3})", "\g<1>'\g<2>", amount)
-		if orig == new:
-			return new
-		else:
-			return self.comma_me(new)
 	def _get_lines(self, based_on,period_list,company_id=False, parent=False, level=0):
-		res = self._get_codes(based_on,parent,level,period_list)
+		res = self._get_codes(based_on,company_id,parent,level,period_list)
 		
 		if period_list[0][2] :
 			res = self._add_codes(based_on,res,period_list)
@@ -73,7 +59,6 @@ class tax_report(rml_parse.rml_parse):
 		
 		i = 0
 		top_result = []
-		
 		while i < len(res):
 			
 			res_dict = { 'code' : res[i][1].code,
@@ -106,7 +91,6 @@ class tax_report(rml_parse.rml_parse):
 	def _get_general(self, tax_code_id,period_list ,company_id, based_on):
 		res=[]
 		period_sql_list =  ','.join(map(str, period_list[0][2]))
-		
 		if based_on == 'payments':
 			self.cr.execute('SELECT SUM(line.tax_amount) AS tax_amount, \
 						SUM(line.debit) AS debit, \
@@ -125,6 +109,7 @@ class tax_report(rml_parse.rml_parse):
 						AND line.account_id = account.id \
 						AND account.company_id = %s \
 						AND move.id = line.move_id \
+						AND line.period_id IN ('+ period_sql_list +') \
 						AND ((invoice.state = %s) \
 							OR (invoice.id IS NULL))  \
 					GROUP BY account.id,account.name,account.code', ('draft',tax_code_id,
@@ -144,6 +129,7 @@ class tax_report(rml_parse.rml_parse):
 						AND line.tax_code_id = %s  \
 						AND line.account_id = account.id \
 						AND account.company_id = %s \
+						AND line.period_id IN ('+ period_sql_list +') \
 						AND account.active \
 					GROUP BY account.id,account.name,account.code', ('draft',tax_code_id,
 						company_id))
@@ -157,15 +143,15 @@ class tax_report(rml_parse.rml_parse):
 			i+=1
 		return res
 
-	def _get_codes(self, based_on, parent=False, level=0,period_list=[]):
+	def _get_codes(self,based_on, company_id, parent=False, level=0,period_list=[]):
 		tc = self.pool.get('account.tax.code')
-		ids = tc.search(self.cr, self.uid, [('parent_id','=',parent)])
+		ids = tc.search(self.cr, self.uid, [('parent_id','=',parent),('company_id','=',company_id)])
 	
 		res = []
 		for code in tc.browse(self.cr, self.uid, ids, {'based_on': based_on}):
 			res.append(('.'*2*level,code))
 			
-			res += self._get_codes(based_on, code.id, level+1)
+			res += self._get_codes(based_on, company_id, code.id, level+1)
 		return res
 	
 	def _add_codes(self,based_on, account_list=[],period_list=[]):

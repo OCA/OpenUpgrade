@@ -223,7 +223,7 @@ class account_invoice(osv.osv):
             help="If you use payment terms, the due date will be computed automatically at the generation "\
                 "of accounting entries. If you keep the payment term and the due date empty, it means direct payment. "\
                 "The payment term may compute several due dates, for example 50% now, 50% in one month."),
-        'period_id': fields.many2one('account.period', 'Force Period', domain=[('state','<>','done')], help="Keep empty to use the period of the validation(invoice) date."),
+        'period_id': fields.many2one('account.period', 'Force Period', domain=[('state','<>','done')], help="Keep empty to use the period of the validation(invoice) date.", readonly=True, states={'draft':[('readonly',False)]}),
 
         'account_id': fields.many2one('account.account', 'Account', required=True, readonly=True, states={'draft':[('readonly',False)]}, help="The partner account used for this invoice."),
         'invoice_line': fields.one2many('account.invoice.line', 'invoice_id', 'Invoice Lines', readonly=True, states={'draft':[('readonly',False)]}),
@@ -862,6 +862,7 @@ class account_invoice(osv.osv):
             'account_id': src_account_id,
             'partner_id': invoice.partner_id.id,
             'ref':invoice.number,
+            'date': date,
         }
         l2 = {
             'debit': direction * pay_amount<0 and - direction * pay_amount,
@@ -869,6 +870,7 @@ class account_invoice(osv.osv):
             'account_id': pay_account_id,
             'partner_id': invoice.partner_id.id,
             'ref':invoice.number,
+            'date': date,
         }
 
         if not name:
@@ -919,7 +921,7 @@ class account_invoice_line(osv.osv):
         if 'check_total' in context:
             t = context['check_total']
             for l in context.get('invoice_line', {}):
-                if len(l) >= 3 and l[2]:
+                if isinstance(l, (list, tuple)) and len(l) >= 3 and l[2]:
                     tax_obj = self.pool.get('account.tax')
                     p = l[2].get('price_unit', 0) * (1-l[2].get('discount', 0)/100.0)
                     t = t - (p * l[2].get('quantity'))

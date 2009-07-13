@@ -366,8 +366,9 @@ class account_move_line(osv.osv):
         'centralisation': fields.selection([('normal','Normal'),('credit','Credit Centralisation'),('debit','Debit Centralisation')], 'Centralisation', size=6),
         'balance': fields.function(_balance, method=True, string='Balance'),
         'state': fields.selection([('draft','Draft'), ('valid','Valid')], 'Status', readonly=True),
-        'tax_code_id': fields.many2one('account.tax.code', 'Tax Account'),
-        'tax_amount': fields.float('Tax/Base Amount', digits=(16,2), select=True),
+        'tax_code_id': fields.many2one('account.tax.code', 'Tax Account', help="The Account can either be a base tax code or tax code account."),
+        'tax_amount': fields.float('Tax/Base Amount', digits=(16,2), select=True, help="If the Tax account is tax code account, this field will contain the taxed amount.If the tax account is base tax code,\
+                    this field will contain the basic amount(without tax)."),
         'invoice': fields.function(_invoice, method=True, string='Invoice',
             type='many2one', relation='account.invoice', fnct_search=_invoice_search),
         'account_tax_id':fields.many2one('account.tax', 'Tax'),
@@ -836,7 +837,7 @@ class account_move_line(osv.osv):
             if journal.type_control_ids:
                 type = account.user_type
                 for t in journal.type_control_ids:
-                    if type==t.code:
+                    if type.code == t.code:
                         ok = True
                         break
             if journal.account_control_ids and not ok:

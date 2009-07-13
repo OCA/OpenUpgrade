@@ -56,7 +56,8 @@ class hr_analytic_timesheet(osv.osv):
 
     def on_change_unit_amount(self, cr, uid, id, prod_id, unit_amount, unit, context={}):
         res = {}
-        if prod_id and unit_amount:
+#        if prod_id and unit_amount:
+        if prod_id:
             res = self.pool.get('account.analytic.line').on_change_unit_amount(cr, uid, id, prod_id, unit_amount,unit, context)
         return res
 
@@ -111,7 +112,15 @@ class hr_analytic_timesheet(osv.osv):
     }
     def on_change_account_id(self, cr, uid, ids, account_id):
         return {'value':{}}
-
+    
+    def on_change_date(self, cr, uid, ids, date):
+        if ids:
+            new_date = self.read(cr,uid,ids[0],['date'])['date']
+            if date != new_date:
+                warning = {'title':'User Alert!','message':'Changing the date will let this entry appear in the timesheet of the new date.'}
+                return {'value':{},'warning':warning}
+        return {'value':{}}
+    
     def create(self, cr, uid, vals, context={}):
         try:
             res = super(hr_analytic_timesheet, self).create(cr, uid, vals, context)

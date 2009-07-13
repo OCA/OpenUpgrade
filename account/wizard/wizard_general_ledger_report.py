@@ -45,6 +45,8 @@ period_form = '''<?xml version="1.0"?>
 
     <field name="display_account" required="True"/>
     <field name="sortbydate" required="True"/>
+
+    <field name="soldeinit" invisible="1"/>
   
     <field name="landscape"/>
     <field name="amount_currency"/>
@@ -120,10 +122,10 @@ def _check_state(self, cr, uid, data, context):
 
         if data['form']['state'] == 'bydate':
            _check_date(self, cr, uid, data, context)
-           data['form']['fiscalyear'] = 0
-        else :
-           
-           data['form']['fiscalyear'] = 1
+#           data['form']['fiscalyear'] = 0
+#        else :
+#           
+#           data['form']['fiscalyear'] = 1
         return data['form']
 
 
@@ -138,8 +140,8 @@ class wizard_report(wizard.interface):
         fiscalyear_obj = pooler.get_pool(cr.dbname).get('account.fiscalyear')
         
         data['form']['fiscalyear'] = fiscalyear_obj.find(cr, uid)
-        periods_obj=pooler.get_pool(cr.dbname).get('account.period')
-        data['form']['periods'] =periods_obj.search(cr, uid, [('fiscalyear_id','=',data['form']['fiscalyear'])])
+        #periods_obj=pooler.get_pool(cr.dbname).get('account.period')
+        #data['form']['periods'] =periods_obj.search(cr, uid, [('fiscalyear_id','=',data['form']['fiscalyear'])])
         data['form']['sortbydate'] = 'sort_date'
         data['form']['display_account']='bal_all'
         data['form']['landscape']=True

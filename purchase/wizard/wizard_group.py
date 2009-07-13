@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -25,15 +25,22 @@ import time
 import wizard
 import netsvc
 import pooler
-from osv.orm import browse_record
+from osv.orm import browse_record, browse_null
+
 
 merge_form = """<?xml version="1.0"?>
 <form string="Merge orders">
     <separator string="Are you sure you want to merge these orders ?"/>
     <newline/>
-    <label string="Please note that orders will only be merged if they are to the same partner and going to the same location, and lines will only be merged if they are exactly the same except for the quantity and unit."/>
+    <label>Please note that:
+      - orders will only be merged if:
+        * their status is draft
+        * they belong to the same partner
+        * are going to the same location
+      - lines will only be merged if:
+        * they are exactly the same except for the quantity and unit</label>
 </form>
-"""
+""" 
 
 merge_fields = {
 }
@@ -45,28 +52,32 @@ ack_form = """<?xml version="1.0"?>
 
 ack_fields = {}
 
-def _mergeOrders(self, cr, uid, data, context):
+
+def _merge_orders(self, cr, uid, data, context):
     order_obj = pooler.get_pool(cr.dbname).get('purchase.order')
 
     def make_key(br, fields):
         list_key = []
         for field in fields:
             field_val = getattr(br, field)
-            if field in ('product_id','move_dest_id', 'account_analytic_id'):
+            if field in ('product_id', 'move_dest_id', 'account_analytic_id'):
                 if not field_val:
                     field_val = False
             if isinstance(field_val, browse_record):
                 field_val = field_val.id
+            elif isinstance(field_val, browse_null):
+                field_val = False
             elif isinstance(field_val, list):
                 field_val = ((6, 0, tuple([v.id for v in field_val])),)
             list_key.append((field, field_val))
         list_key.sort()
         return tuple(list_key)
-        
+
     # compute what the new orders should contain
     new_orders = {}
     for porder in [order for order in order_obj.browse(cr, uid, data['ids']) if order.state == 'draft']:
         order_key = make_key(porder, ('partner_id', 'location_id'))
+
         new_order = new_orders.setdefault(order_key, ({}, []))
         new_order[1].append(porder.id)
         order_infos = new_order[0]
@@ -89,7 +100,7 @@ def _mergeOrders(self, cr, uid, data, context):
             if porder.notes:
                 order_infos['notes'] += ('\n%s' % (porder.notes,))
             if porder.origin:
-                order_infos['origin'] = order_infos['origin'] +' '+ porder.origin
+                order_infos['origin'] = order_infos['origin'] + ' ' + porder.origin
 
         for order_line in porder.order_line:
             line_key = make_key(order_line, ('name', 'date_planned', 'taxes_id', 'price_unit', 'notes', 'product_id', 'move_dest_id', 'account_analytic_id'))
@@ -103,7 +114,7 @@ def _mergeOrders(self, cr, uid, data, context):
                     field_val = getattr(order_line, field)
                     if isinstance(field_val, browse_record):
                         field_val = field_val.id
-                    o_line[field] = field_val 
+                    o_line[field] = field_val
                 o_line['uom_factor'] = order_line.product_uom and order_line.product_uom.factor or 1.0
 
     wf_service = netsvc.LocalService("workflow")
@@ -120,7 +131,7 @@ def _mergeOrders(self, cr, uid, data, context):
             del value['uom_factor']
             value.update(dict(key))
         order_data['order_line'] = [(0, 0, value) for value in order_data['order_line'].itervalues()]
-        
+
         # create the new order
         neworder_id = order_obj.create(cr, uid, order_data)
         allorders.append(neworder_id)
@@ -131,8 +142,8 @@ def _mergeOrders(self, cr, uid, data, context):
             wf_service.trg_validate(uid, 'purchase.order', old_id, 'purchase_cancel', cr)
 
     return {
-        'domain': "[('id','in', ["+','.join(map(str,allorders))+"])]",
-        'name': 'Purchase orders',
+        'domain': "[('id','in', [" + ','.join(map(str, allorders)) + "])]",
+        'name': 'Purchase Orders',
         'view_type': 'form',
         'view_mode': 'tree,form',
         'res_model': 'purchase.order',
@@ -140,18 +151,18 @@ def _mergeOrders(self, cr, uid, data, context):
         'type': 'ir.actions.act_window'
     }
 
+
 class merge_orders(wizard.interface):
     states = {
-        'init' : {
-            'actions' : [],
-            'result' : {'type' : 'form', 'arch' : merge_form, 'fields' : merge_fields, 'state' : [('end', 'Cancel'),('merge', 'Merge orders') ]}
+        'init': {
+            'actions': [],
+            'result': {'type': 'form', 'arch' : merge_form, 'fields' : merge_fields, 'state' : [('end', 'Cancel'), ('merge', 'Merge orders') ]}
         },
-        'merge' : {
-            'actions' : [],
-            'result' : {'type':'action', 'action':_mergeOrders, 'state':'end'}
+        'merge': {
+            'actions': [],
+            'result': {'type': 'action', 'action': _merge_orders, 'state': 'end'}
         },
     }
-merge_orders("purchase.order.merge")
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+merge_orders("purchase.order.merge")
 

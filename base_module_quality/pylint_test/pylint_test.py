@@ -19,14 +19,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-
 import os
+
 from tools import config
 from tools.translate import _
-
 from base_module_quality import base_module_quality
-
 
 class quality_test(base_module_quality.abstract_quality_check):
 
@@ -35,9 +32,6 @@ class quality_test(base_module_quality.abstract_quality_check):
         self.name = _("Pylint Test")
         self.note = _("""This test uses Pylint and checks if the module satisfies the coding standard of Python. See http://www.logilab.org/project/name/pylint for further info.\n """)
         self.bool_installed_only = False
-        self.ponderation = 1.0
-        self.result = ""
-        self.result_details = ""
         return None
 
     def run_test(self, cr, uid, module_path):
@@ -49,23 +43,30 @@ class quality_test(base_module_quality.abstract_quality_check):
                 for j in os.listdir(path):
                     list_files.append(os.path.join(i, j))
 
-        n = 0
+        count = 0
         score = 0.0
-        dict = {}
+        dict_py = {}
+        flag = False
         self.result_details += '''<html>
         <head>
             <link rel="stylesheet" type="text/css" href="/tg_widgets/openerp/css/wiki.css" media="all">
         </head>
         <body>'''
-        for file in list_files:
-            if file.split('.')[-1] == 'py' and not file.endswith('__init__.py') and not file.endswith('__terp__.py'):
-                file_path = os.path.join(module_path, file)
+        for file_py in list_files:
+            if file_py.split('.')[-1] == 'py' and not file_py.endswith('__init__.py') and not file_py.endswith('__terp__.py'):
+                if not flag:
+                    flag = True
+                file_path = os.path.join(module_path, file_py)
                 try:
+                    import pylint
                     res = os.popen('pylint --rcfile=' + config_file_path + ' ' + file_path).read()
                 except:
-                    self.result += _("Error. Is pylint correctly installed?")+"\n"
-                    break
-                n += 1
+                    self.error = True
+                    import netsvc
+                    netsvc.Logger().notifyChannel('Pylint:', netsvc.LOG_WARNING, "Is pylint correctly installed? (http://pypi.python.org/pypi/pylint)")
+                    self.result += _("Error. Is pylint correctly installed? (http://pypi.python.org/pypi/pylint)")+"\n"
+                    return None
+                count += 1
 #                leftchar = -1
 #                while res[leftchar:leftchar+1] != ' ' and leftchar-1 <= 0:
 #                    leftchar -= 1
@@ -77,22 +78,27 @@ class quality_test(base_module_quality.abstract_quality_check):
                     scr = res.split("Your code has been rated at")[1].split("</div>")[0].split("/")[0]
                     score += float(scr)
                     #self.result += file + ": " + res[leftchar+1:rightchar] + "/10\n"
-                    dict[file] = [file, scr]
+                    dict_py[file_py] = [file_py, scr]
                 except:
                     score += 0
                     #self.result += file + ": "+_("Unable to parse the result. Check the details.")+"\n"
-                    dict[file] = [file, _("Unable to parse the result. Check the details.")]
+                    dict_py[file_py] = [file_py, _("Unable to parse the result. Check the details.")]
                 self.result_details += res.replace('''<div''', '''<div class="wikiwidget readonlyfield"''')
+
+        if not flag:
+            self.error = True
+            self.result = _("No python file found")
+            return None
         self.result_details += '</body></html>'
-        average_score = n and score / n or score
-        self.score = (max(average_score,0)) / 10
-        self.result = self.get_result(dict)
+        average_score = count and score / count or score
+        self.score = (max(average_score, 0)) / 10
+        self.result = self.get_result(dict_py)
         return None
 
-    def get_result(self, dict):
+    def get_result(self, dict_py):
         header = ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n! %-10s \n', [_('File Name'), _('Result (/10)')])
         if not self.error:
-            return self.format_table(header, data_list=dict)
+            return self.format_table(header, data_list=dict_py)
         return ""
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

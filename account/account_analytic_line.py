@@ -50,7 +50,7 @@ class account_analytic_line(osv.osv):
     _order = 'date'
     
     
-    def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None):
+    def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
         if context is None:
             context = {}
 
@@ -61,7 +61,7 @@ class account_analytic_line(osv.osv):
             args.append(['date','<=',context['to_date']])
             
         return super(account_analytic_line, self).search(cr, uid, args, offset, limit,
-                order, context=context)
+                order, context=context, count=count)
         
     def _check_company(self, cr, uid, ids):
         lines = self.browse(cr, uid, ids)
@@ -77,7 +77,8 @@ class account_analytic_line(osv.osv):
             unit=False, context=None):
         uom_obj = self.pool.get('product.uom')
         product_obj = self.pool.get('product.product')
-        if unit_amount and prod_id:
+#        if unit_amount and prod_id:
+        if  prod_id:
             prod = product_obj.browse(cr, uid, prod_id)
             a = prod.product_tmpl_id.property_account_expense.id
             if not a:

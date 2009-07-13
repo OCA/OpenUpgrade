@@ -188,12 +188,16 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Production Lot">
-                    <field name="name" select="1"/>
-                    <field name="ref" select="2"/>
-                    <field name="product_id" select="1"/>
-                    <field name="stock_available"/>
-                    <field name="date" select="2"/>
-                    <field colspan="4" name="revisions" nolabel="1"/>
+	                <notebook colspan="4">
+	                	<page string="Production Lot">
+		                    <field name="name" select="1"/>
+		                    <field name="ref" select="2"/>
+		                    <field name="product_id" select="1"/>
+		                    <field name="stock_available"/>
+		                    <field name="date" select="2"/>
+		                    <field colspan="4" name="revisions" nolabel="1"/>
+	                    </page>
+	                </notebook>
                 </form>
             </field>
         </record>
@@ -653,7 +657,7 @@
                             </field>
                             <group col="7" colspan="4">
                                 <label colspan="6"/>
-                                <button name="%(move_split)d" string="Split in Two" type="action"/>
+                                <button name="%(move_split)d" string="Split in Two" type="action" states="assigned,confirmed,draft,auto" />
                             </group>
                             <group col="10" colspan="4">
                                 <field name="state" readonly="1"/>

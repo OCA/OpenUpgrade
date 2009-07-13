@@ -140,8 +140,8 @@
             <field name="name">New Project</field>
             <field name="res_model">project.project</field>
             <field name="view_type">form</field>
-            <field name="view_mode">form,tree,calendar</field>
-            <field name="view_id" eval="False"/>
+            <field name="view_mode">form,tree</field>
+            <field name="view_id" eval="edit_project"/>
         </record>
         <menuitem action="open_view_project" id="menu_open_view_project" parent="menu_all_project" sequence="50"/>
 
@@ -262,7 +262,7 @@
                     <group colspan="6" col="6">
                         <field name="name" select="1" attrs="{'readonly':[('state','=','done')]}" />
                         <field name="project_id" required="1" select="1" attrs="{'readonly':[('state','=','done')]}" />
-                        <field name="total_hours" widget="float_time" attrs="{'readonly':[('state','=','done')]}" />
+                        <field name="total_hours" widget="float_time"/>
                         <field name="user_id" select="1" attrs="{'readonly':[('state','=','done')]}" />
                         <field name="date_deadline" select="2" attrs="{'readonly':[('state','=','done')]}" />
                         <field name="progress" widget="progressbar"/>
@@ -512,7 +512,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,calendar,graph,gantt</field>
             <field name="domain">[('project_id', 'child_of', [active_id])]</field>
-            <field name="context">{'project_id':active_id}</field>
+            <field name="context">{'project_id':active_id, 'active_test':False}</field>
         </record>
         <record id="ir_project_task_open" model="ir.values">
             <field eval=" 'tree_but_open'" name="key2"/>
