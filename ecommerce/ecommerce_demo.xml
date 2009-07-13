@@ -1,0 +1,847 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>	
+	<!-- Ecommerce Shop 0 -->
+<data>
+		
+		<!-- Credit Card Demo Data -->
+		
+		<record id="ecommerce_creditcard_mastercard0" model="ecommerce.creditcard">
+			<field name="code">MC</field>
+			<field name="name">Master Card</field>
+		</record>
+	
+		<record id="ecommerce_creditcard_visacard0" model="ecommerce.creditcard">
+			<field name="code">Visa</field>
+			<field name="name">Visa Card</field>
+		</record>
+
+		<record id="ecommerce_creditcard_discoverycard0" model="ecommerce.creditcard">
+			<field name="code">Disc</field>
+			<field name="name">Discovery Card</field>
+		</record>
+	
+		<record id="ecommerce_creditcard_americanexpresscard0" model="ecommerce.creditcard">
+			<field name="code">AmEx</field>
+			<field name="name">American Express Card</field>
+		</record>
+
+		<record id="ecommerce_creditcard_dinerscard0" model="ecommerce.creditcard">
+			<field name="code">Diners</field>
+			<field name="name">Diners Card</field>
+		</record>
+		
+		<!-- Ecommerce Payment Methods -->
+			
+		<record id="ecommerce_method" model="ecommerce.payment.method">
+			<field name="name">Cheque</field>
+			<field name="shortcut">cheque</field>
+		</record> 
+		
+		<record id="ecommerce_method1" model="ecommerce.payment.method">
+			<field name="name">Paypal</field>
+			<field name="shortcut">paypal</field>
+		</record>
+		 
+		<record id="ecommerce_method2" model="ecommerce.payment.method">
+			<field name="name">Creditcard</field>
+			<field name="shortcut">creditcard</field>
+		</record>
+		
+		<record id="ecommerce_method3" model="ecommerce.payment.method">
+			<field name="name">Banktransaction</field>
+			<field name="shortcut">banwt</field>
+		</record> 
+		
+		
+		<!--Payment Methods Data -->
+		
+		<record id="ecommerce_payment" model="ecommerce.payment">
+			<field name="city">Bruxelles</field>
+			<field name="chequepay_to">Tinysprl Pvt ltd.</field>
+			<field name="zip">1030</field>
+			<field name="street2">Rue des Palais 44</field>
+			<field name="country_id" ref="base.us"/>
+			<field name="street">bte 33</field>
+			<field name="name">cheque</field>
+		</record> 
+
+		<record id="ecommerce_payment1" model="ecommerce.payment">
+			<field name="biz_account">mansur_1219385380_biz@gmail.com</field>
+			<field name="cancel_url">http://192.168.0.102:8080/eshop/cancel_msg</field>
+			<field name="return_url"> http://192.168.0.102:8080/eshop/get_data</field>	
+			<field name="name">paypal</field>
+		</record>
+		
+		<record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop">
+			<field eval="[(6,0,[])]" name="delivery_ids"/>
+			<field name="name">tinyerp</field>
+			<field eval="[(6,0,[])]" name="language_ids"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="[(6,0,[])]" name="currency_ids"/>
+			<field name="shop_id" ref="sale.shop"/>
+		</record>
+
+		<!-- Ecommerce Category Demo 0 -->
+
+		<record id="product_category_laptop0" model="product.category">
+			<field name="name">Laptop</field>
+		</record>
+
+		<record id="product_category_compaq" model="product.category">
+		<field name="parent_id" ref="product_category_laptop0"/>
+		<field name="name">Compaq</field>
+		</record>
+
+
+		<record id="product_category_acer" model="product.category">
+		<field name="parent_id" ref="product_category_laptop0"/>
+		<field name="name">Acer</field>
+		</record>
+
+		<record id="product_category_accesories" model="product.category">
+			<field name="name">Acessories</field>
+		</record>
+
+		<record id="product_category_peripherals" model="product.category">
+			<field name="name">Computer Peripherals</field>
+		</record>
+
+		<record id="product_category_ram" model="product.category">
+		<field name="parent_id" ref="product_category_accesories"/>
+		<field name="name">RAM Computer Acessories</field>
+		</record>
+
+		<record id="product_category_hdd" model="product.category">
+		<field name="parent_id" ref="product_category_accesories"/>
+		<field name="name">Hard disks</field>
+		</record>
+
+		<record id="product_category_mb" model="product.category">
+		<field name="parent_id" ref="product_category_accesories"/>
+		<field name="name">Mother Board</field>
+		</record>
+
+		<!-- Ecommerce Category with parent child relation -->
+
+  		<record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop">
+  			<field name="shop_id" ref="sale.shop"/>
+			<field name="company_id" ref="base.main_company"/>
+		</record>
+
+		<record id="ecommerce_category_tinycomputers0" model="ecommerce.category">
+			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
+			<field name="name">Tiny Computers</field>
+		</record>
+
+		<record id="ecommerce_category_basiccomputers0" model="ecommerce.category">
+			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
+			<field name="category_id" ref="product.product_category_pc"/>
+			<field name="name">Basic Computers</field>
+			<field name="parent_category_id" ref="ecommerce.ecommerce_category_tinycomputers0"/>
+		</record>
+
+		<record id="ecommerce_category_newlaptop0" model="ecommerce.category">
+			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
+			<field name="category_id" ref="ecommerce.product_category_laptop0"/>
+			<field name="name">Laptop</field>
+			<field name="parent_category_id" ref="ecommerce.ecommerce_category_tinycomputers0"/>
+		</record>
+
+		<record id="ecommerce_category_compaq0" model="ecommerce.category">
+			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
+			<field name="category_id" ref="ecommerce.product_category_compaq"/>
+			<field name="name">Compaq</field>
+			<field name="parent_category_id" ref="ecommerce.ecommerce_category_newlaptop0"/>
+		</record>
+
+		<record id="ecommerce_category_acer0" model="ecommerce.category">
+			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
+			<field name="category_id" ref="ecommerce.product_category_acer"/>
+			<field name="name">Acer</field>
+			<field name="parent_category_id" ref="ecommerce.ecommerce_category_newlaptop0"/>
+		</record>
+
+		<record id="ecommerce_category_accesories0" model="ecommerce.category">
+			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
+			<field name="category_id" ref="ecommerce.product_category_accesories"/>
+			<field name="name">All Acessories</field>
+			<field name="parent_category_id" ref="ecommerce.ecommerce_category_tinycomputers0"/>
+		</record>
+
+		<record id="ecommerce_category_ram1" model="ecommerce.category">
+			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
+			<field name="category_id" ref="ecommerce.product_category_ram"/>
+			<field name="name">RAM</field>
+			<field name="parent_category_id" ref="ecommerce.ecommerce_category_accesories0"/>
+		</record>
+
+		<record id="ecommerce_category_hdisk" model="ecommerce.category">
+			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
+			<field name="category_id" ref="ecommerce.product_category_hdd"/>
+			<field name="name">Hard Disk</field>
+			<field name="parent_category_id" ref="ecommerce.ecommerce_category_accesories0"/>
+		</record>
+
+		<record id="ecommerce_category_peripheral" model="ecommerce.category">
+			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
+			<field name="category_id" ref="product.product_category_10"/>
+			<field name="name">Computer Peripherals</field>
+			<field name="parent_category_id" ref="ecommerce.ecommerce_category_tinycomputers0"/>
+		</record>
+
+		<!-- Ecommerce Shop 0 Product  -->
+
+	<record id="product_product_ecom1" model="product.product">
+		<field name="default_code">cq1</field>
+		<field name="list_price">12000.25</field>
+		<field name="standard_price">2500.5</field>
+		<field name="uom_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="type">product</field>
+		<field name="name">Compaq-0028</field>
+		<field name="categ_id" ref="product_category_compaq"/>
+	</record>
+
+	<record id="product_product_ecom2" model="product.product">
+		<field name="default_code">cq2</field>
+		<field name="list_price">1200.25</field>
+		<field name="standard_price">500.5</field>
+		<field name="uom_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="type">product</field>
+		<field name="name">Compaq Presario C707TU</field>
+		<field name="categ_id" ref="product_category_compaq"/>
+	</record>
+
+	<record id="product_product_ecom3" model="product.product">
+		<field name="default_code">cq3</field>
+		<field name="list_price">10200.25</field>
+		<field name="standard_price">2500.5</field>
+		<field name="uom_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="type">product</field>
+		<field name="name">Compaq V3330 TU</field>
+		<field name="categ_id" ref="product_category_compaq"/>
+	</record>
+
+	<record id="product_product_ecom3" model="product.product">
+		<field name="default_code">cq4</field>
+		<field name="list_price">10200.25</field>
+		<field name="standard_price">2500.5</field>
+		<field name="uom_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="type">product</field>
+		<field name="name">Compaq - TU</field>
+		<field name="categ_id" ref="product_category_compaq"/>
+	</record>
+
+	<record id="product_product_ecom4" model="product.product">
+		<field name="default_code">cq4</field>
+		<field name="list_price">20200.25</field>
+		<field name="standard_price">2200.5</field>
+		<field name="uom_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="type">product</field>
+		<field name="name">Compaq Notebook</field>
+		<field name="categ_id" ref="product_category_laptop0"/>
+	</record>
+
+	<record id="product_product_ecom5" model="product.product">
+		<field name="default_code">cq4</field>
+		<field name="list_price">10200.25</field>
+		<field name="standard_price">2230.5</field>
+		<field name="uom_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="type">product</field>
+		<field name="name">Compaq Presario c700</field>
+		<field name="categ_id" ref="product_category_laptop0"/>
+	</record>
+
+	<record id="product_product_ecom6" model="product.product">
+		<field name="default_code">cq4</field>
+		<field name="list_price">40200.25</field>
+		<field name="standard_price">2230.5</field>
+		<field name="uom_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="type">product</field>
+		<field name="name">Compaq Presario V3749AU</field>
+		<field name="categ_id" ref="product_category_laptop0"/>
+	</record>
+
+	<record id="product_product_ecom7" model="product.product">
+		<field name="default_code">cq4</field>
+		<field name="list_price">40200.25</field>
+		<field name="standard_price">2230.5</field>
+		<field name="uom_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="type">product</field>
+		<field name="name">Compaq Presario C786TU</field>
+		<field name="categ_id" ref="product_category_compaq"/>
+	</record>
+
+	<record id="product_product_ecom8" model="product.product">
+		<field name="default_code">cq4</field>
+		<field name="list_price">40200.25</field>
+		<field name="standard_price">2230.5</field>
+		<field name="uom_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="type">product</field>
+		<field name="name">COMPAQ LENOVO</field>
+		<field name="categ_id" ref="product_category_laptop0"/>
+	</record>
+
+	<record id="product_product_lap_acer1" model="product.product">
+		<field name="default_code">la1</field>
+		<field name="list_price">40200.25</field>
+		<field name="standard_price">2230.5</field>
+		<field name="uom_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="type">product</field>
+		<field name="name">The Ferrari 1100</field>
+		<field name="categ_id" ref="product_category_acer"/>
+	</record>
+
+	<record id="product_product_lap_acer2" model="product.product">
+		<field name="default_code">la2</field>
+		<field name="list_price">13000.25</field>
+		<field name="standard_price">2230.5</field>
+		<field name="uom_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="type">product</field>
+		<field name="name">ACER 4021 NWLCi</field>
+		<field name="categ_id" ref="product_category_acer"/>
+	</record>
+
+	<record id="product_product_lap_acer3" model="product.product">
+		<field name="default_code">la3</field>
+		<field name="list_price">23000.25</field>
+		<field name="standard_price">2230.5</field>
+		<field name="uom_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="type">product</field>
+		<field name="name">ACER 4720</field>
+		<field name="categ_id" ref="product_category_acer"/>
+	</record>
+
+	<record id="product_product_lap_acer4" model="product.product">
+		<field name="default_code">la4</field>
+		<field name="list_price">29000.25</field>
+		<field name="standard_price">2330.5</field>
+		<field name="uom_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="type">product</field>
+		<field name="name">NEW Acer Laptop Aspire 4720Z</field>
+		<field name="categ_id" ref="product_category_acer"/>
+	</record>
+
+	<record id="product_product_lap_acer5" model="product.product">
+		<field name="default_code">la5</field>
+		<field name="list_price">29000.25</field>
+		<field name="standard_price">2330.5</field>
+		<field name="uom_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="type">product</field>
+		<field name="name">Acer AS 5315</field>
+		<field name="categ_id" ref="product_category_acer"/>
+	</record>
+
+	<record id="product_product_lap_acer5" model="product.product">
+		<field name="default_code">la6</field>
+		<field name="list_price">29000.25</field>
+		<field name="standard_price">2330.5</field>
+		<field name="uom_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="type">product</field>
+		<field name="name">Acer AS 5315</field>
+		<field name="categ_id" ref="product_category_acer"/>
+	</record>
+
+	<record id="product_product_ram1" model="product.product">
+		<field name="default_code">rm1</field>
+		<field name="list_price">2911.25</field>
+		<field name="standard_price">130.5</field>
+		<field name="uom_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="type">product</field>
+		<field name="name">20gb maxto</field>
+		<field name="categ_id" ref="product_category_ram"/>
+	</record>
+
+	<record id="product_product_lap_ram2" model="product.product">
+		<field name="default_code">rm2</field>
+		<field name="list_price">2911.25</field>
+		<field name="standard_price">130.5</field>
+		<field name="uom_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="type">product</field>
+		<field name="name">120gb maxto</field>
+		<field name="categ_id" ref="product_category_ram"/>
+	</record>
+
+	<record id="product_product_lap_ram3" model="product.product">
+		<field name="default_code">rm3</field>
+		<field name="list_price">2911.25</field>
+		<field name="standard_price">130.5</field>
+		<field name="uom_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="type">product</field>
+		<field name="name">RAM D101GGC </field>
+		<field name="categ_id" ref="product_category_ram"/>
+	</record>
+
+	<record id="product_product_lap_hdd1" model="product.product">
+		<field name="default_code">hdd1</field>
+		<field name="list_price">2911.25</field>
+		<field name="standard_price">130.5</field>
+		<field name="uom_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="type">product</field>
+		<field name="name">80gb harddisk </field>
+		<field name="categ_id" ref="product_category_hdd"/>
+	</record>
+
+	<record id="product_product_lap_hdd2" model="product.product">
+		<field name="default_code">hdd2</field>
+		<field name="list_price">2211.25</field>
+		<field name="standard_price">130.5</field>
+		<field name="uom_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" model="product.uom" ref="product.product_uom_unit"/>
+		<field name="type">product</field>
+		<field name="name">120gb harddisk</field>
+		<field name="categ_id" ref="product_category_hdd"/>
+	</record>
+
+	<!-- State Demo -->
+
+	 	<record model="res.country.state" id="in-ap">
+			<field name="name">Andhra Pradesh</field>
+			<field name="code">ap</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="in-ar">
+			<field name="name">Arunachal Pradesh</field>
+			<field name="code">ar</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="in-as">
+			<field name="name">Assam</field>
+			<field name="code">as</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="in-bi">
+			<field name="name">Bihar</field>
+			<field name="code">bi</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="in-ch">
+			<field name="name">Chhattisgarh</field>
+			<field name="code">ch</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="in-go">
+			<field name="name">Goa</field>
+			<field name="code">go</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="in-gu">
+			<field name="name">Gujarat</field>
+			<field name="code">gu</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record id="res_country_state_bhavnagar0" model="res.country.state">
+			<field eval="&quot;BH&quot;" name="code"/>
+			<field name="country_id" ref="base.in"/>
+			<field eval="&quot;Bhavnagar&quot;" name="name"/>
+		</record>
+		<record model="res.country.state" id="in-hr">
+			<field name="name">Haryana</field>
+			<field name="code">hr</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="in-hp">
+			<field name="name">Himachal Pradesh</field>
+			<field name="code">hp</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="in-jk">
+			<field name="name">Jammu Kashmir</field>
+			<field name="code">jk</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="in-jr">
+			<field name="name">Jharkhand</field>
+			<field name="code">jr</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="in-kr">
+			<field name="name">Karnataka</field>
+			<field name="code">kr</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="in-ke">
+			<field name="name">Kerala</field>
+			<field name="code">ke</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="in-mp">
+			<field name="name">Madhya Pradesh</field>
+			<field name="code">mp</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		 <record model="res.country.state" id="in-mh">
+			<field name="name">Maharashtra</field>
+			<field name="code">mh</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="in-mn">
+			<field name="name">Manipur</field>
+			<field name="code">mn</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="in-me">
+			<field name="name">Meghalaya</field>
+			<field name="code">me</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="in-mz">
+			<field name="name">Mizoram</field>
+			<field name="code">mz</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="in-na">
+			<field name="name">Nagalend</field>
+			<field name="code">na</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="in-or">
+			<field name="name">Orissa</field>
+			<field name="code">or</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		 <record model="res.country.state" id="in-pn">
+			<field name="name">Punjab</field>
+			<field name="code">pn</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="in-rj">
+			<field name="name">Rajashtan</field>
+			<field name="code">rj</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="in-sk">
+			<field name="name">Sikkim</field>
+			<field name="code">sk</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="in-tn">
+			<field name="name">Tamil Nadu</field>
+			<field name="code">tn</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="in-tr">
+			<field name="name">Tripura</field>
+			<field name="code">tr</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="in-up">
+			<field name="name">Uttar Pradesh</field>
+			<field name="code">up</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="in-ut">
+			<field name="name">Uttarakhand</field>
+			<field name="code">ut</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="in-wb">
+			<field name="name">West Bengal</field>
+			<field name="code">wb</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="fr-pa">
+			<field name="name">Paris</field>
+			<field name="code">pa</field>
+			<field name="country_id" model="res.country" ref="base.fr"/>
+		</record>
+		<record model="res.country.state" id="fr-bo">
+			<field name="name">Bordeaux</field>
+			<field name="code">bo</field>
+			<field name="country_id" model="res.country" ref="base.fr"/>
+		</record>
+		<record model="res.country.state" id="fr-li">
+			<field name="name">Lille</field>
+			<field name="code">li</field>
+			<field name="country_id" model="res.country" ref="base.fr"/>
+		</record>
+		<record model="res.country.state" id="fr-ly">
+			<field name="name">Lyon</field>
+			<field name="code">ly</field>
+			<field name="country_id" model="res.country" ref="base.fr"/>
+		</record>
+		<record model="res.country.state" id="fr-re">
+			<field name="name">Rennes</field>
+			<field name="code">re</field>
+			<field name="country_id" model="res.country" ref="base.fr"/>
+		</record>
+		<record model="res.country.state" id="fr-to">
+			<field name="name">Toulouse</field>
+			<field name="code">to</field>
+			<field name="country_id" model="res.country" ref="base.fr"/>
+		</record>
+		<record model="res.country.state" id="fr-ma">
+			<field name="name">Marseille</field>
+			<field name="code">ma</field>
+			<field name="country_id" model="res.country" ref="base.fr"/>
+		</record>
+		<record model="res.country.state" id="fr-st">
+			<field name="name">Strasbourg</field>
+			<field name="code">st</field>
+			<field name="country_id" model="res.country" ref="base.fr"/>
+		</record>
+		<record id="res_country_state_sydny0" model="res.country.state">
+			<field eval="&quot;SY&quot;" name="code"/>
+			<field name="country_id" ref="base.au"/>
+			<field eval="&quot;Sydny&quot;" name="name"/>
+		</record>
+		<record model="res.country.state" id="cn-sag">
+			<field name="name">Shanghai</field>
+			<field name="code">shn</field>
+			<field name="country_id" model="res.country" ref="base.cn"/>
+		</record>
+
+		<!-- GUEST PARTNER CATEGORY -->
+		<record model="res.partner.category" id="guest">
+			<field name="name">Guest</field>
+		</record>
+
+	<!-- Ecommerce Partner 1 -->
+
+		<record id="ecommerce_partner_name1" model="ecommerce.partner">
+			<field name="lang" ref="base.lang_en"></field>
+			<field name="last_name">Fedric</field>
+			<field name="name">Fedric Johnsans</field>
+			<field eval="[(6,0,[ref('base.res_partner_category_0')])]" name="category_ids"/>
+			<field name="company_name">Apociojdn ltd</field>
+			<field eval="1" name="active"/>
+		</record>
+		<record id="ecommerce_partner_address_0" model="ecommerce.partner.address">
+			<field name="username">Thomas Passot</field>
+			<field name="city">Louvain-la-Neuve</field>
+			<field name="fax">4312345</field>
+			<field name="zip">1348</field>
+			<field name="mobile">8986555555</field>
+			<field name="country_id" ref="base.fr"/>
+			<field name="state_id" ref="fr-pa"/>
+			<field name="phone">(+32).10.45.17.73</field>
+			<field name="street">Rue de l'Angelique, 1</field>
+			<field name="partner_id" ref="ecommerce_partner_name1"></field>
+			<field name="email">info@mediapole.net</field>
+		</record>
+
+	<!-- Ecommerce Partner 2 -->
+
+		<record id="ecommerce_partner_name2" model="ecommerce.partner">
+			<field name="lang" ref="base.lang_en"></field>
+			<field  name="last_name">Pathric</field>
+			<field  name="name">Laser Vinnie</field>
+			<field eval="[(6,0,[ref('base.res_partner_category_0')])]" name="category_ids"/>
+			<field name="company_name">DHL Express</field>
+			<field eval="1" name="active"/>
+		</record>
+		<record id="ecommerce_partner_address_1" model="ecommerce.partner.address">
+			<field name="username">Laurent Jacot</field>
+			<field  name="city">Avignon CEDEX 09</field>
+			<field  name="fax">435345465</field>
+			<field name="zip">84911</field>
+			<field name="mobile">9898353333</field>
+			<field  name="street2">85 rue du traite de Rome</field>
+			<field name="country_id" ref="base.fr"/>
+			<field  name="phone">(+33)4.32.74.10.57</field>
+			<field name="street">85 rue du traite de Rome</field>
+			<field name="state_id" ref="fr-pa"/>
+			<field name="partner_id" ref="ecommerce_partner_name2"/>
+			<field name="type">default</field>
+			<field name="email">contact@tecsas.fr</field>
+		</record>
+		
+		<record id="ecommerce_partner_address_22" model="ecommerce.partner.address">
+			<field name="username">James Laith</field>
+			<field name="city">Champs sur Marne</field>
+			<field name="fax">43453456</field>
+			<field name="zip">77420</field>
+			<field name="mobile">74783847655</field>
+			<field name="partner_id" ref="ecommerce_partner_name2"/>
+			<field name="street2">opp town hall</field>
+			<field name="country_id" ref="base.au"/>
+			<field name="state_id" ref="res_country_state_sydny0"/>
+			<field name="phone">+33 1 64 61 04 01</field>
+			<field name="street">12 rue Albert Einstein</field>
+			<field name="type">invoice</field>
+			<field name="email">info@axelor.com</field>
+		</record>
+
+	<!-- Ecommerce Partner 3 -->
+
+		<record id="ecommerce_partner_name3" model="ecommerce.partner">
+			<field name="lang" ref="base.lang_en"></field>
+			<field name="last_name">Passot</field>
+			<field name="name">Thomas Passot</field>
+			<field eval="[(6,0,[ref('base.res_partner_category_0')])]" name="category_ids"/>
+			<field name="company_name">Service Company</field>
+			<field eval="1" name="active"/>
+		</record>
+
+		<record id="ecommerce_partner_address_2" model="ecommerce.partner.address">
+			<field  name="username">Magazin BML 1</field>
+			<field  name="city">Taiwan</field>
+			<field  name="fax">4343566</field>
+			<field  name="zip">23410</field>
+			<field  name="mobile">9787867565</field>
+			<field name="country_id" ref="base.cn"/>
+			<field  name="phone">54+56357658</field>
+			<field  name="street">31 Hong Kong street</field>
+			<field name="state_id" ref="cn-sag"/>
+			<field name="partner_id" ref="ecommerce_partner_name3"/>
+			<field  name="type">default</field>
+			<field name="email">contact@syleam.fr</field>
+		</record>
+		
+	<!-- Ecommerce Partner 4 -->
+
+		<record id="ecommerce_partner_name4" model="ecommerce.partner">
+			<field name="lang" ref="base.lang_en"></field>
+			<field name="last_name">jacot</field>
+			<field name="name">Laurent Oaurent</field>
+			<field eval="[(6,0,[ref('base.res_partner_category_0')])]" name="category_ids"/>
+			<field name="company_name">jacobandtare</field>
+			<field eval="1" name="active"/>
+		</record>
+		<record id="ecommerce_partner_address_11" model="ecommerce.partner.address">
+			<field name="username">Karine Lesbrouffe</field>
+			<field name="city">Liege</field>
+			<field name="zip">6985</field>
+			<field name="mobile">2214555467</field>
+			<field name="partner_id" ref="ecommerce_partner_name4"/>
+			<field name="street2">2 Impasse de la Soif</field>
+			<field name="country_id" ref="base.be"/>
+			<field name="phone">4785552</field>
+			<field name="street">Nr la dimass</field>
+			<field name="state_id" ref="fr-re"/>
+			<field name="type">invoice</field>
+		</record>
+	
+		<record id="ecommerce_partner_address_12" model="ecommerce.partner.address">
+			<field name="username">Arthur Grosbonnet</field>
+			<field name="city">Paris</field>
+			<field name="zip">75016</field>
+			<field name="mobile">432326466</field>
+			<field name="partner_id" ref="ecommerce_partner_name4"/>
+			<field name="street2">1 rue Rockfeller</field>
+			<field name="country_id" ref="base.be"/>
+			<field name="phone">1234534546</field>
+			<field name="street">Rockfeller</field>
+			<field name="state_id" ref="fr-st"/>
+			<field name="type">delivery</field>
+			<field name="email">info@mediapole.net</field>
+		</record>
+	
+		<record id="ecommerce_partner_address_13" model="ecommerce.partner.address">
+			<field name="username">Wong</field>
+			<field name="city">Hong Kong</field>
+			<field name="zip">23540</field>
+			<field name="mobile">23435777777</field>
+			<field name="partner_id" ref="ecommerce_partner_name4"/>
+			<field name="country_id" ref="base.cn"/>
+			<field name="phone"></field>
+			<field name="street">56 Beijing street</field>
+			<field name="state_id" ref="cn-sag"/>
+			<field name="type">default</field>
+			<field name="email">wongmrt@wisp.au</field>
+		</record>
+
+	<!-- Sale Order 1-->
+
+		<record id="ecommerce_saleorder_so0" model="ecommerce.saleorder">
+			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
+			<field name="name">SO/005</field>
+			<field name="epartner_shipping_id" ref="ecommerce.ecommerce_partner_address_1"/>
+			<field name="epartner_add_id" ref="ecommerce.ecommerce_partner_address_1"/>
+			<field name="epartner_id" ref="ecommerce.ecommerce_partner_name2"/>
+			<field name="pricelist_id" ref="purchase.list0"/>
+			<field name="epartner_invoice_id" ref="ecommerce.ecommerce_partner_address_22"/>
+		</record>
+		<record id="ecommerce_order_line_pc0" model="ecommerce.order.line">
+			<field name="product_id" ref="product.product_product_pc2"/>
+			<field name="product_uom_id" ref="product.product_uom_unit"/>
+			<field name="price_unit">50000.0</field>
+			<field eval="3.0" name="product_qty"/>
+			<field name="name">PC</field>
+		</record>
+		<record id="ecommerce_order_line_mouse0" model="ecommerce.order.line">
+			<field name="product_id" ref="product.product_product_25"/>
+			<field name="product_uom_id" ref="product.product_uom_unit"/>
+			<field name="price_unit">10000.0</field>
+			<field name="product_qty">70.0</field>
+			<field name="name">Mouse</field>
+		</record>
+
+		<workflow action="signal_call" model="ecommerce.saleorder" ref="ecommerce_saleorder_so0"/>
+
+	<!-- Sale Order 2-->
+
+		<record id="ecommerce_saleorder_so1" model="ecommerce.saleorder">
+			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
+			<field name="name">SO/007</field>
+			<field name="epartner_shipping_id" ref="ecommerce.ecommerce_partner_address_12"/>
+			<field name="epartner_add_id" ref="ecommerce.ecommerce_partner_address_13"/>
+			<field name="epartner_id" ref="ecommerce.ecommerce_partner_name4"/>
+			<field name="pricelist_id" ref="purchase.list0"/>
+			<field name="epartner_invoice_id" ref="ecommerce.ecommerce_partner_address_11"/>
+		</record>
+		<record id="ecommerce_order_line_processor0" model="ecommerce.order.line">
+			<field name="product_id" ref="product.product_product_cpu_gen"/>
+			<field name="product_uom_id" ref="product.product_uom_unit"/>
+			<field name="price_unit">12000.0</field>
+			<field name="product_qty">16.0</field>
+			<field name="name">Processor</field>
+		</record>
+
+		<workflow action="signal_call" model="ecommerce.saleorder" ref="ecommerce_saleorder_so1"/>
+
+	<!--Currency Rate-->
+
+		<record id="res_currency_aud0" model="res.currency">
+			<field name="code">au</field>
+			<field name="name">AUD</field>
+			<field name="rounding">1.0</field>
+			<field eval="1" name="active"/>
+			<field eval="1" name="accuracy"/>
+		</record>
+		
+		<record id="res_currency_rate_0" model="res.currency.rate">
+			<field name="currency_id" ref="res_currency_aud0"/>
+			<field name="rate">35.0</field>
+		</record>
+		
+		<!-- Search Parameters -->
+	
+		<record id="ecommerce_search_price0" model="ecommerce.search">
+			<field name="code" ref="product.field_product_template_list_price"/>
+			<field name="name">Price</field>
+		</record>
+	
+		<record id="ecommerce_search_name0" model="ecommerce.search">
+			<field name="code" ref="product.field_product_template_name"/>
+			<field name="name">Name</field>
+		</record>
+	
+		
+		<record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop">
+			<field eval="[(6,0,[ref('base.EUR'),ref('res_currency_aud0'),ref('base.EUR'),ref('base.CAD'),ref('base.USD')])]" name="currency_ids"/>
+			<field eval="[(6,0,[ref('ecommerce_payment'),ref('ecommerce_payment1')])]" name="payment_method_ids"/>
+			<field eval="[(6,0,[ref('base.lang_en')])]" name="language_ids"/>
+			<field eval="[(6,0,[ref('ecommerce_search_name0'),ref('ecommerce_search_price0')])]" name="search_ids"/>
+			<field eval="[(6,0,[ref('delivery.delivery_grid')])]" name="delivery_ids"/>
+		</record>
+</data>
+</openerp>

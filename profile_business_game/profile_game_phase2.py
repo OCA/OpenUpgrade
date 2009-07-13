@@ -148,8 +148,8 @@ bank_loan()
 class profile_game_phase_two(osv.osv):
     _name="profile.game.phase2"
 
-    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context={}, toolbar=False):
-        res = super(profile_game_phase_two, self).fields_view_get(cr, uid, view_id, view_type, context=context, toolbar=toolbar)
+    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context={}, toolbar=False, submenu=False):
+        res = super(profile_game_phase_two, self).fields_view_get(cr, uid, view_id, view_type, context=context, toolbar=toolbar, submenu=submenu)
         p_id = self.search(cr, uid, [])
         p_br = self.browse(cr, uid, p_id)
         for rec in p_br:
@@ -522,12 +522,12 @@ class profile_game_phase_two(osv.osv):
         data = data1 = {}
         data['form'] = {}
         data1['form'] = {}
-        closing_journal = self.pool.get('account.journal').search(cr, uid, [('code','ilike','JC')])[0]
+        opening_journal = self.pool.get('account.journal').search(cr, uid, [('code','ilike','JO')])[0]
         period_id = self.pool.get('account.period').search(cr, uid, [('fiscalyear_id', '=', new_fy)])[0]
         from account.wizard import wizard_fiscalyear_close,wizard_fiscalyear_close_state
         data['form']['period_id'] = period_id
         data['form']['report_name'] = 'End of Fiscal Year Entry'
-        data['form']['journal_id'] = closing_journal
+        data['form']['journal_id'] = opening_journal
         data['form']['fy_id'] = close_fy
         data['form']['fy2_id'] = new_fy
         data['form']['sure'] = True
@@ -724,9 +724,13 @@ class profile_game_phase_two(osv.osv):
         print "continue_next_year"
         fiscal_year_id = self.pool.get('account.fiscalyear').search(cr, uid, [('state','=','draft')])
         fy = self.pool.get('account.fiscalyear').browse(cr, uid, fiscal_year_id)[0]
-        partner_ids = self.pool.get('res.partner').search(cr,uid,[])
-        prod_ids = self.pool.get('product.product').search(cr,uid,[])
-        shop = self.pool.get('sale.shop').search(cr,uid,[])
+        cr.execute("select id from res_partner")
+        partner_ids = map(lambda x: x[0], cr.fetchall())
+        cr.execute("select id from product_product")
+        prod_ids = map(lambda x: x[0], cr.fetchall())
+        cr.execute("select id from sale_shop")
+        shop = map(lambda x: x[0], cr.fetchall())
+
         wf_service = netsvc.LocalService('workflow')
         cnt = 0
         for period in fy.period_ids:
@@ -736,6 +740,9 @@ class profile_game_phase_two(osv.osv):
                                 ['invoice', 'delivery', 'contact'])
                 pricelist = self.pool.get('res.partner').browse(cr, uid, partner_ids[partner],
                                 context).property_product_pricelist.id
+                fpos = self.pool.get('res.partner').browse(cr, uid, partner_ids[partner],
+                                context).property_account_position
+                fpos_id = fpos and fpos.id or False
                 od = self.get_date(cr, uid, context)
                 vals = {
                         'shop_id': shop[0],
@@ -745,13 +752,14 @@ class profile_game_phase_two(osv.osv):
                         'partner_order_id': partner_addr['contact'],
                         'partner_shipping_id': partner_addr['delivery'],
                         'order_policy': 'postpaid',
-                        'date_order':od
+                        'date_order':od,
+                        'fiscal_position': fpos_id
                     }
                 new_id = self.pool.get('sale.order').create(cr, uid, vals)
                 for j in range(0,random.randrange(1,5)):
                     product = random.randrange(len(prod_ids))
                     value = self.pool.get('sale.order.line').product_id_change(cr, uid, [], pricelist,
-                                    prod_ids[product], qty=i, partner_id=partner_ids[partner])['value']
+                                    prod_ids[product], qty=i, partner_id=partner_ids[partner], fiscal_position=fpos_id)['value']
                     value['product_id'] = prod_ids[product]
                     value['product_uom_qty'] = j + 100
                     value['order_id'] = new_id
@@ -790,93 +798,6 @@ class profile_game_phase_two(osv.osv):
         return super(account.period,self).find(cr, uid, dt, context)
 
 profile_game_phase_two()
-
-class profile_game_config_wizard(osv.osv_memory):
-    _name='profile.game.config.wizard'
-    _columns = {
-        'state':fields.selection([('3','3'),('4','4')],'Number of Players',required=True),
-        'finance_name':fields.char('Name of Financial Manager',size='64', required=True),
-        'finance_email':fields.char('Email of Financial Manager',size='64'),
-        'hr_name':fields.char('Name of Human Resource Manager',size='64', readonly=True,required=False,states={'4':[('readonly',False),('required',True)]}),
-        'hr_email':fields.char('Email of Human Resource Manager',size='64',readonly=True,required=False,states={'4':[('readonly',False),('required',False)]}),
-        'logistic_name':fields.char('Name of Logistic Manager',size='64', required=True),
-        'logistic_email':fields.char('Email of Logistic Manager',size='64'),
-        'sale_name':fields.char('Name of Sales Manager',size='64', required=True),
-        'sale_email':fields.char('Email of Sales Manager',size='64'),
-        'objectives':fields.selection([
-            ('on_max_turnover','Maximise Turnover of Last Year'),
-            ('on_max_cumulative','Maximise Cumulative Benefit'),
-            ('on_max_products_sold','Maximise Number of Products Sold')],'Objectives',required=True),
-        'years':fields.selection([
-            ('3','3 Years (40 minutes)'),
-            ('5','5 Years (1 hour)'),
-            ('7','7 Years (1 hours and 20 minutes)')],'Number of Turns',required=True),
-        'difficulty':fields.selection([
-            ('easy','Easy'),
-            ('medium','Medium'),
-            ('hard','Hard')],'Difficulty',required=True),
-    }
-    _defaults = {
-        'difficulty': lambda *args: 'medium',
-        'years': lambda *args: '5',
-        'objectives': lambda *args: 'on_max_turnover',
-        'state': lambda *args: '3',
-    }
-
-
-    def action_run(self, cr, uid, ids, context = None):
-        game_obj = self.pool.get('profile.game.phase2')
-        fiscal_obj = self.pool.get('account.fiscalyear')
-        user_obj = self.pool.get('res.users')
-        emp_obj = self.pool.get('hr.employee')
-        for res in self.read(cr, uid, ids, context = context):
-            if res.get('id',False):
-                del res['id']
-            game_vals = {
-                'state':res['state'],
-                'objectives':res['objectives'],
-                'years':res['years'],
-                'difficulty':res['difficulty'],
-            }
-            players = int(res['state'])
-            game_id = game_obj.create(cr,uid,game_vals,context=context)
-            for user_name in ['finance','sale','logistic','hr']:
-                if user_name == 'hr' and players < 4:
-                    continue
-                user_ids = user_obj.name_search(cr, uid, user_name)
-                user_id = len(user_ids) and user_ids[0][0] or False
-                if user_name == 'finance':
-                    game_vals['finance_user_id'] = user_id
-                if user_name == 'sale':
-                    game_vals['sales_user_id'] = user_id
-                if user_name == 'logistic':
-                    game_vals['logistic_user_id'] = user_id
-                if user_name == 'hr':
-                    game_vals['hr_user_id'] = user_id
-                game_obj.write(cr, uid, game_id, game_vals)
-                name = res.get(user_name+'_name','')
-                if name:
-                    email = res.get(user_name+'_email','')
-                    emp_ids = emp_obj.search(cr,uid,[('user_id','=',user_id)])
-                    if not len(emp_ids):
-                        emp_obj.create(cr,uid,{
-                                'name':name.strip(),
-                                'work_email':email
-                        })
-                    else:
-                        emp_obj.write(cr,uid,emp_ids,{
-                                'name':name.strip(),
-                                'work_email':email
-                        })
-                    user_obj.write(cr,uid,[user_id],{'name':name.strip()})
-        return {
-                'view_type': 'form',
-                "view_mode": 'form',
-                'res_model': 'ir.actions.configuration.wizard',
-                'type': 'ir.actions.act_window',
-                'target':'new',
-            }
-profile_game_config_wizard()
 
 class mrp_production(osv.osv):
     _inherit = 'mrp.production'

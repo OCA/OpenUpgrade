@@ -27,20 +27,24 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
 {
-    "name" : "Base",
-    "version" : "1.0",
+    "name" : "Maintenance Editor",
+    "version" : "1.1",
     "author" : "Tiny",
     "category" : "Generic Modules/Base",
-    "depends" : ["base"],
+    "depends" : ["base", 'product', 'crm'],
     "init_xml" : [],
-    "demo_xml" : ["maintenance_editor_demo.xml"],
+    "demo_xml" : [
+    ],
     "description": """
     module to manage maintenance contracts:
     """,
     "update_xml" : [
+        "security/maintenance_security.xml",
         "security/ir.model.access.csv",
         "maintenance_editor_view.xml",
-        "maintenance_sequence.xml"
+        "maintenance_sequence.xml",
+        "maintenance_report.xml",
+        "maintenance_wizard.xml",
         ],
     "active": False,
     "installable": True

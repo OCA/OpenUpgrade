@@ -1,0 +1,300 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+   <template pageSize="(1120.0,770.0)" title="Test" author="Martin Simon" allowSplitting="20" >
+    <pageTemplate id="first">
+      <frame id="first" x1="22.0" y1="15.0" width="1080" height="680"/>
+			<pageGraphics>
+				<setFont name="Helvetica-Bold" size="9"/>
+				<!--COL 1-->
+				<drawString x="1.3cm" y="25.50cm">[[ get_company(data['form']) ]]</drawString>
+				<!--COL 2-->
+				<setFont name="Helvetica" size="9"/>
+				<drawString x="1.3cm" y="0.50cm"> [[ formatLang(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),date_time = True) ]]</drawString>
+				<drawString x="37.20cm" y="0.50cm">Page <pageNumber/></drawString>
+
+			    <lineMode width="0.7"/>
+				<lines>1.3cm 24.9cm 38.3cm 24.9cm</lines>
+				<setFont name="Helvetica" size="8"/>
+			  </pageGraphics>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table_Title_Report">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table_Company_name">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table_Heading_Title">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#cccccc" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#cccccc" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#cccccc" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="3,0" stop="3,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#cccccc" start="3,0" stop="3,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#cccccc" start="3,0" stop="3,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="3,-1" stop="3,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table_debit_credit">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#cccccc" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#cccccc" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="3,0" stop="3,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#cccccc" start="3,0" stop="3,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="3,-1" stop="3,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="4,0" stop="4,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#cccccc" start="4,0" stop="4,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="4,-1" stop="4,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="5,0" stop="5,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#cccccc" start="5,0" stop="5,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="5,-1" stop="5,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="6,0" stop="6,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#cccccc" start="6,0" stop="6,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#cccccc" start="6,0" stop="6,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="6,-1" stop="6,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table_Account_Detail_line">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      
+      <lineStyle kind="LINEAFTER" colorName="#cccccc" start="6,-1" stop="6,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table_Difference_Op_bal">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table_Final_Summation">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#cccccc" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#cccccc" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#cccccc" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="3,0" stop="3,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#cccccc" start="3,0" stop="3,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="3,-1" stop="3,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="4,0" stop="4,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#cccccc" start="4,0" stop="4,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="4,-1" stop="4,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="5,0" stop="5,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#cccccc" start="5,0" stop="5,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="5,-1" stop="5,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="6,0" stop="6,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#cccccc" start="6,0" stop="6,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#cccccc" start="6,0" stop="6,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="6,-1" stop="6,-1"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P2" fontName="Helvetica-Oblique" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="Standard" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="LEFT"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="10.0" leading="13" alignment="LEFT" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="Text body" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Helvetica" fontSize="12.0" leading="15" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Helvetica-Oblique" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Helvetica" fontSize="9.0" leading="11" alignment="LEFT"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Heading" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Footer" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="LEFT"/>
+    <paraStyle name="Horizontal Line" fontName="Times-Roman" fontSize="6.0" leading="8" alignment="LEFT" spaceBefore="0.0" spaceAfter="14.0"/>
+    <paraStyle name="terp_header" fontName="Helvetica-Bold" fontSize="15.0" leading="19" alignment="LEFT" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="Heading 9" fontName="Helvetica-Bold" fontSize="75%" leading="NaN" alignment="LEFT" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_tblheader_General" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_tblheader_Details" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_default_8" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Bold_8" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_tblheader_General_Centre" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_tblheader_General_Right" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_tblheader_Details_Centre" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="CENTER" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_tblheader_Details_Right" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_default_Right_8" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Centre_8" fontName="Helvetica" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_header_Right" fontName="Helvetica-Bold" fontSize="15.0" leading="19" alignment="LEFT" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_header_Centre" fontName="Helvetica-Bold" fontSize="12.0" leading="15" alignment="CENTER" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_default_address" fontName="Helvetica" fontSize="10.0" leading="13" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_9" fontName="Helvetica" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Bold_9" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Bold_9_Right" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Centre_9" fontName="Helvetica" fontSize="9.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Right_9" fontName="Helvetica" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Right_Bold_9" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_2" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+  </stylesheet>
+  <images/>
+  <story>
+    <blockTable colWidths="1049.0" style="Table_Title_Report">
+      <tr>
+        <td>
+          <para style="terp_header_Centre">Trial Balance</para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="1049.0" style="Table_Company_name">
+      <tr>
+        <td>
+          <para style="terp_header_Centre">From : [[ data['form']['date_from'] ]] To: [[ data['form']['date_to'] ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <section>
+    <blockTable colWidths="262.25,262.25,262.25,262.25" style="Table_Heading_Title" repeatRows="1">
+      <tr>
+        <td>
+          <para style="terp_tblheader_Details_Centre">Particulars</para>
+        </td>
+        <td>
+          <para style="terp_tblheader_Details_Centre">Opening Balance</para>
+        </td>
+        <td>
+          <para style="terp_tblheader_Details_Centre">Transaction</para>
+        </td>
+        <td>
+          <para style="terp_tblheader_Details_Centre">Closing Balance</para>
+        </td>
+      </tr>
+      <tr>
+      <td>
+	    <blockTable colWidths="257.60,131.00,131.00,131.00,131.00,131.00,131.00" style="Table_debit_credit" repeatRows="1">
+	      <tr>
+	        <td>
+	          <para style="terp_tblheader_Details_Centre">
+	            <font color="white"> </font>
+	          </para>
+	        </td>
+	        <td>
+	          <para style="terp_tblheader_Details_Centre">Debit</para>
+	        </td>
+	        <td>
+	          <para style="terp_tblheader_Details_Centre">Credit</para>
+	        </td>
+	        <td>
+	          <para style="terp_tblheader_Details_Centre">Debit</para>
+	        </td>
+	        <td>
+	          <para style="terp_tblheader_Details_Centre">Credit</para>
+	        </td>
+	        <td>
+	          <para style="terp_tblheader_Details_Centre">Debit</para>
+	        </td>
+	        <td>
+	          <para style="terp_tblheader_Details_Centre">Credit</para>
+	        </td>
+	      </tr>
+	    </blockTable>
+	  </td>
+	  </tr>
+	  <tr>
+	  <td>
+	    <para style="terp_default_2"><font face="Times-Roman">[[ repeatIn(get_lines(data['form']), 'a') ]]</font></para>
+	    <blockTable colWidths="257.60,131.00,131.00,131.00,131.00,131.00,131.00" style="Table_Account_Detail_line">
+	      <tr>
+	        <td>
+	          <para style="terp_default_9">[[ a['child']=='1' and ( setTag('para','para',{'style':'terp_default_Bold_9'})) ]]<font color="white">[[  '. '*(a['level']-3) ]]</font><font>[[ a['name'] ]]</font></para>
+	        </td>
+	        <td>
+	          <para style="terp_default_Right_9">[[ a['o_debit'] ]]</para>
+	        </td>
+	        <td>
+	          <para style="terp_default_Right_9">[[ a['o_credit'] ]]</para>
+	        </td>
+	        <td>
+	          <para style="terp_default_Right_9">[[ a['t_debit'] ]]</para>
+	        </td>
+	        <td>
+	          <para style="terp_default_Right_9">[[ a['t_credit'] ]]</para>
+	        </td>
+	        <td>
+	          <para style="terp_default_Right_9">[[ a['c_debit'] ]]</para>
+	        </td>
+	        <td>
+	          <para style="terp_default_Right_9">[[ a['c_credit'] ]]</para>
+	        </td>
+	      </tr>
+	    </blockTable>
+	 </td>
+	 </tr>
+     </blockTable>
+	</section>
+    <blockTable colWidths="262.25,131.12,131.12,131.12,131.12,131.12,131.12" style="Table_Final_Summation">
+      <tr>
+        <td>
+          <para style="terp_default_Right_9">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="terp_default_Right_9">[[ '%.2f' % sum_debit() or 0.0 ]]</para>
+        </td>
+        <td>
+          <para style="terp_default_Right_9">[[ '%.2f' % sum_credit() or 0.0 ]]</para>
+        </td>
+        <td>
+          <para style="terp_default_Right_9">[[ '%.2f' % sum_tra_debit() or 0.0 ]]</para>
+        </td>
+        <td>
+          <para style="terp_default_Right_9">[[ '%.2f' % sum_tra_credit() or 0.0 ]]</para>
+        </td>
+        <td>
+          <para style="terp_default_Right_9">[[ '%.2f' % sum_clo_debit() or 0.0 ]]</para>
+        </td>
+        <td>
+          <para style="terp_default_Right_9">[[ '%.2f' % sum_clo_credit() or 0.0 ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+   	<blockTable colWidths="262.25,131.12,131.12,131.12,131.12,131.12,131.12" style="Table_Difference_Op_bal">
+   	 <tr>
+        <td>
+		<para style="terp_default_Bold_9">Difference of Opening Balance :</para>        
+		</td>
+        <td>
+          <para style="terp_default_Right_Bold_9">[[ op_diff()['type']== 'dr' and '%.2f' % op_diff()['bal'] or '']]</para>
+        </td>
+        <td>
+          <para style="terp_default_Right_Bold_9">[[ op_diff()['type']== 'cr' and '%.2f' % op_diff()['bal'] or '']]</para>
+        </td>
+        <td>
+          <para style="terp_default_Right_9"></para>
+        </td>
+        <td>
+          <para style="terp_default_Right_9"></para>
+        </td>
+        <td>
+          <para style="terp_default_Right_9"></para>
+        </td>
+        <td>
+          <para style="terp_default_Right_9"></para>
+        </td>
+      </tr>
+	</blockTable>
+    <para style="terp_default_2">
+      <font color="white"> </font>
+    </para>
+  </story>
+</document>

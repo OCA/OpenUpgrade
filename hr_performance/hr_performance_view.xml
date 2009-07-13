@@ -11,6 +11,7 @@
 						<field name="reviewer_id"/>
 						<field name="date_from" attrs="{'readonly':[('state','=','done')]}"/>
 						<field name="date_to" attrs="{'readonly':[('state','=','done')]}"/>
+						<field name="user_id"/>
 					</group>
 					<field name="performance_id" nolabel="1" colspan="4" attrs="{'readonly':[('state','=','done')]}">
 						<form string="Performance Lines">
@@ -28,8 +29,8 @@
 					</field>
 					<group col="4" colspan="4">
 						<field name="state"/>
-						<button string="Get Employee List" type="object" name="fill_employee_list" states="new"/>
-						<button string="Confirm" type="object" name="change_sate" states="saved" confirm="Are you sure to confirm this record." />
+						<button string="Get Employee List" name="get_employee_list" states="new"/>
+						<button string="Confirm" name="confirm_review" states="saved" confirm="Are you sure to confirm this record." />
 					</group>
 				</form>
 			</field>

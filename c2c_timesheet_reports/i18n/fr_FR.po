@@ -1,0 +1,264 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* c2c_timesheet_reports
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-04-20 11:22:24+0000\n"
+"PO-Revision-Date: 2009-04-20 11:22:24+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: c2c_timesheet_reports
+#: constraint:ir.model:0
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr "Le nom de l'objet doit commencer avec x_ et ne pas contenir de charactères spéciaux !"
+
+#. module: c2c_timesheet_reports
+#: selection:reminder_config,init,interval_type:0
+msgid "Week(s)"
+msgstr "Semaine(s)"
+
+#. module: c2c_timesheet_reports
+#: model:ir.module.module,shortdesc:c2c_timesheet_reports.module_name_translation
+msgid "Timesheet Reports"
+msgstr "Rapport de feuille de pointage"
+
+#. module: c2c_timesheet_reports
+#: model:ir.model,name:c2c_timesheet_reports.model_c2c_timesheet_reports_reminder
+msgid "Handle the scheduling of messages"
+msgstr "Gèrer la plannification des messages"
+
+#. module: c2c_timesheet_reports
+#: model:ir.module.module,description:c2c_timesheet_reports.module_name_translation
+msgid "\n"
+"        Timesheet Reports Module:\n"
+"            * Add a report \"/HR/report/Timesheets/Timesheet Status\" that display the timesheet status for each user: \"confirmed\", \"draft\", \"missing\". \n"
+"              It displays 5 periods' status previous to a given date\n"
+"            * Add a field \"ended\" to the employee form to define when the employee stopped working for the company\n"
+"            * Add a tool \"/HR/Configuration/Timesheet Reminder\" to send automatics emails to those who did not complete their timesheet and add a boolean field to employees to define if they should receive this message or not\n"
+"    "
+msgstr ""
+
+#. module: c2c_timesheet_reports
+#: view:hr.employee:0
+msgid "Timesheet report"
+msgstr "Rapport de feuille de pointage"
+
+#. module: c2c_timesheet_reports
+#: wizard_view:reminder_config,init:0
+msgid "Timesheet reminder Configuration"
+msgstr "Configuration des rapelles de pointage"
+
+#. module: c2c_timesheet_reports
+#: wizard_view:c2c_timesheet_reports.timesheet_status,init:0
+msgid "Filter by a Company (leave empty to select all companies)"
+msgstr "Filtrer par compagnie"
+
+#. module: c2c_timesheet_reports
+#: code:addons/c2c_timesheet_reports/reminder.py:0
+#: model:ir.ui.menu,name:c2c_timesheet_reports.menu_reminder_config
+#, python-format
+msgid "Timesheet Reminder"
+msgstr "Rappelle de pointage"
+
+#. module: c2c_timesheet_reports
+#: wizard_view:c2c_timesheet_reports.timesheet_status,init:0
+msgid "timesheet Status"
+msgstr "Statuts des pointages"
+
+#. module: c2c_timesheet_reports
+#: wizard_button:reminder_config,init,save:0
+msgid "Save"
+msgstr "Sauver"
+
+#. module: c2c_timesheet_reports
+#: wizard_view:c2c_timesheet_reports.timesheet_status,init:0
+msgid "Parameter"
+msgstr "Paramètre"
+
+#. module: c2c_timesheet_reports
+#: selection:reminder_config,init,interval_type:0
+msgid "Day(s)"
+msgstr "Jour(s)"
+
+#. module: c2c_timesheet_reports
+#: wizard_view:reminder_config,init:0
+msgid "Then send message every"
+msgstr "Envoie le message chaque"
+
+#. module: c2c_timesheet_reports
+#: wizard_field:c2c_timesheet_reports.timesheet_status,init,company:0
+msgid "Company"
+msgstr "Compagnie"
+
+#. module: c2c_timesheet_reports
+#: wizard_view:c2c_timesheet_reports.timesheet_status,init:0
+msgid "End Date (display the 5 timesheets previous to this date )"
+msgstr "Date de fin (affiche les 5 dèrnières feuilles avant cette date)"
+
+#. module: c2c_timesheet_reports
+#: wizard_field:reminder_config,init,nextcall:0
+msgid "Next Run"
+msgstr "Prochain passage"
+
+#. module: c2c_timesheet_reports
+#: model:ir.actions.wizard,name:c2c_timesheet_reports.wizard_reminder_config
+msgid "Timesheet Reminder Configuration"
+msgstr "Configuration des rappelles de pointages"
+
+#. module: c2c_timesheet_reports
+#: rml:c2c_timesheet_reports.timesheet_status:0
+#: model:ir.actions.report.xml,name:c2c_timesheet_reports.timesheet status
+#: model:ir.actions.wizard,name:c2c_timesheet_reports.wizard_timesheet_status
+msgid "Timesheet Status"
+msgstr "Statuts de feuilles de pointage"
+
+#. module: c2c_timesheet_reports
+#: wizard_field:reminder_config,init,interval_number:0
+msgid "Periodicity Quantity"
+msgstr "Quantité de la périodicité"
+
+#. module: c2c_timesheet_reports
+#: wizard_field:c2c_timesheet_reports.timesheet_status,init,date:0
+msgid "End Date"
+msgstr "Date de fin"
+
+#. module: c2c_timesheet_reports
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr "XML non valide pour l'architecture de la vue"
+
+#. module: c2c_timesheet_reports
+#: wizard_field:reminder_config,init,interval_type:0
+msgid "Periodicity Unit"
+msgstr "Unité de périodicité"
+
+#. module: c2c_timesheet_reports
+#: rml:c2c_timesheet_reports.timesheet_status:0
+msgid "Employees"
+msgstr "Employée"
+
+#. module: c2c_timesheet_reports
+#: wizard_view:c2c_timesheet_reports.timesheet_status,init:0
+msgid "Filter"
+msgstr "Filtrer"
+
+#. module: c2c_timesheet_reports
+#: wizard_field:reminder_config,init,reminder_active:0
+msgid "Reminder Active"
+msgstr "Rappel actif"
+
+#. module: c2c_timesheet_reports
+#: wizard_button:c2c_timesheet_reports.timesheet_status,init,print:0
+msgid "Print Status"
+msgstr "Imprimer le statut"
+
+#. module: c2c_timesheet_reports
+#: rml:c2c_timesheet_reports.timesheet_status:0
+msgid "Page"
+msgstr "Page"
+
+#. module: c2c_timesheet_reports
+#: wizard_view:reminder_config,run:0
+msgid "Timesheet reminder Run"
+msgstr "Lancer les rappels"
+
+#. module: c2c_timesheet_reports
+#: code:addons/c2c_timesheet_reports/reminder.py:0
+#, python-format
+msgid "timesheet status reminder"
+msgstr "Statuts des rappels de pointages"
+
+#. module: c2c_timesheet_reports
+#: wizard_view:reminder_config,init:0
+msgid "Periodicity"
+msgstr "Périodicité"
+
+#. module: c2c_timesheet_reports
+#: field:hr.employee,started:0
+msgid "started on"
+msgstr "Commencé le"
+
+#. module: c2c_timesheet_reports
+#: model:ir.ui.menu,name:c2c_timesheet_reports.menu_wizard_timesheet_status
+msgid "Timesheets Status"
+msgstr "Status de la feuille de pointage"
+
+#. module: c2c_timesheet_reports
+#: wizard_button:reminder_config,run,init:0
+msgid "Back"
+msgstr "Retour"
+
+#. module: c2c_timesheet_reports
+#: code:addons/c2c_timesheet_reports/reminder.py:0
+#, python-format
+msgid "At least one of your last timesheets is still in draft or is missing. Please take time to complete and confirm it."
+msgstr "Au moins l'une de vos feuille est encore en brouillon ou manquante"
+
+#. module: c2c_timesheet_reports
+#: wizard_view:reminder_config,run:0
+msgid "The message has been sent"
+msgstr "Le message a été envoyé"
+
+#. module: c2c_timesheet_reports
+#: selection:reminder_config,init,interval_type:0
+msgid "Month(s)"
+msgstr "Mois"
+
+#. module: c2c_timesheet_reports
+#: wizard_button:reminder_config,init,run:0
+msgid "Save And Run Now"
+msgstr "Sauver et lancer"
+
+#. module: c2c_timesheet_reports
+#: rml:c2c_timesheet_reports.timesheet_status:0
+msgid "1.2cm 28.0cm 19.8cm 28.0cm"
+msgstr ""
+
+#. module: c2c_timesheet_reports
+#: field:hr.employee,ended:0
+msgid "Ended on"
+msgstr "Terminé le"
+
+#. module: c2c_timesheet_reports
+#: wizard_button:c2c_timesheet_reports.timesheet_status,init,end:0
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: c2c_timesheet_reports
+#: wizard_button:reminder_config,init,end:0
+#: wizard_button:reminder_config,run,end:0
+msgid "Close"
+msgstr "Fermer"
+
+#. module: c2c_timesheet_reports
+#: field:c2c_timesheet_reports.reminder,message:0
+#: wizard_view:reminder_config,init:0
+#: wizard_field:reminder_config,init,message:0
+msgid "Message"
+msgstr "Message"
+
+#. module: c2c_timesheet_reports
+#: field:c2c_timesheet_reports.reminder,subject:0
+#: wizard_field:reminder_config,init,subject:0
+msgid "Subject"
+msgstr "Sujet"
+
+#. module: c2c_timesheet_reports
+#: field:hr.employee,receive_timesheet_alerts:0
+msgid "Receive Timesheet Alerts"
+msgstr "Reçoit les rappelles de pointage"
+
+#. module: c2c_timesheet_reports
+#: field:c2c_timesheet_reports.reminder,reply_to:0
+#: wizard_field:reminder_config,init,reply_to:0
+msgid "Reply To"
+msgstr "Répondre à"
+

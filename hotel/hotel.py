@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -32,10 +32,10 @@ from tools import config
 class hotel_floor(osv.osv):
     _name = "hotel.floor"
     _description = "Floor"
-    _columns = {
+    _columns = { 
         'name': fields.char('Floor Name', size=64, required=True,select=True),
         'sequence' : fields.integer('Sequence', size=64),
-        }
+        }    
 hotel_floor()
 
 class product_category(osv.osv):
@@ -51,13 +51,13 @@ class hotel_room_type(osv.osv):
     _name = "hotel.room_type"
     _inherits = {'product.category':'cat_id'}
     _description = "Room Type"
-    _columns = {
+    _columns = { 
         'cat_id':fields.many2one('product.category','category',required=True,select=True),
-
+   
     }
     _defaults = {
         'isroomtype': lambda *a: 1,
-    }
+    }    
 hotel_room_type()
 
 
@@ -67,7 +67,7 @@ class product_product(osv.osv):
         'isroom':fields.boolean('Is Room'),
         'iscategid':fields.boolean('Is categ id'),
         'isservice':fields.boolean('Is Service id'),
-
+                
     }
 product_product()
 
@@ -80,7 +80,7 @@ class hotel_room_amenities_type(osv.osv):
        }
     _defaults = {
         'isamenitype': lambda *a: 1,
-
+        
     }
 
 hotel_room_amenities_type()
@@ -90,9 +90,9 @@ class hotel_room_amenities(osv.osv):
     _description='Room amenities'
     _inherits={'product.product':'room_categ_id'}
     _columns = {
-
+               
          'room_categ_id':fields.many2one('product.product','Product Category',required=True),
-         'rcateg_id':fields.many2one('hotel.room_amenities_type','Amenity Catagory'),
+         'rcateg_id':fields.many2one('hotel.room_amenities_type','Amenity Catagory'),   
          'amenity_rate':fields.integer('Amenity Rate'),
 
 
@@ -100,13 +100,11 @@ class hotel_room_amenities(osv.osv):
     _defaults = {
         'iscategid': lambda *a: 1,
         }
-
-#end class
+        
 hotel_room_amenities()
 
-
 class hotel_room(osv.osv):
-
+  
     _name='hotel.room'
     _inherits={'product.product':'product_id'}
     _description='Hotel Room'
@@ -126,9 +124,8 @@ class hotel_room(osv.osv):
 
 hotel_room()
 
-
 class hotel_folio(osv.osv):
-
+    
     def _incoterm_get(self, cr, uid, context={}):
         return  self.pool.get('sale.order')._incoterm_get(cr, uid, context={})
     def copy(self, cr, uid, id, default=None,context={}):
@@ -143,7 +140,7 @@ class hotel_folio(osv.osv):
         return self.pool.get('sale.order')._amount_tax(cr, uid, ids, field_name, arg, context)
     def _amount_total(self, cr, uid, ids, field_name, arg, context):
         return self.pool.get('sale.order')._amount_total(cr, uid, ids, field_name, arg, context)
-
+        
     _name='hotel.folio'
     _description='hotel folio new'
     _inherits={'sale.order':'order_id'}
@@ -154,7 +151,7 @@ class hotel_folio(osv.osv):
           'room_lines': fields.one2many('hotel_folio.line','folio_id'),
           'service_lines': fields.one2many('hotel_service.line','folio_id'),
     }
-
+    
     def create(self, cr, uid, vals, context=None, check=True):
         tmp_room_lines = vals['room_lines']
         tmp_service_lines = vals['service_lines']
@@ -170,15 +167,17 @@ class hotel_folio(osv.osv):
         else:
             folio_id = super(hotel_folio, self).create(cr, uid, vals, context)
         return folio_id
-
-
+    
+   
     def onchange_shop_id(self, cr, uid, ids, shop_id):
         return  self.pool.get('sale.order').onchange_shop_id(cr, uid, ids, shop_id)
+    
     def onchange_partner_id(self, cr, uid, ids, part):
         return  self.pool.get('sale.order').onchange_partner_id(cr, uid, ids, part)
+    
     def button_dummy(self, cr, uid, ids, context={}):
         return  self.pool.get('sale.order').button_dummy(cr, uid, ids, context={})
-
+    
     def action_invoice_create(self, cr, uid, ids, grouped=False, states=['confirmed','done']):
         i = self.pool.get('sale.order').action_invoice_create(cr, uid, ids, grouped=False, states=['confirmed','done'])
         for line in self.browse(cr, uid, ids, context={}):
@@ -187,16 +186,16 @@ class hotel_folio(osv.osv):
                self.write(cr, uid, [line.id], {'state' : 'progress'})
             else:
                self.write(cr, uid, [line.id], {'state' : 'progress'})
-        return i
+        return i 
 
-
+   
     def action_invoice_cancel(self, cr, uid, ids, context={}):
         res = self.pool.get('sale.order').action_invoice_cancel(cr, uid, ids, context={})
         for sale in self.browse(cr, uid, ids):
             for line in sale.order_line:
                 self.pool.get('sale.order.line').write(cr, uid, [line.id], {'invoiced': invoiced})
         self.write(cr, uid, ids, {'state':'invoice_except', 'invoice_id':False})
-        return res
+        return res  
     def action_cancel(self, cr, uid, ids, context={}):
         c = self.pool.get('sale.order').action_cancel(cr, uid, ids, context={})
         ok = True
@@ -209,10 +208,10 @@ class hotel_folio(osv.osv):
                 for inv in r['invoice_ids']:
                     wf_service = netsvc.LocalService("workflow")
                     wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_cancel', cr)
-
+            
         self.write(cr,uid,ids,{'state':'cancel'})
         return c
-
+    
     def action_wait(self, cr, uid, ids, *args):
         res = self.pool.get('sale.order').action_wait(cr, uid, ids, *args)
         for o in self.browse(cr, uid, ids):
@@ -229,44 +228,19 @@ class hotel_folio(osv.osv):
             self.pool.get('sale.order.line').write(cr, uid, write_done_ids, {'state': 'done'})
         if write_cancel_ids:
             self.pool.get('sale.order.line').write(cr, uid, write_cancel_ids, {'state': 'cancel'})
-        return res
+        return res 
     def procurement_lines_get(self, cr, uid, ids, *args):
         res = self.pool.get('sale.order').procurement_lines_get(cr, uid, ids, *args)
         return  res
     def action_ship_create(self, cr, uid, ids, *args):
         res =  self.pool.get('sale.order').action_ship_create(cr, uid, ids, *args)
-        picking_id=False
-        for order in self.browse(cr, uid, ids, context={}):
-            for line in order.order_line:
-                proc_id=False
-                if line.state == 'done':
-                    continue
-                    wf_service = netsvc.LocalService("workflow")
-                    wf_service.trg_validate(uid, 'mrp.procurement', proc_id, 'button_confirm', cr)
-                    self.pool.get('sale.order.line').write(cr, uid, [line.id], {'procurement_id': proc_id})
-                else:
-                    wf_service = netsvc.LocalService("workflow")
-                    wf_service.trg_validate(uid, 'mrp.procurement', proc_id, 'button_confirm', cr)
-                    self.pool.get('sale.order.line').write(cr, uid, [line.id], {'procurement_id': proc_id})
-
-            val = {}
-            if picking_id:
-                wf_service = netsvc.LocalService("workflow")
-                wf_service.trg_validate(uid, 'stock.picking', picking_id, 'button_confirm', cr)
-                #val = {'picking_ids':[(6,0,[picking_id])]}
-
-            if order.state=='shipping_except':
-                val['state'] = 'progress'
-                if (order.order_policy == 'manual') and order.invoice_ids:
-                    val['state'] = 'manual'
-            self.write(cr, uid, [order.id], val)
         return res
     def action_ship_end(self, cr, uid, ids, context={}):
         res = self.pool.get('sale.order').action_ship_end(cr, uid, ids, context={})
         for order in self.browse(cr, uid, ids):
             val = {'shipped':True}
             self.write(cr, uid, [order.id], val)
-        return res
+        return res 
     def _log_event(self, cr, uid, ids, factor=0.7, name='Open Order'):
         return  self.pool.get('sale.order')._log_event(cr, uid, ids, factor=0.7, name='Open Order')
     def has_stockable_products(self,cr, uid, ids, *args):
@@ -274,13 +248,13 @@ class hotel_folio(osv.osv):
     def action_cancel_draft(self, cr, uid, ids, *args):
         d = self.pool.get('sale.order').action_cancel_draft(cr, uid, ids, *args)
         self.write(cr, uid, ids, {'state':'draft', 'invoice_ids':[], 'shipped':0})
-        self.pool.get('sale.order.line').write(cr, uid, line_ids, {'invoiced':False, 'state':'draft', 'invoice_lines':[(6,0,[])]})
+        self.pool.get('sale.order.line').write(cr, uid,ids, {'invoiced':False, 'state':'draft', 'invoice_lines':[(6,0,[])]})
         return d
-
+  
 hotel_folio()
 
 class hotel_folio_line(osv.osv):
-
+    
     def copy(self, cr, uid, id, default=None, context={}):
         return  self.pool.get('sale.order.line').copy(cr, uid, id, default=None, context={})
     def _amount_line_net(self, cr, uid, ids, field_name, arg, context):
@@ -299,7 +273,7 @@ class hotel_folio_line(osv.osv):
         if 'checkin_date' in context:
             return context['checkout_date']
         return time.strftime('%Y-%m-%d %H:%M:%S')
-
+ 
     _name='hotel_folio.line'
     _description='hotel folio1 room line'
     _inherits={'sale.order.line':'order_line_id'}
@@ -312,7 +286,7 @@ class hotel_folio_line(osv.osv):
     _defaults={
        'checkin_date':_get_checkin_date,
        'checkout_date':_get_checkout_date,
-
+       
     }
 
     def create(self, cr, uid, vals, context=None, check=True):
@@ -323,20 +297,24 @@ class hotel_folio_line(osv.osv):
             vals.update({'order_id':folio.order_id.id})
         roomline = super(osv.osv, self).create(cr, uid, vals, context)
         return roomline
+    
     def uos_change(self, cr, uid, ids, product_uos, product_uos_qty=0, product_id=None):
         return  self.pool.get('sale.order.line').uos_change(cr, uid, ids, product_uos, product_uos_qty=0, product_id=None)
+    
     def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
-            uom=False, qty_uos=0, uos=False, name='', partner_id=False, fiscal_position=False,
+            uom=False, qty_uos=0, uos=False, name='', partner_id=False,
             lang=False, update_tax=True, date_order=False):
-        return  self.pool.get('sale.order.line').product_id_change(cr, uid, ids, pricelist, product, qty=qty,
-            uom=uom, qty_uos=qty_uos, uos=uos, name=name, partner_id=partner_id, fiscal_position=fiscal_position,
-            lang=lang, update_tax=update_tax, date_order=date_order)
+        return  self.pool.get('sale.order.line').product_id_change(cr, uid, ids, pricelist, product, qty=0,
+            uom=False, qty_uos=0, uos=False, name='',partner_id=partner_id,
+            lang=False, update_tax=True, date_order=False)
+        
     def product_uom_change(self, cursor, user, ids, pricelist, product, qty=0,
             uom=False, qty_uos=0, uos=False, name='', partner_id=False,
             lang=False, update_tax=True, date_order=False):
-        return  self.pool.get('sale.order.line').product_uom_change(cursor, user, ids, pricelist, product, qty=qty,
-            uom=uom, qty_uos=qty_uos, uos=uos, name=name, partner_id=partner_id,
-            lang=lang, update_tax=update_tax, date_order=date_order)
+        return  self.pool.get('sale.order.line').product_uom_change(cursor, user, ids, pricelist, product, qty=0,
+            uom=False, qty_uos=0, uos=False, name='', partner_id=partner_id,
+            lang=False, update_tax=True, date_order=False)
+        
     def on_change_checkout(self,cr, uid, ids, checkin_date=time.strftime('%Y-%m-%d %H:%M:%S'),checkout_date=time.strftime('%Y-%m-%d %H:%M:%S'),context=None):
         qty = 1
         if checkout_date < checkin_date:
@@ -344,10 +322,12 @@ class hotel_folio_line(osv.osv):
         if checkin_date:
             diffDate = datetime.datetime(*time.strptime(checkout_date,'%Y-%m-%d %H:%M:%S')[:5]) - datetime.datetime(*time.strptime(checkin_date,'%Y-%m-%d %H:%M:%S')[:5])
             qty = diffDate.days
+            if qty == 0:
+                qty=1
         return {'value':{'product_uom_qty':qty}}
-
+    
     def button_confirm(self, cr, uid, ids, context={}):
-
+       
         return  self.pool.get('sale.order.line').button_confirm(cr, uid, ids, context={})
     def button_done(self, cr, uid, ids, context={}):
         res = self.pool.get('sale.order.line').button_done(cr, uid, ids, context={})
@@ -357,18 +337,18 @@ class hotel_folio_line(osv.osv):
             wf_service.trg_write(uid, 'sale.order', line.order_id.id, cr)
         return res
 
-
+        
     def uos_change(self, cr, uid, ids, product_uos, product_uos_qty=0, product_id=None):
         return  self.pool.get('sale.order.line').uos_change(cr, uid, ids, product_uos, product_uos_qty=0, product_id=None)
     def copy(self, cr, uid, id, default=None,context={}):
         return  self.pool.get('sale.order.line').copy(cr, uid, id, default=None,context={})
-
-
+    
+        
 
 hotel_folio_line()
 
 class hotel_service_line(osv.osv):
-
+    
     def copy(self, cr, uid, id, default=None, context={}):
         return  self.pool.get('sale.order.line').copy(cr, uid, id, default=None, context={})
     def _amount_line_net(self, cr, uid, ids, field_name, arg, context):
@@ -379,15 +359,15 @@ class hotel_service_line(osv.osv):
         return  self.pool.get('sale.order.line')._number_packages(cr, uid, ids, field_name, arg, context)
     def _get_1st_packaging(self, cr, uid, context={}):
         return  self.pool.get('sale.order.line')._get_1st_packaging(cr, uid, context={})
-
-
+   
+ 
     _name='hotel_service.line'
     _description='hotel Service line'
     _inherits={'sale.order.line':'service_line_id'}
     _columns={
           'service_line_id':fields.many2one('sale.order.line','service_line_id',required=True,ondelete='cascade'),
           'folio_id':fields.many2one('hotel.folio','folio_id',ondelete='cascade'),
-
+         
     }
 
     def create(self, cr, uid, vals, context=None, check=True):
@@ -401,17 +381,17 @@ class hotel_service_line(osv.osv):
     def uos_change(self, cr, uid, ids, product_uos, product_uos_qty=0, product_id=None):
         return  self.pool.get('sale.order.line').uos_change(cr, uid, ids, product_uos, product_uos_qty=0, product_id=None)
     def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
-            uom=False, qty_uos=0, uos=False, name='', partner_id=False, fiscal_position=False,
+            uom=False, qty_uos=0, uos=False, name='', partner_id=False,
             lang=False, update_tax=True, date_order=False):
-        return self.pool.get('sale.order.line').product_id_change(cr, uid, ids, pricelist, product, qty=qty,
-            uom=uom, qty_uos=qty_uos, uos=uos, name=name, partner_id=partner_id, fiscal_position=fiscal_position,
-            lang=lang, update_tax=update_tax, date_order=date_order)
+        return  self.pool.get('sale.order.line').product_id_change(cr, uid, ids, pricelist, product, qty=0,
+            uom=False, qty_uos=0, uos=False, name='', partner_id=partner_id,
+            lang=False, update_tax=True, date_order=False)
     def product_uom_change(self, cursor, user, ids, pricelist, product, qty=0,
             uom=False, qty_uos=0, uos=False, name='', partner_id=False,
             lang=False, update_tax=True, date_order=False):
-        return  self.pool.get('sale.order.line').product_uom_change(cursor, user, ids, pricelist, product, qty=qty,
-            uom=uom, qty_uos=qty_uos, uos=uos, name=name, partner_id=partner_id,
-            lang=lang, update_tax=update_tax, date_order=date_order)
+        return  self.pool.get('sale.order.line').product_uom_change(cursor, user, ids, pricelist, product, qty=0,
+            uom=False, qty_uos=0, uos=False, name='', partner_id=partner_id,
+            lang=False, update_tax=True, date_order=False)
     def on_change_checkout(self,cr, uid, ids, checkin_date=time.strftime('%Y-%m-%d %H:%M:%S'),checkout_date=time.strftime('%Y-%m-%d %H:%M:%S'),context=None):
         qty = 1
         if checkout_date < checkin_date:
@@ -420,9 +400,9 @@ class hotel_service_line(osv.osv):
             diffDate = datetime.datetime(*time.strptime(checkout_date,'%Y-%m-%d %H:%M:%S')[:5]) - datetime.datetime(*time.strptime(checkin_date,'%Y-%m-%d %H:%M:%S')[:5])
             qty = diffDate.days
         return {'value':{'product_uom_qty':qty}}
-
+    
     def button_confirm(self, cr, uid, ids, context={}):
-
+       
         return  self.pool.get('sale.order.line').button_confirm(cr, uid, ids, context={})
     def button_done(self, cr, uid, ids, context={}):
         return  self.pool.get('sale.order.line').button_done(cr, uid, ids, context={})
@@ -430,8 +410,8 @@ class hotel_service_line(osv.osv):
         return  self.pool.get('sale.order.line').uos_change(cr, uid, ids, product_uos, product_uos_qty=0, product_id=None)
     def copy(self, cr, uid, id, default=None,context={}):
         return  self.pool.get('sale.order.line').copy(cr, uid, id, default=None,context={})
-
-
+    
+        
 
 hotel_service_line()
 
@@ -439,34 +419,28 @@ class hotel_service_type(osv.osv):
     _name = "hotel.service_type"
     _inherits = {'product.category':'ser_id'}
     _description = "Service Type"
-    _columns = {
+    _columns = { 
         'ser_id':fields.many2one('product.category','category',required=True,select=True),
-
+        
     }
     _defaults = {
         'isservicetype': lambda *a: 1,
-    }
-#end class
+    }    
 hotel_service_type()
 
 class hotel_services(osv.osv):
-
+    
     _name = 'hotel.services'
     _description = 'Hotel Services and its charges'
     _inherits={'product.product':'service_id'}
     _columns = {
-        'service_id': fields.many2one('product.product','Service_id'),
-
+        'service_id': fields.many2one('product.product','Service_id'),        
+       
         }
     _defaults = {
         'isservice': lambda *a: 1,
         }
-#end class
 hotel_services()
 
 
-
-
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

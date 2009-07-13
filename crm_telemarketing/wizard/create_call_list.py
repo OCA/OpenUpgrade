@@ -90,6 +90,7 @@ class make_call_list(wizard.interface):
 
     def _make_list(self, cr, uid, data, context):
         form = data['form']
+        pool = pooler.get_pool(cr.dbname)
 
         query = """SELECT DISTINCT add.partner_id FROM
         (SELECT partner_id FROM res_partner_category_rel WHERE category_id=%s) cat,
@@ -99,15 +100,44 @@ class make_call_list(wizard.interface):
         if form['city']:
             query += " AND city ilike '%s%%'" % form['city']
 
-        print 'QUERY: %s' % query
         # Search all match record
         cr.execute(query)
-
+        
+        partner_obj = pool.get('res.partner')
+        address_obj = pool.get('res.partner.address')
+        case_obj = pool.get('crm.case')
+        x = 0
         for r in cr.fetchall():
-            print 'r: %s' %str(r)
+            x += 1
+            partner = partner_obj.read(cr, uid, r, ['name'], context)[0]
 
-        print 'DATA: %s' % str(data)
-        return {'message':'ok c est cool'}
+            args = [('partner_id','=',r)]
+            addr_id = address_obj.search(cr, uid, args)[0]
+            if addr_id:
+                addr = address_obj.read(cr, uid, addr_id, ['phone','mobile'], context)
+
+            case = {
+                'name': partner['name'],
+                'section_id': form['section_id'],
+                'categ_id': form['category_id'],
+                'partner_id': r[0],
+                'partner_phone': False,
+                'partner_mobile': False,
+                'user_id': False,
+            }
+
+            if addr_id:
+                case['partner_phone'] = addr['phone']
+                case['partner_mobile'] = addr['mobile']
+
+            if form['date_call']:
+                case['date'] = form['date_call']
+
+            case_id = case_obj.create(cr, uid, case, context)
+            #if not case_id:
+
+        result = '%i appel(s) crée(s)' % x
+        return {'message': result}
 
     states = {
         'init': {

@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="sms_smsclient_form">
+			<field name="name">sms.smsclient.form</field>
+			<field name="model">sms.smsclient</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="SMS Gateway">
+					<notebook>
+						<page string="General">
+							<field name="name" select="1"/>
+							<field name="method" select="1"/>
+							<newline/>
+							<field name="url" colspan="4"/>
+							<field name="property_ids" colspan="4">
+								<tree string="Gateway Parameters">
+									<field name="type"/>
+									<field name="name"/>
+									<field name="value"/>
+								</tree>
+								<form string="Gateway Parameters">
+									<field name="type"/>
+									<field name="name"/>
+									<field name="value"/>
+								</form>
+							</field>
+							<field name="state"/>
+						</page>
+						
+						<page string="Permission">
+							<separator string="Access Permission"
+								colspan="4" />
+							<field name="users_id" select="1"
+								colspan="4" nolabel="1" />
+						</page>
+						
+					</notebook>
+				</form>
+			</field>
+		</record>
+		
+		<record model="ir.ui.view" id="sms_smsclient_tree">
+			<field name="name">sms.smsclient.tree</field>
+			<field name="model">sms.smsclient</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="SMS Gateways">
+					<field name="name" select="1"/>
+					<field name="method" select="1"/>
+					<field name="url" colspan="4"/>
+					<field name="property_ids" colspan="4"/>
+				</tree>
+			</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="action_sms_smsclient_tree">
+			<field name="name">SMS Gateway</field>
+			<field name="res_model">sms.smsclient</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="sms_smsclient_tree" />
+		</record>
+		
+		<menuitem name="SMS Gateway" id="menu_smsclient_administration_server" parent="base.menu_config"/>
+		<menuitem name="Gateway List" id="menu_smsclient_administration_sms_server" parent="menu_smsclient_administration_server" action="action_sms_smsclient_tree"/>
+
+		<record model="ir.ui.view" id="sms_smsclient_tree">
+			<field name="name">sms.smsclient.history.tree</field>
+			<field name="model">sms.smsclient.history</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Gateway History">
+					<field name="date_create"/>
+					<field name="user_id"/>
+					<field name="name"/>
+					<field name="gateway_id"/>
+					<field name="to"/>
+					<field name="sms"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="sms_smsclient_history_form">
+			<field name="name">sms.smsclient.history.form</field>
+			<field name="model">sms.smsclient.history</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Gateway History">
+					<field name="gateway_id" select="1"/>
+					<field name="date_create" select="1"/>
+					<field name="user_id" select="1"/>
+					<field name="name" select="1"/>
+					<field name="to" select="1"/>
+					<field name="sms" colspan="4" select="1"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_sms_smsclient_history_tree">
+			<field name="name">SMS Gateway History</field>
+			<field name="res_model">sms.smsclient.history</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="sms_smsclient_tree" />
+		</record>
+		<menuitem name="SMS Gateway History" id="menu_smsclient_administration_sms_server_history" parent="menu_smsclient_administration_server" action="action_sms_smsclient_history_tree"/>
+
+		<act_window context="{'gateway_id': active_id}" domain="[('gateway_id', '=', active_id)]" id="act_sms_gateway_2_sms_history" name="SMS History" res_model="sms.smsclient.history" src_model="sms.smsclient"/>
+		
+		<!-- Message Queue -->
+		<record model="ir.ui.view" id="sms_smsclient_message_queue_tree">
+			<field name="name">sms.smsclient.queue.tree</field>
+			<field name="model">sms.smsclient.queue</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Message Queue">
+					<field name="date_create"/>
+					<field name="mobile"/>
+					<field name="msg"/>
+					<field name="state"/>
+					<field name="gateway_id"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="sms_smsclient_message_queue_form">
+			<field name="name">sms.smsclient.history.form</field>
+			<field name="model">sms.smsclient.queue</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Gateway History">
+					<field name="date_create" select="1"/>
+					<field name="gateway_id" select="1"/>
+					<field name="mobile" select="1"/>
+					<field name="state" select="1"/>
+					<separator string="SMS Message"	colspan="4"/>
+					<field name="msg" colspan="4" select="2" nolabel="1"/>
+					<separator string="Last Error"	colspan="4"/>
+					<field name="error" colspan="4" select="2" nolabel="1"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_sms_smsclient_queue_tree">
+			<field name="name">Message Queue</field>
+			<field name="res_model">sms.smsclient.queue</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="sms_smsclient_message_queue_tree" />
+		</record>
+		<menuitem name="Message Queue" id="menu_smsclient_administration_sms_server_queue" parent="menu_smsclient_administration_server" action="action_sms_smsclient_queue_tree"/>
+
+		<act_window context="{'gateway_id': active_id}" domain="[('gateway_id', '=', active_id)]" id="act_sms_gateway_2_sms_queue" name="Message Queue" res_model="sms.smsclient.queue" src_model="sms.smsclient"/>
+		
+	</data>
+</openerp>

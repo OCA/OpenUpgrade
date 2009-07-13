@@ -21,4 +21,7 @@
 ##############################################################################
 
 import create_call_list
+import direct_poll
+import meeting_planify
 
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

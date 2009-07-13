@@ -47,38 +47,36 @@ class hr_performance(osv.osv):
             raise osv.except_osv('Date Error !','From date should be smaller than To date')
         return super(hr_performance, self).write(cr, uid, ids, vals, context=context)
 
-    def search(self, cr, uid, args, offset=0, limit=None, order=None,
-            context=None, count=False):
-          
-          res=[]
-          search_ids = self.pool.get('hr.employee').search(cr, uid, [('user_id','=', uid)])
-          
-          for search_id in search_ids:
+    def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
+        res=[]
+        search_ids = self.pool.get('hr.employee').search(cr, uid, [('user_id','=', uid)])
+  
+        for search_id in search_ids:
             child_ids = self.pool.get('hr.employee').search(cr, uid,[('parent_id','in',search_ids)])
             for b in child_ids:
                 res.append(b)
-          
-          ids1=super(hr_performance,self).search(cr,uid,[('reviewer_id','in',res),('state','=','done')])
-                          
-          res2 = self.pool.get('hr.employee').search(cr, uid, [('user_id','=', uid)])
-          boss = self.pool.get('hr.employee').search(cr, uid, [('user_id','=', uid),('parent_id','=',False)])
-          
-          if boss:
-              ids2=super(hr_performance,self).search(cr,uid,[('reviewer_id','in',res2)])
-          else:
-              ids2=super(hr_performance,self).search(cr,uid,[('reviewer_id','in',res2),('state','!=','done')])
+  
+        ids1=super(hr_performance,self).search(cr,uid,[('reviewer_id','in',res),('state','=','done')])
+                  
+        res2 = self.pool.get('hr.employee').search(cr, uid, [('user_id','=', uid)])
+        boss = self.pool.get('hr.employee').search(cr, uid, [('user_id','=', uid),('parent_id','=',False)])
+  
+        if boss:
+            ids2=super(hr_performance,self).search(cr,uid,[('reviewer_id','in',res2)])
+        else:
+            ids2=super(hr_performance,self).search(cr,uid,[('reviewer_id','in',res2),('state','!=','done')])
 
-          ids=ids1+ids2
-          
-          if ids:
-              args1=args
-              if len(args1) > 2:
-                  args1=args1[0:-2]
-                  args=[('id','in',ids)]+args1
-              else:   
-                   args=[('id','in',ids)]
+        ids=ids1+ids2
+  
+        if ids:
+            args1=args
+            if len(args1) > 2:
+                args1=args1[0:-2]
+                args=[('id','in',ids)]+args1
+        else:   
+            args=[('id','in',ids)]
               
-          return super(hr_performance,self).search(cr, uid, args, offset, limit,
+        return super(hr_performance,self).search(cr, uid, args, offset, limit,
                 order, context=context, count=count)
           
     def _check_date(self, cr, uid, ids):
@@ -93,7 +91,7 @@ class hr_performance(osv.osv):
                 return False
         return True       
      
-    def fill_employee_list(self,cr,uid,ids,context):
+    def fill_employee_list(self, cr, uid, ids, *args):
         res=[]
         search_ids = self.pool.get('hr.employee').search(cr, uid, [('user_id','=', uid)])
         
@@ -107,11 +105,11 @@ class hr_performance(osv.osv):
             'employee_id': emp_id,
             'performance_id':ids[0]
             },context={'from_btn':True})
-                            
+            
             att_ids = self.pool.get('hr.performance.line.attribute').search(cr, uid,[])
             
             for attribute_id in att_ids:
-                att_obj=self.pool.get('hr.performance.line.attribute').browse(cr, uid,attribute_id, context=context)
+                att_obj=self.pool.get('hr.performance.line.attribute').browse(cr, uid,attribute_id, *args)
                 self.pool.get('attribute.line').create(cr, uid, {
                         'attribute_id': attribute_id,
                         'performance_line_id':pl_id,
@@ -119,12 +117,12 @@ class hr_performance(osv.osv):
                         'obtained_marks':0 },context={'from_btn':True})
         return self.write(cr, uid, ids, {'state':'saved'})
     
-    def change_sate(self,cr,uid,ids,context):
+    def change_sate(self, cr, uid, ids, *args):
         self.write(cr, uid, ids, {'state':'done'})
         return True
         
-    def _employee_get(obj,cr,uid,context={}):
-        ids = obj.pool.get('hr.employee').search(cr, uid, [('user_id','=', uid)])
+    def _employee_get(self,cr,uid,context={}):
+        ids = self.pool.get('hr.employee').search(cr, uid, [('user_id','=', uid)])
         if ids:
             return ids[0]
         return False
@@ -138,11 +136,13 @@ class hr_performance(osv.osv):
         'date_to':fields.date('Date To',required=True,select=True),
         'state':fields.selection([('new','New'),('saved','Saved'),('done','Confirmed')],'State',readonly=True),
         'performance_id':fields.one2many('hr.performance.line','performance_id','Performance'),
+        'user_id' : fields.many2one('res.users', 'User', readonly=True)
     }
 
     _defaults={
       'reviewer_id': _employee_get,
-      'state': lambda *a : 'new'
+      'state': lambda *a : 'new',
+      'user_id': lambda obj, cr, uid, context: uid,
     }
     _constraints = [
         (_check_date, 'You can not have 2 Review that overlaps !', ['date_from','date_to']),
@@ -190,7 +190,7 @@ class hr_performance_line_attribute(osv.osv):
     _name="hr.performance.line.attribute"
     _description="Review Attributes"
     _columns={
-        'name':fields.char('Attribute Name', size=36, select=True, required=True),
+        'name':fields.char('Attribute Name', size=1024, select=True, required=True),
         'note':fields.text('Description'),
         'total_point':fields.integer('Total Point',required=True)
     }

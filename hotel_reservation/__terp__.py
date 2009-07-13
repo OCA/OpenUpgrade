@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,19 +19,32 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 {
     "name" : "Hotel Reservation",
     "version" : "1.0",
-    "depends" : ["hotel"],
-    "category" : "Generic Modules/Hotel Restaurant",
+    "author" : "Tiny",
+    "category" : "Generic Modules/Hotel Reservation",
     "description": """
-    Hotel Reservations
+    Module for Hotel/Resort/Property management. You can manage:
+    * Guest Reservation
+    * Group Reservartion
+      Different reports are also provided, mainly for hotel statistics.
     """,
-    "update_xml" : ["hotel_reservation_view.xml", "hotel_reservation_workflow.xml", "hotel_reservation_wizard.xml"],
-    "demo_xml" : [ ],
-    "init_xml" : ["hotel_reservation_sequence.xml",],
+    "depends" : ["hotel"],
+    "init_xml" : [],
+    "demo_xml" : ['hotel_reservation_data.xml',
+    ],
+    "update_xml" : [
+                    "hotel_reservation_view.xml",
+                    "hotel_reservation_sequence.xml",
+                    "hotel_reservation_workflow.xml",
+                    "hotel_reservation_wizard.xml",
+                    "hotel_reservation_report.xml",
+                    "security/ir.model.access.csv",
+    ],
     "active": False,
     "installable": True
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

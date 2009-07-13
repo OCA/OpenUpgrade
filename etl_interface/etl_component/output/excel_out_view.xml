@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record id="etl_component_excel_out_form" model="ir.ui.view">
+			<field name="name">view.etl.component.excel.out.form</field>
+			<field name="model">etl.component</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+			<form string="Component">
+			    <group col="6" colspan="4">
+			        <field name="name" select="1" />
+			        <field name="type_id" select="1" />
+			        <field name="job_id" select="1" />
+			        <field name="connector_id" select="1" required="1" domain="[('type','=','localfile')]"/>
+			       <field name="transformer_id"/>
+			    </group>
+			    <notebook colspan="4">
+			        <page string="Property">
+			            <field name="excel_params" />
+			        </page>
+		            <page string="Transitions Detail">
+		                    <field name="trans_in_ids" nolabel="1" colspan="4" widget="one2many_list">
+		                        <tree string="Incomming Transitions">
+		                            <field name="name"/>
+		                            <field name="type"/>
+		                            <field name="source_component_id"/>
+		                            <field name="channel_source"/>
+		                            <field name="channel_destination"/>
+		                            <field name="state" />
+		                        </tree>
+		                        <form string="Incomming Transitions">
+		                            <field name="name"/>
+		                            <field name="type"/>
+		                            <separator string="Transition property" colspan="4" />
+		                            <newline />
+		                            <field name="source_component_id"/>
+		                            <field name="destination_component_id"/>
+		                            <field name="channel_source"/>
+		                            <field name="channel_destination"/>
+		                            <separator string="Status" colspan="4" />
+		                            <newline />
+		                            <field name="state"/>
+		                            <group col="2" colspan="2">
+		                                <button name="action_close_transition"
+		                                    string="Close Transition" type="object" states="open" />
+		                                <button name="action_open_transition"
+		                                    string="Open Transition" type="object" states="close" />
+		                            </group>
+		                        </form>
+		                    </field>
+		                    <field name="trans_out_ids" nolabel="1" colspan="4" widget="one2many_list">
+		                        <tree string="Outgoing Transitions">
+		                                <field name="name"/>
+		                                <field name="type"/>
+		                                <field name="destination_component_id"/>
+		                                <field name="channel_source"/>
+		                                <field name="channel_destination"/>
+		                                <field name="state" />
+		                            </tree>
+		                            <form string="Outgoing Transitions">
+		                                <field name="name"/>
+		                                <field name="type"/>
+		                                <separator string="Transition property" colspan="4" />
+		                                <newline />
+		                                <field name="source_component_id"/>
+		                                <field name="destination_component_id"/>
+		                                <field name="channel_source"/>
+		                                <field name="channel_destination"/>
+		                                <separator string="Status" colspan="4" />
+		                                <newline />
+		                                <field name="state"/>
+		                                <group col="2" colspan="2">
+		                                    <button name="action_close_transition"
+		                                        string="Close Transition" type="object" states="open" />
+		                                    <button name="action_open_transition"
+		                                        string="Open Transition" type="object" states="close" />
+		                                </group>
+		                            </form>
+		                    </field>
+		                </page>
+		                <page string="Other Information">
+		                    <field name="row_limit"/>
+                            <field name ="encoding"/>
+		                </page>
+		            </notebook>
+		        </form>
+			</field>
+		</record>
+
+        <record id="etl_component_excel_out_form1" model="ir.ui.view">
+            <field name="name">view.etl.component.output.excel_out</field>
+            <field name="model">etl.component</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+            <form string="Excel Out">
+                    <group col="4" colspan="4">
+                        <field name="name" select="1" required="1"/>
+                        <field name="type_id" select="1" required="0" readonly="1"/>
+                        <field name="connector_id" required="1" select="1" domain="[('type','=','localfile')]"/>
+                   <field name="transformer_id"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Property">
+                            <field name="excel_params" />
+                        </page>
+                        <page string="Other Information">
+                            <field name="row_limit"/>
+                    <field name ="encoding"/>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+        
+		<record id="action_etl_component_excel_out_tree"
+			model="ir.actions.act_window">
+			<field name="name">Excel Out component</field>
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type_id.name','=','output.excel_out')]</field>
+			<field name="context">{'type_id':'output.excel_out'}</field>
+		</record>
+
+		<record id="action_etl_component_excel_out_from"
+			model="ir.actions.act_window">
+			<field name="res_model">etl.component</field>
+			<field name="name">Excel Out component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="domain">[('type_id.name','=','output.excel_out')]</field>
+			<field name="context">{'type_id':'output.excel_out'}</field>
+			<field name="view_id" ref="etl_component_excel_out_form" />
+		</record>
+
+		<record id="action_etl_component_excel_out_view1"
+			model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id"
+				ref="etl_interface.etl_component_tree" />
+			<field name="act_window_id"
+				ref="action_etl_component_excel_out_tree" />
+		</record>
+
+		<record id="action_etl_component_excel_out_view2"
+			model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="etl_component_excel_out_form" />
+			<field name="act_window_id"
+				ref="action_etl_component_excel_out_tree" />
+		</record>
+
+		<menuitem name="Excel"
+			action="action_etl_component_excel_out_tree"
+			parent="etl_interface.menu_etl_component_output_form"
+			id="menu_etl_excel_out_tree" />
+
+	</data>
+</openerp>

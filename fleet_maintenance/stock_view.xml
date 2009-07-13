@@ -32,7 +32,7 @@
 
 					<notebook colspan="4">
 						<page string="Fleet Extensions">
-							<field colspan="4" mode="tree, form" context="{'fleet_type':'sub_fleet'}" name="child_ids" nolabel="1">
+							<field colspan="4" mode="tree, form" context="{'fleet_type':'sub_fleet'}" name="child_ids" nolabel="1" on_change="sub_fleet_change(active_id or False)">
 								<tree string="Sub Fleets">
 									<field name="name" />
 									<field name="is_expired" />
@@ -209,7 +209,7 @@
 			<field name="model">stock.location</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="Stock location" colors="red:is_expired==True;">
+				<tree string="Stock location">
 					<field name="complete_name" />
 					<field name="partner_id" />
 					<field name="stock_real" />
@@ -232,16 +232,14 @@
 
 		<record id="ir_actions_act_window_view_0" model="ir.actions.act_window.view">
 			<field name="act_window_id" ref="fleet_maintenance.fleet_normal_action" />
-			<field eval="0" name="multi" />
 			<field eval="&quot;&quot;&quot;tree&quot;&quot;&quot;" name="view_mode" />
 			<field name="view_id" ref="fleet_maintenance.view_location_tree_fleet" />
 			<field eval="0" name="sequence" />
 		</record>
 		<record id="ir_actions_act_window_view_1" model="ir.actions.act_window.view">
 			<field name="act_window_id" ref="fleet_maintenance.fleet_normal_action" />
-			<field eval="0" name="multi" />
 			<field eval="&quot;&quot;&quot;form&quot;&quot;&quot;" name="view_mode" />
-			<field name="view_id" ref="view_location_fleet_form" />
+			<field name="view_id" ref="fleet_maintenance.view_location_fleet_form" />
 			<field eval="1" name="sequence" />
 		</record>
 
@@ -259,7 +257,6 @@
 
 		<record id="ir_actions_act_window_view_4" model="ir.actions.act_window.view">
 			<field name="act_window_id" ref="fleet_maintenance.action_fleet_new" />
-			<field eval="0" name="multi" />
 			<field eval="&quot;&quot;&quot;form&quot;&quot;&quot;" name="view_mode" />
 			<field name="view_id" ref="view_location_fleet_form" />
 		</record>
@@ -308,6 +305,7 @@
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">stock.location</field>
 			<field name="view_type">form</field>
+			<field name="limit">20</field>
 			<field name="domain">[('fleet_type','=','sub_fleet')]</field>
 			<field name="context">{'fleet_type':'sub_fleet'}</field>
 		</record>
@@ -397,15 +395,16 @@
 						<field name="date" />
 					</group>
 
-					<field colspan="4" name="move_lines" nolabel="1" widget="one2many_list" default_get="{'move_line':move_lines}">
+					<field colspan="4" name="move_lines" nolabel="1" default_get="{'move_line':move_lines}" context="{'location_id_usage':context.get('location_id_usage', 'internal'),'location_dest_id_usage':context.get('location_dest_id_usage', 'customer'),'product_id':context.get('product_id', False),'location_id':context.get('location_id', False),'location_dest_id':context.get('location_dest_id', False),'prodlot_id':context.get('prodlot_id', False)}">
 						<form string="Stock Moves">
 							<separator colspan="4" string="Move Information" />
-							<field name="location_id" select="1" />
-							<field name="location_dest_id" select="1" />
+							<field name="location_id" select="1"/><!-- TODO filter domain using location_id_usage form context-->
+							<field name="location_dest_id" select="1"/><!-- TODO filter domain using location_dest_id_usage form context-->
 							<field colspan="4" context="location=location_id" name="product_id"
 								on_change="onchange_product_id(product_id, location_id, location_dest_id)" select="1" />
 							<field name="product_qty" select="1" />
 							<field name="product_uom" select="1" />
+							<field name="name" invisible="1" />
 							<field groups="product.group_uos" name="product_uos" />
 							<field groups="product.group_uos" name="product_uos_qty" />
 							<field colspan="4" invisible="1" name="name" select="1" />

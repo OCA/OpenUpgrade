@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="view_voucher_form1">
+			<field name="name">account.voucher.form</field>
+			<field name="model">account.voucher</field>
+			<field name="inherit_id" ref="account_voucher.view_voucher_form"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<group col="6" colspan="6" position="replace">
+					<group col="8" colspan="8">
+						<field name="state"/>
+						<button name="open_voucher" string="Pro-forma" states="draft"/>
+						<button name="proforma_voucher" string="Create" states="proforma"/>
+						<button name="recheck_voucher" string="Validate" states="recheck"/>
+						<button name="audit_complete" string="Audit Transection" states="posted"/>
+						<button name="cancel_voucher" string="Cancel" states="draft,proforma,recheck,posted"  type="object"/>
+						<button name="action_cancel_draft" states="cancel" string="Set to Draft"/>
+					</group>
+				</group>
+			</field>
+		</record>
+	</data>
+</openerp>

@@ -19,20 +19,23 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
+
 {
-    "name" : "Extension Module of Document Management System",
-    "version" : "1.0",
-    "author" : "Tiny",
-    "category" : "Generic Modules/Others",
-    "website": "http://www.openerp.com",
-    "description": """This is an extension module of document management system with
-    * Implementation of Versioning and lock system
+    'name': 'Extension Module of Document Management System',
+    'version': '1.0',
+    'category': 'Generic Modules/Others',
+    'description': """This is an extension module of document management system with
+    * Implementation of Versioning and lock system
 """,
-    "depends" : ["base","process","document"],
-    "init_xml" : [],
-    "update_xml" : ['document_extension_view.xml'],
-    "demo_xml" : [],
-    "active": False,
-    "installable": True,
-    "certificate": 23638762444717
+    'author': 'Tiny',
+    'website': 'http://www.openerp.com',
+    'depends': ['base', 'process', 'document'],
+    'init_xml': [],
+    'update_xml': ['document_extension_view.xml'],
+    'demo_xml': [],
+    'installable': True,
+    'active': False,
+    'certificate': '',
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

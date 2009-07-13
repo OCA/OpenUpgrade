@@ -1,31 +1,3 @@
-////////////////////////////////////////////////////////////////////////////////
-//
-// Copyright (C) 2007-TODAY Tiny ERP Pvt Ltd. All Rights Reserved.
-//
-// $Id$
-//
-// Developed by Tiny (http://openerp.com) and Axelor (http://axelor.com).
-//
-// The OpenERP web client is distributed under the "OpenERP Public License".
-// It's based on Mozilla Public License Version (MPL) 1.1 with following 
-// restrictions:
-//
-// -   All names, links and logos of Tiny, Open ERP and Axelor must be 
-//     kept as in original distribution without any changes in all software 
-//     screens, especially in start-up page and the software header, even if 
-//     the application source code has been changed or updated or code has been 
-//     added.
-//
-// -   All distributions of the software must keep source code with OEPL.
-// 
-// -   All integrations to any other software must keep source code with OEPL.
-//
-// If you need commercial licence to remove this kind of restriction please
-// contact us.
-//
-// You can see the MPL licence at: http://www.mozilla.org/MPL/MPL-1.1.html
-//
-////////////////////////////////////////////////////////////////////////////////
 
 var ModalBox = function(options) {
     this.__init__(options);
@@ -38,9 +10,9 @@ ModalBox.prototype = {
         this.options = MochiKit.Base.update({
             title: 'Modalbox',  // title
             content: null,      // content
-            buttons: [],        // buttons
+            buttons: []        // buttons
         }, options || {});
-
+		
         if (MochiKit.DOM.getElement('modalbox_overlay')){
             throw "Only one Modalbox instance is allowed per page.";
         }
@@ -78,26 +50,25 @@ ModalBox.prototype = {
 
     show : function() {
 
-        //setElementDimensions(this.overlay, elementDimensions(document.body));
-        MochiKit.DOM.setElementDimensions(this.overlay, {'w': document.body.clientWidth, 'h': document.body.clientHeight});
-
+        setElementDimensions(this.overlay, elementDimensions(document.body));
+//        MochiKit.DOM.setElementDimensions(this.overlay, {'w': window.screen.availWidth, 'h': window.screen.availHeight});
+		
         var w = this.width || 0;
         var h = this.height || 0;
-
+		
         MochiKit.DOM.setElementDimensions(this.box, {w: w, h: h});
-
-        var vdh = window.innerHeight;
-        var vdw = window.innerWidth;
-        
+		
+        var vdh = window.innerHeight || window.screen.availHeight;
+        var vdw = window.innerWidth || window.screen.availWidth;
+     
         var md = this.box.clientHeight;
         var x = (vdw / 2) - (w / 2);
         var y = (vdh / 2) - (h / 2);
-
+        
         x = Math.max(0, x);
         y = Math.max(0, y);
         
         y = y + document.documentElement.scrollTop;
-        
         setElementPosition(this.box, {x: x, y: y});
 
         showElement(this.overlay);

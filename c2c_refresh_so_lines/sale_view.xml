@@ -1,0 +1,19 @@
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="solstis_custom_address_invoice">
+            <field name="name">solstis_custom_sale</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+            <field name="invoiced" select="2" position="after" >
+                <button name="button_refresh_prices" 
+                    string="Refresh line unit prices" 
+                    states="draft" 
+                    type="object" 
+                    colspan="2"/>
+            </field>
+            </field>
+        </record>
+    </data>
+</openerp>

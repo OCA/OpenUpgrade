@@ -24,6 +24,25 @@ import time
 from osv import fields
 from osv import osv
 
+class dm_media(osv.osv):
+    _name = "dm.media"
+    """    
+    def search(self, cr, uid, args, offset=0, limit=None, order=None,
+            context=None, count=False):
+        if 'step_media_ids' in context and context['step_media_ids']:
+            if context['step_media_ids'][0][2]:
+                brse_rec = context['step_media_ids'][0][2]
+            else:
+                raise osv.except_osv('Error !',"It is necessary to select media in offer step.")
+        else:
+            brse_rec = super(dm_media, self).search(cr, uid, [])
+        return brse_rec
+    """
+    _columns = {
+        'name' : fields.char('Name', size=64, translate=True, required=True),
+        'code' : fields.char('Code', size=64, translate=True, required=True),
+    }
+dm_media()
 
 class dm_trademark(osv.osv):
     _name = "dm.trademark"
@@ -33,7 +52,16 @@ class dm_trademark(osv.osv):
         'partner_id' : fields.many2one('res.partner', 'Partner', required=False),
         'header' : fields.binary('Header (.odt)'),
         'logo' : fields.binary('Logo'),
-        'signature' : fields.binary('Signature')
+        'logo_url' : fields.char('URL', size=128),
+        'signature' : fields.binary('Signature'),
+        'signature_url' : fields.char('URL', size=128),
+        'banner_top' : fields.binary('Top Banner'),
+        'banner_top_url' : fields.char('URL', size=128),
+        'banner_bottom' : fields.binary('Bottom Banner'),
+        'banner_bottom_url' : fields.char('URL', size=128),
+        'media_id' : fields.many2one('dm.media', 'Media'),
+        'email' : fields.char('Email', size=64),
+        'website' : fields.char('Website', size=64),
     }
 
 dm_trademark()

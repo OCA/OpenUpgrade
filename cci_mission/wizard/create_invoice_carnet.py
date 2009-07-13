@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -68,9 +68,9 @@ def _createInvoices(self, cr, uid, data, context):
         list.append(carnet.type_id.original_product_id.id)
         list.append(carnet.type_id.copy_product_id.id)
         list.append(carnet.warranty_product_id.id)
-
+        fpos = carnet.partner_id.property_account_position and carnet.partner_id.property_account_position.id or False
         for product_line in carnet.product_ids:#extra Products
-            val = obj_lines.product_id_change(cr, uid, [], product_line.product_id.id,uom =False, partner_id=carnet.partner_id.id)
+            val = obj_lines.product_id_change(cr, uid, [], product_line.product_id.id,uom =False, partner_id=carnet.partner_id.id, fposition_id=fpos)
             val['value'].update({'product_id' : product_line.product_id.id })
             val['value'].update({'quantity' : product_line.quantity })
             val['value'].update({'price_unit':product_line.price_unit})
@@ -94,7 +94,7 @@ def _createInvoices(self, cr, uid, data, context):
         count=0
         for prod_id in list:
             count += 1
-            val = obj_lines.product_id_change(cr, uid, [], prod_id,uom =False, partner_id=carnet.partner_id.id)
+            val = obj_lines.product_id_change(cr, uid, [], prod_id,uom =False, partner_id=carnet.partner_id.id, fposition_id=fpos)
             val['value'].update({'product_id' : prod_id })
             if count==2:
                 qty_copy=carnet.initial_pages
@@ -147,6 +147,7 @@ def _createInvoices(self, cr, uid, data, context):
                 'currency_id' :carnet.partner_id.property_product_pricelist.currency_id.id,# 1,
                 'comment': '',
                 'payment_term':carnet.partner_id.property_payment_term.id,
+                'fiscal_position': carnet.partner_id.property_account_position.id
             }
 
         inv_obj = pool_obj.get('account.invoice')

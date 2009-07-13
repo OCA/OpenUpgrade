@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <openerp>
+    <data>
+	<report
+		auto="False"
+		id="account.account_invoices"
+		model="account.invoice"
+		name="account.invoice"
+		rml="c2c_invoice_report/report/invoice.rml"
+		string="Invoices"
+		attachment="(object.state in ('open','paid')) and ('INV'+(object.number or '').replace('/',''))"
+		attachment_use="1"/>
+
+  </data>
+</openerp>

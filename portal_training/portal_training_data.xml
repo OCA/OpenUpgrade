@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- We define the main menu -->
+        <menuitem name="Training Portals" id="menu_portal_training" parent="portal.menu_portal_root" />
+
+        <!-- 
+        Portal Supplier 
+        -->
+        <record model="ir.rule.group" id="portal_supplier_rule_group">
+            <field name="name">Portal Supplier Rule</field>
+            <field name="model_id" search="[('model', '=', 'purchase.order.line')]" model="ir.model" />
+            <field name="global" eval="False" />
+        </record>
+
+        <record model="ir.rule" id="portal_supplier_purchase_order_line_rule">
+            <field name="field_id" search="[('model', '=', 'purchase.order.line'),('name', '=', 'order_id')]" model="ir.model.fields" />
+            <field name="operator">=</field>
+            <field name="operand">user.address_id.partner_id.id</field>
+            <field name="domain_force">[('order_id.partner_id.id', '=', user.address_id.partner_id.id)]</field>
+            <field name="rule_group" ref="portal_supplier_rule_group"/>
+        </record>
+
+        <record id="purchase_order_line_form_portal" model="ir.ui.view">
+            <field name="name">purchase.order.line.form.portal</field>
+            <field name="model">purchase.order.line</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Purchase Order Line">
+                    <notebook>
+                        <page string="Order Line">
+                            <field name="name" colspan="4" />
+                            <field name="product_id" readonly="True" />
+                            <field name="product_qty" readonly="True" />
+                            <field name="product_uom" readonly="True" />
+                            <field name="date_planned" readonly="True" />
+                            <field name="confirmed_supplier" />
+                        </page>
+                        <page string="Notes">
+                            <field colspan="4" name="notes" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record model="portal.model" id="model_purchase_order_line">
+            <field name="name">Purchase Order Line</field>
+            <field name="model_id" search="[('model', '=', 'purchase.order.line')]"/>
+            <field name="rule_group_id" ref="portal_supplier_rule_group" />
+            <field name="view_ids" eval="[(6, 0, [ref('purchase.purchase_order_line_tree'), ref('purchase_order_line_form_portal')])]"/>
+        </record>
+
+        <record model="res.groups" id="res_groups_portal_supplier">
+            <field name="name">Portal Supplier Group</field>
+            <field name="rule_groups" eval="[(4, ref('portal_supplier_rule_group'))]" />
+        </record>
+
+        <record model="ir.model.access" id="model_access_purchase_order_lines">
+            <field name="name">Purchase Order Lines</field>
+            <field name="perm_read">True</field>
+            <field name="perm_write">True</field>
+            <field name="group_id" ref="res_groups_portal_supplier" />
+            <field name="model_id" search="[('model', '=', 'purchase.order.line')]" />
+        </record>
+
+        <record model="ir.actions.act_window" id="portal_supplier_purchase_order_lines_action">
+            <field name="name">Your Purchase Order Lines</field>
+            <field name="res_model">purchase.order.line</field>
+            <field name="view_type">form</field>
+        </record>
+        <record model="ir.actions.act_window.view" id="window_view_tree_inv">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="purchase.purchase_order_line_tree"/>
+            <field name="act_window_id" ref="portal_supplier_purchase_order_lines_action" />
+        </record>
+        <record model="ir.actions.act_window.view" id="window_view_form_inv">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="purchase_order_line_form_portal"/>
+            <field name="act_window_id" ref="portal_supplier_purchase_order_lines_action" />
+        </record>
+
+        <record model="ir.model.access" id="model_access_training_seance_supplier">
+            <field name="name">Training - Seances</field>
+            <field name="perm_read">True</field>
+            <field name="group_id" ref="res_groups_portal_supplier" />
+            <field name="model_id" search="[('model', '=', 'training.seance')]" />
+        </record>
+
+        <record model="ir.ui.view" id="view_portal_supplier_training_seance_list">
+            <field name="name">view.portal.supplier.training.seance.list</field>
+            <field name="model">training.seance</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Seances">
+                    <field name="name" />
+                    <field name="date" />
+                    <field name="participant_count" />
+                    <field name="course_id" />
+                    <field name="state" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="portal_supplier_seance_action">
+            <field name="name">Seances</field>
+            <field name="res_model">training.seance</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_portal_supplier_training_seance_list" />
+            <field name="domain">[('date', '>=', time.strftime('%Y-%m-%d 00:00:00'))]</field>
+        </record>
+
+
+        <menuitem name="Supplier Portal" id="menu_supplier_portal_training" parent="menu_portal_training" />
+        <menuitem name="Purchase Management" id="menu_portal_purchase_order_lines"
+            parent="menu_supplier_portal_training" />
+        <menuitem parent="menu_portal_purchase_order_lines" action="portal_supplier_purchase_order_lines_action" id="menu_portal_your_purchase_order_line_mi" />
+        <menuitem name="Training Management" id="menu_training_supplier_portal" parent="menu_supplier_portal_training"/>
+        <menuitem id="menu_training_seance_supplier_portal" parent="menu_training_supplier_portal" action="portal_supplier_seance_action" />
+
+        <!-- 
+        Partner Portal 
+        -->
+
+        <record model="ir.rule.group" id="portal_partner_invoice_rule_group">
+            <field name="name">Portal Partner Invoice Rule</field>
+            <field name="model_id" search="[('model', '=', 'account.invoice')]" model="ir.model" />
+            <field name="global" eval="False" />
+        </record>
+
+        <record model="ir.rule" id="portal_partner_account_invoice">
+            <field name="field_id" search="[('model', '=', 'account.invoice'),('name', '=', 'partner_id')]" model="ir.model.fields" />
+            <field name="operator">=</field>
+            <field name="operand">user.address_id.partner_id.id</field>
+            <field name="rule_group" ref="portal_partner_invoice_rule_group"/>
+        </record>
+
+        <record model="portal.model" id="portal_model_invoice">
+            <field name="name">Invoices</field>
+            <field name="model_id" search="[('model', '=', 'account.invoice')]"/>
+            <field name="rule_group_id" ref="portal_partner_invoice_rule_group" />
+        </record>
+
+        <record model="ir.rule.group" id="portal_partner_subscription_rule_group">
+            <field name="name">Portal Partner Subscription Rule</field>
+            <field name="model_id" search="[('model', '=', 'training.subscription')]" model="ir.model" />
+            <field name="global" eval="False" />
+        </record>
+
+        <record model="ir.rule" id="portal_partner_subscription">
+            <field name="field_id" search="[('model', '=', 'training.subscription'),('name', '=', 'partner_id')]" model="ir.model.fields" />
+            <field name="operator">=</field>
+            <field name="operand">user.address_id.partner_id.id</field>
+            <field name="rule_group" ref="portal_partner_subscription_rule_group"/>
+        </record>
+
+        <record model="portal.model" id="portal_model_subscription">
+            <field name="name">Subscriptions</field>
+            <field name="model_id" search="[('model', '=', 'training.subscription')]"/>
+            <field name="rule_group_id" ref="portal_partner_subscription_rule_group" />
+        </record>
+
+        <record model="ir.rule.group" id="portal_partner_portal_subscription_rule_group">
+            <field name="name">Portal Partner Old Subscription</field>
+            <field name="model_id" search="[('model', '=', 'portal.training.subscription')]" model="ir.model" />
+            <field name="global" eval="False" />
+        </record>
+
+        <record model="ir.rule" id="portal_partner_portal_subscription">
+            <field name="field_id" search="[('model', '=', 'portal.training.subscription'),('name', '=', 'partner_id')]" model="ir.model.fields" />
+            <field name="operator">=</field>
+            <field name="operand">user.address_id.partner_id.id</field>
+            <field name="rule_group" ref="portal_partner_portal_subscription_rule_group"/>
+        </record>
+
+        <record model="portal.model" id="portal_model_portal_subscription">
+            <field name="name">Portal Subscriptions</field>
+            <field name="model_id" search="[('model', '=', 'portal.training.subscription')]"/>
+            <field name="rule_group_id" ref="portal_partner_portal_subscription_rule_group" />
+        </record>
+
+
+        <record model="res.groups" id="res_groups_portal_partner">
+            <field name="name">Portal Partner Group</field>
+            <field name="rule_groups" eval="[(6, 0,
+                [ref('portal_partner_invoice_rule_group'),ref('portal_partner_subscription_rule_group'),ref('portal_partner_portal_subscription_rule_group')])]" />
+        </record>
+
+        <record model="ir.model.access" id="model_access_invoice">
+            <field name="name">Invoices</field>
+            <field name="perm_read">True</field>
+            <field name="group_id" ref="res_groups_portal_partner" />
+            <field name="model_id" search="[('model', '=', 'account.invoice')]" />
+        </record>
+
+        <record model="ir.model.access" id="model_access_subscription">
+            <field name="name">Subscriptions</field>
+            <field name="perm_read">True</field>
+            <field name="perm_create">True</field>
+            <field name="group_id" ref="res_groups_portal_partner" />
+            <field name="model_id" search="[('model', '=', 'training.subscription')]" />
+        </record>
+
+        <record model="ir.model.access" id="model_access_portal_subscription">
+            <field name="name">Portal Old Subscriptions</field>
+            <field name="perm_read">True</field>
+            <field name="group_id" ref="res_groups_portal_partner" />
+            <field name="model_id" search="[('model', '=', 'portal.training.subscription')]" />
+        </record>
+
+        <menuitem name="Partner Portal" id="menu_partner_portal_training" parent="menu_portal_training" />
+        <menuitem name="Training Management" id="menu_portal_partner_training" parent="menu_partner_portal_training" />
+
+        <record model="ir.actions.act_window" id="portal_partner_subscription_all_act">
+            <field name="name">Subscriptions</field>
+            <field name="res_model">training.subscription</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem
+            parent="menu_portal_partner_training"
+            id="portal_partner_subscription_all_mi"
+            action="portal_partner_subscription_all_act" />
+
+        <menuitem 
+            parent="portal_partner_subscription_all_mi"
+            id="portal_partner_subscription_new_mi"
+            action="training.training_subscription_new_act" />
+
+        <record model="ir.ui.view" id="view_portal_partner_subscription_tree">
+            <field name="name">view.portal.partner.subscription.tree</field>
+            <field name="model">portal.training.subscription</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Partner Subscriptions">
+                    <field name="date" />
+                    <field name="seance_id" />
+                    <field name="session_id" />
+                    <field name="contact_id" />
+                    <field name="examen" />
+                    <field name="note" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="portal_partner_subscription_act">
+            <field name="name">Old Subscriptions</field>
+            <field name="res_model">portal.training.subscription</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem name="Survey" id="portal_partner_survey_mi" parent="menu_partner_portal_training" />
+        <menuitem id="portal_partner_survey_old_subscription_mi" parent="portal_partner_survey_mi"
+            action="portal_partner_subscription_act" />
+
+        <menuitem 
+            name="Financial Management" 
+            id="portal_partner_financial_management_mi" 
+            parent="menu_partner_portal_training"/>
+
+        <menuitem 
+            id="portal_partner_financial_management_incoice_all_mi"
+            parent="portal_partner_financial_management_mi" 
+            action="account.action_invoice_tree1" />
+
+    </data>
+
+    <data noupdate="1">
+        <record id="portal_supplier_action_menu" model="ir.actions.act_window">
+            <field eval="[(6,0,[])]" name="groups_id"/>
+            <field name="domain" eval="'[(\'parent_id\',\'=\','+str(ref('menu_supplier_portal_training'))+')]'"/>
+            <field eval="&quot;&quot;&quot;current&quot;&quot;&quot;" name="target"/>
+            <field eval="&quot;&quot;&quot;tree&quot;&quot;&quot;" name="view_type"/>
+            <field eval="&quot;&quot;&quot;ir.ui.menu&quot;&quot;&quot;" name="res_model"/>
+            <field name="view_id" ref="base.view_menu"/>
+            <field eval="1" name="portal_visible"/>
+            <field eval="&quot;&quot;&quot;tree,form&quot;&quot;&quot;" name="view_mode"/>
+            <field eval="80" name="limit"/>
+            <field eval="&quot;&quot;&quot;{}&quot;&quot;&quot;" name="context"/>
+            <field eval="&quot;&quot;&quot;ir.actions.act_window&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;menu&quot;&quot;&quot;" name="usage"/>
+            <field eval="&quot;&quot;&quot;Portal Supplier Menu&quot;&quot;&quot;" name="name"/>
+        </record>
+        <record id="portal_partner_action_menu" model="ir.actions.act_window">
+            <field eval="[(6,0,[])]" name="groups_id"/>
+            <field name="domain" eval="'[(\'parent_id\',\'=\','+str(ref('menu_partner_portal_training'))+')]'"/>
+            <field eval="&quot;&quot;&quot;current&quot;&quot;&quot;" name="target"/>
+            <field eval="&quot;&quot;&quot;tree&quot;&quot;&quot;" name="view_type"/>
+            <field eval="&quot;&quot;&quot;ir.ui.menu&quot;&quot;&quot;" name="res_model"/>
+            <field name="view_id" ref="base.view_menu"/>
+            <field eval="1" name="portal_visible"/>
+            <field eval="&quot;&quot;&quot;tree,form&quot;&quot;&quot;" name="view_mode"/>
+            <field eval="80" name="limit"/>
+            <field eval="&quot;&quot;&quot;{}&quot;&quot;&quot;" name="context"/>
+            <field eval="&quot;&quot;&quot;ir.actions.act_window&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;menu&quot;&quot;&quot;" name="usage"/>
+            <field eval="&quot;&quot;&quot;Portal Partner Menu&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+
+    <data>
+        <!-- SkateHolder Portal -->
+
+        <menuitem name="SkateHolder Portal" id="menu_skateholder_portal_training" parent="menu_portal_training" />
+
+        <menuitem name="Training Management" parent="menu_skateholder_portal_training"
+            id="training_management_skateholder_portal_mi" />
+
+        <record model="ir.actions.act_window" id="participation_participant_skateholder_portal_act">
+            <field name="name">Participations of the Participants</field>
+            <field name="res_model">training.participation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem parent="training_management_skateholder_portal_mi"
+            id="participation_training_management_skateholder_portal_mi"
+            action="participation_participant_skateholder_portal_act" />
+
+        <record model="res.groups" id="res_groups_portal_skateholder">
+            <field name="name">Portal SkateHolder Group</field>
+        </record>
+
+        <record model="ir.model.access" id="model_access_participation">
+            <field name="name">Participations of the Participants</field>
+            <field name="perm_read">True</field>
+            <field name="perm_write">True</field>
+            <field name="group_id" ref="res_groups_portal_skateholder" />
+            <field name="model_id" search="[('model', '=', 'training.participation')]" />
+        </record>
+
+        <menuitem parent="training_management_skateholder_portal_mi"
+            id="participation_skateholder_portal_mi"
+            action="training.action_training_participation_skateholder_all" />
+
+        <record model="ir.model.access" id="model_access_participation_skateholder">
+            <field name="name">Participations of the SkateHolders</field>
+            <field name="perm_read">True</field>
+            <field name="perm_write">True</field>
+            <field name="group_id" ref="res_groups_portal_skateholder" />
+            <field name="model_id" search="[('model', '=', 'training.participation.skateholder')]"/>
+        </record>
+
+    </data>
+</openerp>

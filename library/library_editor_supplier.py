@@ -22,22 +22,8 @@
 
 from osv import osv, fields
 import tools
+from tools.translate import _
 
-# class library_editor_supplier(osv.osv):
-#   _name = "library.editor.supplier"
-#   _description = "Suppliers associated to an editor"
-#   _auto = False
-#   _columns = {
-#       'name': fields.many2one('res.partner', 'Editor', readonly= True),
-#       'supplier_ids' : fields.many2many('res.partner','editor_supplier_rel','editor_id','supplier_id', 'Suppliers',readonly= True),
-#   }
-#   def init(self, cr):
-#       cr.execute("""
-#           create or replace view library_editor_supplier as (
-#               select editor as id, editor as name from product_product group by editor
-#               )
-#           """)
-# library_editor_supplier()
 
 class library_editor_supplier(osv.osv):
     _name = "library.editor.supplier"
@@ -95,22 +81,20 @@ class library_editor_supplier(osv.osv):
             self.pool.get('product.supplierinfo').unlink(cr, uid, ids, context)
         return True
 
-#   cr.execute('select name, supplier_id from library_editor_supplier where id in ('+','.join(map(str,ids))+')' )
-
     def write(self, cr, user, ids, vals, context={}):
         res = {}
-        update = "update product_supplierinfo set sequence = %s where name = %d"
+        update = "update product_supplierinfo set sequence = %s where name = %s"
         relations = self.browse(cr, user, ids)
         for rel, idn in zip(relations, ids):
             #   cannot change supplier here. Must create a new relation:
             original_supplier_id = rel.supplier_id.id
             if not original_supplier_id:
-                raise osv.except_osv("Warning", "Please choose a supplier.")
+                raise osv.except_osv(_("Warning"), _("Cannot set supplier in this form. Please create a new relation."))
 
             new_supplier_id = vals.get('supplier_id', 0)
             supplier_change = new_supplier_id != 0 and (idn < 0 or (original_supplier_id != new_supplier_id))
             if supplier_change:
-                raise osv.except_osv("Warning", "Cannot set supplier in this form. Please create a new relation.")
+                raise osv.except_osv(_("Warning"), _("Cannot set supplier in this form. Please create a new relation."))
             else:
                 params = (vals.get('sequence', 0), original_supplier_id)
                 cr.execute(update, params)

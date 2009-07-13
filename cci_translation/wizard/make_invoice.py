@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -83,7 +83,8 @@ def _createInvoices(self, cr, uid, data, context):
         inv_create = inv_create + 1
 
         translation_product_id = pool_obj.get('product.product').search(cr, uid, [('name', 'like', 'Translation Folder')])[0]
-        val = obj_lines.product_id_change(cr, uid, [], translation_product_id,uom =False, partner_id = transfolder.partner_id.id)
+        fpos = transfolder.partner_id.property_account_position and transfolder.partner_id.property_account_position.id or False
+        val = obj_lines.product_id_change(cr, uid, [], translation_product_id,uom =False, partner_id = transfolder.partner_id.id, fposition_id=fpos)
 
         note = ''
         cci_special_reference = False
@@ -117,6 +118,7 @@ def _createInvoices(self, cr, uid, data, context):
             'currency_id' :transfolder.partner_id.property_product_pricelist.currency_id.id,
             'comment': '',
             'payment_term':transfolder.partner_id.property_payment_term.id,
+            'fiscal_position': transfolder.partner_id.property_account_position.id
         }
 
         inv_obj = pool_obj.get('account.invoice')

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="account_base_partner_form">
+			<field name="name">account_base.partner.form</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="model">res.partner</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field colspan="4" context="address=address" name="bank_ids" nolabel="1" select="2" position="before">
+					<separator string="Excise, Service Tax, and PAN Details" colspan="4"/>
+					<field name="excise" select="2"/>
+					<field name="range" select="2"/>
+					<field name="div" select="2"/>
+					<field name="vat_no" select="2" />
+					<field name="cst_no" select="2"/>
+					<field name="pan_no" select="2" />
+					<field name="ser_tax" select="2"/>
+				</field>
+			</field>
+		</record>
+		
+	</data>
+</openerp>

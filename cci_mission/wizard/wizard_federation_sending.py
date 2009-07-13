@@ -128,7 +128,7 @@ class wizard_fed_send(wizard.interface):
     def _send_mail(self, cr, uid, data, context):
 
         ptrn = re.compile('(\w+@\w+(?:\.\w+)+)')
-        result=ptrn.search(data['form']['email'])
+        result = ptrn.search(data['form']['email'])
         if result==None:
             raise wizard.except_wizard('Error !', 'Enter Valid E-Mail Address.')
 

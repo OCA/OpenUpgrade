@@ -26,15 +26,21 @@
     "website" : "http://www.syleam.fr",
     "category" : "Generic Modules/CRM & SRM",
     "description": """
-TODO
+Add a new fonctionnality on Questionnaire
+New wizard on CRM Case to create a new case
 """,
-    "depends" : ["crm","crm_configuration"],
+    "depends" : [
+        "crm",
+        "crm_configuration",
+        "crm_profiling",
+    ],
     "init_xml" : [
 #        "crm_configuration_wizard.xml",
     ],
     "demo_xml" : [],
     "update_xml" : [
-       "partner_wizard.xml",
+        "crm_profiling_wizard.xml",
+        "crm_profiling_view.xml",
 #         "security/ir.model.access.csv",
 #         "process/crm_configuration_process.xml",
     ],

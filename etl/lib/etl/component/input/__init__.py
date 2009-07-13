@@ -21,12 +21,20 @@
 ##############################################################################
 
 """
-ETL Input Components:
-* csv_in : read data from csv file
-* sql_in : read data from sql database
-* openobject_in : read data from openobject 
-* xml_in : read data from xml file
+ To extract data from the source systems.
 
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+ GNU General Public License.
 """
-import csv_in
-
+from data import data
+from csv_in import csv_in
+from sql_in import sql_in
+from openobject_in import openobject_in
+from facebook_in import facebook_in
+from vcard_in import vcard_in
+from gmail_in import gmail_in
+from sugarcrm_in import sugarcrm_in
+from xmlrpc_in import xmlrpc_in
+from gcalendar_in import gcalendar_in
+from gdoc_in import gdoc_in
+from xmlrpc_in_block import xmlrpc_in_block

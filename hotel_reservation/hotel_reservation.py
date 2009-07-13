@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
+
 from osv import fields
 from osv import osv
 import time
@@ -76,19 +78,18 @@ class hotel_reservation(osv.osv):
     def confirmed_reservation(self,cr,uid,ids):
          
          for reservation in self.browse(cr, uid, ids):
-             print "check in: ",reservation.checkin
              cr.execute("select count(*) from hotel_reservation as hr " \
                         "inner join hotel_reservation_line as hrl on hrl.line_id = hr.id " \
                         "inner join hotel_reservation_line_room_rel as hrlrr on hrlrr.room_id = hrl.id " \
                         "where (checkin,checkout) overlaps ( timestamp %s , timestamp %s ) " \
-                        "and hr.id <> %d  " \
+                        "and hr.id <> cast(%s as integer) " \
                         "and hr.state = 'confirm' " \
                         "and hrlrr.hotel_reservation_line_id in (" \
                         "select hrlrr.hotel_reservation_line_id from hotel_reservation as hr " \
                         "inner join hotel_reservation_line as hrl on hrl.line_id = hr.id " \
                         "inner join hotel_reservation_line_room_rel as hrlrr on hrlrr.room_id = hrl.id " \
-                        "where hr.id = %d )" \
-                        ,(reservation.checkin,reservation.checkout,reservation.id,reservation.id)
+                        "where hr.id = cast(%s as integer) )" \
+                        ,(reservation.checkin,reservation.checkout,str(reservation.id),str(reservation.id))
                         )
              res = cr.fetchone()
              roomcount =  res and res[0] or 0.0
@@ -104,7 +105,6 @@ class hotel_reservation(osv.osv):
             for line in reservation.reservation_line:
                  for r in line.reserve:
                     folio=self.pool.get('hotel.folio').create(cr,uid,{
-#                                                                      'name':reservation.reservation_no,
                                                                       'date_order':reservation.date_order,
                                                                       'shop_id':reservation.shop_id.id,
                                                                       'partner_id':reservation.partner_id.id,
@@ -125,10 +125,8 @@ class hotel_reservation(osv.osv):
                                                                                            
                                                                                            })],
                                                                      'service_lines':reservation['folio_id']     
-#                                                                                           
-#                                                                                                  
                                                                        })
-            cr.execute('insert into hotel_folio_reservation_rel (order_id,invoice_id) values (%s,%s)', (reservation.id, folio))   
+            cr.execute('insert into hotel_folio_reservation_rel (order_id,invoice_id) values (%d,%d)', (reservation.id, folio))  
             self.write(cr, uid, ids, {'state':'done'})
         return True
 hotel_reservation()
@@ -140,13 +138,12 @@ class hotel_reservation_line(osv.osv):
      _columns = {
                  
                'line_id':fields.many2one('hotel.reservation'),
-               'reserve':fields.many2many('product.product','hotel_reservation_line_room_rel','room_id','hotel_reservation_line_id', domain="[('categ_id','=',categ_id)]"),   
-               'categ_id': fields.many2one('product.category','Room Type'), 
-               'reserve':fields.many2many('product.product','hotel_reservation_line_room_rel','room_id','hotel_reservation_line_id', domain="[('categ_id','=',categ_id)]"),   
+               'reserve':fields.many2many('product.product','hotel_reservation_line_room_rel','room_id','hotel_reservation_line_id', domain="[('isroom','=',True),('categ_id','=',categ_id)]"),   
                'categ_id': fields.many2one('product.category','Room Type',domain="[('isroomtype','=',True)]"), 
-
+              
         }
 hotel_reservation_line()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+
 

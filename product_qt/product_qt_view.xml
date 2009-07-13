@@ -165,32 +165,34 @@
 
 		<record id="quality_testing_mrp_production_workcenter_line_view" model="ir.ui.view">
             <field name="name">quality.testing.mrp.production.form</field>
-            <field name="model">mrp.production.workcenter.line</field>
+            <field name="model">mrp.production</field>
             <field name="type">form</field>
-            <field name="inherit_id" ref="mrp.mrp_production_workcenter_form_view"/>
+            <field name="priority" eval="18"/>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
             <field name="arch" type="xml">
-           		<field name="hour" position="after">
-                    <separator colspan="4" string="Quality Testing"/>
+           		<xpath expr="/form/notebook/page/field[@name='workcenter_lines']/form/field[@name='hour']" position="after">
+					<separator colspan="4" string="Quality Testing"/>
                     	<field name="qlty_test_accept"/>
                     	<newline/>
                     	<field name="qlty_test_reject"/>
                     	<button name="%(qty_test_prod_id)d" string="Quality Testing" type="action"/>
-            	</field>
+				</xpath>
            </field>
         </record>
 
 		<record id="quality_testing_mrp_production_workcenter_tree_view" model="ir.ui.view">
             <field name="name">quality.testing.mrp.production.tree</field>
-            <field name="model">mrp.production.workcenter.line</field>
+            <field name="model">mrp.production</field>
             <field name="type">tree</field>
-            <field name="inherit_id" ref="mrp.mrp_production_workcenter_tree_view"/>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
             <field name="arch" type="xml">
-           		<field name="hour" position="after">
-                    <separator colspan="4" string="Quality Testing"/>
+				<xpath expr="/form/notebook/page/field[@name='workcenter_lines']/tree/field[@name='hour']" position="after">
+					<separator colspan="4" string="Quality Testing"/>
                     	<field name="qlty_test_accept"/>
                     	<newline/>
                     	<field name="qlty_test_reject"/>
-            	</field>
+                    	<button name="%(qty_test_prod_id)d" string="Quality Testing" type="action"/>
+				</xpath>
            </field>
         </record>
 

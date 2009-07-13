@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="view_server_statistics_graph">
+			<field name="name">ir.actions.server.form.inherit</field>
+			<field name="model">ir.actions.server</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="base.view_server_action_form"/>
+			<field name="arch" type="xml">
+				<field name="email" position="after">
+				    <field name="email_server" select="1" attrs="{'required':[('state','=','email')]}"/>
+				</field>
+			</field>
+		</record>
+    </data>
+</openerp>

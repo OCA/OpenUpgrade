@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+    <openerp>
+        <data>
+        <!--
+         =======================================================
+         OFFER STEP DOCUMENT EXTENSION
+         =======================================================
+         -->
+
+        <record id="dm_document_normal_form_view" model="ir.ui.view">
+            <field name="name">dm.offer.document.form.inherit</field>
+            <field name="model">dm.offer.document</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="dm.view_offer_step_document_form"/>
+                <field name="arch" type="xml">
+                    <notebook position="inside">
+                        <page string="Email Configuration" attrs="{'invisible':[('media_id','!=','Email')]}">
+                            <field name="subject" colspan="4" attrs="{'required':[('media_id','=','Email')]}"/>
+                            <field name="editor" colspan="4" attrs="{'required':[('media_id','=','Email')]}"/>
+                            <group colspan="4" attrs="{'invisible':[('editor','!=','internal')]}">
+                                <separator string="Content" colspan="4" />
+                                <field name="content" colspan="4" nolabel="1"  widget="text_html"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </field>
+        </record>
+
+        <record id="dm_document_normal_form_view2" model="ir.ui.view">
+            <field name="name">dm.offer.document.form.inherit2</field>
+            <field name="model">dm.offer.document</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="dm.view_offer_step_document_form"/>
+            <field name="arch" type="xml">
+                <field name="step_id" position="after">
+                    <field name="media_id" invisible="True"/>
+                </field>
+            </field>
+        </record>
+
+        <!--
+         =======================================================
+         MAIL SERVICE EXTENSION
+         =======================================================
+         -->
+        <record id="view_dm_mail_service_form_inherit" model="ir.ui.view">
+            <field name="name">dm.mail_service.form.inherit</field>
+            <field name="model">dm.mail_service</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="dm.view_dm_mail_service_form"/>
+            <field name="arch" type="xml">
+				<field name="type_id" position="after">
+					<group colspan="4" attrs="{'invisible':[('service_type','!=','smtp')]}">
+						<separator string="SMTP Server Configuration" colspan="4" />
+						<field name="service_type" on_change="on_change_service_type(type_id)" invisible="1"/>
+						<field name="smtp_server_id"/>
+					</group>
+				</field>
+			</field>
+		</record>
+
+        <record id="view_dm_mail_service_form_inherit2" model="ir.ui.view">
+            <field name="name">dm.mail_service.form.inherit2</field>
+            <field name="model">dm.mail_service</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="dm.view_dm_mail_service_form"/>
+            <field name="arch" type="xml">
+                <field name="type_id" position="replace">
+                    <field name="type_id" on_change="on_change_service_type(type_id)" widget="selection"/>
+                </field>
+            </field>
+        </record>
+        </data>
+    </openerp>

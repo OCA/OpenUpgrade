@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="view_users_blogger_form">
+			<field name="name">res.users.blogger.form</field>
+			<field name="model">res.users</field>
+			<field name="inherit_id" ref="base.view_users_form"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<notebook>
+					<page string="Blogger">
+						<field name="blogger_email"/>
+						<field name="blogger_password" password="True"/>
+					</page>
+				</notebook>
+			</field>
+		</record>
+	</data>
+</openerp>

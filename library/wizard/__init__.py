@@ -21,7 +21,4 @@
 ##############################################################################
 
 import wizard_update_prices
-import wizard_merge_purchase
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

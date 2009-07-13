@@ -4,7 +4,7 @@
 	<input type="hidden" id="item_id" name="item_id" value="${item_id}"/>
 	
 	<div class="header">
-		<b>${item_id}</b>
+		<b>${item}</b>
 	</div>
 	
 	<table id="voting" align="center">
@@ -22,14 +22,27 @@
 				${ch['name']}
 			</td>
 			<td>
-				<select style="width: 150px;" name="${ch['id']}_score_id" id="${ch['id']}_score_id">				
-                	<option py:for="s in value_name" py:content="s['name']"></option>
+				<select style="width: 150px;" name="${ch['id']}_score_id" id="${ch['id']}_score_id">
+					<option name="none" value="0"> </option>				
+                	<option py:for="s in value_name" value="${s['id']}">${s['name']}</option>
                 </select>
             </td>
         </tr>
+	</table><hr/>
+	<table align="center">
+		<tr>
+			<td style="font-weight: bold;">
+				Provide a justification or details about your suggestion :
+			</td>
+		</tr>
+		<tr>
+			<td width="430px">
+				<textarea align="center" style="width: 100%;" name="note" id="note" rows="8"/>
+			</td>
+		</tr>
 	</table>
-	
-	<div py:if="error" align="right">
+	<br/>
+	<div py:if="error" id="error_box" align="right">
 		<div class="box2 message">
 			${error}
 		</div>

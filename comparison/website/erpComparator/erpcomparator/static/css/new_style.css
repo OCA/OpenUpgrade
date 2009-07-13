@@ -82,6 +82,7 @@ button {
     padding: 0px 2px;
     font-size: 11px;
     white-space: nowrap;
+    margin: 1px;
 }
 
 #container {
@@ -130,7 +131,7 @@ div.header {
     text-align: center;
     color: #990033;
     text-align: center;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .toolbar {
@@ -300,10 +301,10 @@ td.item .radio {
 	width:890px;
 }
 
-#header_bar {
+div .header_bar {
 	/*height:40px;*/
 	position:relative;
-	width:890px;
+	width:900px;
 	height:39px;
 	background-attachment: scroll;
 	background-color: transparent;
@@ -373,17 +374,26 @@ td.item .radio {
 	font-style: normal;
 	font-size: 11px;
 	padding-left: 10px;
-	padding-bottom: 10px;
+	padding-bottom: 30px;
 	padding-right: 10px;
 }
 
+.checkboxtext {
+	font-family: Verdana, Geneva, sans-serif;
+	font-style: normal;
+	font-size: 11px;
+	padding-bottom: 10px;
+	padding-right: 10px;
+	padding-top: 18px;
+}
+
 #loginbg {
-	background-image:url(/static/images/bk_loginimage.png);
-	background-repeat:no-repeat;
-	float:right;
-	height:39px;
-	padding-right:10px;
-	width:420px;
+	/*background: url(/static/images/bk_loginimage.png);*/
+	background-repeat:repeat scroll 0 0;
+	float: right;
+	height: 39px;
+	font-size: 11px;
+	width: 55%;
 }
 	
 #s {
@@ -415,10 +425,9 @@ td.item .radio {
 
 .textInput {
 	border: 1px solid #d1d1d1;
-	background: #ffffff;
-	width:100px;
-	color: #ffffff;
+	width:80px;
 	font-size: 1.1em;
+	height: 17px;
 }
 
 #bottom_shadow {
@@ -448,7 +457,13 @@ td.item .radio {
 	font-family: Verdana, Geneva, sans-serif;
 	font-size: 11px;
 	text-decoration:none;
-} 
+}
+
+#new_planet {
+	width: 850px;
+	font-family: sans-serif;
+	margin: 0px 8px auto;
+}
 
 
 /**

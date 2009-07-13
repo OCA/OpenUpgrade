@@ -71,6 +71,10 @@ res_company()
 
 def ldap_login(oldfnc):
     def _ldap_login(db, login, passwd):
+        ret = oldfnc(db, login, passwd)
+        if ret:
+            return ret
+
         cr = pooler.get_db(db).cursor()
         module_obj = pooler.get_pool(cr.dbname).get('ir.module.module')
         module_ids = module_obj.search(cr, 1, [('name', '=', 'users_ldap')])
@@ -129,15 +133,18 @@ def ldap_login(oldfnc):
                     except Exception, e:
                         continue
         cr.close()
-        return oldfnc(db, login, passwd)
+        return False
     return _ldap_login
 
 security.login = ldap_login(security.login)
 
 def ldap_check(oldfnc):
     def _ldap_check(db, uid, passwd):
-        if security._uid_cache.has_key(uid) and (security._uid_cache[uid]==passwd):
-            return True
+        try:
+            return oldfnc(db, uid, passwd)
+        except: # AccessDenied
+            pass
+
         cr = pooler.get_db(db).cursor()
         module_obj = pooler.get_pool(cr.dbname).get('ir.module.module')
         module_ids = module_obj.search(cr, 1, [('name', '=', 'users_ldap')])
@@ -164,14 +171,14 @@ def ldap_check(oldfnc):
                                     name=result_data[0][1]['cn']
                                     if l.bind_s(dn, passwd):
                                         l.unbind()
-                                        security._uid_cache[uid] = passwd
+                                        security._uid_cache.setdefault(db, {})[uid] = passwd
                                         cr.close()
                                         return True
                                 l.unbind()
                         except Exception, e:
                             pass
         cr.close()
-        return oldfnc(db, uid, passwd)
+        raise Exception('AccessDenied')
     return _ldap_check
 
 security.check = ldap_check(security.check)

@@ -40,6 +40,8 @@ class portal_portal(osv.osv):
         """
         Create default menu for the users of the portal.
         """
+        mod_obj = self.pool.get('ir.model.data')
+        result = mod_obj._get_id(cr, uid, 'base', 'view_menu')
         menu_action_id = self.pool.get('ir.actions.act_window').create(cr,uid, {
             'name': action_name+ ' main menu',
             'usage': 'menu',
@@ -47,7 +49,7 @@ class portal_portal(osv.osv):
             'res_model': "ir.ui.menu",
             'domain': "[('parent_id','=',"+str(action_id)+")]",
             'view_type': 'tree',
-            'view_id': self.pool.get('ir.model.data')._get_id(cr, uid, 'base', 'view_menu')
+            'view_id': mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
             })
         return menu_action_id
 
@@ -59,7 +61,7 @@ class portal_portal(osv.osv):
 
     def create_menu(self, cr, uid,portal_id, portal_model_id, menu_name, action_id,parent_menu_id=None,view_ids=None,view_type=False,context=None):
         """
-        Create a menuitem for the given portal and model whith the given name and action.
+        Create a menuitem for the given portal and model with the given name and action.
         """
 
         assert portal_id and portal_model_id and menu_name and action_id, "Create_menu does not accept null values"
@@ -170,7 +172,8 @@ class portal_portal(osv.osv):
             })
         ## add the rule_group to the user
         if model.rule_group_id:
-            portal.group_id.write(cr,uid,[portal.group_id.id],{'rule_groups': [(4,model.rule_group_id.id)]})
+            group_obj = self.pool.get('res.groups')
+            group_obj.write(cr,uid,[portal.group_id.id],{'rule_groups': [(4,model.rule_group_id.id)]})
         return action_id
 
 portal_portal()
@@ -252,7 +255,7 @@ class portal_config_install_modules_wizard(osv.osv_memory):
                     ids = mod_obj.search(cr, uid, [('name', '=', r)])
                     mod_obj.button_install(cr, uid, ids, context=context)
         cr.commit()
-        db, pool = pooler.restart_pool(cr.dbname,force_demo=True, update_module=True)
+        db, pool = pooler.restart_pool(cr.dbname,update_module=True)
         return {
                 'view_type': 'form',
                 "view_mode": 'form',

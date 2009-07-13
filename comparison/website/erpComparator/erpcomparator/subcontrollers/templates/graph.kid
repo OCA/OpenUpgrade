@@ -4,6 +4,12 @@
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
     <title>Comparison</title>
+    
+    <script type="text/javascript">
+    	MochiKit.DOM.addLoadEvent(function(evt){
+    		load_radar();
+    	});
+	</script>
 </head>
 <body>
 	<div id="bodybackground">
@@ -18,7 +24,7 @@
 		    </div>
 		    <div style="float:left; width:175; height:46;">
 		    	<a href="#" onclick="window.location.href='/graph'">
-		    		<img src="/static/images/graphs_hover.jpg" name="graph_image" alt="" border="0" width="175" height="46"/>
+		    		<img src="/static/images/graphs_hover.png" name="graph_image" alt="" border="0" width="175" height="46"/>
 		    	</a>
 		    </div>
 		    <div style="float:left;width:176;">
@@ -27,12 +33,12 @@
 		    	</a>
 		    </div>
 		    <div style="float:left;width:176;">
-		    	<a href="#" onclick="window.location.href='/document'" onmouseover="document.document_image.src='/static/images/document_hover.jpg'" onmouseout="document.document_image.src='/static/images/document.jpg'">
-		    		<img src="/static/images/document.jpg" name="document_image" alt="" border="0" width="176" height="46"/>
+		    	<a href="#" onclick="window.location.href='/news'" onmouseover="document.news_image.src='/static/images/news_hover.jpg'" onmouseout="document.news_image.src='/static/images/news.jpg'">
+		    		<img src="/static/images/news.jpg" name="news_image" alt="" border="0" width="176" height="46"/>
 		    	</a>
 		    </div>
 		    <div style="float:left;width:173;">
-		    	<a href="#" onclick="window.location.href='/about'" onmouseover="document.about_image.src='/static/images/about_hover.jpg'" onmouseout="document.about_image.src='/static/images/about.jpg'">
+		    	<a href="#" onclick="window.location.href='/about'" onmouseover="document.about_image.src='/static/images/about_hover.png'" onmouseout="document.about_image.src='/static/images/about.jpg'">
 		    		<img src="/static/images/about.jpg" name="about_image" alt="" border="0" width="173" height="46"/>
 		    	</a>
 		    </div>
@@ -49,7 +55,12 @@
 					Analysis axis :
 				</td>
 				<td>
-					<select style="width: 500px; font-size: 12px; font-family: Verdana, Geneva, sans-serif; font-style: normal;" name="factors" id="factors">
+					<select py:if="view_name" style="width: 500px; font-size: 12px; font-family: Verdana, Geneva, sans-serif; font-style: normal;" name="factors" id="factors" class="factors">
+						<option>Summary</option>
+			        	<option py:for="s in parents" py:content="s['name']">${s['name']}</option>
+			        	<option py:for="c in all_child" selected="${tg.selector(view_name==c['name'])}">${c['name']}</option>
+			        </select>
+			        <select py:if="not view_name" style="width: 500px; font-size: 12px; font-family: Verdana, Geneva, sans-serif; font-style: normal;" name="factors" id="factors" class="factors">
 						<option>Summary</option>
 			        	<option py:for="s in parents" py:content="s['name']">${s['name']}</option>
 			        	<option py:for="c in all_child" py:content="c['name']">${c['name']}</option>
@@ -59,12 +70,20 @@
 		</table>
 		<div id="checkboxtext">
 			<table name="item_list" id="graph_item_list">
-				<tr>
+				<tr py:if="selected_items">
+					<td py:for="label in titles">
+						<input id="${label['id']}" type="checkbox" checked="${tg.selector(label['sel'])}" class="grid-record-selector">${label['name']}</input>
+					</td>
+					<td>&nbsp;
+						<button type="button" class="button" onclick="load_radar()">Show Graph</button>
+					</td>
+				</tr>
+				<tr py:if="not selected_items">
 					<td py:for="label in titles">
 						<input id="${label['id']}" type="checkbox" checked="true" class="grid-record-selector">${label['name']}</input>
 					</td>
 					<td>&nbsp;
-						<button type="button" class="button" onclick="radarData()">Show Graph</button>
+						<button type="button" class="button" onclick="load_radar()">Show Graph</button>
 					</td>
 				</tr>
 			</table><br/>

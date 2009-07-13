@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <wizard 
+            id="wizard_call_list_menu" 
+            model="res.partner" 
+            name="partner.call_list" 
+            string="Create phone call list"/>
+        <menuitem action="wizard_call_list_menu" id="menu_wizard_call_list_menu" parent="base.menu_base_partner" type="wizard"/>
+
+        <wizard
+            id="wizard_direct_poll_menu"
+            model="crm.case"
+            name="crm.direct_poll"
+            string="Questionnaire"/>
+    <!-- idem sur la fiche partenaire -->
+        <wizard
+            id="wizard_direct_poll_menu"
+            model="res.partner"
+            name="crm.direct_poll"
+            string="Questionnaire"/>
+
+        <wizard
+            id="wizard_market_meeting_menu"
+            model="crm.case"
+            name="market.meeting"
+            string="New meeting"/>
+    </data>
+</openerp>

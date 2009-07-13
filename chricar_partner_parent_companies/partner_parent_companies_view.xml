@@ -1,0 +1,136 @@
+<openerp>
+	
+	
+  <data>
+
+<!--
+==============================================
+Modification of Partner - Adding Tab for Parent Companies
+==============================================
+-->
+        <record model="ir.ui.view" id="view_partner_form">
+                <field name="name">res.partner.form.parent_company</field>
+                <field name="model">res.partner</field>
+                <field name="inherit_id" ref="base.view_partner_form"/>
+                <field name="arch" type="xml">
+                  <notebook position="inside" >
+                    <page string="Participations">
+		       
+		        <field name="partner_ids" colspan="4" nolabel="1" widget="one2many_list">
+                          <tree string="Parent Companies">    
+                             <field name="name" select="1" />
+                             <field name="percentage" select="1" />
+                             <field name="consolidation" select="1" />
+                             <field name="partner_parent_id" select="1" />
+                             <field name="valid_from" select="1" />
+                             <field name="valid_until" select="1" />
+                             <field name="valid_fiscal_from" select="1" />
+                             <field name="valid_fiscal_until" select="1" />
+                             <field name="contract_date" select="1" />
+                             <field name="contract_number" select="1" />
+                          </tree>
+			  <form string="Parent Companies">
+                             <field name="name" select="1" />
+                             <field name="percentage" select="1" />
+                             <field name="consolidation" select="1" />
+                             <field name="partner_parent_id" select="1" />
+                             <field name="valid_from" select="1" />
+                             <field name="valid_until" select="1" />
+                             <field name="valid_fiscal_from" select="1" />
+                             <field name="valid_fiscal_until" select="1" />
+                             <field name="contract_date" select="1" />
+                             <field name="contract_number" select="1" />
+                             <separator colspan="4" string="Notes"/>
+                             <field name="comment" colspan="4" nolabel="1" />
+                          </form>
+		       </field>
+		       <field name="participation_ids" colspan="4" nolabel="1" widget="one2many_list">
+                          <tree string="Participations">
+                             <field name="name" select="1" />
+                             <field name="percentage" select="1" />
+                             <field name="consolidation" select="1" />
+                             <field name="partner_id" select="1" />
+                             <field name="valid_from" select="1" />
+                             <field name="valid_until" select="1" />
+                             <field name="valid_fiscal_from" select="1" />
+                             <field name="valid_fiscal_until" select="1" />
+                             <field name="contract_date" select="1" />
+                             <field name="contract_number" select="1" />
+                          </tree>
+			  <form string="Participations">
+                             <field name="name" select="1" />
+                             <field name="percentage" select="1" />
+                             <field name="consolidation" select="1" />
+                             <field name="partner_id" select="1" />
+                             <field name="valid_from" select="1" />
+                             <field name="valid_until" select="1" />
+                             <field name="valid_fiscal_from" select="1" />
+                             <field name="valid_fiscal_until" select="1" />
+                             <field name="contract_date" select="1" />
+                             <field name="contract_number" select="1" />
+                             <separator colspan="4" string="Notes"/>
+                             <field name="comment" colspan="4" nolabel="1" />
+                          </form>
+                       </field>
+                    </page>
+		  </notebook>   
+                </field>
+        </record>   
+
+<!--
+==============================================
+Definition of Parent Companies
+==============================================
+-->
+            <record id="view_partner_parent_companies_form" model="ir.ui.view">
+            <field name="name">res.partner.parent_company.form</field>
+            <field name="model">res.partner.parent_company</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Parent Companies">
+                             <field name="name" select="1" />
+                             <field name="percentage" select="1" />
+                             <field name="consolidation" select="1" />
+                             <field name="partner_parent_id" select="1" />
+                             <field name="valid_from" select="1" />
+                             <field name="valid_until" select="1" />
+                             <field name="valid_fiscal_from" select="1" />
+                             <field name="valid_fiscal_until" select="1" />
+                             <field name="contract_date" select="1" />
+                             <field name="contract_number" select="1" />
+                             <separator colspan="4" string="Notes"/>
+                             <field name="comment" colspan="4" nolabel="1" />
+                </form>
+              </field>
+            </record>
+            
+            <record id="view_partner_parent_companies_tree" model="ir.ui.view">
+            <field name="name">res.partner.parent_company.tree</field>
+            <field name="model">res.partner.parent_company</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                       <tree string="Parent Companies">
+                             <field name="name" select="1" />
+                             <field name="percentage" select="1" />
+                             <field name="consolidation" select="1" />
+                             <field name="partner_parent_id" select="1" />
+                             <field name="valid_from" select="1" />
+                             <field name="valid_until" select="1" />
+                             <field name="valid_fiscal_from" select="1" />
+                             <field name="valid_fiscal_until" select="1" />
+                             <field name="contract_date" select="1" />
+                             <field name="contract_number" select="1" />
+
+                       </tree>
+              </field>
+            </record>
+            
+            <record id="action_partner_parent_companies_form" model="ir.actions.act_window">
+             <field name="name">Partner ID Numbers</field>
+             <field name="res_model">res.partner.parent_company</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">tree,form</field>
+            </record>
+
+    </data>
+</openerp>

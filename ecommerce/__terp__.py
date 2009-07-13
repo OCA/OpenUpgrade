@@ -19,32 +19,39 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name" : "E-Commerce",
-    "version" : "1.0",
-    "author" : "e-tiny",
-    "website" : "http://www.etiny.com",
-    "depends" : ["delivery","base", "product","sale"],
-    "category" : "Generic Modules/E-Commerce Shop",
-    "init_xml" : [],
-    "demo_xml" : ["ecommerce_demo_data.xml"],
-    "description": """eCommerce Users can order on the website, orders are automatically imported in TinyERP.
-                      You can configure products, categories of products, language, currency, carrier, payment
-                      and also configure row,column,images.""",
 
-    "update_xml" : [
-                    "tools/ecom_product_view.xml",
-                    "basic_info_view.xml",
-                    "partner/partner_new_view.xml",
-                    "catalog/catalog_view.xml",
-                    "tools/tools_wizard.xml",
-                    "sale_order/sale_order_view.xml",
-                    "sale_order/sale_order_sequence.xml",
-                    "report_shipping.xml", 
-                    "security/ir.model.access.csv"                            
-   ],
-    "active": False,
-    "installable": True
+{
+    'name': 'E-Commerce',
+    'version': '1.0',
+    'author': 'Tiny',
+    'website': 'http://www.openerp.com',
+    'category': 'Generic Modules/E-Commerce',
+    'depends': ['delivery'],
+    'description': """
+ecommerce users can order on the website, orders are automatically imported in OpenERP.
+
+You can export products, product's categories, product images and create links between
+categories of products, currency and languages to website.
+
+Delivery of products manage by carriers.
+
+Different payment methods are available for users to make payment.
+
+You can display products in table on website using rows and columns specified in webshop.
+                 """,
+    'init_xml': [],
+    'demo_xml': ['ecommerce_demo.xml'],
+    'update_xml': [
+        'ecommerce_wizard.xml',
+        'ecommerce_view.xml',
+        'partner/partner_view.xml',
+        'catalog/catalog_view.xml',       
+        'sale_order/sale_order_view.xml',
+        'sale_order/sale_order_sequence.xml',
+        'ecommerce_report.xml', 
+        'security/ir.model.access.csv'
+    ],
+    'installable': True,
+    'active': False
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

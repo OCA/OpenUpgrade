@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -117,6 +117,7 @@ def _createInvoices(self, cr, uid, data, context):
                 'currency_id' :embassy.partner_id.property_product_pricelist.currency_id.id,# 1,
                 'comment': embassy.invoice_note,
                 'payment_term':embassy.partner_id.property_payment_term.id,
+                'fiscal_position': embassy.partner_id.property_account_position.id
         }
         inv_create = inv_create + 1
         inv_obj = pool_obj.get('account.invoice')

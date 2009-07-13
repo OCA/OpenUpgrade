@@ -36,7 +36,7 @@ Also take note of the following points:
 4) When we look if there is enough product on virtual stock for a line, we look at the time the sale order is confirmed,
 we don't try to anticipate if there will be enough virtual stock is the future if the sale order is planned for later.
     """,
-    "depends":["base", "product", "sale", "purchase"],
+    "depends":["sale", "purchase"],
     "demo_xml":[],
     "update_xml":["product_view.xml", "sale_view.xml", "purchase_view.xml", "stock_view.xml", "supplier_export_data.xml"],
     "active": False,

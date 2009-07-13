@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+ 
+        <record id="sth0_view_partner_informations_form" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="type">form</field>
+            <field name="priority">2</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <notebook>
+                    <page string="Informations">
+                        <field name="turnover_id" widget="one2many_list" colspan="4" nolabel="1" mode="tree,form">
+                            <form string="Partner turnover">
+                                <group col="6" colspan="4">
+                                    <field name="name" select="1"/>
+                                    <field name="turnover" select="1"/>
+                                    <field name="currency_id" select="1"/>
+                                </group>
+                                <field name="manpower" select="1"/>
+                            </form>
+                            <tree string="Partner turnover">
+                                <field name="name"/>
+                                <field name="turnover"/>
+                                <field name="currency_id"/>
+                                <field name="manpower"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+    </data>
+</openerp>

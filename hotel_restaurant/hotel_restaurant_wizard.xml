@@ -14,9 +14,10 @@
 			id="wizard_hotel_table_res"/>
 			
 		<menuitem
-			name="Reservation List" parent="menu_hotel_res"
+			name="Hotel Management/Reports/Table Reservation List" 
 			action="wizard_hotel_table_res" 
 			type="wizard"
-			id="wizard_list_menu"/>
+			id="wizard_list_menu"
+			sequence="30"/>
 	</data>
 </openerp>

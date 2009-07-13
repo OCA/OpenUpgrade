@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+	<record model="ir.ui.view" id="view_esale_oscom_product_add_oscom_fields">
+		<field name="name">esale.oscom.product.add.oscom.fields</field>
+		<field name="model">product.product</field>
+		<field name="inherit_id" ref="product.product_normal_form_view"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<notebook position="inside">
+				<page string="E-Sale Information">
+					<separator string = "Special price information" colspan="4"/>
+					<group colspan="4" col="12">
+						<field name="spe_price" />
+						<field name="exp_date" />
+						<field name="spe_price_status" />
+					</group>
+					<newline/>
+					<separator string = "Link to Oscommerce" colspan="4"/>
+					<field name="oscom_url" widget="url"/>
+					<newline/>
+					<separator string = "Other information" colspan="4"/>
+					<field name="product_url" />
+					<field name="date_available" />
+					<field name="product_picture" />
+					<field name="in_out_stock" />
+					<field name="manufacturer_id" />
+					<!--<field name="esale_oscom_id" readonly="1" />
+					<newline/>
+					<field name="web_ids" readonly="1" colspan="4" />-->
+				</page>
+			</notebook>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_esale_oscom_product_manufacturer_form">
+		<field name="name">esale.oscom.product.maufacturer.view.form</field>
+		<field name="model">product.manufacturer</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Manufacturer">
+				<field name="name"/>
+				<field name="manufacturer_url" />
+			</form>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_esale_oscom_product_manufacturer_tree">
+		<field name="name">esale.oscom.product.maufacturer.view.tree</field>
+		<field name="model">product.manufacturer</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Manufacturer">
+				<field name="name" />
+				<field name="manufacturer_url" />
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_esale_oscom_product_manufacturer_form">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">product.manufacturer</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="view_esale_oscom_product_manufacturer_tree"/>
+	</record>
+
+        <menuitem name="Sales Management/Internet Sales/Manufacturers" id="menu_action_esale_oscom_product_manufacturer" action="action_esale_oscom_product_manufacturer_form" groups="group_esale_oscom_user"/>
+</data>
+</openerp>

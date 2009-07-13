@@ -34,7 +34,7 @@ class wizard_campaign_group(wizard.interface):
         <field name="group" colspan="4"/>
     </form>'''
     
-    message ='''<?xml version="1.0"?>
+    message = '''<?xml version="1.0"?>
     <form string="Create Group">
         <label align="0.0" colspan="4" string="Selected campaign has been added in the group.Campaigns that are already in some group will not be added in new group and will remain in same group"/>
     </form>'''

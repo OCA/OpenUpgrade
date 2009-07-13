@@ -41,23 +41,19 @@
 			<field name="parent_id" ref="product_category_matrieldesono0"/>
 		</record>
 	</data>
-	<data>
-		<record id="res_partner_function_salesman0" model="res.partner.function">
-			<field eval="&quot;&quot;&quot;Salesman&quot;&quot;&quot;" name="name"/>
-		</record>
-	</data>
+
 	<data noupdate="1">
 		<record id="base.main_partner" model="res.partner">
-            <field name="property_account_receivable" ref="l10n_fr.a_recv"/>
-			<field name="property_account_payable" ref="l10n_fr.a_pay"/>
+            <field name="property_account_receivable" ref="l10n_fr.fr_pcg_recv"/>
+			<field name="property_account_payable" ref="l10n_fr.fr_pcg_pay"/>
         </record>
 		<record id="res_partner_chinasoundelectronic0" model="res.partner">
 			<field eval="&quot;&quot;&quot;Tres bons tarifs et serieux.
 Le seul probleme sont les delais de livraison par bateau qui sont tres longs.&quot;&quot;&quot;" name="comment"/>
 			<field eval="1" name="active"/>
 			<field name="property_product_pricelist" ref="product.list0"/>
-		    <field name="property_account_receivable" ref="l10n_fr.a_recv"/>
-			<field name="property_account_payable" ref="l10n_fr.a_pay"/>
+		   <field name="property_account_receivable" ref="l10n_fr.fr_pcg_recv"/>
+			<field name="property_account_payable" ref="l10n_fr.fr_pcg_pay"/>
 			<field name="property_stock_supplier" ref="stock.stock_location_suppliers"/>
 			<field eval="&quot;&quot;&quot;CSE&quot;&quot;&quot;" name="ref"/>
 			<field eval="1" name="supplier"/>
@@ -68,7 +64,7 @@ Le seul probleme sont les delais de livraison par bateau qui sont tres longs.&qu
 			<field eval="[(6,0,[ref('profile_business_game.res_partner_category_matrieldesono0')])]" name="category_id"/>
 		</record>
 		<record id="res_partner_address_luuchingtao0" model="res.partner.address">
-			<field name="function" ref="res_partner_function_salesman0"/>
+			<field name="function" ref="base.function_sale"/>
 			<field eval="&quot;&quot;&quot;Changzhou Jiangsu&quot;&quot;&quot;" name="city"/>
 			<field eval="&quot;&quot;&quot;Luu Ching Tao&quot;&quot;&quot;" name="name"/>
 			<field eval="&quot;&quot;&quot;213022&quot;&quot;&quot;" name="zip"/>
@@ -116,8 +112,8 @@ Le seul probleme sont les delais de livraison par bateau qui sont tres longs.&qu
 			<field eval="[(6,0,[])]" name="taxes_id"/>
 			<field eval="1.0" name="produce_delay"/>
 			<field eval="0" name="rental"/>
-			<field name="property_account_expense" ref="l10n_fr.a_pay"/>
-			<field name="property_account_income" ref="l10n_fr.a_recv"/>
+			<field name="property_account_expense" ref="l10n_fr.fr_pcg_pay"/>
+			<field name="property_account_income" ref="l10n_fr.fr_pcg_recv"/>
 		</record>
 		<record id="product_supplierinfo_0" model="product.supplierinfo">
 			<field name="name" ref="res_partner_chinasoundelectronic0"/>
@@ -176,8 +172,8 @@ Le seul probleme sont les delais de livraison par bateau qui sont tres longs.&qu
 			<field eval="[(6,0,[])]" name="taxes_id"/>
 			<field eval="1.0" name="produce_delay"/>
 			<field eval="0" name="rental"/>
-			<field name="property_account_expense" ref="l10n_fr.a_pay"/>
-			<field name="property_account_income" ref="l10n_fr.a_recv"/>
+			<field name="property_account_expense" ref="l10n_fr.fr_pcg_pay"/>
+			<field name="property_account_income" ref="l10n_fr.fr_pcg_recv"/>
 		</record>
 		<record id="product_supplierinfo_3" model="product.supplierinfo">
 			<field name="name" ref="res_partner_chinasoundelectronic0"/>
@@ -227,8 +223,8 @@ Le seul probleme sont les delais de livraison par bateau qui sont tres longs.&qu
 			<field eval="[(6,0,[])]" name="taxes_id"/>
 			<field eval="1.0" name="produce_delay"/>
 			<field eval="0" name="rental"/>
-			<field name="property_account_expense" ref="l10n_fr.a_pay"/>
-			<field name="property_account_income" ref="l10n_fr.a_recv"/>
+			<field name="property_account_expense" ref="l10n_fr.fr_pcg_pay"/>
+			<field name="property_account_income" ref="l10n_fr.fr_pcg_recv"/>
 		</record>
 	</data>
 	<data noupdate="1">
@@ -280,8 +276,8 @@ Le seul probleme sont les delais de livraison par bateau qui sont tres longs.&qu
 			<field eval="[(6,0,[])]" name="taxes_id"/>
 			<field eval="1.0" name="produce_delay"/>
 			<field eval="0" name="rental"/>
-			<field name="property_account_expense" ref="l10n_fr.a_pay"/>
-			<field name="property_account_income" ref="l10n_fr.a_recv"/>
+			<field name="property_account_expense" ref="l10n_fr.fr_pcg_pay"/>
+			<field name="property_account_income" ref="l10n_fr.fr_pcg_recv"/>
 		</record>
 		<record id="product_supplierinfo_11" model="product.supplierinfo">
 			<field name="name" ref="profile_business_game.res_partner_sound0"/>
@@ -324,8 +320,8 @@ Le seul probleme sont les delais de livraison par bateau qui sont tres longs.&qu
 			<field eval="[(6,0,[])]" name="taxes_id"/>
 			<field eval="1.0" name="produce_delay"/>
 			<field eval="0" name="rental"/>
-			<field name="property_account_expense" ref="l10n_fr.a_pay"/>
-			<field name="property_account_income" ref="l10n_fr.a_recv"/>
+			<field name="property_account_expense" ref="l10n_fr.fr_pcg_pay"/>
+			<field name="property_account_income" ref="l10n_fr.fr_pcg_recv"/>
 		</record>
 		<record id="product_supplierinfo_5" model="product.supplierinfo">
 			<field name="name" ref="profile_business_game.res_partner_sound0"/>
@@ -372,8 +368,8 @@ Le seul probleme sont les delais de livraison par bateau qui sont tres longs.&qu
 			<field eval="[(6,0,[])]" name="taxes_id"/>
 			<field eval="1.0" name="produce_delay"/>
 			<field eval="0" name="rental"/>
-			<field name="property_account_expense" ref="l10n_fr.a_pay"/>
-			<field name="property_account_income" ref="l10n_fr.a_recv"/>
+			<field name="property_account_expense" ref="l10n_fr.fr_pcg_pay"/>
+			<field name="property_account_income" ref="l10n_fr.fr_pcg_recv"/>
 		</record>
 		<record id="product_supplierinfo_7" model="product.supplierinfo">
 			<field name="name" ref="profile_business_game.res_partner_sound0"/>
@@ -417,8 +413,8 @@ Le JackHammer est le subwoofer anniversaire pour celebrer les 35 ans d’MTX. Da
 			<field eval="[(6,0,[])]" name="taxes_id"/>
 			<field eval="1.0" name="produce_delay"/>
 			<field eval="0" name="rental"/>
-			<field name="property_account_expense" ref="l10n_fr.a_pay"/>
-			<field name="property_account_income" ref="l10n_fr.a_recv"/>
+			<field name="property_account_expense" ref="l10n_fr.fr_pcg_pay"/>
+			<field name="property_account_income" ref="l10n_fr.fr_pcg_recv"/>
 		</record>
 		<record id="product_supplierinfo_8" model="product.supplierinfo">
 			<field name="name" ref="res_partner_chinasoundelectronic0"/>

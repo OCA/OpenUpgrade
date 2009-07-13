@@ -18,5 +18,11 @@
 				model="email.smtpclient"
 				name="email.testemail"
 				id="wizard_email_testemail"/>
+			
+			<wizard id="base.res_partner_mass_mailing_wizard" 
+				model="res.partner" 
+				name="res.partner.spam_send.smtpclient"
+				string="Mass Mailing"/>
+        
 	</data>
 </openerp>

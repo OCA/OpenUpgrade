@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <openerp>
-	<data>
+	<data noupdate="1">
  
 	 <!-- Table Data --> 
 		<record id="hotel_restaurant_tables_table0" model="hotel.restaurant.tables">
@@ -26,7 +26,7 @@
 		<!--  Food Item Category -->
 			
 		<record id="hotel_menucard_type_0" model="hotel.menucard.type">
-			<field name="parent_id" ref="null" />
+			<field name="parent_id"  ref="null" />
 			<field name="name">All FoodItems</field>
 
 		</record>

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -47,6 +47,7 @@ class product_template(osv.osv):
     _columns = {
         'name': fields.char('Name', size=256, required=True, select=True),
         }
+
 product_template()
 
 
@@ -54,7 +55,6 @@ class product_product(osv.osv):
     """Book variant of product"""
     _name = "product.product"
     _inherit = "product.product"
-
 
     def name_get(self, cr, user, ids, context={}):
         if not len(ids):
@@ -165,7 +165,7 @@ class product_product(osv.osv):
     }
 
     _sql_constraints = [
-        ('unique_ean13', 'unique(ean13)',  'The ean13 field must be unique across all the products'),
+        ('unique_ean13', 'unique(ean13)', 'The ean13 field must be unique across all the products'),
         ('code_uniq', 'unique (code)', 'The code of the product must be unique !')
     ]
 
@@ -179,6 +179,7 @@ class author_book_rel(osv.osv):
         'author_id': fields.many2one('library.author', 'Author', ondelete='cascade'),
         'product_id': fields.many2one('product.product', 'Book', ondelete='cascade')
     }
+
 author_book_rel()
 
 
@@ -196,6 +197,7 @@ class product_product_in(osv.osv):
     _constraints = [
 
     ]
+
 product_product_in()
 
 
@@ -204,6 +206,6 @@ class library_author(osv.osv):
     _columns = {
         'book_ids': fields.many2many('product.product', 'author_book_rel', 'author_id', 'product_id', 'Books', select=1),
     }
-library_author()
 
+library_author()
 

@@ -23,7 +23,7 @@
     "name" : "Direct Marketing",
     "version" : "1.0",
     "author" : "Tiny",
-    "website" : "http://tinyerp.com",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Direct Marketing",
     "description": """
 
@@ -46,10 +46,14 @@
             - Manage copywriters, brokers, dealers, addresses deduplicators and cleaners
 
             """,
-    "depends" : ["project_retro_planning","purchase","purchase_tender","base_language","document","sale","base_report_designer"],
+    "depends" : [
+                 "project_retro_planning","purchase_tender",
+                 "base_language","document","base_report_designer",
+                 "sale","base_partner_gender",
+                 ],
     "init_xml" : [ ],
     "demo_xml" : [
-                    "dm_demo.xml"
+                    "demo/dm_demo.xml"
                   ],
     "update_xml" : [
                     "security/dm_security.xml",
@@ -62,14 +66,15 @@
                     "trademark_view.xml",
                     "dm_report.xml",
                     "offer_sequence.xml",
-                    "dm_data.xml",
+                    "demo/dm_data.xml",
                     "dm_workflow.xml",
                     "dm_document_view.xml",
-                    "document_data.xml",
+                    "demo/document_data.xml",
+                    "mail_service_view.xml",
                     ],
     "active": False,
     "installable": True,
-#    'certificate': '76807797184'    
+#    'certificate': '0176807797184'    
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

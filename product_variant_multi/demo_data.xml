@@ -1,0 +1,82 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data noupdate="1">
+		<record id="product_template_mezzanine" model="product.template">
+			<field eval="1.0" name="list_price"/>
+			<field eval="1.0" name="standard_price"/>
+			<field eval="&quot;&quot;&quot;fixed&quot;&quot;&quot;" name="mes_type"/>
+			<field name="uom_id" ref="product.product_uom_unit"/>
+			<field eval="1.0" name="uos_coeff"/>
+			<field eval="1" name="sale_ok"/>
+			<field eval="1" name="purchase_ok"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="uom_po_id" ref="product.product_uom_unit"/>
+			<field eval="&quot;&quot;&quot;product&quot;&quot;&quot;" name="type"/>
+			<field eval="&quot;&quot;&quot;Mezzanine&quot;&quot;&quot;" name="name"/>
+			<field name="cost_method">standard</field>
+			<field name="supply_method">produce</field>
+			<field name="procure_method">make_to_order</field>
+			<field eval="0" name="rental"/>
+			<field eval="7.0" name="sale_delay"/>
+			<field name="categ_id" ref="product.cat1"/>
+			<field eval="1.0" name="produce_delay"/>
+		</record>
+		<record id="product_variant_dimension_type_hauteur0" model="product.variant.dimension.type">
+			<field name="product_tmpl_id" ref="product_template_mezzanine"/>
+			<field eval="1" name="allow_custom_value"/>
+			<field eval="&quot;&quot;&quot;Hauteur&quot;&quot;&quot;" name="name"/>
+			<field eval="0" name="sequence"/>
+		</record>
+		<record id="product_variant_dimension_type_largeur0" model="product.variant.dimension.type">
+			<field name="product_tmpl_id" ref="product_template_mezzanine"/>
+			<field eval="1" name="allow_custom_value"/>
+			<field eval="&quot;&quot;&quot;Largeur&quot;&quot;&quot;" name="name"/>
+			<field eval="1" name="sequence"/>
+		</record>
+		<record id="product_variant_dimension_value_0" model="product.variant.dimension.value">
+			<field eval="&quot;&quot;&quot;10&quot;&quot;&quot;" name="name"/>
+			<field name="dimension_id" ref="product_variant_dimension_type_hauteur0"/>
+			<field model="product.template" name="product_tmpl_id" search="[('name','=','Mezzanine')]"/>
+		</record>
+		<record id="product_variant_dimension_value_1" model="product.variant.dimension.value">
+			<field eval="&quot;&quot;&quot;20&quot;&quot;&quot;" name="name"/>
+			<field name="dimension_id" ref="product_variant_dimension_type_hauteur0"/>
+			<field model="product.template" name="product_tmpl_id" search="[('name','=','Mezzanine')]"/>
+		</record>
+
+		<record id="product_variant_dimension_value_2" model="product.variant.dimension.value">
+			<field eval="&quot;&quot;&quot;22&quot;&quot;&quot;" name="name"/>
+			<field name="dimension_id" ref="product_variant_dimension_type_largeur0"/>
+			<field eval="1.0" name="dimension_sequence"/>
+			<field model="product.template" name="product_tmpl_id" search="[('name','=','Mezzanine')]"/>
+		</record>
+		<record id="product_variant_dimension_value_3" model="product.variant.dimension.value">
+			<field eval="&quot;&quot;&quot;33&quot;&quot;&quot;" name="name"/>
+			<field name="dimension_id" ref="product_variant_dimension_type_largeur0"/>
+			<field eval="1.0" name="dimension_sequence"/>
+			<field model="product.template" name="product_tmpl_id" search="[('name','=','Mezzanine')]"/>
+		</record>
+
+		<record id="product_product_mezzanine0" model="product.product">
+			<field eval="1" name="active"/>
+			<field name="product_tmpl_id" ref="product_template_mezzanine"/>
+			<field eval="[(6,0,[ref('product_variant_dimension_value_0'),ref('product_variant_dimension_value_2')])]" name="dimension_value_ids"/>
+		</record>
+		<record id="product_product_mezzanine1" model="product.product">
+			<field eval="1" name="active"/>
+			<field name="product_tmpl_id" ref="product_template_mezzanine"/>
+			<field eval="[(6,0,[ref('product_variant_dimension_value_0'),ref('product_variant_dimension_value_3')])]" name="dimension_value_ids"/>
+		</record>
+		<record id="product_product_mezzanine2" model="product.product">
+			<field eval="1" name="active"/>
+			<field name="product_tmpl_id" ref="product_template_mezzanine"/>
+			<field eval="[(6,0,[ref('product_variant_dimension_value_1'),ref('product_variant_dimension_value_2')])]" name="dimension_value_ids"/>
+		</record>
+		<record id="product_product_mezzanine3" model="product.product">
+			<field eval="1" name="active"/>
+			<field name="product_tmpl_id" ref="product_template_mezzanine"/>
+			<field eval="[(6,0,[ref('product_variant_dimension_value_1'),ref('product_variant_dimension_value_3')])]" name="dimension_value_ids"/>
+		</record>
+
+	</data>
+</openerp>

@@ -24,7 +24,7 @@
     "version" : "1.0",
     "depends" : ["sale","account_tax_include"],
     "author" : "Tiny",
-    "website" : "http://tinyerp.com/module_account.html",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Sales & Purchases",
     "description": """Allow the user to work tax included prices.
 Especially useful for b2c businesses.

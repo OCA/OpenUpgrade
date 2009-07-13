@@ -1,0 +1,232 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+	<!-- PREPARATIONS -->
+	
+	<!--
+	<function model="personal.base.account" name="try_create_litas"/>
+	<function model="personal.base.account.type" name="try_create_demo"/>
+	-->
+
+	<!-- 
+		Creating 2 users
+	 -->
+	 
+	<function model="personal.base.account.entry.line" name="delete_unit_test_records"/>
+	<function model="personal.base.account.entry" name="delete_unit_test_records"/>
+	<function model="personal.base.account" name="delete_unit_test_records"/>
+	<function model="res.users" name="delete_unit_test_records"/>
+	
+	<record model="res.users" id="personal_user_jonas">
+		<field name="login">personal_jonas</field>
+		<field name="password">slaptas</field>
+		<field name="name">Jonas</field>
+		<field name="action_id">1</field>
+		<field name="menu_id">1</field>
+<!--		<field name="address_id" ref="base.main_address"/>
+		<field name="company_id" ref="base.main_company"/> -->
+		<field name="currency_id" model="res.currency" search="[('code','=','EUR')]"/>
+		<field name="email">personal_jonas@jonas.com</field>
+		<field name="unit_test">True</field>
+	</record>
+	
+	<record model="res.users" id="personal_user_petras">
+		<field name="login">personal_petras</field>
+		<field name="password">slaptas2</field>
+		<field name="name">Petras</field>
+		<field name="action_id">1</field>
+		<field name="menu_id">1</field>
+<!--		<field name="address_id" ref="base.main_address"/>
+		<field name="company_id" ref="base.main_company"/>  -->
+		<field name="currency_id" model="res.currency" search="[('code','=','EUR')]"/>
+		<field name="email">petras@petras.com</field>
+		<field name="unit_test">True</field>
+	</record>
+	
+	<!-- BACKLOG: Accounts plan -->
+	
+	<!-- Adding some accounts for Jonas -->
+	
+	<record model="personal.base.account" id="personal_cash_account">
+		<field name="name">Cash</field>
+		<field name="currency_id" model="res.currency" search="[('code','=','EUR')]"/>
+		<field name="type_id" model="personal.base.account.type" search="[('name','=','Asset')]"/>
+		<field name="user_id" ref="personal_user_jonas"/>
+		<field name="unit_test">True</field>
+	</record>
+	
+	<record model="personal.base.account" id="personal_cash_account_from_petras">
+		<field name="name">Cash</field>
+		<field name="currency_id" model="res.currency" search="[('code','=','EUR')]"/>
+		<field name="type_id" model="personal.base.account.type" search="[('name','=','Asset')]"/>
+		<field name="user_id" ref="personal_user_petras"/>
+		<field name="unit_test">True</field>
+	</record>
+	
+	<record model="personal.base.account" id="personal_house_account">
+		<field name="name">House</field>
+		<field name="currency_id" model="res.currency" search="[('code','=','EUR')]"/>
+		<field name="type_id" model="personal.base.account.type" search="[('name','=','Expense')]"/>
+		<field name="user_id" ref="personal_user_jonas"/>
+		<field name="unit_test">True</field>
+	</record>
+	
+	<record model="personal.base.account" id="personal_expenses_account_from_petras">
+		<field name="name">Some Expenses</field>
+		<field name="currency_id" model="res.currency" search="[('code','=','EUR')]"/>
+		<field name="type_id" model="personal.base.account.type" search="[('name','=','Expense')]"/>
+		<field name="user_id" ref="personal_user_petras"/>
+		<field name="unit_test">True</field>
+	</record>
+	
+	<assert model="personal.base.account" search="[]" count="2" uid="personal_user_petras"/>
+	<assert model="personal.base.account" search="[]" count="2" uid="personal_user_jonas"/>
+	
+	<!-- BACKLOG: Posting of simpliest account entries -->
+	
+	<!-- Jonas and Petras create and confirm account entry -->
+	
+	<record model="personal.base.account.entry" id="personal_jonas_account_entry_1">
+		<field name="name">Sofa</field>
+		<field name="user_id" ref="personal_user_jonas"/>
+		<field name="currency_id" model="res.currency" search="[('code','=','EUR')]"/>
+		<field name="unit_test">True</field>
+	</record>
+	<assert model="personal.base.account.entry" search="[]" count="1" uid="personal_user_jonas"/>
+	<function model="personal.base.account.entry.line" name="test_if_create_is_impossible">
+		<value eval="{
+			'account_id': ref('personal_cash_account'),
+			'debit_amount': 100,
+			'unit_test': True,
+		}"/>
+	</function>
+	<function model="personal.base.account.entry.line" name="test_if_create_is_impossible">
+		<value eval="{
+			'parent_id': ref('personal_jonas_account_entry_1'),
+			'account_id': ref('personal_cash_account'),
+			'debit_amount': 100,
+			'credit_amount': 50,
+			'unit_test': True,
+		}"/>
+	</function>
+	<assert model="personal.base.account.entry.line" search="[]" count="0" uid="personal_user_jonas"/>
+
+	<record model="personal.base.account.entry.line" id="personal_jonas_account_entry_line_1">
+		<field name="parent_id" ref="personal_jonas_account_entry_1"/>
+		<field name="account_id" ref="personal_cash_account"/>
+		<field name="credit_amount">100</field>
+		<field name="user_id" ref="personal_user_jonas"/>
+		<field name="unit_test">True</field>
+	</record>
+	<assert model="personal.base.account.entry.line" id="personal_jonas_account_entry_line_1" uid="personal_user_jonas">
+		<test expr="debit_amount == 0"/>
+		<test expr="amount_base == -100"/>
+	</assert>
+	<assert model="res.currency" search="[('name','=','Litas')]" count="1"/>
+	<record model="personal.base.account.entry.line" id="personal_jonas_account_entry_line_1">
+		<field name="currency_id" model="res.currency" search="[('name','=','Litas')]"/>
+		<field name="unit_test">True</field>
+	</record>
+	<assert model="personal.base.account.entry.line" id="personal_jonas_account_entry_line_1" uid="personal_user_jonas">
+		<test expr="debit_amount == 0"/>
+		<test expr="credit_amount == 100"/>
+		<test expr="round(amount_base, 2) == round(-100 / 3.4528, 2)"/>
+	</assert>
+	
+	<record model="personal.base.account.entry" id="personal_petras_account_entry_1">
+		<field name="name">Petras Entry</field>
+		<field name="user_id" ref="personal_user_petras"/>
+		<field name="currency_id" model="res.currency" search="[('code','=','EUR')]"/>
+		<field name="unit_test">True</field>
+	</record>
+	<assert model="personal.base.account.entry" search="[]" count="1" uid="personal_user_petras"/>
+	<!-- With wrong Account ID from Jonas -->
+	<function model="personal.base.account.entry.line" name="test_if_create_is_impossible">
+		<value eval="{
+			'parent_id': ref('personal_petras_account_entry_1'),
+			'account_id': ref('personal_cash_account'),
+			'debit_amount': 100,
+			'credit_amount': 0,
+			'unit_test': True,
+		}"/>
+	</function>
+	<function model="personal.base.account.entry.line" name="test_if_create_is_impossible">
+		<value eval="{
+			'parent_id': ref('personal_jonas_account_entry_1'),
+			'account_id': ref('personal_cash_account_from_petras'),
+			'debit_amount': 100,
+			'credit_amount': 0,
+			'unit_test': True,
+		}"/>
+	</function>
+	<assert model="personal.base.account.entry.line" search="[]" count="0" uid="personal_user_petras"/>
+	<record model="personal.base.account.entry.line" id="personal_petras_account_entry_line_1">
+		<field name="parent_id" ref="personal_petras_account_entry_1"/>
+		<field name="account_id" ref="personal_cash_account_from_petras"/>
+		<field name="credit_amount">100</field>
+		<field name="user_id" ref="personal_user_petras"/>
+		<field name="unit_test">True</field>
+	</record>
+	<assert model="personal.base.account.entry.line" search="[]" count="1" uid="personal_user_petras"/>
+	
+	<!--
+		 Posting 
+	-->
+	
+	<function model="personal.base.account.entry" name="test_if_confirm_possible" uid="personal_user_jonas">
+		<value eval="[ref('personal_jonas_account_entry_1')]" />
+	</function>
+	<record model="personal.base.account.entry.line" id="personal_jonas_account_entry_line_2">
+		<field name="parent_id" ref="personal_jonas_account_entry_1"/>
+		<field name="account_id" ref="personal_house_account"/>
+		<field name="debit_amount">100</field>
+		<field name="user_id" ref="personal_user_jonas"/>
+		<field name="unit_test">True</field>
+		<field name="currency_id" model="res.currency" search="[('name','=','Litas')]"/>
+	</record>
+	<record model="personal.base.account.entry.line" id="personal_petras_account_entry_line_2">
+		<field name="parent_id" ref="personal_petras_account_entry_1"/>
+		<field name="account_id" ref="personal_expenses_account_from_petras"/>
+		<field name="debit_amount">100</field>
+		<field name="user_id" ref="personal_user_petras"/>
+		<field name="unit_test">True</field>
+	</record>
+	
+	<function model="personal.base.account.entry" name="confirm" uid="personal_user_jonas">
+		<value eval="[ref('personal_jonas_account_entry_1')]"/>
+	</function>
+	<assert model="personal.base.account.entry" search="[('state','=','confirmed')]" count="1" uid="personal_user_jonas"/>
+	<assert model="personal.base.account.entry.line" search="[('state','=','confirmed')]" count="2" uid="personal_user_jonas"/>
+	<function model="personal.base.account.entry" name="confirm" uid="personal_user_petras">
+		<value eval="[ref('personal_petras_account_entry_1')]"/>
+	</function>
+	<assert model="personal.base.account.entry" search="[('state','=','confirmed')]" count="1" uid="personal_user_petras"/>
+	<assert model="personal.base.account.entry.line" search="[('state','=','confirmed')]" count="2" uid="personal_user_petras"/>
+	
+	<!-- 
+		Returning
+	 -->
+	 
+	<function model="personal.base.account.entry" name="return_entry" uid="personal_user_jonas">
+		<value eval="[ref('personal_jonas_account_entry_1')]"/>
+	</function>
+	<assert model="personal.base.account.entry" search="[('state','=','confirmed')]" count="0" uid="personal_user_jonas"/>
+	<assert model="personal.base.account.entry.line" search="[('state','=','confirmed')]" count="0" uid="personal_user_jonas"/>
+	<assert model="personal.base.account.entry" search="[('state','=','draft')]" count="1" uid="personal_user_jonas"/>
+	<assert model="personal.base.account.entry.line" search="[('state','=','draft')]" count="2" uid="personal_user_jonas"/>
+	
+	<!-- 
+		CLEARING 
+	-->
+	
+	<function model="personal.base.account.entry.line" name="delete_unit_test_records" uid="personal_user_jonas"/>
+	<function model="personal.base.account.entry" name="delete_unit_test_records" uid="personal_user_jonas"/>
+	<function model="personal.base.account" name="delete_unit_test_records" uid="personal_user_jonas"/>
+	<function model="personal.base.account.entry.line" name="delete_unit_test_records" uid="personal_user_petras"/>
+	<function model="personal.base.account.entry" name="delete_unit_test_records" uid="personal_user_petras"/>
+	<function model="personal.base.account" name="delete_unit_test_records" uid="personal_user_petras"/>
+	<function model="res.users" name="delete_unit_test_records"/>
+	
+</data>
+</openerp>

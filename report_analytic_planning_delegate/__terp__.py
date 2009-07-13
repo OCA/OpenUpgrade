@@ -23,7 +23,7 @@
     "name" : "Analytic planning - Delegation in the hierarchy",
     "version" : "1.0",
     "author" : "Tiny",
-    "website" : "http://tinyerp.com",
+    "website" : "http://www.openerp.com",
     "depends" : ["report_analytic_planning"],
     "category" : "Generic Modules/Human Resources",
     "description": "Planning on analytic accounts, delegation in the hierarchy.",
@@ -31,6 +31,7 @@
     "demo_xml" : [
     ],
     "update_xml" : [
+        "security/planning_security.xml",
         "report_analytic_planning_view.xml",
     ],
     "active": False,

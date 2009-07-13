@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+		<!--
+			Your invoices
+		-->
+
+	<record id="portal_account_invoice_tree" model="ir.ui.view">
+        <field name="name">account.invoice.tree</field>
+        <field name="model">account.invoice</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree colors="blue:state=='draft'" string="Invoice">
+                <field name="name"/>
+                <field name="type"/>
+                <field name="number"/>
+                <field name="partner_id"/>
+                <field name="amount_untaxed" sum="Untaxed amount"/>
+                <field name="amount_total" sum="Total amount"/>
+                <field name="currency_id"/>
+                <field name="date_invoice"/>
+                <field name="date_due" select="1"/>
+                <field name="residual"/>
+                <field name="state"/>
+                <field name="origin"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="portal_account_invoice_form" model="ir.ui.view">
+            <field name="name">account.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Invoice">
+                    <group colspan="4" col="6">
+                        <field name="number" select="1"/>
+                        <field name="partner_id" on_change="onchange_partner_id(type,partner_id,date_invoice,payment_term)" select="1"/>
+                        <field domain="[('partner_id','=',partner_id)]" name="address_invoice_id"/>
+                        <field name="currency_id" on_change="onchange_currency_id(currency_id)" select="2"/>
+                        <field name="date_invoice" on_change="onchange_payment_term_date_invoice(payment_term, date_invoice)" select="1"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Invoice">
+                            <field colspan="4" name="invoice_line" nolabel="1" widget="one2many_list"/>
+                            <group col="1" colspan="2">
+                                <field name="tax_line" nolabel="1">
+                                    <tree editable="bottom" string="Taxes">
+                                        <field name="name"/>
+                                         <field name="base" on_change="base_change(base,parent.currency_id,parent.company_id,parent.date_invoice)" readonly="1"/>
+                                        <field name="amount" on_change="amount_change(amount,parent.currency_id,parent.company_id,parent.date_invoice)"/>
+                                        <field invisible="True" name="base_amount"/>
+                                        <field invisible="True" name="tax_amount"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group col="4" colspan="2">
+                                <field name="amount_untaxed"/>
+                                <label string="" colspan="2"/>
+                                <field name="amount_tax"/>
+                                <field name="reconciled"/>
+                                <field name="amount_total"/>
+                                <field name="state" select="2"/>
+                                <field name="residual"/>
+                            </group>
+                        </page>
+                        <page string="Other Info">
+                            <field name="date_due" select="1"/>
+                            <newline/>
+                            <field name="origin" select="2"/>
+                            <field colspan="4" domain="[('partner_id','=',partner_id)]" name="address_contact_id"/>
+                        </page>
+                        <page string="Payments">
+                            <field name="payment_ids" colspan="4" nolabel="1">
+                                <tree string="Payments">
+                                    <field name="date"/>
+                                    <field name="ref"/>
+                                    <field name="name"/>
+                                    <field name="journal_id"/>
+                                    <field name="debit"/>
+                                    <field name="credit"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+        
+    <record model="ir.actions.act_window" id="portal_action_customer_invoice">
+		<field name="name">Your Invoices</field>
+		<field name="res_model">account.invoice</field>
+		<field name="view_type">form</field>
+		<field name="domain">[('type','=','out_invoice')]</field>
+		<field name="context">{'type':'out_invoice'}</field>
+	</record>
+	<record model="ir.actions.act_window.view" id="window_view_tree_inv">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="portal_account_invoice_tree"/>
+		<field name="act_window_id" ref="portal_action_customer_invoice"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="window_view_form_inv">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="portal_account_invoice_form"/>
+		<field name="act_window_id" ref="portal_action_customer_invoice"/>
+	</record>
+
+	<menuitem name="Account" id="menu_portal_configuration_account" parent="portal.menu_portal_customer"/>
+	<menuitem name="Invoices" id="menu_portal_configuration_account_invoice" parent="menu_portal_configuration_account"/>
+	<menuitem name="Your Invoices" id="menu_portal_configuration_account_your" parent="menu_portal_configuration_account_invoice" action="portal_action_customer_invoice"/>
+	
+		<!--
+			Customer Refund
+		-->
+	
+	<record model="ir.actions.act_window" id="portal_action_refund_invoice">
+		<field name="name">Your Refunds</field>
+		<field name="res_model">account.invoice</field>
+		<field name="view_type">form</field>
+		<field name="domain">[('type','=','out_refund')]</field>
+		<field name="context">{'type':'out_refund'}</field>
+	</record>
+	<record model="ir.actions.act_window.view" id="window_view_tree_ref">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="portal_account_invoice_tree"/>
+		<field name="act_window_id" ref="portal_action_refund_invoice"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="window_view_form_ref">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="portal_account_invoice_form"/>
+		<field name="act_window_id" ref="portal_action_refund_invoice"/>
+	</record>
+
+	<menuitem name="Customer Refund" id="menu_portal_configuration_account_refund" parent="menu_portal_configuration_account_invoice" action="portal_action_refund_invoice"/>
+	
+	<!--	
+		Payable and Receivalbe
+	-->
+	
+	<record model="ir.actions.act_window" id="portal_action_account_move">
+		<field name="name">Payables &amp; Receivables</field>
+		<field name="res_model">account.move.line</field>
+		<field name="domain">[('reconcile_id','=',False),('account_id.type','in',('receivable','payable'))]</field>
+	</record>
+	<record model="ir.actions.act_window.view" id="window_view_tree_move">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="account.view_move_line_tree"/>
+		<field name="act_window_id" ref="portal_action_account_move"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="window_view_form_move">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="account.view_move_line_form"/>
+		<field name="act_window_id" ref="portal_action_account_move"/>
+	</record>
+
+	<menuitem name="Payables &amp; Receivables" id="menu_portal_configuration_account_payable" parent="menu_portal_configuration_account" action="portal_action_account_move"/>
+	
+
+</data>
+</openerp>

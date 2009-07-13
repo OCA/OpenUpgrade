@@ -65,7 +65,7 @@ class aged_trial_report(report_sxw.rml_parse):
                     "AND (line.reconcile_id IS NULL) " \
                     "AND (line.partner_id=res_partner.id) " \
                     "AND " + line_query + " " \
-                    "AND (account_account.company_id = %d) " \
+                    "AND (account_account.company_id = %s) " \
                     "AND account_account.active " \
                     "AND partner_id in ("+','.join(map(str,self.partner_ids))+")" \
                 "ORDER BY res_partner.name", (form['company_id'],))
@@ -76,10 +76,10 @@ class aged_trial_report(report_sxw.rml_parse):
                     "FROM account_move_line AS line, account_account " \
                     "WHERE (line.account_id=account_account.id) " \
                         "AND (account_account.type IN ('payable','receivable')) " \
-                        "AND (date < %s) AND (partner_id=%d) " \
+                        "AND (date < %s) AND (partner_id=%s) " \
                         "AND (reconcile_id IS NULL) " \
                         "AND " + line_query + " " \
-                        "AND (account_account.company_id = %d) " \
+                        "AND (account_account.company_id = %s) " \
                         "AND account_account.active",
                         (form['0']['start'], partner['id'], form['company_id']))
             before = self.cr.fetchone()
@@ -90,10 +90,10 @@ class aged_trial_report(report_sxw.rml_parse):
                         "WHERE (line.account_id=account_account.id) " \
                             "AND (account_account.type IN ('payable','receivable')) " \
                             "AND (date >= %s) AND (date <= %s) " \
-                            "AND (partner_id = %d) " \
+                            "AND (partner_id = %s) " \
                             "AND (reconcile_id IS NULL) " \
                             "AND " + line_query + " " \
-                            "AND (account_account.company_id = %d) " \
+                            "AND (account_account.company_id = %s) " \
                             "AND account_account.active",
                             (form[str(i)]['start'], form[str(i)]['stop'],
                                 partner['id'], form['company_id']))
@@ -104,10 +104,10 @@ class aged_trial_report(report_sxw.rml_parse):
                     "FROM account_move_line AS line, account_account " \
                     "WHERE (line.account_id = account_account.id) " \
                         "AND (account_account.type IN ('payable','receivable')) " \
-                        "AND (partner_id = %d) " \
+                        "AND (partner_id = %s) " \
                         "AND (reconcile_id IS NULL) " \
                         "AND " + line_query + " " \
-                        "AND (account_account.company_id = %d) " \
+                        "AND (account_account.company_id = %s) " \
                         "AND account_account.active",
                         (partner['id'], form['company_id']))
             total = self.cr.fetchone()
@@ -138,7 +138,7 @@ class aged_trial_report(report_sxw.rml_parse):
                     "AND reconcile_id IS NULL " \
                     "AND partner_id is NOT NULL " \
                     "AND " + line_query + " " \
-                    "AND (account_account.company_id = %d) " \
+                    "AND (account_account.company_id = %s) " \
                     "AND partner_id in ("+','.join(map(str,self.partner_ids))+")" \
                     "AND account_account.active",
                     (company_id,))
@@ -157,7 +157,7 @@ class aged_trial_report(report_sxw.rml_parse):
                     "AND (date < %s) " \
                     "AND partner_id IS NOT NULL " \
                     "AND " + line_query + " " \
-                    "AND (account_account.company_id = %d) " \
+                    "AND (account_account.company_id = %s) " \
                     "AND partner_id in ("+','.join(map(str,self.partner_ids))+")" \
                     "AND account_account.active",
                     (date, company_id))
@@ -177,7 +177,7 @@ class aged_trial_report(report_sxw.rml_parse):
                     "AND (date <= %s) " \
                     "AND partner_id IS NOT NULL " \
                     "AND " + line_query + " " \
-                    "AND (account_account.company_id = %d) " \
+                    "AND (account_account.company_id = %s) " \
                     "AND partner_id in ("+','.join(map(str,self.partner_ids))+")" \
                     "AND account_account.active",
                     (period['start'], period['stop'], company_id))

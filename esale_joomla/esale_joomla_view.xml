@@ -65,8 +65,8 @@
         <field name="view_id" ref="view_esale_joomla_form"/>
     </record>
     <menuitem name="eSale" parent="sale.menu_sale_root" id="menu_esale"/>
-    <menuitem name="Definition" parent="menu_esale" id="menu_esale_defination"/> 
-    <menuitem name="Web Shop" parent="menu_esale_defination" id="menu_action_esale_joomla_web" action="action_esale_joomla_form" groups="base.group_admin"/>
+    <menuitem name="Definition" parent="menu_esale" id="menu_esale_defination"/>
+    <menuitem name="Web Shop" parent="menu_esale_defination" id="menu_action_esale_joomla_web" action="action_esale_joomla_form" groups="base.group_system"/>
 
     <record model="ir.ui.view" id="view_esale_joomla_product_form">
         <field name="name">esale_joomla.product.form</field>
@@ -102,7 +102,7 @@
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_esale_joomla_product_tree"/>
     </record>
-    <menuitem name="Web Product" parent="menu_esale_defination" id="menu_action_esale_joomla_product" action="action_esale_joomla_product_form" groups="base.group_admin"/>
+    <menuitem name="Web Product" parent="menu_esale_defination" id="menu_action_esale_joomla_product" action="action_esale_joomla_product_form" groups="base.group_system"/>
 
     <record model="ir.ui.view" id="view_order_tree">
         <field name="name">esale_joomla.order.tree</field>
@@ -158,7 +158,7 @@
         <field name="view_type">form</field>
         <field name="view_id" ref="view_order_form"/>
     </record>
-    <menuitem name="eSale Orders" parent="menu_esale" id="menu_action_order_form" action="action_order_form" groups="base.group_admin"/>
+    <menuitem name="eSale Orders" parent="menu_esale" id="menu_action_order_form" action="action_order_form" groups="base.group_system"/>
 
     <record model="ir.actions.act_window" id="action_order_tree">
         <field name="name">esale_joomla.order</field>
@@ -168,7 +168,7 @@
         <field name="view_mode">tree,form</field>
         <field name="domain">[('state','=','draft')]</field>
     </record>
-    <menuitem name="Draft eSale Orders" parent="menu_action_order_form" id="menu_action_order_tree" action="action_order_tree" groups="base.group_admin"/>
+    <menuitem name="Draft eSale Orders" parent="menu_action_order_form" id="menu_action_order_tree" action="action_order_tree" groups="base.group_system"/>
 
 
     <record model="ir.ui.view" id="view_order_line_form">

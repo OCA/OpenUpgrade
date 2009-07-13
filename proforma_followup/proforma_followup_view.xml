@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model='ir.ui.view' id='view_action_list'>
+            <field name='name'>proforma.followup.action list</field>
+            <field name='model'>proforma.followup.action</field>
+            <field name='type'>tree</field>
+            <field name='arch' type='xml'>
+                <tree string='Proforma Followup Actions' editable='bottom'>
+                    <field name='sequence'/>
+                    <field name='name'/>
+                    <field name='days'/>
+                    <field name='action_id'/>
+                    <field name='active'/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_actions_list" model="ir.actions.act_window">
+            <field name="name">Proforma Followup Actions</field>
+            <field name="res_model">proforma.followup.action</field>
+            <field name="view_type">form</field>
+            <field name='view_mode'>tree</field>
+            <field name="view_id" ref="view_action_list"/>
+            <field name='context'>{'active_test': False}</field>
+        </record>
+
+        <menuitem action="action_actions_list" id="menu_actions_list" parent="account.menu_finance_configuration"/>
+
+
+
+        <record model='ir.ui.view' id='view_scheduler_list'>
+            <field name='name'>proforma.followup.scheduler list</field>
+            <field name='model'>proforma.followup.scheduler</field>
+            <field name='type'>tree</field>
+            <field name='arch' type='xml'>
+                <tree string='Proforma Followup Scheduler'>
+                    <field name="date"/>
+                    <field name='followup_action_id'/>
+                    <field name='invoice_id'/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_scheduler_list" model="ir.actions.act_window">
+            <field name="name">Proforma Followup Scheduler</field>
+            <field name="res_model">proforma.followup.scheduler</field>
+            <field name="view_type">form</field>
+            <field name='view_mode'>tree</field>
+            <field name="view_id" ref="view_scheduler_list"/>
+        </record>
+
+        <menuitem action="action_scheduler_list" id="menu_scheduler_list" parent="account.menu_finance_configuration"/>
+
+
+    </data>
+</openerp>

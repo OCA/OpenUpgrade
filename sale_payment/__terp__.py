@@ -8,6 +8,8 @@
 
 The sale order inherits payment type and bank account (if the payment type is related to bank accounts) from partner as default. Next, the invoice based on this sale order inherits the payment information from it.
 
+Also computes payment type and bank account of invoices created from picking lists (extracted from partner info).
+
 Based on previous work of Readylan (version for 4.2).
 """,
     "depends" : [

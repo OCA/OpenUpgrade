@@ -3,7 +3,7 @@
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:fo="http://www.w3.org/1999/XSL/Format">
 
-	<xsl:import href="../../custom/corporate_defaults.xsl"/>
+	<xsl:import href="../../base/report/corporate_defaults.xsl"/>
 	<xsl:import href="../../base/report/rml_template.xsl"/>
 	<xsl:variable name="page_format">a4_normal</xsl:variable>
 
@@ -35,7 +35,7 @@
 	<xsl:template match="material">
 		<setNextTemplate name="other_pages"/>
 		<para>
-			<b t="1">Name</b>: 
+			<b t="1">Name</b>:
 			<i><xsl:value-of select="material-name"/></i>
 		</para>
 		<para>

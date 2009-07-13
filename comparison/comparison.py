@@ -29,12 +29,16 @@ class comparison_user(osv.osv):
         'email': fields.char('Email', size=64, required=True),
         'password': fields.char('Password', size=64, required=True),
         'active': fields.boolean('Active'),
+        'vote_ids': fields.one2many('comparison.vote', 'user_id', "Votes"),
+        'factor_ids': fields.one2many('comparison.factor', 'user_id', "Factors",),
+        'suggestion_ids': fields.one2many('comparison.ponderation.suggestion', 'user_id', "Ponderation Suggestions",),
     }
     _defaults = {
         'active': lambda *args: 1,
     }
     _sql_constraints = [
-        ('email', 'unique(email)', 'The email of the User must be unique.' )
+        ('email', 'unique(email)', 'The Email is Already Registered!.' ),
+        ('name', 'unique(name)', 'The Username Already Exists!.' ),
     ]
     
 comparison_user()
@@ -49,15 +53,36 @@ class comparison_item(osv.osv):
         'user_id': fields.many2one('comparison.user','User'),
         'result_ids': fields.one2many('comparison.factor.result', 'item_id', "Results"),
         'state': fields.selection([('draft','Draft'),('open','Open')], 'Status', required=True),
+        'load_default' : fields.boolean('Load by Default',help="This option if checked, will let the Item display on Evaluation Matrix, by default."),
+        'sequence': fields.integer('Sequence'),
     }
     _defaults = {
         'state': lambda *args: 'draft',
-#        'ponderation': lambda *args: 1.0,
+        'sequence': lambda *args: 1,
+        'load_default': lambda *args: 0,
     }
     _sql_constraints = [
-        ('name', 'unique(name)', 'The name of the item must be unique!' )
+        ('name', 'unique(name)', 'The Item with the same name is already in the List!' )
     ]
-#    _order = 'parent_id,name asc'
+
+    _order = 'sequence,id'
+
+    def create(self, cr, uid, vals, context={}):
+        result = super(comparison_item, self).create(cr, uid, vals, context)
+        obj_factor = self.pool.get('comparison.factor')
+        obj_factor_result = self.pool.get('comparison.factor.result')
+        
+        for factor_id in obj_factor.search(cr, uid, []):
+            obj_factor_result.create(cr, uid, {'factor_id':factor_id,'item_id':[result][0]})
+        
+        return result
+#    
+#    def write(self, cr, uid, ids, vals, context=None):
+#        if not context:
+#            context={}
+#        result = super(comparison_item, self).write(cr, uid, ids, vals, context=context)
+#        
+#        return result
     
 comparison_item()
 
@@ -87,11 +112,11 @@ class comparison_factor(osv.osv):
         'child_ids': fields.one2many('comparison.factor','parent_id','Child Factors'),
         'note': fields.text('Note'),
         'sequence': fields.integer('Sequence'),
-        'type': fields.selection([('view','View'),('criterion','criterion')], 'Type'),
+        'type': fields.selection([('view','Category'),('criterion','Criteria')], 'Type', required=True),
 #        'result': fields.function(_result_compute, method=True, type='float', string="Result"),
         'result_ids': fields.one2many('comparison.factor.result', 'factor_id', "Results",),
         'ponderation': fields.float('Ponderation'),
-        'pond_computed': fields.function(_ponderation_compute, store=True, method=True, type='float', string="Computed Ponderation"),
+        'pond_computed': fields.function(_ponderation_compute, digits=(16,3), method=True, type='float', string="Computed Ponderation"),
         'state': fields.selection([('draft','Draft'),('open','Open'),('cancel','Cancel')], 'Status', required=True),
 #        'results': fields.one2many('comparison.factor.result', 'factor_id', 'Computed Results', readonly=1)
     }
@@ -99,8 +124,20 @@ class comparison_factor(osv.osv):
         'state': lambda *args: 'draft',
         'ponderation': lambda *args: 1.0,
         'sequence': lambda *args: 1,
+        'type' : lambda *args: 'criterion',
     }
-
+    
+    def create(self, cr, uid, vals, context={}):
+        result = super(comparison_factor, self).create(cr, uid, vals, context)
+        
+        obj_item = self.pool.get('comparison.item')
+        obj_factor_result = self.pool.get('comparison.factor.result')
+        
+        for item_id in obj_item.search(cr, uid, []):
+            obj_factor_result.create(cr, uid, {'factor_id':[result][0],'item_id':item_id})
+        
+        return result
+    
     def _check_recursion(self, cr, uid, ids):
         level = 100
         while len(ids):
@@ -144,7 +181,7 @@ class comparison_factor(osv.osv):
         ('name', 'unique(parent_id,name)', 'The name of the Comparison Factor must be unique!' )
     ]
     
-    _order = 'parent_id,sequence'
+    _order = 'parent_id,sequence,id'
 comparison_factor()
 
 class comparison_vote_values(osv.osv):
@@ -160,23 +197,110 @@ class comparison_vote_values(osv.osv):
 comparison_vote_values()
 
 class comparison_vote(osv.osv):
+    
+    def __init__(self, pool, cr=None):
+        super(comparison_vote, self).__init__(pool,cr)
+        self.reload_ids = []
+        
     _name = 'comparison.vote'
     _columns = {
-        'user_id': fields.many2one('comparison.user', 'User', required=True, ondelete='cascade'),
+        'user_id': fields.many2one('comparison.user', 'User', ondelete='set null'),
         'factor_id': fields.many2one('comparison.factor', 'Factor', required=True, ondelete='cascade', domain=[('type','<>','view')]),
         'item_id': fields.many2one('comparison.item', 'Item', required=True, ondelete='cascade'),
         'score_id': fields.many2one('comparison.vote.values', 'Value', required=True),
-#        'ponderation': fields.float('Ponderation'), do we need it here?
         'note': fields.text('Note'),
+        'state': fields.selection([('draft','Draft'),('valid','Valid'),('cancel','Cancel')], 'Status', required=True, readonly=True),
     }
-#    _defaults = {
-#        'ponderation': lambda *a: 1.0,
-#    }
+    
+    _defaults = {
+        'state': lambda *args: 'draft',
+    }
+    
+    _sql_constraints = [
+        ('vote_unique', 'unique(user_id,factor_id,item_id)', "You can't vote twice to the same factor of the same item!" )
+    ]
+    
+    def accept_vote(self, cr, uid, ids, context={}):
+        self.write(cr, uid, ids, {'state':'valid'})
+        return True
+    
+    def cancel_vote(self, cr, uid, ids, context={}):
+        self.write(cr, uid, ids, {'state':'cancel'})
+        return True
+    
+    def vote_create_async(self, cr, uid, args):
+        # this will accept the votes in bunch and will calculate parent's score at one call.
+        self.reload_ids = []
+        if args:
+            for vote in args:
+                self.create(cr,uid, vote, client_call=True)
+            factor_id = int(args[0]['factor_id'])
+            factor = self.pool.get('comparison.factor').browse(cr, uid, factor_id) 
+            item_obj = self.pool.get('comparison.item').browse(cr, uid, int(args[0]['item_id']))
+            # calculating parents until found top level
+            while (factor and  factor.parent_id):
+                self.compute_parents(cr, uid, factor, item_obj)
+                factor = factor.parent_id
+        return self.reload_ids
 
-#    def create(self, cr, uid, vals, context={}):
-#        result = super(comparison_vote, self).create(cr, uid, vals, context)
-#        
-#        return result
+    def compute_parents(self, cr, uid, factor, item):
+
+        if factor.parent_id:
+            obj_factor_result = self.pool.get('comparison.factor.result')
+            final_score = 0.0
+
+            factor_clause = (','.join([str(x.id) for x in factor.parent_id.child_ids]))
+
+            cr.execute("select sum(cf.ponderation) from comparison_factor as cf where cf.id in (%s) and cf.state!='cancel'"%(factor_clause))
+            tot_pond = cr.fetchall()
+            
+            cr.execute("select cfr.result,cf.ponderation from comparison_factor_result as cfr,comparison_factor as cf where cfr.item_id=%s and cfr.votes > 0.0 and cfr.factor_id = cf.id and cf.id in (%s) and cf.state!='cancel'"%(item.id,factor_clause))
+            res = cr.fetchall()
+
+            final_score = 0.0
+            
+            if res:
+                for record in res:
+                    final_score += (record[0] * record[1])
+    
+                final_score = final_score / tot_pond[0][0]   
+
+                parent_result_id = obj_factor_result.search(cr, uid, [('factor_id','=',factor.parent_id.id),('item_id','=',item.id)])
+                obj_parent = obj_factor_result.read(cr, uid, parent_result_id,['votes'])
+                obj_factor_result.write(cr, uid, parent_result_id[0],{'votes':(obj_parent[0]['votes'] + 1),'result':final_score})
+                self.reload_ids.append(parent_result_id[0])
+        return True
+        
+    def create(self, cr, uid, vals, context={}, client_call=False):
+        result = super(comparison_vote, self).create(cr, uid, vals, context)
+        obj_factor = self.pool.get('comparison.factor')
+        obj_factor_result = self.pool.get('comparison.factor.result')
+        obj_vote_values = self.pool.get('comparison.vote.values')
+        vo = self.browse(cr, uid, result)
+        pond_div = 5.0 # ponderation division factor
+        
+        for obj_vote in self.browse(cr, uid, [result]):
+            
+            result_id = obj_factor_result.search(cr, uid, [('factor_id','=',obj_vote.factor_id.id),('item_id','=',obj_vote.item_id.id)])
+            obj_result = obj_factor_result.read(cr, uid, result_id, ['votes','result'])
+            # finding previous score and votes
+            votes_old = obj_result[0]['votes']         
+            score = (obj_vote.score_id.factor / float(pond_div) ) * 100
+            
+            if votes_old:
+                score = (score + obj_result[0]['result']) /2
+                                            
+            obj_factor_result.write(cr, uid, result_id, {'votes':(votes_old + 1),'result':score})
+            self.reload_ids.append(result_id[0])
+            
+            if not client_call:
+                factor = obj_vote.factor_id
+                item_obj = obj_vote.item_id
+                while (factor and  factor.parent_id):
+                    self.compute_parents(cr, uid, factor, item_obj)
+                    factor = factor.parent_id
+                
+        return result
 #    
 #    def write(self, cr, uid, ids, vals, context=None):
 #        if not context:
@@ -191,91 +315,97 @@ comparison_vote()
 class comparison_factor_result(osv.osv):
     _name = "comparison.factor.result"
     _rec_name = 'factor_id'
-    _table = "comparison_factor_result"
-    _auto = False
+#    _table = "comparison_factor_result"
+#    _auto = False
     
-    def _compute_score(self, cr, uid, ids, name, args, context):
-        if not ids: return {}
-        result = {}
-        for obj_factor_result in self.browse(cr, uid, ids):
-#            consider maximum vote factor = 5.0
-            pond_div = 5.00
-            result[obj_factor_result.id] = 0.00
-            ponderation_result = 0.00
-            
-            if obj_factor_result.factor_id.type == 'criterion': # type=view cannot be voted ever.
-                
-                ponderation = obj_factor_result.factor_id.ponderation
-                vote_ids = self.pool.get('comparison.vote').search(cr, uid, [('factor_id','=',obj_factor_result.factor_id.id),('item_id','=',obj_factor_result.item_id.id)])
-                votes = []
-                
-                if vote_ids:
-                    for obj_vote in self.pool.get('comparison.vote').browse(cr, uid, vote_ids):
-                        votes.append(obj_vote.score_id.factor * ponderation)
-                    ponderation_result = (ponderation * pond_div) * len(votes)    
-                else:
-    #                votes = [0.00]
-                    ponderation_result = (ponderation * pond_div)        
-                sum_votes = votes and sum(votes) or 0.00
-                
-                result[obj_factor_result.id] = round(((sum_votes * 100)/float(ponderation_result)),2) #+   (' + str(len(votes)) + ' Vote(s))'
-
-            else:
-                
-                sum_votes = 0.0
-#                child_ids = self.pool.get('comparison.factor').search(cr, uid, [('parent_id','child_of',[obj_factor_result.factor_id.id])])
-#                child_ids.remove(obj_factor_result.factor_id.id)
-                voted = False
-                if obj_factor_result.factor_id.child_ids:
-                    child_ids = [x.id for x in obj_factor_result.factor_id.child_ids]
-                    child_factor_ids = self.pool.get('comparison.factor.result').search(cr, uid, [('factor_id','in',child_ids),('item_id','=',obj_factor_result.item_id.id)])
-                    
-                    if child_factor_ids:
-                        child_factors = self.pool.get('comparison.factor.result').read(cr, uid, child_factor_ids)
-                        votes_child = []
-                        pond_child_result = 0.0
-                        
-                        for factor in child_factors:
-                            obj_factor = self.pool.get('comparison.factor').browse(cr, uid, factor['factor_id'][0])
-                            score = factor['result']
-                            if score > 0.0:
-                                votes_child.append(obj_factor.ponderation * pond_div * score/100.00)
-                                pond_child_result += (obj_factor.ponderation * pond_div)
-                                voted = True
-                        
-                        # adding parent into calculation if it has a parent
-#                        if obj_factor_result.factor_id.parent_id:
-#                            pond_child_result += ponderation_result 
-                        
-                        sum_votes += sum(votes_child)
-                        pond_child_result = pond_child_result or 1.0
-                        result[obj_factor_result.id] = round(((sum_votes * 100)/float(pond_child_result)),2)
-                # Calculate scores of relative parents
-#                if obj_factor_result.factor_id.parent_id:
-#                    self.write(cr, uid, obj_factor_result.factor_id.parent_id.id, {'votes':obj_factor_result.votes + 1})
-        return result
-    
+#    def _compute_score(self, cr, uid, ids, name, args, context):
+#        if not ids: return {}
+#        result = {}
+#        print "iiiiiiiiids",ids
+#        for obj_factor_result in self.browse(cr, uid, ids):
+##            consider maximum vote factor = 5.0
+#            pond_div = 5.00
+#            result[obj_factor_result.id] = 0.00
+#            ponderation_result = 0.00
+#            
+#            if obj_factor_result.factor_id.type == 'criterion': # type=view cannot be voted ever.
+#                
+#                ponderation = obj_factor_result.factor_id.ponderation
+#                vote_ids = self.pool.get('comparison.vote').search(cr, uid, [('factor_id','=',obj_factor_result.factor_id.id),('item_id','=',obj_factor_result.item_id.id)])
+#                votes = []
+#                
+#                if vote_ids:
+#                    for obj_vote in self.pool.get('comparison.vote').browse(cr, uid, vote_ids):
+#                        votes.append(obj_vote.score_id.factor * ponderation)
+#                    ponderation_result = (ponderation * pond_div) * len(votes)    
+#                else:
+#    #                votes = [0.00]
+#                    ponderation_result = (ponderation * pond_div)        
+#                sum_votes = votes and sum(votes) or 0.00
+#                
+#                result[obj_factor_result.id] = round(((sum_votes * 100)/float(ponderation_result)),2) #+   (' + str(len(votes)) + ' Vote(s))'
+#            else:
+#                # for type=view, we have to compute its children first and then it should affect its relative parents(not only immediate parents).
+#                sum_votes = 0.0
+##                child_ids = self.pool.get('comparison.factor').search(cr, uid, [('parent_id','child_of',[obj_factor_result.factor_id.id])])
+##                child_ids.remove(obj_factor_result.factor_id.id)
+#                voted = False
+#                if obj_factor_result.factor_id.child_ids:
+#                    child_ids = [x.id for x in obj_factor_result.factor_id.child_ids]
+#                    child_factor_ids = self.pool.get('comparison.factor.result').search(cr, uid, [('factor_id','in',child_ids),('item_id','=',obj_factor_result.item_id.id)])
+#                    
+#                    if child_factor_ids:
+#                        child_factors = self.pool.get('comparison.factor.result').read(cr, uid, child_factor_ids)
+#                        votes_child = []
+#                        pond_child_result = 0.0
+#                        
+#                        for factor in child_factors:
+#                            obj_factor = self.pool.get('comparison.factor').browse(cr, uid, factor['factor_id'][0])
+#                            score = factor['result']
+#                            if score > 0.0:
+#                                votes_child.append(obj_factor.ponderation * pond_div * score/100.00)
+#                                pond_child_result += (obj_factor.ponderation * pond_div)
+#                                voted = True
+#                        
+#                        # adding parent into calculation if it has a parent
+##                        if obj_factor_result.factor_id.parent_id:
+##                            pond_child_result += ponderation_result 
+#                        
+#                        sum_votes += sum(votes_child)
+#                        pond_child_result = pond_child_result or 1.0
+#                        result[obj_factor_result.id] = round(((sum_votes * 100)/float(pond_child_result)),2)
+#                # Calculate scores of relative parents
+##                if obj_factor_result.factor_id.parent_id:
+##                    self.write(cr, uid, obj_factor_result.factor_id.parent_id.id, {'votes':obj_factor_result.votes + 1})
+#        return result
+#    
+      
     _columns = {
-        'factor_id': fields.many2one('comparison.factor','Factor', ondelete='set null', required=1, readonly=1),
-        'item_id': fields.many2one('comparison.item','Item', ondelete='set null', required=1, readonly=1),
-        'result': fields.function(_compute_score, method=True, digits=(16,2), type="float", string='Goodness(%)', readonly=1),
+        'factor_id': fields.many2one('comparison.factor','Factor', ondelete='cascade', required=1, readonly=1,),
+        'item_id': fields.many2one('comparison.item','Item', ondelete='cascade', required=1, readonly=1),
+#        'result': fields.function(_compute_score, method=True, digits=(16,2), type="float", string='Goodness(%)', readonly=1,),
         'votes': fields.float('Votes', readonly=1),
+        'result': fields.float('Goodness(%)', readonly=1, digits=(16,3)),
         # This field must be recomputed each time we add a vote
     }
     
-    def init(self, cr):
-        cr.execute(""" create or replace view comparison_factor_result as (select (fr.id*10 + it.id ) as id,fr.id as factor_id,it.id as item_id,0.00 as result,(select count(*) from comparison_vote cv where cv.factor_id=fr.id and cv.item_id=it.id) as votes from comparison_factor as fr,comparison_item as it);
-                    """)
-        
-    def unlink(self, cr, uid, ids, context={}):
-        raise osv.except_osv(_('Error !'), _('You cannot delete the vote result. You may have to delete the concerned Item or Factor!'))    
+    _defaults = {
+        'votes': lambda *a: 0.0,
+        'result': lambda *a: 0.0,
+    }
+    
+#    def init(self, cr):
+#        cr.execute(""" create or replace view comparison_factor_result as (select (fr.id*10 + it.id ) as id,fr.id as factor_id,it.id as item_id,0.00 as result,(select count(*) from comparison_vote cv where cv.factor_id=fr.id and cv.item_id=it.id) as votes from comparison_factor as fr,comparison_item as it);
+#                    """)
+#    def unlink(self, cr, uid, ids, context={}):
+#        raise osv.except_osv(_('Error !'), _('You cannot delete the vote result. You may have to delete the concerned Item or Factor!'))    
              
 comparison_factor_result()
 
 
 class comparison_ponderation_suggestion(osv.osv):
     _name = 'comparison.ponderation.suggestion'
-    _desc = 'Users can suggest new ponderations on criterions'
+    _desc = 'Users can suggest new ponderations on criterias'
     
     def accept_suggestion(self, cr, uid, ids, context={}):
 #        obj_sugg = self.browse(cr, uid, ids)[0]
@@ -293,23 +423,30 @@ class comparison_ponderation_suggestion(osv.osv):
         pool_factor = self.pool.get('comparison.factor')
         obj_factor = pool_factor.browse(cr, uid, obj_sugg.factor_id.id)
         obj_user = self.pool.get('comparison.user').browse(cr, uid, obj_sugg.user_id.id)
-        suggestion = obj_sugg.ponderation or 1.0 # to avoid 0 division
-        new_pond = (obj_factor.ponderation / suggestion)
+#        suggestion = obj_sugg.ponderation or 1.0 # to avoid 0 division
+#        new_pond = (obj_factor.ponderation / suggestion)
+        if obj_sugg.effect == 'positive':
+            new_pond = obj_factor.ponderation - 0.1
+        else:
+            new_pond = obj_factor.ponderation + 0.1
+        
         note = obj_factor.note or ''
         factor_id = pool_factor.write(cr, uid, [obj_sugg.factor_id.id],{'ponderation':new_pond,'note':str(note) + '\n' +'Ponderation Revoked by Website Administrator. Value Changed from ' + str(obj_factor.ponderation) + ' to ' + str(new_pond) +'.' })
         self.write(cr, uid, ids, {'state':'cancel'})
         return True
     
     _columns = {
-        'user_id': fields.many2one('comparison.user', 'User', required=True, ondelete='cascade'),
+        'user_id': fields.many2one('comparison.user', 'User', required=True, ondelete='set null'),
         'factor_id': fields.many2one('comparison.factor', 'Factor', required=True, ondelete='cascade'),
         'ponderation': fields.float('Ponderation',required=True),
         'state': fields.selection([('draft','Draft'),('done','Done'),('cancel','Cancel')],'State',readonly=True),
-        'note': fields.text('Suggestion')
+        'note': fields.text('Suggestion'),
+        'effect':fields.selection([('positive','Positive'),('negative','Negative')],'Ponderation Effect', help="Select Positive if your suggestion has greater poderation value than the current value, negative otherwise."),
     }
     _defaults = {
         'ponderation': lambda *a: 1.0,
         'state': lambda *a: 'draft',
+        'effect': lambda *a: 'positive',
     }
     
     _sql_constraints = [
@@ -322,7 +459,7 @@ class comparison_ponderation_suggestion(osv.osv):
         for obj_sugg in self.browse(cr, uid, [result]):
             obj_factor = pool_factor.browse(cr, uid, obj_sugg.factor_id.id)
             obj_user = self.pool.get('comparison.user').browse(cr, uid, obj_sugg.user_id.id)
-            new_pond = (obj_factor.ponderation * obj_sugg.ponderation)
+            new_pond = obj_sugg.ponderation
             note = obj_factor.note or ''
             pool_factor.write(cr, uid, [obj_sugg.factor_id.id],{'ponderation':new_pond, 'note':str(note) + '\n' +'Ponderation Change Suggested by ' + str(obj_user.name) + '(' + obj_user.email + '). Value Changed from ' + str(obj_factor.ponderation) + ' to ' + str(new_pond) +'.' })
         return result
@@ -348,4 +485,14 @@ class comparison_ponderation_suggestion(osv.osv):
 
 comparison_ponderation_suggestion()
 
+class evaluation_pack(osv.osv):
+    _name = 'evaluation.pack'
+    _description = 'Evaluation Pack for Easy Comparison'
+    
+    _columns = {
+        'name': fields.char('Name', size=64, required=True),
+        'item_ids':fields.many2many('comparison.item','pack_items_rel','pack_id','item_id','Items',requierd=True)
+    }
+evaluation_pack()    
 
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

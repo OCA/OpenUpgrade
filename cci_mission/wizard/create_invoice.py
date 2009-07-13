@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -103,9 +103,9 @@ def _createInvoices(self, cr, uid, data, context={}):
         dict['original'] = data.type_id.original_product_id.id
         list.append(data.type_id.copy_product_id.id)
         dict['copy'] = data.type_id.copy_product_id.id
-
+        fpos = data.order_partner_id.property_account_position and data.order_partner_id.property_account_position.id or False
         for prod_id in list:
-            val = obj_lines.product_id_change(cr, uid, [], prod_id,uom =False, partner_id=data.order_partner_id.id)
+            val = obj_lines.product_id_change(cr, uid, [], prod_id,uom =False, partner_id=data.order_partner_id.id, fposition_id=fpos)
             val['value'].update({'product_id' : prod_id })
 
             force_member=force_non_member=False
@@ -161,6 +161,7 @@ def _createInvoices(self, cr, uid, data, context={}):
             'currency_id' :data.order_partner_id.property_product_pricelist.currency_id.id,# 1,
             'comment': data.text_on_invoice,
             'payment_term':data.order_partner_id.property_payment_term.id,
+            'fiscal_position': data.order_partner_id.property_account_position.id
             }
         price = data.total
         inv_obj = pool_obj.get('account.invoice')

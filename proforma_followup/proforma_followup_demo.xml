@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        
+        <record model='ir.actions.server' id='demo_action_server_send_email'>
+            <field name='name'>Invoice: Send Proforma Followup Email</field>
+            <field name='type'>ir.actions.server</field>
+            <field name='condition'>True</field>
+            <field name='model_id' ref='account.model_account_invoice'/>
+            <field name='state'>email</field>
+            <field name='email'>object.address_invoice_id.email</field>
+            <field name='subject'>Open ERP: Reminder for Proforma Invoice</field>
+            <field name='message'>
+    Dear [[ object.partner_id.name ]],
+
+Your invoice of [[ object.residual ]] [[ object.currency_id.name ]] is in PROFORMA state.
+Please confirm it within [[ context.get('days', 3) ]] days.
+
+Kind Regards.
+            </field>
+        </record>
+
+        <record model='proforma.followup.action' id='action_1'>
+            <field name='name'>Send email after 10 days</field>
+            <field name='sequence'>1</field>
+            <field name='days'>10</field>
+            <field name='action_id' ref='demo_action_server_send_email'/>
+            <field name='context'>days=5</field>
+        </record>
+
+
+        <record model='proforma.followup.action' id='action_2'>
+            <field name='name'>Cancel invoice after 5 days</field>
+            <field name='sequence'>2</field>
+            <field name='days'>5</field>
+            <field name='action_id' ref='action_server_cancel_invoice'/>
+        </record>
+
+        <!-- and a proforma invoice -->        
+        
+        <record model="account.invoice" id="invoice_1">
+			<field name="currency_id" ref="base.EUR"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="address_invoice_id" ref="base.res_partner_address_8"/>
+			<field name="partner_id" ref="base.res_partner_agrolait"/>
+			<field name="journal_id" ref="account.sales_journal"/>
+			<field name="state">proforma2</field>
+			<field name="type">out_invoice</field>
+			<field name="account_id" ref="account.a_sale"/>
+			<field name="name">Proforma Test invoice</field>
+			<field name="address_contact_id" ref="base.res_partner_address_8"/>
+			<field eval="time.strftime('%Y-%m-%d 18:00')" name="date_invoice"/>
+		</record>
+		<record model="account.invoice.line" id="invoice_1_line_1">
+			<field name="name">Mainboard ASUStek A7N8X</field>
+			<field name="invoice_id" ref="invoice_1"/>
+			<field name="price_unit">88.00</field>
+			<field name="quantity">2</field>
+			<field name="product_id" ref="product.product_product_mb1"/>
+			<field name="account_id" ref="account.a_sale"/>
+		</record>
+		<record model="account.invoice.line" id="invoice_1_line_2">
+			<field name="name">Little server with raid 1 and 512ECC ram</field>
+			<field name="invoice_id" ref="invoice_1"/>
+			<field name="price_unit">800</field>
+			<field name="quantity">1</field>
+			<field name="product_id" ref="product.product_product_ram512"/>
+			<field name="account_id" ref="account.a_sale"/>
+		</record>
+    </data>
+</openerp>

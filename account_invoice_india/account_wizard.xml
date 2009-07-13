@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<wizard
+			string="Perediocal Accounts Charts" 
+			menu="False" 
+			model="account.account" 
+			name="account.chart.periods" 
+			id="wizard_account_chart_periods"/>
+			
+		<menuitem
+		    parent="indian_accounting_reports2"
+			name="Perediocal Charts of Accounts" 
+			id="menu_action_account_tree21" 
+			action="wizard_account_chart_periods" 
+			type="wizard"
+			sequence="8"/>
+			
+		<wizard 
+			string="Partner wise ledger"
+			model="res.partner"
+			name="account.third_party_ledger.partner.report"
+			menu="False"
+			id="wizard_third_party_wise_ledger"/>
+
+		<menuitem
+		    parent="indian_accounting_reports2"
+			name="Partner wise Ledger"
+			action="wizard_third_party_wise_ledger"
+			type="wizard"
+			icon="STOCK_PRINT"
+			id="menu_third_party_wise_ledger"/>
+		
+		<wizard 
+			string="Create Party Ledger"
+			model="res.partner"
+			name="partner.account.create"
+			menu="True"
+			id="wizard_partner_account_create"/>
+	</data>
+</openerp>

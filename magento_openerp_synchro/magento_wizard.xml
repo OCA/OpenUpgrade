@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<menuitem name="Synchronization" id="menu_magento_synchronization" parent="menu_main_magento" />
+
+		<!-- Synchronize Products & Stocks -->
+		<wizard string="Synchronize products and stocks" model="product.product"
+			name="magento.products.sync" id="wizard_magento_products" />
+		<menuitem
+			name="Synchronize products and stocks" parent="menu_magento_synchronization"
+			action="wizard_magento_products" type="wizard" id="menu_magento_products" />
+		
+		<!-- Synchronize Categories -->
+		<wizard string="Synchronize categories" model="product.category"
+			name="magento.categories.sync" id="wizard_magento_categories" />
+		<menuitem
+			name="Synchronize categories" parent="menu_magento_synchronization"
+			action="wizard_magento_categories" type="wizard" id="menu_magento_categories" />
+
+		<!-- Import Sales Orders -->
+		<wizard string="Import sale orders" model="sale.order"
+			name="magento.saleorders.import" id="wizard_magento_saleorders_import" />
+		<menuitem
+			name="Import sale orders" parent="menu_magento_synchronization"
+			action="wizard_magento_saleorders_import" type="wizard"
+			id="menu_magento_saleorders_import" />
+		
+		<!-- Correct Sales Orders -->
+		<wizard string="Correct sale orders" model="sale.order"
+			name="magento.saleorders.correct" id="wizard_magento_saleorders_correct" />
+		<menuitem
+			name="Correct sale orders" parent="menu_magento_synchronization"
+			action="wizard_magento_saleorders_correct" type="wizard"
+			id="menu_magento_saleorders_correct" />
+			
+		<!-- Update Sales Orders -->
+		<wizard string="Update sale orders" model="sale.order"
+			name="magento.saleorders.update" id="wizard_magento_saleorders_update" />
+		<menuitem
+			name="Update sale orders" parent="menu_magento_synchronization"
+			action="wizard_magento_saleorders_update" type="wizard"
+			id="menu_magento_saleorders_update" />
+		
+	</data>
+</openerp>

@@ -13,10 +13,12 @@ class mrp_procurement(osv.osv):
 
     def action_po_assign(self, cr, uid, ids, context={}):
         po_id = super(mrp_procurement, self).action_po_assign(cr, uid, ids, context)
-        customer_location_id = self.pool.get('purchase.order').browse(cr, uid, po_id).partner_id.property_stock_customer.id
-        self.pool.get('purchase.order').write(cr, uid, po_id, {'location_id':  customer_location_id})
-        
+
         for procurement in self.browse(cr, uid, ids):#TODO ensure that works!!! Why only one po_id is returned from super method?
+            if procurement.move_id.sale_line_id.is_supplier_direct_delivery:
+	        customer_location_id = self.pool.get('purchase.order').browse(cr, uid, po_id).partner_id.property_stock_customer.id
+                self.pool.get('purchase.order').write(cr, uid, po_id, {'location_id':  customer_location_id})
+
             self.pool.get('mrp.procurement').write(cr, uid, procurement.id, {'related_direct_delivery_purchase_order': po_id})
 
 mrp_procurement()

@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+    <!--
+    =======================================================
+    PARTNER EXTENSIONS
+    =======================================================
+    -->
+    <record id="view_partner_form_inherit2" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+        	<field colspan="4" mode="form,tree" name="address" nolabel="1" select="1" position="replace">
+            	<field colspan="4" mode="form,tree" name="address" nolabel="1" select="1">
+                	<form string="Partner Contacts">
+                    	<field name="firstname"/>
+                        <field name="name" select="2" string="Last Name"/>
+                        <field name="name_complement"/>
+                        <field domain="[('domain', '=', 'contact')]" name="title" string="Type"/>
+                        <field name="function"/>
+                        <field name="type" select="2"/>
+                        <field name="street" select="2"/>
+                        <field name="street2"/>
+                        <field name="street3"/>
+                        <field name="street4"/>
+                        <field name="zip" select="2"/>
+                        <field name="city" select="2"/>
+                        <field completion="1" name="country_id" select="2"/>
+                        <field name="state_id" select="2"/>
+                        <field name="phone"/>
+                        <field name="fax"/>
+                        <field name="mobile"/>
+                        <field name="email" select="2" widget="email"/>
+                    </form>
+                    <tree string="Partner Contacts">
+                    	<field name="firstname"/>
+                        <field name="name" string="Last Name"/>
+                        <field name="zip"/>
+                        <field name="city"/>
+                        <field name="country_id"/>
+                        <field name="phone"/>
+                        <field name="email"/>
+                    </tree>
+                </field>
+            </field>
+        </field>
+    </record>
+
+    <!--
+    =======================================================
+    PARTNER ADDRESS EXTENSIONS
+    =======================================================
+    -->
+    <record id="view_partner_address_form_inherit1" model="ir.ui.view">
+	    <field name="name">res.partner.address.form.inherit</field>
+	    <field name="model">res.partner.address</field>
+	    <field name="type">form</field>
+	    <field name="inherit_id" ref="base.view_partner_address_form1"/>
+	    <field name="arch" type="xml">
+	     <field name="name" position="replace">
+	     	<field name="name" string="Last Name"/>
+	     </field>
+	    </field>
+    </record>
+
+    <record id="view_partner_address_form_inherit2" model="ir.ui.view">
+	    <field name="name">res.partner.address.form.inherit</field>
+	    <field name="model">res.partner.address</field>
+	    <field name="type">form</field>
+	    <field name="inherit_id" ref="base.view_partner_address_form1"/>
+	    <field name="arch" type="xml">
+	    	<field name="name" position="before">
+	        	<field name="firstname"/>
+	        </field>
+	    </field>
+    </record>
+
+    <record id="view_partner_address_form_inherit3" model="ir.ui.view">
+	    <field name="name">res.partner.address.form.inherit</field>
+	    <field name="model">res.partner.address</field>
+	    <field name="type">form</field>
+	    <field name="inherit_id" ref="base.view_partner_address_form1"/>
+	    <field name="arch" type="xml">
+	    	<field name="name" position="after">
+	        	<field name="name_complement"/>
+	        </field>
+	    </field>
+    </record>
+
+    <record id="view_partner_address_form_inherit4" model="ir.ui.view">
+	    <field name="name">res.partner.address.form.inherit</field>
+	    <field name="model">res.partner.address</field>
+	    <field name="type">form</field>
+	    <field name="inherit_id" ref="base.view_partner_address_form1"/>
+	    <field name="arch" type="xml">
+	    	<field name="street2" position="after">
+	        	<field name="street3"/>
+	            <field name="street4"/>
+	        </field>
+	    </field>
+    </record>
+
+    <record id="view_partner_address_form_inherit5" model="ir.ui.view">
+        <field name="name">res.partner.address.form.inherit</field>
+        <field name="model">res.partner.address</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_partner_address_form1"/>
+        <field name="arch" type="xml">
+            <form position="inside">
+	            <notebook colspan="4">
+	            	<page string="Direct Marketing">
+                        <field name="id" colspan="4" select="1"/>
+	            		<field name="moved"/>
+	            		<field name="quotation"/>
+	            		<newline/>
+	            		<group colspan = "4">
+	            		<separator string="Origin Information" colspan = "4"/>
+	            		<newline/>
+	            			<field name="origin_partner"/>
+	            			<field name="origin_support"/>
+	            			<field name="origin_keyword"/>
+	            			<field name="origin_campaign_id"/>
+	            			<field name="origin_country_id"/>
+	            		</group>
+	            	</page>
+	            </notebook>
+            </form>
+        </field>
+	</record>
+</data>
+</openerp>

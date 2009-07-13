@@ -28,8 +28,8 @@ class document_directory(osv.osv):
     _inherit='document.directory'
     _columns = {
         'versioning': fields.boolean('Automatic Versioning'),
-        'version_regex' : fields.char('Reg. Ex.',size=64,require=True),
-        'version_replace': fields.char('Replace',size=64,require=True)
+        'version_regex' : fields.char('Reg. Ex.',size=64,required=True),
+        'version_replace': fields.char('Replace',size=64,required=True)
     }
     _defaults={
         'versioning':lambda *a:1,
@@ -39,29 +39,39 @@ class document_directory(osv.osv):
 document_directory()
 class document_file(osv.osv):
     _inherit = 'ir.attachment'
+    _columns = {
+        'lock': fields.boolean('Lock',readonly=True),
+        'base_res_id':fields.integer('Base Resource')
+        }
+    _defaults={
+        'lock':lambda *a:0,}
     def write(self, cr, uid, ids, vals, context=None):
+        result=False
         for document in self.browse(cr,uid,ids,context=context):
+            if document.lock:
+                raise osv.except_osv(_('Invalid action !'), _('You Cannot modify  record! Document is Locked'))
             if document.parent_id and document.parent_id.versioning:
-                count=1
-                if  self._check_duplication(cr,uid,vals,[document.id]):
-                         #version code
-                         newname=''
-                         filename=vals.get('datas_fname',False)
-                         temp=vals.get('datas',False)
-                         pattern=document.parent_id.version_regex
-                         replace=document.parent_id.version_replace.replace('count',str(count))
-                         newname=re.sub(pattern,replace, filename)
-
-                         pool = pooler.get_pool(cr.dbname)
-                         data = self.browse(cr, uid, ids[0], context=context)
-                         if not 'name' in vals :
-                             vals.update({'name':data.name,'datas':temp,'parent_id':data.parent_id.id,'datas_fname':filename})
-                         self.create(cr, uid, vals, context=context)
-                         vals['datas_fname'] = newname
-                         vals['datas']=data.datas
-
-        result = super(document_file,self).write(cr,uid,ids,vals,context=context)
-        cr.commit()
+                new_datas=vals.get('datas',False)
+                if  new_datas and document.datas and document.datas != new_datas:
+                     filename=document.datas_fname
+                     pattern=document.parent_id.version_regex
+                     res=self.search(cr, uid, [('base_res_id' , '=', document.id)])
+                     count = len(res) + 1
+                     replace=document.parent_id.version_replace.replace('count',str(count))
+                     newname=re.sub(pattern,replace, filename)
+                     new_vals= {'lock':True,'base_res_id': document.id, 'name':newname,'datas':document.datas,'parent_id':document.parent_id.id,'datas_fname':newname,'partner_id':document.partner_id.id}
+                     self.create(cr, uid, new_vals, context=context)
+                result = super(document_file,self).write(cr,uid,[document.id],vals,context=context)
         return result
+    def unlink(self, cr, uid, ids, context=None):
+        for state in self.browse(cr,uid,ids,context=context):
+            if state.lock==True:
+                raise osv.except_osv(_('Invalid action !'), _('You Cannot delete  record! Document is Locked'))
+                try:
+                      os.unlink(os.path.join(self._get_filestore(cr), state.store_fname))
+                except:
+                    pass
+            return super(document_file, self).unlink(cr, uid, ids, context)
+
 
 document_file()

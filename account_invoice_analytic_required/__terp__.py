@@ -25,7 +25,7 @@
     "depends" : ["account", "base"],
     "author" : "Tiny",
     "description": """Module to make analytic account field required in sale.invoice.line.""",
-    "website" : "http://tinyerp.com/module_account.html",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Accounting",
     "init_xml" : [
     ],

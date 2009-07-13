@@ -30,7 +30,7 @@ import pooler
 
 parameter_form = '''<?xml version="1.0"?>
 <form string="Campaign Group" colspan="4">
-    <field name="project_id"
+    <field name="project_id" domain="[('parent_id','ilike','Direct Marketing Retro-Planning')]"
 />
 </form>'''
 
@@ -39,7 +39,6 @@ parameter_fields = {
 }
 
 def _create_duplicate(self, cr, uid, data, context):
-    print context,"---------------------------------------------------------------------"
     campaign_group_obj=pooler.get_pool(cr.dbname).get('dm.campaign.group')
     project_obj = pooler.get_pool(cr.dbname).get('project.project')
     campaign = campaign_group_obj.browse(cr, uid, data['id'])

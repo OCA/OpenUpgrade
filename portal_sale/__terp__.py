@@ -23,14 +23,19 @@
     "name" : "Portal Sale Management",
     "version" : "0.1",
     "author" : "Tiny",
-    "website" : "http://tinyerp.com/",
+    "website" : "http://www.openerp.com",
     "depends" : ["base","portal","sale"],
     "category" : "Generic Modules/Others",
     "description": """
      """,
     "init_xml" : [],
-    "update_xml" : ["portal_conf_data.xml"],
-    "demo_xml" : ["portal_sale_data.xml"],
+    "update_xml" : [
+                    "portal_sale_view.xml",
+                    "portal_conf_data.xml",
+                    "portal_sale_data.xml",
+                    "security/ir.model.access.csv",
+                ],
+    "demo_xml" : [],
     "active": False,
     "installable": True
 }
