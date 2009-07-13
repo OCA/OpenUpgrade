@@ -160,9 +160,11 @@ class project_task(osv.osv):
     def write(self, cr, uid, ids, vals, context={}):
         res = super(project_task, self).write(cr, uid, ids, vals, context={})
         cr.commit()
-        task = self.browse(cr, uid, res)
-        if task.project_id:         
-            self.pool.get('project.project')._log_event(cr, uid, task.project_id.id, {
+	print "Res:", res, ids
+        written_tasks = self.browse(cr, uid, ids)
+        for task in written_tasks:
+	    if task.project_id:
+                self.pool.get('project.project')._log_event(cr, uid, task.project_id.id, {
                                 'res_id' : task.id,
                                 'name' : task.name, 
                                 'description' : task.description, 
