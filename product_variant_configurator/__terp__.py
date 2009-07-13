@@ -21,7 +21,12 @@
 ##############################################################################
 {
     "name" : "Products with multi-level variants configurator",
-    "description":"""Product Configurator - WARNING WORK IN PROGRESS""",
+    "description":"""Product Variant Configurator. Assists the product variant selection in the sale order form.
+For each product template dimension a dimension value is asked. Then the matching product variants
+are proposed for selection.
+Should be used along with the product_variant_multi module.
+Might not work well in the web-client due to web-client current limitations.
+""",
     "version" : "0.5",
     "author" : "Smile.fr",
     "website": "http://www.smile.fr",

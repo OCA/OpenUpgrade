@@ -114,7 +114,7 @@ class magento_utils:
             ship_adr_id = bill_adr_id
                 
         # retrieves Magento Shop in OpenERP
-        shop_id=self.pool.get('sale.shop').search(cr, uid, [('magento_id', '>', 0)])
+        shop_id=self.pool.get('sale.shop').search(cr, uid, [('magento_flag', '=', True)])
         if shop_id and len(shop_id) >= 1:
             shop=self.pool.get('sale.shop').browse(cr, uid, shop_id[0])
         else:

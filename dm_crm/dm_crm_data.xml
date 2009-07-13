@@ -12,7 +12,7 @@
 
 	
 	<!-- OFFER STEP ACTION -->
-	<data noupdate="0">
+	<data noupdate="1">
         <record id="ir_actions_server_crm_case_create0" model="ir.actions.server">
             <field name="model_id" ref="dm.model_dm_workitem"/>
 			<field eval="&quot;&quot;&quot;# You can use the following variables
@@ -44,14 +44,6 @@
 			<field name="col1" ref="crm.field_crm_case_name"/>
 		</record>
     </data>
-<!--
-    <data noupdate="0">
-        <record id="dm_offer_step_action_crm_case_create0" model="dm.offer.step.action">
-            <field name="media_id" ref="dm.media_phone"/>
-            <field name="server_action_id" ref="ir_actions_server_crm_case_create0"/>
-        </record>
-    </data>
--->
 
     <!-- OFFER -->
     <data noupdate="1">
@@ -59,6 +51,7 @@
             <field eval="&quot;&quot;&quot;ASS&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;After-Sale Service&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;as&quot;&quot;&quot;" name="type"/>
+            <field name="lang_orig_id" ref="base.lang_en"/>
         </record>
     </data>
     

@@ -66,7 +66,7 @@ class ecommerce_sendmail_wizard(wizard.interface):
             res = pooler.get_pool(cr.dbname).get('ecommerce.partner').browse(cr, uid, partner)
             for partner in res:
                 if partner.address_ids and not partner.address_ids[0].email:
-                        not_sent.append(partner.name)
+                    not_sent.append(partner.name)
                 for adr in partner.address_ids:
                     if adr.email:
                         sent_dict[partner.name] = adr.email

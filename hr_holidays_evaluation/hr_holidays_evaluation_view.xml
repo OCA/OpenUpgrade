@@ -31,21 +31,6 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="view_holidays_per_user_form_inherited">
-            <field name="name">hr.holidays.per.user.form.inherited</field>
-            <field name="model">hr.holidays.per.user</field>
-            <field name="inherit_id" ref="hr_holidays.view_holidays_per_user_form"/>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-                <notebook position="inside">
-                    <page string="Evaluation Holiday History">
-                        <field name="note_ids" readonly="1" nolabel="1"/>
-                    </page>
-                </notebook>
-            </field>
-        </record>
-
-
 		 <record id="view_wizard_hr_development" model="ir.ui.view">
             <field name="name">Holidays Evaluation Wizard</field>
             <field name="model">wizard.hr.holidays.evaluation</field>

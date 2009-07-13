@@ -92,7 +92,12 @@ def _send_mails(self, cr, uid, data, context):
     p = pooler.get_pool(cr.dbname)
 
     user = p.get('res.users').browse(cr, uid, uid, context)
-    file_name = user.company_id.name.replace(' ','_')+'_'+_('Sale_Order')
+    file_name = user.company_id.name.replace(' ','_')+'_'+_('Sale_Order') + '.text'
+    
+    f = open(file_name, 'w')
+    f.write(data['form']['text'])
+    f.close()
+
     sale_smtpserver_id = p.get('email.smtpclient').search(cr, uid, [('type','=','sale'),('state','=','confirm')], context=False)
     if not sale_smtpserver_id:
         default_smtpserver_id = p.get('email.smtpclient').search(cr, uid, [('type','=','default'),('state','=','confirm')], context=False)
@@ -102,9 +107,7 @@ def _send_mails(self, cr, uid, data, context):
 
     nbr = 0
     for email in data['form']['to'].split(','):
-        #print email, data['form']['subject'], data['ids'], data['model'], file_name, data['form']['text']
-        #state = p.get('email.smtpclient').send_email(cr, uid, smtpserver_id, email, data['form']['subject'], data['ids'], data['model'], file_name, data['form']['text'])
-        state = p.get('email.smtpclient').send_email(cr, uid, smtpserver_id, email,data['form']['subject'],data['ids'],data['form']['text'],'sale.order',file_name)
+        state = p.get('email.smtpclient').send_email(cr, uid, smtpserver_id[0], email,data['form']['subject'], data['form']['text'], [file_name], reports=[('report.sale.order',data['ids'])])
 #                                (self, cr, uid, ids,emailto,subject,resource_id,body=False,report_name=False,file_name=False):
         if not state:
             raise osv.except_osv(_('Error sending email'), _('Please check the Server Configuration!'))

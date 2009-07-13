@@ -556,7 +556,7 @@
 			          <para style="terp_default_Bold_9">LST/VAT No. &amp; Date</para>
 			        </td>
 			        <td>
-			         <para style="terp_default_9">[[ o.partner_id.vat_no or '']]  [[ o.partner_id.date ]]</para>
+			         <para style="terp_default_9">[[ o.partner_id.vat_no or '' ]]  <font>[[ o.partner_id.date=='False' and removeParentNode('font')  or o.partner_id.date ]]</font></para>
 			        </td>
 			      </tr>
 			      <tr>
@@ -564,7 +564,7 @@
 			          <para style="terp_default_Bold_9">CST No. &amp; Date</para>
 			        </td>
 			        <td>
-			         <para style="terp_default_9">[[ o.partner_id.cst_no or '']]  [[ o.partner_id.date ]]</para>
+			         <para style="terp_default_9">[[ o.partner_id.cst_no or '' ]]  <font>[[ o.partner_id.date=='False' and removeParentNode('font')  or o.partner_id.date ]]</font></para>
 			        </td>
 			      </tr>
 			      <tr>
@@ -580,7 +580,7 @@
 			          <para style="terp_default_Bold_9">Excise Reg. No. &amp; Date</para>
 			        </td>
 			        <td>
-			          <para style="terp_default_9">[[ o.partner_id.excise or '' ]] [[ o.partner_id.date ]]</para>
+			          <para style="terp_default_9">[[ o.partner_id.excise or '' ]] <font>[[ o.partner_id.date=='False' and removeParentNode('font') or  o.partner_id.date ]]</font></para>
 			        </td>
 			      </tr>
 			       <tr>

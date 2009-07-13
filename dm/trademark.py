@@ -52,10 +52,16 @@ class dm_trademark(osv.osv):
         'partner_id' : fields.many2one('res.partner', 'Partner', required=False),
         'header' : fields.binary('Header (.odt)'),
         'logo' : fields.binary('Logo'),
+        'logo_url' : fields.char('URL', size=128),
         'signature' : fields.binary('Signature'),
+        'signature_url' : fields.char('URL', size=128),
         'banner_top' : fields.binary('Top Banner'),
+        'banner_top_url' : fields.char('URL', size=128),
         'banner_bottom' : fields.binary('Bottom Banner'),
-        'media_id' : fields.many2one('dm.media', 'Media')
+        'banner_bottom_url' : fields.char('URL', size=128),
+        'media_id' : fields.many2one('dm.media', 'Media'),
+        'email' : fields.char('Email', size=64),
+        'website' : fields.char('Website', size=64),
     }
 
 dm_trademark()

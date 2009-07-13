@@ -20,7 +20,7 @@
 ##############################################################################
 {
     "name":"Product price update",
-    "version":"1.0",
+    "version":"1.05",
     "author":"Gábor Dukai",
     "website" : "http://exploringopenerp.blogspot.com",
     "category":"Generic Modules/Inventory Control",

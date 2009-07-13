@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>    
+    <record id="hr_employee_project_contract_timesheet" model="ir.ui.view">
+            <field name="name">hr.employee.project.contract.timesheet.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                 <field name="journal_id" position="after">
+                 	<field name="cost_based_on" select="2" on_change="onchange_cost_based_on(cost_based_on,contract_ids,product_id)"/>
+                 </field>
+            </field>
+        </record>
+    </data>
+</openerp>
+    

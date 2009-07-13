@@ -358,7 +358,6 @@ class etl_job_process(osv.osv):
 
     }
 
-
     def action_start_component(self, key, signal_data={}, data={}):
         cr = pooler.get_db(data['dbname']).cursor()
         pool = pooler.get_pool(cr.dbname)
@@ -510,9 +509,9 @@ class etl_job_process(osv.osv):
             if process.state in ('open', 'exception'):
                 try:
                     job.run()
+                    self.write(cr, uid, process.id, {'state':'end'})
                 except Exception, e:
-                    print 'Exception: ', e
-                    self.write(cr, uid, process.id, {'state':'exception'})
+                    self.write(cr, uid, process.id, {'state':'exception', 'error_msg' : e})
             elif process.state in ('pause'):
                 self.write(cr, uid, process.id, {'state':'start', 'start_date':time.strftime('%Y-%m-%d %H:%M:%S')})
                 job.signal('restart')

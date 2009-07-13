@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+<document filename="timesheet_status.pdf">
+##############################################################################
+#
+# Copyright (c) Camptocamp SA
+# Author: Arnaud Wüst
+#
+#
+#    This file is part of the c2c_timesheet_report module
+#
+#
+# WARNING: This program as such is intended to be used by professional
+# programmers who take the whole responsability of assessing all potential
+# consequences resulting from its eventual inadequacies and bugs
+# End users who are looking for a ready-to-use solution with commercial
+# garantees and support are strongly adviced to contract a Free Software
+# Service Company
+#
+# This program is Free Software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#
+##############################################################################
+
+   <!-- Process all datas -->
+   [[ compute(objects, data) ]] 
+   <template pageSize="(21cm,29.7cm)" title="Timesheet Status" author="Camptocamp (awu)" allowSplitting="20">
+      
+     
+	    <!-- PAGE: template of all pages (= all pages except first and last if defined)-->    
+	    <pageTemplate id="all">
+		    <pageGraphics>
+				<setFont name="Helvetica-Bold" size="9"/>
+	
+				<!--Header-->
+				<drawString x="1.2cm" y="28.1cm">[[ company.name ]]</drawString>
+				<drawString x="17.0cm" y="28.1cm">Timesheet Status</drawString>
+
+			    <lineMode width="0.7"/>
+				<lines>1.2cm 28.0cm 19.8cm 28.0cm</lines>
+				
+				<!-- Footer -->
+				<setFont name="Helvetica" size="9"/>
+				<drawString x="1.2cm" y="1.3cm"> [[ time.strftime("%m-%d-%y %H:%M", time.localtime()) ]]</drawString>
+				<drawString x="18.8cm" y="1.3cm">Page <pageNumber/></drawString>
+	
+		    </pageGraphics>
+	        <frame id="all" x1="1.2cm" y1="1.7cm" width="18.6cm" height="25.8cm"/>
+	    </pageTemplate>
+    
+	</template>
+  	<stylesheet>
+
+	    <!--TABLE: standard table type "columns" (which means there is a title, a header of fields names and then lines of values) -->    	
+	    <blockTableStyle id="std">
+	      <blockAlignment value="LEFT"/>
+	      <blockValign value="TOP"/>
+	      <blockBottomPadding length="4"/>
+		  <blockFont name="Helvetica" size="9" start="0,0" stop="-1,-1"/>
+	
+	      <!-- first line: table name, fake as it was only one cell. grey bg -->
+	      <lineStyle kind="BOX" colorName="black" start="0,0" stop="-1,0"/>
+	      <blockBackground colorName="#cccccc" start="0,0" stop="-1,0"/>
+	      <blockFont name="Helvetica" size="9" start="0,0" stop="-1,0"/>
+	      <!-- second line: header of columns -->
+	      <lineStyle kind="GRID" colorName="black" start="0,1" stop="-1,1"/>
+	      <blockFont name="Helvetica-Oblique" start="0,1" stop="-1,1"/>
+	      <!-- next lines: light grey lines, strong black columns separator, reduce padding to write more data in cells  -->
+	      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="0,2" stop="-1,-1"/>	    
+	      <lineStyle kind="LINEAFTER" colorName="black" start="0,2" stop="-1,-1"/>
+	      <!-- last line: line below -->
+	      <lineStyle kind="OUTLINE" colorName="black" start="0,0" stop="-1,-1"/>
+	      <!-- all columns centered except the first two (1 system columns + employee) -->
+	      <blockAlignment value="CENTER" start="2,1" stop="-1,-1" />
+	      
+	    </blockTableStyle>
+
+		<!-- default para in tables -->
+		<paraStyle name="std"
+			fontName="Helvetica" 
+			fontSize="9"
+			alignment="LEFT"
+			/>
+			
+		<paraStyle name="Confirmed"
+			fontName="Helvetica"
+			fontSize="9"
+			alignment="CENTER"
+			backColor="green"
+			textColor="white"
+			/>
+
+		<paraStyle name="Missing"
+			fontName="Helvetica"
+			fontSize="9"
+			alignment="CENTER"
+			backColor="red"
+			textColor="white"
+			/>
+
+		<paraStyle name="Draft"
+			fontName="Helvetica"
+			fontSize="9"
+			alignment="CENTER"
+			backColor="orange"
+			textColor="black"
+			/>
+
+		<paraStyle name="Error"
+			fontName="Helvetica"
+			fontSize="9"
+			alignment="CENTER"
+			textColor="red"
+			/>
+
+		<paraStyle name="Not in Company"
+			fontName="Helvetica"
+			fontSize="9"
+			alignment="CENTER"
+			textColor="lightgrey"
+			/>
+
+  	
+  	</stylesheet>
+  
+  <!--#######################################-->
+  <!--# STORY                               #-->
+  <!--#######################################-->
+  <story>  
+  	
+    [[repeatIn(objects, 'o')]]
+    <blockTable style="std" repeatRows="2" colWidths="0,5cm,2.7cm,2.7cm,2.7cm,2.7cm,2.7cm" >
+    
+      <!--- title -->
+      <tr>     
+        <td> <!-- system column --></td> 
+        <td>[[get_title(o)]]</td>
+      </tr>
+      
+      <!-- headers -->
+      <tr>
+        <td> <!-- system column --></td>
+        <td>Employees</td>
+      	<td>[[ get_timerange_title(o, 4) ]]</td>
+      	<td>[[ get_timerange_title(o, 3) ]]</td>
+      	<td>[[ get_timerange_title(o, 2) ]]</td>
+      	<td>[[ get_timerange_title(o, 1) ]]</td>
+      	<td>[[ get_timerange_title(o, 0) ]]</td>
+      </tr>
+      
+      <!-- timesheet status -->
+      <tr> 
+        <td>[[repeatIn(get_user_list(o),'u')]]  <!-- system column --></td>
+        <td><para style="std">[[ u.name ]]</para></td>
+        <td><para>[[ get_timesheet_status(o, u, 4) ]]</para></td>
+        <td><para>[[ get_timesheet_status(o, u, 3) ]]</para></td>
+        <td><para>[[ get_timesheet_status(o, u, 2) ]]</para></td>
+        <td><para>[[ get_timesheet_status(o, u, 1) ]]</para></td>
+        <td><para>[[ get_timesheet_status(o, u, 0) ]]</para></td>
+      </tr>
+
+    </blockTable>
+  	
+  </story>
+  </document>

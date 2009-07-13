@@ -37,6 +37,38 @@ Wizard view for the load data
         </record>
 
 
+<!-- 
+Wizard For Olap Warehouse
+ -->
+        <record id="view_warehouse_bi" model="ir.ui.view">
+            <field name="name">Olap Warehouse</field>
+            <field name="model">olap.warehouse.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Warehouse">
+                    <group colspan="16">
+                    <separator string="Query" colspan="16"/>
+                    <field name="query" nolabel="1" colspan="16"/>
+                    <button string="Ok" name="action_ok" colspan="16" type="object" icon='gtk-ok'/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="action_olap_warehouse" model="ir.actions.act_window">
+            <field name="name">Olap Warehouse</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">olap.warehouse.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        <menuitem 
+        name="Olap Warehouse" 
+        action="action_olap_warehouse" 
+        id="menu_bi_warehouse" 
+        sequence="51" 
+        parent="menu_bi"
+        />
 <!--
 
 Wizard View for the parameters wizard
@@ -475,10 +507,10 @@ Wizard view for the Auto Configuring the data
         action="action_olap_measure_form"
         id="menu_action_olap_measure_form"/>
         
-	# ------------------------------------------------------------------
+    # ------------------------------------------------------------------
     # Olap Saved Query
     # ------------------------------------------------------------------
-	<record model="ir.ui.view" id="view_olap_saved_query_form_tree">
+    <record model="ir.ui.view" id="view_olap_saved_query_form_tree">
         <field name="name">olap.saved.query.tree</field>
         <field name="model">olap.saved.query</field>
         <field name="type">tree</field>
@@ -486,6 +518,7 @@ Wizard view for the Auto Configuring the data
             <tree string="Olap Saved Query">
             	<field name="name"/>
                 <field name="cube_id"/>
+                <field name="mdx_id"/>
                 <field name="user_id"/>
                 <field name="query"/>
                 <field name="time"/>
@@ -503,6 +536,7 @@ Wizard view for the Auto Configuring the data
                 <field name="user_id"/>
                 <field name="query"/>
                 <field name="cube_id"/>
+                <field name="mdx_id"/>
             </tree>
         </field>
     </record>
@@ -516,6 +550,7 @@ Wizard view for the Auto Configuring the data
                 <field name="query" select="1" colspan="4" readonly="True"/>
                 <field name="user_id" readonly="True"/>
                 <field name="cube_id" select="2" readonly="True"/>
+                <field name="mdx_id" select="2" readonly="True"/>
                 <field name="schema_id" select="2" readonly="True"/>
             </form>
         </field>
@@ -531,7 +566,7 @@ Wizard view for the Auto Configuring the data
         parent = "menu_bi_conf_tools"
         action="action_olap_saved_query_form"
         id="menu_action_olap_saved_query_form"/>
-
+        
 <!-- 
 
 All Logs
@@ -547,6 +582,8 @@ All Logs
                 <field name="user_id"/>
                 <field name="query"/>
                 <field name="cube_id"/>
+                <field name="mdx_id"/>
+                <field name="schema_id"/>
             </tree>
         </field>
     </record>
@@ -560,6 +597,10 @@ All Logs
                 <field name="time" select="2" readonly="True"/>
                 <field name="result_size" select="2" readonly="True"/>
                 <field name="cube_id" select="2" readonly="True"/>
+                <field name="mdx_id" select="2" readonly="True"/>
+                <field name="count" readonly="True"/>
+                <field name="schema_id" readonly="True"/>
+                <field name="table_name" readonly="True"></field>
             </form>
         </field>
     </record>
@@ -594,6 +635,7 @@ All Logs / My logs
                 <field name="user_id"/>
                 <field name="query"/>
                 <field name="cube_id"/>
+                <field name="mdx_id"/>
             </tree>
         </field>
     </record>
@@ -606,6 +648,7 @@ All Logs / My logs
                 <field name="user_id"/>
                 <field name="query"/>
                 <field name="cube_id"/>
+                <field name="mdx_id"/>
             </tree>
         </field>
     </record>
@@ -622,6 +665,7 @@ All Logs / My logs
                 <field name="time" select="2" readonly="True"/>
                 <field name="result_size" select="2" readonly="True"/>
                 <field name="cube_id" select="2" readonly="True"/>
+                <field name="mdx_id" select="2" readonly="True"/>
                 
             </form>
         </field>

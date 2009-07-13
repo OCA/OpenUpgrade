@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-05-19 11:09:55+0000\n"
-"PO-Revision-Date: 2009-05-19 11:09:55+0000\n"
+"POT-Creation-Date: 2009-06-03 13:53:10+0000\n"
+"PO-Revision-Date: 2009-06-03 13:53:10+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -46,19 +46,19 @@ msgid "Library Collection"
 msgstr ""
 
 #. module: library
-#: constraint:ir.actions.act_window:0
-msgid "Invalid model name in the action definition."
-msgstr "Nom du Modèle incorrect dans la définition de l'action"
-
-#. module: library
 #: field:library.editor.supplier,supplier_id:0
 msgid "Supplier"
 msgstr "Fournisseur"
 
 #. module: library
+#: field:library.editor.supplier,junk:0
+msgid " "
+msgstr " "
+
+#. module: library
 #: wizard_view:purchase.order.merge.library,init:0
 msgid "Please note that orders will only be merged if they are to the same partner and going to the same location, and lines will only be merged if they are exactly the same except for the quantity and unit."
-msgstr "Veuillez noter que les commandes seront fusionnées si elles ont le même partenaire et qu'elles ont la même destination, et les lignes seront fusionnées seulement si elles sont identiques à l'exception de la quantité et de l'unité."
+msgstr "Veuillez noter que les commandes ne seront fusionnées que si elles ont le même partenaire et qu'elles ont la même destination, et les lignes seront fusionnées seulement si elles sont identiques à l'exception de la quantité et de l'unité."
 
 #. module: library
 #: model:ir.ui.menu,name:library.sale_order_day
@@ -183,6 +183,11 @@ msgstr "Disponible"
 #: field:product.product,pocket:0
 msgid "Pocket"
 msgstr "Pocket"
+
+#. module: library
+#: model:ir.model,name:library.model_view_books_without_authors
+msgid "view.books.without.authors"
+msgstr ""
 
 #. module: library
 #: model:ir.actions.wizard,name:library.purchase_order_merge
@@ -375,4 +380,136 @@ msgstr "Facture"
 msgid "Cancel"
 msgstr "Annuler"
 
-#.
+#. module: library
+#: view:product.product:0
+msgid "Procurement (days)"
+msgstr "Approvisionement (jours)"
+
+#. module: library
+#: model:ir.actions.act_window,name:library.action_product_book_30days
+msgid "product.book.form.view"
+msgstr "Livre"
+
+#. module: library
+#: view:product.product:0
+msgid "Information"
+msgstr "Information"
+
+#. module: library
+#: model:ir.actions.wizard,name:library.library_update_prices
+msgid "Update prices"
+msgstr "Mettre à jour les prix"
+
+#. module: library
+#: wizard_view:purchase.order.merge.library,init:0
+#: wizard_button:purchase.order.merge.library,init,merge:0
+msgid "Merge orders"
+msgstr "Fusionner les commandes"
+
+#. module: library
+#: constraint:ir.model:0
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr "Le nom de l'objet doit commencer avec x_ et ne pas contenir de charactères spéciaux !"
+
+#. module: library
+#: field:product.product,num_pocket:0
+msgid "Collection Num."
+msgstr "Num. de la Collection"
+
+#. module: library
+#: field:library.author,born_date:0
+msgid "Date of birth"
+msgstr "Date de Naissance"
+
+#. module: library
+#: field:product.product,isbn:0
+msgid "Isbn code"
+msgstr "Code ISBN"
+
+#. module: library
+#: field:library.author,first_name:0
+msgid "First Name"
+msgstr "Prénom"
+
+#. module: library
+#: view:product.product:0
+msgid "Other"
+msgstr "Autre"
+
+#. module: library
+#: view:product.product:0
+msgid "Details"
+msgstr "Détails"
+
+#. module: library
+#: field:product.product,nbpage:0
+msgid "Number of pages"
+msgstr "Nombre de page"
+
+#. module: library
+#: view:product.product:0
+msgid "Description"
+msgstr "Description"
+
+#. module: library
+#: field:product.product,format:0
+msgid "Format"
+msgstr "Format"
+
+#. module: library
+#: field:library.price.category,price:0
+msgid "Price"
+msgstr "Prix"
+
+#. module: library
+#: field:product.product,price_cat:0
+msgid "Price category"
+msgstr "Catégorie de Prix"
+
+#. module: library
+#: view:library.editor.supplier:0
+msgid "Editor and suppliers relations"
+msgstr "Relations Éditeurs - Fournisseurs"
+
+#. module: library
+#: model:ir.actions.act_window,name:library.action_product_book_new_form
+msgid "New Book"
+msgstr "Nouveau Livre"
+
+#. module: library
+#: field:library.author,name:0
+#: field:library.collection,name:0
+#: field:library.rack,name:0
+msgid "Name"
+msgstr "Nom"
+
+#. module: library
+#: selection:product.product,state:0
+msgid "Printing w/o Date"
+msgstr ""
+
+#. module: library
+#: model:ir.ui.menu,name:library.menu_editor_supplier
+msgid "Editor - Suppliers Relations"
+msgstr "Relations Éditeurs - Fournisseurs"
+
+#. module: library
+#: field:library.editor.supplier,sequence:0
+msgid "Sequence"
+msgstr "Séquence"
+
+#. module: library
+#: wizard_view:purchase.order.merge.library,init:0
+msgid "Are you sure you want to merge these orders ?"
+msgstr "Êtes vous certain de vouloir fusionner ces commandes ?"
+
+#. module: library
+#: view:library.price.category:0
+msgid "Price Category"
+msgstr "Catégorie de Prix"
+
+#. module: library
+#: field:product.product,link_ids:0
+msgid "Related Books"
+msgstr "Livres apparentés"
+

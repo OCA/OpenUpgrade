@@ -106,7 +106,7 @@ def create_kml(self, cr, uid, data, context={}):
     map(lambda x:res.setdefault(x, 0.0), country_list)
     # fetch turnover by country (should be corect)
 #    cr.execute('select sum(l.credit), c.name from account_move_line as l join res_partner_address as a on l.partner_id=a.partner_id left join res_country as c on c.id=a.country_id group by c.name')
-    cr.execute("select sum(l.credit), c.name from account_move_line l, res_country c, res_partner_address a, account_account act where l.partner_id = a.partner_id and c.id=a.country_id and l.account_id = act.id and act.type = 'receivable' group by c.name")
+    cr.execute("select sum(l.debit-l.credit), c.name from account_move_line l, res_country c, res_partner_address a, account_account act where l.partner_id = a.partner_id and c.id=a.country_id and l.account_id = act.id and act.type = 'receivable' group by c.name")
     res_partner = cr.fetchall()
     list_to = []
     for part in res_partner:
@@ -114,10 +114,10 @@ def create_kml(self, cr, uid, data, context={}):
             res[string.upper(part[1])] = part[0]
             list_to.append(part[0])
 
-    avg_to = min(list_to) + max(list_to) / 2 or 0.0
+#    avg_to = min(list_to) + max(list_to) / 2 or 0.0
+    avg_to = list_to and (sum(list_to) / len(list_to)) or 0
 
     map(lambda x:res_inv.setdefault(x, 0), country_list)
-
     # fetch invoice by country
     cr.execute(''' select count(i.id),c.name from account_invoice as i left join res_partner_address as a on i.partner_id=a.partner_id left join res_country as c on a.country_id=c.id where i.type in ('out_invoice','in_invoice') group by c.name ''')
     invoice_partner = cr.fetchall()
@@ -136,7 +136,7 @@ def create_kml(self, cr, uid, data, context={}):
 
     # fetch turnover by individual partner
 #    cr.execute('select min(id) as id, sum(credit) as turnover, partner_id as partner_id from account_move_line group by partner_id')
-    cr.execute("select min(aml.id) as id, sum(aml.credit) as turnover, aml.partner_id as partner_id from account_move_line aml, account_account ac, account_account_type actype where aml.account_id = ac.id and ac.user_type = actype.id and (ac.type = 'receivable') group by aml.partner_id")
+    cr.execute("select min(aml.id) as id, sum(aml.debit - aml.credit) as turnover, aml.partner_id as partner_id from account_move_line aml, account_account ac, account_account_type actype where aml.account_id = ac.id and ac.user_type = actype.id and (ac.type = 'receivable') group by aml.partner_id")
     res_partner = cr.fetchall()
     for part in partners:
         res[part.id]= 0
@@ -168,7 +168,7 @@ def create_kml(self, cr, uid, data, context={}):
     kmlElement.setAttribute('xmlns','http://www.opengis.net/kml/2.2')
     kmlElement = kmlDoc.appendChild(kmlElement)
     documentElement = kmlDoc.createElement('Document')
-    line = '<font color="blue">--------------------------------------------</font>'
+#    line = '<font color="blue">--------------------------------------------</font>'
     line1 = '<font color="blue"><br />--------------------------------------------</font>'
     line1 = ''
     for part in partners:
@@ -190,14 +190,14 @@ def create_kml(self, cr, uid, data, context={}):
 #                address += ', '
 #                address += str(add.street2)
             if add.city:
-                address += ', '
-                address += str(add.city)
+                address += ''
+                address += str(tools.ustr(add.city.encode('ascii','replace')))
             if add.state_id:
                 address += ', '
-                address += str(add.state_id.name)
+                address += str(tools.ustr(add.state_id.name.encode('ascii','replace')))
             if add.country_id:
                 address += ', '
-                address += str(add.country_id.name)
+                address += str(tools.ustr(add.country_id.name.encode('ascii','replace')))
         type = ''
         if part.customer:
             type += 'Customer '
@@ -211,12 +211,13 @@ def create_kml(self, cr, uid, data, context={}):
         elif address == ', Saint Kitts & Nevis Anguilla':
             address = ', Saint Kitts and Nevis'
 
-        desc_text = ' <html><head> <font color="red"> <b> Partner Name : ' + str(part.name) + '<br/>' + line +'<br /> Partner Code : ' + str(part.ref or '') + '<br/>' + line + ' <br />Type : ' + type + ' <br/>' +line+ '<br /> Partner Address: ' +  address + '<br/>' +line+ '<br /> Turnover of partner : ' + str(res[part.id]) + '<br/>' +line+ ' <br /> Main comapny : ' + str(part.parent_id and part.parent_id.name) + '<br/>' + line+  ' <br />Credit Limit : ' + str(part.credit_limit) + '<br/>' \
-                    + line +  ' <br /> Number of customer invoice : ' + str(number_customer or 0 ) + '<br/>' + line+' <br /> Number of supplier invoice : ' + str(number_supplier or 0)  + '<br/>' +line +'<br />Total Receivable : ' + str(part.credit) + '<br/>' + line+' <br/>Total Payable : ' + str(part.debit) + '<br/>' + line+ '<br/>Website : ' + str(part.website or '') + '<br/>' +line+ ' </b> </font> </head></html>'
+#        desc_text = ' <html><head> <font color="red"> <b> Partner Name : ' + str(part.name) + '<br/>' + line +'<br /> Partner Code : ' + str(part.ref or '') + '<br/>' + line + ' <br />Type : ' + type + ' <br/>' +line+ '<br /> Partner Address: ' +  address + '<br/>' +line+ '<br /> Turnover of partner : ' + str(res[part.id]) + '<br/>' +line+ ' <br /> Main comapny : ' + str(part.parent_id and part.parent_id.name) + '<br/>' + line+  ' <br />Credit Limit : ' + str(part.credit_limit) + '<br/>' \
+#                    + line +  ' <br /> Number of customer invoice : ' + str(number_customer or 0 ) + '<br/>' + line+' <br /> Number of supplier invoice : ' + str(number_supplier or 0)  + '<br/>' +line +'<br />Total Receivable : ' + str(part.credit) + '<br/>' + line+' <br/>Total Payable : ' + str(part.debit) + '<br/>' + line+ '<br/>Website : ' + str(part.website or '') + '<br/>' +line+ ' </b> </font> </head></html>'
+        desc_text = '<html><head> <font size=1.9 color="red"> <b><table width=400 border=5 bordercolor="red"><tr><td> Partner Name</td><td>' + str(tools.ustr(part.name.encode('ascii','replace'))) + '</td></tr><tr>' + '<td> Partner Code</td><td> ' + str(part.ref or '') + '</td></tr>' + '<tr><td>Type:</td><td>' + type + '</td></tr><tr><td>' + 'Partner Address</td><td>' \
+                    + tools.ustr(address.encode('ascii','replace')) + '</td></tr>' + '<tr><td>Turnover of partner:</td><td> ' + str(res[part.id]) + '</td></tr>' + ' <tr><td> Main comapny</td><td>' + str(part.parent_id and part.parent_id.name) + '</td></tr>' + '<tr><td>Credit Limit</td><td>' + str(part.credit_limit) + '</td></tr>' \
+                    + '<tr><td>Number of customer invoice</td><td>' + str(number_customer or 0 ) + '</td><tr>' +' <tr><td>Number of supplier invoice</td><td>' + str(number_supplier or 0) + '</td></tr>'  + '<tr><td>' +'Total Receivable</td><td> ' + str(part.credit) + '</td></tr>' +' <tr><td>Total Payable</td><td>' \
+                    + str(part.debit) + '</td></tr>' + '<tr><td>Website</td><td>' + str(part.website or '') + '</td></tr>'+ '</table> </b> </font> </head></html>'
 
-        #desc_text = address + ' , Turnover of partner : ' + str(res[part.id])
-#        desc_text = ' <html><head> <font color="red"> <b> [ Partner Name : ' + str(part.name) + ' <br />[ Partner Code : ' + str(part.ref or '') + ' ]' + ' <br />[ Type : ' + type + ' ]' + '<br /> [ Partner Address: ' +  address + ' ]' + ' <br />[Turnover of partner : ' + str(res[part.id]) + ']' + ' <br />[Main comapny : ' + str(part.parent_id and part.parent_id.name or '') + ']' + ' <br />[Credit Limit : ' + str(part.credit_limit) + ']' \
-#                    + ' <br />[ Number of customers : ' + str(number_customer or '') + ']' + ' <br />[ Number of suppliers : ' + str(number_supplier or '')  + ']' + ' <br />[Total Receivable : ' + str(part.credit) + ']' + ' <br />[Total Payable : ' + str(part.debit) + ']' + ' <br />[Website : ' + str(part.website or '') + ']' + ' </b> </font> </head></html>'
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
         placemarknameText = kmlDoc.createTextNode(part.name)
@@ -258,7 +259,8 @@ def create_kml(self, cr, uid, data, context={}):
         cooridinate = dict_country[country]
 
 #        desctiption_country = '<html><head> <font color="red"> <b> Number of partner: ' + str(res_cus[country])  +  line1 + '<br /> Number of Invoices made: ' + str(res_inv[country]) + line1 + '<br /> Turnover of country: ' + str(res[country]) +  line1 +' </b> </font> </head></html>'
-        desctiption_country = '<html><head><font color="red"><b><table border=10 bordercolor="red"><tr><td>   Number of partner </td><td>' + str(res_cus[country])  +  line1 + '</td></tr><tr><td> Number of Invoices made </td><td>' + str(res_inv[country]) + line1 + '</td></tr><tr><td>Turnover of country</td><td> ' + str(res[country]) +  line1 +' </td></tr></b> </font> </table></head></html>'
+        desctiption_country = '<html><head><font size=1.5 color="red"><b><table width=250 border=5 bordercolor="red"><tr><td>   Number of partner </td><td>' + str(res_cus[country])  +  line1 + '</td></tr><tr><td> Number of Invoices made </td><td>' + str(res_inv[country]) + line1 + \
+                              '</td></tr><tr><td>Turnover of country</td><td> ' + str(res[country]) +  line1 +' </td></tr></b> </font> </table></head></html>'
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
         placemarknameText = kmlDoc.createTextNode(country)
@@ -295,8 +297,8 @@ def create_kml(self, cr, uid, data, context={}):
         folderElement.appendChild(placemarkElement)
         documentElement.appendChild(folderElement)
 
-    out = base64.encodestring(kmlDoc.toxml())
-    fname = 'partner_region' + '.kml'
+    out = base64.encodestring(kmlDoc.toxml().encode('ascii','replace'))
+    fname = 'region' + '.kml'
     return {'kml_file': out, 'name': fname}
 
 class customer_on_map(wizard.interface):

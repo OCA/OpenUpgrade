@@ -1,3 +1,24 @@
+# -*- encoding: utf-8 -*-
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
 import urllib
 import xml.dom.minidom
 import base64
@@ -32,12 +53,12 @@ def geocode(address):
 def get_directions(source, destination):
     steps = []
     res = False
-    try:
-        from google.directions import GoogleDirections
-        gd = GoogleDirections('ABQIAAAAUbF6J26EmcC_0QgBXb9xvhRoz3DfI4MsQy-vo3oSCnT9jW1JqxQfs5OWnaBY9or_pyEGfvnnRcWEhA')
-        res = gd.query(source,destination)
-    except:
-        raise wizard.except_wizard('Warning!','Please install Google direction package from http://pypi.python.org/pypi/google.directions/0.3 ')
+#    try:
+    from google.directions import GoogleDirections
+    gd = GoogleDirections('ABQIAAAAUbF6J26EmcC_0QgBXb9xvhRoz3DfI4MsQy-vo3oSCnT9jW1JqxQfs5OWnaBY9or_pyEGfvnnRcWEhA')
+    res = gd.query(source,destination)
+#    except:
+#        raise wizard.except_wizard('Warning!','Please install Google direction package from http://pypi.python.org/pypi/google.directions/0.3 ')
 
     if res:
         if res.status != 200:
@@ -64,8 +85,10 @@ def _create_kml(self, cr, uid, data, context={}):
     pool = pooler.get_pool(cr.dbname)
     warehouse_obj = pool.get('stock.warehouse')
      #cr.execute('select sp.warehouse_id, sum(m.product_qty) as product_send, count(s.id) as number_delivery,a.city as customer_city from stock_picking as s left join sale_order as so on s.sale_id=so.id left join sale_shop as sp on so.shop_id=sp.id left join stock_warehouse as w on w.id=sp.warehouse_id left join stock_move as m on s.id=m.picking_id left join res_partner_address as a on a.id=s.address_id  left join res_partner as p on p.id=a.partner_id where sale_id is not null group by a.city,sp.warehouse_id;')
-    cr.execute('select sp.warehouse_id, sum(m.product_qty) as product_send, count(s.id) as number_delivery,a.city as customer_city, cc.name as customer_country from stock_picking as s left join sale_order as so on s.sale_id=so.id left join sale_shop as sp on so.shop_id=sp.id left join stock_warehouse as w on w.id=sp.warehouse_id left join stock_move as m on s.id=m.picking_id left join res_partner_address as a on a.id=s.address_id  left join res_partner as p on p.id=a.partner_id left join res_country as cc on a.country_id=cc.id where sale_id is not null group by a.city,cc.name,sp.warehouse_id;')
 
+
+    #cr.execute('select sp.warehouse_id, sum(m.product_qty) as product_send, count(s.id) as number_delivery,a.city as customer_city, cc.name as customer_country from stock_picking as s left join sale_order as so on s.sale_id=so.id left join sale_shop as sp on so.shop_id=sp.id left join stock_warehouse as w on w.id=sp.warehouse_id left join stock_move as m on s.id=m.picking_id left join res_partner_address as a on a.id=s.address_id  left join res_partner as p on p.id=a.partner_id left join res_country as cc on a.country_id=cc.id where sale_id is not null group by a.city,cc.name,sp.warehouse_id;')
+    cr.execute('select sp.warehouse_id, sum(m.product_qty) as product_send, count(s.id) as number_delivery,a.city as customer_city, cc.name as customer_country from stock_picking as s left join sale_order as so on s.sale_id=so.id left join sale_shop as sp on so.shop_id=sp.id left join stock_warehouse as w on w.id=sp.warehouse_id left join stock_move as m on s.id=m.picking_id left join res_partner_address as a on a.id=s.address_id  left join res_partner as p on p.id=a.partner_id left join res_country as cc on a.country_id=cc.id where sale_id is not null and a.city is not null and cc.name is not null group by a.city,cc.name,sp.warehouse_id')
     packings = cr.dictfetchall()
     warehouse_ids = warehouse_obj.search(cr, uid, [])
     warehouse_datas = warehouse_obj.browse(cr, uid, warehouse_ids)
@@ -136,7 +159,7 @@ def _create_kml(self, cr, uid, data, context={}):
         if not (warehouse_city and customer_city):
             raise wizard.except_wizard('Warning!','Address is not defiend on warehouse or customer. ')
 
-        desc_text = '<html><head><font color="red"><b> <table border=10 bordercolor="blue"><tr><td>  Warehouse location</td> <td>' + warehouse_city + '</td></tr><tr><td>' + line + '  Customer Location</td><td> ' + customer_city + ' ' + customer_country + '</td></tr><tr><td>' + line +' Number of product sent</td><td> ' + str(total_qty) + '</td></tr>' +  line +\
+        desc_text = '<html><head><font color="red" size=1.9><b> <table border=5 bordercolor="blue"><tr><td>  Warehouse location</td> <td>' + warehouse_city + '</td></tr><tr><td>' + line + '  Customer Location</td><td> ' + customer_city + ' ' + customer_country + '</td></tr><tr><td>' + line +' Number of product sent</td><td> ' + str(total_qty) + '</td></tr>' +  line +\
         ' <tr><td>Number of delivery</td><td> ' + str(pack['number_delivery']) + '</td></tr>' + '</table></b>  </font></head></html>'
 
         placemarkElement = kmlDoc.createElement('Placemark')
@@ -195,7 +218,7 @@ def _create_kml(self, cr, uid, data, context={}):
             coorElement.appendChild(kmlDoc.createTextNode(coordinates2))
             coorElement.appendChild(kmlDoc.createTextNode(coordinates1))
 #            coordinates2 = geocode(customer_city)
-            coorElement.appendChild(kmlDoc.createTextNode(coordinates2))
+#            coorElement.appendChild(kmlDoc.createTextNode(coordinates2))
         else:
             for s in steps:
                 coorText = '%s, %s, %s \n' % (s[0], s[1], s[2])

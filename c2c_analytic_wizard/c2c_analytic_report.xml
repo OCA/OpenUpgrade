@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<report
+			id="indicator_account_detail"
+			string="Indicator Report"
+			model="account.analytic.account"
+			name="indicator.account.detail"
+			rml="c2c_analytic_wizard/report/indicator_account_detail.rml"
+			auto="False"
+            header="False"/>
+	</data>
+</openerp>

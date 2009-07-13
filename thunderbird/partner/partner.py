@@ -34,6 +34,9 @@ class tinythunderbird_partner(osv.osv):
 
     def thunderbird_mailcreate(self,cr,user,vals):
         dictcreate = dict(vals)
+        import email
+        header_name = email.Header.decode_header(dictcreate['name'])
+        dictcreate['name'] = header_name and header_name[0] and header_name[0][0] 
         add_obj=self.pool.get('res.partner.address')
         case_pool=self.pool.get('crm.case')
         partner_ids=add_obj.search(cr,user,[('email','=',dictcreate['email_from'])])
@@ -98,6 +101,7 @@ class tinythunderbird_partner(osv.osv):
         if vals[1]:
             obj = vals[1];
         name_get=[]
+        er_val=[]
         for object in obj:
             if object == 'res.partner.address':
                 search_id1 = self.pool.get(object).search(cr,user,[('name','ilike',value)])
@@ -109,10 +113,18 @@ class tinythunderbird_partner(osv.osv):
                     name_get.append(object)
                     name_get.append(self.pool.get(object).name_get(cr, user, search_id2))
             else:
-                search_id1 = self.pool.get(object).search(cr,user,[('name','ilike',value)])
-                if search_id1:
-                    name_get.append(object)
-                    name_get.append(self.pool.get(object).name_get(cr, user, search_id1))
+                try:
+                    search_id1 = self.pool.get(object).search(cr,user,[('name','ilike',value)])
+                    if search_id1:
+                        name_get.append(object)
+                        name_get.append(self.pool.get(object).name_get(cr, user, search_id1))
+                except:
+                    er_val.append(object)
+                    continue
+        if len(er_val) > 0:
+            name_get.append('error')
+            name_get.append(er_val)
+        
         return name_get
 
     def thunderbird_attachment(self,cr,user,vals):

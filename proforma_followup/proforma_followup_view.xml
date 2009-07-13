@@ -1,101 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        
-        <record id="view_proforma_line_tree" model="ir.ui.view">
-            <field name="name">proforma.proforma.line.tree</field>
-            <field name="model">proforma.followup.line</field>
-            <field name="type">tree</field>
-            <field name="arch" type="xml">
-                <tree string="PRO-Forma Lines">
-                    <field name="sequence"/>
-                    <field name="name"/>
-                    <field name="days"/>
-                </tree>
-            </field>
-        </record>
-        
-        <record id="view_proforma_line_form" model="ir.ui.view">
-            <field name="name">proforma.proforma.line.form</field>
-            <field name="model">proforma.followup.line</field>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-                <form string="PRO-Forma Lines">
-	                <field name="name" select="1"/>
-                    <field name="sequence" select="1"/>
-                    <field name="days" select="1"/>
-                    <newline/>
-                    <field name="send_email"/>
-                    <field name="call_function"/>
-                    <field name="cancel_invoice"/>
-                    <group colspan="4" col="2" attrs="{'invisible':[('send_email','=',False)]}">
-	                    <separator colspan="4" string="Email"/>
-	                    <field colspan="4" name="subject" attrs="{ 'required':[('send_email','=',True)]}"/>
-	                    <field colspan="4" name="email_body" attrs="{ 'required':[('send_email','=',True)]}"/>
-	                    <newline/>
-	                    <separator string="Legend" colspan="4"/>
-	                    <label string="%%(partner_name)s: Partner name"/>
-						<label string="%%(user_signature)s: User name"/>
-						<newline/>
-						<label string="%%(followup_amount)s: Total Amount Due"/>
-						<label string="%%(date)s: Current Date"/>
-						<newline/>
-						<label string="%%(company_name)s: User's Company name"/>
-						<label string="%%(company_currency)s: User's Company Currency"/>
-						<newline/>
-                    </group>
-                    <group colspan="4" col="2" attrs="{'invisible':[('call_function','=',False)]}">
-                    	<separator colspan="4" string="Function"/>
-                    	<field colspan="2" name="model" attrs="{ 'required':[('call_function','=',True)]}"/>
-	                    <field colspan="2" name="function" attrs="{ 'required':[('call_function','=',True)]}"/>
-	                    <field colspan="4" name="args"/>
-                    </group>
-                </form>
-            </field>
-        </record>
-        
-        <record id="view_proforma_form" model="ir.ui.view">
-            <field name="name">proforma.proforma.form</field>
-            <field name="model">proforma.followup_step</field>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-                <form string="Proforma">
-                    <field name="name" select="1"/>
-                    <field name="company_id" select="1"/>
-                    <separator colspan="4" string="Lines"/>
-                    <field colspan="4" name="proforma_line" nolabel="1"/>
-                    <separator colspan="4" string="Description"/>
-                    <field colspan="4" name="description" nolabel="1" select="1"/>
-                    <field colspan="2" name="state"/>
-                   <!-- <button name="run_followups" string="test" type="object"/> -->
-                </form>
-            </field>
-        </record>
-
-        <record id="view_proforma_tree" model="ir.ui.view">
-            <field name="name">account.proforma.tree</field>
-            <field name="model">proforma.followup_step</field>
-            <field name="type">tree</field>
-            <field name="arch" type="xml">
-                <tree string="Proforma">
-                    <field name="name"/>
-                    <field name="company_id"/>
-                    <field name="description"/>
-                    <field name="proforma_line"/>
-                    <field name="state"/>
+        <record model='ir.ui.view' id='view_action_list'>
+            <field name='name'>proforma.followup.action list</field>
+            <field name='model'>proforma.followup.action</field>
+            <field name='type'>tree</field>
+            <field name='arch' type='xml'>
+                <tree string='Proforma Followup Actions' editable='bottom'>
+                    <field name='sequence'/>
+                    <field name='name'/>
+                    <field name='days'/>
+                    <field name='action_id'/>
+                    <field name='active'/>
                 </tree>
             </field>
         </record>
 
-         <record id="action_view_proforma" model="ir.actions.act_window">
-            <field name="name">Proforma Followups</field>
-            <field name="res_model">proforma.followup_step</field>
+        <record id="action_actions_list" model="ir.actions.act_window">
+            <field name="name">Proforma Followup Actions</field>
+            <field name="res_model">proforma.followup.action</field>
             <field name="view_type">form</field>
-            <field name="view_id" ref="view_proforma_tree"/>
+            <field name='view_mode'>tree</field>
+            <field name="view_id" ref="view_action_list"/>
+            <field name='context'>{'active_test': False}</field>
         </record>
-        
-        <menuitem action="action_view_proforma" id="menu_action_view_proforma" parent="account.menu_finance_configuration"/>
-        
-        
+
+        <menuitem action="action_actions_list" id="menu_actions_list" parent="account.menu_finance_configuration"/>
+
+
+
+        <record model='ir.ui.view' id='view_scheduler_list'>
+            <field name='name'>proforma.followup.scheduler list</field>
+            <field name='model'>proforma.followup.scheduler</field>
+            <field name='type'>tree</field>
+            <field name='arch' type='xml'>
+                <tree string='Proforma Followup Scheduler'>
+                    <field name="date"/>
+                    <field name='followup_action_id'/>
+                    <field name='invoice_id'/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_scheduler_list" model="ir.actions.act_window">
+            <field name="name">Proforma Followup Scheduler</field>
+            <field name="res_model">proforma.followup.scheduler</field>
+            <field name="view_type">form</field>
+            <field name='view_mode'>tree</field>
+            <field name="view_id" ref="view_scheduler_list"/>
+        </record>
+
+        <menuitem action="action_scheduler_list" id="menu_scheduler_list" parent="account.menu_finance_configuration"/>
+
+
     </data>
 </openerp>

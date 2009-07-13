@@ -21,12 +21,13 @@ def php_url(cr,uid,**plugin_args):
             arguments  += '&%s=%s'%(a,plugin_args[a])
     if 'encode' in plugin_args and plugin_args['encode'] : 
         arguments = base64.encodestring(arguments)
-    url_name = plugin_args['url']
+    url_name = plugin_args['url'] or ''
     if url_name.find('http://')<0:
         url_name = 'http://' + url_name
         if arguments :
-            url_name = url_name+"?"+ arguments
+            url_name = url_name+"?data="+ arguments
     value = "<a href= '" + url_name + "' target='_blank'>" + plugin_args['text_display'] + "</a>"
     return value
+#    return (url_name,plugin_args['text_display'])
 
 #vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

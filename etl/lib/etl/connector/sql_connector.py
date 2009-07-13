@@ -83,6 +83,10 @@ class sql_connector(connector):
             import cx_Oracle
             dsn_tns = cx_Oracle.makedsn(self.host, self.port, self.db)
             connector = cx_Oracle.connect(self.uid, self.passwd, dsn_tns)
+        elif self.con_type == 'sybase':# to be test
+            import Sybase
+            db = Sybase.connect(self.host, self.uid, self.passwd)
+            db.execute('use %s' % (self.db))
         else:
             raise Exception('Not Supported')
         return connector

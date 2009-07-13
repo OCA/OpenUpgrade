@@ -448,6 +448,7 @@
         </field>
     </record>
 
+    <!--
     <record model="ir.ui.view" id="view_picking_form_library2">
         <field name="name">Stock packing</field>
         <field name="model">stock.picking</field>
@@ -459,8 +460,11 @@
             </field>
         </field>
     </record>
+    -->
 
-
+    <!--
+         <delete model="ir.ui.view" id="view_picking_form_library2"/>
+    -->
 
     <record model="ir.ui.view" id="stock.view_move_tree">
         <field name="name">stock.move.tree</field>
@@ -537,28 +541,15 @@
         </field>
     </record>
 
-
-
-        <record model="ir.ui.view" id="product_supplierinfo_form_view">
-            <field name="name">product.supplierinfo.form.view</field>
-            <field name="inherit_id" ref="product.product_supplierinfo_form_view"/>
-            <field name="model">product.supplierinfo</field>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-            <field name="name" position="replace">
-                <field name="name" domain="[('category_id','=','Fournisseur')]" />
-            </field>
-            </field>
-        </record>
-
-
-    <record model="ir.ui.view" id="purchase_order_line_tree">
-        <field name="name">purchase.order.line.tree</field>
-        <field name="inherit_id" ref="purchase.purchase_order_line_tree"/>
-        <field name="model">purchase.order.line</field>
-        <field name="type">tree</field>
+    <record model="ir.ui.view" id="product_supplierinfo_form_view">
+        <field name="name">product.supplierinfo.form.view</field>
+        <field name="inherit_id" ref="product.product_supplierinfo_form_view"/>
+        <field name="model">product.supplierinfo</field>
+        <field name="type">form</field>
         <field name="arch" type="xml">
-            <field name="product_id" position="replace"/>
+        <field name="name" position="replace">
+            <field name="name" domain="[('category_id','=','Fournisseur')]" />
+        </field>
         </field>
     </record>
 

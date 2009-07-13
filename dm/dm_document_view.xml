@@ -63,7 +63,7 @@
                     <field name="copywriter_id" select="1"/>
                     <field name="step_id" select="1"/>
                     <field name="gender_id" select="1"/>
-                    <field name="category_id" colspan="4"/>
+                    <field name="category_id" colspan="4" on_change="_check_unique_category(step_id,category_id)"/>
                     <separator string="Description" colspan="4"/>
                     <field name="note" colspan="4" nolabel="1" widget="text_wiki"/>
                     <separator string="Status" colspan="4"/>
@@ -174,7 +174,7 @@
             	    <field name="code" select="1" />                    
             	    <field name="type" select="1" />
             	    <field name="store_value" />
-		    <field name="preview_value" />
+		    <field name="preview_value" attrs="{'required':[('type','!=','image')]}"/>
                 </group>
                 <newline/>
         		<separator string="Description" colspan="4"/>
@@ -225,6 +225,7 @@
         <field name="arch" type="xml">
             <tree string="DTP Plugins">
                 <field name="name" select="1"/>
+                <field name="code" select="1"/>
                 <field name="note"/>
             </tree>
         </field>
@@ -342,7 +343,9 @@
                 <field name="type_id" select="2"/>
                 <field name="segment_id" select="2"/>
                 <field name="delivery_time" select="1"/>
+                <field name="address_id"/>
                 <field name="mail_service_id" select="2"/>
+                <field name="origin" select="1"/>
                 <field name="state" select="2"/>
                 <separator string="Error Message" colspan="4"/>
                 <field name="error_msg" colspan="4" nolabel="1"/>
@@ -358,9 +361,11 @@
             <tree string="Campaign Documents">
                 <field name="name"/>
                 <field name="type_id"/>
+                <field name="origin"/>
                 <field name="segment_id"/>
-                <field name="delivery_time" select="1"/>
-                <field name="state" select="2"/>
+                <field name="address_id"/>
+                <field name="delivery_time"/>
+                <field name="state"/>
                 <field name="error_msg"/>
             </tree>
         </field>

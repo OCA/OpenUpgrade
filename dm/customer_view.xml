@@ -6,194 +6,6 @@
 
 
     <!--
-    ======================
-    CUSTOMER
-    ======================
-    -->
-<!--
-    <record model="ir.ui.view" id="view_dm_customer_form">
-        <field name="name">dm.customer.form</field>
-        <field name="model">res.partner</field>
-        <field name="type">form</field>
-        <field name="arch" type="xml">
-            <form string="Customer">
-                <group colspan="3" col="4">
-                    <separator string="Customer Description" colspan="5"/>
-                    <field name="name" select="1"/>
-                    <field name="ref" select="1"/>
-                    <field name="lang" select="2"/>
-                </group>
-            <notebook>
-                <page string="Address">
-                    <separator string="Address Infos" colspan="4"/>
-                    <field colspan="4" mode="form,tree" name="address" nolabel="1" select="1">
-                        <form string="Partner contacts">
-                            <field name="name" select="2"/>
-                            <field domain="[('domain', '=', 'contact')]" name="title" string="Type"/>
-                            <field name="function"/>
-                            <field name="type" select="2"/>
-                            <field name="street" select="2"/>
-                            <field name="street2"/>
-                            <newline/>
-                            <field name="zip" select="2"/>
-                            <field name="city" select="2"/>
-                            <newline/>
-                            <field completion="1" name="country_id" select="2"/>
-                            <field name="state_id" select="2"/>
-                            <newline/>
-                            <field name="phone"/>
-                            <field name="fax"/>
-                            <newline/>
-                            <field name="mobile"/>
-                            <field name="email" select="2" widget="email"/>
-                        </form>
-                        <tree string="Partner contacts">
-                            <field name="name"/>
-                            <field name="zip"/>
-                            <field name="city"/>
-                            <field name="country_id"/>
-                        </tree>
-                    </field>
-                </page>
-                <page string="Decoy Address">
-                    <group colspan="2" col="4">
-                        <separator string="Decoy Address Infos" colspan="4"/>
-                        <field name="decoy_address" colspan="4" select="1"/>
-                        <field name="decoy_owner" colspan="4" select="2"/>
-                        <field name="decoy_external_ref" colspan="4" select="2"/>
-                        <separator string="Usability" colspan="4"/>
-                        <field name="decoy_for_campaign" colspan="2" select="2"/>
-                        <field name="decoy_for_renting" colspan="2" select="2"/>
-                    </group>
-                    <group colspan="2" col="2">
-                        <separator string="Decoy address for Media" colspan="4"/>
-                        <field name="decoy_media_ids" nolabel="1" select="2"/>
-                    </group>
-                </page>
-                <page string="Extra Infos">
-                    <group colspan="2" col="2">
-                        <separator string="Other Languages" colspan="2"/>
-                        <field name="language_ids" nolabel="1" select="2"/>
-                    </group>
-                    <group colspan="2" col="2">
-                        <separator string="Prospect for Media" colspan="2"/>
-                        <field name="prospect_media_ids" nolabel="1" select="2"/>
-                        <separator string="Client for Media" colspan="2"/>
-                        <field name="client_media_ids" nolabel="1" select="2"/>
-                    </group>
-                    <group colspan="2" col="2">
-                        <separator string="Allowed Countries" colspan="2"/>
-                        <field name="country_ids" nolabel="1" select="2"/>
-                    </group>
-                    <group colspan="2" col="2">
-                        <separator string="Allowed States" colspan="2"/>
-                        <field name="state_ids" nolabel="1" select="2"/>
-                    </group>
-                </page>
-            </notebook>
-            </form>
-        </field>
-    </record>
-
-    <record model="ir.ui.view" id="view_dm_customer_tree">
-        <field name="name">dm.customer.tree</field>
-        <field name="model">res.partner</field>
-        <field name="type">tree</field>
-        <field name="arch" type="xml">
-            <tree string="Customers">
-                <field name="ref"/>
-                <field name="name" colspan="4"/>
-                <field name="country"/>
-                <field name="lang"/>
-            </tree>
-        </field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_dm_customer_form">
-        <field name="name">All Customers</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">res.partner</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="view_dm_customer_tree"/>
-    </record>
-    <record model="ir.actions.act_window.view" id="dm_customer_tree_act_view0">
-        <field name="sequence" eval="1"/>
-        <field name="view_mode">tree</field>
-        <field name="view_id" ref="view_dm_customer_tree"/>
-        <field name="act_window_id" ref="action_dm_customer_form"/>
-    </record>    
-    <record model="ir.actions.act_window.view" id="dm_customer_form__act_view0">
-        <field name="sequence" eval="2"/>
-        <field name="view_mode">form</field>
-        <field name="view_id" ref="view_dm_customer_form"/>
-        <field name="act_window_id" ref="action_dm_customer_form"/>
-    </record>
-    <menuitem id="menu_dm_customer_form" parent="dm.menu_dm_config_customer" action="action_dm_customer_form" sequence="1" />
--->
-    <!--
-    =======================================================
-    CUSTOMER ORDER VIEWS
-    =======================================================
-    -->
-<!--
-    <record model="ir.ui.view" id="view_dm_customer_order_form">
-        <field name="name">dm.customer.order.form</field>
-        <field name="model">dm.customer.order</field>
-        <field name="type">form</field>
-        <field name="arch" type="xml">
-            <form string="Customer Order">
-                <separator string="Customer Infos" colspan="4"/>
-                <field name="customer_id"/>
-                <field name="name"/>
-                <separator string="Campaign Infos" colspan="4"/>
-                <field name="segment_id"/>
-                <field name="offer_step_id"/>
-                <separator string="Sale Infos" colspan="4"/>
-                <field name="shop_id" on_change="onchange_shop_id(shop_id)" select="2"/>
-                <field name="date_order"/>
-                <field name="partner_id" on_change="onchange_partner_id(partner_id)" required="1" select="1" string="Partner"/>
-                <field domain="[('partner_id','=',partner_id)]" name="partner_order_id"/>
-                <field domain="[('partner_id','=',partner_id)]" name="partner_invoice_id"/>
-                <field domain="[('partner_id','=',partner_id)]" name="partner_shipping_id"/>
-                <field domain="[('name','=','Public Pricelist')]" name="pricelist_id"/>
-                <field name="picking_policy" required="True"/>
-                <field name="order_policy" on_change="shipping_policy_change(order_policy)"/>
-                <field name="invoice_quantity" attrs="{'readonly':[('order_policy','=','prepaid'),('order_policy','=','picking')]}"/>
-                <separator string="Note" colspan="4"/>
-                <field name="note" colspan="4" nolabel="1" widget="text_wiki"/>
-                <field name="state"/>
-                <button string="Confirm" name="set_confirm" type="object" states="draft" colspan="2"/>
-            </form>
-        </field>
-    </record>
-
-    <record model="ir.ui.view" id="view_dm_customer_order_tree">
-        <field name="name">dm.customer.order.tree</field>
-        <field name="model">dm.customer.order</field>
-        <field name="type">tree</field>
-        <field name="arch" type="xml">
-            <tree string="Customer Orders">
-                <field name="customer_id"/>
-                <field name="segment_id"/>
-                <field name="offer_step_id"/>
-                <field name="state"/>
-                <field name="note"/>
-            </tree>
-        </field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_dm_customer_order_form">
-        <field name="name">All Customer Orders</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">dm.customer.order</field>
-        <field name="view_type">form</field>
-        <field name="view_id" ref="view_dm_customer_order_tree"/>
-    </record>
-
-    <menuitem id="menu_action_dm_customer_order_form" parent="dm.menu_dm_config_customer" action="action_dm_customer_order_form" sequence="2" />
--->
-    <!--
     =======================================================
     ORDER VIEWS
     =======================================================
@@ -274,10 +86,23 @@
                 <field name="segment_id" select="1"/>
                 <field name="source" select="1"/>
                 <field name="error_msg" select="2" colspan="4"/>
-                <field name="tr_from_id" select="1"/>
-                <field name="sale_order_id" select="2"/>
+                <field name="tr_from_id" select="1">
+                    <tree>
+                        <field name="condition_id"/>
+                        <field name="step_from_id"/>
+                        <field name="step_to_id"/>
+                        <field name="delay"/>
+                        <field name="delay_type"/>
+                        <field name="action_hour"/>
+                    </tree>
+                </field>
+                <field name="sale_order_id" select="2" on_change="_check_unique_so(sale_order_id)"/>
+                <field name="mail_service_id" select="2"/>
+                <newline/>
                 <field name="state" select="1"/>
                 <field name="action_time" select="2"/>
+                <field name="is_global" select="2"/>
+                <field name="is_preview" select="2"/>
             </form>
         </field>
     </record>

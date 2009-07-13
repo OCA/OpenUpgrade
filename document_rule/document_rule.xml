@@ -6,28 +6,40 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
 			<form string="Document Rules">
-				<field name="name" string="Rule Name"/>
+				<field name="name"/>
+				<field name="date"/>
         		<field name="active" />
 				<notebook colspan="4">
 				<page string="Conditions">
 					<separator colspan="4" string="Conditions on States"/>
-						<field name="resource_object"/>
-						<field name="author"/>
-						<field name="partner_id"/>
-						<field name="directory_id"/>
-						<field name="date_type"/>
-						<field name="filename"/>
+							<field name="author"/>
+					    <separator colspan="4" />
+							<field name="regex_title"  string="Regex on Title"/>
+							<field name="regex_filename"  string="Regex on Filename"/>
+					    <separator colspan="4" />
+							<field name="partner_id"/>
+							<field name="directory_id"/>
+							<field name="ressource_id"/>
+							<field name="resource_object"/>
+						<separator colspan="4" string="Conditon"/>
+							<field name="trg_date_type"/>
+							<label align="1.0" string="Delay After Trigger Date:"/>
+
+						<group col="2" colspan="1">
+                                <field name="trg_date_range" nolabel="1"/>
+                                <field name="trg_date_range_type" nolabel="1"/>
+                          </group>
 
 		  		</page>
 		  		<page string="Actions">
 		  			<separator colspan="4" string="Directory Actions"/>
-					<field name="act_copy_directory_id" />
-					<field name="act_move_directory_id"/>
+						<field name="act_copy_directory_id" />
+						<field name="act_move_directory_id"/>
 					<separator colspan="4" string="Assign To"/>
-					<field name="act_assign_user_id"/>
-					<field name="act_assign_partner_id"/>
+						<field name="act_assign_user_id"/>
+						<field name="act_assign_partner_id"/>
 					<separator colspan="4" string="Server Action"/>
-					<field name="server_act"/>
+						<field name="server_act"/>
 		  		</page>
 		</notebook>
 		</form>

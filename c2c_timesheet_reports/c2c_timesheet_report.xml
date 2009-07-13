@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<report
+			id="timesheet status"
+			string="Timesheet Status"
+			model="hr_timesheet_sheet.sheet"
+			name="c2c_timesheet_reports.timesheet_status"
+			rml="c2c_timesheet_reports/report/timesheet_status.rml"
+			auto="False"
+            header="True"
+            menu="False"/>
+	</data>
+</openerp>

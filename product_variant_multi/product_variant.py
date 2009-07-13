@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -28,43 +28,43 @@ from osv import fields, osv
 class product_variant_dimension_type(osv.osv):
     _name = "product.variant.dimension.type"
     _description = "Dimension Type"
-    
+
     _columns = {
         'name' : fields.char('Dimension', size=64),
         'sequence' : fields.integer('Sequence', help="The product 'variants' code will use this to order the dimension values"),
         'value_ids' : fields.one2many('product.variant.dimension.value', 'dimension_id', 'Dimension Values'),
-        'product_tmpl_id': fields.many2one('product.template', 'Product Template', required=True),
+        'product_tmpl_id': fields.many2one('product.template', 'Product Template', required=True, ondelete='cascade'),
         'allow_custom_value': fields.boolean('Allow Custom Value', help="If true, custom values can be entered in the product configurator"),
     }
-    
+
     _order = "sequence, name"
-    
+
     def name_search(self, cr, user, name='', args=None, operator='ilike', context=None, limit=None):
         if context.get('product_tmpl_id', False):
             return super(product_variant_dimension_type, self).name_search(cr, user, '', args, 'ilike', None, None)
         else:
             return super(product_variant_dimension_type, self).name_search(cr, user, '', None, 'ilike', None, None)
-    
+
 product_variant_dimension_type()
 
 
 class product_variant_dimension_value(osv.osv):
     _name = "product.variant.dimension.value"
     _description = "Dimension Value"
-    
+
     def _get_dimension_values(self, cr, uid, ids, context={}):
         result = []
         for type in self.pool.get('product.variant.dimension.type').browse(cr, uid, ids, context=context):
             for value in type.value_ids:
                 result.append(value.id)
         return result
-    
+
     _columns = {
         'name' : fields.char('Dimension Value', size=64, required=True),
         'sequence' : fields.integer('Sequence'),
         'price_extra' : fields.float('Price Extra', size=64),
-        'price_margin' : fields.float('Price Margin', size=64),
-        'dimension_id' : fields.many2one('product.variant.dimension.type', 'Dimension Type', required=True),
+        'price_margin' : fields.float('Price Margin', size=64), #TODO: this field is not implemented yet
+        'dimension_id' : fields.many2one('product.variant.dimension.type', 'Dimension Type', required=True, ondelete='cascade'),
         'product_tmpl_id': fields.related('dimension_id', 'product_tmpl_id', type="many2one", relation="product.template", string="Product Template", store=True),
         'dimension_sequence': fields.related('dimension_id', 'sequence', string="Related Dimension Sequence",#used for ordering purposes in the "variants"
              store={
@@ -72,17 +72,24 @@ class product_variant_dimension_value(osv.osv):
             }),
     }
     _order = "dimension_sequence, sequence, name"
-    
+
 product_variant_dimension_value()
 
 
 class product_template(osv.osv):
     _inherit = "product.template"
-    
+
     _columns = {
         'dimension_type_ids':fields.one2many('product.variant.dimension.type', 'product_tmpl_id', 'Dimension Types'),
         'variant_ids':fields.one2many('product.product', 'product_tmpl_id', 'Variants'),
     }
+    
+    def copy(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        default = default.copy()
+        default.update({'variant_ids':False,})
+        return super(product_template, self).copy(cr, uid, id, default, context)
 
     def button_generate_variants(self, cr, uid, ids, context={}):
         def cartesian_product(args):
@@ -101,23 +108,23 @@ class product_template(osv.osv):
                 if not temp_val_list[-1]:
                     temp_val_list.pop()
                     temp_type_list.pop()
-        
+
             if temp_val_list:
                 list_of_variants = cartesian_product(temp_val_list)
-    
+
                 for variant in list_of_variants:
                     constraints_list=[('dimension_value_ids', 'in', [i] ) for i in variant]
-                    
+
                     prod_var=variants_obj.search(cr, uid, constraints_list)
                     if not prod_var:
                         vals={}
                         vals['product_tmpl_id']=product_temp.id
                         vals['dimension_value_ids']=[(6,0,variant)]
-    
+
                         var_id=variants_obj.create(cr, uid, vals, {})
 
         return True
-    
+
 product_template()
 
 
@@ -130,14 +137,14 @@ class product_product(osv.osv):
             r = map(lambda dim: (dim.dimension_id.name or '')+':'+(dim.name or '-'), product.dimension_value_ids)
             res[product.id] = ' - '.join(r)
         return res
-    
+
     def _get_products_from_dimension(self, cr, uid, ids, context={}):
         result = []
         for type in self.pool.get('product.variant.dimension.type').browse(cr, uid, ids, context=context):
             for product_id in type.product_tmpl_id.variant_ids:
                 result.append(product_id.id)
         return result
-    
+
     def _get_products_from_product(self, cr, uid, ids, context={}):
         result = []
         for product in self.pool.get('product.product').browse(cr, uid, ids, context=context):
@@ -154,7 +161,7 @@ class product_product(osv.osv):
             if len(unique_set) != len(buffer):
                 return False
         return True
-    
+
     def copy(self, cr, uid, id, default=None, context=None):
         if default is None:
             default = {}
@@ -164,12 +171,12 @@ class product_product(osv.osv):
 
     _columns = {
         'dimension_value_ids': fields.many2many('product.variant.dimension.value', 'product_product_dimension_rel', 'product_id','dimension_id', 'Dimensions', domain="[('product_tmpl_id','=',product_tmpl_id)]"),
-        'variants': fields.function(_variant_name_get, method=True, type='char', size=64, string='Variants', readonly=True, 
+        'variants': fields.function(_variant_name_get, method=True, type='char', size=64, string='Variants', readonly=True,
             store={
                 'product.variant.dimension.type': (_get_products_from_dimension, None, 10),
                 'product.product': (_get_products_from_product, None, 10),
             }),
     }
     _constraints = [ (_check_dimension_values, 'Several dimension values for the same dimension type', ['dimension_value_ids']),]
-    
+
 product_product()

@@ -270,12 +270,12 @@ class olap_schema(osv.osv ):
         raise 'Not implemented !'
 
     def request(self,cr,uid,name,request,context = {}):
-        ids = self.search(cr,uid,[('name','=',name)],context)
+        ids = self.search(cr,uid,[('name','=',name)])
         if not len(ids):
             raise 'Schema not found !'
         schema = self.browse(cr,uid,ids[0],context)
-
-
+        warehouse = cube.warehouse()
+        find_table = warehouse.match_table(cr, uid, request, context)
         print 'Parsing MDX...'
         print '\t',request
         mdx_parser = cube.mdx_parser()
@@ -290,11 +290,31 @@ class olap_schema(osv.osv ):
         res_comp = self.pool.get('res.company').browse(cr,uid,res_comp)
         currency = res_comp[0].currency_id.name
         print " Default Currency",currency
-        data = mdx.run(currency)
+        
+        qry_obj = self.pool.get('olap.query.logs')
+        qry_id = qry_obj.search(cr, uid, [('query','=', request)])
+        
+        flag = True
+        if qry_id:
+            qry = qry_obj.browse(cr, uid, qry_id)[0]
+            
+            if qry.count >=3 and qry.table_name!='':
+                data = warehouse.run(currency, qry)
+                flag = False
+                qry.count = qry.count +1
+                qry_obj.write(cr, uid, qry_id, {'count': qry.count})
+            else:
+                data = mdx.run(currency)
+        else:
+            data = mdx.run(currency)
         print 'Running Done...'
         print 'Formatting Output...'
-        if cubex.query_log:
-            mdx.log(cr,uid,cubex,request,context)
+        if cubex.query_log and flag:
+            log = context.get('log')
+            if log:
+                connection = schema.database_id.connection_url
+                warehouse.log(cr,uid,cubex,request,data,connection,context)
+#                mdx.log(cr,uid,cubex,request,context)
         return cube.mdx_output(data)
 olap_schema()
 
@@ -729,7 +749,14 @@ class olap_query_logs(osv.osv):
         'time':fields.datetime('Time',required = True),
         'result_size':fields.integer('Result Size',readonly = True),
         'cube_id': fields.many2one('olap.cube','Cube',required = True),
+        'count': fields.integer('Count', readonly=True),
+        'schema_id': fields.many2one('olap.schema','Schema',readonly = True),
+        'table_name': fields.char('Table Name', size=164, readonly = True),
     }
+    
+    _defaults = {
+                 'count':lambda * args: 0
+                 }
 olap_query_logs()
 
 
@@ -947,6 +974,7 @@ class olap_saved_query(osv.osv):
                 'user_id' : fields.many2one('res.users','User'),
                 'query': fields.text('Query',required = True),
                 'cube_id': fields.many2one('olap.cube','Cube',required = True),
+                'mdx_id': fields.char('Module', size=64),
                 'schema_id': fields.many2one('olap.schema','Schema',required = True),
                 'time':fields.datetime('Time',required = True),
                 }
@@ -1593,6 +1621,34 @@ class bi_auto_configure_wizard(osv.osv_memory):
 
 bi_auto_configure_wizard()
 
+
+class olap_warehouse_wizard(osv.osv_memory):
+    _name = "olap.warehouse.wizard"
+    _description = "Olap Warehouse"
+    
+    def _get_queries(self, cr, uid, context = {}):
+        query_obj = self.pool.get('olap.query.logs')
+        qry_ids = query_obj.search(cr, uid, [('user_id','=',uid),('count','>=',3)])
+        if qry_ids:
+            query = ''
+            for id in query_obj.browse(cr,uid,qry_ids,context):
+                if query == '':
+                    query = id.query
+                else:
+                    query = query + '\n'+id.query
+            return query
+        else:
+            return ''
+    def action_ok(self, cr, uid, ids, context = {}):
+        return {'type':'ir.actions.act_window_close' }
+    
+    _columns = {
+                'query': fields.text('Query', readonly=True),
+                }
+    _defaults = {
+        'query': _get_queries,
+        }
+olap_warehouse_wizard()
 class olap_parameters_config_wizard(osv.osv_memory):
     _name = "olap.parameters.config.wizard"
     _description = "Olap Server Parameters"

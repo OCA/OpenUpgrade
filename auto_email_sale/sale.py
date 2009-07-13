@@ -50,7 +50,8 @@ class sale_order(osv.osv):
                     raise osv.except_osv(_('Error'), _('Verification failed, No Server has been defined!'))
                 smtpserver_id = sale_smtpserver_id or default_smtpserver_id
                 body= _("Your order is confirmed.\nPlease, see the attachment.")
-                state = self.pool.get('email.smtpclient').send_email(cr, uid, smtpserver_id, email,_("OpenERP: Sale Order Confirmed"),ids,body,'sale.order',_('Sale_Order'))
+                                
+                state = self.pool.get('email.smtpclient').send_email(cr, uid, smtpserver_id[0], email,_("OpenERP: Sale Order Confirmed"), body, reports=[('report.sale.order',ids)])
                 if not state:
                     raise osv.except_osv(_('Error'), _('Verification failed. Please check the Server Configuration!'))
                 return {}

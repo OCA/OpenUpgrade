@@ -5,7 +5,7 @@
 		<record id="action_product_configure_from_sale_order" model="ir.actions.act_window">
 			<field name="name">Product Configure Wizard</field>
 			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">sale_product_multistep_configurator.configurator</field>
+			<field name="res_model">sale_product_multistep_configurator.configurator.step</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">form</field>
 			<field name="target">new</field>
@@ -15,7 +15,7 @@
 		<record id="action_product_configure_from_sale_order_line" model="ir.actions.act_window">
 			<field name="name">Product Configure Wizard</field>
 			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">sale_product_multistep_configurator.configurator</field>
+			<field name="res_model">sale_product_multistep_configurator.configurator.step</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">form</field>
 			<field name="target">new</field>
