@@ -19,13 +19,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import os
-# from tools import config
-from tools.translate import _
 from addons import get_module_path
-
-from base_module_quality import base_module_quality
-
 class quality_test(base_module_quality.abstract_quality_check):
 
     def __init__(self):

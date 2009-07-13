@@ -1,0 +1,23 @@
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="currency_auto_comp">
+            <field name="name">res.company.form.inherit</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Currency auto update configuration">
+                       <field name="auto_currency_up" on_change="_on_change_auto_currency_up(auto_currency_up)"/> 
+                        <field name="interval_type" on_change="_on_change_intervall(interval_type)"/>
+                        <field name="multi_company_currency_enable"/>
+                        <separator string="Currency updates services" colspan="4"/>
+                        <field name="services_to_use" colspan="4" nolabel="1"/>
+                        <button name="button_refresh_currency"  string="Refresh currencies" type='object' />
+                    </page>
+                </notebook>
+            </field>
+        </record>
+    </data>
+</openerp>
+

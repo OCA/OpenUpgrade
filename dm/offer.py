@@ -19,32 +19,31 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 import time
 import netsvc
-#import offer_step
 
 from osv import fields
 from osv import osv
 
-AVAILABLE_STATES = [
+AVAILABLE_STATES = [ # {{{
     ('draft','Draft'),
     ('ready', 'Ready To Plan'),
     ('open','Open'),
     ('freeze', 'Freeze'),
     ('closed', 'Close'),
-]
+] # }}}
 
-AVAILABLE_TYPE = [
+AVAILABLE_TYPE = [ # {{{
     ('model','Model'),
     ('new','New'),
     ('standart','Standart'),
     ('rewrite','Rewrite'),
     ('preoffer','Offer Idea'),
     ('as','After-Sale')
-]
+] # }}}
 
-
-class dm_offer_category(osv.osv):
+class dm_offer_category(osv.osv): # {{{
     _name = "dm.offer.category"
     _rec_name = "name"
 
@@ -85,17 +84,17 @@ class dm_offer_category(osv.osv):
         (_check_recursion, 'Error ! You can not create recursive categories.', ['parent_id'])
     ]
 
-dm_offer_category()
+dm_offer_category() # }}}
 
-class dm_offer_production_cost(osv.osv):
+class dm_offer_production_cost(osv.osv): # {{{
     _name = "dm.offer.production.cost"
     _columns = {
         'name' : fields.char('Name', size=32, required=True)
     }
 
-dm_offer_production_cost()
+dm_offer_production_cost() # }}}
 
-class dm_offer(osv.osv):
+class dm_offer(osv.osv): # {{{
     _name = "dm.offer"
     _rec_name = 'name'
     
@@ -228,7 +227,8 @@ class dm_offer(osv.osv):
                             result['toolbar']['print'] =new_print
             else : 
                 if result.has_key('toolbar'):
-                    if result['toolbar'].has_key('print'):
+                     if result['toolbar'].has_key('print') and 'report' in result['toolbar'] and result['toolbar']['report'] :
+#                     if result['toolbar'].has_key('print') :
                         new_print = filter(lambda x : x['report_name'] not in ['offer.model.report','preoffer.report'],result['toolbar']['print'])
                         result['toolbar']['print'] =new_print
         return result
@@ -287,9 +287,9 @@ class dm_offer(osv.osv):
                     self.pool.get('dm.offer.step.transition').copy(cr,uid,trans.id,{'step_to_id':step_to,'step_from_id':step['new_id']})
         return offer_id
 
-dm_offer()
+dm_offer() # }}}
 
-class dm_offer_translation(osv.osv):
+class dm_offer_translation(osv.osv): # {{{
     _name = "dm.offer.translation"
     _rec_name = "offer_id"
     _order = "date"
@@ -300,7 +300,7 @@ class dm_offer_translation(osv.osv):
         'date' : fields.date('Date'),
         'notes' : fields.text('Notes'),
     }
-dm_offer_translation()
+dm_offer_translation() # }}}
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

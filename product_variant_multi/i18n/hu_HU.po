@@ -1,0 +1,195 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* product_variant_multi
+#
+# Dukai Gábor <gdukai@gmail.com>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 5.0.1\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-06-09 10:31:01+0000\n"
+"PO-Revision-Date: 2009-06-22 10:39+0200\n"
+"Last-Translator: Dukai Gábor <gdukai@gmail.com>\n"
+"Language-Team: Magyar <>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+"X-Generator: Lokalize 0.3\n"
+
+#. module: product_variant_multi
+#: constraint:ir.model:0
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr ""
+
+#. module: product_variant_multi
+#: field:product.product,dimension_value_ids:0
+msgid "Dimensions"
+msgstr ""
+
+#. module: product_variant_multi
+#: field:product.variant.dimension.value,dimension_sequence:0
+msgid "Related Dimension Sequence"
+msgstr ""
+
+#. module: product_variant_multi
+#: field:product.variant.dimension.type,allow_custom_value:0
+msgid "Allow Custom Value"
+msgstr "Egyedi érték engedélyezett"
+
+#. module: product_variant_multi
+#: help:product.variant.dimension.type,sequence:0
+msgid "The product 'variants' code will use this to order the dimension values"
+msgstr "Ez alapján fognak a változatok dimenziók szerint sorba rendeződni"
+
+#. module: product_variant_multi
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
+
+#. module: product_variant_multi
+#: view:product.template:0
+msgid "Generate ->"
+msgstr "Létrehozás ->"
+
+#. module: product_variant_multi
+#: model:ir.ui.menu,name:product_variant_multi.menu_variant_dimension_types
+#: field:product.template,dimension_type_ids:0
+msgid "Dimension Types"
+msgstr "Dimenziók"
+
+#. module: product_variant_multi
+#: field:product.variant.dimension.value,price_extra:0
+msgid "Price Extra"
+msgstr "Plusz összeg"
+
+#. module: product_variant_multi
+#: model:ir.actions.act_window,name:product_variant_multi.action_dimension_type_form
+msgid "Types"
+msgstr ""
+
+#. module: product_variant_multi
+#: view:product.template:0
+#: field:product.template,variant_ids:0
+msgid "Variants"
+msgstr "Változatok"
+
+#. module: product_variant_multi
+#: model:ir.actions.act_window,name:product_variant_multi.product_variant
+#: model:ir.ui.menu,name:product_variant_multi.menu_variant
+msgid "Product Variants"
+msgstr "Termékváltozatok"
+
+#. module: product_variant_multi
+#: model:ir.ui.menu,name:product_variant_multi.menu_variant_dimension_values
+#: view:product.template:0
+#: field:product.variant.dimension.type,value_ids:0
+msgid "Dimension Values"
+msgstr "Dimenzió értékek"
+
+#. module: product_variant_multi
+#: view:product.template:0
+msgid "Dimension types"
+msgstr "Dimenziók"
+
+#. module: product_variant_multi
+#: help:product.variant.dimension.type,allow_custom_value:0
+msgid "If true, custom values can be entered in the product configurator"
+msgstr ""
+
+#. module: product_variant_multi
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr ""
+
+#. module: product_variant_multi
+#: field:product.variant.dimension.value,price_margin:0
+msgid "Price Margin"
+msgstr "Plusz árrés"
+
+#. module: product_variant_multi
+#: view:product.template:0
+#: view:product.variant.dimension.type:0
+#: view:product.variant.dimension.value:0
+msgid "Variant Value"
+msgstr "Változat dimenziójának értékei"
+
+#. module: product_variant_multi
+#: model:ir.model,name:product_variant_multi.model_product_variant_dimension_value
+#: field:product.variant.dimension.value,name:0
+msgid "Dimension Value"
+msgstr "Dimenzió érték"
+
+#. module: product_variant_multi
+#: field:product.variant.dimension.type,product_tmpl_id:0
+#: field:product.variant.dimension.value,product_tmpl_id:0
+msgid "Product Template"
+msgstr "Terméksablonok"
+
+#. module: product_variant_multi
+#: model:ir.actions.act_window,name:product_variant_multi.action_dimension_value_form
+msgid "Values"
+msgstr ""
+
+#. module: product_variant_multi
+#: model:ir.module.module,shortdesc:product_variant_multi.module_meta_information
+msgid "Products with multi-level variants"
+msgstr ""
+
+#. module: product_variant_multi
+#: field:product.variant.dimension.type,name:0
+msgid "Dimension"
+msgstr "Dimenzió"
+
+#. module: product_variant_multi
+#: view:product.template:0
+#: view:product.variant.dimension.type:0
+msgid "Variant Type"
+msgstr ""
+
+#. module: product_variant_multi
+#: model:ir.actions.act_window,name:product_variant_multi.product_template
+#: model:ir.ui.menu,name:product_variant_multi.menu_template
+msgid "Product Templates"
+msgstr "Terméksablonok"
+
+#. module: product_variant_multi
+#: model:ir.ui.menu,name:product_variant_multi.menu_variant_dimension
+msgid "Variant Dimensions"
+msgstr "Változatok dimenziói"
+
+#. module: product_variant_multi
+#: field:product.variant.dimension.type,sequence:0
+#: field:product.variant.dimension.value,sequence:0
+msgid "Sequence"
+msgstr "Sorszám"
+
+#. module: product_variant_multi
+#: model:ir.module.module,description:product_variant_multi.module_meta_information
+msgid ""
+"OpenERP is already supporting a product variants at the core level. But\n"
+"without this module, variants are only mono-axial. OpenERP indeed uses the product.tempate\n"
+"as the model object and the product.variant as the instance variant.\n"
+"Using this module, you can now easily deal with multi-axial variants.\n"
+"A product.template, now has a set of dimensions (like Color, Size, anything you want).\n"
+"For each dimension, a product.template has a set of dimension values (like Red, Green\n"
+"for the Color dimension). For each dimension, you can accept or not custom dimension\n"
+"values. The sale interface product configurator will take it into account.\n"
+"Once the product.template is set up, you can use a 'generator' button that will populate\n"
+"the space of the variants. You could also choose to populate only some combinations\n"
+"by hand instead.\n"
+"Each variant can have an extra price that will be taken into account when computing\n"
+"the base listed price. Yet to be implemented: a price extra per variant dimension value.\n"
+"Finally, this module is better used along with the product_variant_configurator which\n"
+"will help the salesman selecting the appropriate variant in the sale order line\n"
+"using dimension criteria instead of having to crawl the full space of variants.\n"
+"    "
+msgstr ""
+
+#. module: product_variant_multi
+#: model:ir.model,name:product_variant_multi.model_product_variant_dimension_type
+#: field:product.variant.dimension.value,dimension_id:0
+msgid "Dimension Type"
+msgstr ""
+
+

@@ -20,7 +20,31 @@
 #
 ##############################################################################
 from osv import fields, osv
-import sale_product_multistep_configurator
+
+class sale_product_multistep_configurator_configurator_step(osv.osv):
+    _inherit = "sale_product_multistep_configurator.configurator.step"
+    
+    def update_context_before_step(self, cr, user, context={}):
+        """Allow to skip the BOM customization wizard if the selected product doesn't have several BOM's"""
+        model_list= context.get('step_list', False)
+        index = context.get('next_step', 0)
+        if index < len(model_list) and model_list[index] == "mrp_bom_customization.configurator":
+            sol_id = context.get('sol_id', False)
+            if sol_id:
+                bom_ids = self.pool.get('mrp.bom').search(cr, user, [('product_id', '=', self.pool.get('sale.order.line').browse(cr, user, sol_id).product_id.id)])
+                if bom_ids:
+                    req = """ SELECT rel.property_id, prop.name 
+                            FROM mrp_bom_property_rel rel, mrp_property prop
+                            WHERE rel.bom_id IN %s AND prop.id=rel.property_id """ % ("("+",".join(map(str,bom_ids))+")")
+                    cr.execute(req)
+                    list_property_values = cr.fetchall()
+                    if len(list_property_values) == 0:
+                        context.update({'next_step': index+1 })
+                else:
+                    context.update({'next_step': index+1 })
+        return super(sale_product_multistep_configurator_configurator_step, self).update_context_before_step(cr, user, context)
+    
+sale_product_multistep_configurator_configurator_step()
 
 
 class mrp_bom_customization_configurator_line(osv.osv_memory):
@@ -102,9 +126,8 @@ class mrp_bom_customization_configurator(osv.osv_memory):
                     if prop_id == property[0]:
                         def_fields.update({'bom_property_id_selection':prop_id})
         return def_fields
-        
-    def onchange_bom_property_id_selection(self, cr, uid, ids, bom_property_id_selection, product_id, sol_id):
-
+    
+    def get_property_groups(self, cr, uid, ids, bom_property_id_selection, product_id, sol_id):
         # product_id is not defined, thus active_id_object_type equals sale.order.line and this wizard is modifying an existing
         # sale.order.line, default_values have to be loaded
         load_values_from_sol = False
@@ -130,8 +153,25 @@ class mrp_bom_customization_configurator(osv.osv_memory):
         keys = cr.fetchall()
         
         group_ids = self.pool.get('mrp_bom_customization.mrp_bom_customization_keys').read(cr, uid, [k[0] for k in keys], ['group_id'])
+        return load_values_from_sol, keys, group_ids
+        
+    def onchange_bom_property_id_selection(self, cr, uid, ids, bom_property_id_selection, product_id, sol_id):
+
+        load_values_from_sol, keys, group_ids = self.get_property_groups(cr, uid, ids, bom_property_id_selection, product_id, sol_id)
         
         line_ids = []
+        lines_to_remove = []
+        
+        if ids:
+            if self.read(cr, uid, ids, ['configurator_line_ids'])[0]:
+                new_lines = [id for id in self.read(cr, uid, ids, ['configurator_line_ids'])[0]['configurator_line_ids']]
+                if len(line_ids) == len(group_ids):
+                    line_ids.append(new_lines)
+                    return {'value':{'configurator_line_ids':line_ids}}
+                else:
+                    self.pool.get('mrp_bom_customization.configurator_line').unlink(cr, uid, new_lines)
+                    cr.commit()
+        
         for k, g in zip(keys, group_ids):
             vals = {'customization_key_id': k[0], 'customization_value_id':None, 'customization_group_id':g['group_id']}
             if load_values_from_sol:
@@ -139,9 +179,11 @@ class mrp_bom_customization_configurator(osv.osv_memory):
                 customization_ids = sol_custom_obj.search(cr, uid, [('sale_order_line_id', '=', sol_id), ('customization_key_id', '=', k[0])])
                 if customization_ids:
                     vals['customization_value_id'] = sol_custom_obj.read(cr, uid, customization_ids[0], ['customization_value_id'])['customization_value_id']
+            if ids:
+                vals.update({'configurator_id': ids[0]})
             
             line_ids.append(self.pool.get('mrp_bom_customization.configurator_line').create(cr, uid, vals))
-        
+
         return {'value':{'configurator_line_ids':line_ids}}
     
     def onchange_configurator_line_ids(self, cr, uid, ids, configurator_line_ids, bom_property_id_selection, product_id):
@@ -159,14 +201,18 @@ class mrp_bom_customization_configurator(osv.osv_memory):
         sol_id = context.get('sol_id', False)
         
         if len(self._list_properties(cr, uid, context)) == 0:
-            return sale_product_multistep_configurator.sale_product_multistep_configurator.next_step(context)
+            return self.pool.get('sale_product_multistep_configurator.configurator.step').next_step(cr, uid, context)
         
         if not res['bom_property_id_selection'] or not sol_id:
             return False
-        for line in self.pool.get('mrp_bom_customization.configurator_line').read(cr, uid, res['configurator_line_ids']):
-            if not line['customization_key_id'] or not line['customization_value_id']:
-                return False
         
+        load_values_from_sol, keys, group_ids = self.get_property_groups(cr, uid, ids, res['bom_property_id_selection'], context.get('product_id', False), sol_id)
+        if len(group_ids) != len(res['configurator_line_ids']):
+            return False
+
+        for line in self.pool.get('mrp_bom_customization.configurator_line').read(cr, uid, res['configurator_line_ids']):
+            if (not line['customization_key_id']) or not line['customization_value_id']:
+                return False
         
         self.pool.get('sale.order.line').write(cr, uid, sol_id, {'property_ids': [(6, 0, [res['bom_property_id_selection']])] })
         
@@ -191,7 +237,7 @@ class mrp_bom_customization_configurator(osv.osv_memory):
                     }
                 self.pool.get('mrp_bom_customization.sale_order_line_customizations').create(cr, uid, vals)
             
-        return sale_product_multistep_configurator.sale_product_multistep_configurator.next_step(context)
+        return self.pool.get('sale_product_multistep_configurator.configurator.step').next_step(cr, uid, context)
     
     def _check_selection(self, cr, uid, ids):
         for configurator in self.browse(cr, uid, ids):

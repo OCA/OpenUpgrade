@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* portal
+# 	* portal
 #
 msgid ""
 msgstr ""
@@ -76,7 +76,8 @@ msgstr ""
 
 #. module: portal
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: portal
@@ -161,12 +162,15 @@ msgstr ""
 
 #. module: portal
 #: help:portal.portal,home_action_id:0
-msgid "Complete this field to provide a Home menu different from the Main menu."
+msgid ""
+"Complete this field to provide a Home menu different from the Main menu."
 msgstr ""
 
 #. module: portal
 #: help:portal.portal,menu_action_id:0
-msgid "Default main menu for the users of the portal. This field is auto-completed at creation. "
+msgid ""
+"Default main menu for the users of the portal. This field is auto-completed "
+"at creation. "
 msgstr ""
 
 #. module: portal
@@ -336,8 +340,7 @@ msgid "Cancel"
 msgstr ""
 
 #. module: portal
-#: wizard_field:portal.create_menu,second,menu:0
-#: field:portal.model,name:0
+#: wizard_field:portal.create_menu,second,menu:0 field:portal.model,name:0
 msgid "Name"
 msgstr ""
 
@@ -352,3 +355,13 @@ msgstr ""
 msgid "Subject"
 msgstr ""
 
+#. module: portal
+#: model:ir.module.module,description:portal.module_name_translation
+msgid ""
+"\n"
+"    Base module to manage portal:\n"
+"    - define new menu entry with associated actions.\n"
+"    - add/delete menu entry easily.\n"
+"    - on-the-fly rules and access control creation.\n"
+"    "
+msgstr ""

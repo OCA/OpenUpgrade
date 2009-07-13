@@ -40,4 +40,5 @@ You can not uninstall or delete it.
     "demo_xml" : [],
     "installable": True,
     "active" : False,
+    "certificate": '00812981973518421629',
 }

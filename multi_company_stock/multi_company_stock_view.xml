@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="stock_picking_company_form">
+            <field name="name">stock.picking.form.multicompany</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <field name="min_date" position="after">
+                    <field name="company_id" select="1"/>
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="stock_picking_delivery_company_form">
+            <field name="name">stock.picking.form.delivery.multicompany</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_delivery_form"/>
+            <field name="arch" type="xml">
+                <field name="origin" position="after">
+                    <field name="company_id" select="1"/>
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="stock_picking_out_company_form">
+            <field name="name">stock.picking.form.out.multicompany</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_out_form"/>
+            <field name="arch" type="xml">
+                <field name="origin" position="after">
+                    <field name="company_id" select="1"/>
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="stock_picking_in_company_form">
+            <field name="name">stock.picking.form.in.multicompany</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_in_form"/>
+            <field name="arch" type="xml">
+                <field name="backorder_id" position="after">
+                    <field name="company_id" select="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="stock_warehouse_company_form">
+            <field name="name">stock.warehouse.form.multicompany</field>
+            <field name="model">stock.warehouse</field>
+            <field name="inherit_id" ref="stock.view_warehouse"/>
+            <field name="arch" type="xml">
+                <field name="lot_output_id" position="after">
+                    <field name="company_id" select="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="stock_location_company_form">
+            <field name="name">stock.location.form.multicompany</field>
+            <field name="model">stock.location</field>
+            <field name="inherit_id" ref="stock.view_location_form"/>
+            <field name="arch" type="xml">
+                <field name="usage" position="after">
+                    <field name="company_id" select="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="stock_move_company_form">
+            <field name="name">stock.move.form.multicompany</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_form"/>
+            <field name="arch" type="xml">
+                <field name="date" position="before">
+                    <field name="company_id" select="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="mrp_procurement_company_form">
+            <field name="name">mrp.procurement.form.multicompany</field>
+            <field name="model">mrp.procurement</field>
+            <field name="inherit_id" ref="mrp.mrp_procurement_form_view"/>
+            <field name="arch" type="xml">
+                <field name="priority" position="after">
+                    <field name="company_id" select="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="stock_inventory_company_form">
+            <field name="name">stock.inventory.form.multicompany</field>
+            <field name="model">stock.inventory</field>
+            <field name="inherit_id" ref="stock.view_inventory_form"/>
+            <field name="arch" type="xml">
+                <field name="date" position="after">
+                    <field name="company_id" select="1"/>
+                    <newline/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="stock_warehouse_orderpoint_company_form">
+            <field name="name">stock.warehouse.orderpoint.form.multicompany</field>
+            <field name="model">stock.warehouse.orderpoint</field>
+            <field name="inherit_id" ref="mrp.view_warehouse_orderpoint_form"/>
+            <field name="arch" type="xml">
+                <field name="location_id" position="after">
+                    <field name="company_id" select="1"/>
+                    <newline/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="mrp_production_company_form">
+            <field name="name">mrp.production.form.multicompany</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+                <field name="product_uos" position="after">
+                    <field name="company_id" select="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="mrp_workcenter_company_form">
+            <field name="name">mrp.workcenter.form.multicompany</field>
+            <field name="model">mrp.workcenter</field>
+            <field name="inherit_id" ref="mrp.mrp_workcenter_view"/>
+            <field name="arch" type="xml">
+                <field name="active" position="after">
+                    <field name="company_id" select="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="mrp_bom_company_form">
+            <field name="name">mrp.bom.form.multicompany</field>
+            <field name="model">mrp.bom</field>
+            <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+            <field name="arch" type="xml">
+                <field name="code" position="after">
+                    <field name="company_id" select="1"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>

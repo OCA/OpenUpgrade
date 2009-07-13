@@ -16,7 +16,7 @@
                     <notebook position="inside">
                         <page string="Email Configuration" attrs="{'invisible':[('media_id','!=','Email')]}">
                             <field name="subject" colspan="4" attrs="{'required':[('media_id','=','Email')]}"/>
-                            <field name="editor" colspan="4"/>
+                            <field name="editor" colspan="4" attrs="{'required':[('media_id','=','Email')]}"/>
                             <group colspan="4" attrs="{'invisible':[('editor','!=','internal')]}">
                                 <separator string="Content" colspan="4" />
                                 <field name="content" colspan="4" nolabel="1"  widget="text_html"/>

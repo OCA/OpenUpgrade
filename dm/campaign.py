@@ -28,7 +28,7 @@ from mx import DateTime
 from osv import fields
 from osv import osv
 
-
+"""
 class dm_overlay_payment_rule(osv.osv):
     _name = 'dm.overlay.payment_rule'
     _rec_name = 'journal_id'
@@ -42,8 +42,9 @@ class dm_overlay_payment_rule(osv.osv):
     }
 
 dm_overlay_payment_rule()
+"""
 
-class dm_campaign_group(osv.osv):
+class dm_campaign_group(osv.osv):#{{{
     _name = "dm.campaign.group"
     
     def _quantity_planned_total(self, cr, uid, ids, name, args, context={}):
@@ -160,17 +161,16 @@ class dm_campaign_group(osv.osv):
         'quantity_delivered_total' : fields.function(_quantity_delivered_total, string='Total Delivered Quantity',type="char",size=64,method=True,readonly=True),
         'quantity_usable_total' : fields.function(_quantity_usable_total, string='Total Usable Quantity',type="char",size=64,method=True,readonly=True),
     }
-dm_campaign_group()
+dm_campaign_group()#}}}
 
-
-class dm_campaign_type(osv.osv):
+class dm_campaign_type(osv.osv):#{{{
     _name = "dm.campaign.type"
     _columns = {
         'name': fields.char('Description', size=64, translate=True, required=True),
         'code': fields.char('Code', size=16, translate=True, required=True),
         'description': fields.text('Description', translate=True),
     }
-dm_campaign_type()
+dm_campaign_type()#}}}
 
 
 class dm_overlay(osv.osv):
@@ -194,11 +194,12 @@ class dm_overlay(osv.osv):
         'dealer_id' : fields.many2one('res.partner', 'Dealer', domain=[('category_id','ilike','Dealer')], context={'category':'Dealer'}, required=True),
         'country_ids' : fields.many2many('res.country', 'overlay_country_rel', 'overlay_id', 'country_id', 'Country', required=True),
         'bank_account_id' : fields.many2one('account.account', 'Account'),
-        'payment_method_rule_ids':fields.many2many('dm.overlay.payment_rule','overlay_payment_method_rule_rel','overlay_id','payment_rule_id','Payment Method Rules')
+#        'payment_method_rule_ids':fields.many2many('dm.overlay.payment_rule','overlay_payment_method_rule_rel','overlay_id','payment_rule_id','Payment Method Rules')
     }
 dm_overlay()
 
-class one2many_mod_task(fields.one2many):
+
+class one2many_mod_task(fields.one2many):#{{{
     def get(self, cr, obj, ids, name, user=None, offset=0, context=None, values=None):
         if not context:
             context = {}
@@ -223,9 +224,9 @@ class one2many_mod_task(fields.one2many):
                 ids2 = obj.pool.get(self._obj).search(cr, user, [(self._fields_id,'in',project_ids),('type','=','Mailing Manufacturing')], limit=self._limit)
             for r in obj.pool.get(self._obj)._read_flat(cr, user, ids2, [self._fields_id], context=context, load='_classic_write'):
                 res[id].append( r['id'] )
-        return res 
+        return res #}}}
 
-class one2many_mod_pline(fields.one2many):
+class one2many_mod_pline(fields.one2many):#{{{
     def get(self, cr, obj, ids, name, user=None, offset=0, context=None, values=None):
         if not context:
             context = {}
@@ -255,9 +256,9 @@ class one2many_mod_pline(fields.one2many):
                 ids2 = obj.pool.get(self._obj).search(cr, user, [('campaign_id','=',id),('product_category','=',type['Mailing Manufacturing'])], limit=self._limit)
             for r in obj.pool.get(self._obj)._read_flat(cr, user, ids2, [self._fields_id], context=context, load='_classic_write'):
                 res[id].append( r['id'] )
-        return res
+        return res#}}}
 
-class dm_campaign(osv.osv):
+class dm_campaign(osv.osv):#{{{
     _name = "dm.campaign"
     _inherits = {'account.analytic.account': 'analytic_account_id'}
     _rec_name = 'name'
@@ -452,7 +453,7 @@ class dm_campaign(osv.osv):
     def state_close_set(self, cr, uid, ids, *args):
         for camp in self.browse(cr,uid,ids):
             if (camp.date > time.strftime('%Y-%m-%d')):
-                raise osv.except_osv("Error!!","Campaign cannot be closed before end date!!!")
+                raise osv.except_osv("Error","Campaign cannot be closed before end date")
         self.write(cr, uid, ids, {'state':'close'})
         return True
 
@@ -476,15 +477,15 @@ class dm_campaign(osv.osv):
     def state_open_set(self, cr, uid, ids, *args):
         camp = self.browse(cr,uid,ids)[0]
         if not camp.date_start or not camp.dealer_id or not camp.trademark_id or not camp.lang_id or not camp.currency_id:
-            raise osv.except_osv("Error!!","Informations are missing. Check Drop Date, Dealer, Trademark, Language and Currency")
+            raise osv.except_osv("Error","Informations are missing. Check Drop Date, Dealer, Trademark, Language and Currency")
 
         if ((camp.manufacturing_state != 'done') or (camp.dtp_state != 'done') or (camp.customer_file_state != 'done') or (camp.items_state != 'done')):
             raise osv.except_osv(
-                _('Could not open this Campaign !'),
+                _('Could not open this Campaign'),
                 _('You must first close all states related to this campaign.'))
 
         if (camp.date_start > time.strftime('%Y-%m-%d')):
-            raise osv.except_osv("Error!!","Campaign cannot be opened before drop date!!!")
+            raise osv.except_osv("Error!!","Campaign cannot be opened before drop date")
 
         """ Create Flow Start Workitems """
         print "Starting Campaign"
@@ -521,7 +522,7 @@ class dm_campaign(osv.osv):
             if (id.state == 'draft') or (id.state == 'pending'):
                 self.write(cr, uid, ids, {'manufacturing_state':'inprogress'})
             else:
-                raise osv.except_osv("Error!!","You cannot be set back to 'In Progress' once the campaign is opened!!!")
+                raise osv.except_osv("Error","This state cannot be set back to 'In Progress' once the campaign is opened")
         return True
 
     def dtp_state_inprogress_set(self, cr, uid, ids, *args):
@@ -529,7 +530,7 @@ class dm_campaign(osv.osv):
             if (id.state == 'draft') or (id.state == 'pending'):
                 self.write(cr, uid, ids, {'dtp_state':'inprogress'})
             else:
-                raise osv.except_osv("Error!!","You cannot be set back to 'In Progress' once the campaign is opened!!!")
+                raise osv.except_osv("Error","This state cannot be set back to 'In Progress' once the campaign is opened")
         return True
  
     def customer_file_state_inprogress_set(self, cr, uid, ids, *args):
@@ -537,7 +538,7 @@ class dm_campaign(osv.osv):
             if (id.state == 'draft') or (id.state == 'pending'):
                 self.write(cr, uid, ids, {'customer_file_state':'inprogress'})
             else:
-                raise osv.except_osv("Error!!","You cannot be set back to 'In Progress' once the campaign is opened!!!")
+                raise osv.except_osv("Error","This state cannot be set back to 'In Progress' once the campaign is opened")
         return True       
     
     def items_state_inprogress_set(self, cr, uid, ids, *args):
@@ -545,7 +546,7 @@ class dm_campaign(osv.osv):
             if (id.state == 'draft') or (id.state == 'pending'):
                 self.write(cr, uid, ids, {'items_state':'inprogress'})
             else:
-                raise osv.except_osv("Error!!","You cannot be set back to 'In Progress' once the campaign is opened!!!")
+                raise osv.except_osv("Error!!","This state cannot be set back to 'In Progress' once the campaign is opened")
         return True 
     
     def manufacturing_state_done_set(self, cr, uid, ids, *args):
@@ -567,7 +568,7 @@ class dm_campaign(osv.osv):
     def write(self, cr, uid, ids, vals, context=None):
         camp = self.pool.get('dm.campaign').browse(cr,uid,ids)[0]
         if not self.check_forbidden_country(cr, uid, camp.offer_id.id,camp.country_id.id):
-            raise osv.except_osv("Error!!","You cannot use this offer in this country")        
+            raise osv.except_osv("Error","You cannot use this offer in this country")        
 
         # In campaign, if no forwarding_charge is given, it gets the 'forwarding_charge' from offer
 #        if not camp.forwarding_charge:
@@ -579,7 +580,7 @@ class dm_campaign(osv.osv):
             vals['payment_method_ids'] = [[6,0,payment_methods]]
             
         # Set campaign end date at one year after start date if end date does not exist
-        if 'date_start' in vals and vals['date_start']:
+        if 'date' not in vals and not camp.date and 'date_start' in vals and vals['date_start'] :
             time_format = "%Y-%m-%d"
             d = time.strptime(vals['date_start'],time_format)
             d = datetime.date(d[0], d[1], d[2])
@@ -605,7 +606,7 @@ class dm_campaign(osv.osv):
         else:
             country_id = camp.country_id.id
             
-#        check if an overlay exists else create it
+        #check if an overlay exists else create it
         overlay_country_ids=[] 
         if trademark_id and dealer_id and country_id:
             overlay_obj = self.pool.get('dm.overlay')
@@ -623,14 +624,13 @@ class dm_campaign(osv.osv):
         return super(dm_campaign,self).write(cr, uid, ids, vals, context)
     
     def create(self,cr,uid,vals,context={}):
-
         type_id = self.pool.get('dm.campaign.type').search(cr, uid, [('code','=','model')])[0]
         if context.has_key('campaign_type') and context['campaign_type']=='model':
             vals['campaign_type_id']=type_id
         id_camp = super(dm_campaign,self).create(cr,uid,vals,context)
         data_cam = self.browse(cr, uid, id_camp)
         if not self.check_forbidden_country(cr, uid, data_cam.offer_id.id,data_cam.country_id.id):
-            raise osv.except_osv("Error!!","You cannot use this offer in this country")        
+            raise osv.except_osv("Error","You cannot use this offer in this country")        
         ''' create campaign mail service '''
 
 #        mail_service_id = for each step in the offer the system should :
@@ -713,14 +713,17 @@ class dm_campaign(osv.osv):
         return True
 
     def copy(self, cr, uid, id, default=None, context={}):
-        cmp_id = super(dm_campaign, self).copy(cr, uid, id, default, context=context)
-        data = self.browse(cr, uid, cmp_id, context)
-        if 'name' in default:
-            name_default=default['name']
-        else:
-            name_default='Copy of %s' % data.name
-        super(dm_campaign, self).write(cr, uid, cmp_id, {'name':name_default, 'date_start':0, 'date':0, 'project_id':0})
-        return cmp_id
+        if not default: default = {}
+        campaign_id = self.browse(cr, uid, id)
+        if not default.get('name', False):
+            default['name'] = 'Copy of ' +campaign_id.name
+        default.update({'date_start': False, 'date': False, 'project_id': False, 'proposition_ids': []})
+        camp_copy_id = super(dm_campaign, self).copy(cr, uid, id, default, context)
+        prop_ids = [x.id for x in campaign_id.proposition_ids]
+        for proposition in campaign_id.proposition_ids:
+            default = {'camp_id': camp_copy_id}
+            prop_copy = self.pool.get('dm.campaign.proposition').copy(cr, uid, proposition.id, default, context)
+        return camp_copy_id
 
     def unlink(self, cr, uid, ids, context={}):
         for campaign in self.browse(cr, uid, ids, context):
@@ -728,16 +731,15 @@ class dm_campaign(osv.osv):
             self.pool.get('dm.offer.history').unlink(cr, uid, history_id, context)
         return super(dm_campaign, self).unlink(cr, uid, ids, context)
 
-dm_campaign()
+dm_campaign()#}}}
 
-
-class dm_campaign_proposition(osv.osv):
+class dm_campaign_proposition(osv.osv):#{{{
     _name = "dm.campaign.proposition"
     _inherits = {'account.analytic.account': 'analytic_account_id'}
 
     def default_get(self, cr, uid, fields, context=None):
         value = super(dm_campaign_proposition, self).default_get(cr, uid, fields, context)
-        if 'camp_id' in context:
+        if 'camp_id' in context and context['camp_id']:
             campaign = self.pool.get('dm.campaign').browse(cr, uid, context['camp_id'])
             value['date_start'] = campaign.date_start
         return value
@@ -771,15 +773,19 @@ class dm_campaign_proposition(osv.osv):
         Function to duplicate segments only if 'keep_segments' is set to yes else not to duplicate segments
         """
         proposition_id = super(dm_campaign_proposition, self).copy(cr, uid, id, default, context=context)
+        if 'camp_id' in default and default['camp_id']:
+            self.write(cr, uid, proposition_id, {'camp_id' : default['camp_id']})
+
         data = self.browse(cr, uid, proposition_id, context)
-        default='Copy of %s' % data.name
-        super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'name':default, 'date_start':0, 'initial_proposition_id':id})
+        default_name='Copy of %s' % data.name
+        super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'name':default_name, 'date_start':False, 'initial_proposition_id':id})
+
         if data.keep_segments == False:
             l = []
             for i in data.segment_ids:
                  l.append(i.id)
                  self.pool.get('dm.campaign.proposition.segment').unlink(cr,uid,l)
-                 super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'segment_ids':[(6,0,[])]})
+                 self.write(cr, uid, proposition_id, {'segment_ids':[(6,0,[])]})
         
         """
         Function to duplicate products only if 'keep_prices' is set to yes else not to duplicate products
@@ -789,7 +795,7 @@ class dm_campaign_proposition(osv.osv):
             for i in data.item_ids:
                  l.append(i.id)
                  self.pool.get('dm.campaign.proposition.item').unlink(cr,uid,l)
-                 super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'item_ids':[(6,0,[])]})
+                 self.write(cr, uid, proposition_id, {'item_ids':[(6,0,[])]})
         return proposition_id
 
     def _proposition_code(self, cr, uid, ids, name, args, context={}):
@@ -963,28 +969,27 @@ class dm_campaign_proposition(osv.osv):
                     new_id = self.pool.get('dm.offer.step.workitem').create(cr,uid,vals)
         return True
 
-dm_campaign_proposition()
+dm_campaign_proposition()#}}}
 
-
-class dm_customers_list_recruit_origin(osv.osv):
+class dm_customers_list_recruit_origin(osv.osv):#{{{
     _name = "dm.customers_list.recruit_origin"
     _description = "The origin of the adresses of a list"
     _columns = {
         'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=16, required=True),
     }
-dm_customers_list_recruit_origin()
+dm_customers_list_recruit_origin()#}}}
 
-class dm_customers_list_type(osv.osv):
+class dm_customers_list_type(osv.osv):#{{{
     _name = "dm.customers_list.type"
     _description = "Type of the adress list"
     _columns = {
         'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=16, required=True),
     }
-dm_customers_list_type()
+dm_customers_list_type()#}}}
 
-class dm_customers_list(osv.osv):
+class dm_customers_list(osv.osv):#{{{
     _name = "dm.customers_list"
     _description = "A list of addresses proposed by an adresses broker"
     _columns = {
@@ -1018,10 +1023,19 @@ class dm_customers_list(osv.osv):
     _defaults =  {
         'invoice_base': lambda *a: 'net',
     }
-dm_customers_list()
+dm_customers_list()#}}}
 
+#class dm_customers_file_source(osv.osv):#{{{
+#    _name = "dm.customers_file.source"
+#    _description = "Customer File Source"
+#    _columns = {
+#            'name' : fields.char('Name', size=64 ,required=True),
+#            'code' : fields.char('code', size=64 ,required=True),
+#            'desc' : fields.text('Description'),
+#            }
+#dm_customers_file_source()#}}}
 
-class dm_customers_file(osv.osv):
+class dm_customers_file(osv.osv):#{{{
     _name = "dm.customers_file"
     _description = "A File of addresses"
 
@@ -1043,9 +1057,9 @@ class dm_customers_file(osv.osv):
         'source': lambda *a: 'address_id',
     }
 
-dm_customers_file()
+dm_customers_file()#}}}
 
-class dm_campaign_proposition_segment(osv.osv):
+class dm_campaign_proposition_segment(osv.osv):#{{{
 
     _name = "dm.campaign.proposition.segment"
     _inherits = {'account.analytic.account': 'analytic_account_id'}
@@ -1058,10 +1072,11 @@ class dm_campaign_proposition_segment(osv.osv):
         return super(dm_campaign_proposition_segment,self).write(cr, uid, ids, vals, context)
 
     def create(self,cr,uid,vals,context={}):
-        proposition_id = self.pool.get('dm.campaign.proposition').browse(cr, uid, vals['proposition_id'])
-        vals['parent_id'] = self.pool.get('account.analytic.account').search(cr,uid,[('id','=',proposition_id.analytic_account_id.id)])[0]
+        if 'proposition_id' in vals and vals['proposition_id'] :
+            proposition_id = self.pool.get('dm.campaign.proposition').browse(cr, uid, vals['proposition_id'])
+            vals['parent_id'] = self.pool.get('account.analytic.account').search(cr,uid,[('id','=',proposition_id.analytic_account_id.id)])[0]
         return super(dm_campaign_proposition_segment, self).create(cr, uid, vals, context)
-        
+
     def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
         if context and 'dm_camp_id' in context:
             if not context['dm_camp_id']:
@@ -1085,6 +1100,7 @@ class dm_campaign_proposition_segment(osv.osv):
             result[segment.id]=segment.quantity_delivered - segment.quantity_usable
         return result
 
+    """
     def _segment_code(self, cr, uid, ids, name, args, context={}):
         result ={}
         for id in ids:
@@ -1111,6 +1127,25 @@ class dm_campaign_proposition_segment(osv.osv):
             else :
                 result[seg.id]=seg.type_src+'%d'%id
         return result
+    """
+
+    def _segment_code(self, cr, uid, ids, name, args, context={}):
+        result ={}
+        for id in ids:
+            seg = self.browse(cr,uid,[id])[0]
+            if seg.customers_list_id:
+                segment_list = self.search(cr,uid,[('customers_list_id','=',seg.customers_list_id.id)])
+                i = 1 
+                for s in segment_list:
+                    country_code = seg.customers_list_id.country_id.code or ''
+                    cust_list_code =  seg.customers_list_id.code
+                    seq = '%%0%sd' % 2 % i
+                    code1='-'.join([country_code[:3], cust_list_code[:3], seq[:4]])
+                    result[s]=code1
+                    i +=1
+            else :
+                result[seg.id]=seg.type_src+'%d'%id
+        return result
 
     def onchange_list(self, cr, uid, ids, customers_list, start_census, end_census):
         if customers_list:
@@ -1121,10 +1156,11 @@ class dm_campaign_proposition_segment(osv.osv):
                 file_name = list.name + '-' + str(start_census) + '/' + str(end_census)
             return {'value':{'name':file_name}}
         return False
-
+    
     _columns = {
         'code1' : fields.function(_segment_code, string='Code', type="char", size=64, method=True, readonly=True),
         'campaign_id' : fields.related('proposition_id', 'camp_id', type='many2one', relation='dm.campaign', string='Campaign'),
+        'country_id' : fields.many2one('res.country','Country'),
         'proposition_id' : fields.many2one('dm.campaign.proposition','Proposition', ondelete='cascade'),
         'type_src' : fields.selection([('internal','Internal'),('external','External')], 'Type'),
         'customers_list_id': fields.many2one('dm.customers_list','Customers List'),
@@ -1174,14 +1210,14 @@ class dm_campaign_proposition_segment(osv.osv):
         'type_src': lambda *a: 'internal',
     }
 
-dm_campaign_proposition_segment()
+dm_campaign_proposition_segment()#}}}
 
-AVAILABLE_ITEM_TYPES = [
+AVAILABLE_ITEM_TYPES = [#
     ('main','Main Item'),
     ('standart','Standart Item'),
-]
+]#
 
-class dm_campaign_proposition_item(osv.osv):
+class dm_campaign_proposition_item(osv.osv):#{{{
     _name = "dm.campaign.proposition.item"
     _rec_name = 'product_id'
     _columns = {
@@ -1191,12 +1227,11 @@ class dm_campaign_proposition_item(osv.osv):
         'price' : fields.float('Sale Price'),
         'proposition_id': fields.many2one('dm.campaign.proposition', 'Commercial Proposition'),
         'item_type': fields.selection(AVAILABLE_ITEM_TYPES, 'Product Type', size=64),
-        'offer_step_type_id': fields.many2one('dm.offer.step.type','Offer Step Type'), 
+        'offer_step_id': fields.many2one('dm.offer.step','Offer Step Name'), 
         'notes' : fields.text('Notes'),
         'forecasted_yield' : fields.float('Forecasted Yield'),
     }
-dm_campaign_proposition_item()
-
+dm_campaign_proposition_item()#}}}
 
 PURCHASE_LINE_TRIGGERS = [
     ('draft','At Draft'),
@@ -1233,13 +1268,13 @@ DOC_TYPES = [
     ('rfq','Request For Quotation'),
 ]
 
-class dm_campaign_purchase_line(osv.osv):
+class dm_campaign_purchase_line(osv.osv):#{{{
     _name = 'dm.campaign.purchase_line'
     _rec_name = 'product_id'
 
     def default_get(self, cr, uid, fields, context=None):
         if context.has_key('product_category'):
-            raise osv.except_osv('Warning', "Purchase order generation is not yet implemented !!!")
+            raise osv.except_osv('Warning', "Purchase order generation is not yet implemented")
         return super(dm_campaign_purchase_line, self).default_get(cr, uid, fields, context)
 
     def _get_uom_id(self, cr, uid, *args):
@@ -1255,7 +1290,7 @@ class dm_campaign_purchase_line(osv.osv):
             if pline.state == 'pending':
                 """if in a group, obj = 1st campaign of the group, if not it's the campaing"""
                 if not (pline.campaign_group_id or pline.campaign_id):
-                    raise  osv.except_osv('Warning', "There's no campaign or campaign group defined for this purchase line .")
+                    raise  osv.except_osv('Warning', "There's no campaign or campaign group defined for this purchase line")
 
                 if pline.campaign_group_id:
                     if not pline.campaign_group_id.campaign_ids:
@@ -1321,11 +1356,11 @@ class dm_campaign_purchase_line(osv.osv):
 
                             address_id = self.pool.get('res.partner').address_get(cr, uid, [partner.id], ['default'])['default']
                             if not address_id:
-                                raise osv.except_osv('Warning', "There's no default address defined for this partner : %s" % (partner.name,) )
+                                raise osv.except_osv('Warning', "There is no default address defined for this partner : %s" % (partner.name,) )
                             delivery_address = address_id
                             pricelist_id = partner.property_product_pricelist_purchase.id
                             if not pricelist_id:
-                                raise osv.except_osv('Warning', "There's no purchase pricelist defined for this partner : %s" % (partner.name,) )
+                                raise osv.except_osv('Warning', "There is no purchase pricelist defined for this partner : %s" % (partner.name,) )
                             price = self.pool.get('product.pricelist').price_get(cr, uid, [pricelist_id], pline.product_id.id, pline.quantity, False, {'uom': pline.uom_id.id})[pricelist_id]
                             newdate = DateTime.strptime(pline.date_planned, '%Y-%m-%d %H:%M:%S') - DateTime.RelativeDateTime(days=pline.product_id.product_tmpl_id.seller_delay or 0.0)
 
@@ -1447,11 +1482,11 @@ class dm_campaign_purchase_line(osv.osv):
 
                         address_id = self.pool.get('res.partner').address_get(cr, uid, [supplier.id], ['default'])['default']
                         if not address_id:
-                            raise osv.except_osv('Warning', "There's no default address defined for this partner : %s" % (supplier.name,) )
+                            raise osv.except_osv('Warning', "There is no default address defined for this partner : %s" % (supplier.name,) )
                         delivery_address = address_id
                         pricelist_id = supplier.property_product_pricelist_purchase.id
                         if not pricelist_id:
-                            raise osv.except_osv('Warning', "There's no purchase pricelist defined for this partner : %s" % (supplier.name,) )
+                            raise osv.except_osv('Warning', "There is no purchase pricelist defined for this partner : %s" % (supplier.name,) )
                         price = self.pool.get('product.pricelist').price_get(cr, uid, [pricelist_id], pline.product_id.id, pline.quantity, False, {'uom': pline.uom_id.id})[pricelist_id]
                         newdate = DateTime.strptime(pline.date_planned, '%Y-%m-%d %H:%M:%S') - DateTime.RelativeDateTime(days=pline.product_id.product_tmpl_id.seller_delay or 0.0)
 
@@ -1974,27 +2009,27 @@ class dm_campaign_purchase_line(osv.osv):
         'type_document': _default_doctype_get,
         'desc_from_offer': lambda *a : True,
     }
-dm_campaign_purchase_line()
+dm_campaign_purchase_line()#}}}
 
-class dm_campaign_manufacturing_cost(osv.osv):
+class dm_campaign_manufacturing_cost(osv.osv):#{{{
     _name = 'dm.campaign.manufacturing_cost'
     _columns = {
         'name' : fields.char('Description', size=64, required=True),
         'amount': fields.float('Amount', digits=(16,2)),
         'campaign_id' : fields.many2one('dm.campaign','Campaign'),
     }
-dm_campaign_manufacturing_cost()
+dm_campaign_manufacturing_cost()#}}}
 
-class dm_campaign_proposition_prices_progression(osv.osv):
+class dm_campaign_proposition_prices_progression(osv.osv):#{{{
     _name = 'dm.campaign.proposition.prices_progression'
     _columns = {
         'name' : fields.char('Name', size=64, required=True),
         'fixed_prog' : fields.float('Fixed Prices Progression', digits=(16,2)),
         'percent_prog' : fields.float('Percentage Prices Progression', digits=(16,2)),
     }
-dm_campaign_proposition_prices_progression()
+dm_campaign_proposition_prices_progression()#}}}
 
-class Country(osv.osv):
+class Country(osv.osv):#{{{
     _name = 'res.country'
     _inherit = 'res.country'
     _columns = {
@@ -2003,9 +2038,9 @@ class Country(osv.osv):
                 'forwarding_charge' : fields.float('Forwarding Charge', digits=(16,2)),
                 'payment_method_ids' : fields.many2many('account.journal','country_payment_method_rel','country_id','journal_id','Payment Methods',domain=[('type','=','cash')]),
     }
-Country()
+Country()#}}}
 
-class res_partner(osv.osv):
+class res_partner(osv.osv):#{{{
     _name = "res.partner"
     _inherit="res.partner"
     _columns = {
@@ -2035,19 +2070,17 @@ class res_partner(osv.osv):
         'country_ids': _default_all_country,
         'state_ids': _default_all_state,
     }
-res_partner()
+res_partner()#}}}
 
-"""
-class purchase_order(osv.osv):
+class purchase_order(osv.osv):#{{{
     _name = 'purchase.order'
     _inherit = 'purchase.order'
     _columns = {
         'dm_campaign_purchase_line' : fields.many2one('dm.campaign.purchase_line','DM Campaign Purchase Line'),
     }
-purchase_order()
-"""
+purchase_order()#}}}
 
-class project_task(osv.osv):
+class project_task(osv.osv):#{{{
     _name = "project.task"
     _inherit = "project.task"
     context_data ={}
@@ -2096,8 +2129,15 @@ class project_task(osv.osv):
         'date_planned': fields.datetime('Planned Date'),
     }
 
-project_task()
+project_task()#}}}
 
-
-
+class sale_order(osv.osv):#{{{
+    _name = "sale.order"
+    _inherit="sale.order"
+    _columns = {
+        'offer_step_id': fields.many2one('dm.offer.step','Offer Step'),
+        'journal_id': fields.many2one('account.journal', 'Journal'),
+    }
+    
+sale_order()#}}}
 #vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

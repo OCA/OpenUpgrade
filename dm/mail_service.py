@@ -56,6 +56,7 @@ class dm_mail_service(osv.osv):
         'default_for_media' : fields.boolean('Default Mail Service for Media'),
         'action_id' : fields.many2one('ir.actions.server','Server Action'),
         'type_id' : fields.many2one('dm.mail_service.type','Type',ondelete="cascade"),
+        'hosted_image_use' : fields.boolean('Hosted Image'),
     }
 
     def _check_unique_mail_service(self, cr, uid, ids, media_id, default_for_media):

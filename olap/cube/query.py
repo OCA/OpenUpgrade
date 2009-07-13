@@ -120,8 +120,7 @@ class query(object):
                     axis_result2 += map(lambda x: (map(lambda y: y or False,x[0]),x[1] or False), r['value'])
                 axis_result.append(axis_result2)
                 axis.append(result)
-                cube_size.append(length)
-            
+                cube_size.append(length)    
         cube_data = self._cube_create(cube_size)
         cr = []
         slice = self.slicer.run(metadata)
@@ -217,14 +216,24 @@ class query(object):
 
     def log(self,cr,uid,cube,query,context={}):
         if not context==False:
-            print "Logging Query..."
-            logentry={}
-            logentry['user_id']=uid
-            logentry['cube_id']=cube.id
-            logentry['query']=query
-            logentry['time']= str(datetime.datetime.now())
-            logentry['result_size']=0
-            log_id = pooler.get_pool(cr.dbname).get('olap.query.logs').create(cr,uid,logentry)
-            return log_id
+            log_ids = pooler.get_pool(cr.dbname).get('olap.query.logs').search( cr, uid, [('query','=', query), ('user_id','=', uid)])
+            if log_ids:
+                count = pooler.get_pool(cr.dbname).get('olap.query.logs').browse(cr, uid, log_ids, context)[0]
+                pooler.get_pool(cr.dbname).get('olap.query.logs').write(cr, uid, log_ids, {'count':count.count+1})
+                if count.count>=3:
+                    print "Write IN TABLE:>>>>"
+                return True
+            else:
+                logentry={}
+                logentry['user_id']=uid
+                logentry['cube_id']=cube.id
+                logentry['query']=query
+                logentry['time']= str(datetime.datetime.now())
+                logentry['result_size']=0
+                logentry['count']=1
+                log_id = pooler.get_pool(cr.dbname).get('olap.query.logs').create(cr,uid,logentry)
+#                count = pooler.get_pool(cr.dbname).get('olap.query.logs').browse(cr, uid, log_id, context)
+#                pooler.get_pool(cr.dbname).get('olap.query.logs').write(cr, uid, log_id, {'count':count.count+1})
+                return log_id
         return -1
 # vim: ts=4 sts=4 sw=4 si et

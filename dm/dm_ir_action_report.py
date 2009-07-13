@@ -26,6 +26,7 @@ from osv import fields, osv
 import pooler
 import os
 from dm_document_report import offer_document
+from base_report_designer.wizard.tiny_sxw2rml import sxw2rml
 from report.report_sxw import report_sxw
 from report import interface
 from StringIO import StringIO
@@ -37,9 +38,7 @@ from lxml import etree
 _regex = re.compile('\[\[setHtmlImage\((.+?)\)\]\]')
 
 #class my_report_sxw(report_sxw):
-#    print "Tessssssssssssssssssssssss"
 #    def create_single(self, cr, uid, ids, data, report_xml, context={}):
-#        print "----------------------------my method"
 #        report_sxw.create_single(self, cr, uid, ids, data, report_xml, context)
 
 def my_register_all(db,report=False):
@@ -89,7 +88,6 @@ class report_xml(osv.osv):
             fp = tools.file_open('normalized_odt2rml.xsl',
                     subdir='addons/base_report_designer/wizard/tiny_sxw2rml')
             rml_content = str(sxw2rml(sxwval, xsl=fp.read()))
-        print file_type
         if file_type=='html':
             rml_content = base64.decodestring(file_sxw)
         report = pool.get('ir.actions.report.xml').write(cr, uid, [report_id], {
@@ -104,7 +102,7 @@ class report_xml(osv.osv):
         list_image_id = []
         def process_tag(node,list_image_id):
             if not node.getchildren():
-                if  node.tag=='img' and node.get('name') and node.get('name').find('[[setHtmlImage')>=0:
+                if  node.tag=='img' and node.get('name') and node.get('name').find('setHtmlImage')>=0:
                     res_id= _regex.split(node.get('name'))[1]
                     list_image_id.append((res_id,node.get('src')))
             else :
@@ -113,7 +111,6 @@ class report_xml(osv.osv):
         datas = self.report_get(cr, uid, report_id)['report_sxw_content']
         root = etree.HTML(base64.decodestring(datas))
         process_tag(root,list_image_id)
-        return list_image_id 
-
+        return list_image_id
 report_xml()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:               

@@ -22,48 +22,6 @@
 
 from osv import fields, osv
 
-
-def next_step(context):
-    index = context.get('next_step', False)
-    context.update({'next_step': index+1 })
-    model_list= context.get('step_list', False)
-    model = 'sale.order.line'
-    if index and model_list and index < len(model_list):
-        model = model_list[index]
-    
-    if model == 'sale.order.line':
-        if context.get('active_id_object_type', False) == 'sale.order.line':
-            return {
-                    'type': 'ir.actions.act_window_close',
-                }
-        else:
-            return {
-                    'view_type': 'form',
-                    "view_mode": 'form',
-                    'res_model': model,
-                    'type': 'ir.actions.act_window',
-                    'target':'new',
-                    'res_id': context.get('sol_id', False),
-                    'buttons': True,
-                    'context': context,
-                }
-    else:
-        return {
-                'view_type': 'form',
-                "view_mode": 'form',
-                'res_model': model,#'sale_product_multistep_configurator', #'ir.actions.configuration.wizard',
-                'type': 'ir.actions.act_window',
-                'target':'new',
-                'context': context,
-            }
-
-
-class sale_product_multistep_configurator_configurator(osv.osv_memory):
-    _name = "sale_product_multistep_configurator.configurator"
-    _columns = {}
-        
-sale_product_multistep_configurator_configurator()
-
 class sale_product_multistep_configurator_configurator_step(osv.osv):
     _name = "sale_product_multistep_configurator.configurator.step"
     _columns = {
@@ -72,6 +30,71 @@ class sale_product_multistep_configurator_configurator_step(osv.osv):
                 'sequence' : fields.integer('Sequence', help="Determine in which order step are executed"),
                 }
     _order = 'sequence'
+    
+    def update_context_before_step(self, cr, user, context={}):
+        """Hook to allow a configurator step module to update the context before running, for instance to skip this step."""
+        return context
+    
+    def next_step(self, cr, user, context={}):
+        context = self.update_context_before_step(cr, user, context)
+        index = context.get('next_step', 0)
+        context.update({'next_step': index+1 })
+        model_list= context.get('step_list', False)
+        if index and model_list and index < len(model_list):
+            return {
+                    'view_type': 'form',
+                    "view_mode": 'form',
+                    'res_model': model_list[index],
+                    'type': 'ir.actions.act_window',
+                    'target':'new',
+                    'context': context,
+                }
+        else:
+            if context.get('active_id_object_type', False) == 'sale.order.line':
+                return {
+                        'type': 'ir.actions.act_window_close',
+                    }
+            else:
+                
+                #fake the product_id_change event occuring when manually selecting the product
+                uid = user
+                order_line = self.pool.get('sale.order.line').browse(cr, uid, context.get('sol_id', False), {})
+                sale_order = order_line.order_id
+                pricelist = sale_order.pricelist_id.id
+                date_order = sale_order.date_order
+                fiscal_position = sale_order.fiscal_position.id
+                qty_uos = order_line.product_uos_qty
+                uos = order_line.product_uos.id
+                partner_id = sale_order.partner_id.id
+                packaging = order_line.product_packaging.id
+                product = order_line.product_id.id
+                qty = order_line.product_uom_qty
+                uom = order_line.product_uom.id
+                qty_uos = order_line.product_uos_qty
+                uos = order_line.product_uos.id
+                name = order_line.name
+                lang = context.get('lang', False)
+                update_tax = True
+                flag = True #TODO sure?
+                
+                
+                on_change_result = self.pool.get('sale.order.line').product_id_change(cr, uid, [order_line.id], pricelist, product, qty,
+                    uom, qty_uos, uos, name, partner_id, lang, update_tax, date_order, packaging, fiscal_position, flag)
+                
+                on_change_result['value']['tax_id'] = [(6, 0, on_change_result['value']['tax_id'])] #deal with many2many and sucking geek Tiny API
+                self.pool.get('sale.order.line').write(cr, uid, [order_line.id], on_change_result['value'])
+                
+                return {
+                        'view_type': 'form',
+                        "view_mode": 'form',
+                        'res_model': 'sale.order.line',
+                        'type': 'ir.actions.act_window',
+                        'target':'new',
+                        'res_id': context.get('sol_id', False),
+                        'buttons': True,
+                        'context': context,
+                    }        
+
     
 sale_product_multistep_configurator_configurator_step()
 

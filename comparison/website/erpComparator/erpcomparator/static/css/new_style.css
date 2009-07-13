@@ -82,6 +82,7 @@ button {
     padding: 0px 2px;
     font-size: 11px;
     white-space: nowrap;
+    margin: 1px;
 }
 
 #container {
@@ -300,7 +301,7 @@ td.item .radio {
 	width:890px;
 }
 
-#header_bar {
+div .header_bar {
 	/*height:40px;*/
 	position:relative;
 	width:900px;
@@ -373,17 +374,26 @@ td.item .radio {
 	font-style: normal;
 	font-size: 11px;
 	padding-left: 10px;
-	padding-bottom: 10px;
+	padding-bottom: 30px;
 	padding-right: 10px;
 }
 
+.checkboxtext {
+	font-family: Verdana, Geneva, sans-serif;
+	font-style: normal;
+	font-size: 11px;
+	padding-bottom: 10px;
+	padding-right: 10px;
+	padding-top: 18px;
+}
+
 #loginbg {
-	background: url(/static/images/bk_loginimage.png);
-	/*background-repeat:no-repeat;*/
+	/*background: url(/static/images/bk_loginimage.png);*/
+	background-repeat:repeat scroll 0 0;
 	float: right;
 	height: 39px;
-	padding-right: 30px;
-	width: 470px;
+	font-size: 11px;
+	width: 55%;
 }
 	
 #s {

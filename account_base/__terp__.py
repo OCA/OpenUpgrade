@@ -24,7 +24,7 @@
     "name" : "Accounting Base Properties",
     "version" : "1.0",
     "depends" : [
-        "base",
+        "base","account"
     ],
     "author" : 'Tiny & Axelor',
     "description": """Accounting Base Properties is providing the,

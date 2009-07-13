@@ -2,18 +2,18 @@ ETL TODO
 ===========
 Phase I : the framework
 -----------------------
-* Exception handling  
-- CURRENT : not save status of job and data if any exception occur during run process 
+* Exception handling
+- CURRENT : not save status of job and data if any exception occur during run process
 
-* Pause , Restart after pause, stop job  
-- CURRENT : lib is not provided this functionality 
+* Pause , Restart after pause, stop job
+- CURRENT : lib is not provided this functionality
 
 * Able to save a job and retrive job
 
 * Handle Trigger Transition
 - Trigger transition active when particular trigger fired from component.
 
-* Improve transformer class 
+* Improve transformer class
 - CURRENT : only provide transform functionality like convert string value into particular type
 - we need also add functionality like Schema validation
 original data :
@@ -26,5 +26,22 @@ transform data :
 * implement cProfile in job
 
 * Improve etl_test lib
+
+
+*  pause and restart job problem
+    - pickle to store the job (etl/demo/test_server.py)
+    - thread server implementation
+*  google calendar in and out => test file
+*  google doc in and out => test file
+*  facebook in and out => test file
+*  gmail in and out => test file
+*  blogger in and out => test file
+*  xml data in and out => test file
+*  subjob.py check
+
+*  sql connector:
+	 currently working => psql, oracle, mysql
+	 should be work with => other databases
+
 
 

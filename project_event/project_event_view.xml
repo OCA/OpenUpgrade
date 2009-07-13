@@ -2,6 +2,7 @@
 <openerp>
     <data>
 
+		<!--    Project Form    -->
         <record id="view_project_event_form2" model="ir.ui.view">
 			<field name="name">project.project</field>
 			<field name="model">project.project</field>
@@ -56,7 +57,7 @@
 			</field>
 		</record>
 
-
+		<!--	Project Event Configuration    -->
         <record model="ir.ui.view" id="project_event_configuration_form_view">
 	        <field name="name">Project Event Configuration</field>
 	        <field name="model">project.event.configuration</field>
@@ -99,8 +100,7 @@
 	        <field name="view_id" ref="project_event_configuration_tree_view"/>
 	    </record>
 
-
-
+		<!--    Project Event Type    -->
         <record model="ir.ui.view" id="project_event_type_view">
 	        <field name="name">Project Event Type</field>
 	        <field name="model">project.event.type</field>
@@ -132,7 +132,7 @@
 	        <field name="view_mode">tree,form</field>
 	        <field name="view_id" ref="project_event_type_tree_view"/>
 	    </record>
-
         <menuitem action="project_event_type_action" id="menu_project_event_type" parent="project.menu_definitions"/>
+        
     </data>
 </openerp>

@@ -51,7 +51,7 @@
 		</record>
 		<menuitem name="Translation" id="menu_translation_root"/>
 		<menuitem name="Translation Dossier" id="menu_translation_root_dossier" parent="menu_translation_root" action="action_translation_folder"/>
-		
+
 <!-- view for credit.line ... -->
 		<record model="ir.ui.view" id="view_credit_line_form">
 			<field name="name">credit.line.form</field>
@@ -89,7 +89,7 @@
 			<field name="view_id" ref="view_credit_line_tree"/>
 		</record>
 		<menuitem name="Credit Line" id="menu_translation_root_credit" parent="menu_translation_root" action="action_credit_line"/>
-		
+
 <!-- view for letter.credence ... -->
 		<record model="ir.ui.view" id="view_letter_credence_form">
 			<field name="name">letter.credence.form</field>
@@ -129,11 +129,10 @@
 			<field name="model">res.partner</field>
 			<field name="inherit_id" ref="base.view_partner_form"/>
 			<field name="arch" type="xml">
-
 				<notebook position="inside">
 					<page string="Certificate Details">
 						<separator string="Translation" colspan="4"/>
-                        <field name="awex_eligible"/>
+                        <field name="awex_eligible" />
                     </page>
 				</notebook>
 

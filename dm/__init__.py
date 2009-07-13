@@ -25,8 +25,8 @@ import trademark
 import offer
 import offer_step
 import campaign
-import customer
 import mail_service
+import customer
 import document
 import reportdm
 import wizard

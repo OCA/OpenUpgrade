@@ -25,11 +25,12 @@
 			<field name="inherit_id" ref="event.view_event_form"/>
 			<field name="arch" type="xml">
 				<notebook position="inside">
-					<page string="Google">
+					<page string="Google Event">
 						<field name="google_event_id" colspan="4"/>
 						<field name="event_modify_date" colspan="4"/>
 						<field name="write_date" colspan="4"/>
 						<field name="create_date" colspan="4"/>
+						<field name="repeat_status" colspan="4"/>
 					</page>
 				</notebook>
 			</field>

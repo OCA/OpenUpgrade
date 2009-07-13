@@ -23,13 +23,12 @@
 from osv import osv, fields
 from tools.translate import _
     
-import sys,os
+import sys, os
 import smtplib
 from email.MIMEText import MIMEText
 from email.MIMEBase import MIMEBase
 from email.MIMEMultipart import MIMEMultipart
 from email.Header import Header
-from email.Utils import formatdate, COMMASPACE
 from email.Utils import formatdate, COMMASPACE
 from email import Encoders    
 

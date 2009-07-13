@@ -131,7 +131,7 @@
 				<xpath expr="/form/notebook" position="inside">
 					<page string="Variants">
 						<field name="dimension_type_ids" widget="one2many_list" nolabel="1">
-							<tree string="Dimension types" editable="bottom">
+							<tree string="Dimension types">
 								<field name="name" />
 								<field name="allow_custom_value" />
 							</tree>
@@ -139,7 +139,7 @@
 								<field name="name" />
 								<field name="sequence" />
 								<field name="allow_custom_value" />
-								<field name="value_ids">
+								<field name="value_ids" nolabel="1" colspan="4">
 									<tree string="Variant Value" editable="bottom">
 										<field name="name" />
 										<field name="sequence" />
@@ -155,6 +155,7 @@
 								</field>
 							</form>
 						</field>
+						<button name="button_generate_variants" string="Generate ->" type="object" />
 						<field name="variant_ids" string="Variants" nolabel="1">
 							<tree string="Variants">
 								<field name="code" />
@@ -162,7 +163,6 @@
 								<field name="variants" string="Dimension Values" />
 							</tree>
 						</field>
-						<button name="button_generate_variants" string="Generate" type="object" />
 					</page>
 				</xpath>
 			</field>
@@ -176,7 +176,7 @@
 			<field name="arch" type="xml">
 				<field name="price_extra" position="after">
 					<field name="standard_price" readonly="1" />
-					<field name="list_price" readonly="1" />
+					<field name="list_price" string="Template price" readonly="1" />
 					<field name="dimension_value_ids" context="{'product_tmpl_id':product_tmpl_id}"/>
 				</field>
 			</field>

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -25,13 +25,13 @@
     "author" : "Tiny",
     "category" : "Generic Modules/CRM",
     "description": """This module allow track events on project and perform particular action in event
-  - event on create/modify task 
-  - event on document upload  
+  - event on create/modify task
+  - event on document upload
 """,
     "depends" : ["base", "project"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["project_event_view.xml", "project_event_data.xml"],
+    "update_xml" : ["project_event_view.xml", "project_event_data.xml", "security/ir.model.access.csv"],
     "active": False,
     "installable": True,
 }

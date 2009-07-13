@@ -52,6 +52,59 @@
 
     <!--
     =======================================================
+    OFFER STEP TRANSITION
+    =======================================================
+    -->
+
+    <record model="ir.ui.view" id="view_offer_step_transition_form">
+        <field name="name">dm.offer.step.transition.form</field>
+        <field name="model">dm.offer.step.transition.type</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Offer Step Transition">
+                <separator string="Origin and Destination" colspan="4"/>
+                <field name="step_from_id" colspan="4" readonly="1"/>
+                <field name="step_to_id" colspan="4" />
+                <separator string="Action Condition and Time" colspan="4"/>
+                <field name="condition_id" select="1" />
+                <label align="1.0" string="Delay After Trigger Date:"/>
+                <group col="2" colspan="1">
+                    <field name="delay" nolabel="1"/>
+                    <field name="delay_type" nolabel="1" select="2"/>
+                </group>
+                <group col="2" colspan="2">
+                    <field name="action_hour" widget="float_time" select="2"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_offer_step_transition_tree">
+        <field name="name">dm.offer.step.transition.tree</field>
+        <field name="model">dm.offer.step.transition</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Offer Step Transition">
+                <field name="condition_id"/>
+                <field name="step_from_id"/>
+                <field name="step_to_id"/>
+                <field name="delay"/>
+                <field name="delay_type"/>
+                <field name="action_hour"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_step_transition_form">
+        <field name="name">All Offer Step Transition</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.offer.step.transition</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_offer_step_transition_tree"/>
+    </record>
+
+    <!--
+    =======================================================
     OFFER STEP VIEWS
     =======================================================
     -->
@@ -112,7 +165,7 @@
                                 <field name="step_from_id" colspan="4" readonly="1"/>
                                 <field name="step_to_id" colspan="4" domain="[('offer_id','=',parent.offer_id)]"/>
                                 <separator string="Action Condition and Time" colspan="4"/>
-                                <field name="condition_id" select="1" domain="[('type','=','offer')]"/>
+                                <field name="condition_id" select="1" />
                                 <label align="1.0" string="Delay After Trigger Date:"/>
                                 <group col="2" colspan="1">
                                     <field name="delay" nolabel="1"/>
@@ -137,7 +190,7 @@
                                 <field name="step_from_id" domain="[('offer_id','=',parent.offer_id)]"/>
                                 <field name="step_to_id" readonly="1"/>
                                 <separator string="Action Condition and Time" colspan="4"/>
-                                <field name="condition_id" select="1" domain="[('type','=','offer')]"/>
+                                <field name="condition_id" select="1" />
                                 <label align="1.0" string="Delay After Trigger Date:"/>
                                 <group col="2" colspan="1">
                                     <field name="delay" nolabel="1"/>
@@ -419,43 +472,6 @@
         view_mode="tree,form"
         id="act_workitem_opened"
         domain = "[('step_id','=',active_id)]"/>
--->
-<!--
-    <record id="view_dm_offer_step_action_form" model="ir.ui.view">
-        <field name="name">dm.offer.step.action.form</field>
-        <field name="model">dm.offer.step.action</field>
-        <field name="type">form</field>
-        <field name="arch" type="xml">
-             <form string="Offer Action">
-                <group col="6" colspan="4">
-                    <field name="server_action_id" />
-                    <field name="media_id"/>
-                </group>
-            </form>
-        </field>
-    </record>
-    
-    <record id="view_dm_offer_step_action_tree" model="ir.ui.view">
-        <field name="name">dm.offer.step.action.tree</field>
-        <field name="model">dm.offer.step.action</field>
-        <field name="type">tree</field>
-        <field name="arch" type="xml">
-            <tree string="Offer Action">
-                <field name="media_id"/>
-                <field name="server_action_id" />
-            </tree>
-        </field>
-    </record>
-
- <record model="ir.actions.act_window" id="action_dm_offer_step_action_form">
-        <field name="name">All Offer Step Action</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">dm.offer.step.action</field>
-        <field name="view_type">form</field>
-        <field name="view_id" ref="view_dm_offer_step_action_tree"/>
-    </record>
-
-<menuitem id="menu_action_dm_offer_step_action_form" parent="dm.menu_dm_config_offer_offer_steps" action="action_dm_offer_step_action_form" sequence="2" />
 -->
 
 </data>

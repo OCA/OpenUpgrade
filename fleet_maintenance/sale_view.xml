@@ -63,7 +63,7 @@
             <field
                 context="partner_id=parent.partner_id,quantity=product_uom_qty,pricelist=parent.pricelist_id,shop=parent.shop_id,uom=product_uom"
                 name="product_uom_qty"
-                on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, 'lang' in context and context['lang'], False, parent.date_order, product_packaging, parent.fiscal_position, is_maintenance, maintenance_product_qty, maintenance_month_qty, parent.fleet_id)"
+                on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, 'lang' in context and context['lang'], False, parent.date_order, product_packaging, parent.fiscal_position, True, is_maintenance, maintenance_product_qty, maintenance_month_qty, parent.fleet_id)"
                 select="1"/>
 				</xpath>
 	    </field>
@@ -79,7 +79,7 @@
 	        <field colspan="4"
 	            context="partner_id=parent.partner_id,quantity=product_uom_qty,pricelist=parent.pricelist_id,shop=parent.shop_id,uom=product_uom"
 	            name="product_id"
-	            on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, 'lang' in context and context['lang'], True, parent.date_order, product_packaging, parent.fiscal_position, is_maintenance, maintenance_product_qty, maintenance_month_qty, parent.fleet_id)"
+	            on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, 'lang' in context and context['lang'], True, parent.date_order, product_packaging, parent.fiscal_position, False, is_maintenance, maintenance_product_qty, maintenance_month_qty, parent.fleet_id)"
 	            select="1"/>
 				</xpath>
 	    </field>

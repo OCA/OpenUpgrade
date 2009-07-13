@@ -13,6 +13,9 @@ def customer_function(cr, uid, **args):
     model_object =  pool.get(model_name)
     if model_name in ['dm.workitem','dm.campaign','dm.offer.step','dm.trademark'] and 'wi_id' in args:
         data = pool.get('dm.workitem').browse(cr,uid,args['wi_id'])
+        if not data.segment_id : return False
+        if not data.segment_id.proposition_id : return False
+        if not data.segment_id.proposition_id.camp_id.trademark_id : return False
         if model_name == 'dm.campaign':
             res = pool.get(model_name).read(cr,uid,data.segment_id.proposition_id.camp_id.id)
         elif model_name == 'dm.offer.step':
@@ -63,14 +66,14 @@ def customer_function(cr, uid, **args):
                     read_name = pool.get('res.partner').read(cr,uid,res['name'][0],['name'])
                     res[args['field_name']] = read_name['name']
                 else : return ' '
-        if (model_name == 'dm.workitem') or (model_name == 'res.partner.address' and args['field_name'] == 'partner_id'):
+        if (model_name == 'dm.workitem'):
             if args['field_name'] == 'tr_from_id':
                 if res['tr_from_id']:
-                    previous_step_id = pool.get('dm.offer.step.transition').browse(cr,uid,[res['tr_from_id'][0]])[0]
+                    previous_step_id = pool.get('dm.offer.step.transition').browse(cr,uid,res['tr_from_id'][0])
                     return previous_step_id.step_from_id.id
                 else : return False
             else : 
-                return res[args['field_name']][0]
+                return res[args['field_name']] and res[args['field_name']][0] or ''
         return res[args['field_name']]
     elif args['field_type'] not in ['many2many','one2many']:
         return res[args['field_name']]

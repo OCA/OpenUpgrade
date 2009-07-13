@@ -89,7 +89,6 @@ class account_invoice_draft(report_sxw.rml_parse):
         self.sum_tax=0.00
         self.sum_tot=0.00
         for invoice in invoices:
-
             self.sum_untaxed +=invoice.amount_untaxed
 
             self.sum_tax +=invoice.amount_tax
@@ -119,7 +118,6 @@ class account_invoice_draft(report_sxw.rml_parse):
                 res['gen_acc']=line.account_id.name
                 res['analytic_acc']=line.account_analytic_id and line.account_analytic_id.name or '-'
                 result.append(res)
-
         return result
 
     def sum_amt_untaxed(self):

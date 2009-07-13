@@ -48,11 +48,12 @@ class SmtpClient(osv.osv):
     _description = 'Email Client'
     _columns = {
         'name' : fields.char('Server Name', size=256, required=True),
-        'from_email' : fields.char('Email From', size=256, required=True, readonly=True, states={'new':[('readonly',False)]}),
+        'from_email' : fields.char('Email From', size=256),
         'email' : fields.char('Email Address', size=256, required=True, readonly=True, states={'new':[('readonly',False)]}),
-        'user' : fields.char('User Name', size=256, required=True, readonly=True, states={'new':[('readonly',False)]}),
-        'password' : fields.char('Password', size=256, required=True, invisible=True, readonly=True, states={'new':[('readonly',False)]}),
+        'user' : fields.char('User Name', size=256, readonly=True, states={'new':[('readonly',False)]}),
+        'password' : fields.char('Password', size=256, invisible=True, readonly=True, states={'new':[('readonly',False)]}),
         'server' : fields.char('SMTP Server', size=256, required=True, readonly=True, states={'new':[('readonly',False)]}),
+        'auth' : fields.boolean("Use Auth", readonly=True, states={'new':[('readonly',False)]}),
         'port' : fields.char('SMTP Port', size=256, required=True, readonly=True, states={'new':[('readonly',False)]}),
         'ssl' : fields.boolean("Use SSL?", readonly=True, states={'new':[('readonly',False)]}),
         'users_id': fields.many2many('res.users', 'res_smtpserver_group_rel', 'sid', 'uid', 'Users Allowed'),
@@ -61,6 +62,7 @@ class SmtpClient(osv.osv):
             ('waiting','Waiting for Verification'),
             ('confirm','Verified'),
         ],'Server Status', select=True, readonly=True),
+        'auth_type':fields.selection([('gmail','Google Server'), ('yahoo','Yahoo!!! Server'), ('unknown','Other Mail Servers')], string="Server Type"),
         'active' : fields.boolean("Active"),
         'date_create': fields.date('Date Create', required=True, readonly=True, states={'new':[('readonly',False)]}),
         'test_email' : fields.text('Test Message'),
@@ -75,37 +77,50 @@ class SmtpClient(osv.osv):
     _defaults = {
         'date_create': lambda *a: time.strftime('%Y-%m-%d'),
         'state': lambda *a: 'new',
+        'type': lambda *a: 'default',
+        'port': lambda *a: '25',
+        'auth': lambda *a: True,
+        'active': lambda *a: True,
         'verify_email': lambda *a: _("Verification Message. This is the code\n\n__code__\n\nyou must copy in the OpenERP Email Server (Verify Server wizard).\n\nCreated by user __user__"),
     }
     server = {}
     smtpServer = {}
-    
-#    def read(self,cr, uid, ids, fields=None, context=None, load='_classic_read'):
-#        def override_password(o):
-#            for field in o[0]:
-#                if field == 'password':
-#                    o[0][field] = '********'
-#            return o
-#        
-#        result = super(SmtpClient, self).read(cr, uid, ids, fields, context, load)
-#        result = override_password(result)
-#        return result
+
+    def read(self,cr, uid, ids, fields=None, context=None, load='_classic_read'):
+        def override_password(o):
+            for field in o[0]:
+                if field == 'password':
+                    o[0][field] = '********'
+            return o
+
+        result = super(SmtpClient, self).read(cr, uid, ids, fields, context, load)
+        result = override_password(result)
+        return result
         
-    def change_email(self, cr, uid, ids, email):
-        if len(email) > 0 and email.index('@') > 0:
-            user = email[0:email.index('@')]
-            return {'value':{'user':user}}
+    def change_servertype(self, cr, uid, ids, server):
+        if server == 'gmail':
+            return {'value':{'server':'smtp.gmail.com', 'port':'25', 'ssl':True, 'auth':True}}
+        elif server== 'yahoo':
+            return {'value':{'server':'smtp.mail.yahoo.co.in', 'ssl':False, 'port':'587', 'auth':True}}
         else:
-            return {'value':{'user':email}}
-        
+            return {'value':{'server':'localhost', 'port':'25', 'ssl':False, 'auth':False}}
+    
+    def change_email(self, cr, uid, ids, email):
+        email_from = self.pool.get('res.users').browse(cr, uid, uid).name
+        if len(email) > 0 and email.find('@') > -1 and email.index('@') > 0:
+            user = email[0:email.index('@')]
+            return {'value':{'user':user, 'from_email':email_from+' <'+email+'>'}}
+        else:
+            return {'value':{'user':email, 'from_email':email_from+' <'+email+'>'}}
+
     def check_permissions(self, cr, uid, ids):
         cr.execute('select * from res_smtpserver_group_rel where sid=%s and uid=%s' % (ids[0], uid))
         data = cr.fetchall()
         if len(data) <= 0:
             return False
-        
+
         return True
-    
+
     def gen_private_key(self, cr, uid, ids):
         new_key = []
         for i in time.strftime('%Y-%m-%d %H:%M:%S'):
@@ -114,7 +129,7 @@ class SmtpClient(osv.osv):
                 keys = random.random()
                 key = str(keys).split('.')[1]
                 ky = key
-                
+
             new_key.append(ky)
         new_key.sort()
         key = ''.join(new_key)
@@ -168,10 +183,16 @@ class SmtpClient(osv.osv):
             })
         self.write(cr, uid, ids, {'state':'waiting', 'code':key})
         return True
-        
+         
+    def getpassword(self,cr,uid,ids):
+        data = {}
+        cr.execute("select * from email_smtpclient where id =%s" , str(ids[0]) )
+        data = cr.dictfetchall()
+        return data
+
     def open_connection(self, cr, uid, ids, serverid=False, permission=True):
         if serverid:
-            self.server[serverid] = self.read(cr, uid, [serverid])[0]
+            self.server[serverid] = self.getpassword(cr, uid, [serverid])[0]
         else:
             raise osv.except_osv(_('Read Error!'), _('Unable to read Server Settings'))
         
@@ -190,7 +211,9 @@ class SmtpClient(osv.osv):
                     self.smtpServer[serverid].starttls()
                     self.smtpServer[serverid].ehlo()
                     
-                self.smtpServer[serverid].login(str(self.server[serverid]['user']),str(self.server[serverid]['password']))
+                if self.server[serverid]['auth']:
+                    self.smtpServer[serverid].login(str(self.server[serverid]['user']),str(self.server[serverid]['password']))
+
             except Exception, e:
                 raise osv.except_osv(_('SMTP Server Error!'), e)
             
@@ -224,13 +247,31 @@ class SmtpClient(osv.osv):
             return False
         
         return ids[0]
-
-    def send_email(self, cr, uid, server_id, emailto, subject, body=False, attachments=[]):
+    
+    # Reports is a list of tuples,where first arguement of tuple is the name of the report,second is the list of ids of the object
+    def send_email(self, cr, uid, server_id, emailto, subject, body=False, attachments=[], reports=[]):
+        
+        def createReport(cr, uid, report, ids):
+            files = []
+            for id in ids:
+                try:
+                    service = netsvc.LocalService(report)
+                    (result, format) = service.create(cr, uid, [id], {}, {})
+                    report_file = '/tmp/reports'+ str(id) + '.pdf'
+                    fp = open(report_file,'wb+')
+                    fp.write(result);
+                    fp.close();
+                    files += [report_file]    
+                except Exception,e:
+                    continue        
+            return files
+        
         smtp_server = self.browse(cr, uid, server_id)
         if smtp_server.state != 'confirm':
             raise osv.except_osv(_('SMTP Server Error !'), 'Server is not Verified, Please Verify the Server !')
-
+        
         subject = unicode(subject, 'utf-8') # Email subject could have non-ascii characters
+        
         if type(emailto) == type([]):
             for to in emailto:
                 msg = MIMEMultipart()
@@ -239,6 +280,10 @@ class SmtpClient(osv.osv):
                 msg['From'] = smtp_server.from_email
                 msg.attach(MIMEText(body or '', _charset='utf-8', _subtype="html"))
                 
+                for rpt in reports:
+                    rpt_file = createReport(cr, uid, rpt[0], rpt[1])
+                    attachments += rpt_file
+                    
                 for file in attachments:
                     part = MIMEBase('application', "octet-stream")
                     part.set_payload(open(file,"rb").read())
@@ -265,6 +310,10 @@ class SmtpClient(osv.osv):
             msg['From'] = smtp_server.from_email
             msg.attach(MIMEText(body or '', _charset='utf-8', _subtype="html"))
             
+            for rpt in reports:
+                rpt_file = createReport(cr, uid, rpt[0], rpt[1])
+                attachments += rpt_file
+                    
             for file in attachments:
                 part = MIMEBase('application', "octet-stream")
                 part.set_payload(open(file,"rb").read())
@@ -384,6 +433,8 @@ class report_smtp_server(osv.osv):
                    select min(h.id) as id, c.id as server_id, h.name as history, h.name as name, count(h.name) as no  from email_smtpclient c inner join email_smtpclient_history h on c.id=h.server_id group by h.name, c.id
                               )
          """)
+         
 report_smtp_server()
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
