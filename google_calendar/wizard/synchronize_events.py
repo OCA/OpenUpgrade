@@ -89,6 +89,42 @@ def _tz_get(self, cr, uid, data, context={}):
     else:
         return 'timezone'
 
+def _get_repeat_status(self, str_google, byday):
+    if not str_google:
+        return 'norepeat'
+    if str_google == 'DAILY':
+        return 'daily'
+    elif str_google == 'YEARLY':
+        return 'yearly'
+    elif str_google == 'MONTHLY':
+        return 'monthly'
+    elif str_google == 'WEEKLY' and byday == 'MO,TU,WE,TH,FR':
+        return 'everyweekday'
+    elif str_google == 'WEEKLY' and byday == 'MO,WE,FR':
+        return 'every_m_w_f'
+    elif str_google == 'WEEKLY' and byday == 'TU,TH':
+        return 'every_t_t'
+    elif str_google == 'WEEKLY':
+        return 'weekly'
+    return 'norepeat'
+
+def _get_repeat_dates(self, x):
+    repeat_start = x[1].split('\n')[0].split(':')[1]
+    repeat_end = x[2].split('\n')[0].split(':')[1]
+    o = repeat_start.split('T')
+    repeat_start = str(o[0][:4]) + '-' + str(o[0][4:6]) + '-' + str(o[0][6:8])
+    if len(o) == 2:
+        repeat_start += ' ' + str(o[1][:2]) + ':' + str(o[1][2:4]) + ':' + str(o[1][4:6])
+    else:
+        repeat_start += ' ' + '00' + ':' + '00' + ':' + '00'
+    p = repeat_end.split('T')
+    repeat_end = str(p[0][:4]) + '-' + str(p[0][4:6]) + '-' + str(p[0][6:8])
+    if len(p) == 2:
+        repeat_end += ' ' + str(p[1][:2]) + ':' + str(p[1][2:4]) + ':' + str(p[1][4:6])
+    else:
+        repeat_end += ' ' + '00' + ':' + '00' + ':' + '00'
+    return (repeat_start, repeat_end)
+
 class google_calendar_wizard(wizard.interface):
 
     calendar_service = ""
@@ -202,7 +238,7 @@ class google_calendar_wizard(wizard.interface):
                         timestring_end = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(event.date_end, "%Y-%m-%d %H:%M:%S"))))
                         endtime = time.strptime(timestring_end, time_format)
                         end_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', endtime)
-                        if an_event and not an_event.when:
+                        if an_event and not an_event.when:# Fix me
                             summary_dict['Error in Event While try to modify in Google'] += 1
                         else:
                             an_event.when[0].start_time = start_time
@@ -218,23 +254,18 @@ class google_calendar_wizard(wizard.interface):
                         if an_event and not an_event.when:
 #                            summary_dict['Error in Event While try to modify in Tiny'] += 1
                             x = an_event.recurrence.text.split(';')
-                            repeat_start = x[1].split('\n')[0].split(':')[1]
-                            repeat_end = x[2].split('\n')[0].split(':')[1]
-                            o = repeat_start.split('T')
-                            repeat_start = str(o[0][:4]) + '-' + str(o[0][4:6]) + '-' + str(o[0][6:8])
-                            if len(o) == 2:
-                                repeat_start += ' ' + str(o[1][:2]) + ':' + str(o[1][2:4]) + ':' + str(o[1][4:6])
-                            else:
-                                repeat_start += ' ' + '00' + ':' + '00' + ':' + '00'
-                            p = repeat_end.split('T')
-                            repeat_end = str(p[0][:4]) + '-' + str(p[0][4:6]) + '-' + str(p[0][6:8])
-                            if len(p) == 2:
-                                repeat_end += ' ' + str(p[1][:2]) + ':' + str(p[1][2:4]) + ':' + str(p[1][4:6])
-                            else:
-                                repeat_end += ' ' + '00' + ':' + '00' + ':' + '00'
+                            status = x[2].split('=')[-1:] and x[2].split('=')[-1:][0] or ''
+                            status_day = x[3].split('=')
+                            byday = ''
+                            if status_day and status_day[0] == 'BYDAY':
+                                byday = status_day[1]
+                            repeat_status = _get_repeat_status(self, status, byday)
+                            repeat_start, repeat_end = _get_repeat_dates(self, x)
+
                             timestring = datetime.datetime.strptime(repeat_start, "%Y-%m-%d %H:%M:%S").strftime('%Y-%m-%d %H:%M:%S')
                             timestring_end = datetime.datetime.strptime(repeat_end, "%Y-%m-%d %H:%M:%S").strftime('%Y-%m-%d %H:%M:%S')
                         else:
+                            repeat_status = 'norepeat'
                             stime = an_event.when[0].start_time
                             etime = an_event.when[0].end_time
                             stime = dateutil.parser.parse(stime)
@@ -247,15 +278,15 @@ class google_calendar_wizard(wizard.interface):
                             except :
                                 timestring = datetime.datetime(*stime.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
                                 timestring_end = datetime.datetime(*etime.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
-                            val = {
-                               'name': name_event,
-                               'date_begin': timestring,
-                               'date_end': timestring_end,
-                               'event_modify_date': timestring_update,
-                               'repeat_status':'norepeat' # To be chk
-                               }
-                            obj_event.write(cr, uid, [event.id], val)
-                            summary_dict['Event Modified In Tiny'] += 1
+                        val = {
+                           'name': name_event,
+                           'date_begin': timestring,
+                           'date_end': timestring_end,
+                           'event_modify_date': timestring_update,
+                           'repeat_status': repeat_status or 'norepeat'
+                           }
+                        obj_event.write(cr, uid, [event.id], val)
+                        summary_dict['Event Modified In Tiny'] += 1
 
                     elif event.write_date == google_up:
                         pass
@@ -268,23 +299,19 @@ class google_calendar_wizard(wizard.interface):
                     if an_event and not an_event.when:
 #                        summary_dict['Error in Event While try to create in Tiny'] += 1
                         x = an_event.recurrence.text.split(';')
-                        repeat_start = x[1].split('\n')[0].split(':')[1]
-                        repeat_end = x[2].split('\n')[0].split(':')[1]
-                        o = repeat_start.split('T')
-                        repeat_start = str(o[0][:4]) + '-' + str(o[0][4:6]) + '-' + str(o[0][6:8])
-                        if len(o) == 2:
-                            repeat_start += ' ' + str(o[1][:2]) + ':' + str(o[1][2:4]) + ':' + str(o[1][4:6])
-                        else:
-                            repeat_start += ' ' + '00' + ':' + '00' + ':' + '00'
-                        p = repeat_end.split('T')
-                        repeat_end = str(p[0][:4]) + '-' + str(p[0][4:6]) + '-' + str(p[0][6:8])
-                        if len(p) == 2:
-                            repeat_end += ' ' + str(p[1][:2]) + ':' + str(p[1][2:4]) + ':' + str(p[1][4:6])
-                        else:
-                            repeat_end += ' ' + '00' + ':' + '00' + ':' + '00'
+
+                        status = x[2].split('=')[-1:] and x[2].split('=')[-1:][0] or ''
+                        status_day = x[3].split('=')
+                        byday = ''
+                        if status_day and status_day[0] == 'BYDAY':
+                            byday = status_day[1]
+
+                        repeat_status = _get_repeat_status(self, status, byday)
+                        repeat_start, repeat_end = _get_repeat_dates(self, x)
                         timestring = datetime.datetime.strptime(repeat_start, "%Y-%m-%d %H:%M:%S").strftime('%Y-%m-%d %H:%M:%S')
                         timestring_end = datetime.datetime.strptime(repeat_end, "%Y-%m-%d %H:%M:%S").strftime('%Y-%m-%d %H:%M:%S')
                     else:
+                        repeat_status = 'norepeat'
                         stime = an_event.when[0].start_time
                         etime = an_event.when[0].end_time
                         stime = dateutil.parser.parse(stime)
@@ -304,7 +331,7 @@ class google_calendar_wizard(wizard.interface):
                        'product_id': product and product[0] or 1,
                        'google_event_id': an_event.id.text,
                        'event_modify_date': timestring_update,
-                       'repeat_status':'norepeat' # To be chk
+                       'repeat_status': repeat_status or 'norepeat'
                         }
                     obj_event.create(cr, uid, val)
                     summary_dict['Event Created In Tiny'] += 1
