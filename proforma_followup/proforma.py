@@ -101,7 +101,7 @@ class proforma_followup_scheduler(osv.osv):
     _rec_name = 'date'
 
     _columns = {
-        'date': fields.date('Next action planned at', readonly=True),
+        'date': fields.datetime('Next action planned at', readonly=True),
         'followup_action_id': fields.many2one('proforma.followup.action', 'Followup Action', readonly=True), 
         'invoice_id': fields.many2one('account.invoice', 'Invoice', readonly=True),
     }
