@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+<terp>
+<!--<data noupdate="1" -->
+<data>
+
+	#
+	# Sequences for labo.analysis.type
+	#
+
+	<record model="ir.sequence.type" id="seq_type_labo_analysis_sample1">
+		<field name="name">Labo sample</field>
+		<field name="code">labo.sample</field>
+	</record>
+	<record model="ir.sequence" id="seq_labo_analysis_sample1">
+		<field name="name">Progenus Number</field>
+		<field name="code">labo.sample</field>
+		<field name="padding">5</field>
+	</record>
+
+	<record model="ir.sequence.type" id="seq_type_labo_analysis_type1">
+		<field name="name">Labo analysis type</field>
+		<field name="code">labo.analysis.type</field>
+	</record>
+	<record model="ir.sequence" id="seq_labo_analysis_type1">
+		<field name="name">Labo analysis type</field>
+		<field name="code">labo.analysis.type</field>
+		<field name="prefix">%(year)s/</field>
+		<field name="padding">3</field>
+	</record>
+
+	<record model="ir.sequence.type" id="seq_type_labo_plate">
+		<field name="name">Labo plate</field>
+		<field name="code">labo.plate</field>
+	</record>
+	<record model="ir.sequence" id="seq_labo_plate">
+		<field name="name">Extraction Plate</field>
+		<field name="code">labo.plate</field>
+		<field name="padding">4</field>
+	</record>
+
+
+	<record model="ir.sequence.type" id="seq_type_labo_dog">
+		<field name="name">EMPDOG</field>
+		<field name="code">labo.dog.empdog</field>
+	</record>
+	<record model="ir.sequence" id="seq_labo_dog_empdog">
+		<field name="name">EMPDOG</field>
+		<field name="code">labo.dog.empdog</field>
+		<field name="prefix">cc</field>
+		<field name="padding">7</field>
+	</record>
+
+	<record model="ir.sequence.type" id="seq_type_file_his">
+		<field name="name">File History</field>
+		<field name="code">file.history.rfc</field>
+	</record>
+	<record model="ir.sequence" id="seq_file_hist_rfc">
+		<field name="name">RFC</field>
+		<field name="code">file.history.rfc</field>
+		<field name="prefix">RFC_%(year)s%(month)s%(day)s_</field>
+		<field name="padding">1</field>
+	</record>
+
+	<record model="ir.sequence.type" id="seq_type_file_hisrbc">
+		<field name="name">File History2</field>
+		<field name="code">file.history.rbc</field>
+	</record>
+	<record model="ir.sequence" id="seq_file_hist_rbc">
+		<field name="name">RBC</field>
+		<field name="code">file.history.rbc</field>
+		<field name="prefix">RBC_%(year)s%(month)s%(day)s_</field>
+		<field name="padding">1</field>
+	</record>
+
+	<record model="ir.sequence.type" id="seq_type_file_hisrcs">
+		<field name="name">File History</field>
+		<field name="code">file.history.rcs</field>
+	</record>
+	<record model="ir.sequence" id="seq_file_hist_rcs">
+		<field name="name">RCS</field>
+		<field name="code">file.history.rcs</field>
+		<field name="prefix">RCS_%(year)s%(month)s%(day)s_</field>
+		<field name="padding">1</field>
+	</record>
+
+	<!--new sequence for next analysis-->
+	<record model="ir.sequence.type" id="seq_type_labo_dog_empche">
+		<field name="name">EMPCHE</field>
+		<field name="code">labo.dog.empche</field>
+	</record>
+	<record model="ir.sequence" id="seq_labo_dog_empche">
+		<field name="name">EMPCHE</field>
+		<field name="code">labo.dog.empche</field>
+		<field name="prefix">ch</field>
+		<field name="padding">7</field>
+	</record>
+
+	<record model="ir.sequence.type" id="seq_type_labo_analysis_request">
+		<field name="name">Labo analysis request</field>
+		<field name="code">labo.analysis.request</field>
+	</record>
+	<record model="ir.sequence" id="seq_labo_analysis_request">
+		<field name="name">Labo analysis request</field>
+		<field name="code">labo.analysis.request</field>
+	<!--	<field name="prefix">%(year)s%(month)s%(day)s/</field>-->
+		<field name="prefix">%(year)s/</field>
+		<field name="padding">4</field>
+		<!--<field name="suffix">/%(year)s</field>-->
+	</record>
+<!--	<record model="ir.sequence.type" id="seq_type_labo_box">
+		<field name="name">Labo file </field>
+		<field name="code">labo.box</field>
+	</record>
+		<field name="prefix">%(year)s/%(month)s/</field>
+	<record model="ir.sequence" id="seq_labo_box">
+		<field name="name">Labo file </field>
+		<field name="code">labo.file</field>
+		<field name="prefix">%(year)s/</field>
+		<field name="padding">3</field>
+		</record>
+-->	<!--<field name="suffix">/%(year)s</field>-->
+
+
+	<record model="ir.sequence.type" id="seq_type_labo_analysis_setup2">
+		<field name="name">Labo setup</field>
+		<field name="code">analysis.setup</field>
+	</record>
+	<record model="ir.sequence" id="seq_labo_analysis_setup2">
+		<field name="name">Labo setup</field>
+		<field name="code">analysis.setup</field>
+		<field name="padding">4</field>
+	</record>
+
+
+	<record model="ir.sequence.type" id="seq_type_labo_analysis_setup">
+		<field name="name">Labo setup</field>
+		<field name="code">analysis.setup</field>
+	</record>
+	<record model="ir.sequence" id="seq_labo_analysis_setup">
+		<field name="name">Labo setup</field>
+		<field name="code">analysis.setup</field>
+		<field name="padding">4</field>
+	</record>
+
+
+	<record model="ir.sequence.type" id="seq_type_labo_follow">
+		<field name="name">Followsheet</field>
+		<field name="code">labo.followsheet</field>
+	</record>
+	<record model="ir.sequence" id="seq_followsheet2">
+		<field name="name">Followsheet</field>
+		<field name="code">labo.followsheet</field>
+		<field name="padding">4</field>
+	</record>
+
+	<!--<record model="ir.sequence.type" id="seq_type_labo_analysis_run">
+		<field name="name">Labo run</field>
+		<field name="code">analysis.run</field>
+	</record>
+	<record model="ir.sequence" id="seq_labo_analysis_run">
+		<field name="name">Labo setup</field>
+		<field name="code">analysis.run</field>
+		<field name="padding">1</field>
+	</record>-->
+
+
+</data>
+
+
+</terp>

@@ -1,0 +1,112 @@
+<?xml version="1.0" ?>
+<terp>
+	<data>
+		<!-- Roles definition -->
+
+		<record model="res.roles" id="request">
+			<field name="name">Request Approvel</field>
+		</record>
+		<record model="res.roles" id="testing">
+			<field name="name">Sample Testing</field>
+		</record>
+
+		<!-- Workflow definition -->
+
+		<record model="workflow" id="analysis_wkf">
+			<field name="name">labo.analysis.request.basic</field>
+			<field name="osv">labo.analysis.request</field>
+			<field name="on_create">True</field>
+		</record>
+
+		<!-- Workflow Activities///////////////////////////////////////////////////////////////////////-->
+
+		<record model="workflow.activity" id="draft">
+			<field name="wkf_id" ref="analysis_wkf"/>
+			<field name="flow_start">True</field>
+			<field name="name">draft</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state':'draft'})</field>
+		</record>
+
+		<record model="workflow.activity" id="open">
+			<field name="wkf_id" ref="analysis_wkf"/>
+			<field name="name">open</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state':'open'})</field>
+			<field name="split_mode">OR</field>
+		</record>
+
+		<record model="workflow.activity" id="ok">
+			<field name="wkf_id" ref="analysis_wkf"/>
+			<field name="name">ok</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state':'ok'})</field>
+			<field name="split_mode">OR</field>
+		</record>
+
+		<record model="workflow.activity" id="ko">
+			<field name="wkf_id" ref="analysis_wkf"/>
+			<field name="name">ko</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state':'ko'})</field>
+			<field name="split_mode">OR</field>
+		</record>
+
+		<record model="workflow.activity" id="invoiced">
+			<field name="wkf_id" ref="analysis_wkf"/>
+			<field name="name">invoiced</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state':'cancel'})</field>
+		</record>
+		<record model="workflow.activity" id="done">
+			<field name="wkf_id" ref="analysis_wkf"/>
+			<field name="name">done</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state':'done'})</field>
+			<field name="split_mode">OR</field>
+		</record>
+		
+		
+		<!-- Workflow Transitions///////////////////////////////////////////////////////////////////////-->
+
+		<record model="workflow.transition" id="analysis_t1">
+			<field name="act_from" ref="draft"/>
+			<field name="act_to" ref="open"/>
+			<field name="signal">start</field>
+			<field name="role_id" ref="request"/>
+		</record>
+	
+		<record model="workflow.transition" id="analysis_t2">
+			<field name="act_from" ref="open"/>
+			<field name="act_to" ref="ko"/>
+			<field name="signal">sample_ko</field>
+		</record>
+	
+		<record model="workflow.transition" id="analysis_t3">
+			<field name="act_from" ref="open"/>
+			<field name="act_to" ref="ok"/>
+			<field name="signal">sample_ok</field>
+		</record>
+	
+		<record model="workflow.transition" id="analysis_t4">
+			<field name="act_from" ref="ok"/>
+			<field name="act_to" ref="invoiced"/>
+			<field name="signal">invoice_create</field>
+		</record>
+	
+		<record model="workflow.transition" id="analysis_t5">
+			<field name="act_from" ref="invoiced"/>
+			<field name="act_to" ref="done"/>
+			<field name="signal">test_done</field>
+		</record>
+	
+		<record model="workflow.transition" id="analysis_t6">
+			<field name="act_from" ref="ko"/>
+			<field name="act_to" ref="draft"/>
+			<field name="signal">retest</field>
+		</record>
+	
+				
+
+	</data>
+</terp>

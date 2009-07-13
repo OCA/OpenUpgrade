@@ -1,0 +1,22 @@
+<header>
+	<pageTemplate>
+		<frame id="first" x1="1cm" y1="0.8cm" width="19.0cm" height="25.5cm"/>
+		<pageGraphics>
+			<!--logo-->
+			<image x="1cm" y="26.5cm" file="addons/labo_analysis/report/progenus.png" height="65.0" width="80.0"/>
+			<setFont name="Helvetica" size="10"/>
+			<drawString x="4.5cm" y="28.0cm">Progenus s.a</drawString>
+			<drawString x="4.5cm" y="27.5cm">[[ company.rml_header1 ]]</drawString>
+			<drawString x="4.5cm" y="27.0cm">Siège d'exploitation: 13, avenue Maréchal Juin - 5030 Gembloux</drawString>
+			<!--page bottom-->
+			<!--fill color="darkblue"/>
+			<stroke color="darkblue"/-->
+			<lines>1.5cm 1.6cm 29.3cm 1.6cm</lines>
+            <drawRightString x="5cm" y="1.2cm">PO-GESECH Rev 001</drawRightString>
+			<drawRightString x="2.9cm" y="0.8cm">Annexe 2</drawRightString>
+			<drawRightString x="827.0" y="1.2cm">Copyright Progenus</drawRightString>
+			<drawRightString x="16.5cm" y="1.2cm">Feuille de setup</drawRightString>
+
+			</pageGraphics>
+	</pageTemplate>
+</header>

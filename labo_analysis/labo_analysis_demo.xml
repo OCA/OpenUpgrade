@@ -1,0 +1,219 @@
+<?xml version="1.0"?>
+<terp>
+<data noupdate="1">
+
+<!-- demo data for the labo.analysis.view  start -->
+
+
+	<record id="labo_analysis_view1" model="labo.analysis.view">
+	<field name="name">simple</field>
+	</record>
+
+
+	<record id="labo_analysis_view2" model="labo.analysis.view">
+	<field name="name">complex</field>
+	</record>
+
+	<record id="labo_analysis_view3" model="labo.analysis.view">
+	<field name="name">very simple</field>
+	</record>
+
+
+	<record id="labo_analysis_view4" model="labo.analysis.view">
+	<field name="name">very complex</field>
+	</record>
+
+
+
+<!-- demo data for the labo.analysis.view  start -->
+
+
+
+
+
+
+
+
+	<!-- demo data for the labo.analysis.type  start -->
+
+<!--	<record id="labo_analysis_type1" model="labo.analysis.type">
+	<field name="code">Bruxelles1</field>
+	<field name="product_id" model="product.product" search="[]"/>
+	<field name="type_seq" model="ir.sequence" />
+	<field name="view_id" model="labo.analysis.view" search="[('name','=','simple')]"/>
+
+	</record>
+	<record id="labo_analysis_type2" model="labo.analysis.type">
+	<field name="code">Bruxelles1</field>-->
+	<!--<field name="product_id" model="product.product" search="[]"/>-->
+	<!--<field name="type_seq" model="ir.sequence" />-->
+	<!--<field name="view_id" model="labo.analysis.view" search="[('name','=','very simple')]"/>
+	</record>-->
+
+<!--	<record id="labo_analysis_type3" model="labo.analysis.type">
+	<field name="code">Bruxelles1</field>
+	<field name="product_id" model="product.product" search="[]"/>-->
+	<!--<field name="type_seq" model="ir.sequence" />-->
+	<!--<field name="view_id" model="labo.analysis.view" search="[('name','=','complex')]"/>
+	</record>-->-->
+
+	<!--<record id="labo_analysis_type4" model="labo.analysis.type">
+	<field name="code">Bruxelles1</field>
+	<field name="product_id" model="product.product" search="[]"/>-->
+	<!--<field name="type_seq" model="ir.sequence" />-->
+	<!--<field name="view_id" model="labo.analysis.view" search="[('name','=','very complex')]"/>
+	</record>-->
+
+	<!-- demo data for the labo.analysis.type end -->
+
+
+	<!-- demo data for the labo.analysis.type  start -->
+
+
+
+
+	<record id="labo_analysis_request1" model="labo.analysis.request">
+	<field name="name">farm1</field>
+	<!--<field name="test_way">Bruxelles1</field>-->
+	<field name="user_id" search="[('login','=','admin')]" model="res.users"/>
+	<field name="begining_date" eval="time.strftime('%Y')+'-03-05'"/>
+	<field name="date_closed"  eval="time.strftime('%Y')+'-04-05'"/>
+	<field name="date_planned" eval="time.strftime('%Y')+'-03-15'"/>
+	<field name="ref_client" model="res.partner" search="[('name','=','Unknown')]"></field>
+	<field name="pricelist_id" search="[]" model="product.pricelist"/>
+<!--	<field name="invoice_ids"></field>-->
+	<!--<field name="type_id" ref="labo_analysis_type1"></field>-->
+	<field name="state"></field>
+
+	</record>
+
+
+	<record id="labo_analysis_request2" model="labo.analysis.request">
+	<field name="name">farm1</field>
+	<!--<field name="test_way">Bruxelles1</field>-->
+	<field name="user_id" search="[('login','=','admin')]" model="res.users"/>
+	<field name="begining_date" eval="time.strftime('%Y')+'-03-05'"/>
+	<field name="date_closed"  eval="time.strftime('%Y')+'-04-05'"/>
+	<field name="date_planned" eval="time.strftime('%Y')+'-03-15'"/>
+	<field name="ref_client" model="res.partner" search="[('name','=','China Export')]"></field>
+	<field name="pricelist_id" search="[]" model="product.pricelist"/>
+<!--	<field name="invoice_ids"></field>-->
+	<!--<field name="type_id" ref="labo_analysis_type2"></field>-->
+	<field name="state"></field>
+
+	</record>
+
+
+	<record id="labo_analysis_request3" model="labo.analysis.request">
+	<field name="name">farm1</field>
+	<!--<field name="test_way">Bruxelles1</field>-->
+	<field name="user_id" search="[('login','=','admin')]" model="res.users"/>
+	<field name="begining_date" eval="time.strftime('%Y')+'-03-05'"/>
+	<field name="date_closed"  eval="time.strftime('%Y')+'-04-05'"/>
+	<field name="date_planned" eval="time.strftime('%Y')+'-03-15'"/>
+	<field name="ref_client" model="res.partner" search="[('name','=','China Export')]"></field>
+	<field name="pricelist_id" search="[]" model="product.pricelist"/>
+<!--	<field name="invoice_ids"></field>-->
+	<!--<field name="type_id" ref="labo_analysis_type3"></field>-->
+	<field name="state"></field>
+
+	</record>
+
+
+	<record id="labo_analysis_request4" model="labo.analysis.request">
+	<field name="name">farm1</field>
+	<!--<field name="test_way">Bruxelles1</field>-->
+	<field name="user_id" search="[('login','=','admin')]" model="res.users"/>
+	<field name="begining_date" eval="time.strftime('%Y')+'-03-05'"/>
+	<field name="date_closed"  eval="time.strftime('%Y')+'-04-05'"/>
+	<field name="date_planned" eval="time.strftime('%Y')+'-03-15'"/>
+	<field name="ref_client" model="res.partner" search="[('name','=','Agrolait')]"></field>
+	<field name="pricelist_id" search="[]" model="product.pricelist"/>
+	<!--<field name="invoice_ids"></field>-->
+	<!--<field name="type_id" ref="labo_analysis_type4"></field>-->
+	<field name="state"></field>
+
+	</record>
+
+	<record id="labo_analysis_request5" model="labo.analysis.request">
+	<field name="name">farm1</field>
+	<!--<field name="test_way">Bruxelles1</field>-->
+	<field name="user_id" search="[('login','=','admin')]" model="res.users"/>
+	<field name="begining_date" eval="time.strftime('%Y')+'-03-05'"/>
+	<field name="date_closed"  eval="time.strftime('%Y')+'-04-05'"/>
+	<field name="date_planned" eval="time.strftime('%Y')+'-03-15'"/>
+	<field name="ref_client" model="res.partner" search="[('name','=','Bank Wealthy and sons')]"></field>
+	<field name="pricelist_id" search="[]" model="product.pricelist"/>
+	<!--<field name="invoice_ids"></field>-->
+	<!--<field name="type_id" ref="labo_analysis_type1"/>-->
+	<field name="state"></field>
+
+	</record>
+
+	<!-- demo data for the labo.analysis.type end -->
+
+	<!-- demo data for the labo.sample  start -->
+
+
+
+	<record id="labo_sample1" model="labo.sample">
+	<!--<field name="type_id" ref="labo_analysis_type1"/>-->
+	<field name="sample_id" ref="labo_analysis_request1"/>
+	<field name="name">Bruxelles1</field>
+	<field name="progenus_number">255</field>
+	<field name="material">Bruxelles1</field>
+	<field name="sex">male</field>
+	<field name="code">001</field>
+	</record>
+
+
+	<record id="labo_sample2" model="labo.sample">
+	<!--<field name="type_id" ref="labo_analysis_type1"/>-->
+	<field name="sample_id" ref="labo_analysis_request2"/>
+	<field name="name">Bruxelles1</field>
+	<field name="progenus_number">255</field>
+	<field name="material">Bruxelles1</field>
+	<field name="sex">male</field>
+	<field name="code">002</field>
+	</record>
+
+
+	<record id="labo_sample3" model="labo.sample">
+	<!--<field name="type_id" ref="labo_analysis_type1"/>-->
+	<field name="sample_id" ref="labo_analysis_request3"/>
+	<field name="name">Bruxelles1</field>
+	<field name="progenus_number">255</field>
+	<field name="material">Bruxelles1</field>
+	<field name="sex">male</field>
+	<field name="code">003</field>
+	</record>
+
+
+	<record id="labo_sample4" model="labo.sample">
+	<!--<field name="type_id" ref="labo_analysis_type1"/>-->
+	<field name="sample_id" ref="labo_analysis_request4"/>
+	<field name="name">Bruxelles1</field>
+	<field name="progenus_number">255</field>
+	<field name="material">Bruxelles1</field>
+	<field name="sex">male</field>
+	<field name="code">004</field>
+	</record>
+
+
+	<record id="labo_sample5" model="labo.sample">
+<!--	<field name="type_id" ref="labo_analysis_type1"/>-->
+	<field name="sample_id" ref="labo_analysis_request5"/>
+	<field name="name">Bruxelles1</field>
+	<field name="progenus_number">255</field>
+	<field name="material">Bruxelles1</field>
+	<field name="sex">male</field>
+	<field name="code">005</field>
+	</record>
+
+
+   	<!-- demo data for the labo.sample end -->
+
+
+
+	</data>
+</terp>

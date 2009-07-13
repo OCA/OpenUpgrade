@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<terp>
+<data>
+	<record model="ir.cron" id="limit_date_cron">
+		<field name="name">Dates</field>
+		<field name="interval_number">1</field>
+		<field name="interval_type">days</field>
+		<field name="numbercall">-1</field>
+		<field name="model">labo.sample</field>
+		<field name="function">running_ko_samples</field>
+	</record>
+	
+
+
+
+
+
+
+
+<!--	<record model="crm.case" id="analysis_case">
+		<field name="name">XYZ analysis</field>
+		<field name="priority">4</field>
+		<field name="description">XYZ analysis.</field>
+		<field name="section_id" ref="section_progenus"/>
+		<field name="categ_id" eval="categ7"/>
+		<field name="partner_id" ref="base.res_partner_agrolait"/>
+		<field name="som" ref="base.som_happy"/>
+		<field name="planned_revenue" eval="3000"/>
+		<field name="probability" eval="0.85"/>
+		<field name="date" eval="time.strftime('%Y-%m-10')"/>
+		<field name="date_deadline" eval="time.strftime('%Y-%m-20')"/>
+		<field name="canal_id" search="[]" model="res.partner.canal"/>-->
+		<!--<field name="user_id" search="[('login','=','demo')]" model="res.users"/>-->
+
+
+</data>
+</terp>

@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<terp>
+	<data>
+		<report string="Stress Report"
+		model="labo.analysis.request"
+		name="List_stress"
+		rml="labo_analysis/report/report_stress_2007_0649.rml"
+		id="List_sstress"
+		multi="1"
+		auto="False"/>
+
+		<report string="DNA Report EQUINE"
+		model="labo.dog"
+		name="report_dna"
+		rml="labo_analysis/report/report_dna.rml"
+		id="id_report_dna"
+		auto="False"/>
+
+		<report string="DNA Report CANINE"
+		model="labo.dog"
+		name="report_dna_dogs"
+		rml="labo_analysis/report/report_dna_dogs.rml"
+		id="id_report_dna_dogs"
+		auto="False"/>
+
+		<report string="DNA Report CANINE with Logo"
+		model="labo.dog"
+		name="report_dna_dogs_logo"
+		rml="labo_analysis/report/report_dna_dogs_logo.rml"
+		id="id_report_dna_dogs_logo"
+		auto="False"/>
+		<report
+			string="Print request"
+			model="labo.analysis.request"
+			name="labo_analysis_request"
+			rml="labo_analysis/report/labo_request.rml"
+			id="empreintes_bovines_id"
+		/>
+		<report id="account.account_invoices"
+			string="Invoices"
+			model="account.invoice"
+			name="labo_analysis.invoice"
+			rml="labo_analysis/report/invoice.rml"
+			auto="False"/>
+
+		<report string="Scid"
+		model="labo.analysis.request"
+		name="List_scid"
+		rml="labo_analysis/report/report_scid_2007_0276.rml"
+		id="List_sscid"
+		multi="1"
+		auto="False"/>
+
+		<report string="Scrapie Report"
+		model="labo.analysis.request"
+		name="List_scrapie"
+		rml="labo_analysis/report/report_scrapie_2007.rml"
+		id="List_scrapie"
+		multi="1"
+		auto="False"/>
+
+		<report string="Followsheet of Sample"
+		model="labo.analysis.request"
+		name="List_followsheet"
+		rml="labo_analysis/report/report_followsheet_of_sample.rml"
+		id="List_followsheet"
+		auto="False"/>
+
+		<report string="Complex Followsheet "
+		model="labo.analysis.request"
+		name="List_followsheet3"
+		rml="labo_analysis/report/report_followsheet_of_sample3.rml"
+		id="List_followsheet_3"
+		auto="False"/>
+
+		<report string="Setup Report"
+		model="labo.sample"
+		name="setup"
+		rml="labo_analysis/report/report_setup.rml"
+		id="setup"
+		auto="False"/>
+
+<!--		<report string="Setup Report2"
+		model="labo.sample"
+		name="setup1"
+		rml="labo_analysis/report/report_setup1.rml"
+		id="setup1"
+		auto="False"/>
+-->
+
+	</data>
+</terp>
