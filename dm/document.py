@@ -284,6 +284,7 @@ class dm_campaign_document(osv.osv): # {{{
         'error_msg' : fields.text('System Message'),
         'document_id' : fields.many2one('dm.offer.document','Document',ondelete="cascade"),
         'address_id' : fields.many2one('res.partner.address', 'Customer Address', select="1", ondelete="cascade"),
+        'origin' : fields.char('Origin', size=64),
         }
     _defaults = {
         'state': lambda *a : 'pending',

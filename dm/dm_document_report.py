@@ -39,6 +39,7 @@ class offer_document(report_sxw.rml_parse):
             'time': time,
             'document':self.document,
             'trademark_id' : self.trademark_id,
+            'report_type':''
         })
         print "Calling offer_document localcontext"
         self.context = context
@@ -48,7 +49,9 @@ class offer_document(report_sxw.rml_parse):
         report_xml_ids = ir_obj.search(self.cr, self.uid,[('report_name', '=', self.name)])
         if report_xml_ids:
             report_xml = ir_obj.browse(self.cr, self.uid, report_xml_ids[0])
-            raw_plugin_list = _regexp1.findall(report_xml.report_rml_content)
+            self.report_type = report_xml.report_type
+            rml = report_xml.report_rml_content
+            raw_plugin_list = _regexp1.findall(rml)
             plugin_list = []
             for i in raw_plugin_list :
                 plugin = _regexp2.findall(i)[0].replace("'",'')
@@ -63,10 +66,11 @@ class offer_document(report_sxw.rml_parse):
             res = self.pool.get('dm.workitem').browse(self.cr,self.uid,workitem_id)
             return res.segment_id.proposition_id.camp_id.trademark_id
         else:
-            print "FFFFFF form :",self.datas['form']
             return self.datas['form']['trademark_id']
 
     def document(self):
+        plugin_list=self._plugin_list()
+        dm_so_line_id = 'dm_so_line_id' in self.context and self.context['dm_so_line_id'] and self.context['dm_so_line_id'] or ''
         if 'form' not in self.datas :
             addr_id = self.context['address_id']
             doc_id = self.context['document_id']
@@ -94,9 +98,8 @@ class offer_document(report_sxw.rml_parse):
                 # !!! To change, it takes any workitem so can send any data
                 wi_id = wi_data[0]
         # to fix : should be able to generate value with no workitems (preview)
-        values = generate_plugin_value(self.cr, self.uid, doc_id=doc_id, addr_id=addr_id, 
-            wi_id=wi_id, plugin_list=self._plugin_list(), type=type)
-
+        values = generate_plugin_value(self.cr, self.uid, doc_id=doc_id, addr_id=addr_id,
+            wi_id=wi_id, plugin_list=plugin_list, type=type,dm_so_line_id=dm_so_line_id)
         return [values]
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

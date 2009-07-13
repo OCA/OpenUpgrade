@@ -28,10 +28,13 @@ from lxml import etree
 import httplib
 import base64
 import time
-from dm_email.dm_email_document import set_image_email
-from email.MIMEMultipart import MIMEMultipart
-from email.MIMEText import MIMEText
-from email.MIMEImage import MIMEImage
+
+from dm.report_design import merge_message
+
+#from dm_email.dm_email_document import set_image_email - not of use
+#from email.MIMEMultipart import MIMEMultipart
+#from email.MIMEText import MIMEText
+#from email.MIMEImage import MIMEImage
 
 class dm_mail_service(osv.osv):
      _inherit = "dm.mail_service"
@@ -47,17 +50,31 @@ class dm_mail_service(osv.osv):
     }
 dm_mail_service()
 
-def _email_body(body):
-    msgRoot = MIMEMultipart('related')
-    msgRoot.preamble = 'This is a multi-part message in MIME format.'
+#Dont need any more (not sure)
+#def set_image_email(node,msg):
+#    if not node.getchildren():
+#        if  node.tag=='img' and node.get('src') and node.get('src').find('data:image/gif;base64,')>=0:
+#            msgImage = MIMEImage(base64.decodestring(node.get('src').replace('data:image/gif;base64,','')))
+#            image_name = ''.join( Random().sample(string.letters+string.digits, 12) )
+#            msgImage.add_header('Content-ID','<%s>'%image_name)
+#            msg.attach(msgImage)
+#            node.set('src',"cid:%s"%image_name)
+#        else :
+#            for n in node.getchildren():
+#                set_image_email(n,msg)
 
-    msg = MIMEMultipart('alternative')
-    msgRoot.attach(msg)
+#def _email_body(body):
+#    msgRoot = MIMEMultipart('related')
+#    msgRoot.preamble = 'This is a multi-part message in MIME format.'
+#
+#    msg = MIMEMultipart('alternative')
+#    msgRoot.attach(msg)
+#
+#    set_image_email(body,msgRoot)
+#    msgText = MIMEText(etree.tostring(body), 'html')
+#    msg.attach(msgText)
+#    return  msgRoot.as_string()
 
-    set_image_email(body,msgRoot)
-    msgText = MIMEText(etree.tostring(body), 'html')
-    msg.attach(msgText)
-    return  msgRoot.as_string()
 def send_email(cr,uid,obj,context):
 
     """ Get Emailmvision connection infos """
@@ -68,7 +85,7 @@ def send_email(cr,uid,obj,context):
 
     email_dest = obj.address_id.email or ''
     email_reply = obj.segment_id.campaign_id.trademark_id.email or ''
-    email_subject = obj.document_id.subject or ''
+    email_subject = merge_message(cr, uid, obj.document_id.subject or '',context)
     name_from = obj.segment_id.campaign_id.trademark_id.name or ''
     name_reply = obj.segment_id.campaign_id.trademark_id.name or ''
 
@@ -81,10 +98,10 @@ def send_email(cr,uid,obj,context):
         body = root.find('body')
 
         print "message :", message
-
-#        html_content = ''.join([ etree.tostring(x) for x in body.getchildren()])
-#        print "body :", html_content
-        html_content = _email_body(body)
+        # I think html_content = message should wrk
+        html_content = ''.join([ etree.tostring(x) for x in body.getchildren()])
+        print "body :", html_content
+#        html_content = _email_body(body)
         text_content = "This is a test"
         print "Test"
 

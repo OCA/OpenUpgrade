@@ -15,7 +15,7 @@
             model="dm.offer"
             name="offer.model.report"
             rml="dm/reportdm/dm_offer_model.rml"
-            auto="False"
+            multi="True"
             />
 
         <report id="dm_preoffer_report"
@@ -23,7 +23,7 @@
             model="dm.offer"
             name="preoffer.report"
             rml="dm/reportdm/dm_preoffer.rml"
-            auto="False"
+            multi="True"
             />
 
         <report id="dm_offer_report_graph"

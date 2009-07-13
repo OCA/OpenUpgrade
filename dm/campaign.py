@@ -28,7 +28,8 @@ from mx import DateTime
 from osv import fields
 from osv import osv
 
-class dm_overlay_payment_rule(osv.osv):#{{{
+"""
+class dm_overlay_payment_rule(osv.osv):
     _name = 'dm.overlay.payment_rule'
     _rec_name = 'journal_id'
     _columns = {
@@ -40,7 +41,8 @@ class dm_overlay_payment_rule(osv.osv):#{{{
         'country_default':fields.boolean('Default for Country')
     }
 
-dm_overlay_payment_rule()#}}}
+dm_overlay_payment_rule()
+"""
 
 class dm_campaign_group(osv.osv):#{{{
     _name = "dm.campaign.group"
@@ -170,7 +172,8 @@ class dm_campaign_type(osv.osv):#{{{
     }
 dm_campaign_type()#}}}
 
-class dm_overlay(osv.osv):#{{{
+
+class dm_overlay(osv.osv):
     _name = 'dm.overlay'
     _rec_name = 'trademark_id'
 
@@ -191,9 +194,10 @@ class dm_overlay(osv.osv):#{{{
         'dealer_id' : fields.many2one('res.partner', 'Dealer', domain=[('category_id','ilike','Dealer')], context={'category':'Dealer'}, required=True),
         'country_ids' : fields.many2many('res.country', 'overlay_country_rel', 'overlay_id', 'country_id', 'Country', required=True),
         'bank_account_id' : fields.many2one('account.account', 'Account'),
-        'payment_method_rule_ids':fields.many2many('dm.overlay.payment_rule','overlay_payment_method_rule_rel','overlay_id','payment_rule_id','Payment Method Rules')
+#        'payment_method_rule_ids':fields.many2many('dm.overlay.payment_rule','overlay_payment_method_rule_rel','overlay_id','payment_rule_id','Payment Method Rules')
     }
-dm_overlay()#}}}
+dm_overlay()
+
 
 class one2many_mod_task(fields.one2many):#{{{
     def get(self, cr, obj, ids, name, user=None, offset=0, context=None, values=None):
@@ -576,7 +580,7 @@ class dm_campaign(osv.osv):#{{{
             vals['payment_method_ids'] = [[6,0,payment_methods]]
             
         # Set campaign end date at one year after start date if end date does not exist
-        if 'date_start' in vals and vals['date_start']:
+        if 'date' not in vals and not camp.date and 'date_start' in vals and vals['date_start'] :
             time_format = "%Y-%m-%d"
             d = time.strptime(vals['date_start'],time_format)
             d = datetime.date(d[0], d[1], d[2])
@@ -602,7 +606,7 @@ class dm_campaign(osv.osv):#{{{
         else:
             country_id = camp.country_id.id
             
-#        check if an overlay exists else create it
+        #check if an overlay exists else create it
         overlay_country_ids=[] 
         if trademark_id and dealer_id and country_id:
             overlay_obj = self.pool.get('dm.overlay')
@@ -620,7 +624,6 @@ class dm_campaign(osv.osv):#{{{
         return super(dm_campaign,self).write(cr, uid, ids, vals, context)
     
     def create(self,cr,uid,vals,context={}):
-
         type_id = self.pool.get('dm.campaign.type').search(cr, uid, [('code','=','model')])[0]
         if context.has_key('campaign_type') and context['campaign_type']=='model':
             vals['campaign_type_id']=type_id
@@ -710,14 +713,17 @@ class dm_campaign(osv.osv):#{{{
         return True
 
     def copy(self, cr, uid, id, default=None, context={}):
-        cmp_id = super(dm_campaign, self).copy(cr, uid, id, default, context=context)
-        data = self.browse(cr, uid, cmp_id, context)
-        if 'name' in default:
-            name_default=default['name']
-        else:
-            name_default='Copy of %s' % data.name
-        super(dm_campaign, self).write(cr, uid, cmp_id, {'name':name_default, 'date_start':0, 'date':0, 'project_id':0})
-        return cmp_id
+        if not default: default = {}
+        campaign_id = self.browse(cr, uid, id)
+        if not default.get('name', False):
+            default['name'] = 'Copy of ' +campaign_id.name
+        default.update({'date_start': False, 'date': False, 'project_id': False, 'proposition_ids': []})
+        camp_copy_id = super(dm_campaign, self).copy(cr, uid, id, default, context)
+        prop_ids = [x.id for x in campaign_id.proposition_ids]
+        for proposition in campaign_id.proposition_ids:
+            default = {'camp_id': camp_copy_id}
+            prop_copy = self.pool.get('dm.campaign.proposition').copy(cr, uid, proposition.id, default, context)
+        return camp_copy_id
 
     def unlink(self, cr, uid, ids, context={}):
         for campaign in self.browse(cr, uid, ids, context):
@@ -767,15 +773,19 @@ class dm_campaign_proposition(osv.osv):#{{{
         Function to duplicate segments only if 'keep_segments' is set to yes else not to duplicate segments
         """
         proposition_id = super(dm_campaign_proposition, self).copy(cr, uid, id, default, context=context)
+        if 'camp_id' in default and default['camp_id']:
+            self.write(cr, uid, proposition_id, {'camp_id' : default['camp_id']})
+
         data = self.browse(cr, uid, proposition_id, context)
-        default='Copy of %s' % data.name
-        super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'name':default, 'date_start':0, 'initial_proposition_id':id})
+        default_name='Copy of %s' % data.name
+        super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'name':default_name, 'date_start':False, 'initial_proposition_id':id})
+
         if data.keep_segments == False:
             l = []
             for i in data.segment_ids:
                  l.append(i.id)
                  self.pool.get('dm.campaign.proposition.segment').unlink(cr,uid,l)
-                 super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'segment_ids':[(6,0,[])]})
+                 self.write(cr, uid, proposition_id, {'segment_ids':[(6,0,[])]})
         
         """
         Function to duplicate products only if 'keep_prices' is set to yes else not to duplicate products
@@ -785,7 +795,7 @@ class dm_campaign_proposition(osv.osv):#{{{
             for i in data.item_ids:
                  l.append(i.id)
                  self.pool.get('dm.campaign.proposition.item').unlink(cr,uid,l)
-                 super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'item_ids':[(6,0,[])]})
+                 self.write(cr, uid, proposition_id, {'item_ids':[(6,0,[])]})
         return proposition_id
 
     def _proposition_code(self, cr, uid, ids, name, args, context={}):
@@ -1217,7 +1227,7 @@ class dm_campaign_proposition_item(osv.osv):#{{{
         'price' : fields.float('Sale Price'),
         'proposition_id': fields.many2one('dm.campaign.proposition', 'Commercial Proposition'),
         'item_type': fields.selection(AVAILABLE_ITEM_TYPES, 'Product Type', size=64),
-        'offer_step_type_id': fields.many2one('dm.offer.step.type','Offer Step Type'), 
+        'offer_step_id': fields.many2one('dm.offer.step','Offer Step Name'), 
         'notes' : fields.text('Notes'),
         'forecasted_yield' : fields.float('Forecasted Yield'),
     }
@@ -2119,4 +2129,13 @@ class project_task(osv.osv):#{{{
 
 project_task()#}}}
 
+class sale_order(osv.osv):#{{{
+    _name = "sale.order"
+    _inherit="sale.order"
+    _columns = {
+        'offer_step_id': fields.many2one('dm.offer.step','Offer Step'),
+        'journal_id': fields.many2one('account.journal', 'Journal'),
+    }
+    
+sale_order()#}}}
 #vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

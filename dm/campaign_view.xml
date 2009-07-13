@@ -286,7 +286,7 @@
                     <page string="Advanced">
                         <field name="mail_service_ids" nolabel="1" colspan="4" mode="tree">
                             <tree string="Mail Service" editable="bottom">
-                                <field name="offer_step_id"/>
+                                <field name="offer_step_id" domain="[('offer_id','=',parent.offer_id)]"/>
                                 <field name="mail_service_id"/>
                             </tree>
                         </field>
@@ -675,7 +675,7 @@
 <!--                    <field name="forwarding_charges"/>-->
                     <field name="item_ids" colspan="4" nolabel="1">
                         <form string="Catalogue">
-                            <field name="offer_step_type_id"/>
+                            <field name="offer_step_id"/>
                             <field name="product_id" string="Product"/>
                             <field name="price"/>
                             <field name="item_type"/>
@@ -685,7 +685,7 @@
                             <field name="notes" nolabel="1" colspan="4" widget="text_wiki"/>
                         </form>
                         <tree string="Catalogue" editable="bottom">
-                            <field name="offer_step_type_id"/>
+                            <field name="offer_step_id"/>
                             <field name="product_id" string="Product"/>
                             <field name="price"/>
                             <field name="forecasted_yield"/>
@@ -1063,7 +1063,6 @@
     DM OVERLAY
     =======================================================
     -->
-
     <record model="ir.ui.view" id="view_dm_overlay_form">
         <field name="name">dm.overlay.form</field>
         <field name="model">dm.overlay</field>
@@ -1074,8 +1073,8 @@
                 <field name="trademark_id" select="1"/>
                 <field name="dealer_id" select="2"/>
                 <field name="bank_account_id" select="2"/>
-                <separator string="Payment Method Rules" colspan="4"/>
-                <field name="payment_method_rule_ids" colspan="4" nolabel="1"/>
+<!--                <separator string="Payment Method Rules" colspan="4"/>
+                <field name="payment_method_rule_ids" colspan="4" nolabel="1"/>-->
                 <separator string="Countries" colspan="4"/>
                 <field name="country_ids" colspan="4" nolabel="1"/>
             </form>
@@ -1091,7 +1090,7 @@
                 <field name="trademark_id"/>
                 <field name="dealer_id"/>
                 <field name="bank_account_id"/>
-                <field name="payment_method_rule_ids"/>
+<!--                <field name="payment_method_rule_ids"/>-->
             </tree>
         </field>
     </record>
@@ -1104,7 +1103,6 @@
         <field name="view_id" ref="view_dm_overlay_tree"/>
     </record>
     <menuitem id="menu_action_dm_overlay_form" parent="dm.menu_dm_config_campaign" action="action_dm_overlay_form"/>
-
 
     <record model="ir.actions.act_window" id="action_campaign_dealer_form">
         <field name="name">All Dealers</field>
@@ -1584,12 +1582,42 @@
         </field>
     </record>
     
+    <!--
+    =======================================================
+    SALE ORDER EXTENSIONS
+    =======================================================
+    -->
+
+    <record id="view_order_form_inherit1" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <notebook colspan="4" position="inside">
+                <page string="Direct Marketing">
+                	<separator colspan="4"/>
+                	<field name="offer_step_id" colspan="4"/>
+                    <field name="journal_id" colspan="4"/>
+                    <group colspan="2" col="2">
+                        <separator string="Automatic actions"/>
+                        <field name="so_confirm_do" />
+                        <field name="invoice_create_do" />
+                        <field name="invoice_validate_do" />
+                        <field name="invoice_pay_do" />
+                    </group>
+
+                </page>
+            </notebook>
+        </field>
+    </record>
+
 <!--
     =======================================================
         OVERLAY PAYMENT RULE
     =======================================================
     -->
-
+<!--
     <record model="ir.ui.view" id="view_overlay_payment_rule_form">
         <field name="name">dm.overlay.payment_rule.form</field>
         <field name="model">dm.overlay.payment_rule</field>
@@ -1633,7 +1661,7 @@
 
     <menuitem id="menu_action_overlay_payment_rule_form" parent="dm.menu_dm_config_campaign" action="action_overlay_payment_rule_form"/>
 
-
+-->
     <!--
     =======================================================
         RELATES

@@ -28,7 +28,188 @@
 			<field eval="0" name="invoice_public"/>
 			<field eval="0" name="dir_exclude"/>
 		</record>
-	</data>
+
+	    <!-- Create the jobs for cci-->
+        <record id="base_contact.res_partner_job_0" model="res.partner.job">
+            <field name="address_id" ref="base.res_partner_address_1"/>
+            <field name="function_id" ref="base.function_sale"/>
+            <field name="contact_id" ref="base_contact.res_partner_contact_mortier0"/>
+            <field name="sequence_partner">2</field>
+            <field name="function_label">Salesman</field>
+        </record>
+        <record id="base_contact.res_partner_job_1" model="res.partner.job">
+            <field name="address_id" ref="base.res_partner_address_2"/>
+            <field name="function_id" ref="base.function_sale"/>
+            <field eval="&quot;&quot;&quot;contact@tecsas.fr&quot;&quot;&quot;" name="email"/>
+            <field name="contact_id" ref="base_contact.res_partner_contact_jacot0"/>
+            <field name="function_label">Salesman</field>
+        </record>
+        <record id="base_contact.res_partner_job_2" model="res.partner.job">
+            <field name="address_id" ref="base.res_partner_address_3"/>
+            <field name="function_id" ref="base.function_it"/>
+            <field eval="&quot;&quot;&quot;info@mediapole.net&quot;&quot;&quot;" name="email"/>
+            <field name="contact_id" ref="base_contact.res_partner_contact_passot0"/>
+            <field name="function_label">Chief Technical Officer</field>
+        </record>
+        <record id="base_contact.res_partner_job_3" model="res.partner.job">
+            <field name="address_id" ref="base.res_partner_address_tang"/>
+            <field name="function_id" ref="base.function_sale"/>
+            <field name="contact_id" ref="base_contact.res_partner_contact_tang0"/>
+            <field name="function_label">Salesman</field>
+        </record>
+        <record id="base_contact.res_partner_job_4" model="res.partner.job">
+            <field name="address_id" ref="base.res_partner_address_wong"/>
+            <field name="function_id" ref="base.function_sale"/>
+            <field name="contact_id" ref="base_contact.res_partner_contact_wong0"/>
+            <field name="function_label">Salesman</field>
+        </record>
+        <record id="base_contact.res_partner_job_5" model="res.partner.job">
+            <field name="address_id" ref="base.res_partner_address_6"/>
+            <field name="function_id" ref="base.function_director"/>
+            <field name="contact_id" ref="base_contact.res_partner_contact_lacarte0"/>
+            <field name="sequence_contact">1</field>
+            <field name="sequence_partner">0</field>
+            <field name="function_label">Director</field>
+        </record>
+        <record id="base_contact.res_partner_job_6" model="res.partner.job">
+            <field name="address_id" ref="base.res_partner_address_7"/>
+            <field name="function_id" ref="base.function_sale"/>
+            <field name="contact_id" ref="base_contact.res_partner_contact_lavente0"/>
+            <field name="function_label">Salesman</field>
+        </record>
+        <record id="base_contact.res_partner_job_7" model="res.partner.job">
+            <field name="address_id" ref="base.res_partner_address_8"/>
+            <field name="function_id" ref="base.function_it"/>
+            <field name="contact_id" ref="base_contact.res_partner_contact_lelitre0"/>
+            <field name="function_label">Chief Technical Officer</field>
+        </record>
+        <record id="base_contact.res_partner_job_8" model="res.partner.job">
+            <field name="address_id" ref="base.res_partner_address_9"/>
+            <field name="function_id" ref="base.function_director"/>
+            <field name="contact_id" ref="base_contact.res_partner_contact_grosbonnet0"/>
+            <field name="function_label">Director</field>
+        </record>
+        <record id="base_contact.res_partner_job_9" model="res.partner.job">
+            <field name="address_id" ref="base.res_partner_address_10"/>
+            <field name="function_id" ref="base.function_sale"/>
+            <field name="contact_id" ref="base_contact.res_partner_contact_lesbrouffe0"/>
+            <field name="function_label">Salesman</field>
+        </record>
+        <record id="base_contact.res_partner_job_10" model="res.partner.job">
+            <field name="address_id" ref="base.res_partner_address_zen"/>
+            <field name="function_id" ref="base.function_it"/>
+            <field name="contact_id" ref="base_contact.res_partner_contact_zen0"/>
+            <field name="function_label">Chief Technical Officer</field>
+        </record>
+        <record id="base_contact.res_partner_job_11" model="res.partner.job">
+            <field name="address_id" ref="base.main_address"/>
+            <field name="function_id" ref="base.function_sale"/>
+            <field eval="&quot;&quot;&quot;re@mycompany.com&quot;&quot;&quot;" name="email"/>
+            <field name="contact_id" ref="base_contact.res_partner_contact_mignon0"/>
+            <field name="function_label">Salesman</field>
+        </record>
+        <record id="base_contact.res_partner_job_12" model="res.partner.job">
+            <field name="address_id" ref="base.main_address"/>
+            <field name="function_id" ref="base.function_it"/>
+            <field eval="&quot;&quot;&quot;st@mycompany.com&quot;&quot;&quot;" name="email"/>
+            <field name="contact_id" ref="base_contact.res_partner_contact_wirtel0"/>
+            <field name="function_label">Chief Technical Officer</field>
+        </record>
+        <record id="base_contact.res_partner_job_13" model="res.partner.job">
+            <field name="address_id" ref="base.main_address"/>
+            <field name="function_id" ref="base.function_it"/>
+            <field eval="&quot;&quot;&quot;ch@mycompany.com&quot;&quot;&quot;" name="email"/>
+            <field name="contact_id" ref="base_contact.res_partner_contact_simonis0"/>
+            <field name="function_label">Chief Technical Officer</field>
+        </record>
+        <record id="base_contact.res_partner_job_14" model="res.partner.job">
+            <field name="address_id" ref="base.main_address"/>
+            <field name="function_id" ref="base.function_it"/>
+            <field eval="&quot;&quot;&quot;ol@mycompany.com&quot;&quot;&quot;" name="email"/>
+            <field name="contact_id" ref="base_contact.res_partner_contact_laurent0"/>
+            <field name="function_label">Chief Technical Officer</field>
+        </record>
+        <record id="base_contact.res_partner_job_15" model="res.partner.job">
+            <field name="address_id" ref="base.main_address"/>
+            <field name="function_id" ref="base.function_it"/>
+            <field eval="&quot;&quot;&quot;fl@mycompany.com&quot;&quot;&quot;" name="email"/>
+            <field name="contact_id" ref="base_contact.res_partner_contact_lambotte0"/>
+            <field name="function_label">Chief Technical Officer</field>
+        </record>
+        <record id="base_contact.res_partner_job_16" model="res.partner.job">
+            <field name="address_id" ref="base.main_address"/>
+            <field name="function_id" ref="base.function_sale"/>
+            <field eval="&quot;&quot;&quot;av@mycompany.com&quot;&quot;&quot;" name="email"/>
+            <field name="contact_id" ref="base_contact.res_partner_contact_vandewerve0"/>
+            <field name="function_label">Salesman</field>
+        </record>
+        <record id="base_contact.res_partner_job_17" model="res.partner.job">
+            <field name="address_id" ref="base.main_address"/>
+            <field name="function_id" ref="base.function_it"/>
+            <field eval="&quot;&quot;&quot;fb@mycompany.com&quot;&quot;&quot;" name="email"/>
+            <field name="contact_id" ref="base_contact.res_partner_contact_semal0"/>
+            <field name="function_label">Chief Technical Officer</field>
+        </record>
+        <record id="base_contact.res_partner_job_18" model="res.partner.job">
+            <field name="address_id" ref="base.main_address"/>
+            <field name="function_id" ref="base.function_it"/>
+            <field eval="&quot;&quot;&quot;qd@mycompany.com&quot;&quot;&quot;" name="email"/>
+            <field name="contact_id" ref="base_contact.res_partner_contact_depaoli0"/>
+            <field name="function_label">Chief Technical Officer</field>
+        </record>
+        <record id="base_contact.res_partner_job_19" model="res.partner.job">
+            <field name="address_id" ref="base.main_address"/>
+            <field name="function_id" ref="base.function_it"/>
+            <field eval="&quot;&quot;&quot;ne@mycompany.com&quot;&quot;&quot;" name="email"/>
+            <field name="contact_id" ref="base_contact.res_partner_contact_elkhayat0"/>
+            <field name="function_label">Chief Technical Officer</field>
+        </record>
+        <record id="base_contact.res_partner_job_20" model="res.partner.job">
+            <field name="address_id" ref="base.main_address"/>
+            <field name="function_id" ref="base.function_it"/>
+            <field eval="&quot;&quot;&quot;ph@mycompany.com&quot;&quot;&quot;" name="email"/>
+            <field name="contact_id" ref="base_contact.res_partner_contact_luu0"/>
+            <field name="function_label">Chief Technical Officer</field>
+        </record>
+        <record id="base_contact.res_partner_job_21" model="res.partner.job">
+            <field name="address_id" ref="base.main_address"/>
+            <field name="function_id" ref="base.function_director"/>
+            <field eval="&quot;&quot;&quot;fp@mycompany.com&quot;&quot;&quot;" name="email"/>
+            <field name="contact_id" ref="base_contact.res_partner_contact_pinckears0"/>
+            <field name="sequence_partner">-1</field>
+            <field name="function_label">Director</field>
+        </record>
+        <record id="base_contact.res_partner_job_22" model="res.partner.job">
+            <field name="address_id" ref="base.main_address"/>
+            <field name="function_id" ref="base.function_sale"/>
+            <field eval="&quot;&quot;&quot;cd@mycompany.com&quot;&quot;&quot;" name="email"/>
+            <field name="contact_id" ref="base_contact.res_partner_contact_debois0"/>
+            <field name="function_label">Salesman</field>
+        </record>
+        <record id="base_contact.res_partner_job_23" model="res.partner.job">
+            <field name="address_id" ref="base_contact.res_partner_address_0"/>
+            <field name="contact_id" ref="base_contact.res_partner_contact_mortier0"/>
+            <field name="function_id" ref="base_contact.res_partner_function_privateaddress0"/>
+            <field name="sequence_contact">5</field>
+            <field name="function_label">Private Address</field>
+        </record>
+        <record id="base_contact.res_partner_job_24" model="res.partner.job">
+            <field eval="1" name="sequence_contact"/>
+            <field name="address_id" ref="base_contact.res_partner_address_1"/>
+            <field name="contact_id" ref="base_contact.res_partner_contact_lacarte0"/>
+            <field name="function_id" ref="base_contact.res_partner_function_privateaddress0"/>
+            <field name="sequence_contact">5</field>
+            <field name="function_label">Private Address</field>
+        </record>
+        <record id="base_contact.res_partner_job_25" model="res.partner.job">
+            <field eval="2" name="sequence_contact"/>
+            <field name="address_id" ref="base_contact.res_partner_address_1"/>
+            <field name="contact_id" ref="base_contact.res_partner_contact_lacarte0"/>
+            <field name="function_id" ref="base.function_director"/>
+            <field name="sequence_contact">1</field>
+            <field name="function_label">Director</field>
+        </record>
+
 <!--	<data>
 		<record id="res_partner_ccih0" model="res.partner">
 			<field eval="0" name="alert_legalisations"/>
@@ -115,4 +296,5 @@
 		</record>
 	</data>
 -->
+	</data>
 </openerp>

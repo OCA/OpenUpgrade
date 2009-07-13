@@ -343,7 +343,9 @@
                 <field name="type_id" select="2"/>
                 <field name="segment_id" select="2"/>
                 <field name="delivery_time" select="1"/>
+                <field name="address_id"/>
                 <field name="mail_service_id" select="2"/>
+                <field name="origin" select="1"/>
                 <field name="state" select="2"/>
                 <separator string="Error Message" colspan="4"/>
                 <field name="error_msg" colspan="4" nolabel="1"/>
@@ -359,10 +361,11 @@
             <tree string="Campaign Documents">
                 <field name="name"/>
                 <field name="type_id"/>
+                <field name="origin"/>
                 <field name="segment_id"/>
                 <field name="address_id"/>
-                <field name="delivery_time" select="1"/>
-                <field name="state" select="2"/>
+                <field name="delivery_time"/>
+                <field name="state"/>
                 <field name="error_msg"/>
             </tree>
         </field>

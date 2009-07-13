@@ -31,7 +31,13 @@
     "depends" : ["point_of_sale","report_intrastat", "mrp"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["security/ir.model.access.csv","library_view.xml","library_wizard.xml","library_data.xml"],
+    "update_xml" : [
+        "security/library_security.xml",
+        "security/ir.model.access.csv",
+        "library_view.xml",
+        "library_wizard.xml",
+        "library_data.xml",
+    ],
     "active" : False,
     "installable" : True,
 }

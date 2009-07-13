@@ -160,8 +160,8 @@ class profile_game_phase_one(osv.osv):
     #
     # TODO: check pre process very carefully
     #
-    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context={}, toolbar=False):
-        res = super(profile_game_phase_one, self).fields_view_get(cr, uid, view_id, view_type, context=context, toolbar=toolbar)
+    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context={}, toolbar=False, submenu=False):
+        res = super(profile_game_phase_one, self).fields_view_get(cr, uid, view_id, view_type, context=context, toolbar=toolbar, submenu=submenu)
         p_obj = self.pool.get('profile.game.phase2')
         p_id = p_obj.search(cr,uid,[])
         p_br = p_obj.browse(cr,uid,p_id)

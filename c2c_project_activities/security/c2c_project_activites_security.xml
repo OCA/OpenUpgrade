@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        <record id="ir_model_access_projectactivityal0" model="ir.model.access">
+            <field name="model_id" ref="c2c_project_activities.model_project_activity_al"/>
+            <field eval="1" name="perm_read"/>
+            <field eval="&quot;&quot;&quot;project_activity_al&quot;&quot;&quot;" name="name"/>
+            <field eval="1" name="perm_unlink"/>
+            <field eval="1" name="perm_write"/>
+            <field eval="1" name="perm_create"/>
+            <field name="group_id" ref="project.group_project_manager"/>
+        </record>
+        <record id="ir_model_access_projectactivityal1" model="ir.model.access">
+            <field name="model_id" ref="c2c_project_activities.model_project_activity_al"/>
+            <field eval="1" name="perm_read"/>
+            <field eval="&quot;&quot;&quot;project_activity_al2&quot;&quot;&quot;" name="name"/>
+            <field eval="0" name="perm_unlink"/>
+            <field eval="0" name="perm_write"/>
+            <field eval="0" name="perm_create"/>
+            <field name="group_id" ref="base.group_user"/>
+        </record>
+    </data>
+</openerp>

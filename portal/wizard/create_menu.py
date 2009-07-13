@@ -66,7 +66,6 @@ def _create_menu(self, cr, uid, data, context):
     Create the new menuitem and open a new tab with the result.
     """
     portal_obj=pooler.get_pool(cr.dbname).get('portal.portal')
-    portal= portal_obj.browse(cr,uid,data['form']['portal_id'], context)
     action_menu_id= portal_obj.create_menu(cr, uid,
         data['form']['portal_id'],
         data['form']['model_id'],
@@ -76,7 +75,7 @@ def _create_menu(self, cr, uid, data, context):
         {'form':data['form']['view_id_form'],'tree':data['form']['view_id_tree']},
         data['form']['view_type'],
         context)
-    action=  pooler.get_pool(cr.dbname).get('ir.actions.act_window').read(cr,uid,[portal.menu_action_id.id])    
+    action=  pooler.get_pool(cr.dbname).get('ir.actions.act_window').read(cr,uid,[action_menu_id])
     return action[0] #FIXME : does not work anymore [bch20070612]
 
 def _add_domain(self, cr, uid, data, context):
