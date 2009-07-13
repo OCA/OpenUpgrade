@@ -47,6 +47,7 @@ class task(osv.osv):
     #]
 
     _columns = {
+      'next_task_ids' : fields.many2many('project.task', 'project_task_rel', 'prior_task_id', 'next_task_id', 'Dependent Tasks '),
       'prior_task_ids': fields.many2many('project.task', 'project_task_rel', 'next_task_id', 'prior_task_id', 'Leading Tasks'),
     }
 
