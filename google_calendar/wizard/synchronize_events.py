@@ -125,32 +125,78 @@ def _get_repeat_dates(self, x):
         repeat_end += ' ' + '00' + ':' + '00' + ':' + '00'
     return (repeat_start, repeat_end)
 
+def tformat_google(self, start_time, end_time):
+    time_format = "%Y-%m-%d %H:%M:%S"
+    if start_time:
+        # convert event start date into gmtime format
+        timestring = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(start_time, "%Y-%m-%d %H:%M:%S"))))
+        starttime = time.strptime(timestring, time_format)
+        start_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', starttime)
+    if end_time:
+        # convert event end date into gmtime format
+        timestring_end = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(end_time, "%Y-%m-%d %H:%M:%S"))))
+        endtime = time.strptime(timestring_end, time_format)
+        end_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', endtime)
+    if start_time is None:
+      # Use current time for the start_time and have the event last 1 hour
+      start_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', time.gmtime())
+      end_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', time.gmtime(time.time() + 3600))
+
+    return (start_time, end_time)
+
 class google_calendar_wizard(wizard.interface):
 
     calendar_service = ""
 
-    def add_event(self, calendar_service, title='',content='', where='', start_time=None, end_time=None):
+    def add_repeat_event(self, calender_service, title='', content='', where='', start_time=None, end_time=None, repeat_status='yearly', recurrence_data=None):
+        try:
+            start_time, end_time = tformat_google(self, start_time, end_time)
+            if recurrence_data is None:
+                # to do: add timezone information + until attribute...
+                if repeat_status == 'monthly':
+                    recurrence_data = ('DTSTART;VALUE=DATE:%s\r\n'
+                                         + 'DTEND;VALUE=DATE:%s\r\n'
+                                         + 'RRULE:FREQ=MONTHLY;BYDAY=-1MO;\r\n')%(start_time, end_time)
+                elif repeat_status in ['yearly', 'daily']:
+                    if repeat_status == 'yearly':
+                        rs = 'YEARLY'
+                    elif repeat_status == 'daily':
+                        rs = 'DAILY'
+                    recurrence_data = ('DTSTART;VALUE=DATE:%s\r\n'
+                                         + 'DTEND;VALUE=DATE:%s\r\n'
+                                         + 'RRULE:FREQ=%s;\r\n')%(start_time, end_time, rs)
+                else:
+                    if repeat_status == 'weekly':
+                        rs = 'MO' #Fix me (Monday)
+                    elif repeat_status == 'everyweekday':
+                        rs = 'MO,TU,WE,TH,FR'
+                    elif repeat_status == 'every_m_w_f':
+                        rs = 'MO,WE,FR'
+                    elif repeat_status == 'every_t_t':
+                        rs = 'TU,TH'
+                    recurrence_data = ('DTSTART;VALUE=DATE:%s\r\n'
+                                         + 'DTEND;VALUE=DATE:%s\r\n'
+                                         + 'RRULE:FREQ=WEEKLY;BYDAY=%s;\r\n')%(start_time, end_time, rs)
+
+            event = gdata.calendar.CalendarEventEntry()
+            event.title = atom.Title(text=title)
+            event.content = atom.Content(text=content)
+            event.where.append(gdata.calendar.Where(value_string=where))
+            # Set a recurring event
+            event.recurrence = gdata.calendar.Recurrence(text=recurrence_data)
+            new_event = calender_service.InsertEvent(event, '/calendar/feeds/default/private/full')
+            return new_event
+        except Exception, e:
+            raise osv.except_osv('Error !', e )
+
+    def add_event(self, calendar_service, title='', content='', where='', start_time=None, end_time=None):
 
         try:
             event = gdata.calendar.CalendarEventEntry()
             event.title = atom.Title(text=title)
             event.content = atom.Content(text=content)
             event.where.append(gdata.calendar.Where(value_string=where))
-            time_format = "%Y-%m-%d %H:%M:%S"
-            if start_time:
-                # convert event start date into gmtime format
-                timestring = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(start_time, "%Y-%m-%d %H:%M:%S"))))
-                starttime = time.strptime(timestring, time_format)
-                start_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', starttime)
-            if end_time:
-                # convert event end date into gmtime format
-                timestring_end = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(end_time, "%Y-%m-%d %H:%M:%S"))))
-                endtime = time.strptime(timestring_end, time_format)
-                end_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', endtime)
-            if start_time is None:
-              # Use current time for the start_time and have the event last 1 hour
-              start_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', time.gmtime())
-              end_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', time.gmtime(time.time() + 3600))
+            start_time, end_time = tformat_google(self, start_time, end_time)
             event.when.append(gdata.calendar.When(start_time=start_time, end_time=end_time))
             new_event = calendar_service.InsertEvent(event, '/calendar/feeds/default/private/full')
             return new_event
@@ -158,6 +204,8 @@ class google_calendar_wizard(wizard.interface):
             raise osv.except_osv('Error !', e )
 
     def _synch_events(self, cr, uid, data, context={}):
+
+        # multiple operations with a batch request for speed up...
 
 #        To do import:
 #            - Retrieving events for a specified date range
@@ -208,7 +256,10 @@ class google_calendar_wizard(wizard.interface):
             for event in tiny_events:
                 if not event.google_event_id:
                     summary_dict['Event Created In Google'] += 1
-                    new_event = self.add_event(self.calendar_service, event.name, event.name, location, event.date_begin, event.date_end)
+                    if not event.repeat_status == 'norepeat':
+                        new_event = self.add_repeat_event(self.calendar_service, event.name, event.name, location, event.date_begin, event.date_end, event.repeat_status, None)
+                    else:
+                        new_event = self.add_event(self.calendar_service, event.name, event.name, location, event.date_begin, event.date_end)
                     obj_event.write(cr, uid, [event.id], {'google_event_id': new_event.id.text,
                        'event_modify_date': new_event.updated.text #should be correct!
                        })
@@ -231,6 +282,8 @@ class google_calendar_wizard(wizard.interface):
                         an_event.where.insert(0, gdata.calendar.Where(value_string=location))
                         time_format = "%Y-%m-%d %H:%M:%S"
                         # convert event start date into gmtime format
+
+                        # can be moved to else part...
                         timestring = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(event.date_begin, "%Y-%m-%d %H:%M:%S"))))
                         starttime = time.strptime(timestring, time_format)
                         start_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', starttime)
@@ -238,7 +291,9 @@ class google_calendar_wizard(wizard.interface):
                         timestring_end = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(event.date_end, "%Y-%m-%d %H:%M:%S"))))
                         endtime = time.strptime(timestring_end, time_format)
                         end_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', endtime)
+
                         if an_event and not an_event.when:# Fix me
+                            # recurrence value should be modified here to fix
                             summary_dict['Error in Event While try to modify in Google'] += 1
                         else:
                             an_event.when[0].start_time = start_time
