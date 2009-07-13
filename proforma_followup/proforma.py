@@ -61,7 +61,7 @@ class proforma_followup_action(osv.osv):
     ]
 
     _sql_constraints = [
-        ('sequence_uniq', 'uniq(sequence)', 'You can not have two actions at the same step'),
+        ('sequence_uniq', 'unique(sequence)', 'You can not have two actions at the same step'),
     ]
 
 proforma_followup_action()
@@ -101,7 +101,7 @@ class proforma_followup_scheduler(osv.osv):
     _rec_name = 'date'
 
     _columns = {
-        'date': fields.datetime('Next action planned at', readonly=True),
+        'date': fields.date('Next action planned at', readonly=True),
         'followup_action_id': fields.many2one('proforma.followup.action', 'Followup Action', readonly=True), 
         'invoice_id': fields.many2one('account.invoice', 'Invoice', readonly=True),
     }
