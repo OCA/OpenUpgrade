@@ -151,12 +151,16 @@ class google_calendar_wizard(wizard.interface):
     def add_repeat_event(self, calender_service, title='', content='', where='', start_time=None, end_time=None, repeat_status='yearly', recurrence_data=None):
         try:
             start_time, end_time = tformat_google(self, start_time, end_time)
+            ts = time.strptime(start_time[:19], "%Y-%m-%dT%H:%M:%S")
+            start_time_google = time.strftime("%Y%m%dT%H%M%S", ts)
+            ts1 = time.strptime(end_time[:19], "%Y-%m-%dT%H:%M:%S")
+            end_time_google = time.strftime("%Y%m%dT%H%M%S", ts1)
             if recurrence_data is None:
                 # to do: add timezone information + until attribute...
                 if repeat_status == 'monthly':
                     recurrence_data = ('DTSTART;VALUE=DATE:%s\r\n'
                                          + 'DTEND;VALUE=DATE:%s\r\n'
-                                         + 'RRULE:FREQ=MONTHLY;BYDAY=-1MO;\r\n')%(start_time, end_time) # -1MO == last monday of the month
+                                         + 'RRULE:FREQ=MONTHLY;BYDAY=-1MO;\r\n')%(start_time_google, end_time_google) # -1MO == last monday of the month
                 elif repeat_status in ['yearly', 'daily']:
                     if repeat_status == 'yearly':
                         rs = 'YEARLY'
@@ -164,7 +168,7 @@ class google_calendar_wizard(wizard.interface):
                         rs = 'DAILY'
                     recurrence_data = ('DTSTART;VALUE=DATE:%s\r\n'
                                          + 'DTEND;VALUE=DATE:%s\r\n'
-                                         + 'RRULE:FREQ=%s;\r\n')%(start_time, end_time, rs)
+                                         + 'RRULE:FREQ=%s;\r\n')%(start_time_google, end_time_google, rs)
                 else:
                     if repeat_status == 'weekly':
                         rs = 'MO' #Fix me (Monday)
@@ -176,7 +180,7 @@ class google_calendar_wizard(wizard.interface):
                         rs = 'TU,TH'
                     recurrence_data = ('DTSTART;VALUE=DATE:%s\r\n'
                                          + 'DTEND;VALUE=DATE:%s\r\n'
-                                         + 'RRULE:FREQ=WEEKLY;BYDAY=%s;\r\n')%(start_time, end_time, rs)
+                                         + 'RRULE:FREQ=WEEKLY;BYDAY=%s;\r\n')%(start_time_google, end_time_google, rs)
 
             event = gdata.calendar.CalendarEventEntry()
             event.title = atom.Title(text=title)
