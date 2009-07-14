@@ -210,7 +210,7 @@ def generate_reports(cr,uid,obj,report_type,context): # {{{
                              'datas': base64.encodestring(report_data),
                              'file_type':report_type
                              }
-                        attach_id = attachment_obj.create(cr,uid,attach_vals)
+                        attach_id = attachment_obj.create(cr,uid,attach_vals,{'not_index_context':True})
 
 
         """ Get reports to process """
@@ -219,6 +219,7 @@ def generate_reports(cr,uid,obj,report_type,context): # {{{
         if report_type=='html2html' and document_data['editor'] and document_data['editor']=='internal' and document_data['content']:
             """ Check if to use the internal editor report """
             report_data = internal_html_report +str(document_data['content'])+"</BODY></HTML>"
+            context['type'] = 'email_doc'
             report_data = merge_message(cr, uid, report_data, context)
             attach_vals={'name' : document_data['name'] + "_" + str(address_id),
                         'datas_fname' : 'report_test' + report_type ,
@@ -227,7 +228,7 @@ def generate_reports(cr,uid,obj,report_type,context): # {{{
                         'datas': base64.encodestring(report_data),
                         'file_type':'html'
                         }
-            attach_id = attachment_obj.create(cr,uid,attach_vals)
+            attach_id = attachment_obj.create(cr,uid,attach_vals,{'not_index_context':True})
 
         for report in pool.get('ir.actions.report.xml').browse(cr, uid, report_ids) :
             srv = netsvc.LocalService('report.' + report.report_name)
@@ -239,7 +240,7 @@ def generate_reports(cr,uid,obj,report_type,context): # {{{
                  'datas': base64.encodestring(report_data),
                  'file_type':report_type
                  }
-            attach_id = attachment_obj.create(cr,uid,attach_vals)
+            attach_id = attachment_obj.create(cr,uid,attach_vals,{'not_index_context':True})
 
     return True # }}}
 

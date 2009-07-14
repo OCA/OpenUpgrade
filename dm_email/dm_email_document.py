@@ -83,14 +83,14 @@ def create_email_queue(cr,uid,obj,context):
     ir_att_obj = pool.get('ir.attachment')
     email_queue_obj = pool.get('email.smtpclient.queue')
     ir_att_ids = ir_att_obj.search(cr,uid,[('res_model','=','dm.campaign.document'),('res_id','=',obj.id),('file_type','=','html')])
+    context['document_id'] = obj.document_id.id
+    context['address_id'] = obj.address_id.id
     for attach in ir_att_obj.browse(cr,uid,ir_att_ids):
         message = base64.decodestring(attach.datas)
         root = etree.HTML(message)
         body = root.find('body')
         msgRoot = MIMEMultipart('related')
 
-        context['document_id'] = obj.document_id.id
-        context['address_id'] = obj.address_id.id
 #        plugin_list = [] 
 #        No need as it is set in the function
 #        if obj.document_id.subject and _regexp1.findall(obj.document_id.subject) :
