@@ -220,9 +220,7 @@ class query(object):
             if log_ids:
                 count = pooler.get_pool(cr.dbname).get('olap.query.logs').browse(cr, uid, log_ids, context)[0]
                 pooler.get_pool(cr.dbname).get('olap.query.logs').write(cr, uid, log_ids, {'count':count.count+1})
-                if count.count>=3:
-                    print "Write IN TABLE:>>>>"
-                return True
+                
             else:
                 logentry={}
                 logentry['user_id']=uid
@@ -231,6 +229,7 @@ class query(object):
                 logentry['time']= str(datetime.datetime.now())
                 logentry['result_size']=0
                 logentry['count']=1
+                logentry['schema_id'] = cube.schema_id.id
                 log_id = pooler.get_pool(cr.dbname).get('olap.query.logs').create(cr,uid,logentry)
 #                count = pooler.get_pool(cr.dbname).get('olap.query.logs').browse(cr, uid, log_id, context)
 #                pooler.get_pool(cr.dbname).get('olap.query.logs').write(cr, uid, log_id, {'count':count.count+1})
