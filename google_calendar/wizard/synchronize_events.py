@@ -317,8 +317,8 @@ class google_calendar_wizard(wizard.interface):
                             repeat_status = _get_repeat_status(self, status, byday)
                             repeat_start, repeat_end = _get_repeat_dates(self, x)
 
-                            timestring = datetime.datetime.strptime(repeat_start, "%Y-%m-%d %H:%M:%S").strftime('%Y-%m-%d %H:%M:%S')
-                            timestring_end = datetime.datetime.strptime(repeat_end, "%Y-%m-%d %H:%M:%S").strftime('%Y-%m-%d %H:%M:%S')
+                            timestring = time.strptime(repeat_start, "%Y-%m-%d %H:%M:%S").strftime('%Y-%m-%d %H:%M:%S')
+                            timestring_end = time.strptime(repeat_end, "%Y-%m-%d %H:%M:%S").strftime('%Y-%m-%d %H:%M:%S')
                         else:
                             repeat_status = 'norepeat'
                             stime = an_event.when[0].start_time
@@ -363,8 +363,8 @@ class google_calendar_wizard(wizard.interface):
 
                         repeat_status = _get_repeat_status(self, status, byday)
                         repeat_start, repeat_end = _get_repeat_dates(self, x)
-                        timestring = datetime.datetime.strptime(repeat_start, "%Y-%m-%d %H:%M:%S").strftime('%Y-%m-%d %H:%M:%S')
-                        timestring_end = datetime.datetime.strptime(repeat_end, "%Y-%m-%d %H:%M:%S").strftime('%Y-%m-%d %H:%M:%S')
+                        timestring = time.strptime(repeat_start, "%Y-%m-%d %H:%M:%S").strftime('%Y-%m-%d %H:%M:%S')
+                        timestring_end = time.strptime(repeat_end, "%Y-%m-%d %H:%M:%S").strftime('%Y-%m-%d %H:%M:%S')
                     else:
                         repeat_status = 'norepeat'
                         stime = an_event.when[0].start_time
