@@ -31,7 +31,6 @@ from gdata import service
 import gdata.calendar.service
 import gdata.calendar
 import atom
-
 import wizard
 import pooler
 from osv import fields, osv
@@ -109,6 +108,11 @@ def _get_repeat_status(self, str_google, byday):
     return 'norepeat'
 
 def _get_repeat_dates(self, x):
+    if x[3].startswith('BY'):
+        zone_time = x[4].split('+')[-1:][0].split(':')[0][:4]
+    else:
+        zone_time = x[3].split('+')[-1:][0].split(':')[0][:4]
+    tz_format = zone_time[:2]+':'+zone_time[2:]
     repeat_start = x[1].split('\n')[0].split(':')[1]
     repeat_end = x[2].split('\n')[0].split(':')[1]
     o = repeat_start.split('T')
@@ -123,7 +127,7 @@ def _get_repeat_dates(self, x):
         repeat_end += ' ' + str(p[1][:2]) + ':' + str(p[1][2:4]) + ':' + str(p[1][4:6])
     else:
         repeat_end += ' ' + '00' + ':' + '00' + ':' + '00'
-    return (repeat_start, repeat_end)
+    return (repeat_start, repeat_end, tz_format)
 
 def tformat_google(self, start_time, end_time):
     time_format = "%Y-%m-%d %H:%M:%S"
@@ -318,10 +322,21 @@ class google_calendar_wizard(wizard.interface):
                         byday = ''
                         if status_day and status_day[0] == 'BYDAY':
                             byday = status_day[1]
+                            
                         repeat_status = _get_repeat_status(self, status, byday)
-                        repeat_start, repeat_end = _get_repeat_dates(self, x)
-                        timestring = time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(repeat_start, "%Y-%m-%d %H:%M:%S"))
-                        timestring_end = time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(repeat_end, "%Y-%m-%d %H:%M:%S"))
+                        repeat_start, repeat_end, zone_time = _get_repeat_dates(self, x)
+                        parse_start =  parse(str(repeat_start)+ '+' + zone_time)
+                        parse_end =  parse(str(repeat_end)+ '+' + zone_time)
+                        repeat_start = dateutil.parser.parse(parse_start.isoformat())
+                        repeat_end = dateutil.parser.parse(parse_end.isoformat())
+                        try:
+                            au_dt = au_tz.normalize(repeat_start.astimezone(au_tz))
+                            timestring = datetime.datetime(*au_dt.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
+                            au_dt = au_tz.normalize(repeat_end.astimezone(au_tz))
+                            timestring_end = datetime.datetime(*au_dt.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
+                        except :
+                            timestring = datetime.datetime(*repeat_start.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
+                            timestring_end = datetime.datetime(*repeat_end.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
                     else:
                         repeat_status = 'norepeat'
                         stime = an_event.when[0].start_time
@@ -365,9 +380,19 @@ class google_calendar_wizard(wizard.interface):
                         byday = status_day[1]
 
                     repeat_status = _get_repeat_status(self, status, byday)
-                    repeat_start, repeat_end = _get_repeat_dates(self, x)
-                    timestring = time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(repeat_start, "%Y-%m-%d %H:%M:%S"))
-                    timestring_end = time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(repeat_end, "%Y-%m-%d %H:%M:%S"))
+                    repeat_start, repeat_end, zone_time = _get_repeat_dates(self, x)
+                    parse_start =  parse(str(repeat_start)+ '+' + zone_time)
+                    parse_end =  parse(str(repeat_end)+ '+' + zone_time)
+                    repeat_start = dateutil.parser.parse(parse_start.isoformat())
+                    repeat_end = dateutil.parser.parse(parse_end.isoformat())
+                    try:
+                        au_dt = au_tz.normalize(repeat_start.astimezone(au_tz))
+                        timestring = datetime.datetime(*au_dt.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
+                        au_dt = au_tz.normalize(repeat_end.astimezone(au_tz))
+                        timestring_end = datetime.datetime(*au_dt.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
+                    except:
+                        timestring = datetime.datetime(*repeat_start.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
+                        timestring_end = datetime.datetime(*repeat_end.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
                 else:
                     repeat_status = 'norepeat'
                     stime = an_event.when[0].start_time
