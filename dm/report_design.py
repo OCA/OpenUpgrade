@@ -52,6 +52,8 @@ def merge_message(cr, uid, keystr, context): # {{{
             args['plugin_list']=context['plugin_list']
         else :
             args['plugin_list']=[exp]
+        if 'type' in context:
+            args['type']=context['type']
         plugin_values = generate_plugin_value(cr, uid,**args)
         context.update(plugin_values)
         context.update({'object':obj,'time':time})
