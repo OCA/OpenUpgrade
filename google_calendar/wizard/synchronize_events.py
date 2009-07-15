@@ -31,6 +31,7 @@ from gdata import service
 import gdata.calendar.service
 import gdata.calendar
 import atom
+
 import wizard
 import pooler
 from osv import fields, osv
@@ -147,6 +148,19 @@ def tformat_google(self, start_time, end_time):
       end_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', time.gmtime(time.time() + 3600))
 
     return (start_time, end_time)
+
+def _get_tinydates(self, stime, etime):
+    stime = dateutil.parser.parse(stime)
+    etime = dateutil.parser.parse(etime)
+    try:
+        au_dt = au_tz.normalize(stime.astimezone(au_tz))
+        timestring = datetime.datetime(*au_dt.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
+        au_dt = au_tz.normalize(etime.astimezone(au_tz))
+        timestring_end = datetime.datetime(*au_dt.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
+    except:
+        timestring = datetime.datetime(*stime.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
+        timestring_end = datetime.datetime(*etime.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
+    return (timestring, timestring_end)
 
 class google_calendar_wizard(wizard.interface):
 
@@ -354,16 +368,7 @@ class google_calendar_wizard(wizard.interface):
                         repeat_status = 'norepeat'
                         stime = an_event.when[0].start_time
                         etime = an_event.when[0].end_time
-                        stime = dateutil.parser.parse(stime)
-                        etime = dateutil.parser.parse(etime)
-                        try:
-                            au_dt = au_tz.normalize(stime.astimezone(au_tz))
-                            timestring = datetime.datetime(*au_dt.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
-                            au_dt = au_tz.normalize(etime.astimezone(au_tz))
-                            timestring_end = datetime.datetime(*au_dt.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
-                        except :
-                            timestring = datetime.datetime(*stime.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
-                            timestring_end = datetime.datetime(*etime.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
+                        timestring, timestring_end = _get_tinydates(self, an_event.when[0].start_time, an_event.when[0].end_time)
                     val = {
                        'name': name_event,
                        'date_begin': timestring,
@@ -410,18 +415,7 @@ class google_calendar_wizard(wizard.interface):
                     timestring_end = time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(repeat_end, "%Y-%m-%d %H:%M:%S"))
                 else:
                     repeat_status = 'norepeat'
-                    stime = an_event.when[0].start_time
-                    etime = an_event.when[0].end_time
-                    stime = dateutil.parser.parse(stime)
-                    etime = dateutil.parser.parse(etime)
-                    try:
-                        au_dt = au_tz.normalize(stime.astimezone(au_tz))
-                        timestring = datetime.datetime(*au_dt.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
-                        au_dt = au_tz.normalize(etime.astimezone(au_tz))
-                        timestring_end = datetime.datetime(*au_dt.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
-                    except:
-                        timestring = datetime.datetime(*stime.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
-                        timestring_end = datetime.datetime(*etime.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
+                    timestring, timestring_end = _get_tinydates(self, an_event.when[0].start_time, an_event.when[0].end_time)
                 val = {
                    'name': name_event,
                    'date_begin': timestring,
@@ -437,6 +431,7 @@ class google_calendar_wizard(wizard.interface):
         final_summary = '************Summary************ \n'
         for sum in summary_dict:
             final_summary += '\n' + str(sum) + ' : ' + str(summary_dict[sum]) + '\n'
+        final_summary += '\n\nNote: Currently repeated events can not be modified in google, Its work with un-repeated events(Does not repeat)'
         return {'summary': final_summary}
 #        except Exception, e:
 #            raise osv.except_osv('Erroraa !', e )
