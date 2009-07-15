@@ -192,8 +192,10 @@ class google_calendar_wizard(wizard.interface):
             event.where.append(gdata.calendar.Where(value_string=where))
             # Set a recurring event
             event.recurrence = gdata.calendar.Recurrence(text=recurrence_data)
-            new_event = calender_service.InsertEvent(event, '/calendar/feeds/default/private/full')
-            return new_event
+            event.batch_id = gdata.BatchId(text='insert-request')
+            return event
+#            new_event = calender_service.InsertEvent(event, '/calendar/feeds/default/private/full')
+#            return new_event
         except Exception, e:
             raise osv.except_osv('Error !', e )
 
@@ -206,15 +208,14 @@ class google_calendar_wizard(wizard.interface):
             event.where.append(gdata.calendar.Where(value_string=where))
             start_time, end_time = tformat_google(self, start_time, end_time)
             event.when.append(gdata.calendar.When(start_time=start_time, end_time=end_time))
-            new_event = calendar_service.InsertEvent(event, '/calendar/feeds/default/private/full')
-            return new_event
+            event.batch_id = gdata.BatchId(text='insert-request')
+            return event
+#            new_event = calendar_service.InsertEvent(event, '/calendar/feeds/default/private/full')
+#            return new_event
         except Exception, e:
             raise osv.except_osv('Error !', e )
 
     def _synch_events(self, cr, uid, data, context={}):
-
-        # multiple operations with a batch request for speed up...
-
 #        To do import:
 #            - Retrieving events for a specified date range
 #            - more attribute can be added if possible on event.event
@@ -261,18 +262,25 @@ class google_calendar_wizard(wizard.interface):
         summary_dict = {}
         keys = ['Event Created In Tiny', 'Event Modified In Tiny', 'Event Created In Google', 'Event Modified In Google', 'Error in Event While try to modify in Google', 'Error in Event While try to modify in Tiny', 'Error in Event While try to create in Tiny']
         map(lambda key:summary_dict.setdefault(key, 0), keys)
+        request_feed = gdata.calendar.CalendarEventFeed()
+        event_ids = []
         for event in tiny_events:
             if not event.google_event_id:
+                event_ids.append(event.id)
                 summary_dict['Event Created In Google'] += 1
                 if not event.repeat_status == 'norepeat':
                     new_event = self.add_repeat_event(self.calendar_service, event.name, event.name, location, event.date_begin, event.date_end, event.repeat_status, None)
                 else:
                     new_event = self.add_event(self.calendar_service, event.name, event.name, location, event.date_begin, event.date_end)
-                obj_event.write(cr, uid, [event.id], {'google_event_id': new_event.id.text,
-                   'event_modify_date': new_event.updated.text #should be correct!
-                   })
+                    request_feed.AddInsert(entry=new_event)
                 tiny_event_dict[event.google_event_id] = event
             tiny_event_dict[event.google_event_id] = event
+        if event_ids:
+            response_feed = self.calendar_service.ExecuteBatch(request_feed, gdata.calendar.service.DEFAULT_BATCH_URL)
+            for entry in response_feed.entry:
+                obj_event.write(cr, uid, event_ids, {'google_event_id': entry.id.text, 'event_modify_date': entry.updated.text })
+
+        request_up_feed = gdata.calendar.CalendarEventFeed()
         for i, an_event in enumerate(feed.entry):
             google_id = an_event.id.text
             if google_id in tiny_event_dict.keys():
@@ -306,7 +314,9 @@ class google_calendar_wizard(wizard.interface):
                     else:
                         an_event.when[0].start_time = start_time
                         an_event.when[0].end_time = end_time
-                        update_event = self.calendar_service.UpdateEvent(an_event.GetEditLink().href, an_event)
+                        an_event.batch_id = gdata.BatchId(text='update-request')
+                        request_up_feed.AddUpdate(entry=an_event)
+#                        update_event = self.calendar_service.UpdateEvent(an_event.GetEditLink().href, an_event)
                         summary_dict['Event Modified In Google'] += 1
                 elif event.write_date < google_up:
                     # google events => tiny
@@ -322,7 +332,7 @@ class google_calendar_wizard(wizard.interface):
                         byday = ''
                         if status_day and status_day[0] == 'BYDAY':
                             byday = status_day[1]
-                            
+
                         repeat_status = _get_repeat_status(self, status, byday)
                         repeat_start, repeat_end, zone_time = _get_repeat_dates(self, x)
                         parse_start =  parse(str(repeat_start)+ '+' + zone_time)
@@ -418,6 +428,7 @@ class google_calendar_wizard(wizard.interface):
                     }
                 obj_event.create(cr, uid, val)
                 summary_dict['Event Created In Tiny'] += 1
+        response_up_feed = self.calendar_service.ExecuteBatch(request_up_feed, gdata.calendar.service.DEFAULT_BATCH_URL)
         final_summary = '************Summary************ \n'
         for sum in summary_dict:
             final_summary += '\n' + str(sum) + ' : ' + str(summary_dict[sum]) + '\n'
