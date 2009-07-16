@@ -43,7 +43,7 @@
 	</xsl:template>
 
 	<xsl:template name="story">
-		<para style="title" t="1">Order Qunatity</para>
+		<para style="title" t="1">Order Quantity</para>
 		<spacer length="1cm" />
 		<blockTable>
 			<xsl:attribute name="style">month</xsl:attribute>

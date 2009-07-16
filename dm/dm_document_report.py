@@ -32,16 +32,13 @@ _regexp2 = re.compile('\'.+?\'')
 
 class offer_document(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
-        print "Calling offer_document __init__"
         super(offer_document, self).__init__(cr, uid, name, context)
-        print "Calling offer_document super"
         self.localcontext.update({
             'time': time,
             'document':self.document,
             'trademark_id' : self.trademark_id,
             'report_type':''
         })
-        print "Calling offer_document localcontext"
         self.context = context
 
     def _plugin_list(self):
@@ -54,7 +51,7 @@ class offer_document(report_sxw.rml_parse):
             raw_plugin_list = _regexp1.findall(rml)
             plugin_list = []
             for i in raw_plugin_list :
-                plugin = _regexp2.findall(i)[0].replace("'",'')
+                plugin = _regexp2.findall(i)[0].replace("'", '')
                 plugin_list.append(plugin)
             return plugin_list
         else :
@@ -63,13 +60,13 @@ class offer_document(report_sxw.rml_parse):
     def trademark_id(self):
         if 'form' not in self.datas :
             workitem_id = self.context['active_id']
-            res = self.pool.get('dm.workitem').browse(self.cr,self.uid,workitem_id)
+            res = self.pool.get('dm.workitem').browse(self.cr, self.uid, workitem_id)
             return res.segment_id.proposition_id.camp_id.trademark_id
         else:
             return self.datas['form']['trademark_id']
 
     def document(self):
-        plugin_list=self._plugin_list()
+        plugin_list = self._plugin_list()
         dm_so_line_id = 'dm_so_line_id' in self.context and self.context['dm_so_line_id'] and self.context['dm_so_line_id'] or ''
         if 'form' not in self.datas :
             addr_id = self.context['address_id']
@@ -82,10 +79,10 @@ class offer_document(report_sxw.rml_parse):
             doc_id = self.ids[0]
 
             dm_workitem_obj = self.pool.get('dm.workitem')
-            wi_data = dm_workitem_obj.search(self.cr,self.uid,[])
+            wi_data = dm_workitem_obj.search(self.cr, self.uid,[])
 
             if not wi_data:
-                document = self.pool.get('dm.offer.document').browse(self.cr,self.uid,doc_id)
+                document = self.pool.get('dm.offer.document').browse(self.cr, self.uid, doc_id)
 
                 dm_segment_obj = self.pool.get('dm.campaign.proposition.segment')
                 segment_data_id = dm_segment_obj.search(self.cr,self.uid,[])
@@ -99,7 +96,7 @@ class offer_document(report_sxw.rml_parse):
                 wi_id = wi_data[0]
         # to fix : should be able to generate value with no workitems (preview)
         values = generate_plugin_value(self.cr, self.uid, doc_id=doc_id, addr_id=addr_id,
-            wi_id=wi_id, plugin_list=plugin_list, type=type,dm_so_line_id=dm_so_line_id)
+            wi_id=wi_id, plugin_list=plugin_list, type=type, dm_so_line_id=dm_so_line_id)
         return [values]
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

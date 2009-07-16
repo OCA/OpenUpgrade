@@ -109,6 +109,47 @@ class dm_workitem(osv.osv): # {{{
         'action_time' : lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
 
+
+    def _set_mail_service(self, cr, uid, wi, context):
+        """ Assign mail service to workitem """
+        if wi.segment_id :
+            if not wi.segment_id.proposition_id:
+                return "no_proposition"
+            elif not wi.segment_id.proposition_id.camp_id:
+                return "no_campaign"
+            else:
+                camp_id = wi.segment_id.proposition_id.camp_id.id
+                camp_mail_service_id = camp_mail_service_wi.search(cr, uid, [('campaign_id','=',camp_id),('offer_step_id','=',step_id)])
+                if not camp_mail_service_id:
+                    return "no_mail_service_for_campaign"
+                else:
+                    self.write(cr, uid, [wi.id], {'mail_service_id': camp_mail_service_id})
+                    return False
+        else:
+            return "no_segment"
+
+    def _check_error(self, cr, uid, ids, error):
+        """ Check action error code and set workitem log """
+        if error=='no_document':
+            self.write(cr, uid, [ids], {'state': 'error','error_msg':'No production document is assigned to this offer step'})
+        elif error=='no_step':
+            self.write(cr, uid, [ids], {'state': 'error','error_msg':'There is no offer step for this workitem'})
+        elif error=='no_segment':
+            self.write(cr, uid, [ids], {'state': 'error','error_msg':'There is no segment for this workitem'})
+        elif error=='no_proposition':
+            self.write(cr, uid, [ids], {'state': 'error','error_msg':'There is no campaign proposition for this workitem'})
+        elif error=='no_campaign':
+            self.write(cr, uid, [ids], {'state': 'error','error_msg':'There is no campaign for this workitem'})
+        elif error=='no_report':
+            self.write(cr, uid, [ids], {'state': 'error','error_msg':'There is no report for this offer step document'})
+        elif error=='no_mail_service_for_campaign':
+            self.write(cr, uid, [ids], {'state': 'error','error_msg':'There is no mail service for this offer step in the campaign'})
+        elif error=='no_mail_service_for_preview':
+            self.write(cr, uid, [ids], {'state': 'error','error_msg':'There is no mail service defined for this preview document'})
+        else:
+#            self.write(cr, uid, [ids], {'state': 'done','error_msg':""})
+            return True
+
     def _check_unique_so(self, cr, uid, ids, sale_order_id):
         if not sale_order_id:
             return {}
@@ -129,6 +170,7 @@ class dm_workitem(osv.osv): # {{{
         if so.invoice_validate_do:
             wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
         if so.invoice_pay_do:
+            # TODO : pay invoice
             pass
 
 
@@ -138,7 +180,7 @@ class dm_workitem(osv.osv): # {{{
         done = False
         try:
             server_obj = self.pool.get('ir.actions.server')
-            res = True
+            tr_res = True
 
             """ Check if action must be done or cancelled by"""
             """ checking the condition code of incoming transitions """
@@ -152,7 +194,7 @@ class dm_workitem(osv.osv): # {{{
                 }
                 val = {}
 
-                """ Evaluate condition code (for non preview worlitems only)"""
+                """ Evaluate condition code (for non preview workitems only)"""
                 if wi.is_preview:
                     val['action'] = True
                 else:
@@ -160,40 +202,35 @@ class dm_workitem(osv.osv): # {{{
 
                 print "Tr Condition return code : ",val.get('action',False)
 
-                if not val.get('action',False):
-                    """ If action returned by the trigger code is False """
-                    res = False
+                if not val.get('action', False):
+                    """ If action returned by the trigger code is False stop here """
+                    tr_res = False
                     act_step = tr.step_from_id.name or False
                     break
 
-            if res:
-                """ Execute server action """
-                res = server_obj.run(cr, uid, [wi.step_id.action_id.id], context)
+            if tr_res:
+                """ Assign mail service if necessary """
+                if not wi.mail_service_id:
+                    ms_err = _set_mail_service(cr, uid, wi, context)
 
-                """ Check returned value and set workitem log """
-                if res=='no_document':
-                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'No production document is assigned to this offer step'})
-                elif res=='no_step':
-                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no offer step for this workitem'})
-                elif res=='no_segment':
-                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no segment for this workitem'})
-                elif res=='no_proposition':
-                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no campaign proposition for this workitem'})
-                elif res=='no_campaign':
-                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no campaign for this workitem'})
-                elif res=='no_report':
-                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no report for this offer step document'})
-                elif res=='no_mail_service_for_campaign':
-                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no mail service for this offer step in the campaign'})
-                elif res=='no_mail_service_for_preview':
-                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no mail service defined for this preview document'})
+                """ Execute server action """
+                if not ms_err:
+                    res = server_obj.run(cr, uid, [wi.step_id.action_id.id], context)
                 else:
-                    self.write(cr, uid, [wi.id], {'state': 'done','error_msg':""})
-                    done = True
+                    res = ms_err
+
+                """ Check returned value and set done status """
+                done = self._check_error(cr, uid, wi.id, res)
+
+                """ Set workitem state as done """
+                if done:
+                    self.write(cr, uid, [ids], {'state': 'done','error_msg':""})
+
             else:
-                """ Dont Execute Action if workitem not to be processed """
+                """ Dont Execute Action if workitem is not to be processed """
                 self.write(cr, uid, [wi.id], {'state': 'cancel','error_msg':'Cancelled by : %s'% act_step})
                 done = False
+
 
         except Exception, exception:
             import traceback
@@ -249,6 +286,7 @@ class dm_workitem(osv.osv): # {{{
         context['active_id'] = camp_doc.id
         try:
             server_obj = self.pool.get('ir.actions.server')
+            """
             if not camp_doc.mail_service_id:
                 self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state': 'error',
                     'error_msg':'There is no mail service for this document'})
@@ -258,6 +296,7 @@ class dm_workitem(osv.osv): # {{{
                 self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state': 'error',
                     'error_msg':'There is no action defined for this mail service : %s' % camp_doc.mail_service_id.name})
                 return False
+            """
 
             res = server_obj.run(cr, uid, [camp_doc.mail_service_id.action_id.id], context)
             print "Campaign Doc action :",res
@@ -589,18 +628,22 @@ class dm_event(osv.osv_memory): # {{{
                 'address_id':obj.address_id.id, 'mail_service_id':obj.mail_service_id.id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'),
                 'tr_from_id':tr.id,'source':obj.source, 'sale_order_id':obj.sale_order_id.id})
                 netsvc.Logger().notifyChannel('dm event', netsvc.LOG_DEBUG, "Creating Workitem with action at %s"% next_action_time.strftime('%Y-%m-%d  %H:%M:%S'))
-            except:
-                netsvc.Logger().notifyChannel('dm event', netsvc.LOG_ERROR, "Event cannot create Workitem")
-
+            except Exception, exception:
+                import traceback
+                tb = sys.exc_info()
+                tb_s = "".join(traceback.format_exception(*tb))
+                netsvc.Logger().notifyChannel('dm event', netsvc.LOG_ERROR, "Event cannot create Workitem : %s\n%s" % (str(exception), tb_s))
         return id
 
 dm_event() # }}}
-
+"""
 class sale_order(osv.osv): # {{{
     _name = "sale.order"
     _inherit = "sale.order"
     _columns ={
         'offer_step_id' : fields.many2one('dm.offer.step','Offer Step'),
+        'segment_id' : fields.many2one('dm.campaign.proposition.segment','Segment'),
+        'journal_id': fields.many2one('account.journal', 'Journal'),
         'lines_number' : fields.integer('Number of sale order lines'),
         'so_confirm_do' : fields.boolean('Auto confirm sale order'),
         'invoice_create_do' : fields.boolean('Auto create invoice'),
@@ -608,3 +651,4 @@ class sale_order(osv.osv): # {{{
         'invoice_pay_do' : fields.boolean('Auto pay invoice'),
     }
 sale_order() # }}}
+"""

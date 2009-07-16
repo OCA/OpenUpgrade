@@ -2134,7 +2134,13 @@ class sale_order(osv.osv):#{{{
     _inherit="sale.order"
     _columns = {
         'offer_step_id': fields.many2one('dm.offer.step','Offer Step'),
+        'segment_id' : fields.many2one('dm.campaign.proposition.segment','Segment'),
         'journal_id': fields.many2one('account.journal', 'Journal'),
+        'lines_number' : fields.integer('Number of sale order lines'),
+        'so_confirm_do' : fields.boolean('Auto confirm sale order'),
+        'invoice_create_do' : fields.boolean('Auto create invoice'),
+        'invoice_validate_do' : fields.boolean('Auto validate invoice'),
+        'invoice_pay_do' : fields.boolean('Auto pay invoice'),
     }
     
 sale_order()#}}}
