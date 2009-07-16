@@ -28,7 +28,7 @@ class account_invoice_line(osv.osv):
     def move_line_get(self, cr, uid, invoice_id, context=None):
         res = super(account_invoice_line,self).move_line_get(cr, uid, invoice_id, context)
         inv = self.pool.get('account.invoice').browse(cr, uid, invoice_id)
-        if inv.type in ('out_invoice','in_refund'):
+        if inv.type in ('out_invoice','out_refund'):
             for i_line in inv.invoice_line:
                 if i_line.product_id:
                     dacc = i_line.product_id.product_tmpl_id.property_stock_account_output and i_line.product_id.product_tmpl_id.property_stock_account_output.id
