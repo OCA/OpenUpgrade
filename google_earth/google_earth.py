@@ -52,6 +52,18 @@ class res_partner(osv.osv):
         coorText = '%s,%s' % (coordinates[3],coordinates[2])
         return coorText
 
+    def _to_unicode(self, s):
+        try:
+            return s.encode('ascii')
+        except UnicodeError:
+            try:
+                return s.decode('utf-8')
+            except UnicodeError:
+                try:
+                    return s.decode('latin')
+                except UnicodeError:
+                    return s
+
     def getMap(self, cr, uid, mode=0, context={}):
         res = {}
         res_inv = {}
@@ -182,10 +194,12 @@ class res_partner(osv.osv):
             elif address == ', Saint Kitts & Nevis Anguilla':
                 address = ', Saint Kitts and Nevis'
 
-            desc_text = '<html><head> <font size=1.9 color="red"> <b><table width=400 border=5 bordercolor="red"><tr><td> Partner Name</td><td>' + str(tools.ustr(part.name.encode('ascii','replace'))) + '</td></tr><tr>' + '<td> Partner Code</td><td> ' + str(part.ref or '') + '</td></tr>' + '<tr><td>Type:</td><td>' + type + '</td></tr><tr><td>' + 'Partner Address</td><td>' \
-                        + tools.ustr(address.encode('ascii','replace')) + '</td></tr>' + '<tr><td>Turnover of partner:</td><td> ' + str(res[part.id]) + '</td></tr>' + ' <tr><td> Main comapny</td><td>' + str(part.parent_id and part.parent_id.name) + '</td></tr>' + '<tr><td>Credit Limit</td><td>' + str(part.credit_limit) + '</td></tr>' \
+            #str(tools.ustr(part.name.encode('ascii','replace'))).
+            #tools.ustr(address.encode('ascii','replace'))
+            desc_text = '<html><head> <font size=1.9 color="red"> <b><table width=400 border=5 bordercolor="red"><tr><td> Partner Name</td><td>' + self._to_unicode(part.name) + '</td></tr><tr>' + '<td> Partner Code</td><td> ' + str(part.ref or '') + '</td></tr>' + '<tr><td>Type:</td><td>' + type + '</td></tr><tr><td>' + 'Partner Address</td><td>' \
+                        + self._to_unicode(address) + '</td></tr>' + '<tr><td>Turnover of partner:</td><td> ' + str(res[part.id]) + '</td></tr>' + ' <tr><td> Main comapny</td><td>' + str(part.parent_id and part.parent_id.name) + '</td></tr>' + '<tr><td>Credit Limit</td><td>' + str(part.credit_limit or '') + '</td></tr>' \
                         + '<tr><td>Number of customer invoice</td><td>' + str(number_customer or 0 ) + '</td><tr>' +' <tr><td>Number of supplier invoice</td><td>' + str(number_supplier or 0) + '</td></tr>'  + '<tr><td>' +'Total Receivable</td><td> ' + str(part.credit) + '</td></tr>' +' <tr><td>Total Payable</td><td>' \
-                        + str(part.debit) + '</td></tr>' + '<tr><td>Website</td><td>' + str(part.website or '') + '</td></tr>'+ '</table> </b> </font> </head></html>'
+                        + str(part.debit or '') + '</td></tr>' + '<tr><td>Website</td><td>' + str(part.website or '') + '</td></tr>'+ '</table> </b> </font> </head></html>'
 
             placemarkElement = kmlDoc.createElement('Placemark')
             placemarknameElement = kmlDoc.createElement('name')
@@ -265,7 +279,7 @@ class res_partner(osv.osv):
             folderElement.appendChild(placemarkElement)
             documentElement.appendChild(folderElement)
 
-        out = kmlDoc.toxml(encoding='utf8')
+        out = kmlDoc.toxml(encoding='UTF-8')
         return out
 res_partner()
 
