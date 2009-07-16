@@ -59,8 +59,9 @@ class recording_objects_proxy(objects_proxy):
                 cache = self.access_cache.setdefault(db, {})
                 if (uid not in cache) or (cache[uid] < time.time()):
                     try:
-                        cr.execute('INSERT INTO use_control_time (user_id, date, duration, active) VALUES (%s, now(), %s, %s)', 
-                                    (int(uid), self.HOUR_MINI, True))
+                        now = time.strftime('%Y-%m-%d %H:%M:%S')
+                        cr.execute("INSERT INTO use_control_time (user_id, date, duration, active) VALUES (%s, %s, %s, %s)", 
+                                    (int(uid), now, self.HOUR_MINI, True))
                     except IntegrityError, ie:
                         # if user does not exists do not record the time in the cache
                         pass
