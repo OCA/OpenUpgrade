@@ -503,6 +503,14 @@ class dm_campaign(osv.osv):#{{{
                             'action_time': time.strftime("%Y-%m-%d %H:%M:%S")})
                         print "created wi :",res
 
+        ''' Check for mail service for each offer step of a campaign '''
+        for step in camp.offer_id.step_ids:
+            mail_service = self.pool.get('dm.campaign.mail_service').search(cr, uid, [('offer_step_id','=',step.id)])
+            if not mail_service:
+                raise osv.except_osv(
+                _('Could not open this Campaign'),
+                _('Assign a Mail Service for "%s".'%step.name))
+
         self.write(cr, uid, ids, {'state':'open','planning_state':'inprogress'})
 
         ''' create offer history'''
