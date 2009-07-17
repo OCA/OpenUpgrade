@@ -23,16 +23,6 @@
         </field>
     </record>
 
-    <!-- We need to city replaces to remove it -->
-    <record model="ir.ui.view" id="partners_form_del_citycity">
-        <field name="name">partners_form_del_citycity</field>
-        <field name="model">res.partner</field>
-        <field name="inherit_id" ref="base.view_partner_form"/>
-        <field name="arch" type="xml">
-            <field name="city" position="replace"/>
-        </field>
-    </record>
-
     <record model="ir.ui.view" id="partners_form_del_zip">
         <field name="name">partners_form_del_zip</field>
         <field name="model">res.partner</field>
@@ -167,6 +157,7 @@
                 <field name="zipcode"/>
                 <field name="name"/>
                 <field name="state_id"/>
+                <field name="country_id"/>
             </tree>
         </field>
     </record>
@@ -177,9 +168,11 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="City">
-                <field name="zipcode" select="1"/>
-                <field name="name" select="1"/>
-                <field name="state_id" select="1"/>
+                <field name="zipcode" />
+                <field name="name" />
+                <field name="country_id" />
+                <field name="state_id" />
+                <field name="code" select="2"/>
             </form>
         </field>
     </record>
