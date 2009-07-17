@@ -1,4 +1,4 @@
-import locale
+ import locale
 
 
 import mdx_input
@@ -70,7 +70,6 @@ class query(object):
                 delta_count = 0 
                 d=0  
                 for data in common.xcombine(axis[-1],cross):
-                    print " In the loop ",delta_count
                     flag = False
                     make_where = []
                     temp_where = []
@@ -132,7 +131,6 @@ class query(object):
                 for key,val in s['query'].items():
                     for v in val:
                         if key=='column':
-                            print "This is the value >>>>",val , v
                             v = v.label('p_%d' % (position,))
                             position += 1
                             select.append_column(v)
@@ -153,7 +151,6 @@ class query(object):
                     if s.has_key('format'):
                         # To make use of the format string if specified for the measure
                         # Its set to static for a testing
-                        print " This the the r[0]"
                         if not currency:
                             currency = "EUR"
                         if isinstance(r[0],float) or isinstance(r[0],int) or isinstance(r[0],long):
