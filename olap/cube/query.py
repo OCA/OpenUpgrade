@@ -1,4 +1,4 @@
- import locale
+import locale
 
 
 import mdx_input
