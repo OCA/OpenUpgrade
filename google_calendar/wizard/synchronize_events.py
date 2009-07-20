@@ -88,6 +88,17 @@ def _tz_get(self, cr, uid, data, context={}):
         return 'synch'
     else:
         return 'timezone'
+    
+visibility_list = {
+            'PRIVATE': 'private',
+            'DEFAULT': 'default',
+            'PUBLIC': 'public'       
+            }
+
+def _get_privacy(self, privacy):
+    if not privacy:
+        return 'public'
+    return visibility_list[privacy]
 
 def _get_repeat_status(self, str_google, byday):
     if not str_google:
@@ -214,7 +225,6 @@ class google_calendar_wizard(wizard.interface):
             raise osv.except_osv('Error !', e )
 
     def add_event(self, calendar_service, title='', content='', where='', start_time=None, end_time=None):
-
         try:
             event = gdata.calendar.CalendarEventEntry()
             event.title = atom.Title(text=title)
@@ -321,7 +331,7 @@ class google_calendar_wizard(wizard.interface):
                     # convert event end date into gmtime format
                     timestring_end = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(event.date_end, "%Y-%m-%d %H:%M:%S"))))
                     endtime = time.strptime(timestring_end, time_format)
-                    end_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', endtime)
+                    end_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', endtime) 
 
                     if an_event and not an_event.when:# Fix me
                         # recurrence value should be modified here to fix
@@ -369,12 +379,15 @@ class google_calendar_wizard(wizard.interface):
                         stime = an_event.when[0].start_time
                         etime = an_event.when[0].end_time
                         timestring, timestring_end = _get_tinydates(self, an_event.when[0].start_time, an_event.when[0].end_time)
+                    privacy = _get_privacy(self, an_event.visibility.value)
                     val = {
                        'name': name_event,
                        'date_begin': timestring,
                        'date_end': timestring_end,
                        'event_modify_date': timestring_update,
-                       'repeat_status': repeat_status or 'norepeat'
+                       'repeat_status': repeat_status or 'norepeat',
+                       'privacy': privacy or 'public',
+                       'email': ', '.join(map(lambda x: x.name, an_event.who))
                        }
                     obj_event.write(cr, uid, [event.id], val)
                     summary_dict['Event Modified In Tiny'] += 1
@@ -390,7 +403,6 @@ class google_calendar_wizard(wizard.interface):
                 if an_event and not an_event.when:
 #                        summary_dict['Error in Event While try to create in Tiny'] += 1
                     x = an_event.recurrence.text.split(';')
-
                     status = x[2].split('=')[-1:] and x[2].split('=')[-1:][0] or ''
                     status_day = x[3].split('=')
                     byday = ''
@@ -416,6 +428,7 @@ class google_calendar_wizard(wizard.interface):
                 else:
                     repeat_status = 'norepeat'
                     timestring, timestring_end = _get_tinydates(self, an_event.when[0].start_time, an_event.when[0].end_time)
+                privacy = _get_privacy(self, an_event.visibility.value)
                 val = {
                    'name': name_event,
                    'date_begin': timestring,
@@ -423,10 +436,13 @@ class google_calendar_wizard(wizard.interface):
                    'product_id': product and product[0] or 1,
                    'google_event_id': an_event.id.text,
                    'event_modify_date': timestring_update,
-                   'repeat_status': repeat_status or 'norepeat'
+                   'repeat_status': repeat_status or 'norepeat',
+                   'privacy': privacy or 'public',
+                   'email': ', '.join(map(lambda x: x.name, an_event.who))
                     }
                 obj_event.create(cr, uid, val)
                 summary_dict['Event Created In Tiny'] += 1
+                
         response_up_feed = self.calendar_service.ExecuteBatch(request_up_feed, gdata.calendar.service.DEFAULT_BATCH_URL)
         final_summary = '************Summary************ \n'
         for sum in summary_dict:
