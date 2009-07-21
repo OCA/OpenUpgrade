@@ -31,10 +31,15 @@ class account_invoice_line(osv.osv):
         if inv.type in ('out_invoice','out_refund'):
             for i_line in inv.invoice_line:
                 if i_line.product_id:
-                    dacc = i_line.product_id.product_tmpl_id.property_stock_account_output and i_line.product_id.product_tmpl_id.property_stock_account_output.id
-                    if not dacc:
-                        dacc = i_line.product_id.categ_id.property_stock_account_output_categ and i_line.product_id.categ_id.property_stock_account_output_categ.id
-                    
+                    if inv.type == 'out_invoice':
+                        dacc = i_line.product_id.product_tmpl_id.property_stock_account_output and i_line.product_id.product_tmpl_id.property_stock_account_output.id
+                        if not dacc:
+                            dacc = i_line.product_id.categ_id.property_stock_account_output_categ and i_line.product_id.categ_id.property_stock_account_output_categ.id
+                    else:
+                        dacc = i_line.product_id.product_tmpl_id.property_stock_account_input and i_line.product_id.product_tmpl_id.property_stock_account_input.id
+                        if not dacc:
+                            dacc = i_line.product_id.categ_id.property_stock_account_input_categ and i_line.product_id.categ_id.property_stock_account_input_categ.id
+                            
                     cacc = i_line.product_id.product_tmpl_id.property_account_expense and i_line.product_id.product_tmpl_id.property_account_expense.id
                     if not cacc:
                         cacc = i_line.product_id.categ_id.property_account_expense_categ and i_line.product_id.categ_id.property_account_expense_categ.id
