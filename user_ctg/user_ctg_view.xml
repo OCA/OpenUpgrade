@@ -77,8 +77,7 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<field name="password" position="after">
-					<field name="lp_login" string="LP Login"/>
-					<field name="lp_password" string="LP Password"/>
+					<field name="lp_login" string="Launchpad ID" colspan="4"/>					
 				</field>
 			</field>
 		</record>

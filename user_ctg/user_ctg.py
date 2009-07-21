@@ -25,6 +25,7 @@ import datetime
 import tools
 import netsvc
 from osv import fields,osv
+import os
 
 class ctg_type(osv.osv):
     _name = 'ctg.type'
@@ -37,11 +38,12 @@ ctg_type()
 class users(osv.osv):    
     _inherit = "res.users"
     _columns = {        
-        'lp_login': fields.char('Login', size=64),
-        'lp_password': fields.char('Password', size=64),
-        'ctg_line':fields.one2many('ctg.line','rewarded_user_id','CTG Lines')
+        'lp_login': fields.char('Launchpad ID', size=64),        
+        'ctg_line':fields.one2many('ctg.line','rewarded_user_id','CTG Lines', readonly=True)
     }
 users()
+
+
 
 class ctg_line(osv.osv):
     _name = 'ctg.line'
@@ -56,12 +58,33 @@ class ctg_line(osv.osv):
         'date_ctg': lambda *a: time.strftime('%Y-%m-%d'),
     }
     _order = 'points desc'  
+    
 
-    def get_LP_points(self, cr, uid, context={}):
-        # TODO : get points from LP and create ctg line. It is called by cron job
-        return
+    def get_LP_points(self, cr, uid, automatic=False, use_new_cursor=False, context=None):                
+        from lp_server import LP_Server        
+        user_obj = self.pool.get('res.users')
+        ctg_type_obj = self.pool.get('ctg.type')
+        lpserver = LP_Server()
+        lpserver.cachedir = os.path.join(tools.config['root_path'],lpserver.cachedir)
+        lpserver.credential_file = os.path.join(tools.config['root_path'],lpserver.credential_file)         
+        lp = lpserver.get_lp()       
+        user_ids = user_obj.search(cr, uid, [('lp_login','!=',False)])
+        users = user_obj.read(cr, uid, user_ids, ['name','lp_login'])
+        for user in users:
+            user_res = lpserver.get_lp_people_info(lp, user['lp_login']) 
+            type_ids = ctg_type_obj.search(cr, uid, [('code','=', 'development')])            
+            if len(type_ids):
+                ctg_ids = self.search(cr, uid, [('rewarded_user_id','=',user['id']),('ctg_type_id','=',type_ids[0])])
+                ctg_res = self.read(cr, uid, ctg_ids, ['points','date_ctg'])                       
+                points = 0.0
+                for ctg in ctg_res:
+                    points += float(ctg['points'])
+                points = user_res[user['lp_login']]['karma'] - points
+                if points > 0.0:
+                    self.create(cr, uid, {'rewarded_user_id':user['id'],'ctg_type_id':type_ids[0],'points':points})    
+        return True
 
-    def _send_mail(self, cr, uid, context={}):
+    def send_mail(self, cr, uid, automatic=False, use_new_cursor=False, context=None):
         # send mail to user regarding them CTG points of month by cron job
         date = context.get('date',False) or datetime.date.today()
         report_obj = self.pool.get('report.ctg.line')
@@ -164,7 +187,7 @@ class ctg_feedback(osv.osv):
     def action_cancel_draft(self, cr, uid, ids, context={}):
         self.write(cr, uid, ids, {'state':'draft'})
 
-    def _check_feedback(self, cr, uid, context={}):
+    def check_feedback(self, cr, uid, automatic=False, use_new_cursor=False, context=None):
         # draft to open feedback . It is called by cron job
         draft_feedback_ids = self.search(cr, uid, [('date_feedback','<=',time.strftime('%Y-%m-%d')),('state','=','draft')])
         if len(draft_ids):

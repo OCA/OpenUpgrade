@@ -23,18 +23,18 @@
 
 {
     'name': 'CTG points Management',
-    'version': '0.0.1',
+    'version': '0.0.2',
     'category': 'Tools',
     'description': """This Module is managed User CTG points (called CTG points as 'Contribution To Growth points') for
-* DMS: Added CTG points to Document's Author user when sent feedback by other people after downloading document through the DMS
-* Devlopments: Added CTG points to Developer user based on LP karma of developer
-* Marketing: Added CTG points to Marketing user base on number of incoming visitors on our website
-* Sales: Addded CTG points to Saleman user that sold something and points accordingly to amount sold
+* DMS: Added CTG points to Document's Author  when sent feedback by other people after downloading document through the DMS
+* Developments: Added CTG points to Developer  based on LP karma 
+* Marketing: Added CTG points to Marketing  base on number of incoming visitors on our website
+* Sales: Addded CTG points to Saleman  that sold something and points accordingly to amount sold
 * Customer Satisfaction: Added CTG points to resposible person of project when customer send feedback for a service/an integration 
 """,
     'author': 'Tiny',
-    'depends': ['base', 'sale','document','account_invoice_salesman'],
-    'update_xml': ['user_ctg_view.xml','demo/demo.xml'],
+    'depends': ['base', 'sale','document','project','account_invoice_salesman'],
+    'update_xml': ['user_ctg_view.xml','user_ctg_data.xml'],
     'demo_xml': [],
     'installable': True,
     'active': False,

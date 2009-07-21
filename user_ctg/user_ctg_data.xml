@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+  	<!-- CTG Type  -->
+	<record model="ctg.type" id="ctg_type1">
+		<field name="name">DMS</field>
+		<field name="code">dms</field>
+	</record>
+	<record model="ctg.type" id="ctg_type2">
+		<field name="name">Development</field>
+		<field name="code">development</field>
+	</record>
+	<record model="ctg.type" id="ctg_type3">
+		<field name="name">Marketing</field>
+		<field name="code">marketing</field>
+	</record>
+	<record model="ctg.type" id="ctg_type4">
+		<field name="name">Sales</field>
+		<field name="code">sales</field>
+	</record>
+	<record model="ctg.type" id="ctg_type5">
+		<field name="name">Customer Satisfaction</field>
+		<field name="code">customer satisfaction</field>
+	</record>
+
+    <record forcecreate="True" id="ir_cron_lp_server" model="ir.cron">
+            <field name="name">Run launchpad server</field>
+            <field eval="False" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">months</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field eval="'ctg.line'" name="model"/>
+            <field eval="'get_LP_points'" name="function"/>
+            <field eval="'(uid,)'" name="args"/>
+        </record>
+
+    <record forcecreate="True" id="ir_cron_ctg_point_send_mail" model="ir.cron">
+            <field name="name">Send CTG points to user by mail</field>
+            <field eval="False" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">months</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field eval="'ctg.line'" name="model"/>
+            <field eval="'send_mail'" name="function"/>
+            <field eval="'(uid,)'" name="args"/>
+        </record>
+
+     <record forcecreate="True" id="ir_cron_check_feedback" model="ir.cron">
+            <field name="name">Check Feedback</field>
+            <field eval="False" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">months</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field eval="'ctg.feedback'" name="model"/>
+            <field eval="'check_feedback'" name="function"/>
+            <field eval="'(uid,)'" name="args"/>
+        </record>
+	  
+  </data>
+</openerp>
+        
