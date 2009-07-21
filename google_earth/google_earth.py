@@ -20,10 +20,10 @@
 #
 ##############################################################################
 import os, xml, string, sys
-import xml.dom.minidom
-from xml.dom.minidom import parse, parseString
+from xml.dom.minidom import parse, parseString # remove me
 import urllib
 import base64
+from lxml import etree
 
 from osv import fields, osv
 import tools
@@ -90,6 +90,7 @@ class stock_move(osv.osv):
 
         colors = ['ff000080','ff800000','ff800080','ff808000','ff8080ff','ff80ff80','ffff8080','ffFACE87','ff1E69D','ff87B8DE', 'ff000000']
         warehouse_obj = self.pool.get('stock.warehouse')
+        # fix me: sale_id is not null..we must have to create sale order!
         cr.execute('select sp.warehouse_id, sum(m.product_qty) as product_send, count(s.id) as number_delivery,a.city as customer_city, cc.name as customer_country from stock_picking as s left join sale_order as so on s.sale_id=so.id left join sale_shop as sp on so.shop_id=sp.id left join stock_warehouse as w on w.id=sp.warehouse_id left join stock_move as m on s.id=m.picking_id left join res_partner_address as a on a.id=s.address_id  left join res_partner as p on p.id=a.partner_id left join res_country as cc on a.country_id=cc.id where sale_id is not null and a.city is not null and cc.name is not null group by a.city,cc.name,sp.warehouse_id')
         packings = cr.dictfetchall()
         warehouse_ids = warehouse_obj.search(cr, uid, [])
@@ -115,18 +116,17 @@ class stock_move(osv.osv):
         c8 = c7 + value
         c9 = c8 + value
 
-        kmlDoc = xml.dom.minidom.Document()
-        kmlElement = kmlDoc.createElementNS('http://maps.google.com/kml/2.2','kml')
-        kmlElement = kmlDoc.appendChild(kmlElement)
+#        XHTML_NAMESPACE = "http://maps.google.com/kml/2.2"
+#        XHTML = "{%s}" % XHTML_NAMESPACE
+#        NSMAP = {None : XHTML_NAMESPACE}
+#        kml_root = etree.Element(XHTML + "kml", nsmap=NSMAP)
+        kml_root = etree.Element("kml")
 
-        documentElement = kmlDoc.createElement('Document')
-        kmlElement.appendChild(documentElement)
-        documentElementname = kmlDoc.createElement('name')
-        documentElementname.appendChild(kmlDoc.createTextNode('Route'))
-        documentElementdesc = kmlDoc.createElement('description')
-        documentElementdesc.appendChild(kmlDoc.createTextNode(
+        kml_doc = etree.SubElement(kml_root, 'Document')
+        etree.SubElement(kml_doc, 'name').text = 'Route'
+        etree.SubElement(kml_doc, 'description').text = \
         ' Color  :           Number of Delivery range \n' \
-        '================================================================================================='
+        '=================================================================================================\n' \
         ' Marun : ' + str(no_of_packs_min) + '-' + str(c1) + '\n' \
         ' Dark Blue : ' + str(c1+1) + '-' + str(c2) + '\n' \
         ' Purple : ' + str(c2+1) + '-' + str(c3) + '\n' \
@@ -137,20 +137,13 @@ class stock_move(osv.osv):
         ' Sky blue : ' + str(c7+1) + '-' + str(c8) + ' \n' \
         ' orange : ' + str(c8+1) + '-' + str(c9) + '\n' \
         ' light brown: ' + '>' + str(c9+1) + '\n' \
-        '=================================================================================================' \
+        '=================================================================================================\n' \
         'Note: map display delivery route from warehouse location to customer locations(cities), it calculates number of deliveries by cities \n' \
-        ))
 
-        polystyleElement = kmlDoc.createElement('PolyStyle')
-        fillElement = kmlDoc.createElement('fill')
-        fillElement.appendChild(kmlDoc.createTextNode('1'))
-        polystyleElement.appendChild(fillElement)
-        outlineElement = kmlDoc.createElement('outline')
-        outlineElement.appendChild(kmlDoc.createTextNode('1'))
-        polystyleElement.appendChild(outlineElement)
-        documentElement.appendChild(polystyleElement)
-        documentElement.appendChild(documentElementname)
-        documentElement.appendChild(documentElementdesc)
+        kml_poly = etree.SubElement(kml_doc, 'PolyStyle')
+        etree.SubElement(kml_poly, 'fill').text = '1'
+        etree.SubElement(kml_poly, 'outline').text = '1'
+
         line = ''
         for pack in packings:
             total_qty = pack['product_send']
@@ -163,72 +156,52 @@ class stock_move(osv.osv):
             desc_text = '<html><head><font color="red" size=1.9><b> <table border=5 bordercolor="blue"><tr><td>  Warehouse location</td> <td>' + warehouse_city + '</td></tr><tr><td>' + line + '  Customer Location</td><td> ' + customer_city + ' ' + customer_country + '</td></tr><tr><td>' + line +' Number of product sent</td><td> ' + str(total_qty) + '</td></tr>' +  line +\
             ' <tr><td>Number of delivery</td><td> ' + str(pack['number_delivery']) + '</td></tr>' + '</table></b>  </font></head></html>'
 
-            placemarkElement = kmlDoc.createElement('Placemark')
-            placemarknameElement = kmlDoc.createElement('name')
-            placemarknameText = kmlDoc.createTextNode(str(warehouse_city))
-            placemarkdescElement = kmlDoc.createElement('description')
-            placemarkdescElement.appendChild(kmlDoc.createTextNode(desc_text))
-            placemarknameElement.appendChild(placemarknameText)
-            placemarkElement.appendChild(placemarknameElement)
-            placemarkElement.appendChild(placemarkdescElement)
+            kml_placemark = etree.SubElement(kml_doc, 'Placemark')
+            etree.SubElement(kml_placemark, 'name').text = str(warehouse_city)
+            etree.SubElement(kml_placemark, 'description').text = desc_text
 
-            styleElement = kmlDoc.createElement('Style')
-            placemarkElement.appendChild(styleElement)
-            linestyleElement = kmlDoc.createElement('LineStyle')
-            styleElement.appendChild(linestyleElement)
-            colorElement = kmlDoc.createElement('color')
+            kml_style = etree.SubElement(kml_placemark, 'Style')
+            kml_linestyle = etree.SubElement(kml_style, 'LineStyle')
+
+
             if pack['number_delivery'] >= no_of_packs_min and pack['number_delivery'] <= c1:
-                colorElement.appendChild(kmlDoc.createTextNode(colors[0]))
+                etree.SubElement(kml_linestyle, 'color').text = colors[0]
             elif pack['number_delivery'] > c1 and pack['number_delivery'] <= c2:
-                colorElement.appendChild(kmlDoc.createTextNode(colors[1]))
+                etree.SubElement(kml_linestyle, 'color').text = colors[1]
             elif pack['number_delivery'] > c2 and pack['number_delivery'] <= c3:
-                colorElement.appendChild(kmlDoc.createTextNode(colors[2]))
+                etree.SubElement(kml_linestyle, 'color').text = colors[2]
             elif pack['number_delivery'] > c3 and pack['number_delivery'] <= c4:
-                colorElement.appendChild(kmlDoc.createTextNode(colors[3]))
+                etree.SubElement(kml_linestyle, 'color').text = colors[3]
             elif pack['number_delivery'] > c4 and pack['number_delivery'] <= c5:
-                colorElement.appendChild(kmlDoc.createTextNode(colors[4]))
+                etree.SubElement(kml_linestyle, 'color').text = colors[4]
             elif pack['number_delivery'] > c5 and pack['number_delivery'] <= c6:
-                colorElement.appendChild(kmlDoc.createTextNode(colors[5]))
+                etree.SubElement(kml_linestyle, 'color').text = colors[5]
             elif pack['number_delivery'] > c6 and pack['number_delivery'] <= c7:
-                colorElement.appendChild(kmlDoc.createTextNode(colors[6]))
+                etree.SubElement(kml_linestyle, 'color').text = colors[6]
             elif pack['number_delivery'] > c7 and pack['number_delivery'] <= c8:
-                colorElement.appendChild(kmlDoc.createTextNode(colors[7]))
+                etree.SubElement(kml_linestyle, 'color').text = colors[7]
             elif pack['number_delivery'] > c8 and pack['number_delivery'] <= c9:
-                colorElement.appendChild(kmlDoc.createTextNode(colors[8]))
+                etree.SubElement(kml_linestyle, 'color').text = colors[8]
             else:
-                colorElement.appendChild(kmlDoc.createTextNode(colors[9]))
+                etree.SubElement(kml_linestyle, 'color').text = colors[9]
 
-            widthElement = kmlDoc.createElement('width')
-            widthElement.appendChild(kmlDoc.createTextNode('4'))
-
-            linestyleElement.appendChild(colorElement)
-            linestyleElement.appendChild(widthElement)
-
-            lineElement = kmlDoc.createElement('LineString')
-            placemarkElement.appendChild(lineElement)
-
-            coorElement = kmlDoc.createElement('coordinates')
-            lineElement.appendChild(coorElement)
-
+            etree.SubElement(kml_linestyle, 'width').text = '4'
+            kml_linestring = etree.SubElement(kml_placemark, 'LineString')
             steps = get_directions(self, warehouse_city, customer_city)
             if not steps: # make route path strait
                 coordinates1 = geocode(self, warehouse_city)
                 coordinates2 = geocode(self, customer_city)
                 coordinates2 = coordinates2 + '\n'
-                coorElement.appendChild(kmlDoc.createTextNode(coordinates2))
-                coorElement.appendChild(kmlDoc.createTextNode(coordinates1))
+                etree.SubElement(kml_linestring, 'coordinates').text = coordinates2 + coordinates1
             else:
                 for s in steps:
                     coorText = '%s, %s, %s \n' % (s[0], s[1], s[2])
-                    coorElement.appendChild(kmlDoc.createTextNode(coorText))
+                    etree.SubElement(kml_linestring, 'coordinates').text = coorText
 
-            lineElement.appendChild(coorElement)
-            documentElement.appendChild(placemarkElement)
-
-        out = kmlDoc.toxml(encoding='UTF-8')
+        out = etree.tostring(kml_root, encoding="UTF-8", xml_declaration=True, pretty_print = False)
         return out
-
 stock_move()
+
 class res_country(osv.osv):
     _inherit = 'res.country'
     _description = 'Country'
@@ -298,7 +271,7 @@ class res_country(osv.osv):
             res[partner_id] = turnover
         ad = tools.config['addons_path'] # check for base module path also
         module_path = os.path.join(ad, 'google_earth/test.kml')
-        dom1 = parse(module_path) # parse an XML file by name
+        dom1 = parse(module_path) # parse an XML file by name #use etree parse...(to do)
         placemarks = dom1.getElementsByTagName('Placemark')
         dict_country = {}
 
@@ -310,11 +283,13 @@ class res_country(osv.osv):
 
             if value_name in country_list:
                 dict_country[value_name] = value_cord
-        kmlDoc = xml.dom.minidom.Document()
-        kmlElement = kmlDoc.createElementNS('http://earth.google.com/kml/2.2','kml')
-        kmlElement.setAttribute('xmlns','http://www.opengis.net/kml/2.2')
-        kmlElement = kmlDoc.appendChild(kmlElement)
-        documentElement = kmlDoc.createElement('Document')
+
+        XHTML_NAMESPACE = "http://www.opengis.net/kml/2.2"
+        XHTML = "{%s}" % XHTML_NAMESPACE
+        NSMAP = {None : XHTML_NAMESPACE}
+        kml_root = etree.Element(XHTML + "kml", nsmap=NSMAP)
+
+        kml_doc = etree.SubElement(kml_root, 'Document')
         line1 = '<font color="blue"><br />--------------------------------------------</font>'
         line1 = ''
         for part in partners:
@@ -361,38 +336,20 @@ class res_country(osv.osv):
                         + '<tr><td>Number of customer invoice</td><td>' + str(number_customer or 0 ) + '</td><tr>' +' <tr><td>Number of supplier invoice</td><td>' + str(number_supplier or 0) + '</td></tr>'  + '<tr><td>' +'Total Receivable</td><td> ' + str(part.credit) + '</td></tr>' +' <tr><td>Total Payable</td><td>' \
                         + str(part.debit or '') + '</td></tr>' + '<tr><td>Website</td><td>' + str(part.website or '') + '</td></tr>'+ '</table> </b> </font> </head></html>'
 
-            placemarkElement = kmlDoc.createElement('Placemark')
-            placemarknameElement = kmlDoc.createElement('name')
-            placemarknameText = kmlDoc.createTextNode(part.name)
-            placemarknameElement.appendChild(placemarknameText)
-            placemarkElement.appendChild(placemarknameElement)
-            descriptionElement = kmlDoc.createElement('description')
-            descriptionText = kmlDoc.createTextNode(desc_text)
-            descriptionElement.appendChild(descriptionText)
-            placemarkElement.appendChild(descriptionElement)
-            pointElement = kmlDoc.createElement('Point')
-            placemarkElement.appendChild(pointElement)
-            coorElement = kmlDoc.createElement('coordinates')
+            kml_placemark = etree.SubElement(kml_doc, 'Placemark')
+            etree.SubElement(kml_placemark, 'name').text = part.name
+            etree.SubElement(kml_placemark, 'description').text = desc_text
+            kml_point = etree.SubElement(kml_placemark, 'Point')
+
             # This geocodes the address and adds it to a <Point> element.
             coordinates = geocode(self, address)
-            coorElement.appendChild(kmlDoc.createTextNode(coordinates))
-            pointElement.appendChild(coorElement)
-            documentElement.appendChild(placemarkElement)
+            etree.SubElement(kml_point, 'coordinates').text = coordinates
 
-        documentElement = kmlElement.appendChild(documentElement)
-        documentElementname = kmlDoc.createElement('name')
-        documentElementname.appendChild(kmlDoc.createTextNode('Country Wise Turnover'))
-        documentElementdesc = kmlDoc.createElement('description')
-        documentElementdesc.appendChild(kmlDoc.createTextNode('============================= \n Light Red - Low Turnover \n Dart Red - High Turnover \n ============================='))
+        etree.SubElement(kml_doc, 'name').text = 'Country Wise Turnover'
+        etree.SubElement(kml_doc, 'description').text = '============================= \n Light Red - Low Turnover \n Dart Red - High Turnover \n ============================='
 
-        documentElement.appendChild(documentElementname)
-        documentElement.appendChild(documentElementdesc)
-
-        folderElement = kmlDoc.createElement('Folder')
-        foldernameElement = kmlDoc.createElement('name')
-        foldernameElement.appendChild(kmlDoc.createTextNode('Folder'))
-        folderElement.appendChild(foldernameElement)
-
+        kml_folder = etree.SubElement(kml_doc, 'Folder')
+        etree.SubElement(kml_folder, 'name').text = 'Folder'
         country_list.sort()
         for country in country_list:
             if res[country] > avg_to:
@@ -403,45 +360,26 @@ class res_country(osv.osv):
 
             desctiption_country = '<html><head><font size=1.5 color="red"><b><table width=250 border=5 bordercolor="red"><tr><td>   Number of partner </td><td>' + str(res_cus[country])  +  line1 + '</td></tr><tr><td> Number of Invoices made </td><td>' + str(res_inv[country]) + line1 + \
                                   '</td></tr><tr><td>Turnover of country</td><td> ' + str(res[country]) +  line1 +' </td></tr></b> </font> </table></head></html>'
-            placemarkElement = kmlDoc.createElement('Placemark')
-            placemarknameElement = kmlDoc.createElement('name')
-            placemarknameText = kmlDoc.createTextNode(country)
-            placemarkdescElement = kmlDoc.createElement('description')
-            placemarkdescElement.appendChild(kmlDoc.createTextNode(desctiption_country))
-            placemarknameElement.appendChild(placemarknameText)
+            kml_placemark1 = etree.SubElement(kml_folder, 'Placemark')
+            etree.SubElement(kml_placemark1, 'name').text = country
+            etree.SubElement(kml_placemark1, 'description').text = desctiption_country
 
-            placemarkstyleElement = kmlDoc.createElement('Style')
-            placemarkpolystyleElement = kmlDoc.createElement('PolyStyle')
-            placemarkcolorrElement = kmlDoc.createElement('color')
-            placemarkcolorrElement.appendChild(kmlDoc.createTextNode(color))#colors[cnt]
-            placemarkpolystyleElement.appendChild(placemarkcolorrElement)
-            placemarkstyleElement.appendChild(placemarkpolystyleElement)
+            kml_style = etree.SubElement(kml_placemark1, 'Style')
+            kml_polystyle = etree.SubElement(kml_style, 'PolyStyle')
+            etree.SubElement(kml_polystyle, 'color').text = color
 
-            placemarkElement.appendChild(placemarknameElement)
-            placemarkElement.appendChild(placemarkdescElement)
-            placemarkElement.appendChild(placemarkstyleElement)
+            kml_mgeometry = etree.SubElement(kml_placemark1, 'MultiGeometry')
+            kml_polygon = etree.SubElement(kml_mgeometry, 'Polygon')
 
-            geometryElement = kmlDoc.createElement('MultiGeometry')
-            polygonElement = kmlDoc.createElement('Polygon')
+            kml_outerboundry = etree.SubElement(kml_polygon, 'outerBoundaryIs')
+            kml_linearring = etree.SubElement(kml_outerboundry, 'LinearRing')
 
-            outerboundaryisElement = kmlDoc.createElement('outerBoundaryIs')
-            linearringElement = kmlDoc.createElement('LinearRing')
-
-            coordinatesElemenent = kmlDoc.createElement('coordinates')
-            coordinatesElemenent.appendChild(kmlDoc.createTextNode(cooridinate))
-            linearringElement.appendChild(coordinatesElemenent)
-
-            outerboundaryisElement.appendChild(linearringElement)
-            polygonElement.appendChild(outerboundaryisElement)
-            geometryElement.appendChild(polygonElement)
-            placemarkElement.appendChild(geometryElement)
-
-            folderElement.appendChild(placemarkElement)
-            documentElement.appendChild(folderElement)
-
-        out = kmlDoc.toxml(encoding='UTF-8')
+            etree.SubElement(kml_linearring, 'coordinates').text = cooridinate
+#        out = kmlDoc.toxml(encoding='UTF-8')
+        out = etree.tostring(kml_root, encoding="UTF-8", xml_declaration=True, pretty_print = False)
         return out
 
+res_country()
 
 class res_partner(osv.osv):
     _inherit = "res.partner"
@@ -468,18 +406,18 @@ class res_partner(osv.osv):
         for ml_id, turnover, partner_id in res_partner:
             res[partner_id] = turnover
 
-        kmlDoc = xml.dom.minidom.Document()
-        kmlElement = kmlDoc.createElementNS('http://maps.google.com/kml/2.2','kml')
-        kmlElement = kmlDoc.appendChild(kmlElement)
-        documentElement = kmlDoc.createElement('Document')
-        kmlElement.appendChild(documentElement)
-        documentElementname = kmlDoc.createElement('name')
-        documentElementname.appendChild(kmlDoc.createTextNode('partners'))
-        documentElementdesc = kmlDoc.createElement('description')
-        documentElementdesc.appendChild(kmlDoc.createTextNode('You can see Partner Information (Name, Code, Type, Partner Address, Turnover Partner, ....., Website) by clicking Partner'))
-        documentElement.appendChild(documentElementname)
-        documentElement.appendChild(documentElementdesc)
+        XHTML_NAMESPACE = "http://www.opengis.net/kml/2.2"
+        XHTML = "{%s}" % XHTML_NAMESPACE
+        NSMAP = {None : XHTML_NAMESPACE}
+        kml_root = etree.Element(XHTML + "kml", nsmap=NSMAP)
+#        kml_root = etree.Element("kml")
+
+        kml_doc = etree.SubElement(kml_root, 'Document')
+        etree.SubElement(kml_doc, 'name').text = 'partners'
+        etree.SubElement(kml_doc, 'description').text = 'You can see Partner Information (Name, Code, Type, Partner Address, Turnover Partner, ....., Website) by clicking Partner'
+
         line = '<font color="blue">--------------------------------------------</font>'
+        cnt_id = 0
         for part in partner_data:
             partner_id = part.id
             address = ''
@@ -510,25 +448,15 @@ class res_partner(osv.osv):
                 if add.country_id:
                     address += ',  '
                     address += tools.ustr(add.country_id.name)
-            styleElement = kmlDoc.createElement('Style')
-            styleElement.setAttribute('id','randomColorIcon')
-            iconstyleElement = kmlDoc.createElement('IconStyle')
-            colorElement = kmlDoc.createElement('color')
-            colorElement.appendChild(kmlDoc.createTextNode('ff00ff00'))
-            iconstyleElement.appendChild(colorElement)
-            colormodeElement = kmlDoc.createElement('colorMode')
-            colormodeElement.appendChild(kmlDoc.createTextNode('random'))
-            iconstyleElement.appendChild(colormodeElement)
-            scaleElement = kmlDoc.createElement('scale')
-            scaleElement.appendChild(kmlDoc.createTextNode('1.1'))
-            iconstyleElement.appendChild(scaleElement)
-            iconElement = kmlDoc.createElement('Icon')
-            hrefElement = kmlDoc.createElement('href')
-            hrefElement.appendChild(kmlDoc.createTextNode('http://maps.google.com/mapfiles/kml/pal3/icon53.png'))
-            iconElement.appendChild(hrefElement)
-            iconstyleElement.appendChild(iconElement)
-            styleElement.appendChild(iconstyleElement)
-            documentElement.appendChild(styleElement)
+            kml_style = etree.SubElement(kml_doc, 'Style')
+            kml_style.set('id','randomColorIcon'+ str(cnt_id+1))
+            cnt_id += 1
+            kml_iconstyle = etree.SubElement(kml_style, 'IconStyle')
+            etree.SubElement(kml_iconstyle, 'color').text = 'ff00ff00'
+            etree.SubElement(kml_iconstyle, 'colorMode').text = 'random'
+            etree.SubElement(kml_iconstyle, 'scale').text = '1.1'
+            kml_icon = etree.SubElement(kml_iconstyle, 'Icon')
+            etree.SubElement(kml_icon, 'href').text = 'http://maps.google.com/mapfiles/kml/pal3/icon53.png'
             type = ''
             if part.customer:
                 type += 'Customer '
@@ -546,28 +474,16 @@ class res_partner(osv.osv):
                         + '<tr><td>Number of customer invoice</td><td>' + str(number_customer_inv or 0 ) + '</td><tr>' +' <tr><td>Number of supplier invoice</td><td>' + str(number_supplier_inv or 0) + '</td></tr>'  + '<tr><td>' +'Total Receivable</td><td> ' + str(part.credit or '') + '</td></tr>' +' <tr><td>Total Payable</td><td>' \
                         + str(part.debit or '') + '</td></tr>' + '<tr><td>Website</td><td>' + str(part.website or '') + '</td></tr>'+ '</table> </b> </font> </head></html>'
 
-            placemarkElement = kmlDoc.createElement('Placemark')
-            placemarknameElement = kmlDoc.createElement('name')
-            placemarknameText = kmlDoc.createTextNode(part.name)
-            placemarknameElement.appendChild(placemarknameText)
-            placemarkElement.appendChild(placemarknameElement)
-            descriptionElement = kmlDoc.createElement('description')
-            descriptionText = kmlDoc.createTextNode(desc_text)
-            descriptionElement.appendChild(descriptionText)
-            placemarkElement.appendChild(descriptionElement)
-            styleurlElement = kmlDoc.createElement('styleUrl')
-            styleurlElement.appendChild(kmlDoc.createTextNode('root://styleMaps#default+nicon=0x304+hicon=0x314'))
-            placemarkElement.appendChild(styleurlElement)
-            pointElement = kmlDoc.createElement('Point')
-            placemarkElement.appendChild(pointElement)
-            coorElement = kmlDoc.createElement('coordinates')
+            kml_placemark = etree.SubElement(kml_doc, 'Placemark')
+            etree.SubElement(kml_placemark, 'name').text = part.name
+            etree.SubElement(kml_placemark, 'description').text = desc_text
+            etree.SubElement(kml_placemark, 'styleUrl').text = 'root://styleMaps#default+nicon=0x304+hicon=0x314'
             # This geocodes the address and adds it to a <Point> element.
             coordinates = geocode(self, address)
-            coorElement.appendChild(kmlDoc.createTextNode(coordinates))
-            pointElement.appendChild(coorElement)
-            documentElement.appendChild(placemarkElement)
+            kml_point = etree.SubElement(kml_placemark, 'Point')
+            etree.SubElement(kml_point, 'coordinates').text = coordinates
             # This writes the KML Document to a file.
-        out = kmlDoc.toxml(encoding='UTF-8')
+        out = etree.tostring(kml_root, encoding="UTF-8", xml_declaration=True, pretty_print = False)
         return out
 
 res_partner()
