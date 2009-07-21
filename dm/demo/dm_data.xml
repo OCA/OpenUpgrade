@@ -1141,4 +1141,48 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
         <function eval="('default',False,'type_id', [('dm.mail_service', False)], dm_mail_service_type_dummy, True, False, False, False, True)" id="type_dummy_default_set" model="ir.values" name="set"/>
     </data>
 
+    <!-- System Message -->
+    <data>
+        <record model="dm.sysmsg" id="dm_sysmsg_document">
+            <field name="name">No production document for an offer step</field>
+            <field name="code">no_document_for_step</field>
+            <field name="message">There is no document for this offer step</field>
+        </record>
+        <record model="dm.sysmsg" id="dm_sysmsg_step_wi">
+            <field name="name">No offer step for a workitem</field>
+            <field name="code">no_step_for_wi</field>
+            <field name="message">There is no offer step for this workitem</field>
+        </record>
+        <record model="dm.sysmsg" id="dm_sysmsg_segment_wi">
+            <field name="name">No segment for a workitem</field>
+            <field name="code">no_segment_for_wi</field>
+            <field name="message">There is no segment for this workitem</field>
+        </record>
+        <record model="dm.sysmsg" id="dm_sysmsg_proposition_wi">
+            <field name="name">No campaign proposition for a workitem</field>
+            <field name="code">no_proposition_for_wi</field>
+            <field name="message">There is no campaign proposition for this workitem</field>
+        </record>
+        <record model="dm.sysmsg" id="dm_sysmsg_campaign_wi">
+            <field name="name">No campaign for a workitem</field>
+            <field name="code">no_campaign_for_wi</field>
+            <field name="message">There is no campaign for this workitem</field>
+        </record>
+        <record model="dm.sysmsg" id="dm_sysmsg_report_step_document">
+            <field name="name">No report for a offer step document</field>
+            <field name="code">no_report_for_step_document</field>
+            <field name="message">There is no report for this offer step document</field>
+        </record>
+        <record model="dm.sysmsg" id="dm_sysmsg_mail_service_step">
+            <field name="name">No mail service for an offer step in a campaign</field>
+            <field name="code">no_mail_service_for_campaign</field>
+            <field name="message">There is no mail service for this offer step in the campaign</field>
+        </record>
+        <record model="dm.sysmsg" id="dm_sysmsg_mail_service_document">
+            <field name="name">No mail service for a preview document</field>
+            <field name="code">no_mail_service_for_preview</field>
+            <field name="message">There is no mail service defined for this preview document</field>
+        </record>
+    </data>
+
 </openerp>

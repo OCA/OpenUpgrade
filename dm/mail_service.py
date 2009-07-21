@@ -82,7 +82,6 @@ class dm_mail_service(osv.osv):
 
 dm_mail_service()
 
-
 class dm_campaign_mail_service(osv.osv):
     _name = "dm.campaign.mail_service"
     _rec_name = 'mail_service_id'
@@ -92,3 +91,31 @@ class dm_campaign_mail_service(osv.osv):
         'offer_step_id' : fields.many2one('dm.offer.step','Offer Step'),
     }
 dm_campaign_mail_service()
+
+class dm_sysmsg(osv.osv):
+    _name = "dm.sysmsg"
+
+    def _default_model(self, cr, uid, context={}):
+        return self.pool.get('ir.model').search(cr,uid,[('model','=','dm.workitem')])[0]
+
+    def _default_field(self, cr, uid, context={}):
+        return self.pool.get('ir.model.fields').search(cr,uid,[('model_id','=','workitem'),('name','=','error_msg')])[0]
+
+    _columns = {
+       'name' : fields.char('Description', size=64, required=True),
+       'code' : fields.char('Code', size=64, required=True),
+       'message' : fields.text('Message'),
+       'type' : fields.selection([('info','Information'),('warning','Warning'),('error','Error')], 'Type'),
+       'level' : fields.integer('Level'),
+       'model' : fields.many2one('ir.model', 'Model', required=True),
+       'field' : fields.many2one('ir.model.fields', 'Field', required=True),
+       'send_email': fields.boolean('Send Email'),
+       'email_user' : fields.many2one('res.users', 'Email User'),
+    }
+    _defaults = {
+       'type' : lambda *a : 'error',
+       'level' : lambda *a: 1,
+       'model' : _default_model,
+       'field' : _default_field,
+    }
+dm_sysmsg()
