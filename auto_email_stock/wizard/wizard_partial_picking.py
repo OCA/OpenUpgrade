@@ -195,11 +195,11 @@ def _do_split(self, cr, uid, data, context):
 
 
 def send_mail(self, cr, uid, data, context):
-    picking_data = pooler.get_pool(cr.dbname).get('stock.picking').read(cr, uid, data['id'], context)
-    email=pooler.get_pool(cr.dbname).get('res.partner.address').read(cr, uid, picking_data['address_id'][0], context)['email']
-    stock_smtpserver_id = pooler.get_pool(cr.dbname).get('email.smtpclient').search(cr, uid, [('type','=','stock')], context=False)
+    picking_data = pooler.get_pool(cr.dbname).get('stock.picking').read(cr, uid, data['id'], context=context)
+    email=pooler.get_pool(cr.dbname).get('res.partner.address').read(cr, uid, picking_data['address_id'][0], context=context)['email']
+    stock_smtpserver_id = pooler.get_pool(cr.dbname).get('email.smtpclient').search(cr, uid, [('type','=','stock')], context=context)
     if not stock_smtpserver_id:
-        default_smtpserver_id = pooler.get_pool(cr.dbname).get('email.smtpclient').search(cr, uid, [('type','=','default')], context=False)
+        default_smtpserver_id = pooler.get_pool(cr.dbname).get('email.smtpclient').search(cr, uid, [('type','=','default')], context=context)
     smtpserver_id = stock_smtpserver_id or default_smtpserver_id
     if email:
         if not smtpserver_id:
