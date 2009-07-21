@@ -27,9 +27,17 @@
 		   keyword="client_action_multi"
 		   />
 
+		<wizard
+		   string="KML For Network link"
+		   name="google.network.link"
+		   id="wizard_network_link"
+		   keyword="client_action_multi"
+		   />
+
 		<menuitem id="google_earth" name="Google Map/Earth" parent="base.menu_base_partner"/>
 		<menuitem name="Customer on Map with Turnover" id="menu_google_earth" parent="google_earth" action="wizard_customer_on_map" type="wizard"/>
 		<menuitem name="Partners country on map" id="menu_layers_of_region_category" parent="google_earth" action="wizard_layers_basedon_region_category" type="wizard"/>
 		<menuitem name="Delievery routes find" id="menu_google_delivery_route" parent="google_earth" action="wizard_find_route" type="wizard"/>
+		<menuitem name="KML For Network link" id="menu_google_network_link" parent="google_earth" action="wizard_network_link" type="wizard"/>
 	</data>
 </openerp>

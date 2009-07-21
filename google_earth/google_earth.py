@@ -245,16 +245,12 @@ class res_country(osv.osv):
         number_customer=0
         number_supplier=0
         colors = ['9f8080ff', '9f0000ff']
-#        pool = pooler.get_pool(cr.dbname)
         partner_obj = self.pool.get('res.partner')
         address_obj= self.pool.get('res.partner.address')
-    #    path = tools.config['addons_path']
-    #    fileName = path + '/google_earth/kml/partner_region.kml'
         partner_ids = partner_obj.search(cr, uid, [])
         partners = partner_obj.browse(cr, uid, partner_ids)
 
         for part in partners:
-            #Todo: should be check for contact/defualt type address
             if part.address and part.address[0].country_id and part.address[0].country_id.name:
                 if not string.upper(part.address[0].country_id.name) in country_list:
                     cntry = string.upper(str(part.address[0].country_id.name))
@@ -266,7 +262,6 @@ class res_country(osv.osv):
                             country_name += char
                     country_list.append(country_name)
         map(lambda x:res.setdefault(x, 0.0), country_list)
-        # fetch turnover by country (should be corect)
         cr.execute("select sum(l.debit-l.credit), c.name from account_move_line l, res_country c, res_partner_address a, account_account act where l.partner_id = a.partner_id and c.id=a.country_id and l.account_id = act.id and act.type = 'receivable' group by c.name")
         res_partner = cr.fetchall()
         list_to = []
@@ -295,7 +290,6 @@ class res_country(osv.osv):
                 res_cus[str(string.upper(part[1]))] = str(part[0])
 
         # fetch turnover by individual partner
-    #    cr.execute('select min(id) as id, sum(credit) as turnover, partner_id as partner_id from account_move_line group by partner_id')
         cr.execute("select min(aml.id) as id, sum(aml.debit - aml.credit) as turnover, aml.partner_id as partner_id from account_move_line aml, account_account ac, account_account_type actype where aml.account_id = ac.id and ac.user_type = actype.id and (ac.type = 'receivable') group by aml.partner_id")
         res_partner = cr.fetchall()
         for part in partners:
@@ -362,9 +356,6 @@ class res_country(osv.osv):
                 address = ', South Georgia and the South Sandwich Islands'
             elif address == ', Saint Kitts & Nevis Anguilla':
                 address = ', Saint Kitts and Nevis'
-
-            #str(tools.ustr(part.name.encode('ascii','replace'))).
-            #tools.ustr(address.encode('ascii','replace'))
             desc_text = '<html><head> <font size=1.9 color="red"> <b><table width=400 border=5 bordercolor="red"><tr><td> Partner Name</td><td>' + _to_unicode(self, part.name) + '</td></tr><tr>' + '<td> Partner Code</td><td> ' + str(part.ref or '') + '</td></tr>' + '<tr><td>Type:</td><td>' + type + '</td></tr><tr><td>' + 'Partner Address</td><td>' \
                         + _to_unicode(self, address) + '</td></tr>' + '<tr><td>Turnover of partner:</td><td> ' + str(res[part.id]) + '</td></tr>' + ' <tr><td> Main comapny</td><td>' + str(part.parent_id and part.parent_id.name) + '</td></tr>' + '<tr><td>Credit Limit</td><td>' + str(part.credit_limit or '') + '</td></tr>' \
                         + '<tr><td>Number of customer invoice</td><td>' + str(number_customer or 0 ) + '</td><tr>' +' <tr><td>Number of supplier invoice</td><td>' + str(number_supplier or 0) + '</td></tr>'  + '<tr><td>' +'Total Receivable</td><td> ' + str(part.credit) + '</td></tr>' +' <tr><td>Total Payable</td><td>' \
@@ -467,8 +458,6 @@ class res_partner(osv.osv):
         res = {}
         number_customer_inv=0
         number_supplier_inv=0
-    #    cr.execute('select min(id) as id, sum(credit) as turnover, partner_id as partner_id from account_move_line group by partner_id')
-
         cr.execute(''' select count(i.id),i.type, i.partner_id from account_invoice as i left join res_partner_address as a on i.partner_id=a.partner_id where i.type in ('out_invoice','in_invoice') group by i.type, i.partner_id ''')
         invoice_partner = cr.fetchall()
 
@@ -551,10 +540,6 @@ class res_partner(osv.osv):
                     number_customer_inv = partner[0]
                 if partner[1] == 'in_invoice' and partner[2] == partner_id:
                     number_supplier_inv = partner[0]
-
-
-    #        desc_text = ' <html><head> <font color="red"> <b> Partner Name : ' + str(part.name) + '<br/>' + line +'<br /> Partner Code : ' + str(part.ref or '') + '<br/>' + line + ' <br />Type : ' + type + ' <br/>' +line+ '<br /> Partner Address: ' +  address + '<br/>' +line+ '<br /> Turnover of partner : ' + str(res[part.id]) + '<br/>' +line+ ' <br /> Main comapny : ' + str(part.parent_id and part.parent_id.name) + '<br/>' + line+  ' <br />Credit Limit : ' + str(part.credit_limit) + '<br/>' \
-    #                    + line +  ' <br /> Number of customer invoice : ' + str(number_customer_inv or 0 ) + '<br/>' + line+' <br /> Number of supplier invoice : ' + str(number_supplier_inv or 0)  + '<br/>' +line +'<br />Total Receivable : ' + str(part.credit) + '<br/>' + line+' <br/>Total Payable : ' + str(part.debit) + '<br/>' + line+ '<br/>Website : ' + str(part.website or '') + '<br/>' +line+ ' </b> </font> </head></html>'
 
             desc_text = '<html><head> <font size=1.5 color="red"> <b><table width=400 border=5 bordercolor="red"><tr><td> Partner Name</td><td>' + _to_unicode(self,part.name) + '</td></tr><tr>' + '<td> Partner Code</td><td> ' + str(part.ref or '') + '</td></tr>' + '<tr><td>Type</td><td>' + type + '</td></tr><tr><td>' + 'Partner Address</td><td>' \
                         + _to_unicode(self, address) + '</td></tr>' + '<tr><td>Turnover of partner</td><td> ' + str(res[part.id]) + '</td></tr>' + ' <tr><td> Main comapny</td><td>' + str(part.parent_id and part.parent_id.name) + '</td></tr>' + '<tr><td>Credit Limit</td><td>' + str(part.credit_limit or '') + '</td></tr>' \
