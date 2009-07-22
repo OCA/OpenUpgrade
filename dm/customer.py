@@ -146,6 +146,8 @@ class dm_workitem(osv.osv): # {{{
             self.write(cr, uid, [ids], {'state': 'error','error_msg':'There is no mail service for this offer step in the campaign'})
         elif error=='no_mail_service_for_preview':
             self.write(cr, uid, [ids], {'state': 'error','error_msg':'There is no mail service defined for this preview document'})
+        elif error=='unsubscribe':
+            self.write(cr, uid, [ids], {'state': 'cancel','error_msg':'Cancelled by unsubscription'})
         else:
 #            self.write(cr, uid, [ids], {'state': 'done','error_msg':""})
             return True
@@ -170,14 +172,37 @@ class dm_workitem(osv.osv): # {{{
         if so.invoice_validate_do:
             wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
         if so.invoice_pay_do:
+            ids = self.pool.get('account.period').find(cr, uid, {})
+            period_id = False
+            if len(ids):
+                period_id = ids[0]
+
+            cur_obj = self.pool.get('res.currency')
+#            journal = self.pool.get('account.journal').browse(cr, uid, journal_id, context)
+
+            for invoice in so.invoice_ids:
+                journal = invoice.journal_id
+                amount_tax = invoice.amount_tax
+                amount = invoice.amount_tax
+                if journal.currency and invoice.company_id.currency_id.id<>journal.currency.id:
+                    ctx = {'date':time.strftime('%Y-%m-%d')}
+                    amount = cur_obj.compute(cr, uid, journal.currency.id, invoice.company_id.currency_id.id, amount, context=ctx)
+
+                acc_id = journal.default_credit_account_id and journal.default_credit_account_id.id
+                if not acc_id:
+                    raise osv.except_osv('Error !','Your journal must have a default credit and debit account.')
+                self.pool.get('account.invoice').pay_and_reconcile(cr, uid, [invoice.id],
+                            amount, acc_id, period_id, journal.id, '', '', '',)
+            # pass
             # TODO : pay invoice
-            pass
+        
 
 
     def run(self, cr, uid, wi, context={}):
         print "Calling run for : ",wi.step_id.action_id.name
         context['active_id'] = wi.id
         done = False
+        ms_err = ''
         try:
             server_obj = self.pool.get('ir.actions.server')
             tr_res = True
@@ -211,7 +236,7 @@ class dm_workitem(osv.osv): # {{{
             if tr_res:
                 """ Assign mail service if necessary """
                 if not wi.mail_service_id:
-                    ms_err = _set_mail_service(cr, uid, wi, context)
+                    ms_err = self._set_mail_service(cr, uid, wi, context)
 
                 """ Execute server action """
                 if not ms_err:
@@ -224,7 +249,7 @@ class dm_workitem(osv.osv): # {{{
 
                 """ Set workitem state as done """
                 if done:
-                    self.write(cr, uid, [ids], {'state': 'done','error_msg':""})
+                    self.write(cr, uid, [wi.id], {'state': 'done','error_msg':""})
 
             else:
                 """ Dont Execute Action if workitem is not to be processed """

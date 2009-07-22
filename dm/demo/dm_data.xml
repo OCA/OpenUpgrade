@@ -794,6 +794,18 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;Generate PDF Document&quot;&quot;&quot;" name="name"/>
         </record>
     </data>
+    <data noupdate="1">
+        <record id="ir_actions_server_unsubscribe" model="ir.actions.server">
+            <field eval="5" name="sequence"/>
+            <field eval="&quot;&quot;&quot;code&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
+            <field name="model_id" ref="dm.model_dm_workitem"/>
+            <field eval="[(6,0,[])]" name="child_ids"/>
+            <field eval="&quot;&quot;&quot;action = 'unsubscribe'&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
+            <field eval="&quot;&quot;&quot;DM - Unsubscribe&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
 
     <!-- ACCOUNT JOURNAL -->
 <!--
