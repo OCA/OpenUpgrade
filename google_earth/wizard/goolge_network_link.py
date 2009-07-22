@@ -41,7 +41,7 @@ _earth_form =  '''<?xml version="1.0"?>
 </form>'''
 
 _earth_fields = {
-    'path': {'string': 'Path (Etiny)', 'type': 'char', 'readonly': False , 'required': True, 'size':64, 'help':'etiny url'},
+    'path': {'string': 'Path (URL)', 'type': 'char', 'readonly': False , 'required': True, 'size':64, 'help':'URL for e.g: http://yourserver:port/kml/?model=res.partner&amp;mode=1'},
     'partner_select': {'string':'Partner', 'type': 'boolean', 'help':'KML with All Details of partners'},
     'country_select': {'string':'Country', 'type': 'boolean', 'help':'KML with All Details of partners and its country'},
     'route_select': {'string':'Delivery route', 'type': 'boolean', 'help':'Delivery route kml'},
@@ -95,7 +95,7 @@ def _create_kml(self, cr, uid, data, context={}):
     folderdescriptionElement = etree.Element('description')
     folderdescriptionElement.text = 'Network Link'
     folderNetworkLinkElement = etree.Element('NetworkLink')
-    
+
     folderElement.append(foldernameElement)
     folderElement.append(foldervisibilityElement)
     folderElement.append(folderopenElement)

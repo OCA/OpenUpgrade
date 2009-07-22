@@ -20,9 +20,7 @@
 #
 ##############################################################################
 import os, xml, string, sys
-from xml.dom.minidom import parse, parseString # remove me
 import urllib
-import base64
 from lxml import etree
 
 from osv import fields, osv
@@ -369,18 +367,26 @@ class res_country(osv.osv):
             res[partner_id] = turnover
         ad = tools.config['addons_path'] # check for base module path also
         module_path = os.path.join(ad, 'google_earth/test.kml')
-        dom1 = parse(module_path) # parse an XML file by name #use etree parse...(to do)
-        placemarks = dom1.getElementsByTagName('Placemark')
         dict_country = {}
 
-        for place in placemarks:
-            name = place.getElementsByTagName('name')
-            value_name = " ".join(t.nodeValue for t in name[0].childNodes if t.nodeType == t.TEXT_NODE)
-            cord = place.getElementsByTagName('coordinates')
-            value_cord = " ".join(t.nodeValue for t in cord[0].childNodes if t.nodeType == t.TEXT_NODE)
+        doc = etree.parse(module_path)
+        root = doc.getroot()
+        placemarks = root.getchildren()[0].findall('{http://earth.google.com/kml/2.0}Placemark')
 
-            if value_name in country_list:
-                dict_country[value_name] = value_cord
+        for place in placemarks:
+            name = place.findall('{http://earth.google.com/kml/2.0}name')
+            if name:
+                value_name = name[0].text
+            cord = place.findall('{http://earth.google.com/kml/2.0}coordinates')
+            for i in place.getchildren():
+                x = i.findall('{http://earth.google.com/kml/2.0}outerBoundaryIs')
+                if x:
+                    y = x[0].findall('{http://earth.google.com/kml/2.0}LinearRing')
+                    if y:
+                        z = y[0].findall('{http://earth.google.com/kml/2.0}coordinates')
+                        value_cord = z[0].text
+                        if value_name in country_list:
+                            dict_country[value_name] = value_cord
 
         line1 = '<font color="blue"><br />--------------------------------------------</font>'
         line1 = ''
