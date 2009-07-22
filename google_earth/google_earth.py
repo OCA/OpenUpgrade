@@ -86,6 +86,68 @@ class google_map(osv.osv):
     _name = 'google.map'
     _descrption = 'Google Map/Earth'
 
+    def get_placemark_kml(self, cr, uid, parent_element, datas, datas_country, context):
+        '''
+        parent_element = [name, description]
+        datas = [{'name': 'partnername', 'address': 'Address of partner' 'desc': {'desc1': 'value1', 'desc2': 'value2', 'desc3': 'value3', .......}}
+                ,{'name': 'partnername', 'address': 'Address of partner' 'desc': {'desc1': 'value1', 'desc2': 'value2', 'desc3': 'value3', .......}},
+                .......]
+        datas_country = [{'name': 'countryname', 'cooridinate': 'boundries of country cooridinate' 'desc': {'desc1': 'value1', 'desc2': 'value2', 'desc3': 'value3', .......}}
+                ,{'name': 'countryname', 'cooridinate': 'boundries of country cooridinate' 'desc': {'desc1': 'value1', 'desc2': 'value2', 'desc3': 'value3', .......}},
+        '''
+
+        XHTML_NAMESPACE = "http://www.opengis.net/kml/2.2"
+        XHTML = "{%s}" % XHTML_NAMESPACE
+        NSMAP = {None : XHTML_NAMESPACE}
+        kml_root = etree.Element(XHTML + "kml", nsmap=NSMAP)
+        kml_doc = etree.SubElement(kml_root, 'Document')
+        etree.SubElement(kml_doc, 'name').text = parent_element[0]
+        etree.SubElement(kml_doc, 'description').text = parent_element[1]
+        geocode_dict = {}
+        for data in datas:
+            desc_text = '<html><head><font color="red" size=1.9><b> <table border=5 bordercolor="blue">'
+            html_text = ''
+            for d in data['desc']:
+                html_text += '<tr><td>' + d + '</td><td>' + data['desc'][d] + '</td></tr>'
+            desc_text += html_text + '</table></b>  </font></head></html>'
+
+            kml_placemark = etree.SubElement(kml_doc, 'Placemark')
+            etree.SubElement(kml_placemark, 'name').text = data['name']
+            etree.SubElement(kml_placemark, 'description').text = desc_text
+            kml_point = etree.SubElement(kml_placemark, 'Point')
+
+            # This geocodes the address and adds it to a <Point> element.
+            if data['address'] in geocode_dict:
+                coordinates = geocode_dict[data['address']]
+            else:
+                coordinates = geocode(self, data['address'])
+                geocode_dict[data['address']] = coordinates
+            etree.SubElement(kml_point, 'coordinates').text = coordinates
+
+        kml_folder = etree.SubElement(kml_doc, 'Folder')
+        etree.SubElement(kml_folder, 'name').text = 'Folder'
+
+        for data in datas_country:
+            desc_text = '<html><head><font color="red" size=1.9><b> <table border=5 bordercolor="blue">'
+            html_text = ''
+            for d in data['desc']:
+                html_text += '<tr><td>' + d + '</td><td>' + data['desc'][d] + '</td></tr>'
+            desc_text += html_text + '</table></b>  </font></head></html>'
+
+            kml_placemark1 = etree.SubElement(kml_folder, 'Placemark')
+            etree.SubElement(kml_placemark1, 'name').text = data['name']
+            etree.SubElement(kml_placemark1, 'description').text = desc_text
+            kml_style = etree.SubElement(kml_placemark1, 'Style')
+            kml_polystyle = etree.SubElement(kml_style, 'PolyStyle')
+            etree.SubElement(kml_polystyle, 'color').text = data['color']
+            kml_mgeometry = etree.SubElement(kml_placemark1, 'MultiGeometry')
+            kml_polygon = etree.SubElement(kml_mgeometry, 'Polygon')
+            kml_outerboundry = etree.SubElement(kml_polygon, 'outerBoundaryIs')
+            kml_linearring = etree.SubElement(kml_outerboundry, 'LinearRing')
+            etree.SubElement(kml_linearring, 'coordinates').text = data['cooridinate']
+        out = etree.tostring(kml_root, encoding="UTF-8", xml_declaration=True, pretty_print = False)
+        return out
+
     def get_direction_kml(self, cr, uid, parent_element, datas, context):
         '''
         parent_element = [name, description]
@@ -105,6 +167,7 @@ class google_map(osv.osv):
 #        etree.SubElement(kml_poly, 'outline').text = '1'
         etree.SubElement(kml_doc, 'name').text = parent_element[0]
         etree.SubElement(kml_doc, 'description').text = parent_element[1]
+        direction_dict = {}
         for data in datas:
             desc_text = '<html><head><font color="red" size=1.9><b> <table border=5 bordercolor="blue">'
             html_text = ''
@@ -122,7 +185,11 @@ class google_map(osv.osv):
             etree.SubElement(kml_linestyle, 'color').text = data['color']
             etree.SubElement(kml_linestyle, 'width').text = '4'
             kml_linestring = etree.SubElement(kml_placemark, 'LineString')
-            steps = get_directions(self, data['source_city'], data['destination_city'])
+            if data['source_city']+' '+data['destination_city'] in direction_dict:
+                steps = direction_dict[data['source_city']+' '+data['destination_city']]
+            else:
+                steps = get_directions(self, data['source_city'], data['destination_city'])
+                direction_dict[data['source_city']+' '+data['destination_city']] = steps
             if not steps: # make route path strait
                 coordinates1 = geocode(self, data['source_city'])
                 coordinates2 = geocode(self, data['destination_city'])
@@ -254,7 +321,6 @@ class res_country(osv.osv):
         address_obj= self.pool.get('res.partner.address')
         partner_ids = partner_obj.search(cr, uid, [])
         partners = partner_obj.browse(cr, uid, partner_ids)
-
         for part in partners:
             if part.address and part.address[0].country_id and part.address[0].country_id.name:
                 if not string.upper(part.address[0].country_id.name) in country_list:
@@ -316,15 +382,12 @@ class res_country(osv.osv):
             if value_name in country_list:
                 dict_country[value_name] = value_cord
 
-        XHTML_NAMESPACE = "http://www.opengis.net/kml/2.2"
-        XHTML = "{%s}" % XHTML_NAMESPACE
-        NSMAP = {None : XHTML_NAMESPACE}
-        kml_root = etree.Element(XHTML + "kml", nsmap=NSMAP)
-
-        kml_doc = etree.SubElement(kml_root, 'Document')
         line1 = '<font color="blue"><br />--------------------------------------------</font>'
         line1 = ''
+        list_data = []
         for part in partners:
+            child_dict = {}
+            master_dict = {}
             address = ''
             mul_address = partner_obj.address_get(cr, uid, [part.id], adr_pref=['default', 'contact', 'invoice', 'delivery'])
             address_all = map(lambda x: x and x[1], mul_address.items())
@@ -345,9 +408,9 @@ class res_country(osv.osv):
                 if add.city:
                     address += ''
                     address += tools.ustr(add.city)
-                if add.state_id:
-                    address += ', '
-                    address += tools.ustr(add.state_id.name)
+#                if add.state_id:
+#                    address += ', '
+#                    address += tools.ustr(add.state_id.name)
                 if add.country_id:
                     address += ', '
                     address += tools.ustr(add.country_id.name)
@@ -359,57 +422,45 @@ class res_country(osv.osv):
                 type += 'Supplier'
                 number_supplier += 1
 
-            if address == ', S. Georgia & S. Sandwich Isls.': # to be check
+            if address == ', S. Georgia & S. Sandwich Isls.': # Fix me
                 address = ', South Georgia and the South Sandwich Islands'
             elif address == ', Saint Kitts & Nevis Anguilla':
                 address = ', Saint Kitts and Nevis'
-            desc_text = '<html><head> <font size=1.9 color="red"> <b><table width=400 border=5 bordercolor="red"><tr><td> Partner Name</td><td>' + _to_unicode(self, part.name) + '</td></tr><tr>' + '<td> Partner Code</td><td> ' + str(part.ref or '') + '</td></tr>' + '<tr><td>Type:</td><td>' + type + '</td></tr><tr><td>' + 'Partner Address</td><td>' \
-                        + _to_unicode(self, address) + '</td></tr>' + '<tr><td>Turnover of partner:</td><td> ' + str(res[part.id]) + '</td></tr>' + ' <tr><td> Main comapny</td><td>' + str(part.parent_id and part.parent_id.name) + '</td></tr>' + '<tr><td>Credit Limit</td><td>' + str(part.credit_limit or '') + '</td></tr>' \
-                        + '<tr><td>Number of customer invoice</td><td>' + str(number_customer or 0 ) + '</td><tr>' +' <tr><td>Number of supplier invoice</td><td>' + str(number_supplier or 0) + '</td></tr>'  + '<tr><td>' +'Total Receivable</td><td> ' + str(part.credit) + '</td></tr>' +' <tr><td>Total Payable</td><td>' \
-                        + str(part.debit or '') + '</td></tr>' + '<tr><td>Website</td><td>' + str(part.website or '') + '</td></tr>'+ '</table> </b> </font> </head></html>'
-
-            kml_placemark = etree.SubElement(kml_doc, 'Placemark')
-            etree.SubElement(kml_placemark, 'name').text = part.name
-            etree.SubElement(kml_placemark, 'description').text = desc_text
-            kml_point = etree.SubElement(kml_placemark, 'Point')
-
             # This geocodes the address and adds it to a <Point> element.
-            coordinates = geocode(self, address)
-            etree.SubElement(kml_point, 'coordinates').text = coordinates
+            child_dict['name'] = part.name
+            master_dict['desc'] = {'Partner Name': _to_unicode(self, part.name), 'Partner Code': str(part.ref or '') , \
+                                   'Type:': type, 'Partner Address': _to_unicode(self, address), 'Turnover of partner:':str(res[part.id]), \
+                                   'Main company': str(part.parent_id and part.parent_id.name), 'Credit Limit': str(part.credit_limit or ''), \
+                                   'Number of customer invoice': str(number_customer or 0 ), 'Number of supplier invoice': str(number_supplier or 0) ,\
+                                   'Total Receivable': str(part.credit), 'Total Payable': str(part.debit or ''), 'Website': str(part.website or '')}
+            child_dict['desc'] = master_dict['desc']
+            child_dict['address'] = address
+            list_data.append(child_dict)
 
-        etree.SubElement(kml_doc, 'name').text = 'Country Wise Turnover'
-        etree.SubElement(kml_doc, 'description').text = '============================= \n Light Red - Low Turnover \n Dart Red - High Turnover \n ============================='
+        text = '============================= \n Light Red - Low Turnover \n Dart Red - High Turnover \n ============================='
+        parent_element = []
+        parent_element.append('Country Wise Turnover')
+        parent_element.append(text)
 
-        kml_folder = etree.SubElement(kml_doc, 'Folder')
-        etree.SubElement(kml_folder, 'name').text = 'Folder'
         country_list.sort()
+        list_data_cntry = []
         for country in country_list:
+            master_dict_cntry = {}
+            child_dict_cntry = {}
             if res[country] > avg_to:
                 color = colors[1]
             else:
                 color = colors[0]
             cooridinate = dict_country[country]
-
-            desctiption_country = '<html><head><font size=1.5 color="red"><b><table width=250 border=5 bordercolor="red"><tr><td>   Number of partner </td><td>' + str(res_cus[country])  +  line1 + '</td></tr><tr><td> Number of Invoices made </td><td>' + str(res_inv[country]) + line1 + \
-                                  '</td></tr><tr><td>Turnover of country</td><td> ' + str(res[country]) +  line1 +' </td></tr></b> </font> </table></head></html>'
-            kml_placemark1 = etree.SubElement(kml_folder, 'Placemark')
-            etree.SubElement(kml_placemark1, 'name').text = country
-            etree.SubElement(kml_placemark1, 'description').text = desctiption_country
-
-            kml_style = etree.SubElement(kml_placemark1, 'Style')
-            kml_polystyle = etree.SubElement(kml_style, 'PolyStyle')
-            etree.SubElement(kml_polystyle, 'color').text = color
-
-            kml_mgeometry = etree.SubElement(kml_placemark1, 'MultiGeometry')
-            kml_polygon = etree.SubElement(kml_mgeometry, 'Polygon')
-
-            kml_outerboundry = etree.SubElement(kml_polygon, 'outerBoundaryIs')
-            kml_linearring = etree.SubElement(kml_outerboundry, 'LinearRing')
-
-            etree.SubElement(kml_linearring, 'coordinates').text = cooridinate
-#        out = kmlDoc.toxml(encoding='UTF-8')
-        out = etree.tostring(kml_root, encoding="UTF-8", xml_declaration=True, pretty_print = False)
-        return out
+            child_dict_cntry['name'] = country
+            master_dict_cntry['desc'] = {'Number of partner': str(res_cus[country]), 'Number of Invoices made': str(res_inv[country]), 'Turnover of country': str(res[country]) }
+            child_dict_cntry['desc'] = master_dict_cntry['desc']
+            child_dict_cntry['address'] = address
+            child_dict_cntry['color'] = color
+            child_dict_cntry['cooridinate'] = cooridinate
+            list_data_cntry.append(child_dict_cntry)
+        etree_kml = self.pool.get('google.map').get_placemark_kml(cr, uid, parent_element, list_data, list_data_cntry, context)
+        return etree_kml
 
 res_country()
 
@@ -438,19 +489,14 @@ class res_partner(osv.osv):
         for ml_id, turnover, partner_id in res_partner:
             res[partner_id] = turnover
 
-        XHTML_NAMESPACE = "http://www.opengis.net/kml/2.2"
-        XHTML = "{%s}" % XHTML_NAMESPACE
-        NSMAP = {None : XHTML_NAMESPACE}
-        kml_root = etree.Element(XHTML + "kml", nsmap=NSMAP)
-#        kml_root = etree.Element("kml")
-
-        kml_doc = etree.SubElement(kml_root, 'Document')
-        etree.SubElement(kml_doc, 'name').text = 'partners'
-        etree.SubElement(kml_doc, 'description').text = 'You can see Partner Information (Name, Code, Type, Partner Address, Turnover Partner, ....., Website) by clicking Partner'
-
         line = '<font color="blue">--------------------------------------------</font>'
-        cnt_id = 0
+        parent_element = []
+        parent_element.append('partners')
+        parent_element.append('You can see Partner Information (Name, Code, Type, Partner Address, Turnover Partner, ....., Website) by clicking Partner')
+        list_data = []
         for part in partner_data:
+            child_dict = {}
+            master_dict = {}
             partner_id = part.id
             address = ''
             mul_address = partner_obj.address_get(cr, uid, [part.id], adr_pref=['default', 'contact', 'invoice', 'delivery'])
@@ -462,7 +508,6 @@ class res_partner(osv.osv):
                     par_address_id = address_all and address_all[0] or False
             if par_address_id:
                 add = address_obj.browse(cr, uid, par_address_id, context)
-
             if add:
                 address += ''
     #            if add.street:
@@ -474,21 +519,12 @@ class res_partner(osv.osv):
                 if add.city:
                     address += '  '
                     address += tools.ustr(add.city)
-                if add.state_id:
-                    address += ',  '
-                    address += tools.ustr(add.state_id.name)
+#                if add.state_id:
+#                    address += ',  '
+#                    address += tools.ustr(add.state_id.name)
                 if add.country_id:
                     address += ',  '
                     address += tools.ustr(add.country_id.name)
-            kml_style = etree.SubElement(kml_doc, 'Style')
-            kml_style.set('id','randomColorIcon'+ str(cnt_id+1))
-            cnt_id += 1
-            kml_iconstyle = etree.SubElement(kml_style, 'IconStyle')
-            etree.SubElement(kml_iconstyle, 'color').text = 'ff00ff00'
-            etree.SubElement(kml_iconstyle, 'colorMode').text = 'random'
-            etree.SubElement(kml_iconstyle, 'scale').text = '1.1'
-            kml_icon = etree.SubElement(kml_iconstyle, 'Icon')
-            etree.SubElement(kml_icon, 'href').text = 'http://maps.google.com/mapfiles/kml/pal3/icon53.png'
             type = ''
             if part.customer:
                 type += 'Customer '
@@ -501,22 +537,19 @@ class res_partner(osv.osv):
                 if partner[1] == 'in_invoice' and partner[2] == partner_id:
                     number_supplier_inv = partner[0]
 
-            desc_text = '<html><head> <font size=1.5 color="red"> <b><table width=400 border=5 bordercolor="red"><tr><td> Partner Name</td><td>' + _to_unicode(self,part.name) + '</td></tr><tr>' + '<td> Partner Code</td><td> ' + str(part.ref or '') + '</td></tr>' + '<tr><td>Type</td><td>' + type + '</td></tr><tr><td>' + 'Partner Address</td><td>' \
-                        + _to_unicode(self, address) + '</td></tr>' + '<tr><td>Turnover of partner</td><td> ' + str(res[part.id]) + '</td></tr>' + ' <tr><td> Main comapny</td><td>' + str(part.parent_id and part.parent_id.name) + '</td></tr>' + '<tr><td>Credit Limit</td><td>' + str(part.credit_limit or '') + '</td></tr>' \
-                        + '<tr><td>Number of customer invoice</td><td>' + str(number_customer_inv or 0 ) + '</td><tr>' +' <tr><td>Number of supplier invoice</td><td>' + str(number_supplier_inv or 0) + '</td></tr>'  + '<tr><td>' +'Total Receivable</td><td> ' + str(part.credit or '') + '</td></tr>' +' <tr><td>Total Payable</td><td>' \
-                        + str(part.debit or '') + '</td></tr>' + '<tr><td>Website</td><td>' + str(part.website or '') + '</td></tr>'+ '</table> </b> </font> </head></html>'
-
-            kml_placemark = etree.SubElement(kml_doc, 'Placemark')
-            etree.SubElement(kml_placemark, 'name').text = part.name
-            etree.SubElement(kml_placemark, 'description').text = desc_text
-            etree.SubElement(kml_placemark, 'styleUrl').text = 'root://styleMaps#default+nicon=0x304+hicon=0x314'
             # This geocodes the address and adds it to a <Point> element.
-            coordinates = geocode(self, address)
-            kml_point = etree.SubElement(kml_placemark, 'Point')
-            etree.SubElement(kml_point, 'coordinates').text = coordinates
+            child_dict['name'] = part.name
+            master_dict['desc'] = {'Partner Name': _to_unicode(self, part.name), 'Partner Code': str(part.ref or '') , \
+                                   'Type:': type, 'Partner Address': _to_unicode(self, address), 'Turnover of partner:':str(res[part.id]), \
+                                   'Main company': str(part.parent_id and part.parent_id.name), 'Credit Limit': str(part.credit_limit or ''), \
+                                   'Number of customer invoice': str(number_customer_inv or 0 ), 'Number of supplier invoice': str(number_supplier_inv or 0) ,\
+                                   'Total Receivable': str(part.credit), 'Total Payable': str(part.debit or ''), 'Website': str(part.website or '')}
+            child_dict['desc'] = master_dict['desc']
+            child_dict['address'] = address
+            list_data.append(child_dict)
             # This writes the KML Document to a file.
-        out = etree.tostring(kml_root, encoding="UTF-8", xml_declaration=True, pretty_print = False)
-        return out
+        etree_kml = self.pool.get('google.map').get_placemark_kml(cr, uid, parent_element, list_data, [], context)
+        return etree_kml
 
 res_partner()
 
