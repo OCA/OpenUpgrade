@@ -1,2 +1,15 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_ctg_type_manager","ctg.type","model_ctg_type","group_ctg_mgr",1,1,1,1
+"access_res_user_manager","res.users","base.model_res_users","group_ctg_mgr",1,1,1,1
+"access_ctg_line_manager","ctg.line","model_ctg_line","group_ctg_mgr",1,1,1,1
+"access_report_ctg_line_manager","report.ctg.line","model_report_ctg_line","group_ctg_mgr",1,1,1,1
+"access_ctg_feedback_manager","ctg.feedback","model_ctg_feedback","group_ctg_mgr",1,1,1,1
+"access_document_file_manager","ir.attachment","base.model_ir_attachment","group_ctg_mgr",1,1,1,1
+"access_account_invoice_manager","account.invoice","account.model_account_invoice","group_ctg_mgr",1,1,1,1
+"access_ctg_type_user","ctg.type","model_ctg_type","group_ctg_usr",1,0,0,0
+"access_res_user_user","res.users","base.model_res_users","group_ctg_usr",1,0,0,0
+"access_ctg_line_user","ctg.line","model_ctg_line","group_ctg_usr",1,0,0,0
+"access_report_ctg_line_user","report.ctg.line","model_report_ctg_line","group_ctg_usr",1,0,0,0
+"access_ctg_feedback_user","ctg.feedback","model_ctg_feedback","group_ctg_usr",1,0,0,0
+"access_document_file_user","ir.attachment","base.model_ir_attachment","group_ctg_usr",1,0,0,0
+"access_account_invoice_user","account.invoice","account.model_account_invoice","group_ctg_usr",1,0,0,0

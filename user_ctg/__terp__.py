@@ -23,7 +23,7 @@
 
 {
     'name': 'CTG points Management',
-    'version': '0.0.2',
+    'version': '0.0.3',
     'category': 'Tools',
     'description': """This Module is managed User CTG points (called CTG points as 'Contribution To Growth points') for
 * DMS: Added CTG points to Document's Author  when sent feedback by other people after downloading document through the DMS
@@ -33,8 +33,8 @@
 * Customer Satisfaction: Added CTG points to resposible person of project when customer send feedback for a service/an integration 
 """,
     'author': 'Tiny',
-    'depends': ['base', 'sale','document','project','account_invoice_salesman'],
-    'update_xml': ['user_ctg_view.xml','user_ctg_data.xml'],
+    'depends': ['base', 'sale','document','account_invoice_salesman','project'],
+    'update_xml': ['user_ctg_view.xml','security/user_ctg_security.xml','security/ir.model.access.csv','user_ctg_data.xml'],
     'demo_xml': [],
     'installable': True,
     'active': False,

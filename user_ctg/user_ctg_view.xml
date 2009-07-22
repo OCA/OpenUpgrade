@@ -29,7 +29,7 @@
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">ctg.type</field>
 			<field name="view_type">form</field>
-			<field name="view_id" ref="view_ctg_type_form"/>
+			<field name="view_id" ref="view_ctg_type_tree"/>
 		</record>
 		<menuitem id="menu_ctg_conf" name="CTG Type" parent="base.menu_config"/>
 		<menuitem id="menu_ctg_type" name="Type" action= "action_view_ctg_type" parent="menu_ctg_conf" />
@@ -41,7 +41,6 @@
 			<field name="arch" type="xml">
 				<tree string="CTG Line">
 					<field name="ctg_type_id" select="1"/>
-<!--					<field name="rewarded_user_id" select="1"/>-->
 					<field name="points"/>
 					<field name="date_ctg" select="1"/>
 				</tree>
@@ -54,7 +53,6 @@
 			<field name="arch" type="xml">
 				<form string="CTG Line">
 					<field name="ctg_type_id" select="1"/>
-<!--					<field name="rewarded_user_id" select="1"/>-->
 					<field name="points"/>
 					<field name="date_ctg" select="1"/>
 				</form>
@@ -207,7 +205,7 @@
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">ctg.feedback</field>
 			<field name="view_type">form</field>
-			<field name="view_id" ref="view_ctg_feedback_form"/>
+			<field name="view_id" ref="view_ctg_feedback_tree"/>
 		</record>
 
 		<menuitem id="menu_feedback" action= "action_view_ctg_feedback" parent="base.menu_users"/>
