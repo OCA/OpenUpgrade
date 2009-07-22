@@ -82,12 +82,66 @@ def get_directions(self, source, destination):
             steps.append(endPoint)
             return steps
 
+class google_map(osv.osv):
+    _name = 'google.map'
+    _descrption = 'Google Map/Earth'
+
+    def get_direction_kml(self, cr, uid, parent_element, datas, context):
+        '''
+        parent_element = [name, description]
+        datas = [{'color': 'ff000080', 'source_city': 'Belgium', 'destination_city': 'Berlin', 'desc': {'desc1': 'value1', 'desc2': 'value2', 'desc3': 'value3', .......}}
+                ,{'color': 'ff000080', 'source_city': 'Belgium', 'destination_city': 'Berlin', 'desc': {'desc1': 'value1', 'desc2': 'value2', 'desc3': 'value3', .......}},
+                .......]
+        '''
+
+        XHTML_NAMESPACE = "http://www.opengis.net/kml/2.2"
+        XHTML = "{%s}" % XHTML_NAMESPACE
+        NSMAP = {None : XHTML_NAMESPACE}
+        kml_root = etree.Element(XHTML + "kml", nsmap=NSMAP)
+#        kml_root = etree.Element("kml")
+        kml_doc = etree.SubElement(kml_root, 'Document')
+#        kml_poly = etree.SubElement(kml_doc, 'PolyStyle')
+#        etree.SubElement(kml_poly, 'fill').text = '1'
+#        etree.SubElement(kml_poly, 'outline').text = '1'
+        etree.SubElement(kml_doc, 'name').text = parent_element[0]
+        etree.SubElement(kml_doc, 'description').text = parent_element[1]
+        for data in datas:
+            desc_text = '<html><head><font color="red" size=1.9><b> <table border=5 bordercolor="blue">'
+            html_text = ''
+            for d in data['desc']:
+                html_text += '<tr><td>' + d + '</td><td>' + data['desc'][d] + '</td></tr>'
+
+            desc_text += html_text + '</table></b>  </font></head></html>'
+            kml_placemark = etree.SubElement(kml_doc, 'Placemark')
+            etree.SubElement(kml_placemark, 'name').text = data['destination_city']
+            etree.SubElement(kml_placemark, 'description').text = desc_text
+
+            kml_style = etree.SubElement(kml_placemark, 'Style')
+            kml_linestyle = etree.SubElement(kml_style, 'LineStyle')
+
+            etree.SubElement(kml_linestyle, 'color').text = data['color']
+            etree.SubElement(kml_linestyle, 'width').text = '4'
+            kml_linestring = etree.SubElement(kml_placemark, 'LineString')
+            steps = get_directions(self, data['source_city'], data['destination_city'])
+            if not steps: # make route path strait
+                coordinates1 = geocode(self, data['source_city'])
+                coordinates2 = geocode(self, data['destination_city'])
+                coordinates2 = coordinates2 + '\n'
+                etree.SubElement(kml_linestring, 'coordinates').text = coordinates2 + coordinates1
+            else:
+                for s in steps:
+                    coorText = '%s, %s, %s \n' % (s[0], s[1], s[2])
+                    etree.SubElement(kml_linestring, 'coordinates').text = coorText
+        out = etree.tostring(kml_root, encoding="UTF-8", xml_declaration=True, pretty_print = False)
+        return out
+
+google_map()
+
 class stock_move(osv.osv):
     _inherit = "stock.move"
     _description = "Stock Move"
 
     def get_kml(self, cr, uid, mode=0, context={}):
-
         colors = ['ff000080','ff800000','ff800080','ff808000','ff8080ff','ff80ff80','ffff8080','ffFACE87','ff1E69D','ff87B8DE', 'ff000000']
         warehouse_obj = self.pool.get('stock.warehouse')
         # fix me: sale_id is not null..we must have to create sale order!
@@ -116,15 +170,8 @@ class stock_move(osv.osv):
         c8 = c7 + value
         c9 = c8 + value
 
-#        XHTML_NAMESPACE = "http://maps.google.com/kml/2.2"
-#        XHTML = "{%s}" % XHTML_NAMESPACE
-#        NSMAP = {None : XHTML_NAMESPACE}
-#        kml_root = etree.Element(XHTML + "kml", nsmap=NSMAP)
-        kml_root = etree.Element("kml")
-
-        kml_doc = etree.SubElement(kml_root, 'Document')
-        etree.SubElement(kml_doc, 'name').text = 'Route'
-        etree.SubElement(kml_doc, 'description').text = \
+        parent_element = []
+        text = \
         ' Color  :           Number of Delivery range \n' \
         '=================================================================================================\n' \
         ' Marun : ' + str(no_of_packs_min) + '-' + str(c1) + '\n' \
@@ -138,13 +185,14 @@ class stock_move(osv.osv):
         ' orange : ' + str(c8+1) + '-' + str(c9) + '\n' \
         ' light brown: ' + '>' + str(c9+1) + '\n' \
         '=================================================================================================\n' \
-        'Note: map display delivery route from warehouse location to customer locations(cities), it calculates number of deliveries by cities \n' \
+        'Note: map display delivery route from warehouse location to customer locations(cities), it calculates number of deliveries by cities \n'
 
-        kml_poly = etree.SubElement(kml_doc, 'PolyStyle')
-        etree.SubElement(kml_poly, 'fill').text = '1'
-        etree.SubElement(kml_poly, 'outline').text = '1'
-
+        parent_element.append('Route')
+        parent_element.append(text)
         line = ''
+        master_dict = {}
+        child_dict = {}
+        list_data = []
         for pack in packings:
             total_qty = pack['product_send']
             warehouse_city = warehouse_dict[pack['warehouse_id']]
@@ -153,53 +201,37 @@ class stock_move(osv.osv):
             if not (warehouse_city and customer_city):
                 raise wizard.except_wizard('Warning!','Address is not defiend on warehouse or customer. ')
 
-            desc_text = '<html><head><font color="red" size=1.9><b> <table border=5 bordercolor="blue"><tr><td>  Warehouse location</td> <td>' + warehouse_city + '</td></tr><tr><td>' + line + '  Customer Location</td><td> ' + customer_city + ' ' + customer_country + '</td></tr><tr><td>' + line +' Number of product sent</td><td> ' + str(total_qty) + '</td></tr>' +  line +\
-            ' <tr><td>Number of delivery</td><td> ' + str(pack['number_delivery']) + '</td></tr>' + '</table></b>  </font></head></html>'
-
-            kml_placemark = etree.SubElement(kml_doc, 'Placemark')
-            etree.SubElement(kml_placemark, 'name').text = str(warehouse_city)
-            etree.SubElement(kml_placemark, 'description').text = desc_text
-
-            kml_style = etree.SubElement(kml_placemark, 'Style')
-            kml_linestyle = etree.SubElement(kml_style, 'LineStyle')
-
-
             if pack['number_delivery'] >= no_of_packs_min and pack['number_delivery'] <= c1:
-                etree.SubElement(kml_linestyle, 'color').text = colors[0]
+                child_dict['color'] = colors[0]
             elif pack['number_delivery'] > c1 and pack['number_delivery'] <= c2:
-                etree.SubElement(kml_linestyle, 'color').text = colors[1]
+                child_dict['color'] = colors[1]
             elif pack['number_delivery'] > c2 and pack['number_delivery'] <= c3:
-                etree.SubElement(kml_linestyle, 'color').text = colors[2]
+                child_dict['color'] = colors[2]
             elif pack['number_delivery'] > c3 and pack['number_delivery'] <= c4:
-                etree.SubElement(kml_linestyle, 'color').text = colors[3]
+                child_dict['color'] = colors[3]
             elif pack['number_delivery'] > c4 and pack['number_delivery'] <= c5:
-                etree.SubElement(kml_linestyle, 'color').text = colors[4]
+                child_dict['color'] = colors[4]
             elif pack['number_delivery'] > c5 and pack['number_delivery'] <= c6:
-                etree.SubElement(kml_linestyle, 'color').text = colors[5]
+                child_dict['color'] = colors[5]
             elif pack['number_delivery'] > c6 and pack['number_delivery'] <= c7:
-                etree.SubElement(kml_linestyle, 'color').text = colors[6]
+                child_dict['color'] = colors[6]
             elif pack['number_delivery'] > c7 and pack['number_delivery'] <= c8:
-                etree.SubElement(kml_linestyle, 'color').text = colors[7]
+                child_dict['color'] = colors[7]
             elif pack['number_delivery'] > c8 and pack['number_delivery'] <= c9:
-                etree.SubElement(kml_linestyle, 'color').text = colors[8]
+                child_dict['color'] = colors[8]
             else:
-                etree.SubElement(kml_linestyle, 'color').text = colors[9]
+                child_dict['color'] = colors[9]
+            child_dict['source_city'] = warehouse_city
+            child_dict['destination_city'] = customer_city
+            master_dict['desc'] = {'Warehouse location': warehouse_city, 'Customer Location': customer_city+' '+customer_country, \
+                                   'Number of product sent': str(total_qty), 'Number of delivery': str(pack['number_delivery'])}
 
-            etree.SubElement(kml_linestyle, 'width').text = '4'
-            kml_linestring = etree.SubElement(kml_placemark, 'LineString')
-            steps = get_directions(self, warehouse_city, customer_city)
-            if not steps: # make route path strait
-                coordinates1 = geocode(self, warehouse_city)
-                coordinates2 = geocode(self, customer_city)
-                coordinates2 = coordinates2 + '\n'
-                etree.SubElement(kml_linestring, 'coordinates').text = coordinates2 + coordinates1
-            else:
-                for s in steps:
-                    coorText = '%s, %s, %s \n' % (s[0], s[1], s[2])
-                    etree.SubElement(kml_linestring, 'coordinates').text = coorText
+            child_dict['desc'] = master_dict['desc']
+            list_data.append(child_dict)
 
-        out = etree.tostring(kml_root, encoding="UTF-8", xml_declaration=True, pretty_print = False)
-        return out
+        etree_kml = self.pool.get('google.map').get_direction_kml(cr, uid, parent_element, list_data, context)
+        return etree_kml
+
 stock_move()
 
 class res_country(osv.osv):
