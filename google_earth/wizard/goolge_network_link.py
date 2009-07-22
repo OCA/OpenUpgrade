@@ -19,8 +19,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import xml.dom.minidom
 import base64
+from lxml import etree
 
 import wizard
 import pooler
@@ -79,95 +79,74 @@ _kml_fields = {
 
 
 def _create_kml(self, cr, uid, data, context={}):
-    kmlDoc = xml.dom.minidom.Document()
-    kmlElement = kmlDoc.createElementNS('http://maps.google.com/kml/2.2','kml')
-    kmlElement.setAttribute('xmlns','http://www.opengis.net/kml/2.2')
-    kmlDoc.appendChild(kmlElement)
-    folderElement = kmlDoc.createElement('Folder')
+    XHTML_NAMESPACE = 'http://maps.google.com/kml/2.2'
+    XHTML = "{%s}" % XHTML_NAMESPACE
+    NSMAP = {None : XHTML_NAMESPACE}
+    kmlElement = etree.Element(XHTML + "kml", nsmap=NSMAP)
+    kmlElement.set('xmlns',"http://www.opengis.net/kml/2.2")
+    folderElement = etree.Element('Folder')
 
-    foldernameElement = kmlDoc.createElement('name')
-    foldernameElement.appendChild(kmlDoc.createTextNode('Network Link Folder'))
-    foldervisibilityElement = kmlDoc.createElement('visibility')
-    foldervisibilityElement.appendChild(kmlDoc.createTextNode('0'))
-    folderopenElement = kmlDoc.createElement('open')
-    folderopenElement.appendChild(kmlDoc.createTextNode('0'))
-    folderdescriptionElement = kmlDoc.createElement('description')
-    folderdescriptionElement.appendChild(kmlDoc.createTextNode('Network Link'))
-    folderNetworkLinkElement = kmlDoc.createElement('NetworkLink')
+    foldernameElement = etree.Element('name')
+    foldernameElement.text = 'Network Link Folder'
+    foldervisibilityElement = etree.Element('visibility')
+    foldervisibilityElement.text = '0'
+    folderopenElement = etree.Element('open')
+    folderopenElement.text = '0'
+    folderdescriptionElement = etree.Element('description')
+    folderdescriptionElement.text = 'Network Link'
+    folderNetworkLinkElement = etree.Element('NetworkLink')
+    
+    folderElement.append(foldernameElement)
+    folderElement.append(foldervisibilityElement)
+    folderElement.append(folderopenElement)
+    folderElement.append(folderdescriptionElement)
+    folderElement.append(folderNetworkLinkElement)
+    folderElement.append(foldernameElement)
 
-    folderElement.appendChild(foldernameElement)
-    folderElement.appendChild(foldervisibilityElement)
-    folderElement.appendChild(folderopenElement)
-    folderElement.appendChild(folderdescriptionElement)
-    folderElement.appendChild(folderNetworkLinkElement)
-    folderElement.appendChild(foldernameElement)
+    networknameElement = etree.Element('name')
+    networknameElement.text = 'Dynamic data'
+    networkvisibilityElement = etree.Element('visibility')
+    networkvisibilityElement.text = '0'
+    networkopenElement = etree.Element('open')
+    networkopenElement.text = '0'
+    networkdescriptionElement = etree.Element('description')
+    networkdescriptionElement.text = 'Network link'
+    networkrefreshVisibilityElement = etree.Element('refreshVisibility')
+    networkrefreshVisibilityElement.text = '0'
+    networkflyToViewElement = etree.Element('flyToView')
+    networkflyToViewElement.text = '0'
+    networkLinkElement = etree.Element('Link')
 
-    networknameElement = kmlDoc.createElement('name')
-    networknameElement.appendChild(kmlDoc.createTextNode('Dynamic data'))
-    networkvisibilityElement = kmlDoc.createElement('visibility')
-    networkvisibilityElement.appendChild(kmlDoc.createTextNode('0'))
-    networkopenElement = kmlDoc.createElement('open')
-    networkopenElement.appendChild(kmlDoc.createTextNode('0'))
-    networkdescriptionElement = kmlDoc.createElement('description')
-    networkdescriptionElement.appendChild(kmlDoc.createTextNode('Network link'))
-    networkrefreshVisibilityElement = kmlDoc.createElement('refreshVisibility')
-    networkrefreshVisibilityElement.appendChild(kmlDoc.createTextNode('0'))
-    networkflyToViewElement = kmlDoc.createElement('flyToView')
-    networkflyToViewElement.appendChild(kmlDoc.createTextNode('0'))
-    networkLinkElement = kmlDoc.createElement('Link')
+    folderNetworkLinkElement.append(networknameElement)
+    folderNetworkLinkElement.append(networkvisibilityElement)
+    folderNetworkLinkElement.append(networkopenElement)
+    folderNetworkLinkElement.append(networkdescriptionElement)
+    folderNetworkLinkElement.append(networkrefreshVisibilityElement)
+    folderNetworkLinkElement.append(networkflyToViewElement)
+    folderNetworkLinkElement.append(networkLinkElement)
 
-    folderNetworkLinkElement.appendChild(networknameElement)
-    folderNetworkLinkElement.appendChild(networkvisibilityElement)
-    folderNetworkLinkElement.appendChild(networkopenElement)
-    folderNetworkLinkElement.appendChild(networkdescriptionElement)
-    folderNetworkLinkElement.appendChild(networkrefreshVisibilityElement)
-    folderNetworkLinkElement.appendChild(networkflyToViewElement)
-    folderNetworkLinkElement.appendChild(networkLinkElement)
+    linkhrefElement = etree.Element('href')
+    linkhrefElement.text = data['form']['path']
+    linkrefreshModeElement = etree.Element('refreshMode')
+    linkrefreshModeElement.text = data['form']['refresh_mode']
+    linkrefreshIntervalElement = etree.Element('refreshInterval')
+    linkrefreshIntervalElement.text = str(data['form']['refresh_interval'])
+    linkviewRefreshModeElement = etree.Element('viewRefreshMode')
+    linkviewRefreshModeElement.text = data['form']['view_refresh_mode']
+    linkrefreshVisibilityElement = etree.Element('refreshVisibility')
+    linkrefreshVisibilityElement.text = str(data['form']['view_refresh_time'])
 
-    linkhrefElement = kmlDoc.createElement('href')
-    linkhrefElement.appendChild(kmlDoc.createTextNode(data['form']['path']))
-    linkrefreshModeElement = kmlDoc.createElement('refreshMode')
-    linkrefreshModeElement.appendChild(kmlDoc.createTextNode(data['form']['refresh_mode']))
-    linkrefreshIntervalElement = kmlDoc.createElement('refreshInterval')
-    linkrefreshIntervalElement.appendChild(kmlDoc.createTextNode(str(data['form']['refresh_interval'])))
-    linkviewRefreshModeElement = kmlDoc.createElement('viewRefreshMode')
-    linkviewRefreshModeElement.appendChild(kmlDoc.createTextNode(data['form']['view_refresh_mode']))
-    linkrefreshVisibilityElement = kmlDoc.createElement('refreshVisibility')
-    linkrefreshVisibilityElement.appendChild(kmlDoc.createTextNode(str(data['form']['view_refresh_time'])))
+    networkLinkElement.append(linkhrefElement)
+    networkLinkElement.append(linkrefreshModeElement)
+    networkLinkElement.append(linkrefreshIntervalElement)
+    networkLinkElement.append(linkviewRefreshModeElement)
+    networkLinkElement.append(networkrefreshVisibilityElement)
+    networkLinkElement.append(linkrefreshVisibilityElement)
 
-    networkLinkElement.appendChild(linkhrefElement)
-    networkLinkElement.appendChild(linkrefreshModeElement)
-    networkLinkElement.appendChild(linkrefreshIntervalElement)
-    networkLinkElement.appendChild(linkviewRefreshModeElement)
-    networkLinkElement.appendChild(networkrefreshVisibilityElement)
-    networkLinkElement.appendChild(linkrefreshVisibilityElement)
-
-    kmlElement.appendChild(folderElement)
-#    out = kmlDoc.toprettyxml(encoding='UTF-8')
-    out = base64.encodestring(kmlDoc.toxml().encode('ascii', 'replace'))
-    fname = 'mykml' + '.kml'
+    kmlElement.append(folderElement)
+    out = base64.encodestring(etree.tostring(kmlElement, encoding="UTF-8", xml_declaration=True, pretty_print = True))
+    fname = 'network' + '.kml'
     return {'kml_file': out, 'name': fname}
-#<Folder>
-#<name>Network Links</name>
-#    <visibility>0</visibility>
-#    <open>0</open>
-#    <description>Network link example 1</description>
-#    <NetworkLink>
-#      <name>Random Placemark</name>
-#      <visibility>0</visibility>
-#      <open>0</open>
-#      <description>A simple server-side script that generates a new random placemark on each call</description>
-#      <refreshVisibility>0</refreshVisibility>
-#      <flyToView>0</flyToView>
-#      <Link>
-#        <href>http://jabber.openerp.co.in:8080/kml/?model=res.partner&amp;mode=1</href>
-#        <refreshMode>onInterval</refreshMode>
-#        <refreshInterval>2</refreshInterval>
-#        <viewRefreshMode>onStop</viewRefreshMode>
-#        <viewRefreshTime>7</viewRefreshTime>
-#      </Link>
-#    </NetworkLink>
-#  </Folder>
 
 class google_network_kml(wizard.interface):
     states = {
