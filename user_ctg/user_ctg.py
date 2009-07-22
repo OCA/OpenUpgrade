@@ -212,18 +212,18 @@ class document_file(osv.osv):
         current_date = datetime.date.today()
         feedback_date = current_date
         ctg_type_obj = self.pool.get('ctg.type')
-        ctg_type_ids = ctg_type_obj.search(cr,uid,[('code','=','dms')])
+        ctg_type_ids = ctg_type_obj.search(cr,user,[('code','=','dms')])
         if len(ctg_type_ids) and context.get('download',False):
             ctg_feedback_obj = self.pool.get('ctg.feedback')
             for res in result:
-                r = cr.execute('select name,title,user_id from res_users where id = %s' %(res['id']))
-                document = r.fetchone()
-                ctg_feedback_obj.create(cr, user, {
+                cr.execute('select name,title,user_id from ir_attachment where id = %s' %(res['id']))
+                document = cr.dictfetchone()
+                ctg_feedback_id = ctg_feedback_obj.create(cr, user, {
                         'name' : 'Feedback of Document : %s' %(document['title']),                        
                         'ctg_type_id': ctg_type_ids[0],
                         'user_to':user,
                         'responsible':document['user_id'],        
-                        'date_feedback': feedback_date.strftime('%y-%m-%d')})       
+                        'date_feedback': feedback_date.strftime('%y-%m-%d')}, context)
         return result
 
 document_file()
