@@ -50,7 +50,6 @@ class dm_mail_service(osv.osv):
         'action_interval': fields.integer('Interval'),
         'unit_interval': fields.selection( [('minutes', 'Minutes'),
             ('hours', 'Hours'), 
-#('work_days','Work Days'), 
             ('days', 'Days'),
             ('weeks', 'Weeks'), ('months', 'Months')], 'Interval Unit'),
         'default_for_media' : fields.boolean('Default Mail Service for Media'),
@@ -64,21 +63,8 @@ class dm_mail_service(osv.osv):
             res = self.search(cr, uid, [('media_id', '=', media_id), ('default_for_media', '=', True)])
             if res and (ids and (res in ids) or True) : 
                 return {'value':{'default_for_media':False}}
-#                raise osv.except_osv("Error!!","You cannot create more than one default mail service for same media")
         else :
             return True 
-
-#    def create(self, cr, uid, vals, context={}):
-#        new_mail_service = super(dm_mail_service, self).create(cr, uid, vals, context)
-#        mail_service = self.browse(cr, uid, new_mail_service)
-#        new_vals = {
-#                    'name'           : mail_service.name,
-#                    'interval_number': mail_service.action_interval,
-#                    'interval_type'  : mail_service.unit_interval,
-#                    'model'          : 'dm.mail_service',
-#                    'function'       : '_check_action'  }
-#        self.pool.get('ir.cron').create(cr, uid, new_vals)
-#        return new_mail_service
 
 dm_mail_service()
 
@@ -92,6 +78,16 @@ class dm_campaign_mail_service(osv.osv):
     }
 dm_campaign_mail_service()
 
+SYSMSG_STATES = [
+    ('draft','Draft'),
+    ('open','Open'),
+    ('close','Close'),
+    ('pending','Pending'),
+    ('cancel','Cancelled'),
+    ('done','Done'),
+    ('error','Error'),
+]
+
 class dm_sysmsg(osv.osv):
     _name = "dm.sysmsg"
 
@@ -102,10 +98,10 @@ class dm_sysmsg(osv.osv):
         return self.pool.get('ir.model.fields').search(cr,uid,[('model_id','=','workitem'),('name','=','error_msg')])[0]
 
     _columns = {
-       'name' : fields.char('Description', size=64, required=True),
+       'name' : fields.char('Description', translate=True, size=64, required=True),
        'code' : fields.char('Code', size=64, required=True),
-       'message' : fields.text('Message'),
-       'type' : fields.selection([('info','Information'),('warning','Warning'),('error','Error')], 'Type'),
+       'message' : fields.text('Message', translate=True),
+       'state' : fields.selection(SYSMSG_STATES, 'State to set'),
        'level' : fields.integer('Level'),
        'model' : fields.many2one('ir.model', 'Model', required=True),
        'field' : fields.many2one('ir.model.fields', 'Field', required=True),
@@ -113,7 +109,7 @@ class dm_sysmsg(osv.osv):
        'email_user' : fields.many2one('res.users', 'Email User'),
     }
     _defaults = {
-       'type' : lambda *a : 'error',
+       'state' : lambda *a : 'error',
        'level' : lambda *a: 1,
        'model' : _default_model,
        'field' : _default_field,

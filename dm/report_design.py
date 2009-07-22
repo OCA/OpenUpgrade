@@ -93,7 +93,7 @@ def generate_reports(cr, uid, obj, report_type, context): # {{{
     if obj.step_id:
         step_id = obj.step_id.id
     else:
-        return "no_step"
+        return "no_step_for_wi"
 
     pool = pooler.get_pool(cr.dbname)
     dm_doc_obj = pool.get('dm.offer.document') 
@@ -104,57 +104,35 @@ def generate_reports(cr, uid, obj, report_type, context): # {{{
     if report_type=='html2html':
         r_type = 'html'
 
-    for address_id in address_ids:
-
-        """ Check if the workitem has a mail service """
-        if not obj.mail_service_id:
-            return "no_mail_service"
-
-        """
-        if not obj.mail_service_id:
-            camp_mail_service = camp_mail_service_obj.browse(cr, uid, [obj.mail_service_id.id])[0]
-        else:
-            if obj.segment_id :
-                if not obj.segment_id.proposition_id:
-                    return "no_proposition"
-                elif not obj.segment_id.proposition_id.camp_id:
-                    return "no_campaign"
-                else:
-                    camp_id = obj.segment_id.proposition_id.camp_id.id
-                    camp_mail_service_id = camp_mail_service_obj.search(cr,uid,[('campaign_id','=',camp_id),('offer_step_id','=',step_id)])
-                    if not camp_mail_service_id:
-                        return "no_mail_service_for_campaign"
-                    else:
-                        camp_mail_service = camp_mail_service_obj.browse(cr, uid, camp_mail_service_id)[0]
+    """ Set mail service to use """
+    if obj.mail_service_id:
+        camp_mail_service = camp_mail_service_obj.browse(cr, uid, [obj.mail_service_id.id])[0]
+    else:
+        if obj.segment_id :
+            if not obj.segment_id.proposition_id:
+                return "no_proposition"
+            elif not obj.segment_id.proposition_id.camp_id:
+                return "no_campaign"
             else:
-                return "no_segment"
-        """
+                camp_id = obj.segment_id.proposition_id.camp_id.id
+                camp_mail_service_id = camp_mail_service_obj.search(cr,uid,[('campaign_id','=',camp_id),('offer_step_id','=',step_id)])
+                if not camp_mail_service_id:
+                    return "no_mail_service_for_campaign"
+                else:
+                    camp_mail_service = camp_mail_service_obj.browse(cr, uid, camp_mail_service_id)[0]
+        else:
+            return "no_segment"
 
-        """ Compute document delivery date """
-        if obj.mail_service_id.time_mode=='interval' :
-            # To test
-            kwargs =  {(obj.mail_service_id.unit_interval):obj.mail_service_id.action_interval}
-            delivery_time = datetime.datetime.now() + datetime.timedelta(**kwargs)
-        elif obj.mail_service_id.time_mode=='date' :
-            """ If the document must be send at a specific date, use it """
-            delivery_time = obj.mail_service_id.action_date
-        elif obj.mail_service_id.time_mode=='hour' :
-            """ If the document must be send at a specific hour, use it """
-            temp_time = str(obj.mail_service_id.action_hour)
-            # To test
-            if time.strftime('%H.%M:') > temp_time:
-                date = datetime.datetime.now() + datetime.timedelta(days=1).strftime('%Y-%m-%d')
-            else : 
-                date = time.strftime('%Y-%m-%d')
-            delivery_time = date + ' ' + temp_time.replace('.',':') + ':00'
-        else :
-            """ If nothing specified then deliver now """
-            delivery_time=time.strftime('%Y-%m-%d %H:%M:%S')
+    ms_id = camp_mail_service.mail_service_id.id
+
+    print "XXXXX camp_mail_service :",ms_id
+
+    for address_id in address_ids:
 
         """ Get offer step documents to process """
         document_id = dm_doc_obj.search(cr, uid, [('step_id','=',obj.step_id.id),('category_id','=','Production')])
         if not document_id : 
-            return "no_document"
+            return "no_document_for_step"
 
         type_id = pool.get('dm.campaign.document.type').search(cr,uid,[('code','=',r_type)])
         
@@ -167,11 +145,11 @@ def generate_reports(cr, uid, obj, report_type, context): # {{{
             'segment_id': obj.segment_id.id or False,
             'name': obj.step_id.code + "_" + str(address_id),
             'type_id': type_id[0],
-            'mail_service_id': obj.mail_service_id.id,
-            'delivery_time' : delivery_time,
+            'mail_service_id': ms_id,
             'document_id' : document_id[0],
             (obj.source) : address_id,
             'origin' : so,
+#            'wi_id' : obj.id,
             }
 
 
