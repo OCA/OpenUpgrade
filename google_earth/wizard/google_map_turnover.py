@@ -25,7 +25,6 @@ import cgi
 
 import wizard
 import pooler
-import tools
 
 _earth_form =  '''<?xml version="1.0"?>
 <form string="Google Map/Earth">
@@ -46,9 +45,9 @@ def create_kml(self, cr, uid, data, context={}):
     # KML elements.
     pool = pooler.get_pool(cr.dbname)
     kml = pool.get('res.partner').get_kml(cr, uid, mode=0, context=context)
-    out = base64.encodestring(kml)
+#    out = base64.encodestring(kml)
     fname = 'turnover' + '.kml'
-    return {'kml_file': out, 'name': fname}
+    return {'kml_file': kml, 'name': fname}
 
 class customer_on_map(wizard.interface):
 

@@ -23,6 +23,8 @@ import os, xml, string, sys
 import urllib
 from lxml import etree
 
+from google.directions import GoogleDirections
+
 from osv import fields, osv
 import tools
 
@@ -62,12 +64,10 @@ def get_directions(self, source, destination):
     steps = []
     res = False
 #    try:
-    from google.directions import GoogleDirections
     gd = GoogleDirections('ABQIAAAAUbF6J26EmcC_0QgBXb9xvhRoz3DfI4MsQy-vo3oSCnT9jW1JqxQfs5OWnaBY9or_pyEGfvnnRcWEhA')
     res = gd.query(source, destination)
 #    except:
 #        raise wizard.except_wizard('Warning!','Please install Google direction package from http://pypi.python.org/pypi/google.directions/0.3 ')
-
     if res:
         if res.status != 200:
             print "Address not found. Status was: %d" % res.status
@@ -82,7 +82,31 @@ def get_directions(self, source, destination):
 
 class google_map(osv.osv):
     _name = 'google.map'
-    _descrption = 'Google Map/Earth'
+    _description = 'Google Map/Earth'
+
+    def get_country_boundries(self, cr, uid, country_list, context):
+        ad = tools.config['addons_path'] # check for base module path also
+        module_path = os.path.join(ad, 'google_earth/test.kml')
+        dict_country = {}
+        doc = etree.parse(module_path)
+        root = doc.getroot()
+        placemarks = root.getchildren()[0].findall('{http://earth.google.com/kml/2.0}Placemark')
+
+        for place in placemarks:
+            name = place.findall('{http://earth.google.com/kml/2.0}name')
+            if name:
+                value_name = name[0].text
+            cord = place.findall('{http://earth.google.com/kml/2.0}coordinates')
+            for i in place.getchildren():
+                x = i.findall('{http://earth.google.com/kml/2.0}outerBoundaryIs')
+                if x:
+                    y = x[0].findall('{http://earth.google.com/kml/2.0}LinearRing')
+                    if y:
+                        z = y[0].findall('{http://earth.google.com/kml/2.0}coordinates')
+                        value_cord = z[0].text
+                        if value_name in country_list:
+                            dict_country[value_name] = value_cord
+        return dict_country
 
     def get_placemark_kml(self, cr, uid, parent_element, datas, datas_country, context):
         '''
@@ -93,7 +117,6 @@ class google_map(osv.osv):
         datas_country = [{'name': 'countryname', 'cooridinate': 'boundries of country cooridinate' 'desc': {'desc1': 'value1', 'desc2': 'value2', 'desc3': 'value3', .......}}
                 ,{'name': 'countryname', 'cooridinate': 'boundries of country cooridinate' 'desc': {'desc1': 'value1', 'desc2': 'value2', 'desc3': 'value3', .......}},
         '''
-
         XHTML_NAMESPACE = "http://www.opengis.net/kml/2.2"
         XHTML = "{%s}" % XHTML_NAMESPACE
         NSMAP = {None : XHTML_NAMESPACE}
@@ -113,7 +136,6 @@ class google_map(osv.osv):
             etree.SubElement(kml_placemark, 'name').text = data['name']
             etree.SubElement(kml_placemark, 'description').text = desc_text
             kml_point = etree.SubElement(kml_placemark, 'Point')
-
             # This geocodes the address and adds it to a <Point> element.
             if data['address'] in geocode_dict:
                 coordinates = geocode_dict[data['address']]
@@ -121,7 +143,6 @@ class google_map(osv.osv):
                 coordinates = geocode(self, data['address'])
                 geocode_dict[data['address']] = coordinates
             etree.SubElement(kml_point, 'coordinates').text = coordinates
-
         kml_folder = etree.SubElement(kml_doc, 'Folder')
         etree.SubElement(kml_folder, 'name').text = 'Folder'
 
@@ -143,8 +164,7 @@ class google_map(osv.osv):
             kml_outerboundry = etree.SubElement(kml_polygon, 'outerBoundaryIs')
             kml_linearring = etree.SubElement(kml_outerboundry, 'LinearRing')
             etree.SubElement(kml_linearring, 'coordinates').text = data['cooridinate']
-        out = etree.tostring(kml_root, encoding="UTF-8", xml_declaration=True, pretty_print = False)
-        return out
+        return etree.tostring(kml_root, encoding="UTF-8", xml_declaration=True, pretty_print = False)
 
     def get_direction_kml(self, cr, uid, parent_element, datas, context):
         '''
@@ -158,11 +178,7 @@ class google_map(osv.osv):
         XHTML = "{%s}" % XHTML_NAMESPACE
         NSMAP = {None : XHTML_NAMESPACE}
         kml_root = etree.Element(XHTML + "kml", nsmap=NSMAP)
-#        kml_root = etree.Element("kml")
         kml_doc = etree.SubElement(kml_root, 'Document')
-#        kml_poly = etree.SubElement(kml_doc, 'PolyStyle')
-#        etree.SubElement(kml_poly, 'fill').text = '1'
-#        etree.SubElement(kml_poly, 'outline').text = '1'
         etree.SubElement(kml_doc, 'name').text = parent_element[0]
         etree.SubElement(kml_doc, 'description').text = parent_element[1]
         direction_dict = {}
@@ -171,18 +187,17 @@ class google_map(osv.osv):
             html_text = ''
             for d in data['desc']:
                 html_text += '<tr><td>' + d + '</td><td>' + data['desc'][d] + '</td></tr>'
-
             desc_text += html_text + '</table></b>  </font></head></html>'
+
             kml_placemark = etree.SubElement(kml_doc, 'Placemark')
             etree.SubElement(kml_placemark, 'name').text = data['destination_city']
             etree.SubElement(kml_placemark, 'description').text = desc_text
-
             kml_style = etree.SubElement(kml_placemark, 'Style')
             kml_linestyle = etree.SubElement(kml_style, 'LineStyle')
-
             etree.SubElement(kml_linestyle, 'color').text = data['color']
             etree.SubElement(kml_linestyle, 'width').text = '4'
             kml_linestring = etree.SubElement(kml_placemark, 'LineString')
+
             if data['source_city']+' '+data['destination_city'] in direction_dict:
                 steps = direction_dict[data['source_city']+' '+data['destination_city']]
             else:
@@ -197,8 +212,7 @@ class google_map(osv.osv):
                 for s in steps:
                     coorText = '%s, %s, %s \n' % (s[0], s[1], s[2])
                     etree.SubElement(kml_linestring, 'coordinates').text = coorText
-        out = etree.tostring(kml_root, encoding="UTF-8", xml_declaration=True, pretty_print = False)
-        return out
+        return etree.tostring(kml_root, encoding="UTF-8", xml_declaration=True, pretty_print=False)
 
 google_map()
 
@@ -294,8 +308,7 @@ class stock_move(osv.osv):
             child_dict['desc'] = master_dict['desc']
             list_data.append(child_dict)
 
-        etree_kml = self.pool.get('google.map').get_direction_kml(cr, uid, parent_element, list_data, context)
-        return etree_kml
+        return self.pool.get('google.map').get_direction_kml(cr, uid, parent_element, list_data, context)
 
 stock_move()
 
@@ -340,7 +353,6 @@ class res_country(osv.osv):
                 list_to.append(part[0])
 
         avg_to = list_to and (sum(list_to) / len(list_to)) or 0
-
         map(lambda x:res_inv.setdefault(x, 0), country_list)
         # fetch invoice by country
         cr.execute(''' select count(i.id),c.name from account_invoice as i left join res_partner_address as a on i.partner_id=a.partner_id left join res_country as c on a.country_id=c.id where i.type in ('out_invoice','in_invoice') group by c.name ''')
@@ -365,29 +377,8 @@ class res_country(osv.osv):
             res[part.id]= 0
         for ml_id, turnover, partner_id in res_partner:
             res[partner_id] = turnover
-        ad = tools.config['addons_path'] # check for base module path also
-        module_path = os.path.join(ad, 'google_earth/test.kml')
-        dict_country = {}
 
-        doc = etree.parse(module_path)
-        root = doc.getroot()
-        placemarks = root.getchildren()[0].findall('{http://earth.google.com/kml/2.0}Placemark')
-
-        for place in placemarks:
-            name = place.findall('{http://earth.google.com/kml/2.0}name')
-            if name:
-                value_name = name[0].text
-            cord = place.findall('{http://earth.google.com/kml/2.0}coordinates')
-            for i in place.getchildren():
-                x = i.findall('{http://earth.google.com/kml/2.0}outerBoundaryIs')
-                if x:
-                    y = x[0].findall('{http://earth.google.com/kml/2.0}LinearRing')
-                    if y:
-                        z = y[0].findall('{http://earth.google.com/kml/2.0}coordinates')
-                        value_cord = z[0].text
-                        if value_name in country_list:
-                            dict_country[value_name] = value_cord
-
+        dict_country = self.pool.get('google.map').get_country_boundries(cr, uid, country_list, context)
         line1 = '<font color="blue"><br />--------------------------------------------</font>'
         line1 = ''
         list_data = []
@@ -406,11 +397,6 @@ class res_country(osv.osv):
                 add = address_obj.browse(cr, uid, par_address_id, context)
 
             if add:
-    #            if add.street:
-    #                address += str(add.street)
-    #            if add.street2:
-    #                address += ', '
-    #                address += str(add.street2)
                 if add.city:
                     address += ''
                     address += tools.ustr(add.city)
@@ -465,8 +451,7 @@ class res_country(osv.osv):
             child_dict_cntry['color'] = color
             child_dict_cntry['cooridinate'] = cooridinate
             list_data_cntry.append(child_dict_cntry)
-        etree_kml = self.pool.get('google.map').get_placemark_kml(cr, uid, parent_element, list_data, list_data_cntry, context)
-        return etree_kml
+        return self.pool.get('google.map').get_placemark_kml(cr, uid, parent_element, list_data, list_data_cntry, context)
 
 res_country()
 
@@ -476,12 +461,9 @@ class res_partner(osv.osv):
 
     def get_kml(self, cr, uid, mode=0, context={}):
         partner_obj = self.pool.get('res.partner')
-    #    path = tools.config['addons_path']
-    #    fileName = path + '/google_earth/kml/partner.kml'
         partner_ids = partner_obj.search(cr, uid, [])
-        partner_data = partner_obj.browse(cr, uid, partner_ids, context)
+        partner_data = partner_obj.browse(cr, uid, [1], context)
         address_obj= self.pool.get('res.partner.address')
-
         res = {}
         number_customer_inv=0
         number_supplier_inv=0
@@ -516,12 +498,6 @@ class res_partner(osv.osv):
                 add = address_obj.browse(cr, uid, par_address_id, context)
             if add:
                 address += ''
-    #            if add.street:
-    #                address += '  '
-    #                address += str(add.street)
-    #            if add.street2:
-    #                address += '  '
-    #                address += str(add.street2)
                 if add.city:
                     address += '  '
                     address += tools.ustr(add.city)
@@ -554,9 +530,7 @@ class res_partner(osv.osv):
             child_dict['address'] = address
             list_data.append(child_dict)
             # This writes the KML Document to a file.
-        etree_kml = self.pool.get('google.map').get_placemark_kml(cr, uid, parent_element, list_data, [], context)
-        return etree_kml
+        return self.pool.get('google.map').get_placemark_kml(cr, uid, parent_element, list_data, [], context)
 
 res_partner()
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
