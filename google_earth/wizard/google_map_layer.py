@@ -49,7 +49,7 @@ def create_kml(self, cr, uid, data, context={}):
     # KML elements.
     pool = pooler.get_pool(cr.dbname)
     kml = pool.get('res.country').get_kml(cr, uid, mode=0, context=context)
-    out = base64.encodestring(kml)
+    out = base64.encodestring(kml).encode('ascii', 'replace')
     fname = 'region' + '.kml'
     return {'kml_file': out, 'name': fname}
 

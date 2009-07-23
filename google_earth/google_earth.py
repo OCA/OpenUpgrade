@@ -67,7 +67,7 @@ def get_directions(self, source, destination):
     gd = GoogleDirections('ABQIAAAAUbF6J26EmcC_0QgBXb9xvhRoz3DfI4MsQy-vo3oSCnT9jW1JqxQfs5OWnaBY9or_pyEGfvnnRcWEhA')
     res = gd.query(source, destination)
 #    except:
-#        raise wizard.except_wizard('Warning!','Please install Google direction package from http://pypi.python.org/pypi/google.directions/0.3 ')
+#        raise osv.except_osv('Warning!','Please install Google direction package from http://pypi.python.org/pypi/google.directions/0.3 ')
     if res:
         if res.status != 200:
             print "Address not found. Status was: %d" % res.status
@@ -164,6 +164,7 @@ class google_map(osv.osv):
             kml_outerboundry = etree.SubElement(kml_polygon, 'outerBoundaryIs')
             kml_linearring = etree.SubElement(kml_outerboundry, 'LinearRing')
             etree.SubElement(kml_linearring, 'coordinates').text = data['cooridinate']
+            
         return etree.tostring(kml_root, encoding="UTF-8", xml_declaration=True, pretty_print = False)
 
     def get_direction_kml(self, cr, uid, parent_element, datas, context):
@@ -278,7 +279,7 @@ class stock_move(osv.osv):
             customer_city = pack['customer_city']
             customer_country = pack['customer_country']
             if not (warehouse_city and customer_city):
-                raise wizard.except_wizard('Warning!','Address is not defiend on warehouse or customer. ')
+                raise osv.except_osv('Warning!','Address is not defiend on warehouse or customer. ')
 
             if pack['number_delivery'] >= no_of_packs_min and pack['number_delivery'] <= c1:
                 child_dict['color'] = colors[0]
@@ -308,7 +309,7 @@ class stock_move(osv.osv):
             child_dict['desc'] = master_dict['desc']
             list_data.append(child_dict)
 
-        return self.pool.get('google.map').get_direction_kml(cr, uid, parent_element, list_data, context)
+        return self.pool.get('google.map').get_direction_kml(cr, uid, parent_element, list_data, context).encode('utf-8')
 
 stock_move()
 
@@ -451,7 +452,7 @@ class res_country(osv.osv):
             child_dict_cntry['color'] = color
             child_dict_cntry['cooridinate'] = cooridinate
             list_data_cntry.append(child_dict_cntry)
-        return self.pool.get('google.map').get_placemark_kml(cr, uid, parent_element, list_data, list_data_cntry, context)
+        return self.pool.get('google.map').get_placemark_kml(cr, uid, parent_element, list_data, list_data_cntry, context).encode('utf-8')
 
 res_country()
 
@@ -462,7 +463,7 @@ class res_partner(osv.osv):
     def get_kml(self, cr, uid, mode=0, context={}):
         partner_obj = self.pool.get('res.partner')
         partner_ids = partner_obj.search(cr, uid, [])
-        partner_data = partner_obj.browse(cr, uid, [1], context)
+        partner_data = partner_obj.browse(cr, uid, partner_ids, context)
         address_obj= self.pool.get('res.partner.address')
         res = {}
         number_customer_inv=0
@@ -530,7 +531,7 @@ class res_partner(osv.osv):
             child_dict['address'] = address
             list_data.append(child_dict)
             # This writes the KML Document to a file.
-        return self.pool.get('google.map').get_placemark_kml(cr, uid, parent_element, list_data, [], context)
+        return self.pool.get('google.map').get_placemark_kml(cr, uid, parent_element, list_data, [], context).encode('utf-8')
 
 res_partner()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
