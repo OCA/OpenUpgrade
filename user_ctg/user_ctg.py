@@ -172,7 +172,23 @@ class ctg_feedback(osv.osv):
         
     def action_open(self, cr, uid, ids, context={}):
         self.write(cr, uid, ids, {'state':'open'})
-        # TODO : Send mail to user regarding link of feedback page, saying that they have to fill a feedback and give url to it
+        # TODO create a link to feedback to send it in the body of the mail to the user
+        feedback_lines = self.browse(cr,uid,ids)
+        # send mail to the user for feedback 
+        for feedback_line in feedback_lines:
+            subject = feedback_line['name']  
+            user = tools.config['email_from']
+            if not user:
+                raise osv.except_osv(_('Error'), _("Please specify server option --smtp-from !"))
+            if feedback_line.user_to.address_id and feedback_line.user_to.address_id.email:
+                mail_to = feedback_line.user_to.address_id.email
+                body = subject + "\n \n Please visit the following link to give the feedback" 
+                # TODO create a link to feedback to send it in the body of the mail to the user
+                logger = netsvc.Logger()
+                if tools.email_send(user, [mail_to], subject, body, debug=False, subtype='html') == True:
+                    logger.notifyChannel('email', netsvc.LOG_INFO, 'Email successfully send to : %s' % (mail_to))
+                else:
+                    logger.notifyChannel('email', netsvc.LOG_ERROR, 'Failed to send email to : %s' % (mail_to))
 
     def action_done(self, cr, uid, ids, context={}):
         self.write(cr, uid, ids, {'state':'done'})
@@ -187,6 +203,7 @@ class ctg_feedback(osv.osv):
         draft_feedback_ids = self.search(cr, uid, [('date_feedback','<=',time.strftime('%Y-%m-%d')),('state','=','draft')])
         if len(draft_feedback_ids):
             self.action_open(cr, uid, draft_feedback_ids, context=context)
+
         # open to cancel feedback if it is not done since long time (1 month)
         current_date = datetime.date.today()
         year = current_date.year
