@@ -41,7 +41,8 @@ _earth_form =  '''<?xml version="1.0"?>
 </form>'''
 
 _earth_fields = {
-    'path': {'string': 'Path (URL)', 'type': 'char', 'readonly': False , 'required': True, 'size':64, 'help':'URL for e.g: http://yourserver:port/kml/?model=res.partner&amp;mode=1'},
+    'path': {'string': 'Path (URL)', 'type': 'char', 'readonly': False , 'default': lambda *x: 'http://yourserver.com:port/kml/'
+             , 'required': True, 'size':64, 'help':'URL for e.g: http://yourserver:port/kml/'},
     'partner_select': {'string':'Partner', 'type': 'boolean', 'help':'KML with All Details of partners'},
     'country_select': {'string':'Country', 'type': 'boolean', 'help':'KML with All Details of partners and its country'},
     'route_select': {'string':'Delivery route', 'type': 'boolean', 'help':'Delivery route kml'},
@@ -77,32 +78,18 @@ _kml_fields = {
         'kml_file': {'string': 'Save KML file', 'type': 'binary', 'required': True},
             }
 
+_summary_form = '''<?xml version="1.0"?>
+        <form string="Summary">
+            <field name="summary" nolabel="1" height="200" width="300" />
+        </form> '''
 
-def _create_kml(self, cr, uid, data, context={}):
-    XHTML_NAMESPACE = 'http://maps.google.com/kml/2.2'
-    XHTML = "{%s}" % XHTML_NAMESPACE
-    NSMAP = {None : XHTML_NAMESPACE}
-    kmlElement = etree.Element(XHTML + "kml", nsmap=NSMAP)
-    kmlElement.set('xmlns',"http://www.opengis.net/kml/2.2")
-    folderElement = etree.Element('Folder')
+_summary_fields = {
+            'summary': {'string': 'Summary', 'type': 'text', 'required': False, 'readonly': True,
+                        'default': lambda *a: '''You can now upload this kml file on google Earth by Add/Networklink menu You will get refresh data (time specified in refresh interval), And you can also upload this kml to google map but refreshment of data might be not working google map'''},
+        }
 
-    foldernameElement = etree.Element('name')
-    foldernameElement.text = 'Network Link Folder'
-    foldervisibilityElement = etree.Element('visibility')
-    foldervisibilityElement.text = '0'
-    folderopenElement = etree.Element('open')
-    folderopenElement.text = '0'
-    folderdescriptionElement = etree.Element('description')
-    folderdescriptionElement.text = 'Network Link'
+def add_network_link(self, cr, uid, url, data, context):
     folderNetworkLinkElement = etree.Element('NetworkLink')
-
-    folderElement.append(foldernameElement)
-    folderElement.append(foldervisibilityElement)
-    folderElement.append(folderopenElement)
-    folderElement.append(folderdescriptionElement)
-    folderElement.append(folderNetworkLinkElement)
-    folderElement.append(foldernameElement)
-
     networknameElement = etree.Element('name')
     networknameElement.text = 'Dynamic data'
     networkvisibilityElement = etree.Element('visibility')
@@ -126,7 +113,7 @@ def _create_kml(self, cr, uid, data, context={}):
     folderNetworkLinkElement.append(networkLinkElement)
 
     linkhrefElement = etree.Element('href')
-    linkhrefElement.text = data['form']['path']
+    linkhrefElement.text = url
     linkrefreshModeElement = etree.Element('refreshMode')
     linkrefreshModeElement.text = data['form']['refresh_mode']
     linkrefreshIntervalElement = etree.Element('refreshInterval')
@@ -143,6 +130,47 @@ def _create_kml(self, cr, uid, data, context={}):
     networkLinkElement.append(networkrefreshVisibilityElement)
     networkLinkElement.append(linkrefreshVisibilityElement)
 
+    return folderNetworkLinkElement
+
+def _create_kml(self, cr, uid, data, context={}):
+#    XHTML_NAMESPACE = 'http://maps.google.com/kml/2.2'
+#    XHTML = "{%s}" % XHTML_NAMESPACE
+#    NSMAP = {None : XHTML_NAMESPACE}
+#    kmlElement = etree.Element(XHTML + "kml", nsmap=NSMAP)
+    kmlElement = etree.Element("kml")
+    kmlElement.set('xmlns',"http://www.opengis.net/kml/2.2")
+    folderElement = etree.Element('Folder')
+
+    foldernameElement = etree.Element('name')
+    foldernameElement.text = 'Network Link Folder'
+    foldervisibilityElement = etree.Element('visibility')
+    foldervisibilityElement.text = '0'
+    folderopenElement = etree.Element('open')
+    folderopenElement.text = '0'
+    folderdescriptionElement = etree.Element('description')
+    folderdescriptionElement.text = 'Network Link'
+
+    if data['form']['partner_select']:
+        print "@@@@@@@@"
+        url = data['form']['path'] + '?model=res.partner&mode=1'
+        network_link = add_network_link(self, cr, uid, url, data, context)
+        folderElement.append(network_link)
+    if data['form']['country_select']:
+        url = data['form']['path'] + '?model=res.country&mode=1'
+        network_link = add_network_link(self, cr, uid, url, data, context)
+        folderElement.append(network_link)
+    if data['form']['route_select']:
+        url = data['form']['path'] + '?model=stock.move&mode=1'
+        network_link = add_network_link(self, cr, uid, url, data, context)
+        folderElement.append(network_link)
+
+    folderElement.append(foldernameElement)
+    folderElement.append(foldervisibilityElement)
+    folderElement.append(folderopenElement)
+    folderElement.append(folderdescriptionElement)
+    #folderElement.append(folderNetworkLinkElement)
+    folderElement.append(foldernameElement)
+
     kmlElement.append(folderElement)
     out = base64.encodestring(etree.tostring(kmlElement, encoding="UTF-8", xml_declaration=True, pretty_print = True))
     fname = 'network' + '.kml'
@@ -156,8 +184,12 @@ class google_network_kml(wizard.interface):
                 },
        'make': {
             'actions': [_create_kml],
-            'result': {'type': 'form', 'arch':_kml_form, 'fields':_kml_fields,  'state':[('end','Ok')]}
+            'result': {'type': 'form', 'arch':_kml_form, 'fields':_kml_fields,  'state':[('info','Ok')]}
                 },
+        'info': {
+            'actions': [],
+            'result': {'type': 'form', 'arch': _summary_form, 'fields': _summary_fields, 'state': [('end', 'Ok')]}
+        }
             }
 google_network_kml('google.network.link')
 
