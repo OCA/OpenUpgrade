@@ -229,7 +229,7 @@ def generate_reports(cr, uid, obj, report_type, context): # {{{
                  }
             attach_id = attachment_obj.create(cr,uid,attach_vals,{'not_index_context':True})
 
-    return True # }}}
+    return "doc_done" # }}}
 
 def compute_customer_plugin(cr, uid, **args): # {{{
     res  = pool.get('ir.model').browse(cr, uid, args['plugin_obj'].model_id.id)    

@@ -110,30 +110,11 @@ class dm_workitem(osv.osv): # {{{
     }
 
 
-    """
-    def _set_mail_service(self, cr, uid, wi, context):
-        if wi.segment_id :
-            if not wi.segment_id.proposition_id:
-                return "no_proposition_for_wi"
-            elif not wi.segment_id.proposition_id.camp_id:
-                return "no_campaign_for_wi"
-            else:
-                camp_id = wi.segment_id.proposition_id.camp_id.id
-                camp_mail_service_id = camp_mail_service_wi.search(cr, uid, [('campaign_id','=',camp_id),('offer_step_id','=',step_id)])
-                if not camp_mail_service_id:
-                    return "no_mail_service_for_campaign"
-                else:
-                    self.write(cr, uid, [wi.id], {'mail_service_id': camp_mail_service_id})
-                    return False
-        else:
-            return "no_segment_for_wi"
-    """
-
     def _check_sysmsg(self, cr, uid, ids, code):
         """ Check action message code and set workitem log """
         sysmsg_id  = self.pool.get('dm.sysmsg').search(cr, uid, [('code','=',code)])
         if sysmsg_id:
-            sysmsg = self.pool.get('dm.sysmsg').browse(cr, uid, sysmsg_id)
+            sysmsg = self.pool.get('dm.sysmsg').browse(cr, uid, sysmsg_id)[0]
             self.write(cr, uid, [ids], {'state': sysmsg.state,'error_msg':sysmsg.message})
         else:
             self.write(cr, uid, [ids], {'state': 'error','error_msg':"An unknown error has occured : %s" % code})
