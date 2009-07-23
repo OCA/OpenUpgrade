@@ -164,7 +164,7 @@ class google_map(osv.osv):
             kml_outerboundry = etree.SubElement(kml_polygon, 'outerBoundaryIs')
             kml_linearring = etree.SubElement(kml_outerboundry, 'LinearRing')
             etree.SubElement(kml_linearring, 'coordinates').text = data['cooridinate']
-            
+
         return etree.tostring(kml_root, encoding="UTF-8", xml_declaration=True, pretty_print = False)
 
     def get_direction_kml(self, cr, uid, parent_element, datas, context):
@@ -309,7 +309,7 @@ class stock_move(osv.osv):
             child_dict['desc'] = master_dict['desc']
             list_data.append(child_dict)
 
-        return self.pool.get('google.map').get_direction_kml(cr, uid, parent_element, list_data, context).encode('utf-8')
+        return self.pool.get('google.map').get_direction_kml(cr, uid, parent_element, list_data, context)#.encode('utf-8')
 
 stock_move()
 
@@ -452,7 +452,7 @@ class res_country(osv.osv):
             child_dict_cntry['color'] = color
             child_dict_cntry['cooridinate'] = cooridinate
             list_data_cntry.append(child_dict_cntry)
-        return self.pool.get('google.map').get_placemark_kml(cr, uid, parent_element, list_data, list_data_cntry, context).encode('utf-8')
+        return self.pool.get('google.map').get_placemark_kml(cr, uid, parent_element, list_data, list_data_cntry, context)#.encode('utf-8')
 
 res_country()
 
@@ -531,7 +531,7 @@ class res_partner(osv.osv):
             child_dict['address'] = address
             list_data.append(child_dict)
             # This writes the KML Document to a file.
-        return self.pool.get('google.map').get_placemark_kml(cr, uid, parent_element, list_data, [], context).encode('utf-8')
+        return self.pool.get('google.map').get_placemark_kml(cr, uid, parent_element, list_data, [], context)#.encode('utf-8')
 
 res_partner()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

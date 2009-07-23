@@ -45,7 +45,7 @@ def create_kml(self, cr, uid, data, context={}):
     # KML elements.
     pool = pooler.get_pool(cr.dbname)
     kml = pool.get('res.partner').get_kml(cr, uid, mode=0, context=context)
-    out = base64.encodestring(kml).encode('ascii', 'replace')
+    out = base64.encodestring(kml)#.encode('ascii', 'replace')
     fname = 'turnover' + '.kml'
     return {'kml_file': out, 'name': fname}
 
