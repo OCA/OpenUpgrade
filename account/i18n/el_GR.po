@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
-"PO-Revision-Date: 2009-07-08 00:38+0300\n"
+"PO-Revision-Date: 2009-07-24 20:31+0300\n"
 "Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: Greek <nls@hellug.gr>\n"
 "MIME-Version: 1.0\n"
@@ -71,11 +71,9 @@ msgstr ""
 
 #. module: account
 #: help:account.invoice,period_id:0
-#, fuzzy
 msgid "Keep empty to use the period of the validation(invoice) date."
 msgstr ""
-"Κρατήστε κενό αυτό το πεδίο για να το χρησιμοποιήσετε για την ημερομηνίας "
-"επικύρωσης. "
+"Αν το πεδίο μείνει κενό, θα πάρει την περίοδο της ημερομηνίας επικύρωσης. "
 
 #. module: account
 #: wizard_view:account.automatic.reconcile,reconcile:0
@@ -2184,7 +2182,7 @@ msgstr "Ενοποίηση"
 #. module: account
 #: field:account.invoice,date_invoice:0
 msgid "Date Invoiced"
-msgstr "Ημερομηνία Τιμολόγησης"
+msgstr "Ημ/νία Τιμολόγησης"
 
 #. module: account
 #: help:account.account.balance.report,checktype,periods:0
@@ -2614,7 +2612,7 @@ msgstr "Επιλέξτε Περίοδο και Ημερολόγιο για Επ�
 #. module: account
 #: field:account.invoice,number:0
 msgid "Invoice Number"
-msgstr "Αριθμός Παραστατικού"
+msgstr "Αρ. Παραστατικού"
 
 #. module: account
 #: field:account.period,date_stop:0
@@ -3721,11 +3719,8 @@ msgstr "Κατά Περίοδο"
 
 #. module: account
 #: help:account.invoice,date_invoice:0
-#, fuzzy
 msgid "Keep empty to use the current date"
-msgstr ""
-"Κρατήστε κενό αυτό το πεδίο για να το χρησιμοποιήσετε για την ημερομηνίας "
-"επικύρωσης. "
+msgstr "Αφήστε κενό το πεδίο αν θέλετε την σημερινή ημερομηνία."
 
 #. module: account
 #: rml:account.overdue:0
@@ -4569,7 +4564,7 @@ msgstr "Παρ."
 #. module: account
 #: field:account.invoice,address_invoice_id:0
 msgid "Invoice Address"
-msgstr "Διεύθυνση Τιμολογίου"
+msgstr "Δ/νση Τιμολογίου"
 
 #. module: account
 #: rml:account.analytic.account.analytic.check:0
