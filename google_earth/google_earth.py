@@ -486,6 +486,17 @@ class res_country(osv.osv):
             if par_address_id:
                 add = address_obj.browse(cr, uid, par_address_id, context)
 
+            cntry_name = add.country_id.name
+            if cntry_name and not cntry_name.find('&')== '-1':
+                cntry_name = cntry_name.replace('&','and')
+            if cntry_name == "Afghanistan, Islamic State of":
+                cntry_name = 'Afghanistan'
+            elif cntry_name == "Andorra, Principality of":
+                cntry_name = 'Andorra'
+            elif cntry_name == "Cambodia, Kingdom of":
+                cntry_name = 'Cambodia'
+            elif cntry_name == "Congo, The Democratic Republic of the":
+                cntry_name = 'Congo'
             if add:
                 if add.city:
                     address += ''
@@ -495,7 +506,7 @@ class res_country(osv.osv):
 #                    address += tools.ustr(add.state_id.name)
                 if add.country_id:
                     address += ', '
-                    address += tools.ustr(add.country_id.name)
+                    address += tools.ustr(cntry_name)
             type = ''
             if part.customer:
                 type += 'Customer '
@@ -504,17 +515,13 @@ class res_country(osv.osv):
                 type += 'Supplier'
                 number_supplier += 1
 
-            if address == ', S. Georgia & S. Sandwich Isls.': # Fix me
-                address = ', South Georgia and the South Sandwich Islands'
-            elif address == ', Saint Kitts & Nevis Anguilla':
-                address = ', Saint Kitts and Nevis'
             # This geocodes the address and adds it to a <Point> element.
             child_dict['name'] = part.name
-            master_dict['desc'] = {'Partner Name': _to_unicode(self, part.name), 'Partner Code': str(part.ref or '') , \
-                                   'Type:': type, 'Partner Address': _to_unicode(self, address), 'Turnover of partner:':str(res[part.id]), \
-                                   'Main company': str(part.parent_id and part.parent_id.name), 'Credit Limit': str(part.credit_limit or ''), \
-                                   'Number of customer invoice': str(number_customer or 0 ), 'Number of supplier invoice': str(number_supplier or 0) ,\
-                                   'Total Receivable': str(part.credit), 'Total Payable': str(part.debit or ''), 'Website': str(part.website or '')}
+            master_dict['desc'] = {' Partner Name ': _to_unicode(self, part.name), ' Partner Code ': str(part.ref or '') , \
+                                   ' Type: ': type, ' Partner Address ': _to_unicode(self, address), ' Turnover of partner: ':str(res[part.id]), \
+                                   ' Main company ': str(part.parent_id and part.parent_id.name), ' Credit Limit ': str(part.credit_limit or ''), \
+                                   ' Number of customer invoice ': str(number_customer or 0 ), ' Number of supplier invoice ': str(number_supplier or 0) ,\
+                                   ' Total Receivable ': str(part.credit), ' Total Payable ': str(part.debit or ''), ' Website ': str(part.website or '')}
             child_dict['desc'] = master_dict['desc']
             child_dict['address'] = address
             list_data.append(child_dict)
