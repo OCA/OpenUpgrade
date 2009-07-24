@@ -37,20 +37,18 @@ _earth_fields = {
     'map_model':{
         'string':"Map For",
         'type':'selection',
-        'selection':[('partner','Partner'), ('partner-country','Partner-Country'), ('route','Delivery Route'), ('all', 'Open all') ],
+        'selection':[('partner','Partner'), ('partner-country','Partner-Country'), ('route','Delivery Route') ],
         'default': lambda *a:'partner',
                 },
              }
 def get_map_url(self, cr, uid, data, context={}):
     #http://maps.google.com/maps?q=http://jabber.tinyerp.co.in:8080/kml?model=res.partner%26mode=1
     if data['form']['map_model'] == 'partner':
-        url_str = url = data['form']['path'] + '?model=res.partner%26mode=1'
+        url_str = url = data['form']['path'] + '?model=res.partner'
     elif data['form']['map_model'] == 'partner-country':
-        url_str = url = data['form']['path'] + '?model=res.country%26mode=1'
+        url_str = url = data['form']['path'] + '?model=res.country'
     elif data['form']['map_model'] == 'route':
-        url_str = url = data['form']['path'] + '?model=stock.move%26mode=1'
-    else:
-        url_str = url = data['form']['path'] + '?model=google.map%26mode=1'
+        url_str = url = data['form']['path'] + '?model=stock.move'
     data['form']['url'] = url_str
     return {}
 

@@ -49,7 +49,7 @@ def _create_kml(self, cr, uid, data, context={}):
 #    path = tools.config['addons_path']
 #    fileName = path + '/google_earth/kml/route.kml'
     pool = pooler.get_pool(cr.dbname)
-    kml = pool.get('stock.move').get_kml(cr, uid, mode=0, context=context)
+    kml = pool.get('stock.move').get_kml(cr, uid, context=context)
     out = base64.encodestring(kml)#.encode('ascii', 'replace')
     fname = 'route' + '.kml'
     return {'kml_file': out, 'name': fname}

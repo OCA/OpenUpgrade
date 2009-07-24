@@ -48,7 +48,7 @@ def create_kml(self, cr, uid, data, context={}):
     # This function creates an XML document and adds the necessary
     # KML elements.
     pool = pooler.get_pool(cr.dbname)
-    kml = pool.get('res.country').get_kml(cr, uid, mode=0, context=context)
+    kml = pool.get('res.country').get_kml(cr, uid, context=context)
     out = base64.encodestring(kml)#.encode('ascii', 'replace')
     fname = 'region' + '.kml'
     return {'kml_file': out, 'name': fname}

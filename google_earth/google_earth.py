@@ -85,10 +85,12 @@ class google_map(osv.osv):
     _name = 'google.map'
     _description = 'Google Map/Earth'
 
-    def get_kml(self, cr, uid, mode=0, context={}):
+    def get_kml(self, cr, uid, context={}):
+        #fix me for path
         data = {'view_refresh_time': 1, 'refresh_mode': 'onInterval',
                 'view_refresh_mode': 'onStop', 'path': 'http://yourserver.com:port/kml/',
                 'models': ['res.country', 'res.partner', 'stock.move'], 'refresh_interval': 1}
+        return self.get_networklink_kml(cr, uid, data=data, context=context)
 
     def add_network_link(self, cr, uid, url, data, context):
         folderNetworkLinkElement = etree.Element('NetworkLink')
@@ -153,7 +155,7 @@ class google_map(osv.osv):
         folderdescriptionElement.text = 'Network Link'
 
         for model in data['models']:
-            url = data['path'] + '?model=%s&mode=1'% (model,)
+            url = data['path'] + '?model=%s'% (model,)
             network_link = self.add_network_link(cr, uid, url, data, context)
             folderElement.append(network_link)
 
@@ -308,7 +310,7 @@ class stock_move(osv.osv):
     _inherit = "stock.move"
     _description = "Stock Move"
 
-    def get_kml(self, cr, uid, mode=0, context={}):
+    def get_kml(self, cr, uid, context={}):
         colors = ['ff000080','ff800000','ff800080','ff808000','ff8080ff','ff80ff80','ffff8080','ffFACE87','ff1E69D','ff87B8DE', 'ff000000']
         warehouse_obj = self.pool.get('stock.warehouse')
         # fix me: sale_id is not null..we must have to create sale order!
@@ -404,7 +406,7 @@ class res_country(osv.osv):
     _inherit = 'res.country'
     _description = 'Country'
 
-    def get_kml(self, cr, uid, mode=0, context={}):
+    def get_kml(self, cr, uid, context={}):
         res = {}
         res_inv = {}
         res_cus = {}
@@ -547,7 +549,7 @@ class res_partner(osv.osv):
     _inherit = "res.partner"
     _description = 'Partner'
 
-    def get_kml(self, cr, uid, mode=0, context={}):
+    def get_kml(self, cr, uid, context={}):
         partner_obj = self.pool.get('res.partner')
         partner_ids = partner_obj.search(cr, uid, [])
         partner_data = partner_obj.browse(cr, uid, partner_ids, context)
