@@ -53,35 +53,30 @@ def graph_get(cr, uid, graph, offer_id):
     type_ids = step_type.search(cr,uid,[])
     type = step_type.read(cr,uid,type_ids,['code'])
     for step in offer.step_ids:
-        args = {}
+        if not step.graph_hide:
+            args = {}
 
-        """ Get user language """
-        usr_obj = pooler.get_pool(cr.dbname).get('res.users')
-        user = usr_obj.browse(cr, uid, [uid])[0]
-        user_lang = user.context_lang
+            """ Get user language """
+            usr_obj = pooler.get_pool(cr.dbname).get('res.users')
+            user = usr_obj.browse(cr, uid, [uid])[0]
+            user_lang = user.context_lang
 
-        """ Get Code Translation """
-        trans_obj =  pooler.get_pool(cr.dbname).get('ir.translation')
-        type_trans = trans_obj._get_ids(cr, uid, 'dm.offer.step,code', 'model',
-                           user_lang or 'en_US',[step.id])
-        type_code = type_trans[step.id] or step.code
-        args['label'] = translate_accent(type_code +'\\n' + step.media_id.code)
-
-        graph.add_node(pydot.Node(step.id, **args))
+            """ Get Code Translation """
+            trans_obj =  pooler.get_pool(cr.dbname).get('ir.translation')
+            type_trans = trans_obj._get_ids(cr, uid, 'dm.offer.step,code', 'model',
+                               user_lang or 'en_US',[step.id])
+            type_code = type_trans[step.id] or step.code
+            args['label'] = translate_accent(type_code +'\\n' + step.media_id.code)
+            graph.add_node(pydot.Node(step.id, **args))
 
     for step in offer.step_ids:
         for transition in step.outgoing_transition_ids:
-
-            trargs = {
-                'label': translate_accent(transition.condition_id.name + '\\n' + str(transition.delay) + ' ' + transition.delay_type)
-            }
-            if step.split_mode=='and':
-                trargs['arrowtail']='box'
-            elif step.split_mode=='or':
-                trargs['arrowtail']='inv'
-            elif step.split_mode=='xor':
-                trargs['arrowtail']='inv'
-            graph.add_edge(pydot.Edge( str(transition.step_from_id.id) ,str(transition.step_to_id.id), fontsize=10, **trargs))
+            if not transition.graph_hide:
+                trargs = {
+                    'label': translate_accent(transition.condition_id.name + '\\n' + str(transition.delay) + ' ' + transition.delay_type),
+                    'arrowtail': 'inv',
+                }
+                graph.add_edge(pydot.Edge( str(transition.step_from_id.id), str(transition.step_to_id.id), fontsize="10", **trargs))
     return True
 
 
@@ -101,7 +96,7 @@ class report_graph_instance(object):
 
         offer = translate_accent(pooler.get_pool(cr.dbname).get('dm.offer').browse(cr, uid, offer_id)[0].name)
 
-        graph = pydot.Dot(fontsize=16, label=offer)
+        graph = pydot.Dot(fontsize="16", label=offer)
         graph.set('size', '10.7,7.3')
         graph.set('center', '1')
         graph.set('ratio', 'auto')

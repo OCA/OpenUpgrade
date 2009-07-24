@@ -162,10 +162,11 @@ dm_document_template() # }}}
 class dm_plugins_value(osv.osv): # {{{
     _name = "dm.plugins.value"
     _columns = {
-        'address_id' : fields.many2one('res.partner.address', 'Customer Address', ondelete="cascade"),
+#        'address_id' : fields.many2one('res.partner.address', 'Customer Address', ondelete="cascade"),
+        'workitem_id' : fields.many2one('dm.workitem', 'Workitem', ondelete="cascade"),
         'plugin_id' : fields.many2one('dm.dtp.plugin', 'Plugin'),
-        'value' : fields.char('Value', size=64),
-        'date' : fields.date('Date'),
+        'value' : fields.text('Value'),
+#        'date' : fields.date('Date'),
     }
     
 dm_plugins_value() # }}}

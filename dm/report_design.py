@@ -125,8 +125,6 @@ def generate_reports(cr, uid, obj, report_type, context): # {{{
 
     ms_id = camp_mail_service.mail_service_id.id
 
-    print "XXXXX camp_mail_service :",ms_id
-
     for address_id in address_ids:
 
         """ Get offer step documents to process """
@@ -149,7 +147,6 @@ def generate_reports(cr, uid, obj, report_type, context): # {{{
             'document_id' : document_id[0],
             (obj.source) : address_id,
             'origin' : so,
-#            'wi_id' : obj.id,
             }
 
 
@@ -282,7 +279,7 @@ def _generate_value(cr, uid, plugin_obj, localcontext, **args): # {{{
             plugin_value = plugin_func(cr, uid,**args)
     return plugin_value # }}}
 
-def generate_plugin_value(cr, uid,**args): # {{{
+def generate_plugin_value(cr, uid, **args): # {{{
     if not 'doc_id' in args and not args['doc_id'] :
         return False
     if not 'addr_id' in args and not args['addr_id'] :
@@ -313,10 +310,13 @@ def generate_plugin_value(cr, uid,**args): # {{{
 #            vals['%s_text_display'%str(plugin_obj.code)] = plugin_value[-1]
 #            plugin_value = plugin_value[0]
         if plugin_obj.store_value :
-            dm_plugins_value.create(cr, uid,{'date':time.strftime('%Y-%m-%d'),
-                                             'address_id':args['addr_id'],
-                                             'plugin_id':plugin_obj.id,
-                                             'value' : plugin_value})
+            dm_plugins_value.create(cr, uid,{
+#                'date':time.strftime('%Y-%m-%d'),
+#                'address_id':args['addr_id'],
+                'workitem_id': args['wi_id'],
+                'plugin_id':plugin_obj.id,
+                'value' : plugin_value
+            })
         vals[str(plugin_obj.code)] = plugin_value
     return vals # }}}
 

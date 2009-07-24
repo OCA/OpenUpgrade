@@ -98,8 +98,8 @@ class dm_sysmsg(osv.osv):
         return self.pool.get('ir.model.fields').search(cr,uid,[('model_id','=','workitem'),('name','=','error_msg')])[0]
 
     _columns = {
-       'name' : fields.char('Description', translate=True, size=64, required=True),
-       'code' : fields.char('Code', size=64, required=True),
+       'name' : fields.char('Description', translate=True, size=128, required=True),
+       'code' : fields.char('Code', size=128, required=True),
        'message' : fields.text('Message', translate=True),
        'state' : fields.selection(SYSMSG_STATES, 'State to set'),
        'level' : fields.integer('Level'),

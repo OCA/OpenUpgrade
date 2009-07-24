@@ -96,6 +96,7 @@ class dm_workitem(osv.osv): # {{{
         'error_msg' : fields.text('System Message'),
         'is_global': fields.boolean('Global Workitem'),
         'is_preview': fields.boolean('Document Preview Workitem'),
+        'use_prev_plugin_values': fields.boolean('Use Previous Plugin Values (For Document Regeneration)'),
         'tr_from_id' : fields.many2one('dm.offer.step.transition', 'Source Transition', select="1", ondelete="cascade"),
         'sale_order_id' : fields.many2one('sale.order','Sale Order'),
         'mail_service_id' : fields.many2one('dm.mail_service','Mail Service'),
@@ -573,6 +574,12 @@ class dm_event(osv.osv_memory): # {{{
                     act_hour = datetime.datetime.strptime(hour_str,'%H:%M')
                     next_action_time = next_action_time.replace(hour=act_hour.hour)
                     next_action_time = next_action_time.replace(minute=act_hour.minute)
+
+                if tr.action_day:
+                    next_action_time = next_action_time.replace(day=tr.action_day)
+
+                if tr.action_date:
+                    next_action_time = tr.action_date
 
             try:
                 wi_id = self.pool.get('dm.workitem').create(cr, uid, {'step_id':tr.step_to_id.id or False, 'segment_id':obj.segment_id.id or False,
