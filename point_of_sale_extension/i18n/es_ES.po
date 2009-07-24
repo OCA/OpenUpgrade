@@ -1,0 +1,339 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+# 	* point_of_sale_extension
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 5.0.1\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-07-24 09:00:36+0000\n"
+"PO-Revision-Date: 2009-07-24 11:10+0100\n"
+"Last-Translator: Jordi Esteve (Zikzakmedia) <jesteve@zikzakmedia.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: point_of_sale_extension
+#: help:pos.payment2,ask_pay,invoice_wanted:0
+msgid "To create invoice, for example if you are billing membership fees. Then the payment in the point of sale has no sense, because the payments will be managed from the menu Financial management / Payment."
+msgstr "Para crear una factura, por ejemplo si está vendiendo cuotas de socios. Entonces el pago en el TPV no tiene sentido porque los pagos de las facturas se gestionan desde el menú Gestión financiera / Pago."
+
+#. module: point_of_sale_extension
+#: view:pos.order:0
+msgid "Ma_ke Payment"
+msgstr "_Realiza pago"
+
+#. module: point_of_sale_extension
+#: wizard_view:pos.payment2,ask_pay:0
+#: wizard_view:pos.payment2,product_stock_warning:0
+#: wizard_view:pos.payment2,sale_order_warning:0
+msgid "Add payment:"
+msgstr "Añadir pago:"
+
+#. module: point_of_sale_extension
+#: constraint:ir.model:0
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr "¡El nombre del objeto debe empezar con x_ y no contener ningún carácter especial!"
+
+#. module: point_of_sale_extension
+#: code:addons/point_of_sale_extension/wizard/wizard_pos_payment.py:0
+#, python-format
+msgid "No products have been added."
+msgstr "No se han añadido productos a la venta."
+
+#. module: point_of_sale_extension
+#: wizard_field:pos.payment2,ask_pay,payment_name:0
+msgid "Payment name"
+msgstr "Descripción pago"
+
+#. module: point_of_sale_extension
+#: field:pos.order.line,state:0
+msgid "State"
+msgstr "Estado"
+
+#. module: point_of_sale_extension
+#: selection:pos.order.line,state:0
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: point_of_sale_extension
+#: wizard_field:pos.payment2,ask_pay,payment_nb:0
+msgid "Piece number"
+msgstr "Número referencia"
+
+#. module: point_of_sale_extension
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr "Nombre de modelo no válido en la definición de la acción."
+
+#. module: point_of_sale_extension
+#: wizard_field:pos.payment2,ask_pay,payment_date:0
+msgid "Payment date"
+msgstr "Fecha de pago"
+
+#. module: point_of_sale_extension
+#: model:ir.module.module,description:point_of_sale_extension.module_name_translation
+msgid ""
+"\n"
+"* Only it allows delete draft or canceled POS orders and POS order lines.\n"
+"* If POS order has a partner, the partner is stored in:\n"
+"    - The stock.picking created by the pos order.\n"
+"    - The account.move.line created by the pos order.\n"
+"* POS orders with amount_total==0 no creates account moves (it gives error).\n"
+"* Shows the payment type (journal) in the payments list in teh second tab of the POS.\n"
+"* The journals used to pay with the POS can be choosed (in the configuration tab of the company: Administration / Users / Companies).\n"
+"* Product prices with or without taxes included (select in the configuration tab of the company).\n"
+"* Shows a warning in the payment wizard (but you can continue) if:\n"
+"    - A product added in the POS order has already been requested by the partner (the partner has a sale order with this product), so the user can decide if is better to do a POS order from a sale order.\n"
+"    - There is not enough virtual stock in any of the products.\n"
+"  These two warnings can be activated/desactivated (in the configuration tab of the company).\n"
+"* List and search POS order lines by number of order, partner and state.\n"
+msgstr ""
+"\n"
+"* Sólo se permite eliminar ventas y líneas de venta TPV en estado borrador o canceladas.\n"
+"* Si la venta TPV tiene una empresa, la guarda en:\n"
+"      - El albarán creado por la venta TPV.\n"
+"      - Las líneas de asiento contable creadas por la venta TPV.\n"
+"* Pedidos con importe total == 0 no crea movimientos contables (da error)\n"
+"* Muestra el tipo de pago a la lista de pagos en el formulario TPV, segunda pestaña.\n"
+"* Se pueden elegir los diarios utilizados para pagar con el TPV (en la pestaña de configuración de la compañía: Administración / Usuarios / Compañías).\n"
+"* Precios de los productos con o sin impuestos incluidos (se selecciona en la pestaña de configuración de la compañía).\n"
+"* Mostrar un aviso al asistente de pago (pero se puede continuar), si:\n"
+"      - La empresa ya ha reservado un producto de los añadidos a la venta TPV (la empresa tiene un pedido de venta con este producto), entonces el usuario puede decidir si es mejor hacer una venta TPV desde el pedido de venta.\n"
+"      - No hay suficiente stock virtual en alguno de los productos.\n"
+"   Estos dos avisos pueden ser activados / desactivados (en la pestaña de configuración de la compañía).\n"
+"* Lista y búsqueda de líneas TPV por número de venta, empresa y estado.\n"
+
+#. module: point_of_sale_extension
+#: wizard_field:pos.payment2,product_stock_warning,product:0
+#: wizard_field:pos.payment2,sale_order_warning,product:0
+msgid "Product"
+msgstr "Producto"
+
+#. module: point_of_sale_extension
+#: model:ir.actions.act_window,name:point_of_sale_extension.act_partner_2_pos_orders
+msgid "TPV sales"
+msgstr "Ventas TPV"
+
+#. module: point_of_sale_extension
+#: code:addons/point_of_sale_extension/pos.py:0
+#, python-format
+msgid "Error !"
+msgstr "¡Error!"
+
+#. module: point_of_sale_extension
+#: wizard_view:pos.payment2,product_stock_warning:0
+msgid "These products have not enough virtual stock:"
+msgstr "Estos productos no tienen suficiente stock virtual:"
+
+#. module: point_of_sale_extension
+#: code:addons/point_of_sale_extension/pos.py:0
+#, python-format
+msgid "Please provide a partner for the sale."
+msgstr "Debe seleccionar una empresa en la venta."
+
+#. module: point_of_sale_extension
+#: wizard_field:pos.payment2,ask_pay,journal:0
+msgid "Journal"
+msgstr "Diario"
+
+#. module: point_of_sale_extension
+#: code:addons/point_of_sale_extension/pos.py:0
+#, python-format
+msgid "Cannot delete a point of sale line which is already confirmed !"
+msgstr "¡No se puede eliminar una línea de una venta que ya está confirmada!"
+
+#. module: point_of_sale_extension
+#: model:ir.actions.act_window,name:point_of_sale_extension.act_partner_2_pos_order_lines
+msgid "TPV sales lines"
+msgstr "Líneas ventas TPV"
+
+#. module: point_of_sale_extension
+#: selection:pos.order.line,state:0
+msgid "Paid"
+msgstr "Pagado"
+
+#. module: point_of_sale_extension
+#: help:res.company,pos_journals:0
+msgid "The journals used to pay with the POS."
+msgstr "Los diarios utilizados para pagar con el TPV."
+
+#. module: point_of_sale_extension
+#: code:addons/point_of_sale_extension/pos.py:0
+#, python-format
+msgid "Invalid action !"
+msgstr "Acción no válida!"
+
+#. module: point_of_sale_extension
+#: view:res.company:0
+msgid "Configuration"
+msgstr "Configuración"
+
+#. module: point_of_sale_extension
+#: model:ir.actions.wizard,name:point_of_sale_extension.pos_payment2
+msgid "Payment"
+msgstr "Pago"
+
+#. module: point_of_sale_extension
+#: help:res.company,pos_warn_virtual_stock:0
+msgid "Shows a warning if there is not enough virtual stock in any of the products."
+msgstr "Muestra un aviso si no hay suficiente stock virtual en cualquiera de los productos."
+
+#. module: point_of_sale_extension
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr "¡﻿XML no válido para la definición de la vista!"
+
+#. module: point_of_sale_extension
+#: wizard_view:pos.payment2,sale_order_warning:0
+msgid "Maybe you may want to create the sale from the existing order:"
+msgstr "Quizás desea crear la venta a partir del pedido existente:"
+
+#. module: point_of_sale_extension
+#: wizard_view:pos.payment2,sale_order_warning:0
+msgid "This partner has already made an order with the product:"
+msgstr "Esta empresa ya ha hecho una reserva del producto:"
+
+#. module: point_of_sale_extension
+#: wizard_field:pos.payment2,ask_pay,payment_id:0
+msgid "Payment term"
+msgstr "Plazo de pago"
+
+#. module: point_of_sale_extension
+#: field:res.company,pos_warn_sale_order:0
+msgid "Product in sale order warning"
+msgstr "Aviso producto en pedido venta"
+
+#. module: point_of_sale_extension
+#: field:res.company,pos_prices_tax_include:0
+msgid "Prices tax included"
+msgstr "Precios impuestos incluidos"
+
+#. module: point_of_sale_extension
+#: wizard_field:pos.payment2,ask_pay,amount:0
+msgid "Amount"
+msgstr "Importe"
+
+#. module: point_of_sale_extension
+#: help:res.company,pos_prices_tax_include:0
+msgid "Product prices have tax included."
+msgstr "Los precios de los productos tienen los impuestos incluidos."
+
+#. module: point_of_sale_extension
+#: code:addons/point_of_sale_extension/pos.py:0
+#: code:addons/point_of_sale_extension/wizard/wizard_pos_payment.py:0
+#, python-format
+msgid "Error"
+msgstr "Error"
+
+#. module: point_of_sale_extension
+#: wizard_button:pos.payment2,product_stock_warning,ask_pay:0
+#: wizard_button:pos.payment2,sale_order_warning,ask_pay:0
+msgid "Go on"
+msgstr "Continuar"
+
+#. module: point_of_sale_extension
+#: view:res.company:0
+msgid "Point of sale"
+msgstr "Terminal punto de venta"
+
+#. module: point_of_sale_extension
+#: wizard_field:pos.payment2,sale_order_warning,sale_order:0
+msgid "Order"
+msgstr "Pedido"
+
+#. module: point_of_sale_extension
+#: model:ir.model,name:point_of_sale_extension.model_pos_report_change
+msgid "Change path to rml file to get a better POS receipt"
+msgstr "Cambia la ruta del archivo rml para obtener un ticket TPV mejor"
+
+#. module: point_of_sale_extension
+#: wizard_button:pos.payment2,ask_pay,add_pay:0
+msgid "Ma_ke payment"
+msgstr "_Realiza pago"
+
+#. module: point_of_sale_extension
+#: field:res.company,pos_warn_virtual_stock:0
+msgid "No virtual stock warning"
+msgstr "Aviso falta de stock virtual"
+
+#. module: point_of_sale_extension
+#: help:res.company,pos_warn_sale_order:0
+msgid "Shows a warning if a product added in the POS order has already been requested by the partner (the partner has a sale order with this product), so the user can decide if is better to do a POS order from a sale order."
+msgstr "Muestra un aviso si un producto que se ha añadido a la venta TPV ya había sido reservado por la empresa (la empresa tiene un pedido de venta con este producto), por lo que el usuario puede decidir si es mejor hacer la venta TPV desde la venta existente."
+
+#. module: point_of_sale_extension
+#: model:ir.module.module,shortdesc:point_of_sale_extension.module_name_translation
+msgid "Point Of Sale Extension"
+msgstr "Terminal Punto de Venta. Extensión"
+
+#. module: point_of_sale_extension
+#: field:res.company,pos_journals:0
+msgid "Payment journals"
+msgstr "Diarios de pago"
+
+#. module: point_of_sale_extension
+#: view:pos.order:0
+msgid "Sales Order POS"
+msgstr "Terminal Punto de Venta"
+
+#. module: point_of_sale_extension
+#: code:addons/point_of_sale_extension/pos.py:0
+#, python-format
+msgid "Cannot delete a point of sale which is already confirmed !"
+msgstr "¡No se puede eliminar una venta que ya está confirmada!"
+
+#. module: point_of_sale_extension
+#: selection:pos.order.line,state:0
+msgid "Done"
+msgstr "Realizado"
+
+#. module: point_of_sale_extension
+#: wizard_field:pos.payment2,ask_pay,invoice_wanted:0
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: point_of_sale_extension
+#: selection:pos.order.line,state:0
+#: wizard_button:pos.payment2,ask_pay,end:0
+#: wizard_button:pos.payment2,product_stock_warning,end:0
+#: wizard_button:pos.payment2,sale_order_warning,end:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: point_of_sale_extension
+#: field:pos.order.line,partner_id:0
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: point_of_sale_extension
+#: selection:pos.order.line,state:0
+msgid "Invoiced"
+msgstr "Facturado"
+
+#. module: point_of_sale
+#: rml:pos.receipt:0
+msgid "Tax :"
+msgstr "Impuestos :"
+
+#. module: point_of_sale
+#: rml:pos.receipt:0
+msgid "Disc :"
+msgstr "Descuento :"
+
+#. module: point_of_sale
+#: rml:pos.receipt:0
+msgid "This coupon is valid until"
+msgstr "Este vale es válido hasta"
+
+#. module: point_of_sale
+#: rml:pos.receipt:0
+msgid "Operation Nº :"
+msgstr "Venta nº :"
+
+#. module: point_of_sale
+#: rml:pos.receipt:0
+msgid "Salesman :"
+msgstr "Cajero/a :"
