@@ -34,10 +34,18 @@
 		   keyword="client_action_multi"
 		   />
 
+		<wizard
+		   string="Open Google Map"
+		   name="google.map.open"
+		   id="wizard_map_open"
+		   keyword="client_action_multi"
+		   />
+
 		<menuitem id="google_earth" name="Google Map/Earth" parent="base.menu_base_partner"/>
 		<menuitem name="KML for Partner" id="menu_google_earth" parent="google_earth" action="wizard_customer_on_map" type="wizard"/>
 		<menuitem name="KML for Partner-Country" id="menu_layers_of_region_category" parent="google_earth" action="wizard_layers_basedon_region_category" type="wizard"/>
 		<menuitem name="KML for Delivery Route" id="menu_google_delivery_route" parent="google_earth" action="wizard_find_route" type="wizard"/>
 		<menuitem name="KML For Network link" id="menu_google_network_link" parent="google_earth" action="wizard_network_link" type="wizard"/>
+		<menuitem name="Open Google Map" id="menu_google_map_open" parent="google_earth" action="wizard_map_open" type="wizard"/>
 	</data>
 </openerp>

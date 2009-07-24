@@ -22,6 +22,7 @@
 import os, xml, string, sys
 import urllib
 from lxml import etree
+import base64
 
 from google.directions import GoogleDirections
 
@@ -84,8 +85,94 @@ class google_map(osv.osv):
     _name = 'google.map'
     _description = 'Google Map/Earth'
 
+    def get_kml(self, cr, uid, mode=0, context={}):
+        data = {'view_refresh_time': 1, 'refresh_mode': 'onInterval',
+                'view_refresh_mode': 'onStop', 'path': 'http://yourserver.com:port/kml/',
+                'models': ['res.country', 'res.partner', 'stock.move'], 'refresh_interval': 1}
+
+    def add_network_link(self, cr, uid, url, data, context):
+        folderNetworkLinkElement = etree.Element('NetworkLink')
+        networknameElement = etree.Element('name')
+        networknameElement.text = 'Dynamic data'
+        networkvisibilityElement = etree.Element('visibility')
+        networkvisibilityElement.text = '0'
+        networkopenElement = etree.Element('open')
+        networkopenElement.text = '0'
+        networkdescriptionElement = etree.Element('description')
+        networkdescriptionElement.text = 'Network link'
+        networkrefreshVisibilityElement = etree.Element('refreshVisibility')
+        networkrefreshVisibilityElement.text = '0'
+        networkflyToViewElement = etree.Element('flyToView')
+        networkflyToViewElement.text = '0'
+        networkLinkElement = etree.Element('Link')
+
+        folderNetworkLinkElement.append(networknameElement)
+        folderNetworkLinkElement.append(networkvisibilityElement)
+        folderNetworkLinkElement.append(networkopenElement)
+        folderNetworkLinkElement.append(networkdescriptionElement)
+        folderNetworkLinkElement.append(networkrefreshVisibilityElement)
+        folderNetworkLinkElement.append(networkflyToViewElement)
+        folderNetworkLinkElement.append(networkLinkElement)
+
+        linkhrefElement = etree.Element('href')
+        linkhrefElement.text = url
+        linkrefreshModeElement = etree.Element('refreshMode')
+        linkrefreshModeElement.text = data['refresh_mode']
+        linkrefreshIntervalElement = etree.Element('refreshInterval')
+        linkrefreshIntervalElement.text = str(data['refresh_interval'])
+        linkviewRefreshModeElement = etree.Element('viewRefreshMode')
+        linkviewRefreshModeElement.text = data['view_refresh_mode']
+        linkrefreshVisibilityElement = etree.Element('refreshVisibility')
+        linkrefreshVisibilityElement.text = str(data['view_refresh_time'])
+
+        networkLinkElement.append(linkhrefElement)
+        networkLinkElement.append(linkrefreshModeElement)
+        networkLinkElement.append(linkrefreshIntervalElement)
+        networkLinkElement.append(linkviewRefreshModeElement)
+        networkLinkElement.append(networkrefreshVisibilityElement)
+        networkLinkElement.append(linkrefreshVisibilityElement)
+        return folderNetworkLinkElement
+
+    def get_networklink_kml(self, cr, uid, data, context):
+        '''
+        data = {'view_refresh_time': 1, 'refresh_mode': 'onInterval',
+                'view_refresh_mode': 'onStop', 'path': 'http://yourserver.com:port/kml/',
+                'models': ['res.country', 'res.partner'], 'refresh_interval': 1}
+        '''
+        kmlElement = etree.Element("kml")
+        kmlElement.set('xmlns',"http://www.opengis.net/kml/2.2")
+        folderElement = etree.Element('Folder')
+
+        foldernameElement = etree.Element('name')
+        foldernameElement.text = 'Network Link Folder'
+        foldervisibilityElement = etree.Element('visibility')
+        foldervisibilityElement.text = '0'
+        folderopenElement = etree.Element('open')
+        folderopenElement.text = '0'
+        folderdescriptionElement = etree.Element('description')
+        folderdescriptionElement.text = 'Network Link'
+
+        for model in data['models']:
+            url = data['path'] + '?model=%s&mode=1'% (model,)
+            network_link = self.add_network_link(cr, uid, url, data, context)
+            folderElement.append(network_link)
+
+        folderElement.append(foldernameElement)
+        folderElement.append(foldervisibilityElement)
+        folderElement.append(folderopenElement)
+        folderElement.append(folderdescriptionElement)
+        #folderElement.append(folderNetworkLinkElement)
+        folderElement.append(foldernameElement)
+        kmlElement.append(folderElement)
+        return etree.tostring(kmlElement, encoding="UTF-8", xml_declaration=True, pretty_print = True)
+
     def get_country_boundries(self, cr, uid, country_list, context):
-        ad = tools.config['addons_path'] # check for base module path also
+        '''
+        This function return boundries (coordinates) of all countries specified in
+        country list by reading test.kml
+        '''
+
+        ad = tools.config['addons_path']
         module_path = os.path.join(ad, 'google_earth/test.kml')
         dict_country = {}
         doc = etree.parse(module_path)

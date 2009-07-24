@@ -88,91 +88,18 @@ _summary_fields = {
                         'default': lambda *a: '''You can now upload this kml file on google Earth by Add/Networklink menu You will get refresh data (time specified in refresh interval), And you can also upload this kml to google map but refreshment of data might be not working google map'''},
         }
 
-def add_network_link(self, cr, uid, url, data, context):
-    folderNetworkLinkElement = etree.Element('NetworkLink')
-    networknameElement = etree.Element('name')
-    networknameElement.text = 'Dynamic data'
-    networkvisibilityElement = etree.Element('visibility')
-    networkvisibilityElement.text = '0'
-    networkopenElement = etree.Element('open')
-    networkopenElement.text = '0'
-    networkdescriptionElement = etree.Element('description')
-    networkdescriptionElement.text = 'Network link'
-    networkrefreshVisibilityElement = etree.Element('refreshVisibility')
-    networkrefreshVisibilityElement.text = '0'
-    networkflyToViewElement = etree.Element('flyToView')
-    networkflyToViewElement.text = '0'
-    networkLinkElement = etree.Element('Link')
-
-    folderNetworkLinkElement.append(networknameElement)
-    folderNetworkLinkElement.append(networkvisibilityElement)
-    folderNetworkLinkElement.append(networkopenElement)
-    folderNetworkLinkElement.append(networkdescriptionElement)
-    folderNetworkLinkElement.append(networkrefreshVisibilityElement)
-    folderNetworkLinkElement.append(networkflyToViewElement)
-    folderNetworkLinkElement.append(networkLinkElement)
-
-    linkhrefElement = etree.Element('href')
-    linkhrefElement.text = url
-    linkrefreshModeElement = etree.Element('refreshMode')
-    linkrefreshModeElement.text = data['form']['refresh_mode']
-    linkrefreshIntervalElement = etree.Element('refreshInterval')
-    linkrefreshIntervalElement.text = str(data['form']['refresh_interval'])
-    linkviewRefreshModeElement = etree.Element('viewRefreshMode')
-    linkviewRefreshModeElement.text = data['form']['view_refresh_mode']
-    linkrefreshVisibilityElement = etree.Element('refreshVisibility')
-    linkrefreshVisibilityElement.text = str(data['form']['view_refresh_time'])
-
-    networkLinkElement.append(linkhrefElement)
-    networkLinkElement.append(linkrefreshModeElement)
-    networkLinkElement.append(linkrefreshIntervalElement)
-    networkLinkElement.append(linkviewRefreshModeElement)
-    networkLinkElement.append(networkrefreshVisibilityElement)
-    networkLinkElement.append(linkrefreshVisibilityElement)
-
-    return folderNetworkLinkElement
-
 def _create_kml(self, cr, uid, data, context={}):
-#    XHTML_NAMESPACE = 'http://maps.google.com/kml/2.2'
-#    XHTML = "{%s}" % XHTML_NAMESPACE
-#    NSMAP = {None : XHTML_NAMESPACE}
-#    kmlElement = etree.Element(XHTML + "kml", nsmap=NSMAP)
-    kmlElement = etree.Element("kml")
-    kmlElement.set('xmlns',"http://www.opengis.net/kml/2.2")
-    folderElement = etree.Element('Folder')
-
-    foldernameElement = etree.Element('name')
-    foldernameElement.text = 'Network Link Folder'
-    foldervisibilityElement = etree.Element('visibility')
-    foldervisibilityElement.text = '0'
-    folderopenElement = etree.Element('open')
-    folderopenElement.text = '0'
-    folderdescriptionElement = etree.Element('description')
-    folderdescriptionElement.text = 'Network Link'
-
+    pool = pooler.get_pool(cr.dbname)
+    models = []
     if data['form']['partner_select']:
-        print "@@@@@@@@"
-        url = data['form']['path'] + '?model=res.partner&mode=1'
-        network_link = add_network_link(self, cr, uid, url, data, context)
-        folderElement.append(network_link)
+        models.append('res.partner')
     if data['form']['country_select']:
-        url = data['form']['path'] + '?model=res.country&mode=1'
-        network_link = add_network_link(self, cr, uid, url, data, context)
-        folderElement.append(network_link)
+        models.append('res.country')
     if data['form']['route_select']:
-        url = data['form']['path'] + '?model=stock.move&mode=1'
-        network_link = add_network_link(self, cr, uid, url, data, context)
-        folderElement.append(network_link)
-
-    folderElement.append(foldernameElement)
-    folderElement.append(foldervisibilityElement)
-    folderElement.append(folderopenElement)
-    folderElement.append(folderdescriptionElement)
-    #folderElement.append(folderNetworkLinkElement)
-    folderElement.append(foldernameElement)
-
-    kmlElement.append(folderElement)
-    out = base64.encodestring(etree.tostring(kmlElement, encoding="UTF-8", xml_declaration=True, pretty_print = True))
+        models.append('stock.move')
+    data['form']['models'] = models
+    kml = pool.get('google.map').get_networklink_kml(cr, uid, data=data['form'], context=context)
+    out = base64.encodestring(kml)
     fname = 'network' + '.kml'
     return {'kml_file': out, 'name': fname}
 
