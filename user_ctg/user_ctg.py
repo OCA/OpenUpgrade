@@ -183,7 +183,6 @@ class ctg_feedback(osv.osv):
             if feedback_line.user_to.address_id and feedback_line.user_to.address_id.email:
                 mail_to = feedback_line.user_to.address_id.email
                 body = subject + "\n \n Please visit the following link to give the feedback" 
-                # TODO create a link to feedback to send it in the body of the mail to the user
                 logger = netsvc.Logger()
                 if tools.email_send(user, [mail_to], subject, body, debug=False, subtype='html') == True:
                     logger.notifyChannel('email', netsvc.LOG_INFO, 'Email successfully send to : %s' % (mail_to))
@@ -193,6 +192,19 @@ class ctg_feedback(osv.osv):
     def action_done(self, cr, uid, ids, context={}):
         self.write(cr, uid, ids, {'state':'done'})
         # TODO : create CTG Line with ctg_type ?
+        feedback_lines = self.browse(cr,uid,ids)
+        ctg_line_obj = self.pool.get('ctg.line')
+        for feedback_line in feedback_lines:
+            #if feedback_line.ctg_type_id.code == 'sales' or feedback_line.ctg_type_id.code == 'dms': 
+            if feedback_line.points:
+               ctg_line_obj.create(cr, uid,{
+                        'ctg_type_id':feedback_line.ctg_type_id.id,
+                        'rewarded_user_id':feedback_line.responsible.id,
+                        'points':feedback_line.points,
+                        'date_ctg': feedback_line.date_feedback})
+            else:
+                raise osv.except_osv(_('Usererror !'),
+                        _('Please Select Points For Feedback.'))
         # points : for customer satisfaction type , need to calaculate avg. points base on projects ?
                     # example : customer give 2 points for 1 project / 3 projects ?
     def action_cancel_draft(self, cr, uid, ids, context={}):
