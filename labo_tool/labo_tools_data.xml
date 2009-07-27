@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<terp>
+<data>
+	<record model="ir.cron" id="expire_date_cron">
+		<field name="name">Dates of intervention</field>
+		<field name="interval_number">1</field>
+		<field name="interval_type">days</field>
+		<field name="numbercall">-1</field>
+		<field name="model">labo.tool</field>
+		<field name="function">running_expired_dates</field>
+	</record>
+
+	<record model="crm.case.section" id="section_progenus">
+		<field name="name">Analysis</field>
+		<field name="code">analysis</field>
+	</record>
+	<record model="crm.case.categ" id="categ7">
+		<field name="name">analysis material</field>
+		<field name="section_id" ref="section_progenus"/>
+	</record>
+	<record model="crm.case.section" id="section1">
+		<field name="name">Equipment</field>
+		<field name="code">equip</field>
+	</record>
+	<record model="crm.case.categ" id="categ_eq">
+		<field name="name">Equipment</field>
+		<field name="section_id" ref="section1"/>
+	</record>
+
+	<record model="crm.case.section" id="section_progenus_gl">
+		<field name="name">NC Gl</field>
+		<field name="code">nc_gen</field>
+	</record>
+	<record model="crm.case.categ" id="categ7_gl">
+		<field name="name">NC Gl</field>
+		<field name="section_id" ref="section_progenus_gl"/>
+	</record>
+	<record model="crm.case.section" id="section_progenus2">
+		<field name="name">KO Samples</field>
+		<field name="code">samples</field>
+	</record>
+	<record model="crm.case.categ" id="categ_ko">
+		<field name="name">Samples</field>
+		<field name="section_id" ref="section_progenus2"/>
+	</record>
+
+
+	<record model="crm.case.section" id="section_progenus_final">
+		<field name="name">NC Finale</field>
+		<field name="code">nc_fin</field>
+	</record>
+	<record model="crm.case.categ" id="categ8_finale">
+		<field name="name">NC Finale</field>
+		<field name="section_id" ref="section_progenus_final"/>
+	</record>
+
+
+	<record model="crm.case.section" id="section_progenus_rean">
+		<field name="name">NC Reanalyse</field>
+		<field name="code">nc_rean</field>
+	</record>
+	<record model="crm.case.categ" id="categ7_rean">
+		<field name="name">NC Reanalyse</field>
+		<field name="section_id" ref="section_progenus_rean"/>
+	</record>
+
+
+	<record model="crm.case.section" id="section_progenus_dates">
+		<field name="name">NC Date</field>
+		<field name="code">nc_date</field>
+	</record>
+	<record model="crm.case.categ" id="categ7_dates">
+		<field name="name">NC Date</field>
+		<field name="section_id" ref="section_progenus_dates"/>
+	</record>
+</data>
+</terp>

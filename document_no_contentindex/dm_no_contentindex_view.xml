@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+    <!--
+    =======================================================
+    DOCUMENT FILE EXTENSIONS
+    =======================================================
+    -->
+    <record id="view_document_file_form_inherit" model="ir.ui.view">
+        <field name="name">ir.attachment.form.inherit</field>
+        <field name="model">ir.attachment</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="document.view_document_file_form"/>
+        <field name="arch" type="xml">
+        	<field name="datas_fname" select="1" position="after">
+        		<field name="no_index_content"/>
+        	</field>
+        </field>
+    </record>
+	</data>
+</openerp>

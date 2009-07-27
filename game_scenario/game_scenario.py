@@ -28,7 +28,6 @@ import datetime
 
 import netsvc
 from service import security
-from service import web_services
 
 class game_scenario(osv.osv):
     _name="game.scenario"
@@ -108,7 +107,9 @@ def _post_process(db,uid,passwd,object,method,steps,type='execute',*args):
         cr.close()
     return res
 
-class scenario_objects_proxy(web_services.objects_proxy):
+
+web_services_objects_proxy = netsvc.SERVICES['object'].__class__
+class scenario_objects_proxy(web_services_objects_proxy):
     def exec_workflow(self, db, uid, passwd, object, method, id):
         args=id,
         steps=_pre_process(db,uid,passwd,object,method,'execute_wkf',*args)
@@ -126,7 +127,8 @@ class scenario_objects_proxy(web_services.objects_proxy):
 scenario_objects_proxy()
 
 
-class scenario_wizard(web_services.wizard):
+web_services_wizard = netsvc.SERVICES['wizard'].__class__
+class scenario_wizard(web_services_wizard):
     def execute(self,db, uid, passwd, wiz_id, datas, action='init', context=None):
         args=wiz_id,datas,action,context,
         steps=_pre_process(db,uid,passwd,None,None,'wizard',*args)
@@ -138,7 +140,9 @@ class scenario_wizard(web_services.wizard):
         return res
 scenario_wizard()
 
-class scenario_report_spool(web_services.report_spool):
+
+web_services_report_spool = netsvc.SERVICES['report'].__class__
+class scenario_report_spool(web_services_report_spool):
     def report(self,db, uid, passwd, object, ids, datas=None, context=None):
         args=ids,datas,context,
         steps=_pre_process(db,uid,passwd,object,None,'report',*args)

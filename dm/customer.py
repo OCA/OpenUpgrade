@@ -96,6 +96,7 @@ class dm_workitem(osv.osv): # {{{
         'error_msg' : fields.text('System Message'),
         'is_global': fields.boolean('Global Workitem'),
         'is_preview': fields.boolean('Document Preview Workitem'),
+        'use_prev_plugin_values': fields.boolean('Use Previous Plugin Values (For Document Regeneration)'),
         'tr_from_id' : fields.many2one('dm.offer.step.transition', 'Source Transition', select="1", ondelete="cascade"),
         'sale_order_id' : fields.many2one('sale.order','Sale Order'),
         'mail_service_id' : fields.many2one('dm.mail_service','Mail Service'),
@@ -109,89 +110,98 @@ class dm_workitem(osv.osv): # {{{
         'action_time' : lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
 
-    def _check_unique_so(self, cr, uid, ids, sale_order_id):
-        if not sale_order_id:
-            return {}
-        if self.search(cr,uid,[('sale_order_id','=',sale_order_id)]):
-            raise osv.except_osv("Error!","You cannot create more than 1 workitem for the same sale order !")
-        else :
-            return {'value':{'sale_order_id':sale_order_id}}
+
+    def _check_sysmsg(self, cr, uid, ids, code):
+        """ Check action message code and set workitem log """
+        sysmsg_id  = self.pool.get('dm.sysmsg').search(cr, uid, [('code','=',code)])
+        if sysmsg_id:
+            sysmsg = self.pool.get('dm.sysmsg').browse(cr, uid, sysmsg_id)[0]
+            self.write(cr, uid, [ids], {'state': sysmsg.state,'error_msg':sysmsg.message})
+        else:
+            self.write(cr, uid, [ids], {'state': 'error','error_msg':"An unknown error has occured : %s" % code})
+
 
     def _sale_order_process(self, cr, uid, sale_order_id):
         so = self.pool.get('sale.order').browse(cr, uid, sale_order_id)
         wf_service = netsvc.LocalService('workflow')
-        if so.so_confirm_do:
+
+        if so.so_confirm_do and so.state == 'draft':
             wf_service.trg_validate(uid, 'sale.order', sale_order_id, 'order_confirm', cr)
-        if so.invoice_create_do:
-            inv_id = self.pool.get('sale.order').action_invoice_create(cr, uid, [sale_order_id])
-            if so.journal_id:
-                self.pool.get('account.invoice').write(cr, uid, inv_id, {'journal_id': so.journal_id.id, 'account_id': so.journal_id.default_credit_account_id.id})
-        if so.invoice_validate_do:
-            wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
-        if so.invoice_pay_do:
-            pass
+            if so.invoice_create_do:
+                inv_id = self.pool.get('sale.order').action_invoice_create(cr, uid, [sale_order_id])
+                if so.journal_id:
+                    self.pool.get('account.invoice').write(cr, uid, inv_id, {'journal_id': so.journal_id.id, 'account_id': so.journal_id.default_credit_account_id.id})
+                if inv_id and so.invoice_validate_do:
+                    wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
+                    if so.invoice_pay_do:
+                        ids = self.pool.get('account.period').find(cr, uid, {})
+                        period_id = False
+                        if len(ids):
+                            period_id = ids[0]
+
+                        cur_obj = self.pool.get('res.currency')
+                        #journal = self.pool.get('account.journal').browse(cr, uid, journal_id, context)
+
+                        for invoice in so.invoice_ids:
+                            journal = invoice.journal_id
+                            amount_tax = invoice.amount_tax
+                            amount = invoice.amount_tax
+                            if journal.currency and invoice.company_id.currency_id.id<>journal.currency.id:
+                                ctx = {'date':time.strftime('%Y-%m-%d')}
+                                amount = cur_obj.compute(cr, uid, journal.currency.id, invoice.company_id.currency_id.id, amount, context=ctx)
+
+                            acc_id = journal.default_credit_account_id and journal.default_credit_account_id.id
+                            if not acc_id:
+                                raise osv.except_osv('Error !','Your journal must have a default credit and debit account.')
+                            self.pool.get('account.invoice').pay_and_reconcile(cr, uid, [invoice.id],
+                                        amount, acc_id, period_id, journal.id, '', '', '',)
+        
 
 
     def run(self, cr, uid, wi, context={}):
-        print "Calling run for : ",wi.step_id.action_id.name
         context['active_id'] = wi.id
         done = False
+        ms_err = ''
+
         try:
             server_obj = self.pool.get('ir.actions.server')
-            res = True
+            tr_res = True
 
-            """ Check if action must be done or cancelled by"""
-            """ checking the condition code of incoming transitions """
+            """ Check if action must be done or cancelled by checking the condition code of incoming transitions """
             for tr in wi.step_id.incoming_transition_ids:
                 eval_context = {
                     'pool' : self.pool,
                     'cr' : cr,
                     'uid' : uid,
                     'wi': wi,
-                    'tr':tr,
+                    'tr' : tr,
                 }
                 val = {}
 
-                """ Evaluate condition code (for non preview worlitems only)"""
+                """ Evaluate condition code (for non preview workitems only)"""
                 if wi.is_preview:
                     val['action'] = True
                 else:
                     exec tr.condition_id.in_act_cond.replace('\r','') in eval_context,val
 
-                print "Tr Condition return code : ",val.get('action',False)
-
-                if not val.get('action',False):
-                    """ If action returned by the trigger code is False """
-                    res = False
+                if not val.get('action', False):
+                    """ If action returned by the trigger code is False stop here """
+                    tr_res = False
                     act_step = tr.step_from_id.name or False
                     break
 
-            if res:
+            if tr_res:
                 """ Execute server action """
                 res = server_obj.run(cr, uid, [wi.step_id.action_id.id], context)
 
-                """ Check returned value and set workitem log """
-                if res=='no_document':
-                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'No production document is assigned to this offer step'})
-                elif res=='no_step':
-                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no offer step for this workitem'})
-                elif res=='no_segment':
-                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no segment for this workitem'})
-                elif res=='no_proposition':
-                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no campaign proposition for this workitem'})
-                elif res=='no_campaign':
-                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no campaign for this workitem'})
-                elif res=='no_report':
-                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no report for this offer step document'})
-                elif res=='no_mail_service_for_campaign':
-                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no mail service for this offer step in the campaign'})
-                elif res=='no_mail_service_for_preview':
-                    self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'There is no mail service defined for this preview document'})
-                else:
+                """ Check returned value and set done status """
+                done = self._check_sysmsg(cr, uid, wi.id, res)
+
+                """ Set workitem state as done """
+                if done:
                     self.write(cr, uid, [wi.id], {'state': 'done','error_msg':""})
-                    done = True
             else:
-                """ Dont Execute Action if workitem not to be processed """
+                """ Dont Execute Action if workitem is not to be processed """
                 self.write(cr, uid, [wi.id], {'state': 'cancel','error_msg':'Cancelled by : %s'% act_step})
                 done = False
 
@@ -202,8 +212,9 @@ class dm_workitem(osv.osv): # {{{
             self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'Exception: %s\n%s' % (str(exception), tb_s)})
             netsvc.Logger().notifyChannel('dm action', netsvc.LOG_ERROR, 'Exception: %s\n%s' % (str(exception), tb_s))
 
+
+        """ Check if it has to create next auto workitems """
         if done and not wi.is_preview:
-            """ Check if it has to create next auto workitems """
             for tr in wi.step_id.outgoing_transition_ids:
                 if tr.condition_id and tr.condition_id.gen_next_wi:
 
@@ -245,28 +256,15 @@ class dm_workitem(osv.osv): # {{{
         return super(dm_workitem, self).__init__(*args)
 
     def mail_service_run(self, cr, uid, camp_doc, context={}):
-        print "Calling camp doc run for :", camp_doc.id
         context['active_id'] = camp_doc.id
         try:
             server_obj = self.pool.get('ir.actions.server')
-            if not camp_doc.mail_service_id:
-                self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state': 'error',
-                    'error_msg':'There is no mail service for this document'})
-                return False
-                
-            if not camp_doc.mail_service_id.action_id :
-                self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state': 'error',
-                    'error_msg':'There is no action defined for this mail service : %s' % camp_doc.mail_service_id.name})
-                return False
-
             res = server_obj.run(cr, uid, [camp_doc.mail_service_id.action_id.id], context)
-            print "Campaign Doc action :",res
             camp_res = self.pool.get('dm.campaign.document').read(cr, uid, [camp_doc.id], ['state'])[0]
-            print "Camp doc State : ", camp_res['state']
 
-            """ If no error occured during the document generation set state to done """
+            """ If no error occured during the document delivery set state to done """
             if camp_res['state'] != 'error':
-                self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state': 'done','error_msg':""})
+                self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state':'done','delivery_time':time.strftime('%Y-%m-%d %H:%M:%S'),'error_msg':""})
 
         except Exception, exception:
             import traceback
@@ -278,32 +276,27 @@ class dm_workitem(osv.osv): # {{{
         return True
 
     def check_all(self, cr, uid, context={}):
-        print "Calling check all"
         """ Check if the action engine is already running """
         if not self.is_running:
             self.is_running = True
+
+            """ Workitems processing """
             """ Get workitems to process """
-            ids = self.search(cr, uid, [('state','=','pending'),
-                ('action_time','<=',time.strftime('%Y-%m-%d %H:%M:%S'))])
-            print "Workitems to process : ",ids
+            ids = self.search(cr, uid, [('state','=','pending'),('action_time','<=',time.strftime('%Y-%m-%d %H:%M:%S'))])
 
             """ Run workitem action """
             for wi in self.browse(cr, uid, ids, context=context):
-                # To improve : get result from action
-                self.run(cr, uid, wi, context=context)
+                wi_res = self.run(cr, uid, wi, context=context)
+            
 
             """ Campaign documents processing """
-            camp_doc_obj = self.pool.get('dm.campaign.document')
-            time_now = time.strftime('%Y-%m-%d %H:%M:%S')
-
             """ Get campaign documents to process """
-            camp_doc_ids = camp_doc_obj.search(cr,uid,[('state','=','pending'),('delivery_time','<',time_now)])
-            print camp_doc_ids
+            camp_doc_obj = self.pool.get('dm.campaign.document')
+            camp_doc_ids = camp_doc_obj.search(cr, uid, [('state','=','pending')])
+
+            """ Run campaign document action """
             for camp_doc in camp_doc_obj.browse(cr, uid, camp_doc_ids, context=context):
-                print "Sending : ",camp_doc.name
-                """ Run campaign document action """
-                # To improve : Get result from mail_service_run
-                self.mail_service_run(cr, uid, camp_doc, context=context)
+                ms_res = self.mail_service_run(cr, uid, camp_doc, context=context)
 
             self.is_running = False
             return True
@@ -582,25 +575,33 @@ class dm_event(osv.osv_memory): # {{{
                     next_action_time = next_action_time.replace(hour=act_hour.hour)
                     next_action_time = next_action_time.replace(minute=act_hour.minute)
 
+                if tr.action_day:
+                    next_action_time = next_action_time.replace(day=tr.action_day)
+
+                if tr.action_date:
+                    next_action_time = tr.action_date
+
             try:
-                if (obj.sale_order_id.id != False) and self.pool.get('dm.workitem').search(cr,uid,[('sale_order_id','=',obj.sale_order_id.id)]):
-                    raise osv.except_osv("Error!","You cannot create more than 1 workitem for the same sale order !")
                 wi_id = self.pool.get('dm.workitem').create(cr, uid, {'step_id':tr.step_to_id.id or False, 'segment_id':obj.segment_id.id or False,
                 'address_id':obj.address_id.id, 'mail_service_id':obj.mail_service_id.id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'),
                 'tr_from_id':tr.id,'source':obj.source, 'sale_order_id':obj.sale_order_id.id})
                 netsvc.Logger().notifyChannel('dm event', netsvc.LOG_DEBUG, "Creating Workitem with action at %s"% next_action_time.strftime('%Y-%m-%d  %H:%M:%S'))
-            except:
-                netsvc.Logger().notifyChannel('dm event', netsvc.LOG_ERROR, "Event cannot create Workitem")
-
+            except Exception, exception:
+                import traceback
+                tb = sys.exc_info()
+                tb_s = "".join(traceback.format_exception(*tb))
+                netsvc.Logger().notifyChannel('dm event', netsvc.LOG_ERROR, "Event cannot create Workitem : %s\n%s" % (str(exception), tb_s))
         return id
 
 dm_event() # }}}
-
+"""
 class sale_order(osv.osv): # {{{
     _name = "sale.order"
     _inherit = "sale.order"
     _columns ={
         'offer_step_id' : fields.many2one('dm.offer.step','Offer Step'),
+        'segment_id' : fields.many2one('dm.campaign.proposition.segment','Segment'),
+        'journal_id': fields.many2one('account.journal', 'Journal'),
         'lines_number' : fields.integer('Number of sale order lines'),
         'so_confirm_do' : fields.boolean('Auto confirm sale order'),
         'invoice_create_do' : fields.boolean('Auto create invoice'),
@@ -608,3 +609,4 @@ class sale_order(osv.osv): # {{{
         'invoice_pay_do' : fields.boolean('Auto pay invoice'),
     }
 sale_order() # }}}
+"""

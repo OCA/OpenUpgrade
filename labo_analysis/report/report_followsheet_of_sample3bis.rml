@@ -1,0 +1,205 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+ <!-- <template pageSize="(1120.0,660.0)" title="Test" author="Martin Simon" allowSplitting="20" -->
+  <template pageSize="(270.0mm,210.0mm)" title="Test" author="Martin Simon" allowSplitting="20" >
+    <pageTemplate id="first">
+
+ 		<frame id="first" x1="-45.0" y1="28.0" width="870" height="550"/>
+
+ 	<pageGraphics>
+			<setFont name="Times-Bold" size="8"/>
+<<<<<<< .mine
+			<lines>40.0 1.5cm 825.0 1.5cm </lines>
+			<drawRightString x="4.5cm" y="1.2cm">PO-GESECH Rev 001</drawRightString>
+			<drawRightString x="2.9cm" y="0.8cm">Annexe 2</drawRightString>
+			<drawRightString x="730.0" y="1.2cm">Copyright Progenus</drawRightString>
+	<!--		<drawRightString x="15.5cm" y="1.2cm">Feuille de suivi</drawRightString>
+			<drawRightString x="819.0" y="1.2cm">Copyright Progenus</drawRightString>
+			<drawCentredString x="15.5cm" y="1.2cm">Feuille de suivi  <pageNumber/>  Of </drawCentredString>
+			<drawString x="16.8cm" y="1.2cm"> <pageCount/></drawString>
+=======
+			<lines>48.0 1.5cm 735.0 1.5cm </lines>
+			<drawRightString x="4.5cm" y="1.2cm">PO-GESECH Rev 001</drawRightString>
+			<drawRightString x="2.9cm" y="0.8cm">Annexe 2</drawRightString>
+			<drawRightString x="730.0" y="1.2cm">Copyright Progenus</drawRightString>
+			<drawRightString x="15.5cm" y="1.2cm">Feuille de suivi</drawRightString>
+<!--			<drawCentredString x="15.5cm" y="1.2cm">Feuille de suivi  <pageNumber/>  Of </drawCentredString>
+			<drawString x="16.8cm" y="1.2cm"> <pageCount/></drawString-->
+>>>>>>> .r954
+-->
+		</pageGraphics>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+  	  <lineStyle kind="LINEBELOW" colorName="red" start="0,0" stop="-1,0"/>
+  	  <lineStyle kind="LINEBELOW" colorName="grey" start="0,1" stop="-1,-1"/>
+  	  <!--lineStyle kind="LINEBELOW" colorName="red" start="0,0" stop="-1,0"/-->
+    </blockTableStyle>
+
+    <blockTableStyle id="Table4">
+      <blockAlignment value="LEFT"/>
+      <blockLeftPadding length="0.0" />
+      <blockValign value="TOP"/>
+<!--		<lineStyle kind="LINEBELOW" colorName="grey" start="0,0" stop="-1,-1"/-->
+    </blockTableStyle>
+
+     <blockTableStyle id="Table5">
+      <blockAlignment value="LEFT"/>
+      <blockLeftPadding length="0.0" />
+      <blockValign value="TOP"/>
+  	  <lineStyle kind="LINEBELOW" colorName="white" start="0,0" stop="-1,0"/>
+
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P111" fontName="Times-Roman" fontSize="10.0" alignment="LEFT" leading="20.0"/>
+    <paraStyle name="P111b" fontName="Times-Roman" fontSize="10.0" alignment="CENTER" leading="10.0"/>
+    <paraStyle name="P112" fontName="Times-Roman" alignment="CENTER" leading="11"/>
+    <paraStyle name="P1" rightIndent="-29.0" leftIndent="0.0" fontName="Courier" fontSize="10.0" leading="13" alignment="LEFT"/>
+    <paraStyle name="P2" rightIndent="-29.0" leftIndent="0.0" fontName="Courier-Bold" fontSize="10.0" leading="25" alignment="RIGHT"/>
+    <paraStyle name="P3" rightIndent="-29.0" leftIndent="0.0" fontName="Courier" fontSize="10.0" leading="13" alignment="CENTER"/>
+    <paraStyle name="P4" rightIndent="-29.0" leftIndent="0.0" fontName="Courier" fontSize="10.0" leading="13"/>
+    <paraStyle name="P4a" rightIndent="-29.0" leftIndent="0.0" fontName="Courier" fontSize="10.0" leading="0" alignment="RIGHT"/>
+    <paraStyle name="P5" rightIndent="-29.0" leftIndent="0.0" fontName="Courier" fontSize="9.0" leading="11"/>
+    <paraStyle name="P6" rightIndent="-29.0" leftIndent="0.0" fontName="Times-Roman" fontSize="8.0" leading="10"/>
+    <paraStyle name="P7" fontName="Times-Roman" alignment="LEFT" leading="11" spaceBefore="1.0" spaceAfter="1.0"/>
+    <paraStyle name="P7b" fontName="Times-Roman" alignment="CENTER" leading="11" spaceBefore="1.0" spaceAfter="1.0"/>
+    <paraStyle name="P8" fontName="Courier-Bold" fontSize="8.0" leading="10" alignment="CENTER"/>
+    <paraStyle name="P9" fontName="Courier-Bold" fontSize="8.0" leading="10" alignment="LEFT"/>
+    <paraStyle name="P10" rightIndent="0.0" leftIndent="0.0" fontName="Courier-Bold" fontSize="8.0" leading="10" alignment="LEFT"/>
+    <paraStyle name="P11" rightIndent="-29.0" leftIndent="0.0" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="LEFT"/>
+    <paraStyle name="P12" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="LEFT"/>
+    <paraStyle name="P13" rightIndent="-29.0" leftIndent="0.0" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="LEFT"/>
+    <paraStyle name="P14" rightIndent="-29.0" leftIndent="0.0" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="LEFT"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman"/>
+    <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER"/>
+    <paraStyle name="Caption" fontName="Times-Roman" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+  </stylesheet>
+  <story>
+
+    <para style="P1">[[repeatIn(get_followsheet_2(objects),'o') ]]</para>
+
+    <blockTable colWidths="10.0,100.0,35.0,40.0,60.0,60.0,73.0,60.0,73.0,73.0,100.0" style="Table1" repeatRows="3">
+
+      <!--<tr>
+       <td>
+    <!--    <blockTable colWidths="318.0" style="Table5" repeatRows="1">
+		<tr>
+			<td>
+				<para style="P4">Page number: [[ o[0] ]]</para>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<para style="P4">Date: [[ o[2] ]]</para>
+			</td>
+		</tr>
+		</blockTable-->
+		</td>
+      </tr> -->
+      <tr>
+        <td>
+          <para style="P7">U</para>
+        </td>
+        <td>
+          <para style="P7">Rapport</para>
+        </td>
+        <td>
+          <para style="P7">N° </para>
+        </td>
+        <td>
+          <para style="P7">Matière</para>
+        </td>
+         <td>
+          <para style="P7">Début</para>
+        </td>
+        <td>
+          <para style="P7">Limite </para>
+        </td>
+        <td>
+          <para style="P7b">Remarque</para>
+        </td>
+        <td>
+          <para style="P7">Clôture </para>
+        </td>
+        <td>
+          <para style="P7">Résultat</para>
+        </td>
+
+        <td>
+          <para style="P7">Set-Up</para>
+        </td>
+        <td>
+          <para style="P7">Sauvegarde</para>
+        </td>
+      </tr>
+      <tr>
+     	 <td>
+      	   <para style="P111">[[ repeatIn (get_request_c(o[1]),'f')]]</para>
+       	   <para style="P111">[[ get_urgent_c(o[1],f) ]]</para>
+       	</td>
+       	<td>
+        	  <para style="P111">[[ get_report_type_c(o[1],f) ]]</para>
+       	</td>
+        <td>
+           <para style="P111">[[get_code_c(o[1], f)]]</para>
+        </td>
+        <td>
+           <para style="P111">[[get_material_c(o[1],f)]]</para>
+       	</td>
+       <td>
+          <para style="P111">[[ (get_begining_date_c(o[1],f) and (time.strftime('%d/%m/%Y', time.strptime(get_begining_date_c(o[1] , f), '%Y-%m-%d'))))  or '' ]]</para>
+        </td>
+        <td>
+             <para style="P111">[[(get_date_limit_c(o[1],f) and (time.strftime('%d/%m/%Y', time.strptime(get_date_limit_c(o[1] , f), '%Y-%m-%d'))))  or ''  ]]</para>
+        </td>
+    	<td>
+       		<para style="P111">[[ get_notice_c(o[1], f) ]]</para>
+        </td>
+        <td>
+           <para style="P111">[[ (get_date_closed_c(o[1],f) and (time.strftime('%d/%m/%Y', time.strptime(get_date_closed_c(o[1] , f), '%Y-%m-%d'))))  or '' ]]</para>
+        </td>
+        <td>
+            <para style="P111">[[ get_res_c(o[1], f) ]]</para>
+        </td>
+        <td>
+           <para style="P111">[[ct_c(o[1],f)]]</para>
+        </td>
+        <td>
+           <para style="P111">[[ get_request_name_c(o[1],f)]]</para>
+        </td>
+      </tr>
+      <!--tr>
+      <td>
+		</td>
+      </tr-->
+    </blockTable>
+       <blockTable colWidths="120.0, 465.0,100.0" style="Table4" >
+		<tr>
+			<td>
+				<para style="P4">Date: [[ o[2] and time.strftime('%d/%m/%Y', time.strptime(o[2] , '%Y-%m-%d'))  or '' ]]</para>
+			</td>
+			<td></td>
+			<td>
+				<para style="P4">Page number: [[ o[0] ]]</para>
+			</td>
+		</tr>
+
+		</blockTable>
+
+  </story>
+</document>
+

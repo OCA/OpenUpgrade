@@ -503,6 +503,14 @@ class dm_campaign(osv.osv):#{{{
                             'action_time': time.strftime("%Y-%m-%d %H:%M:%S")})
                         print "created wi :",res
 
+        ''' Check for mail service for each offer step of a campaign '''
+        for step in camp.offer_id.step_ids:
+            mail_service = self.pool.get('dm.campaign.mail_service').search(cr, uid, [('offer_step_id','=',step.id)])
+            if not mail_service:
+                raise osv.except_osv(
+                _('Could not open this Campaign'),
+                _('Assign a Mail Service for "%s".'%step.name))
+
         self.write(cr, uid, ids, {'state':'open','planning_state':'inprogress'})
 
         ''' create offer history'''
@@ -2134,7 +2142,13 @@ class sale_order(osv.osv):#{{{
     _inherit="sale.order"
     _columns = {
         'offer_step_id': fields.many2one('dm.offer.step','Offer Step'),
+        'segment_id' : fields.many2one('dm.campaign.proposition.segment','Segment'),
         'journal_id': fields.many2one('account.journal', 'Journal'),
+        'lines_number' : fields.integer('Number of sale order lines'),
+        'so_confirm_do' : fields.boolean('Auto confirm sale order'),
+        'invoice_create_do' : fields.boolean('Auto create invoice'),
+        'invoice_validate_do' : fields.boolean('Auto validate invoice'),
+        'invoice_pay_do' : fields.boolean('Auto pay invoice'),
     }
     
 sale_order()#}}}

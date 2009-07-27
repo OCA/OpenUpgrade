@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    <menuitem name="Reporting" id="menu_dm_report" parent="dm.menu_dm"  sequence="0"/>
+
+
+        <report auto="False" id="report_order_qty_offer_step" menu="False" model="dm.offer" name="dm.order.quantity.offer.steps" string="Order Qunatity Offer Step" xsl="report_dm/report/order_qty_offer_steps.xsl"/>        
+        <wizard id="wizard_order_quantity_offer_steps" menu="False" model="dm.offer" name="dm.order.quantity.offer.steps" string="Order quantity per Offer Steps"/>
+    <menuitem icon="STOCK_PRINT" action="wizard_order_quantity_offer_steps" id="menu_order_quantity_offer_steps" parent="menu_dm_report" type="wizard"/>
+
+
+
+        <report auto="False" id="report_order_amt_offer_step" menu="False" model="dm.offer" name="dm.order.amount.offer.steps" string="Income per Offer Steps" xsl="report_dm/report/order_amt_offer_steps.xsl"/>        
+        <wizard id="wizard_order_amount_offer_steps" menu="False" model="dm.offer" name="dm.order.amount.offer.steps" string="Income per Offer Steps"/>
+    <menuitem icon="STOCK_PRINT" action="wizard_order_amount_offer_steps" id="menu_order_amount_offer_steps" parent="menu_dm_report" type="wizard"/>
+
+
+    </data>
+</openerp>

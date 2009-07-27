@@ -207,6 +207,9 @@ class JournalPeriod(osv.osv):
     _columns = {
         'company_id' : fields.many2one('res.company', 'Company')
     }
+    _defaults = {
+        'company_id': lambda self,cr,uid,c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
+    }
 JournalPeriod()
 
 class account_invoice(osv.osv):

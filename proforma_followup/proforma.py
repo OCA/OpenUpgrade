@@ -61,7 +61,7 @@ class proforma_followup_action(osv.osv):
     ]
 
     _sql_constraints = [
-        ('sequence_uniq', 'uniq(sequence)', 'You can not have two actions at the same step'),
+        ('sequence_uniq', 'unique(sequence)', 'You can not have two actions at the same step'),
     ]
 
 proforma_followup_action()
