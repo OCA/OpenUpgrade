@@ -88,11 +88,11 @@ def _tz_get(self, cr, uid, data, context={}):
         return 'synch'
     else:
         return 'timezone'
-    
+
 visibility_list = {
             'PRIVATE': 'private',
             'DEFAULT': 'default',
-            'PUBLIC': 'public'       
+            'PUBLIC': 'public'
             }
 
 def _get_privacy(self, privacy):
@@ -242,23 +242,18 @@ class google_calendar_wizard(wizard.interface):
     def _synch_events(self, cr, uid, data, context={}):
 #        To do import:
 #            - Retrieving events for a specified date range
-#            - more attribute can be added if possible on event.event
-#            - open summary window after finish importing
 #            - delete events
 
 #         To do export:
-#            1. using proxy connect
-#            2. open summary window after finish exporting
-#            3. multiple location of events
-#            4. delete events
+#            1. multiple location of events
+#            2. delete events
 
         obj_user = pooler.get_pool(cr.dbname).get('res.users')
         product = pooler.get_pool(cr.dbname).get('product.product').search(cr, uid, [('name', 'like', 'Calendar Product')])
         google_auth_details = obj_user.browse(cr, uid, uid)
         obj_event = pooler.get_pool(cr.dbname).get('event.event')
         if not google_auth_details.google_email or not google_auth_details.google_password:
-            raise osv.except_osv('Warning !',
-                                 'Please Enter google email id and password in users')
+            raise osv.except_osv('Warning !', 'Please Enter google email id and password in users')
         if 'tz' in context and context['tz']:
             time_zone = context['tz']
         else:
@@ -268,7 +263,7 @@ class google_calendar_wizard(wizard.interface):
         self.calendar_service = gdata.calendar.service.CalendarService()
         self.calendar_service.email = google_auth_details.google_email
         self.calendar_service.password = google_auth_details.google_password
-        self.calendar_service.source = 'Tiny'
+        self.calendar_service.source = 'Tiny Event'
         self.calendar_service.ProgrammaticLogin()
         tiny_events = obj_event.search(cr, uid, [])
         location = ''
@@ -284,7 +279,7 @@ class google_calendar_wizard(wizard.interface):
         feed = self.calendar_service.GetCalendarEventFeed()
         tiny_event_dict = {}
         summary_dict = {}
-        keys = ['Event Created In Tiny', 'Event Modified In Tiny', 'Event Created In Google', 'Event Modified In Google', 'Error in Event While try to modify in Google', 'Error in Event While try to modify in Tiny', 'Error in Event While try to create in Tiny']
+        keys = ['Event Created In Tiny', 'Event Modified In Tiny', 'Event Created In Google', 'Event Modified In Google', 'Error in Event While try to modify in Google']
         map(lambda key:summary_dict.setdefault(key, 0), keys)
         request_feed = gdata.calendar.CalendarEventFeed()
         event_ids = []
@@ -322,21 +317,19 @@ class google_calendar_wizard(wizard.interface):
                     an_event.content.text = event.name
                     an_event.where.insert(0, gdata.calendar.Where(value_string=location))
                     time_format = "%Y-%m-%d %H:%M:%S"
-                    # convert event start date into gmtime format
-
-                    # can be moved to else part...
-                    timestring = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(event.date_begin, "%Y-%m-%d %H:%M:%S"))))
-                    starttime = time.strptime(timestring, time_format)
-                    start_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', starttime)
-                    # convert event end date into gmtime format
-                    timestring_end = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(event.date_end, "%Y-%m-%d %H:%M:%S"))))
-                    endtime = time.strptime(timestring_end, time_format)
-                    end_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', endtime) 
-
                     if an_event and not an_event.when:# Fix me
                         # recurrence value should be modified here to fix
                         summary_dict['Error in Event While try to modify in Google'] += 1
                     else:
+                        # convert event start date into gmtime format
+                        timestring = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(event.date_begin, "%Y-%m-%d %H:%M:%S"))))
+                        starttime = time.strptime(timestring, time_format)
+                        start_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', starttime)
+                        # convert event end date into gmtime format
+                        timestring_end = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(event.date_end, "%Y-%m-%d %H:%M:%S"))))
+                        endtime = time.strptime(timestring_end, time_format)
+                        end_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', endtime)
+
                         an_event.when[0].start_time = start_time
                         an_event.when[0].end_time = end_time
                         an_event.batch_id = gdata.BatchId(text='update-request')
@@ -379,14 +372,13 @@ class google_calendar_wizard(wizard.interface):
                         stime = an_event.when[0].start_time
                         etime = an_event.when[0].end_time
                         timestring, timestring_end = _get_tinydates(self, an_event.when[0].start_time, an_event.when[0].end_time)
-                    privacy = _get_privacy(self, an_event.visibility.value)
                     val = {
                        'name': name_event,
                        'date_begin': timestring,
                        'date_end': timestring_end,
                        'event_modify_date': timestring_update,
                        'repeat_status': repeat_status or 'norepeat',
-                       'privacy': privacy or 'public',
+                       'privacy': _get_privacy(self, an_event.visibility.value),
                        'email': ', '.join(map(lambda x: x.name, an_event.who))
                        }
                     obj_event.write(cr, uid, [event.id], val)
@@ -428,7 +420,6 @@ class google_calendar_wizard(wizard.interface):
                 else:
                     repeat_status = 'norepeat'
                     timestring, timestring_end = _get_tinydates(self, an_event.when[0].start_time, an_event.when[0].end_time)
-                privacy = _get_privacy(self, an_event.visibility.value)
                 val = {
                    'name': name_event,
                    'date_begin': timestring,
@@ -437,12 +428,12 @@ class google_calendar_wizard(wizard.interface):
                    'google_event_id': an_event.id.text,
                    'event_modify_date': timestring_update,
                    'repeat_status': repeat_status or 'norepeat',
-                   'privacy': privacy or 'public',
+                   'privacy': _get_privacy(self, an_event.visibility.value),
                    'email': ', '.join(map(lambda x: x.name, an_event.who))
                     }
                 obj_event.create(cr, uid, val)
                 summary_dict['Event Created In Tiny'] += 1
-                
+
         response_up_feed = self.calendar_service.ExecuteBatch(request_up_feed, gdata.calendar.service.DEFAULT_BATCH_URL)
         final_summary = '************Summary************ \n'
         for sum in summary_dict:
@@ -457,17 +448,14 @@ class google_calendar_wizard(wizard.interface):
             'actions': [],
             'result': {'type': 'form', 'arch': _google_form, 'fields': _google_fields, 'state': [('end', 'Cancel'),('tz', 'Synchronize')]}
         },
-
         'tz': {
             'actions': [],
             'result': {'type': 'choice', 'next_state': _tz_get }
             },
-
         'timezone': {
             'actions': [],
             'result': {'type': 'form', 'arch': _timezone_form, 'fields': _timezone_fields, 'state': [('synch', 'Synchronize')]}
         },
-
         'synch': {
             'actions': [_synch_events],
             'result': {'type': 'form', 'arch': _summary_form, 'fields': _summary_fields, 'state': [('end', 'Ok')]}
