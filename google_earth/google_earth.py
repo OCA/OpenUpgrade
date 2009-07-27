@@ -415,11 +415,16 @@ class res_country(osv.osv):
     _description = 'Country'
 
     def get_kml(self, cr, uid, context={}):
-        res = res_inv = res_cus = {}
+        res = {}
+        res_inv = {}
+        res_cus = {}
         address = ' '
-        coordinates = addresslist = country_list = []
+        coordinates = []
+        addresslist = []
+        country_list = []
         coordinates_text = ' '
-        number_customer = number_supplier = 0
+        number_customer = 0
+        number_supplier = 0
         colors = ['9f8080ff', '9f0000ff']
         partner_obj = self.pool.get('res.partner')
         address_obj= self.pool.get('res.partner.address')
@@ -527,7 +532,6 @@ class res_country(osv.osv):
             child_dict['desc'] = master_dict['desc']
             child_dict['address'] = address
             list_data.append(child_dict)
-
         text = '============================= \n Light Red - Low Turnover \n Dart Red - High Turnover \n ============================='
         parent_element = []
         parent_element.append('Country Wise Turnover')
@@ -564,7 +568,8 @@ class res_partner(osv.osv):
         partner_data = partner_obj.browse(cr, uid, partner_ids, context)
         address_obj= self.pool.get('res.partner.address')
         res = {}
-        number_customer_inv = number_supplier_inv = 0
+        number_customer_inv = 0
+        number_supplier_inv = 0
         cr.execute(''' select count(i.id),i.type, i.partner_id from account_invoice as i left join res_partner_address as a on i.partner_id=a.partner_id where i.type in ('out_invoice','in_invoice') group by i.type, i.partner_id ''')
         invoice_partner = cr.fetchall()
 
@@ -576,11 +581,13 @@ class res_partner(osv.osv):
             res[partner_id] = turnover
 
         line = '<font color="blue">--------------------------------------------</font>'
-        parent_element = list_data = []
+        parent_element = []
+        list_data = []
         parent_element.append('partners')
         parent_element.append('You can see Partner Information (Name, Code, Type, Partner Address, Turnover Partner, ....., Website) by clicking Partner')
         for part in partner_data:
-            child_dict = master_dict = {}
+            child_dict = {}
+            master_dict = {}
             partner_id = part.id
             address = ''
             mul_address = partner_obj.address_get(cr, uid, [part.id], adr_pref=['default', 'contact', 'invoice', 'delivery'])
