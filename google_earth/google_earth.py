@@ -19,15 +19,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import os, xml, string, sys
+import os
+import xml
+import string
 import urllib
-from lxml import etree
 import base64
+from lxml import etree
 
 from google.directions import GoogleDirections
 
-from osv import fields, osv
 import tools
+from osv import fields, osv
 
 def _to_unicode(self, s):
     try:
@@ -92,7 +94,7 @@ class google_map(osv.osv):
                 'models': ['res.country', 'res.partner', 'stock.move'], 'refresh_interval': 1}
         return self.get_networklink_kml(cr, uid, data=data, context=context)
 
-    def add_network_link(self, cr, uid, url, data, context):
+    def add_network_link(self, cr, uid, url, data, context={}):
         folderNetworkLinkElement = etree.Element('NetworkLink')
         networknameElement = etree.Element('name')
         networknameElement.text = 'Dynamic data'
@@ -135,7 +137,7 @@ class google_map(osv.osv):
         networkLinkElement.append(linkrefreshVisibilityElement)
         return folderNetworkLinkElement
 
-    def get_networklink_kml(self, cr, uid, data, context):
+    def get_networklink_kml(self, cr, uid, data, context={}):
         '''
         data = {'view_refresh_time': 1, 'refresh_mode': 'onInterval',
                 'view_refresh_mode': 'onStop', 'path': 'http://yourserver.com:port/kml/',
@@ -168,7 +170,7 @@ class google_map(osv.osv):
         kmlElement.append(folderElement)
         return etree.tostring(kmlElement, encoding="UTF-8", xml_declaration=True, pretty_print = True)
 
-    def get_country_boundries(self, cr, uid, country_list, context):
+    def get_country_boundries(self, cr, uid, country_list, context={}):
         '''
         This function return boundries (coordinates) of all countries specified in
         country list by reading test.kml
@@ -197,7 +199,7 @@ class google_map(osv.osv):
                             dict_country[value_name] = value_cord
         return dict_country
 
-    def get_placemark_kml(self, cr, uid, parent_element, datas, datas_country, context):
+    def get_placemark_kml(self, cr, uid, parent_element, datas, datas_country, context={}):
         '''
         parent_element = [name, description]
         datas = [{'name': 'partnername', 'address': 'Address of partner' 'desc': {'desc1': 'value1', 'desc2': 'value2', 'desc3': 'value3', .......}}
@@ -256,7 +258,7 @@ class google_map(osv.osv):
 
         return etree.tostring(kml_root, encoding="UTF-8", xml_declaration=True, pretty_print = False)
 
-    def get_direction_kml(self, cr, uid, parent_element, datas, context):
+    def get_direction_kml(self, cr, uid, parent_element, datas, context={}):
         '''
         parent_element = [name, description]
         datas = [{'color': 'ff000080', 'source_city': 'Belgium', 'destination_city': 'Berlin', 'desc': {'desc1': 'value1', 'desc2': 'value2', 'desc3': 'value3', .......}}
@@ -314,7 +316,13 @@ class stock_move(osv.osv):
         colors = ['ff000080','ff800000','ff800080','ff808000','ff8080ff','ff80ff80','ffff8080','ffFACE87','ff1E69D','ff87B8DE', 'ff000000']
         warehouse_obj = self.pool.get('stock.warehouse')
         # fix me: sale_id is not null..we must have to create sale order!
-        cr.execute('select sp.warehouse_id, sum(m.product_qty) as product_send, count(s.id) as number_delivery,a.city as customer_city, cc.name as customer_country from stock_picking as s left join sale_order as so on s.sale_id=so.id left join sale_shop as sp on so.shop_id=sp.id left join stock_warehouse as w on w.id=sp.warehouse_id left join stock_move as m on s.id=m.picking_id left join res_partner_address as a on a.id=s.address_id  left join res_partner as p on p.id=a.partner_id left join res_country as cc on a.country_id=cc.id where sale_id is not null and a.city is not null and cc.name is not null group by a.city,cc.name,sp.warehouse_id')
+        cr.execute('select sp.warehouse_id, sum(m.product_qty) as product_send, count(s.id) as number_delivery,a.city as customer_city, cc.name as customer_country  \
+                    from stock_picking as s left join sale_order as so on s.sale_id=so.id \
+                    left join sale_shop as sp on so.shop_id=sp.id left join stock_warehouse as w on w.id=sp.warehouse_id  \
+                    left join stock_move as m on s.id=m.picking_id left join res_partner_address as a on a.id=s.address_id  \
+                    left join res_partner as p on p.id=a.partner_id left join res_country as cc on a.country_id=cc.id  \
+                    where sale_id is not null and a.city is not null and cc.name is not null \
+                    group by a.city,cc.name,sp.warehouse_id')
         packings = cr.dictfetchall()
         warehouse_ids = warehouse_obj.search(cr, uid, [])
         warehouse_datas = warehouse_obj.browse(cr, uid, warehouse_ids)
@@ -407,16 +415,11 @@ class res_country(osv.osv):
     _description = 'Country'
 
     def get_kml(self, cr, uid, context={}):
-        res = {}
-        res_inv = {}
-        res_cus = {}
+        res = res_inv = res_cus = {}
         address = ' '
-        coordinates = []
-        addresslist = []
-        country_list = []
+        coordinates = addresslist = country_list = []
         coordinates_text = ' '
-        number_customer=0
-        number_supplier=0
+        number_customer = number_supplier = 0
         colors = ['9f8080ff', '9f0000ff']
         partner_obj = self.pool.get('res.partner')
         address_obj= self.pool.get('res.partner.address')
@@ -487,7 +490,7 @@ class res_country(osv.osv):
                 add = address_obj.browse(cr, uid, par_address_id, context)
 
             cntry_name = add.country_id.name
-            if cntry_name and not cntry_name.find('&')== '-1':
+            if cntry_name and not cntry_name.find('&') == '-1':
                 cntry_name = cntry_name.replace('&','and')
             if cntry_name == "Afghanistan, Islamic State of":
                 cntry_name = 'Afghanistan'
@@ -515,7 +518,6 @@ class res_country(osv.osv):
                 type += 'Supplier'
                 number_supplier += 1
 
-            # This geocodes the address and adds it to a <Point> element.
             child_dict['name'] = part.name
             master_dict['desc'] = {' Partner Name ': _to_unicode(self, part.name), ' Partner Code ': str(part.ref or '') , \
                                    ' Type: ': type, ' Partner Address ': _to_unicode(self, address), ' Turnover of partner: ':str(res[part.id]), \
@@ -562,8 +564,7 @@ class res_partner(osv.osv):
         partner_data = partner_obj.browse(cr, uid, partner_ids, context)
         address_obj= self.pool.get('res.partner.address')
         res = {}
-        number_customer_inv=0
-        number_supplier_inv=0
+        number_customer_inv = number_supplier_inv = 0
         cr.execute(''' select count(i.id),i.type, i.partner_id from account_invoice as i left join res_partner_address as a on i.partner_id=a.partner_id where i.type in ('out_invoice','in_invoice') group by i.type, i.partner_id ''')
         invoice_partner = cr.fetchall()
 
@@ -575,13 +576,11 @@ class res_partner(osv.osv):
             res[partner_id] = turnover
 
         line = '<font color="blue">--------------------------------------------</font>'
-        parent_element = []
+        parent_element = list_data = []
         parent_element.append('partners')
         parent_element.append('You can see Partner Information (Name, Code, Type, Partner Address, Turnover Partner, ....., Website) by clicking Partner')
-        list_data = []
         for part in partner_data:
-            child_dict = {}
-            master_dict = {}
+            child_dict = master_dict = {}
             partner_id = part.id
             address = ''
             mul_address = partner_obj.address_get(cr, uid, [part.id], adr_pref=['default', 'contact', 'invoice', 'delivery'])
@@ -616,7 +615,6 @@ class res_partner(osv.osv):
                 if partner[1] == 'in_invoice' and partner[2] == partner_id:
                     number_supplier_inv = partner[0]
 
-            # This geocodes the address and adds it to a <Point> element.
             child_dict['name'] = part.name
             master_dict['desc'] = {'Partner Name': _to_unicode(self, part.name), 'Partner Code': str(part.ref or '') , \
                                    'Type:': type, 'Partner Address': _to_unicode(self, address), 'Turnover of partner:':str(res[part.id]), \
@@ -626,7 +624,6 @@ class res_partner(osv.osv):
             child_dict['desc'] = master_dict['desc']
             child_dict['address'] = address
             list_data.append(child_dict)
-            # This writes the KML Document to a file.
         return self.pool.get('google.map').get_placemark_kml(cr, uid, parent_element, list_data, [], context)#.encode('utf-8')
 
 res_partner()

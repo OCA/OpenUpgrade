@@ -55,7 +55,6 @@ def _create_kml(self, cr, uid, data, context={}):
     return {'kml_file': out, 'name': fname}
 
 class delivery_route(wizard.interface):
-
     states = {
        'init': {
             'actions': [_create_kml],

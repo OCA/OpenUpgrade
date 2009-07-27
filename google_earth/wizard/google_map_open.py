@@ -33,7 +33,7 @@ _earth_form =  '''<?xml version="1.0"?>
 
 _earth_fields = {
     'path': {'string': 'Path (URL)', 'type': 'char', 'readonly': False , 'default': lambda *x: 'http://maps.google.com/maps?q=http://yourserver.com:port/kml'
-             , 'required': True, 'size':128, 'help':'URL for e.g: http://yourserver:port/kml/'},
+             , 'required': True, 'size':128, 'help':'URL for e.g: http://maps.google.com/maps?q=http://yourserver:port/kml/'},
     'map_model':{
         'string':"Map For",
         'type':'selection',

@@ -42,7 +42,7 @@ _earth_form =  '''<?xml version="1.0"?>
 
 _earth_fields = {
     'path': {'string': 'Path (URL)', 'type': 'char', 'readonly': False , 'default': lambda *x: 'http://yourserver.com:port/kml/'
-             , 'required': True, 'size':64, 'help':'URL for e.g: http://yourserver:port/kml/'},
+             , 'required': True, 'size':128, 'help':'URL for e.g: http://yourserver:port/kml/'},
     'partner_select': {'string':'Partner', 'type': 'boolean', 'help':'KML with All Details of partners'},
     'country_select': {'string':'Country', 'type': 'boolean', 'help':'KML with All Details of partners and its country'},
     'route_select': {'string':'Delivery route', 'type': 'boolean', 'help':'Delivery route kml'},
@@ -79,13 +79,13 @@ _kml_fields = {
             }
 
 _summary_form = '''<?xml version="1.0"?>
-        <form string="Summary">
+        <form string="Upload to google earth">
             <field name="summary" nolabel="1" height="200" width="300" />
         </form> '''
 
 _summary_fields = {
             'summary': {'string': 'Summary', 'type': 'text', 'required': False, 'readonly': True,
-                        'default': lambda *a: '''You can now upload this kml file on google Earth by Add/Networklink menu You will get refresh data (time specified in refresh interval), And you can also upload this kml to google map but refreshment of data might be not working google map'''},
+                        'default': lambda *a: '''You can now upload this kml file on google Earth by Add/Networklink menu You will get refresh data (time specified in refresh interval), And you can also upload this kml to google map but refreshment of data might be not working with google map'''},
         }
 
 def _create_kml(self, cr, uid, data, context={}):

@@ -19,9 +19,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 import sys
-import os, xml, string
+import os
+import xml
+import string
 import base64
 
 import wizard
@@ -55,11 +56,11 @@ def create_kml(self, cr, uid, data, context={}):
 
 class customer_on_map(wizard.interface):
     states = {
-         'init': {
-            'actions': [create_kml],
-            'result': {'type': 'form', 'arch':_earth_form, 'fields':_earth_fields,  'state':[('end','Ok')]}
-                }
+     'init': {
+        'actions': [create_kml],
+        'result': {'type': 'form', 'arch':_earth_form, 'fields':_earth_fields,  'state':[('end','Ok')]}
             }
+        }
 customer_on_map('layers.region.catery')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
