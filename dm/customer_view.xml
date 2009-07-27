@@ -103,6 +103,9 @@
                 <field name="action_time" select="2"/>
                 <field name="is_global" select="2"/>
                 <field name="is_preview" select="2"/>
+                <group colspan="3" col="2">
+                <field name="use_prev_plugin_values"/>
+                </group>
             </form>
         </field>
     </record>

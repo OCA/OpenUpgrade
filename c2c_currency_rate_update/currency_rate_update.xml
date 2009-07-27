@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<openerp>   
+	<data>
+        <record model="ir.ui.view" id="currency_rate_update_tree">
+            <field name="name">Update Rates service</field>
+            <field name="model">currency.rate.update.service</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Rates">
+                    <field name="service"/>
+                    <field name="currency_to_update"/>
+                    <field name="company_id"/>
+
+                </tree>
+            </field>
+        </record>
+    
+        <record model="ir.ui.view" id="currency_rate_update_form">
+            <field name="name">Update Rates</field>
+            <field name="model">currency.rate.update.service</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Rate">
+                    <field name="service"/>
+                    <field name="company_id"/>
+                    <separator string="Currencies to update with this services" colspan="4"/>
+                    <field name="currency_to_update" colspan="4" nolabel="1"/>
+                    <separator string="note" colspan="4"/>
+                    <field name="note" colspan="4" nolabel="1"/>    
+                </form>
+            </field>
+        </record>
+        
+    <!--    <record model="ir.actions.act_window" id="open_currency_rate_update">
+            <field name="name">Update Rates</field>
+            <field name="res_model">currency.rate.update</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="currency_rate_update_tree"/>
+        </record>
+        
+        ###################################
+        # MENU
+        ###################################
+        <wizard string="Update Now" model="currency.rate.update" name="currency.rate.update" id="wizard_update_rate"/>
+        <menuitem name="Financial Management/Configuration/Update Rates" id="menu_currency_rate_update1" action="open_currency_rate_update"/> -->
+	</data>
+</openerp>

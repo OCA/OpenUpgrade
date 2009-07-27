@@ -29,6 +29,40 @@
 
             <!--
             =======================================================
+            WORKITEM EXTENSIONS
+            =======================================================
+            -->
+            <record id="view_dm_workitem_form_inherit" model="ir.ui.view">
+                <field name="name">dm.workitem.inherit</field>
+                <field name="model">dm.workitem</field>
+                <field name="type">form</field>
+                <field name="inherit_id" ref="dm.view_dm_workitem_form"/>
+                <field name="arch" type="xml">
+                    <field name="address_id" position="after">
+                                    <field name="case_id"/>
+                    </field>
+                </field>
+            </record>
+
+            <!--
+            =======================================================
+            CAMPAIGN DOCUMENT EXTENSIONS
+            =======================================================
+            -->
+            <record id="view_dm_campaign_document_form_inherit" model="ir.ui.view">
+                <field name="name">dm.campaign.document.inherit</field>
+                <field name="model">dm.campaign.document</field>
+                <field name="type">form</field>
+                <field name="inherit_id" ref="dm.view_dm_campaign_document_form"/>
+                <field name="arch" type="xml">
+                    <field name="address_id" position="after">
+                                    <field name="case_id"/>
+                    </field>
+                </field>
+            </record>
+
+            <!--
+            =======================================================
             EVENT CASE VIEWS
             =======================================================
             -->

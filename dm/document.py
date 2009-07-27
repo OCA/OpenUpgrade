@@ -32,10 +32,10 @@ class dm_dynamic_text(osv.osv): # {{{
     _name = 'dm.dynamic_text'
     _rec_name = 'content'
     _columns = {
-        'language_id' : fields.many2one('res.lang','Language',ondelete='cascade'),
+        'language_id' : fields.many2one('res.lang', 'Language', ondelete='cascade'),
         'gender_id' : fields.many2one('partner.gender', 'Gender'),
         'content' : fields.text('Content'),
-        'previous_step_id' : fields.many2one('dm.offer.step','Previous Step',ondelete='cascade'),
+        'previous_step_id' : fields.many2one('dm.offer.step', 'Previous Step', ondelete='cascade'),
         'ref_text_id' : fields.many2one('dm.dynamic_text', 'Reference Text'),
         }
 dm_dynamic_text() # }}}
@@ -61,7 +61,7 @@ class dm_dtp_plugin(osv.osv): # {{{
 
     def _data_get(self, cr, uid, ids, name, arg, context):
         result = {}
-        cr.execute('select id, file_fname from dm_dtp_plugin where id in ('+','.join(map(str, ids))+')')
+        cr.execute('select id, file_fname from dm_dtp_plugin where id in ('+', '.join(map(str, ids))+')')
         for id, r in cr.fetchall():
             try:
                 path = os.path.join(os.getcwd(), "addons/dm/dm_dtp_plugins", cr.dbname)
@@ -162,10 +162,11 @@ dm_document_template() # }}}
 class dm_plugins_value(osv.osv): # {{{
     _name = "dm.plugins.value"
     _columns = {
-        'address_id' : fields.many2one('res.partner.address', 'Customer Address', ondelete="cascade"),
+#        'address_id' : fields.many2one('res.partner.address', 'Customer Address', ondelete="cascade"),
+        'workitem_id' : fields.many2one('dm.workitem', 'Workitem', ondelete="cascade"),
         'plugin_id' : fields.many2one('dm.dtp.plugin', 'Plugin'),
-        'value' : fields.char('Value', size=64),
-        'date' : fields.date('Date'),
+        'value' : fields.text('Value'),
+#        'date' : fields.date('Date'),
     }
     
 dm_plugins_value() # }}}
@@ -285,11 +286,11 @@ class dm_campaign_document(osv.osv): # {{{
         'document_id' : fields.many2one('dm.offer.document','Document',ondelete="cascade"),
         'address_id' : fields.many2one('res.partner.address', 'Customer Address', select="1", ondelete="cascade"),
         'origin' : fields.char('Origin', size=64),
+        'wi_id' : fields.many2one('dm.workitem','Workitem'),
         }
     _defaults = {
         'state': lambda *a : 'pending',
-        }
-        
+       }
 dm_campaign_document() # }}}
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -24,18 +24,7 @@
 			<field name="view_id" ref="product.product_variant_form_view" />
 		</record>
 
-		<record id="product_template" model="ir.actions.act_window">
-			<field name="name">Product Templates</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">product.template</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-		</record>
-
-		<menuitem action="product_template" id="menu_template" parent="product.menu_products" />
-
-		<menuitem action="product_variant" id="menu_variant" parent="product.menu_products" />
-
+		<menuitem action="product_variant" id="menu_variant" parent="product.menu_products_products" sequence="3" />
 
 		<record model="ir.actions.act_window" id="action_dimension_type_form">
 			<field name="name">Types</field>

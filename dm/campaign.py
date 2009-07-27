@@ -503,6 +503,14 @@ class dm_campaign(osv.osv):#{{{
                             'action_time': time.strftime("%Y-%m-%d %H:%M:%S")})
                         print "created wi :",res
 
+        ''' Check for mail service for each offer step of a campaign '''
+        for step in camp.offer_id.step_ids:
+            mail_service = self.pool.get('dm.campaign.mail_service').search(cr, uid, [('offer_step_id','=',step.id)])
+            if not mail_service:
+                raise osv.except_osv(
+                _('Could not open this Campaign'),
+                _('Assign a Mail Service for "%s".'%step.name))
+
         self.write(cr, uid, ids, {'state':'open','planning_state':'inprogress'})
 
         ''' create offer history'''
@@ -624,7 +632,6 @@ class dm_campaign(osv.osv):#{{{
         return super(dm_campaign,self).write(cr, uid, ids, vals, context)
     
     def create(self,cr,uid,vals,context={}):
-
         type_id = self.pool.get('dm.campaign.type').search(cr, uid, [('code','=','model')])[0]
         if context.has_key('campaign_type') and context['campaign_type']=='model':
             vals['campaign_type_id']=type_id
@@ -714,14 +721,17 @@ class dm_campaign(osv.osv):#{{{
         return True
 
     def copy(self, cr, uid, id, default=None, context={}):
-        cmp_id = super(dm_campaign, self).copy(cr, uid, id, default, context=context)
-        data = self.browse(cr, uid, cmp_id, context)
-        if 'name' in default:
-            name_default=default['name']
-        else:
-            name_default='Copy of %s' % data.name
-        super(dm_campaign, self).write(cr, uid, cmp_id, {'name':name_default, 'date_start':0, 'date':0, 'project_id':0})
-        return cmp_id
+        if not default: default = {}
+        campaign_id = self.browse(cr, uid, id)
+        if not default.get('name', False):
+            default['name'] = 'Copy of ' +campaign_id.name
+        default.update({'date_start': False, 'date': False, 'project_id': False, 'proposition_ids': []})
+        camp_copy_id = super(dm_campaign, self).copy(cr, uid, id, default, context)
+        prop_ids = [x.id for x in campaign_id.proposition_ids]
+        for proposition in campaign_id.proposition_ids:
+            default = {'camp_id': camp_copy_id}
+            prop_copy = self.pool.get('dm.campaign.proposition').copy(cr, uid, proposition.id, default, context)
+        return camp_copy_id
 
     def unlink(self, cr, uid, ids, context={}):
         for campaign in self.browse(cr, uid, ids, context):
@@ -771,15 +781,19 @@ class dm_campaign_proposition(osv.osv):#{{{
         Function to duplicate segments only if 'keep_segments' is set to yes else not to duplicate segments
         """
         proposition_id = super(dm_campaign_proposition, self).copy(cr, uid, id, default, context=context)
+        if 'camp_id' in default and default['camp_id']:
+            self.write(cr, uid, proposition_id, {'camp_id' : default['camp_id']})
+
         data = self.browse(cr, uid, proposition_id, context)
-        default='Copy of %s' % data.name
-        super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'name':default, 'date_start':0, 'initial_proposition_id':id})
+        default_name='Copy of %s' % data.name
+        super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'name':default_name, 'date_start':False, 'initial_proposition_id':id})
+
         if data.keep_segments == False:
             l = []
             for i in data.segment_ids:
                  l.append(i.id)
                  self.pool.get('dm.campaign.proposition.segment').unlink(cr,uid,l)
-                 super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'segment_ids':[(6,0,[])]})
+                 self.write(cr, uid, proposition_id, {'segment_ids':[(6,0,[])]})
         
         """
         Function to duplicate products only if 'keep_prices' is set to yes else not to duplicate products
@@ -789,7 +803,7 @@ class dm_campaign_proposition(osv.osv):#{{{
             for i in data.item_ids:
                  l.append(i.id)
                  self.pool.get('dm.campaign.proposition.item').unlink(cr,uid,l)
-                 super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'item_ids':[(6,0,[])]})
+                 self.write(cr, uid, proposition_id, {'item_ids':[(6,0,[])]})
         return proposition_id
 
     def _proposition_code(self, cr, uid, ids, name, args, context={}):
@@ -1221,7 +1235,7 @@ class dm_campaign_proposition_item(osv.osv):#{{{
         'price' : fields.float('Sale Price'),
         'proposition_id': fields.many2one('dm.campaign.proposition', 'Commercial Proposition'),
         'item_type': fields.selection(AVAILABLE_ITEM_TYPES, 'Product Type', size=64),
-        'offer_step_type_id': fields.many2one('dm.offer.step.type','Offer Step Type'), 
+        'offer_step_id': fields.many2one('dm.offer.step','Offer Step Name'), 
         'notes' : fields.text('Notes'),
         'forecasted_yield' : fields.float('Forecasted Yield'),
     }
@@ -2128,7 +2142,13 @@ class sale_order(osv.osv):#{{{
     _inherit="sale.order"
     _columns = {
         'offer_step_id': fields.many2one('dm.offer.step','Offer Step'),
+        'segment_id' : fields.many2one('dm.campaign.proposition.segment','Segment'),
         'journal_id': fields.many2one('account.journal', 'Journal'),
+        'lines_number' : fields.integer('Number of sale order lines'),
+        'so_confirm_do' : fields.boolean('Auto confirm sale order'),
+        'invoice_create_do' : fields.boolean('Auto create invoice'),
+        'invoice_validate_do' : fields.boolean('Auto validate invoice'),
+        'invoice_pay_do' : fields.boolean('Auto pay invoice'),
     }
     
 sale_order()#}}}

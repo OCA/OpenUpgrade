@@ -1,0 +1,313 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="57.0" y1="57.0" width="481" height="728"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Courier" fontSize="10.0" leading="13"/>
+    <paraStyle name="P2" fontName="Times-Roman" fontSize="12.0" leading="15"/>
+    <paraStyle name="P3" fontName="Times-Roman" fontSize="11.0" leading="14"/>
+    <paraStyle name="P4" fontName="Times-Roman" fontSize="11.0" leading="14"/>
+    <paraStyle name="P5" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="CENTER"/>
+    <paraStyle name="P6" fontName="Times-Roman" fontSize="12.0" leading="15"/>
+    <paraStyle name="P7" fontName="Times-Roman"/>
+    <paraStyle name="P8" fontName="Times-Roman" fontSize="11.0" leading="14"/>
+    <paraStyle name="P9" rightIndent="156.0" leftIndent="156.0" fontName="Helvetica-Bold" fontSize="10.0" leading="13" alignment="CENTER"/>
+    <paraStyle name="P10" fontName="Helvetica-Bold" fontSize="10.0" leading="13" alignment="CENTER"/>
+    <paraStyle name="P11" fontName="Helvetica-Bold" fontSize="18.0" leading="22" alignment="CENTER"/>
+    <paraStyle name="P12" fontName="Helvetica-Bold" fontSize="13.0" leading="16" alignment="CENTER"/>
+    <paraStyle name="P13" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="CENTER"/>
+    <paraStyle name="P14" fontName="Times-Roman" fontSize="10.0" leading="13" alignment="LEFT"/>
+    <paraStyle name="P15" fontName="Helvetica-Bold" fontSize="10.0" leading="13" alignment="LEFT"/>
+    <paraStyle name="P16" fontName="Times-Roman"/>
+    <paraStyle name="P17" rightIndent="0.0" leftIndent="43.0" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="LEFT"/>
+    <paraStyle name="P18" fontName="Times-Roman" fontSize="12.0" leading="15"/>
+    <paraStyle name="P19" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="LEFT"/>
+    <paraStyle name="P20" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="LEFT"/>
+    <paraStyle name="P21" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="LEFT"/>
+    <paraStyle name="P22" rightIndent="0.0" leftIndent="0.0" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="LEFT"/>
+    <paraStyle name="P23" rightIndent="0.0" leftIndent="0.0" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="LEFT"/>
+    <paraStyle name="P24" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="LEFT"/>
+    <paraStyle name="P25" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="LEFT"/>
+    <paraStyle name="P26" rightIndent="0.0" leftIndent="0.0" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="LEFT"/>
+    <paraStyle name="P27" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="LEFT"/>
+    <paraStyle name="P28" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="LEFT"/>
+    <paraStyle name="P29" rightIndent="0.0" leftIndent="0.0" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="LEFT"/>
+    <paraStyle name="P30" fontName="Times-Roman" fontSize="10.0" leading="13" alignment="CENTER"/>
+    <paraStyle name="P31" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="CENTER"/>
+    <paraStyle name="P32" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="LEFT"/>
+    <paraStyle name="P33" fontName="Helvetica" fontSize="10.0" leading="13" alignment="CENTER"/>
+    <paraStyle name="P34" fontName="Times-Roman" fontSize="10.0" leading="13"/>
+    <paraStyle name="P35" fontName="Times-Roman" fontSize="12.0" leading="15"/>
+    <paraStyle name="P36" rightIndent="0.0" leftIndent="71.0" fontName="Times-Roman" fontSize="12.0" leading="15"/>
+    <paraStyle name="P37" rightIndent="0.0" leftIndent="71.0" fontName="Times-Roman" fontSize="10.0" leading="13"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="Heading 1" fontName="Times-Roman"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Header" fontName="Times-Roman" fontSize="10.0" leading="13"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman"/>
+    <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER"/>
+    <paraStyle name="Caption" fontName="Times-Italic" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+    <paraStyle name="Corps de texte 3" fontName="Times-Roman"/>
+  </stylesheet>
+  <story>
+    <para style="P1">[[repeatIn(objects,'o') ]]</para>
+    <para style="P1">[[repeatIn(o.sample_ids,'a') ]]</para>
+    <blockTable colWidths="166.0,167.0,168.0" style="Table1">
+      <tr>
+        <td>
+          <para style="P2">Le laboratoire :</para>
+          <para style="P3">Progenus s.a.</para>
+          <para style="P4">13 Avenue Maréchal Juin</para>
+          <para style="P4">5030 Gembloux</para>
+          <para style="P4">Tél : 081-616901</para>
+          <para style="P4">FAX : 081-601723</para>
+          <para style="Standard">
+            <font face="Times-Roman" size="11.0">e-mail : </font>
+            <font face="Times-Roman" size="11.0">info@progenus</font>
+            <font face="Times-Roman" size="11.0">.be</font>
+          </para>
+        </td>
+        <td>
+          <para style="P5">
+            <font color="white"> </font>
+          </para>
+          <para style="P6">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P7">Le client:</para>
+          <para style="P8">[[ o.ref_client and o.ref_client.name or False]]</para>
+          <para style="P8">[[o.ref_client and o.ref_client.address[0].street or False]]</para>
+          <para style="P8">[[o.ref_client and o.ref_client.address[0].zip or False]][[o.ref_client and o.ref_client.address[0] and o.ref_client.address[0].city or False]]</para>
+          <para style="P8">[[o.ref_client and o.ref_client.address[0].country_id or False]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P9">
+      <font color="white"> </font>
+    </para>
+    <para style="P9">
+      <font color="white"> </font>
+    </para>
+    <para style="P10">
+      <font color="white"> </font>
+    </para>
+    <para style="P10">
+      <font color="white"> </font>
+    </para>
+    <para style="P11">RAPPORT D’ESSAI</para>
+    <para style="P10">
+      <font color="white"> </font>
+    </para>
+    <para style="P10">
+      <font color="white"> </font>
+    </para>
+    <para style="P10">
+      <font color="white"> </font>
+    </para>
+    <para style="P12">N° : [[o.type_id.code or False]]/[[o.name or False]]</para>
+    <para style="P10">
+      <font color="white"> </font>
+    </para>
+    <para style="P10">
+      <font color="white"> </font>
+    </para>
+    <para style="P13">Ce rapport ne peut être reproduit même partiellement sans l’accord </para>
+    <para style="P13">écrit du laboratoire et ne concerne que les objets soumis à l’essai</para>
+    <para style="P14">
+      <font color="white"> </font>
+    </para>
+    <para style="P15">
+      <font color="white"> </font>
+    </para>
+    <para style="Standard">
+      <font face="Times-Roman" size="10.0">Object : </font>
+      <font face="Times-Roman" size="12.0">la caractérisation génétique de la sensibilité au stress (HLA-1843) sur des échantillons prélevés et fournis au Laboratoire sous la responsabilité du demandeur.</font>
+    </para>
+    <para style="P16">
+      <font color="white"> </font>
+    </para>
+    <para style="P17">
+      <font color="white"> </font>
+    </para>
+    <para style="P18">
+      <font face="Times-Roman" size="14.0">Description des échantillons reçus:</font>
+    </para>
+    <para style="P18">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="115.0,115.0,117.0,117.0" style="Table2">
+      <tr>
+        <td>
+          <para style="P19">Nombre d’échantillons reçus :</para>
+        </td>
+        <td>
+          <para style="P20">[[get_number(o)]]</para>
+        </td>
+        <td>
+          <para style="P21">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P21">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P19">Nature de l’échantillon:</para>
+        </td>
+        <td>
+          <para style="P20">[[get_nature(o)]] </para>
+        </td>
+        <td>
+          <para style="P19">Espèce :</para>
+        </td>
+        <td>
+          <para style="P20">[[get_kind(o)]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P22">Date de réception :</para>
+          <para style="P23">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P23">[[o.begining_date or False]]</para>
+        </td>
+        <td>
+          <para style="P24">Condition de l’échantillon :</para>
+        </td>
+        <td>
+          <para style="P25">[[get_cond_recept(o)]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P26"><font face="Times-Roman">Conditions de l’emballage</font> :</para>
+        </td>
+        <td>
+          <para style="P26">[[ get_cond_pack(o)]]</para>
+        </td>
+        <td>
+          <para style="P27">Condition de réception :</para>
+        </td>
+        <td>
+          <para style="P21">[[o.cond_reception or False]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P28"/>
+    <para style="P28">
+      <font color="white"> </font>
+    </para>
+    <para style="P28">
+      <font face="Times-Roman">Remarque : </font>
+    </para>
+    <para style="P26">[[o.desc_2 or False]]</para>
+    <para style="P29">
+      <font color="white"> </font>
+    </para>
+    <para style="P30">
+      <font face="Times-Roman" size="12.0"/>
+    </para>
+    <para style="P31">
+      <font color="white"> </font>
+    </para>
+    <para style="P31"/>
+    <para style="P32">
+      <font color="white"> .........</font>
+      <font color="white"> .........</font>
+    </para>
+    <para style="P32"><font face="Times-Roman"/><font face="Times-Roman">Résultats</font>:</para>
+    <para style="P32">
+      <font color="white"> </font>
+    </para>
+    <para style="P32">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="65.0,173.0" style="Table3">
+      <tr>
+        <td>
+          <para style="P33">NN</para>
+        </td>
+        <td>
+          <para style="P33">homozygous, no mutation</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P33">Nn</para>
+        </td>
+        <td>
+          <para style="P33">heterozygous, carrier</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P33">nn</para>
+        </td>
+        <td>
+          <para style="P33">homozygous, halothan positive</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P34">
+      <font color="white"> </font>
+    </para>
+    <para style="P35">
+      <font color="white"> </font>
+    </para>
+    <para style="P34">Fait en deux exemplaires à Gembloux le<font face="Times-Roman" size="10.0"/><font face="Times-Roman" size="10.0">[[time.strftime('%Y-%m-%d') ]]</font></para>
+    <para style="P18">
+      <font color="white"> </font>
+    </para>
+    <para style="P18">Signatures:</para>
+    <para style="P18">
+      <font color="white"> </font>
+    </para>
+    <para style="P36">Duterme Olivier</para>
+    <para style="P37">Responsable Scientifique</para>
+    <para style="P37">
+      <font color="white"> </font>
+    </para>
+    <para style="P37">
+      <font color="white"> </font>
+    </para>
+    <para style="P37">
+      <font color="white"> </font>
+    </para>
+  </story>
+</document>
+

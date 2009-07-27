@@ -274,8 +274,8 @@ class olap_schema(osv.osv ):
         if not len(ids):
             raise 'Schema not found !'
         schema = self.browse(cr,uid,ids[0],context)
-        warehouse = cube.warehouse()
-        find_table = warehouse.match_table(cr, uid, request, context)
+#        warehouse = cube.warehouse()
+#        find_table = warehouse.match_table(cr, uid, request, context)
         print 'Parsing MDX...'
         print '\t',request
         mdx_parser = cube.mdx_parser()
@@ -290,31 +290,32 @@ class olap_schema(osv.osv ):
         res_comp = self.pool.get('res.company').browse(cr,uid,res_comp)
         currency = res_comp[0].currency_id.name
         print " Default Currency",currency
-        
-        qry_obj = self.pool.get('olap.query.logs')
-        qry_id = qry_obj.search(cr, uid, [('query','=', request)])
-        
-        flag = True
-        if qry_id:
-            qry = qry_obj.browse(cr, uid, qry_id)[0]
-            
-            if qry.count >=3 and qry.table_name!='':
-                data = warehouse.run(currency, qry)
-                flag = False
-                qry.count = qry.count +1
-                qry_obj.write(cr, uid, qry_id, {'count': qry.count})
-            else:
-                data = mdx.run(currency)
-        else:
-            data = mdx.run(currency)
+        data = mdx.run(currency)
+#        qry_obj = self.pool.get('olap.query.logs')
+#        qry_id = qry_obj.search(cr, uid, [('query','=', request)])
+#        
+#        flag = True
+#        if qry_id:
+#            qry = qry_obj.browse(cr, uid, qry_id)[0]
+#            
+#            if qry.count >=3 and qry.table_name!='':
+#                data = warehouse.run(currency, qry)
+#                flag = False
+#                qry.count = qry.count +1
+#                qry_obj.write(cr, uid, qry_id, {'count': qry.count})
+#            else:
+#                data = mdx.run(currency)
+#        else:
+#            data = mdx.run(currency)
         print 'Running Done...'
         print 'Formatting Output...'
-        if cubex.query_log and flag:
+#        if cubex.query_log and flag:
+        if cubex.query_log:
             log = context.get('log')
             if log:
                 connection = schema.database_id.connection_url
-                warehouse.log(cr,uid,cubex,request,data,connection,context)
-#                mdx.log(cr,uid,cubex,request,context)
+#                warehouse.log(cr,uid,cubex,request,data,connection,context)
+                mdx.log(cr,uid,cubex,request,context)
         return cube.mdx_output(data)
 olap_schema()
 
@@ -751,7 +752,7 @@ class olap_query_logs(osv.osv):
         'cube_id': fields.many2one('olap.cube','Cube',required = True),
         'count': fields.integer('Count', readonly=True),
         'schema_id': fields.many2one('olap.schema','Schema',readonly = True),
-        'table_name': fields.char('Table Name', size=164, readonly = True),
+#        'table_name': fields.char('Table Name', size=164, readonly = True),
     }
     
     _defaults = {

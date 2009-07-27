@@ -28,11 +28,9 @@
             <field name="type">form</field>
             <field name="model">product.product</field>
             <field name="priority">2</field>
-            <field name="inherit_id" ref="product.product_normal_form_view" />
+            <field name="inherit_id" ref="stock.view_normal_stock_property_form" />
             <field name="arch" type="xml">
-                <field name="uom_po_id" position="after">
-                    <field name="qty_available" />
-                    <field name="virtual_available" />
+                <field name="virtual_available" position="after">
                     <field name="qty_dispo" />
                 </field>
             </field>

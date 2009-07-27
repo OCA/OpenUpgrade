@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>    
+    	<!-- Add a menu to open the timesheet status report -->
+        <wizard string="Timesheet Status" 
+                model="hr_timesheet_sheet.sheet" 
+                name="c2c_timesheet_reports.timesheet_status" 
+                id="wizard_timesheet_status" 
+                menu="False"
+        />
+        <menuitem
+			name="Human Resources/Reporting/Timesheet/Timesheets Status"
+			id="menu_wizard_timesheet_status"
+			action="wizard_timesheet_status"
+			type="wizard" />
+        
+        
+		<!-- Add a menu to configure the timesheet status reminder -->
+		<wizard
+			string="Timesheet Reminder Configuration"
+			model="c2c_timesheet_reports.reminder"
+			name="reminder_config"
+			menu="False"
+			id="wizard_reminder_config"
+		/>
+		<menuitem name="Human Resources/Configuration/Timesheet Reminder"
+			action="wizard_reminder_config"
+			type="wizard"
+			id="menu_reminder_config"/>        
+        
+    </data>
+</openerp>

@@ -1,0 +1,214 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* c2c_project_activities
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-04-20 09:53:30+0000\n"
+"PO-Revision-Date: 2009-04-20 09:53:30+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: c2c_project_activities
+#: model:project.activity_al,name:c2c_project_activities.activity_al_21
+msgid "Contract & claims (commercial negociations)"
+msgstr "Contrat et réclamation"
+
+#. module: c2c_project_activities
+#: model:project.activity_al,name:c2c_project_activities.activity_al_14
+#: model:project.activity_al,name:c2c_project_activities.activity_al_6
+msgid "Management"
+msgstr "Management"
+
+#. module: c2c_project_activities
+#: constraint:ir.model:0
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr "Le nom de l'objet doit commencer avec x_ et ne pas contenir de charactères spéciaux !"
+
+#. module: c2c_project_activities
+#: model:project.activity_al,name:c2c_project_activities.activity_al_17
+msgid "Meetings (internal)"
+msgstr "Rendez-vous interne"
+
+#. module: c2c_project_activities
+#: model:ir.ui.menu,name:c2c_project_activities.menu_activity_al_form
+msgid "Edit Project activity"
+msgstr "Edition des activités"
+
+#. module: c2c_project_activities
+#: model:project.activity_al,name:c2c_project_activities.activity_al_9
+msgid "Secretariat on administrative matters"
+msgstr Secrétariat""
+
+#. module: c2c_project_activities
+#: model:project.activity_al,name:c2c_project_activities.activity_al_8
+msgid "Secretariat for Management"
+msgstr "Secrétariat et management"
+
+#. module: c2c_project_activities
+#: model:ir.actions.act_window,name:c2c_project_activities.action_activity_tree
+#: model:ir.ui.menu,name:c2c_project_activities.menu_activity_al_tree
+msgid "Activity tree"
+msgstr "Arbre des activités"
+
+#. module: c2c_project_activities
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr "Modèle invalide"
+
+#. module: c2c_project_activities
+#: model:project.activity_al,name:c2c_project_activities.activity_al_3
+msgid "Training / Seminars"
+msgstr "Entrainement séminaire"
+
+#. module: c2c_project_activities
+#: model:project.activity_al,name:c2c_project_activities.activity_al_16
+msgid "Secretariat"
+msgstr "Secrétariat"
+
+#. module: c2c_project_activities
+#: model:project.activity_al,name:c2c_project_activities.activity_al_19
+msgid "Missions abroad"
+msgstr "Frais de missions"
+
+#. module: c2c_project_activities
+#: model:ir.actions.act_window,name:c2c_project_activities.action_activity_form
+#: model:ir.actions.act_window,name:c2c_project_activities.action_activity_list
+msgid "project.activity_al"
+msgstr "Activité de projet"
+
+#. module: c2c_project_activities
+#: model:ir.model,name:c2c_project_activities.model_project_activity_al
+#: model:ir.ui.menu,name:c2c_project_activities.menu_activity_al
+msgid "Project activity"
+msgstr "Activité de projet"
+
+#. module: c2c_project_activities
+#: view:hr_timesheet_sheet.sheet:0
+msgid "Timesheet"
+msgstr "Feuille de présence"
+
+#. module: c2c_project_activities
+#: field:project.activity_al,parent_id:0
+msgid "Parent activity"
+msgstr "Activité parente"
+
+#. module: c2c_project_activities
+#: field:project.activity_al,project_ids:0
+msgid "Concerned project"
+msgstr "Projet concerné"
+
+#. module: c2c_project_activities
+#: model:project.activity_al,name:c2c_project_activities.activity_al_20
+msgid "Periodic reports to client"
+msgstr "Rapport périodique"
+
+#. module: c2c_project_activities
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr "XML non valide pour l'architecture de la vue"
+
+#. module: c2c_project_activities
+#: field:project.activity_al,child_ids:0
+msgid "Childs Activity"
+msgstr "Activités enfants"
+
+#. module: c2c_project_activities
+#: model:project.activity_al,name:c2c_project_activities.activity_al_23
+msgid "Quality / Time / Cost Control"
+msgstr "Qualité"
+
+#. module: c2c_project_activities
+#: model:project.activity_al,name:c2c_project_activities.activity_al_5
+msgid "General Administration (économat, travaux, photocopies…)"
+msgstr "Admin. générale"
+
+#. module: c2c_project_activities
+#: view:account.analytic.account:0
+#: field:account.analytic.account,activity_ids:0
+msgid "Related activities"
+msgstr "Activités Liées"
+
+#. module: c2c_project_activities
+#: model:project.activity_al,name:c2c_project_activities.activity_al_18
+msgid "Meetings (with external partners)"
+msgstr "RDV"
+
+#. module: c2c_project_activities
+#: model:project.activity_al,name:c2c_project_activities.activity_al_15
+msgid "Procurement"
+msgstr "Procurement"
+
+#. module: c2c_project_activities
+#: model:project.activity_al,name:c2c_project_activities.activity_al_7
+msgid "Reception"
+msgstr "Réception"
+
+#. module: c2c_project_activities
+#: field:account.analytic.line,activity:0
+#: view:project.activity_al:0
+#: field:project.activity_al,name:0
+msgid "Activity"
+msgstr "Activité"
+
+#. module: c2c_project_activities
+#: model:project.activity_al,name:c2c_project_activities.activity_al_12
+msgid "Business Development"
+msgstr "Affaires"
+
+#. module: c2c_project_activities
+#: model:project.activity_al,name:c2c_project_activities.activity_al_10
+msgid "Travels"
+msgstr "Voyages"
+
+#. module: c2c_project_activities
+#: field:project.activity_al,code:0
+msgid "Code"
+msgstr "Code"
+
+#. module: c2c_project_activities
+#: model:project.activity_al,name:c2c_project_activities.activity_al_4
+msgid "Exhibitions"
+msgstr "Exhibitions"
+
+#. module: c2c_project_activities
+#: model:project.activity_al,name:c2c_project_activities.activity_al_11
+msgid "Communication"
+msgstr "Communication"
+
+#. module: c2c_project_activities
+#: model:ir.module.module,shortdesc:c2c_project_activities.module_name_translation
+msgid "Project activities"
+msgstr "Activités de projets"
+
+#. module: c2c_project_activities
+#: model:project.activity_al,name:c2c_project_activities.activity_al_1
+msgid "Meetings (internal or external)"
+msgstr "Meetings"
+
+#. module: c2c_project_activities
+#: view:account.analytic.line:0
+msgid "Total quantity"
+msgstr "Quantité totale"
+
+#. module: c2c_project_activities
+#: model:project.activity_al,name:c2c_project_activities.activity_al_22
+msgid "Planning"
+msgstr "Planning"
+
+#. module: c2c_project_activities
+#: model:project.activity_al,name:c2c_project_activities.activity_al_13
+msgid "Preparation of the offer & Negociation"
+msgstr "Préparation des offres"
+
+#. module: c2c_project_activities
+#: model:project.activity_al,name:c2c_project_activities.activity_al_2
+msgid "Standards - Procedures"
+msgstr "Standards et procédures"
+

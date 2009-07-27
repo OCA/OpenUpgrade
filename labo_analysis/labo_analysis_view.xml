@@ -1,0 +1,1499 @@
+<?xml version="1.0" ?>
+<terp>
+	<data>
+	<record id="product_category_2" model="product.category">
+		<field name="name">analysis</field>
+	</record>
+	<menuitem name="Progenus" groups="admin" id="menu_progenus"/>
+	<menuitem name="Progenus/Consult Analysis" groups="admin" id="menu_curr_year"/>
+	<menuitem name="Progenus/Samples" groups="admin" id="menu_progenus_samples"/>
+<!--	<menuitem name="Progenus/Labo Analysis" groups="admin" id="id_3"/>-->
+	<menuitem name="Progenus/Configuration" groups="admin"/>
+	=======================================================
+	Type
+	=======================================================
+	<record model="ir.ui.view" id="dog_doss_form" >
+		<field name="name">Dossier</field>
+		<field name="model">doss.dog</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Saint-Hubert Files">
+				<field name="name" select="1"/>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="dog_doss_tree" >
+		<field name="name">Dossier</field>
+		<field name="model">doss.dog</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Saint-Hubert Files">
+				<field name="name" select="1"/>
+			</tree>
+		</field>
+	</record>
+    ======================================================
+	Progenus/Labo Analysis/analysis type
+	=======================================================
+	<record model="ir.ui.view" id="labo_article_view_form" >
+		<field name="name">labo_article_view_form</field>
+		<field name="model">product.product</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Articles">
+				<field name="name" select="1"/>
+				<field name="categ_id" select="1"/>
+				<field name="list_price"/>
+				<field name="standard_price" />
+				<field colspan="4" name="taxes_id"/>
+			</form>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="labo_article_view_tree" >
+		<field name="name">labo_article_view_tree</field>
+		<field name="model">product.product</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<tree string="Articles">
+				<field name="name" select="1"/>
+				<field name="categ_id" select="1"/>
+				<field name="list_price"/>
+				<field name="standard_price" />
+			</tree>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_labo_analysis_type_form_view1">
+			<field name="name">labo.analysis.type_form</field>
+			<field name="model">labo.analysis.type</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Analysis type">
+					<field name="code" />
+					<field name="product_id" domain="[('categ_id','=',%(product_category_2)d)]" context="{'isarticleprod':True}" />
+					<field name="view_id" />
+				</form>
+			</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_labo_analysis_type_tree_view1">
+			<field name="name">labo.analysis.type_tree</field>
+			<field name="model">labo.analysis.type</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Analysis type">
+					<field name="code" />
+					<field name="product_id" />
+					<!--<field name="tool" />-->
+				</tree>
+			</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_labo_analysis_type_form_view">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">labo.analysis.type</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form,tree</field>
+		<field name="context">{'isarticleprod':True}</field>
+		<field name="view_id" ref="view_labo_analysis_type_tree_view1"/>
+	</record>
+	<menuitem name="Progenus/Configuration/Definition Type of Analysis" id="menu_action_labo_analysis_type_form_view" action="action_labo_analysis_type_form_view"/>
+	=======================================================
+	Request
+	=======================================================
+	Progenus/Labo Analysis/Analysis setup
+	=======================================================
+
+		<record model="ir.ui.view" id="view_labo_setup_form">
+			<field name="name">setup</field>
+			<field name="model">analysis.setup</field>
+			<field name="type">form</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			<form string="Labo file Information">
+				<field name="well"/>
+				<field name="set_up" select="1"/>
+				<field name="run_setup" colspan="4"/>
+				<field name="res" colspan="4"/>
+<!--				<field name="sample_id"/>-->
+			</form>
+		</field></record>
+
+		<record model="ir.ui.view" id="view_labo_setup_tree">
+			<field name="name">setup</field>
+			<field name="model">analysis.setup</field>
+			<field name="type">tree</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			<tree string="Labo file Information">
+				<field name="well"/>
+				<field name="set_up"/>
+				<field name="run_setup"/>
+				<field name="res"/>
+			</tree>
+		</field></record>
+
+		<record model="ir.actions.act_window" id="action_view_labo_setup_form">
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">analysis.setup</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_labo_setup_tree"/>
+		</record>
+
+		<menuitem name="Progenus/Configuration/Setup Pages" id="menu_action_view_analysis_view_an" action="action_view_labo_setup_form"/>
+        ========================
+        plate
+        ========================
+		<record model="ir.ui.view" id="view_labo_plate_form">
+			<field name="name">plate</field>
+			<field name="model">labo.plate</field>
+			<field name="type">form</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			<form string="Labo plate Information">
+				<field name="name"/>
+				<field name="date_p"/>
+			</form>
+		</field></record>
+
+		<record model="ir.ui.view" id="view_labo_plate_tree">
+			<field name="name">Extraction Plate</field>
+			<field name="model">labo.plate</field>
+			<field name="type">tree</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			<tree string="Labo plate Information">
+				<field name="name"/>
+				<field name="date_p"/>
+			</tree>
+		</field></record>
+		<record model="ir.actions.act_window" id="action_view_labo_plate_form">
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">labo.plate</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_labo_plate_tree"/>
+		</record>
+	=======================================================
+		Progenus/Labo Analysis/Labo setup
+	=======================================================
+
+		<record model="ir.ui.view" id="view_labo_etup_form">
+			<field name="name">Setup</field>
+			<field name="model">labo.setup</field>
+			<field name="type">form</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			<form string="Setup Page">
+				<field name="name"/>
+				<field name="date_s"/>
+			</form>
+		</field></record>
+
+		<record model="ir.ui.view" id="view_labo_etup_tree">
+			<field name="name">Setup</field>
+			<field name="model">labo.setup</field>
+			<field name="type">tree</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			<tree string="Setup Page">
+				<field name="name"/>
+				<field name="date_s"/>
+			</tree>
+		</field></record>
+
+	=======================================================
+		Progenus/Labo Analysis/Labo followsheet
+	=======================================================
+
+		<record model="ir.ui.view" id="view_labo_followsheet_form">
+			<field name="name">Follow Sheet</field>
+			<field name="model">labo.followsheet</field>
+			<field name="type">form</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			<form string="Follows Sheet">
+				<field name="name"/>
+				<field name="date_f"/>
+			</form>
+		</field></record>
+
+		<record model="ir.ui.view" id="view_labo_followsheet_tree">
+			<field name="name">Setup</field>
+			<field name="model">labo.followsheet</field>
+			<field name="type">tree</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			<tree string="Setup Page">
+				<field name="name"/>
+				<field name="date_f"/>
+			</tree>
+		</field></record>
+	=======================================================
+	Progenus/Labo Analysis/samples history
+	=======================================================
+
+		<record model="ir.ui.view" id="view_sample_history_form">
+			<field name="name">Samples History</field>
+			<field name="model">sample.history</field>
+			<field name="type">form</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			<form string="Samples History">
+				<field name="name"/>
+				<field name="sample_id"/>
+				<field name="request_id"/>
+				<field name="req_id"/>
+			</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_sample_history_tree">
+			<field name="name">Samples History</field>
+			<field name="model">sample.history</field>
+			<field name="type">tree</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			<tree string="Samples history">
+				<field name="name"/>
+				<field name="sample_id"/>
+				<field name="request_id"/>
+				<field name="req_id"/>
+			</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_view_labo_history_form">
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">sample.history</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="view_sample_history_tree"/>
+		</record>
+
+
+		<record model="ir.ui.view" id="view_plate_history_form">
+			<field name="name">Plates History</field>
+			<field name="model">plate.history</field>
+			<field name="type">form</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			<form string="Plates History">
+				<field name="name"/>
+				<!--field name="sample_id"/-->
+				<field name="plate_id"/>
+				<field name="plate_id2"/>
+				<field name="old_alpha"/>
+			</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_plate_history_tree">
+			<field name="name">Plates History</field>
+			<field name="model">plate.history</field>
+			<field name="type">tree</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			<tree string="Plates history">
+				<field name="name"/>
+				<!--field name="sample_id"/-->
+				<field name="plate_id"/>
+				<field name="plate_id2"/>
+				<field name="old_alpha"/>
+			</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_view_plate_history_form">
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">plate.history</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="view_plate_history_tree"/>
+		</record>
+
+		<record model="ir.ui.view" id="view_setup_history_form">
+			<field name="name">Setup History</field>
+			<field name="model">setup.history</field>
+			<field name="type">form</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			<form string="Setup History">
+				<field name="name"/>
+				<!--field name="sample_id"/-->
+				<field name="setup_id"/>
+				<field name="setup_id2"/>
+				<field name="old_alpha"/>
+			</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_setup_history_tree">
+			<field name="name">Setup History</field>
+			<field name="model">setup.history</field>
+			<field name="type">tree</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			<tree string="Setup history">
+				<field name="name"/>
+				<!--field name="sample_id"/-->
+				<field name="setup_id"/>
+				<field name="setup_id2"/>
+				<field name="old_alpha"/>
+			</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_alleled_form">
+			<field name="name">Alleles </field>
+			<field name="model">dog.allele.history</field>
+			<field name="type">form</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			<form string="Alleles">
+				<field name="marker_dog"/>
+				<field name="allele_dog1"/>
+				<field name="allele_dog2"/>
+				<field name="creation_date"/>
+			</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_alleled_tree">
+			<field name="name">Alleles </field>
+			<field name="model">dog.allele.history</field>
+			<field name="type">tree</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			<tree string="Alleles">
+				<field name="marker_dog"/>
+				<field name="allele_dog1"/>
+				<field name="allele_dog2"/>
+				<field name="creation_date"/>
+			</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_allele_form">
+			<field name="name">Alleles </field>
+			<field name="model">dog.allele</field>
+			<field name="type">form</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			<form string="Alleles">
+				<field name="marker_dog"/>
+				<field name="allele_dog1"/>
+				<field name="allele_dog2"/>
+				<field name="creation_date"/>
+			</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_allele_tree">
+			<field name="name">Alleles </field>
+			<field name="model">dog.allele</field>
+			<field name="type">tree</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			<tree string="Alleles">
+				<field name="marker_dog"/>
+				<field name="allele_dog1"/>
+				<field name="allele_dog2"/>
+				<field name="creation_date"/>
+			</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_view_setup_history_form">
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">setup.history</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="view_setup_history_tree"/>
+		</record>
+
+		<record model="ir.ui.view" id="view_allele_history_form">
+			<field name="name">Allele History</field>
+			<field name="model">allele.history</field>
+			<field name="type">form</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			<form string="Alleles History">
+				<field name="allele"/>
+				<field name="date_s"/>
+				<field name="name"/>
+			</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_allele_history_tree">
+			<field name="name">Alleles History</field>
+			<field name="model">allele.history</field>
+			<field name="type">tree</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			<tree string="Allele history">
+				<field name="allele"/>
+				<field name="date_s"/>
+				<field name="name"/>
+			</tree>
+			</field>
+		</record>
+
+
+		<record model="ir.ui.view" id="view_file_history_form">
+			<field name="name">File History</field>
+			<field name="model">file.history</field>
+			<field name="type">form</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			<form string="Files History">
+				<field name="name"/>
+				<field name="date_f"/>
+			</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_file_history_tree">
+			<field name="name">Files History</field>
+			<field name="model">file.history</field>
+			<field name="type">tree</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			<tree string="File history">
+				<field name="name"/>
+				<field name="date_f"/>
+			</tree>
+			</field>
+		</record>
+	=======================================================
+	Analysis view
+	=======================================================
+	Progenus/Configuration/analysis view
+	=======================================================
+	<record model="ir.ui.view" id="view_analysis_view_form">
+			<field name="name">Analysis view</field>
+			<field name="model">labo.analysis.view</field>
+			<field name="type">form</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml" >
+				<form string="Analysis View 1">
+					<field name="name"/>
+						<field name="columns_id"  mode="tree,form" colspan="4" nolabel="1" select="1">
+							<form string="columns">
+							<!--	<field name="name"/>-->
+								<field name="sequence"/>
+								<field name="field"/>
+								<field name="select"/>
+							</form>
+						</field>
+				</form>
+			</field>
+		</record>
+
+
+		<record model="ir.ui.view" id="view_analysis_view_tree">
+			<field name="name">Analysis view</field>
+			<field name="model">labo.analysis.view</field>
+			<field name="type">tree</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml" >
+				<tree string="Analysis Column">
+					<field name="name"/>
+						<field name="columns_id"  mode="tree,form" colspan="4" nolabel="1" select="1">
+							<form string="columns">
+							<!--	<field name="name"/>-->
+								<field name="sequence"/>
+								<field name="field"/>
+								<field name="select"/>
+							</form>
+						</field>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_view_analysis_view_form">
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">labo.analysis.view</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="view_analysis_view_form"/>
+		</record>
+	<!--	<menuitem name="Progenus/Configuration/Analysis view" id="menu_action_view_analysis_view_form" action="action_view_analysis_view_form"/>-->
+	=======================================================
+	Analysis column
+	=======================================================
+	Progenus/Configuration/analysis column
+	=======================================================
+	<record model="ir.ui.view" id="view_column_form">
+			<field name="name">Analysis columns</field>
+			<field name="model">analysis.column</field>
+			<field name="type">form</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml" >
+				<form string="Analysis Column">
+					<!--field name="name"/-->
+					<field name="sequence"/>
+					<field name="field"/>
+					<field name="required"/>
+					<field name="readonly"/>
+					<field name="select"/>
+				</form>
+			</field>
+		</record>
+
+
+		<record model="ir.ui.view" id="view_column_tree">
+			<field name="name">Analysis columns</field>
+			<field name="model">analysis.column</field>
+			<field name="type">tree</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml" >
+				<tree string="Analysis Column" editable="top">
+					<!--field name="name"/-->
+					<field name="sequence"/>
+					<field name="field"/>
+					<field name="required"/>
+					<field name="readonly"/>
+					<field name="select"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_view_column_form">
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">analysis.column</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_column_form"/>
+		</record>
+
+	<record model="ir.ui.view" id="view_field_csv_formi">
+			<field name="name">Analysis X</field>
+			<field name="model">labo.analysis.view</field>
+			<field name="type">form</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+				<form string="CSV">
+							<field name="name" select="2"/>
+							<field name="columns_id"/>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_view_analaysis1">
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">analysis.fields</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+		</record>
+
+<!--		<record model="ir.actions.act_window" id="action7">
+		<field name="name">Simplified</field>
+		<field name="res_model">labo.sample</field>
+		<field name="view_type">form</field>
+		<field name="domain">[('sample_id','=',active_id)]</field>
+		<field name="limit" eval="2000"/>
+	</record>
+
+	<record model="ir.values" id="ir_open_analysis">
+		<field name="key2">tree_but_open</field>
+		<field name="model">labo.analysis.request</field>
+		<field name="name">Open Analysis</field>
+		<field name="value" eval="'ir.actions.act_window,%d'%action7"/>
+		<field name="object" eval="True"/>
+	</record>
+	<record model="ir.actions.act_window" id="action_request_line_form">
+		<field name="name">Open Analysis</field>
+		<field name="res_model">labo.analysis.request</field>
+		<field name="view_type">tree</field>
+		<field name="act_window_id" ref="action7"/>
+	</record>
+	<menuitem name="Progenus/Entries/Entries by Journal/" id="action2" action="action_request_line_form"/>-->
+
+
+
+		<record model="ir.actions.act_window" id="action_request">
+			<field name="res_model">labo.analysis.request</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		<!--	<field name="domain">[('type_id','=', active_id)]</field>-->
+<!--
+			<field name="context">{'request_id':parent.type_id}</field>-->
+		</record>
+
+		<record model="ir.values" id="ir_open_1">
+			<field name="key2" eval="'tree_but_open'"/>
+			<field name="model" eval="'labo.analysis.type'"/>
+			<field name="name">Requests</field>
+			<field name="value" eval="'ir.actions.act_window,%d'%action_request"/>
+			<field name="object" eval="True"/>
+		</record>
+
+
+		<record model="ir.actions.act_window" id="action_type">
+			<field name="name">Analysis Type</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">labo.analysis.type</field>
+			<field name="view_type">tree</field>
+		</record>
+<!--	<menuitem name="Progenus/" id="action229" action="action_type"/>-->
+
+		<record model="ir.actions.act_window" id="action_request2">
+			<field name="res_model">labo.sample</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('sample_id','=', active_id)]</field>
+			<field name="context">{'request_id':active_id}</field>
+		</record>
+
+
+
+	<record model="ir.values" id="ir_open_">
+			<field name="key2" eval="'tree_but_open'"/>
+			<field name="model" eval="'labo.analysis.request'"/>
+			<field name="name">Requests</field>
+			<field name="value" eval="'ir.actions.act_window,%d'%action_request2"/>
+			<field name="object" eval="True"/>
+		</record>
+
+
+		<record model="ir.actions.act_window" id="action_type1">
+			<field name="name">Analysis Requests</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">labo.analysis.request</field>
+			<field name="view_type">tree</field>
+		</record>
+<!--	<menuitem name="Progenus/" id="action291" action="action_type1"/>-->
+
+
+	<record model="ir.ui.view" id="view_report_request_analysis_tree">
+		<field name="name">report.year.analysis.form</field>
+		<field name="model">report.year.analysis</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Success by type of analysis">
+				<field name="count_t" select="1"/>
+				<field name="code_t" select="1"/>
+				<field name="year" select="1"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_report_analysis_object_date_graph">
+		<field name="name">Graph</field>
+		<field name="model">report.year.analysis</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Success of analysis by type"  type="bar">
+				<field name="code_t" select="1"/>
+				<field name="count_t" operator="+"/>
+				<field name="year" group="True"/>
+				<!--<field name="state_percentage" operator="+"/>-->
+
+			</graph>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_report_request_analysis_year_tree1">
+		<field name="res_model">report.year.analysis</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain"> [('year','ilike',time.strftime('%Y'))]</field>
+	</record>
+
+
+	<menuitem
+		name="Progenus/Reporting/Stat by type per year"
+		action="action_report_request_analysis_year_tree1"
+		id="menu_report_analysis_stat_year_id" sequence="2"/>
+
+<!--SUBSTANCE-->
+
+
+	<record model="ir.ui.view" id="view_report_aanalysissubstance_tree">
+		<field name="name">Tree</field>
+		<field name="model">report.analysis.substance</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Success of analysis by substance">
+				<field name="material"/>
+				<field name="year"/>
+				<field name="count_t" select="1"/>
+
+			</tree>
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="view_report_aanalysissubstance_graph">
+		<field name="name">Graph</field>
+		<field name="model">report.analysis.substance</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Success of analysis by substance for the current year"  type="bar">
+				<field name="material" select="1"/>
+				<field name="count_t" select="1"/>
+				<field name="year" group="True"/>
+			</graph>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_report_request_analysis_substance_year_tree">
+		<field name="res_model">report.analysis.substance</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain"> [('year','ilike',time.strftime('%Y-%m'))]</field>
+	</record>
+
+	<menuitem
+		name="Progenus/Reporting/Stat by substance per month"
+		action="action_report_request_analysis_substance_year_tree"
+		id="menu_report_analysis_stat_substance_year_l" sequence="3"/>
+
+
+
+
+	<record model="ir.ui.view" id="view_report_aanalysissubstance_tree_year">
+		<field name="name">Tree</field>
+		<field name="model">report.analysis.substance.year</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Success of analysis by substance">
+				<field name="material"/>
+				<field name="year"/>
+				<field name="count_t" select="1"/>
+s
+			</tree>
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="view_report_aanalysissubstance_graph_year">
+		<field name="name">Graph</field>
+		<field name="model">report.analysis.substance.year</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Success of analysis by substance"  type="bar">
+				<field name="material" select="1"/>
+				<field name="count_t" select="1"/>
+				<field name="year" group="True"/>
+			</graph>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_report_request_analysis_substance_year_tree_year">
+		<field name="res_model">report.analysis.substance.year</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain"> [('year','ilike',time.strftime('%Y'))]</field>
+	</record>
+
+	<menuitem
+		name="Progenus/Reporting/Stat by substance per year"
+		action="action_report_request_analysis_substance_year_tree_year"
+		id="menu_report_analysis_stat_substance_year_id" sequence="4"/>
+
+
+
+
+	<record model="ir.ui.view" id="view_report_analysis_tree">
+		<field name="name">Report Analysis</field>
+		<field name="model">report.analysis</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Success by type of analysis">
+				<field name="count_t" select="1"/>
+				<field name="code_t" select="1"/>
+				<field name="year" select="1"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_report_analysis_graph">
+		<field name="name">Graph</field>
+		<field name="model">report.analysis</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Success of analysis by type by month"  type="bar">
+				<field name="code_t" select="1"/>
+				<field name="count_t" operator="+"/>
+			</graph>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_report_request_analysis_month_tree">
+		<field name="res_model">report.analysis</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain"> [('year','ilike',time.strftime('%Y-%m'))]</field>
+	</record>
+		<!--field name="domain"> [('user_id','=',uid),('date','ilike',time.strftime('%Y-%m'))]</field-->
+		<!--<field name="domain"> [('date','ilike',time.strftime('%Y-%m'))]</field>-->
+
+	<menuitem
+		name="Progenus/Reporting/Stat by type per month"
+		action="action_report_request_analysis_month_tree"
+		id="menu_report_analysis_stat_month_l" sequence="1"/>
+
+<!--	<record model="ir.ui.view" id="view_field_setup_tree">
+			<field name="name">Setup</field>
+			<field name="model">analysis.setup</field>
+			<field name="type">form</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+				<tree string="SETUP">
+					<field name="name" select="2"/>
+					<field name="run_setup"/>
+					<field name="file_id"/>
+					<field name="res"/>
+				</tree>
+			</field>
+		</record>
+	<record model="ir.ui.view" id="view_field_setup_form">
+			<field name="name">Setup</field>
+			<field name="model">analysis.setup</field>
+			<field name="type">form</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+				<form string="SETUP">
+							<field name="name" select="2"/>
+							<field name="run_setup"/>
+							<field name="file_id"/>
+							<field name="res"/>
+				</form>
+			</field>
+		</record>-->
+
+
+	<record model="ir.ui.view" id="view_report_request_analysis_tree_accredit">
+		<field name="name">report.analysis.accredit</field>
+		<field name="model">report.analysis.accredit</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Success of accredited analysis">
+				<field name="count_t" select="1"/>
+				<field name="year" select="1"/>
+				<field name="accredit" select="1"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_report_analysis_object_date_graph_accredit">
+		<field name="name">Graph</field>
+		<field name="model">report.analysis.accredit</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Success of accredited analysis for the current year"  type="bar">
+				<field name="year" select="1"/>
+				<field name="count_t" operator="+"/>
+				<!--<field name="state_percentage" operator="+"/>-->
+
+			</graph>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_report_request_analysis_year_tree_accredit">
+		<field name="res_model">report.analysis.accredit</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain"> [('year','ilike',time.strftime('%Y-%m'))]</field>
+	</record>
+
+	<menuitem
+		name="Progenus/Reporting/Stat accredit per month"
+		action="action_report_request_analysis_year_tree_accredit"
+		id="menu_report_analysis_stat_month_l_accredit_id" sequence="5"/>
+
+
+	<record model="ir.ui.view" id="view_report_request_analysis_tree_accredit_year">
+		<field name="name">report.analysis.accredit.year</field>
+		<field name="model">report.analysis.accredit.year</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Accredited analysis for year">
+				<field name="count_t" select="1"/>
+				<field name="year" select="1"/>
+				<field name="accredit" select="1" />
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_report_analysis_object_date_graph_accredit_year">
+		<field name="name">Graph</field>
+		<field name="model">report.analysis.accredit.year</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Success of accredited analysis for the current year"  type="bar">
+				<field name="year" select="1"/>
+				<field name="count_t" operator="+"/>
+			</graph>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_report_request_analysis_year_tree_accredit_year">
+		<field name="res_model">report.analysis.accredit.year</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain"> [('year','ilike',time.strftime('%Y'))]</field>
+	</record>
+
+	<menuitem
+		name="Progenus/Reporting/Stat accredit per year"
+		action="action_report_request_analysis_year_tree_accredit_year"
+		id="menu_report_analysis_stat_month_l_accredit_year_id" sequence="6"/>
+
+<!--	<act_window name="Analysis Samples 777"
+		domain="[('sample_id.type_id', '=', active_id)]"
+		context="{'sample_id.type_id':active_id}"
+		view_type="form"
+		view_mode="tree,form"
+		res_model="labo.sample"
+		src_model="labo.analysis.request"
+		id="act_labo_sample_open"/>
+-->
+<!--	<record model="ir.values" id="ir_open_auction_lots">
+		<field name="key2">tree_but_open</field>
+		<field name="model">auction.analysis.request</field>
+		<field name="name">Open auction</field>
+		<field name="value" eval="'ir.actions.act_window,%d'%act_labo_sample_open"/>
+		<field name="object" eval="True"/>
+	</record>-->
+<!--	<act_window name="Mon test"
+		res_model="labo.sample"
+		src_model="labo.analysis.request"
+		domain="[('sample_id', '=', active_id)]"
+		id="act_sample_request"/>
+-->
+
+	<record model="ir.ui.view" id="view_labo_rk_tree">
+			<field name="name">Labo rke</field>
+			<field name="model">labo.rque</field>
+			<field name="type">tree</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+				<tree string="Labos">
+					<field name="name"/>
+					<field name="code"/>
+				</tree>
+			</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_labo_rk_form">
+			<field name="name">Labo rke</field>
+			<field name="model">labo.rque</field>
+			<field name="type">form</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+				<form string="Labos">
+					<field name="name"/>
+					<field name="code"/>
+				</form>
+			</field>
+	</record>
+
+		<record model="ir.actions.act_window" id="action_view_lab_rque">
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">labo.rque</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+		<field name="view_id" ref="view_labo_rk_tree"/>
+		</record>
+
+	<menuitem
+		name="Progenus/Configuration/Configure Remarks"
+		action="action_view_lab_rque"
+		id="menu_view_labo_id_rq" />
+
+	<record model="ir.ui.view" id="view_labo_form">
+			<field name="name">Labo view</field>
+			<field name="model">labo.labo</field>
+			<field name="type">form</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+				<form string="Labos">
+					<field name="name" select="1"/>
+					<field name="code" select="1"/>
+				</form>
+			</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_labo_tree">
+			<field name="name">Labo</field>
+			<field name="model">labo.labo</field>
+			<field name="type">tree</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+				<tree string="Labos">
+					<field name="name"/>
+					<field name="code"/>
+				</tree>
+			</field>
+	</record>
+
+		<record model="ir.actions.act_window" id="action_view_labo">
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">labo.labo</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+		<field name="view_id" ref="view_labo_tree"/>
+		</record>
+
+	<menuitem
+		name="Progenus/List of Dogs, Horses and Labos/List of Labos"
+		action="action_view_labo"
+		id="menu_view_labo_id" />
+
+	<record model="ir.ui.view" id="view_dog_form">
+			<field name="name">Dog1</field>
+			<field name="model">labo.dog</field>
+			<field name="type">form</field>
+			<field name="priority" eval="1"/>
+			<field name="arch" type="xml">
+				<form string="Dogs">
+			        <notebook>
+				    <page string="General">
+							<field name="name" select="1"/>
+							<field name="progenus_number" select="1" />
+							<field name="seq" />
+							<field name="pedigree" />
+							<field name="origin"/>
+							<field name="sex"/>
+							<field name="race"/>
+							<field name="ref_dog"/>
+							<field name="parent_f_id" />
+							<field name="parent_m_id" />
+							<field name="birthdate" />
+							<field name="date_eff" />
+							<field name="date_reception" />
+							<field name="material"/>
+							<field name="date_limit" />
+							<field name="date_closing" />
+							<field name="result"/>
+	                         <field name="notice"  />
+							<field name="tatoo" on_change="onchange_val_child(origin, progenus_number, parent_f_id, parent_m_id)"/>
+							<field name="ship" on_change="onchange_val_child(origin, progenus_number, parent_f_id, parent_m_id)"/>
+							<field name="labo_id" />
+							<field name="type_animal" />
+	                         <field name="file_setup"   />
+	                         <field name="num_alpha"  />
+			                <field name="plate_id"  />
+		                    <field name="num_alpha2"/>
+	                         <field name="follow_sheet_id"  />
+	                         <field name="tool"  />
+	                         <field name="stock_id"  />
+	                         <field name="state"  />
+					        <newline/>
+                             <button name="button_prog_child" string="Set Number to the Current Dog"  type="object" colspan="2" on_change="onchange_child(origin)"/>
+                             <button name="button_prog_femal" string="Set number to Mother"  type="object" colspan="2"/>
+                             <button name="button_prog_mal" string="Set number to Father"  type="object" colspan="4"/>
+                            </page>
+                        <page string="Notice/Details">
+					        <newline/>
+	                         <field name="rk_id"  />
+							<field name="v_done" />
+							<field name="done_i" />
+							<field name="c_done" />
+							<field name="v_tag" />
+				            <field name="v_done2" />
+                             <field name="to_be_invoiced"  />
+                             <field name="nc_gle"  />
+                             <field name="final_c" />
+                             <field name="nc_reanalyse" />
+							<field name="rk_txt" colspan="4" nolabel="1"/>
+                        </page>
+                        <page string="Alleles">
+							<field name="allele_ids"  colspan="4" nolabel="1"/>
+                        </page>
+                        <page string="Old alleles">
+							<field name="allele_ids_hist"  colspan="4" nolabel="1"/>
+                        </page>
+                        <page string= "Alleles History">
+				        <field name="history_allele_ids" colspan="4" nolabel="1"/>
+                        </page>
+                        <page string="Files">
+							<field name="file_h_ids" colspan="4" />
+							<field name="doss_id" colspan="4" />
+                        </page>
+                        <page string="History">
+                        <field name="history_p_ids" colspan="4" nolabel="1"/>
+				        <field name="history_s_ids" colspan="4" nolabel="1"/>
+<!--							<field name="childm_ids"/>
+							<field name="childf_ids"/>
+-->
+                        </page>
+                    </notebook>
+				</form>
+			</field>
+		</record>
+
+	<record model="ir.ui.view" id="view_che">
+			<field name="name">Che2</field>
+			<field name="model">labo.dog</field>
+			<field name="type">form</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+				<form string="Dogs">
+			        <notebook>
+				    <page string="General">
+							<field name="name" select="1"/>
+							<field name="progenus_number" select="1" string="Num certif"/>
+							<!--field name="seq"/-->
+							<field name="pedigree" string="Num AB"/>
+							<field name="origin"/>
+							<field name="sex"/>
+							<field name="race"/>
+							<field name="ref_dog"/>
+							<field name="parent_f_id" />
+							<field name="parent_m_id" />
+							<field name="birthdate" />
+							<field name="date_eff" />
+							<field name="date_reception" />
+							<field name="material"/>
+							<field name="date_limit" />
+							<field name="date_closing" />
+							<field name="result"/>
+	                         <field name="notice"  />
+							<field name="tatoo" string="EULN" on_change="onchange_val_child(origin, progenus_number, parent_f_id, parent_m_id)"/>
+							<field name="ship" on_change="onchange_val_child(origin, progenus_number, parent_f_id, parent_m_id)"/>
+							<field name="labo_id" />
+							<field name="type_animal" />
+	                         <field name="file_setup"   />
+	                         <field name="num_alpha"  />
+			                <field name="plate_id"  />
+		                    <field name="num_alpha2"/>
+	                         <field name="follow_sheet_id"  />
+	                         <field name="tool"  />
+	                         <field name="stock_id"  />
+	                         <field name="state"  />
+					        <newline/>
+                             <button name="button_prog_child" string="Set number to the current Horse"  type="object" colspan="2"/>
+                             <button name="button_prog_femal" string="Set number if Femal"  type="object" colspan="2"/>
+                             <button name="button_prog_mal" string="Set number if Male"  type="object" colspan="4"/>
+                            </page>
+                        <page string="Notice/Details">
+	                         <field name="rk_id"  />
+							<field name="v_done" />
+							<field name="done_i" />
+							<field name="c_done" />
+							<field name="v_tag" />
+				            <field name="v_done2" />
+                             <field name="to_be_invoiced"  />
+                             <field name="nc_gle"  />
+                             <field name="final_c" />
+                             <field name="nc_reanalyse" />
+							<field name="rk_txt" colspan="4" nolabel="1"/>
+                        </page>
+                        <page string="Current Alleles">
+							<field name="allele_ids"  colspan="4" nolabel="1"/>
+                        </page>
+                        <page string="Old alleles">
+							<field name="allele_ids_hist"  colspan="4" nolabel="1"/>
+                        </page>
+                        <page string= "Alleles History">
+				        <field name="history_allele_ids" colspan="4" nolabel="1"/>
+                        </page>
+                        <page string="Files">
+							<field name="file_h_ids" colspan="4" />
+                        </page>
+                        <page string="History">
+                        <field name="history_p_ids" colspan="4" nolabel="1"/>
+				        <field name="history_s_ids" colspan="4" nolabel="1"/>
+                        </page>
+                    </notebook>
+				</form>
+			</field>
+		</record>
+
+	<record model="ir.ui.view" id="view_dog_f">
+			<field name="name">Dog2</field>
+			<field name="model">labo.dog</field>
+			<field name="type">form</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+				<form string="Dogs">
+			        <notebook>
+				    <page string="General">
+							<field name="name" select="1"/>
+							<field name="progenus_number" select="1" />
+							<field name="seq" />
+							<field name="pedigree" />
+							<field name="origin"/>
+							<field name="sex"/>
+							<field name="race"/>
+							<field name="ref_dog"/>
+							<field name="parent_f_id" />
+							<field name="parent_m_id" />
+							<field name="birthdate" />
+							<field name="date_eff" />
+							<field name="date_reception" />
+							<field name="date_limit" />
+							<field name="date_closing" />
+							<field name="material"/>
+							<field name="result"/>
+	                         <field name="notice"  />
+							<field name="tatoo" on_change="onchange_val_child(origin, progenus_number, parent_f_id, parent_m_id)"/>
+							<field name="ship" on_change="onchange_val_child(origin, progenus_number, parent_f_id, parent_m_id)"/>
+							<field name="labo_id" />
+							<field name="type_animal" />
+	                         <field name="file_setup"   />
+	                         <field name="num_alpha"  />
+			                <field name="plate_id"  />
+		                    <field name="num_alpha2"/>
+	                         <field name="follow_sheet_id"  />
+	                         <field name="tool"  />
+	                         <field name="stock_id"  />
+	                         <field name="state"  />
+                             <button name="button_prog_femal" string="Set number if Femal"  type="object" colspan="2"/>
+                             <button name="button_prog_mal" string="Set number if Male"  type="object" colspan="2"/>
+                            </page>
+                        <page string="Notice/Details">
+					        <newline/>
+	                         <field name="rk_id"  />
+							<field name="v_done" />
+							<field name="v_tag" />
+							<field name="done_i" />
+							<field name="c_done" />
+				            <field name="v_done2" />
+                             <field name="to_be_invoiced"  />
+                             <field name="nc_gle"  />
+                             <field name="final_c" />
+                             <field name="nc_reanalyse" />
+							<field name="rk_txt" colspan="4" nolabel="1"/>
+                        </page>
+                        <page string="Alleles">
+							<field name="allele_ids"  colspan="4" nolabel="1"/>
+                        </page>
+                        <page string="Old alleles">
+							<field name="allele_ids_hist"  colspan="4" nolabel="1"/>
+                        </page>
+                        <page string= "Alleles History">
+				        <field name="history_allele_ids" colspan="4" nolabel="1"/>
+                        </page>
+                        <page string="Files">
+							<field name="file_h_ids" colspan="4" />
+							<field name="doss_id" colspan="4" />
+                        </page>
+                        <page string="History">
+                        <field name="history_p_ids" colspan="4" nolabel="1"/>
+				        <field name="history_s_ids" colspan="4" nolabel="1"/>
+                        </page>
+                    </notebook>
+				</form>
+			</field>
+		</record>
+
+	<record model="ir.ui.view" id="view_dog_tree">
+			<field name="name">Dog </field>
+			<field name="model">labo.dog</field>
+			<field name="type">tree</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+				<tree string="Dogs">
+							<field name="name"/>
+							<field name="progenus_number"/>
+							<field name="seq"/>
+							<field name="origin"/>
+							<field name="ref_dog"/>
+							<field name="tatoo"/>
+							<field name="sex"/>
+							<field name="race"/>
+							<field name="birthdate"/>
+							<field name="ship"/>
+	                         <field name="file_setup"   />
+	                         <field name="follow_sheet_id"  />
+			                <field name="plate_id"  />
+	                         <field name="num_alpha"  />
+		                    <field name="num_alpha2"/>
+							<field name="v_done" />
+							<field name="v_tag" />
+	                         <field name="state"  />
+				</tree>
+			</field>
+		</record>
+
+	<record model="ir.ui.view" id="view_horse_tree">
+			<field name="name">emp_tree</field>
+			<field name="model">labo.dog</field>
+			<field name="type">tree</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+				<tree string="Dogs">
+							<field name="name"/>
+							<field name="progenus_number" string="Num certif"/>
+							<!--field name="seq"/-->
+							<field name="origin"/>
+							<field name="tatoo" string="EULN"/>
+							<field name="sex"/>
+							<field name="race"/>
+							<field name="ref_dog"/>
+							<field name="birthdate"/>
+							<field name="ship"/>
+	                         <field name="file_setup"   />
+	                         <field name="follow_sheet_id"  />
+			                <field name="plate_id"  />
+	                         <field name="num_alpha"  />
+		                    <field name="num_alpha2"/>
+							<field name="v_done" />
+							<field name="v_tag" />
+	                         <field name="state"  />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_view_dog">
+			<field name="name">Dogs</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">labo.dog</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="context">{'dog':True}</field>
+			<field name="view_id" ref="view_dog_tree"/>
+            <field name="domain">[('type_animal','=','dog')]</field>
+		</record>
+
+		<record model="ir.actions.act_window.view" id="act_dog_tree">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="view_dog_tree"/>
+					<field name="act_window_id" ref="action_view_dog"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_dog_form">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="view_dog_form"/>
+					<field name="act_window_id" ref="action_view_dog"/>
+		</record>
+	<menuitem
+		name="Progenus/List of Dogs, Horses and Labos/List of Dogs"
+		action="action_view_dog"
+		id="menu_view_dog_id" />
+
+		<record model="ir.actions.act_window" id="action_view_horse">
+			<field name="name">Horses</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">labo.dog</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="context">{'dog':True}</field>
+			<field name="view_id" ref="view_horse_tree"/>
+            <field name="domain">[('type_animal','=','horse')]</field>
+
+		</record>
+
+		<record model="ir.actions.act_window.view" id="act_horse_tree">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="view_horse_tree"/>
+					<field name="act_window_id" ref="action_view_horse"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_horse_form">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="view_che"/>
+					<field name="act_window_id" ref="action_view_horse"/>
+		</record>
+	<menuitem
+		name="Progenus/List of Dogs, Horses and Labos/List of Horses"
+		action="action_view_horse"
+		id="menu_view_horse_id" />
+
+	<record model="ir.ui.view" id="view_req_tree">
+			<field name="name">Request</field>
+			<field name="model">labo.analysis.request</field>
+			<field name="type">tree</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			<tree string="Analysis Request">
+				<field name="name" />
+				<field name="type_id"  />
+				<field name="begining_date" />
+				<field name="cond_reception"/>
+				<field name="user_id"/>
+				<field name="date_closed" />
+				<field name="date_planned" />
+				<field name="ref_client" />
+				<field name="pricelist_id" />
+			</tree>
+			</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_req_form">
+			<field name="name">Request</field>
+			<field name="model">labo.analysis.request</field>
+			<field name="type">form</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			<form string="Analysis Request">
+				<field name="name" />
+				<field name="type_id"  />
+				<field name="begining_date" />
+				<field name="cond_reception"/>
+				<field name="user_id"/>
+				<field name="date_closed" />
+				<field name="date_planned" />
+				<field name="ref_client" />
+				<field name="pricelist_id" />
+			</form>
+			</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_tax_form_inherited2">
+		<field name="name">account.tax.form</field>
+		<field name="model">account.tax</field>
+		<field name="type">form</field>
+		<field name="inherit_id" ref="account.view_tax_form"/>
+		<field name="arch" type="xml">
+			<field name="child_ids"  position="after">
+				<field name="note" colspan="4"/>
+			</field>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="letter_number_form">
+			<field name="name">Letters/Numbers</field>
+			<field name="model">letters.numbers</field>
+			<field name="type">form</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			<form string="Marker codes">
+				<field name="name" select="1"/>
+				<field name="name_letter"  select="1"/>
+				<field name="name_number" select="1"/>
+			</form>
+			</field>
+	</record>
+
+	<record model="ir.ui.view" id="letter_number_tree">
+			<field name="name">Letters/Numbers</field>
+			<field name="model">letters.numbers</field>
+			<field name="type">tree</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			<tree string="Marker codes">
+				<field name="name" />
+				<field name="name_letter"  />
+				<field name="name_number" />
+			</tree>
+			</field>
+	</record>
+
+      <record model="ir.actions.act_window" id="action_lett_nbrs">
+        <field name="name">Configure Marker Codes</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">letters.numbers</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="letter_number_tree"/>
+      </record>
+
+      <menuitem name="Progenus/Configuration/Configure Marker Codes" id="menu_action_lett_nbrs" action="action_lett_nbrs"/>
+
+		<record model="ir.ui.view" id="view_partner_form">
+		<field name="name">res.partner.vat.inherit</field>
+		<field name="model">res.partner</field>
+	<field name="inherit_id" ref="base.view_partner_form"/>
+		<field name="arch" type="xml">
+			<field name="active" position="after">
+				<field name="domain_res"/>
+			</field>
+		</field>
+	</record>
+
+	</data>
+</terp>

@@ -25,9 +25,16 @@
     "author" : "Tiny",
     "depends" : ["product", "purchase", "sale"],
     "category" : "Generic Modules/Inventory Control",
+    "description": """
+Product extension. This module adds:
+  * Last purchase order for each product supplier 
+  * New functional field: Available stock (real+outgoing stock)
+  * Computes standard price from the BoM of the product (optional for each product)
+  * Standard price is shown in the BoM and it can be computed with a wizard 
+""",
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["product_extended_view.xml"],
+    "update_xml" : ["product_extended_view.xml","product_extended_wizard.xml","mrp_view.xml"],
     "active": False,
     "installable": True
 }

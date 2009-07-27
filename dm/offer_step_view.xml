@@ -65,6 +65,7 @@
                 <separator string="Origin and Destination" colspan="4"/>
                 <field name="step_from_id" colspan="4" readonly="1"/>
                 <field name="step_to_id" colspan="4" />
+                <field name="graph_hide"/>
                 <separator string="Action Condition and Time" colspan="4"/>
                 <field name="condition_id" select="1" />
                 <label align="1.0" string="Delay After Trigger Date:"/>
@@ -74,6 +75,8 @@
                 </group>
                 <group col="2" colspan="2">
                     <field name="action_hour" widget="float_time" select="2"/>
+                    <field name="action_day" select="2"/>
+                    <field name="action_date" select="2"/>
                 </group>
             </form>
         </field>
@@ -91,6 +94,8 @@
                 <field name="delay"/>
                 <field name="delay_type"/>
                 <field name="action_hour"/>
+                <field name="action_day"/>
+                <field name="action_date"/>
             </tree>
         </field>
     </record>
@@ -139,23 +144,21 @@
                 <notebook colspan="4" >
                     <page string="General">
                         <field name="name" select="1" />
-<!--                       <field name="type_id" select="2" widget="selection" on_change="onchange_type(type_id,offer_id,context)"/>-->
                         <field name="type_id" select="2" widget="selection" on_change="onchange_code(type_id,context)"/>
-<!--                        <field name="type_id" select="2"/>-->
                         <field name="media_id" select="1"/>
-<!--                        <field name="action_id" select="1" domain="[('media_id','=',media_id)]"/>-->
                         <field name="action_id" select="1" />
                         <field name="quotation" select="2" groups="base.group_extended"/>
                         <field name="legal_state" select="2" groups="base.group_extended"/>
                         <separator string="Description" colspan="4"/>
                         <field name="desc" nolabel="1" colspan="4" widget="text_wiki"/>
+                        <field name="graph_hide"/>
+                <separator string="Action Condition and Time" colspan="4"/>
                         <separator string="Status" colspan="4"/>
                         <group col="8" colspan="4">
                             <field name="state" select="1" nolabel="1"/>
                             <button name="state_open_set" string="Open" states="draft,freeze"/>
                             <button name="state_freeze_set" string="Freeze" states="draft"/>
                             <button name="state_close_set" string="Close" states="open,draft,freeze"/>
-<!--                            <button name="state_draft_set" string="Reset to Draft" states="closed"/>-->
                         </group>
                     </page>
                     <page string="Transitions">
@@ -164,6 +167,7 @@
                                 <separator string="Origin and Destination" colspan="4"/>
                                 <field name="step_from_id" colspan="4" readonly="1"/>
                                 <field name="step_to_id" colspan="4" domain="[('offer_id','=',parent.offer_id)]"/>
+                                <field name="graph_hide"/>
                                 <separator string="Action Condition and Time" colspan="4"/>
                                 <field name="condition_id" select="1" />
                                 <label align="1.0" string="Delay After Trigger Date:"/>
@@ -173,7 +177,8 @@
                                 </group>
                                 <group col="2" colspan="2">
                                     <field name="action_hour" widget="float_time" select="2"/>
-<!--                                    <field name="action_day" select="2"/>-->
+                                    <field name="action_day" select="2"/>
+                                    <field name="action_date" select="2"/>
                                 </group>
                             </form>
                             <tree string="Outgoing Transitions">
@@ -182,6 +187,9 @@
                                 <field name="condition_id"/>
                                 <field name="delay"/>
                                 <field name="delay_type"/>
+                                <field name="action_hour"/>
+                                <field name="action_day"/>
+                                <field name="action_date"/>
                             </tree>
                         </field>
                         <field name="incoming_transition_ids" colspan="4" nolabel="1">
@@ -189,6 +197,7 @@
                                 <separator string="Origin and Destination" colspan="4"/>
                                 <field name="step_from_id" domain="[('offer_id','=',parent.offer_id)]"/>
                                 <field name="step_to_id" readonly="1"/>
+                                <field name="graph_hide"/>
                                 <separator string="Action Condition and Time" colspan="4"/>
                                 <field name="condition_id" select="1" />
                                 <label align="1.0" string="Delay After Trigger Date:"/>
@@ -198,14 +207,19 @@
                                 </group>
                                 <group col="2" colspan="2">
                                     <field name="action_hour" widget="float_time" select="2"/>
-<!--                                    <field name="action_day" select="2"/>-->
+                                    <field name="action_day" select="2"/>
+                                    <field name="action_date" select="2"/>
                                 </group>
                             </form>
                             <tree string="Incoming Transitions">
                                 <field name="step_from_id"/>
                                 <field name="step_to_id"/>
                                 <field name="condition_id"/>
+                                <field name="delay"/>
                                 <field name="delay_type"/>
+                                <field name="action_hour"/>
+                                <field name="action_day"/>
+                                <field name="action_date"/>
                             </tree>
                         </field>
                         <field name="seq"/>
@@ -300,53 +314,6 @@
         </record>
         <menuitem parent="dm.menu_dm_config_offer_offer_steps" id="menu_offer_step_transition_trigger" action="action_offer_step_transition_trigger"/>
 
-
-    <!--
-    =======================================================
-    MANUFACTURING CONSTRAINT VIEWS
-    =======================================================
-    
-
-    <record model="ir.ui.view" id="view_offer_step_manufacturing_constraint_form">
-        <field name="name">dm.offer.step.manufacturing_constraint.form</field>
-        <field name="model">dm.offer.step.manufacturing_constraint</field>
-        <field name="type">form</field>
-        <field name="arch" type="xml">    
-            <form string="Manufacturing Description">
-                <field name="name" select="1"/>
-                <field name="offer_step_id" select="2"/>
-                <separator string="Manufacturing Description" colspan="4"/>
-                <field name="constraint" colspan="4" nolabel="1" select="2"/>
-                <separator string="Used for Countries" colspan="4"/>
-                <field name="country_ids" colspan="4" nolabel="1" select="1"/>
-            </form>
-        </field>
-    </record>
-
-    <record model="ir.ui.view" id="view_offer_step_manufacturing_constraint_tree">
-        <field name="name">dm.offer.step.manufacturing_constraint.tree</field>
-        <field name="model">dm.offer.step.manufacturing_constraint</field>
-        <field name="type">tree</field>
-        <field name="arch" type="xml">    
-            <tree string="Manufacturing Descriptions">
-                <field name="name" select="1"/>
-                <field name="constraint"/>
-                <field name="offer_step_id"/>
-                <field name="country_ids"/>
-            </tree>
-        </field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_step_manufacturing_constraint_form">
-        <field name="name">All Manufacturing Constraints</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">dm.offer.step.manufacturing_constraint</field>
-        <field name="view_type">form</field>
-        <field name="view_id" ref="view_offer_step_manufacturing_constraint_tree"/>
-    </record>
-
-    <menuitem id="menu_action_step_manufacturing_constraint_form" parent="dm.menu_dm_config_offer_offer_steps" action="action_step_manufacturing_constraint_form" groups="res_groups_offeradmin,res_groups_campaignadmin"/>
--->
 
     <!--
     =======================================================
@@ -452,27 +419,6 @@
         view_mode="tree,form"
         id="act_offer_product_opened"
         context="{'offer_id':active_id}"/>
-
-<!--
-    <act_window name="WorkItems"
-        res_model="dm.offer.step.workitem"
-        src_model="dm.offer.step"
-        view_type="form"
-        view_mode="tree,form"
-        id="act_workitem_opened"
-        domain = "[('step_id','=',active_id)]"/>
--->
-
-
-<!--
-    <act_window name="WorkItems"
-        res_model="dm.offer.step.workitem"
-        src_model="dm.offer.step"
-        view_type="form"
-        view_mode="tree,form"
-        id="act_workitem_opened"
-        domain = "[('step_id','=',active_id)]"/>
--->
 
 </data>
 </openerp>

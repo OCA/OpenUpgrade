@@ -1,0 +1,3195 @@
+<?xml version="1.0" ?>
+<terp>
+    <data>
+
+    <record id="product_category_2" model="product.category">
+		<field name="name">analysis</field>
+	</record>
+
+	<record id="monproduit1" model="product.product">
+		<field name="name">0%</field>
+		<field name="categ_id" ref="product_category_2"/>
+	</record>
+
+	<record id="monproduit2" model="product.product">
+		<field name="name">6%</field>
+		<field name="categ_id" ref="product_category_2"/>
+	</record>
+
+	<record id="monproduit3" model="product.product">
+		<field name="name">12%</field>
+		<field name="categ_id" ref="product_category_2"/>
+	</record>
+
+	<record id="monproduit4" model="product.product">
+		<field name="name">21%</field>
+		<field name="categ_id" ref="product_category_2"/>
+	</record>
+
+
+	<record model="labo.analysis.view" id="pro_analysis_view1">
+		<field name="name">EMPBOV view</field>
+	</record>
+
+	<record model="labo.analysis.view" id="pro_analysis_view2">
+		<field name="name">SCRAPIE view</field>
+	</record>
+
+	<record model="labo.analysis.view" id="pro_analysis_view3">
+		<field name="name">RACE view</field>
+	</record>
+
+	<record model="labo.analysis.view" id="pro_analysis_view4">
+		<field name="name">SEQUENCE view</field>
+	</record>
+
+	<record model="labo.analysis.view" id="pro_analysis_view5">
+		<field name="name">EMPDOG view</field>
+	</record>
+
+	<record model="labo.analysis.view" id="pro_analysis_view6">
+		<field name="name">EMPDOG alone</field>
+	</record>
+
+	<record model="labo.analysis.view" id="pro_analysis_view7">
+		<field name="name">ACBOV view</field>
+	</record>
+
+	<record model="labo.analysis.type" id="labo_analysis_type_record1">
+		<field name="view_id" ref="pro_analysis_view1"/>
+		<field name="code">EMPBOV</field>
+		<field name="product_id"  ref="monproduit4"/>
+	</record>
+
+	<record model="labo.analysis.type" id="labo_analysis_type_record2">
+		<field name="view_id" ref="pro_analysis_view2"/>
+		<field name="code">Scrapie</field>
+		<field name="product_id"  ref="monproduit4"/>
+	</record>
+
+	<record model="labo.analysis.type" id="labo_analysis_type_record3">
+		<field name="view_id" ref="pro_analysis_view3"/>
+		<field name="code">Id of race</field>
+		<field name="product_id"  ref="monproduit4"/>
+	</record>
+
+	<record model="labo.analysis.type" id="labo_analysis_type_record4">
+		<field name="view_id" ref="pro_analysis_view4"/>
+		<field name="code">Sequence</field>
+		<field name="product_id"  ref="monproduit4"/>
+	</record>
+
+	<record model="labo.analysis.type" id="labo_analysis_type_record5">
+		<field name="view_id" ref="pro_analysis_view5"/>
+		<field name="code">EMPDOG</field>
+		<field name="product_id"  ref="monproduit4"/>
+	</record>
+
+	<record model="labo.analysis.type" id="labo_analysis_type_record6">
+		<field name="view_id" ref="pro_analysis_view6"/>
+		<field name="code">EMPDOG_2</field>
+		<field name="product_id"  ref="monproduit4"/>
+	</record>
+
+	<record model="labo.analysis.type" id="labo_analysis_type_record7">
+		<field name="view_id" ref="pro_analysis_view7"/>
+		<field name="code">ACBOV</field>
+		<field name="product_id"  ref="monproduit4"/>
+	</record>
+
+	<!--   ACBOV -->
+
+    <record model="ir.ui.view" id="labo_acbov_view_request" >
+        <field name="name">Analysis</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+	       	<tree string="Analysis Request">
+	          <field name="name" />
+	          <field name="begining_date" />
+	          <field name="cond_reception"/>
+	          <field name="type_id"/>
+	          <field name="user_id"/>
+	          <field name="date_closed" />
+	          <field name="date_planned" />
+		    <field name="date_awe"/>
+	          <field name="ref_client" />
+	          <field name="pricelist_id" />
+	       </tree>
+       </field>
+    </record>
+    <record model="ir.ui.view" id="labo_view_acbov" >
+        <field name="name">ACBOV</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+     		<form string="Analysis Request">
+     	       <notebook>
+	                <page string="General">
+	                    <field name="name" select="1" />
+	                    <field name="type_id" domain="[('code','=','ACBOV')]" context="{'type_id':'ACBOV'}"/>
+	                    <field name="begining_date" />
+	                    <field name="date_reception" />
+	                    <field name="date_planned" />
+	                    <field name="date_closed" />
+	                    <field name="cond_reception"/>
+					    <field name="date_awe"/>
+	                    <field name="ref_client"  on_change="onchange_pricelist(ref_client)" select="1" />
+	                    <field name="pricelist_id" />
+	                    <field name="user_id" select="1" />
+	                    <field name="invoice_ids" />
+	                    <field name="urgent" />
+	                    <field name="accredit" />
+	                    <field name="desc_1" colspan="4" nolabel="1"/>
+	                    <newline/>
+	                    <field name="desc_2" colspan="4" nolabel="1"/>
+	                    <field name="desc_3" colspan="4" nolabel="1"/>
+	                    <field name="state" colspan="4" nolabel="1"/>
+	                     <group col="4" colspan="4">
+	                        <button name="button_draft" string="Set to Draft" states="cancel" type="object"/>
+	                        <button name="button_cancel" string="Cancel" states="running" type="object"/>
+	                        <button name="button_running" string="Running" states="draft" type="object"/>
+	                        <button name="button_closed" string="Closed" states="draft,running" type="object"/>
+	                    </group>
+                    </page>
+                	<page string="Cases">
+                   		<field name="case_id" nolabel="1"/>
+                	</page>
+                	<page string="Send to">
+                    	<field name="send_to_ids" context="{'request_id': active_id}" nolabel="1"/>
+                	</page>
+                	<page string="Analysis Lines" >
+                    	<field name="sample_ids"  mode="tree,form" editable="top" nolabel="1">
+                    		<tree string="Analysis samples"  colspan="4">
+	                            <field name="progenus_number" />
+	                            <field name="sanitel" />
+	                            <field name="code" />
+	                            <field name="sex" />
+	                            <field name="material" />
+	                            <field name="date_reception" />
+	                            <field name="date_closing" />
+	                            <field name="date_eff" />
+	                            <field name="date_limit" />
+		                		<field name="date_starting"/>
+	                            <field name="file_setup" />
+	                            <field name="follow_sheet_id" />
+			                    <field name="plate_id"  />
+	                            <field name="num_alpha"/>
+		            			<field name="num_alpha2"/>
+	                            <field name="state" />
+	                            <field name="field_awe" />
+	                            <field name="tube" />
+	                            <field name="result" />
+	                            <field name="awe2" />
+	                            <field name="name_animal"  />
+	                            <field name="birthdate"  />
+	                            <field name="tool"  />
+	                            <field name="stock_id"  />
+	                            <field name="user_id"   />
+				    			<field name="sample_id" />
+	                            <field name="nc_gle" />
+	                            <field name="final_c"  />
+	                            <field name="to_be_invoiced"  />
+	                            <field name="nc_reanalyse" />
+				                <field name="v_done" />
+				                <field name="done_i" />
+                        	</tree>
+                        	<form string="Analysis Request" colspan="4" >
+                        		<notebook>
+                            		<page string="lines">
+	                                    <field name="progenus_number" select="2"  />
+	                                    <field name="sanitel" select="2"  />
+	                                    <field name="code" select="2"  />
+	                                    <field name="sex" select="2"  />
+	                                    <field name="material" select="2"  />
+	                                    <!--field name="allele1" select="2"  />
+	                                    <field name="allele2" select="2"  /-->
+	                                    <field name="date_reception" select="2"  />
+	                                    <field name="date_closing" select="2"  />
+	                                    <field name="date_eff" select="2"  />
+	                                    <field name="date_limit" select="2"  />
+		                				<field name="date_starting" select="2"  />
+	                                    <field name="file_setup" select="2"  />
+	                                    <field name="follow_sheet_id" select="2"  />
+			                            <field name="plate_id" select="2" />
+	                                    <field name="num_alpha" select="2"  />
+		            					<field name="num_alpha2" select="2" />
+	                                    <field name="state" select="2"  />
+	                                    <field name="field_awe" select="2"  />
+	                                    <field name="tube" select="2"  />
+	                                    <field name="result" select="2"  />
+	                                    <field name="awe2" select="2"  />
+	                                    <field name="name_animal" select="2"  />
+	                                    <field name="birthdate" select="2"  />
+	                                    <field name="tool" select="2"  />
+	                                    <field name="stock_id" select="2"  />
+	                                    <field name="user_id" select="2"  />
+				    					<field name="sample_id" />
+	                                    <field name="nc_gle" select="2"  />
+	                                    <field name="final_c" select="2"  />
+	                                    <field name="to_be_invoiced" select="2"  />
+	                                    <field name="nc_reanalyse" select="2"  />
+				                        <field name="v_done" select="2"/>
+				                        <field name="done_i" />
+                                        <button name="button_prog_simple" string="Set Progenus Number"  type="object" colspan="4"/>
+                                	</page>
+		                            <page string="Alleles" >
+	                                    <field name="allele_ids"/>
+                                    </page>
+		                            <page string="Old Alleles" >
+	                                    <field name="allele_ids_hist"/>
+                                    </page>
+		                            <page string="History" >
+		                                <field name="history_ids" colspan="4"/>
+                                        <field name="history_p_ids" colspan="4"/>
+				                        <field name="history_s_ids" colspan="4" />
+	                                    <field name="file_h_ids" colspan="4"/>
+		                            </page>
+		                		</notebook>
+            				</form>
+        				</field>
+    				</page>
+				</notebook>
+			</form>
+    	</field>
+    </record>
+    <record model="ir.actions.act_window" id="action_labo_analysis_acbov">
+        <field name="name">ACBOV Requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.analysis.request</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="labo_acbov_view_request"/>
+        <field name="domain" eval="'[(\'type_id\',\'=\',%d)]'%labo_analysis_type_record7" />
+        <field name="context">{'type_id':'ACBOV'}</field>
+    </record>
+
+		<record model="ir.actions.act_window.view" id="act_acbov_tree_view2">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_acbov_view_request"/>
+					<field name="act_window_id" ref="action_labo_analysis_acbov"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_acbov_form_view">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_view_acbov"/>
+					<field name="act_window_id" ref="action_labo_analysis_acbov"/>
+		</record>
+    <menuitem name="Progenus/Requests/ACBOV" id="menu_action_acbov_view" action="action_labo_analysis_acbov"/>
+
+    <record model="ir.ui.view" id="labo_sample_acbov" >
+        <field name="name">ACBOV2</field>
+        <field name="model">labo.sample</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+        	<tree string="Analysis Samples" >
+	             <field name="progenus_number" />
+	             <field name="sanitel" />
+	             <field name="code" />
+	             <field name="sex" />
+	             <field name="material"  />
+	             <field name="date_reception" />
+	             <field name="date_closing"  />
+	            <field name="date_eff"  />
+	             <field name="date_limit"   />
+	             <field name="file_setup"   />
+	             <field name="follow_sheet_id"  />
+			    <field name="plate_id"  />
+	             <field name="num_alpha"  />
+		        <field name="num_alpha2"/>
+		         <field name="date_starting"   />
+	             <field name="state" />
+	             <field name="field_awe"  />
+	             <field name="tube"  />
+	             <field name="result"  />
+	             <field name="awe2"  />
+	             <field name="name_animal"  />
+	             <field name="birthdate"  />
+	             <field name="tool" />
+	             <field name="stock_id"  />
+	             <field name="user_id"  />
+				    <field name="sample_id" />
+	             <field name="nc_gle"  />
+	             <field name="final_c"  />
+	             <field name="to_be_invoiced" />
+	             <field name="nc_reanalyse"  />
+				<field name="v_done" />
+				            <field name="done_i" />
+        	</tree>
+    	</field>
+	</record>
+    <record model="ir.ui.view" id="labo_sample_acbov_form" >
+        <field name="name">ACBOV1</field>
+        <field name="model">labo.sample</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+        	<form string="Analysis Samples" >
+         		<notebook>
+            		<page string="Information">
+		                <field name="progenus_number" select="1"  />
+		                <field name="sanitel" select="2"  />
+		                <field name="code" select="2"  />
+		                <field name="sex" select="2"  />
+		                <field name="material" select="2"  />
+		                <!--field name="allele1" select="2"  />
+		                <field name="allele2" select="2"  /-->
+	                    <!-- <field name="marker" select="1"/-->
+		                <field name="date_reception" select="2"  />
+		                <field name="date_closing" select="2"  />
+	                    <field name="date_eff" select="2"  />
+		                <field name="date_limit" select="2"  />
+		                <field name="date_starting" select="2"  />
+		                <field name="file_setup" select="2"  />
+		                <field name="follow_sheet_id" select="2"  />
+			            <field name="plate_id" select="2" />
+		                <field name="num_alpha" select="2"  />
+		            	<field name="num_alpha2" select="2" />
+		                <field name="state" select="2"  />
+		                <field name="field_awe" select="2"  />
+		                <field name="tube" select="2"  />
+		                <field name="result" select="2"  />
+		                <field name="awe2" select="2"  />
+		                <field name="name_animal" select="2"  />
+		                <field name="birthdate" select="2"  />
+		                <field name="tool" select="2"  />
+		                <field name="stock_id" select="2"  />
+	                    <field name="user_id" select="2"  />
+				    <field name="sample_id" />
+		                <field name="nc_gle" select="2"  />
+		                <field name="final_c" select="2"  />
+		                <field name="to_be_invoiced" select="2"  />
+		                <field name="nc_reanalyse" select="2"  />
+				        <field name="v_done" select="2"/>
+				            <field name="done_i" />
+                        <button name="button_prog_simple" string="Set Progenus Number"  type="object" colspan="4"/>
+		            </page>
+                    <page string="Alleles">
+						<field name="allele_ids"  colspan="4" nolabel="1"/>
+                    </page>
+		                            <page string="Old Alleles" >
+	                                    <field name="allele_ids_hist"/>
+                                    </page>
+            		<page string="History" >
+		                <field name="history_ids" colspan="4"/>
+                        <field name="history_p_ids" colspan="4"/>
+				        <field name="history_s_ids" colspan="4" />
+	                    <field name="file_h_ids" colspan="4" />
+            		</page>
+            	</notebook>
+		    </form>
+    	</field>
+	</record>
+    <record model="ir.actions.act_window" id="action_labo_sample_acbov">
+        <field name="name">ACBOV samples</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.sample</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="domain">[('sample_id.type_id.code','ilike','ACBOV')]</field>
+        <field name="view_id" ref="labo_sample_acbov"/>
+        <field name="context">{'type_id':'ACBOV'}</field>
+		<field name="limit" eval="300"/>
+    </record>
+
+		<record model="ir.actions.act_window.view" id="act_labo_acsample_tree_view2">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_sample_acbov"/>
+					<field name="act_window_id" ref="action_labo_sample_acbov"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_labo_acsample_form_view">
+					<field name="sequence" eval="2"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_sample_acbov_form"/>
+					<field name="act_window_id" ref="action_labo_sample_acbov"/>
+		</record>
+
+    <menuitem name="Progenus/Samples/ACBOV Samples" id="menu_action_acbov_form_view" action="action_labo_sample_acbov"/>
+
+    <record model="ir.ui.view" id="labo_view_acbov_an1" >
+        <field name="name">ACBOV</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+        	<form string="Analysis Request">
+            	<notebook>
+				<page string="General">
+					<field name="name" select="1" />
+					<field name="type_id" domain="[('code','ilike','ACBOV')]" context="{'type_id':'ACBOV'}"/>
+					<field name="begining_date" />
+					<field name="date_reception" />
+					<field name="date_planned" />
+					<field name="date_closed" />
+					<field name="cond_reception"/>
+					<field name="date_awe"/>
+					<field name="ref_client"  on_change="onchange_pricelist(ref_client)" select="1" />
+					<field name="pricelist_id" />
+					<field name="user_id" select="1" />
+					<field name="invoice_ids" />
+					<field name="urgent" />
+					<field name="accredit" />
+					<field name="desc_1" colspan="4" nolabel="1"/>
+					<newline/>
+
+					<field name="desc_2" colspan="4" nolabel="1"/>
+					<field name="desc_3" colspan="4" nolabel="1"/>
+					<field name="state" colspan="4" nolabel="1"/>
+				 	<group col="4" colspan="4">
+						<button name="button_draft" string="Set to Draft" states="cancel" type="object"/>
+						<button name="button_cancel" string="Cancel" states="running" type="object"/>
+						<button name="button_running" string="Running" states="draft" type="object"/>
+						<button name="button_closed" string="Closed" states="draft,running" type="object"/>
+					</group>
+					</page>
+				<page string="Cases">
+					<field name="case_id" nolabel="1"/>
+				</page>
+				<page string="Send to">
+					<field name="send_to_ids" nolabel="1"/>
+				</page>
+			</notebook>
+		</form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_labo_req_acbov_an1">
+        <field name="name">ACBOV request</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.analysis.request</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="labo_acbov_view_request"/>
+        <field name="domain" eval="'[(\'type_id\',\'=\',%d)]'%labo_analysis_type_record7" />
+<!--        <field name="domain">[('type_id.code','ilike','ACBOV')]</field>-->
+        <field name="context">{'type_id':'ACBOV'}</field>
+    </record>
+
+		<record model="ir.actions.act_window.view" id="act_samplesac_tree_view2">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_acbov_view_request"/>
+					<field name="act_window_id" ref="action_labo_req_acbov_an1"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_samplesac_form_view">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_view_acbov_an1"/>
+					<field name="act_window_id" ref="action_labo_req_acbov_an1"/>
+		</record>
+
+    <menuitem name="Progenus/Consult Analysis/ACBOV" id="menu_action_acbovan_form_view12" action="action_labo_req_acbov_an1"/>
+
+	<!-- EMPBOV -->
+
+    <record model="ir.ui.view" id="labo_view_request_bis" >
+        <field name="name">Analysis</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+	       	<tree string="Analysis Request">
+	          <field name="name" />
+	          <field name="begining_date" />
+	          <field name="cond_reception"/>
+	          <field name="type_id"/>
+	          <field name="user_id"/>
+	          <field name="date_closed" />
+	          <field name="date_planned" />
+		    <field name="date_awe"/>
+	          <field name="ref_client" />
+	          <field name="pricelist_id" />
+	       </tree>
+       </field>
+    </record>
+    <record model="ir.ui.view" id="labo_view_request" >
+        <field name="name">Analysis</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+	       	<tree string="Analysis Request">
+	          <field name="name" />
+	          <field name="begining_date" />
+	          <field name="cond_reception"/>
+	          <field name="type_id"/>
+	          <field name="user_id"/>
+	          <field name="date_closed" />
+	          <field name="date_planned" />
+		    <field name="date_awe"/>
+	          <field name="ref_client" />
+	          <field name="pricelist_id" />
+	       </tree>
+       </field>
+    </record>
+    <record model="ir.ui.view" id="labo_view_empbov" >
+        <field name="name">EMPBOV</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+     		<form string="Analysis Request">
+     	       <notebook>
+	                <page string="General">
+	                    <field name="name" select="1" />
+	                    <field name="type_id" domain="[('code','=','EMPBOV')]" context="{'type_id':'EMPBOV'}"/>
+	                    <field name="begining_date" />
+	                    <field name="date_reception" />
+	                    <field name="date_planned" />
+	                    <field name="date_closed" />
+	                    <field name="cond_reception"/>
+					    <field name="date_awe"/>
+	                    <field name="ref_client"  on_change="onchange_pricelist(ref_client)" select="1" />
+	                    <field name="pricelist_id" />
+	                    <field name="user_id" select="1" />
+	                    <field name="invoice_ids" />
+	                    <field name="urgent" />
+	                    <field name="accredit" />
+	                    <field name="desc_1" colspan="4" nolabel="1"/>
+	                    <newline/>
+	                    <field name="desc_2" colspan="4" nolabel="1"/>
+	                    <field name="desc_3" colspan="4" nolabel="1"/>
+	                    <field name="state" colspan="4" nolabel="1"/>
+	                     <group col="4" colspan="4">
+	                        <button name="button_draft" string="Set to Draft" states="cancel" type="object"/>
+	                        <button name="button_cancel" string="Cancel" states="running" type="object"/>
+	                        <button name="button_running" string="Running" states="draft" type="object"/>
+	                        <button name="button_closed" string="Closed" states="draft,running" type="object"/>
+	                    </group>
+                    </page>
+                	<page string="Cases">
+                   		<field name="case_id" nolabel="1"/>
+                	</page>
+                	<page string="Send to">
+                    	<field name="send_to_ids" context="{'request_id': active_id}" nolabel="1"/>
+                	</page>
+                	<page string="Analysis Lines" >
+                    	<field name="sample_ids"  mode="tree,form" editable="top" nolabel="1">
+                    		<tree string="Analysis samples"  colspan="4">
+	                            <field name="progenus_number" />
+	                            <field name="sanitel" />
+	                            <field name="code" />
+	                            <field name="sex" />
+	                            <field name="material" />
+	                            <field name="date_reception" />
+	                            <field name="date_closing" />
+	                            <field name="date_eff" />
+	                            <field name="notice" />
+	                            <field name="date_limit" />
+		                		<field name="date_starting"/>
+	                            <field name="file_setup" />
+	                            <field name="follow_sheet_id" />
+			                    <field name="plate_id"  />
+	                            <field name="num_alpha"/>
+		            			<field name="num_alpha2"/>
+	                            <field name="state" />
+	                            <field name="field_awe" />
+	                            <field name="tube" />
+	                            <field name="result" />
+	                            <field name="awe2" />
+	                            <field name="name_animal"  />
+	                            <field name="birthdate"  />
+	                            <field name="tool"  />
+	                            <field name="stock_id"  />
+	                            <field name="user_id"   />
+				    			<field name="sample_id" />
+	                            <field name="nc_gle" />
+	                            <field name="final_c"  />
+	                            <field name="to_be_invoiced"  />
+	                            <field name="nc_reanalyse" />
+				                <field name="v_done" />
+				            <field name="done_i" />
+                        	</tree>
+                        	<form string="Analysis Request" colspan="4" >
+                        		<notebook>
+                            		<page string="lines">
+	                                    <field name="progenus_number" select="2"  />
+	                                    <field name="sanitel" select="2"  />
+	                                    <field name="code" select="2"  />
+	                                    <field name="sex" select="2"  />
+	                                    <field name="material" select="2"  />
+	                                    <!--field name="allele1" select="2"  />
+	                                    <field name="allele2" select="2"  /-->
+	                                    <field name="date_reception" select="2"  />
+	                                    <field name="date_closing" select="2"  />
+	                                    <field name="date_eff" select="2"  />
+	                            <field name="notice" />
+	                                    <field name="date_limit" select="2"  />
+		                				<field name="date_starting" select="2"  />
+	                                    <field name="file_setup" select="2"  />
+	                                    <field name="follow_sheet_id" select="2"  />
+			                            <field name="plate_id" select="2" />
+	                                    <field name="num_alpha" select="2"  />
+		            					<field name="num_alpha2" select="2" />
+	                                    <field name="state" select="2"  />
+	                                    <field name="field_awe" select="2"  />
+	                                    <field name="tube" select="2"  />
+	                                    <field name="result" select="2"  />
+	                                    <field name="awe2" select="2"  />
+	                                    <field name="name_animal" select="2"  />
+	                                    <field name="birthdate" select="2"  />
+	                                    <field name="tool" select="2"  />
+	                                    <field name="stock_id" select="2"  />
+	                                    <field name="user_id" select="2"  />
+				    					<field name="sample_id" />
+	                                    <field name="nc_gle" select="2"  />
+	                                    <field name="final_c" select="2"  />
+	                                    <field name="to_be_invoiced" select="2"  />
+	                                    <field name="nc_reanalyse" select="2"  />
+				                        <field name="v_done" select="2"/>
+				            <field name="done_i" />
+                                        <button name="button_prog_simple" string="Set Progenus Number"  type="object" colspan="4"/>
+                                	</page>
+		                            <page string="Alleles" >
+	                                    <field name="allele_ids"/>
+                                    </page>
+		                            <page string="Old Alleles" >
+	                                    <field name="allele_ids_hist"/>
+                                    </page>
+		                            <page string="History" >
+		                                <field name="history_ids" colspan="4"/>
+                                        <field name="history_p_ids" colspan="4"/>
+				                        <field name="history_s_ids" colspan="4" />
+	                                    <field name="file_h_ids" colspan="4"/>
+		                            </page>
+		                		</notebook>
+            				</form>
+        				</field>
+    				</page>
+				</notebook>
+			</form>
+    	</field>
+    </record>
+    <record model="ir.actions.act_window" id="action_labo_analysis_empbov">
+        <field name="name">EMPBOV Requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.analysis.request</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="labo_view_request"/>
+        <field name="domain" eval="'[(\'type_id\',\'=\',%d)]'%labo_analysis_type_record1" />
+        <field name="context">{'type_id':'EMPBOV'}</field>
+    </record>
+
+		<record model="ir.actions.act_window.view" id="act_empbov_tree_view2">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_view_request"/>
+					<field name="act_window_id" ref="action_labo_analysis_empbov"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_empbov_form_view">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_view_empbov"/>
+					<field name="act_window_id" ref="action_labo_analysis_empbov"/>
+		</record>
+    <menuitem name="Progenus/Requests/EMPBOV" id="menu_action_empbov_view" action="action_labo_analysis_empbov"/>
+
+    <record model="ir.ui.view" id="labo_sample_empbov" >
+        <field name="name">EMPBOV2</field>
+        <field name="model">labo.sample</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+        	<tree string="Analysis Samples" >
+	             <field name="progenus_number" />
+	             <field name="sanitel" />
+	             <field name="code" />
+	             <field name="sex" />
+	             <field name="material"  />
+	             <!--field name="allele1"  />
+	             <field name="allele2"  /-->
+	             <field name="date_reception" />
+	             <field name="date_closing"  />
+	            <field name="date_eff"  />
+	             <field name="date_limit"   />
+	             <field name="file_setup"   />
+	             <field name="follow_sheet_id"  />
+	                            <field name="notice" />
+			    <field name="plate_id"  />
+	             <field name="num_alpha"  />
+		        <field name="num_alpha2"/>
+		         <field name="date_starting"   />
+	             <field name="state" />
+	             <field name="field_awe"  />
+	             <field name="tube"  />
+	             <field name="result"  />
+	             <field name="awe2"  />
+	             <field name="name_animal"  />
+	             <field name="birthdate"  />
+	             <field name="tool" />
+	             <field name="stock_id"  />
+	             <field name="user_id"  />
+				    <field name="sample_id" />
+	             <field name="nc_gle"  />
+	             <field name="final_c"  />
+	             <field name="to_be_invoiced" />
+	             <field name="nc_reanalyse"  />
+				<field name="v_done" />
+				<field name="done_i" />
+        	</tree>
+    	</field>
+	</record>
+    <record model="ir.ui.view" id="labo_sample_empbov_form" >
+        <field name="name">EMPBOV1</field>
+        <field name="model">labo.sample</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+        	<form string="Analysis Samples" >
+         		<notebook>
+            		<page string="Information">
+		                <field name="progenus_number" select="1"  />
+		                <field name="sanitel" select="2"  />
+		                <field name="code" select="2"  />
+		                <field name="sex" select="2"  />
+		                <field name="material" select="2"  />
+		                <!--field name="allele1" select="2"  />
+		                <field name="allele2" select="2"  /-->
+	                    <!-- <field name="marker" select="1"/-->
+		                <field name="date_reception" select="2"  />
+		                <field name="date_closing" select="2"  />
+	                    <field name="date_eff" select="2"  />
+		                <field name="date_limit" select="2"  />
+		                <field name="date_starting" select="2"  />
+		                <field name="file_setup" select="2"  />
+		                <field name="follow_sheet_id" select="2"  />
+			            <field name="plate_id" select="2" />
+		                <field name="num_alpha" select="2"  />
+		            	<field name="num_alpha2" select="2" />
+		                <field name="state" select="2"  />
+		                <field name="field_awe" select="2"  />
+		                <field name="tube" select="2"  />
+		                <field name="result" select="2"  />
+		                <field name="awe2" select="2"  />
+		                <field name="name_animal" select="2"  />
+		                <field name="birthdate" select="2"  />
+		                <field name="tool" select="2"  />
+		                <field name="stock_id" select="2"  />
+	                    <field name="user_id" select="2"  />
+	                            <field name="notice" />
+				    <field name="sample_id" />
+		                <field name="nc_gle" select="2"  />
+		                <field name="final_c" select="2"  />
+		                <field name="to_be_invoiced" select="2"  />
+		                <field name="nc_reanalyse" select="2"  />
+				        <field name="v_done" select="2"/>
+				            <field name="done_i" />
+                        <button name="button_prog_simple" string="Set Progenus Number"  type="object" colspan="4"/>
+		            </page>
+                    <page string="Alleles">
+						<field name="allele_ids"  colspan="4" nolabel="1"/>
+                    </page>
+		                            <page string="Old Alleles" >
+	                                    <field name="allele_ids_hist"/>
+                                    </page>
+            		<page string="History" >
+		                <field name="history_ids" colspan="4"/>
+                        <field name="history_p_ids" colspan="4"/>
+				        <field name="history_s_ids" colspan="4" />
+	                    <field name="file_h_ids" colspan="4" />
+            		</page>
+            	</notebook>
+		    </form>
+    	</field>
+	</record>
+    <record model="ir.actions.act_window" id="action_labo_sample_empbov">
+        <field name="name">EMPBOV samples</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.sample</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="domain">[('sample_id.type_id.code','ilike','EMPBOV')]</field>
+        <field name="view_id" ref="labo_sample_empbov"/>
+        <field name="context">{'type_id':'EMPBOV'}</field>
+		<field name="limit" eval="300"/>
+    </record>
+
+		<record model="ir.actions.act_window.view" id="act_labo_sample_tree_view2">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_sample_empbov"/>
+					<field name="act_window_id" ref="action_labo_sample_empbov"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_labo_sample_form_view">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_sample_empbov_form"/>
+					<field name="act_window_id" ref="action_labo_sample_empbov"/>
+		</record>
+
+    <menuitem name="Progenus/Samples/EMPBOV Samples" id="menu_action_empbov_form_view" action="action_labo_sample_empbov"/>
+
+    <record model="ir.ui.view" id="labo_view_empbov_an1" >
+        <field name="name">EMPBOV</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+        	<form string="Analysis Request">
+            	<notebook>
+				<page string="General">
+					<field name="name" select="1" />
+					<field name="type_id" domain="[('code','ilike','EMPBOV')]" context="{'type_id':'EMPBOV'}"/>
+					<field name="begining_date" />
+					<field name="date_reception" />
+					<field name="date_planned" />
+					<field name="date_closed" />
+					<field name="cond_reception"/>
+					<field name="date_awe"/>
+					<field name="ref_client"  on_change="onchange_pricelist(ref_client)" select="1" />
+					<field name="pricelist_id" />
+					<field name="user_id" select="1" />
+					<field name="invoice_ids" />
+					<field name="urgent" />
+					<field name="accredit" />
+					<field name="desc_1" colspan="4" nolabel="1"/>
+					<newline/>
+
+					<field name="desc_2" colspan="4" nolabel="1"/>
+					<field name="desc_3" colspan="4" nolabel="1"/>
+					<field name="state" colspan="4" nolabel="1"/>
+				 	<group col="4" colspan="4">
+						<button name="button_draft" string="Set to Draft" states="cancel" type="object"/>
+						<button name="button_cancel" string="Cancel" states="running" type="object"/>
+						<button name="button_running" string="Running" states="draft" type="object"/>
+						<button name="button_closed" string="Closed" states="draft,running" type="object"/>
+					</group>
+					</page>
+				<page string="Cases">
+					<field name="case_id" nolabel="1"/>
+				</page>
+				<page string="Send to">
+					<field name="send_to_ids" nolabel="1"/>
+				</page>
+			</notebook>
+		</form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="labo_view_empbov_consult" >
+        <field name="name">EMPBOV</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+        	<form string="Analysis Request">
+            	<notebook>
+				<page string="General">
+					<field name="name" select="1" />
+					<field name="type_id" domain="[('code','ilike','EMPBOV')]" context="{'type_id':'EMPBOV'}"/>
+					<field name="begining_date" />
+					<field name="date_reception" />
+					<field name="date_planned" />
+					<field name="date_closed" />
+					<field name="cond_reception"/>
+					<field name="date_awe"/>
+					<field name="ref_client"  on_change="onchange_pricelist(ref_client)" select="1" />
+					<field name="pricelist_id" />
+					<field name="user_id" select="1" />
+					<field name="invoice_ids" />
+					<field name="urgent" />
+					<field name="accredit" />
+					<field name="desc_1" colspan="4" nolabel="1"/>
+					<newline/>
+
+					<field name="desc_2" colspan="4" nolabel="1"/>
+					<field name="desc_3" colspan="4" nolabel="1"/>
+					<field name="state" colspan="4" nolabel="1"/>
+				 	<group col="4" colspan="4">
+						<button name="button_draft" string="Set to Draft" states="cancel" type="object"/>
+						<button name="button_cancel" string="Cancel" states="running" type="object"/>
+						<button name="button_running" string="Running" states="draft" type="object"/>
+						<button name="button_closed" string="Closed" states="draft,running" type="object"/>
+					</group>
+					</page>
+				<page string="Cases">
+					<field name="case_id" nolabel="1"/>
+				</page>
+				<page string="Send to">
+					<field name="send_to_ids" nolabel="1"/>
+				</page>
+			</notebook>
+		</form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_labo_req_empbov_an111">
+        <field name="name">EMPBOV Requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.analysis.request</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="labo_view_request"/>
+        <field name="domain" eval="'[(\'type_id\',\'=\',%d)]'%labo_analysis_type_record1" />
+        <field name="context">{'type_id':'EMPBOV'}</field>
+    </record>
+
+		<record model="ir.actions.act_window.view" id="act_samplesemp_tree_view222">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_view_request"/>
+					<field name="act_window_id" ref="action_labo_req_empbov_an111"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_samplesemp_form_view222">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_view_empbov_consult"/>
+					<field name="act_window_id" ref="action_labo_req_empbov_an111"/>
+		</record>
+
+    <menuitem name="Progenus/Consult Analysis/EMPBOV" id="menu_actions_empbovan_form_view12" action="action_labo_req_empbov_an111"/>
+
+
+	<!--EMPDOG view-->
+
+     <record model="ir.ui.view" id="labo_view_request_empdog_id" >
+        <field name="name">EMPDOG</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+        	<tree string="Analysis Request">
+	          <field name="name" />
+	          <field name="begining_date" />
+	          <field name="cond_reception"/>
+	          <field name="type_id" />
+	          <field name="user_id"/>
+	          <field name="date_closed" />
+	          <field name="date_planned" />
+	          <field name="ref_client" />
+	          <field name="pricelist_id" />
+	        </tree>
+        </field>
+     </record>
+	 <record model="ir.ui.view" id="labo_view_empdog" >
+        <field name="name">EMPDOG REQUEST</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+    	    <form string="Analysis Request">
+        		<notebook>
+            		<page string="General">
+		              <field name="name" select="1" />
+		              <field name="type_id" domain="[('code','=','EMPDOG')]" context="{'type_id':'EMPDOG'}"/>
+		              <field name="begining_date" />
+		              <field name="date_reception" />
+		              <field name="date_planned" />
+		              <field name="date_closed" />
+		              <field name="cond_reception"/>
+		              <field name="ref_client"  on_change="onchange_pricelist(ref_client)" select="1" />
+		              <field name="pricelist_id" />
+		              <field name="user_id" select="1" />
+		              <field name="invoice_ids" />
+		              <field name="urgent" />
+		              <field name="accredit" />
+		              <field name="desc_1" colspan="4" nolabel="1"/>
+		              <newline/>
+		              <field name="desc_2" colspan="4" nolabel="1"/>
+		              <field name="desc_3" colspan="4" nolabel="1"/>
+		              <field name="state" colspan="4" nolabel="1"/>
+		              <group col="4" colspan="4">
+		                <button name="button_draft" string="Set to Draft" states="cancel" type="object"/>
+		                <button name="button_cancel" string="Cancel" states="running" type="object"/>
+		                <button name="button_running" string="Running" states="draft" type="object"/>
+		                <button name="button_closed" string="Closed" states="draft,running" type="object"/>
+		              </group>
+		            </page>
+            		<page string="Send to">
+              			<field name="send_to_ids" context="{'request_id': active_id}" nolabel="1"/>
+            		</page>
+            		<page string="Analysis Lines" >
+              			<field name="sample_ids"  mode="tree,form" editable="top" nolabel="1">
+              				<tree string="Analysis samples"  colspan="4">
+				                <field name="dog_mother"  domain="[('type_animal','=','dog')]" colspan="4" />
+				                <field name="dog_father" domain="[('type_animal','=','dog')]" colspan="4" />
+				                <field name="dog_child"  context="{'isd':'k'}" domain="[('type_animal','=','dog')]" colspan="4" />
+								<field name="date_mod"/>
+				                <field name="state"/>
+				                <field name="tatooer_id"  />
+				                <field name="lp_file"  />
+				                <field name="lp_doss"  />
+				                <field name="lp_serv"  />
+				                <field name="preleveur1_id"  />
+	                            <field name="user_id"  />
+				                <field name="sample_id" />
+				                <field name="date_reception" />
+				                <field name="date_limit" />
+		                		<field name="date_starting"  />
+				                <field name="date_closing"  />
+				                <field name="res_filiation" />
+					            <field name="state_2" />
+				                <field name="history_ids"  />
+				              </tree>
+	              <form string="Analysis Request" colspan="4" >
+	                <notebook>
+	                  <page string="lines">
+	                    <field name="dog_mother" select="2"  domain="[('type_animal','=','dog')]" colspan="4" on_change="onchange_dog(dog_mother)"/>
+	                    <field name="dog_father" select="2"  domain="[('type_animal','=','dog')]" colspan="4" on_change="onchange_dog(dog_father)" />
+				        <field name="dog_child" select="2" domain="[('type_animal','=','dog')]" colspan="4" context="{'isd':'k'}" on_change="onchange_dog(dog_child)"/>
+				        <field name="tatooer_id"  />
+	                    <field name="date_reception" select="2"  />
+	                    <field name="date_limit" select="2"  />
+	                    <field name="date_mod" select="2"  />
+	                    <field name="date_closing" select="2"  />
+	                    <field name="res_filiation" select="2"  />
+	                    <field name="lp_file" select="2"  />
+	                    <field name="lp_doss" select="2"  />
+		                <field name="date_starting" select="2"  />
+	                    <field name="lp_serv" select="2"  />
+	                    <field name="preleveur1_id" select="2"  />
+	                    <field name="user_id" select="2"  />
+	                    <field name="sample_id" select="2"/>
+					    <field name="state_2" select="2"  />
+					    <field name="notice" select="2"  colspan="4" />
+					    <newline/>
+<!--					    <newline/>
+                         <group col="4" colspan="4">
+                        <button name="button_prog_femal" string="Set prog femal"  type="object"/>
+                        <button name="button_prog_child" string="Set prog Child"  type="object"/>
+                        <button name="button_prog_mal" string="set prog mal"  type="object"/>
+                    </group>
+-->
+	                  </page>
+	                  <page string="History" >
+		                <field name="history_ids" colspan="4" nolabel="1"/>
+	                  </page>
+                        <page string="Cases">
+							<field name="case_id" colspan="4" />
+                        </page>
+	                </notebook>
+	              </form>
+	              </field>
+	            </page>
+	          </notebook>
+	        </form>
+        </field>
+      </record>
+
+	<act_window name="Open Samples"
+		domain="[('sample_id', '=', active_id)]"
+		context="{ 'type':type_id}"
+		view_type="form"
+		view_mode="tree,form"
+		res_model="labo.sample"
+		src_model="labo.analysis.request"
+		limit="300"
+		id="act_labo_sample_open1"/>
+
+      <record model="ir.actions.act_window" id="action_labo_analysis_empdog">
+        <field name="name">EMPDOG Request</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.analysis.request</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="labo_view_request_empdog_id"/>
+        <field name="domain" eval="'[(\'type_id\',\'=\',%d)]'%labo_analysis_type_record5" />
+        <field name="context">{'type_id':'EMPDOG'}</field>
+      </record>
+
+		<record model="ir.actions.act_window.view" id="act_sampleempdog_tree_view2">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_view_request_empdog_id"/>
+					<field name="act_window_id" ref="action_labo_analysis_empdog"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_sampleempdog_form_view">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_view_empdog"/>
+					<field name="act_window_id" ref="action_labo_analysis_empdog"/>
+		</record>
+      <menuitem name="Progenus/Requests/EMPDOG" id="menu_action_empdogs_view" action="action_labo_analysis_empdog"/>
+
+      <record model="ir.ui.view" id="labo_sample_empdog2" >
+        <field name="name">EMPDOG2</field>
+        <field name="model">labo.sample</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+        <tree string="Analysis Samples" >
+          <field name="dog_mother"  domain="[('type_animal','=','dog')]" colspan="4" on_change="onchange_dog(dog_mother)"/>
+          <field name="dog_father"  domain="[('type_animal','=','dog')]" colspan="4" on_change="onchange_dog(dog_father)" />
+		  <field name="dog_child"  domain="[('type_animal','=','dog')]" colspan="4" on_change="onchange_dog(dog_child)" />
+          <field name="date_mod"  />
+		  <field name="tatooer_id"  />
+          <field name="date_reception"  />
+          <field name="res_filiation"  />
+		  <field name="date_starting" />
+          <field name="date_limit"  />
+          <field name="date_closing"  />
+          <field name="lp_file"    />
+          <field name="lp_doss"    />
+          <field name="lp_serv"    />
+          <field name="preleveur1_id" />
+	      <field name="user_id"   />
+          <field name="sample_id" />
+		<field name="state_2"     />
+		<field name="v_tag"     />
+        </tree>
+        </field>
+      </record>
+
+
+	<record model="ir.ui.view" id="labo_sample_empdog_form" >
+        <field name="name">EMPDOG1</field>
+        <field name="model">labo.sample</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+        <form string="Analysis Samples" >
+			<notebook>
+				<page string="Information">
+					<field name="dog_mother" domain="[('type_animal','=','dog')]"  colspan="4" select="1" on_change="onchange_dog(dog_mother)" />
+					<field name="dog_father" select="1"  domain="[('type_animal','=','dog')]" colspan="4" on_change="onchange_dog(dog_father)" />
+		            <field name="dog_child" select="1" domain="[('type_animal','=','dog')]" colspan="4" on_change="onchange_dog(dog_child)" />
+					<field name="res_filiation" select="2"  />
+					<field name="date_mod" select="2"  />
+				    <field name="tatooer_id"  />
+					<field name="date_reception" select="1"/>
+					<field name="date_limit" select="2"  />
+		            <field name="date_starting" select="2"  />
+					<field name="date_closing" select="2"  />
+					<field name="lp_file" select="2"  />
+					<field name="lp_doss" select="2"  />
+	                <field name="lp_serv" comparator="=" select="1"/>
+					<field name="preleveur1_id" select="2"  />
+	                <field name="user_id" select="2"  />
+		      <field name="v_tag"     />
+					<field name="sample_id" select="2" domain="[('type_id.code','=','EMPDOG')]" />
+					<field name="state_2" select="2"  />
+					<field name="notice" select="2" colspan="4" />
+					<newline/>
+					<newline/>
+				</page>
+				<page string="History" >
+		                <field name="history_ids" colspan="4"  nolabel="1"/>
+				</page>
+               <page string="Cases">
+			   	<field name="case_id" colspan="4" />
+               </page>
+			</notebook>
+		</form>
+    </field>
+</record>
+
+
+<!-- EMPDOG AND EMPDOG ALONE IN THE SAME VIEW-->
+
+      <record model="ir.ui.view" id="labo_sample_empdog12" >
+        <field name="name">EMPDOG12</field>
+        <field name="model">labo.sample</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+        <tree string="Analysis Samples" >
+          <field name="dog_mother"  domain="[('type_animal','=','dog')]" colspan="4" on_change="onchange_dog(dog_mother)"/>
+          <field name="dog_father"  domain="[('type_animal','=','dog')]" colspan="4" on_change="onchange_dog(dog_father)"/>
+		  <field name="dog_child"  domain="[('type_animal','=','dog')]" colspan="4" on_change="onchange_dog(dog_child)"/>
+			<field name="date_mod" select="2"  />
+		  <field name="tatooer_id"  />
+          <field name="date_reception"  />
+          <field name="res_filiation"  />
+		  <field name="date_starting" />
+          <field name="date_limit"  />
+          <field name="date_closing"  />
+          <field name="lp_file"    />
+          <field name="lp_doss"    />
+          <field name="lp_serv"    />
+          <field name="preleveur1_id" />
+	      <field name="user_id"   />
+          <field name="sample_id" />
+		<field name="state_2"     />
+		      <field name="v_tag"     />
+        </tree>
+        </field>
+      </record>
+
+
+	<record model="ir.ui.view" id="labo_sample_empdog1_form" >
+        <field name="name">EMPDOG11</field>
+        <field name="model">labo.sample</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+        <form string="Analysis Samples" >
+			<notebook>
+				<page string="Information">
+					<field name="dog_mother" domain="[('type_animal','=','dog')]"  colspan="4" select="1" on_change="onchange_dog(dog_mother)"/>
+					<field name="dog_father" select="1"  domain="[('type_animal','=','dog')]" colspan="4" on_change="onchange_dog(dog_father)"/>
+		            <field name="dog_child" select="1" domain="[('type_animal','=','dog')]" colspan="4" on_change="onchange_dog(dog_child)"/>
+					<field name="res_filiation" select="2"  />
+					<field name="date_mod" select="2"  />
+				    <field name="tatooer_id"  />
+					<field name="date_reception" select="1"/>
+					<field name="date_limit" select="2"  />
+		            <field name="date_starting" select="2"  />
+					<field name="date_closing" select="2"  />
+					<field name="lp_file" select="2"  />
+					<field name="lp_doss" select="2"  />
+	                <field name="lp_serv" comparator="=" select="1"/>
+					<field name="preleveur1_id" select="2"  />
+	                <field name="user_id" select="2"  />
+					<field name="sample_id" select="2" domain="[('type_id.code','=','EMPDOG')]" />
+					<field name="state_2" select="2"  />
+					<field name="notice" select="2" colspan="4" />
+		      <field name="v_tag"     />
+					<newline/>
+					<newline/>
+				</page>
+				<page string="History" >
+		                <field name="history_ids" colspan="4"  nolabel="1"/>
+				</page>
+               <page string="Cases">
+			   	<field name="case_id" colspan="4" />
+               </page>
+			</notebook>
+		</form>
+    </field>
+</record>
+
+	<record model="ir.actions.act_window" id="action_labo_sample_empdog_mix">
+        <field name="name">EMPDOG and EMPDOG Alone samples</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.sample</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="labo_sample_empdog12"/>
+        <field name="context">{'type_id':'empdog1_2'}</field>
+        <field name="domain">[('sample_id.type_id.code','in', ('EMPDOG' , 'EMPDOG_2'))]</field>
+		<field name="limit" eval="300"/>
+
+    </record>
+
+		<record model="ir.actions.act_window.view" id="act_sampledogmix_tree">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_sample_empdog12"/>
+					<field name="act_window_id" ref="action_labo_sample_empdog_mix"/>
+		</record>
+
+		<record model="ir.actions.act_window.view" id="act_sampledogmix_form">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_sample_empdog1_form"/>
+					<field name="act_window_id" ref="action_labo_sample_empdog_mix"/>
+		</record>
+    <menuitem name="Progenus/Samples/EMPDOG and EMPDOG Alone Samples" id="menu_action_empdogsmix_form_view" action="action_labo_sample_empdog_mix"/>
+
+
+	<record model="ir.actions.act_window" id="action_labo_sample_empdog_1">
+        <field name="name">EMPDOG samples</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.sample</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="labo_sample_empdog2"/>
+        <field name="context">{'type_id':'EMPDOG'}</field>
+        <field name="domain">[('sample_id.type_id.code','=','EMPDOG')]</field>
+		<field name="limit" eval="300"/>
+
+    </record>
+
+		<record model="ir.actions.act_window.view" id="act_sampledog_tree">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_sample_empdog2"/>
+					<field name="act_window_id" ref="action_labo_sample_empdog_1"/>
+		</record>
+
+		<record model="ir.actions.act_window.view" id="act_sampledog_form">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_sample_empdog_form"/>
+					<field name="act_window_id" ref="action_labo_sample_empdog_1"/>
+		</record>
+    <menuitem name="Progenus/Samples/EMPDOG Samples" id="menu_action_empdog_form_view" action="action_labo_sample_empdog_1"/>
+
+
+	<record model="ir.actions.act_window" id="action_labo_sample_empdog_1_state2">
+        <field name="name">EMPDOG Samples</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.sample</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="labo_sample_empdog2"/>
+        <field name="context">{'type_id':'EMPDOG'}</field>
+        <field name="domain">[('sample_id.type_id.code','=','EMPDOG'),('state_2','=','sent')]</field>
+		<field name="limit" eval="300"/>
+    </record>
+
+		<record model="ir.actions.act_window.view" id="act_sampledog_tree2">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_sample_empdog2"/>
+					<field name="act_window_id" ref="action_labo_sample_empdog_1_state2"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_sampledog_form2">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_sample_empdog_form"/>
+					<field name="act_window_id" ref="action_labo_sample_empdog_1_state2"/>
+		</record>
+    <menuitem name="Progenus/Samples/EMPDOG Samples/Closed Samples" id="menu_action_empdog_form_view_state2" action="action_labo_sample_empdog_1_state2"/>
+	<record model="ir.ui.view" id="labo_view_empdog_an" >
+        <field name="name">EMPDOG</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+     	<form string="Analysis Request">
+			<notebook>
+				<page string="General">
+					<field name="name" select="1" />
+					<field name="type_id" domain="[('code','ilike','EMPDOG')]" context="{'type_id':'EMPDOG'}"/>
+					<field name="begining_date" />
+					<field name="date_reception" />
+					<field name="date_planned" />
+					<field name="date_closed" />
+					<field name="cond_reception"/>
+					<field name="ref_client"  on_change="onchange_pricelist(ref_client)" select="1" />
+					<field name="pricelist_id" />
+					<field name="user_id" select="1" />
+					<field name="invoice_ids" />
+					<field name="urgent" />
+					<field name="accredit" />
+					<field name="desc_1" colspan="4" nolabel="1"/>
+					<newline/>
+
+					<field name="desc_2" colspan="4" nolabel="1"/>
+					<field name="desc_3" colspan="4" nolabel="1"/>
+					<field name="state" colspan="4" nolabel="1"/>
+					<newline/>
+				 	<group col="4" colspan="4">
+						<button name="button_draft" string="Set to Draft" states="cancel" type="object"/>
+						<button name="button_cancel" string="Cancel" states="running" type="object"/>
+						<button name="button_running" string="Running" states="draft" type="object"/>
+						<button name="button_closed" string="Closed" states="draft,running" type="object"/>
+					</group>
+					</page>
+				<page string="Send to">
+					<field name="send_to_ids" nolabel="1"/>
+				</page>
+			</notebook>
+		</form>
+        </field>
+    </record>
+
+
+	<record model="ir.actions.act_window" id="action_labo_samples_empdog_an">
+        <field name="name">EMPDOG Requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.analysis.request</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="labo_view_request"/>
+        <field name="domain" eval="'[(\'type_id\',\'=\',%d)]'%labo_analysis_type_record5" />
+        <field name="context">{'type_id':'EMPDOG'}</field>
+    </record>
+
+		<record model="ir.actions.act_window.view" id="act_labosempdog_tree">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_view_request"/>
+					<field name="act_window_id" ref="action_labo_samples_empdog_an"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_labos_empdog_form">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_view_empdog_an"/>
+					<field name="act_window_id" ref="action_labo_samples_empdog_an"/>
+		</record>
+    <menuitem name="Progenus/Consult Analysis/EMPDOG" id="menu_action_empdogan_form_vew" action="action_labo_samples_empdog_an"/>
+
+
+  	<!-- SCRAPIE view -->
+
+  	<record model="ir.ui.view" id="labo_view_request_scrapie" >
+        <field name="name">Scrapie</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+       		<tree string="Analysis Request">
+	          <field name="name" />
+	          <field name="begining_date" />
+	          <field name="cond_reception"/>
+	          <field name="type_id" />
+	          <field name="user_id"/>
+	          <field name="date_closed" />
+	          <field name="date_planned" />
+	          <field name="ref_client" />
+	          <field name="pricelist_id" />
+       		</tree>
+       	</field>
+    </record>
+    <record model="ir.ui.view" id="labo_view_scrapie" >
+        <field name="name">Scrapie</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+     		<form string="Analysis Request">
+     	    	<notebook>
+                	<page string="General">
+	                    <field name="name" select="1" />
+	                    <field name="type_id" domain="[('code','=','Scrapie')]" context="{'type_id':'Scrapie'}"/>
+	                    <field name="begining_date" />
+	                    <field name="date_reception" />
+	                    <field name="date_planned" />
+	                    <field name="date_closed" />
+	                    <field name="cond_reception"/>
+	                    <field name="ref_client"  on_change="onchange_pricelist(ref_client)" select="1" />
+	                    <field name="pricelist_id" />
+	                    <field name="user_id" select="1" />
+	                    <field name="invoice_ids" />
+	                    <field name="urgent" />
+	                    <field name="accredit" />
+	                    <field name="desc_1" colspan="4" nolabel="1"/>
+	                    <newline/>
+	                    <field name="desc_2" colspan="4" nolabel="1"/>
+	                    <field name="desc_3" colspan="4" nolabel="1"/>
+	                    <field name="state" colspan="4" nolabel="1"/>
+		                    <group col="4" colspan="4">
+		                        <button name="button_draft" string="Set to Draft" states="cancel" type="object"/>
+		                        <button name="button_cancel" string="Cancel" states="running" type="object"/>
+		                        <button name="button_running" string="Running" states="draft" type="object"/>
+		                        <button name="button_closed" string="Closed" states="draft,running" type="object"/>
+	                    	</group>
+                	</page>
+                	<page string="Cases">
+                    	<field name="case_id" nolabel="1"/>
+               		</page>
+                	<page string="Send to">
+                    	<field name="send_to_ids" context="{'request_id': active_id}" nolabel="1"/>
+                	</page>
+                	<page string="Analysis Lines" >
+                    	<field name="sample_ids"  mode="tree,form" editable="top" nolabel="1">
+                    		<tree string="Analysis samples"  colspan="4">
+	                            <field name="progenus_number"/>
+	                            <field name="sanitel"  />
+	                            <field name="code"  />
+	                            <field name="sex"  />
+	                            <field name="material"  />
+	                            <field name="p13"  />
+	                            <field name="p15"  />
+	                            <field name="p17" />
+	                            <field name="breed" />
+	                            <field name="genotype"  />
+	                            <field name="date_reception"  />
+	                            <field name="date_closing"  />
+	                            <field name="date_eff" />
+	                            <field name="date_limit"/>
+	                            <field name="date_starting"/>
+	                            <field name="file_setup"  />
+	                            <field name="follow_sheet_id" />
+			                    <field name="plate_id" />
+	                            <field name="num_alpha" />
+		  						<field name="num_alpha2"/>
+	                            <field name="state" />
+	                            <field name="field_awe"  />
+	                            <field name="tube" />
+	                            <field name="result" />
+	                            <field name="awe2" />
+	                            <field name="name_animal"  />
+                                <field name="birthdate"  />
+	                            <field name="tool" />
+	                            <field name="stock_id" />
+	                            <field name="user_id" />
+				    			<field name="sample_id" />
+	                            <field name="to_be_invoiced" />
+	                            <field name="final_c" />
+	                            <field name="nc_gle" />
+	                            <field name="nc_reanalyse" />
+				                <field name="v_done" />
+				            <field name="done_i" />
+                        	</tree>
+                        	<form string="Analysis Request" colspan="4" >
+                        		<notebook>
+	                            	<page string="lines">
+	                                    <field name="progenus_number" select="2" />
+		                            	<field name="sanitel" select="2" />
+		                            	<field name="code" select="2" />
+		                            	<field name="sex" select="2" />
+		                            	<field name="material" select="2" />
+		                            	<field name="p13" select="2" />
+		                            	<field name="p15" select="2" />
+		                            	<field name="p17" select="2" />
+		                            	<field name="breed" select="2" />
+		                            	<field name="genotype" select="2" />
+		                            	<field name="date_reception" select="2" />
+		                            	<field name="date_closing" select="2" />
+	                                    <field name="date_eff" select="2"  />
+	                            		<field name="date_starting"/>
+		                            	<field name="date_limit" select="2" />
+		                            	<field name="file_setup" select="2" />
+		                            	<field name="follow_sheet_id" select="2" />
+			                            <field name="plate_id" select="2" />
+		                            	<field name="num_alpha" select="2" />
+		  								<field name="num_alpha2" select="2"/>
+		                            	<field name="state" select="2" />
+		                            	<field name="field_awe" select="2" />
+		                            	<field name="tube" select="2" />
+			                            <field name="result" select="2" />
+			                            <field name="awe2" select="2" />
+			                            <field name="name_animal" select="2"  />
+		                                <field name="birthdate" select="2"  />
+			                            <field name="tool" select="2" />
+			                            <field name="stock_id" select="2" />
+	                                    <field name="user_id" select="2"  />
+				    					<field name="sample_id" />
+			                            <field name="to_be_invoiced" select="2" />
+			                            <field name="final_c" select="2" />
+			                            <field name="nc_gle" select="2" />
+			                            <field name="nc_reanalyse" select="2" />
+				                        <field name="v_done" select="2"/>
+				            <field name="done_i" />
+                                        <button name="button_prog_simple" string="Set Progenus Number"  type="object" colspan="4"/>
+	                                </page>
+	                            	<page string="Alleles" >
+		                                 <field name="allele_ids" colspan="4" nolabel="1"/>
+                                    </page>
+		                            <page string="Old Alleles" >
+	                                    <field name="allele_ids_hist"/>
+                                    </page>
+	                            	<page string="History" >
+		                                 <field name="history_ids" colspan="4"/>
+                                         <field name="history_p_ids" colspan="4"/>
+				                         <field name="history_s_ids" colspan="4" />
+	                                        <field name="file_h_ids" colspan="4"/>
+	                            	</page>
+               					</notebook>
+            				</form>
+        				</field>
+    				</page>
+				</notebook>
+	 	 	</form>
+  	   </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_labo_analysis_scrapie">
+        <field name="name">Scrapie Requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.analysis.request</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="labo_view_request_scrapie"/>
+        <field name="domain" eval="'[(\'type_id\',\'=\',%d)]'%labo_analysis_type_record2" />
+        <field name="context">{'type_id':'Scrapie'}</field>
+    </record>
+
+		<record model="ir.actions.act_window.view" id="act_scrapie_tree">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_view_request_scrapie"/>
+					<field name="act_window_id" ref="action_labo_analysis_scrapie"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_scrapie_form">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_view_scrapie"/>
+					<field name="act_window_id" ref="action_labo_analysis_scrapie"/>
+		</record>
+    <menuitem name="Progenus/Requests/Scrapie" id="menu_action_scrapie_view" action="action_labo_analysis_scrapie"/>
+
+    <record model="ir.ui.view" id="labo_sample_scrapie" >
+        <field name="name">Scrapie2</field>
+        <field name="model">labo.sample</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+	        <tree string="Analysis Samples" >
+           		<field name="progenus_number"  />
+              	<field name="sanitel" />
+              	<field name="code" />
+              	<field name="sex"/>
+              	<field name="material" />
+              	<field name="p13"  />
+              	<field name="p15" />
+              	<field name="p17" />
+              	<field name="breed" />
+              	<field name="genotype"  />
+              	<field name="date_reception" />
+              	<field name="date_closing"  />
+	            <field name="date_eff"  />
+              	<field name="date_limit" />
+	            <field name="date_starting"/>
+              	<field name="file_setup" />
+              	<field name="follow_sheet_id"  />
+			    <field name="plate_id"  />
+              	<field name="num_alpha"  />
+		  		<field name="num_alpha2" select="2"/>
+              	<field name="state"  />
+              	<field name="field_awe" />
+              	<field name="tube" />
+              	<field name="result" />
+              	<field name="awe2" />
+              	<field name="name_animal" select="2"  />
+                <field name="birthdate" select="2"  />
+              	<field name="tool" select="2" />
+              	<field name="stock_id" select="2" />
+	             <field name="user_id" select="2"  />
+				<field name="sample_id" />
+              	<field name="to_be_invoiced" select="2" />
+              	<field name="final_c" select="2" />
+              	<field name="nc_gle" select="2" />
+              	<field name="nc_reanalyse" select="2" />
+				<field name="v_done" select="2"/>
+				            <field name="done_i" />
+	        </tree>
+	    </field>
+	</record>
+    <record model="ir.ui.view" id="labo_sample_scrapie_form" >
+        <field name="name">Scrapie1</field>
+        <field name="model">labo.sample</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+	        <form string="Analysis Samples" >
+	        	<notebook>
+		            <page string="Information">
+		            	<field name="progenus_number" select="1" />
+		               	<field name="sanitel" select="1" />
+		               	<field name="code" select="1" />
+		               	<field name="sex" select="1" />
+		               	<field name="material" select="2" />
+		               	<field name="p13" select="1" />
+		               	<field name="p15" select="1" />
+		               	<field name="p17" select="1" />
+		               	<field name="breed" select="1" />
+		               	<field name="genotype" select="2" />
+		               	<field name="date_reception" select="2" />
+		               	<field name="date_closing" select="2" />
+	                    <field name="date_eff" select="2"  />
+		               	<field name="date_limit" select="2" />
+	                    <field name="date_starting"/>
+		               	<field name="file_setup" select="2" />
+		               	<field name="follow_sheet_id" select="2" />
+			            <field name="plate_id" select="2" />
+		               	<field name="num_alpha" select="2" />
+		  				<field name="num_alpha2" select="2"/>
+		               	<field name="state" select="2" />
+		               	<field name="field_awe" select="2" />
+		               	<field name="tube" select="2" />
+		                <field name="result" select="2" />
+		                <field name="awe2" select="2" />
+		                <field name="name_animal" select="2"  />
+		                <field name="birthdate" select="2"  />
+		                <field name="tool" select="2" />
+		                <field name="stock_id" select="2" />
+	                    <field name="user_id" select="2"  />
+				    	<field name="sample_id" />
+		                <field name="to_be_invoiced" select="2" />
+		                <field name="final_c" select="2" />
+		                <field name="nc_gle" select="2" />
+		                <field name="nc_reanalyse" select="2" />
+				        <field name="v_done" select="2"/>
+				            <field name="done_i" />
+                        <button name="button_prog_simple" string="Set Progenus Number"  type="object" colspan="4"/>
+		            </page>
+	                <page string="Alleles" >
+	                    <field name="allele_ids" colspan="4" nolabel="1"/>
+                    </page>
+		                            <page string="Old Alleles" >
+	                                    <field name="allele_ids_hist"/>
+                                    </page>
+		            <page string="History" >
+		                <field name="history_ids" colspan="4"/>
+                        <field name="history_p_ids" colspan="4"/>
+				        <field name="history_s_ids" colspan="4" />
+	                    <field name="file_h_ids" colspan="4"/>
+		            </page>
+	       		</notebook>
+	        </form>
+    	</field>
+	</record>
+
+    <record model="ir.actions.act_window" id="action_labo_sample_scrapie">
+        <field name="name">Scrapie Samples</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.sample</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="domain">[('sample_id.type_id.code','ilike','Scrapie')]</field>
+        <field name="view_id" ref="labo_sample_scrapie"/>
+        <field name="context">{'type_id':'Scrapie'}</field>
+		<field name="limit" eval="300"/>
+    </record>
+
+		<record model="ir.actions.act_window.view" id="act_sample_scrapie_tree">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_sample_scrapie"/>
+					<field name="act_window_id" ref="action_labo_sample_scrapie"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_sample_scrapie_form">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_sample_scrapie_form"/>
+					<field name="act_window_id" ref="action_labo_sample_scrapie"/>
+		</record>
+    <menuitem name="Progenus/Samples/Scrapie Samples" id="menu_action_scrapie_form_view" action="action_labo_sample_scrapie"/>
+
+    <record model="ir.ui.view" id="labo_view_scrapie_an1" >
+        <field name="name">Scrapie</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+        	<form string="Analysis Request">
+            	<notebook>
+                	<page string="General">
+	                    <field name="name" select="1" />
+	                    <field name="type_id" domain="[('type_id.code','=','Scrapie')]" context="{'type_id':'Scrapie'}" />
+	                    <field name="begining_date" />
+	                    <field name="date_reception" />
+	                    <field name="date_planned" />
+	                    <field name="date_closed" />
+	                    <field name="cond_reception"/>
+	                    <field name="ref_client"  on_change="onchange_pricelist(ref_client)" select="1" />
+	                    <field name="pricelist_id" />
+	                    <field name="user_id" select="1" />
+	                    <field name="invoice_ids" />
+	                    <field name="urgent" />
+	                    <field name="accredit" />
+	                    <field name="desc_1" colspan="4" nolabel="1"/>
+	                    <newline/>
+	                    <field name="desc_2" colspan="4" nolabel="1"/>
+	                    <field name="desc_3" colspan="4" nolabel="1"/>
+	                    <field name="state" colspan="4" nolabel="1"/>
+                   		<group col="4" colspan="4">
+	                        <button name="button_draft" string="Set to Draft" states="cancel" type="object"/>
+	                        <button name="button_cancel" string="Cancel" states="running" type="object"/>
+	                        <button name="button_running" string="Running" states="draft" type="object"/>
+	                        <button name="button_closed" string="Closed" states="draft,running" type="object"/>
+                    	</group>
+                	</page>
+	                <page string="Cases">
+	                    <field name="case_id" nolabel="1"/>
+	                </page>
+	                <page string="Send to">
+	                    <field name="send_to_ids" context="{'request_id': active_id}" nolabel="1"/>
+	                </page>
+            	</notebook>
+        	</form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_labo_sample_scrapie_an1">
+        <field name="name">Scrapie Requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.analysis.request</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="labo_view_scrapie_an1"/>
+        <field name="domain" eval="'[(\'type_id\',\'=\',%d)]'%labo_analysis_type_record2" />
+        <field name="context">{'type_id':'Scrapie'}</field>
+    </record>
+
+		<record model="ir.actions.act_window.view" id="act_consultscrapie_tree">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_view_request"/>
+					<field name="act_window_id" ref="action_labo_sample_scrapie_an1"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_laboempdog_form">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_view_scrapie_an1"/>
+					<field name="act_window_id" ref="action_labo_sample_scrapie_an1"/>
+		</record>
+    <menuitem name="Progenus/Consult Analysis/Scrapie" id="menu_action_scrapiean_form_view" action="action_labo_sample_scrapie_an1"/>
+
+  	<!-- SEQUENCE view -->
+
+  	<record model="ir.ui.view" id="labo_view_request_sequence" >
+        <field name="name">Sequence</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+       		<tree string="Analysis Request">
+	          <field name="name" />
+	          <field name="begining_date" />
+	          <field name="cond_reception"/>
+	          <field name="type_id" />
+	          <field name="user_id"/>
+	          <field name="date_closed" />
+	          <field name="date_planned" />
+	          <field name="ref_client" />
+	          <field name="pricelist_id" />
+       		</tree>
+       	</field>
+    </record>
+
+    <record model="ir.ui.view" id="labo_view_sequence_form" >
+        <field name="name">Sequence</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+     		<form string="Analysis Request">
+     	    	<notebook>
+                	<page string="General">
+	                    <field name="name" select="1" />
+	                    <field name="type_id" domain="[('code','=','Sequence')]" context="{'type_id':'Sequence'}"/>
+	                    <field name="begining_date" />
+	                    <field name="date_reception" />
+	                    <field name="date_planned" />
+	                    <field name="date_closed" />
+	                    <field name="cond_reception"/>
+	                    <field name="ref_client"  on_change="onchange_pricelist(ref_client)" select="1" />
+	                    <field name="pricelist_id" />
+	                    <field name="user_id" select="1" />
+	                    <field name="invoice_ids" />
+	                    <field name="urgent" />
+	                    <field name="accredit" />
+	                    <field name="desc_1" colspan="4" nolabel="1"/>
+	                    <newline/>
+	                    <field name="desc_2" colspan="4" nolabel="1"/>
+	                    <field name="desc_3" colspan="4" nolabel="1"/>
+	                    <field name="state" colspan="4" nolabel="1"/>
+		                    <group col="4" colspan="4">
+		                        <button name="button_draft" string="Set to Draft" states="cancel" type="object"/>
+		                        <button name="button_cancel" string="Cancel" states="running" type="object"/>
+		                        <button name="button_running" string="Running" states="draft" type="object"/>
+		                        <button name="button_closed" string="Closed" states="draft,running" type="object"/>
+	                    	</group>
+                	</page>
+                	<page string="Cases">
+                    	<field name="case_id" nolabel="1"/>
+               		</page>
+                	<page string="Send to">
+                    	<field name="send_to_ids" context="{'request_id': active_id}" nolabel="1"/>
+                	</page>
+                	<page string="Analysis Lines" >
+                    	<field name="sample_ids"  mode="tree,form" editable="top" nolabel="1">
+                    		<tree string="Analysis samples"  colspan="4">
+	                            <field name="progenus_number" />
+	                            <field name="sanitel"/>
+	                            <field name="file_setup"  />
+	                            <field name="follow_sheet_id"  />
+			                    <field name="plate_id"  />
+	                            <field name="tube" />
+	                            <field name="result" />
+	                            <field name="num_alpha"  />
+		  						<field name="num_alpha2"/>
+	                            <field name="field_awe"  />
+	                            <field name="awe2" />
+	                            <field name="name_animal"  />
+                                <field name="birthdate" />
+	                            <field name="date_reception"  />
+	                            <field name="date_closing" />
+	                            <field name="date_starting"/>
+	                            <field name="date_eff" />
+	                            <field name="date_limit"  />
+	                            <field name="tool" />
+	                            <field name="stock_id"  />
+	                            <field name="user_id"  />
+				    			<field name="sample_id" />
+	                            <field name="to_be_invoiced" />
+	                            <field name="nc_gle" />
+	                            <field name="final_c" />
+	                            <field name="nc_reanalyse"  />
+				                <field name="v_done" />
+				            <field name="done_i" />
+                        	</tree>
+                        	<form string="Analysis Request" colspan="4" >
+                        		<notebook>
+	                            	<page string="lines">
+	                                    <field name="progenus_number" select="1" />
+			                            <field name="sanitel" select="1" />
+			                            <field name="file_setup" select="2" />
+			                            <field name="follow_sheet_id" select="2" />
+			                            <field name="plate_id" />
+			                            <field name="tube" select="2" />
+			                            <field name="result" select="2" />
+			                            <field name="num_alpha" select="2" />
+			                            <field name="num_alpha2" select="2" />
+			                            <field name="field_awe" select="2" />
+			                            <field name="awe2" select="2" />
+			                            <field name="name_animal" select="2"  />
+		                                <field name="birthdate" select="2"  />
+	                            		<field name="date_starting"/>
+			                            <field name="date_reception" select="2" />
+			                            <field name="date_closing" select="2" />
+	                                    <field name="date_eff" select="2"  />
+			                            <field name="date_limit" select="2" />
+			                            <field name="tool" select="2" />
+			                            <field name="stock_id" select="2" />
+	                                    <field name="user_id" select="2"  />
+				    					<field name="sample_id" />
+			                            <field name="to_be_invoiced" select="2" />
+			                            <field name="nc_gle" select="2" />
+			                            <field name="final_c" select="2" />
+			                            <field name="nc_reanalyse" select="2" />
+				                        <field name="v_done" select="2"/>
+				            <field name="done_i" />
+                                        <button name="button_prog_simple" string="Set Progenus Number"  type="object" colspan="4"/>
+	                                </page>
+	                            	<page string="Alleles" >
+		                                 <field name="allele_ids" colspan="4" nolabel="1"/>
+                                    </page>
+		                            <page string="Old Alleles" >
+	                                    <field name="allele_ids_hist"/>
+                                    </page>
+	                            	<page string="History" >
+		                                 <field name="history_ids" colspan="4"/>
+                                         <field name="history_p_ids" colspan="4"/>
+				                         <field name="history_s_ids" colspan="4" />
+	                                    <field name="file_h_ids" colspan="4"/>
+	                            	</page>
+               					</notebook>
+            				</form>
+        				</field>
+    				</page>
+				</notebook>
+	 	 	</form>
+  	   </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_labo_analysis_sequence1">
+        <field name="name">Sequence Requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.analysis.request</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="labo_view_request_sequence"/>
+        <field name="context">{'type_id':'Sequence'}</field>
+        <field name="domain" eval="'[(\'type_id\',\'=\',%d)]'%labo_analysis_type_record4" />
+    </record>
+		<record model="ir.actions.act_window.view" id="act_sequence_tree_1">
+			<field name="sequence" eval="1"/>
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="labo_view_request_sequence"/>
+			<field name="act_window_id" ref="action_labo_analysis_sequence1"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_sequence_req_form">
+			<field name="sequence" eval="1"/>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="labo_view_sequence_form"/>
+			<field name="act_window_id" ref="action_labo_analysis_sequence1"/>
+		</record>
+    <menuitem name="Progenus/Requests/Sequence" id="menu_action_sequence_view" action="action_labo_analysis_sequence1"/>
+
+    <record model="ir.ui.view" id="labo_sample_sequence" >
+        <field name="name">Sequence2</field>
+        <field name="model">labo.sample</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+	        <tree string="Analysis Samples" >
+           		<field name="progenus_number"/>
+                    <field name="sanitel"/>
+	                 <field name="date_starting"/>
+                    <field name="date_reception" />
+                    <field name="date_closing"  />
+	                <field name="date_eff"  />
+                    <field name="date_limit" />
+                    <field name="file_setup" />
+                    <field name="follow_sheet_id" />
+			        <field name="plate_id" />
+                    <field name="tube"  />
+                    <field name="result"  />
+                    <field name="num_alpha"  />
+			        <field name="num_alpha2"/>
+                    <field name="field_awe"  />
+                    <field name="awe2"  />
+                    <field name="name_animal"  />
+                    <field name="birthdate" />
+                    <field name="tool"  />
+                    <field name="stock_id"  />
+	                <field name="user_id"   />
+				    <field name="sample_id" />
+                    <field name="to_be_invoiced" />
+                    <field name="nc_gle"  />
+                    <field name="final_c"  />
+                    <field name="nc_reanalyse"  />
+				    <field name="v_done" />
+				            <field name="done_i" />
+	        </tree>
+	    </field>
+	</record>
+    <record model="ir.ui.view" id="labo_sample_sequence_form" >
+        <field name="name">Sequence1</field>
+        <field name="model">labo.sample</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+	        <form string="Analysis Samples" >
+	        	<notebook>
+		            <page string="Information">
+		            	<field name="progenus_number" select="1" />
+                            <field name="sanitel" select="1" />
+	                        <field name="date_starting"/>
+                            <field name="date_reception" select="1" />
+                            <field name="date_closing" select="2" />
+	                        <field name="date_eff" select="2"  />
+                            <field name="date_limit" select="2" />
+                            <field name="file_setup" select="2" />
+                            <field name="follow_sheet_id" select="2" />
+			                <field name="plate_id" select="2" />
+                            <field name="tube" select="1" />
+                            <field name="result" select="1" />
+                            <field name="num_alpha" select="2" />
+			                <field name="num_alpha2" select="2" />
+                            <field name="field_awe" select="2" />
+                            <field name="awe2" select="2" />
+                            <field name="name_animal" select="2"  />
+                            <field name="birthdate" select="2"  />
+                            <field name="tool" select="2" />
+                            <field name="stock_id" select="2" />
+	                        <field name="user_id" select="2"  />
+				    		<field name="sample_id" />
+                            <field name="to_be_invoiced" select="2" />
+                            <field name="nc_gle" select="2" />
+                            <field name="final_c" select="2" />
+                            <field name="nc_reanalyse" select="2" />
+				            <field name="v_done" select="2"/>
+				            <field name="done_i" />
+                            <button name="button_prog_simple" string="Set Progenus Number"  type="object" colspan="4"/>
+		            </page>
+                	<page string="Alleles" >
+	                     <field name="allele_ids" colspan="4" nolabel="1"/>
+                    </page>
+		                            <page string="Old Alleles" >
+	                                    <field name="allele_ids_hist"/>
+                                    </page>
+		            <page string="History" >
+		                <field name="history_ids" colspan="4"/>
+				        <field name="history_p_ids" colspan="4"/>
+				        <field name="history_s_ids" colspan="4" />
+	                    <field name="file_h_ids" colspan="4"/>
+		            </page>
+	       		</notebook>
+	        </form>
+    	</field>
+	</record>
+
+    <record model="ir.actions.act_window" id="action_labo_sample_sequence">
+        <field name="name">Sequence Samples</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.sample</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="domain">[('sample_id.type_id.code','ilike','Sequence')]</field>
+        <field name="view_id" ref="labo_sample_sequence"/>
+        <field name="context">{'type_id':'Sequence'}</field>
+		<field name="limit" eval="300"/>
+    </record>
+
+		<record model="ir.actions.act_window.view" id="act_sequence_tree">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_sample_sequence"/>
+					<field name="act_window_id" ref="action_labo_sample_sequence"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_sequence_form">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_sample_sequence_form"/>
+					<field name="act_window_id" ref="action_labo_sample_sequence"/>
+		</record>
+    <menuitem name="Progenus/Samples/Sequence Samples" id="menu_action_sequence_form_view" action="action_labo_sample_sequence"/>
+
+  	<record model="ir.ui.view" id="labo_view_sequence_an1" >
+        <field name="name">Sequence1</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+        	<form string="Analysis Request">
+            	<notebook>
+                	<page string="General">
+	                    <field name="name" select="1" />
+	                    <field name="type_id" domain="[('type_id.code','ilike','Sequence')]" context="{'type_id':'Sequence'}" />
+	                    <field name="begining_date" />
+	                    <field name="date_reception" />
+	                    <field name="date_planned" />
+	                    <field name="date_closed" />
+	                    <field name="cond_reception"/>
+	                    <field name="ref_client"  on_change="onchange_pricelist(ref_client)" select="1" />
+	                    <field name="pricelist_id" />
+	                    <field name="user_id" select="1" />
+	                    <field name="invoice_ids" />
+	                    <field name="urgent" />
+	                    <field name="accredit" />
+	                    <field name="desc_1" colspan="4" nolabel="1"/>
+	                    <newline/>
+	                    <field name="desc_2" colspan="4" nolabel="1"/>
+	                    <field name="desc_3" colspan="4" nolabel="1"/>
+	                    <field name="state" colspan="4" nolabel="1"/>
+		                    <group col="4" colspan="4">
+		                        <button name="button_draft" string="Set to Draft" states="cancel" type="object"/>
+		                        <button name="button_cancel" string="Cancel" states="running" type="object"/>
+		                        <button name="button_running" string="Running" states="draft" type="object"/>
+		                        <button name="button_closed" string="Closed" states="draft,running" type="object"/>
+	                    	</group>
+                	</page>
+                	<page string="Cases">
+                    	<field name="case_id" nolabel="1"/>
+               		</page>
+                	<page string="Send to">
+                    	<field name="send_to_ids" context="{'request_id': active_id}" nolabel="1"/>
+                	</page>
+            	</notebook>
+        	</form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_labo_sample_sequence_an1">
+        <field name="name">Sequence Requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.analysis.request</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="labo_view_request_sequence"/>
+        <field name="domain" eval="'[(\'type_id\',\'=\',%d)]'%labo_analysis_type_record4" />
+        <field name="context">{'type_id':'Sequence'}</field>
+    </record>
+
+		<record model="ir.actions.act_window.view" id="act_consultsequence_tree">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_view_request_sequence"/>
+					<field name="act_window_id" ref="action_labo_sample_sequence_an1"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_consultsequence_form">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_view_sequence_an1"/>
+					<field name="act_window_id" ref="action_labo_sample_sequence_an1"/>
+		</record>
+    <menuitem name="Progenus/Consult Analysis/Sequence" id="menu_action_sequencean_form_view" action="action_labo_sample_sequence_an1"/>
+
+  <!-- RACE view -->
+  	<record model="ir.ui.view" id="labo_view_request_race" >
+        <field name="name">Id of race</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+       		<tree string="Analysis Request">
+	          <field name="name" />
+	          <field name="begining_date" />
+	          <field name="cond_reception"/>
+	          <field name="type_id" />
+	          <field name="user_id"/>
+	          <field name="date_closed" />
+	          <field name="date_planned" />
+	          <field name="ref_client" />
+	          <field name="pricelist_id" />
+       		</tree>
+       	</field>
+  	</record>
+
+  	<record model="ir.ui.view" id="labo_view_race" >
+        <field name="name">Id of race</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+     		<form string="Analysis Request">
+     	    	<notebook>
+                	<page string="General">
+	                    <field name="name" select="1" />
+	                    <field name="type_id" domain="[('code','=','Id of race')]" context="{'type_id':'Id of race'}"/>
+	                    <field name="begining_date" />
+	                    <field name="date_reception" />
+	                    <field name="date_planned" />
+	                    <field name="date_closed" />
+	                    <field name="cond_reception"/>
+	                    <field name="ref_client"  on_change="onchange_pricelist(ref_client)" select="1" />
+	                    <field name="pricelist_id" />
+	                    <field name="user_id" select="1" />
+	                    <field name="invoice_ids" />
+	                    <field name="urgent" />
+	                    <field name="accredit" />
+	                    <field name="desc_1" colspan="4" nolabel="1"/>
+	                    <newline/>
+	                    <field name="desc_2" colspan="4" nolabel="1"/>
+	                    <field name="desc_3" colspan="4" nolabel="1"/>
+	                    <field name="state" colspan="4" nolabel="1"/>
+		                    <group col="4" colspan="4">
+		                        <button name="button_draft" string="Set to Draft" states="cancel" type="object"/>
+		                        <button name="button_cancel" string="Cancel" states="running" type="object"/>
+		                        <button name="button_running" string="Running" states="draft" type="object"/>
+		                        <button name="button_closed" string="Closed" states="draft,running" type="object"/>
+	                    	</group>
+                	</page>
+                	<page string="Cases">
+                    	<field name="case_id" nolabel="1"/>
+               		</page>
+                	<page string="Send to">
+                    	<field name="send_to_ids" context="{'request_id': active_id}" nolabel="1"/>
+                	</page>
+                	<page string="Analysis Lines" >
+                    	<field name="sample_ids"  mode="tree,form" editable="top" nolabel="1">
+                    		<tree string="Analysis samples"  colspan="4">
+	                            <field name="progenus_number"  />
+	                            <field name="date_starting"/>
+	                            <field name="sanitel" />
+	                            <field name="date_reception"  />
+	                            <field name="date_closing"  />
+	                            <field name="date_eff"  />
+	                            <field name="date_limit"  />
+	                            <field name="file_setup" />
+	                            <field name="follow_sheet_id" />
+			                    <field name="plate_id" />
+	                            <field name="num_alpha" />
+			                    <field name="num_alpha2"/>
+	                            <field name="field_awe" />
+	                            <field name="tube" />
+	                            <field name="result" />
+	                            <field name="awe2" />
+	                            <field name="name_animal"  />
+                                <field name="birthdate" />
+	                            <field name="tool" />
+	                            <field name="stock_id"  />
+	                            <field name="user_id" />
+				    			<field name="sample_id" />
+	                            <field name="to_be_invoiced" />
+	                            <field name="nc_gle" />
+	                            <field name="final_c" />
+	                            <field name="nc_reanalyse" />
+				                <field name="v_done" />
+				            <field name="done_i" />
+                        	</tree>
+                        	<form string="Analysis Request" colspan="4" >
+                        		<notebook>
+	                            	<page string="lines">
+	                                    <field name="progenus_number" select="2" />
+	                            		<field name="date_starting"/>
+			                            <field name="sanitel" select="2" />
+			                            <field name="date_reception" select="2" />
+			                            <field name="date_closing" select="2" />
+	                                    <field name="date_eff" select="2"  />
+			                            <field name="date_limit" select="2" />
+			                            <field name="file_setup" select="2" />
+			                            <field name="follow_sheet_id" select="2" />
+			                            <field name="plate_id" select="2" />
+			                            <field name="num_alpha" select="2" />
+			                            <field name="num_alpha2" select="2" />
+			                            <field name="field_awe" select="2" />
+			                            <field name="tube" select="2" />
+			                            <field name="result" select="2" />
+			                            <field name="awe2" select="2" />
+			                            <field name="name_animal" select="2"  />
+		                                <field name="birthdate" select="2"  />
+			                            <field name="tool" select="2" />
+			                            <field name="stock_id" select="2" />
+	                                    <field name="user_id" select="2"  />
+				    					<field name="sample_id" />
+			                            <field name="to_be_invoiced" select="2" />
+			                            <field name="nc_gle" select="2" />
+			                            <field name="final_c" select="2" />
+			                            <field name="nc_reanalyse" select="2" />
+				                        <field name="v_done" select="2"/>
+				            <field name="done_i" />
+                                        <button name="button_prog_simple" string="Set Progenus Number"  type="object" colspan="4"/>
+	                                </page>
+	                            	<page string="Alleles" >
+		                                 <field name="allele_ids" colspan="4" nolabel="1"/>
+                                    </page>
+		                            <page string="Old Alleles" >
+	                                    <field name="allele_ids_hist"/>
+                                    </page>
+	                            	<page string="History" >
+		                                 <field name="history_ids" colspan="4"/>
+				                         <field name="history_p_ids" colspan="4"/>
+				                         <field name="history_s_ids" colspan="4" />
+	                                    <field name="file_h_ids" colspan="4"/>
+	                            	</page>
+               					</notebook>
+            				</form>
+        				</field>
+    				</page>
+				</notebook>
+	 	 	</form>
+  	   </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_labo_analysis_race">
+        <field name="name">Id of race Requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.analysis.request</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="labo_view_request_race"/>
+        <field name="domain" eval="'[(\'type_id\',\'=\',%d)]'%labo_analysis_type_record3" />
+<!--        <field name="domain">[('type_id.code','ilike','Id of race')]</field>-->
+        <field name="context">{'type_id':'Id of race'}</field>
+    </record>
+		<record model="ir.actions.act_window.view" id="act_race_tree">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_view_request_race"/>
+					<field name="act_window_id" ref="action_labo_analysis_race"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_race_form">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_view_race"/>
+					<field name="act_window_id" ref="action_labo_analysis_race"/>
+		</record>
+    <menuitem name="Progenus/Requests/Id of race" id="menu_action_race_view_id" action="action_labo_analysis_race"/>
+
+  	<record model="ir.ui.view" id="labo_sample_race" >
+        <field name="name">RACE2</field>
+        <field name="model">labo.sample</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+	        <tree string="Analysis Samples" >
+                    	<field name="progenus_number" />
+	                    <field name="date_starting"/>
+                        <field name="sanitel" />
+                        <field name="date_reception" />
+                        <field name="date_closing" />
+	                    <field name="date_eff"  />
+                        <field name="date_limit" />
+                        <field name="file_setup"  />
+                        <field name="follow_sheet_id"  />
+			            <field name="plate_id" />
+                        <field name="num_alpha" />
+			            <field name="num_alpha2"/>
+                        <field name="field_awe" />
+                        <field name="tube"  />
+                        <field name="result" />
+                        <field name="awe2"  />
+                        <field name="name_animal"   />
+                        <field name="birthdate"  />
+                        <field name="tool" />
+                        <field name="stock_id"/>
+	                    <field name="user_id"  />
+				    	<field name="sample_id" />
+                        <field name="to_be_invoiced"  />
+                        <field name="nc_gle" />
+                        <field name="final_c"  />
+                        <field name="nc_reanalyse" />
+				        <field name="v_done" />
+				            <field name="done_i" />
+	        </tree>
+	    </field>
+	</record>
+    <record model="ir.ui.view" id="labo_sample_race_form" >
+        <field name="name">RACE1</field>
+        <field name="model">labo.sample</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+	        <form string="Analysis Samples" >
+	        	<notebook>
+		            <page string="Information">
+                        <field name="progenus_number" select="1" />
+	                     <field name="date_starting"/>
+                         <field name="sanitel" select="1" />
+                         <field name="date_reception" select="1" />
+                         <field name="date_closing" select="2" />
+	                     <field name="date_eff" select="2"  />
+                         <field name="date_limit" select="2" />
+                         <field name="file_setup" select="2" />
+                         <field name="follow_sheet_id" select="2" />
+			            <field name="plate_id" select="2" />
+                         <field name="num_alpha" select="2" />
+			            <field name="num_alpha2" select="2" />
+                         <field name="field_awe" select="2" />
+                         <field name="tube" select="1" />
+                         <field name="result" select="2" />
+                         <field name="awe2" select="2" />
+                         <field name="name_animal" select="2"  />
+                        <field name="birthdate" select="2"  />
+                         <field name="tool" select="2" />
+                         <field name="stock_id" select="2" />
+	                      <field name="user_id" select="2"  />
+				    	<field name="sample_id" />
+                         <field name="to_be_invoiced" select="2" />
+                         <field name="nc_gle" select="2" />
+                         <field name="final_c" select="2" />
+                         <field name="nc_reanalyse" select="2" />
+				        <field name="v_done" select="2"/>
+				            <field name="done_i" />
+                        <button name="button_prog_simple" string="Set Progenus Number"  type="object" colspan="4"/>
+		            </page>
+	            	<page string="Alleles" >
+                         <field name="allele_ids" colspan="4" nolabel="1"/>
+                    </page>
+		                            <page string="Old Alleles" >
+	                                    <field name="allele_ids_hist"/>
+                                    </page>
+		            <page string="History" >
+		                <field name="history_ids" colspan="4"/>
+                        <field name="history_p_ids" colspan="4"/>
+				        <field name="history_s_ids" colspan="4" />
+	                    <field name="file_h_ids" colspan="4" />
+		            </page>
+	       		</notebook>
+	        </form>
+    	</field>
+	</record>
+
+    <record model="ir.actions.act_window" id="action_labo_sample_race">
+        <field name="name">Id of race Samples</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.sample</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="domain">[('sample_id.type_id.code','ilike','Id of race')]</field>
+        <field name="view_id" ref="labo_sample_race"/>
+        <field name="context">{'type_id':'Id of race'}</field>
+		<field name="limit" eval="300"/>
+    </record>
+
+		<record model="ir.actions.act_window.view" id="actsamplerace_tree">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_sample_race"/>
+					<field name="act_window_id" ref="action_labo_sample_race"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_samplerace_form">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_sample_race_form"/>
+					<field name="act_window_id" ref="action_labo_sample_race"/>
+		</record>
+    <menuitem name="Progenus/Samples/Id of race Samples" id="menu_action_race_form_view" action="action_labo_sample_race"/>
+
+    <record model="ir.ui.view" id="labo_view_race_an1" >
+        <field name="name">Id of race</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+        	<form string="Analysis Request">
+            	<notebook>
+                	<page string="General">
+	                    <field name="name" select="1" />
+	                    <field name="type_id" domain="[('type_id.code','ilike','Id of race')]" context="{'type_id':'Id of race'}" />
+	                    <field name="begining_date" />
+	                    <field name="date_reception" />
+	                    <field name="date_planned" />
+	                    <field name="date_closed" />
+	                    <field name="cond_reception"/>
+	                    <field name="ref_client"  on_change="onchange_pricelist(ref_client)" select="1" />
+	                    <field name="pricelist_id" />
+	                    <field name="user_id" select="1" />
+	                    <field name="invoice_ids" />
+	                    <field name="urgent" />
+	                    <field name="accredit" />
+	                    <field name="desc_1" colspan="4" nolabel="1"/>
+	                    <newline/>
+	                    <field name="desc_2" colspan="4" nolabel="1"/>
+	                    <field name="desc_3" colspan="4" nolabel="1"/>
+	                    <field name="state" colspan="4" nolabel="1"/>
+                   		<group col="4" colspan="4">
+	                        <button name="button_draft" string="Set to Draft" states="cancel" type="object"/>
+	                        <button name="button_cancel" string="Cancel" states="running" type="object"/>
+	                        <button name="button_running" string="Running" states="draft" type="object"/>
+	                        <button name="button_closed" string="Closed" states="draft,running" type="object"/>
+                    	</group>
+                	</page>
+	                <page string="Cases">
+	                    <field name="case_id" nolabel="1"/>
+	                </page>
+	                <page string="Send to">
+	                    <field name="send_to_ids" context="{'request_id': active_id}" nolabel="1"/>
+	                </page>
+            	</notebook>
+        	</form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_labo_sample_race_an1">
+        <field name="name">Id of race Requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.analysis.request</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="labo_view_request"/>
+        <field name="domain" eval="'[(\'type_id\',\'=\',%d)]'%labo_analysis_type_record3" />
+        <field name="context">{'type_id':'Id of race'}</field>
+    </record>
+		<record model="ir.actions.act_window.view" id="act_consultrace_tree">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_view_request"/>
+					<field name="act_window_id" ref="action_labo_sample_race_an1"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_consultracce_form">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_view_race_an1"/>
+					<field name="act_window_id" ref="action_labo_sample_race_an1"/>
+		</record>
+    <menuitem name="Progenus/Consult Analysis/Id of race" id="menu_action_racean_form_view" action="action_labo_sample_race_an1"/>
+
+	 <record model="ir.ui.view" id="labo_view_empdog_alone" >
+        <field name="name">EMPDOG ALONE</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+    	    <form string="Analysis Request">
+        		<notebook>
+            		<page string="General">
+		              <field name="name" select="1" />
+		              <field name="type_id" domain="[('code','=','EMPDOG_2')]" context="{'type_id':'EMPDOG_2'}"/>
+		              <field name="begining_date" />
+		              <field name="date_reception" />
+		              <field name="date_planned" />
+		              <field name="date_closed" />
+		              <field name="cond_reception"/>
+		              <field name="ref_client"  on_change="onchange_pricelist(ref_client)" select="1" />
+		              <field name="pricelist_id" />
+		              <field name="user_id" select="1" />
+		              <field name="invoice_ids" />
+		              <field name="urgent" />
+		              <field name="accredit" />
+		              <field name="desc_1" colspan="4" nolabel="1"/>
+		              <newline/>
+		              <field name="desc_2" colspan="4" nolabel="1"/>
+		              <field name="desc_3" colspan="4" nolabel="1"/>
+		              <field name="state" colspan="4" nolabel="1"/>
+		              <group col="4" colspan="4">
+		                <button name="button_draft" string="Set to Draft" states="cancel" type="object"/>
+		                <button name="button_cancel" string="Cancel" states="running" type="object"/>
+		                <button name="button_running" string="Running" states="draft" type="object"/>
+		                <button name="button_closed" string="Closed" states="draft,running" type="object"/>
+		              </group>
+		            </page>
+            		<page string="Cases">
+              			<field name="case_id" nolabel="1"/>
+            		</page>
+            		<page string="Send to">
+              			<field name="send_to_ids" context="{'request_id': active_id}" nolabel="1"/>
+            		</page>
+            		<page string="Analysis Lines" >
+              			<field name="sample_ids"  mode="tree,form" editable="top" nolabel="1">
+              				<tree string="Analysis samples"  colspan="4">
+				                <field name="dog_mother"  domain="[('type_animal','=','dog')]" context="{'type_id1':'EMPDOG_2'}" colspan="4" />
+				                <field name="dog_father"  domain="[('type_animal','=','dog')]" context="{'type_id1':'EMPDOG_2'}" colspan="4" />
+				                <field name="date_mod"/>
+				                <field name="state"/>
+				                <field name="tatooer_id"  />
+				                <field name="lp_file"  />
+				                <field name="lp_doss"  />
+				                <field name="lp_serv"  />
+				                <field name="preleveur1_id"  />
+	                            <field name="user_id"  />
+				                <field name="sample_id" />
+<!--	                            <field name="date_starting"/>-->
+				                <field name="date_reception" />
+				                <field name="date_limit" />
+				                <field name="date_closing"  />
+					            <field name="state_2" />
+				              </tree>
+	              <form string="Analysis Request" colspan="4" >
+	                <notebook>
+	                  <page string="lines">
+	                    <field name="dog_mother" select="2"  domain="[('type_animal','=','dog')]" colspan="4">
+            				<form string="Dogs">
+			                <notebook>
+				            <page string="General">
+							<field name="name" select="1"/>
+							<field name="progenus_number" select="1" />
+<!--	                            <field name="date_starting"/>-->
+							<field name="seq" />
+							<field name="pedigree" />
+							<field name="origin"/>
+							<field name="sex"/>
+							<field name="race"/>
+							<field name="parent_f_id" />
+							<field name="parent_m_id" />
+							<field name="birthdate" />
+							<field name="date_eff" />
+							<field name="tatoo" on_change="onchange_val_child(origin, progenus_number, parent_f_id, parent_m_id)"/>
+							<field name="ship" on_change="onchange_val_child(origin, progenus_number, parent_f_id, parent_m_id)"/>
+							<field name="labo_id" />
+							<field name="type_animal" />
+	                         <field name="file_setup"   />
+	                         <field name="num_alpha"  />
+			                <field name="plate_id"  />
+		                    <field name="num_alpha2"/>
+	                         <field name="follow_sheet_id"  />
+	                         <field name="tool"  />
+	                         <field name="stock_id"  />
+					        <newline/>
+							<field name="v_done" />
+				            <field name="done_i" />
+				            <field name="v_done2" />
+				            <field name="done_i" />
+                             <field name="to_be_invoiced"  />
+                             <field name="nc_gle"  />
+                             <field name="final_c" />
+                             <field name="nc_reanalyse" />
+                             <button name="button_prog_femal" string="Set number if Femal"  type="object" colspan="4"/>
+                             <button name="button_prog_mal" string="Set number if Male"  type="object" colspan="4"/>
+                        </page>
+                        <page string="Alleles">
+							<field name="allele_ids"  colspan="4" nolabel="1"/>
+                        </page>
+                        <page string= "Alleles History">
+				        <field name="history_allele_ids" colspan="4" nolabel="1"/>
+                        </page>
+                        <page string="Files">
+							<field name="file_h_ids" colspan="4" />
+                        </page>
+                        <page string="History">
+                        <field name="history_p_ids" colspan="4" nolabel="1"/>
+				        <field name="history_s_ids" colspan="4" nolabel="1"/>
+                        </page>
+                    </notebook>
+				</form>
+                </field>
+	                    <field name="dog_father" select="2"  domain="[('type_animal','=','dog')]" colspan="4" />
+				        <field name="tatooer_id"  />
+	                    <field name="date_reception" select="2"  />
+	                    <field name="date_limit" select="2"  />
+	                    <field name="date_closing" select="2"  />
+						<field name="date_mod"/>
+	                    <field name="lp_file" select="2"  />
+	                    <field name="lp_doss" select="2"  />
+	                    <field name="lp_serv" select="2"  />
+	                    <field name="preleveur1_id" select="2"  />
+	                    <field name="user_id" select="2"  />
+				    	<field name="sample_id" />
+	                    <!--field name="sample_id" select="2"  domain="[('type_id.code','=','EMPDOG_2')]"/-->
+					    <field name="state_2" select="2"  />
+					    <field name="notice" select="2" colspan="4"  />
+					    <newline/>
+	                  </page>
+	                  <page string="History" >
+		                <field name="history_ids" colspan="4" nolabel="1"/>
+	                  </page>
+	                </notebook>
+	              </form>
+	              </field>
+	            </page>
+	          </notebook>
+	        </form>
+        </field>
+      </record>
+  	<record model="ir.ui.view" id="labo_view_request_empseul" >
+        <field name="name">EMPDOG SEULS</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+       		<tree string="Analysis Request">
+	          <field name="name" />
+	          <field name="begining_date" />
+	          <field name="cond_reception"/>
+	          <field name="type_id" />
+	          <field name="user_id"/>
+	          <field name="date_closed" />
+	          <field name="date_planned" />
+	          <field name="ref_client" />
+	          <field name="pricelist_id" />
+       		</tree>
+       	</field>
+  	</record>
+      <record model="ir.actions.act_window" id="action_labo_analysis_alone">
+        <field name="name">EMPDOG alone Requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.analysis.request</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="labo_view_request_empseul"/>
+        <field name="domain" eval="'[(\'type_id\',\'=\',%d)]'%labo_analysis_type_record6" />
+        <field name="context">{'type_id':'EMPDOG_2'}</field>
+<!--        <field name="domain">[('type_id.code','ilike','EMPDOG')]</field>-->
+      </record>
+
+		<record model="ir.actions.act_window.view" id="act_aloneempdog_tree">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_view_request_empseul"/>
+					<field name="act_window_id" ref="action_labo_analysis_alone"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_samplesempdog_form_view">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_view_empdog_alone"/>
+					<field name="act_window_id" ref="action_labo_analysis_alone"/>
+		</record>
+      <menuitem name="Progenus/Requests/EMPDOG SEULS" id="menu_action_empdog_seul_view_k" action="action_labo_analysis_alone"/>
+
+      <record model="ir.ui.view" id="labo_sample_empdog_al2" >
+        <field name="name">ALONE2</field>
+        <field name="model">labo.sample</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+        <tree string="Analysis Samples" >
+          <field name="dog_mother" domain="[('type_animal','=','dog')]"  colspan="4" />
+          <field name="dog_father" domain="[('type_animal','=','dog')]"  colspan="4" />
+		  <field name="tatooer_id"  />
+          <field name="date_reception"  />
+<!--	                            <field name="date_starting"/>-->
+          <field name="date_limit"  />
+		  <field name="date_mod"/>
+          <field name="date_closing"  />
+          <field name="lp_file"    />
+          <field name="lp_doss"    />
+          <field name="lp_serv"    />
+          <field name="preleveur1_id" />
+	      <field name="user_id"   />
+          <field name="sample_id" />
+		<field name="state_2"     />
+		      <field name="v_tag"     />
+        </tree>
+        </field>
+      </record>
+
+
+	<record model="ir.ui.view" id="labo_sample_empdogal_form" >
+        <field name="name">ALONE1</field>
+        <field name="model">labo.sample</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+        <form string="Analysis Samples" >
+			<notebook>
+				<page string="Information">
+					<field name="dog_mother" select="1"  domain="[('type_animal','=','dog')]" colspan="4" on_change="onchange_dog(dog_mother)" />
+					<field name="dog_father" select="1"  domain="[('type_animal','=','dog')]" colspan="4"  on_change="onchange_dog(dog_father)"/>
+				    <field name="tatooer_id"  />
+<!--	                            <field name="date_starting"/>-->
+					<field name="date_reception" select="1"/>
+					<field name="date_mod" select="1"/>
+					<field name="date_limit" select="2"  />
+					<field name="date_closing" select="2"  />
+					<field name="lp_file" select="2"  />
+					<field name="lp_doss" select="2"  />
+					<field name="lp_serv" select="2"  />
+					<field name="preleveur1_id" select="2"  />
+	                <field name="user_id" select="2"  />
+					<field name="sample_id" select="2" domain="[('type_id.code','=','EMPDOG_2')]" />
+					<field name="state_2" select="2"  />
+					<field name="notice" select="2" colspan="4"  />
+		      <field name="v_tag"     />
+					<newline/>
+				</page>
+				<page string="History" >
+		                <field name="history_ids" colspan="4"  nolabel="1"/>
+				</page>
+			</notebook>
+		</form>
+    </field>
+</record>
+
+
+	<record model="ir.actions.act_window" id="action_labo_sample_empdogalone_1">
+        <field name="name">EMPDOG alone Samples</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.sample</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="labo_sample_empdog_al2"/>
+        <field name="domain">[('sample_id.type_id.code','ilike','EMPDOG_2')]</field>
+        <field name="context">{'type_id':'EMPDOG_2'}</field>
+		<field name="limit" eval="300"/>
+    </record>
+
+		<record model="ir.actions.act_window.view" id="act_sampledogalone_tree">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_sample_empdog_al2"/>
+					<field name="act_window_id" ref="action_labo_sample_empdogalone_1"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_sampledogalone_form">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_sample_empdogal_form"/>
+					<field name="act_window_id" ref="action_labo_sample_empdogalone_1"/>
+		</record>
+    <menuitem name="Progenus/Samples/EMPDOG ALONE Samples" id="menu_action_empdogal_form_view" action="action_labo_sample_empdogalone_1"/>
+
+    <record model="ir.ui.view" id="labo_view_empdogalone_f" >
+        <field name="name">EMPDOG3</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+        	<form string="Analysis Request">
+            	<notebook>
+                	<page string="General">
+	                    <field name="name" select="1" />
+	                    <field name="type_id" domain="[('type_id.code','ilike','EMPDOG_2')]" context="{'type_id':'EMPDOG_2'}" />
+<!--	                            <field name="date_starting"/>-->
+	                    <field name="begining_date" />
+	                    <field name="date_reception" />
+	                    <field name="date_planned" />
+	                    <field name="date_closed" />
+	                    <field name="cond_reception"/>
+	                    <field name="ref_client"  on_change="onchange_pricelist(ref_client)" select="1" />
+	                    <field name="pricelist_id" />
+	                    <field name="user_id" select="1" />
+	                    <field name="invoice_ids" />
+	                    <field name="urgent" />
+	                    <field name="accredit" />
+	                    <field name="desc_1" colspan="4" nolabel="1"/>
+	                    <newline/>
+	                    <field name="desc_2" colspan="4" nolabel="1"/>
+	                    <field name="desc_3" colspan="4" nolabel="1"/>
+	                    <field name="state" colspan="4" nolabel="1"/>
+                   		<group col="4" colspan="4">
+	                        <button name="button_draft" string="Set to Draft" states="cancel" type="object"/>
+	                        <button name="button_cancel" string="Cancel" states="running" type="object"/>
+	                        <button name="button_running" string="Running" states="draft" type="object"/>
+	                        <button name="button_closed" string="Closed" states="draft,running" type="object"/>
+                    	</group>
+                	</page>
+	                <page string="Cases">
+	                    <field name="case_id" nolabel="1"/>
+	                </page>
+	                <page string="Send to">
+	                    <field name="send_to_ids" context="{'request_id': active_id}" nolabel="1"/>
+	                </page>
+            	</notebook>
+        	</form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_labo_sample_alone_an1">
+        <field name="name">EMPDOG alone Requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.analysis.request</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="labo_view_request"/>
+        <field name="domain" eval="'[(\'type_id\',\'=\',%d)]'%labo_analysis_type_record6" />
+        <field name="context">{'type_id':'EMPDOG_2'}</field>
+    </record>
+		<record model="ir.actions.act_window.view" id="act_consultalone_tree">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_view_request"/>
+					<field name="act_window_id" ref="action_labo_sample_alone_an1"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_consultalone_form">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_view_empdogalone_f"/>
+					<field name="act_window_id" ref="action_labo_sample_alone_an1"/>
+		</record>
+    <menuitem name="Progenus/Consult Analysis/EMPDOG SEUL" id="menu_action_alone" action="action_labo_sample_alone_an1"/>
+
+
+    <record model="ir.actions.act_window" id="action_labo_analysis_all">
+        <field name="name">ALL kinds of requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.analysis.request</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+		<field name="domain">[('state','&lt;&gt;','closed')]</field>
+        <field name="view_id" ref="labo_view_request"/>
+		<field name="limit" eval="100"/>
+    </record>
+    <menuitem name="Progenus/Consult Analysis/Unclosed Analysis" id="menu_action_all_analysis" action="action_labo_analysis_all"/>
+
+    <record model="ir.ui.view" id="labo_sample_empacbov" >
+        <field name="name">EMPACBOV2</field>
+        <field name="model">labo.sample</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+        	<tree string="Analysis Samples" >
+	             <field name="progenus_number" />
+	             <field name="sanitel" />
+	             <field name="code" />
+	             <field name="sex" />
+	             <field name="material"  />
+	             <!--field name="allele1"  />
+	             <field name="allele2"  /-->
+	             <field name="date_reception" />
+	             <field name="date_closing"  />
+	            <field name="date_eff"  />
+	             <field name="date_limit"   />
+	             <field name="file_setup"   />
+	             <field name="follow_sheet_id"  />
+	                            <field name="notice" />
+			    <field name="plate_id"  />
+	             <field name="num_alpha"  />
+		        <field name="num_alpha2"/>
+		         <field name="date_starting"   />
+	             <field name="state" />
+	             <field name="field_awe"  />
+	             <field name="tube"  />
+	             <field name="result"  />
+	             <field name="awe2"  />
+	             <field name="name_animal"  />
+	             <field name="birthdate"  />
+	             <field name="tool" />
+	             <field name="stock_id"  />
+	             <field name="user_id"  />
+				    <field name="sample_id" />
+	             <field name="nc_gle"  />
+	             <field name="final_c"  />
+	             <field name="to_be_invoiced" />
+	             <field name="nc_reanalyse"  />
+				<field name="v_done" />
+				<field name="done_i" />
+        	</tree>
+    	</field>
+	</record>
+    <record model="ir.ui.view" id="labo_sample_empacbov_form" >
+        <field name="name">EMPACBOV1</field>
+        <field name="model">labo.sample</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+        	<form string="Analysis Samples" >
+         		<notebook>
+            		<page string="Information">
+		                <field name="progenus_number" select="1"  />
+		                <field name="sanitel" select="2"  />
+		                <field name="code" select="2"  />
+		                <field name="sex" select="2"  />
+		                <field name="material" select="2"  />
+		                <field name="date_reception" select="2"  />
+		                <field name="date_closing" select="2"  />
+	                    <field name="date_eff" select="2"  />
+		                <field name="date_limit" select="2"  />
+		                <field name="date_starting" select="2"  />
+		                <field name="file_setup" select="2"  />
+		                <field name="follow_sheet_id" select="2"  />
+			            <field name="plate_id" select="2" />
+		                <field name="num_alpha" select="2"  />
+		            	<field name="num_alpha2" select="2" />
+		                <field name="state" select="2"  />
+		                <field name="field_awe" select="2"  />
+		                <field name="tube" select="2"  />
+		                <field name="result" select="2"  />
+		                <field name="awe2" select="2"  />
+		                <field name="name_animal" select="2"  />
+		                <field name="birthdate" select="2"  />
+		                <field name="tool" select="2"  />
+		                <field name="stock_id" select="2"  />
+	                    <field name="user_id" select="2"  />
+	                            <field name="notice" />
+				    <field name="sample_id" />
+		                <field name="nc_gle" select="2"  />
+		                <field name="final_c" select="2"  />
+		                <field name="to_be_invoiced" select="2"  />
+		                <field name="nc_reanalyse" select="2"  />
+				        <field name="v_done" select="2"/>
+				            <field name="done_i" />
+                        <button name="button_prog_simple" string="Set Progenus Number"  type="object" colspan="4"/>
+		            </page>
+                    <page string="Alleles">
+						<field name="allele_ids"  colspan="4" nolabel="1"/>
+                    </page>
+		                            <page string="Old Alleles" >
+	                                    <field name="allele_ids_hist"/>
+                                    </page>
+            		<page string="History" >
+		                <field name="history_ids" colspan="4"/>
+                        <field name="history_p_ids" colspan="4"/>
+				        <field name="history_s_ids" colspan="4" />
+	                    <field name="file_h_ids" colspan="4" />
+            		</page>
+            	</notebook>
+		    </form>
+    	</field>
+	</record>
+    <record model="ir.actions.act_window" id="action_sample_empacbov">
+        <field name="name">EMPBOV/ACBOV samples</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.sample</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="domain">[('sample_id.type_id.code','in', ('ACBOV' , 'EMPBOV'))]</field>
+        <field name="view_id" ref="labo_sample_empacbov"/>
+		<field name="limit" eval="300"/>
+        <field name="context">{'type_id':'EMPACBOV'}</field>
+    </record>
+
+		<record model="ir.actions.act_window.view" id="act_labo_sampleacemp_tree_view2">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_sample_empacbov"/>
+					<field name="act_window_id" ref="action_sample_empacbov"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_labo_sampleacemp_form_view">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_sample_empacbov_form"/>
+					<field name="act_window_id" ref="action_sample_empacbov"/>
+		</record>
+
+    <menuitem name="Progenus/Samples/EMPBOV and ACBOV Samples" id="menu_empacbov_form_view" action="action_sample_empacbov"/>
+<!-- ALL SAMPLES-->
+
+    <record model="ir.ui.view" id="labo_samples_all" >
+        <field name="name">ALL2</field>
+        <field name="model">labo.sample</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+        	<tree string="Analysis Samples" >
+	             <field name="progenus_number" />
+	             <field name="sanitel" />
+	             <field name="code" />
+	             <field name="sex" />
+	             <field name="material"  />
+	             <field name="date_reception" />
+	             <field name="dog_mother" />
+	             <field name="dog_father" />
+	             <field name="dog_child" />
+				<field name="date_mod"/>
+	             <field name="date_closing"  />
+	            <field name="date_eff"  />
+	             <field name="date_limit"   />
+	             <field name="file_setup"   />
+	             <field name="follow_sheet_id"  />
+	             <field name="notice" />
+			    <field name="plate_id"  />
+	             <field name="num_alpha"  />
+		        <field name="num_alpha2"/>
+		         <field name="date_starting"   />
+	             <field name="state" />
+	             <field name="field_awe"  />
+	             <field name="tube"  />
+	             <field name="result"  />
+	             <field name="awe2"  />
+	             <field name="name_animal"  />
+	             <field name="birthdate"  />
+	             <field name="tool" />
+	             <field name="stock_id"  />
+	             <field name="user_id"  />
+				    <field name="sample_id" />
+	             <field name="nc_gle"  />
+	             <field name="final_c"  />
+	             <field name="to_be_invoiced" />
+	             <field name="nc_reanalyse"  />
+				<field name="v_done" />
+				<field name="done_i" />
+        	</tree>
+    	</field>
+	</record>
+    <record model="ir.ui.view" id="labo_samples_all_form" >
+        <field name="name">ALL1</field>
+        <field name="model">labo.sample</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+        	<form string="Analysis Samples" >
+         		<notebook>
+            		<page string="Information">
+		                <field name="progenus_number" select="1"  />
+		                <field name="sanitel" select="2"  />
+		                <field name="code" select="2"  />
+		                <field name="sex" select="2"  />
+		                <field name="material" select="2"  />
+	           			<field name="dog_mother" select="1" on_change="onchange_dog(dog_mother)"/>
+	           	 		<field name="dog_father" select="1" on_change="onchange_dog(dog_father)"/>
+	           	  		<field name="dog_child" select="1" on_change="onchange_dog(dog_child)"/>
+		       	         <field name="date_reception" select="2"  />
+						<field name="date_mod" select="1"/>
+		                <field name="date_closing" select="2"  />
+	                    <field name="date_eff" select="2"  />
+		                <field name="date_limit" select="2"  />
+		                <field name="date_starting" select="2"  />
+		                <field name="file_setup" select="2"  />
+		                <field name="follow_sheet_id" select="2"  />
+			            <field name="plate_id" select="2" />
+		                <field name="num_alpha" select="2"  />
+		            	<field name="num_alpha2" select="2" />
+		                <field name="state" select="2"  />
+		                <field name="field_awe" select="2"  />
+		                <field name="tube" select="2"  />
+		                <field name="result" select="2"  />
+		                <field name="awe2" select="2"  />
+		                <field name="name_animal" select="2"  />
+		                <field name="birthdate" select="2"  />
+		                <field name="tool" select="2"  />
+		                <field name="stock_id" select="2"  />
+	                    <field name="user_id" select="2"  />
+	                    <field name="notice" />
+				    	<field name="sample_id" select="2"/>
+		                <field name="nc_gle" select="2"  />
+		                <field name="final_c" select="2"  />
+		                <field name="to_be_invoiced" select="2"  />
+		                <field name="nc_reanalyse" select="2"  />
+				        <field name="v_done" select="2"/>
+				            <field name="done_i" />
+                        <button name="button_prog_simple" string="Set Progenus Number"  type="object" colspan="4"/>
+		            </page>
+                    <page string="Alleles">
+						<field name="allele_ids"  colspan="4" nolabel="1"/>
+                    </page>
+		                            <page string="Old Alleles" >
+	                                    <field name="allele_ids_hist"/>
+                                    </page>
+            		<page string="History" >
+		                <field name="history_ids" colspan="4"/>
+                        <field name="history_p_ids" colspan="4"/>
+				        <field name="history_s_ids" colspan="4" />
+	                    <field name="file_h_ids" colspan="4" />
+            		</page>
+            	</notebook>
+		    </form>
+    	</field>
+	</record>
+    <record model="ir.actions.act_window" id="action_labo_sample_all">
+        <field name="name">ALL samples</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.sample</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="labo_samples_all"/>
+        <field name="context">{'type_id':'all'}</field>
+		<field name="limit" eval="300"/>
+    </record>
+
+		<record model="ir.actions.act_window.view" id="act_labo_sample_tree_all">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_samples_all"/>
+					<field name="act_window_id" ref="action_labo_sample_all"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_labo_sample_form_all">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_samples_all_form"/>
+					<field name="act_window_id" ref="action_labo_sample_all"/>
+		</record>
+
+    <menuitem name="Progenus/Samples/ALL Samples" id="menu_action_samples_form_all" action="action_labo_sample_all"/>
+
+   <record model="ir.ui.view" id="labo_view_allreq_consult" >
+        <field name="name">ALL</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+        	<form string="Analysis Request">
+            	<notebook>
+				<page string="General">
+					<field name="name" select="1" />
+					<field name="type_id" />
+					<field name="begining_date" />
+					<field name="date_reception" />
+					<field name="date_planned" />
+					<field name="date_closed" />
+					<field name="cond_reception"/>
+					<field name="date_awe"/>
+					<field name="ref_client"  on_change="onchange_pricelist(ref_client)" select="1" />
+					<field name="pricelist_id" />
+					<field name="user_id" select="1" />
+					<field name="invoice_ids" />
+					<field name="urgent" />
+					<field name="accredit" />
+					<field name="desc_1" colspan="4" nolabel="1"/>
+					<newline/>
+
+					<field name="desc_2" colspan="4" nolabel="1"/>
+					<field name="desc_3" colspan="4" nolabel="1"/>
+					<field name="state" colspan="4" nolabel="1"/>
+				 	<group col="4" colspan="4">
+						<button name="button_draft" string="Set to Draft" states="cancel" type="object"/>
+						<button name="button_cancel" string="Cancel" states="running" type="object"/>
+						<button name="button_running" string="Running" states="draft" type="object"/>
+						<button name="button_closed" string="Closed" states="draft,running" type="object"/>
+					</group>
+					</page>
+				<page string="Cases">
+					<field name="case_id" nolabel="1"/>
+				</page>
+				<page string="Send to">
+					<field name="send_to_ids" nolabel="1"/>
+				</page>
+			</notebook>
+		</form>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="action_labo_analysis_all_2">
+        <field name="name">ALL kinds of requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.analysis.request</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="labo_view_request"/>
+		<field name="limit" eval="100"/>
+        <field name="context">{'type_id':'empdog1_2'}</field>
+    </record>
+
+		<record model="ir.actions.act_window.view" id="act_all_tree_view2">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_view_request"/>
+					<field name="act_window_id" ref="action_labo_analysis_all_2"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_all_form_view">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_view_allreq_consult"/>
+					<field name="act_window_id" ref="action_labo_analysis_all_2"/>
+		</record>
+    <menuitem name="Progenus/Consult Analysis/ALL Analysis Types" id="menu_action_all_analysis2" action="action_labo_analysis_all_2"/>
+</data>
+</terp>
