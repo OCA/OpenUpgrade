@@ -16,6 +16,8 @@
                 - partners display on map with its turnover
             * Most frequent delivery routes (menu: Partners/Google Map/Earth)
                 - grouping of delivery by city and put route path on map with differnt color by number of deliveries
+            * Network link kml file for dynamic updates of data on google earth.
+            * directly open google map in your browser with different information.
     """,
     "init_xml" : [],
     "demo_xml" : [],
