@@ -96,7 +96,7 @@
                         <field name="action_hour"/>
                     </tree>
                 </field>
-                <field name="sale_order_id" select="2" on_change="_check_unique_so(sale_order_id)"/>
+                <field name="sale_order_id" select="2" /> <!--on_change="_check_unique_so(sale_order_id)"/-->
                 <field name="mail_service_id" select="2"/>
                 <newline/>
                 <field name="state" select="1"/>

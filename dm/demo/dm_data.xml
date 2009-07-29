@@ -801,7 +801,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
             <field name="model_id" ref="dm.model_dm_workitem"/>
             <field eval="[(6,0,[])]" name="child_ids"/>
-            <field eval="&quot;&quot;&quot;action = 'unsubscribe'&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;seg_wi_id = self.search(cr,uid, [('segment_id','=',obj.segment_id.id)])\nself.write(cr,uid,seg_wi_id,{'state':'cancel','error_msg':'Cancelled by unsubscription'})\naction = 'unsubscription' &quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
             <field eval="&quot;&quot;&quot;DM - Unsubscribe&quot;&quot;&quot;" name="name"/>
         </record>
@@ -1194,6 +1194,11 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="name">No mail service for a preview document</field>
             <field name="code">no_mail_service_for_preview</field>
             <field name="message">There is no mail service defined for this preview document</field>
+        </record>
+        <record model="dm.sysmsg" id="dm_sysmsg_mail_service_unsubscription">
+            <field name="name">DM - Unsubscription</field>
+            <field name="code">unsubscription</field>
+            <field name="message">Cancelled by unsubscription</field>
         </record>
         <record model="dm.sysmsg" id="dm_sysmsg_document_done">
             <field name="name">Document Succesfully Generated</field>
