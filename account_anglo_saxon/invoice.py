@@ -68,6 +68,38 @@ class account_invoice_line(osv.osv):
                         'account_analytic_id':i_line.account_analytic_id.id,
                         'taxes':i_line.invoice_line_tax_id,
                         })
+        elif inv.type in ('in_invoice','in_refund'):
+            for i_line in inv.invoice_line:
+                if i_line.product_id:
+                    acc = i_line.product_id.product_tmpl_id.property_account_creditor_price_difference and i_line.product_id.product_tmpl_id.property_account_creditor_price_difference.id
+                    if not acc:
+                        acc = i_line.product_id.categ_id.property_account_creditor_price_difference_categ and i_line.product_id.categ_id.property_account_creditor_price_difference_categ.id
+
+                    oa = i_line.product_id.product_tmpl_id.property_stock_account_input and i_line.product_id.product_tmpl_id.property_stock_account_input.id
+                    if not oa:
+                        oa = i_line.product_id.categ_id.property_stock_account_input_categ and i_line.product_id.categ_id.property_stock_account_input_categ.id
+                    if oa:
+                        fpos = i_line.invoice_id.fiscal_position or False
+                        a = self.pool.get('account.fiscal.position').map_account(cr, uid, fpos, oa)
+
+                    for line in res:
+                        if a == line['account_id'] and i_line.product_id.id == line['product_id']:
+                            if i_line.product_id.product_tmpl_id.standard_price != i_line.price_unit and acc:
+                                price_diff = i_line.price_unit - i_line.product_id.product_tmpl_id.standard_price
+                                line.update({'price':i_line.product_id.product_tmpl_id.standard_price * i_line.quantity})
+                                res.append({
+                                    'type':'src',
+                                    'name': i_line.name[:64],
+                                    'price_unit':price_diff,
+                                    'quantity':i_line.quantity,
+                                    'price': price_diff * i_line.quantity,
+                                    'account_id':acc,
+                                    'product_id':i_line.product_id.id,
+                                    'uos_id':i_line.uos_id.id,
+                                    'account_analytic_id':i_line.account_analytic_id.id,
+                                    'taxes':i_line.invoice_line_tax_id,
+                                    })
+        
         return res    
 account_invoice_line()
 #    def move_line_get(self, cr, uid, invoice_id, context=None):
