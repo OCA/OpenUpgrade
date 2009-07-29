@@ -22,6 +22,7 @@
 
 import time
 import datetime
+import mx.DateTime
 import tools
 import netsvc
 from osv import fields,osv
@@ -39,7 +40,8 @@ class users(osv.osv):
     _inherit = "res.users"
     _columns = {        
         'lp_login': fields.char('Launchpad ID', size=64),
-        'ctg_line':fields.one2many('ctg.line','rewarded_user_id','CTG Lines', readonly=True)
+        'ctg_line':fields.one2many('ctg.line','rewarded_user_id','CTG Lines', readonly=True),
+        'user_history':fields.one2many('user.history','user_id','User History', readonly=True)
     }
 users()
 
@@ -92,20 +94,57 @@ class ctg_line(osv.osv):
             mail_body = {}
             for report_ctg_line in report_ctg_line_obj.browse(cr, uid, report_ctg_line_ids):
                 if report_ctg_line.rewarded_user_id.address_id and report_ctg_line.rewarded_user_id.address_id.email:
+                    values = []
+                    if mail_body.get(report_ctg_line.rewarded_user_id.id,False):
+                        values = mail_body.get(report_ctg_line.rewarded_user_id.id,False)
                     mail_to = report_ctg_line.rewarded_user_id.address_id.email
-                    mail_body[report_ctg_line.rewarded_user_id.id]= [mail_to,report_ctg_line.ctg_type_id.name,report_ctg_line.points] 
-            for mail_to, ctg_type,points in mail_body.values():
-                body = 'You obtain following CTG points of %s month:\n' %(date.strftime('%Y:%m')) + '%s : %s \n'%(ctg_type, points)
-                user = tools.config['email_from']
-                if not user:
-                    raise osv.except_osv(_('Error'), _("Please specify server option --smtp-from !"))
-        
-                subject = 'Your CTG points of %s month in OpenERP' %(date.strftime('%Y:%m'))
-                logger = netsvc.Logger()
-                if tools.email_send(user, [mail_to], subject, body, debug=False, subtype='html') == True:
-                    logger.notifyChannel('email', netsvc.LOG_INFO, 'Email successfully send to : %s' % (mail_to))
+                    values.append([report_ctg_line.rewarded_user_id.name,mail_to,report_ctg_line.ctg_type_id.name,report_ctg_line.points])
+                    mail_body[report_ctg_line.rewarded_user_id.id] = values
+            user_history_obj = self.pool.get('user.history')
+            for usr_id,values in mail_body.items():
+                usr = True
+                total = 0.0 
+                action = "ctg_line"
+                cr.execute("select max(date) as max_date from user_history where action = '%s'"%(action))
+                history_ctg_lines = cr.dictfetchone()
+                if history_ctg_lines['max_date']:
+                    last_date = history_ctg_lines
+                    cr.execute("""select sum(points) as old_points from ctg_line
+                                  where date_ctg <= '%s' and rewarded_user_id =%s """%(last_date['max_date'],str(usr_id)))
+                    old_total = cr.fetchone()[0]
                 else:
-                    logger.notifyChannel('email', netsvc.LOG_ERROR, 'Failed to send email to : %s' % (mail_to))      
+                    old_total = 0.0
+                    last_date = date
+                for user, mail_to, ctg_type, points in values:
+                    if usr:
+                        body ="<html><body>Hello <b>" + user + "</b>!<br>" 
+                        body = body +"<p style=\"margin-left:35px\"> Thanks to Contribute on OpenERP/OpenObject during <b>"+ last_date['max_date'] + "</b> and <b>" + date.strftime('%Y-%m-%d')+"</b><br>"\
+                                       + "Your CTG points are decribe in following table."\
+                                       + "Your CTG Ponits table:</p>"\
+                                       + "<p style=\"margin-left:70px\"><table><tr><th align=left>CTG Type</th><th align=center>|</th><th align=right>Points</th></tr>"\
+                                       + "<tr><td colspan=3><hr></td></tr>" 
+                        usr = False 
+                    body = body + "<tr><td align=left>" + ctg_type + "</td><td align=center>|</td><td align=right>" + str(points) + "</td></tr>"
+                    total = total + points       
+                cr.execute("select sum(points) as total1 from ctg_line where rewarded_user_id=%s " %str(usr_id))
+                total1 = cr.fetchone()[0]
+                if total1 != old_total or not history_ctg_lines:
+                    body = body + "<tr><td></td><td align=center>|</td><td></td></tr>"\
+                            + "<tr><td colspan=3><hr></td></tr>"\
+                            + "<tr><td align=left>Total</td><td align=center>|</td><td align=right>" + str(total) + "</td></tr></table></p>"\
+                            + "<p style=\"margin-left:35px\">And Total CTG points upto <b>" + date.strftime('%Y-%m-%d') +"</b> : <b>" + str(total1) + "</b></p>"\
+                            + "Thanks<br>OpenERP Quality Team</body></html>"
+                    user = tools.config['email_from']
+                    if not user:
+                        raise osv.except_osv(_('Error'), _("Please specify server option --smtp-from !"))
+                    
+                    subject = 'Your CTG points of %s month in OpenERP' %(date.strftime('%Y:%m'))
+                    logger = netsvc.Logger()
+                    if tools.email_send(user, [mail_to], subject, body, debug=False, subtype='html') == True:
+                        logger.notifyChannel('email', netsvc.LOG_INFO, 'Email successfully send to : %s' % (mail_to))
+                        user_history_obj.create(cr,uid,{'action':action,'description':subject,'date':date,'user_id':usr_id})
+                    else:
+                        logger.notifyChannel('email', netsvc.LOG_ERROR, 'Failed to send email to : %s' % (mail_to))
         return
     
     
@@ -186,6 +225,10 @@ class ctg_feedback(osv.osv):
                 logger = netsvc.Logger()
                 if tools.email_send(user, [mail_to], subject, body, debug=False, subtype='html') == True:
                     logger.notifyChannel('email', netsvc.LOG_INFO, 'Email successfully send to : %s' % (mail_to))
+                    date = feedback_line.date_feedback or datetime.date.today()
+                    usr_id = feedback_line.user_to.id
+                    feedback_id = feedback_line.id  
+                    self.pool.get('user.history').create(cr,uid,{'action':'feedback', 'description':subject, 'feedback_id':feedback_line.id,'date':date, 'user_id':usr_id})
                 else:
                     logger.notifyChannel('email', netsvc.LOG_ERROR, 'Failed to send email to : %s' % (mail_to))
 
@@ -222,15 +265,36 @@ class ctg_feedback(osv.osv):
         if current_date.month == 1:
             year = current_date.year - 1
             month = 12
+            days = current_date.day
         else:
+            # if previous month has less days the current month and current_date is last date
             month = current_date.month - 1
-        d = datetime.date(year, month, current_date.day)
+            ref_date = current_date
+            rel_date = ref_date.replace(month=month+1, day=1) - datetime.timedelta(days=1)
+            if current_date.day > rel_date.day:
+                days = rel_date.day
+            else:
+                days = current_date.day
+        d = datetime.date(year, month, days)
         open_feedback_ids = self.search(cr, uid, [('date_feedback','<=',d.strftime('%Y-%m-%d')),('state','=','open')])  
         if len(open_feedback_ids):
             self.action_cancel(cr, uid, open_feedback_ids, context=context)
 
 ctg_feedback()
 
+class user_history(osv.osv):
+    _name = "user.history"
+    _rec_name ="user_id"
+    _description = "User History"
+    _columns = {
+                'action':fields.selection([('feedback', 'Feedback'), ('ctg_line', 'CTG Line')],'Action'),
+                'feedback_id':fields.many2one('ctg.feedback', 'Feedback'),
+                'description':fields.char('Description', size=64),
+                'date':fields.date('Sent Date'),
+                'user_id':fields.many2one('res.users', 'Responsible', required=True),
+                
+              }
+user_history()
 
 
 class document_file(osv.osv):
@@ -307,12 +371,14 @@ class account_invoice_line(osv.osv):
             projects = project_obj.browse(cr, uid, project_ids)
             ctg_type_ids = self.pool.get('ctg.type').search(cr,uid,[('code','=','customer satisfaction')])
             new_date = datetime.date.today() + datetime.timedelta(days=2)
-            if len(ctg_type_ids):
+            invoice_rec = self.pool.get('account.invoice').browse(cr,uid,vals['invoice_id'])
+            dedicated_user = invoice_rec.partner_id.user_id
+            if len(ctg_type_ids) and dedicated_user:
                 for project in projects:
                         feedback_obj.create(cr, uid, {
                                     'name':'Feedback of %s Project' %(project.name),
                                     'ctg_type_id':ctg_type_ids[0],
-                                    'user_to':uid,
+                                    'user_to':dedicated_user.id,
                                     'responsible':project.manager.id,
                                     'date_feedback':new_date,
                         })
