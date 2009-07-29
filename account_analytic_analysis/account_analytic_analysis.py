@@ -35,7 +35,7 @@ class account_analytic_account(osv.osv):
         ids2 = self.search(cr, uid, [('parent_id', 'child_of', ids)])
         if ids2:
             acc_set = ",".join(map(str, ids2))
-            cr.execute("select account_analytic_line.account_id, COALESCE(sum(amount),0.0) \
+            cr.execute("select account_analytic_line.account_id, sum(amount) \
                     from account_analytic_line \
                     join account_analytic_journal \
                         on account_analytic_line.journal_id = account_analytic_journal.id  \
@@ -62,9 +62,9 @@ class account_analytic_account(osv.osv):
             # Amount uninvoiced hours to invoice at sale price
             acc_set = ",".join(map(str, ids2))
             cr.execute("""SELECT account_analytic_account.id, \
-                        COALESCE(sum (product_template.list_price * \
+                        sum (product_template.list_price * \
                             account_analytic_line.unit_amount * \
-                            ((100-hr_timesheet_invoice_factor.factor)/100)),0.0) \
+                            ((100-hr_timesheet_invoice_factor.factor)/100)) \
                             AS ca_to_invoice \
                     FROM product_template \
                     join product_product \
@@ -114,7 +114,7 @@ class account_analytic_account(osv.osv):
         ids2 = self.search(cr, uid, [('parent_id', 'child_of', ids)])
         if ids2:
             acc_set = ",".join(map(str, ids2))
-            cr.execute("select account_analytic_line.account_id, COALESCE(sum(unit_amount),0.0) \
+            cr.execute("select account_analytic_line.account_id, sum(unit_amount) \
                     from account_analytic_line \
                     join account_analytic_journal \
                         on account_analytic_line.journal_id = account_analytic_journal.id \
@@ -140,15 +140,14 @@ class account_analytic_account(osv.osv):
         ids2 = self.search(cr, uid, [('parent_id', 'child_of', ids)])
         if ids2:
             acc_set = ",".join(map(str, ids2))
-            cr.execute("select account_analytic_line.account_id,COALESCE(SUM(unit_amount),0.0) \
+            cr.execute("select account_analytic_line.account_id,sum(unit_amount) \
                     from account_analytic_line \
                     join account_analytic_journal \
                         on account_analytic_line.journal_id = account_analytic_journal.id \
                     where account_analytic_line.account_id IN (%s) \
                         and account_analytic_journal.type='general' \
                     GROUP BY account_analytic_line.account_id"%acc_set)
-            ff =  cr.fetchall()
-            for account_id, sum in ff:
+            for account_id, sum in cr.fetchall():
                 res[account_id] = round(sum,2)
         for obj_id in ids:
             res.setdefault(obj_id, 0.0)
@@ -165,7 +164,7 @@ class account_analytic_account(osv.osv):
         ids2 = self.search(cr, uid, [('parent_id', 'child_of', ids)])
         if ids2:
             acc_set = ",".join(map(str, ids2))
-            cr.execute("""select account_analytic_line.account_id,COALESCE(sum(amount),0.0) \
+            cr.execute("""select account_analytic_line.account_id,sum(amount) \
                     from account_analytic_line \
                     join account_analytic_journal \
                         on account_analytic_line.journal_id = account_analytic_journal.id \
@@ -191,9 +190,9 @@ class account_analytic_account(osv.osv):
         if ids2:
             acc_set = ",".join(map(str, ids2))
             cr.execute("""select account_analytic_line.account_id as account_id, \
-                        COALESCE(sum((account_analytic_line.unit_amount * pt.list_price) \
+                        sum((account_analytic_line.unit_amount * pt.list_price) \
                             - (account_analytic_line.unit_amount * pt.list_price \
-                                * hr.factor)),0.0) as somme
+                                * hr.factor)) as somme
                     from account_analytic_line \
                     left join account_analytic_journal \
                         on (account_analytic_line.journal_id = account_analytic_journal.id) \

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-08-06 15:18:10+0000\n"
-"PO-Revision-Date: 2009-08-06 15:18:10+0000\n"
+"POT-Creation-Date: 2009-05-19 14:20:52+0000\n"
+"PO-Revision-Date: 2009-05-20 10:20:52+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -56,14 +56,20 @@ msgid "Delivery"
 msgstr "Levering"
 
 #. module: purchase
-#: field:purchase.order.line,product_qty:0
-msgid "Quantity"
-msgstr "Aantal"
+#: wizard_view:purchase.order.merge,init:0
+msgid "Please note that orders will only be merged if they are to the same partner and going to the same location, and lines will only be merged if they are exactly the same except for the quantity and unit."
+msgstr "Alleen orders met dezelfde leverancier en met dezelfde bestemming worden samengevoegd. Tevens moeten de regels exact hetzelfde zijn (uitgezonderd aantallen)."
 
 #. module: purchase
-#: selection:purchase.order,invoice_method:0
-msgid "From Order"
-msgstr "Van order"
+#: code:addons/purchase/purchase.py:0
+#, python-format
+msgid "No Pricelist !"
+msgstr "Geen prijslijst!"
+
+#. module: purchase
+#: model:ir.actions.act_window,name:purchase.act_purchase_order_2_stock_picking
+msgid "Packing"
+msgstr "Verpakking"
 
 #. module: purchase
 #: model:process.node,name:purchase.process_node_confirmpurchaseorder0
@@ -111,9 +117,9 @@ msgid "Purchase Process"
 msgstr ""
 
 #. module: purchase
-#: model:process.transition,name:purchase.process_transition_invoicefrompackinglist0
-msgid "Invoice from Packing list"
-msgstr "Factureer op basis van pakbonnen"
+#: field:purchase.order.line,product_qty:0
+msgid "Quantity"
+msgstr "Aantal"
 
 #. module: purchase
 #: view:purchase.order:0
@@ -146,6 +152,11 @@ msgstr "Notities"
 
 #. module: purchase
 #: rml:purchase.order:0
+msgid "N°"
+msgstr "Nr."
+
+#. module: purchase
+#: rml:purchase.order:0
 #: field:purchase.order,amount_tax:0
 #: field:purchase.order.line,taxes_id:0
 msgid "Taxes"
@@ -161,9 +172,9 @@ msgid "Purchase Order"
 msgstr "Inkooporder"
 
 #. module: purchase
-#: rml:purchase.quotation:0
-msgid "Regards,"
-msgstr "Met vriendelijk groet,"
+#: field:purchase.order,name:0
+msgid "Order Reference"
+msgstr "Order referentie"
 
 #. module: purchase
 #: rml:purchase.order:0
@@ -191,15 +202,20 @@ msgid "Incoming Products"
 msgstr "Binnenkomende producten"
 
 #. module: purchase
-#: rml:purchase.order:0
-#: rml:purchase.quotation:0
-msgid "Qty"
-msgstr "Hvhd"
+#: model:process.node,note:purchase.process_node_confirmpurchaseorder0
+msgid "Purchase order is confirmed by the user."
+msgstr "Inkooporder is goedgekeurd door de gebruiker."
 
 #. module: purchase
 #: view:purchase.order:0
 msgid "Manually Corrected"
 msgstr "Handmatig gecorrigeerd"
+
+#. module: purchase
+#: code:addons/purchase/purchase.py:0
+#, python-format
+msgid "You must first cancel all invoices attached to this purchase order."
+msgstr "Annuleer eerst alle inkoopfacturen welke zijn gekoppeld aan deze inkooporder."
 
 #. module: purchase
 #: view:purchase.order:0
@@ -252,6 +268,18 @@ msgstr "Netto-prijs"
 #: view:purchase.order.line:0
 msgid "Order Line"
 msgstr "Orderregel"
+
+#. module: purchase
+#: code:addons/purchase/purchase.py:0
+#, python-format
+msgid "You have to select a pricelist in the purchase form !\nPlease set one before choosing a product."
+msgstr ""
+
+#. module: purchase
+#: code:addons/purchase/purchase.py:0
+#, python-format
+msgid "Wrong Product UOM !"
+msgstr "Verkeerde product meeteenheid!"
 
 #. module: purchase
 #: selection:purchase.order,state:0
@@ -325,10 +353,10 @@ msgid "Shipping address :"
 msgstr "Afleveradres :"
 
 #. module: purchase
-#: model:product.pricelist.type,name:purchase.pricelist_type_purchase
-#: field:res.partner,property_product_pricelist_purchase:0
-msgid "Purchase Pricelist"
-msgstr "Inkoopprijslijst"
+#: code:addons/purchase/purchase.py:0
+#, python-format
+msgid "Error !"
+msgstr "Fout !"
 
 #. module: purchase
 #: field:purchase.order,minimum_planned_date:0
@@ -341,9 +369,9 @@ msgid "Approved by Supplier"
 msgstr "Goedgekeurd door leverancier"
 
 #. module: purchase
-#: model:ir.actions.act_window,name:purchase.act_purchase_order_2_stock_picking
-msgid "Packing"
-msgstr "Verpakking"
+#: selection:purchase.order,invoice_method:0
+msgid "From Order"
+msgstr "Van order"
 
 #. module: purchase
 #: model:ir.actions.wizard,name:purchase.purchase_order_merge
@@ -356,9 +384,10 @@ msgid "Reservation Destination"
 msgstr "Gereserveerde bestemming"
 
 #. module: purchase
-#: field:purchase.order,name:0
-msgid "Order Reference"
-msgstr "Order referentie"
+#: code:addons/purchase/purchase.py:0
+#, python-format
+msgid "Invalid action !"
+msgstr "Foutieve handeling!"
 
 #. module: purchase
 #: selection:purchase.order,state:0
@@ -421,6 +450,12 @@ msgid "Encoded manually by the user."
 msgstr "Handmatig aangepast door de gebruiker"
 
 #. module: purchase
+#: rml:purchase.order:0
+#: rml:purchase.quotation:0
+msgid "Qty"
+msgstr "Hvhd"
+
+#. module: purchase
 #: help:purchase.order,minimum_planned_date:0
 msgid "This is computed as the minimum scheduled date of all purchase order lines' products."
 msgstr "Dit is een berekende minimale geplande datum van alle inkooporderregels."
@@ -477,6 +512,12 @@ msgid "Invoiced"
 msgstr "Gefactureerd"
 
 #. module: purchase
+#: code:addons/purchase/purchase.py:0
+#, python-format
+msgid "You have to select a product UOM in the same category than the purchase UOM of the product"
+msgstr "De meeteenheid die geselecteerd moet worden moet dezelfde zijn is die van het product"
+
+#. module: purchase
 #: field:purchase.order,dest_address_id:0
 msgid "Destination Address"
 msgstr "Bestemmingsadres"
@@ -486,6 +527,12 @@ msgstr "Bestemmingsadres"
 #: field:stock.move,purchase_line_id:0
 msgid "Purchase Order Line"
 msgstr "Inkooporderregel"
+
+#. module: purchase
+#: code:addons/purchase/purchase.py:0
+#, python-format
+msgid "You have to select a partner in the purchase form !\nPlease set one partner before choosing a product."
+msgstr ""
 
 #. module: purchase
 #: view:purchase.order:0
@@ -529,24 +576,20 @@ msgid "Creates invoice from packin list"
 msgstr "Maak factuur op basis van de pakbonnen"
 
 #. module: purchase
-#: help:purchase.order,date_order:0
-msgid "Date on which this document has been created."
-msgstr ""
-
-#. module: purchase
 #: view:purchase.order:0
 msgid "Delivery & Invoices"
 msgstr "Levering & Facturen"
 
 #. module: purchase
-#: field:purchase.order,date_order:0
-msgid "Date"
-msgstr ""
-
-#. module: purchase
 #: help:purchase.order,origin:0
 msgid "Reference of the document that generated this purchase order request."
 msgstr "Referente op het document welke wordt gegenereerd voor deze inkoopofferte-aanvraag"
+
+#. module: purchase
+#: code:addons/purchase/purchase.py:0
+#, python-format
+msgid "There is no expense account defined for this product: \"%s\" (id:%d)"
+msgstr "Er is geen inkoopgrootboekkaart gekoppeld aan dit product!"
 
 #. module: purchase
 #: rml:purchase.order:0
@@ -604,9 +647,9 @@ msgid "When purchase order is approved , it creates its packing list."
 msgstr "Wanneer de inkoop is goedgekeurd, wordt de pakbon gecreëerd."
 
 #. module: purchase
-#: view:purchase.order.line:0
-msgid "History"
-msgstr ""
+#: model:process.transition,name:purchase.process_transition_invoicefrompackinglist0
+msgid "Invoice from Packing list"
+msgstr "Factureer op basis van pakbonnen"
 
 #. module: purchase
 #: field:purchase.order,state:0
@@ -632,11 +675,6 @@ msgstr "Eenheidsprijs"
 #. module: purchase
 #: field:purchase.order,fiscal_position:0
 msgid "Fiscal Position"
-msgstr ""
-
-#. module: purchase
-#: rml:purchase.order:0
-msgid "Request for Quotation N°"
 msgstr ""
 
 #. module: purchase
@@ -717,6 +755,12 @@ msgid "Date Approved"
 msgstr "Datum goedgekeurd"
 
 #. module: purchase
+#: code:addons/purchase/purchase.py:0
+#, python-format
+msgid "Could not cancel this purchase order !"
+msgstr "Inkooporder kan niet geannuleerd worden."
+
+#. module: purchase
 #: model:ir.module.module,description:purchase.module_meta_information
 msgid "Module for purchase management\n"
 "    Request for quotation, Create Supplier Invoice, Print Order..."
@@ -726,6 +770,12 @@ msgstr ""
 #: field:purchase.order.line,product_id:0
 msgid "Product"
 msgstr "Product"
+
+#. module: purchase
+#: code:addons/purchase/purchase.py:0
+#, python-format
+msgid "No Partner!"
+msgstr ""
 
 #. module: purchase
 #: rml:purchase.order:0
@@ -761,14 +811,20 @@ msgid "Product UOM"
 msgstr "Product eenh."
 
 #. module: purchase
-#: field:purchase.order.line,move_ids:0
-msgid "Reservation"
-msgstr ""
+#: rml:purchase.quotation:0
+msgid "Regards,"
+msgstr "Met vriendelijk groet,"
 
 #. module: purchase
-#: model:process.node,note:purchase.process_node_confirmpurchaseorder0
-msgid "Purchase order is confirmed by the user."
-msgstr "Inkooporder is goedgekeurd door de gebruiker."
+#: field:purchase.order.line,move_id:0
+msgid "Reservation"
+msgstr "Reservering"
+
+#. module: purchase
+#: code:addons/purchase/purchase.py:0
+#, python-format
+msgid "Could not cancel purchase order !"
+msgstr "Inkooporder kan niet worden geannuleerd!"
 
 #. module: purchase
 #: model:process.transition,name:purchase.process_transition_purchaseinvoice0
@@ -776,14 +832,15 @@ msgid "Purchase Invoice"
 msgstr "Inkoopfactuur"
 
 #. module: purchase
-#: rml:purchase.order:0
-msgid "Your Order Reference"
-msgstr "Eigen orderreferentie"
+#: code:addons/purchase/purchase.py:0
+#, python-format
+msgid "You must first cancel all packing attached to this purchase order."
+msgstr ""
 
 #. module: purchase
 #: rml:purchase.order:0
-msgid "Purchase Order Confirmation N°"
-msgstr ""
+msgid "Your Order Reference"
+msgstr "Eigen orderreferentie"
 
 #. module: purchase
 #: view:purchase.order:0
@@ -792,6 +849,7 @@ msgstr "Totaalbedrag"
 
 #. module: purchase
 #: rml:purchase.order:0
+#: field:purchase.order,date_order:0
 msgid "Date Ordered"
 msgstr "Besteldatum"
 
@@ -805,6 +863,12 @@ msgstr "Inkoopcontrole"
 #: model:ir.ui.menu,name:purchase.menu_purchase_order_draft
 msgid "Request For Quotations"
 msgstr "Inkoopofferte-aanvraag"
+
+#. module: purchase
+#: model:product.pricelist.type,name:purchase.pricelist_type_purchase
+#: field:res.partner,property_product_pricelist_purchase:0
+msgid "Purchase Pricelist"
+msgstr "Inkoopprijslijst"
 
 #. module: purchase
 #: field:purchase.order,invoice_method:0
@@ -827,11 +891,6 @@ msgid "From Packing list, Create invoice."
 msgstr "Maak factuur vanaf pakbonnen"
 
 #. module: purchase
-#: field:purchase.order,amount_total:0
-msgid "Total"
-msgstr "Totaal"
-
-#. module: purchase
 #: wizard_view:purchase.order.merge,init:0
 msgid "Are you sure you want to merge these orders ?"
 msgstr "Ben je er zeker van dat je deze orders wilt samenvoegen?"
@@ -847,7 +906,7 @@ msgid "After approved purchase order , it comes into the supplier invoice"
 msgstr "Na goedkeuring inkooporder, de concept-inkoopfactuur wordt aangemaakt."
 
 #. module: purchase
-#: view:purchase.order.line:0
-msgid "Stock Moves"
-msgstr ""
+#: field:purchase.order,amount_total:0
+msgid "Total"
+msgstr "Totaal"
 

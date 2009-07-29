@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-08-06 15:19:24+0000\n"
-"PO-Revision-Date: 2009-08-06 15:19:24+0000\n"
+"POT-Creation-Date: 2009-05-19 14:21:36+0000\n"
+"PO-Revision-Date: 2009-05-20 10:21:36+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 #. module: account_budget
 #: field:crossovered.budget,creating_user_id:0
 msgid "Responsible User"
-msgstr "Vastutav kasutaja"
+msgstr ""
 
 #. module: account_budget
 #: rml:account.budget:0
@@ -29,7 +29,7 @@ msgstr "% teostus"
 #: model:ir.actions.act_window,name:account_budget.open_budget_post_form
 #: model:ir.ui.menu,name:account_budget.menu_budget_post_form
 msgid "Budgetary Positions"
-msgstr "Eelarvelised seisukohad"
+msgstr ""
 
 #. module: account_budget
 #: constraint:ir.actions.act_window:0
@@ -40,17 +40,17 @@ msgstr "Vigane mudeli nimi toimingu definitsioonis."
 #: rml:account.analytic.account.budget:0
 #: rml:crossovered.budget.report:0
 msgid "Printed at:"
-msgstr "Prinditud:"
+msgstr ""
 
 #. module: account_budget
 #: view:crossovered.budget:0
 msgid "Confirm"
-msgstr "Kinnita"
+msgstr ""
 
 #. module: account_budget
 #: field:crossovered.budget,validating_user_id:0
 msgid "Validate User"
-msgstr "Valideeriv kasutaja"
+msgstr ""
 
 #. module: account_budget
 #: constraint:ir.model:0
@@ -60,7 +60,13 @@ msgstr "Objekti nimi peab algama x_'ga ja ei tohi sisaldada ühtegi erisümbolit
 #. module: account_budget
 #: selection:crossovered.budget,state:0
 msgid "Confirmed"
-msgstr "Kinnitatud"
+msgstr ""
+
+#. module: account_budget
+#: code:addons/account_budget/wizard/wizard_budget_report.py:0
+#, python-format
+msgid "Insufficient Data!"
+msgstr ""
 
 #. module: account_budget
 #: field:account.budget.post.dotation,period_id:0
@@ -73,34 +79,34 @@ msgstr "Periood"
 #: wizard_field:wizard.crossovered.budget,init,date_to:0
 #: wizard_field:wizard.crossovered.budget.summary,init,date_to:0
 msgid "End of period"
-msgstr "Perioodi lõpp"
+msgstr ""
 
 #. module: account_budget
 #: rml:account.budget:0
 msgid "Printing date:"
-msgstr "Printimise kuupäev:"
+msgstr ""
 
 #. module: account_budget
 #: selection:crossovered.budget,state:0
 msgid "Draft"
-msgstr "Mustand"
+msgstr ""
 
 #. module: account_budget
 #: rml:account.analytic.account.budget:0
 #: rml:account.budget:0
 #: rml:crossovered.budget.report:0
 msgid "at"
-msgstr "kell"
+msgstr ""
 
 #. module: account_budget
 #: view:account.budget.post:0
 msgid "Dotations"
-msgstr "Dotatsioonid"
+msgstr ""
 
 #. module: account_budget
 #: rml:account.budget:0
 msgid "Performance"
-msgstr "Jõudlus"
+msgstr ""
 
 #. module: account_budget
 #: rml:account.analytic.account.budget:0
@@ -112,12 +118,12 @@ msgstr "Rahaühik:"
 #. module: account_budget
 #: rml:account.budget:0
 msgid "From"
-msgstr "Alates"
+msgstr ""
 
 #. module: account_budget
 #: field:crossovered.budget.lines,percentage:0
 msgid "Percentage"
-msgstr "Protsent"
+msgstr ""
 
 #. module: account_budget
 #: rml:account.budget:0
@@ -127,7 +133,7 @@ msgstr "Tulemused"
 #. module: account_budget
 #: field:crossovered.budget,state:0
 msgid "Status"
-msgstr "Staatus"
+msgstr ""
 
 #. module: account_budget
 #: model:ir.module.module,description:account_budget.module_meta_information
@@ -156,26 +162,25 @@ msgstr ""
 #: rml:account.budget:0
 #: rml:crossovered.budget.report:0
 msgid "%"
-msgstr "%"
+msgstr ""
 
 #. module: account_budget
 #: rml:account.analytic.account.budget:0
 #: rml:crossovered.budget.report:0
 msgid "Description"
-msgstr "Kirjeldus"
+msgstr ""
 
 #. module: account_budget
 #: rml:account.analytic.account.budget:0
 msgid "Analytic Account :"
-msgstr "Analüütiline konto:"
+msgstr ""
 
 #. module: account_budget
-#: wizard_button:account.budget.report,init,report:0
-#: wizard_button:wizard.analytic.account.budget.report,init,report:0
-#: wizard_button:wizard.crossovered.budget,init,report:0
-#: wizard_button:wizard.crossovered.budget.summary,init,report:0
-msgid "Print"
-msgstr "Prindi"
+#: rml:account.analytic.account.budget:0
+#: field:crossovered.budget.lines,practical_amount:0
+#: rml:crossovered.budget.report:0
+msgid "Practical Amount"
+msgstr ""
 
 #. module: account_budget
 #: rml:account.budget:0
@@ -187,48 +192,53 @@ msgstr ""
 #: rml:account.budget:0
 #: rml:crossovered.budget.report:0
 msgid "to"
-msgstr "kuni"
+msgstr ""
 
 #. module: account_budget
 #: rml:account.analytic.account.budget:0
 #: rml:account.budget:0
 #: rml:crossovered.budget.report:0
 msgid "Total :"
-msgstr "Kokku :"
+msgstr ""
 
 #. module: account_budget
 #: rml:account.analytic.account.budget:0
 #: field:crossovered.budget.lines,planned_amount:0
 #: rml:crossovered.budget.report:0
 msgid "Planned Amount"
-msgstr "Planeeritud summa"
+msgstr ""
 
 #. module: account_budget
-#: rml:account.analytic.account.budget:0
-#: rml:crossovered.budget.report:0
-msgid "Perc(%)"
-msgstr "Prots(%)"
+#: code:addons/account_budget/wizard/wizard_budget_report.py:0
+#, python-format
+msgid "No Dotations or Master Budget Expenses Found on Budget %s!"
+msgstr ""
 
 #. module: account_budget
 #: rml:account.budget:0
 msgid "Period Budget"
-msgstr "Perioodi eelarve"
+msgstr ""
 
 #. module: account_budget
 #: rml:account.budget:0
 msgid "Budget Analysis"
-msgstr "Eelarve analüüs"
+msgstr ""
 
 #. module: account_budget
 #: view:crossovered.budget:0
 #: selection:crossovered.budget,state:0
 msgid "Done"
-msgstr "Tehtud"
+msgstr ""
 
 #. module: account_budget
 #: view:crossovered.budget:0
 msgid "Validate"
-msgstr "Valideeri"
+msgstr ""
+
+#. module: account_budget
+#: wizard_view:account.budget.report,init:0
+msgid "Select period"
+msgstr "Vali periood"
 
 #. module: account_budget
 #: wizard_view:wizard.crossovered.budget,init:0
@@ -237,17 +247,21 @@ msgid "Select Options"
 msgstr ""
 
 #. module: account_budget
+#: wizard_view:wizard.analytic.account.budget.report,init:0
+msgid "Select Dates Period"
+msgstr ""
+
+#. module: account_budget
 #: rml:account.analytic.account.budget:0
-#: field:crossovered.budget.lines,practical_amount:0
 #: rml:crossovered.budget.report:0
-msgid "Practical Amount"
-msgstr "Praktiline summa"
+msgid "Perc(%)"
+msgstr ""
 
 #. module: account_budget
 #: field:crossovered.budget,date_to:0
 #: field:crossovered.budget.lines,date_to:0
 msgid "End Date"
-msgstr "Lõppkuupäev"
+msgstr ""
 
 #. module: account_budget
 #: constraint:ir.ui.view:0
@@ -257,30 +271,30 @@ msgstr "Vigane XML vaate arhitektuurile!"
 #. module: account_budget
 #: field:crossovered.budget.lines,theoritical_amount:0
 msgid "Theoritical Amount"
-msgstr "Teoreetiline summa"
+msgstr ""
 
 #. module: account_budget
 #: field:account.budget.post,name:0
 #: field:account.budget.post.dotation,name:0
 #: field:crossovered.budget,name:0
 msgid "Name"
-msgstr "Nimi"
+msgstr ""
 
 #. module: account_budget
 #: model:ir.actions.wizard,name:account_budget.wizard_crossovered_budget_menu_1
 msgid "Print Summary of Budgets"
-msgstr "Prindi eelarvete kokkuvõte"
+msgstr ""
 
 #. module: account_budget
 #: model:ir.actions.wizard,name:account_budget.wizard_budget_spread
 msgid "Spread amount"
-msgstr "Hajuta summa"
+msgstr ""
 
 #. module: account_budget
 #: view:account.analytic.account:0
 #: view:account.budget.post:0
 msgid "Lines"
-msgstr "Read"
+msgstr ""
 
 #. module: account_budget
 #: rml:account.budget:0
@@ -291,11 +305,12 @@ msgstr "Read"
 #: model:ir.model,name:account_budget.model_crossovered_budget
 #: model:ir.ui.menu,name:account_budget.menu_act_crossovered_budget_view
 msgid "Budget"
-msgstr "Eelarve"
+msgstr ""
 
 #. module: account_budget
-#: field:account.budget.post.dotation,post_id:0
-msgid "Item"
+#: code:addons/account_budget/crossovered_budget.py:0
+#, python-format
+msgid "Error!"
 msgstr ""
 
 #. module: account_budget
@@ -307,42 +322,48 @@ msgstr "Kogus"
 #. module: account_budget
 #: field:crossovered.budget.lines,paid_date:0
 msgid "Paid Date"
-msgstr "Maksmise kuupäev"
+msgstr ""
 
 #. module: account_budget
 #: model:ir.actions.act_window,name:account_budget.action_account_budget_post_tree
 #: model:ir.ui.menu,name:account_budget.menu_action_account_budget_post_tree
 #: model:ir.ui.menu,name:account_budget.next_id_31
 msgid "Budgets"
-msgstr "Eelarved"
+msgstr ""
+
+#. module: account_budget
+#: code:addons/account_budget/crossovered_budget.py:0
+#, python-format
+msgid "The General Budget '%s' has no Accounts!"
+msgstr ""
 
 #. module: account_budget
 #: selection:crossovered.budget,state:0
 msgid "Cancelled"
-msgstr "Tühistatud"
+msgstr ""
 
 #. module: account_budget
 #: view:account.budget.post.dotation:0
 #: model:ir.model,name:account_budget.model_account_budget_post_dotation
 msgid "Budget Dotation"
-msgstr "Eelarve dotatsioon"
+msgstr ""
 
 #. module: account_budget
 #: view:account.budget.post.dotation:0
 msgid "Budget Dotations"
-msgstr "Eelarve dotatsioonid"
+msgstr ""
 
 #. module: account_budget
 #: rml:account.budget:0
 msgid "Budget Item Detail"
-msgstr "Eelarve eseme detailid"
+msgstr ""
 
 #. module: account_budget
 #: view:account.budget.post:0
 #: field:crossovered.budget.lines,general_budget_id:0
 #: model:ir.model,name:account_budget.model_account_budget_post
 msgid "Budgetary Position"
-msgstr "Eelarveline positsioon"
+msgstr ""
 
 #. module: account_budget
 #: wizard_field:account.budget.report,init,date1:0
@@ -350,7 +371,7 @@ msgstr "Eelarveline positsioon"
 #: wizard_field:wizard.crossovered.budget,init,date_from:0
 #: wizard_field:wizard.crossovered.budget.summary,init,date_from:0
 msgid "Start of period"
-msgstr "Perioodi algus"
+msgstr ""
 
 #. module: account_budget
 #: model:ir.actions.report.xml,name:account_budget.account_analytic_account_budget
@@ -358,49 +379,57 @@ msgstr "Perioodi algus"
 #: model:ir.actions.wizard,name:account_budget.account_analytic_account_budget_report
 #: model:ir.actions.wizard,name:account_budget.wizard_crossovered_budget_menu
 msgid "Print Budgets"
-msgstr "Prindi eelarved"
+msgstr ""
 
 #. module: account_budget
 #: field:account.budget.post,code:0
 #: field:crossovered.budget,code:0
 msgid "Code"
-msgstr "Kood"
+msgstr ""
 
 #. module: account_budget
 #: field:account.budget.post.dotation,tot_planned:0
 msgid "Total Planned Amount"
-msgstr "Kogu planeeritud summa"
+msgstr ""
 
 #. module: account_budget
-#: wizard_view:wizard.analytic.account.budget.report,init:0
-msgid "Select Dates Period"
-msgstr "Vali kuupäevade periood"
+#: field:account.budget.post.dotation,post_id:0
+msgid "Item"
+msgstr ""
+
+#. module: account_budget
+#: wizard_button:account.budget.report,init,report:0
+#: wizard_button:wizard.analytic.account.budget.report,init,report:0
+#: wizard_button:wizard.crossovered.budget,init,report:0
+#: wizard_button:wizard.crossovered.budget.summary,init,report:0
+msgid "Print"
+msgstr ""
 
 #. module: account_budget
 #: field:account.budget.post,dotation_ids:0
 msgid "Spreading"
-msgstr "Hajutamine"
+msgstr ""
 
 #. module: account_budget
 #: rml:account.analytic.account.budget:0
 #: rml:crossovered.budget.report:0
 msgid "Theoretical Amount"
-msgstr "Teoreetiline summa"
+msgstr ""
 
 #. module: account_budget
 #: wizard_field:account.budget.spread,init,fiscalyear:0
 msgid "Fiscal Year"
-msgstr "Majandusaasta"
+msgstr ""
 
 #. module: account_budget
 #: field:crossovered.budget.lines,analytic_account_id:0
 msgid "Analytic Account"
-msgstr "Analüütiline konto"
+msgstr ""
 
 #. module: account_budget
 #: rml:crossovered.budget.report:0
 msgid "Budget :"
-msgstr "Eelarve :"
+msgstr ""
 
 #. module: account_budget
 #: rml:account.budget:0
@@ -408,7 +437,7 @@ msgstr "Eelarve :"
 #: wizard_view:account.budget.spread,init:0
 #: wizard_button:account.budget.spread,init,spread:0
 msgid "Spread"
-msgstr "Hajuta"
+msgstr ""
 
 #. module: account_budget
 #: view:account.budget.post:0
@@ -419,7 +448,7 @@ msgstr "Kontod"
 #. module: account_budget
 #: model:ir.actions.report.xml,name:account_budget.account_budget
 msgid "Print Budget"
-msgstr "Prindi eelarve"
+msgstr ""
 
 #. module: account_budget
 #: view:account.analytic.account:0
@@ -434,7 +463,7 @@ msgstr "Prindi eelarve"
 #: model:ir.model,name:account_budget.model_crossovered_budget_lines
 #: model:ir.ui.menu,name:account_budget.menu_act_crossovered_budget_lines_view
 msgid "Budget Lines"
-msgstr "Eelarveread"
+msgstr ""
 
 #. module: account_budget
 #: wizard_button:account.budget.report,init,end:0
@@ -444,32 +473,27 @@ msgstr "Eelarveread"
 #: wizard_button:wizard.crossovered.budget,init,end:0
 #: wizard_button:wizard.crossovered.budget.summary,init,end:0
 msgid "Cancel"
-msgstr "Tühista"
+msgstr ""
 
 #. module: account_budget
 #: model:ir.module.module,shortdesc:account_budget.module_meta_information
 msgid "Budget Management"
-msgstr "Eelarve haldus"
+msgstr ""
 
 #. module: account_budget
 #: field:crossovered.budget,date_from:0
 #: field:crossovered.budget.lines,date_from:0
 msgid "Start Date"
-msgstr "Alguskuupäev"
+msgstr ""
 
 #. module: account_budget
 #: rml:account.analytic.account.budget:0
 #: rml:crossovered.budget.report:0
 msgid "Analysis from"
-msgstr "Analüüs alates"
+msgstr ""
 
 #. module: account_budget
 #: selection:crossovered.budget,state:0
 msgid "Validated"
-msgstr "Valideeritud"
-
-#. module: account_budget
-#: wizard_view:account.budget.report,init:0
-msgid "Select period"
-msgstr "Vali periood"
+msgstr ""
 

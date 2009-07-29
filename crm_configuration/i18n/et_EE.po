@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-08-06 15:19:24+0000\n"
-"PO-Revision-Date: 2009-08-06 15:19:24+0000\n"
+"POT-Creation-Date: 2009-05-19 14:21:36+0000\n"
+"PO-Revision-Date: 2009-05-20 10:21:36+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,12 +19,12 @@ msgstr ""
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_all1
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_all1
 msgid "Bugs Waiting Approval"
-msgstr "Vead mis ootavad heakskiitmist"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Title"
-msgstr "Pealkiri"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.model,name:crm_configuration.model_report_crm_case_section_categ2
@@ -45,12 +45,12 @@ msgstr "Vigane mudeli nimi toimingu definitsioonis."
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_categ0_act_all3
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_myjobs_all3
 msgid "Current Requests"
-msgstr "Käesolevad päringud"
+msgstr ""
 
 #. module: crm_configuration
 #: help:crm.menu.config_wizard,helpdesk:0
 msgid "Manages an Helpdesk service."
-msgstr "Haldab helpdesk teenust."
+msgstr ""
 
 #. module: crm_configuration
 #: field:crm.case.stage,name:0
@@ -70,19 +70,26 @@ msgstr "Nõude Kirjeldus"
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Amount"
-msgstr "Summa"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage2
 #: model:crm.case.stage,name:crm_configuration.stage_claim2
 #: model:crm.case.stage,name:crm_configuration.stage_meet1
 msgid "Fixed"
-msgstr "Fikseeritud"
+msgstr ""
+
+#. module: crm_configuration
+#: code:addons/crm_configuration/wizard/wizard_opportunity_set.py:0
+#: code:addons/crm_configuration/wizard/wizard_partner_create.py:0
+#, python-format
+msgid "Warning !"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.categ,name:crm_configuration.categ_oppor5
 msgid "Campaign"
-msgstr "Kampaania"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_section_stage_tree
@@ -123,7 +130,7 @@ msgstr ""
 #. module: crm_configuration
 #: model:crm.case.categ,name:crm_configuration.categ_meet3
 msgid "Phone Call"
-msgstr "Telefonikõne"
+msgstr ""
 
 #. module: crm_configuration
 #: field:report.crm.case.section.categ.categ2,state:0
@@ -131,7 +138,7 @@ msgstr "Telefonikõne"
 #: field:report.crm.case.section.categ2,state:0
 #: field:report.crm.case.section.stage,state:0
 msgid "State"
-msgstr "Olek"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -198,12 +205,12 @@ msgstr ""
 #. module: crm_configuration
 #: model:ir.module.module,shortdesc:crm_configuration.module_meta_information
 msgid "Customer Relationship Management"
-msgstr "Kliendisuhete haldus"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_claim1
 msgid "Accepted as Claim"
-msgstr "Aksepteeritud kui nõue"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_categ_phone_incoming2
@@ -211,18 +218,18 @@ msgstr "Aksepteeritud kui nõue"
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ_phone_incoming2
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ_phone_outgoing2
 msgid "Planned Calls"
-msgstr "Planeeritud kõned"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_helpdesk_act_all0
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_helpdesk_act_myhelpdesk_all0
 msgid "All Open Helpdesk Requests"
-msgstr "Kõik avatud helpdeski päringud"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_lead6
 msgid "Dead"
-msgstr "Surnud"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.categ,name:crm_configuration.categ3
@@ -238,13 +245,13 @@ msgstr ""
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_meet2
 msgid "Home"
-msgstr "Kodu"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_categ_phone_incoming1
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ_phone_incoming1
 msgid "New Incoming Call"
-msgstr "Uus sissetulev kõne"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -281,12 +288,12 @@ msgstr "Toimingu Informatsioon"
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category1
 msgid "Version 4.2"
-msgstr "Versioon 4.2"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category2
 msgid "Version 4.4"
-msgstr "Versioon 4.4"
+msgstr ""
 
 #. module: crm_configuration
 #: model:process.transition,note:crm_configuration.process_transition_opportunitymeeting0
@@ -311,23 +318,23 @@ msgstr "Koosolekute Puu"
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Escalate"
-msgstr "Eskaleeri"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ_meet
 msgid "All Meetings"
-msgstr "Kõik kohtumised"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.section,name:crm_configuration.section_support_help
 msgid "HelpDesk"
-msgstr "HelpDesk"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_categ_phone_outgoing4
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ_phone_outgoing4
 msgid "Calls Not Held"
-msgstr "Mittepeetud kõned"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage6
@@ -467,9 +474,11 @@ msgid "Leads Form"
 msgstr ""
 
 #. module: crm_configuration
+#: code:addons/crm_configuration/wizard/wizard_opportunity_set.py:0
 #: view:crm.case:0
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_oppor
 #: model:ir.ui.menu,name:crm_configuration.menu_action_report_crm_case_oppor
+#, python-format
 msgid "Opportunity"
 msgstr "Võimalus"
 
@@ -512,7 +521,7 @@ msgstr ""
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Add Last Mail for Replying"
-msgstr "Lisa viimane kiri vastamiseks"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -520,12 +529,12 @@ msgstr "Lisa viimane kiri vastamiseks"
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_opp
 #: model:process.node,name:crm_configuration.process_node_opportunities0
 msgid "Opportunities"
-msgstr "Võimalused"
+msgstr ""
 
 #. module: crm_configuration
 #: field:crm.menu.config_wizard,document_ics:0
 msgid "Shared Calendar"
-msgstr "Jagatud kalender"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -535,7 +544,7 @@ msgstr "Toimingu Kirjeldus"
 #. module: crm_configuration
 #: model:ir.ui.menu,name:crm_configuration.menu_action_report_crm_case_lead_user
 msgid "Cases by Leads and User"
-msgstr "Juhtumid juhtimiste ja kasutajate kaupa"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.ui.menu,name:crm_configuration.menu_action_report_crm_case_oppor_user
@@ -551,18 +560,18 @@ msgstr "Kalendri Jagamine"
 #: wizard_button:crm.case.partner_create,init,confirm:0
 #: model:ir.actions.wizard,name:crm_configuration.wizard_crm_partner_create
 msgid "Create Partner"
-msgstr "Loo partner"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_oppor
 msgid "New Opportunity"
-msgstr "Uus võimalus"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_fund_my1
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_category_act_fund_my1
 msgid "My Funds"
-msgstr "Minu vahendid"
+msgstr ""
 
 #. module: crm_configuration
 #: field:crm.case,partner_mobile:0
@@ -577,12 +586,12 @@ msgstr ""
 #. module: crm_configuration
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ_meet_my
 msgid "My Meetings"
-msgstr "Minu kohtumised"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_claim2
 msgid "Preventive"
-msgstr "Ennetav"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_leads_my3
@@ -615,7 +624,7 @@ msgstr "Perspektiiv konverditakse äripartneriks"
 #. module: crm_configuration
 #: view:crm.menu.config_wizard:0
 msgid "Next"
-msgstr "Järgmine"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.ui.menu,name:crm_configuration.menu_action_report_crm_case_oppor_categ_stage
@@ -625,14 +634,14 @@ msgstr ""
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_lead4
 msgid "Print"
-msgstr "Prindi"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
 #: field:report.crm.case.section.categ.categ2,category2_id:0
 #: field:report.crm.case.section.categ2,category2_id:0
 msgid "Type"
-msgstr "Tüüp"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -658,7 +667,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_oppor22
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_oppor22
 msgid "My Opportunities"
-msgstr "Minu võimalused"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.model,name:crm_configuration.model_report_crm_case_section_categ_categ2
@@ -689,19 +698,19 @@ msgstr "Vigane XML vaate arhitektuurile!"
 #. module: crm_configuration
 #: field:crm.case,case_id:0
 msgid "Related Case"
-msgstr "Seotud juhtum"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.categ,name:crm_configuration.categ_fund2
 msgid "Learning And Education"
-msgstr "Õppimine ja haridus"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case.stage:0
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_stage_act
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_stage_act
 msgid "Stages"
-msgstr "Etapid"
+msgstr ""
 
 #. module: crm_configuration
 #: wizard_field:crm.case.opportunity_set,init,planned_revenue:0
@@ -716,12 +725,12 @@ msgstr "Koosoleku Kuupäev"
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Convert to Partner"
-msgstr "Muuda partneriks"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_meetall3
 msgid "Next Meetings"
-msgstr "Järgmised kohtumised"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_leads_all1
@@ -740,7 +749,7 @@ msgstr ""
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_helpdesk_act_myhelpdesk
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_helpdesk_act_myhelpdesk_allhelpdesk
 msgid "Calendar of Helpdesk"
-msgstr "Helpdeski kalender"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_fund_my2
@@ -761,13 +770,13 @@ msgstr "Meeldetuletus"
 #. module: crm_configuration
 #: field:crm.case,partner_name:0
 msgid "Employee Name"
-msgstr "Töötaja nimi"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.categ,name:crm_configuration.categ_lead6
 #: model:crm.case.categ,name:crm_configuration.categ_oppor6
 msgid "Website"
-msgstr "Veebileht"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_all6
@@ -781,14 +790,14 @@ msgstr ""
 #: view:crm.case:0
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_fund1
 msgid "Funds"
-msgstr "Vahendid"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage5
 #: model:crm.case.stage,name:crm_configuration.stage_claim5
 #: model:crm.case.stage,name:crm_configuration.stage_meet4
 msgid "Awaiting Response"
-msgstr "Vastuse ootel"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -803,7 +812,7 @@ msgstr "Kandidaadi Nimi"
 #. module: crm_configuration
 #: model:process.transition,note:crm_configuration.process_transition_leadopportunity0
 msgid "Creating business opportunities from leads"
-msgstr "Ärivõimaluste loomine algatustest"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.categ,name:crm_configuration.categ_lead2
@@ -820,7 +829,7 @@ msgstr "Vead"
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_lead4
 msgid "Converted"
-msgstr "Muudetud"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -846,7 +855,7 @@ msgstr "Töökohad - Värbamise Puu"
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_lead1
 msgid "Telesales"
-msgstr "Telemüügid"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -866,7 +875,7 @@ msgstr "Loobu"
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_categ_phone_outgoing1
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ_phone_outgoing1
 msgid "New Outgoing Call"
-msgstr "Uus väljuv kõne"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -877,7 +886,7 @@ msgstr "Nõude Kahjum"
 #: model:crm.case.categ,name:crm_configuration.categ_lead8
 #: model:crm.case.categ,name:crm_configuration.categ_oppor8
 msgid "Other"
-msgstr "Muu"
+msgstr ""
 
 #. module: crm_configuration
 #: help:crm.menu.config_wizard,bugs:0
@@ -887,7 +896,7 @@ msgstr "Kasutatakse firmades jälgimaks vigu ja pakkumaks tuge tarkvarale"
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_lead2
 msgid "Mail"
-msgstr "E-post"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.action_view_config_crm_menu
@@ -897,7 +906,7 @@ msgstr "Seadista Menüü CRM juhumi Jaotisele"
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_oppor2
 msgid "Needs Analysis"
-msgstr "Vajab analüüsi"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_helpdesk_act_my_helpdesk
@@ -907,7 +916,7 @@ msgstr ""
 #. module: crm_configuration
 #: model:process.process,name:crm_configuration.process_process_contractprocess0
 msgid "Contract Process"
-msgstr "Lepingu protsess"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -947,12 +956,12 @@ msgstr ""
 #: field:crm.menu.config_wizard,bugs:0
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_bug_track
 msgid "Bug Tracking"
-msgstr "Vigade jälgimine"
+msgstr "Vigade Jälgimine"
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Actions"
-msgstr "Toimingud"
+msgstr ""
 
 #. module: crm_configuration
 #: model:process.node,note:crm_configuration.process_node_partner0
@@ -973,17 +982,17 @@ msgstr "Vigade Puu"
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_oppor4
 msgid "Proposal/Price Quote"
-msgstr "Ettepanek/Hinnapakkumine"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_lead5
 msgid "Web"
-msgstr "Veeb"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Severity"
-msgstr "Tõsidus"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -1008,7 +1017,7 @@ msgstr "Seadista CRM Jaotised"
 #. module: crm_configuration
 #: wizard_view:crm.case.meeting,init:0
 msgid "Note that you can also use the calendar view to graphically schedule your next meeting."
-msgstr "Sa saad kasutada ka kalendrivaadet, et graafiliselt planeerida oma järgmist kohtumist."
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -1020,12 +1029,12 @@ msgstr ""
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_categ_phone_incoming0
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ_phone_incoming0
 msgid "Inbound"
-msgstr "Sissetulev"
+msgstr ""
 
 #. module: crm_configuration
 #: constraint:crm.case.section:0
 msgid "Error ! You cannot create recursive sections."
-msgstr "Viga! Sa ei saa luua rekursiivseid sektsioone."
+msgstr ""
 
 #. module: crm_configuration
 #: help:crm.menu.config_wizard,document_ics:0
@@ -1041,18 +1050,18 @@ msgstr ""
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Contract Data"
-msgstr "Lepingu andmed"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_helpdesk_act_my2
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_helpdesk_act_myhelpdesk2
 msgid "My helpdesk Propositions to Review"
-msgstr "Minu helpdeski ettepanekud üle vaatamiseks"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Notes"
-msgstr "Märkmed"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.categ,name:crm_configuration.categ_claim1
@@ -1081,7 +1090,7 @@ msgstr "# Juhtumid"
 #: field:report.crm.case.section.categ2,amount_revenue:0
 #: field:report.crm.case.section.stage,amount_revenue:0
 msgid "Est.Revenue"
-msgstr "Loodetav tulu"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_job1
@@ -1092,7 +1101,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_my0
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_my0
 msgid "My Bugs"
-msgstr "Minu vead"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -1119,7 +1128,7 @@ msgstr ""
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Reset to Draft"
-msgstr "Lähtesta mustandiks"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -1130,12 +1139,12 @@ msgstr "Täiendav info"
 #: model:crm.case.section,name:crm_configuration.section_support4
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_fund_raise
 msgid "Fund Raising"
-msgstr "Vahendite kogumine"
+msgstr ""
 
 #. module: crm_configuration
 #: wizard_view:crm.case.partner_create,init:0
 msgid "Convert To Partner"
-msgstr "Muuda partneriks"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -1145,17 +1154,17 @@ msgstr "Prioriteet"
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Source"
-msgstr "Allikas"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Location"
-msgstr "Asukoht"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Payment Mode"
-msgstr "Makseviis"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -1165,6 +1174,12 @@ msgstr "Staatus "
 #. module: crm_configuration
 #: model:process.node,note:crm_configuration.process_node_meeting0
 msgid "Schedule a normal or phone meeting"
+msgstr ""
+
+#. module: crm_configuration
+#: code:addons/crm_configuration/wizard/wizard_opportunity_set.py:0
+#, python-format
+msgid "Error !"
 msgstr ""
 
 #. module: crm_configuration
@@ -1198,28 +1213,28 @@ msgstr ""
 #. module: crm_configuration
 #: field:crm.case,partner_name2:0
 msgid "Employee Email"
-msgstr "Töötaja e-post"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_categ_help_act
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_helpdesk_my_act
 msgid "My Helpdesk"
-msgstr "Minu helpdesk"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.categ2_fund1
 msgid "Cash"
-msgstr "Sularaha"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Direction"
-msgstr "Suund"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.menu.config_wizard:0
 msgid "The CRM module of OpenERP is able to manage any kind of relationship. But, as to help you to start quickly on the system, we configured a few of them for you."
-msgstr "Open ERP moodul võimaldab hallata igat tüüpi suhteid. Aga selleks, et aidata sul kiirelt alustada, seadistasime me mõned neist sinu jaoks."
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -1261,7 +1276,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_meetings
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_category_act_meetings_new
 msgid "New Meeting"
-msgstr "Uus kohtumine"
+msgstr ""
 
 #. module: crm_configuration
 #: field:report.crm.case.section.categ.categ2,name:0
@@ -1269,7 +1284,7 @@ msgstr "Uus kohtumine"
 #: field:report.crm.case.section.categ2,name:0
 #: field:report.crm.case.section.stage,name:0
 msgid "Month"
-msgstr "Kuu"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -1284,7 +1299,7 @@ msgstr ""
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.categ2_fund3
 msgid "Credit Card"
-msgstr "Krediitkaart"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -1294,7 +1309,7 @@ msgstr ""
 #. module: crm_configuration
 #: help:crm.menu.config_wizard,fund:0
 msgid "This may help associations in their fund raising process and tracking."
-msgstr "See võib aidata assotsiatsioone vahendite kogumise protsessil ja jälgimisel."
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_f0
@@ -1310,7 +1325,7 @@ msgstr ""
 #. module: crm_configuration
 #: field:crm.case,note:0
 msgid "Note"
-msgstr "Märge"
+msgstr ""
 
 #. module: crm_configuration
 #: field:report.crm.case.section.categ.categ2,delay_close:0
@@ -1326,7 +1341,7 @@ msgstr ""
 #: selection:report.crm.case.section.categ2,state:0
 #: selection:report.crm.case.section.stage,state:0
 msgid "Closed"
-msgstr "Suletud"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_all4
@@ -1337,7 +1352,7 @@ msgstr ""
 #. module: crm_configuration
 #: model:crm.case.categ,name:crm_configuration.categ_meet2
 msgid "Internal Meeting"
-msgstr "Sisemine kohtumine"
+msgstr ""
 
 #. module: crm_configuration
 #: help:crm.menu.config_wizard,lead:0
@@ -1347,12 +1362,12 @@ msgstr ""
 #. module: crm_configuration
 #: model:crm.case.categ,name:crm_configuration.categ_meet1
 msgid "Customer Meeting"
-msgstr "Kohtumine kliendiga"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Degree"
-msgstr "Teaduskraad"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -1382,12 +1397,18 @@ msgstr "Telefon"
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.categ2_fund2
 msgid "Cheque"
-msgstr "Tšekk"
+msgstr ""
+
+#. module: crm_configuration
+#: code:addons/crm_configuration/wizard/meeting_planify.py:0
+#, python-format
+msgid "meeting"
+msgstr "Koosolek"
 
 #. module: crm_configuration
 #: model:process.node,note:crm_configuration.process_node_opportunities0
 msgid "When a real project/opportunity is detected"
-msgstr "Kui reaalne projekt/võimalus tuvastatakse"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_helpdesk_act_all3
@@ -1413,7 +1434,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_categ_act0
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ_act0
 msgid "All Bugs"
-msgstr "Kõik vead"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.model,name:crm_configuration.model_report_crm_case_section_stage
@@ -1433,7 +1454,7 @@ msgstr "Üldine"
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_lead2
 msgid "Assigned"
-msgstr "Määratud"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_lead5
@@ -1443,7 +1464,7 @@ msgstr ""
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Done"
-msgstr "Tehtud"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -1466,6 +1487,12 @@ msgid "Open"
 msgstr "Avatud"
 
 #. module: crm_configuration
+#: code:addons/crm_configuration/wizard/wizard_partner_create.py:0
+#, python-format
+msgid "A partner is already existing with the same name."
+msgstr ""
+
+#. module: crm_configuration
 #: constraint:ir.model:0
 msgid "The Object name must start with x_ and not contain any special character !"
 msgstr "Objekti nimi peab algama x_'ga ja ei tohi sisaldada ühtegi erisümbolit !"
@@ -1484,14 +1511,14 @@ msgstr "Vastutav"
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_leads_my1
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_leads_my1
 msgid "My Current Leads"
-msgstr "Mina käesolevad algatused"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage4
 #: model:crm.case.stage,name:crm_configuration.stage_claim4
 #: model:crm.case.stage,name:crm_configuration.stage_meet3
 msgid "Invalid"
-msgstr "Vigane"
+msgstr ""
 
 #. module: crm_configuration
 #: wizard_button:crm.case.meeting,init,order:0
@@ -1501,7 +1528,7 @@ msgstr "Sea Koosolek"
 #. module: crm_configuration
 #: field:crm.menu.config_wizard,meeting:0
 msgid "Calendar of Meetings"
-msgstr "Koosolekute kalender"
+msgstr "Koosolekute Kalender"
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_oppor2
@@ -1518,17 +1545,17 @@ msgstr "Juhtumid Staatuse ja Hinnangutejärgi"
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_leads_my_new
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_category_act_leads_my_new
 msgid "New Lead"
-msgstr "Uus algatus"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Meeting For Leads Generation"
-msgstr "Kohtumine algatuste genereerimiseks"
+msgstr ""
 
 #. module: crm_configuration
 #: wizard_view:crm.case.partner_create,init:0
 msgid "Are you sure you want to create a partner based on this lead ?"
-msgstr "Oled sa kindel, et soovid luua partnerit selle algatuse põhjal?"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_job6
@@ -1543,7 +1570,7 @@ msgstr ""
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Availability (weeks)"
-msgstr "Kättesaadavus (nädalad)"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -1560,7 +1587,7 @@ msgstr ""
 #: model:crm.case.categ,name:crm_configuration.categ_lead1
 #: model:crm.case.categ,name:crm_configuration.categ_oppor1
 msgid "Existing Customer"
-msgstr "Olemasolev klient"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.categ2_fund4
@@ -1586,7 +1613,7 @@ msgstr "Nõude Tüüp"
 #. module: crm_configuration
 #: field:crm.case,duration:0
 msgid "Duration"
-msgstr "Kestus"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_f1
@@ -1602,12 +1629,12 @@ msgstr "Juhtumid jaotise, Kategooria ja staatusejärgi"
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Candidate Hired"
-msgstr "Kandidaat palgatud"
+msgstr ""
 
 #. module: crm_configuration
 #: field:crm.menu.config_wizard,jobs:0
 msgid "Jobs Hiring Process"
-msgstr ""
+msgstr "Töökohad Töölevõtmise Protsess"
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_categ0_act_all2
@@ -1619,12 +1646,18 @@ msgstr ""
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_categ_help_new_act
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ_help_new_act
 msgid "New Helpdesk"
-msgstr "Uus helpdesk"
+msgstr ""
+
+#. module: crm_configuration
+#: code:addons/crm_configuration/wizard/wizard_partner_create.py:0
+#, python-format
+msgid "A partner is already defined on this lead."
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Deadlines"
-msgstr "Tähtajad"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.ui.menu,name:crm_configuration.menu_action_report_crm_case_lead_categ
@@ -1641,7 +1674,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_claim_my1
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_category_act_claim_my1
 msgid "My Claims"
-msgstr "Minu nõuded"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_fund_all3
@@ -1657,13 +1690,13 @@ msgstr ""
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_lead3
 msgid "In Process"
-msgstr "Töös"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_leads_unassigned
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_leads_unassigned
 msgid "Unassigned Leads"
-msgstr "Määramata algatused"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_section_categ_tree
@@ -1675,7 +1708,7 @@ msgstr ""
 #. module: crm_configuration
 #: model:ir.ui.menu,name:crm_configuration.menu_aftersale
 msgid "After-Sale Services"
-msgstr "Müügijärgsed teenused"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_categ0_act111
@@ -1692,12 +1725,12 @@ msgstr "Rakendatud Töökohad"
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_leads_all2
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_leads_all2
 msgid "All Draft Leads"
-msgstr "Kõik algatuste mustandid"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Relevant"
-msgstr "Asjakohane"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -1714,7 +1747,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_leads_my
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_leads_my
 msgid "My Leads"
-msgstr "Minu algatused"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_oppor1
@@ -1744,23 +1777,23 @@ msgstr ""
 #. module: crm_configuration
 #: model:crm.case.categ,name:crm_configuration.categ_fund1
 msgid "Social Rehabilitation And Rural Upliftment"
-msgstr "Sotsiaalne rehabilitatsioon ja maaharimine"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.categ,name:crm_configuration.categ_lead3
 #: model:crm.case.categ,name:crm_configuration.categ_oppor3
 msgid "Employee"
-msgstr "Töötaja"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_lead1
 msgid "New"
-msgstr "Uus"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_lead3
 msgid "Email"
-msgstr "E-post"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -1770,12 +1803,12 @@ msgstr "Perspektiivi Email"
 #. module: crm_configuration
 #: model:ir.ui.menu,name:crm_configuration.menu_action_report_crm_case_lead_stage
 msgid "Cases by Leads and Stage"
-msgstr "Juhtumid algatuste ja etappide kaupa"
+msgstr ""
 
 #. module: crm_configuration
 #: field:crm.menu.config_wizard,fund:0
 msgid "Fund Raising Operations"
-msgstr "Vahendite kogumise operatsioonid"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -1789,7 +1822,7 @@ msgstr "Pooleliolev"
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Expected Salary"
-msgstr "Oodatav palk"
+msgstr ""
 
 #. module: crm_configuration
 #: model:process.node,note:crm_configuration.process_node_leads0
@@ -1806,12 +1839,12 @@ msgstr ""
 #: model:crm.case.categ,name:crm_configuration.categ_lead7
 #: model:crm.case.categ,name:crm_configuration.categ_oppor7
 msgid "Word of mouth"
-msgstr "Jututurundus"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Lead Subject"
-msgstr "Algatuse teema"
+msgstr ""
 
 #. module: crm_configuration
 #: help:crm.menu.config_wizard,claims:0
@@ -1821,12 +1854,12 @@ msgstr "Haldab tarnijate ja klientide nõudeid, sealjuures sinu korrigeerivaid j
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_phone1
 msgid "Planned"
-msgstr "Planeeritud"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_meet3
 msgid "Customer Office"
-msgstr "Kliendi kontor"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -1870,12 +1903,12 @@ msgstr ""
 #: selection:report.crm.case.section.categ2,state:0
 #: selection:report.crm.case.section.stage,state:0
 msgid "Canceled"
-msgstr "Tühistatud"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_oppor1
 msgid "Existing Business"
-msgstr "Eksisteeriv äri"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_fund_all1
@@ -1886,12 +1919,12 @@ msgstr ""
 #. module: crm_configuration
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_category_act_meetings
 msgid "Calendar"
-msgstr "Kalender"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.categ,name:crm_configuration.categ_job1
 msgid "Salesman"
-msgstr "Müügimees"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_oppor6
@@ -1902,25 +1935,25 @@ msgstr ""
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_categ0_act_all0
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_myjobs_all0
 msgid "All Open Jobs Requests"
-msgstr "Kõik lahtised töökohapäringud"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
 #: model:ir.actions.wizard,name:crm_configuration.wizard_crm_meeting
 msgid "Schedule Meeting"
-msgstr "Planeeri kohtumine"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.categ,name:crm_configuration.categ_fund4
 msgid "Arts And Culture"
-msgstr "Kunstid ja kultuur"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.categ,name:crm_configuration.categ_phone2
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_categ_phone_outgoing0
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ_phone_outgoing0
 msgid "Outbound"
-msgstr "Väljuv"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.todo,note:crm_configuration.config_wizard_step_case_section_menu
@@ -1930,23 +1963,23 @@ msgstr "Seda Seadistuse sammu kasutatakse loomaks Menüü Juhtumi Jaotistele"
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Historize"
-msgstr "Arhiveeri"
+msgstr ""
 
 #. module: crm_configuration
 #: wizard_field:crm.case.opportunity_set,init,probability:0
 msgid "Success Probability"
-msgstr "Edu tõenäosus"
+msgstr ""
 
 #. module: crm_configuration
 #: field:crm.case,category2_id:0
 msgid "Category Name"
-msgstr "Kategooria nimi"
+msgstr "Kategooria Nimi"
 
 #. module: crm_configuration
 #: view:crm.case:0
 #: model:process.node,name:crm_configuration.process_node_meeting0
 msgid "Meeting"
-msgstr "Kohtumine"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_f2
@@ -1975,7 +2008,7 @@ msgstr "Perspektiivi Nimi"
 #: field:report.crm.case.section.categ2,user_id:0
 #: field:report.crm.case.section.stage,user_id:0
 msgid "User"
-msgstr "Kasutaja"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.ui.menu,name:crm_configuration.menu_action_report_crm_case_lead_categ_categ2
@@ -1988,7 +2021,7 @@ msgstr ""
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_job2
 msgid "Licenced"
-msgstr "Litsenseeritud"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_helpdesk_act_all1
@@ -2017,17 +2050,17 @@ msgstr "Haldab kasutajate koosolekute kalendrit."
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_helpdesk_act_my0
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_helpdesk_act_myhelpdesk0
 msgid "My Open Helpdesk Requests"
-msgstr "Minu lahtised helpdeski päringud"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.categ,name:crm_configuration.categ_fund3
 msgid "Healthcare"
-msgstr "Tervishoid"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage1
 msgid "Accepted as Bug"
-msgstr "Aksepteeritud kui Viga"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_f4
@@ -2043,7 +2076,7 @@ msgstr ""
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_meet1
 msgid "Office"
-msgstr "Kontor"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.model,name:crm_configuration.model_crm_case_stage
@@ -2077,12 +2110,12 @@ msgstr ""
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage_meet2
 msgid "Not fixed"
-msgstr "Pole parandatud"
+msgstr ""
 
 #. module: crm_configuration
 #: help:crm.menu.config_wizard,jobs:0
 msgid "Help you to organise the jobs hiring process: evaluation, meetings, email integration..."
-msgstr "Aitab sul organiseerida töölevõtmise protsessi; hindamine, koosolekud, e-posti integreerimine..."
+msgstr "Aitab sul organiseerida töölevõtmise protsessi; hindamine, Koosolekud, email integreerimine..."
 
 #. module: crm_configuration
 #: selection:report.crm.case.section.categ.categ2,state:0
@@ -2090,13 +2123,13 @@ msgstr "Aitab sul organiseerida töölevõtmise protsessi; hindamine, koosolekud
 #: selection:report.crm.case.section.categ2,state:0
 #: selection:report.crm.case.section.stage,state:0
 msgid "Draft"
-msgstr "Mustand"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_categ_claim0
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ_claim0
 msgid "All Claims"
-msgstr "Kõik nõuded"
+msgstr ""
 
 #. module: crm_configuration
 #: view:crm.case:0
@@ -2106,12 +2139,12 @@ msgstr "Kirjeldus"
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Internal Notes"
-msgstr "Sisemised märkmed"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.section,name:crm_configuration.section_support0
 msgid "Jobs"
-msgstr "Töökohad"
+msgstr ""
 
 #. module: crm_configuration
 #: wizard_view:crm.case.meeting,init:0
@@ -2131,32 +2164,32 @@ msgstr ""
 #. module: crm_configuration
 #: view:crm.case:0
 msgid "Funds by Categories"
-msgstr "Fondid kategooria järgi"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.stage,name:crm_configuration.stage7
 #: model:crm.case.stage,name:crm_configuration.stage_meet5
 msgid "Future"
-msgstr "Tulevik"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.actions.act_window,name:crm_configuration.crm_case_category_act_all8
 #: model:ir.ui.menu,name:crm_configuration.menu_crm_case_categ0_act_all8
 msgid "Old Bugs"
-msgstr "Vanad vead"
+msgstr ""
 
 #. module: crm_configuration
 #: model:ir.model,name:crm_configuration.model_crm_menu_config_wizard
 msgid "crm.menu.config_wizard"
-msgstr "crm.menu.config_wizard"
+msgstr ""
 
 #. module: crm_configuration
 #: field:crm.case.stage,sequence:0
 msgid "Sequence"
-msgstr "Järjekord"
+msgstr ""
 
 #. module: crm_configuration
 #: model:crm.case.category2,name:crm_configuration.category_lead8
 msgid "Newsletter"
-msgstr "Infoleht"
+msgstr ""
 

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-08-06 15:19:24+0000\n"
-"PO-Revision-Date: 2009-08-06 15:19:24+0000\n"
+"POT-Creation-Date: 2009-05-19 14:21:36+0000\n"
+"PO-Revision-Date: 2009-05-20 10:21:36+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -31,6 +31,12 @@ msgid "New title of the task delegated to the user."
 msgstr "Kasutajale volitatud ülesande uus tiitel"
 
 #. module: project
+#: code:addons/project/wizard/close_task.py:0
+#, python-format
+msgid "Couldn't send mail because the contact for this task (%s) has no email address!"
+msgstr "Ei saanud saata e-kirja, sest selle ülesande (%s) kontaktisikul pole e-posti aadressi!"
+
+#. module: project
 #: view:config.compute.remaining:0
 msgid "Change Remaining Hours"
 msgstr "Muuda järelejäänud tunde"
@@ -46,9 +52,16 @@ msgid "Project Tasks"
 msgstr "Projekti ülesanded"
 
 #. module: project
-#: model:process.transition,name:project.process_transition_opendonetask0
-msgid "Open Done Task"
-msgstr "Ava valmis ülesanne"
+#: code:addons/project/project.py:0
+#, python-format
+msgid "Operation Not Permitted !"
+msgstr "Toiming pole lubatud!"
+
+#. module: project
+#: code:addons/project/wizard/task_delegate.py:0
+#, python-format
+msgid "CHECK: "
+msgstr ""
 
 #. module: project
 #: constraint:ir.actions.act_window:0
@@ -120,12 +133,18 @@ msgstr "Kasutaja, kellele sa soovid seda ülesannet volitada."
 #. module: project
 #: model:ir.actions.wizard,name:project.wizard_attachment_task
 msgid "All Attachments"
-msgstr "Kõik manused"
+msgstr ""
 
 #. module: project
 #: model:process.transition.action,name:project.process_transition_action_openpendingtask0
 msgid "Set pending"
 msgstr "Määra lahtiseks"
+
+#. module: project
+#: model:ir.actions.act_window,name:project.action_view_task7
+#: model:ir.ui.menu,name:project.menu_action_view_task7
+msgid "Unassigned Tasks"
+msgstr "Määramata ülesanded"
 
 #. module: project
 #: model:process.node,note:project.process_node_drafttask0
@@ -264,6 +283,12 @@ msgid "Delegates tasks to the other user"
 msgstr "Volitab ülesanded teisele kasutajale"
 
 #. module: project
+#: code:addons/project/project.py:0
+#, python-format
+msgid "A new project has been created !\nWe suggest you to close this one and work on this new project."
+msgstr ""
+
+#. module: project
 #: help:project.task,effective_hours:0
 msgid "Computed using the sum of the task work done."
 msgstr "Arvutatud kasutades ülesandel tehtud töö summat."
@@ -276,7 +301,7 @@ msgstr "Kui sa märgid selle siis avaneb kasutajal hüpikaken ülesande sulgemis
 #. module: project
 #: help:project.task.delegate,init,new_task_description:0
 msgid "Reinclude the description of the task in the task of the user."
-msgstr "Sisesta ülesande kirjeldus kasutaja ülesandele."
+msgstr ""
 
 #. module: project
 #: field:project.project,category_id:0
@@ -320,7 +345,7 @@ msgstr "Planeeritud tunnid"
 #. module: project
 #: view:project.project:0
 msgid "Task: %(name)s"
-msgstr "Ülesanne: %(name)s"
+msgstr ""
 
 #. module: project
 #: view:project.project:0
@@ -366,7 +391,7 @@ msgstr "Suletud ülesannete protsent kõigi tegemist vajavate ülesannete hulgas
 #. module: project
 #: wizard_field:project.task.delegate,init,new_task_description:0
 msgid "New Task Description"
-msgstr "Uue ülesande kirjeldus"
+msgstr ""
 
 #. module: project
 #: help:project.project,notes:0
@@ -454,10 +479,10 @@ msgid "Tasks in Progress"
 msgstr "Töös olevad ülesanded"
 
 #. module: project
-#: model:ir.actions.act_window,name:project.action_view_task7
-#: model:ir.ui.menu,name:project.menu_action_view_task7
-msgid "Unassigned Tasks"
-msgstr "Määramata ülesanded"
+#: code:addons/project/project.py:0
+#, python-format
+msgid "Operation Done"
+msgstr "Toiming teostatud"
 
 #. module: project
 #: wizard_field:project.task.delegate,init,name:0
@@ -521,7 +546,7 @@ msgstr "Mustand lahtiseks ülesandeks"
 #. module: project
 #: view:project.project:0
 msgid "User: %(user_id)s"
-msgstr "Kasutaja: %(user_id)s"
+msgstr ""
 
 #. module: project
 #: field:project.task,delay_hours:0
@@ -580,6 +605,12 @@ msgid "Timetable working hours to adjust the gantt diagram report"
 msgstr "Ajatabeli töötunnid, et kohandada gantt diagrammaruannet"
 
 #. module: project
+#: code:addons/project/project.py:0
+#, python-format
+msgid "Task '%s' set in progress"
+msgstr ""
+
+#. module: project
 #: view:project.project:0
 msgid "Project's members"
 msgstr "Projekti liikmed"
@@ -603,7 +634,13 @@ msgstr "Minu ülesanded"
 #. module: project
 #: view:project.project:0
 msgid "Status: %(state)s"
-msgstr "Staatus: %(state)s"
+msgstr ""
+
+#. module: project
+#: code:addons/project/project.py:0
+#, python-format
+msgid "Task '%s' cancelled"
+msgstr ""
 
 #. module: project
 #: view:project.task:0
@@ -703,6 +740,7 @@ msgid "Total Time"
 msgstr "Aeg kokku"
 
 #. module: project
+#: field:project.project,active:0
 #: field:project.task,active:0
 msgid "Active"
 msgstr "Aktiivne"
@@ -760,6 +798,12 @@ msgstr "See määrab projektides ja ülesannetes kasutatava mõõtühiku.\n"
 "Kui sa kasutad projektiga seotud tööajalehte (project_timesheet moodul), siis ära unusta seadistada õige mõõtühik oma töötajatele."
 
 #. module: project
+#: code:addons/project/wizard/close_task.py:0
+#, python-format
+msgid "Error"
+msgstr "Viga"
+
+#. module: project
 #: model:ir.actions.act_window,name:project.act_res_users_2_project_project
 msgid "User's projects"
 msgstr "Kasutaja projektid"
@@ -775,6 +819,12 @@ msgid "Urgent"
 msgstr "Kiireloomuline"
 
 #. module: project
+#: code:addons/project/wizard/close_task.py:0
+#, python-format
+msgid "Couldn't send mail because your email address is not configured!"
+msgstr "Ei saanud saata e-kirja sest su e-post ei ole seadistatud!"
+
+#. module: project
 #: wizard_view:project.task.delegate,init:0
 msgid "Delegate this task to a user"
 msgstr "Volita see ülesanne kasutajale"
@@ -782,7 +832,7 @@ msgstr "Volita see ülesanne kasutajale"
 #. module: project
 #: field:project.task,delegated_user_id:0
 msgid "Delegated To"
-msgstr "Delegeeritud kellele:"
+msgstr ""
 
 #. module: project
 #: field:project.task,date_close:0
@@ -843,7 +893,7 @@ msgstr "Ülesande kokkuvõte"
 #. module: project
 #: view:project.project:0
 msgid "Date Start: %(date_start)s"
-msgstr "Alguskuupäev: %(date_start)s"
+msgstr ""
 
 #. module: project
 #: help:project.project,category_id:0
@@ -881,9 +931,15 @@ msgid "Open"
 msgstr "Ava"
 
 #. module: project
+#: code:addons/project/project.py:0
+#, python-format
+msgid "You can not delete a project with tasks. I suggest you to deactivate it."
+msgstr "Sa ei saa kustutada ülesannetega projekti. Soovitan sul see deaktiveerida."
+
+#. module: project
 #: view:project.project:0
 msgid "ID: %(task_id)s"
-msgstr "ID: %(task_id)s"
+msgstr ""
 
 #. module: project
 #: selection:project.task,state:0
@@ -1004,6 +1060,12 @@ msgid "New Feature"
 msgstr "Uus omadus"
 
 #. module: project
+#: code:addons/project/project.py:0
+#, python-format
+msgid "Task '%s' closed"
+msgstr ""
+
+#. module: project
 #: model:process.node,note:project.process_node_opentask0
 msgid "Encode your working hours."
 msgstr "Kodeeri oma töötunnid"
@@ -1022,6 +1084,11 @@ msgstr "Projekti ülesanne"
 #: field:project.task,effective_hours:0
 msgid "Hours Spent"
 msgstr "Kulutatud tunnid"
+
+#. module: project
+#: model:process.transition,name:project.process_transition_opendonetask0
+msgid "Open Done Task"
+msgstr "Ava valmis ülesanne"
 
 #. module: project
 #: field:project.task,total_hours:0
@@ -1083,7 +1150,7 @@ msgstr "Töö kokkuvõte"
 #. module: project
 #: view:project.project:0
 msgid "Date Stop: %(date_stop)s"
-msgstr "Lõppkuupäev: %(date_stop)s"
+msgstr ""
 
 #. module: project
 #: field:project.project,date_end:0

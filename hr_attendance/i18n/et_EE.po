@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-08-06 15:19:24+0000\n"
-"PO-Revision-Date: 2009-08-06 15:19:24+0000\n"
+"POT-Creation-Date: 2009-05-19 14:21:36+0000\n"
+"PO-Revision-Date: 2009-05-20 10:21:36+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 #: field:hr.employee,state:0
 #: model:ir.model,name:hr_attendance.model_hr_attendance
 msgid "Attendance"
-msgstr "Kohalviibimine"
+msgstr ""
 
 #. module: hr_attendance
 #: constraint:ir.model:0
@@ -33,17 +33,23 @@ msgstr "Objekti nimi peab algama x_'ga ja ei tohi sisaldada ühtegi erisümbolit
 #: model:ir.actions.wizard,name:hr_attendance.si_so
 #: model:ir.ui.menu,name:hr_attendance.menu_si_so
 msgid "Sign in / Sign out"
-msgstr "Logi Sisse / Välja"
+msgstr ""
+
+#. module: hr_attendance
+#: code:addons/hr_attendance/hr_attendance.py:0
+#, python-format
+msgid "You tried to sign with a date anterior to another event !\nTry to contact the administrator to correct attendances."
+msgstr ""
 
 #. module: hr_attendance
 #: rml:report.hr.timesheet.attendance.error:0
 msgid "(*) A positive delay means that the employee worked less than recorded."
-msgstr "(*) Positiivne viivitus tähendab, et töötaja töötas vähem kui salvestatud"
+msgstr ""
 
 #. module: hr_attendance
 #: view:hr.attendance:0
 msgid "Employee attendances"
-msgstr "Töötaja kohalviibimised"
+msgstr ""
 
 #. module: hr_attendance
 #: constraint:ir.ui.view:0
@@ -53,37 +59,37 @@ msgstr "Vigane XML vaate arhitektuurile!"
 #. module: hr_attendance
 #: wizard_view:hr.si_so,init:0
 msgid "You are now ready to sign in or out of the attendance follow up"
-msgstr "Sa oled nüüd valmis sisse või välja logima kohalviibimise täiendusele"
+msgstr ""
 
 #. module: hr_attendance
 #: selection:hr.action.reason,action_type:0
 #: wizard_button:hr.si_so,init,so_test:0
 #: wizard_button:hr.si_so,so_ask_si,so:0
 msgid "Sign out"
-msgstr "Logi välja"
+msgstr ""
 
 #. module: hr_attendance
 #: rml:report.hr.timesheet.attendance.error:0
 msgid "Delay"
-msgstr "Viivitus"
+msgstr ""
 
 #. module: hr_attendance
 #: wizard_field:hr.si_so,init,name:0
 #: wizard_field:hr.si_so,si_ask_so,name:0
 #: wizard_field:hr.si_so,so_ask_si,name:0
 msgid "Employee's name"
-msgstr "Töötaja nimi"
+msgstr ""
 
 #. module: hr_attendance
 #: wizard_button:hr.attendance.print_month,init,print:0
 #: wizard_button:hr.attendance.print_week,init,print:0
 msgid "Print Timesheet"
-msgstr "Prindi tööajaleht"
+msgstr ""
 
 #. module: hr_attendance
 #: model:ir.actions.wizard,name:hr_attendance.wizard_attendance_error
 msgid "Print Attendance Error Report"
-msgstr "Prindi kohalviibimise veaaruanne"
+msgstr ""
 
 #. module: hr_attendance
 #: constraint:ir.actions.act_window:0
@@ -93,289 +99,332 @@ msgstr "Vigane mudeli nimi toimingu definitsioonis."
 #. module: hr_attendance
 #: model:ir.actions.wizard,name:hr_attendance.print_week
 msgid "Print Timesheet by week"
-msgstr "Prindi tööajaleht nädala kaupa"
+msgstr ""
 
 #. module: hr_attendance
 #: field:hr.attendance,employee_id:0
 msgid "Employee"
-msgstr "Töötaja"
+msgstr ""
 
 #. module: hr_attendance
 #: wizard_view:hr.attendance.print_week,init:0
 #: wizard_view:hr.attendance.report,init:0
 msgid "Select a time span"
-msgstr "Vali ajavahemik"
+msgstr ""
 
 #. module: hr_attendance
 #: rml:report.hr.timesheet.attendance.error:0
 msgid "Date Recorded"
-msgstr "Salvestamise kuupäev"
+msgstr ""
 
 #. module: hr_attendance
 #: selection:hr.attendance,action:0
 #: view:hr.employee:0
 msgid "Sign In"
-msgstr "Logi sisse"
+msgstr ""
 
 #. module: hr_attendance
 #: rml:report.hr.timesheet.attendance.error:0
 msgid "Total period:"
-msgstr "Kogu periood:"
+msgstr ""
+
+#. module: hr_attendance
+#: code:addons/hr_attendance/hr_attendance.py:0
+#, python-format
+msgid "You tried to sign out with a date anterior to another event !\nTry to contact the administrator to correct attendances."
+msgstr ""
 
 #. module: hr_attendance
 #: field:hr.attendance,action_desc:0
 #: model:ir.model,name:hr_attendance.model_hr_action_reason
 msgid "Action reason"
-msgstr "Toimingu põhjus"
+msgstr ""
 
 #. module: hr_attendance
 #: selection:hr.attendance.print_month,init,month:0
 msgid "March"
-msgstr "Märts"
+msgstr ""
 
 #. module: hr_attendance
 #: selection:hr.attendance.print_month,init,month:0
 msgid "August"
-msgstr "August"
+msgstr ""
 
 #. module: hr_attendance
 #: selection:hr.attendance.print_month,init,month:0
 msgid "May"
-msgstr "Mai"
+msgstr ""
 
 #. module: hr_attendance
-#: wizard_field:hr.si_so,so_ask_si,last_time:0
-msgid "Your last sign in"
-msgstr "Sinu viimane sisse logimine"
+#: code:addons/hr_attendance/wizard/sign_in_out.py:0
+#, python-format
+msgid "A sign-out must be right after a sign-in !"
+msgstr ""
 
 #. module: hr_attendance
 #: selection:hr.attendance.print_month,init,month:0
 msgid "June"
-msgstr "Juuni"
+msgstr ""
 
 #. module: hr_attendance
 #: model:ir.actions.wizard,name:hr_attendance.print_month
 msgid "Print Timesheet by month"
-msgstr "Prindi tööajaleht kuu kaupa"
+msgstr ""
 
 #. module: hr_attendance
 #: selection:hr.attendance,action:0
 #: view:hr.employee:0
 msgid "Sign Out"
-msgstr "Logi välja"
+msgstr ""
 
 #. module: hr_attendance
 #: model:ir.module.module,shortdesc:hr_attendance.module_meta_information
 msgid "Attendances Of Employees"
-msgstr "Töötajate kohalviibimised"
+msgstr ""
 
 #. module: hr_attendance
 #: field:hr.action.reason,name:0
 msgid "Reason"
-msgstr "Põhjus"
+msgstr ""
 
 #. module: hr_attendance
 #: constraint:hr.attendance:0
 msgid "Error: Sign in (resp. Sign out) must follow Sign out (resp. Sign in)"
-msgstr "Viga: Sisse logimine (vast. välja logimine) peab järgnema välja logimisele (vast. sisse logimine)"
+msgstr ""
+
+#. module: hr_attendance
+#: code:addons/hr_attendance/wizard/sign_in_out.py:0
+#, python-format
+msgid "The sign-out date must be in the past"
+msgstr ""
 
 #. module: hr_attendance
 #: rml:report.hr.timesheet.attendance.error:0
 msgid "Date Signed"
-msgstr "Allkirjastamise kuupäev"
+msgstr ""
 
 #. module: hr_attendance
 #: field:hr.attendance,name:0
 msgid "Date"
-msgstr "Kuupäev"
+msgstr ""
 
 #. module: hr_attendance
 #: selection:hr.attendance.print_month,init,month:0
 msgid "July"
-msgstr "Juuli"
+msgstr ""
 
 #. module: hr_attendance
 #: wizard_view:hr.si_so,si_ask_so:0
 msgid "You did not signed out the last time. Please enter the date and time you signed out."
-msgstr "Sa ei loginud välja eelmine kord. Palun sisesta kuupäev ja kellaaeg, millal sa välja logisid."
+msgstr ""
 
 #. module: hr_attendance
 #: view:hr.action.reason:0
 msgid "Attendance reasons"
-msgstr "Kohalviibimise põhjused"
+msgstr ""
 
 #. module: hr_attendance
 #: wizard_field:hr.attendance.print_week,init,init_date:0
 #: wizard_field:hr.attendance.report,init,init_date:0
 msgid "Starting Date"
-msgstr "Alguskuupäev"
+msgstr ""
 
 #. module: hr_attendance
 #: selection:hr.employee,state:0
 msgid "Present"
-msgstr "Kohal"
+msgstr ""
 
 #. module: hr_attendance
 #: selection:hr.employee,state:0
 msgid "Absent"
-msgstr "Puudub"
+msgstr ""
 
 #. module: hr_attendance
 #: selection:hr.attendance.print_month,init,month:0
 msgid "February"
-msgstr "Veebruar"
+msgstr ""
 
 #. module: hr_attendance
 #: selection:hr.attendance.print_month,init,month:0
 msgid "October"
-msgstr "Oktoober"
+msgstr ""
 
 #. module: hr_attendance
 #: wizard_field:hr.si_so,si_ask_so,last_time:0
 msgid "Your last sign out"
-msgstr "Sinu viimane välja logimine"
+msgstr ""
+
+#. module: hr_attendance
+#: code:addons/hr_attendance/wizard/sign_in_out.py:0
+#, python-format
+msgid "The Sign-in date must be in the past"
+msgstr ""
+
+#. module: hr_attendance
+#: wizard_field:hr.attendance.print_month,init,year:0
+msgid "Year"
+msgstr ""
 
 #. module: hr_attendance
 #: rml:report.hr.timesheet.attendance.error:0
 msgid "Min Delay"
-msgstr "Min viivitus"
+msgstr ""
 
 #. module: hr_attendance
 #: field:hr.action.reason,action_type:0
 msgid "Action's type"
-msgstr "Toimingu tüüp"
+msgstr ""
 
 #. module: hr_attendance
 #: view:hr.action.reason:0
 msgid "Define attendance reason"
-msgstr "Määratle kohalviibimise põhjus"
+msgstr ""
 
 #. module: hr_attendance
 #: selection:hr.action.reason,action_type:0
 #: wizard_button:hr.si_so,init,si_test:0
 #: wizard_button:hr.si_so,si_ask_so,si:0
 msgid "Sign in"
-msgstr "Logi sisse"
+msgstr ""
 
 #. module: hr_attendance
 #: wizard_view:hr.attendance.report,init:0
 msgid "Analysis Information"
-msgstr "Analüüsi info"
+msgstr ""
 
 #. module: hr_attendance
 #: wizard_field:hr.si_so,init,state:0
 msgid "Current state"
-msgstr "Praegune olek"
+msgstr ""
 
 #. module: hr_attendance
 #: selection:hr.attendance.print_month,init,month:0
 msgid "January"
-msgstr "Jaanuar"
+msgstr ""
 
 #. module: hr_attendance
 #: selection:hr.attendance.print_month,init,month:0
 msgid "April"
-msgstr "Aprill"
+msgstr ""
 
 #. module: hr_attendance
 #: model:ir.actions.act_window,name:hr_attendance.open_view_attendance
 #: model:ir.ui.menu,name:hr_attendance.menu_hr_attendance
 #: model:ir.ui.menu,name:hr_attendance.menu_open_view_attendance
 msgid "Attendances"
-msgstr "Kohalviibimised"
+msgstr ""
 
 #. module: hr_attendance
 #: rml:report.hr.timesheet.attendance.error:0
 msgid "Attendance Errors"
-msgstr "Kohalviibimise vead"
+msgstr ""
 
 #. module: hr_attendance
 #: field:hr.attendance,action:0
 #: selection:hr.attendance,action:0
 msgid "Action"
-msgstr "Toiming"
+msgstr ""
 
 #. module: hr_attendance
 #: wizard_button:hr.attendance.report,init,print:0
 msgid "Print Attendance Report"
-msgstr "Prindi kohalviibimise aruanne"
+msgstr ""
 
 #. module: hr_attendance
 #: model:ir.actions.act_window,name:hr_attendance.open_view_attendance_reason
 #: model:ir.ui.menu,name:hr_attendance.menu_open_view_attendance_reason
 msgid "Attendance Reasons"
-msgstr "Kohalviibimise põhjused"
+msgstr ""
 
 #. module: hr_attendance
 #: selection:hr.attendance.print_month,init,month:0
 msgid "November"
-msgstr "November"
+msgstr ""
 
 #. module: hr_attendance
 #: wizard_view:hr.attendance.report,init:0
 msgid "Bellow this delay, the error is considered to be voluntary"
-msgstr "Allpool seda viivitust loetakse viga tahtlikuks."
+msgstr ""
+
+#. module: hr_attendance
+#: code:addons/hr_attendance/wizard/sign_in_out.py:0
+#, python-format
+msgid "UserError"
+msgstr ""
 
 #. module: hr_attendance
 #: wizard_field:hr.attendance.report,init,max_delay:0
 msgid "Max. Delay (Min)"
-msgstr "Maks viivitus (min)"
+msgstr ""
 
 #. module: hr_attendance
 #: wizard_view:hr.attendance.print_week,init:0
 msgid "Select a starting and a end date"
-msgstr "Vali algus- ja lõppkuupäev"
+msgstr ""
+
+#. module: hr_attendance
+#: code:addons/hr_attendance/wizard/print_attendance_error.py:0
+#, python-format
+msgid "No Data Available"
+msgstr ""
 
 #. module: hr_attendance
 #: wizard_field:hr.attendance.print_week,init,end_date:0
 #: wizard_field:hr.attendance.report,init,end_date:0
 msgid "Ending Date"
-msgstr "Lõppkuupäev"
+msgstr ""
+
+#. module: hr_attendance
+#: code:addons/hr_attendance/wizard/print_attendance_error.py:0
+#, python-format
+msgid "No records found for your selection!"
+msgstr ""
 
 #. module: hr_attendance
 #: wizard_view:hr.si_so,so_ask_si:0
 msgid "You did not signed in the last time. Please enter the date and time you signed in."
-msgstr "Sa ei loginud sisse eelmine kord. Palun sisesta kuupäev ja kellaaeg, millal sa sisse logisid."
+msgstr ""
 
 #. module: hr_attendance
 #: selection:hr.attendance.print_month,init,month:0
 msgid "September"
-msgstr "September"
-
-#. module: hr_attendance
-#: selection:hr.attendance.print_month,init,month:0
-msgid "December"
-msgstr "Detsember"
-
-#. module: hr_attendance
-#: view:hr.attendance:0
-msgid "Employee attendance"
-msgstr "Töötaja kohalviibimine"
-
-#. module: hr_attendance
-#: wizard_view:hr.attendance.print_month,init:0
-msgid "Select a month"
-msgstr "Vali kuu"
-
-#. module: hr_attendance
-#: wizard_field:hr.attendance.print_month,init,month:0
-msgid "Month"
-msgstr "Kuu"
-
-#. module: hr_attendance
-#: model:ir.module.module,description:hr_attendance.module_meta_information
-msgid "This module aims to manage employee's attendances."
-msgstr "Selle mooduli eesmärk on hallata töötajate kohalviibimisi."
+msgstr ""
 
 #. module: hr_attendance
 #: model:ir.actions.report.xml,name:hr_attendance.attendance_error_report
 msgid "Attendance Error Report"
-msgstr "Kohalviibimise veaaruanne"
+msgstr ""
 
 #. module: hr_attendance
-#: wizard_field:hr.attendance.print_month,init,year:0
-msgid "Year"
-msgstr "Aasta"
+#: view:hr.attendance:0
+msgid "Employee attendance"
+msgstr ""
+
+#. module: hr_attendance
+#: wizard_view:hr.attendance.print_month,init:0
+msgid "Select a month"
+msgstr ""
+
+#. module: hr_attendance
+#: wizard_field:hr.attendance.print_month,init,month:0
+msgid "Month"
+msgstr ""
+
+#. module: hr_attendance
+#: model:ir.module.module,description:hr_attendance.module_meta_information
+msgid "This module aims to manage employee's attendances."
+msgstr ""
+
+#. module: hr_attendance
+#: code:addons/hr_attendance/hr_attendance.py:0
+#, python-format
+msgid "Warning"
+msgstr ""
+
+#. module: hr_attendance
+#: selection:hr.attendance.print_month,init,month:0
+msgid "December"
+msgstr ""
 
 #. module: hr_attendance
 #: wizard_button:hr.attendance.print_month,init,end:0
@@ -385,10 +434,27 @@ msgstr "Aasta"
 #: wizard_button:hr.si_so,si_ask_so,end:0
 #: wizard_button:hr.si_so,so_ask_si,end:0
 msgid "Cancel"
-msgstr "Tühista"
+msgstr ""
 
 #. module: hr_attendance
 #: rml:report.hr.timesheet.attendance.error:0
 msgid "Operation"
-msgstr "Operatsioon"
+msgstr ""
+
+#. module: hr_attendance
+#: code:addons/hr_attendance/hr_attendance.py:0
+#, python-format
+msgid "You tried to sign in with a date anterior to another event !\nTry to contact the administrator to correct attendances."
+msgstr ""
+
+#. module: hr_attendance
+#: wizard_field:hr.si_so,so_ask_si,last_time:0
+msgid "Your last sign in"
+msgstr ""
+
+#. module: hr_attendance
+#: code:addons/hr_attendance/wizard/sign_in_out.py:0
+#, python-format
+msgid "A sign-in must be right after a sign-out !"
+msgstr ""
 

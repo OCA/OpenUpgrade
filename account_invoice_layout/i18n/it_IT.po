@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-08-06 15:25:35+0000\n"
-"PO-Revision-Date: 2009-08-06 15:25:35+0000\n"
+"POT-Creation-Date: 2009-05-19 14:24:38+0000\n"
+"PO-Revision-Date: 2009-05-20 10:24:38+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -43,18 +43,8 @@ msgstr ""
 
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
-msgid "/ ("
-msgstr ""
-
-#. module: account_invoice_layout
-#: rml:account.invoice.layout:0
 msgid "Disc. (%)"
 msgstr "Sconto (%)"
-
-#. module: account_invoice_layout
-#: rml:account.invoice.layout:0
-msgid "(Incl. taxes):"
-msgstr ""
 
 #. module: account_invoice_layout
 #: selection:account.invoice.line,state:0
@@ -113,7 +103,12 @@ msgstr "Rif. Cliente:"
 
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
-msgid ")"
+msgid "Description"
+msgstr "Descrizione"
+
+#. module: account_invoice_layout
+#: model:ir.module.module,shortdesc:account_invoice_layout.module_meta_information
+msgid "account_invoice_layout"
 msgstr ""
 
 #. module: account_invoice_layout
@@ -208,18 +203,18 @@ msgstr ""
 
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
-msgid "Description / Taxes"
-msgstr ""
-
-#. module: account_invoice_layout
-#: rml:account.invoice.layout:0
 msgid "Amount"
 msgstr "Importo"
 
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
-msgid "Description/Taxes"
-msgstr ""
+msgid "Total (excl. taxes):"
+msgstr "Totale (tasse escluse):"
+
+#. module: account_invoice_layout
+#: rml:account.invoice.layout:0
+msgid "Taxes"
+msgstr "Tasse"
 
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
@@ -258,23 +253,13 @@ msgstr "Fattura Fornitore"
 
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
-msgid "Note :"
-msgstr ""
-
-#. module: account_invoice_layout
-#: rml:account.invoice.layout:0
 msgid "Tax"
 msgstr "Tassa"
 
 #. module: account_invoice_layout
-#: model:ir.module.module,shortdesc:account_invoice_layout.module_meta_information
-msgid "account_invoice_layout"
-msgstr ""
-
-#. module: account_invoice_layout
 #: rml:account.invoice.layout:0
-msgid "Total (Excl. taxes):"
-msgstr ""
+msgid "(incl. taxes):"
+msgstr "(tasse incluse):"
 
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0

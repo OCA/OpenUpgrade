@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-08-06 15:19:24+0000\n"
-"PO-Revision-Date: 2009-08-06 15:19:24+0000\n"
+"POT-Creation-Date: 2009-05-19 14:21:36+0000\n"
+"PO-Revision-Date: 2009-05-20 10:21:36+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,14 +18,14 @@ msgstr ""
 #. module: report_task
 #: selection:report.closed.task,state:0
 msgid "In Progress"
-msgstr "Edenemisel"
+msgstr ""
 
 #. module: report_task
 #: model:ir.actions.act_window,name:report_task.action_project_task
 #: model:ir.ui.menu,name:report_task.menu_project_task_user_tree
 #: view:report.task.user.pipeline.open:0
 msgid "Tasks by User"
-msgstr "Ülesanded kasutaja järgi"
+msgstr ""
 
 #. module: report_task
 #: constraint:ir.model:0
@@ -35,12 +35,12 @@ msgstr "Objekti nimi peab algama x_'ga ja ei tohi sisaldada ühtegi erisümbolit
 #. module: report_task
 #: field:report.closed.task,remaining_hours:0
 msgid "Remaining Hours"
-msgstr "Järelejäänud tunnid"
+msgstr ""
 
 #. module: report_task
 #: selection:report.task.user.pipeline.open,task_state:0
 msgid "No Task"
-msgstr "Ülesanne puudub"
+msgstr ""
 
 #. module: report_task
 #: model:ir.module.module,shortdesc:report_task.module_meta_information
@@ -50,23 +50,23 @@ msgstr ""
 #. module: report_task
 #: view:report.closed.task:0
 msgid "Delay"
-msgstr "Viivitus"
+msgstr ""
 
 #. module: report_task
 #: selection:report.closed.task,priority:0
 msgid "Very Low"
-msgstr "Väga madal"
+msgstr ""
 
 #. module: report_task
 #: selection:report.closed.task,state:0
 #: selection:report.task.user.pipeline.open,task_state:0
 msgid "Draft"
-msgstr "Mustand"
+msgstr ""
 
 #. module: report_task
 #: selection:report.closed.task,priority:0
 msgid "Low"
-msgstr "Madal"
+msgstr ""
 
 #. module: report_task
 #: constraint:ir.actions.act_window:0
@@ -76,7 +76,7 @@ msgstr "Vigane mudeli nimi toimingu definitsioonis."
 #. module: report_task
 #: field:report.closed.task,name:0
 msgid "Task summary"
-msgstr "Ülesande kokkuvõte"
+msgstr ""
 
 #. module: report_task
 #: selection:report.closed.task,state:0
@@ -88,33 +88,33 @@ msgstr ""
 #: field:report.closed.task,state:0
 #: field:report.task.user.pipeline.open,task_state:0
 msgid "Status"
-msgstr "Staatus"
+msgstr ""
 
 #. module: report_task
 #: selection:report.closed.task,priority:0
 msgid "Medium"
-msgstr "Keskmine"
+msgstr ""
 
 #. module: report_task
 #: model:ir.actions.act_window,name:report_task.action_report_timesheet_task_user
 #: model:ir.ui.menu,name:report_task.menu_timesheet_task_user
 msgid "Timesheet / Task Hours Per Month"
-msgstr "Tööajaleht / Ülesannete tunnid kuu kaupa"
+msgstr ""
 
 #. module: report_task
 #: field:report.closed.task,progress:0
 msgid "Progress (%)"
-msgstr "Edenemine (%)"
+msgstr ""
 
 #. module: report_task
 #: field:report.closed.task,priority:0
 msgid "Importance"
-msgstr "Tähtsus"
+msgstr ""
 
 #. module: report_task
 #: field:report.task.user.pipeline.open,company_id:0
 msgid "Company"
-msgstr "Ettevõte"
+msgstr ""
 
 #. module: report_task
 #: model:ir.ui.menu,name:report_task.next_id_57
@@ -130,23 +130,42 @@ msgstr ""
 #: field:report.task.user.pipeline.open,user_id:0
 #: field:report.timesheet.task.user,user_id:0
 msgid "User"
-msgstr "Kasutaja"
+msgstr ""
 
 #. module: report_task
 #: model:ir.actions.act_window,name:report_task.action_closed_task_board
 msgid "Task Closed Within Past 15 Days"
-msgstr "Viimase 15 päeva jooksul suletud ülesanded"
+msgstr ""
 
 #. module: report_task
 #: selection:report.closed.task,priority:0
 msgid "Very urgent"
-msgstr "Väga pakiline"
+msgstr ""
 
 #. module: report_task
 #: selection:report.closed.task,state:0
 #: selection:report.task.user.pipeline.open,task_state:0
 msgid "Done"
-msgstr "Tehtud"
+msgstr ""
 
 #. module: report_task
-#: field:report.task.us
+#: field:report.task.user.pipeline.open,task_hrs:0
+#: field:report.timesheet.task.user,task_hrs:0
+msgid "Task Hours"
+msgstr ""
+
+#. module: report_task
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr "Vigane XML vaate arhitektuurile!"
+
+#. module: report_task
+#: field:report.closed.task,delay_hours:0
+msgid "Delay Hours"
+msgstr ""
+
+#. module: report_task
+#: field:report.closed.task,project_id:0
+msgid "Project"
+msgstr ""
+

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-08-06 15:19:24+0000\n"
-"PO-Revision-Date: 2009-08-06 15:19:24+0000\n"
+"POT-Creation-Date: 2009-05-19 14:21:36+0000\n"
+"PO-Revision-Date: 2009-05-20 10:21:36+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -32,7 +32,13 @@ msgstr ""
 #: field:hr_timesheet_sheet.sheet.account,sheet_id:0
 #: field:hr_timesheet_sheet.sheet.day,sheet_id:0
 msgid "Sheet"
-msgstr "Leht"
+msgstr ""
+
+#. module: hr_timesheet_sheet
+#: code:addons/hr_timesheet_sheet/wizard/wizard_timesheet_current.py:0
+#, python-format
+msgid "No employee defined for your user !"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: constraint:ir.actions.act_window:0
@@ -44,18 +50,18 @@ msgstr "Vigane mudeli nimi toimingu definitsioonis."
 #: field:hr_timesheet_sheet.sheet,total_attendance_day:0
 #: view:hr_timesheet_sheet.sheet.day:0
 msgid "Total Attendance"
-msgstr "Kogu kohalviibimine"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:ir.actions.act_window,name:hr_timesheet_sheet.act_hr_timesheet_sheet_form_my_confirm
 #: model:ir.ui.menu,name:hr_timesheet_sheet.menu_act_hr_timesheet_sheet_form_my_confirm
 msgid "My timesheets to confirm"
-msgstr "Minu tööajaleht kinnitamiseks"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: field:res.company,timesheet_range:0
 msgid "Timeshet range"
-msgstr "Tööajalehe ulatus"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: view:hr_timesheet_sheet.sheet:0
@@ -65,7 +71,7 @@ msgstr "Täna"
 #. module: hr_timesheet_sheet
 #: model:process.transition,name:hr_timesheet_sheet.process_transition_confirmtimesheetsheet0
 msgid "Confirm timesheet sheet"
-msgstr "Kinnita tööajalehe leht"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: view:hr_timesheet_sheet.sheet:0
@@ -78,23 +84,23 @@ msgstr "Ajagraafik"
 #. module: hr_timesheet_sheet
 #: view:hr_timesheet_sheet.sheet:0
 msgid "Set to Draft"
-msgstr "Sea mustandiks"
+msgstr "Määra mustandiks"
 
 #. module: hr_timesheet_sheet
 #: model:process.node,note:hr_timesheet_sheet.process_node_attendance0
 msgid "Defines employee's timesheet entry"
-msgstr "Määrab töötaja tööajalehe kirje"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:process.node,name:hr_timesheet_sheet.process_node_drafttimesheetsheet0
 msgid "Draft Timesheet sheet"
-msgstr "Tööajalehe lehe mustand"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:ir.actions.wizard,name:hr_timesheet_sheet.act_hr_timesheet_sheet_form_my_current
 #: model:ir.ui.menu,name:hr_timesheet_sheet.menu_act_hr_timesheet_sheet_form_my_current
 msgid "My Current Timesheet"
-msgstr "Minu käesolev tööajaleht"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:process.transition.action,name:hr_timesheet_sheet.process_transition_action_validatetimesheet0
@@ -109,7 +115,13 @@ msgstr "Päev"
 #. module: hr_timesheet_sheet
 #: selection:hr_timesheet_sheet.sheet,state_attendance:0
 msgid "Present"
-msgstr "Kohal"
+msgstr ""
+
+#. module: hr_timesheet_sheet
+#: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:0
+#, python-format
+msgid "UserError"
+msgstr "KasutajaViga"
 
 #. module: hr_timesheet_sheet
 #: view:hr_timesheet_sheet.sheet:0
@@ -120,7 +132,7 @@ msgstr "Keeldu"
 #. module: hr_timesheet_sheet
 #: model:process.node,name:hr_timesheet_sheet.process_node_validatedtimesheet0
 msgid "Validated Timesheet"
-msgstr "Valideeritud tööajaleht"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: constraint:hr_timesheet_sheet.sheet:0
@@ -128,19 +140,31 @@ msgid "You must select a Current date wich is in the timesheet dates !"
 msgstr ""
 
 #. module: hr_timesheet_sheet
+#: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:0
+#, python-format
+msgid "You can not sign in from an other date than today"
+msgstr ""
+
+#. module: hr_timesheet_sheet
 #: view:hr_timesheet_sheet.sheet.day:0
 msgid "Total Difference"
-msgstr "Kogu erinevus"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:process.transition,name:hr_timesheet_sheet.process_transition_phonecallencoding0
 msgid "Phone call encoding"
-msgstr "Telefonikõne arvutamine"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:ir.actions.act_window,name:hr_timesheet_sheet.act_hr_timesheet_sheet_sheet_by_account
 msgid "Timesheet by Day"
-msgstr "Tööajaleht päeva kaupa"
+msgstr ""
+
+#. module: hr_timesheet_sheet
+#: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:0
+#, python-format
+msgid "Warning !"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:process.node,note:hr_timesheet_sheet.process_node_timesheet0
@@ -155,27 +179,27 @@ msgstr ""
 #. module: hr_timesheet_sheet
 #: view:hr_timesheet_sheet.sheet.day:0
 msgid "Timesheet by Days"
-msgstr "Tööajaleht päevade kaupa"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:process.transition,note:hr_timesheet_sheet.process_transition_confirmtimesheet0
 msgid "timesheet is confirmed at the end of the week / month"
-msgstr "tööajaleht kinnitatakse nädala/kuu lõpus"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: field:hr_timesheet_sheet.sheet.account,name:0
 msgid "Analytic Account"
-msgstr "Analüütiline konto"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: field:hr_timesheet_sheet.sheet.day,total_timesheet:0
 msgid "Project Timesheet"
-msgstr "Projekti tööajaleht"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: field:hr_timesheet_sheet.sheet,date_from:0
 msgid "Date from"
-msgstr "Kuupäevast"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:process.process,name:hr_timesheet_sheet.process_process_hrtimesheetprocess0
@@ -185,19 +209,19 @@ msgstr ""
 #. module: hr_timesheet_sheet
 #: model:process.node,name:hr_timesheet_sheet.process_node_analyticcost0
 msgid "Analytic cost"
-msgstr "Analüütiline kulu"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: selection:hr_timesheet_sheet.sheet,state:0
 msgid "Confirmed"
-msgstr "Kinnitatud"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: field:hr_timesheet_sheet.sheet.day,total_attendance:0
 #: model:process.node,name:hr_timesheet_sheet.process_node_attendance0
 #: model:process.transition,name:hr_timesheet_sheet.process_transition_attendancetimesheet0
 msgid "Attendance"
-msgstr "Kohalviibimine"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: view:hr_timesheet_sheet.sheet:0
@@ -208,17 +232,17 @@ msgstr "Kinnita"
 #. module: hr_timesheet_sheet
 #: field:hr_timesheet_sheet.sheet,timesheet_ids:0
 msgid "Timesheet lines"
-msgstr "Tööajalehe read"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:process.node,note:hr_timesheet_sheet.process_node_timesheetline0
 msgid "Encode your timesheet line"
-msgstr "Arvuta oma tööajalehe rida"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:process.transition,name:hr_timesheet_sheet.process_transition_confirmtimesheet0
 msgid "Confirm Timesheet"
-msgstr "Kinnita tööajaleht"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:process.node,note:hr_timesheet_sheet.process_node_validatedtimesheet0
@@ -228,37 +252,56 @@ msgstr ""
 #. module: hr_timesheet_sheet
 #: selection:hr_timesheet_sheet.sheet,state:0
 msgid "New"
-msgstr "Uus"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:process.node,note:hr_timesheet_sheet.process_node_timesheetconfirming0
 msgid "Timesheet sheet confirm at the end of the period"
-msgstr "Tööajalehe lehe kinnitamine perioodi lõpus"
+msgstr ""
+
+#. module: hr_timesheet_sheet
+#: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:0
+#: code:addons/hr_timesheet_sheet/wizard/wizard_timesheet_current.py:0
+#, python-format
+msgid "Error !"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: field:hr_timesheet_sheet.sheet.account,total:0
 msgid "Total Time"
-msgstr "Aeg kokku"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:ir.actions.act_window,name:hr_timesheet_sheet.act_hr_timesheet_sheet_sheet_2_hr_analytic_timesheet
 msgid "Timesheet Lines"
-msgstr "Tööajalehe read"
+msgstr ""
+
+#. module: hr_timesheet_sheet
+#: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:0
+#, python-format
+msgid "Please verify that the total difference of the sheet is lower than %.2f !"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:process.transition,note:hr_timesheet_sheet.process_transition_confirmtimesheetsheet0
 msgid "Confirm timesheet at the end of the period"
-msgstr "Kinnita tööajaleht perioodi lõpus"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: selection:hr_timesheet_sheet.sheet,state_attendance:0
 msgid "No employee defined"
-msgstr "Ühtegi töötajat pole määratud"
+msgstr ""
+
+#. module: hr_timesheet_sheet
+#: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:0
+#, python-format
+msgid "Invalid action !"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:process.node,name:hr_timesheet_sheet.process_node_confirmedtimesheet0
 msgid "Confirmed Timesheet"
-msgstr "Kinnitatud tööajaleht"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: view:res.company:0
@@ -268,7 +311,7 @@ msgstr "Seadistus"
 #. module: hr_timesheet_sheet
 #: selection:res.company,timesheet_range:0
 msgid "Week"
-msgstr "Nädal"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: constraint:ir.ui.view:0
@@ -284,28 +327,28 @@ msgstr ""
 #: model:ir.model,name:hr_timesheet_sheet.model_hr_timesheet_sheet_sheet_account
 #: model:ir.model,name:hr_timesheet_sheet.model_hr_timesheet_sheet_sheet_day
 msgid "Timesheets by period"
-msgstr "Tööajalehed perioodi kaupa"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: view:hr_timesheet_sheet.sheet:0
 msgid "Sign In"
-msgstr "Logi sisse"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:ir.actions.wizard,name:hr_timesheet_sheet.act_hr_timesheet_sheet_form_department_current
 #: model:ir.ui.menu,name:hr_timesheet_sheet.menu_act_hr_timesheet_sheet_form_department_current
 msgid "My Department's Timesheet"
-msgstr "Minu osakonna tööajaleht"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: view:hr_timesheet_sheet.sheet:0
 msgid "Go to:"
-msgstr "Mine:"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:process.node,name:hr_timesheet_sheet.process_node_phonecall0
 msgid "Phone call"
-msgstr "Telefonikõne"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: field:hr_timesheet_sheet.sheet,total_timesheet:0
@@ -322,12 +365,12 @@ msgstr ""
 #. module: hr_timesheet_sheet
 #: model:process.node,name:hr_timesheet_sheet.process_node_invoiceonwork0
 msgid "Invoice on Work"
-msgstr "Arve tööle"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: selection:res.company,timesheet_range:0
 msgid "Month"
-msgstr "Kuu"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:process.node,note:hr_timesheet_sheet.process_node_drafttimesheetsheet0
@@ -338,12 +381,12 @@ msgstr ""
 #: model:process.node,name:hr_timesheet_sheet.process_node_review0
 #: model:process.transition.action,name:hr_timesheet_sheet.process_transition_action_reviewtimesheet0
 msgid "Review"
-msgstr "Ülevaade"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: selection:hr_timesheet_sheet.sheet,state:0
 msgid "Draft"
-msgstr "Mustand"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: view:hr_timesheet_sheet.sheet:0
@@ -359,32 +402,44 @@ msgstr "Tööajalehed"
 #: model:ir.actions.act_window,name:hr_timesheet_sheet.act_hr_timesheet_sheet_form_all_confirm
 #: model:ir.ui.menu,name:hr_timesheet_sheet.menu_act_hr_timesheet_sheet_form_all_confirm
 msgid "Timesheets To Confirm"
-msgstr "Tööajalehed kinnitamiseks"
+msgstr ""
+
+#. module: hr_timesheet_sheet
+#: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:0
+#, python-format
+msgid "You can not sign out from an other date than today"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: field:hr_timesheet_sheet.sheet,state:0
 msgid "Status"
-msgstr "Staatus"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: field:hr_timesheet_sheet.sheet,date_to:0
 msgid "Date to"
-msgstr "Kuupäevani"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: field:hr_timesheet_sheet.sheet,state_attendance:0
 msgid "Current Status"
-msgstr "Praegune staatus"
+msgstr ""
+
+#. module: hr_timesheet_sheet
+#: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:0
+#, python-format
+msgid "You cannot modify an entry in a confirmed timesheet !"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:process.transition,name:hr_timesheet_sheet.process_transition_invoiceontimesheet0
 msgid "Invoice on timesheet"
-msgstr "Arve tööajalehele"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:process.node,note:hr_timesheet_sheet.process_node_invoiceonwork0
 msgid "Invoice based on timesheet"
-msgstr "Arve tööajalehe põhjal"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:ir.actions.act_window,name:hr_timesheet_sheet.act_hr_timesheet_sheet_sheet_by_day
@@ -394,39 +449,45 @@ msgstr "Tööajakaart konto järgi"
 #. module: hr_timesheet_sheet
 #: field:hr_timesheet_sheet.sheet.day,name:0
 msgid "Date"
-msgstr "Kuupäev"
+msgstr ""
+
+#. module: hr_timesheet_sheet
+#: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:0
+#, python-format
+msgid "You can not modify an entry in a confirmed timesheet !"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: field:hr_timesheet_sheet.sheet,user_id:0
 msgid "User"
-msgstr "Kasutaja"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:process.transition,note:hr_timesheet_sheet.process_transition_invoiceontimesheet0
 msgid "Creates invoice based on timesheet"
-msgstr "Loob arve tööajalehe põhjal"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:ir.actions.act_window,name:hr_timesheet_sheet.act_hr_timesheet_sheet_form_all_valid
 #: model:ir.ui.menu,name:hr_timesheet_sheet.menu_act_hr_timesheet_sheet_form_all_valid
 msgid "Timesheets To Validate"
-msgstr "Tööajalehed valideerida"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: field:res.company,timesheet_max_difference:0
 msgid "Timesheet allowed difference"
-msgstr "Tööajalehe lubatud erinevus"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: view:hr_timesheet_sheet.sheet:0
 #: field:hr_timesheet_sheet.sheet,period_ids:0
 msgid "Period"
-msgstr "Periood"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: selection:hr_timesheet_sheet.sheet,state:0
 msgid "Done"
-msgstr "Tehtud"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:process.transition,note:hr_timesheet_sheet.process_transition_attendancetimesheet0
@@ -441,12 +502,12 @@ msgstr ""
 #. module: hr_timesheet_sheet
 #: model:process.node,name:hr_timesheet_sheet.process_node_timesheetline0
 msgid "Timesheet Line"
-msgstr "Tööajalehe rida"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: view:hr_timesheet_sheet.sheet.account:0
 msgid "Timesheet by Accounts"
-msgstr "Tööajaleht kontode kaupa"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: constraint:ir.model:0
@@ -454,74 +515,86 @@ msgid "The Object name must start with x_ and not contain any special character 
 msgstr "Objekti nimi peab algama x_'ga ja ei tohi sisaldada ühtegi erisümbolit !"
 
 #. module: hr_timesheet_sheet
+#: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:0
+#, python-format
+msgid "Cannot delete Sheet(s) which are already confirmed !"
+msgstr ""
+
+#. module: hr_timesheet_sheet
 #: model:process.transition,note:hr_timesheet_sheet.process_transition_validatetimesheet0
 msgid "Timesheet is validate by project manager."
-msgstr "Tööajaleht on valideeritud projektijuhi poolt."
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:process.node,note:hr_timesheet_sheet.process_node_phonecall0
 msgid "Whatever time u spent for phone call"
-msgstr "Aeg, mis sa kulutasid telefonikõnele."
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:process.transition,name:hr_timesheet_sheet.process_transition_validatetimesheet0
 msgid "Validate Timesheet"
-msgstr "Valideeri tööajaleht"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:ir.actions.wizard,name:hr_timesheet_sheet.act_hr_timesheet_sheet_form_department_confirm
 #: model:ir.ui.menu,name:hr_timesheet_sheet.menu_act_hr_timesheet_sheet_form_department_confirm
 msgid "My Department's Timesheet to Confirm"
-msgstr "Minu osakonna tööajaleht kinnitada"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: view:hr_timesheet_sheet.sheet:0
 #: field:hr_timesheet_sheet.sheet,attendances_ids:0
 #: model:ir.actions.act_window,name:hr_timesheet_sheet.act_hr_timesheet_sheet_sheet_2_hr_attendance
 msgid "Attendances"
-msgstr "Kohalviibimised"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:process.transition,name:hr_timesheet_sheet.process_transition_createanalyticcose0
 msgid "Create Analytic cost"
-msgstr "Loo analüütiline kulu"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: field:hr_timesheet_sheet.sheet,name:0
 msgid "Description"
-msgstr "Kirjeldus"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: view:hr_timesheet_sheet.sheet:0
 msgid "Sign Out"
-msgstr "Logi välja"
+msgstr ""
+
+#. module: hr_timesheet_sheet
+#: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:0
+#, python-format
+msgid "You can not duplicate a timesheet !"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: view:hr_timesheet_sheet.sheet:0
 msgid "By Day"
-msgstr "Päeva kaupa"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: field:hr_timesheet_sheet.sheet,total_difference:0
 #: field:hr_timesheet_sheet.sheet,total_difference_day:0
 #: field:hr_timesheet_sheet.sheet.day,total_difference:0
 msgid "Difference"
-msgstr "Erinevus"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:ir.model,name:hr_timesheet_sheet.model_hr_timesheet_sheet_sheet
 msgid "hr_timesheet_sheet.sheet"
-msgstr "hr_timesheet_sheet.sheet"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: selection:hr_timesheet_sheet.sheet,state_attendance:0
 msgid "Absent"
-msgstr "Puudub"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:process.node,note:hr_timesheet_sheet.process_node_confirmedtimesheet0
 msgid "At the end of the period (week/month)"
-msgstr "Perioodi lõpus (nädal/kuu)"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:process.transition,note:hr_timesheet_sheet.process_transition_timesheetdraft0
@@ -531,17 +604,17 @@ msgstr ""
 #. module: hr_timesheet_sheet
 #: model:process.node,note:hr_timesheet_sheet.process_node_analyticcost0
 msgid "Analytic cost is created"
-msgstr "Analüütiline kulu on loodud"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: field:hr_timesheet_sheet.sheet.account,invoice_rate:0
 msgid "Invoice rate"
-msgstr "Arve määr"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:process.transition,note:hr_timesheet_sheet.process_transition_phonecallencoding0
 msgid "Encode how much time u spent on phone call"
-msgstr "Arvuta aeg, mis sa kulutasid telefonikõnele"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:process.transition,note:hr_timesheet_sheet.process_transition_reviewofwork0
@@ -551,43 +624,43 @@ msgstr ""
 #. module: hr_timesheet_sheet
 #: field:hr_timesheet_sheet.sheet,account_ids:0
 msgid "Analytic accounts"
-msgstr "Analüütilised kontod"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:ir.actions.act_window,name:hr_timesheet_sheet.act_hr_timesheet_sheet_form_my
 #: model:ir.ui.menu,name:hr_timesheet_sheet.menu_act_hr_timesheet_sheet_form_my
 msgid "My timesheets"
-msgstr "Minu tööajalehed"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: view:hr_timesheet_sheet.sheet:0
 msgid "Accept"
-msgstr "Nõustu"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: field:hr_timesheet_sheet.sheet,date_current:0
 msgid "Current date"
-msgstr "Praegune kuupäev"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:ir.actions.act_window,name:hr_timesheet_sheet.act_hr_timesheet_sheet_unvalidate
 #: model:ir.ui.menu,name:hr_timesheet_sheet.menu_hr_timesheet_sheet_unvalidate
 msgid "Unvalidated Timesheets"
-msgstr "Valideerimata tööajalehed"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: selection:res.company,timesheet_range:0
 msgid "Year"
-msgstr "Aasta"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: view:hr_timesheet_sheet.sheet.account:0
 msgid "Total"
-msgstr "Kokku"
+msgstr ""
 
 #. module: hr_timesheet_sheet
 #: model:ir.actions.wizard,name:hr_timesheet_sheet.act_hr_timesheet_sheet_form_department_validate
 #: model:ir.ui.menu,name:hr_timesheet_sheet.menu_act_hr_timesheet_sheet_form_department_validate
 msgid "My Department's Timesheet to Validate"
-msgstr "Minu osakonna tööajalehed valideerida"
+msgstr ""
 

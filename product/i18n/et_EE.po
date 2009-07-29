@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-08-06 15:19:24+0000\n"
-"PO-Revision-Date: 2009-08-06 15:19:24+0000\n"
+"POT-Creation-Date: 2009-05-19 14:21:36+0000\n"
+"PO-Revision-Date: 2009-05-20 10:21:36+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -111,6 +111,12 @@ msgid "Standard Price"
 msgstr "Standardhind"
 
 #. module: product
+#: code:addons/product/product.py:0
+#, python-format
+msgid "Products: "
+msgstr "Tooted: "
+
+#. module: product
 #: help:product.packaging,height:0
 msgid "The height of the package"
 msgstr "Pakendi kõrgus"
@@ -177,9 +183,10 @@ msgid "Base price for computing the customer price. Sometimes called the catalog
 msgstr "Baashind arvutamaks kliendihinda. Vahetevahel kutsutakse kui kataloogihind."
 
 #. module: product
-#: field:pricelist.partnerinfo,min_quantity:0
-msgid "Quantity"
-msgstr "Kogus"
+#: code:addons/product/pricelist.py:0
+#, python-format
+msgid "Partner section of the product form"
+msgstr "Partneri sektsioon toote vormil"
 
 #. module: product
 #: model:product.template,name:product.product_product_cpu3_product_template
@@ -251,15 +258,6 @@ msgstr "kui Muu hinnakiri"
 #: view:product.product:0
 msgid "Products"
 msgstr "Tooted"
-
-#. module: product
-#: help:product.pricelist.item,price_round:0
-msgid "Sets the price so that it is a multiple of this value.\n"
-"Rounding is applied after the discount and before the surcharge.\n"
-"To have prices that end in 9.99, set rounding 10, surcharge -0.01"
-msgstr "Määrab hinna nii, et see on selle väärtuse kordne.\n"
-"Ümardmine rakendatakse peale allahindlust ja enne lisatasu.\n"
-"Et saada hindu, mis lõppevad 9.99, määra ümarduseks 10, lisatasu -0,01"
 
 #. module: product
 #: view:product.pricelist.item:0
@@ -502,12 +500,9 @@ msgid "The mode for computing the price for this rule."
 msgstr "Sellele reeglile hinna arvutamise viis"
 
 #. module: product
-#: model:ir.actions.act_window,name:product.product_uom_form_action
-#: model:ir.ui.menu,name:product.menu_product_uom_form_action
-#: model:ir.ui.menu,name:product.next_id_16
-#: view:product.uom:0
-msgid "Units of Measure"
-msgstr "Mõõtühikud"
+#: model:ir.model,name:product.model_product_ul
+msgid "Shipping Unit"
+msgstr "Saatmisüksus"
 
 #. module: product
 #: field:product.product,partner_ref:0
@@ -525,9 +520,9 @@ msgid "PC"
 msgstr "PC"
 
 #. module: product
-#: help:product.template,seller_delay:0
-msgid "This is the average delay in days between the purchase order confirmation and the reception of goods for this product and for the default supplier. It is used by the scheduler to order requests based on reordering delays."
-msgstr "See on keskmine viivitus päevades ostutellimuse kinnitamise ja kaupade vastuvõtmise vahel sellele tootele ja vaikimisi tarnijale. Seda kasutatakse planeerija poolt tellimuse jaoks põhinedes taastellimise viivitustel."
+#: field:pricelist.partnerinfo,min_quantity:0
+msgid "Quantity"
+msgstr "Kogus"
 
 #. module: product
 #: field:product.template,seller_delay:0
@@ -574,6 +569,12 @@ msgstr "Tarbekaup"
 #: help:product.price.type,currency_id:0
 msgid "The currency the field is expressed in."
 msgstr "Valuuta, milles välja väljendatakse."
+
+#. module: product
+#: code:addons/product/pricelist.py:0
+#, python-format
+msgid "Other Pricelist"
+msgstr "Muu hinnakiri"
 
 #. module: product
 #: help:product.template,weight:0
@@ -733,13 +734,6 @@ msgstr "IT komponentide komplektid"
 #: view:product.uom.categ:0
 msgid "Units of Measure categories"
 msgstr "Mõõtühikute kategooriad"
-
-#. module: product
-#: field:product.category,sequence:0
-#: field:product.packaging,sequence:0
-#: field:product.pricelist.item,sequence:0
-msgid "Sequence"
-msgstr "Jada"
 
 #. module: product
 #: view:product.supplierinfo:0
@@ -984,13 +978,9 @@ msgid "Information about a product supplier"
 msgstr "Info toote tarnija kohta"
 
 #. module: product
-#: field:product.price.type,active:0
-#: field:product.pricelist,active:0
-#: field:product.pricelist.version,active:0
-#: field:product.product,active:0
-#: field:product.uom,active:0
-msgid "Active"
-msgstr "Aktiivne"
+#: help:product.product,packaging:0
+msgid "Gives the different ways to package the same product. This has no impact on the packing order and is mainly used if you use the EDI module."
+msgstr "Pakub erinevaid viise sama toote pakendamiseks. Sellel puudub mõju pakendamiskorrldusele ja kasutatakse peamiselt, kui sa kasutad EDI moodulit."
 
 #. module: product
 #: field:product.product,price_margin:0
@@ -1032,6 +1022,11 @@ msgid "Second UoM"
 msgstr "Teine mõõtühik"
 
 #. module: product
+#: help:product.template,seller_delay:0
+msgid "This is the average delay in days between the purchase order confirmation and the reception of goods for this product and for the default supplier. It is used by the scheduler to order requests based on reordering delays."
+msgstr "See on keskmine viivitus päevades ostutellimuse kinnitamise ja kaupade vastuvõtmise vahel sellele tootele ja vaikimisi tarnijale. Seda kasutatakse planeerija poolt tellimuse jaoks põhinedes taastellimise viivitustel."
+
+#. module: product
 #: model:product.category,name:product.product_category_4
 msgid "Dello Computer"
 msgstr "Dello arvuti"
@@ -1063,9 +1058,13 @@ msgid "Gross weight"
 msgstr "Brutokaal"
 
 #. module: product
-#: help:product.product,packaging:0
-msgid "Gives the different ways to package the same product. This has no impact on the packing order and is mainly used if you use the EDI module."
-msgstr "Pakub erinevaid viise sama toote pakendamiseks. Sellel puudub mõju pakendamiskorrldusele ja kasutatakse peamiselt, kui sa kasutad EDI moodulit."
+#: field:product.price.type,active:0
+#: field:product.pricelist,active:0
+#: field:product.pricelist.version,active:0
+#: field:product.product,active:0
+#: field:product.uom,active:0
+msgid "Active"
+msgstr "Aktiivne"
 
 #. module: product
 #: model:ir.model,name:product.model_product_category
@@ -1104,7 +1103,7 @@ msgstr "Arvutikaubad"
 #: field:product.product,code:0
 #: field:product.product,default_code:0
 msgid "Code"
-msgstr "Kood"
+msgstr "Tootekood"
 
 #. module: product
 #: help:product.uom,factor_inv:0
@@ -1142,9 +1141,11 @@ msgid "Product Template"
 msgstr "Toote mall"
 
 #. module: product
-#: model:ir.model,name:product.model_product_ul
-msgid "Shipping Unit"
-msgstr "Saatmisüksus"
+#: field:product.category,sequence:0
+#: field:product.packaging,sequence:0
+#: field:product.pricelist.item,sequence:0
+msgid "Sequence"
+msgstr "Jada"
 
 #. module: product
 #: help:product.uom,rounding:0
@@ -1403,7 +1404,7 @@ msgstr "Hinna lisamaks"
 #. module: product
 #: constraint:product.pricelist.version:0
 msgid "You cannot have 2 pricelist versions that overlap!"
-msgstr "Sul ei saa olla 2 hinnakirja versiooni, mis kattuvad!"
+msgstr ""
 
 #. module: product
 #: view:product.pricelist.item:0
@@ -1497,15 +1498,30 @@ msgid "Palletization"
 msgstr "Kaubaalus"
 
 #. module: product
+#: code:addons/product/pricelist.py:0
+#, python-format
+msgid "Warning !"
+msgstr "Ettevaatust !"
+
+#. module: product
 #: view:product.product:0
 #: view:product.template:0
 msgid "Prices & Suppliers"
-msgstr "Hinnad ja tarnijad"
+msgstr "Hinnad ja Tarnijad"
 
 #. module: product
 #: help:product.packaging,weight:0
 msgid "The weight of a full of products palet or box."
 msgstr "Kaubaga täidetud kaubaaluse või kasti kaal."
+
+#. module: product
+#: help:product.pricelist.item,price_round:0
+msgid "Sets the price so that it is a multiple of this value.\n"
+"Rounding is applied after the discount and before the surcharge.\n"
+"To have prices that end in 9.99, set rounding 10, surcharge -0.01"
+msgstr "Määrab hinna nii, et see on selle väärtuse kordne.\n"
+"Ümardmine rakendatakse peale allahindlust ja enne lisatasu.\n"
+"Et saada hindu, mis lõppevad 9.99, määra ümarduseks 10, lisatasu -0,01"
 
 #. module: product
 #: selection:product.template,state:0
@@ -1580,6 +1596,14 @@ msgstr "Privaatne"
 #: help:product.supplierinfo,delay:0
 msgid "Delay in days between the confirmation of the purchase order and the reception of the products in your warehouse. Used by the scheduler for automatic computation of the purchase order planning."
 msgstr "Viivitus päevades ostutellimuse kinnitamise ja toodete lattu saabumise vahel. Kasutatakse planeerija poolt ostutellimuse planeerimise automaatseks arvutamiseks."
+
+#. module: product
+#: model:ir.actions.act_window,name:product.product_uom_form_action
+#: model:ir.ui.menu,name:product.menu_product_uom_form_action
+#: model:ir.ui.menu,name:product.next_id_16
+#: view:product.uom:0
+msgid "Units of Measure"
+msgstr "Mõõtühikud"
 
 #. module: product
 #: help:product.template,uom_po_id:0
