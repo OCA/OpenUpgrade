@@ -24,7 +24,7 @@ from osv import fields
 from osv import osv
 import netsvc
 
-class document_file(osv.osv):
+class ir_attachment(osv.osv):
     _inherit = 'ir.attachment'
     _columns = {
         'no_index_content' : fields.boolean('No Index Content'),
@@ -38,7 +38,7 @@ class document_file(osv.osv):
             return False
         if not self._check_duplication(cr,uid,vals,ids,'write'):
             raise except_orm(_('ValidateError'), _('File name must be unique!'))
-        result = super(document_file,self).write(cr,uid,ids,vals,context=context)
+        result = super(ir_attachment,self).write(cr,uid,ids,vals,context=context)
         cr.commit()
         if 'no_index_content' in vals and vals['no_index_content']:
             self.write(cr, uid, ids, {'index_content': False})
@@ -48,7 +48,7 @@ class document_file(osv.osv):
                     #if 'datas' not in vals:
                     #    vals['datas']=f.datas
                     res = content_index(base64.decodestring(vals['datas']), f.datas_fname, f.file_type or None)
-                    super(document_file,self).write(cr, uid, ids, {
+                    super(ir_attachment,self).write(cr, uid, ids, {
                         'index_content': res
                     })
                 cr.commit()
@@ -94,14 +94,14 @@ class document_file(osv.osv):
         vals['file_size']= len(datas)
         if not self._check_duplication(cr,uid,vals):
             raise except_orm(_('ValidateError'), _('File name must be unique!'))
-        result = super(document_file,self).create(cr, uid, vals, context)
+        result = super(ir_attachment,self).create(cr, uid, vals, context)
         cr.commit()
         if 'no_index_content' in vals and vals['no_index_content']:
             self.write(cr, uid, [result], {'index_content': False})
         else:
             try:
                 res = content_index(base64.decodestring(datas), vals['datas_fname'], vals.get('content_type', None))
-                super(document_file,self).write(cr, uid, [result], {
+                super(ir_attachment,self).write(cr, uid, [result], {
                     'index_content': res,
                 })
                 cr.commit()
@@ -109,4 +109,4 @@ class document_file(osv.osv):
                 pass
         return result
 
-document_file()
+ir_attachment()
