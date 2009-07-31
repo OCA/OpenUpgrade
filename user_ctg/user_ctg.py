@@ -59,7 +59,7 @@ class ctg_line(osv.osv):
     }
     _order = 'points desc'  
 
-    def get_LP_points(self, cr, uid, automatic=False, use_new_cursor=False, context=None):                
+    def get_LP_points(self, cr, uid, automatic=False, use_new_cursor=False, context=None):                     
         from lp_server import LP_Server        
         user_obj = self.pool.get('res.users')
         ctg_type_obj = self.pool.get('ctg.type')
@@ -89,23 +89,26 @@ class ctg_line(osv.osv):
             context = {}
         date = context.get('date',False) or datetime.date.today()
         report_ctg_line_obj = self.pool.get('report.ctg.line')
-        report_ctg_line_ids = report_ctg_line_obj.search(cr, uid, [('name','=',date.strftime('%Y:%m'))])
+        report_ctg_line_ids = report_ctg_line_obj.search(cr, uid, [('name','=',date.strftime('%Y:%m'))])        
         if len(report_ctg_line_ids):
             mail_body = {}
             for report_ctg_line in report_ctg_line_obj.browse(cr, uid, report_ctg_line_ids):
-                if report_ctg_line.rewarded_user_id.address_id and report_ctg_line.rewarded_user_id.address_id.email:
-                    values = []
-                    if mail_body.get(report_ctg_line.rewarded_user_id.id,False):
-                        values = mail_body.get(report_ctg_line.rewarded_user_id.id,False)
-                    mail_to = report_ctg_line.rewarded_user_id.address_id.email
-                    values.append([report_ctg_line.rewarded_user_id.name,mail_to,report_ctg_line.ctg_type_id.name,report_ctg_line.points])
+                user_address = report_ctg_line.rewarded_user_id.address_id
+                if user_address and user_address.email:
+                    values = mail_body.get(report_ctg_line.rewarded_user_id.id,[])                                        
+                    values.append([
+                            user_address.name,
+                            user_address.email,
+                            report_ctg_line.ctg_type_id.name,
+                            report_ctg_line.points
+                          ])
                     mail_body[report_ctg_line.rewarded_user_id.id] = values
-            user_history_obj = self.pool.get('user.history')
+            user_history_obj = self.pool.get('user.history')            
             for usr_id,values in mail_body.items():
                 usr = True
                 total = 0.0 
                 action = "ctg_line"
-                cr.execute("select max(date) as max_date from user_history where action = '%s'"%(action))
+                cr.execute("select max(date) as max_date from user_history where user_id = %s and action = '%s'"%(usr_id,action))
                 history_ctg_lines = cr.dictfetchone()
                 if history_ctg_lines['max_date']:
                     last_date = history_ctg_lines['max_date']
@@ -221,16 +224,20 @@ class ctg_feedback(osv.osv):
                 raise osv.except_osv(_('Error'), _("Please specify server option --smtp-from !"))
             if feedback_line.user_to.address_id and feedback_line.user_to.address_id.email:
                 mail_to = feedback_line.user_to.address_id.email
-                body = subject + "\n \n Please visit the following link to give the feedback" 
+                body = """
+                Hello %s,\n                
+                Please visit the following link to give the feedback of %s.
+                """ %(feedback_line.user_to.name, feedback_line['name'])
                 logger = netsvc.Logger()
                 if tools.email_send(user, [mail_to], subject, body, debug=False, subtype='html') == True:
                     logger.notifyChannel('email', netsvc.LOG_INFO, 'Email successfully send to : %s' % (mail_to))
                     date = feedback_line.date_feedback or datetime.date.today()
                     usr_id = feedback_line.user_to.id
                     feedback_id = feedback_line.id  
-                    self.pool.get('user.history').create(cr,uid,{'action':'feedback', 'description':subject, 'feedback_id':feedback_line.id,'date':date, 'user_id':usr_id})
+                    #self.pool.get('user.history').create(cr,uid,{'action':'feedback', 'description':subject, 'feedback_id':feedback_line.id,'date':date, 'user_id':usr_id})
                 else:
                     logger.notifyChannel('email', netsvc.LOG_ERROR, 'Failed to send email to : %s' % (mail_to))
+        return True            
 
     def action_done(self, cr, uid, ids, context={}):
         self.write(cr, uid, ids, {'state':'done'})
@@ -312,7 +319,7 @@ class document_file(osv.osv):
                 cr.execute('select name,title,user_id from ir_attachment where id = %s' %(res['id']))
                 document = cr.dictfetchone()
                 ctg_feedback_id = ctg_feedback_obj.create(cr, user, {
-                        'name' : 'Feedback of Document : %s' %(document['title']),                        
+                        'name' : '%s Document' %(document['title']),                        
                         'ctg_type_id': ctg_type_ids[0],
                         'user_to':user,
                         'responsible':document['user_id'],        
@@ -331,7 +338,7 @@ class account_invoice(osv.osv):
         ctg_line_obj = self.pool.get('ctg.line')
         ctg_type_obj = self.pool.get('ctg.type')
         ctg_type_ids = ctg_type_obj.search(cr,uid,[('code','=','sales')])
-        new_date = datetime.date.today() + datetime.timedelta(days=2)
+        new_date = datetime.date.today()
         for invoice in self.browse(cr,uid,ids):
             if len(ctg_type_ids):
                 if invoice.user_id:
@@ -369,18 +376,24 @@ class account_invoice_line(osv.osv):
         if vals.has_key('account_analytic_id') and vals['account_analytic_id']:            
             project_obj = self.pool.get('project.project')      
             feedback_obj = self.pool.get('ctg.feedback')
+            user_obj = self.pool.get('res.users')
             project_ids = project_obj.search(cr, uid, [('category_id','=',vals['account_analytic_id'])])
             projects = project_obj.browse(cr, uid, project_ids)
             ctg_type_ids = self.pool.get('ctg.type').search(cr,uid,[('code','=','customer satisfaction')])
             new_date = datetime.date.today() + datetime.timedelta(days=2)
             invoice_rec = self.pool.get('account.invoice').browse(cr,uid,vals['invoice_id'])
-            dedicated_user = invoice_rec.partner_id.user_id
+            dedicated_user = False
+            for address in invoice_rec.partner_id.address:
+                user_ids = user_obj.search(cr, uid, [('address_id','=',address.id)])
+                if len(user_ids):
+                    dedicated_user = user_ids[0]
+                    break
             if len(ctg_type_ids) and dedicated_user:
                 for project in projects:
                         feedback_obj.create(cr, uid, {
-                                    'name':'Feedback of %s Project' %(project.name),
+                                    'name':'%s Project' %(project.name),
                                     'ctg_type_id':ctg_type_ids[0],
-                                    'user_to':dedicated_user.id,
+                                    'user_to':dedicated_user,
                                     'responsible':project.manager.id,
                                     'date_feedback':new_date,
                         })
