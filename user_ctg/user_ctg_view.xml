@@ -64,8 +64,8 @@
 			<field name="name">CTG Line</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">ctg.line</field>
-			<field name="view_type">form</field>
-			<field name="view_id" ref="view_ctg_line_form"/>
+			<field name="view_type">tree</field>
+			<field name="view_id" ref="view_ctg_line_tree"/>
 		</record>
 
 		<menuitem name="CTG Line" id="menu_ctg_line" action= "action_view_ctg_line" parent="menu_user_ctg" sequence="1"/>

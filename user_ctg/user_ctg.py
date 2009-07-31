@@ -108,9 +108,9 @@ class ctg_line(osv.osv):
                 cr.execute("select max(date) as max_date from user_history where action = '%s'"%(action))
                 history_ctg_lines = cr.dictfetchone()
                 if history_ctg_lines['max_date']:
-                    last_date = history_ctg_lines
+                    last_date = history_ctg_lines['max_date']
                     cr.execute("""select sum(points) as old_points from ctg_line
-                                  where date_ctg <= '%s' and rewarded_user_id =%s """%(last_date['max_date'],str(usr_id)))
+                                  where date_ctg <= '%s' and rewarded_user_id =%s """%(last_date,str(usr_id)))
                     old_total = cr.fetchone()[0]
                 else:
                     old_total = 0.0
@@ -118,7 +118,7 @@ class ctg_line(osv.osv):
                 for user, mail_to, ctg_type, points in values:
                     if usr:
                         body ="<html><body>Hello <b>" + user + "</b>!<br>" 
-                        body = body +"<p style=\"margin-left:35px\"> Thanks to Contribute on OpenERP/OpenObject during <b>"+ last_date['max_date'] + "</b> and <b>" + date.strftime('%Y-%m-%d')+"</b><br>"\
+                        body = body +"<p style=\"margin-left:35px\"> Thanks to Contribute on OpenERP/OpenObject during <b>"+ last_date + "</b> and <b>" + date.strftime('%Y-%m-%d')+"</b><br>"\
                                        + "Your CTG points are decribe in following table."\
                                        + "Your CTG Ponits table:</p>"\
                                        + "<p style=\"margin-left:70px\"><table><tr><th align=left>CTG Type</th><th align=center>|</th><th align=right>Points</th></tr>"\
