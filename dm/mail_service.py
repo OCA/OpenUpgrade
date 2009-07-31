@@ -107,6 +107,7 @@ class dm_sysmsg(osv.osv):
        'field' : fields.many2one('ir.model.fields', 'Field', required=True),
        'send_email': fields.boolean('Send Email'),
        'email_user' : fields.many2one('res.users', 'Email User'),
+       'result'  : fields.boolean('Action Result'),
     }
     _defaults = {
        'state' : lambda *a : 'error',

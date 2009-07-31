@@ -117,8 +117,10 @@ class dm_workitem(osv.osv): # {{{
         if sysmsg_id:
             sysmsg = self.pool.get('dm.sysmsg').browse(cr, uid, sysmsg_id)[0]
             self.write(cr, uid, [ids], {'state': sysmsg.state,'error_msg':sysmsg.message})
+            return sysmsg.result
         else:
             self.write(cr, uid, [ids], {'state': 'error','error_msg':"An unknown error has occured : %s" % code})
+            return False
 
 
     def _sale_order_process(self, cr, uid, sale_order_id):
@@ -230,13 +232,15 @@ class dm_workitem(osv.osv): # {{{
                         next_action_time = next_action_time.replace(hour=act_hour.hour)
                         next_action_time = next_action_time.replace(minute=act_hour.minute)
 
-                    """
                     if tr.action_day:
-                        nxt_act_time = next_action_time.timetuple()
-                        print "Next time timetuple :",nxt_act_time
-                        act_day = int(tr.action_day)
-                        print "Action Day :",act_day
-                    """
+                        """ If a static action day of the month is set, use it """
+                        next_action_time = next_action_time.replace(day=int(tr.action_day))
+                        if next_action_time.day > int(tr.action_day):
+                            next_action_time = next_action_time.replace(month=next_action_time.month + 1)
+
+                    if tr.action_date:
+                        """ If a static date is set, use it """
+                        next_action_time = tr.action_date
 
                     try:
                         aw_id = self.copy(cr, uid, wi.id, {'step_id':tr.step_to_id.id, 'tr_from_id':tr.id,
@@ -576,7 +580,9 @@ class dm_event(osv.osv_memory): # {{{
                     next_action_time = next_action_time.replace(minute=act_hour.minute)
 
                 if tr.action_day:
-                    next_action_time = next_action_time.replace(day=tr.action_day)
+                    next_action_time = next_action_time.replace(day=int(tr.action_day))
+                    if next_action_time.day > int(tr.action_day):
+                        next_action_time = next_action_time.replace(month=next_action_time.month + 1)
 
                 if tr.action_date:
                     next_action_time = tr.action_date
