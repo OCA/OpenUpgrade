@@ -146,8 +146,8 @@ class dm_workitem(osv.osv): # {{{
 
                         for invoice in so.invoice_ids:
                             journal = invoice.journal_id
-                            amount_tax = invoice.amount_tax
-                            amount = invoice.amount_tax
+#                            amount_tax = invoice.residual
+                            amount = invoice.residual
                             if journal.currency and invoice.company_id.currency_id.id<>journal.currency.id:
                                 ctx = {'date':time.strftime('%Y-%m-%d')}
                                 amount = cur_obj.compute(cr, uid, journal.currency.id, invoice.company_id.currency_id.id, amount, context=ctx)
