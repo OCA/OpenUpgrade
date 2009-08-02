@@ -114,11 +114,11 @@ class ctg_line(osv.osv):
                     old_total = cr.fetchone()[0]
                 else:
                     old_total = 0.0
-                    last_date = date
+                    last_date = date.strftime('%Y-%m-%d')
                 for user, mail_to, ctg_type, points in values:
                     if usr:
                         body ="<html><body>Hello <b>" + user + "</b>!<br>" 
-                        body = body +"<p style=\"margin-left:35px\"> Thanks to Contribute on OpenERP/OpenObject during <b>"+ last_date + "</b> and <b>" + date.strftime('%Y-%m-%d')+"</b><br>"\
+                        body = body +"<p style=\"margin-left:35px\"> Thanks to Contribute on OpenERP/OpenObject during <b>"+ last_date + "</b> and <b>" + date.strftime('%Y-%m-%d') +"</b><br>"\
                                        + "Your CTG points are decribe in following table."\
                                        + "Your CTG Ponits table:</p>"\
                                        + "<p style=\"margin-left:70px\"><table><tr><th align=left>CTG Type</th><th align=center>|</th><th align=right>Points</th></tr>"\
@@ -334,11 +334,12 @@ class account_invoice(osv.osv):
         new_date = datetime.date.today() + datetime.timedelta(days=2)
         for invoice in self.browse(cr,uid,ids):
             if len(ctg_type_ids):
-                ctg_line_obj.create(cr, uid,{
-                        'ctg_type_id':ctg_type_ids[0],
-                        'rewarded_user_id':uid,
-                        'date_ctg': new_date,
-                        'points':invoice.amount_untaxed})
+                if invoice.user_id:
+                    ctg_line_obj.create(cr, uid,{
+                            'ctg_type_id':ctg_type_ids[0],
+                            'rewarded_user_id':invoice.user_id.id,
+                            'date_ctg': new_date,
+                            'points':invoice.amount_untaxed})
         return result
     
     def action_cancel(self, cr, uid, ids, *args):
@@ -349,11 +350,12 @@ class account_invoice(osv.osv):
         for invoice in invoices:
             if invoice.state == 'open':
                 if len(ctg_type_ids):
-                    ctg_line_obj.create(cr, uid, {
-                                'ctg_type_id': ctg_type_ids[0],
-                                'rewarded_user_id' : uid,
-                                'points':-invoice.amount_untaxed
-                                })      
+                    if invoice.user_id:
+                        ctg_line_obj.create(cr, uid, {
+                                    'ctg_type_id': ctg_type_ids[0],
+                                    'rewarded_user_id' : invoice.user_id.id,
+                                    'points':-invoice.amount_untaxed
+                                    })      
         result = super(account_invoice,self).action_cancel(cr, uid, ids, args)             
         return result 
     
