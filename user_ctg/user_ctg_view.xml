@@ -54,9 +54,10 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="CTG Line">
-					<field name="ctg_type_id" select="1"/>
-					<field name="points"/>
-					<field name="date_ctg" select="1"/>
+					<field name="rewarded_user_id" select="1" readonly="1"/>
+					<field name="ctg_type_id" select="1" readonly="1"/>
+					<field name="points" readonly="1"/>
+					<field name="date_ctg" select="1" readonly="1"/>
 				</form>
 			</field>
 		</record>
