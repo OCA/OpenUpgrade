@@ -1,0 +1,226 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="57.0" y1="57.0" width="481" height="728"/>
+  		<pageGraphics>
+			<setFont name="Times-Roman" size="9"/>
+			<drawRightString x="19.0cm" y="27.0cm">Page <pageNumber /> </drawRightString>
+			<!--page bottom-->
+
+			<setFont name="Times-Bold" size="8"/>
+			<lines>2.0cm 2.0cm 19.0cm 2.0cm</lines>
+			<drawRightString x="19.0cm" y="1.7cm">Copyright Progenus</drawRightString>
+
+		</pageGraphics>
+
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <blockLeftPadding length="0.0" />
+    </blockTableStyle>
+    <blockTableStyle id="Table3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <blockLeftPadding length="0.0" />
+    </blockTableStyle>
+    <blockTableStyle id="Table2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <blockLeftPadding length="0.0" />
+    </blockTableStyle>
+    <blockTableStyle id="Table4">
+      <blockAlignment value="LEFT"/>
+      <blockLeftPadding length="0.0" />
+      <blockValign value="TOP"/>
+		<lineStyle kind="LINEBELOW" colorName="grey" start="0,0" stop="-1,-1"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Times-Roman" alignment="LEFT" leading="11"/>
+    <paraStyle name="P11" fontName="Times-Roman" alignment="CENTER" leading="11"/>
+    <paraStyle name="P2" fontName="Times-Roman" fontSize="15.0" leading="19" alignment="CENTER"/>
+    <paraStyle name="P3" fontName="Times-Roman" alignment="CENTER"/>
+    <paraStyle name="P4" fontName="Times-Roman" fontSize="18.0" leading="22" alignment="CENTER"/>
+    <paraStyle name="P5" fontName="Times-Roman" fontSize="9.0" leading="11"/>
+    <paraStyle name="P6" fontName="Times-Roman" fontSize="10.0" leading="13" alignment="RIGHT"/>
+    <paraStyle name="P7" fontName="Times-Roman" alignment="LEFT" leading="11" spaceBefore="1.0" spaceAfter="1.0"/>
+    <paraStyle name="P8" fontName="Times-Bold" />
+    <paraStyle name="P9" fontName="Times-Roman" alignment="LEFT"/>
+    <paraStyle name="P10" fontName="Times-Roman" alignment="CENTER"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Times-Italic" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman"/>
+    <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER"/>
+  </stylesheet>
+  <story>
+  		[[ repeatIn(objects,'o') ]]
+  		<illustration height="3.0cm">
+
+			<rect x="4.7 cm" y="25.0" width="7.2 cm" height="1.25 cm" fill="no" stroke="yes" round="0.15 cm"/>
+			<setFont name="Times-Bold" size="15.5"/>
+			<drawCentredString x="8.2cm" y="1.29cm"> [[ get_title(o) ]]</drawCentredString>
+  		</illustration>
+
+    <blockTable colWidths="292.0,29.0,161.0" style="Table1">
+      <tr>
+        <td>
+          <blockTable colWidths="83.0,203.0" style="Table3">
+            <tr>
+              <td>
+                <para style="P7">Reference:</para>
+              </td>
+              <td>
+                <para style="P8">[[o.type_id.code]]/[[ o.name]]</para>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <para style="P7">Description:</para>
+              </td>
+              <td>
+                <para style="P8">
+                  [[ get_description(o) ]]
+                </para>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <para style="P7">Client:</para>
+              </td>
+              <td>
+                <para style="P8">[[o.ref_client and o.ref_client.name ]]</para>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <para style="P7">Info:</para>
+              </td>
+              <td>
+                <para style="P8">[[o.desc_1 ]]</para>
+              </td>
+            </tr>
+          </blockTable>
+
+        </td>
+        <td>
+          <para style="P7">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td align="right">
+          <blockTable colWidths="40.0,115.0" style="Table2">
+            <tr>
+              <td>
+                <para style="P7">Date:</para>
+              </td>
+              <td>
+                <para style="P8">[[ o.date_reception[8:10] ]]/[[ o.date_reception [5:7] ]]/[[ o.date_reception[0:4] ]]</para>
+              </td>
+            </tr>
+          </blockTable>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P3">
+      <font color="white"> </font>
+    </para>
+
+    <para style="P3">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="50.0,88.0,60.0,63.0,38.0,38.0,101.0,25.0,20.0" style="Table4">
+      <tr>
+        <td>
+          <para style="P7">
+            <font face="Times-Roman">Progenus</font>
+          </para>
+        </td>
+        <td>
+          <para style="P7">
+            <font face="Times-Roman">Sanitel</font>
+          </para>
+        </td>
+        <td>
+          <para style="P7">
+            <font face="Times-Roman">Code</font>
+          </para>
+        </td>
+        <td>
+          <para style="P7">
+            <font face="Times-Roman">Microsatellite</font>
+          </para>
+        </td>
+        <td>
+          <para style="P7">
+            <font face="Times-Roman">Allèle1</font>
+          </para>
+        </td>
+        <td>
+          <para style="P7">
+            <font face="Times-Roman">Allèle2</font>
+          </para>
+        </td>
+        <td>
+          <para style="P7">
+            <font face="Times-Roman">Matériel</font>
+          </para>
+        </td>
+        <td>
+          <para style="P7">
+            <font face="Times-Roman">Sexe</font>
+          </para>
+        </td>
+        <td>
+          <para style="P7">
+            <font face="Times-Roman">Etat</font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>[[ repeatIn(o.sample_ids,'sample_ids') ]]
+          <para style="P1">[[ sample_ids.progenus_number ]]</para>
+        </td>
+        <td>
+          <para style="P1">[[ sample_ids.sanitel ]]</para>
+        </td>
+        <td>
+          <para style="P1">[[ sample_ids.code ]]</para>
+        </td>
+        <td>
+          <para style="P1">[[ sample_ids.microsattelitte ]]</para>
+        </td>
+        <td>
+          <para style="P11">[[ sample_ids.allele1 ]]</para>
+        </td>
+        <td>
+          <para style="P11">[[ sample_ids.allele2 ]]</para>
+        </td>
+        <td>
+          <para style="P1">[[ sample_ids.material ]]</para>
+        </td>
+        <td>
+          <para style="P1">[[ sample_ids.sex ]]</para>
+        </td>
+        <td>
+          <para style="P11">[[ (sample_ids.state=='no_substance' and 2) or (sample_ids.state=='ko' and 0) or (sample_ids.state=='ok' and 1) or (sample_ids.state=='faulty_substance' and 3) or  (sample_ids.state=='incoming_res' and 4) or (sample_ids.state=='exist' and 5) or  (sample_ids.state=='unrealized' and 6)  ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="Standard">
+      <font color="white"> </font>
+    </para>
+  </story>
+</document>

@@ -19,6 +19,10 @@
       <blockValign value="TOP"/>
       <lineStyle kind="GRID" colorName="black"/>
     </blockTableStyle>
+    <blockTableStyle id="Table3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
     <blockTableStyle id="Table5">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
@@ -27,12 +31,14 @@
       <paraStyle name="all" alignment="justify"/>
     </initialize>
     <paraStyle name="P1" fontName="Times-Roman"/>
-    <paraStyle name="P2" fontName="Times-Bold" fontSize="7.0" leading="9" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P3" fontName="Times-Roman" fontSize="7.0" leading="9" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P4" fontName="Times-Roman" fontSize="7.0" leading="9" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P5" fontName="Times-Roman" fontSize="8.0" leading="10" spaceBefore="0.0" spaceAfter="1.0"/>
-    <paraStyle name="P6" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="1.0"/>
+    <paraStyle name="P2" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P3" fontName="Times-Roman" fontSize="4.0" leading="5" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P4" fontName="Times-Roman" fontSize="4.0" leading="5" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P5" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P6" fontName="Times-Roman" fontSize="8.0" leading="10" spaceBefore="0.0" spaceAfter="1.0"/>
     <paraStyle name="P7" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="1.0"/>
+    <paraStyle name="P8" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="LEFT" spaceBefore="0.0" spaceAfter="1.0"/>
+    <paraStyle name="P9" fontName="Times-Bold" fontSize="7.0" leading="9" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -46,94 +52,107 @@
     <blockTable colWidths="281.0,244.0" style="Table2">
       <tr>
         <td>
-          <para style="P5">Name : [[o.name]]</para>
-          <para style="P5">Code : [[o.code]]</para>
-          <para style="P5">Recommended Trademark : [[o.recommended_trademark_id and o.recommended_trademark_id.name]]</para>
-          <para style="P5">Original Offer : [[o.offer_origin_id and o.offer_origin_id.name]]</para>
-          <para style="P6">Preoffer : [[o.preoffer_original_id and o.preoffer_original_id.name]]</para>
-          <para style="P6">
+          <para style="P6">Name : [[o.name]]</para>
+          <para style="P6">Code : [[o.code]]</para>
+          <para style="P6">Recommended Trademark : [[o.recommended_trademark_id and o.recommended_trademark_id.name]]</para>
+          <para style="P6">Original Offer : [[o.offer_origin_id and o.offer_origin_id.name]]</para>
+          <para style="P7">Preoffer : [[o.preoffer_original_id and o.preoffer_original_id.name]]</para>
+          <para style="P7">
             <font color="white"> </font>
           </para>
-          <para style="P5">Order Date : [[o.order_date]]</para>
-          <para style="P5">Fixed Date : [[o.fixed_date]]</para>
-          <para style="P5">Planned Delivery Date : [[o.planned_delivery_date]]</para>
-          <para style="P5">Delivery Date : [[o.delivery_date]]</para>
-          <para style="P5">Fixed Date : [[o.fixed_date]]</para>
+          <para style="P6">Order Date : [[o.order_date]]</para>
+          <para style="P6">Fixed Date : [[o.fixed_date]]</para>
+          <para style="P6">Planned Delivery Date : [[o.planned_delivery_date]]</para>
+          <para style="P6">Delivery Date : [[o.delivery_date]]</para>
+          <para style="P6">Fixed Date : [[o.fixed_date]]</para>
         </td>
         <td>
-          <para style="P6">Original Language: [[o.lang_orig_id and o.lang_orig_id.name]]</para>
-          <para style="P6">Copywriter : [[o.copywriter_id and o.copywriter_id.name]]</para>
-          <para style="P6">Legal State : [[o.legal_state]]</para>
-          <para style="P6">Responsible : [[o.offer_responsible_id and o.offer_responsible_id.name]]</para>
-          <para style="P6">Categories : [[ ','.join(map(lambda x:x['name'],o.category_ids)) ]]</para>
-          <para style="P6">Quotation : [[o.quotation ]]</para>
-          <para style="P6">Attached Documents : [[offer_docs(o.id)]]</para>
+          <para style="P7">Original Language: [[o.lang_orig_id and o.lang_orig_id.name]]</para>
+          <para style="P7">Copywriter : [[o.copywriter_id and o.copywriter_id.name]]</para>
+          <para style="P7">Legal State : [[o.legal_state]]</para>
+          <para style="P7">Responsible : [[o.offer_responsible_id and o.offer_responsible_id.name]]</para>
+          <para style="P7">Categories : [[ ','.join(map(lambda x:x['name'],o.category_ids)) ]]</para>
+          <para style="P7">Quotation : [[o.quotation ]]</para>
+          <para style="P7">Attached Documents : [[offer_docs(o.id)]]</para>
         </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="47.0,29.0,45.0,52.0,59.0,74.0,74.0,79.0,66.0" style="Table4">
+    <blockTable colWidths="32.0,44.0,45.0,52.0,59.0,74.0,74.0,79.0,66.0" style="Table4">
       <tr>
         <td>
-          <para style="P2">Code</para>
+          <para style="P9">Code</para>
         </td>
         <td>
-          <para style="P2">Type</para>
+          <para style="P9">Type</para>
         </td>
         <td>
-          <para style="P2">Quotation</para>
+          <para style="P9">Quotation</para>
         </td>
         <td>
-          <para style="P2">Legal State</para>
+          <para style="P9">Legal State</para>
         </td>
         <td>
-          <para style="P2">Media</para>
+          <para style="P9">Media</para>
         </td>
         <td>
-          <para style="P2">Products</para>
+          <para style="P9">Products</para>
         </td>
         <td>
-          <para style="P2">Incoming Transition offer steps</para>
+          <para style="P9">Incoming Transition offer steps</para>
         </td>
         <td>
-          <para style="P2">Outgoing Transition offer steps</para>
+          <para style="P9">Outgoing Transition offer steps</para>
         </td>
         <td>
-          <para style="P2">Documents</para>
+          <para style="P9">Documents</para>
         </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="47.0,29.0,45.0,52.0,59.0,74.0,74.0,79.0,66.0" style="Table5">
+    <blockTable colWidths="524.0" style="Table3">
       <tr>
         <td>
-          <para style="P3"><font face="Times-Roman" size="4.0">[[repeatIn(o.step_ids,'step')]]</font>[[step.code]]</para>
-        </td>
-        <td>
-          <para style="P3">[[step.type]]</para>
-        </td>
-        <td>
-          <para style="P4">[[ step.quotation ]]</para>
-        </td>
-        <td>
-          <para style="P4">[[ step.legal_state ]]</para>
-        </td>
-        <td>
-          <para style="P6">[[ ','.join(map(lambda x:x['name'],step.media_ids)) ]]</para>
-        </td>
-        <td>
-          <para style="P4">[[ ','.join(map(lambda x : x['product_id'].name ,step.product_ids ) ) ]]</para>
-        </td>
-        <td>
-          <para style="P4">[[ ','.join(map(lambda x : x['step_from_id'].code ,step.incoming_transition_ids) ) ]]</para>
-        </td>
-        <td>
-          <para style="P4">[[ ','.join(map(lambda x : x['step_to_id'].code ,step.outgoing_transition_ids) ) ]]</para>
-        </td>
-        <td>
-          <para style="P4">[[offer_step_docs(step.id)]]</para>
+          <para style="P3">[[repeatIn(o.step_ids,'step')]]</para>
+          <blockTable colWidths="31.0,45.0,45.0,51.0,59.0,74.0,74.0,79.0,66.0" style="Table5">
+            <tr>
+              <td>
+                <para style="P2">[[step.code]]</para>
+              </td>
+              <td>
+                <para style="P2">[[step.type_id.name]]</para>
+              </td>
+              <td>
+                <para style="P5">[[ step.quotation ]]</para>
+              </td>
+              <td>
+                <para style="P5">[[ step.legal_state ]]</para>
+              </td>
+              <td>
+                <para style="P8">[[step.media_id.name]]</para>
+              </td>
+              <td>
+                <para style="P5">[[ ','.join(map(lambda x : x['name'] ,step.item_ids ) ) ]]</para>
+              </td>
+              <td>
+                <para style="P5">[[ ','.join(map(lambda x : x['step_from_id'].code ,step.incoming_transition_ids) ) ]]</para>
+              </td>
+              <td>
+                <para style="P5">[[ ','.join(map(lambda x : x['step_to_id'].code ,step.outgoing_transition_ids) ) ]]</para>
+              </td>
+              <td>
+                <para style="P5">[[offer_step_docs(step.id)]]</para>
+              </td>
+            </tr>
+          </blockTable>
+          <para style="P4">
+            <font color="white"> </font>
+          </para>
         </td>
       </tr>
     </blockTable>
-    <para style="P1">
+    <para style="P4">
+      <font color="white"> </font>
+    </para>
+    <para style="Standard">
       <font color="white"> </font>
     </para>
   </story>

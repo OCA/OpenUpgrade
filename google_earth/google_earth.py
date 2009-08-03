@@ -43,7 +43,7 @@ class res_partner(osv.osv):
         mapsUrl = 'http://maps.google.com/maps/geo?q='
 
         # This joins the parts of the URL together into one string.
-        url = ''.join([mapsUrl,urllib.quote(address),'&output=csv&key=',mapsKey])
+        url = ''.join([mapsUrl,urllib.quote(address.encode('utf-8')),'&output=csv&key=',mapsKey])
 
         # This retrieves the URL from Google.
         coordinates = urllib.urlopen(url).read().split(',')
@@ -52,7 +52,7 @@ class res_partner(osv.osv):
         coorText = '%s,%s' % (coordinates[3],coordinates[2])
         return coorText
 
-    def GetMap(self, cr, uid, ids, context={}):
+    def getMap(self, cr, uid, mode=0, context={}):
         res = {}
         res_inv = {}
         res_cus = {}
@@ -162,13 +162,13 @@ class res_partner(osv.osv):
     #                address += str(add.street2)
                 if add.city:
                     address += ''
-                    address += str(tools.ustr(add.city.encode('ascii','replace')))
+                    address += tools.ustr(add.city)
                 if add.state_id:
                     address += ', '
-                    address += str(tools.ustr(add.state_id.name.encode('ascii','replace')))
+                    address += tools.ustr(add.state_id.name)
                 if add.country_id:
                     address += ', '
-                    address += str(tools.ustr(add.country_id.name.encode('ascii','replace')))
+                    address += tools.ustr(add.country_id.name)
             type = ''
             if part.customer:
                 type += 'Customer '
@@ -265,8 +265,8 @@ class res_partner(osv.osv):
             folderElement.appendChild(placemarkElement)
             documentElement.appendChild(folderElement)
 
-        out = base64.encodestring(kmlDoc.toxml().encode('ascii','replace'))
-        return kmlDoc.toxml().encode('ascii','replace')#  {'kml_file': out, 'name': fname}
+        out = kmlDoc.toxml(encoding='utf8')
+        return out
 res_partner()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -55,9 +55,8 @@ class purchase_order(osv.osv):
                 self.pool.get('res.partner.event').create(cr, uid, {'name':'Purchase Order: '+po.name, 'partner_id':po.partner_id.id, 'date':time.strftime('%Y-%m-%d %H:%M:%S'), 'user_id':uid, 'partner_type':'retailer', 'probability': 1.0, 'planned_cost':po.amount_untaxed})
         current_name = self.name_get(cr, uid, ids)[0][1]
         for id in ids:
-            self.write(cr, uid, [id], {'state' : 'confirmed', 'validator' : uid}) #'approvator' : uid
+            self.write(cr, uid, [id], {'state': 'confirmed','validator': uid, 'approvator': uid}) #'approvator' : uid
         return True
-
 
     _columns = {
         'internal_notes': fields.text('Internal Note'),
@@ -65,5 +64,5 @@ class purchase_order(osv.osv):
         'state': fields.selection([('draft', 'Request for Quotation'), ('wait', 'Waiting'), ('confirmed', 'Confirmed'),('wait_approve','Waiting For Approve'), ('approved', 'Approved'),('except_picking', 'Shipping Exception'), ('except_invoice', 'Invoice Exception'), ('done', 'Done'), ('cancel', 'Cancelled')], 'Order State', readonly=True, help="The state of the purchase order or the quotation request. A quotation is a purchase order in a 'Draft' state. Then the order has to be confirmed by the user, the state switch to 'Confirmed'. Then the supplier must confirm the order to change the state to 'Approved'. When the purchase order is paid and received, the state becomes 'Done'. If a cancel action occurs in the invoice or in the reception of goods, the state becomes in exception.", select=True),
                 }
 purchase_order()
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

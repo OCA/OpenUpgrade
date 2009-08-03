@@ -34,14 +34,19 @@ res_users()
 
 class event_event(osv.osv):
     _inherit = "event.event"
-    _description = "Event"
+    _description = "Google Event"
 
     _columns = {
         'google_event_id': fields.char('Google Event Id', size=128, readonly=True),
         'event_modify_date': fields.datetime('Google Modify Date', readonly=True, help='google event modify date'),
         'write_date': fields.datetime('Date Modified', readonly=True, help='tiny event modify date'),
         'create_date': fields.datetime('Date created', readonly=True, help='tiny event create date'),
+        'repeat_status': fields.selection([('norepeat', 'Does not Repeat'), ('daily', 'Daily'), ('everyweekday', 'Every weekday(Mon-Fri)'), ('every_m_w_f', 'Every Mon-Wed-Fri'), ('every_t_t', 'Every Tue-Thu'), ('weekly', 'Weekly'), ('monthly', 'Monthly'), ('yearly', 'Yearly')], 'Repeats', size=32, required=False),
                 }
+
+    _defaults = {
+        'repeat_status': lambda *a: 'norepeat',
+    }
 event_event()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
