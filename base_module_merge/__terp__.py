@@ -20,6 +20,12 @@
 #
 ##############################################################################
 {
+    "name" : "Module Merger",
+    "version" : "1.0",
+    "author" : "Tiny",
+    "website" : "http://www.openerp.com",
+    "category" : "Generic Modules/Base",
+    "description": """
     * The wizard asks a many2many of modules
     * And then generate a module which is the merge of all selected modules
     * The new module is provided as a .zip file
