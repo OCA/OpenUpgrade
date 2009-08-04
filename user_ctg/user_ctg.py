@@ -89,7 +89,7 @@ class ctg_line(osv.osv):
             context = {}
         date = context.get('date',False) or datetime.date.today()
         report_ctg_line_obj = self.pool.get('report.ctg.line')
-        report_ctg_line_ids = report_ctg_line_obj.search(cr, uid, [('name','=',date.strftime('%Y:%m'))])        
+        report_ctg_line_ids = report_ctg_line_obj.search(cr, uid, [('name','=',date.strftime('%Y:%m'))])   
         if len(report_ctg_line_ids):
             mail_body = {}
             for report_ctg_line in report_ctg_line_obj.browse(cr, uid, report_ctg_line_ids):
@@ -119,6 +119,8 @@ class ctg_line(osv.osv):
                     old_total = 0.0
                     last_date = date.strftime('%Y-%m-%d')
                 for user, mail_to, ctg_type, points in values:
+                    if not user:
+                        user = ''
                     if usr:
                         body ="<html><body>Hello <b>" + user + "</b>!<br>" 
                         body = body +"<p style=\"margin-left:35px\"> Thanks to Contribute on OpenERP/OpenObject during <b>"+ last_date + "</b> and <b>" + date.strftime('%Y-%m-%d') +"</b><br>"\
@@ -131,23 +133,37 @@ class ctg_line(osv.osv):
                     total = total + points       
                 cr.execute("select sum(points) as total1 from ctg_line where rewarded_user_id=%s " %str(usr_id))
                 total1 = cr.fetchone()[0]
-                if total1 != old_total or not history_ctg_lines:
+                if total1 == old_total:
+                    body = ''
+                    body ="<html><body>Hello <b>" + user + "</b>!<br>"\
+                           +"<p style=\"margin-left:35px\"> Thanks to Contribute on OpenERP/OpenObject during <b>"+ last_date + "</b> and <b>" + date.strftime('%Y-%m-%d') +"</b><br>"\
+                           + "Your CTG points are decribe in following table."\
+                           + "Your CTG Ponits table:</p>"\
+                           + "<p style=\"margin-left:70px\"><table><tr><th align=left>CTG Type</th><th align=center>|</th><th align=right>Points</th></tr>"\
+                           + "<tr><td colspan=3><hr></td></tr>"\
+                           + "<tr><td align=left>" + ctg_type + "</td><td align=center>|</td><td align=right>" + str(0.00) + "</td></tr>"\
+                           + "<tr><td></td><td align=center>|</td><td></td></tr>"\
+                           + "<tr><td colspan=3><hr></td></tr>"\
+                           + "<tr><td align=left>Total</td><td align=center>|</td><td align=right>" + str(0.00) + "</td></tr></table></p>"\
+                           + "<p style=\"margin-left:35px\">And Total CTG points upto <b>" + date.strftime('%Y-%m-%d') +"</b> : <b>" + str(0.00) + "</b></p>"\
+                           + "Thanks<br>OpenERP Quality Team</body></html>"
+                else:
                     body = body + "<tr><td></td><td align=center>|</td><td></td></tr>"\
                             + "<tr><td colspan=3><hr></td></tr>"\
                             + "<tr><td align=left>Total</td><td align=center>|</td><td align=right>" + str(total) + "</td></tr></table></p>"\
                             + "<p style=\"margin-left:35px\">And Total CTG points upto <b>" + date.strftime('%Y-%m-%d') +"</b> : <b>" + str(total1) + "</b></p>"\
                             + "Thanks<br>OpenERP Quality Team</body></html>"
-                    user = tools.config['email_from']
-                    if not user:
-                        raise osv.except_osv(_('Error'), _("Please specify server option --smtp-from !"))
-                    
-                    subject = 'Your CTG points of %s month in OpenERP' %(date.strftime('%Y:%m'))
-                    logger = netsvc.Logger()
-                    if tools.email_send(user, [mail_to], subject, body, debug=False, subtype='html') == True:
-                        logger.notifyChannel('email', netsvc.LOG_INFO, 'Email successfully send to : %s' % (mail_to))
-                        user_history_obj.create(cr,uid,{'action':action,'description':subject,'date':date,'user_id':usr_id})
-                    else:
-                        logger.notifyChannel('email', netsvc.LOG_ERROR, 'Failed to send email to : %s' % (mail_to))
+                user = tools.config['email_from']
+                if not user:
+                    raise osv.except_osv(_('Error'), _("Please specify server option --smtp-from !"))
+                
+                subject = 'Your CTG points of %s month in OpenERP' %(date.strftime('%Y:%m'))
+                logger = netsvc.Logger()
+                if tools.email_send(user, [mail_to], subject, body, debug=False, subtype='html') == True:
+                    logger.notifyChannel('email', netsvc.LOG_INFO, 'Email successfully send to : %s' % (mail_to))
+                    user_history_obj.create(cr,uid,{'action':action,'description':subject,'date':date,'user_id':usr_id})
+                else:
+                    logger.notifyChannel('email', netsvc.LOG_ERROR, 'Failed to send email to : %s' % (mail_to))
         return
     
     
