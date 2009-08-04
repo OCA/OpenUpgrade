@@ -309,8 +309,7 @@ class document_file(osv.osv):
     
     def read(self, cr, user, ids, fields_to_read=None, context=None, load='_classic_read'):
         result = super(document_file,self).read(cr, user, ids, fields_to_read, context=context, load=load)
-        current_date = datetime.date.today()
-        feedback_date = current_date
+        feedback_date = datetime.date.today() + datetime.timedelta(days=2)
         ctg_type_obj = self.pool.get('ctg.type')
         ctg_type_ids = ctg_type_obj.search(cr,user,[('code','=','dms')])
         if len(ctg_type_ids) and context.get('download',False):
@@ -380,7 +379,7 @@ class account_invoice_line(osv.osv):
             project_ids = project_obj.search(cr, uid, [('category_id','=',vals['account_analytic_id'])])
             projects = project_obj.browse(cr, uid, project_ids)
             ctg_type_ids = self.pool.get('ctg.type').search(cr,uid,[('code','=','customer satisfaction')])
-            new_date = datetime.date.today() + datetime.timedelta(days=2)
+            feedback_date = datetime.date.today() + datetime.timedelta(days=2)
             invoice_rec = self.pool.get('account.invoice').browse(cr,uid,vals['invoice_id'])
             dedicated_user = False
             for address in invoice_rec.partner_id.address:
@@ -395,7 +394,7 @@ class account_invoice_line(osv.osv):
                                     'ctg_type_id':ctg_type_ids[0],
                                     'user_to':dedicated_user,
                                     'responsible':project.manager.id,
-                                    'date_feedback':new_date,
+                                    'date_feedback':feedback_date,
                         })
         return result
 
