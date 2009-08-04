@@ -104,7 +104,7 @@ class account_invoice_line(osv.osv):
                                     'account_analytic_id':line['account_analytic_id'],
                                     'taxes':line['taxes'],
                                     })
-        res += diff_res
+                    res += diff_res
         return res   
     
     def product_id_change(self, cr, uid, ids, product, uom, qty=0, name='', type='out_invoice', partner_id=False, fposition_id=False, price_unit=False, address_invoice_id=False, context=None):
