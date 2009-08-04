@@ -22,12 +22,12 @@
 ##############################################################################
 {
 	"name" : "City",
-	"version" : "1.0",
+	"version" : "1.1",
 	"author" : "Pablo Rocandio",
 	"category" : "Generic Modules/Base",
 	"description": """Creates a model for storing cities
 Zip code, city, state and country fields are replaced with a location field in partner and partner contact forms.
-This module helps to keep homogenous address data in the database.""",
+This module helps to keep homogeneous address data in the database.""",
 	"depends" : ["base"],
 	"init_xml" : [],
 	"update_xml" : [

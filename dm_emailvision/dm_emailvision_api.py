@@ -85,6 +85,10 @@ def send_email(cr,uid,obj,context):
 
     email_dest = obj.address_id.email or ''
     email_reply = obj.segment_id.campaign_id.trademark_id.email or ''
+
+    context['document_id'] = obj.document_id.id
+    context['address_id'] = obj.address_id.id
+
     email_subject = merge_message(cr, uid, obj.document_id.subject or '',context)
     name_from = obj.segment_id.campaign_id.trademark_id.name or ''
     name_reply = obj.segment_id.campaign_id.trademark_id.name or ''
@@ -92,6 +96,7 @@ def send_email(cr,uid,obj,context):
     pool = pooler.get_pool(cr.dbname)
     ir_att_obj = pool.get('ir.attachment')
     ir_att_ids = ir_att_obj.search(cr,uid,[('res_model','=','dm.campaign.document'),('res_id','=',obj.id),('file_type','=','html')])
+
     for attach in ir_att_obj.browse(cr,uid,ir_att_ids):
         message = base64.decodestring(attach.datas)
         root = etree.HTML(message)

@@ -69,5 +69,61 @@
     </record>
 
     <menuitem id="menu_dm_mail_service_form" parent="dm.menu_dm_config_mail_service" action="action_dm_mail_service_form" sequence="1" />
+
+
+    <!--
+    ======================
+    DM SYSMSG
+    ======================
+    -->
+
+    <record model="ir.ui.view" id="view_dm_sysmsg_form">
+        <field name="name">dm.sysmsg.form</field>
+        <field name="model">dm.sysmsg</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="System Message">
+                <field name="name" select="1"/>
+                <field name="code" select="1"/>
+                <field name="model" select="1"/>
+                <field name="field" select="2"/>
+                <field name="state"/>
+                <field name="result"/>
+                <field name="level"/>
+                <field name="send_email"/>
+                <field name="email_user"/>
+                <separator string="Message" colspan="4"/>
+                <field name="message" nolabel="1" colspan="4"/>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_dm_sysmsg_tree">
+        <field name="name">dm.sysmsg.tree</field>
+        <field name="model">dm.sysmsg</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="System Messages">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="state"/>
+                <field name="level"/>
+                <field name="model"/>
+                <field name="field"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_dm_sysmsg_form">
+        <field name="name">All System Messages</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.sysmsg</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_dm_sysmsg_tree"/>
+    </record>
+
+    <menuitem id="menu_dm_sysmsg_form" parent="dm.menu_dm_config_lowlevel" action="action_dm_sysmsg_form"/>
+
 </data>
 </openerp>

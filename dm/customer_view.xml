@@ -96,13 +96,16 @@
                         <field name="action_hour"/>
                     </tree>
                 </field>
-                <field name="sale_order_id" select="2" on_change="_check_unique_so(sale_order_id)"/>
+                <field name="sale_order_id" select="2" /> <!--on_change="_check_unique_so(sale_order_id)"/-->
                 <field name="mail_service_id" select="2"/>
                 <newline/>
                 <field name="state" select="1"/>
                 <field name="action_time" select="2"/>
                 <field name="is_global" select="2"/>
                 <field name="is_preview" select="2"/>
+                <group colspan="3" col="2">
+                <field name="use_prev_plugin_values"/>
+                </group>
             </form>
         </field>
     </record>

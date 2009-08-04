@@ -70,7 +70,6 @@ class query(object):
                 delta_count = 0 
                 d=0  
                 for data in common.xcombine(axis[-1],cross):
-                    print " In the loop ",delta_count
                     flag = False
                     make_where = []
                     temp_where = []
@@ -132,7 +131,6 @@ class query(object):
                 for key,val in s['query'].items():
                     for v in val:
                         if key=='column':
-                            print "This is the value >>>>",val , v
                             v = v.label('p_%d' % (position,))
                             position += 1
                             select.append_column(v)
@@ -153,7 +151,6 @@ class query(object):
                     if s.has_key('format'):
                         # To make use of the format string if specified for the measure
                         # Its set to static for a testing
-                        print " This the the r[0]"
                         if not currency:
                             currency = "EUR"
                         if isinstance(r[0],float) or isinstance(r[0],int) or isinstance(r[0],long):
@@ -220,9 +217,7 @@ class query(object):
             if log_ids:
                 count = pooler.get_pool(cr.dbname).get('olap.query.logs').browse(cr, uid, log_ids, context)[0]
                 pooler.get_pool(cr.dbname).get('olap.query.logs').write(cr, uid, log_ids, {'count':count.count+1})
-                if count.count>=3:
-                    print "Write IN TABLE:>>>>"
-                return True
+                
             else:
                 logentry={}
                 logentry['user_id']=uid
@@ -231,6 +226,7 @@ class query(object):
                 logentry['time']= str(datetime.datetime.now())
                 logentry['result_size']=0
                 logentry['count']=1
+                logentry['schema_id'] = cube.schema_id.id
                 log_id = pooler.get_pool(cr.dbname).get('olap.query.logs').create(cr,uid,logentry)
 #                count = pooler.get_pool(cr.dbname).get('olap.query.logs').browse(cr, uid, log_id, context)
 #                pooler.get_pool(cr.dbname).get('olap.query.logs').write(cr, uid, log_id, {'count':count.count+1})

@@ -6,18 +6,32 @@ include("xmlrpc.inc");
 include("xmlrpcs.inc");
 
 require_once( 'configuration.php' );
-require_once( 'includes/joomla.php' );
 require_once( 'administrator/components/com_virtuemart/virtuemart.cfg.php' );
 
-$con = mysql_pconnect($mosConfig_host, $mosConfig_user,$mosConfig_password );
-mysql_select_db($mosConfig_db);
+if(empty($mosConfig_host))
+{ 
+	$conf = new JConfig();
+	
+	$dbprefix = $conf->dbprefix;
+	
+	$con = mysql_pconnect($conf->host, $conf->user, $conf->password );
+	mysql_select_db($conf->db);
+	
+}
+else
+{
+	$dbprefix = $mosConfig_dbprefix;
+	
+	$con = mysql_pconnect($mosConfig_host, $mosConfig_user, $mosConfig_password );
+	mysql_select_db($mosConfig_db);	
+}
 
 
 function get_taxes() {
-  global $mosConfig_dbprefix;
+  global $dbprefix;
   $taxes=array();
-
-  $result=mysql_query("select tax_rate_id, tax_rate*100 from ".$mosConfig_dbprefix."vm_tax_rate;");
+	
+  $result=mysql_query("select tax_rate_id, tax_rate*100 from ".$dbprefix."vm_tax_rate;");
   if ($result) while ($row=mysql_fetch_row($result)) {
     $taxes[]=new xmlrpcval(array(new xmlrpcval($row[0], "int"), new xmlrpcval("Tax ".$row[1]."%", "string")), "array");
   }
@@ -25,16 +39,16 @@ function get_taxes() {
 }
 
 function delete_products() {
-  global $mosConfig_dbprefix;
+  global $dbprefix;
 
-  mysql_query("truncate  table ".$mosConfig_dbprefix."vm_product_attribute;");
-  mysql_query("truncate  table ".$mosConfig_dbprefix."vm_product_price;");
-  mysql_query("truncate  table ".$mosConfig_dbprefix."vm_product_tax;");
-  mysql_query("truncate  table ".$mosConfig_dbprefix."vm_product_category_xref;");
-  mysql_query("delete from ".$mosConfig_dbprefix."jf_content where reference_table='vm_product' and reference_field in ('product_s_desc','product_desc') ;");
-  $result=mysql_query("truncate  table ".$mosConfig_dbprefix."vm_product;");
-  //$result=mysql_query("update ".$mosConfig_dbprefix."vm_product set `product_publish` = 'N';");
-  //$result=mysql_query("update ".$mosConfig_dbprefix."vm_product set ".
+  mysql_query("truncate  table ".$dbprefix."vm_product_attribute;");
+  mysql_query("truncate  table ".$dbprefix."vm_product_price;");
+  mysql_query("truncate  table ".$dbprefix."vm_product_tax;");
+  mysql_query("truncate  table ".$dbprefix."vm_product_category_xref;");
+  mysql_query("delete from ".$dbprefix."jf_content where reference_table='vm_product' and reference_field in ('product_s_desc','product_desc') ;");
+  $result=mysql_query("truncate  table ".$dbprefix."vm_product;");
+  //$result=mysql_query("update ".$dbprefix."vm_product set `product_publish` = 'N';");
+  //$result=mysql_query("update ".$dbprefix."vm_product set ".
   //  "product_publish='N' ".
   //  ";");
 
@@ -42,17 +56,17 @@ function delete_products() {
 }
 
 function unlink_products($product_id) {
-  global $mosConfig_dbprefix;
+  global $dbprefix;
   //self.debug("Products Ids for Unlink: ".implode(",",$product_ids));
-  mysql_query("update ".$mosConfig_dbprefix."vm_product set product_publish='N' where product_id in (".implode(",",$product_id).");");
+  mysql_query("update ".$dbprefix."vm_product set product_publish='N' where product_id in (".implode(",",$product_id).");");
   return new xmlrpcresp(new xmlrpcval(1,"int"));
 }
 
 function delete_product_categories() {
-  global $mosConfig_dbprefix;
+  global $dbprefix;
 
-  mysql_query("truncate  table ".$mosConfig_dbprefix."vm_category_xref;");
-  $result = mysql_query("truncate  table ".$mosConfig_dbprefix."vm_category;");
+  mysql_query("truncate  table ".$dbprefix."vm_category_xref;");
+  $result = mysql_query("truncate  table ".$dbprefix."vm_category;");
 
 
   return new xmlrpcresp(new xmlrpcval($result, "int"));
@@ -67,10 +81,10 @@ function get_languages() {
 }
 
 function get_categories() {
-  global $mosConfig_dbprefix;
+  global $dbprefix;
   $categories=array();
 
-  $result=mysql_query("select category_id, category_name from ".$mosConfig_dbprefix."vm_category;");
+  $result=mysql_query("select category_id, category_name from ".$dbprefix."vm_category;");
 
   if ($result) while ($row=mysql_fetch_row($result)) {
     $row0 = $row[0];
@@ -82,13 +96,13 @@ function get_categories() {
 }
 
 function parent_category($id, $name) {
-  global $mosConfig_dbprefix;
-  $result=mysql_query("select category_parent_id from ".$mosConfig_dbprefix."vm_category_xref where category_child_id=".$id.";");
+  global $dbprefix;
+  $result=mysql_query("select category_parent_id from ".$dbprefix."vm_category_xref where category_child_id=".$id.";");
   if ($result && $row=mysql_fetch_row($result)) {
     if ($row[0]==0) {
       return $name;
     } else {
-      $resultb=mysql_query("select category_name from ".$mosConfig_dbprefix."vm_category where category_id=".$row[0].";");
+      $resultb=mysql_query("select category_name from ".$dbprefix."vm_category where category_id=".$row[0].";");
       if ($resultb && $rowb=mysql_fetch_row($resultb)) {
         $name=parent_category($row[0], $rowb[0] . " \\ ". $name);
         return $name;
@@ -99,8 +113,8 @@ function parent_category($id, $name) {
 }
 
 function set_product_stock($tiny_product) {
-  global $mosConfig_dbprefix;
-  mysql_query("update ".$mosConfig_dbprefix."vm_product set product_in_stock=".$tiny_product['quantity']." where
+  global $dbprefix;
+  mysql_query("update ".$dbprefix."vm_product set product_in_stock=".$tiny_product['quantity']." where
   product_id=".$tiny_product['esale_joomla_id'].";");
   //mysql_query("update products set products_status=".(($tiny_product['quantity']>0)?1:0)." where
   //products_id=".$tiny_product['esale_joomla_id'].";");
@@ -115,7 +129,7 @@ function debug($s) {
 
 function _update_category_name_by_lang($lang_id, $lang_str, $osc_id, $tiny_category) {
   $res = 0;
-  global $mosConfig_dbprefix;
+  global $dbprefix;
 
   $original_name = ($tiny_category['name']);
   $name_value = ($tiny_category['name:' . $lang_str]);
@@ -128,37 +142,37 @@ function _update_category_name_by_lang($lang_id, $lang_str, $osc_id, $tiny_categ
 
   if($original_name != '') {
     $name_value = str_replace('"', '\"', $name_value);
-    $result = mysql_query("select id from ".$mosConfig_dbprefix."jf_content where reference_id=".$osc_id." and reference_table='vm_category' and reference_field='category_name';");
+    $result = mysql_query("select id from ".$dbprefix."jf_content where reference_id=".$osc_id." and reference_table='vm_category' and reference_field='category_name';");
 
     $res = -1;
     if ($result && $row=mysql_fetch_row($result)) {
-      $res = mysql_query("update ".$mosConfig_dbprefix."jf_content set reference_id=".$osc_id." ,language_id='".$lang_id."',published=1,value=\"".$name_value."\",modified='".date( "Y-m-d H:i:s" )."',original_value='".md5($original_name)."' where id=".$row[0].";");
+      $res = mysql_query("update ".$dbprefix."jf_content set reference_id=".$osc_id." ,language_id='".$lang_id."',published=1,value=\"".$name_value."\",modified='".date( "Y-m-d H:i:s" )."',original_value='".md5($original_name)."' where id=".$row[0].";");
     } else {
-      $res = mysql_query("insert into  ".$mosConfig_dbprefix."jf_content(language_id,reference_id,reference_table,reference_field,value,original_value,modified_by,modified,published) values (".$lang_id.",".$osc_id.",'vm_category','category_name',\"".$name_value."\",'".md5($original_name)."',70,'".date( "Y-m-d H:i:s" )."',1);");
+      $res = mysql_query("insert into  ".$dbprefix."jf_content(language_id,reference_id,reference_table,reference_field,value,original_value,modified_by,modified,published) values (".$lang_id.",".$osc_id.",'vm_category','category_name',\"".$name_value."\",'".md5($original_name)."',70,'".date( "Y-m-d H:i:s" )."',1);");
     }
   }
 }
 
 function set_category($tiny_category){
-  global $mosConfig_dbprefix;
+  global $dbprefix;
 
   if($tiny_category['esale_joomla_id'] != 0) {
-    $result = mysql_query("update ".$mosConfig_dbprefix."vm_category set ".
+    $result = mysql_query("update ".$dbprefix."vm_category set ".
       "category_name='". ($tiny_category['name'])."', ".
       "category_description='". ($tiny_category['name'])."'".
       "where category_id=".$tiny_category['esale_joomla_id'].";");
     $osc_id = $tiny_category['esale_joomla_id'];
 
   } else {
-    mysql_query("insert into  ".$mosConfig_dbprefix."vm_category  (category_name,category_description,category_publish,vendor_id) values (\"". ($tiny_category['name'])."\",\"". ($tiny_category['name'])."\",\"Y\",'1');");
+    mysql_query("insert into  ".$dbprefix."vm_category  (category_name,category_description,category_publish,vendor_id) values (\"". ($tiny_category['name'])."\",\"". ($tiny_category['name'])."\",\"Y\",'1');");
     $category_child_id = mysql_insert_id();
-    mysql_query("update ".$mosConfig_dbprefix."vm_category set list_order=".$category_child_id." where category_id=".$category_child_id.";");
+    mysql_query("update ".$dbprefix."vm_category set list_order=".$category_child_id." where category_id=".$category_child_id.";");
     $category_parent_id=$tiny_category['parent_id'];
-    mysql_query("insert into  ".$mosConfig_dbprefix."vm_category_xref  (category_parent_id,category_child_id) values (".$category_parent_id.",".$category_child_id.");");
+    mysql_query("insert into  ".$dbprefix."vm_category_xref  (category_parent_id,category_child_id) values (".$category_parent_id.",".$category_child_id.");");
     $osc_id = $category_child_id;
 
   }
-  $result = mysql_query("select id from ".$mosConfig_dbprefix."languages where iso='fr';");
+  $result = mysql_query("select id from ".$dbprefix."languages where iso='fr';");
   $lang_id = -1;
   if ($result && $row=mysql_fetch_row($result)) {
     $lang_id = $row[0];
@@ -166,7 +180,7 @@ function set_category($tiny_category){
   }
 
   // Retrieve FRENCH language:
-  $res = mysql_query("select id from ".$mosConfig_dbprefix."languages where iso='fr';");
+  $res = mysql_query("select id from ".$dbprefix."languages where iso='fr';");
   $lang_fr_id = -1;
   $lang_fr_str = 'fr_FR';
   if ($res && $row=mysql_fetch_row($res)) {
@@ -174,7 +188,7 @@ function set_category($tiny_category){
   }
 
   // Retrieve ENGLISH language:
-  $res = mysql_query("select id from ".$mosConfig_dbprefix."languages where iso='en';");
+  $res = mysql_query("select id from ".$dbprefix."languages where iso='en';");
   $lang_en_id = -1;
   $lang_en_str = 'en_US';
   if ($res && $row=mysql_fetch_row($res)) {
@@ -188,7 +202,7 @@ function set_category($tiny_category){
 }
 
 function set_tax($tiny_tax){
-  global $mosConfig_dbprefix;
+  global $dbprefix;
   $country_id = '-';
   $state_id = '-';
   $type = 'fixamount';
@@ -196,14 +210,14 @@ function set_tax($tiny_tax){
     $type = 'percentage';
 
   if ($tiny_tax['country']) {
-    $result = mysql_query("select country_3_code from ".$mosConfig_dbprefix."vm_country where country_name='".$tiny_tax['country']."';");
+    $result = mysql_query("select country_3_code from ".$dbprefix."vm_country where country_name='".$tiny_tax['country']."';");
     if ($result && $row=mysql_fetch_row($result)) {
       $country_id = $row[0];
     }
   }
 
   if($tiny_tax['esale_joomla_id'] != 0) {
-    $result=mysql_query("update ".$mosConfig_dbprefix."vm_tax_rate set ".
+    $result=mysql_query("update ".$dbprefix."vm_tax_rate set ".
       "tax_name='".$tiny_tax['name']."', ".
       "tax_type='".$type."', ".
       "tax_rate=".$tiny_tax['rate'].", ".
@@ -215,7 +229,7 @@ function set_tax($tiny_tax){
 
     $osc_id=$tiny_tax['esale_joomla_id'];
   } else {
-    mysql_query("insert into  ".$mosConfig_dbprefix."vm_tax_rate  (tax_name,tax_type,tax_rate,inc_base_price,priority,tax_country,tax_state,vendor_id) values (\"".$tiny_tax['name']."\",\"".$type."\",".$tiny_tax['rate'].",".$tiny_tax['include_base_amount'].",".$tiny_tax['sequence'].",'".$country_id."','".$state_id."','1');");
+    mysql_query("insert into  ".$dbprefix."vm_tax_rate  (tax_name,tax_type,tax_rate,inc_base_price,priority,tax_country,tax_state,vendor_id) values (\"".$tiny_tax['name']."\",\"".$type."\",".$tiny_tax['rate'].",".$tiny_tax['include_base_amount'].",".$tiny_tax['sequence'].",'".$country_id."','".$state_id."','1');");
     $osc_id = mysql_insert_id();
   }
 
@@ -224,7 +238,7 @@ function set_tax($tiny_tax){
 
 function _update_product_name_by_lang($lang_id, $lang_str, $osc_id, $tiny_product) {
   $res = 0;
-  global $mosConfig_dbprefix;
+  global $dbprefix;
 
   $original_name = ($tiny_product['name']);
   $name_value = ($tiny_product['name:' . $lang_str]);
@@ -237,16 +251,16 @@ function _update_product_name_by_lang($lang_id, $lang_str, $osc_id, $tiny_produc
 
   if($original_name != '') {
     $name_value = str_replace('"', '\"', $name_value);
-    $result = mysql_query("select id from ".$mosConfig_dbprefix."jf_content where reference_id=".$osc_id." and reference_table='vm_product' and reference_field='product_name' and language_id = ".$lang_id.";");
+    $result = mysql_query("select id from ".$dbprefix."jf_content where reference_id=".$osc_id." and reference_table='vm_product' and reference_field='product_name' and language_id = ".$lang_id.";");
 
     $res = -1;
     if ($result && $row=mysql_fetch_row($result)) {
-      $res = mysql_query("update ".$mosConfig_dbprefix."jf_content set reference_id=".$osc_id." ,language_id='".$lang_id."',published=1,value=\"".$name_value."\",modified='".date( "Y-m-d H:i:s" )."',original_value='".md5($original_name)."' where id=".$row[0].";");
-      //self.debug("update ".$mosConfig_dbprefix."jf_content set reference_id=".$osc_id." ,language_id='".$lang_id."',published=1,value=\"".$name_value."\",modified='".date( "Y-m-d H:i:s" )."',original_value='".md5($original_name)."' where id=".$row[0].";");
+      $res = mysql_query("update ".$dbprefix."jf_content set reference_id=".$osc_id." ,language_id='".$lang_id."',published=1,value=\"".$name_value."\",modified='".date( "Y-m-d H:i:s" )."',original_value='".md5($original_name)."' where id=".$row[0].";");
+      //self.debug("update ".$dbprefix."jf_content set reference_id=".$osc_id." ,language_id='".$lang_id."',published=1,value=\"".$name_value."\",modified='".date( "Y-m-d H:i:s" )."',original_value='".md5($original_name)."' where id=".$row[0].";");
       //self.debug("res_update: " . $res);
     } else {
-      $res = mysql_query("insert into  ".$mosConfig_dbprefix."jf_content(language_id,reference_id,reference_table,reference_field,value,original_value,modified_by,modified,published) values (".$lang_id.",".$osc_id.",'vm_product','product_name',\"".$name_value."\",'".md5($original_name)."',70,'".date( "Y-m-d H:i:s" )."',1);");
-      //self.debug("insert into  ".$mosConfig_dbprefix."jf_content(language_id,reference_id,reference_table,reference_field,value,original_value,modified_by,modified,published) values (".$lang_id.",".$osc_id.",'vm_product','product_name',\"".$name_value."\",'".md5($original_name)."',70,'".date( "Y-m-d H:i:s" )."',1);");
+      $res = mysql_query("insert into  ".$dbprefix."jf_content(language_id,reference_id,reference_table,reference_field,value,original_value,modified_by,modified,published) values (".$lang_id.",".$osc_id.",'vm_product','product_name',\"".$name_value."\",'".md5($original_name)."',70,'".date( "Y-m-d H:i:s" )."',1);");
+      //self.debug("insert into  ".$dbprefix."jf_content(language_id,reference_id,reference_table,reference_field,value,original_value,modified_by,modified,published) values (".$lang_id.",".$osc_id.",'vm_product','product_name',\"".$name_value."\",'".md5($original_name)."',70,'".date( "Y-m-d H:i:s" )."',1);");
       //self.debug("res_insert: " . $res);
     }
   }
@@ -254,7 +268,7 @@ function _update_product_name_by_lang($lang_id, $lang_str, $osc_id, $tiny_produc
 
 function _update_product_long_desc_by_lang($lang_id, $lang_str, $osc_id, $tiny_product) {
   $res = 0;
-  global $mosConfig_dbprefix;
+  global $dbprefix;
 
   $original_name = ($tiny_product['description']);
   $desc_value = ($tiny_product['description:' . $lang_str]);
@@ -267,20 +281,20 @@ function _update_product_long_desc_by_lang($lang_id, $lang_str, $osc_id, $tiny_p
 
   if ($original_name!='') {
     $desc_value = str_replace('"', '\"', $desc_value);
-    $result = mysql_query("select id from ".$mosConfig_dbprefix."jf_content where reference_id=".$osc_id." and reference_table='vm_product' and reference_field='product_desc' and language_id = ".$lang_id.";");
+    $result = mysql_query("select id from ".$dbprefix."jf_content where reference_id=".$osc_id." and reference_table='vm_product' and reference_field='product_desc' and language_id = ".$lang_id.";");
 
     $res = -1;
     if ($result && $row=mysql_fetch_row($result)) {
-      $res = mysql_query("update ".$mosConfig_dbprefix."jf_content set reference_id=".$osc_id." ,language_id='".$lang_id."',published=1,value=\"".$desc_value."\",modified='".date( "Y-m-d H:i:s" )."',original_value='".md5($original_name)."' where id=".$row[0].";");
+      $res = mysql_query("update ".$dbprefix."jf_content set reference_id=".$osc_id." ,language_id='".$lang_id."',published=1,value=\"".$desc_value."\",modified='".date( "Y-m-d H:i:s" )."',original_value='".md5($original_name)."' where id=".$row[0].";");
     } else {
-      $res = mysql_query("insert into  ".$mosConfig_dbprefix."jf_content(language_id,reference_id,reference_table,reference_field,value,original_value,modified_by,modified,published) values (".$lang_id.",".$osc_id.",'vm_product','product_desc',\"".$desc_value."\",'".md5($original_name)."',70,'".date( "Y-m-d H:i:s" )."',1);");
+      $res = mysql_query("insert into  ".$dbprefix."jf_content(language_id,reference_id,reference_table,reference_field,value,original_value,modified_by,modified,published) values (".$lang_id.",".$osc_id.",'vm_product','product_desc',\"".$desc_value."\",'".md5($original_name)."',70,'".date( "Y-m-d H:i:s" )."',1);");
     }
   }
 }
 
 function _update_product_short_desc_by_lang($lang_id, $lang_str, $osc_id, $tiny_product) {
   $res = 0;
-  global $mosConfig_dbprefix;
+  global $dbprefix;
 
   $original_name = ($tiny_product['short_description']);
   $desc_value = ($tiny_product['short_description:' . $lang_str]);
@@ -293,12 +307,12 @@ function _update_product_short_desc_by_lang($lang_id, $lang_str, $osc_id, $tiny_
 
   if ($original_name!='') {
     $desc_value = str_replace('"','\"',$desc_value);
-    $result = mysql_query("select id from ".$mosConfig_dbprefix."jf_content where reference_id=".$osc_id." and reference_table='vm_product' and reference_field='product_s_desc' and language_id = ".$lang_id.";");
+    $result = mysql_query("select id from ".$dbprefix."jf_content where reference_id=".$osc_id." and reference_table='vm_product' and reference_field='product_s_desc' and language_id = ".$lang_id.";");
     $temp = -1;
     if ($result && $row=mysql_fetch_row($result)) {
-      $temp = mysql_query("update ".$mosConfig_dbprefix."jf_content set reference_id=".$osc_id.",language_id='".$lang_id."',published=1,value=\"".$desc_value."\",modified='".date( "Y-m-d H:i:s" )."',original_value='".md5($original_name)."' where id=".$row[0].";");
+      $temp = mysql_query("update ".$dbprefix."jf_content set reference_id=".$osc_id.",language_id='".$lang_id."',published=1,value=\"".$desc_value."\",modified='".date( "Y-m-d H:i:s" )."',original_value='".md5($original_name)."' where id=".$row[0].";");
     } else {
-      $temp = mysql_query("insert into  ".$mosConfig_dbprefix."jf_content(language_id,reference_id,reference_table,reference_field,value,original_value,modified_by,modified,published) values (".$lang_id.",".$osc_id.",'vm_product','product_s_desc',\"".$desc_value."\",'".md5($original_name)."',70,'".date( "Y-m-d H:i:s" )."',1);");
+      $temp = mysql_query("insert into  ".$dbprefix."jf_content(language_id,reference_id,reference_table,reference_field,value,original_value,modified_by,modified,published) values (".$lang_id.",".$osc_id.",'vm_product','product_s_desc',\"".$desc_value."\",'".md5($original_name)."',70,'".date( "Y-m-d H:i:s" )."',1);");
     }
   }
 }
@@ -306,49 +320,49 @@ function _update_product_short_desc_by_lang($lang_id, $lang_str, $osc_id, $tiny_
 function set_product($tiny_product){
   $rpc_error = 0;
 
-  global $mosConfig_dbprefix;
+  global $dbprefix;
   $prod = Array(
     'vendor_id'=>0
   );
 
-  $result = mysql_query("select vendor_id, vendor_currency from ".$mosConfig_dbprefix."vm_vendor;");
+  $result = mysql_query("select vendor_id, vendor_currency from ".$dbprefix."vm_vendor;");
   if ($result && $row=mysql_fetch_row($result)) {
     $prod['vendor_id']=$row[0];
     $prod['vendor_currency']=$row[1];
   }
-  $result=mysql_query("select shopper_group_id from ".$mosConfig_dbprefix."vm_shopper_group where vendor_id=".$vendor_id." and shopper_group_name='-default-';");
+  $result=mysql_query("select shopper_group_id from ".$dbprefix."vm_shopper_group where vendor_id=".$vendor_id." and shopper_group_name='-default-';");
   if ($result && $row=mysql_fetch_row($result))
     $prod['shopper_group']=$row[0];
   if ( $tiny_product['esale_joomla_id']) {
-    $result = mysql_query("select count(*) from ".$mosConfig_dbprefix."vm_product where product_id=". $tiny_product['esale_joomla_id']);
+    $result = mysql_query("select count(*) from ".$dbprefix."vm_product where product_id=". $tiny_product['esale_joomla_id']);
     $row = mysql_fetch_row($result);
     if (! $row[0] )
       $tiny_product['esale_joomla_id'] = 0;
   }
 
   if (! $tiny_product['esale_joomla_id']) {
-    $res = mysql_query("select shopper_group_id,vendor_id from ".$mosConfig_dbprefix."vm_shopper_group where `default` = 1");
+    $res = mysql_query("select shopper_group_id,vendor_id from ".$dbprefix."vm_shopper_group where `default` = 1");
     $shoperid = mysql_fetch_array($res);
     $shopper_group = $shoperid['shopper_group_id'];
     $vendorid = $shoperid['vendor_id'];
 
-    $res = mysql_query("select vendor_currency from ".$mosConfig_dbprefix."vm_vendor where vendor_id = ".$vendorid);
+    $res = mysql_query("select vendor_currency from ".$dbprefix."vm_vendor where vendor_id = ".$vendorid);
     $vcurrency = mysql_fetch_array($res);
     $vendor_currency = $vcurrency['vendor_currency'];
 
-    mysql_query("insert into ".$mosConfig_dbprefix."vm_product () values ()");
+    mysql_query("insert into ".$dbprefix."vm_product () values ()");
     $osc_id = mysql_insert_id();
-    mysql_query("insert into ".$mosConfig_dbprefix."vm_product_price (product_id, product_price, product_currency, product_price_vdate, product_price_edate, shopper_group_id) values (".$osc_id.", ".$tiny_product['price'].", '".$vendor_currency."', 0, 0, ".$shopper_group.");");
-    mysql_query("insert into ".$mosConfig_dbprefix."vm_product_category_xref (product_id, category_id) values (".$osc_id.", ".$tiny_product['category_id'].");");
+    mysql_query("insert into ".$dbprefix."vm_product_price (product_id, product_price, product_currency, product_price_vdate, product_price_edate, shopper_group_id) values (".$osc_id.", ".$tiny_product['price'].", '".$vendor_currency."', 0, 0, ".$shopper_group.");");
+    mysql_query("insert into ".$dbprefix."vm_product_category_xref (product_id, category_id) values (".$osc_id.", ".$tiny_product['category_id'].");");
 
     foreach ($tiny_product['tax_rate_id'] as $taxes=>$values) {
-      mysql_query("insert into ".$mosConfig_dbprefix."vm_product_tax (product_id, tax_rate_id) values (".$osc_id.", ".$values["id"].");");
+      mysql_query("insert into ".$dbprefix."vm_product_tax (product_id, tax_rate_id) values (".$osc_id.", ".$values["id"].");");
     }
   } else {
     $osc_id = $tiny_product['esale_joomla_id'];
   }
 
-  $query = "update ".$mosConfig_dbprefix."vm_product set ".
+  $query = "update ".$dbprefix."vm_product set ".
     "product_in_stock=".$tiny_product['quantity'].",".
     "product_weight=".$tiny_product['weight'].",".
     "product_sku='".mysql_escape_string($tiny_product['model'])."',".
@@ -369,16 +383,16 @@ function set_product($tiny_product){
 
   // Replace or delete old values
 
-  mysql_query("update ".$mosConfig_dbprefix."vm_product_price set product_price='".$tiny_product['price']."' where product_id=".$osc_id.";");
+  mysql_query("update ".$dbprefix."vm_product_price set product_price='".$tiny_product['price']."' where product_id=".$osc_id.";");
 
-  mysql_query("update ".$mosConfig_dbprefix."vm_product_category_xref set category_id='".$tiny_product['category_id']."' where product_id=".$osc_id.";");
-  mysql_query("delete from ".$mosConfig_dbprefix."vm_product_tax where product_id=".$osc_id.";");
+  mysql_query("update ".$dbprefix."vm_product_category_xref set category_id='".$tiny_product['category_id']."' where product_id=".$osc_id.";");
+  mysql_query("delete from ".$dbprefix."vm_product_tax where product_id=".$osc_id.";");
   foreach ($tiny_product['tax_rate_id'] as $taxes=>$values) {
-      mysql_query("insert into ".$mosConfig_dbprefix."vm_product_tax (product_id, tax_rate_id) values (".$osc_id.", ".$values["id"].");");
+      mysql_query("insert into ".$dbprefix."vm_product_tax (product_id, tax_rate_id) values (".$osc_id.", ".$values["id"].");");
     }
 
   // Retrieve FRENCH language:
-  $res = mysql_query("select id from ".$mosConfig_dbprefix."languages where iso='fr';");
+  $res = mysql_query("select id from ".$dbprefix."languages where iso='fr';");
   $lang_fr_id = -1;
   $lang_fr_str = 'fr_FR';
   if ($res && $row=mysql_fetch_row($res)) {
@@ -386,7 +400,7 @@ function set_product($tiny_product){
   }
 
   // Retrieve ENGLISH language:
-  $res = mysql_query("select id from ".$mosConfig_dbprefix."languages where iso='en';");
+  $res = mysql_query("select id from ".$dbprefix."languages where iso='en';");
   $lang_en_id = -1;
   $lang_en_str = 'en_US';
   if ($res && $row=mysql_fetch_row($res)) {
@@ -415,8 +429,8 @@ function set_product($tiny_product){
     fclose($hd);
     $short = strrchr($filename,'/');
     $short = substr($short, 1, strlen($short));
-    mysql_query("update ".$mosConfig_dbprefix."vm_product set product_full_image='".$short."' where product_id=".$osc_id.";");
-    mysql_query("update ".$mosConfig_dbprefix."vm_product set product_thumb_image='".$short."' where product_id=".$osc_id.";");
+    mysql_query("update ".$dbprefix."vm_product set product_full_image='".$short."' where product_id=".$osc_id.";");
+    mysql_query("update ".$dbprefix."vm_product set product_thumb_image='".$short."' where product_id=".$osc_id.";");
     unlink(substr($filename,0,strlen($filename)-4));
     /*$newxsize = PSHOP_IMG_WIDTH;
     if (!$newxsize) {
@@ -450,7 +464,7 @@ function set_product($tiny_product){
       $short=strrchr($thumb,'/');
       $short=substr($short,1,strlen($short));
       $save($tn, $thumb);
-      mysql_query("update ".$mosConfig_dbprefix."vm_product set product_thumb_image='".$short."' where product_id=".$osc_id.";");
+      mysql_query("update ".$dbprefix."vm_product set product_thumb_image='".$short."' where product_id=".$osc_id.";");
     }*/
   }
 
@@ -465,7 +479,7 @@ function set_product($tiny_product){
 }
 
 function get_saleorders($last_so) {
-  global $mosConfig_dbprefix;
+  global $dbprefix;
   $saleorders=array();
 
   /*$result=mysql_query(
@@ -476,9 +490,9 @@ function get_saleorders($last_so) {
       c.title, c.first_name, d.title, d.first_name,
       d.user_id, c.user_id, o.customer_note
     FROM ".
-      $mosConfig_dbprefix."vm_orders as o,".
-      $mosConfig_dbprefix."vm_user_info as c, ".
-      $mosConfig_dbprefix."vm_user_info as d
+      $dbprefix."vm_orders as o,".
+      $dbprefix."vm_user_info as c, ".
+      $dbprefix."vm_user_info as d
     where
       o.order_id>".$last_so." and
       o.user_id=c.user_id and
@@ -494,10 +508,10 @@ function get_saleorders($last_so) {
       c.title, c.first_name, d.title, d.first_name,
       d.user_id, c.user_id, o.customer_note,
       o.order_discount,o.order_shipping,o.order_shipping_tax FROM ".
-      $mosConfig_dbprefix."vm_orders as o,".
-      $mosConfig_dbprefix."vm_user_info as c, ".
-      $mosConfig_dbprefix."vm_country as cn, ".
-      $mosConfig_dbprefix."vm_user_info as d
+      $dbprefix."vm_orders as o,".
+      $dbprefix."vm_user_info as c, ".
+      $dbprefix."vm_country as cn, ".
+      $dbprefix."vm_user_info as d
     where
       o.order_id>".$last_so." and
       o.user_id=c.user_id and
@@ -508,7 +522,7 @@ function get_saleorders($last_so) {
 
   if ($result) while ($row=mysql_fetch_row($result)) {
     $orderlines = array();
-    $resultb = mysql_query("select product_id, product_quantity, product_item_price from ".$mosConfig_dbprefix."vm_order_item where order_id=".$row[0].";");
+    $resultb = mysql_query("select product_id, product_quantity, product_item_price from ".$dbprefix."vm_order_item where order_id=".$row[0].";");
     if ($resultb) while ($rowb=mysql_fetch_row($resultb)) {
       $orderlines[] = new xmlrpcval( array(
         "product_id" => new xmlrpcval($rowb[0], "int"),
@@ -586,16 +600,16 @@ function get_saleorders($last_so) {
 }
 
 function process_order($order_id) {
-  global $mosConfig_dbprefix;
-  mysql_query("update ".$mosConfig_dbprefix."vm_orders set order_status='C' where order_id=".$order_id.";");
-  mysql_query("update ".$mosConfig_dbprefix."vm_order_item set oerder_status='C' where order_id=".$order_id.";");
+  global $dbprefix;
+  mysql_query("update ".$dbprefix."vm_orders set order_status='C' where order_id=".$order_id.";");
+  mysql_query("update ".$dbprefix."vm_order_item set oerder_status='C' where order_id=".$order_id.";");
   return new xmlrpcresp(new xmlrpcval(0, "int"));
 }
 
 function close_order($order_id) {
-  global $mosConfig_dbprefix;
-  mysql_query("update ".$mosConfig_dbprefix."vm_orders set order_status='S' where order_id=".$order_id.";");
-  mysql_query("update ".$mosConfig_dbprefix."vm_order_item set oerder_status='S' where order_id=".$order_id.";");
+  global $dbprefix;
+  mysql_query("update ".$dbprefix."vm_orders set order_status='S' where order_id=".$order_id.";");
+  mysql_query("update ".$dbprefix."vm_order_item set oerder_status='S' where order_id=".$order_id.";");
   return new xmlrpcresp(new xmlrpcval(0, "int"));
 }
 

@@ -253,10 +253,11 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="All Plugins Values">
-                <field name="address_id" select="1"/>
-                <field name="plugin_id" select="2"/>
+<!--                <field name="address_id" select="1"/>-->
+                <field name="workitem_id" select="1"/>
+                <field name="plugin_id" select="1"/>
                 <field name="value" select="2"/>
-                <field name="date" select="2"/>
+<!--                <field name="date" select="2"/>-->
             </form>
         </field>
     </record>
@@ -267,10 +268,9 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="Plugins Values">
-                <field name="address_id" select="1"/>
-                <field name="plugin_id" select="2"/>
-                <field name="value" select="2"/>
-                <field name="date" select="2"/>
+                <field name="workitem_id"/>
+                <field name="plugin_id"/>
+                <field name="value"/>
             </tree>
         </field>
     </record>
