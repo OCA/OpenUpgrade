@@ -23,7 +23,7 @@
 
 {
     'name': 'CTG points Management',
-    'version': '0.0.3',
+    'version': '0.0.5',
     'category': 'Tools',
     'description': """This Module is managed User CTG points (called CTG points as 'Contribution To Growth points') for
 * DMS: Added CTG points to Document's Author  when sent feedback by other people after downloading document through the DMS
