@@ -42,8 +42,8 @@ class sale_order(osv.osv):
         for salesman in salesman_ids:
             result = super(sale_order, self).action_invoice_create(cr, uid,
                     ids, grouped, states)
-            if result:
-                self.pool.get('account.invoice').write(cr,uid,result,{'user_id':salesman['user_id'][0]})
+            if result and salesman.get('user_id',False):
+                self.pool.get('account.invoice').write(cr, uid, result, {'user_id':salesman['user_id'][0]})
         return result
     
 sale_order()
