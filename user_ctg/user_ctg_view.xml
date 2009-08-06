@@ -183,13 +183,12 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="CTG Feedback">
-					<field name="name" select="1" colspan="4" attrs="{'readonly':[('state','=','done')]}"/>
-					<field name="ctg_line_id" select="1" />
-					<field name="ctg_type_id" select="1" attrs="{'readonly':[('state','=','done')]}"/>
-					<field name="user_to" select="1" attrs="{'readonly':[('state','=','done')]}"/>
-					<field name="responsible" select="1" attrs="{'readonly':[('state','=','done')]}"/>
+					<field name="name" select="1" colspan="4" attrs="{'readonly':[('state','=','done')]}"/>					
+					<field name="ctg_type_id" select="1" attrs="{'readonly':[('state','not in',['draft'])]}"/>
+					<field name="user_to" select="1" attrs="{'readonly':[('state','not in',['draft'])]}"/>
+					<field name="responsible" select="1" attrs="{'readonly':[('state','not in',['draft'])]}"/>
 					<field name="points" select="1" attrs="{'readonly':[('state','in',['draft','done'])],'required':[('state','=','open')]}"/>
-					<field name="date_feedback" select="1" attrs="{'readonly':[('state','=','done')]}"/>
+					<field name="date_feedback" select="1" attrs="{'readonly':[('state','not in',['draft'])]}"/>
                     <notebook colspan="4">
                         <page string="Notes">
                             <field colspan="4" name="note" nolabel="1" attrs="{'readonly':[('state','=','done')]}"/>

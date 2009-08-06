@@ -164,7 +164,7 @@ class ctg_line(osv.osv):
                     user_history_obj.create(cr,uid,{'action':action,'description':subject,'date':date,'user_id':usr_id})
                 else:
                     logger.notifyChannel('email', netsvc.LOG_ERROR, 'Failed to send email to : %s' % (mail_to))
-        return
+        return True
     
     
 ctg_line()
@@ -226,7 +226,7 @@ class ctg_feedback(osv.osv):
     _order = 'name desc'  
 
     def action_cancel(self, cr, uid, ids, context={}):
-        self.write(cr, uid, ids, {'state':'cancel'})
+        return self.write(cr, uid, ids, {'state':'cancel'})
         
     def action_open(self, cr, uid, ids, context={}):
         self.write(cr, uid, ids, {'state':'open'})
@@ -273,8 +273,9 @@ class ctg_feedback(osv.osv):
                         _('Please Select Points For Feedback.'))
         # points : for customer satisfaction type , need to calaculate avg. points base on projects ?
                     # example : customer give 2 points for 1 project / 3 projects ?
+        return True                    
     def action_cancel_draft(self, cr, uid, ids, context={}):
-        self.write(cr, uid, ids, {'state':'draft'})
+        return self.write(cr, uid, ids, {'state':'draft'})
 
     def check_feedback(self, cr, uid, automatic=False, use_new_cursor=False, context=None):
         # draft to open feedback . It is called by cron job
@@ -302,7 +303,7 @@ class ctg_feedback(osv.osv):
         open_feedback_ids = self.search(cr, uid, [('date_feedback','<=',d.strftime('%Y-%m-%d')),('state','=','open')])  
         if len(open_feedback_ids):
             self.action_cancel(cr, uid, open_feedback_ids, context=context)
-
+        return True
 ctg_feedback()
 
 class user_history(osv.osv):
