@@ -27,7 +27,8 @@ class Currency(osv.osv):
     _inherit = "res.currency"
     _columns = {
         'company_id':fields.many2one('res.company', 'Company'),
-        'date': fields.date('Date')
+        'date': fields.date('Date'),
+        'base': fields.boolean('Base')
     }
     
     def read(self, cr, user, ids, fields=None, context=None, load='_classic_read'):
@@ -35,9 +36,10 @@ class Currency(osv.osv):
         for r in res:
             if r.__contains__('rate_ids'):
                 rates=r['rate_ids']
-                currency_rate_obj=self.pool.get('res.currency.rate')
-                currency_date=currency_rate_obj.read(cr,user,rates[0],['name'])['name']
-                r['date']=currency_date
+                if rates:
+                    currency_rate_obj=self.pool.get('res.currency.rate')
+                    currency_date=currency_rate_obj.read(cr,user,rates[0],['name'])['name']
+                    r['date']=currency_date
         return res
         
         
