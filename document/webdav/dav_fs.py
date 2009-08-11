@@ -25,6 +25,9 @@ from cache import memoize
 
 CACHE_SIZE=20000
 
+#hack for urlparse: add webdav in the net protocols
+urlparse.uses_netloc.append('webdav')
+
 class tinyerp_handler(dav_interface):
 	"""
 	This class models a Tiny ERP interface for the DAV server
@@ -48,10 +51,6 @@ class tinyerp_handler(dav_interface):
 #		return self.db_name
 #
 
-	@memoize(500)
-	def is_db(self, uri):
-		reluri = self.uri2local(uri)
-		return not len(reluri.split('/'))>1
 
 	@memoize(4)
 	def db_list(self):
@@ -71,15 +70,20 @@ class tinyerp_handler(dav_interface):
 
 	def get_childs(self,uri):
 		""" return the child objects as self.baseuris for the given URI """
-		if self.is_db(uri):
+		if uri[-1]=='/':uri=uri[:-1]
+		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+		
+		if not dbname:
 			s = netsvc.LocalService('db')
 			return map(lambda x: urlparse.urljoin(self.baseuri, x), self.db_list())
 		result = []
-		if uri[-1]=='/':uri=uri[:-1]
-		cr, uid, pool, uri2 = self.get_cr(uri)
 		node = self.uri2object(cr,uid,pool, uri2[:])
-		for d in node.children():
-			result.append( urlparse.urljoin(self.baseuri, d.path) )
+		if not node:
+			print "Object %s from %s not found.." % (uri2[:],uri)
+		else:
+		    for d in node.children():
+			result.append( urlparse.urljoin(self.baseuri,dbname+'/' + d.path) )
+		    print "Result", result
 		return result
 
 	def uri2local(self, uri):
@@ -94,21 +98,28 @@ class tinyerp_handler(dav_interface):
 	#
 	def get_cr(self, uri):
 		reluri = self.uri2local(uri)
-		dbname = reluri.split('/')[1]
+		try:
+			dbname = reluri.split('/')[1]
+		except:
+			dbname = False
+		if not dbname:
+			return None, None, None, False, None
 		uid = security.login(dbname, dav_auth.auth['user'], dav_auth.auth['pwd'])
 		db,pool = pooler.get_db_and_pool(dbname)
 		cr = db.cursor()
-		uri2 = reluri.split('/')[1:]
-		return cr, uid, pool, uri2
+		uri2 = reluri.split('/')[2:]
+		return cr, uid, pool, dbname, uri2
 
 	def uri2object(self, cr,uid, pool,uri):
+		if not uid:
+			return None
 		return pool.get('document.directory').get_object(cr, uid, uri)
 
 	def get_data(self,uri):
-		if self.is_db(uri):
-			raise DAV_Error, 409
 		if uri[-1]=='/':uri=uri[:-1]
-		cr, uid, pool, uri2 = self.get_cr(uri)
+		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+		if not dbname:
+			raise DAV_Error, 409
 		node = self.uri2object(cr,uid,pool, uri2)
 		if not node:
 			raise DAV_NotFound
@@ -133,9 +144,9 @@ class tinyerp_handler(dav_interface):
 		""" return type of object """
 		print 'RT', uri
 		if uri[-1]=='/':uri=uri[:-1]
-		if self.is_db(uri):
+		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+		if not dbname:
 			return COLLECTION
-		cr, uid, pool, uri2 = self.get_cr(uri)
 		node = self.uri2object(cr,uid,pool, uri2)
 		cr.close()
 		if node.type in ('collection','database'):
@@ -145,15 +156,15 @@ class tinyerp_handler(dav_interface):
 	def _get_dav_displayname(self,uri):
 		raise DAV_Secret
 
-	@memoize(CACHE_SIZE)
+	#@memoize(CACHE_SIZE)
 	def _get_dav_getcontentlength(self,uri):
 		""" return the content length of an object """
 		print 'Get DAV CL', uri
 		if uri[-1]=='/':uri=uri[:-1]
-		if self.is_db(uri):
-			return '0'
 		result = 0
-		cr, uid, pool, uri2 = self.get_cr(uri)
+		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+		if not dbname:
+			return '0'
 		node = self.uri2object(cr, uid, pool, uri2)
 		if node.type=='file':
 			result = node.object.file_size or 0
@@ -166,10 +177,9 @@ class tinyerp_handler(dav_interface):
 		print 'Get DAV Mod', uri
 		if uri[-1]=='/':uri=uri[:-1]
 		today = time.time()
-		#return today
-		if self.is_db(uri):
+		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+		if not dbname:
 			return today
-		cr, uid, pool, uri2 = self.get_cr(uri)
 		node = self.uri2object(cr,uid,pool, uri2)
 		if node.type=='file':
 			dt = node.object.write_date or node.object.create_date
@@ -184,10 +194,10 @@ class tinyerp_handler(dav_interface):
 		""" return the last modified date of the object """
 		print 'Get DAV Cre', uri
 
-		if self.is_db(uri):
-			raise DAV_Error, 409
 		if uri[-1]=='/':uri=uri[:-1]
-		cr, uid, pool, uri2 = self.get_cr(uri)
+		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+		if not dbname:
+			raise DAV_Error, 409
 		node = self.uri2object(cr,uid,pool, uri2)
 		if node.type=='file':
 			result = node.object.write_date or node.object.create_date
@@ -200,9 +210,9 @@ class tinyerp_handler(dav_interface):
 	def _get_dav_getcontenttype(self,uri):
 		print 'Get DAV CT', uri
 		if uri[-1]=='/':uri=uri[:-1]
-		if self.is_db(uri):
+		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+		if not dbname:
 			return 'httpd/unix-directory'
-		cr, uid, pool, uri2 = self.get_cr(uri)
 		node = self.uri2object(cr,uid,pool, uri2)
 		result = 'application/octet-stream'
 		if node.type=='collection':
@@ -215,8 +225,6 @@ class tinyerp_handler(dav_interface):
 		""" create a new collection """
 		print 'MKCOL', uri
 		if uri[-1]=='/':uri=uri[:-1]
-		if self.is_db(uri):
-			raise DAV_Error, 409
 		parent='/'.join(uri.split('/')[:-1])
 		if not parent.startswith(self.baseuri):
 			parent=self.baseuri + ''.join(parent[1:])
@@ -224,7 +232,9 @@ class tinyerp_handler(dav_interface):
 			uri=self.baseuri + ''.join(uri[1:])
 
 
-		cr, uid, pool, uri2 = self.get_cr(uri)
+		cr, uid, pool,dbname, uri2 = self.get_cr(uri)
+		if not dbname:
+			raise DAV_Error, 409
 		node = self.uri2object(cr,uid,pool, uri2[:-1])
 		object2=node and node.object2 or False
 		object=node and node.object or False
@@ -252,10 +262,10 @@ class tinyerp_handler(dav_interface):
 	def put(self,uri,data,content_type=None):
 		""" put the object into the filesystem """
 		print 'Putting', uri, len(data), content_type
-		if self.is_db(uri):
-			raise DAV_Forbidden
 		parent='/'.join(uri.split('/')[:-1])
-		cr, uid, pool, uri2 = self.get_cr(uri)
+		cr, uid, pool,dbname, uri2 = self.get_cr(uri)
+		if not dbname:
+			raise DAV_Forbidden
 		print 'Looking Node'
 		try:
 			node = self.uri2object(cr,uid,pool, uri2[:])
@@ -312,10 +322,10 @@ class tinyerp_handler(dav_interface):
 	def rmcol(self,uri):
 		""" delete a collection """
 		if uri[-1]=='/':uri=uri[:-1]
-		if self.is_db(uri):
-			raise DAV_Error, 409
 
-		cr, uid, pool, uri2 = self.get_cr(uri)
+		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+		if not dbname:
+			raise DAV_Error, 409
 		node = self.uri2object(cr,uid,pool, uri2)
 		object2=node and node.object2 or False
 		object=node and node.object or False
@@ -332,11 +342,11 @@ class tinyerp_handler(dav_interface):
 
 	def rm(self,uri):
 		if uri[-1]=='/':uri=uri[:-1]
-		if self.is_db(uri):
-			raise DAV_Error, 409
 
 		object=False
-		cr, uid, pool, uri2 = self.get_cr(uri)
+		cr, uid, pool,dbname, uri2 = self.get_cr(uri)
+		if not dbname:
+			raise DAV_Error, 409
 		node = self.uri2object(cr,uid,pool, uri2)
 		object2=node and node.object2 or False
 		object=node and node.object or False
@@ -501,10 +511,10 @@ class tinyerp_handler(dav_interface):
 
 	def exists(self,uri):
 		""" test if a resource exists """
-		if self.is_db(uri):
-			return True
 		result = False
-		cr, uid, pool, uri2 = self.get_cr(uri)
+		cr, uid, pool,dbname, uri2 = self.get_cr(uri)
+		if not dbname:
+			return True
 		try:
 			node = self.uri2object(cr,uid,pool, uri2)
 			if node:
