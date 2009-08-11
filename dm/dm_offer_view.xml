@@ -2,10 +2,67 @@
 <openerp>
 <data>
 
-    <menuitem name="Direct Marketing" icon="terp-crm" id="menu_dm"/>
-    <menuitem name="Configuration" id="menu_dm_config" parent="menu_dm" groups="res_groups_offeradmin,res_groups_offermanager,res_groups_campaignadmin,res_groups_campaignmanager,res_groups_dtpmanager" sequence="0"/>
     <menuitem name="Offers" id="menu_dm_offer" parent="menu_dm" sequence="2"/>
     <menuitem name="Offers" id="menu_dm_config_offer" parent="dm.menu_dm_config" sequence="2"/>
+
+	<!--
+	=======================================================
+	Trademark Views
+	=======================================================
+	-->
+
+	<record model="ir.ui.view" id="view_trademark_tree">
+		<field name="name">dm.trademark.tree</field>
+		<field name="model">dm.trademark</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Trademarks">
+				<field name="name"/>
+				<field name="code"/>
+				<field name="partner_id"/>
+				<field name="media_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_trademark_form">
+		<field name="name">dm.trademark.form</field>
+		<field name="model">dm.trademark</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Trademarks">
+					<field name="name" select="1"/>
+					<field name="code"/>
+					<field name="partner_id" select="2"/>
+					<field name="media_id" select="1"/>
+                    <field name="website" select="2"/>
+                    <field name="email" select="2"/>
+					<separator string="Layout" colspan="4"/>
+					<field name="header" colspan="4" />
+					<separator string="Signature" colspan="4"/>
+					<field name="signature" widget="image" nolabel="1" colspan="2"/>
+					<field name="signature_url"/>
+					<separator string="Logo" colspan="4"/>
+					<field name="logo" widget="image" nolabel="1" colspan="2"/>
+					<field name="logo_url"/>
+					<separator string="Banners" colspan="4"/>
+					<field name="banner_top" widget="image" nolabel="0" colspan="2"/>
+					<field name="banner_top_url"/>
+					<field name="banner_bottom" widget="image" nolabel="0" colspan="2"/>
+					<field name="banner_bottom_url"/>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_trademark_form">
+		<field name="name">All Trademarks</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.trademark</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="view_trademark_tree"/>
+	</record>
+
+	<menuitem id="menu_action_trademark_form" parent="dm.menu_dm_config_campaign" action="action_trademark_form"/>
 
     <!--
     =======================================================

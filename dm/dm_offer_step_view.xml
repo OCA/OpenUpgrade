@@ -355,31 +355,6 @@
 
     <menuitem id="menu_action_dm_media_form" parent="dm.menu_dm_config_offer_offer_steps" action="action_dm_media_form" sequence="2" />
 
-    <!--
-    =======================================================
-    PRODUCT EXTENSIONS
-    =======================================================
-    -->
-
-    <record id="product_normal_form_view" model="ir.ui.view">
-        <field name="name">product.normal.form.inherit</field>
-        <field name="model">product.product</field>
-        <field name="type">form</field>
-        <field name="inherit_id" ref="product.product_normal_form_view"/>
-        <field name="arch" type="xml">
-            <notebook position="inside">
-                <page string="Direct Marketing">
-                <separator string="Language" colspan="4"/>
-                 <field name="language_id" colspan="4" nolabel="1"/>
-                 <separator string="Allowed Countries" colspan="4"/>
-                 <field name="country_ids" colspan="4" nolabel="1"/>
-                 <separator string="Allowed States" colspan="4"/>
-                 <field name="state_ids" colspan="4" nolabel="1"/>
-                </page>
-            </notebook>
-        </field>
-    </record>
-
         
     <!--
     =======================================================

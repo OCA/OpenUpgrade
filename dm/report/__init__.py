@@ -19,7 +19,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-import dm_crm_campaign
+import dm_offer_report
+import dm_campaign_report
+import dm_print_offer_graph
+import dm_document_report
+import dm_ir_action_report
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

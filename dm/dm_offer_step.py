@@ -228,46 +228,5 @@ class dm_offer_step_transition(osv.osv): # {{{
 
 dm_offer_step_transition() # }}}
 
-class product_product(osv.osv): # {{{
-    _name = "product.product"
-    _inherit = "product.product"
-    _columns = {
-        'country_ids' : fields.many2many('res.country', 'product_country_rel', 'product_id', 'country_id', 'Allowed Countries'),
-        'state_ids' : fields.many2many('res.country.state','product_state_rel', 'product_id', 'state_id', 'Allowed States'),
-        'language_id' : fields.many2one('res.lang', 'Language'),
-    }
-
-    def _default_all_country(self, cr, uid, context={}):
-        id_country = self.pool.get('res.country').search(cr,uid,[])
-        return id_country
-
-    def _default_all_state(self, cr, uid, context={}):
-        id_state = self.pool.get('res.country.state').search(cr,uid,[])
-        return id_state
-
-    _defaults = {
-        'country_ids': _default_all_country,
-        'state_ids': _default_all_state,
-    }
-
-    def search(self, cr, uid, args, offset=0, limit=None, order=None, context={}, count=False):
-            result = super(product_product,self).search(cr,uid,args,offset,limit,order,context,count)
-            if 'offer_id' in context and context['offer_id']:
-                result = []
-                offer_browse_id = self.pool.get('dm.offer').browse(cr,uid,context['offer_id'])
-                for step in offer_browse_id.step_ids:
-                    for item in step.item_ids:
-                        result.append(item.id)
-            return result
-product_product() # }}}
-
-class actions_server(osv.osv): # {{{
-    _name = 'ir.actions.server'
-    _inherit = 'ir.actions.server'
-    _columns = {
-        'dm_action' : fields.boolean('Action')
-    }
-actions_server() # }}}
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

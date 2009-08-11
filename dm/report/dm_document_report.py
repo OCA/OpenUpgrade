@@ -23,7 +23,7 @@
 import time
 import pooler
 from report import report_sxw
-from report_design import generate_plugin_value
+from dm.dm_report_design import generate_plugin_value
 import re
 import base64
 

@@ -255,6 +255,10 @@ class dm_offer_document(osv.osv): # {{{
         'note' : fields.text('Description'),
 #        'gender_id' : fields.many2one('res.partner.title', 'Gender' ,domain=[('domain','=','contact')]),
         'gender_id' : fields.many2one('partner.gender', 'Gender', ondelete="cascade"),
+        'subject' : fields.char('Object',size=128),
+        'editor' : fields.selection([('internal','Internal'),('oord','DM Open Office Report Design')],'Editor'),
+        'content' : fields.text('Content'),
+        'media_id':fields.related('step_id','media_id','name',type='char', relation='dm.media', string='Media'),
     }
     _defaults = {
         'state': lambda *a: 'draft',

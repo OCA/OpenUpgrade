@@ -2,11 +2,83 @@
 <openerp>
 <data>
 
+    <menuitem name="Direct Marketing" icon="terp-crm" id="menu_dm"/>
+    <menuitem name="Configuration" id="menu_dm_config" parent="menu_dm" groups="res_groups_offeradmin,res_groups_offermanager,res_groups_campaignadmin,res_groups_campaignmanager,res_groups_dtpmanager" sequence="0"/>
     <menuitem name="Campaigns" id="menu_dm_config_campaign" parent="dm.menu_dm_config" groups="res_groups_offeradmin,res_groups_campaignadmin" sequence="1"/>
     <menuitem name="Customers Lists and Files" id="menu_dm_config_custlist" parent="dm.menu_dm_config" groups="res_groups_offeradmin,res_groups_campaignadmin" sequence="1"/>
     <menuitem name="Campaigns" id="menu_dm_campaign" parent="menu_dm" sequence="4"/>
     <menuitem name="Low Level" id="menu_dm_config_lowlevel" parent="dm.menu_dm_config" groups="res_groups_dmadmin" sequence="0"/>
+    <menuitem name="Mail Service" id="menu_dm_config_mail_service" parent="dm.menu_dm_config" sequence="7"/>
 
+    <!--
+    ======================
+    Mail Service
+    ======================
+    -->
+
+    <record model="ir.ui.view" id="view_dm_mail_service_form">
+        <field name="name">dm.mail_service.form</field>
+        <field name="model">dm.mail_service</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Mail Service">
+                <field name="name" select="1"/>
+                <field name="partner_id" select="1"/>
+                <field name="media_id" select="1"/>
+                <field name="default_for_media" on_change="_check_unique_mail_service(media_id,default_for_media)"/>
+                <field name="type_id" on_change="on_change_service_type(type_id)" widget="selection"/>
+                <group colspan="4" attrs="{'invisible':[('service_type','!=','smtp')]}">
+					<separator string="SMTP Server Configuration" colspan="4" />
+					<field name="service_type" on_change="on_change_service_type(type_id)" invisible="1"/>
+					<field name="smtp_server_id"/>
+				</group>
+                <field name="hosted_image_use"/>
+                <separator string="Mailing Action" colspan="4"/>
+                <group colspan="4" col="4">
+                <field name="action_id" select="1"/>
+                <field name="time_mode"/>
+                <field name="action_hour" widget="float_time" attrs="{'invisible':[('time_mode','!=','hour')]}"/>
+                <field name="action_date" attrs="{'invisible':[('time_mode','!=','date')]}"/>
+                <group colspan="4" attrs="{'invisible':[('time_mode','!=','interval')]}">
+                <field name="action_interval" />
+                <field name="unit_interval" />
+                </group>
+<!--                <field name="condition" />
+                <field name="state" />
+                <field name="model_id" />-->
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_dm_mail_service_tree">
+        <field name="name">dm.mail_service.tree</field>
+        <field name="model">dm.mail_service</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Mail Services">
+                <field name="name" />
+                <field name="partner_id" />
+                <field name="media_id" />
+                <field name="action_id" />
+                <field name="default_for_media"/>
+<!--                <field name="condition" />
+                <field name="state" />
+                <field name="model_id" />-->
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_dm_mail_service_form">
+        <field name="name">All Mail Services</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.mail_service</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_dm_mail_service_tree"/>
+    </record>
+
+    <menuitem id="menu_dm_mail_service_form" parent="dm.menu_dm_config_mail_service" action="action_dm_mail_service_form" sequence="1" />
 
     <!--
     =======================================================
@@ -1529,89 +1601,6 @@
 
     <menuitem id="menu_action_dm_customers_file" parent="dm.menu_dm_config_custlist" action="action_dm_customers_file" sequence="2" />
 
-
-
-    <!--
-    =======================================================
-   COUNTRY EXTENSIONS
-    =======================================================
-    -->
-
-        <record id="view_country_form_inherit" model="ir.ui.view">
-            <field name="name">res.country.form.inherit</field>
-            <field name="model">res.country</field>
-            <field name="type">form</field>
-            <field name="inherit_id" ref="base.view_country_form"/>
-            <field name="arch" type="xml">
-                <field name="code" position="after">
-                   <field name="main_currency" select="1"/>
-                   <field name="main_language" select="1"/>
-                   <field name="forwarding_charge" select="2"/>
-                   <separator string="Payment Methods" colspan="4"/>
-                   <field name="payment_method_ids" colspan="4" nolabel="1"/>
-                </field>
-            </field>
-        </record>
-
-
-    <!--
-    =======================================================
-    PARTNER EXTENSIONS
-    =======================================================
-    -->
-
-    <record id="view_partner_property_form1" model="ir.ui.view">
-        <field name="name">res.partner.form.inherit</field>
-        <field name="model">res.partner</field>
-        <field name="type">form</field>
-        <field name="inherit_id" ref="base.view_partner_form"/>
-        <field name="arch" type="xml">
-            <notebook colspan="4" position="inside">
-                <page string="Direct Marketing">
-                	<separator colspan="4"/>
-                	<field name="deceased"/>
-                	<group attrs="{'invisible':[('deceased','!=',True)]}">
-                		<field name="deceased_date" />
-                	</group>
-                    <separator string="Allowed Countries" colspan="4"/>
-                    <field name="country_ids" colspan="4" nolabel="1"/>
-                    <separator string="Allowed States" colspan="4"/>
-                    <field name="state_ids" colspan="4" nolabel="1"/>
-                </page>
-            </notebook>
-        </field>
-    </record>
-    
-    <!--
-    =======================================================
-    SALE ORDER EXTENSIONS
-    =======================================================
-    -->
-
-    <record id="view_order_form_inherit1" model="ir.ui.view">
-        <field name="name">sale.order.form.inherit</field>
-        <field name="model">sale.order</field>
-        <field name="type">form</field>
-        <field name="inherit_id" ref="sale.view_order_form"/>
-        <field name="arch" type="xml">
-            <notebook colspan="4" position="inside">
-                <page string="Direct Marketing">
-                	<separator colspan="4"/>
-                	<field name="offer_step_id" colspan="4"/>
-                	<field name="segment_id" colspan="4"/>
-                    <field name="journal_id" colspan="4"/>
-                    <group colspan="2" col="2">
-                        <separator string="Automatic actions"/>
-                        <field name="so_confirm_do" />
-                        <field name="invoice_create_do" />
-                        <field name="invoice_validate_do" />
-                        <field name="invoice_pay_do" />
-                    </group>
-
-                </page>
-            </notebook>
-        </field>
-    </record>
 
 <!--
     =======================================================

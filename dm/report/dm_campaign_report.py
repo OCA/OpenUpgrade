@@ -19,26 +19,20 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name" : "Direct Marketing For Emails",
-    "version" : "1.0",
-    "author" : "Tiny",
-    "website" : "http://www.openerp.com",
-    "category" : "Generic Modules/Direct Marketing",
-    "description": """
-            This module add emailing management to the Direct Marketing module.
-            """,
-    "depends" : ["dm","smtpclient"],
-    "init_xml" : [],
-    "demo_xml" : [
-                   "dm_email_demo.xml",
-                   ],
-    "update_xml" : [
-                    "dm_email_view.xml",
-                    "dm_email_data.xml",
-                    ],
-    "active": False,
-    "installable": True,
-}
+
+import time
+from report import report_sxw
+
+class campaign_report(report_sxw.rml_parse):
+    def __init__(self, cr, uid, name, context):
+        super(campaign_report, self).__init__(cr, uid, name, context)
+        self.sum_debit = 0.0
+        self.sum_credit = 0.0
+        self.localcontext.update({
+            'time': time,
+        })
+        self.context = context
+        
+report_sxw.report_sxw('report.dm.campaign.report', 'dm.campaign', 'addons/dm/report/dm_campaign.rml', parser=campaign_report,)
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
