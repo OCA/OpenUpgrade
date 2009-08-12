@@ -154,10 +154,13 @@ class DAVRequestHandler(AuthServer.BufferedAuthRequestHandler):
         try:
             DATA=pf.createResponse()
             DATA=DATA+"\n"
+	    # print "Data:", DATA
+	except DAV_NotFound,(ec,dd):
+	    return self.send_notFound(dd, uri)
         except DAV_Error, (ec,dd):
-            return self.send_status(ec)
+	    print "Dav Error (propfind):",ec,dd
+            return self.send_error(ec,dd)
 
-        #print DATA
         self.send_body_chunks(DATA,"207","Multi-Status","Multiple responses")
 
     def do_GET(self):
@@ -183,6 +186,7 @@ class DAVRequestHandler(AuthServer.BufferedAuthRequestHandler):
         try:
             data=dc.get_data(uri)
         except DAV_Error, (ec,dd):
+	    print "Dav Error(get):",ec,dd
             self.send_status(ec)
             return
 
@@ -352,3 +356,12 @@ class DAVRequestHandler(AuthServer.BufferedAuthRequestHandler):
         if not msg: msg=STATUS_CODES[code]
         self.send_body(body,code,STATUS_CODES[code],msg,mediatype)
 
+    def send_notFound(self,descr,uri):
+        body = """<?xml version="1.0" encoding="utf-8" ?>
+	<D:response xmlns:D="DAV:">
+		<D:href>%s</D:href>
+		<D:error/>
+		<D:responsedescription>%s</D:responsedescription>
+	</D:response>
+	"""
+	return self.send_status(404,descr, body=body % (uri,descr))

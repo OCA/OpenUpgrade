@@ -75,8 +75,13 @@ class PROPFIND:
 
         If we get an ALLPROP we first get the list of properties and then
         we do the same as with a PROP method.
+	
+	If the uri doesn't exist, return an xml response with a 404 status
 
         """
+
+	if not self.__dataclass.exists(self.__uri):
+		raise DAV_NotFound("Path %s doesn't exist" % self.__uri)
 
         if self.request_type==RT_ALLPROP:
             return self.create_allprop()
@@ -171,11 +176,14 @@ class PROPFIND:
             res=self.mk_prop_response(self.__uri,gp,bp,doc)
             ms.appendChild(res)
 
-
-        for newuri in self.__dataclass.get_childs(self.__uri):
-            gp,bp=self.get_propvalues(newuri)
-            res=self.mk_prop_response(newuri,gp,bp,doc)
-            ms.appendChild(res)
+	    try:
+		for newuri in self.__dataclass.get_childs(self.__uri):
+			gp,bp=self.get_propvalues(newuri)
+			res=self.mk_prop_response(newuri,gp,bp,doc)
+			ms.appendChild(res)
+	    except DAV_NotFound:
+		# If no children, never mind.
+		pass
 
         sfile=StringIO()
         ext.PrettyPrint(doc,stream=sfile)
@@ -245,31 +253,31 @@ class PROPFIND:
         re.appendChild(href)
 
         # write good properties
-        if good_props:
+        if good_props and len(good_props.items()):
             ps=doc.createElement("D:propstat")
-            re.appendChild(ps)
 
-        gp=doc.createElement("D:prop")
-        for ns in good_props.keys():
-            ns_prefix="ns"+str(self.namespaces.index(ns))+":"
-            for p,v in good_props[ns].items():
-                pe=doc.createElement(ns_prefix+str(p))
-                if p=="resourcetype":
-                    if v=="1":
-                        ve=doc.createElement("D:collection")
+            gp=doc.createElement("D:prop")
+            for ns in good_props.keys():
+                ns_prefix="ns"+str(self.namespaces.index(ns))+":"
+                for p,v in good_props[ns].items():
+                    pe=doc.createElement(ns_prefix+str(p))
+                    if p=="resourcetype":
+                        if v=="1":
+                            ve=doc.createElement("D:collection")
+                            pe.appendChild(ve)
+                    else:
+                        ve=doc.createTextNode(str(v))
                         pe.appendChild(ve)
-                else:
-                    ve=doc.createTextNode(str(v))
-                    pe.appendChild(ve)
 
-                gp.appendChild(pe)
-
-        ps.appendChild(gp)
-        s=doc.createElement("D:status")
-        t=doc.createTextNode("HTTP/1.1 200 OK")
-        s.appendChild(t)
-        ps.appendChild(s)
-        re.appendChild(ps)
+                    gp.appendChild(pe)
+            if gp.hasChildNodes():
+		re.appendChild(ps)
+		ps.appendChild(gp)
+		s=doc.createElement("D:status")
+		t=doc.createTextNode("HTTP/1.1 200 OK")
+		s.appendChild(t)
+		ps.appendChild(s)
+		re.appendChild(ps)
 
         # now write the errors!
         if len(bad_props.items()):
@@ -315,6 +323,7 @@ class PROPFIND:
             ec = 0
             for prop in plist:
                 try:
+                    ec = 0
                     r=self.__dataclass.get_prop(uri,ns,prop)
                     good_props[ns][prop]=str(r)
                 except DAV_Error, error_code:

@@ -52,8 +52,6 @@ class dav_interface:
 
     def get_prop2(self,uri,ns,pname):
         """ return the value of a property 
-
-        
         """
         if lower(ns)=="dav:": return self.get_dav(uri,pname)
 

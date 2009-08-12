@@ -79,7 +79,7 @@ class tinyerp_handler(dav_interface):
 		result = []
 		node = self.uri2object(cr,uid,pool, uri2[:])
 		if not node:
-			raise DAV_NotFound("Path %s not found" % uri2)
+			raise DAV_NotFound(uri2)
 		else:
 		    for d in node.children():
 			result.append( urlparse.urljoin(self.baseuri,dbname+'/' + d.path) )
@@ -121,7 +121,7 @@ class tinyerp_handler(dav_interface):
 			raise DAV_Error, 409
 		node = self.uri2object(cr,uid,pool, uri2)
 		if not node:
-			raise DAV_NotFound("Path %s not found" % uri2)
+			raise DAV_NotFound(uri2)
 		if node.type=='file':
 			datas=False
 			if node.object.datas:
@@ -148,19 +148,19 @@ class tinyerp_handler(dav_interface):
 			return COLLECTION
 		node = self.uri2object(cr,uid,pool, uri2)
 		if not node:
-			raise DAV_NotFound("Path %s not found" % uri2)
+			raise DAV_NotFound(uri2)
 		cr.close()
 		if node.type in ('collection','database'):
 			return COLLECTION
 		return OBJECT
 
 	def _get_dav_displayname(self,uri):
+		# TODO!
 		raise DAV_Secret
 
-	#@memoize(CACHE_SIZE)
+	@memoize(CACHE_SIZE)
 	def _get_dav_getcontentlength(self,uri):
 		""" return the content length of an object """
-		print 'Get DAV CL', uri
 		if uri[-1]=='/':uri=uri[:-1]
 		result = 0
 		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
@@ -168,7 +168,7 @@ class tinyerp_handler(dav_interface):
 			return '0'
 		node = self.uri2object(cr, uid, pool, uri2)
 		if not node:
-			raise DAV_NotFound("Path %s not found" % uri2)
+			raise DAV_NotFound(uri2)
 		if node.type=='file':
 			result = node.object.file_size or 0
 		cr.close()
@@ -185,7 +185,7 @@ class tinyerp_handler(dav_interface):
 			return today
 		node = self.uri2object(cr,uid,pool, uri2)
 		if not node:
-			raise DAV_NotFound("Path %s not found" % uri2)
+			raise DAV_NotFound(uri2)
 		if node.type=='file':
 			dt = node.object.write_date or node.object.create_date
 			print "Time:",dt
@@ -205,7 +205,7 @@ class tinyerp_handler(dav_interface):
 			raise DAV_Error, 409
 		node = self.uri2object(cr,uid,pool, uri2)
 		if not node:
-			raise DAV_NotFound("Path %s not found" % uri2)
+			raise DAV_NotFound(uri2)
 		if node.type=='file':
 			dt = node.object.write_date or node.object.create_date
 			result = time.strptime(dt,'%Y-%m-%d %H:%M:%S')
@@ -223,7 +223,7 @@ class tinyerp_handler(dav_interface):
 			return 'httpd/unix-directory'
 		node = self.uri2object(cr,uid,pool, uri2)
 		if not node:
-			raise DAV_NotFound("Path %s not found" % uri2)
+			raise DAV_NotFound(uri2)
 		# Todo: get the real content type..
 		result = 'application/octet-stream'
 		if node.type=='collection':
@@ -362,7 +362,7 @@ class tinyerp_handler(dav_interface):
 		object2=node and node.object2 or False
 		object=node and node.object or False
 		if not object:
-			raise DAV_NotFound, 404
+			raise DAV_NotFound
 
 		print ' rm',object._table_name,uri
 		if object._table_name=='ir.attachment':
