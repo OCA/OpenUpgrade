@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import pooler
 
 import base64
@@ -187,7 +188,8 @@ class tinyerp_handler(dav_interface):
 			raise DAV_NotFound("Path %s not found" % uri2)
 		if node.type=='file':
 			dt = node.object.write_date or node.object.create_date
-			result = int(time.mktime(time.strptime(dt,'%Y-%m-%d %H:%M:%S')))
+			print "Time:",dt
+			result = time.mktime(time.strptime(dt,'%Y-%m-%d %H:%M:%S'))
 		else:
 			result = today
 		cr.close()

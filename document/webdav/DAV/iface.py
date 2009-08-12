@@ -111,8 +111,10 @@ class dav_interface:
     def _get_dav_getlastmodified(self,uri):
         """ return the last modified date of a resource """
         d=self.get_lastmodified(uri)
+	if isinstance(d, int) or isinstance(d, float):
+		d = time.localtime(d)
         # format it
-        return time.strftime("%a, %d %b %Y %H:%M:%S %Z",time.localtime(d))
+        return time.asctime(d)
 
 
     ###
