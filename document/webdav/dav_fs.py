@@ -54,7 +54,6 @@ class tinyerp_handler(dav_interface):
 
 	@memoize(4)
 	def db_list(self):
-		print '*'*90
 		s = netsvc.LocalService('db')
 		result = s.list()
 		self.db_name_list=[]
@@ -79,11 +78,10 @@ class tinyerp_handler(dav_interface):
 		result = []
 		node = self.uri2object(cr,uid,pool, uri2[:])
 		if not node:
-			print "Object %s from %s not found.." % (uri2[:],uri)
+			raise DAV_NotFound("Path %s not found" % uri2)
 		else:
 		    for d in node.children():
 			result.append( urlparse.urljoin(self.baseuri,dbname+'/' + d.path) )
-		    print "Result", result
 		return result
 
 	def uri2local(self, uri):
@@ -122,7 +120,7 @@ class tinyerp_handler(dav_interface):
 			raise DAV_Error, 409
 		node = self.uri2object(cr,uid,pool, uri2)
 		if not node:
-			raise DAV_NotFound
+			raise DAV_NotFound("Path %s not found" % uri2)
 		if node.type=='file':
 			datas=False
 			if node.object.datas:
@@ -148,6 +146,8 @@ class tinyerp_handler(dav_interface):
 		if not dbname:
 			return COLLECTION
 		node = self.uri2object(cr,uid,pool, uri2)
+		if not node:
+			raise DAV_NotFound("Path %s not found" % uri2)
 		cr.close()
 		if node.type in ('collection','database'):
 			return COLLECTION
@@ -166,6 +166,8 @@ class tinyerp_handler(dav_interface):
 		if not dbname:
 			return '0'
 		node = self.uri2object(cr, uid, pool, uri2)
+		if not node:
+			raise DAV_NotFound("Path %s not found" % uri2)
 		if node.type=='file':
 			result = node.object.file_size or 0
 		cr.close()
@@ -181,6 +183,8 @@ class tinyerp_handler(dav_interface):
 		if not dbname:
 			return today
 		node = self.uri2object(cr,uid,pool, uri2)
+		if not node:
+			raise DAV_NotFound("Path %s not found" % uri2)
 		if node.type=='file':
 			dt = node.object.write_date or node.object.create_date
 			result = int(time.mktime(time.strptime(dt,'%Y-%m-%d %H:%M:%S')))
@@ -199,6 +203,8 @@ class tinyerp_handler(dav_interface):
 		if not dbname:
 			raise DAV_Error, 409
 		node = self.uri2object(cr,uid,pool, uri2)
+		if not node:
+			raise DAV_NotFound("Path %s not found" % uri2)
 		if node.type=='file':
 			result = node.object.write_date or node.object.create_date
 		else:
@@ -214,6 +220,9 @@ class tinyerp_handler(dav_interface):
 		if not dbname:
 			return 'httpd/unix-directory'
 		node = self.uri2object(cr,uid,pool, uri2)
+		if not node:
+			raise DAV_NotFound("Path %s not found" % uri2)
+		# Todo: get the real content type..
 		result = 'application/octet-stream'
 		if node.type=='collection':
 			return 'httpd/unix-directory'
