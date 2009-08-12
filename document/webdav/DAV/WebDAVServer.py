@@ -125,7 +125,7 @@ class DAVRequestHandler(AuthServer.BufferedAuthRequestHandler):
         if self.headers.has_key("Content-Length"):
             l=self.headers['Content-Length']
             body=self.rfile.read(atoi(l))
-        body = """<?xml version="1.0" encoding="utf-8"?>
+        alt_body = """<?xml version="1.0" encoding="utf-8"?>
                     <propfind xmlns="DAV:"><prop>
                     <getcontentlength xmlns="DAV:"/>
                     <getlastmodified xmlns="DAV:"/>
@@ -146,9 +146,7 @@ class DAVRequestHandler(AuthServer.BufferedAuthRequestHandler):
 
         uri=urlparse.urljoin(dc.baseuri,self.path)
         uri=urllib.unquote(uri)
-        print 'PROPFIND', uri, dc, d
         pf=PROPFIND(uri,dc,d)
-        print 'PROPFIND', pf
 
         if body:
             pf.read_propfind(body)

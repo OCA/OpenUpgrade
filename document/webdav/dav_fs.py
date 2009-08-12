@@ -198,7 +198,6 @@ class tinyerp_handler(dav_interface):
 	@memoize(CACHE_SIZE)
 	def get_creationdate(self,uri):
 		""" return the last modified date of the object """
-		print 'Get DAV Cre', uri
 
 		if uri[-1]=='/':uri=uri[:-1]
 		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
@@ -208,11 +207,12 @@ class tinyerp_handler(dav_interface):
 		if not node:
 			raise DAV_NotFound("Path %s not found" % uri2)
 		if node.type=='file':
-			result = node.object.write_date or node.object.create_date
+			dt = node.object.write_date or node.object.create_date
+			result = time.strptime(dt,'%Y-%m-%d %H:%M:%S')
 		else:
-			result = time.strftime('%Y-%m-%d %H:%M:%S')
+			result = time.time()
 		cr.close()
-		return time.mktime(time.strptime(result,'%Y-%m-%d %H:%M:%S'))
+		return result
 
 	@memoize(CACHE_SIZE)
 	def _get_dav_getcontenttype(self,uri):
