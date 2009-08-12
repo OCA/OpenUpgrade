@@ -297,11 +297,11 @@ class tinyerp_handler(dav_interface):
 				'parent_id': object and object.id or False,
 			}
 			partner = False
-			if object2.partner_id and object2.partner_id.id:
-				partner = object2.partner_id.id
-			if object2._name == 'res.partner':
-				partner = object2.id
 			if object2:
+				if object2.partner_id and object2.partner_id.id:
+					partner = object2.partner_id.id
+				if object2._name == 'res.partner':
+					partner = object2.id
 				val.update( {
 					'res_model': object2._name,
 					'partner_id': partner,
