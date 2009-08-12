@@ -655,7 +655,9 @@ class document_file(osv.osv):
             pass
         return result
 
-    def create(self, cr, uid, vals, context={}):
+    def create(self, cr, uid, vals, context=None):
+        if not context:
+            context = {}
         vals['title']=vals['name']
         vals['parent_id'] = context.get('parent_id',False) or vals.get('parent_id',False)
         if not vals.get('res_id', False) and context.get('default_res_id',False):
