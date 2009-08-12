@@ -188,7 +188,6 @@ class tinyerp_handler(dav_interface):
 			raise DAV_NotFound(uri2)
 		if node.type=='file':
 			dt = node.object.write_date or node.object.create_date
-			print "Time:",dt
 			result = time.mktime(time.strptime(dt,'%Y-%m-%d %H:%M:%S'))
 		else:
 			result = today
@@ -216,7 +215,6 @@ class tinyerp_handler(dav_interface):
 
 	@memoize(CACHE_SIZE)
 	def _get_dav_getcontenttype(self,uri):
-		print 'Get DAV CT', uri
 		if uri[-1]=='/':uri=uri[:-1]
 		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
 		if not dbname:
@@ -224,10 +222,18 @@ class tinyerp_handler(dav_interface):
 		node = self.uri2object(cr,uid,pool, uri2)
 		if not node:
 			raise DAV_NotFound(uri2)
-		# Todo: get the real content type..
+			
 		result = 'application/octet-stream'
 		if node.type=='collection':
-			return 'httpd/unix-directory'
+			result ='httpd/unix-directory'
+		elif node.type == 'file':
+			try:
+				ftype = node.object.file_type
+				if ftype and  '/' in ftype:
+					result = ftype
+			except Exception,e:
+				print e
+				pass
 		cr.close()
 		return result
 		#raise DAV_NotFound, 'Could not find %s' % path
@@ -277,17 +283,14 @@ class tinyerp_handler(dav_interface):
 		cr, uid, pool,dbname, uri2 = self.get_cr(uri)
 		if not dbname:
 			raise DAV_Forbidden
-		print 'Looking Node'
 		try:
 			node = self.uri2object(cr,uid,pool, uri2[:])
 		except:
 			node = False
-		print 'NODE FOUND', node
 		fobj = pool.get('ir.attachment')
 		objname = uri2[-1]
 		ext = objname.find('.') >0 and objname.split('.')[1] or False
 		if node and node.type=='file':
-			print '*** FILE', node.object
 			val = {
 				'file_size': len(data),
 				'datas': base64.encodestring(data),
@@ -295,7 +298,6 @@ class tinyerp_handler(dav_interface):
 			cid = fobj.write(cr, uid, [node.object.id], val)
 			cr.commit()
 		elif not node:
-			print '*** CREATE', 'not node'
 			node = self.uri2object(cr,uid,pool, uri2[:-1])
 			object2=node and node.object2 or False
 			object=node and node.object or False
@@ -327,7 +329,6 @@ class tinyerp_handler(dav_interface):
 			cr.close()
 			return 201
 		else:
-			print '*** FORB'
 			raise DAV_Forbidden
 
 	def rmcol(self,uri):
@@ -533,7 +534,6 @@ class tinyerp_handler(dav_interface):
 		except:
 			pass
 		cr.close()
-		print 'Get Exists', uri, result
 		return result
 
 	@memoize(CACHE_SIZE)
