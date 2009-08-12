@@ -9,8 +9,9 @@
                     "sale",
                 ],
     "author" : "Axelor",
-    "description": """Multi company Product Module
-    """,
+    "description": """The Module allows to define each product for many companies with their cost price and sale price
+    and that update cost price and sale price as per userwise company, for the purpose of multicompany""",
+    
     'website': 'http://www.axelor.com',
     'init_xml': [],
     'update_xml': [
