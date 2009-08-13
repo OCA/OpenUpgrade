@@ -423,10 +423,52 @@ class pos_order_line(osv.osv):
     _inherit = 'pos.order.line'
     _order = "create_date desc"
 
+    def _price_unit_vat(self, cr, uid, ids, field_name, arg, context):
+        """This method is defined to show unit prices minus discount plus taxes on order line"""
+        res = {}
+        tax_obj = self.pool.get('account.tax')
+        users_obj = self.pool.get('res.users')
+        user = users_obj.browse(cr, uid, uid, context)
+        prices_tax_include = user.company_id.pos_prices_tax_include
+
+        for line in self.browse(cr, uid, ids):
+            val = 0.0
+            if not prices_tax_include:
+                val = reduce(lambda x, y: x+round(y['amount'], 2),
+                    tax_obj.compute(cr, uid, line.product_id.taxes_id,
+                        line.price_unit * \
+                        (1-(line.discount or 0.0)/100.0), 1),
+                        val)
+            res[line.id] = val + line.price_unit * (1-(line.discount or 0.0)/100.0)
+        return res
+
+
+    def _price_subtotal_vat(self, cr, uid, ids, field_name, arg, context):
+        """This method is defined to show subtotal prices plus taxes on order line"""
+        res = {}
+        tax_obj = self.pool.get('account.tax')
+        users_obj = self.pool.get('res.users')
+        user = users_obj.browse(cr, uid, uid, context)
+        prices_tax_include = user.company_id.pos_prices_tax_include
+
+        for line in self.browse(cr, uid, ids):
+            val = 0.0
+            if not prices_tax_include:
+                val = reduce(lambda x, y: x+round(y['amount'], 2),
+                    tax_obj.compute(cr, uid, line.product_id.taxes_id,
+                        line.price_unit * \
+                        (1-(line.discount or 0.0)/100.0), line.qty),
+                        val)
+            res[line.id] = val + (line.price_unit * (1-(line.discount or 0.0)/100.0) * line.qty)
+        return res
+
+
     _columns = {
         'partner_id':fields.related('order_id', 'partner_id', type='many2one', relation='res.partner', string='Partner'),
         'state':fields.related('order_id', 'state', type='selection', selection=[('cancel', 'Cancel'), ('draft', 'Draft'),
             ('paid', 'Paid'), ('done', 'Done'), ('invoiced', 'Invoiced')], string='State'),
+        'price_unit_vat': fields.function(_price_unit_vat, method=True, string='Total Unit'),
+        'price_subtotal_vat': fields.function(_price_subtotal_vat, method=True, string='Subtotal+Tax'),
     }
 
     def unlink(self, cr, uid, ids, context={}):

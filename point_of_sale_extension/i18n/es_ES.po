@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-07-24 09:00:36+0000\n"
-"PO-Revision-Date: 2009-07-24 11:10+0100\n"
+"POT-Creation-Date: 2009-08-07 17:43:56+0000\n"
+"PO-Revision-Date: 2009-08-07 19:48+0100\n"
 "Last-Translator: Jordi Esteve (Zikzakmedia) <jesteve@zikzakmedia.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -47,6 +47,11 @@ msgstr "No se han añadido productos a la venta."
 #: wizard_field:pos.payment2,ask_pay,payment_name:0
 msgid "Payment name"
 msgstr "Descripción pago"
+
+#. module: point_of_sale_extension
+#: field:pos.order.line,price_unit_vat:0
+msgid "Total Unit"
+msgstr "Total unidad"
 
 #. module: point_of_sale_extension
 #: field:pos.order.line,state:0
@@ -202,6 +207,11 @@ msgid "Payment term"
 msgstr "Plazo de pago"
 
 #. module: point_of_sale_extension
+#: field:pos.order.line,price_subtotal_vat:0
+msgid "Subtotal+Tax"
+msgstr "Subtotal+Impuesto"
+
+#. module: point_of_sale_extension
 #: field:res.company,pos_warn_sale_order:0
 msgid "Product in sale order warning"
 msgstr "Aviso producto en pedido venta"
@@ -337,3 +347,4 @@ msgstr "Venta nº :"
 #: rml:pos.receipt:0
 msgid "Salesman :"
 msgstr "Cajero/a :"
+
