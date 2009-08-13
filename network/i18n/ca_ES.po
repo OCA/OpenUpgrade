@@ -1,0 +1,404 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+# 	* network
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 5.0.1\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-08-06 18:35:18+0000\n"
+"PO-Revision-Date: 2009-08-06 20:39+0100\n"
+"Last-Translator: Jordi Esteve (Zikzakmedia) <jesteve@zikzakmedia.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: network
+#: field:network.hardware.type,networkable:0
+msgid "Networkable hardware"
+msgstr "Maquinari en xarxa"
+
+#. module: network
+#: model:ir.module.module,description:network.module_meta_information
+msgid ""
+"\n"
+"    A simple module to encode your networks and materials:\n"
+"    - networks and connections between networks\n"
+"    - hardwares and softwares with:\n"
+"        - versions, access rights, waranties\n"
+"\n"
+"    You can print interventions form for technical people."
+msgstr ""
+"\n"
+"    Un mòdul senzill per codificar les vostre xarxes i maquinari:\n"
+"    - Xarxes i connexions entre xarxes\n"
+"    - Maquinari i programari amb:\n"
+"            - Versions, identificacions (usuaris i contrasenyes), garanties\n"
+"\n"
+"   Podeu imprimir informes de les intervencions pel personal tècnic."
+
+#. module: network
+#: constraint:ir.model:0
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr "El nom de l'objecte ha de començar amb x_ i sense cap caràcter especial!"
+
+#. module: network
+#: model:ir.actions.act_window,name:network.tree_by_network
+msgid "Material in this network"
+msgstr "Maquinari d'aquesta xarxa"
+
+#. module: network
+#: view:network.software:0
+msgid "General Informations"
+msgstr "Informació general"
+
+#. module: network
+#: field:network.material,child_id:0
+msgid "Childs Materials"
+msgstr "Maquinari fill"
+
+#. module: network
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr "XML invàlid en l'estructura de la vista!"
+
+#. module: network
+#: field:network.changes,date:0
+msgid "Change date"
+msgstr "Data"
+
+#. module: network
+#: field:network.changes,machine_id:0
+msgid "Machine"
+msgstr "Màquina"
+
+#. module: network
+#: model:ir.module.module,shortdesc:network.module_meta_information
+msgid "Network Management"
+msgstr "Gestor de xarxes"
+
+#. module: network
+#: model:ir.actions.act_window,name:network.action_top_material_tree
+#: model:ir.ui.menu,name:network.menu_action_top_material_tree
+msgid "Top Materials"
+msgstr "Maquinari principal"
+
+#. module: network
+#: field:network.material,warranty:0
+msgid "Warranty deadline"
+msgstr "Període de garantia"
+
+#. module: network
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr "Nom del model invàlid en aquesta acció."
+
+#. module: network
+#: field:network.material,supplier:0
+msgid "Supplier"
+msgstr "Proveïdor"
+
+#. module: network
+#: view:network.software:0
+#: field:network.software,logpass:0
+msgid "Login / Password"
+msgstr "Usuari / Contrasenya"
+
+#. module: network
+#: model:ir.actions.act_window,name:network.add_view_material
+#: model:ir.ui.menu,name:network.menu_add_view_material
+msgid "Material List"
+msgstr "Llista de maquinari"
+
+#. module: network
+#: model:ir.actions.act_window,name:network.add_new_network
+#: model:ir.model,name:network.model_network_network
+#: model:ir.ui.menu,name:network.menu_network
+#: field:network.material,network_id:0
+msgid "Network"
+msgstr "Xarxa"
+
+#. module: network
+#: model:ir.model,name:network.model_network_software_logpass
+msgid "Software login"
+msgstr "Identificació del programari"
+
+#. module: network
+#: view:network.software.logpass:0
+msgid "Passwords"
+msgstr "Contrasenyes"
+
+#. module: network
+#: view:network.software.logpass:0
+msgid "Add a password"
+msgstr "Afegir contrasenya"
+
+#. module: network
+#: field:network.network,range:0
+msgid "Address range"
+msgstr "Rang d'adreces"
+
+#. module: network
+#: view:network.material:0
+#: view:network.network:0
+msgid "Material Info"
+msgstr "Informació maquinari"
+
+#. module: network
+#: model:ir.model,name:network.model_network_changes
+msgid "Network changes"
+msgstr "Canvis de xarxes"
+
+#. module: network
+#: field:network.software,version:0
+msgid "Software version"
+msgstr "Versió del programari"
+
+#. module: network
+#: model:ir.actions.act_window,name:network.edit_material_2click
+#: model:ir.model,name:network.model_network_material
+#: field:network.software,material_id:0
+msgid "Material"
+msgstr "Maquinari"
+
+#. module: network
+#: model:ir.model,name:network.model_network_software_type
+msgid "Software type"
+msgstr "Tipus de programari"
+
+#. module: network
+#: view:network.network:0
+msgid "Network Definition"
+msgstr "Definició de la xarxa"
+
+#. module: network
+#: view:network.material:0
+#: view:network.network:0
+msgid "Updates"
+msgstr "Actualitzacions"
+
+#. module: network
+#: view:network.material:0
+msgid "Material in this Network"
+msgstr "Maquinari d'aquesta xarxa"
+
+#. module: network
+#: field:network.changes,name:0
+msgid "Short Description"
+msgstr "Descripció breu"
+
+#. module: network
+#: view:network.changes:0
+msgid "Enter a diary entry"
+msgstr "Introdueix una intervenció"
+
+#. module: network
+#: model:ir.ui.menu,name:network.menu_network_definition
+msgid "Configuration"
+msgstr "Configuració"
+
+#. module: network
+#: field:network.network,user_id:0
+msgid "Onsite Contact person"
+msgstr "Persona de contacte"
+
+#. module: network
+#: model:ir.ui.menu,name:network.menu_action_hard_type
+#: model:ir.ui.menu,name:network.menu_action_software_type
+msgid "Types"
+msgstr "Tipus"
+
+#. module: network
+#: field:network.material,software_id:0
+msgid "Installed Software"
+msgstr "Programari instal·lat"
+
+#. module: network
+#: field:network.software,name:0
+#: field:network.software.type,name:0
+msgid "Composant Name"
+msgstr "Nom del programari"
+
+#. module: network
+#: view:network.material:0
+msgid "All Network Material"
+msgstr "Tot el maquinari"
+
+#. module: network
+#: field:network.material,name:0
+msgid "Device Name"
+msgstr "Nom del dispositiu"
+
+#. module: network
+#: field:network.network,material_ids:0
+msgid "Members"
+msgstr "Membres"
+
+#. module: network
+#: view:network.software:0
+msgid "Network Softwares"
+msgstr "Programari de la xarxa"
+
+#. module: network
+#: view:network.material:0
+#: field:network.material,note:0
+#: view:network.network:0
+#: view:network.software:0
+#: field:network.software,note:0
+#: field:network.software.type,note:0
+msgid "Notes"
+msgstr "Notes"
+
+#. module: network
+#: view:network.material:0
+#: view:network.network:0
+msgid "Network Material"
+msgstr "Maquinari de la xarxa"
+
+#. module: network
+#: model:ir.actions.act_window,name:network.action_software_type
+#: field:network.software,type:0
+#: view:network.software.type:0
+msgid "Software Type"
+msgstr "Tipus de programari"
+
+#. module: network
+#: view:network.network:0
+msgid "Network Element"
+msgstr "Element de la xarxa"
+
+#. module: network
+#: model:ir.model,name:network.model_network_software
+#: model:ir.ui.menu,name:network.menu_software
+#: field:network.software.logpass,software_id:0
+msgid "Software"
+msgstr "Programari"
+
+#. module: network
+#: field:network.hardware.type,name:0
+msgid "Type of material"
+msgstr "Tipus de material"
+
+#. module: network
+#: model:ir.actions.act_window,name:network.add_view_network
+msgid "Netwok List"
+msgstr "Llista de xarxes"
+
+#. module: network
+#: field:network.software.logpass,login:0
+msgid "Login"
+msgstr "Usuari"
+
+#. module: network
+#: model:ir.actions.act_window,name:network.action_hard_type
+#: view:network.hardware.type:0
+msgid "Hardware Type"
+msgstr "Tipus de maquinari"
+
+#. module: network
+#: field:network.material,date:0
+#: field:network.software,date:0
+msgid "Installation Date"
+msgstr "Data d'instal·lació"
+
+#. module: network
+#: view:network.material:0
+#: view:network.network:0
+msgid "Informations"
+msgstr "Informacions"
+
+#. module: network
+#: field:network.software.logpass,password:0
+msgid "Password"
+msgstr "Contrasenya"
+
+#. module: network
+#: field:network.changes,description:0
+msgid "Long Description"
+msgstr "Descripció"
+
+#. module: network
+#: view:network.changes:0
+msgid "Diary entry"
+msgstr "Intervenció"
+
+#. module: network
+#: view:network.network:0
+msgid "All Networks"
+msgstr "Totes les xarxes"
+
+#. module: network
+#: view:network.changes:0
+msgid "Interventions"
+msgstr "Intervencions"
+
+#. module: network
+#: field:network.software,email:0
+msgid "Contact Email"
+msgstr "Correu de contacte"
+
+#. module: network
+#: model:ir.actions.act_window,name:network.action_material_tree
+#: model:ir.ui.menu,name:network.menu_action_material_tree
+msgid "All Materials"
+msgstr "Tot el maquinari"
+
+#. module: network
+#: model:ir.ui.menu,name:network.menu_add_view_network
+msgid "Network List"
+msgstr "Llista de xarxes"
+
+#. module: network
+#: field:network.material,parent_id:0
+msgid "Parent Material"
+msgstr "Maquinari pare"
+
+#. module: network
+#: model:ir.ui.menu,name:network.menu_add_new_network
+msgid "Networks"
+msgstr "Xarxes"
+
+#. module: network
+#: model:ir.ui.menu,name:network.menu_hardware
+msgid "Hardware"
+msgstr "Maquinari"
+
+#. module: network
+#: field:network.material,ip_addr:0
+msgid "IP Address"
+msgstr "Adreça IP"
+
+#. module: network
+#: field:network.network,contact_id:0
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: network
+#: field:network.material,change_id:0
+msgid "Changes on this machine"
+msgstr "Canvis d'aquest maquinari"
+
+#. module: network
+#: view:network.material:0
+#: view:network.network:0
+msgid "Softwares"
+msgstr "Programari"
+
+#. module: network
+#: model:ir.ui.menu,name:network.menu_tools
+msgid "Tools"
+msgstr "Eines"
+
+#. module: network
+#: model:ir.model,name:network.model_network_hardware_type
+#: field:network.material,type:0
+msgid "Hardware type"
+msgstr "Tipus de maquinari"
+
+#. module: network
+#: field:network.network,name:0
+msgid "Network name"
+msgstr "Nom de la xarxa"
+
