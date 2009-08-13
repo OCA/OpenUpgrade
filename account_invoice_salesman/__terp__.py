@@ -24,7 +24,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "website" : "http://www.openerp.com",
-    "depends" : ["account"],
+    "depends" : ["account","sale"],
     "category" : "Generic Modules/Accounting",
     "description": "This module adds a salesman on each invoice.",
     "init_xml" : [],

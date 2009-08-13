@@ -617,7 +617,7 @@
 	<!-- Ecommerce Partner 1 -->
 
 		<record id="ecommerce_partner_name1" model="ecommerce.partner">
-			<field name="lang" ref="base.lang_en"></field>
+			<field name="lang">en_US</field>
 			<field name="last_name">Fedric</field>
 			<field name="name">Fedric Johnsans</field>
 			<field eval="[(6,0,[ref('base.res_partner_category_0')])]" name="category_ids"/>
@@ -641,7 +641,7 @@
 	<!-- Ecommerce Partner 2 -->
 
 		<record id="ecommerce_partner_name2" model="ecommerce.partner">
-			<field name="lang" ref="base.lang_en"></field>
+			<field name="lang">en_US</field>
 			<field  name="last_name">Pathric</field>
 			<field  name="name">Laser Vinnie</field>
 			<field eval="[(6,0,[ref('base.res_partner_category_0')])]" name="category_ids"/>
@@ -683,7 +683,7 @@
 	<!-- Ecommerce Partner 3 -->
 
 		<record id="ecommerce_partner_name3" model="ecommerce.partner">
-			<field name="lang" ref="base.lang_en"></field>
+			<field name="lang">en_US</field>
 			<field name="last_name">Passot</field>
 			<field name="name">Thomas Passot</field>
 			<field eval="[(6,0,[ref('base.res_partner_category_0')])]" name="category_ids"/>
@@ -709,7 +709,7 @@
 	<!-- Ecommerce Partner 4 -->
 
 		<record id="ecommerce_partner_name4" model="ecommerce.partner">
-			<field name="lang" ref="base.lang_en"></field>
+			<field name="lang">en_US</field>
 			<field name="last_name">jacot</field>
 			<field name="name">Laurent Oaurent</field>
 			<field eval="[(6,0,[ref('base.res_partner_category_0')])]" name="category_ids"/>

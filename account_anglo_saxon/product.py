@@ -22,9 +22,17 @@
 
 from osv import fields, osv
 
-#class product_category(osv.osv):
-#    _inherit = "product.category"
-#    _columns = {
+class product_category(osv.osv):
+    _inherit = "product.category"
+    _columns = {
+        'property_account_creditor_price_difference_categ': fields.property(
+            'account.account',
+            type='many2one',
+            relation='account.account',
+            string="Price Difference Account",
+            method=True,
+            view_load=True,
+            help="This account will be used to value price difference between purchase price and cost price."),                
 #        'property_account_received_goods_categ': fields.property(
 #            'account.account',
 #            type='many2one',
@@ -41,12 +49,20 @@ from osv import fields, osv
 #            method=True,
 #            view_load=True,
 #            help="This account will be used to value outgoing stock for the current product category"),
-#    }
-#product_category()
-#
-#class product_template(osv.osv):
-#    _inherit = "product.template"
-#    _columns = {
+    }
+product_category()
+
+class product_template(osv.osv):
+    _inherit = "product.template"
+    _columns = {
+        'property_account_creditor_price_difference': fields.property(
+            'account.account',
+            type='many2one',
+            relation='account.account',
+            string="Price Difference Account",
+            method=True,
+            view_load=True,
+            help="This account will be used to value price difference between purchase price and cost price."),                
 #        'property_account_received_goods': fields.property(
 #            'account.account',
 #            type='many2one',
@@ -63,8 +79,8 @@ from osv import fields, osv
 #            method=True,
 #            view_load=True,
 #            help="This account will be used instead of the default one to value outgoing stock for the current product"),
-#    }
-#product_template()
+    }
+product_template()
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
