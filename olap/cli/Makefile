@@ -1,6 +1,6 @@
 DATABASE = 'bi'
 
-all: simple sale date where sublevels calc_meas cross page complex
+all: simple sale date where sublevels calc_meas cross page complex test
 
 simple:
 	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "tinyerp" -c "select {[User].[all]} on rows, {[measures].[Credit Limit],[measures].[Count]} on columns from Partner"
@@ -32,8 +32,7 @@ date:
 	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "OpenERPSales" -c "select {[Order Date].children,[Order Date].[2008].children,[Order Date].[2008].[Q2].children} on rows, {[measures].[Total Sales]} on columns from Sales where ([Order Date].[2008].[Q2])"
 
 where:
-	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "OpenERPSales" -c "select {[Order Date].children, [Order Date].[all]} on rows, {[measures].[Total Sales]} from Sales where ([Order Date].[2008])"
-
+	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "OpenERPSales" -c " select crossjoin (crossjoin ({[Order Date].[all],[Users].[all]} , {[Users].children} ) , {[Partner Country].[all]}) on rows, {[measures].[Units Sold]} on columns from Sales"
 sublevels:
 	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "OpenERPSales" -c "select {[City].[all],[City].children} on rows, {[measures].[Total Sales]} on columns from Sales"
 	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "OpenERPSales" -c "select {[City].[all],[City].children} on rows, {[measures].[Total Sales]} on columns from Sales"
@@ -66,4 +65,5 @@ complex:
 	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "OpenERPSales" -c "select crossjoin(crossjoin({[City].[all],[City].children},{[Order Date].children}),{[Users].children}) on rows, {[measures].[Units Sold],[measures].[Total Sales]} on columns, {[Order Date].children} on pages from Sales"
 	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "OpenERPSales" -c "select crossjoin(crossjoin({[City].[all],[City].children},{[Order Date].children}),{[Users].children}) on rows, crossjoin({[measures].[Units Sold],[measures].[Total Sales]},{[City].children}) on columns, {[Order Date].children} on pages from Sales"
 
-
+test:
+	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "tinyerp" -c " select crossjoin (crossjoin ({[Order Date].[all],[Users].[all]} , {[Users].children} ) , {[Partner Country].[all]}) on rows, {[measures].[Units Sold]} on columns from Sales"

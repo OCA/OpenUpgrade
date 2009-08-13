@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+		<menuitem id="menu_user_ctg" name="CTG" parent="base.menu_administration"/>
+
+		<record model="ir.ui.view" id="view_ctg_type_tree">
+			<field name="name">ctg.type.tree</field>
+			<field name="model">ctg.type</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="CTG Type">
+					<field name="name" select="1"/>
+					<field name="code" select="1"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_ctg_type_form">
+			<field name="name">ctg.type.form</field>
+			<field name="model">ctg.type</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="CTG Type">
+					<field name="name" select="1"/>
+					<field name="code" select="1"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_view_ctg_type">
+			<field name="name">CTG Type</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">ctg.type</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="view_ctg_type_tree"/>
+		</record>
+		<menuitem id="menu_ctg_conf" name="CTG Type" parent="base.menu_config"/>
+		<menuitem id="menu_ctg_type" name="Type" action= "action_view_ctg_type" parent="menu_ctg_conf" />
+		
+		<record model="ir.ui.view" id="view_ctg_line_tree">
+			<field name="name">ctg.line.tree</field>
+			<field name="model">ctg.line</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="CTG Line">
+					<field name="ctg_type_id" select="1"/>
+					<field name="points"/>
+					<field name="date_ctg" select="1"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_ctg_line_form">
+			<field name="name">ctg.line.form</field>
+			<field name="model">ctg.line</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="CTG Line">
+					<field name="rewarded_user_id" select="1" readonly="1"/>
+					<field name="ctg_type_id" select="1" readonly="1"/>
+					<field name="points" readonly="1"/>
+					<field name="date_ctg" select="1" readonly="1"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_view_ctg_line">
+			<field name="name">CTG Line</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">ctg.line</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="view_ctg_line_tree"/>
+		</record>
+
+		<menuitem name="CTG Line" id="menu_ctg_line" action= "action_view_ctg_line" parent="menu_user_ctg" sequence="1"/>
+
+		<record model="ir.ui.view" id="users_inherit_form1">
+			<field name="name">users.inherit.form</field>
+			<field name="inherit_id" ref="base.view_users_form"/>
+			<field name="model">res.users</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="password" position="after">
+					<field name="lp_login" string="Launchpad ID" colspan="4"/>					
+				</field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="users_inherit_form2">
+			<field name="name">users.inherit.form</field>
+			<field name="inherit_id" ref="base.view_users_form"/>
+			<field name="model">res.users</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+			<notebook colspan="4" position="inside">
+				<page string="CTG Line">
+					<field colspan="4" nolabel="1" name="ctg_line"/>
+				</page>
+				<page string="History">
+					<field colspan="4" nolabel="1" name="user_history"/>
+				</page>
+			</notebook>
+			</field>
+		</record>
+
+
+		<record model="ir.ui.view" id="view_report_ctg_line_tree">
+			<field name="name">report.ctg.line.tree</field>
+			<field name="model">report.ctg.line</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Report CTG Line">
+					<field name="name" select="1"/>
+					<field name="ctg_type_id" select="1"/>
+					<field name="points" />
+					<field name="rewarded_user_id" select="1"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_report_ctg_line_form">
+			<field name="name">report.ctg.line.form</field>
+			<field name="model">report.ctg.line</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Report CTG Line">
+					<field name="name" select="1"/>
+					<field name="ctg_type_id" select="1"/>
+					<field name="points" />
+					<field name="rewarded_user_id" select="1"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_view_report_ctg_line">
+			<field name="name">Report CTG Line</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">report.ctg.line</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,graph</field>
+		</record>
+		
+        <!-- graph view -->
+        <record model="ir.ui.view" id="report_ctg_line_graph_view">
+            <field name="name">CTG Line -Graph</field>
+            <field name="model">report.ctg.line</field>
+            <field name="type">graph</field>
+            <field name="arch" type="xml">
+                <graph string="Report CTG Line" type="bar" orientation="vertical">
+                	<field group="True" name="ctg_type_id"/>
+                    <field name="rewarded_user_id"/>
+                    <field group="True" name="name"/>
+                    <field name="points" operator="+"/>
+                </graph>
+            </field>
+        </record>
+
+	    <record model="ir.actions.act_window.view" id="action_report_ctg_line_graph_view">
+	         <field name="sequence" eval="4"/>
+	         <field name="view_mode">graph</field>
+	         <field name="view_id" ref="report_ctg_line_graph_view"/>
+	         <field name="act_window_id" ref="action_view_report_ctg_line"/>
+	    </record>
+
+		<menuitem id="menu_ctg_line_rpt" name="Report" parent="menu_user_ctg" sequence="3"/>
+		<menuitem id="menu_ctg_line_report" name="CTG Report" action= "action_view_report_ctg_line" parent="menu_ctg_line_rpt" />
+
+		<record model="ir.ui.view" id="view_ctg_feedback_tree">
+			<field name="name">ctg.feedback.tree</field>
+			<field name="model">ctg.feedback</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="CTG Feedback">
+					<field name="name" select="1"/>
+					<field name="ctg_line_id" select="1"/>
+					<field name="ctg_type_id" select="1"/>
+					<field name="user_to" select="1"/>
+					<field name="responsible" select="1"/>
+					<field name="points" select="1"/>
+					<field name="date_feedback" select="1"/>
+					<field name="state" select="1"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_ctg_feedback_form">
+			<field name="name">ctg.feedback.form</field>
+			<field name="model">ctg.feedback</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="CTG Feedback">
+					<field name="name" select="1" colspan="4" attrs="{'readonly':[('state','=','done')]}"/>					
+					<field name="ctg_type_id" select="1" attrs="{'readonly':[('state','not in',['draft'])]}"/>
+					<field name="user_to" select="1" attrs="{'readonly':[('state','not in',['draft'])]}"/>
+					<field name="responsible" select="1" attrs="{'readonly':[('state','not in',['draft'])]}"/>
+					<field name="points" select="1" attrs="{'readonly':[('state','in',['draft','done'])],'required':[('state','=','open')]}"/>
+					<field name="date_feedback" select="1" attrs="{'readonly':[('state','not in',['draft'])]}"/>
+                    <notebook colspan="4">
+                        <page string="Notes">
+                            <field colspan="4" name="note" nolabel="1" attrs="{'readonly':[('state','=','done')]}"/>
+                        </page>
+                    </notebook>
+					<separator colspan="4" string="States"/>
+					<group col="6" colspan="6">
+						<field name="state" readonly="1"/>
+						<button name="action_open" states="draft" string="Open" type="object" icon="gtk-open"/>
+						<button name="action_done" string="Done" states="open" type="object"  icon="gtk-go-forward"/>
+						<button name="action_cancel" string="Cancel" states="done" type="object" icon="gtk-cancel"/>
+						<button name="action_cancel_draft" states="cancel" type="object" string="Set to Draft" icon="gtk-convert"/>
+					</group>
+				</form>
+			</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="action_view_all_ctg_feedback">
+			<field name="name">All CTG Feedbacks</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">ctg.feedback</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="view_ctg_feedback_tree"/>
+		</record>
+		<record model="ir.actions.act_window" id="action_view_open_ctg_feedback">
+			<field name="name">Open CTG Feedbacks</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">ctg.feedback</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="view_ctg_feedback_tree"/>
+			<field name="domain">[('state','=','open')]</field>
+		</record>
+		<menuitem id="menu_feedback_all" action= "action_view_all_ctg_feedback" parent="menu_user_ctg" sequence="2"/>
+		<menuitem id="menu_feedback_open" action= "action_view_open_ctg_feedback" parent="menu_feedback_all"/>
+
+		<record model="ir.ui.view" id="view_user_history_tree">
+			<field name="name">user.history.tree</field>
+			<field name="model">user.history</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="History">
+					<field name="user_id" select="1"/>
+					<field name="date" select="1"/>
+					<field name="action" select="1"/>
+					<field name="description" select="1"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_user_history_form">
+			<field name="name">user.history.form</field>
+			<field name="model">user.history</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="History">
+					<field name="user_id"/>
+					<field name="date"/>
+					<field name="action"/>
+					<field name="description"/>
+					<field name="feedback_id"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_view_user_history">
+			<field name="name">History</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">user.history</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="view_user_history_tree"/>
+		</record>
+
+    </data>
+</openerp>

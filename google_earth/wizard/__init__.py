@@ -23,5 +23,7 @@
 import google_map_turnover
 import google_map_layer
 import google_route
+import goolge_network_link
+import google_map_open
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

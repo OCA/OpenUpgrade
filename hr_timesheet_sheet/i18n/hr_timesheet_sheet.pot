@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* hr_timesheet_sheet
+# 	* hr_timesheet_sheet
 #
 msgid ""
 msgstr ""
@@ -21,8 +21,7 @@ msgid "Review end of day check day is complete"
 msgstr ""
 
 #. module: hr_timesheet_sheet
-#: field:hr.analytic.timesheet,sheet_id:0
-#: field:hr.attendance,sheet_id:0
+#: field:hr.analytic.timesheet,sheet_id:0 field:hr.attendance,sheet_id:0
 #: field:hr_timesheet_sheet.sheet.account,sheet_id:0
 #: field:hr_timesheet_sheet.sheet.day,sheet_id:0
 msgid "Sheet"
@@ -138,7 +137,9 @@ msgstr ""
 
 #. module: hr_timesheet_sheet
 #: help:res.company,timesheet_max_difference:0
-msgid "Allowed difference between the sign in/out and the timesheet computation for one sheet. Set this to 0 if you do not want any control."
+msgid ""
+"Allowed difference between the sign in/out and the timesheet computation for "
+"one sheet. Set this to 0 if you do not want any control."
 msgstr ""
 
 #. module: hr_timesheet_sheet
@@ -339,8 +340,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:hr_timesheet_sheet.act_hr_timesheet_sheet_form
 #: model:ir.module.module,shortdesc:hr_timesheet_sheet.module_meta_information
 #: model:ir.ui.menu,name:hr_timesheet_sheet.menu_act_hr_timesheet_sheet_form
-#: model:ir.ui.menu,name:hr_timesheet_sheet.next_id_60
-#: view:res.company:0
+#: model:ir.ui.menu,name:hr_timesheet_sheet.next_id_60 view:res.company:0
 msgid "Timesheets"
 msgstr ""
 
@@ -407,8 +407,7 @@ msgid "Timesheet allowed difference"
 msgstr ""
 
 #. module: hr_timesheet_sheet
-#: view:hr_timesheet_sheet.sheet:0
-#: field:hr_timesheet_sheet.sheet,period_ids:0
+#: view:hr_timesheet_sheet.sheet:0 field:hr_timesheet_sheet.sheet,period_ids:0
 msgid "Period"
 msgstr ""
 
@@ -439,7 +438,8 @@ msgstr ""
 
 #. module: hr_timesheet_sheet
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: hr_timesheet_sheet
@@ -580,3 +580,14 @@ msgstr ""
 msgid "My Department's Timesheet to Validate"
 msgstr ""
 
+#. module: hr_timesheet_sheet
+#: constraint:hr_timesheet_sheet.sheet:0
+msgid ""
+"You can not have 2 timesheets that overlaps !\n"
+"Please use the menu 'My Current Timesheet' to avoid this problem."
+msgstr ""
+
+#. module: hr_timesheet_sheet
+#: constraint:hr_timesheet_sheet.sheet:0
+msgid "You must select a Current date wich is in the timesheet dates !"
+msgstr ""

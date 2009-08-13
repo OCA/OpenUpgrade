@@ -1,0 +1,359 @@
+<?xml version="1.0"?>
+<terp>
+	<data>
+	  <!--wizard string="Repeat lines"
+			model="labo.scrapie"
+			name="request.line.repeat"
+			menu="True"
+			id="request_line_repeat"/-->
+
+	  <wizard string="Invoice client (Simple Analysis)"
+			model="labo.analysis.request"
+			name="labo.invoice"
+			menu="True"
+			id="request_invoice_labo"/>
+
+<!--	  <wizard string="Invoice creation"
+			model="labo.analysis.request"
+			name="labo.invoice.create"
+			menu="True"
+			id="request_invoice_create_labo"/>
+	-->
+	  <wizard string="Create Case"
+			model="labo.analysis.request"
+			name="labo.new.case"
+			menu="True"
+			id="new_case_labo"/>
+
+	  <wizard string="Create Case "
+			model="labo.sample"
+			name="sample.new.case"
+			menu="True"
+			id="new_case_sample"/>
+
+<!--	  <wizard string="New Request"
+			model="labo.analysis.request"
+			name="labo.new.req"
+			menu="True"
+			id="new_req2_labo"/>-->
+
+	<wizard string="Set Date Sample Arrival"
+			model="labo.sample"
+			name="set.date.real"
+			multi="1"
+			id="set_date_real_wizard_sample"/>
+
+	<wizard string="Set Date Limit"
+			model="labo.sample"
+			name="set.date.lim"
+			multi="1"
+			id="set_date_limit_wizard_sample"/>
+	<wizard string="Set Date Sending"
+			model="labo.analysis.request"
+			name="set.begin"
+			multi="1"
+			id="set_date_begin_wizard_req"/>
+
+	<wizard string="Create Interpretation File"
+			model="labo.sample"
+			name="file.interp"
+			id="create_interp"/>
+
+	<wizard string="Create Interpretation File(Simple Analysis)"
+			model="labo.sample"
+			name="file.interp.simple"
+			id="create_interp_simple"/>
+
+	<wizard string="Create Card"
+			model="labo.dog"
+			name="labo.card"
+			id="import_create_card"/>
+	<wizard string="Import Dogs Infos"
+			model="labo.dog"
+			name="dogs.infos"
+			id="import_dogs_infos"/>
+
+	<wizard string="Set Date closing"
+			model="labo.analysis.request"
+			name="set.date.req"
+			multi="1"
+			id="set_date_close_wizard_rq"/>
+
+	<wizard string="Set Date Planned"
+			model="labo.analysis.request"
+			name="set.date.planned"
+			multi="1"
+			id="set_date_plan_wizard"/>
+	<wizard string="Set Date Starting"
+			model="labo.sample"
+			name="set.starting"
+			multi="1"
+			id="set_date_starting_wizard"/>
+
+	<wizard string="Set Date Reception"
+			model="labo.sample"
+			name="set.reception"
+			multi="1"
+			id="set_date_reception_wizard"/>
+	<wizard string="Set Date Closing"
+			model="labo.sample"
+			name="set.date"
+			multi="1"
+			id="set_date_wizard"/>
+
+	<wizard string="Set state"
+			model="labo.sample"
+			name="set.state"
+			multi="1"
+			id="set_state_wizard"/>
+
+	<wizard string="Set Request"
+			model="labo.sample"
+			name="set.request"
+			multi="1"
+			id="set_request_wizard"/>
+
+	<wizard string="Set State"
+			model="labo.analysis.request"
+			name="set.state.req"
+			multi="1"
+			id="set_state_req_wizard"/>
+
+	<wizard string="Create machine file "
+			model="labo.sample"
+			name="attach.machine"
+			id="attach_machine_wizard"/>
+
+<!--	<wizard string="Numerotate alpha"
+			model="labo.sample"
+			name="numerotate.alpha"
+			multi="1"
+			id="numerotate_alpha_wizard"/>
+-->
+	<wizard string="Print setup"
+			model="labo.sample"
+			name="labo.sample.print"
+			id="analysis_print_wizard"/>
+
+	<wizard string="Set Progenus Number"
+			model="labo.sample"
+			name="set.prog_num"
+			id="setprognum_wizard"/>
+
+	<wizard string="Import File For Simple Analysis"
+			model="labo.sample"
+			name="labo.simple.analysis"
+			multi="1"
+			id="analysis_simple_wizard"/>
+
+	<wizard string="Create .Res"
+			model="labo.sample"
+			name="labo.analysis.create"
+			multi="1"
+			id="analysis_create_wizard"/>
+
+	<wizard string="Import Results For Simple Analysis"
+			model="labo.sample"
+			name="labo.analysis.import"
+			multi="1"
+			id="analysis_import_wizard"/>
+
+		<!--	model="labo.analysis.request"-->
+	<wizard string="Import ENV(AWE File)"
+			model="labo.analysis.request"
+			name="labo.analysis.env"
+			id="wizard_analysiis_import_env"/>
+
+	<wizard string="Import EMPDOG/EMPDOG_2/EMPCHE File"
+			model="labo.sample"
+			name="labo.analysis.csv"
+			id="wizard_analysiis_import_csv"/>
+
+<!--	<wizard string="Import XLS"
+			model="labo.sample"
+			name="labo.analysis.xls"
+			id="wizard_analysiis_import_xls"/>
+-->
+	<wizard string="Export Filiation Result: RCS &amp; RFC "
+			model="labo.sample"
+			name="labo.analysis.export.xls"
+			id="wizard_analysiis_export_xls"/>
+
+	<wizard string="Import Plate Sheet"
+			model="labo.sample"
+			name="plate.sheet"
+			id="wizard_import_platesheet"/>
+
+	<wizard string="Import SetUp"
+			model="labo.sample"
+			name="set.up.sheet"
+			id="wizard_import_setup1"/>
+
+	<wizard string="Import EMPDOG/EMPCHE Results"
+			model="labo.sample"
+			name="import.ressample"
+			id="wizard_import_resample"/>
+
+<!--	<wizard string="Export Samples"
+			model="labo.analysis.request"
+			name="labo.analysis.request.export.samples"
+			id="wizard_analysiis_request_export_samples"/>
+-->
+	<wizard string="Export Samples Res: RBC"
+			model="labo.sample"
+            name="labo.sample.create"
+			id="wizard_analysis_sample_export_samples"/>
+
+	<wizard string="Import RES"
+			model="labo.sample"
+			name="labo.analysis.res"
+			id="wizard_analysis_import_res"/>
+
+	<wizard string="Mailing"
+			model="labo.analysis.request"
+			name="labo.analysis.spam_send"
+			id="analysis_mass_mailing_wizard"/>
+
+	<wizard string="Numerotate Runs"
+			model="labo.sample"
+			name="set.run"
+			menu="True"
+			multi="1"
+			id="run_numerotate"/>
+
+	<wizard string="Numerotate Setup"
+			model="labo.sample"
+			name="setup.numerotate"
+			menu="True"
+			multi="1"
+			id="req_numerotate"/>
+
+	<wizard string="Enable to be invoiced"
+			model="labo.sample"
+			name="sample.enable"
+			menu="False"
+			multi="1"
+			id="enable_tobeinvoiced"/>
+
+
+	<wizard string="Able to be invoiced"
+			model="labo.sample"
+			name="sample.able"
+			menu="False"
+			multi="1"
+			id="able_tobeinvoiced"/>
+
+
+	<wizard string="Set Followsheet to Simple Samples"
+			model="labo.sample"
+			name="set.followsheet"
+			menu="True"
+			multi="1"
+			id="set_follow"/>
+
+	<wizard string="Set Followsheet to Complex Samples"
+			model="labo.sample"
+			name="set.followsheet.c"
+			menu="True"
+			multi="1"
+			id="set_follow_c"/>
+
+	<wizard string="Set Plate Extraction to Samples"
+			model="labo.sample"
+			name="set.plate"
+			menu="True"
+			multi="1"
+			id="set_plate_s"/>
+			
+	<wizard string="Set Date Limit"
+			model="labo.dog"
+			name="set.datelimit"
+			menu="True"
+			multi="1"
+			id="set_limit_date"/>
+	
+	<wizard string="Set Date Closing"
+			model="labo.dog"
+			name="set.date_closing"
+			menu="True"
+			multi="1"
+			id="set_date_closing"/>
+			
+	<wizard string="Set Date Sample Arrival"
+			model="labo.dog"
+			name="set.date_eff"
+			menu="True"
+			multi="1"
+			id="set_date_eff"/>
+			
+	<wizard string="Set Date Effective Reception"
+			model="labo.dog"
+			name="set.date_reception"
+			menu="True"
+			multi="1"
+			id="set_date_reception"/>
+			
+	<wizard string="Set Tag on Samples"
+			model="labo.sample"
+			name="set.tag_done2"
+			menu="True"
+			multi="1"
+			id="set_tagdone2"/>
+
+	<wizard string="Set Tag"
+			model="labo.dog"
+			name="set.tag_done"
+			menu="True"
+			multi="1"
+			id="set_tagdone"/>
+			
+	<wizard string="Set NC reanalyse"
+			model="labo.dog"
+			name="set.nc_reanalyse"
+			menu="True"
+			multi="1"
+			id="set_nc_reanalyse"/>
+			
+	<wizard string="Set NC reanalyse"
+			model="labo.sample"
+			name="set.nc_reanalyse_s"
+			menu="True"
+			multi="1"
+			id="set_nc_reanalyse_s"/>
+			
+	<wizard string="Set Final conformity"
+			model="labo.dog"
+			name="set.final_c"
+			menu="True"
+			multi="1"
+			id="set_final_c"/>
+			
+	<wizard string="Set Final conformity"
+			model="labo.sample"
+			name="set.final_c_s"
+			menu="True"
+			multi="1"
+			id="set_final_c_s"/>
+			
+	<wizard string="Set NC General"
+			model="labo.dog"
+			name="set.nc_gle"
+			menu="True"
+			multi="1"
+			id="set_nc_gle"/>
+			
+	<wizard string="Set NC General"
+			model="labo.sample"
+			name="set.nc_gle_s"
+			menu="True"
+			multi="1"
+			id="set_nc_gle_s"/>
+			
+	<wizard string="Set Card Done"
+			model="labo.dog"
+			name="set.card_done"
+			id="set_card_done"/>
+			
+	</data>
+</terp>
+

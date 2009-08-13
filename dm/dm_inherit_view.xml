@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+    
+    <!--
+    =======================================================
+    COUNTRY EXTENSIONS
+    =======================================================
+    -->
+
+        <record id="view_country_form_inherit" model="ir.ui.view">
+            <field name="name">res.country.form.inherit</field>
+            <field name="model">res.country</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="base.view_country_form"/>
+            <field name="arch" type="xml">
+                <field name="code" position="after">
+                   <field name="main_currency" select="1"/>
+                   <field name="main_language" select="1"/>
+                   <field name="forwarding_charge" select="2"/>
+                   <separator string="Payment Methods" colspan="4"/>
+                   <field name="payment_method_ids" colspan="4" nolabel="1"/>
+                </field>
+            </field>
+        </record>
+
+
+    <!--
+    =======================================================
+    PARTNER EXTENSIONS
+    =======================================================
+    -->
+
+    <record id="view_partner_property_form1" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <notebook colspan="4" position="inside">
+                <page string="Direct Marketing">
+                	<separator colspan="4"/>
+                	<field name="deceased"/>
+                	<group attrs="{'invisible':[('deceased','!=',True)]}">
+                		<field name="deceased_date" />
+                	</group>
+                    <separator string="Allowed Countries" colspan="4"/>
+                    <field name="country_ids" colspan="4" nolabel="1"/>
+                    <separator string="Allowed States" colspan="4"/>
+                    <field name="state_ids" colspan="4" nolabel="1"/>
+                </page>
+            </notebook>
+        </field>
+    </record>
+    
+    <!--
+    =======================================================
+    SALE ORDER EXTENSIONS
+    =======================================================
+    -->
+
+    <record id="view_order_form_inherit1" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <notebook colspan="4" position="inside">
+                <page string="Direct Marketing">
+                	<separator colspan="4"/>
+                	<field name="offer_step_id" colspan="4"/>
+                	<field name="segment_id" colspan="4"/>
+                    <field name="journal_id" colspan="4"/>
+                    <group colspan="2" col="2">
+                        <separator string="Automatic actions"/>
+                        <field name="so_confirm_do" />
+                        <field name="invoice_create_do" />
+                        <field name="invoice_validate_do" />
+                        <field name="invoice_pay_do" />
+                    </group>
+
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <!--
+    =======================================================
+    PRODUCT EXTENSIONS
+    =======================================================
+    -->
+
+    <record id="product_normal_form_view" model="ir.ui.view">
+        <field name="name">product.normal.form.inherit</field>
+        <field name="model">product.product</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Direct Marketing">
+                <separator string="Language" colspan="4"/>
+                 <field name="language_id" colspan="4" nolabel="1"/>
+                 <separator string="Allowed Countries" colspan="4"/>
+                 <field name="country_ids" colspan="4" nolabel="1"/>
+                 <separator string="Allowed States" colspan="4"/>
+                 <field name="state_ids" colspan="4" nolabel="1"/>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+	</data>
+</openerp>

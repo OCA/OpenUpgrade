@@ -25,8 +25,7 @@
             <field name='code'>
 import netsvc
 wkf_service = netsvc.LocalService('workflow')
-wkf_service.trg_validate(uid, 'account.invoice', obj.id, 'invoice_cancel', cr)
-            </field>
+wkf_service.trg_validate(uid, 'account.invoice', obj.id, 'invoice_cancel', cr)</field>
         </record>
     </data>
 </openerp>

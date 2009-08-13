@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    	<record id="product_supplierinfo_form_view" model="ir.ui.view">
+            <field name="name">product.supplierinfo.form.view</field>
+            <field name="model">product.supplierinfo</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product.product_supplierinfo_form_view" />
+            <field name="arch" type="xml">
+                <field name="qty" position="after">
+                   <field name="company_id"/>
+                </field>
+            </field>
+        </record>
+        <record id="product_supplierinfo_tree_view" model="ir.ui.view">
+            <field name="name">product.supplierinfo.tree.view</field>
+            <field name="model">product.supplierinfo</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="product.product_supplierinfo_tree_view" />
+            <field name="arch" type="xml">
+                    <field name="product_code" position="after">
+                    	<field name="company_id"/>
+                    </field>
+            </field>
+        </record>
+        
+        <record id="company_wise_cost_price_form_view" model="ir.ui.view">
+            <field name="name">company.wise.cost.price.form</field>
+            <field name="model">company.wise.cost.price</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Company Wise Cost Prices">
+                    <field name="company_id" on_change="company_cost_onchange(company_id)"/>
+                    <field name="standard_price"/>
+                    <field name="currency_id"/>
+                </form>
+            </field>
+        </record>
+        
+        <record id="company_wise_cost_price_tree_view" model="ir.ui.view">
+            <field name="name">company.wise.cost.price.tree</field>
+            <field name="model">company.wise.cost.price</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Company Wise Cost Prices">
+                    <field name="company_id"/>
+                    <field name="standard_price"/>
+                    <field name="currency_id"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="company_wise_sale_price_form_view" model="ir.ui.view">
+            <field name="name">company.wise.sale.price.form</field>
+            <field name="model">company.wise.sale.price</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Company Wise Sale Prices">
+                    <field name="company_id" on_change="company_sale_onchange(company_id)"/>
+                    <field name="list_price"/>
+                    <field name="currency_id"/>
+                </form>
+            </field>
+        </record>
+        
+        <record id="company_wise_sale_price_tree_view" model="ir.ui.view">
+            <field name="name">company.wise.sale.price.tree</field>
+            <field name="model">company.wise.sale.price</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Company Wise Sale Prices">
+                    <field name="company_id"/>
+                    <field name="list_price"/>
+                    <field name="currency_id"/>
+                </tree>
+            </field>
+        </record>
+        
+       <record id="product_normal_form_view" model="ir.ui.view">
+            <field name="name">product.normal.form</field>
+            <field name="model">product.product</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product.product_normal_form_view" />
+            <field name="arch" type="xml">
+            	<field name="list_price" position="after">
+            		<field name="standard_price_ids" nolabel="1" colspan="2"/>
+            		<field name="list_price_ids" nolabel="1" colspan="2"/>
+            	</field>
+            </field>
+        </record>
+    
+    </data>
+</openerp>

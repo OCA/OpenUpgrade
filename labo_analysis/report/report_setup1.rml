@@ -1,0 +1,589 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(882.0,607.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="810.0" y1="75.0" width="372" height="486"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+       <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+  <blockTableStyle id="Tableau3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEABOVE" colorName="black" start="2,0" stop="-1,0" />
+	  <lineStyle kind="LINEBEFORE" colorName="black" start="2,0" stop="-1,-1"/>
+	  <lineStyle kind="LINEAFTER" colorName="black" start="2,0" stop="-1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="black" start="2,0" stop="-1,-1" />
+    </blockTableStyle>
+    <blockTableStyle id="Tableau2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEABOVE" colorName="black" start="2,0" stop="-1,0" />
+	  <lineStyle kind="LINEBEFORE" colorName="black" start="2,0" stop="-1,-1"/>
+	  <lineStyle kind="LINEAFTER" colorName="black" start="2,0" stop="-1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="black" start="2,0" stop="-1,-1" />
+	</blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+   <paraStyle name="P1" fontName="Times-Roman" fontSize="12.0" leading="15"/>
+    <paraStyle name="P2" fontName="Times-Roman" fontSize="12.0" leading="15"/>
+    <paraStyle name="P3" fontName="Courier" fontSize="11.0" leading="13"/>
+    <paraStyle name="P4" fontName="Courier" fontSize="11.0" leading="13" alignment="LEFT"/>
+    <paraStyle name="P5" rightIndent="0.0" leftIndent="0.0" fontName="Times-Roman" fontSize="11.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P6" rightIndent="3.0" leftIndent="0.0" fontName="Times-Roman" fontSize="11.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P7" rightIndent="0.0" leftIndent="1.0" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="LEFT"/>
+    <!--paraStyle name="P8" rightIndent="0.0" leftIndent="0.0" fontName="Times-Roman" fontSize="7.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/-->
+    <paraStyle name="P8" fontName="Times-Roman" fontSize="7.0" leading="11" alignment="LEFT"/>
+    <paraStyle name="P9" rightIndent="0.0" leftIndent="0.0" fontName="Times-Roman" fontSize="11.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P10" fontName="Times-Roman" fontSize="10.0" leading="11" alignment="LEFT"/>
+    <paraStyle name="P11" fontName="Times-Roman" fontSize="8.0" leading="11" alignment="LEFT"/>
+    <paraStyle name="P12" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="LEFT"/>
+    <paraStyle name="P13" fontName="Times-Roman" fontSize="10.0" leading="13" alignment="LEFT"/>
+    <paraStyle name="P14" rightIndent="0.0" leftIndent="27.0" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="LEFT"/>
+    <paraStyle name="Standard" fontName="Times-Roman" fontSize="12.0" leading="15"/>
+    <paraStyle name="Text body" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="CENTER"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="Heading 1" fontName="Times-Bold" fontSize="10.0" leading="13"/>
+    <paraStyle name="Heading 2" fontName="Times-Bold" fontSize="14.0" leading="17"/>
+    <paraStyle name="Heading 3" fontName="Times-Bold" fontSize="12.0" leading="15"/>
+    <paraStyle name="Heading 4" fontName="Times-Bold" fontSize="10.0" leading="13" alignment="CENTER"/>
+    <paraStyle name="List" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="CENTER"/>
+    <paraStyle name="Header" fontName="Times-Roman" fontSize="12.0" leading="15"/>
+    <paraStyle name="Footer" fontName="Times-Roman" fontSize="12.0" leading="15"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman" fontSize="12.0" leading="15"/>
+    <paraStyle name="Table Heading" fontName="Times-Bold" fontSize="12.0" leading="15" alignment="CENTER"/>
+    <paraStyle name="Caption" fontName="Times-Italic" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Times-Roman" fontSize="12.0" leading="15"/>
+    <paraStyle name="Contents 1 (user)" rightIndent="0.0" leftIndent="36.0" fontName="Times-Roman" fontSize="12.0" leading="15"/>
+    <paraStyle name="Contents 2 (user)" rightIndent="0.0" leftIndent="72.0" fontName="Times-Roman" fontSize="12.0" leading="15"/>
+    <paraStyle name="Contents 3 (user)" rightIndent="0.0" leftIndent="108.0" fontName="Times-Roman" fontSize="12.0" leading="15"/>
+    <paraStyle name="Contents 4 (user)" rightIndent="0.0" leftIndent="144.0" fontName="Times-Roman" fontSize="12.0" leading="15"/>
+    <paraStyle name="Numbered Heading 1" fontName="Times-Roman" fontSize="12.0" leading="15"/>
+    <paraStyle name="Numbered Heading 2" fontName="Times-Roman" fontSize="12.0" leading="15"/>
+    <paraStyle name="Square List" rightIndent="0.0" leftIndent="36.0" fontName="Times-Roman"/>
+    <paraStyle name="Lower Roman List" rightIndent="0.0" leftIndent="36.0" fontName="Times-Roman" fontSize="12.0" leading="15"/>
+    <paraStyle name="Corps de texte 2" fontName="Times-Roman" fontSize="10.0" leading="13"/>
+    <paraStyle name="Corps de texte 3" fontName="Times-Bold" fontSize="12.0" leading="15"/>
+    <paraStyle name="Diamond List" rightIndent="0.0" leftIndent="36.0" fontName="Times-Roman"/>
+    <paraStyle name="Numbered List" rightIndent="0.0" leftIndent="36.0" fontName="Times-Roman"/>
+    <paraStyle name="Triangle List" rightIndent="0.0" leftIndent="36.0" fontName="Times-Roman"/>
+    <paraStyle name="Numbered Heading 3" fontName="Times-Roman" fontSize="12.0" leading="15"/>
+    <paraStyle name="Dashed List" rightIndent="0.0" leftIndent="36.0" fontName="Times-Roman"/>
+    <paraStyle name="Upper Roman List" rightIndent="0.0" leftIndent="36.0" fontName="Times-Roman"/>
+    <paraStyle name="Heart List" rightIndent="0.0" leftIndent="36.0" fontName="Times-Roman"/>
+    <paraStyle name="Contents Header" fontName="Helvetica-Bold" fontSize="16.0" leading="20" alignment="CENTER" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="Tableau Normal" fontName="Times-Bold" fontSize="10.0" leading="13"/>
+    <paraStyle name="Upper Case List" rightIndent="0.0" leftIndent="36.0" fontName="Times-Roman"/>
+    <paraStyle name="Bullet List" rightIndent="0.0" leftIndent="36.0" fontName="Times-Roman"/>
+    <paraStyle name="Hand List" rightIndent="0.0" leftIndent="36.0" fontName="Times-Roman"/>
+    <paraStyle name="Tick List" rightIndent="0.0" leftIndent="36.0" fontName="Times-Roman"/>
+    <paraStyle name="Lower Case List" rightIndent="0.0" leftIndent="36.0" fontName="Times-Roman"/>
+    <paraStyle name="Block Text" rightIndent="72.0" leftIndent="72.0" fontName="Times-Roman" fontSize="12.0" leading="15" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Section Heading" fontName="Times-Roman" fontSize="12.0" leading="15"/>
+    <paraStyle name="Implies List" rightIndent="0.0" leftIndent="36.0" fontName="Times-Roman"/>
+    <paraStyle name="Box List" rightIndent="0.0" leftIndent="36.0" fontName="Times-Roman"/>
+    <paraStyle name="Star List" rightIndent="0.0" leftIndent="36.0" fontName="Times-Roman"/>
+    <paraStyle name="TM 1" fontName="Times-Roman" fontSize="12.0" leading="15"/>
+    <paraStyle name="Plain Text" fontName="Courier" fontSize="12.0" leading="15"/>
+    <paraStyle name="Chapter Heading" fontName="Times-Roman" fontSize="12.0" leading="15"/>
+  </stylesheet>
+  <story>
+   <para style="P1">
+      <font color="white"> </font>
+    </para>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <para style="P3">[[repeatIn(get_setup(objects),'o') ]]</para>
+    <para style="P3">
+      <font color="white"> </font>
+    </para>
+
+    <para style="P4">Page number: [[ o[0] ]]</para>
+    <para style="P4">Date: [[ o[2] ]]</para>
+    <para style="P4">Rapport: [[ o[3] ]]</para>
+    <para style="P4">
+      <font color="white"> </font>
+    </para>
+    <para style="P4">
+      <font color="white"> </font>
+    </para>
+    <para style="P4">
+      <font color="white"> </font>
+    </para>
+   <!-- <blockTable colWidths="100,175,110.0,110.0,110.0,110.0,110.0,110.0" style="Tableau3"-->
+    <blockTable colWidths="130,175,126.0,126.0,126.0,126.0,126.0,126.0" style="Tableau3">
+      <tr>
+     	 <td><para/></td>
+      	<td><para/></td>
+        <td>
+          <para style="P5">RUN [[ find_run(o[1], range(91,113) ) ]]</para>
+        </td>
+        <td>
+          <para style="P5">RUN [[ find_run(o[1], range(113,129) ) ]]</para>
+        </td>
+        <td>
+          <para style="P6">RUN [[ find_run(o[1], range(129,145) ) ]]</para>
+        </td>
+        <td>
+          <para style="P6">RUN [[ find_run(o[1], range(145,161) ) ]]</para>
+        </td>
+        <td>
+          <para style="P6">RUN [[ find_run(o[1], range(161,177) ) ]]</para>
+        </td>
+        <td>
+          <para style="P6">RUN [[ find_run(o[1], range(177,192) ) ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <!--blockTable rowHeights="40, 40, 40, 40, 40, 40, 40,40 " colWidths="100,175,55, 55, 55, 55, 55, 55, 55,55,55, 55, 55, 55 " style="Tableau2"-->
+    <blockTable rowHeights="40, 40, 40, 40, 40, 40, 40,40 " colWidths="130,175,63, 63, 63, 63, 63, 63, 63,63,63, 63, 63, 63" style="Tableau2">
+      <tr>
+      	<td><para/></td>
+      	<td><para/></td>
+        <td>
+          <para style="P7">97</para>
+          <para style="P8">[[ get_well2(o[1],97) ]]</para>
+        </td>
+        <td>
+          <para style="P7">105</para>
+          <para style="P8">[[ get_well2(o[1],105) ]]</para>
+        </td>
+        <td>
+          <para style="P7">113</para>
+          <para style="P8">[[ get_well2(o[1],113) ]]</para>
+        </td>
+        <td>
+          <para style="P7">121</para>
+          <para style="P8">[[ get_well2(o[1],121) ]]</para>
+        </td>
+        <td>
+          <para style="P7">129</para>
+          <para style="P8">[[ get_well2(o[1],129) ]]</para>
+        </td>
+        <td>
+          <para style="P7">137</para>
+          <para style="P8">[[ get_well2(o[1],137) ]]</para>
+        </td>
+        <td>
+          <para style="P7">145</para>
+          <para style="P8">[[ get_well2(o[1],145) ]]</para>
+        </td>
+        <td>
+          <para style="P9">153</para>
+          <para style="P8">[[ get_well2(o[1],153) ]]</para>
+        </td>
+        <td>
+          <para style="P9">161</para>
+          <para style="P8">[[ get_well2(o[1],161) ]]</para>
+        </td>
+        <td>
+          <para style="P9">169</para>
+          <para style="P8">[[ get_well2(o[1],169) ]]</para>
+        </td>
+        <td>
+          <para style="P9">177</para>
+          <para style="P8">[[ get_well2(o[1],177) ]]</para>
+        </td>
+        <td>
+          <para style="P9">185</para>
+          <para style="P8">[[ get_well2(o[1],185) ]]</para>
+        </td>
+      </tr>
+      <tr>
+      	<td><para/></td>
+      	<td><para/></td>
+        <td>
+          <para style="P9">98</para>
+          <para style="P8">[[ get_well2(o[1],98) ]]</para>
+        </td>
+        <td>
+          <para style="P9">106</para>
+          <para style="P8">[[ get_well2(o[1],106) ]]</para>
+        </td>
+        <td>
+          <para style="P9">114</para>
+          <para style="P10">[[ get_well2(o[1],114) ]]</para>
+        </td>
+        <td>
+          <para style="P9">122</para>
+          <para style="P8">[[ get_well2(o[1],122) ]]</para>
+        </td>
+        <td>
+          <para style="P9">130</para>
+          <para style="P8">[[ get_well2(o[1],130) ]]</para>
+        </td>
+        <td>
+          <para style="P9">138</para>
+          <para style="P8">[[ get_well2(o[1],138) ]]</para>
+        </td>
+        <td>
+          <para style="P9">146</para>
+          <para style="P8">[[ get_well2(o[1],146) ]]</para>
+        </td>
+        <td>
+          <para style="P9">154</para>
+          <para style="P8">[[ get_well2(o[1],154) ]]</para>
+        </td>
+        <td>
+          <para style="P9">162</para>
+          <para style="P8">[[ get_well2(o[1],162) ]]</para>
+        </td>
+        <td>
+          <para style="P9">170</para>
+          <para style="P8">[[ get_well2(o[1],170) ]]</para>
+        </td>
+        <td>
+          <para style="P9">78</para>
+          <para style="P8">[[ get_well2(o[1],78) ]]</para>
+        </td>
+        <td>
+          <para style="P9">186</para>
+          <para style="P8">[[ get_well2(o[1],186) ]]</para>
+        </td>
+      </tr>
+      <tr>
+      	<td><para/></td>
+      	<td><para/></td>
+        <td>
+          <para style="P9">99</para>
+          <para style="P8">[[ get_well2(o[1],99) ]]</para>
+        </td>
+        <td>
+          <para style="P9">107</para>
+          <para style="P8">[[ get_well2(o[1],107) ]]</para>
+        </td>
+        <td>
+          <para style="P9">115</para>
+          <para style="P8">[[ get_well2(o[1],115) ]]</para>
+        </td>
+        <td>
+          <para style="P9">123</para>
+          <para style="P8">[[ get_well2(o[1],123) ]]</para>
+        </td>
+        <td>
+          <para style="P9">131</para>
+          <para style="P8">[[ get_well2(o[1],131) ]]</para>
+        </td>
+        <td>
+          <para style="P9">139</para>
+          <para style="P8">[[ get_well2(o[1],139) ]]</para>
+        </td>
+        <td>
+          <para style="P9">147</para>
+          <para style="P8">[[ get_well2(o[1],147) ]]</para>
+        </td>
+        <td>
+          <para style="P9">155</para>
+          <para style="P8">[[ get_well2(o[1],155) ]]</para>
+        </td>
+        <td>
+          <para style="P9">163</para>
+          <para style="P8">[[ get_well2(o[1],163) ]]</para>
+        </td>
+        <td>
+          <para style="P9">171</para>
+          <para style="P8">[[ get_well2(o[1],171) ]]</para>
+        </td>
+        <td>
+          <para style="P9">179</para>
+          <para style="P8">[[ get_well2(o[1],179) ]]</para>
+        </td>
+        <td>
+          <para style="P9">187</para>
+          <para style="P8">[[ get_well2(o[1],187) ]]</para>
+        </td>
+      </tr>
+      <tr>
+      	<td><para/></td>
+      	<td><para/></td>
+        <td>
+          <para style="P9">100</para>
+          <para style="P8">[[ get_well2(o[1],100) ]]</para>
+        </td>
+        <td>
+          <para style="P9">108</para>
+          <para style="P8">[[ get_well2(o[1],108) ]]</para>
+        </td>
+        <td>
+          <para style="P9">116</para>
+          <para style="P8">[[ get_well2(o[1],116) ]]</para>
+        </td>
+        <td>
+          <para style="P9">124</para>
+          <para style="P8">[[ get_well2(o[1],124) ]]</para>
+        </td>
+        <td>
+          <para style="P9">132</para>
+          <para style="P8">[[ get_well2(o[1],132) ]]</para>
+        </td>
+        <td>
+          <para style="P9">140</para>
+          <para style="P8">[[ get_well2(o[1],140) ]]</para>
+        </td>
+        <td>
+          <para style="P9">148</para>
+          <para style="P8">[[ get_well2(o[1],148) ]]</para>
+        </td>
+        <td>
+          <para style="P9">156</para>
+          <para style="P8">[[ get_well2(o[1],156) ]]</para>
+        </td>
+        <td>
+          <para style="P9">164</para>
+          <para style="P8">[[ get_well2(o[1],64) ]]</para>
+        </td>
+        <td>
+          <para style="P9">172</para>
+          <para style="P8">[[ get_well2(o[1],172) ]]</para>
+        </td>
+        <td>
+          <para style="P9">180</para>
+          <para style="P8">[[ get_well2(o[1],180) ]]</para>
+        </td>
+        <td>
+          <para style="P9">88</para>
+          <para style="P8">[[ get_well2(o[1],88) ]]</para>
+        </td>
+      </tr>
+      <tr>
+      	<td><para/></td>
+      	<td><para/></td>
+        <td>
+          <para style="P9">101</para>
+          <para style="P8">[[ get_well2(o[1],101) ]]</para>
+        </td>
+        <td>
+          <para style="P9">109</para>
+          <para style="P8">[[ get_well2(o[1],109) ]]</para>
+        </td>
+        <td>
+          <para style="P9">117</para>
+          <para style="P8">[[ get_well2(o[1],117) ]]</para>
+        </td>
+        <td>
+          <para style="P9">125</para>
+          <para style="P8">[[ get_well2(o[1],125) ]]</para>
+        </td>
+        <td>
+          <para style="P9">133</para>
+          <para style="P8">[[ get_well2(o[1],133) ]]</para>
+        </td>
+        <td>
+          <para style="P9">141</para>
+          <para style="P8">[[ get_well2(o[1],141) ]]</para>
+        </td>
+        <td>
+          <para style="P9">149</para>
+          <para style="P8">[[ get_well2(o[1],149) ]]</para>
+        </td>
+        <td>
+          <para style="P9">157</para>
+          <para style="P8">[[ get_well2(o[1],157) ]]</para>
+        </td>
+        <td>
+          <para style="P9">165</para>
+          <para style="P8">[[ get_well2(o[1],165) ]]</para>
+        </td>
+        <td>
+          <para style="P9">173</para>
+          <para style="P8">[[ get_well2(o[1],173) ]]</para>
+        </td>
+        <td>
+          <para style="P9">181</para>
+          <para style="P8">[[ get_well2(o[1],181) ]]</para>
+        </td>
+        <td>
+          <para style="P9">189</para>
+          <para style="P8">[[ get_well2(o[1],189) ]]</para>
+        </td>
+      </tr>
+      <tr>
+      	<td><para/></td>
+      	<td><para/></td>
+        <td>
+          <para style="P9">102</para>
+          <para style="P8">[[ get_well2(o[1],102) ]]</para>
+        </td>
+        <td>
+          <para style="P9">110</para>
+          <para style="P8">[[ get_well2(o[1],110) ]]</para>
+        </td>
+        <td>
+          <para style="P9">118</para>
+          <para style="P8">[[ get_well2(o[1],118) ]]</para>
+        </td>
+        <td>
+          <para style="P9">126</para>
+          <para style="P8">[[ get_well2(o[1],126) ]]</para>
+        </td>
+        <td>
+          <para style="P9">134</para>
+          <para style="P8">[[ get_well2(o[1],134) ]]</para>
+        </td>
+        <td>
+          <para style="P9">142</para>
+          <para style="P8">[[ get_well2(o[1],142) ]]</para>
+        </td>
+        <td>
+          <para style="P9">150</para>
+          <para style="P8">[[ get_well2(o[1],150) ]]</para>
+        </td>
+        <td>
+          <para style="P9">158</para>
+          <para style="P8">[[ get_well2(o[1],158) ]]</para>
+        </td>
+        <td>
+          <para style="P9">166</para>
+          <para style="P8">[[ get_well2(o[1],166) ]]</para>
+        </td>
+        <td>
+          <para style="P9">174</para>
+          <para style="P8">[[ get_well2(o[1],174) ]]</para>
+        </td>
+        <td>
+          <para style="P9">182</para>
+          <para style="P10">[[ get_well2(o[1],182) ]]</para>
+        </td>
+        <td>
+          <para style="P9">190</para>
+          <para style="P10">[[ get_well2(o[1],190) ]]</para>
+        </td>
+      </tr>
+      <tr>
+      	<td><para/></td>
+      	<td><para/></td>
+        <td>
+          <para style="P9">103</para>
+          <para style="P8">[[ get_well2(o[1],103) ]]</para>
+        </td>
+        <td>
+          <para style="P9">111</para>
+          <para style="P8">[[ get_well2(o[1],111) ]]</para>
+        </td>
+        <td>
+          <para style="P9">119</para>
+          <para style="P8">[[ get_well2(o[1],119) ]]</para>
+        </td>
+        <td>
+          <para style="P9">127</para>
+          <para style="P8">[[ get_well2(o[1],127) ]]</para>
+        </td>
+        <td>
+          <para style="P9">135</para>
+          <para style="P8">[[ get_well2(o[1],135) ]]</para>
+        </td>
+        <td>
+          <para style="P9">143</para>
+          <para style="P8">[[ get_well2(o[1],143) ]]</para>
+        </td>
+        <td>
+          <para style="P9">151</para>
+          <para style="P8">[[ get_well2(o[1],151) ]]</para>
+        </td>
+        <td>
+          <para style="P9">159</para>
+          <para style="P8">[[ get_well2(o[1],159) ]]</para>
+        </td>
+        <td>
+          <para style="P9">167</para>
+          <para style="P8">[[ get_well2(o[1],167) ]]</para>
+        </td>
+        <td>
+          <para style="P9">175</para>
+          <para style="P8">[[ get_well2(o[1],175) ]]</para>
+        </td>
+        <td>
+          <para style="P9">183</para>
+          <para style="P8">[[ get_well2(o[1],183) ]]</para>
+        </td>
+        <td>
+          <para style="P9">191</para>
+          <para style="P10">[[ get_well2(o[1],191) ]]</para>
+        </td>
+      </tr>
+      <tr>
+      	<td><para/></td>
+      	<td><para/></td>
+        <td>
+          <para style="P9">104</para>
+          <para style="P8">[[ get_well2(o[1],104) ]]</para>
+        </td>
+        <td>
+          <para style="P9">112</para>
+          <para style="P8">[[ get_well2(o[1],112) ]]</para>
+        </td>
+        <td>
+          <para style="P9">120</para>
+          <para style="P8">[[ get_well2(o[1],120) ]]</para>
+        </td>
+        <td>
+          <para style="P9">128</para>
+          <para style="P8">[[ get_well2(o[1],128) ]]</para>
+        </td>
+        <td>
+          <para style="P9">136</para>
+          <para style="P8">[[ get_well2(o[1],136) ]]</para>
+        </td>
+        <td>
+          <para style="P9">144</para>
+          <para style="P8">[[ get_well2(o[1],144) ]]</para>
+        </td>
+        <td>
+          <para style="P9">152</para>
+          <para style="P8">[[ get_well2(o[1],152) ]]</para>
+        </td>
+        <td>
+          <para style="P9">160</para>
+          <para style="P8">[[ get_well2(o[1],160) ]]</para>
+        </td>
+        <td>
+          <para style="P9">168</para>
+          <para style="P8">[[ get_well2(o[1],168) ]]</para>
+        </td>
+        <td>
+          <para style="P9">176</para>
+          <para style="P8">[[ get_well2(o[1],176) ]]</para>
+        </td>
+        <td>
+          <para style="P9">184</para>
+          <para style="P8">[[ get_well2(o[1],184) ]]</para>
+        </td>
+        <td>
+          <para style="P9">192</para>
+          <para style="P10">[[ get_well2(o[1],192) ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+
+  </story>
+</document>
+

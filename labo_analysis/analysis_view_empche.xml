@@ -1,0 +1,376 @@
+<?xml version="1.0" ?>
+<terp>
+    <data>
+	<record model="labo.analysis.view" id="pro_analysis_view_empche">
+		<field name="name">EMPCHE view</field>
+	</record>
+
+	<record model="labo.analysis.type" id="labo_analysis_type_empche">
+		<field name="view_id" ref="pro_analysis_view_empche"/>
+		<field name="code">EMPCHE</field>
+		<field name="product_id"  ref="monproduit4"/>
+	</record>
+
+	<!--EMPCHE view-->
+    
+    <record model="ir.ui.view" id="labo_view_empche_an2" >
+        <field name="name">EMPCHE</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+        	<form string="Analysis Request">
+            	<notebook>
+                	<page string="General">
+	                    <field name="name" select="1" />
+	                    <field name="type_id" domain="[('type_id.code','ilike','EMPCHE')]" context="{'type_id':'EMPCHE'}" />
+	                    <field name="begining_date" />
+	                    <field name="date_reception" />
+	                    <field name="date_planned" />
+	                    <field name="date_closed" />
+	                    <field name="cond_reception"/>
+	                    <field name="ref_client"  on_change="onchange_pricelist(ref_client)" select="1" />
+	                    <field name="pricelist_id" />
+	                    <field name="user_id" select="1" />
+	                    <field name="invoice_ids" />
+	                    <field name="urgent" />
+	                    <field name="accredit" />
+	                    <field name="desc_1" colspan="4" nolabel="1"/>
+	                    <newline/>
+	                    <field name="desc_2" colspan="4" nolabel="1"/>
+	                    <field name="desc_3" colspan="4" nolabel="1"/>
+	                    <field name="state" colspan="4" nolabel="1"/>
+	                     <group col="4" colspan="4">
+	                        <button name="button_draft" string="Set to Draft" states="cancel" type="object"/>
+	                        <button name="button_cancel" string="Cancel" states="running" type="object"/>
+	                        <button name="button_running" string="Running" states="draft" type="object"/>
+	                        <button name="button_closed" string="Closed" states="draft,running" type="object"/>
+	                    </group>
+	                </page>
+                	<page string="Cases">
+                    	<field name="case_id" nolabel="1"/>
+                	</page>
+                	<page string="Send to">
+                     	<field name="send_to_ids" context="{'request_id': active_id}" nolabel="1"/>
+                	</page>
+            	</notebook>
+        	</form>
+        </field>
+    </record>
+
+	 <record model="ir.ui.view" id="labo_view_empche" >
+        <field name="name">EMPCHE REQUEST</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+    	    <form string="Analysis Request">
+        		<notebook>
+            		<page string="General">
+		              <field name="name" select="1" />
+		              <field name="type_id" domain="[('code','=','EMPCHE')]" context="{'type_id':'EMPCHE'}"/>
+		              <field name="begining_date" />
+		              <field name="date_reception" />
+		              <field name="date_planned" />
+		              <field name="date_closed" />
+		              <field name="cond_reception"/>
+		              <field name="ref_client"  on_change="onchange_pricelist(ref_client)" select="1" />
+		              <field name="pricelist_id" />
+		              <field name="user_id" select="1" />
+		              <field name="invoice_ids" />
+		              <field name="urgent" />
+		              <field name="accredit" />
+		              <field name="desc_1" colspan="4" nolabel="1"/>
+		              <newline/>
+		              <field name="desc_2" colspan="4" nolabel="1"/>
+		              <field name="desc_3" colspan="4" nolabel="1"/>
+		              <field name="state" colspan="4" nolabel="1"/>
+		              <group col="4" colspan="4">
+		                <button name="button_draft" string="Set to Draft" states="cancel" type="object"/>
+		                <button name="button_cancel" string="Cancel" states="running" type="object"/>
+		                <button name="button_running" string="Running" states="draft" type="object"/>
+		                <button name="button_closed" string="Closed" states="draft,running" type="object"/>
+		              </group>
+		            </page>
+            		<page string="Send to">
+              			<field name="send_to_ids" context="{'request_id': active_id}" nolabel="1"/>
+            		</page>
+            		<page string="Analysis Lines" >
+              			<field name="sample_ids"  mode="tree,form" editable="top" nolabel="1">
+              				<tree string="Analysis samples"  colspan="4">
+				                <field name="dog_mother"  domain="[('type_animal','=','horse')]" colspan="4" />
+				                <field name="dog_father" domain="[('type_animal','=','horse')]" colspan="4" context="tt"/>
+				                <field name="dog_child"  domain="[('type_animal','=','horse')]" context="horse" colspan="4" />
+								<field name="date_mod"/>
+				                <field name="state"/>
+				                <field name="tatooer_id" string="Eleveur" />
+								<field name="date_starting"/>
+				                <field name="lp_file"  />
+				                <field name="lp_doss"  />
+					            <field name="seq_horse"/>
+				                <field name="lp_serv"  />
+				                <field name="preleveur1_id"  />
+	                            <field name="user_id"  />
+				                <field name="sample_id" />
+				                <field name="date_reception" />
+				                <field name="date_limit" />
+				                <field name="date_closing"  />
+				                <field name="res_filiation" />
+					            <field name="state_2" />
+				                <field name="history_ids"  />
+				              </tree>
+	              <form string="Analysis Request" colspan="4" >
+	                <notebook>
+	                  <page string="lines">
+	                    <field name="dog_mother" select="2"  domain="[('type_animal','=','horse')]" context="{'type_view':'EMPCHE'}" colspan="4" on_change="onchange_dog(dog_mother)"  />
+				        <field name="dog_father" domain="[('type_animal','=','horse')]" colspan="4" context="{'type_view':'EMPCHE'}" on_change="onchange_dog(dog_father)" />
+				        <field name="dog_child"  domain="[('type_animal','=','horse')]"  colspan="4" context="{'type_view':'EMPCHE'}" on_change="onchange_dog(dog_child)" />
+				                <field name="tatooer_id" string="Eleveur" />
+						<field name="date_starting"/>
+	                    <field name="date_reception" select="2"  />
+	                    <field name="date_limit" select="2"  />
+	                    <field name="date_closing" select="2"  />
+						<field name="date_mod"/>
+	                    <field name="res_filiation" select="2"  />
+	                    <field name="lp_file" select="2"  />
+	                    <field name="lp_doss" select="2"  />
+				       	<field name="seq_horse" select="2"  />
+	                    <field name="lp_serv" select="2"  />
+	                    <field name="preleveur1_id" select="2"  />
+	                    <field name="user_id" select="2"  />
+	                    <field name="sample_id" select="2"/>
+					    <field name="state_2" select="2"  />
+					    <field name="notice" select="2" colspan="4"  />
+					    <newline/>
+	                  </page>
+	                  <page string="History" >
+		                <field name="history_ids" colspan="4" nolabel="1"/>
+	                  </page>
+                        <page string="Cases">
+							<field name="case_id" colspan="4" />
+                        </page>
+	                </notebook>
+	              </form>
+	              </field>
+	            </page>
+	          </notebook>
+	        </form>
+        </field>
+      </record>
+     <record model="ir.ui.view" id="labo_view_request_empche" >
+        <field name="name">EMPCHE</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+        	<tree string="Analysis Request">
+	          <field name="name" />
+	          <field name="begining_date" />
+	          <field name="cond_reception"/>
+	          <field name="type_id" />
+	          <field name="user_id"/>
+	          <field name="date_closed" />
+	          <field name="date_planned" />
+	          <field name="ref_client" />
+	          <field name="pricelist_id" />
+	        </tree>
+        </field>
+     </record>
+
+      <record model="ir.actions.act_window" id="action_labo_analysis_empche">
+        <field name="name">EMPCHE Requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.analysis.request</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="labo_view_request_empche"/>
+        <field name="domain" eval="'[(\'type_id\',\'=\',%d)]'%labo_analysis_type_empche" />
+        <field name="context">{'type_id':'EMPCHE'}</field>
+      </record>
+
+		<record model="ir.actions.act_window.view" id="act_sampleempche_tree_view2">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_view_request_empche"/>
+					<field name="act_window_id" ref="action_labo_analysis_empche"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_sampleempche_form_view">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_view_empche"/>
+					<field name="act_window_id" ref="action_labo_analysis_empche"/>
+		</record>
+      <menuitem name="Progenus/Requests/EMPCHE" id="menu_action_empche_view" action="action_labo_analysis_empche"/>
+<!--SAMPLES-->
+
+
+      <record model="ir.ui.view" id="labo_sample_empche2" >
+        <field name="name">EMPCHE2</field>
+        <field name="model">labo.sample</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+        <tree string="Analysis Samples" >
+          <field name="dog_mother"  colspan="4" />
+          <field name="dog_father"  colspan="4" />
+		  <field name="dog_child"  colspan="4" />
+				                <field name="tatooer_id" string="Eleveur" />
+		<field name="date_starting"/>
+		<field name="date_mod" select="1"/>
+          <field name="date_reception"  />
+          <field name="res_filiation"  />
+          <field name="date_limit"  />
+          <field name="date_closing"  />
+          <field name="lp_file"    />
+          <field name="lp_doss"    />
+          <field name="lp_serv"    />
+          <field name="seq_horse"    />
+          <field name="preleveur1_id" />
+	      <field name="user_id"   />
+          <field name="sample_id" />
+		      <field name="v_tag"     />
+		<field name="state_2"     />
+        </tree>
+        </field>
+      </record>
+
+
+	<record model="ir.ui.view" id="labo_sample_empche_form" >
+        <field name="name">EMPCHE1</field>
+        <field name="model">labo.sample</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+        <form string="Analysis Samples" > 
+			<notebook> 
+				<page string="Information">
+					<field name="dog_mother" domain="[('type_animal','=','horse')]"  colspan="4" select="1" on_change="onchange_dog(dog_mother)"  />
+					<field name="dog_father" select="1"  domain="[('type_animal','=','horse')]" colspan="4" on_change="onchange_dog(dog_father)" />
+		            <field name="dog_child" select="1" domain="[('type_animal','=','horse')]" colspan="4" on_change="onchange_dog(dog_child)" />
+					<field name="res_filiation" select="2"  />
+					<field name="date_mod" select="1"/>
+				                <field name="tatooer_id" string="Eleveur" />
+					<field name="date_starting" select="1"/>
+					<field name="date_reception" select="1"/>
+					<field name="date_limit" select="2"  />
+					<field name="date_closing" select="2"  />
+					<field name="lp_file" select="2"  />
+					<field name="lp_doss" select="2"  />
+	                <field name="lp_serv" comparator="=" select="1"/>
+					<field name="seq_horse" select="2"  />
+					<field name="preleveur1_id" select="2"  />
+	                <field name="user_id" select="2"  />
+					<field name="sample_id" select="2" domain="[('type_id.code','=','EMPCHE')]" />
+					<field name="state_2" select="2"  />
+					<field name="notice" select="2" colspan="4"  />
+		      <field name="v_tag"     />
+					<newline/>
+					<newline/>
+				</page>
+				<page string="History" >
+		                <field name="history_ids" colspan="4"  nolabel="1"/>
+				</page>
+               <page string="Cases">
+			   	<field name="case_id" colspan="4" />
+               </page>
+			</notebook>
+		</form>
+    </field>
+</record>
+
+
+	<record model="ir.actions.act_window" id="action_labo_sample_empche_1">
+        <field name="name">EMPCHE Samples</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.sample</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="labo_sample_empche2"/>
+        <field name="context">{'type_id':'EMPCHE'}</field>
+        <field name="domain">[('sample_id.type_id.code','=','EMPCHE')]</field>
+		<field name="limit" eval="300"/>
+    </record>
+
+		<record model="ir.actions.act_window.view" id="act_sampleche_tree">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_sample_empche2"/>
+					<field name="act_window_id" ref="action_labo_sample_empche_1"/>
+		</record>
+
+		<record model="ir.actions.act_window.view" id="act_sampleche_form">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_sample_empche_form"/>
+					<field name="act_window_id" ref="action_labo_sample_empche_1"/>
+		</record>
+    <menuitem name="Progenus/Samples/EMPCHE Samples" id="menu_action_empche_form_view" action="action_labo_sample_empche_1"/>
+<!-- CONSULT ANALYSIS-->
+
+	<record model="ir.ui.view" id="labo_view_empche_an" >
+        <field name="name">EMPCHE</field>
+        <field name="model">labo.analysis.request</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+     	<form string="Analysis Request">
+			<notebook>
+				<page string="General">
+					<field name="name" select="1" />
+					<field name="type_id" domain="[('code','ilike','EMPCHE')]" context="{'type_id':'EMPCHE'}"/>
+					<field name="begining_date" />
+					<field name="date_reception" />
+					<field name="date_planned" />
+					<field name="date_closed" />
+					<field name="cond_reception"/>
+					<field name="ref_client"  on_change="onchange_pricelist(ref_client)" select="1" />
+					<field name="pricelist_id" />
+					<field name="user_id" select="1" />
+					<field name="invoice_ids" />
+					<field name="urgent" />
+					<field name="accredit" />
+					<field name="desc_1" colspan="4" nolabel="1"/>
+					<newline/>
+
+					<field name="desc_2" colspan="4" nolabel="1"/>
+					<field name="desc_3" colspan="4" nolabel="1"/>
+					<field name="state" colspan="4" nolabel="1"/>
+					<newline/>
+				 	<group col="4" colspan="4">
+						<button name="button_draft" string="Set to Draft" states="cancel" type="object"/>
+						<button name="button_cancel" string="Cancel" states="running" type="object"/>
+						<button name="button_running" string="Running" states="draft" type="object"/>
+						<button name="button_closed" string="Closed" states="draft,running" type="object"/>
+					</group>
+					</page>
+				<page string="Send to">
+					<field name="send_to_ids" nolabel="1"/>
+				</page>
+			</notebook>
+		</form>
+        </field>
+    </record>
+	
+	
+	<record model="ir.actions.act_window" id="action_labo_samples_empche_an">
+        <field name="name">EMPCHE Requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labo.analysis.request</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="labo_view_request"/>
+        <field name="domain" eval="'[(\'type_id\',\'=\',%d)]'%labo_analysis_type_empche" />
+        <field name="context">{'type_id':'EMPCHE'}</field>
+    </record>
+
+		<record model="ir.actions.act_window.view" id="act_labosempche_tree">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_view_request"/>
+					<field name="act_window_id" ref="action_labo_samples_empche_an"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_labosempche_form">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_view_empche_an"/>
+					<field name="act_window_id" ref="action_labo_samples_empche_an"/>
+		</record>
+    <menuitem name="Progenus/Consult Analysis/EMPCHE" id="menu_action_empchean_form_view" action="action_labo_samples_empche_an"/>
+
+
+</data>
+</terp>

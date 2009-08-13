@@ -1,0 +1,138 @@
+<?xml version="1.0" ?>
+<terp>
+	<data>
+
+	  <menuitem name="Progenus/Labo Tools" groups="admin"/>
+
+
+<record model="ir.ui.view" id="view_labo_log_form_view">
+			<field name="name">labo.log.form</field>
+			<field name="model">labo.log</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Labo log">
+				<!--	<field name="name" />-->
+					<field name="planified_date" />
+					<field name="user_id" />
+					<field name="check_in" />
+					<field name="result_action" />
+				</form>
+				</field>
+
+		</record>
+		<record model="ir.ui.view" id="view_labo_log_tree_view">
+			<field name="name">labo.log.tree</field>
+			<field name="model">labo.log</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Labo log"><!-- editable="top">-->
+				<!--	<field name="name" />-->
+					<field name="planified_date" />
+					<field name="user_id" />
+					<field name="check_in" />
+					<field name="result_action" />
+				</tree>
+				</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_labo_log_form_view">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">labo.log</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form,tree</field>
+		<field name="view_id" ref="view_labo_log_form_view"/>
+	</record>
+
+
+<!--	<menuitem name="Progenus/Labo Tools/Log" id="menu_action_labo_log_form_view" action="action_labo_log_form_view"/>-->
+
+
+		<record model="ir.ui.view" id="view_labo_tools_tree_view">
+			<field name="name">Equipment</field>
+			<field name="model">labo.tool</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Labo tools" > <!--editable="top">-->
+					<field name="name"/>
+					<field name="log_interv"/>
+					<field name="log"/>
+
+				</tree>
+			</field>
+	</record>
+
+
+
+		<record model="ir.ui.view" id="view_labo_tools_form_view">
+			<field name="name">Equipment</field>
+			<field name="model">labo.tool</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Labo tools">
+					<notebook>
+							<page string="General">
+								<field name="name" />
+								<field name="order_tool"/>
+							    <field name="log" colspan="4" nolabel="1" select="1"/>
+ <!--editable="top">-->
+							</page>
+							<page string="Intervention">
+								<field name="log_interv" colspan="4" nolabel="1" select="1"/> <!-- editable="top"/>-->
+							  </page>
+						</notebook>
+				</form>
+				</field>
+
+		</record>
+
+		<record model="ir.actions.act_window" id="action_labo_tools_form_view">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">labo.tool</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form,tree</field>
+		<field name="view_id" ref="view_labo_tools_tree_view"/>
+		</record>
+	<menuitem name="Progenus/Labo Tools/Equipments" id="menu_action_labo_tools_form_view" action="action_labo_tools_form_view"/>
+
+
+
+<record model="ir.ui.view" id="view_labo_interv_form_view">
+			<field name="name">Intervention</field>
+			<field name="model">labo.intervention</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Labo Intervention">
+					<field name="intervention_date" />
+					<field name="user_id" />
+					<field name="check_in" />
+					<field name="name" />
+				</form>
+				</field>
+
+		</record>
+		
+		<record model="ir.ui.view" id="view_labo_intervention_tree_view">
+			<field name="name">Intervention</field>
+			<field name="model">labo.intervention</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Labo Intervention"><!-- editable="top">-->
+					<field name="intervention_date" />
+					<field name="user_id" />
+					<field name="check_in" />
+					<field name="name" />
+				</tree>
+				</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_labo_intervention_form_view">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">labo.intervention</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form,tree</field>
+		<field name="view_id" ref="view_labo_interv_form_view"/>
+	</record>
+
+
+
+
+	</data>
+</terp>

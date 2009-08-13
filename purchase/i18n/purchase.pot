@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* purchase
+# 	* purchase
 #
 msgid ""
 msgstr ""
@@ -57,7 +57,10 @@ msgstr ""
 
 #. module: purchase
 #: wizard_view:purchase.order.merge,init:0
-msgid "Please note that orders will only be merged if they are to the same partner and going to the same location, and lines will only be merged if they are exactly the same except for the quantity and unit."
+msgid ""
+"Please note that orders will only be merged if they are to the same partner "
+"and going to the same location, and lines will only be merged if they are "
+"exactly the same except for the quantity and unit."
 msgstr ""
 
 #. module: purchase
@@ -87,7 +90,9 @@ msgstr ""
 
 #. module: purchase
 #: help:res.partner,property_product_pricelist_purchase:0
-msgid "This pricelist will be used, instead of the default one, for purchases from the current partner"
+msgid ""
+"This pricelist will be used, instead of the default one, for purchases from "
+"the current partner"
 msgstr ""
 
 #. module: purchase
@@ -102,7 +107,9 @@ msgstr ""
 
 #. module: purchase
 #: help:purchase.order,pricelist_id:0
-msgid "The pricelist sets the currency used for this purchase order. It also computes the supplier price for the selected products/quantities."
+msgid ""
+"The pricelist sets the currency used for this purchase order. It also "
+"computes the supplier price for the selected products/quantities."
 msgstr ""
 
 #. module: purchase
@@ -137,10 +144,8 @@ msgid "Untaxed Amount"
 msgstr ""
 
 #. module: purchase
-#: view:purchase.order:0
-#: field:purchase.order,notes:0
-#: view:purchase.order.line:0
-#: field:purchase.order.line,notes:0
+#: view:purchase.order:0 field:purchase.order,notes:0
+#: view:purchase.order.line:0 field:purchase.order.line,notes:0
 msgid "Notes"
 msgstr ""
 
@@ -150,8 +155,7 @@ msgid "N°"
 msgstr ""
 
 #. module: purchase
-#: rml:purchase.order:0
-#: field:purchase.order,amount_tax:0
+#: rml:purchase.order:0 field:purchase.order,amount_tax:0
 #: field:purchase.order.line,taxes_id:0
 msgid "Taxes"
 msgstr ""
@@ -182,7 +186,13 @@ msgstr ""
 
 #. module: purchase
 #: help:purchase.order,state:0
-msgid "The state of the purchase order or the quotation request. A quotation is a purchase order in a 'Draft' state. Then the order has to be confirmed by the user, the state switch to 'Confirmed'. Then the supplier must confirm the order to change the state to 'Approved'. When the purchase order is paid and received, the state becomes 'Done'. If a cancel action occurs in the invoice or in the reception of goods, the state becomes in exception."
+msgid ""
+"The state of the purchase order or the quotation request. A quotation is a "
+"purchase order in a 'Draft' state. Then the order has to be confirmed by the "
+"user, the state switch to 'Confirmed'. Then the supplier must confirm the "
+"order to change the state to 'Approved'. When the purchase order is paid and "
+"received, the state becomes 'Done'. If a cancel action occurs in the invoice "
+"or in the reception of goods, the state becomes in exception."
 msgstr ""
 
 #. module: purchase
@@ -196,8 +206,7 @@ msgid "Incoming Products"
 msgstr ""
 
 #. module: purchase
-#: rml:purchase.order:0
-#: rml:purchase.quotation:0
+#: rml:purchase.order:0 rml:purchase.quotation:0
 msgid "Qty"
 msgstr ""
 
@@ -238,9 +247,13 @@ msgstr ""
 
 #. module: purchase
 #: help:purchase.order,invoice_method:0
-msgid "From Order: a draft invoice will be pre-generated based on the purchase order. The accountant will just have to validate this invoice for control.\n"
-"From Picking: a draft invoice will be pre-genearted based on validated receptions.\n"
-"Manual: no invoice will be pre-generated. The accountant will have to encode manually."
+msgid ""
+"From Order: a draft invoice will be pre-generated based on the purchase "
+"order. The accountant will just have to validate this invoice for control.\n"
+"From Picking: a draft invoice will be pre-genearted based on validated "
+"receptions.\n"
+"Manual: no invoice will be pre-generated. The accountant will have to encode "
+"manually."
 msgstr ""
 
 #. module: purchase
@@ -427,7 +440,9 @@ msgstr ""
 
 #. module: purchase
 #: help:purchase.order,minimum_planned_date:0
-msgid "This is computed as the minimum scheduled date of all purchase order lines' products."
+msgid ""
+"This is computed as the minimum scheduled date of all purchase order lines' "
+"products."
 msgstr ""
 
 #. module: purchase
@@ -437,7 +452,10 @@ msgstr ""
 
 #. module: purchase
 #: help:purchase.order,dest_address_id:0
-msgid "Put an address if you want to deliver directly from the supplier to the customer.In this case, it will remove the warehouse link and set the customer location."
+msgid ""
+"Put an address if you want to deliver directly from the supplier to the "
+"customer.In this case, it will remove the warehouse link and set the "
+"customer location."
 msgstr ""
 
 #. module: purchase
@@ -457,7 +475,8 @@ msgstr ""
 
 #. module: purchase
 #: help:purchase.order,picking_ids:0
-msgid "This is the list of picking list that have been generated for this purchase"
+msgid ""
+"This is the list of picking list that have been generated for this purchase"
 msgstr ""
 
 #. module: purchase
@@ -487,8 +506,7 @@ msgid "Destination Address"
 msgstr ""
 
 #. module: purchase
-#: view:purchase.order.line:0
-#: field:stock.move,purchase_line_id:0
+#: view:purchase.order.line:0 field:stock.move,purchase_line_id:0
 msgid "Purchase Order Line"
 msgstr ""
 
@@ -629,8 +647,7 @@ msgid "Default Purchase Pricelist Version"
 msgstr ""
 
 #. module: purchase
-#: rml:purchase.order:0
-#: field:purchase.order.line,price_unit:0
+#: rml:purchase.order:0 field:purchase.order.line,price_unit:0
 msgid "Unit Price"
 msgstr ""
 
@@ -675,7 +692,8 @@ msgstr ""
 
 #. module: purchase
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: purchase
@@ -685,8 +703,7 @@ msgid "New Purchase Order"
 msgstr ""
 
 #. module: purchase
-#: field:purchase.order,shipped:0
-#: field:purchase.order,shipped_rate:0
+#: field:purchase.order,shipped:0 field:purchase.order,shipped_rate:0
 msgid "Received"
 msgstr ""
 
@@ -718,7 +735,8 @@ msgstr ""
 
 #. module: purchase
 #: model:ir.module.module,description:purchase.module_meta_information
-msgid "Module for purchase management\n"
+msgid ""
+"Module for purchase management\n"
 "    Request for quotation, Create Supplier Invoice, Print Order..."
 msgstr ""
 
@@ -728,8 +746,7 @@ msgid "Product"
 msgstr ""
 
 #. module: purchase
-#: rml:purchase.order:0
-#: field:purchase.order.line,name:0
+#: rml:purchase.order:0 field:purchase.order.line,name:0
 #: rml:purchase.quotation:0
 msgid "Description"
 msgstr ""
@@ -841,3 +858,22 @@ msgstr ""
 msgid "Total"
 msgstr ""
 
+#. module: purchase
+#: view:purchase.order.line:0
+msgid "History"
+msgstr ""
+
+#. module: purchase
+#: rml:purchase.order:0
+msgid "Request for Quotation N°"
+msgstr ""
+
+#. module: purchase
+#: rml:purchase.order:0
+msgid "Purchase Order Confirmation N°"
+msgstr ""
+
+#. module: purchase
+#: view:purchase.order.line:0
+msgid "Stock Moves"
+msgstr ""
