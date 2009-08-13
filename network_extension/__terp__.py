@@ -22,7 +22,7 @@
 {
     "name" : "Network Management Extension",
     "version" : "1.0",
-    "author" : "Tiny",
+    "author" : "Zikzakmedia SL",
     "category" : "Enterprise Specific Modules/Information Technology",
     "website": "http://www.zikzakmedia.com",
     "depends" : ["network"],
