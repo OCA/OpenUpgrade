@@ -19,9 +19,10 @@
 						<!--<field name="partner_anonymous_id" required="1"/>-->
 						<field name="price_type"/>
 						<field name="esale_account_id"/>
-						<!--<label string="Proceed with the mappings BEFORE the definitions of the active products!!" colspan="4"/> -->
-<!--						<separator string="Active Products" colspan="4"/>-->
-						<button name="product_import_create" string="Add all products" colspan="2" type="object"/>
+						<newline/>
+						<label string="Proceed with the mappings before adding products!" colspan="2"/>
+						<button name="product_import_create" string="Import all products from OSCommerce" colspan="2" type="object"/>
+						<separator string="Active Products" colspan="4"/>
 						<field name="product_ids" colspan="4" widget="one2many_list" nolabel="1" readonly="1"/>
 					</page>
 					<page string="Taxes Mapping">
@@ -53,6 +54,10 @@
 			<tree string="OScommerce Web Shop">
 				<field name="name"/>
 				<field name="url"/>
+				<field name="active"/>
+				<field name="shop_id"/>
+				<field name="price_type"/>
+				<field name="esale_account_id"/>
 			</tree>
 		</field>
 	</record>
@@ -126,6 +131,7 @@
 				<field name="payment_id" select="1"/>
 				<field name="esale_oscom_id" readonly="1" select="1"/>
 				<field name="paytyp" select="1"/>
+				<field name="journal_id" select="2" attrs="{'required':[('paytyp','=','type5')]}"/>
 			</form>
 		</field>
 	</record>
@@ -138,6 +144,7 @@
 				<field name="name" />
 				<field name="payment_id" />
 				<field name="paytyp" />
+				<field name="journal_id" />
 			</tree>
 		</field>
 	</record>
@@ -178,7 +185,6 @@
 				<field name="name" colspan="4" select="1" required="1"/>
 				<field name="product_id" on_change="onchange_product_id(product_id, web_id)" select="1" required="1"/>
 				<field name="esale_oscom_id" readonly="1" select="1"/>
-				<field name="esale_oscom_tax_id" readonly="1" select="1"/>
 			</form>
 		</field>
 	</record>
@@ -191,10 +197,13 @@
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Sales Orders">
+				<field name="esale_oscom_web"/>
+				<field name="esale_oscom_id"/>
+				<field name="shipping_title"/>
+				<field name="pay_met_title"/>
+				<field name="orders_status"/>
 				<field name="name"/>
 				<field name="shipped"/>
-				<field name="esale_oscom_id"/>
-				<field name="esale_oscom_web"/>
 				<field name="invoiced"/>
 				<field name="date_order"/>
 				<field name="partner_id"/>
@@ -227,6 +236,9 @@
 						<field domain="[('partner_id','=',partner_id)]" name="partner_shipping_id"/>
 						<field domain="[('type','=','sale')]" name="pricelist_id"/>
 						<field name="project_id" select="1"/>
+						<field name="shipping_title"/>
+						<field name="pay_met_title"/>
+						<field name="orders_status"/>
 						<newline/>
 						<field colspan="4" name="order_line" nolabel="1" widget="one2many_list"/>
 						<newline/>
@@ -277,6 +289,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">sale.order</field>
 		<field name="view_type">form</field>
+		<field name="view_id" ref="esale_oscom_saleorder_tree"/>
 		<field name="view_mode">tree,form</field>
 		<field name="domain">[('esale_oscom_id','!=', 0)]</field>
 	</record>
@@ -297,6 +310,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">sale.order</field>
 		<field name="view_type">form</field>
+		<field name="view_id" ref="esale_oscom_saleorder_tree"/>
 		<field name="view_mode">tree,form</field>
 		<field name="domain">[('esale_oscom_web','!=', ''),('state','=','draft'),('user_id','=',uid)]</field>
 	</record>
@@ -307,6 +321,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">sale.order</field>
 		<field name="view_type">form</field>
+		<field name="view_id" ref="esale_oscom_saleorder_tree"/>
 		<field name="view_mode">tree,form</field>
 		<field name="domain">[('esale_oscom_web','!=', ''),('state','=','manual'),('user_id','=',uid)]</field>
 	</record>
@@ -317,6 +332,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">sale.order</field>
 		<field name="view_type">form</field>
+		<field name="view_id" ref="esale_oscom_saleorder_tree"/>
 		<field name="view_mode">tree,form</field>
 		<field name="domain">[('esale_oscom_web','!=', ''),('state','=','progress'),('user_id','=',uid)]</field>
 	</record>
