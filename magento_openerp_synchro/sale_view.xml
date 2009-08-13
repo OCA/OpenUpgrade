@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>		
+		
+		<!-- Sale View -->
+		<record model="ir.ui.view" id="view_order_form">
+			<field name="name">sale.order.form.magento</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<page position="after" string="Sale Order">
+					<page position="inside" string="Magento">
+						<separator string="Magento Information" colspan="4"/>
+						<field name="magento_id" position="inside"/>
+						<field name="has_error" position="inside"/>
+					</page>
+				</page>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_order_tree">
+			<field name="name">sale.order.tree.magento</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_tree" />
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Sales orders">
+					<field name="magento_id" position="after" />
+					<field name="has_error" position="after" />
+				</tree>
+			</field>
+		</record>
+		
+		
+		<!-- Shop View -->
+		<record model="ir.ui.view" id="view_shop_tree">
+			<field name="name">sale.shop.tree.magento</field>
+			<field name="model">sale.shop</field>
+			<field name="inherit_id" ref="sale.view_shop_tree" />
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Sale Shop">
+					<field name="magento_flag" position="after" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_shop_form">
+			<field name="name">sale.shop.form.inherit</field>
+			<field name="model">sale.shop</field>
+			<field name="inherit_id" ref="sale.view_shop_form" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Sale Shop">
+					<separator string="Magento Information" colspan="4"
+						position="after" />
+					<field name="magento_flag" position="after" />
+				</form>
+			</field>
+		</record>
+
+	</data>
+</openerp>

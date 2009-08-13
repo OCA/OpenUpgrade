@@ -108,17 +108,18 @@ class account_invoice_line(osv.osv):
     _columns = {
                'product_id': fields.many2one('product.product', 'Product', ondelete='set null'), 
     }
-   
+    
     def product_id_change(self, cr, uid, ids, product, uom, qty=0, name='', type='out_invoice', partner_id=False, fposition_id=False, price_unit=False, address_invoice_id=False,  company_id=False, context=None):
+        
         if context is None:
             context = {}
         if not partner_id:
             raise osv.except_osv(_('No Partner Defined !'),_("You must first select a partner !") )
         if not product:
             if type in ('in_invoice', 'in_refund'):
-                return {'domain':{'product_uom':[]}}
+                return {'value': {'categ_id': False}, 'domain':{'product_uom':[]}}
             else:
-                return {'value': {'price_unit': 0.0}, 'domain':{'product_uom':[]}}
+                return {'value': {'price_unit': 0.0, 'categ_id': False}, 'domain':{'product_uom':[]}}
         part = self.pool.get('res.partner').browse(cr, uid, partner_id)
         fpos = fposition_id and self.pool.get('account.fiscal.position').browse(cr, uid, fposition_id) or False
 
@@ -132,7 +133,26 @@ class account_invoice_line(osv.osv):
                 in_pro_id = self.pool.get('ir.property').search(cr,uid,[('name','=','property_account_income_categ'),('res_id','=','product.template,'+str(res.categ_id.id)+''),('company_id','=',company_id)])
             exp_pro_id = self.pool.get('ir.property').search(cr,uid,[('name','=','property_account_expense'),('res_id','=','product.template,'+str(res.product_tmpl_id.id)+''),('company_id','=',company_id)])
             if not exp_pro_id:
-                exp_pro_id = self.pool.get('ir.property').search(cr,uid,[('name','=','property_account_expense'),('res_id','=','product.template,'+str(res.categ_id.id)+''),('company_id','=',company_id)])
+                exp_pro_id = self.pool.get('ir.property').search(cr,uid,[('name','=','property_account_expense_categ'),('res_id','=','product.template,'+str(res.categ_id.id)+''),('company_id','=',company_id)])
+            
+            if not in_pro_id:
+                in_acc = res.product_tmpl_id.property_account_income 
+                in_acc_cate = res.categ_id.property_account_income_categ
+                if in_acc:
+                    app_acc_in = in_acc
+                else:
+                    app_acc_in = in_acc_cate
+            else:
+                app_acc_in = self.pool.get('account.account').browse(cr,uid,in_pro_id)[0]
+            if not exp_pro_id:
+                ex_acc = res.product_tmpl_id.property_account_expense
+                ex_acc_cate = res.categ_id.property_account_expense_categ
+                if ex_acc:
+                    app_acc_exp = ex_acc
+                else:
+                    app_acc_exp = ex_acc_cate
+            else:
+                app_acc_exp = self.pool.get('account.account').browse(cr,uid,exp_pro_id)[0]
             if not in_pro_id and not exp_pro_id:
                 in_acc = res.product_tmpl_id.property_account_income 
                 in_acc_cate = res.categ_id.property_account_income_categ
@@ -144,9 +164,9 @@ class account_invoice_line(osv.osv):
                 else:
                     app_acc_in = in_acc_cate
                     app_acc_exp = ex_acc_cate
-            else:
-                app_acc_in = self.pool.get('account.account').browse(cr,uid,in_pro_id)[0]
-                app_acc_exp = self.pool.get('account.account').browse(cr,uid,exp_pro_id)[0]
+#            else:
+#                app_acc_in = self.pool.get('account.account').browse(cr,uid,in_pro_id)[0]
+#                app_acc_exp = self.pool.get('account.account').browse(cr,uid,exp_pro_id)[0]
             if app_acc_in.company_id.id != company_id and app_acc_exp.company_id.id != company_id:
                 in_res_id=self.pool.get('account.account').search(cr,uid,[('name','=',app_acc_in.name),('company_id','=',company_id)])
                 exp_res_id=self.pool.get('account.account').search(cr,uid,[('name','=',app_acc_exp.name),('company_id','=',company_id)])
@@ -198,7 +218,101 @@ class account_invoice_line(osv.osv):
             res2 = res.uom_id.category_id.id
             if res2 :
                 domain = {'uos_id':[('category_id','=',res2 )]}
+
+        prod_pool=self.pool.get('product.product')            
+        result['categ_id'] = res.categ_id.id       
         return {'value':result, 'domain':domain}
+   
+#    def product_id_change(self, cr, uid, ids, product, uom, qty=0, name='', type='out_invoice', partner_id=False, fposition_id=False, price_unit=False, address_invoice_id=False,  company_id=False, context=None):
+#        if context is None:
+#            context = {}
+#        if not partner_id:
+#            raise osv.except_osv(_('No Partner Defined !'),_("You must first select a partner !") )
+#        if not product:
+#            if type in ('in_invoice', 'in_refund'):
+#                return {'domain':{'product_uom':[]}}
+#            else:
+#                return {'value': {'price_unit': 0.0}, 'domain':{'product_uom':[]}}
+#        part = self.pool.get('res.partner').browse(cr, uid, partner_id)
+#        fpos = fposition_id and self.pool.get('account.fiscal.position').browse(cr, uid, fposition_id) or False
+#
+#        lang=part.lang
+#        context.update({'lang': lang})
+#        result = {}
+#        res = self.pool.get('product.product').browse(cr, uid, product, context=context)
+#        if company_id:
+#            in_pro_id = self.pool.get('ir.property').search(cr,uid,[('name','=','property_account_income'),('res_id','=','product.template,'+str(res.product_tmpl_id.id)+''),('company_id','=',company_id)])
+#            if not in_pro_id:
+#                in_pro_id = self.pool.get('ir.property').search(cr,uid,[('name','=','property_account_income_categ'),('res_id','=','product.template,'+str(res.categ_id.id)+''),('company_id','=',company_id)])
+#            exp_pro_id = self.pool.get('ir.property').search(cr,uid,[('name','=','property_account_expense'),('res_id','=','product.template,'+str(res.product_tmpl_id.id)+''),('company_id','=',company_id)])
+#            if not exp_pro_id:
+#                exp_pro_id = self.pool.get('ir.property').search(cr,uid,[('name','=','property_account_expense'),('res_id','=','product.template,'+str(res.categ_id.id)+''),('company_id','=',company_id)])
+#            if not in_pro_id and not exp_pro_id:
+#                in_acc = res.product_tmpl_id.property_account_income 
+#                in_acc_cate = res.categ_id.property_account_income_categ
+#                ex_acc = res.product_tmpl_id.property_account_expense
+#                ex_acc_cate = res.categ_id.property_account_expense_categ
+#                if in_acc or ex_acc:
+#                    app_acc_in = in_acc
+#                    app_acc_exp = ex_acc
+#                else:
+#                    app_acc_in = in_acc_cate
+#                    app_acc_exp = ex_acc_cate
+#            else:
+#                app_acc_in = self.pool.get('account.account').browse(cr,uid,in_pro_id)[0]
+#                app_acc_exp = self.pool.get('account.account').browse(cr,uid,exp_pro_id)[0]
+#            if app_acc_in.company_id.id != company_id and app_acc_exp.company_id.id != company_id:
+#                in_res_id=self.pool.get('account.account').search(cr,uid,[('name','=',app_acc_in.name),('company_id','=',company_id)])
+#                exp_res_id=self.pool.get('account.account').search(cr,uid,[('name','=',app_acc_exp.name),('company_id','=',company_id)])
+#                if not in_res_id and not exp_res_id:
+#                    raise osv.except_osv(_('Configration Error !'),
+#                        _('Can not find account chart for this company, Please Create account.'))
+#                in_obj_acc=self.pool.get('account.account').browse(cr,uid,in_res_id)
+#                exp_obj_acc=self.pool.get('account.account').browse(cr,uid,exp_res_id)
+#                if in_acc or ex_acc:
+#                    res.product_tmpl_id.property_account_income = in_obj_acc[0]
+#                    res.product_tmpl_id.property_account_expense = exp_obj_acc[0]
+#                else:
+#                    res.categ_id.property_account_income_categ = in_obj_acc[0]
+#                    res.categ_id.property_account_expense_categ = exp_obj_acc[0]
+#
+#        if type in ('out_invoice','out_refund'):
+#            a =  res.product_tmpl_id.property_account_income.id
+#            if not a:
+#                a = res.categ_id.property_account_income_categ.id
+#        else:
+#            a =  res.product_tmpl_id.property_account_expense.id
+#            if not a:
+#                a = res.categ_id.property_account_expense_categ.id
+#
+#        a = self.pool.get('account.fiscal.position').map_account(cr, uid, fpos, a)
+#        if a:
+#            result['account_id'] = a
+#
+#        taxep=None
+#        tax_obj = self.pool.get('account.tax')
+#        if type in ('out_invoice', 'out_refund'):
+#            taxes = res.taxes_id and res.taxes_id or (a and self.pool.get('account.account').browse(cr, uid,a).tax_ids or False)
+#            tax_id = self.pool.get('account.fiscal.position').map_tax(cr, uid, fpos, taxes)
+#        else:
+#            taxes = res.supplier_taxes_id and res.supplier_taxes_id or (a and self.pool.get('account.account').browse(cr, uid,a).tax_ids or False)
+#            tax_id = self.pool.get('account.fiscal.position').map_tax(cr, uid, fpos, taxes)
+#        if type in ('in_invoice', 'in_refund'):
+#            to_update = self.product_id_change_unit_price_inv(cr, uid, tax_id, price_unit, qty, address_invoice_id, product, partner_id, context=context)
+#            result.update(to_update)
+#        else:
+#            result.update({'price_unit': res.list_price, 'invoice_line_tax_id': tax_id})
+#
+#        if not name:
+#            result['name'] = res.name
+#
+#        domain = {}
+#        result['uos_id'] = uom or res.uom_id.id or False
+#        if result['uos_id']:
+#            res2 = res.uom_id.category_id.id
+#            if res2 :
+#                domain = {'uos_id':[('category_id','=',res2 )]}
+#        return {'value':result, 'domain':domain}
 
 account_invoice_line()
 
@@ -206,6 +320,9 @@ class JournalPeriod(osv.osv):
     _inherit = 'account.journal.period'
     _columns = {
         'company_id' : fields.many2one('res.company', 'Company')
+    }
+    _defaults = {
+        'company_id': lambda self,cr,uid,c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
     }
 JournalPeriod()
 

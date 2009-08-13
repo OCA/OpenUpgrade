@@ -45,8 +45,8 @@ _result_form = '''<?xml version="1.0"?>
 </form>'''
 
 _result_fields = {   
-    'final_amount': {'string': 'Amount', 'type': 'float'},
-    'rate': {'string': 'Current Rate', 'type': 'float'},
+    'final_amount': {'string': 'Amount', 'type': 'float', 'digits':(16,6)},
+    'rate': {'string': 'Current Rate', 'type': 'float', 'digits':(16,6)},
 }
 
 
@@ -61,8 +61,8 @@ class wizard_currency_rate(wizard.interface):
             to_cur_id = data['form']['to_cur']
             amount = data['form']['amount']
            
-            from_code = cur_obj.browse(self.cr, self.uid, from_cur_id).code
-            to_code = cur_obj.browse(self.cr, self.uid, to_cur_id).code
+            from_code = cur_obj.browse(cr, uid, from_cur_id).code
+            to_code = cur_obj.browse(cr, uid, to_cur_id).code
             
             urldata = {'FromCurrency':from_code, 'ToCurrency':to_code ,'method':'GET'}
             data = urllib.urlencode(urldata)
@@ -72,11 +72,12 @@ class wizard_currency_rate(wizard.interface):
             data = response.read()
             xmldoc = minidom.parseString(data)
             rate = xmldoc.documentElement.firstChild.nodeValue
-        
+            
             if rate:
-                res['final_amount'] = (amount * rate) or 0.0
+                res['final_amount'] = (float(amount) * float(rate)) or 0.0
                 res['rate'] = rate
-        except:
+            
+        except Exception,e:            
             return res
         return res
         

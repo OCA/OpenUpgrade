@@ -582,7 +582,6 @@ All Logs
                 <field name="user_id"/>
                 <field name="query"/>
                 <field name="cube_id"/>
-                <field name="mdx_id"/>
                 <field name="schema_id"/>
             </tree>
         </field>
@@ -597,10 +596,8 @@ All Logs
                 <field name="time" select="2" readonly="True"/>
                 <field name="result_size" select="2" readonly="True"/>
                 <field name="cube_id" select="2" readonly="True"/>
-                <field name="mdx_id" select="2" readonly="True"/>
                 <field name="count" readonly="True"/>
                 <field name="schema_id" readonly="True"/>
-                <field name="table_name" readonly="True"></field>
             </form>
         </field>
     </record>
@@ -635,7 +632,6 @@ All Logs / My logs
                 <field name="user_id"/>
                 <field name="query"/>
                 <field name="cube_id"/>
-                <field name="mdx_id"/>
             </tree>
         </field>
     </record>
@@ -648,7 +644,6 @@ All Logs / My logs
                 <field name="user_id"/>
                 <field name="query"/>
                 <field name="cube_id"/>
-                <field name="mdx_id"/>
             </tree>
         </field>
     </record>
@@ -665,7 +660,6 @@ All Logs / My logs
                 <field name="time" select="2" readonly="True"/>
                 <field name="result_size" select="2" readonly="True"/>
                 <field name="cube_id" select="2" readonly="True"/>
-                <field name="mdx_id" select="2" readonly="True"/>
                 
             </form>
         </field>

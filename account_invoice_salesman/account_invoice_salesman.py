@@ -31,6 +31,39 @@ class account_invoice(osv.osv):
     _defaults = {
         'user_id': lambda self,cr,uid,ctx: uid
     }
+
 account_invoice()
+
+class sale_order(osv.osv):
+    _inherit="sale.order"
+
+    def action_invoice_create(self, cr, uid, ids, grouped=False, states=['confirmed','done','exception']):
+        salesman_ids = self.read(cr,uid,ids,['user_id'])
+        for salesman in salesman_ids:
+            result = super(sale_order, self).action_invoice_create(cr, uid,
+                    ids, grouped, states)
+            if result and salesman.get('user_id',False):
+                self.pool.get('account.invoice').write(cr, uid, result, {'user_id':salesman['user_id'][0]})
+        return result
+    
+sale_order()
+
+class stock_picking(osv.osv):
+    _inherit = 'stock.picking'
+
+    def action_invoice_create(self, cursor, user, ids, journal_id=False,
+            group=False, type='out_invoice', context=None):
+        result = super(stock_picking, self).action_invoice_create(cursor, user,
+                ids, journal_id, group, type,
+                context)
+        invoice_ids = result.values()
+        for picking in self.browse(cursor, user, ids, context=context):
+            if not picking.sale_id:
+                continue
+            if picking.sale_id.user_id:
+                self.pool.get('account.invoice').write(cursor, user, invoice_ids, {'user_id':picking.sale_id.user_id.id })
+        return result
+    
+stock_picking()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

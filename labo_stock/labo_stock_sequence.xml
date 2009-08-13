@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<terp>
+<data noupdate="1">
+
+	#
+	# Sequences for labo.analysis.type
+	#
+
+	<record model="ir.sequence.type" id="seq_labo_article">
+		<field name="name">Labo Article</field>
+		<field name="code">labo.article</field>
+	</record>
+	<record model="ir.sequence" id="seq_labo_article">
+		<field name="name">Labo Article</field>
+		<field name="code">labo.article</field>
+		<field name="padding">4</field>
+
+	</record>
+
+
+	<record model="ir.sequence.type" id="seq_labo_mix_type">
+		<field name="name">Mix</field>
+		<field name="code">form.mix</field>
+	</record>
+	<record model="ir.sequence" id="seq_labo_mix">
+		<field name="name">Mix</field>
+		<field name="code">form.mix</field>
+		<field name="padding">4</field>
+
+	</record>
+
+	<record model="ir.sequence.type" id="seq_labo_reactives">
+		<field name="name">Reactives</field>
+		<field name="code">stock.reactives</field>
+	</record>
+	<record model="ir.sequence" id="seq_labo_article">
+		<field name="name">Reactives</field>
+		<field name="code">stock.reactives</field>
+		<field name="padding">4</field>
+	</record>
+
+
+
+</data>
+</terp>

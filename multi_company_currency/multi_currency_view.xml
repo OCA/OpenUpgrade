@@ -14,6 +14,61 @@
                 </field>
             </field>
         </record>
+        
+        <record id="view_currency_form_inherit_base" model="ir.ui.view">
+            <field name="name">res.currency.form.inherit</field>
+            <field name="model">res.currency</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="base.view_currency_form" />
+            <field name="arch" type="xml">
+                <field name="active" select= "1" position="after">
+                    <field name="base"/>
+                </field>
+            </field>
+        </record>
+        
+        <record id="view_currency_form_inherit_rates" model="ir.ui.view">
+            <field name="name">res.currency.form.inherit</field>
+            <field name="model">res.currency</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="base.view_currency_form" />
+            <field name="arch" type="xml">
+                <field colspan="4" mode="tree,form" name="rate_ids" nolabel="1" position="replace">
+                    <field colspan="4" mode="tree,form" name="rate_ids" nolabel="1" attrs="{'readonly':[('base','=',True)]}">
+                    	<form string="Rates">
+                            <field name="name"/>
+                            <field name="rate"/>
+                        </form>
+                        <tree string="Rates">
+                            <field name="name"/>
+                            <field name="rate"/>
+                        </tree>
+                     </field>
+                </field>
+            </field>
+        </record>
+        
+        <record id="view_currency_tree_inherit" model="ir.ui.view">
+            <field name="name">res.currency.tree.inherit</field>
+            <field name="model">res.currency</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="base.view_currency_tree" />
+            <field name="arch" type="xml">
+	            <tree string="Currencies" position="replace">
+	            	<tree string="Currencies">
+	                    <field name="name"/>
+	                    <field name="code"/>
+	                    <field name="company_id" select="2" />
+	                     <field name="rate_ids" invisible="1"/>
+	                    <field name="date"/>
+	                    <field name="rate"/>
+	                    <field name="rounding"/>
+	                    <field name="accuracy"/>
+	                    <field name="active"/>
+	                 </tree>
+	            </tree>
+            </field>
+        </record>
 
         <record id="view_company_form_inherit" model="ir.ui.view">
             <field name="name">res.company.form.inherit</field>

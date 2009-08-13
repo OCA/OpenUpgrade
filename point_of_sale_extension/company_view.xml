@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+
+        <record id="pos_company" model="ir.ui.view">
+            <field name="name">res.company.pos.config</field>
+            <field name="model">res.company</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <page string="Configuration" position="inside">
+                    <separator string="Point of sale" colspan="4"/>
+                    <field name="pos_warn_virtual_stock"/>
+                    <field name="pos_warn_sale_order"/>
+                    <field name="pos_prices_tax_include"/>
+                    <field name="pos_journals" colspan="4"/>
+                    <newline/>
+                </page>
+            </field>
+        </record>
+
+    </data>
+</openerp>

@@ -21,11 +21,62 @@
 #
 ##############################################################################
 
+
 import xmlrpclib
 import time
 import base64
 
 import sys
+
+demo_profile = sys.argv[1]
+
+def wrong_profile():
+	print "Cannot find SaaS demo profile :",demo_profile
+	sys.exit()
+
+if demo_profile == 'service_fr':
+	profile = 'profile_service'
+	l10n_chart = 'l10n_be'
+	lang = 'fr_FR'
+	dbname = 'service_fr'
+elif demo_profile == 'service_en':
+	profile = 'profile_service'
+	l10n_chart = 'l10n_chart_uk_minimal'
+	lang = 'en_US'
+	dbname = 'service_en'
+elif demo_profile == 'manufacturing_fr':
+	profile = 'profile_manufacturing'
+	l10n_chart = 'l10n_be'
+	lang = 'fr_FR'
+	dbname = 'manufacturing_fr'
+elif demo_profile == 'manufacturing_en':
+	profile = 'profile_manufacturing'
+	l10n_chart = 'l10n_chart_uk_minimal'
+	lang = 'en_US'
+	dbname = 'manufacturing_en'
+elif demo_profile == 'accounting_fr':
+	profile = 'profile_accounting'
+	l10n_chart = 'l10n_be'
+	lang = 'fr_FR'
+	dbname = 'accounting_fr'
+elif demo_profile == 'accounting_en':
+	profile = 'profile_accounting'
+	l10n_chart = 'l10n_chart_uk_minimal'
+	lang = 'en_US'
+	dbname = 'accounting_en'
+elif demo_profile == 'auction_fr':
+	profile = 'profile_auction'
+	l10n_chart = 'l10n_be'
+	lang = 'fr_FR'
+	dbname = 'auction_fr'
+elif demo_profile == 'auction_en':
+	profile = 'profile_auction'
+	l10n_chart = 'l10n_chart_uk_minimal'
+	lang = 'en_US'
+	dbname = 'auction_en'
+else:
+	wrong_profile()
+
 
 url = 'http://localhost:8069/xmlrpc'
 
@@ -34,11 +85,6 @@ sock2 = xmlrpclib.ServerProxy(url+'/db')
 sock3 = xmlrpclib.ServerProxy(url+'/common')
 sock4 = xmlrpclib.ServerProxy(url+'/wizard')
 
-profile = 'profile_service'
-l10n_chart = 'l10n_chart_uk_minimal'
-lang = 'en_US'
-
-dbname = 'demo'
 admin_passwd = 'admin'
 
 def wait(id):
@@ -70,17 +116,16 @@ def create_db():
     wiz_id = sock4.create(dbname, uid, 'admin', 'base_setup.base_setup')
     state = 'init'
     datas = {'form':{}}
-    while state!='menu':
+    while state!='config':        
         res = sock4.execute(dbname, uid, 'admin', wiz_id, datas, state, {})
-        if 'datas' in res:
+        if state=='init':
             datas['form'].update( res['datas'] )
         if res['type']=='form':
-            for field in res['fields'].keys():
-                datas['form'][field] = res['fields'][field].get('value', False)
+            for field in res['fields'].keys():               
+                datas['form'][field] = datas['form'].get(field,False)
             state = res['state'][-1][0]
             datas['form'].update({
-                'profile': idprof[0],
-                'charts': idl10n[0],
+                'profile': idprof[0]                
             })
         elif res['type']=='state':
             state = res['state']
@@ -89,7 +134,7 @@ def create_db():
 
     return True
 
-def load_laungauges(*langs):
+def load_languages(*langs):
     uid = sock3.login(dbname, 'admin','admin')
 
     wiz_id = sock4.create(dbname, uid, 'admin', 'module.lang.install')
@@ -141,21 +186,19 @@ else:
     print "FAIL"
 
 
-print "Loading demo module:",
-sys.stdout.flush()
+#print "Loading demo module:",
+#sys.stdout.flush()
 
-if load_demo_module():
-    print "OK"
-else:
-    print "FAIL"
+#if load_demo_module():
+#    print "OK"
+#else:
+#    print "FAIL"
 
 
 #print "Loading additional languages:",
 #sys.stdout.flush()
 
-#if load_laungauges('fr_FR', 'en_US'):
+#if load_languages('fr_FR', 'en_US'):
 #    print "OK"
 #else:
 #    print "FAIL"
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

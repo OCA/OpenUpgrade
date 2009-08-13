@@ -8,7 +8,7 @@
             <field name='inherit_id' ref='account.invoice_form'/>
             <field name='arch' type='xml'>
                 <notebook colspan="4" position='inside'>
-                    <page string='Followups' attrs="{'invisible': [('state', '!=', 'proforma2')]}">
+                    <page string='Followups' attrs="{'invisible': [('state', '!=', 'proforma2')]}" groups="base.group_user">
                         <field name='proforma_next_followup_action_id'/> 
                         <field name='proforma_next_followup_scheduled_at'/> 
                         <field name='proforma_followup_history_ids' colspan='4' nolabel='1'>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_pos_pos_form_z1">
+            <field name="name">pos.order.form.z1</field>
+            <field name="model">pos.order</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+            <field name="arch" type="xml">
+                <button name="%(point_of_sale.pos_payment)d" position="replace">
+                    <button name="%(pos_payment2)d"
+                        string="Ma_ke Payment"
+                        type="action" states="draft"/>
+                </button>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_pos_pos_form_z2">
+            <field name="name">pos.order.form.z2</field>
+            <field name="model">pos.order</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" on_change="onchange_partner_pricelist(partner_id)" position="replace">
+                    <field name="partner_id" on_change="onchange_partner_pricelist(partner_id)" select="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_pos_pos_form_z3">
+            <field name="name">pos.order.form.z3</field>
+            <field name="model">pos.order</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+            <field name="arch" type="xml">
+                <field name="payment_id" position="after">
+                    <field name="journal_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_pos_pos_form_z4">
+            <field name="name">pos.order.form.z4</field>
+            <field name="model">pos.order</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+            <field name="arch" type="xml">
+                <field name="name" select="1" position="replace"/>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_pos_pos_form_z5">
+            <field name="name">pos.order.form.z5</field>
+            <field name="model">pos.order</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+            <field name="arch" type="xml">
+                <field name="date_order" select="1" position="replace"/>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_pos_pos_form_z6">
+            <field name="name">pos.order.form.z6</field>
+            <field name="model">pos.order</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+            <field name="arch" type="xml">
+                <field name="date_validity" position="replace"/>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_pos_pos_form_z7">
+            <field name="name">pos.order.form.z7</field>
+            <field name="model">pos.order</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+            <field name="arch" type="xml">
+                <form string="Sales Order POS" position="inside">
+                    <group colspan="3" col="6">
+                        <field name="name" select="1"/>
+                        <field name="date_order" select="1"/>
+                        <field name="date_validity" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_pos_order_tree_z1">
+            <field name="name">Sales</field>
+            <field name="model">pos.order</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="before">
+                    <field name="partner_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_pos_order_line_z1">
+            <field name="name">Sale lines</field>
+            <field name="model">pos.order.line</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_order_line"/>
+            <field name="arch" type="xml">
+                <field name="product_id" position="before">
+                    <field name="partner_id" readonly="1" select="1"/>
+                    <field name="order_id" readonly="1" select="2"/>
+                    <field name="state" readonly="1" select="2"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- Shortcuts -->
+        <act_window name="TPV sales"
+                    domain="[('partner_id', '=', active_id)]"
+                    context="{'partner_id': active_id}"
+                    res_model="pos.order"
+                    src_model="res.partner"
+                    id="act_partner_2_pos_orders"/>
+
+        <act_window name="TPV sales lines"
+                    domain="[('partner_id', '=', active_id)]"
+                    context="{'partner_id': active_id}"
+                    res_model="pos.order.line"
+                    src_model="res.partner"
+                id="act_partner_2_pos_order_lines"/>
+    </data>
+</openerp>

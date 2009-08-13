@@ -34,7 +34,7 @@ class account_invoice(osv.osv):
     }
 
 
-    def _refund_cleanup_lines(self, lines):
+    def _refund_cleanup_lines(self, cr, uid, lines):
         for line in lines:
             del line['id']
             del line['invoice_id']

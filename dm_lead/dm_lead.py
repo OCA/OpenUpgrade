@@ -45,10 +45,17 @@ class dm_workitem(osv.osv):
         return super(dm_workitem, self).__init__(*args)
 
     _columns = {
-                'case_id' : fields.many2one('crm.case','CRM Case', select="1", ondelete="cascade")
+                'case_id' : fields.many2one('crm.case', 'CRM Case', select="1", ondelete="cascade")
             }
 dm_workitem()
 
+class dm_campaign_document(osv.osv):
+    _inherit = "dm.campaign.document"
+
+    _columns = {
+                'case_id' : fields.many2one('crm.case', 'CRM Case', select="1", ondelete="cascade"),
+    }
+dm_campaign_document()
 
 class dm_event_case(osv.osv_memory):
     _name = "dm.event.case"
@@ -60,6 +67,7 @@ class dm_event_case(osv.osv_memory):
         'source' : fields.selection([('case_id','CRM Cases')], 'Source', required=True),
         'case_id' : fields.many2one('crm.case','CRM Case'),
         'trigger_type_id' : fields.many2one('dm.offer.step.transition.trigger','Trigger Condition',required=True),
+        'mail_service_id' : fields.many2one('dm.mail_service','Mail Service'),
         'action_time': fields.datetime('Action Time'),
     }
     _defaults = {
@@ -91,8 +99,8 @@ class dm_event_case(osv.osv_memory):
                     next_action_time = next_action_time.replace(minute=act_hour.minute)
 
             try:
-                wi_id = self.pool.get('dm.workitem').create(cr, uid, {'step_id':tr.step_to_id.id or False, 'segment_id':obj.segment_id.id or False,
-                    'case_id':obj.case_id.id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'), 'source':obj.source})
+                wi_id = self.pool.get('dm.workitem').create(cr, uid, {'step_id':tr.step_to_id.id or False, 'segment_id':obj.segment_id.id or False, 'tr_from_id':tr.id,
+                    'case_id':obj.case_id.id, 'mail_service_id':obj.mail_service_id.id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'), 'source':obj.source})
                 netsvc.Logger().notifyChannel('dm event case', netsvc.LOG_DEBUG, "Creating Workitem with action at %s"% next_action_time.strftime('%Y-%m-%d  %H:%M:%S'))
                 netsvc.Logger().notifyChannel('dm event case', netsvc.LOG_DEBUG, "Workitem : %s"% vals)
             except:

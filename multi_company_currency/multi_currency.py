@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution    
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -26,8 +26,23 @@ import tools
 class Currency(osv.osv):
     _inherit = "res.currency"
     _columns = {
-        'company_id':fields.many2one('res.company', 'Company')
+        'company_id':fields.many2one('res.company', 'Company'),
+        'date': fields.date('Date'),
+        'base': fields.boolean('Base')
     }
+    
+    def read(self, cr, user, ids, fields=None, context=None, load='_classic_read'):
+        res=super(osv.osv, self).read(cr, user, ids, fields, context, load)
+        for r in res:
+            if r.__contains__('rate_ids'):
+                rates=r['rate_ids']
+                if rates:
+                    currency_rate_obj=self.pool.get('res.currency.rate')
+                    currency_date=currency_rate_obj.read(cr,user,rates[0],['name'])['name']
+                    r['date']=currency_date
+        return res
+        
+        
 Currency()
 
 class Company(osv.osv):

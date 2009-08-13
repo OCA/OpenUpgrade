@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+    
+    <!--
+    =======================================================
+    WORKITEM VIEWS
+    =======================================================
+    -->
+
+    <record model="ir.ui.view" id="view_dm_workitem_form">
+        <field name="name">dm.worktitem.form</field>
+        <field name="model">dm.workitem</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Workitem">
+                <field name="address_id" select="1"/>
+                <field name="step_id" select="1"/>
+                <field name="segment_id" select="1"/>
+                <field name="source" select="1"/>
+                <field name="error_msg" select="2" colspan="4"/>
+                <field name="tr_from_id" select="1">
+                    <tree>
+                        <field name="condition_id"/>
+                        <field name="step_from_id"/>
+                        <field name="step_to_id"/>
+                        <field name="delay"/>
+                        <field name="delay_type"/>
+                        <field name="action_hour"/>
+                    </tree>
+                </field>
+                <field name="sale_order_id" select="2"/><!--  on_change="_check_unique_so(sale_order_id)"/ -->
+                <field name="mail_service_id" select="2"/>
+                <newline/>
+                <field name="state" select="1"/>
+                <field name="action_time" select="2"/>
+                <field name="is_global" select="2"/>
+                <field name="is_preview" select="2"/>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_dm_workitem_tree">
+        <field name="name">dm.workitem.tree</field>
+        <field name="model">dm.workitem</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Workitems">
+                <field name="address_id" />
+                <field name="source" />
+                <field name="step_id" />
+                <field name="segment_id" />
+                <field name="action_time" />
+                <field name="state" />
+                <field name="error_msg" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_dm_workitem_form">
+        <field name="name">All Workitems</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.workitem</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_dm_workitem_tree"/>
+    </record>
+
+    <menuitem id="menu_action_view_dm_workitem_form" parent="dm.menu_dm_config_lowlevel" action="action_dm_workitem_form"/>
+
+    <!--
+    =======================================================
+    EVENT VIEWS
+    =======================================================
+    -->
+
+    <record id="view_dm_event_tree" model="ir.ui.view">
+        <field name="name">dm.event.tree</field>
+        <field name="model">dm.event</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom" string="Events">
+                <field name="segment_id"/>
+                <field name="step_id"/>
+                <field name="address_id" required="1"/>
+                <field name="trigger_type_id" widget="selection"/>
+                <field name="sale_order_id"/>
+                <field name="action_time"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_dm_event_form" model="ir.ui.view">
+        <field name="name">dm.event.form</field>
+        <field name="model">dm.event</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Events">
+                <field name="segment_id"/>
+                <field name="step_id" select="2"/>
+                <field name="address_id" required="1"/>
+                <field name="trigger_type_id" select="1"/>
+                <field name="sale_order_id"/>
+                <field name="action_time"/>
+            </form>
+        </field>
+    </record>
+    <record id="act_dm_event_form" model="ir.actions.act_window">
+        <field name="name">Edit Customer Events</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.event</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem action="act_dm_event_form" id="menu_act_dm_event_form" parent="dm.menu_dm_config_lowlevel"/>
+
+    <!--
+    ======================
+    DM SYSMSG
+    ======================
+    -->
+
+    <record model="ir.ui.view" id="view_dm_sysmsg_form">
+        <field name="name">dm.sysmsg.form</field>
+        <field name="model">dm.sysmsg</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="System Message">
+                <field name="name" select="1"/>
+                <field name="code" select="1"/>
+                <field name="model" select="1"/>
+                <field name="field" select="2"/>
+                <field name="state"/>
+                <field name="result"/>
+                <field name="level"/>
+                <field name="send_email"/>
+                <field name="email_user"/>
+                <separator string="Message" colspan="4"/>
+                <field name="message" nolabel="1" colspan="4"/>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_dm_sysmsg_tree">
+        <field name="name">dm.sysmsg.tree</field>
+        <field name="model">dm.sysmsg</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="System Messages">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="state"/>
+                <field name="level"/>
+                <field name="model"/>
+                <field name="field"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_dm_sysmsg_form">
+        <field name="name">All System Messages</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.sysmsg</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_dm_sysmsg_tree"/>
+    </record>
+
+    <menuitem id="menu_dm_sysmsg_form" parent="dm.menu_dm_config_lowlevel" action="action_dm_sysmsg_form"/>
+
+    </data>
+</openerp>

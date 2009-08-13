@@ -1,0 +1,85 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* city
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-02-27 09:13:15+0000\n"
+"PO-Revision-Date: 2009-02-27 10:22+0100\n"
+"Last-Translator: Numerigraphe <informatique@numerigraphe.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: "
+
+#. module: city
+#: view:city.city:0
+#: model:ir.actions.act_window,name:city.action_city
+#: model:ir.model,name:city.model_city_city
+#: model:ir.module.module,shortdesc:city.module_meta_information
+msgid "City"
+msgstr "Ville"
+
+#. module: city
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr "XML non valide pour l'architecture de la vue"
+
+#. module: city
+#: constraint:ir.model:0
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr "Le nom de l'objet doit commencer avec x_ et ne pas contenir de charactères spéciaux !"
+
+#. module: city
+#: field:city.city,zipcode:0
+msgid "ZIP"
+msgstr "Code postal"
+
+#. module: city
+#: field:city.city,state_id:0
+msgid "State"
+msgstr "État"
+
+#. module: city
+#: field:city.city,country_id:0
+msgid "Country"
+msgstr "Pays"
+
+#. module: city
+#: field:city.city,code:0
+msgid "City Code"
+msgstr "Code de la ville"
+
+#. module: city
+#: model:ir.module.module,description:city.module_meta_information
+msgid "Creates a model for storing cities\n"
+"Zip code, city, state and country fields are replaced with a location field in partner and partner contact forms.\n"
+"This module helps to keep homogeneous address data in the database."
+msgstr "Crée un modèle de données pour les villes.\n"
+"Les champs \"code postal\", \"ville\", \"état\" et \"pays\" sont remplacés par un champ \"localisation\" dans les formulaires \"partenaire\" et \"contacts du partenaire\"."
+"Ce module permet de conserver des données d'adresse homogènes."
+
+#. module: city
+#: field:city.city,name:0
+msgid "City Name"
+msgstr "Nom de la ville"
+
+#. module: city
+#: field:res.partner.address,location:0
+msgid "Location"
+msgstr "Localisation"
+
+#. module: city
+#: help:city.city,code:0
+msgid "The official code for the city"
+msgstr "Le code officiel de la ville"
+
+#. module: city
+#: model:ir.ui.menu,name:city.menu_city_partner
+#: field:res.country.state,city_ids:0
+msgid "Cities"
+msgstr "Villes"
+

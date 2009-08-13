@@ -26,7 +26,8 @@
 	"author" : "Pablo Rocandio",
 	"category" : "Generic Modules/Base",
 	"description": """Zip code, city, state and country fields are replaced with a location field in partner form when base_contact module is installed.
-This module helps to keep homogenous address data in our database.""",
+This module helps to keep homogeneous address data in our database.
+You should use this module if you are already using base_contact and city""",
 	"depends" : ["base", "base_contact", "city"],
 	"init_xml" : [],
 	"update_xml" : [

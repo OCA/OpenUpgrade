@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    	<record id="sequence_view" model="ir.ui.view">
+            <field name="name">ir.sequence.form</field>
+            <field name="model">ir.sequence</field>
+      		<field name="inherit_id" ref="base.sequence_view" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+            	<field name="number_next" position="after">
+            		<field name="company_id"/>
+            	</field>
+           	</field>
+        </record>
+        
+        <record id="view_users_tree" model="ir.ui.view">
+            <field name="name">res.users.tree</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_tree" />
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+            	<field name="login" position="after">
+            		<field name="company_id"/>
+            	</field>
+            </field>
+       </record>
+        
+    </data>
+</openerp>
