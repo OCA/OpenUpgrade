@@ -122,7 +122,7 @@ class account_move_line(osv.osv):
 
     _columns = {
         'received_check': fields.boolean('Received check', help="To write down that a check in paper support has been received, for example."),
-        'partner_bank': fields.many2one('res.partner.bank','Bank Account', select=True,),
+        'partner_bank': fields.many2one('res.partner.bank','Bank Account'),
         'amount_to_pay' : fields.function(amount_to_pay, method=True, type='float', string='Amount to pay', fnct_search=_to_pay_search),
         'payment_type': fields.function(_payment_type_get, fnct_search=_payment_type_search, method=True, type="many2one", relation="payment.type", string="Payment type"),
     }
