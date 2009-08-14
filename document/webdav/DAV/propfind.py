@@ -205,7 +205,7 @@ class PROPFIND:
         uparts=urlparse.urlparse(uri)
         fileloc=uparts[2]
         href=doc.createElement("D:href")
-        huri=doc.createTextNode(urllib.quote(fileloc))
+        huri=doc.createTextNode(urllib.quote(fileloc.encode('utf8')))
         href.appendChild(huri)
         re.appendChild(href)
 
@@ -248,7 +248,7 @@ class PROPFIND:
         uparts=urlparse.urlparse(uri)
         fileloc=uparts[2]
         href=doc.createElement("D:href")
-        huri=doc.createTextNode(urllib.quote(fileloc))
+        huri=doc.createTextNode(urllib.quote(fileloc.encode('utf8')))
         href.appendChild(huri)
         re.appendChild(href)
 
