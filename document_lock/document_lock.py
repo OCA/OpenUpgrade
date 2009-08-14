@@ -33,7 +33,7 @@ class ir_attachment(osv.osv):
         'state' : lambda *a: 'unlocked'
     }
 
-    def check(self, cr, uid, ids, mode):
+    def check(self, cr, uid, ids, mode, context = None):
         if not ids:
             return
         ima = self.pool.get('ir.model.access')
