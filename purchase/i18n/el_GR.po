@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
 "PO-Revision-Date: 2009-06-18 14:35+0300\n"
 "Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: Greek <nls@hellug.gr>\n"
@@ -61,16 +61,9 @@ msgid "Delivery"
 msgstr "Παραλαβή"
 
 #. module: purchase
-#: wizard_view:purchase.order.merge,init:0
-msgid ""
-"Please note that orders will only be merged if they are to the same partner "
-"and going to the same location, and lines will only be merged if they are "
-"exactly the same except for the quantity and unit."
-msgstr ""
-"Παρακαλώ, σημειώστε ότι οι παραγγελίες θα συγχωνευθούν μόνο αν προέρχονται "
-"από τον ίδιο προμηθευτή και έχουν τον ίδιο προορισμό. Οι γραμμές θα "
-"συγχωνευθούν μόνο αν είναι ολόιδιες, με εξαίρεση τις ποσότητες και τις "
-"μονάδες μέτρησης."
+#: field:purchase.order.line,product_qty:0
+msgid "Quantity"
+msgstr "Ποσότητα"
 
 #. module: purchase
 #: selection:purchase.order,invoice_method:0
@@ -132,9 +125,9 @@ msgid "Purchase Process"
 msgstr "Διαδικασία Αγορών"
 
 #. module: purchase
-#: field:purchase.order.line,product_qty:0
-msgid "Quantity"
-msgstr "Ποσότητα"
+#: model:process.transition,name:purchase.process_transition_invoicefrompackinglist0
+msgid "Invoice from Packing list"
+msgstr "Τιμολόγηση από Κατάσταση Συσκευασίας"
 
 #. module: purchase
 #: view:purchase.order:0
@@ -162,11 +155,6 @@ msgstr "Καθαρό ποσό"
 #: view:purchase.order.line:0 field:purchase.order.line,notes:0
 msgid "Notes"
 msgstr "Σημειώσεις"
-
-#. module: purchase
-#: rml:purchase.order:0
-msgid "N°"
-msgstr "N°"
 
 #. module: purchase
 #: rml:purchase.order:0 field:purchase.order,amount_tax:0
@@ -663,9 +651,9 @@ msgstr ""
 "Όταν η Παραγγελία Αγοράς εγκριθεί, δημιουργείται η Κατάσταση Συσκευασίας της."
 
 #. module: purchase
-#: model:process.transition,name:purchase.process_transition_invoicefrompackinglist0
-msgid "Invoice from Packing list"
-msgstr "Τιμολόγηση από Κατάσταση Συσκευασίας"
+#: view:purchase.order.line:0
+msgid "History"
+msgstr ""
 
 #. module: purchase
 #: field:purchase.order,state:0
@@ -692,6 +680,12 @@ msgstr "Τιμή Μονάδας"
 #, fuzzy
 msgid "Fiscal Position"
 msgstr "Φορολογική Θέση"
+
+#. module: purchase
+#: rml:purchase.order:0
+#, fuzzy
+msgid "Request for Quotation N°"
+msgstr "Αίτηση για Προσφορά"
 
 #. module: purchase
 #: field:purchase.order,invoice_id:0
@@ -819,7 +813,7 @@ msgid "Product UOM"
 msgstr "ΜΜ Προϊόντων"
 
 #. module: purchase
-#: field:purchase.order.line,move_id:0
+#: field:purchase.order.line,move_ids:0
 msgid "Reservation"
 msgstr "Κράτηση"
 
@@ -837,6 +831,12 @@ msgstr "Τιμολόγιο Αγοράς"
 #: rml:purchase.order:0
 msgid "Your Order Reference"
 msgstr "Η Παραπομπή της παραγγελίας σας"
+
+#. module: purchase
+#: rml:purchase.order:0
+#, fuzzy
+msgid "Purchase Order Confirmation N°"
+msgstr "Γραμμή Παραγγελίας Αγοράς"
 
 #. module: purchase
 #: view:purchase.order:0
@@ -880,6 +880,11 @@ msgid "From Packing list, Create invoice."
 msgstr "Δημιουργία Τιμολογίου από Κατάσταση Συσκευασίας"
 
 #. module: purchase
+#: field:purchase.order,amount_total:0
+msgid "Total"
+msgstr "Σύνολο"
+
+#. module: purchase
 #: wizard_view:purchase.order.merge,init:0
 msgid "Are you sure you want to merge these orders ?"
 msgstr "Είστε σίγουροι ότι θέλετε να συγχωνεύσετε αυτές τις παραγγελίες;"
@@ -896,9 +901,22 @@ msgstr ""
 "Αφού εγκριθεί η Παραγγελία Αγοράς συμπεριλαμβάνεται στο τιμολόγιο προμηθευτή"
 
 #. module: purchase
-#: field:purchase.order,amount_total:0
-msgid "Total"
-msgstr "Σύνολο"
+#: view:purchase.order.line:0
+msgid "Stock Moves"
+msgstr ""
+
+#~ msgid ""
+#~ "Please note that orders will only be merged if they are to the same "
+#~ "partner and going to the same location, and lines will only be merged if "
+#~ "they are exactly the same except for the quantity and unit."
+#~ msgstr ""
+#~ "Παρακαλώ, σημειώστε ότι οι παραγγελίες θα συγχωνευθούν μόνο αν "
+#~ "προέρχονται από τον ίδιο προμηθευτή και έχουν τον ίδιο προορισμό. Οι "
+#~ "γραμμές θα συγχωνευθούν μόνο αν είναι ολόιδιες, με εξαίρεση τις ποσότητες "
+#~ "και τις μονάδες μέτρησης."
+
+#~ msgid "N°"
+#~ msgstr "N°"
 
 #~ msgid "No Pricelist !"
 #~ msgstr "Δεν υπάρχει Τιμοκατάλογος!"

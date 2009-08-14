@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-08 21:23:38+0000\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
 "PO-Revision-Date: 2009-06-18 14:49+0300\n"
 "Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: Greek <nls@hellug.gr>\n"
@@ -785,11 +785,6 @@ msgid "Parent BoM"
 msgstr "Κ.Υ. Προέλευσης"
 
 #. module: mrp
-#: rml:mrp.production.order:0
-msgid "Qty"
-msgstr "Ποσ."
-
-#. module: mrp
 #: view:mrp.procurement:0
 msgid "References"
 msgstr "Παραπομπές"
@@ -890,11 +885,6 @@ msgstr "Αρ. Κύκλου"
 #: field:mrp.routing.workcenter,name:0 field:stock.warehouse.orderpoint,name:0
 msgid "Name"
 msgstr "Όνομα"
-
-#. module: mrp
-#: model:ir.actions.wizard,name:mrp.product_procurement_wizard
-msgid "Create Procurement"
-msgstr "Δημιουργία Προμηθειών"
 
 #. module: mrp
 #: field:mrp.routing.workcenter,cycle_nbr:0
@@ -1134,6 +1124,12 @@ msgstr "Μέγ. Ποσότητα"
 #: model:ir.model,name:mrp.model_mrp_procurement view:mrp.procurement:0
 msgid "Procurement"
 msgstr "Προμήθειες"
+
+#. module: mrp
+#: model:ir.actions.wizard,name:mrp.product_procurement_wizard
+#, fuzzy
+msgid "Procurement Request"
+msgstr "Αιτία Προμήθειας"
 
 #. module: mrp
 #: model:ir.actions.wizard,name:mrp.wizard_price
@@ -1956,6 +1952,12 @@ msgstr "Ιεράρχηση"
 #: model:ir.ui.menu,name:mrp.menu_mrp_bom_form_action2
 msgid "Bill of Materials Components"
 msgstr "Περιεχόμενα Κατάστασης Υλικών"
+
+#~ msgid "Qty"
+#~ msgstr "Ποσ."
+
+#~ msgid "Create Procurement"
+#~ msgstr "Δημιουργία Προμηθειών"
 
 #~ msgid "UoM"
 #~ msgstr "ΜοΜ"

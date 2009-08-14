@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
 "PO-Revision-Date: 2009-06-18 10:10+0300\n"
 "Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: Greek <nls@hellug.gr>\n"
@@ -70,6 +70,16 @@ msgstr "Αντίγραφα"
 #: view:account.invoice:0
 msgid "Print"
 msgstr "Εκτύπωση"
+
+#. module: account_greek_fiscal
+#: selection:account.fiscalgr.print,state:0
+msgid "Failed"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.print,state:0
+msgid "State"
+msgstr ""
 
 #. module: account_greek_fiscal
 #: rml:account.invoice.fiscalgr:0
@@ -172,9 +182,15 @@ msgid "Base"
 msgstr "Βάση"
 
 #. module: account_greek_fiscal
-#: field:account.fiscalgr.print,name:0
-msgid "Title"
-msgstr "Τίτλος"
+#: selection:account.fiscalgr.print,state:0
+#, fuzzy
+msgid "Printed"
+msgstr "Εκτυπωτής"
+
+#. module: account_greek_fiscal
+#: selection:account.fiscalgr.print,state:0
+msgid "Unknown"
+msgstr ""
 
 #. module: account_greek_fiscal
 #: field:account.fiscalgr.print,report:0
@@ -276,6 +292,11 @@ msgid "Print date"
 msgstr "Ημ/νία εκτύπωσης"
 
 #. module: account_greek_fiscal
+#: selection:account.fiscalgr.print,state:0
+msgid "Queued"
+msgstr ""
+
+#. module: account_greek_fiscal
 #: rml:account.invoice.fiscalgr:0
 msgid "Quantity"
 msgstr "Ποσότητα"
@@ -310,6 +331,11 @@ msgstr "Τιμολόγιο Προμηθευτή"
 #: field:account.fiscalgr.print,machine_id:0
 msgid "Machine ID"
 msgstr "ID Μηχανής"
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.print,name:0
+msgid "Title"
+msgstr "Τίτλος"
 
 #. module: account_greek_fiscal
 #: help:res.partner,vat_occup:0
@@ -364,4 +390,3 @@ msgstr "Ελληνικές Φορολογικές Εκτυπώσεις"
 #, fuzzy
 msgid "Fiscal Prints"
 msgstr "Φορολογικές εκτυπώσεις"
-

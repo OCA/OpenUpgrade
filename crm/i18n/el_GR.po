@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
 "PO-Revision-Date: 2009-06-15 02:45+0200\n"
 "Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
 "Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
@@ -178,13 +178,10 @@ msgid "<"
 msgstr "<"
 
 #. module: crm
-#: help:crm.segmentation,categ_id:0
-msgid ""
-"The partner category that will be added to partners that match the "
-"segmentation criterions after computation."
-msgstr ""
-"Η Κατηγορία Συνεργάτη που θα προστεθεί σε όσους πελάτες πληρούν τα κριτήρια "
-"καταμερισμού."
+#: view:crm.case.rule:0
+#, fuzzy
+msgid "%(case_description)s = Case description"
+msgstr "%(case_subject)s = Τίτλος Θέματος"
 
 #. module: crm
 #: field:crm.case,email_cc:0
@@ -986,9 +983,10 @@ msgid "Active"
 msgstr "Ενεργό"
 
 #. module: crm
-#: wizard_view:crm.case.section.menu,design_menu:0
-msgid "Created Menus"
-msgstr "Δημιουργημένα Μενού"
+#: wizard_field:crm.case.section.menu,design_menu,menu9:0
+#: wizard_field:crm.case.section.menu,design_menu,menu9_option:0
+msgid "All Unassigned "
+msgstr "Ό,τι δεν έχει ανατεθεί"
 
 #. module: crm
 #: help:crm.case.rule,act_remind_attach:0
@@ -1072,10 +1070,9 @@ msgid "Date"
 msgstr "Ημερ/νία"
 
 #. module: crm
-#: wizard_field:crm.case.section.menu,design_menu,menu9:0
-#: wizard_field:crm.case.section.menu,design_menu,menu9_option:0
-msgid "All Unassigned "
-msgstr "Ό,τι δεν έχει ανατεθεί"
+#: wizard_view:crm.case.section.menu,design_menu:0
+msgid "Created Menus"
+msgstr "Δημιουργημένα Μενού"
 
 #. module: crm
 #: field:crm.case.log,name:0
@@ -1137,6 +1134,15 @@ msgstr "Αποστολή Υπενθύμισης"
 #: view:crm.case.section:0
 msgid "Complete this if you use the mail gateway."
 msgstr "Συμπληρώστε αυτό αν χρησιμοποιείτε mail gateway."
+
+#. module: crm
+#: help:crm.segmentation,categ_id:0
+msgid ""
+"The partner category that will be added to partners that match the "
+"segmentation criterions after computation."
+msgstr ""
+"Η Κατηγορία Συνεργάτη που θα προστεθεί σε όσους πελάτες πληρούν τα κριτήρια "
+"καταμερισμού."
 
 #. module: crm
 #: view:crm.case:0

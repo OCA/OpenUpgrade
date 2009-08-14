@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
 "PO-Revision-Date: 2009-05-15 22:23+0000\n"
 "Last-Translator: Makis Nicolaou <mark.nicolaou@gmail.com>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -33,9 +33,10 @@ msgid "Entries Selection Based on"
 msgstr "Επιλογή Εγγραφών Βασισμένων σε"
 
 #. module: account_balance
-#: help:account.balance.account.balance.report,init,select_account:0
-msgid "Keep empty for comparision to its parent"
-msgstr "Διατηρήστε κενα για σύγκριση με κατηγορίες"
+#: wizard_view:account.balance.account.balance.report,backtoinit:0
+#: wizard_view:account.balance.account.balance.report,zero_years:0
+msgid "Notification"
+msgstr "Υπενθύμιση"
 
 #. module: account_balance
 #: selection:account.balance.account.balance.report,init,period_manner:0
@@ -43,29 +44,10 @@ msgid "Financial Period"
 msgstr "Οικονομική Περίοδος"
 
 #. module: account_balance
-#: rml:account.account.balance.landscape:0
-#: rml:account.balance.account.balance:0
 #: model:ir.actions.report.xml,name:account_balance.account_account_balance
 #: model:ir.actions.report.xml,name:account_balance.account_account_balance_landscape
 msgid "Account balance"
 msgstr "Ισοζύγιο Λογαριασμού"
-
-#. module: account_balance
-#: wizard_button:account.balance.account.balance.report,init,checkyear:0
-msgid "Print"
-msgstr "Εκτύπωση"
-
-#. module: account_balance
-#: rml:account.account.balance.landscape:0
-#: rml:account.balance.account.balance:0
-msgid "Printing date:"
-msgstr "Ημερομηνία εκτύπωσης:"
-
-#. module: account_balance
-#: rml:account.account.balance.landscape:0
-#: rml:account.balance.account.balance:0
-msgid "at"
-msgstr "σε"
 
 #. module: account_balance
 #: rml:account.account.balance.landscape:0
@@ -76,8 +58,13 @@ msgstr "Όνομα Λογαριασμού"
 #. module: account_balance
 #: rml:account.account.balance.landscape:0
 #: rml:account.balance.account.balance:0
-msgid "Currency:"
-msgstr "Νόμισμα:"
+msgid "Debit"
+msgstr ""
+
+#. module: account_balance
+#: wizard_button:account.balance.account.balance.report,init,checkyear:0
+msgid "Print"
+msgstr "Εκτύπωση"
 
 #. module: account_balance
 #: wizard_view:account.balance.account.balance.report,init:0
@@ -98,6 +85,11 @@ msgstr "Σύγκριση Επιλεγμένων Ετών σε Όρους"
 #: wizard_view:account.balance.account.balance.report,init:0
 msgid "Select Fiscal Year(s)(Maximum Three Years)"
 msgstr "Επιλογή Λογιστικού Έτους(ων) (Μέγιστο Τρία Έτη)"
+
+#. module: account_balance
+#: wizard_field:account.balance.account.balance.report,init,select_account:0
+msgid "Select Reference Account(for  % comparision)"
+msgstr "Επιλέξτε Λογαριασμό Αναφοράς (για % σύγκρισης)"
 
 #. module: account_balance
 #: model:ir.actions.wizard,name:account_balance.wizard_account_balance_report
@@ -147,15 +139,28 @@ msgid "With balance is not equal to 0"
 msgstr "Με ισοζύγιο που δεν είναι ίσο με 0"
 
 #. module: account_balance
+#: rml:account.account.balance.landscape:0
+#: rml:account.balance.account.balance:0
+#, fuzzy
+msgid "Total :"
+msgstr "Σύνολο:"
+
+#. module: account_balance
+#: rml:account.account.balance.landscape:0
+#: rml:account.balance.account.balance:0
+#, fuzzy
+msgid "Account Balance -"
+msgstr "Ισοζύγιο Λογαριασμού"
+
+#. module: account_balance
 #: wizard_field:account.balance.account.balance.report,init,format_perc:0
 msgid "Show Comparision in %"
 msgstr "Εμφάνιση Σύγκρισης σε %"
 
 #. module: account_balance
-#: wizard_view:account.balance.account.balance.report,backtoinit:0
-#: wizard_view:account.balance.account.balance.report,zero_years:0
-msgid "Notification"
-msgstr "Υπενθύμιση"
+#: wizard_view:account.balance.account.balance.report,init:0
+msgid "Select Period"
+msgstr "Επιλογή Περιόδου"
 
 #. module: account_balance
 #: wizard_view:account.balance.account.balance.report,init:0
@@ -174,12 +179,6 @@ msgid "Ok"
 msgstr "ΟΚ"
 
 #. module: account_balance
-#: rml:account.account.balance.landscape:0
-#: rml:account.balance.account.balance:0
-msgid "Total:"
-msgstr "Σύνολο:"
-
-#. module: account_balance
 #: selection:account.balance.account.balance.report,init,compare_pattern:0
 msgid "Cash"
 msgstr "Μετρητά"
@@ -195,15 +194,10 @@ msgid "Show Accounts"
 msgstr "Εμφάνιση Λογαριασμών"
 
 #. module: account_balance
-#: wizard_view:account.balance.account.balance.report,zero_years:0
-msgid ""
-"You may have selected the compare options with more than 1 year with credit/"
-"debit columns and % option.This can lead contents to be printed out of the "
-"paper.Please try again."
+#: rml:account.account.balance.landscape:0
+#: rml:account.balance.account.balance:0
+msgid "Credit"
 msgstr ""
-"Μπορεί να επιλέξατε την επιλογή σύγκρισης με περισσότερα απο 1 έτη με στήλες "
-"χρέωσης/πίστωσης και %. Αυτό μπορεί να οδηγήσει σε περιεχόμενα που θα "
-"εκτυπωθούν πέρα απο τα όρια του χαρτιού. Παρακαλώ επιλέξτε ξανά."
 
 #. module: account_balance
 #: wizard_view:account.balance.account.balance.report,backtoinit:0
@@ -216,14 +210,22 @@ msgid "Accounting and financial management-Compare Accounts"
 msgstr ""
 
 #. module: account_balance
+#: rml:account.account.balance.landscape:0
+#: rml:account.balance.account.balance:0
+msgid "Year :"
+msgstr ""
+
+#. module: account_balance
 #: wizard_view:account.balance.account.balance.report,backtoinit:0
 msgid "You can select maximum 3 years. Please check again."
 msgstr "Μπορείτε να επιλέξετε το πολύ 3 έτη. Παρακαλώ ελέγξτε ξανά."
 
 #. module: account_balance
-#: wizard_field:account.balance.account.balance.report,init,select_account:0
-msgid "Select Reference Account(for  % comparision)"
-msgstr "Επιλέξτε Λογαριασμό Αναφοράς (για % σύγκρισης)"
+#: rml:account.account.balance.landscape:0
+#: rml:account.balance.account.balance:0
+#, fuzzy
+msgid "Balance"
+msgstr "Άκυρο"
 
 #. module: account_balance
 #: wizard_view:account.balance.account.balance.report,backtoinit:0
@@ -235,12 +237,6 @@ msgstr ""
 "επιλέξει διάταξη landscape."
 
 #. module: account_balance
-#: rml:account.account.balance.landscape:0
-#: rml:account.balance.account.balance:0
-msgid "Code"
-msgstr "Κώδικας"
-
-#. module: account_balance
 #: wizard_view:account.balance.account.balance.report,backtoinit:0
 msgid ""
 "You might have done following mistakes. Please correct them and try again."
@@ -249,10 +245,9 @@ msgstr ""
 "ξαναπροσπαθήστε."
 
 #. module: account_balance
-#: rml:account.account.balance.landscape:0
-#: rml:account.balance.account.balance:0
-msgid "Account Information"
-msgstr "Πληροφορίες Λογαριασμού"
+#: help:account.balance.account.balance.report,init,select_account:0
+msgid "Keep empty for comparision to its parent"
+msgstr "Διατηρήστε κενα για σύγκριση με κατηγορίες"
 
 #. module: account_balance
 #: selection:account.balance.account.balance.report,init,period_manner:0
@@ -278,6 +273,17 @@ msgid "Periods"
 msgstr "Περίοδοι"
 
 #. module: account_balance
+#: wizard_view:account.balance.account.balance.report,zero_years:0
+msgid ""
+"You may have selected the compare options with more than 1 year with credit/"
+"debit columns and % option.This can lead contents to be printed out of the "
+"paper.Please try again."
+msgstr ""
+"Μπορεί να επιλέξατε την επιλογή σύγκρισης με περισσότερα απο 1 έτη με στήλες "
+"χρέωσης/πίστωσης και %. Αυτό μπορεί να οδηγήσει σε περιεχόμενα που θα "
+"εκτυπωθούν πέρα απο τα όρια του χαρτιού. Παρακαλώ επιλέξτε ξανά."
+
+#. module: account_balance
 #: wizard_button:account.balance.account.balance.report,init,end:0
 msgid "Cancel"
 msgstr "Άκυρο"
@@ -289,10 +295,20 @@ msgstr "Θα πρέπει να επιλέξετε τουλάχιστον 1 λο�
 
 #. module: account_balance
 #: wizard_view:account.balance.account.balance.report,init:0
-msgid "Select Period"
-msgstr "Επιλογή Περιόδου"
-
-#. module: account_balance
-#: wizard_view:account.balance.account.balance.report,init:0
 msgid "Customize Report"
 msgstr "Παραμετροποίηση Αναφοράς"
+
+#~ msgid "Printing date:"
+#~ msgstr "Ημερομηνία εκτύπωσης:"
+
+#~ msgid "at"
+#~ msgstr "σε"
+
+#~ msgid "Currency:"
+#~ msgstr "Νόμισμα:"
+
+#~ msgid "Code"
+#~ msgstr "Κώδικας"
+
+#~ msgid "Account Information"
+#~ msgstr "Πληροφορίες Λογαριασμού"

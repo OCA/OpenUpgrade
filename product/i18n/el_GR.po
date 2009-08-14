@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
 "PO-Revision-Date: 2009-06-18 17:04+0300\n"
 "Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: Greek <nls@hellug.gr>\n"
@@ -499,8 +499,7 @@ msgstr ""
 "Αυτή είναι η μέση καθυστέρηση σε ημέρες μεταξύ της επιβεβαίωσης της εντολής "
 "αγοράς και της παραλαβής των αγαθών απο τον προεπιλεγμένο προμηθευτή. "
 "Χρησιμοποιείται απο το χρονοδιάγραμμα για αιτήσεις παραγγελιών που "
-"βασίζονται σε "
-"καθυστερήσεις επαναπαραγγελίας."
+"βασίζονται σε καθυστερήσεις επαναπαραγγελίας."
 
 #. module: product
 #: field:product.template,seller_delay:0
@@ -1101,6 +1100,7 @@ msgid "Pricelist item"
 msgstr "Είδος Τιμοκαταλόγου"
 
 #. module: product
+#: model:ir.actions.wizard,name:product.report_wizard_price
 #: field:product.pricelist.version,pricelist_id:0
 msgid "Price List"
 msgstr "Τιμοκατάλογος"

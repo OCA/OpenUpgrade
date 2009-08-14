@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
 "PO-Revision-Date: 2009-05-15 22:03+0000\n"
 "Last-Translator: Makis Nicolaou <mark.nicolaou@gmail.com>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -16,11 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2009-05-16 09:40+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
-
-#. module: account_payment
-#: model:ir.module.module,shortdesc:account_payment.module_meta_information
-msgid "Payment Management"
-msgstr "Διαχείριση Πληρωμών"
 
 #. module: account_payment
 #: field:payment.order,date_planned:0
@@ -225,12 +220,6 @@ msgstr ""
 "\"Ημερομηνία Λήξης\" σημαίνει την καθορισμένη ημερομηνία εκτέλεσης."
 
 #. module: account_payment
-#: code:addons/account_payment/account_move_line.py:0
-#, python-format
-msgid "Error !"
-msgstr "Σφάλμα!"
-
-#. module: account_payment
 #: view:account.move.line:0
 msgid "Total debit"
 msgstr "Συνολική χρέωση"
@@ -273,11 +262,6 @@ msgid "Created"
 msgstr "Δημιουργήθηκε"
 
 #. module: account_payment
-#: view:payment.order:0
-msgid "Select Invoices to Pay"
-msgstr "Επιλέξτε Τιμολόγια Προς Πληρωμή"
-
-#. module: account_payment
 #: view:payment.line:0
 msgid "Currency Amount Total"
 msgstr "Συνολικό Ποσό Νομίσματος"
@@ -291,6 +275,16 @@ msgstr "Εκτελέστε Πληρωμές"
 #: field:payment.line,state:0
 msgid "Communication Type"
 msgstr "Τύπος Επικοινωνίας"
+
+#. module: account_payment
+#: model:ir.module.module,shortdesc:account_payment.module_meta_information
+msgid "Payment Management"
+msgstr "Διαχείριση Πληρωμών"
+
+#. module: account_payment
+#: field:payment.line,communication:0
+msgid "Communication"
+msgstr "Επικοινωνία"
 
 #. module: account_payment
 #: selection:payment.order,date_prefered:0
@@ -336,12 +330,6 @@ msgstr "Συνεργάτης"
 #: help:payment.line,communication2:0
 msgid "The successor message of Communication."
 msgstr "Το επόμενο μήνυμα της Επικοινωνίας."
-
-#. module: account_payment
-#: code:addons/account_payment/account_move_line.py:0
-#, python-format
-msgid "No partner defined on entry line"
-msgstr "Κανένας συνεργάτης δεν καθορίστηκε για αυτήν την γραμμή εγγραφής"
 
 #. module: account_payment
 #: help:payment.line,info_partner:0
@@ -454,9 +442,9 @@ msgid "Done"
 msgstr "Εκπληρωμένο"
 
 #. module: account_payment
-#: field:payment.line,communication:0
-msgid "Communication"
-msgstr "Επικοινωνία"
+#: view:payment.order:0
+msgid "Select Invoices to Pay"
+msgstr "Επιλέξτε Τιμολόγια Προς Πληρωμή"
 
 #. module: account_payment
 #: view:payment.order:0
@@ -576,14 +564,6 @@ msgid "Entry Information"
 msgstr "Πληροφορίες Εγγραφής"
 
 #. module: account_payment
-#: code:addons/account_payment/account_move_line.py:0
-#, python-format
-msgid "Partner '+ line.partner_id.name+ ' has no bank account defined"
-msgstr ""
-"Ο συνεργάτης '+ line.partner_id.name+ ' δεν έχει καθορισμένο λογαριασμό "
-"τραπέζης"
-
-#. module: account_payment
 #: model:ir.actions.wizard,name:account_payment.wizard_populate_statement
 msgid "Populate Statement with Payment lines"
 msgstr "Συγκέντρωση δήλωσης με εγγραφές Πληρωμών"
@@ -635,6 +615,17 @@ msgstr "Λογαριασμός Τραπέζης για την Κατάσταση
 #: field:payment.mode,journal:0
 msgid "Journal"
 msgstr "Ημερολόγιο"
+
+#~ msgid "Error !"
+#~ msgstr "Σφάλμα!"
+
+#~ msgid "No partner defined on entry line"
+#~ msgstr "Κανένας συνεργάτης δεν καθορίστηκε για αυτήν την γραμμή εγγραφής"
+
+#~ msgid "Partner '+ line.partner_id.name+ ' has no bank account defined"
+#~ msgstr ""
+#~ "Ο συνεργάτης '+ line.partner_id.name+ ' δεν έχει καθορισμένο λογαριασμό "
+#~ "τραπέζης"
 
 #~ msgid "Invoice Ref"
 #~ msgstr "Αναφ. Τιμολογίου"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
 "PO-Revision-Date: 2009-06-18 14:34+0300\n"
 "Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: Greek <nls@hellug.gr>\n"
@@ -103,7 +103,7 @@ msgid "Packing list"
 msgstr "Κατάσταση Συσκευασίας"
 
 #. module: stock
-#: rml:lot.stock.overview_all:0
+#: rml:lot.stock.overview:0 rml:lot.stock.overview_all:0
 msgid "Amount"
 msgstr "Ποσό"
 
@@ -390,8 +390,8 @@ msgid "STOCK_PREFERENCES"
 msgstr "STOCK_PREFERENCES"
 
 #. module: stock
-#: rml:lot.location:0 rml:lot.stock.overview:0
-#: field:stock.inventory.line,product_qty:0 field:stock.move,product_qty:0
+#: rml:lot.location:0 field:stock.inventory.line,product_qty:0
+#: field:stock.move,product_qty:0 rml:stock.picking.list:0
 #: field:stock.report.prodlots,name:0
 msgid "Quantity"
 msgstr "Ποσότητα"
@@ -981,11 +981,6 @@ msgid "terp-partner"
 msgstr "terp-partner"
 
 #. module: stock
-#: rml:stock.picking.list:0
-msgid "Qty"
-msgstr "Ποσ."
-
-#. module: stock
 #: model:ir.actions.act_window,name:stock.action_inventory_form_draft
 #: model:ir.ui.menu,name:stock.menu_action_inventory_form_draft
 msgid "Draft Periodical Inventories"
@@ -1000,7 +995,7 @@ msgstr "Πρόχειρες Περιοδικές Απογραφές"
 #: wizard_button:stock.move.split,init,end:0
 #: wizard_button:stock.move.track,init,end:0
 #: wizard_button:stock.partial_picking,init,end:0 view:stock.picking:0
-#: selection:stock.picking,state:0 wizard_button:stock.picking.make,init,end:0
+#: wizard_button:stock.picking.make,init,end:0
 #: view:stock.picking.move.wizard:0
 #: wizard_button:stock.return.picking,init,end:0
 msgid "Cancel"
@@ -1039,7 +1034,8 @@ msgid "Stock Tracking Lots"
 msgstr "Παρτίδες Αναφοράς"
 
 #. module: stock
-#: rml:lot.stock.overview:0 field:stock.move,price_unit:0
+#: rml:lot.stock.overview:0 rml:lot.stock.overview_all:0
+#: field:stock.move,price_unit:0
 msgid "Unit Price"
 msgstr "Τιμή Μονάδας"
 
@@ -2033,7 +2029,7 @@ msgid "Virtual Stock Value"
 msgstr "Μετακίνηση Πιθανού Αποθέματος"
 
 #. module: stock
-#: selection:stock.move,state:0
+#: selection:stock.move,state:0 selection:stock.picking,state:0
 msgid "Canceled"
 msgstr "Ακυρώθηκε"
 
@@ -2214,12 +2210,6 @@ msgid "Moves"
 msgstr "Κινήσεις"
 
 #. module: stock
-#: rml:lot.stock.overview_all:0
-#, fuzzy
-msgid "UnitPrice"
-msgstr "Τιμή ανά Μονάδα"
-
-#. module: stock
 #: field:stock.move,location_dest_id:0 field:stock.picking,location_dest_id:0
 msgid "Dest. Location"
 msgstr "Τοποθεσία Προορ."
@@ -2332,6 +2322,13 @@ msgstr "STOCK_REDO"
 #: model:stock.location,name:stock.stock_location_locations
 msgid "Physical Locations"
 msgstr "Φυσικές Τοποοθεσίες"
+
+#~ msgid "Qty"
+#~ msgstr "Ποσ."
+
+#, fuzzy
+#~ msgid "UnitPrice"
+#~ msgstr "Τιμή ανά Μονάδα"
 
 #~ msgid "Futur Stock"
 #~ msgstr "Μελλοντικό Απόθεμα"

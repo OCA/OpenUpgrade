@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
 "PO-Revision-Date: 2009-05-15 22:58+0000\n"
 "Last-Translator: Makis Nicolaou <mark.nicolaou@gmail.com>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -16,11 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2009-05-16 10:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
-
-#. module: account_report
-#: model:ir.module.module,shortdesc:account_report.module_meta_information
-msgid "Reporting for accounting"
-msgstr "Αναφορές για λογιστική"
 
 #. module: account_report
 #: field:account.report.history,name:0 selection:account.report.report,type:0
@@ -72,13 +67,6 @@ msgstr "ισοζύγιο(['ACCOUNT_CODE',],fiscalyear)"
 #: rml:print.indicators:0
 msgid "Tabular Summary"
 msgstr "Πίνακας Σύνοψης"
-
-#. module: account_report
-#: code:addons/account_report/wizard/wizard_print_indicators.py:0
-#, python-format
-msgid "Please select maximum 8 records to fit the page-width."
-msgstr ""
-"Παρακαλώ επιλέξτε το μέγιστο 8 εγγραφές για να χωρέσουν στο πλάτος σελίδας."
 
 #. module: account_report
 #: view:account.report.report:0
@@ -156,6 +144,11 @@ msgid "Next"
 msgstr "Επόμενο"
 
 #. module: account_report
+#: model:ir.module.module,shortdesc:account_report.module_meta_information
+msgid "Reporting for accounting"
+msgstr "Αναφορές για λογιστική"
+
+#. module: account_report
 #: wizard_button:print.indicators,next,print:0
 #: wizard_button:print.indicators.pdf,init,print:0
 msgid "Print"
@@ -180,12 +173,6 @@ msgstr "Κώδικας Λογαριασμού Φόρου:"
 #: view:account.report.report:0 selection:account.report.report,status:0
 msgid "Good"
 msgstr "Καλό"
-
-#. module: account_report
-#: code:addons/account_report/account.py:0
-#, python-format
-msgid "Error !"
-msgstr "Σφάλμα!"
 
 #. module: account_report
 #: view:account.report.history:0
@@ -466,16 +453,6 @@ msgid "Select Criteria"
 msgstr "Επιλέξτε Κριτήριο"
 
 #. module: account_report
-#: code:addons/account_report/account.py:0
-#, python-format
-msgid ""
-"You cannot delete an indicator history record. You may have to delete the "
-"concerned Indicator!"
-msgstr ""
-"Δεν μπορείτε να διαγράψετε μιά εγγραφή απο το ιστορικό του δείκτη. Ίσως "
-"χρειαστεί να διαγράψετε τον εν λόγω δείκτη!"
-
-#. module: account_report
 #: view:account.report.report:0
 msgid "tax_code(['ACCOUNT_TAX_CODE',],period)"
 msgstr "tax_code(['ACCOUNT_TAX_CODE',],period)"
@@ -492,12 +469,6 @@ msgstr "Λογιστικό Έτος"
 #: model:ir.ui.menu,name:account_report.menu_action_account_report_tree_view
 msgid "Custom reporting"
 msgstr "Custom αναφορές"
-
-#. module: account_report
-#: code:addons/account_report/wizard/wizard_print_indicators.py:0
-#, python-format
-msgid "User Error!"
-msgstr "Σφάλμα Χρήστη!"
 
 #. module: account_report
 #: rml:print.indicators:0
@@ -560,3 +531,21 @@ msgstr ""
 #: selection:account.report.report,type:0
 msgid "Fiscal Statement"
 msgstr "Λογιστική Δήλωση"
+
+#~ msgid "Please select maximum 8 records to fit the page-width."
+#~ msgstr ""
+#~ "Παρακαλώ επιλέξτε το μέγιστο 8 εγγραφές για να χωρέσουν στο πλάτος "
+#~ "σελίδας."
+
+#~ msgid "Error !"
+#~ msgstr "Σφάλμα!"
+
+#~ msgid ""
+#~ "You cannot delete an indicator history record. You may have to delete the "
+#~ "concerned Indicator!"
+#~ msgstr ""
+#~ "Δεν μπορείτε να διαγράψετε μιά εγγραφή απο το ιστορικό του δείκτη. Ίσως "
+#~ "χρειαστεί να διαγράψετε τον εν λόγω δείκτη!"
+
+#~ msgid "User Error!"
+#~ msgstr "Σφάλμα Χρήστη!"
