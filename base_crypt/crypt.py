@@ -175,8 +175,10 @@ def login(db, login, password):
 #         raise Exception('AccessDenied')
 
 def check(db, uid, passwd):
-    if security._uid_cache.has_key( uid ) and (security._uid_cache[uid]==passwd):
+    cached_pass = security._uid_cache.get(db, {}).get(uid)
+    if (cached_pass is not None) and cached_pass == passwd:
         return True
+
     cr = pooler.get_db(db).cursor()
     if passwd not in _salt_cache:
         cr.execute( 'select login from res_users where id=%s', (uid,) )
@@ -185,13 +187,13 @@ def check(db, uid, passwd):
             stored_login = stored_login[0]
 
         if not login(db,stored_login,passwd):
-            return False
+            raise security.ExceptionNoTb('AccessDenied')
     salt = _salt_cache[passwd]
     cr.execute(' select count(*) from res_users where id=%s and password=%s', (int(uid), encrypt_md5( passwd, salt )) )
     res = cr.fetchone()[0]
     cr.close()
     if not bool(res):
-        raise Exception('AccessDenied')
+        raise security.ExceptionNoTb('AccessDenied')
     if res:
         security._uid_cache[uid] = passwd
     return bool(res)
@@ -204,7 +206,7 @@ def access(db, uid, passwd, sec_level, ids):
     res = cr.fetchone()
     cr.close()
     if not res:
-        raise Exception('Bad username or password')
+        raise security.ExceptionNoTb('Bad username or password')
     return res[0]
 
 # check if module is installed or not

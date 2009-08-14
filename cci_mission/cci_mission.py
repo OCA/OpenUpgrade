@@ -996,7 +996,7 @@ class Product(osv.osv):
             else:
                 res[product.id] = product[ptype] or 0.0
                 if ptype == 'list_price':
-                    res[product.id] = (res[product.id] * product.price_margin) + \
+                    res[product.id] = (res[product.id] * (product.price_margin or 1.0) ) + \
                             product.price_extra
             if 'uom' in context:
                 uom = product.uos_id or product.uom_id

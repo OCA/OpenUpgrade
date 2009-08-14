@@ -2,7 +2,7 @@
 import sqlalchemy
 import common
 import axis_map
-import pooler
+import pooler,tools
 
 class level(object):
     def __init__(self, level, sublevels=[]):
@@ -32,6 +32,30 @@ class level(object):
             if res:
                 pos += 1
         return self.object
+
+    def _to_unicode(self,s):
+        try:
+            return s.encode('ascii')
+        except UnicodeError:
+            try:
+                return s.decode('utf-8')
+            except UnicodeError:
+                try:
+                    return s.decode('latin')
+                except UnicodeError:
+                    return s
+
+    def _to_decode(self,s):
+        try:
+            return s.encode('utf-8')
+        except UnicodeError:
+            try:
+                return s.encode('latin')
+            except UnicodeError:
+                try:
+                    return s.decode('ascii')
+                except UnicodeError:
+                    return s
 
     def run(self, metadata):
         '''
@@ -111,6 +135,7 @@ class level(object):
         axis_select2.append_column(result_axis['column_name'][-1].label('axis_name'))
         query = axis_select2.execute()
         result = query.fetchall()
+          
         def _tuple_define(x):
             y=list(x)
             if y[-1] == None:
@@ -118,7 +143,8 @@ class level(object):
             elif isinstance(y[-1],float):
                 y[-1] = str (int(y[-1]))
             else:
-                y[-1] = str (y[-1])
+                y[-1] = self._to_unicode(y[-1])
+                y[-1] = tools.ustr(y[-1])
             return ([self.level]+y[:-1]),y[-1]
              
         axis = map(_tuple_define, result)
@@ -220,8 +246,6 @@ class level(object):
                         a[0][i] = str(a[0][i])
                     elif isinstance(a[0][i],float):
                         a[0][i] = str(int(a[0][i]))
-                    else:
-                        a[0][i] = str(a[0][i])
                 else:
                     a[0][i] = '/'
             a = list(a)
@@ -230,10 +254,12 @@ class level(object):
             elif isinstance(a[-1],float):
                 a[-1] = str(int(a[-1]))
             a = tuple(a)
+            primary_keys = map(lambda x: str(x),primary_keys)
             result.append( {
                 'value': [a],
                 'query': {
-                    'whereclause': [col.in_(*primary_keys)],#.extend(result_axis['where_clause']),
+                          
+                    'whereclause': [col.in_(primary_keys)],#.extend(result_axis['where_clause']),
                     'column': [sqlalchemy.literal('transform')],
                 },
                 'axis_mapping': axis_map.column_static(False),

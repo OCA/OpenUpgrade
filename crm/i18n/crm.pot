@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.1\n"
+"Project-Id-Version: OpenERP Server 5.0.2\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-17 14:57:53+0000\n"
-"PO-Revision-Date: 2009-06-17 14:57:53+0000\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
+"PO-Revision-Date: 2009-08-14 08:23:23+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -173,8 +173,8 @@ msgid "<"
 msgstr ""
 
 #. module: crm
-#: help:crm.segmentation,categ_id:0
-msgid "The partner category that will be added to partners that match the segmentation criterions after computation."
+#: view:crm.case.rule:0
+msgid "%(case_description)s = Case description"
 msgstr ""
 
 #. module: crm
@@ -925,8 +925,9 @@ msgid "Active"
 msgstr ""
 
 #. module: crm
-#: wizard_view:crm.case.section.menu,design_menu:0
-msgid "Created Menus"
+#: wizard_field:crm.case.section.menu,design_menu,menu9:0
+#: wizard_field:crm.case.section.menu,design_menu,menu9_option:0
+msgid "All Unassigned "
 msgstr ""
 
 #. module: crm
@@ -1008,9 +1009,8 @@ msgid "Date"
 msgstr ""
 
 #. module: crm
-#: wizard_field:crm.case.section.menu,design_menu,menu9:0
-#: wizard_field:crm.case.section.menu,design_menu,menu9_option:0
-msgid "All Unassigned "
+#: wizard_view:crm.case.section.menu,design_menu:0
+msgid "Created Menus"
 msgstr ""
 
 #. module: crm
@@ -1073,6 +1073,11 @@ msgstr ""
 #. module: crm
 #: view:crm.case.section:0
 msgid "Complete this if you use the mail gateway."
+msgstr ""
+
+#. module: crm
+#: help:crm.segmentation,categ_id:0
+msgid "The partner category that will be added to partners that match the segmentation criterions after computation."
 msgstr ""
 
 #. module: crm

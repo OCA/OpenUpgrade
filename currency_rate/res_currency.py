@@ -57,7 +57,8 @@ class res_currency(osv.osv):
         
                 if rate:
                     date = time.strftime('%Y-%m-%d')
-                    cur_rate_obj.create(cr, uid, {'name': date , 'rate':rate, 'currency_id': cur.id})
+                    if cur.base==False:
+                        cur_rate_obj.create(cr, uid, {'name': date , 'rate':rate, 'currency_id': cur.id})
         return True
     
 res_currency()

@@ -1,0 +1,254 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="57.0" y1="57.0" width="481" height="728"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table12">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+
+    </blockTableStyle>
+    <blockTableStyle id="Table3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="add_table_heading_bold" fontName="Times-Bold"/>
+    <paraStyle name="K1" fontName="Times-Bold" alignment="RIGHT" rightIndent="35.0" />
+    <paraStyle name="add_in_table" fontName="Times-Roman"/>
+    <paraStyle name="SPACE" fontName="Times-Roman"/>
+    <paraStyle name="report_header" rightIndent="156.0" leftIndent="156.0" fontName="Times-Roman" fontSize="18.0" leading="22" alignment="CENTER"/>
+    <paraStyle name="report_subject" fontName="Helvetica" fontSize="11.0" leading="14" alignment="CENTER"/>
+    <paraStyle name="report_subject1" fontName="Helvetica" fontSize="11.0" leading="14" alignment="LEFT"/>
+    <paraStyle name="paragraph" leftIndent="20.0" fontName="Times-Roman" fontSize="11.0"/>
+    <paraStyle name="point" fontName="Helvetica" fontSize="12.0" />
+    <paraStyle name="bullet"  leftIndent="100.0" fontName="Times-Roman"/>
+    <paraStyle name="info_table_heading" fontName="Helvetica-Bold" fontSize="12.0" leading="15" alignment="CENTER"/>
+    <paraStyle name="table_data" fontName="Times-Roman" fontSize="11.0" leading="14"/>
+    <paraStyle name="Progenus_num" rightIndent="28.0" leftIndent="0.0" fontName="Times-Bold" alignment="CENTER"/>
+    <paraStyle name="result_data" fontName="Helvetica" fontSize="12.0" leading="15" alignment="CENTER"/>
+	<paraStyle name="sign" fontName="Helvetica" fontSize="12.0" leading="15"/>
+	<paraStyle name="P27" fontName="Times-Roman" alignment="CENTER"/>
+	<paraStyle name="P28" alignment="LEFT"/>
+	<paraStyle name="info_table_heading_small" fontName="Helvetica-Bold" fontSize="11.0" leading="15" alignment="CENTER"/>
+  </stylesheet>
+  <story>
+    <para style="Standard">
+      [[ repeatIn(objects,'o') ]]
+    </para>
+     <para style="Standard">
+      [[ repeatIn(o.sample_ids,'a') ]]
+    </para>
+    <blockTable colWidths="155.0,145.0,150.0" style="Table1">
+      <tr>
+        <td>
+          <para style="add_table_heading_bold">Le laboratoire :</para>
+          <para style="add_table_heading_bold">Progenus s.a.</para>
+          <para style="add_in_table">13 Avenue Maréchal Juin</para>
+          <para style="add_in_table">5030 Gembloux</para>
+          <para style="add_in_table">Tél : 081-616901</para>
+          <para style="add_in_table">FAX : 081-601723</para>
+          <para style="add_in_table"> e-mail :info@progenus.be</para>
+        </td>
+        <td>
+        	<illustration height="75.0" width="95.0">
+            	<image x="20" y="0" file="progenus.png" height="69.0" width="91.0"/>
+          	</illustration>
+        </td>
+        <td>
+          <para style="add_table_heading_bold">Le client:</para>
+          <para style="add_in_table">[[ o.ref_client  and o.ref_client.name or False]]</para>
+          <para style="add_in_table">[[o.ref_client and o.ref_client.address[0].street or False]]</para>
+          <para style="add_in_table">[[o.ref_client and o.ref_client.address[0].zip or False]] [[o.ref_client and o.ref_client.address[0].city or False]]</para>
+          <para style="add_in_table">[[o.ref_client and o.ref_client.address[0].country_id.name or False]]</para>
+
+        </td>
+      </tr>
+    </blockTable>
+	 <para style="SPACE">
+      <font color="white"> </font>
+    </para>
+
+    <para style="K1">N° : [[o.name or False]] </para>
+    <para style="SPACE">
+      <font color="white"> </font>
+    </para>
+    <para style="report_header">RAPPORT</para>
+     <para style="report_header">D’ESSAI</para>
+      <para style="SPACE">
+      <font color="white"> </font>
+    </para>
+    <para style="report_subject">Ce rapport ne peut être reproduit même partiellement sans l’accord </para>
+ 	<para style="report_subject">écrit du laboratoire et ne concerne que les objets soumis à l’essai </para>
+    <para style="SPACE">
+      <font color="white"> </font>
+    </para>
+    <para style="add_table_heading_bold"> Date: [[ time.strftime('%d/%m/%Y')]] </para>
+    <para style="add_table_heading_bold">Objet :</para>
+    <para style="report_subject1">la caractérisation génétique de la sensibilité au stress (HLA-1843) sur des échantillons prélevés et fournis au Laboratoire sous la responsabilité du demandeur.</para>
+	 <para style="SPACE">
+      <font color="white"> </font>
+    </para>
+    <para style="point"> <b> Description des échantillons reçus: </b> </para>
+    <para style="point"> <b> Nombre d’échantillons reçus :  </b>[[ get_sample(o) ]] </para>
+    <para style="point"> <b> Nature de l’échantillon : </b> [[ a.nature ]]</para>
+	<para style="point"> <b> Date de réception : </b> [[ o.begining_date ]] </para>
+	<para style="point"> <b> Espèce: </b> [[ a. breed ]] </para>
+	<para style="point"> <b> Condition de l’échantillon: </b> [[ a.cond_sample ]] </para>
+	<para style="point"> <b> Date de Conditions de l’emballage: </b>  [[ a.cond_packing ]] </para>
+	<para style="point"> <b> Condition de réception : </b>[[ a.cond_reception ]]  </para>
+	<para style="point"> <b> Chronopost Remarque :  </b> [[ a.notice ]]  </para>
+    <pageBreak/>
+	 <para style="SPACE">
+      <font color="white"> </font>
+    </para>
+	<blockTable colWidths="161.0,161.0,161.0" style="Table1">
+      <tr>
+        <td>
+        		<blockTable colWidths="160.0" style="Table12">
+		         	 <tr>
+		            	<td>
+		             		 <para style="info_table_heading">° de l'échantillon</para>
+		           		 </td>
+		          	</tr>
+		         	 <tr>
+		          	<td>
+		          		<blockTable colWidths="53.0,53.0,53.0" style="Table1">
+							<tr>
+								<td>
+					            	<para style="info_table_heading_small">N° du tube</para>
+					            </td>
+					            <td>
+					              	<para style="info_table_heading_small">N° Progenus</para>
+					            </td>
+					            <td>
+					              	<para style="info_table_heading_small">N° Ordre</para>
+					            </td>
+							</tr>
+		          	</blockTable>
+	          	</td>
+	           </tr>
+          </blockTable>
+        </td>
+        <td>
+          <para style="info_table_heading">Identification Nationale</para>
+        </td>
+        <td>
+	        		<blockTable colWidths="150.0" style="Table12">
+			         	 <tr>
+			            	<td>
+			             		 <para style="info_table_heading">° Test Result</para>
+			           		 </td>
+			          	</tr>
+			         	 <tr>
+			          	<td>
+			          		<blockTable colWidths="45.0,45.0,45.0" style="Table12">
+								<tr>
+									<td>
+						            	<para style="info_table_heading_small">NN</para>
+						            </td>
+						            <td>
+						              	<para style="info_table_heading_small">Nn</para>
+						            </td>
+						            <td>
+						              	<para style="info_table_heading_small">nn</para>
+						            </td>
+								</tr>
+			          	</blockTable>
+		          	</td>
+		           </tr>
+	          </blockTable>
+        </td>
+      </tr>
+    </blockTable>
+
+
+	 <para style="SPACE">
+      <font color="white"> </font>
+    </para>
+
+     <para style="SPACE">
+      <font color="white"> </font>
+    </para>
+     <para style="SPACE">
+      <font color="white"> </font>
+    </para>
+
+ <blockTable colWidths="50.0,200.0" style="Table2">
+      <tr>
+        <td>
+          <para style="P30">NN</para>
+        </td>
+        <td>
+          <para style="P30">homozygous, no mutation</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P30">Nn</para>
+        </td>
+        <td>
+          <para style="P30">heterozygous, carrier</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P30">nn</para>
+        </td>
+        <td>
+          <para style="P30">homozygous, halothan positive</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="SPACE">
+      <font color="white"> </font>
+    </para>
+    <para style="SPACE">
+      <font color="white"> </font>
+    </para>
+    <para style="SPACE">
+      <font color="white"> </font>
+    </para>
+    <para style="SPACE">
+      <font color="white"> </font>
+    </para>
+
+	<para style="SPACE">
+      <font color="white"> </font>
+    </para>
+    <para style="point">Fait en deux exemplaires à Gembloux le [[ time.strftime('%d/%m/%Y')]] </para>
+
+    <para style="SPACE">
+      <font color="white"> </font>
+    </para>
+    <para style="point"> <b> Signature : </b></para>
+    <para style="SPACE">
+      <font color="white"> </font>
+    </para>
+    <para style="sign">Duterme Olivier</para>
+    <para style="sign">Responsable Scientifique</para>
+  </story>
+</document>
+

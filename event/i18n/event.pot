@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.1\n"
+"Project-Id-Version: OpenERP Server 5.0.2\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-17 14:57:52+0000\n"
-"PO-Revision-Date: 2009-06-17 14:57:52+0000\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
+"PO-Revision-Date: 2009-08-14 08:23:23+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -94,6 +94,23 @@ msgstr ""
 #. module: event
 #: wizard_view:event.reg_make_invoice,init:0
 msgid "Create Invoices"
+msgstr ""
+
+#. module: event
+#: model:ir.module.module,description:event.module_meta_information
+msgid "Organization and management of events.\n"
+"\n"
+"    This module allow you\n"
+"        * to manage your events and their registrations\n"
+"        * to use emails to automatically confirm and send acknowledgements for any registration to an event\n"
+"        * ...\n"
+"\n"
+"    Note that:\n"
+"    - You can define new types of events in\n"
+"                Events / Configuration / Types of Events\n"
+"    - You can access predefined reports about number of registration per event or per event category in :\n"
+"                Events / Reporting\n"
+""
 msgstr ""
 
 #. module: event
@@ -288,11 +305,6 @@ msgid "Events On Registrations"
 msgstr ""
 
 #. module: event
-#: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
-msgstr ""
-
-#. module: event
 #: wizard_field:event.reg_make_invoice,init,inv_created:0
 msgid "Invoice Created"
 msgstr ""
@@ -318,20 +330,8 @@ msgid "Event type on registration"
 msgstr ""
 
 #. module: event
-#: model:ir.module.module,description:event.module_meta_information
-msgid "Organization and management of events.\n"
-"\n"
-"    This module allow you\n"
-"        * to manage your events and their registrations\n"
-"        * to use emails to automatically confirm and send acknowledgements for any registration to an event\n"
-"        * ...\n"
-"\n"
-"    Note that:\n"
-"    - You can define new types of events in\n"
-"                Events \\ Configuration \\ Types of Events\n"
-"    - You can access predefined reports about number of registration per event or per event category in :\n"
-"                Events \\ Reporting\n"
-""
+#: constraint:ir.model:0
+msgid "The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: event

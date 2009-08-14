@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Project-Id-Version: OpenERP Server 5.0.2\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
-"PO-Revision-Date: 2009-05-30 15:14:08+0000\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
+"PO-Revision-Date: 2009-08-14 08:23:23+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,1646 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: etl_interface
+#: view:etl.transformer:0
+msgid "Transformers"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_unique_tree
+msgid "Unique component"
+msgstr ""
+
+#. module: etl_interface
+#: wizard_button:etl.job.add_component,view,save:0
+#: wizard_button:etl.job.add_transitions,init,save:0
+msgid "_Save"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.model,name:etl_interface.model_etl_job
+msgid "ETL Job"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.job.process:0
+#: selection:etl.job.process,state:0
+#: selection:etl.job.process.statistics,state:0
+msgid "Stop"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component.field,source_field:0
+msgid "Source Field"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,transformer_id:0
+#: view:etl.transformer:0
+#: model:ir.actions.act_window,name:etl_interface.action_etl_transformer_tree
+msgid "Transformer"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "Mapping"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,connector_id:0
+#: view:etl.connector:0
+msgid "Connector"
+msgstr ""
+
+#. module: etl_interface
+#: wizard_view:etl.run.scheduled.job.processes,init:0
+msgid "Scheduler Parameters"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.model,name:etl_interface.model_etl_connector_type
+msgid "etl.connector.type"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_sleep_tree
+msgid "Sleep Component"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.model,name:etl_interface.model_etl_transformer
+msgid "etl.transformer"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.job.add_transitions,init,type:0
+#: selection:etl.transition,type:0
+msgid "Data Transition"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.connector,sql_con_type:0
+msgid "MySQL"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,map_line_ids:0
+msgid "Map lines"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.job.process,statistics:0
+msgid "Statistics Details"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_tree
+#: model:ir.model,name:etl_interface.model_etl_component
+msgid "ETL Component"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,field_key:0
+msgid "Check Key"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.job,running_process:0
+#: model:ir.actions.act_window,name:etl_interface.action_etl_job_process_running_tree
+msgid "Running Processes"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.job.process,input_records:0
+msgid "Total Input Records"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.connector,obj:0
+msgid "Object"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.menu_etl_jd_c_ic_filter_form
+msgid "Filter in Transform"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.transformer.line,type:0
+msgid "LONG"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.model,name:etl_interface.model_etl_component_field
+msgid "etl.component.field"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,criteria_ids:0
+msgid "Filter Criteria"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.job.process.statistics,state:0
+msgid "Not Started"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+#: view:etl.connector:0
+msgid "Other Information"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.job.add_transitions,init,channel_destination:0
+#: selection:etl.job.add_transitions,init,channel_source:0
+msgid "main"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_gmail_in_tree
+msgid "Gmail In Component"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.job.process:0
+#: view:etl.job.process.log:0
+msgid "Logs/Messages"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.connector,bufsize:0
+msgid "Buffer Size"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.menu_etl_project_current_form
+msgid "Current Projects"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.connector,openobject_con_type:0
+msgid "Socket"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_running_job_process_tree
+#: model:ir.ui.menu,name:etl_interface.menu_etl_proc_rp_form
+msgid "Running Process"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.connector,uri:0
+msgid "URL"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component.filter.criteria,operator:0
+msgid "Operator"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.job:0
+#: field:etl.job,notes:0
+msgid "Notes"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_job_process_tree
+msgid "Job Processes"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.job.process:0
+msgid "Component's Statistics"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.menu_etl_proc_dp_form
+msgid "Draft Process"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.project:0
+msgid "Project"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.model,name:etl_interface.model_etl_project
+msgid "etl.project"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,row_limit:0
+msgid "Limit"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_job_process_draft_tree
+msgid "Draft Processes"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+#: field:etl.job,component_ids:0
+#: model:ir.ui.menu,name:etl_interface.menu_etl_job_def_components
+msgid "Components"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.transformer.line,type:0
+msgid "INTEGER"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_trans_trigger_tree
+#: model:ir.ui.menu,name:etl_interface.menu_etl_t_tt_form
+msgid "Trigger Transitions"
+msgstr ""
+
+#. module: etl_interface
+#: wizard_field:etl.job.add_transitions,init,destination_component_id:0
+#: field:etl.transition,destination_component_id:0
+msgid "Destination Component"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.menu_etl_jd_c_pec_form
+msgid "Transform ETL Component"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component.field,dest_field:0
+msgid "Destination Field"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,encoding:0
+msgid "Encoding"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.component.filter.criteria,operator:0
+msgid "="
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_xmlrpc_out_from
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_xmlrpc_out_tree
+msgid "XML-RPC Out component"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.channel:0
+#: model:ir.ui.menu,name:etl_interface.menu_etl_channel_def
+msgid "Channels"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.job,project_id:0
+msgid "ETL Project"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_vcard_in_tree
+msgid "vCard In Component"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.connector,local_name:0
+msgid "Local Name"
+msgstr ""
+
+#. module: etl_interface
+#: wizard_button:etl.job.add_component,init,end:0
+#: wizard_button:etl.job.add_component,view,end:0
+#: wizard_button:etl.job.add_transitions,init,end:0
+msgid "_Cancel"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.menu_etl_jd_c_pec__data_count_form
+msgid "Data Count"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component.filter.criteria,operand:0
+msgid "Operand"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.job.process:0
+msgid "Other Details"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "Pre-Process Py-Function"
+msgstr ""
+
+#. module: etl_interface
+#: wizard_view:etl.component.type.add_fields,init:0
+msgid "Create component's view from type"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "Fields To Load"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.component.filter.criteria,condition:0
+msgid "OR"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.model,name:etl_interface.model_etl_transition
+msgid "This defines  ETL job's transition"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.menu_etl_jd_c_ic_gmail_form
+msgid "Gmail"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_csv_in_tree
+msgid "CSV In component"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.job.process:0
+msgid "Retry"
+msgstr ""
+
+#. module: etl_interface
+#: wizard_field:etl.job.add_transitions,init,channel_source:0
+#: field:etl.transition,channel_source:0
+msgid "Source Channel"
+msgstr ""
+
+#. module: etl_interface
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.menu_etl_jd_j_rj_form
+msgid "Open Jobs"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.model,name:etl_interface.model_etl_channel
+msgid "etl.channel"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,file_path:0
+msgid "Document Path"
+msgstr ""
+
+#. module: etl_interface
+#: wizard_button:etl.component.type.add_fields,init,create:0
+msgid "Create"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_filter_tree
+msgid "Filter component"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.menu_etl_excel_in_tree
+#: model:ir.ui.menu,name:etl_interface.menu_etl_excel_out_tree
+msgid "Excel"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "Excel In"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+#: wizard_view:etl.job.add_transitions,init:0
+#: view:etl.transition:0
+msgid "Transition property"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_channel_trans_tree
+#: model:ir.ui.menu,name:etl_interface.etl_menu_trans_channel
+msgid "Transition Channels"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_xml_in_from
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_xml_in_tree
+msgid "XML In component"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,field_extra:0
+msgid "Refuse Extra Fields"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.transformer.line,type:0
+msgid "COMPLEX"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "SugarCRM In"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component.filter.criteria:0
+msgid "Criteria"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,field_to_sort:0
+msgid "Field to sort"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.component.filter.criteria,condition:0
+msgid "XOR"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.channel,type:0
+#: field:etl.transformer.line,type:0
+msgid "Type"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.connector,email:0
+msgid "Email"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.channel:0
+#: field:etl.component.field,channel:0
+msgid "Channel"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_sql_out_tree
+msgid "SQL Out Component"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_csv_out_tree
+msgid "CSV Out component"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_proj_form
+#: model:ir.ui.menu,name:etl_interface.menu_etl_project_new_form
+msgid "New Project"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.job.add_transitions,init,channel_destination:0
+#: selection:etl.job.add_transitions,init,channel_source:0
+msgid "error"
+msgstr ""
+
+#. module: etl_interface
+#: wizard_button:etl.run.scheduled.job.processes,init,run:0
+msgid "Run"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.connector,sql_con_type:0
+msgid "Postgres"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.job.process:0
+#: field:etl.job.process.log,job_process_id:0
+#: field:etl.job.process.statistics,job_process_id:0
+#: model:ir.ui.menu,name:etl_interface.menu_etl_job_processes
+msgid "Job Process"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "Fields lines"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.job.process:0
+#: field:etl.job.process,error_msg:0
+msgid "Error Message"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.job.process:0
+#: field:etl.job.process,log:0
+msgid "Log Details"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,job_id:0
+#: view:etl.job:0
+#: field:etl.job.process,job_id:0
+msgid "Job"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.menu_etl_jd_c_ic_facebook_form
+msgid "Facebook"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component.unique:0
+#: field:etl.component.unique,key:0
+msgid "Key"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_excel_out_from
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_excel_out_tree
+msgid "Excel Out component"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,type_id:0
+#: view:etl.component.type:0
+#: wizard_field:etl.job.add_component,init,compnent_type_id:0
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_type_tree
+msgid "Component Type"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.menu_etl_configure
+msgid "Configuration"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.project:0
+#: model:ir.actions.act_window,name:etl_interface.action_etl_proj_tree
+#: model:ir.ui.menu,name:etl_interface.menu_etl_project_all_form
+msgid "Projects"
+msgstr ""
+
+#. module: etl_interface
+#: wizard_button:etl.job.add_component,init,view:0
+msgid "_Next"
+msgstr ""
+
+#. module: etl_interface
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.model,name:etl_interface.model_etl_job_process_log
+msgid "Job Process Logs"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "XML Out"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.etl_jd_c_pec__fmp_form
+msgid "Field Mapping Process"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_xml_out_from
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_xml_out_tree
+msgid "XML Out component"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,excel_params:0
+msgid "EXCEL Parameters"
+msgstr ""
+
+#. module: etl_interface
+#: wizard_view:etl.component.type.add_fields,init:0
+msgid "Create View"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.menu_etl_jd_c_ic_csvff_form
+#: model:ir.ui.menu,name:etl_interface.menu_etl_jd_c_oc_cdom_form
+msgid "CSVFile"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component.type,connector_type_id:0
+#: field:etl.connector,type:0
+#: view:etl.connector.type:0
+msgid "Connector Type"
+msgstr ""
+
+#. module: etl_interface
+#: wizard_button:etl.component.type.add_fields,init,end:0
+#: view:etl.job.process:0
+#: selection:etl.job.process,state:0
+#: wizard_button:etl.run.scheduled.job.processes,init,end:0
+msgid "Cancel"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_channel_form
+#: model:ir.ui.menu,name:etl_interface.etl_menu_new_log_channel
+msgid "New Channel"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.job:0
+#: selection:etl.job,state:0
+#: selection:etl.job.add_transitions,init,state:0
+#: selection:etl.transition,state:0
+msgid "Close"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.job:0
+#: view:etl.job.process:0
+#: view:etl.project:0
+#: field:etl.project,job_ids:0
+#: model:ir.actions.act_window,name:etl_interface.action_etl_job_all_tree
+#: model:ir.actions.act_window,name:etl_interface.action_etl_job_open_tree
+#: model:ir.ui.menu,name:etl_interface.menu_etl_job_def
+msgid "Jobs"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.model,name:etl_interface.model_etl_component_type
+msgid "ETL Component Type"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+#: field:etl.component,properties:0
+#: view:etl.connector:0
+msgid "Property"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.connector,openobject_con_type:0
+#: model:ir.ui.menu,name:etl_interface.menu_etl_xmlrpc_in_tree
+#: model:ir.ui.menu,name:etl_interface.menu_etl_xmlrpc_out_tree
+msgid "XML-RPC"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "Unique Key"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.component.filter.criteria,condition:0
+msgid "AND"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,domain:0
+msgid "Domain"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.transition:0
+#: model:ir.ui.menu,name:etl_interface.menu_etl_t_form
+msgid "Transitions"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.job.process:0
+#: field:etl.job.process,log_ids:0
+msgid "Logs"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,field_size:0
+msgid "Check Field Size"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_trans_data_tree
+#: model:ir.ui.menu,name:etl_interface.menu_etl_t_dt_form
+msgid "Data Transitions"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.wizard,name:etl_interface.wizard_launch_job_process
+msgid "Launch Process"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_xmlrpc_in_from
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_xmlrpc_in_tree
+msgid "XML-RPC In component"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.menu_etl_jd_c_ic_openobjectff_form
+#: model:ir.ui.menu,name:etl_interface.menu_etl_jd_c_oc_oem_form
+msgid "OpenObject"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.job.process,state:0
+#: selection:etl.job.process.statistics,state:0
+msgid "Paused"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,trans_out_ids:0
+msgid "Destination ID"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_connector_basic_tree
+#: model:ir.ui.menu,name:etl_interface.etl_connector_all_tree
+msgid "Connectors"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.model,name:etl_interface.model_etl_job_process_statistics
+msgid "This defines Statitics of  ETL Job Process"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.transformer.line,type:0
+msgid "TIME"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "Unique"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "Facebook In"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "Outgoing Transitions"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.connector,uid:0
+msgid "User  ID"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "Incomming Transitions"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,trans_in_ids:0
+msgid "Source ID"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.wizard,name:etl_interface.wizard_job_add_transitions
+msgid "Add Transitions"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.job.process:0
+msgid "Pause"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "Unique Keys"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.component.filter.criteria,operator:0
+msgid ">="
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.menu_etl_component_input_form
+msgid "Input Component"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.job.process.statistics,records_in:0
+msgid "Input Records"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.job.add_transitions,init,channel_destination:0
+#: selection:etl.job.add_transitions,init,channel_source:0
+msgid "address"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.menu_etl_jd_c_control_form
+msgid "Control ETL Component"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component.filter.criteria,field_name:0
+msgid "Field Name"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.job.process:0
+msgid "Start"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+#: field:etl.component,field_ids:0
+#: field:etl.component,openobject_field_ids:0
+#: view:etl.component.field:0
+msgid "Fields"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+#: model:ir.ui.menu,name:etl_interface.menu_etl_jd_c_pec__sv_form
+msgid "Schema Validation"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.job,state:0
+#: selection:etl.job.process,state:0
+msgid "Draft"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.job.process:0
+msgid "Set to Draft"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.transformer,tranformer_line_ids:0
+#: field:etl.transformer.line,tranformer_id:0
+msgid "ETL Transformer"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_facebook_in_tree
+msgid "facebook In component"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.model,name:etl_interface.model_etl_transformer_line
+msgid "etl.transformer.line"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.job.process,compute_time:0
+#: field:etl.job.process.statistics,compute_time:0
+msgid "Computation Time"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,method:0
+msgid "Method"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.menu_etl_root
+msgid "ETL"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+#: view:etl.job:0
+#: wizard_view:etl.job.add_transitions,init:0
+#: view:etl.job.process:0
+#: view:etl.job.process.statistics:0
+#: view:etl.transition:0
+msgid "Status"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.job.process,component_ids:0
+msgid "Statics"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_open_job_process_tree
+msgid "Open Process"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_data_count_tree
+msgid "Data Count Component"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.wizard,name:etl_interface.wizard_add_to_component_view
+msgid "Add fields to Component's View"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.job.process,state:0
+#: selection:etl.job.process.statistics,state:0
+msgid "Started"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_trans_map_tree
+msgid "Field Mapping component"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,csv_params:0
+msgid "CSV Parameters"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.job.process,output_records:0
+msgid "Total Output Records"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.connector,host:0
+msgid "Host"
+msgstr ""
+
+#. module: etl_interface
+#: wizard_field:etl.job.add_transitions,init,source_component_id:0
+#: field:etl.transition,source_component_id:0
+msgid "Source Component"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.job:0
+msgid "Reset to draft"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.connector,sslmode:0
+msgid "Allow SSL Mode"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,module_name:0
+msgid "Module Name"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.job.process:0
+msgid "Statistics"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "Transitions Detail"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.job.process,start_date:0
+#: field:etl.job.process.statistics,start_date:0
+msgid "Start Date"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.transformer.line,type:0
+msgid "STRING"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "CSV In"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,field_type:0
+msgid "Check Field Type"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.menu_etl_sugarcrm_in_tree
+msgid "SugarCRM"
+msgstr ""
+
+#. module: etl_interface
 #: model:ir.module.module,shortdesc:etl_interface.module_name_translation
 msgid "ETL system"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.menu_etl_xml_in_tree
+#: model:ir.ui.menu,name:etl_interface.menu_etl_xml_out_tree
+msgid "XML"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.job.process,state:0
+msgid "Exception"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component.filter.criteria,condition:0
+msgid "Condition"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.connector,mode:0
+msgid "File Operation Mode"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.connector,db:0
+msgid "Database"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.channel,type:0
+#: wizard_view:etl.job.add_transitions,init:0
+#: view:etl.transition:0
+msgid "Transition"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.job,total_process:0
+msgid "Total Processes"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.menu_etl_jd_c_pec__logger_bloc_tree
+msgid "Logger Bloc"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "Filter"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_merge_form
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_merge_tree
+msgid "Merge"
+msgstr ""
+
+#. module: etl_interface
+#: help:etl.job.process,compute_time:0
+#: help:etl.job.process.statistics,compute_time:0
+msgid "The total computation time to run process in Seconds"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.model,name:etl_interface.model_etl_component_filter_criteria
+msgid "etl.component.filter.criteria"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.connector,sql_con_type:0
+msgid "Oracle"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_sort_tree
+msgid "Sort component"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.model,name:etl_interface.model_etl_connector
+msgid "etl.connector"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.job.add_transitions,init,channel_destination:0
+#: selection:etl.job.add_transitions,init,channel_source:0
+msgid "gmail"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.model,name:etl_interface.model_etl_job_process
+msgid "This defines  ETL Job Process"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_excel_in_from
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_excel_in_tree
+msgid "Excel In component"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.component.filter.criteria,operator:0
+msgid "in"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "Excel Out"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.channel,code:0
+#: field:etl.component.type,code:0
+#: field:etl.connector.type,code:0
+msgid "Code"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,not_null:0
+msgid "Check NOT NULL"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_openobject_in_tree
+msgid "Open-Object In Component"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component.filter.criteria,sequence:0
+msgid "Sequence"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.job,state:0
+#: wizard_field:etl.job.add_transitions,init,state:0
+#: field:etl.job.process,state:0
+#: field:etl.job.process.statistics,state:0
+#: field:etl.transition,state:0
+msgid "State"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.connector,name:0
+msgid "Connector Name"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.transformer.line,type:0
+msgid "BOOLEAN"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.job.process,state:0
+msgid "Done"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.connector.type:0
+#: model:ir.actions.act_window,name:etl_interface.action_etl_connector_type_tree
+#: model:ir.ui.menu,name:etl_interface.menu_etl_connector_type
+msgid "Connector Types"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "Fields Mapping"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component.type,added:0
+msgid "Added to Component view"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.menu_action_etl_component_types
+msgid "Component types"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,xml_params:0
+msgid "XML Parameters"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.job:0
+#: selection:etl.job,state:0
+#: selection:etl.job.add_transitions,init,state:0
+#: view:etl.job.process:0
+#: selection:etl.job.process,state:0
+#: selection:etl.job.process.statistics,state:0
+#: selection:etl.transition,state:0
+msgid "Open"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.job.process:0
+msgid "Restart"
+msgstr ""
+
+#. module: etl_interface
+#: constraint:ir.model:0
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.component.filter.criteria,operator:0
+msgid "<>"
+msgstr ""
+
+#. module: etl_interface
+#: wizard_view:etl.job.add_component,init:0
+msgid "Select Component Type"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.component.filter.criteria,operator:0
+msgid "<="
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.job:0
+msgid "Processes"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_channel_log_tree
+#: model:ir.ui.menu,name:etl_interface.menu_etl_log_channel_form
+msgid "Log Channels"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,delay:0
+msgid "Delay"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,preprocess:0
+msgid "Preprocess"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.job:0
+msgid "Other Info"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "OpenObject Out"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_sql_in_tree
+msgid "SQL In Component"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.job.process:0
+#: view:etl.job.process.statistics:0
+msgid "Details"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_sugarcrm_in_from
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_sugarcrm_in_tree
+msgid "SugarCRM In component"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_logger_tree
+msgid "Logger Component"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.transformer.line,type:0
+msgid "DATE"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.job.process.statistics,state:0
+msgid "Canceld"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.channel,type:0
+#: model:ir.ui.menu,name:etl_interface.menu_etl_jd_c_pec__logger_form
+msgid "Logger"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.job.add_transitions,init,type:0
+#: selection:etl.transition,type:0
+msgid "Trigger Transition"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,field_name:0
+msgid "Check Field Name"
+msgstr ""
+
+#. module: etl_interface
+#: help:etl.component,doc_type:0
+msgid "File Extension"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "Sort"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.job.process,schedule_date:0
+msgid "Scheduled Date"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.job.process:0
+#: view:etl.job.process.log:0
+#: field:etl.job.process.log,desc:0
+msgid "Description"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.menu_etl_component_output_form
+msgid "Output Component"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.job.process.statistics,seconds_par_record:0
+msgid "MilliSeconds per Record"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component.type:0
+msgid "Fields Mapped to this type of Component"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+#: field:etl.component.field,component_id:0
+#: field:etl.component.filter.criteria,component_id:0
+#: field:etl.component.unique,component_id:0
+#: view:etl.job.process:0
+#: view:etl.job.process.statistics:0
+#: field:etl.job.process.statistics,name:0
+msgid "Component"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.channel,name:0
+msgid "Channel Name"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.menu_etl_jd_c_pec__sort_form
+msgid "Sort process"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.job.process.log,date_time:0
+msgid "Date/Time"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.job.process.statistics,state:0
+msgid "Finished"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "Pre-Process Python Function"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.job:0
+msgid "Launch a Process"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.menu_etl_jd_c_pec__sleep_form
+msgid "Sleep"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.connector,passwd:0
+msgid "Password"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component.type,field_ids:0
+msgid "Component fields"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "XML In"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.job.process,end_date:0
+#: field:etl.job.process.statistics,end_date:0
+msgid "End Date"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "CSV Out"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.job:0
+msgid "Run All Open Processes"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,name:0
+#: field:etl.component.type,name:0
+#: field:etl.connector.type,name:0
+#: field:etl.job,name:0
+#: field:etl.job.process,name:0
+#: field:etl.project,name:0
+#: field:etl.transformer,name:0
+#: field:etl.transformer.line,name:0
+#: field:etl.transition,name:0
+msgid "Name"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.wizard,name:etl_interface.wizard_run_scheduled_process
+#: model:ir.ui.menu,name:etl_interface.etl_run_process_scheduler
+msgid "Run All Scheduled Processes"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component.type:0
+msgid "Add to Components View"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.job.process.statistics,signal:0
+msgid "Signal"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.model,name:etl_interface.model_etl_component_unique
+msgid "etl.component.unique"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.job,user_id:0
+msgid "Responsible"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.menu_etl_comp_sql_out_form
+#: model:ir.ui.menu,name:etl_interface.menu_etl_jd_c_ic_sql_form
+msgid "SQL"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_logger_bloc_tree
+msgid "Logger Bloc Component"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+#: view:etl.transition:0
+msgid "Open Transition"
+msgstr ""
+
+#. module: etl_interface
+#: wizard_field:etl.job.add_transitions,init,type:0
+#: field:etl.transition,type:0
+msgid "Transition Type"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,model_id:0
+msgid "Model"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.transformer.line,type:0
+msgid "DATETIME"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+#: view:etl.transition:0
+msgid "Close Transition"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.menu_etl_jd_c_pec__mp_form
+msgid "Merge Process"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "Openobject Field"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.wizard,name:etl_interface.wizard_job_add_component
+msgid "Add Component"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "OpenObject In"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.job.process.statistics,records_out:0
+msgid "Output Records"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "New Field Name(empty for same)"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,field_format:0
+msgid "Check Format"
+msgstr ""
+
+#. module: etl_interface
+#: wizard_view:etl.run.scheduled.job.processes,init:0
+msgid "This will run all scheduled process which are in Open State"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "Criterias"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_job_form
+#: model:ir.ui.menu,name:etl_interface.menu_etl_jd_j_nj_form
+msgid "New Job"
+msgstr ""
+
+#. module: etl_interface
+#: wizard_field:etl.job.add_transitions,init,channel_destination:0
+#: field:etl.transition,channel_destination:0
+msgid "Destination Channel"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.transformer.line,type:0
+msgid "FLOAT"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.menu_etl_comp_vcard_out_form
+#: model:ir.ui.menu,name:etl_interface.menu_etl_jd_c_ic_vcard_form
+msgid "vCard"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.job:0
+msgid "Job's Components"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_vcard_out_tree
+msgid "vCard Out Component"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_open_object_out_form
+#: model:ir.actions.act_window,name:etl_interface.action_etl_component_open_object_out_tree
+msgid "Open-Object Out component"
+msgstr ""
+
+#. module: etl_interface
+#: view:etl.component:0
+msgid "facebook Field"
+msgstr ""
+
+#. module: etl_interface
+#: selection:etl.job.add_transitions,init,channel_destination:0
+#: selection:etl.job.add_transitions,init,channel_source:0
+msgid "partner"
+msgstr ""
+
+#. module: etl_interface
+#: help:etl.connector,uri:0
+msgid "Enter Real Path"
+msgstr ""
+
+#. module: etl_interface
+#: model:ir.ui.menu,name:etl_interface.menu_etl_jd_c_ic_unique_form
+msgid "Unique Transform"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.component,doc_type:0
+msgid "Document Type"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.connector,port:0
+msgid "Port"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.connector,delay:0
+msgid "Delay time"
+msgstr ""
+
+#. module: etl_interface
+#: field:etl.connector,openobject_con_type:0
+#: field:etl.connector,sql_con_type:0
+msgid "Connection Type"
 msgstr ""
 

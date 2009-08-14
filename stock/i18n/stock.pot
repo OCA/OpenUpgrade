@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.1\n"
+"Project-Id-Version: OpenERP Server 5.0.2\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-17 14:57:52+0000\n"
-"PO-Revision-Date: 2009-06-17 14:57:52+0000\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
+"PO-Revision-Date: 2009-08-14 08:23:23+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -100,6 +100,7 @@ msgid "Packing list"
 msgstr ""
 
 #. module: stock
+#: rml:lot.stock.overview:0
 #: rml:lot.stock.overview_all:0
 msgid "Amount"
 msgstr ""
@@ -397,9 +398,9 @@ msgstr ""
 
 #. module: stock
 #: rml:lot.location:0
-#: rml:lot.stock.overview:0
 #: field:stock.inventory.line,product_qty:0
 #: field:stock.move,product_qty:0
+#: rml:stock.picking.list:0
 #: field:stock.report.prodlots,name:0
 msgid "Quantity"
 msgstr ""
@@ -979,11 +980,6 @@ msgid "terp-partner"
 msgstr ""
 
 #. module: stock
-#: rml:stock.picking.list:0
-msgid "Qty"
-msgstr ""
-
-#. module: stock
 #: model:ir.actions.act_window,name:stock.action_inventory_form_draft
 #: model:ir.ui.menu,name:stock.menu_action_inventory_form_draft
 msgid "Draft Periodical Inventories"
@@ -1000,7 +996,6 @@ msgstr ""
 #: wizard_button:stock.move.track,init,end:0
 #: wizard_button:stock.partial_picking,init,end:0
 #: view:stock.picking:0
-#: selection:stock.picking,state:0
 #: wizard_button:stock.picking.make,init,end:0
 #: view:stock.picking.move.wizard:0
 #: wizard_button:stock.return.picking,init,end:0
@@ -1043,6 +1038,7 @@ msgstr ""
 
 #. module: stock
 #: rml:lot.stock.overview:0
+#: rml:lot.stock.overview_all:0
 #: field:stock.move,price_unit:0
 msgid "Unit Price"
 msgstr ""
@@ -2017,6 +2013,7 @@ msgstr ""
 
 #. module: stock
 #: selection:stock.move,state:0
+#: selection:stock.picking,state:0
 msgid "Canceled"
 msgstr ""
 
@@ -2182,11 +2179,6 @@ msgstr ""
 #. module: stock
 #: view:stock.move:0
 msgid "Moves"
-msgstr ""
-
-#. module: stock
-#: rml:lot.stock.overview_all:0
-msgid "UnitPrice"
 msgstr ""
 
 #. module: stock

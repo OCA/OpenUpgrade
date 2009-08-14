@@ -369,6 +369,8 @@ class product_category(osv.osv):
                     'name' : category.name,
                     'path' : path,
                     'is_active' : 1,
+                    'default_sort_by': 'name',
+                    'available_sort_by': 'name',
             }
             updated = True
             #===============================================================================

@@ -27,42 +27,54 @@ import os
 import os.path
 import tools
 from math import ceil
+from psycopg2 import IntegrityError
+from service import security
 
 ##############################################################################
 # Service to record use of the database
 ##############################################################################
 
-HOUR_MINI = 1.0
+objects_proxy = netsvc.SERVICES['object'].__class__
 
-def check(chk_fnct):
-    data = {}
-    def check_one(db, uid, passwd):
-        data.setdefault(db, {})
+class recording_objects_proxy(objects_proxy):
+    access_cache = {}
+    HOUR_MINI = 1.0
+    UNTIMED_CALLS = {
+        # values are either '*' or a list of methods
+        ## 'foo': ['bar', 'baz'],
+        'res.request': '*',
+    }
+    def execute(self, db, uid, passwd, object, method, *args):
         cr = pooler.get_db(db).cursor()
         try:
-            # Check if the database is blocked
+            # check if database is blocked
             cr.execute('SELECT name FROM use_control_db_block')
             msg = cr.fetchone()
             if msg:
-                # raise an Exception formatted for the client
-                # netsvc.Service.abortResponse can't be called while it's not a static method...
-                raise Exception('warning -- %s\n\n%s' % ('Database blocked', msg[0]))
+                self.abordResponse(None, 'Database suspended', 'warning', msg[0])
 
-            if (uid not in data[db]) or (data[db][uid] < time.time()):
-                data[db][uid] = time.time() + 3600 * HOUR_MINI
-                cr.execute('INSERT INTO use_control_time (user_id, date, duration, active) VALUES (%s,%s,%s,%s)', 
-                                (int(uid), time.strftime('%Y-%m-%d %H:%M:%S'), HOUR_MINI, True))
-                cr.commit()
+            utc = self.UNTIMED_CALLS.get(object, [])
+            if utc is not '*' and method not in utc:
+
+                cache = self.access_cache.setdefault(db, {})
+                if (uid not in cache) or (cache[uid] < time.time()):
+                    try:
+                        now = time.strftime('%Y-%m-%d %H:%M:%S')
+                        cr.execute("INSERT INTO use_control_time (user_id, date, duration, active) VALUES (%s, %s, %s, %s)", 
+                                    (int(uid), now, self.HOUR_MINI, True))
+                    except IntegrityError, ie:
+                        # if user does not exists do not record the time in the cache
+                        pass
+                    else:
+                        cache[uid] = time.time() + 3600 * self.HOUR_MINI
+                    cr.commit()
+
+            return super(recording_objects_proxy, self).execute(db, uid, passwd, object, method, *args)
         finally:
             cr.close()
-        return chk_fnct(db, uid, passwd)
-    return check_one
 
-# May be it's better using inheritancy and resubscribing the service
-# Override the check method to store use of the database
-from service import security
-security.check = check(security.check)
-
+recording_objects_proxy()
+        
 ##############################################################################
 # Service to request feedback on a database usage
 ##############################################################################

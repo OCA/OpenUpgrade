@@ -28,13 +28,14 @@
     "description": """
             This module manages after-sale wizard.
             """,
-    "depends" : ["dm_email"],
+    "depends" : ["dm"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
                     "security/dm_after_sale_security.xml",
                     "security/ir.model.access.csv",
                     "dm_after_sale_view.xml",
+                    "dm_after_sale_data.xml",
                     ],
     "active": False,
     "installable": True,

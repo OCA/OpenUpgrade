@@ -25,16 +25,9 @@
     'name': 'Event Certificate',
     'version': '0.1',
     'category': 'Generic Modules/Association',
-    'description': """Organization and management of events Certificate.
-
+    'description': """Events Certificate.
     This module allow you
-        * to print certificate related to your events and their registrations
-
-    Note that:
-    - You can define new types of events in
-                Events / Configuration / Types of Events
-    - You can access predefined reports about number of registration per event or per event category in :
-                Events / Reporting
+        * to print certificate related to your events and their registrations    
 """,
     'author': 'Tiny',
     'depends': ['event'],

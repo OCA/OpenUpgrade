@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.1\n"
+"Project-Id-Version: OpenERP Server 5.0.2\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-17 14:57:52+0000\n"
-"PO-Revision-Date: 2009-06-17 14:57:52+0000\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
+"PO-Revision-Date: 2009-08-14 08:23:23+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -56,8 +56,8 @@ msgid "Delivery"
 msgstr ""
 
 #. module: purchase
-#: wizard_view:purchase.order.merge,init:0
-msgid "Please note that orders will only be merged if they are to the same partner and going to the same location, and lines will only be merged if they are exactly the same except for the quantity and unit."
+#: field:purchase.order.line,product_qty:0
+msgid "Quantity"
 msgstr ""
 
 #. module: purchase
@@ -111,8 +111,8 @@ msgid "Purchase Process"
 msgstr ""
 
 #. module: purchase
-#: field:purchase.order.line,product_qty:0
-msgid "Quantity"
+#: model:process.transition,name:purchase.process_transition_invoicefrompackinglist0
+msgid "Invoice from Packing list"
 msgstr ""
 
 #. module: purchase
@@ -142,11 +142,6 @@ msgstr ""
 #: view:purchase.order.line:0
 #: field:purchase.order.line,notes:0
 msgid "Notes"
-msgstr ""
-
-#. module: purchase
-#: rml:purchase.order:0
-msgid "N°"
 msgstr ""
 
 #. module: purchase
@@ -609,8 +604,8 @@ msgid "When purchase order is approved , it creates its packing list."
 msgstr ""
 
 #. module: purchase
-#: model:process.transition,name:purchase.process_transition_invoicefrompackinglist0
-msgid "Invoice from Packing list"
+#: view:purchase.order.line:0
+msgid "History"
 msgstr ""
 
 #. module: purchase
@@ -637,6 +632,11 @@ msgstr ""
 #. module: purchase
 #: field:purchase.order,fiscal_position:0
 msgid "Fiscal Position"
+msgstr ""
+
+#. module: purchase
+#: rml:purchase.order:0
+msgid "Request for Quotation N°"
 msgstr ""
 
 #. module: purchase
@@ -761,7 +761,7 @@ msgid "Product UOM"
 msgstr ""
 
 #. module: purchase
-#: field:purchase.order.line,move_id:0
+#: field:purchase.order.line,move_ids:0
 msgid "Reservation"
 msgstr ""
 
@@ -778,6 +778,11 @@ msgstr ""
 #. module: purchase
 #: rml:purchase.order:0
 msgid "Your Order Reference"
+msgstr ""
+
+#. module: purchase
+#: rml:purchase.order:0
+msgid "Purchase Order Confirmation N°"
 msgstr ""
 
 #. module: purchase
@@ -822,6 +827,11 @@ msgid "From Packing list, Create invoice."
 msgstr ""
 
 #. module: purchase
+#: field:purchase.order,amount_total:0
+msgid "Total"
+msgstr ""
+
+#. module: purchase
 #: wizard_view:purchase.order.merge,init:0
 msgid "Are you sure you want to merge these orders ?"
 msgstr ""
@@ -837,7 +847,7 @@ msgid "After approved purchase order , it comes into the supplier invoice"
 msgstr ""
 
 #. module: purchase
-#: field:purchase.order,amount_total:0
-msgid "Total"
+#: view:purchase.order.line:0
+msgid "Stock Moves"
 msgstr ""
 

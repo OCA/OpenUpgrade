@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.1\n"
+"Project-Id-Version: OpenERP Server 5.0.2\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-17 14:57:53+0000\n"
-"PO-Revision-Date: 2009-06-17 14:57:53+0000\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
+"PO-Revision-Date: 2009-08-14 08:23:23+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -34,6 +34,11 @@ msgstr ""
 #. module: account
 #: model:ir.ui.menu,name:account.menu_finance_entries
 msgid "Entries Encoding"
+msgstr ""
+
+#. module: account
+#: model:ir.actions.todo,note:account.config_wizard_account_base_setup_form
+msgid "Specify The Message for the Overdue Payment Report."
 msgstr ""
 
 #. module: account
@@ -257,6 +262,7 @@ msgstr ""
 
 #. module: account
 #: model:ir.actions.report.xml,name:account.account_overdue
+#: view:res.company:0
 msgid "Overdue Payments"
 msgstr ""
 
@@ -278,15 +284,8 @@ msgid "Origin"
 msgstr ""
 
 #. module: account
-#: field:account.account,reconcile:0
-#: wizard_button:account.automatic.reconcile,init,reconcile:0
-#: field:account.bank.statement.line,reconcile_id:0
-#: view:account.bank.statement.reconcile:0
-#: field:account.bank.statement.reconcile.line,line_id:0
-#: field:account.move.line,reconcile_id:0
-#: wizard_button:account.move.line.reconcile,addendum,reconcile:0
-#: wizard_button:account.move.line.reconcile,init_full,reconcile:0
-msgid "Reconcile"
+#: rml:account.analytic.account.journal:0
+msgid "Move Name"
 msgstr ""
 
 #. module: account
@@ -310,8 +309,10 @@ msgid "Delta Debit"
 msgstr ""
 
 #. module: account
-#: field:account.chart.template,property_account_receivable:0
-msgid "Receivable Account"
+#: rml:account.invoice:0
+#: field:account.invoice,amount_tax:0
+#: field:account.move.line,account_tax_id:0
+msgid "Tax"
 msgstr ""
 
 #. module: account
@@ -385,11 +386,6 @@ msgstr ""
 #. module: account
 #: rml:account.partner.balance:0
 msgid "(Account/Partner) Name"
-msgstr ""
-
-#. module: account
-#: rml:account.overdue:0
-msgid "Would your payment have been carried out after this mail was sent, please consider the present one as void. Do not hesitate to contact our accounting departement at +32 81 81 37 00."
 msgstr ""
 
 #. module: account
@@ -1085,8 +1081,8 @@ msgid "Unit Price"
 msgstr ""
 
 #. module: account
-#: model:ir.actions.wizard,name:account.action_move_journal_line_form_select
-msgid "Standard entry"
+#: rml:account.analytic.account.journal:0
+msgid "Period from :"
 msgstr ""
 
 #. module: account
@@ -1152,8 +1148,8 @@ msgid "Invoice import"
 msgstr ""
 
 #. module: account
-#: rml:account.invoice:0
-msgid "Tel. :"
+#: model:ir.actions.wizard,name:account.action_move_journal_line_form_select
+msgid "Standard entry"
 msgstr ""
 
 #. module: account
@@ -1263,6 +1259,11 @@ msgid "Centralised counterpart"
 msgstr ""
 
 #. module: account
+#: view:wizard.company.setup:0
+msgid "Message"
+msgstr ""
+
+#. module: account
 #: model:process.node,note:account.process_node_supplierpaymentorder0
 msgid "Select invoices you want to pay and manages advances"
 msgstr ""
@@ -1292,6 +1293,12 @@ msgstr ""
 #. module: account
 #: help:account.tax,type:0
 msgid "The computation method for the tax amount."
+msgstr ""
+
+#. module: account
+#: model:process.node,note:account.process_node_accountingentries0
+#: model:process.node,note:account.process_node_supplieraccountingentries0
+msgid "Validated accounting entries."
 msgstr ""
 
 #. module: account
@@ -1405,6 +1412,11 @@ msgid "Close states"
 msgstr ""
 
 #. module: account
+#: model:ir.model,name:account.model_wizard_company_setup
+msgid "wizard.company.setup"
+msgstr ""
+
+#. module: account
 #: model:ir.actions.act_window,name:account.action_account_analytic_account_line_extended_form
 msgid "account.analytic.line.extended"
 msgstr ""
@@ -1422,6 +1434,11 @@ msgstr ""
 #. module: account
 #: selection:account.bank.statement.line,type:0
 msgid "Supplier"
+msgstr ""
+
+#. module: account
+#: rml:account.invoice:0
+msgid "Tel. :"
 msgstr ""
 
 #. module: account
@@ -1688,13 +1705,6 @@ msgid "Period length (days)"
 msgstr ""
 
 #. module: account
-#: rml:account.invoice:0
-#: field:account.invoice,amount_tax:0
-#: field:account.move.line,account_tax_id:0
-msgid "Tax"
-msgstr ""
-
-#. module: account
 #: selection:account.payment.term.line,value:0
 #: selection:account.tax,type:0
 #: selection:account.tax.template,type:0
@@ -1733,6 +1743,11 @@ msgstr ""
 #. module: account
 #: field:account.analytic.account,user_id:0
 msgid "Account Manager"
+msgstr ""
+
+#. module: account
+#: rml:account.analytic.account.journal:0
+msgid "to :"
 msgstr ""
 
 #. module: account
@@ -1856,6 +1871,11 @@ msgid "7"
 msgstr ""
 
 #. module: account
+#: rml:account.invoice:0
+msgid "JJJJJ"
+msgstr ""
+
+#. module: account
 #: model:ir.actions.report.xml,name:account.account_transfers
 msgid "Transfers"
 msgstr ""
@@ -1936,6 +1956,7 @@ msgstr ""
 #: field:account.move,partner_id:0
 #: wizard_field:account.partner.balance.report,init,result_selection:0
 #: wizard_field:account.third_party_ledger.report,init,result_selection:0
+#: field:wizard.company.setup,partner_id:0
 msgid "Partner"
 msgstr ""
 
@@ -1962,6 +1983,11 @@ msgstr ""
 #. module: account
 #: model:process.process,name:account.process_process_invoiceprocess0
 msgid "Customer Invoice Process"
+msgstr ""
+
+#. module: account
+#: rml:account.invoice:0
+msgid "Fiscal Position Remark :"
 msgstr ""
 
 #. module: account
@@ -2033,9 +2059,8 @@ msgid "Analytic Entry"
 msgstr ""
 
 #. module: account
-#: model:process.node,note:account.process_node_accountingentries0
-#: model:process.node,note:account.process_node_supplieraccountingentries0
-msgid "Validated accounting entries."
+#: view:res.company:0
+msgid "Overdue Payments Message"
 msgstr ""
 
 #. module: account
@@ -2312,15 +2337,8 @@ msgid "Open Journal"
 msgstr ""
 
 #. module: account
-#: selection:account.tax,applicable_type:0
-#: field:account.tax,python_applicable:0
-#: field:account.tax,python_compute:0
-#: selection:account.tax,type:0
-#: selection:account.tax.template,applicable_type:0
-#: field:account.tax.template,python_applicable:0
-#: field:account.tax.template,python_compute:0
-#: selection:account.tax.template,type:0
-msgid "Python Code"
+#: rml:account.analytic.account.journal:0
+msgid "KI"
 msgstr ""
 
 #. module: account
@@ -2417,6 +2435,7 @@ msgstr ""
 #: wizard_button:account.third_party_ledger.report,init,end:0
 #: wizard_button:account.vat.declaration,init,end:0
 #: wizard_button:account_use_models,init_form,end:0
+#: view:wizard.company.setup:0
 #: view:wizard.multi.charts.accounts:0
 msgid "Cancel"
 msgstr ""
@@ -2499,6 +2518,11 @@ msgid "Create Invoice"
 msgstr ""
 
 #. module: account
+#: field:wizard.company.setup,overdue_msg:0
+msgid "Overdue Payment Message"
+msgstr ""
+
+#. module: account
 #: model:ir.model,name:account.model_account_tax_code_template
 msgid "Tax Code Template"
 msgstr ""
@@ -2543,6 +2567,11 @@ msgstr ""
 #: rml:account.third_party_ledger:0
 #: rml:account.third_party_ledger_other:0
 msgid "-"
+msgstr ""
+
+#. module: account
+#: rml:account.analytic.account.journal:0
+msgid "asgfas"
 msgstr ""
 
 #. module: account
@@ -2604,6 +2633,7 @@ msgstr ""
 #. module: account
 #: field:account.account,name:0
 #: field:account.account.template,name:0
+#: rml:account.analytic.account.inverted.balance:0
 #: field:account.bank.statement,name:0
 #: field:account.bank.statement.line,name:0
 #: field:account.chart.template,name:0
@@ -2688,6 +2718,18 @@ msgid "New Customer Invoice"
 msgstr ""
 
 #. module: account
+#: field:account.account,reconcile:0
+#: wizard_button:account.automatic.reconcile,init,reconcile:0
+#: field:account.bank.statement.line,reconcile_id:0
+#: view:account.bank.statement.reconcile:0
+#: field:account.bank.statement.reconcile.line,line_id:0
+#: field:account.move.line,reconcile_id:0
+#: wizard_button:account.move.line.reconcile,addendum,reconcile:0
+#: wizard_button:account.move.line.reconcile,init_full,reconcile:0
+msgid "Reconcile"
+msgstr ""
+
+#. module: account
 #: rml:account.overdue:0
 msgid "Best regards."
 msgstr ""
@@ -2732,8 +2774,6 @@ msgstr ""
 #: rml:account.account.balance:0
 #: rml:account.analytic.account.analytic.check:0
 #: rml:account.analytic.account.balance:0
-#: rml:account.analytic.account.inverted.balance:0
-#: rml:account.analytic.account.journal:0
 #: rml:account.general.ledger:0
 #: rml:account.journal.period.print:0
 #: rml:account.partner.balance:0
@@ -2875,8 +2915,8 @@ msgid "Unit of Measure"
 msgstr ""
 
 #. module: account
-#: rml:account.analytic.account.journal:0
-msgid "Move name"
+#: field:account.chart.template,property_account_receivable:0
+msgid "Receivable Account"
 msgstr ""
 
 #. module: account
@@ -3020,6 +3060,7 @@ msgstr ""
 #: view:account.account.template:0
 #: view:account.bank.statement:0
 #: field:account.bank.statement.line,note:0
+#: field:account.fiscal.position,note:0
 #: view:account.invoice.line:0
 #: field:account.invoice.line,note:0
 msgid "Notes"
@@ -3196,6 +3237,18 @@ msgid "This account will be used instead of the default one as the receivable ac
 msgstr ""
 
 #. module: account
+#: selection:account.tax,applicable_type:0
+#: field:account.tax,python_applicable:0
+#: field:account.tax,python_compute:0
+#: selection:account.tax,type:0
+#: selection:account.tax.template,applicable_type:0
+#: field:account.tax.template,python_applicable:0
+#: field:account.tax.template,python_compute:0
+#: selection:account.tax.template,type:0
+msgid "Python Code"
+msgstr ""
+
+#. module: account
 #: model:ir.actions.act_window,name:account.act_account_journal_2_account_bank_statement
 msgid "Bank statements"
 msgstr ""
@@ -3222,6 +3275,7 @@ msgstr ""
 
 #. module: account
 #: view:account.invoice:0
+#: view:wizard.company.setup:0
 #: view:wizard.multi.charts.accounts:0
 msgid "Create"
 msgstr ""
@@ -3483,6 +3537,11 @@ msgid "Check this box if you want to print all entries when printing the General
 msgstr ""
 
 #. module: account
+#: model:ir.model,name:account.model_account_payment_term_line
+msgid "Payment Term Line"
+msgstr ""
+
+#. module: account
 #: selection:account.config.wizard,period:0
 #: field:report.hr.timesheet.invoice.journal,name:0
 msgid "Month"
@@ -3600,8 +3659,9 @@ msgid "If no account is specified, the reconciliation will be made using every a
 msgstr ""
 
 #. module: account
-#: model:ir.model,name:account.model_account_payment_term_line
-msgid "Payment Term Line"
+#: model:ir.actions.act_window,name:account.action_wizard_company_setup_form
+#: view:wizard.company.setup:0
+msgid "Overdue Payment Report Message"
 msgstr ""
 
 #. module: account
@@ -3993,7 +4053,6 @@ msgstr ""
 #: field:account.analytic.account,name:0
 #: rml:account.analytic.account.analytic.check:0
 #: rml:account.analytic.account.balance:0
-#: rml:account.analytic.account.inverted.balance:0
 #: rml:account.central.journal:0
 msgid "Account Name"
 msgstr ""
@@ -4379,6 +4438,7 @@ msgstr ""
 #: field:account.tax.code,company_id:0
 #: wizard_field:account.third_party_ledger.report,init,company_id:0
 #: wizard_field:account.vat.declaration,init,company_id:0
+#: field:wizard.company.setup,company_id:0
 #: field:wizard.multi.charts.accounts,company_id:0
 msgid "Company"
 msgstr ""
@@ -5074,8 +5134,6 @@ msgstr ""
 #: rml:account.account.balance:0
 #: rml:account.analytic.account.analytic.check:0
 #: rml:account.analytic.account.balance:0
-#: rml:account.analytic.account.inverted.balance:0
-#: rml:account.analytic.account.journal:0
 #: rml:account.general.ledger:0
 #: rml:account.journal.period.print:0
 #: rml:account.partner.balance:0

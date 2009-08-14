@@ -19,21 +19,21 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import project_wizard
-import campaign_tasks
-import campaign_pos
-import campaign_group_pos
-import offer_document
-import campaign_group
-import proposition_products
-import campaign_group_project
-import campaign_group_tasks
-import document_report
-import workitem_wizard
-import partner_address_segments
-import address_after_sale_action
-import so_after_sale_action
-import all_document_report
+import dm_project_wizard
+import dm_campaign_tasks
+import dm_campaign_pos
+import dm_campaign_group_pos
+import dm_offer_document
+import dm_campaign_group
+import dm_proposition_products
+import dm_campaign_group_project
+import dm_campaign_group_tasks
+import dm_document_report
+import dm_workitem_wizard
+import dm_partner_address_segments
+import dm_address_after_sale_action
+import dm_so_after_sale_action
+import dm_all_document_report
 #import proposition_copy
 #import campaign_copy
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

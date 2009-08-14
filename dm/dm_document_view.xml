@@ -83,6 +83,14 @@
                         </tree>
                     </field>
                 </page>
+                <page string="Email Configuration" attrs="{'invisible':[('media_id','!=','Email')]}">
+                    <field name="subject" colspan="4" attrs="{'required':[('media_id','=','Email')]}"/>
+                    <field name="editor" colspan="4" attrs="{'required':[('media_id','=','Email')]}"/>
+                    <group colspan="4" attrs="{'invisible':[('editor','!=','internal')]}">
+                        <separator string="Content" colspan="4" />
+                        <field name="content" colspan="4" nolabel="1"  widget="text_html"/>
+                    </group>
+                </page>
                 </notebook>
             </form>
         </field>
@@ -97,6 +105,7 @@
                 <field name="name"/>
                 <field name="code"/>
                 <field name="step_id" />
+                <field name="media_id" invisible="True"/>
                 <field name="copywriter_id"/>
                 <field name="state"/>
                 <field name="gender_id"/>
@@ -253,10 +262,11 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="All Plugins Values">
-                <field name="address_id" select="1"/>
-                <field name="plugin_id" select="2"/>
+<!--                <field name="address_id" select="1"/>-->
+                <field name="workitem_id" select="1"/>
+                <field name="plugin_id" select="1"/>
                 <field name="value" select="2"/>
-                <field name="date" select="2"/>
+<!--                <field name="date" select="2"/>-->
             </form>
         </field>
     </record>
@@ -267,10 +277,9 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="Plugins Values">
-                <field name="address_id" select="1"/>
-                <field name="plugin_id" select="2"/>
-                <field name="value" select="2"/>
-                <field name="date" select="2"/>
+                <field name="workitem_id"/>
+                <field name="plugin_id"/>
+                <field name="value"/>
             </tree>
         </field>
     </record>

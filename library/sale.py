@@ -27,9 +27,10 @@ from osv import fields, osv
 
 class sale_order_line(osv.osv):
     _inherit = 'sale.order.line'
+
     _columns = {
         'production_lot_id': fields.many2one('stock.production.lot', 'Production Lot',),
-        'customer_ref': fields.char('Customer reference', size=64),
+        'customer_ref': fields.related('order_id', 'client_order_ref', string='Customer reference', type='char'),
     }
 
     _defaults = {

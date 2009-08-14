@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
 "PO-Revision-Date: 2009-05-17 21:11+0000\n"
 "Last-Translator: Makis Nicolaou <mark.nicolaou@gmail.com>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -31,7 +31,6 @@ msgstr ""
 "ειδικούς χαρακτήρες!"
 
 #. module: account_analytic_plans
-#: rml:account.analytic.account.crossovered.analytic:0
 #: model:ir.actions.report.xml,name:account_analytic_plans.account_analytic_account_crossovered_analytic
 #: model:ir.actions.wizard,name:account_analytic_plans.account_analytic_account_inverted_balance_report
 msgid "Crossovered Analytic"
@@ -71,9 +70,15 @@ msgid "Analytic Distribution Lines"
 msgstr "Γραμμές Διανομής Αναλυτικής"
 
 #. module: account_analytic_plans
-#: field:account.analytic.plan.instance,code:0
-msgid "Distribution Code"
-msgstr "Κώδικας Διανομής"
+#: wizard_button:wizard.crossovered.analytic,init,print:0
+msgid "Print"
+msgstr "Εκτύπωση"
+
+#. module: account_analytic_plans
+#: rml:account.analytic.account.crossovered.analytic:0
+#, fuzzy
+msgid "To Date"
+msgstr "Ημερομηνία Λήξης"
 
 #. module: account_analytic_plans
 #: field:account.analytic.plan.instance.line,plan_id:0
@@ -96,9 +101,9 @@ msgid "Analytic Distribution Line"
 msgstr "Γραμμή Διανομής Αναλυτικής"
 
 #. module: account_analytic_plans
-#: rml:account.analytic.account.crossovered.analytic:0
-msgid "Currency:"
-msgstr "Νόμισμα:"
+#: field:account.analytic.plan.instance,code:0
+msgid "Distribution Code"
+msgstr "Κώδικας Διανομής"
 
 #. module: account_analytic_plans
 #: constraint:ir.actions.act_window:0
@@ -109,6 +114,12 @@ msgstr ""
 #: field:account.analytic.plan.line,name:0
 msgid "Plan Name"
 msgstr "Όνομα Πλάνου"
+
+#. module: account_analytic_plans
+#: rml:account.analytic.account.crossovered.analytic:0
+#, fuzzy
+msgid "Printing date"
+msgstr "Ημερομηνία εκτύπωσης:"
 
 #. module: account_analytic_plans
 #: rml:account.analytic.account.crossovered.analytic:0
@@ -147,13 +158,10 @@ msgid "Analytic Account Ref."
 msgstr "Σχ. Λογαριασμός Αναλυτικής"
 
 #. module: account_analytic_plans
-#: field:account.analytic.default,analytics_id:0
-#: view:account.analytic.plan.instance:0
-#: field:account.analytic.plan.instance,name:0
-#: field:account.invoice.line,analytics_id:0
-#: field:account.move.line,analytics_id:0
-msgid "Analytic Distribution"
-msgstr "Διανομή Αναλυτικής"
+#: rml:account.analytic.account.crossovered.analytic:0
+#, fuzzy
+msgid "Analytic Account :"
+msgstr "Λογαριασμος Αναλυτικής"
 
 #. module: account_analytic_plans
 #: view:account.analytic.plan.line:0
@@ -176,16 +184,16 @@ msgid "Default Entries"
 msgstr "Προκαθορισμένες Εγγραφές"
 
 #. module: account_analytic_plans
-#: rml:account.analytic.account.crossovered.analytic:0
-msgid "to"
-msgstr "έως"
-
-#. module: account_analytic_plans
 #: view:account.analytic.plan:0 field:account.analytic.plan,plan_ids:0
 #: field:account.journal,plan_id:0
 #: model:ir.model,name:account_analytic_plans.model_account_analytic_plan
 msgid "Analytic Plans"
 msgstr "Πλάνα Αναλυτικής"
+
+#. module: account_analytic_plans
+#: field:account.analytic.plan.line,min_required:0
+msgid "Minimum Allowed (%)"
+msgstr "Ελάχιστη Επιτρεπόμενη (%)"
 
 #. module: account_analytic_plans
 #: field:account.analytic.plan.instance,account1_ids:0
@@ -294,9 +302,10 @@ msgid "Analytic Plan Lines"
 msgstr "Γραμμές Πλάνου Αναλυτικής"
 
 #. module: account_analytic_plans
-#: field:account.analytic.plan.line,min_required:0
-msgid "Minimum Allowed (%)"
-msgstr "Ελάχιστη Επιτρεπόμενη (%)"
+#: rml:account.analytic.account.crossovered.analytic:0
+#, fuzzy
+msgid "Crossovered Analytic -"
+msgstr "Διασταυρωμένη Αναλυτική"
 
 #. module: account_analytic_plans
 #: field:account.analytic.plan.instance,plan_id:0
@@ -349,9 +358,12 @@ msgid "Root Account"
 msgstr "Κύριος Λογαριασμός"
 
 #. module: account_analytic_plans
-#: wizard_button:wizard.crossovered.analytic,init,print:0
-msgid "Print"
-msgstr "Εκτύπωση"
+#: wizard_view:create.model,info:0
+msgid ""
+"This distribution model has been saved. You will be able to reuse it later."
+msgstr ""
+"Αυτό το μοντέλο διανομής έχει αποθηκευτεί. Θα μπορείτε να το "
+"χρησιμοποιείσετε ξανα αργότερα."
 
 #. module: account_analytic_plans
 #: field:account.analytic.plan.line,sequence:0
@@ -359,32 +371,23 @@ msgid "Sequence"
 msgstr "Αλληλουχία"
 
 #. module: account_analytic_plans
-#: rml:account.analytic.account.crossovered.analytic:0
-msgid "Period from"
-msgstr "Περίοδος απο"
-
-#. module: account_analytic_plans
 #: field:account.analytic.plan.instance.line,analytic_account_id:0
 msgid "Analytic Account"
 msgstr "Λογαριασμος Αναλυτικής"
 
 #. module: account_analytic_plans
-#: rml:account.analytic.account.crossovered.analytic:0
-msgid "Printing date:"
-msgstr "Ημερομηνία εκτύπωσης:"
+#: field:account.analytic.default,analytics_id:0
+#: view:account.analytic.plan.instance:0
+#: field:account.analytic.plan.instance,name:0
+#: field:account.invoice.line,analytics_id:0
+#: field:account.move.line,analytics_id:0
+msgid "Analytic Distribution"
+msgstr "Διανομή Αναλυτικής"
 
 #. module: account_analytic_plans
 #: model:ir.ui.menu,name:account_analytic_plans.menu_account_analytic_plan_instance_action
 msgid "Analytic Distribution's models"
 msgstr "Μοντέλα Διανομών Αναλυτικής"
-
-#. module: account_analytic_plans
-#: wizard_view:create.model,info:0
-msgid ""
-"This distribution model has been saved. You will be able to reuse it later."
-msgstr ""
-"Αυτό το μοντέλο διανομής έχει αποθηκευτεί. Θα μπορείτε να το "
-"χρησιμοποιείσετε ξανα αργότερα."
 
 #. module: account_analytic_plans
 #: wizard_button:wizard.crossovered.analytic,init,end:0
@@ -400,6 +403,21 @@ msgstr "Ημερομηνία Από"
 #: rml:account.analytic.account.crossovered.analytic:0
 msgid "at"
 msgstr "σε"
+
+#. module: account_analytic_plans
+#: rml:account.analytic.account.crossovered.analytic:0
+#, fuzzy
+msgid "From Date"
+msgstr "Ημερομηνία Από"
+
+#~ msgid "Currency:"
+#~ msgstr "Νόμισμα:"
+
+#~ msgid "to"
+#~ msgstr "έως"
+
+#~ msgid "Period from"
+#~ msgstr "Περίοδος απο"
 
 #~ msgid "A model having this name and code already exists !"
 #~ msgstr "Ένα μοντέλο που έχει αυτό το όνομα και κωδικό υπάρχει ήδη!"

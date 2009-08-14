@@ -1,0 +1,720 @@
+<?xml version="1.0" ?>
+<terp>
+	<data>
+		<menuitem name="Progenus" id="menu_stock_root" icon="terp-stock"/>
+		<menuitem name="Progenus/Labo Stock" groups="admin" sequence="1"/>
+
+		<!-- Product Form view -->
+<!--		<record model="ir.ui.view" id="product_product_form_view_article">
+			<field name="name">product.normal.form</field>
+			<field name="model">product.product</field>
+			<field name="type">form</field>
+			<field name="priority" eval="6"/>
+			<field name="arch" type="xml">
+				<form string="Article">
+					<notebook>
+						<page string="Information">
+							<field name="name" select="1"/>
+							<field name="default_code" select="1"/>
+							<field name ="date_entry" select="1"/>
+							<field name="categ_id" select="1"/>
+							<newline/>
+							<field name="supplier_taxes_id" colspan="4"/>
+							<field name="taxes_id" colspan="4"/>
+						</page>
+						<page string="Procurement">
+							<field name="supply_method"/>
+							<field name="active" select="2"/>
+							<newline/>
+							<field name="sale_delay"/>
+							<field name="list_price"/>
+							<newline/>
+							<field name="standard_price"/>
+							<newline />
+							<field name="seller_ids" colspan="4" nolabel="1" widget="one2many_list"/>
+						</page>
+						<page string="Descriptions">
+							<separator string="Memo" />
+							<field name="description" colspan="4" nolabel="1" />
+							<separator string="Description In French"/>
+							<field name="description_sale" colspan="4" nolabel="1"/>
+							<separator string="Description In Neederlands"/>
+							<field name="description_purchase" colspan="4" nolabel="1"/>
+						</page>
+						<page string="Other Information">
+							<field name="family" />
+						</page>
+
+					</notebook>
+				</form>
+			</field>
+		</record>
+-->
+		<!-- Product Tree view -->
+
+<!--		<record model="ir.ui.view" id="product_product_tree_view_article">
+			<field name="name">product.normal.tree</field>
+			<field name="model">product.product</field>
+			<field name="type">form</field>
+			<field name="priority" eval="6"/>
+			<field name="arch" type="xml">
+				<tree string="Article">
+							<field name="name" select="1"/>
+							<field name="default_code" select="1"/>
+							<field name ="date_entry" select="1"/>
+							<field name="categ_id" select="1"/>
+							<field name="list_price"/>
+							<field name="family" />
+				</tree>
+			</field>
+		</record>-->
+<!--		<record model="ir.ui.view" id="product_product_tree_inherited_view">
+			<field name="name">product.normal.form</field>
+			<field name="model">product.product</field>
+			<field name="inherit_id" ref="product.product_product_tree_view"/>
+			<field name="type">tree</field>
+			<field name="priority" eval="7"/>
+			<field name="arch" type="xml">
+				<field name="standard_price" position="after">
+					<field name="date_entry" />
+					<field name="family" />
+				</field>
+			</field>
+		</record>
+-->
+
+<!--	<record model="ir.ui.view" id="view_labo_article_tree_view">
+			<field name="name">Article</field>
+			<field name="model">labo.article</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Article">
+						<field name="name" />
+						<field name="supplier" />
+						<field name="date_entry" />
+						<field name="qte" />
+						<field name="supplier" />
+						<field name="price_cat" />
+						<field name="ttc" />
+						<field name="localisation" />
+				</tree>
+			</field>
+	</record>
+	<record model="ir.ui.view" id="view_labo_article_form_view">
+			<field name="name">labo.article.form</field>
+			<field name="model">labo.article</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Article">
+				<notebook>
+					<page string="General">
+								<field name="name" />
+								<field name="supplier"   on_change="onchange_pricelist(supplier)"/>
+								<field name="date_entry" />
+								<field name="family" />
+								<field name="desc_fr" />
+								<field name="desc_nl" />
+								<field name="desc_memo" colspan="4"/>
+								<field name="memo" colspan="4" />
+								<newline/>
+								<field name="category_id" colspan="4"/>
+					</page>
+					<page string="Extra">
+								<field name="paref" />
+								<field name="qte" />
+								<field name="expenses" />
+								<field name="price_cat" />
+								<field name="ttc" />
+								<field name="discount"/>
+								<field name="pafou_1" />
+								<field name="pcref" />
+								<field name="pv_a" />
+								<field name="product_nl" />
+								<field name="localisation" />
+								<field name="unit" />
+								<field name="qtyflag" />
+								<field name="flag" />
+								<field name="tva" />
+								<field name="barcod"/>
+								<field name="facq" />
+						</page>
+					</notebook>
+
+				</form>
+			</field>
+	</record>
+	<record model="ir.ui.view" id="view_labo_article_tree_view">
+			<field name="name">Article</field>
+			<field name="model">labo.article</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Article">
+
+								<field name="name" />
+								<field name="supplier" />
+								<field name="date_entry" />
+								<field name="desc_fr" />
+								<field name="desc_nl" />
+								<field name="memo" />
+								<field name="desc_memo" />
+								<field name="family" />
+								<field name="qte" />
+								<field name="expenses" />
+								<field name="supplier" />
+								<field name="price_cat" />
+								<field name="ttc" />
+								<field name="discount"/>
+								<field name="pafou_1" />
+								<field name="category_id" colspan="4"/>
+								<field name="paref" />
+								<field name="pcref" />
+								<field name="pv_a" />
+								<field name="product_nl" />
+								<field name="facq" />
+								<field name="localisation" />
+								<field name="unit" />
+								<field name="flag" />
+								<field name="qtyflag" />
+								<field name="tva" />
+								<field name="barcod"/>
+
+				</tree>
+			</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_labo_article_view">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">labo.article</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="view_labo_article_tree_view"/>
+	</record>
+	<menuitem name="Progenus/Labo Stock/Article" id="menu_action_labo_article_view" action="action_labo_article_view" sequence= "2"/>
+
+
+	<record model="ir.ui.view" id="view_labo_article_category_tree_view">
+			<field name="name">Article</field>
+			<field name="model">labo.article.category</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Article">
+								<field name="name" />
+								<field name="active" />
+
+				</tree>
+			</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_labo_article_category_form_view">
+			<field name="name">labo.article.category.form</field>
+			<field name="model">labo.article.category</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Article">
+								<field name="name" />
+								<field name="active" />
+
+				</form>
+			</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_labo_article_category_view">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">labo.article.category</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="view_labo_article_category_tree_view"/>
+	</record>
+	<menuitem name="Progenus/Labo Stock/Configuration/Article category" id="menu_action_labo_article_category_view" action="action_labo_article_category_view" sequence="5"/>
+
+-->
+
+	<record model="ir.ui.view" id="view_labo_mix_category_tree_view">
+			<field name="name">Mix</field>
+			<field name="model">mix.category</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Mix">
+								<field name="name" />
+								<field name="active" />
+
+				</tree>
+			</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_labo_article_category_form_view">
+			<field name="name">Mix</field>
+			<field name="model">mix.category</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Mix">
+								<field name="name" />
+								<field name="active" />
+				</form>
+			</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_labo_mix_category_view">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">mix.category</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="view_labo_mix_category_tree_view"/>
+	</record>
+	<menuitem name="Progenus/Labo Stock/Configuration/Mix category" id="menu_action_labo_mix_category_view" action="action_labo_mix_category_view" sequence="6"/>
+=============================================================
+						Category Amorces
+==============================================================
+
+
+	<record model="ir.ui.view" id="view_category_amorces_form_view">
+			<field name="name">Category</field>
+			<field name="model">amorces.category</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Amorces">
+					<field name="name" />
+					<field name="pref" />
+				</form>
+			</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_category_amorces_tree_view">
+			<field name="name">Category</field>
+			<field name="model">amorces.category</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Amorces">
+					<field name="name" />
+					<field name="pref" />
+				</tree>
+			</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_category_amorces_view">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">amorces.category</field>
+		<field name="view_mode">form,tree</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="view_category_amorces_tree_view"/>
+	</record>
+<!--	<menuitem name="Progenus/Labo Stock/Configuration/Amorce's Category " id="menu_action_category_amorces_view" action="action_category_amorces_view"/>-->
+==================================
+	Reactives category
+==================================
+	<record model="ir.ui.view" id="view_category_reactives_form_view">
+			<field name="name">Category</field>
+			<field name="model">labo.type.reactives</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Reactives">
+					<field name="code" />
+					<newline/>
+					<field name="desc" />
+				</form>
+			</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_category_reactives_tree_view">
+			<field name="name">Category</field>
+			<field name="model">labo.type.reactives</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Reactives">
+					<field name="code" />
+					<field name="desc" />
+				</tree>
+			</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_category_reactives_view">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">labo.type.reactives</field>
+		<field name="view_mode">form,tree</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="view_category_reactives_tree_view"/>
+	</record>
+	<menuitem name="Progenus/Labo Stock/Configuration/Reactive's Category " id="menu_action_category_reactives_view" action="action_category_reactives_view"/>
+
+
+========================================
+		Amorces
+=========================================
+
+	<record model="ir.ui.view" id="view_labo_amorces_tree_view">
+			<field name="name">Amorces</field>
+			<field name="model">labo.amorces</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Amorces">
+								<field name="name" />
+							<!--	<field name="type_id" />-->
+								<field name="num_lot" />
+								<field name="firm_id" />
+								<field name="rec_date" />
+								<field name="exp_date" />
+								<field name="open_date" />
+								<field name="close_date" />
+								<field name="accredit"/>
+
+								<field name="concentration" />
+								<!--field name="concentration" /-->
+								<field name="sequence_id" colspan="4" />
+				</tree>
+			</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="view_labo_amorces_form_view">
+			<field name="name">Reactives</field>
+			<field name="model">labo.amorces</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Amorces">
+								<field name="name" />
+							<!--	<field name="type_id" />-->
+								<field name="num_lot" />
+								<field name="firm_id" />
+								<field name="rec_date" />
+								<field name="exp_date" />
+								<field name="open_date" />
+								<field name="accredit"/>
+								<field name="concentration" />
+								<!--field name="concentration" /-->
+								<field name="sequence_id" colspan="4" />
+				</form>
+			</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_labo_amorces_view">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">labo.amorces</field>
+		<field name="view_mode">form,tree</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="view_labo_amorces_tree_view"/>
+	</record>
+	<menuitem name="Progenus/Labo Stock/Amorces" id="menu_action_labo_amorces_view" action="action_labo_amorces_view" sequence="1"/>
+
+
+
+
+	<record model="ir.ui.view" id="view_stock_reactives_tree_view">
+			<field name="name">Reactives</field>
+			<field name="model">stock.reactives</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Reactives">
+								<field name="name" />
+								<field name="product_id"/>
+								<field name="internal_num" />
+								<field name="categ_id"/>
+							<!--	<field name="num_lot" />-->
+								<field name="rec_date" />
+								<field name="open_date" />
+								<field name="exp_date" />
+								<field name="exp_date2" />
+								<field name="close_date" />
+								<field name="family" />
+								<field name="send_date" />
+								<field name="testing_date" />
+				</tree>
+			</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_stock_reactives_form_view">
+			<field name="name">Reactives</field>
+			<field name="model">stock.reactives</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+			<form string="Reactives">
+			<notebook>
+				<page string="General">
+					<field name="product_id" colspan="4"/>
+					<field name="categ_id"/>
+					<field name="name" />
+					<field name="internal_num" />
+					<field name="rec_date" />
+					<field name="open_date" />
+					<field name="exp_date" />
+					<field name="exp_date2" />
+					<field name="close_date" />
+					<field name="send_date" />
+					<field name="testing_date" />
+					<field name="family" />
+				</page>
+					<page string="History">
+					<field name="history_id" colspan="4"/>
+					</page>
+			</notebook>
+				</form>
+			</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_stock_reactives_view">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">stock.reactives</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form,tree</field>
+		<field name="context">{'islaboarticleprod':True}</field>
+		<field name="view_id" ref="view_stock_reactives_tree_view"/>
+	</record>
+	<menuitem name="Progenus/Labo Stock/Stock Reactives" id="menu_action_stock_reactives_view" action="action_stock_reactives_view" sequence="3"/>
+
+
+	<record model="ir.ui.view" id="view_labo_history_tree_view">
+			<field name="name">History</field>
+			<field name="model">reactive.history</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Reactives">
+								<field name="name" />
+				</tree>
+			</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_labo_history_form_view">
+			<field name="name">History</field>
+			<field name="model">reactive.history</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Reactives">
+								<field name="name" />
+								<field name="reactive_id" />
+				</form>
+			</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="view_labo_mix_form_view">
+			<field name="name">Mix</field>
+			<field name="model">labo.mix</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Preparation of mixes">
+								<field name="amorce_id" on_change="onchange_volume(amorce_id)" />
+								<field name="amorce_num" />
+								<field name="vol_mix" />
+								<field name="final_vol" />
+								<field name="vol_take" />
+				</form>
+			</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_labo_mix_tree_view">
+			<field name="name">Mix</field>
+			<field name="model">labo.mix</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Preparation of mixes">
+								<field name="amorce_num" />
+								<field name="vol_mix" />
+								<field name="final_vol" />
+
+				</tree>
+			</field>
+	</record>
+
+
+	<record model="ir.actions.act_window" id="actionlabom_mix_view">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">labo.mix</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form,tree</field>
+		<field name="view_id" ref="view_labo_mix_tree_view"/>
+	</record>
+<!--	<menuitem name="Progenus/Labo Stock/labo Mix" id="menu_action_labo_view" action="actionlabom_mix_view" />-->
+
+
+	<record model="ir.ui.view" id="view_form_mix_form_view">
+			<field name="name">Form mix</field>
+			<field name="model">form.mix</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Mixes">
+								<field name="compos_name" />
+								<field name="categ_id" />
+								<field name="name" />
+								<field name="date_fich" />
+								<field name="user_id" />
+								<field name="comp_nbr" />
+								<field name="react_nbr" />
+								<field name="vol" />
+								<field name="mix_id" colspan="4" nolabel="1" />
+								<field name="water_rate" colspan="4" />
+				</form>
+			</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_form_mix_tree_view">
+			<field name="name">Form mix</field>
+			<field name="model">form.mix</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Mixes">
+								<field name="compos_name"/>
+								<field name="categ_id" />
+								<field name="name" />
+								<field name="comp_nbr" />
+								<field name="user_id" />
+								<field name="vol" />
+								<field name="react_nbr" />
+								<field name="date_fich" />
+								<field name="water_rate" colspan="4" />
+				</tree>
+			</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_form_mix_view">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">form.mix</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form,tree</field>
+		<field name="view_id" ref="view_form_mix_tree_view"/>
+	</record>
+	<menuitem name="Progenus/Labo Stock/Primer Mix" id="menu_action_form_view" action="action_form_mix_view" sequence="4"/>
+
+<!--	<record model="ir.ui.view" id="product_pricelist_item_form_view_inherit">
+		<field name="name">labo.article.price.form</field>
+		<field name="model">product.pricelist.item</field>
+		<field name="type">form</field>
+		<field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
+		<field name="arch" type="xml">
+			<field name="product_id" position="replace">
+				<field name="article_id"/>
+			</field>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="product_pricelist_item_form_view_inherit1">
+		<field name="name">labo.article.price.form</field>
+		<field name="model">product.pricelist.item</field>
+		<field name="type">form</field>
+		<field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
+		<field name="arch" type="xml">
+			<field name="product_tmpl_id" position="replace">
+			</field>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="product_pricelist_item_form_view_inherit1">
+		<field name="name">labo.article.price.form</field>
+		<field name="model">product.pricelist.item</field>
+		<field name="type">form</field>
+		<field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
+		<field name="arch" type="xml">
+			<field name="categ_id" position="replace">
+			</field>
+		</field>
+	</record>-->
+
+		<record model="ir.ui.view" id="labo_stock_article_view_tree">
+			<field name="name">labo_stock_article_view_tree</field>
+			<field name="model">product.product</field>
+			<field name="type">tree</field>
+			<field name="priority" eval="7"/>
+			<field name="arch" type="xml">
+				<tree string="Article">
+							<field name="name" />
+							<field name="default_code" />
+							<field name ="date_entry" />
+							<field name="categ_id"/>
+							<field name="list_price"/>
+							<field name="standard_price"/>
+							<field name="family"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="labo_stock_article_view_form">
+			<field name="name">labo_stock_article_view_form</field>
+			<field name="model">product.product</field>
+			<field name="type">form</field>
+			<field name="priority" eval="7"/>
+			<field name="arch" type="xml">
+				<form string="Article">
+					<notebook>
+						<page string="Information">
+							<field name="name" select="1"/>
+							<field name="product_nl" select="1"/>
+							<field name="default_code" select="1"/>
+							<field name ="date_entry" select="1"/>
+							<field name="categ_id" select="1"/>
+							<field name="accredit" select="1"/>
+							<field name="store_loc" select="1"/>
+							<field name="part_n" select="1"/>
+							<field name="family" select="1"/>
+							<newline/>
+							<field name="supplier_taxes_id" colspan="4"/>
+							<field name="taxes_id" colspan="4"/>
+						</page>
+						<page string="Procurement">
+							<field name="supply_method"/>
+							<field name="active" select="2"/>
+							<newline/>
+							<!--field name="sale_delay"/-->
+							<field name="list_price"/>
+							<newline/>
+							<field name="standard_price"/>
+							<field name="uom_id"/>
+							<field name="uos_coeff"/>
+							<field name="uos_id"/>
+							<newline />
+							<field name="icar"/>
+							<field name="belac"/>
+							<newline />
+							<field name="seller_ids" colspan="4" nolabel="1" widget="one2many_list"/>
+						</page>
+						<page string="Descriptions">
+							<separator string="Memo" />
+							<field name="description" colspan="4" nolabel="1" />
+							<separator string="Description In French"/>
+							<field name="description_sale" colspan="4" nolabel="1"/>
+							<separator string="Description In Neederlands"/>
+							<field name="description_purchase" colspan="4" nolabel="1"/>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_labo_article_view">
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">product.product</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="labo_stock_article_view_tree"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_product_article_tree_view2">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">tree</field>
+					<field name="view_id" ref="labo_stock_article_view_tree"/>
+					<field name="act_window_id" ref="action_labo_article_view"/>
+		</record>
+		<record model="ir.actions.act_window.view" id="act_product_article_form_view">
+					<field name="sequence" eval="1"/>
+					<field name="view_mode">form</field>
+					<field name="view_id" ref="labo_stock_article_view_form"/>
+					<field name="act_window_id" ref="action_labo_article_view"/>
+		</record>
+
+		<menuitem name="Progenus/Labo Stock/Article" id="menu_action_labo_article_view" action="action_labo_article_view" sequence= "2"/>
+		
+		<record model="ir.ui.view" id="product_category_form_view_labo">
+			<field name="name">product.category.form</field>
+			<field name="model">product.category</field>
+			<field name="inherit_id" ref="product.product_category_form_view"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="name" position="after">
+					<field name="code_p" select="1"/>
+				</field>
+			</field>
+		</record>
+<!--		<record model="ir.ui.view" id="product_category_tree_view_labo">
+			<field name="name">product.category.tree</field>
+			<field name="model">product.category</field>
+			<field name="type">tree</field>
+			<field name="inherit_id" ref="product.product_category_tree_view"/>
+			<field name="arch" type="xml">
+				<field name="name" position="after">
+					<field name="code_p"/>
+				</field>
+			</field>
+		</record>
+-->
+	</data>
+</terp>

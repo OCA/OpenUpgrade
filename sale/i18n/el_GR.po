@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
 "PO-Revision-Date: 2009-05-10 22:24+0000\n"
 "Last-Translator: Makis Nicolaou <mark.nicolaou@gmail.com>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -114,13 +114,9 @@ msgid "Delivery, from the warehouse to the customer."
 msgstr "Παράδοση, απο την αποθήκη στον πελάτη."
 
 #. module: sale
-#: model:ir.actions.todo,note:sale.config_wizard_step_sale_picking_policy
-msgid ""
-"This Configuration step use to set default picking policy when make sale "
-"order"
-msgstr ""
-"Αυτό το βήμα παραμετροποίησης χρησιμοποιείται για να ρυθμιστεί η "
-"προκαθορισμένη πολιτική φορτώσεων όταν δημιουργείτε μία εντολή πώλησης"
+#: model:ir.model,name:sale.model_sale_config_picking_policy
+msgid "sale.config.picking_policy"
+msgstr "sale.config.picking_policy"
 
 #. module: sale
 #: model:process.transition.action,name:sale.process_transition_action_validate0
@@ -187,6 +183,12 @@ msgstr "Καθαρό Σύνολο:"
 #: field:sale.order,order_policy:0
 msgid "Shipping Policy"
 msgstr "Πολτική Μεταφορών"
+
+#. module: sale
+#: selection:sale.order,state:0 selection:sale.order.line,state:0
+#, fuzzy
+msgid "Cancelled"
+msgstr "Ακυρωμένο"
 
 #. module: sale
 #: selection:sale.order,state:0
@@ -484,11 +486,6 @@ msgid "Customer Ref"
 msgstr "Παρ. Πελάτη"
 
 #. module: sale
-#: model:ir.model,name:sale.model_sale_config_picking_policy
-msgid "sale.config.picking_policy"
-msgstr "sale.config.picking_policy"
-
-#. module: sale
 #: view:sale.order:0
 msgid "Sales orders"
 msgstr "Εντολές πώλησης"
@@ -580,9 +577,10 @@ msgid "Packaging"
 msgstr "Συσκευασία"
 
 #. module: sale
-#: selection:sale.order.line,state:0
-msgid "Canceled"
-msgstr "Ακυρωμένο"
+#: model:ir.module.module,shortdesc:sale.module_meta_information
+#: model:ir.ui.menu,name:sale.menu_sale_root
+msgid "Sales Management"
+msgstr "Διαχείριση Πωλήσεων"
 
 #. module: sale
 #: field:sale.order.line,order_id:0
@@ -635,31 +633,13 @@ msgid "Uninvoiced Lines"
 msgstr "Μή Τιμολογημένες Γραμμές"
 
 #. module: sale
-#: help:sale.order,order_policy:0
+#: model:ir.actions.todo,note:sale.config_wizard_step_sale_picking_policy
 msgid ""
-"The Shipping Policy is used to synchronise invoice and delivery operations.\n"
-"  - The 'Pay before delivery' choice will first generate the invoice and "
-"then generate the packing order after the payment of this invoice.\n"
-"  - The 'Shipping & Manual Invoice' will create the packing order directly "
-"and wait for the user to manually click on the 'Invoice' button to generate "
-"the draft invoice.\n"
-"  - The 'Invoice on Order Ater Delivery' choice will generate the draft "
-"invoice based on sale order after all packing lists have been finished.\n"
-"  - The 'Invoice from the packing' choice is used to create an invoice "
-"during the packing process."
+"This Configuration step use to set default picking policy when make sale "
+"order"
 msgstr ""
-"Η Πολιτική Αποστολής χρησιμοποιείται για το συγχρονισμό τιμολογήσεων και "
-"παραδόσεων.\n"
-" - 'Πληρωμή πριν την παράδοση' σημαίνει δημιουργία του τιμολογίου, πληρωμή "
-"και ύστερα δημιουργία της συσκευασίας.\n"
-" - 'Αποστολή και Μη Αυτόματη Τιμολόγηση' σημαίνει άμεση δημιουργία της "
-"συσκευασίας αλλά το πρόχειρο τιμολόγιο θα πρέπει να δημιουργηθεί από το "
-"χρήστη.\n"
-" - 'Τιμολόγηση μετά την Παράδοση με βάση την Παραγγελία' σημαίνει δημιουργία "
-"του πρόχειρου τιμολογίου με βάση την παραγγελία αφού όλες οι Καταστάσεις "
-"συσκευασίας έχουν ολοκληρωθεί.\n"
-" - 'Τιμολόγηση από τη Συσκευασία' σημαίνει δημιουργία τιμολογίου κατά τη "
-"συσκευασία."
+"Αυτό το βήμα παραμετροποίησης χρησιμοποιείται για να ρυθμιστεί η "
+"προκαθορισμένη πολιτική φορτώσεων όταν δημιουργείτε μία εντολή πώλησης"
 
 #. module: sale
 #: model:process.process,name:sale.process_process_salesprocess0
@@ -838,6 +818,34 @@ msgid "History"
 msgstr "Ιστορικό"
 
 #. module: sale
+#: help:sale.order,order_policy:0
+#, fuzzy
+msgid ""
+"The Shipping Policy is used to synchronise invoice and delivery operations.\n"
+"  - The 'Pay before delivery' choice will first generate the invoice and "
+"then generate the packing order after the payment of this invoice.\n"
+"  - The 'Shipping & Manual Invoice' will create the packing order directly "
+"and wait for the user to manually click on the 'Invoice' button to generate "
+"the draft invoice.\n"
+"  - The 'Invoice on Order After Delivery' choice will generate the draft "
+"invoice based on sale order after all packing lists have been finished.\n"
+"  - The 'Invoice from the packing' choice is used to create an invoice "
+"during the packing process."
+msgstr ""
+"Η Πολιτική Αποστολής χρησιμοποιείται για το συγχρονισμό τιμολογήσεων και "
+"παραδόσεων.\n"
+" - 'Πληρωμή πριν την παράδοση' σημαίνει δημιουργία του τιμολογίου, πληρωμή "
+"και ύστερα δημιουργία της συσκευασίας.\n"
+" - 'Αποστολή και Μη Αυτόματη Τιμολόγηση' σημαίνει άμεση δημιουργία της "
+"συσκευασίας αλλά το πρόχειρο τιμολόγιο θα πρέπει να δημιουργηθεί από το "
+"χρήστη.\n"
+" - 'Τιμολόγηση μετά την Παράδοση με βάση την Παραγγελία' σημαίνει δημιουργία "
+"του πρόχειρου τιμολογίου με βάση την παραγγελία αφού όλες οι Καταστάσεις "
+"συσκευασίας έχουν ολοκληρωθεί.\n"
+" - 'Τιμολόγηση από τη Συσκευασία' σημαίνει δημιουργία τιμολογίου κατά τη "
+"συσκευασία."
+
+#. module: sale
 #: rml:sale.order:0
 msgid "Your Reference"
 msgstr "Οι Παραπομπές σας"
@@ -904,8 +912,7 @@ msgstr "Τιμολόγιο"
 #: model:process.transition.action,name:sale.process_transition_action_cancel1
 #: model:process.transition.action,name:sale.process_transition_action_cancel2
 #: wizard_button:sale.advance_payment_inv,init,end:0
-#: view:sale.config.picking_policy:0 selection:sale.order,state:0
-#: view:sale.order.line:0
+#: view:sale.config.picking_policy:0 view:sale.order.line:0
 #: wizard_button:sale.order.line.make_invoice,init,end:0
 #: wizard_button:sale.order.make_invoice,init,end:0
 msgid "Cancel"
@@ -1047,12 +1054,6 @@ msgstr "Επαφή Τιμολογίου"
 #: rml:sale.order:0 field:sale.order.line,name:0
 msgid "Description"
 msgstr "Περιγραφή"
-
-#. module: sale
-#: model:ir.module.module,shortdesc:sale.module_meta_information
-#: model:ir.ui.menu,name:sale.menu_sale_root
-msgid "Sales Management"
-msgstr "Διαχείριση Πωλήσεων"
 
 #. module: sale
 #: rml:sale.order:0
