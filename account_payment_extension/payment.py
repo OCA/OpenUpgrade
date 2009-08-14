@@ -89,7 +89,7 @@ class payment_order(osv.osv):
 
     def _get_type(self, cr, uid, context={}):
         type = context.get('type', 'payable')
-        print "type",type
+        #print "type",type
         return type
 
     def _get_reference(self, cr, uid, context={}):
