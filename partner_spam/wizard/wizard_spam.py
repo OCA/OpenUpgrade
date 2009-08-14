@@ -130,6 +130,8 @@ def conv_ascii(text):
     import string
     old_chars = ['á','é','í','ó','ú','à','è','ì','ò','ù','ä','ë','ï','ö','ü','â','ê','î','ô','û','Á','É','Í','Ú','Ó','À','È','Ì','Ò','Ù','Ä','Ë','Ï','Ö','Ü','Â','Ê','Î','Ô','Û','ñ','Ñ','ç','Ç','ª','º',',',';',':']
     new_chars = ['a','e','i','o','u','a','e','i','o','u','a','e','i','o','u','a','e','i','o','u','A','E','I','O','U','A','E','I','O','U','A','E','I','O','U','A','E','I','O','U','n','N','c','C','a','o','','','']
+    if type(text) is str:
+        text = unicode(text,'UTF-8')
     for old, new in zip(old_chars, new_chars):
         text = text.replace(unicode(old,'UTF-8'), new)
 
@@ -176,7 +178,7 @@ def _mass_mail_send(cr, uid, data, context, adr):
     f_attach = [f for f in f_attach if f] # Removing False elements
 
     email_server = pooler.get_pool(cr.dbname).get('email.smtpclient')
-    email_server.send_email(cr, uid, data['form']['smtp_server'], to, data['form']['subject'], mail, f_attach)
+    email_server.send_email(cr, uid, data['form']['smtp_server'], to, conv_ascii(data['form']['subject']), mail, f_attach) # Bug in smtpclient module can not send non-english chars in email subject
 
     # Add a partner event
     c_id = pooler.get_pool(cr.dbname).get('res.partner.canal').search(cr ,uid, [('name','ilike','EMAIL'),('active','=',True)])
