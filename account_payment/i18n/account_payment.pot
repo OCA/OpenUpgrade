@@ -1,24 +1,19 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-# 	* account_payment
+#	* account_payment
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Project-Id-Version: OpenERP Server 5.0.2\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
-"PO-Revision-Date: 2009-05-30 15:14:08+0000\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
+"PO-Revision-Date: 2009-08-14 08:23:23+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: account_payment
-#: model:ir.module.module,shortdesc:account_payment.module_meta_information
-msgid "Payment Management"
-msgstr ""
 
 #. module: account_payment
 #: field:payment.order,date_planned:0
@@ -46,22 +41,21 @@ msgid "Invalid model name in the action definition."
 msgstr ""
 
 #. module: account_payment
-#: view:payment.line:0 field:payment.line,info_owner:0 view:payment.order:0
+#: view:payment.line:0
+#: field:payment.line,info_owner:0
+#: view:payment.order:0
 msgid "Owner Account"
 msgstr ""
 
 #. module: account_payment
 #: help:account.invoice,amount_to_pay:0
-msgid ""
-"The amount which should be paid at the current date\n"
+msgid "The amount which should be paid at the current date\n"
 "minus the amount which is already in payment order"
 msgstr ""
 
 #. module: account_payment
 #: help:payment.line,date:0
-msgid ""
-"If no payment date is specified, the bank will treat this payment line "
-"directly"
+msgid "If no payment date is specified, the bank will treat this payment line directly"
 msgstr ""
 
 #. module: account_payment
@@ -95,7 +89,8 @@ msgid "_Add to payment order"
 msgstr ""
 
 #. module: account_payment
-#: rml:payment.order:0 view:payment.order:0
+#: rml:payment.order:0
+#: view:payment.order:0
 msgid "Amount"
 msgstr ""
 
@@ -121,7 +116,8 @@ msgid "New Payment Order"
 msgstr ""
 
 #. module: account_payment
-#: rml:payment.order:0 field:payment.order,reference:0
+#: rml:payment.order:0
+#: field:payment.order,reference:0
 msgid "Reference"
 msgstr ""
 
@@ -138,7 +134,8 @@ msgstr ""
 
 #. module: account_payment
 #: model:ir.actions.act_window,name:account_payment.action_payment_line_form
-#: model:ir.model,name:account_payment.model_payment_line view:payment.line:0
+#: model:ir.model,name:account_payment.model_payment_line
+#: view:payment.line:0
 #: view:payment.order:0
 msgid "Payment Line"
 msgstr ""
@@ -184,7 +181,8 @@ msgid "State"
 msgstr ""
 
 #. module: account_payment
-#: view:payment.line:0 view:payment.order:0
+#: view:payment.line:0
+#: view:payment.order:0
 msgid "Transaction Information"
 msgstr ""
 
@@ -207,16 +205,7 @@ msgstr ""
 
 #. module: account_payment
 #: help:payment.order,date_prefered:0
-msgid ""
-"Choose an option for the Payment Order:'Fixed' stands for a date specified "
-"by you.'Directly' stands for the direct execution.'Due date' stands for the "
-"scheduled date of execution."
-msgstr ""
-
-#. module: account_payment
-#: code:addons/account_payment/account_move_line.py:0
-#, python-format
-msgid "Error !"
+msgid "Choose an option for the Payment Order:'Fixed' stands for a date specified by you.'Directly' stands for the direct execution.'Due date' stands for the scheduled date of execution."
 msgstr ""
 
 #. module: account_payment
@@ -240,7 +229,8 @@ msgid "Destination Account"
 msgstr ""
 
 #. module: account_payment
-#: view:payment.line:0 view:payment.order:0
+#: view:payment.line:0
+#: view:payment.order:0
 msgid "Desitination Account"
 msgstr ""
 
@@ -262,11 +252,6 @@ msgid "Created"
 msgstr ""
 
 #. module: account_payment
-#: view:payment.order:0
-msgid "Select Invoices to Pay"
-msgstr ""
-
-#. module: account_payment
 #: view:payment.line:0
 msgid "Currency Amount Total"
 msgstr ""
@@ -279,6 +264,16 @@ msgstr ""
 #. module: account_payment
 #: field:payment.line,state:0
 msgid "Communication Type"
+msgstr ""
+
+#. module: account_payment
+#: model:ir.module.module,shortdesc:account_payment.module_meta_information
+msgid "Payment Management"
+msgstr ""
+
+#. module: account_payment
+#: field:payment.line,communication:0
+msgid "Communication"
 msgstr ""
 
 #. module: account_payment
@@ -302,7 +297,8 @@ msgid "Mode of Payment"
 msgstr ""
 
 #. module: account_payment
-#: view:payment.type:0 help:payment.type,name:0
+#: view:payment.type:0
+#: help:payment.type,name:0
 msgid "Payment Type"
 msgstr ""
 
@@ -317,19 +313,14 @@ msgid "Draft"
 msgstr ""
 
 #. module: account_payment
-#: field:payment.line,partner_id:0 rml:payment.order:0
+#: field:payment.line,partner_id:0
+#: rml:payment.order:0
 msgid "Partner"
 msgstr ""
 
 #. module: account_payment
 #: help:payment.line,communication2:0
 msgid "The successor message of Communication."
-msgstr ""
-
-#. module: account_payment
-#: code:addons/account_payment/account_move_line.py:0
-#, python-format
-msgid "No partner defined on entry line"
 msgstr ""
 
 #. module: account_payment
@@ -370,9 +361,7 @@ msgstr ""
 
 #. module: account_payment
 #: help:payment.line,move_line_id:0
-msgid ""
-"This Entry Line will be referred for the information of the ordering "
-"customer."
+msgid "This Entry Line will be referred for the information of the ordering customer."
 msgstr ""
 
 #. module: account_payment
@@ -431,7 +420,8 @@ msgid "Payment order"
 msgstr ""
 
 #. module: account_payment
-#: view:payment.line:0 view:payment.order:0
+#: view:payment.line:0
+#: view:payment.order:0
 msgid "General Information"
 msgstr ""
 
@@ -441,8 +431,8 @@ msgid "Done"
 msgstr ""
 
 #. module: account_payment
-#: field:payment.line,communication:0
-msgid "Communication"
+#: view:payment.order:0
+msgid "Select Invoices to Pay"
 msgstr ""
 
 #. module: account_payment
@@ -451,14 +441,14 @@ msgid "Cancel"
 msgstr ""
 
 #. module: account_payment
-#: view:payment.line:0 view:payment.order:0
+#: view:payment.line:0
+#: view:payment.order:0
 msgid "Information"
 msgstr ""
 
 #. module: account_payment
 #: constraint:ir.model:0
-msgid ""
-"The Object name must start with x_ and not contain any special character !"
+msgid "The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: account_payment
@@ -509,7 +499,8 @@ msgid "Cash Journal for the Payment Mode"
 msgstr ""
 
 #. module: account_payment
-#: field:payment.mode,bank_id:0 rml:payment.order:0
+#: field:payment.mode,bank_id:0
+#: rml:payment.order:0
 msgid "Bank account"
 msgstr ""
 
@@ -525,7 +516,8 @@ msgstr ""
 
 #. module: account_payment
 #: model:ir.ui.menu,name:account_payment.menu_main
-#: model:ir.ui.menu,name:account_payment.next_id_44 view:payment.line:0
+#: model:ir.ui.menu,name:account_payment.next_id_44
+#: view:payment.line:0
 #: view:payment.order:0
 msgid "Payment"
 msgstr ""
@@ -537,13 +529,12 @@ msgstr ""
 
 #. module: account_payment
 #: help:payment.line,communication:0
-msgid ""
-"Used as the message between ordering customer and current company. Depicts "
-"'What do you want to say to the recipient about this order ?'"
+msgid "Used as the message between ordering customer and current company. Depicts 'What do you want to say to the recipient about this order ?'"
 msgstr ""
 
 #. module: account_payment
-#: field:payment.mode,name:0 field:payment.type,name:0
+#: field:payment.mode,name:0
+#: field:payment.type,name:0
 msgid "Name"
 msgstr ""
 
@@ -553,14 +544,9 @@ msgid "_Search"
 msgstr ""
 
 #. module: account_payment
-#: view:payment.line:0 view:payment.order:0
+#: view:payment.line:0
+#: view:payment.order:0
 msgid "Entry Information"
-msgstr ""
-
-#. module: account_payment
-#: code:addons/account_payment/account_move_line.py:0
-#, python-format
-msgid "Partner '+ line.partner_id.name+ ' has no bank account defined"
 msgstr ""
 
 #. module: account_payment
@@ -615,3 +601,4 @@ msgstr ""
 #: field:payment.mode,journal:0
 msgid "Journal"
 msgstr ""
+

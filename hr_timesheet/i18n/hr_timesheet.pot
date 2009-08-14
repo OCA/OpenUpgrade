@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-# 	* hr_timesheet
+#	* hr_timesheet
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.1\n"
+"Project-Id-Version: OpenERP Server 5.0.2\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-17 14:57:52+0000\n"
-"PO-Revision-Date: 2009-06-17 14:57:52+0000\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
+"PO-Revision-Date: 2009-08-14 08:23:23+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -30,8 +30,7 @@ msgstr ""
 
 #. module: hr_timesheet
 #: constraint:ir.model:0
-msgid ""
-"The Object name must start with x_ and not contain any special character !"
+msgid "The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: hr_timesheet
@@ -172,7 +171,8 @@ msgid "Total time"
 msgstr ""
 
 #. module: hr_timesheet
-#: xsl:hr.analytical.timesheet:0 xsl:hr.analytical.timesheet_users:0
+#: xsl:hr.analytical.timesheet:0
+#: xsl:hr.analytical.timesheet_users:0
 #: model:ir.ui.menu,name:hr_timesheet.next_id_48
 msgid "Timesheet"
 msgstr ""
@@ -327,7 +327,8 @@ msgid "Stop Working"
 msgstr ""
 
 #. module: hr_timesheet
-#: xsl:hr.analytical.timesheet:0 xsl:hr.analytical.timesheet_users:0
+#: xsl:hr.analytical.timesheet:0
+#: xsl:hr.analytical.timesheet_users:0
 msgid "Total"
 msgstr ""
 
@@ -433,122 +434,3 @@ msgstr ""
 msgid "Timesheets"
 msgstr ""
 
-#. module: hr_timesheet
-#: constraint:product.template:0
-msgid ""
-"Error: The default UOM and the purchase UOM must be in the same category."
-msgstr ""
-
-#. module: hr_timesheet
-#: selection:hr.analytical.timesheet,init,month:0
-#: selection:hr.analytical.timesheet.my,init,month:0
-#: selection:hr.analytical.timesheet_users,init,month:0
-msgid "août"
-msgstr ""
-
-#. module: hr_timesheet
-#: model:product.uom,name:hr_timesheet.uom_hour
-msgid "Hour"
-msgstr ""
-
-#. module: hr_timesheet
-#: selection:hr.analytical.timesheet,init,month:0
-#: selection:hr.analytical.timesheet.my,init,month:0
-#: selection:hr.analytical.timesheet_users,init,month:0
-msgid "juillet"
-msgstr ""
-
-#. module: hr_timesheet
-#: selection:hr.analytical.timesheet,init,month:0
-#: selection:hr.analytical.timesheet.my,init,month:0
-#: selection:hr.analytical.timesheet_users,init,month:0
-msgid "janvier"
-msgstr ""
-
-#. module: hr_timesheet
-#: selection:hr.analytical.timesheet,init,month:0
-#: selection:hr.analytical.timesheet.my,init,month:0
-#: selection:hr.analytical.timesheet_users,init,month:0
-msgid "juin"
-msgstr ""
-
-#. module: hr_timesheet
-#: model:product.uom,name:hr_timesheet.uom_day
-msgid "Day"
-msgstr ""
-
-#. module: hr_timesheet
-#: selection:hr.analytical.timesheet,init,month:0
-#: selection:hr.analytical.timesheet.my,init,month:0
-#: selection:hr.analytical.timesheet_users,init,month:0
-msgid "avril"
-msgstr ""
-
-#. module: hr_timesheet
-#: constraint:product.template:0
-msgid "Error: UOS must be in a different category than the UOM"
-msgstr ""
-
-#. module: hr_timesheet
-#: selection:hr.analytical.timesheet,init,month:0
-#: selection:hr.analytical.timesheet.my,init,month:0
-#: selection:hr.analytical.timesheet_users,init,month:0
-msgid "novembre"
-msgstr ""
-
-#. module: hr_timesheet
-#: selection:hr.analytical.timesheet,init,month:0
-#: selection:hr.analytical.timesheet.my,init,month:0
-#: selection:hr.analytical.timesheet_users,init,month:0
-msgid "octobre"
-msgstr ""
-
-#. module: hr_timesheet
-#: selection:hr.analytical.timesheet,init,month:0
-#: selection:hr.analytical.timesheet.my,init,month:0
-#: selection:hr.analytical.timesheet_users,init,month:0
-msgid "décembre"
-msgstr ""
-
-#. module: hr_timesheet
-#: model:product.template,name:hr_timesheet.product_consultant_product_template
-msgid "Consultancy - Senior Developer"
-msgstr ""
-
-#. module: hr_timesheet
-#: selection:hr.analytical.timesheet,init,month:0
-#: selection:hr.analytical.timesheet.my,init,month:0
-#: selection:hr.analytical.timesheet_users,init,month:0
-msgid "mars"
-msgstr ""
-
-#. module: hr_timesheet
-#: selection:hr.analytical.timesheet,init,month:0
-#: selection:hr.analytical.timesheet.my,init,month:0
-#: selection:hr.analytical.timesheet_users,init,month:0
-msgid "mai"
-msgstr ""
-
-#. module: hr_timesheet
-#: selection:hr.analytical.timesheet,init,month:0
-#: selection:hr.analytical.timesheet.my,init,month:0
-#: selection:hr.analytical.timesheet_users,init,month:0
-msgid "février"
-msgstr ""
-
-#. module: hr_timesheet
-#: constraint:product.product:0
-msgid "Error: Invalid ean code"
-msgstr ""
-
-#. module: hr_timesheet
-#: model:product.uom.categ,name:hr_timesheet.uom_categ_wtime
-msgid "Working Time"
-msgstr ""
-
-#. module: hr_timesheet
-#: selection:hr.analytical.timesheet,init,month:0
-#: selection:hr.analytical.timesheet.my,init,month:0
-#: selection:hr.analytical.timesheet_users,init,month:0
-msgid "septembre"
-msgstr ""

@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-# 	* hr_attendance
+#	* hr_attendance
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.1\n"
+"Project-Id-Version: OpenERP Server 5.0.2\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-17 14:57:53+0000\n"
-"PO-Revision-Date: 2009-06-17 14:57:53+0000\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
+"PO-Revision-Date: 2009-08-14 08:23:23+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,12 +23,12 @@ msgstr ""
 
 #. module: hr_attendance
 #: constraint:ir.model:0
-msgid ""
-"The Object name must start with x_ and not contain any special character !"
+msgid "The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: hr_attendance
-#: wizard_view:hr.si_so,init:0 wizard_view:hr.si_so,si_ask_so:0
+#: wizard_view:hr.si_so,init:0
+#: wizard_view:hr.si_so,si_ask_so:0
 #: wizard_view:hr.si_so,so_ask_si:0
 #: model:ir.actions.wizard,name:hr_attendance.si_so
 #: model:ir.ui.menu,name:hr_attendance.menu_si_so
@@ -57,7 +57,8 @@ msgstr ""
 
 #. module: hr_attendance
 #: selection:hr.action.reason,action_type:0
-#: wizard_button:hr.si_so,init,so_test:0 wizard_button:hr.si_so,so_ask_si,so:0
+#: wizard_button:hr.si_so,init,so_test:0
+#: wizard_button:hr.si_so,so_ask_si,so:0
 msgid "Sign out"
 msgstr ""
 
@@ -67,7 +68,8 @@ msgid "Delay"
 msgstr ""
 
 #. module: hr_attendance
-#: wizard_field:hr.si_so,init,name:0 wizard_field:hr.si_so,si_ask_so,name:0
+#: wizard_field:hr.si_so,init,name:0
+#: wizard_field:hr.si_so,si_ask_so,name:0
 #: wizard_field:hr.si_so,so_ask_si,name:0
 msgid "Employee's name"
 msgstr ""
@@ -110,7 +112,8 @@ msgid "Date Recorded"
 msgstr ""
 
 #. module: hr_attendance
-#: selection:hr.attendance,action:0 view:hr.employee:0
+#: selection:hr.attendance,action:0
+#: view:hr.employee:0
 msgid "Sign In"
 msgstr ""
 
@@ -156,7 +159,8 @@ msgid "Print Timesheet by month"
 msgstr ""
 
 #. module: hr_attendance
-#: selection:hr.attendance,action:0 view:hr.employee:0
+#: selection:hr.attendance,action:0
+#: view:hr.employee:0
 msgid "Sign Out"
 msgstr ""
 
@@ -187,9 +191,7 @@ msgstr ""
 
 #. module: hr_attendance
 #: wizard_view:hr.si_so,si_ask_so:0
-msgid ""
-"You did not signed out the last time. Please enter the date and time you "
-"signed out."
+msgid "You did not signed out the last time. Please enter the date and time you signed out."
 msgstr ""
 
 #. module: hr_attendance
@@ -245,7 +247,8 @@ msgstr ""
 
 #. module: hr_attendance
 #: selection:hr.action.reason,action_type:0
-#: wizard_button:hr.si_so,init,si_test:0 wizard_button:hr.si_so,si_ask_so,si:0
+#: wizard_button:hr.si_so,init,si_test:0
+#: wizard_button:hr.si_so,si_ask_so,si:0
 msgid "Sign in"
 msgstr ""
 
@@ -282,7 +285,8 @@ msgid "Attendance Errors"
 msgstr ""
 
 #. module: hr_attendance
-#: field:hr.attendance,action:0 selection:hr.attendance,action:0
+#: field:hr.attendance,action:0
+#: selection:hr.attendance,action:0
 msgid "Action"
 msgstr ""
 
@@ -325,9 +329,7 @@ msgstr ""
 
 #. module: hr_attendance
 #: wizard_view:hr.si_so,so_ask_si:0
-msgid ""
-"You did not signed in the last time. Please enter the date and time you "
-"signed in."
+msgid "You did not signed in the last time. Please enter the date and time you signed in."
 msgstr ""
 
 #. module: hr_attendance
@@ -374,7 +376,8 @@ msgstr ""
 #: wizard_button:hr.attendance.print_month,init,end:0
 #: wizard_button:hr.attendance.print_week,init,end:0
 #: wizard_button:hr.attendance.report,init,end:0
-#: wizard_button:hr.si_so,init,end:0 wizard_button:hr.si_so,si_ask_so,end:0
+#: wizard_button:hr.si_so,init,end:0
+#: wizard_button:hr.si_so,si_ask_so,end:0
 #: wizard_button:hr.si_so,so_ask_si,end:0
 msgid "Cancel"
 msgstr ""
@@ -384,7 +387,3 @@ msgstr ""
 msgid "Operation"
 msgstr ""
 
-#. module: hr_attendance
-#: constraint:hr.attendance:0
-msgid "Error: Sign in (resp. Sign out) must follow Sign out (resp. Sign in)"
-msgstr ""

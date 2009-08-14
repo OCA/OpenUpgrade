@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.1\n"
+"Project-Id-Version: OpenERP Server 5.0.2\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-17 14:57:53+0000\n"
-"PO-Revision-Date: 2009-06-17 14:57:53+0000\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
+"PO-Revision-Date: 2009-08-14 08:23:23+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -126,14 +126,6 @@ msgid "Invalid XML for View Architecture!"
 msgstr ""
 
 #. module: project_event
-#: model:ir.module.module,description:project_event.module_name_translation
-msgid "This module allow track events on project and perform particular action in event\n"
-"  - event on create/modify task \n"
-"  - event on document upload  \n"
-""
-msgstr ""
-
-#. module: project_event
 #: field:project.event.configuration,name:0
 #: field:project.event.type,name:0
 msgid "Name"
@@ -179,6 +171,14 @@ msgstr ""
 #. module: project_event
 #: field:project.event.type,code:0
 msgid "Code"
+msgstr ""
+
+#. module: project_event
+#: model:ir.module.module,description:project_event.module_name_translation
+msgid "This module allow track events on project and perform particular action in event\n"
+"  - event on create/modify task\n"
+"  - event on document upload\n"
+""
 msgstr ""
 
 #. module: project_event

@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-# 	* account_report
+#	* account_report
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.1\n"
+"Project-Id-Version: OpenERP Server 5.0.2\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-17 14:57:52+0000\n"
-"PO-Revision-Date: 2009-06-17 14:57:52+0000\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
+"PO-Revision-Date: 2009-08-14 08:23:23+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,8 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_report
-#: field:account.report.history,name:0 selection:account.report.report,type:0
+#: field:account.report.history,name:0
+#: selection:account.report.report,type:0
 #: model:ir.model,name:account_report.model_account_report_history
 msgid "Indicator"
 msgstr ""
@@ -82,7 +83,8 @@ msgid "Very bad"
 msgstr ""
 
 #. module: account_report
-#: field:account.report.history,val:0 field:account.report.report,amount:0
+#: field:account.report.history,val:0
+#: field:account.report.report,amount:0
 msgid "Value"
 msgstr ""
 
@@ -92,7 +94,8 @@ msgid "= Badness Indicator Limit:"
 msgstr ""
 
 #. module: account_report
-#: view:account.report.report:0 selection:account.report.report,status:0
+#: view:account.report.report:0
+#: selection:account.report.report,status:0
 msgid "Bad"
 msgstr ""
 
@@ -168,7 +171,8 @@ msgid "Account Tax Code:"
 msgstr ""
 
 #. module: account_report
-#: view:account.report.report:0 selection:account.report.report,status:0
+#: view:account.report.report:0
+#: selection:account.report.report,status:0
 msgid "Good"
 msgstr ""
 
@@ -213,7 +217,8 @@ msgid "< Badness Indicator Limit:"
 msgstr ""
 
 #. module: account_report
-#: view:account.report.report:0 selection:account.report.report,status:0
+#: view:account.report.report:0
+#: selection:account.report.report,status:0
 msgid "Very Good"
 msgstr ""
 
@@ -223,7 +228,8 @@ msgid "Note"
 msgstr ""
 
 #. module: account_report
-#: rml:accounting.report:0 rml:print.indicators:0
+#: rml:accounting.report:0
+#: rml:print.indicators:0
 msgid "Currency:"
 msgstr ""
 
@@ -234,9 +240,7 @@ msgstr ""
 
 #. module: account_report
 #: help:account.report.report,disp_tree:0
-msgid ""
-"When the indicators are printed, if one indicator is set with this field to "
-"True, then it will display one more graphs with all its children in tree"
+msgid "When the indicators are printed, if one indicator is set with this field to True, then it will display one more graphs with all its children in tree"
 msgstr ""
 
 #. module: account_report
@@ -301,7 +305,8 @@ msgid "New Reporting Item Formula"
 msgstr ""
 
 #. module: account_report
-#: field:account.report.report,code:0 rml:accounting.report:0
+#: field:account.report.report,code:0
+#: rml:accounting.report:0
 msgid "Code"
 msgstr ""
 
@@ -339,8 +344,7 @@ msgstr ""
 
 #. module: account_report
 #: constraint:ir.model:0
-msgid ""
-"The Object name must start with x_ and not contain any special character !"
+msgid "The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: account_report
@@ -351,7 +355,8 @@ msgstr ""
 #. module: account_report
 #: model:ir.actions.wizard,name:account_report.wizard_print_indicators
 #: model:ir.ui.menu,name:account_report.menu_wizard_print_indicators
-#: wizard_view:print.indicators,init:0 wizard_view:print.indicators,next:0
+#: wizard_view:print.indicators,init:0
+#: wizard_view:print.indicators,next:0
 msgid "Print Indicators"
 msgstr ""
 
@@ -361,7 +366,8 @@ msgid "+ - * / ( )"
 msgstr ""
 
 #. module: account_report
-#: rml:accounting.report:0 rml:print.indicators:0
+#: rml:accounting.report:0
+#: rml:print.indicators:0
 msgid "Printing date:"
 msgstr ""
 
@@ -371,7 +377,8 @@ msgid "Indicators in PDF"
 msgstr ""
 
 #. module: account_report
-#: rml:accounting.report:0 rml:print.indicators:0
+#: rml:accounting.report:0
+#: rml:print.indicators:0
 msgid "at"
 msgstr ""
 
@@ -393,9 +400,7 @@ msgstr ""
 
 #. module: account_report
 #: view:account.report.report:0
-msgid ""
-"Note: The second arguement 'fiscalyear' and 'period' are optional arguements."
-"If the value is -1,previous fiscalyear or period is considered."
+msgid "Note: The second arguement 'fiscalyear' and 'period' are optional arguements.If the value is -1,previous fiscalyear or period is considered."
 msgstr ""
 
 #. module: account_report
@@ -432,7 +437,8 @@ msgid "Indicators reporting"
 msgstr ""
 
 #. module: account_report
-#: field:account.report.report,name:0 rml:accounting.report:0
+#: field:account.report.report,name:0
+#: rml:accounting.report:0
 #: rml:print.indicators:0
 msgid "Name"
 msgstr ""
@@ -477,9 +483,7 @@ msgstr ""
 
 #. module: account_report
 #: help:account.report.report,disp_graph:0
-msgid ""
-"If the field is set to True, information will be printed as a Graph, "
-"otherwise as an array."
+msgid "If the field is set to True, information will be printed as a Graph, otherwise as an array."
 msgstr ""
 
 #. module: account_report
@@ -504,8 +508,7 @@ msgstr ""
 
 #. module: account_report
 #: model:ir.module.module,description:account_report.module_meta_information
-msgid ""
-"Financial and accounting reporting\n"
+msgid "Financial and accounting reporting\n"
 "    Fiscal statements\n"
 "    Indicators\n"
 "    "
@@ -515,3 +518,4 @@ msgstr ""
 #: selection:account.report.report,type:0
 msgid "Fiscal Statement"
 msgstr ""
+

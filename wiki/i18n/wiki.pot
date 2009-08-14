@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-# 	* wiki
+#	* wiki
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.1\n"
+"Project-Id-Version: OpenERP Server 5.0.2\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-17 14:57:53+0000\n"
-"PO-Revision-Date: 2009-06-17 14:57:53+0000\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
+"PO-Revision-Date: 2009-08-14 08:23:23+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,8 +22,7 @@ msgstr ""
 
 #. module: wiki
 #: constraint:ir.model:0
-msgid ""
-"The Object name must start with x_ and not contain any special character !"
+msgid "The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: wiki
@@ -64,7 +63,8 @@ msgid "Make Section ?"
 msgstr ""
 
 #. module: wiki
-#: model:ir.model,name:wiki.model_wiki_wiki_history view:wiki.wiki.history:0
+#: model:ir.model,name:wiki.model_wiki_wiki_history
+#: view:wiki.wiki.history:0
 msgid "Wiki History"
 msgstr ""
 
@@ -89,7 +89,8 @@ msgid "Invalid model name in the action definition."
 msgstr ""
 
 #. module: wiki
-#: field:wiki.groups,name:0 field:wiki.wiki,group_id:0
+#: field:wiki.groups,name:0
+#: field:wiki.wiki,group_id:0
 msgid "Wiki Group"
 msgstr ""
 
@@ -179,7 +180,8 @@ msgid "Configuration"
 msgstr ""
 
 #. module: wiki
-#: field:wiki.groups,home:0 field:wiki.groups,page_ids:0
+#: field:wiki.groups,home:0
+#: field:wiki.groups,page_ids:0
 msgid "Pages"
 msgstr ""
 
@@ -209,17 +211,20 @@ msgid "Notes"
 msgstr ""
 
 #. module: wiki
-#: wizard_view:wiki.create.menu,init:0 wizard_view:wiki.make.index,init:0
+#: wizard_view:wiki.create.menu,init:0
+#: wizard_view:wiki.make.index,init:0
 msgid "Menu Information"
 msgstr ""
 
 #. module: wiki
-#: field:wiki.groups,parent_id:0 field:wiki.groups.link,group_id:0
+#: field:wiki.groups,parent_id:0
+#: field:wiki.groups.link,group_id:0
 msgid "Parent Group"
 msgstr ""
 
 #. module: wiki
-#: field:wiki.wiki,summary:0 field:wiki.wiki.history,summary:0
+#: field:wiki.wiki,summary:0
+#: field:wiki.wiki.history,summary:0
 msgid "Summary"
 msgstr ""
 
@@ -265,7 +270,8 @@ msgid "History"
 msgstr ""
 
 #. module: wiki
-#: model:ir.ui.menu,name:wiki.menu_document view:wiki.wiki:0
+#: model:ir.ui.menu,name:wiki.menu_document
+#: view:wiki.wiki:0
 msgid "Wiki"
 msgstr ""
 
@@ -333,3 +339,4 @@ msgstr ""
 #: field:wiki.wiki,review:0
 msgid "Need Review"
 msgstr ""
+

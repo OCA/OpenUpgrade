@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-# 	* document
+#	* document
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.1\n"
+"Project-Id-Version: OpenERP Server 5.0.2\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-17 14:57:52+0000\n"
-"PO-Revision-Date: 2009-06-17 14:57:52+0000\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
+"PO-Revision-Date: 2009-08-14 08:23:23+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -32,8 +32,7 @@ msgstr ""
 
 #. module: document
 #: constraint:ir.model:0
-msgid ""
-"The Object name must start with x_ and not contain any special character !"
+msgid "The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: document
@@ -73,9 +72,7 @@ msgstr ""
 
 #. module: document
 #: help:document.directory.content,include_name:0
-msgid ""
-"Check this field if you want that the name of the file start by the record "
-"name."
+msgid "Check this field if you want that the name of the file start by the record name."
 msgstr ""
 
 #. module: document
@@ -115,9 +112,7 @@ msgstr ""
 
 #. module: document
 #: help:document.directory,ressource_tree:0
-msgid ""
-"Check this if you want to use the same tree structure as the object selected "
-"in the system."
+msgid "Check this if you want to use the same tree structure as the object selected in the system."
 msgstr ""
 
 #. module: document
@@ -142,7 +137,8 @@ msgid "File Information"
 msgstr ""
 
 #. module: document
-#: field:document.directory,file_ids:0 view:ir.attachment:0
+#: field:document.directory,file_ids:0
+#: view:ir.attachment:0
 msgid "Files"
 msgstr ""
 
@@ -152,7 +148,8 @@ msgid "Stored Filename"
 msgstr ""
 
 #. module: document
-#: field:document.directory,write_uid:0 field:ir.attachment,write_uid:0
+#: field:document.directory,write_uid:0
+#: field:ir.attachment,write_uid:0
 msgid "Last Modification User"
 msgstr ""
 
@@ -173,9 +170,7 @@ msgstr ""
 
 #. module: document
 #: model:ir.actions.todo,note:document.config_auto_directory
-msgid ""
-"This wizard will configure the URL of the server of the document management "
-"system."
+msgid "This wizard will configure the URL of the server of the document management system."
 msgstr ""
 
 #. module: document
@@ -185,9 +180,7 @@ msgstr ""
 
 #. module: document
 #: help:document.directory,ressource_parent_type_id:0
-msgid ""
-"If you put an object here, this directory template will appear bellow all of "
-"these objects. Don't put a parent directory if you select a parent model."
+msgid "If you put an object here, this directory template will appear bellow all of these objects. Don't put a parent directory if you select a parent model."
 msgstr ""
 
 #. module: document
@@ -206,7 +199,8 @@ msgid "Directory Type"
 msgstr ""
 
 #. module: document
-#: field:document.directory,group_ids:0 field:ir.attachment,group_ids:0
+#: field:document.directory,group_ids:0
+#: field:ir.attachment,group_ids:0
 msgid "Groups"
 msgstr ""
 
@@ -217,16 +211,12 @@ msgstr ""
 
 #. module: document
 #: help:document.configuration.wizard,host:0
-msgid ""
-"Put here the server address or IP. Keep localhost if you don't know what to "
-"write."
+msgid "Put here the server address or IP. Keep localhost if you don't know what to write."
 msgstr ""
 
 #. module: document
 #: view:document.configuration.wizard:0
-msgid ""
-"This wizard will automatically configure the document management system "
-"according to modules installed on your system."
+msgid "This wizard will automatically configure the document management system according to modules installed on your system."
 msgstr ""
 
 #. module: document
@@ -240,7 +230,8 @@ msgid "Notes"
 msgstr ""
 
 #. module: document
-#: view:ir.attachment:0 field:ir.attachment,index_content:0
+#: view:ir.attachment:0
+#: field:ir.attachment,index_content:0
 msgid "Indexed Content"
 msgstr ""
 
@@ -256,11 +247,11 @@ msgstr ""
 
 #. module: document
 #: model:ir.module.module,description:document.module_meta_information
-msgid ""
-"This is a complete document management system:\n"
+msgid "This is a complete document management system:\n"
 "    * FTP Interface\n"
 "    * User Authentication\n"
 "    * Document Indexation\n"
+""
 msgstr ""
 
 #. module: document
@@ -306,7 +297,8 @@ msgid "Directory"
 msgstr ""
 
 #. module: document
-#: field:document.directory,user_id:0 field:ir.attachment,user_id:0
+#: field:document.directory,user_id:0
+#: field:ir.attachment,user_id:0
 msgid "Owner"
 msgstr ""
 
@@ -333,7 +325,8 @@ msgid "Content Type"
 msgstr ""
 
 #. module: document
-#: view:document.directory:0 view:ir.attachment:0
+#: view:document.directory:0
+#: view:ir.attachment:0
 msgid "Security"
 msgstr ""
 
@@ -354,9 +347,7 @@ msgstr ""
 
 #. module: document
 #: help:document.directory,ressource_type_id:0
-msgid ""
-"Select an object here and Open ERP will create a mapping for each of these "
-"objects, using the given domain, when browsing through FTP."
+msgid "Select an object here and Open ERP will create a mapping for each of these objects, using the given domain, when browsing through FTP."
 msgstr ""
 
 #. module: document
@@ -370,7 +361,8 @@ msgid "Domain"
 msgstr ""
 
 #. module: document
-#: field:document.directory,write_date:0 field:ir.attachment,write_date:0
+#: field:document.directory,write_date:0
+#: field:ir.attachment,write_date:0
 msgid "Date Modified"
 msgstr ""
 
@@ -412,8 +404,7 @@ msgstr ""
 
 #. module: document
 #: help:document.directory,domain:0
-msgid ""
-"Use a domain if you want to apply an automatic filter on visible resources."
+msgid "Use a domain if you want to apply an automatic filter on visible resources."
 msgstr ""
 
 #. module: document
@@ -460,3 +451,4 @@ msgstr ""
 #: view:document.directory:0
 msgid "Contents"
 msgstr ""
+
