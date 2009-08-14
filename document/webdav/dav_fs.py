@@ -306,7 +306,6 @@ class tinyerp_handler(dav_interface):
 				'datas_fname': objname,
 				'file_size': len(data),
 				'datas': base64.encodestring(data),
-				'file_type': ext,
 				'parent_id': object and object.id or False,
 			}
 			partner = False

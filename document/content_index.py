@@ -19,52 +19,186 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import time
 import os
-import StringIO
-import odt2txt
 import tempfile
 
-#
-# This should be the indexer
-#
-def _to_unicode(s):
-    try:
-        return s.decode('utf-8')
-    except UnicodeError:
-        try:
-            return s.decode('latin')
-        except UnicodeError:
-            try:
-                return s.encode('ascii')
-            except UnicodeError:
-                return s
 
+class NhException(Exception):
+	pass
 
-def content_index(content, filename=None, content_type=None):
-    fname,ext = os.path.splitext(filename)
-    result = ''
-    if ext in ('.doc'): #or content_type ?
-        (stdin,stdout) = os.popen2('antiword -', 'b')
-        stdin.write(content)
-        stdin.close()
-        result = _to_unicode(stdout.read())
-    elif ext == '.pdf':
-        file_descriptor, file_name = tempfile.mkstemp(suffix=ext)
-        os.write(file_descriptor, content)
-        os.close(file_descriptor)
-        fp = os.popen('pdftotext -enc UTF-8 -nopgbrk '+file_name+' -', 'r')
-        result = fp.read()
-        fp.close()
-    elif ext in ('.xls','.ods','.odt','.odp'):
-        s = StringIO.StringIO(content)
-        o = odt2txt.OpenDocumentTextFile(s)
-        result = _to_unicode(o.toString())
-        s.close()
-    elif ext in ('.txt','.py','.patch','.html','.csv','.xml'):
-        result = content
-    else:
-        result = content
-    return result
+from subprocess import Popen, PIPE
+
+class indexer():
+	""" An indexer knows how to parse the content of some file.
+	
+	    Typically, one indexer should be instantiated per file
+	    type.
+	    Override this class to add more functionality. Note that
+	    you should only override the Content or the File methods
+	    that give an optimal result. """
+	    
+	def _getMimeTypes(self):
+	    """ Return supported mimetypes """
+	    return []
+	
+	def _getExtensions(self):
+	    return []
+	
+	def _getDefMime(self,ext):
+		""" Return a mimetype for this document type, ideally the
+		    closest to the extension ext. """
+		mts = self._getMimeTypes();
+		if len (mts):
+			return mts[0]
+		return None
+
+	def indexContent(self,content,filename=None, realfile = None):
+		""" Use either content or the real file, to index.
+		    Some parsers will work better with the actual
+		    content, others parse a file easier. Try the
+		    optimal.
+		"""
+		res = ''
+		try:
+			if content != None:
+				return self._doIndexContent(content)
+		except NhException:
+			pass
+		
+		if realfile != None:
+			try:
+				return self._doIndexFile(realfile)
+			except NhException:
+				pass
+			
+			fp = open(realfile,'rb')
+			content2 = fp.read()
+			fp.close()
+			
+			# The not-handled exception may be raised here
+			return self._doIndexContent(content2)
+			
+			
+		# last try, with a tmp file
+		if content:
+			try:
+				fname,ext = filename and os.path.splitext(filename) or ('','')
+				fd, rfname = tempfile.mkstemp(suffix=ext)
+				os.write(fd, content)
+				os.close(fd)
+				res = self._doIndexFile(rfname)
+				os.unlink(rfname)
+				return res
+			except NhException:
+				pass
+
+		raise NhException('No appropriate method to index file')
+	
+	def _doIndexContent(self,content):
+		raise NhException("Content not handled here")
+
+	def _doIndexFile(self,fpath):
+		raise NhException("Content not handled here")
+		
+		
+
+def mime_match(mime, mdict):
+	if mdict.has_key(mime):
+		return (mime, mdict[mime])
+	if '/' in mime:
+		mpat = mime.split('/')[0]+'/*'
+		if mdict.has_key(mpat):
+			return (mime, mdict[mpat])
+	
+	return (None, None)
+
+class contentIndex() :
+	def __init__(self):
+		self.mimes = {}
+		self.exts = {}
+	
+	def register(self, obj):
+		f = False
+		for mime in obj._getMimeTypes():
+			self.mimes[mime] = obj
+			f = True
+			
+		for ext in obj._getExtensions():
+			self.exts[ext] = obj
+			f = True
+			
+		if not f:
+			raise Exception("Your indexer should at least suport a mimetype or extension")
+	
+	def doIndex(self,content, filename=None, content_type=None, realfname = None, debug=False):
+		fobj = None
+		fname = None
+		mime = None
+		if content_type and self.mimes.has_key(content_type):
+			mime = content_type
+			fobj = self.mimes[content_type]
+		elif filename:
+			bname,ext = os.path.splitext(filename)
+			if self.exts.has_key(ext):
+				fobj = self.exts[ext]
+				mime = fobj._getDefMime(ext)
+		
+		if content_type and not fobj:
+			mime,fobj = mime_match(content_type, self.mimes)
+		
+		if not fobj:
+		    try:
+			if realfname :
+				fname = realfname
+			else:
+				bname,ext = os.path.splitext(filename)
+				fd, fname = tempfile.mkstemp(suffix=ext)
+				os.write(fd, content)
+				os.close(fd)
+			
+			fp = Popen(['file','-b','--mime-type',fname], shell=False, stdout=PIPE).stdout
+			result = fp.read()
+			fp.close()
+			mime = result.strip()
+			if debug:
+				print "File gave us:",mime
+			# Note that the temporary file still exists now.
+			mime,fobj = mime_match(mime, self.mimes)
+			if debug:
+				print "Matching mime:",mime
+		    except Exception, e:
+			if debug:
+				import traceback,sys
+				tb_s = reduce(lambda x, y: x+y, traceback.format_exception( sys.exc_type, sys.exc_value, sys.exc_traceback))
+				print "Traceback:",tb_s
+			print "Cannot determine mime type:",e
+		
+		try:
+			if fobj:
+				if debug:
+					print "Have object, indexing content ",filename, fname or realfname
+				res = (mime, fobj.indexContent(content,filename,fname or realfname) )
+			else:
+				if debug:
+					print "Have no object, return (",mime,", None)"
+				res = (mime, None )
+		except Exception, e:
+			if debug:
+				import traceback,sys
+				tb_s = reduce(lambda x, y: x+y, traceback.format_exception( sys.exc_type, sys.exc_value, sys.exc_traceback))
+				print "Traceback:",tb_s
+			print "Could not index file, %s" % e
+			res = None
+		
+		# If we created a tmp file, unlink it now
+		if not realfname and fname:
+			try:
+				os.unlink(fname)
+			except Exception, e:
+				print "Could not unlink %s, %s" %(fname, e)
+		
+		return res
+
+cntIndex = contentIndex()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
