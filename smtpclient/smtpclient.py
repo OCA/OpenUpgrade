@@ -181,7 +181,10 @@ class SmtpClient(osv.osv):
                 'body':body,
                 'serialized_message':message,
             })
-        self.write(cr, uid, ids, {'state':'waiting', 'code':key})
+        
+        if self.server[serverid]['state'] != 'confirm':
+            self.write(cr, uid, ids, {'state':'waiting', 'code':key})
+            
         return True
          
     def getpassword(self,cr,uid,ids):
