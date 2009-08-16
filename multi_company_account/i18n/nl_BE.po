@@ -1,0 +1,94 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* multi_company_account
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 5.0.1\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-08-06 15:16:52+0000\n"
+"PO-Revision-Date: 2009-08-06 15:16:52+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: multi_company_account
+#: model:ir.module.module,description:multi_company_account.module_meta_information
+msgid "Module to handle multi company accounting."
+msgstr ""
+
+#. module: multi_company_account
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr ""
+
+#. module: multi_company_account
+#: constraint:ir.model:0
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr "De objectnaam moet beginnen met x_ en mag geen speciale karakters bevatten !"
+
+#. module: multi_company_account
+#: model:ir.actions.todo,note:multi_company_account.config_wizard_company_header_footer_setup_form
+msgid "Define Company Header/Footer Detail"
+msgstr ""
+
+#. module: multi_company_account
+#: field:account.analytic.journal,company_id:0
+#: field:account.budget.post,company_id:0
+#: field:account.journal.period,company_id:0
+#: field:account.move,company_id:0
+#: field:account.move.line,company_id:0
+#: field:account.period,company_id:0
+#: view:wizard.company.header.footer.setup:0
+msgid "Company"
+msgstr ""
+
+#. module: multi_company_account
+#: field:wizard.company.header.footer.setup,company_id:0
+msgid "Companies"
+msgstr ""
+
+#. module: multi_company_account
+#: model:ir.module.module,shortdesc:multi_company_account.module_meta_information
+msgid "Multi company for accounting module"
+msgstr ""
+
+#. module: multi_company_account
+#: model:ir.model,name:multi_company_account.model_wizard_company_header_footer_setup
+msgid "wizard.company.header.footer.setup"
+msgstr ""
+
+#. module: multi_company_account
+#: model:ir.actions.act_window,name:multi_company_account.action_wizard_company_header_footer_setup_form
+#: view:wizard.company.header.footer.setup:0
+msgid "Company Header Footer Detail"
+msgstr ""
+
+#. module: multi_company_account
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
+
+#. module: multi_company_account
+#: field:wizard.company.header.footer.setup,rml_header2:0
+msgid "RML Internal Header"
+msgstr ""
+
+#. module: multi_company_account
+#: field:wizard.company.header.footer.setup,rml_header:0
+msgid "RML Header"
+msgstr ""
+
+#. module: multi_company_account
+#: view:wizard.company.header.footer.setup:0
+msgid "Create"
+msgstr ""
+
+#. module: multi_company_account
+#: view:wizard.company.header.footer.setup:0
+msgid "Header/Footer"
+msgstr ""
+

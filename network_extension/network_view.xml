@@ -1,0 +1,299 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+<!-- NETWORK -->
+	<record model="ir.ui.view" id="view_network_ext1">
+		<field name="name">network.network.tree.ext1</field>
+		<field name="model">network.network</field>
+		<field name="inherit_id" ref="network.view_network"/>
+		<field name="arch" type="xml">
+			<field name="name" position="after">
+				<field name="public_ip_address" select="2"/>
+				<field name="public_domain" select="2"/>
+			</field>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="add_network_view_form_ext1">
+		<field name="name">network.network.form.ext1</field>
+		<field name="model">network.network</field>
+		<field name="inherit_id" ref="network.add_network_view"/>
+		<field name="arch" type="xml">
+			<field name="range" position="after">
+				<field name="gateway" />
+				<field name="dns" />
+				<field name="public_ip_address"/>
+				<field name="public_domain"/>
+			</field>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="add_network_view_form_ext2">
+		<field name="name">network.network.form.ext2</field>
+		<field name="model">network.network</field>
+		<field name="inherit_id" ref="network.add_network_view"/>
+		<field name="arch" type="xml">
+			<field name="user_id" position="replace"/>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="add_network_view_form_ext3">
+		<field name="name">network.network.form.ext3</field>
+		<field name="model">network.network</field>
+		<field name="inherit_id" ref="network.add_network_view"/>
+		<field name="arch" type="xml">
+			<field name="contact_id" position="replace">
+				<field name="contact_id" select="1"/>
+				<field name="user_id" select="1"/>
+			</field>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="add_network_view_form_ext4">
+		<field name="name">network.network.form.ext4</field>
+		<field name="model">network.network</field>
+		<field name="inherit_id" ref="network.add_network_view"/>
+		<field name="arch" type="xml">
+			<field name="parent_id" position="after">
+				<field name="ip_addr"/>
+			</field>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="add_network_view_form_ext5">
+		<field name="name">network.network.form.ext5</field>
+		<field name="model">network.network</field>
+		<field name="inherit_id" ref="network.add_network_view"/>
+		<field name="arch" type="xml">
+			<field name="software_id" position="replace">
+				<field name="software_id" context="material_id=active_id" nolabel="1" colspan="4" widget="one2many_list"/>
+			</field>
+		</field>
+	</record>
+
+<!-- MATERIAL -->
+	<record model="ir.ui.view" id="edit_network_tree_ext1">
+		<field name="name">network.material.tree.ext1</field>
+		<field name="model">network.material</field>
+		<field name="inherit_id" ref="network.material_view"/>
+		<field name="arch" type="xml">
+			<field name="type" position="after">
+				<field name="network_id" select="2"/>
+			</field>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="edit_network_form_ext1">
+		<field name="name">network.material.form.ext1</field>
+		<field name="model">network.material</field>
+		<field name="inherit_id" ref="network.edit_network"/>
+		<field name="arch" type="xml">
+			<field name="software_id" position="replace">
+				<field name="software_id" context="material_id=active_id" nolabel="1" colspan="4" widget="one2many_list"/>
+			</field>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="edit_network_form_ext2">
+		<field name="name">network.material.form.ext2</field>
+		<field name="model">network.material</field>
+		<field name="inherit_id" ref="network.edit_network"/>
+		<field name="arch" type="xml">
+			<field name="network_id" position="after">
+				<field name="ip_addr"/>
+			</field>
+		</field>
+	</record>
+
+<!-- SOFTWARE -->
+	<record model="ir.ui.view" id="view_software_tree_ext1">
+		<field name="name">network.view.software.form.ext1</field>
+		<field name="model">network.software</field>
+		<field name="inherit_id" ref="network.view_software_tree"/>
+		<field name="arch" type="xml">
+			<field name="type" position="after">
+				<field name="material_id" select="1"/>
+			</field>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="software_form_ext1">
+		<field name="name">network.software.form.ext1</field>
+		<field name="model">network.software</field>
+		<field name="inherit_id" ref="network.software_form"/>
+		<field name="arch" type="xml">
+			<field name="logpass" position="replace">
+				<field name="logpass" nolabel="1" colspan="4" widget="one2many_list">
+					<tree string="Login/Password">
+						<field name="name"/>
+						<field name="login"/>
+						<field name="password"/>
+					</tree>
+                                        <form string="Login/Password">
+						<field name="login" colspan="4"/>
+						<field name="password" colspan="4"/>
+						<field name="name" colspan="4"/>
+						<separator string="Note" colspan="4"/>
+						<field name="note" colspan="4" nolabel="1"/>
+					</form>
+				</field>
+				<field name="service_ids" nolabel="1" colspan="4" widget="one2many_list">
+					<tree string="Service">
+						<field name="name"/>
+						<field name="protocol_id"/>
+						<field name="port"/>
+						<field name="public_port"/>
+						<field name="private_url"/>
+						<field name="public_url"/>
+					</tree>
+					<form string="Service">
+						<field name="name"/>
+						<field name="protocol_id"/>
+						<field name="port" on_change="onchange_port(port)"/>
+						<field name="public_port"/>
+						<field name="path"/>
+						<field name="public_url" colspan="4" widget="url"/>
+						<field name="private_url" colspan="4" widget="url"/>
+						<label string=""/>
+						<button name="_compute_public_url" type="object" string="Compute URL" colspan="3"/>
+					</form>
+				</field>
+			</field>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="software_form_ext2">
+		<field name="name">network.software.form.ext2</field>
+		<field name="model">network.software</field>
+		<field name="inherit_id" ref="network.software_form"/>
+		<field name="arch" type="xml">
+			<field name="type" position="after">
+				<field name="material_id" required="True"/>
+			</field>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_network_software">
+		<field name="name">Software</field>
+		<field name="res_model">network.software</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<menuitem name="Software" parent="network.menu_network" id="menu_action_software_tree" action="action_network_software" groups="network.group_network_manager"/>
+
+<!-- LOGIN/PASSWORD -->
+	<record model="ir.ui.view" id="password_tree_ext1">
+		<field name="name">network.password.tree.ext1</field>
+		<field name="model">network.software.logpass</field>
+		<field name="inherit_id" ref="network.password_tree"/>
+		<field name="arch" type="xml">
+			<field name="login" position="replace">
+				<field name="material" select="1"/>
+				<field name="software_id" select="1"/>
+				<field name="name" select="1" />
+				<field name="login" select="1" />
+			</field>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="password_form_ext1">
+		<field name="name">network.password.form.ext1</field>
+		<field name="model">network.software.logpass</field>
+		<field name="inherit_id" ref="network.password_form"/>
+		<field name="arch" type="xml">
+			<field name="password" position="after">
+				<field name="name" colspan="4"/>
+				<field name="material"/>
+				<field name="software_id"/>
+				<separator string="Note" colspan="4"/>
+				<field name="note" colspan="4" nolabel="1"/>
+			</field>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_network_logpass">
+		<field name="name">Login/Password</field>
+		<field name="res_model">network.software.logpass</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<menuitem name="Logins/Passwords" parent="network.menu_network" id="menu_action_logpass_tree" action="action_network_logpass" groups="network.group_network_manager"/>
+
+<!-- SERVICE -->
+	<record model="ir.ui.view" id="service_tree">
+		<field name="name">network.service.tree</field>
+		<field name="model">network.service</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Service">
+				<field name="material" select="1"/>
+                                <field name="software_id" select="1"/>
+				<field name="name"/>
+				<field name="protocol_id"/>
+				<field name="port"/>
+				<field name="public_port"/>
+				<field name="private_url"/>
+				<field name="public_url"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="service_form">
+		<field name="name">network.service.form</field>
+		<field name="model">network.service</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Service">
+				<field name="material"/>
+				<field name="software_id"/>
+				<field name="name"/>
+				<field name="protocol_id"/>
+				<field name="port" on_change="onchange_port(port)"/>
+				<field name="public_port"/>
+				<field name="path"/>
+				<field name="public_url" colspan="4" widget="url"/>
+				<field name="private_url" colspan="4" widget="url"/>
+				<label string=""/>
+				<button name="_compute_public_url" type="object" string="Compute URL" colspan="3"/>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_network_service">
+		<field name="name">Service</field>
+		<field name="res_model">network.service</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<menuitem name="Services" parent="network.menu_network" id="menu_action_service_tree" action="action_network_service" groups="network.group_network_manager"/>
+
+<!-- PROTOCOL -->
+	<record model="ir.ui.view" id="protocol_tree">
+		<field name="name">network.protocol.tree</field>
+		<field name="model">network.protocol</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Protocol">
+				<field name="name"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="protocol_form">
+		<field name="name">network.protocol.form</field>
+		<field name="model">network.protocol</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Protocol">
+				<field name="name" select="1"/>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_network_protocol">
+		<field name="name">Protocol</field>
+		<field name="res_model">network.protocol</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<menuitem name="Protocol" parent="network.menu_network_definition" id="menu_action_protocol_tree" action="action_network_protocol" groups="network.group_network_manager"/>
+
+	</data>
+</openerp>

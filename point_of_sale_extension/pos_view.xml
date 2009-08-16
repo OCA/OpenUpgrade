@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        <record model="ir.ui.view" id="view_pos_pos_form_z1">
-            <field name="name">pos.order.form.z1</field>
+        <record model="ir.ui.view" id="view_pos_pos_form_ext1">
+            <field name="name">pos.order.form.ext1</field>
             <field name="model">pos.order</field>
             <field name="type">form</field>
             <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
@@ -15,8 +15,8 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="view_pos_pos_form_z2">
-            <field name="name">pos.order.form.z2</field>
+        <record model="ir.ui.view" id="view_pos_pos_form_ext2">
+            <field name="name">pos.order.form.ext2</field>
             <field name="model">pos.order</field>
             <field name="type">form</field>
             <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
@@ -27,8 +27,8 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="view_pos_pos_form_z3">
-            <field name="name">pos.order.form.z3</field>
+        <record model="ir.ui.view" id="view_pos_pos_form_ext3">
+            <field name="name">pos.order.form.ext3</field>
             <field name="model">pos.order</field>
             <field name="type">form</field>
             <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
@@ -39,8 +39,8 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="view_pos_pos_form_z4">
-            <field name="name">pos.order.form.z4</field>
+        <record model="ir.ui.view" id="view_pos_pos_form_ext4">
+            <field name="name">pos.order.form.ext4</field>
             <field name="model">pos.order</field>
             <field name="type">form</field>
             <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
@@ -49,8 +49,8 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="view_pos_pos_form_z5">
-            <field name="name">pos.order.form.z5</field>
+        <record model="ir.ui.view" id="view_pos_pos_form_ext5">
+            <field name="name">pos.order.form.ext5</field>
             <field name="model">pos.order</field>
             <field name="type">form</field>
             <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
@@ -59,8 +59,8 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="view_pos_pos_form_z6">
-            <field name="name">pos.order.form.z6</field>
+        <record model="ir.ui.view" id="view_pos_pos_form_ext6">
+            <field name="name">pos.order.form.ext6</field>
             <field name="model">pos.order</field>
             <field name="type">form</field>
             <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
@@ -69,8 +69,8 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="view_pos_pos_form_z7">
-            <field name="name">pos.order.form.z7</field>
+        <record model="ir.ui.view" id="view_pos_pos_form_ext7">
+            <field name="name">pos.order.form.ext7</field>
             <field name="model">pos.order</field>
             <field name="type">form</field>
             <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
@@ -85,8 +85,32 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="view_pos_order_tree_z1">
-            <field name="name">Sales</field>
+        <record model="ir.ui.view" id="view_pos_pos_form_ext8">
+            <field name="name">pos.order.form.ext8</field>
+            <field name="model">pos.order</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+            <field name="arch" type="xml">
+                <field name="price_unit" position="after">
+                    <field name="price_unit_vat" readonly="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_pos_pos_form_ext9">
+            <field name="name">pos.order.form.ext9</field>
+            <field name="model">pos.order</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+            <field name="arch" type="xml">
+                <field name="price_subtotal" position="after">
+                    <field name="price_subtotal_vat" readonly="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_pos_order_tree_ext1">
+            <field name="name">Sales ext1</field>
             <field name="model">pos.order</field>
             <field name="type">tree</field>
             <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
@@ -97,8 +121,8 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="view_pos_order_line_z1">
-            <field name="name">Sale lines</field>
+        <record model="ir.ui.view" id="view_pos_order_line_ext1">
+            <field name="name">Sale lines ext1</field>
             <field name="model">pos.order.line</field>
             <field name="type">tree</field>
             <field name="inherit_id" ref="point_of_sale.view_pos_order_line"/>
@@ -110,6 +134,31 @@
                 </field>
             </field>
         </record>
+
+        <record model="ir.ui.view" id="view_pos_order_line_ext2">
+            <field name="name">Sale lines ext2</field>
+            <field name="model">pos.order.line</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_order_line"/>
+            <field name="arch" type="xml">
+                <field name="price_unit" position="after">
+                    <field name="price_unit_vat" readonly="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_pos_order_line_ext3">
+            <field name="name">Sale lines ext3</field>
+            <field name="model">pos.order.line</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_order_line"/>
+            <field name="arch" type="xml">
+                <field name="price_subtotal" position="after">
+                    <field name="price_subtotal_vat" readonly="1"/>
+                </field>
+            </field>
+        </record>
+
 
         <!-- Shortcuts -->
         <act_window name="TPV sales"
