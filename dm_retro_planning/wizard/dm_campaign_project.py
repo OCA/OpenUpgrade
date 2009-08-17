@@ -26,7 +26,7 @@ import pooler
 import netsvc
 
 parameter_form = '''<?xml version="1.0"?>
-<form string="Campaign Group" colspan="4">
+<form string="Campaign" colspan="4">
     <field name="project_id" domain="[('parent_id','ilike','Direct Marketing Retro-Planning')]"
 />
 </form>'''
@@ -51,17 +51,17 @@ def _create_duplicate(self, cr, uid, data, context):
     for task in tasks_obj.browse(cr, uid, tasks_ids):
         if task.type:
             if task.type.name == 'DTP' and campaign.dtp_responsible_id:
-                new_tasks_id = tasks_obj.write(cr, uid, task.id, {'user_id':campaign.dtp_responsible_id.id,'state':'open'})
+                tasks_obj.write(cr, uid, task.id, {'user_id':campaign.dtp_responsible_id.id,'state':'open'})
             elif task.type.name == 'Mailing Manufacturing' and campaign.manufacturing_responsible_id:
-                new_tasks_id = tasks_obj.write(cr, uid, task.id, {'user_id':campaign.manufacturing_responsible_id.id,'state':'open'})
+                tasks_obj.write(cr, uid, task.id, {'user_id':campaign.manufacturing_responsible_id.id,'state':'open'})
             elif task.type.name == 'Customers List' and campaign.files_responsible_id:
-                new_tasks_id = tasks_obj.write(cr, uid, task.id, {'user_id':campaign.files_responsible_id.id,'state':'open'})
+                tasks_obj.write(cr, uid, task.id, {'user_id':campaign.files_responsible_id.id,'state':'open'})
             elif task.type.name == 'Items Procurement' and campaign.item_responsible_id:
-                new_tasks_id = tasks_obj.write(cr, uid, task.id, {'user_id':campaign.item_responsible_id.id,'state':'open'})
+                tasks_obj.write(cr, uid, task.id, {'user_id':campaign.item_responsible_id.id,'state':'open'})
             else:
-                new_tasks_id = tasks_obj.write(cr, uid, task.id, {'state':'open'})
+                tasks_obj.write(cr, uid, task.id, {'state':'open'})
         else:
-            new_tasks_id = tasks_obj.write(cr, uid, task.id, {'state':'open','date_deadline':campaign.date_start})
+            tasks_obj.write(cr, uid, task.id, {'state':'open','date_deadline':campaign.date_start})
     project_obj.write(cr, uid, [duplicate_project_id], {'name' : project_obj.browse(cr, uid, duplicate_project_id, context).name + " for " + campaign.name, 'date_end' : campaign.date_start})
     campaign_obj.write(cr, uid, [data['id']], {'project_id': duplicate_project_id})
     return {}

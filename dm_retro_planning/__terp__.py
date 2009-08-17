@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
+#    OpenERP, Open Source Management Solution	
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -20,37 +20,25 @@
 #
 ##############################################################################
 {
-    "name":"Board for DM users",
-    "version":"1.0",
-    "author":"Tiny",
-    "category":"Board/Direct Marketing",
-    "depends":[
-        "board", "project", "dm",
-    ],
-    "demo_xml":[
-#        "board_dm_demo.xml",
-    ],
-    "update_xml":[
-        "board_campaign_manager_view.xml",
-        "board_customer_manager_view.xml",
-        "board_manufacturing_manager_view.xml",
-        "board_dtp_manager_view.xml",
-        "board_item_manager_view.xml",
-        "board_offer_manager_view.xml",
-    ],
+    "name" : "Retro-Planning Tasks Management for DM",
+    "version" : "1.0",
+    "author" : "Tiny",
+    "website" : "http://www.openerp.com",
+    "category" : "Generic Modules/Direct Marketing",
     "description": """
-This module implements a dashboard for campaign manager that includes:
-    * List of campaigns that have started at max 2 month ago and those that will start in the 2 month to come
-    * List of the tasks of the day
-    * List of  the tasks with a deadline passed
-    
-This module implements a dashboard for offer manager that includes:
-    * Offers
-    * Offer Ideas
-    """,
-    "active":False,
-    "installable":True,
+            This module adds campaign retro-planning tasks management for Direct Marketing.
+            """,
+    "depends" : ["project_retro_planning","dm_campaign_purchase"],
+    "init_xml" : [],
+    "demo_xml" : [],
+    "update_xml" : [
+                    "security/ir.model.access.csv",
+                    "dm_retro_planning_wizard.xml",
+                    "dm_retro_planning_view.xml",
+                    "dm_retro_planning_data.xml",
+                    ],
+    "active": False,
+    "installable": True,
 }
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

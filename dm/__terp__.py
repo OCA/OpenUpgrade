@@ -47,7 +47,6 @@
 
             """,
     "depends" : [
-                 "project_retro_planning","purchase_tender",
                  "base_language","document","base_report_designer",
                  "sale","base_partner_gender", "crm", "smtpclient",
                  ],

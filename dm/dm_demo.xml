@@ -858,7 +858,6 @@ rkJggg==
             <field name="trademark_id" ref="dm.dm_trademark_openerp0"/>
             <field name="currency_id" ref="base.USD"/>
             <field ref="dm.dm_campaign_type_loyalty" name="campaign_type_id"/>
-            <field eval="&quot;&quot;&quot;pending&quot;&quot;&quot;" name="manufacturing_state"/>
             <field name="dealer_id" ref="base.main_partner"/>
             <field name="country_id" ref="base.us"/>
             <field eval="time.strftime('%Y-%m-%d')" name="date_start"/>
@@ -866,27 +865,10 @@ rkJggg==
             <field name="offer_id" ref="dm.dm_offer_openerpondemandfreetrial2009"/>
             <field name="responsible_id" ref="base.user_root"/>
             <field eval=" str(time.localtime()[0] + 1) + time.strftime('-%m-%d')" name="date"/>
-            <field eval="&quot;&quot;&quot;pending&quot;&quot;&quot;" name="customer_file_state"/>
             <field eval="&quot;&quot;&quot;OpenERP OnDemand Free Trial 2009&quot;&quot;&quot;" name="name"/>
             <field name="lang_id" ref="base.lang_en"/>
-            <field eval="&quot;&quot;&quot;pending&quot;&quot;&quot;" name="items_state"/>
             <field eval="&quot;&quot;&quot;This is the 2009 Direct Marketing Campaign for the OpenERP OnDemand Free Trial offer of 2009.&quot;&quot;&quot;" name="notes"/>
         </record>
-
-        <!--
-        <record id="dm_campaign_purchase_line_0" model="dm.campaign.purchase_line">
-            <field eval="&quot;&quot;&quot;rfq&quot;&quot;&quot;" name="type_document"/>
-            <field name="product_id" ref="dm.product_product_defaultpapermailing0"/>
-            <field eval="&quot;&quot;&quot;2009-11-04 15:38:32&quot;&quot;&quot;" name="date_planned"/>
-            <field eval="&quot;&quot;&quot;19&quot;&quot;&quot;" name="product_category"/>
-            <field eval="&quot;&quot;&quot;manual&quot;&quot;&quot;" name="trigger"/>
-            <field name="campaign_id" ref="dm_campaign_openerpondemandfreetrial2009"/>
-            <field name="uom_id" ref="product.product_uom_unit"/>
-            <field eval="1" name="desc_from_offer"/>
-            <field eval="&quot;&quot;&quot;pending&quot;&quot;&quot;" name="state"/>
-            <field eval="&quot;&quot;&quot;quantity_wanted&quot;&quot;&quot;" name="type_quantity"/>
-        </record>
-        -->
 
         <record id="dm_campaign_proposition_ondemandfreetrialbookstoreoffer0" model="dm.campaign.proposition">
             <field eval="1" name="keep_prices"/>
@@ -988,11 +970,7 @@ rkJggg==
     <!-- CAMAPAIGN RESPONSIBLE -->
 
         <record id="dm.dm_campaign_openerpondemandfreetrial2009" model="dm.campaign">
-            <field name="item_responsible_id" ref="dm.res_users_sue0"/>
-            <field name="dtp_responsible_id" ref="dm.res_users_ann0"/>
-            <field name="manufacturing_responsible_id" ref="dm.res_users_tom0"/>
             <field name="responsible_id" ref="dm.res_users_jim0"/>
-            <field name="files_responsible_id" ref="res_users_joe0"/>
         </record>
 
     <!-- CUSTOMERS LIST -->

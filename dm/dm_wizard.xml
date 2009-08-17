@@ -1,59 +1,17 @@
 <?xml version="1.0" ?>
 <openerp>
     <data>
-        <wizard string="Project"
-            model="dm.campaign.group"
-            name="campaign.group.project"
-            id="campaign_group_wiz"
-            menu="False"/>
-
-        <wizard string="Project"
-            model="dm.campaign"
-            name="campaign.project"
-            id="campaign_wiz"
-            menu="False"/>
-
-        <wizard
-            string="View Tasks"
-            model="dm.campaign.group"
-            name="wizard_campaign_group_tasks"
-            id="wizard_campaign_group_task"/>
-
         <wizard
             string="View Documents"
             model="dm.offer"
             name="wizard_offer_documents"
             id="wizard_offer_documents"/>
 
-        <wizard
-            string="Add to Campaign group"
-            model="dm.campaign"
-            name="wizard_campaign_group"
-            id="wizard_campaign_group"/>
-
         <wizard string="Get Products"
             model="dm.campaign.proposition"
             name="wizard_proposition_products"
             id="wizard_proposition_products"
             menu="False"/>
-
-        <wizard
-            string="View Tasks"
-            model="dm.campaign"
-            name="wizard_campaign_tasks"
-            id="wizard_campaign_task"/>
-
-        <wizard
-            string="Purchase Orders"
-            model="dm.campaign"
-            name="wizard_campaign_pos"
-            id="wizard_campaign_pos"/>
-
-        <wizard
-            string="Purchase Orders"
-            model="dm.campaign.group"
-            name="wizard_campaign_group_pos"
-            id="wizard_campaign_group_pos"/>
 
         <wizard
             string="Document Report"
