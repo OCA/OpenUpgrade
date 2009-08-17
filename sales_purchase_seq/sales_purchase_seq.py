@@ -43,8 +43,8 @@ class sale_order(osv.osv):
     def so_seq_get(self, cr, uid):
 
         pool_seq=self.pool.get('ir.sequence')
-        cr.execute("select id,number_next,number_increment,prefix,suffix,padding from ir_sequence where code='sale.order' and active=True")
-        res = cr.dictfetchone()
+        seq_ids = pool_seq.search(cr, uid, [('code','=','sale.order')])
+        res = pool_seq.read(cr, uid, seq_ids)[0]
         if res:
             if res['number_next']:
                 return pool_seq._process(res['prefix']) + '%%0%sd' % res['padding'] % res['number_next'] + pool_seq._process(res['suffix'])
@@ -81,8 +81,8 @@ class purchase_order(osv.osv):
     def po_seq_get(self, cr, uid):
 
         pool_seq=self.pool.get('ir.sequence')
-        cr.execute("select id,number_next,number_increment,prefix,suffix,padding from ir_sequence where code='purchase.order' and active=True")
-        res = cr.dictfetchone()
+        seq_ids = pool_seq.search(cr, uid, [('code','=','purchase.order')])
+        res = pool_seq.read(cr, uid, seq_ids)[0]
         if res:
             if res['number_next']:
                 return pool_seq._process(res['prefix']) + '%%0%sd' % res['padding'] % res['number_next'] + pool_seq._process(res['suffix'])
