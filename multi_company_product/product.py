@@ -56,8 +56,8 @@ class product_template(osv.osv):
         return res
     
     _columns={
-              'list_price': fields.function(_calc_list_price, method=True, type='float', string='Sale Price', help="Base price for computing the customer price. Sometimes called the catalog price."),
-              'standard_price': fields.function(_calc_standard_price, method=True, type='float', string='Cost Price', required=True, help="The cost of the product for accounting stock valuation. It can serves as a base price for supplier price."),
+              'list_price': fields.function(_calc_list_price, method=True, type='float', store=True, string='Sale Price', help="Base price for computing the customer price. Sometimes called the catalog price."),
+              'standard_price': fields.function(_calc_standard_price, method=True, type='float', store=True, string='Cost Price', required=True, help="The cost of the product for accounting stock valuation. It can serves as a base price for supplier price."),
               'standard_price_ids' :fields.one2many('company.wise.cost.price','product_id'),
               'list_price_ids' :fields.one2many('company.wise.sale.price','product_id')
               }

@@ -4,9 +4,8 @@
     "name" : "MultiCompany Product",
     "version" : "1.1",
     "depends" : [
-                    "account", 
-                    "stock",
-                    "sale",
+                   'base',
+                   'product',
                 ],
     "author" : "Axelor",
     "description": """The Module allows to define each product for many companies with their cost price and sale price
