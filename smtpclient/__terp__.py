@@ -35,7 +35,7 @@
     "init_xml" : [
     ],
     "demo_xml" : [
-        "smtpclient_date.xml"
+        "smtpclient_demo.xml"
     ],
     "update_xml" : [
         "smtpclient_view.xml",
