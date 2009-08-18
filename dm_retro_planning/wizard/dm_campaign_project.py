@@ -27,7 +27,7 @@ import netsvc
 
 parameter_form = '''<?xml version="1.0"?>
 <form string="Campaign" colspan="4">
-    <field name="project_id" domain="[('parent_id','ilike','Direct Marketing Retro-Planning')]"
+    <field name="project_id" domain="[('parent_id.name','ilike','Direct Marketing Retro-Planning')]" context="{'parent_id':'Direct Marketing Retro-Planning'}"
 />
 </form>'''
 

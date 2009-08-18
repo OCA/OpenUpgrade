@@ -30,6 +30,18 @@ class dm_campaign_group(osv.osv):#{{{
     }
 dm_campaign_group()
 
+class project(osv.osv):
+    _inherit = 'project.project'
+    
+    def default_get(self, cr, uid, fields, context={}):
+        data = super(project, self).default_get(cr, uid, fields, context)
+        if 'parent_id' in context and context['parent_id'] and context['parent_id'] == 'Direct Marketing Retro-Planning':
+            prj_ids = self.search(cr, uid, [('name','=','Direct Marketing Retro-Planning')])
+            data['parent_id']=prj_ids[0]
+        return data
+    
+project()
+
 class one2many_mod_task(fields.one2many):#{{{
     def get(self, cr, obj, ids, name, user=None, offset=0, context=None, values=None):
         if not context:
