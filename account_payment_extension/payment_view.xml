@@ -149,66 +149,60 @@
     </record>
 
 
-    <!--****************************** PAYMENTS ***********************************-->
-    <!-- account.move.line extension to show the payment type and date of maturity -->
-    <!--<record model="ir.ui.view" id="payments_move_line_tree">
+    <!--************ account.move.line extension to show additional fields **********-->
+    <record model="ir.ui.view" id="payments_move_line_tree">
         <field name="name">account.payments.move.line.tree</field>
         <field name="model">account.move.line</field>
         <field name="type">tree</field>
-        <field name="priority" eval="3"/>
-        <field name="inherit_id" ref="account.view_move_line_tree"/>
+        <field name="inherit_id" ref="account_payment.view_move_line_tree_wiz"/>
         <field name="arch" type="xml">
-            <field name="reconcile_id" position="before">
-                <field name="payment_type" select="1" />
-                <field name="date_maturity" />
+            <field name="currency_id" position="replace">
+                <field groups="base.group_extended" name="currency_id"/>
+                <field name="account_id"/>
+                <field name="reconcile_id"/>
+                <field groups="base.group_extended" name="reconcile_partial_id"/>
+                <field name="state"/>
+                <field name="payment_type"/>
             </field>
         </field>
-    </record>-->
+    </record>
+
+    <record model="ir.ui.view" id="payments_move_line_form">
+        <field name="name">account.payments.move.line.form</field>
+        <field name="model">account.move.line</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="account.view_move_line_form"/>
+        <field name="arch" type="xml">
+            <field name="analytic_account_id" position="after">
+                <field name="payment_type" select="1"/>
+                <field name="partner_bank" domain="[('partner_id','=',partner_id)]" select="2"/>
+                <field name="received_check" select="2"/>
+            </field>
+        </field>
+    </record>
 
 
+    <!--****************************** PAYMENTS ***********************************-->
     <record model="ir.ui.view" id="view_payments_tree">
         <field name="name">Payments</field>
         <field name="model">account.move.line</field>
         <field name="field_parent">partner_id</field>
         <field name="type">tree</field>
-        <field name="priority" eval="3"/>
+        <field name="priority" eval="16"/>
         <field name="arch" type="xml">
             <tree string="Payments" editable="top">
-                <field name="received_check"/>
                 <field name="invoice" readonly="1"/>
                 <field name="partner_id" readonly="1"/>
                 <field name="account_id" readonly="1"/>
-                <field name="date_maturity"/>
                 <field name="debit" readonly="1"/>
                 <field name="credit" readonly="1"/>
                 <field name="payment_type" readonly="1"/>
+                <field name="partner_bank" domain="[('partner_id','=',partner_id)]"/>
+                <field name="received_check"/>
+                <field name="date_maturity"/>
                 <field name="move_id" readonly="1"/>
                 <field name="reconcile_id" readonly="1"/>
             </tree>
-
-        </field>
-    </record>
-
-    <record model="ir.ui.view" id="view_payments_form">
-        <field name="name">Payments</field>
-        <field name="model">account.move.line</field>
-        <field name="type">form</field>
-        <field name="priority" eval="1"/>
-        <field name="arch" type="xml">
-            <form string="Payments">
-                <field name="date_maturity" select="1"/>
-                <field name="received_check" select="1"/>
-                <field name="invoice" select="1"/>
-                <field name="partner_id" select="1"/>
-                <field name="account_id" select="2"/>
-                <field name="debit" select="2"/>
-                <field name="credit" select="2"/>
-                <field name="move_id" select="2"/>
-                <field name="reconcile_id" />
-                <field name="partner_bank" select="1" domain="[('partner_id','=',partner_id)]"/>
-                <newline/>
-                <field name="payment_type" select="1"/>
-            </form>
         </field>
     </record>
 
@@ -264,7 +258,6 @@
         <field name="view_id" ref="view_payments_tree"/>
         <field name="domain">[('account_id.type','=','payable'), ('invoice','&lt;&gt;',False)]</field>
     </record>
-
     <menuitem
          name="All paid and to pay payments"
          parent="menu_finance_payments"
@@ -328,18 +321,6 @@
         </field>
     </record>
 
-    <!-- View used in the payment wizard -->
-    <record id="view_move_line_tree_wiz" model="ir.ui.view">
-        <field name="name">account.move.line.tree.inherit</field>
-        <field name="model">account.move.line</field>
-        <field name="type">tree</field>
-        <field name="inherit_id" ref="account_payment.view_move_line_tree_wiz"/>
-        <field name="arch" type="xml">
-            <field name="currency_id" position="after">
-                <field name="payment_type"/>
-            </field>
-        </field>
-    </record>
 
     <!--**************************** PAYABLE PAYMENT ORDER ********************************-->
     <menuitem id="menu_pay_payments" name="Payable payment orders" parent="account_payment.menu_main"/>

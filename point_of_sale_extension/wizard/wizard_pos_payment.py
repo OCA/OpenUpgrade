@@ -136,12 +136,14 @@ class pos_payment(wizard.interface):
 
         # check if an invoice is wanted:
         #invoice_wanted_checked = not not order.partner_id # not not -> boolean
-        # Membership products need invoice
+        # Membership products need invoice. But, are we using membership module?
         invoice_wanted_checked = False
-        for line in order.lines:
-            if line.product_id.membership:
-                invoice_wanted_checked = True
-                break
+        cr.execute('select * from ir_module_module where name=%s and state=%s', ('membership','installed'))
+        if cr.fetchone():
+            for line in order.lines:
+                if line.product_id.membership:
+                    invoice_wanted_checked = True
+                    break
 
         # select the current date
         current_date = time.strftime('%Y-%m-%d')

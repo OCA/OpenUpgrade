@@ -24,14 +24,14 @@
     "version" : "1.0",
     "author" : "Tiny",
     "website" : "http://www.openerp.com",
-    "category" : "Generic Modules/Direct Marketing",
+    "category" : "Generic Modules/Others",
     "description": """
             This module restricts the indexing of the content of files.
             """,
-    "depends" : ["dm"],
+    "depends" : ["document"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["dm_no_contentindex_view.xml"],
+    "update_xml" : ["document_no_contentindex_view.xml"],
     "active": False,
     "installable": True,
 }

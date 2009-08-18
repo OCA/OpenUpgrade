@@ -25,6 +25,13 @@ from osv import fields, osv
 class invoice(osv.osv):
     _inherit = 'account.invoice'
     
+    def copy(self, cr, uid, oid, default=None, context=None):
+        if default is None:
+            default = {}
+        default = default.copy()
+        default['proforma_followup_history_ids'] = False
+        return super(invoice, self).copy(cr, uid, oid, default, context)
+    
     def _get_next_followup(self, cr, uid, ids, field_names, args, context=None):
         result = {}
         for i in ids:

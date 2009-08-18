@@ -73,7 +73,7 @@ class proforma_followup_history(osv.osv):
     
     _columns = {
         'name': fields.char('Name', size=132, required=True),   
-        'invoice_id': fields.many2one('account.invoice', 'Invoice', required=True),
+        'invoice_id': fields.many2one('account.invoice', 'Invoice', required=True, ondelete='cascade'),
         'create_date': fields.datetime('Followup Date'),
         'step': fields.integer('Step'),
     }

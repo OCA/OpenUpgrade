@@ -1,9 +1,10 @@
+# -*- coding: utf-8 -*-
 {
 	"name" : "OScommerce Interface / ZenCart",
 	"version" : "1.0",
 	"author" : "Axelor/Zikzakmedia",
 	"category" : "Interface OScommerce",
-	"website" : "http://www.zikzakmedia.com",
+	"website" : "http://www.aulaerp.com/cursos-aulaerp/configuracion-y-funcionamiento-del-conector-openerp-oscommerce.html",
 	"depends" : ["product", "stock", "sale", "account_payment"],
 	"description": """OSCommerce (Zencart) eCommerce interface synchronisation.
 Users can order on the website, orders are automatically imported in OpenERP.

@@ -1,0 +1,62 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* carrier_picking
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-05-08 18:56:05+0000\n"
+"PO-Revision-Date: 2009-05-08 21:08+0100\n"
+"Last-Translator: Jordi Esteve (Zikzakmedia) <jesteve@zikzakmedia.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: carrier_picking
+#: field:res.partner.address,plate:0
+msgid "Plate"
+msgstr "Matrícula"
+
+#. module: carrier_picking
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr "¡XML inválido para la definición de la vista!"
+
+#. module: carrier_picking
+#: model:ir.module.module,description:carrier_picking.module_name_translation
+msgid ""
+"Carrier picking module:\n"
+"\n"
+"* Adds contact carrier in picking lists and a field to store additional information (like vehicle's plate) in partner addresses and picking lists"
+msgstr ""
+"Módulo transportista en los albaranes:\n"
+"\n"
+"* Añade la dirección del transportista en los albaranes y un campo para almacenar información adicional (por ejemplo la matrícula del vehículo) en las direcciones de empresa y los albaranes."
+
+#. module: carrier_picking
+#: help:res.partner.address,plate:0
+msgid "Vehicle's plate"
+msgstr "Matrícula del vehículo"
+
+#. module: carrier_picking
+#: model:ir.module.module,shortdesc:carrier_picking.module_name_translation
+msgid "Carrier picking"
+msgstr "Transportista en los albaranes"
+
+#. module: carrier_picking
+#: field:stock.picking,address_carrier_id:0
+msgid "Carrier Address"
+msgstr "Dir. transportista"
+
+#. module: carrier_picking
+#: field:stock.picking,carrier_name:0
+msgid "Carrier Info"
+msgstr "Info. transportista"
+
+#. module: carrier_picking
+#: help:stock.picking,carrier_name:0
+msgid "Additional carrier information (vehicle's plate, ...)"
+msgstr "Información adicional transportista (matrícula vehículo, ...)"
