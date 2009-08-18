@@ -20,6 +20,7 @@
 #
 ##############################################################################
 import dm_offer_document
+import dm_proposition_products
 import dm_document_report
 import dm_workitem_wizard
 import dm_partner_address_segments
