@@ -981,7 +981,6 @@ class dm_campaign_proposition_segment(osv.osv):#{{{
         'end_census' : fields.integer('End Census'),
         'deduplication_level' : fields.integer('Deduplication Level',
                     help='The deduplication level defines the order in which the deduplication takes place.'),
-        'active' : fields.boolean('Active'),
         'reuse_id' : fields.many2one('dm.campaign.proposition.segment','Reuse'),
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
         'note' : fields.text('Notes'),
