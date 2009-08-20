@@ -43,7 +43,7 @@ from email.MIMEImage import MIMEImage
 import urllib2, urlparse
 
 
-from dm_report_design import merge_message
+from dm_report_design import merge_message ,generate_internal_reports ,generate_openoffice_reports
 
 _regex = re.compile('\[\[setHtmlImage\((.+?)\)\]\]')
 _regexp1 = re.compile('(\[\[.+?\]\])')
@@ -108,7 +108,6 @@ class dm_dtp_plugin(osv.osv): # {{{
         fp.write(v)
         fp.close()
         plugin_res = self.browse(cr,uid,id)
-        print "Plugin result :", plugin_res
         sys.path.append(path)
         X =  __import__(filename.split('.')[0])
         args = []
@@ -210,16 +209,29 @@ def set_image_email(node,msg):
 
 def create_email_queue(cr,uid,obj,context):
     pool = pooler.get_pool(cr.dbname)
-    ir_att_obj = pool.get('ir.attachment')
     email_queue_obj = pool.get('email.smtpclient.queue')
-    ir_att_ids = ir_att_obj.search(cr,uid,[('res_model','=','dm.campaign.document'),('res_id','=',obj.id),('file_type','=','html')])
     context['document_id'] = obj.document_id.id
     context['address_id'] = obj.address_id.id
-
-
-    for attach in ir_att_obj.browse(cr,uid,ir_att_ids):
-        message = base64.decodestring(attach.datas)
-        root = etree.HTML(message)
+    context['wi_id'] = obj.wi_id.id
+    message = []
+    if obj.mail_service_id.store_email_document:
+        ir_att_obj = pool.get('ir.attachment')
+        ir_att_ids = ir_att_obj.search(cr,uid,[('res_model','=','dm.campaign.document'),('res_id','=',obj.id),('file_type','=','html')])
+        for attach in ir_att_obj.browse(cr,uid,ir_att_ids):
+            message.append(base64.decodestring(attach.datas))
+    else :
+       active_id = context['active_id']
+       context['active_id'] = obj.wi_id.id
+       document_data = pool.get('dm.offer.document').browse(cr,uid,obj.document_id.id)
+       
+       if obj.document_id.editor ==  'internal' :
+            message.append(generate_internal_reports(cr, uid, 'html2html', document_data, False, context))
+       else :
+           msg = generate_openoffice_reports(cr, uid, 'html2html', document_data, False, context)
+           message.extend(msg)
+       context['active_id'] = active_id
+    for m  in message:
+        root = etree.HTML(m)
         body = root.find('body')
         msgRoot = MIMEMultipart('related')
 

@@ -108,47 +108,55 @@ def create_tnt_reports(cr,uid,obj,type_id,camp_mail_service,delivery_time,addres
                     attach_id = attachment_obj.create(cr,uid,attach_vals,{'not_index_context':True})
     """
     
-def generate_internal_reports(cr, uid, report_type, document_data, address_id, camp_doc, context):
+def generate_internal_reports(cr, uid, report_type, document_data, camp_doc, context):
 
     """ Generate documents from the internal editor """
     pool = pooler.get_pool(cr.dbname)
     attachment_obj = pool.get('ir.attachment')
     
-    if report_type=='html2html' and document_data['editor'] and document_data['editor']=='internal' and document_data['content']:
+    if report_type=='html2html' and document_data.content:
         """ Check if to use the internal editor report """
-        report_data = internal_html_report + str(document_data['content'])+"</BODY></HTML>"
+        report_data = internal_html_report + str(document_data.content)+"</BODY></HTML>"
         context['type'] = 'email_doc'
         report_data = merge_message(cr, uid, report_data, context)
-        attach_vals={'name' : document_data['name'] + "_" + str(address_id),
-                    'datas_fname' : 'report_test' + report_type ,
-                    'res_model' : 'dm.campaign.document',
-                    'res_id' : camp_doc,
-                    'datas': base64.encodestring(report_data),
-                    'file_type':'html'
-                    }
-        attach_id = attachment_obj.create(cr,uid,attach_vals,{'not_index_context':True})
+        if camp_doc : 
+           attach_vals={'name' : document_data.name + "_" + str(context['address_id']),
+                       'datas_fname' : 'report_test' + report_type ,
+                       'res_model' : 'dm.campaign.document',
+                       'res_id' : camp_doc,
+                       'datas': base64.encodestring(report_data),
+                       'file_type':'html'
+                       }
+           attach_id = attachment_obj.create(cr,uid,attach_vals,{'not_index_context':True})
+           return True
+        return report_data
 
-def generate_openoffice_reports(cr, uid, report_type, document_data, address_id, camp_doc, context):
-
+def generate_openoffice_reports(cr, uid, report_type, document_data, camp_doc, context):
+    report_content = []
     """ Get reports to process """
     pool = pooler.get_pool(cr.dbname)    
     attachment_obj = pool.get('ir.attachment')
     report_xml = pool.get('ir.actions.report.xml')
         
-    report_ids = report_xml.search(cr, uid, [('document_id','=',document_data['id']),('report_type','=',report_type)])
+    report_ids = report_xml.search(cr, uid, [('document_id','=',document_data.id),('report_type','=',report_type)])
 
     """ Generate documents created by OpenOffice """
     for report in pool.get('ir.actions.report.xml').browse(cr, uid, report_ids) :
         srv = netsvc.LocalService('report.' + report.report_name)
         report_data, report_type = srv.create(cr, uid, [], {}, context)
-        attach_vals = {'name' : document_data['name'] + "_" + str(address_id) + str(report.id),
-                'datas_fname' : 'report.' + report.report_name + '.' + report_type ,
-                'res_model' : 'dm.campaign.document',
-                'res_id' : camp_doc,
-                'datas': base64.encodestring(report_data),
-                'file_type':report_type
-                }
-        attach_id = attachment_obj.create(cr,uid,attach_vals,{'not_index_context':True})
+        if camp_doc : 
+            attach_vals = {'name' : document_data.name + "_" + str(context['address_id']) + str(report.id),
+                    'datas_fname' : 'report.' + report.report_name + '.' + report_type ,
+                    'res_model' : 'dm.campaign.document',
+                    'res_id' : camp_doc,
+                    'datas': base64.encodestring(report_data),
+                    'file_type':report_type
+                    }
+            attach_id = attachment_obj.create(cr,uid,attach_vals,{'not_index_context':True})
+        else :
+            report_content.append(report_data)
+    if report_content and not camp_doc:
+        return report_content
 
 def process_workitem(cr, uid, obj, report_type, context): # {{{
 
@@ -205,16 +213,14 @@ def process_workitem(cr, uid, obj, report_type, context): # {{{
             return "no_segment"
 
     ms_id = camp_mail_service.mail_service_id.id
-
     for address_id in address_ids:
-
         """ Get offer step documents to process """
         document_id = dm_doc_obj.search(cr, uid, [('step_id','=',obj.step_id.id),('category_id','=','Production')])
-        if not document_id : 
+        if not document_id :
             return "no_document_for_step"
 
         type_id = pool.get('dm.campaign.document.type').search(cr,uid,[('code','=',r_type)])
-        
+    
         if obj.sale_order_id:
             so = obj.sale_order_id.name
         else:
@@ -228,22 +234,25 @@ def process_workitem(cr, uid, obj, report_type, context): # {{{
             'document_id' : document_id[0],
             (obj.source) : address_id,
             'origin' : so,
+            'wi_id':obj.id
             }
 
 
-        """ Create campaign document """
-        camp_doc = pool.get('dm.campaign.document').create(cr, uid, vals)
-
+    """ Create campaign document """
+    camp_doc = pool.get('dm.campaign.document').create(cr, uid, vals)
+    if camp_mail_service.mail_service_id.store_email_document :
         context['address_id'] = address_id
-        document_data = dm_doc_obj.read(cr, uid, document_id, ['name', 'editor', 'content', 'subject'])[0]
+        document_data = dm_doc_obj.browse(cr, uid, document_id[0])
         context['document_id'] = document_id[0]
         context['wi_id'] = obj.id
-        
-#        create_tnt_reports(cr,uid,obj,type_id,camp_mail_service,delivery_time,address_id,document_data,context)
-        
-        generate_internal_reports(cr, uid, report_type, document_data, address_id, camp_doc, context)
-        
-        generate_openoffice_reports(cr, uid, report_type, document_data, address_id, camp_doc, context)
+        context['store_document'] = True
+    #        create_tnt_reports(cr,uid,obj,type_id,camp_mail_service,delivery_time,address_id,document_data,context)
+        if document_data['editor'] ==  'internal' :
+           generate_internal_reports(cr, uid, report_type, document_data, camp_doc, context)
+        elif document_data['editor'] == 'oord' :
+           generate_openoffice_reports(cr, uid, report_type, document_data, camp_doc, context)
+        else :
+            return "no_report_for_document"
     return "doc_done" # }}}
     
             
