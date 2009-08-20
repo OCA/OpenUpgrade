@@ -19,14 +19,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import dm_offer_document
-import dm_document_report
-import dm_workitem_wizard
-import dm_partner_address_segments
-import dm_address_after_sale_action
-import dm_so_after_sale_action
-import dm_all_document_report
-#import proposition_copy
-#import campaign_copy
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
+import dm_price_progression
+import wizard
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

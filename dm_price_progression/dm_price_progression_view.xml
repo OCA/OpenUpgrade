@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+    <!--
+    =======================================================
+    PROPOSITION EXTENSIONS
+    =======================================================
+    -->
+
+        <record id="view_proposition_price_form_inherit" model="ir.ui.view">
+            <field name="name">dm.campaign.proposition.price.inherit</field>
+            <field name="model">dm.campaign.proposition</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="dm.view_campaign_proposition_form"/>
+            <field name="arch" type="xml">
+            	<button name="_get_step_products" string="Get Products" type="object" position="replace">
+            		<button string="Get Products" name="%(dm_price_progression.wizard_proposition_products)d" type="action" colspan="3"/>
+<!--                    <group col="6" colspan="4" groups="base.group_extended">-->
+					<newline/>
+                    <field name="force_sm_price" colspan="1"/>
+                    <field name="sm_price" attrs="{'readonly':[('force_sm_price','=',0)]}" colspan="1"/>
+                    <field name="price_prog_use" attrs="{'readonly':[('force_sm_price','=',0)]}" colspan="1"/>
+<!--                    </group>-->
+            	</button>
+            </field>
+        </record>
+
+    <!--
+    =======================================================
+    CAMPAIGN PROPOSITION PRICES PROGRESSION
+    =======================================================
+    -->
+
+    <record model="ir.ui.view" id="view_dm_campaign_proposition_prices_progression_form">
+        <field name="name">dm.campaign.proposition.prices_progression.form</field>
+        <field name="model">dm.campaign.proposition.prices_progression</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Campaign Prices Progression">
+                <separator string="Price Progression Description" colspan="4"/>
+                <field name="name" select="1"/>
+                <separator string="Progression" colspan="4"/>
+                <field name="fixed_prog" select="1"/>
+                <field name="percent_prog" select="1"/>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_dm_campaign_proposition_prices_progression_tree">
+        <field name="name">dm.campaign.proposition.prices_progression.tree</field>
+        <field name="model">dm.campaign.proposition.prices_progression</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Campaign Prices Progression">
+                <field name="name"/>
+                <field name="fixed_prog"/>
+                <field name="percent_prog"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_dm_campaign_proposition_prices_progression_form">
+        <field name="name">All Campaign Prices Progression</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign.proposition.prices_progression</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_dm_campaign_proposition_prices_progression_tree"/>
+    </record>
+
+    <menuitem id="menu_action_dm_campaign_proposition_prices_progression_form" parent="dm.menu_dm_config_campaign" action="action_dm_campaign_proposition_prices_progression_form"/>
+
+</data>
+</openerp>

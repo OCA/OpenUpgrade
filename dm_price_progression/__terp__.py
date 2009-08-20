@@ -19,14 +19,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import dm_offer_document
-import dm_document_report
-import dm_workitem_wizard
-import dm_partner_address_segments
-import dm_address_after_sale_action
-import dm_so_after_sale_action
-import dm_all_document_report
-#import proposition_copy
-#import campaign_copy
+{
+    "name" : "Price Progression for DM",
+    "version" : "1.0",
+    "author" : "Tiny",
+    "website" : "http://www.openerp.com",
+    "category" : "Generic Modules/Direct Marketing",
+    "description": """
+            This module assigns price progression in campaign propositions for Direct Marketing.
+            """,
+    "depends" : ["dm"],
+    "init_xml" : [],
+    "demo_xml" : ["dm_price_progression_demo.xml"],
+    "update_xml" : [
+                    "security/ir.model.access.csv",
+                    "dm_price_progression_wizard.xml",
+                    "dm_price_progression_view.xml",
+                    ],
+    "active": False,
+    "installable": True,
+}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

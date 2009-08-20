@@ -496,6 +496,25 @@ class dm_campaign_proposition(osv.osv):#{{{
     _name = "dm.campaign.proposition"
     _inherits = {'account.analytic.account': 'analytic_account_id'}
 
+    def _get_step_products(self,cr, uid, ids, *args):
+        prop_obj = self.browse(cr, uid, ids)[0]
+        offer_id = prop_obj.camp_id.offer_id.id
+        step_ids = self.pool.get('dm.offer.step').search(cr, uid, [('offer_id','=',offer_id)])
+        step_obj = self.pool.get('dm.offer.step').browse(cr, uid, step_ids)
+        for step in step_obj:
+            for item in step.item_ids:
+                vals = {'product_id':item.id,
+                        'proposition_id':ids[0],
+                        'offer_step_id':step.id,
+                        'qty_planned':item.virtual_available,
+                        'qty_real':item.qty_available,
+                        'price':item.list_price,
+                        'notes':item.description,
+                        'forecasted_yield' : step.forecasted_yield,
+                }
+                self.pool.get('dm.campaign.proposition.item').create(cr, uid, vals)
+        return True
+
     def default_get(self, cr, uid, fields, context=None):
         value = super(dm_campaign_proposition, self).default_get(cr, uid, fields, context)
         if 'camp_id' in context and context['camp_id']:
@@ -710,10 +729,6 @@ class dm_campaign_proposition(osv.osv):#{{{
         'payment_method_ids' : fields.many2many('account.journal','proposition_payment_method_rel','proposition_id','journal_id','Payment Methods',domain=[('type','=','cash')]),
         'keep_segments' : fields.boolean('Keep Segments'),
         'keep_prices' : fields.boolean('Keep Prices At Duplication'),
-        'force_sm_price' : fields.boolean('Force Starting Mail Price'),
-        'price_prog_use' : fields.boolean('Price Progression'),
-        'sm_price' : fields.float('Starting Mail Price', digits=(16,2)),
-#        'prices_prog_id' : fields.many2one('dm.campaign.proposition.prices_progression', 'Prices Progression'),
         'manufacturing_costs': fields.float('Manufacturing Costs',digits=(16,2)),
         'forwarding_charge' : fields.float('Forwarding Charge', digits=(16,2)),
     }
@@ -1010,15 +1025,6 @@ class dm_campaign_manufacturing_cost(osv.osv):#{{{
         'campaign_id' : fields.many2one('dm.campaign','Campaign'),
     }
 dm_campaign_manufacturing_cost()#}}}
-
-class dm_campaign_proposition_prices_progression(osv.osv):#{{{
-    _name = 'dm.campaign.proposition.prices_progression'
-    _columns = {
-        'name' : fields.char('Name', size=64, required=True),
-        'fixed_prog' : fields.float('Fixed Prices Progression', digits=(16,2)),
-        'percent_prog' : fields.float('Percentage Prices Progression', digits=(16,2)),
-    }
-dm_campaign_proposition_prices_progression()#}}}
 
 class dm_mail_service_type(osv.osv):
     _name = "dm.mail_service.type"

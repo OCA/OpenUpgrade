@@ -33,6 +33,7 @@ class dm_workitem(osv.osv): # {{{
     _description = "workitem"
     _SOURCES = [('address_id','Partner Address')]
     SELECTION_LIST = [('pending','Pending'),('error','Error'),('cancel','Cancelled'),('done','Done')]
+    _rec_name = 'step_id'
 
     _columns = {
         'step_id' : fields.many2one('dm.offer.step', 'Offer Step', select="1", ondelete="cascade"),
