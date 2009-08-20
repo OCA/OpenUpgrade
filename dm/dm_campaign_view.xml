@@ -27,6 +27,7 @@
                 <field name="media_id" select="1"/>
                 <field name="default_for_media" on_change="_check_unique_mail_service(media_id,default_for_media)"/>
                 <field name="type_id" on_change="on_change_service_type(type_id)" widget="selection"/>
+                <field name="store_email_document" select="1"/>
                 <group colspan="4" attrs="{'invisible':[('service_type','!=','smtp')]}">
 					<separator string="SMTP Server Configuration" colspan="4" />
 					<field name="service_type" on_change="on_change_service_type(type_id)" invisible="1"/>

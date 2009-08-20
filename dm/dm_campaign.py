@@ -23,25 +23,10 @@ import time
 import datetime
 import warnings
 import netsvc
-import pooler
-import base64
-import string
-import re
 from mx import DateTime
 
 from osv import fields
 from osv import osv
-from lxml import etree
-from random import Random
-
-from email.MIMEMultipart import MIMEMultipart
-from email.MIMEText import MIMEText
-from email.MIMEImage import MIMEImage
-
-from dm.dm_report_design import merge_message
-
-_regex = re.compile('\[\[setHtmlImage\((.+?)\)\]\]')
-_regexp1 = re.compile('(\[\[.+?\]\])')
 
 """
 class dm_overlay_payment_rule(osv.osv):
@@ -1070,6 +1055,7 @@ class dm_mail_service(osv.osv):
         'hosted_image_use' : fields.boolean('Hosted Image'),
         'smtp_server_id' : fields.many2one('email.smtpclient', 'SMTP Server', ondelete="cascade"),
         'service_type' : fields.char('Type Code',size=64),
+        'store_email_document' : fields.boolean('Store Email Document'),
     }
 
     def _check_unique_mail_service(self, cr, uid, ids, media_id, default_for_media):
@@ -1088,64 +1074,6 @@ class dm_mail_service(osv.osv):
         return res
 
 dm_mail_service()
-
-def set_image_email(node,msg):
-    if not node.getchildren():
-        if  node.tag=='img' and node.get('src') and node.get('src').find('data:image/gif;base64,')>=0:
-            msgImage = MIMEImage(base64.decodestring(node.get('src').replace('data:image/gif;base64,','')))
-            image_name = ''.join( Random().sample(string.letters+string.digits, 12) )
-            msgImage.add_header('Content-ID','<%s>'%image_name)
-            msg.attach(msgImage)
-            node.set('src',"cid:%s"%image_name)
-    else :
-        for n in node.getchildren():
-            set_image_email(n,msg)
-
-def create_email_queue(cr,uid,obj,context):
-    pool = pooler.get_pool(cr.dbname)
-    ir_att_obj = pool.get('ir.attachment')
-    email_queue_obj = pool.get('email.smtpclient.queue')
-    ir_att_ids = ir_att_obj.search(cr,uid,[('res_model','=','dm.campaign.document'),('res_id','=',obj.id),('file_type','=','html')])
-    context['document_id'] = obj.document_id.id
-    context['address_id'] = obj.address_id.id
-    for attach in ir_att_obj.browse(cr,uid,ir_att_ids):
-        message = base64.decodestring(attach.datas)
-        root = etree.HTML(message)
-        body = root.find('body')
-        msgRoot = MIMEMultipart('related')
-
-#        plugin_list = [] 
-#        No need as it is set in the function
-#        if obj.document_id.subject and _regexp1.findall(obj.document_id.subject) :
-#            raw_plugin_list = _regexp1.findall(obj.document_id.subject)
-#            for p in raw_plugin_list :
-#                plugin_list.append(p[2:-2])
-#        context['plugin_list'] = plugin_list'''
-        subject =  merge_message(cr, uid, obj.document_id.subject, context)
-        msgRoot['Subject'] = subject
-        msgRoot['From'] = str(obj.mail_service_id.smtp_server_id.email)
-        msgRoot['To'] = str(obj.address_id.email)
-        msgRoot.preamble = 'This is a multi-part message in MIME format.'
-    
-        msg = MIMEMultipart('alternative')
-        msgRoot.attach(msg)
-
-        set_image_email(body,msgRoot)
-        msgText = MIMEText(etree.tostring(body), 'html')
-        msg.attach(msgText)
-        if message :
-            vals = {
-                'to':str(obj.address_id.email),
-                'server_id':obj.mail_service_id.smtp_server_id.id,
-                'cc':False,
-                'bcc':False,
-                'name':subject,
-                'body' : msgRoot.as_string(),
-                'serialized_message': msgRoot.as_string(),
-                'date_create':time.strftime('%Y-%m-%d %H:%M:%S')
-                }
-            email_queue_obj.create(cr,uid,vals)
-    return True
 
 class dm_campaign_mail_service(osv.osv):
     _name = "dm.campaign.mail_service"
