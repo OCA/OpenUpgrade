@@ -292,7 +292,7 @@ class dm_offer(osv.osv): # {{{
             vals['type'] = 'preoffer'
         elif not vals.has_key('type') :
             vals['type'] = 'model'
-        context['create'] = 'create'
+#        context['create'] = 'create'
         new_offer_id = super(dm_offer,self).create(cr,uid,vals,context)
         if vals.has_key('preoffer_original_id'):
             self.write(cr,uid,vals['preoffer_original_id'],{'preoffer_offer_id':new_offer_id})

@@ -28,7 +28,7 @@
     "description": """
             This module adds campaign retro-planning tasks management for Direct Marketing.
             """,
-    "depends" : ["project_retro_planning","dm_campaign_purchase"],
+    "depends" : ["dm_campaign_purchase"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [

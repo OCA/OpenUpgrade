@@ -256,10 +256,6 @@ class dm_campaign(osv.osv):#{{{
         return True      
 
     def state_pending_set(self, cr, uid, ids, *args):
-        self.manufacturing_state_inprogress_set(cr, uid, ids, *args)
-        self.dtp_state_inprogress_set(cr, uid, ids, *args)
-        self.customer_file_state_inprogress_set(cr, uid, ids, *args)
-        self.items_state_inprogress_set(cr, uid, ids, *args)
         self.write(cr, uid, ids, {'state':'pending'})
         return True
 
@@ -267,11 +263,6 @@ class dm_campaign(osv.osv):#{{{
         camp = self.browse(cr,uid,ids)[0]
         if not camp.date_start or not camp.dealer_id or not camp.trademark_id or not camp.lang_id or not camp.currency_id:
             raise osv.except_osv("Error","Informations are missing. Check Drop Date, Dealer, Trademark, Language and Currency")
-
-        if ((camp.manufacturing_state != 'done') or (camp.dtp_state != 'done') or (camp.customer_file_state != 'done') or (camp.items_state != 'done')):
-            raise osv.except_osv(
-                _('Could not open this Campaign'),
-                _('You must first close all states related to this campaign.'))
 
         if (camp.date_start > time.strftime('%Y-%m-%d')):
             raise osv.except_osv("Error!!","Campaign cannot be opened before drop date")
