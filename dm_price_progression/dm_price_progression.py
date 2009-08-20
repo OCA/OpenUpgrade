@@ -23,7 +23,6 @@
 from osv import fields
 from osv import osv
 
-print "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
 class dm_campaign_proposition(osv.osv):#{{{
     _inherit = "dm.campaign.proposition"
     _columns = {
