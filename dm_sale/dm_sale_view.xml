@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+    
+    <!--
+    =======================================================
+    SALE ORDER EXTENSIONS
+    =======================================================
+    -->
+
+    <record id="view_order_form_inherit1" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <notebook colspan="4" position="inside">
+                <page string="Direct Marketing">
+                	<separator colspan="4"/>
+                	<field name="offer_step_id" colspan="4"/>
+                	<field name="segment_id" colspan="4"/>
+                    <field name="journal_id" colspan="4"/>
+                    <group colspan="2" col="2">
+                        <separator string="Automatic actions"/>
+                        <field name="so_confirm_do" />
+                        <field name="invoice_create_do" />
+                        <field name="invoice_validate_do" />
+                        <field name="invoice_pay_do" />
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <!--
+    =======================================================
+    WORKITEM EXTENSIONS
+    =======================================================
+    -->
+
+    <record id="view_wi_form_inherit1" model="ir.ui.view">
+        <field name="name">dm.workitem.form.inherit</field>
+        <field name="model">dm.workitem</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="dm.view_dm_workitem_form"/>
+        <field name="arch" type="xml">
+            <field name="tr_from_id" position="after">
+                <field name="sale_order_id" select="2"/>
+            </field>
+        </field>
+    </record>
+
+	</data>
+</openerp>
