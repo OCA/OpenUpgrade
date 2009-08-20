@@ -27,6 +27,9 @@ import pooler
 import sys
 import datetime
 import netsvc
+import traceback
+import tools
+
 
 class dm_workitem(osv.osv): # {{{
     _name = "dm.workitem"
@@ -36,19 +39,19 @@ class dm_workitem(osv.osv): # {{{
     _rec_name = 'step_id'
 
     _columns = {
-        'step_id' : fields.many2one('dm.offer.step', 'Offer Step', select="1", ondelete="cascade"),
+        'step_id' : fields.many2one('dm.offer.step', 'Offer Step', ondelete="cascade", select="1"),
         'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segments', select="1", ondelete="cascade"),
         'address_id' : fields.many2one('res.partner.address', 'Customer Address', select="1", ondelete="cascade"),
-        'action_time' : fields.datetime('Action Time'),
+        'action_time' : fields.datetime('Action Time', select="1"),
         'source' : fields.selection(_SOURCES, 'Source', required=True),
         'error_msg' : fields.text('System Message'),
         'is_global': fields.boolean('Global Workitem'),
         'is_preview': fields.boolean('Document Preview Workitem'),
         'use_prev_plugin_values': fields.boolean('Use Previous Plugin Values (For Document Regeneration)'),
-        'tr_from_id' : fields.many2one('dm.offer.step.transition', 'Source Transition', select="1", ondelete="cascade"),
+        'tr_from_id' : fields.many2one('dm.offer.step.transition', 'Source Transition', ondelete="cascade"),
         'sale_order_id' : fields.many2one('sale.order','Sale Order'),
         'mail_service_id' : fields.many2one('dm.mail_service','Mail Service'),
-        'state' : fields.selection(SELECTION_LIST, 'Status'),
+        'state' : fields.selection(SELECTION_LIST, 'Status', select="1"),
     }
     _defaults = {
         'source': lambda *a: 'address_id',
@@ -64,55 +67,17 @@ class dm_workitem(osv.osv): # {{{
         sysmsg_id  = self.pool.get('dm.sysmsg').search(cr, uid, [('code','=',code)])
         if sysmsg_id:
             sysmsg = self.pool.get('dm.sysmsg').browse(cr, uid, sysmsg_id)[0]
-            self.write(cr, uid, [ids], {'state': sysmsg.state,'error_msg':sysmsg.message})
-            return sysmsg.result
+            return {'state': sysmsg.state,'msg':sysmsg.message,'result':sysmsg.result}
         else:
-            self.write(cr, uid, [ids], {'state': 'error','error_msg':"An unknown error has occured : %s" % code})
-            return False
-
-
-    def _sale_order_process(self, cr, uid, sale_order_id):
-        so = self.pool.get('sale.order').browse(cr, uid, sale_order_id)
-        wf_service = netsvc.LocalService('workflow')
-
-        if so.so_confirm_do and so.state == 'draft':
-            wf_service.trg_validate(uid, 'sale.order', sale_order_id, 'order_confirm', cr)
-            if so.invoice_create_do:
-                inv_id = self.pool.get('sale.order').action_invoice_create(cr, uid, [sale_order_id])
-                if so.journal_id:
-                    self.pool.get('account.invoice').write(cr, uid, inv_id, {'journal_id': so.journal_id.id, 'account_id': so.journal_id.default_credit_account_id.id})
-                if inv_id and so.invoice_validate_do:
-                    wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
-                    if so.invoice_pay_do:
-                        ids = self.pool.get('account.period').find(cr, uid, {})
-                        period_id = False
-                        if len(ids):
-                            period_id = ids[0]
-
-                        cur_obj = self.pool.get('res.currency')
-                        #journal = self.pool.get('account.journal').browse(cr, uid, journal_id, context)
-
-                        for invoice in so.invoice_ids:
-                            journal = invoice.journal_id
-#                            amount_tax = invoice.residual
-                            amount = invoice.residual
-                            if journal.currency and invoice.company_id.currency_id.id<>journal.currency.id:
-                                ctx = {'date':time.strftime('%Y-%m-%d')}
-                                amount = cur_obj.compute(cr, uid, journal.currency.id, invoice.company_id.currency_id.id, amount, context=ctx)
-
-                            acc_id = journal.default_credit_account_id and journal.default_credit_account_id.id
-                            if not acc_id:
-                                raise osv.except_osv('Error !','Your journal must have a default credit and debit account.')
-                            self.pool.get('account.invoice').pay_and_reconcile(cr, uid, [invoice.id],
-                                        amount, acc_id, period_id, journal.id, '', '', '',)
-        
+            return {'state': 'error','msg':"An unknown error has occured : %s" % code,'result':False}
 
 
     def run(self, cr, uid, wi, context={}):
+        logger = netsvc.Logger()
         context['active_id'] = wi.id
         done = False
         ms_err = ''
-
+    
         try:
             server_obj = self.pool.get('ir.actions.server')
             tr_res = True
@@ -145,72 +110,69 @@ class dm_workitem(osv.osv): # {{{
                 res = server_obj.run(cr, uid, [wi.step_id.action_id.id], context)
 
                 """ Check returned value and set done status """
-                done = self._check_sysmsg(cr, uid, wi.id, res)
+                status = self._check_sysmsg(cr, uid, wi.id, res)
 
-                """ Set workitem state as done """
-                if done:
-                    self.write(cr, uid, [wi.id], {'state': 'done','error_msg':""})
+                """ Set workitem state and message """
+                self.write(cr, uid, [wi.id], {'state': status['state'],'error_msg':status['msg']})
+                done = status['result']
             else:
                 """ Dont Execute Action if workitem is not to be processed """
                 self.write(cr, uid, [wi.id], {'state': 'cancel','error_msg':'Cancelled by : %s'% act_step})
-                done = False
 
         except Exception, exception:
-            import traceback
             tb = sys.exc_info()
             tb_s = "".join(traceback.format_exception(*tb))
-            self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'Exception: %s\n%s' % (str(exception), tb_s)})
-            netsvc.Logger().notifyChannel('dm action', netsvc.LOG_ERROR, 'Exception: %s\n%s' % (str(exception), tb_s))
+            self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'Exception: %s\n%s' % (tools.exception_to_unicode(exception), tb_s)})
+            netsvc.Logger().notifyChannel('dm action', netsvc.LOG_ERROR, 'Exception: %s\n%s' % (tools.exception_to_unicode(exception), tb_s))
 
 
         """ Check if it has to create next auto workitems """
         if done and not wi.is_preview:
-            for tr in wi.step_id.outgoing_transition_ids:
-                if tr.condition_id and tr.condition_id.gen_next_wi:
+            try:
+                for tr in wi.step_id.outgoing_transition_ids:
+                    if tr.condition_id and tr.condition_id.gen_next_wi:
 
-                    """ Compute action time """
-                    wi_action_time = datetime.datetime.strptime(wi.action_time, '%Y-%m-%d  %H:%M:%S')
-                    kwargs = {(tr.delay_type+'s'): tr.delay}
-                    next_action_time = wi_action_time + datetime.timedelta(**kwargs)
+                        """ Compute action time """
+                        wi_action_time = datetime.datetime.strptime(wi.action_time, '%Y-%m-%d  %H:%M:%S')
+                        kwargs = {(tr.delay_type+'s'): tr.delay}
+                        next_action_time = wi_action_time + datetime.timedelta(**kwargs)
 
-                    if tr.action_hour:
-                        """ If a static action hour is set, use it """
-                        hour_str =  str(tr.action_hour).split('.')[0] + ':' + str(int(int(str(tr.action_hour).split('.')[1]) * 0.6))
-                        act_hour = datetime.datetime.strptime(hour_str,'%H:%M')
-                        next_action_time = next_action_time.replace(hour=act_hour.hour)
-                        next_action_time = next_action_time.replace(minute=act_hour.minute)
+                        if tr.action_hour:
+                            """ If a static action hour is set, use it """
+                            hour_str =  str(tr.action_hour).split('.')[0] + ':' + str(int(int(str(tr.action_hour).split('.')[1]) * 0.6))
+                            act_hour = datetime.datetime.strptime(hour_str,'%H:%M')
+                            next_action_time = next_action_time.replace(hour=act_hour.hour)
+                            next_action_time = next_action_time.replace(minute=act_hour.minute)
 
-                    if tr.action_day:
-                        """ If a static action day of the month is set, use it """
-                        next_action_time = next_action_time.replace(day=int(tr.action_day))
-                        if next_action_time.day > int(tr.action_day):
-                            next_action_time = next_action_time.replace(month=next_action_time.month + 1)
+                        if tr.action_day:
+                            """ If a static action day of the month is set, use it """
+                            next_action_time = next_action_time.replace(day=int(tr.action_day))
+                            if next_action_time.day > int(tr.action_day):
+                                next_action_time = next_action_time.replace(month=next_action_time.month + 1)
 
-                    if tr.action_date:
-                        """ If a static date is set, use it """
-                        next_action_time = tr.action_date
+                        if tr.action_date:
+                            """ If a static date is set, use it """
+                            next_action_time = tr.action_date
 
-                    try:
                         aw_id = self.copy(cr, uid, wi.id, {'step_id':tr.step_to_id.id, 'tr_from_id':tr.id,
                             'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'), 'sale_order_id': False})
-                        netsvc.Logger().notifyChannel('dm action', netsvc.LOG_DEBUG, "Creating Auto Workitem %d with action at %s"% (aw_id,next_action_time.strftime('%Y-%m-%d  %H:%M:%S')))
-                    except:
-                        netsvc.Logger().notifyChannel('dm action', netsvc.LOG_ERROR, "Cannot create Auto Workitem")
-        
-        """ Processing sale orders """
-        if wi.sale_order_id:
-            so_res = self._sale_order_process(cr, uid, wi.sale_order_id.id)
 
-        return True
+            except Exception, exception:
+                tb = sys.exc_info()
+                tb_s = "".join(traceback.format_exception(*tb))
+                self.write(cr, uid, [wi.id], {'error_msg':'Error while creating auto workitem :\nException: %s\n%s' % (tools.exception_to_unicode(exception), tb_s)})
+                netsvc.Logger().notifyChannel('dm action - auto wi creation', netsvc.LOG_ERROR, 'Exception: %s\n%s' % (tools.exception_to_unicode(exception), tb_s))
 
     def __init__(self, *args):
         self.is_running = False
         return super(dm_workitem, self).__init__(*args)
 
     def mail_service_run(self, cr, uid, camp_doc, context={}):
+        logger = netsvc.Logger()
         context['active_id'] = camp_doc.id
         try:
             server_obj = self.pool.get('ir.actions.server')
+            print "XXX camp_doc.mail_service_id.action_id.id :",camp_doc.mail_service_id.action_id.id
             res = server_obj.run(cr, uid, [camp_doc.mail_service_id.action_id.id], context)
             camp_res = self.pool.get('dm.campaign.document').read(cr, uid, [camp_doc.id], ['state'])[0]
 
@@ -219,38 +181,41 @@ class dm_workitem(osv.osv): # {{{
                 self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state':'done','delivery_time':time.strftime('%Y-%m-%d %H:%M:%S'),'error_msg':""})
 
         except Exception, exception:
-            import traceback
             tb = sys.exc_info()
             tb_s = "".join(traceback.format_exception(*tb))
-            self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state': 'error','error_msg':'Exception: %s\n%s' % (str(exception), tb_s)})
-            netsvc.Logger().notifyChannel('dm campaign document', netsvc.LOG_ERROR, 'Exception: %s\n%s' % (str(exception), tb_s))
+            self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state': 'error','error_msg':'Exception: %s\n%s' % (tools.exception_to_unicode(exception), tb_s)})
+            logger.notifyChannel('dm campaign document', netsvc.LOG_ERROR, 'Exception: %s\n%s' % (tools.exception_to_unicode(exception), tb_s))
 
         return True
 
     def check_all(self, cr, uid, context={}):
         """ Check if the action engine is already running """
         if not self.is_running:
-            self.is_running = True
+            try:
+                self.is_running = True
 
-            """ Workitems processing """
-            """ Get workitems to process """
-            ids = self.search(cr, uid, [('state','=','pending'),('action_time','<=',time.strftime('%Y-%m-%d %H:%M:%S'))])
+                """ Workitems processing """
+                """ Get workitems to process """
+                ids = self.search(cr, uid, [('state','=','pending'),('action_time','<=',time.strftime('%Y-%m-%d %H:%M:%S'))])
 
-            """ Run workitem action """
-            for wi in self.browse(cr, uid, ids, context=context):
-                wi_res = self.run(cr, uid, wi, context=context)
-            
+                """ Run workitem action """
+                for wi in self.browse(cr, uid, ids, context=context):
+                    wi_res = self.run(cr, uid, wi, context=context)
 
-            """ Campaign documents processing """
-            """ Get campaign documents to process """
-            camp_doc_obj = self.pool.get('dm.campaign.document')
-            camp_doc_ids = camp_doc_obj.search(cr, uid, [('state','=','pending')])
 
-            """ Run campaign document action """
-            for camp_doc in camp_doc_obj.browse(cr, uid, camp_doc_ids, context=context):
-                ms_res = self.mail_service_run(cr, uid, camp_doc, context=context)
+                """ Campaign documents processing """
+                """ Get campaign documents to process """
+                camp_doc_obj = self.pool.get('dm.campaign.document')
+                camp_doc_ids = camp_doc_obj.search(cr, uid, [('state','=','pending')])
 
-            self.is_running = False
+                """ Run campaign document action """
+                for camp_doc in camp_doc_obj.browse(cr, uid, camp_doc_ids, context=context):
+                    print "XXx camp: ",camp_doc.id
+                    ms_res = self.mail_service_run(cr, uid, camp_doc, context=context)
+
+            finally:
+                self.is_running = False
+
             return True
         return False
 
@@ -313,7 +278,6 @@ class dm_event(osv.osv_memory): # {{{
                 'tr_from_id':tr.id,'source':obj.source, 'sale_order_id':obj.sale_order_id.id})
                 netsvc.Logger().notifyChannel('dm event', netsvc.LOG_DEBUG, "Creating Workitem with action at %s"% next_action_time.strftime('%Y-%m-%d  %H:%M:%S'))
             except Exception, exception:
-                import traceback
                 tb = sys.exc_info()
                 tb_s = "".join(traceback.format_exception(*tb))
                 netsvc.Logger().notifyChannel('dm event', netsvc.LOG_ERROR, "Event cannot create Workitem : %s\n%s" % (str(exception), tb_s))
@@ -331,7 +295,7 @@ SYSMSG_STATES = [
     ('error','Error'),
 ]
 
-class dm_sysmsg(osv.osv):
+class dm_sysmsg(osv.osv): # {{{
     _name = "dm.sysmsg"
 
     def _default_model(self, cr, uid, context={}):
@@ -358,5 +322,5 @@ class dm_sysmsg(osv.osv):
        'model' : _default_model,
        'field' : _default_field,
     }
-dm_sysmsg()
+dm_sysmsg() # }}}
 

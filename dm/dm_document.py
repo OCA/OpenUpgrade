@@ -388,7 +388,7 @@ class dm_campaign_document(osv.osv): # {{{
         'document_id' : fields.many2one('dm.offer.document','Document',ondelete="cascade"),
         'address_id' : fields.many2one('res.partner.address', 'Customer Address', select="1", ondelete="cascade"),
         'origin' : fields.char('Origin', size=64),
-        'wi_id' : fields.many2one('dm.workitem','Workitem'),
+        'wi_id' : fields.many2one('dm.workitem', 'Workitem', ondelete="cascade"),
         }
     _defaults = {
         'state': lambda *a : 'pending',

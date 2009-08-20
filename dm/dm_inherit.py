@@ -61,21 +61,22 @@ class res_partner(osv.osv):#{{{
             return [id_cat]
         return []
 
-    def _default_all_country(self, cr, uid, context={}):
-        id_country = self.pool.get('res.country').search(cr,uid,[])
-        return id_country
+#    def _default_all_country(self, cr, uid, context={}):
+#        id_country = self.pool.get('res.country').search(cr,uid,[])
+#        return id_country
 
-    def _default_all_state(self, cr, uid, context={}):
-        id_state = self.pool.get('res.country.state').search(cr,uid,[])
-        return id_state
+#    def _default_all_state(self, cr, uid, context={}):
+#        id_state = self.pool.get('res.country.state').search(cr,uid,[])
+#        return id_state
 
     _defaults = {
         'category_id': _default_category,
-        'country_ids': _default_all_country,
-        'state_ids': _default_all_state,
+#        'country_ids': _default_all_country,
+#        'state_ids': _default_all_state,
     }
 res_partner()#}}}
 
+"""
 class sale_order(osv.osv):#{{{
     _name = "sale.order"
     _inherit="sale.order"
@@ -91,6 +92,7 @@ class sale_order(osv.osv):#{{{
     }
     
 sale_order()#}}}
+"""
 
 class product_product(osv.osv): # {{{
     _name = "product.product"
