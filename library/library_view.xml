@@ -8,6 +8,7 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="Products" colors="red:state in ['draft', 'end', 'obsolete']">
+                <field name="qty_available"/>
                 <field name="virtual_available"/>
                 <field name="name"/>
                 <field name="ean13"/>
@@ -108,6 +109,7 @@
             <field name="ean13" />
             <field name="catalog_num"/>
             <field name="list_price" />
+            <field name="qty_available"/>
             <field name="virtual_available"/>
             <field name="date_retour" />
        </tree>
@@ -143,8 +145,8 @@
                      </field>
                     <group colspan="2" col="2">
                     <field name="list_price" select="2"/>
-                     <field name="virtual_available"/>
                      <field name="qty_available"/>
+                     <field name="virtual_available"/>
                     </group>
                 </page>
                 <page string="Details">
