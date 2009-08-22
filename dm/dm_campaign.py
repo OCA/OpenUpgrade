@@ -23,25 +23,10 @@ import time
 import datetime
 import warnings
 import netsvc
-import pooler
-import base64
-import string
-import re
 from mx import DateTime
 
 from osv import fields
 from osv import osv
-from lxml import etree
-from random import Random
-
-from email.MIMEMultipart import MIMEMultipart
-from email.MIMEText import MIMEText
-from email.MIMEImage import MIMEImage
-
-from dm.dm_report_design import merge_message
-
-_regex = re.compile('\[\[setHtmlImage\((.+?)\)\]\]')
-_regexp1 = re.compile('(\[\[.+?\]\])')
 
 """
 class dm_overlay_payment_rule(osv.osv):
@@ -271,10 +256,6 @@ class dm_campaign(osv.osv):#{{{
         return True      
 
     def state_pending_set(self, cr, uid, ids, *args):
-        self.manufacturing_state_inprogress_set(cr, uid, ids, *args)
-        self.dtp_state_inprogress_set(cr, uid, ids, *args)
-        self.customer_file_state_inprogress_set(cr, uid, ids, *args)
-        self.items_state_inprogress_set(cr, uid, ids, *args)
         self.write(cr, uid, ids, {'state':'pending'})
         return True
 
@@ -282,11 +263,6 @@ class dm_campaign(osv.osv):#{{{
         camp = self.browse(cr,uid,ids)[0]
         if not camp.date_start or not camp.dealer_id or not camp.trademark_id or not camp.lang_id or not camp.currency_id:
             raise osv.except_osv("Error","Informations are missing. Check Drop Date, Dealer, Trademark, Language and Currency")
-
-        if ((camp.manufacturing_state != 'done') or (camp.dtp_state != 'done') or (camp.customer_file_state != 'done') or (camp.items_state != 'done')):
-            raise osv.except_osv(
-                _('Could not open this Campaign'),
-                _('You must first close all states related to this campaign.'))
 
         if (camp.date_start > time.strftime('%Y-%m-%d')):
             raise osv.except_osv("Error!!","Campaign cannot be opened before drop date")
@@ -511,6 +487,25 @@ class dm_campaign_proposition(osv.osv):#{{{
     _name = "dm.campaign.proposition"
     _inherits = {'account.analytic.account': 'analytic_account_id'}
 
+    def _get_step_products(self,cr, uid, ids, *args):
+        prop_obj = self.browse(cr, uid, ids)[0]
+        offer_id = prop_obj.camp_id.offer_id.id
+        step_ids = self.pool.get('dm.offer.step').search(cr, uid, [('offer_id','=',offer_id)])
+        step_obj = self.pool.get('dm.offer.step').browse(cr, uid, step_ids)
+        for step in step_obj:
+            for item in step.item_ids:
+                vals = {'product_id':item.id,
+                        'proposition_id':ids[0],
+                        'offer_step_id':step.id,
+                        'qty_planned':item.virtual_available,
+                        'qty_real':item.qty_available,
+                        'price':item.list_price,
+                        'notes':item.description,
+                        'forecasted_yield' : step.forecasted_yield,
+                }
+                self.pool.get('dm.campaign.proposition.item').create(cr, uid, vals)
+        return True
+
     def default_get(self, cr, uid, fields, context=None):
         value = super(dm_campaign_proposition, self).default_get(cr, uid, fields, context)
         if 'camp_id' in context and context['camp_id']:
@@ -725,10 +720,6 @@ class dm_campaign_proposition(osv.osv):#{{{
         'payment_method_ids' : fields.many2many('account.journal','proposition_payment_method_rel','proposition_id','journal_id','Payment Methods',domain=[('type','=','cash')]),
         'keep_segments' : fields.boolean('Keep Segments'),
         'keep_prices' : fields.boolean('Keep Prices At Duplication'),
-        'force_sm_price' : fields.boolean('Force Starting Mail Price'),
-        'price_prog_use' : fields.boolean('Price Progression'),
-        'sm_price' : fields.float('Starting Mail Price', digits=(16,2)),
-#        'prices_prog_id' : fields.many2one('dm.campaign.proposition.prices_progression', 'Prices Progression'),
         'manufacturing_costs': fields.float('Manufacturing Costs',digits=(16,2)),
         'forwarding_charge' : fields.float('Forwarding Charge', digits=(16,2)),
     }
@@ -1026,15 +1017,6 @@ class dm_campaign_manufacturing_cost(osv.osv):#{{{
     }
 dm_campaign_manufacturing_cost()#}}}
 
-class dm_campaign_proposition_prices_progression(osv.osv):#{{{
-    _name = 'dm.campaign.proposition.prices_progression'
-    _columns = {
-        'name' : fields.char('Name', size=64, required=True),
-        'fixed_prog' : fields.float('Fixed Prices Progression', digits=(16,2)),
-        'percent_prog' : fields.float('Percentage Prices Progression', digits=(16,2)),
-    }
-dm_campaign_proposition_prices_progression()#}}}
-
 class dm_mail_service_type(osv.osv):
     _name = "dm.mail_service.type"
     _columns = {
@@ -1070,6 +1052,7 @@ class dm_mail_service(osv.osv):
         'hosted_image_use' : fields.boolean('Hosted Image'),
         'smtp_server_id' : fields.many2one('email.smtpclient', 'SMTP Server', ondelete="cascade"),
         'service_type' : fields.char('Type Code',size=64),
+        'store_email_document' : fields.boolean('Store Email Document'),
     }
 
     def _check_unique_mail_service(self, cr, uid, ids, media_id, default_for_media):
@@ -1088,64 +1071,6 @@ class dm_mail_service(osv.osv):
         return res
 
 dm_mail_service()
-
-def set_image_email(node,msg):
-    if not node.getchildren():
-        if  node.tag=='img' and node.get('src') and node.get('src').find('data:image/gif;base64,')>=0:
-            msgImage = MIMEImage(base64.decodestring(node.get('src').replace('data:image/gif;base64,','')))
-            image_name = ''.join( Random().sample(string.letters+string.digits, 12) )
-            msgImage.add_header('Content-ID','<%s>'%image_name)
-            msg.attach(msgImage)
-            node.set('src',"cid:%s"%image_name)
-    else :
-        for n in node.getchildren():
-            set_image_email(n,msg)
-
-def create_email_queue(cr,uid,obj,context):
-    pool = pooler.get_pool(cr.dbname)
-    ir_att_obj = pool.get('ir.attachment')
-    email_queue_obj = pool.get('email.smtpclient.queue')
-    ir_att_ids = ir_att_obj.search(cr,uid,[('res_model','=','dm.campaign.document'),('res_id','=',obj.id),('file_type','=','html')])
-    context['document_id'] = obj.document_id.id
-    context['address_id'] = obj.address_id.id
-    for attach in ir_att_obj.browse(cr,uid,ir_att_ids):
-        message = base64.decodestring(attach.datas)
-        root = etree.HTML(message)
-        body = root.find('body')
-        msgRoot = MIMEMultipart('related')
-
-#        plugin_list = [] 
-#        No need as it is set in the function
-#        if obj.document_id.subject and _regexp1.findall(obj.document_id.subject) :
-#            raw_plugin_list = _regexp1.findall(obj.document_id.subject)
-#            for p in raw_plugin_list :
-#                plugin_list.append(p[2:-2])
-#        context['plugin_list'] = plugin_list'''
-        subject =  merge_message(cr, uid, obj.document_id.subject, context)
-        msgRoot['Subject'] = subject
-        msgRoot['From'] = str(obj.mail_service_id.smtp_server_id.email)
-        msgRoot['To'] = str(obj.address_id.email)
-        msgRoot.preamble = 'This is a multi-part message in MIME format.'
-    
-        msg = MIMEMultipart('alternative')
-        msgRoot.attach(msg)
-
-        set_image_email(body,msgRoot)
-        msgText = MIMEText(etree.tostring(body), 'html')
-        msg.attach(msgText)
-        if message :
-            vals = {
-                'to':str(obj.address_id.email),
-                'server_id':obj.mail_service_id.smtp_server_id.id,
-                'cc':False,
-                'bcc':False,
-                'name':subject,
-                'body' : msgRoot.as_string(),
-                'serialized_message': msgRoot.as_string(),
-                'date_create':time.strftime('%Y-%m-%d %H:%M:%S')
-                }
-            email_queue_obj.create(cr,uid,vals)
-    return True
 
 class dm_campaign_mail_service(osv.osv):
     _name = "dm.campaign.mail_service"

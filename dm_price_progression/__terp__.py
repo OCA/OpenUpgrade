@@ -20,22 +20,21 @@
 #
 ##############################################################################
 {
-    "name" : "Retro-Planning Tasks Management for DM",
+    "name" : "Price Progression for DM",
     "version" : "1.0",
     "author" : "Tiny",
     "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Direct Marketing",
     "description": """
-            This module adds campaign retro-planning tasks management for Direct Marketing.
+            This module assigns price progression in campaign propositions for Direct Marketing.
             """,
-    "depends" : ["dm_campaign_purchase"],
+    "depends" : ["dm"],
     "init_xml" : [],
-    "demo_xml" : [],
+    "demo_xml" : ["dm_price_progression_demo.xml"],
     "update_xml" : [
                     "security/ir.model.access.csv",
-                    "dm_retro_planning_wizard.xml",
-                    "dm_retro_planning_view.xml",
-                    "dm_retro_planning_data.xml",
+                    "dm_price_progression_wizard.xml",
+                    "dm_price_progression_view.xml",
                     ],
     "active": False,
     "installable": True,

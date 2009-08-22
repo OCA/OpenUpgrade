@@ -141,6 +141,25 @@ class dm_campaign(osv.osv):#{{{
     def items_state_done_set(self, cr, uid, ids, *args):
         self.write(cr, uid, ids, {'items_state':'done'})
         return True
+    
+    def state_pending_set(self, cr, uid, ids, *args):
+        self.manufacturing_state_inprogress_set(cr, uid, ids, *args)
+        self.dtp_state_inprogress_set(cr, uid, ids, *args)
+        self.customer_file_state_inprogress_set(cr, uid, ids, *args)
+        self.items_state_inprogress_set(cr, uid, ids, *args)
+        super(dm_campaign, self).state_pending_set(cr, uid, ids, *args)
+        return True
+    
+    def state_open_set(self, cr, uid, ids, *args):
+        camp = self.browse(cr,uid,ids)[0]
+        if ((camp.manufacturing_state != 'done') or (camp.dtp_state != 'done') or (camp.customer_file_state != 'done') or (camp.items_state != 'done')):
+            raise osv.except_osv(
+                _('Could not open this Campaign'),
+                _('You must first close all states related to this campaign.'))
+        super(dm_campaign, self).state_open_set(cr, uid, ids, *args)
+        return True
+
+
 
 dm_campaign()
 

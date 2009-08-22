@@ -16,7 +16,7 @@
             <field name="arch" type="xml">
             	<notebook position="inside">
             		<page string="Supplying">
-	                    <field name="purchase_line_ids" colspan="4" nolabel="1" context="{'campaign_group_id':active_id}"/>
+	                    <field name="purchase_line_ids" colspan="4" nolabel="1"/>
 	                </page>
             	</notebook>
             </field>

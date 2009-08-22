@@ -12,7 +12,8 @@ def customer_function(cr, uid, **args):
     model_name = args['model_name']
     model_object =  pool.get(model_name)
     if model_name in ['dm.workitem','dm.campaign','dm.offer.step','dm.trademark'] and 'wi_id' in args:
-        data = pool.get('dm.workitem').browse(cr,uid,args['wi_id'])
+#        data = pool.get('dm.workitem').browse(cr,uid,args['wi_id'])
+        data = pool.get('dm.workitem').browse(cr,uid,args['wi_id'],context={'bin_size': False})
         if not data.segment_id : return False
         if not data.segment_id.proposition_id : return False
         if not data.segment_id.proposition_id.camp_id.trademark_id : return False

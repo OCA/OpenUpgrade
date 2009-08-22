@@ -524,7 +524,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
             <field name="model_id" ref="dm.model_dm_workitem"/>
             <field eval="[(6,0,[])]" name="child_ids"/>
-            <field eval="&quot;&quot;&quot;from dm import dm_report_design \naction = dm_report_design.generate_reports(cr,uid,obj,'pdf',context)&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;from dm import dm_report_design \naction = dm_report_design.process_workitem(cr,uid,obj,'pdf',context)&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
             <field eval="&quot;&quot;&quot;Generate PDF Document&quot;&quot;&quot;" name="name"/>
         </record>
@@ -547,7 +547,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="model_id" ref="dm.model_dm_workitem"/>
             <field eval="[(6,0,[])]" name="child_ids"/>
             <field eval="1" name="dm_action"/>
-            <field eval="&quot;&quot;&quot;from dm import dm_report_design \naction = dm_report_design.generate_reports(cr,uid,obj,'html2html',context)&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;from dm import dm_report_design \naction = dm_report_design.process_workitem(cr,uid,obj,'html2html',context)&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
             <field eval="&quot;&quot;&quot;Generate HTML Document&quot;&quot;&quot;" name="name"/>
         </record>
@@ -558,7 +558,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
             <field name="model_id" ref="dm.model_dm_campaign_document"/>
             <field eval="[(6,0,[])]" name="child_ids"/>
-            <field eval="&quot;&quot;&quot;from dm import dm_campaign\naction = dm_campaign.create_email_queue(cr,uid,obj,context)&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;from dm import dm_document\naction = dm_document.create_email_queue(cr,uid,obj,context)&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
             <field eval="&quot;&quot;&quot;Generate Email Queue&quot;&quot;&quot;" name="name"/>
         </record>
@@ -975,7 +975,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="message">There is no mail service defined for this preview document</field>
         </record>
         <record model="dm.sysmsg" id="dm_sysmsg_mail_service_unsubscription">
-            <field name="name">DM - Unsubscription</field>
+            <field name="name">Unsubscription</field>
             <field name="code">unsubscription</field>
             <field name="message">Cancelled by unsubscription</field>
         </record>

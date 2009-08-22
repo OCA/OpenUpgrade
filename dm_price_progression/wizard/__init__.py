@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution    
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -19,26 +19,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name" : "Retro-Planning Tasks Management for DM",
-    "version" : "1.0",
-    "author" : "Tiny",
-    "website" : "http://www.openerp.com",
-    "category" : "Generic Modules/Direct Marketing",
-    "description": """
-            This module adds campaign retro-planning tasks management for Direct Marketing.
-            """,
-    "depends" : ["dm_campaign_purchase"],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-                    "security/ir.model.access.csv",
-                    "dm_retro_planning_wizard.xml",
-                    "dm_retro_planning_view.xml",
-                    "dm_retro_planning_data.xml",
-                    ],
-    "active": False,
-    "installable": True,
-}
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
+import dm_proposition_products
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

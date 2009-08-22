@@ -872,7 +872,6 @@ rkJggg==
 
         <record id="dm_campaign_proposition_ondemandfreetrialbookstoreoffer0" model="dm.campaign.proposition">
             <field eval="1" name="keep_prices"/>
-            <field eval="0" name="force_sm_price"/>
             <field eval="1" name="keep_segments"/>
             <field eval="&quot;&quot;&quot;init&quot;&quot;&quot;" name="proposition_type"/>
             <field eval="5.0" name="sale_rate"/>
@@ -887,7 +886,6 @@ rkJggg==
 
         <record id="dm_campaign_proposition_ondemandfreetrialassociationoffer0" model="dm.campaign.proposition">
             <field eval="1" name="keep_prices"/>
-            <field eval="0" name="force_sm_price"/>
             <field eval="1" name="keep_segments"/>
             <field eval="&quot;&quot;&quot;init&quot;&quot;&quot;" name="proposition_type"/>
             <field eval="7.0" name="sale_rate"/>
@@ -898,10 +896,6 @@ rkJggg==
             <field eval="time.strftime('%Y-%m-%d')" name="date_start"/>
             <field eval="&quot;&quot;&quot;
 1 month OpenERP OnDemand Free Trial for the Association Offer&quot;&quot;&quot;" name="notes"/>
-        </record>
-
-        <record id="dm_campaign_proposition_prices_progression_nopriceprogression0" model="dm.campaign.proposition.prices_progression">
-            <field eval="&quot;&quot;&quot;No Price Progression&quot;&quot;&quot;" name="name"/>
         </record>
 
     <!-- Users -->
