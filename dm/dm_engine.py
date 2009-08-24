@@ -247,9 +247,8 @@ class dm_event(osv.osv_memory): # {{{
                 ('condition_id','=',obj.trigger_type_id.id)])
         if not tr_ids:
             netsvc.Logger().notifyChannel('dm event case', netsvc.LOG_WARNING, "There is no transition %s at this step : %s"% (obj.trigger_type_id.name, obj.step_id.code))
-            osv.except_osv('Warning', "There is no transition %s at this step : %s"% (obj.trigger_type_id.name, obj.step_id.code))
+            raise osv.except_osv('Warning', "There is no transition %s at this step : %s"% (obj.trigger_type_id.name, obj.step_id.code))
             return False
-
         for tr in self.pool.get('dm.offer.step.transition').browse(cr, uid, tr_ids):
             if obj.action_time:
                 next_action_time = datetime.datetime.strptime(obj.action_time, '%Y-%m-%d  %H:%M:%S')
