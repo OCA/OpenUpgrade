@@ -43,31 +43,32 @@ class account_invoice_line(osv.osv):
                     cacc = i_line.product_id.product_tmpl_id.property_account_expense and i_line.product_id.product_tmpl_id.property_account_expense.id
                     if not cacc:
                         cacc = i_line.product_id.categ_id.property_account_expense_categ and i_line.product_id.categ_id.property_account_expense_categ.id
-                    res.append({
-                        'type':'src',
-                        'name': i_line.name[:64],
-                        'price_unit':i_line.product_id.product_tmpl_id.standard_price,
-                        'quantity':i_line.quantity,
-                        'price':i_line.product_id.product_tmpl_id.standard_price * i_line.quantity,
-                        'account_id':dacc,
-                        'product_id':i_line.product_id.id,
-                        'uos_id':i_line.uos_id.id,
-                        'account_analytic_id':i_line.account_analytic_id.id,
-                        'taxes':i_line.invoice_line_tax_id,
-                        })
-                    
-                    res.append({
-                        'type':'src',
-                        'name': i_line.name[:64],
-                        'price_unit':i_line.product_id.product_tmpl_id.standard_price,
-                        'quantity':i_line.quantity,
-                        'price': -1 * i_line.product_id.product_tmpl_id.standard_price * i_line.quantity,
-                        'account_id':cacc,
-                        'product_id':i_line.product_id.id,
-                        'uos_id':i_line.uos_id.id,
-                        'account_analytic_id':i_line.account_analytic_id.id,
-                        'taxes':i_line.invoice_line_tax_id,
-                        })
+                    if dacc and cacc:
+                        res.append({
+                            'type':'src',
+                            'name': i_line.name[:64],
+                            'price_unit':i_line.product_id.product_tmpl_id.standard_price,
+                            'quantity':i_line.quantity,
+                            'price':i_line.product_id.product_tmpl_id.standard_price * i_line.quantity,
+                            'account_id':dacc,
+                            'product_id':i_line.product_id.id,
+                            'uos_id':i_line.uos_id.id,
+                            'account_analytic_id':i_line.account_analytic_id.id,
+                            'taxes':i_line.invoice_line_tax_id,
+                            })
+                        
+                        res.append({
+                            'type':'src',
+                            'name': i_line.name[:64],
+                            'price_unit':i_line.product_id.product_tmpl_id.standard_price,
+                            'quantity':i_line.quantity,
+                            'price': -1 * i_line.product_id.product_tmpl_id.standard_price * i_line.quantity,
+                            'account_id':cacc,
+                            'product_id':i_line.product_id.id,
+                            'uos_id':i_line.uos_id.id,
+                            'account_analytic_id':i_line.account_analytic_id.id,
+                            'taxes':i_line.invoice_line_tax_id,
+                            })
         elif inv.type in ('in_invoice','in_refund'):
             for i_line in inv.invoice_line:
                 if i_line.product_id:
@@ -90,7 +91,7 @@ class account_invoice_line(osv.osv):
                         diff_res = []
                         for line in res:
                             if a == line['account_id'] and i_line.product_id.id == line['product_id']:
-                                if i_line.product_id.product_tmpl_id.standard_price != i_line.price_unit and acc:
+                                if i_line.product_id.product_tmpl_id.standard_price != i_line.price_unit and line['price'] == i_line.price_unit and acc:
                                     price_diff = i_line.price_unit - i_line.product_id.product_tmpl_id.standard_price
                                     line.update({'price':i_line.product_id.product_tmpl_id.standard_price * line['quantity']})
                                     diff_res.append({
@@ -103,7 +104,7 @@ class account_invoice_line(osv.osv):
                                         'product_id':line['product_id'],
                                         'uos_id':line['uos_id'],
                                         'account_analytic_id':line['account_analytic_id'],
-                                        'taxes':line['taxes'],
+                                        'taxes':line.get('taxes',[]),
                                         })
                         res += diff_res
         return res   
