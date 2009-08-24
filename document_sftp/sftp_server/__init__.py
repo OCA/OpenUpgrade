@@ -30,7 +30,7 @@ from document import ftpserver
 from tools import config
 import os
 
-privateKey = os.path.expanduser('~/.ssh/id_rsa')
+privateKey = config['root_path'] + 'server.pkey'
 PORT = int(config.get('sftp_server_port', 8022))
 HOST = ''
 

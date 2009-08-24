@@ -6,11 +6,18 @@
             <field name="inherit_id" ref="base.view_users_form"/>
             <field name="arch" type="xml">
                 <field name="signature" position="after">
-                    <field name="ssh_key" colspan="4"/>                    
-                </field>
-            </field>
+                    <field name="ssh_key_ids" colspan="4"  nolabel="1" mode="tree,form" >
+                    	<tree string="SSH Public Keys">
+                    		<field name="ssh_key"/>
+                    	</tree>
+                    	<form string="SSH Public Keys">
+                    		<separator string="SSH Public Key" colspan="1"/> 
+                    		<field name="ssh_key" colspan="4"  nolabel="1"/>
+                    	</form>
+                   </field>
+               </field>
+           </field>
         </record>
-    
 
 </data>
 </openerp>
