@@ -220,8 +220,6 @@ def create_email_queue(cr,uid,obj,context):
         for attach in ir_att_obj.browse(cr,uid,ir_att_ids):
             message.append(base64.decodestring(attach.datas))
     else :
-       active_id = context['active_id']
-       context['active_id'] = obj.wi_id.id
        document_data = pool.get('dm.offer.document').browse(cr,uid,obj.document_id.id)
        
        if obj.document_id.editor ==  'internal' :
@@ -229,9 +227,8 @@ def create_email_queue(cr,uid,obj,context):
        else :
            msg = generate_openoffice_reports(cr, uid, 'html2html', document_data, False, context)
            message.extend(msg)
-       context['active_id'] = active_id
-    for m  in message:
-        root = etree.HTML(m)
+    for msg  in message:
+        root = etree.HTML(msg)
         body = root.find('body')
         msgRoot = MIMEMultipart('related')
 

@@ -59,7 +59,7 @@ class offer_document(report_sxw.rml_parse):
 
     def trademark_id(self):
         if 'form' not in self.datas :
-            workitem_id = self.context['active_id']
+            workitem_id = self.context['wi_id']
             res = self.pool.get('dm.workitem').browse(self.cr, self.uid, workitem_id)
             return res.segment_id.proposition_id.camp_id.trademark_id
         else:
@@ -71,7 +71,7 @@ class offer_document(report_sxw.rml_parse):
         if 'form' not in self.datas :
             addr_id = self.context['address_id']
             doc_id = self.context['document_id']
-            wi_id = self.context['active_id']
+            wi_id = self.context['wi_id']
             type = 'email_doc'
         else :
             type = 'preview'

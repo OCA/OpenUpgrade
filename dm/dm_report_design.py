@@ -116,6 +116,8 @@ def generate_internal_reports(cr, uid, report_type, document_data, camp_doc, con
     
     if report_type=='html2html' and document_data.content:
         """ Check if to use the internal editor report """
+        if not document_data.content:
+                return "no_report_for_document"
         report_data = internal_html_report + str(document_data.content)+"</BODY></HTML>"
         context['type'] = 'email_doc'
         report_data = merge_message(cr, uid, report_data, context)
@@ -128,7 +130,7 @@ def generate_internal_reports(cr, uid, report_type, document_data, camp_doc, con
                        'file_type':'html'
                        }
            attach_id = attachment_obj.create(cr,uid,attach_vals,{'not_index_context':True})
-           return True
+           return "doc_done"
         return report_data
 
 def generate_openoffice_reports(cr, uid, report_type, document_data, camp_doc, context):
@@ -139,6 +141,8 @@ def generate_openoffice_reports(cr, uid, report_type, document_data, camp_doc, c
     report_xml = pool.get('ir.actions.report.xml')
         
     report_ids = report_xml.search(cr, uid, [('document_id','=',document_data.id),('report_type','=',report_type)])
+    if not report_ids :
+        return "no_report_for_document"
 
     """ Generate documents created by OpenOffice """
     for report in pool.get('ir.actions.report.xml').browse(cr, uid, report_ids) :
@@ -157,6 +161,8 @@ def generate_openoffice_reports(cr, uid, report_type, document_data, camp_doc, c
             report_content.append(report_data)
     if report_content and not camp_doc:
         return report_content
+    else :
+        return "doc_done"
 
 def process_workitem(cr, uid, obj, report_type, context): # {{{
 
@@ -195,7 +201,7 @@ def process_workitem(cr, uid, obj, report_type, context): # {{{
 
     """ Set mail service to use """
     if obj.mail_service_id:
-        camp_mail_service = camp_mail_service_obj.browse(cr, uid, [obj.mail_service_id.id])[0]
+        mail_service = obj.mail_service_id
     else:
         if obj.segment_id :
             if not obj.segment_id.proposition_id:
@@ -208,11 +214,11 @@ def process_workitem(cr, uid, obj, report_type, context): # {{{
                 if not camp_mail_service_id:
                     return "no_mail_service_for_campaign"
                 else:
-                    camp_mail_service = camp_mail_service_obj.browse(cr, uid, camp_mail_service_id)[0]
+                    mail_service = camp_mail_service_obj.browse(cr, uid, camp_mail_service_id)[0].mail_service_id
         else:
             return "no_segment"
 
-    ms_id = camp_mail_service.mail_service_id.id
+    ms_id = mail_service.id
     for address_id in address_ids:
         """ Get offer step documents to process """
         document_id = dm_doc_obj.search(cr, uid, [('step_id','=',obj.step_id.id),('category_id','=','Production')])
@@ -240,7 +246,7 @@ def process_workitem(cr, uid, obj, report_type, context): # {{{
 
     """ Create campaign document """
     camp_doc = pool.get('dm.campaign.document').create(cr, uid, vals)
-    if camp_mail_service.mail_service_id.store_email_document :
+    if mail_service.store_email_document :
         context['address_id'] = address_id
         document_data = dm_doc_obj.browse(cr, uid, document_id[0])
         context['document_id'] = document_id[0]
@@ -248,11 +254,11 @@ def process_workitem(cr, uid, obj, report_type, context): # {{{
         context['store_document'] = True
     #        create_tnt_reports(cr,uid,obj,type_id,camp_mail_service,delivery_time,address_id,document_data,context)
         if document_data['editor'] ==  'internal' :
-           generate_internal_reports(cr, uid, report_type, document_data, camp_doc, context)
+           res = generate_internal_reports(cr, uid, report_type, document_data, camp_doc, context)
         elif document_data['editor'] == 'oord' :
-           generate_openoffice_reports(cr, uid, report_type, document_data, camp_doc, context)
-        else :
-            return "no_report_for_document"
+           res =generate_openoffice_reports(cr, uid, report_type, document_data, camp_doc, context)
+        if type(res) not in (type([]) , type(True)) :
+            return res
     return "doc_done" # }}}
     
             
