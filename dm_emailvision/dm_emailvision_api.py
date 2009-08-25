@@ -29,7 +29,7 @@ import httplib
 import base64
 import time
 
-from dm.dm_report_design import merge_message
+from dm.dm_report_design import merge_message ,generate_internal_reports ,generate_openoffice_reports
 
 #from dm_email.dm_email_document import set_image_email - not of use
 #from email.MIMEMultipart import MIMEMultipart
