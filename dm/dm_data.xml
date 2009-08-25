@@ -974,10 +974,16 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="code">no_mail_service_for_preview</field>
             <field name="message">There is no mail service defined for this preview document</field>
         </record>
+        <record model="dm.sysmsg" id="dm_sysmsg_mail_service_no_report">
+            <field name="name">No report for a document</field>
+            <field name="code">no_report_for_document</field>
+            <field name="message">There is no report defined for this document</field>
+        </record>
         <record model="dm.sysmsg" id="dm_sysmsg_mail_service_unsubscription">
             <field name="name">Unsubscription</field>
             <field name="code">unsubscription</field>
             <field name="message">Cancelled by unsubscription</field>
+            <field name="state">cancel</field>
         </record>
         <record model="dm.sysmsg" id="dm_sysmsg_document_done">
             <field name="name">Document Succesfully Generated</field>
