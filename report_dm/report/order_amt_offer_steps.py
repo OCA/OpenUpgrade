@@ -35,7 +35,7 @@ def lengthmonth(year, month):
     return [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month]
 
 def step_create_xml(cr, id, som, eom):
-    # Computing the attendence by analytical account
+    # Computing the total amt by offer step
     cr.execute(
         "select sum(amount_total) as qty, s.date_order from sale_order s "\
         "where offer_step_id = %s and s.date_order >= %s and s.date_order < %s " \
@@ -45,9 +45,9 @@ def step_create_xml(cr, id, som, eom):
     # Sum by day
     month = {}
     res = cr.dictfetchall()
-    for presence in res:
-        day = int(presence['date_order'][-2:])
-        month[day] = month.get(day, 0.0) + presence['qty']
+    for r in res:
+        day = int(r['date_order'][-2:])
+        month[day] = month.get(day, 0.0) + r['qty']
     
     xml = '''
     <time-element date="%s">

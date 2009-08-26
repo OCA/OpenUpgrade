@@ -22,5 +22,7 @@
 
 import wizard_order_quantity_offer_steps
 import wizard_order_amount_offer_steps
+import wizard_order_amount_campaign
+import wizard_order_quantity_campaign
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

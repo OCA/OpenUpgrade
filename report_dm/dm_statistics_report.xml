@@ -16,5 +16,14 @@
     <menuitem icon="STOCK_PRINT" action="wizard_order_amount_offer_steps" id="menu_order_amount_offer_steps" parent="menu_dm_report" type="wizard"/>
 
 
+        <report auto="False" id="report_order_qty_campaign" menu="False" model="dm.campaign" name="dm.order.quantity.campaign" string="Order Qunatity for Campaign segment" xsl="report_dm/report/order_qty_campaign.xsl"/>        
+        <wizard id="wizard_order_quantity_campaign" menu="False" model="dm.campaign" name="dm.order.quantity.campaign" string="Order quantity per Segment of campaign"/>
+    <menuitem icon="STOCK_PRINT" action="wizard_order_quantity_campaign" id="menu_order_quantity_campaign" parent="menu_dm_report" type="wizard"/>
+
+
+
+        <report auto="False" id="report_order_amt_campaign" menu="False" model="dm.campaign" name="dm.order.amount.campaign" string="Income per Segment of Campaign" xsl="report_dm/report/order_amt_campaign.xsl"/>        
+        <wizard id="wizard_order_amount_campaign" menu="False" model="dm.campaign" name="dm.order.amount.campaign" string="Income per Segment of Campaign"/>
+    <menuitem icon="STOCK_PRINT" action="wizard_order_amount_campaign" id="menu_order_amount_campaign" parent="menu_dm_report" type="wizard"/>
     </data>
 </openerp>

@@ -34,11 +34,11 @@ def lengthmonth(year, month):
         return 29
     return [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month]
 
-def step_create_xml(cr, id, som, eom):
-    # Computing the qty by offer step
+def segment_create_xml(cr, uid, id, som, eom):
+    # Computing the qty by segment
     cr.execute(
         "select count(id) as qty, s.date_order from sale_order s "\
-        "where offer_step_id = %s and s.date_order >= %s and s.date_order < %s " \
+        "where segment_id = %s and s.date_order >= %s and s.date_order < %s " \
         "group by s.date_order",
         (id, som.strftime('%Y-%m-%d'), eom.strftime('%Y-%m-%d')))
     
@@ -56,15 +56,15 @@ def step_create_xml(cr, id, som, eom):
     '''
     time_xml = ([xml % (day, amount) for day, amount in month.iteritems()])
     
-    # Computing the employee
-    cr.execute("select name from dm_offer_step where id=%s", (id,))
-    step = cr.fetchone()[0]
+    pool = pooler.get_pool(cr.dbname)
+        
+    segment = pool.get('dm.campaign.proposition.segment').browse(cr,uid,id).name
     # Computing the xml
     xml = '''
-    <step id="%d" name="%s">
+    <segment id="%d" name="%s">
     %s
-    </step>
-    ''' % (id, toxml(step), '\n'.join(time_xml))
+    </segment>
+    ''' % (id, toxml(segment), '\n'.join(time_xml))
     return xml
 
 class report_custom(report_rml):
@@ -79,13 +79,13 @@ class report_custom(report_rml):
 
     def create_xml(self, cr, uid, ids, data, context):
 
-        offer_id = data['form']['offer_id']
+        camp_id = data['form']['camp_id']
         pool = pooler.get_pool(cr.dbname)
         
-        step_id = pool.get('dm.offer.step').search(cr,uid,[('offer_id','=',offer_id)])
+        segment_id = pool.get('dm.campaign.proposition.segment').search(cr,uid,[('campaign_id','=',camp_id)])
         
         
-        sql = "select count(s.id),offer_step_id ,to_char(s.date_order, 'YYYY-MM-DD') as date from sale_order s where offer_step_id in %s group by to_char(s.date_order, 'YYYY-MM-DD') , offer_step_id "%str(tuple(step_id))
+        sql = "select count(s.id),segment_id ,to_char(s.date_order, 'YYYY-MM-DD') as date from sale_order s where segment_id in %s group by to_char(s.date_order, 'YYYY-MM-DD') , segment_id "%str(tuple(segment_id))
         
         cr.execute(sql)
         res = cr.fetchall()
@@ -99,21 +99,20 @@ class report_custom(report_rml):
         date_xml.append('<cols>3.75cm%s,1.25cm</cols>\n' % (',.75cm' * lengthmonth(som.year, som.month)))
         
 
-        step_xml=''
-        for id in step_id:
-            step_xml += step_create_xml(cr, id, som, eom)
+        segment_xml=''
+        for id in segment_id:
+            segment_xml += segment_create_xml(cr, uid, id, som, eom)
             
         # Computing the xml
         xml = '''<?xml version="1.0" encoding="UTF-8" ?>
         <report>%s
         %s
         </report>
-        ''' % (date_xml , step_xml )
+        ''' % (date_xml , segment_xml )
 
         return xml
 
-report_custom('report.dm.order.quantity.offer.steps', 'dm.offer', '', 'addons/report_dm/report/order_qty_offer_steps.xsl')
-
+report_custom('report.dm.order.quantity.campaign', 'dm.campaign', '', 'addons/report_dm/report/order_qty_campaign.xsl')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
