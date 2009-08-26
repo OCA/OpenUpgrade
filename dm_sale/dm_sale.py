@@ -24,6 +24,7 @@ import sys
 from osv import fields
 from osv import osv
 import netsvc
+import traceback
 
 
 class dm_workitem(osv.osv):
@@ -67,7 +68,7 @@ class sale_order(osv.osv):#{{{
                 wf_service.trg_validate(uid, 'sale.order', sale_order_id, 'order_confirm', cr)
                 if so.invoice_create_do:
                     inv_id = self.pool.get('sale.order').action_invoice_create(cr, uid, [sale_order_id])
-                    if so.journal_id:
+                    if so.journal_id and so.journal_id.default_credit_account_id and so.journal_id.default_credit_account_id.reconcile:
                         self.pool.get('account.invoice').write(cr, uid, inv_id, {'journal_id': so.journal_id.id, 'account_id': so.journal_id.default_credit_account_id.id})
                     if inv_id and so.invoice_validate_do:
                         wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
