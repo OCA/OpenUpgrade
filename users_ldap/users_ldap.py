@@ -26,7 +26,7 @@ import pooler
 
 try:
     import ldap
-    from ld ap.filter import filter_format
+    from ldap.filter import filter_format
 except ImportError:
     import netsvc
     logger = netsvc.Logger()
