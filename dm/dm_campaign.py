@@ -268,12 +268,8 @@ class dm_campaign(osv.osv):#{{{
             raise osv.except_osv("Error!!","Campaign cannot be opened before drop date")
 
         """ Create Flow Start Workitems """
-        print "Starting Campaign"
         start_type_ids = self.pool.get('dm.offer.step.type').search(cr, uid, [('flow_start','=',True)])
-        print "start_type_ids : ",start_type_ids
         step_ids = self.pool.get('dm.offer.step').search(cr, uid, [('offer_id','=',camp.offer_id.id),('type_id','in',start_type_ids)])
-        print "step_ids : ",step_ids
-
         for step in step_ids:
             for propo in camp.proposition_ids:
                 for seg in propo.segment_ids:
@@ -281,7 +277,6 @@ class dm_campaign(osv.osv):#{{{
                         res = self.pool.get('dm.workitem').create(cr, uid, {'segment_id':seg.id, 'step_id':step,
                             'source':seg.customers_file_id.source, 'is_global':True,
                             'action_time': time.strftime("%Y-%m-%d %H:%M:%S")})
-                        print "created wi :",res
 
         ''' Check for mail service for each offer step of a campaign '''
         for step in camp.offer_id.step_ids:
@@ -466,7 +461,7 @@ class dm_campaign(osv.osv):#{{{
         if not default: default = {}
         campaign_id = self.browse(cr, uid, id)
         if not default.get('name', False):
-            default['name'] = 'Copy of ' +campaign_id.name
+            default['name'] =  campaign_id.name + ' (Copy)'
         default.update({'date_start': False, 'date': False, 'project_id': False, 'proposition_ids': []})
         camp_copy_id = super(dm_campaign, self).copy(cr, uid, id, default, context)
         prop_ids = [x.id for x in campaign_id.proposition_ids]
@@ -557,7 +552,7 @@ class dm_campaign_proposition(osv.osv):#{{{
             self.write(cr, uid, proposition_id, {'camp_id' : default['camp_id']})
 
         data = self.browse(cr, uid, proposition_id, context)
-        default_name='Copy of %s' % data.name
+        default_name=' %s (Copy)' % data.name
         super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'name':default_name, 'date_start':False, 'initial_proposition_id':id})
 
         if data.keep_segments == False:
@@ -932,6 +927,15 @@ class dm_campaign_proposition_segment(osv.osv):#{{{
                 file_name = list.name + '-' + str(start_census) + '/' + str(end_census)
             return {'value':{'name':file_name}}
         return False
+    
+    
+    def copy(self, cr, uid, id, default=None, context={}):
+        if not default: default = {}
+        segment_id = self.browse(cr, uid, id)
+        if not default.get('name', False):
+            default['name'] =  segment_id.name + ' (Copy)'
+        seg_copy_id = super(dm_campaign_proposition_segment, self).copy(cr, uid, id, default, context)
+        return seg_copy_id
     
     _columns = {
         'code1' : fields.function(_segment_code, string='Code', type="char", size=64, method=True, readonly=True),

@@ -1276,7 +1276,6 @@
     =======================================================
     -->
 
-
     <act_window name="Commercial Propositions"
         res_model="dm.campaign.proposition"
         src_model="dm.campaign"
@@ -1295,6 +1294,6 @@
         id="act_campaign_opened"
         domain="[('proposition_ids','in',[active_id])]"
     />
-
+    
 </data>
 </openerp>
