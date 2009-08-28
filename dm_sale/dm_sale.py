@@ -27,7 +27,7 @@ import netsvc
 import traceback
 
 
-class dm_workitem(osv.osv):
+class dm_workitem(osv.osv): # {{{
     _name = "dm.workitem"
     _inherit = "dm.workitem"
 
@@ -41,7 +41,7 @@ class dm_workitem(osv.osv):
             so_res = self.pool.get('sale.order')._sale_order_process(cr, uid, wi.sale_order_id.id)
         return result
         
-dm_workitem()
+dm_workitem() # }}}
 
 
 class sale_order(osv.osv):#{{{
@@ -49,8 +49,8 @@ class sale_order(osv.osv):#{{{
     _inherit="sale.order"
 
     _columns = {
-        'offer_step_id': fields.many2one('dm.offer.step','Offer Step'),
-        'segment_id' : fields.many2one('dm.campaign.proposition.segment','Segment'),
+        'offer_step_id': fields.many2one('dm.offer.step', 'Offer Step', select="1"),
+        'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segment', select="1"),
         'journal_id': fields.many2one('account.journal', 'Journal'),
         'lines_number' : fields.integer('Number of sale order lines'),
         'so_confirm_do' : fields.boolean('Auto confirm sale order'),
