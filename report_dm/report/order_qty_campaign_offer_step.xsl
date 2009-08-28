@@ -44,7 +44,7 @@
 		<xsl:for-each select="report/story">	
 		<xsl:variable name="s_id" select="attribute::s_id"/>
 		<story>
-		    <para style="title" t="1"> -- Order Qunatity -- <xsl:value-of select="attribute::name"/> </para>
+		    <para style="title" t="1"> -- Order Quantity per Steps of Campaign -- <xsl:value-of select="attribute::name"/> </para>
 		    <spacer length="1cm" />
 		    <blockTable>
 			    <xsl:attribute name="style">month</xsl:attribute>
