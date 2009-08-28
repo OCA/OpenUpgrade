@@ -88,7 +88,6 @@ def send_email(cr,uid,obj,context):
 
     context['document_id'] = obj.document_id.id
     context['address_id'] = obj.address_id.id
-    context['wi_id'] = obj.wi_id.id
 
     email_subject = merge_message(cr, uid, obj.document_id.subject or '',context)
     name_from = obj.segment_id.campaign_id.trademark_id.name or ''
@@ -106,21 +105,17 @@ def send_email(cr,uid,obj,context):
        document_data = pool.get('dm.offer.document').browse(cr,uid,obj.document_id.id)
        
        if obj.document_id.editor ==  'internal' :
-            message.append(generate_internal_reports(cr, uid, 'html2html', document_data, False, context))
+           message.append(generate_internal_reports(cr, uid, 'html2html', document_data, False, context))
        else :
            msg = generate_openoffice_reports(cr, uid, 'html2html', document_data, False, context)
            message.extend(msg)
+
     for msg  in message:
         root = etree.HTML(msg)
         body = root.find('body')
 
-        print "message :", message
-        # I think html_content = message should wrk
         html_content = ''.join([ etree.tostring(x) for x in body.getchildren()])
-        print "body :", html_content
-#        html_content = _email_body(body)
-        text_content = "This is a test"
-        print "Test"
+        text_content = "html content only"
 
         "Composing XML"
         msg = etree.Element("MultiSendRequest")
@@ -198,11 +193,9 @@ def send_email(cr,uid,obj,context):
         res = ev_api.getfile().read()
     
         if statuscode != 200:
-            print "E"*50
             error_msg = "This document cannot be sent to Emailvision NMS API\nStatus Code : " + str(statuscode) + "\nStatus Message : " + statusmessage + "\nHeader : " + str(header) + "\nResult : " + res
             pool.get('dm.campaign.document').write(cr, uid, [obj.id], {'state':'error','error_msg':error_msg})
-            return False
-
-    return True
+            return {'code':'emv_doc_error'}
+    return {'code':'emv_doc_sent'}
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
