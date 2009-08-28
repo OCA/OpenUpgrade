@@ -73,18 +73,30 @@
              <field eval="True" name="condition"/>
              <field eval="&quot;&quot;&quot;Send Email with Emailvision NMP API&quot;&quot;&quot;" name="name"/>
          </record>
-        <record model="dm.sysmsg" id="dm_sysmsg_emv_sent">
-            <field name="name">Emailvision Document Sent</field>
-            <field name="code">emv_doc_sent</field>
-            <field name="message">This document was succesfully sent by the Emailvision API</field>
-            <field name="state">done</field>
-        </record>
-        <record model="dm.sysmsg" id="dm_sysmsg_emv_error">
-            <field name="name">Emailvision Document Error</field>
-            <field name="code">emv_doc_sent</field>
-            <field name="message">This document could not be sent by the Emailvision API</field>
-            <field name="state">error</field>
-        </record>
+
+		<record id="dm_sysmsg_emv_sent" model="dm.sysmsg">
+			<field eval="&quot;&quot;&quot;emv_doc_sent&quot;&quot;&quot;" name="code"/>
+			<field eval="&quot;&quot;&quot;Emailvision Document Sent&quot;&quot;&quot;" name="name"/>
+			<field name="field" ref="dm.field_dm_campaign_document_error_msg"/>
+			<field eval="1" name="level"/>
+			<field eval="0" name="send_email"/>
+			<field eval="&quot;&quot;&quot;done&quot;&quot;&quot;" name="state"/>
+			<field eval="1" name="result"/>
+			<field eval="&quot;&quot;&quot;This document was succesfully sent by the Emailvision API&quot;&quot;&quot;" name="message"/>
+			<field name="model" ref="dm.model_dm_campaign_document"/>
+		</record>
+		<record id="dm_sysmsg_emv_error" model="dm.sysmsg">
+			<field eval="&quot;&quot;&quot;emv_doc_error&quot;&quot;&quot;" name="code"/>
+			<field eval="&quot;&quot;&quot;Emailvision Document Error&quot;&quot;&quot;" name="name"/>
+			<field name="field" ref="dm.field_dm_campaign_document_error_msg"/>
+			<field eval="1" name="level"/>
+			<field eval="0" name="send_email"/>
+			<field eval="&quot;&quot;&quot;error&quot;&quot;&quot;" name="state"/>
+			<field eval="0" name="result"/>
+			<field eval="&quot;&quot;&quot;This document could not be sent by the Emailvision API&quot;&quot;&quot;" name="message"/>
+			<field name="model" ref="dm.model_dm_campaign_document"/>
+		</record>
+
      </data>
 
 
