@@ -69,10 +69,23 @@
              <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
              <field name="model_id" ref="dm.model_dm_campaign_document"/>
              <field eval="[(6,0,[])]" name="child_ids"/>
-             <field eval="&quot;&quot;&quot;from dm_emailvision import dm_emailvision_api\ndm_emailvision_api.send_email(cr,uid,obj,context)&quot;&quot;&quot;" name="code"/>
+             <field eval="&quot;&quot;&quot;from dm_emailvision import dm_emailvision_api\naction = dm_emailvision_api.send_email(cr,uid,obj,context)&quot;&quot;&quot;" name="code"/>
              <field eval="True" name="condition"/>
              <field eval="&quot;&quot;&quot;Send Email with Emailvision NMP API&quot;&quot;&quot;" name="name"/>
          </record>
+        <record model="dm.sysmsg" id="dm_sysmsg_emv_sent">
+            <field name="name">Emailvision Document Sent</field>
+            <field name="code">emv_doc_sent</field>
+            <field name="message">This document was succesfully sent by the Emailvision API</field>
+            <field name="state">done</field>
+        </record>
+        <record model="dm.sysmsg" id="dm_sysmsg_emv_error">
+            <field name="name">Emailvision Document Error</field>
+            <field name="code">emv_doc_sent</field>
+            <field name="message">This document could not be sent by the Emailvision API</field>
+            <field name="state">error</field>
+        </record>
      </data>
+
 
 </openerp>
