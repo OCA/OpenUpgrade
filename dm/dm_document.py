@@ -182,7 +182,8 @@ class dm_plugins_value(osv.osv): # {{{
     _name = "dm.plugins.value"
     _columns = {
 #        'address_id' : fields.many2one('res.partner.address', 'Customer Address', ondelete="cascade"),
-        'workitem_id' : fields.many2one('dm.workitem', 'Workitem', ondelete="cascade"),
+#        'workitem_id' : fields.many2one('dm.workitem', 'Workitem', ondelete="cascade"),
+        'document_id' : fields.many2one('dm.campaign.document','Campaign Document', ondelete="cascade"),
         'plugin_id' : fields.many2one('dm.dtp.plugin', 'Plugin'),
         'value' : fields.text('Value'),
 #        'date' : fields.date('Date'),
@@ -292,7 +293,6 @@ class dm_offer_document_category(osv.osv): # {{{
 
 dm_offer_document_category() # }}}
 
-
 class dm_offer_document(osv.osv): # {{{
     _name = "dm.offer.document"
     _rec_name = 'name'
@@ -385,7 +385,7 @@ class dm_campaign_document(osv.osv): # {{{
         'document_id' : fields.many2one('dm.offer.document','Document',ondelete="cascade"),
         'address_id' : fields.many2one('res.partner.address', 'Customer Address', select="1", ondelete="cascade"),
         'origin' : fields.char('Origin', size=64),
-        'wi_id' : fields.many2one('dm.workitem', 'Workitem', ondelete="cascade"),
+#        'wi_id' : fields.many2one('dm.workitem', 'Workitem', ondelete="cascade"),
         }
     _defaults = {
         'state': lambda *a : 'pending',
