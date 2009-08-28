@@ -31,12 +31,14 @@ _order_quantity_offer_steps_form = """<?xml version="1.0"?>
    <field name="month"/>
    <field name="year"/>
    <field name="offer_id"/>
+   <field name="origin_partner"/>
 </form>"""
 
 _order_quantity_offer_steps_fields = {
      'month': dict(string=u'Month', type='selection', required=True, selection=[(x, datetime.date(2000, x, 1).strftime('%B')) for x in range(1, 13)]), 
     'year': dict(string=u'Year', type='integer', required=True),
     'offer_id': {'string': 'Offer', 'type': 'many2one', 'relation': 'dm.offer', 'required': True},
+    'origin_partner':{'string':'Sort by origin partner' , 'type':'boolean'}
 }
 
 def _get_value(self, cr, uid, data, context):

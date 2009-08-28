@@ -32,6 +32,8 @@
             """,
     "depends" : [
                  "dm",
+                 "dm_sale",
+                 "dm_partner_address",
                  ],
     "init_xml" : [ ],
     "demo_xml" : [ ],

@@ -34,13 +34,13 @@ def lengthmonth(year, month):
         return 29
     return [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month]
 
-def segment_create_xml(cr, uid, id, som, eom):
+def segment_create_xml(cr, uid, s_id, som, eom, origin):
     # Computing the qty by segment
-    cr.execute(
-        "select count(id) as qty, s.date_order from sale_order s "\
-        "where segment_id = %s and s.date_order >= %s and s.date_order < %s " \
-        "group by s.date_order",
-        (id, som.strftime('%Y-%m-%d'), eom.strftime('%Y-%m-%d')))
+    cond = " where segment_id = %s and s.date_order >= '%s' and s.date_order < '%s' "%(s_id, som.strftime('%Y-%m-%d'), eom.strftime('%Y-%m-%d'))
+    if origin : 
+        cond += " and origin = '%s' " %origin
+    sql = "select count(id) as qty, s.date_order from sale_order s %s group by s.date_order"%cond
+    cr.execute(sql)        
     
     # Sum by day
     month = {}
@@ -58,13 +58,13 @@ def segment_create_xml(cr, uid, id, som, eom):
     
     pool = pooler.get_pool(cr.dbname)
         
-    segment = pool.get('dm.campaign.proposition.segment').browse(cr,uid,id).name
+    segment = pool.get('dm.campaign.proposition.segment').browse(cr,uid,s_id).name
     # Computing the xml
     xml = '''
     <segment id="%d" name="%s">
     %s
     </segment>
-    ''' % (id, toxml(segment), '\n'.join(time_xml))
+    ''' % (s_id, toxml(segment), '\n'.join(time_xml))
     return xml
 
 class report_custom(report_rml):
@@ -81,6 +81,12 @@ class report_custom(report_rml):
 
         camp_id = data['form']['camp_id']
         pool = pooler.get_pool(cr.dbname)
+        
+        origin=[(False,)]        
+        if data['form']['origin_partner'] :
+            cr.execute("select distinct origin from sale_order")
+            origin = cr.fetchall()
+            origin.sort()
         
         segment_id = pool.get('dm.campaign.proposition.segment').search(cr,uid,[('campaign_id','=',camp_id)])
         
@@ -99,16 +105,20 @@ class report_custom(report_rml):
         date_xml.append('<cols>3.75cm%s,1.25cm</cols>\n' % (',.75cm' * lengthmonth(som.year, som.month)))
         
 
-        segment_xml=''
-        for id in segment_id:
-            segment_xml += segment_create_xml(cr, uid, id, som, eom)
+        story_xml = ''
+        for i in range(len(origin)) :
+            segment_xml=''
+            for s_id in segment_id:
+                segment_xml += segment_create_xml(cr, uid, s_id, som, eom, origin[i][0])
+            story_xml += "<story s_id='%d' name='%s'> %s </story>"%(i+1,origin[i][0],segment_xml)
+
             
         # Computing the xml
         xml = '''<?xml version="1.0" encoding="UTF-8" ?>
         <report>%s
         %s
         </report>
-        ''' % (date_xml , segment_xml )
+        ''' % (date_xml , story_xml )
 
         return xml
 

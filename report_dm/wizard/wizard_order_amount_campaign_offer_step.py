@@ -26,15 +26,15 @@ import datetime
 import pooler
 
 
-_order_amount_campaign_form = """<?xml version="1.0"?>
-<form string="Order quantity per Campaign">
+_order_amount_campaign_offer_step_form = """<?xml version="1.0"?>
+<form string="Order quantity per Campaign - Offer">
    <field name="month"/>
    <field name="year"/>
    <field name="camp_id"/>
    <field name="origin_partner"/>
 </form>"""
 
-_order_amount_campaign_fields = {
+_order_amount_campaign_offer_step_fields = {
      'month': dict(string=u'Month', type='selection', required=True, selection=[(x, datetime.date(2000, x, 1).strftime('%B')) for x in range(1, 13)]), 
     'year': dict(string=u'Year', type='integer', required=True),
     'camp_id': {'string': 'Campaign', 'type': 'many2one', 'relation': 'dm.campaign', 'required': True},
@@ -46,17 +46,17 @@ def _get_value(self, cr, uid, data, context):
     return dict(month=today.month, year=today.year)
     
     
-class wizard_amt_campaign_report(wizard.interface):
+class wizard_amt_campaign_offer_step_report(wizard.interface):
     states = {
         'init': {
             'actions': [_get_value],
-            'result': {'type':'form', 'arch':_order_amount_campaign_form, 'fields':_order_amount_campaign_fields, 'state':[('end','Cancel'),('print','Print Report')]},
+            'result': {'type':'form', 'arch':_order_amount_campaign_offer_step_form, 'fields':_order_amount_campaign_offer_step_fields, 'state':[('end','Cancel'),('print','Print Report')]},
         },
         'print': {
             'actions': [],
-            'result': {'type':'print', 'report':'dm.order.amount.campaign', 'state':'end'},
+            'result': {'type':'print', 'report':'dm.order.amount.campaign.offer.step', 'state':'end'},
         },
     }
-wizard_amt_campaign_report('dm.order.amount.campaign')
+wizard_amt_campaign_offer_step_report('dm.order.amount.campaign.offer.step')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
