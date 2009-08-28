@@ -415,14 +415,6 @@ msgstr ""
 "effectuée."
 
 #. module: dm
-#: view:dm.campaign:0
-#: field:dm.campaign.group,campaign_ids:0
-#: model:ir.ui.menu,name:dm.menu_dm_campaign
-#: model:ir.ui.menu,name:dm.menu_dm_config_campaign
-msgid "Campaigns"
-msgstr "Campagnes"
-
-#. module: dm
 #: view:dm.dtp.plugin:0
 msgid "DTP Plugin"
 msgstr "Plugin PAO"
@@ -461,12 +453,6 @@ msgstr "Catégories"
 #: view:dm.offer:0
 msgid "Dates"
 msgstr "Dates"
-
-#. module: dm
-#: wizard_field:wizard_campaign_group,init,group:0
-#: wizard_view:wizard_campaign_group,name_group:0
-msgid "Select Group"
-msgstr "Sélectionner le groupe"
 
 #. module: dm
 #: constraint:product.template:0
@@ -516,17 +502,6 @@ msgid "DTP Plugin Name"
 msgstr "Nom du plugin de PAO"
 
 #. module: dm
-#: wizard_view:wizard_campaign_group,add:0
-#: wizard_view:wizard_campaign_group,new:0
-msgid ""
-"Selected campaign has been added in the group.Campaigns that are already in "
-"some group will not be added in new group and will remain in same group"
-msgstr ""
-"La campagne sélectionnée à été ajoutée au groupe. Les campagnes qui sont "
-"déjà dans un groupe ne sont pas ajoutée à un nouveau groupe et reste "
-"assignée au groupe actuel."
-
-#. module: dm
 #: help:dm.campaign.proposition.segment,quantity_real:0
 msgid ""
 "The real quantity is the number of addresses that are really in the "
@@ -564,7 +539,6 @@ msgstr "Pays d'utilisation"
 
 #. module: dm
 #: field:dm.campaign,quantity_wanted_total:0
-#: field:dm.campaign.group,quantity_wanted_total:0
 msgid "Total Wanted Quantity"
 msgstr "Quantité totale souhaitée"
 
@@ -827,7 +801,6 @@ msgstr "Quantité Nettoyée"
 
 #. module: dm
 #: field:dm.campaign,quantity_usable_total:0
-#: field:dm.campaign.group,quantity_usable_total:0
 msgid "Total Usable Quantity"
 msgstr "Quantité totale utilisable"
 
@@ -929,11 +902,6 @@ msgstr "Date fixée"
 #: model:product.template,name:dm.product_product_printingus0_product_template
 msgid "Paper Printing US"
 msgstr "Impression US"
-
-#. module: dm
-#: wizard_button:wizard_campaign_group,init,name_group:0
-msgid "Create New Group"
-msgstr "Créer un nouveau groupe"
 
 #. module: dm
 #: view:dm.customer.segmentation:0
@@ -1431,12 +1399,6 @@ msgid "Recruiting campaign"
 msgstr "Campagne de recrutement"
 
 #. module: dm
-#: wizard_view:wizard_campaign_group,error:0
-msgid ""
-"Group name can't be none.You have to select any avilable group or create new"
-msgstr "Veuillez spécifier un groupe ou en créer un nouveau"
-
-#. module: dm
 #: model:ir.model,name:dm.model_dm_offer_production_cost
 msgid "dm.offer.production.cost"
 msgstr "dm.offer.production.cost"
@@ -1510,11 +1472,6 @@ msgid "Purchase Notes"
 msgstr "Notes d'approvisionnement"
 
 #. module: dm
-#: view:dm.campaign.group:0
-msgid "Total Quantities"
-msgstr "Quantités totales"
-
-#. module: dm
 #: view:dm.campaign:0
 msgid "Items Procurement Status"
 msgstr "Statut des commandes d'articles"
@@ -1523,11 +1480,6 @@ msgstr "Statut des commandes d'articles"
 #: constraint:dm.offer:0
 msgid "Error ! this offer idea is already assigned to an offer"
 msgstr "Cette Idée d'offre est déjà assignée à une offre"
-
-#. module: dm
-#: field:dm.campaign.group,name:0
-msgid "Campaign group name"
-msgstr "Nom de groupe de campagne"
 
 #. module: dm
 #: selection:dm.campaign.proposition.item,item_type:0
@@ -1736,11 +1688,6 @@ msgid "Development of customer loyalty"
 msgstr "Développement de la fidélisation du client"
 
 #. module: dm
-#: model:ir.actions.wizard,name:dm.wizard_campaign_group
-msgid "Add to Campaign group"
-msgstr "Ajouter au groupe de campagne"
-
-#. module: dm
 #: rml:dm.campaign.report:0
 msgid "Proposition :"
 msgstr "Proposition :"
@@ -1759,9 +1706,6 @@ msgstr "Plugins"
 #. module: dm
 #: wizard_button:campaign.group.project,init,end:0
 #: wizard_button:campaign.project,init,end:0
-#: wizard_button:wizard_campaign_group,error,end:0
-#: wizard_button:wizard_campaign_group,init,end:0
-#: wizard_button:wizard_campaign_group,name_group,end:0
 #: wizard_button:wizard_document_report,init,end:0
 msgid "Cancel"
 msgstr "Annuler"
@@ -2249,7 +2193,6 @@ msgstr "Suppression"
 #. module: dm
 #: view:dm.campaign:0
 #: field:dm.campaign,code1:0
-#: field:dm.campaign.group,code:0
 #: view:dm.campaign.proposition:0
 #: field:dm.campaign.proposition,code1:0
 #: view:dm.campaign.proposition.segment:0
@@ -2538,12 +2481,6 @@ msgid "A File of addresses delivered by an addresses broker"
 msgstr "Le fichier d'adresses livré par le broker"
 
 #. module: dm
-#: model:ir.actions.act_window,name:dm.action_campaign_mygroup_form
-#: model:ir.ui.menu,name:dm.menu_action_campaign_mygroup_form
-msgid "My Campaign Groups"
-msgstr "Mes groupes de campagnes"
-
-#. module: dm
 #: field:dm.offer.step,document_ids:0
 #: model:ir.actions.act_window,name:dm.act_offer_document_opened
 msgid "DTP Documents"
@@ -2559,11 +2496,6 @@ msgstr "Vous devez d'abord valider tous les services de cette campagne."
 #: view:dm.offer:0
 msgid "Create Offers"
 msgstr "Créer l'offre"
-
-#. module: dm
-#: model:ir.model,name:dm.model_dm_campaign_group
-msgid "dm.campaign.group"
-msgstr "dm.campaign.group"
 
 #. module: dm
 #: selection:dm.customer.order,order_policy:0
@@ -2791,11 +2723,6 @@ msgid "Split"
 msgstr "Split"
 
 #. module: dm
-#: view:dm.campaign.group:0
-msgid "Groups"
-msgstr "Groupes de campagnes"
-
-#. module: dm
 #: field:dm.campaign.proposition,quantity_wanted:0
 #: field:dm.campaign.proposition.segment,quantity_wanted:0
 #: selection:dm.campaign.purchase_line,type_quantity:0
@@ -2849,12 +2776,6 @@ msgstr "Frais d'envoi"
 msgid "Could not open this Campaign !"
 msgstr "Impossible d'ouvrir la campagne"
 
-
-#. module: dm
-#: wizard_button:wizard_campaign_group,init,next:0
-msgid "Add in Group"
-msgstr "Ajouter dans le groupe"
-
 #. module: dm
 #: model:ir.actions.act_window,name:dm.action_offer_copywriter_form
 #: model:ir.ui.menu,name:dm.menu_action_offer_copywriter_from
@@ -2867,11 +2788,6 @@ msgstr "Tous les auteurs"
 #: selection:dm.campaign.purchase_line,type_quantity:0
 msgid "Usable Quantity"
 msgstr "Quantité utilisable"
-
-#. module: dm
-#: field:dm.campaign,campaign_group_id:0
-msgid "Campaign group"
-msgstr "Groupe de campagne"
 
 #. module: dm
 #: field:dm.campaign.mail_service,action_id:0
@@ -2973,11 +2889,6 @@ msgid "Purchase Orders"
 msgstr "Commande d'achat"
 
 #. module: dm
-#: wizard_button:wizard_campaign_group,error,init:0
-msgid "Select the group"
-msgstr "Sélectionner le groupe"
-
-#. module: dm
 #: view:dm.offer:0
 msgid "Forbiden Countries"
 msgstr "Pays Interdits"
@@ -2989,11 +2900,6 @@ msgid ""
 msgstr ""
 "Le nom de l'objet doit démarrer avec x_ et ne pas contenir de charactère "
 "spéciaux !"
-
-#. module: dm
-#: wizard_view:wizard_campaign_group,error:0
-msgid "Error!!!"
-msgstr "Erreur"
 
 #. module: dm
 #: selection:dm.customer.boolean_criteria,operator:0
@@ -3178,7 +3084,6 @@ msgstr "Déclancheur de transition"
 
 #. module: dm
 #: view:dm.campaign:0
-#: view:dm.campaign.group:0
 #: view:dm.campaign.proposition:0
 #: view:dm.campaign.proposition.segment:0
 #: view:dm.customer.segmentation:0
@@ -3262,7 +3167,6 @@ msgstr "Open ERP Discoveryt Day en Mai 2009"
 
 #. module: dm
 #: field:dm.campaign,quantity_delivered_total:0
-#: field:dm.campaign.group,quantity_delivered_total:0
 msgid "Total Delivered Quantity"
 msgstr "Quantité totale livrée"
 
@@ -3310,11 +3214,6 @@ msgstr "Semaines"
 #: model:ir.model,name:dm.model_dm_order
 msgid "dm.order"
 msgstr "dm.order"
-
-#. module: dm
-#: wizard_field:wizard_campaign_group,name_group,group:0
-msgid "Group Name"
-msgstr "Nom du groupe"
 
 #. module: dm
 #: view:dm.campaign:0
@@ -3530,7 +3429,6 @@ msgstr "Transitions"
 #. module: dm
 #: wizard_view:campaign.group.project,init:0
 #: wizard_view:campaign.project,init:0
-#: view:dm.campaign.group:0
 #: field:dm.campaign.purchase_line,campaign_group_id:0
 msgid "Campaign Group"
 msgstr "Groupe de campagne"
@@ -3767,12 +3665,6 @@ msgid "Segment Origin"
 msgstr "Origine du segment"
 
 #. module: dm
-#: model:ir.actions.act_window,name:dm.action_campaign_group_form
-#: model:ir.ui.menu,name:dm.menu_action_campaign_group_form
-msgid "All Campaign Groups"
-msgstr "Tous les groupes de campagnes"
-
-#. module: dm
 #: model:ir.model,name:dm.model_dm_overlay
 msgid "dm.overlay"
 msgstr "dm.overlay"
@@ -3918,14 +3810,6 @@ msgstr "Un ensemble d'adresse provenant d'une liste clients"
 #: view:dm.campaign:0
 msgid "Create Campaign"
 msgstr "Créer la campagne"
-
-#. module: dm
-#: wizard_view:wizard_campaign_group,add:0
-#: wizard_view:wizard_campaign_group,init:0
-#: wizard_button:wizard_campaign_group,name_group,new:0
-#: wizard_view:wizard_campaign_group,new:0
-msgid "Create Group"
-msgstr "Créer le groupe"
 
 #. module: dm
 #: field:dm.offer.step,interactive:0
