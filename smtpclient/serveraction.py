@@ -30,6 +30,7 @@ class ServerAction(osv.osv):
     _description = 'Email Client'
     _columns = {
         'email_server':fields.many2one('email.smtpclient', 'Email Server'),
+        'report':fields.many2one('ir.actions.report.xml', 'Report', required=False),
     }
     
     def run(self, cr, uid, ids, context={}):
@@ -58,7 +59,7 @@ class ServerAction(osv.osv):
                     address =  eval(str(action.email), cxt)
                 except:
                     pass
-                
+
                 if not address:
                     logger.notifyChannel('email', netsvc.LOG_INFO, 'Partner Email address not Specified!')
                     continue
@@ -66,8 +67,12 @@ class ServerAction(osv.osv):
                 subject = self.merge_message(cr, uid, str(action.subject), action, context)
                 body = self.merge_message(cr, uid, str(action.message), action, context)
                 smtp_pool = self.pool.get('email.smtpclient')
-                
-                if smtp_pool.send_email(cr, uid, action.email_server.id, address, subject, body) == True:
+
+                reports = []
+                if action.report:
+                    reports.append(('report.'+action.report.report_name, [context['active_id']]))
+
+                if smtp_pool.send_email(cr, uid, action.email_server.id, address, subject, body, [], reports) == True:
                     logger.notifyChannel('email', netsvc.LOG_INFO, 'Email successfully send to : %s' % (address))
                 else:
                     logger.notifyChannel('email', netsvc.LOG_ERROR, 'Failed to send email to : %s' % (address))

@@ -38,7 +38,7 @@ from email.Utils import COMMASPACE, formatdate
 import netsvc
 import random
 import sys
-
+import tools
 #if sys.version[0:3] > '2.4':
 #    from hashlib import md5
 #else:
@@ -115,6 +115,8 @@ class SmtpClient(osv.osv):
             return {'value':{'user':email, 'from_email':email_from+' <'+email+'>'}}
 
     def check_permissions(self, cr, uid, ids):
+        if uid == 1:
+            return True
         cr.execute('select * from res_smtpserver_group_rel where sid=%s and uid=%s' % (ids[0], uid))
         data = cr.fetchall()
         if len(data) <= 0:
@@ -345,7 +347,7 @@ class SmtpClient(osv.osv):
         
         queue = self.pool.get('email.smtpclient.queue')
         history = self.pool.get('email.smtpclient.history')
-        sids = queue.search(cr, uid, [('state','not in',['send','sending','error'])], limit=30)
+        sids = queue.search(cr, uid, [('state','not in',['send','sending'])], limit=30)
         queue.write(cr, uid, sids, {'state':'sending'})
         error = []
         sent = []
