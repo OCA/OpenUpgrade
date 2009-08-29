@@ -9,9 +9,9 @@
 
 	<xsl:template name="rml">
 		<document filename="example.pdf">
-            <template pageSize="29.7cm,21cm" title="Test" author="Martin Simon" allowSplitting="20">
+            <template pageSize="45cm,21cm" title="Test" author="Martin Simon" allowSplitting="20">
                 <pageTemplate id="first">
-                    <frame id="first"  x1="2.5cm" y1="2.5cm" width="24.7cm" height="17cm"/>
+                    <frame id="first"  x1="10cm" y1="2.5cm" width="24.7cm" height="17cm"/>
     			</pageTemplate>
 			</template>
 
@@ -35,6 +35,7 @@
 					<blockValign value="TOP"/>
 				</blockTableStyle>
 			</stylesheet>
+
 			<xsl:call-template name="story"/>
 		</document>
 	</xsl:template>
@@ -43,7 +44,7 @@
 		<xsl:for-each select="report/story">	
 		<xsl:variable name="s_id" select="attribute::s_id"/>
 		<story>
-		    <para style="title" t="1"> -- Order Quantity per Steps of Offer -- <xsl:value-of select="attribute::name"/> </para>
+		    <para style="title" t="1"> -- Income per Steps of Campaign -- <xsl:value-of select="attribute::name"/> </para>
 		    <spacer length="1cm" />
 		    <blockTable>
 			    <xsl:attribute name="style">month</xsl:attribute>
@@ -91,6 +92,6 @@
 		    </blockTable>
     	</story>
 	</xsl:for-each>
-
+	
 	</xsl:template>
 </xsl:stylesheet>

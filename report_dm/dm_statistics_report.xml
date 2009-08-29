@@ -5,7 +5,7 @@
     <menuitem name="Reporting" id="menu_dm_report" parent="dm.menu_dm"  sequence="0"/>
 
 
-        <report auto="False" id="report_order_qty_offer_step" menu="False" model="dm.offer" name="dm.order.quantity.offer.steps" string="Order Qunatity Offer Step" xsl="report_dm/report/order_qty_offer_steps.xsl"/>        
+        <report auto="False" id="report_order_qty_offer_step" menu="False" model="dm.offer" name="dm.order.quantity.offer.steps" string="Order Quantity per Offer Step" xsl="report_dm/report/order_qty_offer_steps.xsl"/>        
         <wizard id="wizard_order_quantity_offer_steps" menu="False" model="dm.offer" name="dm.order.quantity.offer.steps" string="Order quantity per Offer Steps"/>
     <menuitem icon="STOCK_PRINT" action="wizard_order_quantity_offer_steps" id="menu_order_quantity_offer_steps" parent="menu_dm_report" type="wizard"/>
 
@@ -16,14 +16,26 @@
     <menuitem icon="STOCK_PRINT" action="wizard_order_amount_offer_steps" id="menu_order_amount_offer_steps" parent="menu_dm_report" type="wizard"/>
 
 
-        <report auto="False" id="report_order_qty_campaign" menu="False" model="dm.campaign" name="dm.order.quantity.campaign" string="Order Qunatity for Campaign segment" xsl="report_dm/report/order_qty_campaign.xsl"/>        
-        <wizard id="wizard_order_quantity_campaign" menu="False" model="dm.campaign" name="dm.order.quantity.campaign" string="Order quantity per Segment of campaign"/>
+        <report auto="False" id="report_order_qty_campaign" menu="False" model="dm.campaign" name="dm.order.quantity.campaign" string="Order Quantity per Segments of Campaign" xsl="report_dm/report/order_qty_campaign.xsl"/>        
+        <wizard id="wizard_order_quantity_campaign" menu="False" model="dm.campaign" name="dm.order.quantity.campaign" string="Order Quantity per Segments of Campaign"/>
     <menuitem icon="STOCK_PRINT" action="wizard_order_quantity_campaign" id="menu_order_quantity_campaign" parent="menu_dm_report" type="wizard"/>
 
 
 
-        <report auto="False" id="report_order_amt_campaign" menu="False" model="dm.campaign" name="dm.order.amount.campaign" string="Income per Segment of Campaign" xsl="report_dm/report/order_amt_campaign.xsl"/>        
-        <wizard id="wizard_order_amount_campaign" menu="False" model="dm.campaign" name="dm.order.amount.campaign" string="Income per Segment of Campaign"/>
+        <report auto="False" id="report_order_amt_campaign" menu="False" model="dm.campaign" name="dm.order.amount.campaign" string="Income per Segments of Campaign" xsl="report_dm/report/order_amt_campaign.xsl"/>        
+        <wizard id="wizard_order_amount_campaign" menu="False" model="dm.campaign" name="dm.order.amount.campaign" string="Income per Segments of Campaign"/>
     <menuitem icon="STOCK_PRINT" action="wizard_order_amount_campaign" id="menu_order_amount_campaign" parent="menu_dm_report" type="wizard"/>
+    
+    
+    
+        <report auto="False" id="report_order_qty_campaign_offer_step" menu="False" model="dm.campaign" name="dm.order.quantity.campaign.offer.step" string="Order Quantity per Step of Campaign" xsl="report_dm/report/order_qty_campaign_offer_step.xsl"/>        
+        <wizard id="wizard_order_quantity_campaign_offer_step" menu="False" model="dm.campaign" name="dm.order.quantity.campaign.offer.step" string="Order Quantity per Step of Campaign"/>
+    <menuitem icon="STOCK_PRINT" action="wizard_order_quantity_campaign_offer_step" id="menu_order_quantity_campaign_offer_step" parent="menu_dm_report" type="wizard"/>
+
+
+        <report auto="False" id="report_order_amt_campaign_offer_step" menu="False" model="dm.campaign" name="dm.order.amount.campaign.offer.step" string="Income per Step of Campaign" xsl="report_dm/report/order_amt_campaign_offer_step.xsl"/>        
+        <wizard id="wizard_order_amount_campaign_offer_step" menu="False" model="dm.campaign" name="dm.order.amount.campaign.offer.step" string="Income per Step of Campaign"/>
+    <menuitem icon="STOCK_PRINT" action="wizard_order_amount_campaign_offer_step" id="menu_order_amount_campaign_offer_step" parent="menu_dm_report" type="wizard"/>
+
     </data>
 </openerp>

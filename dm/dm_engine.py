@@ -29,7 +29,8 @@ import datetime
 import netsvc
 import traceback
 import tools
-
+import gc
+#import objgraph
 
 class dm_workitem(osv.osv): # {{{
     _name = "dm.workitem"
@@ -47,7 +48,7 @@ class dm_workitem(osv.osv): # {{{
         'error_msg' : fields.text('System Message'),
         'is_global': fields.boolean('Global Workitem'),
         'is_preview': fields.boolean('Document Preview Workitem'),
-        'use_prev_plugin_values': fields.boolean('Use Previous Plugin Values (For Document Regeneration)'),
+#        'use_prev_plugin_values': fields.boolean('Use Previous Plugin Values (For Document Regeneration)'),
         'tr_from_id' : fields.many2one('dm.offer.step.transition', 'Source Transition', ondelete="cascade"),
         'sale_order_id' : fields.many2one('sale.order','Sale Order'),
         'mail_service_id' : fields.many2one('dm.mail_service','Mail Service'),
@@ -61,12 +62,12 @@ class dm_workitem(osv.osv): # {{{
         'action_time' : lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
 
-
-    def _check_sysmsg(self, cr, uid, ids, code):
+    @tools.cache()
+    def _check_sysmsg(self, cr, uid, code, context=None):
         """ Check action message code and set workitem log """
-        sysmsg_id  = self.pool.get('dm.sysmsg').search(cr, uid, [('code','=',code)])
+        sysmsg_id  = self.pool.get('dm.sysmsg').search(cr, uid, [('code','=',code)], context=context)
         if sysmsg_id:
-            sysmsg = self.pool.get('dm.sysmsg').browse(cr, uid, sysmsg_id)[0]
+            sysmsg = self.pool.get('dm.sysmsg').browse(cr, uid, sysmsg_id, context=context)[0]
             return {'state': sysmsg.state,'msg':sysmsg.message,'result':sysmsg.result}
         else:
             return {'state': 'error','msg':"An unknown error has occured : %s" % code,'result':False}
@@ -107,14 +108,30 @@ class dm_workitem(osv.osv): # {{{
 
             if tr_res:
                 """ Execute server action """
-                res = server_obj.run(cr, uid, [wi.step_id.action_id.id], context)
+                wi_res = server_obj.run(cr, uid, [wi.step_id.action_id.id], context)
+                print "XXX wi_res :",wi_res
 
-                """ Check returned value and set done status """
-                status = self._check_sysmsg(cr, uid, wi.id, res)
+                """ Check returned code and set wi status """
+                wi_status = self._check_sysmsg(cr, uid, wi_res['code'], context.copy())
+                print "WWW wi_status :",wi_status
 
                 """ Set workitem state and message """
-                self.write(cr, uid, [wi.id], {'state': status['state'],'error_msg':status['msg']})
-                done = status['result']
+                self.write(cr, uid, [wi.id], {'state': wi_status['state'],'error_msg':wi_status['msg']})
+                done = wi_status['result']
+                print "wi_status['result'] :",wi_status['result']
+
+                """ If workitem done then execute mail service action """
+                if done:
+                    camp_doc_obj = self.pool.get('dm.campaign.document')
+                    for camp_doc in camp_doc_obj.browse(cr, uid, wi_res['ids']):
+                        context['active_id'] = camp_doc.id
+                        context['wi_id'] = wi.id
+
+                        ms_res = server_obj.run(cr, uid, [camp_doc.mail_service_id.action_id.id], context.copy())
+                        print "XXX ms_res :",ms_res
+                        ms_status = self._check_sysmsg(cr, uid, ms_res['code'], context)
+                        camp_doc_obj.write(cr, uid, [camp_doc.id], {'state': ms_status['state'],'error_msg':ms_status['msg']})
+
             else:
                 """ Dont Execute Action if workitem is not to be processed """
                 self.write(cr, uid, [wi.id], {'state': 'cancel','error_msg':'Cancelled by : %s'% act_step})
@@ -167,55 +184,26 @@ class dm_workitem(osv.osv): # {{{
         self.is_running = False
         return super(dm_workitem, self).__init__(*args)
 
-    def mail_service_run(self, cr, uid, camp_doc, context={}):
-        logger = netsvc.Logger()
-        context['active_id'] = camp_doc.id
-        try:
-            server_obj = self.pool.get('ir.actions.server')
-            print "XXX camp_doc.mail_service_id.action_id.id :",camp_doc.mail_service_id.action_id.id
-            res = server_obj.run(cr, uid, [camp_doc.mail_service_id.action_id.id], context)
-            camp_res = self.pool.get('dm.campaign.document').read(cr, uid, [camp_doc.id], ['state'])[0]
-
-            """ If no error occured during the document delivery set state to done """
-            if camp_res['state'] != 'error':
-                self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state':'done','delivery_time':time.strftime('%Y-%m-%d %H:%M:%S'),'error_msg':""})
-
-        except Exception, exception:
-            tb = sys.exc_info()
-            tb_s = "".join(traceback.format_exception(*tb))
-            self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state': 'error','error_msg':'Exception: %s\n%s' % (tools.exception_to_unicode(exception), tb_s)})
-            logger.notifyChannel('dm campaign document', netsvc.LOG_ERROR, 'Exception: %s\n%s' % (tools.exception_to_unicode(exception), tb_s))
-
-        return True
-
     def check_all(self, cr, uid, context={}):
         """ Check if the action engine is already running """
         if not self.is_running:
+
+            """ Workitems processing """
             try:
                 self.is_running = True
 
-                """ Workitems processing """
-                """ Get workitems to process """
+                """ Get workitems to process and run action """
                 ids = self.search(cr, uid, [('state','=','pending'),('action_time','<=',time.strftime('%Y-%m-%d %H:%M:%S'))])
 
-                """ Run workitem action """
                 for wi in self.browse(cr, uid, ids, context=context):
                     wi_res = self.run(cr, uid, wi, context=context)
-
-
-                """ Campaign documents processing """
-                """ Get campaign documents to process """
-                camp_doc_obj = self.pool.get('dm.campaign.document')
-                camp_doc_ids = camp_doc_obj.search(cr, uid, [('state','=','pending')])
-
-                """ Run campaign document action """
-                for camp_doc in camp_doc_obj.browse(cr, uid, camp_doc_ids, context=context):
-                    print "XXx camp: ",camp_doc.id
-                    ms_res = self.mail_service_run(cr, uid, camp_doc, context=context)
+    
+                    #gc.collect()
+                    #gc.garbage
 
             finally:
                 self.is_running = False
-
+                
             return True
         return False
 
@@ -242,6 +230,7 @@ class dm_event(osv.osv_memory): # {{{
 
     def create(self,cr,uid,vals,context={}):
         id = super(dm_event,self).create(cr,uid,vals,context)
+
         obj = self.browse(cr, uid ,id)
         tr_ids = self.pool.get('dm.offer.step.transition').search(cr, uid, [('step_from_id','=',obj.step_id.id),
                 ('condition_id','=',obj.trigger_type_id.id)])

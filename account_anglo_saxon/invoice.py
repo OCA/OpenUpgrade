@@ -91,9 +91,11 @@ class account_invoice_line(osv.osv):
                         diff_res = []
                         for line in res:
                             if a == line['account_id'] and i_line.product_id.id == line['product_id']:
-                                if i_line.product_id.product_tmpl_id.standard_price != i_line.price_unit and line['price'] == i_line.price_unit and acc:
-                                    price_diff = i_line.price_unit - i_line.product_id.product_tmpl_id.standard_price
-                                    line.update({'price':i_line.product_id.product_tmpl_id.standard_price * line['quantity']})
+                                uom = i_line.product_id.uos_id or i_line.product_id.uom_id
+                                standard_price = self.pool.get('product.uom')._compute_price(cr, uid, uom.id, i_line.product_id.product_tmpl_id.standard_price, i_line.uos_id.id)
+                                if standard_price != i_line.price_unit and line['price'] == i_line.price_unit and acc:
+                                    price_diff = i_line.price_unit - standard_price
+                                    line.update({'price':standard_price * line['quantity']})
                                     diff_res.append({
                                         'type':'src',
                                         'name': i_line.name[:64],

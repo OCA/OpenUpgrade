@@ -36,7 +36,7 @@ class offer_document(report_sxw.rml_parse):
         self.localcontext.update({
             'time': time,
             'document':self.document,
-            'trademark_id' : self.trademark_id,
+#            'trademark_id' : self.trademark_id,
             'report_type':''
         })
         self.context = context
@@ -56,7 +56,7 @@ class offer_document(report_sxw.rml_parse):
             return plugin_list
         else :
             return False
-
+    """
     def trademark_id(self):
         if 'form' not in self.datas :
             workitem_id = self.context['wi_id']
@@ -64,7 +64,7 @@ class offer_document(report_sxw.rml_parse):
             return res.segment_id.proposition_id.camp_id.trademark_id
         else:
             return self.datas['form']['trademark_id']
-
+    """
     def document(self):
         plugin_list = self._plugin_list()
         dm_so_line_id = 'dm_so_line_id' in self.context and self.context['dm_so_line_id'] and self.context['dm_so_line_id'] or ''

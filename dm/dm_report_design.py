@@ -68,7 +68,7 @@ def merge_message(cr, uid, keystr, context): # {{{
     message = com.sub(merge, keystr)
     return message # }}}
 
-def create_tnt_reports(cr,uid,obj,type_id,camp_mail_service,delivery_time,address_id,document_data,context):
+def create_tnt_reports(cr,uid,obj,type_id,camp_mail_service,delivery_time,address_id,document_data,context): # {{{
     """ Create TNT Stickers as attachment of campaign document"""
     """
     pool = pooler.get_pool(cr.dbname)
@@ -106,9 +106,9 @@ def create_tnt_reports(cr,uid,obj,type_id,camp_mail_service,delivery_time,addres
                          'file_type':report_type
                          }
                     attach_id = attachment_obj.create(cr,uid,attach_vals,{'not_index_context':True})
-    """
+    """ # }}}
     
-def generate_internal_reports(cr, uid, report_type, document_data, camp_doc, context):
+def generate_internal_reports(cr, uid, report_type, document_data, camp_doc, context): # {{{
 
     """ Generate documents from the internal editor """
     pool = pooler.get_pool(cr.dbname)
@@ -131,9 +131,9 @@ def generate_internal_reports(cr, uid, report_type, document_data, camp_doc, con
                        }
            attach_id = attachment_obj.create(cr,uid,attach_vals,{'not_index_context':True})
            return "doc_done"
-        return report_data
+        return report_data # }}}
 
-def generate_openoffice_reports(cr, uid, report_type, document_data, camp_doc, context):
+def generate_openoffice_reports(cr, uid, report_type, document_data, camp_doc, context): # {{{
     report_content = []
     """ Get reports to process """
     pool = pooler.get_pool(cr.dbname)    
@@ -162,14 +162,11 @@ def generate_openoffice_reports(cr, uid, report_type, document_data, camp_doc, c
     if report_content and not camp_doc:
         return report_content
     else :
-        return "doc_done"
+        return "doc_done" # }}}
 
-def process_workitem(cr, uid, obj, report_type, context): # {{{
+def document_process(cr, uid, obj, report_type, context): # {{{
 
-    print "Calling process_workitem from wi : ", obj.id
-    print "Calling process_workitem source code : ", obj.source
-
-    """ Set addess_id depending of the source : partner address or crm case """
+    """ Set addess_id depending of the source : partner address, crm case, etc """
     address_id = getattr(obj, obj.source).id
     address_ids = []
 
@@ -177,27 +174,21 @@ def process_workitem(cr, uid, obj, report_type, context): # {{{
         """ if internal segment workitem """
         print "source fields : ",getattr(obj.segment_id.customers_file_id, obj.source + "s")
         for cust_id in getattr(obj.segment_id.customers_file_id, obj.source + "s"):
-            print "cust_id : ",cust_id
             address_ids.append(cust_id.id)
     else:
         """ if customer workitem """
         address_ids.append(address_id)
 
-    print "address_ids : ", address_ids
-
     if obj.step_id:
         step_id = obj.step_id.id
     else:
-        return "no_step_for_wi"
+        return {'code':"no_step_for_wi"}
 
     pool = pooler.get_pool(cr.dbname)
     dm_doc_obj = pool.get('dm.offer.document') 
     report_xml = pool.get('ir.actions.report.xml')
     camp_mail_service_obj = pool.get('dm.campaign.mail_service')
 
-    r_type = report_type
-    if report_type=='html2html':
-        r_type = 'html'
 
     """ Set mail service to use """
     if obj.mail_service_id:
@@ -205,31 +196,36 @@ def process_workitem(cr, uid, obj, report_type, context): # {{{
     else:
         if obj.segment_id :
             if not obj.segment_id.proposition_id:
-                return "no_proposition"
+                return {'code':"no_proposition_for_wi"}
             elif not obj.segment_id.proposition_id.camp_id:
-                return "no_campaign"
+                return {'code':"no_campaign_for_wi"}
             else:
                 camp_id = obj.segment_id.proposition_id.camp_id.id
                 camp_mail_service_id = camp_mail_service_obj.search(cr,uid,[('campaign_id','=',camp_id),('offer_step_id','=',step_id)])
                 if not camp_mail_service_id:
-                    return "no_mail_service_for_campaign"
+                    return {'code':"no_mail_service_for_campaign"}
                 else:
                     mail_service = camp_mail_service_obj.browse(cr, uid, camp_mail_service_id)[0].mail_service_id
         else:
-            return "no_segment"
+            return {'code':"no_segment_for_wi"}
 
     ms_id = mail_service.id
 
+    """ Get offer step documents to process """
     document_id = dm_doc_obj.search(cr, uid, [('step_id','=',obj.step_id.id),('category_id','=','Production')])
     if not document_id :
-        return "no_document_for_step"
+        return {'code':"no_document_for_step"}
     document_data = dm_doc_obj.browse(cr, uid, document_id[0])
 
     if not document_data.content and document_data.editor == 'internal' :
-        return "no_report_for_document"
+        return {'code':"no_report_for_document"}
     report_ids = report_xml.search(cr, uid, [('document_id','=',document_data.id),('report_type','=',report_type)])
     if not report_ids and document_data.editor == 'oord' :
-        return "no_report_for_document"
+        return {'code':"no_report_for_document"}
+
+    r_type = report_type
+    if report_type == 'html2html':
+        r_type = 'html'
 
     type_id = pool.get('dm.campaign.document.type').search(cr,uid,[('code','=',r_type)])
     
@@ -239,8 +235,8 @@ def process_workitem(cr, uid, obj, report_type, context): # {{{
         so = False
 
     for address_id in address_ids:
-        """ Get offer step documents to process """
 
+        """ Create campaign document """
         vals={
             'segment_id': obj.segment_id.id or False,
             'name': obj.step_id.code + "_" + str(address_id),
@@ -249,25 +245,25 @@ def process_workitem(cr, uid, obj, report_type, context): # {{{
             'document_id' : document_id[0],
             (obj.source) : address_id,
             'origin' : so,
-            'wi_id':obj.id
             }
 
-        """ Create campaign document """
         camp_doc = pool.get('dm.campaign.document').create(cr, uid, vals)
+
+        """ If DMS stored document """
         if mail_service.store_email_document :
             context['address_id'] = address_id
             context['document_id'] = document_id[0]
-            context['wi_id'] = obj.id
+#            context['wi_id'] = obj.id
             context['store_document'] = True
-    #        create_tnt_reports(cr,uid,obj,type_id,camp_mail_service,delivery_time,address_id,document_data,context)
+#            create_tnt_reports(cr,uid,obj,type_id,camp_mail_service,delivery_time,address_id,document_data,context)
             if document_data.editor ==  'internal' :
                 res = generate_internal_reports(cr, uid, report_type, document_data, camp_doc, context)
             elif document_data.editor == 'oord' :
-                res =generate_openoffice_reports(cr, uid, report_type, document_data, camp_doc, context)
+                res = generate_openoffice_reports(cr, uid, report_type, document_data, camp_doc, context)
             if type(res) not in (type([]) , type(True)) :
                 return res
-    return "doc_done" # }}}
-    
+
+    return {'code':'doc_done','ids':[camp_doc]} # }}}
             
 def compute_customer_plugin(cr, uid, **args): # {{{
     res  = pool.get('ir.model').browse(cr, uid, args['plugin_obj'].model_id.id)    
@@ -354,8 +350,8 @@ def generate_plugin_value(cr, uid, **args): # {{{
             dm_plugins_value.create(cr, uid,{
 #                'date':time.strftime('%Y-%m-%d'),
 #                'address_id':args['addr_id'],
-                'workitem_id': args['wi_id'],
-                'plugin_id':plugin_obj.id,
+#                'workitem_id': args['wi_id'],
+                'plugin_id': plugin_obj.id,
                 'value' : plugin_value
             })
         vals[str(plugin_obj.code)] = plugin_value

@@ -29,13 +29,13 @@ class wizard_document_report(wizard.interface):
     <form string="Select Report">
         <field name="report" colspan="4"/>
         <field name="address_id" colspan="4"/>
-        <field name="trademark_id" colspan="4"/>
+        <field name="segment_id" colspan="4"/>
     </form>'''
 
-    report_send_form = '''<?xml version="1.0"?>
-    <form string="Send Report">
-        <field name="mail_service_id" colspan="4"/>
-    </form>'''
+#    report_send_form = '''<?xml version="1.0"?>
+#    <form string="Send Report">
+#        <field name="mail_service_id" colspan="4"/>
+#    </form>'''
 
     def execute(self, db, uid, data, state='init', context=None): # {{{
         self.dm_wiz_data = data
@@ -47,13 +47,14 @@ class wizard_document_report(wizard.interface):
         return {} # }}}
 
     def _send_report(self, cr, uid, data , context): # {{{
-        if not data['form']['mail_service_id']:
-                raise osv.except_osv("Error","You must choose a mail service for sending preview documents")
+#        if not data['form']['mail_service_id']:
+#                raise osv.except_osv("Error","You must choose a mail service for sending preview documents")
         doc = pooler.get_pool(cr.dbname).get('dm.offer.document').browse(cr, uid, self.dm_wiz_data['id'])
         vals = {
             'address_id' : data['form']['address_id'],
+            'segment_id' : data['form']['segment_id'],
             'step_id' : doc.step_id.id,
-            'mail_service_id' : data['form']['mail_service_id'],
+#            'mail_service_id' : data['form']['mail_service_id'],
             'is_preview' : True,
         }
         pooler.get_pool(cr.dbname).get('dm.workitem').create(cr, uid, vals)
@@ -72,7 +73,7 @@ class wizard_document_report(wizard.interface):
     report_list_fields = { # {{{
         'report': {'string': 'Select Report', 'type': 'selection', 'selection':_get_reports, },
         'address_id': {'string': 'Select Customer Address', 'type': 'many2one','relation':'res.partner.address', 'selection':_get_reports, 'domain':[('partner_id.category_id','=','DTP Preview Customers')] },
-        'trademark_id':{'string': 'Select Trademark', 'type': 'many2one','relation':'dm.trademark'}
+        'segment_id':{'string': 'Select Segment', 'type': 'many2one','relation':'dm.campaign.proposition.segment'}
         } # }}}
 
     report_send_fields = { # {{{
@@ -83,17 +84,18 @@ class wizard_document_report(wizard.interface):
         'init': {
             'actions': [],
             'result': {'type':'form', 'arch':report_list_form, 'fields':report_list_fields,
-                'state':[('end','Cancel'),('print_report','Print Report'),('select_ms','Send Report'),]}
+#                'state':[('end','Cancel'),('print_report','Print Report'),('select_ms','Send Report'),]}
+                'state':[('end','Cancel'),('print_report','Print Report'),('send_report','Send Report'),]}
             },
         'print_report': {
             'actions': [_print_report],
             'result': {'type': 'print', 'report':'', 'state':'end'}
             },
-        'select_ms': {
-            'actions': [],
-            'result': {'type':'form', 'arch':report_send_form, 'fields':report_send_fields,
-                'state':[('send_report','Send Report')]}
-            },
+#        'select_ms': {
+#            'actions': [],
+#            'result': {'type':'form', 'arch':report_send_form, 'fields':report_send_fields,
+#                'state':[('send_report','Send Report')]}
+#            },
         'send_report': {
             'actions': [_send_report],
             'result' : {'type':'state', 'state':'end'}

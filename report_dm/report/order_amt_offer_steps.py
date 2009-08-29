@@ -34,13 +34,13 @@ def lengthmonth(year, month):
         return 29
     return [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month]
 
-def step_create_xml(cr, id, som, eom):
+def step_create_xml(cr, o_id, som, eom, origin):
     # Computing the total amt by offer step
-    cr.execute(
-        "select sum(amount_total) as qty, s.date_order from sale_order s "\
-        "where offer_step_id = %s and s.date_order >= %s and s.date_order < %s " \
-        "group by s.date_order",
-        (id, som.strftime('%Y-%m-%d'), eom.strftime('%Y-%m-%d')))
+    cond = " where offer_step_id = %s and s.date_order >= '%s' and s.date_order < '%s' "%(o_id, som.strftime('%Y-%m-%d'), eom.strftime('%Y-%m-%d'))
+    if origin : 
+        cond += " and origin = '%s' " %origin
+    sql = "select sum(amount_total) as qty, s.date_order from sale_order s %s group by s.date_order"%cond
+    cr.execute(sql)       
     
     # Sum by day
     month = {}
@@ -56,8 +56,8 @@ def step_create_xml(cr, id, som, eom):
     '''
     time_xml = ([xml % (day, amount) for day, amount in month.iteritems()])
     
-    # Computing the employee
-    cr.execute("select name from dm_offer_step where id=%s", (id,))
+    # Computing the step
+    cr.execute("select name from dm_offer_step where id=%s", (o_id,))
     step = cr.fetchone()[0]
     
     # Computing the xml
@@ -65,7 +65,7 @@ def step_create_xml(cr, id, som, eom):
     <step id="%d" name="%s">
     %s
     </step>
-    ''' % (id, toxml(step), '\n'.join(time_xml))
+    ''' % (o_id, toxml(step), '\n'.join(time_xml))
     return xml
 
 class report_custom(report_rml):
@@ -83,13 +83,14 @@ class report_custom(report_rml):
         offer_id = data['form']['offer_id']
         pool = pooler.get_pool(cr.dbname)
         
+        origin=[(False,)]        
+        if data['form']['origin_partner'] :
+            cr.execute("select distinct origin from sale_order")
+            origin = cr.fetchall()
+            origin.sort()
+
         step_id = pool.get('dm.offer.step').search(cr,uid,[('offer_id','=',offer_id)])
         
-        
-        sql = "select count(s.id),offer_step_id ,to_char(s.date_order, 'YYYY-MM-DD') as date from sale_order s where offer_step_id in %s group by to_char(s.date_order, 'YYYY-MM-DD') , offer_step_id "%str(tuple(step_id))
-        
-        cr.execute(sql)
-        res = cr.fetchall()
         
         # Computing the dates (start of month: som, and end of month: eom)
         som = datetime.date(data['form']['year'], data['form']['month'], 1)
@@ -99,17 +100,19 @@ class report_custom(report_rml):
         date_xml.append('</days>')
         date_xml.append('<cols>3.75cm%s,1.25cm</cols>\n' % (',1.25cm' * lengthmonth(som.year, som.month)))
         
-
-        step_xml=''
-        for id in step_id:
-            step_xml += step_create_xml(cr, id, som, eom)
+        story_xml = ''
+        for i in range(len(origin)) :
+            step_xml=''
+            for s_id in step_id:
+                step_xml += step_create_xml(cr, s_id, som, eom, origin[i][0])
+            story_xml += "<story s_id='%d' name='%s'> %s </story>"%(i+1,origin[i][0],step_xml)
             
         # Computing the xml
         xml = '''<?xml version="1.0" encoding="UTF-8" ?>
         <report>%s
         %s
         </report>
-        ''' % (date_xml , step_xml )
+        ''' % (date_xml , story_xml )
 
         return xml
 
