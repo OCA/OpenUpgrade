@@ -25,7 +25,8 @@ from osv import fields
 from osv import osv
 import netsvc
 import traceback
-
+import sys
+import datetime
 
 class dm_workitem(osv.osv): # {{{
     _name = "dm.workitem"
@@ -40,9 +41,81 @@ class dm_workitem(osv.osv): # {{{
         if wi.sale_order_id:
             so_res = self.pool.get('sale.order')._sale_order_process(cr, uid, wi.sale_order_id.id)
         return result
+
+    def copy(self, cr, uid, id, default=None, context={}):
+        if not default: default = {}
+        default.update({'sale_order_id': False})
+        copy_id = super(dm_workitem, self).copy(cr, uid, id, default, context)
+        return copy_id
         
 dm_workitem() # }}}
 
+class dm_event_sale(osv.osv_memory): # {{{
+    _name = "dm.event.sale"
+    _rec_name = "segment_id"
+
+    _columns = {
+        'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segment', required=True),
+        'step_id' : fields.many2one('dm.offer.step', 'Offer Step', required=True),
+        'source' : fields.selection([('address_id','Addresses')], 'Source', required=True),
+        'address_id' : fields.many2one('res.partner.address', 'Address'),
+        'trigger_type_id' : fields.many2one('dm.offer.step.transition.trigger','Trigger Condition',required=True),
+        'sale_order_id' : fields.many2one('sale.order', 'Sale Order'),
+        'mail_service_id' : fields.many2one('dm.mail_service','Mail Service'),
+        'action_time': fields.datetime('Action Time'),
+        'is_realtime' : fields.boolean('Realtime Processing'),
+    }
+    _defaults = {
+        'source': lambda *a: 'address_id',
+        'sale_order_id' : lambda *a : False,
+    }
+
+    def create(self,cr,uid,vals,context={}):
+        id = super(dm_event_sale,self).create(cr,uid,vals,context)
+        obj = self.browse(cr, uid ,id)
+
+        tr_ids = self.pool.get('dm.offer.step.transition').search(cr, uid, [('step_from_id','=',obj.step_id.id),
+                ('condition_id','=',obj.trigger_type_id.id)])
+        if not tr_ids:
+            netsvc.Logger().notifyChannel('dm event case', netsvc.LOG_WARNING, "There is no transition %s at this step : %s"% (obj.trigger_type_id.name, obj.step_id.code))
+            raise osv.except_osv('Warning', "There is no transition %s at this step : %s"% (obj.trigger_type_id.name, obj.step_id.code))
+            return False
+        for tr in self.pool.get('dm.offer.step.transition').browse(cr, uid, tr_ids):
+            if obj.action_time:
+                action_time = datetime.datetime.strptime(obj.action_time, '%Y-%m-%d  %H:%M:%S')
+            else:
+                if obj.is_realtime:
+                    action_time = datetime.datetime.now()
+                else:
+                    wi_action_time = datetime.datetime.now()
+                    kwargs = {(tr.delay_type+'s'): tr.delay}
+                    action_time = wi_action_time + datetime.timedelta(**kwargs)
+
+                    if tr.action_hour:
+                        hour_str =  str(tr.action_hour).split('.')[0] + ':' + str(int(int(str(tr.action_hour).split('.')[1]) * 0.6))
+                        act_hour = datetime.datetime.strptime(hour_str,'%H:%M')
+                        action_time = action_time.replace(hour=act_hour.hour)
+                        action_time = action_time.replace(minute=act_hour.minute)
+
+                    if tr.action_day:
+                        action_time = action_time.replace(day=int(tr.action_day))
+                        if action_time.day > int(tr.action_day):
+                            action_time = action_time.replace(month=action_time.month + 1)
+
+                    if tr.action_date:
+                        action_time = tr.action_date
+
+            try:
+                wi_id = self.pool.get('dm.workitem').create(cr, uid, {'step_id':tr.step_to_id.id or False, 'segment_id':obj.segment_id.id or False,
+                'address_id':obj.address_id.id, 'mail_service_id':obj.mail_service_id.id, 'action_time':action_time.strftime('%Y-%m-%d  %H:%M:%S'),
+                'tr_from_id':tr.id,'source':obj.source, 'is_realtime': obj.is_realtime, 'sale_order_id':obj.sale_order_id.id})
+            except Exception, exception:
+                tb = sys.exc_info()
+                tb_s = "".join(traceback.format_exception(*tb))
+                netsvc.Logger().notifyChannel('dm event sale', netsvc.LOG_ERROR, "Event cannot create Workitem : %s\n%s" % (str(exception), tb_s))
+        return id
+
+dm_event_sale() # }}}
 
 class sale_order(osv.osv):#{{{
     _name = "sale.order"

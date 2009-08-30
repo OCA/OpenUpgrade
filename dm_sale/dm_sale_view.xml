@@ -50,5 +50,50 @@
         </field>
     </record>
 
+    <!--
+    =======================================================
+    EVENT VIEWS
+    =======================================================
+    -->
+
+    <record id="view_dm_event_sale_tree" model="ir.ui.view">
+        <field name="name">dm.event.sale.tree</field>
+        <field name="model">dm.event.sale</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom" string="Sale Events">
+                <field name="segment_id"/>
+                <field name="step_id"/>
+                <field name="address_id" required="1"/>
+                <field name="trigger_type_id" widget="selection"/>
+                <field name="sale_order_id"/>
+                <field name="action_time"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_dm_event_sale_form" model="ir.ui.view">
+        <field name="name">dm.event.sale.form</field>
+        <field name="model">dm.event.sale</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Sale Events">
+                <field name="segment_id"/>
+                <field name="step_id" select="2"/>
+                <field name="address_id" required="1"/>
+                <field name="trigger_type_id" widget="selection" select="1"/>
+                <field name="sale_order_id"/>
+                <field name="is_realtime"/>
+                <field name="action_time"/>
+            </form>
+        </field>
+    </record>
+    <record id="act_dm_event_sale_form" model="ir.actions.act_window">
+        <field name="name">Edit Sale Events</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.event.sale</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem action="act_dm_event_sale_form" id="menu_act_dm_event_sale_form" parent="dm.menu_dm_config_lowlevel"/>
 	</data>
 </openerp>
