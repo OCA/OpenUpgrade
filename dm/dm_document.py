@@ -181,17 +181,14 @@ dm_document_template() # }}}
 class dm_plugins_value(osv.osv): # {{{
     _name = "dm.plugins.value"
     _columns = {
-#        'address_id' : fields.many2one('res.partner.address', 'Customer Address', ondelete="cascade"),
-#        'workitem_id' : fields.many2one('dm.workitem', 'Workitem', ondelete="cascade"),
         'document_id' : fields.many2one('dm.campaign.document','Campaign Document', ondelete="cascade"),
         'plugin_id' : fields.many2one('dm.dtp.plugin', 'Plugin'),
         'value' : fields.text('Value'),
-#        'date' : fields.date('Date'),
     }
     
 dm_plugins_value() # }}}
 
-def set_image_email(node,msg):
+def set_image_email(node,msg): # {{{
     if not node.getchildren():
         if  node.tag=='img' and node.get('src') :
             content = ''
@@ -207,8 +204,9 @@ def set_image_email(node,msg):
     else :
         for n in node.getchildren():
             set_image_email(n,msg)
+ # }}}
 
-def create_email_queue(cr,uid,obj,context):
+def create_email_queue(cr,uid,obj,context): # {{{
     pool = pooler.get_pool(cr.dbname)
     email_queue_obj = pool.get('email.smtpclient.queue')
     context['document_id'] = obj.document_id.id
@@ -264,7 +262,7 @@ def create_email_queue(cr,uid,obj,context):
                 'date_create':time.strftime('%Y-%m-%d %H:%M:%S')
                 }
             email_queue_obj.create(cr,uid,vals)
-    return True
+    return True # }}}
 
 class dm_offer_document_category(osv.osv): # {{{
     _name = "dm.offer.document.category"
@@ -385,7 +383,6 @@ class dm_campaign_document(osv.osv): # {{{
         'document_id' : fields.many2one('dm.offer.document','Document',ondelete="cascade"),
         'address_id' : fields.many2one('res.partner.address', 'Customer Address', select="1", ondelete="cascade"),
         'origin' : fields.char('Origin', size=64),
-#        'wi_id' : fields.many2one('dm.workitem', 'Workitem', ondelete="cascade"),
         }
     _defaults = {
         'state': lambda *a : 'pending',

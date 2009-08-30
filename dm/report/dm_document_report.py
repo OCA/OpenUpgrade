@@ -34,7 +34,7 @@ class offer_document(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
         super(offer_document, self).__init__(cr, uid, name, context)
         self.localcontext.update({
-            'time': time,
+#            'time': time,
             'document':self.document,
 #            'trademark_id' : self.trademark_id,
             'report_type':''
@@ -66,37 +66,28 @@ class offer_document(report_sxw.rml_parse):
             return self.datas['form']['trademark_id']
     """
     def document(self):
+#        print "context",self.context
         plugin_list = self._plugin_list()
-        dm_so_line_id = 'dm_so_line_id' in self.context and self.context['dm_so_line_id'] and self.context['dm_so_line_id'] or ''
         if 'form' not in self.datas :
+            type = 'email_doc'
             addr_id = self.context['address_id']
             doc_id = self.context['document_id']
-            wi_id = self.context['wi_id']
-            type = 'email_doc'
+#            seg_id = self.context['segment_id'] or False
         else :
             type = 'preview'
             addr_id = self.datas['form']['address_id']
             doc_id = self.ids[0]
+            seg_id = self.datas['form']['segment_id']
 
-            dm_workitem_obj = self.pool.get('dm.workitem')
-            wi_data = dm_workitem_obj.search(self.cr, self.uid,[])
-
-            if not wi_data:
-                document = self.pool.get('dm.offer.document').browse(self.cr, self.uid, doc_id)
-
-                dm_segment_obj = self.pool.get('dm.campaign.proposition.segment')
-                segment_data_id = dm_segment_obj.search(self.cr,self.uid,[])
-
-                wi_id = dm_workitem_obj.create(self.cr, self.uid,{'address_id':addr_id,
-                                             'step_id':document.step_id.id,
-                                             'segment_id' : segment_data_id[0]})
-
-            else :
-                # !!! To change, it takes any workitem so can send any data
-                wi_id = wi_data[0]
-        # to fix : should be able to generate value with no workitems (preview)
-        values = generate_plugin_value(self.cr, self.uid, doc_id=doc_id, addr_id=addr_id,
-            wi_id=wi_id, plugin_list=plugin_list, type=type, dm_so_line_id=dm_so_line_id)
+        values = generate_plugin_value(self.cr, self.uid, 
+            doc_id = doc_id,
+            camp_doc_id = self.context['camp_doc_id'],
+            addr_id = addr_id,
+#            seg_id = seg_id,
+            wi_id = self.context['wi_id'],
+            plugin_list = plugin_list,
+            type = type,
+            )
         return [values]
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

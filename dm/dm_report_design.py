@@ -42,71 +42,27 @@ def merge_message(cr, uid, keystr, context): # {{{
     """ Merge offer internal document content and plugins values """
     def merge(match):
         dm_obj = pooler.get_pool(cr.dbname).get('dm.offer.document')
-#        id = context.get('document_id')
-#        obj = dm_obj.browse(cr, uid, id)
         obj = dm_obj.browse(cr, uid, context.get('document_id'))
         exp = str(match.group()[2:-2]).strip()
-        wi_id = None
-        if 'wi_id' in context :
-            wi_id = context['wi_id']
-        args = {'doc_id' : context['document_id'],'addr_id':context['address_id'],'wi_id':wi_id}
+        args = {'doc_id' : context['document_id'],'addr_id':context['address_id'],'camp_doc_id':context['camp_doc_id']}
         if 'plugin_list' in context :
             args['plugin_list'] = context['plugin_list']
         else :
             args['plugin_list']=[exp]
         if 'type' in context:
-            args['type']=context['type']
-        plugin_values = generate_plugin_value(cr, uid,**args)
+            args['type'] = context['type']
+
+        plugin_values = generate_plugin_value(cr, uid, **args)
         context.update(plugin_values)
         context.update({'object':obj, 'time':time})
         result = eval(exp, context)
         if result in (None, False):
             # What is that ?
-            return str("--------")
+            return str("-Missing-Plugin-Value-")
         return result
     com = re.compile('(\[\[.+?\]\])')
     message = com.sub(merge, keystr)
     return message # }}}
-
-def create_tnt_reports(cr,uid,obj,type_id,camp_mail_service,delivery_time,address_id,document_data,context): # {{{
-    """ Create TNT Stickers as attachment of campaign document"""
-    """
-    pool = pooler.get_pool(cr.dbname)
-    report_xml = pool.get('ir.actions.report.xml')
-    attachment_obj = pool.get('ir.attachment')
-    
-    if obj.sale_order_id and obj.sale_order_id.order_line:
-
-        vals2={
-            'segment_id': obj.segment_id.id or False,
-            'name': obj.step_id.code + "_" +str(address_id),
-            'type_id': type_id[0],
-            'mail_service_id':camp_mail_service.mail_service_id.id,
-            'delivery_time' : delivery_time,
-            'address_id' : address_id,
-            'origin' : obj.sale_order_id.name,
-            }
-
-        so_camp_doc = pool.get('dm.campaign.document').create(cr,uid,vals2)
-
-        for line in obj.sale_order_id.order_line :
-            if line.tracking_lot_id:
-                carrier_delivery_type = line.carrier_delivery_type or 'J'
-                tnt_report_id = report_xml.search(cr,uid,[('name','=','TNT Reports - %s'%carrier_delivery_type)])
-                if tnt_report_id :
-                    tnt_report = pool.get('ir.actions.report.xml').browse(cr, uid, tnt_report_id[0])
-                    srv = netsvc.LocalService('report.' + tnt_report.report_name)
-                    context['dm_so_line_id'] = line.id
-                    report_data,report_type = srv.create(cr, uid, [], {},context)
-                    attach_vals={'name' : document_data['name'] + "_" + str(address_id)+str(line.id),
-                         'datas_fname' : tnt_report.name.replace(' ','_').replace('-','')+ str(line.id) + '.pdf' ,
-                         'res_model' : 'dm.campaign.document',
-                         'res_id' : so_camp_doc,
-                         'datas': base64.encodestring(report_data),
-                         'file_type':report_type
-                         }
-                    attach_id = attachment_obj.create(cr,uid,attach_vals,{'not_index_context':True})
-    """ # }}}
     
 def generate_internal_reports(cr, uid, report_type, document_data, camp_doc, context): # {{{
 
@@ -134,17 +90,18 @@ def generate_internal_reports(cr, uid, report_type, document_data, camp_doc, con
         return report_data # }}}
 
 def generate_openoffice_reports(cr, uid, report_type, document_data, camp_doc, context): # {{{
-    report_content = []
+    " Generate documents created by OpenOffice "
+
     """ Get reports to process """
+    report_content = []
     pool = pooler.get_pool(cr.dbname)    
     attachment_obj = pool.get('ir.attachment')
     report_xml = pool.get('ir.actions.report.xml')
-        
+    
     report_ids = report_xml.search(cr, uid, [('document_id','=',document_data.id),('report_type','=',report_type)])
     if not report_ids :
         return "no_report_for_document"
 
-    """ Generate documents created by OpenOffice """
     for report in pool.get('ir.actions.report.xml').browse(cr, uid, report_ids) :
         srv = netsvc.LocalService('report.' + report.report_name)
         report_data, report_type = srv.create(cr, uid, [], {}, context)
@@ -172,7 +129,6 @@ def document_process(cr, uid, obj, report_type, context): # {{{
 
     if obj.is_global:
         """ if internal segment workitem """
-        print "source fields : ",getattr(obj.segment_id.customers_file_id, obj.source + "s")
         for cust_id in getattr(obj.segment_id.customers_file_id, obj.source + "s"):
             address_ids.append(cust_id.id)
     else:
@@ -253,9 +209,7 @@ def document_process(cr, uid, obj, report_type, context): # {{{
         if mail_service.store_email_document :
             context['address_id'] = address_id
             context['document_id'] = document_id[0]
-#            context['wi_id'] = obj.id
             context['store_document'] = True
-#            create_tnt_reports(cr,uid,obj,type_id,camp_mail_service,delivery_time,address_id,document_data,context)
             if document_data.editor ==  'internal' :
                 res = generate_internal_reports(cr, uid, report_type, document_data, camp_doc, context)
             elif document_data.editor == 'oord' :
@@ -264,7 +218,7 @@ def document_process(cr, uid, obj, report_type, context): # {{{
                 return res
 
     return {'code':'doc_done','ids':[camp_doc]} # }}}
-            
+"""            
 def compute_customer_plugin(cr, uid, **args): # {{{
     res  = pool.get('ir.model').browse(cr, uid, args['plugin_obj'].model_id.id)    
     args['model_name'] = res.model
@@ -272,12 +226,13 @@ def compute_customer_plugin(cr, uid, **args): # {{{
     args['field_type'] = str(args['plugin_obj'].field_id.ttype)
     args['field_relation'] = str(args['plugin_obj'].field_id.relation)
     return customer_function(cr, uid, **args) # }}}
-
+"""
 def _generate_value(cr, uid, plugin_obj, localcontext, **args): # {{{
     pool = pooler.get_pool(cr.dbname)
     localcontext['plugin_obj'] = plugin_obj
     plugin_args={}
     plugin_value = ''
+
     if plugin_obj.type in ('fields','image'):
         res  = pool.get('ir.model').browse(cr, uid, plugin_obj.model_id.id)    
         args['model_name'] = res.model
@@ -285,17 +240,17 @@ def _generate_value(cr, uid, plugin_obj, localcontext, **args): # {{{
         args['field_type'] = str(plugin_obj.field_id.ttype)
         args['field_relation'] = str(plugin_obj.field_id.relation)
         plugin_value = customer_function(cr, uid, **args)
-        if not plugin_value :
-            plugin_value = plugin_obj.preview_value
+#        if not plugin_value :
+#            plugin_value = plugin_obj.preview_value
     else :
         arg_ids = pool.get('dm.plugin.argument').search(cr,uid,[('plugin_id','=',plugin_obj.id)])
         for arg in pool.get('dm.plugin.argument').browse(cr,uid,arg_ids):
             if not arg.stored_plugin :
-                plugin_args[str(arg.name)]=arg.value
+                plugin_args[str(arg.name)] = arg.value
             else :
                 plugin_args[str(arg.name)] = _generate_value(cr,uid,arg.custome_plugin_id,localcontext,**args)
+
         if plugin_obj.type=='dynamic' and plugin_obj.python_code :
-    #        Set in localcontext ['addr_id','uid','wi_id','cr','plugin_obj','type','doc_id':,'plugin_list']
             localcontext.update(plugin_args)
             localcontext['pool']=pool
             exec plugin_obj.python_code.replace('\r','') in localcontext
@@ -314,6 +269,7 @@ def _generate_value(cr, uid, plugin_obj, localcontext, **args): # {{{
             X =  __import__(plugin_name)
             plugin_func = getattr(X, plugin_name)
             plugin_value = plugin_func(cr, uid,**args)
+
     return plugin_value # }}}
 
 def generate_plugin_value(cr, uid, **args): # {{{
@@ -321,40 +277,38 @@ def generate_plugin_value(cr, uid, **args): # {{{
         return False
     if not 'addr_id' in args and not args['addr_id'] :
         return False
-    if not 'wi_id' in args and not args['wi_id'] :
-        return False
     vals = {}
     localcontext = {'cr':cr,'uid':uid}
     localcontext.update(args)
 
     pool = pooler.get_pool(cr.dbname)
-
     dm_document = pool.get('dm.offer.document')
     dm_plugins_value = pool.get('dm.plugins.value')
 
     plugins = dm_document.browse(cr, uid, args['doc_id'], ['document_template_plugin_ids' ])
     if 'plugin_list' in args and args['plugin_list'] :
+        "Get plugins to compute value"
         p_ids = pool.get('dm.dtp.plugin').search(cr,uid,[('code','in',args['plugin_list'])])
         plugin_ids = pool.get('dm.dtp.plugin').browse(cr,uid,p_ids)
     else :
-        plugins = dm_document.browse(cr, uid, args['doc_id'], ['document_template_plugin_ids' ])
-        plugin_ids = plugins['document_template_plugin_ids']
+        "If no plugins in document do nothing"
+        return {}
         
     for plugin_obj in plugin_ids :
-        plugin_value = _generate_value(cr,uid,plugin_obj,localcontext,**args)
+        "Compute plugin value"
+        plugin_value = _generate_value(cr, uid, plugin_obj, localcontext, **args)
 #       dnt remove this comment it s for url changes
 #        if plugin_obj.type == 'url' :
 #            vals['%s_text_display'%str(plugin_obj.code)] = plugin_value[-1]
 #            plugin_value = plugin_value[0]
         if plugin_obj.store_value :
             dm_plugins_value.create(cr, uid,{
-#                'date':time.strftime('%Y-%m-%d'),
-#                'address_id':args['addr_id'],
-#                'workitem_id': args['wi_id'],
-                'plugin_id': plugin_obj.id,
+                'document_id' : args['camp_doc_id'],
+                'plugin_id' : plugin_obj.id,
                 'value' : plugin_value
             })
         vals[str(plugin_obj.code)] = plugin_value
+
     return vals # }}}
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

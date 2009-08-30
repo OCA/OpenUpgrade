@@ -11,7 +11,9 @@ def customer_function(cr, uid, **args):
     pool = pooler.get_pool(cr.dbname)
     model_name = args['model_name']
     model_object =  pool.get(model_name)
+    
     if model_name in ['dm.workitem','dm.campaign','dm.offer.step','dm.trademark'] and 'wi_id' in args:
+        # To change : browse wi for every plugins
         data = pool.get('dm.workitem').browse(cr,uid,args['wi_id'])
         if not data.segment_id : return False
         if not data.segment_id.proposition_id : return False
@@ -35,6 +37,7 @@ def customer_function(cr, uid, **args):
                 if model_name == 'res.partner.contact' : 
                     id = pool.get('res.partner.job').read(cr,uid,id[0])['contact_id']
                 res = model_object.read(cr,uid,id[0])
+
     if args['field_type'] == 'selection':
         if res[args['field_name']]:
             if args['field_name'] == 'lang':
