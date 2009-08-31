@@ -31,7 +31,10 @@
     "depends" : ["dm"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ['dm_sale_view.xml'],
+    "update_xml" : [
+                'dm_sale_view.xml',
+                'dm_sale_data.xml',
+                ],
     "active": False,
     "installable": True,
 }

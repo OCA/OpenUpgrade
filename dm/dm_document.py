@@ -178,16 +178,6 @@ class dm_document_template(osv.osv): # {{{
     
 dm_document_template() # }}}
 
-class dm_plugins_value(osv.osv): # {{{
-    _name = "dm.plugins.value"
-    _columns = {
-        'document_id' : fields.many2one('dm.campaign.document','Campaign Document', ondelete="cascade"),
-        'plugin_id' : fields.many2one('dm.dtp.plugin', 'Plugin'),
-        'value' : fields.text('Value'),
-    }
-    
-dm_plugins_value() # }}}
-
 def set_image_email(node,msg): # {{{
     if not node.getchildren():
         if  node.tag=='img' and node.get('src') :
@@ -389,4 +379,13 @@ class dm_campaign_document(osv.osv): # {{{
        }
 dm_campaign_document() # }}}
 
+class dm_plugins_value(osv.osv): # {{{
+    _name = "dm.plugins.value"
+    _columns = {
+        'document_id' : fields.many2one('dm.campaign.document','Campaign Document', ondelete="cascade"),
+        'plugin_id' : fields.many2one('dm.dtp.plugin', 'Plugin'),
+        'value' : fields.text('Value'),
+    }
+    
+dm_plugins_value() # }}}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
