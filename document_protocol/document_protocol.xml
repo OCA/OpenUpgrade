@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_document_file_form_proto">
+            <field name="name">ir.attachment.inherited</field>
+            <field name="model">ir.attachment</field>
+            <field name="inherit_id" ref="document.view_document_file_form" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+	    <xpath expr="/form/notebook/page[@string='Others Info']" position="inside">
+                <group name="protocol" colspan="2" col="2">
+		    <separator string="Protocol" colspan="2" />
+                    <field name="proto_num" />
+		    <field name="proto_date" />
+		    <field name="proto_from" />
+		    <field name="proto_to" />
+                </group>
+	    </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
