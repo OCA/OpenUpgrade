@@ -87,6 +87,7 @@ def send_email(cr,uid,obj,context):
     email_reply = obj.segment_id.campaign_id.trademark_id.email or ''
 
     context['document_id'] = obj.document_id.id
+    context['camp_doc_id'] = obj.id
     context['address_id'] = obj.address_id.id
 
     email_subject = merge_message(cr, uid, obj.document_id.subject or '',context)
@@ -106,9 +107,11 @@ def send_email(cr,uid,obj,context):
        
        if obj.document_id.editor ==  'internal' :
            message.append(generate_internal_reports(cr, uid, 'html2html', document_data, False, context))
-       else :
+       elif obj.document_id.editor ==  'oord' :
            msg = generate_openoffice_reports(cr, uid, 'html2html', document_data, False, context)
            message.extend(msg)
+       else:
+           return {'code':'emv_doc_error'}
 
     for msg  in message:
         root = etree.HTML(msg)
@@ -176,7 +179,7 @@ def send_email(cr,uid,obj,context):
         synchrotype = etree.SubElement(sendrequest, "synchrotype")
         synchrotype.text = "NOTHING"
 
-        print("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "\n" + etree.tostring(msg, method="xml", encoding='utf-8', pretty_print=True))
+#        print("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "\n" + etree.tostring(msg, method="xml", encoding='utf-8', pretty_print=True))
 
         xml_msg = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + etree.tostring(msg, encoding="utf-8")
 
