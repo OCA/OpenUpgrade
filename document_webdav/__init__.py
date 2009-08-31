@@ -26,5 +26,4 @@
 #
 ##############################################################################
 
-import document
-import webdav
+import webdav_server

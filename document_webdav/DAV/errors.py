@@ -34,7 +34,11 @@ class DAV_NotFound(DAV_Error):
     
     def __init__(self,*args):
         if len(args):
-            DAV_Error.__init__(self,404,args[0])
+	    if isinstance(args[0],list):
+		stre = "Path %s not found!"%('/'.join(args[0]))
+	    else:
+	        stre = args[0]
+            DAV_Error.__init__(self,404,stre)
         else:
             DAV_Error.__init__(self,404)
 

@@ -52,8 +52,6 @@ class dav_interface:
 
     def get_prop2(self,uri,ns,pname):
         """ return the value of a property 
-
-        
         """
         if lower(ns)=="dav:": return self.get_dav(uri,pname)
 
@@ -106,13 +104,17 @@ class dav_interface:
         """ return the creationdate of a resource """
         d=self.get_creationdate(uri)
         # format it
-        return time.strftime("%Y-%m-%dT%H-%M-%SZ",time.localtime(d))
+	if isinstance(d, int) or isinstance(d, float):
+		d = time.localtimetime(d)
+        return time.strftime("%Y-%m-%dT%H:%M:%S%Z",d)
 
     def _get_dav_getlastmodified(self,uri):
         """ return the last modified date of a resource """
         d=self.get_lastmodified(uri)
+	if isinstance(d, int) or isinstance(d, float):
+		d = time.localtime(d)
         # format it
-        return time.strftime("%a, %d %b %Y %H:%M:%S %Z",time.localtime(d))
+        return time.asctime(d)
 
 
     ###
