@@ -18,5 +18,57 @@
 	    </xpath>
             </field>
         </record>
+	
+        <record model="ir.ui.view" id="view_document_file_form_proto2">
+            <field name="name">ir.attachment.inherited2</field>
+            <field name="model">ir.attachment</field>
+            <field name="inherit_id" ref="view_document_file_form_proto" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+		<xpath expr="/form/notebook/page" position="after">
+	        <page name='signatures' string='Signatures'>
+                    <field name="signature_ids">
+			<tree string="Signatures">
+				<field name="write_uid" />
+				<field name="keyid"/>
+				<field name="write_date"/>
+				<field name="status"/>
+			</tree>
+		    </field>
+		</page>
+	    </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_document_signature_tree">
+            <field name="name">document.signature.tree</field>
+            <field name="model">document.signature</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+		<tree string="Signatures">
+                    <field name="file"/>
+		    <field name="write_uid" />
+                    <field name="keyid"/>
+                    <field name="write_date"/>
+                    <field name="status"/>
+                </tree>
+	     </field>
+	 </record>
+
+        <record model="ir.ui.view" id="view_document_signature_view">
+            <field name="name">document.signature.form</field>
+            <field name="model">document.signature</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+		<form string="Signatures">
+                    <field name="file_id"/>
+		    <field name="write_uid" />
+                    <field name="keyid"/>
+                    <field name="write_date"/>
+                    <field name="status"/>
+		    <field name="signature" />
+                </form>
+	     </field>
+	 </record>
     </data>
 </openerp>
