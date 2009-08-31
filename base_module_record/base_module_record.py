@@ -27,7 +27,7 @@ import pooler
 import string
 import tools
 
-objects_proxy = netsvc.SERVICES['object'].__class__
+objects_proxy = netsvc.ExportService.getService('object').__class__
 
 class recording_objects_proxy(objects_proxy):
     def execute(self, *args, **argv):
