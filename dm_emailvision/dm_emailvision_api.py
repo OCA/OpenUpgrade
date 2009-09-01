@@ -31,11 +31,6 @@ import time
 
 from dm.dm_report_design import merge_message ,generate_internal_reports ,generate_openoffice_reports
 
-#from dm_email.dm_email_document import set_image_email - not of use
-#from email.MIMEMultipart import MIMEMultipart
-#from email.MIMEText import MIMEText
-#from email.MIMEImage import MIMEImage
-
 class dm_mail_service(osv.osv):
      _inherit = "dm.mail_service"
      _columns = {
@@ -50,31 +45,6 @@ class dm_mail_service(osv.osv):
     }
 dm_mail_service()
 
-#Dont need any more (not sure)
-#def set_image_email(node,msg):
-#    if not node.getchildren():
-#        if  node.tag=='img' and node.get('src') and node.get('src').find('data:image/gif;base64,')>=0:
-#            msgImage = MIMEImage(base64.decodestring(node.get('src').replace('data:image/gif;base64,','')))
-#            image_name = ''.join( Random().sample(string.letters+string.digits, 12) )
-#            msgImage.add_header('Content-ID','<%s>'%image_name)
-#            msg.attach(msgImage)
-#            node.set('src',"cid:%s"%image_name)
-#        else :
-#            for n in node.getchildren():
-#                set_image_email(n,msg)
-
-#def _email_body(body):
-#    msgRoot = MIMEMultipart('related')
-#    msgRoot.preamble = 'This is a multi-part message in MIME format.'
-#
-#    msg = MIMEMultipart('alternative')
-#    msgRoot.attach(msg)
-#
-#    set_image_email(body,msgRoot)
-#    msgText = MIMEText(etree.tostring(body), 'html')
-#    msg.attach(msgText)
-#    return  msgRoot.as_string()
-
 def send_email(cr,uid,obj,context):
 
     """ Get Emailmvision connection infos """
@@ -85,10 +55,6 @@ def send_email(cr,uid,obj,context):
 
     email_dest = obj.address_id.email or ''
     email_reply = obj.segment_id.campaign_id.trademark_id.email or ''
-
-    context['document_id'] = obj.document_id.id
-    context['camp_doc_id'] = obj.id
-    context['address_id'] = obj.address_id.id
 
     email_subject = merge_message(cr, uid, obj.document_id.subject or '',context)
     name_from = obj.segment_id.campaign_id.trademark_id.name or ''
