@@ -121,7 +121,7 @@
             <field name="inherit_id" ref="account.invoice_supplier_form"/>
             <field name="arch" type="xml">
                 <xpath expr="/form/notebook/page/field[@name='invoice_line']/tree/field[@name='product_id']" position="replace">
-                    <field name="product_id" on_change="product_id_change(product_id, uos_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position, price_unit, parent.address_invoice_id,parent.company_id)"/>
+                    <field name="product_id" on_change="product_id_change(product_id, uos_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position, price_unit, parent.address_invoice_id, {'company_id': parent.company_id })"/>
                 </xpath>
             </field>
         </record>
