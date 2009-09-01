@@ -66,25 +66,35 @@ class offer_document(report_sxw.rml_parse):
             return self.datas['form']['trademark_id']
     """
     def document(self):
-#        print "context",self.context
         plugin_list = self._plugin_list()
         if 'form' not in self.datas :
             type = 'email_doc'
             addr_id = self.context['address_id']
             doc_id = self.context['document_id']
-#            seg_id = self.context['segment_id'] or False
+            if 'segment_id' in self.context:
+                seg_id = self.context['segment_id']
+            else:
+                seg_id = False
+            camp_doc_id = self.context['camp_doc_id']
+            wi_id = self.context['wi_id']
         else :
             type = 'preview'
             addr_id = self.datas['form']['address_id']
             doc_id = self.ids[0]
             seg_id = self.datas['form']['segment_id']
+            camp_doc_id = False
+
+            doc = self.pool.get('dm.offer.document').browse(self.cr, self.uid, doc_id)
+            wi_id = self.pool.get('dm.workitem').create(self.cr, self.uid, {'address_id':addr_id,
+                'segment_id':seg_id, 'step_id':doc.step_id.id, 'is_preview':True, 
+                'state':'done'})
 
         values = generate_plugin_value(self.cr, self.uid, 
             doc_id = doc_id,
-            camp_doc_id = self.context['camp_doc_id'],
+            camp_doc_id = camp_doc_id,
             addr_id = addr_id,
-#            seg_id = seg_id,
-            wi_id = self.context['wi_id'],
+            seg_id = seg_id,
+            wi_id = wi_id,
             plugin_list = plugin_list,
             type = type,
             )

@@ -11,21 +11,21 @@ def customer_function(cr, uid, **args):
     pool = pooler.get_pool(cr.dbname)
     model_name = args['model_name']
     model_object =  pool.get(model_name)
-    
-    if model_name in ['dm.workitem','dm.campaign','dm.offer.step','dm.trademark'] and 'wi_id' in args:
-        # To change : browse wi for every plugins
-        data = pool.get('dm.workitem').browse(cr,uid,args['wi_id'])
-        if not data.segment_id : return False
-        if not data.segment_id.proposition_id : return False
-        if not data.segment_id.proposition_id.camp_id.trademark_id : return False
+
+    if model_name in ['dm.workitem'] and 'wi_id' in args:
+        res = pool.get(model_name).read(cr,uid,args['wi_id'], [args['field_name']])
+    elif model_name in ['dm.campaign','dm.trademark'] and 'seg_id' in args:
+        segment_id = pool.get('dm.campaign.proposition.segment').browse(cr,uid,args['seg_id'])
+        if not segment_id.proposition_id or segment_id.proposition_id.camp_id : return False
         if model_name == 'dm.campaign':
-            res = pool.get(model_name).read(cr,uid,data.segment_id.proposition_id.camp_id.id, [args['field_name']])
-        elif model_name == 'dm.offer.step':
-            res = pool.get(model_name).read(cr,uid,data.step_id.id, [args['field_name']])
+            res = pool.get(model_name).read(cr, uid, segment_id.proposition_id.camp_id.id, [args['field_name']])
         elif model_name == 'dm.trademark' :
-            res = pool.get(model_name).read(cr,uid,data.segment_id.proposition_id.camp_id.trademark_id.id, [args['field_name']])
-        else:
-            res = pool.get(model_name).read(cr,uid,args['wi_id'], [args['field_name']])
+            if not segment_id.proposition_id.camp_id.trademark_id : return False
+            res = pool.get(model_name).read(cr, uid, segment_id.proposition_id.camp_id.trademark_id.id, [args['field_name']])
+    elif model_name in ['dm.offer.step'] and 'doc_id' in args:
+        document_id = pool.get('dm.offer.document').browse(cr,uid,args['doc_id'])
+        if not document_id.step_id : return False
+        res = pool.get(model_name).read(cr, uid, document_id.step_id.id, [args['field_name']])
     else :
         res = pool.get('res.partner.address').read(cr,uid,args['addr_id'])
         if model_name == 'res.partner' :
