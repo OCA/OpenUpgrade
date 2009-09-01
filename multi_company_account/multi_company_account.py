@@ -109,8 +109,8 @@ class account_invoice_line(osv.osv):
                'product_id': fields.many2one('product.product', 'Product', ondelete='set null'), 
     }
     
-    def product_id_change(self, cr, uid, ids, product, uom, qty=0, name='', type='out_invoice', partner_id=False, fposition_id=False, price_unit=False, address_invoice_id=False,  company_id=False, context=None):
-        
+    def product_id_change(self, cr, uid, ids, product, uom, qty=0, name='', type='out_invoice', partner_id=False, fposition_id=False, price_unit=False, address_invoice_id=False, context=None):
+        company_id = context['company_id']
         if context is None:
             context = {}
         if not partner_id:
@@ -355,8 +355,8 @@ class account_invoice(osv.osv):
                         pay_pro_id = self.pool.get('ir.property').search(cr,uid,[('name','=','property_account_payable'),('company_id','=',company_id)])
                     rec_line_data = self.pool.get('ir.property').read(cr,uid,rec_pro_id,['name','value','res_id'])
                     pay_line_data = self.pool.get('ir.property').read(cr,uid,pay_pro_id,['name','value','res_id'])
-                    rec_res_id = int(rec_line_data[0]['value'].split(',')[1]) or False
-                    pay_res_id = int(pay_line_data[0]['value'].split(',')[1]) or False
+                    rec_res_id = rec_line_data and int(rec_line_data[0]['value'].split(',')[1]) or False
+                    pay_res_id = pay_line_data and int(pay_line_data[0]['value'].split(',')[1]) or False
                     if not rec_res_id and not pay_res_id:
                         raise osv.except_osv(_('Configration Error !'),
                             _('Can not find account chart for this company, Please Create account.'))
@@ -419,8 +419,8 @@ class account_invoice(osv.osv):
                         pay_pro_id = self.pool.get('ir.property').search(cr,uid,[('name','=','property_account_payable'),('company_id','=',company_id)])
                     rec_line_data = self.pool.get('ir.property').read(cr,uid,rec_pro_id,['name','value','res_id'])
                     pay_line_data = self.pool.get('ir.property').read(cr,uid,pay_pro_id,['name','value','res_id'])
-                    rec_res_id = int(rec_line_data[0]['value'].split(',')[1]) or False
-                    pay_res_id = int(pay_line_data[0]['value'].split(',')[1]) or False
+                    rec_res_id = rec_line_data and int(rec_line_data[0]['value'].split(',')[1]) or False
+                    pay_res_id = pay_line_data and int(pay_line_data[0]['value'].split(',')[1]) or False
                     if not rec_res_id and not rec_res_id:
                         raise osv.except_osv(_('Configration Error !'),
                             _('Can not find account chart for this company, Please Create account.'))
