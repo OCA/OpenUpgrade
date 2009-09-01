@@ -30,7 +30,7 @@ class ir_attachment(osv.osv):
 	'proto_date': fields.datetime('Protocol Date', readonly=False),
 	'proto_from': fields.char('From',size=100, help="A textual description where the document has come from."),
 	'proto_to': fields.char('To',size=100,help="The main recepient of this document"),
-        'signature_ids': fields.one2many('document.signature', 'file_id', 'Signatures'),
+        'signature_ids': fields.one2many('document.signature', 'file_id', 'Signatures', readonly=True),
     }
 
     _defaults = {
