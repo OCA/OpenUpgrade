@@ -39,6 +39,7 @@
     "demo_xml" : [ ],
     "update_xml" : [
                     "dm_statistics_report.xml",
+                    "security/dm_statistics_security.xml",
                     ],
     "active": False,
     "installable": True,
