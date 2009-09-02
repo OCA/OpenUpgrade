@@ -150,9 +150,9 @@ class SmtpClient(osv.osv):
             raise osv.except_osv(_('Server Error!'), _('Please verify Email Server, without verification you can not send Email(s).'))
         key = False
         if test and self.server[serverid]['state'] == 'confirm':
-            body = str(self.server[serverid]['test_email'])
+            body = self.server[serverid]['test_email']
         else:
-            body = str(self.server[serverid]['verify_email'])
+            body = self.server[serverid]['verify_email']
             #ignore the code
             key = self.gen_private_key(cr, uid, ids)
             #md5(time.strftime('%Y-%m-%d %H:%M:%S') + toemail).hexdigest();
@@ -165,7 +165,10 @@ class SmtpClient(osv.osv):
         if len(body.strip()) <= 0:
             raise osv.except_osv(_('Message Error!'), _('Please configure Email Server Messages [Verification / Test]'))
         
-        msg = MIMEText(body or '', _charset='utf-8')
+        try:
+            msg = MIMEText(body.encode('utf8') or '',_subtype='plain',_charset='utf-8')
+        except:
+            msg = MIMEText(body or '',_subtype='plain',_charset='utf-8')
         
         if not test and not self.server[serverid]['state'] == 'confirm':
             msg['Subject'] = _('OpenERP SMTP server Email Registration Code!')
