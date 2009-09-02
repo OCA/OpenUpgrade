@@ -102,26 +102,29 @@ class report_custom(report_rml):
             row_id = pool.get('dm.campaign.proposition.segment').search(cr,uid,[('campaign_id','=',camp_id)])
             field = 'segment_id'
             model = 'dm.campaign.proposition.segment'
+            t2 = " per Segments Of Campaign"
         elif self.name2 in camp_offer_qty_report or self.name2 in camp_offer_amt_report:
             camp_id = data['form']['row_id']
             offer_id = pool.get('dm.campaign').browse(cr,uid,camp_id).offer_id.id
             row_id = pool.get('dm.offer.step').search(cr,uid,[('offer_id','=',offer_id)])
             field = 'offer_step_id'
             model = 'dm.offer.step'
+            t2 = " per Offer Step of Campaign"
         elif self.name2 in offer_amt_report  or self.name2 in offer_qty_report:
             offer_id = data['form']['row_id']
             offer_name = pool.get('dm.offer').browse(cr,uid,offer_id).name
             row_id = pool.get('dm.offer.step').search(cr,uid,[('offer_id','=',offer_id)])        
             field = 'offer_step_id'
             model = 'dm.offer.step'
+            t2 = " per Offer Steps"
         if self.name2 in offer_amt_report or self.name2 in camp_amt_report or self.name2 in camp_offer_amt_report :
             cal = 'sum(amount_total)'
-            name = 'Income'
+            t1 = 'Income'
         elif self.name2 in offer_qty_report or self.name2 in camp_qty_report or self.name2 in camp_offer_qty_report :
             cal = 'count(id)'
-            name = 'Order'
-        n = "Statement"
+            t1 = 'Order Quantity'
         story_xml = ''
+        n = name = t1 + t2
         for i in range(len(origin)) :
             row_xml=''
             for r_id in row_id:
