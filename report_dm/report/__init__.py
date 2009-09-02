@@ -20,11 +20,7 @@
 #
 ##############################################################################
 
-import order_qty_offer_steps
-import order_amt_offer_steps
-import order_amt_campaign
-import order_qty_campaign
-import order_amt_campaign_offer_step
-import order_qty_campaign_offer_step
+import order_statistics_reports
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
