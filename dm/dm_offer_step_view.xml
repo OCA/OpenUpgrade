@@ -229,7 +229,7 @@
                             <field name="forecasted_yield" colspan="4"/>
                        </group>
                             <separator string="Offer Step Product"  colspan="4"/>
-                            <field name="item_ids" colspan="4" nolabel="1" readonly="0"/>
+                            <field name="item_ids" colspan="4" nolabel="1" readonly="0" widget="one2many"/>
                     </page>
                     <page string="Advises">
                         <group groups="base.group_extended">
@@ -395,14 +395,14 @@
         id="act_offer_product_opened"
         context="{'offer_id':active_id}"/>
         
-    <act_window
+    <!--act_window
             id="act_edit_items"
             view_type="form"
         	view_mode="tree,form"
             name="Edit Items"
             res_model="product.product"
             src_model="dm.offer.step"
-          	domain = "[('id','in',item_ids[0][2])]"/>
+          	domain = "[('id','in',item_ids[0][2])]"/-->
 
 </data>
 </openerp>
