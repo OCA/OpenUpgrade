@@ -25,38 +25,59 @@ import time
 import datetime
 import pooler
 
+from tools.misc import UpdateableDict
 
-_order_amount_campaign_offer_step_form = """<?xml version="1.0"?>
-<form string="Order quantity per Campaign - Offer">
+Fields = UpdateableDict()
+
+Form = """<?xml version="1.0"?>
+<form string="Statistic Reports">
    <field name="month"/>
    <field name="year"/>
-   <field name="camp_id"/>
+   <field name="row_id"/>
    <field name="origin_partner"/>
 </form>"""
 
-_order_amount_campaign_offer_step_fields = {
+Fields = {
      'month': dict(string=u'Month', type='selection', required=True, selection=[(x, datetime.date(2000, x, 1).strftime('%B')) for x in range(1, 13)]), 
     'year': dict(string=u'Year', type='integer', required=True),
-    'camp_id': {'string': 'Campaign', 'type': 'many2one', 'relation': 'dm.campaign', 'required': True},
     'origin_partner':{'string':'Sort by origin partner' , 'type':'boolean'}
 }
 
+camp_wiz = ["dm.order.amount.campaign","dm.order.quantity.campaign",  "dm.order.quantity.campaign.offer.step",
+            "dm.order.amount.campaign.offer.step"]
+offer_wiz = ["dm.order.quantity.offer.steps", "dm.order.amount.offer.steps"]      
+
 def _get_value(self, cr, uid, data, context):
+    if self.wiz_name in camp_wiz :
+        Fields['row_id']= {'string': 'Campaign', 'type': 'many2one', 'relation': 'dm.campaign', 'required': True}
+    elif self.wiz_name in offer_wiz :
+        Fields['row_id']= {'string': 'Offer', 'type': 'many2one', 'relation': 'dm.offer', 'required': True}
     today=datetime.date.today()
     return dict(month=today.month, year=today.year)
     
+def _report_name(self, cr, uid, data, context):
+    self.states['print']['result']['report'] = self.wiz_name
+    return {}
     
-class wizard_amt_campaign_offer_step_report(wizard.interface):
+    
+class wizard_amt_campaign_report(wizard.interface):
     states = {
         'init': {
             'actions': [_get_value],
-            'result': {'type':'form', 'arch':_order_amount_campaign_offer_step_form, 'fields':_order_amount_campaign_offer_step_fields, 'state':[('end','Cancel'),('print','Print Report')]},
+            'result': {'type':'form', 'arch':Form, 'fields':Fields, 'state':[('end','Cancel'),('print','Print Report')]},
         },
         'print': {
-            'actions': [],
-            'result': {'type':'print', 'report':'dm.order.amount.campaign.offer.step', 'state':'end'},
+            'actions': [_report_name],
+            'result': {'type':'print', 'report':'', 'state':'end'},
         },
     }
-wizard_amt_campaign_offer_step_report('dm.order.amount.campaign.offer.step')
+wizard_amt_campaign_report('dm.order.amount.campaign')
+wizard_amt_campaign_report('dm.order.quantity.campaign')
+wizard_amt_campaign_report('dm.order.quantity.campaign.offer.step')
+wizard_amt_campaign_report('dm.order.amount.campaign.offer.step')
+wizard_amt_campaign_report('dm.order.quantity.offer.steps')
+wizard_amt_campaign_report('dm.order.amount.offer.steps')
+
+
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

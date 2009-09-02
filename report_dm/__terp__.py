@@ -39,6 +39,8 @@
     "demo_xml" : [ ],
     "update_xml" : [
                     "dm_statistics_report.xml",
+                    "security/dm_statistics_security.xml",
+                    "security/ir.model.access.csv",
                     ],
     "active": False,
     "installable": True,

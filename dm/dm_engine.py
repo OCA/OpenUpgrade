@@ -127,8 +127,12 @@ class dm_workitem(osv.osv): # {{{
                 if done:
                     camp_doc_obj = self.pool.get('dm.campaign.document')
                     for camp_doc in camp_doc_obj.browse(cr, uid, wi_res['ids']):
-                        context['active_id'] = camp_doc.id
+                        context['active_id'] = context['camp_doc_id'] = camp_doc.id
                         context['wi_id'] = wi.id
+                        context['addess_id'] = wi.address_id.id
+                        context['step_id'] = wi.step_id.id
+                        context['document_id'] = camp_doc.document_id.id
+                        context['segment_id'] = wi.segment_id.id
 
                         ms_res = server_obj.run(cr, uid, [camp_doc.mail_service_id.action_id.id], context.copy())
 

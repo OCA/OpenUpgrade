@@ -280,7 +280,10 @@ class SmtpClient(osv.osv):
         if smtp_server.state != 'confirm':
             raise osv.except_osv(_('SMTP Server Error !'), 'Server is not Verified, Please Verify the Server !')
         
-        subject = unicode(subject, 'utf-8') # Email subject could have non-ascii characters
+        try:
+            subject = subject.encode('utf-8')
+        except:
+            subject = subject.decode()   
         
         if type(emailto) == type([]):
             for to in emailto:
