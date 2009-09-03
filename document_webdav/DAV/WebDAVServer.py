@@ -50,7 +50,9 @@ from string import atoi,split
 from status import STATUS_CODES
 from errors import *
 
-class DAVRequestHandler(AuthServer.BufferedAuthRequestHandler):
+import BaseHTTPServer
+
+class DAVRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     """Simple DAV request handler with
 
     - GET
@@ -72,11 +74,15 @@ class DAVRequestHandler(AuthServer.BufferedAuthRequestHandler):
     def _log(self, message):
         pass
 
+    def _append(self,s):
+        """ write the string to wfile """
+        self.wfile.write(s)
+
     def send_body(self,DATA,code,msg,desc,ctype='application/octet-stream',headers={}):
         """ send a body in one part """
 
         self.send_response(code,message=msg)
-        self.send_header("Connection", "close")
+        self.send_header("Connection", "close") # *-*
         self.send_header("Accept-Ranges", "bytes")
 
         for a,v in headers.items():
@@ -98,7 +104,7 @@ class DAVRequestHandler(AuthServer.BufferedAuthRequestHandler):
         self.responses[207]=(msg,desc)
         self.send_response(code,message=msg)
         self.send_header("Content-type", ctype)
-        self.send_header("Connection", "close")
+        self.send_header("Connection", "close") # *-*
         self.send_header("Transfer-Encoding", "chunked")
         self.end_headers()
         self._append(hex(len(DATA))[2:]+"\r\n")
@@ -136,7 +142,7 @@ class DAVRequestHandler(AuthServer.BufferedAuthRequestHandler):
                     <resourcetype xmlns="DAV:"/>
                     <checked-out xmlns="DAV:"/>
                     </prop></propfind>"""
-        self.write_infp(body)
+        #self.wfile.write(body)
 
         # which Depth?
         if self.headers.has_key('Depth'):
@@ -144,8 +150,8 @@ class DAVRequestHandler(AuthServer.BufferedAuthRequestHandler):
         else:
             d="infinity"
 
-        uri=urlparse.urljoin(dc.baseuri,self.path)
-        uri=urllib.unquote(uri)
+        uri=self.geturi()
+	print "uri now:",uri
         pf=PROPFIND(uri,dc,d)
 
         if body:
@@ -161,13 +167,20 @@ class DAVRequestHandler(AuthServer.BufferedAuthRequestHandler):
 	    print "Dav Error (propfind):",ec,dd
             return self.send_error(ec,dd)
 
-        self.send_body_chunks(DATA,"207","Multi-Status","Multiple responses")
+        self.send_body_chunks(DATA,207,"Multi-Status","Multiple responses")
+
+    def geturi(self):
+        buri = self.IFACE_CLASS.baseuri
+	if buri[-1] == '/':
+		return urllib.unquote(buri[:-1]+self.path)
+	else:
+		return urllib.unquote(buri+self.path)
 
     def do_GET(self):
         """Serve a GET request."""
         dc=self.IFACE_CLASS
-        uri=urlparse.urljoin(dc.baseuri,self.path)
-        uri=urllib.unquote(uri)
+        uri=self.geturi()
+	print "uri now:",uri
 
         # get the last modified date
         try:
@@ -196,9 +209,9 @@ class DAVRequestHandler(AuthServer.BufferedAuthRequestHandler):
     def do_HEAD(self):
         """ Send a HEAD response """
         dc=self.IFACE_CLASS
-        uri=urlparse.urljoin(dc.baseuri,self.path)
-        uri=urllib.unquote(uri)
-
+        uri=self.geturi()
+        print "uri now:",uri
+	
         # get the last modified date
         try:
             lm=dc.get_prop(uri,"DAV:","getlastmodified")
@@ -229,8 +242,7 @@ class DAVRequestHandler(AuthServer.BufferedAuthRequestHandler):
         """ create a new collection """
 
         dc=self.IFACE_CLASS
-        uri=urlparse.urljoin(dc.baseuri,self.path)
-        uri=urllib.unquote(uri)
+        uri=self.geturi()
         try:
             dc.mkcol(uri)
             self.send_status(200)
@@ -240,8 +252,7 @@ class DAVRequestHandler(AuthServer.BufferedAuthRequestHandler):
     def do_DELETE(self):
         """ delete an resource """
         dc=self.IFACE_CLASS
-        uri=urlparse.urljoin(dc.baseuri,self.path)
-        uri=urllib.unquote(uri)
+        uri=self.geturi()
         dl=DELETE(uri,dc)
         if dc.is_collection(uri):
             res=dl.delcol()
@@ -261,8 +272,7 @@ class DAVRequestHandler(AuthServer.BufferedAuthRequestHandler):
         if self.headers.has_key("Content-Length"):
             l=self.headers['Content-Length']
             body=self.rfile.read(atoi(l))
-        uri=urlparse.urljoin(dc.baseuri,self.path)
-        uri=urllib.unquote(uri)
+        uri=self.geturi()
 
         ct=None
         if self.headers.has_key("Content-Type"):
@@ -293,8 +303,7 @@ class DAVRequestHandler(AuthServer.BufferedAuthRequestHandler):
         dc=self.IFACE_CLASS
 
         # get the source URI
-        source_uri=urlparse.urljoin(dc.baseuri,self.path)
-        source_uri=urllib.unquote(source_uri)
+        source_uri=self.geturi()
 
         # get the destination URI
         dest_uri=self.headers['Destination']

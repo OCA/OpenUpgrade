@@ -1,51 +1,74 @@
-import BaseHTTPServer
-import DAV
-import os
+# -*- encoding: utf-8 -*-
 
-from xml.dom import ext
+#
+# Copyright P. Christeas <p_christ@hol.gr> 2008,2009
+#
+#
+# WARNING: This program as such is intended to be used by professional
+# programmers who take the whole responsability of assessing all potential
+# consequences resulting from its eventual inadequacies and bugs
+# End users who are looking for a ready-to-use solution with commercial
+# garantees and support are strongly adviced to contract a Free Software
+# Service Company
+#
+# This program is Free Software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+###############################################################################
+
 
 import netsvc
-from dav_auth import tinyerp_auth
-from dav_fs import tinyerp_handler
+from dav_fs import tinydav_handler
 from tools.config import config
+from DAV.WebDAVServer import DAVRequestHandler
+from service.websrv_lib import HTTPDir,FixSendError
 
-from tools.misc import ustr,exception_to_unicode
-import threading
-import pooler
+class DAVHandler(FixSendError,DAVRequestHandler):
+    verbose = False
+	
+    def get_userinfo(self,user,pw):
+	print "get_userinfo"
+	return False
+    def _log(self, message):
+	netsvc.Logger().notifyChannel("webdav",netsvc.LOG_DEBUG,message)
+	
+    def handle(self):
+        pass
 
-class dav_server(threading.Thread):
-	def __init__(self):
-		super(dav_server,self).__init__()
-		self.host = config.get_misc('webdav','host','')
-		self.port = int(config.get_misc('webdav','port',8008))
-		self.db_name = config.get_misc('webdav','db_name','')
-		self.directory_id = config.get_misc('webdav','directory_id',False)
+    def finish(self):
+        pass
 
-	def log(self,level,msg):
-		""" An independent log() that will release the logger upon return
-		"""
-		logger = netsvc.Logger()
-		logger.notifyChannel('webdav', level, msg)
-		
-	def run(self):
-		server = BaseHTTPServer.HTTPServer
-		handler = tinyerp_auth
-		handler.db_name = self.db_name
-		handler.IFACE_CLASS  = tinyerp_handler( self.host,self.port,  True )
-		handler.verbose = config.get_misc('webdav','verbose',True)
-		handler.debug = config.get_misc('webdav','debug',True)
-		try:
-			self.log(netsvc.LOG_INFO,"Starting WebDAV service at %s:%d" % (self.host,self.port))
-			runner = server( (self.host, self.port), handler )
-			runner.serve_forever()
-		except Exception, e:
-			raise
+    def setup(self):
+	davpath = '/'+config.get_misc('webdav','vdir','webdav')+'/'
+	self.baseuri = "http://%s:%d%s"% (self.server.server_name,self.server.server_port,davpath)
+	self.IFACE_CLASS  = tinydav_handler(self)
+        print "Setup!", self.baseuri
+	pass
 
 try:
+	from service.http_server import reg_http_service,OpenERPAuthProvider
 	if (config.get_misc('webdav','enable',False)):
-		ds = dav_server()
-		ds.start()
+		davpath = '/'+config.get_misc('webdav','vdir','webdav')+'/'
+		handler = DAVHandler
+		handler.verbose = config.get_misc('webdav','verbose',True)
+		handler.debug = config.get_misc('webdav','debug',True)
+		reg_http_service(HTTPDir(davpath,DAVHandler,OpenERPAuthProvider()))
+		netsvc.Logger().notifyChannel('webdav',netsvc.LOG_INFO,"WebDAV service registered at path: %s/ "% davpath)
 except Exception, e:
 	logger = netsvc.Logger()
-	logger.notifyChannel('webdav', netsvc.LOG_ERROR, 'Cannot launch webdav: %s' % exception_to_unicode(e))
+	logger.notifyChannel('webdav', netsvc.LOG_ERROR, 'Cannot launch webdav: %s' % e)
+
+#eof
+
+
 

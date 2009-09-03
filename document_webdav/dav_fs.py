@@ -37,7 +37,6 @@ from string import joinfields, split, lower
 
 from DAV import AuthServer
 from service import security
-import dav_auth
 
 import netsvc
 import urlparse
@@ -55,18 +54,18 @@ CACHE_SIZE=20000
 
 #hack for urlparse: add webdav in the net protocols
 urlparse.uses_netloc.append('webdav')
+urlparse.uses_netloc.append('webdavs')
 
-class tinyerp_handler(dav_interface):
+class tinydav_handler(dav_interface):
 	"""
 	This class models a Tiny ERP interface for the DAV server
 	"""
-	def __init__(self,  host,port,  verbose=False):
+	def __init__(self,  parent, verbose=False):
 		self.db_name = False
 		self.directory_id=False
-		self.host=host
-		self.port=port
-		self.baseuri = 'http://%s:%s/' % (self.host, self.port)
 		self.db_name_list=[]
+		self.parent = parent
+		self.baseuri = parent.baseuri
 #
 #
 #	def get_db(self,uri):
@@ -79,6 +78,14 @@ class tinyerp_handler(dav_interface):
 #		return self.db_name
 #
 
+	def later_get_db_from_path(self,path):
+		return "aaa"
+
+	def urijoin(self,*ajoin):
+		""" Return the base URI of this request, or even join it with the
+		    ajoin path elements
+		"""
+		return self.baseuri+ '/'.join(ajoin)
 
 	@memoize(4)
 	def db_list(self):
@@ -102,14 +109,14 @@ class tinyerp_handler(dav_interface):
 		
 		if not dbname:
 			s = netsvc.LocalService('db')
-			return map(lambda x: urlparse.urljoin(self.baseuri, x), self.db_list())
+			return map(lambda x: self.urijoin(x), self.db_list())
 		result = []
 		node = self.uri2object(cr,uid,pool, uri2[:])
 		if not node:
 			raise DAV_NotFound(uri2)
 		else:
 		    for d in node.children():
-			result.append( urlparse.urljoin(self.baseuri,dbname+'/' + d.path) )
+			result.append( self.urijoin(dbname,d.path) )
 		return result
 
 	def uri2local(self, uri):
@@ -123,17 +130,24 @@ class tinyerp_handler(dav_interface):
 	# pos: -1 to get the parent of the uri
 	#
 	def get_cr(self, uri):
+		print "get cr",uri, self.parent.auth_proxy
+		pdb = self.parent.auth_proxy.last_auth
 		reluri = self.uri2local(uri)
 		try:
-			dbname = reluri.split('/')[1]
+			dbname = reluri.split('/')[2]
 		except:
 			dbname = False
 		if not dbname:
 			return None, None, None, False, None
-		uid = security.login(dbname, dav_auth.auth['user'], dav_auth.auth['pwd'])
+		if not pdb and dbname:
+			# if dbname was in our uri, we should have authenticated
+			# against that.
+			raise Exception("Programming error")
+		assert pdb == dbname, " %s != %s" %(pdb, dbname)
+		user, passwd, dbn2, uid = self.parent.auth_proxy.auth_creds[pdb]
 		db,pool = pooler.get_db_and_pool(dbname)
 		cr = db.cursor()
-		uri2 = reluri.split('/')[2:]
+		uri2 = reluri.split('/')[3:]
 		return cr, uid, pool, dbname, uri2
 
 	def uri2object(self, cr,uid, pool,uri):
