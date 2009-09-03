@@ -133,8 +133,7 @@ def _check(self, cr, uid, data, context):
 
 
 class wizard_report(wizard.interface):
-    def _get_defaults(self, cr, uid, data, context={}):
-        data['form']['context'] = context
+    def _get_defaults(self, cr, uid, data, context):
         fiscalyear_obj = pooler.get_pool(cr.dbname).get('account.fiscalyear')
         data['form']['fiscalyear']=[fiscalyear_obj.find(cr, uid)]
 #       p_ids=pooler.get_pool(cr.dbname).get('account.period').search(cr,uid,[('fiscalyear_id','=',fiscalyear_obj.find(cr, uid))])
