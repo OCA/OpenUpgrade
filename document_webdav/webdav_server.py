@@ -52,8 +52,14 @@ class DAVHandler(FixSendError,DAVRequestHandler):
 	davpath = '/'+config.get_misc('webdav','vdir','webdav')+'/'
 	self.baseuri = "http://%s:%d%s"% (self.server.server_name,self.server.server_port,davpath)
 	self.IFACE_CLASS  = tinydav_handler(self)
-        print "Setup!", self.baseuri
 	pass
+	
+    def log_message(self, format, *args):
+	netsvc.Logger().notifyChannel('webdav',netsvc.LOG_DEBUG_RPC,format % args)
+
+    def log_error(self, format, *args):
+	netsvc.Logger().notifyChannel('xmlrpc',netsvc.LOG_WARNING,format % args)
+
 
 try:
 	from service.http_server import reg_http_service,OpenERPAuthProvider

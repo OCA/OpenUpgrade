@@ -37,7 +37,6 @@ import socket
 import string
 import posixpath
 import base64
-import AuthServer
 import urlparse
 import urllib
 
@@ -151,7 +150,6 @@ class DAVRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             d="infinity"
 
         uri=self.geturi()
-	print "uri now:",uri
         pf=PROPFIND(uri,dc,d)
 
         if body:
@@ -164,7 +162,6 @@ class DAVRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 	except DAV_NotFound,(ec,dd):
 	    return self.send_notFound(dd, uri)
         except DAV_Error, (ec,dd):
-	    print "Dav Error (propfind):",ec,dd
             return self.send_error(ec,dd)
 
         self.send_body_chunks(DATA,207,"Multi-Status","Multiple responses")
@@ -180,7 +177,6 @@ class DAVRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         """Serve a GET request."""
         dc=self.IFACE_CLASS
         uri=self.geturi()
-	print "uri now:",uri
 
         # get the last modified date
         try:
@@ -199,18 +195,16 @@ class DAVRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         try:
             data=dc.get_data(uri)
         except DAV_Error, (ec,dd):
-	    print "Dav Error(get):",ec,dd
             self.send_status(ec)
             return
 
         # send the data
-        self.send_body(data,"200","OK","OK",ct,headers)
+        self.send_body(data,200,"OK","OK",ct,headers)
 
     def do_HEAD(self):
         """ Send a HEAD response """
         dc=self.IFACE_CLASS
         uri=self.geturi()
-        print "uri now:",uri
 	
         # get the last modified date
         try:
@@ -230,10 +224,10 @@ class DAVRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             data=dc.get_data(uri)
             headers["Content-Length"]=str(len(data))
         except DAV_NotFound:
-            self.send_body(None,"404","Not Found","")
+            self.send_body(None,404,"Not Found","")
             return
 
-        self.send_body(None,"200","OK","OK",ct,headers)
+        self.send_body(None,200,"OK","OK",ct,headers)
 
     def do_POST(self):
         self.send_error(404,"File not found")

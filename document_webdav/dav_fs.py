@@ -35,7 +35,6 @@ import os
 import time
 from string import joinfields, split, lower
 
-from DAV import AuthServer
 from service import security
 
 import netsvc
@@ -130,7 +129,6 @@ class tinydav_handler(dav_interface):
 	# pos: -1 to get the parent of the uri
 	#
 	def get_cr(self, uri):
-		print "get cr",uri, self.parent.auth_proxy
 		pdb = self.parent.auth_proxy.last_auth
 		reluri = self.uri2local(uri)
 		try:
@@ -182,7 +180,6 @@ class tinydav_handler(dav_interface):
 	@memoize(CACHE_SIZE)
 	def _get_dav_resourcetype(self,uri):
 		""" return type of object """
-		print 'RT', uri
 		if uri[-1]=='/':uri=uri[:-1]
 		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
 		if not dbname:
@@ -218,7 +215,6 @@ class tinydav_handler(dav_interface):
 	@memoize(CACHE_SIZE)
 	def get_lastmodified(self,uri):
 		""" return the last modified date of the object """
-		print 'Get DAV Mod', uri
 		if uri[-1]=='/':uri=uri[:-1]
 		today = time.time()
 		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
@@ -273,7 +269,7 @@ class tinydav_handler(dav_interface):
 				if ftype and  '/' in ftype:
 					result = ftype
 			except Exception,e:
-				print e
+				self.parent.log_error( str(e))
 				pass
 		cr.close()
 		return result
@@ -281,7 +277,7 @@ class tinydav_handler(dav_interface):
 
 	def mkcol(self,uri):
 		""" create a new collection """
-		print 'MKCOL', uri
+		self.parent.log_message('MKCOL: %s' % uri)
 		if uri[-1]=='/':uri=uri[:-1]
 		parent='/'.join(uri.split('/')[:-1])
 		if not parent.startswith(self.baseuri):
@@ -319,7 +315,7 @@ class tinydav_handler(dav_interface):
 
 	def put(self,uri,data,content_type=None):
 		""" put the object into the filesystem """
-		print 'Putting', uri, len(data), content_type
+		self.parent.log_message('Putting %s (%d), %s'%( uri, len(data), content_type))
 		parent='/'.join(uri.split('/')[:-1])
 		cr, uid, pool,dbname, uri2 = self.get_cr(uri)
 		if not dbname:
@@ -405,7 +401,7 @@ class tinydav_handler(dav_interface):
 		if not object:
 			raise DAV_NotFound
 
-		print ' rm',object._table_name,uri
+		self.parent.log_message(' rm %s "%s"'%(object._table_name,uri))
 		if object._table_name=='ir.attachment':
 			res = pool.get('ir.attachment').unlink(cr, uid, [object.id])
 		else:
