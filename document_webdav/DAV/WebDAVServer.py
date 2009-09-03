@@ -68,6 +68,7 @@ class DAVRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     """
 
     server_version = "DAV/" + __version__
+    protocol_version = 'HTTP/1.1'
 
     ### utility functions
     def _log(self, message):
@@ -81,7 +82,7 @@ class DAVRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         """ send a body in one part """
 
         self.send_response(code,message=msg)
-        self.send_header("Connection", "close") # *-*
+        self.send_header("Connection", "keep-alive")
         self.send_header("Accept-Ranges", "bytes")
 
         for a,v in headers.items():
@@ -103,7 +104,7 @@ class DAVRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         self.responses[207]=(msg,desc)
         self.send_response(code,message=msg)
         self.send_header("Content-type", ctype)
-        self.send_header("Connection", "close") # *-*
+        self.send_header("Connection", "keep-alive")
         self.send_header("Transfer-Encoding", "chunked")
         self.end_headers()
         self._append(hex(len(DATA))[2:]+"\r\n")
@@ -119,6 +120,7 @@ class DAVRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Allow", "GET, HEAD, COPY, MOVE, POST, PUT, PROPFIND, PROPPATCH, OPTIONS, MKCOL, DELETE, TRACE")
         self.send_header("Content-Type", "text/plain")
+	self.send_header("Connection", "keep-alive")
         self.send_header("DAV", "1")
         self.end_headers()
 
@@ -183,7 +185,7 @@ class DAVRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             lm=dc.get_prop(uri,"DAV:","getlastmodified")
         except:
             lm="Sun, 01 Dec 2014 00:00:00 GMT"  # dummy!
-        headers={"Last-Modified":lm}
+        headers={"Last-Modified":lm , "Connection": "keep-alive"}
 
         # get the content type
         try:
@@ -212,7 +214,7 @@ class DAVRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         except:
             lm="Sun, 01 Dec 2014 00:00:00 GMT"  # dummy!
 
-        headers={"Last-Modified":lm}
+        headers={"Last-Modified":lm, "Connection": "keep-alive"}
 
         # get the content type
         try:
@@ -240,6 +242,8 @@ class DAVRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         try:
             dc.mkcol(uri)
             self.send_status(200)
+	    #self.send_header("Connection", "keep-alive")
+	    # Todo: some content, too
         except DAV_Error, (ec,dd):
             self.send_status(ec)
 
