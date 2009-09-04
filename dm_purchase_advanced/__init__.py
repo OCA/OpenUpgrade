@@ -19,26 +19,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name" : "Purchase Management for DM",
-    "version" : "1.0",
-    "author" : "Tiny",
-    "website" : "http://www.openerp.com",
-    "category" : "Generic Modules/Direct Marketing",
-    "description": """
-            This module adds purchase management for the 4 departments of direct marketing
-            (manufacturing, files, items and DTP)
-            """,
-    "depends" : ["purchase_tender", "dm_campaign_group"],
-    "init_xml" : [],
-    "demo_xml" : ["dm_campaign_purchase_demo.xml"],
-    "update_xml" : [
-                    "security/ir.model.access.csv",
-                    "dm_campaign_purchase_wizard.xml",
-                    "dm_campaign_purchase_view.xml",
-                    ],
-    "active": False,
-    "installable": True,
-}
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
+import dm_purchase_advanced
+import wizard
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

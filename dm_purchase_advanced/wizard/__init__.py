@@ -20,6 +20,6 @@
 #
 ##############################################################################
 
-import dm_campaign_purchase
-import wizard
+import dm_campaign_pos
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+
