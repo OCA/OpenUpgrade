@@ -29,7 +29,7 @@
             This module adds purchase management for the 4 departments of direct marketing
             (manufacturing, files, items and DTP)
             """,
-    "depends" : ["dm","purchase_tender"],
+    "depends" : ["dm_purchase","purchase_tender"],
     "init_xml" : [],
     "demo_xml" : ["dm_purchase_advanced_demo.xml"],
     "update_xml" : [
