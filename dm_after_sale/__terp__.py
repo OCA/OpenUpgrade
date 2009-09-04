@@ -28,7 +28,7 @@
     "description": """
             This module manages after-sale wizard.
             """,
-    "depends" : ["dm"],
+    "depends" : ["dm_sale"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
