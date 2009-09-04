@@ -2,7 +2,7 @@
 <openerp>
 
     <!-- Emailvision Partner -->
-    <data>
+    <data noupdate="1">
     <record id="res_partner_emailvision0" model="res.partner">
          <field model="res.country" name="country_ids" search="[]"/>
          <field name="property_product_pricelist" ref="product.list0"/>
@@ -24,7 +24,7 @@
     </data>
 
     <!-- Mail Service Type -->
-    <data>
+    <data noupdate="1">
         <record model="dm.mail_service.type" id="dm_mail_service_type_emailvision">
         <field name="name" eval="&quot;Emailvision&quot;"/>
         <field name="code" eval="&quot;emailvision&quot;"/>
@@ -32,7 +32,7 @@
    </data>
 
     <!-- Transition Trigger -->
-    <data>
+    <data noupdate="1">
         <record id="dm_offer_step_transition_ev_mail_opened" model="dm.offer.step.transition.trigger">
             <field eval="&quot;&quot;&quot;Emailvision - Mail Opened&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;ev_mail_opened&quot;&quot;&quot;" name="code"/>
@@ -62,7 +62,7 @@
             <field eval="&quot;&quot;&quot;offer&quot;&quot;&quot;" name="type"/>
         </record>
     </data>
-    <data noupdate="0">
+    <data noupdate="1">
          <record id="ir_actions_server_emailvision_api" model="ir.actions.server">
              <field eval="5" name="sequence"/>
              <field eval="&quot;&quot;&quot;code&quot;&quot;&quot;" name="state"/>
