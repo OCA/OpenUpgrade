@@ -20,20 +20,21 @@
 #
 ##############################################################################
 {
-    "name" : "Sales for DM",
-    "version" : "1.0",
+    "name" : "Sales Management for DM",
+    "version" : "0.1",
     "author" : "Tiny",
     "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Direct Marketing",
     "description": """
-            This module manages sales for Direct Marketing.
+            This module adds sales management for Direct Marketing.
             """,
     "depends" : ["dm"],
-    "init_xml" : [],
+    "init_xml" : [
+                'dm_sale_data.xml',
+                ],
     "demo_xml" : [],
     "update_xml" : [
                 'dm_sale_view.xml',
-                'dm_sale_data.xml',
                 ],
     "active": False,
     "installable": True,
