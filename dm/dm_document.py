@@ -201,7 +201,7 @@ def create_email_queue(cr,uid,obj,context): # {{{
     email_queue_obj = pool.get('email.smtpclient.queue')
     context['document_id'] = obj.document_id.id
     context['address_id'] = obj.address_id.id
-    context['wi_id'] = obj.wi_id.id
+    context['workitem_id'] = obj.workitem_id.id
     message = []
     if obj.mail_service_id.store_email_document:
         ir_att_obj = pool.get('ir.attachment')

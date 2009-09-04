@@ -39,18 +39,16 @@ internal_html_report = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transition
 _regex = re.compile('\[\[setHtmlImage\((.+?)\)\]\]')
 
 def merge_message(cr, uid, keystr, context): # {{{
-    """ Merge offer internal document content and plugins values """
+    " Merge offer internal document content and plugins values "
     def merge(match):
         dm_obj = pooler.get_pool(cr.dbname).get('dm.offer.document')
         obj = dm_obj.browse(cr, uid, context.get('document_id'))
         exp = str(match.group()[2:-2]).strip()
-        args = {'doc_id' : context['document_id'],'addr_id':context['address_id'],'camp_doc_id':context['camp_doc_id']}
+        args = context.copy()
         if 'plugin_list' in context :
             args['plugin_list'] = context['plugin_list']
         else :
-            args['plugin_list']=[exp]
-        if 'type' in context:
-            args['type'] = context['type']
+            args['plugin_list'] = [exp]
 
         plugin_values = generate_plugin_value(cr, uid, **args)
         context.update(plugin_values)
@@ -58,7 +56,7 @@ def merge_message(cr, uid, keystr, context): # {{{
         result = eval(exp, context)
         if result in (None, False):
             # What is that ?
-            return str("-Missing-Plugin-Value-")
+            return str("!!!Missing-Plugin-Value!!!")
         return result
     com = re.compile('(\[\[.+?\]\])')
     message = com.sub(merge, keystr)
@@ -66,12 +64,12 @@ def merge_message(cr, uid, keystr, context): # {{{
     
 def generate_internal_reports(cr, uid, report_type, document_data, camp_doc, context): # {{{
 
-    """ Generate documents from the internal editor """
+    "Generate documents from the internal editor"
     pool = pooler.get_pool(cr.dbname)
     attachment_obj = pool.get('ir.attachment')
     
     if report_type=='html2html' and document_data.content:
-        """ Check if to use the internal editor report """
+        "Check if to use the internal editor report"
         if not document_data.content:
                 return "no_report_for_document"
         report_data = internal_html_report + str(document_data.content)+"</BODY></HTML>"
@@ -98,7 +96,8 @@ def generate_openoffice_reports(cr, uid, report_type, document_data, camp_doc, c
     attachment_obj = pool.get('ir.attachment')
     report_xml = pool.get('ir.actions.report.xml')
     
-    report_ids = report_xml.search(cr, uid, [('document_id','=',document_data.id),('report_type','=',report_type)])
+    report_ids = report_xml.search(cr, uid, [('document_id','=',document_data.id),
+        ('report_type','=',report_type)])
     if not report_ids :
         return "no_report_for_document"
 
@@ -106,7 +105,8 @@ def generate_openoffice_reports(cr, uid, report_type, document_data, camp_doc, c
         srv = netsvc.LocalService('report.' + report.report_name)
         report_data, report_type = srv.create(cr, uid, [], {}, context)
         if camp_doc : 
-            attach_vals = {'name' : document_data.name + "_" + str(context['address_id']) + str(report.id),
+            attach_vals = {
+                    'name' : document_data.name + "_" + str(context['address_id']) + str(report.id),
                     'datas_fname' : 'report.' + report.report_name + '.' + report_type ,
                     'res_model' : 'dm.campaign.document',
                     'res_id' : camp_doc,
@@ -232,7 +232,6 @@ def _generate_value(cr, uid, plugin_obj, localcontext, **args): # {{{
     localcontext['plugin_obj'] = plugin_obj
     plugin_args={}
     plugin_value = ''
-
     if plugin_obj.type in ('fields','image'):
         res  = pool.get('ir.model').browse(cr, uid, plugin_obj.model_id.id)    
         args['model_name'] = res.model
@@ -240,15 +239,16 @@ def _generate_value(cr, uid, plugin_obj, localcontext, **args): # {{{
         args['field_type'] = str(plugin_obj.field_id.ttype)
         args['field_relation'] = str(plugin_obj.field_id.relation)
         plugin_value = customer_function(cr, uid, **args)
-#        if not plugin_value :
-#            plugin_value = plugin_obj.preview_value
+        if not plugin_value :
+            return False
     else :
         arg_ids = pool.get('dm.plugin.argument').search(cr,uid,[('plugin_id','=',plugin_obj.id)])
         for arg in pool.get('dm.plugin.argument').browse(cr,uid,arg_ids):
             if not arg.stored_plugin :
                 plugin_args[str(arg.name)] = arg.value
             else :
-                plugin_args[str(arg.name)] = _generate_value(cr,uid,arg.custome_plugin_id,localcontext,**args)
+                plugin_args[str(arg.name)] = _generate_value(cr,uid,arg.custome_plugin_id,
+                    localcontext,**args)
 
         if plugin_obj.type=='dynamic' and plugin_obj.python_code :
             localcontext.update(plugin_args)
@@ -269,13 +269,10 @@ def _generate_value(cr, uid, plugin_obj, localcontext, **args): # {{{
             X =  __import__(plugin_name)
             plugin_func = getattr(X, plugin_name)
             plugin_value = plugin_func(cr, uid,**args)
-
     return plugin_value # }}}
 
 def generate_plugin_value(cr, uid, **args): # {{{
-    if not 'doc_id' in args and not args['doc_id'] :
-        return False
-    if not 'addr_id' in args and not args['addr_id'] :
+    if not 'document_id' in args and not args['document_id'] :
         return False
     vals = {}
     localcontext = {'cr':cr,'uid':uid}
@@ -285,7 +282,7 @@ def generate_plugin_value(cr, uid, **args): # {{{
     dm_document = pool.get('dm.offer.document')
     dm_plugins_value = pool.get('dm.plugins.value')
 
-    plugins = dm_document.browse(cr, uid, args['doc_id'], ['document_template_plugin_ids' ])
+    plugins = dm_document.browse(cr, uid, args['document_id'], ['document_template_plugin_ids' ])
     if 'plugin_list' in args and args['plugin_list'] :
         "Get plugins to compute value"
         p_ids = pool.get('dm.dtp.plugin').search(cr,uid,[('code','in',args['plugin_list'])])
@@ -302,6 +299,8 @@ def generate_plugin_value(cr, uid, **args): # {{{
 #            vals['%s_text_display'%str(plugin_obj.code)] = plugin_value[-1]
 #            plugin_value = plugin_value[0]
         if plugin_obj.store_value :
+            if not 'camp_doc_id' in args and not args['camp_doc_id'] :
+                return False
             dm_plugins_value.create(cr, uid,{
                 'document_id' : args['camp_doc_id'],
                 'plugin_id' : plugin_obj.id,

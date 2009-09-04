@@ -12,22 +12,22 @@ def customer_function(cr, uid, **args):
     model_name = args['model_name']
     model_object =  pool.get(model_name)
 
-    if model_name in ['dm.workitem'] and 'wi_id' in args:
-        res = pool.get(model_name).read(cr,uid,args['wi_id'], [args['field_name']])
-    elif model_name in ['dm.campaign','dm.trademark'] and 'seg_id' in args:
-        segment_id = pool.get('dm.campaign.proposition.segment').browse(cr,uid,args['seg_id'])
+    if model_name in ['dm.workitem'] and 'workitem_id' in args:
+        res = pool.get(model_name).read(cr,uid,args['workitem_id'], [args['field_name']])
+    elif model_name in ['dm.campaign','dm.trademark'] and 'segment_id' in args:
+        segment_id = pool.get('dm.campaign.proposition.segment').browse(cr,uid,args['segment_id'])
         if not segment_id.proposition_id or segment_id.proposition_id.camp_id : return False
         if model_name == 'dm.campaign':
             res = pool.get(model_name).read(cr, uid, segment_id.proposition_id.camp_id.id, [args['field_name']])
         elif model_name == 'dm.trademark' :
             if not segment_id.proposition_id.camp_id.trademark_id : return False
             res = pool.get(model_name).read(cr, uid, segment_id.proposition_id.camp_id.trademark_id.id, [args['field_name']])
-    elif model_name in ['dm.offer.step'] and 'doc_id' in args:
-        document_id = pool.get('dm.offer.document').browse(cr,uid,args['doc_id'])
+    elif model_name in ['dm.offer.step'] and 'document_id' in args:
+        document_id = pool.get('dm.offer.document').browse(cr,uid,args['document_id'])
         if not document_id.step_id : return False
         res = pool.get(model_name).read(cr, uid, document_id.step_id.id, [args['field_name']])
     else :
-        res = pool.get('res.partner.address').read(cr,uid,args['addr_id'])
+        res = pool.get('res.partner.address').read(cr,uid,args['address_id'])
         if model_name == 'res.partner' :
             if res['partner_id']:
                 res = model_object.read(cr,uid,res['partner_id'][0])

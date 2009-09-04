@@ -56,45 +56,50 @@ class offer_document(report_sxw.rml_parse):
             return plugin_list
         else :
             return False
-    """
+
     def trademark_id(self):
         if 'form' not in self.datas :
-            workitem_id = self.context['wi_id']
-            res = self.pool.get('dm.workitem').browse(self.cr, self.uid, workitem_id)
-            return res.segment_id.proposition_id.camp_id.trademark_id
+            if 'segment_id' in self.context:
+                segment_id = self.pool.get('dm.campaign.proposition.segment').browse(self.cr, self.uid, self.context['segment_id'])
+                return segment_id.proposition_id.camp_id.trademark_id.id
+            elif 'workitem_id' in self.context:
+                workitem_id = self.pool.get('dm.workitem').browse(self.cr, self.uid, self.context['workitem_id'])
+                return workitem_id.segment_id.proposition_id.camp_id.trademark_id.id
+            else : return False
         else:
-            return self.datas['form']['trademark_id']
-    """
+            segment_id = self.pool.get('dm.campaign.proposition.segment').browse(self.cr, self.uid, self.datas['form']['segment_id'])
+            return segment_id.trademark_id.id
+
     def document(self):
         plugin_list = self._plugin_list()
         if 'form' not in self.datas :
             type = 'email_doc'
-            addr_id = self.context['address_id']
-            doc_id = self.context['document_id']
+            address_id = self.context['address_id']
+            document_id = self.context['document_id']
             if 'segment_id' in self.context:
-                seg_id = self.context['segment_id']
+                segment_id = self.context['segment_id']
             else:
-                seg_id = False
+                segment_id = False
             camp_doc_id = self.context['camp_doc_id']
-            wi_id = self.context['wi_id']
+            workitem_id = self.context['workitem_id']
         else :
             type = 'preview'
-            addr_id = self.datas['form']['address_id']
-            doc_id = self.ids[0]
-            seg_id = self.datas['form']['segment_id']
+            address_id = self.datas['form']['address_id']
+            document_id = self.ids[0]
+            segment_id = self.datas['form']['segment_id']
             camp_doc_id = False
 
-            doc = self.pool.get('dm.offer.document').browse(self.cr, self.uid, doc_id)
-            wi_id = self.pool.get('dm.workitem').create(self.cr, self.uid, {'address_id':addr_id,
-                'segment_id':seg_id, 'step_id':doc.step_id.id, 'is_preview':True, 
+            doc = self.pool.get('dm.offer.document').browse(self.cr, self.uid, document_id)
+            workitem_id = self.pool.get('dm.workitem').create(self.cr, self.uid, {'address_id':address_id,
+                'segment_id':segment_id, 'step_id':doc.step_id.id, 'is_preview':True, 
                 'state':'done'})
 
         values = generate_plugin_value(self.cr, self.uid, 
-            doc_id = doc_id,
+            document_id = document_id,
             camp_doc_id = camp_doc_id,
-            addr_id = addr_id,
-            seg_id = seg_id,
-            wi_id = wi_id,
+            address_id = address_id,
+            segment_id = segment_id,
+            workitem_id = workitem_id,
             plugin_list = plugin_list,
             type = type,
             )
