@@ -2,8 +2,12 @@
 <openerp>
 <data>
 
-    <menuitem name="Offers" id="menu_dm_offer" parent="menu_dm" sequence="2"/>
-    <menuitem name="Offers" id="menu_dm_config_offer" parent="dm.menu_dm_config" sequence="2"/>
+    <menuitem name="Offers" id="menu_dm_offer" parent="menu_dm" 
+groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_dmadmin,res_groups_campaignmanager,res_groups_offermanager"
+    sequence="2"/>
+    <menuitem name="Offers" id="menu_dm_config_offer" parent="dm.menu_dm_config" 
+groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_dmadmin,res_groups_campaignmanager,res_groups_offermanager"
+    sequence="2"/>
 
 	<!--
 	=======================================================

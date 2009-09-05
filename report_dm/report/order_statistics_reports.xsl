@@ -9,9 +9,9 @@
 
 	<xsl:template name="rml">
 		<document filename="example.pdf">
-            <template pageSize="29.7cm,21cm" title="Test" author="Martin Simon" allowSplitting="20">
+            <template pageSize="45cm,21cm" title="Test" author="Martin Simon" allowSplitting="20">
                 <pageTemplate id="first">
-                    <frame id="first"  x1="2.5cm" y1="2.5cm" width="24.7cm" height="17cm"/>
+                    <frame id="first"  x1="10cm" y1="2.5cm" width="24.7cm" height="17cm"/>
     			</pageTemplate>
 			</template>
 
@@ -35,6 +35,7 @@
 					<blockValign value="TOP"/>
 				</blockTableStyle>
 			</stylesheet>
+
 			<xsl:call-template name="story"/>
 		</document>
 	</xsl:template>
@@ -43,7 +44,7 @@
 		<xsl:for-each select="report/story">	
 		<xsl:variable name="s_id" select="attribute::s_id"/>
 		<story>
-		    <para style="title" t="1"> -- Order Quantity per Steps of Offer -- <xsl:value-of select="attribute::name"/> </para>
+		    <para style="title" t="1"> <xsl:value-of select="attribute::name"/> </para>
 		    <spacer length="1cm" />
 		    <blockTable>
 			    <xsl:attribute name="style">month</xsl:attribute>
@@ -57,8 +58,8 @@
 				    </xsl:for-each>
 				    <td t="1">Total</td>
 			    </tr>
-			    <xsl:apply-templates select="step"/>
-			    <xsl:for-each select="step">
+			    <xsl:apply-templates select="row"/>
+			    <xsl:for-each select="row">
 				    <xsl:variable name="id" select="attribute::id"/>
 				    <tr>
 					    <td><para><xsl:value-of select="attribute::name"/></para></td>
@@ -66,14 +67,14 @@
 					    <xsl:variable name="today" select="attribute::number" />
 						    <td>
 							    <para>
-								     <xsl:value-of select="format-number(sum(//story[@s_id=$s_id]/step[@id=$id]/time-element[@date=$today]), '##.##')" />
+								     <xsl:value-of select="format-number(sum(//story[@s_id=$s_id]/row[@id=$id]/time-element[@date=$today]), '##.##')" />
 
 							    </para>
 						    </td>
 					    </xsl:for-each>
 					    <td>
 					        <para> 
-            				     <xsl:value-of select="format-number(sum(//story[@s_id=$s_id]/step[@id=$id]/time-element),'##.##')"/>
+            				     <xsl:value-of select="format-number(sum(//story[@s_id=$s_id]/row[@id=$id]/time-element),'##.##')"/>
         					</para>
 					    </td>
 				    </tr>
@@ -83,14 +84,14 @@
 				    <xsl:for-each select="//report/days/day">
 					    <xsl:variable name="today" select="attribute::number"/>
 					    <td>
-                        <para><xsl:value-of select="format-number(sum(//story[@s_id=$s_id]/step/time-element[@date=$today]),'##.##')"/></para>
+                        <para><xsl:value-of select="format-number(sum(//story[@s_id=$s_id]/row/time-element[@date=$today]),'##.##')"/></para>
 					    </td>
 				    </xsl:for-each>
-				    <td><xsl:value-of select="format-number(sum(//story[@s_id=$s_id]/step/time-element),'##.##')"/></td>
+				    <td><xsl:value-of select="format-number(sum(//story[@s_id=$s_id]/row/time-element),'##.##')"/></td>
 			    </tr>
 		    </blockTable>
     	</story>
 	</xsl:for-each>
-
+	
 	</xsl:template>
 </xsl:stylesheet>

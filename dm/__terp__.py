@@ -49,11 +49,12 @@
     "depends" : [
                  "base_language","document","base_report_designer",
                  "sale","base_partner_gender", "crm", "smtpclient",
+                ],
+    "init_xml" : [
                  ],
-    "init_xml" : [ ],
     "demo_xml" : [
                     "dm_demo.xml",
-                  ],
+                 ],
     "update_xml" : [
                     "security/dm_security.xml",
                     "security/ir.model.access.csv",

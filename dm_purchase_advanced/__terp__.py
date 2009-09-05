@@ -20,7 +20,7 @@
 #
 ##############################################################################
 {
-    "name" : "Purchase Management for DM",
+    "name" : "Advanced Purchase Management for DM",
     "version" : "1.0",
     "author" : "Tiny",
     "website" : "http://www.openerp.com",
@@ -29,13 +29,13 @@
             This module adds purchase management for the 4 departments of direct marketing
             (manufacturing, files, items and DTP)
             """,
-    "depends" : ["purchase_tender", "dm_campaign_group"],
+    "depends" : ["dm_purchase","purchase_tender"],
     "init_xml" : [],
-    "demo_xml" : ["dm_campaign_purchase_demo.xml"],
+    "demo_xml" : ["dm_purchase_advanced_demo.xml"],
     "update_xml" : [
                     "security/ir.model.access.csv",
-                    "dm_campaign_purchase_wizard.xml",
-                    "dm_campaign_purchase_view.xml",
+                    "dm_purchase_advanced_wizard.xml",
+                    "dm_purchase_advanced_view.xml",
                     ],
     "active": False,
     "installable": True,

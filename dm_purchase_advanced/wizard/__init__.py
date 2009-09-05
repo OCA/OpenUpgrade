@@ -19,31 +19,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name" : "Direct Marketing - Reporting",
-    "version" : "1.0",
-    "author" : "Tiny",
-    "website" : "http://www.openerp.com",
-    "category" : "Generic Modules/Direct Marketing",
-    "description": """
 
-        This module allows to see statstic of marketing 
-
-            """,
-    "depends" : [
-                 "dm",
-                 "dm_sale",
-                 "dm_partner_address",
-                 ],
-    "init_xml" : [ ],
-    "demo_xml" : [ ],
-    "update_xml" : [
-                    "dm_statistics_report.xml",
-                    "security/dm_statistics_security.xml",
-                    "security/ir.model.access.csv",
-                    ],
-    "active": False,
-    "installable": True,
-}
+import dm_campaign_pos
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

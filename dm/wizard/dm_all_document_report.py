@@ -27,13 +27,13 @@ class wizard_all_document_report(wizard.interface):
     report_list_form = '''<?xml version="1.0"?>
     <form string="Select Variables">
         <field name="address_id" colspan="4"/>
-        <field name="trademark_id" colspan="4"/>
+        <field name="segment_id" colspan="4"/>
     </form>'''
 
-    report_send_form = '''<?xml version="1.0"?>
-    <form string="Send Report">
-        <field name="mail_service_id" colspan="4"/>
-    </form>'''
+#    report_send_form = '''<?xml version="1.0"?>
+#    <form string="Send Report">
+#        <field name="mail_service_id" colspan="4"/>
+#    </form>'''
 
     def execute(self, db, uid, data, state='init', context=None):
         self.dm_wiz_data = data
@@ -51,23 +51,24 @@ class wizard_all_document_report(wizard.interface):
             vals = {
                 'address_id' : data['form']['address_id'],
                 'step_id' : step.id,
-                'mail_service_id' : data['form']['mail_service_id'],
+                'segment_id' : data['form']['segment_id'],
+#                'mail_service_id' : data['form']['mail_service_id'],
             }
             pooler.get_pool(cr.dbname).get('dm.workitem').create(cr, uid, vals)
         return {}
 
     def _get_reports(self, cr, uid, context):
         document_id = self.dm_wiz_data['id']
-        pool=pooler.get_pool(cr.dbname)
+        pool = pooler.get_pool(cr.dbname)
         group_obj=pool.get('ir.actions.report.xml')
-        ids=group_obj.search(cr, uid, [('document_id','=',document_id)])
-        res=[(group.id, group.name) for group in group_obj.browse(cr, uid, ids)]
+        ids = group_obj.search(cr, uid, [('document_id','=',document_id)])
+        res = [(group.id, group.name) for group in group_obj.browse(cr, uid, ids)]
         res.sort(lambda x,y: cmp(x[1],y[1]))
         return res    
     
     report_list_fields = {
         'address_id': {'string': 'Select Customer Address', 'type': 'many2one','relation':'res.partner.address', 'domain':[('partner_id.category_id','=','DTP Preview Customers')] },
-        'trademark_id':{'string': 'Select Trademark', 'type': 'many2one','relation':'dm.trademark'}
+        'segment_id':{'string': 'Select Segment', 'type': 'many2one','relation':'dm.campaign.proposition.segment'}
         }
     
     report_send_fields = {
@@ -78,17 +79,17 @@ class wizard_all_document_report(wizard.interface):
         'init': {
             'actions': [],
             'result': {'type':'form', 'arch':report_list_form, 'fields':report_list_fields,
-                'state':[('end','Cancel'),('print_report','Print Report'),('select_ms','Send Report'),]}
+                'state':[('end','Cancel'),('print_report','Print Report'),('send_report','Send Report'),]}
             },
         'print_report': {
             'actions': [_print_report],
             'result': {'type': 'print', 'report':'', 'state':'end'}
             },
-        'select_ms': {
-            'actions': [],
-            'result': {'type':'form', 'arch':report_send_form, 'fields':report_send_fields,
-                'state':[('send_report','Send Report')]}
-            },
+#        'select_ms': {
+#            'actions': [],
+#            'result': {'type':'form', 'arch':report_send_form, 'fields':report_send_fields,
+#                'state':[('send_report','Send Report')]}
+#            },
         'send_report': {
             'actions': [_send_report],
             'result' : {'type':'state', 'state':'end'}

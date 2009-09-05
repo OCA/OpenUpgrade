@@ -34,7 +34,7 @@ class offer_document(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
         super(offer_document, self).__init__(cr, uid, name, context)
         self.localcontext.update({
-            'time': time,
+#            'time': time,
             'document':self.document,
 #            'trademark_id' : self.trademark_id,
             'report_type':''
@@ -56,47 +56,53 @@ class offer_document(report_sxw.rml_parse):
             return plugin_list
         else :
             return False
-    """
+
     def trademark_id(self):
         if 'form' not in self.datas :
-            workitem_id = self.context['wi_id']
-            res = self.pool.get('dm.workitem').browse(self.cr, self.uid, workitem_id)
-            return res.segment_id.proposition_id.camp_id.trademark_id
+            if 'segment_id' in self.context:
+                segment_id = self.pool.get('dm.campaign.proposition.segment').browse(self.cr, self.uid, self.context['segment_id'])
+                return segment_id.proposition_id.camp_id.trademark_id.id
+            elif 'workitem_id' in self.context:
+                workitem_id = self.pool.get('dm.workitem').browse(self.cr, self.uid, self.context['workitem_id'])
+                return workitem_id.segment_id.proposition_id.camp_id.trademark_id.id
+            else : return False
         else:
-            return self.datas['form']['trademark_id']
-    """
+            segment_id = self.pool.get('dm.campaign.proposition.segment').browse(self.cr, self.uid, self.datas['form']['segment_id'])
+            return segment_id.trademark_id.id
+
     def document(self):
         plugin_list = self._plugin_list()
-        dm_so_line_id = 'dm_so_line_id' in self.context and self.context['dm_so_line_id'] and self.context['dm_so_line_id'] or ''
         if 'form' not in self.datas :
-            addr_id = self.context['address_id']
-            doc_id = self.context['document_id']
-            wi_id = self.context['wi_id']
             type = 'email_doc'
+            address_id = self.context['address_id']
+            document_id = self.context['document_id']
+            if 'segment_id' in self.context:
+                segment_id = self.context['segment_id']
+            else:
+                segment_id = False
+            camp_doc_id = self.context['camp_doc_id']
+            workitem_id = self.context['workitem_id']
         else :
             type = 'preview'
-            addr_id = self.datas['form']['address_id']
-            doc_id = self.ids[0]
+            address_id = self.datas['form']['address_id']
+            document_id = self.ids[0]
+            segment_id = self.datas['form']['segment_id']
+            camp_doc_id = False
 
-            dm_workitem_obj = self.pool.get('dm.workitem')
-            wi_data = dm_workitem_obj.search(self.cr, self.uid,[])
+            doc = self.pool.get('dm.offer.document').browse(self.cr, self.uid, document_id)
+            workitem_id = self.pool.get('dm.workitem').create(self.cr, self.uid, {'address_id':address_id,
+                'segment_id':segment_id, 'step_id':doc.step_id.id, 'is_preview':True, 
+                'state':'done'})
 
-            if not wi_data:
-                document = self.pool.get('dm.offer.document').browse(self.cr, self.uid, doc_id)
-
-                dm_segment_obj = self.pool.get('dm.campaign.proposition.segment')
-                segment_data_id = dm_segment_obj.search(self.cr,self.uid,[])
-
-                wi_id = dm_workitem_obj.create(self.cr, self.uid,{'address_id':addr_id,
-                                             'step_id':document.step_id.id,
-                                             'segment_id' : segment_data_id[0]})
-
-            else :
-                # !!! To change, it takes any workitem so can send any data
-                wi_id = wi_data[0]
-        # to fix : should be able to generate value with no workitems (preview)
-        values = generate_plugin_value(self.cr, self.uid, doc_id=doc_id, addr_id=addr_id,
-            wi_id=wi_id, plugin_list=plugin_list, type=type, dm_so_line_id=dm_so_line_id)
+        values = generate_plugin_value(self.cr, self.uid, 
+            document_id = document_id,
+            camp_doc_id = camp_doc_id,
+            address_id = address_id,
+            segment_id = segment_id,
+            workitem_id = workitem_id,
+            plugin_list = plugin_list,
+            type = type,
+            )
         return [values]
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

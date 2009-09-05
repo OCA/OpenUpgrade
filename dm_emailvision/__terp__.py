@@ -30,10 +30,11 @@
             It allow to use that API to send Direct Marketing emails.
             """,
     "depends" : ["dm"],
-    "init_xml" : [],
+    "init_xml" : [
+                    "dm_emailvision_data.xml",
+                    ],
     "demo_xml" : [],
     "update_xml" : [
-                    "dm_emailvision_data.xml",
                     "dm_emailvision_view.xml",
                     ],
     "active": False,

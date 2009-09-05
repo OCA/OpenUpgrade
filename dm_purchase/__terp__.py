@@ -19,7 +19,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-import dm_campaign_purchase
-import wizard
+{
+    "name" : "Purchase Management for DM",
+    "version" : "1.0",
+    "author" : "Tiny",
+    "website" : "http://www.openerp.com",
+    "category" : "Generic Modules/Direct Marketing",
+    "description": """
+            This module adds dm fields to purchase
+            """,
+    "depends" : ["dm","purchase"],
+    "init_xml" : [],
+    "demo_xml" : [
+#                     "dm_purchase_demo.xml"
+                 ],
+    "update_xml" : [
+#                    "security/ir.model.access.csv",
+#                    "dm_purchase_wizard.xml",
+                    "dm_purchase_view.xml",
+                    ],
+    "active": False,
+    "installable": True,
+}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

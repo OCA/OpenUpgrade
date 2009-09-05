@@ -35,6 +35,7 @@
                 <field name="action_time" select="2"/>
                 <field name="is_global" select="2"/>
                 <field name="is_preview" select="2"/>
+                <field name="is_realtime" select="2"/>
             </form>
         </field>
     </record>
@@ -82,7 +83,6 @@
                 <field name="step_id"/>
                 <field name="address_id" required="1"/>
                 <field name="trigger_type_id" widget="selection"/>
-                <field name="sale_order_id"/>
                 <field name="action_time"/>
             </tree>
         </field>
@@ -97,7 +97,7 @@
                 <field name="step_id" select="2"/>
                 <field name="address_id" required="1"/>
                 <field name="trigger_type_id" widget="selection" select="1"/>
-                <field name="sale_order_id"/>
+                <field name="is_realtime"/>
                 <field name="action_time"/>
             </form>
         </field>

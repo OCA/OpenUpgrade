@@ -4,16 +4,16 @@ __description__ = """This plugin return a text based on the languge selected in 
                     and gender from workitem's partner gender"""
 
 def dynamic_text(cr,uid,**args):
-    doc_id = args['doc_id']
+    doc_id = args['document_id']
     pool = pooler.get_pool(cr.dbname)
     doc_obj = pool.get('dm.offer.document').browse(cr,uid,doc_id)
     lang_id = doc_obj.lang_id.id
     title_obj = pool.get('res.partner.title')
     if args['type'] == 'preview':
-        address_id = pool.get('res.partner.address').browse(cr,uid,args['addr_id'])
+        address_id = pool.get('res.partner.address').browse(cr,uid,args['address_id'])
     else:
-        wi_id = pool.get('dm.workitem').browse(cr,uid,args['wi_id'])
-        address_id = wi_id.address_id
+        workitem_id = pool.get('dm.workitem').browse(cr,uid,args['workitem_id'])
+        address_id = workitem_id.address_id
     title_srch_id = title_obj.search(cr,uid,[('shortcut','=',address_id.title)])
     if not title_srch_id:
         return False

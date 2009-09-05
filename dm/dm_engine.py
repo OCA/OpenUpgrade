@@ -24,13 +24,12 @@ import time
 from osv import fields
 from osv import osv
 import pooler
+import time
 import sys
 import datetime
 import netsvc
 import traceback
 import tools
-import gc
-#import objgraph
 
 class dm_workitem(osv.osv): # {{{
     _name = "dm.workitem"
@@ -48,10 +47,9 @@ class dm_workitem(osv.osv): # {{{
         'error_msg' : fields.text('System Message'),
         'is_global': fields.boolean('Global Workitem'),
         'is_preview': fields.boolean('Document Preview Workitem'),
-#        'use_prev_plugin_values': fields.boolean('Use Previous Plugin Values (For Document Regeneration)'),
         'tr_from_id' : fields.many2one('dm.offer.step.transition', 'Source Transition', ondelete="cascade"),
-        'sale_order_id' : fields.many2one('sale.order','Sale Order'),
         'mail_service_id' : fields.many2one('dm.mail_service','Mail Service'),
+        'is_realtime' : fields.boolean('Realtime Processing', select="1"),
         'state' : fields.selection(SELECTION_LIST, 'Status', select="1"),
     }
     _defaults = {
@@ -59,8 +57,16 @@ class dm_workitem(osv.osv): # {{{
         'state': lambda *a: 'pending',
         'is_global': lambda *a: False,
         'is_preview': lambda *a: False,
+        'is_realtime': lambda *a: True,
         'action_time' : lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
+
+    def create(self,cr,uid,vals,context={}):
+        id = super(dm_workitem,self).create(cr,uid,vals,context)
+        obj = self.browse(cr, uid ,id)
+        if obj.is_realtime:
+            wi_res = self.run(cr, uid, obj, context=context)
+        return id
 
     @tools.cache()
     def _check_sysmsg(self, cr, uid, code, context=None):
@@ -78,7 +84,7 @@ class dm_workitem(osv.osv): # {{{
         context['active_id'] = wi.id
         done = False
         ms_err = ''
-    
+
         try:
             server_obj = self.pool.get('ir.actions.server')
             tr_res = True
@@ -109,28 +115,29 @@ class dm_workitem(osv.osv): # {{{
             if tr_res:
                 """ Execute server action """
                 wi_res = server_obj.run(cr, uid, [wi.step_id.action_id.id], context)
-                print "XXX wi_res :",wi_res
-
                 """ Check returned code and set wi status """
                 wi_status = self._check_sysmsg(cr, uid, wi_res['code'], context.copy())
-                print "WWW wi_status :",wi_status
 
                 """ Set workitem state and message """
-                self.write(cr, uid, [wi.id], {'state': wi_status['state'],'error_msg':wi_status['msg']})
+                wr = self.write(cr, uid, [wi.id], {'state': wi_status['state'],'error_msg':wi_status['msg']})
                 done = wi_status['result']
-                print "wi_status['result'] :",wi_status['result']
 
                 """ If workitem done then execute mail service action """
                 if done:
                     camp_doc_obj = self.pool.get('dm.campaign.document')
                     for camp_doc in camp_doc_obj.browse(cr, uid, wi_res['ids']):
-                        context['active_id'] = camp_doc.id
-                        context['wi_id'] = wi.id
+                        "Set context value for plugin computation"
+                        context['active_id'] = context['camp_doc_id'] = camp_doc.id
+                        context['workitem_id'] = wi.id
+                        context['address_id'] = wi.address_id.id
+                        context['step_id'] = wi.step_id.id
+                        context['document_id'] = camp_doc.document_id.id
+                        context['segment_id'] = wi.segment_id.id
 
                         ms_res = server_obj.run(cr, uid, [camp_doc.mail_service_id.action_id.id], context.copy())
-                        print "XXX ms_res :",ms_res
                         ms_status = self._check_sysmsg(cr, uid, ms_res['code'], context)
-                        camp_doc_obj.write(cr, uid, [camp_doc.id], {'state': ms_status['state'],'error_msg':ms_status['msg']})
+                        camp_doc_obj.write(cr, uid, [camp_doc.id], {'state': ms_status['state'],
+                            'error_msg':ms_status['msg'], 'delivery_time':time.strftime('%Y-%m-%d  %H:%M:%S')})
 
             else:
                 """ Dont Execute Action if workitem is not to be processed """
@@ -171,8 +178,8 @@ class dm_workitem(osv.osv): # {{{
                             """ If a static date is set, use it """
                             next_action_time = tr.action_date
 
-                        aw_id = self.copy(cr, uid, wi.id, {'step_id':tr.step_to_id.id, 'tr_from_id':tr.id,
-                            'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'), 'sale_order_id': False})
+                        aw_id = self.copy(cr, uid, wi.id, {'step_id':tr.step_to_id.id, 'tr_from_id':tr.id, 'error_msg':'',
+                            'is_realtime':False, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S')})
 
             except Exception, exception:
                 tb = sys.exc_info()
@@ -185,6 +192,7 @@ class dm_workitem(osv.osv): # {{{
         return super(dm_workitem, self).__init__(*args)
 
     def check_all(self, cr, uid, context={}):
+        MAX_SIZE = 1000
         """ Check if the action engine is already running """
         if not self.is_running:
 
@@ -193,13 +201,11 @@ class dm_workitem(osv.osv): # {{{
                 self.is_running = True
 
                 """ Get workitems to process and run action """
-                ids = self.search(cr, uid, [('state','=','pending'),('action_time','<=',time.strftime('%Y-%m-%d %H:%M:%S'))])
-
-                for wi in self.browse(cr, uid, ids, context=context):
+                ids = self.search(cr, uid, [('state','=','pending'),('action_time','<=',time.strftime('%Y-%m-%d %H:%M:%S')),
+                    ('is_realtime','=',False)])
+                for wi in self.browse(cr, uid, ids[:MAX_SIZE], context=context):
                     wi_res = self.run(cr, uid, wi, context=context)
-    
-                    #gc.collect()
-                    #gc.garbage
+                    cr.commit()
 
             finally:
                 self.is_running = False
@@ -219,19 +225,18 @@ class dm_event(osv.osv_memory): # {{{
         'source' : fields.selection([('address_id','Addresses')], 'Source', required=True),
         'address_id' : fields.many2one('res.partner.address', 'Address'),
         'trigger_type_id' : fields.many2one('dm.offer.step.transition.trigger','Trigger Condition',required=True),
-        'sale_order_id' : fields.many2one('sale.order', 'Sale Order'),
         'mail_service_id' : fields.many2one('dm.mail_service','Mail Service'),
         'action_time': fields.datetime('Action Time'),
+        'is_realtime' : fields.boolean('Realtime Processing'),
     }
     _defaults = {
         'source': lambda *a: 'address_id',
-        'sale_order_id' : lambda *a : False,
     }
 
     def create(self,cr,uid,vals,context={}):
         id = super(dm_event,self).create(cr,uid,vals,context)
-
         obj = self.browse(cr, uid ,id)
+
         tr_ids = self.pool.get('dm.offer.step.transition').search(cr, uid, [('step_from_id','=',obj.step_id.id),
                 ('condition_id','=',obj.trigger_type_id.id)])
         if not tr_ids:
@@ -240,31 +245,33 @@ class dm_event(osv.osv_memory): # {{{
             return False
         for tr in self.pool.get('dm.offer.step.transition').browse(cr, uid, tr_ids):
             if obj.action_time:
-                next_action_time = datetime.datetime.strptime(obj.action_time, '%Y-%m-%d  %H:%M:%S')
+                action_time = datetime.datetime.strptime(obj.action_time, '%Y-%m-%d  %H:%M:%S')
             else:
-                wi_action_time = datetime.datetime.now()
-                kwargs = {(tr.delay_type+'s'): tr.delay}
-                next_action_time = wi_action_time + datetime.timedelta(**kwargs)
+                if obj.is_realtime:
+                    action_time = datetime.datetime.now()
+                else:
+                    wi_action_time = datetime.datetime.now()
+                    kwargs = {(tr.delay_type+'s'): tr.delay}
+                    action_time = wi_action_time + datetime.timedelta(**kwargs)
 
-                if tr.action_hour:
-                    hour_str =  str(tr.action_hour).split('.')[0] + ':' + str(int(int(str(tr.action_hour).split('.')[1]) * 0.6))
-                    act_hour = datetime.datetime.strptime(hour_str,'%H:%M')
-                    next_action_time = next_action_time.replace(hour=act_hour.hour)
-                    next_action_time = next_action_time.replace(minute=act_hour.minute)
+                    if tr.action_hour:
+                        hour_str =  str(tr.action_hour).split('.')[0] + ':' + str(int(int(str(tr.action_hour).split('.')[1]) * 0.6))
+                        act_hour = datetime.datetime.strptime(hour_str,'%H:%M')
+                        action_time = action_time.replace(hour=act_hour.hour)
+                        action_time = action_time.replace(minute=act_hour.minute)
 
-                if tr.action_day:
-                    next_action_time = next_action_time.replace(day=int(tr.action_day))
-                    if next_action_time.day > int(tr.action_day):
-                        next_action_time = next_action_time.replace(month=next_action_time.month + 1)
+                    if tr.action_day:
+                        action_time = action_time.replace(day=int(tr.action_day))
+                        if action_time.day > int(tr.action_day):
+                            action_time = action_time.replace(month=action_time.month + 1)
 
-                if tr.action_date:
-                    next_action_time = tr.action_date
+                    if tr.action_date:
+                        action_time = tr.action_date
 
             try:
-                wi_id = self.pool.get('dm.workitem').create(cr, uid, {'step_id':tr.step_to_id.id or False, 'segment_id':obj.segment_id.id or False,
-                'address_id':obj.address_id.id, 'mail_service_id':obj.mail_service_id.id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'),
-                'tr_from_id':tr.id,'source':obj.source, 'sale_order_id':obj.sale_order_id.id})
-                netsvc.Logger().notifyChannel('dm event', netsvc.LOG_DEBUG, "Creating Workitem with action at %s"% next_action_time.strftime('%Y-%m-%d  %H:%M:%S'))
+                workitem_id = self.pool.get('dm.workitem').create(cr, uid, {'step_id':tr.step_to_id.id or False, 'segment_id':obj.segment_id.id or False,
+                'address_id':obj.address_id.id, 'mail_service_id':obj.mail_service_id.id, 'action_time':action_time.strftime('%Y-%m-%d  %H:%M:%S'),
+                'tr_from_id':tr.id,'source':obj.source, 'is_realtime': obj.is_realtime})
             except Exception, exception:
                 tb = sys.exc_info()
                 tb_s = "".join(traceback.format_exception(*tb))
@@ -273,7 +280,7 @@ class dm_event(osv.osv_memory): # {{{
 
 dm_event() # }}}
 
-SYSMSG_STATES = [
+SYSMSG_STATES = [ # {{{
     ('draft','Draft'),
     ('open','Open'),
     ('close','Close'),
@@ -281,7 +288,7 @@ SYSMSG_STATES = [
     ('cancel','Cancelled'),
     ('done','Done'),
     ('error','Error'),
-]
+] # }}}
 
 class dm_sysmsg(osv.osv): # {{{
     _name = "dm.sysmsg"

@@ -84,11 +84,14 @@ class dm_after_sale_action(osv.osv_memory):
                 for camp_mail_service in wi_browse_id.segment_id.proposition_id.camp_id.mail_service_ids:
                     if wi_browse_id.step_id.id == camp_mail_service.offer_step_id.id:
                         mail_service = camp_mail_service.mail_service_id.id
-                step = wi_browse_id.step_id.id
+                step_id = self.pool.get('dm.offer.step').search(cr,uid,[('code','=','ASEVENT-EMAIL')])
+                if step_id:
+                    step = step_id[0]
                 address = wi_browse_id.address_id.id
                 sale_order = args[0]['sale_order_id']
 
         if args and 'address_id' in args[0] and args[0]['address_id']:
+            # TO FIX : works only for email
             step_id = self.pool.get('dm.offer.step').search(cr,uid,[('code','=','ASEVENT-EMAIL')])
             if step_id:
                 step = step_id[0]
@@ -104,7 +107,7 @@ class dm_after_sale_action(osv.osv_memory):
                 'trigger_type_id' : i.action_id.id,
                 'mail_service_id' : mail_service,
             }
-            id = self.pool.get('dm.event').create(cr,uid,vals)
+            id = self.pool.get('dm.event.sale').create(cr,uid,vals)
             production_doc_id = self.pool.get('dm.offer.document').search(cr,uid,[('step_id','=',i.document_id.step_id.id),('category_id','=','Production')])
             if not production_doc_id :
                 vals = {'name':'From AS wizard production',
@@ -119,7 +122,7 @@ class dm_after_sale_action(osv.osv_memory):
                 doc_id = self.pool.get('dm.offer.document').create(cr,uid,vals)
             else :
                 self.pool.get('dm.offer.document').write(cr,uid,[production_doc_id[0]],{'content':i.as_report})
-            display_info ="Event is created for the above information and internal report is changed for the '%s' document"%i.document_id.name
+            display_info ="Document '%s' sucessfully sent"%i.document_id.name
             self.write(cr,uid,[i.id],{'state':'done','display_info':display_info})
         return True
 
