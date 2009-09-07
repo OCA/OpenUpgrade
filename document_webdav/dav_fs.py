@@ -311,7 +311,7 @@ class tinydav_handler(dav_interface):
 
 		cr.commit()
 		cr.close()
-		return 201
+		return True
 
 	def put(self,uri,data,content_type=None):
 		""" put the object into the filesystem """

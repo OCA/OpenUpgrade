@@ -78,9 +78,11 @@ class DAVRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         """ write the string to wfile """
         self.wfile.write(s)
 
-    def send_body(self,DATA,code,msg,desc,ctype='application/octet-stream',headers={}):
+    def send_body(self,DATA,code,msg,desc,ctype='application/octet-stream',headers=None):
         """ send a body in one part """
 
+	if not headers:
+		headers = {}
         self.send_response(code,message=msg)
         self.send_header("Connection", "keep-alive")
         self.send_header("Accept-Ranges", "bytes")
@@ -240,12 +242,15 @@ class DAVRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         dc=self.IFACE_CLASS
         uri=self.geturi()
         try:
-            dc.mkcol(uri)
-            self.send_status(200)
+            res = dc.mkcol(uri)
+	    if res:
+		self.send_body(None,201,"Created",'')
+	    else:
+		self.send_body(None,415,"Cannot create",'')
 	    #self.send_header("Connection", "keep-alive")
 	    # Todo: some content, too
         except DAV_Error, (ec,dd):
-            self.send_status(ec)
+            self.send_body(None,int(ec),dd,dd)
 
     def do_DELETE(self):
         """ delete an resource """
