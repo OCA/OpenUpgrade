@@ -34,6 +34,12 @@ import utils
 from constants import COLLECTION, OBJECT, DAV_PROPS, RT_ALLPROP, RT_PROPNAME, RT_PROP
 from errors import *
 
+def utf8str(st):
+	if isinstance(st,unicode):
+		return st.encode('utf8')
+	else:
+		return str(st)
+
 class PROPFIND:
     """ parse a propfind xml element and extract props
 
@@ -248,7 +254,7 @@ class PROPFIND:
         uparts=urlparse.urlparse(uri)
         fileloc=uparts[2]
         href=doc.createElement("D:href")
-        huri=doc.createTextNode(urllib.quote(fileloc.encode('utf8')))
+        huri=doc.createTextNode(urllib.quote(utf8str(fileloc)))
         href.appendChild(huri)
         re.appendChild(href)
 

@@ -315,7 +315,7 @@ class tinydav_handler(dav_interface):
 
 	def put(self,uri,data,content_type=None):
 		""" put the object into the filesystem """
-		self.parent.log_message('Putting %s (%d), %s'%( uri, len(data), content_type))
+		self.parent.log_message('Putting %s (%d), %s'%( unicode(uri,'utf8'), len(data), content_type))
 		parent='/'.join(uri.split('/')[:-1])
 		cr, uid, pool,dbname, uri2 = self.get_cr(uri)
 		if not dbname:
