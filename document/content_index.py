@@ -22,6 +22,25 @@
 import os
 import tempfile
 
+# A quick hack: if netsvc is not there, emulate it. Thus, work offline, too
+try:
+	import netsvc
+	def log(lvl,msg):
+		netsvc.Logger().notifyChannel("index",lvl,msg)
+except:
+	class netsvc:
+		LOG_NOTSET = 'notset'
+		LOG_DEBUG_RPC = 'debug_rpc'
+		LOG_DEBUG = 'debug'
+		LOG_DEBUG2 = 'debug2'
+		LOG_INFO = 'info'
+		LOG_WARNING = 'warn'
+		LOG_ERROR = 'error'
+		LOG_CRITICAL = 'critical'
+	
+	def log(lvl,msg):
+		print msg
+
 
 class NhException(Exception):
 	pass
@@ -127,6 +146,8 @@ class contentIndex() :
 			self.exts[ext] = obj
 			f = True
 			
+		if f:
+			log(netsvc.LOG_DEBUG, "Register content indexer: %r" % obj)
 		if not f:
 			raise Exception("Your indexer should at least suport a mimetype or extension")
 	
@@ -159,35 +180,23 @@ class contentIndex() :
 			fp = Popen(['file','-b','--mime-type',fname], shell=False, stdout=PIPE).stdout
 			result = fp.read()
 			fp.close()
-			mime = result.strip()
-			if debug:
-				print "File gave us:",mime
+			mime2 = result.strip()
+			log(netsvc.LOG_DEBUG,"File gave us: %s" % mime2)
 			# Note that the temporary file still exists now.
-			mime,fobj = mime_match(mime, self.mimes)
-			if debug:
-				print "Matching mime:",mime
+			mime,fobj = mime_match(mime2, self.mimes)
+			if not mime:
+				mime = mime2
 		    except Exception, e:
-			if debug:
-				import traceback,sys
-				tb_s = reduce(lambda x, y: x+y, traceback.format_exception( sys.exc_type, sys.exc_value, sys.exc_traceback))
-				print "Traceback:",tb_s
-			print "Cannot determine mime type:",e
+			log(netsvc.LOG_WARNING,"Cannot determine mime type: %s" % str(e))
 		
 		try:
 			if fobj:
-				if debug:
-					print "Have object, indexing content ",filename, fname or realfname
 				res = (mime, fobj.indexContent(content,filename,fname or realfname) )
 			else:
-				if debug:
-					print "Have no object, return (",mime,", None)"
+				log(netsvc.LOG_DEBUG,"Have no object, return (%s, None)" % mime)
 				res = (mime, None )
 		except Exception, e:
-			if debug:
-				import traceback,sys
-				tb_s = reduce(lambda x, y: x+y, traceback.format_exception( sys.exc_type, sys.exc_value, sys.exc_traceback))
-				print "Traceback:",tb_s
-			print "Could not index file, %s" % e
+			log(netsvc.LOG_WARNING,"Could not index file, %s" % e)
 			res = None
 		
 		# If we created a tmp file, unlink it now
@@ -195,7 +204,7 @@ class contentIndex() :
 			try:
 				os.unlink(fname)
 			except Exception, e:
-				print "Could not unlink %s, %s" %(fname, e)
+				log(netsvc.LOG_WARNING,"Could not unlink %s, %s" %(fname, e))
 		
 		return res
 

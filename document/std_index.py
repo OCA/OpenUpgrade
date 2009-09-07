@@ -64,24 +64,40 @@ class DocIndex(indexer):
 
 cntIndex.register(DocIndex())
 
+class PdfIndex(indexer):
+	def _getMimeTypes(self):
+	    return [ 'application/pdf']
+	
+	def _getExtensions(self):
+	    return ['.pdf']
+
+	def _doIndexFile(self,fname):
+		fp = Popen(['pdftotext', '-enc', 'UTF-8', '-nopgbrk', fname, '-'], shell=False, stdout=PIPE).stdout
+		return _to_unicode( fp.read())
+
+cntIndex.register(PdfIndex())
+
+class ImageNoIndex(indexer):
+	def _getMimeTypes(self):
+	    return [ 'image/*']
+	
+	def _getExtensions(self):
+	    #better return no extension, and let 'file' do its magic
+	    return []
+	    #return ['.png','.jpg','.gif','.jpeg','.bmp','.tiff']
+
+	def _doIndexContent(self,content):
+		return 'image'
+
+
+cntIndex.register(ImageNoIndex())
+
 #class Doc(indexer):
 	#def _getDefMime(self,ext):
 
 #def content_index(content, filename=None, content_type=None):
     #fname,ext = os.path.splitext(filename)
     #result = ''
-    #if ext in ('.doc'): #or content_type ?
-        #(stdin,stdout) = os.popen2('antiword -', 'b')
-        #stdin.write(content)
-        #stdin.close()
-        #result = _to_unicode(stdout.read())
-    #elif ext == '.pdf':
-        #file_descriptor, file_name = tempfile.mkstemp(suffix=ext)
-        #os.write(file_descriptor, content)
-        #os.close(file_descriptor)
-        #fp = os.popen('pdftotext -enc UTF-8 -nopgbrk '+file_name+' -', 'r')
-        #result = fp.read()
-        #fp.close()
     #elif ext in ('.xls','.ods','.odt','.odp'):
         #s = StringIO.StringIO(content)
         #o = odt2txt.OpenDocumentTextFile(s)
