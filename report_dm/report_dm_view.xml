@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <menuitem name="Reporting" id="menu_dm_report" parent="dm.menu_dm"  sequence="0"/>
+        
+        
+        <!--  Sales by month -->
+        
+        
+        <record id="view_sale_per_month_form" model="ir.ui.view">
+            <field name="name">report.sale.per.month.form</field>
+            <field name="model">report.sale.per.month</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Sales by Month">
+                    <field name="name" select="1"/>
+                    <field name="offer_step_id" select="1"/>
+                    <field name="offer_id"/>
+                    <field name="campaign_id"/>
+                    <field name="sale_quantity" select="2"/>
+                    <field name="sale_amount"/>
+                </form>
+            </field>
+        </record>
+        
+        <record id="view_sale_per_month_tree" model="ir.ui.view">
+            <field name="name">report.sale.per.month.tree</field>
+            <field name="model">report.sale.per.month</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Sales by Month">
+                    <field name="name" select="1"/>
+                    <field name="offer_step_id" select="1"/>
+                    <field name="offer_id"/>
+                    <field name="campaign_id"/>
+                    <field name="sale_quantity" select="2"/>
+                    <field name="sale_amount"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_sale_per_month_form" model="ir.ui.view">
+            <field name="name">report.sale.per.month.form</field>
+            <field name="model">report.sale.per.month</field>
+            <field name="type">graph</field>
+            <field name="arch" type="xml">
+                <graph string="Average Sales by Month" type="pie">
+                    <field name="offer_step_id"/>
+                    <field name="sale_amount"/>
+                </graph>
+            </field>
+        </record>
+
+        
+        
+        <record id="action_sale_this_month_tree" model="ir.actions.act_window">
+            <field name="name">Sales by Month (this month)</field>
+            <field name="res_model">report.sale.per.month</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">graph,tree</field>
+            <field name="domain">[('name','=',time.strftime('%Y-%m-01'))]</field>
+        </record>
+        
+        <menuitem id="menu_dm_sale_this_month" name="This Month" parent="menu_dm_report"/>
+        <menuitem action="action_sale_this_month_tree" id="menu_report_sale_this_month" parent="menu_dm_sale_this_month"/>
+        
+        
+        <record id="action_sale_per_month_all" model="ir.actions.act_window">
+            <field name="name">Sales by Month</field>
+            <field name="res_model">report.sale.per.month</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">graph,tree</field>
+        </record>
+        
+        <menuitem id="menu_dm_sale_all_month" name="All Months" parent="report_dm.menu_dm_report"/>
+        <menuitem action="action_sale_per_month_all" id="menu_report_sale_per_month" parent="menu_dm_sale_all_month"/>
+
+
+        <!--  Sales by day -->
+        
+        <record id="view_sale_per_day_form" model="ir.ui.view">
+            <field name="name">report.sale.per.day.form</field>
+            <field name="model">report.sale.per.day</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Sales by Day">
+                    <field name="name" select="1"/>
+                    <field name="offer_step_id" select="1"/>
+                    <field name="offer_id"/>
+                    <field name="campaign_id"/>
+                    <field name="sale_quantity" select="2"/>
+                    <field name="sale_amount"/>
+                </form>
+            </field>
+        </record>
+        
+        <record id="view_sale_per_day_tree" model="ir.ui.view">
+            <field name="name">report.sale.per.day.tree</field>
+            <field name="model">report.sale.per.day</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Sales by Day">
+                    <field name="name" select="1"/>
+                    <field name="offer_step_id" select="1"/>
+                    <field name="offer_id"/>
+                    <field name="campaign_id"/>
+                    <field name="sale_quantity" select="2"/>
+                    <field name="sale_amount"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_sale_per_Day_form" model="ir.ui.view">
+            <field name="name">report.sale.per.day.form</field>
+            <field name="model">report.sale.per.day</field>
+            <field name="type">graph</field>
+            <field name="arch" type="xml">
+                <graph string="Average Sales by Day" type="pie">
+                    <field name="offer_step_id"/>
+                    <field name="sale_amount"/>
+                </graph>
+            </field>
+        </record>
+
+        
+        
+        <record id="action_sale_today_tree" model="ir.actions.act_window">
+            <field name="name">Sales by Day (Today)</field>
+            <field name="res_model">report.sale.per.day</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">graph,tree</field>
+            <field name="domain">[('name','=',time.strftime('%Y-%m-%d'))]</field>
+        </record>
+        
+        <menuitem id="menu_dm_sale_today" name="Today" parent="menu_dm_report"/>
+        <menuitem action="action_sale_today_tree" id="menu_report_sale_today" parent="menu_dm_sale_today"/>
+        
+        
+        <record id="action_sale_per_day_all" model="ir.actions.act_window">
+            <field name="name">Sales by Day</field>
+            <field name="res_model">report.sale.per.day</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">graph,tree</field>
+        </record>
+        
+        <menuitem id="menu_dm_sale_all_day" name="All Days" parent="report_dm.menu_dm_report"/>
+        <menuitem action="action_sale_per_day_all" id="menu_report_sale_per_day" parent="menu_dm_sale_all_day"/>
+
+
+    </data>
+</openerp>
