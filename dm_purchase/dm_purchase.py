@@ -35,4 +35,13 @@ class purchase_order(osv.osv):#{{{
     }
 purchase_order()#}}}
 
+class dm_offer_step(osv.osv):
+    _name = "dm.offer.step"
+    _inherit = "dm.offer.step"
+    
+    _columns = {
+        'manufacturing_constraint_ids' : fields.many2many('product.product','dm_offer_step_manufacturing_product_rel','product_id','offer_step_id','Mailing Manufacturing Products',domain=[('categ_id', 'ilike', 'Mailing Manufacturing')], states={'closed':[('readonly',True)]}),
+        }
+dm_offer_step()
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

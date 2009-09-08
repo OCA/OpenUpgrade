@@ -689,4 +689,13 @@ class purchase_order(osv.osv):#{{{
     }
 purchase_order()#}}}
 
+class dm_offer(osv.osv):
+    _name = "dm.offer"
+    _inherit = "dm.offer"
+    
+    _columns = {
+        'translation_ids' : fields.one2many('dm.offer.translation', 'offer_id', 'Translations', ondelete="cascade", readonly=True),
+        }
+dm_offer()
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

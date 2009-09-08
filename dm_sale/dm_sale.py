@@ -174,4 +174,14 @@ class sale_order(osv.osv):#{{{
 
 sale_order()#}}}
 
+class dm_offer_step(osv.osv):
+    _name = "dm.offer.step"
+    _inherit = "dm.offer.step"
+    
+    _columns = {
+        'forecasted_yield' : fields.float('Forecasted Yield'),
+        'item_ids' : fields.many2many('product.product','dm_offer_step_product_rel','product_id','offer_step_id','Items', states={'closed':[('readonly',True)]}),
+        }
+dm_offer_step()
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
