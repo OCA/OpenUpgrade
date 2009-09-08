@@ -51,7 +51,7 @@ class report_sale_per_month(osv.osv):
                     left join dm_campaign cmp on (cmp.id = pro.camp_id) 
                     left join dm_offer o on (cmp.offer_id = o.id) 
                     left join dm_offer_step s on (s.offer_id = o.id and so.offer_step_id = s.id) 
-                    group by to_char(so.date_order, 'YYYY-MM-dd') ,cmp.id , o.id , s.id;
+                    group by to_char(so.date_order, 'YYYY-MM-dd') ,cmp.id , o.id , s.id
             )
         """)
 report_sale_per_month()
@@ -85,7 +85,7 @@ class report_sale_per_day(osv.osv):
                     left join dm_campaign cmp on (cmp.id = pro.camp_id) 
                     left join dm_offer o on (cmp.offer_id = o.id) 
                     left join dm_offer_step s on (s.offer_id = o.id and so.offer_step_id = s.id) 
-                    group by to_char(so.date_order, 'YYYY-MM-01') ,cmp.id , o.id , s.id;
+                    group by to_char(so.date_order, 'YYYY-MM-01') ,cmp.id , o.id , s.id
              )
         """)
 report_sale_per_day()
