@@ -7,20 +7,20 @@ from mx import DateTime
 class crm_case(osv.osv):
     _inherit = "crm.case" 
     _columns = {
-        'incident_ref': fields.char('Incident Ref', size=64, required=True, select=1),
-        'external_ref': fields.char('Ticket Code', size=64, select=1),
-        'fleet_id': fields.many2one('stock.location', 'Fleet', required = False, select = 1),
+        'incident_ref': fields.char('Incident Ref', size=64, required=True),
+        'external_ref': fields.char('Ticket Code', size=64),
+        'fleet_id': fields.many2one('stock.location', 'Fleet', required = False),
         'parent_fleet_id': fields.related('fleet_id', 'location_id', type='many2one', relation='stock.location', string='Fleet', store=True),
         'is_fleet_expired': fields.related('fleet_id', 'is_expired', type='boolean', string='Is Fleet Expired?'),
-        'picking_id': fields.many2one('stock.picking', 'Repair Picking', required = False, select = True),
-        'incoming_picking_id': fields.many2one('stock.picking', 'Incoming Picking', required = False, select = 1),
-        'outgoing_picking_id': fields.many2one('stock.picking', 'Outgoing Picking', required = False, select = True),
+        'picking_id': fields.many2one('stock.picking', 'Repair Picking', required = False),
+        'incoming_picking_id': fields.many2one('stock.picking', 'Incoming Picking', required = False),
+        'outgoing_picking_id': fields.many2one('stock.picking', 'Outgoing Picking', required = False),
         'related_picking_state': fields.related('picking_id', 'state', type="char", string="Related Picking State", readonly=True),
         'related_incoming_picking_state': fields.related('incoming_picking_id', 'state', type="char", string="Related Picking State", readonly=True),
         'related_outgoing_picking_state': fields.related('outgoing_picking_id', 'state', type="char", string="Related Picking State", readonly=True),
-        'in_supplier_picking_id': fields.many2one('stock.picking', 'Return To Supplier Picking', required = False, select = True),
-        'out_supplier_picking_id': fields.many2one('stock.picking', 'Return From Supplier Picking', required = False, select = True),
-        'prodlot_id': fields.many2one('stock.production.lot', 'Serial Number', required = False, select = 1),
+        'in_supplier_picking_id': fields.many2one('stock.picking', 'Return To Supplier Picking', required = False),
+        'out_supplier_picking_id': fields.many2one('stock.picking', 'Return From Supplier Picking', required = False),
+        'prodlot_id': fields.many2one('stock.production.lot', 'Serial Number', required = False),
         'product_id': fields.related('prodlot_id', 'product_id', type='many2one', relation='product.product', string='Related Product'),
     }
     
