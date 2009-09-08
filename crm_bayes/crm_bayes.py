@@ -37,10 +37,21 @@ class crm_bayes_group(osv.osv):
           'train_data': fields.binary('Trained Data')
     }
     
-    def action_reset(self, cr, uid, ids, conect=None):
-        group_obj = self.pool.get('crm.bayes.group')
-        for rec in group_obj.search(cr,uid,[]):
-            group_obj.write(cr,uid,rec,{'train_data':""})
+    def action_reset(self, cr, uid, ids, context=None):
+        self.write(cr,uid,ids,{'train_data':''})
+        cat_obj = self.pool.get('crm.bayes.categories')
+        
+        cat_ids = cat_obj.search(cr,uid,[('group_id','=',ids[0])])
+        
+        for id in cat_ids:
+            cat_obj.write(cr,uid,id,{'train_messages':0,'guess_messages':0,'automate_test' :0})
+            
+        case_obj = self.pool.get('crm.case')
+        case_ids = case_obj.search(cr,uid,[])
+        for rec in case_obj.read(cr,uid,case_ids,['category_id','state_bayes']):
+            if rec['category_id']:
+                if rec['category_id'][0] in cat_ids and  rec['state_bayes'] == 'trained' :
+                    case_obj.write(cr,uid,rec['id'],{'state_bayes':'untrained'})
         return True
          
 crm_bayes_group()
@@ -82,7 +93,7 @@ class crm_bayes_test_guess(osv.osv_memory):
     _columns = {
         'name' : fields.text('Message',required=1),
     }
-
+    
     def action_guess(self, cr, uid, ids, context=None):
         guesser = Bayes()
         group_obj = self.pool.get('crm.bayes.group')
@@ -139,7 +150,7 @@ class crm_bayes_test_train(osv.osv_memory):
         group_obj = self.pool.get('crm.bayes.group')
         message_obj = self.pool.get('crm.bayes.test.guess')
         for id in ids:
-            cat_id = self.read(cr,uid,id,['category_id'])                         
+            cat_id = self.read(cr,uid,id,['category_id','name'])         
             cat_id = cat_id[0]['category_id']
             if  result[0] and not cat_id:        
                 max = float(result[0][0][1])
@@ -173,8 +184,149 @@ class crm_bayes_test_train(osv.osv_memory):
                 cat_obj.write(cr,uid,cat_id,{'train_messages':int(cat_rec['train_messages']) + 1,'guess_messages':int(cat_rec['guess_messages']) + 1,'automate_test':percantage })
             else :
                 raise osv.except_osv(_('Error !'),_('Please Select Category! '))
-        return True
+        return {}
     
 crm_bayes_test_train()
+
+class crm_case_rule(osv.osv):
+    _name = "crm.case.rule"
+    _inherit = "crm.case.rule"
+    _columns = {
+        'action': fields.selection([('perform action and assign category','Perform Action and assign category'),('perform action','Perform Action'),("don't perform statistic test","Don't Perform Statistic Test")], 'Action', size=32,required=1),
+        'group_id': fields.many2one('crm.bayes.group','Statistic Group'),
+        'category_id': fields.many2one('crm.bayes.categories','Statistic Category'),
+        'main_category_rate': fields.float('Main Category Min Rate', help = 'Perform the action only if the probability to be the main category if bigger than this rate'),
+        'sec_category_rate': fields.float('Second Category Max Rate',help = 'Perform the ation only if the probability of the second category is lower than this rate'),
+    }
+    _defaults = {
+        'action': lambda *a: "don't perform statistic test",
+    }
+    
+crm_case_rule()
+
+class crm_case(osv.osv):
+    _name = "crm.case"
+    _inherit= "crm.case"
+    _description = "Case"
+    _columns = {
+        'category_id': fields.many2one('crm.bayes.categories','Statistic Category'),
+        'state_bayes': fields.selection([('trained','Trained',),('untrained','Untrained')], 'Status', size=16, readonly=True),
+    }
+    _defaults = {
+        'state_bayes': lambda *a: 'untrained',
+    }
+    
+    def perform_action(self, cr, uid, ids, conect=None):
+        record = self.read(cr,uid,ids[0],['category_id'])
+        if not record['category_id']:
+            raise osv.except_osv(_('Error !'),_('Statistic Category  is not define '))
+        
+        return True    
+    
+    def trained(self, cr, uid, ids, conect=None):
+        for id in ids:
+            record = self.read(cr,uid,id,['category_id','description'])
+            if not record['category_id']:
+                raise osv.except_osv(_('Error !'),_('Statistic Category  is not define '))
+            if record['description']:
+                group_obj = self.pool.get('crm.bayes.group')
+                cat_obj = self.pool.get('crm.bayes.categories')
+                
+                cat_rec = cat_obj.read(cr,uid,record['category_id'][0],[])
+                guesser = Bayes()
+                data =""
+                for rec in group_obj.browse(cr,uid,[cat_rec['group_id'][0]]):
+                    if rec['train_data']:
+                        data += str(rec['train_data'])
+                if data :
+                    myfile = file(file_path+"crm_bayes.bay", 'w')
+                    myfile.write(data)
+                    myfile.close()
+                    guesser.load(file_path+"crm_bayes.bay")
+                guesser.train(cat_rec['name'],record['description'])
+                guesser.save(file_path+"crm_bayes.bay")
+                myfile = file(file_path+"crm_bayes.bay", 'r')
+                data=""
+                for fi in myfile.readlines():
+                    data += fi
+                group_obj.write(cr,uid,cat_rec['group_id'][0],{'train_data': data})
+                percantage = 0
+                if cat_rec.get('guess_messages',  False):
+                    percantage = (int(cat_rec['guess_messages'])) *100  / (int(cat_rec['train_messages']) + int(cat_rec['guess_messages']) + 1)
+    
+                cat_obj.write(cr,uid,record['category_id'][0],{'train_messages':int(cat_rec['train_messages']) + 1,'automate_test':percantage })
+                self.write(cr,uid,id,{'state_bayes':'trained'})
+            else:
+                raise osv.except_osv(_('Error !'),_('Description is not define '))
+        return True
+        
+    def untrained(self, cr, uid, ids, conect=None):
+        for id in ids:
+            record = self.read(cr,uid,id,['category_id','description'])
+            if record['description']:
+                group_obj = self.pool.get('crm.bayes.group')
+                cat_obj = self.pool.get('crm.bayes.categories')
+                
+                cat_rec = cat_obj.read(cr,uid,record['category_id'][0],[])
+                guesser = Bayes()
+                data =""
+                for rec in group_obj.browse(cr,uid,[cat_rec['group_id'][0]]):
+                    if rec['train_data']:
+                        data += str(rec['train_data'])
+                if data :
+                    myfile = file(file_path+"crm_bayes.bay", 'w')
+                    myfile.write(data)
+                    myfile.close()
+                    guesser.load(file_path+"crm_bayes.bay")
+                guesser.untrain(cat_rec['name'],record['description'])
+                guesser.save(file_path+"crm_bayes.bay")
+                myfile = file(file_path+"crm_bayes.bay", 'r')
+                data=""
+                for fi in myfile.readlines():
+                    data += fi
+                group_obj.write(cr,uid,cat_rec['group_id'][0],{'train_data': data})
+                percantage = 0
+                if cat_rec.get('guess_messages',  False):
+                    percantage = (int(cat_rec['guess_messages'])) *100  / (int(cat_rec['train_messages']) + int(cat_rec['guess_messages']) - 1)
+                    
+                cat_obj.write(cr,uid,record['category_id'][0],{'train_messages':int(cat_rec['train_messages']) - 1,'automate_test':percantage })
+                self.write(cr,uid,id,{'state_bayes':'untrained'})
+            else:
+                raise osv.except_osv(_('Error !'),_('Description is not define '))
+        return True    
+    
+crm_case()
+
+class report_crm_bayes_statistic(osv.osv):
+    _name = "report.crm.bayes.statistic"
+    _description = "Bayes Statistic Report"
+    _auto = False
+    _columns = {
+        'name': fields.char('Year', size=4),
+        'month': fields.char('Month',size =4),
+        'section_id': fields.many2one('crm.case.section', 'Section'),
+        'total_case': fields.integer('Total Case'),
+        'category_id': fields.many2one('crm.bayes.categories','Statistic Category'),
+        'state_bayes': fields.char('Statistic Status',size=64),
+        'group_id' : fields.many2one('crm.bayes.group','Group')
+    }
+    def init(self, cr):
+        cr.execute("""
+            create or replace view report_crm_bayes_statistic as (
+            select 
+                min(c.id) as id,
+                count(c.section_id) as total_case ,
+                c.section_id as section_id,
+                c.category_id as category_id,
+                c.state_bayes as state_bayes,
+                to_char(c.create_date, 'MM') as month,  
+                to_char(c.create_date, 'YYYY') as name, 
+                ct.group_id as group_id
+            from 
+                crm_case c,crm_bayes_categories ct 
+            where ct.id = c.category_id 
+            group by c.section_id,c.category_id,c.state_bayes,to_char(c.create_date, 'MM'),to_char(c.create_date, 'YYYY'),ct.group_id
+            )""")
+report_crm_bayes_statistic()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

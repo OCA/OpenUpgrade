@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+    
+        <record model="crm.case.section" id="crm_configuration.section_support3">
+	        <field name="name">Opportunities</field>
+	        <field name="code">oppor</field>
+   		</record>
+        <record id="group0" model="crm.bayes.group">
+            <field name="name">Languange</field>
+        </record>
+        
+        <record id="cat_english" model="crm.bayes.categories">
+            <field name="name">English</field>
+            <field name="group_id"  ref="group0"/>
+        </record>
+        
+		<record id="cat_french" model="crm.bayes.categories">
+            <field name="name">French</field>
+            <field name="group_id"  ref="group0"/>
+        </record>
+        
+        <record id="cat_spanish" model="crm.bayes.categories">
+            <field name="name">Spanish</field>
+            <field name="group_id"  ref="group0"/>
+        </record>   
+        
+        <record id="crm_case_en_languange" model="crm.case">
+			<field name="partner_address_id" ref="base.res_partner_address_1"/>
+			<field eval="time.strftime('%Y-%m-08 10:15:00')" name="date"/>
+			<field eval="&quot;5&quot;" name="priority"/>
+			<field name="user_id" ref="base.user_root"/>
+			<field name="partner_id" ref="base.res_partner_agrolait"/>
+			<field eval="&quot;open&quot;" name="state"/>
+			<field name="section_id" ref="crm_configuration.section_support3"/>
+			<field eval="1" name="active"/>
+			<field eval="15.0" name="duration"/>
+			<field eval="&quot;Sale &quot;" name="name"/>
+			<field eval="&quot;agr@agrolait.com&quot;" name="email_from"/>
+			<field eval="&quot;&quot;&quot; UNDERSTANDING YOUR RIGHTS DURING THE JOB INTERVIEW \nThis article first appeared in Job Recorded Bulletin #176. JOB (Job Opportunities for the Blind) is sponsored by the National Federation of the Blind and the U.S. Department of Labor. \nThe job interview is probably the most crucial step in the path  to becoming employed. It is your best opportunity to make a favorable impression on a prospective employer. It may also be your only opportunity to educate the employer about the  abilities of a blind person, and to make him or her feel comfortable with your blindness. However, because the Americans with Disabilities Act of 1990 (ADA) prohibits employers from  asking disability-related questions during an interview, you may  need to take charge of the interview process and raise the questions yourself. To do this, you must understand what  questions are permitted by the ADA, and which ones are prohibited. This article will briefly explain the impermissible and impermissible questions, suggest some strategies for taking charge during the interview process, and explain some options you may have if you believe your rights were violated.   &quot;&quot;&quot;" name="description" ></field>
+			<field name="category_id" ref="cat_english"/>
+		</record> 
+		
+        <record id="crm_case_en_languange2" model="crm.case">
+			<field name="partner_address_id" ref="base.res_partner_address_3000"/>
+			<field eval="time.strftime('%Y-%m-08 10:15:00')" name="date"/>
+			<field eval="&quot;5&quot;" name="priority"/>
+			<field name="user_id" ref="base.user_root"/>
+			<field name="partner_id" ref="base.res_partner_seagate"/>
+			<field eval="&quot;open&quot;" name="state"/>
+			<field name="section_id" ref="crm_configuration.section_support3"/>
+			<field eval="1" name="active"/>
+			<field eval="15.0" name="duration"/>
+			<field eval="&quot;Sale  &quot;" name="name"/>
+			<field eval="&quot;agr@agrolait.com&quot;" name="email_from"/>
+			<field eval="&quot;&quot;&quot; Living Laboratories \n Small Watersheds in Experimental Forests Play a Big Role in Science, Management, and Policymaking \n Tucked away in quiet valleys on national forests across the country are a series of small streams that have a big role  to  play in the protection and management of our water and forest resources. Located within Forest Service experimental forests, these inconspicuous streams and the watersheds that feed them have served for decades as living laboratories, providing unparalleled opportunities for the study of forest  ecosystems. The work here has generated pivotal information about basic ecological processes and how management of  landscapes can affect the streams that flow through them &quot;&quot;&quot;" name="description" ></field>
+			<field name="category_id" ref="cat_english"/>
+		</record>
+		
+        <record id="crm_case_fr_languange" model="crm.case">
+			<field name="partner_address_id" ref="base.res_partner_address_3"/>
+			<field eval="time.strftime('%Y-%m-08 10:15:00')" name="date"/>
+			<field eval="&quot;5&quot;" name="priority"/>
+			<field name="user_id" ref="base.user_root"/>
+			<field name="partner_id" ref="base.res_partner_8"/>
+			<field eval="&quot;open&quot;" name="state"/>
+			<field name="section_id" ref="crm_configuration.section_support3"/>
+			<field eval="1" name="active"/>
+			<field eval="15.0" name="duration"/>
+			<field eval="&quot;Sale &quot;" name="name"/>
+			<field eval="&quot;contact@syleam.fr&quot;" name="email_from"/>
+			<field eval="&quot;&quot;&quot; INTRODUCTION \n\n Le plus grand atout de l’Ontario, c’est sa population. Notre économie a besoin de main-d’oeuvre qualifiée et les employeurs recherchent des personnes instruites et créatives qui ont le sens de la communication et du travail d’équipe.&quot;&quot;&quot;" name="description" ></field>
+			<field name="category_id" ref="cat_french"/>
+		</record> 
+		
+        <record id="crm_case_fr_languange2" model="crm.case">
+			<field name="partner_address_id" ref="base.res_partner_address_tang"/>
+			<field eval="time.strftime('%Y-%m-08 10:15:00')" name="date"/>
+			<field eval="&quot;5&quot;" name="priority"/>
+			<field name="user_id" ref="base.user_root"/>
+			<field name="partner_id" ref="base.res_partner_15"/>
+			<field eval="&quot;open&quot;" name="state"/>
+			<field name="section_id" ref="crm_configuration.section_support3"/>
+			<field eval="1" name="active"/>
+			<field eval="15.0" name="duration"/>
+			<field eval="&quot;Sale  &quot;" name="name"/>
+			<field eval="&quot;contact@syleam.fr&quot;" name="email_from"/>
+			<field eval="&quot;&quot;&quot; A l’ouest d’Almeria, en Andalousie se trouve la plus vaste zone de cultures sous plastique au monde. Coincés entre mer  et montagne sur la péninsule du Poniente, on compte 35.000 hectares de serres baptisés « la mer de plastique ». Ici, des  terrassements de serres sur les versants de la Sierra de Gador près d’El Ejido.  &quot;&quot;&quot;" name="description" ></field>
+			<field name="category_id" ref="cat_french"/>
+		</record>		
+		
+		<record id="crm_case_sp_languange" model="crm.case">
+			<field name="partner_address_id" ref="base.res_partner_address_wong"/>
+			<field eval="time.strftime('%Y-%m-08 10:15:00')" name="date"/>
+			<field eval="&quot;5&quot;" name="priority"/>
+			<field name="user_id" ref="base.user_root"/>
+			<field name="partner_id" ref="base.res_partner_14"/>
+			<field eval="&quot;open&quot;" name="state"/>
+			<field name="section_id" ref="crm_configuration.section_support3"/>
+			<field eval="1" name="active"/>
+			<field eval="15.0" name="duration"/>
+			<field eval="&quot;Sale &quot;" name="name"/>
+			<field eval="&quot;contact@syleam.fr&quot;" name="email_from"/>
+			<field eval="&quot;&quot;&quot; INTRODUCTION \n\n A modo de introducción, deseo plantear que hablaremos del efecto del estrés en la productividad, reconociendo que ambos elementos son parte de la realidad y del interés del Gerente moderno. Lo haré desde una óptica múltiple, caracterizada por tareas de médico clínico en medicina del trabajo; Salubrista Epidemiólogo interesado en un problema emergente y de alto impacto en grupos productivos de la sociedad; Director de Hospital que reconoce que la administración debe perfeccionarse en reconocer el valor del individuo; y ergónomo estudioso de la organización como ente artificial, que interactúa con el trabajador condicionando niveles, a veces mayores, a veces menores, de bienestar y eficiencia.  &quot;&quot;&quot;" name="description" ></field>
+			<field name="category_id" ref="cat_spanish"/>
+		</record> 
+		<record id="crm_case_sp_languange2" model="crm.case">
+			<field name="partner_address_id" ref="base.res_partner_address_6"/>
+			<field eval="time.strftime('%Y-%m-08 10:15:00')" name="date"/>
+			<field eval="&quot;5&quot;" name="priority"/>
+			<field name="user_id" ref="base.user_root"/>
+			<field name="partner_id" ref="base.res_partner_11"/>
+			<field eval="&quot;open&quot;" name="state"/>
+			<field name="section_id" ref="crm_configuration.section_support3"/>
+			<field eval="1" name="active"/>
+			<field eval="15.0" name="duration"/>
+			<field eval="&quot;Sale &quot;" name="name"/>
+			<field eval="&quot;contact@syleam.fr&quot;" name="email_from"/>
+			<field eval="&quot;&quot;&quot; Finalmente lo haremos pensando en un destinatario también variado: empresarios, sindicalistas, trabajadores, y profesionales preocupados de la salud de los trabajadores y del buen funcionamiento de las organizaciones.  Hablo a partir de la experiencia que hemos acumulado en la Unidad de Salud Ocupacional del Instituto de Seguridad del Trabajo,  trabajando en un equipo multidisciplinario con enfoque sistémico. Inicialmente definiremos los conceptos que nos interesan; siendo la productividad una amiga del empresario, la trataremos desde una perspectiva simple, para mas bien profundizar en distintos aspectos del estrés, pues, como dice un autor, 'entenderlo es manejarlo'. &quot;&quot;&quot;" name="description" ></field>
+			<field name="category_id" ref="cat_spanish"/>
+		</record>	
+    
+        
+    </data>
+</openerp>
