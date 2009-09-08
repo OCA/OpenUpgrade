@@ -1,76 +1,79 @@
 <?xml version="1.0"?>
 <openerp>
-<data>
-	<record model ="ir.ui.view" id= "crm_bayes_group_form">
-		<field name="name">crm_bayes_group</field>
-		<field name="model">crm.bayes.group</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Crm Bayes Group">
-				<field name="name"/>
-				<newline/>
-				<field name="bayes_category_ids" nolabel="1" colspan="4"/>
-				<group colspan="4">
-					<label align="0.0" colspan="2" string=""/>
-					<button   name="%(action_view_crm_bayes_test_message)d" string="Test Message" icon="gtk-execute" type="action" />
-                	<button   name="action_reset" string="Reset Training Base" icon="gtk-new" type="object"/>
-                </group>
-			</form>			          
-		</field>			
-	</record>
-
-	<record model ="ir.ui.view" id= "crm_bayes_group_tree">
-		<field name="name">crm_bayes_group</field>
-		<field name="model">crm.bayes.group</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Crm Bayes Group">
-				<field name="name"/>
-			</tree>			          
-		</field>			
-	</record>
+	<data>
+	    <!--
+		CRM Bayes Group
+		-->
+		<record model ="ir.ui.view" id= "crm_bayes_group_form">
+			<field name="name">crm_bayes_group</field>
+			<field name="model">crm.bayes.group</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Crm Bayes Group">
+					<field name="name" select="1" />
+					<newline/>
+					<field name="bayes_category_ids" nolabel="1" colspan="4"/>
+					<group colspan="4">
+						<label align="0.0" colspan="2" string=""/>
+						<button name="%(action_view_crm_bayes_test_message)d" string="Test Message"  icon="gtk-execute" type="action" />						
+	                	<button name="action_reset" string="Reset Training Base" icon="gtk-new" type="object"/>
+	                </group>
+				</form>			          
+			</field>			
+		</record>
 	
-	<record model="ir.actions.act_window" id="crm_bayes_group_view">
-		<field name="name">Crm bayes group</field>
-		<field name="res_model">crm.bayes.group</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="crm_bayes_group_tree"></field>
-	</record>
+		<record model ="ir.ui.view" id= "crm_bayes_group_tree">
+			<field name="name">crm_bayes_group</field>
+			<field name="model">crm.bayes.group</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Crm Bayes Group">
+					<field name="name" select="1"/>
+				</tree>			          
+			</field>			
+		</record>
+		
+		<record model="ir.actions.act_window" id="crm_bayes_group_view">
+			<field name="name">Crm bayes group</field>
+			<field name="res_model">crm.bayes.group</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="crm_bayes_group_tree"></field>
+		</record>
+		
+		<menuitem name= "Statistics Groups" id = "menu_crm_bayes_group" action="crm_bayes_group_view" parent ='crm.next_id_51'/>	
+		
+	    <!--
+		CRM Bayes Categories
+		-->
+		
+		<record model ="ir.ui.view" id= "crm_bayes_category_form">
+			<field name="name">crm_bayes_categories</field>
+			<field name="model">crm.bayes.categories</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Categories of Action">
+					<field name="name" select="1" />
+					<field name="train_messages" select="1" />
+					<field name="guess_messages" select="1" />
+					<field name="automate_test" select="1" />				
+				</form>			          
+			</field>			
+		</record>
 	
-	<menuitem name= "Statistics Groups" id = "menu_crm_bayes_group" action="crm_bayes_group_view" parent ='crm.next_id_51'/>	
-	
-	
-	<record model ="ir.ui.view" id= "crm_bayes_category_form">
-		<field name="name">crm_bayes_categories</field>
-		<field name="model">crm.bayes.categories</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Crm Bayes Category">
-				<field name="name"/>
-				<field name="train_messages"/>
-				<field name="guess_messages"/>
-				<field name="automate_test"/>				
-			</form>			          
-		</field>			
-	</record>
-
-	<record model ="ir.ui.view" id= "crm_bayes_category_tree">
-		<field name="name">crm_bayes_categories</field>
-		<field name="model">crm.bayes.categories</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Category Action">
-				<field name="name"/>
-				<field name="train_messages"/>
-				<field name="guess_messages"/>
-				<field name="automate_test"/>				
-			</tree>			          
-		</field>			
-	</record>
-	
- 
-	
-	
-</data>
+		<record model ="ir.ui.view" id= "crm_bayes_category_tree">
+			<field name="name">crm_bayes_categories</field>
+			<field name="model">crm.bayes.categories</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Categories of Action">
+					<field name="seq"/>
+					<field name="name" select="1"/>
+					<field name="train_messages" select="1" />
+					<field name="guess_messages" select="1" />
+					<field name="automate_test" select="1" />				
+				</tree>			          
+			</field>			
+		</record>
+	</data>
 </openerp> 

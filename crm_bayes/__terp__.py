@@ -21,11 +21,11 @@
 ##############################################################################
 
 {
-    "name" : "Crm Bayes",
+    "name" : "Bayesian Filter",
     "version" : "1.0",
     "author" : "Tiny",
     "category" : "Generic Modules/Others",
-    "depends" : ["base",'crm'],
+    "depends" : ['crm_configuration',"base"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ["crm_bayes_wizard.xml","crm_bayes_view.xml"],
