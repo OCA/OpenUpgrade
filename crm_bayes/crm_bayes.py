@@ -22,9 +22,13 @@
 
 from osv import fields, osv
 import string
-from reverend.thomas import Bayes
 import tools
 
+try:
+    from reverend.thomas import Bayes
+except:
+    import netsvc
+    netsvc.Logger().notifyChannel('reverend:', netsvc.LOG_WARNING, "python-reverend package currently not install!")
 result =[]
 file_path= tools.config['addons_path'] +"/crm_bayes/"
 
