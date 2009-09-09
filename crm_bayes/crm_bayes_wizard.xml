@@ -59,6 +59,28 @@
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
+		
+		<record id="view_crm_bayes_train_message" model="ir.ui.view">
+            <field name="name">Train Mesage</field>
+            <field name="model">crm.bayes.train.message</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Train Message">
+                    <label  string="Train Message Successfully "/>
+                    <separator colspan="4" string=""/>
+                    <button name="action_ok" string="OK" type="object" icon="gtk-ok"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_crm_bayes_train_message" model="ir.actions.act_window">
+            <field name="name">Train Mesage</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.bayes.train.message</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
 
 	</data>
 </terp>

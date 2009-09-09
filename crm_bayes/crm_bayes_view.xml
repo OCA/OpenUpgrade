@@ -11,6 +11,7 @@
 			<field name="arch" type="xml">
 				<form string="Crm Bayes Group">
 					<field name="name" select="1" />
+					<field name="active" select="1" />
 					<newline/>
 					<field name="bayes_category_ids" nolabel="1" colspan="4"/>
 					<group colspan="4">
@@ -29,6 +30,7 @@
 			<field name="arch" type="xml">
 				<tree string="Crm Bayes Group">
 					<field name="name" select="1"/>
+					<field name="active" select="1" />
 				</tree>			          
 			</field>			
 		</record>
@@ -126,7 +128,6 @@
 					<group colspan="8" col="8">
 	                <field name="category_id" attrs="{'readonly':[('state_bayes','=','trained')]}"/>
 	                <field colspan="2" name="state_bayes"/>
-					<button name="perform_action" string="Perform Action" attrs="{'invisible':[('state_bayes','!=','untrained')]}" type ="object"/>
 					<button name="trained" string="Trained" attrs="{'invisible':[('state_bayes','=','trained')]}"   type ="object"/>
 					<button name="untrained" string="Untrained"  attrs="{'invisible':[('state_bayes','=','untrained')]}" type ="object"/>
 	            	</group>
@@ -161,7 +162,6 @@
 					<group colspan="8" col="8">
 	                <field name="category_id" attrs="{'readonly':[('state_bayes','=','trained')]}"/>
 	                <field colspan="2" name="state_bayes"/>
-					<button name="perform_action" string="Perform Action" attrs="{'invisible':[('state_bayes','!=','untrained')]}" type ="object"/>
 					<button name="trained" string="Trained" attrs="{'invisible':[('state_bayes','=','trained')]}"   type ="object"/>
 					<button name="untrained" string="Untrained"  attrs="{'invisible':[('state_bayes','=','untrained')]}" type ="object"/>
 	            	</group>
@@ -196,7 +196,6 @@
 					<group colspan="8" col="8">
 	                <field name="category_id" attrs="{'readonly':[('state_bayes','=','trained')]}"/>
 	                <field colspan="2" name="state_bayes"/>
-					<button name="perform_action" string="Perform Action" attrs="{'invisible':[('state_bayes','!=','untrained')]}" type ="object"/>
 					<button name="trained" string="Trained" attrs="{'invisible':[('state_bayes','=','trained')]}"   type ="object"/>
 					<button name="untrained" string="Untrained"  attrs="{'invisible':[('state_bayes','=','untrained')]}" type ="object"/>
 	            	</group>
@@ -231,7 +230,6 @@
 					<group colspan="8" col="8">
 	                <field name="category_id" attrs="{'readonly':[('state_bayes','=','trained')]}"/>
 	                <field colspan="2" name="state_bayes"/>
-					<button name="perform_action" string="Perform Action" attrs="{'invisible':[('state_bayes','!=','untrained')]}" type ="object"/>
 					<button name="trained" string="Trained" attrs="{'invisible':[('state_bayes','=','trained')]}"   type ="object"/>
 					<button name="untrained" string="Untrained"  attrs="{'invisible':[('state_bayes','=','untrained')]}" type ="object"/>
 	            	</group>
