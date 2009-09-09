@@ -2,7 +2,7 @@
 <openerp>
     <data>
 
-    <menuitem name="Advanced" id="menu_dm_report_advance" parent="report_dm.menu_dm_report"  sequence="0"/>
+    <menuitem name="Advanced" id="menu_dm_report_advanced" parent="report_dm.menu_dm_report"  sequence="0"/>
 
 <!--Order Quantity per Offer Step-->
         <wizard 
@@ -14,7 +14,7 @@
             icon="STOCK_PRINT" 
             action="wizard_order_quantity_offer_steps"
 			id="menu_order_quantity_offer_steps" 
-			parent="menu_dm_report_advance" 
+			parent="menu_dm_report_advanced" 
 			type="wizard"/>
 
 <!-- Income per Offer Steps -->
@@ -27,7 +27,7 @@
             icon="STOCK_PRINT" 
             action="wizard_order_amount_offer_steps"
 			id="menu_order_amount_offer_steps" 
-			parent="menu_dm_report_advance" 
+			parent="menu_dm_report_advanced" 
 			type="wizard"/>
 
 <!-- Order Quantity per Segments of Campaign -->
@@ -40,7 +40,7 @@
             icon="STOCK_PRINT" 
             action="wizard_order_quantity_campaign"
 			id="menu_order_quantity_campaign" 
-			parent="menu_dm_report_advance" 
+			parent="menu_dm_report_advanced" 
 			type="wizard"/>
 
 <!-- Income per Segments of Campaign -->
@@ -53,7 +53,7 @@
             icon="STOCK_PRINT" 
             action="wizard_order_amount_campaign"
 			id="menu_order_amount_campaign" 
-			parent="menu_dm_report_advance" 
+			parent="menu_dm_report_advanced" 
 			type="wizard"/>
     
     
@@ -67,7 +67,7 @@
             icon="STOCK_PRINT" 
             action="wizard_order_quantity_campaign_offer_step"
 			id="menu_order_quantity_campaign_offer_step" 
-			parent="menu_dm_report_advance" 
+			parent="menu_dm_report_advanced" 
 			type="wizard"/>
 
 <!-- Income per Step of Campaign -->
@@ -80,7 +80,7 @@
             icon="STOCK_PRINT" 
             action="wizard_order_amount_campaign_offer_step"
 			id="menu_order_amount_campaign_offer_step" 
-			parent="menu_dm_report_advance" 
+			parent="menu_dm_report_advanced" 
 			type="wizard"/>
 
     </data>

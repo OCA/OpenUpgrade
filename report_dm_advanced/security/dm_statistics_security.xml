@@ -4,7 +4,7 @@
 
 	<!-- USER GROUPS -->
 	<record id="res_groups_dmstatistics" model="res.groups">
-		<field eval="[(6,0,[ref('report_dm.menu_dm_report'),ref('report_dm.menu_order_quantity_offer_steps'),ref('report_dm.menu_order_amount_offer_steps'),ref('report_dm.menu_order_quantity_campaign'),ref('report_dm.menu_order_amount_campaign'),ref('report_dm.menu_order_quantity_campaign_offer_step'),ref('report_dm.menu_order_amount_campaign_offer_step')
+		<field eval="[(6,0,[ref('report_dm_advanced.menu_dm_report_advance'),ref('report_dm_advanced.menu_order_quantity_offer_steps'),ref('report_dm_advanced.menu_order_amount_offer_steps'),ref('report_dm_advanced.menu_order_quantity_campaign'),ref('report_dm_advanced.menu_order_amount_campaign'),ref('report_dm_advanced.menu_order_quantity_campaign_offer_step'),ref('report_dm_advanced.menu_order_amount_campaign_offer_step')
 		])]" name="menu_access"/>
 		<field eval="&quot;&quot;&quot;Direct Marketing / Statistics&quot;&quot;&quot;" name="name"/>
 	</record>	
