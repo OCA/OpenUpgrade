@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    OpenERP, Open Source Management Solution
+#    Copyright (c) 2008 Zikzakmedia S.L. (http://zikzakmedia.com) All Rights Reserved.
+#                       Jordi Esteve <jesteve@zikzakmedia.com>
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,12 +20,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 {
     "name" : "Network Management Extension",
     "version" : "1.0",
     "author" : "Zikzakmedia SL",
     "category" : "Enterprise Specific Modules/Information Technology",
-    "website": "http://www.zikzakmedia.com",
+    "website": "www.zikzakmedia.com",
+    "license" : "GPL-3",
     "depends" : ["network"],
     'init_xml': ['network_protocol_data.xml'],
     "demo_xml" : [],
@@ -33,13 +36,15 @@
         "network_view.xml",
     ],
     "description": """
-    Organize your software and configurations.
+Organize your software and configurations.
     - Additional network information: IP, domain, DNS, gateway
     - Protocols
     - Services
     - Ports
     - Public and private URLs
-    """,
+    - Password encryption
+
+System dependency: package python-crypto required.""",
     "active" : False,
     "installable": True
 }
