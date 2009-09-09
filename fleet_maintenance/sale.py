@@ -12,6 +12,17 @@ default_maintenance_start_delta = 3 #TODO make this a fields.property parameter!
 class sale_order_line(osv.osv):
     _inherit = "sale.order.line"
     
+    def create(self, cr, uid, vals, context={}):
+        """Prevents the ORM from trying to write the is_maintenance product fields view fields related.
+        User might indeed not have this right, example is a salesman duplicating a sale_order.
+        Actually this looks like a bug in OpenObject because it will try to write even if we declared
+        the is_maintenance field as read_only.
+        see bugreport here https://bugs.launchpad.net/openobject-server/+bug/426676
+        """
+        if vals.get('is_maintenance', False):
+            del(vals['is_maintenance'])
+        return super(sale_order_line, self).create(cr, uid, vals, context=context)  
+    
     def _get_maintenance_month_qty_from_start_end(self, cr, uid, start, end):
         delta = DateTime.RelativeDateDiff(end + RelativeDateTime(days=fixed_days_before_month_end + 1), start)
         return delta.months + delta.years * 12

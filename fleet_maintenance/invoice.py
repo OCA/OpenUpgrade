@@ -25,6 +25,17 @@ account_invoice()
 class account_invoice_line(osv.osv):
     _inherit = "account.invoice.line"
     
+    def create(self, cr, uid, vals, context={}):
+        """Prevents the ORM from trying to write the is_maintenance product fields view fields related.
+        User might indeed not have this right, example is an accountant creating a credit note.
+        Actually this looks like a bug in OpenObject because it will try to write even if we declared
+        the is_maintenance field as read_only.
+        see bugreport here https://bugs.launchpad.net/openobject-server/+bug/426676
+        """
+        if vals.get('is_maintenance', False):
+            del(vals['is_maintenance'])
+        return super(account_invoice_line, self).create(cr, uid, vals, context=context)  
+    
     def copy(self, cr, uid, id, default=None, context={}):
         if not default:
             default = {}
