@@ -92,15 +92,36 @@ def _invoice_merge(self, cr, uid, data, context):
 			if vals['date_due'] and (vals['date_due'] > d['date_due']):
 				vals['date_due'] = d['date_due']
 				
-	#Now, alter all invoice lines and tax lines that pointed to merged invoices
-	ilobj = pool.get('account.invoice.line')
-	mlines = ilobj.search(cr,uid,[('invoice_id','in',inv_ids)])
-	ilobj.write(cr,uid,mlines,{'invoice_id': invs[0]['id']})
-
-	itobj = pool.get('account.invoice.tax')
-	tlines = itobj.search(cr,uid,[('invoice_id','in',inv_ids)])
-	itobj.write(cr,uid,tlines,{'invoice_id': invs[0]['id']})
-
+	# Locate the fields (o2m) that reference this invoice, and update
+	# them to point to the new invoice
+	mod_fields = [  ('account.invoice.line',None,True),
+			('account.invoice.tax', None,True),
+			('account.analytic.line',None, False),
+			('hr.expense.expense',None, False),
+			('mrp.repair',None, False),
+			('proforma.followup.history',None, False),
+			('purchase.order',None, False),
+			('training.subscription.line',None, False),]
+		# please, add your module's models here, so that their refs
+		# get updated, too.
+		
+	for model, field, oblig in mod_fields:
+		try:
+		    mobj = pool.get(model)
+		    if (not mobj) and (not oblig):
+			continue
+		    mfie = field or 'invoice_id'
+		    mids = mobj.search(cr,uid,[(mfie,'in', inv_ids)])
+		    if mids and len(mids):
+			mobj.write(cr,uid,mids,{ mfie: invs[0]['id'] })
+		except Exception, e:
+			print "Exception while merging %s" %model,e
+			if oblig:
+				raise
+			pass
+	
+	# TODO: "sale.order" also has a many2many ref to invoice id
+	
 	# Finally, remove merged invoices
 	inv_obj.unlink(cr,uid,inv_ids)
 
