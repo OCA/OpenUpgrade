@@ -39,19 +39,20 @@ class report_sale_per_month(osv.osv):
         cr.execute("""
             create or replace view report_sale_per_month as (
                 select min(so.id) as id , 
-                    to_char(so.date_order, 'YYYY-MM-dd') as name,
+                    to_char(date_trunc('month',so.date_order),'YYYY-MM-DD')::text as name,
                     s.id as offer_step_id, 
                     o.id as offer_id,
                     cmp.id as campaign_id,
                     sum(so.amount_total) as sale_amount ,
                     count(so.id) as sale_quantity 
-                from sale_order so 
-                    left join dm_campaign_proposition_segment seg on (so.segment_id = seg.id) 
-                    left join dm_campaign_proposition pro on (pro.id = seg.proposition_id) 
-                    left join dm_campaign cmp on (cmp.id = pro.camp_id) 
-                    left join dm_offer o on (cmp.offer_id = o.id) 
-                    left join dm_offer_step s on (s.offer_id = o.id and so.offer_step_id = s.id) 
-                    group by to_char(so.date_order, 'YYYY-MM-dd') ,cmp.id , o.id , s.id
+                from sale_order so,dm_campaign_proposition_segment seg,
+                    dm_campaign_proposition pro,dm_campaign cmp,
+                    dm_offer o ,dm_offer_step s
+                where
+                    so.segment_id = seg.id and pro.id = seg.proposition_id 
+                    and cmp.id = pro.camp_id and cmp.offer_id = o.id and
+                    s.offer_id = o.id and so.offer_step_id = s.id
+                group by to_char(date_trunc('month',so.date_order),'YYYY-MM-DD')::text ,cmp.id , o.id , s.id
             )
         """)
 report_sale_per_month()
@@ -73,19 +74,19 @@ class report_sale_per_day(osv.osv):
         cr.execute("""
             create or replace view report_sale_per_day as (
                 select min(so.id) as id , 
-                    to_char(so.date_order, 'YYYY-MM-01') as name,
+                    to_char(date_trunc('day',so.date_order),'YYYY-MM-DD')::text as name,
                     s.id as offer_step_id, 
                     o.id as offer_id,
                     cmp.id as campaign_id,
                     sum(so.amount_total) as sale_amount ,
                     count(so.id) as sale_quantity 
-                from sale_order so 
-                    left join dm_campaign_proposition_segment seg on (so.segment_id = seg.id) 
-                    left join dm_campaign_proposition pro on (pro.id = seg.proposition_id) 
-                    left join dm_campaign cmp on (cmp.id = pro.camp_id) 
-                    left join dm_offer o on (cmp.offer_id = o.id) 
-                    left join dm_offer_step s on (s.offer_id = o.id and so.offer_step_id = s.id) 
-                    group by to_char(so.date_order, 'YYYY-MM-01') ,cmp.id , o.id , s.id
+                from sale_order so, dm_campaign_proposition_segment seg,  
+                    dm_campaign_proposition pro, dm_campaign cmp,
+                    dm_offer o, dm_offer_step s
+                where so.segment_id = seg.id and pro.id = seg.proposition_id
+                    and cmp.id = pro.camp_id and cmp.offer_id = o.id
+                    and s.offer_id = o.id and so.offer_step_id = s.id
+                group by to_char(date_trunc('day',so.date_order),'YYYY-MM-DD')::text ,cmp.id , o.id , s.id
              )
         """)
 report_sale_per_day()

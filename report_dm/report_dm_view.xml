@@ -71,6 +71,7 @@
             <field name="res_model">report.sale.per.month</field>
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree</field>
+			<field name="domain">[('name','like',time.strftime('%Y-%m'))]</field>
         </record>
         
         <menuitem id="menu_dm_sale_all_month" name="All Months" parent="report_dm.menu_dm_report"/>
