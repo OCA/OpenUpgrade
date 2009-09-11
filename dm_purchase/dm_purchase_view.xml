@@ -30,5 +30,26 @@
         </field>
     </record>
 
+	<!--
+	======================================================= 
+	Offer Step Views
+	=======================================================
+	-->
+
+	<record id="view_purchase_offer_step_form_inherit" model="ir.ui.view">
+        <field name="name">dm.offer.step.form1.inherit</field>
+        <field name="model">dm.offer.step</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="dm.view_offer_step_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Mailing Manufacturing">
+                    <separator string="Mailing Manufacturing Products" colspan="4"/>
+                    <field name="manufacturing_constraint_ids" colspan="4" nolabel="1"/>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
 	</data>
 </openerp>

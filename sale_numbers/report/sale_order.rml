@@ -538,7 +538,7 @@
                 <para style="terp_default_Bold_9">LST/VAT No. &amp; Date</para>
               </td>
               <td>
-                <para style="terp_default_9">[[ company.partner_id.vat_no or '']] [[ company.partner_id.date ]]</para>
+                <para style="terp_default_9">[[ company.partner_id.vat_no or or removeParentNode('para') ]] [[ formatLang(company.partner_id.date,date = True) or '' ]]</para>
               </td>
             </tr>
           </blockTable>
@@ -548,7 +548,7 @@
                 <para style="terp_default_Bold_9">CST No. &amp; Date</para>
               </td>
               <td>
-                <para style="terp_default_9">[[ company.partner_id.cst_no or '']] [[ company.partner_id.date ]]</para>
+                <para style="terp_default_9">[[ company.partner_id.cst_no or or removeParentNode('para') ]] [[ formatLang(company.partner_id.date,date = True) or '' ]]</para>
               </td>
             </tr>
           </blockTable>
@@ -665,7 +665,7 @@
           <para style="terp_default_9">[[ o.client_order_ref or '' ]]</para>
         </td>
         <td>
-          <para style="terp_default_9">[[ time.strftime('%d/%m/%Y', time.strptime(o.date_order, '%Y-%m-%d')) ]]</para>
+          <para style="terp_default_9">[[ formatLang(o.date_order,date = True) ]]</para>
         </td>
         <td>
           <para style="terp_default_9">[[ o.user_id.name ]]</para>
@@ -714,16 +714,16 @@
             <para style="terp_default_9">[[ ', '.join(map(lambda x: x.name, line.tax_id))]]</para>
           </td>
           <td>
-            <para style="terp_default_9">[[ line.product_uos and '%.2f' % line.product_uos_qty or '%.2f' % line.product_uom_qty ]] [[ line.product_uos and line.product_uos.name or line.product_uom.name ]]</para>
+            <para style="terp_default_9">[[ formatLang(line.product_uos and line.product_uos_qty or line.product_uom_qty) ]] [[ line.product_uos and line.product_uos.name or line.product_uom.name ]]</para>
           </td>
           <td>
-            <para style="terp_default_Right_9">[[ '%.2f' % line.price_unit ]]</para>
+            <para style="terp_default_Right_9">[[ formatLang(line.price_unit ) ]]</para>
           </td>
           <td>
-            <para style="terp_default_9">[[ (line.discount and str(line.discount)+'%')or '' ]]</para>
+            <para style="terp_default_9">[[ formatLang(line.discount) ]]</para>
           </td>
           <td>
-            <para style="terp_default_Right_9">[[ '%.2f' % line.price_subtotal ]]</para>
+            <para style="terp_default_Right_9">[[ formatLang(line.price_subtotal ) ]]</para>
           </td>
         </tr>
         <tr>
@@ -777,7 +777,7 @@
           <para style="terp_default_Bold_9">Net Total :</para>
         </td>
         <td>
-          <para style="terp_default_Right_9">[[ '%.2f' % o.amount_untaxed ]] [[ o.pricelist_id.currency_id.name ]]</para>
+          <para style="terp_default_Right_9">[[ formatLang(o.amount_untaxed) ]] [[ o.pricelist_id.currency_id.name ]]</para>
         </td>
       </tr>
     </blockTable>
@@ -792,7 +792,7 @@
           <para style="terp_default_Bold_9">Taxes :</para>
         </td>
         <td>
-          <para style="terp_default_Right_9">[[ '%.2f' % o.amount_tax ]] [[ o.pricelist_id.currency_id.name ]]</para>
+          <para style="terp_default_Right_9">[[ formatLang(o.amount_tax) ]] [[ o.pricelist_id.currency_id.name ]]</para>
         </td>
       </tr>
     </blockTable>
@@ -807,7 +807,7 @@
           <para style="terp_default_Bold_9">TOTAL :</para>
         </td>
         <td>
-          <para style="terp_default_Right_9">[[ '%.2f' % o.amount_total ]] [[ o.pricelist_id.currency_id.name ]]</para>
+          <para style="terp_default_Right_9">[[ formatLang(o.amount_total) ]] [[ o.pricelist_id.currency_id.name ]]</para>
         </td>
       </tr>
     </blockTable>
@@ -827,7 +827,7 @@
                 <para style="terp_default_Bold_9">LST/VAT No. &amp; Date</para>
               </td>
               <td>
-                <para style="terp_default_9">[[ o.partner_id.vat_no or '']] [[ o.partner_id.date ]]</para>
+                <para style="terp_default_9">[[ o.partner_id.vat_no or '']] [[ formatLang(o.partner_id.date,date = True) or '' ]]</para>
               </td>
             </tr>
           </blockTable>
@@ -837,7 +837,7 @@
                 <para style="terp_default_Bold_9">CST No. &amp; Date</para>
               </td>
               <td>
-                <para style="terp_default_9">[[ o.partner_id.cst_no or '']] [[ o.partner_id.date ]]</para>
+                <para style="terp_default_9">[[ o.partner_id.cst_no or '']] [[ formatLang(o.partner_id.date,date = True) or '' ]]</para>
               </td>
             </tr>
           </blockTable>
@@ -847,7 +847,7 @@
                 <para style="terp_default_Bold_9">Excise Reg. No. &amp; Date</para>
               </td>
               <td>
-                <para style="terp_default_9">[[ o.partner_id.excise or '' ]] [[ o.partner_id.date ]]</para>
+                <para style="terp_default_9">[[ o.partner_id.excise or '' ]] [[ formatLang(o.partner_id.date,date = True) or '' ]]</para>
               </td>
             </tr>
           </blockTable>
@@ -893,12 +893,12 @@
     <blockTable colWidths="539.0" style="Table_Notes_Content">
       <tr>
         <td>
-          <para style="terp_default_9">[[ format(o.note) or '' ]]</para>
+          <para style="terp_default_9">[[ format(o.note or '') ]]</para>
         </td>
       </tr>
       <tr>
         <td>
-          <para style="terp_default_9">[[ format((o.partner_id.property_payment_term and o.partner_id.property_payment_term[1]) or '') ]]</para>
+          <para style="terp_default_9">[[ format((o.partner_id.property_payment_term and o.partner_id.property_payment_term.note) or '') ]]</para>
         </td>
       </tr>
     </blockTable>

@@ -475,7 +475,6 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
             <field name="action_id" ref="dm.ir_actions_server_html_doc_generate0"/>
-            <field eval="[(6,0,[ref('dm.product_product_papermailingus0')])]" name="item_ids"/>
             <field eval="&quot;&quot;&quot;SM&quot;&quot;&quot;" name="code"/>
             <field eval="1" name="doc_number"/>
             <field eval="&quot;&quot;&quot;Use the new OnDemand logo in the mailing&quot;&quot;&quot;" name="dtp_note"/>
@@ -495,7 +494,6 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
             <field name="action_id" ref="dm.ir_actions_server_crm_case_create0"/>
-            <field eval="[(6,0,[ref('dm.product_product_openerpuserbook0')])]" name="item_ids"/>
             <field eval="&quot;&quot;&quot;IM&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;The Intermediate mailing is a phone by a commercial call to thank the client to have subscribed to the offer and propose to buy the OpenERP Book&quot;&quot;&quot;" name="desc"/>
             <field name="media_id" ref="dm.media_paper"/>
@@ -515,7 +513,6 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
             <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
-            <field eval="[(6,0,[ref('dm.product_product_openerpdiscoverydayonmay0')])]" name="item_ids"/>
             <field eval="&quot;&quot;&quot;PI&quot;&quot;&quot;" name="code"/>
         </record>
         <record id="dm_offer_step_alpiforopenerpondemandfreetrial2009" model="dm.offer.step">
@@ -531,7 +528,6 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
             <field name="action_id" ref="dm.ir_actions_server_html_doc_generate0"/>
-            <field eval="[(6,0,[ref('dm.product_product_openerpdiscoverydayonmay0')])]" name="item_ids"/>
             <field eval="&quot;&quot;&quot;ALPI&quot;&quot;&quot;" name="code"/>
         </record>
         <record id="dm_offer_step_alimforopenerpondemandfreetrial2009" model="dm.offer.step">
@@ -547,7 +543,6 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
             <field name="action_id" ref="dm.ir_actions_server_html_doc_generate0"/>
-            <field eval="[(6,0,[ref('dm.product_product_openerpuserbook0')])]" name="item_ids"/>
             <field eval="&quot;&quot;&quot;ALIM&quot;&quot;&quot;" name="code"/>
         </record>
 
@@ -616,14 +611,12 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field eval="&quot;&quot;&quot;SM&quot;&quot;&quot;" name="code"/>
         </record>
         <record id="dm_offer_step_phoneintermediatemailingofferforanondemandoffer0" model="dm.offer.step">
-			<field eval="[(6,0,[])]" name="manufacturing_constraint_ids"/>
 			<field name="media_id" ref="dm.media_phone"/>
 			<field name="type_id" ref="dm.dm_offer_step_type_intermediatemailing0"/>
 			<field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
 			<field eval="0" name="mailing_at_dates"/>
 			<field name="action_id" ref="dm.ir_actions_server_crm_case_create0"/>
 			<field eval="&quot;&quot;&quot;Phone Intermediate Mailing offer for an OnDemand offer 2010&quot;&quot;&quot;" name="name"/>
-			<field eval="[(6,0,[])]" name="item_ids"/>
 			<field eval="0" name="floating_date"/>
 			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
 			<field name="offer_id" ref="dm.dm_offer_openerpondemandfreetrial2010"/>
@@ -631,14 +624,12 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
 			<field eval="&quot;&quot;&quot;IM&quot;&quot;&quot;" name="code"/>
 		</record>
 		<record id="dm_offer_step_emailstartingmailingofferforanondemandoffer0" model="dm.offer.step">
-			<field eval="[(6,0,[])]" name="manufacturing_constraint_ids"/>
 			<field name="media_id" ref="dm.media_email"/>
 			<field name="type_id" ref="dm.dm_offer_step_type_startingmailing0"/>
 			<field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
 			<field eval="0" name="mailing_at_dates"/>
 			<field name="action_id" ref="dm.ir_actions_server_html_doc_generate0"/>
 			<field eval="&quot;&quot;&quot;Email Starting Mailing offer for an OnDemand offer 2010&quot;&quot;&quot;" name="name"/>
-			<field eval="[(6,0,[])]" name="item_ids"/>
 			<field eval="0" name="floating_date"/>
 			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
 			<field name="offer_id" ref="dm.dm_offer_openerpondemandfreetrial2010"/>

@@ -1,13 +1,6 @@
 <?xml version="1.0" ?>
 <terp>
 	<data>
-<!--	 <wizard-->
-<!--            string="Test Message"-->
-<!--            model="crm.bayes.group"-->
-<!--            name="populate_test_message"-->
-<!--            menu="False"-->
-<!--            id="wizard_populate_test_message"/>-->
-
 		<record id="view_crm_bayes_test_message" model="ir.ui.view">
             <field name="name">Test Mesage</field>
             <field name="model">crm.bayes.test.guess</field>
@@ -20,13 +13,12 @@
                     <newline/>
                     <separator colspan="4" string="Action"/>
                     <group col="4" colspan="4">
-                        <button icon="gtk-go-forward" name="action_guess" string="Test" type="object"/>
+                        <button icon="gtk-go-forward" name="action_guess" string="Test" type="object" />
                         <button icon="gtk-cancel" special="cancel" string="Cancel" colspan="2"/>
                     </group>
                 </form>
             </field>
         </record>
-
 
         <record id="action_view_crm_bayes_test_message" model="ir.actions.act_window">
             <field name="name">Test Message</field>
@@ -35,8 +27,8 @@
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
+            
         </record>
-        
         
         <record id="view_crm_bayes_test_message_test" model="ir.ui.view">
             <field name="name">Test Mesage</field>
@@ -47,7 +39,7 @@
                     <separator colspan="4" string="Statistics"/>
                     <newline/>
                     <field name="name" nolabel="1" colspan="4"/>
-                    <field name="category_id"/>
+                    <field name="category_id" />
                     <button name="action_train" string="Train" type="object" />
                     <newline/>
                     <separator colspan="4" string="Actions"/>
@@ -63,6 +55,28 @@
             <field name="name">Test Message</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">crm.bayes.test.train</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+		
+		<record id="view_crm_bayes_train_message" model="ir.ui.view">
+            <field name="name">Train Mesage</field>
+            <field name="model">crm.bayes.train.message</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Train Message">
+                    <label  string="Train Message Successfully "/>
+                    <separator colspan="4" string=""/>
+                    <button name="action_ok" string="OK" type="object" icon="gtk-ok"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_crm_bayes_train_message" model="ir.actions.act_window">
+            <field name="name">Train Mesage</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.bayes.train.message</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>

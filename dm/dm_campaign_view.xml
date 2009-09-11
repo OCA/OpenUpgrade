@@ -540,38 +540,6 @@
                     <separator string="Notes" colspan="4"/>
                     <field name="notes" colspan="4" nolabel="1" widget="text_wiki"/>
                 </page>
-                <page string="Products and Prices">
-                    <separator string="Prices policy" colspan="4"/>
-                    <group colspan="4" col="6">
-                    <field name="customer_pricelist_id"/>
-                    <button name="_get_step_products" string="Get Products" type="object"/>
-                    </group>
-<!--                    <field name="forwarding_charges"/>-->
-                    <field name="item_ids" colspan="4" nolabel="1">
-                        <form string="Catalogue">
-                            <field name="offer_step_id"/>
-                            <field name="product_id" string="Product"/>
-                            <field name="price"/>
-                            <field name="item_type"/>
-                            <field name="qty_real"/>
-                            <field name="qty_planned"/>
-                            <separator string="Notes" colspan="4"/>
-                            <field name="notes" nolabel="1" colspan="4" widget="text_wiki"/>
-                        </form>
-                        <tree string="Catalogue" editable="bottom">
-                            <field name="offer_step_id"/>
-                            <field name="product_id" string="Product"/>
-                            <field name="price"/>
-                            <field name="forecasted_yield"/>
-                            <field name="item_type"/>
-                            <field name="notes"/>
-                        </tree>
-                    </field>
-                    <separator string="Payment Methods" colspan="4"/>
-                    <field name="payment_method_ids" colspan="4" nolabel="1"/>
-                    <separator string="" colspan="4"/>
-                    <field name="keep_prices" string="Keep Prices at Duplication"/>
-                </page>
                 <page string="Segments">
                     <field name="segment_ids" colspan="4" nolabel="1">
                     <form string="Segment">

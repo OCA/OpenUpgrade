@@ -28,7 +28,7 @@
     "description": """
             This module assigns price progression in campaign propositions for Direct Marketing.
             """,
-    "depends" : ["dm"],
+    "depends" : ["dm_sale"],
     "init_xml" : [],
     "demo_xml" : ["dm_price_progression_demo.xml"],
     "update_xml" : [

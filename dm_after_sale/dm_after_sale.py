@@ -47,13 +47,15 @@ dm_campaign_proposition_segment()
 class dm_after_sale_action(osv.osv_memory):
     _name = "dm.after.sale.action"
     _columns = {
-        'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segment', required=True),
-        'action_id' : fields.many2one('dm.offer.step.transition.trigger', 'Action', domain=[('type','=','as')], required=True),
+        'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segment'),
+        'action_id' : fields.many2one('dm.offer.step.transition.trigger', 'Action', domain=[('type','=','as')]),
         'mail_service_id' : fields.many2one('dm.mail_service', 'Mail Service'),
         'as_report' : fields.text('Report Content'),
+        'subject' : fields.char('Subject',size=128),
         'document_id' : fields.many2one('dm.offer.document','Document'),
-        'state': fields.selection([('draft','Draft'),('set','Set'),('done','Done')],"State",size=10),
+        'state': fields.selection([('draft','Draft'),('set','Set'),('done','Done'),('reset','Reset')],"State",size=10),
         'display_info':fields.text('Info'),
+        'clear_data' : fields.boolean('Clear'),
     }
 
     def default_get(self, cr, uid, fields, context=None):
@@ -69,6 +71,7 @@ class dm_after_sale_action(osv.osv_memory):
         return True
     _defaults = {
              'state' : lambda *a : 'draft',
+             'clear_data' : lambda *a : False,
     }
 
     def send_document(self, cr, uid, ids, *args):
@@ -121,9 +124,17 @@ class dm_after_sale_action(osv.osv_memory):
                 }
                 doc_id = self.pool.get('dm.offer.document').create(cr,uid,vals)
             else :
-                self.pool.get('dm.offer.document').write(cr,uid,[production_doc_id[0]],{'content':i.as_report})
+                self.pool.get('dm.offer.document').write(cr,uid,[production_doc_id[0]],{'content':i.as_report,'subject':i.subject})
             display_info ="Document '%s' sucessfully sent"%i.document_id.name
             self.write(cr,uid,[i.id],{'state':'done','display_info':display_info})
+        return True
+
+    def reset(self,cr,uid,ids,*args):
+        for i in self.browse(cr,uid,ids):
+            if i.clear_data:
+                self.write(cr,uid,ids,{'state':'draft','segment_id' : '','action_id' :'','mail_service_id' : ''})
+            else :
+                self.write(cr,uid,ids,{'state':'draft'})
         return True
 
     def set_content(self,cr,uid,ids,*args):
@@ -132,24 +143,33 @@ class dm_after_sale_action(osv.osv_memory):
         doc_categ_id = self.pool.get('dm.offer.document.category').search(cr,uid,[('name','=','After-Sale Document Template')])
         for i in self.browse(cr,uid,ids):
             transition_ids = self.pool.get('dm.offer.step.transition').search(cr,uid,[('condition_id','=',i.action_id.id)])
-            step_id = self.pool.get('dm.offer.step').search(cr,uid,[('incoming_transition_ids','in',transition_ids)])[0]
-            if i.as_report and not i.document_id:
-                vals = {'name':'From AS wizard',
-                        'code':'ASW',
-                        'lang_id':lang_id,
-                        'category_id':doc_categ_id and doc_categ_id[0] or False,
-                        'content' :i.as_report,
-                        'step_id' : step_id,
-                        'subject' : 'After-Sale Document',
-                        'editor' : 'internal',
-                }
-                doc_id = self.pool.get('dm.offer.document').create(cr,uid,vals)
-                result.append((i.id,{'state':'set','document_id':doc_id}))
+            step_id = self.pool.get('dm.offer.step').search(cr,uid,[('incoming_transition_ids','in',transition_ids)])
+            if not step_id :
+                result.append((i.id,{'display_info':'Cant find step for the given action- Please create step first!!',
+                                     'state':'reset','clear_data':True}))
             else :
-                srch_doc_id = self.pool.get('dm.offer.document').search(cr,uid,[('step_id','=',step_id),('category_id','=','After-Sale Document Template')])
-                if srch_doc_id :
-                    doc_id = self.pool.get('dm.offer.document').browse(cr,uid,srch_doc_id)[0]
-                    result.append((i.id,{'as_report': doc_id.content,'state':'set','document_id':srch_doc_id[0]}))
+                step_id = step_id[0]
+                if i.as_report and not i.document_id:
+                    vals = {'name':'From AS wizard',
+                           'code':'ASW',
+                           'lang_id':lang_id,
+                           'category_id':doc_categ_id and doc_categ_id[0] or False,
+                           'content' :i.as_report,
+                           'step_id' : step_id,
+                           'subject' : i.subject or 'After-Sale Document',
+                           'editor' : 'internal',
+                        }
+                    doc_id = self.pool.get('dm.offer.document').create(cr,uid,vals)
+                    result.append((i.id,{'state':'set','document_id':doc_id}))
+                else :
+                    srch_doc_id = self.pool.get('dm.offer.document').search(cr,uid,[('step_id','=',step_id),('category_id','=','After-Sale Document Template')])
+                    if not srch_doc_id :
+                        result.append((i.id,{'display_info':'Cant find document for the step- Please create Document first or write report content here!!',
+                                     'state':'reset',}))
+                    else :
+                        doc_id = self.pool.get('dm.offer.document').browse(cr,uid,srch_doc_id)[0]
+                        result.append((i.id,{'as_report': doc_id.content,'state':'set','subject':doc_id.subject,'document_id':srch_doc_id[0]}))
+                    
         for id,vals in result:
             self.write(cr,uid,[id],vals)
         return True

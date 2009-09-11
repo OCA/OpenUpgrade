@@ -140,12 +140,12 @@ class report_custom(report_rml):
         ''' % (date_xml , story_xml )
         return xml
 
-report_custom('report.dm.order.amount.campaign', 'dm.campaign', '', 'addons/report_dm/report/order_statistics_reports.xsl')
-report_custom('report.dm.order.quantity.campaign', 'dm.campaign', '', 'addons/report_dm/report/order_statistics_reports.xsl')
-report_custom('report.dm.order.quantity.campaign.offer.step', 'dm.campaign', '', 'addons/report_dm/report/order_statistics_reports.xsl')
-report_custom('report.dm.order.amount.campaign.offer.step', 'dm.campaign', '', 'addons/report_dm/report/order_statistics_reports.xsl')
-report_custom('report.dm.order.quantity.offer.steps', 'dm.campaign', '', 'addons/report_dm/report/order_statistics_reports.xsl')
-report_custom('report.dm.order.amount.offer.steps', 'dm.campaign', '', 'addons/report_dm/report/order_statistics_reports.xsl')
+report_custom('report.dm.order.amount.campaign', 'dm.campaign', '', 'addons/report_dm_advanced/report/order_statistics_reports.xsl')
+report_custom('report.dm.order.quantity.campaign', 'dm.campaign', '', 'addons/report_dm_advanced/report/order_statistics_reports.xsl')
+report_custom('report.dm.order.quantity.campaign.offer.step', 'dm.campaign', '', 'addons/report_dm_advanced/report/order_statistics_reports.xsl')
+report_custom('report.dm.order.amount.campaign.offer.step', 'dm.campaign', '', 'addons/report_dm_advanced/report/order_statistics_reports.xsl')
+report_custom('report.dm.order.quantity.offer.steps', 'dm.campaign', '', 'addons/report_dm_advanced/report/order_statistics_reports.xsl')
+report_custom('report.dm.order.amount.offer.steps', 'dm.campaign', '', 'addons/report_dm_advanced/report/order_statistics_reports.xsl')
 
 
 

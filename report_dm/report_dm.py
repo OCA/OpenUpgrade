@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution····
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    OpenERP, Open Source Management Solution	
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -21,49 +21,75 @@
 ##############################################################################
 
 from osv import fields,osv
-#Order quantity per Offer Steps
-'''class report_order_quantity_offer_steps(osv.osv):
-    _name = "report_order_quantity_offer_steps"
-    _description = "Order quantity per Offer Steps"
+
+class report_sale_per_month(osv.osv):
+    _name = "report.sale.per.month"
+    _description = "Sales per Month"
     _auto = False
     _columns = {
         'name': fields.date('Month', readonly=True),
-        'state': fields.selection([
-            ('draft','Quotation'),
-            ('waiting_date','Waiting Schedule'),
-            ('manual','Manual in progress'),
-            ('progress','In progress'),
-            ('shipping_except','Shipping Exception'),
-            ('invoice_except','Invoice Exception'),
-            ('done','Done'),
-            ('cancel','Cancel')
-        ], 'Order State', readonly=True),
-        'product_id':fields.many2one('product.product', 'Product', readonly=True),
-        'quantity': fields.float('# of Products', readonly=True),
-        'price_total': fields.float('Total Price', readonly=True),
-        'price_average': fields.float('Average Price', readonly=True),
-        'count': fields.integer('# of Lines', readonly=True),
+        'offer_step_id': fields.many2one('dm.offer.step','Step', readonly=True),
+        'offer_id': fields.many2one('dm.offer','Offer', readonly=True),
+        'campaign_id': fields.many2one('dm.campaign','Campaign', readonly=True),
+        'sale_amount': fields.float('Amount', readonly=True),
+        'sale_quantity': fields.float('Quantity', readonly=True),        
     }
-    _order = 'name desc,price_total desc'
+    _order = 'name desc'
     def init(self, cr):
         cr.execute("""
-            create or replace view report_order_quantity_offer_steps as (
-                select
-                    min(l.id) as id,
-                    to_char(s.date_order, 'YYYY-MM-01') as name,
-                    s.state,
-                    l.product_id,
-                    sum(l.product_uom_qty*u.factor) as quantity,
-                    count(*),
-                    sum(l.product_uom_qty*l.price_unit) as price_total,
-                    (sum(l.product_uom_qty*l.price_unit)/sum(l.product_uom_qty*u.factor))::decimal(16,2) as price_average
-                from sale_order s
-                    right join sale_order_line l on (s.id=l.order_id)
-                    left join product_uom u on (u.id=l.product_uom)
-                where l.product_uom_qty != 0
-                group by l.product_id, to_char(s.date_order, 'YYYY-MM-01'),s.state
+            create or replace view report_sale_per_month as (
+                select min(so.id) as id , 
+                    to_char(date_trunc('month',so.date_order),'YYYY-MM-DD')::text as name,
+                    s.id as offer_step_id, 
+                    o.id as offer_id,
+                    cmp.id as campaign_id,
+                    sum(so.amount_total) as sale_amount ,
+                    count(so.id) as sale_quantity 
+                from sale_order so,dm_campaign_proposition_segment seg,
+                    dm_campaign_proposition pro,dm_campaign cmp,
+                    dm_offer o ,dm_offer_step s
+                where
+                    so.segment_id = seg.id and pro.id = seg.proposition_id 
+                    and cmp.id = pro.camp_id and cmp.offer_id = o.id and
+                    s.offer_id = o.id and so.offer_step_id = s.id
+                group by to_char(date_trunc('month',so.date_order),'YYYY-MM-DD')::text ,cmp.id , o.id , s.id
             )
         """)
-report_sale_order_product()'''
+report_sale_per_month()
 
-#vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+class report_sale_per_day(osv.osv):
+    _name = "report.sale.per.day"
+    _description = "Sales per day"
+    _auto = False
+    _columns = {
+        'name': fields.date('Month', readonly=True),
+        'offer_step_id': fields.many2one('dm.offer.step','Step', readonly=True),
+        'offer_id': fields.many2one('dm.offer','Offer', readonly=True),
+        'campaign_id': fields.many2one('dm.campaign','Campaign', readonly=True),
+        'sale_amount': fields.float('Amount', readonly=True),
+        'sale_quantity': fields.float('Quantity', readonly=True),        
+    }
+    _order = 'name desc'
+    def init(self, cr):
+        cr.execute("""
+            create or replace view report_sale_per_day as (
+                select min(so.id) as id , 
+                    to_char(date_trunc('day',so.date_order),'YYYY-MM-DD')::text as name,
+                    s.id as offer_step_id, 
+                    o.id as offer_id,
+                    cmp.id as campaign_id,
+                    sum(so.amount_total) as sale_amount ,
+                    count(so.id) as sale_quantity 
+                from sale_order so, dm_campaign_proposition_segment seg,  
+                    dm_campaign_proposition pro, dm_campaign cmp,
+                    dm_offer o, dm_offer_step s
+                where so.segment_id = seg.id and pro.id = seg.proposition_id
+                    and cmp.id = pro.camp_id and cmp.offer_id = o.id
+                    and s.offer_id = o.id and so.offer_step_id = s.id
+                group by to_char(date_trunc('day',so.date_order),'YYYY-MM-DD')::text ,cmp.id , o.id , s.id
+             )
+        """)
+report_sale_per_day()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

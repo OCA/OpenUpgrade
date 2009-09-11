@@ -30,11 +30,11 @@
             """,
     "depends" : ["dm"],
     "init_xml" : [
-                'dm_sale_data.xml',
+                'dm_sale_data.xml'
                 ],
-    "demo_xml" : [],
+    "demo_xml" : ['dm_sale_demo.xml'],
     "update_xml" : [
-                'dm_sale_view.xml',
+                'dm_sale_view.xml' 
                 ],
     "active": False,
     "installable": True,

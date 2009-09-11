@@ -33,14 +33,11 @@
     "depends" : [
                  "dm",
                  "dm_sale",
-                 "dm_partner_address",
                  ],
     "init_xml" : [ ],
     "demo_xml" : [ ],
     "update_xml" : [
-                    "dm_statistics_report.xml",
-                    "security/dm_statistics_security.xml",
-                    "security/ir.model.access.csv",
+                    'report_dm_view.xml',
                     ],
     "active": False,
     "installable": True,

@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-08-07 18:16:49+0000\n"
-"PO-Revision-Date: 2009-08-07 20:19+0100\n"
-"Last-Translator: Raimon Esteve <resteve@zikzakmedia.com>\n"
+"POT-Creation-Date: 2009-09-09 09:25:05+0000\n"
+"PO-Revision-Date: 2009-09-09 11:27+0100\n"
+"Last-Translator: Jordi Esteve (Zikzakmedia) <jesteve@zikzakmedia.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,22 +16,40 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: network_extension
-#: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
-msgstr "¡El nombre del objeto debe empezar con x_ y no contener ningún carácter especial!"
+#: model:ir.actions.act_window,name:network_extension.action_network_encrypt_password
+#: view:network.encrypt.password:0
+msgid "En/Decrypt password"
+msgstr "Contraseña cifrar/descifrar"
 
 #. module: network_extension
-#: field:network.service,public_service:0
-#, fuzzy
+#: view:network.software:0
+#: view:network.software.logpass:0
+msgid "Encrypt"
+msgstr "Cifrar"
+
+#. module: network_extension
+#: field:network.service,public_url:0
 msgid "Public URL"
-msgstr "IP pública"
+msgstr "URL pública"
 
 #. module: network_extension
+#: model:ir.model,name:network_extension.model_network_encrypt_password
+msgid "network.encrypt.password"
+msgstr "network.encrypt.password"
+
+#. module: network_extension
+#: help:network.service,public_port:0
+msgid "Sometimes public and private ports are different."
+msgstr "Algunas veces los puertos públicos y privados son diferentes."
+
+#. module: network_extension
+#: view:network.service:0
 #: view:network.software:0
 msgid "Compute URL"
 msgstr "Calcula URL"
 
 #. module: network_extension
+#: view:network.software:0
 #: view:network.software.logpass:0
 #: field:network.software.logpass,note:0
 msgid "Note"
@@ -41,6 +59,16 @@ msgstr "Nota"
 #: constraint:ir.actions.act_window:0
 msgid "Invalid model name in the action definition."
 msgstr "Nombre del modelo inválido en esta acción."
+
+#. module: network_extension
+#: constraint:ir.model:0
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr "¡El nombre del objeto debe empezar con x_ y no contener ningún carácter especial!"
+
+#. module: network_extension
+#: field:network.service,public_port:0
+msgid "Public port"
+msgstr "Puerto público"
 
 #. module: network_extension
 #: field:network.network,public_domain:0
@@ -57,28 +85,9 @@ msgstr "Servicios"
 
 #. module: network_extension
 #: field:network.service,material:0
+#: field:network.software.logpass,material:0
 msgid "Material"
 msgstr "Hardware"
-
-#. module: network_extension
-#: model:ir.module.module,description:network_extension.module_meta_information
-msgid ""
-"\n"
-"    Organize your software and configurations.\n"
-"    - Additional network information: IP, domain, DNS, gateway\n"
-"    - Protocols\n"
-"    - Services\n"
-"    - Ports\n"
-"    - Public and private URLs\n"
-"    "
-msgstr ""
-"\n"
-"    Organiza su software y configuraciones.\n"
-"    - Información adicional de la red: IP, dominios, DNS, gateway\n"
-"    - Protocolos\n"
-"    - Servicios\n"
-"    - Puertos\n"
-"    - URL públicas y privadas\n"
 
 #. module: network_extension
 #: help:network.network,dns:0
@@ -86,14 +95,9 @@ msgid "List of DNS servers, separated by commas"
 msgstr "Lista de servidores DNS, separados por comas"
 
 #. module: network_extension
-#: model:ir.model,name:network_extension.model_network_port
-msgid "Port Network"
-msgstr "Puertos de la red"
-
-#. module: network_extension
 #: model:ir.module.module,shortdesc:network_extension.module_meta_information
 msgid "Network Management Extension"
-msgstr "Extención del gestor de redes"
+msgstr "Extensión del gestor de redes"
 
 #. module: network_extension
 #: field:network.service,path:0
@@ -124,14 +128,13 @@ msgstr "DNS"
 
 #. module: network_extension
 #: model:ir.model,name:network_extension.model_network_service
-#, fuzzy
 msgid "Service Network"
-msgstr "Puertos de la red"
+msgstr "Servicios de red"
 
 #. module: network_extension
-#: field:network.service,private_service:0
+#: field:network.service,private_url:0
 msgid "Private URL"
-msgstr "IP privada"
+msgstr "URL privada"
 
 #. module: network_extension
 #: model:ir.actions.act_window,name:network_extension.action_network_software
@@ -152,29 +155,73 @@ msgstr "IP pública"
 #: view:network.protocol:0
 #: field:network.service,protocol_id:0
 msgid "Protocol"
-msgstr "Protocol"
+msgstr "Protocolo"
 
 #. module: network_extension
 #: model:ir.actions.act_window,name:network_extension.action_network_logpass
+#: view:network.software:0
 msgid "Login/Password"
 msgstr "Usuario/Contraseña"
 
 #. module: network_extension
+#: model:ir.ui.menu,name:network_extension.menu_action_encrypt_password_tree
+#: field:network.encrypt.password,name:0
+msgid "Encrypt/Decrypt password"
+msgstr "Contraseña para cifrar/descifrar"
+
+#. module: network_extension
+#: field:network.software.logpass,encrypted:0
+msgid "Encrypted"
+msgstr "Cifrado"
+
+#. module: network_extension
+#: view:network.software:0
+#: view:network.software.logpass:0
+msgid "Decrypt"
+msgstr "Descifrar"
+
+#. module: network_extension
+#: model:ir.module.module,description:network_extension.module_meta_information
+msgid ""
+"\n"
+"Organize your software and configurations.\n"
+"    - Additional network information: IP, domain, DNS, gateway\n"
+"    - Protocols\n"
+"    - Services\n"
+"    - Ports\n"
+"    - Public and private URLs\n"
+"    - Password encryption\n"
+"\n"
+"System dependency: package python-crypto required."
+msgstr ""
+"\n"
+"Organiza su software y configuraciones.\n"
+"    - Información adicional de la red: IP, dominios, DNS, gateway\n"
+"    - Protocolos\n"
+"    - Servicios\n"
+"    - Puertos\n"
+"    - URL públicas y privadas\n"
+"    - Cifrado de contraseñas\n"
+"\n"
+"Dependencia de sistema: Es necesario el paquete python-crypto."
+
+#. module: network_extension
 #: field:network.network,gateway:0
 msgid "Gateway"
-msgstr "Gateway"
+msgstr "Pasarela"
 
 #. module: network_extension
 #: model:ir.ui.menu,name:network_extension.menu_action_logpass_tree
-#, fuzzy
 msgid "Logins/Passwords"
-msgstr "Usuario/Contraseñas"
+msgstr "Usuarios/Contraseñas"
 
 #. module: network_extension
 #: field:network.service,port:0
 msgid "Port"
 msgstr "Puerto"
 
+#~ msgid "Port Network"
+#~ msgstr "Puertos de la red"
 #~ msgid ""
 #~ "\n"
 #~ "    Organize your software and configurations"

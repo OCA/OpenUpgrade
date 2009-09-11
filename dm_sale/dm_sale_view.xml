@@ -50,6 +50,30 @@
         </field>
     </record>
 
+	<!--
+	======================================================= 
+	Offer Step Views
+	=======================================================
+	-->
+
+	<record id="view_sale_offer_step_form_inherit" model="ir.ui.view">
+        <field name="name">dm.offer.step.form.inherit</field>
+        <field name="model">dm.offer.step</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="dm.view_offer_step_form"/>
+        <field name="arch" type="xml">
+            <page string="Transitions" position="after">
+                <page string="Products">
+                   <group colspan = "4">
+                        <field name="forecasted_yield" colspan="4"/>
+                   </group>
+                        <separator string="Offer Step Product"  colspan="4"/>
+                        <field name="item_ids" colspan="4" nolabel="1" readonly="0" widget="one2many"/>
+                </page>
+            </page>
+        </field>
+    </record>
+
     <!--
     =======================================================
     EVENT VIEWS
@@ -94,6 +118,65 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
+
     <menuitem action="act_dm_event_sale_form" id="menu_act_dm_event_sale_form" parent="dm.menu_dm_config_lowlevel"/>
+    
+	<!--
+	======================================================= 
+	Campaign proposition
+	=======================================================
+	-->
+    
+        <record model="ir.ui.view" id="view_campaign_proposition_form_inherit">
+        <field name="name">dm.campaign.proposition.form.inherit</field>
+        <field name="model">dm.campaign.proposition</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="dm.view_campaign_proposition_form"/>
+        <field name="arch" type="xml">
+            <page string = "General" position="after">
+                <page string="Products and Prices">
+                    <separator string="Prices policy" colspan="4"/>
+                    <group colspan="4" col="6">
+                        <field name="customer_pricelist_id"/>
+                        <button name="_get_step_products" string="Get Products" type="object"/>
+                    </group>
+<!--                    <field name="forwarding_charges"/>-->
+                    <field name="item_ids" colspan="4" nolabel="1">
+                        <form string="Catalogue">
+                            <field name="offer_step_id"/>
+                            <field name="product_id" string="Product"/>
+                            <field name="price"/>
+                            <field name="item_type"/>
+                            <field name="qty_real"/>
+                            <field name="qty_planned"/>
+                            <separator string="Notes" colspan="4"/>
+                            <field name="notes" nolabel="1" colspan="4" widget="text_wiki"/>
+                        </form>
+                        <tree string="Catalogue" editable="bottom">
+                            <field name="offer_step_id"/>
+                            <field name="product_id" string="Product"/>
+                            <field name="price"/>
+                            <field name="forecasted_yield"/>
+                            <field name="item_type"/>
+                            <field name="notes"/>
+                        </tree>
+                    </field>
+                    <separator string="Payment Methods" colspan="4"/>
+                    <field name="payment_method_ids" colspan="4" nolabel="1"/>
+                    <separator string="" colspan="4"/>
+                    <field name="keep_prices" string="Keep Prices at Duplication"/>
+                </page>        
+            </page>
+        </field>
+        </record>        
+        
+     <act_window name="Products"
+         res_model="product.product"
+         src_model="dm.offer"
+         view_type="form"
+         view_mode="tree,form"
+         id="act_offer_product_opened"
+         context="{'offer_id':active_id}"/>
+    
 	</data>
 </openerp>

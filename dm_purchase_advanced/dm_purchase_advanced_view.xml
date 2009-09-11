@@ -225,5 +225,35 @@
         domain="[('campaign_id','=',active_id)]"
     />
 
+	<!--
+	======================================================= 
+	Offer Views
+	=======================================================
+	-->
+
+	<record id="view_purchase_offer_form_inherit" model="ir.ui.view">
+        <field name="name">dm.offer.form.inherit</field>
+        <field name="model">dm.offer</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="dm.view_offer_form"/>
+        <field name="arch" type="xml">
+            <field name="history_ids" position="after">
+                <field name="translation_ids" nolabel="1" colspan="4">
+                    <form string="Translation">
+                        <field name="language_id"/>
+                        <field name="translator_id"/>
+                        <field name="date"/>
+                        <field name="notes" nolabel="1" colspan="4" widget="text_wiki"/>
+                    </form>
+                    <tree string="Translations">
+                        <field name="language_id"/>
+                        <field name="translator_id"/>
+                        <field name="date"/>
+                    </tree>
+                </field>
+			</field>
+        </field>
+    </record>
+
 </data>
 </openerp>
