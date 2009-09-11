@@ -96,26 +96,9 @@ class node_class(object):
         if nodename:
             where.append( (fobj._rec_name,'=',nodename) )
         for content in self.object.content_ids:
-            if self.object2 or not content.include_name:
-                if content.include_name:
-                    content_name = self.object2.name
-                    obj = pool.get(self.object.ressource_type_id.model)
-                    name_for = obj._name.split('.')[-1]            
-                    if content_name  and content_name.find(name_for) == 0  :
-                        content_name = content_name.replace(name_for,'')
-                    test_nodename = content_name + (content.suffix or '') + (content.extension or '')
-                else:
-                    test_nodename = (content.suffix or '') + (content.extension or '')
-                if test_nodename.find('/'):
-                    test_nodename=test_nodename.replace('/', '_')
-                path = self.path+'/'+test_nodename
-                if not nodename:
-                    n = node_class(self.cr, self.uid,path, self.object2, False, context=self.context, content=content, type='content', root=False)
-                    res2.append( n)
-                else:
-                    if nodename == test_nodename:
-                        n = node_class(self.cr, self.uid, path, self.object2, False, context=self.context, content=content, type='content', root=False)
-                        res2.append(n)
+	    res3 = content._table._file_get(self,nodename,content)
+	    if res3:
+		res2.extend(res3)
 
         ids = fobj.search(self.cr, self.uid, where+[ ('parent_id','=',self.object and self.object.id or False) ])
         if self.object and self.root and (self.object.type=='ressource'):
@@ -477,6 +460,37 @@ class document_directory_content(osv.osv):
         'sequence': lambda *args: 1,
         'include_name': lambda *args: 1,
     }
+    
+    def _file_get(self,node, nodename,content):
+	""" return the nodes of a <node> parent having a <content> content
+	    The return value MUST be false or a list of node_class objects.
+	"""
+	if content.include_name and not node.object2:
+		return False
+	
+	res2 = []
+	test_nodename = ''
+	if content.include_name:
+		content_name = node.object2.name
+		obj = pool.get(node.object.ressource_type_id.model)
+		name_for = obj._name.split('.')[-1]
+		if content_name  and content_name.find(name_for) == 0  :
+			content_name = content_name.replace(name_for,'')
+			test_nodename = content_name + (content.suffix or '') + (content.extension or '')
+	else:
+		test_nodename = (content.suffix or '') + (content.extension or '')
+	if test_nodename.find('/'):
+		test_nodename=test_nodename.replace('/', '_')
+	path = node.path+'/'+test_nodename
+	if not nodename:
+		n = node_class(node.cr, node.uid,path, node.object2, False, context=node.context, content=content, type='content', root=False)
+		res2.append( n)
+	else:
+		if nodename == test_nodename:
+			n = node_class(node.cr, node.uid, path, node.object2, False, context=node.context, content=content, type='content', root=False)
+			res2.append(n)
+	return res2
+
     def process_write_pdf(self, cr, uid, node, context={}):
         return True
     def process_read_pdf(self, cr, uid, node, context={}):
