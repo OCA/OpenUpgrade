@@ -170,11 +170,13 @@ class tinydav_handler(dav_interface):
 				datas=base64.encodestring(urllib.urlopen(node.object.link).read())
 			return base64.decodestring(datas or '')
 		elif node.type=='content':
-			report = pool.get('ir.actions.report.xml').browse(cr, uid, node.content['report_id']['id'])
-			srv = netsvc.LocalService('report.'+report.report_name)
-			pdf,pdftype = srv.create(cr, uid, [node.object.id], {}, {})
-			return pdf
+			cr = node.cr
+			uid = node.uid
+			pool = pooler.get_pool(cr.dbname)
+			sio =  getattr(pool.get('document.directory.content'), 'process_read_'+node.content.extension[1:])(cr, uid, node)
+			return sio.getvalue()
 		else:
+			print "invalid type:",node.type
 			raise DAV_Forbidden
 
 	@memoize(CACHE_SIZE)
@@ -334,6 +336,7 @@ class tinydav_handler(dav_interface):
 			}
 			cid = fobj.write(cr, uid, [node.object.id], val)
 			cr.commit()
+		# elif node and node.type == 'content': TODO
 		elif not node:
 			node = self.uri2object(cr,uid,pool, uri2[:-1])
 			object2=node and node.object2 or False
