@@ -23,6 +23,7 @@
 from osv import fields, osv
 import string
 import tools
+import copy
 
 try:
     from reverend.thomas import Bayes
@@ -169,12 +170,7 @@ class crm_bayes_test_train(osv.osv_memory):
             cat_id = self.read(cr, uid, id, ['category_id','name'])         
             cat_id = cat_id[0]['category_id']
             if  result :
-                max = float(result[0][1])
-                max_list = result[0]
-                for le in result:
-                    if float(le[1]) > max and float(le[1]) > 0 :
-                        max = float(le[1])
-                        max_list = le
+                max_list = max(result, key=lambda k: k[1])
                 if max_list[1] > 0:
                     cat_id1 = cat_obj.search(cr, uid, [('name','=',max_list[0])])[0]
                     cat_guess_msg = cat_obj.read(cr, uid, cat_id1, ['guess_messages'])
@@ -241,7 +237,6 @@ class crm_case_rule(osv.osv):
     _defaults = {
         'action': lambda *a: "don't perform statistic test",
     }
-    
 crm_case_rule()
 
 class crm_case(osv.osv):
@@ -255,8 +250,100 @@ class crm_case(osv.osv):
     _defaults = {
         'state_bayes': lambda *a: 'untrained',
     }
+    def perform_action(self, cr, uid, ids, context=None):
+        cases = self.browse(cr, uid, ids)
+        for case in cases:
+            if not case.category_id :
+                raise osv.except_osv(_('Error !'),_('Statistic Category  is not define '))
+            if not case.email_from :
+                raise osv.except_osv(_('Error!'),_("No E-Mail ID Found  for Partner Email!"))
+            if case.user_id and case.user_id.address_id and case.user_id.address_id.email:
+                emailfrom = case.user_id.address_id.email
+            else:
+                emailfrom = case.section_id.reply_to
+            if not emailfrom:
+                raise osv.except_osv(_('Error!'),_("No E-Mail ID Found for your Company address or missing reply address in section!"))
+        self._action(cr,uid, cases, 'open')
+        return True
     
-    def trained(self, cr, uid, ids, conect=None):
+    def guess_message(self,cr,uid,ids,context={}):
+        cases = self.browse(cr, uid, ids)
+        result_lang=[]
+        if cases.description :
+            guesser = Bayes()
+            group_obj = self.pool.get('crm.bayes.group')
+            data = ""
+            for rec in group_obj.browse(cr, uid, group_obj.search(cr,uid,[('active','=',True)])):
+                if rec['train_data']:
+                    data += rec['train_data']
+            if data :
+                myfile = file("/tmp/crm_bayes.bay", 'w')
+                myfile.write(data)
+                myfile.close()
+                guesser.load('/tmp/crm_bayes.bay')
+                result_lang = guesser.guess(cases.description)
+        guess_re = []
+        for le in result_lang:
+            guess_re.append((le[0],le[1]*100))
+        return guess_re
+
+    def _action(self, cr, uid, cases, state_to, scrit=None, context={}):
+        super(crm_case, self)._action(cr, uid, cases, state_to, scrit=None, context={})
+        if not scrit:
+            scrit = []
+        action_ids = self.pool.get('crm.case.rule').search(cr, uid, scrit)
+        actions = self.pool.get('crm.case.rule').browse(cr, uid, action_ids, context)
+        category={}
+        cat_obj = self.pool.get('crm.bayes.categories')
+        cat_rec = cat_obj.read(cr, uid, cat_obj.search(cr, uid, []),['name'])
+        for cat in cat_rec:
+            category[cat['name']] = cat['id']
+        for case in cases:
+            result_perform = self.guess_message(cr, uid, case.id, context)
+            for action in actions:
+                if action.action == "perform action"  and action.category_id == case.category_id :
+                    if result_perform:
+                        res = max(result_perform, key=lambda k: k[1])
+                        if res[1] >= action.main_category_rate:
+                            self.write(cr, uid, case.id, {'category_id':category[res[0]]})
+                            break
+                        elif action.sec_category_rate :
+                            sec_result = copy.deepcopy(result_perform)
+                            sec_result.pop(sec_result.index (max (result_perform, key=lambda k: k[1])))
+                            if sec_result:
+                                re = max(sec_result, key=lambda k: k[1])
+                                if re[1] <= action.main_category_rate and re[1] >= action.sec_category_rate:
+                                    self.write(cr, uid, case.id, {'category_id':category[re[0]]})
+                                    break
+                elif action.action == "perform action and assign category" and action.category_id == case.category_id:
+                    if result_perform :
+                        max_list = max(result_perform, key=lambda k: k[1])
+                        self.write(cr, uid, case.id, {'category_id':category[max_list[0]]})
+                        break
+        for case in cases:
+            for action in actions:
+                cate = self.read(cr, uid, case.id, ['category_id'])
+                if action.action == "don't perform statistic test":
+                    continue
+                if cate['category_id']  and case.email_from :
+                    if action.category_id.name == cate['category_id'][1]:
+                        emails = []
+                        emails.append(case.email_from)
+                        if len(emails) and action.act_mail_body:
+                            body = action.act_mail_body
+                            if case.user_id and case.user_id.address_id and case.user_id.address_id.email:
+                                emailfrom = case.user_id.address_id.email
+                            else:
+                                emailfrom = case.section_id.reply_to
+                            name = '[%d] %s' % (case.id, case.name.encode('utf8'))
+                            reply_to = case.section_id.reply_to or False
+                            if reply_to: reply_to = reply_to.encode('utf8')
+                            if emailfrom:
+                                tools.email_send(emailfrom, emails, name, body, reply_to=reply_to, tinycrm=str(case.id))
+                                break
+        return True
+    
+    def trained(self, cr, uid, ids, context=None):
         for id in ids:
             record = self.read(cr, uid, id, ['category_id','description'])
             if not record['category_id']:
@@ -293,7 +380,7 @@ class crm_case(osv.osv):
                 raise osv.except_osv(_('Error !'),_('Description is not define '))
         return True
         
-    def untrained(self, cr, uid, ids, conect=None):
+    def untrained(self, cr, uid, ids, context=None):
         for id in ids:
             record = self.read(cr, uid, id, ['category_id','description'])
             if record['description']:

@@ -128,6 +128,7 @@
 					<group colspan="8" col="8">
 	                <field name="category_id" attrs="{'readonly':[('state_bayes','=','trained')]}"/>
 	                <field colspan="2" name="state_bayes"/>
+	                <button name="perform_action" string="Perform action" type ="object"/>
 					<button name="trained" string="Trained" attrs="{'invisible':[('state_bayes','=','trained')]}"   type ="object"/>
 					<button name="untrained" string="Untrained"  attrs="{'invisible':[('state_bayes','=','untrained')]}" type ="object"/>
 	            	</group>
@@ -162,6 +163,7 @@
 					<group colspan="8" col="8">
 	                <field name="category_id" attrs="{'readonly':[('state_bayes','=','trained')]}"/>
 	                <field colspan="2" name="state_bayes"/>
+	                <button name="perform_action" string="Perform action" type ="object"/>
 					<button name="trained" string="Trained" attrs="{'invisible':[('state_bayes','=','trained')]}"   type ="object"/>
 					<button name="untrained" string="Untrained"  attrs="{'invisible':[('state_bayes','=','untrained')]}" type ="object"/>
 	            	</group>
@@ -196,6 +198,7 @@
 					<group colspan="8" col="8">
 	                <field name="category_id" attrs="{'readonly':[('state_bayes','=','trained')]}"/>
 	                <field colspan="2" name="state_bayes"/>
+	                <button name="perform_action" string="Perform action" type ="object"/>
 					<button name="trained" string="Trained" attrs="{'invisible':[('state_bayes','=','trained')]}"   type ="object"/>
 					<button name="untrained" string="Untrained"  attrs="{'invisible':[('state_bayes','=','untrained')]}" type ="object"/>
 	            	</group>
@@ -230,6 +233,7 @@
 					<group colspan="8" col="8">
 	                <field name="category_id" attrs="{'readonly':[('state_bayes','=','trained')]}"/>
 	                <field colspan="2" name="state_bayes"/>
+					<button name="perform_action" string="Perform action" type ="object"/>
 					<button name="trained" string="Trained" attrs="{'invisible':[('state_bayes','=','trained')]}"   type ="object"/>
 					<button name="untrained" string="Untrained"  attrs="{'invisible':[('state_bayes','=','untrained')]}" type ="object"/>
 	            	</group>
@@ -280,7 +284,7 @@
             <field name="arch" type="xml">
                 <graph string="Cases by Statistics Group" type="bar">
                     <field name="category_id" />
-                    <field name="total_case"/>
+                    <field name="total_case" />
                 </graph>
             </field>
         </record>
