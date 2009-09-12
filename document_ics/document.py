@@ -59,7 +59,8 @@ document_directory_ics_fields()
 class document_directory_content(osv.osv):
     _inherit = 'document.directory.content'
     _columns = {
-        'ics_object_id': fields.many2one('ir.model', 'Object'),
+        'object_id': fields.many2one('ir.model', 'Object', oldname= 'ics_object_id'),
+	'obj_iterate': fields.boolean('Iterate object',help="If set, a separate instance will be created for each record of Object"),
         'ics_domain': fields.char('Domain', size=64),
         'ics_field_ids': fields.one2many('document.directory.ics.fields', 'content_id', 'Fields Mapping')
     }
@@ -94,7 +95,7 @@ class document_directory_content(osv.osv):
             if not uuid:
                 continue
 
-            fobj = self.pool.get(content.ics_object_id.model)
+            fobj = self.pool.get(content.object_id.model)
             id = fobj.search(cr, uid, [(fields['uid'], '=', uuid.encode('utf8'))], context=context)
             if id:
                 fobj.write(cr, uid, id, result, context=context)
@@ -113,7 +114,7 @@ class document_directory_content(osv.osv):
                 return datetime.datetime.strptime(idate, '%Y-%m-%d %H:%M:%S')
 
         import vobject
-        obj_class = self.pool.get(node.content.ics_object_id.model)
+        obj_class = self.pool.get(node.content.object_id.model)
         # Can be improved to use context and active_id !
         domain = eval(node.content.ics_domain)
         ids = obj_class.search(cr, uid, domain, context)
@@ -129,7 +130,7 @@ class document_directory_content(osv.osv):
             for field in node.content.ics_field_ids:
                 value = getattr(obj, field.field_id.name)
                 if (not value) and field.name=='uid':
-                    value = 'OpenERP-%s_%s@%s' % (node.content.ics_object_id.model, str(obj.id), cr.dbname,)
+                    value = 'OpenERP-%s_%s@%s' % (node.content.object_id.model, str(obj.id), cr.dbname,)
                     obj_class.write(cr, uid, [obj.id], {field.field_id.name: value})
                 if ICS_TAGS[field.name]=='normal':
                     if type(value)==type(obj):
@@ -146,7 +147,7 @@ class document_directory_content(osv.osv):
                     else:
                         value = ics_datetime(value)
                     event.add(field.name).value = value
-        s= StringIO.StringIO(cal.serialize().encode('utf8'))
+        s= StringIO.StringIO(cal.serialize())
         s.name = node
         cr.commit()
         return s
