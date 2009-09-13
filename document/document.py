@@ -591,13 +591,16 @@ class document_file(osv.osv):
         'parent_id': fields.many2one('document.directory', 'Directory', select=1),
         'file_size': fields.integer('File Size', required=True),
         'file_type': fields.char('Content Type', size=32),
+	# If ir.attachment contained any data before document is installed, preserve
+	# the data, don't drop the column!
+	'db_datas': fields.binary('Data',oldname='datas'),
         'index_content': fields.text('Indexed Content'),
         'write_date': fields.datetime('Date Modified', readonly=True),
         'write_uid':  fields.many2one('res.users', 'Last Modification User', readonly=True),
         'create_date': fields.datetime('Date Created', readonly=True),
         'create_uid':  fields.many2one('res.users', 'Creator', readonly=True),
         'store_method': fields.selection([('db','Database'),('fs','Filesystem'),('link','Link')], "Storing Method"),
-        'datas': fields.function(_data_get,method=True,fnct_inv=_data_set,string='File Content',type="binary"),
+        'datas': fields.function(_data_get,method=True,fnct_inv=_data_set,string='File Content',type="binary", nodrop=True),
         'store_fname': fields.char('Stored Filename', size=200),
         'res_model': fields.char('Attached Model', size=64), #res_model
         'res_id': fields.integer('Attached ID'), #res_id
