@@ -312,16 +312,6 @@ class document_directory(osv.osv):
     def onchange_content_id(self, cr, uid, ids, ressource_type_id):
         return {}
 
-    def _get_childs(self, cr, uid, node, nodename=False, context={}):
-        where = []
-        if nodename:
-            nodename = self.get_translation(nodename, self.context['lang'])
-            where.append(('name','=',nodename))
-        if object:
-            where.append(('parent_id','=',object.id))
-        ids = self.search(cr, uid, where, context)
-        return self.browse(cr, uid, ids, context), False
-
     """
         PRE:
             uri: of the form "Sales Order/SO001"
@@ -370,8 +360,6 @@ class document_directory(osv.osv):
         else:
             children= [node]
         result = map(lambda node: node.path_get(), children)
-        #childs,object2 = self._get_childs(cr, uid, object, False, context)
-        #result = map(lambda x: urlparse.urljoin(path+'/',x.name), childs)
         return result
 
     def copy(self, cr, uid, id, default=None, context=None):
