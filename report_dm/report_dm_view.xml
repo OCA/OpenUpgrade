@@ -4,7 +4,7 @@
         
         <menuitem name="Reporting" id="menu_dm_report" parent="dm.menu_dm"  sequence="0"/>
         
-        <!-- Sales by month -->
+        <!-- SALES BY MONTH BY OFFER STEP AND CAMPAIGN -->
         
         <record id="view_sale_per_month_form" model="ir.ui.view">
             <field name="name">report.sale.per.month.form</field>
@@ -51,7 +51,7 @@
         </record>
 
         <record id="action_sale_this_month_tree" model="ir.actions.act_window">
-            <field name="name">Sales by Segment and Offer Step (This Month)</field>
+            <field name="name">Sales by Segment and Offer Step</field>
             <field name="res_model">report.sale.per.month</field>
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree</field>
@@ -73,7 +73,7 @@
         <menuitem id="menu_dm_sale_all_month" name="All Months" parent="report_dm.menu_dm_report"/>
         <menuitem action="action_sale_per_month_all" id="menu_report_sale_per_month" parent="menu_dm_sale_all_month"/>
 
-	<!-- Sales by offer step -->
+	<!-- SALES BY OFFER STEP -->
 	
 
  	<record id="view_sale_offer_step_per_month_form" model="ir.ui.view">
@@ -85,7 +85,6 @@
                     <field name="name" select="1"/>
                     <field name="offer_step_id" select="1"/>
                     <field name="offer_id"/>
-                    <!--<field name="campaign_id"/>-->
                     <field name="sale_quantity" select="2"/>
                     <field name="sale_amount"/>
                 </form>
@@ -101,7 +100,6 @@
                     <field name="name" select="1"/>
                     <field name="offer_step_id" select="1"/>
                     <field name="offer_id"/>
-                    <!--<field name="campaign_id"/>-->
                     <field name="sale_quantity" select="2"/>
                     <field name="sale_amount"/>
                 </tree>
@@ -121,28 +119,25 @@
         </record>
 
   	<record id="action_sale_offer_step_this_month_tree" model="ir.actions.act_window">
-            <field name="name">Sales of Offer Step by Month (this month)</field>
+            <field name="name">Sales of Offer Step by Month</field>
             <field name="res_model">report.sale.offer.step.per.month</field>
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree</field>
             <field name="domain">[('name','=',time.strftime('%Y-%m-01'))]</field>
         </record>
         
-<!--        <menuitem id="menu_dm_sale_offer_step_this_month" name="This Months offer" parent="menu_dm_report"/>-->
         <menuitem action="action_sale_offer_step_this_month_tree" id="menu_report_sale_offer_step_this_month" parent="menu_dm_sale_this_month"/>
         
-        
         <record id="action_sale_offer_step_per_month_all" model="ir.actions.act_window">
-            <field name="name">Sales by Offer Step(All Months)</field>
+            <field name="name">Sales by Offer Step</field>
             <field name="res_model">report.sale.offer.step.per.month</field>
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree</field>
         </record>
         
-<!--        <menuitem id="menu_dm_sale_offer_step_all_month" name="All Months Offer" parent="report_dm.menu_dm_report"/>-->
         <menuitem action="action_sale_offer_step_per_month_all" id="menu_report_sale_offer_step_per_month" parent="menu_dm_sale_all_month"/>
         
-     <!-- sales by segment -->
+     <!-- SALES BY SEGMENT -->
            
         <record id="view_sale_segment_per_month_form" model="ir.ui.view">
             <field name="name">report.sale.segment.per.month.form</field>
@@ -150,9 +145,8 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Sales by Segment">
-                    <field name="name" select="1"/><!--
-                    <field name="offer_step_id" select="1"/>
-                    --><field name="offer_id"/>
+                    <field name="name" select="1"/>
+               		<field name="offer_id"/>
                     <field name="campaign_id"/>
                     <field name="sale_quantity" select="2"/>
                     <field name="sale_amount"/>
@@ -189,29 +183,25 @@
         </record>
 
         <record id="action_sale_segment_this_month_tree" model="ir.actions.act_window">
-            <field name="name">Sales by Segment(This Month)</field>
+            <field name="name">Sales by Segment</field>
             <field name="res_model">report.sale.segment.per.month</field>
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree</field>
             <field name="domain">[('name','=',time.strftime('%Y-%m-01'))]</field>
         </record>
         
-        
         <menuitem action="action_sale_segment_this_month_tree" id="menu_report_sale_segment_this_month" parent="menu_dm_sale_this_month"/>
         
-        
         <record id="action_sale_segment_per_month_all" model="ir.actions.act_window">
-            <field name="name">Sales by Segment(All Month) </field>
+            <field name="name">Sales by Segment</field>
             <field name="res_model">report.sale.segment.per.month</field>
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree</field>
         </record>
         
-<!--        <menuitem id="menu_dm_sale_segment_all_month" name="All Months" parent="report_dm.menu_dm_report"/>-->
         <menuitem action="action_sale_segment_per_month_all" id="menu_report_sale_segment_per_month" parent="menu_dm_sale_all_month"/>
-        
     
-        <!--  Sales by day offerstep and segment -->
+        <!--  SALES BY OFFER STEP AND SEGMENT BY DAY -->
         
         <record id="view_sale_per_day_form" model="ir.ui.view">
             <field name="name">report.sale.per.day.form</field>
@@ -256,11 +246,9 @@
                 </graph>
             </field>
         </record>
-
-        
         
         <record id="action_sale_today_tree" model="ir.actions.act_window">
-            <field name="name">Sales by Segment and Offer Step (Today)</field>
+            <field name="name">Sales by Segment and Offer Step</field>
             <field name="res_model">report.sale.per.day</field>
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree</field>
@@ -272,7 +260,7 @@
         
         
         <record id="action_sale_per_day_all" model="ir.actions.act_window">
-            <field name="name">Sales by Segment and Offer Step (All Days)</field>
+            <field name="name">Sales by Segment and Offer Step</field>
             <field name="res_model">report.sale.per.day</field>
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree</field>
@@ -281,7 +269,7 @@
         <menuitem id="menu_dm_sale_all_day" name="All Days" parent="report_dm.menu_dm_report"/>
         <menuitem action="action_sale_per_day_all" id="menu_report_sale_per_day" parent="menu_dm_sale_all_day"/>
         
-        <!-- sales by offer step per day -->
+        <!-- SALES BY OFFER STEP -->
         
 		<record id="view_sale_offer_step_per_day_form" model="ir.ui.view">
             <field name="name">report.sale.offer.step.per.day.form</field>
@@ -325,19 +313,15 @@
             </field>
         </record>
 
-        
-        
         <record id="action_sale_offer_step_today_tree" model="ir.actions.act_window">
-            <field name="name">Sales by Offer Step by Day (Today)</field>
+            <field name="name">Sales by Offer Step by Day</field>
             <field name="res_model">report.sale.offer.step.per.day</field>
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree</field>
             <field name="domain">[('name','=',time.strftime('%Y-%m-%d'))]</field>
         </record>
         
-<!--        <menuitem id="menu_dm_sale_offer_step_today" name="Today" parent="menu_dm_report"/>-->
         <menuitem action="action_sale_offer_step_today_tree" id="menu_report_sale_today" parent="menu_dm_sale_today"/>
-        
         
         <record id="action_sale_offer_step_per_day_all" model="ir.actions.act_window">
             <field name="name">Sales Offer Step by Day</field>
@@ -346,9 +330,9 @@
             <field name="view_mode">graph,tree</field>
         </record>
         
-<!--        <menuitem id="menu_dm_sale_offer_step_all_day" name="All Days" parent="report_dm.menu_dm_report"/>-->
         <menuitem action="action_sale_offer_step_per_day_all" id="menu_report_sale_offer_step_per_day" parent="menu_dm_sale_all_day"/>
-        <!--  segment-->
+       
+        <!-- SALES BY SEGMENT -->
         
   	<record id="view_sale_segment_per_day_form" model="ir.ui.view">
             <field name="name">report.sale.segment.per.day.form</field>
@@ -392,30 +376,23 @@
             </field>
         </record>
 
-        
-        
         <record id="action_sale_segment_today_tree" model="ir.actions.act_window">
-            <field name="name">Sales by Segment by Day (Today)</field>
+            <field name="name">Sales by Segment by Day</field>
             <field name="res_model">report.sale.segment.per.day</field>
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree</field>
             <field name="domain">[('name','=',time.strftime('%Y-%m-%d'))]</field>
         </record>
         
-<!--        <menuitem id="menu_dm_sale_segment_today" name="Today" parent="menu_dm_report"/>-->
         <menuitem action="action_sale_segment_today_tree" id="menu_report_sale_segment_today" parent="menu_dm_sale_today"/>
         
-        
         <record id="action_sale_segment_per_day_all" model="ir.actions.act_window">
-            <field name="name">Sales by Segment by Day (All Days)</field>
+            <field name="name">Sales by Segment by Day</field>
             <field name="res_model">report.sale.segment.per.day</field>
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree</field>
         </record>
-        
-<!--        <menuitem id="menu_dm_sale_segment_all_day" name="All Days" parent="report_dm.menu_dm_report"/>-->
         <menuitem action="action_sale_segment_per_day_all" id="menu_report_sale_segment_per_day" parent="menu_dm_sale_all_day"/>
         
-
     </data>
 </openerp>
