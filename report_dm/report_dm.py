@@ -21,11 +21,12 @@
 ##############################################################################
 
 from osv import fields,osv
+
 # Sales by Segment and Offer Step
 
-class report_sale_per_month(osv.osv):
-    _name = "report.sale.per.month"
-    _description = "Sales per Month"
+class report_dm_sale_per_month(osv.osv):
+    _name = "report.dm.sale.per.month"
+    _description = "Sales by Segment and Offer Step by month"
     _auto = False
     _columns = {
         'name': fields.date('Month', readonly=True),
@@ -38,7 +39,7 @@ class report_sale_per_month(osv.osv):
     _order = 'name desc'
     def init(self, cr):
         cr.execute("""
-            create or replace view report_sale_per_month as (
+            create or replace view report_dm_sale_per_month as (
                 select min(so.id) as id , 
                     to_char(date_trunc('month',so.date_order),'YYYY-MM-DD')::text as name,
                     s.id as offer_step_id, 
@@ -56,85 +57,14 @@ class report_sale_per_month(osv.osv):
                 group by to_char(date_trunc('month',so.date_order),'YYYY-MM-DD')::text ,cmp.id , o.id , s.id
             )
         """)
-report_sale_per_month()
+report_dm_sale_per_month()
 
-# Sales by Offer Step
-class report_sale_offer_step_per_month(osv.osv):
-    _name = "report.sale.offer.step.per.month"
-    _description = "Sales by Offer Step per Month"
+class report_dm_sale_per_day(osv.osv):
+    _name = "report.dm.sale.per.day"
+    _description = "Sales by Segment and Offer Step by day"
     _auto = False
     _columns = {
-        'name': fields.date('Month', readonly=True),
-        'offer_step_id': fields.many2one('dm.offer.step','Step', readonly=True),
-        'offer_id': fields.many2one('dm.offer','Offer', readonly=True),
-        #'campaign_id': fields.many2one('dm.campaign','Campaign', readonly=True),
-        'sale_amount': fields.float('Amount', readonly=True),
-        'sale_quantity': fields.float('Quantity', readonly=True),        
-    }
-    _order = 'name desc'
-    def init(self, cr):
-        cr.execute("""
-            create or replace view report_sale_offer_step_per_month as (
-           select
-                min(so.id) as id,
-                to_char(date_trunc('month',so.date_order),'YYYY-MM-DD')::text as name,
-        dos.id as offer_step_id,
-                do1.id as offer_id,
-                sum(so.amount_total) as sale_amount ,
-                count(so.id) as sale_quantity
-            from sale_order as so, dm_offer_step dos, dm_offer do1
-            where 
-                so.offer_step_id is not null and so.offer_step_id = dos.id and dos.offer_id = do1.id 
-            group by do1.id,  to_char(date_trunc('month',so.date_order),'YYYY-MM-DD')::text, dos.id
-
-        )
-        """)
-report_sale_offer_step_per_month()
-
-############Sales by Segment
-class report_sale_segment_per_month(osv.osv):
-    _name = "report.sale.segment.per.month"
-    _description = "Sales by Segment per Month"
-    _auto = False
-    _columns = {
-        'name': fields.date('Month', readonly=True),
-        #'offer_step_id': fields.many2one('dm.offer.step','Step', readonly=True),
-        'offer_id': fields.many2one('dm.offer','Offer', readonly=True),
-        'campaign_id': fields.many2one('dm.campaign','Campaign', readonly=True),
-        'sale_amount': fields.float('Amount', readonly=True),
-        'sale_quantity': fields.float('Quantity', readonly=True),        
-    }
-    _order = 'name desc'
-    def init(self, cr):
-        cr.execute("""
-            create or replace view report_sale_segment_per_month as (
-               select
-                    min(so.id) as id,
-                    to_char(date_trunc('month',so.date_order),'YYYY-MM-DD')::text as name,
-                    dcps.id as Segment,
-                    do1.id as offer_id,
-                    dc.id as campaign_id,
-                    sum(so.amount_total) as sale_amount ,
-                    count(so.id) as sale_quantity
-                from sale_order as so, dm_campaign_proposition_segment dcps,
-                    dm_campaign_proposition dcp, dm_campaign dc, dm_offer do1
-                where 
-                    so.segment_id is not null and so.segment_id = dcps.id and 
-                    dcp.id = dcps.proposition_id and dc.id  = dcp.camp_id and do1.id = dc.offer_id 
-                group by do1.id, dc.id, to_char(date_trunc('month',so.date_order),'YYYY-MM-DD')::text, dcps.id
-       )
-        """)
-report_sale_segment_per_month()
-
-######DAYSSSSSSSSSSSSSSSS
-#Sales by Segment and Offer Step
-
-class report_sale_per_day(osv.osv):
-    _name = "report.sale.per.day"
-    _description = "Sales per day"
-    _auto = False
-    _columns = {
-        'name': fields.date('Month', readonly=True),
+        'name': fields.date('Day', readonly=True),
         'offer_step_id': fields.many2one('dm.offer.step','Step', readonly=True),
         'offer_id': fields.many2one('dm.offer','Offer', readonly=True),
         'campaign_id': fields.many2one('dm.campaign','Campaign', readonly=True),
@@ -144,7 +74,7 @@ class report_sale_per_day(osv.osv):
     _order = 'name desc'
     def init(self, cr):
         cr.execute("""
-            create or replace view report_sale_per_day as (
+            create or replace view report_dm_sale_per_day as (
                 select min(so.id) as id , 
                     to_char(date_trunc('day',so.date_order),'YYYY-MM-DD')::text as name,
                     s.id as offer_step_id, 
@@ -161,25 +91,56 @@ class report_sale_per_day(osv.osv):
                 group by to_char(date_trunc('day',so.date_order),'YYYY-MM-DD')::text ,cmp.id , o.id , s.id
              )
         """)
-report_sale_per_day()
+report_dm_sale_per_day()
 
 # Sales by Offer Step
-class report_sale_offer_step_per_day(osv.osv):
-    _name = "report.sale.offer.step.per.day"
-    _description = "Sales by Offer Step per day"
+
+class report_dm_sale_offer_step_per_month(osv.osv):
+    _name = "report.dm.sale.offer.step.per.month"
+    _description = "Sales by Offer Step per Month"
     _auto = False
     _columns = {
         'name': fields.date('Month', readonly=True),
         'offer_step_id': fields.many2one('dm.offer.step','Step', readonly=True),
         'offer_id': fields.many2one('dm.offer','Offer', readonly=True),
-        #'campaign_id': fields.many2one('dm.campaign','Campaign', readonly=True),
         'sale_amount': fields.float('Amount', readonly=True),
         'sale_quantity': fields.float('Quantity', readonly=True),        
     }
     _order = 'name desc'
     def init(self, cr):
         cr.execute("""
-            create or replace view report_sale_offer_step_per_day as (
+            create or replace view report_dm_sale_offer_step_per_month as (
+           select
+                min(so.id) as id,
+                to_char(date_trunc('month',so.date_order),'YYYY-MM-DD')::text as name,
+        dos.id as offer_step_id,
+                do1.id as offer_id,
+                sum(so.amount_total) as sale_amount ,
+                count(so.id) as sale_quantity
+            from sale_order as so, dm_offer_step dos, dm_offer do1
+            where 
+                so.offer_step_id is not null and so.offer_step_id = dos.id and dos.offer_id = do1.id 
+            group by do1.id,  to_char(date_trunc('month',so.date_order),'YYYY-MM-DD')::text, dos.id
+
+        )
+        """)
+report_dm_sale_offer_step_per_month()
+
+class report_dm_sale_offer_step_per_day(osv.osv):
+    _name = "report.dm.sale.offer.step.per.day"
+    _description = "Sales by Offer Step per day"
+    _auto = False
+    _columns = {
+        'name': fields.date('Day', readonly=True),
+        'offer_step_id': fields.many2one('dm.offer.step','Step', readonly=True),
+        'offer_id': fields.many2one('dm.offer','Offer', readonly=True),
+        'sale_amount': fields.float('Amount', readonly=True),
+        'sale_quantity': fields.float('Quantity', readonly=True),        
+    }
+    _order = 'name desc'
+    def init(self, cr):
+        cr.execute("""
+            create or replace view report_dm_sale_offer_step_per_day as (
                select
                     min(so.id) as id,
                     to_char(date_trunc('day',so.date_order),'YYYY-MM-DD')::text as name,
@@ -194,16 +155,16 @@ class report_sale_offer_step_per_day(osv.osv):
 
              )
         """)
-report_sale_offer_step_per_day()
+report_dm_sale_offer_step_per_day()
 
 #Sales by Segment
-class report_sale_segment_per_day(osv.osv):
-    _name = "report.sale.segment.per.day"
-    _description = "Sales per day"
+class report_dm_sale_segment_per_month(osv.osv):
+    _name = "report.dm.sale.segment.per.month"
+    _description = "Sales by Segment per Month"
     _auto = False
     _columns = {
         'name': fields.date('Month', readonly=True),
-       # 'offer_step_id': fields.many2one('dm.offer.step','Step', readonly=True),
+        'segment_id': fields.many2one('dm.campaign.proposition.segment','Segment', readonly=True),
         'offer_id': fields.many2one('dm.offer','Offer', readonly=True),
         'campaign_id': fields.many2one('dm.campaign','Campaign', readonly=True),
         'sale_amount': fields.float('Amount', readonly=True),
@@ -212,11 +173,45 @@ class report_sale_segment_per_day(osv.osv):
     _order = 'name desc'
     def init(self, cr):
         cr.execute("""
-            create or replace view report_sale_segment_per_day as (
+            create or replace view report_dm_sale_segment_per_month as (
+               select
+                    min(so.id) as id,
+                    to_char(date_trunc('month',so.date_order),'YYYY-MM-DD')::text as name,
+                    dcps.id as segment_id,
+                    do1.id as offer_id,
+                    dc.id as campaign_id,
+                    sum(so.amount_total) as sale_amount ,
+                    count(so.id) as sale_quantity
+                from sale_order as so, dm_campaign_proposition_segment dcps,
+                    dm_campaign_proposition dcp, dm_campaign dc, dm_offer do1
+                where 
+                    so.segment_id is not null and so.segment_id = dcps.id and 
+                    dcp.id = dcps.proposition_id and dc.id  = dcp.camp_id and do1.id = dc.offer_id 
+                group by do1.id, dc.id, to_char(date_trunc('month',so.date_order),'YYYY-MM-DD')::text, dcps.id
+       )
+        """)
+report_dm_sale_segment_per_month()
+
+class report_dm_sale_segment_per_day(osv.osv):
+    _name = "report.dm.sale.segment.per.day"
+    _description = "Sales by Segment per Day"
+    _auto = False
+    _columns = {
+        'name': fields.date('Month', readonly=True),
+        'segment_id': fields.many2one('dm.campaign.proposition.segment','Segment', readonly=True),
+        'offer_id': fields.many2one('dm.offer','Offer', readonly=True),
+        'campaign_id': fields.many2one('dm.campaign','Campaign', readonly=True),
+        'sale_amount': fields.float('Amount', readonly=True),
+        'sale_quantity': fields.float('Quantity', readonly=True),        
+    }
+    _order = 'name desc'
+    def init(self, cr):
+        cr.execute("""
+            create or replace view report_dm_sale_segment_per_day as (
                select
                     min(so.id) as id,
                     to_char(date_trunc('day',so.date_order),'YYYY-MM-DD')::text as name,
-                    dcps.id as Segment,
+                    dcps.id as segment_id,
                     do1.id as offer_id,
                     dc.id as campaign_id,
                     sum(so.amount_total) as sale_amount ,
@@ -231,7 +226,10 @@ class report_sale_segment_per_day(osv.osv):
                 group by do1.id, dc.id, to_char(date_trunc('day',so.date_order),'YYYY-MM-DD')::text, dcps.id
              )
         """)
-report_sale_segment_per_day()
+report_dm_sale_segment_per_day()
+
+# Sales by Offer Step
+
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
