@@ -145,11 +145,14 @@ class base_module_record(osv.osv):
                         newid,update = self._get_id(cr, uid, fields[key]['relation'], valitem[1])
                         if not newid:
                             newid = self._create_id(cr, uid, fields[key]['relation'], valitem[2])
-                        self.ids[(fields[key]['relation'], valitem[1])] = newid
-                        
+#                        if valitem[0]==0:
+#                            newid = self._create_id(cr, uid, fields[key]['relation'], valitem[2])
+#                        else:
+#                            newid,update = self._get_id(cr, uid, fields[key]['relation'], valitem[1])
                         childrecord, update = self._create_record(cr, uid, doc, fields[key]['relation'],valitem[2], newid)
                         noupdate = noupdate or update
                         record_list += childrecord
+                        self.ids[(fields[key]['relation'],newid)] = newid
                     else:
                         pass
             elif fields[key]['type'] in ('many2many',):
@@ -158,7 +161,7 @@ class base_module_record(osv.osv):
                     if valitem[0]==6:
                         for id2 in valitem[2]:
                             id,update = self._get_id(cr, uid, fields[key]['relation'], id2)
-                            self.ids[(fields[key]['relation'],id2)] = id
+                            self.ids[(fields[key]['relation'],id)] = id
                             noupdate = noupdate or update
                             res.append(id)
                         field = doc.createElement('field')
@@ -262,7 +265,7 @@ class base_module_record(osv.osv):
         elif rec[4]=='create':
             id = self._create_id(cr, uid, rec[3],rec[5])
             record,noupdate = self._create_record(cr, uid, doc, rec[3], rec[5], id)
-            self.ids[(rec[3], result)] = id
+            self.ids[(rec[3],result)] = id
             record_list += record
 
         elif rec[4]=='copy':
@@ -273,7 +276,7 @@ class base_module_record(osv.osv):
             self.recording_data=rec_data
             id = self._create_id(cr, uid, rec[3],rec[6])
             record,noupdate = self._create_record(cr, uid, doc, rec[3], rec[6], id)
-            self.ids[(rec[3], result)] = id
+            self.ids[(rec[3],result)] = id
             record_list += record
 
         return record_list,noupdate
