@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+
+<openerp>
+    <data>
+
+	    <record model="res.roles" id="ACC">
+		    <field name="name">Chaque Posting</field>
+	    </record>
+
+	    <record model="res.roles" id="AP">
+		    <field name="name">Chaque Approvel</field>
+	    </record>
+
+	    <record model="workflow" id="chaque_wkf">
+		    <field name="name">account.cheque.basic</field>
+		    <field name="osv">account.loan.bank.cheque</field>
+		    <field name="on_create">True</field>
+	    </record>
+
+	    <record model="workflow.activity" id="chq_draft">
+		    <field name="wkf_id" ref="chaque_wkf"/>
+		    <field name="flow_start">True</field>
+		    <field name="name">chq_draft</field>
+		    <field name="kind">function</field>
+		    <field name="action">write({'state':'draft'})</field>
+		    <field name="split_mode">OR</field>
+	    </record>
+
+	    <record model="workflow.activity" id="chq_posted">
+		    <field name="wkf_id" ref="chaque_wkf"/>
+		    <field name="name">chq_posted</field>
+		    <field name="kind">function</field>
+		    <field name="action">post_bank()&#10;write({'state':'posted'})</field>
+		    <field name="split_mode">OR</field>
+	    </record>
+
+	    <record model="workflow.activity" id="chq_return">
+		    <field name="wkf_id" ref="chaque_wkf"/>
+		    <field name="name">chq_return</field>
+		    <field name="kind">function</field>
+		    <field name="action">cheque_return()&#10;write({'state':'return'})</field>
+	    </record>
+
+	    <record model="workflow.activity" id="chq_cancel">
+		    <field name="wkf_id" ref="chaque_wkf"/>
+		    <field name="name">chq_cancel</field>
+		    <field name="kind">function</field>
+		    <field name="action">write({'state':'cancel'})</field>
+	    </record>
+
+	    <record model="workflow.activity" id="chq_clear">
+		    <field name="wkf_id" ref="chaque_wkf"/>
+		    <field name="name">chq_clear</field>
+		    <field name="kind">function</field>
+		    <field name="flow_stop">True</field>
+		    <field name="action">cheque_clear()&#10;write({'state':'done'})</field>
+	    </record>
+
+	    <record model="workflow.transition" id="t1">
+		    <field name="act_from" ref="chq_draft"/>
+		    <field name="act_to" ref="chq_posted"/>
+		    <field name="signal">post_bank</field>
+		    <field name="role_id" ref="ACC"/>
+	    </record>
+
+	    <record model="workflow.transition" id="t11">
+		    <field name="act_from" ref="chq_draft"/>
+		    <field name="act_to" ref="chq_cancel"/>
+		    <field name="signal">cheque_cancel</field>
+		    <field name="role_id" ref="ACC"/>
+	    </record>
+	
+	    <record model="workflow.transition" id="t3">
+		    <field name="act_from" ref="chq_posted"/>
+		    <field name="act_to" ref="chq_return"/>
+		    <field name="signal">cheque_retun</field>
+		    <field name="role_id" ref="AP"/>
+	    </record>
+	
+	    <record model="workflow.transition" id="t2">
+		    <field name="act_from" ref="chq_posted"/>
+		    <field name="act_to" ref="chq_clear"/>
+		    <field name="signal">cheque_clear</field>
+		    <field name="role_id" ref="AP"/>
+	    </record>
+
+
+	    <record model="workflow.transition" id="t4">
+		    <field name="act_from" ref="chq_return"/>
+		    <field name="act_to" ref="chq_cancel"/>
+		    <field name="signal">cheque_cancel</field>
+		    <field name="role_id" ref="AP"/>
+	    </record>
+
+	    <record model="workflow.transition" id="t5">
+		    <field name="act_from" ref="chq_cancel"/>
+		    <field name="act_to" ref="chq_draft"/>
+		    <field name="signal">set_draft</field>
+		    <field name="role_id" ref="AP"/>
+	    </record>
+	
+    </data>
+</openerp>

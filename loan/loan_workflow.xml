@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+	    <record model="res.roles" id="Prof">
+		    <field name="name">Proof Checking</field>
+	    </record>
+	    <record model="res.roles" id="Finance">
+		    <field name="name">Finance Approvel</field>
+	    </record>
+
+	    <record model="workflow" id="loan_wkf">
+		    <field name="name">account.loan.basic</field>
+		    <field name="osv">account.loan</field>
+		    <field name="on_create">True</field>
+	    </record>
+
+	    <record model="workflow.activity" id="draft">
+		    <field name="wkf_id" ref="loan_wkf"/>
+		    <field name="flow_start">True</field>
+		    <field name="name">draft</field>
+		    <field name="kind">function</field>
+		    <field name="action">write({'state':'draft'})</field>
+	    </record>
+
+	    <record model="workflow.activity" id="proof approval">
+		    <field name="wkf_id" ref="loan_wkf"/>
+		    <field name="name">proof approval</field>
+		    <field name="kind">function</field>
+		    <field name="action">proof_approval()&#10;write({'state':'proof approval'})</field>
+		    <field name="split_mode">OR</field>
+	    </record>
+
+	    <record model="workflow.activity" id="apply">
+		    <field name="wkf_id" ref="loan_wkf"/>
+		    <field name="name">apply</field>
+		    <field name="kind">function</field>
+		    <field name="action">loan_interest_get()&#10;apply_loan()&#10;write({'state':'apply'})</field>
+		    <field name="split_mode">OR</field>
+	    </record>
+
+	    <record model="workflow.activity" id="approved">
+		    <field name="wkf_id" ref="loan_wkf"/>
+		    <field name="name">approved</field>
+		    <field name="kind">function</field>
+		    <field name="action">loan_clear()&#10;write({'state':'approved'})</field>
+		    <field name="split_mode">OR</field>
+	    </record>
+
+	    <record model="workflow.activity" id="cancel">
+		    <field name="wkf_id" ref="loan_wkf"/>
+		    <field name="name">cancel</field>
+		    <field name="kind">function</field>
+		    <field name="action">reject_loan()&#10;write({'state':'cancel'})</field>
+	    </record>
+	
+	    <record model="workflow.activity" id="paid">
+		    <field name="wkf_id" ref="loan_wkf"/>
+		    <field name="name">paid</field>
+		    <field name="kind">function</field>
+		    <field name="flow_stop">True</field>
+		    <field name="action">loan_paid()&#10;write({'state':'done'})</field>
+	    </record>
+
+	    <record model="workflow.transition" id="loan_t1">
+		    <field name="act_from" ref="draft"/>
+		    <field name="act_to" ref="proof approval"/>
+		    <field name="signal">approve_proofs</field>
+		    <field name="role_id" ref="Prof"/>
+	    </record>
+
+	    <record model="workflow.transition" id="loan_t2">
+		    <field name="act_from" ref="proof approval"/>
+		    <field name="act_to" ref="apply"/>
+		    <field name="signal">approve_finance</field>
+	    </record>
+
+	    <record model="workflow.transition" id="loan_t4">
+		    <field name="act_from" ref="proof approval"/>
+		    <field name="act_to" ref="cancel"/>
+		    <field name="signal">loan_cancel</field>
+	    </record>
+	
+	    <record model="workflow.transition" id="loan_t3">
+		    <field name="act_from" ref="apply"/>
+		    <field name="act_to" ref="approved"/>
+		    <field name="signal">approve_loan</field>
+	    </record>
+
+	    <record model="workflow.transition" id="loan_t5">
+		    <field name="act_from" ref="apply"/>
+		    <field name="act_to" ref="cancel"/>
+		    <field name="signal">loan_cancel</field>
+	    </record>
+
+	    <record model="workflow.transition" id="loan_ttt1">
+		    <field name="act_from" ref="approved"/>
+		    <field name="act_to" ref="paid"/>
+		    <field name="signal">loan_paid</field>
+	    </record>
+
+	    <record model="workflow.transition" id="loan_t6">
+		    <field name="act_from" ref="approved"/>
+		    <field name="act_to" ref="cancel"/>
+		    <field name="signal">loan_cancel</field>
+	    </record>
+
+	    <record model="workflow.transition" id="loan_t7">
+		    <field name="act_from" ref="cancel"/>
+		    <field name="act_to" ref="draft"/>
+		    <field name="signal">loan_draft</field>
+	    </record>
+
+    </data>
+</openerp>
