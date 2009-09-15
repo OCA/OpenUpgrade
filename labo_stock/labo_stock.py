@@ -158,7 +158,6 @@ class labo_article(osv.osv):
 
 
 	def onchange_pricelist(self, cr, uid, ids,supplier,context={}):
-		print "IN THE ONCHANCE PRICELIST FUNCTION"
 		if not supplier:
 			return {'value': {'pricelist_id':False}}
 		part = self.pool.get('res.partner').browse(cr, uid, supplier)
@@ -167,7 +166,6 @@ class labo_article(osv.osv):
 
 
 	def invoice_create(self,cr, uid,ids,context):
-		print "INVOICE CREATE"
 		invoices = {}
 		taxes=[]
 		inv_ref=self.pool.get('account.invoice')
@@ -201,7 +199,6 @@ class labo_article(osv.osv):
 #			price = self.pool.get('product.pricelist').price_get(cr, uid, [article.discount.id],
 #											article.id,
 #											1.0, article.supplier)[article.discount.id]
-			print "PRICE",price
 			if price is False:
 				raise osv.except_osv('No valid pricelist line found !',
 				"You have to change either the product defined on the type of analysis or the pricelist.")
@@ -215,7 +212,6 @@ class labo_article(osv.osv):
 				'invoice_line_tax_id': [(6,0,taxes)],
 				'price_unit': price,
 			}
-			print inv_line['price_unit']
 			self.pool.get('account.invoice.line').create(cr, uid, inv_line,context)
 			inv_ref.button_compute(cr, uid, invoices.values())
 		for inv in inv_ref.browse(cr, uid, invoices.values(), context):
@@ -268,8 +264,6 @@ class labo_article(osv.osv):
 #		'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid,'labo.article'),
 #}
 labo_article()
-
-
 
 class labo_type_reactives(osv.osv):
 	_name='labo.type.reactives'
@@ -392,7 +386,7 @@ class labo_mix(osv.osv):
 		mix = self.pool.get('labo.amorces').browse(cr, uid, amorce_id)
 		v_mix=mix.concentration or 0
 		num=mix.name or ""
-		print ids
+
 		try:
 			v_take = self.volume_to_take(cr, uid, ids)[ids[0]]
 			return {'value': {'vol_mix': v_mix,'amorce_num':num,'vol_take':v_take}}
