@@ -194,7 +194,7 @@ class account_loan(osv.osv):
     def create(self,cr,uid,vals, context=None):
         cr_id = super(account_loan, self).create(cr, uid, vals, context=context)
         if vals.has_key('loan_amount') and vals['loan_amount']:
-            search_ids = self.pool.get('account.loan').search(cr,uid,[('loan_id','=',vals['loan_id'])]
+            search_ids = self.pool.get('account.loan').search(cr,uid,[('loan_id','=',vals['loan_id'])])
             read_ids = self.pool.get('account.loan').read(cr,uid,search_ids,['loan_amount'])
             for read_id in read_ids:
                 del read_id['id']
