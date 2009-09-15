@@ -95,7 +95,7 @@
 						 <field name="category_id" domain="[('group_id','=', group_id)]"/>
 						 <separator string="Conditions" colspan="4"/>
 						 <field name="main_category_rate" attrs="{'required':[('action','=','perform action')]}"/>
-						 <field name="sec_category_rate"/>
+						 <field name="sec_category_rate" attrs="{'required':[('action','=','perform action')]}"/>
 		               </page>
 				</notebook>
 			</field>

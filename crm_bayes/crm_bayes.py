@@ -227,7 +227,7 @@ class crm_case_rule(osv.osv):
     _name = "crm.case.rule"
     _inherit = "crm.case.rule"
     _columns = {
-        'action': fields.selection([('perform action and assign category','Perform Action and assign category'),('perform action','Perform Action'),("don't perform statistic test","Don't Perform Statistic Test")], 'Action', size=32,required=1),
+        'action': fields.selection([('perform action and assign category','Perform Action and assign category'),('perform action only','Perform Action Only'),("don't perform statistic test","Don't Perform Statistic Test")], 'Action', size=32,required=1),
         'group_id': fields.many2one('crm.bayes.group','Statistic Group'),
         'category_id': fields.many2one('crm.bayes.categories','Statistic Category'),
         'main_category_rate': fields.float('Main Category Min Rate', help = 'Perform the action only if the probability to be the main category if bigger than this rate'),
@@ -298,7 +298,7 @@ class crm_case(osv.osv):
         for case in cases:
             result_perform = self.guess_message(cr, uid, case.id, context)
             for action in actions:
-                if action.action == "perform action"  and action.category_id == case.category_id :
+                if action.action == "perform action only"  and action.category_id == case.category_id :
                     if result_perform:
                         res = max(result_perform, key=lambda k: k[1])
                         if res[1] >= action.main_category_rate:
