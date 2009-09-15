@@ -22,7 +22,7 @@
                         <field name="notes" nolabel="1" select="2" colspan="4" widget="text_wiki"/>
                     </page>
                     <page string="Customers">
-                        <field name="customer_text_criteria_ids" colspan="2" nolabel="1" select="2">
+                        <field name="address_text_criteria_ids" colspan="2" nolabel="1" select="2">
                             <form string="Customer Textual Criteria">
                                 <field name="field_id"/>
                                 <field name="operator" nolabel="1"/>
@@ -34,7 +34,7 @@
                                 <field name="value"/>
                             </tree>
                         </field>
-                        <field name="customer_numeric_criteria_ids" colspan="2" nolabel="1" select="2">
+                        <field name="address_numeric_criteria_ids" colspan="2" nolabel="1" select="2">
                             <form string="Customer Numeric Criteria">
                                 <field name="field_id"/>
                                 <field name="operator" nolabel="1"/>
@@ -46,7 +46,7 @@
                                 <field name="value"/>
                             </tree>
                         </field>
-                        <field name="customer_boolean_criteria_ids" colspan="2" nolabel="1" select="2">
+                        <field name="address_boolean_criteria_ids" colspan="2" nolabel="1" select="2">
                             <form string="Customer Boolean Criteria">
                                 <field name="field_id"/>
                                 <field name="operator" nolabel="1"/>
@@ -58,7 +58,7 @@
                                 <field name="value"/>
                             </tree>
                         </field>
-                        <field name="customer_date_criteria_ids" colspan="2" nolabel="1" select="2">
+                        <field name="address_date_criteria_ids" colspan="2" nolabel="1" select="2">
                             <form string="Customer Date Criteria">
                                 <field name="field_id"/>
                                 <field name="operator" nolabel="1"/>

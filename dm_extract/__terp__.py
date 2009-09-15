@@ -33,6 +33,7 @@
                     ],
     "demo_xml" : [],
     "update_xml" : [
+                    "security/ir.model.access.csv",  
                     "dm_extract_view.xml",
                     ],
     "active": False,
