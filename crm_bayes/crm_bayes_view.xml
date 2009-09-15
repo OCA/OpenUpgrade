@@ -112,30 +112,30 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<button name="case_reset" position="after">
+					<group colspan="8" col="8">
 						<separator colspan="8" string="Automated Statistics Actions"/>
-		                <field colspan="2" name="category_id" attrs="{'readonly':[('state_bayes','=','trained')]}"/>
+		                <field name="category_id" attrs="{'readonly':[('state_bayes','=','trained')],'required':[('state_bayes','=','untrained')]}"/>
+		                <field colspan="2" name="state_bayes"/>
+		                <button name="perform_action" string="Perform action" type ="object" attrs="{'invisible':[('state_bayes','=','trained')]}"/>
+						<button name="trained" string="Trained" attrs="{'invisible':[('state_bayes','=','trained')]}"   type ="object"/>
+						<button name="untrained" string="Untrained"  attrs="{'invisible':[('state_bayes','=','untrained')]}" type ="object"/>
+	            	</group>
 		        </button>
 			</field>
 		</record>
 		
-		<record id="view_crm_case_form_oppor_new" model="ir.ui.view">
-			<field name="name">crm_case_bayes_form_oppo_newr</field>
+		<record id="view_crm_case_form_oppor_new1" model="ir.ui.view">
+			<field name="name">crm_case_bayes_form_oppo_newr1</field>
 			<field name="model">crm.case</field>
 			<field name="inherit_id" ref="crm_configuration.crm_case_form_view_oppor"/>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<field name="category_id" position="replace">
-					<group colspan="8" col="8">
-	                <field name="category_id" attrs="{'readonly':[('state_bayes','=','trained')]}"/>
-	                <field colspan="2" name="state_bayes"/>
-	                <button name="perform_action" string="Perform action" type ="object" attrs="{'invisible':[('state_bayes','=','trained')]}"/>
-					<button name="trained" string="Trained" attrs="{'invisible':[('state_bayes','=','trained')]}"   type ="object"/>
-					<button name="untrained" string="Untrained"  attrs="{'invisible':[('state_bayes','=','untrained')]}" type ="object"/>
-	            	</group>
+				<field name="description" colspan="2" nolabel="1" position="replace"> 
+					<field name="description" colspan="2" nolabel="1" attrs="{'required':[('state_bayes','=','untrained')]}"/>
 	            </field>
 			</field>
 		</record>
-	
+
 		<!--
 		CRM Case (Leads)
 		-->
@@ -147,30 +147,30 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<button name="case_reset" position="after">
-					<separator colspan="8" string="Automated Statistics Actions"/>
-	                <field colspan="2" name="category_id" attrs="{'readonly':[('state_bayes','=','trained')]}"/>
-	        	</button>
+					<group colspan="8" col="8">
+						<separator colspan="8" string="Automated Statistics Actions"/>
+		                <field name="category_id" attrs="{'readonly':[('state_bayes','=','trained')],'required':[('state_bayes','=','untrained')]}"/>
+		                <field colspan="2" name="state_bayes"/>
+		                <button name="perform_action" string="Perform action" type ="object" attrs="{'invisible':[('state_bayes','=','trained')]}"/>
+						<button name="trained" string="Trained" attrs="{'invisible':[('state_bayes','=','trained')]}"   type ="object"/>
+						<button name="untrained" string="Untrained"  attrs="{'invisible':[('state_bayes','=','untrained')]}" type ="object"/>
+	            	</group>
+		        </button>
 			</field>
 		</record>
 		
-		<record id="view_crm_case_form_leads_new" model="ir.ui.view">
-			<field name="name">crm_case_bayes_form_leads_new</field>
+		<record id="view_crm_case_form_leads_description" model="ir.ui.view">
+			<field name="name">view_crm_case_form_leads_description</field>
 			<field name="model">crm.case</field>
 			<field name="inherit_id" ref="crm_configuration.crm_case_form_view_leads"/>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<field name="category_id" position="replace">
-					<group colspan="8" col="8">
-	                <field name="category_id" attrs="{'readonly':[('state_bayes','=','trained')]}"/>
-	                <field colspan="2" name="state_bayes"/>
-	                <button name="perform_action" string="Perform action" type ="object" attrs="{'invisible':[('state_bayes','=','trained')]}"/>
-					<button name="trained" string="Trained" attrs="{'invisible':[('state_bayes','=','trained')]}"   type ="object"/>
-					<button name="untrained" string="Untrained"  attrs="{'invisible':[('state_bayes','=','untrained')]}" type ="object"/>
-	            	</group>
-	            </field>
+				<field name="description" colspan="2" nolabel="1" position="replace"> 
+					<field name="description" colspan="2" nolabel="1" attrs="{'required':[('state_bayes','=','untrained')]}"/>
+				</field>
 			</field>
 		</record>
-	
+		
 		<!--
 		CRM Case (Claims)
 		-->
@@ -182,29 +182,29 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<button name="case_reset" position="after">
-					<separator colspan="8" string="Automated Statistics Actions"/>
-	                <field colspan="2" name="category_id" attrs="{'readonly':[('state_bayes','=','trained')]}"/>
-	       		</button>
+					<group colspan="8" col="8">
+						<separator colspan="8" string="Automated Statistics Actions"/>
+		                <field name="category_id" attrs="{'readonly':[('state_bayes','=','trained')],'required':[('state_bayes','=','untrained')]}"/>
+		                <field colspan="2" name="state_bayes"/>
+		                <button name="perform_action" string="Perform action" type ="object" attrs="{'invisible':[('state_bayes','=','trained')]}"/>
+						<button name="trained" string="Trained" attrs="{'invisible':[('state_bayes','=','trained')]}"   type ="object"/>
+						<button name="untrained" string="Untrained"  attrs="{'invisible':[('state_bayes','=','untrained')]}" type ="object"/>
+	            	</group>
+		        </button>
 			</field>
 		</record>
 		
-		<record id="view_crm_case_form_claims_new" model="ir.ui.view">
-			<field name="name">crm_case_bayes_form_claims_new</field>
+		<record id="view_crm_case_form_claims_description" model="ir.ui.view">
+			<field name="name">view_crm_case_form_claims_description</field>
 			<field name="model">crm.case</field>
 			<field name="inherit_id" ref="crm_configuration.crm_case_claims_form_view"/>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<field name="category_id" position="replace">
-					<group colspan="8" col="8">
-	                <field name="category_id" attrs="{'readonly':[('state_bayes','=','trained')]}"/>
-	                <field colspan="2" name="state_bayes"/>
-	                <button name="perform_action" string="Perform action" type ="object" attrs="{'invisible':[('state_bayes','=','trained')]}"/>
-					<button name="trained" string="Trained" attrs="{'invisible':[('state_bayes','=','trained')]}"   type ="object"/>
-					<button name="untrained" string="Untrained"  attrs="{'invisible':[('state_bayes','=','untrained')]}" type ="object"/>
-	            	</group>
+				<field name="description" colspan="2" nolabel="1" position="replace"> 
+					<field name="description" colspan="2" nolabel="1" attrs="{'required':[('state_bayes','=','untrained')]}"/>
 	            </field>
 			</field>
-		</record>		
+		</record>
 	
 		<!--
 		CRM Case (Helpdesk and Support)
@@ -217,30 +217,30 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<button name="case_reset" position="after">
-					<separator colspan="8" string="Automated Statistics Actions"/>
-	                <field name="category_id" attrs="{'readonly':[('state_bayes','=','trained')]}"/>
-	            </button>
+					<group colspan="8" col="8">
+						<separator colspan="8" string="Automated Statistics Actions"/>
+		                <field name="category_id" attrs="{'readonly':[('state_bayes','=','trained')],'required':[('state_bayes','=','untrained')]}"/>
+		                <field colspan="2" name="state_bayes"/>
+		                <button name="perform_action" string="Perform action" type ="object" attrs="{'invisible':[('state_bayes','=','trained')]}"/>
+						<button name="trained" string="Trained" attrs="{'invisible':[('state_bayes','=','trained')]}"   type ="object"/>
+						<button name="untrained" string="Untrained"  attrs="{'invisible':[('state_bayes','=','untrained')]}" type ="object"/>
+	            	</group>
+		        </button>
 			</field>
 		</record>
-
-		<record id="view_crm_case_form_support_new" model="ir.ui.view">
-			<field name="name">crm_case_bayes_form_support_new</field>
+		
+		<record id="view_crm_case_form_support_description" model="ir.ui.view">
+			<field name="name">view_crm_case_form_support_description</field>
 			<field name="model">crm.case</field>
 			<field name="inherit_id" ref="crm.crm_case-view"/>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<field name="category_id" position="replace">
-					<group colspan="8" col="8">
-	                <field name="category_id" attrs="{'readonly':[('state_bayes','=','trained')]}"/>
-	                <field colspan="2" name="state_bayes"/>
-					<button name="perform_action" string="Perform action" type ="object" attrs="{'invisible':[('state_bayes','=','trained')]}"/>
-					<button name="trained" string="Trained" attrs="{'invisible':[('state_bayes','=','trained')]}"   type ="object"/>
-					<button name="untrained" string="Untrained"  attrs="{'invisible':[('state_bayes','=','untrained')]}" type ="object"/>
-	            	</group>
+				<field name="description" colspan="2" nolabel="1" position="replace"> 
+					<field name="description" colspan="2" nolabel="1" attrs="{'required':[('state_bayes','=','untrained')]}"/>
 	            </field>
 			</field>
-		</record>		
-		
+		</record>
+
 		<!--
 		CRM Bayes Statistic Report
 		-->
