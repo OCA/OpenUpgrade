@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.1\n"
+"Project-Id-Version: OpenERP Server 5.0.3\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-08-07 18:16:49+0000\n"
-"PO-Revision-Date: 2009-08-07 18:16:49+0000\n"
+"POT-Creation-Date: 2009-09-09 09:25:05+0000\n"
+"PO-Revision-Date: 2009-09-09 09:25:05+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,21 +16,40 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: network_extension
-#: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+#: model:ir.actions.act_window,name:network_extension.action_network_encrypt_password
+#: view:network.encrypt.password:0
+msgid "En/Decrypt password"
 msgstr ""
 
 #. module: network_extension
-#: field:network.service,public_service:0
+#: view:network.software:0
+#: view:network.software.logpass:0
+msgid "Encrypt"
+msgstr ""
+
+#. module: network_extension
+#: field:network.service,public_url:0
 msgid "Public URL"
 msgstr ""
 
 #. module: network_extension
+#: model:ir.model,name:network_extension.model_network_encrypt_password
+msgid "network.encrypt.password"
+msgstr ""
+
+#. module: network_extension
+#: help:network.service,public_port:0
+msgid "Sometimes public and private ports are different."
+msgstr ""
+
+#. module: network_extension
+#: view:network.service:0
 #: view:network.software:0
 msgid "Compute URL"
 msgstr ""
 
 #. module: network_extension
+#: view:network.software:0
 #: view:network.software.logpass:0
 #: field:network.software.logpass,note:0
 msgid "Note"
@@ -39,6 +58,16 @@ msgstr ""
 #. module: network_extension
 #: constraint:ir.actions.act_window:0
 msgid "Invalid model name in the action definition."
+msgstr ""
+
+#. module: network_extension
+#: constraint:ir.model:0
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr ""
+
+#. module: network_extension
+#: field:network.service,public_port:0
+msgid "Public port"
 msgstr ""
 
 #. module: network_extension
@@ -56,29 +85,13 @@ msgstr ""
 
 #. module: network_extension
 #: field:network.service,material:0
+#: field:network.software.logpass,material:0
 msgid "Material"
-msgstr ""
-
-#. module: network_extension
-#: model:ir.module.module,description:network_extension.module_meta_information
-msgid "\n"
-"    Organize your software and configurations.\n"
-"    - Additional network information: IP, domain, DNS, gateway\n"
-"    - Protocols\n"
-"    - Services\n"
-"    - Ports\n"
-"    - Public and private URLs\n"
-"    "
 msgstr ""
 
 #. module: network_extension
 #: help:network.network,dns:0
 msgid "List of DNS servers, separated by commas"
-msgstr ""
-
-#. module: network_extension
-#: model:ir.model,name:network_extension.model_network_port
-msgid "Port Network"
 msgstr ""
 
 #. module: network_extension
@@ -119,7 +132,7 @@ msgid "Service Network"
 msgstr ""
 
 #. module: network_extension
-#: field:network.service,private_service:0
+#: field:network.service,private_url:0
 msgid "Private URL"
 msgstr ""
 
@@ -146,7 +159,39 @@ msgstr ""
 
 #. module: network_extension
 #: model:ir.actions.act_window,name:network_extension.action_network_logpass
+#: view:network.software:0
 msgid "Login/Password"
+msgstr ""
+
+#. module: network_extension
+#: model:ir.ui.menu,name:network_extension.menu_action_encrypt_password_tree
+#: field:network.encrypt.password,name:0
+msgid "Encrypt/Decrypt password"
+msgstr ""
+
+#. module: network_extension
+#: field:network.software.logpass,encrypted:0
+msgid "Encrypted"
+msgstr ""
+
+#. module: network_extension
+#: view:network.software:0
+#: view:network.software.logpass:0
+msgid "Decrypt"
+msgstr ""
+
+#. module: network_extension
+#: model:ir.module.module,description:network_extension.module_meta_information
+msgid "\n"
+"Organize your software and configurations.\n"
+"    - Additional network information: IP, domain, DNS, gateway\n"
+"    - Protocols\n"
+"    - Services\n"
+"    - Ports\n"
+"    - Public and private URLs\n"
+"    - Password encryption\n"
+"\n"
+"System dependency: package python-crypto required."
 msgstr ""
 
 #. module: network_extension

@@ -184,4 +184,42 @@ class dm_offer_step(osv.osv):
         }
 dm_offer_step()
 
+class dm_campaign_proposition(osv.osv):#{{{
+    _inherit = "dm.campaign.proposition"
+
+    def _get_step_products(self,cr, uid, ids, *args):
+        print "@222222222222"
+        prop_obj = self.browse(cr, uid, ids)[0]
+        offer_id = prop_obj.camp_id.offer_id.id
+        step_ids = self.pool.get('dm.offer.step').search(cr, uid, [('offer_id','=',offer_id)])
+        step_obj = self.pool.get('dm.offer.step').browse(cr, uid, step_ids)
+        for step in step_obj:
+            for item in step.item_ids:
+                vals = {'product_id':item.id,
+                        'proposition_id':ids[0],
+                        'offer_step_id':step.id,
+                        'qty_planned':item.virtual_available,
+                        'qty_real':item.qty_available,
+                        'price':item.list_price,
+                        'notes':item.description,
+                        'forecasted_yield' : step.forecasted_yield,
+                }
+                self.pool.get('dm.campaign.proposition.item').create(cr, uid, vals)
+        return True
+dm_campaign_proposition()#}}}
+
+class product_product(osv.osv): # {{{
+    _inherit = "product.product"
+    
+    def search(self, cr, uid, args, offset=0, limit=None, order=None, context={}, count=False):
+            result = super(product_product,self).search(cr,uid,args,offset,limit,order,context,count)
+            if 'offer_id' in context and context['offer_id']:
+                result = []
+                offer_browse_id = self.pool.get('dm.offer').browse(cr,uid,context['offer_id'])
+                for step in offer_browse_id.step_ids:
+                    for item in step.item_ids:
+                        result.append(item.id)
+            return result
+product_product() # }}}
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

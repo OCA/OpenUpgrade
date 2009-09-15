@@ -1,0 +1,74 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+
+        <!-- Date Query Operators -->
+
+		<record model="dm.query.operator" id="operator_date_equals">
+            <field name="name">equals</field>
+            <field eval="&quot;&quot;&quot;=&quot;&quot;&quot;" name="code"/>
+			<field name="field_type">date</field>
+        </record>
+
+		<record model="dm.query.operator" id="operator_date_lt">
+            <field name="name">before</field>
+            <field eval="&quot;&quot;&quot;<&quot;&quot;&quot;" name="code"/>
+			<field name="field_type">date</field>
+        </record>
+
+		<record model="dm.query.operator" id="operator_date_gt">
+            <field name="name">after</field>
+            <field eval="&quot;&quot;&quot;>&quot;&quot;&quot;" name="code"/>
+			<field name="field_type">date</field>
+        </record>
+
+		<!-- Char Query Operators -->
+	
+		<record model="dm.query.operator" id="operator_char_like">
+            <field name="name">like</field>
+            <field name="code">like</field>
+			<field name="field_type">char</field>
+        </record>
+
+		<record model="dm.query.operator" id="operator_char_ilike">
+            <field name="name">ilike</field>
+            <field name="code">ilike</field>
+			<field name="field_type">char</field>
+        </record>
+
+		<!-- Numeric Query Operators -->
+
+		<record model="dm.query.operator" id="operator_numeric_equals">
+            <field name="name">equals</field>
+            <field eval="&quot;&quot;&quot;=&quot;&quot;&quot;" name="code"/>
+			<field name="field_type">numeric</field>
+        </record>
+
+		<record model="dm.query.operator" id="operator_numeric_lt">
+            <field name="name">smaller then</field>
+            <field eval="&quot;&quot;&quot;<&quot;&quot;&quot;" name="code"/>
+			<field name="field_type">numeric</field>
+        </record>
+
+		<record model="dm.query.operator" id="operator_numeric_gt">
+            <field name="name">bigger then</field>
+            <field eval="&quot;&quot;&quot;>&quot;&quot;&quot;" name="code"/>
+			<field name="field_type">numeric</field>
+        </record>
+
+		<!-- Boolean Query Operators -->
+
+		<record model="dm.query.operator" id="operator_boolean_is">
+            <field name="name">is</field>
+            <field name="code">is</field>
+			<field name="field_type">boolean</field>
+        </record>
+
+		<record model="dm.query.operator" id="operator_boolean_isnot">
+            <field name="name">is not</field>
+            <field name="code">isnot</field>
+			<field name="field_type">boolean</field>
+        </record>
+
+	</data>
+</openerp>

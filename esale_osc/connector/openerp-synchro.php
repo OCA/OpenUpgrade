@@ -1,4 +1,27 @@
 <?php
+/*# -*- encoding: utf-8 -*-
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution
+#    Copyright (c) 2008 Zikzakmedia S.L. (http://zikzakmedia.com) All Rights Reserved.
+#                       Jordi Esteve <jesteve@zikzakmedia.com>
+#    $Id$
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################*/
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////                                                                        ////////////////////
 ////////////////////////      PLEASE CONFIGURE THE RIGHT INCLUDES FOR YOUR CONFIGURATION        ////////////////////
@@ -38,8 +61,8 @@
 //			"Ã¨" => "e",
 //			"Ã"  => "i"
 //			);
-		$arrfrom = array("Ã±","Ã©","Ã¡","Ã³","Ãº","Ãš","Ã“","Ã&shy;","º","Âº","Âª","Â°","Â·","Ã­-","Ã¨","Ã", "”", "");
-		$arrto = array( "ñ","e", "a","a", "o", "u", "u", "o", "i", " ", ".", ".", ".", ".", "i", "e", "i", "''", "''");
+		$arrfrom = array("Ã±","Ã©","Ã¡","Ã³","Ãº","Ãš","Ã“","Ã&shy;","º" ,"Âº","Âª","Â°","Â·","Ã­-", "Ã¨","Ã");
+		$arrto = array(  "ñ" ,"e" , "a","a" , "o", "u", "u", "o"    , "i", " ", ".", ".", ".", ".", "i", "e");
 
 		$cur_encoding = mb_detect_encoding($in_str);
 		if($cur_encoding == "UTF-8" && mb_check_encoding($in_str,"UTF-8")) {
@@ -644,9 +667,17 @@
 		$result = mysql_query($query.$condition.';');
 		if ($result) while ($row_cust=mysql_fetch_array($result, MYSQL_ASSOC)) {
 			$addresses = get_partner_address(array('customers_id'=>$row_cust['customers_id']));
+			$query_company = "select entry_nif, entry_company from address_book where customers_id = " . $row_cust['customers_id'];
+			$result_company = mysql_query($query_company);
 			$partner = array();
 			$partner['esale_oscom_id'] = new xmlrpcval($row_cust['customers_id'],"int");
-			$partner['name'] = new xmlrpcval(fixEncoding($row_cust['name']),"string");
+			$partner['nif'] = $result_company[0];
+			$partner['company'] = $result_company[1];
+			if ($partner['company']<> '' ) {
+			    $partner['name'] = new xmlrpcval(fixEncoding($row_cust['name']),"string");
+			}else{
+			    $partner['name'] = new xmlrpcval(fixEncoding($partner['company']),"string");
+			}
 			$partner['addresses'] = $addresses;
 			$ret_partners[] = new xmlrpcval($partner,"struct");
 		}

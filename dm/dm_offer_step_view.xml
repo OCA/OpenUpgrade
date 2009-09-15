@@ -375,23 +375,6 @@
         view_mode="tree,form"
         id="act_offer_opened"
         domain = "[('step_ids','in',[active_id])]"/>
-    
-    <act_window name="Products"
-        res_model="product.product"
-        src_model="dm.offer"
-        view_type="form"
-        view_mode="tree,form"
-        id="act_offer_product_opened"
-        context="{'offer_id':active_id}"/>
-        
-    <!--act_window
-            id="act_edit_items"
-            view_type="form"
-        	view_mode="tree,form"
-            name="Edit Items"
-            res_model="product.product"
-            src_model="dm.offer.step"
-          	domain = "[('id','in',item_ids[0][2])]"/-->
 
 </data>
 </openerp>

@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    OpenERP, Open Source Management Solution
+#    Copyright (c) 2008 Zikzakmedia S.L. (http://zikzakmedia.com) All Rights Reserved.
+#                       Jordi Esteve <jesteve@zikzakmedia.com>
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -22,6 +23,8 @@
 
 import time
 from osv import fields, osv
+import base64
+from tools.translate import _
 
 #--------------------------------------------------------------
 # A network is composed of all kind of networkable materials
@@ -68,8 +71,66 @@ class network_software_logpass(osv.osv):
     _columns = {
         'name': fields.char('Name', size=100),
         'note': fields.text('Note'),
-        'material':fields.related('software_id', 'material_id', type='many2one', relation='network.material', string='Material', readonly=True),
+        'material': fields.related('software_id', 'material_id', type='many2one', relation='network.material', string='Material', readonly=True),
+        'encrypted': fields.boolean('Encrypted'),
     }
+
+    _defaults = {
+        'encrypted': lambda obj, cursor, user, context: False,
+    }
+
+    def onchange_password(self, cr, uid, ids, encrypted, context={}):
+        return {'value':{'encrypted': False}}
+
+
+    def _encrypt_password(self, cr, uid, ids, *args):
+        for rec in self.browse(cr, uid, ids):
+            try:
+                from Crypto.Cipher import ARC4
+            except ImportError:
+                raise osv.except_osv(_('Error !'), _('Package python-crypto no installed.'))
+
+            if not rec.encrypted:
+                obj_encrypt_password = self.pool.get('network.encrypt.password')
+                encrypt_password_ids = obj_encrypt_password.search(cr, uid, [('create_uid','=',uid),('write_uid','=',uid)])
+                encrypt_password_id = encrypt_password_ids and encrypt_password_ids[0] or False
+                if encrypt_password_id:
+                    passwordkey = obj_encrypt_password.browse(cr, uid, encrypt_password_id).name
+                    enc = ARC4.new(passwordkey)
+                    try:
+                        encripted = base64.b64encode(enc.encrypt(rec.password))
+                    except UnicodeEncodeError:
+                        break
+                    self.write(cr, uid, [rec.id], {'password': encripted, 'encrypted': True})
+                else:
+                    raise osv.except_osv(_('Error !'), _('Not encrypt/decrypt password has given.'))
+        return True
+
+
+    def _decrypt_password(self, cr, uid, ids, *args):
+        for rec in self.browse(cr, uid, ids):
+            try:
+                from Crypto.Cipher import ARC4
+            except ImportError:
+                raise osv.except_osv(_('Error !'), _('Package python-crypto no installed.'))
+
+            if rec.encrypted:
+                obj_encrypt_password = self.pool.get('network.encrypt.password')
+                encrypt_password_ids = obj_encrypt_password.search(cr, uid, [('create_uid','=',uid),('write_uid','=',uid)])
+                encrypt_password_id = encrypt_password_ids and encrypt_password_ids[0] or False
+                if encrypt_password_id:
+                    passwordkey = obj_encrypt_password.browse(cr, uid, encrypt_password_id).name
+                    dec = ARC4.new(passwordkey)
+                    try:
+                        desencripted = dec.decrypt(base64.b64decode(rec.password))
+                        unicode(desencripted, 'ascii')
+                        raise osv.except_osv(rec.login+_(' password:'), desencripted)
+                    except UnicodeDecodeError:
+                        raise osv.except_osv(_('Error !'), _('Wrong encrypt/decrypt password.'))
+                else:
+                    raise osv.except_osv(_('Error !'), _('Not encrypt/decrypt password has given.'))
+        return True
+
 network_software_logpass()
 
 
@@ -139,3 +200,17 @@ class network_service(osv.osv):
         return {'value':{'public_port': port}}
 
 network_service()
+
+
+class network_encrypt_password(osv.osv_memory):
+    _name = 'network.encrypt.password'
+    _columns = {
+        'name': fields.char('Encrypt/Decrypt password', size=100),
+    }
+
+    def create(self, cr, uid, vals, context=None):
+        encrypt_password_ids = self.search(cr, uid, [('create_uid','=',uid),('write_uid','=',uid)], context=context)
+        self.unlink(cr, uid, encrypt_password_ids, context=context)
+        return super(osv.osv_memory, self).create(cr, uid, vals, context=context)
+
+network_encrypt_password()

@@ -8,6 +8,7 @@
    		</record>
         <record id="group0" model="crm.bayes.group">
             <field name="name">Languange</field>
+            <field name="active">True</field>
         </record>
         
         <record id="cat_english" model="crm.bayes.categories">
@@ -23,6 +24,31 @@
         <record id="cat_spanish" model="crm.bayes.categories">
             <field name="name">Spanish</field>
             <field name="group_id"  ref="group0"/>
+        </record>   
+        
+        
+        <record id="rule_english" model="crm.case.rule">
+        	<field name="name">lang_english</field>
+			<field name="action">perform action and assign category</field>
+            <field name="group_id"  ref="group0"/>
+            <field name="category_id"  ref="cat_english"/>
+            <field name="act_mail_body"> English Category </field>
+        </record>
+        
+		<record id="rule_french" model="crm.case.rule">
+			<field name="name">lang_french</field>
+            <field name="action">perform action and assign category</field>
+            <field name="group_id"  ref="group0"/>
+            <field name="category_id"  ref="cat_french"/>
+            <field name="act_mail_body"> French Category </field>
+        </record>
+        
+        <record id="rule_spanish" model="crm.case.rule">
+        	<field name="name">lang_spanish</field>
+            <field name="action">perform action and assign category</field>
+            <field name="group_id"  ref="group0"/>
+            <field name="category_id"  ref="cat_spanish"/>
+            <field name="act_mail_body">Spanish Category </field>
         </record>   
         
         <record id="crm_case_en_languange" model="crm.case">

@@ -22,9 +22,14 @@
 
 from osv import fields, osv
 import string
-from reverend.thomas import Bayes
 import tools
+import copy
 
+try:
+    from reverend.thomas import Bayes
+except:
+    import netsvc
+    netsvc.Logger().notifyChannel('reverend:', netsvc.LOG_WARNING, "python-reverend package currently not install!")
 result =[]
 file_path= tools.config['addons_path'] +"/crm_bayes/"
 
@@ -34,24 +39,25 @@ class crm_bayes_group(osv.osv):
     _columns = {  
           'name': fields.char('Group Name',size=64,required=1),
           'bayes_category_ids': fields.one2many('crm.bayes.categories','group_id','Category'),
-          'train_data': fields.binary('Trained Data')
+          'train_data': fields.binary('Trained Data'),
+          'active': fields.boolean("Active"),
     }
     
     def action_reset(self, cr, uid, ids, context=None):
-        self.write(cr,uid,ids,{'train_data':''})
+        self.write(cr, uid, ids, {'train_data':''})
         cat_obj = self.pool.get('crm.bayes.categories')
         
-        cat_ids = cat_obj.search(cr,uid,[('group_id','=',ids[0])])
+        cat_ids = cat_obj.search(cr, uid,[('group_id','=',ids[0])])
         
         for id in cat_ids:
-            cat_obj.write(cr,uid,id,{'train_messages':0,'guess_messages':0,'automate_test' :0})
+            cat_obj.write(cr, uid, id, {'train_messages':0,'guess_messages':0,'automate_test' :0})
             
         case_obj = self.pool.get('crm.case')
-        case_ids = case_obj.search(cr,uid,[])
-        for rec in case_obj.read(cr,uid,case_ids,['category_id','state_bayes']):
+        case_ids = case_obj.search(cr, uid, [])
+        for rec in case_obj.read(cr, uid, case_ids, ['category_id','state_bayes']):
             if rec['category_id']:
                 if rec['category_id'][0] in cat_ids and  rec['state_bayes'] == 'trained' :
-                    case_obj.write(cr,uid,rec['id'],{'state_bayes':'untrained'})
+                    case_obj.write(cr, uid, rec['id'], {'state_bayes':'untrained'})
         return True
          
 crm_bayes_group()
@@ -65,8 +71,9 @@ class crm_bayes_categories(osv.osv):
         'train_messages': fields.integer('Training Message', readonly = True),
         'guess_messages': fields.integer('Guessed Message', readonly = True),
         'automate_test': fields.float('% Automated', readonly = True),
-        'group_id': fields.many2one('crm.bayes.group'),
+        'group_id': fields.many2one('crm.bayes.group',ondelete='cascade'),
     }
+    
     def create(self, cr, uid, vals, context={}):
         cr.execute("select seq from crm_bayes_categories where group_id = %d order by seq " % vals['group_id'])
         rec = cr.dictfetchall()
@@ -101,18 +108,29 @@ class crm_bayes_test_guess(osv.osv_memory):
             for res in range(0, len(result)):
                 result.pop(0)
         data = ""
-        for rec in group_obj.browse(cr,uid,context['active_ids']):
+        for rec in group_obj.browse(cr, uid, context['active_ids']):
             if rec['train_data']:
-                data += str(rec['train_data'])
+                data += rec['train_data']
         result_lang=[]
         if data:
             myfile = file("/tmp/crm_bayes.bay", 'w')
             myfile.write(data)
             myfile.close()
             guesser.load('/tmp/crm_bayes.bay')
-            message = self.read(cr,uid,ids,['name'])
+            message = self.read(cr, uid, ids, ['name'])
             result_lang = guesser.guess(message[0]['name'])
-        result.append(result_lang)
+            
+        cat_obj = self.pool.get('crm.bayes.categories')
+        cat_id = cat_obj.search(cr, uid, [])
+        for re in cat_obj.read(cr, uid, cat_id, ['name']):
+            flag = False
+            for r in result_lang:
+                if r[0] == re['name']:
+                    result.append(r)
+                    flag = True
+                    break
+            if not flag:
+                result.append((re['name'],0))
         context_new = {}
         context_new.update({'from_wiz':True})
         context_new.update({'group_id':context.get('active_id',False)})
@@ -124,7 +142,6 @@ class crm_bayes_test_guess(osv.osv_memory):
             'type': 'ir.actions.act_window', 
             'target':'new', 
          }
-        
 crm_bayes_test_guess()
 
 class crm_bayes_test_train(osv.osv_memory):
@@ -133,7 +150,7 @@ class crm_bayes_test_train(osv.osv_memory):
     def _default_statistics(self, cr, uid, context={}):
         text=""
         if result :
-            for re in result[0]:
+            for re in result:
                 text += str(re[0]) +"\t" + str(round(re[1] * 100,2))  +"%" +"\n"
         return text
     
@@ -150,49 +167,67 @@ class crm_bayes_test_train(osv.osv_memory):
         group_obj = self.pool.get('crm.bayes.group')
         message_obj = self.pool.get('crm.bayes.test.guess')
         for id in ids:
-            cat_id = self.read(cr,uid,id,['category_id','name'])         
+            cat_id = self.read(cr, uid, id, ['category_id','name'])         
             cat_id = cat_id[0]['category_id']
-            if  result[0] and not cat_id:        
-                max = float(result[0][0][1])
-                max_list = result[0][0]
-                for le in result[0]:
-                    if float(le[1]) > max :
-                        max = float(le[1])
-                        max_list =le
-                cat_id = cat_obj.search(cr,uid,[('name','=',max_list[0])])[0]
-                self.write(cr,uid,ids,{'category_id':cat_id})
+            if  result :
+                max_list = max(result, key=lambda k: k[1])
+                if max_list[1] > 0 and not cat_id:
+                    cat_id = cat_obj.search(cr, uid, [('name','=',max_list[0])])[0]
+                    cat_guess_msg = cat_obj.read(cr, uid, cat_id, ['guess_messages'])
+                    cat_obj.write(cr, uid, cat_id, {'guess_messages' :cat_guess_msg['guess_messages'] + 1})
+
+                    self.write(cr, uid, ids, {'category_id':cat_id})
             if cat_id :
-                cat_rec = cat_obj.read(cr,uid,cat_id,[])
+                cat_rec = cat_obj.read(cr, uid, cat_id, [])
                 guesser = Bayes()
                 data = ""
-                for rec in group_obj.browse(cr,uid,[cat_rec['group_id'][0]]):
+                for rec in group_obj.browse(cr, uid, [cat_rec['group_id'][0]]):
                     if rec['train_data']:
-                        data += str(rec['train_data'])
+                        data += rec['train_data']
                 if data :
                     myfile = file(file_path+"crm_bayes.bay", 'w')
                     myfile.write(data)
                     myfile.close()
                     guesser.load(file_path+"crm_bayes.bay")
-                guesser.train(cat_rec['name'],message_obj.read(cr,uid,id)[0]['name'])
+                    
+                guesser.train(cat_rec['name'], message_obj.read(cr, uid, id)[0]['name'])
                 guesser.save(file_path+"crm_bayes.bay")
                 myfile = file(file_path+"crm_bayes.bay", 'r')
                 data=""
                 for fi in myfile.readlines():
                     data += fi 
-                group_obj.write(cr,uid,cat_rec['group_id'][0],{'train_data': data})
-                percantage = (int(cat_rec['guess_messages']) + 1) *100  / (int(cat_rec['train_messages']) + int(cat_rec['guess_messages']) +2)
-                cat_obj.write(cr,uid,cat_id,{'train_messages':int(cat_rec['train_messages']) + 1,'guess_messages':int(cat_rec['guess_messages']) + 1,'automate_test':percantage })
+                group_obj.write(cr, uid, cat_rec['group_id'][0], {'train_data': data})
+                percantage = (int(cat_rec['guess_messages'])) *100  / (int(cat_rec['train_messages']) + int(cat_rec['guess_messages']) + 1)
+                cat_obj.write(cr, uid, cat_id, {'train_messages':int(cat_rec['train_messages']) + 1, 'guess_messages':int(cat_rec['guess_messages']), 'automate_test':percantage })
+            
             else :
                 raise osv.except_osv(_('Error !'),_('Please Select Category! '))
-        return {}
+        return {
+            'view_type': 'form', 
+            "view_mode": 'form', 
+            'res_model': 'crm.bayes.train.message', 
+            'type': 'ir.actions.act_window', 
+            'target':'new', 
+         }
     
 crm_bayes_test_train()
+
+
+class crm_bayes_train_message(osv.osv_memory):
+    _name = 'crm.bayes.train.message'
+    _columns = {
+    }
+    
+    def action_ok(self, cr, uid, ids, context=None):
+        return {}
+        
+crm_bayes_train_message()
 
 class crm_case_rule(osv.osv):
     _name = "crm.case.rule"
     _inherit = "crm.case.rule"
     _columns = {
-        'action': fields.selection([('perform action and assign category','Perform Action and assign category'),('perform action','Perform Action'),("don't perform statistic test","Don't Perform Statistic Test")], 'Action', size=32,required=1),
+        'action': fields.selection([('perform action and assign category','Perform Action and assign category'),('perform action only','Perform Action Only'),("don't perform statistic test","Don't Perform Statistic Test")], 'Action', size=32,required=1),
         'group_id': fields.many2one('crm.bayes.group','Statistic Group'),
         'category_id': fields.many2one('crm.bayes.categories','Statistic Category'),
         'main_category_rate': fields.float('Main Category Min Rate', help = 'Perform the action only if the probability to be the main category if bigger than this rate'),
@@ -201,7 +236,6 @@ class crm_case_rule(osv.osv):
     _defaults = {
         'action': lambda *a: "don't perform statistic test",
     }
-    
 crm_case_rule()
 
 class crm_case(osv.osv):
@@ -215,64 +249,143 @@ class crm_case(osv.osv):
     _defaults = {
         'state_bayes': lambda *a: 'untrained',
     }
+    def perform_action(self, cr, uid, ids, context=None):
+        cases = self.browse(cr, uid, ids)
+        for case in cases:
+            if not case.email_from :
+                raise osv.except_osv(_('Error!'),_("No E-Mail ID Found  for Partner Email!"))
+            if case.user_id and case.user_id.address_id and case.user_id.address_id.email:
+                emailfrom = case.user_id.address_id.email
+            else:
+                emailfrom = case.section_id.reply_to
+            if not emailfrom:
+                raise osv.except_osv(_('Error!'),_("No E-Mail ID Found for your Company address or missing reply address in section!"))
+        self._action(cr,uid, cases, 'open')
+        return True
     
-    def perform_action(self, cr, uid, ids, conect=None):
-        record = self.read(cr,uid,ids[0],['category_id'])
-        if not record['category_id']:
-            raise osv.except_osv(_('Error !'),_('Statistic Category  is not define '))
-        
-        return True    
+    def guess_message(self,cr,uid,ids,context={}):
+        cases = self.browse(cr, uid, ids)
+        result_lang=[]
+        if cases.description :
+            guesser = Bayes()
+            group_obj = self.pool.get('crm.bayes.group')
+            data = ""
+            for rec in group_obj.browse(cr, uid, group_obj.search(cr,uid,[('active','=',True)])):
+                if rec['train_data']:
+                    data += rec['train_data']
+            if data :
+                myfile = file("/tmp/crm_bayes.bay", 'w')
+                myfile.write(data)
+                myfile.close()
+                guesser.load('/tmp/crm_bayes.bay')
+                result_lang = guesser.guess(cases.description)
+        guess_re = []
+        for le in result_lang:
+            guess_re.append((le[0],le[1]*100))
+        return guess_re
+
+    def _action(self, cr, uid, cases, state_to, scrit=None, context={}):
+        super(crm_case, self)._action(cr, uid, cases, state_to, scrit=None, context={})
+        if not scrit:
+            scrit = []
+        action_ids = self.pool.get('crm.case.rule').search(cr, uid, scrit)
+        actions = self.pool.get('crm.case.rule').browse(cr, uid, action_ids, context)
+        category={}
+        cat_obj = self.pool.get('crm.bayes.categories')
+        cat_rec = cat_obj.read(cr, uid, cat_obj.search(cr, uid, []),['name'])
+        for cat in cat_rec:
+            category[cat['name']] = cat['id']
+        for case in cases:
+            result_perform = self.guess_message(cr, uid, case.id, context)
+            for action in actions:
+                if action.action == "perform action only"  and action.category_id == case.category_id :
+                    if result_perform:
+                        res = max(result_perform, key=lambda k: k[1])
+                        if res[1] >= action.main_category_rate:
+                            self.write(cr, uid, case.id, {'category_id':category[res[0]]})
+                            break
+                        elif action.sec_category_rate :
+                            sec_result = copy.deepcopy(result_perform)
+                            sec_result.pop(sec_result.index (max (result_perform, key=lambda k: k[1])))
+                            if sec_result:
+                                re = max(sec_result, key=lambda k: k[1])
+                                if re[1] <= action.main_category_rate and re[1] >= action.sec_category_rate:
+                                    self.write(cr, uid, case.id, {'category_id':category[re[0]]})
+                                    break
+                elif action.action == "perform action and assign category" and action.category_id == case.category_id:
+                    if result_perform :
+                        max_list = max(result_perform, key=lambda k: k[1])
+                        self.write(cr, uid, case.id, {'category_id':category[max_list[0]]})
+                        break
+        for case in cases:
+            for action in actions:
+                cate = self.read(cr, uid, case.id, ['category_id'])
+                if action.action == "don't perform statistic test":
+                    continue
+                if cate['category_id']  and case.email_from :
+                    if action.category_id.name == cate['category_id'][1]:
+                        emails = []
+                        emails.append(case.email_from)
+                        if len(emails) and action.act_mail_body:
+                            body = action.act_mail_body
+                            if case.user_id and case.user_id.address_id and case.user_id.address_id.email:
+                                emailfrom = case.user_id.address_id.email
+                            else:
+                                emailfrom = case.section_id.reply_to
+                            name = '[%d] %s' % (case.id, case.name.encode('utf8'))
+                            reply_to = case.section_id.reply_to or False
+                            if reply_to: reply_to = reply_to.encode('utf8')
+                            if emailfrom:
+                                tools.email_send(emailfrom, emails, name, body, reply_to=reply_to, tinycrm=str(case.id))
+                                break
+        return True
     
-    def trained(self, cr, uid, ids, conect=None):
+    def trained(self, cr, uid, ids, context=None):
         for id in ids:
-            record = self.read(cr,uid,id,['category_id','description'])
-            if not record['category_id']:
-                raise osv.except_osv(_('Error !'),_('Statistic Category  is not define '))
+            record = self.read(cr, uid, id, ['category_id','description'])
             if record['description']:
                 group_obj = self.pool.get('crm.bayes.group')
                 cat_obj = self.pool.get('crm.bayes.categories')
                 
-                cat_rec = cat_obj.read(cr,uid,record['category_id'][0],[])
+                cat_rec = cat_obj.read(cr, uid, record['category_id'][0], [])
                 guesser = Bayes()
                 data =""
-                for rec in group_obj.browse(cr,uid,[cat_rec['group_id'][0]]):
+                for rec in group_obj.browse(cr, uid, [cat_rec['group_id'][0]]):
                     if rec['train_data']:
-                        data += str(rec['train_data'])
+                        data += rec['train_data']
                 if data :
                     myfile = file(file_path+"crm_bayes.bay", 'w')
                     myfile.write(data)
                     myfile.close()
                     guesser.load(file_path+"crm_bayes.bay")
-                guesser.train(cat_rec['name'],record['description'])
+                guesser.train(cat_rec['name'], record['description'])
                 guesser.save(file_path+"crm_bayes.bay")
                 myfile = file(file_path+"crm_bayes.bay", 'r')
                 data=""
                 for fi in myfile.readlines():
                     data += fi
-                group_obj.write(cr,uid,cat_rec['group_id'][0],{'train_data': data})
+                group_obj.write(cr, uid, cat_rec['group_id'][0], {'train_data': data})
                 percantage = 0
                 if cat_rec.get('guess_messages',  False):
                     percantage = (int(cat_rec['guess_messages'])) *100  / (int(cat_rec['train_messages']) + int(cat_rec['guess_messages']) + 1)
     
-                cat_obj.write(cr,uid,record['category_id'][0],{'train_messages':int(cat_rec['train_messages']) + 1,'automate_test':percantage })
-                self.write(cr,uid,id,{'state_bayes':'trained'})
-            else:
-                raise osv.except_osv(_('Error !'),_('Description is not define '))
+                cat_obj.write(cr, uid, record['category_id'][0], {'train_messages':int(cat_rec['train_messages']) + 1, 'automate_test':percantage })
+                self.write(cr, uid, id, {'state_bayes':'trained'})
         return True
         
-    def untrained(self, cr, uid, ids, conect=None):
+    def untrained(self, cr, uid, ids, context=None):
         for id in ids:
-            record = self.read(cr,uid,id,['category_id','description'])
+            record = self.read(cr, uid, id, ['category_id','description'])
             if record['description']:
                 group_obj = self.pool.get('crm.bayes.group')
                 cat_obj = self.pool.get('crm.bayes.categories')
                 
-                cat_rec = cat_obj.read(cr,uid,record['category_id'][0],[])
+                cat_rec = cat_obj.read(cr, uid, record['category_id'][0],[])
                 guesser = Bayes()
-                data =""
-                for rec in group_obj.browse(cr,uid,[cat_rec['group_id'][0]]):
+                data = ""
+                for rec in group_obj.browse(cr, uid, [cat_rec['group_id'][0]]):
                     if rec['train_data']:
-                        data += str(rec['train_data'])
+                        data += rec['train_data']
                 if data :
                     myfile = file(file_path+"crm_bayes.bay", 'w')
                     myfile.write(data)
@@ -281,18 +394,16 @@ class crm_case(osv.osv):
                 guesser.untrain(cat_rec['name'],record['description'])
                 guesser.save(file_path+"crm_bayes.bay")
                 myfile = file(file_path+"crm_bayes.bay", 'r')
-                data=""
+                data= ""
                 for fi in myfile.readlines():
                     data += fi
-                group_obj.write(cr,uid,cat_rec['group_id'][0],{'train_data': data})
+                group_obj.write(cr, uid, cat_rec['group_id'][0], {'train_data': data})
                 percantage = 0
                 if cat_rec.get('guess_messages',  False):
                     percantage = (int(cat_rec['guess_messages'])) *100  / (int(cat_rec['train_messages']) + int(cat_rec['guess_messages']) - 1)
                     
-                cat_obj.write(cr,uid,record['category_id'][0],{'train_messages':int(cat_rec['train_messages']) - 1,'automate_test':percantage })
-                self.write(cr,uid,id,{'state_bayes':'untrained'})
-            else:
-                raise osv.except_osv(_('Error !'),_('Description is not define '))
+                cat_obj.write(cr, uid, record['category_id'][0], {'train_messages':int(cat_rec['train_messages']) - 1, 'automate_test':percantage })
+                self.write(cr, uid, id, {'state_bayes':'untrained'})
         return True    
     
 crm_case()
