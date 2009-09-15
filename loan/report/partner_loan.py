@@ -34,7 +34,7 @@ class partner_loan(report_sxw.rml_parse):
         res = []
         for loan in tc.browse(self.cr, self.uid, ids, {'partner_id':partner_id}):
             res.append(loan)
-            print res
+
         return res
 
     def __installment__(self,install):

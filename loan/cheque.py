@@ -220,8 +220,6 @@ class account_loan_bank_cheque(osv.osv):
     def cheque_clear(self, cr, uid, ids, context={}):
         res = False  
         for o in self.pool.get('account.loan.bank.cheque').browse(cr,uid,ids):
-            self.write(cr, uid, [o.id], {'clear_date': time.strftime('%Y-%m-%d')})
-            
-        print res    
+            self.write(cr, uid, [o.id], {'clear_date': time.strftime('%Y-%m-%d')})  
 
 account_loan_bank_cheque()
