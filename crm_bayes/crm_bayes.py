@@ -171,12 +171,11 @@ class crm_bayes_test_train(osv.osv_memory):
             cat_id = cat_id[0]['category_id']
             if  result :
                 max_list = max(result, key=lambda k: k[1])
-                if max_list[1] > 0:
-                    cat_id1 = cat_obj.search(cr, uid, [('name','=',max_list[0])])[0]
-                    cat_guess_msg = cat_obj.read(cr, uid, cat_id1, ['guess_messages'])
-                    cat_obj.write(cr, uid, cat_id1, {'guess_messages' :cat_guess_msg['guess_messages'] + 1})
                 if max_list[1] > 0 and not cat_id:
                     cat_id = cat_obj.search(cr, uid, [('name','=',max_list[0])])[0]
+                    cat_guess_msg = cat_obj.read(cr, uid, cat_id, ['guess_messages'])
+                    cat_obj.write(cr, uid, cat_id, {'guess_messages' :cat_guess_msg['guess_messages'] + 1})
+
                     self.write(cr, uid, ids, {'category_id':cat_id})
             if cat_id :
                 cat_rec = cat_obj.read(cr, uid, cat_id, [])
@@ -253,8 +252,6 @@ class crm_case(osv.osv):
     def perform_action(self, cr, uid, ids, context=None):
         cases = self.browse(cr, uid, ids)
         for case in cases:
-            if not case.category_id :
-                raise osv.except_osv(_('Error !'),_('Statistic Category  is not define '))
             if not case.email_from :
                 raise osv.except_osv(_('Error!'),_("No E-Mail ID Found  for Partner Email!"))
             if case.user_id and case.user_id.address_id and case.user_id.address_id.email:
@@ -346,8 +343,6 @@ class crm_case(osv.osv):
     def trained(self, cr, uid, ids, context=None):
         for id in ids:
             record = self.read(cr, uid, id, ['category_id','description'])
-            if not record['category_id']:
-                raise osv.except_osv(_('Error !'),_('Statistic Category  is not define '))
             if record['description']:
                 group_obj = self.pool.get('crm.bayes.group')
                 cat_obj = self.pool.get('crm.bayes.categories')
@@ -376,8 +371,6 @@ class crm_case(osv.osv):
     
                 cat_obj.write(cr, uid, record['category_id'][0], {'train_messages':int(cat_rec['train_messages']) + 1, 'automate_test':percantage })
                 self.write(cr, uid, id, {'state_bayes':'trained'})
-            else:
-                raise osv.except_osv(_('Error !'),_('Description is not define '))
         return True
         
     def untrained(self, cr, uid, ids, context=None):
@@ -411,8 +404,6 @@ class crm_case(osv.osv):
                     
                 cat_obj.write(cr, uid, record['category_id'][0], {'train_messages':int(cat_rec['train_messages']) - 1, 'automate_test':percantage })
                 self.write(cr, uid, id, {'state_bayes':'untrained'})
-            else:
-                raise osv.except_osv(_('Error !'),_('Description is not define '))
         return True    
     
 crm_case()
