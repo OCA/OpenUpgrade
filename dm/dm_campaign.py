@@ -962,6 +962,7 @@ class dm_campaign_proposition_segment(osv.osv):#{{{
         'note' : fields.text('Notes'),
         'segmentation_criteria': fields.text('Segmentation Criteria'),
         'type_census' : fields.selection([('minutes', 'Minutes'),('hour','Hours'),('day','Days'),('month','Months')], 'Census Type'),
+        'segmentation_id':fields.many2one('dm.address.segmentation','Segments'),
     }
     _order = 'deduplication_level'
     _defaults =  {
