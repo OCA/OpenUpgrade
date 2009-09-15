@@ -13,7 +13,7 @@
         <field name="type">form</field>
         <field name="inherit_id" ref="dm_extract.view_dm_address_segmentation_form"/>
         <field name="arch" type="xml">
-           <notebook position="inside" colspan="4">
+           <page string= "Customers" position="after">
                <page string="Customer Orders">
                    <field name="order_text_criteria_ids" colspan="2" nolabel="1" select="2">
                        <form string="Customer Order Textual Criteria">
@@ -64,7 +64,7 @@
                        </tree>
                    </field>
                </page>
-          	</notebook>
+          	</page>
         </field>
     </record>
 

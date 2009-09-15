@@ -34,44 +34,18 @@ class dm_address_segmentation(osv.osv): # {{{
     _description = "Order Segmentation"
 
     _columns = {
-        'order_text_criteria_ids' : fields.one2many('dm.customer.order.text_criteria', 'segmentation_id', 'Customers Order Textual Criteria'),
-        'order_numeric_criteria_ids' : fields.one2many('dm.customer.order.numeric_criteria', 'segmentation_id', 'Customers Order Numeric Criteria'),
-        'order_boolean_criteria_ids' : fields.one2many('dm.customer.order.boolean_criteria', 'segmentation_id', 'Customers Order Boolean Criteria'),
-        'order_date_criteria_ids' : fields.one2many('dm.customer.order.date_criteria', 'segmentation_id', 'Customers Order Date Criteria'),
+        'order_text_criteria_ids' : fields.one2many('dm.extract.sale.text_criteria', 'segmentation_id', 'Customers Order Textual Criteria'),
+        'order_numeric_criteria_ids' : fields.one2many('dm.extract.sale.numeric_criteria', 'segmentation_id', 'Customers Order Numeric Criteria'),
+        'order_boolean_criteria_ids' : fields.one2many('dm.extract.sale.boolean_criteria', 'segmentation_id', 'Customers Order Boolean Criteria'),
+        'order_date_criteria_ids' : fields.one2many('dm.extract.sale.date_criteria', 'segmentation_id', 'Customers Order Date Criteria'),
     }
 
-    def set_customer_criteria(self, cr, uid, id, context={}):
-        criteria=[]
-        browse_id = self.browse(cr, uid, id)
-        if browse_id.order_text_criteria_ids:
-            for i in browse_id.order_text_criteria_ids:
-                criteria.append("s.%s %s '%s'"%(i.field_id.name, i.operator, "%"+i.value+"%"))
-        if browse_id.order_numeric_criteria_ids:
-            for i in browse_id.order_numeric_criteria_ids:
-                criteria.append("s.%s %s %f"%(i.field_id.name, i.operator, i.value))
-        if browse_id.order_boolean_criteria_ids:
-            for i in browse_id.order_boolean_criteria_ids:
-                criteria.append("s.%s %s %s"%(i.field_id.name, i.operator, i.value))
-        if browse_id.order_date_criteria_ids:
-            for i in browse_id.order_date_criteria_ids:
-                criteria.append("s.%s %s '%s'"%(i.field_id.name, i.operator, i.value))
+    def set_address_criteria(self, cr, uid, id, context={}):
+        sql_query = super(dm_address_segmentation,self).set_address_criteria(cr, uid, id, context)
+        print "=========================================",sql_query
+        sql_query.replace('from','from sale_order s, ')
+        return sql_query
 
-        if criteria:
-            sql_query = ("""select distinct p.name \nfrom res_partner p, sale_order s\nwhere p.id = s.customer_id and %s\n""" % (' and '.join(criteria))).replace('isnot','is not')
-        else:
-            sql_query = """select distinct p.name \nfrom res_partner p, sale_order s\nwhere p.id = s.customer_id"""
-        return super(dm_address_segmentation,self).write(cr, uid, id, {'sql_query':sql_query})
-
-    def create(self,cr,uid,vals,context={}):
-        id = super(dm_address_segmentation,self).create(cr,uid,vals,context)
-        self.set_customer_criteria(cr, uid, id)
-        return id
-
-    def write(self, cr, uid, ids, vals, context=None):
-        id = super(dm_address_segmentation,self).write(cr, uid, ids, vals, context)
-        for i in ids:
-            self.set_customer_criteria(cr, uid, i)
-        return id
 
 dm_address_segmentation() # }}}
 
@@ -98,68 +72,68 @@ DATE_OPERATORS = [ # {{{
 ] # }}}
 
 
-class dm_customer_order_text_criteria(osv.osv): # {{{
-    _name = "dm.customer.order.text_criteria"
+class dm_extract_sale_text_criteria(osv.osv): # {{{
+    _name = "dm.extract.sale.text_criteria"
     _description = "Customer Order Segmentation Textual Criteria"
     _rec_name = "segmentation_id"
 
     _columns = {
         'segmentation_id' : fields.many2one('dm.address.segmentation', 'Segmentation'),
         'field_id' : fields.many2one('ir.model.fields','Customers Field',
-               domain=[('model_id.model','=','dm.customer.order'),
+               domain=[('model_id.model','=','sale.order'),
                ('ttype','like','char')],
-               context={'model':'dm.customer.order'}),
-        'operator' : fields.selection(TEXT_OPERATORS, 'Operator', size=32),
-        'value' : fields.char('Value', size=128),
+               context={'model':'sale.order'}, required = True),
+        'operator' : fields.selection(TEXT_OPERATORS, 'Operator', size=32, required = True),
+        'value' : fields.char('Value', size=128, required = True),
     }
-dm_customer_order_text_criteria() # }}}
+dm_extract_sale_text_criteria() # }}}
 
-class dm_customer_order_numeric_criteria(osv.osv): # {{{
-    _name = "dm.customer.order.numeric_criteria"
+class dm_extract_sale_numeric_criteria(osv.osv): # {{{
+    _name = "dm.extract.sale.numeric_criteria"
     _description = "Customer Order Segmentation Numeric Criteria"
     _rec_name = "segmentation_id"
 
     _columns = {
         'segmentation_id' : fields.many2one('dm.address.segmentation', 'Segmentation'),
         'field_id' : fields.many2one('ir.model.fields','Customers Field',
-               domain=[('model_id.model','=','dm.customer.order'),
+               domain=[('model_id.model','=','sale.order'),
                ('ttype','in',['integer','float'])],
-               context={'model':'dm.customer.order'}),
-        'operator' : fields.selection(NUMERIC_OPERATORS, 'Operator', size=32),
-        'value' : fields.float('Value', digits=(16,2)),
+               context={'model':'sale.order'}, required = True),
+        'operator' : fields.selection(NUMERIC_OPERATORS, 'Operator', size=32, required = True),
+        'value' : fields.float('Value', digits=(16,2), required = True),
     }
-dm_customer_order_numeric_criteria() # }}}
+dm_extract_sale_numeric_criteria() # }}}
 
-class dm_customer_order_boolean_criteria(osv.osv): # {{{
-    _name = "dm.customer.order.boolean_criteria"
+class dm_extract_sale_boolean_criteria(osv.osv): # {{{
+    _name = "dm.extract.sale.boolean_criteria"
     _description = "Customer Order Segmentation Boolean Criteria"
     _rec_name = "segmentation_id"
 
     _columns = {
         'segmentation_id' : fields.many2one('dm.address.segmentation', 'Segmentation'),
         'field_id' : fields.many2one('ir.model.fields','Customers Field',
-               domain=[('model_id.model','=','dm.customer.order'),
+               domain=[('model_id.model','=','sale.order'),
                ('ttype','like','boolean')],
-               context={'model':'dm.customer.order'}),
-        'operator' : fields.selection(BOOL_OPERATORS, 'Operator', size=32),
-        'value' : fields.selection([('true','True'),('false','False')],'Value'),
+               context={'model':'sale.order'}, required = True),
+        'operator' : fields.selection(BOOL_OPERATORS, 'Operator', size=32, required = True),
+        'value' : fields.selection([('true','True'),('false','False')],'Value', required = True),
     }
-dm_customer_order_boolean_criteria() # }}}
+dm_extract_sale_boolean_criteria() # }}}
 
-class dm_customer_order_date_criteria(osv.osv): # {{{
-    _name = "dm.customer.order.date_criteria"
+class dm_extract_sale_date_criteria(osv.osv): # {{{
+    _name = "dm.extract.sale.date_criteria"
     _description = "Customer Order Segmentation Date Criteria"
     _rec_name = "segmentation_id"
 
     _columns = {
         'segmentation_id' : fields.many2one('dm.address.segmentation', 'Segmentation'),
         'field_id' : fields.many2one('ir.model.fields','Customers Field',
-               domain=[('model_id.model','=','dm.customer.order'),
+               domain=[('model_id.model','=','sale.order'),
                ('ttype','in',['date','datetime'])],
-               context={'model':'dm.customer.order'}),
-        'operator' : fields.selection(DATE_OPERATORS, 'Operator', size=32),
-        'value' : fields.date('Date'),
+               context={'model':'sale.order'}, required = True),
+        'operator' : fields.selection(DATE_OPERATORS, 'Operator', size=32, required = True),
+        'value' : fields.date('Date', required = True),
     }
-dm_customer_order_date_criteria() # }}}
+dm_extract_sale_date_criteria() # }}}
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
