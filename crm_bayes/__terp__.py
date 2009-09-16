@@ -28,7 +28,7 @@
     "depends" : ['crm_configuration',"base"],
     "init_xml" : [],
     "demo_xml" : ['crm_bayes_demo.xml'],
-    "update_xml" : ["crm_bayes_wizard.xml","crm_bayes_view.xml"],
+    "update_xml" : ['crm_bayes_wizard.xml','crm_bayes_view.xml','security/ir.model.access.csv'],
     "active": False,
     "installable": True
 }
