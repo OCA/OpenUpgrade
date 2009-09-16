@@ -78,6 +78,7 @@ class query(object):
                         flag = True
                         temp_where = data[0]['query']['whereclause'][0] 
                         data[0]['query']['whereclause']=str(data[0]['query']['whereclause'][0])
+                        
                     if isinstance(type(data[0]['query']['column'][0]),type(sqlalchemy.sql.expression._Function)):
                         temp_column = data[0]['query']['column'][0]
                         data[0]['query']['column'][0] = str(data[0]['query']['column'][0])
@@ -169,8 +170,8 @@ class query(object):
                             r[0] = locale.format("%(data).2f", a, 1)
                             r[0] = currency + " "  + str(r[0])
                         elif s['format'] == 'cr_postfix_comma':
-                            r[0] = locale.format("%(data).2f", a, 1)
-                            r[0] = str(r[0]) + " " + currency
+                            a['currency'] = currency
+                            r[0] = locale.format("%(data).2f %(currency)s", a, 1)
                     cube = s['axis_mapping'].cube_set(cube, r, s['delta'])
                     value = s['axis_mapping'].value_set(r) or value
                 for s in slice:
