@@ -201,6 +201,8 @@ class crm_bayes_test_train(osv.osv_memory):
                     data += fi 
                 cr.execute("select sum(train_messages) as tot_train,sum(guess_messages) as tot_guess from crm_bayes_categories where group_id=%d"% cat_rec['group_id'][0])
                 rec = cr.dictfetchall()
+                if not rec[0]['tot_guess']:
+                    rec[0]['tot_guess'] =0
                 percantage = float(rec[0]['tot_guess'] *100)  / float(rec[0]['tot_guess'] + rec[0]['tot_train'])
                 group_obj.write(cr, uid, cat_rec['group_id'][0], {'train_data': data,'automate_test':percantage})            
             else :
