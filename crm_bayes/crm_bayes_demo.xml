@@ -30,6 +30,8 @@
         <record id="rule_english" model="crm.case.rule">
         	<field name="name">lang_english</field>
 			<field name="action">perform action and assign category</field>
+			<field name="main_category_rate"> 90.00 </field>
+			<field name="sec_category_rate"> 20.00 </field>
             <field name="group_id"  ref="group0"/>
             <field name="category_id"  ref="cat_english"/>
             <field name="act_mail_body"> English Category </field>
@@ -38,6 +40,8 @@
 		<record id="rule_french" model="crm.case.rule">
 			<field name="name">lang_french</field>
             <field name="action">perform action and assign category</field>
+            <field name="main_category_rate"> 90.00 </field>
+			<field name="sec_category_rate"> 20.00 </field>
             <field name="group_id"  ref="group0"/>
             <field name="category_id"  ref="cat_french"/>
             <field name="act_mail_body"> French Category </field>
@@ -46,6 +50,8 @@
         <record id="rule_spanish" model="crm.case.rule">
         	<field name="name">lang_spanish</field>
             <field name="action">perform action and assign category</field>
+            <field name="main_category_rate"> 90.00 </field>
+			<field name="sec_category_rate"> 20.00 </field>
             <field name="group_id"  ref="group0"/>
             <field name="category_id"  ref="cat_spanish"/>
             <field name="act_mail_body">Spanish Category </field>
