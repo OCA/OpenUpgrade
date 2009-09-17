@@ -296,56 +296,60 @@ class crm_case(osv.osv):
         super(crm_case, self)._action(cr, uid, cases, state_to, scrit=None, context={})
         if not scrit:
             scrit = []
-        action_ids = self.pool.get('crm.case.rule').search(cr, uid, scrit)
+        action_obj = self.pool.get('crm.case.rule')
+        action_ids= action_obj.search(cr, uid, scrit)
         actions = self.pool.get('crm.case.rule').browse(cr, uid, action_ids, context)
+        
         category={}
         cat_obj = self.pool.get('crm.bayes.categories')
         cat_rec = cat_obj.read(cr, uid, cat_obj.search(cr, uid, []),['name'])
         for cat in cat_rec:
             category[cat['name']] = cat['id']
+            
         for case in cases:
-            result_perform = self.guess_message(cr, uid, case.id, context)
             for action in actions:
-                if action.action == "perform action only"  and action.category_id == case.category_id :
-                    if result_perform:
-                        res = max(result_perform, key=lambda k: k[1])
-                        if res[1] >= action.main_category_rate:
-                            self.write(cr, uid, case.id, {'category_id':category[res[0]]})
-                            break
-                        elif action.sec_category_rate :
-                            sec_result = copy.deepcopy(result_perform)
-                            sec_result.pop(sec_result.index (max (result_perform, key=lambda k: k[1])))
-                            if sec_result:
-                                re = max(sec_result, key=lambda k: k[1])
-                                if re[1] <= action.main_category_rate and re[1] >= action.sec_category_rate:
-                                    self.write(cr, uid, case.id, {'category_id':category[re[0]]})
-                                    break
-                elif action.action == "perform action and assign category" and action.category_id == case.category_id:
-                    if result_perform :
-                        max_list = max(result_perform, key=lambda k: k[1])
-                        self.write(cr, uid, case.id, {'category_id':category[max_list[0]]})
+                if action.category_id == case.category_id:
+                    if action.action == "don't perform statistic test":
                         break
-        for case in cases:
-            for action in actions:
-                cate = self.read(cr, uid, case.id, ['category_id'])
-                if action.action == "don't perform statistic test":
-                    continue
-                if cate['category_id']  and case.email_from :
-                    if action.category_id.name == cate['category_id'][1]:
-                        emails = []
-                        emails.append(case.email_from)
-                        if len(emails) and action.act_mail_body:
-                            body = action.act_mail_body
-                            if case.user_id and case.user_id.address_id and case.user_id.address_id.email:
-                                emailfrom = case.user_id.address_id.email
-                            else:
-                                emailfrom = case.section_id.reply_to
-                            name = '[%d] %s' % (case.id, case.name.encode('utf8'))
-                            reply_to = case.section_id.reply_to or False
-                            if reply_to: reply_to = reply_to.encode('utf8')
-                            if emailfrom:
-                                tools.email_send(emailfrom, emails, name, body, reply_to=reply_to, tinycrm=str(case.id))
-                                break
+                    result_perform = self.guess_message(cr, uid, case.id, context)
+                    if action.action == "perform action only":
+                        if result_perform:
+                            res = max(result_perform, key=lambda k: k[1])
+                            if res[1] >= action.main_category_rate:
+                                self.write(cr, uid, case.id, {'category_id':category[res[0]]})
+                            elif action.sec_category_rate :
+                                sec_result = copy.deepcopy(result_perform)
+                                sec_result.pop(sec_result.index (max (result_perform, key=lambda k: k[1])))
+                                if sec_result:
+                                    re = max(sec_result, key=lambda k: k[1])
+                                    if re[1] <= action.main_category_rate and re[1] >= action.sec_category_rate:
+                                        self.write(cr, uid, case.id, {'category_id':category[re[0]]})
+
+                    elif action.action == "perform action and assign category" :
+                        if result_perform :
+                            max_list = max(result_perform, key=lambda k: k[1])
+                            self.write(cr, uid, case.id, {'category_id':category[max_list[0]]})
+
+                    cate = self.read(cr, uid, case.id, ['category_id'])
+                    if cate['category_id'] :
+                        a_ids = action_obj.search(cr, uid,[('category_id','=',cate['category_id'][0])])
+                        action_rec = action_obj.browse(cr,uid,a_ids[0])
+                        if action_rec:
+                            if action_rec.category_id.name == cate['category_id'][1] and case.email_from :
+                                emails = []
+                                emails.append(case.email_from)
+                                if len(emails) and action_rec.act_mail_body:
+                                    body = action_rec.act_mail_body
+                                    if case.user_id and case.user_id.address_id and case.user_id.address_id.email:
+                                        emailfrom = case.user_id.address_id.email
+                                    else:
+                                        emailfrom = case.section_id.reply_to
+                                    name = '[%d] %s' % (case.id, case.name.encode('utf8'))
+                                    reply_to = case.section_id.reply_to or False
+                                    if reply_to: reply_to = reply_to.encode('utf8')
+                                    if emailfrom:
+                                        tools.email_send(emailfrom, emails, name, body, reply_to=reply_to, tinycrm=str(case.id))
+                    break
         return True
     
     def trained(self, cr, uid, ids, context=None):
