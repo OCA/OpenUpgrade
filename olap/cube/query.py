@@ -74,8 +74,6 @@ class query(object):
                     make_where = []
                     temp_where = []
                     temp_column = []
-                    print "\n\n\n\n\n\n type==========",type(data[0]['query']['column'][0])
-                    print "Data-----------------------",data[0]['query']['column'][0]
                     if 'whereclause' in data[0]['query'].keys():
                         flag = True
                         temp_where = data[0]['query']['whereclause'][0] 
