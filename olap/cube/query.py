@@ -74,12 +74,14 @@ class query(object):
                     make_where = []
                     temp_where = []
                     temp_column = []
+                    print "\n\n\n\n\n\n type==========",type(data[0]['query']['column'][0])
+                    print "Data-----------------------",data[0]['query']['column'][0]
                     if 'whereclause' in data[0]['query'].keys():
                         flag = True
                         temp_where = data[0]['query']['whereclause'][0] 
                         data[0]['query']['whereclause']=str(data[0]['query']['whereclause'][0])
                         
-                    if isinstance(type(data[0]['query']['column'][0]),type(sqlalchemy.sql.expression._Function)):
+                    if isinstance(type(data[0]['query']['column'][0]),type(sqlalchemy.sql.expression._BindParamClause)):
                         temp_column = data[0]['query']['column'][0]
                         data[0]['query']['column'][0] = str(data[0]['query']['column'][0])
                     data_temp = copy.deepcopy(data[0])
