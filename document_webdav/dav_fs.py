@@ -163,6 +163,20 @@ class tinydav_handler(dav_interface):
 		node = self.uri2object(cr,uid,pool, uri2)
 		if not node:
 			raise DAV_NotFound(uri2)
+		try:
+			datas = node.get_data(cr)
+		except TypeError,e:
+			print "TypeError",e
+			raise DAV_Forbidden
+		except IndexError,e :
+			print "IndexError",e
+			raise DAV_NotFound(uri2)
+		except Exception,e:
+			print "exc",e
+			raise DAV_Error, 409
+		return datas
+		
+		# old code, to go!! *-*
 		if node.type=='file':
 			datas=False
 			if node.object.datas:
