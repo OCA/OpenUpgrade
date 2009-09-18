@@ -27,6 +27,7 @@ from osv.orm import except_orm
 import urlparse
 
 import os
+import nodes
 
 class document_directory(osv.osv):
     _name = 'document.directory'
@@ -40,6 +41,7 @@ class document_directory(osv.osv):
         'file_type': fields.char('Content Type', size=32),
         'domain': fields.char('Domain', size=128, help="Use a domain if you want to apply an automatic filter on visible resources."),
         'user_id': fields.many2one('res.users', 'Owner'),
+	'storage_id': fields.many2one('document.storage', 'Storage'),
         'group_ids': fields.many2many('res.groups', 'document_directory_group_rel', 'item_id', 'group_id', 'Groups'),
         'parent_id': fields.many2one('document.directory', 'Parent Item'),
         'child_ids': fields.one2many('document.directory', 'parent_id', 'Children'),
@@ -56,17 +58,33 @@ class document_directory(osv.osv):
         'ressource_tree': fields.boolean('Tree Structure',
             help="Check this if you want to use the same tree structure as the object selected in the system."),
     }
+    def _get_root_directory(self, cr,uid, context=None):
+	objid=self.pool.get('ir.model.data')
+	mid = objid._get_id(cr, uid, 'document', 'dir_root')
+	return objid.browse(cr, uid, mid, context=context).res_id
+    
+    def _get_def_storage(self,cr,uid,context=None):
+	objid=self.pool.get('ir.model.data')
+	try:
+		mid =  objid._get_id(cr, uid, 'document', 'storage_default')
+		return objid.browse(cr, uid, mid, context=context).res_id
+	except Exception:
+		return None
+	
     _defaults = {
         'user_id': lambda self,cr,uid,ctx: uid,
         'domain': lambda self,cr,uid,ctx: '[]',
         'type': lambda *args: 'directory',
-        'ressource_id': lambda *a: 0
+        'ressource_id': lambda *a: 0,
+	'parent_id': _get_root_directory,
+	'storage_id': _get_def_storage,
     }
     _sql_constraints = [
-        ('dirname_uniq', 'unique (name,parent_id,ressource_id,ressource_parent_type_id)', 'The directory name must be unique !')
+        ('dirname_uniq', 'unique (name,parent_id,ressource_id,ressource_parent_type_id)', 'The directory name must be unique !'),
+	('no_selfparent', 'check(parent_id <> id)', 'Directory cannot be parent of itself!')
     ]
 
-    def get_resource_path(self,cr,uid,dir_id,res_model,res_id):
+    def ol_get_resource_path(self,cr,uid,dir_id,res_model,res_id):
         # this method will be used in process module
         # to be need test and Improvement if resource dir has parent resource (link resource)
         path=[]
@@ -105,7 +123,7 @@ class document_directory(osv.osv):
     ]
     def __init__(self, *args, **kwargs):
         res = super(document_directory, self).__init__(*args, **kwargs)
-        self._cache = {}
+        #self._cache = {}
 
     def onchange_content_id(self, cr, uid, ids, ressource_type_id):
         return {}
@@ -118,28 +136,62 @@ class document_directory(osv.osv):
             object: the object.directory or object.directory.content
             object2: the other object linked (if object.directory.content)
     """
-    def get_object(self, cr, uid, uri, context={}):
+    def get_object(self, cr, uid, uri, context=None):
+        """ Return a node object for the given uri.
+	   This fn merely passes the call to node_context
+	"""
+	if not context:
+		context = {}
         lang = context.get('lang',False)
         if not lang:
             user = self.pool.get('res.users').browse(cr, uid, uid)
             lang = user.context_lang 
-        context['lang'] = lang
-        if not uri:
-            return node_class(cr, uid, '', False, context=context, type='database')
-        turi = tuple(uri)
-        if False and (turi in self._cache):
-            (path, oo, oo2, context, content,type,root) = self._cache[turi]
-            if oo:
-                object = self.pool.get(oo[0]).browse(cr, uid, oo[1], context)
-            else:
-                object = False
-            if oo2:
-                object2 = self.pool.get(oo2[0]).browse(cr, uid, oo2[1], context)
-            else:
-                object2 = False
-            node = node_class(cr, uid, '/', False, context=context, type='database')
-            return node
+	    context['lang'] = lang
+	    
+	print "directory.get_object",uri
+	try: #just instrumentation
+		return nodes.get_node_context(cr, uid, context).get_uri(cr,uri)
+	except Exception,e:
+		print "exception: ",e
+		raise
 
+
+    def _locate_child(self, cr,uid, root_id, uri,nparent, ncontext):
+	""" try to locate the node in uri """
+	did = root_id
+	duri = uri
+	path = []
+	print "locate:",did,duri
+	while len(duri):
+	    # TODO: resource dirs.
+	    nid = self.search(cr,uid,[('parent_id','=',did),('name','=',duri[0])])
+	    if not nid:
+		did = False
+		break
+	    if len(nid)>1:
+	        print "Duplicate dir? p= %d, n=\"%s\"" %(did,duri[0])
+	    path.append(duri[0])
+	    duri = duri[1:]
+	    did = nid[0]
+	if not did:
+	    # not found
+	    print "not found",duri
+	    return None
+	if not (duri and len(duri)):
+	    # did points to full path, it's a directory
+	    print "return a dir"
+	    return nodes.node_dir(path, nparent,ncontext,did)
+	
+	# Here, we must find the appropriate non-dir child..
+	
+	print "nothing found:",did, duri
+	#still, nothing found
+	return None
+	
+    def old_code():
+        if not uri:
+            return node_database(cr, uid, context=context)
+        turi = tuple(uri)
         node = node_class(cr, uid, '/', False, context=context, type='database')
         for path in uri[:]:
             if path:
@@ -148,10 +200,9 @@ class document_directory(osv.osv):
                     return False
         oo = node.object and (node.object._name, node.object.id) or False
         oo2 = node.object2 and (node.object2._name, node.object2.id) or False
-        self._cache[turi] = (node.path, oo, oo2, node.context, node.content,node.type,node.root)
         return node
 
-    def get_childs(self, cr, uid, uri, context={}):
+    def ol_get_childs(self, cr, uid, uri, context={}):
         node = self.get_object(cr, uid, uri, context)
         if uri:
             children = node.children()

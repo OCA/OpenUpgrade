@@ -114,7 +114,7 @@ class tinydav_handler(dav_interface):
 		if not node:
 			raise DAV_NotFound(uri2)
 		else:
-		    for d in node.children():
+		    for d in node.children(cr):
 			result.append( self.urijoin(dbname,d.path) )
 		return result
 

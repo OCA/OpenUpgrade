@@ -21,6 +21,38 @@
 ##############################################################################
 
 from osv import osv, fields
+import os
+import tools
+
+""" The algorithm of data storage
+
+We have to consider 3 cases of data /retrieval/:
+ Given (context,path) we need to access the file (aka. node).
+ given (directory, context), we need one of its children (for listings, views)
+ given (ir.attachment, context), we needs its data and metadata (node).
+
+For data /storage/ we have the cases:
+ Have (ir.attachment, context), we modify the file (save, update, rename etc).
+ Have (directory, context), we create a file.
+ Have (path, context), we create or modify a file.
+ 
+Note that in all above cases, we don't explicitly choose the storage media,
+but always require a context to be present.
+
+Note that a node will not always have a corresponding ir.attachment. Dynamic
+nodes, for once, won't. Their metadata will be computed by the parent storage
+media + directory.
+
+The algorithm says that in any of the above cases, our first goal is to locate
+the node for any combination of search criteria. It would be wise NOT to 
+represent each node in the path (like node[/] + node[/dir1] + node[/dir1/dir2])
+but directly jump to the end node (like node[/dir1/dir2]) whenever possible.
+
+We also contain all the parenting loop code in one function. This is intentional,
+because one day this will be optimized in the db (Pg 8.4).
+
+
+"""
 
 class document_storage(osv.osv):
     """ The primary object for data storage.
@@ -50,7 +82,11 @@ class document_storage(osv.osv):
 	'online': fields.boolean('Online',help="If not checked, media is currently offline and its contents not available", required=True),
 	'readonly': fields.boolean('Read Only', help="If set, media is for reading only"),
     }
-    
+
+    def _get_rootpath(self,cr,uid,context=None):
+	from tools import config
+        return os.path.join(tools.config['root_path'], 'filestore', cr.dbname)
+
     _defaults = {
         'user_id': lambda self,cr,uid,ctx: uid,
 	'online': lambda *args: True,
@@ -64,12 +100,8 @@ class document_storage(osv.osv):
 	# SQL note: a path = NULL doesn't have to be unique.
 	('path_uniq', 'UNIQUE(type,path)', "The storage path must be unique!")
 	]
-    
-    def _get_rootpath(self,cr,uid,context=None):
-	from tools import config
-	from ...
-	return config['root_path']+'filestore'
 
+document_storage()
 
 
 #eof
