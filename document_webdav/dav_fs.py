@@ -114,8 +114,10 @@ class tinydav_handler(dav_interface):
 		if not node:
 			raise DAV_NotFound(uri2)
 		else:
+		    fp = node.full_path()
+		    fp = '/'.join(fp)
 		    for d in node.children(cr):
-			result.append( self.urijoin(dbname,d.path) )
+			result.append( self.urijoin(dbname,fp,d.path) )
 		return result
 
 	def uri2local(self, uri):
@@ -209,8 +211,7 @@ class tinydav_handler(dav_interface):
 		node = self.uri2object(cr, uid, pool, uri2)
 		if not node:
 			raise DAV_NotFound(uri2)
-		if node.type=='file':
-			result = node.object.file_size or 0
+		result = node.content_length or 0
 		cr.close()
 		return str(result)
 
@@ -225,11 +226,8 @@ class tinydav_handler(dav_interface):
 		node = self.uri2object(cr,uid,pool, uri2)
 		if not node:
 			raise DAV_NotFound(uri2)
-		if node.type=='file':
-			dt = node.object.write_date or node.object.create_date
-			result = time.mktime(time.strptime(dt,'%Y-%m-%d %H:%M:%S'))
-		else:
-			result = today
+		dt = node.write_date or today
+		result = time.mktime(time.strptime(dt,'%Y-%m-%d %H:%M:%S'))
 		cr.close()
 		return result
 
@@ -244,9 +242,8 @@ class tinydav_handler(dav_interface):
 		node = self.uri2object(cr,uid,pool, uri2)
 		if not node:
 			raise DAV_NotFound(uri2)
-		if node.type=='file':
-			dt = node.object.write_date or node.object.create_date
-			result = time.strptime(dt,'%Y-%m-%d %H:%M:%S')
+		if node.create_date:
+			result =time.strptime(node.create_date,'%Y-%m-%d %H:%M:%S')
 		else:
 			result = time.time()
 		cr.close()
@@ -263,16 +260,10 @@ class tinydav_handler(dav_interface):
 			raise DAV_NotFound(uri2)
 			
 		result = 'application/octet-stream'
-		if node.type=='collection':
-			result ='httpd/unix-directory'
-		elif node.type == 'file':
-			try:
-				ftype = node.object.file_type
-				if ftype and  '/' in ftype:
-					result = ftype
-			except Exception,e:
-				self.parent.log_error( str(e))
-				pass
+		#if node.type=='collection':
+			#result ='httpd/unix-directory'
+		#else:
+		result = node.mimetype
 		cr.close()
 		return result
 		#raise DAV_NotFound, 'Could not find %s' % path
