@@ -100,6 +100,42 @@ class document_storage(osv.osv):
 	# SQL note: a path = NULL doesn't have to be unique.
 	('path_uniq', 'UNIQUE(type,path)', "The storage path must be unique!")
 	]
+	
+    def get_data_n(self, cr,uid, id, file_node,context = None):
+	""" retrieve the contents of some file_node having storage_id = id
+	"""
+        print "storage.get_data"
+	if not context:
+		context = {}
+        boo = self.browse(cr,uid,id,context)
+	ira = self.pool.get('ir.attachment').browse(cr,uid, file_node.file_id, context=context)
+	return self.__get_data_3(cr,uid,boo, ira, context)
+	
+
+    def get_data_i(self, cr, uid, ira_id, context = None):
+	if not context:
+		context = {}
+	ira_o = self.pool.get('ir.attachment')
+	ira = ira_o.browse(cr,uid,ira_id, context=context)
+	boo = ira.parent_id.storage_id
+	return self.__get_data_3(cr, uid, boo, ira, context)
+	
+	
+    def __get_data_3(self,cr,uid, boo, ira, context):
+	if not boo.online:
+		raise RuntimeError('media offline')
+	if boo.type == 'filestore':
+		fpath = os.path.join(boo.path,ira.store_fname)
+		print "Trying to read \"%s\".."% fpath
+		return file(fpath,'rb').read()
+	elif boo.type == 'db':
+		# base64?
+		return ira.db_datas
+	elif boo.type == 'realstore':
+		# fpath = os.path.join(boo.path,
+		return None
+	else:
+		raise TypeError("No %s storage" % boo.type)
 
 document_storage()
 

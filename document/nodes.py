@@ -113,6 +113,12 @@ class node_class(object):
     def path_get(self):
 	print "node_class.path_get()"
 	return False
+	
+    def get_data(self,cr):
+	raise TypeError('no data for %s'% self.type)
+
+    def _get_storage(self,cr):
+	raise RuntimeError("no storage for base class")
 
 class node_dir(node_class):
     our_type = 'collection'
@@ -174,7 +180,14 @@ class node_file(node_class):
 	self.create_date = fil.create_date
 	self.write_date = fil.write_date or fil.create_date
 	self.content_length = fil.file_size
-
+	self.storage_id = fil.parent_id.storage_id.id
+	
+    def get_data(self, cr):
+	# this is where storage kicks in..
+	stor = self.storage_id
+	assert stor
+	stobj = self.context._dirobj.pool.get('document.storage')
+	return stobj.get_data_n(cr,self.context.uid,stor, self,self.context.context)
 
 class old_class():
     # the old code, remove..
