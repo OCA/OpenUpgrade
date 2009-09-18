@@ -24,6 +24,12 @@
     "name" : "Bayesian Filter",
     "version" : "1.0",
     "author" : "Tiny",
+    "description" :  """This module allowed to automate actions to be performed on customers request, based on bayes. First we need to train some email contains in bayes to related category then after guess the email contain using bayes and then send a template of email to the customer. if no email contains is train in bayes then bayes filter will not work and no guess for any email contain. if you try to guess email contain without train email contain then no guess result is found, then can not send a template of email to the responsible customer to right category.
+
+For example, suppose you receive lots of email into sales@openerp.com. Some emails are in French, some are in English and others in Spanish. first we need to train some email contain to related category. then any email contain to guess it will filter to related category and send a template of email to the right category and to the responsible person. suppose if received email is in French language then it will automatically  send email template  in French language.
+
+Required Package:-
+    -> python-reverend""",
     "category" : "Generic Modules/Others",
     "depends" : ['crm_configuration',"base"],
     "init_xml" : [],
