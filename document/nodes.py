@@ -108,9 +108,10 @@ class node_class(object):
 
 class node_dir(node_class):
     our_type = 'collection'
-    def __init__(self,path, parent, context, dir_id):
+    def __init__(self,path, parent, context, dirr):
 	super(node_dir,self).__init__(path, parent,context)
-	self.dir_id = dir_id
+	self.dir_id = dirr.id
+	#todo: more info from dirr
 	
 
     def children(self,cr):
@@ -131,16 +132,30 @@ class node_dir(node_class):
     def _child_get(self,cr,name = None):
 	dirobj = self.context._dirobj
 	uid = self.context.uid
+	ctx = self.context.context
 	where = [('parent_id','=',self.dir_id) ]
 	if name:
 		where.append(('name','=',name))
-	ids = dirobj.search(cr, uid, where)
+	ids = dirobj.search(cr, uid, where,context=ctx)
 	res = []
 	if ids:
-	    for dirr in dirobj.browse(cr,uid,ids):
-		res.append(node_dir(dirr.name,self,self.context,dirr.id))
+	    for dirr in dirobj.browse(cr,uid,ids,context=ctx):
+		res.append(node_dir(dirr.name,self,self.context,dirr))
+		
+	fil_obj=dirobj.pool.get('ir.attachment')
+	ids = fil_obj.search(cr,uid,where,context=ctx)
+	if ids:
+	    for fil in fil_obj.browse(cr,uid,ids,context=ctx):
+		res.append(node_file(fil.name,self,self.context,fil))
 	
 	return res
+
+class node_file(node_class):
+    our_type = 'file'
+    def __init__(self,path, parent, context, fil):
+	super(node_file,self).__init__(path, parent,context)
+	self.file_id = fil.id
+	#todo: more info from ir_attachment
 
 class old_class():
     # the old code, remove..
