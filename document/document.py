@@ -72,6 +72,7 @@ class document_file(osv.osv):
 
     def _data_get(self, cr, uid, ids, name, arg, context):
         result = {}
+	raise Exception('*-*')
         cr.execute('select id,store_fname,link from ir_attachment where id in ('+','.join(map(str,ids))+')')
         for id,r,l in cr.fetchall():
             try:
@@ -91,6 +92,7 @@ class document_file(osv.osv):
     def _data_set(self, cr, obj, id, name, value, uid=None, context={}):
         if not value:
             return True
+	raise Exception('*-*')
         #if (not context) or context.get('store_method','fs')=='fs':
         try:
             path = self._get_filestore(cr)
