@@ -77,6 +77,10 @@ class node_database():
 
 
 class node_class(object):
+    """ this is a superclass for our inodes
+        It is an API for all code that wants to access the document files. 
+	Nodes have attributes which contain usual file properties
+	"""
     our_type = 'baseclass'
     def __init__(self, path, parent, context):
 	assert isinstance(context,node_context)
@@ -85,13 +89,17 @@ class node_class(object):
         self.context = context
         self.type=self.our_type
 	self.parent = parent
+	self.mimetype = 'application/octet-stream'
+	self.create_date = None
+	self.write_date = None
+	self.content_length = 0
 	
     def full_path(self):
-	if parent:
-	    s = parent.full_path()
+	if self.parent:
+	    s = self.parent.full_path()
 	else:
 	    s = []
-	s.append(self.path)
+	s+=self.path
 	return s
 
     def children(self):
@@ -112,6 +120,11 @@ class node_dir(node_class):
 	super(node_dir,self).__init__(path, parent,context)
 	self.dir_id = dirr.id
 	#todo: more info from dirr
+	self.mimetype = 'application/x-directory'
+		# 'httpd/unix-directory'
+	self.create_date = dirr.create_date
+	self.write_date = dirr.write_date or dirr.create_date
+	self.content_length = 0
 	
 
     def children(self,cr):
@@ -156,6 +169,12 @@ class node_file(node_class):
 	super(node_file,self).__init__(path, parent,context)
 	self.file_id = fil.id
 	#todo: more info from ir_attachment
+	if fil.file_type and '/' in fil.file_type:
+		self.mimetype = fil.file_type
+	self.create_date = fil.create_date
+	self.write_date = fil.write_date or fil.create_date
+	self.content_length = fil.file_size
+
 
 class old_class():
     # the old code, remove..
