@@ -21,7 +21,7 @@ var aSlider = {
         jQuery(".messaging",p).css("display","none");
         jQuery(".scr_title",p).css("display","none");
         itemLength = jQuery(".item",p).length;
-       	
+       
        	if (itemLength < '4'){
        		jQuery(".next",p).css("display","none");
        		return false;
@@ -46,10 +46,10 @@ var aSlider = {
                     jQuery(".prev",p).css("display","block");
                     jQuery(".container",p).animate({left: animateLeft}, s.newsSpeed, function() {
                         jQuery(this).css("left",animateLeft);
-                        if (parseInt(jQuery(".container",p).css("left")) + parseInt(jQuery(".container",p).css("width")) > aSlider.itemWidth * 2) {
+                        
+                        if (parseInt(jQuery(".container",p).css("left")) + parseInt(jQuery(".container",p).css("width")) > aSlider.itemWidth * 20) {                     
                             jQuery(".next",p).css("display","none");
                         }
-                        jQuery(".next",p).css("display","none");
                         animating = false;
                     });
                 } else {
