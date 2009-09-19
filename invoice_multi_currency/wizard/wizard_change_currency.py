@@ -32,9 +32,14 @@ class wizard_change_currency(wizard.interface):
     <form string="Invoice Currency">
         <field name="currency_id"/>
     </form>'''
-
+    
+    message = '''<?xml version="1.0"?>
+    <form string="Invoice Currency">
+        <label string="You can not change currency for Open Invoice !"/>
+    </form>'''
+    
     fields = {
-        'currency_id': {'string': 'New Currency', 'type': 'many2one', 'relation': 'res.currency'},
+        'currency_id': {'string': 'New Currency', 'type': 'many2one', 'relation': 'res.currency', 'required':True},
     }
 
     def _get_defaults(self, cr, user, data, context):
@@ -73,15 +78,31 @@ class wizard_change_currency(wizard.interface):
                 inv_line_obj.write(cr, uid, [line.id], {'price_unit':new_price})
             inv_obj.write(cr, uid, [invoice.id], {'currency_id':new_currency})
         return {}
-    
+
+    def _check_what_next(self, cr, uid, data, context):
+        pool = pooler.get_pool(cr.dbname)
+        inv_obj = pool.get('account.invoice')
+        if inv_obj.browse(cr, uid, data['id']).state != 'draft':
+            return 'message'
+            
+        return 'change'
+        
     states = {
         'init': {
-            'actions': [_get_defaults],
-            'result': {'type': 'form', 'arch': form, 'fields': fields, 'state': (('end', 'Cancel'), ('next', 'Process'))},
+            'actions': [],
+            'result': {'type': 'choice', 'next_state': _check_what_next},
+        },
+        'change': {
+            'actions': [],
+            'result': {'type': 'form', 'arch': form, 'fields': fields, 'state': (('end', 'Cancel'), ('next', 'Change Currency'))},
         },
         'next': {
             'actions': [_change_currency],
             'result': {'type': 'state', 'state': 'end'},
+        },
+        'message': {
+            'actions': [],
+            'result': {'type': 'form', 'arch': message, 'fields': {}, 'state': [('end', 'Ok')]},
         },
     }
 wizard_change_currency('account.invoice.currency_change')
