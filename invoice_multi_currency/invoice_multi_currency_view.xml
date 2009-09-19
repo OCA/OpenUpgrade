@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>   
+        <record id="view_invoice_line_form_inherit" model="ir.ui.view">
+            <field name="name">account.invoice.line.form.inherit</field>
+            <field name="model">account.invoice.line</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.view_invoice_line_form"/>
+            <field name="arch" type="xml">
+                <field name="product_id" position="replace">
+                    <field name="product_id" on_change="product_id_change(product_id, uos_id, parent.currency_id, parent.company_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position)" select="1"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>
