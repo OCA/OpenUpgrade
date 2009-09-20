@@ -19,7 +19,7 @@ from osv import osv,fields
 class product_product(osv.osv):
     _inherit = "product.template"
     _columns = {
-        'categ_id': fields.many2one('product.category','Pricing/Primary Category',change_default=True),
+        'categ_id': fields.many2one('product.category','Pricing/Primary Category', required=True, change_default=True),
         'categ_ids': fields.many2many('product.category','product_categ_rel','product_id','categ_id','Product Categories')
     }
 product_product()
