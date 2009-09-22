@@ -222,6 +222,35 @@ class document_storage(osv.osv):
 	else:
 		raise TypeError("No %s storage" % boo.type)
 
+    def prepare_unlink(self,cr,uid,storage_bo, fil_bo):
+	""" Before we unlink a file (fil_boo), prepare the list of real
+	files that have to be removed, too. """
+	
+	if not storage_bo.online:
+		raise RuntimeError('media offline')
+	
+	if storage_bo.type == 'filestore':
+	    fname = fil_bo.store_fname
+	    if not fname:
+		return None
+	    path = storage_bo.path
+	    return ( storage_bo.id, 'file', os.path.join(path,fname))
+	elif storage_bo.type == 'db':
+	    return None
+	else:
+	    raise TypeError("No %s storage" % boo.type)
+
+    def do_unlink(self, cr,uid,unres):
+	for id, ktype, fname in unres:
+	    if ktype == 'file':
+	        try:
+		    os.unlink(fname)
+		except Exception,e:
+		    netsvc.Logger().notifyChannel('document',netsvc.LOG_WARNING,"Could not remove file %s, please remove manually." % fname)
+	    else:
+		    netsvc.Logger().notifyChannel('document',netsvc.LOG_WARNING,"Unknown unlink key %s" % ktype)
+	
+	return True
 	
 
 document_storage()

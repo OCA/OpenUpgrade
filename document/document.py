@@ -192,12 +192,21 @@ class document_file(osv.osv):
         return result
 
     def unlink(self,cr, uid, ids, context={}):
+        stor = self.pool.get('document.storage')
+	unres= []
+	# We have to do the unlink in 2 stages: prepare a list of actual
+	# files to be unlinked, update the db (safer to do first, can be
+	# rolled back) and then unlink the files. The list wouldn't exist
+	# after we discard the objects
+	
         for f in self.browse(cr, uid, ids, context):
-            #if f.store_method=='fs':
-            try:
-                os.unlink(os.path.join(self._get_filestore(cr), f.store_fname))
-            except:
-                pass
-        return super(document_file, self).unlink(cr, uid, ids, context)
+	    # TODO: update the node cache
+	    r = stor.prepare_unlink(cr,uid,f.parent_id.storage_id, f)
+	    if r:
+		unres.append(r)
+        res = super(document_file, self).unlink(cr, uid, ids, context)
+	stor.do_unlink(cr,uid,unres)
+	return res
+	
 document_file()
 
