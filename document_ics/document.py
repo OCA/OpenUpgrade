@@ -30,6 +30,8 @@ import time
 import random
 import tools
 
+from tools.safe_eval import safe_eval
+
 ICS_TAGS = {
     'summary':'normal',
     'uid':'normal' ,
@@ -67,15 +69,27 @@ class document_directory_content(osv.osv):
     _defaults = {
         'ics_domain': lambda *args: '[]'
     }
-    def process_write_ics(self, cr, uid, node, data, context={}):
+    def _file_get(self, cr, node, nodename,content):
+	if not content.obj_iterate:
+		return super(document_directory_content, self)._file_get(cr,node,nodename,content)
+	else:
+		print "iterate over ", content.object_id.model
+		mod = self.pool.get(content.object_id.model)
+		where = []
+		
+		# *-*
+		return False
+
+    def process_write(self, cr, uid, node, data, context=None):
+	if node.extension != '.ics':
+		return super(document_directory_content).process_write(cr, uid, node, data, context)
         import vobject
         parsedCal = vobject.readOne(data)
         fields = {}
-        fobj = self.pool.get('document.directory.content')
-        content = fobj.browse(cr, uid, node.content.id, context)
+        content = self.browse(cr, uid, node.cnt_id, context)
 
         idomain = {}
-        for d in eval(content.ics_domain):
+        for d in safe_eval(content.ics_domain,{}):
             idomain[d[0]]=d[2]
         for n in content.ics_field_ids:
             fields[n.name] = n.field_id.name
@@ -106,18 +120,22 @@ class document_directory_content(osv.osv):
 
         return True
 
-    def process_read_ics(self, cr, uid, node, context={}):
+    def process_read(self, cr, uid, node, context=None):
         def ics_datetime(idate, short=False):
             if short:
                 return datetime.date.fromtimestamp(time.mktime(time.strptime(idate, '%Y-%m-%d')))
             else:
                 return datetime.datetime.strptime(idate, '%Y-%m-%d %H:%M:%S')
 
+	if node.extension != '.ics':
+		return super(document_directory_content).process_read(cr, uid, node, context)
+
         import vobject
-        obj_class = self.pool.get(node.content.object_id.model)
+        content = self.browse(cr, uid, node.cnt_id, context)
+        obj_class = self.pool.get(content.object_id.model)
         # Can be improved to use context and active_id !
-        domain = eval(node.content.ics_domain)
-        ids = obj_class.search(cr, uid, domain, context)
+        domain = safe_eval(content.ics_domain,{})
+        ids = obj_class.search(cr, uid, domain, context=context)
         cal = vobject.iCalendar()
         for obj in obj_class.browse(cr, uid, ids, context):
             event = cal.add('vevent')
@@ -127,10 +145,10 @@ class document_directory_content(osv.osv):
             event.add('dtstamp').value = ics_datetime(perm[0]['create_date'][:19])
             if perm[0]['write_date']:
                 event.add('last-modified').value = ics_datetime(perm[0]['write_date'][:19])
-            for field in node.content.ics_field_ids:
+            for field in content.ics_field_ids:
                 value = getattr(obj, field.field_id.name)
                 if (not value) and field.name=='uid':
-                    value = 'OpenERP-%s_%s@%s' % (node.content.object_id.model, str(obj.id), cr.dbname,)
+                    value = 'OpenERP-%s_%s@%s' % (content.object_id.model, str(obj.id), cr.dbname,)
                     obj_class.write(cr, uid, [obj.id], {field.field_id.name: value})
                 if ICS_TAGS[field.name]=='normal':
                     if type(value)==type(obj):
@@ -147,8 +165,7 @@ class document_directory_content(osv.osv):
                     else:
                         value = ics_datetime(value)
                     event.add(field.name).value = value
-        s= StringIO.StringIO(cal.serialize())
-        s.name = node
+        s= cal.serialize()
         cr.commit()
         return s
 document_directory_content()
