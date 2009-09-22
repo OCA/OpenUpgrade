@@ -28,7 +28,6 @@ import urlparse
 import os
 
 import pooler
-from content_index import cntIndex
 import netsvc
 #import StringIO
 
@@ -145,21 +144,6 @@ class document_file(osv.osv):
             raise except_orm(_('ValidateError'), _('File name must be unique!'))
         result = super(document_file,self).write(cr,uid,ids,vals,context=context)
         cr.commit()
-        try:
-            for f in self.browse(cr, uid, ids, context=context):
-                #if 'datas' not in vals:
-                #    vals['datas']=f.datas
-		mime,res = cntIndex.doIndex(base64.decodestring(vals['datas']), f.datas_fname, 
-			f.file_type or None,f.store_fname)
-		wval = {'index_content': res,}
-		if (not f.file_type ) and mime:
-			wval['file_type'] = mime
-		super(document_file,self).write(cr, uid, [f.id], wval )
-            cr.commit()
-        except Exception,e:
-	    logger = netsvc.Logger()
-	    logger.notifyChannel('document', netsvc.LOG_DEBUG, 'Cannot index file: %s' % str(e))
-            pass
         return result
 
     def create(self, cr, uid, vals, context=None):
@@ -205,18 +189,6 @@ class document_file(osv.osv):
             raise except_orm(_('ValidateError'), _('File name must be unique!'))
         result = super(document_file,self).create(cr, uid, vals, context)
         cr.commit()
-        try:
-            mime,res = cntIndex.doIndex(base64.decodestring(datas), vals['datas_fname'], 
-		vals.get('file_type', None),vals.get('store_fname',None))
-	    wval = {'index_content': res,}
-	    if (not vals.get('file_type',False)) and mime:
-		wval['file_type'] = mime
-            super(document_file,self).write(cr, uid, [result], wval )
-            cr.commit()
-        except Exception,e:
-	    logger = netsvc.Logger()
-	    logger.notifyChannel('document', netsvc.LOG_DEBUG, 'Cannot index file: %s' % str(e))
-            pass
         return result
 
     def unlink(self,cr, uid, ids, context={}):

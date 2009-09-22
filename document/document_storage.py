@@ -30,6 +30,8 @@ from osv.orm import except_orm
 import random
 import string
 import netsvc
+from content_index import cntIndex
+
 
 """ The algorithm of data storage
 
@@ -168,6 +170,7 @@ class document_storage(osv.osv):
 	if not context:
 		context = {}
         boo = self.browse(cr,uid,id,context)
+	logger = netsvc.Logger()
 	if fil_obj:
 		ira = fil_obj
 	else:
@@ -175,7 +178,7 @@ class document_storage(osv.osv):
 		
 	if not boo.online:
 		raise RuntimeError('media offline')
-	netsvc.Logger().notifyChannel('document',netsvc.LOG_DEBUG,"Store data for ir.attachment #%d" %ira.id)
+	logger.notifyChannel('document',netsvc.LOG_DEBUG,"Store data for ir.attachment #%d" %ira.id)
 	if boo.type == 'filestore':
 	    path = boo.path
 	    try:
@@ -191,17 +194,27 @@ class document_storage(osv.osv):
 		fp = file(fname,'wb')
 		fp.write(data)
 		fp.close()
-		netsvc.Logger().notifyChannel('document',netsvc.LOG_DEBUG,"Saved data to %s" % fname)
+		logger.notifyChannel('document',netsvc.LOG_DEBUG,"Saved data to %s" % fname)
 		filesize = len(data) # os.stat(fname).st_size
 		
 		# TODO Here, an old file would be left hanging.
 
+		icont = ''
+		mime = ira.file_type
+		try:
+			mime,icont = cntIndex.doIndex(data, ira.datas_fname, 
+				ira.file_type or None,fname)
+		except Exception,e:
+			logger.notifyChannel('document', netsvc.LOG_DEBUG, 'Cannot index file: %s' % str(e))
+			pass
+
 		# a hack: /assume/ that the calling write operation will not try
 		# to write the fname and size, and update them in the db concurrently.
 		# We cannot use a write() here, because we are already in one.
-		cr.execute('UPDATE ir_attachment SET store_fname = %s, file_size = %s WHERE id = %s',
-			(os.path.join(flag,filename), filesize, file_node.file_id ))
+		cr.execute('UPDATE ir_attachment SET store_fname = %s, file_size = %s, index_content = %s, file_type = %s WHERE id = %s',
+			(os.path.join(flag,filename), filesize, icont, mime, file_node.file_id ))
 		file_node.content_length = filesize
+		file_node.content_type = mime
 		return True
             except Exception,e :
 		netsvc.Logger().notifyChannel('document',netsvc.LOG_WARNING,"Couldn't save data: %s" %str(e))
