@@ -236,6 +236,12 @@ class node_res_dir(node_class):
         return None
 
     def _child_get(self,cr,name = None):
+        """ return virtual children of resource, based on the
+	    foreign object.
+	    
+	    Note that many objects use NULL for a name, so we should
+	    better call the name_search(),name_get() set of methods
+	"""
 	obj = self.context._dirobj.pool.get(self.res_model)
 	if not obj:
 		print "couldn't find model", self.res_model
@@ -243,8 +249,6 @@ class node_res_dir(node_class):
 	uid = self.context.uid
 	ctx = self.context.context
 	where = []
-	if name:
-		where.append(('name','=',name))
 	if self.domain:
 		where.append(self.domain)
 	if self.resm_id:
@@ -252,12 +256,14 @@ class node_res_dir(node_class):
 	
 	print "Where clause for %s" % self.res_model, where
 	
-	resids = obj.search(cr,uid,where,context=ctx)
-	if not resids:
-		return []
+	if name:
+		rest = obj.name_search(cr,uid,name,where, operator='=', context=ctx)
+	else:
+		resids = obj.search(cr,uid,where,context=ctx)
+		rest = obj.name_get(cr,uid,resids,context=ctx)
 	res = []
-	for bo in obj.browse(cr,uid,resids,context=ctx):
-		res.append(node_res_obj(bo.name,self,self.context,self.res_model, bo.id))
+	for id,name in rest:
+		res.append(node_res_obj(name,self,self.context,self.res_model, id))
 	return res
 	
 class node_res_obj(node_class):
