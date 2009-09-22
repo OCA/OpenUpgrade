@@ -344,9 +344,30 @@ class tinydav_handler(dav_interface):
 			node = self.uri2object(cr,uid,pool, uri2[:])
 		except:
 			node = False
-		fobj = pool.get('ir.attachment')
 		objname = uri2[-1]
 		ext = objname.find('.') >0 and objname.split('.')[1] or False
+
+		if not node:
+			dir_node = self.uri2object(cr,uid,pool, uri2[:-1])
+			if not dir_node:
+				raise DAV_NotFound('Parent folder not found')
+			try:
+			    dir_node.create_child(cr,objname,data)
+			except Exception,e:
+			    self.parent.log_error("Cannot create %s: %s" %(objname, str(e)))
+			    raise DAV_Forbidden
+		else:
+			try:
+			    node.set_data(cr,data)
+			except Exception,e:
+			    self.parent.log_error("Cannot create %s: %s" %(objname, str(e)))
+			    raise DAV_Forbidden
+			
+		cr.commit()
+
+		return 201
+		
+		# OLD code *-*:
 		if node and node.type=='file':
 			val = {
 				'file_size': len(data),
@@ -378,13 +399,6 @@ class tinydav_handler(dav_interface):
 					'res_id': object2.id
 				})
 			cid = fobj.create(cr, uid, val)
-			cr.commit()
-
-			# TODO: Test Permissions
-			if False:
-				raise DAV_Forbidden
-			cr.close()
-			return 201
 		else:
 			raise DAV_Forbidden
 
@@ -393,7 +407,7 @@ class tinydav_handler(dav_interface):
 		if uri[-1]=='/':uri=uri[:-1]
 
 		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
-		if not dbname:
+		if True or not dbname: # *-*
 			raise DAV_Error, 409
 		node = self.uri2object(cr,uid,pool, uri2)
 		object2=node and node.object2 or False
@@ -414,7 +428,8 @@ class tinydav_handler(dav_interface):
 
 		object=False
 		cr, uid, pool,dbname, uri2 = self.get_cr(uri)
-		if not dbname:
+		#if not dbname:
+		if True:
 			raise DAV_Error, 409
 		node = self.uri2object(cr,uid,pool, uri2)
 		object2=node and node.object2 or False
