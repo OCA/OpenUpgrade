@@ -103,6 +103,7 @@ class tinydav_handler(dav_interface):
 
 	def get_childs(self,uri):
 		""" return the child objects as self.baseuris for the given URI """
+		self.parent.log_message('get childs: %s' % uri)
 		if uri[-1]=='/':uri=uri[:-1]
 		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
 		
@@ -115,9 +116,17 @@ class tinydav_handler(dav_interface):
 			raise DAV_NotFound(uri2)
 		else:
 		    fp = node.full_path()
-		    fp = '/'.join(fp)
+		    if fp and len(fp):
+			self.parent.log_message('childs: @%s' % fp)
+			fp = '/'.join(fp)
+		    else:
+			fp = None
 		    for d in node.children(cr):
-			result.append( self.urijoin(dbname,fp,d.path) )
+			self.parent.log_message('child: %s' % d.path)
+			if fp:
+				result.append( self.urijoin(dbname,fp,d.path) )
+			else:
+				result.append( self.urijoin(dbname,d.path) )
 		return result
 
 	def uri2local(self, uri):
@@ -156,6 +165,7 @@ class tinydav_handler(dav_interface):
 		return pool.get('document.directory').get_object(cr, uid, uri)
 
 	def get_data(self,uri):
+		self.parent.log_message('GET: %s' % uri)
 		if uri[-1]=='/':uri=uri[:-1]
 		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
 		if not dbname:
@@ -198,6 +208,7 @@ class tinydav_handler(dav_interface):
 	@memoize(CACHE_SIZE)
 	def _get_dav_resourcetype(self,uri):
 		""" return type of object """
+		self.parent.log_message('get RT: %s' % uri)
 		if uri[-1]=='/':uri=uri[:-1]
 		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
 		if not dbname:
@@ -217,6 +228,7 @@ class tinydav_handler(dav_interface):
 	@memoize(CACHE_SIZE)
 	def _get_dav_getcontentlength(self,uri):
 		""" return the content length of an object """
+		self.parent.log_message('get length: %s' % uri)
 		if uri[-1]=='/':uri=uri[:-1]
 		result = 0
 		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
@@ -265,6 +277,7 @@ class tinydav_handler(dav_interface):
 
 	@memoize(CACHE_SIZE)
 	def _get_dav_getcontenttype(self,uri):
+		self.parent.log_message('get contenttype: %s' % uri)
 		if uri[-1]=='/':uri=uri[:-1]
 		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
 		if not dbname:
