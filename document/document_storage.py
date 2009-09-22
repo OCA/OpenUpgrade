@@ -189,11 +189,10 @@ class document_storage(osv.osv):
 		filename = random_name()
 		fname = os.path.join(path, flag, filename)
 		fp = file(fname,'wb')
-		v = base64.decodestring(data)
-		fp.write(v)
+		fp.write(data)
 		fp.close()
 		netsvc.Logger().notifyChannel('document',netsvc.LOG_DEBUG,"Saved data to %s" % fname)
-		filesize = len(v) # os.stat(fname).st_size
+		filesize = len(data) # os.stat(fname).st_size
 		
 		# TODO Here, an old file would be left hanging.
 

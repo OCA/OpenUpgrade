@@ -68,7 +68,7 @@ class document_file(osv.osv):
 	fbro = self.browse(cr,uid,id,context=context)
 	nctx = nodes.get_node_context(cr,uid,context)
 	fnode = nodes.node_file(None,None,nctx,fbro)
-	res = fnode.set_data(cr,value,fbro)
+	res = fnode.set_data(cr,base64.decodestring(value),fbro)
 	return res
 
     _columns = {
