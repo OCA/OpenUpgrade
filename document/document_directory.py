@@ -64,6 +64,11 @@ class document_directory(osv.osv):
 	return objid.browse(cr, uid, mid, context=context).res_id
     
     def _get_def_storage(self,cr,uid,context=None):
+	if context and context['default_parent_id']:
+		# Use the same storage as the parent..
+		diro = self.browse(cr,uid,context['default_parent_id'])
+		if diro.storage_id:
+			return diro.storage_id.id
 	objid=self.pool.get('ir.model.data')
 	try:
 		mid =  objid._get_id(cr, uid, 'document', 'storage_default')
