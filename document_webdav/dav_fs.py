@@ -176,7 +176,6 @@ class tinydav_handler(dav_interface):
 		try:
 			datas = node.get_data(cr)
 		except TypeError,e:
-			print "TypeError",e
 			raise DAV_Forbidden
 		except IndexError,e :
 			print "IndexError",e
