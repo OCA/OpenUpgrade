@@ -153,7 +153,6 @@ class document_directory(osv.osv):
             lang = user.context_lang 
 	    context['lang'] = lang
 	    
-	print "directory.get_object",uri
 	try: #just instrumentation
 		return nodes.get_node_context(cr, uid, context).get_uri(cr,uri)
 	except Exception,e:
@@ -180,7 +179,6 @@ class document_directory(osv.osv):
 	    did = nid[0]
 	if did and not (duri and len(duri)):
 	    # did points to full path, it's a directory
-	    print "return a dir"
 	    return nodes.node_dir(path, nparent,ncontext,self.browse(cr,uid,did, context))
 	
 	# Here, we must find the appropriate non-dir child..
@@ -190,7 +188,6 @@ class document_directory(osv.osv):
 	if nid:
 		if len(duri)>1:
 			# cannot treat child as a dir
-			print "requested child of file"
 			return None
 		if len(nid)>1:
 			print "Duplicate file?",did,duri[0]

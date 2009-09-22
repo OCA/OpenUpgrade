@@ -61,8 +61,6 @@ class node_context(object):
     def get_uri(self, cr,  uri):
 	""" Although this fn passes back to doc.dir, it is needed since
 	it is a potential caching point """
-	print "node get uri:",uri
-	
 	return self._dirobj._locate_child(cr,self.uid, self.rootdir,uri, None, self)
 
 
@@ -205,7 +203,7 @@ class node_file(node_class):
 	return self.content_length
 
     def set_data(self, cr, data, fil_obj = None):
-	""" Retrieve the data for some file. 
+	""" Store data at some file. 
 	    fil_obj may optionally be specified, and should be a browse object
 	    for the file. This is useful when the caller has already initiated
 	    the browse object. """
