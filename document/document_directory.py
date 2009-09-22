@@ -166,7 +166,6 @@ class document_directory(osv.osv):
 	duri = uri
 	path = []
 	context = ncontext.context
-	print "locate:",did,duri
 	while len(duri):
 	    # TODO: resource dirs.
 	    nid = self.search(cr,uid,[('parent_id','=',did),('name','=',duri[0])], context=context)

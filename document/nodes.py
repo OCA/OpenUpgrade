@@ -167,6 +167,27 @@ class node_dir(node_class):
 		res.append(node_file(fil.name,self,self.context,fil))
 	
 	return res
+	
+    def create_child(self,cr,path,data):
+	""" API function to create a child file object and node
+	    Return the node_* created
+	"""
+	dirobj = self.context._dirobj
+	uid = self.context.uid
+	ctx = self.context.context
+	fil_obj=dirobj.pool.get('ir.attachment')
+	val = {
+		'name': path,
+		'datas_fname': path,
+		'parent_id': self.dir_id,
+		# Datas are not set here
+	}
+
+	fil_id = fil_obj.create(cr,uid, val, context=ctx)
+	fil = fil_obj.browse(cr,uid,fil_id,context=ctx)
+	fnode = node_file(path,self,self.context,fil)
+	fnode.set_data(cr,data,fil)
+	return fnode
 
 class node_file(node_class):
     our_type = 'file'
