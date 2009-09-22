@@ -24,6 +24,7 @@ from osv import osv, fields
 import os
 import tools
 import base64
+from tools.misc import ustr
 
 from osv.orm import except_orm
 
@@ -212,7 +213,7 @@ class document_storage(osv.osv):
 		# to write the fname and size, and update them in the db concurrently.
 		# We cannot use a write() here, because we are already in one.
 		cr.execute('UPDATE ir_attachment SET store_fname = %s, file_size = %s, index_content = %s, file_type = %s WHERE id = %s',
-			(os.path.join(flag,filename), filesize, icont, mime, file_node.file_id ))
+			(os.path.join(flag,filename), filesize, ustr(icont), mime, file_node.file_id ))
 		file_node.content_length = filesize
 		file_node.content_type = mime
 		return True
