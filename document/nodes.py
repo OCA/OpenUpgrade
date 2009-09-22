@@ -26,6 +26,7 @@ from osv import osv, fields
 from osv.orm import except_orm
 import urlparse
 import pooler
+from tools.safe_eval import safe_eval
 
 import os
 
@@ -61,7 +62,15 @@ class node_context(object):
     def get_uri(self, cr,  uri):
 	""" Although this fn passes back to doc.dir, it is needed since
 	it is a potential caching point """
-	return self._dirobj._locate_child(cr,self.uid, self.rootdir,uri, None, self)
+	
+	(ndir, duri) =  self._dirobj._locate_child(cr,self.uid, self.rootdir,uri, None, self)
+	
+	while duri:
+	    ndir = ndir.child(cr, duri[0])
+	    if not ndir:
+		return False
+	    duri = duri[1:]
+	return ndir
 
 
 class node_database():
@@ -97,14 +106,17 @@ class node_class(object):
 	    s = self.parent.full_path()
 	else:
 	    s = []
-	s+=self.path
+	if isinstance(self.path,list):
+		s+=self.path
+	else:
+		s.append(self.path)
 	return s
 
-    def children(self):
+    def children(self, cr):
         print "node_class.children()"
 	return [] #stub
 
-    def child(self, name):
+    def child(self,cr, name):
 	print "node_class.child()"
         return None
 
@@ -158,9 +170,13 @@ class node_dir(node_class):
 	res = []
 	if ids:
 	    for dirr in dirobj.browse(cr,uid,ids,context=ctx):
-		res.append(node_dir(dirr.name,self,self.context,dirr))
+	        if dirr.type == 'directory':
+			res.append(node_dir(dirr.name,self,self.context,dirr))
+		elif dirr.type == 'ressource':
+			res.append(node_res_dir(dirr.name,self,self.context,dirr))
 		
 	fil_obj=dirobj.pool.get('ir.attachment')
+	#where2 = where # + [('res_model', '=', None)]
 	ids = fil_obj.search(cr,uid,where,context=ctx)
 	if ids:
 	    for fil in fil_obj.browse(cr,uid,ids,context=ctx):
@@ -180,6 +196,150 @@ class node_dir(node_class):
 		'name': path,
 		'datas_fname': path,
 		'parent_id': self.dir_id,
+		# Datas are not set here
+	}
+
+	fil_id = fil_obj.create(cr,uid, val, context=ctx)
+	fil = fil_obj.browse(cr,uid,fil_id,context=ctx)
+	fnode = node_file(path,self,self.context,fil)
+	fnode.set_data(cr,data,fil)
+	return fnode
+
+class node_res_dir(node_class):
+    """ A special sibling to node_dir, which does only contain dynamically
+        created folders foreach resource in the foreign model.
+	All folders should be of type node_res_obj and merely behave like
+	node_dirs (with limited domain).
+	"""
+    our_type = 'collection'
+    def __init__(self,path, parent, context, dirr):
+	super(node_res_dir,self).__init__(path, parent,context)
+	self.dir_id = dirr.id
+	#todo: more info from dirr
+	self.mimetype = 'application/x-directory'
+		# 'httpd/unix-directory'
+	self.create_date = dirr.create_date
+	# TODO: the write date should be MAX(file.write)..
+	self.write_date = dirr.write_date or dirr.create_date
+	self.content_length = 0
+	self.res_model = dirr.ressource_type_id.model
+	self.resm_id = dirr.ressource_id
+	self.domain = safe_eval(dirr.domain,{})
+
+    def children(self,cr):
+        return self._child_get(cr)
+
+    def child(self,cr, name):
+        res = self._child_get(cr,name)
+        if res:
+            return res[0]
+        return None
+
+    def _child_get(self,cr,name = None):
+	obj = self.context._dirobj.pool.get(self.res_model)
+	if not obj:
+		print "couldn't find model", self.res_model
+		return []
+	uid = self.context.uid
+	ctx = self.context.context
+	where = []
+	if name:
+		where.append(('name','=',name))
+	if self.domain:
+		where.append(self.domain)
+	if self.resm_id:
+		where.append(('id','=',self.resm_id))
+	
+	print "Where clause for %s" % self.res_model, where
+	
+	resids = obj.search(cr,uid,where,context=ctx)
+	if not resids:
+		return []
+	res = []
+	for bo in obj.browse(cr,uid,resids,context=ctx):
+		res.append(node_res_obj(bo.name,self,self.context,self.res_model, bo.id))
+	return res
+	
+class node_res_obj(node_class):
+    """ A special sibling to node_dir, which does only contain dynamically
+        created folders foreach resource in the foreign model.
+	All folders should be of type node_res_obj and merely behave like
+	node_dirs (with limited domain).
+	"""
+    our_type = 'collection'
+    def __init__(self,path, parent, context, res_model, res_id):
+	super(node_res_obj,self).__init__(path, parent,context)
+	assert parent
+	#todo: more info from dirr
+	self.dir_id = parent.dir_id
+	self.mimetype = 'application/x-directory'
+		# 'httpd/unix-directory'
+	self.create_date = parent.create_date
+	# TODO: the write date should be MAX(file.write)..
+	self.write_date = parent.write_date
+	self.content_length = 0
+	self.res_model = res_model
+	self.res_id = res_id
+	self.domain = parent.domain
+
+    def children(self,cr):
+        return self._child_get(cr) + self._file_get(cr)
+
+    def child(self,cr, name):
+        res = self._child_get(cr,name)
+        if res:
+            return res[0]
+        res = self._file_get(cr,name)
+        if res:
+            return res[0]
+        return None
+
+    def _file_get(self,cr, nodename=False):
+	return []
+
+    def _child_get(self,cr,name = None):
+	dirobj = self.context._dirobj
+	uid = self.context.uid
+	ctx = self.context.context
+	where = [('parent_id','=',self.dir_id) ]
+	if name:
+		where.append(('name','=',name))
+	ids = dirobj.search(cr, uid, where,context=ctx)
+	res = []
+	if ids:
+	    for dirr in dirobj.browse(cr,uid,ids,context=ctx):
+	        if dirr.type == 'directory':
+			res.append(node_res_obj(dirr.name,self,self.context,self.res_model,self.res_id))
+		elif dirr.type == 'ressource':
+			print "How to handle multiple resources?"
+			pass
+			# 
+			#res.append(node_res_dir(dirr.name,self,self.context,dirr))
+		
+	fil_obj=dirobj.pool.get('ir.attachment')
+	where2 = where  + [('res_model', '=', self.res_model), ('res_id','=',self.res_id)]
+	print "where clause for dir_obj", where2
+	ids = fil_obj.search(cr,uid,where2,context=ctx)
+	if ids:
+	    for fil in fil_obj.browse(cr,uid,ids,context=ctx):
+		res.append(node_file(fil.name,self,self.context,fil))
+	
+	return res
+	
+    def create_child(self,cr,path,data):
+	""" API function to create a child file object and node
+	    Return the node_* created
+	"""
+	dirobj = self.context._dirobj
+	uid = self.context.uid
+	ctx = self.context.context
+	fil_obj=dirobj.pool.get('ir.attachment')
+	val = {
+		'name': path,
+		'datas_fname': path,
+		'parent_id': self.dir_id,
+		'res_model': self.res_model,
+		'res_id': self.res_id,
 		# Datas are not set here
 	}
 

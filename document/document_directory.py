@@ -161,14 +161,15 @@ class document_directory(osv.osv):
 
 
     def _locate_child(self, cr,uid, root_id, uri,nparent, ncontext):
-	""" try to locate the node in uri """
+	""" try to locate the node in uri,
+	    Return a tuple (node_dir, remaining_path)
+	"""
 	did = root_id
 	duri = uri
 	path = []
 	context = ncontext.context
 	while len(duri):
-	    # TODO: resource dirs.
-	    nid = self.search(cr,uid,[('parent_id','=',did),('name','=',duri[0])], context=context)
+	    nid = self.search(cr,uid,[('parent_id','=',did),('name','=',duri[0]),('type','=','directory')], context=context)
 	    if not nid:
 		break
 	    if len(nid)>1:
@@ -176,10 +177,19 @@ class document_directory(osv.osv):
 	    path.append(duri[0])
 	    duri = duri[1:]
 	    did = nid[0]
-	if did and not (duri and len(duri)):
-	    # did points to full path, it's a directory
-	    return nodes.node_dir(path, nparent,ncontext,self.browse(cr,uid,did, context))
 	
+	return (nodes.node_dir(path, nparent,ncontext,self.browse(cr,uid,did, context)), duri)
+
+	
+	nid = self.search(cr,uid,[('parent_id','=',did),('name','=',duri[0]),('type','=','ressource')], context=context)
+	if nid:
+	    if len(nid)>1:
+	        print "Duplicate dir? p= %d, n=\"%s\"" %(did,duri[0])
+	    path.append(duri[0])
+	    duri = duri[1:]
+	    did = nid[0]
+	    return nodes.node_res_dir(path, nparent,ncontext,self.browse(cr,uid,did, context))
+
 	# Here, we must find the appropriate non-dir child..
 	# Chech for files:
 	fil_obj = self.pool.get('ir.attachment')
