@@ -101,30 +101,30 @@ class document_storage(osv.osv):
 	('path_uniq', 'UNIQUE(type,path)', "The storage path must be unique!")
 	]
 	
-    def get_data_n(self, cr,uid, id, file_node,context = None):
+    def get_data(self, cr,uid, id, file_node,context = None, fil_obj = None):
 	""" retrieve the contents of some file_node having storage_id = id
+	    optionally, fil_obj could point to the browse object of the file
+	    (ir.attachment)
 	"""
         print "storage.get_data"
 	if not context:
 		context = {}
         boo = self.browse(cr,uid,id,context)
-	ira = self.pool.get('ir.attachment').browse(cr,uid, file_node.file_id, context=context)
+	if fil_obj:
+		ira = fil_obj
+	else:
+		ira = self.pool.get('ir.attachment').browse(cr,uid, file_node.file_id, context=context)
 	return self.__get_data_3(cr,uid,boo, ira, context)
-	
-
-    def get_data_i(self, cr, uid, ira_id, context = None):
-	if not context:
-		context = {}
-	ira_o = self.pool.get('ir.attachment')
-	ira = ira_o.browse(cr,uid,ira_id, context=context)
-	boo = ira.parent_id.storage_id
-	return self.__get_data_3(cr, uid, boo, ira, context)
-	
 	
     def __get_data_3(self,cr,uid, boo, ira, context):
 	if not boo.online:
 		raise RuntimeError('media offline')
 	if boo.type == 'filestore':
+		if not ira.store_fname:
+			# On a migrated db, some files may have the wrong storage type
+			# try to fix their directory.
+			netsvc.Logger().notifyChannel('document',netsvc.LOG_WARNING,"ir.attachment #%d does not have a filename, but is at filestore, fix it!" %ira.id)
+			raise RuntimeError("No file for attachment #%d." % ira.id)
 		fpath = os.path.join(boo.path,ira.store_fname)
 		print "Trying to read \"%s\".."% fpath
 		return file(fpath,'rb').read()

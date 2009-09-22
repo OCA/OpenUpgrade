@@ -129,6 +129,7 @@ class node_dir(node_class):
 	self.mimetype = 'application/x-directory'
 		# 'httpd/unix-directory'
 	self.create_date = dirr.create_date
+	# TODO: the write date should be MAX(file.write)..
 	self.write_date = dirr.write_date or dirr.create_date
 	self.content_length = 0
 	
@@ -180,14 +181,28 @@ class node_file(node_class):
 	self.create_date = fil.create_date
 	self.write_date = fil.write_date or fil.create_date
 	self.content_length = fil.file_size
-	self.storage_id = fil.parent_id.storage_id.id
 	
-    def get_data(self, cr):
+	# This only propagates the problem to get_data. Better
+	# fix those files to point to the root dir.
+	if fil.parent_id:
+		self.storage_id = fil.parent_id.storage_id.id
+	else:
+		self.storage_id = None
+	
+    def get_data(self, cr, fil_obj = None):
+	""" Retrieve the data for some file. 
+	    fil_obj may optionally be specified, and should be a browse object
+	    for the file. This is useful when the caller has already initiated
+	    the browse object. """
 	# this is where storage kicks in..
 	stor = self.storage_id
 	assert stor
 	stobj = self.context._dirobj.pool.get('document.storage')
-	return stobj.get_data_n(cr,self.context.uid,stor, self,self.context.context)
+	return stobj.get_data(cr,self.context.uid,stor, self,self.context.context, fil_obj)
+
+    def get_data_len(self, cr, fil_obj = None):
+	# TODO: verify with the storage object!
+	return self.content_length
 
 class old_class():
     # the old code, remove..
