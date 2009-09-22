@@ -27,6 +27,7 @@ from osv.orm import except_orm
 import urlparse
 
 import os
+import nodes
 
 class document_directory_content_type(osv.osv):
     _name = 'document.directory.content.type'
@@ -64,7 +65,7 @@ class document_directory_content(osv.osv):
         'include_name': lambda *args: 1,
     }
     
-    def _file_get(self,node, nodename,content):
+    def _file_get(self,cr,node, nodename,content):
 	""" return the nodes of a <node> parent having a <content> content
 	    The return value MUST be false or a list of node_class objects.
 	"""
@@ -72,31 +73,34 @@ class document_directory_content(osv.osv):
 		return False
 	
 	res2 = []
-	test_nodename = ''
+	tname = ''
 	if content.include_name:
 		content_name = node.object2.name
 		obj = pool.get(node.object.ressource_type_id.model)
 		name_for = obj._name.split('.')[-1]
 		if content_name  and content_name.find(name_for) == 0  :
 			content_name = content_name.replace(name_for,'')
-			test_nodename = content_name + (content.suffix or '') + (content.extension or '')
+			tname = content_name + (content.suffix or '') + (content.extension or '')
 	else:
-		test_nodename = (content.suffix or '') + (content.extension or '')
-	if test_nodename.find('/'):
-		test_nodename=test_nodename.replace('/', '_')
-	path = node.path+'/'+test_nodename
+		tname = (content.suffix or '') + (content.extension or '')
+	if tname.find('/'):
+		tname=tname.replace('/', '_')
 	if not nodename:
-		n = node_class(node.cr, node.uid,path, node.object2, False, context=node.context, content=content, type='content', root=False)
+		n = nodes.node_content(tname, node, node.context,content)
 		res2.append( n)
 	else:
-		if nodename == test_nodename:
-			n = node_class(node.cr, node.uid, path, node.object2, False, context=node.context, content=content, type='content', root=False)
+		if nodename == tname:
+			n = nodes.node_content(tname, node, node.context,content)
 			res2.append(n)
 	return res2
 
-    def process_write_pdf(self, cr, uid, node, context={}):
+    def process_write(self, cr, uid, node, data):
+	if node.extension != '.pdf':
+		raise Exception("Invalid content: %s" % node.extension)
         return True
-    def process_read_pdf(self, cr, uid, node, context={}):
+    def process_read(self, cr, uid, node):
+	if node.extension != '.pdf':
+		raise Exception("Invalid content: %s" % node.extension)
         report = self.pool.get('ir.actions.report.xml').browse(cr, uid, node.content.report_id.id)
         srv = netsvc.LocalService('report.'+report.report_name)
         pdf,pdftype = srv.create(cr, uid, [node.object.id], {}, {})

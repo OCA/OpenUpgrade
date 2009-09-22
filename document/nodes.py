@@ -157,7 +157,18 @@ class node_dir(node_class):
         return None
 
     def _file_get(self,cr, nodename=False):
-	return []
+	res = []
+	cntobj = self.context._dirobj.pool.get('document.directory.content')
+	uid = self.context.uid
+	ctx = self.context.context
+	where = [('directory_id','=',self.dir_id) ]
+	ids = cntobj.search(cr,uid,where,context=ctx)
+        for content in cntobj.browse(cr,uid,ids,context=ctx):
+	    res3 = cntobj._file_get(cr,self,nodename,content)
+	    if res3:
+		res.extend(res3)
+
+	return res
 
     def _child_get(self,cr,name = None):
 	dirobj = self.context._dirobj
@@ -399,6 +410,35 @@ class node_file(node_class):
 	assert stor
 	stobj = self.context._dirobj.pool.get('document.storage')
 	return stobj.set_data(cr,self.context.uid,stor, self, data, self.context.context, fil_obj)
+
+class node_content(node_class):
+    our_type = 'content'
+    def __init__(self,path, parent, context, cnt):
+	super(node_content,self).__init__(path, parent,context)
+	self.cnt_id = cnt.id
+	self.create_date = False
+	self.write_date = False
+	self.content_length = False
+	self.extension = cnt.extension
+	self.report_id = cnt.report_id and cnt.report_id.id
+	#self.mimetype = cnt.extension.
+        #cr.execute('select code,name from document_directory_content_type where active')
+        #res = cr.fetchall()
+
+    def get_data(self, cr, fil_obj = None):
+        cntobj = self.context._dirobj.pool.get('document.directory.content')
+	data = cntobj.process_read(cr,self.context.uid,self,self.context.context)
+	if data:
+		self.content_length = len(data)
+	return data
+
+    def get_data_len(self, cr, fil_obj = None):
+	if not self.content_length:
+		self.get_data(cr,fil_obj)
+	return self.content_length
+
+    def set_data(self, cr, data, fil_obj = None):
+	return cntobj.process_write(cr,self.context.uid,self, data,self.context.context)
 
 class old_class():
     # the old code, remove..
