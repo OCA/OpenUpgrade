@@ -23,7 +23,6 @@
 import base64
 
 from osv import osv, fields
-from osv.orm import except_orm
 import urlparse
 
 import os
@@ -33,37 +32,11 @@ from content_index import cntIndex
 import netsvc
 #import StringIO
 
-import random
-import string
 from psycopg2 import Binary
 #from tools import config
 import tools
 from tools.translate import _
 import nodes
-
-def random_name():
-    random.seed()
-    d = [random.choice(string.ascii_letters) for x in xrange(10) ]
-    name = "".join(d)
-    return name
-
-
-# Unsupported WebDAV Commands:
-#     label
-#     search
-#     checkin
-#     checkout
-#     propget
-#     propset
-
-INVALID_CHARS={'*':str(hash('*')), '|':str(hash('|')) , "\\":str(hash("\\")), '/':'__', ':':str(hash(':')), '"':str(hash('"')), '<':str(hash('<')) , '>':str(hash('>')) , '?':str(hash('?'))}
-
-
-def create_directory(path):
-    dir_name = random_name()
-    path = os.path.join(path,dir_name)
-    os.makedirs(path)
-    return dir_name
 
 class document_file(osv.osv):
     _inherit = 'ir.attachment'
@@ -80,45 +53,23 @@ class document_file(osv.osv):
 		fnode = nodes.node_file(None,None,nctx,fbro)
 		if not bin_size:
 			data = fnode.get_data(cr,fbro)
-			result[fbro.id] = base64.encodestring(data)
+			result[fbro.id] = base64.encodestring(data or '')
 		else:
-			result[fbro.id] = tools.human_size(fnode.get_data_len(cr,fbro))
+			result[fbro.id] = fnode.get_data_len(cr,fbro)
 			
 	return result
 
     #
     # This code can be improved
     #
-    def _data_set(self, cr, obj, id, name, value, uid=None, context={}):
+    def _data_set(self, cr, uid, id, name, value, arg, context):
         if not value:
             return True
-	raise Exception('*-*')
-        #if (not context) or context.get('store_method','fs')=='fs':
-        try:
-            path = self._get_filestore(cr)
-            if not os.path.isdir(path):
-                try:
-                    os.makedirs(path)
-                except:
-                    raise except_orm(_('Permission Denied !'), _('You do not permissions to write on the server side.'))
-
-            flag = None
-            # This can be improved
-            for dirs in os.listdir(path):
-                if os.path.isdir(os.path.join(path,dirs)) and len(os.listdir(os.path.join(path,dirs)))<4000:
-                    flag = dirs
-                    break
-            flag = flag or create_directory(path)
-            filename = random_name()
-            fname = os.path.join(path, flag, filename)
-            fp = file(fname,'wb')
-            v = base64.decodestring(value)
-            fp.write(v)
-            filesize = os.stat(fname).st_size
-            cr.execute('update ir_attachment set store_fname=%s,store_method=%s,file_size=%s where id=%s', (os.path.join(flag,filename),'fs',len(v),id))
-            return True
-        except Exception,e :
-            raise except_orm(_('Error!'), str(e))
+	fbro = self.browse(cr,uid,id,context=context)
+	nctx = nodes.get_node_context(cr,uid,context)
+	fnode = nodes.node_file(None,None,nctx,fbro)
+	res = fnode.set_data(cr,value,fbro)
+	return res
 
     _columns = {
         'user_id': fields.many2one('res.users', 'Owner', select=1),
@@ -249,7 +200,7 @@ class document_file(osv.osv):
             datas=base64.encodestring(urllib.urlopen(vals['link']).read())
         else:
             datas=vals.get('datas',False)
-        vals['file_size']= len(datas)
+        vals['file_size']= datas and len(datas) or 0
         if not self._check_duplication(cr,uid,vals):
             raise except_orm(_('ValidateError'), _('File name must be unique!'))
         result = super(document_file,self).create(cr, uid, vals, context)

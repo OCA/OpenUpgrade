@@ -23,6 +23,13 @@
 from osv import osv, fields
 import os
 import tools
+import base64
+
+from osv.orm import except_orm
+
+import random
+import string
+import netsvc
 
 """ The algorithm of data storage
 
@@ -53,6 +60,22 @@ because one day this will be optimized in the db (Pg 8.4).
 
 
 """
+
+def random_name():
+    random.seed()
+    d = [random.choice(string.ascii_letters) for x in xrange(10) ]
+    name = "".join(d)
+    return name
+
+INVALID_CHARS={'*':str(hash('*')), '|':str(hash('|')) , "\\":str(hash("\\")), '/':'__', ':':str(hash(':')), '"':str(hash('"')), '<':str(hash('<')) , '>':str(hash('>')) , '?':str(hash('?'))}
+
+
+def create_directory(path):
+    dir_name = random_name()
+    path = os.path.join(path,dir_name)
+    os.makedirs(path)
+    return dir_name
+
 
 class document_storage(osv.osv):
     """ The primary object for data storage.
@@ -106,7 +129,6 @@ class document_storage(osv.osv):
 	    optionally, fil_obj could point to the browse object of the file
 	    (ir.attachment)
 	"""
-        print "storage.get_data"
 	if not context:
 		context = {}
         boo = self.browse(cr,uid,id,context)
@@ -123,8 +145,9 @@ class document_storage(osv.osv):
 		if not ira.store_fname:
 			# On a migrated db, some files may have the wrong storage type
 			# try to fix their directory.
-			netsvc.Logger().notifyChannel('document',netsvc.LOG_WARNING,"ir.attachment #%d does not have a filename, but is at filestore, fix it!" %ira.id)
-			raise RuntimeError("No file for attachment #%d." % ira.id)
+			if ira.file_size:
+				netsvc.Logger().notifyChannel('document',netsvc.LOG_WARNING,"ir.attachment #%d does not have a filename, but is at filestore, fix it!" %ira.id)
+			return None
 		fpath = os.path.join(boo.path,ira.store_fname)
 		print "Trying to read \"%s\".."% fpath
 		return file(fpath,'rb').read()
@@ -136,6 +159,58 @@ class document_storage(osv.osv):
 		return None
 	else:
 		raise TypeError("No %s storage" % boo.type)
+
+    def set_data(self, cr,uid, id, file_node, data, context = None, fil_obj = None):
+	""" store the data.
+	    This function MUST be used from an ir.attachment. It wouldn't make sense
+	    to store things persistently for other types (dynamic).
+	"""
+	if not context:
+		context = {}
+        boo = self.browse(cr,uid,id,context)
+	if fil_obj:
+		ira = fil_obj
+	else:
+		ira = self.pool.get('ir.attachment').browse(cr,uid, file_node.file_id, context=context)
+		
+	if not boo.online:
+		raise RuntimeError('media offline')
+	netsvc.Logger().notifyChannel('document',netsvc.LOG_DEBUG,"Store data for ir.attachment #%d" %ira.id)
+	if boo.type == 'filestore':
+	    path = boo.path
+	    try:
+		flag = None
+		# This can be improved
+		for dirs in os.listdir(path):
+		    if os.path.isdir(os.path.join(path,dirs)) and len(os.listdir(os.path.join(path,dirs)))<4000:
+			flag = dirs
+                        break
+		flag = flag or create_directory(path)
+		filename = random_name()
+		fname = os.path.join(path, flag, filename)
+		fp = file(fname,'wb')
+		v = base64.decodestring(data)
+		fp.write(v)
+		fp.close()
+		netsvc.Logger().notifyChannel('document',netsvc.LOG_DEBUG,"Saved data to %s" % fname)
+		filesize = len(v) # os.stat(fname).st_size
+		
+		# TODO Here, an old file would be left hanging.
+
+		# a hack: /assume/ that the calling write operation will not try
+		# to write the fname and size, and update them in the db concurrently.
+		# We cannot use a write() here, because we are already in one.
+		cr.execute('UPDATE ir_attachment SET store_fname = %s, file_size = %s WHERE id = %s',
+			(os.path.join(flag,filename), filesize, file_node.file_id ))
+		file_node.content_length = filesize
+		return True
+            except Exception,e :
+		netsvc.Logger().notifyChannel('document',netsvc.LOG_WARNING,"Couldn't save data: %s" %str(e))
+		raise except_orm(_('Error!'), str(e))
+	else:
+		raise TypeError("No %s storage" % boo.type)
+
+	
 
 document_storage()
 

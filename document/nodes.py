@@ -204,6 +204,17 @@ class node_file(node_class):
 	# TODO: verify with the storage object!
 	return self.content_length
 
+    def set_data(self, cr, data, fil_obj = None):
+	""" Retrieve the data for some file. 
+	    fil_obj may optionally be specified, and should be a browse object
+	    for the file. This is useful when the caller has already initiated
+	    the browse object. """
+	# this is where storage kicks in..
+	stor = self.storage_id
+	assert stor
+	stobj = self.context._dirobj.pool.get('document.storage')
+	return stobj.set_data(cr,self.context.uid,stor, self, data, self.context.context, fil_obj)
+
 class old_class():
     # the old code, remove..
     def __init__(self, cr, uid, path, object, object2=False, context={}, content=False, type='collection', root=False):
