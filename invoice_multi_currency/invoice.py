@@ -35,7 +35,7 @@ account_invoice()
 class account_invoice_line(osv.osv):
     _inherit = "account.invoice.line"
 
-    def product_id_change(self, cr, uid, ids, product, uom, currency_id, company_id, qty=0, name='', type='out_invoice', partner_id=False, fposition_id=False, price_unit=False, address_invoice_id=False, context=None):
+    def product_id_change(self, cr, uid, ids, product, uom, qty=0, name='', type='out_invoice', partner_id=False, fposition_id=False, price_unit=False, address_invoice_id=False, currency_id=False, company_id=False, context=None):
         res = super(account_invoice_line, self).product_id_change(cr, uid, ids, product, uom, qty=qty, name=name, type=type, partner_id=partner_id, fposition_id=fposition_id, price_unit=price_unit, address_invoice_id=address_invoice_id, context=context)
 
         if not company_id and not currency_id:

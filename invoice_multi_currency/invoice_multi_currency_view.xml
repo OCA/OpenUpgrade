@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="account.view_invoice_line_form"/>
             <field name="arch" type="xml">
                 <field name="product_id" position="replace">
-                    <field name="product_id" on_change="product_id_change(product_id, uos_id, parent.currency_id, parent.company_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position)" select="1"/>
+                    <field name="product_id" on_change="product_id_change(product_id, uos_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position, False, False, parent.currency_id, parent.company_id)" select="1"/>
                 </field>
             </field>
         </record>
@@ -23,7 +23,7 @@
                 <field name="invoice_line" position="replace">
                     <field colspan="4" default_get="{'check_total': check_total, 'invoice_line': invoice_line, 'address_invoice_id': address_invoice_id, 'partner_id': partner_id, 'price_type': 'price_type' in dir() and price_type or False}" name="invoice_line" nolabel="1">
                         <tree string="Invoice lines" editable="top">
-                            <field name="product_id" on_change="product_id_change(product_id, uos_id, parent.currency_id, parent.company_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position)"/>
+                            <field name="product_id" on_change="product_id_change(product_id, uos_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position, False, False, parent.currency_id, parent.company_id)"/>
                             <field domain="[('company_id', '=', parent.company_id), ('journal_id', '=', parent.journal_id), ('type', '&lt;&gt;', 'view')]" name="account_id" on_change="onchange_account_id(parent.fiscal_position,account_id)"/>
                             <field name="invoice_line_tax_id" view_mode="2" context="{'type':parent.type}" domain="[('parent_id','=',False)]"/>
                             <field domain="[('type','&lt;&gt;','view'), ('company_id', '=', parent.company_id)]" name="account_analytic_id"/>
