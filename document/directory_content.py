@@ -65,10 +65,12 @@ class document_directory_content(osv.osv):
         'include_name': lambda *args: 1,
     }
     
-    def _file_get(self,cr,node, nodename,content):
+    def _file_get(self,cr,node, nodename, content, context=None):
 	""" return the nodes of a <node> parent having a <content> content
 	    The return value MUST be false or a list of node_class objects.
 	"""
+	
+	# TODO: respect the context!
 	if content.include_name and not node.object2:
 		return False
 	

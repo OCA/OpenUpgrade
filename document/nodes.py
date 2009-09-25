@@ -362,7 +362,22 @@ class node_res_obj(node_class):
         return None
 
     def _file_get(self,cr, nodename=False):
-	return []
+	res = []
+	cntobj = self.context._dirobj.pool.get('document.directory.content')
+	uid = self.context.uid
+	ctx = self.context.context.copy()
+	ctx.update(self.dctx)
+	where = [('directory_id','=',self.dir_id) ]
+	#if self.domain:
+	#	where.extend(self.domain)
+	print "res_obj file_get clause", where
+	ids = cntobj.search(cr,uid,where,context=ctx)
+        for content in cntobj.browse(cr,uid,ids,context=ctx):
+	    res3 = cntobj._file_get(cr,self,nodename,content, context=ctx)
+	    if res3:
+		res.extend(res3)
+
+	return res
 
     def _child_get(self,cr,name = None):
 	dirobj = self.context._dirobj
