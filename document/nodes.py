@@ -100,6 +100,10 @@ class node_class(object):
 	self.create_date = None
 	self.write_date = None
 	self.content_length = 0
+	# dynamic context:
+	self.dctx = {}
+	if parent:
+	    self.dctx = parent.dctx.copy()
 	
     def full_path(self):
 	if self.parent:
@@ -132,7 +136,7 @@ class node_class(object):
 
 class node_dir(node_class):
     our_type = 'collection'
-    def __init__(self,path, parent, context, dirr):
+    def __init__(self,path, parent, context, dirr, dctx=None):
 	super(node_dir,self).__init__(path, parent,context)
 	self.dir_id = dirr.id
 	#todo: more info from dirr
@@ -142,7 +146,18 @@ class node_dir(node_class):
 	# TODO: the write date should be MAX(file.write)..
 	self.write_date = dirr.write_date or dirr.create_date
 	self.content_length = 0
-	
+	if dctx:
+	    self.dctx.update(dctx)
+	dc2 = self.context.context
+	dc2.update(self.dctx)
+	dc2['dir_id'] = self.dir_id
+	for dfld in dirr.dctx_ids:
+	    try:
+		self.dctx['dctx_' + dfld.field] = safe_eval(dfld.expr,dc2)
+	    except Exception,e:
+	        print "Cannot eval %s" % dfld.expr
+		print e
+		pass
 
     def children(self,cr):
         return self._child_get(cr) + self._file_get(cr)
@@ -160,7 +175,8 @@ class node_dir(node_class):
 	res = []
 	cntobj = self.context._dirobj.pool.get('document.directory.content')
 	uid = self.context.uid
-	ctx = self.context.context
+	ctx = self.context.context.copy()
+	ctx.update(self.dctx)
 	where = [('directory_id','=',self.dir_id) ]
 	ids = cntobj.search(cr,uid,where,context=ctx)
         for content in cntobj.browse(cr,uid,ids,context=ctx):
@@ -173,7 +189,8 @@ class node_dir(node_class):
     def _child_get(self,cr,name = None):
 	dirobj = self.context._dirobj
 	uid = self.context.uid
-	ctx = self.context.context
+	ctx = self.context.context.copy()
+	ctx.update(self.dctx)
 	where = [('parent_id','=',self.dir_id) ]
 	if name:
 		where.append(('name','=',name))
@@ -201,7 +218,8 @@ class node_dir(node_class):
 	"""
 	dirobj = self.context._dirobj
 	uid = self.context.uid
-	ctx = self.context.context
+	ctx = self.context.context.copy()
+	ctx.update(self.dctx)
 	fil_obj=dirobj.pool.get('ir.attachment')
 	val = {
 		'name': path,
@@ -223,7 +241,7 @@ class node_res_dir(node_class):
 	node_dirs (with limited domain).
 	"""
     our_type = 'collection'
-    def __init__(self,path, parent, context, dirr):
+    def __init__(self,path, parent, context, dirr, dctx=None ):
 	super(node_res_dir,self).__init__(path, parent,context)
 	self.dir_id = dirr.id
 	#todo: more info from dirr
@@ -235,7 +253,17 @@ class node_res_dir(node_class):
 	self.content_length = 0
 	self.res_model = dirr.ressource_type_id.model
 	self.resm_id = dirr.ressource_id
-	self.domain = safe_eval(dirr.domain,{})
+	self.namefield = dirr.resource_field or 'name'
+	# Important: the domain is evaluated using the *parent* dctx!
+	self.domain = safe_eval(dirr.domain,self.dctx)
+	# and then, we add our own vars in the dctx:
+	if dctx:
+	    self.dctx.update(dctx)
+	
+	# and then, we prepare a dctx dict, for deferred evaluation:
+	self.dctx_dict = {}
+	for dfld in dirr.dctx_ids:
+	    self.dctx_dict['dctx_' + dfld.field] = dfld.expr
 
     def children(self,cr):
         return self._child_get(cr)
@@ -258,23 +286,29 @@ class node_res_dir(node_class):
 		print "couldn't find model", self.res_model
 		return []
 	uid = self.context.uid
-	ctx = self.context.context
+	ctx = self.context.context.copy()
+	ctx.update(self.dctx)
 	where = []
 	if self.domain:
 		where.append(self.domain)
 	if self.resm_id:
 		where.append(('id','=',self.resm_id))
 	
+	if name:
+		where.append((self.namefield,'=',name))
 	print "Where clause for %s" % self.res_model, where
 	
-	if name:
-		rest = obj.name_search(cr,uid,name,where, operator='=', context=ctx)
-	else:
-		resids = obj.search(cr,uid,where,context=ctx)
-		rest = obj.name_get(cr,uid,resids,context=ctx)
+	resids = obj.search(cr,uid, where, context=ctx)
 	res = []
-	for id,name in rest:
-		res.append(node_res_obj(name,self,self.context,self.res_model, id))
+	for bo in obj.browse(cr,uid,resids,context=ctx):
+		print "bo", bo
+		if not bo:
+			continue
+		name = getattr(bo,self.namefield)
+		if not name:
+			continue
+			# Yes! we can't do better but skip nameless records.
+		res.append(node_res_obj(name,self,self.context,self.res_model, bo))
 	return res
 	
 class node_res_obj(node_class):
@@ -284,7 +318,7 @@ class node_res_obj(node_class):
 	node_dirs (with limited domain).
 	"""
     our_type = 'collection'
-    def __init__(self,path, parent, context, res_model, res_id):
+    def __init__(self,path, parent, context, res_model, res_bo, res_id = None):
 	super(node_res_obj,self).__init__(path, parent,context)
 	assert parent
 	#todo: more info from dirr
@@ -296,8 +330,24 @@ class node_res_obj(node_class):
 	self.write_date = parent.write_date
 	self.content_length = 0
 	self.res_model = res_model
-	self.res_id = res_id
 	self.domain = parent.domain
+
+	if res_bo:
+	    self.res_id = res_bo.id
+	    dc2 = self.context.context
+	    dc2.update(self.dctx)
+	    dc2['res_model'] = res_model
+	    dc2['res_id'] = res_bo.id
+	    dc2['this'] = res_bo
+	    for fld,expr in parent.dctx_dict.items():
+	        try:
+		    self.dctx[fld] = safe_eval(expr,dc2)
+	        except Exception,e:
+	            print "Cannot eval %s for %s" % (expr, fld)
+		    print e
+		    pass
+	else:
+	   self.res_id = res_id
 
     def children(self,cr):
         return self._child_get(cr) + self._file_get(cr)
@@ -317,7 +367,8 @@ class node_res_obj(node_class):
     def _child_get(self,cr,name = None):
 	dirobj = self.context._dirobj
 	uid = self.context.uid
-	ctx = self.context.context
+	ctx = self.context.context.copy()
+	ctx.update(self.dctx)
 	where = [('parent_id','=',self.dir_id) ]
 	if name:
 		where.append(('name','=',name))
@@ -326,12 +377,10 @@ class node_res_obj(node_class):
 	if ids:
 	    for dirr in dirobj.browse(cr,uid,ids,context=ctx):
 	        if dirr.type == 'directory':
-			res.append(node_res_obj(dirr.name,self,self.context,self.res_model,self.res_id))
+		    res.append(node_res_obj(dirr.name,self,self.context,self.res_model,res_bo = None, res_id = self.res_id))
 		elif dirr.type == 'ressource':
-			print "How to handle multiple resources?"
-			pass
-			# 
-			#res.append(node_res_dir(dirr.name,self,self.context,dirr))
+		    # child resources can be controlled by properly set dctx
+		    res.append(node_res_dir(dirr.name,self,self.context,dirr))
 		
 	fil_obj=dirobj.pool.get('ir.attachment')
 	where2 = where  + [('res_model', '=', self.res_model), ('res_id','=',self.res_id)]
@@ -349,7 +398,8 @@ class node_res_obj(node_class):
 	"""
 	dirobj = self.context._dirobj
 	uid = self.context.uid
-	ctx = self.context.context
+	ctx = self.context.context.copy()
+	ctx.update(self.dctx)
 	fil_obj=dirobj.pool.get('ir.attachment')
 	val = {
 		'name': path,
@@ -427,7 +477,9 @@ class node_content(node_class):
 
     def get_data(self, cr, fil_obj = None):
         cntobj = self.context._dirobj.pool.get('document.directory.content')
-	data = cntobj.process_read(cr,self.context.uid,self,self.context.context)
+	ctx = self.context.context.copy()
+	ctx.update(self.dctx)
+	data = cntobj.process_read(cr,self.context.uid,self,ctx)
 	if data:
 		self.content_length = len(data)
 	return data
@@ -438,7 +490,9 @@ class node_content(node_class):
 	return self.content_length
 
     def set_data(self, cr, data, fil_obj = None):
-	return cntobj.process_write(cr,self.context.uid,self, data,self.context.context)
+        ctx = self.context.context.copy()
+        ctx.update(self.dctx)
+        return cntobj.process_write(cr,self.context.uid,self, data,ctx)
 
 class old_class():
     # the old code, remove..
