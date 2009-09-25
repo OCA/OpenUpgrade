@@ -3,6 +3,48 @@
     <menuitem name="Document Management" icon="terp-stock" id="menu_document"/>
     <menuitem name="Document Configuration" id="menu_document_configuration" parent="menu_document"/>
 
+    <record model="ir.ui.view" id="view_document_storage_form">
+        <field name="name">document.storage</field>
+        <field name="model">document.storage</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Storage Media">
+                <field name="name" select="1" colspan="4"/>
+                <field name="user_id"/>
+                <field name="type" />
+                <field name="online" />
+                <field name="readonly" />
+                <field name="path" />
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_document_storage_tree">
+        <field name="name">document.storage</field>
+        <field name="model">document.storage</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Storage Media" toolbar="1">
+                <field name="name"/>
+                <field name="type"/>
+                <field name="online"/>
+                <field name="readonly"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_document_storage_form">
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">document.storage</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem
+        name="Storage Media"
+        action="action_document_storage_form"
+        id="menu_document_storage_media"
+        parent="menu_document_configuration"/>
+
     <record model="ir.ui.view" id="view_document_directory_form">
         <field name="name">document.directory</field>
         <field name="model">document.directory</field>
@@ -12,6 +54,7 @@
                 <field name="name" select="1" colspan="4"/>
                 <field name="user_id"/>
                 <field name="parent_id"/>
+                <field name="storage_id" />
                 <notebook colspan="4">
                 <page string="Definition">
                     <separator string="Directory Type" colspan="4"/>
