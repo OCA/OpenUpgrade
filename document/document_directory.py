@@ -51,6 +51,7 @@ class document_directory(osv.osv):
         'ressource_type_id': fields.many2one('ir.model', 'Directories Mapped to Objects',
             help="Select an object here and Open ERP will create a mapping for each of these " \
                  "objects, using the given domain, when browsing through FTP."),
+        'resource_field': fields.char('Name field',size=32,help='Field to be used as name on resource directories. If empty, the "name" will be used.'),
         'ressource_parent_type_id': fields.many2one('ir.model', 'Parent Model',
             help="If you put an object here, this directory template will appear bellow all of these objects. " \
                  "Don't put a parent directory if you select a parent model."),
@@ -290,7 +291,7 @@ class document_directory_dctx(osv.osv):
         'dir_id': fields.many2one('document.directory', 'Directory', required=True),
         'field': fields.char('Field', size=20, required=True, select=1, help="The name of the field. Note that the prefix \"dctx_\" will be prepended to what is typed here."),
         'expr': fields.char('Expression', size=64, required=True, help="A python expression used to evaluate the field.\n" + \
-                "You can use 'this' as a reference to the current record, in dynamic folders"),
+                "You can use 'dir_id' for current dir, 'res_id', 'res_model' as a reference to the current record, in dynamic folders"),
         }
 
 document_directory_dctx()
