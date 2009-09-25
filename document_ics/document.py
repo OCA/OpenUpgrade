@@ -69,7 +69,7 @@ class document_directory_content(osv.osv):
     _defaults = {
         'ics_domain': lambda *args: '[]'
     }
-    def _file_get(self, cr, node, nodename,content):
+    def _file_get(self, cr, node, nodename,content, context=None):
 	if not content.obj_iterate:
 		return super(document_directory_content, self)._file_get(cr,node,nodename,content)
 	else:
@@ -89,7 +89,10 @@ class document_directory_content(osv.osv):
         content = self.browse(cr, uid, node.cnt_id, context)
 
         idomain = {}
-        for d in safe_eval(content.ics_domain,{}):
+        ctx = (context or {})
+        ctx.update(node.context.context.copy())
+        ctx.update(node.dctx)
+        for d in safe_eval(content.ics_domain,ctx):
             idomain[d[0]]=d[2]
         for n in content.ics_field_ids:
             fields[n.name] = n.field_id.name
@@ -131,13 +134,16 @@ class document_directory_content(osv.osv):
 		return super(document_directory_content).process_read(cr, uid, node, context)
 
         import vobject
-        content = self.browse(cr, uid, node.cnt_id, context)
+        ctx = (context or {})
+        ctx.update(node.context.context.copy())
+        ctx.update(node.dctx)
+        content = self.browse(cr, uid, node.cnt_id, ctx)
         obj_class = self.pool.get(content.object_id.model)
         # Can be improved to use context and active_id !
-        domain = safe_eval(content.ics_domain,{})
-        ids = obj_class.search(cr, uid, domain, context=context)
+        domain = safe_eval(content.ics_domain,ctx)
+        ids = obj_class.search(cr, uid, domain, context=ctx)
         cal = vobject.iCalendar()
-        for obj in obj_class.browse(cr, uid, ids, context):
+        for obj in obj_class.browse(cr, uid, ids):
             event = cal.add('vevent')
             # Fix dtstamp et last-modified with create and write date on the object line
             perm = obj_class.perm_read(cr, uid, [obj.id], context)
