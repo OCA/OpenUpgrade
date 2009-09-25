@@ -184,25 +184,6 @@ class tinydav_handler(dav_interface):
 			print "exc",e
 			raise DAV_Error, 409
 		return datas
-		
-		# old code, to go!! *-*
-		if node.type=='file':
-			datas=False
-			if node.object.datas:
-				datas=node.object.datas
-			elif node.object.link:
-				import urllib
-				datas=base64.encodestring(urllib.urlopen(node.object.link).read())
-			return base64.decodestring(datas or '')
-		elif node.type=='content':
-			cr = node.cr
-			uid = node.uid
-			pool = pooler.get_pool(cr.dbname)
-			sio =  getattr(pool.get('document.directory.content'), 'process_read_'+node.content.extension[1:])(cr, uid, node)
-			return sio.getvalue()
-		else:
-			print "invalid type:",node.type
-			raise DAV_Forbidden
 
 	@memoize(CACHE_SIZE)
 	def _get_dav_resourcetype(self,uri):
@@ -251,10 +232,10 @@ class tinydav_handler(dav_interface):
 		node = self.uri2object(cr,uid,pool, uri2)
 		if not node:
 			raise DAV_NotFound(uri2)
-		dt = node.write_date or today
-		result = time.mktime(time.strptime(dt,'%Y-%m-%d %H:%M:%S'))
-		cr.close()
-		return result
+		if node.write_date:
+			return time.mktime(time.strptime(node.write_date,'%Y-%m-%d %H:%M:%S'))
+		else:
+			return today
 
 	@memoize(CACHE_SIZE)
 	def get_creationdate(self,uri):
@@ -268,9 +249,9 @@ class tinydav_handler(dav_interface):
 		if not node:
 			raise DAV_NotFound(uri2)
 		if node.create_date:
-			result =time.strptime(node.create_date,'%Y-%m-%d %H:%M:%S')
+			result = time.strptime(node.create_date,'%Y-%m-%d %H:%M:%S')
 		else:
-			result = time.time()
+			result = time.gmtime()
 		cr.close()
 		return result
 
@@ -365,41 +346,6 @@ class tinydav_handler(dav_interface):
 		cr.commit()
 
 		return 201
-		
-		# OLD code *-*:
-		if node and node.type=='file':
-			val = {
-				'file_size': len(data),
-				'datas': base64.encodestring(data),
-			}
-			cid = fobj.write(cr, uid, [node.object.id], val)
-			cr.commit()
-		# elif node and node.type == 'content': TODO
-		elif not node:
-			node = self.uri2object(cr,uid,pool, uri2[:-1])
-			object2=node and node.object2 or False
-			object=node and node.object or False
-			val = {
-				'name': objname,
-				'datas_fname': objname,
-				'file_size': len(data),
-				'datas': base64.encodestring(data),
-				'parent_id': object and object.id or False,
-			}
-			partner = False
-			if object2:
-				if object2.partner_id and object2.partner_id.id:
-					partner = object2.partner_id.id
-				if object2._name == 'res.partner':
-					partner = object2.id
-				val.update( {
-					'res_model': object2._name,
-					'partner_id': partner,
-					'res_id': object2.id
-				})
-			cid = fobj.create(cr, uid, val)
-		else:
-			raise DAV_Forbidden
 
 	def rmcol(self,uri):
 		""" delete a collection """
