@@ -84,7 +84,20 @@
                             <field name="extension"/>
                         </tree>
                     </field>
-                </page><page string="Security">
+                </page>
+                <page string="Dynamic context">
+                    <field name="dctx_ids" nolabel="1" colspan="4">
+                        <tree string="Fields" editable="bottom">
+                            <field name="field"/>
+                            <field name="expr"/>
+                        </tree>
+                        <form string="Fields">
+                            <field name="field"/>
+                            <field name="expr"/>
+                        </form>
+                    </field>
+                </page>
+                <page string="Security">
                     <field name="group_ids" colspan="4" nolabel="1"/>
                 </page>
                 </notebook>

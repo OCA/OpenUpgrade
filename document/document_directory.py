@@ -57,6 +57,7 @@ class document_directory(osv.osv):
         'ressource_id': fields.integer('Resource ID'),
         'ressource_tree': fields.boolean('Tree Structure',
             help="Check this if you want to use the same tree structure as the object selected in the system."),
+        'dctx_ids': fields.one2many('document.directory.dctx', 'dir_id', 'Context fields'),
     }
     def _get_root_directory(self, cr,uid, context=None):
 	objid=self.pool.get('ir.model.data')
@@ -273,6 +274,27 @@ class document_directory(osv.osv):
         return super(document_directory,self).create(cr, uid, vals, context)
 
 document_directory()
+
+class document_directory_dctx(osv.osv):
+    """ In order to evaluate dynamic folders, child items could have a limiting
+        domain expression. For that, their parents will export a context where useful
+        information will be passed on.
+        If you define sth like "s_id" = "this.id" at a folder iterating over sales, its
+        children could have a domain like [('sale_id', = ,dctx_s_id )]
+	This system should be used recursively, that is, parent dynamic context will be
+	appended to all children down the tree.
+    """
+    _name = 'document.directory.dctx'
+    _description = 'Directory dynamic context'
+    _columns = {
+        'dir_id': fields.many2one('document.directory', 'Directory', required=True),
+        'field': fields.char('Field', size=20, required=True, select=1, help="The name of the field. Note that the prefix \"dctx_\" will be prepended to what is typed here."),
+        'expr': fields.char('Expression', size=64, required=True, help="A python expression used to evaluate the field.\n" + \
+                "You can use 'this' as a reference to the current record, in dynamic folders"),
+        }
+
+document_directory_dctx()
+
 
 class document_directory_node(osv.osv):
     _inherit = 'process.node'
