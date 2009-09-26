@@ -51,13 +51,24 @@ ICS_TAGS = {
     # TODO: handle the 'duration' property
 }
 
+ICS_FUNCTIONS = [
+    ('field', 'Use the field'),
+    ('const', 'Expression as constant'),
+    ]
+
 class document_directory_ics_fields(osv.osv):
     _name = 'document.directory.ics.fields'
     _columns = {
-        'field_id': fields.many2one('ir.model.fields', 'Open ERP Field', required=True),
+        'field_id': fields.many2one('ir.model.fields', 'Open ERP Field'),
         'name': fields.selection(map(lambda x: (x, x), ICS_TAGS.keys()), 'ICS Value', required=True),
-        'content_id': fields.many2one('document.directory.content', 'Content', required=True, ondelete='cascade')
+        'content_id': fields.many2one('document.directory.content', 'Content', required=True, ondelete='cascade'),
+        'expr': fields.char("Expression", size=64),
+        'fn': fields.selection(ICS_FUNCTIONS,'Function',help="Alternate method of calculating the value", required=True)
     }
+    _defaults = {
+        'fn': lambda *a: 'field',
+    }
+   
 document_directory_ics_fields()
 
 class document_directory_content(osv.osv):
