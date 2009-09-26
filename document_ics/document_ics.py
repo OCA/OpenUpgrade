@@ -107,6 +107,7 @@ class document_directory_content(osv.osv):
 		    if fname_fld:
 			dctx2['active_'+fname_fld] = ro[fname_fld]
 		    n = nodes.node_content(tname, node, node.context,content,dctx=dctx2, act_id = ro['id'])
+		    n.fill_fields(cr, dctx2)
 		    res2.append(n)
 		return res2
 
