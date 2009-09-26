@@ -30,6 +30,8 @@ import time
 import random
 import tools
 
+from document import nodes
+
 from tools.safe_eval import safe_eval
 
 ICS_TAGS = {
@@ -62,23 +64,44 @@ class document_directory_content(osv.osv):
     _inherit = 'document.directory.content'
     _columns = {
         'object_id': fields.many2one('ir.model', 'Object', oldname= 'ics_object_id'),
-	'obj_iterate': fields.boolean('Iterate object',help="If set, a separate instance will be created for each record of Object"),
+        'obj_iterate': fields.boolean('Iterate object',help="If set, a separate instance will be created for each record of Object"),
+        'fname_field': fields.char("Filename field",size=16,help="The field of the object used in the filename. Has to be a unique identifier."),
         'ics_domain': fields.char('Domain', size=64),
         'ics_field_ids': fields.one2many('document.directory.ics.fields', 'content_id', 'Fields Mapping')
     }
     _defaults = {
         'ics_domain': lambda *args: '[]'
     }
-    def _file_get(self, cr, node, nodename,content, context=None):
+    def _file_get(self, cr, node, nodename, content, context=None):
 	if not content.obj_iterate:
 		return super(document_directory_content, self)._file_get(cr,node,nodename,content)
 	else:
 		print "iterate over ", content.object_id.model
 		mod = self.pool.get(content.object_id.model)
+		uid = node.context.uid
 		where = []
+		if node.domain:
+		    where.append(node.domain)
+		print "ics iterate clause:", where
+		resids = mod.search(cr,uid,where,context=context)
+		if not resids:
+		    return False
 		
-		# *-*
-		return False
+		res2 = []
+		fname_fld = content.fname_field or 'id'
+		for ro in mod.read(cr,uid,resids,['id', fname_fld]):
+		    print 'ics ro:',ro
+		    tname = (content.prefix or '') + str(ro[fname_fld])
+		    tname += (content.suffix or '') + (content.extension or '')
+		    # tmp suboptimal way, FIXME:
+		    if nodename and (tname != nodename):
+			continue
+		    dctx2 = { 'active_id': ro['id'] }
+		    if fname_fld:
+			dctx2['active_'+fname_fld] = ro[fname_fld]
+		    n = nodes.node_content(tname, node, node.context,content,dctx=dctx2, act_id = ro['id'])
+		    res2.append(n)
+		return res2
 
     def process_write(self, cr, uid, node, data, context=None):
 	if node.extension != '.ics':
@@ -93,6 +116,7 @@ class document_directory_content(osv.osv):
         ctx.update(node.context.context.copy())
         ctx.update(node.dctx)
         for d in safe_eval(content.ics_domain,ctx):
+	    # TODO: operator?
             idomain[d[0]]=d[2]
         for n in content.ics_field_ids:
             fields[n.name] = n.field_id.name
@@ -139,8 +163,14 @@ class document_directory_content(osv.osv):
         ctx.update(node.dctx)
         content = self.browse(cr, uid, node.cnt_id, ctx)
         obj_class = self.pool.get(content.object_id.model)
-        # Can be improved to use context and active_id !
-        domain = safe_eval(content.ics_domain,ctx)
+
+        if content.ics_domain:
+            domain = safe_eval(content.ics_domain,ctx)
+        else:
+            domain = []
+        if node.act_id:
+            domain.append(('id','=',node.act_id))
+        print "process read clause:",domain
         ids = obj_class.search(cr, uid, domain, context=ctx)
         cal = vobject.iCalendar()
         for obj in obj_class.browse(cr, uid, ids):

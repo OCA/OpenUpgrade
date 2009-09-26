@@ -9,11 +9,12 @@
         <field name="arch" type="xml">
             <field name="include_name" position="after">
                 <field name="object_id"/>
-		<field name="obj_iterate" />
-	    </field>
+                <field name="obj_iterate" />
+                <field name="fname_field" />
+            </field>
         </field>
     </record>
-	
+
     <record model="ir.ui.view" id="view_document_directory_form">
         <field name="name">document.directory</field>
         <field name="model">document.directory</field>
