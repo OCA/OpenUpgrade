@@ -53,6 +53,7 @@ class document_directory_content(osv.osv):
     _columns = {
         'name': fields.char('Content Name', size=64, required=True),
         'sequence': fields.integer('Sequence', size=16),
+        'prefix': fields.char('Prefix', size=16),
         'suffix': fields.char('Suffix', size=16),
         'report_id': fields.many2one('ir.actions.report.xml', 'Report'),
         'extension': fields.selection(_extension_get, 'Document Type', required=True, size=4),
@@ -82,9 +83,9 @@ class document_directory_content(osv.osv):
 		name_for = obj._name.split('.')[-1]
 		if content_name  and content_name.find(name_for) == 0  :
 			content_name = content_name.replace(name_for,'')
-			tname = content_name + (content.suffix or '') + (content.extension or '')
+			tname = (content.prefix or '') + content_name + (content.suffix or '') + (content.extension or '')
 	else:
-		tname = (content.suffix or '') + (content.extension or '')
+		tname = (content.prefix or '') + (content.suffix or '') + (content.extension or '')
 	if tname.find('/'):
 		tname=tname.replace('/', '_')
 	if not nodename:

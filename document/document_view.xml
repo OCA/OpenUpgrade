@@ -66,12 +66,13 @@
                     <field name="resource_field"/>
                     <field name="ressource_id" select="2" readonly="1"/>
                     <field name="ressource_parent_type_id"/>
-
+<!-- TODO: separate page-->
                     <separator string="Auto-Generated Files" colspan="4"/>
                     <field name="content_ids" nolabel="1" colspan="4">
                         <form string="Contents">
                             <field name="name"/>
                             <field name="sequence"/>
+                            <field name="prefix"/>
                             <field name="suffix"/>
                             <field name="extension"/>
                             <field name="include_name"/>
