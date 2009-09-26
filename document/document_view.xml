@@ -66,8 +66,9 @@
                     <field name="resource_field"/>
                     <field name="ressource_id" select="2" readonly="1"/>
                     <field name="ressource_parent_type_id"/>
-<!-- TODO: separate page-->
-                    <separator string="Auto-Generated Files" colspan="4"/>
+                </page>
+                <page string="Generated Files">
+                    <label colspan="4" string="For each entry here, virtual files will appear in this folder." />
                     <field name="content_ids" nolabel="1" colspan="4">
                         <form string="Contents">
                             <field name="name"/>
