@@ -487,11 +487,23 @@ class node_content(node_class):
 	self.extension = cnt.extension
 	self.report_id = cnt.report_id and cnt.report_id.id
 	#self.mimetype = cnt.extension.
-        #cr.execute('select code,name from document_directory_content_type where active')
-        #res = cr.fetchall()
 	if dctx:
 	   self.dctx.update(dctx)
 	self.act_id = act_id
+	
+    def fill_fields(self,cr,dctx = None):
+        """ Try to read the object and fill missing fields, like mimetype,
+            dates etc.
+            This function must be different from the constructor, because
+            it uses the db cursor.
+        """
+        
+        cr.execute('SELECT DISTINCT mimetype FROM document_directory_content_type WHERE active AND code = %s;',
+                (self.extension,))
+        res = cr.fetchall()
+        if res and res[0][0]:
+            self.mimetype = res[0][0]
+
 
     def get_data(self, cr, fil_obj = None):
         cntobj = self.context._dirobj.pool.get('document.directory.content')

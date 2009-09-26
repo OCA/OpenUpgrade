@@ -36,6 +36,7 @@ class document_directory_content_type(osv.osv):
         'name': fields.char('Content Type', size=64, required=True),
         'code': fields.char('Extension', size=4),
         'active': fields.boolean('Active'),
+        'mimetype': fields.char('Mime Type',size=32)
     }
     _defaults = {
         'active': lambda *args: 1
@@ -94,6 +95,7 @@ class document_directory_content(osv.osv):
 	else:
 		if nodename == tname:
 			n = nodes.node_content(tname, node, node.context,content)
+			n.fill_fields(cr)
 			res2.append(n)
 	return res2
 

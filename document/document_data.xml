@@ -5,6 +5,7 @@
     <record model="document.directory.content.type" id="pdf">
         <field name="code">.pdf</field>
         <field name="name">PDF Report</field>
+        <field name="mimetype">application/pdf</field>
     </record>
     
     <record model="document.storage" id="storage_default">
