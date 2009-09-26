@@ -478,7 +478,7 @@ class node_file(node_class):
 
 class node_content(node_class):
     our_type = 'content'
-    def __init__(self,path, parent, context, cnt):
+    def __init__(self,path, parent, context, cnt, dctx = None, act_id=None):
 	super(node_content,self).__init__(path, parent,context)
 	self.cnt_id = cnt.id
 	self.create_date = False
@@ -489,6 +489,9 @@ class node_content(node_class):
 	#self.mimetype = cnt.extension.
         #cr.execute('select code,name from document_directory_content_type where active')
         #res = cr.fetchall()
+	if dctx:
+	   self.dctx.update(dctx)
+	self.act_id = act_id
 
     def get_data(self, cr, fil_obj = None):
         cntobj = self.context._dirobj.pool.get('document.directory.content')
