@@ -176,12 +176,17 @@ class tinydav_handler(dav_interface):
 		try:
 			datas = node.get_data(cr)
 		except TypeError,e:
+			import traceback
+			print "typeError:",e
+			traceback.print_exc()
 			raise DAV_Forbidden
 		except IndexError,e :
 			print "IndexError",e
 			raise DAV_NotFound(uri2)
 		except Exception,e:
 			print "exc",e
+			import traceback
+			traceback.print_exc()
 			raise DAV_Error, 409
 		return datas
 
