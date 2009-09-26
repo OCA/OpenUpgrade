@@ -79,23 +79,30 @@ class document_directory_content(osv.osv):
 		print "iterate over ", content.object_id.model
 		mod = self.pool.get(content.object_id.model)
 		uid = node.context.uid
+		fname_fld = content.fname_field or 'id'
 		where = []
 		if node.domain:
 		    where.append(node.domain)
+		if nodename:
+		    # Reverse-parse the nodename to deduce the clause:
+		    prefix = (content.prefix or '')
+		    suffix = (content.suffix or '') + (content.extension or '')
+		    if not nodename.startswith(prefix):
+			return False
+		    if not nodename.endswith(suffix):
+			return False
+		    tval = nodename[len(prefix):0 - len(suffix)]
+		    where.append((fname_fld,'=',tval))
 		print "ics iterate clause:", where
 		resids = mod.search(cr,uid,where,context=context)
 		if not resids:
 		    return False
 		
 		res2 = []
-		fname_fld = content.fname_field or 'id'
 		for ro in mod.read(cr,uid,resids,['id', fname_fld]):
 		    print 'ics ro:',ro
 		    tname = (content.prefix or '') + str(ro[fname_fld])
 		    tname += (content.suffix or '') + (content.extension or '')
-		    # tmp suboptimal way, FIXME:
-		    if nodename and (tname != nodename):
-			continue
 		    dctx2 = { 'active_id': ro['id'] }
 		    if fname_fld:
 			dctx2['active_'+fname_fld] = ro[fname_fld]
