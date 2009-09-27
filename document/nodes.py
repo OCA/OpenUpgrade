@@ -29,7 +29,7 @@ import pooler
 from tools.safe_eval import safe_eval
 
 import os
-
+import time
 
 #
 # An object that represent an uri
@@ -104,6 +104,7 @@ class node_class(object):
 	self.dctx = {}
 	if parent:
 	    self.dctx = parent.dctx.copy()
+	self.displayname = 'Object'
 	
     def full_path(self):
 	if self.parent:
@@ -133,6 +134,34 @@ class node_class(object):
 
     def _get_storage(self,cr):
 	raise RuntimeError("no storage for base class")
+
+    def get_etag(self,cr):
+        """ Get a tag, unique per object + modification.
+	
+	    see. http://tools.ietf.org/html/rfc2616#section-13.3.3 """
+	return self._get_ttag(cr) + ':' + self._get_wtag(cr)
+
+    def _get_wtag(self,cr):
+	""" Return the modification time as a unique, compact string """
+	if self.write_date:
+		wtime = time.mktime(time.strptime(self.write_date,'%Y-%m-%d %H:%M:%S'))
+	else: wtime = time.time()
+	return str(wtime)
+    
+    def _get_ttag(self,cr):
+	""" Get a unique tag for this type/id of object.
+	    Must be overriden, so that each node is uniquely identified.
+	"""
+	print "node_class.get_ttag()",self
+	raise RuntimeError("get_etag stub()")
+	
+    def get_dav_props(self, cr):
+        """ If this class has special behaviour for GroupDAV etc, export
+	its capabilities """
+	return {}
+
+    def get_dav_eprop(self,cr,ns,prop):
+	return None
 
 class node_dir(node_class):
     our_type = 'collection'
@@ -186,6 +215,36 @@ class node_dir(node_class):
 
 	return res
 
+    def get_dav_props(self, cr):
+	res = {}
+	cntobj = self.context._dirobj.pool.get('document.directory.content')
+	uid = self.context.uid
+	ctx = self.context.context.copy()
+	ctx.update(self.dctx)
+	where = [('directory_id','=',self.dir_id) ]
+	ids = cntobj.search(cr,uid,where,context=ctx)
+        for content in cntobj.browse(cr,uid,ids,context=ctx):
+	    if content.extension == '.ics': # FIXME: call the content class!
+		res['http://groupdav.org/'] = ('resourcetype',)
+		break
+	return res
+
+    def get_dav_eprop(self,cr,ns,prop):
+	if ns != 'http://groupdav.org/' or prop != 'resourcetype':
+	    print "Who asked for %s:%s?" % (ns,prop)
+	    return None
+	res = {}
+	cntobj = self.context._dirobj.pool.get('document.directory.content')
+	uid = self.context.uid
+	ctx = self.context.context.copy()
+	ctx.update(self.dctx)
+	where = [('directory_id','=',self.dir_id) ]
+	ids = cntobj.search(cr,uid,where,context=ctx)
+        for content in cntobj.browse(cr,uid,ids,context=ctx):
+	    if content.extension == '.ics': # FIXME: call the content class!
+	        return ('vevent-collection','http://groupdav.org/')
+	return None
+
     def _child_get(self,cr,name = None):
 	dirobj = self.context._dirobj
 	uid = self.context.uid
@@ -233,6 +292,9 @@ class node_dir(node_class):
 	fnode = node_file(path,self,self.context,fil)
 	fnode.set_data(cr,data,fil)
 	return fnode
+	
+    def _get_ttag(self,cr):
+	return 'dir-%d' % self.dir_id
 
 class node_res_dir(node_class):
     """ A special sibling to node_dir, which does only contain dynamically
@@ -301,7 +363,6 @@ class node_res_dir(node_class):
 	resids = obj.search(cr,uid, where, context=ctx)
 	res = []
 	for bo in obj.browse(cr,uid,resids,context=ctx):
-		print "bo", bo
 		if not bo:
 			continue
 		name = getattr(bo,self.namefield)
@@ -310,7 +371,10 @@ class node_res_dir(node_class):
 			# Yes! we can't do better but skip nameless records.
 		res.append(node_res_obj(name,self,self.context,self.res_model, bo))
 	return res
-	
+
+    def _get_ttag(self,cr):
+	return 'rdir-%d' % self.dir_id
+
 class node_res_obj(node_class):
     """ A special sibling to node_dir, which does only contain dynamically
         created folders foreach resource in the foreign model.
@@ -379,6 +443,35 @@ class node_res_obj(node_class):
 
 	return res
 
+    def get_dav_props(self, cr):
+	res = {}
+	cntobj = self.context._dirobj.pool.get('document.directory.content')
+	uid = self.context.uid
+	ctx = self.context.context.copy()
+	ctx.update(self.dctx)
+	where = [('directory_id','=',self.dir_id) ]
+	ids = cntobj.search(cr,uid,where,context=ctx)
+        for content in cntobj.browse(cr,uid,ids,context=ctx):
+	    if content.extension == '.ics': # FIXME: call the content class!
+		res['http://groupdav.org/'] = ('resourcetype',)
+	return res
+
+    def get_dav_eprop(self,cr,ns,prop):
+	if ns != 'http://groupdav.org/' or prop != 'resourcetype':
+	    print "Who asked for %s:%s?" % (ns,prop)
+	    return None
+	res = {}
+	cntobj = self.context._dirobj.pool.get('document.directory.content')
+	uid = self.context.uid
+	ctx = self.context.context.copy()
+	ctx.update(self.dctx)
+	where = [('directory_id','=',self.dir_id) ]
+	ids = cntobj.search(cr,uid,where,context=ctx)
+        for content in cntobj.browse(cr,uid,ids,context=ctx):
+	    if content.extension == '.ics': # FIXME: call the content class!
+	        return ('vevent-collection','http://groupdav.org/')
+	return None
+
     def _child_get(self,cr,name = None):
 	dirobj = self.context._dirobj
 	uid = self.context.uid
@@ -431,6 +524,9 @@ class node_res_obj(node_class):
 	fnode.set_data(cr,data,fil)
 	return fnode
 
+    def _get_ttag(self,cr):
+	return 'rodir-%d-%d' % (self.dir_id,self.res_id)
+
 class node_file(node_class):
     our_type = 'file'
     def __init__(self,path, parent, context, fil):
@@ -475,6 +571,9 @@ class node_file(node_class):
 	assert stor
 	stobj = self.context._dirobj.pool.get('document.storage')
 	return stobj.set_data(cr,self.context.uid,stor, self, data, self.context.context, fil_obj)
+
+    def _get_ttag(self,cr):
+	return 'file-%d' % self.fil_id
 
 class node_content(node_class):
     our_type = 'content'
@@ -523,6 +622,9 @@ class node_content(node_class):
         ctx = self.context.context.copy()
         ctx.update(self.dctx)
         return cntobj.process_write(cr,self.context.uid,self, data,ctx)
+
+    def _get_ttag(self,cr):
+        return 'cnt-%d%s' % (self.cnt_id,(self.act_id and ('-' + str(self.act_id))) or '')
 
 class old_class():
     # the old code, remove..
