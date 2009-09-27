@@ -59,13 +59,51 @@ class tinydav_handler(dav_interface):
 	"""
 	This class models a Tiny ERP interface for the DAV server
 	"""
+	PROPS={'DAV:': dav_interface.PROPS['DAV:'], }
+
+	M_NS={ "DAV:" : dav_interface.M_NS['DAV:'], }
+
 	def __init__(self,  parent, verbose=False):
 		self.db_name = False
 		self.directory_id=False
 		self.db_name_list=[]
 		self.parent = parent
 		self.baseuri = parent.baseuri
-#
+
+        def get_propnames(self,uri):
+	    props = self.PROPS
+	    self.parent.log_message('get propnames: %s' % uri)
+	    if uri[-1]=='/':uri=uri[:-1]
+	    cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+	    if not dbname:
+		return props
+	    node = self.uri2object(cr,uid,pool, uri2)
+	    if node:
+		props.update(node.get_dav_props(cr))
+	    cr.close()
+	    return props
+
+        def get_prop(self,uri,ns,propname):
+            """ return the value of a given property
+
+                uri        -- uri of the object to get the property of
+                ns        -- namespace of the property
+                pname        -- name of the property
+             """
+            if self.M_NS.has_key(ns):
+               return dav_interface.get_prop(self,uri,ns,propname)
+
+            if uri[-1]=='/':uri=uri[:-1]
+            cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+            if not dbname:
+                raise DAV_NotFound
+            node = self.uri2object(cr,uid,pool, uri2)
+            if not node:
+                raise DAV_NotFound
+            res = node.get_dav_eprop(cr,ns,propname)
+            cr.close()
+            return res
+
 #
 #	def get_db(self,uri):
 #		names=self.uri2local(uri).split('/')
@@ -207,8 +245,16 @@ class tinydav_handler(dav_interface):
 		return OBJECT
 
 	def _get_dav_displayname(self,uri):
-		# TODO!
-		raise DAV_Secret
+		self.parent.log_message('get DN: %s' % uri)
+		if uri[-1]=='/':uri=uri[:-1]
+		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+		if not dbname:
+			return COLLECTION
+		node = self.uri2object(cr,uid,pool, uri2)
+		if not node:
+			raise DAV_NotFound(uri2)
+		cr.close()
+		return node.displayname
 
 	@memoize(CACHE_SIZE)
 	def _get_dav_getcontentlength(self,uri):
@@ -223,6 +269,22 @@ class tinydav_handler(dav_interface):
 		if not node:
 			raise DAV_NotFound(uri2)
 		result = node.content_length or 0
+		cr.close()
+		return str(result)
+
+	@memoize(CACHE_SIZE)
+	def _get_dav_getetag(self,uri):
+		""" return the content length of an object """
+		self.parent.log_message('get etag: %s' % uri)
+		if uri[-1]=='/':uri=uri[:-1]
+		result = 0
+		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+		if not dbname:
+			return '0'
+		node = self.uri2object(cr, uid, pool, uri2)
+		if not node:
+			raise DAV_NotFound(uri2)
+		result = node.get_etag(cr)
 		cr.close()
 		return str(result)
 
