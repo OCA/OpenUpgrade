@@ -294,7 +294,7 @@ class PROPFIND:
                         ve=doc.createElement(ns_prefix+v[0])
                         pe.appendChild(ve)
                     else:
-                        ve=doc.createTextNode(str(v))
+                        ve=doc.createTextNode(utf8str(v))
                         pe.appendChild(ve)
 
                     gp.appendChild(pe)
