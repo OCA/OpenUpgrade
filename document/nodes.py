@@ -180,6 +180,7 @@ class node_dir(node_class):
 	dc2 = self.context.context
 	dc2.update(self.dctx)
 	dc2['dir_id'] = self.dir_id
+	self.displayname = dirr.name
 	for dfld in dirr.dctx_ids:
 	    try:
 		self.dctx['dctx_' + dfld.field] = safe_eval(dfld.expr,dc2)
@@ -316,6 +317,7 @@ class node_res_dir(node_class):
 	self.res_model = dirr.ressource_type_id.model
 	self.resm_id = dirr.ressource_id
 	self.namefield = dirr.resource_field or 'name'
+	self.displayname = dirr.name
 	# Important: the domain is evaluated using the *parent* dctx!
 	self.domain = safe_eval(dirr.domain,self.dctx)
 	# and then, we add our own vars in the dctx:
@@ -395,6 +397,7 @@ class node_res_obj(node_class):
 	self.content_length = 0
 	self.res_model = res_model
 	self.domain = parent.domain
+	self.displayname = path
 
 	if res_bo:
 	    self.res_id = res_bo.id
@@ -538,6 +541,7 @@ class node_file(node_class):
 	self.create_date = fil.create_date
 	self.write_date = fil.write_date or fil.create_date
 	self.content_length = fil.file_size
+	self.displayname = fil.name
 	
 	# This only propagates the problem to get_data. Better
 	# fix those files to point to the root dir.
@@ -586,6 +590,7 @@ class node_content(node_class):
 	self.extension = cnt.extension
 	self.report_id = cnt.report_id and cnt.report_id.id
 	#self.mimetype = cnt.extension.
+	self.displayname = path
 	if dctx:
 	   self.dctx.update(dctx)
 	self.act_id = act_id
