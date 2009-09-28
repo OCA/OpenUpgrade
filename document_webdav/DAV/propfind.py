@@ -64,6 +64,7 @@ class PROPFIND:
         self.__dataclass=dataclass
         self.__depth=str(depth)
         self.__uri=uri
+        self.use_full_urls=True
         self.__has_body=None    # did we parse a body?
 
     def read_propfind(self,xml_doc):
@@ -217,10 +218,13 @@ class PROPFIND:
         re=doc.createElement("D:response")
 
         # write href information
-        uparts=urlparse.urlparse(uri)
-        fileloc=uparts[2]
         href=doc.createElement("D:href")
-        huri=doc.createTextNode(urllib.quote(fileloc.encode('utf8')))
+        if self.use_full_urls:
+            huri=doc.createTextNode(uri)
+        else:
+            uparts=urlparse.urlparse(uri)
+            fileloc=uparts[2]
+            huri=doc.createTextNode(urllib.quote(fileloc.encode('utf8')))
         href.appendChild(huri)
         re.appendChild(href)
 
@@ -261,10 +265,13 @@ class PROPFIND:
             nsnum=nsnum+1
 
         # write href information
-        uparts=urlparse.urlparse(uri)
-        fileloc=uparts[2]
         href=doc.createElement("D:href")
-        huri=doc.createTextNode(urllib.quote(utf8str(fileloc)))
+        if self.use_full_urls:
+            huri=doc.createTextNode(uri)
+        else:
+            uparts=urlparse.urlparse(uri)
+            fileloc=uparts[2]
+            huri=doc.createTextNode(urllib.quote(fileloc.encode('utf8')))
         href.appendChild(huri)
         re.appendChild(href)
 
