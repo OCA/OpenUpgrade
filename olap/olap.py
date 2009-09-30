@@ -978,6 +978,7 @@ class olap_saved_query(osv.osv):
                 'mdx_id': fields.char('Module', size=64),
                 'schema_id': fields.many2one('olap.schema','Schema',required = True),
                 'time':fields.datetime('Time',required = True),
+                'axis_keys': fields.text('Axis Keys'),
                 }
 olap_saved_query()
 # Wizard for the Load Data Structure

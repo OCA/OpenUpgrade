@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <wizard 
+            id="wizard_invoice_currency_change" 
+            model="account.invoice" 
+            name="account.invoice.currency_change" 
+            string="Change Currency" 
+            groups="base.group_user"/>
+    </data>
+</openerp>

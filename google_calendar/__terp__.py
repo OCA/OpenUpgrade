@@ -7,7 +7,7 @@
     "description": """
         Export events (crm) to google calendar
     """,
-    "depends" : ["event"],
+    "depends" : ["base", "event"],
     "init_xml" : [],
     "demo_xml" : ['google_calendar_demo.xml'],
     "update_xml" : ['google_calendar_view.xml', 'google_calendar_wizard.xml'],

@@ -74,6 +74,7 @@ class report_xml(osv.osv):
 #        'actual_model':fields.char('Report Object', size=64),
         'document_id':fields.integer('Document'),
         }
+
     def upload_report(self, cr, uid, report_id, file_sxw,file_type, context):
         '''
         Untested function
@@ -98,6 +99,7 @@ class report_xml(osv.osv):
         db = pooler.get_db_only(cr.dbname)
         interface.register_all(db)
         return True
+
     def set_image_email(self,cr,uid,report_id):
         list_image_id = []
         def process_tag(node,list_image_id):
@@ -112,5 +114,6 @@ class report_xml(osv.osv):
         root = etree.HTML(base64.decodestring(datas))
         process_tag(root,list_image_id)
         return list_image_id
+
 report_xml()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:               

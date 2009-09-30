@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+    <!-- CAMPAIGN RESPONSIBLE -->
+
+        <record id="dm.dm_campaign_openerpondemandfreetrial2009" model="dm.campaign">
+            <field name="item_responsible_id" ref="dm.res_users_sue0"/>
+            <field name="dtp_responsible_id" ref="dm.res_users_ann0"/>
+            <field name="manufacturing_responsible_id" ref="dm.res_users_tom0"/>
+            <field name="files_responsible_id" ref="dm.res_users_joe0"/>
+        </record>
+        
+	<!-- CAMPAIGN PURCHASE LINE -->       
+        <!--
+        <record id="dm_campaign_purchase_line_0" model="dm.campaign.purchase_line">
+            <field eval="&quot;&quot;&quot;rfq&quot;&quot;&quot;" name="type_document"/>
+            <field name="product_id" ref="dm.product_product_defaultpapermailing0"/>
+            <field eval="&quot;&quot;&quot;2009-11-04 15:38:32&quot;&quot;&quot;" name="date_planned"/>
+            <field eval="&quot;&quot;&quot;19&quot;&quot;&quot;" name="product_category"/>
+            <field eval="&quot;&quot;&quot;manual&quot;&quot;&quot;" name="trigger"/>
+            <field name="campaign_id" ref="dm_campaign_openerpondemandfreetrial2009"/>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+            <field eval="1" name="desc_from_offer"/>
+            <field eval="&quot;&quot;&quot;pending&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;quantity_wanted&quot;&quot;&quot;" name="type_quantity"/>
+        </record>
+        -->
+	</data>
+</openerp>

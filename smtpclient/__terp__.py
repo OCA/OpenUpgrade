@@ -23,7 +23,7 @@
     "name" : "Email Client",
     "version" : "1.0",
     "depends" : ["base"],
-    "author" : "Tiny",
+    "author" : "Tiny/Axelor",
     "description": """Email Client module that provides:
     Sending Email
     Use Multiple Server
@@ -35,6 +35,7 @@
     "init_xml" : [
     ],
     "demo_xml" : [
+        "smtpclient_demo.xml"
     ],
     "update_xml" : [
         "smtpclient_view.xml",

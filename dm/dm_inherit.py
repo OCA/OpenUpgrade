@@ -61,80 +61,22 @@ class res_partner(osv.osv):#{{{
             return [id_cat]
         return []
 
-    def _default_all_country(self, cr, uid, context={}):
-        id_country = self.pool.get('res.country').search(cr,uid,[])
-        return id_country
+#    def _default_all_country(self, cr, uid, context={}):
+#        id_country = self.pool.get('res.country').search(cr,uid,[])
+#        return id_country
 
-    def _default_all_state(self, cr, uid, context={}):
-        id_state = self.pool.get('res.country.state').search(cr,uid,[])
-        return id_state
+#    def _default_all_state(self, cr, uid, context={}):
+#        id_state = self.pool.get('res.country.state').search(cr,uid,[])
+#        return id_state
 
     _defaults = {
         'category_id': _default_category,
-        'country_ids': _default_all_country,
-        'state_ids': _default_all_state,
+#        'country_ids': _default_all_country,
+#        'state_ids': _default_all_state,
     }
 res_partner()#}}}
 
-class purchase_order(osv.osv):#{{{
-    _name = 'purchase.order'
-    _inherit = 'purchase.order'
-    _columns = {
-        'dm_campaign_purchase_line' : fields.many2one('dm.campaign.purchase_line','DM Campaign Purchase Line'),
-    }
-purchase_order()#}}}
-
-class project_task(osv.osv):#{{{
-    _name = "project.task"
-    _inherit = "project.task"
-    context_data ={}
-
-    def default_get(self, cr, uid, fields, context=None):
-        if 'type' in context and 'project_id' in context:
-            self.context_data = context.copy()
-            self.context_data['flag'] = True
-        else:
-            self.context_data['flag'] = False
-        return super(project_task, self).default_get(cr, uid, fields, context)
-
-    def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
-        result = super(project_task,self).fields_view_get(cr, user, view_id, view_type, context, toolbar)
-        if 'flag' in self.context_data or 'type' in context:
-            if 'project_id' in self.context_data:
-                if result['type']=='form':
-                    result['arch']= """<?xml version="1.0" encoding="utf-8"?>\n<form string="Task edition">\n<group colspan="6" col="6">\n<field name="name" select="1"/>\n<field name="project_id" readonly="1" select="1"/>\n
-                        <field name="total_hours" widget="float_time"/>\n<field name="user_id" select="1"/>\n<field name="date_deadline" select="2"/>\n<field name="progress" widget="progressbar"/>\n</group>\n
-                        <notebook colspan="4">\n<page string="Information">\n<field name="planned_hours" widget="float_time" on_change="onchange_planned(planned_hours,effective_hours)"/>\n<field name="delay_hours" widget="float_time"/>\n
-                        <field name="remaining_hours" select="2" widget="float_time"/>\n<field name="effective_hours" widget="float_time"/>\n<field colspan="4" name="description" nolabel="1" select="2"/>\n
-                        <field colspan="4" name="work_ids" nolabel="1"/>\n<newline/>\n<group col="11" colspan="4">\n<field name="state" select="1"/>\n<button name="do_draft" states="open" string="Set Draft" type="object"/>
-                        <button name="do_open" states="pending,draft" string="Open" type="object"/>\n<button name="do_reopen" states="done,cancelled" string="Re-open" type="object"/>\n<button name="do_pending" states="open" string="Set Pending" type="object"/>\n
-                        <button groups="base.group_extended" name="%(project.wizard_delegate_task)d" states="pending,open" string="Delegate" type="action"/>\n<button name="%(project.wizard_close_task)d" states="pending,open" string="Done" type="action"/>\n
-                        <button name="do_cancel" states="draft,open,pending" string="Cancel" type="object"/>\n</group>\n</page>\n<page groups="base.group_extended" string="Delegations">\n
-                        <field colspan="4" name="history" nolabel="1"/>\n<field colspan="4" height="150" name="child_ids" nolabel="1">\n<tree string="Delegated tasks">\n<field name="name"/>\n
-                        <field name="user_id"/>\n<field name="date_deadline"/>\n<field name="planned_hours" widget="float_time"/>\n<field name="effective_hours" widget="float_time"/>\n<field name="state"/>\n</tree>\n
-                        </field>\n<field colspan="4" name="parent_id"/>\n</page>\n<page groups="base.group_extended" string="Extra Info">\n<separator string="Planning" colspan="2"/>\n<separator string="Dates" colspan="2"/>\n<field name="priority"/>\n
-                        <field name="date_start" select="2"/>\n<field name="sequence"/>\n<field name="date_close" select="2"/>\n<field name="type"/>\n<field name="active" select="2"/>\n
-                        <field name="partner_id" select="2"/>\n<separator colspan="4" string="Notes"/>\n<field colspan="4" name="notes" nolabel="1"/>\n</page>\n</notebook>\n</form>"""
-        return result
-    
-    def create(self,cr,uid,vals,context={}):
-        if 'flag' in self.context_data:
-            if 'type' in self.context_data:
-                task_type = self.pool.get('project.task.type').search(cr,uid,[('name','=',self.context_data['type'])])[0]
-                vals['type']=task_type
-                vals['project_id']=self.context_data['project_id']
-                self.context_data = {}
-            if 'planned_hours' not in vals:
-                vals['planned_hours'] = 0.0
-        return super(project_task, self).create(cr, uid, vals, context)
-    
-    _columns = {
-        'date_reviewed': fields.datetime('Reviewed Date'),
-        'date_planned': fields.datetime('Planned Date'),
-    }
-
-project_task()#}}}
-
+"""
 class sale_order(osv.osv):#{{{
     _name = "sale.order"
     _inherit="sale.order"
@@ -150,6 +92,7 @@ class sale_order(osv.osv):#{{{
     }
     
 sale_order()#}}}
+"""
 
 class product_product(osv.osv): # {{{
     _name = "product.product"

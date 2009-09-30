@@ -30,8 +30,19 @@ class campaign_report(report_sxw.rml_parse):
         self.sum_credit = 0.0
         self.localcontext.update({
             'time': time,
+            'get_segments': self.get_segments
         })
         self.context = context
+        
+    def get_segments(self,proposition):
+        res={}
+        segments=proposition.segment_ids
+        all_seg=''
+        for segment in segments:
+            all_seg=all_seg+' '+segment.name
+        res['segments']=all_seg        
+        return res
+        
         
 report_sxw.report_sxw('report.dm.campaign.report', 'dm.campaign', 'addons/dm/report/dm_campaign.rml', parser=campaign_report,)
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

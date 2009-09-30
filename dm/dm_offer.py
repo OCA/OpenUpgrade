@@ -184,7 +184,7 @@ class dm_offer(osv.osv): # {{{
         'purchase_note' : fields.text('Purchase Notes'),
         'purchase_category_ids' : fields.many2many('dm.offer.category','dm_offer_purchase_category','offer_id','offer_purchase_categ_id', 'Purchase Categories', domain="[('domain','=','purchase')]"),
         'history_ids' : fields.one2many('dm.offer.history', 'offer_id', 'History', ondelete="cascade", readonly=True),
-        'translation_ids' : fields.one2many('dm.offer.translation', 'offer_id', 'Translations', ondelete="cascade", readonly=True),
+        
         'order_date' : fields.date('Order Date'),
         'last_modification_date' : fields.function(dtp_last_modification_date, method=True,type="char", string='Last Modification Date',readonly=True),
         'planned_delivery_date' : fields.date('Planned Delivery Date'),
@@ -292,7 +292,7 @@ class dm_offer(osv.osv): # {{{
             vals['type'] = 'preoffer'
         elif not vals.has_key('type') :
             vals['type'] = 'model'
-        context['create'] = 'create'
+#        context['create'] = 'create'
         new_offer_id = super(dm_offer,self).create(cr,uid,vals,context)
         if vals.has_key('preoffer_original_id'):
             self.write(cr,uid,vals['preoffer_original_id'],{'preoffer_offer_id':new_offer_id})
