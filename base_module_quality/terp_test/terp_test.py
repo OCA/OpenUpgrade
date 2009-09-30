@@ -26,7 +26,6 @@ import re
 import tools
 from tools.translate import _
 from base_module_quality import base_module_quality
-import pooler
 
 class quality_test(base_module_quality.abstract_quality_check):
 
@@ -59,7 +58,7 @@ class quality_test(base_module_quality.abstract_quality_check):
         result_dict1 = {}
         terp_file = os.path.join(module_path,'__terp__.py')
         res = eval(tools.file_open(terp_file).read())
-        terp_keys = ['category', 'name', 'description', 'author', 'website', 'update_xml', 'init_xml', 'depends', 'version', 'active', 'installable', 'demo_xml', 'certificate']
+        terp_keys = ['category', 'name', 'description', 'author', 'website', 'update_xml', 'init_xml', 'depends', 'version', 'active', 'installable', 'demo_xml']
         for key in terp_keys:
             if key in res:
                 feel_good_factor += 1 # each tag should appear
@@ -116,6 +115,7 @@ class quality_test(base_module_quality.abstract_quality_check):
 
         if result_dict1 or result_dict1:
             score = round((feel_good_factor) / float(feel_good_factor + feel_bad_factor), 2)
+
         self.result_details += self.get_result_details(result_dict)
         self.result_details += self.get_result_details(result_dict1)
         return [_('__terp__.py file'), score]
@@ -123,6 +123,8 @@ class quality_test(base_module_quality.abstract_quality_check):
     def run_test(self, cr, uid, module_path):
         terp_score = self.run_test_terp(cr, uid, module_path)
         self.score = terp_score and terp_score[1] or 0.0
+        if self.score*100 < self.min_score:
+            self.message = 'Score is below than minimal score(%s%%)' % self.min_score
         if terp_score:
             self.result = self.get_result({'__terp__.py': terp_score})
         return None
@@ -135,10 +137,11 @@ class quality_test(base_module_quality.abstract_quality_check):
 
     def get_result_details(self, dict_terp):
         if dict_terp:
-            str_html = '''<html><head></head><body><table border="1">'''
-            header = ('<tr><th>%s</th><th>%s</th></tr>', [_('Tag Name'), _('Feed back About terp file of Module')])
+            str_html = '''<html><head>%s</head><body><table class="tablestyle">'''%(self.get_style())
+            header = ('<tr><th class="tdatastyle">%s</th><th class="tdatastyle">%s</th></tr>', [_('Tag Name'), _('Feed back About terp file of Module')])
             if not self.error:
                 res = str_html + self.format_html_table(header, data_list=dict_terp) + '</table><newline/></body></html>'
+                res = res.replace('''<td''', '''<td class="tdatastyle" ''')
                 return res
         return ""
 
