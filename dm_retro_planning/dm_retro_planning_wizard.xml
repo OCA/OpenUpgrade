@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+
+        <wizard string="Project"
+            model="dm.campaign.group"
+            name="campaign.group.project"
+            id="campaign_group_wiz"
+            menu="False"/>
+
+        <wizard string="Project"
+            model="dm.campaign"
+            name="campaign.project"
+            id="campaign_wiz"
+            menu="False"/>
+
+        <wizard
+            string="View Tasks"
+            model="dm.campaign.group"
+            name="wizard_campaign_group_tasks"
+            id="wizard_campaign_group_task"/>
+
+        <wizard
+            string="View Tasks"
+            model="dm.campaign"
+            name="wizard_campaign_tasks"
+            id="wizard_campaign_task"/>
+
+    </data>
+</openerp>

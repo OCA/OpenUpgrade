@@ -50,12 +50,21 @@ class Server (paramiko.ServerInterface):
                 if results:
                     pool = pooler.get_pool(cr.dbname)
                     user = pool.get('res.users').browse(cr,results[2],results[2])
-                    user_pubkey = user.ssh_key                    
-                    if user_pubkey: 
-                        filekey = user_pubkey.split(' ')[1]
-                        custKey = paramiko.RSAKey(data=base64.decodestring(filekey))
-                        if custKey == key:                                                
-                            res = results[2]
+                    key_obj = pool.get('sftp.public.keys')
+                    for k in user.ssh_key_ids:
+                        user_pubkey = k.ssh_key
+                        if user_pubkey: 
+                            filekey = user_pubkey.split(' ')
+                            if len(filekey)> 1:
+                                user_pubkey = filekey[1]
+                            else:
+                                continue
+                            custKey = paramiko.RSAKey(data=base64.decodestring(user_pubkey))
+                            if custKey == key:
+                                res = results[2]
+                                break
+                            else:
+                                continue
 
             elif allowed_auths == 'password':
                 cr.execute("select distinct users.login,users.password,users.id from ir_module_module module,res_users users "+ \

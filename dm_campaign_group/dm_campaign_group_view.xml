@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+    <!--
+    =======================================================
+    CAMPAIGN GROUP
+    =======================================================
+    -->
+
+    <record model="ir.ui.view" id="view_campaign_group_form">
+        <field name="name">dm.campaign.group.form</field>
+        <field name="model">dm.campaign.group</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Campaign Group">
+                <field name="name" select="1"/>
+                <field name="code" select="1"/>
+                <notebook colspan="4">
+                <page string="General">
+                    <field name="campaign_ids" colspan="4" nolabel="1" select="2"/>
+                    <group colspan="4">
+                    <separator string="Total Quantities" colspan="4"/>
+<!--                    <field name="quantity_planned_total"/>-->
+                    <field name="quantity_wanted_total"/>
+                    <field name="quantity_delivered_total"/>
+                    <field name="quantity_usable_total"/>
+                    </group>
+                </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_campaign_group_tree">
+        <field name="name">dm.campaign.group.tree</field>
+        <field name="model">dm.campaign.group</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Groups">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_campaign_group_form">
+        <field name="name">All Campaign Groups</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign.group</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_campaign_group_tree"/>
+    </record>
+    <menuitem id="menu_action_campaign_group_form" parent="dm.menu_dm_campaign" action="action_campaign_group_form"/>
+
+    <record model="ir.actions.act_window" id="action_campaign_mygroup_form">
+        <field name="name">My Campaign Groups</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign.group</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_campaign_group_tree"/>
+        <field name="domain">[('create_uid','=',uid)]</field>
+    </record>
+    <menuitem id="menu_action_campaign_mygroup_form" parent="dm.menu_dm_campaign" groups="dm.res_groups_campaignadmin,dm.res_groups_campaignmanager" action="action_campaign_mygroup_form"/>
+
+    <!--
+    =======================================================
+    CAMPAIGN EXTENSIONS
+    =======================================================
+    -->
+        <record id="view_campaign_form_group_inherit" model="ir.ui.view">
+            <field name="name">dm.campaign.group.inherit</field>
+            <field name="model">dm.campaign</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="dm.view_campaign_form"/>
+            <field name="arch" type="xml">
+                <field name="responsible_id" position="after">
+                    <field name="campaign_group_id"/>
+                </field>
+            </field>
+        </record>
+
+</data>
+</openerp>

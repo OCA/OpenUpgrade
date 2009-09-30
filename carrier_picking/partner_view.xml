@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+    <record model="ir.ui.view" id="view_partner_form_v1">
+        <field name="name">res.partner.form.v1</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="email" select="2" widget="email" position="after">
+                <field name="plate"/>
+            </field>
+        </field>
+    </record>
+    
+    <record model="ir.ui.view" id="view_partner_address_form_v1">
+        <field name="name">res.partner.address.form.v1</field>
+        <field name="model">res.partner.address</field>
+        <field name="inherit_id" ref="base.view_partner_address_form1"/>
+        <field name="arch" type="xml">
+            <field name="email" select="2" widget="email" position="after">
+                <field name="plate"/>
+            </field>
+        </field>
+    </record>
+
+    </data>
+</openerp>

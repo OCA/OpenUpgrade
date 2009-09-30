@@ -38,6 +38,11 @@ from email.Utils import COMMASPACE, formatdate
 import netsvc
 import random
 import sys
+import tools
+from datetime import datetime
+from datetime import timedelta
+
+        
 #if sys.version[0:3] > '2.4':
 #    from hashlib import md5
 #else:
@@ -65,13 +70,20 @@ class SmtpClient(osv.osv):
         'auth_type':fields.selection([('gmail','Google Server'), ('yahoo','Yahoo!!! Server'), ('unknown','Other Mail Servers')], string="Server Type"),
         'active' : fields.boolean("Active"),
         'date_create': fields.date('Date Create', required=True, readonly=True, states={'new':[('readonly',False)]}),
-        'test_email' : fields.text('Test Message'),
-        'body' : fields.text('Message', help="The message text that will be send along with the email which is send through this server"),
-        'verify_email' : fields.text('Verify Message', readonly=True, states={'new':[('readonly',False)]}),
+        'test_email' : fields.text('Test Message', translate=True),
+        'body' : fields.text('Message', translate=True, help="The message text that will be send along with the email which is send through this server"),
+        'verify_email' : fields.text('Verify Message', translate=True, readonly=True, states={'new':[('readonly',False)]}),
         'code' : fields.char('Verification Code', size=1024),
         'type' : fields.selection([("default", "Default"),("account", "Account"),("sale","Sale"),("stock","Stock")], "Server Type",required=True),
         'history_line': fields.one2many('email.smtpclient.history', 'server_id', 'History'),
-        'server_statistics': fields.one2many('report.smtp.server', 'server_id', 'Statistics')
+        'server_statistics': fields.one2many('report.smtp.server', 'server_id', 'Statistics'),
+        'delete_queue': fields.selection([
+            ('never','Never Delete History'),
+            ('content','Delete Content After'),
+            ('all','Clear All After'),
+            ('after_send','Delete when Email Sent'),
+        ],'History Option', select=True),
+        'delete_queue_period': fields.integer('Delete after', help="delete emails/contents from email queue after specified no of days"),
     }
     
     _defaults = {
@@ -79,8 +91,10 @@ class SmtpClient(osv.osv):
         'state': lambda *a: 'new',
         'type': lambda *a: 'default',
         'port': lambda *a: '25',
+        'delete_queue_period': lambda *a: 30,
         'auth': lambda *a: True,
         'active': lambda *a: True,
+        'delete_queue': lambda *a: 'never',
         'verify_email': lambda *a: _("Verification Message. This is the code\n\n__code__\n\nyou must copy in the OpenERP Email Server (Verify Server wizard).\n\nCreated by user __user__"),
     }
     server = {}
@@ -88,9 +102,10 @@ class SmtpClient(osv.osv):
 
     def read(self,cr, uid, ids, fields=None, context=None, load='_classic_read'):
         def override_password(o):
-            for field in o[0]:
-                if field == 'password':
-                    o[0][field] = '********'
+            if len(o) > 0:
+                for field in o[0]:
+                    if field == 'password':
+                        o[0][field] = '********'
             return o
 
         result = super(SmtpClient, self).read(cr, uid, ids, fields, context, load)
@@ -114,6 +129,8 @@ class SmtpClient(osv.osv):
             return {'value':{'user':email, 'from_email':email_from+' <'+email+'>'}}
 
     def check_permissions(self, cr, uid, ids):
+        if uid == 1:
+            return True
         cr.execute('select * from res_smtpserver_group_rel where sid=%s and uid=%s' % (ids[0], uid))
         data = cr.fetchall()
         if len(data) <= 0:
@@ -146,9 +163,9 @@ class SmtpClient(osv.osv):
             raise osv.except_osv(_('Server Error!'), _('Please verify Email Server, without verification you can not send Email(s).'))
         key = False
         if test and self.server[serverid]['state'] == 'confirm':
-            body = str(self.server[serverid]['test_email'])
+            body = self.server[serverid]['test_email']
         else:
-            body = str(self.server[serverid]['verify_email'])
+            body = self.server[serverid]['verify_email']
             #ignore the code
             key = self.gen_private_key(cr, uid, ids)
             #md5(time.strftime('%Y-%m-%d %H:%M:%S') + toemail).hexdigest();
@@ -161,7 +178,10 @@ class SmtpClient(osv.osv):
         if len(body.strip()) <= 0:
             raise osv.except_osv(_('Message Error!'), _('Please configure Email Server Messages [Verification / Test]'))
         
-        msg = MIMEText(body or '', _charset='utf-8')
+        try:
+            msg = MIMEText(body.encode('utf8') or '',_subtype='plain',_charset='utf-8')
+        except:
+            msg = MIMEText(body or '',_subtype='plain',_charset='utf-8')
         
         if not test and not self.server[serverid]['state'] == 'confirm':
             msg['Subject'] = _('OpenERP SMTP server Email Registration Code!')
@@ -169,7 +189,7 @@ class SmtpClient(osv.osv):
             msg['Subject'] = _('OpenERP Test Email!')
         
         msg['To'] = toemail
-        msg['From'] = str(self.server[serverid]['from_email'])
+        msg['From'] = tools.ustr(self.server[serverid]['from_email'])
         
         message = msg.as_string()
         
@@ -181,7 +201,10 @@ class SmtpClient(osv.osv):
                 'body':body,
                 'serialized_message':message,
             })
-        self.write(cr, uid, ids, {'state':'waiting', 'code':key})
+        
+        if self.server[serverid]['state'] != 'confirm':
+            self.write(cr, uid, ids, {'state':'waiting', 'code':key})
+            
         return True
          
     def getpassword(self,cr,uid,ids):
@@ -270,7 +293,10 @@ class SmtpClient(osv.osv):
         if smtp_server.state != 'confirm':
             raise osv.except_osv(_('SMTP Server Error !'), 'Server is not Verified, Please Verify the Server !')
         
-        subject = unicode(subject, 'utf-8') # Email subject could have non-ascii characters
+        try:
+            subject = subject.encode('utf-8')
+        except:
+            subject = subject.decode()   
         
         if type(emailto) == type([]):
             for to in emailto:
@@ -335,13 +361,36 @@ class SmtpClient(osv.osv):
                 })
         
         return True
+    
+    def _check_history(self, cr, uid, ids=False, context={}):
+        result = True
+        server = self.pool.get('email.smtpclient')
+        queue = self.pool.get('email.smtpclient.queue')
+        sids = self.search(cr, uid, [])
+        for server in self.browse(cr, uid, sids):
+            if server.delete_queue == 'never':
+                continue
             
-    def _check_queue(self, cr, uid, ids=False, context={}):
-        import tools
+            now = datetime.today()
+            days = timedelta(days=server.delete_queue_period)
+            day = now - days
+            kday = day.__str__().split(' ')[0]
+            
+            if server.delete_queue == 'content':
+                qids = queue.search(cr, uid, [('server_id','=',server.id), ('date_create','<=',kday)])
+                queue.write(cr, uid, qids, {'serialized_message':False})
+                continue
+            
+            if server.delete_queue == 'all':
+                qids = queue.search(cr, uid, [('server_id','=',server.id), ('date_create','<=',kday)])
+                queue.unlink(cr, uid, qids)
+                
+        return result
         
+    def _check_queue(self, cr, uid, ids=False, context={}):        
         queue = self.pool.get('email.smtpclient.queue')
         history = self.pool.get('email.smtpclient.history')
-        sids = queue.search(cr, uid, [('state','!=','send'),('state','!=','sending')], limit=30)
+        sids = queue.search(cr, uid, [('state','not in',['send','sending'])], limit=30)
         queue.write(cr, uid, sids, {'state':'sending'})
         error = []
         sent = []
@@ -352,7 +401,7 @@ class SmtpClient(osv.osv):
                 self.open_connection(cr, uid, ids, email.server_id.id)
                 
             try:
-                self.smtpServer[email.server_id.id].sendmail(str(email.server_id.email), email.to, email.serialized_message)
+                self.smtpServer[email.server_id.id].sendmail(str(email.server_id.email), email.to, tools.ustr(email.serialized_message))
             except Exception, e:
                 queue.write(cr, uid, [email.id], {'error':e, 'state':'error'})
                 continue

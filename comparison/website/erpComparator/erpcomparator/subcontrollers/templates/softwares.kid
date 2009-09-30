@@ -18,14 +18,15 @@
 	    function view_detail(id) {
 	    	
 	    	var elem = document.getElementById(id);
+	    	
 	        elem.style.display = elem.style.display == 'none' ? '' : 'none';
 		}
 		
 		function view_erp_detail(id, key, parent) {
-			
+		
 			if(key) {
 				var table = getElement('checkboxtext');
-				id = table.rows[1].id
+				id = table.rows[0].id
 			}
 			
 			$(function() {			
@@ -38,11 +39,12 @@
 			if(key) {
 				
 				var table = getElement('checkboxtext');
-				var tr = table.rows[0];
+				var tr = table.rows[0];	
 				var td = MochiKit.DOM.getElementsByTagAndClassName('td', null, tr)[0];
 				td.style.color = "#990033";
-				table.rows[1].style.display = '';
-				var first_init = getElement('img_'+table.rows[1].id) 
+				table.rows[0].style.display = '';
+				var first_init = getElement('img_'+table.rows[0].id)
+				 
 				first_init.style.display = '';
 			}
 			
@@ -66,13 +68,19 @@
 					}
 				}
 			}		
-		}
-		
-		
+		}		
 	</script>
     
 </head>
 <body>
+	<?python
+	    id = ''
+		for i in range(len(res)):
+			if id == '':
+				id=str(res[i]['id'])
+			else:
+				id=id+','+str(res[i]['id'])
+	?>
 	<div id="bodybackground">
 		<div style="height: 46px; width: 890px; float: left;">
 			<div style="float:left;width:9;">
@@ -110,42 +118,19 @@
 		<div>
 			<img src="/static/images/bluebgimage.png"/>
 		</div>
-		<table id="checkboxtext" width="850px" align="center" cellspacing="0">
-			<?python
-			    id = ''
-				for i in range(len(res)):
-					if id == '':
-						id=str(res[i]['id'])
-					else:
-						id=id+','+str(res[i]['id'])
-			?>
-			
-			<tr id="${id}" width="100%" class="toolbar">
-				<td py:for="r in res" id="'${r['id']}'" onclick="view_erp_detail(${r['id']},false,this.parentNode)" align="center" style="color: #021677; border: 1px solid gray; padding: 2px; white-space:nowrap; font-family: Verdana, Geneva, sans-serif; float: center; width: fixed; cursor: pointer; font-size: 12px;"> 
+		<table class="checkboxtext" style="padding-left: 10px;" width="890px">
+			<tr id="${id}" class="toolbar">
+				<td py:for="r in res" id="'${r['id']}'" onclick="view_erp_detail(${r['id']},false,this.parentNode)" align="center" class="toolbar_td">
 					<b>
 						${r['name']} 
 					</b>		
 				</td>
-			</tr>
-			<tr py:for="r in res" id="${r['id']}" style="display:none;">
-				<td colspan="${len(res)}">
-					<div id="${r['name']}" style="color: #252a28; padding-left: 5px; overflow-y: hidden; overflow-x: auto; width: 830px;">
-							<pre py:if="r['note']" py:content="XML(r['note'])">content</pre>
-							<pre py:if="not r['note']">No Description...</pre>
-					</div>
-				</td>
-			</tr>
+			</tr>		
 		</table>
-		
-		<div id="scr_title" style="padding-left: 25px; padding-right: 25px;" >
-			<div style="padding:1px; border: 1px solid grey; background-color: #F6F6F6;">
-				<b style="padding-left: 15px; color:#021677;">Screen Gallery</b>
-			</div>
-		</div>
-		
-		<div id="screenshots" class="checkboxtext">
-			<div py:for="r in res" id="${r['id']}">
-				<div class="slider latest_listing_${r['id']}" width="850px">
+		<table id="checkboxtext" style= "padding-left:0px;" align="center" cellspacing="0">
+			<tr py:for="r in res" id="${r['id']}" style="display:none; padding-left:0px;">
+				<td colspan="${len(res)}">
+					<div class="slider latest_listing_${r['id']}" width="850px">
 					<div class="messaging" style="display: none;">Please Note: You may have disabled JavaScript and/or CSS.</div>
 					<div class="icon_items" id="img_${r['id']}" style="display:none;">
 						<a class="prev" href="#"><img height="16" width="16" env="images" title="Previous" alt="Previous" src="/static/images/previous.png" /></a>         
@@ -159,15 +144,19 @@
 											<img src="/static/images/Screenshots/${val[0][image]}" alt="${val[1][image]}"/>
 										</a>
 										<div align="center"><b>${val[1][image]}</b></div>
-										
 									</div>
 								</div>
 							</div>		
 						</div>			
 					</div>
-				</div>
-			</div>
-		</div>
+					</div>
+					<div id="${r['name']}" style="color: #252a28; padding-left: 45px; overflow-y: hidden; overflow-x: auto; width: 830px; padding-top:10px;">
+							<pre py:if="r['note']" py:content="XML(r['note'])">content</pre>
+							<pre py:if="not r['note']">No Description...</pre>
+					</div>
+				</td>
+			</tr>
+		</table>
 	</div>
 </body>
 </html>

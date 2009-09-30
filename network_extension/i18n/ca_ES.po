@@ -1,0 +1,235 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+# 	* network_extension
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 5.0.1\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-09-09 09:25:05+0000\n"
+"PO-Revision-Date: 2009-09-09 11:27+0100\n"
+"Last-Translator: Jordi Esteve (Zikzakmedia) <jesteve@zikzakmedia.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: network_extension
+#: model:ir.actions.act_window,name:network_extension.action_network_encrypt_password
+#: view:network.encrypt.password:0
+msgid "En/Decrypt password"
+msgstr "Contrasenya xifrar/desxifrar"
+
+#. module: network_extension
+#: view:network.software:0
+#: view:network.software.logpass:0
+msgid "Encrypt"
+msgstr "Xifra"
+
+#. module: network_extension
+#: field:network.service,public_url:0
+msgid "Public URL"
+msgstr "URL pública"
+
+#. module: network_extension
+#: model:ir.model,name:network_extension.model_network_encrypt_password
+msgid "network.encrypt.password"
+msgstr "network.encrypt.password"
+
+#. module: network_extension
+#: help:network.service,public_port:0
+msgid "Sometimes public and private ports are different."
+msgstr "Algunes vegades els ports públics i privats són diferents."
+
+#. module: network_extension
+#: view:network.service:0
+#: view:network.software:0
+msgid "Compute URL"
+msgstr "Calcula URL"
+
+#. module: network_extension
+#: view:network.software:0
+#: view:network.software.logpass:0
+#: field:network.software.logpass,note:0
+msgid "Note"
+msgstr "Nota"
+
+#. module: network_extension
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr "Nom del model invàlid per aquesta acció."
+
+#. module: network_extension
+#: constraint:ir.model:0
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr "El nom del objecte ha de començar amb x_ i sense caràcters especials!"
+
+#. module: network_extension
+#: field:network.service,public_port:0
+msgid "Public port"
+msgstr "Port públic"
+
+#. module: network_extension
+#: field:network.network,public_domain:0
+msgid "Public domain"
+msgstr "Domini"
+
+#. module: network_extension
+#: model:ir.actions.act_window,name:network_extension.action_network_service
+#: view:network.service:0
+#: view:network.software:0
+#: field:network.software,service_ids:0
+msgid "Service"
+msgstr "Servei"
+
+#. module: network_extension
+#: field:network.service,material:0
+#: field:network.software.logpass,material:0
+msgid "Material"
+msgstr "Maquinari"
+
+#. module: network_extension
+#: help:network.network,dns:0
+msgid "List of DNS servers, separated by commas"
+msgstr "Llista de servidors DNS, separat per comes"
+
+#. module: network_extension
+#: model:ir.module.module,shortdesc:network_extension.module_meta_information
+msgid "Network Management Extension"
+msgstr "Extensió del gestor de xarxes"
+
+#. module: network_extension
+#: field:network.service,path:0
+msgid "Path"
+msgstr "Ruta"
+
+#. module: network_extension
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr "XML invàlid en la estructura de vista!"
+
+#. module: network_extension
+#: field:network.protocol,name:0
+#: field:network.service,name:0
+#: field:network.software.logpass,name:0
+msgid "Name"
+msgstr "Nom"
+
+#. module: network_extension
+#: model:ir.ui.menu,name:network_extension.menu_action_service_tree
+msgid "Services"
+msgstr "Serveis"
+
+#. module: network_extension
+#: field:network.network,dns:0
+msgid "DNS"
+msgstr "DNS"
+
+#. module: network_extension
+#: model:ir.model,name:network_extension.model_network_service
+msgid "Service Network"
+msgstr "Xarxa de serveis"
+
+#. module: network_extension
+#: field:network.service,private_url:0
+msgid "Private URL"
+msgstr "URL privada"
+
+#. module: network_extension
+#: model:ir.actions.act_window,name:network_extension.action_network_software
+#: model:ir.ui.menu,name:network_extension.menu_action_software_tree
+#: field:network.service,software_id:0
+msgid "Software"
+msgstr "Programari"
+
+#. module: network_extension
+#: field:network.network,public_ip_address:0
+msgid "Public IP address"
+msgstr "IP pública"
+
+#. module: network_extension
+#: model:ir.actions.act_window,name:network_extension.action_network_protocol
+#: model:ir.model,name:network_extension.model_network_protocol
+#: model:ir.ui.menu,name:network_extension.menu_action_protocol_tree
+#: view:network.protocol:0
+#: field:network.service,protocol_id:0
+msgid "Protocol"
+msgstr "Protocol"
+
+#. module: network_extension
+#: model:ir.actions.act_window,name:network_extension.action_network_logpass
+#: view:network.software:0
+msgid "Login/Password"
+msgstr "Usuari/Contrasenya"
+
+#. module: network_extension
+#: model:ir.ui.menu,name:network_extension.menu_action_encrypt_password_tree
+#: field:network.encrypt.password,name:0
+msgid "Encrypt/Decrypt password"
+msgstr "Contrasenya per xifrar/desxifrar"
+
+#. module: network_extension
+#: field:network.software.logpass,encrypted:0
+msgid "Encrypted"
+msgstr "Xifrat"
+
+#. module: network_extension
+#: view:network.software:0
+#: view:network.software.logpass:0
+msgid "Decrypt"
+msgstr "Desxifra"
+
+#. module: network_extension
+#: model:ir.module.module,description:network_extension.module_meta_information
+msgid ""
+"\n"
+"Organize your software and configurations.\n"
+"    - Additional network information: IP, domain, DNS, gateway\n"
+"    - Protocols\n"
+"    - Services\n"
+"    - Ports\n"
+"    - Public and private URLs\n"
+"    - Password encryption\n"
+"\n"
+"System dependency: package python-crypto required."
+msgstr ""
+"\n"
+"Organitza el vostre programari i configuracions.\n"
+"    - Informació addicional de la xarxa: IP, dominis, DNS, gateway\n"
+"    - Protocols\n"
+"    - Serveis\n"
+"    - Ports\n"
+"    - URL públiques i privades\n"
+"    - Xifrat de contrasenyes\n"
+"\n"
+"Dependència de sistema: És necessari el paquet python-crypto."
+
+#. module: network_extension
+#: field:network.network,gateway:0
+msgid "Gateway"
+msgstr "Passarel·la"
+
+#. module: network_extension
+#: model:ir.ui.menu,name:network_extension.menu_action_logpass_tree
+msgid "Logins/Passwords"
+msgstr "Usuaris/Contrasenyes"
+
+#. module: network_extension
+#: field:network.service,port:0
+msgid "Port"
+msgstr "Port"
+
+#~ msgid "Port Network"
+#~ msgstr "Ports de la xarxa"
+#~ msgid ""
+#~ "\n"
+#~ "    Organize your software and configurations"
+#~ msgstr ""
+#~ "\n"
+#~ "    Organitza les configuracions del programari"
+
+#, fuzzy
+#~ msgid "Public service"
+#~ msgstr "IP pública"
+

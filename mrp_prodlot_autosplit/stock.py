@@ -99,7 +99,7 @@ class stock_production_lot(osv.osv):
     def _last_location_id(self, cr, uid, ids, field_name, arg, context={}):
         res = {}
         for prodlot_id in ids:
-            cr.execute("select location_dest_id from stock_move where stock_move.prodlot_id = %s and stock_move.state='done' order by stock_move.date_planned ASC LIMIT 1" % prodlot_id)
+            cr.execute("select location_dest_id from stock_move where stock_move.prodlot_id = %s and stock_move.state='done' order by stock_move.date_planned DESC LIMIT 1" % prodlot_id)
             results = cr.fetchone()
             if results and len(results) > 0:
                 res[prodlot_id] = results[0]#TODO return tuple to avoid name_get being requested by the GTK client

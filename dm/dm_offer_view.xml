@@ -2,8 +2,12 @@
 <openerp>
 <data>
 
-    <menuitem name="Offers" id="menu_dm_offer" parent="menu_dm" sequence="2"/>
-    <menuitem name="Offers" id="menu_dm_config_offer" parent="dm.menu_dm_config" sequence="2"/>
+    <menuitem name="Offers" id="menu_dm_offer" parent="menu_dm" 
+groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_dmadmin,res_groups_campaignmanager,res_groups_offermanager"
+    sequence="2"/>
+    <menuitem name="Offers" id="menu_dm_config_offer" parent="dm.menu_dm_config" 
+groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_dmadmin,res_groups_campaignmanager,res_groups_offermanager"
+    sequence="2"/>
 
 	<!--
 	=======================================================
@@ -147,19 +151,6 @@
                     <page string="History">
                         <separator string="History" />
                         <field name="history_ids" nolabel="1" colspan="4"/>
-                        <field name="translation_ids" nolabel="1" colspan="4">
-                            <form string="Translation">
-                                <field name="language_id"/>
-                                <field name="translator_id"/>
-                                <field name="date"/>
-                                <field name="notes" nolabel="1" colspan="4" widget="text_wiki"/>
-                            </form>
-                            <tree string="Translations">
-                                <field name="language_id"/>
-                                <field name="translator_id"/>
-                                <field name="date"/>
-                            </tree>
-                        </field>
                     </page>
                     <page string="Dates" groups="base.group_extended">
                         <group colspan="2" col="2">
@@ -440,6 +431,7 @@
                         <group col="8" colspan="4">
                         <field name="name" select="1"/>
                         <field name="code" colspan="2"/>
+                        <field name="lang_orig_id"/>
                         </group>
                         <separator string="Notes" colspan="4"/>
                         <field name="notes" colspan="4"  nolabel="1" widget="text_wiki"/>

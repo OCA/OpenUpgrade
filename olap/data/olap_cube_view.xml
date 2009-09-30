@@ -537,6 +537,7 @@ Wizard view for the Auto Configuring the data
                 <field name="query"/>
                 <field name="cube_id"/>
                 <field name="mdx_id"/>
+                <field name="axis_keys" readonly="True"/>
             </tree>
         </field>
     </record>
@@ -552,6 +553,7 @@ Wizard view for the Auto Configuring the data
                 <field name="cube_id" select="2" readonly="True"/>
                 <field name="mdx_id" select="2" readonly="True"/>
                 <field name="schema_id" select="2" readonly="True"/>
+                <field name="axis_keys" readonly="True"/>
             </form>
         </field>
     </record>

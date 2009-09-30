@@ -19,15 +19,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import dm_project_wizard
-import dm_campaign_tasks
-import dm_campaign_pos
-import dm_campaign_group_pos
 import dm_offer_document
-import dm_campaign_group
-import dm_proposition_products
-import dm_campaign_group_project
-import dm_campaign_group_tasks
 import dm_document_report
 import dm_workitem_wizard
 import dm_partner_address_segments

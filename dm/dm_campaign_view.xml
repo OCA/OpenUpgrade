@@ -6,7 +6,9 @@
     <menuitem name="Configuration" id="menu_dm_config" parent="menu_dm" groups="res_groups_offeradmin,res_groups_offermanager,res_groups_campaignadmin,res_groups_campaignmanager,res_groups_dtpmanager" sequence="0"/>
     <menuitem name="Campaigns" id="menu_dm_config_campaign" parent="dm.menu_dm_config" groups="res_groups_offeradmin,res_groups_campaignadmin" sequence="1"/>
     <menuitem name="Customers Lists and Files" id="menu_dm_config_custlist" parent="dm.menu_dm_config" groups="res_groups_offeradmin,res_groups_campaignadmin" sequence="1"/>
-    <menuitem name="Campaigns" id="menu_dm_campaign" parent="menu_dm" sequence="4"/>
+    <menuitem name="Campaigns" id="menu_dm_campaign" parent="menu_dm" 
+    groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_dmadmin,res_groups_campaignmanager,res_groups_offermanager"
+    sequence="4"/>
     <menuitem name="Low Level" id="menu_dm_config_lowlevel" parent="dm.menu_dm_config" groups="res_groups_dmadmin" sequence="0"/>
     <menuitem name="Mail Service" id="menu_dm_config_mail_service" parent="dm.menu_dm_config" sequence="7"/>
 
@@ -27,6 +29,7 @@
                 <field name="media_id" select="1"/>
                 <field name="default_for_media" on_change="_check_unique_mail_service(media_id,default_for_media)"/>
                 <field name="type_id" on_change="on_change_service_type(type_id)" widget="selection"/>
+                <field name="store_email_document" select="1"/>
                 <group colspan="4" attrs="{'invisible':[('service_type','!=','smtp')]}">
 					<separator string="SMTP Server Configuration" colspan="4" />
 					<field name="service_type" on_change="on_change_service_type(type_id)" invisible="1"/>
@@ -149,11 +152,6 @@
                         <field name="date_start" select="2" string="Drop Date"/>
                         <field name="date" string="End Date"/>
                         </group>
-                        <separator string="Tasks Management" colspan="4"/>
-                        <group colspan="4">
-                        <field name="project_id" string="Retro Planning"/>
-                        <button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action" attrs="{'invisible':[('project_id','!=',False)]}"/> 
-                        </group>
                         <separator string="Campaign Status" colspan="4"/>
                         <group col="10" colspan="4">
                             <field name="state" readonly="1" select="2" nolabel="1"/>
@@ -162,208 +160,17 @@
                             <button name="state_close_set" string="Close" states="open"/>
                         </group>
                     </page>
-                    <page string="Manufacturing">
-                        <separator string="Manufacturing" colspan="4"/>
-                        <group colspan="4">
-                            <field name="manufacturing_responsible_id"/>
-                            <field name="campaign_group_id"/>
-                        </group>
-                        <group colspan="4">
-                            <field name="manufacturing_task_ids" nolabel="1" mode="tree,gantt" widget="one2many_list" default_get="{'type':'Mailing Manufacturing','project_id':project_id}">
-                                <tree string="Manufacturing tasks" editable="bottom">
-                                    <field name="name" string="Task Name"/>
-                                    <field name="date_deadline" string="Theorical Date"/>
-                                    <field name="date_reviewed"/>
-                                    <field name="date_planned"/>
-                                    <field name="date_close" string="Real Date"/>
-                                </tree>
-                            </field>
-                        </group>
-                        <field name="manufacturing_purchase_line_ids" widget="one2many_list" nolabel="1" colspan="4" default_get="{'product_category':'Mailing Manufacturing'}">
-                            <form string="Mailing Manufacturing Purchase Line">
-                                <group colspan="2" col="2">
-                                    <separator string="Purchase Line Product" colspan="2"/>
-                                    <field name="product_category"/>
-                                    <field name="product_id" domain="[('categ_id','=',int(product_category))]"/>
-                                    <field name="uom_id"/>
-                                    <separator string="Documents Generation" colspan="2"/>
-                                    <field name="type_document"/>
-                                    <field name="desc_from_offer" />
-                                </group>
-                                <group colspan="2" col="2">
-                                    <separator string="Quantity" colspan="2"/>
-                                    <field name="type_quantity"/>
-                                    <separator string="Dates" colspan="4"/>
-                                    <field name="date_planned"/>
-                                    <field name="date_delivery"/>
-                                </group>
-                                <separator string="Notes" colspan="4"/>
-                                <field name="notes" colspan="4" nolabel="1" widget="text_wiki"/>
-                                <field name="state" nolabel="1"/>
-                            </form>
-                        </field>
-                        <separator string="Manufacturing Status" colspan="4"/>
-                        <group colspan="4">
-                            <field name="manufacturing_state" nolabel="1"/>
-                            <button name="manufacturing_state_inprogress_set" string="In Progress" attrs="{'invisible':[('manufacturing_state','!=','pending')]}" type="object"/>
-                            <button name="manufacturing_state_done_set" string="Done" attrs="{'invisible':[('manufacturing_state','!=','inprogress')]}" type="object"/>
-                            <button name="manufacturing_state_inprogress_set" string="Set to In Progress" attrs="{'invisible':[('manufacturing_state','!=','done')]}" type="object"/>
-                        </group>
-                    </page>
-                    <page string="DTP">
-                        <separator string="Desktop Publishing" colspan="4"/>
-                        <group colspan="2" col="2">
-                            <field name="dtp_responsible_id"/>
-                        </group>
-                        <field name="dtp_task_ids" nolabel="1" colspan="4" mode="tree,gantt" default_get="{'type':'DTP','project_id':project_id}">
-                            <tree string="DTP Tasks" editable="bottom">
-                                <field name="name" string="Task Name"/>
-                                <field name="date_deadline" string="Theorical Date" widget="date"/>
-                                <field name="date_reviewed"/>
-                                <field name="date_planned"/>
-                                <field name="date_close" string="Real Date"/>
-                            </tree>
-                        </field>
-                        <field name="dtp_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list" default_get="{'product_category':'DTP'}">
-                            <form string="DTP Purchase Line">
-                                <group colspan="2" col="2">
-                                    <separator string="Purchase Line Product" colspan="2"/>
-                                    <field name="product_category"/>
-                                    <field name="product_id" domain="[('categ_id','=',int(product_category))]"/>
-                                    <field name="uom_id"/>
-                                    <separator string="Documents Generation" colspan="2"/>
-                                    <field name="type_document"/>
-                                    <field name="desc_from_offer" />
-<!--                                    <button name="desc_from_offer_get" string="Get Description from Offer" type="object" context="{'campaign_id':'test'}"/>-->
-                                </group>
-                                <group colspan="2" col="2">
-                                    <separator string="Quantity" colspan="2"/>
-                                    <field name="type_quantity"/>
-                                    <separator string="Dates" colspan="4"/>
-                                    <field name="date_planned"/>
-                                    <field name="date_delivery"/>
-                                </group>
-                                <separator string="Notes" colspan="4"/>
-                                <field name="notes" colspan="4" nolabel="1" widget="text_wiki"/>
-                                <field name="state" nolabel="1"/>
-                            </form>
-                        </field>
-                        <separator string="DTP Status" colspan="4"/>
-                        <group colspan="4">
-                            <field name="dtp_state" nolabel="1"/>
-                            <button name="dtp_state_inprogress_set" string="In Progress" attrs="{'invisible':[('dtp_state','!=','pending')]}" type="object"/>
-                            <button name="dtp_state_done_set" string="Done" attrs="{'invisible':[('dtp_state','!=','inprogress')]}" type="object"/>
-                            <button name="dtp_state_inprogress_set" string="Set to In Progress" attrs="{'invisible':[('dtp_state','!=','done')]}" type="object"/>
-                        </group>
-                    </page>
-                    <page string="Customers Files">
-                        <group colspan="2" col="2">
-                            <separator string="Customers Files" colspan="2"/>
-                            <field name="files_responsible_id"/>
-<!--                            <field name="invoiced_partner_id"/>
-                            <field name="files_delivery_address_id"/>-->
-                        </group>
-                        <group colspan="2" col="2">
-                            <separator string="Intermediaries" colspan="2"/>
-                            <field name="cleaner_id"/>
-                            <field name="deduplicator_id"/>
-                            <field name="router_id"/>
-                        </group>
-                        <field name="cust_file_task_ids" nolabel="1" colspan="4" mode="tree,gantt" default_get="{'type':'Customers List','project_id':project_id}">
-                            <tree string="Customers Files Tasks" editable="bottom">
-                                <field name="name" string="Task Name"/>
-                                <field name="date_deadline" string="Theorical Date"/>
-                                <field name="date_reviewed"/>
-                                <field name="date_planned"/>
-                                <field name="date_close" string="Real Date"/>
-                            </tree>
-                        </field>
-                        <field name="cust_file_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list" default_get="{'product_category':'Customers List'}">
-                            <form string="Customers Files Purchase Line">
-                                <group colspan="2" col="2">
-                                    <separator string="Purchase Line Product" colspan="2"/>
-                                    <field name="product_category"/>
-                                    <field name="product_id" domain="[('categ_id','=',int(product_category))]"/>
-                                    <field name="uom_id"/>
-                                    <separator string="Documents Generation" colspan="2"/>
-                                    <field name="type_document"/>
-                                    <field name="desc_from_offer" />
-                                </group>
-                                <group colspan="2" col="2">
-                                    <separator string="Quantity" colspan="2"/>
-                                    <field name="type_quantity"/>
-                                    <separator string="Dates" colspan="4"/>
-                                    <field name="date_planned"/>
-                                    <field name="date_delivery"/>
-                                </group>
-                                <separator string="Notes" colspan="4"/>
-                                <field name="notes" colspan="4" nolabel="1" widget="text_wiki"/>
-                                <field name="state" nolabel="1"/>
-                            </form>
-                        </field>
-                        <separator string="Customers Files Status" colspan="4"/>
-                        <group colspan="4">
-                            <field name="customer_file_state" nolabel="1"/>
-                            <button name="customer_file_state_inprogress_set" string="In Progress" attrs="{'invisible':[('customer_file_state','!=','pending')]}" type="object"/>
-                            <button name="customer_file_state_done_set" string="Done" attrs="{'invisible':[('customer_file_state','!=','inprogress')]}" type="object"/>
-                            <button name="customer_file_state_inprogress_set" string="Set to In Progress" attrs="{'invisible':[('customer_file_state','!=','done')]}" type="object"/>
-                        </group>
-                    </page>
-                    <page string="Items Procurement">
-                        <separator string="Items Procurement" colspan="4"/>
-                        <group colspan="2" col="2">
-                            <field name="item_responsible_id"/>
-                        </group>
-                        <field name="item_task_ids" nolabel="1" colspan="4" mode="tree,gantt" default_get="{'type':'Items Procurement','project_id':project_id}">
-                            <tree string="Items Procurement Tasks" editable="bottom">
-                                <field name="name" string="Task Name"/>
-                                <field name="date_deadline" string="Theorical Date"/>
-                                <field name="date_reviewed"/>
-                                <field name="date_planned"/>
-                                <field name="date_close" string="Real Date"/>
-                            </tree>
-                        </field>
-                        <field name="item_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list" default_get="{'product_category':'Items'}">
-                            <form string="Item Purchase Line">
-                                <group colspan="2" col="2">
-                                    <separator string="Purchase Line Product" colspan="2"/>
-                                    <field name="product_category"/>
-                                    <field name="product_id" domain="[('categ_id','=',int(product_category))]"/>
-                                    <field name="uom_id"/>
-                                    <separator string="Documents Generation" colspan="2"/>
-                                    <field name="type_document"/>
-                                    <field name="desc_from_offer" />
-<!--                                    <button name="desc_from_offer_get" string="Get Description from Offer" type="object" context="{'campaign_id':'test'}"/>-->
-                                </group>
-                                <group colspan="2" col="2">
-                                    <separator string="Quantity" colspan="2"/>
-                                    <field name="type_quantity"/>
-                                    <separator string="Dates" colspan="4"/>
-                                    <field name="date_planned"/>
-                                    <field name="date_delivery"/>
-                                </group>
-                                <separator string="Notes" colspan="4"/>
-                                <field name="notes" colspan="4" nolabel="1" widget="text_wiki"/>
-                                <field name="state" nolabel="1"/>
-                            </form>
-                        </field>
-                        <separator string="Items Procurement Status" colspan="4"/>
-                        <group colspan="4">
-                            <field name="items_state" nolabel="1"/>
-                            <button name="items_state_inprogress_set" string="In Progress" attrs="{'invisible':[('items_state','!=','pending')]}" type="object"/>
-                            <button name="items_state_done_set" string="Done" attrs="{'invisible':[('items_state','!=','inprogress')]}" type="object"/>
-                            <button name="items_state_inprogress_set" string="Set to In Progress" attrs="{'invisible':[('items_state','!=','done')]}" type="object"/>
-                        </group>
-                    </page>
-                    <page string="Advanced">
+                    <page string="Mail Service">
                         <field name="mail_service_ids" nolabel="1" colspan="4" mode="tree">
                             <tree string="Mail Service" editable="bottom">
                                 <field name="offer_step_id" domain="[('offer_id','=',parent.offer_id)]"/>
                                 <field name="mail_service_id"/>
                             </tree>
                         </field>
-                        <separator string="Payment Methods" colspan="4"/>
-                           <field name="payment_method_ids" colspan="4" nolabel="1"/>
+                    </page>
+                    <page string="Accounting">
+                    	<separator string="Payment Methods" colspan="4"/>
+                        <field name="payment_method_ids" colspan="4" nolabel="1"/>
                     </page>
                     <page string="Notes">
                         <separator string="Notes" colspan="4"/>
@@ -733,43 +540,6 @@
                     <separator string="Notes" colspan="4"/>
                     <field name="notes" colspan="4" nolabel="1" widget="text_wiki"/>
                 </page>
-                <page string="Products and Prices">
-                    <separator string="Prices policy" colspan="4"/>
-                    <group colspan="4">
-                    <field name="customer_pricelist_id"/>
-                    <button string="Get Products" name="%(dm.wizard_proposition_products)d" type="action"/>
-                    </group>
-                    <group col="6" colspan="4" groups="base.group_extended">
-                    <field name="force_sm_price"/>
-                    <field name="sm_price" attrs="{'readonly':[('force_sm_price','=',0)]}"/>
-                    <field name="price_prog_use" attrs="{'readonly':[('force_sm_price','=',0)]}"/>
-                    </group>
-<!--                    <field name="forwarding_charges"/>-->
-                    <field name="item_ids" colspan="4" nolabel="1">
-                        <form string="Catalogue">
-                            <field name="offer_step_id"/>
-                            <field name="product_id" string="Product"/>
-                            <field name="price"/>
-                            <field name="item_type"/>
-                            <field name="qty_real"/>
-                            <field name="qty_planned"/>
-                            <separator string="Notes" colspan="4"/>
-                            <field name="notes" nolabel="1" colspan="4" widget="text_wiki"/>
-                        </form>
-                        <tree string="Catalogue" editable="bottom">
-                            <field name="offer_step_id"/>
-                            <field name="product_id" string="Product"/>
-                            <field name="price"/>
-                            <field name="forecasted_yield"/>
-                            <field name="item_type"/>
-                            <field name="notes"/>
-                        </tree>
-                    </field>
-                    <separator string="Payment Methods" colspan="4"/>
-                    <field name="payment_method_ids" colspan="4" nolabel="1"/>
-                    <separator string="" colspan="4"/>
-                    <field name="keep_prices" string="Keep Prices at Duplication"/>
-                </page>
                 <page string="Segments">
                     <field name="segment_ids" colspan="4" nolabel="1">
                     <form string="Segment">
@@ -1017,76 +787,6 @@
 
     <!--
     =======================================================
-    CAMPAIGN GROUP
-    =======================================================
-    -->
-
-    <record model="ir.ui.view" id="view_campaign_group_form">
-        <field name="name">dm.campaign.group.form</field>
-        <field name="model">dm.campaign.group</field>
-        <field name="type">form</field>
-        <field name="arch" type="xml">
-            <form string="Campaign Group">
-                <field name="name" select="1"/>
-                <field name="code" select="1"/>
-                <notebook colspan="4">
-                <page string="General">
-                <separator string="Tasks Management" colspan="4"/>
-                    <group colspan="4">
-                    <field name="project_id" string="Retro Planning"/>
-                    <button string="Create Retro-Planning" name="%(dm.campaign_group_wiz)d" type="action" attrs="{'invisible':[('state','!=','open'),('project_id','!=',False)]}"/>
-                    </group>
-                    <field name="campaign_ids" colspan="4" nolabel="1" select="2"/>
-                    <group colspan="4">
-                    <separator string="Total Quantities" colspan="4"/>
-<!--                    <field name="quantity_planned_total"/>-->
-                    <field name="quantity_wanted_total"/>
-                    <field name="quantity_delivered_total"/>
-                    <field name="quantity_usable_total"/>
-                    </group>
-                </page>
-                <page string="Supplying">
-                    <field name="purchase_line_ids" colspan="4" nolabel="1" context="{'campaign_group_id':active_id}"/>
-                </page>
-                </notebook>
-            </form>
-        </field>
-    </record>
-
-    <record model="ir.ui.view" id="view_campaign_group_tree">
-        <field name="name">dm.campaign.group.tree</field>
-        <field name="model">dm.campaign.group</field>
-        <field name="type">tree</field>
-        <field name="arch" type="xml">
-            <tree string="Groups">
-                <field name="name"/>
-            </tree>
-        </field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_campaign_group_form">
-        <field name="name">All Campaign Groups</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">dm.campaign.group</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="view_campaign_group_tree"/>
-    </record>
-    <menuitem id="menu_action_campaign_group_form" parent="dm.menu_dm_campaign" action="action_campaign_group_form"/>
-
-    <record model="ir.actions.act_window" id="action_campaign_mygroup_form">
-        <field name="name">My Campaign Groups</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">dm.campaign.group</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="view_campaign_group_tree"/>
-        <field name="domain">[('create_uid','=',uid)]</field>
-    </record>
-    <menuitem id="menu_action_campaign_mygroup_form" parent="dm.menu_dm_campaign" groups="res_groups_campaignadmin,res_groups_campaignmanager" action="action_campaign_mygroup_form"/>
-
-    <!--
-    =======================================================
     CAMPAIGN TYPE
     =======================================================
     -->
@@ -1213,118 +913,6 @@
         <field name="context">{'category':'Deduplicator'}</field>
     </record>
     <menuitem id="menu_action_campaign_duplicator_form" parent="dm.menu_dm_config_custlist" action="action_campaign_duplicator_form"/>
-
-
-    <!--
-    =======================================================
-    CAMPAIGN PROPOSITION PRICES PROGRESSION
-    =======================================================
-    -->
-
-    <record model="ir.ui.view" id="view_dm_campaign_proposition_prices_progression_form">
-        <field name="name">dm.campaign.proposition.prices_progression.form</field>
-        <field name="model">dm.campaign.proposition.prices_progression</field>
-        <field name="type">form</field>
-        <field name="arch" type="xml">
-            <form string="Campaign Prices Progression">
-                <separator string="Price Progression Description" colspan="4"/>
-                <field name="name" select="1"/>
-                <separator string="Progression" colspan="4"/>
-                <field name="fixed_prog" select="1"/>
-                <field name="percent_prog" select="1"/>
-            </form>
-        </field>
-    </record>
-
-    <record model="ir.ui.view" id="view_dm_campaign_proposition_prices_progression_tree">
-        <field name="name">dm.campaign.proposition.prices_progression.tree</field>
-        <field name="model">dm.campaign.proposition.prices_progression</field>
-        <field name="type">tree</field>
-        <field name="arch" type="xml">
-            <tree string="Campaign Prices Progression">
-                <field name="name"/>
-                <field name="fixed_prog"/>
-                <field name="percent_prog"/>
-            </tree>
-        </field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_dm_campaign_proposition_prices_progression_form">
-        <field name="name">All Campaign Prices Progression</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">dm.campaign.proposition.prices_progression</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="view_dm_campaign_proposition_prices_progression_tree"/>
-    </record>
-
-    <menuitem id="menu_action_dm_campaign_proposition_prices_progression_form" parent="dm.menu_dm_config_campaign" action="action_dm_campaign_proposition_prices_progression_form"/>
-
-    <!--
-    =======================================================
-    PURCHASE LINE
-    =======================================================
-    -->
-
-    <record model="ir.ui.view" id="view_campaign_purchase_line_tree">
-        <field name="name">dm.campaign.purchase_line_tree</field>
-        <field name="model">dm.campaign.purchase_line</field>
-        <field name="type">tree</field>
-        <field name="arch" type="xml">
-            <tree string="Purchase Lines">
-                <field name="product_category"/>
-                <field name="product_id"/>
-                <field name="type_quantity"/>
-                <field name="type_document"/>
-                <field name="date_planned"/>
-                <field name="date_delivery"/>
-                <field name="state"/>
-                <button name="pline_doc_generate" string="Generate Documents" states="pending" type="object"/>
-            </tree>
-        </field>
-    </record>
-
-    <record model="ir.ui.view" id="view_campaign_purchase_line_form">
-        <field name="name">dm.campaign.purchase_line_form</field>
-        <field name="model">dm.campaign.purchase_line</field>
-        <field name="type">form</field>
-        <field name="arch" type="xml">
-            <form string="Purchase Line">
-                <group colspan="2" col="2">
-                    <separator string="Purchase Line Product" colspan="2"/>
-                    <field name="product_category"/>
-                    <field name="product_id" domain="[('categ_id','=',int(product_category))]"/>
-                    <field name="uom_id"/>
-                    <separator string="Document" colspan="2"/>
-                    <field name="type_document"/>
-                    <field name="desc_from_offer" />
-                    <field name="campaign_id" />
-                    <field name="campaign_group_id" />
-                </group>
-                <group colspan="2" col="2">
-                    <separator string="Quantity" colspan="2"/>
-                    <field name="type_quantity"/>
-                    <separator string="Dates" colspan="4"/>
-                    <field name="date_planned"/>
-                    <field name="date_delivery"/>
-                </group>
-                <separator string="Description" colspan="4"/>
-                <field name="notes" colspan="4" nolabel="1" widget="text_wiki"/>
-                <field name="state" nolabel="1"/>
-            </form>
-        </field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_campaign_purchase_line_form">
-        <field name="name">All Purchase Lines</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">dm.campaign.purchase_line</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="view_campaign_purchase_line_tree"/>
-    </record>
-
-    <menuitem id="menu_action_campaign_purchase_line_form" parent="menu_dm_config_campaign" action="action_campaign_purchase_line_form"/>
 
     <!--
     =======================================================
@@ -1658,7 +1246,6 @@
     =======================================================
     -->
 
-
     <act_window name="Commercial Propositions"
         res_model="dm.campaign.proposition"
         src_model="dm.campaign"
@@ -1669,15 +1256,6 @@
         context="{'camp_id':active_id}"
     />
 
-    <act_window name="Purchase Lines"
-        res_model="dm.campaign.purchase_line"
-        src_model="dm.campaign"
-        view_type="form"
-        view_mode="tree,form"
-        id="act_campaign_purchase_line_opened"
-        domain="[('campaign_id','=',active_id)]"
-    />
-
     <act_window name="Back To Campaign"
         res_model="dm.campaign"
         src_model="dm.campaign.proposition"
@@ -1686,6 +1264,6 @@
         id="act_campaign_opened"
         domain="[('proposition_ids','in',[active_id])]"
     />
-
+    
 </data>
 </openerp>

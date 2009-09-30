@@ -65,7 +65,7 @@ class openobject_connector(connector):
             connector = xmlrpclib.ServerProxy(self.uri + self.obj)
         elif self.con_type == 'socket':
             connector = etl_socket.etl_socket()
-            self.obj = self.obj[1:]
+#            self.obj = self.obj[1:]
         else:
             raise Exception('Not Supported')
         self.uid = self.login(self.user_login, self.passwd)
@@ -103,9 +103,12 @@ class openobject_connector(connector):
             xg = xmlrpclib.ServerProxy(self.uri + '/xmlrpc/common')
             return xg.login(self.db, uid,passwd)
         elif self.con_type == 'socket':
-            xg = xmlrpclib.ServerProxy(self.uri + '/xmlrpc/common')
-            return xg.login(self.db, uid, passwd)
-            raise Exception('Not Implemented')
+            connector = etl_socket.etl_socket()
+            connector.connect(self.uri)
+            connector.mysend(('common', 'login', self.db or '', uid or '', passwd or ''))
+            res = connector.myreceive()
+            connector.disconnect()
+            return res
         else:
             raise Exception('Not Supported')
 
@@ -119,6 +122,7 @@ class openobject_connector(connector):
             result = getattr(connector, method)(self.db, self.uid, self.passwd, *args)
             return self.__convert(result)
         elif self.con_type == 'socket':
+            connector = etl_socket.etl_socket()
             connector.connect(self.uri)
             connector.mysend((self.obj, method, self.db, self.uid, self.passwd) + args)
             res = connector.myreceive()
@@ -142,7 +146,7 @@ class openobject_connector(connector):
 def test():
     from etl_test import etl_test
     import etl
-    openobject_partner=openobject_connector('http://localhost:8069', 'test', 'admin', 'admin',con_type='xmlrpc')
+    openobject_partner=openobject_connector('http://localhost:8070', 'trunk', 'admin', 'a', obj='object', con_type='socket')
     test = etl_test.etl_component_test(etl.component.input.openobject_in(
                  openobject_partner,'res.partner.address',
                  fields=['partner_id','title', 'name', 'street', 'street2' , 'phone' , 'city' ,  'zip' ,'state_id' , 'country_id' , 'mobile', 'birthdate'],
@@ -150,7 +154,6 @@ def test():
     res=test.output()
     print res
     #TODO
-
 
 if __name__ == '__main__':
     test()

@@ -25,6 +25,19 @@ account_invoice()
 class account_invoice_line(osv.osv):
     _inherit = "account.invoice.line"
     
+    def create(self, cr, uid, vals, context={}):
+        """Prevents the ORM from trying to write the is_maintenance product fields view fields related.
+        User might indeed not have this right, example is an accountant creating a credit note.
+        Actually this looks like a bug in OpenObject because it will try to write even if we declared
+        the is_maintenance field as read_only.
+        see bugreport here https://bugs.launchpad.net/openobject-server/+bug/426676
+        """
+        if vals.get('is_maintenance', False):
+            del(vals['is_maintenance'])
+        if vals.get('account_analytic_lines', False):
+            del(vals['account_analytic_lines'])
+        return super(account_invoice_line, self).create(cr, uid, vals, context=context)  
+    
     def copy(self, cr, uid, id, default=None, context={}):
         if not default:
             default = {}
@@ -73,33 +86,24 @@ class account_move_line(osv.osv):
     _inherit="account.move.line"
 
     def create_analytic_lines(self, cr, uid, ids, context={}):
-        super(account_move_line, self).create_analytic_lines(cr, uid, ids, context)
+        res = super(account_move_line, self).create_analytic_lines(cr, uid, ids, context)
+        matched_invoice_line_ids = []
         for move_line in self.browse(cr, uid, ids, context):
-            print "--------"
-            print move_line
-            print move_line.move_id
-            print "invoice:"
-            print move_line.invoice
-            print move_line.invoice.id
             
-            if move_line.analytic_lines and len(move_line.analytic_lines) == 1:
+            if move_line.analytic_lines and len(move_line.analytic_lines) == 1 and move_line.product_id.is_maintenance and move_line.invoice:
                 print "native analytic line creation"
                 print move_line
                 analytic_line = move_line.analytic_lines[0] #we assume their is only one analytic line for a maintenance product
-                print analytic_line 
+                print analytic_line
                 
-                if move_line.invoice:
-                    for invoice_line in move_line.invoice.invoice_line:
-                        if invoice_line.product_id and invoice_line.product_id.is_maintenance:
+                for invoice_line in move_line.invoice.invoice_line:
+                    if invoice_line.id not in matched_invoice_line_ids: #we take care of not matching invoice line twice
+                        if invoice_line.product_id and invoice_line.product_id.is_maintenance \
+                            and invoice_line.product_id.id == analytic_line.product_id.id and analytic_line.amount == invoice_line.price_subtotal:
+                            matched_invoice_line_ids.append(invoice_line.id)
                             month_qty = int(invoice_line.maintenance_month_qty)
                             splitted_amount =  invoice_line.quantity / invoice_line.maintenance_month_qty
-                            print "product_qty:"
-                            print month_qty
-                            print "old amount:"
-                            print analytic_line.amount
-                            print "amount: "
                             amount = float(analytic_line.amount) / float(invoice_line.maintenance_month_qty)
-                            print amount
                             
                             start_date = DateTime.strptime(invoice_line.maintenance_start_date, '%Y-%m-%d')
                             
@@ -109,11 +113,8 @@ class account_move_line(osv.osv):
                                 start_date += DateTime.RelativeDateTime(months=1)
                                 print start_date
                                 self.pool.get('account.analytic.line').copy(cr, uid, analytic_line.id, {'date': start_date}) #TODO check month_qty
-                            
-        
-                break #we create all the analytic lines only once
                 
-        return True
+        return res
                 
 
 account_move_line()

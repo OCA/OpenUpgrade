@@ -2,10 +2,10 @@
 <terp>
 	<data>
 
-	  <menuitem name="Progenus/Labo Tools" groups="admin"/>
+	    <menuitem name="Progenus/Labo Tools" groups="base.group_extended"/>
 
 
-<record model="ir.ui.view" id="view_labo_log_form_view">
+        <record model="ir.ui.view" id="view_labo_log_form_view">
 			<field name="name">labo.log.form</field>
 			<field name="model">labo.log</field>
 			<field name="type">form</field>

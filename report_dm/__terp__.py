@@ -32,11 +32,12 @@
             """,
     "depends" : [
                  "dm",
+                 "dm_sale",
                  ],
     "init_xml" : [ ],
     "demo_xml" : [ ],
     "update_xml" : [
-                    "dm_statistics_report.xml",
+                    'security/ir.model.access.csv','report_dm_view.xml'
                     ],
     "active": False,
     "installable": True,

@@ -70,7 +70,10 @@ class stock_move(osv.osv):
 
             custom_text = ""
             for key in res:
-                custom_text+= key_val_grp_dict[key[0]][0] + ":" + key_val_grp_dict[key[0]][1] + ","
+                if key[0] in key_val_grp_dict:
+                    custom_text+= key_val_grp_dict[key[0]][0] + ":" + key_val_grp_dict[key[0]][1] + ","
+                else:
+                    custom_text+= "Key %d without value," % (key[0])
             
             if custom_text:
                 result[id] = custom_text[0:-1]

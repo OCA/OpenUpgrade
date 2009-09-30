@@ -1,29 +1,23 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
+#    OpenERP, Open Source Management Solution
+#    Copyright (c) 2008 Zikzakmedia S.L. (http://zikzakmedia.com) All Rights Reserved.
+#                       Jordi Esteve <jesteve@zikzakmedia.com>
+#    $Id$
 #
-# $Id: sale.py 1005 2005-07-25 08:41:42Z nicoe $
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-# WARNING: This program as such is intended to be used by professional
-# programmers who take the whole responsability of assessing all potential
-# consequences resulting from its eventual inadequacies and bugs
-# End users who are looking for a ready-to-use solution with commercial
-# garantees and support are strongly adviced to contract a Free Software
-# Service Company
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
 #
-# This program is Free Software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 
@@ -53,7 +47,6 @@ class esale_oscom_product_inherit(osv.osv):
                 'exp_date':fields.datetime('Expiry date'),
                 'spe_price_status':fields.selection([('1','On'), ('0','Off')], 'Status'),
                 'oscom_url':fields.char('URL to OScommerce', size=256, readonly=True),
-
                 }
     _defaults = {
                  'in_out_stock' : lambda *a:'0',
@@ -133,6 +126,50 @@ class esale_oscom_product_inherit(osv.osv):
         (_check_spe_price, _('You can not give other value in Special Price! Please enter number with % or decimal value'), ['spe_price'])
     ]
 
+    def product_fields(self, esale_product):
+        """If you want compute additional product fields you can redefine this method in your own module"""
+        vals = {
+            #'field_name': esale_product['field_name']
+        }
+        return vals
+
+
+    def product_trans_fields(self, product):
+        """If you want compute additional product translatable fields you can redefine this method in your own module"""
+        vals = {
+            #'field_name': product['field_name']
+        }
+        return vals
+
+
+    def product_extra_info(self, cr, uid, website, esale_product):
+        """If you want compute extra information from other OpenERP objects to send to OScommerce you can redefine this method in your own module"""
+        vals = {
+            #'field_name': value
+        }
+        return vals
+
+
+    def product_images(self, cr, uid, esale_product):
+        """Adds images from attachment or field"""
+        attach_obj = self.pool.get('ir.attachment')
+        product = esale_product.product_id
+        vals = {}
+
+        attach_ids = attach_obj.search(cr, uid, [('res_model','=','product.product'), ('res_id','=',product.id)])
+        attachs = attach_obj.browse(cr, uid, attach_ids)
+        if len(attachs): # Picture attached to product object
+            vals['haspic'] = 1
+            vals['picture'] = attachs[0].datas
+            vals['fname'] = attachs[0].datas_fname
+        elif product.product_picture: # URL to external picture
+            vals['haspic'] = 2
+            vals['fname'] = product.product_picture
+        else:
+            vals['haspic'] =0
+        return vals
+
+
     def oscom_export(self, cr, uid, website=None, product_ids=[], context={}):
         """Export product_ids to OScommerce website (all the websites where there are product_ids if website is not defined)"""
         esale_web_obj = self.pool.get('esale.oscom.web')
@@ -140,7 +177,6 @@ class esale_oscom_product_inherit(osv.osv):
         esale_product_obj = self.pool.get('esale.oscom.product')
         category_obj = self.pool.get('product.category')
         product_obj = self.pool.get('product.product')
-        attach_obj = self.pool.get('ir.attachment')
         pricelist_obj = self.pool.get('product.pricelist')
         tax_obj = self.pool.get('account.tax')
         manufacturer_obj = self.pool.get('product.manufacturer')
@@ -163,6 +199,7 @@ class esale_oscom_product_inherit(osv.osv):
 
         # Main loop for the web shops
         websites_objs = esale_web_obj.browse(cr, uid, websites.keys())
+        #print websites_objs
         for website in websites_objs:
             # print "%s/openerp-synchro.php" % website.url
             server = xmlrpclib.ServerProxy("%s/openerp-synchro.php" % website.url)
@@ -229,6 +266,9 @@ class esale_oscom_product_inherit(osv.osv):
                     'spe_price'       : esale_product.product_id.spe_price,
                     'spe_price_status': esale_product.product_id.spe_price_status
                 }
+                webproduct.update(self.product_fields(esale_product)) # Adds additional fields
+                webproduct.update(self.product_images(cr, uid, esale_product)) # Adds image fields
+                webproduct.update(self.product_extra_info(cr, uid, website, esale_product)) # Adds extra fields computed from other OpenERP objects
 
                 # Get price
                 if website.price_type == '0':
@@ -246,19 +286,6 @@ class esale_oscom_product_inherit(osv.osv):
                     webproduct['price'] = round(t_price,5).__str__()
                     #print "FROM TAX PRICE:::::::::::::", webproduct['price']
 
-                # Get attachment
-                attach_ids = attach_obj.search(cr, uid, [('res_model','=','product.product'), ('res_id', '=',esale_product.product_id.id)])
-                attachs = attach_obj.browse(cr, uid, attach_ids)
-                if len(attachs):
-                    webproduct['haspic'] = 1
-                    webproduct['picture'] = attachs[0].datas
-                    webproduct['fname'] = attachs[0].datas_fname
-                elif esale_product.product_id.product_picture:
-                    webproduct['haspic'] = 2
-                    webproduct['fname'] = esale_product.product_id.product_picture
-                else:
-                    webproduct['haspic'] =0
-
                 # Get multi language attributes
                 langs = {}
                 manufacturer_langs = {}
@@ -270,6 +297,9 @@ class esale_oscom_product_inherit(osv.osv):
                             'description': product.description_sale or '',
                             'url': product.product_url or '',
                         }
+                        langs[str(lang.esale_oscom_id)].update(self.product_trans_fields(product)) # Adds additional fields
+                        #print "==========trans========="
+                        #print lang.esale_oscom_id, langs[str(lang.esale_oscom_id)]
                         if esale_product.product_id.manufacturer_id:
                             manufacturer = manufacturer_obj.browse(cr, uid, esale_product.product_id.manufacturer_id.id, {'lang': lang.language_id.code})
                             manufacturer_langs[str(lang.esale_oscom_id)] = {
@@ -285,7 +315,8 @@ class esale_oscom_product_inherit(osv.osv):
                     webproduct['manufacturers_name'] = esale_product.product_id.manufacturer_id.name
                     webproduct['manufacturers_url'] = esale_product.product_id.manufacturer_id.manufacturer_url or ''
                     webproduct['manufacturer_langs'] = manufacturer_langs
-                #print "webproduct:::::::::::",webproduct
+                #print "====================webproduct==================="
+                #print webproduct
 
                 # Sends product to web shop
                 prod_id = webproduct['product_id']
@@ -318,7 +349,7 @@ class esale_oscom_product_inherit(osv.osv):
                 esale_prod_ids = esale_product_obj.search(cr, uid, [('esale_oscom_id','=',oscom_id)])
                 esale_prod = esale_product_obj.browse(cr, uid, esale_prod_ids[0])
                 #print "ESALE PROD DATA (id, web, product, category):",esale_prod.id, esale_prod.web_id.id, esale_prod.product_id.id, esale_prod.product_id.categ_id.id
-                prod_url = website_url[0] + "//" + website_url[2] + "/" + website_url[3] + "/" + website_url[4] + "/" +"categories.php?cPath=" + str(category_id) + "&pID=" + str(oscom_id) + "&action=new_product"
+                prod_url = website_url[0] + "//" + website_url[2] + "/" +"product_info.php?cPath=" + str(category_id) + "&products_id=" + str(oscom_id)
                 super(esale_oscom_product_inherit, self).write(cr, uid, esale_prod.product_id.id, {'oscom_url': prod_url})
 
             # Remove delete products
@@ -405,9 +436,3 @@ class esale_oscom_product_inherit(osv.osv):
 
 esale_oscom_product_inherit()
 
-
-#class oscom_res_currency(osv.osv):
-#    _inherit='res.currency'
-#    def compute(self, cr, uid, from_currency_id, to_currency_id, from_amount, round=False, context={}):
-#        return super(oscom_res_corrency,self).compute(cr, uid, from_currency_id, to_currency_id, from_amount, round,context)
-#oscom_res_currency()

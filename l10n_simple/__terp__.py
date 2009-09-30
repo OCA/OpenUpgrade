@@ -30,7 +30,7 @@
     "demo_xml" : ["account_demo.xml",
 #                  "account.analytic.line.csv" #comment because of template system
                   ],
-    "update_xml" : ["account_pcmn_belgium.xml","l10n_simple_wizard.xml"],
+    "update_xml" : ["tax_configure_wiz.xml","account_pcmn_belgium.xml","l10n_simple_wizard.xml"],
     "active": False,
     "installable": True
 }
