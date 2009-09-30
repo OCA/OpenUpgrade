@@ -36,10 +36,10 @@ class quality_test(base_module_quality.abstract_quality_check):
 Test checks for fields, views, security rules, dependancy level
 """)
         self.bool_installed_only = True
+        self.min_score = 40
         return None
 
     def run_test(self, cr, uid, module_path):
-
         pool = pooler.get_pool(cr.dbname)
         module_name = module_path.split('/')[-1]
         obj_list = self.get_objects(cr, uid, module_name)
@@ -166,6 +166,8 @@ Test checks for fields, views, security rules, dependancy level
         score_depend = (100 - (bad_depend * 5)) / 100.0 #  note : score is calculated based on if you have for e.g. two module extra in dependancy it will score -10 out of 100
         score_security = good_sec and float(good_sec - bad_sec) / float(good_sec)
         self.score = (score_view + score_field + score_security + score_depend) / 4
+        if self.score*100 < self.min_score:
+            self.message = 'Score is below than minimal score(%s%%)' % self.min_score
         self.result = self.get_result({ module_name: [int(score_field * 100), int(score_view * 100), int(score_security * 100), int(score_depend * 100)]})
         self.result_details += self.get_result_details(result_dict)
         self.result_details += self.get_result_general(result_view, name="View")
@@ -181,9 +183,9 @@ Test checks for fields, views, security rules, dependancy level
     def get_result_details(self, dict_obj):
         res = ""
         if dict_obj != {}:
-            str_html = '''<html><strong> Fields Result</strong><head></head><body>'''
+            str_html = '''<html><strong> Fields Result</strong><head>%s</head><body>'''%(self.get_style())
             res += str_html
-            header = ('<tr><th width="200">%s</th><th width="200">%s</th><th width="300">%s</th></tr>', [_('Object Name'), _('Field name'), _('Suggestion')])
+            header = ('<tr><th class="tdatastyle">%s</th><th class="tdatastyle">%s</th><th class="tdatastyle">%s</th></tr>', [_('Object Name'), _('Field name'), _('Suggestion')])
             if not self.error:
                 for key in dict_obj.keys():
                     data_list = []
@@ -193,17 +195,18 @@ Test checks for fields, views, security rules, dependancy level
                     for i in data_list:
                         count = count + 1
                         final_dict[key + str(count)] = i
-                    res += '<table>' + self.format_html_table(header, data_list=final_dict) + '</table><br>'
+                    res_str = '<table class="tablestyle">' + self.format_html_table(header, data_list=final_dict) + '</table><br>'
+                    res += res_str.replace('''<td''', '''<td class="tdatastyle" ''')
             return res + '</body></html>'
         return ""
 
     def get_result_general(self, dict_obj, name=''):
-        str_html = '''<html><strong> %s Result</strong><head></head><body><table>'''% (name)
-        header = ('<tr><th>%s</th><th>%s</th></tr>', [_('Object Name'), _('Suggestion')])
+        str_html = '''<html><strong> %s Result</strong><head>%s</head><body><table class="tablestyle">'''% (name, self.get_style())
+        header = ('<tr><th class="tdatastyle">%s</th><th class="tdatastyle">%s</th></tr>', [_('Object Name'), _('Suggestion')])
         if not self.error:
             res = str_html + self.format_html_table(header, data_list=dict_obj) + '</table></body></html>'
+            res = res.replace('''<td''', '''<td class="tdatastyle" ''')
             return res
         return ""
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

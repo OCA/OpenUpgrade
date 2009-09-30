@@ -26,8 +26,6 @@ import pooler
 from osv import osv, fields
 
 from addons import get_module_path
-#TODO: add cheks: do the class quality_check inherits the class abstract_quality_check?
-
 class quality_check(wizard.interface):
 
     def _create_quality_check(self, cr, uid, data, context={}):

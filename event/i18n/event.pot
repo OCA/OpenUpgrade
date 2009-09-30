@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* event
+# 	* event
 #
 msgid ""
 msgstr ""
@@ -16,8 +16,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: event
-#: field:event.event,date_end:0
-#: field:report.event.registration,date_end:0
+#: field:event.event,date_end:0 field:report.event.registration,date_end:0
 msgid "Ending date"
 msgstr ""
 
@@ -98,19 +97,21 @@ msgstr ""
 
 #. module: event
 #: model:ir.module.module,description:event.module_meta_information
-msgid "Organization and management of events.\n"
+msgid ""
+"Organization and management of events.\n"
 "\n"
 "    This module allow you\n"
 "        * to manage your events and their registrations\n"
-"        * to use emails to automatically confirm and send acknowledgements for any registration to an event\n"
+"        * to use emails to automatically confirm and send acknowledgements "
+"for any registration to an event\n"
 "        * ...\n"
 "\n"
 "    Note that:\n"
 "    - You can define new types of events in\n"
 "                Events / Configuration / Types of Events\n"
-"    - You can access predefined reports about number of registration per event or per event category in :\n"
+"    - You can access predefined reports about number of registration per "
+"event or per event category in :\n"
 "                Events / Reporting\n"
-""
 msgstr ""
 
 #. module: event
@@ -124,14 +125,12 @@ msgid "Registration"
 msgstr ""
 
 #. module: event
-#: field:event.type,name:0
-#: model:ir.model,name:event.model_event_type
+#: field:event.type,name:0 model:ir.model,name:event.model_event_type
 msgid "Event type"
 msgstr ""
 
 #. module: event
-#: view:event.event:0
-#: model:ir.model,name:event.model_event_event
+#: view:event.event:0 model:ir.model,name:event.model_event_event
 #: model:ir.module.module,shortdesc:event.module_meta_information
 #: field:report.event.registration,name:0
 msgid "Event"
@@ -331,7 +330,8 @@ msgstr ""
 
 #. module: event
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: event
@@ -340,8 +340,7 @@ msgid "Event Related"
 msgstr ""
 
 #. module: event
-#: model:crm.case.section,name:event.case_section_event
-#: view:event.event:0
+#: model:crm.case.section,name:event.case_section_event view:event.event:0
 #: model:ir.actions.act_window,name:event.action_event_view
 msgid "Events"
 msgstr ""
@@ -352,9 +351,7 @@ msgid "Number of Registration"
 msgstr ""
 
 #. module: event
-#: view:event.event:0
-#: field:event.event,state:0
-#: view:event.registration:0
+#: view:event.event:0 field:event.event,state:0 view:event.registration:0
 msgid "Status"
 msgstr ""
 
@@ -370,7 +367,8 @@ msgstr ""
 
 #. module: event
 #: help:event.event,mail_auto_registr:0
-msgid "Check this box if you want to use the automatic mailing for new registration"
+msgid ""
+"Check this box if you want to use the automatic mailing for new registration"
 msgstr ""
 
 #. module: event
@@ -406,8 +404,7 @@ msgid "Auto Confirmation Email"
 msgstr ""
 
 #. module: event
-#: view:event.event:0
-#: view:event.registration:0
+#: view:event.event:0 view:event.registration:0
 msgid "General"
 msgstr ""
 
@@ -422,8 +419,7 @@ msgid "Done"
 msgstr ""
 
 #. module: event
-#: field:event.event,date_begin:0
-#: field:report.event.registration,date_begin:0
+#: field:event.event,date_begin:0 field:report.event.registration,date_begin:0
 msgid "Beginning date"
 msgstr ""
 
@@ -502,12 +498,17 @@ msgstr ""
 
 #. module: event
 #: help:event.event,mail_auto_confirm:0
-msgid "Check this box if you want ot use the automatic confirmation emailing or the reminder"
+msgid ""
+"Check this box if you want ot use the automatic confirmation emailing or the "
+"reminder"
 msgstr ""
 
 #. module: event
 #: help:event.event,mail_confirm:0
-msgid "This email will be sent when the event gets confimed or when someone subscribes to a confirmed event. This is also the email sent to remind someone about the event."
+msgid ""
+"This email will be sent when the event gets confimed or when someone "
+"subscribes to a confirmed event. This is also the email sent to remind "
+"someone about the event."
 msgstr ""
 
 #. module: event
@@ -526,8 +527,7 @@ msgid "Payments"
 msgstr ""
 
 #. module: event
-#: view:event.type:0
-#: field:report.event.type.registration,name:0
+#: view:event.type:0 field:report.event.type.registration,name:0
 msgid "Event Type"
 msgstr ""
 
@@ -564,3 +564,48 @@ msgstr ""
 msgid "Auto Registration Email"
 msgstr ""
 
+#. module: event
+#: model:crm.case.section,name:event.event_0_crm_case_section
+msgid "Concert of Bon Jovi"
+msgstr ""
+
+#. module: event
+#: model:product.template,name:event.event_product_1_product_template
+msgid "Ticket for Opera"
+msgstr ""
+
+#. module: event
+#: model:crm.case.section,name:event.event_1_crm_case_section
+msgid "Opera of Verdi"
+msgstr ""
+
+#. module: event
+#: constraint:product.template:0
+msgid "Error: UOS must be in a different category than the UOM"
+msgstr ""
+
+#. module: event
+#: model:product.template,name:event.event_product_0_product_template
+msgid "Ticket for Concert"
+msgstr ""
+
+#. module: event
+#: constraint:product.template:0
+msgid ""
+"Error: The default UOM and the purchase UOM must be in the same category."
+msgstr ""
+
+#. module: event
+#: model:crm.case.section,name:event.event_2_crm_case_section
+msgid "Conference on ERP Buisness"
+msgstr ""
+
+#. module: event
+#: model:product.template,name:event.event_product_2_product_template
+msgid "Ticket for Conference"
+msgstr ""
+
+#. module: event
+#: constraint:product.product:0
+msgid "Error: Invalid ean code"
+msgstr ""

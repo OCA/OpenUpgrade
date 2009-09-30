@@ -52,7 +52,7 @@
                 <form string="Invoice Line">
                     <notebook>
                         <page string="Line">
-                            <field name="product_id" on_change="product_id_change(product_id, uos_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position)" select="1"/>
+                            <field name="product_id" on_change="product_id_change(product_id, uos_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position, price_unit)" select="1"/>
                             <field name="uos_id"/>
                             <field name="quantity" select="1"/>
                             <field name="price_unit" select="1"/>
@@ -221,6 +221,8 @@
                                     <field name="journal_id"/>
                                     <field name="debit"/>
                                     <field name="credit"/>
+                                    <field name="amount_currency"/>
+                                    <field name="currency_id"/>
                                 </tree>
                             </field>
                         </page>
@@ -306,6 +308,8 @@
                                     <field name="journal_id" groups="base.group_user"/>
                                     <field name="debit"/>
                                     <field name="credit"/>
+                                    <field name="amount_currency"/>
+                                    <field name="currency_id"/>
                                 </tree>
                             </field>
                         </page>

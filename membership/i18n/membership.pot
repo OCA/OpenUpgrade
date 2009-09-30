@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* membership
+# 	* membership
 #
 msgid ""
 msgstr ""
@@ -68,7 +68,8 @@ msgstr ""
 
 #. module: membership
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: membership
@@ -208,10 +209,8 @@ msgstr ""
 
 #. module: membership
 #: model:ir.module.module,shortdesc:membership.module_meta_information
-#: model:ir.ui.menu,name:membership.menu_membership
-#: view:product.product:0
-#: field:product.product,membership:0
-#: view:res.partner:0
+#: model:ir.ui.menu,name:membership.menu_membership view:product.product:0
+#: field:product.product,membership:0 view:res.partner:0
 #: field:res.partner,member_lines:0
 msgid "Membership"
 msgstr ""
@@ -474,3 +473,48 @@ msgstr ""
 msgid "Invoiced"
 msgstr ""
 
+#. module: membership
+#: constraint:account.account:0
+msgid "Error ! You can not create recursive accounts."
+msgstr ""
+
+#. module: membership
+#: constraint:account.invoice:0
+msgid "Error: BVR reference is required."
+msgstr ""
+
+#. module: membership
+#: constraint:membership.membership_line:0
+msgid "Error, this membership product is out of date"
+msgstr ""
+
+#. module: membership
+#: constraint:product.template:0
+msgid "Error: UOS must be in a different category than the UOM"
+msgstr ""
+
+#. module: membership
+#: model:product.template,name:membership.member_product_1_product_template
+msgid "Membership Product - 2"
+msgstr ""
+
+#. module: membership
+#: model:product.template,name:membership.member_product_0_product_template
+msgid "Membership Product - 1"
+msgstr ""
+
+#. module: membership
+#: constraint:product.template:0
+msgid ""
+"Error: The default UOM and the purchase UOM must be in the same category."
+msgstr ""
+
+#. module: membership
+#: constraint:account.invoice:0
+msgid "Error: Invalid Bvr Number (wrong checksum)."
+msgstr ""
+
+#. module: membership
+#: constraint:product.product:0
+msgid "Error: Invalid ean code"
+msgstr ""
