@@ -314,8 +314,9 @@ class stock_tracking(osv.osv):
         return (10 - (sum % 10)) % 10
     checksum = staticmethod(checksum)
 
-    def make_sscc(self, cr, uid, context={}):
-        sequence = self.pool.get('ir.sequence').get(cr, uid, 'stock.lot.tracking')
+    def make_sscc(self, cr, uid, context=None):
+	context = context or {}
+        sequence = self.pool.get('ir.sequence').get(cr, uid, 'stock.lot.tracking',context)
         return sequence + str(self.checksum(sequence))
 
     _columns = {
@@ -407,8 +408,10 @@ class stock_picking(osv.osv):
         return res
 
     def create(self, cr, user, vals, context=None):
+	context = (context or {}).copy()
+	context.update({'object': vals})
         if ('name' not in vals) or (vals.get('name')=='/'):
-            vals['name'] = self.pool.get('ir.sequence').get(cr, user, 'stock.picking')
+            vals['name'] = self.pool.get('ir.sequence').get(cr, user, 'stock.picking',context)
         return super(stock_picking, self).create(cr, user, vals, context)
 
     _columns = {
@@ -459,7 +462,7 @@ class stock_picking(osv.osv):
         if default is None:
             default = {}
         default = default.copy()
-        default['name'] = self.pool.get('ir.sequence').get(cr, uid, 'stock.picking')
+        default['name'] = self.pool.get('ir.sequence').get(cr, uid, 'stock.picking', context)
         return super(stock_picking, self).copy(cr, uid, id, default, context)
 
     def onchange_partner_in(self, cr, uid, context, partner_id=None):
@@ -843,7 +846,7 @@ class stock_production_lot(osv.osv):
     }
     _defaults = {
         'date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
-        'name': lambda x,y,z,c: x.pool.get('ir.sequence').get(y,z,'stock.lot.serial'),
+        'name': lambda x,y,z,c: x.pool.get('ir.sequence').get(y,z,'stock.lot.serial',c),
         'product_id': lambda x,y,z,c: c.get('product_id',False),
     }
     _sql_constraints = [
