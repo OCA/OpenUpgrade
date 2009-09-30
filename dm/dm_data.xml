@@ -131,25 +131,6 @@
             <field name="name">Model</field>
         </record>
 
-        <!-- RP Project Task Types-->
-
-        <record id="project_task_type_dtp0" model="project.task.type">
-            <field eval="&quot;&quot;&quot;DTP&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;Direct Marketing -  Desktop Publishing Task&quot;&quot;&quot;" name="description"/>
-        </record>
-        <record id="project_task_type_mailingmanufacturing0" model="project.task.type">
-            <field eval="&quot;&quot;&quot;Mailing Manufacturing&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;Direct Marketing -  Mailing Manufacturing Task&quot;&quot;&quot;" name="description"/>
-        </record>
-        <record id="project_task_type_customerslist0" model="project.task.type">
-            <field eval="&quot;&quot;&quot;Customers List&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;Direct Marketing -  Customers List Task&quot;&quot;&quot;" name="description"/>
-        </record>
-        <record id="project_task_type_items0" model="project.task.type">
-            <field eval="&quot;&quot;&quot;Items Procurement&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;Direct Marketing -  Items Procurement Task&quot;&quot;&quot;" name="description"/>
-        </record>
-
         <!-- Product Categories -->
 
         <record id="product_category_directmarketing0" model="product.category">
@@ -238,189 +219,9 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;Acknowledgement of Delivered Email&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;ACKEMAIL&quot;&quot;&quot;" name="code"/>              
         </record>
-
-    <!-- RP Projects -->
-
-        <record id="project_project_directmarketingretroplanning0" model="project.project">
-            <field eval="1" name="active"/>
-            <field name="manager" ref="base.user_root"/>
-            <field eval="0" name="warn_manager"/>
-            <field eval="0" name="warn_customer"/>
-            <field eval="&quot;&quot;&quot;2009-01-01&quot;&quot;&quot;" name="date_start"/>
-            <field eval="1" name="priority"/>
-            <field eval="&quot;&quot;&quot;open&quot;&quot;&quot;" name="state"/>
-            <field eval="[(6,0,[])]" name="members"/>
-            <field eval="&quot;&quot;&quot;Direct Marketing Retro-Planning&quot;&quot;&quot;" name="name"/>
-        </record>
-        <record id="project_project_defaultretroplanning0" model="project.project">
-            <field eval="&quot;&quot;&quot;2009-10-01&quot;&quot;&quot;" name="date_end"/>
-            <field eval="1" name="active"/>
-            <field name="manager" ref="base.user_root"/>
-            <field eval="0" name="warn_manager"/>
-            <field eval="0" name="warn_customer"/>
-            <field eval="&quot;&quot;&quot;2009-01-01&quot;&quot;&quot;" name="date_start"/>
-            <field eval="1" name="priority"/>
-            <field name="parent_id" ref="project_project_directmarketingretroplanning0"/>
-            <field eval="&quot;&quot;&quot;open&quot;&quot;&quot;" name="state"/>
-            <field eval="[(6,0,[])]" name="members"/>
-            <field eval="&quot;&quot;&quot;Default Retro-Planning&quot;&quot;&quot;" name="name"/>
-        </record>
-
-    <!-- RP Projects Tasks -->
-
-        <record id="project_task_dtprequest0" model="project.task">
-            <field eval="10" name="sequence"/>
-            <field eval="1.0" name="planned_hours"/>
-            <field name="user_id" ref="base.user_root"/>
-            <field eval="&quot;&quot;&quot;2&quot;&quot;&quot;" name="priority"/>
-            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
-            <field name="project_id" ref="project_project_defaultretroplanning0"/>
-            <field name="type" ref="dm.project_task_type_dtp0"/>
-            <field eval="1" name="active"/>
-            <field eval="&quot;&quot;&quot;DTP Request&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;2009-08-02 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
-            <field eval="1.0" name="remaining_hours"/>
-            <field eval="&quot;&quot;&quot;2009-08-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
-        </record>
-        <record id="project_task_translationrequest0" model="project.task">
-            <field eval="10" name="sequence"/>
-            <field eval="1.0" name="planned_hours"/>
-            <field name="user_id" ref="base.user_root"/>
-            <field eval="&quot;&quot;&quot;2&quot;&quot;&quot;" name="priority"/>
-            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
-            <field name="project_id" ref="project_project_defaultretroplanning0"/>
-            <field name="type" ref="dm.project_task_type_mailingmanufacturing0"/>
-            <field eval="1" name="active"/>
-            <field eval="&quot;&quot;&quot;Translation Request&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;2009-08-02 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
-            <field eval="1.0" name="remaining_hours"/>
-            <field eval="&quot;&quot;&quot;2009-08-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
-        </record>
-        <record id="project_task_customersfilespurchaset0" model="project.task">
-            <field eval="10" name="sequence"/>
-            <field eval="1.0" name="planned_hours"/>
-            <field name="user_id" ref="base.user_root"/>
-            <field eval="&quot;&quot;&quot;2&quot;&quot;&quot;" name="priority"/>
-            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
-            <field name="project_id" ref="project_project_defaultretroplanning0"/>
-            <field name="type" ref="dm.project_task_type_customerslist0"/>
-            <field eval="1" name="active"/>
-            <field eval="&quot;&quot;&quot;Customers Files Purchase&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;2009-08-02 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
-            <field eval="1.0" name="remaining_hours"/>
-            <field eval="&quot;&quot;&quot;2009-08-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
-        </record>
-        <record id="project_task_mailingrequestsforquotation0" model="project.task">
-            <field eval="10" name="sequence"/>
-            <field eval="1.0" name="planned_hours"/>
-            <field name="user_id" ref="base.user_root"/>
-            <field eval="&quot;&quot;&quot;2&quot;&quot;&quot;" name="priority"/>
-            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
-            <field name="project_id" ref="project_project_defaultretroplanning0"/>
-            <field name="type" ref="dm.project_task_type_mailingmanufacturing0"/>
-            <field eval="1" name="active"/>
-            <field eval="&quot;&quot;&quot;Mailing Requests for Quotation&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;2009-08-12 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
-            <field eval="1.0" name="remaining_hours"/>
-            <field eval="&quot;&quot;&quot;2009-08-12 09:00:00&quot;&quot;&quot;" name="date_start"/>
-        </record>
-        <record id="project_task_mailingpurchase0" model="project.task">
-            <field eval="10" name="sequence"/>
-            <field eval="1.0" name="planned_hours"/>
-            <field name="user_id" ref="base.user_root"/>
-            <field eval="&quot;&quot;&quot;2&quot;&quot;&quot;" name="priority"/>
-            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
-            <field name="project_id" ref="project_project_defaultretroplanning0"/>
-            <field name="type" ref="dm.project_task_type_mailingmanufacturing0"/>
-            <field eval="1" name="active"/>
-            <field eval="&quot;&quot;&quot;Mailing Purchase&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;2009-09-02 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
-            <field eval="1.0" name="remaining_hours"/>
-            <field eval="&quot;&quot;&quot;2009-09-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
-        </record>
-        <record id="project_task_dtpfirstdraftdelivery0" model="project.task">
-            <field eval="10" name="sequence"/>
-            <field eval="1.0" name="planned_hours"/>
-            <field name="user_id" ref="base.user_root"/>
-            <field eval="&quot;&quot;&quot;2&quot;&quot;&quot;" name="priority"/>
-            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
-            <field name="project_id" ref="project_project_defaultretroplanning0"/>
-            <field name="type" ref="dm.project_task_type_dtp0"/>
-            <field eval="1" name="active"/>
-            <field eval="&quot;&quot;&quot;DTP First Draft Delivery&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;2009-08-22 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
-            <field eval="1.0" name="remaining_hours"/>
-            <field eval="&quot;&quot;&quot;2009-08-21 09:00:00&quot;&quot;&quot;" name="date_start"/>
-        </record>
-        <record id="project_task_translationdelivery0" model="project.task">
-            <field eval="10" name="sequence"/>
-            <field eval="1.0" name="planned_hours"/>
-            <field name="user_id" ref="base.user_root"/>
-            <field eval="&quot;&quot;&quot;2&quot;&quot;&quot;" name="priority"/>
-            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
-            <field name="project_id" ref="project_project_defaultretroplanning0"/>
-            <field name="type" ref="dm.project_task_type_mailingmanufacturing0"/>
-            <field eval="1" name="active"/>
-            <field eval="&quot;&quot;&quot;Translation Delivery&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;2009-09-02 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
-            <field eval="1.0" name="remaining_hours"/>
-            <field eval="&quot;&quot;&quot;2009-09-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
-        </record>
-        <record id="project_task_customersfilesdelivery0" model="project.task">
-            <field eval="10" name="sequence"/>
-            <field eval="1.0" name="planned_hours"/>
-            <field name="user_id" ref="base.user_root"/>
-            <field eval="&quot;&quot;&quot;2&quot;&quot;&quot;" name="priority"/>
-            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
-            <field name="project_id" ref="project_project_defaultretroplanning0"/>
-            <field name="type" ref="dm.project_task_type_customerslist0"/>
-            <field eval="1" name="active"/>
-            <field eval="&quot;&quot;&quot;Customers Files Delivery&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;2009-09-02 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
-            <field eval="1.0" name="remaining_hours"/>
-            <field eval="&quot;&quot;&quot;2009-09-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
-        </record>
-        <record id="project_task_dtpdelivery0" model="project.task">
-            <field eval="10" name="sequence"/>
-            <field eval="1.0" name="planned_hours"/>
-            <field name="user_id" ref="base.user_root"/>
-            <field eval="&quot;&quot;&quot;2&quot;&quot;&quot;" name="priority"/>
-            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
-            <field name="project_id" ref="project_project_defaultretroplanning0"/>
-            <field name="type" ref="dm.project_task_type_dtp0"/>
-            <field eval="1" name="active"/>
-            <field eval="&quot;&quot;&quot;DTP Delivery&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;2009-09-11 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
-            <field eval="1.0" name="remaining_hours"/>
-            <field eval="&quot;&quot;&quot;2009-09-10 09:00:00&quot;&quot;&quot;" name="date_start"/>
-        </record>
-        <record id="project_task_itemspurchase0" model="project.task">
-            <field eval="10" name="sequence"/>
-            <field eval="1.0" name="planned_hours"/>
-            <field name="user_id" ref="base.user_root"/>
-            <field eval="&quot;&quot;&quot;2&quot;&quot;&quot;" name="priority"/>
-            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
-            <field name="project_id" ref="project_project_defaultretroplanning0"/>
-            <field name="type" ref="dm.project_task_type_items0"/>
-            <field eval="1" name="active"/>
-            <field eval="&quot;&quot;&quot;Items Purchase&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;2009-08-02 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
-            <field eval="1.0" name="remaining_hours"/>
-            <field eval="&quot;&quot;&quot;2009-08-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
-        </record>
-        <record id="project_task_itemdelivery0" model="project.task">
-            <field eval="10" name="sequence"/>
-            <field eval="1.0" name="planned_hours"/>
-            <field name="user_id" ref="base.user_root"/>
-            <field eval="&quot;&quot;&quot;2&quot;&quot;&quot;" name="priority"/>
-            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
-            <field name="project_id" ref="project_project_defaultretroplanning0"/>
-            <field name="type" ref="dm.project_task_type_items0"/>
-            <field eval="1" name="active"/>
-            <field eval="&quot;&quot;&quot;Items Delivery&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;2009-09-11 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
-            <field eval="1.0" name="remaining_hours"/>
-            <field eval="&quot;&quot;&quot;2009-09-10 09:00:00&quot;&quot;&quot;" name="date_start"/>
+        <record id="offer_step_type_unsubscritpion0" model="dm.offer.step.type">
+            <field eval="&quot;&quot;&quot;Unsubscription&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;UNSUBSCR&quot;&quot;&quot;" name="code"/>              
         </record>
 
     <!-- Default Products -->
@@ -588,125 +389,6 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;html&quot;&quot;&quot;" name="code"/>
         </record>
 
-    <!-- DMS Directories -->
-
-    <!-- Offers -->
-
-        <record id="document_directory_directmarketing0" model="document.directory">
-            <field eval="0" name="ressource_tree"/>
-            <field eval="[(6,0,[])]" name="group_ids"/>
-            <field name="user_id" ref="base.user_root"/>
-            <field eval="&quot;&quot;&quot;Direct Marketing&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;[]&quot;&quot;&quot;" name="domain"/>
-            <field eval="&quot;&quot;&quot;directory&quot;&quot;&quot;" name="type"/>
-        </record>
-        <record id="document_directory_offers0" model="document.directory">
-            <field eval="0" name="ressource_tree"/>
-            <field eval="[(6,0,[])]" name="group_ids"/>
-            <field name="user_id" ref="base.user_root"/>
-            <field eval="&quot;&quot;&quot;Offers&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;[]&quot;&quot;&quot;" name="domain"/>
-            <field name="parent_id" ref="document_directory_directmarketing0"/>
-            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
-            <field name="ressource_type_id" ref="dm.model_dm_offer"/>
-        </record>
-        <record id="document_directory_steps0" model="document.directory">
-            <field eval="0" name="ressource_tree"/>
-            <field eval="[(6,0,[])]" name="group_ids"/>
-            <field name="user_id" ref="base.user_root"/>
-            <field eval="&quot;&quot;&quot;Steps&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;[('offer_id','in',[active_id])]&quot;&quot;&quot;" name="domain"/>
-            <field name="ressource_parent_type_id" ref="dm.model_dm_offer"/>
-            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
-            <field name="ressource_type_id" ref="dm.model_dm_offer_step"/>
-        </record>
-        <record id="document_directory_documentsbycategory0" model="document.directory">
-            <field eval="1" name="ressource_tree"/>
-            <field eval="[(6,0,[])]" name="group_ids"/>
-            <field name="user_id" ref="base.user_root"/>
-            <field eval="&quot;&quot;&quot;Documents by Category&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;[]&quot;&quot;&quot;" name="domain"/>
-            <field name="ressource_parent_type_id" ref="dm.model_dm_offer_step"/>
-            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
-            <field name="ressource_type_id" ref="dm.model_dm_offer_document_category"/>
-        </record>
-        <record id="document_directory_documents0" model="document.directory">
-            <field eval="0" name="ressource_tree"/>
-            <field eval="[(6,0,[])]" name="group_ids"/>
-            <field name="user_id" ref="base.user_root"/>
-            <field eval="&quot;&quot;&quot;Documents&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;[('category_id','=',active_id)]&quot;&quot;&quot;" name="domain"/>
-            <field name="ressource_parent_type_id" ref="dm.model_dm_offer_document_category"/>
-            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
-            <field name="ressource_type_id" ref="dm.model_dm_offer_document"/>
-        </record>
-
-    <!-- Campaigns -->
-
-        <record id="document_directory_campaigns0" model="document.directory">
-            <field eval="0" name="ressource_tree"/>
-            <field eval="[(6,0,[])]" name="group_ids"/>
-            <field name="user_id" ref="base.user_root"/>
-            <field eval="&quot;&quot;&quot;Campaigns&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;[]&quot;&quot;&quot;" name="domain"/>
-            <field name="parent_id" ref="document_directory_directmarketing0"/>
-            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
-            <field name="ressource_type_id" ref="dm.model_dm_campaign"/>
-        </record>
-        <record id="document_directory_propo0" model="document.directory">
-            <field eval="0" name="ressource_tree"/>
-            <field eval="[(6,0,[])]" name="group_ids"/>
-            <field name="user_id" ref="base.user_root"/>
-            <field eval="&quot;&quot;&quot;Commercial Propositions&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;[('camp_id','in',[active_id])]&quot;&quot;&quot;" name="domain"/>
-            <field name="ressource_parent_type_id" ref="dm.model_dm_campaign"/>
-            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
-            <field name="ressource_type_id" ref="dm.model_dm_campaign_proposition"/>
-        </record>
-        <record id="document_directory_segment0" model="document.directory">
-            <field eval="0" name="ressource_tree"/>
-            <field eval="[(6,0,[])]" name="group_ids"/>
-            <field name="user_id" ref="base.user_root"/>
-            <field eval="&quot;&quot;&quot;Segments&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;[('proposition_id','in',[active_id])]&quot;&quot;&quot;" name="domain"/>
-            <field name="ressource_parent_type_id" ref="dm.model_dm_campaign_proposition"/>
-            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
-            <field name="ressource_type_id" ref="dm.model_dm_campaign_proposition_segment"/>
-        </record>
-        <record id="document_directory_campaign_document_type0" model="document.directory">
-            <field eval="1" name="ressource_tree"/>
-            <field eval="[(6,0,[])]" name="group_ids"/>
-            <field name="user_id" ref="base.user_root"/>
-            <field eval="&quot;&quot;&quot;Documents by Type&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;[]&quot;&quot;&quot;" name="domain"/>
-            <field name="ressource_parent_type_id" ref="dm.model_dm_campaign_proposition_segment"/>
-            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
-            <field name="ressource_type_id" ref="dm.model_dm_campaign_document_type"/>
-        </record>
-        <record id="document_directory_campaign_documents0" model="document.directory">
-            <field eval="0" name="ressource_tree"/>
-            <field eval="[(6,0,[])]" name="group_ids"/>
-            <field name="user_id" ref="base.user_root"/>
-            <field eval="&quot;&quot;&quot;Documents&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;[('type_id','=',active_id)]&quot;&quot;&quot;" name="domain"/>
-            <field name="ressource_parent_type_id" ref="dm.model_dm_campaign_document_type"/>
-            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
-            <field name="ressource_type_id" ref="dm.model_dm_campaign_document"/>
-        </record>
-
-    <!--
-        <record id="document_directory_documents0" model="document.directory">
-            <field eval="0" name="ressource_tree"/>
-            <field eval="[(6,0,[])]" name="group_ids"/>
-            <field name="user_id" ref="base.user_root"/>
-            <field eval="&quot;&quot;&quot;Documents&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;[('category_id','=',active_id)]&quot;&quot;&quot;" name="domain"/>
-            <field name="ressource_parent_type_id" ref="dm.model_dm_offer_document_category"/>
-            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
-            <field name="ressource_type_id" ref="dm.model_dm_campaign_document"/>
-        </record>
-    -->
-
     <!-- Default Shop in Customer Order -->
     
         <record id="shop1" model="sale.shop">
@@ -727,7 +409,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
             <field name="model_id" ref="dm.model_dm_workitem"/>
             <field eval="[(6,0,[])]" name="child_ids"/>
-            <field eval="&quot;&quot;&quot;from dm import dm_report_design \naction = dm_report_design.generate_reports(cr,uid,obj,'pdf',context)&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;from dm import dm_report_design \naction = dm_report_design.document_process(cr,uid,obj,'pdf',context)&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
             <field eval="&quot;&quot;&quot;Generate PDF Document&quot;&quot;&quot;" name="name"/>
         </record>
@@ -738,9 +420,9 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
             <field name="model_id" ref="dm.model_dm_workitem"/>
             <field eval="[(6,0,[])]" name="child_ids"/>
-            <field eval="&quot;&quot;&quot;seg_wi_id = self.search(cr,uid, [('segment_id','=',obj.segment_id.id)])\nself.write(cr,uid,seg_wi_id,{'state':'cancel','error_msg':'Cancelled by unsubscription'})\naction = 'unsubscription' &quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;wi_ids = self.search(cr, uid, [('state','=','pending'),('address_id','=',obj.address_id.id),('segment_id','=',obj.segment_id.id)])\nif wi_ids:\n    self.write(cr, uid, wi_ids, {'state':'cancel','error_msg':'Cancelled by unsubscrition'})\naction = {'code':'unsubscribe'}&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
-            <field eval="&quot;&quot;&quot;DM - Unsubscribe&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;Unsubscribe&quot;&quot;&quot;" name="name"/>
         </record>
 
 	    <record id="ir_actions_server_html_doc_generate0" model="ir.actions.server">
@@ -750,7 +432,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="model_id" ref="dm.model_dm_workitem"/>
             <field eval="[(6,0,[])]" name="child_ids"/>
             <field eval="1" name="dm_action"/>
-            <field eval="&quot;&quot;&quot;from dm import dm_report_design \naction = dm_report_design.generate_reports(cr,uid,obj,'html2html',context)&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;from dm import dm_report_design \naction = dm_report_design.document_process(cr,uid,obj,'html2html',context)&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
             <field eval="&quot;&quot;&quot;Generate HTML Document&quot;&quot;&quot;" name="name"/>
         </record>
@@ -761,7 +443,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
             <field name="model_id" ref="dm.model_dm_campaign_document"/>
             <field eval="[(6,0,[])]" name="child_ids"/>
-            <field eval="&quot;&quot;&quot;from dm import dm_campaign\naction = dm_campaign.create_email_queue(cr,uid,obj,context)&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;from dm import dm_document\naction = dm_document.create_email_queue(cr,uid,obj,context)&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
             <field eval="&quot;&quot;&quot;Generate Email Queue&quot;&quot;&quot;" name="name"/>
         </record>
@@ -1018,15 +700,6 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="field_id" ref="dm.field_dm_offer_step_code"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
-        <record id="dm_dtp_plugin_wi_so_id" model="dm.dtp.plugin">
-            <field eval="&quot;&quot;&quot;sale_order_id&quot;&quot;&quot;" name="code"/>
-            <field eval="&quot;&quot;&quot;Sale Order ID&quot;&quot;&quot;" name="name"/>
-            <field eval="0" name="store_value"/>
-            <field name="model_id" ref="dm.model_dm_workitem"/>
-            <field eval="&quot;&quot;&quot;Sale Order - Id&quot;&quot;&quot;" name="note"/>
-            <field name="field_id" ref="dm.field_dm_workitem_sale_order_id"/> 
-            <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
-        </record>
         <record id="dm_dtp_plugin_currenttime0" model="dm.dtp.plugin">
             <field eval="&quot;&quot;&quot;current_time&quot;&quot;&quot;" name="code"/>
             <field eval="0" name="store_value"/>
@@ -1177,10 +850,16 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="code">no_mail_service_for_preview</field>
             <field name="message">There is no mail service defined for this preview document</field>
         </record>
+        <record model="dm.sysmsg" id="dm_sysmsg_mail_service_no_report">
+            <field name="name">No report for a document</field>
+            <field name="code">no_report_for_document</field>
+            <field name="message">There is no report defined for this document</field>
+        </record>
         <record model="dm.sysmsg" id="dm_sysmsg_mail_service_unsubscription">
-            <field name="name">DM - Unsubscription</field>
-            <field name="code">unsubscription</field>
+            <field name="name">Unsubscribe</field>
+            <field name="code">unsubscribe</field>
             <field name="message">Cancelled by unsubscription</field>
+            <field name="state">cancel</field>
         </record>
         <record model="dm.sysmsg" id="dm_sysmsg_document_done">
             <field name="name">Document Succesfully Generated</field>
@@ -1189,5 +868,27 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="message">This document was succesfully generated</field>
         </record>
 
+		<record id="dm_sysmsg_smtp_doc_sent" model="dm.sysmsg">
+			<field eval="&quot;&quot;&quot;smtp_doc_sent&quot;&quot;&quot;" name="code"/>
+			<field eval="&quot;&quot;&quot;SMTP Document Sent&quot;&quot;&quot;" name="name"/>
+			<field name="field" ref="dm.field_dm_campaign_document_error_msg"/>
+			<field eval="1" name="level"/>
+			<field eval="0" name="send_email"/>
+			<field eval="&quot;&quot;&quot;done&quot;&quot;&quot;" name="state"/>
+			<field eval="1" name="result"/>
+			<field eval="&quot;&quot;&quot;This document was succesfully sent by the SMTP&quot;&quot;&quot;" name="message"/>
+			<field name="model" ref="dm.model_dm_campaign_document"/>
+		</record>
+		<record id="dm_sysmsg_smtp_doc_error" model="dm.sysmsg">
+			<field eval="&quot;&quot;&quot;smtp_doc_error&quot;&quot;&quot;" name="code"/>
+			<field eval="&quot;&quot;&quot;SMTP Document Error&quot;&quot;&quot;" name="name"/>
+			<field name="field" ref="dm.field_dm_campaign_document_error_msg"/>
+			<field eval="1" name="level"/>
+			<field eval="0" name="send_email"/>
+			<field eval="&quot;&quot;&quot;error&quot;&quot;&quot;" name="state"/>
+			<field eval="0" name="result"/>
+			<field eval="&quot;&quot;&quot;This document could not be sent by SMTP&quot;&quot;&quot;" name="message"/>
+			<field name="model" ref="dm.model_dm_campaign_document"/>
+		</record>
     </data>
 </openerp>

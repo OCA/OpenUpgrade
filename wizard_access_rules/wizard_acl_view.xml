@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_wizard_acl" model="ir.ui.view">
+            <field name="name">wizard.acl.list.form</field>
+            <field name="model">wizard.acl.list</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Create Access">
+                    <field name="acl_ids" mode="tree" nolabel="1" colspan="4">
+                        <tree string="Create Access" editable="top">
+                            <field name="name"/>
+                            <field name="object_id"/>
+                            <field name="group_id"/>
+                            <field name="read"/>
+                            <field name="create"/>
+                            <field name="write"/>
+                            <field name="unlink"/>
+                        </tree>
+                    </field>
+                    <group col="2" colspan="2">
+                        <button icon='gtk-cancel' special="cancel" name="action_cancel" type='object' string='Skip'/>
+                        <button name="get_list" type='object' string='Get ACL'/>
+                        <button name='action_create' icon='gtk-ok' type='object' string='Create ACL'/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_config_acl_form" model="ir.actions.act_window">
+            <field name="name">Configure ACL</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wizard.acl.list</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_wizard_acl"/>
+            <field name="target">new</field>
+        </record>
+        
+        <record id="config_wizard_step_acl" model="ir.actions.todo">
+            <field name="name">Create Default ACL</field>
+            <field name="note">Create a Access Control</field>
+            <field name="state">open</field>
+            <field name="action_id" ref="action_config_acl_form"/>
+            <field name="sequence">5</field>
+        </record>
+    </data>
+</openerp>

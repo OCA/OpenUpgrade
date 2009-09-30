@@ -102,11 +102,11 @@ where tmpTable.check_date = current_date
 		cr.execute("select distinct(t.name),l.check_in,l.planified_date,i.check_in,i.intervention_date,i.user_id,l.user_id from labo_intervention i,labo_log l, labo_tool t  where t.id=l.log_id and i.intervention_id = t.id ")
 #cr.execute("select distinct(t.name) from labo_intervention i,labo_log l, labo_tool t  where t.id=l.log_id and i.intervention_id = t.id and (l.max_date = current_date or i.next_date = current_date) ")
 		res=cr.fetchall()
-		print ">>>>>>>>>>>>>>>>>>",res
+
 		max_date= now()+ RelativeDateTime(years=+1)
 		next_date= now()+ RelativeDateTime(years=+1)
 		for r in res:
-			print ">>>>>>>>>",r[1],r[3]
+
 			if r[1] == 'year'or r[3] == 'year':
 				if r[3]=='year':
 					next_date = mx.DateTime.strptime(r[4], '%Y-%m-%d') +  RelativeDateTime(years=+1) + RelativeDateTime(months=-1)
@@ -146,19 +146,19 @@ where tmpTable.check_date = current_date
 				section_id=pooler.get_pool(cr.dbname).get('crm.case.section').search(cr, uid,[('code', '=', 'equip'),])
 
 			 #   user_id=pooler.get_pool(cr.dbname).get('labo.log').search(cr,uid,[('lod' '=', '')])
-				print "section_id*************************************",section_id
+
 				user_list=[]
 				user_list.append(r[5])
 				if (r[5] != r[6]):
 						user_list.append(r[6])
-				print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11", user_list
+
 				user_obj=pooler.get_pool(cr.dbname).get('res.users')
 				mail_admin='admin@progenus.com '
 				if r:
 					for i in user_list:
 						print "iii",i
 						partner_id= pooler.get_pool(cr.dbname).get('res.users').browse(cr, uid, [i])
-						print "%%%%%%%%%%%%%555",partner_id
+
 						new_id=ref_case.create(cr,uid,{
 						'name': "Equipment to review",
 						'section_id':section_id[0],
@@ -172,7 +172,7 @@ where tmpTable.check_date = current_date
 						res=cr.fetchone()[0] or ""
 						print res
 						address_mail=res
-						print "ADRESSE",address_mail
+
 						if address_mail:
 							tools.email_send('administrator@progenus.com',mail_admin ,'Checking equipments', txt2, 'olivier.duterme@progenus.com', address_mail,  tinycrm=new_id)
 #						else:

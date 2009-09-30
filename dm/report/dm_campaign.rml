@@ -62,14 +62,14 @@
     <blockTable colWidths="304.0,221.0" style="Table2">
       <tr>
         <td>
-          <para style="P6"><font face="Times-Roman">Name :</font> [[o.name]]</para>
-          <para style="P6"><font face="Times-Roman">Code :</font> [[o.code]]</para>
-          <para style="P6"><font face="Times-Roman">Country of Campaign :</font> [[o.country_id and o.country_id.name]]</para>
+          <para style="P6"><font face="Times-Roman">Name : [[o.name]]</font></para>
+          <para style="P6"><font face="Times-Roman">Code : [[o.code1]]</font></para>
+          <para style="P6"><font face="Times-Roman">Country of Campaign : [[o.country_id and o.country_id.name]]</font></para>
         </td>
         <td>
-          <para style="P7"><font face="Times-Roman">Offer :</font>[[o.offer_id and o.offer_id.name]]</para>
-          <para style="P7"><font face="Times-Roman">Type : </font>[[ o.campaign_type_id]]</para>
-          <para style="P7"><font face="Times-Roman">Status :</font> [[o.state]]</para>
+          <para style="P7"><font face="Times-Roman">Offer : [[o.offer_id and o.offer_id.name]]</font></para>
+          <para style="P7"><font face="Times-Roman">Type : [[ o.campaign_type_id.name]]</font></para>
+          <para style="P7"><font face="Times-Roman">Status : [[o.state]]</font></para>
         </td>
       </tr>
     </blockTable>
@@ -116,7 +116,7 @@
           <para style="P5">[[pro.sale_rate]]</para>
         </td>
         <td>
-          <para style="P5">[[pro.segment_id and pro.segment_id.name]]</para>
+         <para style="P5">[[ get_segments(pro)['segments'] ]] </para>
         </td>
       </tr>
     </blockTable>

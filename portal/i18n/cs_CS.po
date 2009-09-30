@@ -1,0 +1,354 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* portal
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 5.0.1\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-08-06 15:41:09+0000\n"
+"PO-Revision-Date: 2009-08-06 15:41:09+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: portal
+#: wizard_view:portal.create_user,init:0
+msgid "User creation "
+msgstr ""
+
+#. module: portal
+#: field:ir.actions.act_window,portal_visible:0
+#: field:ir.actions.report.custom,portal_visible:0
+#: field:ir.actions.report.xml,portal_visible:0
+#: field:ir.actions.wizard,portal_visible:0
+msgid "Visible in Portal"
+msgstr ""
+
+#. module: portal
+#: field:portal.config.install_modules_wizard,portal_account:0
+msgid "Portal for Account Module"
+msgstr ""
+
+#. module: portal
+#: wizard_field:portal.create_user,init,mail_from:0
+msgid "From"
+msgstr ""
+
+#. module: portal
+#: model:ir.ui.menu,name:portal.menu_portal_customer
+msgid "Customer Portal"
+msgstr ""
+
+#. module: portal
+#: field:portal.config.install_modules_wizard,portal_sale:0
+msgid "Portal for Sale Module"
+msgstr ""
+
+#. module: portal
+#: model:ir.actions.wizard,name:portal.wizard_portal_create_menu
+msgid "Create menu"
+msgstr ""
+
+#. module: portal
+#: wizard_view:portal.create_menu,second:0
+msgid "Action triggered by the new menu :"
+msgstr ""
+
+#. module: portal
+#: field:portal.portal,home_action_id:0
+msgid "User Home Action"
+msgstr ""
+
+#. module: portal
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
+
+#. module: portal
+#: wizard_view:portal.create_menu,init:0
+#: wizard_view:portal.create_menu,second:0
+msgid "Create menu : "
+msgstr ""
+
+#. module: portal
+#: constraint:ir.model:0
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr ""
+
+#. module: portal
+#: wizard_view:portal.create_menu,second:0
+msgid "Views used to display the action :"
+msgstr ""
+
+#. module: portal
+#: model:ir.actions.act_window,name:portal.action_config_install_module
+msgid "Portal : Install Extra Modules"
+msgstr ""
+
+#. module: portal
+#: wizard_field:portal.create_user,create,note:0
+msgid "Log"
+msgstr ""
+
+#. module: portal
+#: wizard_field:portal.create_user,init,mail:0
+msgid "Body"
+msgstr ""
+
+#. module: portal
+#: wizard_field:portal.create_user,init,send_mail:0
+msgid "Send mail for new user"
+msgstr ""
+
+#. module: portal
+#: wizard_view:portal.create_user,create:0
+msgid "User creation"
+msgstr ""
+
+#. module: portal
+#: field:portal.model,view_ids:0
+msgid "Views"
+msgstr ""
+
+#. module: portal
+#: field:portal.portal,name:0
+msgid "Portal Name"
+msgstr ""
+
+#. module: portal
+#: field:portal.portal,company_id:0
+msgid "Company"
+msgstr ""
+
+#. module: portal
+#: wizard_button:portal.create_user,create,end:0
+msgid "_Ok"
+msgstr ""
+
+#. module: portal
+#: model:ir.actions.act_window,name:portal.action_portal_form
+#: model:ir.model,name:portal.model_portal_portal
+#: model:ir.ui.menu,name:portal.menu_portal_root
+#: wizard_field:portal.create_menu,init,portal_id:0
+#: wizard_field:portal.create_user,init,portal_id:0
+msgid "Portal"
+msgstr ""
+
+#. module: portal
+#: wizard_field:portal.create_user,init,send_mail_existing:0
+msgid "Send reminder for existing user"
+msgstr ""
+
+#. module: portal
+#: model:ir.actions.act_window,name:portal.action_portal_model_form
+#: model:ir.model,name:portal.model_portal_model
+msgid "Portal Model"
+msgstr ""
+
+#. module: portal
+#: model:ir.ui.menu,name:portal.menu_portal_configuration
+msgid "Configuration"
+msgstr "Konfigurace"
+
+#. module: portal
+#: wizard_view:portal.create_menu,init:0
+msgid "The new menu will be available for the portal :"
+msgstr ""
+
+#. module: portal
+#: help:portal.portal,home_action_id:0
+msgid "Complete this field to provide a Home menu different from the Main menu."
+msgstr ""
+
+#. module: portal
+#: help:portal.portal,menu_action_id:0
+msgid "Default main menu for the users of the portal. This field is auto-completed at creation. "
+msgstr ""
+
+#. module: portal
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr ""
+
+#. module: portal
+#: field:portal.config.install_modules_wizard,portal_service:0
+msgid "Portal for Service Module"
+msgstr ""
+
+#. module: portal
+#: model:ir.ui.menu,name:portal.menu_portal_configuration_models
+msgid "Available Models"
+msgstr ""
+
+#. module: portal
+#: wizard_field:portal.create_menu,second,parent_menu_id:0
+msgid "Parent Menu"
+msgstr ""
+
+#. module: portal
+#: wizard_view:portal.create_user,init:0
+msgid "Create user on portal :"
+msgstr ""
+
+#. module: portal
+#: field:portal.portal,menu_action_id:0
+msgid "User Menu Action"
+msgstr ""
+
+#. module: portal
+#: view:portal.config.install_modules_wizard:0
+msgid "Portal : Install Extra Module"
+msgstr ""
+
+#. module: portal
+#: wizard_field:portal.create_menu,second,view_type:0
+msgid "Use Form View By Default"
+msgstr ""
+
+#. module: portal
+#: field:portal.config.install_modules_wizard,portal_analytic:0
+msgid "Portal for Analytic Account Module"
+msgstr ""
+
+#. module: portal
+#: model:ir.ui.menu,name:portal.menu_portal_configuration_portals
+msgid "Portals"
+msgstr ""
+
+#. module: portal
+#: field:portal.portal,menu_id:0
+msgid "Main Menu"
+msgstr ""
+
+#. module: portal
+#: wizard_button:portal.create_menu,second,init:0
+msgid "_Back"
+msgstr ""
+
+#. module: portal
+#: wizard_view:portal.create_menu,second:0
+msgid "The new menu is located under:"
+msgstr ""
+
+#. module: portal
+#: view:portal.config.install_modules_wizard:0
+msgid "Install"
+msgstr ""
+
+#. module: portal
+#: model:ir.model,name:portal.model_portal_config_install_modules_wizard
+msgid "portal.config.install_modules_wizard"
+msgstr ""
+
+#. module: portal
+#: wizard_field:portal.create_menu,second,action_id:0
+msgid "Action"
+msgstr ""
+
+#. module: portal
+#: model:ir.actions.todo,note:portal.config_install_module
+msgid "A few modules are proposed according to portal you selected."
+msgstr ""
+
+#. module: portal
+#: wizard_field:portal.create_menu,init,model_id:0
+#: field:portal.model,model_id:0
+msgid "Model"
+msgstr ""
+
+#. module: portal
+#: model:ir.actions.wizard,name:portal.wizard_portal_create_user
+msgid "Create User"
+msgstr ""
+
+#. module: portal
+#: field:portal.model,rule_group_id:0
+msgid "Rule group"
+msgstr ""
+
+#. module: portal
+#: wizard_field:portal.create_menu,second,view_id_form:0
+msgid "Form View"
+msgstr ""
+
+#. module: portal
+#: model:ir.module.module,shortdesc:portal.module_meta_information
+#: view:portal.config.install_modules_wizard:0
+msgid "Portal Management"
+msgstr ""
+
+#. module: portal
+#: view:portal.portal:0
+msgid "Defaults actions for the users of this portal"
+msgstr ""
+
+#. module: portal
+#: model:ir.actions.act_window,name:portal.portal_customer_action_menu
+msgid "Portal Customer Menu"
+msgstr ""
+
+#. module: portal
+#: wizard_view:portal.create_user,create:0
+msgid "Results :"
+msgstr ""
+
+#. module: portal
+#: model:ir.ui.menu,name:portal.wiz_portal_configuration_menu
+msgid "Create Menu"
+msgstr ""
+
+#. module: portal
+#: field:portal.portal,group_id:0
+msgid "Associated Group"
+msgstr ""
+
+#. module: portal
+#: wizard_view:portal.create_menu,init:0
+msgid "The new menu will open this model :"
+msgstr ""
+
+#. module: portal
+#: wizard_view:portal.create_menu,second:0
+msgid "Name of the new menu :"
+msgstr ""
+
+#. module: portal
+#: wizard_button:portal.create_menu,init,second:0
+#: wizard_button:portal.create_menu,second,create:0
+#: wizard_button:portal.create_user,init,create:0
+msgid "_Next"
+msgstr ""
+
+#. module: portal
+#: wizard_button:portal.create_menu,init,end:0
+#: wizard_button:portal.create_menu,second,end:0
+#: wizard_button:portal.create_user,init,end:0
+msgid "_Cancel"
+msgstr ""
+
+#. module: portal
+#: view:portal.config.install_modules_wizard:0
+msgid "Cancel"
+msgstr ""
+
+#. module: portal
+#: wizard_field:portal.create_menu,second,menu:0
+#: field:portal.model,name:0
+msgid "Name"
+msgstr ""
+
+#. module: portal
+#: wizard_field:portal.create_menu,second,view_id_tree:0
+msgid "Tree View"
+msgstr ""
+
+#. module: portal
+#: wizard_field:portal.create_user,init,mail_subject:0
+#: wizard_field:portal.create_user,init,mail_subject_existing:0
+msgid "Subject"
+msgstr ""
+

@@ -74,31 +74,37 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="SMTP Server">
-				    <field name="name" select="1" />
-				    <field name="date_create" select="1"/>
+				    <group col="6" colspan="4">
+				        <field name="name" select="1" />
+				        <field name="date_create" select="1"/>
+				        <field name="state" select="1" />
+			        </group>
 					<notebook colspan="4">
 						<page string="Configuration">
-							<separator string="User Information"
+						    <separator string="Server Information"
 								colspan="4" />
 							<field name="auth_type" on_change="change_servertype(auth_type)"/>
+							<field name="server" select="2" />
+							<field name="ssl" select="2" />
+							<field name="port" select="2" />
+							
+							<separator string="User Information"
+								colspan="4" />
 							<field name="email" select="1"
 								on_change="change_email(email)"/>
 							<field name="from_email" select="1"/>
-							<field name="auth" select="1"/>
+							<field name="auth" select="2"/>
 							<newline/>
 							<field name="user" select="1" attrs="{'required': [('auth_type','in',['gmail','yahoo'])]}"/>
-							<field name="password" select="2" password="True" attrs="{'required': [('auth_type','in',['gmail','yahoo'])]}"/>
+							<field name="password" password="True" attrs="{'required': [('auth_type','in',['gmail','yahoo'])]}"/>
 							<newline />
-							<separator string="Server Information"
+					
+							<separator string="Other Information"
 								colspan="4" />
-							<field name="server" select="1" />
-							<field name="port" select="1" />
-							<field name="ssl" select="1" />
-							<separator string="Verification Information"
-								colspan="4" />
-							<field name="state" select="1" />
 							<field name="type" select="1" />
-							<field name="active" select="1" />
+							<field name="active" select="2" />
+							<field name="delete_queue" select="2" />
+							<field name="delete_queue_period" select="2" attrs="{'readonly':[('delete_queue','not in',['content','all'])]}"/>
 						</page>
 
 						<page string="Messages">

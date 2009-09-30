@@ -224,13 +224,6 @@
                         </field>
                         <field name="seq"/>
                     </page>
-                    <page string="Products">
-                        <group colspan="4">
-                            <field name="forecasted_yield" colspan="4"/>
-                            <separator string="Offer Step Product"  colspan="4"/>
-                            <field name="item_ids" colspan="4" nolabel="1" readonly="0" select="2"/>
-                        </group>
-                    </page>
                     <page string="Advises">
                         <group groups="base.group_extended">
                         <field name="mailing_at_dates" select="2"/>
@@ -250,10 +243,6 @@
                         <field name="production_note" nolabel="1" colspan="4" widget="text_wiki"/>
                         <separator string="Purchase Advices" colspan="4"/>
                         <field name="purchase_note" nolabel="1" colspan="4" widget="text_wiki"/>
-                    </page>
-                    <page string="Mailing Manufacturing">
-                        <separator string="Mailing Manufacturing Products" colspan="4"/>
-                        <field name="manufacturing_constraint_ids" colspan="4" nolabel="1"/>
                     </page>
                 </notebook>
             </form>
@@ -386,14 +375,6 @@
         view_mode="tree,form"
         id="act_offer_opened"
         domain = "[('step_ids','in',[active_id])]"/>
-    
-    <act_window name="Products"
-        res_model="product.product"
-        src_model="dm.offer"
-        view_type="form"
-        view_mode="tree,form"
-        id="act_offer_product_opened"
-        context="{'offer_id':active_id}"/>
 
 </data>
 </openerp>

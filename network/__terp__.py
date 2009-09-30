@@ -34,7 +34,12 @@
 
     You can print interventions form for technical people.""",
     "demo_xml" : ["network_demo.xml"],
-    "update_xml" : ["security/ir.model.access.csv", "network_view.xml", "network_report.xml"],
+    "update_xml" : [
+        "security/network_security.xml",
+        "security/ir.model.access.csv",
+        "network_view.xml", 
+        "network_report.xml"
+    ],
     "active" : False,
     "installable": True
 }

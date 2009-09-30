@@ -1,0 +1,453 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+		<record model="ir.ui.view" id="view_loan_type_form">
+			<field name="name">account.loan.proof.type.form</field>
+			<field name="model">account.loan.proof.type</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Loan Proof Type">
+					<field name="name" select="1"/>
+					<field name="shortcut" select="1"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_loan_type_tree">
+			<field name="name">account.loan.proof.type.tree</field>
+			<field name="model">account.loan.proof.type</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Loan Proof Type">
+					<field name="name" select="1"/>
+					<field name="shortcut" select="1"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_loan_type">
+			<field name="name">account.loan.proof.type</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.loan.proof.type</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<menuitem name="Financial Management/Configuration/Loan/Proof Type" action="action_loan_type" id="menu_loan_type"/>
+
+		<record model="ir.ui.view" id="view_loan_installment_period_form">
+			<field name="name">loan.installment.period.form</field>
+			<field name="model">loan.installment.period</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Loan Period">
+					<field name="name" select="1"/>
+					<field name="period" select="1"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_loan_installment_period_tree">
+			<field name="name">loan.installment.period.tree</field>
+			<field name="model">loan.installment.period</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Loan Period">
+					<field name="name"/>
+					<field name="period"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_loan_installment_period">
+			<field name="name">loan.installment.period</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">loan.installment.period</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<menuitem name="Financial Management/Configuration/Loan/Loan Period" action="action_loan_installment_period" id="menu_loan_installment_period"/>
+
+		<record model="ir.ui.view" id="view_loan_form">
+			<field name="name">res.partner.form.inherit</field>
+			<field name="model">res.partner</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<field name="lang" position="after">
+					<field name="incom" select="1"/>
+				</field>
+			</field>
+		</record>
+	
+		<record model="ir.ui.view" id="view_loan_partner_bank_form">
+			<field name="name">res.partner.bank.form.inherit</field>
+			<field name="model">res.partner.bank</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="base.view_partner_bank_form"/>
+			<field name="arch" type="xml">
+				<field name="acc_number" position="after">
+					<field name="account_id" select="1"/>
+				</field>
+			</field>
+		</record>
+		
+		<record model="ir.ui.view" id="account_loan_proof_tree">
+			<field name="name">account.loan.proof.tree</field>
+			<field name="model">account.loan.proof</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Proof Document">
+					<field name="name"/>
+					<field name="note"/>
+					<field name="type"/>
+					<field name="state"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_loan_installment">
+			<field name="name">account.loan.installment.tree</field>
+			<field name="model">account.loan.installment</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Installments" editable="top">
+					<field name="name"/>
+					<field name="cheque_id"/>
+					<field name="capital"/>
+					<field name="interest"/>
+					<field name="total"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_loan_proof_form">
+			<field name="name">account.loan.proof.form</field>
+			<field name="model">account.loan.proof</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Proof Document">
+					<field name="name" select="1"/>
+					<field name="loan_id" invisible="1"/>
+					<field name="type" select="1"/>
+					<newline />
+					<field name="note" select="1" colspan="4"/>
+					<newline />
+					<field name="document" colspan="4"/>
+					<newline />
+					<group col="7" colspan="4">
+						<field name="state" readonly="1" select="1"/>
+						<button name="apply_varification" type="object" states="draft" string="Apply For Varification"/>
+						<button name="proof_varified" type="object" states="apply" string="Accept"/>
+						<button name="proof_canceled" type="object" states="apply" string="Refuse"/>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_account_loan_proof_form">
+			<field name="name">account.account.loan.proof</field>
+			<field name="res_model">account.loan.proof</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_account_loan_proof_tree">
+			<field name="name">account.loan.proof</field>
+			<field name="res_model">account.loan.proof</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+
+		</record>
+		<record model="ir.ui.view" id="account_loan_tree">
+			<field name="name">account.loan.tree</field>
+			<field name="model">account.loan</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Invoice Line">
+					<field name="loan_id"/>
+					<field name="auto_id"/>
+					<field name="name"/>
+					<field name="partner_id"/>
+					<field name="contact"/>
+					<field name="loan_amount"/>
+					<field name="total_installment"/>
+					<field name="apply_date"/>
+					<field name="approve_date"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="account_loan_form">
+			<field name="name">account.loan.form</field>
+			<field name="model">account.loan</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Loan Details">
+				    <separator string="General Information" colspan="4"/>
+					<field name="loan_id" select="1"/>
+					<field name="name" select="1"/>
+					<field name="apply_date" select="1"/>
+					<field name="approve_date" select="1"/>
+					<notebook colspan="4">
+						<page string="Loan">
+    						<group col="6" colspan="4">
+    							<field name="partner_id" select="1"  on_change="onchange_partner_id(partner_id)" />
+    							<field name="contact" select="1" domain="[('partner_id','=',partner_id)]"/>
+    							<field name="loan_amount" select="1"/>
+    							
+    							<field name="loan_period" select="1" on_change="onchange_loan_period(loan_period)"/>
+    							<field name="total_installment" select="1"/>
+    							<field name="loan_type" select="1"/>
+    							
+    							<field name="approve_amount" select="1"/>
+    							<field name="interest_rate" select="1"/>
+    							
+    							<field name="process_fee" select="1"/>
+    							<!--field name="interest"/-->
+                            </group>
+							<separator string="Installment Information" colspan="4"/>
+							<field name="installment_id" select="1" colspan="4" nolabel="1"/>
+							<!--field name="running_loan" colspan="4" select="1" domain="[['auto_id','&lt;',auto_id],['partner_id','=',partner_id]]"/-->
+
+							<!--domain="[['auto_id','&lt;',auto_id],['partner_id','=',partner_id]]"-->
+
+							<group col="10" colspan="4">
+							    <field name="return_type"/>
+								<field name="state" readonly="1" select="1"/>
+								<button name="loan_draft" states="cancel" string="Re Apply"/>
+								<button name="approve_proofs" states="draft" string="Approve Proofs"/>
+								<button name="approve_finance" states="proof approval" string="Approve By Finance"/>
+								<button name="approve_loan" states="apply" string="Final Approvel"/>
+								<button name="loan_paid" states="approved" string="Loan Paid"/>
+								<button name="loan_cancel" states="apply,approved,proof approval" string="Reject Loan"/>
+							</group>
+						</page>
+						<page string="Proofs">
+							<field name="id" invisible="1"/>
+							<field name="proof_id" colspan="4" nolabel="1" context="loan_id=id"/>
+							<field name="proof_1" select="1"/>
+							<field name="proof_2" select="2"/>
+						</page>
+                    	<page string="Accounting">
+                        	<field name="cus_pay_acc"/>
+                        	<field name="bank_acc"/>
+                        	<newline/>
+                        	<field name="int_acc"/>
+                        	<field name="anal_acc"/>
+                        	<field name="proc_fee"/>                        	
+                        	<newline/> 
+                        	<field name="move_id" colspan="4" nolabel="1"/>                    	
+                        </page>					
+                        
+						<page string="Cheque Details">
+							<separator string="Invoicing Information" colspan="4"/>
+							<field name="voucher_id" domain= "[('voucher_id','=',voucher_id)]"  />
+							<newline/>
+							<separator string="BankChaques Information" colspan="4"/>
+							<field name="cheque_ids" select="1" nolabel="1" colspan="4"/>
+						</page>
+                        
+						<page string="Notes">
+						    <separator string="Terms and Confitions" colspan="4"/>
+							<field name="notes" colspan="4" nolabel="1"/>
+						</page>
+						
+						<page string="EMI Calculator">
+							<group>
+								<field name="loan_amt"/>
+								<newline/>
+								<field name="month"/>
+								<newline/>
+								<field name="int_rate"/>
+								<newline/>
+							
+								<separator string="Monthly Payment (EMI)" colspan="4"/>	
+							
+								<group colspan="1" >				
+									<button name="cal_amt"  string="Calculate" type="object"/>
+									<button name="re_set"  string="Reset" type="object"/>
+								</group>
+								
+								<newline/>				
+								<field name="emi_cal"/>
+								<newline/>
+								<field name="tot_amt"/>
+								<newline/>
+								<field name="flat_pa"/>
+								<newline/>
+								<field name="flat_pm"/>
+								<newline/>	
+								<field name="tot_int_amt"/>
+								<newline/>	
+								<field name="yr_int_amt"/>
+								<newline/>	
+							</group>																																													
+						</page>						
+					</notebook>
+				</form>
+			</field>
+		</record>
+				
+		<record model="ir.actions.act_window" id="action_account_loan_form">
+			<field name="name">Personal Loan</field>
+			<field name="res_model">account.loan</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+		</record>
+
+		<menuitem name="Financial Management/Loan/Personal Loan" id="menu_action_account_loan_form" action="action_account_loan_form"/>
+
+		<record model="ir.actions.act_window" id="action_account_loan_tree_approve">
+			<field name="name">account.loan</field>
+			<field name="res_model">account.loan</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('state','!=','approved')]</field>
+		</record>
+		<menuitem name="Financial Management/Loan/Personal Loan/Apprived Loans" id="menu_action_account_loan_tree_approve" action="action_account_loan_tree_approve"/>
+
+		<record model="ir.actions.act_window" id="action_account_loan_tree_small">
+			<field name="name">account.loan</field>
+			<field name="res_model">account.loan</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('loan_amount','&lt;=','50000')]</field>
+		</record>
+		<menuitem name="Financial Management/Loan/Personal Loan/Small Loans" id="menu_action_account_loan_tree_small" action="action_account_loan_tree_small"/>
+
+		<record model="ir.actions.act_window" id="action_account_loan_tree_mediul">
+			<field name="name">account.loan</field>
+			<field name="res_model">account.loan</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('loan_amount','&gt;','50000'),('loan_amount','&lt;=','200000')]</field>
+		</record>
+		<menuitem name="Financial Management/Loan/Personal Loan/Medium Loans" id="menu_action_account_loan_tree_mediul" action="action_account_loan_tree_mediul"/>
+
+		<record model="ir.actions.act_window" id="action_account_loan_tree_large">
+			<field name="name">account.loan</field>
+			<field name="res_model">account.loan</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('loan_amount','&gt;','200000')]</field>
+		</record>
+		<menuitem name="Financial Management/Loan/Personal Loan/Large Loans" id="menu_action_account_loan_tree_large" action="action_account_loan_tree_large"/>
+		
+		<record model="ir.ui.view" id="view_account_loan_bank_cheque_form">
+			<field name="name">account.loan.bank.cheque.form</field>
+			<field name="model">account.loan.bank.cheque</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Cheque Details">
+					<field name="name" select="1"/>
+					<field name="code" select="1"/>
+					<field name="partner_id" on_change="onchange_bank_id(partner_id)" select="1"/>
+					<field name="loan_id" domain="[('partner_id','=',partner_id)]" select="1"/>
+					<field name="loan_bank_id" domain="[('partner_id','=',partner_id)]" select="1"/>
+					<field name="account_id" domain="[('bank_id','=',loan_bank_id)]" select="1"/>
+					<field name="cheque_amount" select="1"/>
+					<field name="date" select="1"/>
+					<field name="clear_date" select="1"/>
+					<field name="return_date" select="1"/>
+					<field name="loan" select="1"/>
+					<field name="interest" select="1"/>
+					<field name="voucher_id" select="1"/>
+					<newline/>
+					<field name='note' colspan='7'/>
+					<group col="8" colspan="4">
+						<field name="state"/>
+						<button name="post_bank" states="draft" string="Post to Bank" />
+						<button name="cheque_cancel" states="draft" string="Cancel"/>
+						<button name="cheque_clear" states="posted" string="Clear"/>
+						<button name="cheque_retun" states="posted" string="Bounce"/>
+						<button name="cheque_cancel" states="return" string="Cancel"/>
+						<button name="set_draft" states="cancel" string="Set to Draft"/>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_loan_bank_cheque_tree">
+			<field name="name">account.loan.bank.cheque.tree</field>
+			<field name="model">account.loan.bank.cheque</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Cheque Details" editable="top">
+					<field name="name"/>
+					<field name="code"/>
+					<field name="partner_id" on_change="onchange_bank_id(partner_id)"/>
+					<field name="loan_id" domain="[('partner_id','=',partner_id)]"/>
+					<field name="loan_bank_id" domain="[('partner_id','=',partner_id)]"/>
+					<field name="account_id" domain="[('bank_id','=',loan_bank_id)]"/>
+					<field name="cheque_amount"/>
+					<field name="date"/>
+					<field name="state"/>
+					<field name="clear_date"/>
+					<field name="return_date"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_account_loan_bank_cheque">
+			<field name="name">account.loan.bank.cheque</field>
+			<field name="res_model">account.loan.bank.cheque</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+		</record>
+
+		<menuitem name="Financial Management/Loan/Cheque" id="menu_account_loan_bank_cheque_form" action="action_account_loan_bank_cheque"/>
+
+		<record model="ir.actions.act_window" id="action_account_loan_bank_cheque_draft">
+			<field name="name">account.loan.bank.cheque</field>
+			<field name="res_model">account.loan.bank.cheque</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('state','=','draft'),('date','=',time.strftime('%Y-%m-%d'))]</field>
+		</record>
+		<menuitem name="Financial Management/Loan/Cheque/Draft" id="menu_action_account_loan_bank_cheque_draft" action="action_account_loan_bank_cheque_draft"/>
+
+		<record model="ir.actions.act_window" id="action_account_loan_bank_cheque_posted">
+			<field name="name">account.loan.bank.cheque</field>
+			<field name="res_model">account.loan.bank.cheque</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('state','=','posted'),('date','=',time.strftime('%Y-%m-%d'))]</field>
+		</record>
+		<menuitem name="Financial Management/Loan/Cheque/Posted" id="menu_action_account_loan_bank_cheque_posted" action="action_account_loan_bank_cheque_posted"/>
+
+		<record model="ir.ui.view" id="view_account_loan_installment_form">
+			<field name="name">account.loan.installment.form</field>
+			<field name="model">account.loan.installment</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Installments">
+					<field name="loan_id" select="1" domain="[('partner_id','=',partner_id)]"/>
+					<field name="name" select="1"/>
+					<field name="cheque_id" select="1" domain="[('loan_id','=',loan_id)]"/>
+					<field name="capital" select="1"/>
+					<field name="interest" select="1"/>
+					<field name="total" select="1"/>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_loan_installment_tree2">
+			<field name="name">account.loan.installment.tree</field>
+			<field name="model">account.loan.installment</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Installments">
+					<field name="loan_id" select="1" domain="[('partner_id','=',partner_id)]"/>
+					<field name="name" select="1"/>
+					<field name="cheque_id" select="1" domain="[('loan_id','=',loan_id)]"/>
+					<field name="capital" select="1"/>
+					<field name="interest" select="1"/>
+					<field name="total" select="1"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_account_loan_installment_form">
+			<field name="name">account.loan.installment</field>
+			<field name="res_model">account.loan.installment</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+		</record>
+		<menuitem name="Financial Management/Loan/Installment" id="menu_account_loan_installment_form" action="action_account_loan_installment_form"/>
+	</data>
+</openerp>

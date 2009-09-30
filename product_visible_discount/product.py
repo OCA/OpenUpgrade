@@ -95,6 +95,7 @@ class account_invoice_line(osv.osv):
         if product:
             product = self.pool.get('product.product').browse(cr, uid, product, context=context)
             result=res['value']
+            pricelist = False
             if type in ('in_invoice', 'in_refund'):
                 if not price_unit and partner_id:
                     pricelist = self.pool.get('res.partner').browse(cr, uid, partner_id).property_product_pricelist_purchase.id

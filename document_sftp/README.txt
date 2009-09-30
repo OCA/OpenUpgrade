@@ -16,4 +16,11 @@ if you want to change host/ port for SFTP server, you have to change it from 'do
 
 you have to install paramiko-1.7.4 python module before install this module. you can download paramiko lib from (http://www.lag.net/paramiko/?ref=darwinports.com) 
 
+Tested On:
+==============
+Firefox Web Browser 3.0.8
+Nautilus 2.26.2
+
+
+
 

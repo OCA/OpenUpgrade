@@ -23,7 +23,7 @@ def _test_connection(self,cr,uid,part,context={}):
 
         elif type == 'mysql':
             import MySQLdb
-            tdb = MySQLdb.connect(host = host,port = port, db = db, user = user, passwd = passwd)
+            tdb = MySQLdb.connect(host = host,port = port, db = db_name, user = user, passwd = password)
                 
 
         elif type == 'oracle':

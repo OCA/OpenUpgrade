@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    <menuitem name="Advanced" id="menu_dm_report_advanced" parent="report_dm.menu_dm_report"  sequence="0"/>
+
+<!--Order Quantity per Offer Step-->
+        <wizard 
+            id="wizard_order_quantity_offer_steps"
+			menu="False" model="dm.offer"
+			name="dm.order.quantity.offer.steps"
+			string="Order quantity per Offer Steps"		/>
+        <menuitem 
+            icon="STOCK_PRINT" 
+            action="wizard_order_quantity_offer_steps"
+			id="menu_order_quantity_offer_steps" 
+			parent="menu_dm_report_advanced" 
+			type="wizard"/>
+
+<!-- Income per Offer Steps -->
+        <wizard 
+            id="wizard_order_amount_offer_steps"
+			menu="False" model="dm.offer"
+			name="dm.order.amount.offer.steps"
+			string="Income per Offer Steps"/>
+        <menuitem 
+            icon="STOCK_PRINT" 
+            action="wizard_order_amount_offer_steps"
+			id="menu_order_amount_offer_steps" 
+			parent="menu_dm_report_advanced" 
+			type="wizard"/>
+
+<!-- Order Quantity per Segments of Campaign -->
+        <wizard 
+            id="wizard_order_quantity_campaign"
+			menu="False" model="dm.campaign"
+			name="dm.order.quantity.campaign"
+			string="Order Quantity per Segments of Campaign"/>
+        <menuitem 
+            icon="STOCK_PRINT" 
+            action="wizard_order_quantity_campaign"
+			id="menu_order_quantity_campaign" 
+			parent="menu_dm_report_advanced" 
+			type="wizard"/>
+
+<!-- Income per Segments of Campaign -->
+        <wizard 
+            id="wizard_order_amount_campaign"
+			menu="False" model="dm.campaign"
+			name="dm.order.amount.campaign"
+			string="Income per Segments of Campaign"/>
+        <menuitem 
+            icon="STOCK_PRINT" 
+            action="wizard_order_amount_campaign"
+			id="menu_order_amount_campaign" 
+			parent="menu_dm_report_advanced" 
+			type="wizard"/>
+    
+    
+<!-- Order Quantity per Step of Campaign -->    
+        <wizard 
+            id="wizard_order_quantity_campaign_offer_step"
+			menu="False" model="dm.campaign"
+			name="dm.order.quantity.campaign.offer.step"
+			string="Order Quantity per Step of Campaign"/>
+        <menuitem 
+            icon="STOCK_PRINT" 
+            action="wizard_order_quantity_campaign_offer_step"
+			id="menu_order_quantity_campaign_offer_step" 
+			parent="menu_dm_report_advanced" 
+			type="wizard"/>
+
+<!-- Income per Step of Campaign -->
+        <wizard 
+            id="wizard_order_amount_campaign_offer_step"
+			menu="False" model="dm.campaign"
+			name="dm.order.amount.campaign.offer.step"
+			string="Income per Step of Campaign"/>
+        <menuitem 
+            icon="STOCK_PRINT" 
+            action="wizard_order_amount_campaign_offer_step"
+			id="menu_order_amount_campaign_offer_step" 
+			parent="menu_dm_report_advanced" 
+			type="wizard"/>
+
+    </data>
+</openerp>

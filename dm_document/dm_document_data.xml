@@ -1,0 +1,125 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+
+    <!-- DMS Directories -->
+
+    <!-- Offers -->
+
+        <record id="document_directory_directmarketing0" model="document.directory">
+            <field eval="0" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Direct Marketing&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[]&quot;&quot;&quot;" name="domain"/>
+            <field eval="&quot;&quot;&quot;directory&quot;&quot;&quot;" name="type"/>
+        </record>
+        <record id="document_directory_offers0" model="document.directory">
+            <field eval="0" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Offers&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[]&quot;&quot;&quot;" name="domain"/>
+            <field name="parent_id" ref="document_directory_directmarketing0"/>
+            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
+            <field name="ressource_type_id" ref="dm.model_dm_offer"/>
+        </record>
+        <record id="document_directory_steps0" model="document.directory">
+            <field eval="0" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Steps&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[('offer_id','in',[active_id])]&quot;&quot;&quot;" name="domain"/>
+            <field name="ressource_parent_type_id" ref="dm.model_dm_offer"/>
+            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
+            <field name="ressource_type_id" ref="dm.model_dm_offer_step"/>
+        </record>
+        <record id="document_directory_documentsbycategory0" model="document.directory">
+            <field eval="1" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Documents by Category&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[]&quot;&quot;&quot;" name="domain"/>
+            <field name="ressource_parent_type_id" ref="dm.model_dm_offer_step"/>
+            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
+            <field name="ressource_type_id" ref="dm.model_dm_offer_document_category"/>
+        </record>
+        <record id="document_directory_documents0" model="document.directory">
+            <field eval="0" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Documents&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[('category_id','=',active_id)]&quot;&quot;&quot;" name="domain"/>
+            <field name="ressource_parent_type_id" ref="dm.model_dm_offer_document_category"/>
+            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
+            <field name="ressource_type_id" ref="dm.model_dm_offer_document"/>
+        </record>
+
+    <!-- Campaigns -->
+
+        <record id="document_directory_campaigns0" model="document.directory">
+            <field eval="0" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Campaigns&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[]&quot;&quot;&quot;" name="domain"/>
+            <field name="parent_id" ref="document_directory_directmarketing0"/>
+            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
+            <field name="ressource_type_id" ref="dm.model_dm_campaign"/>
+        </record>
+        <record id="document_directory_propo0" model="document.directory">
+            <field eval="0" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Commercial Propositions&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[('camp_id','in',[active_id])]&quot;&quot;&quot;" name="domain"/>
+            <field name="ressource_parent_type_id" ref="dm.model_dm_campaign"/>
+            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
+            <field name="ressource_type_id" ref="dm.model_dm_campaign_proposition"/>
+        </record>
+        <record id="document_directory_segment0" model="document.directory">
+            <field eval="0" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Segments&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[('proposition_id','in',[active_id])]&quot;&quot;&quot;" name="domain"/>
+            <field name="ressource_parent_type_id" ref="dm.model_dm_campaign_proposition"/>
+            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
+            <field name="ressource_type_id" ref="dm.model_dm_campaign_proposition_segment"/>
+        </record>
+        <record id="document_directory_campaign_document_type0" model="document.directory">
+            <field eval="1" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Documents by Type&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[]&quot;&quot;&quot;" name="domain"/>
+            <field name="ressource_parent_type_id" ref="dm.model_dm_campaign_proposition_segment"/>
+            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
+            <field name="ressource_type_id" ref="dm.model_dm_campaign_document_type"/>
+        </record>
+        <record id="document_directory_campaign_documents0" model="document.directory">
+            <field eval="0" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Documents&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[('type_id','=',active_id)]&quot;&quot;&quot;" name="domain"/>
+            <field name="ressource_parent_type_id" ref="dm.model_dm_campaign_document_type"/>
+            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
+            <field name="ressource_type_id" ref="dm.model_dm_campaign_document"/>
+        </record>
+
+    <!--
+        <record id="document_directory_documents0" model="document.directory">
+            <field eval="0" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Documents&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[('category_id','=',active_id)]&quot;&quot;&quot;" name="domain"/>
+            <field name="ressource_parent_type_id" ref="dm.model_dm_offer_document_category"/>
+            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
+            <field name="ressource_type_id" ref="dm.model_dm_campaign_document"/>
+        </record>
+    -->
+	
+	</data>
+</openerp>

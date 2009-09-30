@@ -372,7 +372,7 @@ function set_product($tiny_product){
     "product_unit='".mysql_escape_string( ($tiny_product['product_unit']))."', ".
     "product_publish='Y',".
     "product_packaging=".$tiny_product['product_packaging_qty'].",".
-    "product_packaging_type='".$tiny_product['product_packaging_type']."',".
+//    "product_packaging_type='".$tiny_product['product_packaging_type']."',".
     "product_s_desc='".mysql_escape_string( (substr($tiny_product['short_description'],0,200)))."' ".
     "where product_id=".$osc_id.";";
 

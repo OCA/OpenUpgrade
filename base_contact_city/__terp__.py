@@ -1,9 +1,10 @@
-#!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (c) 2008 Zikzakmedia S.L. (http://zikzakmedia.com) All Rights Reserved.
+#                       Jordi Esteve <jesteve@zikzakmedia.com>
+#    Copyright (c) 2008 Pablo Rocandio. All Rights Reserved.
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -20,10 +21,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 {
 	"name" : "City for base_contact",
 	"version" : "1.0",
 	"author" : "Pablo Rocandio",
+	"license" : "GPL-3",
 	"category" : "Generic Modules/Base",
 	"description": """Zip code, city, state and country fields are replaced with a location field in partner form when base_contact module is installed.
 This module helps to keep homogeneous address data in our database.

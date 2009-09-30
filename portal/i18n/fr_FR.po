@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-27 14:59:00+0000\n"
-"PO-Revision-Date: 2009-06-27 14:59:00+0000\n"
+"POT-Creation-Date: 2009-08-07 13:38:25+0000\n"
+"PO-Revision-Date: 2009-08-07 13:38:25+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -59,16 +59,6 @@ msgid "Action triggered by the new menu :"
 msgstr "Action déclenchée par le nouveau menu"
 
 #. module: portal
-#: model:ir.module.module,description:portal.module_name_translation
-msgid "\n"
-"    Base module to manage portal:\n"
-"    - define new menu entry with associated actions.\n"
-"    - add/delete menu entry easily.\n"
-"    - on-the-fly rules and access control creation.\n"
-"    "
-msgstr ""
-
-#. module: portal
 #: field:portal.portal,home_action_id:0
 msgid "User Home Action"
 msgstr "Action de la page d'accueil de l'utilisateur"
@@ -76,7 +66,7 @@ msgstr "Action de la page d'accueil de l'utilisateur"
 #. module: portal
 #: constraint:ir.actions.act_window:0
 msgid "Invalid model name in the action definition."
-msgstr "Nom du model invalide dans l'action définit."
+msgstr "Nom de modèle invalide pour la définition de l'action"
 
 #. module: portal
 #: wizard_view:portal.create_menu,init:0
@@ -286,7 +276,7 @@ msgid "Form View"
 msgstr "Vue formulaire"
 
 #. module: portal
-#: model:ir.module.module,shortdesc:portal.module_name_translation
+#: model:ir.module.module,shortdesc:portal.module_meta_information
 #: view:portal.config.install_modules_wizard:0
 msgid "Portal Management"
 msgstr "Gestion du portail"

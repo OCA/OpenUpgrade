@@ -24,7 +24,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "category" : "Generic Modules/CRM",
-    "description": """ This module allow customers to connect on Project Portal and
+    "description": """ This module allows customers to connect on Project Portal and
 manage their projects very easily. Customers can be able to manage everything
 related to a project:
   - Tasks

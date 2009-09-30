@@ -43,7 +43,7 @@ class mdx_parser(object):
         rightSqBr = Literal("]").suppress()
         dotToken = Literal(".").suppress()
         measuresToken = Literal("measures").suppress()
-        scalar = Word(alphanums+ alphas8bit +"_"+" "+"-" )
+        scalar = Word(alphanums+alphas8bit.encode("utf-8") +"_"+" "+"-" )
         level_filter = leftSqBr + scalar + rightSqBr
         level_function = Keyword("children", caseless=True)
         level_filter.setParseAction(lambda s,a,toks: level.level_filter(toks[0]))
