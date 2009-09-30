@@ -150,7 +150,7 @@ class project_task(osv.osv):
         cr.commit()
         task = self.browse(cr, uid, res, context=context)
         if task.project_id:
-            desc = ''' Hello, \n \t The new task is created for the Project: %s \n\n And its Details are: \n \n Task: %s \n Created on: %s \n Assigned to: %s \n Deadline: %s \n Planned hours: %s \n Remaining hours: %s \n Total Hours: %s \n For Partner: %s \n Task Summary: \n ====== \n %s \n \n ======= \n \nThanks,\nProject Manager \n%s''' \
+            desc = _(''' Hello, \n \t The new task is created for the Project: %s \n\n And its Details are: \n \n Task: %s \n Created on: %s \n Assigned to: %s \n Deadline: %s \n Planned hours: %s \n Remaining hours: %s \n Total Hours: %s \n For Partner: %s \n Task Summary: \n ====== \n %s \n \n ======= \n \nThanks,\nProject Manager \n%s''') \
                        %(task.project_id.name,\
                          task.name, task.date_start, task.user_id.name, \
                          task.date_deadline or '', task.planned_hours or 0, \
@@ -169,10 +169,11 @@ class project_task(osv.osv):
     def write(self, cr, uid, ids, vals, context={}):
         res = super(project_task, self).write(cr, uid, ids, vals, context={})
         cr.commit()
-	print "Res:", res, ids
+        if isinstance(ids,(int,long)):
+            ids = [ids]
         written_tasks = self.browse(cr, uid, ids)
         for task in written_tasks:
-	    if task.project_id:
+            if task.project_id:
                 self.pool.get('project.project')._log_event(cr, uid, task.project_id.id, {
                                 'res_id' : task.id,
                                 'name' : task.name, 
@@ -191,17 +192,10 @@ class document_file(osv.osv):
         res = super(document_file, self).create(cr, uid, values, *args, **kwargs)
         cr.commit()
         document = self.browse(cr, uid, res)
-        if document.file_size >= 1073741824:
-                size = str((document.file_size) / 1024 / 1024 / 1024) + ' GB'
-        elif document.file_size >= 1048576:
-            size = str((document.file_size) / 1024 / 1024) + ' MB'
-        elif document.file_size >= 1024:
-            size = str((document.file_size) / 1024) + ' KB'
-        elif document.file_size < 1024:
-            size = str(document.file_size) + ' bytes'
+        size = tools.misc.human_size(document.file_size)
 
         if document.res_model == 'project.project' and document.res_id:
-            desc = ''' Hello, \n \n \t The new document is uploaded on the Project: %s \n\n Document attached: %s \n Attachment name: %s \n Owner: %s \n Size: %s \n Creator: %s \n Date Created: %s \n Document Summary: %s \n \n Thanks,\n Project Manager\n''' \
+            desc = _(''' Hello, \n \n \t The new document is uploaded on the Project: %s \n\n Document attached: %s \n Attachment name: %s \n Owner: %s \n Size: %s \n Creator: %s \n Date Created: %s \n Document Summary: %s \n \n Thanks,\n Project Manager\n''') \
                        %(document.title, document.datas_fname, document.name, \
                          document.user_id.name, size, document.create_uid.name, document.create_date, document.description or '')
             self.pool.get('project.project')._log_event(cr, uid, document.res_id, {
