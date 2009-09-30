@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* hr_contract
+# 	* hr_contract
 #
 msgid ""
 msgstr ""
@@ -27,12 +27,12 @@ msgstr ""
 
 #. module: hr_contract
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: hr_contract
-#: view:hr.contract:0
-#: view:hr.employee:0
+#: view:hr.contract:0 view:hr.employee:0
 msgid "Generalities"
 msgstr ""
 
@@ -93,9 +93,7 @@ msgid "Miscelleanous"
 msgstr ""
 
 #. module: hr_contract
-#: view:hr.contract:0
-#: view:hr.employee:0
-#: field:hr.employee,contract_ids:0
+#: view:hr.contract:0 view:hr.employee:0 field:hr.employee,contract_ids:0
 msgid "Contracts"
 msgstr ""
 
@@ -105,8 +103,7 @@ msgid "Type"
 msgstr ""
 
 #. module: hr_contract
-#: field:hr.contract,wage_type_id:0
-#: view:hr.contract.wage.type:0
+#: field:hr.contract,wage_type_id:0 view:hr.contract.wage.type:0
 #: model:ir.model,name:hr_contract.model_hr_contract_wage_type
 msgid "Wage Type"
 msgstr ""
@@ -152,15 +149,12 @@ msgid "Invalid XML for View Architecture!"
 msgstr ""
 
 #. module: hr_contract
-#: view:hr.contract:0
-#: field:hr.contract,notes:0
-#: view:hr.employee:0
+#: view:hr.contract:0 field:hr.contract,notes:0 view:hr.employee:0
 msgid "Notes"
 msgstr ""
 
 #. module: hr_contract
-#: view:hr.contract:0
-#: view:hr.employee:0
+#: view:hr.contract:0 view:hr.employee:0
 #: model:ir.actions.act_window,name:hr_contract.action_hr_contract
 #: model:ir.model,name:hr_contract.model_hr_contract
 #: model:ir.ui.menu,name:hr_contract.hr_menu_contract
@@ -195,8 +189,7 @@ msgid "Contract Name"
 msgstr ""
 
 #. module: hr_contract
-#: field:hr.employee,marital_status:0
-#: view:hr.employee.marital.status:0
+#: field:hr.employee,marital_status:0 view:hr.employee.marital.status:0
 #: field:hr.employee.marital.status,name:0
 #: model:ir.actions.act_window,name:hr_contract.action_hr_marital_status
 #: model:ir.ui.menu,name:hr_contract.hr_menu_marital_status
@@ -223,7 +216,9 @@ msgstr ""
 #. module: hr_contract
 #: help:hr.contract.wage.type,factor_type:0
 #: help:hr.contract.wage.type.period,factor_days:0
-msgid "This field is used by the timesheet system to compute the price of an hour of work wased on the contract of the employee"
+msgid ""
+"This field is used by the timesheet system to compute the price of an hour "
+"of work wased on the contract of the employee"
 msgstr ""
 
 #. module: hr_contract
@@ -242,8 +237,6 @@ msgid "Status Description"
 msgstr ""
 
 #. module: hr_contract
-#: view:hr.contract:0
-#: view:hr.employee:0
+#: view:hr.contract:0 view:hr.employee:0
 msgid "Contract Duration"
 msgstr ""
-

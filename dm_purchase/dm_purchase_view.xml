@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+    
+    <!--
+    =======================================================
+    PURCHASE ORDER EXTENSIONS
+    =======================================================
+    -->
+
+    <record id="view_purchase_order_form_inherit1" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <notebook colspan="4" position="inside">
+                <page string="Direct Marketing">
+                	<separator colspan="4"/>
+                	<field name="campaign_id" colspan="4"/>
+                    <group colspan="2" col="2">
+                        <separator string="Automatic actions"/>
+                        <field name="po_confirm_do" />
+                        <field name="invoice_create_do" />
+                        <field name="invoice_validate_do" />
+                        <field name="invoice_pay_do" />
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+	<!--
+	======================================================= 
+	Offer Step Views
+	=======================================================
+	-->
+
+	<record id="view_purchase_offer_step_form_inherit" model="ir.ui.view">
+        <field name="name">dm.offer.step.form1.inherit</field>
+        <field name="model">dm.offer.step</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="dm.view_offer_step_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Mailing Manufacturing">
+                    <separator string="Mailing Manufacturing Products" colspan="4"/>
+                    <field name="manufacturing_constraint_ids" colspan="4" nolabel="1"/>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+	</data>
+</openerp>

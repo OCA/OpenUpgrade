@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* hr_holidays
+# 	* hr_holidays
 #
 msgid ""
 msgstr ""
@@ -61,8 +61,7 @@ msgid "Off-Days' Summary"
 msgstr ""
 
 #. module: hr_holidays
-#: view:hr.holidays:0
-#: view:hr.holidays.per.user:0
+#: view:hr.holidays:0 view:hr.holidays.per.user:0
 #: model:process.transition,name:hr_holidays.process_transition_employeeholidays0
 msgid "Employee Holidays"
 msgstr ""
@@ -73,8 +72,7 @@ msgid "Set to Draft"
 msgstr ""
 
 #. module: hr_holidays
-#: view:hr.holidays.per.user:0
-#: field:hr.holidays.per.user,holiday_ids:0
+#: view:hr.holidays.per.user:0 field:hr.holidays.per.user,holiday_ids:0
 #: model:ir.model,name:hr_holidays.model_hr_holidays
 #: model:process.node,name:hr_holidays.process_node_holidays0
 msgid "Holidays"
@@ -101,8 +99,7 @@ msgid "Employee Declaration"
 msgstr ""
 
 #. module: hr_holidays
-#: view:hr.holidays:0
-#: selection:hr.holidays,state:0
+#: view:hr.holidays:0 selection:hr.holidays,state:0
 #: model:process.transition.action,name:hr_holidays.process_transition_action_validate0
 msgid "Validate"
 msgstr ""
@@ -139,14 +136,12 @@ msgid "My Holidays Requests"
 msgstr ""
 
 #. module: hr_holidays
-#: field:hr.holidays,notes:0
-#: field:hr.holidays.per.user,notes:0
+#: field:hr.holidays,notes:0 field:hr.holidays.per.user,notes:0
 msgid "Notes"
 msgstr ""
 
 #. module: hr_holidays
-#: field:hr.holidays,holiday_status:0
-#: field:hr.holidays.log,holiday_status:0
+#: field:hr.holidays,holiday_status:0 field:hr.holidays.log,holiday_status:0
 #: field:hr.holidays.per.user,holiday_status:0
 msgid "Holiday's Status"
 msgstr ""
@@ -251,8 +246,7 @@ msgid "Encoding of annual available holidays."
 msgstr ""
 
 #. module: hr_holidays
-#: field:hr.holidays,employee_id:0
-#: field:hr.holidays.log,employee_id:0
+#: field:hr.holidays,employee_id:0 field:hr.holidays.log,employee_id:0
 #: field:hr.holidays.per.user,employee_id:0
 msgid "Employee"
 msgstr ""
@@ -288,8 +282,7 @@ msgid "My Holiday Requests"
 msgstr ""
 
 #. module: hr_holidays
-#: view:hr.holidays:0
-#: view:hr.holidays.per.user:0
+#: view:hr.holidays:0 view:hr.holidays.per.user:0
 msgid "Number of Days"
 msgstr ""
 
@@ -385,25 +378,39 @@ msgstr ""
 
 #. module: hr_holidays
 #: model:ir.module.module,description:hr_holidays.module_meta_information
-msgid "Human Ressources: Holidays tracking and workflow\n"
+msgid ""
+"Human Ressources: Holidays tracking and workflow\n"
 "\n"
-"    This module allows you to manage holidays and holidays requests. For each employee, you can also define a number of available holidays per holiday status.\n"
+"    This module allows you to manage holidays and holidays requests. For "
+"each employee, you can also define a number of available holidays per "
+"holiday status.\n"
 "\n"
 "    Note that:\n"
-"    - A synchronisation with an internal agenda (use of the CRM module) is possible: in order to automatically create a case when an holiday request is accepted, you have to link the holidays status to a case section. You can set up this info and your colour preferences in\n"
+"    - A synchronisation with an internal agenda (use of the CRM module) is "
+"possible: in order to automatically create a case when an holiday request is "
+"accepted, you have to link the holidays status to a case section. You can "
+"set up this info and your colour preferences in\n"
 "                HR / Configuration / Holidays Status\n"
-"    - An employee can make a negative holiday request (holiday request of -2 days for example), this is considered by the system as an ask for more off-days. It will increase his total of that holiday status available (if the request is accepted).\n"
+"    - An employee can make a negative holiday request (holiday request of -2 "
+"days for example), this is considered by the system as an ask for more off-"
+"days. It will increase his total of that holiday status available (if the "
+"request is accepted).\n"
 "    - There are two ways to print the employee's holidays:\n"
-"        * The first will allow to choose employees by department and is used by clicking the menu item located in\n"
+"        * The first will allow to choose employees by department and is used "
+"by clicking the menu item located in\n"
 "                HR / Holidays Request / Print Summary of Holidays\n"
-"        * The second will allow you to choose the holidays report for specific employees. Go on the list\n"
+"        * The second will allow you to choose the holidays report for "
+"specific employees. Go on the list\n"
 "                HR / Employees / Employees\n"
-"            then select the ones you want to choose, click on the print icon and select the option\n"
+"            then select the ones you want to choose, click on the print icon "
+"and select the option\n"
 "                'Print Summary of Employee's Holidays'\n"
-"    - The wizard allows you to choose if you want to print either the Confirmed & Validated holidays or only the Validated ones. These states must be set up by a user from the group 'HR' and with the role 'holidays'. You can define these features in the security tab from the user data in\n"
+"    - The wizard allows you to choose if you want to print either the "
+"Confirmed & Validated holidays or only the Validated ones. These states must "
+"be set up by a user from the group 'HR' and with the role 'holidays'. You "
+"can define these features in the security tab from the user data in\n"
 "                Administration / Users / Users\n"
 "            for example, you maybe will do it for the user 'admin'.\n"
-""
 msgstr ""
 
 #. module: hr_holidays
@@ -529,8 +536,7 @@ msgid "Holiday manager"
 msgstr ""
 
 #. module: hr_holidays
-#: field:hr.holidays.per.user,active:0
-#: field:hr.holidays.status,active:0
+#: field:hr.holidays.per.user,active:0 field:hr.holidays.status,active:0
 msgid "Active"
 msgstr ""
 
@@ -565,8 +571,7 @@ msgid "General Information"
 msgstr ""
 
 #. module: hr_holidays
-#: view:hr.holidays:0
-#: selection:hr.holidays,state:0
+#: view:hr.holidays:0 selection:hr.holidays,state:0
 #: wizard_button:hr.holidays.summary,init,end:0
 #: wizard_button:hr.holidays.summary.employee,init,end:0
 msgid "Cancel"
@@ -590,7 +595,8 @@ msgstr ""
 
 #. module: hr_holidays
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: hr_holidays
@@ -706,4 +712,3 @@ msgstr ""
 #: model:process.node,note:hr_holidays.process_node_refused0
 msgid "His manager refuses the request"
 msgstr ""
-

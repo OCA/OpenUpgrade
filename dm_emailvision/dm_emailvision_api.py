@@ -29,12 +29,7 @@ import httplib
 import base64
 import time
 
-from dm.dm_report_design import merge_message
-
-#from dm_email.dm_email_document import set_image_email - not of use
-#from email.MIMEMultipart import MIMEMultipart
-#from email.MIMEText import MIMEText
-#from email.MIMEImage import MIMEImage
+from dm.dm_report_design import merge_message ,generate_internal_reports ,generate_openoffice_reports
 
 class dm_mail_service(osv.osv):
      _inherit = "dm.mail_service"
@@ -50,31 +45,6 @@ class dm_mail_service(osv.osv):
     }
 dm_mail_service()
 
-#Dont need any more (not sure)
-#def set_image_email(node,msg):
-#    if not node.getchildren():
-#        if  node.tag=='img' and node.get('src') and node.get('src').find('data:image/gif;base64,')>=0:
-#            msgImage = MIMEImage(base64.decodestring(node.get('src').replace('data:image/gif;base64,','')))
-#            image_name = ''.join( Random().sample(string.letters+string.digits, 12) )
-#            msgImage.add_header('Content-ID','<%s>'%image_name)
-#            msg.attach(msgImage)
-#            node.set('src',"cid:%s"%image_name)
-#        else :
-#            for n in node.getchildren():
-#                set_image_email(n,msg)
-
-#def _email_body(body):
-#    msgRoot = MIMEMultipart('related')
-#    msgRoot.preamble = 'This is a multi-part message in MIME format.'
-#
-#    msg = MIMEMultipart('alternative')
-#    msgRoot.attach(msg)
-#
-#    set_image_email(body,msgRoot)
-#    msgText = MIMEText(etree.tostring(body), 'html')
-#    msg.attach(msgText)
-#    return  msgRoot.as_string()
-
 def send_email(cr,uid,obj,context):
 
     """ Get Emailmvision connection infos """
@@ -86,29 +56,35 @@ def send_email(cr,uid,obj,context):
     email_dest = obj.address_id.email or ''
     email_reply = obj.segment_id.campaign_id.trademark_id.email or ''
 
-    context['document_id'] = obj.document_id.id
-    context['address_id'] = obj.address_id.id
-
     email_subject = merge_message(cr, uid, obj.document_id.subject or '',context)
     name_from = obj.segment_id.campaign_id.trademark_id.name or ''
     name_reply = obj.segment_id.campaign_id.trademark_id.name or ''
 
     pool = pooler.get_pool(cr.dbname)
-    ir_att_obj = pool.get('ir.attachment')
-    ir_att_ids = ir_att_obj.search(cr,uid,[('res_model','=','dm.campaign.document'),('res_id','=',obj.id),('file_type','=','html')])
 
-    for attach in ir_att_obj.browse(cr,uid,ir_att_ids):
-        message = base64.decodestring(attach.datas)
-        root = etree.HTML(message)
+    message = []
+    if obj.mail_service_id.store_email_document:
+        ir_att_obj = pool.get('ir.attachment')
+        ir_att_ids = ir_att_obj.search(cr,uid,[('res_model','=','dm.campaign.document'),('res_id','=',obj.id),('file_type','=','html')])
+        for attach in ir_att_obj.browse(cr,uid,ir_att_ids):
+            message.append(base64.decodestring(attach.datas))
+    else :
+       document_data = pool.get('dm.offer.document').browse(cr,uid,obj.document_id.id)
+       
+       if obj.document_id.editor ==  'internal' :
+           message.append(generate_internal_reports(cr, uid, 'html2html', document_data, False, context))
+       elif obj.document_id.editor ==  'oord' :
+           msg = generate_openoffice_reports(cr, uid, 'html2html', document_data, False, context)
+           message.extend(msg)
+       else:
+           return {'code':'emv_doc_error'}
+
+    for msg  in message:
+        root = etree.HTML(msg)
         body = root.find('body')
 
-        print "message :", message
-        # I think html_content = message should wrk
         html_content = ''.join([ etree.tostring(x) for x in body.getchildren()])
-        print "body :", html_content
-#        html_content = _email_body(body)
-        text_content = "This is a test"
-        print "Test"
+        text_content = "html content only"
 
         "Composing XML"
         msg = etree.Element("MultiSendRequest")
@@ -169,7 +145,7 @@ def send_email(cr,uid,obj,context):
         synchrotype = etree.SubElement(sendrequest, "synchrotype")
         synchrotype.text = "NOTHING"
 
-        print("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "\n" + etree.tostring(msg, method="xml", encoding='utf-8', pretty_print=True))
+#        print("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "\n" + etree.tostring(msg, method="xml", encoding='utf-8', pretty_print=True))
 
         xml_msg = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + etree.tostring(msg, encoding="utf-8")
 
@@ -186,11 +162,9 @@ def send_email(cr,uid,obj,context):
         res = ev_api.getfile().read()
     
         if statuscode != 200:
-            print "E"*50
             error_msg = "This document cannot be sent to Emailvision NMS API\nStatus Code : " + str(statuscode) + "\nStatus Message : " + statusmessage + "\nHeader : " + str(header) + "\nResult : " + res
             pool.get('dm.campaign.document').write(cr, uid, [obj.id], {'state':'error','error_msg':error_msg})
-            return False
-
-    return True
+            return {'code':'emv_doc_error'}
+    return {'code':'emv_doc_sent'}
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

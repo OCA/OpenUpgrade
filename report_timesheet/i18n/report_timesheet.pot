@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* report_timesheet
+# 	* report_timesheet
 #
 msgid ""
 msgstr ""
@@ -34,7 +34,8 @@ msgstr ""
 
 #. module: report_timesheet
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: report_timesheet
@@ -97,8 +98,7 @@ msgid "Product"
 msgstr ""
 
 #. module: report_timesheet
-#: field:random.timesheet.lines,name:0
-#: field:report.random.timesheet,name:0
+#: field:random.timesheet.lines,name:0 field:report.random.timesheet,name:0
 msgid "Description"
 msgstr ""
 
@@ -114,8 +114,7 @@ msgid "Timesheet - Reporting"
 msgstr ""
 
 #. module: report_timesheet
-#: field:random.timesheet.lines,date:0
-#: field:report.random.timesheet,date:0
+#: field:random.timesheet.lines,date:0 field:report.random.timesheet,date:0
 #: field:report_timesheet.account.date,name:0
 #: field:report_timesheet.user,name:0
 msgid "Date"
@@ -243,7 +242,8 @@ msgstr ""
 
 #. module: report_timesheet
 #: model:ir.module.module,description:report_timesheet.module_meta_information
-msgid "Module to add timesheet views like\n"
+msgid ""
+"Module to add timesheet views like\n"
 "    All Month, Timesheet By User, Timesheet Of Month, Timesheet By Account"
 msgstr ""
 
@@ -280,4 +280,3 @@ msgstr ""
 #: model:ir.ui.menu,name:report_timesheet.menu_report_timesheet_user
 msgid "Timesheet by user (this month)"
 msgstr ""
-

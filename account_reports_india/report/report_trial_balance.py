@@ -159,8 +159,8 @@ class report_trial_balance(rml_parse.rml_parse):
         for account in accounts:
             journal_id = self.pool.get('account.journal').search(self.cr, self.uid,[('type','=','situation')])
             jnl_other_id = self.pool.get('account.journal').search(self.cr, self.uid,[('type','!=','situation')])
-            move_id = self.pool.get('account.move.line').search(self.cr, self.uid, [('account_id','=', account['id']),('journal_id','in',journal_id)])
-            move_other_id = self.pool.get('account.move.line').search(self.cr, self.uid, [('account_id','=', account['id']),('journal_id','in',jnl_other_id)])
+            move_id = self.pool.get('account.move.line').search(self.cr, self.uid, [('account_id','=', account['id']),('journal_id','in',journal_id),('state','!=','draft')])
+            move_other_id = self.pool.get('account.move.line').search(self.cr, self.uid, [('account_id','=', account['id']),('journal_id','in',jnl_other_id),('state','!=','draft')])
             move = self.pool.get('account.move.line').read(self.cr, self.uid, move_id, ['date','debit','credit'])
             move_other = self.pool.get('account.move.line').read(self.cr, self.uid, move_other_id , ['date','debit','credit'])
             open = 0.0

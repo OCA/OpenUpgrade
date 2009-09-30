@@ -37,6 +37,7 @@ PEP-8 Test , copyright of py files check, method can not call from loops
         self.bad_standard = 0
         self.good_standard = 0
         self.result_py = {}
+        self.min_score = 40
         return None
 
     def run_test(self, cr, uid, module_path):
@@ -85,6 +86,8 @@ PEP-8 Test , copyright of py files check, method can not call from loops
         self.check_boolean(open_files)
 
         self.score = self.good_standard and float(self.good_standard) / float(self.good_standard + self.bad_standard)
+        if self.score*100 < self.min_score:
+            self.message = 'Score is below than minimal score(%s%%)' % self.min_score
         self.result = self.get_result({ module_path: [int(self.score * 100)]})
         self.result_details += self.get_result_general(self.result_py)
         return None
@@ -268,10 +271,11 @@ PEP-8 Test , copyright of py files check, method can not call from loops
         return ""
 
     def get_result_general(self, dict_obj):
-        str_html = '''<html><strong>Result</strong><head></head><body><table>'''
-        header = ('<tr><th>%s</th><th>%s</th><th>%s</th></tr>', [_('Object Name'), _('Line number'), _('Suggestion')])
+        str_html = '''<html><strong>Result</strong><head>%s</head><body><table class="tablestyle">'''%(self.get_style())
+        header = ('<tr><th class="tdatastyle">%s</th><th class="tdatastyle">%s</th><th class="tdatastyle">%s</th></tr>', [_('Object Name'), _('Line number'), _('Suggestion')])
         if not self.error:
             res = str_html + self.format_html_table(header, data_list=dict_obj) + '</table></body></html>'
+            res = res.replace('''<td''', '''<td class="tdatastyle" ''')
             return res
         return ""
 

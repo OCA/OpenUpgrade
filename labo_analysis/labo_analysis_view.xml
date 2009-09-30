@@ -4,11 +4,11 @@
 	<record id="product_category_2" model="product.category">
 		<field name="name">analysis</field>
 	</record>
-	<menuitem name="Progenus" groups="admin" id="menu_progenus"/>
-	<menuitem name="Progenus/Consult Analysis" groups="admin" id="menu_curr_year"/>
-	<menuitem name="Progenus/Samples" groups="admin" id="menu_progenus_samples"/>
+	<menuitem name="Progenus" groups="base.group_extended" id="menu_progenus"/>
+	<menuitem name="Progenus/Consult Analysis" groups="base.group_extended" id="menu_curr_year"/>
+	<menuitem name="Progenus/Samples" groups="base.group_extended" id="menu_progenus_samples"/>
 <!--	<menuitem name="Progenus/Labo Analysis" groups="admin" id="id_3"/>-->
-	<menuitem name="Progenus/Configuration" groups="admin"/>
+	<menuitem name="Progenus/Configuration" groups="base.group_extended"/>
 	=======================================================
 	Type
 	=======================================================

@@ -21,10 +21,22 @@
 ##############################################################################
 
 from osv import osv, fields
+
+class sftp_public_keys(osv.osv):
+    _name = 'sftp.public.keys'
+    _description = "Public Keys"
+    _rec_name = 'ssh_key'
+    _columns = {
+        'ssh_key': fields.text('SSH Public key'),
+        'user_id' : fields.many2one('res.users', 'User')
+    }    
+    
+sftp_public_keys()
+
 class res_users(osv.osv):
     _name = 'res.users'
     _inherit = 'res.users'    
     _columns = {
-        'ssh_key': fields.text('SSH Public key'),
+        'ssh_key_ids': fields.one2many('sftp.public.keys', 'user_id', 'SSH Public key'),
     }    
 res_users()

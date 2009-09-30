@@ -25,8 +25,7 @@
     "author":"Tiny",
     "category":"Board/Direct Marketing",
     "depends":[
-        "board",
-        "dm",
+        "board", "project", "dm",
     ],
     "demo_xml":[
 #        "board_dm_demo.xml",

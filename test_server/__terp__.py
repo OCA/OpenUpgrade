@@ -20,7 +20,6 @@
 #
 ##############################################################################
 
-
 {
     'name': 'Automated Tests & Integration Server',
     'version': '1.0',
@@ -30,7 +29,6 @@ This is a generic automated test and integration server. It has been
 designed to test the quality of Open ERP:
   - automated migrations,
   - testing each contribution,
-
 It's a generic module that can be used to test any software.
     """,
     'author': 'Tiny',

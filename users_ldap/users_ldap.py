@@ -26,6 +26,7 @@ import pooler
 
 try:
     import ldap
+    from ldap.filter import filter_format
 except ImportError:
     import netsvc
     logger = netsvc.Logger()
@@ -88,7 +89,7 @@ def ldap_login(oldfnc):
                         if l.simple_bind_s(res_company_ldap['ldap_binddn'], res_company_ldap['ldap_password']):
                             base = res_company_ldap['ldap_base']
                             scope = ldap.SCOPE_SUBTREE
-                            filter = res_company_ldap['ldap_filter']%(login,)
+                            filter = filter_format(res_company_ldap['ldap_filter'], (login,))
                             retrieve_attributes = None
                             result_id = l.search(base, scope, filter, retrieve_attributes)
                             timeout = 60
@@ -161,7 +162,7 @@ def ldap_check(oldfnc):
                                     res_company_ldap.ldap_password):
                                 base = res_company_ldap.ldap_base
                                 scope = ldap.SCOPE_SUBTREE
-                                filter = res_company_ldap.ldap_filter % (user.login,)
+                                filter = filter_format(res_company_ldap.ldap_filter, (user.login,))
                                 retrieve_attributes = None
                                 result_id = l.search(base, scope, filter, retrieve_attributes)
                                 timeout = 60

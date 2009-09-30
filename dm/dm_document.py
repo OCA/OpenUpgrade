@@ -20,13 +20,33 @@
 #
 ##############################################################################
 import time
+import datetime
+import warnings
 import sys
+import netsvc
+import pooler
+import base64
+import string
+import re
+import os
+import tools
+from lxml import etree
+
+from mx import DateTime
 from osv import fields
 from osv import osv
-import pooler
-import os
-import base64
-import tools
+from random import Random
+
+from email.MIMEMultipart import MIMEMultipart
+from email.MIMEText import MIMEText
+from email.MIMEImage import MIMEImage
+import urllib2, urlparse
+
+
+from dm_report_design import merge_message ,generate_internal_reports ,generate_openoffice_reports
+
+_regex = re.compile('\[\[setHtmlImage\((.+?)\)\]\]')
+_regexp1 = re.compile('(\[\[.+?\]\])')
 
 class dm_dynamic_text(osv.osv): # {{{
     _name = 'dm.dynamic_text'
@@ -88,7 +108,6 @@ class dm_dtp_plugin(osv.osv): # {{{
         fp.write(v)
         fp.close()
         plugin_res = self.browse(cr,uid,id)
-        print "Plugin result :", plugin_res
         sys.path.append(path)
         X =  __import__(filename.split('.')[0])
         args = []
@@ -159,17 +178,81 @@ class dm_document_template(osv.osv): # {{{
     
 dm_document_template() # }}}
 
-class dm_plugins_value(osv.osv): # {{{
-    _name = "dm.plugins.value"
-    _columns = {
-#        'address_id' : fields.many2one('res.partner.address', 'Customer Address', ondelete="cascade"),
-        'workitem_id' : fields.many2one('dm.workitem', 'Workitem', ondelete="cascade"),
-        'plugin_id' : fields.many2one('dm.dtp.plugin', 'Plugin'),
-        'value' : fields.text('Value'),
-#        'date' : fields.date('Date'),
-    }
+def set_image_email(node,msg): # {{{
+    if not node.getchildren():
+        if  node.tag=='img' and node.get('src') :
+            content = ''
+            if node.get('src').find('data:image/gif;base64,')>=0:
+                content = base64.decodestring(node.get('src').replace('data:image/gif;base64,',''))
+            elif node.get('src').find('http')>=0:
+                content=urllib2.urlopen(node.get('src')).read()
+            msgImage = MIMEImage(content)
+            image_name = ''.join( Random().sample(string.letters+string.digits, 12) )
+            msgImage.add_header('Content-ID','<%s>'%image_name)
+            msg.attach(msgImage)
+            node.set('src',"cid:%s"%image_name)
+    else :
+        for n in node.getchildren():
+            set_image_email(n,msg)
+ # }}}
+
+def create_email_queue(cr,uid,obj,context): # {{{
+    pool = pooler.get_pool(cr.dbname)
+    email_queue_obj = pool.get('email.smtpclient.queue')
+    context['document_id'] = obj.document_id.id
+    context['address_id'] = obj.address_id.id
+    context['workitem_id'] = obj.workitem_id.id
+    message = []
+    if obj.mail_service_id.store_email_document:
+        ir_att_obj = pool.get('ir.attachment')
+        ir_att_ids = ir_att_obj.search(cr,uid,[('res_model','=','dm.campaign.document'),('res_id','=',obj.id),('file_type','=','html')])
+        for attach in ir_att_obj.browse(cr,uid,ir_att_ids):
+            message.append(base64.decodestring(attach.datas))
+    else :
+       document_data = pool.get('dm.offer.document').browse(cr,uid,obj.document_id.id)
+       
+       if obj.document_id.editor ==  'internal' :
+            message.append(generate_internal_reports(cr, uid, 'html2html', document_data, False, context))
+       else :
+           msg = generate_openoffice_reports(cr, uid, 'html2html', document_data, False, context)
+           message.extend(msg)
+    for msg  in message:
+        root = etree.HTML(msg)
+        body = root.find('body')
+        msgRoot = MIMEMultipart('related')
+
+#        plugin_list = [] 
+#        No need as it is set in the function
+#        if obj.document_id.subject and _regexp1.findall(obj.document_id.subject) :
+#            raw_plugin_list = _regexp1.findall(obj.document_id.subject)
+#            for p in raw_plugin_list :
+#                plugin_list.append(p[2:-2])
+#        context['plugin_list'] = plugin_list'''
+        subject =  merge_message(cr, uid, obj.document_id.subject, context)
+        msgRoot['Subject'] = subject
+        msgRoot['From'] = str(obj.mail_service_id.smtp_server_id.email)
+        msgRoot['To'] = str(obj.address_id.email)
+        msgRoot.preamble = 'This is a multi-part message in MIME format.'
     
-dm_plugins_value() # }}}
+        msg = MIMEMultipart('alternative')
+        msgRoot.attach(msg)
+
+        set_image_email(body,msgRoot)
+        msgText = MIMEText(etree.tostring(body), 'html')
+        msg.attach(msgText)
+        if message :
+            vals = {
+                'to':str(obj.address_id.email),
+                'server_id':obj.mail_service_id.smtp_server_id.id,
+                'cc':False,
+                'bcc':False,
+                'name':subject,
+                'body' : msgRoot.as_string(),
+                'serialized_message': msgRoot.as_string(),
+                'date_create':time.strftime('%Y-%m-%d %H:%M:%S')
+                }
+            email_queue_obj.create(cr,uid,vals)
+    return True # }}}
 
 class dm_offer_document_category(osv.osv): # {{{
     _name = "dm.offer.document.category"
@@ -290,11 +373,19 @@ class dm_campaign_document(osv.osv): # {{{
         'document_id' : fields.many2one('dm.offer.document','Document',ondelete="cascade"),
         'address_id' : fields.many2one('res.partner.address', 'Customer Address', select="1", ondelete="cascade"),
         'origin' : fields.char('Origin', size=64),
-        'wi_id' : fields.many2one('dm.workitem','Workitem'),
         }
     _defaults = {
         'state': lambda *a : 'pending',
        }
 dm_campaign_document() # }}}
 
+class dm_plugins_value(osv.osv): # {{{
+    _name = "dm.plugins.value"
+    _columns = {
+        'document_id' : fields.many2one('dm.campaign.document','Campaign Document', ondelete="cascade"),
+        'plugin_id' : fields.many2one('dm.dtp.plugin', 'Plugin'),
+        'value' : fields.text('Value'),
+    }
+    
+dm_plugins_value() # }}}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

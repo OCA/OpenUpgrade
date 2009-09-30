@@ -151,16 +151,6 @@ msgid "Forbidden Countries"
 msgstr "Pays interdits"
 
 #. module: dm
-#: wizard_button:wizard_proposition_items,init,next:0
-msgid "Assign Prices Progression"
-msgstr "Assigner le progression de prix"
-
-#. module: dm
-#: view:dm.campaign.proposition.prices_progression:0
-msgid "Progression"
-msgstr "Progression"
-
-#. module: dm
 #: view:dm.overlay:0
 msgid "Countries"
 msgstr "Pays"
@@ -425,14 +415,6 @@ msgstr ""
 "effectuée."
 
 #. module: dm
-#: view:dm.campaign:0
-#: field:dm.campaign.group,campaign_ids:0
-#: model:ir.ui.menu,name:dm.menu_dm_campaign
-#: model:ir.ui.menu,name:dm.menu_dm_config_campaign
-msgid "Campaigns"
-msgstr "Campagnes"
-
-#. module: dm
 #: view:dm.dtp.plugin:0
 msgid "DTP Plugin"
 msgstr "Plugin PAO"
@@ -473,24 +455,11 @@ msgid "Dates"
 msgstr "Dates"
 
 #. module: dm
-#: wizard_field:wizard_campaign_group,init,group:0
-#: wizard_view:wizard_campaign_group,name_group:0
-msgid "Select Group"
-msgstr "Sélectionner le groupe"
-
-#. module: dm
 #: constraint:product.template:0
 msgid "Error: UOS must be in a different category than the UOM"
 msgstr ""
 "Erreur: l'unité de vente doit appartenir à une catégorie différente que "
 "l'unité de mesure"
-
-#. module: dm
-#: selection:dm.campaign.purchase_line,type:0
-#: field:dm.offer.step,item_ids:0
-#: model:product.category,name:dm.product_category_items0
-msgid "Items"
-msgstr "Articles"
 
 #. module: dm
 #: view:dm.plugins.value:0
@@ -524,17 +493,6 @@ msgstr "Origine de la liste de recrutement"
 #: field:dm.dtp.plugin,name:0
 msgid "DTP Plugin Name"
 msgstr "Nom du plugin de PAO"
-
-#. module: dm
-#: wizard_view:wizard_campaign_group,add:0
-#: wizard_view:wizard_campaign_group,new:0
-msgid ""
-"Selected campaign has been added in the group.Campaigns that are already in "
-"some group will not be added in new group and will remain in same group"
-msgstr ""
-"La campagne sélectionnée à été ajoutée au groupe. Les campagnes qui sont "
-"déjà dans un groupe ne sont pas ajoutée à un nouveau groupe et reste "
-"assignée au groupe actuel."
 
 #. module: dm
 #: help:dm.campaign.proposition.segment,quantity_real:0
@@ -574,7 +532,6 @@ msgstr "Pays d'utilisation"
 
 #. module: dm
 #: field:dm.campaign,quantity_wanted_total:0
-#: field:dm.campaign.group,quantity_wanted_total:0
 msgid "Total Wanted Quantity"
 msgstr "Quantité totale souhaitée"
 
@@ -766,12 +723,6 @@ msgid "Plugin For Value"
 msgstr "Plugin pour valeur"
 
 #. module: dm
-#: field:dm.campaign.proposition,sm_price:0
-#: field:dm.campaign.proposition,starting_mail_price:0
-msgid "Starting Mail Price"
-msgstr "Prix du mailing de départ"
-
-#. module: dm
 #: model:ir.model,name:dm.model_dm_plugins_value
 msgid "dm.plugins.value"
 msgstr "dm.plugins.value"
@@ -810,11 +761,6 @@ msgid "All Customers Files"
 msgstr "Tous les fichiers clients"
 
 #. module: dm
-#: wizard_button:wizard_proposition_items,init,name_prices_prog:0
-msgid "Create New Prices Progression"
-msgstr "Créer une nouvelle progression de prix"
-
-#. module: dm
 #: view:dm.customers_file:0
 msgid "Customers Lists Description"
 msgstr "Description de la liste clients"
@@ -848,14 +794,8 @@ msgstr "Quantité Nettoyée"
 
 #. module: dm
 #: field:dm.campaign,quantity_usable_total:0
-#: field:dm.campaign.group,quantity_usable_total:0
 msgid "Total Usable Quantity"
 msgstr "Quantité totale utilisable"
-
-#. module: dm
-#: view:dm.campaign.proposition.prices_progression:0
-msgid "Campaign Prices Progression"
-msgstr "Progression de prix"
 
 #. module: dm
 #: view:res.partner:0
@@ -955,11 +895,6 @@ msgstr "Date fixée"
 #: model:product.template,name:dm.product_product_printingus0_product_template
 msgid "Paper Printing US"
 msgstr "Impression US"
-
-#. module: dm
-#: wizard_button:wizard_campaign_group,init,name_group:0
-msgid "Create New Group"
-msgstr "Créer un nouveau groupe"
 
 #. module: dm
 #: view:dm.customer.segmentation:0
@@ -1161,7 +1096,7 @@ msgstr "Propositions commercialles"
 #: rml:offer.model.report:0
 #: rml:offer.report:0
 msgid "Products"
-msgstr "Articles"
+msgstr "Produits"
 
 #. module: dm
 #: model:product.template,name:dm.product_product_papermailingus0_product_template
@@ -1293,12 +1228,6 @@ msgid "Invoice Address"
 msgstr "Adresse de facturation"
 
 #. module: dm
-#: model:ir.actions.act_window,name:dm.action_dm_campaign_proposition_prices_progression_form
-#: model:ir.ui.menu,name:dm.menu_action_dm_campaign_proposition_prices_progression_form
-msgid "All Campaign Prices Progression"
-msgstr "Toutes les progressions de prix"
-
-#. module: dm
 #: field:project.task,date_reviewed:0
 msgid "Reviewed Date"
 msgstr "Date révisée"
@@ -1353,11 +1282,6 @@ msgstr "Idée d'offre"
 #: constraint:document.directory:0
 msgid "Error! You can not create recursive Directories."
 msgstr "Erreur ! Vous ne pouvez pas créer de répertoires récursifs"
-
-#. module: dm
-#: wizard_field:wizard_proposition_items,name_prices_prog,fixed_prog:0
-msgid "Fixed Progression"
-msgstr "Progression fixe"
 
 #. module: dm
 #: model:ir.actions.act_window,name:dm.action_offer_model_form
@@ -1446,32 +1370,20 @@ msgid "Manufacturing Descriptions"
 msgstr "Descriptions de fabrication"
 
 #. module: dm
-#: view:dm.offer:0
-#: field:dm.offer,translation_ids:0
-msgid "Translations"
-msgstr "Traductions"
-
-#. module: dm
 #: selection:dm.campaign.purchase_line,trigger:0
 msgid "At Close"
 msgstr "A la fermeture"
 
 #. module: dm
 #: view:dm.campaign.proposition:0
-#: model:ir.actions.wizard,name:dm.wizard_proposition_items
-msgid "Get Items"
-msgstr "Obtenir les articles"
+#: model:ir.actions.wizard,name:dm.wizard_proposition_products
+msgid "Get Products"
+msgstr "Obtenir les produits"
 
 #. module: dm
 #: model:dm.campaign.type,name:dm.dm_campaign_type_recruiting
 msgid "Recruiting campaign"
 msgstr "Campagne de recrutement"
-
-#. module: dm
-#: wizard_view:wizard_campaign_group,error:0
-msgid ""
-"Group name can't be none.You have to select any avilable group or create new"
-msgstr "Veuillez spécifier un groupe ou en créer un nouveau"
 
 #. module: dm
 #: model:ir.model,name:dm.model_dm_offer_production_cost
@@ -1515,11 +1427,6 @@ msgid "Status :"
 msgstr "État :"
 
 #. module: dm
-#: wizard_field:wizard_proposition_items,name_prices_prog,percent_prog:0
-msgid "Percent Progression Name"
-msgstr "Nom de la progression par pourcentage"
-
-#. module: dm
 #: rml:offer.report:0
 msgid "Legal State :"
 msgstr "État légal"
@@ -1552,11 +1459,6 @@ msgid "Purchase Notes"
 msgstr "Notes d'approvisionnement"
 
 #. module: dm
-#: view:dm.campaign.group:0
-msgid "Total Quantities"
-msgstr "Quantités totales"
-
-#. module: dm
 #: view:dm.campaign:0
 msgid "Items Procurement Status"
 msgstr "Statut des commandes d'articles"
@@ -1565,11 +1467,6 @@ msgstr "Statut des commandes d'articles"
 #: constraint:dm.offer:0
 msgid "Error ! this offer idea is already assigned to an offer"
 msgstr "Cette Idée d'offre est déjà assignée à une offre"
-
-#. module: dm
-#: field:dm.campaign.group,name:0
-msgid "Campaign group name"
-msgstr "Nom de groupe de campagne"
 
 #. module: dm
 #: selection:dm.campaign.proposition.item,item_type:0
@@ -1697,11 +1594,6 @@ msgid "dm.campaign.proposition.item"
 msgstr "dm.campaign.proposition.item"
 
 #. module: dm
-#: view:dm.campaign.proposition.prices_progression:0
-msgid "Price Progression Description"
-msgstr "Description de la progression de prix"
-
-#. module: dm
 #: field:dm.customer.order,partner_shipping_id:0
 msgid "Shipping Address"
 msgstr "Adresse d'expédition"
@@ -1783,11 +1675,6 @@ msgid "Development of customer loyalty"
 msgstr "Développement de la fidélisation du client"
 
 #. module: dm
-#: model:ir.actions.wizard,name:dm.wizard_campaign_group
-msgid "Add to Campaign group"
-msgstr "Ajouter au groupe de campagne"
-
-#. module: dm
 #: rml:dm.campaign.report:0
 msgid "Proposition :"
 msgstr "Proposition :"
@@ -1806,13 +1693,7 @@ msgstr "Plugins"
 #. module: dm
 #: wizard_button:campaign.group.project,init,end:0
 #: wizard_button:campaign.project,init,end:0
-#: wizard_button:wizard_campaign_group,error,end:0
-#: wizard_button:wizard_campaign_group,init,end:0
-#: wizard_button:wizard_campaign_group,name_group,end:0
 #: wizard_button:wizard_document_report,init,end:0
-#: wizard_button:wizard_proposition_items,error,end:0
-#: wizard_button:wizard_proposition_items,init,end:0
-#: wizard_button:wizard_proposition_items,name_prices_prog,end:0
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -1892,12 +1773,6 @@ msgid "Task Name"
 msgstr "Nom de la tâche"
 
 #. module: dm
-#: wizard_view:wizard_proposition_items,new:0
-#: wizard_view:wizard_proposition_items,select:0
-msgid "Price Progresson Assigned"
-msgstr "Progression de prix assignée"
-
-#. module: dm
 #: view:res.partner:0
 #: field:res.partner,prospect_media_ids:0
 msgid "Prospect for Media"
@@ -1959,7 +1834,6 @@ msgstr "Champs dynamique"
 #. module: dm
 #: view:dm.campaign:0
 #: view:dm.campaign.proposition:0
-#: field:dm.campaign.proposition.prices_progression,name:0
 #: view:dm.campaign.proposition.segment:0
 #: rml:dm.campaign.report:0
 #: field:dm.customer.segmentation,name:0
@@ -1978,7 +1852,6 @@ msgstr "Champs dynamique"
 #: field:dm.offer.step,name:0
 #: field:dm.offer.step.type,name:0
 #: field:dm.trademark,name:0
-#: wizard_field:wizard_proposition_items,name_prices_prog,prices_prog_name:0
 msgid "Name"
 msgstr "Nom"
 
@@ -2004,11 +1877,6 @@ msgstr "Date de livraison"
 #: field:dm.campaign.proposition,keep_prices:0
 msgid "Keep Prices At Duplication"
 msgstr "Conserver les prix lors de la duplication"
-
-#. module: dm
-#: field:dm.campaign.proposition.prices_progression,percent_prog:0
-msgid "Percentage Prices Progression"
-msgstr "Progression de prix par pourcentage"
 
 #. module: dm
 #: code:addons/dm/offer.py:0
@@ -2312,7 +2180,6 @@ msgstr "Suppression"
 #. module: dm
 #: view:dm.campaign:0
 #: field:dm.campaign,code1:0
-#: field:dm.campaign.group,code:0
 #: view:dm.campaign.proposition:0
 #: field:dm.campaign.proposition,code1:0
 #: view:dm.campaign.proposition.segment:0
@@ -2572,13 +2439,6 @@ msgid "All Customers"
 msgstr "Tous les clients"
 
 #. module: dm
-#: wizard_button:wizard_proposition_items,name_prices_prog,new:0
-#: wizard_view:wizard_proposition_items,new:0
-#: wizard_view:wizard_proposition_items,select:0
-msgid "Create Prices Progression"
-msgstr "Créer la progression de prix"
-
-#. module: dm
 #: field:dm.customer.order,client_order_ref:0
 msgid "Customer Ref"
 msgstr "Référence client"
@@ -2608,12 +2468,6 @@ msgid "A File of addresses delivered by an addresses broker"
 msgstr "Le fichier d'adresses livré par le broker"
 
 #. module: dm
-#: model:ir.actions.act_window,name:dm.action_campaign_mygroup_form
-#: model:ir.ui.menu,name:dm.menu_action_campaign_mygroup_form
-msgid "My Campaign Groups"
-msgstr "Mes groupes de campagnes"
-
-#. module: dm
 #: field:dm.offer.step,document_ids:0
 #: model:ir.actions.act_window,name:dm.act_offer_document_opened
 msgid "DTP Documents"
@@ -2629,11 +2483,6 @@ msgstr "Vous devez d'abord valider tous les services de cette campagne."
 #: view:dm.offer:0
 msgid "Create Offers"
 msgstr "Créer l'offre"
-
-#. module: dm
-#: model:ir.model,name:dm.model_dm_campaign_group
-msgid "dm.campaign.group"
-msgstr "dm.campaign.group"
 
 #. module: dm
 #: selection:dm.customer.order,order_policy:0
@@ -2861,11 +2710,6 @@ msgid "Split"
 msgstr "Split"
 
 #. module: dm
-#: view:dm.campaign.group:0
-msgid "Groups"
-msgstr "Groupes de campagnes"
-
-#. module: dm
 #: field:dm.campaign.proposition,quantity_wanted:0
 #: field:dm.campaign.proposition.segment,quantity_wanted:0
 #: selection:dm.campaign.purchase_line,type_quantity:0
@@ -2919,12 +2763,6 @@ msgstr "Frais d'envoi"
 msgid "Could not open this Campaign !"
 msgstr "Impossible d'ouvrir la campagne"
 
-
-#. module: dm
-#: wizard_button:wizard_campaign_group,init,next:0
-msgid "Add in Group"
-msgstr "Ajouter dans le groupe"
-
 #. module: dm
 #: model:ir.actions.act_window,name:dm.action_offer_copywriter_form
 #: model:ir.ui.menu,name:dm.menu_action_offer_copywriter_from
@@ -2939,23 +2777,11 @@ msgid "Usable Quantity"
 msgstr "Quantité utilisable"
 
 #. module: dm
-#: field:dm.campaign,campaign_group_id:0
-msgid "Campaign group"
-msgstr "Groupe de campagne"
-
-#. module: dm
 #: field:dm.campaign.mail_service,action_id:0
 #: field:dm.mail_service,action_id:0
 #: field:dm.offer.step,action:0
 msgid "Action"
 msgstr "Action"
-
-#. module: dm
-#: wizard_button:wizard_proposition_items,error,init:0
-#: wizard_field:wizard_proposition_items,init,prices_progression:0
-#: wizard_view:wizard_proposition_items,name_prices_prog:0
-msgid "Select Prices Progression"
-msgstr "Sélectionnerl a progression de prix"
 
 #. module: dm
 #: view:dm.campaign.proposition:0
@@ -3050,11 +2876,6 @@ msgid "Purchase Orders"
 msgstr "Commande d'achat"
 
 #. module: dm
-#: wizard_button:wizard_campaign_group,error,init:0
-msgid "Select the group"
-msgstr "Sélectionner le groupe"
-
-#. module: dm
 #: view:dm.offer:0
 msgid "Forbiden Countries"
 msgstr "Pays Interdits"
@@ -3066,17 +2887,6 @@ msgid ""
 msgstr ""
 "Le nom de l'objet doit démarrer avec x_ et ne pas contenir de charactère "
 "spéciaux !"
-
-#. module: dm
-#: wizard_view:wizard_campaign_group,error:0
-#: wizard_view:wizard_proposition_items,error:0
-msgid "Error!!!"
-msgstr "Erreur"
-
-#. module: dm
-#: field:dm.campaign.proposition,force_sm_price:0
-msgid "Force Starting Mail Price"
-msgstr "Forcer le prix du mailing de départ"
 
 #. module: dm
 #: selection:dm.customer.boolean_criteria,operator:0
@@ -3261,7 +3071,6 @@ msgstr "Déclancheur de transition"
 
 #. module: dm
 #: view:dm.campaign:0
-#: view:dm.campaign.group:0
 #: view:dm.campaign.proposition:0
 #: view:dm.campaign.proposition.segment:0
 #: view:dm.customer.segmentation:0
@@ -3339,18 +3148,12 @@ msgid "The quantity of duplicated addresses removed by the deduplicator."
 msgstr "La quantité d'adresse en double supprimée par le déduplicateur"
 
 #. module: dm
-#: wizard_view:wizard_proposition_items,error:0
-msgid "error test"
-msgstr "Test d'erreur"
-
-#. module: dm
 #: model:product.template,name:dm.product_product_openerpdiscoverydayonmay0_product_template
 msgid "Open ERP Discovery Day on May 2009"
 msgstr "Open ERP Discoveryt Day en Mai 2009"
 
 #. module: dm
 #: field:dm.campaign,quantity_delivered_total:0
-#: field:dm.campaign.group,quantity_delivered_total:0
 msgid "Total Delivered Quantity"
 msgstr "Quantité totale livrée"
 
@@ -3398,11 +3201,6 @@ msgstr "Semaines"
 #: model:ir.model,name:dm.model_dm_order
 msgid "dm.order"
 msgstr "dm.order"
-
-#. module: dm
-#: wizard_field:wizard_campaign_group,name_group,group:0
-msgid "Group Name"
-msgstr "Nom du groupe"
 
 #. module: dm
 #: view:dm.campaign:0
@@ -3490,8 +3288,6 @@ msgstr "Magasin"
 #: wizard_button:campaign.project,init,done:0
 #: wizard_button:wizard_campaign_group,add,end:0
 #: wizard_button:wizard_campaign_group,new,end:0
-#: wizard_button:wizard_proposition_items,new,end:0
-#: wizard_button:wizard_proposition_items,select,end:0
 msgid "Ok"
 msgstr "Valider"
 
@@ -3620,7 +3416,6 @@ msgstr "Transitions"
 #. module: dm
 #: wizard_view:campaign.group.project,init:0
 #: wizard_view:campaign.project,init:0
-#: view:dm.campaign.group:0
 #: field:dm.campaign.purchase_line,campaign_group_id:0
 msgid "Campaign Group"
 msgstr "Groupe de campagne"
@@ -3695,11 +3490,6 @@ msgstr "Génération des documents"
 #: selection:dm.campaign.proposition.item,item_type:0
 msgid "Main Item"
 msgstr "Article principal"
-
-#. module: dm
-#: model:ir.model,name:dm.model_dm_campaign_proposition_prices_progression
-msgid "dm.campaign.proposition.prices_progression"
-msgstr "dm.campaign.proposition.prices_progression"
 
 #. module: dm
 #: model:ir.model,name:dm.model_dm_customer_order_numeric_criteria
@@ -3862,12 +3652,6 @@ msgid "Segment Origin"
 msgstr "Origine du segment"
 
 #. module: dm
-#: model:ir.actions.act_window,name:dm.action_campaign_group_form
-#: model:ir.ui.menu,name:dm.menu_action_campaign_group_form
-msgid "All Campaign Groups"
-msgstr "Tous les groupes de campagnes"
-
-#. module: dm
 #: model:ir.model,name:dm.model_dm_overlay
 msgid "dm.overlay"
 msgstr "dm.overlay"
@@ -3943,8 +3727,8 @@ msgstr "Remise du broker (%)"
 
 #. module: dm
 #: view:dm.campaign.proposition:0
-msgid "Items and Prices"
-msgstr "Prix et articles"
+msgid "Products and Prices"
+msgstr "Prix et produits"
 
 #. module: dm
 #: selection:dm.customer.order,state:0
@@ -4015,14 +3799,6 @@ msgid "Create Campaign"
 msgstr "Créer la campagne"
 
 #. module: dm
-#: wizard_view:wizard_campaign_group,add:0
-#: wizard_view:wizard_campaign_group,init:0
-#: wizard_button:wizard_campaign_group,name_group,new:0
-#: wizard_view:wizard_campaign_group,new:0
-msgid "Create Group"
-msgstr "Créer le groupe"
-
-#. module: dm
 #: field:dm.offer.step,interactive:0
 msgid "Interactive"
 msgstr "Interactif"
@@ -4045,12 +3821,6 @@ msgstr "Réécriture"
 #: model:ir.actions.wizard,name:dm.wizard_document_report
 msgid "Document Report"
 msgstr "Document"
-
-#. module: dm
-#: view:dm.offer.step:0
-#: field:dm.offer.step,manufacturing_constraint_ids:0
-msgid "Mailing Manufacturing Products"
-msgstr "Produits pour fabrication"
 
 #. module: dm
 #: field:dm.campaign,manufacturing_product:0

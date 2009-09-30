@@ -51,7 +51,7 @@ class SFTPServer (paramiko.SFTPServer):
             attr._pack(msg)
         self._send_packet(CMD_NAME, str(msg))
 
-    def _process(self, t, request_number, msg):                        
+    def _process(self, t, request_number, msg):
         self._log(DEBUG, 'Request: %s' % CMD_NAMES[t])
         datacr = None
         try:

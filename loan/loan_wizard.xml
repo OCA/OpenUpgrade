@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+
+		<wizard string="Cheque Process" model="account.loan.bank.cheque" name="account.bank.cheque.process" id="wizard_cheque_state_process" />
+
+		<wizard
+			string="Report On Partner Loan"
+			model="account.loan"
+			name="account.partner.loan"
+			menu="False"
+			id="wizard_partner_loan"/>
+		<menuitem name="Financial Management/Loan/Report Of Partner Loan"
+			action="wizard_partner_loan"
+			type="wizard"
+			id="menu_partner_loan"/>
+			
+		<wizard
+			string="Create Account"
+			model="account.loan"
+			name="wizard_cus_acct"
+			menu="True"
+			id="wizard_cus_acct"/>  
+			
+	</data>
+</openerp>

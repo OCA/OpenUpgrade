@@ -19,8 +19,9 @@ class Softwares(controllers.Controller, TinyResource):
         res = proxy.read(ids, ['name', 'note', 'code'], rpc.session.context)
         
         full_dir = os.path.realpath("erpcomparator/static/images/Screenshots")
-        lst_folder = os.listdir(full_dir)    
-          
+        lst_folder = os.listdir(full_dir)
+        lst_folder.sort()    
+        
         for note in res:
             files = []
             file_names = [] 

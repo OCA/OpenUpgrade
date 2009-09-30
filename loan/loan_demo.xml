@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<openerp>
+<data noupdate="1">
+#
+	# Resource: loan_installment_period
+	#
+
+<record id="loan_period_installment_p1" model="loan.installment.period">
+	<field name="name">1 Year</field>
+	<field name="period">12</field>
+</record>
+<record id="loan_period_installment_p2" model="loan.installment.period">
+	<field name="name">2 Year</field>
+	<field name="period">24</field>
+
+</record>
+<record id="loan_period_installment_p3" model="loan.installment.period">
+	<field name="name">3 Year</field>
+	<field name="period">36</field>
+</record>
+<record id="loan_period_installment_p4" model="loan.installment.period">
+	<field name="name">4 Year</field>
+	<field name="period">48</field>
+</record>
+<record id="loan_period_installment_p5" model="loan.installment.period">
+	<field name="name">5 Year</field>
+	<field name="period">60</field>
+</record>
+<record id="loan_period_installment_p6" model="loan.installment.period">
+	<field name="name">6 Year</field>
+	<field name="period">72</field>
+</record>
+<record id="loan_period_installment_p7" model="loan.installment.period">
+	<field name="name">7 Year</field>
+	<field name="period">84</field>
+</record>
+</data>
+</openerp>

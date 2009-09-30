@@ -1,0 +1,259 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+            
+    <!--
+    =======================================================
+    CAMPAIGN EXTENSIONS
+    =======================================================
+    -->
+        <record id="view_dm_purchase_form_inherit" model="ir.ui.view">
+            <field name="name">dm.purchase.inherit</field>
+            <field name="model">dm.campaign</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="dm.view_campaign_form"/>
+            <field name="arch" type="xml">
+                <page string="General" position="after">
+                    <page string="Manufacturing">
+                        <separator string="Manufacturing" colspan="4"/>
+                        <group colspan="4">
+                            <field name="manufacturing_responsible_id"/>
+                        </group>
+                        <field name="manufacturing_purchase_line_ids" widget="one2many_list" nolabel="1" colspan="4" default_get="{'product_category':'Mailing Manufacturing'}">
+                            <form string="Mailing Manufacturing Purchase Line">
+                                <group colspan="2" col="2">
+                                    <separator string="Purchase Line Product" colspan="2"/>
+                                    <field name="product_category"/>
+                                    <field name="product_id" domain="[('categ_id','=',int(product_category))]"/>
+                                    <field name="uom_id"/>
+                                    <separator string="Documents Generation" colspan="2"/>
+                                    <field name="type_document"/>
+                                    <field name="desc_from_offer" />
+                                </group>
+                                <group colspan="2" col="2">
+                                    <separator string="Quantity" colspan="2"/>
+                                    <field name="type_quantity"/>
+                                    <separator string="Dates" colspan="4"/>
+                                    <field name="date_planned"/>
+                                    <field name="date_delivery"/>
+                                </group>
+                                <separator string="Notes" colspan="4"/>
+                                <field name="notes" colspan="4" nolabel="1" widget="text_wiki"/>
+                                <field name="state" nolabel="1"/>
+                            </form>
+                        </field>
+                    </page>
+                    <page string="DTP">
+                        <separator string="Desktop Publishing" colspan="4"/>
+                        <group colspan="2" col="2">
+                            <field name="dtp_responsible_id"/>
+                        </group>
+                        <field name="dtp_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list" default_get="{'product_category':'DTP'}">
+                            <form string="DTP Purchase Line">
+                                <group colspan="2" col="2">
+                                    <separator string="Purchase Line Product" colspan="2"/>
+                                    <field name="product_category"/>
+                                    <field name="product_id" domain="[('categ_id','=',int(product_category))]"/>
+                                    <field name="uom_id"/>
+                                    <separator string="Documents Generation" colspan="2"/>
+                                    <field name="type_document"/>
+                                    <field name="desc_from_offer" />
+<!--                                    <button name="desc_from_offer_get" string="Get Description from Offer" type="object" context="{'campaign_id':'test'}"/>-->
+                                </group>
+                                <group colspan="2" col="2">
+                                    <separator string="Quantity" colspan="2"/>
+                                    <field name="type_quantity"/>
+                                    <separator string="Dates" colspan="4"/>
+                                    <field name="date_planned"/>
+                                    <field name="date_delivery"/>
+                                </group>
+                                <separator string="Notes" colspan="4"/>
+                                <field name="notes" colspan="4" nolabel="1" widget="text_wiki"/>
+                                <field name="state" nolabel="1"/>
+                            </form>
+                        </field>
+                    </page>
+                    <page string="Customers Files">
+                        <group colspan="2" col="2">
+                            <separator string="Customers Files" colspan="2"/>
+                            <field name="files_responsible_id"/>
+<!--                            <field name="invoiced_partner_id"/>
+                            <field name="files_delivery_address_id"/>-->
+                        </group>
+                        <group colspan="2" col="2">
+                            <separator string="Intermediaries" colspan="2"/>
+                            <field name="cleaner_id"/>
+                            <field name="deduplicator_id"/>
+                            <field name="router_id"/>
+                        </group>
+                        <field name="cust_file_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list" default_get="{'product_category':'Customers List'}">
+                            <form string="Customers Files Purchase Line">
+                                <group colspan="2" col="2">
+                                    <separator string="Purchase Line Product" colspan="2"/>
+                                    <field name="product_category"/>
+                                    <field name="product_id" domain="[('categ_id','=',int(product_category))]"/>
+                                    <field name="uom_id"/>
+                                    <separator string="Documents Generation" colspan="2"/>
+                                    <field name="type_document"/>
+                                    <field name="desc_from_offer" />
+                                </group>
+                                <group colspan="2" col="2">
+                                    <separator string="Quantity" colspan="2"/>
+                                    <field name="type_quantity"/>
+                                    <separator string="Dates" colspan="4"/>
+                                    <field name="date_planned"/>
+                                    <field name="date_delivery"/>
+                                </group>
+                                <separator string="Notes" colspan="4"/>
+                                <field name="notes" colspan="4" nolabel="1" widget="text_wiki"/>
+                                <field name="state" nolabel="1"/>
+                            </form>
+                        </field>
+                    </page>
+                    <page string="Items Procurement">
+                        <separator string="Items Procurement" colspan="4"/>
+                        <group colspan="2" col="2">
+                            <field name="item_responsible_id"/>
+                        </group>
+                        <field name="item_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list" default_get="{'product_category':'Items'}">
+                            <form string="Item Purchase Line">
+                                <group colspan="2" col="2">
+                                    <separator string="Purchase Line Product" colspan="2"/>
+                                    <field name="product_category"/>
+                                    <field name="product_id" domain="[('categ_id','=',int(product_category))]"/>
+                                    <field name="uom_id"/>
+                                    <separator string="Documents Generation" colspan="2"/>
+                                    <field name="type_document"/>
+                                    <field name="desc_from_offer" />
+<!--                                    <button name="desc_from_offer_get" string="Get Description from Offer" type="object" context="{'campaign_id':'test'}"/>-->
+                                </group>
+                                <group colspan="2" col="2">
+                                    <separator string="Quantity" colspan="2"/>
+                                    <field name="type_quantity"/>
+                                    <separator string="Dates" colspan="4"/>
+                                    <field name="date_planned"/>
+                                    <field name="date_delivery"/>
+                                </group>
+                                <separator string="Notes" colspan="4"/>
+                                <field name="notes" colspan="4" nolabel="1" widget="text_wiki"/>
+                                <field name="state" nolabel="1"/>
+                            </form>
+                        </field>
+                    </page>
+                </page>
+            </field>
+		</record>
+                
+    <!--
+    =======================================================
+    PURCHASE LINE
+    =======================================================
+    -->
+
+    <record model="ir.ui.view" id="view_campaign_purchase_line_tree">
+        <field name="name">dm.campaign.purchase_line_tree</field>
+        <field name="model">dm.campaign.purchase_line</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Purchase Lines">
+                <field name="product_category"/>
+                <field name="product_id"/>
+                <field name="type_quantity"/>
+                <field name="type_document"/>
+                <field name="date_planned"/>
+                <field name="date_delivery"/>
+                <field name="state"/>
+                <button name="pline_doc_generate" string="Generate Documents" states="pending" type="object"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_campaign_purchase_line_form">
+        <field name="name">dm.campaign.purchase_line_form</field>
+        <field name="model">dm.campaign.purchase_line</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Purchase Line">
+                <group colspan="2" col="2">
+                    <separator string="Purchase Line Product" colspan="2"/>
+                    <field name="product_category"/>
+                    <field name="product_id" domain="[('categ_id','=',int(product_category))]"/>
+                    <field name="uom_id"/>
+                    <separator string="Document" colspan="2"/>
+                    <field name="type_document"/>
+                    <field name="desc_from_offer" />
+                    <field name="campaign_id" />
+                </group>
+                <group colspan="2" col="2">
+                    <separator string="Quantity" colspan="2"/>
+                    <field name="type_quantity"/>
+                    <separator string="Dates" colspan="4"/>
+                    <field name="date_planned"/>
+                    <field name="date_delivery"/>
+                </group>
+                <separator string="Description" colspan="4"/>
+                <field name="notes" colspan="4" nolabel="1" widget="text_wiki"/>
+                <field name="state" nolabel="1"/>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_campaign_purchase_line_form">
+        <field name="name">All Purchase Lines</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign.purchase_line</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_campaign_purchase_line_tree"/>
+    </record>
+
+    <menuitem id="menu_action_campaign_purchase_line_form" parent="dm.menu_dm_config_campaign" action="action_campaign_purchase_line_form"/>
+
+    <!--
+    =======================================================
+        RELATES
+    =======================================================
+    -->
+    
+    <act_window name="Purchase Lines"
+        res_model="dm.campaign.purchase_line"
+        src_model="dm.campaign"
+        view_type="form"
+        view_mode="tree,form"
+        id="act_campaign_purchase_line_opened"
+        domain="[('campaign_id','=',active_id)]"
+    />
+
+	<!--
+	======================================================= 
+	Offer Views
+	=======================================================
+	-->
+
+	<record id="view_purchase_offer_form_inherit" model="ir.ui.view">
+        <field name="name">dm.offer.form.inherit</field>
+        <field name="model">dm.offer</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="dm.view_offer_form"/>
+        <field name="arch" type="xml">
+            <field name="history_ids" position="after">
+                <field name="translation_ids" nolabel="1" colspan="4">
+                    <form string="Translation">
+                        <field name="language_id"/>
+                        <field name="translator_id"/>
+                        <field name="date"/>
+                        <field name="notes" nolabel="1" colspan="4" widget="text_wiki"/>
+                    </form>
+                    <tree string="Translations">
+                        <field name="language_id"/>
+                        <field name="translator_id"/>
+                        <field name="date"/>
+                    </tree>
+                </field>
+			</field>
+        </field>
+    </record>
+
+</data>
+</openerp>

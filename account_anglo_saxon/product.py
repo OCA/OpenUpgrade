@@ -33,22 +33,7 @@ class product_category(osv.osv):
             method=True,
             view_load=True,
             help="This account will be used to value price difference between purchase price and cost price."),                
-#        'property_account_received_goods_categ': fields.property(
-#            'account.account',
-#            type='many2one',
-#            relation='account.account',
-#            string="Incoming goods",
-#            method=True,
-#            view_load=True,
-#            help="This account will be used to value incoming stock for the current product category"),
-#        'property_account_sending_goods_categ': fields.property(
-#            'account.account',
-#            type='many2one',
-#            relation='account.account',
-#            string="Outgoing goods",
-#            method=True,
-#            view_load=True,
-#            help="This account will be used to value outgoing stock for the current product category"),
+
     }
 product_category()
 
@@ -63,22 +48,7 @@ class product_template(osv.osv):
             method=True,
             view_load=True,
             help="This account will be used to value price difference between purchase price and cost price."),                
-#        'property_account_received_goods': fields.property(
-#            'account.account',
-#            type='many2one',
-#            relation='account.account',
-#            string="Incoming goods",
-#            method=True,
-#            view_load=True,
-#            help="This account will be used instead of the default one to value incoming stock for the current product"),
-#        'property_account_sending_goods': fields.property(
-#            'account.account',
-#            type='many2one',
-#            relation='account.account',
-#            string="Outgoing goods",
-#            method=True,
-#            view_load=True,
-#            help="This account will be used instead of the default one to value outgoing stock for the current product"),
+
     }
 product_template()
 

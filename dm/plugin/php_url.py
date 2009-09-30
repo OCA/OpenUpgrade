@@ -13,7 +13,7 @@ def php_url(cr,uid,**plugin_args):
     res =[]
     arguments = ''
     arg = ('url','text_display','encode')
-    url_arg = filter(lambda x : x not in arg ,plugin_args)
+    url_arg = filter(lambda x : x not in arg,plugin_args)
     for a in url_arg:
         if arguments =='' :
             arguments  += '%s=%s'%(a,plugin_args[a])
