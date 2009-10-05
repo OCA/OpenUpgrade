@@ -81,18 +81,8 @@ product_pricelist_type()
 
 class product_pricelist(osv.osv):
     def _pricelist_type_get(self, cr, uid, context={}):
-        pricelist_type_obj = self.pool.get('product.pricelist.type')
-        pricelist_type_ids = pricelist_type_obj.search(cr, uid, [], order='name')
-        pricelist_types = pricelist_type_obj.read(cr, uid, pricelist_type_ids, ['key','name'], context=context)
-        
-        res = []
-        
-        for type in pricelist_types:
-            res.append((type['key'],type['name']))
-        
-        return res
-#        cr.execute('select key,name from product_pricelist_type order by name')
-#        return cr.fetchall()
+        cr.execute('select key,name from product_pricelist_type order by name')
+        return cr.fetchall()
     _name = "product.pricelist"
     _description = "Pricelist"
     _columns = {

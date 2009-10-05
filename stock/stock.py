@@ -1266,7 +1266,6 @@ class stock_move(osv.osv):
                             (0, 0, {
                                 'name': move.name,
                                 'quantity': move.product_qty,
-                                'product_id': move.product_id and move.product_id.id or False,
                                 'credit': amount,
                                 'account_id': acc_src,
                                 'ref': ref,
@@ -1274,7 +1273,6 @@ class stock_move(osv.osv):
                                 'partner_id': partner_id}),
                             (0, 0, {
                                 'name': move.name,
-                                'product_id': move.product_id and move.product_id.id or False,
                                 'quantity': move.product_qty,
                                 'debit': amount,
                                 'account_id': acc_dest,
