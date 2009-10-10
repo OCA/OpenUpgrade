@@ -76,6 +76,7 @@ class tinydav_handler(dav_interface):
 	    if uri[-1]=='/':uri=uri[:-1]
 	    cr, uid, pool, dbname, uri2 = self.get_cr(uri)
 	    if not dbname:
+	        cr.close()
 		return props
 	    node = self.uri2object(cr,uid,pool, uri2)
 	    if node:
@@ -96,9 +97,11 @@ class tinydav_handler(dav_interface):
             if uri[-1]=='/':uri=uri[:-1]
             cr, uid, pool, dbname, uri2 = self.get_cr(uri)
             if not dbname:
+	        cr.close()
                 raise DAV_NotFound
             node = self.uri2object(cr,uid,pool, uri2)
             if not node:
+	        cr.close()
                 raise DAV_NotFound
             res = node.get_dav_eprop(cr,ns,propname)
             cr.close()
@@ -151,6 +154,7 @@ class tinydav_handler(dav_interface):
 		result = []
 		node = self.uri2object(cr,uid,pool, uri2[:])
 		if not node:
+			cr.close()
 			raise DAV_NotFound(uri2)
 		else:
 		    fp = node.full_path()
@@ -165,6 +169,7 @@ class tinydav_handler(dav_interface):
 				result.append( self.urijoin(dbname,fp,d.path) )
 			else:
 				result.append( self.urijoin(dbname,d.path) )
+		cr.close()
 		return result
 
 	def uri2local(self, uri):
@@ -203,9 +208,10 @@ class tinydav_handler(dav_interface):
 		return pool.get('document.directory').get_object(cr, uid, uri)
 
 	def get_data(self,uri):
-		self.parent.log_message('GET: %s' % uri)
-		if uri[-1]=='/':uri=uri[:-1]
-		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+	    self.parent.log_message('GET: %s' % uri)
+	    if uri[-1]=='/':uri=uri[:-1]
+	    cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+	    try:
 		if not dbname:
 			raise DAV_Error, 409
 		node = self.uri2object(cr,uid,pool, uri2)
@@ -227,31 +233,37 @@ class tinydav_handler(dav_interface):
 			traceback.print_exc()
 			raise DAV_Error, 409
 		return datas
+	    finally:
+		cr.close()
 
 	@memoize(CACHE_SIZE)
 	def _get_dav_resourcetype(self,uri):
-		""" return type of object """
-		self.parent.log_message('get RT: %s' % uri)
-		if uri[-1]=='/':uri=uri[:-1]
-		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+	    """ return type of object """
+	    self.parent.log_message('get RT: %s' % uri)
+	    if uri[-1]=='/':uri=uri[:-1]
+	    cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+	    try:
 		if not dbname:
 			return COLLECTION
 		node = self.uri2object(cr,uid,pool, uri2)
 		if not node:
 			raise DAV_NotFound(uri2)
-		cr.close()
 		if node.type in ('collection','database'):
 			return COLLECTION
 		return OBJECT
+	    finally:
+	        cr.close()
 
 	def _get_dav_displayname(self,uri):
 		self.parent.log_message('get DN: %s' % uri)
 		if uri[-1]=='/':uri=uri[:-1]
 		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
 		if not dbname:
+			cr.close()
 			return COLLECTION
 		node = self.uri2object(cr,uid,pool, uri2)
 		if not node:
+			cr.close()
 			raise DAV_NotFound(uri2)
 		cr.close()
 		return node.displayname
@@ -264,9 +276,11 @@ class tinydav_handler(dav_interface):
 		result = 0
 		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
 		if not dbname:
+			cr.close()
 			return '0'
 		node = self.uri2object(cr, uid, pool, uri2)
 		if not node:
+			cr.close()
 			raise DAV_NotFound(uri2)
 		result = node.content_length or 0
 		cr.close()
@@ -280,9 +294,11 @@ class tinydav_handler(dav_interface):
 		result = 0
 		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
 		if not dbname:
+			cr.close()
 			return '0'
 		node = self.uri2object(cr, uid, pool, uri2)
 		if not node:
+			cr.close()
 			raise DAV_NotFound(uri2)
 		result = node.get_etag(cr)
 		cr.close()
@@ -290,10 +306,11 @@ class tinydav_handler(dav_interface):
 
 	@memoize(CACHE_SIZE)
 	def get_lastmodified(self,uri):
-		""" return the last modified date of the object """
-		if uri[-1]=='/':uri=uri[:-1]
-		today = time.time()
-		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+	    """ return the last modified date of the object """
+	    if uri[-1]=='/':uri=uri[:-1]
+	    today = time.time()
+	    cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+	    try:
 		if not dbname:
 			return today
 		node = self.uri2object(cr,uid,pool, uri2)
@@ -303,13 +320,16 @@ class tinydav_handler(dav_interface):
 			return time.mktime(time.strptime(node.write_date,'%Y-%m-%d %H:%M:%S'))
 		else:
 			return today
+	    finally:
+		cr.close()
 
 	@memoize(CACHE_SIZE)
 	def get_creationdate(self,uri):
-		""" return the last modified date of the object """
+	    """ return the last modified date of the object """
 
-		if uri[-1]=='/':uri=uri[:-1]
-		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+	    if uri[-1]=='/':uri=uri[:-1]
+	    cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+	    try:
 		if not dbname:
 			raise DAV_Error, 409
 		node = self.uri2object(cr,uid,pool, uri2)
@@ -319,14 +339,16 @@ class tinydav_handler(dav_interface):
 			result = time.strptime(node.create_date,'%Y-%m-%d %H:%M:%S')
 		else:
 			result = time.gmtime()
-		cr.close()
 		return result
+	    finally:
+		cr.close()
 
 	@memoize(CACHE_SIZE)
 	def _get_dav_getcontenttype(self,uri):
-		self.parent.log_message('get contenttype: %s' % uri)
-		if uri[-1]=='/':uri=uri[:-1]
-		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+	    self.parent.log_message('get contenttype: %s' % uri)
+	    if uri[-1]=='/':uri=uri[:-1]
+	    cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+	    try:
 		if not dbname:
 			return 'httpd/unix-directory'
 		node = self.uri2object(cr,uid,pool, uri2)
@@ -338,9 +360,10 @@ class tinydav_handler(dav_interface):
 			#result ='httpd/unix-directory'
 		#else:
 		result = node.mimetype
-		cr.close()
 		return result
 		#raise DAV_NotFound, 'Could not find %s' % path
+	    finally:
+	        cr.close()
 
 	def mkcol(self,uri):
 		""" create a new collection """
