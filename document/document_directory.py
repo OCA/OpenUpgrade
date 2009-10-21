@@ -74,29 +74,29 @@ class document_directory(osv.osv):
         return objid.browse(cr, uid, mid, context=context).res_id
 
     def _get_def_storage(self,cr,uid,context=None):
-	if context and context['default_parent_id']:
-		# Use the same storage as the parent..
-		diro = self.browse(cr,uid,context['default_parent_id'])
-		if diro.storage_id:
-			return diro.storage_id.id
-	objid=self.pool.get('ir.model.data')
-	try:
-		mid =  objid._get_id(cr, uid, 'document', 'storage_default')
-		return objid.browse(cr, uid, mid, context=context).res_id
-	except Exception:
-		return None
-	
+        if context and context['default_parent_id']:
+                # Use the same storage as the parent..
+                diro = self.browse(cr,uid,context['default_parent_id'])
+                if diro.storage_id:
+                        return diro.storage_id.id
+        objid=self.pool.get('ir.model.data')
+        try:
+                mid =  objid._get_id(cr, uid, 'document', 'storage_default')
+                return objid.browse(cr, uid, mid, context=context).res_id
+        except Exception:
+                return None
+        
     _defaults = {
         'user_id': lambda self,cr,uid,ctx: uid,
         'domain': lambda self,cr,uid,ctx: '[]',
         'type': lambda *args: 'directory',
         'ressource_id': lambda *a: 0,
-	'parent_id': _get_root_directory,
-	'storage_id': _get_def_storage,
+        'parent_id': _get_root_directory,
+        'storage_id': _get_def_storage,
     }
     _sql_constraints = [
         ('dirname_uniq', 'unique (name,parent_id,ressource_id,ressource_parent_type_id)', 'The directory name must be unique !'),
-	('no_selfparent', 'check(parent_id <> id)', 'Directory cannot be parent of itself!')
+        ('no_selfparent', 'check(parent_id <> id)', 'Directory cannot be parent of itself!')
     ]
 
     def ol_get_resource_path(self,cr,uid,dir_id,res_model,res_id):
@@ -153,70 +153,70 @@ class document_directory(osv.osv):
     """
     def get_object(self, cr, uid, uri, context=None):
         """ Return a node object for the given uri.
-	   This fn merely passes the call to node_context
-	"""
-	if not context:
-		context = {}
+           This fn merely passes the call to node_context
+        """
+        if not context:
+                context = {}
         lang = context.get('lang',False)
         if not lang:
             user = self.pool.get('res.users').browse(cr, uid, uid)
             lang = user.context_lang 
-	    context['lang'] = lang
-	    
-	try: #just instrumentation
-		return nodes.get_node_context(cr, uid, context).get_uri(cr,uri)
-	except Exception,e:
-		print "exception: ",e
-		raise
+            context['lang'] = lang
+            
+        try: #just instrumentation
+                return nodes.get_node_context(cr, uid, context).get_uri(cr,uri)
+        except Exception,e:
+                print "exception: ",e
+                raise
 
 
     def _locate_child(self, cr,uid, root_id, uri,nparent, ncontext):
-	""" try to locate the node in uri,
-	    Return a tuple (node_dir, remaining_path)
-	"""
-	did = root_id
-	duri = uri
-	path = []
-	context = ncontext.context
-	while len(duri):
-	    nid = self.search(cr,uid,[('parent_id','=',did),('name','=',duri[0]),('type','=','directory')], context=context)
-	    if not nid:
-		break
-	    if len(nid)>1:
-	        print "Duplicate dir? p= %d, n=\"%s\"" %(did,duri[0])
-	    path.append(duri[0])
-	    duri = duri[1:]
-	    did = nid[0]
-	
-	return (nodes.node_dir(path, nparent,ncontext,self.browse(cr,uid,did, context)), duri)
+        """ try to locate the node in uri,
+            Return a tuple (node_dir, remaining_path)
+        """
+        did = root_id
+        duri = uri
+        path = []
+        context = ncontext.context
+        while len(duri):
+            nid = self.search(cr,uid,[('parent_id','=',did),('name','=',duri[0]),('type','=','directory')], context=context)
+            if not nid:
+                break
+            if len(nid)>1:
+                print "Duplicate dir? p= %d, n=\"%s\"" %(did,duri[0])
+            path.append(duri[0])
+            duri = duri[1:]
+            did = nid[0]
+        
+        return (nodes.node_dir(path, nparent,ncontext,self.browse(cr,uid,did, context)), duri)
 
-	
-	nid = self.search(cr,uid,[('parent_id','=',did),('name','=',duri[0]),('type','=','ressource')], context=context)
-	if nid:
-	    if len(nid)>1:
-	        print "Duplicate dir? p= %d, n=\"%s\"" %(did,duri[0])
-	    path.append(duri[0])
-	    duri = duri[1:]
-	    did = nid[0]
-	    return nodes.node_res_dir(path, nparent,ncontext,self.browse(cr,uid,did, context))
+        
+        nid = self.search(cr,uid,[('parent_id','=',did),('name','=',duri[0]),('type','=','ressource')], context=context)
+        if nid:
+            if len(nid)>1:
+                print "Duplicate dir? p= %d, n=\"%s\"" %(did,duri[0])
+            path.append(duri[0])
+            duri = duri[1:]
+            did = nid[0]
+            return nodes.node_res_dir(path, nparent,ncontext,self.browse(cr,uid,did, context))
 
-	# Here, we must find the appropriate non-dir child..
-	# Chech for files:
-	fil_obj = self.pool.get('ir.attachment')
-	nid = fil_obj.search(cr,uid,[('parent_id','=',did),('name','=',duri[0])],context=context)
-	if nid:
-		if len(duri)>1:
-			# cannot treat child as a dir
-			return None
-		if len(nid)>1:
-			print "Duplicate file?",did,duri[0]
-		path.append(duri[0])
-		return nodes.node_file(path,nparent,ncontext,fil_obj.browse(cr,uid,nid[0],context))
-	
-	print "nothing found:",did, duri
-	#still, nothing found
-	return None
-	
+        # Here, we must find the appropriate non-dir child..
+        # Chech for files:
+        fil_obj = self.pool.get('ir.attachment')
+        nid = fil_obj.search(cr,uid,[('parent_id','=',did),('name','=',duri[0])],context=context)
+        if nid:
+                if len(duri)>1:
+                        # cannot treat child as a dir
+                        return None
+                if len(nid)>1:
+                        print "Duplicate file?",did,duri[0]
+                path.append(duri[0])
+                return nodes.node_file(path,nparent,ncontext,fil_obj.browse(cr,uid,nid[0],context))
+        
+        print "nothing found:",did, duri
+        #still, nothing found
+        return None
+        
     def old_code():
         if not uri:
             return node_database(cr, uid, context=context)
@@ -290,8 +290,8 @@ class document_directory_dctx(osv.osv):
         information will be passed on.
         If you define sth like "s_id" = "this.id" at a folder iterating over sales, its
         children could have a domain like [('sale_id', = ,dctx_s_id )]
-	This system should be used recursively, that is, parent dynamic context will be
-	appended to all children down the tree.
+        This system should be used recursively, that is, parent dynamic context will be
+        appended to all children down the tree.
     """
     _name = 'document.directory.dctx'
     _description = 'Directory dynamic context'
