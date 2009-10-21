@@ -61,10 +61,18 @@ class document_directory(osv.osv):
         'dctx_ids': fields.one2many('document.directory.dctx', 'dir_id', 'Context fields'),
     }
     def _get_root_directory(self, cr,uid, context=None):
-	objid=self.pool.get('ir.model.data')
-	mid = objid._get_id(cr, uid, 'document', 'dir_root')
-	return objid.browse(cr, uid, mid, context=context).res_id
-    
+        objid=self.pool.get('ir.model.data')
+        try:
+            mid = objid._get_id(cr, uid, 'document', 'dir_root')
+            if not mid:
+                return None
+        except Exception, e:
+            import netsvc
+            logger = netsvc.Logger()
+            logger.notifyChannel("document", netsvc.LOG_WARNING, 'Cannot set directory root:'+ str(e))
+            return None
+        return objid.browse(cr, uid, mid, context=context).res_id
+
     def _get_def_storage(self,cr,uid,context=None):
 	if context and context['default_parent_id']:
 		# Use the same storage as the parent..
