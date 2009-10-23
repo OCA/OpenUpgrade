@@ -158,7 +158,7 @@ class wizard_cost_account_synchro(wizard.interface):
             # If not synchronized, try to find it with name_get/name_search
             #
             names = pool_src.get(object).name_get(cr, uid, [id], context)[0][1]
-            res = pool_dest.get(object).name_search(cr, uid, names)
+            res = pool_dest.get(object).name_search(cr, uid, names, args=[], operator='like')
             if res:
                 result = res[0][0]
             else:
