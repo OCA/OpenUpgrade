@@ -202,15 +202,13 @@ class document_directory_content(osv.osv):
                 event.add('last-modified').value = ics_datetime(perm[0]['write_date'][:19])
             for field in content.ics_field_ids:
                 value = getattr(obj, field.field_id.name)
-                value = value and tools.ustr(value)
                 if (not value) and field.name=='uid':
                     value = 'OpenERP-%s_%s@%s' % (content.object_id.model, str(obj.id), cr.dbname,)
                     obj_class.write(cr, uid, [obj.id], {field.field_id.name: value})
                 if ICS_TAGS[field.name]=='normal':
                     if type(value)==type(obj):
                         value=value.name
-                    value = value or ''
-                    event.add(field.name).value = value or ''
+                    event.add(field.name).value = tools.ustr(value) or ''
                 elif ICS_TAGS[field.name]=='date' and value:
                     if field.name == 'dtstart':
                         date_start = start_date = datetime.datetime.fromtimestamp(time.mktime(time.strptime(value , "%Y-%m-%d %H:%M:%S")))
