@@ -90,7 +90,7 @@ class document_directory_content(osv.osv):
 	if not content.obj_iterate:
 		return super(document_directory_content, self)._file_get(cr,node,nodename,content)
 	else:
-		print "iterate over ", content.object_id.model
+		# print "iterate over ", content.object_id.model
 		mod = self.pool.get(content.object_id.model)
 		uid = node.context.uid
 		fname_fld = content.fname_field or 'id'
@@ -107,14 +107,13 @@ class document_directory_content(osv.osv):
 			return False
 		    tval = nodename[len(prefix):0 - len(suffix)]
 		    where.append((fname_fld,'=',tval))
-		print "ics iterate clause:", where
+		# print "ics iterate clause:", where
 		resids = mod.search(cr,uid,where,context=context)
 		if not resids:
 		    return False
 		
 		res2 = []
 		for ro in mod.read(cr,uid,resids,['id', fname_fld]):
-		    print 'ics ro:',ro
 		    tname = (content.prefix or '') + str(ro[fname_fld])
 		    tname += (content.suffix or '') + (content.extension or '')
 		    dctx2 = { 'active_id': ro['id'] }
@@ -139,7 +138,7 @@ class document_directory_content(osv.osv):
         ctx = (context or {})
         ctx.update(node.context.context.copy())
         ctx.update(node.dctx)
-        print "ICS domain: ", type(content.ics_domain), content.ics_domain
+        # print "ICS domain: ", type(content.ics_domain), content.ics_domain
         if content.ics_domain:
             for d in safe_eval(content.ics_domain,ctx):
                 # TODO: operator?
@@ -245,8 +244,8 @@ class document_directory_content(osv.osv):
             else:
                 return datetime.datetime.strptime(idate, '%Y-%m-%d %H:%M:%S')
 
-	if node.extension != '.ics':
-		return super(document_directory_content).process_read(cr, uid, node, context)
+        if node.extension != '.ics':
+                return super(document_directory_content).process_read(cr, uid, node, context)
 
         import vobject
         ctx = (context or {})
@@ -261,7 +260,7 @@ class document_directory_content(osv.osv):
             domain = []
         if node.act_id:
             domain.append(('id','=',node.act_id))
-        print "process read clause:",domain
+        # print "process read clause:",domain
         ids = obj_class.search(cr, uid, domain, context=ctx)
         cal = vobject.iCalendar()
         for obj in obj_class.browse(cr, uid, ids):
