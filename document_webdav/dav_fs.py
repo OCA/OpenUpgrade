@@ -221,16 +221,16 @@ class tinydav_handler(dav_interface):
 			datas = node.get_data(cr)
 		except TypeError,e:
 			import traceback
-			print "typeError:",e
-			traceback.print_exc()
+			self.parent.log_error("GET typeError: %s", str(e))
+			self.parent.log_message("Exc: %s",traceback.format_exc())
 			raise DAV_Forbidden
 		except IndexError,e :
-			print "IndexError",e
+			self.parent.log_error("GET IndexError: %s", str(e))
 			raise DAV_NotFound(uri2)
 		except Exception,e:
-			print "exc",e
 			import traceback
-			traceback.print_exc()
+			self.parent.log_error("GET exception: %s",str(e))
+			self.parent.log_message("Exc: %s", traceback.format_exc())
 			raise DAV_Error, 409
 		return datas
 	    finally:
@@ -424,13 +424,17 @@ class tinydav_handler(dav_interface):
 			try:
 			    dir_node.create_child(cr,objname,data)
 			except Exception,e:
+			    import traceback
 			    self.parent.log_error("Cannot create %s: %s" %(objname, str(e)))
+			    self.parent.log_message("Exc: %s",traceback.format_exc())
 			    raise DAV_Forbidden
 		else:
 			try:
 			    node.set_data(cr,data)
 			except Exception,e:
-			    self.parent.log_error("Cannot create %s: %s" %(objname, str(e)))
+			    import traceback
+			    self.parent.log_error("Cannot save %s: %s" %(objname, str(e)))
+			    self.parent.log_message("Exc: %s",traceback.format_exc())
 			    raise DAV_Forbidden
 			
 		cr.commit()
