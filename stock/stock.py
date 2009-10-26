@@ -470,7 +470,8 @@ class stock_picking(osv.osv):
         if default is None:
             default = {}
         default = default.copy()
-        default['name'] = self.pool.get('ir.sequence').get(cr, uid, 'stock.picking', context)
+        if not default.get('name',False):
+            default['name'] = self.pool.get('ir.sequence').get(cr, uid, 'stock.picking', context)
         return super(stock_picking, self).copy(cr, uid, id, default, context)
 
     def onchange_partner_in(self, cr, uid, context, partner_id=None):
