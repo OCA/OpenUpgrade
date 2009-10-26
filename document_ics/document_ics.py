@@ -29,6 +29,7 @@ import datetime
 import time
 import random
 import tools
+import re
 
 from document import nodes
 
@@ -73,6 +74,7 @@ document_directory_ics_fields()
 
 class document_directory_content(osv.osv):
     _inherit = 'document.directory.content'
+    __rege = re.compile(r'OpenERP-([\w|\.]+)_([0-9]+)@(\w+)$')
     _columns = {
         'object_id': fields.many2one('ir.model', 'Object', oldname= 'ics_object_id'),
         'obj_iterate': fields.boolean('Iterate object',help="If set, a separate instance will be created for each record of Object"),
@@ -123,8 +125,8 @@ class document_directory_content(osv.osv):
 		return res2
 
     def process_write(self, cr, uid, node, data, context=None):
-	if node.extension != '.ics':
-		return super(document_directory_content).process_write(cr, uid, node, data, context)
+        if node.extension != '.ics':
+                return super(document_directory_content).process_write(cr, uid, node, data, context)
         import vobject
         parsedCal = vobject.readOne(data)
         fields = {}
@@ -134,34 +136,79 @@ class document_directory_content(osv.osv):
         ctx = (context or {})
         ctx.update(node.context.context.copy())
         ctx.update(node.dctx)
-        for d in safe_eval(content.ics_domain,ctx):
-	    # TODO: operator?
-            idomain[d[0]]=d[2]
+        print "ICS domain: ", type(content.ics_domain), content.ics_domain
+        if content.ics_domain:
+            for d in safe_eval(content.ics_domain,ctx):
+                # TODO: operator?
+                idomain[d[0]]=d[2]
         for n in content.ics_field_ids:
-            fields[n.name] = n.field_id.name
+            fields[n.name] = n.field_id.name and str(n.field_id.name)
         if 'uid' not in fields:
+	    print "uid not in ", fields
+	    # FIXME: should pass
             return True
         for child in parsedCal.getChildren():
             result = {}
             uuid = None
             for event in child.getChildren():
-                if event.name.lower()=='uid':
+                enl = event.name.lower()
+                if enl =='uid':
                     uuid = event.value
-                if event.name.lower() in fields:
-                    if ICS_TAGS[event.name.lower()]=='normal':
-                        result[fields[event.name.lower()]] = event.value.encode('utf8')
-                    elif ICS_TAGS[event.name.lower()]=='date':
-                        result[fields[event.name.lower()]] = event.value.strftime('%Y-%m-%d %H:%M:%S')
+                if enl in fields:
+                    if not fields[enl]:
+                        # don't write that field. TODO: special functions
+                        continue
+                    if ICS_TAGS[enl]=='normal':
+                        result[fields[enl]] = event.value.encode('utf8')
+                    elif ICS_TAGS[enl]=='date':
+                        result[fields[enl]] = event.value.strftime('%Y-%m-%d %H:%M:%S')
+                
             if not uuid:
+                print "Skipping cal", child
+		# FIXME: should pass
                 continue
 
+            cmodel = content.object_id.model
+	    wexpr = False
+            if fields['uid']:
+                wexpr = [(fields['uid'], '=', uuid.encode('utf8'))]
+            else:
+                # Parse back the uid from 'OpenERP-%s_%s@%s'
+                wematch = self.__rege.match(uuid.encode('utf8'))
+                # TODO: perhaps also add the domain to wexpr, restrict.
+                if not wematch:
+                    raise Exception("Cannot locate UID in %s" % uuid)
+                if wematch.group(3) != cr.dbname:
+                    raise Exception("Object is not for our db!")
+                if content.object_id:
+                    if wematch.group(1) != cmodel:
+                        raise Exception("ICS must be at the wrong folder, this one is for %s" % cmodel)
+                else:
+                    # TODO: perhaps guess the model from the iCal, is it safe?
+                    pass
+
+                wexpr = [ ( 'id', '=', wematch.group(2) ) ]
+                
+            print "Looking at ", cmodel, " for ", wexpr
+	    print "domain=", idomain
+
             fobj = self.pool.get(content.object_id.model)
-            id = fobj.search(cr, uid, [(fields['uid'], '=', uuid.encode('utf8'))], context=context)
+
+            if not wexpr:
+                id = False
+            else:
+                id = fobj.search(cr, uid, wexpr, context=context)
+        
+            if isinstance(id, list):
+                if len(id) > 1:
+                    raise Exception("Multiple matches found for ICS")
             if id:
+                print "writting at %s#%d:" %(cmodel, id[0]), result
                 fobj.write(cr, uid, id, result, context=context)
             else:
                 r = idomain.copy()
                 r.update(result)
+                print "creating at  %s#%d:" %(cmodel, id), result
                 fobj.create(cr, uid, r, context=context)
 
         return True
@@ -201,10 +248,12 @@ class document_directory_content(osv.osv):
             if perm[0]['write_date']:
                 event.add('last-modified').value = ics_datetime(perm[0]['write_date'][:19])
             for field in content.ics_field_ids:
-                value = getattr(obj, field.field_id.name)
+                if field.field_id.name:
+                    value = getattr(obj, field.field_id.name)
+                else: value = None
                 if (not value) and field.name=='uid':
                     value = 'OpenERP-%s_%s@%s' % (content.object_id.model, str(obj.id), cr.dbname,)
-                    obj_class.write(cr, uid, [obj.id], {field.field_id.name: value})
+                    # Why? obj_class.write(cr, uid, [obj.id], {field.field_id.name: value})
                 if ICS_TAGS[field.name]=='normal':
                     if type(value)==type(obj):
                         value=value.name
