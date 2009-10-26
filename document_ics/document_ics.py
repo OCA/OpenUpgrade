@@ -55,6 +55,7 @@ ICS_TAGS = {
 ICS_FUNCTIONS = [
     ('field', 'Use the field'),
     ('const', 'Expression as constant'),
+    ('hours', 'Interval in hours'),
     ]
 
 class document_directory_ics_fields(osv.osv):
@@ -130,6 +131,8 @@ class document_directory_content(osv.osv):
         import vobject
         parsedCal = vobject.readOne(data)
         fields = {}
+        funcs = {}
+        fexprs = {}
         content = self.browse(cr, uid, node.cnt_id, context)
 
         idomain = {}
@@ -143,6 +146,9 @@ class document_directory_content(osv.osv):
                 idomain[d[0]]=d[2]
         for n in content.ics_field_ids:
             fields[n.name] = n.field_id.name and str(n.field_id.name)
+            funcs[n.name] = n.fn
+            fexprs[n.name] = n.expr
+
         if 'uid' not in fields:
 	    print "uid not in ", fields
 	    # FIXME: should pass
@@ -150,19 +156,38 @@ class document_directory_content(osv.osv):
         for child in parsedCal.getChildren():
             result = {}
             uuid = None
+            
             for event in child.getChildren():
                 enl = event.name.lower()
                 if enl =='uid':
                     uuid = event.value
-                if enl in fields:
-                    if not fields[enl]:
-                        # don't write that field. TODO: special functions
+                if not enl in fields:
+                        # print "skip", enl
                         continue
+                if fields[enl] and funcs[enl] == 'field':
                     if ICS_TAGS[enl]=='normal':
                         result[fields[enl]] = event.value.encode('utf8')
                     elif ICS_TAGS[enl]=='date':
                         result[fields[enl]] = event.value.strftime('%Y-%m-%d %H:%M:%S')
-                
+        
+                    # print "Field ",enl,  result[fields[enl]]
+                elif fields[enl] and funcs[enl] == 'hours':
+                    ntag = fexprs[enl] or 'dtstart'
+                    ts_start = child.getChildValue(ntag, default=False)
+                    if not ts_start:
+                        raise Exception("Cannot parse hours (for %s) without %s" % (enl, ntag))
+                    ts_end = event.value
+                    assert isinstance(ts_start, datetime.datetime)
+                    assert isinstance(ts_end, datetime.datetime)
+                    td = ts_end - ts_start
+                    result[fields[enl]] = td.days * 24.0 + ( td.seconds / 3600.0)
+
+                # put other functions here..
+                else:
+                    # print "Unhandled tag in ICS:", enl
+                    pass
+            # end for 
+
             if not uuid:
                 print "Skipping cal", child
 		# FIXME: should pass
@@ -189,8 +214,8 @@ class document_directory_content(osv.osv):
 
                 wexpr = [ ( 'id', '=', wematch.group(2) ) ]
                 
-            print "Looking at ", cmodel, " for ", wexpr
-	    print "domain=", idomain
+            # print "Looking at ", cmodel, " for ", wexpr
+            # print "domain=", idomain
 
             fobj = self.pool.get(content.object_id.model)
 
@@ -261,7 +286,7 @@ class document_directory_content(osv.osv):
                 elif ICS_TAGS[field.name]=='date' and value:
                     if field.name == 'dtstart':
                         date_start = start_date = datetime.datetime.fromtimestamp(time.mktime(time.strptime(value , "%Y-%m-%d %H:%M:%S")))
-                    if field.name == 'dtend' and isinstance(value, float):
+                    if field.name == 'dtend' and ( isinstance(value, float) or field.fn == 'hours'):
                         value = (start_date + datetime.timedelta(hours=value)).strftime('%Y-%m-%d %H:%M:%S')
                     if len(value)==10:
                         value = ics_datetime(value, True)
