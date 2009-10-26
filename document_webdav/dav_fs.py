@@ -425,7 +425,7 @@ class tinydav_handler(dav_interface):
 			    dir_node.create_child(cr,objname,data)
 			except Exception,e:
 			    import traceback
-			    self.parent.log_error("Cannot create %s: %s" %(objname, str(e)))
+			    self.parent.log_error("Cannot create %s: %s", objname, str(e))
 			    self.parent.log_message("Exc: %s",traceback.format_exc())
 			    raise DAV_Forbidden
 		else:
@@ -433,7 +433,7 @@ class tinydav_handler(dav_interface):
 			    node.set_data(cr,data)
 			except Exception,e:
 			    import traceback
-			    self.parent.log_error("Cannot save %s: %s" %(objname, str(e)))
+			    self.parent.log_error("Cannot save %s: %s", objname, str(e))
 			    self.parent.log_message("Exc: %s",traceback.format_exc())
 			    raise DAV_Forbidden
 			

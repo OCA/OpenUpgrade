@@ -360,7 +360,7 @@ class node_res_dir(node_class):
 	
 	if name:
 		where.append((self.namefield,'=',name))
-	print "Where clause for %s" % self.res_model, where
+	# print "Where clause for %s" % self.res_model, where
 	
 	resids = obj.search(cr,uid, where, context=ctx)
 	res = []
@@ -437,7 +437,7 @@ class node_res_obj(node_class):
 	where = [('directory_id','=',self.dir_id) ]
 	#if self.domain:
 	#	where.extend(self.domain)
-	print "res_obj file_get clause", where
+	# print "res_obj file_get clause", where
 	ids = cntobj.search(cr,uid,where,context=ctx)
         for content in cntobj.browse(cr,uid,ids,context=ctx):
 	    res3 = cntobj._file_get(cr,self,nodename,content, context=ctx)
@@ -495,7 +495,7 @@ class node_res_obj(node_class):
 		
 	fil_obj=dirobj.pool.get('ir.attachment')
 	where2 = where  + [('res_model', '=', self.res_model), ('res_id','=',self.res_id)]
-	print "where clause for dir_obj", where2
+	# print "where clause for dir_obj", where2
 	ids = fil_obj.search(cr,uid,where2,context=ctx)
 	if ids:
 	    for fil in fil_obj.browse(cr,uid,ids,context=ctx):
@@ -624,6 +624,7 @@ class node_content(node_class):
 	return self.content_length
 
     def set_data(self, cr, data, fil_obj = None):
+        cntobj = self.context._dirobj.pool.get('document.directory.content')
         ctx = self.context.context.copy()
         ctx.update(self.dctx)
         return cntobj.process_write(cr,self.context.uid,self, data,ctx)
