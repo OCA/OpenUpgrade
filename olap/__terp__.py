@@ -4,6 +4,7 @@
     "author" : "Tiny",
     "website" : "http://www.openerp.com",
     "depends" : ["base"],
+    "ext_depends": [ "python-sqlalchemy" ],
     "category" : "Generic Modules/Olap",
     "description": """
     Base module to manage Olap schemas. Cube designer.
