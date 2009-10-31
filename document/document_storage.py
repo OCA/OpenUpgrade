@@ -155,8 +155,12 @@ class document_storage(osv.osv):
 		print "Trying to read \"%s\".."% fpath
 		return file(fpath,'rb').read()
 	elif boo.type == 'db':
-		# base64?
-		return ira.db_datas
+		# TODO: we need a better api for large files
+		if ira.db_datas:
+			out=base64.decodestring(ira.db_datas)
+		else:
+			out=''
+		return out
 	elif boo.type == 'realstore':
 		# fpath = os.path.join(boo.path,
 		return None
@@ -180,6 +184,8 @@ class document_storage(osv.osv):
 	if not boo.online:
 		raise RuntimeError('media offline')
 	logger.notifyChannel('document',netsvc.LOG_DEBUG,"Store data for ir.attachment #%d" %ira.id)
+	store_fname = None
+	fname = None
 	if boo.type == 'filestore':
 	    path = boo.path
 	    try:
@@ -197,31 +203,46 @@ class document_storage(osv.osv):
 		fp.close()
 		logger.notifyChannel('document',netsvc.LOG_DEBUG,"Saved data to %s" % fname)
 		filesize = len(data) # os.stat(fname).st_size
+		store_fname = os.path.join(flag,filename)
 		
 		# TODO Here, an old file would be left hanging.
 
-		icont = ''
-		mime = ira.file_type
-		try:
-			mime,icont = cntIndex.doIndex(data, ira.datas_fname, 
-				ira.file_type or None,fname)
-		except Exception,e:
-			logger.notifyChannel('document', netsvc.LOG_DEBUG, 'Cannot index file: %s' % str(e))
-			pass
-
-		# a hack: /assume/ that the calling write operation will not try
-		# to write the fname and size, and update them in the db concurrently.
-		# We cannot use a write() here, because we are already in one.
-		cr.execute('UPDATE ir_attachment SET store_fname = %s, file_size = %s, index_content = %s, file_type = %s WHERE id = %s',
-			(os.path.join(flag,filename), filesize, ustr(icont), mime, file_node.file_id ))
-		file_node.content_length = filesize
-		file_node.content_type = mime
-		return True
             except Exception,e :
 		netsvc.Logger().notifyChannel('document',netsvc.LOG_WARNING,"Couldn't save data: %s" %str(e))
 		raise except_orm(_('Error!'), str(e))
+	elif boo.type == 'db':
+	    filesize = len(data)
+	    # will that work for huge data? TODO
+	    out=base64.encodestring(data)
+	    cr.execute('UPDATE ir_attachment SET db_datas = %s WHERE id = %s',
+			( out, file_node.file_id ))
 	else:
 		raise TypeError("No %s storage" % boo.type)
+
+	# 2nd phase: store the metadata
+	try:
+	    icont = ''
+	    mime = ira.file_type
+	    try:
+		mime,icont = cntIndex.doIndex(data, ira.datas_fname, 
+		ira.file_type or None,fname)
+	    except Exception,e:
+		logger.notifyChannel('document', netsvc.LOG_DEBUG, 'Cannot index file: %s' % str(e))
+		pass
+
+	    # a hack: /assume/ that the calling write operation will not try
+	    # to write the fname and size, and update them in the db concurrently.
+	    # We cannot use a write() here, because we are already in one.
+	    cr.execute('UPDATE ir_attachment SET store_fname = %s, file_size = %s, index_content = %s, file_type = %s WHERE id = %s',
+			(store_fname, filesize, ustr(icont), mime, file_node.file_id ))
+	    file_node.content_length = filesize
+	    file_node.content_type = mime
+	    return True
+        except Exception,e :
+	    netsvc.Logger().notifyChannel('document',netsvc.LOG_WARNING,"Couldn't save data: %s" %str(e))
+	    # should we really rollback once we have written the actual data?
+	    # at the db case (only), that rollback would be safe
+	    raise except_orm(_('Error at doc write!'), str(e))
 
     def prepare_unlink(self,cr,uid,storage_bo, fil_bo):
 	""" Before we unlink a file (fil_boo), prepare the list of real
