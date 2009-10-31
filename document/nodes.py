@@ -577,7 +577,7 @@ class node_file(node_class):
 	return stobj.set_data(cr,self.context.uid,stor, self, data, self.context.context, fil_obj)
 
     def _get_ttag(self,cr):
-	return 'file-%d' % self.fil_id
+	return 'file-%d' % self.file_id
 
 class node_content(node_class):
     our_type = 'content'

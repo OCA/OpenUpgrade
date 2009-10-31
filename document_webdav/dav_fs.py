@@ -288,7 +288,7 @@ class tinydav_handler(dav_interface):
 
 	@memoize(CACHE_SIZE)
 	def _get_dav_getetag(self,uri):
-		""" return the content length of an object """
+		""" return the ETag of an object """
 		self.parent.log_message('get etag: %s' % uri)
 		if uri[-1]=='/':uri=uri[:-1]
 		result = 0
