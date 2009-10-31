@@ -70,13 +70,17 @@ class dav_interface:
 	    print "No namespace:",ns
             raise DAV_NotFound
         mname=prefix+"_"+propname
+	if not hasattr(self,mname):
+	    raise DAV_NotFound
+
         try:
-                m=getattr(self,mname)
-                r=m(uri)
-                return r
-        except AttributeError:
-	        print 'Property %s not supported' % propname
-                raise DAV_NotFound
+            m=getattr(self,mname)
+            r=m(uri)
+            return r
+        except AttributeError, e:
+	    print 'Property %s not supported' % propname
+	    print "Exception:", e
+            raise DAV_NotFound
 
     ###
     ### DATA methods (for GET and PUT)
