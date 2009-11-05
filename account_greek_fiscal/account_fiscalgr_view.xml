@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+	<record model="ir.ui.view" id="view_account_ficalgr_print_form">
+		<field name="name">account.fiscalgr.print.form</field>
+		<field name="model">account.fiscalgr.print</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Prints">
+				<field name="cups_jobid" />
+				<field name="name" colspan="2"/>
+				<field name="state" />
+				<field name="report" />
+				<field name="date" />
+				<field name="cups_msg" colspan="4"/>
+				<field name="hash" />
+				<field name="machine_id" />
+				<field name="day_no" />
+				<field name="total_no" />
+			</form>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_account_ficalgr_print_tree">
+		<field name="name">account.fiscalgr.print.tree</field>
+		<field name="model">account.fiscalgr.print</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Prints">
+				<field name="cups_jobid" />
+				<field name="name" colspan="2"/>
+				<field name="state" />
+				<field name="date" />
+			</tree>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="view_account_fiscalgr_print_tree_form">
+		<field name="name">Fiscal Prints</field>
+		<field name="res_model">account.fiscalgr.print</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<menuitem name="Fiscal prints" id="menu_account_fiscalgr" parent="account.menu_finance_reporting"/>
+	<menuitem name="All Prints" id="menu_account_fiscalgr_print_tree_form" action="view_account_fiscalgr_print_tree_form" parent="menu_account_fiscalgr"/>
+
+	
+	<record model="ir.ui.view" id="view_invoice_fiscalgr_inherit_1">
+		<field name="name">account.invoice.fiscalgr.view.inherit_1</field>
+		<field name="model">account.invoice</field>
+		<field name="inherit_id" ref="account.invoice_form"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<xpath expr="/form/notebook/page/group/group/button[@name='invoice_cancel']" position="before">
+				<button name="action_fiscalgr_print" states="open" string="Print" type="object"/>
+			</xpath>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_report_fiscalgr_inherit_1">
+		<field name="name">ir.actions.report.xml.fiscalgr_1</field>
+		<field name="model">ir.actions.report.xml</field>
+		<field name="inherit_id" ref="base.act_report_xml_view"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<xpath expr="/form/field[@name='attachment']" position="after">
+				<field name="printer"/>
+				<field name="copies"/>
+			</xpath>
+		</field>
+	</record>
+	
+	<record forcecreate="True" id="ir_cron_scheduler_action" model="ir.cron">
+            <field name="name">Check fiscal print result</field>
+            <field eval="False" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field name="model">account.fiscalgr.print</field>
+            <field name="function">check_results</field>
+            <field name="args"></field>
+        </record>
+
+	</data>
+</openerp>

@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* base_report_designer
+# 	* base_report_designer
 #
 msgid ""
 msgstr ""
@@ -92,7 +92,11 @@ msgstr ""
 
 #. module: base_report_designer
 #: wizard_view:base_report_designer.modify,get_form_result:0
-msgid "This is the template of your requested report. Save it as a .SXW file and open it with OpenOffice. Don't forget to install the Tiny OpenOffice package to modify it. Once it is modified, re-upload it in Open ERP using this wizard."
+msgid ""
+"This is the template of your requested report. Save it as a .SXW file and "
+"open it with OpenOffice. Don't forget to install the Tiny OpenOffice package "
+"to modify it. Once it is modified, re-upload it in Open ERP using this "
+"wizard."
 msgstr ""
 
 #. module: base_report_designer
@@ -139,3 +143,14 @@ msgstr ""
 msgid "Select your report"
 msgstr ""
 
+#. module: base_report_designer
+#: code:addons/base_report_designer/wizard/base_report_designer_modify.py:0
+#, python-format
+msgid "Report does not contain the sxw content!"
+msgstr ""
+
+#. module: base_report_designer
+#: code:addons/base_report_designer/wizard/base_report_designer_modify.py:0
+#, python-format
+msgid "Error"
+msgstr ""

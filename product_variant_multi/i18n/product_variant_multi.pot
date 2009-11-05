@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* product_variant_multi
+# 	* product_variant_multi
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.1\n"
+"Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-06-09 10:30:13+0000\n"
-"PO-Revision-Date: 2009-06-09 10:30:13+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
+"PO-Revision-Date: 2009-05-30 15:14:08+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,8 +16,14 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: product_variant_multi
+#: model:ir.module.module,shortdesc:product_variant_multi.module_meta_information
+msgid "Products with multi-level variants"
+msgstr ""
+
+#. module: product_variant_multi
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: product_variant_multi
@@ -67,8 +73,7 @@ msgid "Types"
 msgstr ""
 
 #. module: product_variant_multi
-#: view:product.template:0
-#: field:product.template,variant_ids:0
+#: view:product.template:0 field:product.template,variant_ids:0
 msgid "Variants"
 msgstr ""
 
@@ -80,8 +85,7 @@ msgstr ""
 
 #. module: product_variant_multi
 #: model:ir.ui.menu,name:product_variant_multi.menu_variant_dimension_values
-#: view:product.template:0
-#: field:product.variant.dimension.type,value_ids:0
+#: view:product.template:0 field:product.variant.dimension.type,value_ids:0
 msgid "Dimension Values"
 msgstr ""
 
@@ -106,8 +110,7 @@ msgid "Price Margin"
 msgstr ""
 
 #. module: product_variant_multi
-#: view:product.template:0
-#: view:product.variant.dimension.type:0
+#: view:product.template:0 view:product.variant.dimension.type:0
 #: view:product.variant.dimension.value:0
 msgid "Variant Value"
 msgstr ""
@@ -130,18 +133,12 @@ msgid "Values"
 msgstr ""
 
 #. module: product_variant_multi
-#: model:ir.module.module,shortdesc:product_variant_multi.module_meta_information
-msgid "Products with multi-level variants"
-msgstr ""
-
-#. module: product_variant_multi
 #: field:product.variant.dimension.type,name:0
 msgid "Dimension"
 msgstr ""
 
 #. module: product_variant_multi
-#: view:product.template:0
-#: view:product.variant.dimension.type:0
+#: view:product.template:0 view:product.variant.dimension.type:0
 msgid "Variant Type"
 msgstr ""
 
@@ -164,22 +161,34 @@ msgstr ""
 
 #. module: product_variant_multi
 #: model:ir.module.module,description:product_variant_multi.module_meta_information
-msgid "OpenERP is already supporting a product variants at the core level. But\n"
-"without this module, variants are only mono-axial. OpenERP indeed uses the product.tempate\n"
+msgid ""
+"OpenERP is already supporting a product variants at the core level. But\n"
+"without this module, variants are only mono-axial. OpenERP indeed uses the "
+"product.tempate\n"
 "as the model object and the product.variant as the instance variant.\n"
 "Using this module, you can now easily deal with multi-axial variants.\n"
-"A product.template, now has a set of dimensions (like Color, Size, anything you want).\n"
-"For each dimension, a product.template has a set of dimension values (like Red, Green\n"
-"for the Color dimension). For each dimension, you can accept or not custom dimension\n"
+"A product.template, now has a set of dimensions (like Color, Size, anything "
+"you want).\n"
+"For each dimension, a product.template has a set of dimension values (like "
+"Red, Green\n"
+"for the Color dimension). For each dimension, you can accept or not custom "
+"dimension\n"
 "values. The sale interface product configurator will take it into account.\n"
-"Once the product.template is set up, you can use a 'generator' button that will populate\n"
-"the space of the variants. You could also choose to populate only some combinations\n"
+"Once the product.template is set up, you can use a 'generator' button that "
+"will populate\n"
+"the space of the variants. You could also choose to populate only some "
+"combinations\n"
 "by hand instead.\n"
-"Each variant can have an extra price that will be taken into account when computing\n"
-"the base listed price. Yet to be implemented: a price extra per variant dimension value.\n"
-"Finally, this module is better used along with the product_variant_configurator which\n"
-"will help the salesman selecting the appropriate variant in the sale order line\n"
-"using dimension criteria instead of having to crawl the full space of variants.\n"
+"Each variant can have an extra price that will be taken into account when "
+"computing\n"
+"the base listed price. Yet to be implemented: a price extra per variant "
+"dimension value.\n"
+"Finally, this module is better used along with the "
+"product_variant_configurator which\n"
+"will help the salesman selecting the appropriate variant in the sale order "
+"line\n"
+"using dimension criteria instead of having to crawl the full space of "
+"variants.\n"
 "    "
 msgstr ""
 
@@ -188,4 +197,3 @@ msgstr ""
 #: field:product.variant.dimension.value,dimension_id:0
 msgid "Dimension Type"
 msgstr ""
-

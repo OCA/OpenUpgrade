@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* l10n_ch
+# 	* l10n_ch
 #
 msgid ""
 msgstr ""
@@ -41,8 +41,7 @@ msgid "DTA-BVRPOST"
 msgstr ""
 
 #. module: l10n_ch
-#: rml:l10n_ch.bvr:0
-#: rml:l10n_ch.invoice.bvr:0
+#: rml:l10n_ch.bvr:0 rml:l10n_ch.invoice.bvr:0
 msgid "Mail:"
 msgstr ""
 
@@ -179,8 +178,7 @@ msgid "Monsieur"
 msgstr ""
 
 #. module: l10n_ch
-#: rml:l10n_ch.bvr:0
-#: rml:l10n_ch.invoice.bvr:0
+#: rml:l10n_ch.bvr:0 rml:l10n_ch.invoice.bvr:0
 msgid "+"
 msgstr ""
 
@@ -267,8 +265,7 @@ msgid "BVR adherent number"
 msgstr ""
 
 #. module: l10n_ch
-#: rml:l10n_ch.bvr:0
-#: rml:l10n_ch.invoice.bvr:0
+#: rml:l10n_ch.bvr:0 rml:l10n_ch.invoice.bvr:0
 msgid "Phone:"
 msgstr ""
 
@@ -298,14 +295,12 @@ msgid "Condition"
 msgstr ""
 
 #. module: l10n_ch
-#: rml:l10n_ch.bvr:0
-#: rml:l10n_ch.invoice.bvr:0
+#: rml:l10n_ch.bvr:0 rml:l10n_ch.invoice.bvr:0
 msgid ">"
 msgstr ""
 
 #. module: l10n_ch
-#: rml:l10n_ch.bvr:0
-#: rml:l10n_ch.invoice.bvr:0
+#: rml:l10n_ch.bvr:0 rml:l10n_ch.invoice.bvr:0
 msgid "TVA:"
 msgstr ""
 
@@ -397,8 +392,7 @@ msgid "Invoice"
 msgstr ""
 
 #. module: l10n_ch
-#: view:account.journal.todo:0
-#: wizard_button:l10n_ch.bvr_import,init,end:0
+#: view:account.journal.todo:0 wizard_button:l10n_ch.bvr_import,init,end:0
 msgid "Cancel"
 msgstr ""
 
@@ -409,7 +403,8 @@ msgstr ""
 
 #. module: l10n_ch
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: l10n_ch
@@ -453,8 +448,7 @@ msgid "BVR file"
 msgstr ""
 
 #. module: l10n_ch
-#: rml:l10n_ch.bvr:0
-#: rml:l10n_ch.invoice.bvr:0
+#: rml:l10n_ch.bvr:0 rml:l10n_ch.invoice.bvr:0
 msgid "1cm 25.7cm 7cm 25.7cm"
 msgstr ""
 
@@ -495,8 +489,9 @@ msgstr ""
 
 #. module: l10n_ch
 #: model:ir.actions.todo,note:l10n_ch.action_config_journal_todo
-msgid "Set accounts on financial journals defined by\n"
-"			Camptocamp l10n_ch module"
+msgid ""
+"Set accounts on financial journals defined by\n"
+"\t\t\tCamptocamp l10n_ch module"
 msgstr ""
 
 #. module: l10n_ch
@@ -505,8 +500,7 @@ msgid "horiz. delta in mm 1.2 will print the bvz 1.2mm lefter"
 msgstr ""
 
 #. module: l10n_ch
-#: rml:l10n_ch.bvr:0
-#: rml:l10n_ch.invoice.bvr:0
+#: rml:l10n_ch.bvr:0 rml:l10n_ch.invoice.bvr:0
 msgid "1cm 27.7cm 20cm 27.7cm"
 msgstr ""
 
@@ -526,3 +520,95 @@ msgstr ""
 msgid "Total"
 msgstr ""
 
+#. module: l10n_ch
+#: code:addons/l10n_ch/wizard/dta_wizard.py:0
+#, python-format
+msgid "No bank account for the company."
+msgstr ""
+
+#. module: l10n_ch
+#: code:addons/l10n_ch/wizard/bvr_import.py:0
+#, python-format
+msgid "Record found after total record!"
+msgstr ""
+
+#. module: l10n_ch
+#: code:addons/l10n_ch/wizard/dta_wizard.py:0
+#, python-format
+msgid "The Bank type %s of the bank account: %s is not supported"
+msgstr ""
+
+#. module: l10n_ch
+#: code:addons/l10n_ch/wizard/wizard_bvr.py:0
+#, python-format
+msgid "UserError"
+msgstr ""
+
+#. module: l10n_ch
+#: code:addons/l10n_ch/wizard/bvr_import.py:0
+#, python-format
+msgid "Total record different from the computed!"
+msgstr ""
+
+#. module: l10n_ch
+#: code:addons/l10n_ch/wizard/bvr_import.py:0
+#, python-format
+msgid "Number record different from the computed!"
+msgstr ""
+
+#. module: l10n_ch
+#: code:addons/l10n_ch/wizard/dta_wizard.py:0
+#, python-format
+msgid "No IBAN for the company bank account."
+msgstr ""
+
+#. module: l10n_ch
+#: code:addons/l10n_ch/wizard/dta_wizard.py:0
+#, python-format
+msgid "You must provide a Clearing Number for your bank account."
+msgstr ""
+
+#. module: l10n_ch
+#: code:addons/l10n_ch/wizard/bvr_import.py:0
+#, python-format
+msgid "The properties account payable account receivable"
+msgstr ""
+
+#. module: l10n_ch
+#: code:addons/l10n_ch/wizard/dta_wizard.py:0
+#, python-format
+msgid "not implemented"
+msgstr ""
+
+#. module: l10n_ch
+#: code:addons/l10n_ch/wizard/dta_wizard.py:0
+#, python-format
+msgid "No payment mode or payment type code invalid."
+msgstr ""
+
+#. module: l10n_ch
+#: code:addons/l10n_ch/wizard/bvr_import.py:0
+#, python-format
+msgid "Recursive mod10 is invalid for reference: %s"
+msgstr ""
+
+#. module: l10n_ch
+#: code:addons/l10n_ch/wizard/wizard_bvr.py:0
+#, python-format
+msgid ""
+"No bank specified on invoice:\n"
+"%s"
+msgstr ""
+
+#. module: l10n_ch
+#: code:addons/l10n_ch/wizard/bvr_import.py:0
+#: code:addons/l10n_ch/wizard/dta_wizard.py:0
+#, python-format
+msgid "Error"
+msgstr ""
+
+#. module: l10n_ch
+#: code:addons/l10n_ch/wizard/bvr_import.py:0
+#, python-format
+msgid "Too much total record found!"
+msgstr ""

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+        <record id="act_report_postxt_view" model="ir.ui.view">
+            <field name="name">ir.actions.report.postxt</field>
+            <field name="model">ir.actions.report.postxt</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="POS prints">
+		    <notebook>
+		    <page string="General">
+			<group colspan="4">
+				<field name="name" select="1"/>
+				<!-- <field name="type" select="2"/> -->
+				<field name="model" select="1"/>
+				<field name="code" select="1"/>
+				<field name="usage"/>
+				<field name="printer"/>
+				<field name="copies"/>
+				<field name="soft_copies"/>
+				<field name="encoding" />
+			</group>
+			<group colspan="4">
+				<field name="groups_id"/>
+			</group>
+		    </page>
+		    <page string="Content">
+		    <field name="txt_content"/>
+		</page>
+	</notebook>
+                </form>
+            </field>
+        </record>
+        <record id="act_report_postxt_view_tree" model="ir.ui.view">
+            <field name="name">ir.actions.report.postxt.tree</field>
+            <field name="model">ir.actions.report.postxt</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="POS prints">
+                    <field name="name"/>
+                    <field name="model"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="ir_action_report_postxt" model="ir.actions.act_window">
+            <field name="name">POS print Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ir.actions.report.postxt</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="act_report_postxt_view_tree"/>
+        </record>
+	
+        <menuitem action="ir_action_report_postxt" id="menu_ir_action_report_postxt" parent="base.next_id_6"/>
+	
+	<wizard string="Print POS Labels"
+			name="wizard.point_of_sale_print.print"
+			id="wizard_pos_print_print"
+			model="res.partner.address"
+			keyword="client_print_multi"
+			/>
+	</data>
+</openerp>

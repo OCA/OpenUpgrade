@@ -23,8 +23,8 @@ import os
 import pooler
 import osv
 import tools
-from tools import config
 from tools.translate import _
+from addons import get_module_path
 from osv import osv, fields
 
 class abstract_quality_check(object):
@@ -84,12 +84,12 @@ class abstract_quality_check(object):
         #The tests have to subscribe itselfs in this list, that contains
         #all the test that have to be performed.
         self.tests = []
-        self.list_folders = os.listdir(config['addons_path'] +
-            '/base_module_quality/')
+        mq_modpath=get_module_path('base_module_quality')
+        self.list_folders = os.listdir(mq_modpath)
         for item in self.list_folders:
             self.item = item
-            path = config['addons_path']+'/base_module_quality/'+item
-            if os.path.exists(path + '/' + item + '.py') and item not in ['report', 'wizard', 'security']:
+            path = os.path.join(mq_modpath,item)
+            if os.path.exists(os.path.join(path, item + '.py')) and item not in ['report', 'wizard', 'security']:
                 item2 = 'base_module_quality.' + item +'.' + item
                 x_module = __import__(item2)
                 x_file = getattr(x_module, item)
@@ -129,7 +129,13 @@ class abstract_quality_check(object):
         pool = pooler.get_pool(cr.dbname)
         result_ids = {}
         for obj in object_list:
-            ids = pool.get(obj).search(cr, uid, [])
+            pobj = pool.get(obj)
+	    if not pobj:
+                # raise Exception(_("Cannot get object %s from pool. Is that properly implemented?")%obj)
+		#better:
+		result_ids[obj] = []
+	    else:
+                ids = pobj.search(cr, uid, [])
             ids = filter(lambda id: id != None, ids)
             result_ids[obj] = ids
         return result_ids

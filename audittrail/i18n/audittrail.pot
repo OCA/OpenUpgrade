@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* audittrail
+# 	* audittrail
 #
 msgid ""
 msgstr ""
@@ -22,7 +22,8 @@ msgstr ""
 
 #. module: audittrail
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: audittrail
@@ -126,8 +127,7 @@ msgid "Read"
 msgstr ""
 
 #. module: audittrail
-#: field:audittrail.log,object_id:0
-#: field:audittrail.rule,object_id:0
+#: field:audittrail.log,object_id:0 field:audittrail.rule,object_id:0
 msgid "Object"
 msgstr ""
 
@@ -148,8 +148,11 @@ msgstr ""
 
 #. module: audittrail
 #: model:ir.module.module,description:audittrail.module_meta_information
-msgid "Allows the administrator to track every user operations on all objects of the system.\n"
-"    Subscribe Rules for read, write, create and delete on objects and check logs"
+msgid ""
+"Allows the administrator to track every user operations on all objects of "
+"the system.\n"
+"    Subscribe Rules for read, write, create and delete on objects and check "
+"logs"
 msgstr ""
 
 #. module: audittrail
@@ -302,3 +305,14 @@ msgstr ""
 msgid "Log deletes"
 msgstr ""
 
+#. module: audittrail
+#: code:addons/audittrail/audittrail.py:0
+#, python-format
+msgid "WARNING:audittrail is not part of the pool"
+msgstr ""
+
+#. module: audittrail
+#: code:addons/audittrail/audittrail.py:0
+#, python-format
+msgid "Change audittrail depends -- Setting rule as DRAFT"
+msgstr ""

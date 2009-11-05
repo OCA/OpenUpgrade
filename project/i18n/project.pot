@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* project
+# 	* project
 #
 msgid ""
 msgstr ""
@@ -68,7 +68,9 @@ msgstr ""
 #. module: project
 #: help:config.compute.remaining,remaining_hours:0
 #: help:project.task,remaining_hours:0
-msgid "Total remaining time, can be re-estimated periodically by the assignee of the task."
+msgid ""
+"Total remaining time, can be re-estimated periodically by the assignee of "
+"the task."
 msgstr ""
 
 #. module: project
@@ -99,7 +101,9 @@ msgstr ""
 
 #. module: project
 #: help:project.project,warn_header:0
-msgid "Header added at the beginning of the email for the warning message sent to the customer when a task is closed."
+msgid ""
+"Header added at the beginning of the email for the warning message sent to "
+"the customer when a task is closed."
 msgstr ""
 
 #. module: project
@@ -160,7 +164,8 @@ msgstr ""
 
 #. module: project
 #: model:ir.module.module,description:project.module_meta_information
-msgid "Project management module that track multi-level projects, tasks,\n"
+msgid ""
+"Project management module that track multi-level projects, tasks,\n"
 "works done on tasks, eso. It is able to render planning, order tasks, eso.\n"
 "    "
 msgstr ""
@@ -189,13 +194,13 @@ msgstr ""
 
 #. module: project
 #: help:project.task.delegate,init,planned_hours_me:0
-msgid "Estimated time for you to validate the work done by the user to whom you delegate this task."
+msgid ""
+"Estimated time for you to validate the work done by the user to whom you "
+"delegate this task."
 msgstr ""
 
 #. module: project
-#: view:project.project:0
-#: field:project.project,notes:0
-#: view:project.task:0
+#: view:project.project:0 field:project.project,notes:0 view:project.task:0
 #: field:project.task,notes:0
 msgid "Notes"
 msgstr ""
@@ -211,8 +216,7 @@ msgid "Analysis"
 msgstr ""
 
 #. module: project
-#: model:ir.model,name:project.model_project_project
-#: view:project.project:0
+#: model:ir.model,name:project.model_project_project view:project.project:0
 #: field:project.task,project_id:0
 #: model:res.request.link,name:project.req_link_project
 msgid "Project"
@@ -231,18 +235,17 @@ msgstr ""
 
 #. module: project
 #: view:project.project:0
-msgid "Automatic variables for headers and footer. Use exactly the same notation."
+msgid ""
+"Automatic variables for headers and footer. Use exactly the same notation."
 msgstr ""
 
 #. module: project
-#: selection:project.project,state:0
-#: selection:project.task,state:0
+#: selection:project.project,state:0 selection:project.task,state:0
 msgid "Cancelled"
 msgstr ""
 
 #. module: project
-#: view:project.project:0
-#: field:project.project,warn_header:0
+#: view:project.project:0 field:project.project,warn_header:0
 msgid "Mail Header"
 msgstr ""
 
@@ -268,7 +271,9 @@ msgstr ""
 
 #. module: project
 #: help:project.project,warn_customer:0
-msgid "If you check this, the user will have a popup when closing a task that propose a message to send by email to the customer."
+msgid ""
+"If you check this, the user will have a popup when closing a task that "
+"propose a message to send by email to the customer."
 msgstr ""
 
 #. module: project
@@ -304,8 +309,7 @@ msgid "Extra Info"
 msgstr ""
 
 #. module: project
-#: field:project.project,partner_id:0
-#: field:project.task,partner_id:0
+#: field:project.project,partner_id:0 field:project.task,partner_id:0
 msgid "Partner"
 msgstr ""
 
@@ -332,7 +336,8 @@ msgstr ""
 
 #. module: project
 #: help:project.project,members:0
-msgid "Project's member. Not used in any computation, just for information purpose."
+msgid ""
+"Project's member. Not used in any computation, just for information purpose."
 msgstr ""
 
 #. module: project
@@ -382,8 +387,7 @@ msgid "Computed as: Time Spent + Remaining Time."
 msgstr ""
 
 #. module: project
-#: field:project.task,type:0
-#: field:project.task.type,name:0
+#: field:project.task,type:0 field:project.task.type,name:0
 msgid "Type"
 msgstr ""
 
@@ -427,8 +431,7 @@ msgid "Planned Time"
 msgstr ""
 
 #. module: project
-#: model:ir.model,name:project.model_project_task_work
-#: view:project.task:0
+#: model:ir.model,name:project.model_project_task_work view:project.task:0
 #: view:project.task.work:0
 msgid "Task Work"
 msgstr ""
@@ -479,20 +482,17 @@ msgid "Template"
 msgstr ""
 
 #. module: project
-#: model:ir.ui.menu,name:project.menu_definitions
-#: view:res.company:0
+#: model:ir.ui.menu,name:project.menu_definitions view:res.company:0
 msgid "Configuration"
 msgstr ""
 
 #. module: project
-#: field:project.project,date_start:0
-#: field:project.task,date_start:0
+#: field:project.project,date_start:0 field:project.task,date_start:0
 msgid "Starting Date"
 msgstr ""
 
 #. module: project
-#: model:ir.ui.menu,name:project.menu_all_project
-#: view:project.project:0
+#: model:ir.ui.menu,name:project.menu_all_project view:project.project:0
 msgid "Projects"
 msgstr ""
 
@@ -544,20 +544,17 @@ msgstr ""
 
 #. module: project
 #: model:ir.module.module,shortdesc:project.module_meta_information
-#: model:ir.ui.menu,name:project.menu_main
-#: view:res.company:0
+#: model:ir.ui.menu,name:project.menu_main view:res.company:0
 msgid "Project Management"
 msgstr ""
 
 #. module: project
-#: field:project.project,effective_hours:0
-#: field:project.task.work,hours:0
+#: field:project.project,effective_hours:0 field:project.task.work,hours:0
 msgid "Time Spent"
 msgstr ""
 
 #. module: project
-#: model:ir.ui.menu,name:project.menu_tasks
-#: view:project.task:0
+#: model:ir.ui.menu,name:project.menu_tasks view:project.task:0
 msgid "Tasks"
 msgstr ""
 
@@ -645,8 +642,7 @@ msgstr ""
 
 #. module: project
 #: model:process.transition.action,name:project.process_transition_action_opendrafttask0
-#: view:project.task:0
-#: selection:project.task,state:0
+#: view:project.task:0 selection:project.task,state:0
 msgid "Draft"
 msgstr ""
 
@@ -661,10 +657,8 @@ msgid "Project Manager"
 msgstr ""
 
 #. module: project
-#: view:project.project:0
-#: selection:project.project,state:0
-#: view:project.task:0
-#: selection:project.task,state:0
+#: view:project.project:0 selection:project.project,state:0
+#: view:project.task:0 selection:project.task,state:0
 #: selection:project.task.delegate,init,state:0
 msgid "Pending"
 msgstr ""
@@ -676,7 +670,9 @@ msgstr ""
 
 #. module: project
 #: help:project.task.delegate,init,state:0
-msgid "New state of your own task. Pending will be reopened automatically when the delegated task is closed."
+msgid ""
+"New state of your own task. Pending will be reopened automatically when the "
+"delegated task is closed."
 msgstr ""
 
 #. module: project
@@ -685,8 +681,7 @@ msgid "Project Time Unit"
 msgstr ""
 
 #. module: project
-#: field:project.project,complete_name:0
-#: field:project.project,name:0
+#: field:project.project,complete_name:0 field:project.project,name:0
 msgid "Project Name"
 msgstr ""
 
@@ -722,7 +717,9 @@ msgstr ""
 
 #. module: project
 #: help:project.task,delay_hours:0
-msgid "Computed as: Total Time - Estimated Time. It gives the difference of the time estimated by the project manager and the real time to close the task."
+msgid ""
+"Computed as: Total Time - Estimated Time. It gives the difference of the "
+"time estimated by the project manager and the real time to close the task."
 msgstr ""
 
 #. module: project
@@ -752,8 +749,10 @@ msgstr ""
 
 #. module: project
 #: help:res.company,project_time_mode:0
-msgid "This will set the unit of measure used in projects and tasks.\n"
-"If you use the timesheet linked to projects (project_timesheet module), don't forget to setup the right unit of measure in your employees."
+msgid ""
+"This will set the unit of measure used in projects and tasks.\n"
+"If you use the timesheet linked to projects (project_timesheet module), "
+"don't forget to setup the right unit of measure in your employees."
 msgstr ""
 
 #. module: project
@@ -793,7 +792,9 @@ msgstr ""
 
 #. module: project
 #: help:project.task,planned_hours:0
-msgid "Estimated time to do the task, usually set by the project manager when the task is in draft state."
+msgid ""
+"Estimated time to do the task, usually set by the project manager when the "
+"task is in draft state."
 msgstr ""
 
 #. module: project
@@ -803,7 +804,9 @@ msgstr ""
 
 #. module: project
 #: help:project.task,project_id:0
-msgid "If you have [?] in the project name, it means there are no analytic account linked to this project."
+msgid ""
+"If you have [?] in the project name, it means there are no analytic account "
+"linked to this project."
 msgstr ""
 
 #. module: project
@@ -844,14 +847,15 @@ msgstr ""
 
 #. module: project
 #: help:project.project,category_id:0
-msgid "Link this project to an analytic account if you need financial management on projects. It enables you to connect projects with budgets, planning, cost and revenue analysis, timesheets on projects, etc."
+msgid ""
+"Link this project to an analytic account if you need financial management on "
+"projects. It enables you to connect projects with budgets, planning, cost "
+"and revenue analysis, timesheets on projects, etc."
 msgstr ""
 
 #. module: project
-#: view:project.project:0
-#: selection:project.project,state:0
-#: view:project.task:0
-#: selection:project.task,state:0
+#: view:project.project:0 selection:project.project,state:0
+#: view:project.task:0 selection:project.task,state:0
 #: selection:project.task.delegate,init,state:0
 msgid "Done"
 msgstr ""
@@ -860,8 +864,7 @@ msgstr ""
 #: view:config.compute.remaining:0
 #: model:process.transition.action,name:project.process_transition_action_draftcanceltask0
 #: model:process.transition.action,name:project.process_transition_action_opencanceltask0
-#: view:project.project:0
-#: view:project.task:0
+#: view:project.project:0 view:project.task:0
 #: wizard_button:project.task.close,mail_ask,end:0
 #: wizard_button:project.task.delegate,init,end:0
 msgid "Cancel"
@@ -889,7 +892,8 @@ msgstr ""
 
 #. module: project
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: project
@@ -977,7 +981,9 @@ msgstr ""
 
 #. module: project
 #: help:project.project,parent_id:0
-msgid "If you have [?] in the name, it means there are no analytic account linked to project."
+msgid ""
+"If you have [?] in the name, it means there are no analytic account linked "
+"to project."
 msgstr ""
 
 #. module: project
@@ -992,7 +998,9 @@ msgstr ""
 
 #. module: project
 #: help:project.project,warn_manager:0
-msgid "If you check this field, the project manager will receive a request each time a task is completed by his team."
+msgid ""
+"If you check this field, the project manager will receive a request each "
+"time a task is completed by his team."
 msgstr ""
 
 #. module: project
@@ -1032,14 +1040,15 @@ msgid "Template of Projects"
 msgstr ""
 
 #. module: project
-#: field:project.project,priority:0
-#: field:project.task,sequence:0
+#: field:project.project,priority:0 field:project.task,sequence:0
 msgid "Sequence"
 msgstr ""
 
 #. module: project
 #: help:project.project,warn_footer:0
-msgid "Footer added at the beginning of the email for the warning message sent to the customer when a task is closed."
+msgid ""
+"Footer added at the beginning of the email for the warning message sent to "
+"the customer when a task is closed."
 msgstr ""
 
 #. module: project
@@ -1093,8 +1102,7 @@ msgid "Delegate your task to the other user"
 msgstr ""
 
 #. module: project
-#: view:project.project:0
-#: field:project.project,warn_footer:0
+#: view:project.project:0 field:project.project,warn_footer:0
 msgid "Mail Footer"
 msgstr ""
 
@@ -1104,3 +1112,7 @@ msgstr ""
 msgid "Running projects"
 msgstr ""
 
+#. module: project
+#: field:res.company,overdue_msg:0
+msgid "Overdue Payments Message"
+msgstr ""

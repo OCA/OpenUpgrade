@@ -1,14 +1,15 @@
 # Translation of OpenERP Server.
 # This file containt the translation of the following modules:
-#	* membership
+# 	* membership
 #
+# Copyright (C) 2008,2009 P. Christeas <p_christ@hol.gr>
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2008-11-15 08:33:16+0000\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
 "PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
-"Last-Translator: <>\n"
+"Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,8 +32,18 @@ msgid "Reporting"
 msgstr ""
 
 #. module: membership
-#: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+#: field:membership.membership_line,date_from:0
+msgid "From"
+msgstr ""
+
+#. module: membership
+#: model:process.process,name:membership.process_process_membershipprocess0
+msgid "Membership Process"
+msgstr ""
+
+#. module: membership
+#: model:process.node,note:membership.process_node_waitingmember0
+msgid "Draft invoice for membership."
 msgstr ""
 
 #. module: membership
@@ -41,9 +52,30 @@ msgid "Confirm"
 msgstr ""
 
 #. module: membership
+#: model:product.pricelist.version,name:membership.ver1m
+msgid "Member Sale Pricelist Version"
+msgstr ""
+
+#. module: membership
 #: selection:membership.membership_line,state:0
 #: selection:res.partner,membership_state:0
 msgid "Canceled Member"
+msgstr ""
+
+#. module: membership
+#: model:process.node,name:membership.process_node_waitingmember0
+msgid "Waiting member"
+msgstr ""
+
+#. module: membership
+#: constraint:ir.model:0
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
+msgstr ""
+
+#. module: membership
+#: model:process.transition,note:membership.process_transition_invoicetoassociate0
+msgid "Invoiced member may be Associated member."
 msgstr ""
 
 #. module: membership
@@ -57,15 +89,10 @@ msgid "Member line"
 msgstr ""
 
 #. module: membership
-#: model:ir.ui.menu,name:membership.menu_membership_products
-#: view:product.product:0
-msgid "Membership products"
+#: model:product.price.type,name:membership.product_price_type_memberprice
+#: field:product.template,member_price:0
+msgid "Member Price"
 msgstr ""
-
-#. module: membership
-#: field:membership.membership_line,date_to:0
-msgid "To"
-msgstr "Προς"
 
 #. module: membership
 #: field:membership.membership_line,state:0
@@ -73,16 +100,18 @@ msgid "State"
 msgstr "Κατάσταση Λογαριασμού"
 
 #. module: membership
+#: constraint:product.pricelist.version:0
+msgid "You cannot have 2 pricelist versions that overlap!"
+msgstr ""
+
+#. module: membership
 #: field:res.partner,membership_start:0
 msgid "Start membership date"
 msgstr ""
 
 #. module: membership
-#: field:report.partner_member.year,invoiced_amount:0
-#: field:report.partner_member.year,invoiced_number:0
-#: field:report.partner_member.year_new,invoiced_amount:0
-#: field:report.partner_member.year_new,invoiced_number:0
-msgid "Invoiced"
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
 msgstr ""
 
 #. module: membership
@@ -92,50 +121,18 @@ msgid "Paid Member"
 msgstr ""
 
 #. module: membership
-#: field:membership.membership_line,date_from:0
-msgid "From"
+#: model:process.node,name:membership.process_node_associatedmember0
+msgid "Associated member"
 msgstr ""
 
 #. module: membership
-#: field:report.partner_member.year,currency:0
-#: field:report.partner_member.year_new,currency:0
-msgid "Currency"
-msgstr "Νόμισμα"
-
-#. module: membership
-#: field:product.product,membership_date_to:0
-msgid "Date to"
+#: model:process.transition,note:membership.process_transition_producttomember0
+msgid "Define product for membership."
 msgstr ""
 
 #. module: membership
-#: model:ir.actions.act_window,name:membership.action_membership_products
-msgid "Membership Products"
-msgstr ""
-
-#. module: membership
-#: model:ir.model,name:membership.model_report_partner_member_year
-#: model:ir.ui.menu,name:membership.menu_report_partner_member_year
-#: view:report.partner_member.year:0
-msgid "Membership by Years"
-msgstr ""
-
-#. module: membership
-#: selection:membership.membership_line,state:0
-#: selection:res.partner,membership_state:0
-msgid "Free Member"
-msgstr ""
-
-#. module: membership
-#: field:report.partner_member.year_new,paid_amount:0
-#: field:report.partner_member.year_new,paid_number:0
-#: field:report.partner_member.year,paid_amount:0
-#: field:report.partner_member.year,paid_number:0
-msgid "Paid"
-msgstr ""
-
-#. module: membership
-#: field:res.partner,membership_amount:0
-msgid "Membership amount"
+#: model:process.node,name:membership.process_node_setassociation0
+msgid "Set association"
 msgstr ""
 
 #. module: membership
@@ -145,17 +142,95 @@ msgid "Invoiced Member"
 msgstr ""
 
 #. module: membership
-#: field:product.product,membership:0
+#: field:product.product,membership_date_to:0
+msgid "Date to"
+msgstr ""
+
+#. module: membership
+#: model:process.node,name:membership.process_node_paidmember0
+msgid "Paid member"
+msgstr ""
+
+#. module: membership
+#: model:process.transition,name:membership.process_transition_waitingtoinvoice0
+msgid "Waiting to invoice"
+msgstr ""
+
+#. module: membership
+#: model:process.node,note:membership.process_node_invoicedmember0
+msgid "Open invoice."
+msgstr ""
+
+#. module: membership
+#: field:report.partner_member.year,canceled_amount:0
+#: field:report.partner_member.year,canceled_number:0
+#: field:report.partner_member.year_new,canceled_amount:0
+#: field:report.partner_member.year_new,canceled_number:0
+msgid "Canceled"
+msgstr ""
+
+#. module: membership
+#: model:process.transition,note:membership.process_transition_invoicetopaid0
+msgid "Invoice is be paid."
+msgstr ""
+
+#. module: membership
+#: model:process.node,note:membership.process_node_membershipproduct0
+msgid "Define membership product."
+msgstr ""
+
+#. module: membership
+#: selection:membership.membership_line,state:0
+#: selection:res.partner,membership_state:0
+msgid "Free Member"
+msgstr ""
+
+#. module: membership
+#: model:process.node,note:membership.process_node_paidmember0
+msgid "Membership invoice paid."
+msgstr ""
+
+#. module: membership
+#: field:report.partner_member.year,paid_amount:0
+#: field:report.partner_member.year,paid_number:0
+#: field:report.partner_member.year_new,paid_amount:0
+#: field:report.partner_member.year_new,paid_number:0
+msgid "Paid"
+msgstr ""
+
+#. module: membership
+#: field:res.partner,membership_amount:0
+msgid "Membership amount"
+msgstr ""
+
+#. module: membership
+#: field:res.partner,membership_cancel:0
+msgid "Cancel membership date"
+msgstr ""
+
+#. module: membership
+#: model:ir.module.module,shortdesc:membership.module_meta_information
+#: model:ir.ui.menu,name:membership.menu_membership view:product.product:0
+#: field:product.product,membership:0 view:res.partner:0
 #: field:res.partner,member_lines:0
-#: model:ir.ui.menu,name:membership.menu_membership
-#: view:product.product:0
-#: view:res.partner:0
 msgid "Membership"
 msgstr ""
 
 #. module: membership
-#: help:product.product,membership:0
-msgid "Specify if this product is a membership product"
+#: field:report.partner_member.year,year:0
+#: field:report.partner_member.year_new,year:0
+msgid "Year"
+msgstr ""
+
+#. module: membership
+#: selection:membership.membership_line,state:0
+#: selection:res.partner,membership_state:0
+msgid "Waiting Member"
+msgstr ""
+
+#. module: membership
+#: view:res.partner:0
+msgid "Members"
 msgstr ""
 
 #. module: membership
@@ -165,19 +240,18 @@ msgid "Non Member"
 msgstr ""
 
 #. module: membership
-#: field:res.partner,membership_stop:0
-msgid "Stop membership date"
-msgstr ""
-
-#. module: membership
-#: selection:membership.membership_line,state:0
-#: selection:res.partner,membership_state:0
-msgid "Associated Member"
+#: model:process.transition,name:membership.process_transition_associationpartner0
+msgid "Association Partner"
 msgstr ""
 
 #. module: membership
 #: model:ir.ui.menu,name:membership.menu_conf
 msgid "Configuration"
+msgstr ""
+
+#. module: membership
+#: model:process.transition.action,name:membership.process_transition_action_create0
+msgid "Create"
 msgstr ""
 
 #. module: membership
@@ -192,6 +266,12 @@ msgid "Member Sale Pricelist"
 msgstr ""
 
 #. module: membership
+#: field:membership.membership_line,date_to:0
+msgid "To"
+msgstr "Προς"
+
+#. module: membership
+#: model:ir.actions.act_window,name:membership.action_membership_members
 #: model:ir.ui.menu,name:membership.menu_members
 msgid "Current members"
 msgstr ""
@@ -202,29 +282,19 @@ msgid "Invalid XML for View Architecture!"
 msgstr ""
 
 #. module: membership
-#: view:res.partner:0
-msgid "Members"
+#: help:product.product,membership:0
+msgid "Specify if this product is a membership product"
 msgstr ""
 
 #. module: membership
-#: field:res.partner,membership_cancel:0
-msgid "Cancel membership date"
+#: model:ir.ui.menu,name:membership.menu_membership_products
+#: view:product.product:0
+msgid "Membership products"
 msgstr ""
 
 #. module: membership
 #: view:res.partner:0
 msgid "Partners"
-msgstr ""
-
-#. module: membership
-#: model:ir.ui.menu,name:membership.menu_members_waiting
-msgid "Future members (invoice not confirmed)"
-msgstr ""
-
-#. module: membership
-#: selection:membership.membership_line,state:0
-#: selection:res.partner,membership_state:0
-msgid "Waiting Member"
 msgstr ""
 
 #. module: membership
@@ -241,14 +311,48 @@ msgid "Old members"
 msgstr ""
 
 #. module: membership
-#: model:ir.actions.act_window,name:membership.action_membership_members_associated
-#: model:ir.ui.menu,name:membership.menu_members_associated
-msgid "Associated members"
+#: model:ir.ui.menu,name:membership.menu_members_waiting
+msgid "Future members (invoice not confirmed)"
 msgstr ""
+
+#. module: membership
+#: model:process.node,name:membership.process_node_invoicedmember0
+msgid "Invoiced member"
+msgstr ""
+
+#. module: membership
+#: model:ir.actions.act_window,name:membership.action_membership_products
+msgid "Membership Products"
+msgstr ""
+
+#. module: membership
+#: model:process.transition,name:membership.process_transition_producttomember0
+msgid "Product to member"
+msgstr ""
+
+#. module: membership
+#: field:membership.membership_line,date_cancel:0
+msgid "Cancel date"
+msgstr ""
+
+#. module: membership
+#: field:membership.membership_line,partner:0
+msgid "Partner"
+msgstr "Συνέταιρος"
 
 #. module: membership
 #: field:res.partner,associate_member:0
 msgid "Associate member"
+msgstr ""
+
+#. module: membership
+#: model:process.node,note:membership.process_node_setassociation0
+msgid "Set an associate member of partner."
+msgstr ""
+
+#. module: membership
+#: model:process.node,note:membership.process_node_associatedmember0
+msgid "Member is associated."
 msgstr ""
 
 #. module: membership
@@ -257,6 +361,12 @@ msgid "Invoice Membership"
 msgstr ""
 
 #. module: membership
+#: field:res.partner,membership_stop:0
+msgid "Stop membership date"
+msgstr ""
+
+#. module: membership
+#: model:process.node,name:membership.process_node_membershipproduct0
 #: wizard_field:wizard_invoice_membership,init,product:0
 msgid "Membership product"
 msgstr ""
@@ -273,20 +383,20 @@ msgid "Paid members"
 msgstr ""
 
 #. module: membership
-#: constraint:product.pricelist.version:0
-msgid "You can not have 2 pricelist version that overlaps!"
+#: model:process.transition,note:membership.process_transition_associationpartner0
+msgid "Associated partner."
 msgstr ""
 
 #. module: membership
-#: selection:membership.membership_line,state:0
-#: selection:res.partner,membership_state:0
-msgid "Old Member"
+#: model:ir.model,name:membership.model_report_partner_member_year
+#: model:ir.ui.menu,name:membership.menu_report_partner_member_year
+#: view:report.partner_member.year:0
+msgid "Membership by Years"
 msgstr ""
 
 #. module: membership
-#: field:product.template,member_price:0
-#: model:product.price.type,name:membership.product_price_type_memberprice
-msgid "Member Price"
+#: model:process.transition,name:membership.process_transition_invoicetoassociate0
+msgid "invoice to associate"
 msgstr ""
 
 #. module: membership
@@ -295,20 +405,28 @@ msgid "Free member"
 msgstr ""
 
 #. module: membership
-#: field:report.partner_member.year_new,waiting_amount:0
-#: field:report.partner_member.year_new,waiting_number:0
 #: field:report.partner_member.year,waiting_amount:0
 #: field:report.partner_member.year,waiting_number:0
+#: field:report.partner_member.year_new,waiting_amount:0
+#: field:report.partner_member.year_new,waiting_number:0
 msgid "Waiting"
 msgstr ""
 
 #. module: membership
-#: field:report.partner_member.year,canceled_amount:0
-#: field:report.partner_member.year,canceled_number:0
-#: field:report.partner_member.year_new,canceled_amount:0
-#: field:report.partner_member.year_new,canceled_number:0
-msgid "Canceled"
+#: model:process.transition,name:membership.process_transition_invoicetopaid0
+msgid "Invoice to paid"
 msgstr ""
+
+#. module: membership
+#: model:process.transition,note:membership.process_transition_waitingtoinvoice0
+msgid "Draft invoice is now open."
+msgstr ""
+
+#. module: membership
+#: field:report.partner_member.year,currency:0
+#: field:report.partner_member.year_new,currency:0
+msgid "Currency"
+msgstr "Νόμισμα"
 
 #. module: membership
 #: field:product.product,membership_date_from:0
@@ -321,9 +439,9 @@ msgid "Future members"
 msgstr ""
 
 #. module: membership
-#: field:report.partner_member.year_new,year:0
-#: field:report.partner_member.year,year:0
-msgid "Year"
+#: selection:membership.membership_line,state:0
+#: selection:res.partner,membership_state:0
+msgid "Old Member"
 msgstr ""
 
 #. module: membership
@@ -332,9 +450,10 @@ msgid "Cancel"
 msgstr ""
 
 #. module: membership
-#: field:membership.membership_line,partner:0
-msgid "Partner"
-msgstr "Συνέταιρος"
+#: model:ir.actions.act_window,name:membership.action_membership_members_associated
+#: model:ir.ui.menu,name:membership.menu_members_associated
+msgid "Associated members"
+msgstr ""
 
 #. module: membership
 #: model:ir.actions.act_window,name:membership.action_membership_members_free
@@ -348,7 +467,9 @@ msgid "Current membership state"
 msgstr ""
 
 #. module: membership
-#: field:membership.membership_line,date_cancel:0
-msgid "Cancel date"
+#: field:report.partner_member.year,invoiced_amount:0
+#: field:report.partner_member.year,invoiced_number:0
+#: field:report.partner_member.year_new,invoiced_amount:0
+#: field:report.partner_member.year_new,invoiced_number:0
+msgid "Invoiced"
 msgstr ""
-

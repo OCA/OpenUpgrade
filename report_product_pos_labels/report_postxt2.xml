@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+	<wizard id="wizard_pos_print_labels_product" model="product.product" 
+			name="wizard.point_of_sale_print.print" string="Print POS labels" 
+			keyword="client_print_multi"/>
+
+	<wizard id="wizard_pos_print_labels_prodlot" model="stock.production.lot" 
+			name="wizard.point_of_sale_print.print" string="Product Lot labels" 
+			keyword="client_print_multi"/>
+
+ <record id="report_product_labels1" model="ir.actions.report.postxt">
+  <field name="name">Simple Product Labels</field>
+  <field name="model">product.product</field>
+  <field name="soft_copies" eval="True"/>
+  <field name="txt_content">
+N
+I8,D,001
+q439
+A23,7,0,3,1,1,N,"ACME"
+A23,33,0,2,1,1,N,"$name"
+B23,71,0,E30,2,3,73,B,"$ean13"
+P$num_copies
+</field>
+  </record>
+
+ <record id="report_prodlot_labels1" model="ir.actions.report.postxt">
+  <field name="name">Simple Lot Labels</field>
+  <field name="model">stock.production.lot</field>
+  <field name="soft_copies" eval="True"/>
+  <field name="txt_content">
+$\
+N
+I8,D,001
+q439
+A23,7,0,3,1,1,N,"ACME  $ref"
+A23,33,0,2,1,1,N,"$prod_name"
+A23,60,0,2,1,1,N,"$prod_vars"
+B23,85,0,1,2,3,67,B,"$name"
+GG300,78,"hellug"
+P$num_copies
+
+$\+prod_name this.product_id.name
+$\+prod_vars specs or this.product_id.variants
+  </field>
+  </record>
+
+</data>
+</openerp>

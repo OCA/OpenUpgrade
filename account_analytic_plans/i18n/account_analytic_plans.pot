@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* account_analytic_plans
+# 	* account_analytic_plans
 #
 msgid ""
 msgstr ""
@@ -22,7 +22,8 @@ msgstr ""
 
 #. module: account_analytic_plans
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: account_analytic_plans
@@ -47,8 +48,7 @@ msgid "Rate (%)"
 msgstr ""
 
 #. module: account_analytic_plans
-#: view:account.analytic.plan:0
-#: field:account.analytic.plan,name:0
+#: view:account.analytic.plan:0 field:account.analytic.plan,name:0
 #: field:account.analytic.plan.line,plan_id:0
 #: model:ir.actions.act_window,name:account_analytic_plans.account_analytic_plan_form_action
 #: model:ir.ui.menu,name:account_analytic_plans.menu_account_analytic_plan_action
@@ -177,8 +177,7 @@ msgid "Default Entries"
 msgstr ""
 
 #. module: account_analytic_plans
-#: view:account.analytic.plan:0
-#: field:account.analytic.plan,plan_ids:0
+#: view:account.analytic.plan:0 field:account.analytic.plan,plan_ids:0
 #: field:account.journal,plan_id:0
 #: model:ir.model,name:account_analytic_plans.model_account_analytic_plan
 msgid "Analytic Plans"
@@ -221,7 +220,9 @@ msgstr ""
 
 #. module: account_analytic_plans
 #: model:ir.module.module,description:account_analytic_plans.module_meta_information
-msgid "This module allows to use several analytic plans, according to the general journal,\n"
+msgid ""
+"This module allows to use several analytic plans, according to the general "
+"journal,\n"
 "so that multiple analytic lines are created when the invoice or the entries\n"
 "are confirmed.\n"
 "\n"
@@ -246,7 +247,8 @@ msgid "This module allows to use several analytic plans, according to the genera
 "Plan2:\n"
 "    Eric: 100%\n"
 "\n"
-"So when this line of invoice will be confirmed, it will generate 3 analytic lines,\n"
+"So when this line of invoice will be confirmed, it will generate 3 analytic "
+"lines,\n"
 "for one account entry.\n"
 "        "
 msgstr ""
@@ -319,7 +321,8 @@ msgstr ""
 
 #. module: account_analytic_plans
 #: wizard_view:create.model,info:0
-msgid "This distribution model has been saved. You will be able to reuse it later."
+msgid ""
+"This distribution model has been saved. You will be able to reuse it later."
 msgstr ""
 
 #. module: account_analytic_plans
@@ -365,4 +368,3 @@ msgstr ""
 #: rml:account.analytic.account.crossovered.analytic:0
 msgid "From Date"
 msgstr ""
-

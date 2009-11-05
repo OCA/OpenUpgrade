@@ -29,7 +29,7 @@ import tools
 class etl_connector_localfile(osv.osv):
     _name='etl.connector'
     _inherit='etl.connector'
-    _path =  tools.config['addons_path']+'/etl_interface/etl_data/'
+    _path =  './filestore/etl_data/'
     
     _columns={
               'bufsize' : fields.integer('Buffer Size'),

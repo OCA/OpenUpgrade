@@ -1,0 +1,71 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* base_contact_team
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 5.0.2\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
+"PO-Revision-Date: 2009-08-14 08:23:23+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: base_contact_team
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr ""
+
+#. module: base_contact_team
+#: constraint:ir.model:0
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr ""
+
+#. module: base_contact_team
+#: view:res.partner.team:0
+#: field:res.partner.team,description:0
+msgid "Description"
+msgstr ""
+
+#. module: base_contact_team
+#: model:ir.model,name:base_contact_team.model_res_partner_team
+msgid "res.partner.team"
+msgstr ""
+
+#. module: base_contact_team
+#: model:ir.actions.act_window,name:base_contact_team.res_partner_team_all_act
+#: model:ir.ui.menu,name:base_contact_team.res_partner_team_all_mi
+msgid "Teams"
+msgstr ""
+
+#. module: base_contact_team
+#: model:ir.actions.act_window,name:base_contact_team.res_partner_team_new_act
+#: model:ir.ui.menu,name:base_contact_team.res_partner_team_new_mi
+msgid "New Team"
+msgstr ""
+
+#. module: base_contact_team
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
+
+#. module: base_contact_team
+#: field:res.partner.job,team_id:0
+#: view:res.partner.team:0
+msgid "Team"
+msgstr ""
+
+#. module: base_contact_team
+#: model:ir.module.module,description:base_contact_team.module_meta_information
+msgid "With this module will help you to manages teams of contacts for different purposes."
+msgstr ""
+
+#. module: base_contact_team
+#: field:res.partner.team,name:0
+msgid "Name"
+msgstr ""
+

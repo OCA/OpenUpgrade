@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* base_module_quality
+# 	* base_module_quality
 #
 msgid ""
 msgstr ""
@@ -22,7 +22,8 @@ msgstr ""
 
 #. module: base_module_quality
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: base_module_quality
@@ -62,12 +63,13 @@ msgstr ""
 
 #. module: base_module_quality
 #: help:module.quality.detail,ponderation:0
-msgid "Some tests are more critical than others, so they have a bigger weight in the computation of final rating"
+msgid ""
+"Some tests are more critical than others, so they have a bigger weight in "
+"the computation of final rating"
 msgstr ""
 
 #. module: base_module_quality
-#: view:module.quality.check:0
-#: field:module.quality.check,check_detail_ids:0
+#: view:module.quality.check:0 field:module.quality.check,check_detail_ids:0
 msgid "Tests"
 msgstr ""
 
@@ -78,7 +80,9 @@ msgstr ""
 
 #. module: base_module_quality
 #: help:module.quality.detail,state:0
-msgid "The test will be completed only if the module is installed or if the test may be processed on uninstalled module."
+msgid ""
+"The test will be completed only if the module is installed or if the test "
+"may be processed on uninstalled module."
 msgstr ""
 
 #. module: base_module_quality
@@ -117,8 +121,7 @@ msgid "Save report as .html format"
 msgstr ""
 
 #. module: base_module_quality
-#: view:module.quality.detail:0
-#: field:module.quality.detail,summary:0
+#: view:module.quality.detail:0 field:module.quality.detail,summary:0
 msgid "Summary"
 msgstr ""
 
@@ -153,8 +156,7 @@ msgid "Done"
 msgstr ""
 
 #. module: base_module_quality
-#: view:module.quality.check:0
-#: view:module.quality.detail:0
+#: view:module.quality.check:0 view:module.quality.detail:0
 msgid "Result"
 msgstr ""
 
@@ -173,3 +175,27 @@ msgstr ""
 msgid "Quality"
 msgstr ""
 
+#. module: base_module_quality
+#: field:quality.check.detail,general_info:0
+msgid "General Info"
+msgstr ""
+
+#. module: base_module_quality
+#: field:wizard.quality.check,verbose_detail:0
+msgid "Verbose Detail"
+msgstr ""
+
+#. module: base_module_quality
+#: model:ir.model,name:base_module_quality.model_quality_check_detail
+msgid "quality.check.detail"
+msgstr ""
+
+#. module: base_module_quality
+#: model:ir.model,name:base_module_quality.model_wizard_quality_check
+msgid "wizard.quality.check"
+msgstr ""
+
+#. module: base_module_quality
+#: view:wizard.quality.check:0
+msgid "Verbose detail"
+msgstr ""

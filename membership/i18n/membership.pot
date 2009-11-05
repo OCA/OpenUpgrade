@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* membership
+# 	* membership
 #
 msgid ""
 msgstr ""
@@ -276,7 +276,8 @@ msgstr ""
 
 #. module: membership
 #: constraint:product.template:0
-msgid "Error: The default UOM and the purchase UOM must be in the same category."
+msgid ""
+"Error: The default UOM and the purchase UOM must be in the same category."
 msgstr ""
 
 #. module: membership
@@ -325,10 +326,8 @@ msgstr ""
 
 #. module: membership
 #: model:ir.module.module,shortdesc:membership.module_meta_information
-#: model:ir.ui.menu,name:membership.menu_membership
-#: view:product.product:0
-#: field:product.product,membership:0
-#: view:res.partner:0
+#: model:ir.ui.menu,name:membership.menu_membership view:product.product:0
+#: field:product.product,membership:0 view:res.partner:0
 #: field:res.partner,member_lines:0
 msgid "Membership"
 msgstr ""
@@ -434,7 +433,8 @@ msgstr ""
 
 #. module: membership
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: membership
@@ -518,4 +518,3 @@ msgstr ""
 #: field:res.partner,membership_state:0
 msgid "Current membership state"
 msgstr ""
-

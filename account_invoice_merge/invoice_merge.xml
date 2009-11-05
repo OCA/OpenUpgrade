@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <wizard id="wizard_invoice_merge" model="account.invoice" 
+	        name="account.invoice.merge.wizard" string="Merge invoices" 
+		multi="1"
+		groups="base.group_user"/>
+
+</data>
+</openerp>

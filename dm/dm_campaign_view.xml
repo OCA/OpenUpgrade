@@ -131,7 +131,7 @@
                 </group>
                 <notebook colspan="4">
                     <page string="General">
-                        <group colspan="2">
+                        <group colspan="2" col="2">
                         <separator string="Global Information" colspan="2"/>
                         <field name="offer_id" select="1"/>
                         <field name="campaign_type_id" widget="selection" select="2"/>
@@ -140,7 +140,7 @@
                         <field name="trademark_id"/>
                         <field name="responsible_id" />
                         </group>
-                        <group colspan="2">
+                        <group colspan="2" col="2">
                         <separator string="Geographical" colspan="2"/>
                         <field name="country_id" select="1" on_change="onchange_lang_currency(country_id)"/>
                         <field name="lang_id" select="2"/>
@@ -153,7 +153,7 @@
                         <field name="date" string="End Date"/>
                         </group>
                         <separator string="Campaign Status" colspan="4"/>
-                        <group colspan="4">
+                        <group col="10" colspan="4">
                             <field name="state" readonly="1" select="2" nolabel="1"/>
                             <button name="state_pending_set" string="Set pending" states="draft"/>
                             <button name="state_open_set" string="Start Campaign" states="pending"/>
@@ -455,11 +455,11 @@
                 <notebook colspan="4">
                     <page string="General">
                         <separator string="Global Information" colspan="4"/>
-                        <group colspan="4">
+                        <group col="10" colspan="4">
                             <field name="name" string="Name" select="1" />
                             <field name="code1" string="Code" select="2"/>
                         </group>
-                        <group colspan="4">
+                        <group col="10" colspan="4">
                             <field name="country_id" select="1"/>
                             <field name="offer_id"/>
                         </group>
@@ -511,14 +511,14 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="Propositions">
-            <group colspan="3">
+            <group colspan="3" col="4">
             <separator string="Commercial Proposition Description" colspan="5"/>
             <field name="name" string="Name" select="1" />
             <field name="code1" string="Code" select="2" />
             </group>
             <notebook colspan="4">
                 <page string="General">
-                    <group colspan="2">
+                    <group colspan="2" col="2">
                     <separator string="Global Information" colspan="2"/>
                     <field name="camp_id"/>
                     <field name="proposition_type" select="1"/>
@@ -529,7 +529,7 @@
                     <field name="sale_rate"/>
                     <field name="forwarding_charge" select="2"/>
                     </group>
-                    <group colspan="2">
+                    <group colspan="2" col="2">
                     <separator string="Quantities" colspan="2"/>
                     <field name="quantity_planned" select="2"/>
                     <field name="quantity_wanted"/>
@@ -929,7 +929,7 @@
                 <separator string="Customers List Description" colspan="4"/>
                 <field name="name" select="1"/>
                 <field name="code" select="2"/>
-                <group colspan="2">
+                <group colspan="2" col="2">
                     <separator string="General" colspan="2"/>
                     <field name="product_id" select="1"/>
                     <field name="media_id" select="1"/>
@@ -942,7 +942,7 @@
                     <field name="recruiting_origin_id" select="2"/>
                     <field name="update_frq" select="2"/>
                 </group>
-                <group colspan="2">
+                <group colspan="2" col="2">
                     <separator string="Costs" colspan="2"/>
                     <field name="per_thousand_price" select="2"/>
                     <field name="delivery_cost" select="2"/>

@@ -21,8 +21,12 @@
 ##############################################################################
 
 import sys
-if sys.version_info[:1] >= (2, 4):
-    import wizard_ical.py
-
+if sys.version_info[:2] >= (2, 4):
+    try:
+    	import wizard_ical.py
+    except ImportError, e:
+	import logging
+        logging.getLogger('init').error(str(e)+': hr_timesheet_ical cannot work')
+	
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

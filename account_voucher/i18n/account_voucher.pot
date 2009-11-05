@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* account_voucher
+# 	* account_voucher
 #
 msgid ""
 msgstr ""
@@ -26,14 +26,12 @@ msgid "Bank Receipts"
 msgstr ""
 
 #. module: account_voucher
-#: rml:voucher.cash_amount:0
-#: rml:voucher.cash_receipt.drcr:0
+#: rml:voucher.cash_amount:0 rml:voucher.cash_receipt.drcr:0
 msgid "Particulars"
 msgstr ""
 
 #. module: account_voucher
-#: rml:voucher.cash_amount:0
-#: rml:voucher.cash_receipt.drcr:0
+#: rml:voucher.cash_amount:0 rml:voucher.cash_receipt.drcr:0
 msgid "State :"
 msgstr ""
 
@@ -43,14 +41,12 @@ msgid "Invalid model name in the action definition."
 msgstr ""
 
 #. module: account_voucher
-#: rml:voucher.cash_amount:0
-#: rml:voucher.cash_receipt.drcr:0
+#: rml:voucher.cash_amount:0 rml:voucher.cash_receipt.drcr:0
 msgid "Ref. :"
 msgstr ""
 
 #. module: account_voucher
-#: selection:account.move,voucher_type:0
-#: selection:account.voucher,type:0
+#: selection:account.move,voucher_type:0 selection:account.voucher,type:0
 #: selection:account.voucher.open,init,type:0
 #: model:ir.actions.act_window,name:account_voucher.action_view_cont_voucher_form
 #: model:ir.ui.menu,name:account_voucher.menu_action_view_cont_voucher_form
@@ -63,8 +59,7 @@ msgid "Company"
 msgstr ""
 
 #. module: account_voucher
-#: selection:account.move,voucher_type:0
-#: selection:account.voucher,type:0
+#: selection:account.move,voucher_type:0 selection:account.voucher,type:0
 #: model:ir.actions.act_window,name:account_voucher.action_view_jour_voucher_form
 #: model:ir.ui.menu,name:account_voucher.menu_action_view_jour_voucher_form
 msgid "Journal Voucher"
@@ -96,8 +91,7 @@ msgid "Total Credit"
 msgstr ""
 
 #. module: account_voucher
-#: field:account.voucher,account_id:0
-#: field:account.voucher.line,account_id:0
+#: field:account.voucher,account_id:0 field:account.voucher.line,account_id:0
 msgid "Account"
 msgstr ""
 
@@ -122,27 +116,23 @@ msgid "Total Debit"
 msgstr ""
 
 #. module: account_voucher
-#: field:account.voucher,amount:0
-#: field:account.voucher.line,amount:0
+#: field:account.voucher,amount:0 field:account.voucher.line,amount:0
 #: rml:voucher.cash_amount:0
 msgid "Amount"
 msgstr ""
 
 #. module: account_voucher
-#: rml:voucher.cash_amount:0
-#: rml:voucher.cash_receipt.drcr:0
+#: rml:voucher.cash_amount:0 rml:voucher.cash_receipt.drcr:0
 msgid "Receiver's Signature"
 msgstr ""
 
 #. module: account_voucher
-#: rml:voucher.cash_amount:0
-#: rml:voucher.cash_receipt.drcr:0
+#: rml:voucher.cash_amount:0 rml:voucher.cash_receipt.drcr:0
 msgid "No."
 msgstr ""
 
 #. module: account_voucher
-#: rml:voucher.cash_amount:0
-#: rml:voucher.cash_receipt.drcr:0
+#: rml:voucher.cash_amount:0 rml:voucher.cash_receipt.drcr:0
 msgid "Amount (in words) :"
 msgstr ""
 
@@ -152,8 +142,7 @@ msgid "Analytic Account"
 msgstr ""
 
 #. module: account_voucher
-#: selection:account.move,voucher_type:0
-#: selection:account.voucher,type:0
+#: selection:account.move,voucher_type:0 selection:account.voucher,type:0
 #: selection:account.voucher.open,init,type:0
 #: model:ir.actions.act_window,name:account_voucher.action_view_jour_sale_voucher_form
 #: model:ir.ui.menu,name:account_voucher.menu_action_view_jour_sale_voucher_form
@@ -172,8 +161,7 @@ msgid "Account :"
 msgstr ""
 
 #. module: account_voucher
-#: rml:voucher.cash_amount:0
-#: rml:voucher.cash_receipt.drcr:0
+#: rml:voucher.cash_amount:0 rml:voucher.cash_receipt.drcr:0
 msgid "On Account of :"
 msgstr ""
 
@@ -202,8 +190,7 @@ msgid "Number"
 msgstr ""
 
 #. module: account_voucher
-#: view:account.move:0
-#: field:account.voucher,state:0
+#: view:account.move:0 field:account.voucher,state:0
 #: wizard_field:account.voucher.open,init,state:0
 msgid "State"
 msgstr ""
@@ -211,14 +198,12 @@ msgstr ""
 #. module: account_voucher
 #: selection:account.account,type1:0
 #: selection:account.account.template,type1:0
-#: selection:account.voucher.line,type:0
-#: rml:voucher.cash_receipt.drcr:0
+#: selection:account.voucher.line,type:0 rml:voucher.cash_receipt.drcr:0
 msgid "Debit"
 msgstr ""
 
 #. module: account_voucher
-#: field:account.voucher,type:0
-#: field:account.voucher.line,type:0
+#: field:account.voucher,type:0 field:account.voucher.line,type:0
 msgid "Type"
 msgstr ""
 
@@ -228,8 +213,7 @@ msgid "Voucher Entries"
 msgstr ""
 
 #. module: account_voucher
-#: rml:voucher.cash_amount:0
-#: rml:voucher.cash_receipt.drcr:0
+#: rml:voucher.cash_amount:0 rml:voucher.cash_receipt.drcr:0
 msgid "Authorised Signatory"
 msgstr ""
 
@@ -240,8 +224,7 @@ msgid "Vouchers"
 msgstr ""
 
 #. module: account_voucher
-#: view:account.voucher:0
-#: field:account.voucher.line,voucher_id:0
+#: view:account.voucher:0 field:account.voucher.line,voucher_id:0
 #: model:res.request.link,name:account_voucher.req_link_voucher
 msgid "Voucher"
 msgstr ""
@@ -258,8 +241,7 @@ msgid "Invalid XML for View Architecture!"
 msgstr ""
 
 #. module: account_voucher
-#: rml:voucher.cash_amount:0
-#: rml:voucher.cash_receipt.drcr:0
+#: rml:voucher.cash_amount:0 rml:voucher.cash_receipt.drcr:0
 msgid "Dated :"
 msgstr ""
 
@@ -269,8 +251,7 @@ msgid "Cash Receipts"
 msgstr ""
 
 #. module: account_voucher
-#: field:account.voucher,partner_id:0
-#: field:account.voucher.line,partner_id:0
+#: field:account.voucher,partner_id:0 field:account.voucher.line,partner_id:0
 msgid "Partner"
 msgstr ""
 
@@ -280,8 +261,7 @@ msgid "New Bank Payment"
 msgstr ""
 
 #. module: account_voucher
-#: view:account.voucher:0
-#: field:account.voucher,payment_ids:0
+#: view:account.voucher:0 field:account.voucher,payment_ids:0
 msgid "Voucher Lines"
 msgstr ""
 
@@ -291,9 +271,7 @@ msgid "Currency"
 msgstr ""
 
 #. module: account_voucher
-#: view:account.move:0
-#: field:account.move,narration:0
-#: view:account.voucher:0
+#: view:account.move:0 field:account.move,narration:0 view:account.voucher:0
 #: field:account.voucher,narration:0
 msgid "Narration"
 msgstr ""
@@ -320,15 +298,13 @@ msgstr ""
 
 #. module: account_voucher
 #: selection:account.voucher,state:0
-#: selection:account.voucher.open,init,state:0
-#: rml:voucher.cash_amount:0
+#: selection:account.voucher.open,init,state:0 rml:voucher.cash_amount:0
 #: rml:voucher.cash_receipt.drcr:0
 msgid "Draft"
 msgstr ""
 
 #. module: account_voucher
-#: rml:voucher.cash_amount:0
-#: rml:voucher.cash_receipt.drcr:0
+#: rml:voucher.cash_amount:0 rml:voucher.cash_receipt.drcr:0
 msgid "PRO-FORMA"
 msgstr ""
 
@@ -358,14 +334,12 @@ msgid "Date"
 msgstr ""
 
 #. module: account_voucher
-#: rml:voucher.cash_amount:0
-#: rml:voucher.cash_receipt.drcr:0
+#: rml:voucher.cash_amount:0 rml:voucher.cash_receipt.drcr:0
 msgid ":"
 msgstr ""
 
 #. module: account_voucher
-#: field:account.account,type1:0
-#: field:account.account.template,type1:0
+#: field:account.account,type1:0 field:account.account.template,type1:0
 msgid "Dr/Cr"
 msgstr ""
 
@@ -383,14 +357,12 @@ msgstr ""
 #. module: account_voucher
 #: selection:account.account,type1:0
 #: selection:account.account.template,type1:0
-#: selection:account.voucher.line,type:0
-#: rml:voucher.cash_receipt.drcr:0
+#: selection:account.voucher.line,type:0 rml:voucher.cash_receipt.drcr:0
 msgid "Credit"
 msgstr ""
 
 #. module: account_voucher
-#: rml:voucher.cash_amount:0
-#: rml:voucher.cash_receipt.drcr:0
+#: rml:voucher.cash_amount:0 rml:voucher.cash_receipt.drcr:0
 msgid "Through :"
 msgstr ""
 
@@ -425,23 +397,22 @@ msgid "Periods"
 msgstr ""
 
 #. module: account_voucher
-#: view:account.voucher:0
-#: selection:account.voucher,state:0
+#: view:account.voucher:0 selection:account.voucher,state:0
 #: wizard_button:account.voucher.open,init,end:0
 #: selection:account.voucher.open,init,state:0
 msgid "Cancel"
 msgstr ""
 
 #. module: account_voucher
-#: view:account.voucher:0
-#: selection:account.voucher,state:0
+#: view:account.voucher:0 selection:account.voucher,state:0
 #: selection:account.voucher.open,init,state:0
 msgid "Pro-forma"
 msgstr ""
 
 #. module: account_voucher
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: account_voucher
@@ -471,18 +442,15 @@ msgid "Description"
 msgstr ""
 
 #. module: account_voucher
-#: rml:voucher.cash_amount:0
-#: rml:voucher.cash_receipt.drcr:0
+#: rml:voucher.cash_amount:0 rml:voucher.cash_receipt.drcr:0
 msgid "Canceled"
 msgstr ""
 
 #. module: account_voucher
-#: selection:account.move,voucher_type:0
-#: selection:account.voucher,type:0
+#: selection:account.move,voucher_type:0 selection:account.voucher,type:0
 #: selection:account.voucher.open,init,type:0
 #: model:ir.actions.act_window,name:account_voucher.action_view_cash_pay_voucher_form
-#: rml:voucher.cash_amount:0
-#: rml:voucher.cash_receipt.drcr:0
+#: rml:voucher.cash_amount:0 rml:voucher.cash_receipt.drcr:0
 msgid "Cash Payment Voucher"
 msgstr ""
 
@@ -492,14 +460,12 @@ msgid "Bank Receipt"
 msgstr ""
 
 #. module: account_voucher
-#: rml:voucher.cash_amount:0
-#: rml:voucher.cash_receipt.drcr:0
+#: rml:voucher.cash_amount:0 rml:voucher.cash_receipt.drcr:0
 msgid "-"
 msgstr ""
 
 #. module: account_voucher
-#: selection:account.move,voucher_type:0
-#: selection:account.voucher,type:0
+#: selection:account.move,voucher_type:0 selection:account.voucher,type:0
 #: selection:account.voucher.open,init,type:0
 #: model:ir.actions.act_window,name:account_voucher.action_view_jour_pur_voucher_form
 #: model:ir.ui.menu,name:account_voucher.menu_action_view_jour_pur_voucher_form
@@ -518,8 +484,7 @@ msgstr ""
 
 #. module: account_voucher
 #: selection:account.voucher,state:0
-#: selection:account.voucher.open,init,state:0
-#: rml:voucher.cash_amount:0
+#: selection:account.voucher.open,init,state:0 rml:voucher.cash_amount:0
 #: rml:voucher.cash_receipt.drcr:0
 msgid "Posted"
 msgstr ""
@@ -560,38 +525,30 @@ msgid "Cash Payments"
 msgstr ""
 
 #. module: account_voucher
-#: selection:account.move,voucher_type:0
-#: selection:account.voucher,type:0
+#: selection:account.move,voucher_type:0 selection:account.voucher,type:0
 #: selection:account.voucher.open,init,type:0
 #: model:ir.actions.act_window,name:account_voucher.action_view_cash_rec_voucher_form
-#: rml:voucher.cash_amount:0
-#: rml:voucher.cash_receipt.drcr:0
+#: rml:voucher.cash_amount:0 rml:voucher.cash_receipt.drcr:0
 msgid "Cash Receipt Voucher"
 msgstr ""
 
 #. module: account_voucher
-#: selection:account.move,voucher_type:0
-#: selection:account.voucher,type:0
+#: selection:account.move,voucher_type:0 selection:account.voucher,type:0
 #: selection:account.voucher.open,init,type:0
 #: model:ir.actions.act_window,name:account_voucher.action_view_bank_pay_voucher_form
-#: rml:voucher.cash_amount:0
-#: rml:voucher.cash_receipt.drcr:0
+#: rml:voucher.cash_amount:0 rml:voucher.cash_receipt.drcr:0
 msgid "Bank Payment Voucher"
 msgstr ""
 
 #. module: account_voucher
-#: selection:account.move,voucher_type:0
-#: selection:account.voucher,type:0
+#: selection:account.move,voucher_type:0 selection:account.voucher,type:0
 #: selection:account.voucher.open,init,type:0
 #: model:ir.actions.act_window,name:account_voucher.action_view_bank_rec_voucher_form
-#: rml:voucher.cash_amount:0
-#: rml:voucher.cash_receipt.drcr:0
+#: rml:voucher.cash_amount:0 rml:voucher.cash_receipt.drcr:0
 msgid "Bank Receipt Voucher"
 msgstr ""
 
 #. module: account_voucher
-#: field:account.account,journal_id:0
-#: field:account.voucher,journal_id:0
+#: field:account.account,journal_id:0 field:account.voucher,journal_id:0
 msgid "Journal"
 msgstr ""
-

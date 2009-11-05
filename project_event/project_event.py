@@ -167,23 +167,19 @@ class project_task(osv.osv):
         return res
 
     def write(self, cr, uid, ids, vals, context={}):
-        task = self.browse(cr, uid, ids)[0]
         res = super(project_task, self).write(cr, uid, ids, vals, context={})
         cr.commit()
-        task_data = self.browse(cr, uid, ids[0], context)
-        desc = '''Hello ,\n\n  The task is updated for the project: %s\n\nModified Datas are:\n''' %(str(task.project_id.name),)
-        for val in vals:
-            if val.endswith('id') or val.endswith('ids'):
-                continue
-            desc += val + ':' + str(vals[val]) + "\n"
-        desc += '\nThanks,\n' + 'Project Manager\n' + (task_data.project_id.manager and task_data.project_id.manager.name) or ''
-        self.pool.get('project.project')._log_event(cr, uid, task.project_id.id, {
-                                                                'res_id' : ids[0],
-                                                                'name' : task.name or '',
-                                                                'description' : desc,
-                                                                'user_id': uid,
-                                                                'action' : 'write',
-                                                                'type' : 'task'})
+	print "Res:", res, ids
+        written_tasks = self.browse(cr, uid, ids)
+        for task in written_tasks:
+	    if task.project_id:
+                self.pool.get('project.project')._log_event(cr, uid, task.project_id.id, {
+                                'res_id' : task.id,
+                                'name' : task.name, 
+                                'description' : task.description, 
+                                'user_id': uid, 
+                                'action' : 'write',
+                                'type' : 'task'})
         return res
 
 project_task()

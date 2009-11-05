@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* mrp_operations
+# 	* mrp_operations
 #
 msgid ""
 msgstr ""
@@ -34,7 +34,8 @@ msgstr ""
 
 #. module: mrp_operations
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: mrp_operations
@@ -153,7 +154,9 @@ msgstr ""
 
 #. module: mrp_operations
 #: help:mrp.production,allow_reorder:0
-msgid "Check this to be able to move independently all production orders, without moving dependent ones."
+msgid ""
+"Check this to be able to move independently all production orders, without "
+"moving dependent ones."
 msgstr ""
 
 #. module: mrp_operations
@@ -433,3 +436,85 @@ msgstr ""
 msgid "Start working"
 msgstr ""
 
+#. module: mrp_operations
+#: code:addons/mrp_operations/mrp_operations.py:0
+#, python-format
+msgid "Production Order Cannot start in [%s] state"
+msgstr ""
+
+#. module: mrp_operations
+#: field:mrp.production.workcenter.line,delay:0
+msgid "Delay"
+msgstr ""
+
+#. module: mrp_operations
+#: field:mrp.production.workcenter.line,date_planned:0
+msgid "Date Planned"
+msgstr ""
+
+#. module: mrp_operations
+#: code:addons/mrp_operations/mrp_operations.py:0
+#, python-format
+msgid " You cannot Resume the operation other then Pause state !"
+msgstr ""
+
+#. module: mrp_operations
+#: code:addons/mrp_operations/mrp_operations.py:0
+#, python-format
+msgid "Operation is already finished !"
+msgstr ""
+
+#. module: mrp_operations
+#: code:addons/mrp_operations/mrp_operations.py:0
+#, python-format
+msgid "There is no Operation to be cancelled !"
+msgstr ""
+
+#. module: mrp_operations
+#: code:addons/mrp_operations/mrp_operations.py:0
+#, python-format
+msgid "Sorry!"
+msgstr ""
+
+#. module: mrp_operations
+#: code:addons/mrp_operations/mrp_operations.py:0
+#, python-format
+msgid "You cannot finish the operation without Starting/Resuming it !"
+msgstr ""
+
+#. module: mrp_operations
+#: code:addons/mrp_operations/mrp_operations.py:0
+#, python-format
+msgid "Operation is not started yet !"
+msgstr ""
+
+#. module: mrp_operations
+#: code:addons/mrp_operations/mrp_operations.py:0
+#, python-format
+msgid "Error!"
+msgstr ""
+
+#. module: mrp_operations
+#: code:addons/mrp_operations/mrp_operations.py:0
+#, python-format
+msgid "Operation is Already Cancelled  !"
+msgstr ""
+
+#. module: mrp_operations
+#: view:mrp.production.workcenter.line:0
+msgid "Graph view in hours by workcenter"
+msgstr ""
+
+#. module: mrp_operations
+#: code:addons/mrp_operations/mrp_operations.py:0
+#, python-format
+msgid "You cannot Pause the Operation other then Start/Resume state !"
+msgstr ""
+
+#. module: mrp_operations
+#: code:addons/mrp_operations/mrp_operations.py:0
+#, python-format
+msgid ""
+"Operation has already started !' 'You  can either Pause /Finish/Cancel the "
+"operation"
+msgstr ""

@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* event_project
+# 	* event_project
 #
 msgid ""
 msgstr ""
@@ -32,10 +32,11 @@ msgstr ""
 
 #. module: event_project
 #: model:ir.module.module,description:event_project.module_meta_information
-msgid "Organization and management of events.\n"
+msgid ""
+"Organization and management of events.\n"
 "\n"
-"    This module allow you to create retro planning for managing your events.\n"
-""
+"    This module allow you to create retro planning for managing your "
+"events.\n"
 msgstr ""
 
 #. module: event_project
@@ -49,8 +50,7 @@ msgid "Event - Project"
 msgstr ""
 
 #. module: event_project
-#: field:event.event,project_id:0
-#: wizard_field:event.project,init,project_id:0
+#: field:event.event,project_id:0 wizard_field:event.project,init,project_id:0
 #: model:ir.actions.wizard,name:event_project.event_wiz
 msgid "Project"
 msgstr ""
@@ -80,3 +80,16 @@ msgstr ""
 msgid "Tasks management"
 msgstr ""
 
+#. module: event_project
+#: code:addons/event_project/wizard/event_task.py:0
+#, python-format
+msgid "Error !"
+msgstr ""
+
+#. module: event_project
+#: code:addons/event_project/wizard/event_task.py:0
+#, python-format
+msgid ""
+"No project defined for this event.\n"
+"You can create one with the retro-planning button !"
+msgstr ""

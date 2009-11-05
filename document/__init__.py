@@ -19,6 +19,8 @@
 #
 ##############################################################################
 
+import content_index
+import std_index
 import document
 #import ftpserver
 

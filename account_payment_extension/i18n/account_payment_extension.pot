@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
-# This file containt the translation of the following modules:
+# This file contains the translation of the following modules:
 #	* account_payment_extension
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.0-rc1\n"
+"Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2008-12-15 17:50:10+0000\n"
-"PO-Revision-Date: 2008-12-15 17:50:10+0000\n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
+"PO-Revision-Date: 2009-05-30 15:14:08+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,186 +16,20 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_payment_extension
-#: selection:payment.order,type:0
-msgid "Receivable"
-msgstr ""
-
-#. module: account_payment_extension
-#: model:ir.ui.menu,name:account_payment_extension.menu_pay_payments
-msgid "Payable payment orders"
-msgstr ""
-
-#. module: account_payment_extension
-#: wizard_view:populate_payment_ext,init:0
-msgid "Search Payment lines"
-msgstr ""
-
-#. module: account_payment_extension
-#: model:ir.actions.act_window,name:account_payment_extension.action_rec_payment_order_tree
-#: model:ir.ui.menu,name:account_payment_extension.menu_action_rec_payment_order_form
-msgid "Rec. payment order"
-msgstr ""
-
-#. module: account_payment_extension
-#: model:ir.actions.act_window,name:account_payment_extension.action_pay_payment_order_draft
-#: model:ir.ui.menu,name:account_payment_extension.menu_action_pay_payment_order_draft
-msgid "Draft pay. payment order"
-msgstr ""
-
-#. module: account_payment_extension
-#: wizard_field:populate_payment_ext,search,communication2:0
-msgid "Communication 2"
-msgstr ""
-
-#. module: account_payment_extension
-#: field:payment.order,type:0
-msgid "Type"
-msgstr ""
-
-#. module: account_payment_extension
-#: model:ir.ui.menu,name:account_payment_extension.menu_rec_payments
-msgid "Receivable payment orders"
-msgstr ""
-
-#. module: account_payment_extension
-#: wizard_field:populate_payment_ext,init,duedate:0
-msgid "Due Date"
-msgstr ""
-
-#. module: account_payment_extension
-#: field:payment.order,payment_type_name:0
-msgid "Payment type name"
-msgstr ""
-
-#. module: account_payment_extension
-#: selection:payment.order,type:0
-msgid "Payable"
-msgstr ""
-
-#. module: account_payment_extension
-#: model:ir.actions.wizard,name:account_payment_extension.wizard_populate_payment_ext
-msgid "Populate payment to pay"
-msgstr ""
-
-#. module: account_payment_extension
-#: view:payment.order:0
-msgid "Select invoices to pay/receive payment"
-msgstr ""
-
-#. module: account_payment_extension
-#: model:ir.ui.menu,name:account_payment_extension.menu_action_payments_payable
-msgid "All paid and to pay payments"
-msgstr ""
-
-#. module: account_payment_extension
-#: model:ir.actions.act_window,name:account_payment_extension.action_pay_payment_order_open
-#: model:ir.ui.menu,name:account_payment_extension.menu_action_pay_payment_order_open
-msgid "Pay. payment orders to validate"
-msgstr ""
-
-#. module: account_payment_extension
-#: model:ir.actions.act_window,name:account_payment_extension.action_pay_payment_order_tree_new
-#: model:ir.ui.menu,name:account_payment_extension.menu_action_pay_payment_order_form_new
-msgid "New Pay. payment Order"
-msgstr ""
-
-#. module: account_payment_extension
-#: wizard_field:populate_payment_ext,search,entries:0
-msgid "Entries"
-msgstr ""
-
-#. module: account_payment_extension
-#: constraint:ir.ui.view:0
-msgid "Invalid XML for View Architecture!"
-msgstr ""
-
-#. module: account_payment_extension
-#: model:ir.actions.act_window,name:account_payment_extension.action_rec_payment_order_open
-#: model:ir.ui.menu,name:account_payment_extension.menu_action_rec_payment_order_open
-msgid "Rec. payment orders to validate"
-msgstr ""
-
-#. module: account_payment_extension
-#: model:ir.actions.act_window,name:account_payment_extension.action_rec_payment_order_tree_new
-#: model:ir.ui.menu,name:account_payment_extension.menu_action_rec_payment_order_form_new
-msgid "New rec. payment order"
-msgstr ""
-
-#. module: account_payment_extension
-#: wizard_button:populate_payment_ext,search,create:0
-msgid "_Add to payment order"
-msgstr ""
-
-#. module: account_payment_extension
-#: wizard_button:populate_payment_ext,init,search:0
-msgid "_Search"
-msgstr ""
-
-#. module: account_payment_extension
-#: model:ir.ui.menu,name:account_payment_extension.menu_action_payments_receivable
-msgid "All received and to receive payments"
-msgstr ""
-
-#. module: account_payment_extension
-#: model:ir.ui.menu,name:account_payment_extension.menu_finance_payments
-#: view:account.move.line:0
-msgid "Payments"
-msgstr ""
-
-#. module: account_payment_extension
-#: model:ir.actions.act_window,name:account_payment_extension.action_payments_payable
-msgid "Payable payments"
-msgstr ""
-
-#. module: account_payment_extension
-#: model:ir.actions.act_window,name:account_payment_extension.action_payments_to_pay
-#: model:ir.ui.menu,name:account_payment_extension.menu_action_payments_to_pay
-msgid "Payments to pay"
-msgstr ""
-
-#. module: account_payment_extension
-#: view:payment.type:0
-msgid "Description"
-msgstr ""
-
-#. module: account_payment_extension
-#: model:ir.actions.act_window,name:account_payment_extension.action_payments_receivable
-msgid "Receivable payments"
-msgstr ""
-
-#. module: account_payment_extension
-#: model:ir.actions.act_window,name:account_payment_extension.action_payment_type_form
-#: field:account.move.line,payment_type:0
-#: model:ir.ui.menu,name:account_payment_extension.menu_action_payment_type_form
-msgid "Payment type"
-msgstr ""
-
-#. module: account_payment_extension
-#: model:ir.actions.act_window,name:account_payment_extension.action_pay_payment_order_tree
-#: model:ir.ui.menu,name:account_payment_extension.menu_action_pay_payment_order_form
-msgid "Pay. payment order"
-msgstr ""
-
-#. module: account_payment_extension
-#: wizard_button:populate_payment_ext,init,end:0
-#: wizard_button:populate_payment_ext,search,end:0
-msgid "_Cancel"
-msgstr ""
-
-#. module: account_payment_extension
-#: model:ir.actions.act_window,name:account_payment_extension.action_payments_to_receive
-#: model:ir.ui.menu,name:account_payment_extension.menu_action_payments_to_receive
-msgid "Payments to receive"
-msgstr ""
-
-#. module: account_payment_extension
-#: view:res.partner:0
-msgid "Bank Details"
-msgstr ""
-
-#. module: account_payment_extension
-#: model:ir.actions.act_window,name:account_payment_extension.action_rec_payment_order_draft
-#: model:ir.ui.menu,name:account_payment_extension.menu_action_rec_payment_order_draft
-msgid "Draft rec. payment order"
+#: model:ir.module.module,description:account_payment_extension.module_meta_information
+msgid "Account payment extension.\n"
+"\n"
+"This module extends the account_payment module with a lot of features:\n"
+"    * Extension of payment types: The payment type has a translated name and note that can be shown in the invoices.\n"
+"    * Two default payment types for partners (client and supplier).\n"
+"    * Automatic selection of payment type in invoices. Now an invoice can have a payment term (30 days, 30/60 days, ...) and a payment type (cash, bank transfer, ...).\n"
+"    * A default check field in partner bank accounts. The default partner bank accounts are selected in invoices and payments.\n"
+"    * New menu/tree/forms to see payments to receive and payments to pay.\n"
+"    * The payments show tree editable fields: Due date, bank account and a check field (for example to write down if a bank check in paper support has been received).\n"
+"    * Two types of payment orders: Payable payment orders (from supplier invoices) and receivable payment orders (from client invoices). So we can make payment orders to receive the payments of our client invoices. Each payment order type has its own sequence.\n"
+"    * The payment orders allow negative payment amounts. So we can have payment orders for supplier invoices (pay money) and refund supplier invoices (return or receive money). Or for client invoices (receive money) and refund client invoices (return or pay money).\n"
+"    * Payment orders: Selected invoices are filtered by payment type, the second message communication can be set at the same time for several invoices.\n"
+"Based on previous work of Pablo Rocandio & Zikzakmedia (version for 4.2).\n"
+""
 msgstr ""
 

@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* mrp_repair
+# 	* mrp_repair
 #
 msgid ""
 msgstr ""
@@ -21,8 +21,7 @@ msgid "Fees Line"
 msgstr ""
 
 #. module: mrp_repair
-#: field:mrp.repair.fee,repair_id:0
-#: field:mrp.repair.line,repair_id:0
+#: field:mrp.repair.fee,repair_id:0 field:mrp.repair.line,repair_id:0
 msgid "Repair Order Ref"
 msgstr ""
 
@@ -52,8 +51,7 @@ msgid "Printing Date"
 msgstr ""
 
 #. module: mrp_repair
-#: field:mrp.repair.fee,product_uom_qty:0
-#: rml:repair.order:0
+#: field:mrp.repair.fee,product_uom_qty:0 rml:repair.order:0
 msgid "Quantity"
 msgstr ""
 
@@ -94,8 +92,7 @@ msgid "Guarantee limit"
 msgstr ""
 
 #. module: mrp_repair
-#: field:mrp.repair,amount_tax:0
-#: field:mrp.repair.fee,tax_id:0
+#: field:mrp.repair,amount_tax:0 field:mrp.repair.fee,tax_id:0
 #: field:mrp.repair.line,tax_id:0
 msgid "Taxes"
 msgstr ""
@@ -147,8 +144,7 @@ msgid "Repairs in quotation"
 msgstr ""
 
 #. module: mrp_repair
-#: selection:mrp.repair,state:0
-#: selection:mrp.repair.line,state:0
+#: selection:mrp.repair,state:0 selection:mrp.repair.line,state:0
 msgid "Confirmed"
 msgstr ""
 
@@ -168,8 +164,7 @@ msgid "Repair Order N° :"
 msgstr ""
 
 #. module: mrp_repair
-#: field:mrp.repair,prodlot_id:0
-#: rml:repair.order:0
+#: field:mrp.repair,prodlot_id:0 rml:repair.order:0
 msgid "Lot Number"
 msgstr ""
 
@@ -214,8 +209,7 @@ msgid "Quantity (UoM)"
 msgstr ""
 
 #. module: mrp_repair
-#: field:mrp.repair.fee,to_invoice:0
-#: field:mrp.repair.line,to_invoice:0
+#: field:mrp.repair.fee,to_invoice:0 field:mrp.repair.line,to_invoice:0
 msgid "To Invoice"
 msgstr ""
 
@@ -245,8 +239,7 @@ msgid "Gives the state of the Repair Order"
 msgstr ""
 
 #. module: mrp_repair
-#: view:mrp.repair:0
-#: field:mrp.repair,quotation_notes:0
+#: view:mrp.repair:0 field:mrp.repair,quotation_notes:0
 msgid "Quotation Notes"
 msgstr ""
 
@@ -263,7 +256,11 @@ msgstr ""
 
 #. module: mrp_repair
 #: help:mrp.repair,guarantee_limit:0
-msgid "The garantee limit is computed as: last move date + warranty defined on selected product. If the current date is below the garantee limit, each operation and fee you will add will be set as 'not to invoiced' by default. Note that you can change manually afterwards."
+msgid ""
+"The garantee limit is computed as: last move date + warranty defined on "
+"selected product. If the current date is below the garantee limit, each "
+"operation and fee you will add will be set as 'not to invoiced' by default. "
+"Note that you can change manually afterwards."
 msgstr ""
 
 #. module: mrp_repair
@@ -323,8 +320,7 @@ msgid "Yes"
 msgstr ""
 
 #. module: mrp_repair
-#: field:mrp.repair,invoiced:0
-#: field:mrp.repair.fee,invoiced:0
+#: field:mrp.repair,invoiced:0 field:mrp.repair.fee,invoiced:0
 #: field:mrp.repair.line,invoiced:0
 msgid "Invoiced"
 msgstr ""
@@ -341,8 +337,7 @@ msgid "Create invoices"
 msgstr ""
 
 #. module: mrp_repair
-#: selection:mrp.repair.line,type:0
-#: rml:repair.order:0
+#: selection:mrp.repair.line,type:0 rml:repair.order:0
 msgid "Add"
 msgstr ""
 
@@ -359,7 +354,8 @@ msgstr ""
 
 #. module: mrp_repair
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: mrp_repair
@@ -378,8 +374,7 @@ msgid "Guarantee Limit"
 msgstr ""
 
 #. module: mrp_repair
-#: field:mrp.repair,product_id:0
-#: rml:repair.order:0
+#: field:mrp.repair,product_id:0 rml:repair.order:0
 msgid "Product to Repair"
 msgstr ""
 
@@ -390,7 +385,9 @@ msgstr ""
 
 #. module: mrp_repair
 #: wizard_view:mrp.repair.cancel,display:0
-msgid "This operation  will  cancel the  Repair process, but  will not cancel it's Invoice. Do you want to continue?"
+msgid ""
+"This operation  will  cancel the  Repair process, but  will not cancel it's "
+"Invoice. Do you want to continue?"
 msgstr ""
 
 #. module: mrp_repair
@@ -440,8 +437,7 @@ msgid "Qty"
 msgstr ""
 
 #. module: mrp_repair
-#: selection:mrp.repair,state:0
-#: selection:mrp.repair.line,state:0
+#: selection:mrp.repair,state:0 selection:mrp.repair.line,state:0
 msgid "Done"
 msgstr ""
 
@@ -494,12 +490,14 @@ msgstr ""
 
 #. module: mrp_repair
 #: help:mrp.repair,invoice_method:0
-msgid "This field allow you to change the workflow of the repair order. If value selected is different from 'No Invoice', it also allow you to select the pricelist and invoicing address."
+msgid ""
+"This field allow you to change the workflow of the repair order. If value "
+"selected is different from 'No Invoice', it also allow you to select the "
+"pricelist and invoicing address."
 msgstr ""
 
 #. module: mrp_repair
-#: field:mrp.repair.fee,price_unit:0
-#: field:mrp.repair.line,price_unit:0
+#: field:mrp.repair.fee,price_unit:0 field:mrp.repair.line,price_unit:0
 #: rml:repair.order:0
 msgid "Unit Price"
 msgstr ""
@@ -510,9 +508,7 @@ msgid "Do you really want to create the invoices ?"
 msgstr ""
 
 #. module: mrp_repair
-#: field:mrp.repair.fee,name:0
-#: field:mrp.repair.line,name:0
-#: rml:repair.order:0
+#: field:mrp.repair.fee,name:0 field:mrp.repair.line,name:0 rml:repair.order:0
 msgid "Description"
 msgstr ""
 
@@ -522,8 +518,7 @@ msgid "Operation Lines"
 msgstr ""
 
 #. module: mrp_repair
-#: field:mrp.repair.fee,product_id:0
-#: field:mrp.repair.line,product_id:0
+#: field:mrp.repair.fee,product_id:0 field:mrp.repair.line,product_id:0
 msgid "Product"
 msgstr ""
 
@@ -534,7 +529,11 @@ msgstr ""
 
 #. module: mrp_repair
 #: help:mrp.repair,deliver_bool:0
-msgid "Check this box if you want to manage the delivery once the product is repaired. If cheked, it will create a packing with selected product. Note that you can select the locations in the Info tab, if you have the extended view."
+msgid ""
+"Check this box if you want to manage the delivery once the product is "
+"repaired. If cheked, it will create a packing with selected product. Note "
+"that you can select the locations in the Info tab, if you have the extended "
+"view."
 msgstr ""
 
 #. module: mrp_repair
@@ -553,8 +552,7 @@ msgid "Deliver"
 msgstr ""
 
 #. module: mrp_repair
-#: view:mrp.repair:0
-#: field:mrp.repair,internal_notes:0
+#: view:mrp.repair:0 field:mrp.repair,internal_notes:0
 msgid "Internal Notes"
 msgstr ""
 
@@ -579,8 +577,7 @@ msgid "UoM"
 msgstr ""
 
 #. module: mrp_repair
-#: selection:mrp.repair.line,type:0
-#: rml:repair.order:0
+#: selection:mrp.repair.line,type:0 rml:repair.order:0
 msgid "Remove"
 msgstr ""
 
@@ -590,8 +587,7 @@ msgid "Cancel Repair...??"
 msgstr ""
 
 #. module: mrp_repair
-#: field:mrp.repair.fee,product_uom:0
-#: field:mrp.repair.line,product_uom:0
+#: field:mrp.repair.fee,product_uom:0 field:mrp.repair.line,product_uom:0
 msgid "Product UoM"
 msgstr ""
 
@@ -638,7 +634,8 @@ msgstr ""
 
 #. module: mrp_repair
 #: help:mrp.repair,partner_id:0
-msgid "This field allow you to choose the parner that will be invoiced and delivered"
+msgid ""
+"This field allow you to choose the parner that will be invoiced and delivered"
 msgstr ""
 
 #. module: mrp_repair
@@ -651,3 +648,14 @@ msgstr ""
 msgid "Ready to Repair"
 msgstr ""
 
+#. module: mrp_repair
+#: code:addons/mrp_repair/mrp_repair.py:0
+#, python-format
+msgid "You have to select a partner in the repair form !"
+msgstr ""
+
+#. module: mrp_repair
+#: code:addons/mrp_repair/mrp_repair.py:0
+#, python-format
+msgid "No partner !"
+msgstr ""

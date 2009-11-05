@@ -1,14 +1,15 @@
 # Translation of OpenERP Server.
 # This file containt the translation of the following modules:
-#	* event
+# 	* event
 #
+# Copyright (C) 2008,2009 P. Christeas <p_christ@hol.gr>
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2008-11-15 08:33:16+0000\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
 "PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
-"Last-Translator: <>\n"
+"Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,14 +17,18 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: event
-#: field:event.event,date_end:0
-#: field:report.event.registration,date_end:0
+#: field:event.event,date_end:0 field:report.event.registration,date_end:0
 msgid "Ending date"
 msgstr ""
 
 #. module: event
 #: field:event.event,register_min:0
 msgid "Minimum Registrations"
+msgstr ""
+
+#. module: event
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
 msgstr ""
 
 #. module: event
@@ -37,14 +42,20 @@ msgid "Confirmation Email"
 msgstr ""
 
 #. module: event
+#: constraint:crm.case.section:0
+msgid "Error ! You cannot create recursive sections."
+msgstr ""
+
+#. module: event
 #: model:ir.model,name:event.model_event_registration
 msgid "Event Registration"
 msgstr ""
 
 #. module: event
 #: model:ir.actions.wizard,name:event.event_reg_invoice
+#, fuzzy
 msgid "Make Invoice"
-msgstr ""
+msgstr "Τιμολόγιο"
 
 #. module: event
 #: field:report.event.type.registration,draft_state:0
@@ -68,8 +79,9 @@ msgstr ""
 
 #. module: event
 #: wizard_field:event.reg_make_invoice,init,inv_rejected:0
+#, fuzzy
 msgid "Invoice Rejected"
-msgstr ""
+msgstr "Τιμολόγιο"
 
 #. module: event
 #: view:event.event:0
@@ -83,7 +95,27 @@ msgstr ""
 
 #. module: event
 #: wizard_view:event.reg_make_invoice,init:0
+#, fuzzy
 msgid "Create Invoices"
+msgstr "Τιμολόγιο"
+
+#. module: event
+#: model:ir.module.module,description:event.module_meta_information
+msgid ""
+"Organization and management of events.\n"
+"\n"
+"    This module allow you\n"
+"        * to manage your events and their registrations\n"
+"        * to use emails to automatically confirm and send acknowledgements "
+"for any registration to an event\n"
+"        * ...\n"
+"\n"
+"    Note that:\n"
+"    - You can define new types of events in\n"
+"                Events / Configuration / Types of Events\n"
+"    - You can access predefined reports about number of registration per "
+"event or per event category in :\n"
+"                Events / Reporting\n"
 msgstr ""
 
 #. module: event
@@ -97,21 +129,20 @@ msgid "Registration"
 msgstr ""
 
 #. module: event
-#: model:ir.model,name:event.model_event_type
-#: field:event.type,name:0
+#: field:event.type,name:0 model:ir.model,name:event.model_event_type
 msgid "Event type"
 msgstr ""
 
 #. module: event
-#: model:ir.model,name:event.model_event_event
+#: view:event.event:0 model:ir.model,name:event.model_event_event
+#: model:ir.module.module,shortdesc:event.module_meta_information
 #: field:report.event.registration,name:0
-#: view:event.event:0
 msgid "Event"
 msgstr ""
 
 #. module: event
-#: wizard_field:event.reg_make_invoice,init,inv_created:0
-msgid "Invoice Created"
+#: selection:event.event,state:0
+msgid "Confirmed"
 msgstr ""
 
 #. module: event
@@ -120,13 +151,13 @@ msgid "Registration Confirmation"
 msgstr ""
 
 #. module: event
-#: constraint:ir.ui.view:0
-msgid "Invalid XML for View Architecture!"
-msgstr ""
+#: view:event.registration:0
+msgid "Dates"
+msgstr "Ημερομηνίες"
 
 #. module: event
-#: model:ir.actions.act_window,name:event.action_registration_confirm
 #: field:event.event,register_current:0
+#: model:ir.actions.act_window,name:event.action_registration_confirm
 #: model:ir.ui.menu,name:event.menu_action_registration_confirm
 msgid "Confirmed Registrations"
 msgstr ""
@@ -137,9 +168,10 @@ msgid "Mail Auto Register"
 msgstr ""
 
 #. module: event
-#: field:event.event,type:0
-msgid "Type"
-msgstr "Είδος ημερολογίου"
+#: view:event.registration:0
+#, fuzzy
+msgid "Badge"
+msgstr "Προϋπολογισμός"
 
 #. module: event
 #: field:event.event,section_id:0
@@ -148,8 +180,9 @@ msgstr ""
 
 #. module: event
 #: field:event.registration,tobe_invoiced:0
+#, fuzzy
 msgid "To be Invoiced"
-msgstr ""
+msgstr "Τιμολόγιο"
 
 #. module: event
 #: model:ir.ui.menu,name:event.menu_event_event
@@ -199,24 +232,13 @@ msgid "Configuration"
 msgstr ""
 
 #. module: event
-#, python-format
-#: code:addons/event/event.py:0
-msgid "You must define a reply-to address in order to mail the participant. You can do this in the Mailing tab of your event. Note that this is also the place where you can configure your event to not send emails automaticly while registering"
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
 msgstr ""
-
-#. module: event
-#: view:event.registration:0
-msgid "Dates"
-msgstr "Ημερομηνίες"
 
 #. module: event
 #: wizard_button:event.confirm_registration,split,confirm:0
 msgid "Confirm Anyway"
-msgstr ""
-
-#. module: event
-#: field:event.registration,badge_partner:0
-msgid "Badge Partner"
 msgstr ""
 
 #. module: event
@@ -235,11 +257,6 @@ msgid "Number Of Events"
 msgstr ""
 
 #. module: event
-#: field:event.event,budget_id:0
-msgid "Budget"
-msgstr "Προϋπολογισμός"
-
-#. module: event
 #: view:event.event:0
 msgid "Cancel Event"
 msgstr ""
@@ -255,16 +272,17 @@ msgid "Mailing"
 msgstr ""
 
 #. module: event
-#: model:ir.actions.act_window,name:event.action_registration_draft
 #: field:event.event,register_prospect:0
+#: model:ir.actions.act_window,name:event.action_registration_draft
 #: model:ir.ui.menu,name:event.menu_action_registration_draft
 msgid "Unconfirmed Registrations"
 msgstr ""
 
 #. module: event
 #: field:event.registration,partner_invoice_id:0
+#, fuzzy
 msgid "Partner Invoiced"
-msgstr ""
+msgstr "Τιμολόγιο"
 
 #. module: event
 #: view:event.registration:0
@@ -293,14 +311,10 @@ msgid "Events On Registrations"
 msgstr ""
 
 #. module: event
-#: selection:event.event,state:0
-msgid "Confirmed"
-msgstr ""
-
-#. module: event
-#: view:event.registration:0
-msgid "Action Information"
-msgstr ""
+#: wizard_field:event.reg_make_invoice,init,inv_created:0
+#, fuzzy
+msgid "Invoice Created"
+msgstr "Τιμολόγιο"
 
 #. module: event
 #: view:event.event:0
@@ -309,8 +323,9 @@ msgstr ""
 
 #. module: event
 #: selection:event.event,state:0
+#, fuzzy
 msgid "Draft"
-msgstr ""
+msgstr "Ημερομηνίες"
 
 #. module: event
 #: view:event.event:0
@@ -323,8 +338,9 @@ msgid "Event type on registration"
 msgstr ""
 
 #. module: event
-#: field:event.registration,badge_title:0
-msgid "Badge Title"
+#: constraint:ir.model:0
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: event
@@ -333,8 +349,8 @@ msgid "Event Related"
 msgstr ""
 
 #. module: event
+#: model:crm.case.section,name:event.case_section_event view:event.event:0
 #: model:ir.actions.act_window,name:event.action_event_view
-#: view:event.event:0
 msgid "Events"
 msgstr ""
 
@@ -344,9 +360,7 @@ msgid "Number of Registration"
 msgstr ""
 
 #. module: event
-#: field:event.event,state:0
-#: view:event.registration:0
-#: view:event.event:0
+#: view:event.event:0 field:event.event,state:0 view:event.registration:0
 msgid "Status"
 msgstr ""
 
@@ -362,7 +376,8 @@ msgstr ""
 
 #. module: event
 #: help:event.event,mail_auto_registr:0
-msgid "Check this box if you want to use the automatic mailing for new registration"
+msgid ""
+"Check this box if you want to use the automatic mailing for new registration"
 msgstr ""
 
 #. module: event
@@ -371,9 +386,9 @@ msgid "Set To Draft"
 msgstr ""
 
 #. module: event
+#: view:event.registration:0
 #: model:ir.actions.wizard,name:event.event_confirm_registration
 #: field:report.event.registration,confirm_state:0
-#: view:event.registration:0
 msgid "Confirm Registration"
 msgstr ""
 
@@ -398,8 +413,7 @@ msgid "Auto Confirmation Email"
 msgstr ""
 
 #. module: event
-#: view:event.registration:0
-#: view:event.event:0
+#: view:event.event:0 view:event.registration:0
 msgid "General"
 msgstr ""
 
@@ -414,8 +428,7 @@ msgid "Done"
 msgstr ""
 
 #. module: event
-#: field:event.event,date_begin:0
-#: field:report.event.registration,date_begin:0
+#: field:event.event,date_begin:0 field:report.event.registration,date_begin:0
 msgid "Beginning date"
 msgstr ""
 
@@ -440,8 +453,8 @@ msgid "Open"
 msgstr ""
 
 #. module: event
-#: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+#: field:event.registration,badge_title:0
+msgid "Badge Title"
 msgstr ""
 
 #. module: event
@@ -456,8 +469,8 @@ msgid "Unit Price"
 msgstr "Τιμή ανά Μονάδα"
 
 #. module: event
-#: help:event.event,mail_registr:0
-msgid "This email will be sent when someone subscribes to the event."
+#: field:event.registration,badge_partner:0
+msgid "Badge Partner"
 msgstr ""
 
 #. module: event
@@ -473,8 +486,13 @@ msgid "Maximum Registrations"
 msgstr ""
 
 #. module: event
-#: view:event.registration:0
-msgid "Badge"
+#: field:event.event,type:0
+msgid "Type"
+msgstr "Είδος ημερολογίου"
+
+#. module: event
+#: help:event.event,mail_registr:0
+msgid "This email will be sent when someone subscribes to the event."
 msgstr ""
 
 #. module: event
@@ -489,12 +507,17 @@ msgstr "Ονομασία"
 
 #. module: event
 #: help:event.event,mail_auto_confirm:0
-msgid "Check this box if you want ot use the automatic confirmation emailing or the reminder"
+msgid ""
+"Check this box if you want ot use the automatic confirmation emailing or the "
+"reminder"
 msgstr ""
 
 #. module: event
 #: help:event.event,mail_confirm:0
-msgid "This email will be sent when the event gets confimed or when someone subscribes to a confirmed event. This is also the email sent to remind someone about the event."
+msgid ""
+"This email will be sent when the event gets confimed or when someone "
+"subscribes to a confirmed event. This is also the email sent to remind "
+"someone about the event."
 msgstr ""
 
 #. module: event
@@ -504,8 +527,9 @@ msgstr "Προϊόν"
 
 #. module: event
 #: field:event.registration,invoice_label:0
+#, fuzzy
 msgid "Label Invoice"
-msgstr ""
+msgstr "Τιμολόγιο"
 
 #. module: event
 #: view:event.registration:0
@@ -513,15 +537,14 @@ msgid "Payments"
 msgstr ""
 
 #. module: event
-#: field:report.event.type.registration,name:0
-#: view:event.type:0
+#: view:event.type:0 field:report.event.type.registration,name:0
 msgid "Event Type"
 msgstr ""
 
 #. module: event
+#: view:event.event:0
 #: model:ir.actions.act_window,name:event.action_registration
 #: model:ir.actions.wizard,name:event.wizard_event_registration
-#: view:event.event:0
 msgid "Registrations"
 msgstr ""
 
@@ -529,12 +552,6 @@ msgstr ""
 #: model:ir.actions.act_window,name:event.action_event_view_draft
 #: model:ir.ui.menu,name:event.menu_event_event_draft
 msgid "Draft Events"
-msgstr ""
-
-#. module: event
-#, python-format
-#: code:addons/event/event.py:0
-msgid "Error!"
 msgstr ""
 
 #. module: event
@@ -556,4 +573,3 @@ msgstr ""
 #: view:event.event:0
 msgid "Auto Registration Email"
 msgstr ""
-

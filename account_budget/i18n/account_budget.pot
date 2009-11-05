@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* account_budget
+# 	* account_budget
 #
 msgid ""
 msgstr ""
@@ -37,8 +37,7 @@ msgid "Invalid model name in the action definition."
 msgstr ""
 
 #. module: account_budget
-#: rml:account.analytic.account.budget:0
-#: rml:crossovered.budget.report:0
+#: rml:account.analytic.account.budget:0 rml:crossovered.budget.report:0
 msgid "Printed at:"
 msgstr ""
 
@@ -54,7 +53,8 @@ msgstr ""
 
 #. module: account_budget
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: account_budget
@@ -86,8 +86,7 @@ msgid "Draft"
 msgstr ""
 
 #. module: account_budget
-#: rml:account.analytic.account.budget:0
-#: rml:account.budget:0
+#: rml:account.analytic.account.budget:0 rml:account.budget:0
 #: rml:crossovered.budget.report:0
 msgid "at"
 msgstr ""
@@ -103,8 +102,7 @@ msgid "Performance"
 msgstr ""
 
 #. module: account_budget
-#: rml:account.analytic.account.budget:0
-#: rml:account.budget:0
+#: rml:account.analytic.account.budget:0 rml:account.budget:0
 #: rml:crossovered.budget.report:0
 msgid "Currency:"
 msgstr ""
@@ -131,36 +129,41 @@ msgstr ""
 
 #. module: account_budget
 #: model:ir.module.module,description:account_budget.module_meta_information
-msgid "This module allows accountants to manage analytic and crossovered budgets.\n"
+msgid ""
+"This module allows accountants to manage analytic and crossovered budgets.\n"
 "\n"
 "Once the Master Budgets and the Budgets defined (in Financial\n"
-"Management/Budgets/), the Project Managers can set the planned amount on each\n"
+"Management/Budgets/), the Project Managers can set the planned amount on "
+"each\n"
 "Analytic Account.\n"
 "\n"
-"The accountant has the possibility to see the total of amount planned for each\n"
+"The accountant has the possibility to see the total of amount planned for "
+"each\n"
 "Budget and Master Budget in order to ensure the total planned is not\n"
-"greater/lower than what he planned for this Budget/Master Budget. Each list of\n"
+"greater/lower than what he planned for this Budget/Master Budget. Each list "
+"of\n"
 "record can also be switched to a graphical view of it.\n"
 "\n"
 "Three reports are available:\n"
-"    1. The first is available from a list of Budgets. It gives the spreading, for these Budgets, of the Analytic Accounts per Master Budgets.\n"
+"    1. The first is available from a list of Budgets. It gives the "
+"spreading, for these Budgets, of the Analytic Accounts per Master Budgets.\n"
 "\n"
-"    2. The second is a summary of the previous one, it only gives the spreading, for the selected Budgets, of the Analytic Accounts.\n"
+"    2. The second is a summary of the previous one, it only gives the "
+"spreading, for the selected Budgets, of the Analytic Accounts.\n"
 "\n"
-"    3. The last one is available from the Analytic Chart of Accounts. It gives the spreading, for the selected Analytic Accounts, of the Master Budgets per Budgets.\n"
+"    3. The last one is available from the Analytic Chart of Accounts. It "
+"gives the spreading, for the selected Analytic Accounts, of the Master "
+"Budgets per Budgets.\n"
 "\n"
-""
 msgstr ""
 
 #. module: account_budget
-#: rml:account.budget:0
-#: rml:crossovered.budget.report:0
+#: rml:account.budget:0 rml:crossovered.budget.report:0
 msgid "%"
 msgstr ""
 
 #. module: account_budget
-#: rml:account.analytic.account.budget:0
-#: rml:crossovered.budget.report:0
+#: rml:account.analytic.account.budget:0 rml:crossovered.budget.report:0
 msgid "Description"
 msgstr ""
 
@@ -183,15 +186,13 @@ msgid "A/c No."
 msgstr ""
 
 #. module: account_budget
-#: rml:account.analytic.account.budget:0
-#: rml:account.budget:0
+#: rml:account.analytic.account.budget:0 rml:account.budget:0
 #: rml:crossovered.budget.report:0
 msgid "to"
 msgstr ""
 
 #. module: account_budget
-#: rml:account.analytic.account.budget:0
-#: rml:account.budget:0
+#: rml:account.analytic.account.budget:0 rml:account.budget:0
 #: rml:crossovered.budget.report:0
 msgid "Total :"
 msgstr ""
@@ -204,8 +205,7 @@ msgid "Planned Amount"
 msgstr ""
 
 #. module: account_budget
-#: rml:account.analytic.account.budget:0
-#: rml:crossovered.budget.report:0
+#: rml:account.analytic.account.budget:0 rml:crossovered.budget.report:0
 msgid "Perc(%)"
 msgstr ""
 
@@ -220,8 +220,7 @@ msgid "Budget Analysis"
 msgstr ""
 
 #. module: account_budget
-#: view:crossovered.budget:0
-#: selection:crossovered.budget,state:0
+#: view:crossovered.budget:0 selection:crossovered.budget,state:0
 msgid "Done"
 msgstr ""
 
@@ -244,8 +243,7 @@ msgid "Practical Amount"
 msgstr ""
 
 #. module: account_budget
-#: field:crossovered.budget,date_to:0
-#: field:crossovered.budget.lines,date_to:0
+#: field:crossovered.budget,date_to:0 field:crossovered.budget.lines,date_to:0
 msgid "End Date"
 msgstr ""
 
@@ -260,8 +258,7 @@ msgid "Theoritical Amount"
 msgstr ""
 
 #. module: account_budget
-#: field:account.budget.post,name:0
-#: field:account.budget.post.dotation,name:0
+#: field:account.budget.post,name:0 field:account.budget.post.dotation,name:0
 #: field:crossovered.budget,name:0
 msgid "Name"
 msgstr ""
@@ -277,14 +274,12 @@ msgid "Spread amount"
 msgstr ""
 
 #. module: account_budget
-#: view:account.analytic.account:0
-#: view:account.budget.post:0
+#: view:account.analytic.account:0 view:account.budget.post:0
 msgid "Lines"
 msgstr ""
 
 #. module: account_budget
-#: rml:account.budget:0
-#: view:crossovered.budget:0
+#: rml:account.budget:0 view:crossovered.budget:0
 #: field:crossovered.budget.lines,crossovered_budget_id:0
 #: model:ir.actions.act_window,name:account_budget.act_crossovered_budget_view
 #: model:ir.actions.wizard,name:account_budget.wizard_budget_report
@@ -361,8 +356,7 @@ msgid "Print Budgets"
 msgstr ""
 
 #. module: account_budget
-#: field:account.budget.post,code:0
-#: field:crossovered.budget,code:0
+#: field:account.budget.post,code:0 field:crossovered.budget,code:0
 msgid "Code"
 msgstr ""
 
@@ -382,8 +376,7 @@ msgid "Spreading"
 msgstr ""
 
 #. module: account_budget
-#: rml:account.analytic.account.budget:0
-#: rml:crossovered.budget.report:0
+#: rml:account.analytic.account.budget:0 rml:crossovered.budget.report:0
 msgid "Theoretical Amount"
 msgstr ""
 
@@ -403,16 +396,14 @@ msgid "Budget :"
 msgstr ""
 
 #. module: account_budget
-#: rml:account.budget:0
-#: view:account.budget.post:0
+#: rml:account.budget:0 view:account.budget.post:0
 #: wizard_view:account.budget.spread,init:0
 #: wizard_button:account.budget.spread,init,spread:0
 msgid "Spread"
 msgstr ""
 
 #. module: account_budget
-#: view:account.budget.post:0
-#: field:account.budget.post,account_ids:0
+#: view:account.budget.post:0 field:account.budget.post,account_ids:0
 msgid "Accounts"
 msgstr ""
 
@@ -438,8 +429,7 @@ msgstr ""
 
 #. module: account_budget
 #: wizard_button:account.budget.report,init,end:0
-#: wizard_button:account.budget.spread,init,end:0
-#: view:crossovered.budget:0
+#: wizard_button:account.budget.spread,init,end:0 view:crossovered.budget:0
 #: wizard_button:wizard.analytic.account.budget.report,init,end:0
 #: wizard_button:wizard.crossovered.budget,init,end:0
 #: wizard_button:wizard.crossovered.budget.summary,init,end:0
@@ -458,8 +448,7 @@ msgid "Start Date"
 msgstr ""
 
 #. module: account_budget
-#: rml:account.analytic.account.budget:0
-#: rml:crossovered.budget.report:0
+#: rml:account.analytic.account.budget:0 rml:crossovered.budget.report:0
 msgid "Analysis from"
 msgstr ""
 
@@ -472,4 +461,3 @@ msgstr ""
 #: wizard_view:account.budget.report,init:0
 msgid "Select period"
 msgstr ""
-

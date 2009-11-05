@@ -58,7 +58,11 @@ This test checks the speed of the module. Note that at least 5 demo data is need
             return None
         obj_counter = 0
         score = 0.0
-        obj_ids = self.get_ids(cr, uid, obj_list)
+	try:
+		obj_ids = self.get_ids(cr, uid, obj_list)
+	except Exception,e:
+		obj_ids= {}
+		self.result_details += e.message
         result_dict = {}
         result_dict2 = {}
         self.result_details += _("<html>O(1) means that the number of SQL requests to read the object does not depand on the number of objects we are reading. This feature is hardly wished.\n</html>")

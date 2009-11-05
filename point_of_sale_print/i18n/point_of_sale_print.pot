@@ -1,0 +1,198 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* point_of_sale_print
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 5.0.2\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
+"PO-Revision-Date: 2009-08-14 08:23:23+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: point_of_sale_print
+#: view:ir.actions.report.postxt:0
+msgid "POS prints"
+msgstr ""
+
+#. module: point_of_sale_print
+#: constraint:ir.model:0
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr ""
+
+#. module: point_of_sale_print
+#: model:ir.module.module,shortdesc:point_of_sale_print.module_meta_information
+msgid "POS text printing"
+msgstr ""
+
+#. module: point_of_sale_print
+#: field:ir.actions.report.postxt,copies:0
+msgid "Copies"
+msgstr ""
+
+#. module: point_of_sale_print
+#: view:ir.actions.report.postxt:0
+msgid "Content"
+msgstr ""
+
+#. module: point_of_sale_print
+#: field:ir.actions.report.postxt,type:0
+msgid "Report Type"
+msgstr ""
+
+#. module: point_of_sale_print
+#: selection:ir.actions.report.postxt,encoding:0
+msgid "UTF-8"
+msgstr ""
+
+#. module: point_of_sale_print
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr ""
+
+#. module: point_of_sale_print
+#: wizard_button:wizard.point_of_sale_print.print,init,print:0
+msgid "Print"
+msgstr ""
+
+#. module: point_of_sale_print
+#: wizard_field:wizard.point_of_sale_print.print,init,copies:0
+msgid "Number of copies"
+msgstr ""
+
+#. module: point_of_sale_print
+#: field:ir.actions.report.postxt,usage:0
+msgid "Action Usage"
+msgstr ""
+
+#. module: point_of_sale_print
+#: model:ir.model,name:point_of_sale_print.model_ir_actions_report_postxt
+msgid "ir.actions.report.postxt"
+msgstr ""
+
+#. module: point_of_sale_print
+#: field:ir.actions.report.postxt,printer:0
+msgid "Printer"
+msgstr ""
+
+#. module: point_of_sale_print
+#: field:ir.actions.report.postxt,model:0
+msgid "Object"
+msgstr ""
+
+#. module: point_of_sale_print
+#: field:ir.actions.report.postxt,groups_id:0
+msgid "Groups"
+msgstr ""
+
+#. module: point_of_sale_print
+#: field:ir.actions.report.postxt,soft_copies:0
+msgid "Soft copies"
+msgstr ""
+
+#. module: point_of_sale_print
+#: field:ir.actions.report.postxt,multi:0
+msgid "On multiple doc."
+msgstr ""
+
+#. module: point_of_sale_print
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr ""
+
+#. module: point_of_sale_print
+#: help:ir.actions.report.postxt,copies:0
+msgid "Default number of copies."
+msgstr ""
+
+#. module: point_of_sale_print
+#: field:ir.actions.report.postxt,name:0
+msgid "Report Name"
+msgstr ""
+
+#. module: point_of_sale_print
+#: selection:ir.actions.report.postxt,encoding:0
+msgid "ISO-8859-7"
+msgstr ""
+
+#. module: point_of_sale_print
+#: help:ir.actions.report.postxt,multi:0
+msgid "If set to true, the action will not be displayed on the right toolbar of a form view."
+msgstr ""
+
+#. module: point_of_sale_print
+#: selection:ir.actions.report.postxt,encoding:0
+msgid "ISO-8859-1"
+msgstr ""
+
+#. module: point_of_sale_print
+#: help:wizard.point_of_sale_print.print,init,copies:0
+msgid "Number of copies for each kind of labels. If left blank, default number will be used"
+msgstr ""
+
+#. module: point_of_sale_print
+#: help:ir.actions.report.postxt,printer:0
+msgid "Preferred printer for this report. Useful for server-side printing."
+msgstr ""
+
+#. module: point_of_sale_print
+#: field:ir.actions.report.postxt,txt_content:0
+msgid "Content of report in text"
+msgstr ""
+
+#. module: point_of_sale_print
+#: selection:ir.actions.report.postxt,encoding:0
+msgid "Win-1253"
+msgstr ""
+
+#. module: point_of_sale_print
+#: model:ir.actions.wizard,name:point_of_sale_print.wizard_pos_print_print
+msgid "Print POS Labels"
+msgstr ""
+
+#. module: point_of_sale_print
+#: help:ir.actions.report.postxt,soft_copies:0
+msgid "If set to true, copies will be done through the\"num_copies\" variable of the content. Else, by the printing system."
+msgstr ""
+
+#. module: point_of_sale_print
+#: field:ir.actions.report.postxt,code:0
+msgid "Code"
+msgstr ""
+
+#. module: point_of_sale_print
+#: field:ir.actions.report.postxt,encoding:0
+msgid "Encoding"
+msgstr ""
+
+#. module: point_of_sale_print
+#: wizard_field:wizard.point_of_sale_print.print,init,pos_action_ids:0
+msgid "Labels"
+msgstr ""
+
+#. module: point_of_sale_print
+#: view:ir.actions.report.postxt:0
+msgid "General"
+msgstr ""
+
+#. module: point_of_sale_print
+#: help:ir.actions.report.postxt,code:0
+msgid "This code is used so that modules can lookup some specific report"
+msgstr ""
+
+#. module: point_of_sale_print
+#: model:ir.actions.act_window,name:point_of_sale_print.ir_action_report_postxt
+#: model:ir.ui.menu,name:point_of_sale_print.menu_ir_action_report_postxt
+msgid "POS print Report"
+msgstr ""
+
+#. module: point_of_sale_print
+#: wizard_button:wizard.point_of_sale_print.print,init,end:0
+msgid "Cancel"
+msgstr ""
+

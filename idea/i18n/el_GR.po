@@ -1,14 +1,15 @@
 # Translation of OpenERP Server.
 # This file containt the translation of the following modules:
-#	* idea
+# 	* idea
 #
+# Copyright (C) 2008,2009 P. Christeas <p_christ@hol.gr>
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2008-11-15 08:33:16+0000\n"
+"POT-Creation-Date: 2009-06-08 21:23:38+0000\n"
 "PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
-"Last-Translator: <>\n"
+"Last-Translator: P. Christeas <p_christ@hol.gr>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,37 +17,34 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: idea
-#: field:idea.category,name:0
-#: field:idea.idea,category_id:0
+#: field:idea.category,name:0 field:idea.idea,category_id:0
 msgid "Category"
 msgstr ""
 
 #. module: idea
-#: selection:idea.idea,my_vote:0
-#: selection:idea.vote,score:0
+#: selection:idea.idea,my_vote:0 selection:idea.vote,score:0
 #: selection:idea.vote.stat,score:0
 msgid "Very Good"
 msgstr ""
 
 #. module: idea
-#: field:idea.idea,stat_vote_ids:0
-#: view:idea.idea:0
+#: view:idea.idea:0 field:idea.idea,stat_vote_ids:0
 msgid "Statistics"
 msgstr ""
 
 #. module: idea
-#: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+#: model:ir.actions.act_window,name:idea.action_idea_idea_my_idea
+#: model:ir.ui.menu,name:idea.menu_idea_idea_my_idea
+msgid "My Ideas"
 msgstr ""
 
 #. module: idea
-#: selection:idea.idea,state:0
-msgid "Opened"
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
 msgstr ""
 
 #. module: idea
-#: selection:idea.idea,my_vote:0
-#: selection:idea.vote,score:0
+#: selection:idea.idea,my_vote:0 selection:idea.vote,score:0
 #: selection:idea.vote.stat,score:0
 msgid "Not Voted"
 msgstr ""
@@ -65,25 +63,13 @@ msgid "Ideas"
 msgstr ""
 
 #. module: idea
-#: model:ir.model,name:idea.model_idea_comment
-#: field:idea.idea,comment_ids:0
-#: view:idea.comment:0
+#: field:idea.category,child_ids:0
+msgid "Child Categories"
+msgstr ""
+
+#. module: idea
 #: view:idea.idea:0
-msgid "Comments"
-msgstr ""
-
-#. module: idea
-#: selection:idea.idea,my_vote:0
-#: selection:idea.vote,score:0
-#: selection:idea.vote.stat,score:0
-msgid "Very Bad"
-msgstr ""
-
-#. module: idea
-#: selection:idea.idea,my_vote:0
-#: selection:idea.vote,score:0
-#: selection:idea.vote.stat,score:0
-msgid "Bad"
+msgid "New Idea"
 msgstr ""
 
 #. module: idea
@@ -93,8 +79,7 @@ msgid "Ideas by Categories"
 msgstr ""
 
 #. module: idea
-#: field:idea.vote,score:0
-#: field:idea.vote.stat,score:0
+#: field:idea.vote,score:0 field:idea.vote.stat,score:0
 msgid "Score"
 msgstr ""
 
@@ -114,13 +99,29 @@ msgid "Statistics on Votes"
 msgstr ""
 
 #. module: idea
+#: constraint:ir.model:0
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
+msgstr ""
+
+#. module: idea
 #: model:ir.model,name:idea.model_idea_category
 msgid "Category for an idea"
 msgstr ""
 
 #. module: idea
-#: view:idea.category:0
-msgid "Category of ideas"
+#: model:ir.module.module,shortdesc:idea.module_meta_information
+msgid "Idea Manager"
+msgstr ""
+
+#. module: idea
+#: model:ir.ui.menu,name:idea.menu_idea_vote_stat
+msgid "Vote Statistics"
+msgstr ""
+
+#. module: idea
+#: selection:idea.idea,state:0
+msgid "Opened"
 msgstr ""
 
 #. module: idea
@@ -129,8 +130,7 @@ msgid "Status"
 msgstr ""
 
 #. module: idea
-#: selection:idea.idea,my_vote:0
-#: selection:idea.vote,score:0
+#: selection:idea.idea,my_vote:0 selection:idea.vote,score:0
 #: selection:idea.vote.stat,score:0
 msgid "Good"
 msgstr ""
@@ -141,8 +141,7 @@ msgid "Description"
 msgstr "Περιγραφή"
 
 #. module: idea
-#: selection:idea.idea,my_vote:0
-#: selection:idea.vote,score:0
+#: selection:idea.idea,my_vote:0 selection:idea.vote,score:0
 #: selection:idea.vote.stat,score:0
 msgid "Normal"
 msgstr ""
@@ -150,11 +149,6 @@ msgstr ""
 #. module: idea
 #: model:ir.ui.menu,name:idea.menu_reporting
 msgid "Reporting"
-msgstr ""
-
-#. module: idea
-#: view:idea.idea:0
-msgid "Close"
 msgstr ""
 
 #. module: idea
@@ -168,8 +162,7 @@ msgid "idea.vote"
 msgstr ""
 
 #. module: idea
-#: field:idea.comment,user_id:0
-#: field:idea.vote,user_id:0
+#: field:idea.comment,user_id:0 field:idea.vote,user_id:0
 msgid "User"
 msgstr "Χρήστης"
 
@@ -179,11 +172,12 @@ msgid "Your comment"
 msgstr ""
 
 #. module: idea
-#: selection:idea.idea,state:0
-msgid "Accepted"
-msgstr "Αποδεκτό"
+#: model:ir.ui.menu,name:idea.menu_config
+msgid "Configuration"
+msgstr ""
 
 #. module: idea
+#: model:ir.actions.act_window,name:idea.action_idea_category
 #: model:ir.ui.menu,name:idea.menu_idea_category
 msgid "Categories"
 msgstr "Κατηγορίες"
@@ -209,8 +203,18 @@ msgid "Votes"
 msgstr ""
 
 #. module: idea
-#: field:idea.comment,create_date:0
-#: field:idea.idea,create_date:0
+#: model:ir.module.module,description:idea.module_meta_information
+msgid ""
+"This module allows your user to easily and efficiently participate in the "
+"innovation of the enterprise. It allows everybody to express ideas about "
+"different subjects. Then, others users can comment these ideas and vote for "
+"particular ideas. Each idea as a score based on the different votes. The "
+"managers can obtain an easy view on best ideas from all the users. Once "
+"installed, check the menu 'Ideas' in the 'Tools' main menu."
+msgstr ""
+
+#. module: idea
+#: field:idea.comment,create_date:0 field:idea.idea,create_date:0
 msgid "Creation date"
 msgstr "Ημερομηνία Δημιουργίας"
 
@@ -230,30 +234,31 @@ msgid "idea.idea"
 msgstr ""
 
 #. module: idea
-#: field:idea.category,summary:0
-msgid "Summary"
+#: model:ir.actions.act_window,name:idea.action_idea_idea_draft_my
+#: model:ir.ui.menu,name:idea.menu_idea_idea_draft_my
+msgid "My Draft Ideas"
 msgstr ""
 
 #. module: idea
-#: view:idea.idea:0
-msgid "Cancel"
+#: field:idea.idea,vote_ids:0
+msgid "Vote"
 msgstr ""
 
 #. module: idea
-#: model:ir.actions.act_window,name:idea.action_idea_idea_my_idea
-#: model:ir.ui.menu,name:idea.menu_idea_idea_my_idea
-msgid "My Ideas"
+#: selection:idea.idea,my_vote:0 selection:idea.vote,score:0
+#: selection:idea.vote.stat,score:0
+msgid "Bad"
 msgstr ""
 
 #. module: idea
-#: model:ir.ui.menu,name:idea.menu_idea_idea
-#: view:idea.idea:0
+#: view:idea.idea:0 model:ir.ui.menu,name:idea.menu_idea_idea
 msgid "All Ideas"
 msgstr ""
 
 #. module: idea
-#: field:idea.category,child_ids:0
-msgid "Child Categories"
+#: view:idea.comment:0 view:idea.idea:0 field:idea.idea,comment_ids:0
+#: model:ir.model,name:idea.model_idea_comment
+msgid "Comments"
 msgstr ""
 
 #. module: idea
@@ -267,36 +272,30 @@ msgid "Idea Summary"
 msgstr ""
 
 #. module: idea
-#: model:ir.ui.menu,name:idea.menu_idea_vote_stat
-msgid "Vote Statistics"
+#: view:idea.category:0
+msgid "Category of ideas"
 msgstr ""
 
 #. module: idea
-#: view:idea.idea:0
-msgid "New Idea"
+#: field:idea.category,summary:0
+msgid "Summary"
 msgstr ""
 
 #. module: idea
-#: field:idea.idea,vote_avg:0
-msgid "Average Score"
-msgstr ""
+#: model:ir.actions.act_window,name:idea.action_idea_idea_categ_open
+#: model:ir.actions.act_window,name:idea.action_idea_idea_open
+#: model:ir.ui.menu,name:idea.menu_idea_idea_open
+msgid "Open Ideas"
+msgstr "Ανοικτές Ιδέες"
 
 #. module: idea
-#: view:idea.idea:0
-#: view:idea.vote.stat:0
+#: view:idea.idea:0 view:idea.vote.stat:0
 msgid "vote_stat of ideas"
 msgstr ""
 
 #. module: idea
-#: field:idea.comment,content:0
-#: view:idea.comment:0
-#: view:idea.idea:0
+#: view:idea.comment:0 field:idea.comment,content:0 view:idea.idea:0
 msgid "Comment"
-msgstr ""
-
-#. module: idea
-#: model:ir.ui.menu,name:idea.menu_config
-msgid "Configuration"
 msgstr ""
 
 #. module: idea
@@ -310,16 +309,20 @@ msgid "Creator"
 msgstr ""
 
 #. module: idea
-#: view:idea.idea:0
-msgid "Open"
+#: model:ir.ui.menu,name:idea.menu_tools
+msgid "Tools"
 msgstr ""
 
 #. module: idea
-#: field:idea.comment,idea_id:0
-#: field:idea.vote,idea_id:0
+#: field:idea.comment,idea_id:0 view:idea.idea:0 field:idea.vote,idea_id:0
 #: field:idea.vote.stat,idea_id:0
-#: view:idea.idea:0
 msgid "Idea"
+msgstr ""
+
+#. module: idea
+#: selection:idea.idea,my_vote:0 selection:idea.vote,score:0
+#: selection:idea.vote.stat,score:0
+msgid "Very Bad"
 msgstr ""
 
 #. module: idea
@@ -333,26 +336,23 @@ msgid "All Votes"
 msgstr ""
 
 #. module: idea
-#: field:idea.idea,vote_ids:0
-msgid "Vote"
+#: view:idea.idea:0
+msgid "Cancel"
 msgstr ""
 
 #. module: idea
-#: model:ir.actions.act_window,name:idea.action_idea_idea_draft_my
-#: model:ir.ui.menu,name:idea.menu_idea_idea_draft_my
-msgid "My Draft Ideas"
+#: view:idea.idea:0
+msgid "Close"
 msgstr ""
 
 #. module: idea
-#: model:ir.actions.act_window,name:idea.action_idea_idea_categ_open
-#: model:ir.actions.act_window,name:idea.action_idea_idea_open
-#: model:ir.ui.menu,name:idea.menu_idea_idea_open
-msgid "Open Ideas"
-msgstr "Ανοικτές Ιδέες"
+#: field:idea.idea,vote_avg:0
+msgid "Average Score"
+msgstr ""
 
 #. module: idea
-#: model:ir.ui.menu,name:idea.menu_tools
-msgid "Tools"
+#: view:idea.idea:0
+msgid "Open"
 msgstr ""
 
 #. module: idea
@@ -360,3 +360,5 @@ msgstr ""
 msgid "Content of the idea"
 msgstr ""
 
+#~ msgid "Accepted"
+#~ msgstr "Αποδεκτό"

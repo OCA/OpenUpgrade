@@ -1,0 +1,392 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+# 	* account_greek_fiscal
+#
+# Copyright (C) 2008,2009 P. Christeas <p_christ@hol.gr>
+# P. Christeas <p_christ@hol.gr>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
+"PO-Revision-Date: 2009-06-18 10:10+0300\n"
+"Last-Translator: P. Christeas <p_christ@hol.gr>\n"
+"Language-Team: Greek <nls@hellug.gr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+"X-Generator: Lokalize 0.3\n"
+
+#. module: account_greek_fiscal
+#: model:ir.actions.report.xml,name:account_greek_fiscal.account_fiscalgr_invoices_report
+msgid "Fiscal Invoice"
+msgstr "Θεωρημένο Τιμολόγιο"
+
+#. module: account_greek_fiscal
+#: help:res.partner,vat_taxauth:0
+msgid "Select the local tax service branch, where the partner is registered."
+msgstr ""
+
+#. module: account_greek_fiscal
+#: constraint:ir.model:0
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
+msgstr ""
+"Το όνομα αντικειμένου πρέπει να αρχίζει με x_ και να μήν περιέχει ειδικούς "
+"χαρακτήρες!"
+
+#. module: account_greek_fiscal
+#: field:account.invoice,fiscalgr_print:0
+msgid "Fiscal print"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: model:ir.module.module,description:account_greek_fiscal.module_meta_information
+msgid ""
+"This enables the greek fiscal printing of reports (invoices). \n"
+"    When an invoice is settled, it is marked by the (legal) fiscal machine "
+"and locked\n"
+"    down. Then, it is printed according to the law.\n"
+"    "
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Tax"
+msgstr "Φόρος"
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Disc. (%)"
+msgstr "Εκπτ. (%)"
+
+#. module: account_greek_fiscal
+#: field:ir.actions.report.xml,copies:0
+msgid "Copies"
+msgstr "Αντίγραφα"
+
+#. module: account_greek_fiscal
+#: view:account.invoice:0
+msgid "Print"
+msgstr "Εκτύπωση"
+
+#. module: account_greek_fiscal
+#: selection:account.fiscalgr.print,state:0
+msgid "Failed"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.print,state:0
+msgid "State"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Unit Price"
+msgstr "Τιμή Μονάδας"
+
+#. module: account_greek_fiscal
+#: view:account.fiscalgr.occup:0
+#: model:ir.actions.act_window,name:account_greek_fiscal.view_account_fiscalgr_occup_tf
+#: model:ir.ui.menu,name:account_greek_fiscal.menu_account_fiscalgr_occup_tf
+msgid "Tax occupations"
+msgstr "Επαγγέλματα"
+
+#. module: account_greek_fiscal
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr "Μη έγκυρο μοντέλο στον ορισμό ενέργειας."
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.print,total_no:0
+#, fuzzy
+msgid "Total sequence"
+msgstr "Σύνολο εκτυπώσεων"
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.print,day_no:0
+#, fuzzy
+msgid "Daily sequence"
+msgstr "Ημερήσιο σύνολο"
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "VAT :"
+msgstr "ΦΠΑ :"
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Document"
+msgstr "Έγγραφο"
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "PRO-FORMA"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Taxes:"
+msgstr "Φόροι:"
+
+#. module: account_greek_fiscal
+#: model:ir.ui.menu,name:account_greek_fiscal.menu_account_fiscalgr
+msgid "Fiscal prints"
+msgstr "Θεωρημένες Εκτυπώσεις"
+
+#. module: account_greek_fiscal
+#: help:account.fiscalgr.tauth,descr:0
+msgid "Any notes for this authority"
+msgstr "Σημειώσεις για τη ΔΟΥ."
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.occup,descr:0 field:account.fiscalgr.tauth,descr:0
+#: rml:account.invoice.fiscalgr:0
+msgid "Description"
+msgstr "Περιγραφή"
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Price"
+msgstr "Τιμή"
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Invoice Date"
+msgstr "Ημερομηνία Τιμολόγησης"
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Canceled Invoice"
+msgstr "Ακυρωμένο Τιμολόγιο"
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Tel. :"
+msgstr "Τηλ:"
+
+#. module: account_greek_fiscal
+#: field:res.partner,vat_taxauth:0
+msgid "Tax authority"
+msgstr "Δ.Ο.Υ."
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.print,cups_jobid:0
+msgid "Job ID"
+msgstr "ID εκτύπωσης"
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Base"
+msgstr "Βάση"
+
+#. module: account_greek_fiscal
+#: selection:account.fiscalgr.print,state:0
+#, fuzzy
+msgid "Printed"
+msgstr "Εκτυπωτής"
+
+#. module: account_greek_fiscal
+#: selection:account.fiscalgr.print,state:0
+msgid "Unknown"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.print,report:0
+msgid "Report"
+msgstr "Αναφορά"
+
+#. module: account_greek_fiscal
+#: model:ir.model,name:account_greek_fiscal.model_account_fiscalgr_tauth
+msgid "account.fiscalgr.tauth"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: view:account.fiscalgr.tauth:0
+#: model:ir.actions.act_window,name:account_greek_fiscal.view_account_fiscalgr_tauth_tf
+#: model:ir.ui.menu,name:account_greek_fiscal.menu_account_fiscalgr_tauth_tf
+msgid "Tax authorities"
+msgstr "Πίνακας Δ.Ο.Υ."
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Partner Ref."
+msgstr "Εταιρική Αναφ."
+
+#. module: account_greek_fiscal
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr "Άκυρο XML για αρχιτεκτονική Προβολής!"
+
+#. module: account_greek_fiscal
+#: help:ir.actions.report.xml,copies:0
+msgid "Default number of copies."
+msgstr "Αριθμός αντιγράφων"
+
+#. module: account_greek_fiscal
+#: field:account.invoice,property_fiscalgr_invoice_report:0
+msgid "Fiscal report template"
+msgstr "Πρότυπο λογιστικού εγγράφου"
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Invoice"
+msgstr "Τιμολόγιο"
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Total:"
+msgstr "Σύνολο:"
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.tauth,country_id:0
+msgid "Country"
+msgstr "Χώρα"
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Taxes"
+msgstr "Φόροι"
+
+#. module: account_greek_fiscal
+#: help:account.fiscalgr.print,cups_msg:0
+msgid "This is the message returned by cups, if the printing fails."
+msgstr "Αυτό είναι το μήνυμα από το σύστημα CUPS, αν αποτύχει η εκτύπωση."
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.print,cups_msg:0
+msgid "CUPS message"
+msgstr "Μήνυμα CUPS"
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Amount"
+msgstr "Ποσό"
+
+#. module: account_greek_fiscal
+#: field:ir.actions.report.xml,printer:0
+msgid "Printer"
+msgstr "Εκτυπωτής"
+
+#. module: account_greek_fiscal
+#: help:ir.actions.report.xml,printer:0
+msgid "Preferred printer for this report. Useful for server-side printing."
+msgstr ""
+"Προεπιλεγμένος εκτυπωτής για αυτή την αναφορά. Χρησιμοποιείται για "
+"εκτυπώσεις του server."
+
+#. module: account_greek_fiscal
+#: help:account.fiscalgr.print,cups_jobid:0
+msgid "CUPS job id"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: model:ir.model,name:account_greek_fiscal.model_account_fiscalgr_print
+msgid "account.fiscalgr.print"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.print,date:0
+msgid "Print date"
+msgstr "Ημ/νία εκτύπωσης"
+
+#. module: account_greek_fiscal
+#: selection:account.fiscalgr.print,state:0
+msgid "Queued"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Quantity"
+msgstr "Ποσότητα"
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Refund"
+msgstr "Επιστροφή"
+
+#. module: account_greek_fiscal
+#: model:ir.model,name:account_greek_fiscal.model_account_fiscalgr_occup
+msgid "account.fiscalgr.occup"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: view:account.fiscalgr.print:0
+msgid "Prints"
+msgstr "Εκτυπώσεις"
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.occup,code:0 field:account.fiscalgr.tauth,code:0
+#, fuzzy
+msgid "Code"
+msgstr "Αντίγραφα"
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Supplier Invoice"
+msgstr "Τιμολόγιο Προμηθευτή"
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.print,machine_id:0
+msgid "Machine ID"
+msgstr "ID Μηχανής"
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.print,name:0
+msgid "Title"
+msgstr "Τίτλος"
+
+#. module: account_greek_fiscal
+#: help:res.partner,vat_occup:0
+msgid ""
+"Select the corresponding occupation of the partner, as registered with tax "
+"authorities."
+msgstr ""
+
+#. module: account_greek_fiscal
+#: field:res.partner,vat_occup:0
+msgid "VAT Occupation"
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Net Total:"
+msgstr "Καθαρό σύνολο:"
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.print,hash:0
+msgid "Secure hash"
+msgstr "ΠΑΗΨΣ"
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Fax :"
+msgstr "Fax :"
+
+#. module: account_greek_fiscal
+#: help:account.fiscalgr.print,name:0
+msgid "Title of the CUPS job, typically the invoice reference."
+msgstr ""
+
+#. module: account_greek_fiscal
+#: rml:account.invoice.fiscalgr:0
+msgid "Supplier Refund"
+msgstr "Επιστροφή Χρημάτων Προμηθευτή"
+
+#. module: account_greek_fiscal
+#: field:account.fiscalgr.occup,name:0 field:account.fiscalgr.tauth,name:0
+msgid "Name"
+msgstr "Όνομα"
+
+#. module: account_greek_fiscal
+#: model:ir.module.module,shortdesc:account_greek_fiscal.module_meta_information
+#, fuzzy
+msgid "Greek Fiscal printing"
+msgstr "Ελληνικές Φορολογικές Εκτυπώσεις"
+
+#. module: account_greek_fiscal
+#: model:ir.actions.act_window,name:account_greek_fiscal.view_account_fiscalgr_print_tree_form
+#, fuzzy
+msgid "Fiscal Prints"
+msgstr "Φορολογικές εκτυπώσεις"

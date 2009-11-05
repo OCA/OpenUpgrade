@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* network
+# 	* network
 #
 msgid ""
 msgstr ""
@@ -22,7 +22,8 @@ msgstr ""
 
 #. module: network
 #: model:ir.module.module,description:network.module_meta_information
-msgid "\n"
+msgid ""
+"\n"
 "    A simple module to encode your networks and materials:\n"
 "    - networks and connections between networks\n"
 "    - hardwares and softwares with:\n"
@@ -33,7 +34,8 @@ msgstr ""
 
 #. module: network
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: network
@@ -93,8 +95,7 @@ msgid "Supplier"
 msgstr ""
 
 #. module: network
-#: view:network.software:0
-#: field:network.software,logpass:0
+#: view:network.software:0 field:network.software,logpass:0
 msgid "Login / Password"
 msgstr ""
 
@@ -133,8 +134,7 @@ msgid "Address range"
 msgstr ""
 
 #. module: network
-#: view:network.material:0
-#: view:network.network:0
+#: view:network.material:0 view:network.network:0
 msgid "Material Info"
 msgstr ""
 
@@ -166,8 +166,7 @@ msgid "Network Definition"
 msgstr ""
 
 #. module: network
-#: view:network.material:0
-#: view:network.network:0
+#: view:network.material:0 view:network.network:0
 msgid "Updates"
 msgstr ""
 
@@ -208,8 +207,7 @@ msgid "Installed Software"
 msgstr ""
 
 #. module: network
-#: field:network.software,name:0
-#: field:network.software.type,name:0
+#: field:network.software,name:0 field:network.software.type,name:0
 msgid "Composant Name"
 msgstr ""
 
@@ -234,25 +232,20 @@ msgid "Network Softwares"
 msgstr ""
 
 #. module: network
-#: view:network.material:0
-#: field:network.material,note:0
-#: view:network.network:0
-#: view:network.software:0
-#: field:network.software,note:0
-#: field:network.software.type,note:0
+#: view:network.material:0 field:network.material,note:0
+#: view:network.network:0 view:network.software:0
+#: field:network.software,note:0 field:network.software.type,note:0
 msgid "Notes"
 msgstr ""
 
 #. module: network
-#: view:network.material:0
-#: view:network.network:0
+#: view:network.material:0 view:network.network:0
 msgid "Network Material"
 msgstr ""
 
 #. module: network
 #: model:ir.actions.act_window,name:network.action_software_type
-#: field:network.software,type:0
-#: view:network.software.type:0
+#: field:network.software,type:0 view:network.software.type:0
 msgid "Software Type"
 msgstr ""
 
@@ -290,14 +283,12 @@ msgid "Hardware Type"
 msgstr ""
 
 #. module: network
-#: field:network.material,date:0
-#: field:network.software,date:0
+#: field:network.material,date:0 field:network.software,date:0
 msgid "Installation Date"
 msgstr ""
 
 #. module: network
-#: view:network.material:0
-#: view:network.network:0
+#: view:network.material:0 view:network.network:0
 msgid "Informations"
 msgstr ""
 
@@ -373,8 +364,7 @@ msgid "Changes on this machine"
 msgstr ""
 
 #. module: network
-#: view:network.material:0
-#: view:network.network:0
+#: view:network.material:0 view:network.network:0
 msgid "Softwares"
 msgstr ""
 
@@ -393,4 +383,3 @@ msgstr ""
 #: field:network.network,name:0
 msgid "Network name"
 msgstr ""
-

@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* l10n_be
+# 	* l10n_be
 #
 msgid ""
 msgstr ""
@@ -26,8 +26,7 @@ msgid "Tiers - Recevable"
 msgstr ""
 
 #. module: l10n_be
-#: wizard_view:list.vat.detail,go:0
-#: wizard_view:vat.intra.xml,go:0
+#: wizard_view:list.vat.detail,go:0 wizard_view:vat.intra.xml,go:0
 #: wizard_view:wizard.account.xml.vat.declaration,go:0
 msgid "Notification"
 msgstr ""
@@ -70,8 +69,7 @@ msgid "Capital"
 msgstr ""
 
 #. module: l10n_be
-#: wizard_field:list.vat.detail,go,msg:0
-#: wizard_field:vat.intra.xml,go,msg:0
+#: wizard_field:list.vat.detail,go,msg:0 wizard_field:vat.intra.xml,go,msg:0
 #: wizard_field:wizard.account.xml.vat.declaration,go,msg:0
 msgid "File created"
 msgstr ""
@@ -160,15 +158,16 @@ msgid "Vue"
 msgstr ""
 
 #. module: l10n_be
-#: wizard_button:list.vat.detail,go,end:0
-#: wizard_button:vat.intra.xml,go,end:0
+#: wizard_button:list.vat.detail,go,end:0 wizard_button:vat.intra.xml,go,end:0
 #: wizard_button:wizard.account.xml.vat.declaration,go,end:0
 msgid "Ok"
 msgstr ""
 
 #. module: l10n_be
 #: wizard_view:list.vat.detail,init:0
-msgid "This wizard will create an XML file for Vat details and total invoiced amounts per partner."
+msgid ""
+"This wizard will create an XML file for Vat details and total invoiced "
+"amounts per partner."
 msgstr ""
 
 #. module: l10n_be
@@ -211,8 +210,14 @@ msgstr ""
 
 #. module: l10n_be
 #: model:ir.actions.todo,note:l10n_be.config_call_account_template
-msgid "Generate Chart of Accounts from a Chart Template. You will be asked to pass the name of the company, the chart template to follow, the no. of digits to generate the code for your accounts and Bank account, currency to create Journals. Thus,the pure copy of chart Template is generated.\n"
-"This is the same wizard that runs from Financial Management/Configuration/Financial Accounting/Financial Accounts/Generate Chart of Accounts from a Chart Template."
+msgid ""
+"Generate Chart of Accounts from a Chart Template. You will be asked to pass "
+"the name of the company, the chart template to follow, the no. of digits to "
+"generate the code for your accounts and Bank account, currency to create "
+"Journals. Thus,the pure copy of chart Template is generated.\n"
+"This is the same wizard that runs from Financial Management/Configuration/"
+"Financial Accounting/Financial Accounts/Generate Chart of Accounts from a "
+"Chart Template."
 msgstr ""
 
 #. module: l10n_be
@@ -243,8 +248,7 @@ msgid "General Information"
 msgstr ""
 
 #. module: l10n_be
-#: wizard_view:list.vat.detail,go:0
-#: wizard_view:vat.intra.xml,go:0
+#: wizard_view:list.vat.detail,go:0 wizard_view:vat.intra.xml,go:0
 msgid "XML File has been Created."
 msgstr ""
 
@@ -271,3 +275,28 @@ msgstr ""
 msgid "Jan/Feb/Mar"
 msgstr ""
 
+#. module: l10n_be
+#: code:addons/l10n_be/wizard/partner_vat_listing.py:0
+#, python-format
+msgid "No partner has a VAT Number asociated with him."
+msgstr ""
+
+#. module: l10n_be
+#: code:addons/l10n_be/wizard/partner_vat_listing.py:0
+#, python-format
+msgid "Data Insufficient!"
+msgstr ""
+
+#. module: l10n_be
+#: code:addons/l10n_be/wizard/account_vat_declaration.py:0
+#: code:addons/l10n_be/wizard/partner_vat_listing.py:0
+#, python-format
+msgid "Data Insufficient"
+msgstr ""
+
+#. module: l10n_be
+#: code:addons/l10n_be/wizard/account_vat_declaration.py:0
+#: code:addons/l10n_be/wizard/partner_vat_listing.py:0
+#, python-format
+msgid "No VAT Number Associated with Main Company!"
+msgstr ""

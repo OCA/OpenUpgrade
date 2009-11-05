@@ -50,6 +50,24 @@ def get_first(tup):
 	"""Convenience function that returns the first part of a tuple"""
 	return tup[0]
 
+def fnc_date_only(val,gnco,gnself):
+	try:
+		return val.date().isoformat()
+	except:
+		return None
+
+def cas_get_ref(c, a, s):
+	if c:
+		return c[1]
+	else:
+		return None
+
+def cas_get_res_id(c, a, s):
+	try:
+		return c[1]['res_id']
+	except:
+		raise Exception("No ref")
+
 class GCHandler (gnccontent.GCDbgHandler):
 	"""This backend syncs the Gnucash object into the OpenERP ones.
 	   It should have a lifetime within the import process.
@@ -65,6 +83,9 @@ class GCHandler (gnccontent.GCDbgHandler):
 		self.dbglims= {}
 		self.cur_book=None
 		self.cur_company=None
+		self.sync_mark=0
+		self.syncLimit=3000
+		self.notProc=0
 		self.act_types= [ { 'gnc': None, 'user_type': 'view'},
 			{ 'gnc': 'CASH','type': 'other', 'user_type': 'cash'},
 			{ 'gnc': 'BANK','type': 'other', 'user_type': 'asset'},
@@ -96,6 +117,8 @@ class GCHandler (gnccontent.GCDbgHandler):
 	def fill_idref(self,idv,obj):
 		if not idv.val:
 			return
+		if ( self.sync_mark > self.syncLimit):
+			return None
 		ooids = self.iobj.search(self.cr, self.uid, [('guid', '=',idv.val)])
 		if ooids:
 		    oos = self.iobj.read(self.cr,self.uid,ooids,['guid','parent_book','module','model','res_id'])
@@ -170,6 +193,7 @@ class GCHandler (gnccontent.GCDbgHandler):
 			if val:
 				dd[str(key)] = val
 		self.dprint('Counters left:',dd)
+		self.dprint('Not processed since 3k limit:',self.notProc)
 		self.cur_book=None
 		self.cur_company=None
 	
@@ -184,6 +208,54 @@ class GCHandler (gnccontent.GCDbgHandler):
 			    ('company_id','',lambda c,a,s: s.cur_company,get_first)
 			    ])
 		
+	def end_invoice(self,act,par):
+		try:
+			if (not act.dic['owner'][1]):
+				raise Exception("No partner id=%s " % (str(act.dic['owner'][0])))
+			adre =act.dic['owner'][1]
+			if adre['model'] != 'res.partner':
+				raise Exception('invalid model in partner ref: %s' % adre['model'])
+			addrs=self.pool.get('res.partner.address').search(self.cr, self.uid,
+				[ ('partner_id','=',adre['res_id']), ('active','=','t')])
+			if addrs:
+				# print "Located addresses:", addrs
+				act.dic['address']=addrs[0]	# arbitrarily select the first
+			else:
+				raise Exception("No address for partner id=%s " % str(act.dic['owner'][1]))
+	
+			self.sync('invoice','account.invoice',act, [
+			    ('name','name'),
+			    ('number','inv_ref'),
+			    ('comment','notes'),
+			    ('reference', 'billing_id'),
+			    ('partner_id', 'owner', cas_get_res_id, get_first ),
+			    ('state','active', lambda c,a,s: (c and 'open') or 'cancel'),
+			    ('currency_id', 'currency', lambda c,a,s: c['ref'], get_first),
+			    ('address_invoice_id', 'address', None, get_first),
+			    ('account_id', 'postacc', cas_get_res_id, get_first ),
+			    ('date_invoice','posted', fnc_date_only ),
+			    ])
+			self.decCount('gnc:GncInvoice')
+		except Exception, ex:
+			self.warn("%s, skipping invoice \"%s\"" % (str(ex),act.dic['inv_ref']))
+			return
+
+	def end_entry(self,act,par):
+	    try:
+		self.sync('entry','account.invoice.line',act,
+			[('name','description'),
+			    ('invoice_id', 'invoice', cas_get_res_id, get_first ),
+			    ('quantity','qty'),
+			    ('discount', 'i-discount'),
+			    ('account_id', 'i-acct', cas_get_res_id, get_first ),
+			    ('price_unit', 'i-price'),
+			    #('note', '', lambda c,a,s: unicode(a.dic))
+			])
+		self.decCount('gnc:GncEntry')
+	    except Exception, ex:
+			self.warn("%s, skipping entry." % str(ex))
+			return
+
 	def get_parent(self, oo_model, fldt, gnc):
 		if not fldt or fldt == None:
 			return None
@@ -199,45 +271,76 @@ class GCHandler (gnccontent.GCDbgHandler):
 			raise Exception('Unresolved guid for %s: %s'%(gnc.name,str(fld)))
 		return fld['res_id']
 
-	def sync(self,oo_module, oo_model,gnco,fields=[]):
+	def sync(self,oo_module, oo_model,gnco,fields=[], match_fields = []):
 		if not fields:
 			raise Exception('No fields specified')
+		if ( self.sync_mark > self.syncLimit):
+			self.notProc=self.notProc+1
+			return None
 		
 		obj = self.pool.get(oo_model)
-		goi=self.iobj.search(self.cr, self.uid, [('guid', '=',gnco.dic['id']),('model','=',oo_model)])
+		if gnco.dic.has_key('guid'):
+			guid=gnco.dic['guid']
+		else:
+			guid=gnco.dic['id']
+		goi=self.iobj.search(self.cr, self.uid, [('guid', '=',guid),('model','=',oo_model)])
 		found = False
+		
+		if not goi and (len(match_fields)>0):
+			match_arr=[]
+			for fld in match_fields:
+				if len(fld)>2 and fld[2]:
+					fnc= fld[2]
+				else:
+					fnc = lambda a,b,c: a
+				val=None
+				if fld[1] in gnco.dic:
+					val = gnco.dic[fld[1]]
+				match_arr.append( (fld[0],'=',fnc(val,gnco,self)) )
+			self.dprint("Retrying match with: "+str(match_arr))
+			res = obj.search(self.cr, self.uid, match_arr)
+			if res:
+				gos= self.iobj.create(self.cr,self.uid, {'guid': guid, 'parent_book': self.cur_book['res_id'], 'module': oo_module,'model':oo_model,'res_id': res[0]})
+				goi= [gos,]
+		
 		if goi:
-		    gos = self.iobj.read(self.cr,self.uid,goi,['guid','parent_book','module','model','res_id'])
+		    gos = self.iobj.read(self.cr,self.uid,goi,['guid','parent_book','module','model','res_id', 'noupdate'])
 		    if gos:
 			    #assert(gos[0]['module'] == 'account', gos[0]['module'])
 			    #assert(gos[0]['parent_book'] == self.cur_book['res_id'],str(gos[0]['parent_book'])+" != "+str(self.cur_book['res_id']))
 			
 			    ooit= obj.read(self.cr,self.uid,gos[0]['res_id'],map(lambda x: x[0], fields))
 			    #for ooit in oos:
-			    if True:
-				if ooit['id'] == gos[0]['res_id']:
-					found = True
-					oocp = {}
-					for fld in fields:
-						if len(fld)>2 and fld[2]:
-							fnc= fld[2]
-						else:
-							fnc = lambda a,b,c: a
-						if len(fld)>3 and fld[3]:
-							fno= fld[3]
-						else:
-							fno= lambda a: a
-						val=None
-						if fld[1] in gnco.dic:
-							val = gnco.dic[fld[1]]
-						if fno(ooit[fld[0]]) != fnc(val,gnco,self):
-							oocp[fld[0]] = fnc(val,gnco,self)
-					if oocp:
-						#self.upd+=1
-						self.debug_lim(oo_model,"Must update: %s" % str(oocp))
-						obj.write(self.cr,self.uid, [ooit['id']],oocp)
-						
+			    if not ooit:
+				self.warn("Skip sync of %s[%d] because object is missing"%(gos[0]['model'],gos[0]['res_id']))
+				return False
+			    if ooit['id'] == gos[0]['res_id']:
+				found = True
+				if gos[0]['noupdate']:
+					self.debug("record %s[%s] is \"noupdate\", won't sync" % (gos[0]['model'], gos[0]['res_id']))
 					return ooit['id']
+				oocp = {}
+				for fld in fields:
+					if len(fld)>2 and fld[2]:
+						fnc= fld[2]
+					else:
+						fnc = lambda a,b,c: a
+					if len(fld)>3 and fld[3]:
+						fno= fld[3]
+					else:
+						fno= lambda a: a
+					val=None
+					if fld[1] in gnco.dic:
+						val = gnco.dic[fld[1]]
+					if fno(ooit[fld[0]]) != fnc(val,gnco,self):
+						oocp[fld[0]] = fnc(val,gnco,self)
+				if oocp:
+					#self.upd+=1
+					self.sync_mark=self.sync_mark+1
+					self.debug_lim(oo_model,"Must update: %s" % str(oocp))
+					obj.write(self.cr,self.uid, [ooit['id']],oocp)
+					
+				return ooit['id']
 	
 		if not found:
 			#self.new+=1
@@ -247,7 +350,7 @@ class GCHandler (gnccontent.GCDbgHandler):
 					fnc= fld[2]
 				else:
 					fnc = lambda a,b,c: a
-				#if len(fld)>3:
+				#if len(fld)>3 and fld[3]:
 					#fno= fld[3]
 				#else:
 					#fno= lambda a: a
@@ -255,10 +358,11 @@ class GCHandler (gnccontent.GCDbgHandler):
 				if fld[1] in gnco.dic:
 					val = gnco.dic[fld[1]]
 				oonew[fld[0]] = fnc(val,gnco,self)
+			self.sync_mark=self.sync_mark+1
 			self.debug_lim(oo_model,"must create: %s" %str(oonew))
 			res = obj.create(self.cr,self.uid,oonew)
 			self.debug_lim(oo_model,"created: %s #%s"%(oo_model,str(res)))
-			self.iobj.create(self.cr,self.uid, {'guid': gnco.dic['id'], 'parent_book': self.cur_book['res_id'], 'module': oo_module,'model':oo_model,'res_id': res})
+			self.iobj.create(self.cr,self.uid, {'guid': guid, 'parent_book': self.cur_book['res_id'], 'module': oo_module,'model':oo_model,'res_id': res})
 			return res
 
 	def end_transaction(self,trn,par):
@@ -267,7 +371,7 @@ class GCHandler (gnccontent.GCDbgHandler):
 		trn.dic['period_id']=self.find_period(trn.dic['date-posted'])
 		mid= self.sync('account','account.move',trn,
 			[('name','description'), ('journal_id','',lambda c,a,s: 4,get_first),
-			('date','date-posted',lambda c,a,s: c[:10]), ('period_id','period_id',None ,get_first)
+			('date','date-posted',fnc_date_only), ('period_id','period_id',None ,get_first)
 			])
 		for spld in trn.splits:
 			split = gnccontent.gnc_elem_dict('split')
@@ -276,11 +380,11 @@ class GCHandler (gnccontent.GCDbgHandler):
 			split.dic['period_id']=trn.dic['period_id']
 			split.dic['move_id'] = mid
 			if split.dic['value'] >= 0.0:
-				split.dic['ocredit'] =  split.dic['value']
-				split.dic['odebit'] = 0.0
-			else:
 				split.dic['ocredit'] = 0.0
-				split.dic['odebit'] = 0.0 - split.dic['value']
+				split.dic['odebit'] = split.dic['value']
+			else:
+				split.dic['ocredit'] = 0.0 - split.dic['value']
+				split.dic['odebit'] = 0.0
 			split.dic['date_created'] = trn.dic.get('date-entered',None)
 			#self.debug_lim('split',str(split.dic))
 			self.sync('account','account.move.line',split,
@@ -299,9 +403,9 @@ class GCHandler (gnccontent.GCDbgHandler):
 			return False
 	
 	def _end_partner(self, act, mfields=[]):
-		fields= [('name','name'), ('active','active')]
+		fields= [('name','name'), ('active','active',lambda c,a,s: (c == '1' ) )]
 		fields.extend(mfields)
-		self.sync('base','res.partner',act, fields)
+		self.sync('base','res.partner',act, fields, [('name','name')])
 		
 	def end_vendor(self,act,par):
 		self.decCount('gnc:GncVendor')
@@ -310,6 +414,19 @@ class GCHandler (gnccontent.GCDbgHandler):
 	def end_customer(self,act,par):
 		self.decCount('gnc:GncCustomer')
 		self._end_partner(act,[('customer',None,lambda c,a,s: True)])
+
+	def find_commodity(self,com):
+		self.decCount('commodity')
+		if com['space'] != 'ISO4217' : #commodity is a currency
+			return
+		
+		per=self.pool.get('res.currency').\
+			search(self.cr, self.uid,[('code','=',com['id'])] )
+		#print "Currency located:", per
+		if per:
+			return per[0]
+		else:
+			return False
 
 class wizard_import_gnucash(wizard.interface):
 

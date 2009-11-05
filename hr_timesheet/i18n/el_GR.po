@@ -1,58 +1,98 @@
 # Translation of OpenERP Server.
-# This file containt the translation of the following modules:
-#	* hr_timesheet
+# This file contains the translation of the following modules:
+# 	* hr_timesheet
 #
+# P. Christeas <p_christ@hol.gr>, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
+"Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2008-11-15 08:33:16+0000\n"
-"PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2009-06-08 21:23:39+0000\n"
+"PO-Revision-Date: 2009-06-18 16:05+0300\n"
+"Last-Translator: P. Christeas <p_christ@hol.gr>\n"
+"Language-Team: Greek <nls@hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Greek\n"
+"X-Poedit-Country: GREECE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Generator: Lokalize 0.3\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: hr_timesheet
+#: selection:hr.analytical.timesheet,init,month:0
+#: selection:hr.analytical.timesheet.my,init,month:0
+#: selection:hr.analytical.timesheet_users,init,month:0
+msgid "Μάρτιος"
+msgstr ""
 
 #. module: hr_timesheet
 #: wizard_view:hr.analytical.timesheet,init:0
 #: wizard_view:hr.analytical.timesheet.my,init:0
 msgid "Choose your month"
-msgstr ""
+msgstr "Επιλογή Μήνα"
 
 #. module: hr_timesheet
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
+"Το όνομα πρέπει να ξεκινάει με x_ και να μην περιέχει ειδικούς χαρακτήρες!"
 
 #. module: hr_timesheet
 #: model:ir.actions.report.xml,name:hr_timesheet.report_user_timesheet
-#: model:ir.actions.wizard,name:hr_timesheet.wizard_hr_timesheet
-#: model:ir.ui.menu,name:hr_timesheet.menu_wizard_hr_timesheet
 msgid "Employee timesheet"
-msgstr ""
+msgstr "Φύλλο Xρόνου Υπαλλήλου"
 
 #. module: hr_timesheet
 #: model:ir.actions.wizard,name:hr_timesheet.si_so
 #: model:ir.ui.menu,name:hr_timesheet.menu_si_so
 msgid "Sign in / Sign out by project"
+msgstr "Προσέλευση / Αναχώρηση ανά έργο"
+
+#. module: hr_timesheet
+#: selection:hr.analytical.timesheet,init,month:0
+#: selection:hr.analytical.timesheet.my,init,month:0
+#: selection:hr.analytical.timesheet_users,init,month:0
+msgid "Ιούλιος"
 msgstr ""
 
 #. module: hr_timesheet
-#: xsl:hr.analytical.timesheet:0
-msgid "Sum"
-msgstr ""
+#: wizard_view:hr_timesheet.si_so,sign_in:0
+msgid "(Keep empty for current_time)"
+msgstr "(Μη συμπληρώσετε το πεδίο αυτό)"
 
 #. module: hr_timesheet
 #: wizard_view:hr_timesheet.si_so,sign_out:0
 msgid "Sign in / Sign out"
+msgstr "Προσέλευση / Αναχώρηση"
+
+#. module: hr_timesheet
+#: wizard_view:hr_timesheet.si_so,sign_in:0
+msgid "Sign in status"
+msgstr "Κατάσταση Προσέλευσης"
+
+#. module: hr_timesheet
+#: wizard_view:hr_timesheet.si_so,sign_out:0
+msgid "(Keep empty for current time)"
+msgstr "(Μη συμπληρώσετε το πεδίο αυτό)"
+
+#. module: hr_timesheet
+#: wizard_field:hr_timesheet.si_so,sign_out,server_date:0
+msgid "Current Date"
+msgstr "Τρέχουσα Ημερ/νία"
+
+#. module: hr_timesheet
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
 msgstr ""
 
 #. module: hr_timesheet
-#, python-format
-#: code:addons/hr_timesheet/wizard/sign_in_out.py:0
-msgid "No employee defined for your user !"
+#: selection:hr.analytical.timesheet,init,month:0
+#: selection:hr.analytical.timesheet.my,init,month:0
+#: selection:hr.analytical.timesheet_users,init,month:0
+msgid "Φεβρουάριος"
 msgstr ""
 
 #. module: hr_timesheet
@@ -60,98 +100,104 @@ msgstr ""
 #: wizard_button:hr.analytical.timesheet.my,init,report:0
 #: wizard_button:hr.analytical.timesheet_users,init,report:0
 msgid "Print"
-msgstr ""
+msgstr "Εκτύπωση"
 
 #. module: hr_timesheet
-#: wizard_view:hr_timesheet.si_so,sign_out:0
-msgid "(Keep empty for current time)"
-msgstr ""
-
-#. module: hr_timesheet
-#: wizard_field:hr_timesheet.si_so,sign_out,server_date:0
-msgid "Current Date"
-msgstr "Τρέχουσα Ημερομηνία"
-
-#. module: hr_timesheet
-#: wizard_view:hr_timesheet.si_so,sign_in:0
-msgid "Sign in status"
-msgstr ""
-
-#. module: hr_timesheet
-#: field:hr.analytic.timesheet,line_id:0
-msgid "Analytic line"
-msgstr "Αναλυτική γραμμή"
+#: wizard_field:hr_timesheet.si_so,sign_in,analytic_amount:0
+msgid "Minimum Analytic Amount"
+msgstr "Ελάχιστος Αναλυτικός Λογαριασμός"
 
 #. module: hr_timesheet
 #: wizard_field:hr_timesheet.si_so,sign_in,server_date:0
 msgid "Current Server Date"
+msgstr "Τρέχουσα Ημερ/νία Server"
+
+#. module: hr_timesheet
+#: selection:hr.analytical.timesheet,init,month:0
+#: selection:hr.analytical.timesheet.my,init,month:0
+#: selection:hr.analytical.timesheet_users,init,month:0
+msgid "Οκτώβριος"
 msgstr ""
 
 #. module: hr_timesheet
-#, python-format
-#: code:addons/hr_timesheet/wizard/sign_in_out.py:0
-msgid "No cost unit defined for this employee !"
-msgstr ""
-
-#. module: hr_timesheet
-#, python-format
-#: code:addons/hr_timesheet/hr_timesheet.py:0
-msgid "No analytic account defined on the project.\nPlease set one or we can not automatically fill the timesheet."
-msgstr ""
-
-#. module: hr_timesheet
-#, python-format
-#: code:addons/hr_timesheet/hr_timesheet.py:0
-msgid "No analytic journal available for this employee.\nDefine an employee for the selected user and assign an analytic journal."
+#: selection:hr.analytical.timesheet,init,month:0
+#: selection:hr.analytical.timesheet.my,init,month:0
+#: selection:hr.analytical.timesheet_users,init,month:0
+msgid "Δεκέμβριος"
 msgstr ""
 
 #. module: hr_timesheet
 #: field:hr.employee,product_id:0
 msgid "Product"
-msgstr "Προϊόν"
+msgstr "Προϊον"
 
 #. module: hr_timesheet
-#: model:process.process,note:hr_timesheet.process_process_timesheetworkflow0
-msgid "Timesheet Lines flow for services companies."
+#: selection:hr.analytical.timesheet,init,month:0
+#: selection:hr.analytical.timesheet.my,init,month:0
+#: selection:hr.analytical.timesheet_users,init,month:0
+msgid "Μάιος"
 msgstr ""
 
 #. module: hr_timesheet
 #: field:hr.employee,journal_id:0
 msgid "Analytic Journal"
-msgstr ""
+msgstr "Αναλυτικό Ημερολόγιο"
 
 #. module: hr_timesheet
 #: model:ir.actions.act_window,name:hr_timesheet.act_hr_timesheet_line_evry1_today_form_my
 #: model:ir.ui.menu,name:hr_timesheet.menu_act_hr_timesheet_line_evry1_today_form_my
 msgid "My Working Hours of The Day"
-msgstr ""
+msgstr "Το Ημερήσιο Ωράριό μου"
+
+#. module: hr_timesheet
+#: model:ir.actions.wizard,name:hr_timesheet.wizard_hr_timesheet
+#: model:ir.ui.menu,name:hr_timesheet.menu_wizard_hr_timesheet
+msgid "Employee Timesheet"
+msgstr "Φύλλο Xρόνου Υπαλλήλου"
 
 #. module: hr_timesheet
 #: view:account.analytic.account:0
 msgid "Work done stats"
-msgstr ""
+msgstr "Στατιστικά δεδουλευμένων"
 
 #. module: hr_timesheet
-#: model:ir.model,name:hr_timesheet.model_hr_analytic_timesheet
-msgid "Timesheet line"
-msgstr ""
+#: model:ir.actions.act_window,name:hr_timesheet.act_hr_timesheet_line_evry1_all_form
+#: model:ir.ui.menu,name:hr_timesheet.menu_act_hr_timesheet_line_evry1_all_form
+#: model:ir.ui.menu,name:hr_timesheet.menu_act_hr_timesheet_line_today_form
+msgid "Working Hours"
+msgstr "Ώρες Εργασίας"
 
 #. module: hr_timesheet
 #: view:hr.analytic.timesheet:0
 msgid "Timesheet Lines"
-msgstr ""
+msgstr "Γραμμές Φύλλων Xρόνου"
 
 #. module: hr_timesheet
 #: view:hr.analytic.timesheet:0
 msgid "Total time"
-msgstr ""
+msgstr "Σύνολο Χρόνου"
 
 #. module: hr_timesheet
-#: xsl:hr.analytical.timesheet:0
-#: xsl:hr.analytical.timesheet_users:0
+#: xsl:hr.analytical.timesheet:0 xsl:hr.analytical.timesheet_users:0
 #: model:ir.ui.menu,name:hr_timesheet.next_id_48
 msgid "Timesheet"
-msgstr ""
+msgstr "Φύλλo Xρόνου"
+
+#. module: hr_timesheet
+#: wizard_button:hr.analytical.timesheet,init,end:0
+#: wizard_button:hr.analytical.timesheet.my,init,end:0
+#: wizard_button:hr.analytical.timesheet_users,init,end:0
+#: wizard_button:hr_timesheet.si_so,sign_in,end:0
+#: wizard_button:hr_timesheet.si_so,sign_out,end:0
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+#. module: hr_timesheet
+#: model:ir.actions.wizard,name:hr_timesheet.wizard_hr_timesheet_my
+#, fuzzy
+#: model:ir.ui.menu,name:hr_timesheet.menu_wizard_hr_timesheet_my
+msgid "Print My Timesheet"
+msgstr "Εκτύπωση Φύλλου Xρόνου μου"
 
 #. module: hr_timesheet
 #: wizard_field:hr.analytical.timesheet,init,user_id:0
@@ -162,149 +208,167 @@ msgstr "Χρήστης"
 #. module: hr_timesheet
 #: wizard_view:hr_timesheet.si_so,sign_out:0
 msgid "Sign in"
-msgstr ""
+msgstr "Προσέλευση"
 
 #. module: hr_timesheet
 #: model:ir.actions.act_window,name:hr_timesheet.act_hr_timesheet_line_evry1_today_form
 #: model:ir.ui.menu,name:hr_timesheet.menu_act_hr_timesheet_line_evry1_today_form
 msgid "Working Hours of The Day"
-msgstr ""
+msgstr "Ημερήσιο Ωράριο Εργασίας"
 
 #. module: hr_timesheet
-#: model:process.process,name:hr_timesheet.process_process_timesheetworkflow0
-msgid "Timesheet Workflow"
+#: selection:hr.analytical.timesheet,init,month:0
+#: selection:hr.analytical.timesheet.my,init,month:0
+#: selection:hr.analytical.timesheet_users,init,month:0
+msgid "Ιανουάριος"
 msgstr ""
 
 #. module: hr_timesheet
 #: wizard_view:hr_timesheet.si_so,sign_out:0
 msgid "(local time on the server side)"
-msgstr ""
+msgstr "(τοπική ώρα server)"
 
 #. module: hr_timesheet
 #: view:hr.analytic.timesheet:0
 msgid "Total cost"
-msgstr ""
+msgstr "Συνολικό Κόστος"
 
 #. module: hr_timesheet
-#: wizard_field:hr_timesheet.si_so,sign_out,date:0
 #: wizard_field:hr_timesheet.si_so,sign_in,date_start:0
+#: wizard_field:hr_timesheet.si_so,sign_out,date:0
 msgid "Starting Date"
-msgstr ""
+msgstr "Ημερ/νία Έναρξης"
 
 #. module: hr_timesheet
 #: wizard_field:hr_timesheet.si_so,sign_in,date:0
 msgid "Closing Date"
-msgstr ""
+msgstr "Ημερ/νία Κλεισίματος"
 
 #. module: hr_timesheet
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
-msgstr ""
+msgstr "Άκυρο XML για Αρχιτεκτονική Όψης!"
 
 #. module: hr_timesheet
-#: wizard_field:hr_timesheet.si_so,sign_in,analytic_amount:0
-msgid "Minimum Analytic Amount"
-msgstr ""
-
-#. module: hr_timesheet
-#: view:account.analytic.account:0
-msgid "Analysis summary"
-msgstr ""
+#: field:hr.analytic.timesheet,line_id:0
+msgid "Analytic line"
+msgstr "Αναλυτική Γραμμή"
 
 #. module: hr_timesheet
 #: wizard_view:hr.analytical.timesheet_users,init:0
 msgid "Choose Users"
+msgstr "Επιλογή Χρηστών"
+
+#. module: hr_timesheet
+#: selection:hr.analytical.timesheet,init,month:0
+#: selection:hr.analytical.timesheet.my,init,month:0
+#: selection:hr.analytical.timesheet_users,init,month:0
+msgid "Αύγουστος"
 msgstr ""
 
 #. module: hr_timesheet
 #: wizard_view:hr_timesheet.si_so,sign_in:0
 msgid "Work done in the last period"
-msgstr ""
+msgstr "Δεδουλευμένα της τελευταίας περιοδου"
 
 #. module: hr_timesheet
 #: view:account.analytic.account:0
 msgid "Key dates"
-msgstr ""
+msgstr "Σημαντικές ημερ/νίες"
 
 #. module: hr_timesheet
-#: wizard_field:hr_timesheet.si_so,sign_out,state:0
 #: wizard_field:hr_timesheet.si_so,sign_in,state:0
+#: wizard_field:hr_timesheet.si_so,sign_out,state:0
 msgid "Current state"
+msgstr "Παρούσα Κατάσταση"
+
+#. module: hr_timesheet
+#: selection:hr.analytical.timesheet,init,month:0
+#: selection:hr.analytical.timesheet.my,init,month:0
+#: selection:hr.analytical.timesheet_users,init,month:0
+msgid "Ιούνιος"
 msgstr ""
 
 #. module: hr_timesheet
 #: view:account.analytic.account:0
 msgid "Analysis stats"
+msgstr "Στατιστικά Ανάλυσης"
+
+#. module: hr_timesheet
+#: selection:hr.analytical.timesheet,init,month:0
+#: selection:hr.analytical.timesheet.my,init,month:0
+#: selection:hr.analytical.timesheet_users,init,month:0
+msgid "Νοέμβριος"
 msgstr ""
 
 #. module: hr_timesheet
-#: model:ir.ui.menu,name:hr_timesheet.menu_act_hr_timesheet_line_evry1_all_form
-#: model:ir.ui.menu,name:hr_timesheet.menu_act_hr_timesheet_line_today_form
-msgid "Working Hours"
-msgstr ""
+#: wizard_field:hr_timesheet.si_so,sign_in,info:0
+msgid "Work Description"
+msgstr "Περιγραφή Εργασίας"
 
 #. module: hr_timesheet
-#: wizard_field:hr_timesheet.si_so,sign_out,name:0
 #: wizard_field:hr_timesheet.si_so,sign_in,name:0
+#: wizard_field:hr_timesheet.si_so,sign_out,name:0
 msgid "Employee's name"
-msgstr ""
+msgstr "Όνομα Υπαλλήλου"
 
 #. module: hr_timesheet
 #: model:ir.actions.act_window,name:hr_timesheet.act_hr_timesheet_line_me_all_form
 #: model:ir.ui.menu,name:hr_timesheet.menu_act_hr_timesheet_line_me_all_form
 msgid "My Working Hours"
-msgstr ""
+msgstr "Το Ωράριο Εργασίας μου"
+
+#. module: hr_timesheet
+#: model:ir.model,name:hr_timesheet.model_hr_analytic_timesheet
+msgid "Timesheet line"
+msgstr "Γραμμή Φύλλου Xρόνου"
+
+#. module: hr_timesheet
+#: xsl:hr.analytical.timesheet:0
+msgid "Sum"
+msgstr "Άθροισμα"
+
+#. module: hr_timesheet
+#: wizard_button:hr_timesheet.si_so,sign_in,so_result_end:0
+msgid "Stop Working"
+msgstr "Τέλος Εργασίας"
+
+#. module: hr_timesheet
+#: xsl:hr.analytical.timesheet:0 xsl:hr.analytical.timesheet_users:0
+msgid "Total"
+msgstr "Σύνολο"
+
+#. module: hr_timesheet
+#: wizard_button:hr_timesheet.si_so,sign_out,si_result:0
+msgid "Start Working"
+msgstr "Έναρξη Εργασίας"
 
 #. module: hr_timesheet
 #: model:ir.actions.report.xml,name:hr_timesheet.report_users_timesheet
 #: model:ir.actions.wizard,name:hr_timesheet.wizard_hr_timesheet_users
 #: model:ir.ui.menu,name:hr_timesheet.menu_wizard_hr_timesheet_users
-msgid "Employees timesheet"
-msgstr ""
+msgid "Employees Timesheet"
+msgstr "Φύλλο Xρόνου Υπαλλήλου"
 
 #. module: hr_timesheet
-#: wizard_button:hr_timesheet.si_so,sign_in,so_result_end:0
-msgid "Stop Working"
-msgstr ""
-
-#. module: hr_timesheet
-#, python-format
-#: code:addons/hr_timesheet/wizard/sign_in_out.py:0
-msgid "UserError"
-msgstr ""
-
-#. module: hr_timesheet
-#: wizard_view:hr_timesheet.si_so,sign_in:0
-msgid "(Keep empty for current_time)"
-msgstr ""
-
-#. module: hr_timesheet
-#: view:hr.employee:0
-msgid "Timesheets"
-msgstr ""
-
-#. module: hr_timesheet
-#: wizard_button:hr_timesheet.si_so,sign_out,si_result:0
-msgid "Start Working"
-msgstr ""
-
-#. module: hr_timesheet
-#: view:hr.analytic.timesheet:0
-msgid "Timesheet Line"
+#: selection:hr.analytical.timesheet,init,month:0
+#: selection:hr.analytical.timesheet.my,init,month:0
+#: selection:hr.analytical.timesheet_users,init,month:0
+msgid "Σεπτέμβριος"
 msgstr ""
 
 #. module: hr_timesheet
 #: view:account.analytic.account:0
 msgid "Stats by month"
-msgstr ""
+msgstr "Μηνιαία Στατιστικά"
 
 #. module: hr_timesheet
+#: view:account.analytic.account:0
 #: wizard_field:hr.analytical.timesheet,init,month:0
 #: wizard_field:hr.analytical.timesheet.my,init,month:0
 #: wizard_field:hr.analytical.timesheet_users,init,month:0
-#: view:account.analytic.account:0
 msgid "Month"
-msgstr ""
+msgstr "Μήνας"
 
 #. module: hr_timesheet
 #: wizard_field:hr_timesheet.si_so,sign_in,account_id:0
@@ -314,65 +378,177 @@ msgstr "Αναλυτικός Λογαριασμός"
 #. module: hr_timesheet
 #: wizard_view:hr_timesheet.si_so,sign_in:0
 msgid "General Information"
-msgstr ""
+msgstr "Γενικές Πληροφορίες"
 
 #. module: hr_timesheet
-#: model:ir.actions.wizard,name:hr_timesheet.wizard_hr_timesheet_my
-#: model:ir.ui.menu,name:hr_timesheet.menu_wizard_hr_timesheet_my
-msgid "Print my timesheet"
+#: model:process.process,name:hr_timesheet.process_process_timesheetprocess0
+msgid "Timesheet Process"
+msgstr "Διεργασία Φύλλου Xρόνου"
+
+#. module: hr_timesheet
+#: selection:hr.analytical.timesheet,init,month:0
+#: selection:hr.analytical.timesheet.my,init,month:0
+#: selection:hr.analytical.timesheet_users,init,month:0
+msgid "Απρίλιος"
 msgstr ""
 
 #. module: hr_timesheet
 #: view:account.analytic.account:0
 msgid "Stats by user"
-msgstr ""
+msgstr "Στατιστικά ανά Χρήστη"
 
 #. module: hr_timesheet
-#: wizard_field:hr.analytical.timesheet_users,init,user_ids:0
+#: view:hr.analytic.timesheet:0
+msgid "Timesheet Line"
+msgstr "Γραμμή Φύλλου Xρόνου"
+
+#. module: hr_timesheet
 #: view:account.analytic.account:0
-msgid "Users"
-msgstr ""
+msgid "Analysis summary"
+msgstr "Ανάλυση Συνοπτικά "
 
 #. module: hr_timesheet
 #: wizard_field:hr.analytical.timesheet,init,year:0
 #: wizard_field:hr.analytical.timesheet.my,init,year:0
 #: wizard_field:hr.analytical.timesheet_users,init,year:0
 msgid "Year"
-msgstr ""
+msgstr "Έτος"
 
 #. module: hr_timesheet
-#: wizard_button:hr_timesheet.si_so,sign_out,end:0
-#: wizard_button:hr_timesheet.si_so,sign_in,end:0
-#: wizard_button:hr.analytical.timesheet,init,end:0
-#: wizard_button:hr.analytical.timesheet.my,init,end:0
-#: wizard_button:hr.analytical.timesheet_users,init,end:0
-msgid "Cancel"
-msgstr ""
+#: model:ir.module.module,shortdesc:hr_timesheet.module_meta_information
+msgid "Human Resources (Timesheet encoding)"
+msgstr "Ανθρώπινο Δυναμικό (Κωδικοποίηση Φύλλων Xρόνου)"
 
 #. module: hr_timesheet
-#: wizard_field:hr_timesheet.si_so,sign_in,info:0
-msgid "Work Description"
-msgstr ""
-
-#. module: hr_timesheet
-#: xsl:hr.analytical.timesheet:0
-#: xsl:hr.analytical.timesheet_users:0
-msgid "Total"
-msgstr "Σύνολο"
-
-#. module: hr_timesheet
-#: wizard_button:hr_timesheet.si_so,sign_in,so_result:0
-msgid "Change Work"
-msgstr ""
-
-#. module: hr_timesheet
-#, python-format
-#: code:addons/hr_timesheet/hr_timesheet.py:0
-msgid "ValidateError"
-msgstr ""
+#: view:account.analytic.account:0
+#: wizard_field:hr.analytical.timesheet_users,init,user_ids:0
+msgid "Users"
+msgstr "Χρήστες"
 
 #. module: hr_timesheet
 #: view:account.analytic.account:0
 msgid "To be invoiced"
-msgstr ""
+msgstr "Προς Τιμολόγηση"
 
+#. module: hr_timesheet
+#: wizard_button:hr_timesheet.si_so,sign_in,so_result:0
+msgid "Change Work"
+msgstr "Αλλαγή Εργασίας"
+
+#. module: hr_timesheet
+#: view:hr.employee:0
+msgid "Timesheets"
+msgstr "Φύλλα Xρόνου"
+
+#~ msgid "Wed"
+#~ msgstr "Τετ"
+
+#~ msgid "No employee defined for your user !"
+#~ msgstr "Ο χρήστης σας δεν έχει συνδεθεί με υπάλληλο της εταιρείας"
+
+#~ msgid "Mon"
+#~ msgstr "Δευτ"
+
+#~ msgid "Day"
+#~ msgstr "Ημέρα"
+
+#~ msgid "UserError"
+#~ msgstr "UserError"
+
+#~ msgid "No cost unit defined for this employee !"
+#~ msgstr "Δεν έχει οριστεί μονάδα κόστους για τον υπάλληλο"
+
+#~ msgid "ValidateError"
+#~ msgstr "ValidateError"
+
+#~ msgid "Sat"
+#~ msgstr "Σάβ"
+
+#~ msgid "Sun"
+#~ msgstr "Κυρ"
+
+#~ msgid "Consultancy - Senior Developer"
+#~ msgstr "Consultancy - Senior Developer"
+
+#~ msgid ""
+#~ "No analytic journal available for this employee.\n"
+#~ "Define an employee for the selected user and assign an analytic journal."
+#~ msgstr ""
+#~ "Δεν υπάρχει αναλυτικό ημερολόγιο για τον υπάλληλο\n"
+#~ "Ορίστε υπάλληλο για το συγκεκριμένο χρήστη και συνδέστε ένα αναλυτικό "
+#~ "ημερολόγιο"
+
+#~ msgid "Hour"
+#~ msgstr "Ώρα"
+
+#~ msgid "July"
+#~ msgstr "Ιούλιος"
+
+#~ msgid "Tue"
+#~ msgstr "Τρίτη"
+
+#~ msgid "Error: UOS must be in a different category than the UOM"
+#~ msgstr "Error: UOS must be in a different category than the UOM"
+
+#~ msgid "March"
+#~ msgstr "Μάρτιος"
+
+#~ msgid "December"
+#~ msgstr "Δεκέμβριος"
+
+#~ msgid "Fri"
+#~ msgstr "Παρ"
+
+#~ msgid ""
+#~ "Error: The default UOM and the purchase UOM must be in the same category."
+#~ msgstr ""
+#~ "Error: The default UOM and the purchase UOM must be in the same category."
+
+#~ msgid "August"
+#~ msgstr "Αύγουστος"
+
+#~ msgid "June"
+#~ msgstr "Ιούνιος"
+
+#~ msgid "November"
+#~ msgstr "Νοέμβριος"
+
+#~ msgid "October"
+#~ msgstr "Οκτώβριος"
+
+#~ msgid ""
+#~ "No analytic account defined on the project.\n"
+#~ "Please set one or we can not automatically fill the timesheet."
+#~ msgstr ""
+#~ "Δεν έχει οριστεί Αναλυτικός Λογαριασμός για το έργο.\n"
+#~ "Παρακαλώ ορίστε έναν για να συμπληρωθεί το Φύλλο Xρόνου Eργασίας αυτόματα."
+
+#~ msgid "January"
+#~ msgstr "Ιανουάριος"
+
+#~ msgid "Employees timesheet"
+#~ msgstr "Φύλλο Xρόνου Eργασίας Υπαλλήλου"
+
+#~ msgid "September"
+#~ msgstr "Σεπτέμβριος"
+
+#~ msgid "Print my timesheet"
+#~ msgstr "Εκτύπωση Φύλλου Xρόνου Eργασίας μου"
+
+#~ msgid "Working Time"
+#~ msgstr "Χρόνος Εργασίας"
+
+#~ msgid "May"
+#~ msgstr "Μάιος"
+
+#~ msgid "February"
+#~ msgstr "Φεβρουάριος"
+
+#~ msgid "Thu"
+#~ msgstr "Πέμ"
+
+#~ msgid "April"
+#~ msgstr "Απρίλιος"
+
+#~ msgid "Error: Invalid ean code"
+#~ msgstr "Σφάλμα: Άκυρος Κωδικός ΕΑΝ"

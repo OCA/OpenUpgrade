@@ -1,135 +1,162 @@
 # Translation of OpenERP Server.
-# This file containt the translation of the following modules:
-#	* base_report_designer
+# This file contains the translation of the following modules:
+# 	* base_report_designer
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
+"Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2008-11-15 08:33:16+0000\n"
-"PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2009-05-30 15:14:08+0000\n"
+"PO-Revision-Date: 2009-06-13 03:37+0200\n"
+"Last-Translator: Panagiotis Kranidiotis <kranidiotis@vatica.org>\n"
+"Language-Team: nls@hellug.gr <nls@hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Greek\n"
+"X-Poedit-Country: GREECE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#. module: base_report_designer
+#: model:ir.module.module,shortdesc:base_report_designer.module_meta_information
+msgid "Report designer interface module"
+msgstr "Άρθρωμα σχεδιαστή αναφορών."
 
 #. module: base_report_designer
 #: wizard_field:base_report_designer.modify,init,text:0
 msgid "Introduction"
-msgstr ""
+msgstr "Εισαγωγή"
 
 #. module: base_report_designer
 #: wizard_view:base_report_designer.modify,send_form:0
 msgid "Upload your modified report"
-msgstr ""
+msgstr "Upload your modified report"
 
 #. module: base_report_designer
 #: wizard_button:base_report_designer.modify,get_form_result,send_form:0
 msgid "Upload the modified report"
-msgstr ""
+msgstr "Upload the modified report"
 
 #. module: base_report_designer
 #: wizard_view:base_report_designer.modify,get_form_result:0
 msgid "The .SXW report"
-msgstr ""
+msgstr "The .SXW report"
 
 #. module: base_report_designer
 #: wizard_view:base_report_designer.modify,send_form_result:0
 msgid "Report modified"
-msgstr ""
+msgstr "Η αναφορά τροποιήθηκε"
 
 #. module: base_report_designer
 #: wizard_button:base_report_designer.modify,init,get_form:0
 msgid "Modify a report"
-msgstr ""
+msgstr "Τροποποίηση αναφορών"
 
 #. module: base_report_designer
 #: wizard_view:base_report_designer.modify,send_form_result:0
 msgid "Your report has been modified."
-msgstr ""
+msgstr "Η αναφορά σας τροποποιήθηκε."
 
 #. module: base_report_designer
-#: wizard_field:base_report_designer.modify,get_form_result,report_id:0
 #: wizard_field:base_report_designer.modify,get_form,report_id:0
+#: wizard_field:base_report_designer.modify,get_form_result,report_id:0
 #: wizard_field:base_report_designer.modify,send_form,report_id:0
 msgid "Report"
-msgstr ""
+msgstr "Αναφορά "
 
 #. module: base_report_designer
-#, python-format
 #: code:addons/base_report_designer/wizard/base_report_designer_modify.py:0
+#, python-format
 msgid "Report does not contain the sxw content!"
-msgstr ""
+msgstr "Report does not contain the sxw content!"
 
 #. module: base_report_designer
 #: model:ir.ui.menu,name:base_report_designer.menu_wizard_report_designer_modify
 msgid "Report Designer"
-msgstr ""
+msgstr "Σχεδιαστής Αναφορών"
 
 #. module: base_report_designer
-#: wizard_view:base_report_designer.modify,get_form_result:0
 #: wizard_view:base_report_designer.modify,get_form:0
+#: wizard_view:base_report_designer.modify,get_form_result:0
 #: wizard_view:base_report_designer.modify,send_form:0
 msgid "Get a report"
-msgstr ""
-
-#. module: base_report_designer
-#: wizard_view:base_report_designer.modify,get_form_result:0
-msgid "This is the template of your requested report. Save it as a .SXW file and open it with OpenOffice. Don't forget to install the Tiny OpenOffice package to modify it. Once it is modified, re-upload it in Tiny ERP using this wizard."
-msgstr ""
+msgstr "Εύρεση αναφορών"
 
 #. module: base_report_designer
 #: wizard_button:base_report_designer.modify,get_form,get_form_result:0
 msgid "Continue"
-msgstr ""
+msgstr "Συνέχεια"
 
 #. module: base_report_designer
+#: code:addons/base_report_designer/wizard/base_report_designer_modify.py:0
+#, python-format
+msgid "Error"
+msgstr "Σφάλμα"
+
+#. module: base_report_designer
+#: wizard_field:base_report_designer.modify,get_form_result,file_sxw:0
 #: wizard_field:base_report_designer.modify,send_form,file_sxw:0
 msgid "Your .SXW file"
-msgstr ""
+msgstr "Your .SXW file"
 
 #. module: base_report_designer
 #: wizard_view:base_report_designer.modify,init:0
 msgid "Report designer"
+msgstr "Σχεδιαστής αναφορών"
+
+#. module: base_report_designer
+#: wizard_view:base_report_designer.modify,get_form_result:0
+msgid ""
+"This is the template of your requested report. Save it as a .SXW file and "
+"open it with OpenOffice. Don't forget to install the Tiny OpenOffice package "
+"to modify it. Once it is modified, re-upload it in Open ERP using this "
+"wizard."
 msgstr ""
+"Αυτό είναι το πρότυπο της αναφοράς που ζητήσατε. Αποθηκεύστε το σε μορφή ."
+"SXW και ανοίξτε το με το OpenOffice. Εγκαταστήστε και το πακέτο Tiny "
+"OpenOffice για τροποποίηση αναφορών. Μόλις ολοκληρώσετε, μπορείτε να την "
+"ανεβάσετε πάλι στο Open ERP ακολουθώντας το σχετικό Αυτόματο οδηγό (wizard)."
 
 #. module: base_report_designer
 #: wizard_button:base_report_designer.modify,send_form,send_form_result:0
 msgid "Update the report"
-msgstr ""
+msgstr "Ενημέρωση αναφοράς"
 
 #. module: base_report_designer
+#: selection:base_report_designer.modify,init,operation:0
+msgid "Create a new report"
+msgstr "Δημιουργία νέων αναφορών"
+
+#. module: base_report_designer
+#: selection:base_report_designer.modify,init,operation:0
 #: model:ir.actions.wizard,name:base_report_designer.wizard_report_designer_modify
 msgid "Modify an existing report"
-msgstr ""
+msgstr "Τροποποίηση αναφορών"
 
 #. module: base_report_designer
 #: wizard_button:base_report_designer.modify,get_form,end:0
 #: wizard_button:base_report_designer.modify,init,end:0
 msgid "Cancel"
-msgstr ""
+msgstr "Ακύρωση"
 
 #. module: base_report_designer
 #: wizard_button:base_report_designer.modify,get_form_result,end:0
 #: wizard_button:base_report_designer.modify,send_form,end:0
 #: wizard_button:base_report_designer.modify,send_form_result,end:0
 msgid "Close"
-msgstr ""
+msgstr "Κλείσιμο"
 
 #. module: base_report_designer
 #: wizard_field:base_report_designer.modify,init,operation:0
 msgid "Operation"
-msgstr ""
-
-#. module: base_report_designer
-#: wizard_view:base_report_designer.modify,get_form:0
-msgid "Select your report"
-msgstr ""
+msgstr "Εργασία"
 
 #. module: base_report_designer
 #: wizard_view:base_report_designer.modify,init:0
 msgid "Report designer introduction"
-msgstr ""
+msgstr "Εισαγωγή στο σχεδιαστή αναφορών"
 
+#. module: base_report_designer
+#: wizard_view:base_report_designer.modify,get_form:0
+msgid "Select your report"
+msgstr "Επιλογή αναφοράς"

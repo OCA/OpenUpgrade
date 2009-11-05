@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* base_module_merge
+# 	* base_module_merge
 #
 msgid ""
 msgstr ""
@@ -120,7 +120,10 @@ msgstr ""
 
 #. module: base_module_merge
 #: wizard_view:base_module_merge.module_merge,save:0
-msgid "If you think your module could interrest others people, we'd like you to publish it on OpenERP.com, in the 'Modules' section. You can do it through the website or using features of the 'base_module_publish' module."
+msgid ""
+"If you think your module could interrest others people, we'd like you to "
+"publish it on OpenERP.com, in the 'Modules' section. You can do it through "
+"the website or using features of the 'base_module_publish' module."
 msgstr ""
 
 #. module: base_module_merge
@@ -149,3 +152,14 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
+#. module: base_module_merge
+#: code:addons/base_module_merge/wizard/base_module_merge.py:0
+#, python-format
+msgid "Recursion error in modules dependencies !"
+msgstr ""
+
+#. module: base_module_merge
+#: code:addons/base_module_merge/wizard/base_module_merge.py:0
+#, python-format
+msgid "Error"
+msgstr ""

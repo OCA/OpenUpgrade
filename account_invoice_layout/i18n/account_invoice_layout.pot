@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* account_invoice_layout
+# 	* account_invoice_layout
 #
 msgid ""
 msgstr ""
@@ -27,7 +27,8 @@ msgstr ""
 
 #. module: account_invoice_layout
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: account_invoice_layout
@@ -36,8 +37,7 @@ msgid "Cancelled Invoice"
 msgstr ""
 
 #. module: account_invoice_layout
-#: selection:account.invoice.line,state:0
-#: field:notify.message,name:0
+#: selection:account.invoice.line,state:0 field:notify.message,name:0
 msgid "Title"
 msgstr ""
 
@@ -68,7 +68,8 @@ msgstr ""
 
 #. module: account_invoice_layout
 #: help:notify.message,msg:0
-msgid "This notification will appear at the bottom of the Invoices when printed."
+msgid ""
+"This notification will appear at the bottom of the Invoices when printed."
 msgstr ""
 
 #. module: account_invoice_layout
@@ -306,3 +307,27 @@ msgstr ""
 msgid "All Notification Messages"
 msgstr ""
 
+#. module: account_invoice_layout
+#: rml:account.invoice.layout:0
+msgid "Description"
+msgstr ""
+
+#. module: account_invoice_layout
+#: rml:account.invoice.layout:0
+msgid "Canceled Invoice"
+msgstr ""
+
+#. module: account_invoice_layout
+#: rml:account.invoice.layout:0
+msgid "Total (excl. taxes):"
+msgstr ""
+
+#. module: account_invoice_layout
+#: rml:account.invoice.layout:0
+msgid "Taxes"
+msgstr ""
+
+#. module: account_invoice_layout
+#: rml:account.invoice.layout:0
+msgid "(incl. taxes):"
+msgstr ""

@@ -1,57 +1,72 @@
 # Translation of OpenERP Server.
-# This file containt the translation of the following modules:
-#	* board_association
+# This file contains the translation of the following modules:
+# 	* board_association
 #
+# P. Christeas <p_christ@hol.gr>, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
+"Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2008-11-15 08:33:16+0000\n"
-"PO-Revision-Date: 2008-11-15 08:33:16+0000\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2009-08-14 08:23:23+0000\n"
+"PO-Revision-Date: 2009-06-18 13:54+0300\n"
+"Last-Translator: P. Christeas <p_christ@hol.gr>\n"
+"Language-Team: Greek <nls@hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Greek\n"
+"X-Poedit-Country: GREECE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Generator: Lokalize 0.3\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: board_association
 #: model:ir.ui.menu,name:board_association.menu_board_associations_manager
 msgid "Associations"
-msgstr ""
+msgstr "Συνεταιρισμοί"
+
+#. module: board_association
+#: model:ir.module.module,shortdesc:board_association.module_meta_information
+msgid "Dashboard for Associations"
+msgstr "Πίνακας για Συνεταιρισμούς"
 
 #. module: board_association
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
-msgstr ""
+msgstr "Άκυρο XML για Αρχιτεκτονική Όψης!"
 
 #. module: board_association
 #: view:board.board:0
+#: model:ir.actions.act_window,name:board_association.open_board_associations_manager
 msgid "Association Dashboard"
-msgstr ""
+msgstr "Πίνακας Συνεταιρισμών"
 
 #. module: board_association
 #: view:board.board:0
 msgid "My tasks"
-msgstr ""
+msgstr "Οι αναθέσεις μου"
 
 #. module: board_association
 #: view:board.board:0
 msgid "New members"
-msgstr ""
+msgstr "Νέα μέλη"
 
 #. module: board_association
 #: view:board.board:0
 msgid "Unpaid Invoices"
-msgstr ""
+msgstr "Απλήρωτα Τιμολόγια"
+
+#. module: board_association
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr "Άκυρο όνομα μοντέλου στον ορισμό της ενέργειας"
 
 #. module: board_association
 #: view:board.board:0
 msgid "Next Events"
-msgstr ""
+msgstr "Επόμενα Συμβάντα"
 
 #. module: board_association
 #: view:board.board:0
 msgid "Registrations by Events"
-msgstr ""
-
+msgstr "Καταχωρήσεις ανά Συμβάν"

@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* base_report_creator
+# 	* base_report_creator
 #
 msgid ""
 msgstr ""
@@ -17,7 +17,9 @@ msgstr ""
 
 #. module: base_report_creator
 #: help:base_report_creator.report.filter,expression:0
-msgid "Provide an expression for the field based on which you want to filter the records.\n"
+msgid ""
+"Provide an expression for the field based on which you want to filter the "
+"records.\n"
 " e.g. res_partner.id=3"
 msgstr ""
 
@@ -359,7 +361,8 @@ msgstr ""
 
 #. module: base_report_creator
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: base_report_creator
@@ -394,13 +397,13 @@ msgstr ""
 
 #. module: base_report_creator
 #: model:ir.module.module,description:base_report_creator.module_meta_information
-msgid "This modules allows you to create any statistic\n"
+msgid ""
+"This modules allows you to create any statistic\n"
 "report on several object. It's a SQL query builder and browser\n"
 "for and users.\n"
 "\n"
 "After installing the module, it adds a menu to define custom report in\n"
 "the \"Dashboard\" menu.\n"
-""
 msgstr ""
 
 #. module: base_report_creator
@@ -485,3 +488,16 @@ msgstr ""
 msgid "Filters"
 msgstr ""
 
+#. module: base_report_creator
+#: code:addons/base_report_creator/base_report_creator.py:0
+#, python-format
+msgid ""
+"These is/are model(s) (%s) in selection which is/are not related to any "
+"other model"
+msgstr ""
+
+#. module: base_report_creator
+#: code:addons/base_report_creator/base_report_creator.py:0
+#, python-format
+msgid "No Related Models!!"
+msgstr ""

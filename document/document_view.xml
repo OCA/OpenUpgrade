@@ -278,6 +278,11 @@
             <field name="action_id" ref="action_config_auto_directory"/>
         </record>
 
+        <act_window domain="[('partner_id', '=', active_id)]"
+            id="act_res_partner_document" name="Related Documents"
+            res_model="ir.attachment"
+            src_model="res.partner"/>
+
 </data>
 </openerp>
 

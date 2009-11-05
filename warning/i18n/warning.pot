@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* warning
+# 	* warning
 #
 msgid ""
 msgstr ""
@@ -41,17 +41,14 @@ msgid "Warning when Purchasing this Product"
 msgstr ""
 
 #. module: warning
-#: view:product.product:0
-#: view:res.partner:0
+#: view:product.product:0 view:res.partner:0
 msgid "Warnings"
 msgstr ""
 
 #. module: warning
 #: selection:product.product,sale_line_warn:0
-#: selection:res.partner,invoice_warn:0
-#: selection:res.partner,picking_warn:0
-#: selection:res.partner,purchase_warn:0
-#: selection:res.partner,sale_warn:0
+#: selection:res.partner,invoice_warn:0 selection:res.partner,picking_warn:0
+#: selection:res.partner,purchase_warn:0 selection:res.partner,sale_warn:0
 msgid "Blocking Message"
 msgstr ""
 
@@ -63,10 +60,8 @@ msgstr ""
 #. module: warning
 #: selection:product.product,purchase_line_warn:0
 #: selection:product.product,sale_line_warn:0
-#: selection:res.partner,invoice_warn:0
-#: selection:res.partner,picking_warn:0
-#: selection:res.partner,purchase_warn:0
-#: selection:res.partner,sale_warn:0
+#: selection:res.partner,invoice_warn:0 selection:res.partner,picking_warn:0
+#: selection:res.partner,purchase_warn:0 selection:res.partner,sale_warn:0
 msgid "No Message"
 msgstr ""
 
@@ -117,12 +112,13 @@ msgstr ""
 
 #. module: warning
 #: help:product.product,purchase_line_warn:0
-#: help:product.product,sale_line_warn:0
-#: help:res.partner,invoice_warn:0
-#: help:res.partner,picking_warn:0
-#: help:res.partner,purchase_warn:0
+#: help:product.product,sale_line_warn:0 help:res.partner,invoice_warn:0
+#: help:res.partner,picking_warn:0 help:res.partner,purchase_warn:0
 #: help:res.partner,sale_warn:0
-msgid "Selecting the \"Warning\" option will notify user with the message, Selecting \"Blocking Message\" will throw an exception with the message and block the flow. The Message has to be written in the next field."
+msgid ""
+"Selecting the \"Warning\" option will notify user with the message, "
+"Selecting \"Blocking Message\" will throw an exception with the message and "
+"block the flow. The Message has to be written in the next field."
 msgstr ""
 
 #. module: warning
@@ -153,10 +149,8 @@ msgstr ""
 #. module: warning
 #: selection:product.product,purchase_line_warn:0
 #: selection:product.product,sale_line_warn:0
-#: selection:res.partner,invoice_warn:0
-#: selection:res.partner,picking_warn:0
-#: selection:res.partner,purchase_warn:0
-#: selection:res.partner,sale_warn:0
+#: selection:res.partner,invoice_warn:0 selection:res.partner,picking_warn:0
+#: selection:res.partner,purchase_warn:0 selection:res.partner,sale_warn:0
 msgid "Warning"
 msgstr ""
 
@@ -165,3 +159,8 @@ msgstr ""
 msgid "Message for Stock Picking"
 msgstr ""
 
+#. module: warning
+#: code:addons/warning/warning.py:0
+#, python-format
+msgid "Alert for ' + product_info.name +' !"
+msgstr ""

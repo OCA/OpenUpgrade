@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* subscription
+# 	* subscription
 #
 msgid ""
 msgstr ""
@@ -28,7 +28,8 @@ msgstr ""
 
 #. module: subscription
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: subscription
@@ -93,7 +94,8 @@ msgstr ""
 
 #. module: subscription
 #: model:ir.module.module,description:subscription.module_meta_information
-msgid "Module allows to create new documents and add subscription on that document."
+msgid ""
+"Module allows to create new documents and add subscription on that document."
 msgstr ""
 
 #. module: subscription
@@ -142,8 +144,7 @@ msgid "Sale Order"
 msgstr ""
 
 #. module: subscription
-#: field:subscription.document,name:0
-#: field:subscription.subscription,name:0
+#: field:subscription.document,name:0 field:subscription.subscription,name:0
 msgid "Name"
 msgstr ""
 
@@ -268,3 +269,16 @@ msgstr ""
 msgid "Tools"
 msgstr ""
 
+#. module: subscription
+#: code:addons/subscription/subscription.py:0
+#, python-format
+msgid ""
+"Please provide another source document.\n"
+"This one does not exist !"
+msgstr ""
+
+#. module: subscription
+#: code:addons/subscription/subscription.py:0
+#, python-format
+msgid "Wrong Source Document !"
+msgstr ""

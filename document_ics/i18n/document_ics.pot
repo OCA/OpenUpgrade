@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* document_ics
+# 	* document_ics
 #
 msgid ""
 msgstr ""
@@ -17,7 +17,8 @@ msgstr ""
 
 #. module: document_ics
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: document_ics
@@ -87,7 +88,9 @@ msgstr ""
 
 #. module: document_ics
 #: model:ir.actions.todo,note:document_ics.config_wizard_step_case_section_menu
-msgid "This Configuration step use to create Calendars in document for all Case Sections"
+msgid ""
+"This Configuration step use to create Calendars in document for all Case "
+"Sections"
 msgstr ""
 
 #. module: document_ics
@@ -97,7 +100,9 @@ msgstr ""
 
 #. module: document_ics
 #: help:document.ics.crm.wizard,jobs:0
-msgid "Help you to organise the jobs hiring process: evaluation, meetings, email integration..."
+msgid ""
+"Help you to organise the jobs hiring process: evaluation, meetings, email "
+"integration..."
 msgstr ""
 
 #. module: document_ics
@@ -172,7 +177,9 @@ msgstr ""
 
 #. module: document_ics
 #: help:document.ics.crm.wizard,lead:0
-msgid "Allows you to track and manage prospects which are pre-sales requests or contacts, the very first contact with a customer request."
+msgid ""
+"Allows you to track and manage prospects which are pre-sales requests or "
+"contacts, the very first contact with a customer request."
 msgstr ""
 
 #. module: document_ics
@@ -192,7 +199,9 @@ msgstr ""
 
 #. module: document_ics
 #: help:document.ics.crm.wizard,claims:0
-msgid "Manages the supplier and customers claims, including your corrective or preventive actions."
+msgid ""
+"Manages the supplier and customers claims, including your corrective or "
+"preventive actions."
 msgstr ""
 
 #. module: document_ics
@@ -222,7 +231,9 @@ msgstr ""
 
 #. module: document_ics
 #: help:document.ics.crm.wizard,phonecall:0
-msgid "Help you to encode the result of a phone call or to planify a list of phone calls to process."
+msgid ""
+"Help you to encode the result of a phone call or to planify a list of phone "
+"calls to process."
 msgstr ""
 
 #. module: document_ics
@@ -305,3 +316,14 @@ msgstr ""
 msgid "dtstamp"
 msgstr ""
 
+#. module: document_ics
+#: code:addons/document_ics/document.py:0
+#, python-format
+msgid "You can not set negative Duration."
+msgstr ""
+
+#. module: document_ics
+#: code:addons/document_ics/document.py:0
+#, python-format
+msgid "Warning !"
+msgstr ""

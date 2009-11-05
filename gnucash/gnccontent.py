@@ -32,7 +32,7 @@ class GCDbgHandler (object):
 	Override the class and add your backend support"""
 	def __init__(self):
 		self.linesout=0
-		self.printed = {'account': 5, 'trans' :5, 'commodity': 2}
+		self.printed = {'account': 5, 'trans' :5, 'commodity': 2, 'invoice' :2, 'entry': 2}
 		self.counters = {}
 	def debug(self,stri):
 		if self.linesout > 200:
@@ -98,10 +98,21 @@ class GCDbgHandler (object):
 	def end_vendor(self,act,par):
 		self.decCount('gnc:GncVendor')
 		self.print_item('vendor',act)
+		
+	def find_commodity(self,dic):
+		return False
 
 	def end_customer(self,act,par):
 		self.decCount('gnc:GncCustomer')
 		self.print_item('customer',act)
+
+	def end_invoice(self,act,par):
+		self.decCount('gnc:GncInvoice')
+		self.print_item('invoice',act)
+
+	def end_entry(self,act,par):
+		self.decCount('gnc:GncEntry')
+		self.print_item('entry',act)
 
 
 class gnc_elem(object):
@@ -199,6 +210,10 @@ class gnc_book_elem(gnc_elem):
 			return gnc_elem_vendor(name)
 		elif name == 'gnc:GncCustomer':
 			return gnc_elem_customer(name)
+		elif name == 'gnc:GncInvoice':
+			return gnc_elem_invoice(name)
+		elif name == 'gnc:GncEntry':
+			return gnc_elem_entry(name)
 		return gnc_unk_elem(name,self.name)
 
 	def begin(self,oh,attrs):
@@ -258,6 +273,14 @@ class gnc_elem_var(gnc_elem):
 	def getchars(self,oh,chars):
 		self.val+=chars
 
+class gnc_elem_var_ren(gnc_elem_var):
+	def __init__(self,name,rename):
+		self.name =name
+		self.rename= rename
+		self.val=''
+	def end(self,oh,parent):
+		parent.setDict(oh,self.rename,self.val)
+	
 class gnc_elem_var_qty(gnc_elem_var):
 	#def begin(self,oh,attrs):
 	#	pass
@@ -314,11 +337,13 @@ class gnc_elem_commodity(gnc_elem_dict):
 	def create(self,oh,name):
 		if ':' in name:
 			(tbl,key)=name.split(':')
-			if tbl == 'cmdty' and (key in [ 'id', 'name', 'space','fraction']):
+			if tbl == 'cmdty' and (key in [ 'id', 'name', 'space','fraction',
+				'get_quotes','quote_tz','quote_source']):
 				#id is a normal string, too.
 				return gnc_elem_var(name)
 		return gnc_unk_elem(name,self.name)
 	def end(self,oh,parent):
+		self.dic['ref']= oh.find_commodity(self.dic)
 		parent.get_commodity(oh,self)
 
 class gnc_elem_slots(gnc_elem):
@@ -389,19 +414,36 @@ class gnc_trns_elem(gnc_elem_dict):
 	def get_commodity(self,oh,com):
 		self.commodity=com.dic
 
+from datetime import datetime
 class gnc_elem_date(gnc_elem):
 	def __init__(self,name):
 		self.name = name
 		self.value=None
 		self.ns = None
+	def parse_date(self,val):
+		tzval='+0000'
+		if len(val)>19:
+			tzval=val[20:]
+			val=val[:19].strip()
+		date= None
+		for fmt in [ '%Y-%m-%d %H:%M:%S', '%Y-%m-%dT%H:%M:%S', '%Y-%m-%d%H:%M:%S' ] :
+			try:
+				date=datetime.strptime(val,fmt)
+			except ValueError,er:
+				continue
+			break
+		#print "TZ: ", tzval
+		if not date:
+			raise ValueError("Cannot parse date: %s"%val)
+		return date;
+			
 	def create(self,oh,name):
 		if name == 'ts:date' or name == 'ts:ns':
 			return gnc_elem_var(name)
 		return gnc_unk_elem(name,self.name)
 	def setDict(self,oh,key,val):
 		if key == 'date':
-		    #TODO: parse it
-		    self.value=val
+		    self.value=self.parse_date(val)
 		elif key == 'ns':
 			self.ns=val
 	def end(self,oh,parent):
@@ -449,18 +491,22 @@ class gnc_elem_partner(gnc_elem_dict):
 			(tbl,key)=name.split(':')
 			if tbl != self.getns():
 				return gnc_unk_elem(name,self.name)
-			if key in ['guid']:
+			if key == 'guid':
 				return gnc_elem_var_id(name)
 			#elif key in ['value','quantity']:
 			#	return gnc_elem_var_qty(name)
 			#elif key == 'reconcile-date':
 			#	return gnc_elem_date(name)
-			elif key in [ 'id','name','use-tt']:
+			elif key == 'id' :
+				return gnc_elem_var_ren(name,'partner_ref')
+			elif key in [ 'name','use-tt']:
 				return gnc_elem_var(name)
 			elif key in [ 'active']:
 				return gnc_elem_var(name)
 			elif key in [ 'currency']:
 				return gnc_elem_commodity(name)
+			elif key in [ 'addr' ]:
+				return gnc_elem_address(name)
 		return gnc_unk_elem(name,self.name)
 	def get_commodity(self,oh,com):
 		self.dic['commodity']=com.dic
@@ -478,6 +524,93 @@ class gnc_elem_customer(gnc_elem_partner):
 	def end(self,oh,parent):
 		oh.end_customer(self,parent)
 		#parent.splits.append(self.dic)
+
+class gnc_elem_address(gnc_elem_dict):
+	def create(self,oh,name):
+		if ':' in name:
+			(tbl,key)=name.split(':')
+			if tbl == 'addr' and (key in [ 'name', 'addr1','addr2', 'addr3', 'addr4', 'phone', 'email' ]):
+				#id is a normal string, too.
+				return gnc_elem_var(name)
+		return gnc_unk_elem(name,self.name)
+	def end(self,oh,parent):
+		#parent.get_address(oh,self) *-*
+		pass
+
+class gnc_elem_invoice(gnc_elem_dict):
+	def __init__(self,name=''):
+		super(gnc_elem_invoice,self).__init__(name)
+		self.slots =[]
+		self.commodity=None
+	def create(self,oh,name):
+		(tbl, key) = name.split(':')
+		if tbl != 'invoice':
+			return gnc_unk_elem(name,self.name)
+		
+		if key in [ 'active', 'billing_id', 'notes' ]:
+			return gnc_elem_var(name)
+		elif key == "guid":
+			return gnc_elem_var_id(name)
+		elif key == "id":
+			return gnc_elem_var_ren(name,'inv_ref')
+		elif key in [ 'posttxn', 'postlot', 'postacc', 'terms' ]:
+			return gnc_elem_var_ref(name)
+		elif key in [ 'owner', 'billto' ]:
+			return gnc_elem_var_ref2(name)
+		elif key == "currency":
+			return gnc_elem_commodity(name)
+		elif key in [ 'posted', 'opened']:
+			return gnc_elem_date(name)
+		elif key == "slots":
+			return gnc_elem_slots(name)
+		return gnc_unk_elem(name,self.name)
+	def begin(self,oh,attrs):
+		#oh.debug("Start Gnucash account")
+		pass
+	def end(self,oh,parent):
+		oh.end_invoice(self,parent)
+		pass
+	def get_slots(self,slots):
+		self.slots.extend(slots)
+	def get_commodity(self,oh,com):
+		self.dic['currency']=com.dic
+
+class gnc_elem_entry(gnc_elem_dict):
+	def __init__(self,name=''):
+		super(gnc_elem_entry,self).__init__(name)
+		self.slots =[]
+		#self.commodity=None
+	def create(self,oh,name):
+		(tbl, key) = name.split(':')
+		if tbl != 'entry':
+			return gnc_unk_elem(name,self.name)
+		
+		if key == "guid":
+			return gnc_elem_var_id(name)
+		elif key in [ 'description', 'i-taxable', 'i-taxincluded', 
+			'i-disc-type', 'i-disc-how', 'action', 'billable', 
+			'b-taxable', 'b-taxincluded', 'b-pay' ]:
+			return gnc_elem_var(name)
+		elif key in [ 'invoice', 'i-acct', 'i-taxtable', 'b-acct', 
+			'bill', 'b-taxtable' ]:
+			return gnc_elem_var_ref(name)
+		elif key in ['qty', 'i-price', 'b-price', 'i-discount' ]:
+			return gnc_elem_var_qty(name)
+		elif key in [ 'date', 'entered']:
+			return gnc_elem_date(name)
+		elif key == "slots":
+			return gnc_elem_slots(name)
+		return gnc_unk_elem(name,self.name)
+	def begin(self,oh,attrs):
+		#oh.debug("Start Gnucash account")
+		pass
+	def end(self,oh,parent):
+		oh.end_entry(self,parent)
+		pass
+	def get_slots(self,slots):
+		self.slots.extend(slots)
+	#def get_commodity(self,oh,com):
+	#	self.commodity=com.dic
 
 class gnc_elem_var_id(gnc_elem_var):
 	""" The declaration of the id for some object """
@@ -502,6 +635,30 @@ class gnc_elem_var_ref(gnc_elem_var):
 	def end(self,oh,parent):
 		oh.fill_idref(self,parent)
 		parent.setDict(oh,self.name.split(':')[1],(self.val,self.ref))
+
+class gnc_elem_var_ref2(gnc_elem_dict):
+	""" Reference to object, by id and type """
+	def __init__(self,name ='',rname='owner'):
+		super(gnc_elem_var_ref2,self).__init__(name)
+		self.ref=None
+		self.rname=rname
+		self.rtype=None
+	
+	def create(self,oh,name):
+		(tbl, key) = name.split(':')
+		if tbl != self.rname:
+			return gnc_unk_elem(name,self.name)
+		if key == 'type':
+			return gnc_elem_var(name)
+		elif key == "id":
+			return gnc_elem_var_ref(name)
+		return gnc_unk_elem(name,self.name)
+	
+	def end(self,oh,parent):
+		# todo: verify dic['type'] = model..
+		# print "End var_ref2",self.dic['id']
+		parent.setDict(oh,self.name.split(':')[1],self.dic['id'])
+		#oh.print_item(self.name,self)
 
 class GCContent(sax.handler.ContentHandler):
 

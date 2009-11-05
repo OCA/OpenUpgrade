@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* report_intrastat
+# 	* report_intrastat
 #
 msgid ""
 msgstr ""
@@ -17,7 +17,8 @@ msgstr ""
 
 #. module: report_intrastat
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: report_intrastat
@@ -87,8 +88,7 @@ msgid "Taxes:"
 msgstr ""
 
 #. module: report_intrastat
-#: rml:account.invoice.intrastat:0
-#: field:report.intrastat.code,description:0
+#: rml:account.invoice.intrastat:0 field:report.intrastat.code,description:0
 msgid "Description"
 msgstr ""
 
@@ -201,8 +201,7 @@ msgstr ""
 
 #. module: report_intrastat
 #: model:ir.model,name:report_intrastat.model_report_intrastat_code
-#: field:product.template,intrastat_id:0
-#: field:report.intrastat,intrastat_id:0
+#: field:product.template,intrastat_id:0 field:report.intrastat,intrastat_id:0
 #: view:report.intrastat.code:0
 msgid "Intrastat code"
 msgstr ""
@@ -213,8 +212,7 @@ msgid "Origin"
 msgstr ""
 
 #. module: report_intrastat
-#: rml:account.invoice.intrastat:0
-#: field:report.intrastat,weight:0
+#: rml:account.invoice.intrastat:0 field:report.intrastat,weight:0
 msgid "Weight"
 msgstr ""
 
@@ -269,4 +267,3 @@ msgstr ""
 #: field:report.intrastat.code,name:0
 msgid "Intrastat Code"
 msgstr ""
-

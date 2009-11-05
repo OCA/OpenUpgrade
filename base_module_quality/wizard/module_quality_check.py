@@ -25,6 +25,7 @@ import wizard
 import pooler
 from osv import osv, fields
 
+from addons import get_module_path
 class quality_check(wizard.interface):
 
     def _create_quality_check(self, cr, uid, data, context={}):
