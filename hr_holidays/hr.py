@@ -272,8 +272,6 @@ class hr_holidays(osv.osv):
 
     def holidays_refuse(self, cr, uid, ids, *args):
         vals = {
-        if not ids2:
-            raise osv.except_osv(_('Warning !'),_('Either there is no Employee defined, or no User attached with it.'))
             'state':'refuse',
         }
         ids2 = self.pool.get('hr.employee').search(cr, uid, [('user_id','=', uid)])
