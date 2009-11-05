@@ -50,9 +50,10 @@ class ir_attachment(osv.osv):
                 if obj.state == 'locked':
                     raise osv.except_osv(_('AccessError'), msg)
 
-        cr.execute('select distinct res_model from ir_attachment where id in ('+','.join(map(str, ids))+')')
+        cr.execute('select distinct res_model from ir_attachment where id = ANY (%s)', (ids,))
         for obj in cr.fetchall():
-            ima.check(cr, uid, obj[0], mode)
+	    if obj[0]:
+                ima.check(cr, uid, obj[0], mode)
 	return True
 
 ir_attachment()

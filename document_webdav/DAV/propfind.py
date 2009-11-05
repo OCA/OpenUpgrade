@@ -64,10 +64,20 @@ class PROPFIND:
         self.__dataclass=dataclass
         self.__depth=str(depth)
         self.__uri=uri
+        self.use_full_urls=True
         self.__has_body=None    # did we parse a body?
 
     def read_propfind(self,xml_doc):
         self.request_type,self.proplist,self.namespaces=utils.parse_propfind(xml_doc)
+	
+	# a violation of the expected logic: client (korganizer) will ask for DAV:resourcetype
+	# but we also have to return the http://groupdav.org/:resourcetype property!
+	if self.proplist.has_key('DAV:') and 'resourcetype' in self.proplist['DAV:']:
+	    if not self.proplist.has_key('http://groupdav.org/'):
+		self.proplist['http://groupdav.org/'] = []
+	    self.proplist['http://groupdav.org/'].append('resourcetype')
+	    if 'DAV:' in self.namespaces: #TMP
+		self.namespaces.append('http://groupdav.org/')
 
     def createResponse(self):
         """ create the multistatus response
@@ -113,17 +123,17 @@ class PROPFIND:
 
         if self.__depth=="0":
             pnames=dc.get_propnames(self.__uri)
-            re=self.mk_propname_response(self.__uri,pnames)
+            re=self.mk_propname_response(self.__uri,pnames,doc)
             ms.appendChild(re)
 
         elif self.__depth=="1":
             pnames=dc.get_propnames(self.__uri)
-            re=self.mk_propname_response(self.__uri,pnames)
+            re=self.mk_propname_response(self.__uri,pnames,doc)
             ms.appendChild(re)
 
         for newuri in dc.get_childs(self.__uri):
             pnames=dc.get_propnames(newuri)
-            re=self.mk_propname_response(newuri,pnames)
+            re=self.mk_propname_response(newuri,pnames,doc)
             ms.appendChild(re)
         # *** depth=="infinity"
 
@@ -208,10 +218,13 @@ class PROPFIND:
         re=doc.createElement("D:response")
 
         # write href information
-        uparts=urlparse.urlparse(uri)
-        fileloc=uparts[2]
         href=doc.createElement("D:href")
-        huri=doc.createTextNode(urllib.quote(fileloc.encode('utf8')))
+        if self.use_full_urls:
+            huri=doc.createTextNode(uri)
+        else:
+            uparts=urlparse.urlparse(uri)
+            fileloc=uparts[2]
+            huri=doc.createTextNode(urllib.quote(fileloc.encode('utf8')))
         href.appendChild(huri)
         re.appendChild(href)
 
@@ -225,12 +238,13 @@ class PROPFIND:
             pr.setAttribute("xmlns:"+nsp,ns)
             nsnum=nsnum+1
 
-        # write propertynames
-        for p in plist:
-            pe=doc.createElement(nsp+":"+p)
-            pr.appendChild(pe)
+            # write propertynames
+            for p in plist:
+                pe=doc.createElement(nsp+":"+p)
+                pr.appendChild(pe)
 
-        ps.appendChild(pr)
+            ps.appendChild(pr)
+
         re.appendChild(ps)
 
         return re
@@ -251,10 +265,13 @@ class PROPFIND:
             nsnum=nsnum+1
 
         # write href information
-        uparts=urlparse.urlparse(uri)
-        fileloc=uparts[2]
         href=doc.createElement("D:href")
-        huri=doc.createTextNode(urllib.quote(utf8str(fileloc)))
+        if self.use_full_urls:
+            huri=doc.createTextNode(uri)
+        else:
+            uparts=urlparse.urlparse(uri)
+            fileloc=uparts[2]
+            huri=doc.createTextNode(urllib.quote(fileloc.encode('utf8')))
         href.appendChild(huri)
         re.appendChild(href)
 
@@ -267,12 +284,17 @@ class PROPFIND:
                 ns_prefix="ns"+str(self.namespaces.index(ns))+":"
                 for p,v in good_props[ns].items():
                     pe=doc.createElement(ns_prefix+str(p))
-                    if p=="resourcetype":
-                        if v=="1":
+                    if v == None:
+                        pass
+                    elif ns=='DAV:' and p=="resourcetype":
+                        if v == 1:
                             ve=doc.createElement("D:collection")
                             pe.appendChild(ve)
+                    elif isinstance(v,tuple) and v[1] == ns:
+                        ve=doc.createElement(ns_prefix+v[0])
+                        pe.appendChild(ve)
                     else:
-                        ve=doc.createTextNode(str(v))
+                        ve=doc.createTextNode(utf8str(v))
                         pe.appendChild(ve)
 
                     gp.appendChild(pe)
@@ -331,7 +353,7 @@ class PROPFIND:
                 try:
                     ec = 0
                     r=self.__dataclass.get_prop(uri,ns,prop)
-                    good_props[ns][prop]=str(r)
+                    good_props[ns][prop]=r
                 except DAV_Error, error_code:
                     ec=error_code[0]
 

@@ -67,14 +67,20 @@ class dav_interface:
         if self.M_NS.has_key(ns):
             prefix=self.M_NS[ns]
         else:
+	    print "No namespace:",ns
             raise DAV_NotFound
         mname=prefix+"_"+propname
+	if not hasattr(self,mname):
+	    raise DAV_NotFound
+
         try:
-                m=getattr(self,mname)
-                r=m(uri)
-                return r
-        except AttributeError:
-                raise DAV_NotFound
+            m=getattr(self,mname)
+            r=m(uri)
+            return r
+        except AttributeError, e:
+	    print 'Property %s not supported' % propname
+	    print "Exception:", e
+            raise DAV_NotFound
 
     ###
     ### DATA methods (for GET and PUT)

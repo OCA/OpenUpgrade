@@ -35,3 +35,4 @@ the exception sub-menu from the mrp menu in the inventory control menu. This all
     "installable": True
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

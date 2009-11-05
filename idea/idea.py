@@ -47,7 +47,7 @@ class idea_idea(osv.osv):
         if not len(ids):
             return {}
 
-        sql = """SELECT i.id, avg(v.score::integer)
+        sql = """SELECT i.id, avg(v.score::integer) 
                    FROM idea_idea i LEFT OUTER JOIN idea_vote v ON i.id = v.idea_id
                     WHERE i.id = ANY(%s)
                     GROUP BY i.id
@@ -60,7 +60,7 @@ class idea_idea(osv.osv):
         if not len(ids):
             return {}
 
-        sql = """SELECT i.id, COUNT(1)
+        sql = """SELECT i.id, COUNT(1) 
                    FROM idea_idea i LEFT OUTER JOIN idea_vote v ON i.id = v.idea_id
                     WHERE i.id = ANY(%s)
                     GROUP BY i.id
@@ -73,7 +73,7 @@ class idea_idea(osv.osv):
         if not len(ids):
             return {}
 
-        sql = """SELECT i.id, COUNT(1)
+        sql = """SELECT i.id, COUNT(1) 
                    FROM idea_idea i LEFT OUTER JOIN idea_comment c ON i.id = c.idea_id
                     WHERE i.id = ANY(%s)
                     GROUP BY i.id

@@ -59,13 +59,54 @@ class tinydav_handler(dav_interface):
 	"""
 	This class models a Tiny ERP interface for the DAV server
 	"""
+	PROPS={'DAV:': dav_interface.PROPS['DAV:'], }
+
+	M_NS={ "DAV:" : dav_interface.M_NS['DAV:'], }
+
 	def __init__(self,  parent, verbose=False):
 		self.db_name = False
 		self.directory_id=False
 		self.db_name_list=[]
 		self.parent = parent
 		self.baseuri = parent.baseuri
-#
+
+        def get_propnames(self,uri):
+	    props = self.PROPS
+	    self.parent.log_message('get propnames: %s' % uri)
+	    if uri[-1]=='/':uri=uri[:-1]
+	    cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+	    if not dbname:
+	        cr.close()
+		return props
+	    node = self.uri2object(cr,uid,pool, uri2)
+	    if node:
+		props.update(node.get_dav_props(cr))
+	    cr.close()
+	    return props
+
+        def get_prop(self,uri,ns,propname):
+            """ return the value of a given property
+
+                uri        -- uri of the object to get the property of
+                ns        -- namespace of the property
+                pname        -- name of the property
+             """
+            if self.M_NS.has_key(ns):
+               return dav_interface.get_prop(self,uri,ns,propname)
+
+            if uri[-1]=='/':uri=uri[:-1]
+            cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+            if not dbname:
+	        cr.close()
+                raise DAV_NotFound
+            node = self.uri2object(cr,uid,pool, uri2)
+            if not node:
+	        cr.close()
+                raise DAV_NotFound
+            res = node.get_dav_eprop(cr,ns,propname)
+            cr.close()
+            return res
+
 #
 #	def get_db(self,uri):
 #		names=self.uri2local(uri).split('/')
@@ -103,6 +144,7 @@ class tinydav_handler(dav_interface):
 
 	def get_childs(self,uri):
 		""" return the child objects as self.baseuris for the given URI """
+		self.parent.log_message('get childs: %s' % uri)
 		if uri[-1]=='/':uri=uri[:-1]
 		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
 		
@@ -112,10 +154,22 @@ class tinydav_handler(dav_interface):
 		result = []
 		node = self.uri2object(cr,uid,pool, uri2[:])
 		if not node:
+			cr.close()
 			raise DAV_NotFound(uri2)
 		else:
-		    for d in node.children():
-			result.append( self.urijoin(dbname,d.path) )
+		    fp = node.full_path()
+		    if fp and len(fp):
+			self.parent.log_message('childs: @%s' % fp)
+			fp = '/'.join(fp)
+		    else:
+			fp = None
+		    for d in node.children(cr):
+			self.parent.log_message('child: %s' % d.path)
+			if fp:
+				result.append( self.urijoin(dbname,fp,d.path) )
+			else:
+				result.append( self.urijoin(dbname,d.path) )
+		cr.close()
 		return result
 
 	def uri2local(self, uri):
@@ -154,108 +208,147 @@ class tinydav_handler(dav_interface):
 		return pool.get('document.directory').get_object(cr, uid, uri)
 
 	def get_data(self,uri):
-		if uri[-1]=='/':uri=uri[:-1]
-		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+	    self.parent.log_message('GET: %s' % uri)
+	    if uri[-1]=='/':uri=uri[:-1]
+	    cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+	    try:
 		if not dbname:
 			raise DAV_Error, 409
 		node = self.uri2object(cr,uid,pool, uri2)
 		if not node:
 			raise DAV_NotFound(uri2)
-		if node.type=='file':
-			datas=False
-			if node.object.datas:
-				datas=node.object.datas
-			elif node.object.link:
-				import urllib
-				datas=base64.encodestring(urllib.urlopen(node.object.link).read())
-			return base64.decodestring(datas or '')
-		elif node.type=='content':
-			cr = node.cr
-			uid = node.uid
-			pool = pooler.get_pool(cr.dbname)
-			sio =  getattr(pool.get('document.directory.content'), 'process_read_'+node.content.extension[1:])(cr, uid, node)
-			return sio.getvalue()
-		else:
-			print "invalid type:",node.type
+		try:
+			datas = node.get_data(cr)
+		except TypeError,e:
+			import traceback
+			self.parent.log_error("GET typeError: %s", str(e))
+			self.parent.log_message("Exc: %s",traceback.format_exc())
 			raise DAV_Forbidden
+		except IndexError,e :
+			self.parent.log_error("GET IndexError: %s", str(e))
+			raise DAV_NotFound(uri2)
+		except Exception,e:
+			import traceback
+			self.parent.log_error("GET exception: %s",str(e))
+			self.parent.log_message("Exc: %s", traceback.format_exc())
+			raise DAV_Error, 409
+		return datas
+	    finally:
+		cr.close()
 
 	@memoize(CACHE_SIZE)
 	def _get_dav_resourcetype(self,uri):
-		""" return type of object """
-		if uri[-1]=='/':uri=uri[:-1]
-		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+	    """ return type of object """
+	    self.parent.log_message('get RT: %s' % uri)
+	    if uri[-1]=='/':uri=uri[:-1]
+	    cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+	    try:
 		if not dbname:
 			return COLLECTION
 		node = self.uri2object(cr,uid,pool, uri2)
 		if not node:
 			raise DAV_NotFound(uri2)
-		cr.close()
 		if node.type in ('collection','database'):
 			return COLLECTION
 		return OBJECT
+	    finally:
+	        cr.close()
 
 	def _get_dav_displayname(self,uri):
-		# TODO!
-		raise DAV_Secret
+		self.parent.log_message('get DN: %s' % uri)
+		if uri[-1]=='/':uri=uri[:-1]
+		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+		if not dbname:
+			cr.close()
+			return COLLECTION
+		node = self.uri2object(cr,uid,pool, uri2)
+		if not node:
+			cr.close()
+			raise DAV_NotFound(uri2)
+		cr.close()
+		return node.displayname
 
 	@memoize(CACHE_SIZE)
 	def _get_dav_getcontentlength(self,uri):
 		""" return the content length of an object """
+		self.parent.log_message('get length: %s' % uri)
 		if uri[-1]=='/':uri=uri[:-1]
 		result = 0
 		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
 		if not dbname:
+			cr.close()
 			return '0'
 		node = self.uri2object(cr, uid, pool, uri2)
 		if not node:
+			cr.close()
 			raise DAV_NotFound(uri2)
-		if node.type=='file':
-			result = node.object.file_size or 0
+		result = node.content_length or 0
+		cr.close()
+		return str(result)
+
+	@memoize(CACHE_SIZE)
+	def _get_dav_getetag(self,uri):
+		""" return the ETag of an object """
+		self.parent.log_message('get etag: %s' % uri)
+		if uri[-1]=='/':uri=uri[:-1]
+		result = 0
+		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+		if not dbname:
+			cr.close()
+			return '0'
+		node = self.uri2object(cr, uid, pool, uri2)
+		if not node:
+			cr.close()
+			raise DAV_NotFound(uri2)
+		result = node.get_etag(cr)
 		cr.close()
 		return str(result)
 
 	@memoize(CACHE_SIZE)
 	def get_lastmodified(self,uri):
-		""" return the last modified date of the object """
-		if uri[-1]=='/':uri=uri[:-1]
-		today = time.time()
-		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+	    """ return the last modified date of the object """
+	    if uri[-1]=='/':uri=uri[:-1]
+	    today = time.time()
+	    cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+	    try:
 		if not dbname:
 			return today
 		node = self.uri2object(cr,uid,pool, uri2)
 		if not node:
 			raise DAV_NotFound(uri2)
-		if node.type=='file':
-			dt = node.object.write_date or node.object.create_date
-			result = time.mktime(time.strptime(dt,'%Y-%m-%d %H:%M:%S'))
+		if node.write_date:
+			return time.mktime(time.strptime(node.write_date,'%Y-%m-%d %H:%M:%S'))
 		else:
-			result = today
+			return today
+	    finally:
 		cr.close()
-		return result
 
 	@memoize(CACHE_SIZE)
 	def get_creationdate(self,uri):
-		""" return the last modified date of the object """
+	    """ return the last modified date of the object """
 
-		if uri[-1]=='/':uri=uri[:-1]
-		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+	    if uri[-1]=='/':uri=uri[:-1]
+	    cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+	    try:
 		if not dbname:
 			raise DAV_Error, 409
 		node = self.uri2object(cr,uid,pool, uri2)
 		if not node:
 			raise DAV_NotFound(uri2)
-		if node.type=='file':
-			dt = node.object.write_date or node.object.create_date
-			result = time.strptime(dt,'%Y-%m-%d %H:%M:%S')
+		if node.create_date:
+			result = time.strptime(node.create_date,'%Y-%m-%d %H:%M:%S')
 		else:
-			result = time.time()
-		cr.close()
+			result = time.gmtime()
 		return result
+	    finally:
+		cr.close()
 
 	@memoize(CACHE_SIZE)
 	def _get_dav_getcontenttype(self,uri):
-		if uri[-1]=='/':uri=uri[:-1]
-		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+	    self.parent.log_message('get contenttype: %s' % uri)
+	    if uri[-1]=='/':uri=uri[:-1]
+	    cr, uid, pool, dbname, uri2 = self.get_cr(uri)
+	    try:
 		if not dbname:
 			return 'httpd/unix-directory'
 		node = self.uri2object(cr,uid,pool, uri2)
@@ -263,19 +356,14 @@ class tinydav_handler(dav_interface):
 			raise DAV_NotFound(uri2)
 			
 		result = 'application/octet-stream'
-		if node.type=='collection':
-			result ='httpd/unix-directory'
-		elif node.type == 'file':
-			try:
-				ftype = node.object.file_type
-				if ftype and  '/' in ftype:
-					result = ftype
-			except Exception,e:
-				self.parent.log_error( str(e))
-				pass
-		cr.close()
+		#if node.type=='collection':
+			#result ='httpd/unix-directory'
+		#else:
+		result = node.mimetype
 		return result
 		#raise DAV_NotFound, 'Could not find %s' % path
+	    finally:
+	        cr.close()
 
 	def mkcol(self,uri):
 		""" create a new collection """
@@ -326,56 +414,39 @@ class tinydav_handler(dav_interface):
 			node = self.uri2object(cr,uid,pool, uri2[:])
 		except:
 			node = False
-		fobj = pool.get('ir.attachment')
 		objname = uri2[-1]
 		ext = objname.find('.') >0 and objname.split('.')[1] or False
-		if node and node.type=='file':
-			val = {
-				'file_size': len(data),
-				'datas': base64.encodestring(data),
-			}
-			cid = fobj.write(cr, uid, [node.object.id], val)
-			cr.commit()
-		# elif node and node.type == 'content': TODO
-		elif not node:
-			node = self.uri2object(cr,uid,pool, uri2[:-1])
-			object2=node and node.object2 or False
-			object=node and node.object or False
-			val = {
-				'name': objname,
-				'datas_fname': objname,
-				'file_size': len(data),
-				'datas': base64.encodestring(data),
-				'parent_id': object and object.id or False,
-			}
-			partner = False
-			if object2:
-				if object2.partner_id and object2.partner_id.id:
-					partner = object2.partner_id.id
-				if object2._name == 'res.partner':
-					partner = object2.id
-				val.update( {
-					'res_model': object2._name,
-					'partner_id': partner,
-					'res_id': object2.id
-				})
-			cid = fobj.create(cr, uid, val)
-			cr.commit()
 
-			# TODO: Test Permissions
-			if False:
-				raise DAV_Forbidden
-			cr.close()
-			return 201
+		if not node:
+			dir_node = self.uri2object(cr,uid,pool, uri2[:-1])
+			if not dir_node:
+				raise DAV_NotFound('Parent folder not found')
+			try:
+			    dir_node.create_child(cr,objname,data)
+			except Exception,e:
+			    import traceback
+			    self.parent.log_error("Cannot create %s: %s", objname, str(e))
+			    self.parent.log_message("Exc: %s",traceback.format_exc())
+			    raise DAV_Forbidden
 		else:
-			raise DAV_Forbidden
+			try:
+			    node.set_data(cr,data)
+			except Exception,e:
+			    import traceback
+			    self.parent.log_error("Cannot save %s: %s", objname, str(e))
+			    self.parent.log_message("Exc: %s",traceback.format_exc())
+			    raise DAV_Forbidden
+			
+		cr.commit()
+
+		return 201
 
 	def rmcol(self,uri):
 		""" delete a collection """
 		if uri[-1]=='/':uri=uri[:-1]
 
 		cr, uid, pool, dbname, uri2 = self.get_cr(uri)
-		if not dbname:
+		if True or not dbname: # *-*
 			raise DAV_Error, 409
 		node = self.uri2object(cr,uid,pool, uri2)
 		object2=node and node.object2 or False
@@ -396,7 +467,8 @@ class tinydav_handler(dav_interface):
 
 		object=False
 		cr, uid, pool,dbname, uri2 = self.get_cr(uri)
-		if not dbname:
+		#if not dbname:
+		if True:
 			raise DAV_Error, 409
 		node = self.uri2object(cr,uid,pool, uri2)
 		object2=node and node.object2 or False

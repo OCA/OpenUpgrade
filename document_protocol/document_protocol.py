@@ -43,19 +43,19 @@ class document_signature(osv.osv):
     """
     _name = 'document.signature'
     _columns = {
-	'file_id' :fields.many2one('ir.attachment', 'File', readonly=True, required=True),
+        'file_id' :fields.many2one('ir.attachment', 'File', readonly=True, required=True),
         'write_uid': fields.many2one('res.users', 'User', readonly=True),
-	'write_date': fields.datetime('Date', readonly=True),
-	'sig_type' : fields.selection([('gpg','GPG'),('sha','SHA')], 'Type', required=True),
-	'signature': fields.text('Signature',required=True),
-	'keyid': fields.char('Key ID',size=64,help="The key id used to generate the signature"),
-	'status': fields.selection([('valid','Valid'),('invalid','Invalid'),('unknown','Unknown')], 'Status',
-		help="Last known status of signature. Do NOT trust this, unless you verify the signature yourself"),
+        'write_date': fields.datetime('Date', readonly=True),
+        'sig_type' : fields.selection([('gpg','GPG'),('sha','SHA')], 'Type', required=True),
+        'signature': fields.text('Signature',required=True),
+        'keyid': fields.char('Key ID',size=64,help="The key id used to generate the signature"),
+        'status': fields.selection([('valid','Valid'),('invalid','Invalid'),('unknown','Unknown')], 'Status',
+                help="Last known status of signature. Do NOT trust this, unless you verify the signature yourself"),
     }
 
     _defaults = {
-	'sig_type': lambda *a: 'gpg',
-	'status': lambda *a: 'unknown',
+        'sig_type': lambda *a: 'gpg',
+        'status': lambda *a: 'unknown',
     }
 
 document_signature()

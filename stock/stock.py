@@ -880,7 +880,7 @@ class stock_production_lot(osv.osv):
     }
     _defaults = {
         'date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
-        'name': lambda x,y,z,c: x.pool.get('ir.sequence').get(y,z,'stock.lot.serial',c),
+        'name': lambda x, y, z, c: x.pool.get('ir.sequence').get(y, z, 'stock.lot.serial', c),
         'product_id': lambda x, y, z, c: c.get('product_id', False),
     }
     _sql_constraints = [
