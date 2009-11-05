@@ -44,4 +44,12 @@ class Bank(osv.osv):
 
 Bank()
 
+class bvr_checkbox(osv.osv):
+    """ Add function to generate function """
+    _inherit = "res.partner.bank"
+    _columns = {
+        'printBank' : fields.boolean('Print Bank on BVR'),
+        'printAccount' : fields.boolean('Print Account Number on BVR'),
+        }
+bvr_checkbox()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

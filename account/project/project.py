@@ -69,6 +69,12 @@ class account_analytic_account(osv.osv):
         ids2 = self.search(cr, uid, [('parent_id', 'child_of', ids)])
         acc_set = ",".join(map(str, ids2))
         
+        for i in ids:
+            res.setdefault(i,0.0)
+            
+        if not acc_set:
+            return res
+        
         where_date = ''
         if context.get('from_date',False):
             where_date += " AND l.date >= '" + context['from_date'] + "'"
@@ -76,7 +82,7 @@ class account_analytic_account(osv.osv):
             where_date += " AND l.date <= '" + context['to_date'] + "'"
             
         cr.execute("SELECT a.id, COALESCE(SUM(l.amount),0) FROM account_analytic_account a LEFT JOIN account_analytic_line l ON (a.id=l.account_id %s) WHERE a.id IN (%s) GROUP BY a.id" % (where_date,acc_set))
-        res = {}
+        
         for account_id, sum in cr.fetchall():
             res[account_id] = sum
 
@@ -109,6 +115,12 @@ class account_analytic_account(osv.osv):
         res = {}
         ids2 = self.search(cr, uid, [('parent_id', 'child_of', ids)])
         acc_set = ",".join(map(str, ids2))
+        
+        for i in ids:
+            res.setdefault(i,0.0)
+            
+        if not acc_set:
+            return res
         
         where_date = ''
         if context.get('from_date',False):
