@@ -1,22 +1,21 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
-#
+#    
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
 #
 ##############################################################################
 
@@ -127,9 +126,11 @@ class mrp_routing_workcenter(osv.osv):
         'name': fields.char('Name', size=64, required=True),
         'sequence': fields.integer('Sequence'),
         'cycle_nbr': fields.float('Number of Cycle', required=True,
-            help="A cycle is defined in the workcenter definition."),
-        'hour_nbr': fields.float('Number of Hours', required=True),
-        'routing_id': fields.many2one('mrp.routing', 'Parent Routing', select=True),
+            help="Time in hours for doing one cycle."),
+        'hour_nbr': fields.float('Number of Hours', required=True, help="Cost per hour"),
+        'routing_id': fields.many2one('mrp.routing', 'Parent Routing', select=True,
+             help="routing indicates all the workcenters used, for how long and/or cycles." \
+                "If Routing is indicated then,the third tab of a production order (workcenters) will be automatically pre-completed."),
         'note': fields.text('Description')
     }
     _defaults = {
@@ -186,9 +187,9 @@ class mrp_bom(osv.osv):
         'position': fields.char('Internal Ref.', size=64, help="Reference to a position in an external plan."),
         'product_id': fields.many2one('product.product', 'Product', required=True),
         'product_uos_qty': fields.float('Product UOS Qty'),
-        'product_uos': fields.many2one('product.uom', 'Product UOS'),
+        'product_uos': fields.many2one('product.uom', 'Product UOS', help="Product UOS (Unit of Sale) is the unit of measurement for the invoicing and promotion of stock."),
         'product_qty': fields.float('Product Qty', required=True),
-        'product_uom': fields.many2one('product.uom', 'Product UOM', required=True),
+        'product_uom': fields.many2one('product.uom', 'Product UOM', required=True, help="UoM (Unit of Measure) is the unit of measurement for the inventory control"),
         'product_rounding': fields.float('Product Rounding', help="Rounding applied on the product quantity. For integer only values, put 1.0"),
         'product_efficiency': fields.float('Product Efficiency', required=True, help="Efficiency on the production. A factor of 0.9 means a loss of 10% in the production."),
         'bom_lines': fields.one2many('mrp.bom', 'bom_id', 'BoM Lines'),
@@ -216,7 +217,7 @@ class mrp_bom(osv.osv):
     def _check_recursion(self, cr, uid, ids):
         level = 500
         while len(ids):
-            cr.execute('select distinct bom_id from mrp_bom where id in ('+','.join(map(str,ids))+')')
+            cr.execute('select distinct bom_id from mrp_bom where id in ('+','.join(map(str, ids))+')')
             ids = filter(None, map(lambda x:x[0], cr.fetchall()))
             if not level:
                 return False
@@ -423,7 +424,7 @@ class mrp_production(osv.osv):
         'date_finnished': fields.datetime('End Date'),
 
         'bom_id': fields.many2one('mrp.bom', 'Bill of Material', domain=[('bom_id','=',False)]),
-        'routing_id': fields.many2one('mrp.routing', string='Routing', on_delete='set null'),
+        'routing_id': fields.many2one('mrp.routing', string='Routing', on_delete='set null', help="The list of operations (list of workcenters) to produce the finished product. The routing is mainly used to compute workcenter costs during operations and to plan futur loads on workcenters based on production plannification."),
 
         'picking_id': fields.many2one('stock.picking', 'Packing list', readonly=True,
             help="This is the internal picking list take bring the raw materials to the production plan."),
@@ -434,7 +435,7 @@ class mrp_production(osv.osv):
         'product_lines': fields.one2many('mrp.production.product.line', 'production_id', 'Scheduled goods'),
         'workcenter_lines': fields.one2many('mrp.production.workcenter.line', 'production_id', 'Workcenters Utilisation'),
 
-        'state': fields.selection([('draft','Draft'),('picking_except', 'Packing Exception'),('confirmed','Waiting Goods'),('ready','Ready to Produce'),('in_production','In Production'),('cancel','Canceled'),('done','Done')],'Status', readonly=True),
+        'state': fields.selection([('draft','Draft'),('picking_except', 'Packing Exception'),('confirmed','Waiting Goods'),('ready','Ready to Produce'),('in_production','In Production'),('cancel','Cancelled'),('done','Done')],'Status', readonly=True),
         'hour_total': fields.function(_production_calc, method=True, type='float', string='Total Hours', multi='workorder'),
         'cycle_total': fields.function(_production_calc, method=True, type='float', string='Total Cycles', multi='workorder'),
 
@@ -781,6 +782,7 @@ mrp_production_product_line()
 class mrp_procurement(osv.osv):
     _name = "mrp.procurement"
     _description = "Procurement"
+    _order = 'priority,date_planned'    
     _columns = {
         'name': fields.char('Name', size=64, required=True),
         'origin': fields.char('Origin', size=64,

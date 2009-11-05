@@ -1,22 +1,21 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
-#
+#    
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
 #
 ##############################################################################
 
@@ -103,26 +102,15 @@ class account_invoice(osv.osv):
     def _amount_residual(self, cr, uid, ids, name, args, context=None):
         res = {}
         data_inv = self.browse(cr, uid, ids)
-        cur_obj = self.pool.get('res.currency')
         for inv in data_inv:
-            debit = credit = 0.0
+            paid_amt = 0.0
+            to_pay = inv.amount_total
             for lines in inv.move_lines:
-                if lines.account_id.company_currency_id.id <> inv.currency_id.id:
-                    if lines.debit:
-                        debit += cur_obj.compute(cr, uid, lines.account_id.company_currency_id.id, inv.currency_id.id, lines.debit)
-                    if lines.credit:
-                        credit += cur_obj.compute(cr, uid, lines.account_id.company_currency_id.id, inv.currency_id.id, lines.credit)
+                if lines.amount_currency and lines.currency_id:
+                    paid_amt += lines.amount_currency
                 else:
-                    debit += lines.debit
-                    credit += lines.credit
-
-            if not inv.amount_total:
-                result = 0.0
-            elif inv.type in ('out_invoice','in_refund'):
-                result = inv.amount_total * (1.0 - credit / (debit + inv.amount_total))
-            else:
-                result = inv.amount_total * (1.0 - debit / (credit + inv.amount_total))
-            res[inv.id] = round(result,int(config['price_accuracy']))
+                    paid_amt += lines.credit + lines.debit
+            res[inv.id] = round(to_pay - abs(paid_amt),int(config['price_accuracy']))
         return res
 
     def _get_lines(self, cr, uid, ids, name, arg, context=None):
@@ -409,7 +397,7 @@ class account_invoice(osv.osv):
                 l.id \
             from account_move_line l \
                 left join account_invoice i on (i.move_id=l.move_id) \
-            where i.id in ('+','.join(map(str,ids))+') and l.account_id=i.account_id')
+            where i.id in ('+','.join(map(str,map(int, ids)))+') and l.account_id=i.account_id')
         res = map(lambda x: x[0], cr.fetchall())
         return res
 
@@ -692,7 +680,7 @@ class account_invoice(osv.osv):
     def action_number(self, cr, uid, ids, *args):
         cr.execute('SELECT id, type, number, move_id, reference ' \
                 'FROM account_invoice ' \
-                'WHERE id IN ('+','.join(map(str,ids))+')')
+                'WHERE id IN ('+','.join(map(str, ids))+')')
         obj_inv = self.browse(cr, uid, ids)[0]
         for (id, invtype, number, move_id, reference) in cr.fetchall():
             if not number:
@@ -1121,25 +1109,23 @@ class account_invoice_tax(osv.osv):
         'tax_code_id': fields.many2one('account.tax.code', 'Tax Code', help="The tax basis of the tax declaration."),
         'tax_amount': fields.float('Tax Code Amount', digits=(16,int(config['price_accuracy']))),
     }
-    
     def base_change(self, cr, uid, ids, base,currency_id=False,company_id=False,date_invoice=False):
         cur_obj = self.pool.get('res.currency')
         company_obj = self.pool.get('res.company')
         company_currency=False
         if company_id:            
-            company_currency = company_obj.read(cr,uid,[company_id],['currency_id'])[0]['currency_id'][0]
+            company_currency=company_obj.browse(cr,uid,company_id).id
         if currency_id and company_currency:
-            base = cur_obj.compute(cr, uid, currency_id, company_currency, base, context={'date': date_invoice or time.strftime('%Y-%m-%d')}, round=False)
+            base=cur_obj.compute(cr, uid, currency_id, company_currency, base, context={'date': date_invoice or time.strftime('%Y-%m-%d')}, round=False)
         return {'value': {'base_amount':base}}
-
     def amount_change(self, cr, uid, ids, amount,currency_id=False,company_id=False,date_invoice=False):
         cur_obj = self.pool.get('res.currency')
         company_obj = self.pool.get('res.company')
         company_currency=False
         if company_id:
-            company_currency = company_obj.read(cr,uid,[company_id],['currency_id'])[0]['currency_id'][0]
+            company_currency=company_obj.browse(cr,uid,company_id).id
         if currency_id and company_currency:
-            amount = cur_obj.compute(cr, uid, currency_id, company_currency, amount, context={'date': date_invoice or time.strftime('%Y-%m-%d')}, round=False)
+            amount=cur_obj.compute(cr, uid, currency_id, company_currency, amount, context={'date': date_invoice or time.strftime('%Y-%m-%d')}, round=False)
         return {'value': {'tax_amount':amount}}
     
     _order = 'sequence'

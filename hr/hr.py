@@ -1,22 +1,21 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
-#
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
 #
 ##############################################################################
 
@@ -102,7 +101,7 @@ class hr_employee_category(osv.osv):
     def _check_recursion(self, cr, uid, ids):
         level = 100
         while len(ids):
-            cr.execute('select distinct parent_id from hr_employee_category where id in ('+','.join(map(str,ids))+')')
+            cr.execute('select distinct parent_id from hr_employee_category where id in ('+','.join(map(str, ids))+')')
             ids = filter(None, map(lambda x:x[0], cr.fetchall()))
             if not level:
                 return False
@@ -131,7 +130,7 @@ class hr_employee(osv.osv):
         'sinid': fields.char('SIN No', size=32),
         'otherid': fields.char('Other ID', size=32),
         'gender': fields.selection([('',''),('male','Male'),('female','Female')], 'Gender'),
-        'marital': fields.selection([('maried','Maried'),('unmaried','Unmaried'),('divorced','Divorced'),('other','Other')],'Marital Status', size=32),
+        'marital': fields.selection([('married','Married'),('unmarried','Unmarried'),('divorced','Divorced'),('other','Other')],'Marital Status', size=32),
 
         'address_id': fields.many2one('res.partner.address', 'Working Address'),
         'address_home_id': fields.many2one('res.partner.address', 'Home Address'),
@@ -151,7 +150,7 @@ class hr_employee(osv.osv):
     def _check_recursion(self, cr, uid, ids):
         level = 100
         while len(ids):
-            cr.execute('select distinct parent_id from hr_employee where id in ('+','.join(map(str,ids))+')')
+            cr.execute('select distinct parent_id from hr_employee where id in ('+','.join(map(str, ids))+')')
             ids = filter(None, map(lambda x:x[0], cr.fetchall()))
             if not level:
                 return False

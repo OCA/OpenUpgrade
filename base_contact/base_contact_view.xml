@@ -1,4 +1,4 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <openerp>
 <data>
 
@@ -32,29 +32,40 @@
                     <page string="General">
                         <newline/>
                         <separator string="General Information" colspan="4"/>
-                        <field name="mobile" select="2"/>
-                        <field name="title" select="1" />
-                        <field name="website"/>
+                       <group string="Partner" colspan="2" col="2">
+                           <field name="partner_id" invisible="1" select="1"/>
+                           <field name="title" select="1"/>
+                           <field name="function_id" invisible="1" select="2"/>
                         <field name="email"/>
-                        <field name="lang_id"/>
-                        <field name="active"/>
-                        <field name="partner_id" invisible="1" select="2"/>
-                        <field name="function_id" invisible="1" select="2"/>
-                        <field name="job_id" invisible="1" select="2" />
-                        <field name="job_ids" colspan="4" nolabel="1" mode="tree,form">
+                           <field name="lang_id"/>
+                           <field name="active"/>
+                       </group>
+                       <group string="Communication" colspan="2" col="2">
+                           <field name="mobile"/>
+                           <field name="email"  widget="email"/>
+                           <field name="website"/>
+                       </group>
+                       <field name="job_ids" colspan="4" nolabel="1" mode="tree,form">
                             <form string="Functions and Addresses">
-                                <field name="function_id"/>
-                                <field name="address_id"/>
-                                <field name="name"/>
-                                <field name="sequence_contact"/>
-                                <field name="phone"/>
+                               <group string="Partner" colspan="2" col="4">
+                                   <field name="name"  colspan="4"/>
+                                   <field name="address_id" colspan="4"/>
+                                   <field name="function_id" colspan="4"/>
                                 <field name="fax"/>
                                 <field name="extension"/>
                                 <field name="other"/>
-                                <field name="email" widget="email"/>
-                                <field name="date_start" />
-                                <field name="date_stop" />
-                                <field name="state" />
+                                   <field name="date_start" />
+                                   <field name="date_stop" />
+                                   <field name="state" />
+                                   <field name="sequence_contact" />
+                               </group>
+                               <group string="Communication" colspan="2" col="2">
+                                   <field name="phone"/>
+                                   <field name="fax"/>
+                                   <field name="email" widget="email"/>
+                                   <field name="extension"/>
+                                   <field name="other"/>
+                               </group>                                    
                             </form>
                             <tree string="Functions and Addresses">
                                 <field name="sequence_contact" string="Seq."/>
@@ -72,19 +83,39 @@
                     </page>
                     <page string="Extra Information">
                         <field name="country_id"/>
-                        <field name="birthdate" select="1" />
+                        <field name="birthdate"/>
                     </page>
+                    <page string="Notes">
+                        <field name="comment" nolabel="1"/>
+                    </page>
+                    <page string="Picture">
+                        <field name="photo" nolabel="1" colspan="2" widget="image"/>
+                    </page>                    
                 </notebook>
             </form>
         </field>
     </record>
 
+    <record model="ir.ui.view" id="view_partner_contact_search">
+        <field name="name">res.partner.contact.search</field>
+        <field name="model">res.partner.contact</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <search string="Partner Contact">
+                <field name="name" select="1"/>
+                <field name="first_name" select="1"/>
+                <field name="partner_id" select="1" string="Partner"/>
+            </search>
+        </field>
+    </record>
+    
     <record model="ir.actions.act_window" id="action_partner_contact_form">
         <field name="name">Contacts</field>
         <field name="res_model">res.partner.contact</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_partner_contact_tree"/>
+        <field name="search_view_id" ref="view_partner_contact_search"/>
     </record>
     <menuitem name="Partners/" id="menu_partner_contact_form" action="action_partner_contact_form"/>
     <menuitem name="Partners/Addresses"  id="base.menu_partner_address_form"/>
@@ -101,21 +132,20 @@
             <field name="address" mode="form,tree" colspan="4" nolabel="1" select="1" position="replace">
                 <field name="address" mode="form,tree" colspan="4" nolabel="1" select="1">
                     <form string="Address">
-                        <field name="type" select="2" colspan="4"/>
-                        <newline/>
-                        <field name="street" select="2"/>
-                        <field name="street2"/>
-                        <newline/>
-                        <field name="zip" select="2"/>
-                        <field name="city" select="2"/>
-                        <newline/>
-                        <field name="country_id" select="2" completion="1"/>
-                        <field name="state_id" select="2"/>
-                        <newline/>
-                        <field name="phone"/>
-                        <field name="fax"/>
-                        <field name="email" widget="email"/>
-                        <newline/>
+                       <group string="Postal Address" colspan="2" col="2">
+                           <field name="type" select="2" />
+                           <field name="street" select="2"/>
+                           <field name="street2"/>
+                           <field name="zip" select="2"/>
+                           <field name="city" select="2"/>
+                           <field name="country_id" select="2" completion="1"/>
+                           <field name="state_id" select="2"/>
+                        </group>
+                        <group string="Communication" colspan="2" col="2"> 
+                           <field name="phone"/>
+                           <field name="fax"/>
+                           <field name="email" widget="email"/>
+                        </group>
                         <field name="job_ids" mode="tree,form" nolabel="1" colspan="4">
                             <tree string="Contacts" editable="top">
                                 <field name="sequence_partner"/>
@@ -128,15 +158,21 @@
                                 <field name="email"/>
                             </tree>
                             <form string="Contacts">
+                            <group string="Partner" colspan="2" col="2">
+                                <field name="sequence_partner"/>                            
                                 <field name="name"/>
-                                <field name="sequence_partner"/>
                                 <field name="contact_id"/>
                                 <field name="function_id"/>
+                            </group>
+                            <group string="Communication" colspan="2" col="2">    
                                 <field name="phone"/>
                                 <field name="fax"/>
                                 <field name="extension"/>
                                 <field name="other"/>
-                                <field name="email" widget="email"/>
+                                <field name="email" widget="email"/>                                
+                                <field name="extension"/>
+                                <field name="other"/>
+                            </group>
                             </form>
                         </field>
                     </form>
@@ -151,6 +187,20 @@
                 </field>
             </field>
         </field>
+    </record>
+    
+    <record id="view_res_partner_filter" model="ir.ui.view">
+	    <field name="name">res.partner.select</field>
+	    <field name="model">res.partner</field>
+	    <field name="type">search</field>
+	    <field name="inherit_id" ref="base.view_res_partner_filter"/>
+	    <field name="arch" type="xml">
+	        <search string="Search Partner">
+	        	<field name="address" mode="tree,form" select="1">
+	                <field name="job_ids" select="1" string="Contacts" />
+		        </field>
+	       </search>
+	    </field>
     </record>
 
 <!-- don't display the categories, since it is displayed in an other tab-->
@@ -303,7 +353,19 @@
             </field>
         </field>
     </record>
-
+	
+	<record id="view_res_partner_address_filter" model="ir.ui.view">
+	    <field name="name">res.partner.address.select</field>
+	    <field name="model">res.partner.address</field>
+	    <field name="type">search</field>
+	    <field name="inherit_id" ref="base.view_res_partner_address_filter"/>
+	    <field name="arch" type="xml">
+	        <search string="Search Contact">
+               	<field name="job_ids" select='1'/>
+	       </search>
+	    </field>
+    </record>
+    
     <!-- Views for res.partner.job -->
     <record model="ir.ui.view" id="view_partner_job_tree">
         <field name="name">res.partner.job.tree</field>

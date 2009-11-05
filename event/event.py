@@ -1,22 +1,21 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
-#
+#    
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
 #
 ##############################################################################
 
@@ -131,7 +130,7 @@ class event(osv.osv):
         'register_prospect': fields.function(_get_prospect, method=True, string='Unconfirmed Registrations'),
         'date_begin': fields.datetime('Beginning date', required=True),
         'date_end': fields.datetime('Ending date', required=True),
-        'state': fields.selection([('draft','Draft'),('confirm','Confirmed'),('done','Done'),('cancel','Canceled')], 'Status', readonly=True, required=True),
+        'state': fields.selection([('draft','Draft'),('confirm','Confirmed'),('done','Done'),('cancel','Cancelled')], 'Status', readonly=True, required=True),
         'mail_auto_registr':fields.boolean('Mail Auto Register',help='Check this box if you want to use the automatic mailing for new registration'),
         'mail_auto_confirm':fields.boolean('Mail Auto Confirm',help='Check this box if you want ot use the automatic confirmation emailing or the reminder'),
         'mail_registr':fields.text('Registration Email',help='This email will be sent when someone subscribes to the event.'),

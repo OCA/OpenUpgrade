@@ -30,8 +30,8 @@
                     <separator colspan="4" string="States"/>
                     <field name="state" select="1" readonly="1"/>
                     <group col="2" colspan="2">
-                        <button name="create_period" states="draft" string="Create Monthly Periods" type="object"/>
-                        <button name="create_period3" states="draft" string="Create 3 Months Periods" type="object"/>
+                        <button name="create_period" states="draft" string="Create Monthly Periods" type="object" icon="gtk-dnd"/>
+                        <button name="create_period3" states="draft" string="Create 3 Months Periods" type="object" icon="gtk-dnd"/>
                     </group>
                 </form>
             </field>
@@ -78,7 +78,7 @@
                     <field name="special"/>
                     <separator colspan="4" string="States"/>
                     <field name="state" select="1"/>
-                    <button name="action_draft" states="done" string="Set to Draft" type="object"/>
+                    <button name="action_draft" states="done" string="Set to Draft" type="object" icon="gtk-convert"/>
                 </form>
             </field>
         </record>
@@ -120,7 +120,7 @@
                     <field name="name" select="1" colspan="4"/>
                     <field name="code" select="1"/>
                     <field name="parent_id"/>
-                    <field name="company_id" select="2"/>
+                    <field name="company_id" select="2" widget="selection"/>
                     <field name="user_type" select="1"/>
                     </group>
                     <notebook colspan="4">
@@ -323,7 +323,7 @@
                     <field name="period_id" select="2"/>
                     <group colspan="2" col="3">
                         <button name="%(wizard_populate_statement_from_inv)d"
-                            string="Import Invoice" type="action" attrs="{'invisible':[('state','=','confirm')]}"/>
+                            string="Import Invoice" type="action" attrs="{'invisible':[('state','=','confirm')]}" icon="gtk-open"/>
                     </group>
                     <newline/>
                     <field name="balance_start"/>
@@ -332,6 +332,7 @@
                         <page string="Entry encoding">
                             <field colspan="4" name="line_ids" nolabel="1">
                                 <tree editable="bottom" string="Statement lines">
+                                    <field name="sequence"/>                                
                                     <field name="date"/>
                                     <field name="ref"/>
                                     <field name="name"/>
@@ -351,6 +352,7 @@
                                     <field name="amount"/>
                                     <field context="{'partner_id':partner_id,'amount':amount,'account_id':account_id,'currency_id': parent.currency,'journal_id':parent.journal_id, 'date':date}" name="reconcile_id"/>
                                     <field name="ref"/>
+                                    <field name="sequence"/>                                    
                                     <separator colspan="4" string="Notes"/>
                                     <field colspan="4" name="note" nolabel="1"/>
                                 </form>
@@ -363,9 +365,9 @@
                     <group col="7" colspan="4">
                         <field name="state" select="2"/>
                         <field name="balance_end"/>
-                        <button name="button_dummy" states="draft" string="Compute"/>
-                        <button name="button_confirm" states="draft" string="Confirm" type="object"/>
-                        <button name="button_cancel" states="confirm" string="Cancel" type="object"/>
+                        <button name="button_dummy" states="draft" string="Compute" icon="gtk-execute"/>
+                        <button name="button_confirm" states="draft" string="Confirm" type="object"  icon="gtk-apply"/>
+                        <button name="button_cancel" states="confirm" string="Cancel" type="object" icon="gtk-cancel"/>
                     </group>
                 </form>
             </field>
@@ -384,8 +386,9 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="domain">[('state','=','draft')]</field>
+            <field name="filter" eval="True"/>            
         </record>
-        <menuitem action="action_bank_statement_draft_tree" id="menu_bank_statement_draft_tree" parent="account.menu_bank_statement_tree"/>
+        <menuitem action="action_bank_statement_draft_tree" id="menu_bank_statement_draft_tree" parent="account.menu_bank_statement_tree" groups="base.group_extended_menu"/>
 
         <record id="action_bank_statement_tree2" model="ir.actions.act_window">
             <field name="name">New Statement</field>
@@ -422,7 +425,7 @@
                         <field name="total_entry"/>
                         <field name="total_new"/>
                         <field name="total_balance"/>
-                        <button colspan="2" name="dummy" string="Compute"/>
+                        <button colspan="2" name="dummy" string="Compute" icon="gtk-execute"/>
                     </group>
                 </form>
             </field>
@@ -531,7 +534,7 @@
                 <form string="Account Tax Code">
                     <field name="name" select="1"/>
                     <field name="code" select="1"/>
-                    <field name="company_id"/>
+                    <field name="company_id" widget="selection"/>
                     <field name="notprintable"/>
                     <field name="parent_id" select="1"/>
                     <field name="sign"/>
@@ -578,7 +581,7 @@
                 <form string="Account Tax">
                     <group colspan="4" col="6">
                         <field name="name" select="1"/>
-                        <field name="company_id"/>
+                        <field name="company_id" widget="selection"/>
                         <field name="description" select="1"/>
                         <field name="active" select="2"/>
                         <field name="tax_group" select="1"/>
@@ -785,6 +788,25 @@
                 </form>
             </field>
         </record>
+		
+		<record id="view_account_move_line_filter" model="ir.ui.view">
+            <field name="name">Entry Lines</field>
+            <field name="model">account.move.line</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Search Move Lines">
+                	<group col='10' colspan='4'>
+                		<filter icon="terp-account" string="Draft" domain="[('state','=','draft')]" help="Draft Move Lines"/>
+                        <filter icon="terp-account" string="Posted" domain="[('state','=','valid')]" help="Posted Move Lines"/>
+						<separator orientation="vertical"/>
+						<field name="date" select='1'/>
+						<field name="account_id" select='1'/>
+						<field name="partner_id" select='1'/>
+						<field name="balance" string="Debit/Credit" select='1'/>
+                	</group>
+                </search>
+            </field>
+        </record>
 
         <record id="action_move_line_select" model="ir.actions.act_window">
             <field name="name">Entry Lines</field>
@@ -792,6 +814,18 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="view_move_line_tree"/>
+            <field name="search_view_id" ref="view_account_move_line_filter"/>            
+        </record>
+        
+        <record id="action_view_move_line" model="ir.actions.act_window">
+            <field name="name">Lines to reconcile</field>
+            <field name="res_model">account.move.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('account_id.reconcile', '=', True),('reconcile_id','=',False)]</field>
+            <field eval="False" name="view_id"/>
+            <field eval="True" name="filter"/>
+            <field name="search_view_id" ref="view_account_move_line_filter"/>            
         </record>
 
         <!--
@@ -884,10 +918,29 @@
                     <separator colspan="4" string="State"/>
                     <field name="state" select="1"/>
                     <group col="2" colspan="2">
-                        <button name="button_validate" states="draft" string="Validate" type="object"/>
-                        <button name="button_cancel" states="posted" string="Cancel" type="object"/>
+                        <button name="button_validate" states="draft" string="Validate" type="object" icon="gtk-execute"/>
+                        <button name="button_cancel" states="posted" string="Cancel" type="object" icon="gtk-cancel"/>
                     </group>
                 </form>
+            </field>
+        </record>
+
+		<record id="view_account_move_filter" model="ir.ui.view">
+            <field name="name">account.move.select</field>
+            <field name="model">account.move</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Search Move">
+                	<group col='8' colspan='4'>
+                		<filter icon="terp-account" string="Draft" domain="[('state','=','draft')]" help="Draft Move Lines"/>
+                        <filter icon="terp-account" string="Posted" domain="[('state','=','posted')]" help="Posted Move Lines"/>
+						<separator orientation="vertical"/>
+						<field name="date" select='1'/>
+						<field name="name" select='1'/>
+						<field name="journal_id" select='1'/>
+						<field name="partner_id" select='1'/>
+                	</group>
+                </search>
             </field>
         </record>
 
@@ -897,6 +950,7 @@
             <field name="res_model">account.move</field>
             <field name="view_type">form</field>
             <field name="view_id" ref="view_move_tree"/>
+            <field name="search_view_id" ref="view_account_move_filter"/>
         </record>
         <menuitem id="next_id_29" name="Search Entries" parent="account.menu_finance_reporting"/>
         <menuitem action="action_move_line_form" id="menu_action_move_line_form" parent="next_id_29"/>
@@ -907,6 +961,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="view_move_tree"/>
+            <field name="search_view_id" ref="view_account_move_filter"/>            
         </record>
 
         <menuitem action="action_move_line_form_encode_by_move" id="menu_encode_entries_by_move" parent="menu_finance_entries"/>
@@ -918,6 +973,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="view_move_line_tree"/>
+            <field name="search_view_id" ref="view_account_move_line_filter"/>
         </record>
         <record id="action_move_line_search_view1" model="ir.actions.act_window.view">
             <field eval="10" name="sequence"/>
@@ -984,8 +1040,8 @@
                     <group col="7" colspan="4">
                         <field name="state" select="2"/>
                         <field name="balance_end"/>
-                        <button name="button_dummy" states="draft" string="Compute"/>
-                        <button name="button_confirm" states="draft" string="Confirm" type="object" icon="gtk-execute"/>
+                        <button name="button_dummy" states="draft" string="Compute" icon="gtk-execute"/>
+                        <button name="button_confirm" states="draft" string="Confirm" type="object" icon="gtk-apply"/>
                         <button name="button_cancel" states="confirm" string="Cancel" type="object" icon="gtk-cancel"/>
                     </group>
                 </form>
@@ -1110,7 +1166,7 @@
                     <separator string="Legend" colspan="4"/>
                     <field name="legend" colspan="4" nolabel="1"/>
                     <group col="1" colspan="4">
-                        <button name="%(wizard_account_use_model)d" string="Create entries" type="action" />
+                        <button name="%(wizard_account_use_model)d" string="Create entries" type="action" icon="gtk-execute"/>
                     </group>
                 </form>
             </field>
@@ -1255,8 +1311,8 @@
                     <field name="period_type"/>
                     <field name="model_id"/>
                     <group col="2" colspan="2">
-                        <button name="compute" states="draft,running" string="Compute" type="object"/>
-                        <button name="remove_line" states="running" string="Remove Lines" type="object"/>
+                        <button name="compute" states="draft,running" string="Compute" type="object" icon="gtk-execute"/>
+                        <button name="remove_line" states="running" string="Remove Lines" type="object" icon="gtk-remove"/>
                     </group>
                     <separator colspan="4" string="Subscription Lines"/>
                     <field colspan="4" name="lines_id" widget="one2many_list"/>
@@ -1264,7 +1320,7 @@
                     <separator colspan="4" string="State"/>
                     <field name="state" select="2"/>
                     <group col="1" colspan="2">
-                        <button name="state_draft" states="done" string="Set to Draft" type="object"/>
+                        <button name="state_draft" states="done" string="Set to Draft" type="object"  icon="gtk-convert" />
                     </group>
                 </form>
             </field>
@@ -1283,8 +1339,9 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="domain">[('state','=','running')]</field>
+            <field name="filter" eval="True"/>            
         </record>
-        <menuitem action="action_subscription_form_running" id="menu_action_subscription_form_running" parent="menu_action_subscription_form"/>
+        <menuitem action="action_subscription_form_running" id="menu_action_subscription_form_running" parent="menu_action_subscription_form" groups="base.group_extended_menu"/>
 
         <record id="action_subscription_form_new" model="ir.actions.act_window">
             <field name="name">New Subscription</field>
@@ -1653,7 +1710,7 @@
                 <form string="Generate Chart of Accounts from a Chart Template">
                     <separator col="4" colspan="4" string="Generate Chart of Accounts from a Chart Template"/>
                     <label align="0.0" string="This will automatically configure your chart of accounts, bank accounts, taxes and journals according to the selected template" colspan="4"/>
-                    <field name="company_id" />
+                    <field name="company_id"  widget="selection"/>
                     <field name ="code_digits" />
                     <field name="chart_template_id"/>
                     <field name ="seq_journal" />

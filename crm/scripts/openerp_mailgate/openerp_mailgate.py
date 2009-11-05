@@ -1,25 +1,23 @@
-#!/usr/bin/python
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
-#
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
 #
-##############################################################################
+###########################################################################################
 
 import re
 import smtplib
@@ -51,8 +49,83 @@ priorities = {
     '5': '5 (Lowest)',
 }
 
+def html2plaintext(html, body_id=None, encoding='utf-8'):
+    ## (c) Fry-IT, www.fry-it.com, 2007
+    ## <peter@fry-it.com>
+    ## download here: http://www.peterbe.com/plog/html2plaintext
+    
+    
+    """ from an HTML text, convert the HTML to plain text.
+    If @body_id is provided then this is the tag where the 
+    body (not necessarily <body>) starts.
+    """
+    try:
+        from BeautifulSoup import BeautifulSoup, SoupStrainer, Comment
+    except:
+        return html
+            
+    urls = []
+    if body_id is not None:
+        strainer = SoupStrainer(id=body_id)
+    else:
+        strainer = SoupStrainer('body')
+    
+    soup = BeautifulSoup(html, parseOnlyThese=strainer, fromEncoding=encoding)
+    for link in soup.findAll('a'):
+        title = link.renderContents()
+        for url in [x[1] for x in link.attrs if x[0]=='href']:
+            urls.append(dict(url=url, tag=str(link), title=title))
+
+    html = soup.__str__()
+            
+    url_index = []
+    i = 0
+    for d in urls:
+        if d['title'] == d['url'] or 'http://'+d['title'] == d['url']:
+            html = html.replace(d['tag'], d['url'])
+        else:
+            i += 1
+            html = html.replace(d['tag'], '%s [%s]' % (d['title'], i))
+            url_index.append(d['url'])
+
+    html = html.replace('<strong>','*').replace('</strong>','*')
+    html = html.replace('<b>','*').replace('</b>','*')
+    html = html.replace('<h3>','*').replace('</h3>','*')
+    html = html.replace('<h2>','**').replace('</h2>','**')
+    html = html.replace('<h1>','**').replace('</h1>','**')
+    html = html.replace('<em>','/').replace('</em>','/')
+    
+
+    # the only line breaks we respect is those of ending tags and 
+    # breaks
+    
+    html = html.replace('\n',' ')
+    html = html.replace('<br>', '\n')
+    html = html.replace('<tr>', '\n')
+    html = html.replace('</p>', '\n\n')
+    html = re.sub('<br\s*/>', '\n', html)
+    html = html.replace(' ' * 2, ' ')
+
+
+    # for all other tags we failed to clean up, just remove then and 
+    # complain about them on the stderr
+    def desperate_fixer(g):
+        #print >>sys.stderr, "failed to clean up %s" % str(g.group())
+        return ' '
+
+    html = re.sub('<.*?>', desperate_fixer, html)
+
+    # lstrip all lines
+    html = '\n'.join([x.lstrip() for x in html.splitlines()])
+
+    for i, url in enumerate(url_index):
+        if i == 0:
+            html += '\n\n'
+        html += '[%s] %s\n' % (i+1, url)       
+    return html
+    
 class rpc_proxy(object):
-    def __init__(self, uid, passwd, host='localhost', port=8069, path='object', dbname='terp'):
+    def __init__(self, uid, passwd, host='localhost', port=8069, path='object', dbname='terp'):        
         self.rpc = xmlrpclib.ServerProxy('http://%s:%s/xmlrpc/%s' % (host, port, path))
         self.user_id = uid
         self.passwd = passwd
@@ -62,8 +135,8 @@ class rpc_proxy(object):
         return self.rpc.execute(self.dbname, self.user_id, self.passwd, *request)
 
 class email_parser(object):
-    def __init__(self, uid, password, section, email, email_default, dbname, host):
-        self.rpc = rpc_proxy(uid, password, host=host, dbname=dbname)
+    def __init__(self, uid, password, section, email, email_default, dbname, host, port):        
+        self.rpc = rpc_proxy(uid, password, host=host, port=port, dbname=dbname)
         try:
             self.section_id = int(section)
         except:
@@ -84,7 +157,7 @@ class email_parser(object):
         adr = self.rpc('res.partner.address', 'read', adr_ids, ['partner_id'])
         return {
             'partner_address_id': adr[0]['id'],
-            'partner_id': adr[0]['partner_id'][0]
+            'partner_id': adr[0].get('partner_id',False) and adr[0]['partner_id'][0] or False
         }
 
     def _decode_header(self, s):
@@ -101,7 +174,8 @@ class email_parser(object):
             'email_cc': self._decode_header(msg['Cc'] or ''),
             'canal_id': self.canal_id,
             'user_id': False,
-            'history_line': [(0, 0, {'name': 'Create','section_id': self.section_id,'canal_id': self.canal_id,'description': message['body'], 'email': msg['From'] })],
+            'description': message['body'],
+            'history_line': [(0, 0, {'description': message['body'], 'email': msg['From'] })],
         }
         try:
             data.update(self.partner_get(self._decode_header(msg['From'])))
@@ -111,7 +185,7 @@ class email_parser(object):
 
         try:
             id = self.rpc('crm.case', 'create', data)
-
+            self.rpc('crm.case','case_open', [id])    
         except Exception,e:
             if getattr(e,'faultCode','') and 'AccessError' in e.faultCode:
                 e = '\n\nThe Specified user does not have an access to the CRM case.'
@@ -143,7 +217,7 @@ class email_parser(object):
 #   #
     def msg_body_get(self, msg):
         message = {};
-        message['body'] = u'';
+        message['body'] = '';
         message['attachment'] = {};
         attachment = message['attachment'];
         counter = 1;
@@ -154,13 +228,17 @@ class email_parser(object):
             if part.get_content_maintype() == 'multipart':
                 continue
 
-            if part.get_content_maintype()=='text' and part.get_content_subtype() == 'plain':
+            if part.get_content_maintype()=='text':
                 buf = part.get_payload(decode=True)
                 if buf:
                     txt = buf.decode(part.get_charsets()[0] or 'ascii', 'replace')
                     txt = re.sub("<(\w)>", replace, txt)
                     txt = re.sub("<\/(\w)>", replace, txt)
-                    message['body'] += txt
+                if txt and part.get_content_subtype() == 'plain':
+                    message['body'] += txt 
+                elif txt and part.get_content_subtype() == 'html':                                                               
+                    message['body'] += html2plaintext(txt)  
+                
             elif part.get_content_maintype()=='application' or part.get_content_maintype()=='image' or part.get_content_maintype()=='text':
                 filename = part.get_filename();
                 if filename :
@@ -172,7 +250,7 @@ class email_parser(object):
                 #end if
             #end if
             message['attachment'] = attachment
-        #end for
+        #end for        
         return message
     #end def
 
@@ -191,9 +269,10 @@ class email_parser(object):
         body['body'] = body_data
 
         data = {
-            'history_line': [(0, 0, {'name': 'Close','section_id': self.section_id,'canal_id': self.canal_id,'description': body['body'], 'email': msg['From']})],
+            'description': body['body'],
+            'history_line': [(0, 0, {'description': body['body'], 'email': msg['From']})],
         }
-        act = 'case_close'
+        act = 'case_pending'
         if 'state' in actions:
             if actions['state'] in ['draft','close','cancel','open','pending']:
                 act = 'case_' + actions['state']
@@ -246,7 +325,8 @@ class email_parser(object):
         self.rpc('crm.case', act, [id])
         body2 = '\n'.join(map(lambda l: '> '+l, (body or '').split('\n')))
         data = {
-                'history_line': [(0, 0, {'name': 'Open','section_id': self.section_id,'canal_id': self.canal_id,'description': body, 'email': msg['From'][:84]})],
+            'description':body,
+            'history_line': [(0, 0, {'description': body, 'email': msg['From'][:84]})],
         }
         self.rpc('crm.case', 'write', [id], data)
         return id
@@ -296,7 +376,7 @@ class email_parser(object):
                 del msg['Subject']
                 msg['Subject'] = '[OpenERP-CaseError] ' + a
                 self.msg_send(msg, self.email_default.split(','))
-        return emails
+        return case_id, emails
 
 if __name__ == '__main__':
     import sys, optparse
@@ -316,10 +396,11 @@ if __name__ == '__main__':
     parser.add_option("-m", "--default", dest="default", help="Default eMail in case of any trouble.", default=None)
     parser.add_option("-d", "--dbname", dest="dbname", help="Database name (default: terp)", default='terp')
     parser.add_option("--host", dest="host", help="Hostname of the Open ERP Server", default="localhost")
+    parser.add_option("--port", dest="port", help="Port of the Open ERP Server", default="8069")
 
 
     (options, args) = parser.parse_args()
-    parser = email_parser(options.userid, options.password, options.section, options.email, options.default, dbname=options.dbname, host=options.host)
+    parser = email_parser(options.userid, options.password, options.section, options.email, options.default, dbname=options.dbname, host=options.host, port=options.port)
 
     msg_txt = email.message_from_file(sys.stdin)
 

@@ -1,22 +1,21 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
-#
+#    
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
 #
 ##############################################################################
 
@@ -58,7 +57,7 @@ class mrp_procurement(osv.osv):
         report_except = 0
         report_later = 0
         while True:
-            cr.execute('select id from mrp_procurement where state=%s and procure_method=%s order by date_planned limit 500 offset %s', ('confirmed', 'make_to_order', offset))
+            cr.execute('select id from mrp_procurement where state=%s and procure_method=%s order by priority,date_planned limit 500 offset %s', ('confirmed', 'make_to_order', offset))
             ids = map(lambda x: x[0], cr.fetchall())
             for proc in procurement_obj.browse(cr, uid, ids):
                 if (maxdate.strftime('%Y-%m-%d')>=proc.date_planned)  or (proc.procure_method=='make_to_order'):

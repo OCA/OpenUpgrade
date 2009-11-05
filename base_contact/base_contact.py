@@ -1,22 +1,21 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
-#
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
 #
 ##############################################################################
 
@@ -49,10 +48,16 @@ class res_partner_contact(osv.osv):
         'function_id':fields.related('job_ids','function_id',type='many2one', relation='res.partner.function', string='Main Function'),
         'job_id':fields.related('job_ids',type='many2one', relation='res.partner.job', string='Main Job'),
         'email': fields.char('E-Mail', size=240),
+        'comment' : fields.text('Notes', translate=True),
+        'photo' : fields.binary('Image'),
+        
     }
     _defaults = {
         'active' : lambda *a: True,
     }
+    
+    _order = "name,first_name"
+        
     def name_get(self, cr, user, ids, context={}):
         #will return name and first_name.......
         if not len(ids):
@@ -117,20 +122,20 @@ class res_partner_job(osv.osv):
     _description ='Contact Partner Function'
     _order = 'sequence_contact'
     _columns = {
-        'name': fields.related('address_id','partner_id', type='many2one', relation='res.partner', string='Partner'),
-        'address_id':fields.many2one('res.partner.address','Address'),
+        'name': fields.related('address_id','partner_id', type='many2one', relation='res.partner', string='Partner', help="You may enter Address first,Partner will be linked automatically if any."),
+        'address_id':fields.many2one('res.partner.address','Address', help='Address which is linked to the Partner'),
         'contact_id':fields.many2one('res.partner.contact','Contact', required=True, ondelete='cascade'),
-        'function_id': fields.many2one('res.partner.function','Partner Function'),
+        'function_id': fields.many2one('res.partner.function','Partner Function', help="Function of this contact with this partner"),
         'sequence_contact':fields.integer('Contact Seq.',help='Order of importance of this address in the list of addresses of the linked contact'),
         'sequence_partner':fields.integer('Partner Seq.',help='Order of importance of this job title in the list of job title of the linked partner'),
-        'email': fields.char('E-Mail', size=240),
-        'phone': fields.char('Phone', size=64),
-        'fax': fields.char('Fax', size=64),
+        'email': fields.char('E-Mail', size=240, help="Job E-Mail"),
+        'phone': fields.char('Phone', size=64, help="Job Phone no."),
+        'fax': fields.char('Fax', size=64, help="Job FAX no."),
         'extension': fields.char('Extension', size=64, help='Internal/External extension phone number'),
         'other': fields.char('Other', size=64, help='Additional phone field'),
-        'date_start' : fields.date('Date Start'),
-        'date_stop' : fields.date('Date Stop'),
-        'state' : fields.selection([('past', 'Past'),('current', 'Current')], 'State', required=True),
+        'date_start' : fields.date('Date Start',help="Start date of job(Joining Date)"),
+        'date_stop' : fields.date('Date Stop', help="Last date of job"),
+        'state' : fields.selection([('past', 'Past'),('current', 'Current')], 'State', required=True, help="Status of Address"),
     }
 
     _defaults = {

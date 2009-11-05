@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 #
 #  dta_wizard.py
 #  l10n_ch
@@ -605,4 +605,5 @@ class wizard_dta_create(wizard.interface):
     }
 
 wizard_dta_create('account.dta_create')
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

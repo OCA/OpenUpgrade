@@ -1,51 +1,34 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
-#
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
 #
 ##############################################################################
 
 from xml import dom
-
+from lxml import etree
 
 from mx import DateTime
 from mx.DateTime import now
 import time
-
+import tools
 import netsvc
 from osv import fields, osv
 import ir
-
-
-class one2many_mod(fields.one2many):
-    def get(self, cr, obj, ids, name, user=None, offset=0, context=None, values=None):
-        if not context:
-            context = {}
-        res = {}
-        num = name[4]
-        for obj in obj.browse(cr, user, ids, context=context):
-            res[obj.id] = []
-            v = getattr(obj,'context'+num+'_id').id
-            if v:
-                ids2 = obj.pool.get(self._obj).search(cr, user, [(self._fields_id,'=',obj.id),('context_id','=',v)], limit=self._limit)
-                for r in obj.pool.get(self._obj)._read_flat(cr, user, ids2, [self._fields_id], context=context, load='_classic_write'):
-                    res[r[self._fields_id]].append( r['id'] )
-        return res
 
 class project_gtd_context(osv.osv):
     _name = "project.gtd.context"
@@ -59,39 +42,21 @@ class project_gtd_context(osv.osv):
         'sequence': lambda *args: 1
     }
     _order = "sequence, name"
+    
 project_gtd_context()
 
 
 class project_gtd_timebox(osv.osv):
     _name = "project.gtd.timebox"
+    _order = "sequence"
     _columns = {
         'name': fields.char('Timebox', size=64, required=True, select=1),
-        'user_id': fields.many2one('res.users', 'User', required=True, select=1),
-        'child_ids': fields.one2many('project.gtd.timebox', 'parent_id', 'Child Timeboxes'),
-        'parent_id': fields.many2one('project.gtd.timebox', 'Parent Timebox'),
-        'task_ids': fields.one2many('project.task', 'timebox_id', 'Tasks'),
-        'type': fields.selection([('daily','Daily'),('weekly','Weekly'),('monthly','Monthly'),('other','Other')], 'Type', required=True),
-        'task1_ids': one2many_mod('project.task', 'timebox_id', 'Tasks'),
-        'task2_ids': one2many_mod('project.task', 'timebox_id', 'Tasks'),
-        'task3_ids': one2many_mod('project.task', 'timebox_id', 'Tasks'),
-        'task4_ids': one2many_mod('project.task', 'timebox_id', 'Tasks'),
-        'task5_ids': one2many_mod('project.task', 'timebox_id', 'Tasks'),
-        'task6_ids': one2many_mod('project.task', 'timebox_id', 'Tasks'),
-        'context1_id': fields.many2one('project.gtd.context', 'Context 1', required=True),
-        'context2_id': fields.many2one('project.gtd.context', 'Context 2'),
-        'context3_id': fields.many2one('project.gtd.context', 'Context 3'),
-        'context4_id': fields.many2one('project.gtd.context', 'Context 4'),
-        'context5_id': fields.many2one('project.gtd.context', 'Context 5'),
-        'context6_id': fields.many2one('project.gtd.context', 'Context 6'),
-        'col_project': fields.boolean('Project'),
-        'col_date_start': fields.boolean('Date Start'),
-        'col_priority': fields.boolean('Priority'),
-        'col_deadline': fields.boolean('Deadline'),
-        'col_planned_hours': fields.boolean('Planned Hours'),
-        'col_effective_hours': fields.boolean('Effective Hours'),
+        'sequence': fields.integer('Sequence'),
+        'icon': fields.selection(tools.icons, 'Icon', size=64),
     }
-    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False):
-        res = super(project_gtd_timebox,self).fields_view_get(cr, uid, view_id, view_type, context, toolbar)
+    
+    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
+        res = super(project_gtd_timebox,self).fields_view_get(cr, uid, view_id, view_type, context, toolbar=toolbar, submenu=submenu)
         if (res['type']=='form') and ('record_id' in context):
             if context['record_id']:
                 rec = self.browse(cr, uid, int(context['record_id']), context)
@@ -137,20 +102,12 @@ class project_gtd_timebox(osv.osv):
         </notebook>
     </form>
             """
-        doc = dom.minidom.parseString(res['arch'])
+        doc = etree.XML(res['arch'])
         xarch, xfields = self._view_look_dom_arch(cr, uid, doc, view_id, context=context)
         res['arch'] = xarch
         res['fields'] = xfields
         return res
-    _defaults = {
-        'type': lambda *args: 'daily',
-        'col_project': lambda *args: True,
-        'col_date_start': lambda *args: True,
-        'col_priority': lambda *args: True,
-        'col_deadline': lambda *args: False,
-        'col_planned_hours': lambda *args: True,
-        'col_effective_hours': lambda *args: False
-    }
+
 project_gtd_timebox()
 
 class project_task(osv.osv):
@@ -159,18 +116,71 @@ class project_task(osv.osv):
         'timebox_id': fields.many2one('project.gtd.timebox', "Timebox"),
         'context_id': fields.many2one('project.gtd.context', "Context"),
      }
+    
     def copy_data(self, cr, uid, id, default=None, context=None):
         if not default:
             default = {}
         default['timebox_id']=False
         default['context_id']=False
         return super(project_task,self).copy_data(cr, uid, id, default, context)
+    
     def _get_context(self,cr, uid, ctx):
         ids = self.pool.get('project.gtd.context').search(cr, uid, [], context=ctx)
         return ids and ids[0] or False
     _defaults = {
         'context_id': _get_context
     }
+    
+    def next_timebox(self, cr, uid, ids, *args):
+        timebox_obj = self.pool.get('project.gtd.timebox')
+        timebox_ids = timebox_obj.search(cr,uid,[])
+        for task in self.browse(cr,uid,ids):
+            timebox = task.timebox_id.id
+            if timebox and  timebox_ids.index(timebox) != len(timebox_ids)-1 :
+                index = timebox_ids.index(timebox)
+            else:
+                index = -1
+            self.write(cr, uid, task.id, {'timebox_id': timebox_ids[index+1]})
+        return True
+
+    def prev_timebox(self, cr, uid, ids, *args):
+        timebox_obj = self.pool.get('project.gtd.timebox')
+        timebox_ids = timebox_obj.search(cr,uid,[])
+        for task in self.browse(cr,uid,ids):
+            timebox = task.timebox_id.id
+            if timebox and  timebox_ids.index(timebox) != 0 :
+                index = timebox_ids.index(timebox)
+            else:
+                index = len(timebox_ids)
+            self.write(cr, uid, task.id, {'timebox_id': timebox_ids[index - 1]})
+        return True
+    
+    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
+        res = super(project_task,self).fields_view_get(cr, uid, view_id, view_type, context, toolbar=toolbar, submenu=submenu)
+        search_extended = False
+        if res['type'] == 'search':
+            search_extended ='''<newline/> <group colspan="2">'''
+            timebox_obj = self.pool.get('project.gtd.timebox')
+            for time in timebox_obj.browse(cr, uid, timebox_obj.search(cr,uid,[])):
+                if time.icon:
+                    icon = time.icon
+                else :
+                    icon=""
+                search_extended += ''' <filter domain="[('timebox_id','=', ''' + str(time.id) + ''')]" help = "Task Related to ''' +  time.name  + ''' Timeboxs" icon="''' + icon + '''" string="''' + time.name + '''"/>'''
+            search_extended += '''</group>
+            <group colspan="2">
+            <field name="context_id" select="1" widget="selection"/> 
+            <field name="priority" select="1"/>
+            </group>
+            </search> '''
+        if search_extended:
+            res['arch'] = res['arch'].replace('</search>',search_extended)
+            attrs_sel = self.pool.get('project.gtd.context').name_search(cr, uid, '', [], context=context)
+            context_id_info = self.pool.get('project.task').fields_get(cr, uid, ['context_id'])
+            context_id_info['context_id']['selection'] = attrs_sel
+            res['fields'].update(context_id_info)
+        return res
+ 
     # Override read for using this method if context set !!!
     #_order = "((55-ascii(coalesce(priority,'2')))*2 +  coalesce((date_start::date-current_date)/2,8))"
 project_task()

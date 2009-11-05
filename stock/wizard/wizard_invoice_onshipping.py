@@ -1,22 +1,21 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
-#
+#    
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
 #
 ##############################################################################
 
@@ -32,6 +31,8 @@ invoice_form = """<?xml version="1.0"?>
     <field name="group"/>
     <newline/>
     <field name="type"/>
+    <newline/>
+    <field name="invoice_date" />    
 </form>
 """
 
@@ -49,14 +50,10 @@ invoice_fields = {
     'type': {
         'string': 'Type',
         'type': 'selection',
-        'selection': [
-            ('out_invoice', 'Customer Invoice'),
-            ('in_invoice', 'Supplier Invoice'),
-            ('out_refund', 'Customer Refund'),
-            ('in_refund', 'Supplier Refund'),
-            ],
+        'selection': [],
         'required': True
     },
+    'invoice_date': {'string': 'Invoiced date', 'type':'date' }    
 }
 
 
@@ -72,6 +69,24 @@ def _get_type(obj, cr, uid, data, context):
     if pick.move_lines:
         usage = pick.move_lines[0].location_id.usage
 
+    if pick.type =='out':
+        invoice_fields['type']['selection'] = [
+            ('out_invoice', 'Customer Invoice'),
+            ('in_refund', 'Supplier Refund'),
+            ]
+    elif pick.type =='in':
+        invoice_fields['type']['selection'] = [
+            ('in_invoice', 'Supplier Invoice'),
+            ('out_refund', 'Customer Refund'),
+            ]
+    else:
+        invoice_fields['type']['selection']=[
+            ('out_invoice', 'Customer Invoice'),
+            ('in_invoice', 'Supplier Invoice'),
+            ('out_refund', 'Customer Refund'),
+            ('in_refund', 'Supplier Refund'),
+            ]
+                    
     if pick.type == 'out' and usage == 'supplier':
         type = 'in_refund'
     elif pick.type == 'out' and usage == 'customer':
@@ -96,6 +111,7 @@ def _create_invoice(obj, cr, uid, data, context):
 
     type = data['form']['type']
 
+    context['date_inv'] = data['form']['invoice_date']
     res = picking_obj.action_invoice_create(cr, uid, data['ids'],
             journal_id = data['form']['journal_id'], group=data['form']['group'],
             type=type, context= context)

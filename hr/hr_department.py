@@ -1,22 +1,21 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
-#
+#    
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
 #
 ##############################################################################
 
@@ -44,7 +43,7 @@ class hr_department(osv.osv):
     def _check_recursion(self, cr, uid, ids):
         level = 100
         while len(ids):
-            cr.execute('select distinct parent_id from hr_department where id in ('+','.join(map(str,ids))+')')
+            cr.execute('select distinct parent_id from hr_department where id in ('+','.join(map(str, ids))+')')
             ids = filter(None, map(lambda x:x[0], cr.fetchall()))
             if not level:
                 return False
@@ -86,45 +85,68 @@ class res_users(osv.osv):
     _inherit = 'res.users'
     _description = 'res.users'
 
-    def _parent_compute(self, cr, uid, ids, name, arg, context={}):
+    def _parent_compute(self, cr, uid, ids, name, args, context={}):
         result = {}
         obj_dept = self.pool.get('hr.department')
-        for id in ids:
-            ids_dept = obj_dept.search(cr, uid, [('member_ids', 'in', [id])])
+        for user_id in ids:
+            ids_dept = obj_dept.search(cr, uid, [('member_ids', 'in', [user_id])])
             parent_ids = []
             if ids_dept:
                 data_dept = obj_dept.read(cr, uid, ids_dept, ['manager_id'])
                 parent_ids = map(lambda x: x['manager_id'][0], data_dept)
-            result[id] = parent_ids
+            result[user_id] = parent_ids
         return result
-
-    def _child_compute(self, cr, uid, ids):
-        obj_dept = self.pool.get('hr.department')
-        child_ids = []
-        for id in ids:
-            ids_dept = obj_dept.search(cr, uid, [('manager_id', '=', id)])
-            if ids_dept:
-                data_dept = obj_dept.read(cr, uid, ids_dept, ['member_ids'])
-                childs = map(lambda x: x['member_ids'], data_dept)
-                childs = tools.flatten(childs)
-                if id in childs:
-                    childs.remove(id)
-                child_ids.extend(tools.flatten(childs))
-        return child_ids
 
     def _parent_search(self, cr, uid, obj, name, args):
         parent = []
         for arg in args:
             if arg[0] == 'parent_id':
                 parent = arg[2]
-        child_ids = self._child_compute(cr, uid, parent)
+        child_ids = self._child_compute(cr, uid, parent,name, args, {})
         if not child_ids:
             return [('id', 'in', [0])]
-        return [('id', 'in', child_ids)]
+        return [('id', 'in', child_ids.get(uid,[]))]
+
+    def _child_compute(self, cr, uid, ids, name, args, context={}):
+        obj_dept = self.pool.get('hr.department')
+        obj_user = self.pool.get('res.users')
+        result = {}
+        for manager_id in ids:
+            child_ids = []
+            mgnt_dept_ids = obj_dept.search(cr, uid, [('manager_id', '=', manager_id)])
+            ids_dept = obj_dept.search(cr, uid, [('id', 'child_of', mgnt_dept_ids)])
+            if ids_dept:
+                data_dept = obj_dept.read(cr, uid, ids_dept, ['member_ids'])
+                childs = map(lambda x: x['member_ids'], data_dept)                
+                childs = tools.flatten(childs)
+                childs = obj_user.search(cr, uid, [('id','in',childs),('active','=',True)])                
+                if manager_id in childs:
+                    childs.remove(manager_id)
+                
+                child_ids.extend(tools.flatten(childs))
+                set = {}
+                map(set.__setitem__, child_ids, [])
+                child_ids =  set.keys()
+            else:
+               child_ids = []
+            result[manager_id] = child_ids
+        return result
+
+    def _child_search(self, cr, uid, obj, name, args):
+        parent = []
+        for arg in args:
+            if arg[0] == 'child_ids':
+                parent = arg[2]
+        child_ids = self._child_compute(cr, uid, parent,name, args, {})
+        if not child_ids:
+            return [('id', 'in', [0])]
+        return [('id', 'in', child_ids.get(uid,[]))]
 
     _columns = {
-        'parent_id': fields.function(_parent_compute, relation='res.users',fnct_search=_parent_search, method=True, string="Parent Users", type='many2many'),
-               }
+        'parent_id': fields.function(_parent_compute, relation='res.users',fnct_search=_parent_search, method=True, string="Managers", type='many2many'),
+        'child_ids': fields.function(_child_compute, relation='res.users', fnct_search=_child_search,method=True, string="Subordinates", type='many2many'),
+    }
+
 
 res_users()
 

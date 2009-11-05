@@ -1,22 +1,21 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
-#
+#    
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
 #
 ##############################################################################
 
@@ -379,7 +378,8 @@ class sale_order(osv.osv):
             'currency_id': order.pricelist_id.currency_id.id,
             'comment': order.note,
             'payment_term': pay_term,
-            'fiscal_position': order.partner_id.property_account_position.id
+            'fiscal_position': order.partner_id.property_account_position.id,
+            'date_invoice' : context.get('date_invoice',False)
         }
         inv_obj = self.pool.get('account.invoice')
         inv.update(self._inv_get(cr, uid, order))
@@ -390,11 +390,16 @@ class sale_order(osv.osv):
         inv_obj.button_compute(cr, uid, [inv_id])
         return inv_id
 
-    def action_invoice_create(self, cr, uid, ids, grouped=False, states=['confirmed', 'done', 'exception']):
+    def action_invoice_create(self, cr, uid, ids, grouped=False, states=['confirmed', 'done', 'exception'], date_inv = False):
         res = False
         invoices = {}
         invoice_ids = []
 
+        context = {}
+        # If date was specified, use it as date invoiced, usefull when invoices are generated this month and put the 
+        # last day of the last month as invoice date
+        if date_inv:
+            context['date_inv'] = date_inv
         for o in self.browse(cr, uid, ids):
             lines = []
             for line in o.order_line:
@@ -412,7 +417,7 @@ class sale_order(osv.osv):
         picking_obj = self.pool.get('stock.picking')
         for val in invoices.values():
             if grouped:
-                res = self._make_invoice(cr, uid, val[0][0], reduce(lambda x, y: x + y, [l for o, l in val], []))
+                res = self._make_invoice(cr, uid, val[0][0], reduce(lambda x,y: x + y, [l for o,l in val], []), context=context)
                 for o, l in val:
                     self.write(cr, uid, [o.id], {'state': 'progress'})
                     if o.order_policy == 'picking':
@@ -420,7 +425,7 @@ class sale_order(osv.osv):
                     cr.execute('insert into sale_order_invoice_rel (order_id,invoice_id) values (%s,%s)', (o.id, res))
             else:
                 for order, il in val:
-                    res = self._make_invoice(cr, uid, order, il)
+                    res = self._make_invoice(cr, uid, order, il, context=context)
                     invoice_ids.append(res)
                     self.write(cr, uid, [order.id], {'state': 'progress'})
                     if order.order_policy == 'picking':
@@ -759,7 +764,8 @@ class sale_order_line(osv.osv):
         'notes': fields.text('Notes'),
         'th_weight': fields.float('Weight'),
         'state': fields.selection([('draft', 'Draft'), ('confirmed', 'Confirmed'), ('done', 'Done'), ('cancel', 'Cancelled'), ('exception', 'Exception')], 'Status', required=True, readonly=True),
-        'order_partner_id': fields.related('order_id', 'partner_id', type='many2one', relation='res.partner', string='Customer')
+        'order_partner_id': fields.related('order_id', 'partner_id', type='many2one', relation='res.partner', string='Customer'),
+        'salesman_id':fields.related('order_id','user_id',type='many2one',relation='res.users',string='Salesman'),
     }
     _order = 'sequence, id'
     _defaults = {
@@ -954,7 +960,7 @@ class sale_order_line(osv.osv):
             partner = partner_obj.browse(cr, uid, partner_id)
             result['tax_id'] = self.pool.get('account.fiscal.position').map_tax(cr, uid, fpos, product_obj.taxes_id)
         if not flag:
-            result['name'] = product_obj.partner_ref
+            result['name'] = self.pool.get('product.product').name_get(cr, uid, [product_obj.id])[0][1]
         domain = {}
         if (not uom) and (not uos):
             result['product_uom'] = product_obj.uom_id.id

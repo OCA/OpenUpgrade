@@ -1,22 +1,21 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
-#
+#    
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
 #
 ##############################################################################
 
@@ -63,6 +62,9 @@ class make_sale(wizard.interface):
 
     def _makeOrder(self, cr, uid, data, context):
         pool = pooler.get_pool(cr.dbname)
+        mod_obj = pool.get('ir.model.data') 
+        result = mod_obj._get_id(cr, uid, 'sale', 'view_sales_order_filter')
+        id = mod_obj.read(cr, uid, result, ['res_id'])        
         case_obj = pool.get('crm.case')
         sale_obj = pool.get('sale.order')
         partner_obj = pool.get('res.partner')
@@ -129,6 +131,7 @@ class make_sale(wizard.interface):
             'res_model': 'sale.order',
             'view_id': False,
             'type': 'ir.actions.act_window',
+            'search_view_id': id['res_id']            
         }
         return value
 

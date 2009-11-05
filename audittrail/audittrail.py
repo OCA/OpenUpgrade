@@ -1,32 +1,31 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
-#
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
 #
 ##############################################################################
 
 
 import ir
-from osv import fields,osv
+from osv import fields, osv
 import netsvc
 import pooler
 import string
-import time,copy
+import time, copy
 from tools.translate import _
 
 class audittrail_rule(osv.osv):
@@ -99,6 +98,7 @@ audittrail_rule()
 
 class audittrail_log(osv.osv):
     _name = 'audittrail.log'
+    
     _columns = {
         "name": fields.char("Name", size=32),
         "object_id": fields.many2one('ir.model', 'Object'),
@@ -106,8 +106,7 @@ class audittrail_log(osv.osv):
         "method": fields.selection((('read', 'Read'), ('write', 'Write'), ('unlink', 'Delete'), ('create', 'Create')), "Method"),
         "timestamp": fields.datetime("Date"),
         "res_id":fields.integer('Resource Id'),
-        "line_ids":fields.one2many('audittrail.log.line','log_id','Log lines')
-
+        "line_ids":fields.one2many('audittrail.log.line','log_id','Log lines'),
     }
     _defaults = {
         "timestamp": lambda *a: time.strftime("%Y-%m-%d %H:%M:%S")
@@ -214,7 +213,9 @@ class audittrail_objects_proxy(objects_proxy):
                 if 'id' in new_value:
                     del new_value['id']
                 if not len(logged_uids) or uid in logged_uids:
-                    id=pool.get('audittrail.log').create(cr, uid, {"method": method , "object_id": model_object.id, "user_id": uid, "res_id": res_id,"name": "%s %s %s" % (method , model_object.id, time.strftime("%Y-%m-%d %H:%M:%S"))})
+                    resource_name = pool.get(model_object.model).name_get(cr,uid,[res_id])
+                    resource_name = resource_name and resource_name[0][1] or ''
+                    id=pool.get('audittrail.log').create(cr, uid, {"method": method , "object_id": model_object.id, "user_id": uid, "res_id": res_id, "name": resource_name})
                     lines=[]
                     for field in new_value:
                         if new_value[field]:
@@ -241,7 +242,9 @@ class audittrail_objects_proxy(objects_proxy):
                     if res:
                         new_values=pool.get(model_object.model).read(cr,uid,res_ids,args[1].keys())[0]
                         if not len(logged_uids) or uid in logged_uids:
-                            id=pool.get('audittrail.log').create(cr, uid, {"method": method, "object_id": model_object.id, "user_id": uid, "res_id": res_id,"name": "%s %s %s" % (method , model_object.id, time.strftime("%Y-%m-%d %H:%M:%S"))})
+                            resource_name = pool.get(model_object.model).name_get(cr,uid,[res_id])
+                            resource_name = resource_name and resource_name[0][1] or ''
+                            id=pool.get('audittrail.log').create(cr, uid, {"method": method, "object_id": model_object.id, "user_id": uid, "res_id": res_id,"name": resource_name})
                             lines=[]
                             for field in args[1].keys():
                                 if args[1].keys():
@@ -270,7 +273,9 @@ class audittrail_objects_proxy(objects_proxy):
                     old_values[res['id']]=res
                 for res_id in old_values:
                     if not len(logged_uids) or uid in logged_uids:
-                        id=pool.get('audittrail.log').create(cr, uid, {"method": method , "object_id": model_object.id, "user_id": uid, "res_id": res_id,"name": "%s %s %s" % (method , model_object.id, time.strftime("%Y-%m-%d %H:%M:%S"))})
+                        resource_name = pool.get(model_object.model).name_get(cr,uid,[res_id])
+                        resource_name = resource_name and resource_name[0][1] or ''
+                        id=pool.get('audittrail.log').create(cr, uid, {"method": method , "object_id": model_object.id, "user_id": uid, "res_id": res_id,"name": resource_name})
                         lines=[]
                         for field in old_values[res_id]:
                             if old_values[res_id][field]:
@@ -293,7 +298,9 @@ class audittrail_objects_proxy(objects_proxy):
 
                 for res_id in res_ids:
                     if not len(logged_uids) or uid in logged_uids:
-                        id=pool.get('audittrail.log').create(cr, uid, {"method": method , "object_id": model_object.id, "user_id": uid, "res_id": res_id,"name": "%s %s %s" % (method, model_object,  time.strftime("%Y-%m-%d %H:%M:%S"))})
+                        resource_name = pool.get(model_object.model).name_get(cr,uid,[res_id])
+                        resource_name = resource_name and resource_name[0][1] or ''
+                        id=pool.get('audittrail.log').create(cr, uid, {"method": method , "object_id": model_object.id, "user_id": uid, "res_id": res_id,"name": resource_name})
                         lines=[]
                         for field in old_values[res_id]:
                             if old_values[res_id][field]:

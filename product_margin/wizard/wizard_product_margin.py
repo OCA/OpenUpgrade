@@ -1,22 +1,21 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
-#
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
 #
 ##############################################################################
 
@@ -27,6 +26,10 @@ import time
 from tools.translate import _
 
 def _action_open_window(self, cr, uid, data, context):
+    pool = pooler.get_pool(cr.dbname) 
+    mod_obj = pool.get('ir.model.data') 
+    result = mod_obj._get_id(cr, uid, 'product', 'product_search_form_view')
+    id = mod_obj.read(cr, uid, result, ['res_id'])    
     cr.execute('select id,name from ir_ui_view where name=%s and type=%s', ('product.margin.graph', 'graph'))
     view_res3 = cr.fetchone()[0]
     cr.execute('select id,name from ir_ui_view where name=%s and type=%s', ('product.margin.form.inherit', 'form'))
@@ -41,7 +44,8 @@ def _action_open_window(self, cr, uid, data, context):
         'res_model':'product.product',
         'type': 'ir.actions.act_window',
         'views': [(view_res,'tree'), (view_res2,'form'), (view_res3,'graph')],
-        'view_id': False
+        'view_id': False,
+        'search_view_id': id['res_id'] 
     }
 
 

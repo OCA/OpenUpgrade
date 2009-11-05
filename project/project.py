@@ -1,22 +1,21 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
-#
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
 #
 ##############################################################################
 
@@ -166,13 +165,25 @@ class project(osv.osv):
             default['name'] = proj.name+_(' (copy)')
         res = super(project, self).copy(cr, uid, id, default, context)
         ids = self.search(cr, uid, [('parent_id','child_of', [res])])
-        cr.execute('update project_task set active=True where project_id in ('+','.join(map(str,ids))+')')
+        cr.execute('update project_task set active=True where project_id in ('+','.join(map(str, ids))+')')
         return res
 
     def duplicate_template(self, cr, uid, ids,context={}):
-        default = {'parent_id': context.get('parent_id',False)}
-        for id in ids:
-            self.copy(cr, uid, id, default=default)
+        for proj in self.browse(cr, uid, ids):
+            parent_id=context.get('parent_id',False)
+            new_id=self.pool.get('project.project').copy(cr, uid, proj.id,default={'name':proj.name+_(' (copy)'),'state':'open','parent_id':parent_id})
+            cr.execute('select id from project_task where project_id=%s', (proj.id,))
+            res = cr.fetchall()
+            for (tasks_id,) in res:
+                self.pool.get('project.task').copy(cr, uid, tasks_id,default={'project_id':new_id,'active':True}, context=context)
+            cr.execute('select id from project_project where parent_id=%s', (proj.id,))
+            res = cr.fetchall()
+            project_ids = [x[0] for x in res]
+            for child in project_ids:
+                self.duplicate_template(cr, uid, [child],context={'parent_id':new_id})
+
+        # TODO : Improve this to open the new project (using a wizard)
+
         cr.commit()
         raise osv.except_osv(_('Operation Done'), _('A new project has been created !\nWe suggest you to close this one and work on this new project.'))
 
@@ -289,6 +300,7 @@ class task(osv.osv):
         'delegated_user_id': fields.related('child_ids','user_id',type='many2one', relation='res.users', string='Delegated To'),
         'partner_id': fields.many2one('res.partner', 'Partner'),
         'work_ids': fields.one2many('project.task.work', 'task_id', 'Work done'),
+        'manager_id': fields.related('project_id','manager', type='many2one', relation='res.users', string='Project Manager')
     }
     _defaults = {
         'user_id': lambda obj,cr,uid,context: uid,
@@ -305,14 +317,13 @@ class task(osv.osv):
     #
     # Override view according to the company definition
     #
-    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False):
-        tm = self.pool.get('res.users').browse(cr, uid, uid, context).company_id.project_time_mode
-        f = self.pool.get('res.company').fields_get(cr, uid, ['project_time_mode'], context)
-        word = dict(f['project_time_mode']['selection'])[tm]
-
-        res = super(task, self).fields_view_get(cr, uid, view_id, view_type, context, toolbar)
-        if tm=='hours':
+    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
+        res = super(task, self).fields_view_get(cr, uid, view_id, view_type, context, toolbar=toolbar, submenu=submenu)
+        tm = self.pool.get('res.users').browse(cr, uid, uid, context).company_id.project_time_mode_id
+        if not tm:
             return res
+        tm = tm.name
+        f = self.pool.get('res.company').fields_get(cr, uid, ['project_time_mode_id'], context)        
         eview = etree.fromstring(res['arch'])
         def _check_rec(eview, tm):
             if eview.attrib.get('widget',False) == 'float_time':
@@ -324,7 +335,7 @@ class task(osv.osv):
         res['arch'] = etree.tostring(eview)
         for f in res['fields']:
             if 'Hours' in res['fields'][f]['string']:
-                res['fields'][f]['string'] = res['fields'][f]['string'].replace('Hours',word)
+                res['fields'][f]['string'] = res['fields'][f]['string'].replace('Hours',tm)
         return res
 
     def do_close(self, cr, uid, ids, *args):

@@ -1,22 +1,21 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
-#
-#    OpenERP, Open Source Management Solution    
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
 #
 ##############################################################################
 
@@ -28,11 +27,13 @@ invoice_form = """<?xml version="1.0"?>
 <form string="Create invoices">
     <separator colspan="4" string="Do you really want to create the invoices ?" />
     <field name="grouped" />
+    <field name="invoice_date" />    
 </form>
 """
 
 invoice_fields = {
-    'grouped' : {'string':'Group the invoices', 'type':'boolean', 'default': lambda x,y,z: False}
+    'grouped' : {'string':'Group the invoices', 'type':'boolean', 'default': lambda x,y,z: False},
+    'invoice_date': {'string': 'Invoiced date', 'type':'date' }
 }
 
 ack_form = """<?xml version="1.0"?>
@@ -43,10 +44,12 @@ ack_form = """<?xml version="1.0"?>
 ack_fields = {}
 
 def _makeInvoices(self, cr, uid, data, context):
-    order_obj = pooler.get_pool(cr.dbname).get('sale.order')
+    pool_obj = pooler.get_pool(cr.dbname)
+    mod_obj = pool_obj.get('ir.model.data') 
+    order_obj = pool_obj.get('sale.order')
     newinv = []
 
-    order_obj.action_invoice_create(cr, uid, data['ids'], data['form']['grouped'])
+    order_obj.action_invoice_create(cr, uid, data['ids'], data['form']['grouped'], date_inv = data['form']['invoice_date'])
     for id in data['ids']:
         wf_service = netsvc.LocalService("workflow")
         wf_service.trg_validate(uid, 'sale.order', id, 'manual_invoice', cr)
@@ -54,9 +57,7 @@ def _makeInvoices(self, cr, uid, data, context):
     for o in order_obj.browse(cr, uid, data['ids'], context):
         for i in o.invoice_ids:
             newinv.append(i.id)
-    pool = pooler.get_pool(cr.dbname)
-    mod_obj = pool.get('ir.model.data')
-    act_obj = pool.get('ir.actions.act_window')
+    act_obj = pool_obj.get('ir.actions.act_window')
     xml_id='action_invoice_tree5'
     result = mod_obj._get_id(cr, uid, 'account', xml_id)
     id = mod_obj.read(cr, uid, result, ['res_id'])['res_id']
@@ -86,9 +87,7 @@ class make_invoice(wizard.interface):
         },
         'invoice' : {
             'actions' : [_makeInvoices],
-            'result' : {'type' : 'action',
-                    'action' : _makeInvoices,
-                    'state' : 'end'}
+            'result' : {'type': 'state', 'state': 'end'}
         },
     }
 make_invoice("sale.order.make_invoice")

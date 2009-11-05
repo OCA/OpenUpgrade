@@ -1,22 +1,21 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
-#
+#    
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
 #
 ##############################################################################
 
@@ -283,6 +282,17 @@ class account_move_line(osv.osv):
                 result.append((line.id, line.name))
         return result
 
+    def _balance_search(self, cursor, user, obj, name, args):
+        if not len(args):
+            return []
+        where = ' and '.join(map(lambda x: '(abs(sum(debit-credit))'+x[1]+str(x[2])+')',args))
+        cursor.execute('select id, sum(debit-credit) from account_move_line \
+                     group by id,debit,credit having '+where)
+        res = cursor.fetchall()
+        if not len(res):
+            return [('id', '=', '0')]
+        return [('id', 'in', [x[0] for x in res])]
+    
     def _invoice_search(self, cursor, user, obj, name, args):
         if not len(args):
             return []
@@ -366,7 +376,7 @@ class account_move_line(osv.osv):
         'date_created': fields.date('Creation date'),
         'analytic_lines': fields.one2many('account.analytic.line', 'move_id', 'Analytic lines'),
         'centralisation': fields.selection([('normal','Normal'),('credit','Credit Centralisation'),('debit','Debit Centralisation')], 'Centralisation', size=6),
-        'balance': fields.function(_balance, method=True, string='Balance'),
+        'balance': fields.function(_balance, fnct_search=_balance_search, method=True, string='Balance'),
         'state': fields.selection([('draft','Draft'), ('valid','Valid')], 'Status', readonly=True),
         'tax_code_id': fields.many2one('account.tax.code', 'Tax Account', help="The Account can either be a base tax code or tax code account."),
         'tax_amount': fields.float('Tax/Base Amount', digits=(16,2), select=True, help="If the Tax account is tax code account, this field will contain the taxed amount.If the tax account is base tax code,\
@@ -661,8 +671,8 @@ class account_move_line(osv.osv):
             return j+(p and (':'+p) or '')
         return False
 
-    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context={}, toolbar=False):
-        result = super(osv.osv, self).fields_view_get(cr, uid, view_id,view_type,context,toolbar=toolbar)
+    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context={}, toolbar=False, submenu=False):
+        result = super(osv.osv, self).fields_view_get(cr, uid, view_id,view_type,context,toolbar=toolbar, submenu=submenu)
         if view_type=='tree' and 'journal_id' in context:
             title = self.view_header_get(cr, uid, view_id, view_type, context)
             journal = self.pool.get('account.journal').browse(cr, uid, context['journal_id'])

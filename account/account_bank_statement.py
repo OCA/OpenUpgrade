@@ -1,24 +1,24 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
-#
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
 #
 ##############################################################################
+
 import time
 import netsvc
 from osv import fields, osv
@@ -124,7 +124,7 @@ class account_bank_statement(osv.osv):
             states={'confirm':[('readonly', True)]}),
         'move_line_ids': fields.one2many('account.move.line', 'statement_id',
             'Entry lines', states={'confirm':[('readonly',True)]}),
-        'state': fields.selection([('draft', 'Draft'),('confirm', 'Confirm')],
+        'state': fields.selection([('draft', 'Draft'),('confirm', 'Confirmed')],
             'State', required=True,
             states={'confirm': [('readonly', True)]}, readonly="1"),
         'currency': fields.function(_currency, method=True, string='Currency',
@@ -157,7 +157,7 @@ class account_bank_statement(osv.osv):
             if not st.state=='draft':
                 continue
 
-            if not (abs(st.balance_end - st.balance_end_real) < 0.0001):
+            if not (abs((st.balance_end or 0.0) - st.balance_end_real) < 0.0001):
                 raise osv.except_osv(_('Error !'),
                         _('The statement balance is incorrect !\n') +
                         _('The expected balance (%.2f) is different than the computed one. (%.2f)') % (st.balance_end_real, st.balance_end))
@@ -578,11 +578,13 @@ class account_bank_statement_line(osv.osv):
         'note': fields.text('Notes'),
         'reconcile_amount': fields.function(_reconcile_amount,
             string='Amount reconciled', method=True, type='float'),
+        'sequence': fields.integer('Sequence'),            
     }
     _defaults = {
         'name': lambda self,cr,uid,context={}: self.pool.get('ir.sequence').get(cr, uid, 'account.bank.statement.line'),
         'date': lambda *a: time.strftime('%Y-%m-%d'),
         'type': lambda *a: 'general',
+        'sequence': lambda *a: 10,        
     }
 
 account_bank_statement_line()

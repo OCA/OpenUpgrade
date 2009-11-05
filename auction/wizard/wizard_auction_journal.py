@@ -1,22 +1,21 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
-#
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
 #
 ##############################################################################
 
@@ -64,19 +63,24 @@ def _values(self,cr,uid, datas,context={}):
 
 def _makeInvoices(self, cr, uid, data, context):
 
-    order_obj = pooler.get_pool(cr.dbname).get('auction.lots')
+    pool = pooler.get_pool(cr.dbname)
+    order_obj = pool.get('auction.lots')
+    mod_obj = pool.get('ir.model.data') 
+    result = mod_obj._get_id(cr, uid, 'account', 'view_account_invoice_filter')
+    id = mod_obj.read(cr, uid, result, ['res_id'])
     newinv = []
     ids = order_obj.seller_trans_create(cr, uid, data['ids'],context)
     cr.commit()
     return {
-        'domain': "[('id','in', ["+','.join(map(str,ids))+"])]",
+        'domain': "[('id','in', ["+','.join(map(str, ids))+"])]",
         'name': 'Seller invoices',
         'view_type': 'form',
         'view_mode': 'tree,form',
         'res_model': 'account.invoice',
         'view_id': False,
         'context': "{'type':'out_refund'}",
-        'type': 'ir.actions.act_window'
+        'type': 'ir.actions.act_window',
+        'search_view_id': id['res_id']        
     }
     return {}
 
