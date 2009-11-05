@@ -213,6 +213,24 @@
             </field>
         </record>
 
+        <record id="view_task_work_calendar" model="ir.ui.view">
+            <field name="name">project.task.work.calendar</field>
+            <field name="model">project.task.work</field>
+            <field name="type">calendar</field>
+            <field eval="16" name="priority"/>
+            <field name="arch" type="xml">
+                <calendar color="project_id" 
+			date_delay="hours" 
+			date_start="date" 
+			string="Task Work">
+                    <field name="name"/>
+		    <field name="task_id"/>
+                    <field name="project_id"/>
+		    <field name="user_id"/>
+                </calendar>
+            </field>
+        </record>
+
         <record id="view_my_project" model="ir.ui.view">
             <field name="name">project.project.tree</field>
             <field name="model">project.project</field>
@@ -806,6 +824,17 @@
         <act_window domain="[('user_id', '=', active_id),('state', '&lt;&gt;', 'cancelled'),('state', '&lt;&gt;', 'done')]" id="act_res_users_2_project_task_opened" name="Assigned tasks" res_model="project.task" src_model="res.users" view_mode="tree,form,gantt,calendar,graph" view_type="form"/>
 
         <act_window domain="[('user_id', '=', active_id),('date', '&gt;=', time.strftime('%Y-%m-01'))]" id="act_res_users_2_project_task_work_month" name="Month works" res_model="project.task.work" src_model="res.users" view_mode="tree,form" view_type="form"/>
-        
+
+        <record id="action_view_task_work" model="ir.actions.act_window">
+            <field name="name">Task Work</field>
+            <field name="res_model">project.task.work</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain"></field>
+        </record>
+
+        <menuitem action="action_view_task_work" id="menu_action_view_task_work"
+                parent="menu_tasks"/>
+
     </data>
 </openerp>
