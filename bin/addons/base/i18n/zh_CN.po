@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2009-08-28 16:01+0000\n"
-"PO-Revision-Date: 2009-12-03 04:27+0000\n"
+"PO-Revision-Date: 2009-12-04 09:57+0000\n"
 "Last-Translator: Jeroen Vet <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-12-03 04:40+0000\n"
+"X-Launchpad-Export-Date: 2009-12-05 04:41+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #. module: base
@@ -1060,7 +1060,7 @@ msgstr ""
 #: code:addons/addons/sale/sale.py:0
 #, python-format
 msgid "invalid mode for test_state"
-msgstr ""
+msgstr "无效测试状态模式"
 
 #. module: base
 #: field:ir.sequence,name:0
@@ -1102,6 +1102,8 @@ msgid ""
 "You can not do this modification on a confirmed entry ! Please note that you "
 "can just change some non important fields !"
 msgstr ""
+"您不能修改该已确认记录的字段！\r\n"
+"您只能修改一些非重要字段！"
 
 #. module: base
 #: model:res.country,name:base.ba
@@ -1181,7 +1183,7 @@ msgstr "动作 URL"
 #: code:addons/addons/odms/odms_invoice.py:0
 #, python-format
 msgid "Your journal must have a default credit and debit account."
-msgstr ""
+msgstr "您的日记帐必须有默认贷方和借方科目。"
 
 #. module: base
 #: code:addons/addons/base_module_quality/structure_test/structure_test.py:0
@@ -1266,7 +1268,7 @@ msgstr "功能"
 #: code:addons/addons/account/invoice.py:0
 #, python-format
 msgid "No Analytic Journal !"
-msgstr ""
+msgstr "无分析日记账！"
 
 #. module: base
 #: code:addons/addons/mrp/report/price.py:0
@@ -1277,7 +1279,7 @@ msgstr "产品单价"
 #. module: base
 #: field:ir.report.custom,frequency:0
 msgid "Frequency"
-msgstr "序列"
+msgstr "次数"
 
 #. module: base
 #: field:ir.report.custom.fields,fc0_op:0
@@ -1354,7 +1356,7 @@ msgstr "-"
 #: code:addons/addons/auction/wizard/wizard_aie_send_result.py:0
 #, python-format
 msgid "Connection to WWW.Auction-in-Europe.com failed !"
-msgstr ""
+msgstr "连接到www.auction-in-europe.com失败！"
 
 #. module: base
 #: field:res.payterm,name:0
@@ -1408,7 +1410,7 @@ msgstr "请指定要导入的模块文件"
 msgid ""
 "No E-Mail ID Found for your Company address or missing reply address in "
 "section!"
-msgstr ""
+msgstr "无您公司地址的电子邮件识别码或章节缺少回复地址!"
 
 #. module: base
 #: code:addons/addons/base_module_quality/speed_test/speed_test.py:0
@@ -1515,7 +1517,7 @@ msgstr "计算精度"
 #: code:addons/addons/account/wizard/wizard_third_party_ledger.py:0
 #, python-format
 msgid "Date to must be set between %s and %s"
-msgstr ""
+msgstr "必须在%s至%s之间设置日期"
 
 #. module: base
 #: model:res.country,name:base.kg
@@ -1549,12 +1551,12 @@ msgstr "附件编号"
 #: code:addons/addons/account/account.py:0
 #, python-format
 msgid "You can not modify/delete a journal with entries for this period !"
-msgstr ""
+msgstr "您不能修改/删除有此期间分录的日记账！"
 
 #. module: base
 #: view:ir.sequence:0
 msgid "Day: %(day)s"
-msgstr "天： %天"
+msgstr "天：%(day)s"
 
 #. module: base
 #: code:addons/addons/base/ir/ir_model.py:0
@@ -1603,7 +1605,7 @@ msgstr "ir.rule"
 #: code:addons/addons/odms/odms.py:0
 #, python-format
 msgid "Invalid Region"
-msgstr ""
+msgstr "地区无效"
 
 #. module: base
 #: code:addons/addons/base_module_quality/object_test/object_test.py:0
@@ -1699,7 +1701,7 @@ msgstr "优先级(0=紧急)"
 #: code:addons/addons/odms/odms.py:0
 #, python-format
 msgid "Missing info: Subscription"
-msgstr ""
+msgstr "缺少信息： 签署预订"
 
 #. module: base
 #: field:workflow.transition,act_from:0
@@ -1824,7 +1826,7 @@ msgstr "西班牙语 / Español"
 msgid ""
 "There is no receivable account defined for this journal:'\\n                 "
 "   ' \"%s\" (id:%d)"
-msgstr ""
+msgstr "未定义此日记账“%s”(识别码:%d)的应收账款科目"
 
 #. module: base
 #: field:res.company,logo:0
@@ -1840,7 +1842,7 @@ msgstr "STOCK_PROPERTIES"
 #: code:addons/addons/account/wizard/wizard_fiscalyear_close.py:0
 #, python-format
 msgid "The journal must have centralised counterpart"
-msgstr ""
+msgstr "该日记账必须有集中的对方"
 
 #. module: base
 #: selection:ir.actions.act_window,target:0
@@ -1852,7 +1854,7 @@ msgstr "新建窗口"
 #: code:addons/addons/odms/odms.py:0
 #, python-format
 msgid "Unable to create your control center user"
-msgstr ""
+msgstr "无法创建您控制中心的用户"
 
 #. module: base
 #: model:res.country,name:base.bs
@@ -1968,7 +1970,7 @@ msgstr "本向导将自动检测应用程序中的新术语以便您手工更新
 #: code:addons/addons/odms/odms.py:0
 #, python-format
 msgid "The region should be in "
-msgstr ""
+msgstr "该地区应该在 "
 
 #. module: base
 #: help:ir.actions.server,expression:0
@@ -1998,7 +2000,7 @@ msgstr "STOCK_NO"
 #: code:addons/addons/point_of_sale/pos.py:0
 #, python-format
 msgid "Cannot delete a point of sale which is already confirmed !"
-msgstr ""
+msgstr "无法删除已确认的销售终端"
 
 #. module: base
 #: model:res.country,name:base.st
@@ -2034,7 +2036,7 @@ msgstr "对象名必须以“x_”开始且不能包含任何特殊字符！"
 #. module: base
 #: help:ir.rule.group,global:0
 msgid "Make the rule global, otherwise it needs to be put on a group"
-msgstr ""
+msgstr "让规则的作用范围为全局，否则需要将其指定给用户组"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_menu_admin
@@ -2042,7 +2044,7 @@ msgstr ""
 #: view:ir.ui.menu:0
 #: field:ir.ui.menu,name:0
 msgid "Menu"
-msgstr "功能列表"
+msgstr "菜单"
 
 #. module: base
 #: field:res.currency,rate:0
@@ -2065,7 +2067,7 @@ msgstr "要启动的动作"
 msgid ""
 "There is no journal defined '\\n                            'on the product "
 "category: \"%s\" (id: %d)"
-msgstr ""
+msgstr "产品类别：“%s“（识别码：%d）未定义日记账"
 
 #. module: base
 #: field:ir.actions.url,target:0
@@ -2097,6 +2099,10 @@ msgid ""
 "' \\n\t\t\t\t\t'on the partner: %s\n"
 "' \\n\t\t\t\t\t'on line: %s"
 msgstr ""
+"未定义银行\n"
+"' \\n\t\t\t\t\t'银行帐户：%s\n"
+"' \\n\t\t\t\t\t'业务伙伴：%s\n"
+"' \\n\t\t\t\t\t'行：%s"
 
 #. module: base
 #: model:res.country,name:base.ve
@@ -2106,7 +2112,7 @@ msgstr "委内瑞拉"
 #. module: base
 #: field:ir.ui.view_sc,name:0
 msgid "Shortcut Name"
-msgstr "快捷键名称"
+msgstr "快捷方式名称"
 
 #. module: base
 #: help:ir.actions.act_window,limit:0
@@ -2157,7 +2163,7 @@ msgstr "服务器动作"
 #: code:addons/addons/account/account_move_line.py:0
 #, python-format
 msgid "The account is not defined to be reconciled !"
-msgstr ""
+msgstr "科目未设定为可对帐！"
 
 #. module: base
 #: model:res.country,name:base.tt
@@ -2172,7 +2178,7 @@ msgstr "拉脱维亚"
 #. module: base
 #: view:ir.values:0
 msgid "Values"
-msgstr "?"
+msgstr "值"
 
 #. module: base
 #: view:ir.actions.server:0
@@ -2183,7 +2189,7 @@ msgstr "字段映射"
 #: code:addons/addons/product_margin/wizard/wizard_product_margin.py:0
 #, python-format
 msgid "Product Margins"
-msgstr "产品利润"
+msgstr "产品毛利"
 
 #. module: base
 #: model:ir.ui.menu,name:base.menu_custom
@@ -2225,7 +2231,7 @@ msgstr "立陶宛"
 #: code:addons/addons/crm_configuration/wizard/wizard_partner_create.py:0
 #, python-format
 msgid "A partner is already defined on this lead."
-msgstr ""
+msgstr "此索线已定义业务伙伴"
 
 #. module: base
 #: code:addons/addons/project/wizard/task_delegate.py:0
@@ -2262,6 +2268,8 @@ msgid ""
 "No journal defined on the related employee.\n"
 "Fill in the timesheet tab of the employee form."
 msgstr ""
+"未定义相关员工日记账。\n"
+"请填好员工表格的工作时间记录表。"
 
 #. module: base
 #: view:res.partner.canal:0
@@ -2328,7 +2336,7 @@ msgstr "Openstuff.net"
 #: code:addons/addons/account/wizard/wizard_third_party_ledger.py:0
 #, python-format
 msgid "Date not in a defined fiscal year"
-msgstr ""
+msgstr "日期不在任何已定义的会计年度内"
 
 #. module: base
 #: model:res.country,name:base.nf
@@ -2339,7 +2347,7 @@ msgstr "诺福克岛"
 #: code:addons/addons/delivery/delivery.py:0
 #, python-format
 msgid "No line matched this order in the choosed delivery grids !"
-msgstr ""
+msgstr "此销售订单无交货格状相配的行"
 
 #. module: base
 #: selection:ir.ui.menu,icon:0
