@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-08-28 16:01+0000\n"
-"PO-Revision-Date: 2009-12-05 03:58+0000\n"
+"PO-Revision-Date: 2009-12-05 07:38+0000\n"
 "Last-Translator: Kent L. H. SIU <Unknown>\n"
 "Language-Team: Chinese (Hong Kong) <zh_HK@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-12-05 04:42+0000\n"
+"X-Launchpad-Export-Date: 2009-12-06 04:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #. module: mrp
@@ -290,19 +290,19 @@ msgstr "表單上的服務"
 msgid ""
 "When the virtual stock goes belong the Min Quantity, Open ERP generates a "
 "procurement to bring the virtual stock to the Max Quantity."
-msgstr ""
+msgstr "當虛擬庫存到最低量時，系統生成一個產品請求使虛擬庫存達到最大數量。"
 
 #. module: mrp
 #: model:process.transition,name:mrp.process_transition_stockmts0
 msgid "Stockable Make to Stock"
-msgstr ""
+msgstr "可庫存備貨型生產"
 
 #. module: mrp
 #: model:ir.actions.act_window,name:mrp.mrp_production_action
 #: model:ir.ui.menu,name:mrp.menu_mrp_production_action
 #: view:mrp.production:0
 msgid "Production Orders"
-msgstr ""
+msgstr "生產單"
 
 #. module: mrp
 #: rml:bom.structure:0
@@ -310,54 +310,54 @@ msgstr ""
 #: rml:mrp.production.order:0
 #: wizard_field:product.product.procurement,init,qty:0
 msgid "Quantity"
-msgstr ""
+msgstr "數量"
 
 #. module: mrp
 #: selection:mrp.procurement,priority:0
 #: selection:mrp.production,priority:0
 msgid "Not urgent"
-msgstr ""
+msgstr "不緊急"
 
 #. module: mrp
 #: model:process.transition,name:mrp.process_transition_procureserviceproduct0
 msgid "Procure Service Product"
-msgstr ""
+msgstr "訂購服務貨品"
 
 #. module: mrp
 #: view:mrp.production:0
 msgid "Confirm Production"
-msgstr ""
+msgstr "確認生產"
 
 #. module: mrp
 #: model:process.node,name:mrp.process_node_purchaseprocure0
 #: field:stock.move,procurements:0
 msgid "Procurements"
-msgstr ""
+msgstr "採購計劃"
 
 #. module: mrp
 #: model:ir.model,name:mrp.model_mrp_production_product_line
 msgid "Production scheduled products"
-msgstr ""
+msgstr "計劃生產貨品"
 
 #. module: mrp
 #: field:mrp.workcenter,timesheet_id:0
 msgid "Working Time"
-msgstr ""
+msgstr "工作時間"
 
 #. module: mrp
 #: view:mrp.procurement:0
 msgid "Details"
-msgstr ""
+msgstr "明細"
 
 #. module: mrp
 #: model:process.process,name:mrp.process_process_procurementprocess0
 msgid "Procurement Process"
-msgstr ""
+msgstr "採購計劃流程"
 
 #. module: mrp
 #: field:mrp.production,date_planned_date:0
 msgid "Scheduled Date"
-msgstr ""
+msgstr "預定日期"
 
 #. module: mrp
 #: selection:mrp.procurement,priority:0
@@ -369,12 +369,12 @@ msgstr ""
 #: help:mrp.bom,product_rounding:0
 msgid ""
 "Rounding applied on the product quantity. For integer only values, put 1.0"
-msgstr ""
+msgstr "貨品數量會四捨五入。只接受整數值，請輸入1.0。"
 
 #. module: mrp
 #: rml:mrp.production.order:0
 msgid "Bill Of Material"
-msgstr ""
+msgstr "物料清單"
 
 #. module: mrp
 #: help:mrp.routing,location_id:0
@@ -382,17 +382,17 @@ msgid ""
 "Keep empty if you produce at the location where the finished products are "
 "needed.Set a location if you produce at a fixed location. This can be a "
 "partner location if you subcontract the manufacturing operations."
-msgstr ""
+msgstr "如果您在所需成品地點生產，請留空。如在固定地點生產請設置地點。如果您外判這個生產業務，這也可以是業務夥伴的地點。"
 
 #. module: mrp
 #: field:mrp.procurement,move_id:0
 msgid "Reservation"
-msgstr ""
+msgstr "預留"
 
 #. module: mrp
 #: model:ir.actions.act_window,name:mrp.action2
 msgid "Bill of Materials Structure"
-msgstr ""
+msgstr "物料清單結構"
 
 #. module: mrp
 #: wizard_field:product.product.procurement,init,product_id:0
@@ -407,22 +407,22 @@ msgstr ""
 #. module: mrp
 #: model:process.transition,name:mrp.process_transition_producttostockrules0
 msgid "Product to stock rules"
-msgstr ""
+msgstr "貨品庫存規則"
 
 #. module: mrp
 #: wizard_button:product_price,init,price:0
 msgid "Print product price"
-msgstr ""
+msgstr "打印貨品價格"
 
 #. module: mrp
 #: wizard_view:product.product.procurement,done:0
 msgid "Make Procurement"
-msgstr ""
+msgstr "生成採購計劃"
 
 #. module: mrp
 #: field:mrp.bom.revision,date:0
 msgid "Modification Date"
-msgstr ""
+msgstr "修改日期"
 
 #. module: mrp
 #: help:mrp.workcenter,costs_cycle_account_id:0
@@ -430,32 +430,32 @@ msgstr ""
 msgid ""
 "Complete this only if you want automatic analytic accounting entries on "
 "production orders."
-msgstr ""
+msgstr "只有在你想生產單自動插入分析型會計帳目時，才須要完成這項。"
 
 #. module: mrp
 #: model:process.transition,note:mrp.process_transition_stockproduction0
 msgid "If Procure method is Make to order and supply method is produce"
-msgstr ""
+msgstr "如果獲得方式是訂貨型生產及供應方式是生產"
 
 #. module: mrp
 #: field:res.company,po_lead:0
 msgid "Purchase Lead Time"
-msgstr ""
+msgstr "採購時間"
 
 #. module: mrp
 #: field:mrp.routing,location_id:0
 msgid "Production Location"
-msgstr ""
+msgstr "生產地點"
 
 #. module: mrp
 #: view:mrp.production:0
 msgid "Change Qty"
-msgstr ""
+msgstr "改變數量"
 
 #. module: mrp
 #: view:mrp.production:0
 msgid "Force Reservation"
-msgstr ""
+msgstr "強制預留"
 
 #. module: mrp
 #: field:mrp.bom.revision,author_id:0
@@ -465,101 +465,101 @@ msgstr ""
 #. module: mrp
 #: model:process.transition,name:mrp.process_transition_stockproduct0
 msgid "Stockable Product Stock"
-msgstr ""
+msgstr "可庫存貨品庫存"
 
 #. module: mrp
 #: field:mrp.bom,product_uos:0
 #: field:mrp.production.product.line,product_uos:0
 msgid "Product UOS"
-msgstr ""
+msgstr "貨品銷售計量單位"
 
 #. module: mrp
 #: model:process.transition,name:mrp.process_transition_productionprocureproducts0
 msgid "Production Procure Products"
-msgstr ""
+msgstr "以生產獲得貨品"
 
 #. module: mrp
 #: model:process.process,name:mrp.process_process_serviceproductprocess0
 msgid "Service Product Process"
-msgstr ""
+msgstr "服務貨品進程"
 
 #. module: mrp
 #: model:process.transition,note:mrp.process_transition_purchaseprocure0
 msgid "Procurement convert into the draft purchase order."
-msgstr ""
+msgstr "採購計劃轉為採購單草稿。"
 
 #. module: mrp
 #: field:mrp.procurement,message:0
 msgid "Latest error"
-msgstr ""
+msgstr "最近的錯誤"
 
 #. module: mrp
 #: field:mrp.bom,bom_lines:0
 msgid "BoM Lines"
-msgstr ""
+msgstr "物料清單明細"
 
 #. module: mrp
 #: field:mrp.workcenter,time_start:0
 msgid "Time before prod."
-msgstr ""
+msgstr "生產前的時間"
 
 #. module: mrp
 #: model:ir.model,name:mrp.model_mrp_routing_workcenter
 msgid "Routing workcenter usage"
-msgstr ""
+msgstr "工藝流程工作中心使用狀況"
 
 #. module: mrp
 #: view:mrp.production:0
 msgid "Consumed Products"
-msgstr ""
+msgstr "損耗的貨品"
 
 #. module: mrp
 #: constraint:mrp.bom:0
 msgid "Error ! You can not create recursive BoM."
-msgstr ""
+msgstr "錯誤！您不能創建架構循環的物料清單。"
 
 #. module: mrp
 #: model:process.transition,note:mrp.process_transition_stockmts0
 #: model:process.transition,note:mrp.process_transition_stockrfq0
 msgid "If Product type is Stockable and procure method is make to stock"
-msgstr ""
+msgstr "如果貨品類型是可庫存型及獲得方式是備貨型生產"
 
 #. module: mrp
 #: field:res.company,manufacturing_lead:0
 msgid "Manufacturity Lead Time"
-msgstr ""
+msgstr "生產所需時間"
 
 #. module: mrp
 #: model:ir.actions.act_window,name:mrp.mrp_procurement_action4
 #: model:ir.ui.menu,name:mrp.menu_mrp_procurement_action4
 msgid "Exceptions Procurements to Fix"
-msgstr ""
+msgstr "需修正的例外採購計劃"
 
 #. module: mrp
 #: selection:mrp.procurement,state:0
 msgid "Ready"
-msgstr ""
+msgstr "就緒"
 
 #. module: mrp
 #: view:mrp.routing:0
 msgid "Workcenter Operations"
-msgstr ""
+msgstr "工作中心操作"
 
 #. module: mrp
 #: model:ir.actions.act_window,name:mrp.mrp_production_action2_gantt
 #: model:ir.ui.menu,name:mrp.menu_production_orders_start_gantt
 msgid "Production Orders Planning"
-msgstr ""
+msgstr "生產單計劃"
 
 #. module: mrp
 #: help:mrp.workcenter,time_efficiency:0
 msgid "Factor that multiplies all times expressed in the workcenter."
-msgstr ""
+msgstr "該係數是在工作中心所擠壓出的所有時間"
 
 #. module: mrp
 #: help:mrp.workcenter,time_cycle:0
 msgid "Time in hours for doing one cycle."
-msgstr ""
+msgstr "一個循環所須的小時數"
 
 #. module: mrp
 #: field:mrp.production,date_finnished:0
@@ -571,22 +571,22 @@ msgstr ""
 msgid ""
 "This is the internal picking list take bring the raw materials to the "
 "production plan."
-msgstr ""
+msgstr "這是生產計畫所需原材料的內部挑選列表"
 
 #. module: mrp
 #: selection:mrp.production,state:0
 msgid "In Production"
-msgstr ""
+msgstr "生產中"
 
 #. module: mrp
 #: field:stock.warehouse.orderpoint,qty_multiple:0
 msgid "Qty Multiple"
-msgstr ""
+msgstr "數量倍數"
 
 #. module: mrp
 #: selection:mrp.procurement,state:0
 msgid "Waiting"
-msgstr ""
+msgstr "等待中"
 
 #. module: mrp
 #: model:ir.model,name:mrp.model_mrp_routing
@@ -595,139 +595,139 @@ msgstr ""
 #: view:mrp.routing:0
 #: model:process.node,name:mrp.process_node_routing0
 msgid "Routing"
-msgstr ""
+msgstr "工藝流程"
 
 #. module: mrp
 #: wizard_button:mrp.workcenter.load,init,report:0
 msgid "Print"
-msgstr ""
+msgstr "打印"
 
 #. module: mrp
 #: field:mrp.workcenter,type:0
 msgid "Type"
-msgstr ""
+msgstr "類型"
 
 #. module: mrp
 #: model:process.node,note:mrp.process_node_stockproduct0
 #: model:process.node,note:mrp.process_node_stockproduct1
 msgid "For stockable and consumable"
-msgstr ""
+msgstr "供可庫存及可損耗"
 
 #. module: mrp
 #: selection:mrp.workcenter.load,init,time_unit:0
 msgid "Per month"
-msgstr ""
+msgstr "每月"
 
 #. module: mrp
 #: field:mrp.procurement,product_uos_qty:0
 msgid "UoS Quantity"
-msgstr ""
+msgstr "銷售單位數量"
 
 #. module: mrp
 #: rml:bom.structure:0
 msgid "Product Name"
-msgstr ""
+msgstr "貨品名稱"
 
 #. module: mrp
 #: rml:mrp.production.order:0
 msgid "Printing date"
-msgstr ""
+msgstr "打印日期"
 
 #. module: mrp
 #: model:process.node,name:mrp.process_node_orderrfq0
 #: model:process.node,name:mrp.process_node_rfq0
 msgid "RFQ"
-msgstr ""
+msgstr "要求報價單"
 
 #. module: mrp
 #: field:mrp.bom,revision_type:0
 msgid "indice type"
-msgstr ""
+msgstr "指數類型"
 
 #. module: mrp
 #: model:process.node,note:mrp.process_node_production0
 msgid "Production orders are created for the product manufacturing."
-msgstr ""
+msgstr "創建生產單用於貨品生產。"
 
 #. module: mrp
 #: rml:mrp.production.order:0
 msgid "WorkCenter"
-msgstr ""
+msgstr "工作中心"
 
 #. module: mrp
 #: field:stock.warehouse.orderpoint,product_min_qty:0
 msgid "Min Quantity"
-msgstr ""
+msgstr "最少數量"
 
 #. module: mrp
 #: view:mrp.production:0
 msgid "Production orders"
-msgstr ""
+msgstr "生產單"
 
 #. module: mrp
 #: field:mrp.bom,child_complete_ids:0
 #: field:mrp.bom,child_ids:0
 msgid "BoM Hyerarchy"
-msgstr ""
+msgstr "物料清單架構"
 
 #. module: mrp
 #: view:mrp.procurement:0
 msgid "Procurement Lines"
-msgstr ""
+msgstr "採購計劃明細"
 
 #. module: mrp
 #: model:process.transition,note:mrp.process_transition_servicemts0
 msgid "If Product type is service and procure method is Make to stock"
-msgstr ""
+msgstr "如果產品類型是服務型並且獲得方式是備貨型生產"
 
 #. module: mrp
 #: model:process.node,note:mrp.process_node_serviceproduct0
 #: model:process.node,note:mrp.process_node_serviceproduct1
 msgid "If Product type is service"
-msgstr ""
+msgstr "如果產品類型是服務型"
 
 #. module: mrp
 #: field:res.company,security_lead:0
 msgid "Security Days"
-msgstr ""
+msgstr "保障天數"
 
 #. module: mrp
 #: view:mrp.production:0
 #: field:mrp.production,cycle_total:0
 msgid "Total Cycles"
-msgstr ""
+msgstr "週期總數"
 
 #. module: mrp
 #: selection:mrp.production,state:0
 msgid "Ready to Produce"
-msgstr ""
+msgstr "就緒生產"
 
 #. module: mrp
 #: field:mrp.bom.revision,name:0
 msgid "Modification name"
-msgstr ""
+msgstr "修改名稱"
 
 #. module: mrp
 #: field:mrp.bom,type:0
 msgid "BoM Type"
-msgstr ""
+msgstr "物料清單類型"
 
 #. module: mrp
 #: selection:mrp.procurement,state:0
 msgid "Exception"
-msgstr ""
+msgstr "例外"
 
 #. module: mrp
 #: wizard_view:product.product.procurement,init:0
 msgid ""
 "This wizard will planify the procurement for this product. This procurement "
 "may generate task, production orders or purchase orders."
-msgstr ""
+msgstr "這嚮導將計劃本產品的採購計劃。這採購計劃可能會產生任務，生產單或採購單。"
 
 #. module: mrp
 #: model:process.node,note:mrp.process_node_mts0
 msgid "The system waits for requested products in stock."
-msgstr ""
+msgstr "系統等待著要求的貨品來貨"
 
 #. module: mrp
 #: model:process.transition,name:mrp.process_transition_servicemto0
@@ -737,18 +737,18 @@ msgstr ""
 #. module: mrp
 #: model:process.transition,note:mrp.process_transition_minimumstockprocure0
 msgid "From minimum stock rules, it goes for procure product."
-msgstr ""
+msgstr "對最低庫存規則而言，適用於獲得貨品。"
 
 #. module: mrp
 #: model:process.node,name:mrp.process_node_stockproduct0
 #: model:process.node,name:mrp.process_node_stockproduct1
 msgid "Stockable Product"
-msgstr ""
+msgstr "可庫存貨品"
 
 #. module: mrp
 #: view:mrp.production:0
 msgid "Production done"
-msgstr ""
+msgstr "生產完成"
 
 #. module: mrp
 #: rml:bom.structure:0
@@ -756,29 +756,29 @@ msgstr ""
 #: field:mrp.routing,code:0
 #: field:mrp.workcenter,code:0
 msgid "Code"
-msgstr ""
+msgstr "代碼"
 
 #. module: mrp
 #: rml:mrp.production.order:0
 msgid "No. Of Hours"
-msgstr ""
+msgstr "小時數"
 
 #. module: mrp
 #: model:ir.model,name:mrp.model_mrp_property_group
 #: field:mrp.property,group_id:0
 #: field:mrp.property.group,name:0
 msgid "Property Group"
-msgstr ""
+msgstr "屬性組別"
 
 #. module: mrp
 #: field:mrp.bom,bom_id:0
 msgid "Parent BoM"
-msgstr ""
+msgstr "父系物料清單"
 
 #. module: mrp
 #: view:mrp.procurement:0
 msgid "References"
-msgstr ""
+msgstr "參照"
 
 #. module: mrp
 #: wizard_button:change_production_qty,confirm,end:0
@@ -792,44 +792,44 @@ msgstr ""
 #: wizard_button:product.product.procurement,init,end:0
 #: wizard_button:product_price,init,end:0
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #. module: mrp
 #: field:mrp.production,move_prod_id:0
 msgid "Move product"
-msgstr ""
+msgstr "移動貨品"
 
 #. module: mrp
 #: selection:mrp.workcenter,type:0
 msgid "Machine"
-msgstr ""
+msgstr "機器"
 
 #. module: mrp
 #: model:process.node,name:mrp.process_node_servicemts0
 msgid "Make to stock"
-msgstr ""
+msgstr "備貨型生產"
 
 #. module: mrp
 #: field:mrp.workcenter,name:0
 msgid "Workcenter Name"
-msgstr ""
+msgstr "工作中心名稱"
 
 #. module: mrp
 #: view:mrp.production:0
 msgid "Start Production"
-msgstr ""
+msgstr "開始生產"
 
 #. module: mrp
 #: selection:mrp.property,composition:0
 msgid "min"
-msgstr ""
+msgstr "最少"
 
 #. module: mrp
 #: help:mrp.workcenter,note:0
 msgid ""
 "Description of the workcenter. Explain here what's a cycle according to this "
 "workcenter."
-msgstr ""
+msgstr "工作中心之描述。在此說明此工作中心是依據那個週期。"
 
 #. module: mrp
 #: rml:bom.structure:0
