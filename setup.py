@@ -52,12 +52,11 @@ if sys.argv[1] == 'bdist_rpm':
 py_short_version = '%s.%s' % sys.version_info[:2]
 
 required_modules = [
+    ('lxml', 'lxml module: pythonic libxml2 and libxslt bindings'),
     ('psycopg2', 'PostgreSQL module'),
-    ('xml', 'XML Tools for python'),
-    ('reportlab', 'reportlab module'),
     ('pychart', 'pychart module'),
     ('pydot', 'pydot module'),
-    ('lxml', 'lxml module: pythonic libxml2 and libxslt bindings'),
+    ('reportlab', 'reportlab module'),
 ]
 
 def check_modules():
