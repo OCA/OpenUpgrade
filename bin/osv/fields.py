@@ -901,7 +901,7 @@ class property(function):
             else:
                 res[int(prop.res_id.split(',')[1])] = prop.value or ''
 
-        try:
+        if self._obj:
             obj = obj.pool.get(self._obj)
             to_check = res.values()
             if default_val and default_val not in to_check:
@@ -917,8 +917,6 @@ class property(function):
                     res[r] = (res[r], names[res[r]])
                 else:
                     res[r] = False
-        except:
-            pass
         return res
 
     def _field_get(self, cr, uid, model_name, prop):
