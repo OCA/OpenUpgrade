@@ -32,8 +32,8 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
 
         self.win.addFixedText("lblDatabaseName", 6, 31, 31, 15, "Database")
         #self.win.addFixedText("lblMsg", -2,28,123,15)
-        self.win.addComboListBox("lstDatabase", -2,28,123,15, True)
-        self.lstDatabase = self.win.getControl( "lstDatabase" )
+#        self.win.addComboListBox("lstDatabase", -2,28,123,15, True)
+#        self.lstDatabase = self.win.getControl( "lstDatabase" )
         #self.win.selectListBoxItem( "lstDatabase", docinfo.getUserFieldValue(2), True )
         #self.win.setEnabled("lblMsg",False)
 
@@ -51,31 +51,43 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         sValue=""
         if docinfo.getUserFieldValue(0)<>"":
             global url
+            global result
             url=docinfo.getUserFieldValue(0)
             self.sock=RPCSession(url)
             res=self.sock.listdb()
+            result=res
             if res == -1:
-                sValue="Could not connect to the server!"
-                self.lstDatabase.addItem("Could not connect to the server!",0)
+                self.win.addEdit("lstDatabase",-2,28,123,15)
+#                sValue="Could not connect to the server!"
+#                self.lstDatabase.addItem("Could not connect to the server!",0)
             elif res == 0:
                 sValue="No Database found !!!"
                 self.lstDatabase.addItem("No Database found !!!",0)
             else:
+                self.win.addComboListBox("lstDatabase", -2,28,123,15, True)
+                self.lstDatabase = self.win.getControl( "lstDatabase" )
                 self.win.removeListBoxItems("lstDatabase", 0, self.win.getListBoxItemCount("lstDatabase"))
-		for i in range(len(res)):
+                for i in range(len(res)):
                     self.lstDatabase.addItem(res[i],i)
                 sValue = database
-
-        self.win.doModalDialog("lstDatabase",sValue)
+        if sValue:
+            self.win.doModalDialog("lstDatabase",sValue)
+        else:
+            self.win.doModalDialog("lstDatabase",None)
 
         #self.win.doModalDialog("lstDatabase",docinfo.getUserFieldValue(2))
 
     def btnOk_clicked(self,oActionEvent):
 
-        sDatabase=self.win.getListBoxSelectedItem("lstDatabase")
+
         sLogin=self.win.getEditText("txtLoginName")
         sPassword=self.win.getEditText("txtPassword")
         global url
+        global result
+        if result==-1:
+            sDatabase=self.win.getEditText("lstDatabase")
+        else:
+            sDatabase=self.win.getListBoxSelectedItem("lstDatabase")
         self.sock=RPCSession(url)
         UID = self.sock.login(sDatabase,sLogin,sPassword)
         if not UID :
@@ -133,7 +145,7 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         url= self.win.getEditText("txtHost")
         Change(aVal,url)
         if aVal[1]== -1:
-            ErrorDialog(aVal[0],"")
+           self.win.getEditText("lstDatabase")
         elif aVal[1]==0:
             ErrorDialog(aVal[0],"")
         else:
