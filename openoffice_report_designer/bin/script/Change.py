@@ -47,7 +47,7 @@ class Change:
         self.sock=RPCSession(url)
         res=self.sock.listdb()
         if res == -1:
-            self.aVal.append("Could not connect to the server!")
+            self.aVal.append(url)
         elif res == 0:
             self.aVal.append("No Database found !!!")
         else:
