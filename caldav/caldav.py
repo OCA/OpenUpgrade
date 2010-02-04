@@ -79,7 +79,7 @@ html_invitation = """
         <td width="100%%">Hello,</td>
     </tr>
     <tr>
-        <td width="100%%">You are invited for OpenERP Event.</td>
+        <td width="100%%">You are invited for <i>%(company)s</i> Event.</td>
     </tr>
     <tr>
         <td width="100%%">Below are the details of event :</td>
@@ -102,44 +102,48 @@ html_invitation = """
                 <td width="21%%">
                 <div><b>Start Date</b></div>
                 </td>
-                <td><b>:</b> %(start_date)s</td>
+                <td><b>:</b></td>
+                <td>%(start_date)s</td>
                 <td width="15%%">
                 <div><b>End Date</b></div>
                 </td>
-                <td><b>:</b> %(end_date)s</td>
+                <td><b>:</b></td>
+                <td width="25%%">%(end_date)s</td>
             </tr>
-            <tr>
+            <tr valign="top">
                 <td><b>Description</b></td>
-                <td colspan="3"><b>:</b> %(description)s</td>
+                <td><b>:</b></td>
+                <td colspan="3">%(description)s</td>
             </tr>
-            <tr>
+            <tr valign="top">
                 <td>
                 <div><b>Location</b></div>
                 </td>
-                <td colspan="3"><b>:</b> %(location)s</td>
+                <td><b>:</b></td>
+                <td colspan="3">%(location)s</td>
             </tr>
-            <tr>
+            <tr valign="top">
                 <td>
                 <div><b>Event Attendees</b></div>
                 </td>
+                <td><b>:</b></td>
                 <td colspan="3">
                 <div>
-                <div><b>:</b> %(attendees)s</div>
+                <div>%(attendees)s</div>
                 </div>
                 </td>
             </tr>
-            <td><b>Are you coming?</b></td>
-            <td colspan="3">
-            <UL>
-                <LI>
-                YES
-                <LI>
-                NO
-                <LI>
-                MAYBE
-            </UL>
-            </td>
-            <tr>
+            <tr valign="top">
+                <td><b>Are you coming?</b></td>
+                <td><b>:</b></td>
+                <td colspan="3">
+                <UL>
+                    <LI>YES</LI>
+                    <LI>NO</LI>
+                    <LI>MAYBE</LI>
+                </UL>
+                </td>
+            </tr>
         </table>
         </td>
     </tr>
@@ -184,13 +188,6 @@ class calendar_attendee(osv.osv):
         name = name[0]
         result = {}
 
-        def get_delegate_data(user):
-            if not user.address_id.email:
-                raise osv.except_osv(_('Error!'), \
-                                ("User does not have an email Address"))
-            email = (user.address_id and ('MAILTO:' + user.address_id.email)) or ''
-            return email
-
         for attdata in self.browse(cr, uid, ids, context=context):
             id = attdata.id
             result[id] = {}
@@ -209,13 +206,10 @@ class calendar_attendee(osv.osv):
                 else:
                     result[id][name] = self._get_address(None, attdata.email)
             if name == 'delegated_to':
-                user_obj = self.pool.get('res.users')
-                todata = map(get_delegate_data, attdata.del_to_user_ids)
+                todata = map(lambda x:('MAILTO:' + x.email) or '', attdata.del_to_user_ids)
                 result[id][name] = ', '.join(todata)
             if name == 'delegated_from':
-                dstring = []
-                user_obj = self.pool.get('res.users')
-                fromdata = map(get_delegate_data, attdata.del_from_user_ids)
+                fromdata = map(lambda x:('MAILTO:' + x.email) or '', attdata.del_from_user_ids)
                 result[id][name] = ', '.join(fromdata)
             if name == 'event_date':
                 if attdata.ref:
@@ -284,11 +278,11 @@ class calendar_attendee(osv.osv):
                 string='Delegated To', type="char", size=124, store=True, \
                 multi='delegated_to', help="The users that the original \
 request was delegated to"), 
-        'del_to_user_ids': fields.many2many('res.users', 'att_del_to_user_rel', 
+        'del_to_user_ids': fields.many2many('calendar.attendee', 'att_del_to_user_rel', 
                                   'attendee_id', 'user_id', 'Users'), 
         'delegated_from': fields.function(_compute_data, method=True, string=\
             'Delegated From', type="char", store=True, size=124, multi='delegated_from'), 
-        'del_from_user_ids': fields.many2many('res.users', 'att_del_from_user_rel', \
+        'del_from_user_ids': fields.many2many('calendar.attendee', 'att_del_from_user_rel', \
                                       'attendee_id', 'user_id', 'Users'), 
         'sent_by': fields.function(_compute_data, method=True, string='Sent By', type="char", multi='sent_by', store=True, size=124, help="Specify the user that is acting on behalf of the calendar user"), 
         'sent_by_uid': fields.function(_compute_data, method=True, string='Sent By User', type="many2one", relation="res.users", multi='sent_by_uid'),
@@ -1165,6 +1159,9 @@ class invite_attendee_wizard(osv.osv_memory):
               }
 
     def do_invite(self, cr, uid, ids, context={}):
+        model2field = {
+                       'calendar.attendee': 'del_to_user_ids', 
+                       'crm.meeting': 'attendee_ids'}
         datas = self.read(cr, uid, ids)[0]
         if not context or not context.get('model'):
             return {}
@@ -1174,7 +1171,9 @@ class invite_attendee_wizard(osv.osv_memory):
         res_obj = obj.browse(cr, uid, context['active_id'])
         type = datas.get('type')
         att_obj = self.pool.get('calendar.attendee')
-        vals = {'ref': '%s,%s' % (model, caldav_id2real_id(context['active_id']))}
+        vals = {}
+        if not model == 'calendar.attendee':
+            vals = {'ref': '%s,%s' % (model, caldav_id2real_id(context['active_id']))}
         if type == 'internal':
             user_obj = self.pool.get('res.users')
             for user_id in datas.get('user_ids', []):
@@ -1185,7 +1184,7 @@ class invite_attendee_wizard(osv.osv_memory):
                 vals.update({'user_id': user_id, 
                                      'email': user.address_id.email})
                 att_id = att_obj.create(cr, uid, vals)
-                obj.write(cr, uid, res_obj.id, {'attendee_ids': [(4, att_id)]})
+                obj.write(cr, uid, res_obj.id, {model2field[model]: [(4, att_id)]})
 
         elif  type == 'external' and datas.get('email'):
             vals.update({'email': datas['email']})
@@ -1196,38 +1195,42 @@ class invite_attendee_wizard(osv.osv_memory):
                              (att.partner_id and att.partner_id.name) or \
                                 att.email) +  ' - Status: ' + att.state.title())
             att_id = att_obj.create(cr, uid, vals)
-            obj.write(cr, uid, res_obj.id, {'attendee_ids': [(4, att_id)]})
+            obj.write(cr, uid, res_obj.id, {model2field[model]: [(4, att_id)]})
             sign = res_obj.user_id and res_obj.user_id.signature or ''
             sign = '<br>'.join(sign and sign.split('\n') or [])
             sub = '[%s Invitation][%d] %s'  % (company, att_id, res_obj.name)
             body_vals = {'name': res_obj.name, 
                         'start_date': res_obj.date, 
                         'end_date': res_obj.date_deadline or None, 
-                        'description': res_obj.description, 
+                        'description': res_obj.description or '-', 
                         'location': res_obj.location or '-', 
-                        'attendees': '<br>'.join(att_infos),  #Todo
+                        'attendees': '<br>'.join(att_infos), 
                         'user': res_obj.user_id and res_obj.user_id.name or 'OpenERP User', 
-                        'sign': sign
+                        'sign': sign, 
+                        'company': company
             }
             body = html_invitation % body_vals
             mail_to = [datas['email']]
             tools.email_send(
-                    tools.config.get('email_from',False), 
+                    tools.config.get('email_from', False), 
                     mail_to, 
                     sub, 
                     body, 
                     subtype='html', 
-                    reply_to=tools.config.get('email_from',False)
+                    reply_to=tools.config.get('email_from', False)
                 )
 
         elif  type == 'partner':
             add_obj = self.pool.get('res.partner.address')
             for contact in  add_obj.browse(cr, uid, datas['contact_ids']):
+                if not contact.email:
+                    raise osv.except_osv(_('Error!'), \
+                                    ("Partner does not have an email Address"))
                 vals.update({
                              'partner_address_id': contact.id, 
                              'email': contact.email})
                 att_id = att_obj.create(cr, uid, vals)
-                obj.write(cr, uid, res_obj.id, {'attendee_ids': [(4, att_id)]})
+                obj.write(cr, uid, res_obj.id, {model2field[model]: [(4, att_id)]})
         return {}
 
 
