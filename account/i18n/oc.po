@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-08-28 16:01+0000\n"
-"PO-Revision-Date: 2010-03-12 14:23+0000\n"
+"PO-Revision-Date: 2010-03-13 10:33+0000\n"
 "Last-Translator: Cédric VALMARY <cvalmary@yahoo.fr>\n"
 "Language-Team: Occitan (post 1500) <oc@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-03-13 04:51+0000\n"
+"X-Launchpad-Export-Date: 2010-03-14 05:02+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #. module: account
@@ -38,37 +38,37 @@ msgstr ""
 #. module: account
 #: model:ir.ui.menu,name:account.menu_finance_entries
 msgid "Entries Encoding"
-msgstr ""
+msgstr "picada de las escrituras"
 
 #. module: account
 #: model:ir.actions.todo,note:account.config_wizard_account_base_setup_form
 msgid "Specify The Message for the Overdue Payment Report."
-msgstr ""
+msgstr "Indiatz lo messatge pels rapòrts de pagament tardièrs."
 
 #. module: account
 #: model:process.transition,name:account.process_transition_confirmstatementfromdraft0
 msgid "Confirm statement from draft"
-msgstr ""
+msgstr "Confirmar l'estat de borrolhon"
 
 #. module: account
 #: model:account.account.type,name:account.account_type_asset
 msgid "Asset"
-msgstr ""
+msgstr "Actius"
 
 #. module: account
 #: constraint:ir.actions.act_window:0
 msgid "Invalid model name in the action definition."
-msgstr ""
+msgstr "Nom del Modèl invalid per la definicion de l'accion."
 
 #. module: account
 #: help:account.journal,currency:0
 msgid "The currency used to enter statement"
-msgstr ""
+msgstr "La devisa utilizada per entrar los relevats"
 
 #. module: account
 #: wizard_view:account_use_models,init_form:0
 msgid "Select Message"
-msgstr ""
+msgstr "Seleccionatz lo Messatge"
 
 #. module: account
 #: help:product.category,property_account_income_categ:0
@@ -85,7 +85,7 @@ msgstr ""
 #. module: account
 #: wizard_view:account.automatic.reconcile,reconcile:0
 msgid "Reconciliation result"
-msgstr ""
+msgstr "Resultat del letratge"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.act_account_acount_move_line_open_unreconciled
@@ -97,18 +97,18 @@ msgstr ""
 #: field:account.tax,base_code_id:0
 #: field:account.tax.template,base_code_id:0
 msgid "Base Code"
-msgstr ""
+msgstr "Compte de basa"
 
 #. module: account
 #: view:account.account:0
 msgid "Account Statistics"
-msgstr ""
+msgstr "Estatisticas del compte"
 
 #. module: account
 #: model:ir.actions.wizard,name:account.wizard_vat_declaration
 #: model:ir.ui.menu,name:account.menu_wizard_vat_declaration
 msgid "Print Taxes Report"
-msgstr ""
+msgstr "Estampar lo rapòrt de taxas"
 
 #. module: account
 #: field:account.account,parent_id:0
@@ -131,7 +131,7 @@ msgstr ""
 #: field:account.tax.template,base_sign:0
 #: field:account.tax.template,ref_base_sign:0
 msgid "Base Code Sign"
-msgstr ""
+msgstr "Coeficient multiplicador"
 
 #. module: account
 #: model:ir.actions.wizard,name:account.wizard_unreconcile_select
@@ -157,12 +157,12 @@ msgstr "Entradas"
 #. module: account
 #: selection:account.move.line,centralisation:0
 msgid "Debit Centralisation"
-msgstr ""
+msgstr "Centralizacion debit"
 
 #. module: account
 #: model:ir.actions.wizard,name:account.wizard_invoice_state_confirm
 msgid "Confirm draft invoices"
-msgstr ""
+msgstr "Confirmar las facturas borrolhon"
 
 #. module: account
 #: help:account.payment.term.line,days2:0
@@ -175,17 +175,17 @@ msgstr ""
 #. module: account
 #: view:account.move:0
 msgid "Total Credit"
-msgstr ""
+msgstr "Total crrdit"
 
 #. module: account
 #: field:account.config.wizard,charts:0
 msgid "Charts of Account"
-msgstr ""
+msgstr "Plan de comptes"
 
 #. module: account
 #: model:ir.actions.wizard,name:account.wizard_move_line_select
 msgid "Move line select"
-msgstr ""
+msgstr "Desplaçar la linha seleccionada"
 
 #. module: account
 #: rml:account.journal.period.print:0
@@ -193,29 +193,29 @@ msgstr ""
 #: rml:account.third_party_ledger:0
 #: rml:account.third_party_ledger_other:0
 msgid "Entry label"
-msgstr ""
+msgstr "Libellat de l'escritura"
 
 #. module: account
 #: model:ir.model,name:account.model_account_model_line
 msgid "Account Model Entries"
-msgstr ""
+msgstr "Modèl d'escritura comptabla"
 
 #. module: account
 #: field:account.tax.code,sum_period:0
 msgid "Period Sum"
-msgstr ""
+msgstr "Montant total del periòde"
 
 #. module: account
 #: view:account.tax:0
 #: view:account.tax.template:0
 msgid "Compute Code (if type=code)"
-msgstr ""
+msgstr "Còde de Calcul (se tipe=còde)"
 
 #. module: account
 #: view:account.move:0
 #: view:account.move.line:0
 msgid "Account Entry Line"
-msgstr ""
+msgstr "Linha d'escritura comptabla"
 
 #. module: account
 #: wizard_view:account.aged.trial.balance,init:0
@@ -245,22 +245,22 @@ msgstr "Montant"
 #: model:ir.actions.wizard,name:account.wizard_third_party_ledger
 #: model:ir.ui.menu,name:account.menu_third_party_ledger
 msgid "Partner Ledger"
-msgstr ""
+msgstr "Grand Libre"
 
 #. module: account
 #: field:product.template,supplier_taxes_id:0
 msgid "Supplier Taxes"
-msgstr ""
+msgstr "Taxas provesidors"
 
 #. module: account
 #: view:account.move:0
 msgid "Total Debit"
-msgstr ""
+msgstr "Total debit"
 
 #. module: account
 #: rml:account.tax.code.entries:0
 msgid "Accounting Entries-"
-msgstr ""
+msgstr "Escrituras comptablas-"
 
 #. module: account
 #: help:account.journal,view_id:0
@@ -291,7 +291,7 @@ msgstr ""
 #: model:ir.actions.report.xml,name:account.account_overdue
 #: view:res.company:0
 msgid "Overdue Payments"
-msgstr ""
+msgstr "Retard de règlament"
 
 #. module: account
 #: wizard_view:account.account.balance.report,checktype:0
@@ -302,7 +302,7 @@ msgstr ""
 #: wizard_view:account.analytic.account.quantity_cost_ledger.report,init:0
 #: wizard_view:account.vat.declaration,init:0
 msgid "Select period"
-msgstr ""
+msgstr "Seleccionatz un periòde"
 
 #. module: account
 #: field:account.invoice,origin:0
@@ -323,7 +323,7 @@ msgstr "Referéncia"
 #. module: account
 #: wizard_view:account.subscription.generate,init:0
 msgid "Subscription Compute"
-msgstr ""
+msgstr "Calcul de la soscripcion"
 
 #. module: account
 #: rml:account.central.journal:0
@@ -340,12 +340,12 @@ msgstr "Dèlta de debit"
 #: field:account.invoice,amount_tax:0
 #: field:account.move.line,account_tax_id:0
 msgid "Tax"
-msgstr ""
+msgstr "Impòstes e taxas"
 
 #. module: account
 #: rml:account.general.journal:0
 msgid "Debit Trans."
-msgstr ""
+msgstr "Debit Trans."
 
 #. module: account
 #: field:account.analytic.line,account_id:0
@@ -353,7 +353,7 @@ msgstr ""
 #: field:account.move.line,analytic_account_id:0
 #: field:report.hr.timesheet.invoice.journal,account_id:0
 msgid "Analytic Account"
-msgstr ""
+msgstr "Centre de còstes"
 
 #. module: account
 #: field:account.tax,child_depend:0
@@ -381,7 +381,7 @@ msgstr ""
 #. module: account
 #: field:account.bank.statement.reconcile,total_entry:0
 msgid "Total entries"
-msgstr ""
+msgstr "Total de las escrituras"
 
 #. module: account
 #: field:account.fiscal.position.account,account_src_id:0
@@ -392,7 +392,7 @@ msgstr "Font comptable"
 #. module: account
 #: field:account.journal,update_posted:0
 msgid "Allow Cancelling Entries"
-msgstr ""
+msgstr "Autorizar l'anullacion d'escritura"
 
 #. module: account
 #: model:process.transition,name:account.process_transition_paymentorderbank0
