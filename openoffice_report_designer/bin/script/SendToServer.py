@@ -55,7 +55,7 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         if docinfo.getUserFieldValue(2)<>"" :
             try:
                 fields=['name','report_name']
-                self.res_other = self.sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'read', [docinfo.getUserFieldValue(2)],fields)
+                self.res_other = self.sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'read', [int(docinfo.getUserFieldValue(2))],fields)
                 name = self.res_other[0]['name']
                 report_name = self.res_other[0]['report_name']
             except:
