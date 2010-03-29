@@ -45,6 +45,8 @@ class Change:
         global url
         url = self.protocol[self.win.getListBoxSelectedItem("lstProtocol")]+self.win.getEditText("txtHost")+":"+self.win.getEditText("txtPort")
         self.sock=RPCSession(url)
+        docinfo=doc.getDocumentInfo()        
+        docinfo.setUserFieldValue(0,url)
         res=self.sock.listdb()
         if res == -1:
             self.aVal.append(url)
