@@ -167,8 +167,7 @@ class email_parser(object):
         data = {
             'name': self._decode_header(msg['Subject']), 
             'email_from': self._decode_header(msg['From']), 
-            'email_cc': self._decode_header(msg['Cc'] or ''), 
-            'canal_id': self.canal_id, 
+            'email_cc': self._decode_header(msg['Cc'] or ''),             
             'user_id': False, 
             'description': message['body'], 
         }
