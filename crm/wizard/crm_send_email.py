@@ -181,8 +181,9 @@ class crm_send_new_email(osv.osv_memory):
             model = hist.log_id.model_id.model
             model_pool = self.pool.get(model)
             case = model_pool.browse(cr, uid, hist.log_id.res_id)
-            if 'email_to' in fields and hist.email_to:
-                res.update({'email_to': hist.email_to})
+            if 'email_to' in fields:
+                res.update({'email_to': hist.email_from or (case.user_id and case.user_id.address_id and \
+                            case.user_id.address_id.email) or tools.config.get('email_from',False)})
             if 'email_from' in fields:
                 res.update({'email_from': (case.user_id and case.user_id.address_id and \
                             case.user_id.address_id.email) or tools.config.get('email_from',False)})
@@ -197,8 +198,8 @@ class crm_send_new_email(osv.osv_memory):
                 res.update({'text': '\n\n%s'%(original)})
             if 'subject' in fields:
                 res.update({'subject': '[%s] %s' %(str(case.id), case.name or '')}) 
-            #if 'state' in fields:
-            #    res.update({'state': 'pending'})       
+            if 'state' in fields:
+                res.update({'state': 'pending'})       
         return res
 
     def view_init(self, cr, uid, fields_list, context=None):
