@@ -114,6 +114,8 @@
                             <field domain="[('usage','=','menu')]" name="menu_id" required="True"/>
                             <field name="context_lang"/>
                             <field name="context_tz"/>
+                            <field name="view" readonly="0" />
+                            <newline/>
                             <group colspan="2" col="2">
                                 <separator string="Signature" colspan="2"/>
                                 <field colspan="2" name="signature" nolabel="1"/>
