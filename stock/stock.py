@@ -49,6 +49,17 @@ class stock_incoterms(osv.osv):
 
 stock_incoterms()
 
+class stock_journal(osv.osv):
+    _name = "stock.journal"
+    _description = "Stock Journal"
+    _columns = {
+        'name': fields.char('Stock Journal', size=32, required=True),
+        'user_id': fields.many2one('res.users','Responsible'),
+    }
+    _defaults = {
+        'user_id': lambda s,c,u,ctx: u
+    }
+stock_journal()
 
 #----------------------------------------------------------
 # Stock Location
@@ -169,6 +180,7 @@ class stock_location(osv.osv):
         'location_id': fields.many2one('stock.location', 'Parent Location', select=True, ondelete='cascade'),
         'child_ids': fields.one2many('stock.location', 'location_id', 'Contains'),
 
+        'chained_journal_id': fields.many2one('stock.journal', 'Chained Journal'),
         'chained_location_id': fields.many2one('stock.location', 'Chained Location If Fixed'),
         'chained_location_type': fields.selection([('none', 'None'), ('customer', 'Customer'), ('fixed', 'Fixed Location')],
             'Chained Location Type', required=True),
@@ -225,7 +237,7 @@ class stock_location(osv.osv):
         elif location.chained_location_type == 'fixed':
             result = location.chained_location_id
         if result:
-            return result, location.chained_auto_packing, location.chained_delay
+            return result, location.chained_auto_packing, location.chained_delay, location.chained_journal_id and location.chained_journal_id.id or False
         return result
 
     def picking_type_get(self, cr, uid, from_location, to_location, context={}):
@@ -557,7 +569,7 @@ class stock_picking(osv.osv):
         'type': fields.selection([('out', 'Sending Goods'), ('in', 'Getting Goods'), ('internal', 'Internal'), ('delivery', 'Delivery')], 'Shipping Type', required=True, select=True, help="Shipping type specify, goods coming in or going out."),
         'active': fields.boolean('Active', help="If the active field is set to true, it will allow you to hide the picking without removing it."),
         'note': fields.text('Notes'),
-
+        'stock_journal_id': fields.many2one('stock.journal','Stock Journal'),
         'location_id': fields.many2one('stock.location', 'Location', help="Keep empty if you produce at the location where the finished products are needed." \
                 "Set a location if you produce at a fixed location. This can be a partner location " \
                 "if you subcontract the manufacturing operations."),
@@ -1396,7 +1408,8 @@ class stock_move(osv.osv):
                     move_list = self.pool.get('stock.move').read(cr, uid, context['move_line'][0], ['location_dest_id'])
                     return move_list and move_list['location_dest_id'][0] or False
         if context.get('address_out_id', False):
-            return self.pool.get('res.partner.address').browse(cr, uid, context['address_out_id'], context).partner_id.property_stock_customer.id
+            property_out = self.pool.get('res.partner.address').browse(cr, uid, context['address_out_id'], context).partner_id.property_stock_customer
+            return property_out and property_out.id or False
         return False
 
     def _default_location_source(self, cr, uid, context={}):
@@ -1567,6 +1580,7 @@ class stock_move(osv.osv):
                 pick_name = ''
                 if ptype == 'delivery':
                     pick_name = self.pool.get('ir.sequence').get(cr, uid, 'stock.picking.delivery')
+                print todo
                 pickid = self.pool.get('stock.picking').create(cr, uid, {
                     'name': pick_name or picking.name,
                     'origin': str(picking.origin or ''),
@@ -1574,11 +1588,11 @@ class stock_move(osv.osv):
                     'note': picking.note,
                     'move_type': picking.move_type,
                     'auto_picking': todo[0][1][1] == 'auto',
+                    'stock_journal_id': todo[0][1][3],
                     'address_id': picking.address_id.id,
                     'invoice_state': 'none'
                 })
-                for move, (loc, auto, delay) in todo:
-                    # Is it smart to copy ? May be it's better to recreate ?
+                for move, (loc, auto, delay, journal) in todo:
                     new_id = self.pool.get('stock.move').copy(cr, uid, move.id, {
                         'location_id': move.location_dest_id.id,
                         'location_dest_id': loc.id,
