@@ -66,7 +66,15 @@ class stock_move_split_lines_exist(osv.osv_memory):
     _name = "stock.move.split.lines.exist"
     _inherit = "stock.move.split.lines.exist"
     _columns = {
-        'date': fields.date('Date'),
+        'date': fields.date('Expiry Date'),
     }
+    def on_change_product(self, cr, uid, ids, product_id):
+        if not product_id:
+            return {'value':{'date': False}}
+        day_life = self.pool.get('product.product').browse(cr, uid, product_id).life_time
+        date_life = (datetime.datetime.now() + datetime.timedelta(days=day_life))
+        return {'value':{'date': date_life.strftime('%Y-%m-%d')
+}}
+
 
 stock_move_split_lines_exist()
