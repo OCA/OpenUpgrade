@@ -32,10 +32,21 @@ from config import config
 import zipfile
 import release
 import socket
+import logging
 import re
 from itertools import islice
 import threading
 from which import which
+
+import smtplib
+from email.MIMEText import MIMEText
+from email.MIMEBase import MIMEBase
+from email.MIMEMultipart import MIMEMultipart
+from email.Header import Header
+from email.Utils import formatdate, COMMASPACE
+from email.Utils import formatdate, COMMASPACE
+from email import Encoders
+import netsvc
 
 
 if sys.version_info[:2] < (2, 4):
@@ -44,6 +55,8 @@ else:
     from threading import local
 
 from itertools import izip
+
+_logger = logging.getLogger('tools')
 
 # initialize a database with base/base.sql
 def init_db(cr):
@@ -336,35 +349,39 @@ def html2plaintext(html, body_id=None, encoding='utf-8'):
     """
 
     html = ustr(html)
-
-    try:
-        from BeautifulSoup import BeautifulSoup, SoupStrainer, Comment
-    except:
-        return html
-
     urls = []
+
+    from lxml.etree import Element, tostring
+    try:
+        from lxml.html.soupparser import fromstring
+        kwargs = {}
+    except ImportError:
+        _logger.debug('tools.misc.html2plaintext: cannot use BeautifulSoup, fallback to lxml.etree.HTMLParser')
+        from lxml.etree import fromstring, HTMLParser
+        kwargs = dict(parser=HTMLParser())
+
+    tree = fromstring(html, **kwargs)
+
     if body_id is not None:
-        strainer = SoupStrainer(id=body_id)
+        source = tree.xpath('//*[@id=%s]'%(body_id,))
     else:
-        strainer = SoupStrainer('body')
-
-    soup = BeautifulSoup(html, parseOnlyThese=strainer, fromEncoding=encoding)
-    for link in soup.findAll('a'):
-        title = link.renderContents()
-        for url in [x[1] for x in link.attrs if x[0]=='href']:
-            urls.append(dict(url=ustr(url), tag=ustr(link), title=ustr(title)))
-
-    html = ustr(soup.__str__())
+        source = tree.xpath('//body')
+    if len(source):
+        tree = source[0]
 
     url_index = []
     i = 0
-    for d in urls:
-        if d['title'] == d['url'] or 'http://'+d['title'] == d['url']:
-            html = html.replace(d['tag'], d['url'])
-        else:
+    for link in tree.findall('.//a'):
+        title = link.text
+        url = link.get('href')
+        if url:
             i += 1
-            html = html.replace(d['tag'], '%s [%s]' % (d['title'], i))
-            url_index.append(d['url'])
+            urls.append(dict(url=ustr(url), tag=ustr(link), title=ustr(title)))
+            link.tag = 'span'
+            link.text = '%s [%s]' % (link.text, i)
+            url_index.append(url)
+
+    html = ustr(tostring(tree, encoding=encoding))
 
     html = html.replace('<strong>','*').replace('</strong>','*')
     html = html.replace('<b>','*').replace('</b>','*')
@@ -372,25 +389,15 @@ def html2plaintext(html, body_id=None, encoding='utf-8'):
     html = html.replace('<h2>','**').replace('</h2>','**')
     html = html.replace('<h1>','**').replace('</h1>','**')
     html = html.replace('<em>','/').replace('</em>','/')
-
-
-    html = html.replace('<br>', '\n')
     html = html.replace('<tr>', '\n')
-    html = html.replace('</p>', '\n\n')
-    html = re.sub('<br\s*/>', '\n', html)
+    html = html.replace('</p>', '\n')
+    html = re.sub('<br\s*/?>', '\n', html)
+    html = re.sub('<.*?>', ' ', html)
     html = html.replace(' ' * 2, ' ')
 
-
-    # for all other tags we failed to clean up, just remove then and
-    # complain about them on the stderr
-    def desperate_fixer(g):
-        #print >>sys.stderr, "failed to clean up %s" % str(g.group())
-        return ' '
-
-    html = re.sub('<.*?>', desperate_fixer, html)
-
-    # lstrip all lines
-    html = '\n'.join([x.lstrip() for x in html.splitlines()])
+    # strip all lines
+    html = '\n'.join([x.strip() for x in html.splitlines()])
+    html = html.replace('\n' * 2, '\n')
 
     for i, url in enumerate(url_index):
         if i == 0:
@@ -398,6 +405,64 @@ def html2plaintext(html, body_id=None, encoding='utf-8'):
         html += ustr('[%s] %s\n') % (i+1, url)
 
     return html
+
+def _email_send(smtp_from, smtp_to_list, message, openobject_id=None, ssl=False, debug=False):
+    """Low-level method to send directly a Message through the configured smtp server.
+        :param smtp_from: RFC-822 envelope FROM (not displayed to recipient)
+        :param smtp_to_list: RFC-822 envelope RCPT_TOs (not displayed to recipient)
+        :param message: an email.message.Message to send
+        :param debug: True if messages should be output to stderr before being sent,
+                      and smtplib.SMTP put into debug mode.
+        :return: True if the mail was delivered successfully to the smtp,
+                 else False (+ exception logged)
+    """
+    if openobject_id:
+        message['Message-Id'] = "<%s-openobject-%s@%s>" % (time.time(), openobject_id, socket.gethostname())
+
+    try:
+        smtp_server = config['smtp_server']
+
+        if smtp_server.startswith('maildir:/'):
+            from mailbox import Maildir
+            maildir_path = smtp_server[8:]
+            mdir = Maildir(maildir_path,factory=None, create = True)
+            mdir.add(msg.as_string(True))
+            return True
+
+        oldstderr = smtplib.stderr
+        if not ssl: ssl = config.get('smtp_ssl', False)
+        s = smtplib.SMTP()
+        try:
+            # in case of debug, the messages are printed to stderr.
+            if debug:
+                smtplib.stderr = WriteToLogger()
+
+            s.set_debuglevel(int(bool(debug)))  # 0 or 1
+            s.connect(smtp_server, config['smtp_port'])
+            if ssl:
+                s.ehlo()
+                s.starttls()
+                s.ehlo()
+
+            if config['smtp_user'] or config['smtp_password']:
+                s.login(config['smtp_user'], config['smtp_password'])
+
+            s.sendmail(smtp_from, smtp_to_list, message.as_string())
+        finally:
+            try:
+                s.quit()
+                if debug:
+                    smtplib.stderr = oldstderr
+            except:
+                # ignored, just a consequence of the previous exception
+                pass
+
+    except Exception, e:
+        _logger.error('could not deliver email', exc_info=True)
+        return False
+
+    return True
+
 
 def email_send(email_from, email_to, subject, body, email_cc=None, email_bcc=None, reply_to=False,
                attach=None, openobject_id=False, ssl=False, debug=False, subtype='plain', x_headers=None, priority='3'):
@@ -412,20 +477,9 @@ def email_send(email_from, email_to, subject, body, email_cc=None, email_bcc=Non
 
     `email_to`: a sequence of addresses to send the mail to.
     """
-    import smtplib
-    from email.MIMEText import MIMEText
-    from email.MIMEBase import MIMEBase
-    from email.MIMEMultipart import MIMEMultipart
-    from email.Header import Header
-    from email.Utils import formatdate, COMMASPACE
-    from email.Utils import formatdate, COMMASPACE
-    from email import Encoders
-    import netsvc
-
     if x_headers is None:
         x_headers = {}
 
-    if not ssl: ssl = config.get('smtp_ssl', False)
 
     if not (email_from or config['email_from']):
         raise ValueError("Sending an email requires either providing a sender "
@@ -462,19 +516,11 @@ def email_send(email_from, email_to, subject, body, email_cc=None, email_bcc=Non
         msg['Bcc'] = COMMASPACE.join(email_bcc)
     msg['Date'] = formatdate(localtime=True)
 
-    # Add OpenERP Server information
-    msg['X-Generated-By'] = 'OpenERP (http://www.openerp.com)'
-    msg['X-OpenERP-Server-Host'] = socket.gethostname()
-    msg['X-OpenERP-Server-Version'] = release.version
     msg['X-Priority'] = priorities.get(priority, '3 (Normal)')
 
     # Add dynamic X Header
     for key, value in x_headers.iteritems():
-        msg['X-OpenERP-%s' % key] = str(value)
         msg['%s' % key] = str(value)
-
-    if openobject_id:
-        msg['Message-Id'] = "<%s-openobject-%s@%s>" % (time.time(), openobject_id, socket.gethostname())
 
     if attach:
         msg.attach(email_text)
@@ -492,49 +538,7 @@ def email_send(email_from, email_to, subject, body, email_cc=None, email_bcc=Non
         def write(self, s):
             self.logger.notifyChannel('email_send', netsvc.LOG_DEBUG, s)
 
-    smtp_server = config['smtp_server']
-    if smtp_server.startswith('maildir:/'):
-        from mailbox import Maildir
-        maildir_path = smtp_server[8:]
-        try:
-            mdir = Maildir(maildir_path,factory=None, create = True)
-            mdir.add(msg.as_string(True))
-            return True
-        except Exception,e:
-            netsvc.Logger().notifyChannel('email_send (maildir)', netsvc.LOG_ERROR, e)
-            return False
-
-    try:
-        oldstderr = smtplib.stderr
-        s = smtplib.SMTP()
-        try:
-            # in case of debug, the messages are printed to stderr.
-            if debug:
-                smtplib.stderr = WriteToLogger()
-
-            s.set_debuglevel(int(bool(debug)))  # 0 or 1
-            s.connect(smtp_server, config['smtp_port'])
-            if ssl:
-                s.ehlo()
-                s.starttls()
-                s.ehlo()
-
-            if config['smtp_user'] or config['smtp_password']:
-                s.login(config['smtp_user'], config['smtp_password'])
-            s.sendmail(email_from,
-                       flatten([email_to, email_cc, email_bcc]),
-                       msg.as_string()
-                      )
-        finally:
-            s.quit()
-            if debug:
-                smtplib.stderr = oldstderr
-
-    except Exception, e:
-        netsvc.Logger().notifyChannel('email_send', netsvc.LOG_ERROR, e)
-        return False
-
-    return True
+    return _email_send(email_from, flatten([email_to, email_cc, email_bcc]), msg, openobject_id=openobject_id, ssl=ssl, debug=debug)
 
 #----------------------------------------------------------
 # SMS
@@ -852,13 +856,13 @@ def ustr(value):
 
     try:
         return unicode(value)
-    except:
+    except Exception:
         pass
 
     for ln in get_encodings():
         try:
             return unicode(value, ln)
-        except:
+        except Exception:
             pass
     raise UnicodeError('unable de to convert %r' % (orig,))
 
