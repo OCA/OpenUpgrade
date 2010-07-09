@@ -248,8 +248,8 @@ class project_resource_allocation(osv.osv):
         'resource_id': fields.many2one('resource.resource', 'Resource', required=True),
         'phase_id': fields.many2one('project.phase', 'Project Phase', required=True),
         'useability': fields.float('Usability', help="Usability of this resource for this project phase in percentage (=50%)"),
-        'related_start_date': fields.related('phase_id', 'date_start', type='datetime', string='Start Date'),
-        'related_duration': fields.related('phase_id', 'duration', type='int', string='Duration'),
+        'date_start': fields.related('phase_id', 'date_start', type='datetime', string='Start Date'),
+        'date_end': fields.related('phase_id', 'date_end', type='datetime', string='End Date'),
     }
     _defaults = {
         'useability': 100,
