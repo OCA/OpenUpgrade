@@ -34,6 +34,20 @@
                 </tree>
             </field>
         </record>
+ 
+        <record id="view_project_resource_allocation_gantt" model="ir.ui.view">
+            <field name="name">project.resource.allocation.gantt</field>
+            <field name="model">project.resource.allocation</field>
+            <field name="type">gantt</field>
+            <field eval="2" name="priority"/>
+            <field name="arch" type="xml">
+                <gantt color="phase_id" date_delay="related_duration" date_start="related_start_date" string="Resource Allocations">
+                    <level object="resource.resource" link="resource_id" domain="[]">
+                        <field name="useability"/>
+                    </level>
+                </gantt>
+            </field>
+        </record>
 
        <record id="view_project_resource_allocation_search" model="ir.ui.view">
             <field name="name">project.resource.allocation.search</field>
