@@ -183,16 +183,11 @@ class users(osv.osv):
             return False
         group_obj = self.pool.get('res.groups')
         extended_group_id = group_obj.get_extended_interface_group(cr, uid, context=context)
-        if type(ids) in (int,long,):
-            ids = [ids]
-        if value != 'simple':
-            #To avoid insert duplication extended group
-            for user in self.browse(cr, uid, ids, context=context):
-                group_ids = map(lambda x:x.id, user.groups_id)
-                if extended_group_id not in group_ids:
-                    self.write(cr, uid, [user.id], {'groups_id': [(4, extended_group_id)]}, context=context)
-        else:
-            self.write(cr, uid, ids, {'groups_id': [(3, extended_group_id)]}, context=context)
+        # First always remove the users from the group (avoids duplication if called twice)
+        self.write(cr, uid, ids, {'groups_id': [(3, extended_group_id)]}, context=context)
+        # Then add them back if requested
+        if value == 'extended':
+            self.write(cr, uid, ids, {'groups_id': [(4, extended_group_id)]}, context=context)
         return True
 
 
@@ -354,15 +349,19 @@ class users(osv.osv):
     def company_get(self, cr, uid, uid2, context=None):
         return self._get_company(cr, uid, context=context, uid2=uid2)
 
+    # User can write to a few of her own fields (but not her groups for example)
+    SELF_WRITEABLE_FIELDS = ['view', 'password', 'signature', 'action_id', 'company_id', 'user_email']
+
     def write(self, cr, uid, ids, values, context=None):
         if not hasattr(ids, '__iter__'):
             ids = [ids]
         if ids == [uid]:
             for key in values.keys():
-                if not (key in ('view', 'password','signature','action_id', 'company_id') or key.startswith('context_')):
+                if not (key in self.SELF_WRITEABLE_FIELDS or key.startswith('context_')):
                     break
             else:
-                uid = 1
+                uid = 1 # safe fields only, so we write as super-user
+
         res = super(users, self).write(cr, uid, ids, values, context=context)
 
         # clear caches linked to the users
