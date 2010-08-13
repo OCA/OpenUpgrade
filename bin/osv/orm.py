@@ -650,7 +650,7 @@ class orm_template(object):
         This method is used when exporting data via client menu
 
         """
-        if not context:
+        if context is None:
             context = {}
         imp_comp = context.get('import_comp',False)
         cols = self._columns.copy()
@@ -2616,7 +2616,7 @@ class orm(orm_template):
                     self._columns[field['name']] = getattr(fields, field['ttype'])(field['relation'], _rel_name, 'id1', 'id2', **attrs)
                 else:
                     self._columns[field['name']] = getattr(fields, field['ttype'])(**attrs)
-
+        self._inherits_check()
         self._inherits_reload()
         if not self._sequence:
             self._sequence = self._table+'_id_seq'
@@ -2733,6 +2733,17 @@ class orm(orm_template):
                 res[col] = (table, self._inherits[table], self.pool.get(table)._inherit_fields[col][2])
         self._inherit_fields = res
         self._inherits_reload_src()
+
+    def _inherits_check(self):
+        for table, field_name in self._inherits.items():
+            if field_name not in self._columns:
+                logging.getLogger('init').info('Missing many2one field definition for _inherits reference "%s" in "%s", using default one.' % (field_name, self._name))
+                self._columns[field_name] =  fields.many2one(table, string="Automatically created field to link to parent %s" % table,
+                                                             required=True, ondelete="cascade")
+            elif not self._columns[field_name].required or self._columns[field_name].ondelete.lower() != "cascade":
+                logging.getLogger('init').warning('Field definition for _inherits reference "%s" in "%s" must be marked as "required" with ondelete="cascade", forcing it.' % (field_name, self._name))
+                self._columns[field_name].required = True
+                self._columns[field_name].ondelete = "cascade"
 
     #def __getattr__(self, name):
     #    """
@@ -3823,16 +3834,21 @@ class orm(orm_template):
         if order:
             self._check_qorder(order)
             o = order.split(' ')[0]
-            if (o in self._columns) and getattr(self._columns[o], '_classic_write'):
-                order_by = order
+            if (o in self._columns):
+                # we can only do efficient sort if the fields is stored in database
+                if getattr(self._columns[o], '_classic_read'):
+                    order_by = order
             elif (o in self._inherit_fields):
-                # Allowing inherited field for server side sorting
-                inherited_tables, inherit_join = self._inherits_join_calc(o,[],[]) # dry run to determine parent
-                inherited_sort_table = inherited_tables[0]
-                order_by = inherited_sort_table + '.' + order
-                if inherited_sort_table not in tables:
-                    # add the missing join
-                    self._inherits_join_calc(o, tables, where_clause)
+                parent_obj = self.pool.get(self._inherit_fields[o][0])
+                if getattr(parent_obj._columns[o], '_classic_read'):
+                    # Allowing inherits'ed field for server side sorting
+                    inherited_tables, inherit_join = self._inherits_join_calc(o,[],[]) # dry run to determine parent
+                    if inherited_tables:
+                        inherited_sort_table = inherited_tables[0]
+                        order_by = inherited_sort_table + '.' + order
+                        if inherited_sort_table not in tables:
+                            # add the missing join
+                            self._inherits_join_calc(o, tables, where_clause)
 
         limit_str = limit and ' limit %d' % limit or ''
         offset_str = offset and ' offset %d' % offset or ''
