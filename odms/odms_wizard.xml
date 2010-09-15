@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<!-- This file declares the wizards used in the module
+        string : The name that will appears on the wizard window
+        model : The object where the wizard finds the datas
+        name : A given name of the wizard
+        id : The id of that wizard
+-->
+
+<openerp>
+    <data>
+        <wizard string="Create Partner" 
+            model="odms.subscription" 
+            name="odms.create_partner" 
+            id="odms_create_partner_wizard"/>
+
+        <wizard string="Activate Service" 
+            model="odms.subs_bundle" 
+            multi="True" 
+            name="odms.bundle.active" 
+            id="odms_bundle_active_wizard"/>
+
+        <wizard string="Make invoices" 
+            model="odms.subscription" 
+            name="odms.make_invoice" 
+            id="odms_make_invoice_wizard"/>
+
+    </data>
+</openerp>
+

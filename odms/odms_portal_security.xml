@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+    # --------------------------------------------------------------------------
+    # ODMS subs_bundle
+    # --------------------------------------------------------------------------
+
+    <record model="ir.rule.group" id="subs_bundle_rule_group">
+        <field name="name">Portal subs_bundle rule</field>
+        <field name="model_id" search="[('model','=','odms.subs_bundle')]" model="ir.model"/>
+        <field name="global" eval="False"/>
+    </record>
+    <record model="ir.rule" id="subs_bundle_rule">
+        <field name="field_id" search="[('model','=','odms.subs_bundle')]" model="ir.model.fields"/>
+        <field name="operator">=</field>
+        <field name="operand">user.address_id.partner_id.id</field>
+        <field name="domain_force">[('subscription_id.partner_id','=',user.address_id.partner_id.id)]</field>
+        <field name="rule_group" ref="subs_bundle_rule_group"/>
+    </record>
+    <record model="portal.model" id="model_subs_bundle">
+        <field name="name" >subs_bundle Model</field>
+        <field name="model_id" search="[('model','=','odms.subs_bundle')]"/>
+        <field name="rule_group_id" ref="subs_bundle_rule_group"/>
+        <field name="view_ids" eval="[(6,0,[ref('view_odms_subs_bundle_tree_portal'),ref('view_odms_subs_bundle_form_portal')])]"/>
+    </record>
+
+
+    # --------------------------------------------------------------------------
+    # ODMS Subscription
+    # --------------------------------------------------------------------------
+
+    <record model="ir.rule.group" id="subscription_rule_group">
+        <field name="name">Portal subscription rule</field>
+        <field name="model_id" search="[('model','=','odms.subscription')]" model="ir.model"/>
+        <field name="global" eval="False"/>
+    </record>
+    <record model="ir.rule" id="subscription_rule">
+        <field name="field_id" search="[('model','=','odms.subscription'),('name','=','partner_id')]" model="ir.model.fields"/>
+        <field name="operator">=</field>
+        <field name="operand">user.address_id.partner_id.id</field>
+        <field name="rule_group" ref="subscription_rule_group"/>
+    </record>
+    <record model="portal.model" id="model_subscription">
+        <field name="name" >subscription Model</field>
+        <field name="model_id" search="[('model','=','odms.subscription')]"/>
+        <field name="rule_group_id" ref="subscription_rule_group"/>
+        <field name="view_ids" eval="[(6,0,[ref('view_odms_subscription_list_portal'),ref('view_odms_subscription_form_portal')])]"/>
+    </record>
+
+</data>
+</openerp>
