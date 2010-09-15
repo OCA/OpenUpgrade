@@ -1,4 +1,4 @@
-ZIP_FILE=openerp_report_designer.zip
+ZIP_FILE=../../openerp_report_designer.zip
 
 all: pack uninstall install
 

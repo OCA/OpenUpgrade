@@ -11,7 +11,7 @@ class About(unohelper.Base, XJobExecutor):
         self.ctx     = ctx
         self.module  = "openerp_report"
         self.version = "0.1"
-        self.win = DBModalDialog(60, 50, 175, 115, ".:: About OpenERP Report Designer ::.")
+        self.win = DBModalDialog(60, 50, 175, 115, "About OpenERP Report Designer")
 
         fdBigFont = createUnoStruct("com.sun.star.awt.FontDescriptor")
         fdBigFont.Width = 20
@@ -54,7 +54,7 @@ class About(unohelper.Base, XJobExecutor):
         oLabelFooter.Model.Align = 1
         oLabelFooter.Model.FontRelief = 1
         oLabelFooter.Model.MultiLine = True
-        sMessage = "OpenERP Report Designer v1.0 \nCopyright 2007-TODAY Tiny sprl \nThis product is free software, under the GPL licence."
+        sMessage = "OpenERP Report Designer v1.0 \nCopyright 2007-TODAY Tiny sprl \nThis product is free software, under the GNU Affero General Public License."
         oLabelFooter.Text = sMessage
 
         self.win.doModalDialog("",None)
