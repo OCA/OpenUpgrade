@@ -2,7 +2,7 @@
 <openerp>
   <data>
 
-    
+
     <record id="view_report_designer_installer" model="ir.ui.view">
       <field name="name">Form View: OpenERP Report Designer Installation</field>
       <field name="model">base_report_designer.installer</field>
@@ -59,7 +59,7 @@
       <field name="sequence">3</field>
     </record>
 
-	
+
 
     <record id="action_report_designer_wizard" model="ir.actions.act_window">
       <field name="name">OpenERP Report Designer</field>
@@ -72,10 +72,7 @@
       <field name="context">{'menu':True}</field> 
     </record>
 
-    <wizard string="Modify an existing report"
-            model="ir.actions.report.xml" name="base_report_designer.modify"
-            id="wizard_report_designer_modify" />
-
+    
     <menuitem icon="terp-graph" id="base.reporting_menu"
             name="Reporting" sequence="30" />
 
@@ -83,12 +80,12 @@
         parent="base.reporting_menu"  sequence="3" />
 
     <menuitem parent="base.next_id_50" name="Report Designer"
-        action="action_report_designer_wizard" 
+        action="action_report_designer_wizard"
         id="menu_action_report_designer_wizard" sequence="70" />
 
-    <menuitem parent="base.next_id_50" name="Modify an existing report"
-            action="wizard_report_designer_modify" type="wizard"
-            id="menu_wizard_report_designer_modify" sequence="70" />
+   <menuitem parent="base.next_id_50" name="Modify an existing report"
+            action="action_view_base_report_sxw"
+            id="menu_wizard_report_designer_modify" sequence="70" groups="base.group_extended"/>
 
   </data>
 </openerp>
