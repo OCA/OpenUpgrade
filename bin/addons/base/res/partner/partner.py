@@ -104,7 +104,7 @@ class res_partner(osv.osv):
     _columns = {
         'name': fields.char('Name', size=128, required=True, select=True),
         'date': fields.date('Date', select=1),
-        'title': fields.many2one('res.partner.title','Title'),
+        'title': fields.many2one('res.partner.title','Partner Form'),
         'parent_id': fields.many2one('res.partner','Parent Partner', select=2),
         'child_ids': fields.one2many('res.partner', 'parent_id', 'Partner Ref.'),
         'ref': fields.char('Reference', size=64),
@@ -130,7 +130,7 @@ class res_partner(osv.osv):
         'email': fields.related('address', 'email', type='char', size=240, string='E-mail'),
         'company_id': fields.many2one('res.company', 'Company', select=1),
     }
-
+    
     def _default_category(self, cr, uid, context={}):
         if 'category_id' in context and context['category_id']:
             return [context['category_id']]
