@@ -505,7 +505,7 @@
           ======================
         -->
         <record id="view_partner_category_form" model="ir.ui.view">
-            <field name="name">res.partner.category.form</field>
+            <field name="name">Partner Categories</field>
             <field name="model">res.partner.category</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
@@ -519,7 +519,7 @@
             </field>
         </record>
         <record id="view_partner_category_list" model="ir.ui.view">
-            <field name="name">res.partner.category.list</field>
+            <field name="name">Partner Categories</field>
             <field name="model">res.partner.category</field>
             <field name="type">tree</field>
             <field eval="6" name="priority"/>
@@ -576,7 +576,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">res.partner.category</field>
             <field name="view_type">form</field>
-            <field name="help">Manage the partner categories in order to better classify them for tracking and analysis purposes. A partner may belong to several categories and categories have a hierarchy   structure: a partner belonging to a category also belong to his parent category.</field>
+            <field name="help">Manage the partner categories in order to better classify them for tracking and analysis purposes. A partner may belong to several categories and categories have a hierarchy structure: a partner belonging to a category also belong to his parent category.</field>
         </record>
 
         <menuitem action="action_partner_category_form" id="menu_partner_category_form" name="Partner Categories" sequence="4" parent="menu_config_address_book"/>
