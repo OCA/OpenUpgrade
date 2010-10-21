@@ -31,7 +31,7 @@
 #   required
 #   size
 #
-from collections import defaultdict
+import datetime as DT
 import string
 import netsvc
 import sys
@@ -64,6 +64,8 @@ class _column(object):
     _symbol_get = None
 
     def __init__(self, string='unknown', required=False, readonly=False, domain=None, context={}, states=None, priority=0, change_default=False, size=None, ondelete="set null", translate=False, select=False, **args):
+        if not context:
+            context = {}
         self.states = states or {}
         self.string = string
         self.readonly = readonly
@@ -189,14 +191,42 @@ class float(_column):
 
 class date(_column):
     _type = 'date'
+    @staticmethod
+    def today(*args):
+        """ Returns the current date in a format fit for being a
+        default value to a ``date`` field.
 
+        This method should be provided as is to the _defaults dict, it
+        should not be called.
+        """
+        return DT.date.today().strftime(
+            tools.DEFAULT_SERVER_DATE_FORMAT)
 
 class datetime(_column):
     _type = 'datetime'
+    @staticmethod
+    def now(*args):
+        """ Returns the current datetime in a format fit for being a
+        default value to a ``datetime`` field.
 
+        This method should be provided as is to the _defaults dict, it
+        should not be called.
+        """
+        return DT.datetime.now().strftime(
+            tools.DEFAULT_SERVER_DATETIME_FORMAT)
 
 class time(_column):
     _type = 'time'
+    @staticmethod
+    def now( *args):
+        """ Returns the current time in a format fit for being a
+        default value to a ``time`` field.
+
+        This method should be proivided as is to the _defaults dict,
+        it should not be called.
+        """
+        return DT.datetime.now().strftime(
+            tools.DEFAULT_SERVER_TIME_FORMAT)
 
 class binary(_column):
     _type = 'binary'
@@ -424,11 +454,14 @@ class one2many(_column):
         if not values:
             values = {}
 
-        res = defaultdict(list)
+        res = {}
+        for id in ids:
+            res[id] = []
 
         ids2 = obj.pool.get(self._obj).search(cr, user, self._domain + [(self._fields_id, 'in', ids)], limit=self._limit, context=context)
         for r in obj.pool.get(self._obj)._read_flat(cr, user, ids2, [self._fields_id], context=context, load='_classic_write'):
-            res[r[self._fields_id]].append(r['id'])
+            if r[self._fields_id] in res:
+                res[r[self._fields_id]].append(r['id'])
         return res
 
     def set(self, cr, obj, id, field, values, user=None, context=None):
@@ -507,7 +540,6 @@ class many2many(_column):
             res[id] = []
         limit_str = self._limit is not None and ' limit %d' % self._limit or ''
         obj = obj.pool.get(self._obj)
-
         d1, d2, tables = obj.pool.get('ir.rule').domain_get(cr, user, obj._name, context=context)
         if d1:
             d1 = ' and ' + ' and '.join(d1)
@@ -531,7 +563,9 @@ class many2many(_column):
               }
         cr.execute(query, [tuple(ids)] + d2)
         for r in cr.fetchall():
-            res[r[1]].append(r[0])
+            if r[0] not in res[r[1]]:
+                ids2 = obj.search(cr, user, self._domain + [('id', '=', r[0])], context=context)
+                if ids2:res[r[1]] += ids2
         return res
 
     def set(self, cr, obj, id, name, values, user=None, context=None):
