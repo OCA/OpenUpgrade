@@ -96,7 +96,27 @@ _LOCALE2WIN32 = {
     'sr_CS': 'Serbian (Cyrillic)_Serbia and Montenegro',
     'sk_SK': 'Slovak_Slovakia',
     'sl_SI': 'Slovenian_Slovenia',
+    #should find more specific locales for spanish countries,
+    #but better than nothing
+    'es_AR': 'Spanish_Spain',
+    'es_BO': 'Spanish_Spain',
+    'es_CL': 'Spanish_Spain',
+    'es_CO': 'Spanish_Spain',
+    'es_CR': 'Spanish_Spain',
+    'es_DO': 'Spanish_Spain',
+    'es_EC': 'Spanish_Spain',
     'es_ES': 'Spanish_Spain',
+    'es_GT': 'Spanish_Spain',
+    'es_HN': 'Spanish_Spain',
+    'es_MX': 'Spanish_Spain',
+    'es_NI': 'Spanish_Spain',
+    'es_PA': 'Spanish_Spain',
+    'es_PE': 'Spanish_Spain',
+    'es_PR': 'Spanish_Spain',
+    'es_PY': 'Spanish_Spain',
+    'es_SV': 'Spanish_Spain',
+    'es_UY': 'Spanish_Spain',
+    'es_VE': 'Spanish_Spain',
     'sv_SE': 'Swedish_Sweden',
     'ta_IN': 'English_Australia',
     'th_TH': 'Thai_Thailand',
@@ -170,8 +190,8 @@ class GettextAlias(object):
                 cr.execute('SELECT value FROM ir_translation WHERE lang=%s AND type IN (%s, %s) AND src=%s', (lang, 'code','sql_constraint', source))
                 res_trans = cr.fetchone()
                 res = res_trans and res_trans[0] or source
-        except:
-            logger.warn('translation went wrong for string %s', repr(source))
+        except Exception:
+            logger.debug('translation went wrong for string %s', repr(source))
         finally:
             if is_new_cr:
                 cr.close()
@@ -605,19 +625,25 @@ def trans_generate(lang, modules, dbname=None):
             if fname and obj.report_type in ('pdf', 'xsl'):
                 try:
                     d = etree.parse(tools.file_open(fname))
-                    for t in parse_func(d):
+                    for t in parse_func(d.iter()):
                         push_translation(module, report_type, name, 0, t)
                 except (IOError, etree.XMLSyntaxError):
                     logging.getLogger("i18n").exception("couldn't export translation for report %s %s %s", name, report_type, fname)
 
-        for constraint in pool.get(model)._constraints:
-            msg = constraint[1]
+        model_obj = pool.get(model)
+        def push_constraint_msg(module, term_type, model, msg):
             # Check presence of __call__ directly instead of using
             # callable() because it will be deprecated as of Python 3.0
             if not hasattr(msg, '__call__'):
-                push_translation(module, 'constraint', model, 0, encode(msg))
+                push_translation(module, term_type, model, 0, encode(msg))
 
-        for field_name,field_def in pool.get(model)._columns.items():
+        for constraint in model_obj._constraints:
+            push_constraint_msg(module, 'constraint', model, constraint[1])
+
+        for constraint in model_obj._sql_constraints:
+            push_constraint_msg(module, 'sql_constraint', model, constraint[2])
+
+        for field_name,field_def in model_obj._columns.items():
             if field_def.translate:
                 name = model + "," + field_name
                 try:
@@ -695,12 +721,12 @@ def trans_generate(lang, modules, dbname=None):
     cr.close()
     return out
 
-def trans_load(db_name, filename, lang, strict=False, verbose=True):
+def trans_load(db_name, filename, lang, strict=False, verbose=True, context={}):
     logger = netsvc.Logger()
     try:
         fileobj = open(filename,'r')
         fileformat = os.path.splitext(filename)[-1][1:].lower()
-        r = trans_load_data(db_name, fileobj, fileformat, lang, strict=strict, verbose=verbose)
+        r = trans_load_data(db_name, fileobj, fileformat, lang, strict=strict, verbose=verbose, context=context)
         fileobj.close()
         return r
     except IOError:
@@ -708,7 +734,7 @@ def trans_load(db_name, filename, lang, strict=False, verbose=True):
             logger.notifyChannel("i18n", netsvc.LOG_ERROR, "couldn't read translation file %s" % (filename,))
         return None
 
-def trans_load_data(db_name, fileobj, fileformat, lang, strict=False, lang_name=None, verbose=True):
+def trans_load_data(db_name, fileobj, fileformat, lang, strict=False, lang_name=None, verbose=True, context={}):
     logger = netsvc.Logger()
     if verbose:
         logger.notifyChannel("i18n", netsvc.LOG_INFO, 'loading translation file for language %s' % (lang))
@@ -833,7 +859,8 @@ def trans_load_data(db_name, fileobj, fileformat, lang, strict=False, lang_name=
                             ('res_id', '=', dic['res_id'])
                         ])
                         if ids:
-                            trans_obj.write(cr, uid, ids, {'value': dic['value']})
+                            if context.get('overwrite', False):
+                                trans_obj.write(cr, uid, ids, {'value': dic['value']})
                         else:
                             trans_obj.create(cr, uid, dic)
             else:
@@ -844,7 +871,8 @@ def trans_load_data(db_name, fileobj, fileformat, lang, strict=False, lang_name=
                     ('src', '=', dic['src'])
                 ])
                 if ids:
-                    trans_obj.write(cr, uid, ids, {'value': dic['value']})
+                    if context.get('overwrite', False):
+                        trans_obj.write(cr, uid, ids, {'value': dic['value']})
                 else:
                     trans_obj.create(cr, uid, dic)
             cr.commit()
