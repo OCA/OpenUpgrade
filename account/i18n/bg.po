@@ -17,6 +17,18 @@ msgstr ""
 "X-Generator: Launchpad (build Unknown)\n"
 
 #. module: account
+#: field:account.partner.balance,result_selection:0
+#: field:account.aged.trial.balance,result_selection:0
+#: field:account.partner.ledger,result_selection:0
+msgid "Partner's"
+msgstr ""
+
+#. module: account
+#: field:account.partner.balance,display_partner:0
+msgid "Display Partners"
+msgstr ""
+
+#. module: account
 #: field:account.tax.template,description:0
 msgid "Internal Name"
 msgstr "Вътрешно име"
@@ -530,6 +542,16 @@ msgstr ""
 
 #. module: account
 #: wizard_field:account.chart,init,target_move:0
+#: field:account.common.report,target_move:0
+#: field:account.report.general.ledger,target_move:0
+#: field:account.balance.report,target_move:0
+#: field:account.pl.report,target_move:0
+#: field:account.bs.report,target_move:0
+#: field:account.print.journal,target_move:0
+#: field:account.general.journal,target_move:0
+#: field:account.central.journal,target_move:0
+#: field:account.partner.balance,target_move:0
+#: field:account.partner.ledger,target_move:0
 msgid "Target Moves"
 msgstr ""
 
@@ -1029,6 +1051,7 @@ msgstr "Мерни единици"
 
 #. module: account
 #: wizard_field:account.third_party_ledger.report,init,page_split:0
+#: field:account.partner.ledger,page_split:0
 msgid "One Partner Per Page"
 msgstr ""
 
