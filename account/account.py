@@ -2541,8 +2541,8 @@ class wizard_multi_charts_accounts(osv.osv_memory):
         'bank_accounts_id': fields.one2many('account.bank.accounts.wizard', 'bank_account_id', 'Bank Accounts', required=True),
         'code_digits':fields.integer('# of Digits', required=True, help="No. of Digits to use for account code"),
         'seq_journal':fields.boolean('Separated Journal Sequences', help="Check this box if you want to use a different sequence for each created journal. Otherwise, all will use the same sequence."),
-        "sale_tax": fields.many2one("account.tax.template", "Sale Tax"),
-        "purchase_tax": fields.many2one("account.tax.template", "Purchase Tax"),
+        "sale_tax": fields.many2one("account.tax.template", "Default Sale Tax"),
+        "purchase_tax": fields.many2one("account.tax.template", "Default Purchase Tax"),
     }
     def onchange_chart_template_id(self, cr, uid, ids, chart_template_id=False, context=None):
         res = {}
@@ -2550,12 +2550,12 @@ class wizard_multi_charts_accounts(osv.osv_memory):
         res['value']["sale_tax"] = False
         res['value']["purchase_tax"] = False
         if chart_template_id:
-            ids = self.pool.get('account.tax.template').search(cr, uid, [("chart_template_id"
-                                          , "=", chart_template_id)], order="sequence")
-            if len(ids) > 0:
-                id=ids[0]
-                res['value']["sale_tax"] = id
-                res['value']["purchase_tax"] = id
+            sale_tax_ids = self.pool.get('account.tax.template').search(cr, uid, [("chart_template_id"
+                                          , "=", chart_template_id), ('type_tax_use', 'in', ('sale','all'))], order="sequence")
+            purchase_tax_ids = self.pool.get('account.tax.template').search(cr, uid, [("chart_template_id"
+                                          , "=", chart_template_id), ('type_tax_use', 'in', ('purchase','all'))], order="sequence")
+            res['value']["sale_tax"] = sale_tax_ids and sale_tax_ids[0] or False
+            res['value']["purchase_tax"] = purchase_tax_ids and purchase_tax_ids[0] or False
         return res
 
     def _get_chart(self, cr, uid, context={}):
@@ -2708,9 +2708,17 @@ class wizard_multi_charts_accounts(osv.osv_memory):
         if obj_multi.seq_journal:
             seq_id_sale = obj_sequence.search(cr, uid, [('name','=','Sale Journal')])[0]
             seq_id_purchase = obj_sequence.search(cr, uid, [('name','=','Purchase Journal')])[0]
+            seq_id_sale_refund = obj_sequence.search(cr, uid, [('name','=','Sales Refund Journal')])
+            if seq_id_sale_refund:
+                seq_id_sale_refund = seq_id_sale_refund[0]
+            seq_id_purchase_refund = obj_sequence.search(cr, uid, [('name','=','Purchase Refund Journal')])
+            if seq_id_purchase_refund:
+                seq_id_purchase_refund = seq_id_purchase_refund[0]
         else:
             seq_id_sale = seq_id
             seq_id_purchase = seq_id
+            seq_id_sale_refund = seq_id
+            seq_id_purchase_refund = seq_id
 
         vals_journal['view_id'] = view_id
 
@@ -2748,6 +2756,60 @@ class wizard_multi_charts_accounts(osv.osv_memory):
             vals_journal['default_debit_account_id'] = acc_template_ref[obj_multi.chart_template_id.property_account_expense_categ.id]
 
         obj_journal.create(cr,uid,vals_journal)
+
+        # Creating Journals Sales Refund and Purchase Refund
+        vals_journal = {}
+        data_id = obj_data.search(cr, uid, [('model', '=', 'account.journal.view'), ('name', '=', 'account_sp_refund_journal_view')], context=context)
+        data = obj_data.browse(cr, uid, data_id[0], context=context)
+        view_id = data.res_id
+
+        #Sales Refund Journal
+        vals_journal = {
+            'view_id': view_id,
+            'name': _('Sales Refund Journal'),
+            'type': 'sale_refund',
+            'refund_journal': True,
+            'code': _('SCNJ'),
+            'sequence_id': seq_id_sale_refund,
+            'analytic_journal_id': analitical_journal_sale,
+            'company_id': company_id
+        }
+
+        if obj_multi.chart_template_id.property_account_receivable:
+            vals_journal['default_credit_account_id'] = acc_template_ref[obj_multi.chart_template_id.property_account_income_categ.id]
+            vals_journal['default_debit_account_id'] = acc_template_ref[obj_multi.chart_template_id.property_account_income_categ.id]
+
+
+#        if obj_multi.property_account_receivable:
+#            vals_journal.update({
+#                'default_credit_account_id': acc_template_ref[obj_multi.chart_template_id.property_account_income_categ.id],
+#                'default_debit_account_id': acc_template_ref[obj_multi.chart_template_id.property_account_income_categ.id]
+#            })
+        obj_journal.create(cr, uid, vals_journal, context=context)
+
+        # Purchase Refund Journal
+        vals_journal = {
+            'view_id': view_id,
+            'name': _('Purchase Refund Journal'),
+            'type': 'purchase_refund',
+            'refund_journal': True,
+            'code': _('ECNJ'),
+            'sequence_id': seq_id_purchase_refund,
+            'analytic_journal_id': analitical_journal_purchase,
+            'company_id': company_id
+        }
+
+        if obj_multi.chart_template_id.property_account_payable:
+            vals_journal['default_credit_account_id'] = acc_template_ref[obj_multi.chart_template_id.property_account_expense_categ.id]
+            vals_journal['default_debit_account_id'] = acc_template_ref[obj_multi.chart_template_id.property_account_expense_categ.id]
+
+
+#        if obj_multi.property_account_payable:
+#            vals_journal.update({
+#                'default_credit_account_id': acc_template_ref[obj_multi.property_account_expense_categ.id],
+#                'default_debit_account_id': acc_template_ref[obj_multi.property_account_expense_categ.id]
+#            })
+        obj_journal.create(cr, uid, vals_journal, context=context)
 
         # Bank Journals
         data_id = obj_data.search(cr, uid, [('model','=','account.journal.view'), ('name','=','account_journal_bank_view')])
