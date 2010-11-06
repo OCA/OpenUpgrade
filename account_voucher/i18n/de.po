@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2010-10-18 17:46+0000\n"
-"PO-Revision-Date: 2010-10-30 14:35+0000\n"
-"Last-Translator: OpenERP Administrators <Unknown>\n"
+"PO-Revision-Date: 2010-11-05 20:31+0000\n"
+"Last-Translator: Thorsten Vocks <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-10-31 05:04+0000\n"
+"X-Launchpad-Export-Date: 2010-11-06 04:52+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #. module: account_voucher
@@ -164,23 +164,23 @@ msgstr ""
 #. module: account_voucher
 #: view:account.statement.from.invoice.lines:0
 msgid "Ok"
-msgstr ""
+msgstr "OK"
 
 #. module: account_voucher
 #: field:account.voucher,date_due:0
 #: field:account.voucher.line,date_due:0
 msgid "Due Date"
-msgstr ""
+msgstr "Fälligkeitsdatum"
 
 #. module: account_voucher
 #: field:account.voucher,narration:0
 msgid "Notes"
-msgstr ""
+msgstr "Anmerkungen"
 
 #. module: account_voucher
 #: selection:account.voucher,type:0
 msgid "Sale"
-msgstr ""
+msgstr "Verkauf"
 
 #. module: account_voucher
 #: field:account.voucher.line,move_line_id:0
@@ -211,7 +211,7 @@ msgstr ""
 #. module: account_voucher
 #: selection:account.voucher,state:0
 msgid "Cancelled"
-msgstr ""
+msgstr "Abgebrochen"
 
 #. module: account_voucher
 #: field:account.statement.from.invoice,date:0
@@ -227,7 +227,7 @@ msgstr "Empfänger Unterschrift"
 #. module: account_voucher
 #: model:ir.model,name:account_voucher.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr ""
+msgstr "Bankauszug Buchungen"
 
 #. module: account_voucher
 #: model:ir.actions.act_window,name:account_voucher.action_purchase_receipt
@@ -238,7 +238,7 @@ msgstr ""
 #. module: account_voucher
 #: field:account.voucher,tax_id:0
 msgid "Tax"
-msgstr ""
+msgstr "Steuer"
 
 #. module: account_voucher
 #: report:voucher.cash_receipt.drcr:0
@@ -254,7 +254,7 @@ msgstr "Analytisches Konto"
 #. module: account_voucher
 #: report:voucher.cash_receipt.drcr:0
 msgid "Journal:"
-msgstr ""
+msgstr "Journal:"
 
 #. module: account_voucher
 #: view:account.voucher:0
@@ -276,7 +276,7 @@ msgstr "Partner"
 #. module: account_voucher
 #: view:account.bank.statement:0
 msgid "Import Invoices"
-msgstr ""
+msgstr "Importiere Rechnungen"
 
 #. module: account_voucher
 #: code:addons/account_voucher/account_voucher.py:0
@@ -293,7 +293,7 @@ msgstr "Konto:"
 #. module: account_voucher
 #: selection:account.voucher,type:0
 msgid "Receipt"
-msgstr ""
+msgstr "Quittung"
 
 #. module: account_voucher
 #: report:voucher.cash_receipt.drcr:0
@@ -304,13 +304,13 @@ msgstr "Bezug Konto:"
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Sales Lines"
-msgstr ""
+msgstr "Auftragspositionen"
 
 #. module: account_voucher
 #: report:voucher.cash_receipt.drcr:0
 #: report:voucher.print:0
 msgid "Date:"
-msgstr ""
+msgstr "Datum:"
 
 #. module: account_voucher
 #: view:account.voucher:0
@@ -339,7 +339,7 @@ msgstr "Belegzeilen"
 #: code:addons/account_voucher/account_voucher.py:0
 #, python-format
 msgid "Error !"
-msgstr ""
+msgstr "Fehler !"
 
 #. module: account_voucher
 #: view:account.voucher:0
@@ -362,7 +362,7 @@ msgstr "Autorisierte Signatur"
 #: model:ir.actions.act_window,name:account_voucher.action_sale_receipt
 #: model:ir.ui.menu,name:account_voucher.menu_action_sale_receipt
 msgid "Sales Receipt"
-msgstr ""
+msgstr "Zahlungsbeleg"
 
 #. module: account_voucher
 #: code:addons/account_voucher/account_voucher.py:0
@@ -373,12 +373,12 @@ msgstr "Fehlerhafte Aktion"
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Other Information"
-msgstr ""
+msgstr "Weitere Informationen"
 
 #. module: account_voucher
 #: view:account.voucher.unreconcile:0
 msgid "Unreconciliation"
-msgstr ""
+msgstr "Ausgleich OP zurücksetzen"
 
 #. module: account_voucher
 #: constraint:ir.ui.view:0
@@ -396,7 +396,7 @@ msgstr ""
 #: code:addons/account_voucher/invoice.py:0
 #, python-format
 msgid "Pay Invoice"
-msgstr ""
+msgstr "Zahle Rechnung"
 
 #. module: account_voucher
 #: code:addons/account_voucher/account_voucher.py:0
@@ -407,7 +407,7 @@ msgstr ""
 #. module: account_voucher
 #: field:account.voucher,tax_amount:0
 msgid "Tax Amount"
-msgstr ""
+msgstr "Steuerbetrag"
 
 #. module: account_voucher
 #: view:account.voucher:0
@@ -417,7 +417,7 @@ msgstr ""
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Paid Amount"
-msgstr ""
+msgstr "Gesamtzahlbetrag"
 
 #. module: account_voucher
 #: selection:account.voucher,pay_now:0
@@ -428,7 +428,7 @@ msgstr ""
 #: field:account.statement.from.invoice,line_ids:0
 #: field:account.statement.from.invoice.lines,line_ids:0
 msgid "Invoices"
-msgstr ""
+msgstr "Rechnungen"
 
 #. module: account_voucher
 #: field:account.voucher.unreconcile,remove:0
@@ -449,7 +449,7 @@ msgstr "Währung"
 #. module: account_voucher
 #: view:account.statement.from.invoice.lines:0
 msgid "Payable and Receivables"
-msgstr ""
+msgstr "Kreditoren und Debitoren"
 
 #. module: account_voucher
 #: selection:account.voucher,pay_now:0
@@ -467,12 +467,12 @@ msgstr "Entwurf"
 #. module: account_voucher
 #: constraint:ir.ui.menu:0
 msgid "Error ! You can not create recursive Menu."
-msgstr ""
+msgstr "Fehler ! Sie können kein rekursives Menü erstellen."
 
 #. module: account_voucher
 #: report:voucher.print:0
 msgid "Currency:"
-msgstr ""
+msgstr "Währung:"
 
 #. module: account_voucher
 #: field:account.move.line,amount_unreconciled:0
@@ -488,7 +488,7 @@ msgstr "PRO-FORMA"
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Total Amount"
-msgstr ""
+msgstr "Gesamtbetrag"
 
 #. module: account_voucher
 #: field:account.voucher.line,type:0
@@ -508,7 +508,7 @@ msgstr ""
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Payment Terms"
-msgstr ""
+msgstr "Zahlungsbedingungen"
 
 #. module: account_voucher
 #: view:account.voucher:0
@@ -530,12 +530,12 @@ msgstr ""
 #: report:voucher.cash_receipt.drcr:0
 #: report:voucher.print:0
 msgid "Number:"
-msgstr ""
+msgstr "Nummer:"
 
 #. module: account_voucher
 #: field:account.bank.statement.line,amount_reconciled:0
 msgid "Amount reconciled"
-msgstr ""
+msgstr "Betrag Ausgeglichen"
 
 #. module: account_voucher
 #: view:account.voucher:0
@@ -562,7 +562,7 @@ msgstr "Guthaben"
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Extended options..."
-msgstr ""
+msgstr "Erweiterte Optionen.."
 
 #. module: account_voucher
 #: code:addons/account_voucher/account_voucher.py:0
@@ -595,7 +595,7 @@ msgstr ""
 #: view:account.voucher:0
 #: view:account.voucher.unreconcile:0
 msgid "Unreconcile"
-msgstr ""
+msgstr "Storno Ausgleich"
 
 #. module: account_voucher
 #: view:account.voucher:0
@@ -611,12 +611,12 @@ msgstr "Nummer"
 #. module: account_voucher
 #: model:ir.model,name:account_voucher.model_account_bank_statement
 msgid "Bank Statement"
-msgstr ""
+msgstr "Bank Auszug"
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "To Review"
-msgstr ""
+msgstr "Zu Prüfen"
 
 #. module: account_voucher
 #: view:account.voucher:0
@@ -638,7 +638,7 @@ msgstr "Beleg"
 #. module: account_voucher
 #: model:ir.model,name:account_voucher.model_account_invoice
 msgid "Invoice"
-msgstr ""
+msgstr "Rechnung"
 
 #. module: account_voucher
 #: view:account.voucher:0
@@ -685,12 +685,12 @@ msgstr ""
 #: view:account.statement.from.invoice:0
 #: model:ir.actions.act_window,name:account_voucher.action_view_account_statement_from_invoice
 msgid "Import Invoices in Statement"
-msgstr ""
+msgstr "Rechungen in Beleg importieren"
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Pay"
-msgstr ""
+msgstr "Zahlen"
 
 #. module: account_voucher
 #: selection:account.voucher.line,type:0
@@ -735,7 +735,7 @@ msgstr "-"
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Internal Notes"
-msgstr ""
+msgstr "Interne Hinweise"
 
 #. module: account_voucher
 #: view:account.voucher:0
@@ -747,7 +747,7 @@ msgstr ""
 #: report:voucher.cash_receipt.drcr:0
 #: report:voucher.print:0
 msgid "State:"
-msgstr ""
+msgstr "Status:"
 
 #. module: account_voucher
 #: field:account.bank.statement.line,voucher_id:0
@@ -756,7 +756,7 @@ msgstr ""
 #: field:account.voucher,pay_now:0
 #: selection:account.voucher,type:0
 msgid "Payment"
-msgstr ""
+msgstr "Zahlung"
 
 #. module: account_voucher
 #: view:account.voucher:0
@@ -769,7 +769,7 @@ msgstr "Versendet"
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Customer"
-msgstr ""
+msgstr "Kunde"
 
 #. module: account_voucher
 #: field:account.voucher,type:0
@@ -790,7 +790,7 @@ msgstr "Buchungssatz"
 #. module: account_voucher
 #: constraint:ir.rule:0
 msgid "Rules are not supported for osv_memory objects !"
-msgstr ""
+msgstr "Regeln werden für osv_memory Objekt nicht unterstützt"
 
 #. module: account_voucher
 #: code:addons/account_voucher/account_voucher.py:0
@@ -824,13 +824,13 @@ msgstr ""
 #: view:account.voucher:0
 #: field:account.voucher.line,amount_unreconciled:0
 msgid "Open Balance"
-msgstr ""
+msgstr "Endsaldo"
 
 #. module: account_voucher
 #: view:account.voucher:0
 #: field:account.voucher,amount:0
 msgid "Total"
-msgstr ""
+msgstr "Summe"
 
 #. module: account_voucher
 #: field:account.voucher,name:0
