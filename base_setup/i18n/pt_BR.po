@@ -6,14 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2010-10-18 17:46+0000\n"
-"PO-Revision-Date: 2009-12-07 16:39+0000\n"
-"Last-Translator: Pedro_Maschio <pedro.bicudo@tgtconsult.com.br>\n"
+"POT-Creation-Date: 2010-11-18 16:11+0000\n"
+"PO-Revision-Date: 2010-11-29 18:23+0000\n"
+"Last-Translator: Douglas Felippe <douglasbn@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-10-30 05:22+0000\n"
+"X-Launchpad-Export-Date: 2010-11-30 04:50+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #. module: base_setup
@@ -26,16 +26,17 @@ msgstr "Cidade"
 msgid ""
 "The Object name must start with x_ and not contain any special character !"
 msgstr ""
+"O nome do objeto deve iniciar com x_ e não conter nenhum caracter especial."
 
 #. module: base_setup
 #: constraint:ir.actions.act_window:0
 msgid "Invalid model name in the action definition."
-msgstr ""
+msgstr "Nome de modelo inválido na definição da ação."
 
 #. module: base_setup
 #: field:base.setup.installer,account_voucher:0
 msgid "Invoicing"
-msgstr ""
+msgstr "Faturamento"
 
 #. module: base_setup
 #: field:base.setup.company,name:0
@@ -48,14 +49,19 @@ msgid "E-mail"
 msgstr "E-mail"
 
 #. module: base_setup
+#: sql_constraint:ir.module.module:0
+msgid "The certificate ID of the module must be unique !"
+msgstr "O ID de certificado do módulo precisa ser único !"
+
+#. module: base_setup
 #: field:base.setup.company,account_no:0
 msgid "Bank Account No"
-msgstr ""
+msgstr "Conta Bancária"
 
 #. module: base_setup
 #: field:base.setup.installer,profile_tools:0
 msgid "Extra Tools"
-msgstr ""
+msgstr "Ferramentas Extras"
 
 #. module: base_setup
 #: field:base.setup.company,rml_footer1:0
@@ -68,21 +74,23 @@ msgid ""
 "Helps you manage your manufacturing processes and generate reports on those "
 "processes."
 msgstr ""
+"Auxilia o gerenciamento dos processos de manufatura e geração de relatórios "
+"sobre estes processos."
 
 #. module: base_setup
 #: help:base.setup.installer,marketing:0
 msgid "Helps you manage your marketing campaigns step by step."
-msgstr ""
+msgstr "Auxilia o gerenciamento de campanhas de marketing passo a passo."
 
 #. module: base_setup
 #: view:base.setup.config:0
 msgid "Your database is now created."
-msgstr ""
+msgstr "O banco de dados foi criado."
 
 #. module: base_setup
 #: field:base.setup.installer,point_of_sale:0
 msgid "Point of Sales"
-msgstr ""
+msgstr "Ponto de Vendas"
 
 #. module: base_setup
 #: field:base.setup.installer,association:0
@@ -97,10 +105,9 @@ msgid ""
 msgstr ""
 
 #. module: base_setup
-#: view:base.setup.config:0
-msgid ""
-"You can start configuring the system or connect directly to the database as "
-"an administrator."
+#: code:addons/base_setup/__init__.py:0
+#, python-format
+msgid "The following users have been installed : \n"
 msgstr ""
 
 #. module: base_setup
@@ -148,6 +155,13 @@ msgid ""
 msgstr ""
 
 #. module: base_setup
+#: view:base.setup.config:0
+msgid ""
+"You can start configuring the system or connect directly to the database as "
+"an administrator."
+msgstr ""
+
+#. module: base_setup
 #: field:base.setup.installer,report_designer:0
 msgid "Advanced Reporting"
 msgstr ""
@@ -168,13 +182,13 @@ msgid "title"
 msgstr ""
 
 #. module: base_setup
-#: view:base.setup.config:0
-msgid "Use Directly"
-msgstr "Usar diretamente"
-
-#. module: base_setup
 #: field:base.setup.installer,knowledge:0
 msgid "Knowledge Management"
+msgstr ""
+
+#. module: base_setup
+#: sql_constraint:ir.module.module:0
+msgid "The name of the module must be unique !"
 msgstr ""
 
 #. module: base_setup
@@ -197,6 +211,11 @@ msgid ""
 "Helps you get the most out of your points of sales with fast sale encoding, "
 "simplified payment mode encoding, automatic picking lists generation and "
 "more."
+msgstr ""
+
+#. module: base_setup
+#: view:base.setup.config:0
+msgid "Skip Configuration Wizards"
 msgstr ""
 
 #. module: base_setup
@@ -464,9 +483,8 @@ msgid "base.setup.config"
 msgstr ""
 
 #. module: base_setup
-#: code:addons/base_setup/__init__.py:0
-#, python-format
-msgid "The following users have been installed : \n"
+#: sql_constraint:ir.model.fields:0
+msgid "Size of the field can never be less than 1 !"
 msgstr ""
 
 #~ msgid "Zip code"
@@ -498,6 +516,9 @@ msgstr ""
 
 #~ msgid "Install"
 #~ msgstr "Instalar"
+
+#~ msgid "Use Directly"
+#~ msgstr "Usar diretamente"
 
 #~ msgid "Cancel"
 #~ msgstr "Cancelar"

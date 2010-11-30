@@ -6,14 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2010-10-18 17:46+0000\n"
-"PO-Revision-Date: 2010-11-09 08:07+0000\n"
-"Last-Translator: OpenERP Administrators <Unknown>\n"
+"POT-Creation-Date: 2010-11-18 16:12+0000\n"
+"PO-Revision-Date: 2010-11-29 12:45+0000\n"
+"Last-Translator: Thorsten Vocks (OpenBig.org) <thorsten.vocks@big-"
+"consulting.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-11-10 05:03+0000\n"
+"X-Launchpad-Export-Date: 2010-11-30 04:52+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #. module: hr_expense
@@ -60,11 +61,6 @@ msgstr "Ungültiger Modellname in der Aktionsdefinition."
 #: field:hr.expense.report,department_id:0
 msgid "Department"
 msgstr "Abteilung"
-
-#. module: hr_expense
-#: view:hr.expense.report:0
-msgid "Extended filters..."
-msgstr "Erweiterter Filter..."
 
 #. module: hr_expense
 #: selection:hr.expense.report,month:0
@@ -271,6 +267,11 @@ msgstr "Anz."
 #: field:hr.expense.report,price_total:0
 msgid "Total Price"
 msgstr "Gesamtpreis"
+
+#. module: hr_expense
+#: sql_constraint:ir.module.module:0
+msgid "The certificate ID of the module must be unique !"
+msgstr "Die Zertifikat ID des Moduls sollte eindeutig sein !"
 
 #. module: hr_expense
 #: model:process.node,note:hr_expense.process_node_reinvoicing0
@@ -525,6 +526,11 @@ msgid "User"
 msgstr "Benutzer"
 
 #. module: hr_expense
+#: sql_constraint:ir.module.module:0
+msgid "The name of the module must be unique !"
+msgstr "Die Modulbezeichnung sollte eindeutig sein !"
+
+#. module: hr_expense
 #: report:hr.expense:0
 #: field:hr.expense.expense,date:0
 #: field:hr.expense.line,date_value:0
@@ -535,6 +541,11 @@ msgstr "Datum"
 #: selection:hr.expense.report,month:0
 msgid "November"
 msgstr "November"
+
+#. module: hr_expense
+#: view:hr.expense.report:0
+msgid "Extended Filters..."
+msgstr "Erweiterter Filter..."
 
 #. module: hr_expense
 #: selection:hr.expense.report,month:0
@@ -608,9 +619,21 @@ msgid "Invoice"
 msgstr "Rechnung"
 
 #. module: hr_expense
+#: sql_constraint:ir.rule:0
+msgid "Rule must have at least one checked access right !"
+msgstr ""
+"Die Berechtigung für diese Regel sollte mindestens bei einem Benutzer "
+"vorhanden sein !"
+
+#. module: hr_expense
 #: model:process.transition,name:hr_expense.process_transition_reimbursereinvoice0
 msgid "Reinvoice"
 msgstr "Weiterberechnung"
+
+#. module: hr_expense
+#: sql_constraint:ir.model.fields:0
+msgid "Size of the field can never be less than 1 !"
+msgstr "Die Größe des Feldes sollte niemals kleiner als 1 sein !"
 
 #. module: hr_expense
 #: view:board.board:0
@@ -724,6 +747,26 @@ msgstr "Ref."
 #: field:hr.expense.report,employee_id:0
 msgid "Employee's Name"
 msgstr "Mitarbeiter Name"
+
+#. module: hr_expense
+#: model:ir.actions.act_window,help:hr_expense.expense_all
+msgid ""
+"The OpenERP expenses management module allows you to track the full flow. "
+"Every month, the employees record their expenses. At the end of the month, "
+"their managers validates the expenses sheets which creates costs on "
+"projects/analytic accounts. The accountant validates the proposed entries "
+"and the employee can be reimbursed. You can also reinvoice the customer at "
+"the end of the flow."
+msgstr ""
+"Das OpenERP Modul für das Management der Erstattung von Spesen und "
+"Mitarbeiterausgaben erlaubt eine vollständige Bearbeitung dieses Vorgangs. "
+"Für jeden Monat erfassen die Mitarbeiter die vorgestreckten Beträge, z.B. "
+"für Anreisen oder Unterkunft für die jeweiligen Projekteinsätze. Hierdurch "
+"werden diese Kosten unmittelbar dem Projekt bzw. dem analytischen Konto "
+"zugewiesen. Der Buchhalter genehmigt diesen Antrag auf Erstattung von "
+"Mitarbeiterausgaben, um dem Mitarbeiter die Beträge zu erstatten. Am Ende "
+"dieses Prozesses können Sie auch noch eine Weiterberechnung an Kunden "
+"vornehmen."
 
 #. module: hr_expense
 #: view:hr.expense.expense:0
@@ -918,3 +961,6 @@ msgstr "Weiterberechnung"
 
 #~ msgid "Date Validated"
 #~ msgstr "Datum Validierung"
+
+#~ msgid "Extended filters..."
+#~ msgstr "Erweiterter Filter..."
