@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2010-11-18 16:12+0000\n"
-"PO-Revision-Date: 2010-11-29 23:29+0000\n"
+"PO-Revision-Date: 2010-11-30 23:10+0000\n"
 "Last-Translator: lolivier <olivier.lenoir@free.fr>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-11-30 04:49+0000\n"
+"X-Launchpad-Export-Date: 2010-12-01 04:59+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #. module: mrp
@@ -832,10 +832,10 @@ msgid ""
 "order creates a RFQ for a subcontracting purchase order or waits until the "
 "service is done (= the delivery of the products)."
 msgstr ""
-"En fonction de la méthode choisie pour pour \"approvisionner\" le service, "
-"l'ordre d'approvisionnement va créer un appel d'offre pour une commande de "
-"sous-traitance, ou va attendre jusqu'à ce que le service soit effectué (= la "
-"livraison des produits)."
+"En fonction de la méthode choisie pour \"l'approvisionnement\" du service, "
+"le besoin va générer un appel d'offres pour une commande de sous-traitance, "
+"ou va attendre jusqu'à ce que le service soit effectué (= la livraison des "
+"produits)."
 
 #. module: mrp
 #: selection:mrp.production,priority:0
@@ -1360,6 +1360,8 @@ msgid ""
 "In case the Supply method of the product is Buy, the system creates a "
 "purchase order."
 msgstr ""
+"Dans le cas où la méthode d'approvisionnement est \"Acheter\", le système va "
+"créer un Ordre d'Achat"
 
 #. module: mrp
 #: model:ir.model,name:mrp.model_procurement_order
