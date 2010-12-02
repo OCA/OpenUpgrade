@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2010-11-18 16:11+0000\n"
-"PO-Revision-Date: 2010-11-30 23:10+0000\n"
+"PO-Revision-Date: 2010-12-01 14:32+0000\n"
 "Last-Translator: Numérigraphe <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-12-01 05:00+0000\n"
+"X-Launchpad-Export-Date: 2010-12-02 04:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #. module: account
@@ -114,8 +114,8 @@ msgid ""
 "You cannot remove/deactivate an account which is set as a property to any "
 "Partner."
 msgstr ""
-"Vous ne pouvez pas supprimer / désactiver un compte tant qu'il est utilisé "
-"comme propriété d'un partenaire ."
+"Vous ne pouvez pas supprimer/désactiver un compte tant qu'il est utilisé "
+"comme propriété d'un partenaire."
 
 #. module: account
 #: view:account.move.reconcile:0
@@ -280,7 +280,7 @@ msgstr "Journal des avoir de frais - ( test )"
 #. module: account
 #: model:ir.model,name:account.model_account_tax
 msgid "account.tax"
-msgstr "Taxes"
+msgstr "account.tax"
 
 #. module: account
 #: code:addons/account/account.py:0
@@ -290,7 +290,7 @@ msgid ""
 "Please create a fiscal year."
 msgstr ""
 "Pas de période définie pour cette date : %s !\n"
-"Veuillez créer un exercice comptable ."
+"Veuillez créer un exercice comptable."
 
 #. module: account
 #: model:ir.model,name:account.model_account_move_line_reconcile_select
@@ -303,8 +303,8 @@ msgid ""
 "The sequence field is used to order the resources from lower sequences to "
 "higher ones"
 msgstr ""
-"Le champ séquence est utilisé pour ordonner les ressources de la séquence la "
-"plus basse vers les plus hautes"
+"Le champ séquence est utilisé pour ordonner les ressources, du numéro de "
+"séquence le plus bas vers le plus haute"
 
 #. module: account
 #: help:account.tax.code,notprintable:0
@@ -477,6 +477,8 @@ msgid ""
 "This field contains the informatin related to the numbering of the journal "
 "entries of this journal."
 msgstr ""
+"Ce champ contient les informations relatives à la numérotation des écritures "
+"de ce journal."
 
 #. module: account
 #: field:account.journal,default_debit_account_id:0
@@ -631,7 +633,7 @@ msgstr "Affectation des taxes"
 #. module: account
 #: model:ir.model,name:account.model_account_installer_modules
 msgid "account.installer.modules"
-msgstr ""
+msgstr "account.installer.modules"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_account_fiscalyear_close_state
@@ -953,7 +955,7 @@ msgstr "TTC"
 #: view:validate.account.move:0
 #: view:validate.account.move.lines:0
 msgid "Approve"
-msgstr ""
+msgstr "Approuver"
 
 #. module: account
 #: view:account.invoice:0
@@ -975,7 +977,7 @@ msgstr "Consolidation"
 #: view:account.invoice.report:0
 #: view:account.move.line:0
 msgid "Extended Filters..."
-msgstr ""
+msgstr "Filtres étendus..."
 
 #. module: account
 #: selection:account.journal,type:0
@@ -1003,7 +1005,7 @@ msgstr ""
 #. module: account
 #: view:account.analytic.line:0
 msgid "Purchases"
-msgstr ""
+msgstr "Achats"
 
 #. module: account
 #: field:account.model,lines_id:0
@@ -1124,7 +1126,7 @@ msgstr "-"
 #. module: account
 #: view:account.analytic.account:0
 msgid "Manager"
-msgstr ""
+msgstr "Responsable"
 
 #. module: account
 #: view:account.subscription.generate:0
@@ -1134,7 +1136,7 @@ msgstr ""
 #. module: account
 #: selection:account.bank.accounts.wizard,account_type:0
 msgid "Bank"
-msgstr ""
+msgstr "Banque"
 
 #. module: account
 #: field:account.period,date_start:0
@@ -1264,7 +1266,7 @@ msgstr "Analyse des écritures"
 #. module: account
 #: field:account.account,level:0
 msgid "Level"
-msgstr ""
+msgstr "Niveau"
 
 #. module: account
 #: report:account.invoice:0
@@ -1318,7 +1320,7 @@ msgstr ""
 #. module: account
 #: view:account.invoice:0
 msgid "Reset to Draft"
-msgstr ""
+msgstr "Remettre en brouillon"
 
 #. module: account
 #: view:wizard.multi.charts.accounts:0
@@ -1339,7 +1341,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.menu,name:account.next_id_22
 msgid "Partners"
-msgstr ""
+msgstr "Partenaires"
 
 #. module: account
 #: view:account.bank.statement:0
@@ -1365,7 +1367,7 @@ msgstr "Compte de client"
 #: field:account.installer.modules,config_logo:0
 #: field:wizard.multi.charts.accounts,config_logo:0
 msgid "Image"
-msgstr ""
+msgstr "Image"
 
 #. module: account
 #: code:addons/account/account_move_line.py:0
@@ -1615,7 +1617,7 @@ msgstr ""
 #. module: account
 #: view:account.invoice:0
 msgid "Responsible"
-msgstr ""
+msgstr "Responsable"
 
 #. module: account
 #: report:account.overdue:0
@@ -1639,7 +1641,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.menu,name:account.periodical_processing_invoicing
 msgid "Invoicing"
-msgstr ""
+msgstr "Facturation"
 
 #. module: account
 #: field:account.chart.template,tax_code_root_id:0
@@ -1689,7 +1691,7 @@ msgstr ""
 #. module: account
 #: field:account.cashbox.line,pieces:0
 msgid "Values"
-msgstr ""
+msgstr "Valeurs"
 
 #. module: account
 #: view:res.partner:0
@@ -1725,7 +1727,7 @@ msgstr ""
 #. module: account
 #: report:account.move.voucher:0
 msgid "Ref. :"
-msgstr ""
+msgstr "Réf. :"
 
 #. module: account
 #: view:account.analytic.chart:0
@@ -1833,7 +1835,7 @@ msgstr ""
 #. module: account
 #: field:account.cashbox.line,subtotal:0
 msgid "Sub Total"
-msgstr ""
+msgstr "Sous-total"
 
 #. module: account
 #: view:account.account:0
@@ -2016,7 +2018,7 @@ msgstr ""
 #: selection:report.account.sales,month:0
 #: selection:report.account_type.sales,month:0
 msgid "January"
-msgstr ""
+msgstr "Janvier"
 
 #. module: account
 #: view:account.journal:0
@@ -2059,7 +2061,7 @@ msgstr "Pro-forma"
 #: code:addons/account/installer.py:0
 #, python-format
 msgid " Journal"
-msgstr ""
+msgstr " Journal"
 
 #. module: account
 #: code:addons/account/account.py:0
@@ -2146,7 +2148,7 @@ msgstr "Écritures triées par"
 #. module: account
 #: field:account.change.currency,currency_id:0
 msgid "Change to"
-msgstr ""
+msgstr "Changer en"
 
 #. module: account
 #: view:account.entries.report:0
@@ -2156,7 +2158,7 @@ msgstr ""
 #. module: account
 #: model:ir.model,name:account.model_product_template
 msgid "Product Template"
-msgstr ""
+msgstr "Modèle de produit"
 
 #. module: account
 #: help:account.aged.trial.balance,fiscalyear_id:0
@@ -2311,7 +2313,7 @@ msgstr ""
 #: view:analytic.entries.report:0
 #: field:analytic.entries.report,day:0
 msgid "Day"
-msgstr ""
+msgstr "Jour"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.act_account_renew_view
@@ -2400,7 +2402,7 @@ msgstr "Centre de coûts"
 #: model:ir.ui.menu,name:account.menu_action_account_form
 #: model:ir.ui.menu,name:account.menu_analytic
 msgid "Accounts"
-msgstr ""
+msgstr "Comptes"
 
 #. module: account
 #: code:addons/account/invoice.py:0
@@ -2412,7 +2414,7 @@ msgstr ""
 #: view:account.invoice.report:0
 #: field:account.invoice.report,price_average:0
 msgid "Average Price"
-msgstr ""
+msgstr "Prix moyen"
 
 #. module: account
 #: report:account.move.voucher:0
@@ -2500,7 +2502,7 @@ msgstr "Vrai"
 #: view:account.move:0
 #: view:account.move.line:0
 msgid "Dates"
-msgstr ""
+msgstr "Dates"
 
 #. module: account
 #: field:account.tax,parent_id:0
@@ -2570,7 +2572,7 @@ msgstr ""
 #. module: account
 #: report:account.invoice:0
 msgid "Cancelled Invoice"
-msgstr ""
+msgstr "Facture annulée"
 
 #. module: account
 #: code:addons/account/account.py:0
@@ -2592,7 +2594,7 @@ msgstr "Codes de taxe"
 #. module: account
 #: model:ir.ui.menu,name:account.menu_finance_receivables
 msgid "Customers"
-msgstr ""
+msgstr "Clients"
 
 #. module: account
 #: report:account.analytic.account.cost_ledger:0
@@ -2608,7 +2610,7 @@ msgstr "Depuis"
 #: selection:report.account.sales,month:0
 #: selection:report.account_type.sales,month:0
 msgid "August"
-msgstr ""
+msgstr "Août"
 
 #. module: account
 #: code:addons/account/account_bank_statement.py:0
@@ -2640,7 +2642,7 @@ msgstr "Numéro de référence"
 #: selection:report.account.sales,month:0
 #: selection:report.account_type.sales,month:0
 msgid "October"
-msgstr ""
+msgstr "Octobre"
 
 #. module: account
 #: help:account.move.line,quantity:0
@@ -2820,7 +2822,7 @@ msgstr ""
 #. module: account
 #: selection:account.tax,applicable_type:0
 msgid "Always"
-msgstr ""
+msgstr "Toujours"
 
 #. module: account
 #: view:account.analytic.line:0
@@ -3093,7 +3095,7 @@ msgstr ""
 #. module: account
 #: model:ir.actions.act_window,name:account.action_invoice_tree_pending_invoice
 msgid "Pending Invoice"
-msgstr ""
+msgstr "Facture en attente"
 
 #. module: account
 #: selection:account.subscription,period_type:0
@@ -3103,7 +3105,7 @@ msgstr "Année"
 #. module: account
 #: report:account.move.voucher:0
 msgid "Authorised Signatory"
-msgstr ""
+msgstr "Signataire autorisé"
 
 #. module: account
 #: view:validate.account.move.lines:0
@@ -3185,7 +3187,7 @@ msgstr ""
 #. module: account
 #: field:account.invoice.report,state:0
 msgid "Invoice State"
-msgstr ""
+msgstr "État de la facture"
 
 #. module: account
 #: view:account.invoice.report:0
