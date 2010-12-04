@@ -6,20 +6,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2010-11-18 16:12+0000\n"
-"PO-Revision-Date: 2010-11-28 10:59+0000\n"
-"Last-Translator: qdp (OpenERP) <qdp-launchpad@tinyerp.com>\n"
+"POT-Creation-Date: 2010-12-03 15:44+0000\n"
+"PO-Revision-Date: 2010-12-03 18:33+0000\n"
+"Last-Translator: Rui Franco (multibase.pt) <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-11-29 04:51+0000\n"
+"X-Launchpad-Export-Date: 2010-12-04 05:13+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #. module: mrp
-#: view:mrp.routing.workcenter:0
-msgid "Routing Work Centers"
-msgstr ""
+#: field:mrp.production,move_created_ids:0
+#: field:mrp.production,move_created_ids2:0
+msgid "Moves Created"
+msgstr "Movimentos criados"
 
 #. module: mrp
 #: report:mrp.production.order:0
@@ -34,7 +35,7 @@ msgstr ""
 #. module: mrp
 #: help:mrp.production,location_src_id:0
 msgid "Location where the system will look for components."
-msgstr ""
+msgstr "Local onde o sistema irá procurar componentes."
 
 #. module: mrp
 #: field:mrp.production,workcenter_lines:0
@@ -47,20 +48,14 @@ msgid "Work Centers load"
 msgstr ""
 
 #. module: mrp
-#: field:mrp.production,move_created_ids:0
-#: field:mrp.production,move_created_ids2:0
-msgid "Moves Created"
-msgstr "Movimentos criados"
+#: view:mrp.routing.workcenter:0
+msgid "Routing Work Centers"
+msgstr ""
 
 #. module: mrp
 #: model:ir.module.module,shortdesc:mrp.module_meta_information
 msgid "Manufacturing Resource Planning"
 msgstr "Planeamento de recursos no fabrico"
-
-#. module: mrp
-#: constraint:ir.actions.act_window:0
-msgid "Invalid model name in the action definition."
-msgstr "Nome de modelo inválido na definição da acção"
 
 #. module: mrp
 #: field:mrp.routing.workcenter,cycle_nbr:0
@@ -75,13 +70,6 @@ msgid ""
 msgstr ""
 
 #. module: mrp
-#: help:mrp.bom,active:0
-msgid ""
-"If the active field is set to true, it will allow you to hide the bills of "
-"material without removing it."
-msgstr ""
-
-#. module: mrp
 #: field:mrp.production,picking_id:0
 #: field:mrp.production.order,picking_id:0
 msgid "Picking list"
@@ -91,7 +79,7 @@ msgstr ""
 #: code:addons/mrp/report/price.py:0
 #, python-format
 msgid "Hourly Cost"
-msgstr ""
+msgstr "Custo por hora"
 
 #. module: mrp
 #: code:addons/mrp/report/price.py:0
@@ -108,7 +96,7 @@ msgstr ""
 #: view:mrp.production.order:0
 #: field:mrp.production.order,day:0
 msgid "Day"
-msgstr ""
+msgstr "Dia"
 
 #. module: mrp
 #: model:ir.actions.act_window,name:mrp.mrp_routing_action
@@ -124,7 +112,7 @@ msgstr ""
 #. module: mrp
 #: model:process.node,note:mrp.process_node_stockproduct1
 msgid "For stockable products and consumables"
-msgstr ""
+msgstr "Para produtos armazenáveis e consumíveis"
 
 #. module: mrp
 #: model:process.transition,name:mrp.process_transition_stockproduction0
@@ -147,7 +135,7 @@ msgstr "Produtos Acabados"
 #. module: mrp
 #: selection:mrp.production.order,month:0
 msgid "May"
-msgstr ""
+msgstr "Maio"
 
 #. module: mrp
 #: model:process.transition,name:mrp.process_transition_servicerfq0
@@ -192,11 +180,6 @@ msgid "Set / Pack"
 msgstr "Definir / Pacote"
 
 #. module: mrp
-#: constraint:ir.ui.view:0
-msgid "Invalid XML for View Architecture!"
-msgstr "XML inválido para a arquitectura de vista"
-
-#. module: mrp
 #: field:mrp.installer,mrp_subproduct:0
 msgid "MRP Subproducts"
 msgstr ""
@@ -207,7 +190,7 @@ msgstr ""
 #: view:mrp.production.order:0
 #: field:mrp.production.order,state:0
 msgid "State"
-msgstr ""
+msgstr "Estado"
 
 #. module: mrp
 #: field:mrp.workcenter,costs_hour:0
@@ -225,11 +208,6 @@ msgstr ""
 #: view:mrp.production:0
 msgid "UOM"
 msgstr "UdM"
-
-#. module: mrp
-#: sql_constraint:ir.module.module:0
-msgid "The certificate ID of the module must be unique !"
-msgstr ""
 
 #. module: mrp
 #: model:ir.actions.act_window,help:mrp.mrp_property_group_action
@@ -262,12 +240,12 @@ msgstr "Ciclo de contas"
 #: code:addons/mrp/report/price.py:0
 #, python-format
 msgid "Work Cost"
-msgstr ""
+msgstr "Custo de produção"
 
 #. module: mrp
 #: report:bom.structure:0
 msgid "["
-msgstr ""
+msgstr "["
 
 #. module: mrp
 #: model:process.transition,name:mrp.process_transition_procureserviceproduct0
@@ -287,7 +265,7 @@ msgstr "Local de destino"
 #. module: mrp
 #: view:mrp.installer:0
 msgid "title"
-msgstr ""
+msgstr "título"
 
 #. module: mrp
 #: model:ir.ui.menu,name:mrp.menu_mrp_bom
@@ -315,12 +293,6 @@ msgid "Sets / Phantom"
 msgstr "Sets / fantasma"
 
 #. module: mrp
-#: selection:mrp.production,priority:0
-#: selection:mrp.production.order,priority:0
-msgid "Not urgent"
-msgstr "Não urgente"
-
-#. module: mrp
 #: help:mrp.bom,position:0
 msgid "Reference to a position in an external plan."
 msgstr "Referência para uma posição em um plano externo."
@@ -328,6 +300,11 @@ msgstr "Referência para uma posição em um plano externo."
 #. module: mrp
 #: selection:mrp.production.order,month:0
 msgid "August"
+msgstr "Agosto"
+
+#. module: mrp
+#: constraint:stock.move:0
+msgid "You try to assign a lot which is not from the same product"
 msgstr ""
 
 #. module: mrp
@@ -338,12 +315,7 @@ msgstr ""
 #. module: mrp
 #: selection:mrp.production.order,month:0
 msgid "June"
-msgstr ""
-
-#. module: mrp
-#: sql_constraint:res.groups:0
-msgid "The name of the group must be unique !"
-msgstr ""
+msgstr "Junho"
 
 #. module: mrp
 #: model:ir.model,name:mrp.model_mrp_product_produce
@@ -353,7 +325,7 @@ msgstr ""
 #. module: mrp
 #: selection:mrp.production.order,month:0
 msgid "October"
-msgstr ""
+msgstr "Outubro"
 
 #. module: mrp
 #: model:process.transition,name:mrp.process_transition_procurestockableproduct0
@@ -368,7 +340,6 @@ msgstr ""
 #. module: mrp
 #: code:addons/mrp/report/price.py:0
 #: report:bom.structure:0
-#: field:mrp.product.produce,product_qty:0
 #: field:mrp.product_price,number:0
 #: report:mrp.production.order:0
 #, python-format
@@ -378,7 +349,7 @@ msgstr "Quantidade"
 #. module: mrp
 #: field:mrp.production.workcenter.line,hour:0
 msgid "Nbr of hours"
-msgstr ""
+msgstr "Número de horas"
 
 #. module: mrp
 #: view:mrp.production:0
@@ -426,7 +397,7 @@ msgstr ""
 #: report:mrp.production.order:0
 #: field:mrp.production.order,date_planned:0
 msgid "Scheduled Date"
-msgstr ""
+msgstr "Data programada"
 
 #. module: mrp
 #: report:mrp.production.order:0
@@ -457,7 +428,7 @@ msgstr "Conta da Estrutura de Materiais"
 #. module: mrp
 #: model:process.node,note:mrp.process_node_serviceproduct0
 msgid "Product type is service"
-msgstr ""
+msgstr "O tipo de produto é \"serviço\""
 
 #. module: mrp
 #: model:process.transition,name:mrp.process_transition_bom0
@@ -509,6 +480,11 @@ msgid ""
 msgstr ""
 
 #. module: mrp
+#: constraint:product.product:0
+msgid "Error: Invalid ean code"
+msgstr "Erro: Código EAN inválido"
+
+#. module: mrp
 #: help:mrp.workcenter,costs_hour:0
 msgid "Specify Cost of Workcenter per hour."
 msgstr ""
@@ -558,7 +534,7 @@ msgstr ""
 #. module: mrp
 #: selection:mrp.production.order,month:0
 msgid "March"
-msgstr ""
+msgstr "Março"
 
 #. module: mrp
 #: model:ir.model,name:mrp.model_mrp_workcenter_load
@@ -580,14 +556,7 @@ msgstr ""
 #: view:mrp.product.produce:0
 #: view:mrp.production:0
 msgid "Produce"
-msgstr ""
-
-#. module: mrp
-#: help:mrp.production,picking_id:0
-msgid ""
-"This is the internal picking list that brings the finished product to the "
-"production plan"
-msgstr ""
+msgstr "Produzir"
 
 #. module: mrp
 #: help:mrp.product_price,number:0
@@ -612,6 +581,13 @@ msgstr "Linhas BoM"
 #: field:mrp.workcenter,time_start:0
 msgid "Time before prod."
 msgstr "Tempo antes da produção"
+
+#. module: mrp
+#: help:mrp.routing,active:0
+msgid ""
+"If the active field is set to False, it will allow you to hide the routing "
+"without removing it."
+msgstr ""
 
 #. module: mrp
 #: model:process.transition,name:mrp.process_transition_billofmaterialrouting0
@@ -652,12 +628,12 @@ msgstr ""
 #. module: mrp
 #: field:mrp.production.order,nbr:0
 msgid "# of Lines"
-msgstr ""
+msgstr "Número de linhas"
 
 #. module: mrp
 #: model:ir.ui.menu,name:mrp.menu_mrp_planning
 msgid "Planning"
-msgstr ""
+msgstr "Planeamento"
 
 #. module: mrp
 #: view:mrp.workcenter:0
@@ -710,7 +686,7 @@ msgstr "Tipo"
 #: code:addons/mrp/report/price.py:0
 #, python-format
 msgid "Total Cost of "
-msgstr ""
+msgstr "Custo total de "
 
 #. module: mrp
 #: model:process.node,note:mrp.process_node_minimumstockrule0
@@ -775,12 +751,12 @@ msgstr ""
 #. module: mrp
 #: view:mrp.production:0
 msgid "Partial"
-msgstr ""
+msgstr "Parcial"
 
 #. module: mrp
 #: selection:mrp.production.order,month:0
 msgid "September"
-msgstr ""
+msgstr "Setembro"
 
 #. module: mrp
 #: report:mrp.production.order:0
@@ -809,7 +785,7 @@ msgstr ""
 #. module: mrp
 #: model:ir.model,name:mrp.model_mrp_production
 msgid "Manufacturing Order"
-msgstr ""
+msgstr "Ordem de produção"
 
 #. module: mrp
 #: model:ir.actions.act_window,help:mrp.mrp_bom_form_action2
@@ -847,7 +823,7 @@ msgstr "Nome de modificação"
 #: view:mrp.production:0
 #: field:mrp.production.order,date:0
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #. module: mrp
 #: field:mrp.bom,type:0
@@ -870,7 +846,7 @@ msgstr ""
 #: view:mrp.production.order:0
 #: view:mrp.property:0
 msgid "Search"
-msgstr ""
+msgstr "Procurar"
 
 #. module: mrp
 #: field:report.workcenter.load,cycle:0
@@ -880,7 +856,7 @@ msgstr "Numero de ciclos"
 #. module: mrp
 #: model:ir.model,name:mrp.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Empresas"
 
 #. module: mrp
 #: model:process.node,name:mrp.process_node_minimumstockrule0
@@ -1011,7 +987,7 @@ msgstr ""
 #: code:addons/mrp/report/price.py:0
 #, python-format
 msgid "Component"
-msgstr ""
+msgstr "Componente"
 
 #. module: mrp
 #: view:mrp.production:0
@@ -1057,12 +1033,12 @@ msgstr ""
 #. module: mrp
 #: field:mrp.product.produce,mode:0
 msgid "Mode"
-msgstr ""
+msgstr "Modo"
 
 #. module: mrp
 #: report:bom.structure:0
 msgid "]"
-msgstr ""
+msgstr "]"
 
 #. module: mrp
 #: help:mrp.routing.workcenter,sequence:0
@@ -1071,14 +1047,9 @@ msgid ""
 msgstr ""
 
 #. module: mrp
-#: constraint:ir.rule:0
-msgid "Rules are not supported for osv_memory objects !"
-msgstr ""
-
-#. module: mrp
 #: constraint:mrp.production:0
 msgid "Order quantity cannot be negative or zero !"
-msgstr ""
+msgstr "A quantidade numa encomenda não pode ser igual ou inferior a zero!"
 
 #. module: mrp
 #: model:ir.actions.act_window,name:mrp.mrp_production_action3
@@ -1109,7 +1080,7 @@ msgstr ""
 #: view:mrp.routing:0
 #: view:mrp.workcenter:0
 msgid "Group By..."
-msgstr ""
+msgstr "Agrupar por..."
 
 #. module: mrp
 #: code:addons/mrp/report/price.py:0
@@ -1132,7 +1103,7 @@ msgstr "Local de Produtos Acabados"
 #. module: mrp
 #: model:ir.ui.menu,name:mrp.menu_pm_resources_config
 msgid "Resources"
-msgstr ""
+msgstr "Recursos"
 
 #. module: mrp
 #: field:mrp.workcenter,costs_journal_id:0
@@ -1208,10 +1179,10 @@ msgid "Location where the system will stock the finished products."
 msgstr "Locais onde o sistema vai armazenar os produtos acabados."
 
 #. module: mrp
-#: help:mrp.routing,active:0
+#: help:mrp.production,picking_id:0
 msgid ""
-"If the active field is set to true, it will allow you to hide the routing "
-"without removing it."
+"This is the internal picking list that brings the finished product to the "
+"production plan"
 msgstr ""
 
 #. module: mrp
@@ -1257,11 +1228,6 @@ msgstr ""
 #: field:mrp.production.order,priority:0
 msgid "Priority"
 msgstr "Prioridade"
-
-#. module: mrp
-#: sql_constraint:ir.module.module:0
-msgid "The name of the module must be unique !"
-msgstr ""
 
 #. module: mrp
 #: model:ir.model,name:mrp.model_stock_picking
@@ -1310,7 +1276,7 @@ msgstr "Fazer para Stock"
 #. module: mrp
 #: selection:mrp.production.order,month:0
 msgid "July"
-msgstr ""
+msgstr "Julho"
 
 #. module: mrp
 #: model:process.transition,note:mrp.process_transition_stockrfq0
@@ -1333,7 +1299,7 @@ msgstr "Estrutura de custo do produto"
 #. module: mrp
 #: model:ir.model,name:mrp.model_mrp_installer
 msgid "mrp.installer"
-msgstr ""
+msgstr "mrp.installer"
 
 #. module: mrp
 #: view:mrp.production:0
@@ -1344,7 +1310,7 @@ msgstr ""
 #: view:mrp.production.order:0
 #: field:mrp.production.order,month:0
 msgid "Month"
-msgstr ""
+msgstr "Mês"
 
 #. module: mrp
 #: model:ir.actions.act_window,help:mrp.mrp_workcenter_action
@@ -1380,11 +1346,6 @@ msgstr "Data de Início"
 #: field:mrp.workcenter,costs_hour_account_id:0
 msgid "Hour Account"
 msgstr "Conta horária"
-
-#. module: mrp
-#: constraint:ir.ui.menu:0
-msgid "Error ! You can not create recursive Menu."
-msgstr ""
 
 #. module: mrp
 #: view:mrp.production:0
@@ -1444,7 +1405,7 @@ msgstr "Informação extra"
 #. module: mrp
 #: model:ir.model,name:mrp.model_change_production_qty
 msgid "Change Quantity of Products"
-msgstr ""
+msgstr "Mudar a quantidade de produtos"
 
 #. module: mrp
 #: model:process.node,note:mrp.process_node_productionorder0
@@ -1455,7 +1416,7 @@ msgstr ""
 #: view:mrp.production:0
 #: view:mrp.production.order:0
 msgid "Current"
-msgstr ""
+msgstr "Atual"
 
 #. module: mrp
 #: field:mrp.workcenter,costs_general_account_id:0
@@ -1486,11 +1447,6 @@ msgid "Change Standard Price"
 msgstr ""
 
 #. module: mrp
-#: sql_constraint:ir.rule:0
-msgid "Rule must have at least one checked access right !"
-msgstr ""
-
-#. module: mrp
 #: field:mrp.production,origin:0
 #: report:mrp.production.order:0
 #: field:mrp.production.order,origin:0
@@ -1498,11 +1454,10 @@ msgid "Source Document"
 msgstr ""
 
 #. module: mrp
-#: constraint:ir.model:0
-msgid ""
-"The Object name must start with x_ and not contain any special character !"
-msgstr ""
-"O nome do objecto deve começar com x_ e não pode conter um carácter especial!"
+#: selection:mrp.production,priority:0
+#: selection:mrp.production.order,priority:0
+msgid "Not urgent"
+msgstr "Não urgente"
 
 #. module: mrp
 #: help:stock.change.standard.price,change_parent_price:0
@@ -1579,7 +1534,7 @@ msgstr "UdM do Produto"
 #: model:ir.ui.menu,name:mrp.menu_mrp_production_order_action
 #: view:mrp.production:0
 msgid "Manufacturing Orders"
-msgstr ""
+msgstr "Ordens de produção"
 
 #. module: mrp
 #: view:mrp.production:0
@@ -1599,7 +1554,7 @@ msgstr "UdM do Produto"
 #: model:process.transition,name:mrp.process_transition_servicemto0
 #: model:process.transition,name:mrp.process_transition_stockproduct0
 msgid "Make to Order"
-msgstr ""
+msgstr "Produzir por encomenda"
 
 #. module: mrp
 #: model:ir.actions.act_window,name:mrp.action_report_mrp_production_order
@@ -1621,7 +1576,7 @@ msgstr "Data de finalização"
 #. module: mrp
 #: field:mrp.workcenter,resource_id:0
 msgid "Resource"
-msgstr ""
+msgstr "Recurso"
 
 #. module: mrp
 #: help:mrp.bom,date_start:0
@@ -1648,7 +1603,7 @@ msgstr "Muito urgente"
 #. module: mrp
 #: view:change.production.qty:0
 msgid "Approve"
-msgstr ""
+msgstr "Aprovar"
 
 #. module: mrp
 #: view:mrp.property.group:0
@@ -1746,7 +1701,7 @@ msgstr ""
 #: field:mrp.routing.workcenter,company_id:0
 #: view:mrp.workcenter:0
 msgid "Company"
-msgstr ""
+msgstr "Empresa"
 
 #. module: mrp
 #: field:mrp.workcenter,time_cycle:0
@@ -1789,7 +1744,7 @@ msgstr "Quantidade de Produto UoS"
 #. module: mrp
 #: view:mrp.bom:0
 msgid "Components"
-msgstr ""
+msgstr "Componentes"
 
 #. module: mrp
 #: report:bom.structure:0
@@ -1846,6 +1801,18 @@ msgstr "Confirmar"
 #. module: mrp
 #: field:mrp.bom,product_efficiency:0
 msgid "Manufacturing Efficiency"
+msgstr "Eficiência de produção"
+
+#. module: mrp
+#: constraint:res.company:0
+msgid "Error! You can not create recursive companies."
+msgstr "Erro! Não pode criar empresas recursivamente."
+
+#. module: mrp
+#: help:mrp.bom,active:0
+msgid ""
+"If the active field is set to False, it will allow you to hide the bills of "
+"material without removing it."
 msgstr ""
 
 #. module: mrp
@@ -1967,12 +1934,12 @@ msgstr "Tempo em horas para a configuração."
 #. module: mrp
 #: selection:mrp.production.order,month:0
 msgid "December"
-msgstr ""
+msgstr "Dezembro"
 
 #. module: mrp
 #: field:mrp.installer,config_logo:0
 msgid "Image"
-msgstr ""
+msgstr "Imagem"
 
 #. module: mrp
 #: field:mrp.bom.revision,bom_id:0
@@ -2026,7 +1993,7 @@ msgstr "Semana"
 #. module: mrp
 #: field:mrp.installer,progress:0
 msgid "Configuration Progress"
-msgstr ""
+msgstr "Progresso da configuração"
 
 #. module: mrp
 #: selection:mrp.production,priority:0
@@ -2037,7 +2004,7 @@ msgstr "Normal"
 #. module: mrp
 #: model:process.node,note:mrp.process_node_routing0
 msgid "Manufacturing Steps."
-msgstr ""
+msgstr "Etapas de produção"
 
 #. module: mrp
 #: code:addons/mrp/report/price.py:0
@@ -2049,12 +2016,12 @@ msgstr ""
 #. module: mrp
 #: selection:mrp.product.produce,mode:0
 msgid "Consume & Produce"
-msgstr ""
+msgstr "Consumir & Produzir"
 
 #. module: mrp
 #: selection:mrp.production.order,month:0
 msgid "November"
-msgstr ""
+msgstr "Novembro"
 
 #. module: mrp
 #: field:mrp.bom,bom_id:0
@@ -2069,7 +2036,7 @@ msgstr "Unidade de medida do montante"
 #. module: mrp
 #: selection:mrp.production.order,month:0
 msgid "January"
-msgstr ""
+msgstr "Janeiro"
 
 #. module: mrp
 #: model:process.node,note:mrp.process_node_stockproduct0
@@ -2082,6 +2049,11 @@ msgstr ""
 #, python-format
 msgid "Error"
 msgstr "Erro"
+
+#. module: mrp
+#: field:mrp.product.produce,product_qty:0
+msgid "Select Quantity"
+msgstr ""
 
 #. module: mrp
 #: model:ir.actions.act_window,name:mrp.act_product_product_2_mrp_bom
@@ -2132,11 +2104,6 @@ msgid ""
 msgstr ""
 
 #. module: mrp
-#: sql_constraint:ir.model.fields:0
-msgid "Size of the field can never be less than 1 !"
-msgstr ""
-
-#. module: mrp
 #: model:ir.model,name:mrp.model_mrp_routing
 #: view:mrp.bom:0
 #: field:mrp.bom,routing_id:0
@@ -2151,12 +2118,17 @@ msgstr "Roteamento"
 #. module: mrp
 #: field:mrp.installer,mrp_operations:0
 msgid "Manufacturing Operations"
-msgstr ""
+msgstr "Operações de produção"
 
 #. module: mrp
 #: help:mrp.production,origin:0
 msgid ""
 "Reference of the document that generated this production order request."
+msgstr ""
+
+#. module: mrp
+#: constraint:stock.move:0
+msgid "You must assign a production lot for this product"
 msgstr ""
 
 #. module: mrp
@@ -2178,7 +2150,7 @@ msgstr ""
 #. module: mrp
 #: model:ir.model,name:mrp.model_mrp_product_price
 msgid "Product Price"
-msgstr ""
+msgstr "Preço do produto"
 
 #. module: mrp
 #: model:ir.actions.act_window,name:mrp.action_mrp_installer
@@ -2193,7 +2165,7 @@ msgstr ""
 #. module: mrp
 #: view:change.production.qty:0
 msgid "Change Quantity"
-msgstr ""
+msgstr "Mudar a quantidade"
 
 #. module: mrp
 #: view:change.production.qty:0
@@ -2259,7 +2231,7 @@ msgstr ""
 #. module: mrp
 #: selection:mrp.production.order,month:0
 msgid "February"
-msgstr ""
+msgstr "Fevereiro"
 
 #. module: mrp
 #: model:ir.actions.act_window,name:mrp.mrp_property_group_action
@@ -2270,7 +2242,7 @@ msgstr ""
 #. module: mrp
 #: selection:mrp.production.order,month:0
 msgid "April"
-msgstr ""
+msgstr "Abril"
 
 #. module: mrp
 #: model:process.transition,note:mrp.process_transition_procurestockableproduct0
@@ -2339,7 +2311,7 @@ msgstr ""
 #: view:mrp.production.order:0
 #: field:mrp.production.order,year:0
 msgid "Year"
-msgstr ""
+msgstr "Ano"
 
 #~ msgid "UoS Quantity"
 #~ msgstr "Quantidade UoS"
@@ -2355,6 +2327,9 @@ msgstr ""
 
 #~ msgid "Automatic orderpoint"
 #~ msgstr "Ponto de pedido automatico"
+
+#~ msgid "Invalid XML for View Architecture!"
+#~ msgstr "XML inválido para a arquitectura de vista"
 
 #~ msgid "Best price (not yet active!)"
 #~ msgstr "Melhor preço (ainda não activado!)"
@@ -2506,6 +2481,11 @@ msgstr ""
 #~ msgid "Reordering Mode"
 #~ msgstr "Modo de reordenamento"
 
+#~ msgid ""
+#~ "The Object name must start with x_ and not contain any special character !"
+#~ msgstr ""
+#~ "O nome do objecto deve começar com x_ e não pode conter um carácter especial!"
+
 #~ msgid "Production Orders in Progress"
 #~ msgstr "Ordens de produção"
 
@@ -2604,6 +2584,9 @@ msgstr ""
 
 #~ msgid "Compute Stock Minimum Rules Only"
 #~ msgstr "Calcular apenas regras de stock mínimo."
+
+#~ msgid "Invalid model name in the action definition."
+#~ msgstr "Nome de modelo inválido na definição da acção"
 
 #~ msgid "Not used in computations, for information purpose only."
 #~ msgstr "Não utilizado em cálculos, apenas para informação."
