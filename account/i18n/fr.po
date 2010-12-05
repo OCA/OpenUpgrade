@@ -7,14 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2010-12-03 15:42+0000\n"
-"PO-Revision-Date: 2010-12-03 22:38+0000\n"
-"Last-Translator: Maxime Chambreuil (http://www.savoirfairelinux.com) "
-"<maxime.chambreuil@savoirfairelinux.com>\n"
+"PO-Revision-Date: 2010-12-04 09:51+0000\n"
+"Last-Translator: Numérigraphe <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-12-04 05:14+0000\n"
+"X-Launchpad-Export-Date: 2010-12-05 04:50+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #. module: account
@@ -73,11 +72,14 @@ msgid "End of Fiscal Year Entry"
 msgstr "Ecriture de fin d'exercice comptable"
 
 #. module: account
-#: model:ir.actions.act_window,name:account.action_account_fiscalyear_form
-#: view:ir.sequence:0
-#: model:ir.ui.menu,name:account.menu_action_account_fiscalyear_form
-msgid "Fiscal Years"
-msgstr "Exercices comptables"
+#: code:addons/account/wizard/account_move_bank_reconcile.py:0
+#, python-format
+msgid ""
+"You have to define the bank account\n"
+"in the journal definition for reconciliation."
+msgstr ""
+"Vous devez définir le compte bancaire\n"
+"dans la définition du journal pour le rapprochement."
 
 #~ msgid "All account entries"
 #~ msgstr "Toutes les écritures de compte"
@@ -4949,7 +4951,7 @@ msgstr "Journal de banque "
 #. module: account
 #: constraint:product.template:0
 msgid "Error: UOS must be in a different category than the UOM"
-msgstr ""
+msgstr "Erreur : l'UdV doit appartenir à une autre catégorie que l'UdM"
 
 #. module: account
 #: view:account.journal:0
@@ -8541,16 +8543,6 @@ msgid "Date of the day"
 msgstr "Date du jour"
 
 #. module: account
-#: code:addons/account/wizard/account_move_bank_reconcile.py:0
-#, python-format
-msgid ""
-"You have to define the bank account\n"
-"in the journal definition for reconciliation."
-msgstr ""
-"Vous devez définir le compte bancaire\n"
-"dans la définition du journal pour le rapprochement."
-
-#. module: account
 #: view:account.move.line.reconcile:0
 msgid "Reconciliation transactions"
 msgstr "Écritures des lettrages"
@@ -9656,6 +9648,13 @@ msgstr "account.addtmpl.wizard"
 #: report:account.third_party_ledger_other:0
 msgid "Partner's"
 msgstr "Du partenaire"
+
+#. module: account
+#: model:ir.actions.act_window,name:account.action_account_fiscalyear_form
+#: view:ir.sequence:0
+#: model:ir.ui.menu,name:account.menu_action_account_fiscalyear_form
+msgid "Fiscal Years"
+msgstr "Exercices comptables"
 
 #. module: account
 #: help:account.analytic.journal,active:0

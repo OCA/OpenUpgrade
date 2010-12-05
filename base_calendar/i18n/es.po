@@ -8,14 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-12-03 15:43+0000\n"
-"PO-Revision-Date: 2010-12-03 16:48+0000\n"
-"Last-Translator: Jordi Esteve (www.zikzakmedia.com) "
-"<jesteve@zikzakmedia.com>\n"
+"PO-Revision-Date: 2010-12-04 22:56+0000\n"
+"Last-Translator: Carlos @ smile.fr <Unknown>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-12-04 05:16+0000\n"
+"X-Launchpad-Export-Date: 2010-12-05 04:53+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #. module: base_calendar
@@ -41,6 +40,8 @@ msgid ""
 "This property defines the list of date/time exceptions for a recurring "
 "calendar component."
 msgstr ""
+"Esta propiedad define la lista de excepciones de fecha/hora para un evento "
+"de calendario recurrente."
 
 #. module: base_calendar
 #: constraint:res.users:0
@@ -50,68 +51,68 @@ msgstr ""
 #. module: base_calendar
 #: field:calendar.event.edit.all,name:0
 msgid "Title"
-msgstr ""
+msgstr "Título"
 
 #. module: base_calendar
 #: selection:base.calendar.set.exrule,freq:0
 #: selection:calendar.event,rrule_type:0
 #: selection:calendar.todo,rrule_type:0
 msgid "Monthly"
-msgstr ""
+msgstr "Mensual"
 
 #. module: base_calendar
 #: view:calendar.attendee:0
 msgid "Invited User"
-msgstr ""
+msgstr "Usuario invitado"
 
 #. module: base_calendar
 #: view:base.calendar.set.exrule:0
 msgid "Select range to Exclude"
-msgstr ""
+msgstr "Elija el rango a excluir"
 
 #. module: base_calendar
 #: model:ir.actions.act_window,name:base_calendar.action_res_alarm_view
 #: model:ir.ui.menu,name:base_calendar.menu_crm_meeting_avail_alarm
 msgid "Alarms"
-msgstr ""
+msgstr "Alarmas"
 
 #. module: base_calendar
 #: selection:base.calendar.set.exrule,week_list:0
 #: selection:calendar.event,week_list:0
 #: selection:calendar.todo,week_list:0
 msgid "Sunday"
-msgstr ""
+msgstr "Domingo"
 
 #. module: base_calendar
 #: view:calendar.attendee:0
 #: field:calendar.attendee,role:0
 msgid "Role"
-msgstr ""
+msgstr "Rol"
 
 #. module: base_calendar
 #: view:calendar.attendee:0
 #: view:calendar.event:0
 msgid "Invitation details"
-msgstr ""
+msgstr "Detalles de la invitación"
 
 #. module: base_calendar
 #: selection:base.calendar.set.exrule,byday:0
 #: selection:calendar.event,byday:0
 #: selection:calendar.todo,byday:0
 msgid "Fourth"
-msgstr ""
+msgstr "Cuarto"
 
 #. module: base_calendar
 #: help:calendar.event,count:0
 #: help:calendar.todo,count:0
 msgid "Repeat max that times"
-msgstr ""
+msgstr "Repetir max. estas veces"
 
 #. module: base_calendar
 #: field:calendar.event,show_as:0
 #: field:calendar.todo,show_as:0
 msgid "Show as"
-msgstr ""
+msgstr "Mostrar como"
 
 #. module: base_calendar
 #: field:base.calendar.set.exrule,day:0
@@ -121,13 +122,13 @@ msgstr ""
 #: field:calendar.todo,day:0
 #: selection:calendar.todo,select1:0
 msgid "Date of month"
-msgstr ""
+msgstr "Día del mes"
 
 #. module: base_calendar
 #: selection:calendar.event,class:0
 #: selection:calendar.todo,class:0
 msgid "Public"
-msgstr ""
+msgstr "Público"
 
 #. module: base_calendar
 #: selection:calendar.alarm,trigger_interval:0
@@ -135,40 +136,40 @@ msgstr ""
 #: selection:calendar.todo,freq:0
 #: selection:res.alarm,trigger_interval:0
 msgid "Hours"
-msgstr ""
+msgstr "Horas"
 
 #. module: base_calendar
 #: selection:base.calendar.set.exrule,month_list:0
 #: selection:calendar.event,month_list:0
 #: selection:calendar.todo,month_list:0
 msgid "March"
-msgstr ""
+msgstr "Marzo"
 
 #. module: base_calendar
 #: code:addons/base_calendar/wizard/base_calendar_set_exrule.py:0
 #, python-format
 msgid "Warning !"
-msgstr ""
+msgstr "¡ Advertencia !"
 
 #. module: base_calendar
 #: selection:base.calendar.set.exrule,week_list:0
 #: selection:calendar.event,week_list:0
 #: selection:calendar.todo,week_list:0
 msgid "Friday"
-msgstr ""
+msgstr "Viernes"
 
 #. module: base_calendar
 #: field:calendar.event,allday:0
 #: field:calendar.todo,allday:0
 msgid "All Day"
-msgstr ""
+msgstr "Todo el día"
 
 #. module: base_calendar
 #: field:base.calendar.set.exrule,select1:0
 #: field:calendar.event,select1:0
 #: field:calendar.todo,select1:0
 msgid "Option"
-msgstr ""
+msgstr "Opción"
 
 #. module: base_calendar
 #: selection:calendar.attendee,availability:0
@@ -176,7 +177,7 @@ msgstr ""
 #: selection:calendar.todo,show_as:0
 #: selection:res.users,availability:0
 msgid "Free"
-msgstr ""
+msgstr "Libre"
 
 #. module: base_calendar
 #: help:calendar.attendee,rsvp:0
@@ -669,7 +670,7 @@ msgstr ""
 #: field:calendar.event,vtimezone:0
 #: field:calendar.todo,vtimezone:0
 msgid "Timezone"
-msgstr ""
+msgstr "Zona horaria"
 
 #. module: base_calendar
 #: view:calendar.event:0
