@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2010-12-15 15:05+0000\n"
-"PO-Revision-Date: 2010-12-17 19:12+0000\n"
+"PO-Revision-Date: 2010-12-18 15:34+0000\n"
 "Last-Translator: Maxime Chambreuil (http://www.savoirfairelinux.com) "
 "<maxime.chambreuil@savoirfairelinux.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-12-18 05:06+0000\n"
+"X-Launchpad-Export-Date: 2010-12-19 04:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #. module: marketing_campaign
@@ -218,6 +218,7 @@ msgstr "Année(s)"
 #, python-format
 msgid "Sorry, campaign duplication is not supported at the moment."
 msgstr ""
+"Désolé, la duplication de campagnes n'est pas supporté pour le moment."
 
 #. module: marketing_campaign
 #: help:marketing.campaign.segment,sync_last_date:0
@@ -613,7 +614,7 @@ msgstr "Analyse des campagnes"
 #. module: marketing_campaign
 #: sql_constraint:marketing.campaign.transition:0
 msgid "The interval must be positive or zero"
-msgstr ""
+msgstr "L'intervalle doit être positif ou égal à zéro"
 
 #. module: marketing_campaign
 #: selection:marketing.campaign,mode:0
@@ -623,7 +624,7 @@ msgstr "Test en temps réel"
 #. module: marketing_campaign
 #: sql_constraint:email.template:0
 msgid "The template name must be unique !"
-msgstr ""
+msgstr "Le nom du modèle doit être unique !"
 
 #. module: marketing_campaign
 #: selection:marketing.campaign,mode:0
@@ -638,7 +639,7 @@ msgstr "Répertoire"
 #. module: marketing_campaign
 #: constraint:res.partner:0
 msgid "Error ! You can not create recursive associated members."
-msgstr ""
+msgstr "Erreur ! Vous ne pouvez pas créer de membres associés récursifs."
 
 #. module: marketing_campaign
 #: view:marketing.campaign:0
@@ -839,7 +840,7 @@ msgstr "Terminé"
 #: code:addons/marketing_campaign/marketing_campaign.py:0
 #, python-format
 msgid "Operation not supported"
-msgstr ""
+msgstr "Opération non supportée"
 
 #. module: marketing_campaign
 #: model:ir.model,name:marketing_campaign.model_email_template
@@ -881,6 +882,11 @@ msgid ""
 "possible action could be sending an email template that has previously been "
 "created in the system."
 msgstr ""
+"Une campagne marketing est un événement ou une activité qui vous aide à "
+"gérer et à rejoindre vos partenaires avec des messages spécifiques. Une "
+"campagne peut avoir plusieurs activités qui seront appelées lors d'une "
+"situation spécifique. Une action possible peut être d'envoyer un modèle de "
+"courriel qui a été précédemment créer dans le système."
 
 #. module: marketing_campaign
 #: model:ir.model,name:marketing_campaign.model_marketing_campaign_transition
@@ -950,7 +956,7 @@ msgstr "En cours"
 #: code:addons/marketing_campaign/marketing_campaign.py:0
 #, python-format
 msgid "After %(interval_nbr)d %(interval_type)s"
-msgstr ""
+msgstr "Après %(interval_nbr)d %(interval_type)s"
 
 #. module: marketing_campaign
 #: model:ir.model,name:marketing_campaign.model_marketing_campaign
