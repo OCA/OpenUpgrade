@@ -108,6 +108,7 @@ class sale_report(osv.osv):
                     el.product_uom_qty,
                     el.price_total,
                     el.categ_id,
+                    el.price_average,
                     el.order_id,
                     s.date_order,
                     s.date_confirm,
