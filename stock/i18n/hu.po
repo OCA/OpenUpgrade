@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2011-01-11 11:16+0000\n"
-"PO-Revision-Date: 2011-01-22 00:49+0000\n"
+"PO-Revision-Date: 2011-01-23 00:40+0000\n"
 "Last-Translator: NOVOTRADE RENDSZERHÁZ <openerp@novotrade.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-01-22 04:51+0000\n"
+"X-Launchpad-Export-Date: 2011-01-23 04:57+0000\n"
 "X-Generator: Launchpad (build 12177)\n"
 
 #. module: stock
@@ -309,7 +309,7 @@ msgstr "Partner"
 #: help:stock.move.memory.in,currency:0
 #: help:stock.move.memory.out,currency:0
 msgid "Currency in which Unit cost is expressed"
-msgstr ""
+msgstr "Önköltség pénzneme"
 
 #. module: stock
 #: code:addons/stock/wizard/stock_return_picking.py:135
@@ -424,7 +424,7 @@ msgstr ""
 #. module: stock
 #: field:report.stock.move,product_qty_in:0
 msgid "In Qty"
-msgstr ""
+msgstr "Bejövő menny."
 
 #. module: stock
 #: code:addons/stock/wizard/stock_fill_inventory.py:115
@@ -1052,7 +1052,7 @@ msgstr "Várható szállítási dátum"
 #. module: stock
 #: selection:stock.move,state:0
 msgid "Not Available"
-msgstr ""
+msgstr "Nem elérhető"
 
 #. module: stock
 #: selection:report.stock.move,month:0
@@ -1244,6 +1244,8 @@ msgstr "Kezdő dátum"
 #, python-format
 msgid "You may only return pickings that are Confirmed, Available or Done!"
 msgstr ""
+"Csak jóváhagyott, rendelkezésre álló vagy kész állapotú készletmozgásokat "
+"lehet visszáruzni!"
 
 #. module: stock
 #: view:stock.picking:0
@@ -1418,6 +1420,16 @@ msgid ""
 "* Done: has been processed, can't be modified or cancelled anymore\n"
 "* Cancelled: has been cancelled, can't be confirmed anymore"
 msgstr ""
+"* Tervezet: még nem hagyták jóvá, és a rendszer addig nem ütemezi be, amíg "
+"jóvá nem hagyják\n"
+"* Jóváhagyott: még várja, hogy legyen elegendő termék\n"
+"* Rendelkezésre álló: a termékek foglalásra kerültek, egyszerűen "
+"jóváhagyásra várnak.\n"
+"* Várakozó: egy másik mozgás befejezésére vár, mielőtt automatikusan "
+"rendelkezésre állóra változik (pl. beszerzés megrendelésre folyamatok "
+"esetében)\n"
+"* Kész: végrehajtásra került, többé nem lehet módosítani vagy törölni\n"
+"* Törölt: törlésre került, többé nem hagyható jóvá"
 
 #. module: stock
 #: help:stock.location,company_id:0
@@ -1456,6 +1468,14 @@ msgid ""
 " When the picking is done the state is 'Done'.              \n"
 "The state is 'Waiting' if the move is waiting for another one."
 msgstr ""
+"A készletmozgás létrehozásakor 'tervezet' állapotban van.\n"
+" Ezután 'nem elérhető' állapotba kerül, ha az ütemező nem talál elegendő "
+"terméket.\n"
+" Ha a termékek foglalásra kerülnek, az állapot 'rendelkezésre álló'-ra "
+"változik.\n"
+" Amikor a készletkiadást/bevételezést végrehajtják, az állapota 'kész' lesz. "
+"             \n"
+"Ha a mozgás egy másik mozgás befejezésére vár, akkor az állapota 'várakozó'."
 
 #. module: stock
 #: selection:report.stock.inventory,location_type:0
@@ -2604,7 +2624,7 @@ msgstr ""
 #. module: stock
 #: view:stock.move:0
 msgid "Set Available"
-msgstr "Rendelkezésre álló"
+msgstr "Beállítás rendelkezésre állónak"
 
 #. module: stock
 #: report:stock.picking.list:0
@@ -3577,6 +3597,12 @@ msgid ""
 " When the picking it done the state is 'Done'.              \n"
 "The state is 'Waiting' if the move is waiting for another one."
 msgstr ""
+"A készletmozgás létrehozásakor 'tervezet' állapotban van.\n"
+" Ezután 'jóváhagyott' állapotba kerül.\n"
+" Ha van elegendő készlet, az állapot 'rendelkezésre álló'-ra változik.\n"
+" Amikor a készletkiadást/bevételezést végrehajtják, az állapota 'kész' lesz. "
+"             \n"
+"Ha a mozgás egy másik mozgás befejezésére vár, akkor az állapota 'várakozó'."
 
 #. module: stock
 #: view:board.board:0
@@ -3621,7 +3647,7 @@ msgstr "Beállítás nullára"
 #: code:addons/stock/wizard/stock_invoice_onshipping.py:85
 #, python-format
 msgid "None of these picking lists require invoicing."
-msgstr ""
+msgstr "Egyik kiszedési listát sem kell számlázni."
 
 #. module: stock
 #: selection:report.stock.move,month:0
@@ -3645,7 +3671,7 @@ msgstr "Nem tervezett mennyiség"
 #: code:addons/stock/stock.py:1318
 #, python-format
 msgid "is scheduled"
-msgstr ""
+msgstr "beütemezésre került."
 
 #. module: stock
 #: field:stock.location,chained_company_id:0
@@ -3702,7 +3728,7 @@ msgstr "XML fájl"
 #. module: stock
 #: view:stock.change.product.qty:0
 msgid "Select Quantity"
-msgstr ""
+msgstr "Mennyiség kiválasztása"
 
 #. module: stock
 #: model:ir.actions.act_window,help:stock.action_location_tree
@@ -3791,7 +3817,7 @@ msgstr ""
 #: code:addons/stock/stock.py:2348
 #, python-format
 msgid "quantity."
-msgstr ""
+msgstr "mennyiség."
 
 #. module: stock
 #: constraint:stock.move:0
@@ -3822,6 +3848,8 @@ msgid ""
 "There are no products to return (only lines in Done state and not fully "
 "returned yet can be returned)!"
 msgstr ""
+"Nincsenek visszáruzható termékek (csak kész állapotú és nem teljesen "
+"visszáruzott tételeket lehet visszáruzni)!"
 
 #. module: stock
 #: model:ir.model,name:stock.model_stock_move_split
@@ -3859,7 +3887,7 @@ msgid ""
 "product, the one from the product category is used."
 msgstr ""
 "Ha valós idejű készletkönyvelést alkalmazunk, minden készletcsökkenés mozgás "
-"tartozik oldala ez a főkönyvi számla lesz. Ha a termékre nincs beállítva, "
+"tartozik oldala ez a főkönyvi számla lesz. Ha a termékre nem állították be, "
 "akkor a termék kategóriánál meghatározott számlát használja a rendszer."
 
 #. module: stock
@@ -3933,7 +3961,7 @@ msgstr "Jövő"
 #. module: stock
 #: field:stock.invoice.onshipping,invoice_date:0
 msgid "Invoiced date"
-msgstr ""
+msgstr "Számla kelte"
 
 #. module: stock
 #: code:addons/stock/stock.py:729
@@ -3959,7 +3987,7 @@ msgstr ""
 #. module: stock
 #: view:product.product:0
 msgid "Cost Price:"
-msgstr "Beszerzési ár:"
+msgstr "Bekerülési érték:"
 
 #. module: stock
 #: help:stock.move,move_dest_id:0

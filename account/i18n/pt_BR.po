@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2011-01-11 11:14+0000\n"
-"PO-Revision-Date: 2011-01-21 13:59+0000\n"
-"Last-Translator: Adriano Prado <adrianojprado@hotmail.com>\n"
+"PO-Revision-Date: 2011-01-22 19:32+0000\n"
+"Last-Translator: Emerson <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-01-22 04:52+0000\n"
+"X-Launchpad-Export-Date: 2011-01-23 04:58+0000\n"
 "X-Generator: Launchpad (build 12177)\n"
 
 #. module: account
@@ -2178,7 +2178,7 @@ msgstr "Não existe Diário Contábil do tipo Compra/Venda definido!"
 #. module: account
 #: view:product.category:0
 msgid "Accounting Properties"
-msgstr "Propriedades da conta"
+msgstr "Propriedades da Conta"
 
 #. module: account
 #: report:account.journal.period.print:0
@@ -2423,7 +2423,7 @@ msgstr ""
 "automaticamente na geração dos lançamentos contábeis. Se você mantiver a "
 "forma de pagamento e a data de vencimento vazias, significa pagamento à "
 "vista. A forma de pagamento pode calcular várias datas de vencimento, por "
-"exemplo 30/60/90 dias da data."
+"exemplo 50% agora, 50% daqui um mês."
 
 #. module: account
 #: view:account.analytic.cost.ledger.journal.report:0
@@ -2711,7 +2711,7 @@ msgstr "Agosto"
 #, python-format
 msgid ""
 "The expected balance (%.2f) is different than the computed one. (%.2f)"
-msgstr "O balanço esperado (%.2f) é diferente do calculado. (%.2f)"
+msgstr "O saldo esperado (%.2f) é diferente do calculado. (%.2f)"
 
 #. module: account
 #: model:process.transition,note:account.process_transition_paymentreconcile0
@@ -4304,7 +4304,7 @@ msgstr "Cancelado"
 #. module: account
 #: help:account.bank.statement,balance_end_cash:0
 msgid "Closing balance based on cashBox"
-msgstr ""
+msgstr "Fechamento de balanço baseado no caixa"
 
 #. module: account
 #: constraint:account.account:0
@@ -5042,8 +5042,8 @@ msgid ""
 "You can not do this modification on a reconciled entry ! Please note that "
 "you can just change some non important fields !"
 msgstr ""
-"Você não pode fazer uma modificação em lançamentos conciliados! Observe que "
-"você pode simplesmente mudar alguns campos sem importância!"
+"Você não pode fazer esta modificação em um lançamento reconciliado ! Observe "
+"que você só pode mudar alguns campos sem importância!"
 
 #. module: account
 #: model:ir.model,name:account.model_account_common_account_report
@@ -5197,8 +5197,8 @@ msgid ""
 "Specified Journal does not have any account move entries in draft state for "
 "this period"
 msgstr ""
-"O diário especificado não tem nenhuma entrada do movimento da conta no "
-"estado do esboço para este período"
+"O diário especificado não tem nenhum lançamento de movimento de conta "
+"informado para este período com status provisório"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_view_move_line
@@ -5433,7 +5433,7 @@ msgstr "Contas a Pagar e Receber"
 #. module: account
 #: field:account.fiscal.position.account.template,position_id:0
 msgid "Fiscal Mapping"
-msgstr ""
+msgstr "Mapeamento Fiscal"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_account_state_open
@@ -5900,7 +5900,7 @@ msgstr "Conta de crédito padrão"
 #. module: account
 #: view:account.installer:0
 msgid "Configure Your Accounting Chart"
-msgstr ""
+msgstr "Configure seu Plano de Contas"
 
 #. module: account
 #: view:account.payment.term.line:0
@@ -6088,7 +6088,7 @@ msgstr "Centralização"
 #. module: account
 #: view:wizard.multi.charts.accounts:0
 msgid "Generate Your Accounting Chart from a Chart Template"
-msgstr ""
+msgstr "Gere seu Plano de Contas a partir de um Plano Modelo"
 
 #. module: account
 #: view:account.account:0
@@ -6236,6 +6236,8 @@ msgid ""
 "corresponds with the entries (or records) of that account in your accounting "
 "system."
 msgstr ""
+"Reconciliação Bancária consiste em verificar que seu extrato bancário "
+"corresponde com os lançamentos (ou registros) das contas no sistema contábil."
 
 #. module: account
 #: model:process.node,note:account.process_node_draftstatement0
@@ -6493,6 +6495,8 @@ msgid ""
 "Check this box if you are unsure of that journal entry and if you want to "
 "note it as 'to be reviewed' by an accounting expert."
 msgstr ""
+"Marque esta opção se você não estiver seguro sobre o lançamento e quiser "
+"colocar uma observação \"para ser revisado\" por um responsável contábil."
 
 #. module: account
 #: help:account.installer.modules,account_voucher:0
@@ -7359,7 +7363,7 @@ msgstr "Fixo"
 #: code:addons/account/invoice.py:720
 #, python-format
 msgid "Warning !"
-msgstr "Mensagem !"
+msgstr "Atenção !"
 
 #. module: account
 #: field:account.entries.report,move_line_state:0
@@ -7621,7 +7625,7 @@ msgstr ""
 #. module: account
 #: model:ir.module.module,shortdesc:account.module_meta_information
 msgid "Accounting and Financial Management"
-msgstr ""
+msgstr "Gestão Financeira e Contábil"
 
 #. module: account
 #: field:account.automatic.reconcile,period_id:0
@@ -8111,7 +8115,7 @@ msgstr ""
 #. module: account
 #: model:process.transition,note:account.process_transition_validentries0
 msgid "Accountant validates the accounting entries coming from the invoice."
-msgstr ""
+msgstr "O contador valida os lançamentos contábeis vindos da fatura."
 
 #. module: account
 #: model:ir.actions.act_window,help:account.action_account_fiscalyear_form
