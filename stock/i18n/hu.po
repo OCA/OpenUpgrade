@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2011-01-11 11:16+0000\n"
-"PO-Revision-Date: 2011-01-24 08:43+0000\n"
+"PO-Revision-Date: 2011-01-25 21:22+0000\n"
 "Last-Translator: NOVOTRADE RENDSZERHÁZ <openerp@novotrade.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-01-25 04:54+0000\n"
+"X-Launchpad-Export-Date: 2011-01-26 04:37+0000\n"
 "X-Generator: Launchpad (build 12177)\n"
 
 #. module: stock
@@ -30,7 +30,7 @@ msgstr ""
 #: code:addons/stock/product.py:76
 #, python-format
 msgid "Variation Account is not specified for Product Category: %s"
-msgstr "%s termék kategóriára nem állítottak be készletszámlát."
+msgstr "%s termék kategóriára nem állítottak be készlet főkönyvi számlát."
 
 #. module: stock
 #: field:stock.location,chained_location_id:0
@@ -1426,7 +1426,7 @@ msgstr ""
 "* Rendelkezésre álló: a termékek foglalásra kerültek, egyszerűen "
 "jóváhagyásra várnak.\n"
 "* Várakozó: egy másik mozgás befejezésére vár, mielőtt automatikusan "
-"rendelkezésre állóra változik (pl. beszerzés megrendelésre folyamatok "
+"rendelkezésre állóra változik (pl. rendelésre gyártás/beszerzés folyamatok "
 "esetében)\n"
 "* Kész: végrehajtásra került, többé nem lehet módosítani vagy törölni\n"
 "* Törölt: törlésre került, többé nem hagyható jóvá"
