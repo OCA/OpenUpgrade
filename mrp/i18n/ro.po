@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2011-01-11 11:15+0000\n"
-"PO-Revision-Date: 2011-01-25 22:21+0000\n"
+"PO-Revision-Date: 2011-01-27 10:32+0000\n"
 "Last-Translator: Dorin Hongu <dhongu@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-01-26 04:37+0000\n"
+"X-Launchpad-Export-Date: 2011-01-28 04:45+0000\n"
 "X-Generator: Launchpad (build 12177)\n"
 
 #. module: mrp
@@ -263,7 +263,7 @@ msgstr ""
 #. module: mrp
 #: view:mrp.workcenter:0
 msgid "Capacity Information"
-msgstr ""
+msgstr "Informaţie capacitate"
 
 #. module: mrp
 #: report:mrp.production.order:0
@@ -522,7 +522,7 @@ msgstr "Schimbă Cant"
 #. module: mrp
 #: view:mrp.production:0
 msgid "Force Reservation"
-msgstr ""
+msgstr "Rezervare forţată"
 
 #. module: mrp
 #: field:mrp.bom.revision,author_id:0
@@ -756,7 +756,7 @@ msgstr "Data tipăririi"
 #: model:process.node,name:mrp.process_node_orderrfq0
 #: model:process.node,name:mrp.process_node_rfq0
 msgid "RFQ"
-msgstr ""
+msgstr "RFQ"
 
 #. module: mrp
 #: model:process.transition,name:mrp.process_transition_producttostockrules0
@@ -1177,7 +1177,7 @@ msgstr "Resurse"
 #. module: mrp
 #: field:mrp.workcenter,costs_journal_id:0
 msgid "Analytic Journal"
-msgstr ""
+msgstr "Jurnal analitic"
 
 #. module: mrp
 #: model:ir.actions.act_window,name:mrp.mrp_workcenter_action
@@ -1879,6 +1879,8 @@ msgid ""
 "If the active field is set to False, it will allow you to hide the bills of "
 "material without removing it."
 msgstr ""
+"În cazul în care câmpul activ este setat la Fals, aceasta va permite să se "
+"ascundă listele de materiale fără să le eliminați."
 
 #. module: mrp
 #: field:mrp.bom,product_rounding:0
@@ -1889,7 +1891,7 @@ msgstr ""
 #: model:ir.model,name:mrp.model_mrp_production_workcenter_line
 #: field:mrp.production.workcenter.line,name:0
 msgid "Work Order"
-msgstr ""
+msgstr "Ordinul de lucru"
 
 #. module: mrp
 #: model:ir.actions.act_window,help:mrp.action_report_mrp_production_order
@@ -1901,7 +1903,7 @@ msgstr ""
 #. module: mrp
 #: selection:mrp.product.produce,mode:0
 msgid "Consume Only"
-msgstr ""
+msgstr "Consumă doar"
 
 #. module: mrp
 #: view:mrp.production:0
@@ -1921,7 +1923,7 @@ msgstr ""
 #. module: mrp
 #: field:mrp.bom,method:0
 msgid "Method"
-msgstr ""
+msgstr "Metoda"
 
 #. module: mrp
 #: help:mrp.production,state:0
@@ -1944,7 +1946,7 @@ msgstr ""
 #: model:ir.ui.menu,name:mrp.menu_mrp_configuration
 #: view:res.company:0
 msgid "Configuration"
-msgstr ""
+msgstr "Configurație"
 
 #. module: mrp
 #: field:mrp.workcenter,time_stop:0
@@ -1959,12 +1961,12 @@ msgstr ""
 #. module: mrp
 #: view:mrp.production:0
 msgid "Total Qty"
-msgstr ""
+msgstr "Cant. totală"
 
 #. module: mrp
 #: field:mrp.routing.workcenter,hour_nbr:0
 msgid "Number of Hours"
-msgstr ""
+msgstr "Număr de ore"
 
 #. module: mrp
 #: view:mrp.workcenter:0
@@ -1994,7 +1996,7 @@ msgstr ""
 #. module: mrp
 #: view:mrp.installer:0
 msgid "Configure"
-msgstr ""
+msgstr "Configurează"
 
 #. module: mrp
 #: help:mrp.workcenter,time_start:0
@@ -2004,24 +2006,24 @@ msgstr ""
 #. module: mrp
 #: selection:mrp.production.order,month:0
 msgid "December"
-msgstr ""
+msgstr "Decembrie"
 
 #. module: mrp
 #: field:mrp.installer,config_logo:0
 msgid "Image"
-msgstr ""
+msgstr "Imagine"
 
 #. module: mrp
 #: field:mrp.bom.revision,bom_id:0
 #: field:procurement.order,bom_id:0
 msgid "BoM"
-msgstr ""
+msgstr "LdM"
 
 #. module: mrp
 #: model:ir.model,name:mrp.model_report_mrp_inout
 #: view:report.mrp.inout:0
 msgid "Stock value variation"
-msgstr ""
+msgstr "Variatia valorii stocului"
 
 #. module: mrp
 #: model:process.node,note:mrp.process_node_mts0
@@ -2045,30 +2047,30 @@ msgstr ""
 #: field:mrp.bom,revision_ids:0
 #: view:mrp.bom.revision:0
 msgid "BoM Revisions"
-msgstr ""
+msgstr "Revizie LdM"
 
 #. module: mrp
 #: selection:mrp.production,state:0
 #: selection:mrp.production.order,state:0
 msgid "Draft"
-msgstr ""
+msgstr "Ciornă"
 
 #. module: mrp
 #: field:report.mrp.inout,date:0
 #: field:report.workcenter.load,name:0
 msgid "Week"
-msgstr ""
+msgstr "Săptămână"
 
 #. module: mrp
 #: field:mrp.installer,progress:0
 msgid "Configuration Progress"
-msgstr ""
+msgstr "Progres Configurare"
 
 #. module: mrp
 #: selection:mrp.production,priority:0
 #: selection:mrp.production.order,priority:0
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #. module: mrp
 #: model:process.node,note:mrp.process_node_routing0
@@ -2090,12 +2092,12 @@ msgstr ""
 #. module: mrp
 #: selection:mrp.production.order,month:0
 msgid "November"
-msgstr ""
+msgstr "Noiembrie"
 
 #. module: mrp
 #: field:mrp.bom,bom_id:0
 msgid "Parent BoM"
-msgstr ""
+msgstr "LdM părinte"
 
 #. module: mrp
 #: model:ir.actions.act_window,help:mrp.mrp_bom_form_action2
@@ -2108,7 +2110,7 @@ msgstr ""
 #. module: mrp
 #: selection:mrp.production.order,month:0
 msgid "January"
-msgstr ""
+msgstr "Ianuarie"
 
 #. module: mrp
 #: model:process.node,note:mrp.process_node_stockproduct0
@@ -2121,7 +2123,7 @@ msgstr ""
 #: code:addons/mrp/wizard/change_production_qty.py:82
 #, python-format
 msgid "Error"
-msgstr ""
+msgstr "Eroare"
 
 #. module: mrp
 #: field:mrp.product.produce,product_qty:0
@@ -2134,7 +2136,7 @@ msgstr ""
 #: model:ir.ui.menu,name:mrp.menu_mrp_bom_form_action
 #: field:product.product,bom_ids:0
 msgid "Bill of Materials"
-msgstr ""
+msgstr "Listă de materiale"
 
 #. module: mrp
 #: help:mrp.routing.workcenter,routing_id:0
@@ -2214,7 +2216,7 @@ msgstr ""
 #: view:mrp.production.order:0
 #: field:stock.move,production_id:0
 msgid "Production"
-msgstr ""
+msgstr "Producție"
 
 #. module: mrp
 #: view:board.board:0
@@ -2263,12 +2265,12 @@ msgstr ""
 #: view:mrp.workcenter:0
 #: field:mrp.workcenter,note:0
 msgid "Description"
-msgstr ""
+msgstr "Descriere"
 
 #. module: mrp
 #: selection:mrp.production.order,month:0
 msgid "May"
-msgstr ""
+msgstr "Mai"
 
 #. module: mrp
 #: view:board.board:0
@@ -2306,7 +2308,7 @@ msgstr ""
 #. module: mrp
 #: selection:mrp.production.order,month:0
 msgid "February"
-msgstr ""
+msgstr "Februarie"
 
 #. module: mrp
 #: model:ir.actions.act_window,name:mrp.mrp_property_group_action
@@ -2317,7 +2319,7 @@ msgstr ""
 #. module: mrp
 #: selection:mrp.production.order,month:0
 msgid "April"
-msgstr ""
+msgstr "Aprilie"
 
 #. module: mrp
 #: model:process.transition,note:mrp.process_transition_procurestockableproduct0
@@ -2369,7 +2371,7 @@ msgstr ""
 #: field:mrp.production.workcenter.line,sequence:0
 #: field:mrp.routing.workcenter,sequence:0
 msgid "Sequence"
-msgstr ""
+msgstr "Secvenţa"
 
 #. module: mrp
 #: model:ir.ui.menu,name:mrp.menu_view_resource_calendar_leaves_search_mrp
@@ -2393,4 +2395,4 @@ msgstr ""
 #: view:mrp.production.order:0
 #: field:mrp.production.order,year:0
 msgid "Year"
-msgstr ""
+msgstr "An"
