@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2011-01-11 11:14+0000\n"
-"PO-Revision-Date: 2011-01-28 19:24+0000\n"
+"PO-Revision-Date: 2011-01-29 10:06+0000\n"
 "Last-Translator: Emerson <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-01-29 04:55+0000\n"
+"X-Launchpad-Export-Date: 2011-01-30 04:51+0000\n"
 "X-Generator: Launchpad (build 12177)\n"
 
 #. module: account
@@ -3926,6 +3926,8 @@ msgid ""
 "Analytic costs (timesheets, some purchased products, ...) come from analytic "
 "accounts. These generate draft supplier invoices."
 msgstr ""
+"Custos analíticos (apontamento de horas, alguns produtos comprados, ...) vem "
+"das contas analíticas. Isto gera faturas provisórias de fornecedores."
 
 #. module: account
 #: view:account.bank.statement:0
@@ -4197,7 +4199,7 @@ msgstr "Voucher nro"
 #. module: account
 #: view:wizard.multi.charts.accounts:0
 msgid "res_config_contents"
-msgstr ""
+msgstr "res_config_contents"
 
 #. module: account
 #: view:account.unreconcile:0
@@ -4609,6 +4611,9 @@ msgid ""
 "To print an analytics (or costs) journal for a given period. The report give "
 "code, move name, account number, general amount and analytic amount."
 msgstr ""
+"Para imprimir um diário analítico (ou de custos) de um determinado período. "
+"O relatório mostra código, nome do movimento, número da conta, valor geral e "
+"valor analítico."
 
 #. module: account
 #: help:account.journal,refund_journal:0
@@ -5271,6 +5276,10 @@ msgid ""
 "impossible any new entry record. Close a fiscal year when you need to "
 "finalize your end of year results definitive "
 msgstr ""
+"Se mais nenhum lançamento deve ser feito em um ano fiscal, você pode fechar "
+"ele aqui. Isto irá fechar todos os períodos no ano e será impossível fazer "
+"novos lançamentos. Feche um ano fiscal quando você precisar finalizar os "
+"resultados do ano definitivamente "
 
 #. module: account
 #: field:account.central.journal,amount_currency:0
@@ -5475,6 +5484,10 @@ msgid ""
 "OpenERP allows you to define the tax structure and manage it from this menu. "
 "You can define both numeric and alphanumeric tax codes."
 msgstr ""
+"A definição do código de imposto depende do sistema de declaração de "
+"impostos do seu país. O OpenERP permite que você defina a estrutura de "
+"impostos e a gerencie neste menu. Você pode definir códigos numéricos ou "
+"alfanuméricos para impostos."
 
 #. module: account
 #: help:account.partner.reconcile.process,progress:0
@@ -5493,6 +5506,9 @@ msgid ""
 "that you should have your last line with the type 'Balance' to ensure that "
 "the whole amount will be threated."
 msgstr ""
+"Selecione aqui o tipo de valorização relacionado à linha da forma de "
+"pagamento. Repare que você deve ter a última linha com o tipo 'Saldo' para "
+"garantir que o montante total seja considerado."
 
 #. module: account
 #: field:account.invoice,period_id:0
@@ -5634,7 +5650,7 @@ msgstr "Diário-Nome do período"
 #. module: account
 #: field:account.invoice.tax,factor_base:0
 msgid "Multipication factor for Base code"
-msgstr ""
+msgstr "Fator de multiplicação para o código Base"
 
 #. module: account
 #: code:addons/account/wizard/account_report_common.py:126
@@ -5784,7 +5800,7 @@ msgstr "Modelos de conta"
 #. module: account
 #: report:account.vat.declaration:0
 msgid "Tax Statement"
-msgstr ""
+msgstr "Extrato de Impostos"
 
 #. module: account
 #: model:ir.model,name:account.model_res_company
@@ -6323,6 +6339,8 @@ msgid ""
 "Check this box if you want to allow the cancellation the entries related to "
 "this journal or of the invoice related to this journal"
 msgstr ""
+"Marque este box se você quiser permitir o cancelamento dos lançamentos "
+"relacionados a este diário ou da fatura relacionada a este diário"
 
 #. module: account
 #: view:account.fiscalyear.close:0
@@ -6489,7 +6507,7 @@ msgstr "Reconciliação da conta"
 #. module: account
 #: model:ir.model,name:account.model_account_fiscal_position_tax
 msgid "Taxes Fiscal Position"
-msgstr ""
+msgstr "Posição Fiscal dos Impostos"
 
 #. module: account
 #: report:account.general.ledger:0

@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2011-01-11 11:15+0000\n"
-"PO-Revision-Date: 2011-01-28 16:12+0000\n"
+"PO-Revision-Date: 2011-01-29 19:55+0000\n"
 "Last-Translator: Douwe Wullink (Dypalio) <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-01-29 04:55+0000\n"
+"X-Launchpad-Export-Date: 2011-01-30 04:50+0000\n"
 "X-Generator: Launchpad (build 12177)\n"
 
 #. module: project_scrum
@@ -601,12 +601,12 @@ msgstr "Email van Product Owner"
 #. module: project_scrum
 #: view:project.scrum.email:0
 msgid "_Send"
-msgstr ""
+msgstr "Ver_sturen"
 
 #. module: project_scrum
 #: help:project.scrum.backlog.assign.sprint,sprint_id:0
 msgid "Select Sprint to assign backlog."
-msgstr ""
+msgstr "Sprint selecteren om backlog toe te wijzen."
 
 #. module: project_scrum
 #: help:project.scrum.product.backlog,progress:0
@@ -618,7 +618,7 @@ msgstr "Berekend als: Gebruikte tijd / totale tijd"
 #: view:project.scrum.meeting:0
 #: view:project.scrum.sprint:0
 msgid "Month"
-msgstr ""
+msgstr "Maand"
 
 #. module: project_scrum
 #: field:project.scrum.meeting,question_blocks:0
@@ -629,29 +629,30 @@ msgstr "Ontdekte blokkades"
 #: help:project.scrum.backlog.assign.sprint,state_open:0
 msgid "Change the state of product backlogs to open if its in draft state"
 msgstr ""
+"De status van de backlogs in open veranderen als ze in concept status zijn"
 
 #. module: project_scrum
 #: view:project.scrum.email:0
 #: field:project.scrum.email,message:0
 msgid "Message"
-msgstr ""
+msgstr "Bericht"
 
 #. module: project_scrum
 #: field:project.scrum.email,scrum_master_email:0
 msgid "Scrum Master Email"
-msgstr ""
+msgstr "Scrum Master Email"
 
 #. module: project_scrum
 #: help:project.project,product_owner_id:0
 #: help:project.scrum.sprint,product_owner_id:0
 msgid "The person who is responsible for the product"
-msgstr ""
+msgstr "De persoon die verantwoordelijk is voor het product"
 
 #. module: project_scrum
 #: code:addons/project_scrum/project_scrum.py:325
 #, python-format
 msgid "*Tasks since yesterday:"
-msgstr ""
+msgstr "*Taken sinds gisteren:"
 
 #. module: project_scrum
 #: view:project.scrum.meeting:0
@@ -662,7 +663,7 @@ msgstr "Scrum sprint"
 #. module: project_scrum
 #: view:project.scrum.sprint:0
 msgid "Product owner"
-msgstr ""
+msgstr "Product owner"
 
 #. module: project_scrum
 #: view:project.scrum.sprint:0
@@ -690,19 +691,20 @@ msgstr "Concept"
 msgid ""
 "Related product backlog that contains this task. Used in SCRUM methodology"
 msgstr ""
+"Gerelateerde product backlog die deze taak bevat. Gebruikt in SCRUM methode"
 
 #. module: project_scrum
 #: view:project.scrum.meeting:0
 #: view:project.scrum.sprint:0
 msgid "What do you plan to do till the next meeting?"
-msgstr ""
+msgstr "Wat ben je van plan te doen tot de volgende vergadering?"
 
 #. module: project_scrum
 #: model:ir.actions.act_window,name:project_scrum.action_postpone_wizard
 #: view:postpone.wizard:0
 #: view:project.scrum.product.backlog:0
 msgid "Postpone"
-msgstr ""
+msgstr "Uitstellen"
 
 #. module: project_scrum
 #: view:project.scrum.product.backlog:0
@@ -716,17 +718,17 @@ msgstr "Wachtend"
 #: view:project.scrum.meeting:0
 #: view:project.scrum.sprint:0
 msgid "Optional Info"
-msgstr ""
+msgstr "Optionele info"
 
 #. module: project_scrum
 #: model:ir.model,name:project_scrum.model_project_scrum_backlog_create_task
 msgid "Create Tasks from Product Backlogs"
-msgstr ""
+msgstr "Taken maken van product backlogs"
 
 #. module: project_scrum
 #: help:project.project,sprint_size:0
 msgid "Number of days allocated for sprint"
-msgstr ""
+msgstr "Aantal toegewezen dagen voor sprint"
 
 #. module: project_scrum
 #: field:project.project,product_owner_id:0
@@ -738,6 +740,7 @@ msgstr "Producteigenaar"
 #: help:project.scrum.product.backlog,sequence:0
 msgid "Gives the sequence order when displaying a list of product backlog."
 msgstr ""
+"Bepaalt de volgorde bij het afbeelden van een lijst van product backlogs."
 
 #. module: project_scrum
 #: model:process.node,name:project_scrum.process_node_productbacklog0
@@ -754,12 +757,12 @@ msgstr "Backlogs"
 #: code:addons/project_scrum/project_scrum.py:326
 #, python-format
 msgid "Thank you"
-msgstr ""
+msgstr "Dank u"
 
 #. module: project_scrum
 #: help:project.scrum.backlog.assign.sprint,convert_to_task:0
 msgid "Create Task for Product Backlog"
-msgstr ""
+msgstr "Taak maken voor product backlog"
 
 #. module: project_scrum
 #: field:project.scrum.product.backlog,active:0
@@ -770,22 +773,22 @@ msgstr "Actief"
 #: model:ir.actions.act_window,name:project_scrum.action_meeting_form
 #: model:ir.ui.menu,name:project_scrum.menu_action_meeting_form
 msgid "Scrum Meetings"
-msgstr ""
+msgstr "Scrum vergaderingen"
 
 #. module: project_scrum
 #: help:project.scrum.product.backlog,expected_hours:0
 msgid "Estimated total time to do the Backlog"
-msgstr ""
+msgstr "Geschatte totale tijd om de backlog te doen"
 
 #. module: project_scrum
 #: help:project.scrum.backlog.merge,project_id:0
 msgid "Select project for the new product backlog"
-msgstr ""
+msgstr "Project selecteren voor de nieuwe backlog"
 
 #. module: project_scrum
 #: view:project.scrum.backlog.merge:0
 msgid "Merge"
-msgstr ""
+msgstr "Samenvoegen"
 
 #. module: project_scrum
 #: model:ir.actions.act_window,name:project_scrum.action_sprint_backlog_open
@@ -796,7 +799,7 @@ msgstr "Bekijk sprint backlog"
 #: code:addons/project_scrum/project_scrum.py:325
 #, python-format
 msgid "No Blocks"
-msgstr ""
+msgstr "Geeb blokkades"
 
 #. module: project_scrum
 #: field:project.scrum.meeting,question_backlog:0
@@ -808,7 +811,7 @@ msgstr "Backlog nauwkeurig"
 #: view:project.scrum.backlog.create.task:0
 #: view:project.scrum.product.backlog:0
 msgid "Convert to Task"
-msgstr ""
+msgstr "Naar taak omzetten"
 
 #. module: project_scrum
 #: help:project.scrum.sprint,project_id:0
@@ -822,7 +825,7 @@ msgstr ""
 #. module: project_scrum
 #: field:project.scrum.product.backlog,sequence:0
 msgid "Sequence"
-msgstr "Reeks"
+msgstr "Volgnummer"
 
 #. module: project_scrum
 #: view:project.scrum.sprint:0
