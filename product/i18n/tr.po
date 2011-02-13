@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev_rc3\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2011-01-11 11:15+0000\n"
-"PO-Revision-Date: 2011-02-11 22:15+0000\n"
-"Last-Translator: elbruz <aycanozcan@gmail.com>\n"
+"PO-Revision-Date: 2011-02-12 13:54+0000\n"
+"Last-Translator: Ahmet Altınışık <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-02-12 06:06+0000\n"
+"X-Launchpad-Export-Date: 2011-02-13 05:33+0000\n"
 "X-Generator: Launchpad (build 12351)\n"
 
 #. module: product
@@ -1401,6 +1401,8 @@ msgid ""
 "gives highest priority to lowest sequence and stops as soon as a matching "
 "item is found."
 msgstr ""
+"Fiyat listesi öğelerinin kontrol sırasını verir. Değerlendirmede en yüksek "
+"öncelik en küçük sırayı alır ve eşleşen kayıt bulunduğunda durur."
 
 #. module: product
 #: selection:product.template,type:0
@@ -1471,6 +1473,8 @@ msgid ""
 "Conversion from Product UoM m to Default UoM PCE is not possible as they "
 "both belong to different Category!."
 msgstr ""
+"farklı kategorilere dahil oldukları için. ürün ölçi biriminden Varsayılan "
+"ölçü birimine çevirim yapılamıyor."
 
 #. module: product
 #: field:product.pricelist.version,date_start:0
@@ -1808,6 +1812,8 @@ msgid ""
 "Base price for computing the customer price. Sometimes called the catalog "
 "price."
 msgstr ""
+"Müşteri fiyatını hesaplamak için temel fiyat. Bazen katalog/liste fiyatı "
+"olarak da geçer."
 
 #. module: product
 #: code:addons/product/pricelist.py:515
@@ -1836,6 +1842,8 @@ msgid ""
 "Default Unit of Measure used for purchase orders. It must be in the same "
 "category than the default unit of measure."
 msgstr ""
+"Satınalma emirlerinde kullanılan varsayılan ölçü birimi. Varsayılan ölçü "
+"birimi ile aynı kategoride olmak zorundadır."
 
 #. module: product
 #: model:product.template,description:product.product_product_cpu1_product_template
@@ -1855,7 +1863,7 @@ msgstr "Uzunluk / Mesafe"
 #. module: product
 #: model:product.template,name:product.product_product_0_product_template
 msgid "Onsite Senior Intervention"
-msgstr ""
+msgstr "Yerinde kıdemli müdahalesi"
 
 #. module: product
 #: model:ir.model,name:product.model_product_pricelist_type
@@ -2058,6 +2066,8 @@ msgid ""
 "The computed quantity will be a multiple of this value. Use 1.0 for a UoM "
 "that cannot be further split, such as a piece."
 msgstr ""
+"Hesaplanan miktar bu değerin katı olacaktır. Daha fazla bölünemeyecek ölçü "
+"birimleri için 1.0 kullanın örnek: adet"
 
 #. module: product
 #: view:product.product:0
@@ -2131,6 +2141,8 @@ msgid ""
 "This supplier's product name will be used when printing a request for "
 "quotation. Keep empty to use the internal one."
 msgstr ""
+"Teklif isteği yazdırılırken  tedarikçinin ürün adı kullanılacaktır. Eğer boş "
+"bırakılırsa dahilde kullanılan ürün adı kullanılır."
 
 #. module: product
 #: selection:product.template,mes_type:0
@@ -2180,6 +2192,10 @@ msgid ""
 "Rounding is applied after the discount and before the surcharge.\n"
 "To have prices that end in 9.99, set rounding 10, surcharge -0.01"
 msgstr ""
+"Fiyatı bu değerin katı olarak ayarlar.\n"
+"Yuvarlama indirimden sonra ek ücretten önce yapılır.\n"
+"9.99 şeklinde bir fiyat elde etmek için yuvarlamayı 10, ek ücreti -0.01 "
+"olarak ayarlayın."
 
 #. module: product
 #: view:product.price_list:0
@@ -2322,6 +2338,8 @@ msgid ""
 "Gives the different ways to package the same product. This has no impact on "
 "the picking order and is mainly used if you use the EDI module."
 msgstr ""
+"Aynı ürünü paketlemek için farklı yollar sunar. Bunun teslimata herhangi bir "
+"etkisi yoktur genelde EDI modülü ile kullanılır."
 
 #. module: product
 #: model:ir.actions.act_window,name:product.product_pricelist_action

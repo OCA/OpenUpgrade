@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev_rc3\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2011-01-11 11:14+0000\n"
-"PO-Revision-Date: 2011-02-11 21:42+0000\n"
+"PO-Revision-Date: 2011-02-12 13:59+0000\n"
 "Last-Translator: Ahmet Altınışık <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-02-12 06:05+0000\n"
+"X-Launchpad-Export-Date: 2011-02-13 05:33+0000\n"
 "X-Generator: Launchpad (build 12351)\n"
 
 #. module: base_module_quality
@@ -130,6 +130,8 @@ msgid ""
 "The test will be completed only if the module is installed or if the test "
 "may be processed on uninstalled module."
 msgstr ""
+"Bu test sadecce eğer modül kurulu ise tamamlanabilir ya da kurulmamış modül "
+"üstünde test işlenebilir."
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/pylint_test/pylint_test.py:99
@@ -263,6 +265,8 @@ msgid ""
 "This test checks where object has workflow or not on it if there is a state "
 "field and several buttons on it and also checks validity of workflow xml file"
 msgstr ""
+"Bu test nesnede iş akışı olup olmadığını kontrol eder. Eğer bir durum alanı  "
+"birkaç buton varsa işakışı xml dosyasının geçerliliğini de kontrol eder."
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/structure_test/structure_test.py:151
@@ -314,6 +318,9 @@ msgid ""
 "wished.\n"
 "</html>"
 msgstr ""
+"<html>O(1)  nesneyi okumak için  gereken SQL isteklerinin okuduğumuz nesneye "
+"bağlı olmadığını gösterir. Bu genel olarak arzu edilen bir özelliktir.\n"
+"</html>"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/terp_test/terp_test.py:120
@@ -342,6 +349,10 @@ msgid ""
 "needed in order to run it.\n"
 "\n"
 msgstr ""
+"\n"
+"Bu test modülün hızını kontrol eder. Testin çalışabilmesi için en az 5 demo "
+"versine ihtiyaç vardır.\n"
+"\n"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/pylint_test/pylint_test.py:71
@@ -440,6 +451,10 @@ msgid ""
 "of Python. See http://www.logilab.org/project/name/pylint for further info.\n"
 " "
 msgstr ""
+"Bu test Pylint kullanır ve modülün Python kodlama standartlarını karşıyayıp "
+"karşılamadığına bakar. Ayrıntılı bilgi için "
+"http://www.logilab.org/project/name/pylint sayfasına göz atın.\n"
+" "
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/workflow_test/workflow_test.py:143
@@ -470,6 +485,9 @@ msgid ""
 "\n"
 "PEP-8 Test , copyright of py files check, method can not call from loops\n"
 msgstr ""
+"\n"
+"PEP-8 Testi , py dosyalarının telif haklarını kontrol eder. Bu fonksiyon "
+"döngülerin içinden çağrılamaz.\n"
 
 #. module: base_module_quality
 #: field:module.quality.check,final_score:0
@@ -482,6 +500,7 @@ msgstr "Sonuç puan (%)"
 msgid ""
 "Error. Is pylint correctly installed? (http://pypi.python.org/pypi/pylint)"
 msgstr ""
+"Hata. Pylint düzgün olarak kurulmuş mu ? (http://pypi.python.org/pypi/pylint)"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/speed_test/speed_test.py:125
@@ -509,6 +528,10 @@ msgid ""
 "'unit_test/test.py' is needed in module.\n"
 "\n"
 msgstr ""
+"\n"
+"Bu test modülün birim testlerini (PyUnit) kontrol eder. Modül  "
+"'unit_test/test.py' olmadan çalışmaz.\n"
+"\n"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/method_test/method_test.py:32
@@ -691,4 +714,4 @@ msgstr "Kalite"
 #: code:addons/base_module_quality/terp_test/terp_test.py:140
 #, python-format
 msgid "Feed back About terp file of Module"
-msgstr ""
+msgstr "Modülün terp dosyası hakkında geri dönüş"
