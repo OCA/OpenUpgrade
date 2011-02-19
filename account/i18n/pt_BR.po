@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2011-01-11 11:14+0000\n"
-"PO-Revision-Date: 2011-02-11 22:50+0000\n"
+"PO-Revision-Date: 2011-02-18 21:46+0000\n"
 "Last-Translator: Emerson <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-02-12 05:00+0000\n"
+"X-Launchpad-Export-Date: 2011-02-19 05:06+0000\n"
 "X-Generator: Launchpad (build 12351)\n"
 
 #. module: account
@@ -2243,7 +2243,7 @@ msgstr "Mantenha vazia para todos os anos fiscais abertos"
 #. module: account
 #: model:ir.model,name:account.model_account_move
 msgid "Account Entry"
-msgstr "Conta Lançamento"
+msgstr "Lançamento Contábil"
 
 #. module: account
 #: field:account.sequence.fiscalyear,sequence_main_id:0
@@ -3581,8 +3581,8 @@ msgstr "Conta de pagamento"
 msgid ""
 "You cannot create entries on different periods/journals in the same move"
 msgstr ""
-"Você não pode criar escrituras com períodos ou jornais diferentes na mesma "
-"entrada"
+"Você não pode criar lançamentos em períodos/diários diferentes no mesmo "
+"movimento."
 
 #. module: account
 #: model:process.node,name:account.process_node_supplierpaymentorder0
@@ -4418,7 +4418,7 @@ msgstr "Data Inicial"
 #. module: account
 #: field:account.chart.template,property_account_income:0
 msgid "Income Account on Product Template"
-msgstr ""
+msgstr "Conta de Receita no Modelo de Produto"
 
 #. module: account
 #: help:res.partner,last_reconciliation_date:0
@@ -4547,12 +4547,12 @@ msgstr "Aplicação de impostos"
 #: model:ir.ui.menu,name:account.menu_eaction_account_moves_sale
 #, python-format
 msgid "Journal Items"
-msgstr "Itens do Livro"
+msgstr "Itens do Diário"
 
 #. module: account
 #: selection:account.account.type,report_type:0
 msgid "Balance Sheet (Assets Accounts)"
-msgstr ""
+msgstr "Planilha de Balanço (Ativos)"
 
 #. module: account
 #: report:account.tax.code.entries:0
@@ -5992,7 +5992,7 @@ msgstr "Visualizar linhas de conta analítica"
 #. module: account
 #: selection:account.account.type,report_type:0
 msgid "Balance Sheet (Liability Accounts)"
-msgstr ""
+msgstr "Planilha de Balanço (Passivos)"
 
 #. module: account
 #: field:account.invoice,internal_number:0
@@ -6721,6 +6721,7 @@ msgstr "Taxas:"
 #: help:account.tax,amount:0
 msgid "For taxes of type percentage, enter % ratio between 0-1."
 msgstr ""
+"Para impostos do tipo porcentagem, entre com um percentual entre 0 e 1."
 
 #. module: account
 #: model:ir.actions.act_window,help:account.action_subscription_form
@@ -6809,6 +6810,8 @@ msgid ""
 "Can not find account chart for this company in invoice line account, Please "
 "Create account."
 msgstr ""
+"O plano de contas desta empresa na conta da linha da fatura não foi "
+"encontrado. Por favor, crie uma conta."
 
 #. module: account
 #: view:account.tax.template:0
@@ -7025,7 +7028,7 @@ msgstr "Relatórios"
 #. module: account
 #: sql_constraint:account.journal:0
 msgid "The code of the journal must be unique per company !"
-msgstr "O código do diário deve ser único por empresa !"
+msgstr "O código do diário deve ser único por empresa!"
 
 #. module: account
 #: field:account.bank.statement,ending_details_ids:0
@@ -7134,6 +7137,12 @@ msgid ""
 "Situation' to be used at the time of new fiscal year creation or end of year "
 "entries generation."
 msgstr ""
+"Selecione 'Venda' para o Diário de venda ser usado no momento da criação da "
+"fatura. Selecione 'Compra' para o Diário de compra ser usado no momento da "
+"aprovação do pedido de compra. Selecione 'Caixa' para ser usado no momento "
+"de fazer pagamento. Selecione 'Geral' para operações diversas. Selecione "
+"'Situação de Abertura/Fechamento' para ser usado quando ocorrer a criação de "
+"um novo ano fiscal ou geração de lançamentos de encerramento de ano."
 
 #. module: account
 #: report:account.invoice:0
@@ -7337,7 +7346,7 @@ msgstr "Sequencia"
 #. module: account
 #: model:ir.model,name:account.model_account_bs_report
 msgid "Account Balance Sheet Report"
-msgstr ""
+msgstr "Relatório da Planilha de Balanço de Contas"
 
 #. module: account
 #: help:account.tax,price_include:0
@@ -7378,6 +7387,11 @@ msgid ""
 "in which they will appear. Then you can create a new journal and link your "
 "view to it."
 msgstr ""
+"Aqui você pode customizar uma exibição de diário ou criar uma nova exibição. "
+"Exibições de diário determinam a forma que você pode registrar os "
+"lançamentos no diário. Selecione os campos que devem aparecer em um diário e "
+"determine a sequência que eles devem aparecer. Então você pode criar um novo "
+"diário e ligar a sua exibição a ele."
 
 #. module: account
 #: view:account.payment.term.line:0
@@ -7703,7 +7717,7 @@ msgstr "Livro de custos"
 #. module: account
 #: view:account.invoice:0
 msgid "Proforma"
-msgstr ""
+msgstr "Pro-forma"
 
 #. module: account
 #: report:account.analytic.account.cost_ledger:0
@@ -7726,6 +7740,7 @@ msgstr "Diário de Reembolso de Compra"
 #: help:account.tax.template,amount:0
 msgid "For Tax Type percent enter % ratio between 0-1."
 msgstr ""
+"Para Tipo de Imposto porcentagem, entre com um percentual entre 0 e 1."
 
 #. module: account
 #: selection:account.automatic.reconcile,power:0
@@ -7811,7 +7826,7 @@ msgstr "Modelo de posição fiscal"
 #. module: account
 #: view:account.entries.report:0
 msgid "Int.Type"
-msgstr ""
+msgstr "Tipo Int."
 
 #. module: account
 #: field:account.move.line,tax_amount:0
@@ -7883,6 +7898,8 @@ msgid ""
 "You can check this box to mark this journal item as a litigation with the "
 "associated partner"
 msgstr ""
+"Você pode marcar este box para indicar este item de diário como uma "
+"pendência com o parceiro associado."
 
 #. module: account
 #: field:account.move.line,reconcile_partial_id:0
@@ -8282,6 +8299,15 @@ msgid ""
 "* The 'Paid' state is set automatically when invoice is paid.            \n"
 "* The 'Cancelled' state is used when user cancel invoice."
 msgstr ""
+" * O status 'Provisório' é usado quando um usuário estiver lançando uma "
+"fatura nova ou não confirmada.              \n"
+"* O status 'Pro-forma' ocorre quando a fatura estiver confirmada mas ainda "
+"não tem um número de nota.\n"
+"* O status 'Aberta' é usado quando o usuário cria a fatura, o número da nota "
+"estiver gerado e a fatura não estiver paga.              \n"
+"* O status 'Pago' é atribuído automaticamente quando a fatura é paga.        "
+"      \n"
+"* O status 'Cancelado' é usado quando o usuário cancela a fatura."
 
 #. module: account
 #: field:account.invoice.refund,period:0
@@ -9194,7 +9220,7 @@ msgstr "Taxa de Câmbio"
 #. module: account
 #: help:account.payment.term.line,value_amount:0
 msgid "For Value percent enter % ratio between 0-1."
-msgstr ""
+msgstr "Para Valor percentual, entre com um percentual entre 0 e 1."
 
 #. module: account
 #: selection:account.entries.report,month:0
