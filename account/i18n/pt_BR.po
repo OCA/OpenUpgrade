@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2011-01-11 11:14+0000\n"
-"PO-Revision-Date: 2011-02-18 21:46+0000\n"
+"PO-Revision-Date: 2011-02-19 23:18+0000\n"
 "Last-Translator: Emerson <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-02-19 05:06+0000\n"
+"X-Launchpad-Export-Date: 2011-02-20 04:34+0000\n"
 "X-Generator: Launchpad (build 12351)\n"
 
 #. module: account
@@ -3264,7 +3264,7 @@ msgstr "Transferências"
 #. module: account
 #: view:account.payment.term.line:0
 msgid "  value amount: n.a"
-msgstr ""
+msgstr "  valor total: n.a."
 
 #. module: account
 #: view:account.chart:0
@@ -4645,7 +4645,7 @@ msgstr "Movimentos"
 #: model:ir.actions.act_window,name:account.action_account_vat_declaration
 #: model:ir.model,name:account.model_account_vat_declaration
 msgid "Account Vat Declaration"
-msgstr ""
+msgstr "Conta de Declaração VAT"
 
 #. module: account
 #: view:account.period:0
@@ -5121,6 +5121,9 @@ msgid ""
 "something to reconcile or not. This figure already count the current partner "
 "as reconciled."
 msgstr ""
+"Estes são os parceiros restantes que você deve conferir se há algo para "
+"reconciliar ou não. Esta lista já considera o parceiro atual como "
+"reconciliado."
 
 #. module: account
 #: view:account.subscription.line:0
@@ -6275,6 +6278,13 @@ msgid ""
 "account. From this view, you can create and manage the account types you "
 "need for your company."
 msgstr ""
+"Um tipo de conta é usado para determinar como uma conta é usada em cada "
+"diário. O método de diferimento de um tipo de conta determina o processo de "
+"fechamento anual. Relatórios como o Balanço ou Lucros e Perdas usam a "
+"categoria (lucro/perda ou balanço). Por exemplo, o tipo de conta pode ser "
+"ligado a uma conta do ativo, despesa ou conta de pagamento. A partir desta "
+"exibição, você pode criar e gerenciar os tipos de conta que você precisa "
+"para sua empresa."
 
 #. module: account
 #: model:ir.actions.act_window,help:account.action_account_bank_reconcile_tree
@@ -6731,6 +6741,11 @@ msgid ""
 "an agreement with a customer or a supplier. With Define Recurring Entries, "
 "you can create such entries to automate the postings in the system."
 msgstr ""
+"Uma entrada recorrente é um lançamento que ocorre periodicamente baseado em "
+"uma data específica. Ex: De acordo com a assinatura de um contrato ou um "
+"acordo com um cliente ou um fornecedor, com a Definição de Lançamentos "
+"Recorrentes, você pode criar este tipo de lançamento para automatizar a "
+"postagem no sistema."
 
 #. module: account
 #: field:account.entries.report,product_uom_id:0
@@ -7081,6 +7096,10 @@ msgid ""
 "line of the expense account, OpenERP will propose to you automatically the "
 "Tax related to this account and the counter-part \"Account Payable\"."
 msgstr ""
+"Esta tela é usada por contadores para registrar lançamentos em massa no "
+"OpenERP. Se voce quiser gravar uma fatura de fornecedor, comece registrando "
+"a linha da conta de despesa, o OpenERP irá propor automaticamente as Taxas "
+"relacionadas a esta conta e a contra-partida \"Conta Pagável\"."
 
 #. module: account
 #: help:res.company,property_reserve_and_surplus_account:0
@@ -7856,6 +7875,13 @@ msgid ""
 "useful because it enables you to preview at any time the tax that you owe at "
 "the start and end of the month or quarter."
 msgstr ""
+"Este menu imprime uma declaração VAT baseada nas faturas ou pagamentos. Você "
+"pode selecionar um ou vários períodos do ano fiscal. As informações "
+"necessárias para a declaração das taxas são geradas automaticamente pelo "
+"OpenERP a partir das faturas (ou pagamentos, em alguns países). Estes dados "
+"são atualizados em tempo real. Isto é muito útil porque permite que você "
+"visualize a qualquer momento uma taxa devida no início e fim do mês ou "
+"trimestre."
 
 #. module: account
 #: report:account.invoice:0
