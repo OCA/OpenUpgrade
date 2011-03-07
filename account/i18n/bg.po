@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2011-01-11 11:14+0000\n"
-"PO-Revision-Date: 2011-03-05 09:16+0000\n"
-"Last-Translator: Boris <boris.t.ivanov@gmail.com>\n"
+"PO-Revision-Date: 2011-03-06 18:56+0000\n"
+"Last-Translator: Dimitar Markov <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-03-06 06:10+0000\n"
+"X-Launchpad-Export-Date: 2011-03-07 06:20+0000\n"
 "X-Generator: Launchpad (build 12351)\n"
 
 #. module: account
@@ -469,6 +469,9 @@ msgid ""
 "it comes to 'Printed' state. When all transactions are done, it comes in "
 "'Done' state."
 msgstr ""
+"Когато се създава период в журнала състоянието му е \"Проект\". Ако се "
+"печата справка състоянието става \"Отпечатан/а\". Когато всички транзакции "
+"са завършени, състоянието става \"Готов/а\"."
 
 #. module: account
 #: model:ir.actions.act_window,help:account.action_account_tax_chart
@@ -706,7 +709,7 @@ msgstr "Приходни сметки"
 #. module: account
 #: model:ir.model,name:account.model_account_report_general_ledger
 msgid "General Ledger Report"
-msgstr ""
+msgstr "Справка - Главна книга"
 
 #. module: account
 #: view:account.invoice:0
@@ -829,6 +832,7 @@ msgstr "дни"
 msgid ""
 "If checked, the new chart of accounts will not contain this by default."
 msgstr ""
+"Ако е отметнато новият сметкоплан няма да съдържа това по подразбиране"
 
 #. module: account
 #: code:addons/account/wizard/account_invoice_refund.py:102
@@ -1286,7 +1290,7 @@ msgstr "Информация за банка"
 #: view:account.aged.trial.balance:0
 #: view:account.common.report:0
 msgid "Report Options"
-msgstr ""
+msgstr "Настройки на справка"
 
 #. module: account
 #: model:ir.model,name:account.model_account_entries_report
@@ -1402,7 +1406,7 @@ msgstr "# Записи "
 #. module: account
 #: model:ir.model,name:account.model_temp_range
 msgid "A Temporary table used for Dashboard view"
-msgstr ""
+msgstr "Временна таблица използвана за изглед Табло"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_invoice_tree4
@@ -1424,11 +1428,14 @@ msgid ""
 "The payment term defined gives a computed amount greater than the total "
 "invoiced amount."
 msgstr ""
+"Не може да се създаде фактурата!\n"
+"Определените условия на плащане връщат по-голямо изчислено количество от "
+"общото фактурираната сума."
 
 #. module: account
 #: field:account.installer.modules,account_anglo_saxon:0
 msgid "Anglo-Saxon Accounting"
-msgstr ""
+msgstr "Англо-Саксонско счетоводство"
 
 #. module: account
 #: selection:account.account,type:0
@@ -1454,7 +1461,7 @@ msgstr "Шаблон с фискална позиция"
 #. module: account
 #: model:account.tax.code,name:account.account_tax_code_0
 msgid "Tax Code Test"
-msgstr ""
+msgstr "Тест на кодове на данъци"
 
 #. module: account
 #: field:account.automatic.reconcile,reconciled:0
@@ -1490,7 +1497,7 @@ msgstr "Необложен с данък"
 #. module: account
 #: view:account.partner.reconcile.process:0
 msgid "Go to next partner"
-msgstr ""
+msgstr "Премини към следващ партньор"
 
 #. module: account
 #: view:account.bank.statement:0
@@ -1502,6 +1509,8 @@ msgstr "Търсене на банкови извлечения"
 msgid ""
 "Wrong credit or debit value in model (Credit + Debit Must Be greater \"0\")!"
 msgstr ""
+"Грешна кредитна или демитна стойност в модела (Кредит + Дебит трябва да бъде "
+"повече от \"0\")!"
 
 #. module: account
 #: view:account.chart.template:0
@@ -1531,6 +1540,12 @@ msgid ""
 "the Payment column of a line, you can press F1 to open the reconciliation "
 "form."
 msgstr ""
+"Банковото извлечение е общо всички финансови транзакции извършени за даден "
+"период от време на депозитна сметка, кредитна карта или който и да е друг "
+"тип финансова сметка. Салдото от минал период ще бъде \"предложено\" "
+"автоматично и крайното салдото от настоящият период е това, което бъде "
+"вписано в банковото извлечение. Когато в колоната за плащане, можете да "
+"натиснете F1 за да отворите формата за"
 
 #. module: account
 #: report:account.analytic.account.cost_ledger:0
@@ -1636,6 +1651,9 @@ msgid ""
 "Have a complete tree view of all journal items per account code by clicking "
 "on an account."
 msgstr ""
+"Показва сметкоплан на вашата фирма за финансова година и филтър за период. "
+"Пълна дървовидна структура на всички единици в журнала за код на сметка чрез "
+"кликане върху сметката."
 
 #. module: account
 #: constraint:account.fiscalyear:0
