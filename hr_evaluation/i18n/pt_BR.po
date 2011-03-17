@@ -1,16 +1,16 @@
-# Russian translation for openobject-addons
-# Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
+# Brazilian Portuguese translation for openobject-addons
+# Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
 # This file is distributed under the same license as the openobject-addons package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-01-11 11:15+0000\n"
-"PO-Revision-Date: 2011-03-16 15:09+0000\n"
-"Last-Translator: Nikolay Chesnokov <chesnokov_n@msn.com>\n"
-"Language-Team: Russian <ru@li.org>\n"
+"PO-Revision-Date: 2011-03-17 01:24+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -33,19 +33,19 @@ msgstr ""
 #: view:hr.evaluation.report:0
 #: view:hr_evaluation.plan:0
 msgid "Group By..."
-msgstr ""
+msgstr "Agrupar Por..."
 
 #. module: hr_evaluation
 #: field:hr.evaluation.interview,request_id:0
 #: field:hr.evaluation.report,request_id:0
 msgid "Request_id"
-msgstr ""
+msgstr "Request_id"
 
 #. module: hr_evaluation
 #: field:hr.evaluation.report,progress_bar:0
 #: field:hr_evaluation.evaluation,progress:0
 msgid "Progress"
-msgstr ""
+msgstr "Progresso"
 
 #. module: hr_evaluation
 #: view:board.board:0
@@ -56,7 +56,7 @@ msgstr ""
 #. module: hr_evaluation
 #: view:hr_evaluation.plan.phase:0
 msgid "Legend"
-msgstr ""
+msgstr "Legenda"
 
 #. module: hr_evaluation
 #: code:addons/hr_evaluation/hr_evaluation.py:311
@@ -67,32 +67,32 @@ msgstr ""
 #. module: hr_evaluation
 #: selection:hr.evaluation.report,month:0
 msgid "March"
-msgstr ""
+msgstr "Março"
 
 #. module: hr_evaluation
 #: field:hr.evaluation.report,delay_date:0
 msgid "Delay to Start"
-msgstr ""
+msgstr "Atrasar o Início"
 
 #. module: hr_evaluation
 #: view:hr.evaluation.report:0
 #: field:hr_evaluation.evaluation,rating:0
 msgid "Appreciation"
-msgstr ""
+msgstr "Apreciação"
 
 #. module: hr_evaluation
 #: code:addons/hr_evaluation/hr_evaluation.py:242
 #: code:addons/hr_evaluation/hr_evaluation.py:311
 #, python-format
 msgid "Warning !"
-msgstr ""
+msgstr "Aviso!"
 
 #. module: hr_evaluation
 #: view:hr_evaluation.plan:0
 #: field:hr_evaluation.plan,company_id:0
 #: field:hr_evaluation.plan.phase,company_id:0
 msgid "Company"
-msgstr ""
+msgstr "Empresa"
 
 #. module: hr_evaluation
 #: model:ir.actions.act_window,name:hr_evaluation.act_hr_employee_2_hr__evaluation_interview
@@ -108,12 +108,12 @@ msgstr ""
 #: view:hr.evaluation.report:0
 #: field:hr.evaluation.report,day:0
 msgid "Day"
-msgstr ""
+msgstr "Dia"
 
 #. module: hr_evaluation
 #: field:hr.evaluation.interview,evaluation_id:0
 msgid "Evaluation Form"
-msgstr ""
+msgstr "Formulário de Avaliação"
 
 #. module: hr_evaluation
 #: help:hr_evaluation.plan.phase,send_anonymous_employee:0
@@ -130,7 +130,7 @@ msgstr ""
 #. module: hr_evaluation
 #: view:hr.employee:0
 msgid "Notes"
-msgstr ""
+msgstr "Notas"
 
 #. module: hr_evaluation
 #: view:hr.evaluation.interview:0
@@ -142,6 +142,8 @@ msgstr ""
 msgid ""
 "Error ! You cannot select a department for which the employee is the manager."
 msgstr ""
+"Erro! Você não pode selecionar um departamento do qual o funcionário é o "
+"gerente."
 
 #. module: hr_evaluation
 #: view:hr_evaluation.plan.phase:0
@@ -159,7 +161,7 @@ msgstr ""
 #: selection:hr.evaluation.report,state:0
 #: selection:hr_evaluation.evaluation,state:0
 msgid "Cancelled"
-msgstr ""
+msgstr "Cancelado"
 
 #. module: hr_evaluation
 #: model:ir.model,name:hr_evaluation.model_hr_evaluation_reminder
@@ -180,7 +182,7 @@ msgstr ""
 #. module: hr_evaluation
 #: selection:hr.evaluation.report,month:0
 msgid "July"
-msgstr ""
+msgstr "Julho"
 
 #. module: hr_evaluation
 #: field:hr_evaluation.plan,month_next:0
@@ -198,7 +200,7 @@ msgstr ""
 #. module: hr_evaluation
 #: field:hr_evaluation.evaluation,date_close:0
 msgid "Ending Date"
-msgstr ""
+msgstr "Data Final"
 
 #. module: hr_evaluation
 #: field:hr_evaluation.plan,month_first:0
@@ -234,12 +236,12 @@ msgstr ""
 #. module: hr_evaluation
 #: field:hr.evaluation.report,deadline:0
 msgid "Deadline"
-msgstr ""
+msgstr "Prazo final"
 
 #. module: hr_evaluation
 #: view:hr.evaluation.report:0
 msgid " Month "
-msgstr ""
+msgstr " Mês "
 
 #. module: hr_evaluation
 #: help:hr_evaluation.plan,month_next:0
@@ -251,7 +253,7 @@ msgstr ""
 #. module: hr_evaluation
 #: model:ir.ui.menu,name:hr_evaluation.menu_eval_hr_config
 msgid "Periodic Evaluations"
-msgstr ""
+msgstr "Avaliações Periódicas"
 
 #. module: hr_evaluation
 #: view:hr.evaluation.reminder:0
@@ -294,7 +296,7 @@ msgstr ""
 #: view:hr_evaluation.evaluation:0
 #: field:hr_evaluation.evaluation,state:0
 msgid "State"
-msgstr "Статус"
+msgstr "Status"
 
 #. module: hr_evaluation
 #: model:ir.model,name:hr_evaluation.model_hr_evaluation_plan_phase
@@ -308,17 +310,17 @@ msgstr ""
 #: field:hr_evaluation.evaluation,employee_id:0
 #: model:ir.model,name:hr_evaluation.model_hr_employee
 msgid "Employee"
-msgstr "Сотрудник"
+msgstr "Funcionário"
 
 #. module: hr_evaluation
 #: field:hr.evaluation.report,overpass_delay:0
 msgid "Overpassed Deadline"
-msgstr ""
+msgstr "Prazo Superado"
 
 #. module: hr_evaluation
 #: field:hr_evaluation.plan.phase,mail_body:0
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #. module: hr_evaluation
 #: selection:hr.evaluation.report,rating:0
@@ -340,12 +342,12 @@ msgstr ""
 #. module: hr_evaluation
 #: view:hr.evaluation.report:0
 msgid "    Month-1    "
-msgstr ""
+msgstr "    Mês-1    "
 
 #. module: hr_evaluation
 #: view:hr_evaluation.evaluation:0
 msgid "Public Notes"
-msgstr ""
+msgstr "Notas Públicas"
 
 #. module: hr_evaluation
 #: field:hr_evaluation.evaluation,date:0
@@ -361,7 +363,7 @@ msgstr ""
 #. module: hr_evaluation
 #: field:hr.evaluation.report,closed:0
 msgid "closed"
-msgstr ""
+msgstr "fechado"
 
 #. module: hr_evaluation
 #: selection:hr.evaluation.report,rating:0
@@ -380,7 +382,7 @@ msgstr ""
 #: model:ir.ui.menu,name:hr_evaluation.menu_eval_hr
 #: model:ir.ui.menu,name:hr_evaluation.menu_open_view_hr_evaluation_tree
 msgid "Evaluations"
-msgstr "Оценки"
+msgstr ""
 
 #. module: hr_evaluation
 #: model:ir.actions.act_window,help:hr_evaluation.open_view_hr_evaluation_tree
@@ -421,29 +423,29 @@ msgstr ""
 #. module: hr_evaluation
 #: view:hr_evaluation.evaluation:0
 msgid "In progress"
-msgstr ""
+msgstr "Em andamento"
 
 #. module: hr_evaluation
 #: field:hr_evaluation.plan.phase,send_answer_employee:0
 #: field:hr_evaluation.plan.phase,send_answer_manager:0
 msgid "All Answers"
-msgstr ""
+msgstr "Todas as Respostas"
 
 #. module: hr_evaluation
 #: selection:hr.evaluation.report,month:0
 msgid "September"
-msgstr ""
+msgstr "Setembro"
 
 #. module: hr_evaluation
 #: selection:hr.evaluation.report,month:0
 msgid "December"
-msgstr ""
+msgstr "Dezembro"
 
 #. module: hr_evaluation
 #: view:hr.evaluation.report:0
 #: field:hr.evaluation.report,month:0
 msgid "Month"
-msgstr ""
+msgstr "Mês"
 
 #. module: hr_evaluation
 #: model:ir.module.module,shortdesc:hr_evaluation.module_meta_information
@@ -453,7 +455,7 @@ msgstr ""
 #. module: hr_evaluation
 #: view:hr_evaluation.evaluation:0
 msgid "Group by..."
-msgstr ""
+msgstr "Agrupar por..."
 
 #. module: hr_evaluation
 #: view:hr_evaluation.plan.phase:0
@@ -504,7 +506,7 @@ msgstr ""
 #: selection:hr.evaluation.report,state:0
 #: selection:hr_evaluation.evaluation,state:0
 msgid "Draft"
-msgstr "Черновик"
+msgstr "Provisório"
 
 #. module: hr_evaluation
 #: field:hr_evaluation.evaluation,note_summary:0
@@ -521,22 +523,22 @@ msgstr ""
 #: view:hr.employee:0
 #: view:hr_evaluation.evaluation:0
 msgid "Evaluation"
-msgstr "Оценка"
+msgstr "Avaliação"
 
 #. module: hr_evaluation
 #: view:hr_evaluation.evaluation:0
 msgid "7 Days"
-msgstr ""
+msgstr "7 Dias"
 
 #. module: hr_evaluation
 #: view:hr.evaluation.report:0
 msgid " Year "
-msgstr ""
+msgstr " Ano "
 
 #. module: hr_evaluation
 #: selection:hr.evaluation.report,month:0
 msgid "August"
-msgstr ""
+msgstr "Agosto"
 
 #. module: hr_evaluation
 #: view:hr_evaluation.evaluation:0
@@ -546,12 +548,12 @@ msgstr ""
 #. module: hr_evaluation
 #: view:hr.evaluation.interview:0
 msgid "To Do"
-msgstr ""
+msgstr "A Ser Feito"
 
 #. module: hr_evaluation
 #: selection:hr.evaluation.report,month:0
 msgid "June"
-msgstr ""
+msgstr "Junho"
 
 #. module: hr_evaluation
 #: selection:hr.evaluation.report,rating:0
@@ -570,42 +572,42 @@ msgstr ""
 #: view:hr_evaluation.evaluation:0
 #: field:hr_evaluation.evaluation,plan_id:0
 msgid "Plan"
-msgstr ""
+msgstr "Plano"
 
 #. module: hr_evaluation
 #: field:hr_evaluation.plan,active:0
 msgid "Active"
-msgstr ""
+msgstr "Ativo"
 
 #. module: hr_evaluation
 #: selection:hr.evaluation.report,month:0
 msgid "November"
-msgstr ""
+msgstr "Novembro"
 
 #. module: hr_evaluation
 #: view:hr.evaluation.report:0
 msgid "Extended Filters..."
-msgstr ""
+msgstr "Filtros Extendidos..."
 
 #. module: hr_evaluation
 #: constraint:hr.employee:0
 msgid "Error ! You cannot create recursive Hierarchy of Employees."
-msgstr ""
+msgstr "Erro! Você não pode criar uma Hierarquia de Funcionários recursiva."
 
 #. module: hr_evaluation
 #: selection:hr.evaluation.report,month:0
 msgid "October"
-msgstr ""
+msgstr "Outubro"
 
 #. module: hr_evaluation
 #: selection:hr.evaluation.report,month:0
 msgid "January"
-msgstr ""
+msgstr "Janeiro"
 
 #. module: hr_evaluation
 #: view:hr.evaluation.reminder:0
 msgid "Send Mail"
-msgstr ""
+msgstr "Enviar Email"
 
 #. module: hr_evaluation
 #: help:hr_evaluation.plan.phase,send_anonymous_manager:0
@@ -627,12 +629,12 @@ msgstr ""
 #. module: hr_evaluation
 #: view:hr_evaluation.evaluation:0
 msgid "Date"
-msgstr "Дата"
+msgstr "Data"
 
 #. module: hr_evaluation
 #: view:hr.evaluation.interview:0
 msgid "Survey"
-msgstr ""
+msgstr "Avaliação"
 
 #. module: hr_evaluation
 #: help:hr_evaluation.evaluation,rating:0
@@ -642,7 +644,7 @@ msgstr ""
 #. module: hr_evaluation
 #: field:hr_evaluation.plan.phase,action:0
 msgid "Action"
-msgstr ""
+msgstr "Ação"
 
 #. module: hr_evaluation
 #: view:hr.evaluation.report:0
@@ -669,13 +671,13 @@ msgstr ""
 #: view:hr.evaluation.interview:0
 #: view:hr_evaluation.evaluation:0
 msgid "Late"
-msgstr ""
+msgstr "Atrasado"
 
 #. module: hr_evaluation
 #: view:hr.evaluation.interview:0
 #: view:hr_evaluation.evaluation:0
 msgid "Interviewer"
-msgstr ""
+msgstr "Entrevistador"
 
 #. module: hr_evaluation
 #: model:ir.model,name:hr_evaluation.model_hr_evaluation_report
@@ -713,7 +715,7 @@ msgstr ""
 #: view:hr_evaluation.evaluation:0
 #: selection:hr_evaluation.evaluation,state:0
 msgid "Done"
-msgstr ""
+msgstr "Concluído"
 
 #. module: hr_evaluation
 #: view:hr_evaluation.plan.phase:0
@@ -724,12 +726,12 @@ msgstr ""
 #: view:hr.evaluation.reminder:0
 #: view:hr_evaluation.evaluation:0
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: hr_evaluation
 #: view:hr.evaluation.report:0
 msgid "In Progress"
-msgstr ""
+msgstr "Em Progresso"
 
 #. module: hr_evaluation
 #: model:ir.actions.act_window,help:hr_evaluation.action_hr_evaluation_interview_tree
@@ -748,7 +750,7 @@ msgstr ""
 #. module: hr_evaluation
 #: view:hr_evaluation.evaluation:0
 msgid "Current"
-msgstr ""
+msgstr "Atual"
 
 #. module: hr_evaluation
 #: model:ir.model,name:hr_evaluation.model_hr_evaluation_interview
@@ -758,7 +760,7 @@ msgstr ""
 #. module: hr_evaluation
 #: field:hr.evaluation.reminder,evaluation_id:0
 msgid "Interview"
-msgstr ""
+msgstr "Entrevista"
 
 #. module: hr_evaluation
 #: view:hr.evaluation.reminder:0
@@ -784,12 +786,12 @@ msgstr ""
 #. module: hr_evaluation
 #: selection:hr.evaluation.report,month:0
 msgid "May"
-msgstr ""
+msgstr "Maio"
 
 #. module: hr_evaluation
 #: view:hr_evaluation.evaluation:0
 msgid "Internal Notes"
-msgstr ""
+msgstr "Notas Internas"
 
 #. module: hr_evaluation
 #: view:hr_evaluation.evaluation:0
@@ -804,7 +806,7 @@ msgstr ""
 #. module: hr_evaluation
 #: field:hr_evaluation.plan.phase,name:0
 msgid "Phase"
-msgstr ""
+msgstr "Fase"
 
 #. module: hr_evaluation
 #: selection:hr_evaluation.plan.phase,action:0
@@ -829,12 +831,12 @@ msgstr ""
 #. module: hr_evaluation
 #: selection:hr.evaluation.report,month:0
 msgid "February"
-msgstr ""
+msgstr "Fevereiro"
 
 #. module: hr_evaluation
 #: view:hr_evaluation.plan.phase:0
 msgid "Send to Managers"
-msgstr ""
+msgstr "Enviar para Gerentes"
 
 #. module: hr_evaluation
 #: model:ir.actions.act_window,name:hr_evaluation.action_hr_evaluation_send_mail
@@ -844,7 +846,7 @@ msgstr ""
 #. module: hr_evaluation
 #: selection:hr.evaluation.report,month:0
 msgid "April"
-msgstr ""
+msgstr "Abril"
 
 #. module: hr_evaluation
 #: model:ir.model,name:hr_evaluation.model_hr_evaluation_evaluation
@@ -859,12 +861,12 @@ msgstr ""
 #. module: hr_evaluation
 #: view:hr_evaluation.plan:0
 msgid "(months)"
-msgstr ""
+msgstr "(meses)"
 
 #. module: hr_evaluation
 #: field:hr_evaluation.plan.phase,sequence:0
 msgid "Sequence"
-msgstr ""
+msgstr "Sequência"
 
 #. module: hr_evaluation
 #: view:hr_evaluation.plan.phase:0
