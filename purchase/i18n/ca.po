@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2011-01-11 11:15+0000\n"
-"PO-Revision-Date: 2011-01-19 12:00+0000\n"
-"Last-Translator: Albert Cervera i Areny - http://www.NaN-tic.com <albert@nan-"
-"tic.com>\n"
+"PO-Revision-Date: 2011-03-17 16:50+0000\n"
+"Last-Translator: Jordi Esteve (www.zikzakmedia.com) "
+"<jesteve@zikzakmedia.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-01-25 07:00+0000\n"
-"X-Generator: Launchpad (build 12177)\n"
+"X-Launchpad-Export-Date: 2011-03-18 06:17+0000\n"
+"X-Generator: Launchpad (build 12559)\n"
 
 #. module: purchase
 #: model:process.transition,note:purchase.process_transition_confirmingpurchaseorder0
@@ -69,6 +69,15 @@ msgid ""
 "supplier invoices: based on the order, based on the receptions or manual "
 "encoding."
 msgstr ""
+"Podeu crear una petició de pressupost quan vulgueu obtenir productes d'un "
+"proveïdor però la compra encara no s'hagi confirmat. Utilitzeu així mateix "
+"aquest menú per revisar les peticions de compra creades automàticament sobre "
+"la base de les vostres regles de logística (estoc mínim, obtenir sota "
+"comanda, etc). Podeu convertir la petició en una compra una vegada la "
+"comanda s'hagi confirmat. Si utilitzeu la interfície estesa (des de les "
+"preferències d'usuari), podeu triar la forma de controlar les vostres "
+"factures de proveïdor: basades en comanda, basades en recepcions o "
+"codificació manual."
 
 #. module: purchase
 #: selection:purchase.order,invoice_method:0
@@ -112,6 +121,9 @@ msgid ""
 "products, etc. For each purchase order, you can track the products received, "
 "and control the supplier invoices."
 msgstr ""
+"Utilitzeu aquest menú per cercar en les vostres comandes de compra per "
+"referència, proveïdor, producte, etc. Per a cada comanda de compra, podeu "
+"obtenir els productes rebuts, i controlar les factures dels proveïdors."
 
 #. module: purchase
 #: code:addons/purchase/purchase.py:722
@@ -348,7 +360,7 @@ msgstr ""
 #: selection:purchase.order.line,state:0
 #: selection:purchase.report,state:0
 msgid "Cancelled"
-msgstr "Cancel·lat"
+msgstr "Cancel·lada"
 
 #. module: purchase
 #: code:addons/purchase/purchase.py:305
@@ -430,7 +442,7 @@ msgstr ""
 #: code:addons/purchase/purchase.py:334
 #, python-format
 msgid "Purchase order '%s' has been set in draft state."
-msgstr ""
+msgstr "Comanda de compra '%s' s'ha canviat a l'estat esborrany."
 
 #. module: purchase
 #: field:purchase.order.line,account_analytic_id:0
@@ -479,7 +491,7 @@ msgstr "Línia de la comanda"
 #. module: purchase
 #: help:purchase.order,shipped:0
 msgid "It indicates that a picking has been done"
-msgstr ""
+msgstr "Indica que un albarà ha estat realitzat."
 
 #. module: purchase
 #: code:addons/purchase/purchase.py:710
@@ -624,6 +636,13 @@ msgid ""
 "Manual: allows you to generate suppliers invoices by chosing in the "
 "uninvoiced lines of all manual purchase orders."
 msgstr ""
+"Des de comanda: es generarà una factura esborrany basant-se en les comandes "
+"de compra. El comptable només haurà de validar la factura per al seu "
+"control.\n"
+"Des d'albarà: es generarà una factura esborrany basant-se en recepcions "
+"validades.\n"
+"Manual: us permet generar factures de proveïdor triant en les línies no "
+"facturades de totes les comandes de compra manuals."
 
 #. module: purchase
 #: help:purchase.order,invoice_ids:0
@@ -652,7 +671,7 @@ msgstr ""
 #. module: purchase
 #: report:purchase.order:0
 msgid "Purchase Order Confirmation N°"
-msgstr "Confirmació d'ordre de compra Nº"
+msgstr "Confirmació de comanda de compra Nº"
 
 #. module: purchase
 #: model:ir.actions.act_window,help:purchase.action_purchase_order_report_all
@@ -744,6 +763,10 @@ msgid ""
 "according to your settings. Once you receive a supplier invoice, you can "
 "match it with the draft invoice and validate it."
 msgstr ""
+"Useu aquest menú per controlar les factures a rebre del vostre proveïdor. "
+"OpenERP pregenera factures esborrany a partir de les vostres comandes de "
+"compra o recepcions, en funció dels paràmetres. Quan rebeu la factura del "
+"proveïdor, podeu verificar-la amb la factura esborrany i validar-la."
 
 #. module: purchase
 #: model:process.node,name:purchase.process_node_draftpurchaseorder0
@@ -815,6 +838,11 @@ msgid ""
 "supplier invoice yet. Once you are ready to receive a supplier invoice, you "
 "can generate a draft supplier invoice based on the lines from this menu."
 msgstr ""
+"Si establiu el control de facturació d'una comanda de compra a \"Manual\", "
+"podeu controlar aquí totes les línies de les comandes de compra per les "
+"quals no heu rebut encara la factura de proveïdor corresponent. Una vegada "
+"estigueu llest per rebre una factura de proveïdor, podeu generar una factura "
+"de proveïdor en esborrany basada en les línies des d'aquest menú."
 
 #. module: purchase
 #: model:process.node,name:purchase.process_node_invoiceafterpacking0
@@ -1341,7 +1369,7 @@ msgstr "Cancel·la"
 #: view:purchase.order:0
 #: view:purchase.order.line:0
 msgid "Purchase Order Lines"
-msgstr "Línies ordre de compra"
+msgstr "Línies comanda de compra"
 
 #. module: purchase
 #: model:process.transition,note:purchase.process_transition_approvingpurchaseorder0
@@ -1374,7 +1402,7 @@ msgstr ""
 #. module: purchase
 #: model:ir.ui.menu,name:purchase.menu_action_picking_tree4
 msgid "Incoming Shipments"
-msgstr ""
+msgstr "Albarans d'entrada"
 
 #. module: purchase
 #: model:ir.actions.act_window,name:purchase.action_purchase_order_by_user_all
@@ -1471,7 +1499,7 @@ msgstr "Producte"
 #: model:process.transition,name:purchase.process_transition_confirmingpurchaseorder0
 #: model:process.transition,name:purchase.process_transition_confirmingpurchaseorder1
 msgid "Confirmation"
-msgstr ""
+msgstr "Confirmació"
 
 #. module: purchase
 #: report:purchase.order:0
@@ -1484,6 +1512,7 @@ msgstr "Descripció"
 #: help:res.company,po_lead:0
 msgid "This is the leads/security time for each purchase order."
 msgstr ""
+"Aquest és el termini de temps de seguretat per cada comanda de compra."
 
 #. module: purchase
 #: report:purchase.quotation:0
@@ -1559,6 +1588,9 @@ msgid ""
 "In case there is no supplier for this product, the buyer can fill the form "
 "manually and confirm it. The RFQ becomes a confirmed Purchase Order."
 msgstr ""
+"En cas que no existeixi cap proveïdor d'aquest producte, el comprador pot "
+"emplenar el formulari manualment i confirmar-ho. La sol·licitud de "
+"pressupost es converteix en una comanda de compra confirmada."
 
 #. module: purchase
 #: selection:purchase.report,month:0
@@ -1641,6 +1673,18 @@ msgid ""
 "\n"
 " "
 msgstr ""
+" Tingueu en compte que: \n"
+" \n"
+" Les comandes només es fusionaran si: \n"
+" * Les comandes de compra estan en esborrany. \n"
+" * Les comandes pertanyen al mateix proveïdor. \n"
+" * Les comandes tenen la mateixa ubicació d'estoc i la mateixa llista de "
+"preus. \n"
+" \n"
+" Les línies només es fusionaran si: \n"
+" * Les línies de comanda són exactament iguals excepte pel producte, "
+"quantitat i unitats. \n"
+" "
 
 #. module: purchase
 #: view:purchase.report:0
@@ -1690,6 +1734,14 @@ msgid ""
 "                                      \n"
 "* The 'Cancelled' state is set automatically when user cancel purchase order."
 msgstr ""
+" * L'estat 'Esborrany' s'estableix automàticament quan creeu una comanda "
+"(pressupost) de compra.                                        \n"
+"* L'estat 'Confirmada' s'estableix automàticament en confirmar la comanda de "
+"compra.                                        \n"
+"* L'estat 'Realitzada' s'estableix automàticament quan la comanda de compra "
+"es realitza.                                        \n"
+"* L'estat 'Cancel·lada' s'estableix automàticament quan l'usuari cancel·la "
+"una comanda de compra."
 
 #. module: purchase
 #: code:addons/purchase/purchase.py:414
