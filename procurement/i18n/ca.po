@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-01-11 11:15+0000\n"
-"PO-Revision-Date: 2011-03-17 17:12+0000\n"
+"PO-Revision-Date: 2011-03-20 18:32+0000\n"
 "Last-Translator: mgaja (GrupoIsep.com) <Unknown>\n"
 "Language-Team: Catalan <ca@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-03-18 06:17+0000\n"
+"X-Launchpad-Export-Date: 2011-03-21 06:22+0000\n"
 "X-Generator: Launchpad (build 12559)\n"
 
 #. module: procurement
@@ -86,7 +86,7 @@ msgstr "Calcula només regles d'estoc mínim"
 #: field:procurement.order,company_id:0
 #: field:stock.warehouse.orderpoint,company_id:0
 msgid "Company"
-msgstr ""
+msgstr "Companyia"
 
 #. module: procurement
 #: field:procurement.order,product_uos_qty:0
@@ -132,7 +132,7 @@ msgstr "sota comanda"
 #. module: procurement
 #: help:procurement.order,message:0
 msgid "Exception occurred while computing procurement orders."
-msgstr ""
+msgstr "Ha ocorregut una excepció mentre es calculaven ordres de proveïment."
 
 #. module: procurement
 #: help:procurement.order,state:0
@@ -253,7 +253,7 @@ msgstr "Estat"
 #: view:stock.warehouse.orderpoint:0
 #: field:stock.warehouse.orderpoint,location_id:0
 msgid "Location"
-msgstr ""
+msgstr "Ubicació"
 
 #. module: procurement
 #: model:ir.model,name:procurement.model_stock_picking
@@ -387,7 +387,7 @@ msgstr "Ordres de proveïment"
 #. module: procurement
 #: view:procurement.order:0
 msgid "To Fix"
-msgstr ""
+msgstr "Per a corregir"
 
 #. module: procurement
 #: view:procurement.order:0
@@ -480,6 +480,8 @@ msgid ""
 "If the active field is set to False, it will allow you to hide the "
 "orderpoint without removing it."
 msgstr ""
+"Si el camp actiu es desmarca, permet ocultar la regla d'estoc mínim sense "
+"eliminar-la."
 
 #. module: procurement
 #: help:stock.warehouse.orderpoint,product_max_qty:0
@@ -652,7 +654,7 @@ msgstr "Grup de propietat"
 #. module: procurement
 #: view:stock.warehouse.orderpoint:0
 msgid "Misc"
-msgstr ""
+msgstr "Varis"
 
 #. module: procurement
 #: view:stock.warehouse.orderpoint:0
@@ -717,7 +719,7 @@ msgstr "Calcula tots els planificadors"
 #. module: procurement
 #: view:procurement.order:0
 msgid "Current"
-msgstr ""
+msgstr "Actual"
 
 #. module: procurement
 #: view:board.board:0
@@ -750,7 +752,7 @@ msgstr "Regles d'estoc mínim"
 #. module: procurement
 #: field:procurement.order,close_move:0
 msgid "Close Move at end"
-msgstr ""
+msgstr "Tanca moviment al final"
 
 #. module: procurement
 #: view:procurement.order:0
@@ -809,7 +811,7 @@ msgstr "UdM"
 #. module: procurement
 #: selection:procurement.order,state:0
 msgid "Waiting"
-msgstr ""
+msgstr "En espera"
 
 #. module: procurement
 #: model:ir.actions.act_window,help:procurement.action_orderpoint_form

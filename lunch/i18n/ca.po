@@ -8,26 +8,27 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-01-11 11:15+0000\n"
-"PO-Revision-Date: 2011-03-15 07:47+0000\n"
-"Last-Translator: mgaja (GrupoIsep.com) <Unknown>\n"
+"PO-Revision-Date: 2011-03-20 22:46+0000\n"
+"Last-Translator: Jordi Esteve (www.zikzakmedia.com) "
+"<jesteve@zikzakmedia.com>\n"
 "Language-Team: Catalan <ca@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-03-16 05:42+0000\n"
+"X-Launchpad-Export-Date: 2011-03-21 06:22+0000\n"
 "X-Generator: Launchpad (build 12559)\n"
 
 #. module: lunch
 #: wizard_view:lunch.cashbox.clean,init:0
 msgid "Reset cashbox"
-msgstr ""
+msgstr "Resetear caja"
 
 #. module: lunch
 #: model:ir.actions.act_window,name:lunch.action_lunch_order_form
 #: model:ir.ui.menu,name:lunch.menu_lunch_order_form
 #: model:ir.ui.menu,name:lunch.menu_lunch_reporting_order
 msgid "Lunch Orders"
-msgstr ""
+msgstr "Comandes de menjar"
 
 #. module: lunch
 #: wizard_view:lunch.order.cancel,init:0
@@ -67,6 +68,13 @@ msgid ""
 "    Apply Different Category for the product.\n"
 "    "
 msgstr ""
+"\n"
+"    El mòdul base per gestionar menjars.\n"
+"\n"
+"    Permet gestionar les comandes de menjar, els moviments d'efectiu, la "
+"caixa i els productes.\n"
+"    Estableix diferents categories per al producte.\n"
+"    "
 
 #. module: lunch
 #: view:lunch.cashmove:0
@@ -102,7 +110,7 @@ msgstr "Cancel·la comanda"
 #: field:lunch.cashmove,amount:0
 #: field:report.lunch.amount,amount:0
 msgid "Amount"
-msgstr ""
+msgstr "Import"
 
 #. module: lunch
 #: model:ir.ui.menu,name:lunch.menu_lunch_product_form
@@ -123,7 +131,7 @@ msgstr "   Mes   "
 #. module: lunch
 #: model:ir.model,name:lunch.model_report_lunch_order
 msgid "Lunch Orders Statistics"
-msgstr ""
+msgstr "Estadístiques de comandes de menjar"
 
 #. module: lunch
 #: model:ir.actions.act_window,name:lunch.action_lunch_cashmove_form
@@ -140,17 +148,17 @@ msgstr "Confirmat"
 #. module: lunch
 #: view:lunch.order.confirm:0
 msgid "Confirm"
-msgstr ""
+msgstr "Confirma"
 
 #. module: lunch
 #: model:ir.module.module,shortdesc:lunch.module_meta_information
 msgid "Lunch Module"
-msgstr "Mòdul de dinars"
+msgstr "Mòdul de menjars"
 
 #. module: lunch
 #: view:lunch.order:0
 msgid "Search Lunch Order"
-msgstr "Cerca comandes de dinar"
+msgstr "Cerca comandes de menjar"
 
 #. module: lunch
 #: field:lunch.order,state:0
@@ -302,7 +310,7 @@ msgstr "Esteu segur que voleu reiniciar aquesta caixa d'efectiu?"
 #. module: lunch
 #: selection:lunch.order,state:0
 msgid "Draft"
-msgstr ""
+msgstr "Esborrany"
 
 #. module: lunch
 #: selection:report.lunch.amount,month:0
@@ -314,7 +322,7 @@ msgstr "Agost"
 #: model:ir.actions.act_window,name:lunch.action_report_lunch_order_all
 #: view:report.lunch.order:0
 msgid "Lunch Order Analysis"
-msgstr "Anàlisis comandes de dinars"
+msgstr "Anàlisis comandes de menjar"
 
 #. module: lunch
 #: selection:report.lunch.amount,month:0
@@ -337,7 +345,7 @@ msgstr "Anàlisi de vendes"
 #. module: lunch
 #: model:ir.ui.menu,name:lunch.menu_lunch
 msgid "Lunch"
-msgstr "Dinar"
+msgstr "Menjar"
 
 #. module: lunch
 #: view:lunch.cashmove:0
@@ -387,7 +395,7 @@ msgstr "Data de comanda"
 #. module: lunch
 #: model:ir.model,name:lunch.model_lunch_cashbox
 msgid "Cashbox for Lunch "
-msgstr ""
+msgstr "Caixa per al menjar "
 
 #. module: lunch
 #: model:ir.actions.wizard,name:lunch.wizard_clean_cashbox
@@ -453,7 +461,7 @@ msgstr "Total caixa"
 #. module: lunch
 #: model:ir.model,name:lunch.model_lunch_product
 msgid "Lunch Product"
-msgstr "Producte dinar"
+msgstr "Producte menjar"
 
 #. module: lunch
 #: field:lunch.cashbox,sum_remain:0
@@ -483,7 +491,7 @@ msgstr "Nom"
 #. module: lunch
 #: view:lunch.cashmove:0
 msgid "Total amount"
-msgstr ""
+msgstr "Import total"
 
 #. module: lunch
 #: view:lunch.category:0
@@ -509,7 +517,7 @@ msgstr "Comanda"
 #: model:ir.ui.menu,name:lunch.menu_lunch
 #: report:lunch.order:0
 msgid "Lunch Order"
-msgstr "Comanda dinar"
+msgstr "Comanda menjar"
 
 #. module: lunch
 #: model:ir.actions.act_window,name:lunch.action_report_lunch_amount_tree
@@ -530,11 +538,11 @@ msgstr "   30 Dies   "
 #. module: lunch
 #: view:lunch.order:0
 msgid "To Confirm"
-msgstr ""
+msgstr "Per confirmar"
 
 #. module: lunch
 #: field:report.lunch.amount,year:0
 #: view:report.lunch.order:0
 #: field:report.lunch.order,year:0
 msgid "Year"
-msgstr ""
+msgstr "Any"
