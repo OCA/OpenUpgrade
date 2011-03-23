@@ -1161,7 +1161,7 @@ class hr_payslip(osv.osv):
                 res['amount'] = salary_rule.amount
                 res['type'] = salary_rule.type.id
                 leave += days
-                total = value
+                total += value
                 res['total'] = value
                 if salary_rule.appears_on_payslip:
                     if salary_rule.parent_rule_id:
