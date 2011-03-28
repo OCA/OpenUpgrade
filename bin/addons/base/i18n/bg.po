@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2011-01-11 11:14+0000\n"
-"PO-Revision-Date: 2011-03-24 15:26+0000\n"
-"Last-Translator: Dimitar Markov <dimitar.markov@gmail.com>\n"
+"PO-Revision-Date: 2011-03-28 05:18+0000\n"
+"Last-Translator: Luk <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-03-25 06:13+0000\n"
+"X-Launchpad-Export-Date: 2011-03-28 05:24+0000\n"
 "X-Generator: Launchpad (build 12559)\n"
 
 #. module: base
@@ -47,6 +47,8 @@ msgid ""
 "The second argument of the many2many field %s must be a SQL table !You used "
 "%s, which is not a valid SQL table name."
 msgstr ""
+"Вторият аргумент на many2many полето %s трябва да е SQL таблица ! Вие "
+"използвате %s, което не е валидно SQL име на таблица."
 
 #. module: base
 #: view:ir.values:0
@@ -156,7 +158,7 @@ msgstr ""
 #: code:addons/osv.py:133
 #, python-format
 msgid "Constraint Error"
-msgstr ""
+msgstr "Ограничение за грешка"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_ui_view_custom
@@ -217,6 +219,7 @@ msgstr "Търсене на контрагент"
 #, python-format
 msgid "\"smtp_server\" needs to be set to send mails to users"
 msgstr ""
+"\"smtp_server\" необходимо е да установите поща за изпращане за потребителите"
 
 #. module: base
 #: code:addons/base/module/wizard/base_export_language.py:60
@@ -438,7 +441,7 @@ msgstr "Планирай обновяване"
 #: code:addons/orm.py:838
 #, python-format
 msgid "Key/value '%s' not found in selection field '%s'"
-msgstr ""
+msgstr "Ключ/стойност '%s' не го откривам в избраното поле '%s'"
 
 #. module: base
 #: help:res.country,code:0
@@ -567,6 +570,9 @@ msgid ""
 "Launchpad.net, our open source project management facility. We use their "
 "online interface to synchronize all translations efforts."
 msgstr ""
+"OpenERP преводи (ядро, модули, клиенти) се управляват през Launchpad.net, "
+"our open source project management facility. We use their online interface "
+"to synchronize all translations efforts."
 
 #. module: base
 #: field:res.partner,title:0
