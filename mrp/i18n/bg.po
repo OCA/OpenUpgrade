@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2011-01-11 11:15+0000\n"
-"PO-Revision-Date: 2011-03-26 20:44+0000\n"
-"Last-Translator: lem0na <nickyk@gmx.net>\n"
+"PO-Revision-Date: 2011-03-27 20:13+0000\n"
+"Last-Translator: Vasil Bojilov Bovilov <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-03-27 06:28+0000\n"
+"X-Launchpad-Export-Date: 2011-03-28 05:24+0000\n"
 "X-Generator: Launchpad (build 12559)\n"
 
 #. module: mrp
@@ -146,7 +146,7 @@ msgstr ""
 #: view:mrp.production:0
 #: field:mrp.production,name:0
 msgid "Reference"
-msgstr "Отпратка"
+msgstr "Препратка"
 
 #. module: mrp
 #: view:mrp.production:0
@@ -176,8 +176,7 @@ msgstr ""
 #. module: mrp
 #: model:process.transition,note:mrp.process_transition_purchaseprocure0
 msgid "The system launches automatically a RFQ to the preferred supplier."
-msgstr ""
-"Системата стартира автоматично е запитване към предпочитан доставчик."
+msgstr "Системата стартира автоматично запитване към предпочитан доставчик."
 
 #. module: mrp
 #: view:mrp.production:0
@@ -187,12 +186,12 @@ msgstr "Продукти за завършване"
 #. module: mrp
 #: selection:mrp.bom,method:0
 msgid "Set / Pack"
-msgstr ""
+msgstr "Настройка/ Пакетиране"
 
 #. module: mrp
 #: field:mrp.installer,mrp_subproduct:0
 msgid "MRP Subproducts"
-msgstr "MRP субпродукти"
+msgstr "ПМР събпродукти"
 
 #. module: mrp
 #: view:mrp.production:0
@@ -200,7 +199,7 @@ msgstr "MRP субпродукти"
 #: view:mrp.production.order:0
 #: field:mrp.production.order,state:0
 msgid "State"
-msgstr "Област"
+msgstr "Състояние"
 
 #. module: mrp
 #: field:mrp.workcenter,costs_hour:0
@@ -253,12 +252,12 @@ msgstr "Версия"
 #. module: mrp
 #: model:ir.ui.menu,name:mrp.next_id_77
 msgid "Reporting"
-msgstr "Справки"
+msgstr "Отчети"
 
 #. module: mrp
 #: field:mrp.workcenter,costs_cycle_account_id:0
 msgid "Cycle Account"
-msgstr ""
+msgstr "Циклична сметка"
 
 #. module: mrp
 #: code:addons/mrp/report/price.py:121
@@ -383,7 +382,7 @@ msgstr "Основна МЕ"
 #: report:mrp.production.order:0
 #, python-format
 msgid "Quantity"
-msgstr ""
+msgstr "Количество"
 
 #. module: mrp
 #: field:mrp.production.workcenter.line,hour:0
@@ -431,7 +430,7 @@ msgstr "Работно време"
 #. module: mrp
 #: model:ir.actions.act_window,name:mrp.action_report_in_out_picking_tree
 msgid "Weekly Stock Value Variation"
-msgstr "Седмични промени стойността"
+msgstr "Седмични промени на стойността"
 
 #. module: mrp
 #: help:mrp.installer,mrp_repair:0
@@ -439,6 +438,8 @@ msgid ""
 "Enables warranty and repair management (and their impact on stocks and "
 "invoicing)."
 msgstr ""
+"Въвежда гаранция и управление на ремонти (и тяхното въздействие върху "
+"запасите и фактуриране)."
 
 #. module: mrp
 #: field:mrp.production,date_planned_date:0
@@ -450,7 +451,7 @@ msgstr "Планирана дата"
 #. module: mrp
 #: report:mrp.production.order:0
 msgid "Bill Of Material"
-msgstr ""
+msgstr "Списък на суровини"
 
 #. module: mrp
 #: help:mrp.routing,location_id:0
@@ -467,12 +468,12 @@ msgstr ""
 #. module: mrp
 #: view:board.board:0
 msgid "Stock Value Variation"
-msgstr ""
+msgstr "Вариации на стокова наличност"
 
 #. module: mrp
 #: model:ir.actions.act_window,name:mrp.action2
 msgid "Bill of Materials Structure"
-msgstr ""
+msgstr "Списък на суровините структура"
 
 #. module: mrp
 #: model:process.node,note:mrp.process_node_serviceproduct0
@@ -485,16 +486,18 @@ msgid ""
 "Define specific property groups that can be assigned to the properties of "
 "your bill of materials."
 msgstr ""
+"Дефиниране на свойства на групи, които могат да бъдат причислени към "
+"свойствата на списъка с материали."
 
 #. module: mrp
 #: model:process.transition,name:mrp.process_transition_bom0
 msgid "Manufacturing decomposition"
-msgstr ""
+msgstr "Разлагане на производство"
 
 #. module: mrp
 #: model:process.node,note:mrp.process_node_serviceproduct1
 msgid "For Services."
-msgstr ""
+msgstr "За услуги."
 
 #. module: mrp
 #: field:mrp.bom.revision,date:0
@@ -508,19 +511,19 @@ msgid ""
 "Complete this only if you want automatic analytic accounting entries on "
 "production orders."
 msgstr ""
-"Попълнете това само в случай че искате в поръчките на продукти записи за "
-"аналитична сметка."
+"Попълнете това само в случай, че искате автоматична, аналитична сметка на "
+"производствена поръчка."
 
 #. module: mrp
 #: field:mrp.production.workcenter.line,cycle:0
 msgid "Nbr of cycles"
-msgstr "Номера на цикли"
+msgstr "Брой цикли"
 
 #. module: mrp
 #: model:process.node,note:mrp.process_node_orderrfq0
 #: model:process.node,note:mrp.process_node_rfq0
 msgid "Request for Quotation."
-msgstr ""
+msgstr "Заявка за оферта."
 
 #. module: mrp
 #: model:process.transition,note:mrp.process_transition_billofmaterialrouting0
@@ -528,6 +531,8 @@ msgid ""
 "The Bill of Material is linked to a routing, i.e. the succession of work "
 "centers."
 msgstr ""
+"Списъка на суровините е свързан с маршрута, т.е. поредица от работни "
+"центрове."
 
 #. module: mrp
 #: constraint:product.product:0
@@ -548,7 +553,7 @@ msgstr "Промяна на к-во"
 #. module: mrp
 #: view:mrp.production:0
 msgid "Force Reservation"
-msgstr ""
+msgstr "Мощност за резервация"
 
 #. module: mrp
 #: field:mrp.bom.revision,author_id:0
@@ -558,23 +563,23 @@ msgstr "Автор"
 #. module: mrp
 #: field:report.mrp.inout,value:0
 msgid "Stock value"
-msgstr ""
+msgstr "Складова наличност"
 
 #. module: mrp
 #: model:ir.actions.act_window,name:mrp.action_product_bom_structure
 msgid "Product BoM Structure"
-msgstr ""
+msgstr "Списък на суровините за продукта"
 
 #. module: mrp
 #: view:mrp.production:0
 msgid "Search Production"
-msgstr ""
+msgstr "Тръсене производство"
 
 #. module: mrp
 #: code:addons/mrp/report/price.py:130
 #, python-format
 msgid "Supplier Price per Uom"
-msgstr ""
+msgstr "Доставна цена за ЕМ"
 
 #. module: mrp
 #: selection:mrp.production.order,month:0
@@ -584,31 +589,31 @@ msgstr "Март"
 #. module: mrp
 #: field:mrp.bom,child_complete_ids:0
 msgid "BoM Hierarchy"
-msgstr ""
+msgstr "Списък на суровините ерархия"
 
 #. module: mrp
 #: model:ir.actions.act_window,name:mrp.act_mrp_product_produce
 #: view:mrp.product.produce:0
 #: view:mrp.production:0
 msgid "Produce"
-msgstr ""
+msgstr "Продукция"
 
 #. module: mrp
 #: help:mrp.workcenter,costs_cycle:0
 msgid "Specify Cost of Work center per cycle."
-msgstr ""
+msgstr "Посочете разходите на работен център за цикъл."
 
 #. module: mrp
 #: selection:mrp.production,state:0
 #: view:mrp.production.order:0
 #: selection:mrp.production.order,state:0
 msgid "Picking Exception"
-msgstr ""
+msgstr "Събиране изключение"
 
 #. module: mrp
 #: field:mrp.bom,bom_lines:0
 msgid "BoM Lines"
-msgstr ""
+msgstr "Списък на суровини редове"
 
 #. module: mrp
 #: field:mrp.workcenter,time_start:0

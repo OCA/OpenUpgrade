@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2011-01-11 11:16+0000\n"
-"PO-Revision-Date: 2011-03-25 13:42+0000\n"
-"Last-Translator: mgaja (GrupoIsep.com) <Unknown>\n"
+"PO-Revision-Date: 2011-03-27 21:39+0000\n"
+"Last-Translator: Esther Xaus (Zikzakmedia) <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-03-26 15:06+0000\n"
+"X-Launchpad-Export-Date: 2011-03-28 05:25+0000\n"
 "X-Generator: Launchpad (build 12559)\n"
 
 #. module: stock
@@ -751,6 +751,8 @@ msgid ""
 "Check this option to select existing lots in the list below, otherwise you "
 "should enter new ones line by line."
 msgstr ""
+"Marqueu aquesta opció per seleccionar lots existents en la llista inferior, "
+"en cas contrari heu d'introduir uns altres de nous línia per la línia."
 
 #. module: stock
 #: field:stock.move,move_dest_id:0
@@ -788,7 +790,7 @@ msgstr "Ubicació entrada"
 #. module: stock
 #: help:stock.picking,date:0
 msgid "Date of Order"
-msgstr ""
+msgstr "Data de l'ordre"
 
 #. module: stock
 #: selection:product.product,valuation:0
@@ -2656,13 +2658,13 @@ msgstr ""
 #: field:stock.production.lot.revision,company_id:0
 #: field:stock.warehouse,company_id:0
 msgid "Company"
-msgstr ""
+msgstr "Companyia"
 
 #. module: stock
 #: view:stock.move:0
 #: view:stock.picking:0
 msgid "Unit Of Measure"
-msgstr ""
+msgstr "Unitat de mesura"
 
 #. module: stock
 #: code:addons/stock/product.py:122
@@ -2670,12 +2672,14 @@ msgstr ""
 msgid ""
 "There is no stock input account defined for this product: \"%s\" (id: %d)"
 msgstr ""
+"No s'ha definit un compte d'entrada d'estoc per a aquest producte: \"%s\" "
+"(id: %d)"
 
 #. module: stock
 #: code:addons/stock/stock.py:2302
 #, python-format
 msgid "Can not consume a move with negative or zero quantity !"
-msgstr ""
+msgstr "No es pot consumir un moviment amb una quantitat negativa o zero!"
 
 #. module: stock
 #: field:stock.location,stock_real:0
@@ -2692,6 +2696,8 @@ msgstr "Omple inventari"
 msgid ""
 "Error: The default UOM and the purchase UOM must be in the same category."
 msgstr ""
+"Error: La UdM per defecte i la UdM de compra han d'estar en la mateixa "
+"categoria."
 
 #. module: stock
 #: help:product.category,property_stock_account_input_categ:0
@@ -2724,7 +2730,7 @@ msgstr "Lot"
 #. module: stock
 #: view:stock.move.split:0
 msgid "Production Lot Number"
-msgstr ""
+msgstr "Número del lot de producció"
 
 #. module: stock
 #: field:stock.move,product_uos_qty:0
@@ -2737,6 +2743,8 @@ msgstr "Quantitat (UdV)"
 msgid ""
 "You are moving %.2f %s products but only %.2f %s available in this lot."
 msgstr ""
+"Està en moviment %.2f%s productes, però només %.2f%s està disponible en "
+"aquest lot."
 
 #. module: stock
 #: view:stock.move:0
@@ -2746,7 +2754,7 @@ msgstr "Reserva"
 #. module: stock
 #: report:stock.picking.list:0
 msgid "Contact Address :"
-msgstr ""
+msgstr "Adreça del contacte:"
 
 #. module: stock
 #: field:stock.move,backorder_id:0
@@ -2797,6 +2805,9 @@ msgid ""
 "costs and responsibilities between buyer and seller and reflect state-of-the-"
 "art transportation practices."
 msgstr ""
+"Els Incoterms són una sèrie de termes de vendes. S'utilitzen per dividir els "
+"costos de transacció i les responsabilitats entre el comprador i el venedor, "
+"i reflecteixen les pràctiques de transport més recents."
 
 #. module: stock
 #: help:stock.fill.inventory,recursive:0
@@ -2804,6 +2815,8 @@ msgid ""
 "If checked, products contained in child locations of selected location will "
 "be included as well."
 msgstr ""
+"Si es marca, els productes que figuren en les ubicacions filles de la "
+"ubicació seleccionada també s'inclouran."
 
 #. module: stock
 #: field:stock.move.track,tracking_prefix:0
@@ -2813,18 +2826,18 @@ msgstr "Prefix seguiment"
 #. module: stock
 #: field:stock.inventory,name:0
 msgid "Inventory Reference"
-msgstr ""
+msgstr "Referència inventari"
 
 #. module: stock
 #: code:addons/stock/stock.py:1307
 #, python-format
 msgid "Internal picking"
-msgstr ""
+msgstr "Albarà intern"
 
 #. module: stock
 #: view:stock.location.product:0
 msgid "Open Product"
-msgstr ""
+msgstr "Obre producte"
 
 #. module: stock
 #: field:stock.location.product,to_date:0
@@ -2835,7 +2848,7 @@ msgstr "Fins"
 #: view:stock.move:0
 #: view:stock.picking:0
 msgid "Process"
-msgstr ""
+msgstr "Processa"
 
 #. module: stock
 #: field:stock.production.lot.revision,name:0
@@ -2865,7 +2878,7 @@ msgstr "Propietats comptables de l'estoc"
 #. module: stock
 #: model:ir.actions.act_window,name:stock.action_picking_tree_out
 msgid "Customers Packings"
-msgstr ""
+msgstr "Paquet client"
 
 #. module: stock
 #: selection:report.stock.inventory,state:0
@@ -2884,7 +2897,7 @@ msgstr "Realitzat"
 #: model:ir.model,name:stock.model_stock_change_standard_price
 #: view:stock.change.standard.price:0
 msgid "Change Standard Price"
-msgstr ""
+msgstr "Canvi de preu estàndard"
 
 #. module: stock
 #: model:stock.location,name:stock.stock_location_locations_virtual
@@ -2916,7 +2929,7 @@ msgstr "No urgent"
 #. module: stock
 #: view:stock.move:0
 msgid "To Do"
-msgstr ""
+msgstr "Per fer"
 
 #. module: stock
 #: model:ir.actions.act_window,name:stock.action_warehouse_form
@@ -2927,19 +2940,19 @@ msgstr "Magatzems"
 #. module: stock
 #: field:stock.journal,user_id:0
 msgid "Responsible"
-msgstr ""
+msgstr "Responsable"
 
 #. module: stock
 #: field:stock.move,returned_price:0
 msgid "Returned product price"
-msgstr ""
+msgstr "Preu producte retornat"
 
 #. module: stock
 #: model:ir.actions.act_window,name:stock.action_stock_inventory_report
 #: model:ir.ui.menu,name:stock.menu_action_stock_inventory_report
 #: view:report.stock.inventory:0
 msgid "Inventory Analysis"
-msgstr ""
+msgstr "Anàlisi inventari"
 
 #. module: stock
 #: field:stock.invoice.onshipping,journal_id:0
@@ -2983,14 +2996,14 @@ msgstr "Producte"
 #: code:addons/stock/wizard/stock_return_picking.py:135
 #, python-format
 msgid "Invoicing"
-msgstr ""
+msgstr "Facturació"
 
 #. module: stock
 #: code:addons/stock/stock.py:2237
 #: code:addons/stock/stock.py:2297
 #, python-format
 msgid "Please provide Proper Quantity !"
-msgstr ""
+msgstr "Indiqueu la quantitat correcte!"
 
 #. module: stock
 #: field:stock.move,product_uos:0
@@ -3005,19 +3018,19 @@ msgstr "Altura (Z)"
 #. module: stock
 #: field:stock.ups,weight:0
 msgid "Lot weight"
-msgstr ""
+msgstr "Pes lot"
 
 #. module: stock
 #: model:ir.model,name:stock.model_stock_move_consume
 #: view:stock.move.consume:0
 msgid "Consume Products"
-msgstr ""
+msgstr "Consumeix productes"
 
 #. module: stock
 #: code:addons/stock/stock.py:1646
 #, python-format
 msgid "Insufficient Stock in Lot !"
-msgstr ""
+msgstr "Estock insuficient en el lot!"
 
 #. module: stock
 #: field:stock.location,parent_right:0
@@ -3027,7 +3040,7 @@ msgstr "Pare dret"
 #. module: stock
 #: field:stock.picking,address_id:0
 msgid "Address"
-msgstr ""
+msgstr "Adreça"
 
 #. module: stock
 #: report:lot.stock.overview:0
@@ -3049,23 +3062,23 @@ msgstr "Proveïdors"
 #: field:report.stock.inventory,value:0
 #: field:report.stock.move,value:0
 msgid "Total Value"
-msgstr ""
+msgstr "Valor total"
 
 #. module: stock
 #: model:ir.ui.menu,name:stock.menu_product_by_category_stock_form
 msgid "Products by Category"
-msgstr ""
+msgstr "Productes per categoria"
 
 #. module: stock
 #: model:ir.ui.menu,name:stock.menu_product_category_config_stock
 msgid "Products Categories"
-msgstr ""
+msgstr "Categories de productes"
 
 #. module: stock
 #: field:stock.move.memory.in,wizard_id:0
 #: field:stock.move.memory.out,wizard_id:0
 msgid "Wizard"
-msgstr ""
+msgstr "Assistent"
 
 #. module: stock
 #: model:ir.actions.act_window,name:stock.action_view_stock_location_product
@@ -3076,12 +3089,12 @@ msgstr "Productes per ubicació"
 #. module: stock
 #: field:stock.fill.inventory,recursive:0
 msgid "Include children"
-msgstr ""
+msgstr "Incloure fills"
 
 #. module: stock
 #: model:stock.location,name:stock.stock_location_components
 msgid "Shelf 1"
-msgstr ""
+msgstr "Prestatge 1"
 
 #. module: stock
 #: model:ir.actions.act_window,help:stock.action_picking_tree6
@@ -3093,6 +3106,13 @@ msgid ""
 "preconfigured logistics rules, but you can also record manual stock "
 "operations."
 msgstr ""
+"Els moviments interns mostren totes les operacions d'inventari que s'han de "
+"realitzar en el vostre magatzem. Totes les operacions poden ser "
+"classificades en estocs diaris, perquè cada treballador tingui la seva "
+"pròpia llista d'operacions a realitzar en el seu propi diari. La major part "
+"d'operacions són preparades automàticament per OpenERP segons les vostres "
+"regles de logística preconfigurades, però també podeu registrar operacions "
+"d'estoc de forma manual."
 
 #. module: stock
 #: view:stock.move:0
@@ -3102,7 +3122,7 @@ msgstr ""
 #. module: stock
 #: field:stock.tracking,name:0
 msgid "Pack Reference"
-msgstr ""
+msgstr "Referència paquet"
 
 #. module: stock
 #: view:report.stock.move:0
@@ -3119,17 +3139,17 @@ msgstr "Assentaments comptabilitat"
 #. module: stock
 #: report:stock.picking.list:0
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #. module: stock
 #: model:stock.location,name:stock.stock_location_intermediatelocation0
 msgid "Internal Shippings"
-msgstr ""
+msgstr "Enviaments interns"
 
 #. module: stock
 #: field:stock.change.standard.price,enable_stock_in_out_acc:0
 msgid "Enable Related Account"
-msgstr ""
+msgstr "Activa compte relacionat"
 
 #. module: stock
 #: field:stock.location,stock_virtual_value:0
@@ -3147,12 +3167,12 @@ msgstr "Lots"
 #: view:stock.move:0
 #: view:stock.picking:0
 msgid "New pack"
-msgstr ""
+msgstr "Nou paquet"
 
 #. module: stock
 #: view:stock.move:0
 msgid "Destination"
-msgstr ""
+msgstr "Destinació"
 
 #. module: stock
 #: selection:stock.picking,move_type:0
@@ -3166,6 +3186,8 @@ msgid ""
 "Quantities, UoMs, Products and Locations cannot be modified on stock moves "
 "that have already been processed (except by the Administrator)"
 msgstr ""
+"Les quantitats, UdM, productes i ubicacions no es poden modificar en els "
+"moviments d'estoc que ja han estat processats (excepte per l'administrador)"
 
 #. module: stock
 #: code:addons/stock/product.py:383
@@ -3193,22 +3215,22 @@ msgstr "Dates d'inventaris"
 #. module: stock
 #: view:report.stock.move:0
 msgid "Total incoming quantity"
-msgstr ""
+msgstr "Quantitat d'entrada total"
 
 #. module: stock
 #: field:report.stock.move,product_qty_out:0
 msgid "Out Qty"
-msgstr ""
+msgstr "Qtat sortida"
 
 #. module: stock
 #: field:stock.production.lot,move_ids:0
 msgid "Moves for this production lot"
-msgstr ""
+msgstr "Moviments per aquest lot de producció"
 
 #. module: stock
 #: model:ir.model,name:stock.model_stock_move_memory_out
 msgid "stock.move.memory.out"
-msgstr ""
+msgstr "estoc.moviment.memòria.sortida"
 
 #. module: stock
 #: code:addons/stock/wizard/stock_fill_inventory.py:115
@@ -3220,7 +3242,7 @@ msgstr "Missatge!"
 #: view:stock.move:0
 #: view:stock.picking:0
 msgid "Put in current pack"
-msgstr ""
+msgstr "Posa en el paquet actual"
 
 #. module: stock
 #: view:stock.inventory:0
@@ -3230,12 +3252,12 @@ msgstr "Regularització d'inventari"
 #. module: stock
 #: view:stock.move:0
 msgid "Reason"
-msgstr ""
+msgstr "Motiu"
 
 #. module: stock
 #: report:stock.picking.list:0
 msgid "Delivery Order:"
-msgstr ""
+msgstr "Albarà de sortida"
 
 #. module: stock
 #: model:ir.actions.act_window,help:stock.action_production_lot_form
@@ -3302,6 +3324,8 @@ msgid ""
 "There is no inventory variation account defined on the product category: "
 "\"%s\" (id: %d)"
 msgstr ""
+"No s'ha definit un compte de variació d'inventari en la categoria del "
+"producte: \"%s\" (id: %d)"
 
 #. module: stock
 #: view:stock.inventory.merge:0
@@ -3320,18 +3344,18 @@ msgstr "Cancel·lat"
 #. module: stock
 #: view:stock.move:0
 msgid "Picking"
-msgstr ""
+msgstr "Albarà"
 
 #. module: stock
 #: help:stock.picking,move_type:0
 msgid "It specifies goods to be delivered all at once or by direct delivery"
-msgstr ""
+msgstr "Indica si les mercaderies s'enviaran totes alhora o directament."
 
 #. module: stock
 #: code:addons/stock/wizard/stock_invoice_onshipping.py:83
 #, python-format
 msgid "This picking list does not require invoicing."
-msgstr ""
+msgstr "Aquest albarà no requereix facturació"
 
 #. module: stock
 #: selection:report.stock.move,type:0
@@ -3354,6 +3378,16 @@ msgid ""
 "* Fixed Location: The chained location is taken from the next field: Chained "
 "Location if Fixed."
 msgstr ""
+"Determina si aquesta ubicació està encadenada a una altra, per exemple "
+"qualsevol producte que entri en aquesta ubicació  ha d'anar a la següent "
+"ubicació encadenada. La ubicació encadenada es determina en funció del "
+"tipus:\n"
+"*Cap: No s'encadena amb cap.\n"
+"*Client: S'utilitza la ubicació encadenada definida en el camp Ubicació del "
+"client del formulari del client especificat en l'albarà dels productes "
+"entrants.\n"
+"*Ubicació fixa: S'utilitza la ubicació encadenada del següent camp: Ubicació "
+"encadenada si fixa."
 
 #. module: stock
 #: code:addons/stock/wizard/stock_inventory_merge.py:43
@@ -3367,7 +3401,7 @@ msgstr "Avís"
 #: code:addons/stock/stock.py:2557
 #, python-format
 msgid "is done."
-msgstr ""
+msgstr "està realitzat."
 
 #. module: stock
 #: model:ir.actions.act_window,name:stock.action_picking_tree
@@ -3402,7 +3436,7 @@ msgstr "Confirma"
 #. module: stock
 #: help:stock.location,icon:0
 msgid "Icon show in  hierarchical tree view"
-msgstr ""
+msgstr "Icona mostrada en la vista d'arbre jeràrquica."
 
 #. module: stock
 #: model:ir.actions.act_window,name:stock.action_view_stock_merge_inventories
@@ -3414,17 +3448,20 @@ msgstr "Fusiona inventaris"
 #: help:stock.change.product.qty,new_quantity:0
 msgid "This quantity is expressed in the Default UoM of the product."
 msgstr ""
+"Aquesta quantitat està expressada en la UdM per defecte del producte."
 
 #. module: stock
 #: report:stock.picking.list:0
 msgid "Reception:"
-msgstr ""
+msgstr "Recepció:"
 
 #. module: stock
 #: help:stock.location,scrap_location:0
 msgid ""
 "Check this box to allow using this location to put scrapped/damaged goods."
 msgstr ""
+"Marqueu aquesta opció per permetre utilitzar aquesta ubicació per posar "
+"mercaderies rebutjades/defectuoses."
 
 #. module: stock
 #: model:ir.actions.act_window,name:stock.act_relate_picking
@@ -3434,18 +3471,18 @@ msgstr "Albarà relacionat"
 #. module: stock
 #: view:report.stock.move:0
 msgid "Total outgoing quantity"
-msgstr ""
+msgstr "Quantitat de sortida total"
 
 #. module: stock
 #: field:stock.picking,backorder_id:0
 msgid "Back Order of"
-msgstr ""
+msgstr "Albarà pendent de"
 
 #. module: stock
 #: help:stock.move.memory.in,cost:0
 #: help:stock.move.memory.out,cost:0
 msgid "Unit Cost for this product line"
-msgstr ""
+msgstr "Cost unitari per a aquesta línia de producte"
 
 #. module: stock
 #: model:ir.model,name:stock.model_product_category
@@ -3454,13 +3491,13 @@ msgstr ""
 #: view:report.stock.move:0
 #: field:report.stock.move,categ_id:0
 msgid "Product Category"
-msgstr ""
+msgstr "Categoria del producte"
 
 #. module: stock
 #: code:addons/stock/wizard/stock_change_product_qty.py:74
 #, python-format
 msgid "INV: "
-msgstr ""
+msgstr "INV: "
 
 #. module: stock
 #: model:ir.ui.menu,name:stock.next_id_61
@@ -3476,7 +3513,7 @@ msgstr ""
 #. module: stock
 #: view:stock.split.into:0
 msgid "Quantity to leave in the current pack"
-msgstr ""
+msgstr "Quantitat a deixar en el paquet actual"
 
 #. module: stock
 #: model:ir.actions.act_window,name:stock.action_stock_invoice_onshipping
@@ -3493,7 +3530,7 @@ msgstr "Configuració"
 #: field:stock.inventory.line.split,use_exist:0
 #: field:stock.move.split,use_exist:0
 msgid "Existing Lots"
-msgstr ""
+msgstr "Lots existents"
 
 #. module: stock
 #: field:product.product,location_id:0
@@ -3514,13 +3551,13 @@ msgstr ""
 #. module: stock
 #: field:stock.location,chained_journal_id:0
 msgid "Chaining Journal"
-msgstr ""
+msgstr "Diari encadenament"
 
 #. module: stock
 #: code:addons/stock/stock.py:729
 #, python-format
 msgid "Not enough stock, unable to reserve the products."
-msgstr ""
+msgstr "Estoc insuficient, no ha estat possible reservar els productes."
 
 #. module: stock
 #: model:stock.location,name:stock.stock_location_customers
@@ -3531,7 +3568,7 @@ msgstr "Clients"
 #: code:addons/stock/stock.py:1320
 #, python-format
 msgid "is cancelled."
-msgstr ""
+msgstr "està cancel·lat."
 
 #. module: stock
 #: view:stock.inventory.line:0
@@ -3542,7 +3579,7 @@ msgstr "Línies regularització d'inventari"
 #: code:addons/stock/wizard/stock_partial_picking.py:74
 #, python-format
 msgid "Process Document"
-msgstr ""
+msgstr "Processar document"
 
 #. module: stock
 #: code:addons/stock/product.py:365
@@ -3553,13 +3590,13 @@ msgstr "Lliurament futur"
 #. module: stock
 #: view:stock.picking:0
 msgid "Additional info"
-msgstr ""
+msgstr "Informació addicional"
 
 #. module: stock
 #: view:stock.move:0
 #: field:stock.move,tracking_id:0
 msgid "Pack"
-msgstr ""
+msgstr "Paquet"
 
 #. module: stock
 #: view:stock.move:0
@@ -3589,12 +3626,12 @@ msgstr "Pes"
 #. module: stock
 #: model:ir.model,name:stock.model_product_template
 msgid "Product Template"
-msgstr ""
+msgstr "Plantilla del producte"
 
 #. module: stock
 #: selection:report.stock.move,month:0
 msgid "December"
-msgstr ""
+msgstr "Desembre"
 
 #. module: stock
 #: selection:stock.location,chained_auto_packing:0
@@ -3608,16 +3645,19 @@ msgid ""
 "specific product. You can filter on the product to see all the past or "
 "future movements for the product."
 msgstr ""
+"Aquest menú us dóna la traçabilitat completa de les operacions d'inventari "
+"sobre un producte específic. Podeu filtrar sobre el producte per veure tots "
+"els moviments passats o futurs per al producte."
 
 #. module: stock
 #: view:stock.picking:0
 msgid "Return Products"
-msgstr ""
+msgstr "Retorna productes"
 
 #. module: stock
 #: view:stock.inventory:0
 msgid "Validate Inventory"
-msgstr ""
+msgstr "Valida inventari"
 
 #. module: stock
 #: help:stock.move,price_currency_id:0
@@ -3625,11 +3665,13 @@ msgid ""
 "Technical field used to record the currency chosen by the user during a "
 "picking confirmation (when average price costing method is used)"
 msgstr ""
+"Camp tècnic utilitzat per registrar la moneda triada per l'usuari durant una "
+"confirmació d'albarà (quan s'utilitza el mètode de preu mitjà de cost)."
 
 #. module: stock
 #: model:ir.ui.menu,name:stock.menu_stock_products_moves
 msgid "Products Moves"
-msgstr ""
+msgstr "Moviments de productes"
 
 #. module: stock
 #: selection:stock.picking,invoice_state:0
@@ -3639,27 +3681,27 @@ msgstr "Facturat"
 #. module: stock
 #: field:stock.move,address_id:0
 msgid "Destination Address"
-msgstr ""
+msgstr "Adreça de destinació"
 
 #. module: stock
 #: field:stock.picking,max_date:0
 msgid "Max. Expected Date"
-msgstr ""
+msgstr "Data prevista màx."
 
 #. module: stock
 #: field:stock.picking,auto_picking:0
 msgid "Auto-Picking"
-msgstr ""
+msgstr "Auto-Albarà"
 
 #. module: stock
 #: model:stock.location,name:stock.stock_location_shop1
 msgid "Shop 2"
-msgstr ""
+msgstr "Tenda 2"
 
 #. module: stock
 #: constraint:res.partner:0
 msgid "Error ! You can not create recursive associated members."
-msgstr ""
+msgstr "Error! No podeu crear membres associats recursius."
 
 #. module: stock
 #: view:report.stock.inventory:0
@@ -3684,7 +3726,7 @@ msgstr "Esborrany"
 #: model:ir.actions.report.xml,name:stock.report_stock_inventory_move
 #: report:stock.inventory.move:0
 msgid "Stock Inventory"
-msgstr ""
+msgstr "Inventari d'estoc"
 
 #. module: stock
 #: help:report.stock.inventory,state:0
@@ -3704,18 +3746,18 @@ msgstr ""
 #. module: stock
 #: view:board.board:0
 msgid "Outgoing Products Delay"
-msgstr ""
+msgstr "Retard productes de sortida"
 
 #. module: stock
 #: field:stock.move.split.lines,use_exist:0
 msgid "Existing Lot"
-msgstr ""
+msgstr "Lot existent"
 
 #. module: stock
 #: code:addons/stock/wizard/stock_return_picking.py:204
 #, python-format
 msgid "Please specify at least one non-zero quantity!"
-msgstr ""
+msgstr "Introduïu almenys una quantitat que no sigui zero!"
 
 #. module: stock
 #: help:product.template,property_stock_procurement:0
@@ -3723,33 +3765,36 @@ msgid ""
 "For the current product, this stock location will be used, instead of the "
 "default one, as the source location for stock moves generated by procurements"
 msgstr ""
+"Per als productes actuals, aquesta ubicació d'estoc s'utilitzarà, en lloc de "
+"la per defecte, com la ubicació d'origen per als moviments d'estoc generats "
+"pels proveïments."
 
 #. module: stock
 #: code:addons/stock/stock.py:1319
 #, python-format
 msgid "is ready to process."
-msgstr ""
+msgstr "preparat per processar."
 
 #. module: stock
 #: help:stock.picking,origin:0
 msgid "Reference of the document that produced this picking."
-msgstr ""
+msgstr "Referència del document que ha generat aquest albarà."
 
 #. module: stock
 #: field:stock.fill.inventory,set_stock_zero:0
 msgid "Set to zero"
-msgstr ""
+msgstr "Inicia a zero"
 
 #. module: stock
 #: code:addons/stock/wizard/stock_invoice_onshipping.py:85
 #, python-format
 msgid "None of these picking lists require invoicing."
-msgstr ""
+msgstr "Cap d'aquests albarans requereix facturació."
 
 #. module: stock
 #: selection:report.stock.move,month:0
 msgid "November"
-msgstr ""
+msgstr "Novembre"
 
 #. module: stock
 #: code:addons/stock/product.py:101
@@ -3757,6 +3802,7 @@ msgstr ""
 #, python-format
 msgid "There is no journal defined on the product category: \"%s\" (id: %d)"
 msgstr ""
+"No s'ha definit un diari en la categoria de producte: \"%s\" (id: %d)"
 
 #. module: stock
 #: code:addons/stock/product.py:379
@@ -3768,12 +3814,12 @@ msgstr "Qtat no planificada"
 #: code:addons/stock/stock.py:1318
 #, python-format
 msgid "is scheduled"
-msgstr ""
+msgstr "està planificat"
 
 #. module: stock
 #: field:stock.location,chained_company_id:0
 msgid "Chained Company"
-msgstr ""
+msgstr "Companyia encadenada"
 
 #. module: stock
 #: view:stock.picking:0
@@ -3783,7 +3829,7 @@ msgstr "Comprova disponibilitat"
 #. module: stock
 #: selection:report.stock.move,month:0
 msgid "January"
-msgstr ""
+msgstr "Gener"
 
 #. module: stock
 #: help:product.product,track_incoming:0
@@ -3791,6 +3837,8 @@ msgid ""
 "Forces to specify a Production Lot for all moves containing this product and "
 "coming from a Supplier Location"
 msgstr ""
+"Força a introduir un lot de producció per a tots els moviments que conté "
+"aquest producte i procedent d'una ubicació de proveïdors."
 
 #. module: stock
 #: model:ir.actions.act_window,name:stock.act_product_stock_move_futur_open
@@ -3800,7 +3848,7 @@ msgstr "Moviments d'estoc futurs"
 #. module: stock
 #: field:stock.move,move_history_ids2:0
 msgid "Move History (parent moves)"
-msgstr ""
+msgstr "Historial moviments (mov. pares)"
 
 #. module: stock
 #: code:addons/stock/product.py:361
@@ -3820,12 +3868,12 @@ msgstr "Error"
 #. module: stock
 #: field:stock.ups.final,xmlfile:0
 msgid "XML File"
-msgstr ""
+msgstr "Fitxer XML"
 
 #. module: stock
 #: view:stock.change.product.qty:0
 msgid "Select Quantity"
-msgstr ""
+msgstr "Selecciona quantitat"
 
 #. module: stock
 #: model:ir.actions.act_window,help:stock.action_location_tree
@@ -3834,6 +3882,9 @@ msgid ""
 "click on a location to get the list of the products and their stock level in "
 "this particular location and all its children."
 msgstr ""
+"Això és l'estructura dels magatzems i ubicacions de la vostra companyia. "
+"Podeu prémer sobre una ubicació per obtenir la llista dels productes i el "
+"seu nivell d'estoc en aquesta ubicació específica i tots els seus fills."
 
 #. module: stock
 #: model:res.request.link,name:stock.req_link_tracking
@@ -3878,7 +3929,7 @@ msgstr "Informació general"
 #. module: stock
 #: field:stock.production.lot,prefix:0
 msgid "Prefix"
-msgstr ""
+msgstr "Prefix"
 
 #. module: stock
 #: code:addons/stock/wizard/stock_splitinto.py:53
@@ -3887,6 +3938,8 @@ msgid ""
 "Total quantity after split exceeds the quantity to split for this product: "
 "\"%s\" (id: %d)"
 msgstr ""
+"Quantitat total després que la divisió excedeixi la quantitat per dividir "
+"per a aquest producte: \"%s\" (id: %d)"
 
 #. module: stock
 #: view:stock.move:0
@@ -3909,22 +3962,24 @@ msgstr "Ubicació destí"
 msgid ""
 "It specifies attributes of packaging like type, quantity of packaging,etc."
 msgstr ""
+"Indica els atributs de l'empaquetat com el tipus, la quantitat de paquets, "
+"etc."
 
 #. module: stock
 #: code:addons/stock/stock.py:2348
 #, python-format
 msgid "quantity."
-msgstr ""
+msgstr "Quantitat"
 
 #. module: stock
 #: constraint:stock.move:0
 msgid "You must assign a production lot for this product"
-msgstr ""
+msgstr "Heu d'assignar un lot de producció per a aquest producte"
 
 #. module: stock
 #: view:stock.move:0
 msgid "Expected"
-msgstr ""
+msgstr "Previst"
 
 #. module: stock
 #: selection:report.stock.inventory,location_type:0
@@ -3936,7 +3991,7 @@ msgstr "Producció"
 #. module: stock
 #: view:stock.split.into:0
 msgid "Split Move"
-msgstr ""
+msgstr "Divideix moviment"
 
 #. module: stock
 #: code:addons/stock/wizard/stock_return_picking.py:97
@@ -3949,12 +4004,12 @@ msgstr ""
 #. module: stock
 #: model:ir.model,name:stock.model_stock_move_split
 msgid "Split in Production lots"
-msgstr ""
+msgstr "Divideix en lots de producció"
 
 #. module: stock
 #: view:report.stock.inventory:0
 msgid "Real"
-msgstr ""
+msgstr "Real"
 
 #. module: stock
 #: report:stock.picking.list:0
@@ -3966,7 +4021,7 @@ msgstr "Descripció"
 #. module: stock
 #: selection:report.stock.move,month:0
 msgid "May"
-msgstr ""
+msgstr "Maig"
 
 #. module: stock
 #: code:addons/stock/wizard/stock_partial_move.py:133
@@ -3995,7 +4050,7 @@ msgstr "Traçabilitat cap amunt"
 #: model:ir.actions.report.xml,name:stock.report_location_overview_all
 #: report:lot.stock.overview_all:0
 msgid "Location Content"
-msgstr ""
+msgstr "Contingut ubicació"
 
 #. module: stock
 #: code:addons/stock/product.py:385
@@ -4030,34 +4085,34 @@ msgstr "Client"
 #. module: stock
 #: selection:report.stock.move,month:0
 msgid "February"
-msgstr ""
+msgstr "Febrer"
 
 #. module: stock
 #: view:stock.production.lot:0
 msgid "Production Lot Identification"
-msgstr ""
+msgstr "Identificació lot de producció"
 
 #. module: stock
 #: field:stock.location,scrap_location:0
 #: view:stock.move.scrap:0
 msgid "Scrap Location"
-msgstr ""
+msgstr "Ubicació rebuig"
 
 #. module: stock
 #: selection:report.stock.move,month:0
 msgid "April"
-msgstr ""
+msgstr "Abril"
 
 #. module: stock
 #: view:report.stock.inventory:0
 #: view:stock.move:0
 msgid "Future"
-msgstr ""
+msgstr "Futur"
 
 #. module: stock
 #: field:stock.invoice.onshipping,invoice_date:0
 msgid "Invoiced date"
-msgstr ""
+msgstr "Data facturada"
 
 #. module: stock
 #: code:addons/stock/stock.py:729
@@ -4068,7 +4123,7 @@ msgstr ""
 #: code:addons/stock/wizard/stock_return_picking.py:204
 #, python-format
 msgid "Warning !"
-msgstr ""
+msgstr "Avís!"
 
 #. module: stock
 #: model:stock.location,name:stock.stock_location_output
