@@ -2,8 +2,7 @@
 openerp.base.form = function (openerp) {
 
 openerp.base.views.add('form', 'openerp.base.FormView');
-openerp.base.FormView =  openerp.base.Controller.extend(
-    /** @lends openerp.base.FormView# */{
+openerp.base.FormView =  openerp.base.Controller.extend( /** @lends openerp.base.FormView# */{
     /**
      * Indicates that this view is not searchable, and thus that no search
      * view should be displayed (if there is one active).
@@ -22,7 +21,7 @@ openerp.base.FormView =  openerp.base.Controller.extend(
         this.dataset = dataset;
         this.model = dataset.model;
         this.view_id = view_id;
-        this.fields_views = {};
+        this.fields_view = {};
         this.widgets = {};
         this.widgets_counter = 0;
         this.fields = {};
@@ -36,7 +35,6 @@ openerp.base.FormView =  openerp.base.Controller.extend(
     on_loaded: function(data) {
         var self = this;
         this.fields_view = data.fields_view;
-        //this.log(this.fields_view);
 
         var frame = new openerp.base.form.WidgetFrame(this, this.fields_view.arch);
 
@@ -45,30 +43,28 @@ openerp.base.FormView =  openerp.base.Controller.extend(
             w.start();
         });
         this.$element.find('button.form_save').click(this.do_save);
-
-//        this.dataset.on_active_id.add(this.on_record_loaded);
-//        this.dataset.active_id(fields of the form, this.on_record_loaded);
-
+        
         // sidebar stuff
         if (this.view_manager.sidebar)
             this.view_manager.sidebar.load_multi_actions();
     },
     on_next: function() {
-//        this.dataset.next();
-//        this.dataset.active_id(fields of the form, this.on_record_loaded);
+        this.dataset.next();
+        this.dataset.fetch_index(this.fields_view.fields, this.on_record_loaded);
     },
     on_prev: function() {
-
-//        this.dataset.prev();
-//        this.dataset.active_id(fields of the form, this.on_record_loaded);
+        this.dataset.prev();
+        this.dataset.fetch_index(this.fields_view.fields, this.on_record_loaded);
     },
     on_record_loaded: function(record) {
-        this.datarecord = record;
-        for (var f in this.fields) {
-            this.fields[f].set_value(this.datarecord.values[f]);
+        if (record.length) {
+            this.datarecord = record[0];
+            for (var f in this.fields) {
+                this.fields[f].set_value(this.datarecord.values[f]);
+            }
+            this.on_form_changed();
+            this.ready = true;
         }
-        this.on_form_changed();
-        this.ready = true;
     },
     on_form_changed: function(widget) {
         for (var w in this.widgets) {
@@ -106,10 +102,41 @@ openerp.base.FormView =  openerp.base.Controller.extend(
             // rpc - save.callbacl on_saved
         }
     },
+    do_search: function() {
+        if (!this.ready) {
+            return false;
+        }
+        var invalid = false;
+        var values = {};
+        for (var f in this.fields) {
+            f = this.fields[f];
+            if (f.invalid) {
+                invalid = true;
+            } else {
+                values[f.name] = f.value;
+            }
+        }
+        if (invalid) {
+            this.on_invalid();
+        } else {
+            console.log("Save form", values);
+            // TODO: save values via datarecord
+            // rpc - save.callbacl on_saved
+        }
+    },
+    do_show: function () {
+        this.dataset.fetch_index(this.fields_view.fields, this.on_record_loaded);
+        this.$element.show();
+    },
+    do_hide: function () {
+        this.$element.hide();
+    },
     on_invalid: function() {
     },
     on_saved: function() {
         // Check response for exceptions, display error
+    },
+    do_search: function (domains, contexts, groupbys) {
     },
     on_action: function (action) {
     }
@@ -119,8 +146,6 @@ openerp.base.FormView =  openerp.base.Controller.extend(
 openerp.base.form = {};
 
 openerp.base.form.Widget = openerp.base.Controller.extend({
-    // TODO Change this to init: function(view, node) { and use view.session and a new element_id for the super
-    // it means that widgets are special controllers
     init: function(view, node) {
         this.view = view;
         this.node = node;
@@ -528,6 +553,24 @@ openerp.base.form.FieldOne2Many = openerp.base.form.Field.extend({
     init: function(view, node) {
         this._super(view, node);
         this.template = "FieldOne2Many";
+        this.viewmanager = null;
+        this.operations = [];
+        thise.iewq.on
+
+    },
+    set_value: function(value) {
+        this.value = value;
+    },
+    get_value: function(value) {
+        return this.operations;
+    },
+    update_dom: function() {
+        this._super.apply(this, arguments);
+        this.$element.toggleClass('disabled', this.readonly);
+        this.$element.toggleClass('required', this.required);
+    },
+    on_ui_change: function() {
+        this.view.on_form_changed(this);
     }
 });
 
