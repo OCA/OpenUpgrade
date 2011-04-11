@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2011-01-11 11:15+0000\n"
-"PO-Revision-Date: 2011-04-10 04:33+0000\n"
+"PO-Revision-Date: 2011-04-10 15:13+0000\n"
 "Last-Translator: Black Jack <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-10 04:49+0000\n"
+"X-Launchpad-Export-Date: 2011-04-11 04:53+0000\n"
 "X-Generator: Launchpad (build 12735)\n"
 
 #. module: crm
@@ -2641,66 +2641,66 @@ msgstr "结束日期"
 #. module: crm
 #: selection:crm.meeting,byday:0
 msgid "Third"
-msgstr ""
+msgstr "其三"
 
 #. module: crm
 #: help:crm.segmentation,som_interval_max:0
 msgid ""
 "The computation is made on all events that occured during this interval, the "
 "past X periods."
-msgstr "此计算是基于在在此期间发生的所有事件, 过去的X期间"
+msgstr "这计算是基于在过去 X 期间发生的所有事件。"
 
 #. module: crm
 #: view:board.board:0
 msgid "My Win/Lost Ratio for the Last Year"
-msgstr ""
+msgstr "在过去一年我获得/丢失的比例"
 
 #. module: crm
 #: field:crm.installer,thunderbird:0
 msgid "Thunderbird"
-msgstr ""
+msgstr "雷鸟邮件客户端"
 
 #. module: crm
 #: view:crm.lead.report:0
 msgid "# of Emails"
-msgstr ""
+msgstr "邮件"
 
 #. module: crm
 #: view:crm.lead:0
 msgid "Search Leads"
-msgstr "查询营销线索"
+msgstr "查询线索"
 
 #. module: crm
 #: view:crm.lead.report:0
 #: view:crm.phonecall.report:0
 #: field:crm.phonecall.report,delay_open:0
 msgid "Delay to open"
-msgstr ""
+msgstr "延迟开启"
 
 #. module: crm
 #: view:crm.meeting:0
 msgid "Recurrency period"
-msgstr ""
+msgstr "循环周期"
 
 #. module: crm
 #: field:crm.meeting,week_list:0
 msgid "Weekday"
-msgstr ""
+msgstr "工作日"
 
 #. module: crm
 #: view:crm.lead:0
 msgid "Referrer"
-msgstr ""
+msgstr "参考"
 
 #. module: crm
 #: model:ir.model,name:crm.model_crm_lead2opportunity
 msgid "Lead To Opportunity"
-msgstr ""
+msgstr "线索转换为商机"
 
 #. module: crm
 #: model:ir.model,name:crm.model_calendar_attendee
 msgid "Attendee information"
-msgstr ""
+msgstr "附件信息"
 
 #. module: crm
 #: view:crm.segmentation:0
@@ -2715,19 +2715,19 @@ msgstr "继续处理"
 #. module: crm
 #: view:crm.installer:0
 msgid "Configure Your CRM Application"
-msgstr ""
+msgstr "设置你的客户关系模块"
 
 #. module: crm
 #: model:ir.model,name:crm.model_crm_phonecall2partner
 msgid "Phonecall to Partner"
-msgstr ""
+msgstr "电话访问业务伙伴"
 
 #. module: crm
 #: help:crm.lead,partner_name:0
 msgid ""
 "The name of the future partner that will be created while converting the "
 "into opportunity"
-msgstr ""
+msgstr "当转换为商机时创建未来业务伙伴名称"
 
 #. module: crm
 #: field:crm.opportunity2phonecall,user_id:0
@@ -2739,7 +2739,7 @@ msgstr "分配到"
 #: field:crm.add.note,state:0
 #: field:crm.send.mail,state:0
 msgid "Set New State To"
-msgstr ""
+msgstr "设定新状态"
 
 #. module: crm
 #: field:crm.lead,date_action_last:0
@@ -2758,42 +2758,42 @@ msgstr "持续时间"
 #. module: crm
 #: field:crm.send.mail,reply_to:0
 msgid "Reply To"
-msgstr ""
+msgstr "回复"
 
 #. module: crm
 #: view:board.board:0
 #: model:ir.actions.act_window,name:crm.open_board_crm
 #: model:ir.ui.menu,name:crm.menu_board_crm
 msgid "Sales Dashboard"
-msgstr ""
+msgstr "销售控制台"
 
 #. module: crm
 #: code:addons/crm/wizard/crm_lead_to_partner.py:56
 #, python-format
 msgid "A partner is already defined on this lead."
-msgstr "此营销线索已定义业务伙伴"
+msgstr "这线索已定义业务伙伴"
 
 #. module: crm
 #: field:crm.lead.report,nbr:0
 #: field:crm.phonecall.report,nbr:0
 msgid "# of Cases"
-msgstr "# 业务个案"
+msgstr "# 业务"
 
 #. module: crm
 #: help:crm.meeting,section_id:0
 #: help:crm.phonecall,section_id:0
 msgid "Sales team to which Case belongs to."
-msgstr ""
+msgstr "销售团队属于那个业务"
 
 #. module: crm
 #: selection:crm.meeting,week_list:0
 msgid "Sunday"
-msgstr ""
+msgstr "周日"
 
 #. module: crm
 #: selection:crm.meeting,byday:0
 msgid "Fourth"
-msgstr ""
+msgstr "4"
 
 #. module: crm
 #: selection:crm.add.note,state:0
@@ -2806,12 +2806,12 @@ msgstr "未更改"
 #: model:ir.actions.act_window,name:crm.crm_segmentation_tree-act
 #: model:ir.ui.menu,name:crm.menu_crm_segmentation-act
 msgid "Partners Segmentation"
-msgstr ""
+msgstr "业务伙伴细分"
 
 #. module: crm
 #: field:crm.lead,fax:0
 msgid "Fax"
-msgstr ""
+msgstr "传真"
 
 #. module: crm
 #: model:ir.actions.act_window,help:crm.crm_case_category_act_oppor11
@@ -2828,11 +2828,15 @@ msgid ""
 "opportunities, convert them into quotations, manage related documents, track "
 "all customer related activities, and much more."
 msgstr ""
+"对于商机你可以管理和与你的销售渠道创建的特定客户或者跟进潜在销售相关的销售单保持联系，信息如：预期收入，商机的阶段，预计结束日期，大量的沟通日志，通过邮件"
+"网关商机能和邮件相连：新的邮件可能能创建新的商机，他们能自动获得和客户交流的日志。\n"
+"\n"
+"你和你的团队可以为会议和从电话访问来的商机做计划，把它们转换成报价，管理相关文档，跟踪所有相关客户的活动等。。"
 
 #. module: crm
 #: view:crm.meeting:0
 msgid "Assignment"
-msgstr ""
+msgstr "分配"
 
 #. module: crm
 #: field:crm.lead,company_id:0
@@ -2847,12 +2851,12 @@ msgstr "公司"
 #. module: crm
 #: selection:crm.meeting,week_list:0
 msgid "Friday"
-msgstr ""
+msgstr "周五"
 
 #. module: crm
 #: field:crm.meeting,allday:0
 msgid "All Day"
-msgstr ""
+msgstr "整天"
 
 #. module: crm
 #: field:crm.segmentation.line,operator:0
@@ -2863,51 +2867,51 @@ msgstr "强制的/ 可选的"
 #: model:ir.actions.act_window,name:crm.action_view_attendee_form
 #: model:ir.ui.menu,name:crm.menu_attendee_invitations
 msgid "Meeting Invitations"
-msgstr ""
+msgstr "会议邀请"
 
 #. module: crm
 #: field:crm.case.categ,object_id:0
 msgid "Object Name"
-msgstr ""
+msgstr "对象名"
 
 #. module: crm
 #: help:crm.lead,email_from:0
 msgid "E-mail address of the contact"
-msgstr ""
+msgstr "这联系的邮件地址"
 
 #. module: crm
 #: field:crm.lead,referred:0
 msgid "Referred By"
-msgstr ""
+msgstr "参考来自"
 
 #. module: crm
 #: view:crm.lead:0
 #: model:ir.model,name:crm.model_crm_add_note
 msgid "Add Internal Note"
-msgstr ""
+msgstr "添加内部备注"
 
 #. module: crm
 #: code:addons/crm/crm_lead.py:304
 #, python-format
 msgid "The stage of lead '%s' has been changed to '%s'."
-msgstr ""
+msgstr "这线索的阶段从 '%s' 改为 '%s'"
 
 #. module: crm
 #: selection:crm.meeting,byday:0
 msgid "Last"
-msgstr ""
+msgstr "最后"
 
 #. module: crm
 #: field:crm.lead,message_ids:0
 #: field:crm.meeting,message_ids:0
 #: field:crm.phonecall,message_ids:0
 msgid "Messages"
-msgstr ""
+msgstr "消息"
 
 #. module: crm
 #: help:crm.case.stage,on_change:0
 msgid "Change Probability on next and previous stages."
-msgstr ""
+msgstr "在下一和前一阶段修改可能性"
 
 #. module: crm
 #: code:addons/crm/crm.py:455
@@ -2922,7 +2926,7 @@ msgstr "错误!"
 #: field:crm.opportunity2phonecall,name:0
 #: field:crm.phonecall2phonecall,name:0
 msgid "Call summary"
-msgstr ""
+msgstr "电话访问摘要"
 
 #. module: crm
 #: selection:crm.add.note,state:0
@@ -2939,29 +2943,29 @@ msgstr "已取消"
 #. module: crm
 #: field:crm.add.note,body:0
 msgid "Note Body"
-msgstr ""
+msgstr "备注内容"
 
 #. module: crm
 #: view:board.board:0
 msgid "My Planned Revenues by Stage"
-msgstr ""
+msgstr "这阶段我的计划收入"
 
 #. module: crm
 #: field:crm.lead.report,date_closed:0
 #: field:crm.phonecall.report,date_closed:0
 msgid "Close Date"
-msgstr ""
+msgstr "结束日期"
 
 #. module: crm
 #: view:crm.lead.report:0
 #: view:crm.phonecall.report:0
 msgid "   Month   "
-msgstr ""
+msgstr "   月   "
 
 #. module: crm
 #: view:crm.lead:0
 msgid "Links"
-msgstr ""
+msgstr "链接"
 
 #. module: crm
 #: model:ir.actions.act_window,help:crm.crm_lead_categ_action
@@ -2970,14 +2974,14 @@ msgid ""
 "classify and analyse your leads and opportunities. Such categories could for "
 "instance reflect your product structure or the different types of sales you "
 "do."
-msgstr ""
+msgstr "创建具体合适你公司营销活动的类型以便更好地分类和分析线索和商机。例如这类型能反映你的产品结构或对不同类型的销售该怎么做。"
 
 #. module: crm
 #: help:crm.segmentation,som_interval_decrease:0
 msgid ""
 "If the partner has not purchased (or bought) during a period, decrease the "
 "state of mind by this factor. It's a multiplication"
-msgstr ""
+msgstr "如果业务伙伴在一段时间都没有买卖，减少满意度这是一个乘法。"
 
 #. module: crm
 #: model:ir.actions.act_window,help:crm.action_report_crm_phonecall
@@ -2986,34 +2990,34 @@ msgid ""
 "on their phone calls. You can group or filter the information according to "
 "several criteria and drill down the information, by adding more groups in "
 "the report."
-msgstr ""
+msgstr "在这报表中，你能分析你的销售团队在电话访问上的业绩。你能根据几个标准和向下钻取数据组织或过滤信息。它能在报表中加入更多的组。"
 
 #. module: crm
 #: view:crm.case.section:0
 msgid "Mailgateway"
-msgstr ""
+msgstr "邮件网关"
 
 #. module: crm
 #: help:crm.lead,user_id:0
 msgid "By Default Salesman is Administrator when create New User"
-msgstr ""
+msgstr "当管理员创建新用户时默认是业务员"
 
 #. module: crm
 #: view:crm.lead.report:0
 msgid "# Mails"
-msgstr ""
+msgstr "邮件"
 
 #. module: crm
 #: code:addons/crm/wizard/crm_phonecall_to_opportunity.py:57
 #, python-format
 msgid "Warning"
-msgstr ""
+msgstr "警告"
 
 #. module: crm
 #: field:crm.phonecall,name:0
 #: view:res.partner:0
 msgid "Call Summary"
-msgstr "呼叫概要"
+msgstr "电话访问摘要"
 
 #. module: crm
 #: field:crm.segmentation.line,expr_operator:0
@@ -3023,17 +3027,17 @@ msgstr "运算符"
 #. module: crm
 #: model:ir.model,name:crm.model_crm_phonecall2phonecall
 msgid "Phonecall To Phonecall"
-msgstr ""
+msgstr "电话访问到电话访问"
 
 #. module: crm
 #: view:crm.lead:0
 msgid "Schedule/Log Call"
-msgstr ""
+msgstr "计划/电话访问的记录"
 
 #. module: crm
 #: field:crm.installer,fetchmail:0
 msgid "Fetch Emails"
-msgstr ""
+msgstr "取邮件"
 
 #. module: crm
 #: selection:crm.meeting,state:0
@@ -3045,27 +3049,27 @@ msgstr "已确认"
 msgid ""
 "These addresses will receive a copy of this email. To modify the permanent "
 "CC list, edit the global CC field of this case"
-msgstr ""
+msgstr "这些地址讲收到这邮件的副本。要永久修改这些抄送地址列表编辑这业务的全局抄送字段。"
 
 #. module: crm
 #: view:crm.meeting:0
 msgid "Confirm"
-msgstr ""
+msgstr "确定"
 
 #. module: crm
 #: field:crm.meeting,su:0
 msgid "Sun"
-msgstr ""
+msgstr "周日"
 
 #. module: crm
 #: field:crm.phonecall.report,section_id:0
 msgid "Section"
-msgstr "划分的业务个案"
+msgstr "分类"
 
 #. module: crm
 #: view:crm.lead:0
 msgid "Total of Planned Revenue"
-msgstr ""
+msgstr "计划收入合计"
 
 #. module: crm
 #: code:addons/crm/crm.py:375
@@ -3073,7 +3077,7 @@ msgstr ""
 msgid ""
 "You can not escalate, You are already at the top level regarding your sales-"
 "team category."
-msgstr ""
+msgstr "你不能再提升了，因为你已经在你的销售团队类型的最高级"
 
 #. module: crm
 #: selection:crm.segmentation.line,operator:0
@@ -3083,12 +3087,12 @@ msgstr "可选表达式"
 #. module: crm
 #: selection:crm.meeting,select1:0
 msgid "Day of month"
-msgstr ""
+msgstr "日"
 
 #. module: crm
 #: field:crm.lead2opportunity,probability:0
 msgid "Success Rate (%)"
-msgstr ""
+msgstr "成功率(%)"
 
 #. module: crm
 #: model:crm.case.stage,name:crm.stage_lead1
@@ -3099,7 +3103,7 @@ msgstr "新建"
 #. module: crm
 #: view:crm.meeting:0
 msgid "Mail TO"
-msgstr ""
+msgstr "发邮件到"
 
 #. module: crm
 #: view:crm.lead:0
@@ -3107,7 +3111,7 @@ msgstr ""
 #: field:crm.meeting,email_from:0
 #: field:crm.phonecall,email_from:0
 msgid "Email"
-msgstr "Email"
+msgstr "电子邮件"
 
 #. module: crm
 #: view:crm.lead:0
@@ -3116,19 +3120,19 @@ msgstr "Email"
 #: field:crm.lead.report,channel_id:0
 #: field:crm.phonecall,canal_id:0
 msgid "Channel"
-msgstr "渠道"
+msgstr "途径"
 
 #. module: crm
 #: model:ir.actions.act_window,name:crm.opportunity2phonecall_act
 msgid "Schedule Call"
-msgstr ""
+msgstr "计划的电话访问"
 
 #. module: crm
 #: code:addons/crm/wizard/crm_lead_to_opportunity.py:133
 #: code:addons/crm/wizard/crm_lead_to_opportunity.py:258
 #, python-format
 msgid "Closed/Cancelled Leads Could not convert into Opportunity"
-msgstr ""
+msgstr "已结束/已取消的线索不能转换为商机"
 
 #. module: crm
 #: view:crm.segmentation:0
@@ -3143,43 +3147,45 @@ msgid ""
 "If checked, remove the category from partners that doesn't match "
 "segmentation criterions"
 msgstr ""
+"检测如果这业务伙伴在类型的细分规则下是受限制。\n"
+"如果要选定，请删除在业务伙伴类型细分规则中不匹配的规则"
 
 #. module: crm
 #: field:crm.meeting,exdate:0
 msgid "Exception Date/Times"
-msgstr "异常日期/ 时间"
+msgstr "例外的日期/ 时间"
 
 #. module: crm
 #: selection:crm.meeting,class:0
 msgid "Confidential"
-msgstr ""
+msgstr "机密"
 
 #. module: crm
 #: help:crm.meeting,date_deadline:0
 msgid ""
 "Deadline Date is automatically                         computed from Start "
 "Date + Duration"
-msgstr ""
+msgstr "截止日期是自动计算的：开始日期 +  持续时间"
 
 #. module: crm
 #: field:crm.lead,state_id:0
 msgid "Fed. State"
-msgstr ""
+msgstr "省/州"
 
 #. module: crm
 #: model:process.transition,note:crm.process_transition_leadopportunity0
 msgid "Creating business opportunities from Leads"
-msgstr "从营销线索创建商机"
+msgstr "从线索创建商机"
 
 #. module: crm
 #: help:crm.send.mail,html:0
 msgid "Select this if you want to send email with HTML formatting."
-msgstr ""
+msgstr "如果你想发送HTML格式的邮件，选此"
 
 #. module: crm
 #: model:crm.case.categ,name:crm.categ_oppor4
 msgid "Need Information"
-msgstr ""
+msgstr "需要信息"
 
 #. module: crm
 #: model:process.transition,name:crm.process_transition_leadopportunity0
@@ -3190,12 +3196,12 @@ msgstr "探查商机"
 #: view:crm.installer:0
 #: model:ir.actions.act_window,name:crm.action_crm_installer
 msgid "CRM Application Configuration"
-msgstr ""
+msgstr "业务关系管理模块设置"
 
 #. module: crm
 #: field:base.action.rule,act_categ_id:0
 msgid "Set Category to"
-msgstr ""
+msgstr "设类型为"
 
 #. module: crm
 #: view:crm.case.section:0
@@ -3205,7 +3211,7 @@ msgstr "设置"
 #. module: crm
 #: field:crm.meeting,th:0
 msgid "Thu"
-msgstr ""
+msgstr "周四"
 
 #. module: crm
 #: view:crm.add.note:0
@@ -3222,33 +3228,33 @@ msgstr "取消(_C)"
 #: view:crm.lead.report:0
 #: view:crm.phonecall.report:0
 msgid "    Month-1    "
-msgstr ""
+msgstr "    上月    "
 
 #. module: crm
 #: help:crm.installer,sale_crm:0
 msgid "This module relates sale from opportunity cases in the CRM."
-msgstr ""
+msgstr "这模块涉及在业务关系管理中业务的销售商机"
 
 #. module: crm
 #: selection:crm.meeting,rrule_type:0
 msgid "Daily"
-msgstr ""
+msgstr "每天"
 
 #. module: crm
 #: model:crm.case.stage,name:crm.stage_lead2
 #: model:crm.case.stage,name:crm.stage_opportunity2
 msgid "Qualification"
-msgstr ""
+msgstr "资格条件"
 
 #. module: crm
 #: view:crm.case.stage:0
 msgid "Stage Definition"
-msgstr ""
+msgstr "阶段定义"
 
 #. module: crm
 #: selection:crm.meeting,byday:0
 msgid "First"
-msgstr ""
+msgstr "首页"
 
 #. module: crm
 #: selection:crm.lead.report,month:0
@@ -3260,7 +3266,7 @@ msgstr "12月"
 #. module: crm
 #: field:crm.installer,config_logo:0
 msgid "Image"
-msgstr ""
+msgstr "图像"
 
 #. module: crm
 #: view:base.action.rule:0
@@ -3278,16 +3284,20 @@ msgid ""
 "bought goods to another supplier.                  \n"
 "Use this functionality for recurring businesses."
 msgstr ""
+"在一个期间两个周期间这细分的业务伙伴销售或采购的平均天数。\n"
+"它主要用来检查业务伙伴有没有业务或者多长时间有。\n"
+"所以因此我们假定他的满意度下降因此向其它供应商采购。\n"
+"对经常的业务使用这功能。"
 
 #. module: crm
 #: view:crm.send.mail:0
 msgid "_Send Reply"
-msgstr ""
+msgstr "_发送回复"
 
 #. module: crm
 #: field:crm.meeting,vtimezone:0
 msgid "Timezone"
-msgstr ""
+msgstr "时区"
 
 #. module: crm
 #: field:crm.lead2opportunity.partner,msg:0
@@ -3299,7 +3309,7 @@ msgstr "消息"
 #. module: crm
 #: field:crm.meeting,sa:0
 msgid "Sat"
-msgstr ""
+msgstr "周六"
 
 #. module: crm
 #: view:crm.lead:0
@@ -3307,32 +3317,32 @@ msgstr ""
 #: view:crm.lead.report:0
 #: view:crm.phonecall.report:0
 msgid "Salesman"
-msgstr "销售员"
+msgstr "业务员"
 
 #. module: crm
 #: field:crm.lead,date_deadline:0
 msgid "Expected Closing"
-msgstr ""
+msgstr "预期结束"
 
 #. module: crm
 #: model:ir.model,name:crm.model_crm_opportunity2phonecall
 msgid "Opportunity to Phonecall"
-msgstr ""
+msgstr "商机转换为电话访问"
 
 #. module: crm
 #: help:crm.case.section,allow_unlink:0
 msgid "Allows to delete non draft cases"
-msgstr "允许删除不是草稿的业务个案"
+msgstr "允许删除不是草稿的业务"
 
 #. module: crm
 #: view:crm.lead:0
 msgid "Schedule Meeting"
-msgstr "会议时间表"
+msgstr "会议计划"
 
 #. module: crm
 #: view:crm.lead:0
 msgid "Partner Name"
-msgstr ""
+msgstr "业务伙伴名称"
 
 #. module: crm
 #: model:crm.case.categ,name:crm.categ_phone2
@@ -3345,13 +3355,13 @@ msgstr "致电"
 #: field:crm.lead,date_open:0
 #: field:crm.phonecall,date_open:0
 msgid "Opened"
-msgstr ""
+msgstr "已开启"
 
 #. module: crm
 #: view:crm.case.section:0
 #: field:crm.case.section,member_ids:0
 msgid "Team Members"
-msgstr ""
+msgstr "团队成员"
 
 #. module: crm
 #: view:crm.lead:0
@@ -3360,17 +3370,17 @@ msgstr ""
 #: view:crm.phonecall:0
 #: view:res.partner:0
 msgid "Contacts"
-msgstr ""
+msgstr "联系人列表"
 
 #. module: crm
 #: model:crm.case.categ,name:crm.categ_oppor1
 msgid "Interest in Computer"
-msgstr ""
+msgstr "计算兴趣"
 
 #. module: crm
 #: view:crm.meeting:0
 msgid "Invitation Detail"
-msgstr ""
+msgstr "邀请内容"
 
 #. module: crm
 #: field:crm.segmentation,som_interval_default:0
@@ -3383,12 +3393,12 @@ msgid ""
 "These email addresses will be added to the CC field of all inbound and "
 "outbound emails for this record before being sent. Separate multiple email "
 "addresses with a comma"
-msgstr ""
+msgstr "这些邮件地址将添加到之前发送记录的发送和接收邮件的抄送字段，分隔多个邮件地址有逗号。"
 
 #. module: crm
 #: constraint:res.partner:0
 msgid "Error ! You can not create recursive associated members."
-msgstr ""
+msgstr "错误！您不能创建递归的相关成员。"
 
 #. module: crm
 #: field:crm.partner2opportunity,probability:0
@@ -3412,7 +3422,7 @@ msgstr "草稿"
 #. module: crm
 #: model:ir.actions.act_window,name:crm.crm_case_section_act_tree
 msgid "Cases by Sales Team"
-msgstr ""
+msgstr "该业务的销售团队"
 
 #. module: crm
 #: field:crm.meeting,attendee_ids:0
@@ -3431,33 +3441,33 @@ msgstr "会议"
 #. module: crm
 #: model:ir.model,name:crm.model_crm_case_categ
 msgid "Category of Case"
-msgstr ""
+msgstr "业务类型"
 
 #. module: crm
 #: view:crm.lead:0
 #: view:crm.phonecall:0
 msgid "7 Days"
-msgstr ""
+msgstr "7天"
 
 #. module: crm
 #: view:board.board:0
 msgid "Planned Revenue by Stage and User"
-msgstr ""
+msgstr "阶段的计划收入和用户"
 
 #. module: crm
 #: view:crm.lead:0
 msgid "Communication & History"
-msgstr ""
+msgstr "沟通&日志"
 
 #. module: crm
 #: model:ir.model,name:crm.model_crm_lead_report
 msgid "CRM Lead Report"
-msgstr ""
+msgstr "客户关系管理线索报表"
 
 #. module: crm
 #: field:crm.installer,progress:0
 msgid "Configuration Progress"
-msgstr ""
+msgstr "设置进度"
 
 #. module: crm
 #: selection:crm.lead,priority:0
@@ -3470,13 +3480,13 @@ msgstr "普通"
 #. module: crm
 #: field:crm.lead,street2:0
 msgid "Street2"
-msgstr ""
+msgstr "街道 2"
 
 #. module: crm
 #: model:ir.actions.act_window,name:crm.crm_meeting_categ_action
 #: model:ir.ui.menu,name:crm.menu_crm_case_meeting-act
 msgid "Meeting Categories"
-msgstr ""
+msgstr "会议类型"
 
 #. module: crm
 #: view:crm.lead2opportunity.partner:0
@@ -3488,7 +3498,7 @@ msgstr "你可能要核实这个业务伙伴是否已不存在"
 #. module: crm
 #: field:crm.lead.report,delay_open:0
 msgid "Delay to Open"
-msgstr ""
+msgstr "延迟开启"
 
 #. module: crm
 #: field:crm.lead.report,user_id:0
@@ -3512,12 +3522,12 @@ msgstr "没建立你的公司地址邮箱ID!"
 #. module: crm
 #: view:crm.lead.report:0
 msgid "Opportunities By Stage"
-msgstr ""
+msgstr "商机的阶段"
 
 #. module: crm
 #: model:ir.actions.act_window,name:crm.crm_case_categ_phone_create_partner
 msgid "Schedule Phone Call"
-msgstr "电话呼叫时间表"
+msgstr "计划的电话访问"
 
 #. module: crm
 #: selection:crm.lead.report,month:0
@@ -3533,7 +3543,7 @@ msgid ""
 "pipeline by maintaining them to their sales opportunities. It will allow "
 "them to easily track how is positioned a specific opportunity in the sales "
 "cycle."
-msgstr ""
+msgstr "创建具体的阶段这将有助你的销售通过组织好销售渠道维护这销售商机。它将使你在销售周期轻松地跟踪和定位一个具体的商机。"
 
 #. module: crm
 #: model:process.process,name:crm.process_process_contractprocess0
@@ -3543,7 +3553,7 @@ msgstr "合同"
 #. module: crm
 #: model:crm.case.resource.type,name:crm.type_lead4
 msgid "Twitter Ads"
-msgstr ""
+msgstr "Twitter地址"
 
 #. module: crm
 #: code:addons/crm/wizard/crm_add_note.py:26
@@ -3557,23 +3567,23 @@ msgstr "错误"
 #. module: crm
 #: view:crm.lead.report:0
 msgid "Planned Revenues"
-msgstr ""
+msgstr "计划收入"
 
 #. module: crm
 #: model:crm.case.categ,name:crm.categ_oppor7
 msgid "Need Consulting"
-msgstr ""
+msgstr "需要咨询"
 
 #. module: crm
 #: constraint:crm.segmentation:0
 msgid "Error ! You can not create recursive profiles."
-msgstr ""
+msgstr "错误! 你不能创建递归的特征。"
 
 #. module: crm
 #: code:addons/crm/crm_lead.py:232
 #, python-format
 msgid "The case '%s' has been closed."
-msgstr ""
+msgstr "这业务'%s'已结束"
 
 #. module: crm
 #: field:crm.lead,partner_address_id:0
@@ -3585,18 +3595,18 @@ msgstr "业务伙伴联系方式"
 #. module: crm
 #: field:crm.meeting,recurrent_id:0
 msgid "Recurrent ID date"
-msgstr ""
+msgstr "循环日期"
 
 #. module: crm
 #: sql_constraint:res.users:0
 msgid "You can not have two users with the same login !"
-msgstr ""
+msgstr "你不能同时登录两个用户！"
 
 #. module: crm
 #: code:addons/crm/wizard/crm_merge_opportunities.py:100
 #, python-format
 msgid "Merged into Opportunity: %s"
-msgstr ""
+msgstr "合并商机: %s"
 
 #. module: crm
 #: code:addons/crm/crm.py:347
@@ -3604,34 +3614,34 @@ msgstr ""
 #: view:res.partner:0
 #, python-format
 msgid "Close"
-msgstr "关闭"
+msgstr "结束"
 
 #. module: crm
 #: view:crm.lead:0
 #: view:crm.phonecall:0
 #: view:res.partner:0
 msgid "Categorization"
-msgstr ""
+msgstr "归类"
 
 #. module: crm
 #: model:ir.model,name:crm.model_base_action_rule
 msgid "Action Rules"
-msgstr ""
+msgstr "动作规则"
 
 #. module: crm
 #: field:crm.meeting,rrule_type:0
 msgid "Recurrency"
-msgstr ""
+msgstr "循环"
 
 #. module: crm
 #: field:crm.meeting,phonecall_id:0
 msgid "Phonecall"
-msgstr ""
+msgstr "电话访问"
 
 #. module: crm
 #: selection:crm.meeting,week_list:0
 msgid "Thursday"
-msgstr ""
+msgstr "周四"
 
 #. module: crm
 #: view:crm.meeting:0
@@ -3642,17 +3652,17 @@ msgstr "到"
 #. module: crm
 #: selection:crm.meeting,class:0
 msgid "Private"
-msgstr ""
+msgstr "私有的"
 
 #. module: crm
 #: field:crm.lead,function:0
 msgid "Function"
-msgstr ""
+msgstr "职务"
 
 #. module: crm
 #: view:crm.add.note:0
 msgid "_Add"
-msgstr ""
+msgstr "添加"
 
 #. module: crm
 #: selection:crm.segmentation.line,expr_name:0
@@ -3688,7 +3698,7 @@ msgstr "说明"
 #: field:res.partner,section_id:0
 #: field:res.users,context_section_id:0
 msgid "Sales Team"
-msgstr ""
+msgstr "销售团队"
 
 #. module: crm
 #: selection:crm.lead.report,month:0
@@ -3700,39 +3710,39 @@ msgstr "5月"
 #. module: crm
 #: model:crm.case.categ,name:crm.categ_oppor2
 msgid "Interest in Accessories"
-msgstr ""
+msgstr "感兴趣"
 
 #. module: crm
 #: code:addons/crm/crm_lead.py:211
 #, python-format
 msgid "The opportunity '%s' has been opened."
-msgstr ""
+msgstr "这商机 \"%s\" 已开启"
 
 #. module: crm
 #: field:crm.lead.report,email:0
 msgid "# Emails"
-msgstr ""
+msgstr "电子邮件"
 
 #. module: crm
 #: field:crm.lead,street:0
 msgid "Street"
-msgstr ""
+msgstr "街道"
 
 #. module: crm
 #: view:crm.lead.report:0
 msgid "Opportunities by User and Team"
-msgstr ""
+msgstr "用户和团队的商机"
 
 #. module: crm
 #: field:crm.case.section,working_hours:0
 msgid "Working Hours"
-msgstr ""
+msgstr "工作时间"
 
 #. module: crm
 #: view:crm.lead:0
 #: field:crm.lead,is_customer_add:0
 msgid "Customer"
-msgstr ""
+msgstr "客户"
 
 #. module: crm
 #: selection:crm.lead.report,month:0
@@ -3753,14 +3763,14 @@ msgstr "安排一个会议"
 #: model:crm.case.stage,name:crm.stage_opportunity6
 #: view:crm.lead:0
 msgid "Lost"
-msgstr ""
+msgstr "丢失"
 
 #. module: crm
 #: field:crm.lead,country_id:0
 #: view:crm.lead.report:0
 #: field:crm.lead.report,country_id:0
 msgid "Country"
-msgstr ""
+msgstr "国家"
 
 #. module: crm
 #: view:crm.lead:0
@@ -3768,12 +3778,12 @@ msgstr ""
 #: view:crm.phonecall:0
 #: view:res.partner:0
 msgid "Convert to Opportunity"
-msgstr "转换到商机"
+msgstr "转换为商机"
 
 #. module: crm
 #: selection:crm.meeting,week_list:0
 msgid "Wednesday"
-msgstr ""
+msgstr "周三"
 
 #. module: crm
 #: selection:crm.lead.report,month:0
@@ -3785,33 +3795,33 @@ msgstr "4月"
 #. module: crm
 #: field:crm.case.resource.type,name:0
 msgid "Campaign Name"
-msgstr ""
+msgstr "营销活动名称"
 
 #. module: crm
 #: model:ir.model,name:crm.model_crm_phonecall_report
 msgid "Phone calls by user and section"
-msgstr ""
+msgstr "用户和业务分类的电话访问"
 
 #. module: crm
 #: selection:crm.lead2opportunity.action,name:0
 msgid "Merge with existing Opportunity"
-msgstr ""
+msgstr "合并现有的商机"
 
 #. module: crm
 #: field:crm.meeting,select1:0
 msgid "Option"
-msgstr ""
+msgstr "选项"
 
 #. module: crm
 #: model:crm.case.stage,name:crm.stage_lead4
 #: model:crm.case.stage,name:crm.stage_opportunity4
 msgid "Negotiation"
-msgstr ""
+msgstr "协商"
 
 #. module: crm
 #: view:crm.lead:0
 msgid "Exp.Closing"
-msgstr ""
+msgstr "结束中"
 
 #. module: crm
 #: field:crm.case.stage,sequence:0
@@ -3822,12 +3832,12 @@ msgstr "序列"
 #. module: crm
 #: field:crm.send.mail,body:0
 msgid "Message Body"
-msgstr ""
+msgstr "消息正文"
 
 #. module: crm
 #: view:crm.meeting:0
 msgid "Accept"
-msgstr ""
+msgstr "同意"
 
 #. module: crm
 #: field:crm.segmentation.line,expr_name:0
@@ -3837,18 +3847,18 @@ msgstr "控制变量"
 #. module: crm
 #: selection:crm.meeting,byday:0
 msgid "Second"
-msgstr ""
+msgstr "第二人称"
 
 #. module: crm
 #: model:crm.case.stage,name:crm.stage_lead3
 #: model:crm.case.stage,name:crm.stage_opportunity3
 msgid "Proposition"
-msgstr ""
+msgstr "建议"
 
 #. module: crm
 #: field:res.partner,phonecall_ids:0
 msgid "Phonecalls"
-msgstr ""
+msgstr "电话访问列表"
 
 #. module: crm
 #: view:crm.lead.report:0
@@ -3856,7 +3866,7 @@ msgstr ""
 #: view:crm.phonecall.report:0
 #: field:crm.phonecall.report,name:0
 msgid "Year"
-msgstr "年份"
+msgstr "年"
 
 #. module: crm
 #: model:crm.case.resource.type,name:crm.type_lead8
