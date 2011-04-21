@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2011-01-11 11:14+0000\n"
-"PO-Revision-Date: 2011-04-19 07:35+0000\n"
-"Last-Translator: Chertykov Denis <chertykov@gmail.com>\n"
+"PO-Revision-Date: 2011-04-20 16:00+0000\n"
+"Last-Translator: Belugin Alexandr <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-20 05:56+0000\n"
+"X-Launchpad-Export-Date: 2011-04-21 06:00+0000\n"
 "X-Generator: Launchpad (build 12758)\n"
 
 #. module: base
@@ -154,6 +154,8 @@ msgid ""
 "Properties of base fields cannot be altered in this manner! Please modify "
 "them through Python code, preferably through a custom addon!"
 msgstr ""
+"Свойства основных полей базы данных не могут быть изменены таким образом! "
+"Измените их в коде Python, желательно при помощи стороннего дополнения!"
 
 #. module: base
 #: code:addons/osv.py:133
@@ -471,6 +473,8 @@ msgstr "Без перевода"
 msgid ""
 "Context dictionary as Python expression, empty by default (Default: {})"
 msgstr ""
+"Словарь контекста в виде Python-выражения является по умолчанию пустым (По "
+"умолчанию: {})"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.ir_action_wizard
@@ -570,6 +574,9 @@ msgid ""
 "Launchpad.net, our open source project management facility. We use their "
 "online interface to synchronize all translations efforts."
 msgstr ""
+"Переводы OpenERP (ядро, модули, клиенты) управляются через Launchpad.net - "
+"наш инструмент управления проектами с открытым кодом. Мы используем его "
+"онлайн интерфейс для синхронизации всех усилий по переводу."
 
 #. module: base
 #: field:res.partner,title:0
@@ -693,7 +700,7 @@ msgstr ""
 #. module: base
 #: selection:base.language.install,lang:0
 msgid "Spanish (UY) / Español (UY)"
-msgstr ""
+msgstr "Испанский (UY) / Español (UY)"
 
 #. module: base
 #: field:res.partner,mobile:0
@@ -919,11 +926,15 @@ msgid ""
 "Lauchpad's web interface (Rosetta). If you need to perform mass translation, "
 "Launchpad also allows uploading full .po files at once"
 msgstr ""
+"Для улучшения или расширения официальных переводов Вам следует использовать  "
+"непосредственно веб-интерфейс Launchpad (Rosetta). Если Вам необходимо "
+"сделать объемный перевод, Launchpad также позволяет загрузить файлы .po "
+"целяком."
 
 #. module: base
 #: selection:base.language.install,lang:0
 msgid "Spanish (GT) / Español (GT)"
-msgstr ""
+msgstr "Испанский (GT) / Español (GT)"
 
 #. module: base
 #: view:res.lang:0
@@ -998,6 +1009,7 @@ msgstr ""
 msgid ""
 "2. Group-specific rules are combined together with a logical AND operator"
 msgstr ""
+"2. Правила для группы связаны друг с другом оператором  логического И (AND)"
 
 #. module: base
 #: code:addons/base/res/res_user.py:206
@@ -1131,7 +1143,7 @@ msgstr "Если отмечено, ваши переводы будут заме
 #. module: base
 #: field:ir.actions.report.xml,report_rml:0
 msgid "Main report file path"
-msgstr ""
+msgstr "Путь к файлу главного отчета"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.ir_action_report_xml
@@ -1215,6 +1227,8 @@ msgid ""
 "Do not display this log if it belongs to the same object the user is working "
 "on"
 msgstr ""
+"Не показывать этот журнал, если он принадлежит объекту с которым работает "
+"пользователь"
 
 #. module: base
 #: model:res.country,name:base.tp
@@ -1500,7 +1514,7 @@ msgstr "Испанский / Español"
 #. module: base
 #: selection:base.language.install,lang:0
 msgid "Korean (KP) / 한국어 (KP)"
-msgstr ""
+msgstr "Корейский (KP) / 한국어 (KP)"
 
 #. module: base
 #: view:base.module.update:0
@@ -1578,6 +1592,8 @@ msgid ""
 "Example: GLOBAL_RULE_1 AND GLOBAL_RULE_2 AND ( (GROUP_A_RULE_1 AND "
 "GROUP_A_RULE_2) OR (GROUP_B_RULE_1 AND GROUP_B_RULE_2) )"
 msgstr ""
+"Пример: GLOBAL_RULE_1 AND GLOBAL_RULE_2 AND ( (GROUP_A_RULE_1 AND "
+"GROUP_A_RULE_2) OR (GROUP_B_RULE_1 AND GROUP_B_RULE_2) )"
 
 #. module: base
 #: model:ir.actions.act_window,help:base.action_ui_view
@@ -1585,6 +1601,8 @@ msgid ""
 "Views allows you to personalize each view of OpenERP. You can add new "
 "fields, move fields, rename them or delete the ones that you do not need."
 msgstr ""
+"Представления позволяют Вам настраивать вид OpenERP. Вы можете добавлять, "
+"перемещать поля, переименовывать их или удалять те, которые Вам не нужны."
 
 #. module: base
 #: field:ir.actions.act_window,groups_id:0
@@ -1610,7 +1628,7 @@ msgstr "Группы"
 #. module: base
 #: selection:base.language.install,lang:0
 msgid "Spanish (CL) / Español (CL)"
-msgstr ""
+msgstr "Испанский (CL) / Español (CL)"
 
 #. module: base
 #: view:res.config.users:0
@@ -1645,6 +1663,8 @@ msgid ""
 "Comma-separated list of allowed view modes, such as 'form', 'tree', "
 "'calendar', etc. (Default: tree,form)"
 msgstr ""
+"Разделенный запятыми список доступных режимов представления, таких как "
+"«форма», «дерево», «календарь» и т.д. (По умолчанию: дерево, форма)"
 
 #. module: base
 #: code:addons/orm.py:3147
@@ -1716,7 +1736,7 @@ msgstr "Счет"
 #. module: base
 #: selection:base.language.install,lang:0
 msgid "Portugese (BR) / Português (BR)"
-msgstr ""
+msgstr "Португальский (BR) / Português (BR)"
 
 #. module: base
 #: model:res.country,name:base.bb
@@ -1994,7 +2014,7 @@ msgstr "Остров Норфолк"
 #. module: base
 #: selection:base.language.install,lang:0
 msgid "Korean (KR) / 한국어 (KR)"
-msgstr ""
+msgstr "Корейский (KR) / 한국어 (KR)"
 
 #. module: base
 #: help:ir.model.fields,model:0
@@ -2216,7 +2236,7 @@ msgstr "Головная компания"
 #. module: base
 #: field:ir.ui.menu,web_icon_hover:0
 msgid "Web Icon File (hover)"
-msgstr ""
+msgstr "Файл значка для Web (наведение)"
 
 #. module: base
 #: view:ir.actions.server:0
@@ -2244,11 +2264,13 @@ msgid ""
 "Please double-check that the file encoding is set to UTF-8 (sometimes called "
 "Unicode) when the translator exports it."
 msgstr ""
+"Когда переводчик экспортирует файл, проверьте дважды что у него установлена "
+"кодировка UTF-8 (иногда называется Юникод)."
 
 #. module: base
 #: selection:base.language.install,lang:0
 msgid "Spanish (DO) / Español (DO)"
-msgstr ""
+msgstr "Испанский (DO) / Español (DO)"
 
 #. module: base
 #: model:ir.model,name:base.model_workflow_activity
@@ -2261,6 +2283,8 @@ msgid ""
 "Reference of the target resource, whose model/table depends on the 'Resource "
 "Name' field."
 msgstr ""
+"Ссылка на целевой ресурс, модель/таблица которого зависит от поля «Имя "
+"Ресурса»."
 
 #. module: base
 #: field:ir.model.fields,select_level:0
