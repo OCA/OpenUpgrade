@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2011-01-11 11:14+0000\n"
-"PO-Revision-Date: 2011-04-22 12:36+0000\n"
+"PO-Revision-Date: 2011-04-23 17:18+0000\n"
 "Last-Translator: Chertykov Denis <chertykov@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-23 06:01+0000\n"
+"X-Launchpad-Export-Date: 2011-04-24 05:52+0000\n"
 "X-Generator: Launchpad (build 12758)\n"
 
 #. module: base
@@ -181,7 +181,7 @@ msgstr "Свазиленд"
 #: code:addons/orm.py:3653
 #, python-format
 msgid "created."
-msgstr "created."
+msgstr "создан."
 
 #. module: base
 #: model:res.partner.category,name:base.res_partner_category_woodsuppliers0
@@ -1007,7 +1007,7 @@ msgstr ""
 "Операция не может быть завершена, вероятно, связано со следующим:\n"
 "- удаление: возможно, вы пытаетесь удалить запись в то время как другие "
 "записи, по-прежнему ссылаются на неё\n"
-"- создание/изменение: обязательное поле не корректно"
+"- создание/изменение: обязательное поле не корректно выбрано или заполнено"
 
 #. module: base
 #: view:ir.rule:0
@@ -1276,7 +1276,7 @@ msgstr ""
 #. module: base
 #: field:res.currency,accuracy:0
 msgid "Computational Accuracy"
-msgstr "Валюта расчетов"
+msgstr "Точность вычислений"
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -1306,7 +1306,7 @@ msgstr "Мальдивы"
 #. module: base
 #: help:ir.values,res_id:0
 msgid "Keep 0 if the action must appear on all resources."
-msgstr "Оставьте 0, если действие предназначено для всех ресурсов."
+msgstr "Оставьте 0, если действие относится ко всем ресурсам"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_rule
@@ -1678,7 +1678,7 @@ msgstr ""
 #: code:addons/orm.py:3147
 #, python-format
 msgid "A document was modified since you last viewed it (%s:%d)"
-msgstr "Документ был изменен с момента вашего последнего посещения (%s:%d)"
+msgstr "Документ был изменен с момента вашего последнего просмотра (%s:%d)"
 
 #. module: base
 #: view:workflow:0
@@ -2043,7 +2043,7 @@ msgstr "Бангладеш"
 #. module: base
 #: constraint:res.company:0
 msgid "Error! You can not create recursive companies."
-msgstr "Ошибка! Невозможно создать рекурсивную компанию."
+msgstr "Ошибка ! Нельзя создать рекурсивные компании."
 
 #. module: base
 #: selection:publisher_warranty.contract,state:0
@@ -2905,7 +2905,7 @@ msgstr "Фильтры по умолчанию"
 #. module: base
 #: field:res.request.history,name:0
 msgid "Summary"
-msgstr "Обзор"
+msgstr "Содержание"
 
 #. module: base
 #: field:multi_company.default,expression:0
@@ -6352,7 +6352,7 @@ msgstr "Китайский (тайваньский) / 正體字"
 #. module: base
 #: model:ir.model,name:base.model_res_request
 msgid "res.request"
-msgstr "Запрос"
+msgstr "res.request"
 
 #. module: base
 #: view:ir.model:0
@@ -6463,7 +6463,7 @@ msgstr "Месяцы"
 #. module: base
 #: field:ir.actions.act_window,search_view:0
 msgid "Search View"
-msgstr "Обзор поиска"
+msgstr "Поиск обзора"
 
 #. module: base
 #: sql_constraint:res.lang:0
@@ -7000,7 +7000,7 @@ msgstr "Г-жа"
 #. module: base
 #: model:ir.model,name:base.model_ir_ui_view
 msgid "ir.ui.view"
-msgstr "Обзор"
+msgstr "ir.ui.view"
 
 #. module: base
 #: constraint:res.partner:0
@@ -7929,7 +7929,7 @@ msgstr "Греция"
 #. module: base
 #: field:res.request,trigger_date:0
 msgid "Trigger Date"
-msgstr "Дата триггера"
+msgstr "Дата активации"
 
 #. module: base
 #: selection:base.language.install,lang:0
