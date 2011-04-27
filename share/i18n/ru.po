@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-01-11 11:16+0000\n"
-"PO-Revision-Date: 2011-04-26 06:01+0000\n"
+"PO-Revision-Date: 2011-04-26 10:24+0000\n"
 "Last-Translator: Chertykov Denis <chertykov@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-26 06:04+0000\n"
+"X-Launchpad-Export-Date: 2011-04-27 05:46+0000\n"
 "X-Generator: Launchpad (build 12758)\n"
 
 #. module: share
@@ -196,12 +196,12 @@ msgstr ""
 #. module: share
 #: field:share.wizard,new_users:0
 msgid "New users"
-msgstr ""
+msgstr "Новые пользователи"
 
 #. module: share
 #: model:ir.model,name:share.model_res_groups
 msgid "res.groups"
-msgstr ""
+msgstr "res.groups"
 
 #. module: share
 #: code:addons/share/wizard/share_wizard.py:121
@@ -212,7 +212,7 @@ msgstr ""
 #. module: share
 #: sql_constraint:res.groups:0
 msgid "The name of the group must be unique !"
-msgstr ""
+msgstr "Название группы должно быть уникальным !"
 
 #. module: share
 #: selection:share.wizard,user_type:0
@@ -228,7 +228,7 @@ msgstr ""
 #. module: share
 #: view:res.groups:0
 msgid "Groups"
-msgstr ""
+msgstr "Группы"
 
 #. module: share
 #: view:share.wizard:0
@@ -245,7 +245,7 @@ msgstr ""
 #: field:share.wizard.result.line,password:0
 #, python-format
 msgid "Password"
-msgstr ""
+msgstr "Пароль"
 
 #. module: share
 #: view:share.wizard:0
@@ -268,12 +268,12 @@ msgstr ""
 #: code:addons/share/wizard/share_wizard.py:102
 #, python-format
 msgid "User already exists"
-msgstr ""
+msgstr "Пользователь уже существует"
 
 #. module: share
 #: view:share.wizard:0
 msgid "Send Email Notification(s)"
-msgstr ""
+msgstr "Отправить уведомление по эл. почте"
 
 #. module: share
 #: code:addons/share/wizard/share_wizard.py:435
@@ -287,12 +287,12 @@ msgstr ""
 #: code:addons/share/wizard/share_wizard.py:432
 #, python-format
 msgid "Database"
-msgstr ""
+msgstr "База данных"
 
 #. module: share
 #: model:ir.model,name:share.model_share_wizard_user
 msgid "share.wizard.user"
-msgstr ""
+msgstr "share.wizard.user"
 
 #. module: share
 #: view:share.wizard:0
@@ -304,13 +304,13 @@ msgstr ""
 #. module: share
 #: selection:share.wizard,user_type:0
 msgid "Existing external users"
-msgstr ""
+msgstr "Cуществующие внешние пользователи"
 
 #. module: share
 #: view:share.wizard:0
 #: field:share.wizard,result_line_ids:0
 msgid "Summary"
-msgstr ""
+msgstr "Содержание"
 
 #. module: share
 #: field:share.wizard,user_type:0
@@ -368,7 +368,7 @@ msgstr ""
 #. module: share
 #: field:share.wizard,domain:0
 msgid "Domain"
-msgstr ""
+msgstr "Домен"
 
 #. module: share
 #: code:addons/share/wizard/share_wizard.py:286
@@ -382,7 +382,7 @@ msgstr ""
 #. module: share
 #: field:share.wizard,access_mode:0
 msgid "Access Mode"
-msgstr ""
+msgstr "Режим доступа"
 
 #. module: share
 #: view:share.wizard:0
@@ -422,7 +422,7 @@ msgstr ""
 #. module: share
 #: model:ir.model,name:share.model_share_wizard_result_line
 msgid "share.wizard.result.line"
-msgstr ""
+msgstr "share.wizard.result.line"
 
 #. module: share
 #: code:addons/share/wizard/share_wizard.py:285
@@ -446,12 +446,12 @@ msgstr ""
 #. module: share
 #: view:share.wizard:0
 msgid "Cancel"
-msgstr ""
+msgstr "Отменить"
 
 #. module: share
 #: view:share.wizard:0
 msgid "Close"
-msgstr ""
+msgstr "Закрыть"
 
 #. module: share
 #: help:res.users,share:0
@@ -463,15 +463,15 @@ msgstr ""
 #. module: share
 #: help:share.wizard,domain:0
 msgid "Optional domain for further data filtering"
-msgstr ""
+msgstr "Дополнительный домен для дальнейшей фильтрации данных"
 
 #. module: share
 #: selection:share.wizard,access_mode:0
 msgid "Read-only"
-msgstr ""
+msgstr "Только чтение"
 
 #. module: share
 #: code:addons/share/wizard/share_wizard.py:295
 #, python-format
 msgid "*usual password*"
-msgstr ""
+msgstr "*Обычный пароль*"
