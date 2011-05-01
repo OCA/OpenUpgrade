@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2011-01-11 11:14+0000\n"
-"PO-Revision-Date: 2011-04-21 21:39+0000\n"
-"Last-Translator: Nédio Batista Marques <Unknown>\n"
+"PO-Revision-Date: 2011-04-30 23:11+0000\n"
+"Last-Translator: Emerson <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-29 05:13+0000\n"
+"X-Launchpad-Export-Date: 2011-05-01 04:54+0000\n"
 "X-Generator: Launchpad (build 12758)\n"
 
 #. module: account
@@ -948,7 +948,7 @@ msgstr "Diário Centralizador"
 #. module: account
 #: selection:account.journal,type:0
 msgid "Sale Refund"
-msgstr "Reembolso de Vendas"
+msgstr "Devolução de Venda"
 
 #. module: account
 #: model:process.node,note:account.process_node_accountingstatemententries0
@@ -1439,7 +1439,7 @@ msgstr "Uma tabela temporária usada para a visão do Dashboard"
 #: model:ir.actions.act_window,name:account.action_invoice_tree4
 #: model:ir.ui.menu,name:account.menu_action_invoice_tree4
 msgid "Supplier Refunds"
-msgstr "Reembolsos de Fornecedor"
+msgstr "Reembolsos a Fornecedores"
 
 #. module: account
 #: view:account.payment.term.line:0
@@ -1549,7 +1549,7 @@ msgstr "Conta pagável"
 #: field:account.tax,account_paid_id:0
 #: field:account.tax.template,account_paid_id:0
 msgid "Refund Tax Account"
-msgstr "Conta reembolso da taxa"
+msgstr "Conta de Reembolso de Imposto"
 
 #. module: account
 #: view:account.bank.statement:0
@@ -1639,8 +1639,8 @@ msgid ""
 "Cancel Invoice: Creates the refund invoice, validate and reconcile it to "
 "cancel the current invoice."
 msgstr ""
-"Cancelar Fatura: Cria uma Fatura de Reembolso, Valide e Reconcilie a mesma "
-"para cancelar a Fatura Corrente."
+"Cancelar Fatura: Crie a fatura de devolução, valide e a reconcilie para "
+"cancelar a fatura atual."
 
 #. module: account
 #: model:ir.ui.menu,name:account.periodical_processing_invoicing
@@ -2567,7 +2567,7 @@ msgstr "Pago/Reconciliado"
 #: field:account.tax,ref_base_code_id:0
 #: field:account.tax.template,ref_base_code_id:0
 msgid "Refund Base Code"
-msgstr "Código base p/reembolso"
+msgstr "Código Base para Devolução"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_bank_statement_periodic_tree
@@ -4396,7 +4396,7 @@ msgstr "Data da operação"
 #: field:account.tax,ref_tax_code_id:0
 #: field:account.tax.template,ref_tax_code_id:0
 msgid "Refund Tax Code"
-msgstr "Código da taxa de reembolso"
+msgstr "Código do Imposto para Reembolso"
 
 #. module: account
 #: view:validate.account.move:0
@@ -4620,7 +4620,8 @@ msgstr ""
 #. module: account
 #: help:account.journal,refund_journal:0
 msgid "Fill this if the journal is to be used for refunds of invoices."
-msgstr "Preencha se o diário for usado para reembolso de faturas."
+msgstr ""
+"Preencha este campo se o diário deve ser usado para faturas de devolução."
 
 #. module: account
 #: view:account.fiscalyear.close:0
@@ -5076,7 +5077,7 @@ msgstr "Contabilidade Analítica"
 #: selection:account.invoice.report,type:0
 #: selection:report.invoice.created,type:0
 msgid "Customer Refund"
-msgstr "Reembolso do cliente"
+msgstr "Reembolso a Cliente"
 
 #. module: account
 #: view:account.account:0
@@ -5643,7 +5644,7 @@ msgstr "  365 dias  "
 #: model:ir.actions.act_window,name:account.action_invoice_tree3
 #: model:ir.ui.menu,name:account.menu_action_invoice_tree3
 msgid "Customer Refunds"
-msgstr "Reembolso a clientes"
+msgstr "Reembolsos a Clientes"
 
 #. module: account
 #: view:account.payment.term.line:0
@@ -5982,7 +5983,7 @@ msgstr "Energia"
 #. module: account
 #: field:account.invoice.refund,filter_refund:0
 msgid "Refund Type"
-msgstr "Tipo de Reembolso"
+msgstr "Tipo de Devolução"
 
 #. module: account
 #: report:account.invoice:0
@@ -6122,7 +6123,7 @@ msgstr "Entre com a Data Inicial !"
 #: selection:account.invoice.report,type:0
 #: selection:report.invoice.created,type:0
 msgid "Supplier Refund"
-msgstr "Reembolso a fornecedor"
+msgstr "Devolução ao Fornecedor"
 
 #. module: account
 #: model:ir.ui.menu,name:account.menu_dashboard_acc
@@ -6786,6 +6787,8 @@ msgid ""
 "This date will be used as the invoice date for Refund Invoice and Period "
 "will be chosen accordingly!"
 msgstr ""
+"Esta data será usada como a data da Fatura de Devolução e o período será "
+"escolhido em conformidade!"
 
 #. module: account
 #: field:account.aged.trial.balance,period_length:0
@@ -7764,7 +7767,7 @@ msgstr "Escolha o Ano Fiscal"
 #: code:addons/account/installer.py:495
 #, python-format
 msgid "Purchase Refund Journal"
-msgstr "Diário de Reembolso de Compra"
+msgstr "Diário de Devolução de Compra"
 
 #. module: account
 #: help:account.tax.template,amount:0
@@ -8021,7 +8024,7 @@ msgstr ""
 #: field:account.invoice.refund,journal_id:0
 #: field:account.journal,refund_journal:0
 msgid "Refund Journal"
-msgstr "Diário de reembolso"
+msgstr "Diário de Devolução"
 
 #. module: account
 #: report:account.account.balance:0
@@ -8470,7 +8473,7 @@ msgstr "Período de"
 #: code:addons/account/installer.py:476
 #, python-format
 msgid "Sales Refund Journal"
-msgstr "Diário de Reembolso de Vendas"
+msgstr "Diário de Devolução de Vendas"
 
 #. module: account
 #: code:addons/account/account.py:927
@@ -8673,7 +8676,7 @@ msgid ""
 "partially. You can easily generate refunds and reconcile them directly from "
 "the invoice form."
 msgstr ""
-"Com os Reembolsos de Fornecedor, você pode gerenciar as notas de créditos "
+"Com os Reembolsos de Fornecedores, você pode gerenciar as notas de créditos "
 "que recebe dos seus fornecedores. Um reembolso é um documento que credita "
 "uma fatura completamente ou parcialmente. Você pode facilmente gerar "
 "reembolsos e reconciliá-los diretamente a partir da tela de faturas."
