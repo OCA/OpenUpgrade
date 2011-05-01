@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2011-01-11 11:14+0000\n"
-"PO-Revision-Date: 2011-04-29 10:54+0000\n"
+"PO-Revision-Date: 2011-04-30 10:29+0000\n"
 "Last-Translator: Ayhan KIZILTAN <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-30 06:07+0000\n"
+"X-Launchpad-Export-Date: 2011-05-01 06:03+0000\n"
 "X-Generator: Launchpad (build 12758)\n"
 
 #. module: account
@@ -6715,6 +6715,10 @@ msgid ""
 "an agreement with a customer or a supplier. With Define Recurring Entries, "
 "you can create such entries to automate the postings in the system."
 msgstr ""
+"Yinelenen giriş, belirli bir tarihte, örneğin; bir alıcı ya da müşteri ile "
+"yapılan sözleşmeye uygun olarak yapılan yinelenen çeşitli girişlerdir. "
+"Yinelen Giriş Tanımlama işlemiyle sisteme otomatik olarak işlenen girişler "
+"yaratabilirsiniz."
 
 #. module: account
 #: field:account.entries.report,product_uom_id:0
@@ -6731,6 +6735,10 @@ msgid ""
 "basis. You can enter the coins that are in your cash box, and then post "
 "entries when money comes in or goes out of the cash box."
 msgstr ""
+"Kasa Kayıtı, nakit yevmiyelerine yapılan nakit girişlerini yönetmenizi "
+"sağlar. Bu özellik, nakit ödemelerin günlük olarak kolayca izlenmesini "
+"sağlar. Kasanızdaki nakit paranın girişini yapabilirsiniz, kasanıza giren, "
+"çıkan nakit parayı işleyebilirsiniz."
 
 #. module: account
 #: selection:account.automatic.reconcile,power:0
@@ -6772,6 +6780,12 @@ msgid ""
 "Most of the OpenERP operations (invoices, timesheets, expenses, etc) "
 "generate analytic entries on the related account."
 msgstr ""
+"Normal Hesap Tablosu, ülkenizdeki yasal düzenlemelerle tanımlanan bir "
+"yapıdadır. Hesap Tablosu Analizi, gider/gelir raporlarına göre "
+"gereksinimlerinizi yansıtır. Genellikle sözleşmeler, projeler, ürünler veya "
+"bölümlere göre yapılandırılır. OpenERP nin çoğu işlemleri (faturalar, zaman "
+"cetvelleri, giderler, v.s.) bağlı olduğu hesaplara göre analiz girişleri "
+"oluşturur."
 
 #. module: account
 #: field:account.analytic.journal,line_ids:0
@@ -6878,7 +6892,7 @@ msgstr ""
 msgid ""
 "You can search for individual account entries through useful information. To "
 "search for account entries, open a journal, then select a record line."
-msgstr ""
+msgstr "Yararlı bilgiler içinden bireysel hesapları araştırabilirsiniz."
 
 #. module: account
 #: report:account.invoice:0
@@ -7000,7 +7014,7 @@ msgstr "Raporlama"
 #. module: account
 #: sql_constraint:account.journal:0
 msgid "The code of the journal must be unique per company !"
-msgstr ""
+msgstr "Yevmiye kodu her firma için benzersiz olmalı."
 
 #. module: account
 #: field:account.bank.statement,ending_details_ids:0
@@ -7053,6 +7067,8 @@ msgid ""
 "line of the expense account, OpenERP will propose to you automatically the "
 "Tax related to this account and the counter-part \"Account Payable\"."
 msgstr ""
+"Bu görünüm, muhasebeciler tarafından girişlerin OpenERP de toplu olarak "
+"kaydı için kullanılır."
 
 #. module: account
 #: help:res.company,property_reserve_and_surplus_account:0
@@ -7273,7 +7289,7 @@ msgstr "Servis Talep Kodu"
 #. module: account
 #: view:validate.account.move:0
 msgid "Post Journal Entries of a Journal"
-msgstr ""
+msgstr "Yevmiyeye ait girişleri işle"
 
 #. module: account
 #: view:product.product:0
@@ -7668,7 +7684,7 @@ msgstr ""
 #. module: account
 #: view:account.installer.modules:0
 msgid "Add extra Accounting functionalities to the ones already installed."
-msgstr ""
+msgstr "Kurulu durumdaki işlevlere ek olarak Muhasebe işlevleri ekle."
 
 #. module: account
 #: report:account.analytic.account.cost_ledger:0
