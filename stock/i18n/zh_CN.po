@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2011-01-11 11:16+0000\n"
-"PO-Revision-Date: 2011-05-01 04:42+0000\n"
-"Last-Translator: Black Jack <onetimespeed@hotmail.com>\n"
+"PO-Revision-Date: 2011-05-01 07:27+0000\n"
+"Last-Translator: openerp-china.Black Jack <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-05-01 04:53+0000\n"
+"X-Launchpad-Export-Date: 2011-05-02 04:36+0000\n"
 "X-Generator: Launchpad (build 12758)\n"
 
 #. module: stock
@@ -1689,7 +1689,7 @@ msgstr "损耗产品"
 #: code:addons/stock/stock.py:1135
 #, python-format
 msgid "You cannot remove the picking which is in %s state !"
-msgstr "您不能删除状态为 %s 的分拣单！"
+msgstr "您不能删除状态为 %s 的装箱单!"
 
 #. module: stock
 #: view:stock.inventory.line.split:0
@@ -1704,7 +1704,7 @@ msgstr "取消"
 #: model:ir.actions.act_window,name:stock.act_stock_return_picking
 #: model:ir.model,name:stock.model_stock_return_picking
 msgid "Return Picking"
-msgstr ""
+msgstr "退货装箱单"
 
 #. module: stock
 #: view:stock.inventory:0
@@ -1730,7 +1730,7 @@ msgstr "拆分生产批次"
 #: field:stock.report.prodlots,location_id:0
 #: field:stock.report.tracklots,location_id:0
 msgid "Location"
-msgstr "库位"
+msgstr "存货地点"
 
 #. module: stock
 #: view:product.template:0
@@ -1740,7 +1740,7 @@ msgstr "信息"
 #. module: stock
 #: report:stock.picking.list:0
 msgid "Shipping Address :"
-msgstr "运输地址"
+msgstr "运输地址:"
 
 #. module: stock
 #: code:addons/stock/wizard/stock_return_picking.py:120
@@ -1754,7 +1754,7 @@ msgstr "输入退货的数量"
 msgid ""
 "Can not create Journal Entry, Input Account defined on this product and "
 "Variant account on category of this product are same."
-msgstr ""
+msgstr "无法建立凭证,请为产品或产品分类定义科目"
 
 #. module: stock
 #: view:stock.change.standard.price:0
@@ -1783,7 +1783,7 @@ msgstr "稍候处理"
 msgid ""
 "This stock location will be used, instead of the default one, as the source "
 "location for goods you receive from the current partner"
-msgstr "默认作为你接收当前业务伙伴产品的来源库位"
+msgstr "默认作为您接收当前业务伙伴产品的来源库位"
 
 #. module: stock
 #: field:stock.warehouse,partner_address_id:0
@@ -1795,7 +1795,7 @@ msgstr "拥有者地址"
 msgid ""
 "Technical field used to record the product cost set by the user during a "
 "picking confirmation (when average price costing method is used)"
-msgstr ""
+msgstr "字段用于记录这产品的成本,在确认装箱单时设置(用于在平均价格里计算成本)"
 
 #. module: stock
 #: model:ir.actions.act_window,help:stock.action_stock_move_report
@@ -1803,22 +1803,22 @@ msgid ""
 "Moves Analysis allows you to easily check and analyse your company stock "
 "moves. Use this report when you want to analyse the different routes taken "
 "by your products and inventory management performance."
-msgstr ""
+msgstr "调拨分析让您轻松检查和分析您公司的库存调拨.在您分析公司不同路线的费用和库存管理的绩效时使用这报表."
 
 #. module: stock
 #: field:report.stock.move,day_diff1:0
 msgid "Planned Lead Time (Days)"
-msgstr ""
+msgstr "计划前置时间(天)"
 
 #. module: stock
 #: field:stock.change.standard.price,new_price:0
 msgid "Price"
-msgstr ""
+msgstr "价格"
 
 #. module: stock
 #: view:stock.inventory:0
 msgid "Search Inventory"
-msgstr ""
+msgstr "查询库存"
 
 #. module: stock
 #: field:stock.move.track,quantity:0
