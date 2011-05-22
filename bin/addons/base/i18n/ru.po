@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2011-01-11 11:14+0000\n"
-"PO-Revision-Date: 2011-05-12 21:57+0000\n"
+"PO-Revision-Date: 2011-05-21 20:53+0000\n"
 "Last-Translator: Chertykov Denis <chertykov@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-05-13 05:48+0000\n"
+"X-Launchpad-Export-Date: 2011-05-22 05:57+0000\n"
 "X-Generator: Launchpad (build 12959)\n"
 
 #. module: base
@@ -613,7 +613,7 @@ msgstr "Королевство Камбоджа"
 #: model:ir.ui.menu,name:base.menu_ir_sequence_form
 #: model:ir.ui.menu,name:base.next_id_5
 msgid "Sequences"
-msgstr "Последовательности"
+msgstr "Нумерация"
 
 #. module: base
 #: model:ir.model,name:base.model_base_language_import
@@ -1191,7 +1191,7 @@ msgstr ""
 #: field:res.config.users,login:0
 #: field:res.users,login:0
 msgid "Login"
-msgstr "Вход"
+msgstr "Логин"
 
 #. module: base
 #: view:ir.actions.server:0
@@ -2995,7 +2995,7 @@ msgstr "Испанский (HN) / Español (HN)"
 #. module: base
 #: view:ir.sequence.type:0
 msgid "Sequence Type"
-msgstr "Тип последовательности"
+msgstr "Тип нумерации"
 
 #. module: base
 #: view:ir.ui.view.custom:0
@@ -3280,7 +3280,7 @@ msgstr "Договор уже зарегистрирован в системе."
 #. module: base
 #: help:ir.sequence,suffix:0
 msgid "Suffix value of the record for the sequence"
-msgstr "Суффикс записи для последовательности"
+msgstr "Суффикс записи для нумерации"
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -3528,10 +3528,11 @@ msgid ""
 "Would your payment have been carried out after this mail was sent, please "
 "consider the present one as void."
 msgstr ""
-"Уведомляем, что наступило время следующего платежа. Если платёж был "
-"отправлен — предоставьте, пожалуйста, подробности этого платежа. Если платёж "
-"будет и далее задерживаться, свяжитесь, пожалуйста, с нами.                  "
-"       Если платёж был отправлен до отправки этого письма — возможно, письмо "
+"Уведомляем, что наступило время следующего платежа. \n"
+"Если платёж был отправлен — предоставьте, пожалуйста, подробности этого "
+"платежа. \n"
+"Если платёж будет и далее задерживаться, свяжитесь, пожалуйста, с нами.\n"
+"Если платёж был отправлен до отправки этого письма — возможно, письмо "
 "отправлено по ошибке."
 
 #. module: base
@@ -4794,7 +4795,7 @@ msgstr "Бутан"
 #. module: base
 #: help:ir.sequence,number_next:0
 msgid "Next number of this sequence"
-msgstr "Следующее число в этой последовательности"
+msgstr "Следующее число в этой нумерации"
 
 #. module: base
 #: model:res.partner.category,name:base.res_partner_category_11
@@ -5794,7 +5795,7 @@ msgstr "Дата создания"
 #. module: base
 #: model:ir.model,name:base.model_ir_actions_todo
 msgid "ir.actions.todo"
-msgstr "ТОДО"
+msgstr "ir.actions.todo"
 
 #. module: base
 #: code:addons/base/res/res_config.py:94
@@ -6227,7 +6228,7 @@ msgstr "Сбор средств"
 #: model:ir.actions.act_window,name:base.ir_sequence_type
 #: model:ir.ui.menu,name:base.menu_ir_sequence_type
 msgid "Sequence Codes"
-msgstr "Последовательность кодов"
+msgstr "Коды нумераций"
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -6749,7 +6750,7 @@ msgstr "Мартиника (заморский регион Франции)"
 #. module: base
 #: view:ir.sequence.type:0
 msgid "Sequences Type"
-msgstr "Тип последовательностей"
+msgstr "Тип нумерации"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.res_request-act
@@ -7309,7 +7310,7 @@ msgstr "Месяц: %(month)s"
 #: field:res.widget.user,sequence:0
 #: field:wizard.ir.model.menu.create.line,sequence:0
 msgid "Sequence"
-msgstr "Последовательность"
+msgstr "Нумерация"
 
 #. module: base
 #: model:res.country,name:base.tn
@@ -8350,7 +8351,7 @@ msgstr "Адресная книга"
 #. module: base
 #: model:ir.model,name:base.model_ir_sequence_type
 msgid "ir.sequence.type"
-msgstr "Тип последовательности"
+msgstr "ir.sequence.type"
 
 #. module: base
 #: selection:base.language.export,format:0
@@ -8689,7 +8690,7 @@ msgstr "Вануату"
 #. module: base
 #: view:res.company:0
 msgid "Internal Header/Footer"
-msgstr "Внутренние верхний / нижний колонтитулы"
+msgstr "Внутренние верхний/нижний колонтитулы"
 
 #. module: base
 #: code:addons/base/module/wizard/base_export_language.py:59
@@ -9488,7 +9489,7 @@ msgstr "Поле мастера"
 #. module: base
 #: help:ir.sequence,prefix:0
 msgid "Prefix value of the record for the sequence"
-msgstr "Префикс записи для последовательности"
+msgstr "Префикс для нумерации"
 
 #. module: base
 #: model:res.country,name:base.sc
@@ -9542,7 +9543,7 @@ msgstr "Объект ресурса"
 #. module: base
 #: help:ir.sequence,number_increment:0
 msgid "The next number of the sequence will be incremented by this number"
-msgstr "Следующее число последовательности будет увеличено на это число"
+msgstr "Следующее число в нумерации будет увеличено на это число"
 
 #. module: base
 #: field:ir.cron,function:0
