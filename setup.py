@@ -58,6 +58,7 @@ setup(
         "Babel >= 0.9.4",
         "simplejson >= 2.0.9",
         "python-dateutil >= 1.4.1",
+        "pytz",
     ],
     tests_require=[
         'unittest2',
