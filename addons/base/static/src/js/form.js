@@ -1084,6 +1084,7 @@ openerp.base.form.FieldMany2One = openerp.base.form.Field.extend({
         this.value = null;
         this.cm_id = _.uniqueId('m2o_cm_');
         this.last_search = [];
+        this.tmp_value = undefined;
     },
     start: function() {
         this._super();
@@ -1272,14 +1273,16 @@ openerp.base.form.FieldMany2One = openerp.base.form.Field.extend({
         value = value || null;
         var self = this;
         var _super = this._super;
+        this.tmp_value = value;
         var real_set_value = function(rval) {
+            this.tmp_value = undefined;
             _super.apply(self, rval);
             self.original_value = rval;
             self._change_int_ext_value(rval);
         };
         if(typeof(value) === "number") {
             var dataset = new openerp.base.DataSetStatic(this.session, this.field.relation, []);
-            dataset.call("name_get", value, function(data) {
+            dataset.call("name_get", [value], function(data) {
                 real_set_value(data.result[0]);
             });
         } else {
@@ -1287,6 +1290,12 @@ openerp.base.form.FieldMany2One = openerp.base.form.Field.extend({
         }
     },
     get_value: function() {
+        if (this.tmp_value !== undefined) {
+            if (this.tmp_value instanceof Array) {
+                return this.tmp_value[0];
+            }
+            return this.tmp_value;
+        }
         if (this.value === undefined)
             throw "theorically unreachable state";
         return this.value ? this.value[0] : false;
