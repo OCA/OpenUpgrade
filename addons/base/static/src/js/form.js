@@ -448,7 +448,7 @@ openerp.base.form.compute_domain = function(expr, fields) {
             }
         }
 
-        var field = fields[ex[0]].value;
+        var field = fields[ex[0]].get_value ? fields[ex[0]].get_value() : fields[ex[0]].value;
         var op = ex[1];
         var val = ex[2];
 
@@ -568,8 +568,8 @@ openerp.base.form.WidgetFrame = openerp.base.form.Widget.extend({
     },
     handle_node: function(node) {
         var type = this.view.fields_view.fields[node.attrs.name] || {};
-        var widget_type = node.attrs.widget || type.type || node.tag;
-        var widget = new (this.view.registry.get_object(widget_type)) (this.view, node);
+        var widget = new (this.view.registry.get_any(
+                [node.attrs.widget, type.type, node.tag])) (this.view, node);
         if (node.tag == 'field') {
             if (!this.view.default_focus_field || node.attrs.default_focus == '1') {
                 this.view.default_focus_field = widget;
@@ -1259,7 +1259,7 @@ openerp.base.form.FieldMany2One = openerp.base.form.Field.extend({
                 }, self.view.domain || [],
                 new openerp.base.CompoundContext(build_relation_context(self)).add(context || {}));
         pop.on_select_elements.add(function(element_ids) {
-            dataset.call("name_get", [element_ids[0]], function(data) {
+            dataset.call("name_get", [[element_ids[0]]], function(data) {
                 self._change_int_ext_value(data.result[0]);
                 pop.stop();
             });
@@ -1284,14 +1284,14 @@ openerp.base.form.FieldMany2One = openerp.base.form.Field.extend({
         var _super = this._super;
         this.tmp_value = value;
         var real_set_value = function(rval) {
-            this.tmp_value = undefined;
+            self.tmp_value = undefined;
             _super.apply(self, rval);
             self.original_value = rval;
             self._change_int_ext_value(rval);
         };
         if(typeof(value) === "number") {
             var dataset = new openerp.base.DataSetStatic(this.session, this.field.relation, []);
-            dataset.call("name_get", [value], function(data) {
+            dataset.call("name_get", [[value]], function(data) {
                 real_set_value(data.result[0]);
             }).fail(function() {self.tmp_value = undefined;});
         } else {
@@ -1303,7 +1303,7 @@ openerp.base.form.FieldMany2One = openerp.base.form.Field.extend({
             if (this.tmp_value instanceof Array) {
                 return this.tmp_value[0];
             }
-            return this.tmp_value;
+            return this.tmp_value === null ? false : this.tmp_value;
         }
         if (this.value === undefined)
             throw "theorically unreachable state";
