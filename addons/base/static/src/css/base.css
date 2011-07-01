@@ -474,9 +474,10 @@ background: linear-gradient(top, #ffffff 0%,#d8d8d8 11%,#afafaf 86%,#333333 91%,
     background: #AAAAAA;
 }
 .openerp .filter_icon {
+    height: 22px;
     padding: 1px 2px 0 2px;
-    margin-left: 0;
-    margin-right: 0;
+    margin: 0;
+    vertical-align: bottom;
 }
 .openerp .filter_label {
     font-weight: bold;
@@ -536,14 +537,6 @@ background: linear-gradient(top, #ffffff 0%,#d8d8d8 11%,#afafaf 86%,#333333 91%,
 }
 .openerp .searchview_group_content {
     padding-left: 10px;
-}
-.openerp .searchview_group_content .oe-searchview-render-line {
-    width:0;
-}
-
-
-.openerp .oe-searchview-render-line {
-    width:100%;
 }
 
 .openerp .searchview_extended_group {
@@ -780,13 +773,14 @@ background: linear-gradient(top, #ffffff 0%,#d8d8d8 11%,#afafaf 86%,#333333 91%,
     position: relative;
     vertical-align: top;
 }
-.openerp input.field_date, .openerp input.field_datetime {
-    background: #fff url('../img/ui/field_calendar.png') no-repeat right center;
-    background-origin: content-box;
-    -moz-background-origin: content;
-    -moz-background-origin: content-box;
-    -webkit-background-origin: content-box;
+.openerp img.ui-datepicker-trigger, .openerp img.ui-datepicker-trigger {
+    margin-left: -20px;
+    vertical-align: middle;
+    cursor: pointer;
+    position: relative;
+    top: -1px;
 }
+
 /* http://www.quirksmode.org/dom/inputfile.html
  * http://stackoverflow.com/questions/2855589/replace-input-type-file-by-an-image
  */
@@ -1043,6 +1037,12 @@ background: linear-gradient(top, #ffffff 0%,#ebe9e9 100%); /* W3C */
     background: #828282;
     border-color: #828282;
 }
+.openerp .oe_necessary_team_song {
+    display: none;
+}
+.openerp.kitten-mode-activated .oe_necessary_team_song {
+    display: block;
+}
 
 .openerp .oe-m2o {
     padding-right: 16px;
@@ -1055,6 +1055,7 @@ background: linear-gradient(top, #ffffff 0%,#ebe9e9 100%); /* W3C */
 .openerp .oe-m2o-drop-down-button img,
 .openerp .oe-m2o-cm-button img {
     margin-bottom: -4px;
+    cursor: pointer;
 }
 .openerp .oe-m2o-disabled-cm {
     color: grey;
