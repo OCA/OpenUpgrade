@@ -357,8 +357,6 @@ openerp.base.Session = openerp.base.BasicController.extend( /** @lends openerp.b
         var self = this;
         // Construct a JSON-RPC2 request, method is currently unused
         params.session_id = this.session_id;
-        // niv: wtf?
-        //params.context = typeof(params.context) != "undefined" ? params.context  : this.context;
 
         // Call using the rpc_mode
         var deferred = $.Deferred();
@@ -408,7 +406,8 @@ openerp.base.Session = openerp.base.BasicController.extend( /** @lends openerp.b
                         self.on_session_invalid(function() {
                             self.rpc(url, payload.params,
                                 function() {deferred.resolve.apply(deferred, arguments);},
-                                function() {deferred.reject.apply(deferred, arguments);});
+                                function(error, event) {event.preventDefault();
+                                    deferred.reject.apply(deferred, arguments);});
                         });
                     } else {
                         deferred.reject(response.error);
