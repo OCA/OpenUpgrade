@@ -242,7 +242,7 @@ openerp.base.FormView =  openerp.base.View.extend( /** @lends openerp.base.FormV
                     }
                 } else {
                     // this is a common case, the normal behavior should be to ignore it
-                    this.log("on_processed_onchange can't find field " + f, result);
+                    console.debug("on_processed_onchange can't find field " + f, result);
                 }
             }
             this.on_form_changed();
@@ -1305,7 +1305,7 @@ openerp.base.form.FieldMany2One = openerp.base.form.Field.extend({
             // create...
             values.push({label: "<em>   Create and Edit...</em>", action: function() {
                 self._change_int_value(null);
-                self._search_create_popup("form");
+                self._search_create_popup("form", undefined, {"default_name": search_val});
             }});
 
             response(values);
@@ -1444,6 +1444,7 @@ var commands = {
     }
 };
 openerp.base.form.FieldOne2Many = openerp.base.form.Field.extend({
+    multi_selection: false,
     init: function(view, node) {
         this._super(view, node);
         this.template = "FieldOne2Many";
@@ -1471,6 +1472,7 @@ openerp.base.form.FieldOne2Many = openerp.base.form.Field.extend({
             }
             if(view.view_type === "list") {
                 view.options = {
+                    'selectable': self.multi_selection
                 };
             }
             views.push(view);
@@ -1616,6 +1618,7 @@ openerp.base.form.One2ManyListView = openerp.base.ListView.extend({
 });
 
 openerp.base.form.FieldMany2Many = openerp.base.form.Field.extend({
+    multi_selection: false,
     init: function(view, node) {
         this._super(view, node);
         this.template = "FieldMany2Many";
@@ -1636,7 +1639,8 @@ openerp.base.form.FieldMany2Many = openerp.base.form.Field.extend({
 
         this.list_view = new openerp.base.form.Many2ManyListView(
                 null, this.view.session, this.list_id, this.dataset, false, {
-                    'addable': 'Add'
+                    'addable': 'Add',
+                    'selectable': self.multi_selection
             });
         this.list_view.m2m_field = this;
         this.list_view.on_loaded.add_last(function() {
@@ -1677,7 +1681,9 @@ openerp.base.form.Many2ManyListView = openerp.base.ListView.extend({
     do_add_record: function () {
         var pop = new openerp.base.form.SelectCreatePopup(
                 null, this.m2m_field.view.session);
-        pop.select_element(this.model, {}, this.m2m_field.build_domain(), this.m2m_field.build_context());
+        pop.select_element(this.model, {},
+            new openerp.base.CompoundDomain(this.m2m_field.build_domain(), ["!", ["id", "in", this.m2m_field.dataset.ids]]),
+            this.m2m_field.build_context());
         var self = this;
         pop.on_select_elements.add(function(element_ids) {
             _.each(element_ids, function(element_id) {
@@ -1730,7 +1736,7 @@ openerp.base.form.SelectCreatePopup = openerp.base.BaseWidget.extend({
     start: function() {
         this._super();
         this.dataset = new openerp.base.ReadOnlyDataSetSearch(this.session, this.model,
-            this.context, this.domain);
+            this.context);
         this.dataset.parent_view = this.options.parent_view;
         if (this.options.initial_view == "search") {
             this.setup_search_view();
@@ -1750,11 +1756,11 @@ openerp.base.form.SelectCreatePopup = openerp.base.BaseWidget.extend({
                 });
         this.searchview.on_search.add(function(domains, contexts, groupbys) {
             if (self.initial_ids) {
-                self.view_list.do_search.call(self, domains.concat([[["id", "in", self.initial_ids]]]),
+                self.view_list.do_search.call(self, domains.concat([[["id", "in", self.initial_ids]], self.domain]),
                     contexts, groupbys);
                 self.initial_ids = undefined;
             } else {
-                self.view_list.do_search.call(self, domains, contexts, groupbys);
+                self.view_list.do_search.call(self, domains.concat([self.domain]), contexts, groupbys);
             }
         });
         this.searchview.on_loaded.add_last(function () {
