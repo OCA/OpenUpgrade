@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title></title>
+
+	<script src="../../codebase/dhtmlxscheduler.js" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" href="../../codebase/dhtmlxscheduler.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	
+	<script  src="../../../dhtmlxSlider/codebase/dhtmlxcommon.js"></script>
+	<script  src="../../../dhtmlxSlider/codebase/dhtmlxslider.js"></script>
+	<script  src="../../../dhtmlxSlider/codebase/ext/dhtmlxslider_start.js"></script>
+	<link rel="STYLESHEET" type="text/css" href="../../../dhtmlxSlider/codebase/dhtmlxslider.css">	
+
+	<style type="text/css" media="screen">
+		html, body{
+			margin:0px;
+			padding:0px;
+			height:100%;
+			overflow:hidden;
+		}	
+		.dhx_cal_larea .slider {
+			padding-top: 10px;
+		}
+	</style>
+
+	<script type="text/javascript" charset="utf-8">
+		if (!window.dhtmlxSlider)
+			alert("You need to have dhtmlxSlider files, to see full functionality of this sample.");
+
+		function init() {
+			scheduler.config.multi_day = true;
+			
+			scheduler.form_blocks["slider"] = {
+				render:function(sns){
+					html = "<div style='height: "+sns.height+"px;'><div class='slider'></div></div>";
+					return html;
+				},
+				set_value:function(node,value,ev,config){
+					if(!node._slider) {
+						var header = node.previousSibling;
+						var originalText = scheduler.locale.labels['section_'+config.name];
+
+						window.dhx_globalImgPath="../../../dhtmlxSlider/codebase/imgs/";
+						var options = {
+							size:config.size,           
+							skin: config.skin,
+							vertical:false,
+							step:config.step,
+							min:config.min,
+							max:config.max,
+							value:config.value  						
+						};
+						var slider = new dhtmlxSlider(node, options);
+						slider.attachEvent("onChange",function(newValue,sliderObj){
+							header.innerHTML = originalText+' '+newValue;
+						})  
+						slider.callEvent('onChange', [value||config.value, slider]);
+						slider.init();
+						node._slider = slider;
+					}
+					node._slider.setValue(value||config.value);
+					node._slider.callEvent('onChange', [value||config.value, node._slider]);
+				},
+				get_value:function(node,ev){
+					return node._slider.getValue();
+				},
+				focus:function(node){
+				}
+			}
+			
+			scheduler.locale.labels.section_slider="Progress:";
+			
+			scheduler.config.lightbox.sections=[	
+				{name:"description", height:130, map_to:"text", type:"textarea" , focus:true},
+				{name:"slider", height:36, type:"slider", size: 550, skin: "ball", step: 1, min: 1, max: 100, value: 0, map_to:"progress" },
+				{name:"time", height:72, type:"time", map_to:"auto"}
+			]		
+			
+			scheduler.config.xml_date="%Y-%m-%d %H:%i";
+			scheduler.init('scheduler_here',new Date(2009,7,5),"month");
+			scheduler.load("../common/events2010.xml");
+		}
+	</script>
+</head>
+
+<body onload="init();">
+	<div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:100%;'>
+		<div class="dhx_cal_navline">
+			<div class="dhx_cal_prev_button">&nbsp;</div>
+			<div class="dhx_cal_next_button">&nbsp;</div>
+			<div class="dhx_cal_today_button"></div>
+			<div class="dhx_cal_date"></div>
+			<div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+			<div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+			<div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+		</div>
+		<div class="dhx_cal_header">
+		</div>
+		<div class="dhx_cal_data">
+		</div>
+	</div>
+</body>
