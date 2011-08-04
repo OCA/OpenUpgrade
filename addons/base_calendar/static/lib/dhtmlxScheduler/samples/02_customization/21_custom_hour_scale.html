@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title></title>
+</head>
+	<script src="../../codebase/dhtmlxscheduler.js" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" href="../../codebase/dhtmlxscheduler.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+	
+<style type="text/css" media="screen">
+	html, body{
+		margin:0px;
+		padding:0px;
+		height:100%;
+		overflow:hidden;
+	}	
+	
+	.dhx_cal_event_cont_selected{
+		background-color: #9cc1db;
+		color: white;
+	}
+	.dhx_scale_hour_main {
+		float: left;
+		text-align: right;
+		font-size: 16px;
+		font-weight: bold;
+	}
+	.dhx_scale_hour_minute_cont {
+		float: left;
+		position: relative;
+		text-align: right;
+	}
+	.dhx_scale_hour_minute_top, .dhx_scale_hour_minute_bottom {
+		font-size: 10px;
+		padding-right: 5px;
+	}
+	.dhx_scale_hour_sep {
+		position: absolute;
+		height: 1px;
+		background-color: #8C929A;
+		right: 0;
+		top: 20px;
+		width: 20px;
+	}
+		
+</style>
+
+<script type="text/javascript" charset="utf-8">
+	function init() {
+		scheduler.config.multi_day = true;
+		scheduler.config.xml_date="%Y-%m-%d %H:%i";
+		scheduler.config.details_on_create = true;
+		
+		scheduler.templates.hour_scale = function(date){
+            var hour = date.getHours();
+            var top = '00';
+            var bottom = '30';
+            if(hour==0)
+                top = 'AM';
+            if(hour==12)
+                top = 'PM';
+            hour =  ((date.getHours()+11)%12)+1;
+            var html = '';
+            var section_width = Math.floor(scheduler.xy.scale_width/2);
+            var minute_height = Math.floor(scheduler.config.hour_size_px/2);
+            html += "<div class='dhx_scale_hour_main' style='width: "+section_width+"px; height:"+(minute_height*2)+"px;'>"+hour+"</div><div class='dhx_scale_hour_minute_cont' style='width: "+section_width+"px;'>";
+            html += "<div class='dhx_scale_hour_minute_top' style='height:"+minute_height+"px; line-height:"+minute_height+"px;'>"+top+"</div><div class='dhx_scale_hour_minute_bottom' style='height:"+minute_height+"px; line-height:"+minute_height+"px;'>"+bottom+"</div>";
+            html += "<div class='dhx_scale_hour_sep'></div></div>";
+            return html;		
+		};
+
+		scheduler.init('scheduler_here',new Date(2010,7,5),"week");
+		scheduler.load("../common/events2010.xml");
+		
+	}
+</script>
+
+<body onload="init();">
+	<div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:100%;'>
+		<div class="dhx_cal_navline">
+			<div class="dhx_cal_prev_button">&nbsp;</div>
+			<div class="dhx_cal_next_button">&nbsp;</div>
+			<div class="dhx_cal_today_button"></div>
+			<div class="dhx_cal_date"></div>
+			<div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+			<div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+			<div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+		</div>
+		<div class="dhx_cal_header">
+		</div>
+		<div class="dhx_cal_data">
+		</div>
+	</div>
+</body>
