@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta  name = "viewport" content = "initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		
+		<script src="../../codebase/dhtmlxscheduler_mobile.js" type="text/javascript"></script>
+		<link rel="stylesheet" type="text/css" href="../../codebase/dhtmlxscheduler_mobile.css">
+
+		<script src="../../sources/locale_ru.js?12" type="text/javascript" charset="utf-8"></script>
+        <style>
+			.dhx_schedulerbar .dhx_el_segmented .segment_0,.dhx_schedulerbar .dhx_el_segmented .segment_N{
+				padding:0 6px 0 6px;
+			}
+			.dhx_schedulerbar .dhx_el_segmented .segment_1{
+				 padding: 0 4px;
+			}
+			.dhx_el_button input{
+			   padding: 0 4px;
+			}
+		</style>
+		<title>Locale</title>
+		<script type="text/javascript" charset="utf-8">
+		    /* labels that are not defined in the locale_ru.js, but necessary to mobile scheduler*/
+			var labels = {
+				icon_back:"Назад",
+				icon_today:"Сегодня",
+				list_tab:"Список",
+				icon_close : "Закрытие формы",
+				icon_delete : "Удалить событие",
+				icon_yes : "Да",
+				icon_no : "Нет",
+				confirm_closing : "Измения не будут сохранены. Желаете продолжить?",
+				/*form*/
+				label_event:"Событие",
+				label_start:"Начало",
+				label_end:"Конец",
+				label_details:"Заметки",
+				label_from:"c",
+				label_to:"до"
+			};
+			/*add values to the existed locale (defined in locale_ru.js)*/
+			dhx.extend(scheduler.locale.labels,labels);
+			/* new button sizes */
+			scheduler.xy.icon_today = 80;
+			scheduler.xy.list_tab = 80;
+			scheduler.xy.day_tab = 62;
+			scheduler.xy.month_tab = 80;
+			
+			dhx.ready(function(){
+	
+			
+				dhx.ui.fullScreen();
+    			dhx.ui({
+					view: "scheduler",
+					id: "scheduler"
+				});
+				
+				dhx.i18n.fullDateFormat="%Y-%m-%d %H:%i"; 
+				dhx.i18n.setLocale();
+				
+				$$("scheduler").load("../common/mobile.xml","scheduler");
+			});
+		</script>
+</head>
+	<body>
+	</body>
+</html>
