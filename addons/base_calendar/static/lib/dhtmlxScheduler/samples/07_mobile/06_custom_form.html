@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta  name = "viewport" content = "initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no">
+
+		<script src="../../codebase/dhtmlxscheduler_mobile.js" type="text/javascript"></script>
+		<link rel="stylesheet" type="text/css" href="../../codebase/dhtmlxscheduler_mobile.css?12">
+
+
+		<title>Custom form</title>
+		<script type="text/javascript" charset="utf-8">
+
+
+		scheduler.config.form = [
+			{view:"text",		label:"Event",	name:'text' },
+			{view:"datepicker",	label:"Start",	name:'start_date',	timeSelect:1, dateFormat:dhx.i18n.fullDateFormat},
+			{view:"datepicker",	label:"End",	name:'end_date',	timeSelect:1, dateFormat:dhx.i18n.fullDateFormat},
+			//custom section in form
+			{view:"text",		label:"Location",	name:'location' },
+			//button can be removed
+			{view:"button", label:"Delete", name:"delete", id:"delete"}
+		];
+
+		dhx.ready(function(){
+
+			dhx.ui.fullScreen();
+			dhx.ui({
+				view: "scheduler",
+				id: "scheduler"
+			});
+
+			dhx.i18n.fullDateFormat="%Y-%m-%d %H:%i"; 
+			dhx.i18n.setLocale();
+			
+			$$("scheduler").load("../common/mobile.xml","scheduler");
+		});
+		</script>
+</head>
+	<body>
+	</body>
+</html>
