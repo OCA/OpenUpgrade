@@ -20,17 +20,21 @@
 #
 ##############################################################################
 
+import logging
+from functools import partial
+from xml.sax.saxutils import quoteattr
+
+import simplejson
+import pytz
+from lxml import etree
+
+import netsvc
+import pooler
+import tools
 from osv import fields,osv
 from osv.orm import browse_record
-import tools
-from functools import partial
-import pytz
-import pooler
-from tools.translate import _
 from service import security
-import netsvc
-import logging
-from lxml import etree
+from tools.translate import _
 
 class groups(osv.osv):
     _name = "res.groups"
@@ -219,7 +223,7 @@ class users(osv.osv):
                                 fnct_inv=_set_new_password,
                                 string='Change password', help="Only specify a value if you want to change the user password. "
                                 "This user will have to logout and login again!"),
-        'user_email': fields.char('E-mail', size=64),
+        'user_email': fields.char('Email', size=64),
         'signature': fields.text('Signature', size=64),
         'active': fields.boolean('Active'),
         'action_id': fields.many2one('ir.actions.actions', 'Home Action', help="If specified, this action will be opened at logon for this user, in addition to the standard menu."),
@@ -760,13 +764,15 @@ class users_view(osv.osv):
                     if tips:
                         fields[app_name].update(help='\n'.join(tips))
                     fields[sel_name] = {'type': 'selection', 'string': 'Group', 'selection': selection}
+                    attrs = {'invisible': [('%s' % app_name, '=', False)]}
                     elems.append("""
                         <field name="%(app)s"/>
                         <field name="%(sel)s" nolabel="1" colspan="2"
-                            attrs="{'invisible': [('%(app)s', '=', False)]}"
-                            modifiers="{'invisible': [('%(app)s', '=', False)]}"/>
+                            attrs=%(attrs)s modifiers=%(json_attrs)s/>
                         <newline/>
-                        """ % {'app': app_name, 'sel': sel_name})
+                        """ % {'app': app_name, 'sel': sel_name,
+                               'attrs': quoteattr(str(attrs)),
+                               'json_attrs': quoteattr(simplejson.dumps(attrs))})
                 # create other sections
                 for sec, groups in others:
                     elems.append('<separator colspan="6" string="%s"/>' % sec)
