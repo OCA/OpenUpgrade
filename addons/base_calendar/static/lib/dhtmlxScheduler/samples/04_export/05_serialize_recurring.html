@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title></title>
+</head>
+	<script src="../../codebase/dhtmlxscheduler.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../codebase/ext/dhtmlxscheduler_serialize.js" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" href="../../codebase/dhtmlxscheduler.css" type="text/css" title="no title" charset="utf-8">
+	
+	<script src="../../codebase/ext/dhtmlxscheduler_recurring.js" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" href="../../codebase/ext/dhtmlxscheduler_recurring.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	
+
+	
+<style type="text/css" media="screen">
+	html, body{
+		margin:0px;
+		padding:0px;
+		height:100%;
+		overflow:hidden;
+	}	
+	.dhx_cal_navline input{
+		width:80px;
+		position:absolute;
+		top:1px;
+		font-family:Tahoma;
+		font-weight:8pt;
+	}
+</style>
+
+
+<script type="text/javascript" charset="utf-8">
+   function init() {
+      scheduler.config.xml_date="%Y-%m-%d %H:%i";
+      scheduler.config.prevent_cache = true;
+      
+      scheduler.init('scheduler_here',new Date(2010,0,20),"month");
+      scheduler.data_attributes = function(){
+         var empty = function(a){ return a||""; }
+         return [["id"],
+               ["text"],
+               ["start_date",scheduler.templates.xml_format],
+               ["end_date",scheduler.templates.xml_format],
+               ["rec_type",empty],
+               ["event_length",empty],
+               ["event_pid",empty]];
+      }
+      scheduler.load("php/data_r.xml");
+   }
+   
+   function show(){
+      alert(scheduler.toXML());
+   }
+   function save(){
+      var form = document.getElementById("xml_form");
+      form.elements.data.value = scheduler.toXML();
+      form.submit();
+   }
+</script>
+
+<body onload="init();">
+	<form action="./php/xml_writer_r.php" id="xml_form" method="post" target="hidden_frame" accept-charset="utf-8">
+		<input type="hidden" name="data" value="" id="data">
+	</form>
+	<iframe src='about:blank' frameborder="0" style="width:0px; height:0px;" id="hidden_frame" name="hidden_frame"></iframe>
+	<div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:100%;'>
+		<div class="dhx_cal_navline">
+			<div class="dhx_cal_prev_button">&nbsp;</div>
+			<div class="dhx_cal_next_button">&nbsp;</div>
+			<div class="dhx_cal_today_button"></div>
+			<div class="dhx_cal_date"></div>
+			<input type="button" name="save" value="save" onclick="save()" style="right:300px;">
+			<input type="button" name="save" value="show" onclick="show()" style="right:400px;">
+			<div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+			<div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+			<div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+		</div>
+		<div class="dhx_cal_header">
+		</div>
+		<div class="dhx_cal_data">
+		</div>		
+	</div>
+</body>
