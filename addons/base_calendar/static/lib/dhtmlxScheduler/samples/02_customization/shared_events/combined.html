@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title></title>
+</head>
+	<script src="../../../codebase/dhtmlxscheduler.js" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" href="../../../codebase/dhtmlxscheduler.css" type="text/css" title="no title" charset="utf-8">
+
+	
+<style type="text/css" media="screen">
+	html, body{
+		margin:0px;
+		padding:0px;
+		height:100%;
+		overflow:hidden;
+	}	
+    /*event in day or week view*/
+	.dhx_cal_event.user_2 div{
+		background-color:#FF8040 !important; 
+		color:white !important;
+	}
+    /*multi-day event in month view*/
+	.dhx_cal_event_line.user_2{
+		background-color:#FF8040 !important; 
+		color:white !important;
+	}
+    /*event with fixed time, in month view*/
+	.dhx_cal_event_clear.user_2{
+		color:#FF8040 !important;
+	}	
+</style>
+
+
+<script type="text/javascript" charset="utf-8">
+	function init() {
+		scheduler.config.xml_date="%Y-%m-%d %H:%i";
+		scheduler.config.readonly = true;
+		scheduler.config.first_hour=6;
+		scheduler.config.prevent_cache = true;
+		
+		scheduler.init('scheduler_here',new Date(2009,5,1),"month");
+		
+		scheduler.load("events_shared.php?user=1");
+		scheduler.load("events_shared.php?user=2");
+		
+		//coloring for different users
+		scheduler.templates.event_bar_text=scheduler.templates.event_text=function(start,end,event){
+			return "["+event.userId+"] "+event.text;
+		}
+		scheduler.templates.event_class=function(start,end,event){
+ 		   if (event.userId==2)
+        	  return "user_2"; 
+		}
+
+
+	}
+</script>
+
+<body onload="init();">
+	<div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:100%;'>
+		<div class="dhx_cal_navline">
+			<div class="dhx_cal_prev_button">&nbsp;</div>
+			<div class="dhx_cal_next_button">&nbsp;</div>
+			<div class="dhx_cal_today_button"></div>
+			<div class="dhx_cal_date"></div>
+			<div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+			<div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+			<div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+		</div>
+		<div class="dhx_cal_header">
+		</div>
+		<div class="dhx_cal_data">
+		</div>		
+	</div>
+</body>
