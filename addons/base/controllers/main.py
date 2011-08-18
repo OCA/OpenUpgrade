@@ -947,7 +947,7 @@ class Binary(openerpweb.Controller):
     _cp_path = "/base/binary"
 
     @openerpweb.httprequest
-    def image(self, request, session_id, model, id, field, **kw):
+    def image(self, request, model, id, field, **kw):
         cherrypy.response.headers['Content-Type'] = 'image/png'
         Model = request.session.model(model)
         context = request.session.eval_context(request.context)
@@ -963,7 +963,7 @@ class Binary(openerpweb.Controller):
         return open(os.path.join(openerpweb.path_addons, 'base', 'static', 'src', 'img', 'placeholder.png'), 'rb').read()
 
     @openerpweb.httprequest
-    def saveas(self, request, session_id, model, id, field, fieldname, **kw):
+    def saveas(self, request, model, id, field, fieldname, **kw):
         Model = request.session.model(model)
         context = request.session.eval_context(request.context)
         res = Model.read([int(id)], [field, fieldname], context)[0]
@@ -979,7 +979,7 @@ class Binary(openerpweb.Controller):
             return base64.decodestring(filecontent)
 
     @openerpweb.httprequest
-    def upload(self, request, session_id, callback, ufile=None):
+    def upload(self, request, callback, ufile=None):
         cherrypy.response.timeout = 500
         headers = {}
         for key, val in cherrypy.request.headers.iteritems():
@@ -1006,7 +1006,7 @@ class Binary(openerpweb.Controller):
         return out % (simplejson.dumps(callback), simplejson.dumps(args))
 
     @openerpweb.httprequest
-    def upload_attachment(self, request, session_id, callback, model, id, ufile=None):
+    def upload_attachment(self, request, callback, model, id, ufile=None):
         cherrypy.response.timeout = 500
         context = request.session.eval_context(request.context)
         Model = request.session.model('ir.attachment')
