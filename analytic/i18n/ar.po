@@ -8,19 +8,19 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-01-11 11:14+0000\n"
-"PO-Revision-Date: 2011-09-04 16:59+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2011-09-05 23:03+0000\n"
+"Last-Translator: Majed Majbour <Unknown>\n"
 "Language-Team: Arabic <ar@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-09-05 05:47+0000\n"
-"X-Generator: Launchpad (build 13830)\n"
+"X-Launchpad-Export-Date: 2011-09-06 04:40+0000\n"
+"X-Generator: Launchpad (build 13861)\n"
 
 #. module: analytic
 #: field:account.analytic.account,child_ids:0
 msgid "Child Accounts"
-msgstr ""
+msgstr "حساب فرعي"
 
 #. module: analytic
 #: field:account.analytic.account,name:0
@@ -30,7 +30,7 @@ msgstr ""
 #. module: analytic
 #: help:account.analytic.line,unit_amount:0
 msgid "Specifies the amount of quantity to count."
-msgstr ""
+msgstr "تحديد مجموع الكمية لعدّها"
 
 #. module: analytic
 #: model:ir.module.module,description:analytic.module_meta_information
@@ -38,6 +38,8 @@ msgid ""
 "Module for defining analytic accounting object.\n"
 "    "
 msgstr ""
+"وحدة لتعريف كائن تحليل المحاسبة.\n"
+"    "
 
 #. module: analytic
 #: field:account.analytic.account,state:0
@@ -52,17 +54,17 @@ msgstr ""
 #. module: analytic
 #: selection:account.analytic.account,state:0
 msgid "Draft"
-msgstr ""
+msgstr "مسودة"
 
 #. module: analytic
 #: selection:account.analytic.account,state:0
 msgid "Closed"
-msgstr ""
+msgstr "مغلق"
 
 #. module: analytic
 #: field:account.analytic.account,debit:0
 msgid "Debit"
-msgstr ""
+msgstr "مدين"
 
 #. module: analytic
 #: help:account.analytic.account,state:0
@@ -86,28 +88,28 @@ msgstr ""
 #. module: analytic
 #: field:account.analytic.account,type:0
 msgid "Account Type"
-msgstr ""
+msgstr "نوع الحساب"
 
 #. module: analytic
 #: selection:account.analytic.account,state:0
 msgid "Template"
-msgstr ""
+msgstr "قالب"
 
 #. module: analytic
 #: selection:account.analytic.account,state:0
 msgid "Pending"
-msgstr ""
+msgstr "إنتظار"
 
 #. module: analytic
 #: model:ir.model,name:analytic.model_account_analytic_line
 msgid "Analytic Line"
-msgstr ""
+msgstr "خط بياني"
 
 #. module: analytic
 #: field:account.analytic.account,description:0
 #: field:account.analytic.line,name:0
 msgid "Description"
-msgstr ""
+msgstr "وصف"
 
 #. module: analytic
 #: selection:account.analytic.account,type:0
@@ -118,38 +120,38 @@ msgstr ""
 #: field:account.analytic.account,company_id:0
 #: field:account.analytic.line,company_id:0
 msgid "Company"
-msgstr ""
+msgstr "الشركة"
 
 #. module: analytic
 #: field:account.analytic.account,quantity_max:0
 msgid "Maximum Quantity"
-msgstr ""
+msgstr "الكمية القصوى"
 
 #. module: analytic
 #: field:account.analytic.line,user_id:0
 msgid "User"
-msgstr ""
+msgstr "مستخدِم"
 
 #. module: analytic
 #: field:account.analytic.account,parent_id:0
 msgid "Parent Analytic Account"
-msgstr ""
+msgstr "حساب التحليل الأعلى"
 
 #. module: analytic
 #: field:account.analytic.line,date:0
 msgid "Date"
-msgstr ""
+msgstr "تاريخ"
 
 #. module: analytic
 #: field:account.analytic.account,currency_id:0
 msgid "Account currency"
-msgstr ""
+msgstr "عملة الحساب"
 
 #. module: analytic
 #: field:account.analytic.account,quantity:0
 #: field:account.analytic.line,unit_amount:0
 msgid "Quantity"
-msgstr ""
+msgstr "الكمية"
 
 #. module: analytic
 #: help:account.analytic.line,amount:0
@@ -161,22 +163,22 @@ msgstr ""
 #. module: analytic
 #: help:account.analytic.account,quantity_max:0
 msgid "Sets the higher limit of quantity of hours."
-msgstr ""
+msgstr "تحديد الحد الأعلى للمقدار بالساعات"
 
 #. module: analytic
 #: field:account.analytic.account,credit:0
 msgid "Credit"
-msgstr ""
+msgstr "دائن"
 
 #. module: analytic
 #: field:account.analytic.line,amount:0
 msgid "Amount"
-msgstr ""
+msgstr "المقدار"
 
 #. module: analytic
 #: field:account.analytic.account,contact_id:0
 msgid "Contact"
-msgstr ""
+msgstr "جهة الإتصال"
 
 #. module: analytic
 #: constraint:account.analytic.account:0
@@ -188,17 +190,17 @@ msgstr ""
 #. module: analytic
 #: selection:account.analytic.account,state:0
 msgid "Cancelled"
-msgstr ""
+msgstr "أُلغيت"
 
 #. module: analytic
 #: field:account.analytic.account,balance:0
 msgid "Balance"
-msgstr ""
+msgstr "رصيد"
 
 #. module: analytic
 #: constraint:account.analytic.account:0
 msgid "Error! You can not create recursive analytic accounts."
-msgstr ""
+msgstr "خطأ! لا يمكنك إنشاء حسابات بيانية متكررة"
 
 #. module: analytic
 #: help:account.analytic.account,type:0
@@ -215,41 +217,41 @@ msgstr ""
 #. module: analytic
 #: field:account.analytic.account,code:0
 msgid "Account Code"
-msgstr ""
+msgstr "رمز الحساب"
 
 #. module: analytic
 #: field:account.analytic.account,complete_name:0
 msgid "Full Account Name"
-msgstr ""
+msgstr "اسم الحساب الكامل"
 
 #. module: analytic
 #: field:account.analytic.line,account_id:0
 #: model:ir.model,name:analytic.model_account_analytic_account
 #: model:ir.module.module,shortdesc:analytic.module_meta_information
 msgid "Analytic Account"
-msgstr ""
+msgstr "حساب تحليلي"
 
 #. module: analytic
 #: selection:account.analytic.account,type:0
 msgid "View"
-msgstr ""
+msgstr "عرض"
 
 #. module: analytic
 #: field:account.analytic.account,partner_id:0
 msgid "Partner"
-msgstr ""
+msgstr "شريك"
 
 #. module: analytic
 #: field:account.analytic.account,date_start:0
 msgid "Date Start"
-msgstr ""
+msgstr "تاريخ البدء"
 
 #. module: analytic
 #: selection:account.analytic.account,state:0
 msgid "Open"
-msgstr ""
+msgstr "فتح"
 
 #. module: analytic
 #: field:account.analytic.account,line_ids:0
 msgid "Analytic Entries"
-msgstr ""
+msgstr "مدخلات بيانية"
