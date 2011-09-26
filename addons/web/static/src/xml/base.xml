@@ -38,11 +38,17 @@
         </td>
     </tr>
     <tr>
-        <td valign="top" id="oe_secondary_menu" class="secondary_menu">
-        </td>
-        <td valign="top" class="oe-application-container">
-            <div id="oe_app" class="oe-application">
-            </div>
+        <td colspan="2" valign="top" height="100%">
+            <table cellspacing="0" cellpadding="0" border="0" height="100%" width="100%">
+            <tr>
+                <td valign="top" id="oe_secondary_menu" class="secondary_menu">
+                </td>
+                <td valign="top" class="oe-application-container">
+                    <div id="oe_app" class="oe-application">
+                    </div>
+                </td>
+            </tr>
+            </table>
         </td>
     </tr>
     <tr>
@@ -342,22 +348,12 @@
             <li>
                 <a t-att-href="'/' + widget.qs" title="Home" class="home"><img src="/web/static/src/img/header-home.png" width="16" height="16" border="0"/></a>
             </li>
-            <!--
-            <li>
-                <a href="#requests" title="Requests" class="requests"><img src="/web/static/src/img/header-requests.png" width="16" height="16" border="0"/><small>1</small></a>
-            </li>
-            -->
             <li class="preferences">
-                <a href="#preferences" title="Preferences" class="preferences"><img src="/web/static/src/img/header-preferences.png" width="16" height="16" border="0"/></a>
+                <a href="javascript:void(0)" title="Preferences" class="preferences"><img src="/web/static/src/img/header-preferences.png" width="16" height="16" border="0"/></a>
             </li>
             <li>
-                <a href="#about" title="About" class="about"><img src="/web/static/src/img/header-about.png" width="16" height="16" border="0"/></a>
+                <a href="javascript:void(0)" title="About" class="about"><img src="/web/static/src/img/header-about.png" width="16" height="16" border="0"/></a>
             </li>
-            <!--
-            <li>
-                <a href="http://doc.openerp.com/v6.0/book?version=$version" title="Help" target="_blank" class="help"><img src="/web/static/src/img/header-help.png" width="16" height="16" border="0"/></a>
-            </li>
-            -->
         </ul>
         <div class="block">
             <a href="#logout" class="logout">LOGOUT</a>
@@ -374,45 +370,39 @@
 </ul>
 <t t-name="Menu">
     <table align="center">
-        <tr>
-        <t t-foreach="data.children" t-as="menu">
-            <td>
-                <a href="#" t-att-data-menu="menu.id">
-                    <t t-esc="menu.name"/>
-                </a>
-            </td>
-        </t>
-        </tr>
+    <tr>
+        <td t-foreach="widget.data.data.children" t-as="menu">
+            <a href="#" t-att-data-menu="menu.id">
+                <t t-esc="menu.name"/>
+            </a>
+        </td>
+    </tr>
     </table>
 </t>
 <t t-name="Menu.secondary">
-    <div style="display: none" class="menu_accordion" t-att-data-menu-parent="menu.id">
+    <div t-attf-class="oe_toggle_secondary_menu">
+        <span class="oe_menu_fold" title="Fold menu">&amp;laquo;</span>
+        <span class="oe_menu_unfold" title="Unfold menu">&amp;raquo;</span>
+    </div>
+    <div t-foreach="widget.data.data.children" t-as="menu" style="display: none" class="oe_secondary_menu" t-att-data-menu-parent="menu.id">
         <t t-foreach="menu.children" t-as="menu">
-            <t t-set="header">h3</t>
+            <t t-set="classname">oe_secondary_menu_item</t>
+            <t t-set="level" t-value="0"/>
             <t t-call="Menu.secondary.children"/>
         </t>
     </div>
 </t>
 <t t-name="Menu.secondary.children">
-    &lt;<t t-esc="header"/>&gt;
-        <a href="#" t-attf-id="menu_#{menu.id}">
-            <span><t t-esc="menu.name"/></span>
-        </a>
-    &lt;/<t t-esc="header"/>&gt;
-    <div class="menu_content">
+    <t t-set="level" t-value="level + 1"/>
+    <a href="#" t-att-id="menu.children.length ? 'menu_' + menu.id : undefined"
+        t-att-class="classname + (menu.children.length ? ' submenu' : ' leaf') + (menu_first and level == 1 ? ' opened' : '')"
+        t-att-data-menu="menu.children.length ? undefined : menu.id">
+        <span t-attf-style="padding-left: #{(level - 2) * 20}px"> <t t-esc="menu.name"/></span>
+    </a>
+    <div t-attf-class="oe_secondary_submenu" t-if="menu.children.length" t-att-style="menu_first and level == 1 ? undefined : 'display: none'">
         <t t-foreach="menu.children" t-as="menu">
-            <t t-if="!menu.children.length">
-                <a href="#" class="leaf" t-att-data-menu="menu.id">
-                    <span><t t-esc="menu.name"/></span>
-                </a>
-            </t>
-            <t t-if="menu.children.length">
-                <div class="submenu_accordion">
-                    <t t-call="Menu.secondary.children">
-                        <t t-set="header">h4</t>
-                    </t>
-                </div>
-            </t>
+            <t t-set="classname">oe_secondary_submenu_item</t>
+            <t t-call="Menu.secondary.children"/>
         </t>
     </div>
 </t>
@@ -819,13 +809,15 @@
     ></textarea>
     <img class="oe_field_translate" t-if="widget.field.translate" src="/web/static/src/img/icons/terp-translate.png" width="16" height="16" border="0"/>
 </t>
-<t t-name="FieldDate">
-    <t t-call="FieldChar"/>
-    <img class="oe_input_icon oe_datepicker_trigger" src="/web/static/src/img/ui/field_calendar.png"
-         title="Select date" width="16" height="16" border="0"/>
-    <div class="oe_datepicker ui-widget-content ui-corner-all" style="display: none; position: absolute; z-index: 1;">
-        <div class="oe_datepicker_container"/>
-        <button type="button" class="oe_datepicker_close ui-state-default ui-priority-primary ui-corner-all" style="float: right;">Done</button>
+<t t-name="web.datetimepicker">
+    <div class="oe_datepicker_root">
+        <input type="text" size="1" style="width: 100%"/>
+        <img class="oe_input_icon oe_datepicker_trigger" src="/web/static/src/img/ui/field_calendar.png"
+             title="Select date" width="16" height="16" border="0"/>
+        <div class="oe_datepicker ui-widget-content ui-corner-all" style="display: none; position: absolute; z-index: 1;">
+            <div class="oe_datepicker_container"/>
+            <button type="button" class="oe_datepicker_close ui-state-default ui-priority-primary ui-corner-all" style="float: right;">Done</button>
+        </div>
     </div>
 </t>
 <t t-name="FieldSelection">
@@ -1070,6 +1062,18 @@
         <t t-if="filters.length" t-raw="filters.render(defaults)"/>
     </div>
 </t>
+<t t-name="SearchView.date">
+    <label t-att-class="'oe_label' + (attrs.help ? '_help' : '')"
+           t-att-title="attrs.help"
+           t-att-for="element_id">
+        <t t-esc="attrs.string || attrs.name"/>
+        <span t-if="attrs.help">?</span>
+    </label>
+    <div style="white-space: nowrap;">
+        <span t-att-id="element_id"></span>
+        <t t-if="filters.length" t-raw="filters.render(defaults)"/>
+    </div>
+</t>
 <t t-name="SearchView.field.selection">
     <label t-att-title="attrs.help"
            t-att-class="'oe_label' + (attrs.help ? '_help' : '')"
@@ -1161,11 +1165,8 @@
 <t t-name="SearchView.extended_search.proposition.char">
     <input t-att-id="element_id" class="field_char"/>
 </t>
-<t t-name="SearchView.extended_search.proposition.datetime">
-    <input t-att-id="element_id" class="field_datetime"/>
-</t>
-<t t-name="SearchView.extended_search.proposition.date">
-    <input t-att-id="element_id" class="field_date"/>
+<t t-name="SearchView.extended_search.proposition.empty">
+    <span t-att-id="element_id"></span>
 </t>
 <t t-name="SearchView.extended_search.proposition.integer">
     <input type="number" t-att-id="element_id" class="field_integer" step="1"/>
@@ -1437,6 +1438,79 @@
         </table>
     </form>
 </t>
+
+<t t-name="ImportView">
+    <a id="importview" href="javascript: void(0)" style="text-decoration: none;color: #3D3D3D;">Import</a>
+</t>
+<t t-name="ImportDataView">
+<form name="import_data" id="import_data" action="" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="session_id" t-att-value="session.session_id"/>
+    <h2 class="separator horizontal">1. Import a .CSV file</h2>
+    <p>Select a .CSV file to import. If you need a sample of file to import,
+       you should use the export tool with the "Import Compatible" option.
+    </p>
+    <p>
+        <label for="csvfile">CSV File:</label>
+        <input type="file" id="csvfile" size="50" name="csvfile"/>
+    </p>
+    <h2 class="separator horizontal">2. Check your file format</h2>
+    <div id="result"></div>
+    <fieldset>
+        <legend style="cursor:pointer;">Import Options</legend>
+        <table style="display:none">
+            <tr>
+                <td colspan="4">
+                    <label for="file_has_headers">Does your file have titles?</label>
+                    <input type="checkbox" checked="checked"
+                           id="file_has_headers"/>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="csv_separator">Separator:</label></td>
+                <td><input type="text" name="csvsep" id="csv_separator" value=","/></td>
+                <td><label for="csv_delimiter">Delimiter:</label></td>
+                <td><input type="text" name="csvdel" id="csv_delimiter" value='"'/></td>
+            </tr>
+            <tr>
+                <td><label for="csv_encoding">Encoding:</label></td>
+                <td>
+                    <select name="csvcode" id="csv_encoding">
+                        <option value="utf-8">UTF-8</option>
+                        <option value="latin1">Latin 1</option>
+                    </select>
+                </td>
+                <td><label for="csv_skip" title="For use if CSV files have titles on multiple lines, skips more than a single line during import">
+                    Lines to skip<sup>?</sup>:</label></td>
+                <td><input type="number" id="csv_skip" value="0" min="0"/></td>
+            </tr>
+        </table>
+    </fieldset>
+</form>
+</t>
+<table t-name="ImportView.result"
+        class="oe_import_grid" width="100%" style="margin: 5px 0;">
+    <tr t-if="headers" class="oe_import_grid-header">
+        <td t-foreach="headers" t-as="header" class="oe_import_grid-cell">
+            <t t-esc="header"/></td>
+    </tr>
+    <tr>
+        <td t-foreach="records[0]" t-as="column">
+            <input class="sel_fields"/>
+        </td>
+    </tr>
+    <tr t-foreach="records" t-as="record" class="oe_import_grid-row">
+        <td t-foreach="record" t-as="cell" class="oe_import_grid-cell">
+            <t t-esc="cell"/></td>
+    </tr>
+</table>
+<t t-name="ImportView.error">
+    <p style="white-space:pre-line;">The import failed due to:<t t-esc="error.message"/></p>
+    <t t-if="error.preview">
+        <p>Here is a preview of the file we could not import:</p>
+        <pre><t t-esc="error.preview"/></pre>
+    </t>
+</t>
+
 <t t-name="About-Page">
     <div>
         <h1>OpenERP Web</h1>

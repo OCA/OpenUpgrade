@@ -26,7 +26,7 @@ openerp.web.FormView = openerp.web.View.extend( /** @lends openerp.web.FormView#
         this.set_default_options(options);
         this.dataset = dataset;
         this.model = dataset.model;
-        this.view_id = view_id;
+        this.view_id = view_id || false;
         this.fields_view = {};
         this.widgets = {};
         this.widgets_counter = 0;
@@ -304,9 +304,15 @@ openerp.web.FormView = openerp.web.View.extend( /** @lends openerp.web.FormView#
         var def = $.Deferred();
         $.when(this.has_been_loaded).then(function() {
             if (self.can_be_discarded()) {
-                self.dataset.default_get(_.keys(self.fields_view.fields)).then(self.on_record_loaded).then(function() {
+                var keys = _.keys(self.fields_view.fields);
+                if (keys.length) {
+                    self.dataset.default_get(keys).then(self.on_record_loaded).then(function() {
+                        def.resolve();
+                    });
+                } else {
+                    self.on_record_loaded({});
                     def.resolve();
-                });
+                }
             }
         });
         return def.promise();
@@ -362,7 +368,7 @@ openerp.web.FormView = openerp.web.View.extend( /** @lends openerp.web.FormView#
             first_invalid_field.focus();
             this.on_invalid();
             return false;
-        } else if (form_dirty) {
+        } else {
             console.log("About to save", values);
             if (!this.datarecord.id) {
                 return this.dataset.create(values, function(r) {
@@ -373,11 +379,6 @@ openerp.web.FormView = openerp.web.View.extend( /** @lends openerp.web.FormView#
                     self.on_saved(r, success);
                 });
             }
-        } else {
-            setTimeout(function() {
-                self.on_saved({ result: true }, success);
-            });
-            return true;
         }
     },
     do_save_edit: function() {
@@ -960,7 +961,7 @@ openerp.web.form.Field = openerp.web.form.Widget.extend(/** @lends openerp.web.f
         return !this.invalid;
     },
     is_dirty: function() {
-        return this.dirty;
+        return this.dirty && !this.readonly;
     },
     get_on_change_value: function() {
         return this.get_value();
@@ -1006,19 +1007,18 @@ openerp.web.form.Field = openerp.web.form.Widget.extend(/** @lends openerp.web.f
      * the fields'context with the action's context.
      */
     build_context: function() {
-        // I previously belevied contexts should be herrited, but now I doubt it
-        //var a_context = this.view.dataset.get_context() || {};
         var f_context = this.field.context || null;
         // maybe the default_get should only be used when we do a default_get?
-        var v_context1 = this.node.attrs.default_get || {};
-        var v_context2 = this.node.attrs.context || {};
-        var v_context = new openerp.web.CompoundContext(v_context1, v_context2);
-        if (v_context1.__ref || v_context2.__ref || true) { //TODO niv: remove || true
+        var v_contexts = _.compact([this.node.attrs.default_get || null,
+            this.node.attrs.context || null]);
+        var v_context = new openerp.web.CompoundContext();
+        _.each(v_contexts, function(x) {v_context.add(x);});
+        if (_.detect(v_contexts, function(x) {return !!x.__ref;})) {
             var fields_values = this._build_view_fields_values();
             v_context.set_eval_context(fields_values);
         }
         // if there is a context on the node, overrides the model's context
-        var ctx = f_context || v_context;
+        var ctx = v_contexts.length > 0 ? v_context : f_context;
         return ctx;
     },
     build_domain: function() {
@@ -1120,16 +1120,13 @@ openerp.web.form.FieldFloat = openerp.web.form.FieldChar.extend({
     }
 });
 
-openerp.web.form.FieldDatetime = openerp.web.form.Field.extend({
-    init: function(view, node) {
-        this._super(view, node);
-        this.template = "FieldDate";
-        this.jqueryui_object = 'datetimepicker';
-    },
+openerp.web.DateTimeWidget = openerp.web.Widget.extend({
+    template: "web.datetimepicker",
+    jqueryui_object: 'datetimepicker',
+    type_of_date: "datetime",
     start: function() {
         var self = this;
-        this._super.apply(this, arguments);
-        this.$element.find('input').change(this.on_ui_change);
+        this.$element.find('input').change(this.on_change);
         this.picker({
             onSelect: this.on_picker_select,
             changeMonth: true,
@@ -1147,6 +1144,8 @@ openerp.web.form.FieldDatetime = openerp.web.form.Field.extend({
         this.$element.find('button.oe_datepicker_close').click(function() {
             self.$element.find('.oe_datepicker').hide();
         });
+        this.set_readonly(false);
+        this.value = false;
     },
     picker: function() {
         return $.fn[this.jqueryui_object].apply(this.$element.find('.oe_datepicker_container'), arguments);
@@ -1156,60 +1155,93 @@ openerp.web.form.FieldDatetime = openerp.web.form.Field.extend({
         this.$element.find('input').val(date ? this.format_client(date) : '').change();
     },
     set_value: function(value) {
-        value = this.parse(value);
-        this._super(value);
+        this.value = value;
         this.$element.find('input').val(value ? this.format_client(value) : '');
     },
     get_value: function() {
-        return this.format(this.value);
+        return this.value;
     },
     set_value_from_ui: function() {
         var value = this.$element.find('input').val() || false;
         this.value = this.parse_client(value);
-        this._super();
     },
-    update_dom: function() {
-        this._super.apply(this, arguments);
+    set_readonly: function(readonly) {
+        this.readonly = readonly;
         this.$element.find('input').attr('disabled', this.readonly);
-        this.$element.find('img.oe_datepicker_trigger').toggleClass('oe_input_icon_disabled', this.readonly);
+        this.$element.find('img.oe_datepicker_trigger').toggleClass('oe_input_icon_disabled', readonly);
     },
-    validate: function() {
-        this.invalid = false;
+    is_valid: function(required) {
         var value = this.$element.find('input').val();
         if (value === "") {
-            this.invalid = this.required;
+            return !required;
         } else {
             try {
                 this.parse_client(value);
-                this.invalid = false;
+                return true;
             } catch(e) {
-                this.invalid = true;
+                return false;
             }
         }
     },
     focus: function() {
         this.$element.find('input').focus();
     },
-    parse: openerp.web.auto_str_to_date,
     parse_client: function(v) {
-        return openerp.web.parse_value(v, this.field);
-    },
-    format: function(val) {
-        return openerp.web.auto_date_to_str(val, this.field.type);
+        return openerp.web.parse_value(v, {"widget": this.type_of_date});
     },
     format_client: function(v) {
-        return openerp.web.format_value(v, this.field);
+        return openerp.web.format_value(v, {"widget": this.type_of_date});
+    },
+    on_change: function() {
+        if (this.is_valid()) {
+            this.set_value_from_ui();
+        }
+    }
+});
+
+openerp.web.DateWidget = openerp.web.DateTimeWidget.extend({
+    jqueryui_object: 'datepicker',
+    type_of_date: "date",
+    on_picker_select: function(text, instance) {
+        this._super(text, instance);
+        this.$element.find('.oe_datepicker').hide();
+    }
+});
+
+openerp.web.form.FieldDatetime = openerp.web.form.Field.extend({
+    template: "EmptyComponent",
+    build_widget: function() {
+        return new openerp.web.DateTimeWidget(this);
+    },
+    start: function() {
+        var self = this;
+        this._super.apply(this, arguments);
+        this.datewidget = this.build_widget();
+        this.datewidget.on_change.add(this.on_ui_change);
+        this.datewidget.appendTo(this.$element);
+    },
+    set_value: function(value) {
+        this._super(value);
+        this.datewidget.set_value(value);
+    },
+    get_value: function() {
+        return this.datewidget.get_value();
+    },
+    update_dom: function() {
+        this._super.apply(this, arguments);
+        this.datewidget.set_readonly(this.readonly);
+    },
+    validate: function() {
+        this.invalid = !this.datewidget.is_valid(this.required);
+    },
+    focus: function() {
+        this.datewidget.focus();
     }
 });
 
 openerp.web.form.FieldDate = openerp.web.form.FieldDatetime.extend({
-    init: function(view, node) {
-        this._super(view, node);
-        this.jqueryui_object = 'datepicker';
-    },
-    on_picker_select: function(text, instance) {
-        this._super(text, instance);
-        this.$element.find('.oe_datepicker').hide();
+    build_widget: function() {
+        return new openerp.web.DateWidget(this);
     }
 });
 
@@ -1435,7 +1467,7 @@ openerp.web.form.FieldMany2One = openerp.web.form.Field.extend({
         this.$input = this.$element.find("input");
         this.$drop_down = this.$element.find(".oe-m2o-drop-down-button");
         this.$menu_btn = this.$element.find(".oe-m2o-cm-button");
-        
+
         // context menu
         var init_context_menu_def = $.Deferred().then(function(e) {
             var rdataset = new openerp.web.DataSetStatic(self, "ir.values", self.build_context());
@@ -1443,7 +1475,7 @@ openerp.web.form.FieldMany2One = openerp.web.form.Field.extend({
                 [[self.field.relation, false]], false, rdataset.get_context()], false, 0)
                 .then(function(result) {
                 self.related_entries = result;
-                
+
                 var $cmenu = $("#" + self.cm_id);
                 $cmenu.append(QWeb.render("FieldMany2One.context_menu", {widget: self}));
                 var bindings = {};
