@@ -2,6 +2,7 @@
     "name" : "web",
     "depends" : [],
     'active': True,
+    'post_load' : 'wsgi_postload',
     'js' : [
         "static/lib/datejs/globalization/en-US.js",
         "static/lib/datejs/core.js",
@@ -25,6 +26,7 @@
         "static/lib/underscore/underscore.js",
         "static/lib/underscore/underscore.string.js",
         "static/lib/labjs/LAB.src.js",
+        "static/lib/py.parse/lib/py.js",
         "static/src/js/boot.js",
         "static/src/js/core.js",
         "static/src/js/dates.js",
@@ -49,5 +51,4 @@
         "static/src/css/data_export.css",
         "static/src/css/data_import.css",
     ],
-    'post_load' : 'wsgi_postload',
 }
