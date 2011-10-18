@@ -1,4 +1,5 @@
 openerp.web.list = function (openerp) {
+var _t = openerp.web._t;
 var QWeb = openerp.web.qweb;
 openerp.web.views.add('list', 'openerp.web.ListView');
 openerp.web.ListView = openerp.web.View.extend( /** @lends openerp.web.ListView# */ {
@@ -10,7 +11,7 @@ openerp.web.ListView = openerp.web.View.extend( /** @lends openerp.web.ListView#
         // whether the column headers should be displayed
         'header': true,
         // display addition button, with that label
-        'addable': "New",
+        'addable': _t("New"),
         // whether the list view can be sorted, note that once a view has been
         // sorted it can not be reordered anymore
         'sortable': true,
@@ -252,7 +253,7 @@ openerp.web.ListView = openerp.web.View.extend( /** @lends openerp.web.ListView#
                                 '<option value="100">100</option>' +
                                 '<option value="200">200</option>' +
                                 '<option value="500">500</option>' +
-                                '<option value="NaN">Unlimited</option>')
+                                '<option value="NaN">' + _t("Unlimited") + '</option>')
                         .change(function () {
                             var val = parseInt($select.val(), 10);
                             self._limit = (isNaN(val) ? null : val);
@@ -463,7 +464,7 @@ openerp.web.ListView = openerp.web.View.extend( /** @lends openerp.web.ListView#
      * @param {Array} ids the ids of the records to delete
      */
     do_delete: function (ids) {
-        if (!ids.length) {
+        if (!(ids.length && confirm(_t("Are you sure to remove those records ?")))) {
             return;
         }
         var self = this;
@@ -767,16 +768,22 @@ openerp.web.ListView.List = openerp.web.Class.extend( /** @lends openerp.web.Lis
                        $row = $target.closest('tr'),
                   record_id = self.row_id($row);
 
-                $(self).trigger('action', [field, record_id, function () {
+                // note: $.data converts data to number if it's composed only
+                // of digits, nice when storing actual numbers, not nice when
+                // storing strings composed only of digits. Force the action
+                // name to be a string
+                $(self).trigger('action', [field.toString(), record_id, function () {
                     return self.reload_record(self.records.get(record_id));
                 }]);
             })
             .delegate('tr', 'click', function (e) {
                 e.stopPropagation();
-                self.dataset.index = self.records.indexOf(
-                    self.records.get(
-                        self.row_id(e.currentTarget)));
-                self.row_clicked(e);
+                var row_id = self.row_id(e.currentTarget);
+                if (row_id !== undefined) {
+                    self.dataset.index = self.records.indexOf(
+                        self.records.get(row_id));
+                    self.row_clicked(e);
+                }
             });
     },
     row_clicked: function () {
@@ -1095,7 +1102,7 @@ openerp.web.ListView.Groups = openerp.web.Class.extend( /** @lends openerp.web.L
                 var group_column = _(self.columns).detect(function (column) {
                     return column.id === group.grouped_on; });
                 $group_column.html(openerp.web.format_cell(
-                    row_data, group_column, "Undefined"
+                    row_data, group_column, _t("Undefined")
                 ));
                 if (group.openable) {
                     // Make openable if not terminal group & group_by_no_leaf
