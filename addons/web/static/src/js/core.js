@@ -600,8 +600,8 @@ openerp.web.Session = openerp.web.CallbackEnabled.extend( /** @lends openerp.web
                 tag.onload_done = true;
                 self.do_load_js(files);
             };
-            $('head').append(tag);
-            self.do_load_js(files);
+            var head = document.head || document.getElementsByTagName('head')[0];
+            head.appendChild(tag);
         } else {
             this.on_modules_loaded();
         }
