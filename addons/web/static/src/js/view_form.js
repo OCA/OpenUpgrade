@@ -15,7 +15,7 @@ openerp.web.FormView = openerp.web.View.extend( /** @lends openerp.web.FormView#
     /**
      * @constructs openerp.web.FormView
      * @extends openerp.web.View
-     * 
+     *
      * @param {openerp.web.Session} session the current openerp session
      * @param {openerp.web.DataSet} dataset the dataset this view will work with
      * @param {String} view_id the identifier of the OpenERP view object
@@ -551,11 +551,13 @@ openerp.web.FormDialog = openerp.web.Dialog.extend({
         this.form.on_saved.add_last(this.on_form_dialog_saved);
         return this;
     },
-    load_id: function(id) {
-        var self = this;
-        return this.dataset.read_ids([id], _.keys(this.form.fields_view.fields), function(records) {
-            self.form.on_record_loaded(records[0]);
-        });
+    select_id: function(id) {
+        if (this.form.dataset.select_id(id)) {
+            return this.form.do_show();
+        } else {
+            this.do_warn("Could not find id in dataset");
+            return $.Deferred().reject();
+        }
     },
     on_form_dialog_saved: function(r) {
         this.close();
@@ -1007,7 +1009,7 @@ openerp.web.form.WidgetButton = openerp.web.form.Widget.extend({
     },
     on_confirmed: function() {
         var self = this;
-        
+
         var context = this.node.attrs.context;
         if (context && context.__ref) {
             context = new openerp.web.CompoundContext(context);
@@ -2745,13 +2747,13 @@ openerp.web.form.FieldStatus = openerp.web.form.Field.extend({
     start: function() {
         this._super();
         this.selected_value = null;
-        
+
         this.render_list();
     },
     set_value: function(value) {
         this._super(value);
         this.selected_value = value;
-        
+
         this.render_list();
     },
     render_list: function() {
@@ -2759,7 +2761,7 @@ openerp.web.form.FieldStatus = openerp.web.form.Field.extend({
         var shown = _.map(((this.node.attrs || {}).statusbar_visible || "").split(","),
             function(x) { return _.trim(x); });
         shown = _.select(shown, function(x) { return x.length > 0; });
-            
+
         if (shown.length == 0) {
             this.to_show = this.field.selection;
         } else {
@@ -2767,10 +2769,10 @@ openerp.web.form.FieldStatus = openerp.web.form.Field.extend({
                 return _.indexOf(shown, x[0]) !== -1 || x[0] === self.selected_value;
             });
         }
-        
+
         var content = openerp.web.qweb.render("FieldStatus.content", {widget: this, _:_});
         this.$element.html(content);
-        
+
         var colors = JSON.parse((this.node.attrs || {}).statusbar_colors || "{}");
         var color = colors[this.selected_value];
         if (color) {
@@ -2874,7 +2876,7 @@ openerp.web.form.FieldMany2OneReadonly = openerp.web.form.FieldCharReadonly.exte
         value = value || null;
         this.invalid = false;
         var self = this;
-        this.tmp_value = value;
+        this.value = value;
         self.update_dom();
         self.on_value_changed();
         var real_set_value = function(rval) {
