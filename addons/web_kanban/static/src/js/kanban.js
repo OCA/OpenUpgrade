@@ -122,23 +122,11 @@ openerp.web_kanban.KanbanView = openerp.web.View.extend({
             }
         }
     },
-    sort_group: function (first, second) {
-        if (first.header && second.header)
-        {
-            first = first.header.toLowerCase();
-            second = second.header.toLowerCase();
-            if (first > second) return 1;
-            else if (first < second) return -1;
-            else return 0;
-        }
-        else return 0;
-    },
     on_show_data: function() {
         var self = this;
         if (!this.group_by.length) {
             this.do_record_group();
         }
-        self.all_display_data.sort(this.sort_group);
         this.$element.html(QWeb.render("KanbanView", {"data": self.all_display_data}));
         this.on_reload_kanban();
         this.$element.find(".oe_vertical_text").hide();
@@ -436,8 +424,7 @@ openerp.web_kanban.KanbanView = openerp.web.View.extend({
                 self.groups = groups;
                 if (groups.length) {
                     self.do_render_group(groups);
-                }
-                else {
+                } else {
                     self.all_display_data = [];
                     self.on_show_data();
                 }
@@ -474,7 +461,7 @@ openerp.web_kanban.KanbanView = openerp.web.View.extend({
                 group_aggregates[value] = group.aggregates[key];
             });
             var dataset = new openerp.web.DataSetSearch(self, self.dataset.model, group.context, group.domain);
-            dataset.read_slice(_.keys(self.fields_view.fields), {'domain': group.domain, 'conext': group.context}, function(records) {
+            dataset.read_slice(_.keys(self.fields_view.fields), {'domain': group.domain, 'context': group.context}, function(records) {
                 self.all_display_data.push({"value" : group_value, "records": records, 'header':group_name, 'ids': dataset.ids, 'aggregates': group_aggregates});
                 if (datagroups.length == self.all_display_data.length) {
                     self.$element.find(".oe_kanban_view").remove();
