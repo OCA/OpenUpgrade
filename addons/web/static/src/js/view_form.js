@@ -1628,6 +1628,11 @@ openerp.web.form.FieldMany2One = openerp.web.form.Field.extend({
                         } else {
                             $("#" + self.cm_id + " .oe_m2o_menu_item_mandatory").addClass("oe-m2o-disabled-cm");
                         }
+                        if (!self.readonly) {
+                            $("#" + self.cm_id + " .oe_m2o_menu_item_noreadonly").removeClass("oe-m2o-disabled-cm");
+                        } else {
+                            $("#" + self.cm_id + " .oe_m2o_menu_item_noreadonly").addClass("oe-m2o-disabled-cm");
+                        }
                         return true;
                     }, menuStyle: {width: "200px"}
                 });
@@ -1647,6 +1652,8 @@ openerp.web.form.FieldMany2One = openerp.web.form.Field.extend({
             }
         });
         this.$drop_down.click(function() {
+            if (self.readonly)
+                return;
             if (self.$input.autocomplete("widget").is(":visible")) {
                 self.$input.autocomplete("close");
             } else {
@@ -1853,6 +1860,10 @@ openerp.web.form.FieldMany2One = openerp.web.form.Field.extend({
     },
     focus: function () {
         this.$input.focus();
+    },
+    update_dom: function() {
+        this._super.apply(this, arguments);
+        this.$input.attr('disabled', this.readonly);
     }
 });
 
@@ -2813,9 +2824,6 @@ openerp.web.form.FieldStatus = openerp.web.form.Field.extend({
     }
 });
 
-openerp.web.form.WidgetNotebookReadonly = openerp.web.form.WidgetNotebook.extend({
-    template: 'WidgetNotebook.readonly'
-});
 openerp.web.form.FieldReadonly = openerp.web.form.Field.extend({
 
 });
@@ -2851,7 +2859,7 @@ openerp.web.form.FieldUrlReadonly = openerp.web.form.FieldURIReadonly.extend({
 });
 openerp.web.form.FieldBooleanReadonly = openerp.web.form.FieldCharReadonly.extend({
     set_value: function (value) {
-        this._super(value ? '\u2714' : '\u2718');
+        this._super(value ? '\u2611' : '\u2610');
     }
 });
 openerp.web.form.FieldSelectionReadonly = openerp.web.form.FieldReadonly.extend({
@@ -2934,7 +2942,6 @@ openerp.web.form.widgets = new openerp.web.Registry({
     'statusbar': 'openerp.web.form.FieldStatus'
 });
 openerp.web.form.readonly = openerp.web.form.widgets.clone({
-    'notebook': 'openerp.web.form.WidgetNotebookReadonly',
     'char': 'openerp.web.form.FieldCharReadonly',
     'email': 'openerp.web.form.FieldEmailReadonly',
     'url': 'openerp.web.form.FieldUrlReadonly',
