@@ -139,7 +139,7 @@ openerp.web.Dialog = openerp.web.OldWidget.extend(/** @lends openerp.web.Dialog#
 openerp.web.CrashManager = openerp.web.CallbackEnabled.extend({
     init: function() {
         this._super();
-        openerp.connector.on_rpc_error.add(this.on_rpc_error);
+        openerp.connection.on_rpc_error.add(this.on_rpc_error);
     },
     on_rpc_error: function(error) {
         this.error = error;
