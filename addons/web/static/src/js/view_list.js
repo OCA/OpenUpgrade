@@ -365,6 +365,9 @@ openerp.web.ListView = openerp.web.View.extend( /** @lends openerp.web.ListView#
                     return {};
                 }
                 var aggregation_func = column['group_operator'] || 'sum';
+                if (!(aggregation_func in column)) {
+                    return {};
+                }
 
                 return _.extend({}, column, {
                     'function': aggregation_func,
@@ -476,7 +479,7 @@ openerp.web.ListView = openerp.web.View.extend( /** @lends openerp.web.ListView#
      * @param {Array} ids the ids of the records to delete
      */
     do_delete: function (ids) {
-        if (!(ids.length && confirm(_t("Are you sure to remove those records ?")))) {
+        if (!(ids.length && confirm(_t("Do you really want to remove these records?")))) {
             return;
         }
         var self = this;
@@ -873,15 +876,20 @@ openerp.web.ListView.List = openerp.web.Class.extend( /** @lends openerp.web.Lis
         }
         var cells = [];
         if (this.options.selectable) {
-            cells.push('<td title="selection"></td>');
+            cells.push('<th class="oe-record-selector"></td>');
         }
         _(this.columns).each(function(column) {
-            if (column.invisible !== '1') {
+            if (column.invisible === '1') {
+                return;
+            }
+            if (column.tag === 'button') {
+                cells.push('<td class="oe-button" title="' + column.string + '">&nbsp;</td>');
+            } else {
                 cells.push('<td title="' + column.string + '">&nbsp;</td>');
             }
         });
         if (this.options.deletable) {
-            cells.push('<td><button type="button" style="visibility: hidden"> </button></td>');
+            cells.push('<td class="oe-record-delete"><button type="button" style="visibility: hidden"> </button></td>');
         }
         cells.unshift('<tr>');
         cells.push('</tr>');
@@ -1145,9 +1153,12 @@ openerp.web.ListView.Groups = openerp.web.Class.extend( /** @lends openerp.web.L
                 row_data[group.grouped_on] = group;
                 var group_column = _(self.columns).detect(function (column) {
                     return column.id === group.grouped_on; });
-                $group_column.html(openerp.web.format_cell(
-                    row_data, group_column, _t("Undefined")
-                ));
+                try {
+                    $group_column.html(openerp.web.format_cell(
+                        row_data, group_column, _t("Undefined")));
+                } catch (e) {
+                    $group_column.html(row_data[group_column.id].value);
+                }
                 if (group.openable) {
                     // Make openable if not terminal group & group_by_no_leaf
                     $group_column

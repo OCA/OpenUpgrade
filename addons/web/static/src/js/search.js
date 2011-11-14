@@ -963,15 +963,18 @@ openerp.web.search.ExtendedSearch = openerp.web.OldWidget.extend({
         this.check_last_element();
     },
     start: function () {
-        this._super();
-        if (!this.$element) {
-            return; // not a logical state but sometimes it happens
-        }
+        this.$element = $("#" + this.element_id);
         this.$element.closest("table.oe-searchview-render-line").css("display", "none");
         var self = this;
         this.rpc("/web/searchview/fields_get",
             {"model": this.model}, function(data) {
             self.fields = data.fields;
+            if (!('id' in self.fields)) {
+                self.fields.id = {
+                    string: 'ID',
+                    type: 'id'
+                }
+            }
             openerp.web.search.add_expand_listener(self.$element);
             self.$element.find('.searchview_extended_add_group').click(function (e) {
                 self.add_group();
@@ -1028,7 +1031,7 @@ openerp.web.search.ExtendedSearchGroup = openerp.web.OldWidget.extend({
         prop.start();
     },
     start: function () {
-        this._super();
+        this.$element = $("#" + this.element_id);
         var _this = this;
         this.add_prop();
         this.$element.find('.searchview_extended_add_proposition').click(function () {
@@ -1080,7 +1083,7 @@ openerp.web.search.ExtendedSearchProposition = openerp.web.OldWidget.extend(/** 
         this.value = null;
     },
     start: function () {
-        this._super();
+        this.$element = $("#" + this.element_id);
         this.select_field(this.fields.length > 0 ? this.fields[0] : null);
         var _this = this;
         this.$element.find(".searchview_extended_prop_field").change(function() {
@@ -1156,7 +1159,12 @@ openerp.web.search.ExtendedSearchProposition = openerp.web.OldWidget.extend(/** 
     }
 });
 
-openerp.web.search.ExtendedSearchProposition.Char = openerp.web.OldWidget.extend({
+openerp.web.search.ExtendedSearchProposition.Field = openerp.web.OldWidget.extend({
+    start: function () {
+        this.$element = $("#" + this.element_id);
+    }
+});
+openerp.web.search.ExtendedSearchProposition.Char = openerp.web.search.ExtendedSearchProposition.Field.extend({
     template: 'SearchView.extended_search.proposition.char',
     identifier_prefix: 'extended-search-proposition-char',
     operators: [
@@ -1173,7 +1181,7 @@ openerp.web.search.ExtendedSearchProposition.Char = openerp.web.OldWidget.extend
         return this.$element.val();
     }
 });
-openerp.web.search.ExtendedSearchProposition.DateTime = openerp.web.OldWidget.extend({
+openerp.web.search.ExtendedSearchProposition.DateTime = openerp.web.search.ExtendedSearchProposition.Field.extend({
     template: 'SearchView.extended_search.proposition.empty',
     identifier_prefix: 'extended-search-proposition-datetime',
     operators: [
@@ -1193,7 +1201,7 @@ openerp.web.search.ExtendedSearchProposition.DateTime = openerp.web.OldWidget.ex
         this.datewidget.prependTo(this.$element);
     }
 });
-openerp.web.search.ExtendedSearchProposition.Date = openerp.web.OldWidget.extend({
+openerp.web.search.ExtendedSearchProposition.Date = openerp.web.search.ExtendedSearchProposition.Field.extend({
     template: 'SearchView.extended_search.proposition.empty',
     identifier_prefix: 'extended-search-proposition-date',
     operators: [
@@ -1213,7 +1221,7 @@ openerp.web.search.ExtendedSearchProposition.Date = openerp.web.OldWidget.extend
         this.datewidget.prependTo(this.$element);
     }
 });
-openerp.web.search.ExtendedSearchProposition.Integer = openerp.web.OldWidget.extend({
+openerp.web.search.ExtendedSearchProposition.Integer = openerp.web.search.ExtendedSearchProposition.Field.extend({
     template: 'SearchView.extended_search.proposition.integer',
     identifier_prefix: 'extended-search-proposition-integer',
     operators: [
@@ -1232,7 +1240,10 @@ openerp.web.search.ExtendedSearchProposition.Integer = openerp.web.OldWidget.ext
         }
     }
 });
-openerp.web.search.ExtendedSearchProposition.Float = openerp.web.OldWidget.extend({
+openerp.web.search.ExtendedSearchProposition.Id = openerp.web.search.ExtendedSearchProposition.Integer.extend({
+    operators: [{value: "=", text: "is"}]
+});
+openerp.web.search.ExtendedSearchProposition.Float = openerp.web.search.ExtendedSearchProposition.Field.extend({
     template: 'SearchView.extended_search.proposition.float',
     identifier_prefix: 'extended-search-proposition-float',
     operators: [
@@ -1251,7 +1262,7 @@ openerp.web.search.ExtendedSearchProposition.Float = openerp.web.OldWidget.exten
         }
     }
 });
-openerp.web.search.ExtendedSearchProposition.Selection = openerp.web.OldWidget.extend({
+openerp.web.search.ExtendedSearchProposition.Selection = openerp.web.search.ExtendedSearchProposition.Field.extend({
     template: 'SearchView.extended_search.proposition.selection',
     identifier_prefix: 'extended-search-proposition-selection',
     operators: [
@@ -1265,7 +1276,7 @@ openerp.web.search.ExtendedSearchProposition.Selection = openerp.web.OldWidget.e
         return this.$element.val();
     }
 });
-openerp.web.search.ExtendedSearchProposition.Boolean = openerp.web.OldWidget.extend({
+openerp.web.search.ExtendedSearchProposition.Boolean = openerp.web.search.ExtendedSearchProposition.Field.extend({
     template: 'SearchView.extended_search.proposition.boolean',
     identifier_prefix: 'extended-search-proposition-boolean',
     operators: [
@@ -1289,7 +1300,9 @@ openerp.web.search.custom_filters = new openerp.web.Registry({
     'integer': 'openerp.web.search.ExtendedSearchProposition.Integer',
     'float': 'openerp.web.search.ExtendedSearchProposition.Float',
     'boolean': 'openerp.web.search.ExtendedSearchProposition.Boolean',
-    'selection': 'openerp.web.search.ExtendedSearchProposition.Selection'
+    'selection': 'openerp.web.search.ExtendedSearchProposition.Selection',
+
+    'id': 'openerp.web.search.ExtendedSearchProposition.Id'
 });
 
 };
