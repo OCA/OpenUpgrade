@@ -752,7 +752,7 @@ openerp.web.Connection = openerp.web.CallbackEnabled.extend( /** @lends openerp.
                 if (parseInt(cookie_val, 10) !== token) { continue; }
 
                 // clear cookie
-                document.cookie = _.sprintf("%s=;expires=%s;path=/",
+                document.cookie = _.str.sprintf("%s=;expires=%s;path=/",
                     cookie_name, new Date().toGMTString());
                 if (options.success) { options.success(); }
                 complete();
@@ -1029,7 +1029,7 @@ openerp.web.TranslationDataBase = openerp.web.Class.extend(/** @lends openerp.we
         this.parameters = {"direction": 'ltr',
                         "date_format": '%m/%d/%Y',
                         "time_format": '%H:%M:%S',
-                        "grouping": "[]",
+                        "grouping": [],
                         "decimal_point": ".",
                         "thousands_sep": ","};
     },
@@ -1045,6 +1045,8 @@ openerp.web.TranslationDataBase = openerp.web.Class.extend(/** @lends openerp.we
         });
         if (translation_bundle.lang_parameters) {
             this.parameters = translation_bundle.lang_parameters;
+            this.parameters.grouping = py.eval(
+                    this.parameters.grouping).toJSON();
         }
     },
     add_module_translation: function(mod) {
@@ -1089,7 +1091,7 @@ openerp.web.qweb.format_text_node = function(s) {
     if (translation && translation.value === 'off') {
         return s;
     }
-    var ts = _.trim(s);
+    var ts = _.str.trim(s);
     if (ts.length === 0) {
         return s;
     }
