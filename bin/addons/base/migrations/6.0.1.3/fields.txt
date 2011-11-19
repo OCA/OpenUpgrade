@@ -1,0 +1,159 @@
+set default###base         / ir.actions.act_window    / auto_search (boolean)         : INT
+set default####base         / ir.actions.act_window    / context (char)                : now required
+nothing ####base         / ir.actions.act_window    / filter (boolean)              : INT
+nothing#base         / ir.actions.act_window    / help (text)                   : INT
+nothing#base         / ir.actions.act_window    / menus (char)                  : INT
+set default#base         / ir.actions.act_window    / multi (boolean)               : INT
+todo: check_default #base         / ir.actions.act_window    / res_model (char)              : now required
+nothing#base         / ir.actions.act_window    / search_view_id (many2one)     : INT relation: ir.ui.view
+check#base         / ir.actions.act_window    / view_mode (char)              : now required
+check#base         / ir.actions.act_window    / view_type (selection)         : now required
+nothing#base         / ir.actions.report.xml    / report_type (selection)       : selection_keys is now '' ('['html', 'html2html', 'odt', 'pdf', 'raw', 'sxw']')
+nothing#base         / ir.actions.report.xml    / report_type (selection)       : type is now 'char' ('selection')
+nothing#base         / ir.actions.server        / copy_object (reference)       : INT
+nothing#base         / ir.actions.server        / state (selection)             : selection_keys is now '['client_action', 'code', 'dummy', 'email', 'loop', 'object_copy', 'object_create', 'object_write', 'other', 'sms', 'trigger']' ('['client_action', 'code', 'dummy', 'email', 'loop', 'object_create', 'object_write', 'other', 'sms', 'trigger']')
+nothing#base         / ir.actions.todo          / active (boolean)              : REM
+nothing#base         / ir.actions.todo          / end_date (datetime)           : REM
+set default#base         / ir.actions.todo          / restart (selection)           : INT required: required, selection_keys: ['always', 'never', 'onskip'], req_default: onskip
+nothing#base         / ir.actions.todo          / start_date (datetime)         : REM
+nothing#base         / ir.actions.todo          / start_on (selection)          : REM selection_keys: ['at_once', 'auto', 'manual']
+#base         / ir.actions.todo          / type (selection)              : REM required: required, selection_keys: ['configure', 'other', 'service'], req_default: function
+#base         / ir.actions.todo          / users_id (many2many)          : REM relation: res.users
+nothing#base         / ir.attachment            / company_id (many2one)         : INT relation: res.company
+#base         / ir.attachment            / link (char)                   : REM
+#base         / ir.attachment            / type (selection)              : INT required: required, selection_keys: ['binary', 'url'], req_default: binary
+oldname#base         / ir.attachment            / url (char)                    : INT
+check#base         / ir.config_parameter      / key (char)                    : INT required: required
+check#base         / ir.config_parameter      / value (text)                  : INT required: required
+newmodel#base         / ir.filters               / context (text)                : INT required: required
+newmodel#base         / ir.filters               / domain (text)                 : INT required: required
+newmodel#base         / ir.filters               / model_id (selection)          : INT required: required, selection_keys: function
+newmodel#base         / ir.filters               / name (char)                   : INT required: required
+newmodel#base         / ir.filters               / user_id (many2one)            : INT relation: res.users
+add dummy column for osv#base         / ir.model.fields          / selectable (boolean)          : INT
+no#base         / ir.module.module         / contributors (text)           : INT
+no#base         / ir.module.module         / maintainer (char)             : INT
+no#base         / ir.module.module         / web (boolean)                 : INT
+#base         / ir.property              / type (selection)              : INT required: required, selection_keys: ['binary', 'boolean', 'char', 'date', 'datetime', 'float', 'integer', 'integer_big', 'many2one', 'text'], req_default: many2one
+no#base         / ir.property              / value_binary (binary)         : INT
+#base         / ir.property              / value_datetime (datetime)     : INT
+#base         / ir.property              / value_float (float)           : INT
+#base         / ir.property              / value_integer (integer_big)   : INT
+#base         / ir.property              / value_reference (reference)   : INT
+rename#base         / ir.property              / value (reference)             : REM
+#base         / ir.property              / value_text (text)             : INT
+??? is this automatic? #base         / ir.rule                  / domain (char)                 : type is now 'text' ('char')
+??? is this automatic? #base         / ir.rule                  / domain_force (char)           : type is now 'text' ('char')
+#base         / ir.rule                  / field_id (many2one)           : REM relation: ir.model.fields
+#base         / ir.rule                  / groups (many2many)            : INT relation: res.groups
+#base         / ir.rule                  / model_id (many2one)           : INT relation: ir.model, required: required
+#base         / ir.rule                  / name (char)                   : INT
+#base         / ir.rule                  / operand (selection)           : REM selection_keys: function
+#base         / ir.rule                  / operator (selection)          : REM selection_keys: ['<=', '<>', '=', '>=', 'child_of', 'in']
+set_default#base         / ir.rule                  / perm_create (boolean)         : INT
+#base         / ir.rule                  / perm_read (boolean)           : INT
+#base         / ir.rule                  / perm_unlink (boolean)         : INT
+#base         / ir.rule                  / perm_write (boolean)          : INT
+Migrated#base         / ir.rule                  / rule_group (many2one)         : REM relation: ir.rule.group, required: required
+#base         / ir.sequence              / company_id (many2one)         : INT relation: res.company
+no#base         / ir.translation           / module (char)                 : INT
+no#base         / ir.translation           / type (selection)              : selection_keys is now '['code', 'constraint', 'field', 'help', 'model', 'report', 'rml', 'selection', 'sql_constraint', 'view', 'wizard_button', 'wizard_field', 'wizard_view', 'xsl']' ('['code', 'constraint', 'field', 'help', 'model', 'rml', 'selection', 'sql_constraint', 'view', 'wizard_button', 'wizard_field', 'wizard_view', 'xsl']')
+no#base         / ir.translation           / xml_id (char)                 : INT
+no#base         / ir.ui.menu               / icon (selection)              : selection_keys is now 'function' ('['STOCK_ABOUT', 'STOCK_ADD', 'STOCK_APPLY', 'STOCK_BOLD', 'STOCK_CANCEL', 'STOCK_CDROM', 'STOCK_CLEAR', 'STOCK_CLOSE', 'STOCK_COLOR_PICKER', 'STOCK_CONNECT', 'STOCK_CONVERT', 'STOCK_COPY', 'STOCK_CUT', 'STOCK_DELETE', 'STOCK_DIALOG_AUTHENTICATION', 'STOCK_DIALOG_ERROR', 'STOCK_DIALOG_INFO', 'STOCK_DIALOG_QUESTION', 'STOCK_DIALOG_WARNING', 'STOCK_DIRECTORY', 'STOCK_DISCONNECT', 'STOCK_DND', 'STOCK_DND_MULTIPLE', 'STOCK_EDIT', 'STOCK_EXECUTE', 'STOCK_FILE', 'STOCK_FIND', 'STOCK_FIND_AND_REPLACE', 'STOCK_FLOPPY', 'STOCK_GOTO_BOTTOM', 'STOCK_GOTO_FIRST', 'STOCK_GOTO_LAST', 'STOCK_GOTO_TOP', 'STOCK_GO_BACK', 'STOCK_GO_DOWN', 'STOCK_GO_FORWARD', 'STOCK_GO_UP', 'STOCK_HARDDISK', 'STOCK_HELP', 'STOCK_HOME', 'STOCK_INDENT', 'STOCK_INDEX', 'STOCK_ITALIC', 'STOCK_JUMP_TO', 'STOCK_JUSTIFY_CENTER', 'STOCK_JUSTIFY_FILL', 'STOCK_JUSTIFY_LEFT', 'STOCK_JUSTIFY_RIGHT', 'STOCK_MEDIA_FORWARD', 'STOCK_MEDIA_NEXT', 'STOCK_MEDIA_PAUSE', 'STOCK_MEDIA_PLAY', 'STOCK_MEDIA_PREVIOUS', 'STOCK_MEDIA_RECORD', 'STOCK_MEDIA_REWIND', 'STOCK_MEDIA_STOP', 'STOCK_MISSING_IMAGE', 'STOCK_NETWORK', 'STOCK_NEW', 'STOCK_NO', 'STOCK_OK', 'STOCK_OPEN', 'STOCK_PASTE', 'STOCK_PREFERENCES', 'STOCK_PRINT', 'STOCK_PRINT_PREVIEW', 'STOCK_PROPERTIES', 'STOCK_QUIT', 'STOCK_REDO', 'STOCK_REFRESH', 'STOCK_REMOVE', 'STOCK_REVERT_TO_SAVED', 'STOCK_SAVE', 'STOCK_SAVE_AS', 'STOCK_SELECT_COLOR', 'STOCK_SELECT_FONT', 'STOCK_SORT_ASCENDING', 'STOCK_SORT_DESCENDING', 'STOCK_SPELL_CHECK', 'STOCK_STOP', 'STOCK_STRIKETHROUGH', 'STOCK_UNDELETE', 'STOCK_UNDERLINE', 'STOCK_UNDO', 'STOCK_UNINDENT', 'STOCK_YES', 'STOCK_ZOOM_100', 'STOCK_ZOOM_FIT', 'STOCK_ZOOM_IN', 'STOCK_ZOOM_OUT', 'terp-account', 'terp-administration', 'terp-calendar', 'terp-crm', 'terp-graph', 'terp-hr', 'terp-mrp', 'terp-partner', 'terp-product', 'terp-project', 'terp-purchase', 'terp-report', 'terp-sale', 'terp-stock', 'terp-tools']')
+no#base         / ir.ui.menu               / web_icon (char)               : INT
+no#base         / ir.ui.menu               / web_icon_hover (char)         : INT
+no#base         / ir.ui.view               / arch (text)                   : module is now '[01]: "base"' ('base')
+no#base         / ir.ui.view_sc            / res_id (many2one)             : relation is now '' ('ir.ui.menu')
+no#base         / ir.ui.view_sc            / res_id (many2one)             : type is now 'integer' ('many2one')
+no#base         / ir.ui.view               / type (selection)              : selection_keys is now '['calendar', 'diagram', 'form', 'gantt', 'graph', 'mdx', 'search', 'tree']' ('['calendar', 'form', 'gantt', 'graph', 'mdx', 'tree']')
+new model#base         / multi_company.default    / company_dest_id (many2one)    : INT relation: res.company, required: required
+new model#base         / multi_company.default    / company_id (many2one)         : INT relation: res.company, required: required
+new model#base         / multi_company.default    / expression (char)             : INT required: required, req_default: function
+new model#base         / multi_company.default    / field_id (many2one)           : INT relation: ir.model.fields
+new model#base         / multi_company.default    / name (char)                   : INT required: required
+new model#base         / multi_company.default    / object_id (many2one)          : INT relation: ir.model, required: required
+new model#base         / multi_company.default    / sequence (integer)            : INT
+not covered#base         / publisher_warranty.contract / check_opw (boolean)           : INT
+not covered#base         / publisher_warranty.contract / check_support (boolean)       : INT
+not covered#base         / publisher_warranty.contract / date_start (date)             : INT
+not covered#base         / publisher_warranty.contract / date_stop (date)              : INT
+not covered#base         / publisher_warranty.contract / kind (char)                   : INT
+not covered#base         / publisher_warranty.contract / name (char)                   : INT required: required
+not covered#base         / publisher_warranty.contract / state (selection)             : INT selection_keys: ['canceled', 'terminated', 'unvalidated', 'valid']
+no#base         / res.company              / account_no (char)             : INT
+no#base         / res.company              / currency_ids (one2many)       : INT relation: res.currency
+set default#base         / res.company              / rml_header2 (text)            : now required
+set default#base         / res.company              / rml_header3 (text)            : INT required: required, req_default: function
+set default#base         / res.company              / rml_header (text)             : now required
+no#base         / res.company              / user_ids (many2many)          : INT relation: res.users
+new model#base         / res.config.users         / action_id (many2one)          : INT relation: ir.actions.actions
+new model#base         / res.config.users         / active (boolean)              : INT
+new model#base         / res.config.users         / address_id (many2one)         : INT relation: res.partner.address
+new model#base         / res.config.users         / company_id (many2one)         : INT relation: res.company, required: required, req_default: function
+new model#base         / res.config.users         / company_ids (many2many)       : INT relation: res.company
+new model#base         / res.config.users         / context_lang (selection)      : INT required: required, selection_keys: function, req_default: en_US
+new model#base         / res.config.users         / context_tz (selection)        : INT selection_keys: function
+new model#base         / res.config.users         / date (datetime)               : INT
+new model#base         / res.config.users         / email (char)                  : INT
+new model#base         / res.config.users         / groups_id (many2many)         : INT relation: res.groups
+new model#base         / res.config.users         / login (char)                  : INT required: required
+new model#base         / res.config.users         / menu_id (many2one)            : INT relation: ir.actions.actions
+new model#base         / res.config.users         / menu_tips (boolean)           : INT
+new model#base         / res.config.users         / name (char)                   : INT required: required
+new model#base         / res.config.users         / password (char)               : INT
+new model#base         / res.config.users         / progress (float)              : INT
+new model#base         / res.config.users         / signature (text)              : INT
+#base         / res.currency             / base (boolean)                : INT
+convert#base         / res.currency             / code (char)                   : REM
+set default#base         / res.currency             / company_id (many2one)         : INT relation: res.company
+placeholder, see read function#base         / res.currency             / date (date)                   : INT
+no#base         / res.currency             / symbol (char)                 : INT
+see ir_rule#base         / res.groups               / rule_groups (many2many)       : relation is now 'ir.rule' ('ir.rule.group')
+no#base         / res.lang                 / iso_code (char)               : INT
+new model#base         / res.log                  / context (char)                : INT
+new model#base         / res.log                  / create_date (datetime)        : INT
+new model#base         / res.log                  / name (char)                   : INT required: required
+new model#base         / res.log                  / read (boolean)                : INT
+new model#base         / res.log                  / res_id (integer)              : INT
+new model#base         / res.log                  / res_model (char)              : INT
+new model#base         / res.log                  / secondary (boolean)           : INT
+new model#base         / res.log                  / user_id (many2one)            : INT relation: res.users
+set default #base         / res.partner.address      / company_id (many2one)         : INT relation: res.company
+converted#base         / res.partner.address      / function (many2one)           : relation is now '' ('res.partner.function')
+converted#base         / res.partner.address      / function (many2one)           : type is now 'char' ('many2one')
+converted#base         / res.partner.address      / title (selection)             : relation is now 'res.partner.title' ('')
+converted#base         / res.partner.address      / title (selection)             : selection_keys is now '' ('function')
+converted#base         / res.partner.address      / title (selection)             : type is now 'many2one' ('selection')
+set default#base         / res.partner.bank         / bank (many2one)               : now required
+no#base         / res.partner.category     / parent_left (integer)         : INT
+no#base         / res.partner.category     / parent_right (integer)        : INT
+no#base         / res.partner.category     / partner_ids (many2many)       : INT relation: res.partner
+set default#base         / res.partner              / company_id (many2one)         : INT relation: res.company
+no#base         / res.partner              / employee (boolean)            : INT
+no#base         / res.partner.event        / canal_id (many2one)           : REM relation: res.partner.canal
+no#base         / res.partner.event        / document (reference)          : REM
+no#base         / res.partner.event        / event_ical_id (char)          : REM
+no#base         / res.partner.event        / partner_type (selection)      : REM selection_keys: ['customer', 'prospect', 'retailer']
+no#base         / res.partner.event        / planned_cost (float)          : REM
+no#base         / res.partner.event        / planned_revenue (float)       : REM
+no#base         / res.partner.event        / probability (float)           : REM
+no#base         / res.partner.event        / som (many2one)                : REM relation: res.partner.som
+no#base         / res.partner.event        / type (selection)              : REM selection_keys: ['prospect', 'purchase', 'sale']
+convert#base         / res.partner              / title (selection)             : relation is now 'res.partner.title' ('')
+convert#base         / res.partner              / title (selection)             : selection_keys is now '' ('function')
+convert#base         / res.partner              / title (selection)             : type is now 'many2one' ('selection')
+set default#base         / res.users                / company_id (many2one)         : now required
+set default#base         / res.users                / company_ids (many2many)       : INT relation: res.company
+no#base         / res.users                / date (datetime)               : INT
+no#base         / res.users                / email (char)                  : INT
+set_default#base         / res.users                / menu_tips (boolean)           : INT
+to convert#base         / res.users                / roles_id (many2many)          : REM relation: res.roles
+no#base         / res.users                / rules_id (many2many)          : REM relation: ir.rule.group
+new model#base         / res.widget               / content (text)                : INT required: required
+new model#base         / res.widget               / title (char)                  : INT required: required
+new model#base         / res.widget.user          / sequence (integer)            : INT
+new model#base         / res.widget.user          / user_id (many2one)            : INT relation: res.users
+new model#base         / res.widget.user          / widget_id (many2one)          : INT relation: res.widget, required: required
+no#base         / workflow.instance        / uid (integer)                 : REM
+convert#base         / workflow.transition      / group_id (many2one)           : INT relation: res.groups
+convert#base         / workflow.transition      / role_id (many2one)            : REM relation: res.roles
