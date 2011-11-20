@@ -118,7 +118,7 @@ obsolete_models = []
 for model in models5:
     if model not in models6:
         obsolete_models.append(model)
-        print '# model %s removed' % model
+        print '# obsolete model %s' % model
 
 for column in copy.copy(k5):
     if column['model'] in obsolete_models:
