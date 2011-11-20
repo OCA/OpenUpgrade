@@ -22,6 +22,7 @@
 
 import os, sys, imp
 from os.path import join as opj
+import types
 import itertools
 import zipimport
 
@@ -608,7 +609,7 @@ class MigrationManager(object):
 
 log = logging.getLogger('init')
 
-def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=None, **kwargs):
+def load_module_graph(cr, graph, status=None, registry=None, perform_checks=True, skip_modules=None, **kwargs):
     """Migrates+Updates or Installs all module nodes from ``graph``
        :param graph: graph of module nodes to load
        :param status: status dictionary for keeping track of progress
@@ -708,6 +709,14 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
     modobj = None
     logger.notifyChannel('init', netsvc.LOG_DEBUG, 'loading %d packages..' % len(graph))
 
+    import string
+    def get_repr(properties, type='val'):
+        if type == 'key':
+            props = ['model', 'field']
+        elif type == 'val':
+            props = ['type', 'isfunction', 'relation', 'required', 'selection_keys', 'req_default', 'inherits']
+        return ','.join(["\"" + string.replace(properties[prop], '\"', '\'') + "\"" for prop in props])
+
     for package in graph:
         if skip_modules and package.name in skip_modules:
             continue
@@ -715,6 +724,56 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
         migrations.migrate_module(package, 'pre')
         register_class(package.name)
         modules = pool.instanciate(package.name, cr)
+
+        logger.notifyChannel('FIELD anal.', netsvc.LOG_INFO, 'module %s' % (package.name))
+        local_registry = {}
+        for orm_object in osv.orm.orm:
+            if orm_object._inherits:
+                properties = { 
+                    'model': orm_object._name,
+                    'field': '_inherits',
+                    'type': '',
+                    'isfunction': '',
+                    'relation': '',
+                    'required': '',
+                    'selection_keys': '',
+                    'req_default': '',
+                    'inherits': unicode(orm_object._inherits),
+                    }
+                local_registry[get_repr(properties, 'key')] = get_repr(properties)
+            for k,v  in orm_object._columns.items():
+                properties = { 
+                    'model': orm_object._name,
+                    'field': k,
+                    'type': v._type,
+                    'isfunction': isinstance(v, osv.fields.function) and 'function' or '',
+                    'relation': v._type in ('many2many', 'many2one','one2many') and v._obj or '',
+                    'required': v.required and 'required' or '',
+                    'selection_keys': '',
+                    'req_default': '',
+                    'inherits': '',
+                    }
+                if v._type == 'selection':
+                    if hasattr(v.selection, "__iter__"):
+                        properties['selection_keys'] = unicode(sorted([x[0] for x in v.selection]))
+                    else:
+                        properties['selection_keys'] = 'function'
+                if v.required and k in orm_object._defaults:
+                    if isinstance(orm_object._defaults[k], types.FunctionType):
+                        # todo: in OpenERP 5 (and in 6 as well), even constants are a lambda function
+                        # the content of which is very informative
+                        properties['req_default'] = 'function'
+                    else:
+                        properties['req_default'] = unicode(orm_object._defaults[k])
+                local_registry[get_repr(properties, 'key')] = get_repr(properties)
+        for key in sorted(local_registry.keys()):
+            if key in registry:
+                if registry[key] != local_registry[key]:
+                    logger.notifyChannel('FIELD anal.', netsvc.LOG_INFO, '"%s","modify",%s,%s' % (package.name, key, local_registry[key]))
+            else:
+                logger.notifyChannel('FIELD anal.', netsvc.LOG_INFO, '"%s","create",%s,%s' % (package.name, key, local_registry[key]))
+            registry[key] = local_registry[key]
+                       
         if hasattr(package, 'init') or hasattr(package, 'update') or package.state in ('to install', 'to upgrade'):
             init_module_objects(cr, package.name, modules)
         cr.commit()
@@ -778,6 +837,10 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
                     delattr(package, kind)
 
         statusi += 1
+        cr.execute('select model, name from ir_model_data where module=%s order by model, name', (package.name,))
+        for res in cr.fetchall():
+            xmlid_repr = ','.join(["\"" + string.replace(property, '\"', '\'') + "\"" for property in (res[0], res[1], package.name)])
+            logger.notifyChannel('XMLID dump', netsvc.LOG_INFO, xmlid_repr)
 
     cr.commit()
 
@@ -817,6 +880,8 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
     # This is a brand new pool, just created in pooler.get_db_and_pool()
     pool = pooler.get_pool(cr.dbname)
 
+    registry = {}
+
     try:
         processed_modules = []
         report = tools.assertion_report()
@@ -830,7 +895,7 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
         if not graph:
             logger.notifyChannel('init', netsvc.LOG_CRITICAL, 'module base cannot be loaded! (hint: verify addons-path)')
             raise osv.osv.except_osv(_('Could not load base module'), _('module base cannot be loaded! (hint: verify addons-path)'))
-        processed_modules.extend(load_module_graph(cr, graph, status, perform_checks=(not update_module), report=report))
+        processed_modules.extend(load_module_graph(cr, graph, status, perform_checks=(not update_module), registry=registry, report=report))
 
         if tools.config['load_language']:
             for lang in tools.config['load_language'].split(','):
@@ -880,7 +945,7 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
                 break
 
             logger.notifyChannel('init', netsvc.LOG_DEBUG, 'Updating graph with %d more modules' % (len(module_list)))
-            processed_modules.extend(load_module_graph(cr, graph, status, report=report, skip_modules=processed_modules))
+            processed_modules.extend(load_module_graph(cr, graph, status, registry=registry, report=report, skip_modules=processed_modules))
 
         # load custom models
         cr.execute('select model from ir_model where state=%s', ('manual',))

@@ -2140,16 +2140,7 @@ class orm_memory(orm_template):
             ids = [ids]
         return all(( id in self.datas for id in ids ))
 
-
-# http://stackoverflow.com/questions/739882/iterating-over-object-instances-of-a-given-class-in-python
-class IterRegistry(type):
-    def __iter__(cls):
-        return iter(cls._registry)
-
 class orm(orm_template):
-    __metaclass__ = IterRegistry
-    _registry = []
-
     _sql_constraints = []
     _table = None
     _all_columns = {}
@@ -2810,8 +2801,6 @@ class orm(orm_template):
 
     def __init__(self, cr):
         super(orm, self).__init__(cr)
-
-        self._registry.append(self)
 
         if not hasattr(self, '_log_access'):
             # if not access is not specify, it is the same value as _auto
