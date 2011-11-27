@@ -5,6 +5,8 @@ import pooler, logging
 log = logging.getLogger('migrate')
 from openupgrade import openupgrade
 
+MODULE='account'
+
 defaults = {
     # False results in column value NULL
     # None value triggers a call to the model's default function 
@@ -31,6 +33,7 @@ def migrate(cr, version):
         # this method called in a try block too
         pool = pooler.get_pool(cr.dbname)
         openupgrade.set_defaults(cr, pool, defaults)
+        openupgrade.load_xml(cr, MODULE, 'migrations/6.0.1.1/data.xml')
     except Exception, e:
         log.error("Migration: error in post.py: %s" % e)
         raise
