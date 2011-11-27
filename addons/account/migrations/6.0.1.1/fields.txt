@@ -1,0 +1,90 @@
+account      / account.account          / check_history (boolean)       : DEL 
+account      / account.account.template / nocreate (boolean)            : NEW 
+account      / account.account.template / type (selection)              : selection_keys is now '['closed', 'consolidation', 'liquidity', 'other', 'payable', 'receivable', 'view']' ('['closed', 'consolidation', 'other', 'payable', 'receivable', 'view']')
+account      / account.account.type     / note (text)                   : NEW 
+account      / account.account.type     / partner_account (boolean)     : DEL 
+account      / account.account.type     / report_type (selection)       : NEW required: required, selection_keys: ['asset', 'expense', 'income', 'liability', 'none'], req_default: none
+account      / account.account          / type (selection)              : selection_keys is now '['closed', 'consolidation', 'liquidity', 'other', 'payable', 'receivable', 'view']' ('['closed', 'consolidation', 'other', 'payable', 'receivable', 'view']')
+account      / account.account.type     / sequence (integer)            : DEL 
+account      / account.analytic.account / active (boolean)              : DEL 
+account      / account.analytic.account / balance (float)               : module is now 'analytic' ('account')
+account      / account.analytic.account / child_ids (one2many)          : module is now 'analytic' ('account')
+account      / account.analytic.account / code (char)                   : module is now 'analytic' ('account')
+account      / account.analytic.account / company_id (many2one)         : module is now 'analytic' ('account')
+account      / account.analytic.account / complete_name (char)          : module is now 'analytic' ('account')
+account      / account.analytic.account / contact_id (many2one)         : module is now 'analytic' ('account')
+account      / account.analytic.account / credit (float)                : module is now 'analytic' ('account')
+account      / account.analytic.account / date (date)                   : module is now 'analytic' ('account')
+account      / account.analytic.account / date_start (date)             : module is now 'analytic' ('account')
+account      / account.analytic.account / debit (float)                 : module is now 'analytic' ('account')
+account      / account.analytic.account / description (text)            : module is now 'analytic' ('account')
+account      / account.analytic.account / line_ids (one2many)           : module is now 'analytic' ('account')
+account      / account.analytic.account / name (char)                   : module is now 'analytic' ('account')
+account      / account.analytic.account / parent_id (many2one)          : module is now 'analytic' ('account')
+account      / account.analytic.account / partner_id (many2one)         : module is now 'analytic' ('account')
+account      / account.analytic.account / quantity (float)              : module is now 'analytic' ('account')
+account      / account.analytic.account / quantity_max (float)          : module is now 'analytic' ('account')
+account      / account.analytic.account / state (selection)             : module is now 'analytic' ('account')
+account      / account.analytic.account / state (selection)             : selection_keys is now '['cancelled', 'close', 'draft', 'open', 'pending', 'template']' ('['close', 'draft', 'open', 'pending']')
+account      / account.analytic.account / type (selection)              : module is now 'analytic' ('account')
+account      / account.analytic.account / user_id (many2one)            : module is now 'analytic' ('account')
+account      / account.analytic.journal / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+account      / account.analytic.line    / account_id (many2one)         : module is now 'analytic' ('account')
+account      / account.analytic.line    / amount (float)                : module is now 'analytic' ('account')
+account      / account.analytic.line    / date (date)                   : module is now 'analytic' ('account')
+account      / account.analytic.line    / name (char)                   : module is now 'analytic' ('account')
+account      / account.analytic.line    / unit_amount (float)           : module is now 'analytic' ('account')
+account      / account.analytic.line    / user_id (many2one)            : module is now 'analytic' ('account')
+account      / account.bank.statement   / closing_date (datetime)       : NEW 
+account      / account.bank.statement   / ending_details_ids (one2many) : NEW relation: account.cashbox.line
+account      / account.bank.statement.line / analytic_account_id (many2one): NEW relation: account.analytic.account
+account      / account.bank.statement.line / reconcile_id (many2one)       : DEL relation: account.bank.statement.reconcile
+account      / account.bank.statement.line / sequence (integer)            : NEW 
+account      / account.bank.statement   / starting_details_ids (one2many): NEW relation: account.cashbox.line
+account      / account.bank.statement   / state (selection)             : selection_keys is now '['confirm', 'draft', 'open']' ('['confirm', 'draft']')
+account      / account.bank.statement   / user_id (many2one)            : NEW relation: res.users
+account      / account.cashbox.line     / ending_id (many2one)          : NEW relation: account.bank.statement
+account      / account.cashbox.line     / number (integer)              : NEW 
+account      / account.cashbox.line     / pieces (float)                : NEW 
+account      / account.cashbox.line     / starting_id (many2one)        : NEW relation: account.bank.statement
+account      / account.chart.template   / property_reserve_and_surplus_account (many2one): NEW relation: account.account.template
+account      / account.fiscalyear       / company_id (many2one)         : now required
+account      / account.invoice          / internal_number (char)        : NEW 
+account      / account.invoice          / number (char)                 : now a function
+account      / account.invoice          / partner_bank_id (many2one)    : NEW relation: res.partner.bank
+account      / account.invoice          / partner_bank (many2one)       : DEL relation: res.partner.bank
+account      / account.invoice          / user_id (many2one)            : NEW relation: res.users
+account      / account.journal          / active (boolean)              : DEL 
+account      / account.journal          / allow_date (boolean)          : NEW 
+account      / account.journal          / code (char)                   : now required
+account      / account.journal          / company_id (many2one)         : not a function anymore
+account      / account.journal          / company_id (many2one)         : now required
+account      / account.journal          / invoice_sequence_id (many2one): DEL relation: ir.sequence
+account      / account.journal          / type (selection)              : selection_keys is now '['bank', 'cash', 'general', 'purchase', 'purchase_refund', 'sale', 'sale_refund', 'situation']' ('['cash', 'general', 'purchase', 'sale', 'situation']')
+account      / account.model.line       / analytic_account_id (many2one): NEW relation: account.analytic.account
+account      / account.model.line       / date (selection)              : DEL required: required, selection_keys: ['partner', 'today'], req_default: function
+account      / account.model.line       / ref (char)                    : DEL 
+account      / account.model            / ref (char)                    : DEL 
+account      / account.move.line        / amount_taxed (float)          : DEL 
+account      / account.move.line        / centralisation (selection)    : selection_keys is now '['credit', 'currency', 'debit', 'normal']' ('['credit', 'debit', 'normal']')
+account      / account.move.line        / move_id (many2one)            : now required
+account      / account.move.line        / ref (char)                    : now a function
+account      / account.move             / narration (text)              : NEW 
+account      / account.move             / type (selection)              : DEL selection_keys: ['bank_pay_voucher', 'bank_rec_voucher', 'cont_voucher', 'journal_pur_voucher', 'journal_sale_vou', 'journal_voucher', 'pay_voucher', 'rec_voucher']
+account      / account.tax              / tax_group (selection)         : DEL selection_keys: ['other', 'vat']
+account      / account.tax.template     / price_include (boolean)       : NEW 
+account      / account.tax.template     / tax_group (selection)         : DEL selection_keys: ['other', 'vat']
+account      / account.tax.template     / type (selection)              : selection_keys is now '['balance', 'code', 'fixed', 'none', 'percent']' ('['code', 'fixed', 'none', 'percent']')
+account      / res.partner              / contract_ids (one2many)       : NEW relation: account.analytic.account
+account      / res.partner              / invoice_ids (one2many)        : NEW relation: account.invoice.line
+account      / res.partner              / last_reconciliation_date (datetime): NEW 
+account      / temp.range               / name (char)                   : NEW 
+analytic     / account.analytic.account / currency_id (many2one)        : NEW relation: res.currency, required: required, req_default: function
+# new model account.cashbox.line
+# new model account.entries.report
+# new model account.invoice.report
+# new model report.account.receivable
+# new model report.account.sales
+# new model report.account_type.sales
+# obsolete model account.bank.statement.reconcile
+# obsolete model account.bank.statement.reconcile.line
