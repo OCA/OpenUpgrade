@@ -2,6 +2,7 @@
 
 from osv import osv
 import pooler, logging
+from openupgrade import openupgrade
 log = logging.getLogger('migrate')
 
 defaults = {
@@ -48,45 +49,6 @@ defaults = {
         ('company_id', None),
         ],
     }
-
-def set_default(cr, pool, model, fields):
-    obj = pool.get(model)
-    if not obj:
-        raise osv.except_osv("Migration: error setting default, no such model: %s" % model, "")
-
-    def write_value(ids, field, value):
-        log.info("model %s, field %s: setting default value of %d resources to %s",
-                 model, field, len(ids), unicode(value))
-        obj.write(cr, 1, ids, {field: value})
-
-    for field, value in fields:
-        ids = obj.search(cr, 1, [(field, '=', False)])
-        if not ids:
-            continue
-        if value is None:
-            # Set the value by calling the _defaults of the object.
-            # Typically used for company_id on various models, and in that
-            # case the result depends on the user associated with the object.
-            # We retrieve create_uid for this purpose and need to call the _defaults
-            # function per resource. Otherwise, write all resources at once.
-            if field in obj._defaults:
-                if not callable(obj._defaults[field]):
-                    write_value(ids, field, obj._defaults[field])
-                else:
-                    # existence users is covered by foreign keys
-#                    cr.execute("SELECT %s.id, res_users.id FROM %s LEFT OUTER JOIN res_users ON (%s.create_uid = res_users.id) WHERE %s.id IN %s" %
-#                               (obj._table, obj._table, obj._table, obj._table, tuple(ids),))
-                    cr.execute("SELECT id, COALESCE(create_uid, 1) FROM %s WHERE id in %s" % (obj._table, tuple(ids),))
-                    fetchdict = dict(cr.fetchall())
-                    for id in ids:
-                        write_value([id], field, obj._defaults[field](obj, cr, fetchdict.get(id, 1), None))
-                        if id not in fetchdict:
-                            log.info("model %s, field %s, id %d: no create_uid defined or user does not exist anymore",
-                                     (model, field, id))
-            else:
-                osv.except_osv("Migration: error setting default, field %s with None default value not in %s' _defaults" % (field, model), "")
-        else:
-            write_value(ids, field, value)
 
 def mgr_ir_rule(cr, pool):
     # rule_group migrated to groups, model_id, name
@@ -257,13 +219,11 @@ def migrate(cr, version):
     try:
         
         log.info("post-set-defaults.py now called")
-    
         # this method called in a try block too
         pool = pooler.get_pool(cr.dbname)
 
         mgr_clean_act_window(cr, pool)
-        for model in defaults.keys():
-            set_default(cr, pool, model, defaults[model])
+        openupgrade.set_defaults(cr, pool, defaults)
 
         mgr_ir_rule(cr, pool)
         mgr_res_partner_address(cr, pool)
