@@ -191,20 +191,10 @@ def mgr_res_currency(cr, pool):
     cr.execute("ALTER TABLE res_currency DROP COLUMN code")
 
 def mgr_ir_module_module(cr):
-    # deal with changed module names
+    # deal with changed module names in order to prevent
+    # 'certificate not unique' error
     cr.execute("UPDATE ir_module_module SET name = 'project_planning' WHERE certificate = '0034901836973'")
     cr.execute("UPDATE ir_module_module SET name = 'association' WHERE certificate = '0078696047261'")
-
-def mgr_clean_act_window(cr, pool):
-    # remove invalid act_windows which refer non existing models
-    obj = pool.get('ir.actions.act_window')
-    acts = obj.browse(cr, 1, obj.search(cr, 1, []))
-    to_unlink = []
-    for action in acts:
-        if (not pool.get(action.res_model) or (action.src_model and not pool.get(action.src_model))):
-            to_unlink.append(action.id)
-            log.info("Cannot find model %s or %s, removing associated act_window" % (action.res_model, action.src_model))
-    obj.unlink(cr, 1, to_unlink)
 
 def mgr_res_users(cr):
     # you cannot have a menu action as home action anymore
@@ -222,7 +212,6 @@ def migrate(cr, version):
         # this method called in a try block too
         pool = pooler.get_pool(cr.dbname)
 
-        mgr_clean_act_window(cr, pool)
         openupgrade.set_defaults(cr, pool, defaults)
 
         mgr_ir_rule(cr, pool)

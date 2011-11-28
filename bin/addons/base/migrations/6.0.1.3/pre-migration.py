@@ -58,11 +58,13 @@ def mgr_fix_test_results(cr):
 def migrate(cr, version):
     try:
         # this method called in a try block too
+        log.info("base:pre.py now called")
         pool = pooler.get_pool(cr.dbname)
-        openupgrade.rename_columns(cr, table, renames)
+        openupgrade.rename_columns(cr, renames)
         mgr_ir_model_fields(cr)
         mgr_company_id(cr)
         mgr_fix_test_results(cr)
     except Exception, e:
+        log.info("Migration: error in pre-convert-fields.py: %s", e)
         osv.except_osv("Migration: error in pre-convert-fields.py: %s" % e, "")
         raise

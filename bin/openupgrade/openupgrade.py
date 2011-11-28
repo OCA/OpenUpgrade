@@ -27,7 +27,7 @@ def load_xml(cr, m, filename, idref=None, mode='init'):
 
     if idref is None:
         idref = {}
-    logger.info('loading %s' % (m, filename))
+    logger.info('%s: loading %s' % (m, filename))
     fp = tools.file_open(opj(m, filename))
     try:
         tools.convert_xml_import(cr, m, fp, idref, mode=mode)
@@ -43,11 +43,11 @@ def rename_columns(cr, column_spec):
 
 def set_defaults(cr, pool, default_spec):
     def write_value(ids, field, value):
-        log.info("model %s, field %s: setting default value of %d resources to %s",
+        logger.info("model %s, field %s: setting default value of %d resources to %s",
                  model, field, len(ids), unicode(value))
         obj.write(cr, 1, ids, {field: value})
 
-    for model in defaults.keys():
+    for model in default_spec.keys():
         obj = pool.get(model)
         if not obj:
             raise osv.except_osv("Migration: error setting default, no such model: %s" % model, "")
@@ -69,15 +69,15 @@ def set_defaults(cr, pool, default_spec):
                     # existence users is covered by foreign keys, so this is not needed
                     # cr.execute("SELECT %s.id, res_users.id FROM %s LEFT OUTER JOIN res_users ON (%s.create_uid = res_users.id) WHERE %s.id IN %s" %
                     #                     (obj._table, obj._table, obj._table, obj._table, tuple(ids),))
-                    cr.execute("SELECT id, COALESCE(create_uid, 1) FROM %s WHERE id in %s" % (obj._table, tuple(ids),))
+                    cr.execute("SELECT id, COALESCE(create_uid, 1) FROM %s " % obj._table + "WHERE id in %s", (tuple(ids),))
                     fetchdict = dict(cr.fetchall())
                     for id in ids:
                         write_value([id], field, obj._defaults[field](obj, cr, fetchdict.get(id, 1), None))
                         if id not in fetchdict:
-                            log.info("model %s, field %s, id %d: no create_uid defined or user does not exist anymore",
+                            logger.info("model %s, field %s, id %d: no create_uid defined or user does not exist anymore",
                                      (model, field, id))
             else:
-                log.error("OpenUpgrade: error setting default, field %s with " +
+                logger.error("OpenUpgrade: error setting default, field %s with " +
                           "None default value not in %s' _defaults",
                           (field, model))
                 # this exeption seems to get lost in a higher up try block
