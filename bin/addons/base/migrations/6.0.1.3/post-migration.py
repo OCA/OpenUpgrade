@@ -175,6 +175,9 @@ def mgr_roles_to_groups(cr, pool):
             'UPDATE res_roles SET mgr_group_id = %s WHERE id = %s',
             (group_id, id,)
             )
+        # TODO maybe it is better to converse migrated roles with the groups
+        # that are associated with the transition in V6 instead of adapting
+        # the group_id to the group that contains the users from the old role.
         cr.execute(
             'UPDATE wkf_transition SET group_id = res_roles.mgr_group_id ' +
             'FROM res_roles WHERE wkf_transition.tmp_mgr_role_id = res_roles.id'

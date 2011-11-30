@@ -9,20 +9,24 @@ logger = logging.getLogger('migrate')
 
 def load_xml(cr, m, filename, idref=None, mode='init'):
     """
-    Load xml data file.
-
-    :param m: the name of the module
-    :param filename: the path to the filename, relative to the module 
-    directory. This can simply be a stock file from the module, but be
+    Load an xml data file from your post script.
+    
+    Theoretically, you could simply load a stock file from the module, but be 
     careful not to reinitialize any data that could have been customized.
     Preferably, select only the newly added items. Copy these to a file
     in your migrations directory and load that file.
     Leave it to the user to actually delete existing resources that are
     marked with 'noupdate' (other named items will be deleted
     automatically).
+
+
+    :param m: the name of the module
+    :param filename: the path to the filename, relative to the module \
+    directory.
     :param idref: optional hash with ?id mapping cache?
-    :param mode: one of 'init', 'update', 'demo'. Always use 'init' for adding new items
+    :param mode: one of 'init', 'update', 'demo'. Always use 'init' for adding new items \
     from files that are marked with 'noupdate'. Defaults to 'init'.
+
     """
 
     if idref is None:
@@ -35,6 +39,13 @@ def load_xml(cr, m, filename, idref=None, mode='init'):
         fp.close()
 
 def rename_columns(cr, column_spec):
+    """
+    Rename table columns. Typically called in the pre script.
+
+    :param column_spec: a hash with table keys, with lists of tuples as values. \
+    Tuples consist of (old_name, new_name).
+
+    """
     for table in column_spec.keys():
         for old, new in column_spec[table]:
             logger.info("table %s, column %s: renaming to %s",
@@ -42,6 +53,16 @@ def rename_columns(cr, column_spec):
             cr.execute('ALTER TABLE "%s" RENAME "%s" TO "%s"' % (table, old, new,))
 
 def set_defaults(cr, pool, default_spec):
+    """
+    Set default value. Useful for fields that are newly required. Uses orm, so
+    call from the post script.
+    
+    :param default_spec: a hash with model names as keys. Values are lists of \
+    tuples (field, value). None as a value has a special meaning: it assigns \
+    the default value. If this value is provided by a function, the function is \
+    called as the user that created the resource.
+    """
+
     def write_value(ids, field, value):
         logger.info("model %s, field %s: setting default value of %d resources to %s",
                  model, field, len(ids), unicode(value))

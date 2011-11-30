@@ -725,7 +725,7 @@ def load_module_graph(cr, graph, status=None, registry=None, perform_checks=True
         register_class(package.name)
         modules = pool.instanciate(package.name, cr)
 
-        logger.notifyChannel('FIELD anal.', netsvc.LOG_INFO, 'module %s' % (package.name))
+        logger.notifyChannel('OpenUpgrade_FIELD', netsvc.LOG_INFO, 'module %s' % (package.name))
         local_registry = {}
         for orm_object in osv.orm.orm:
             if orm_object._inherits:
@@ -769,9 +769,9 @@ def load_module_graph(cr, graph, status=None, registry=None, perform_checks=True
         for key in sorted(local_registry.keys()):
             if key in registry:
                 if registry[key] != local_registry[key]:
-                    logger.notifyChannel('FIELD anal.', netsvc.LOG_INFO, '"%s","modify",%s,%s' % (package.name, key, local_registry[key]))
+                    logger.notifyChannel('OpenUpgrade_FIELD', netsvc.LOG_INFO, '"%s","modify",%s,%s' % (package.name, key, local_registry[key]))
             else:
-                logger.notifyChannel('FIELD anal.', netsvc.LOG_INFO, '"%s","create",%s,%s' % (package.name, key, local_registry[key]))
+                logger.notifyChannel('OpenUpgrade_FIELD', netsvc.LOG_INFO, '"%s","create",%s,%s' % (package.name, key, local_registry[key]))
             registry[key] = local_registry[key]
                        
         if hasattr(package, 'init') or hasattr(package, 'update') or package.state in ('to install', 'to upgrade'):
