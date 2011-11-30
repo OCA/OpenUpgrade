@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-
-from osv import osv
-import pooler
 import logging
 from openupgrade import openupgrade
 
@@ -25,7 +22,6 @@ def mgr_refund_journal_type(cr):
 
 def migrate(cr, version):
     try:
-        pool = pooler.get_pool(cr.dbname)
         openupgrade.rename_columns(cr, column_renames)
         mgr_refund_journal_type(cr)
     except Exception, e:

@@ -1,5 +1,4 @@
-The upgrade scripts for the 'account' module also cover its 'new' dependency 'analytic'.
-TODO: will the OpenERP migration manager automatically select the 'analytic' module for installation?
+The upgrade scripts for the 'account' module also cover its 'new' dependency 'analytic'. The OpenERP migration manager automatically selects this module for installation.
 
 Data integrity
 ==============
@@ -10,6 +9,8 @@ account.account.type: User needs to set the 'report_type'.
 
 Other useful settings you might want to review:
       account.journal: 'Check date not in period'
+
+You may uninstall the modules 'report_analytic' and 'report_analytic_line' manually.
 
 Journal view columns
 ====================
@@ -27,3 +28,14 @@ You may want to remove these columns manually from their respective view types.
 Permissions and rights
 ======================
 OpenERP 6 adds a new group, Analytic Accounting. Add the relevant users to this group.
+
+Known Issues
+============
+- Installing the generic chart of acccounts on an upgraded database leads to the following error.
+
+     view_id_cash = obj_acc_journal_view.search(cr, uid, [('name', '=', 'Bank/Cash Journal View')], context=context)[0] #why fixed name here?
+     IndexError: list index out of range
+
+  If you must do so, first change the name of 'Cash Journal View' to 'Bank/Cash Journal View' (Note the comment in the faulty line....).
+
+
