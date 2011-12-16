@@ -48,7 +48,7 @@ def py2exe_options():
     if os.name == 'nt':
         import py2exe
         return {
-            "console" : [ { "script": "openerp-server", "icon_resources": [(1, join("pixmaps","openerp-icon.ico"))], }],
+            "console" : [ { "script": "openerp-server", "icon_resources": [(1, join("install","openerp-icon.ico"))], }],
             'options' : {
                 "py2exe": {
                     "skip_archive": 1,
@@ -92,7 +92,7 @@ setuptools.setup(
           'mako',
           'psycopg2',
           'pydot',
-          'python-dateutil',
+          'python-dateutil < 2',
           'python-ldap',
           'python-openid',
           'pytz',
@@ -111,3 +111,5 @@ setuptools.setup(
       **py2exe_options()
 )
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
