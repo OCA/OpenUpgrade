@@ -132,7 +132,7 @@ openerp.web.FormView = openerp.web.View.extend( /** @lends openerp.web.FormView#
         return promise;
     },
     do_hide: function () {
-        this.$element.hide();
+        this._super();
         if (this.sidebar) {
             this.sidebar.$element.hide();
         }
@@ -140,7 +140,7 @@ openerp.web.FormView = openerp.web.View.extend( /** @lends openerp.web.FormView#
     on_record_loaded: function(record) {
         var self = this, set_values = [];
         if (!record) {
-            throw("Form: No record received");
+            throw new Error("Form: No record received");
         }
         this.datarecord = record;
 
@@ -174,6 +174,9 @@ openerp.web.FormView = openerp.web.View.extend( /** @lends openerp.web.FormView#
             }
             if (self.default_focus_field && !self.embedded_view) {
                 self.default_focus_field.focus();
+            }
+            if (record.id) {
+                self.do_push_state({id:record.id});
             }
         });
     },
@@ -334,11 +337,9 @@ openerp.web.FormView = openerp.web.View.extend( /** @lends openerp.web.FormView#
         if (!_.isEmpty(result.warning)) {
             $(QWeb.render("DialogWarning", result.warning)).dialog({
                 modal: true,
-                buttons: {
-                    Ok: function() {
-                        $(this).dialog("close");
-                    }
-                }
+                buttons: [
+                    {text: _t("Ok"), click: function() { $(this).dialog("close"); }}
+                ]
             });
         }
         if (result.domain) {
@@ -626,7 +627,7 @@ openerp.web.form.SidebarAttachments = openerp.web.Widget.extend({
     on_attachment_delete: function(e) {
         var self = this, $e = $(e.currentTarget);
         var name = _.str.trim($e.parent().find('a.oe-sidebar-attachments-link').text());
-        if (confirm("Do you really want to delete the attachment " + name + " ?")) {
+        if (confirm(_.sprintf(_t("Do you really want to delete the attachment %s?"), name))) {
             this.rpc('/web/dataset/unlink', {
                 model: 'ir.attachment',
                 ids: [parseInt($e.attr('data-id'))]
@@ -1048,20 +1049,22 @@ openerp.web.form.WidgetButton = openerp.web.form.Widget.extend({
             if (self.node.attrs.confirm) {
                 var def = $.Deferred();
                 var dialog = $('<div>' + self.node.attrs.confirm + '</div>').dialog({
-                    title: 'Confirm',
+                    title: _t('Confirm'),
                     modal: true,
-                    buttons: {
-                        Ok: function() {
-                            self.on_confirmed().then(function() {
-                                def.resolve();
-                            });
-                            $(this).dialog("close");
+                    buttons: [
+                        {text: _t("Ok"), click: function() {
+                                self.on_confirmed().then(function() {
+                                    def.resolve();
+                                });
+                                $(this).dialog("close");
+                            }
                         },
-                        Cancel: function() {
-                            def.resolve();
-                            $(this).dialog("close");
+                        {text: _t("Cancel"), click: function() {
+                                def.resolve();
+                                $(this).dialog("close");
+                            }
                         }
-                    }
+                    ]
                 });
                 return def.promise();
             } else {
@@ -2055,7 +2058,9 @@ openerp.web.form.FieldOne2Many = openerp.web.form.Field.extend({
         });
         this.views = views;
 
-        this.viewmanager = new openerp.web.ViewManager(this, this.dataset, views);
+        this.viewmanager = new openerp.web.ViewManager(this, this.dataset, views, {
+            action_buttons : false
+        });
         this.viewmanager.template = 'One2Many.viewmanager';
         this.viewmanager.registry = openerp.web.views.clone({
             list: 'openerp.web.form.One2ManyListView',
@@ -2083,7 +2088,6 @@ openerp.web.form.FieldOne2Many = openerp.web.form.Field.extend({
                 controller.on_pager_action.add_first(function() {
                     self.save_any_view();
                 });
-                controller.$element.find(".oe_form_button_save").hide();
             } else if (view_type == "graph") {
                 self.reload_current_view()
             }
@@ -2370,7 +2374,7 @@ openerp.web.form.FieldMany2Many = openerp.web.form.Field.extend({
     load_view: function() {
         var self = this;
         this.list_view = new openerp.web.form.Many2ManyListView(this, this.dataset, false, {
-                    'addable': self.is_readonly() ? null : 'Add',
+                    'addable': self.is_readonly() ? null : _t("Add"),
                     'deletable': self.is_readonly() ? false : true,
                     'selectable': self.multi_selection
             });
@@ -2905,13 +2909,18 @@ openerp.web.form.FieldBinaryFile = openerp.web.form.FieldBinary.extend({
     },
     set_value: function(value) {
         this._super.apply(this, arguments);
-        var show_value = (value != null && value !== false) ? value : '';
+        var show_value;
+        if (this.node.attrs.filename) {
+            show_value = this.view.datarecord[this.node.attrs.filename] || '';
+        } else {
+            show_value = (value != null && value !== false) ? value : '';
+        }
         this.$element.find('input').eq(0).val(show_value);
     },
     on_file_uploaded_and_valid: function(size, name, content_type, file_base64) {
         this.value = file_base64;
         this.binary_value = true;
-        var show_value = this.human_filesize(size);
+        var show_value = name + " (" + this.human_filesize(size) + ")";
         this.$element.find('input').eq(0).val(show_value);
         this.set_filename(name);
     },

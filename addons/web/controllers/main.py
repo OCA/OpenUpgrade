@@ -10,6 +10,7 @@ import os
 import re
 import simplejson
 import time
+import urllib2
 import xmlrpclib
 import zlib
 from xml.etree import ElementTree
@@ -242,6 +243,21 @@ class WebClient(openerpweb.Controller):
             "version": web.common.release.version
         }
 
+class Proxy(openerpweb.Controller):
+    _cp_path = '/web/proxy'
+
+    @openerpweb.jsonrequest
+    def load(self, req, path):
+        #req.config.socket_port
+        #if not re.match('^/[^/]+/static/.*', path):
+        #    return werkzeug.exceptions.BadRequest()
+
+        env = req.httprequest.environ
+        port = env['SERVER_PORT']
+
+        o = urllib2.urlopen('http://127.0.0.1:%s%s' % (port, path))
+        return o.read()
+
 class Database(openerpweb.Controller):
     _cp_path = "/web/database"
 
@@ -270,7 +286,7 @@ class Database(openerpweb.Controller):
             params['db_lang'],
             params['create_admin_pwd']
         )
-        
+
         try:
             return req.session.proxy("db").create(*create_attrs)
         except xmlrpclib.Fault, e:
@@ -359,7 +375,6 @@ class Session(openerpweb.Controller):
 
     @openerpweb.jsonrequest
     def get_session_info(self, req):
-        req.session.assert_valid(force=True)
         return {
             "uid": req.session._uid,
             "context": req.session.get_context() if req.session._uid else False,
@@ -1181,7 +1196,7 @@ class Binary(openerpweb.Controller):
                         }
                     </script>"""
             data = ufile.read()
-            args = [ufile.content_length, ufile.filename,
+            args = [len(data), ufile.filename,
                     ufile.content_type, base64.b64encode(data)]
         except Exception, e:
             args = [False, e.message]
