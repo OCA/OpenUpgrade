@@ -56,31 +56,38 @@ session.web.ActionManager = session.web.Widget.extend({
         }
     },
     do_load_state: function(state) {
+        var self = this,
+            action_loaded;
         if (state.action_id) {
-            this.null_action();
-            this.do_action(state.action_id);
+            var run_action = (!this.inner_viewmanager) || this.inner_viewmanager.action.id !== state.action_id;
+            if (run_action) {
+                this.null_action();
+                action_loaded = this.do_action(state.action_id);
+            }
         }
         else if (state.model && state.id) {
             // TODO implement it
             //this.null_action();
-            // action = {}
+            //action = {res_model: state.model, res_id: state.id};
+            //action_loaded = this.do_action(action);
         }
         else if (state.client_action) {
             this.null_action();
             this.ir_actions_client(state.client_action);
         }
 
-        if (this.inner_viewmanager) {
-            this.inner_viewmanager.do_load_state(state);
-        }
+        $.when(action_loaded || null).then(function() {
+            if (self.inner_viewmanager) {
+                self.inner_viewmanager.do_load_state(state);
+            }
+        });
     },
     do_action: function(action, on_close) {
         if (_.isNumber(action)) {
             var self = this;
-            self.rpc("/web/action/load", { action_id: action }, function(result) {
+            return self.rpc("/web/action/load", { action_id: action }, function(result) {
                 self.do_action(result.result, on_close);
             });
-            return;
         }
         if (!action.type) {
             console.error("No type for action", action);
@@ -203,7 +210,18 @@ session.web.ViewManager =  session.web.Widget.extend(/** @lends session.web.View
         this.dataset = dataset;
         this.searchview = null;
         this.active_view = null;
-        this.views_src = _.map(views, function(x) {return x instanceof Array? {view_id: x[0], view_type: x[1]} : x;});
+        this.views_src = _.map(views, function(x) {
+            if (x instanceof Array) {
+                var View = session.web.views.get_object(x[1], true);
+                return {
+                    view_id: x[0],
+                    view_type: x[1],
+                    label: View ? View.prototype.display_name : (void 'nope')
+                };
+            } else {
+                return x;
+            }
+        });
         this.views = {};
         this.flags = flags || {};
         this.registry = session.web.views;
@@ -583,8 +601,13 @@ session.web.ViewManagerAction = session.web.ViewManager.extend(/** @lends oepner
         }
     },
     do_load_state: function(state) {
-        var self = this;
-        $.when(this.on_mode_switch(state.view_type, true)).done(function() {
+        var self = this,
+            defs = [];
+        if (state.view_type && state.view_type !== this.active_view) {
+            defs.push(this.on_mode_switch(state.view_type, true));
+        } 
+
+        $.when(defs).then(function() {
             self.views[self.active_view].controller.do_load_state(state);
         });
     },
@@ -955,6 +978,8 @@ session.web.TranslateDialog = session.web.Dialog.extend({
 
 session.web.View = session.web.Widget.extend(/** @lends session.web.View# */{
     template: "EmptyComponent",
+    // name displayed in view switchers
+    display_name: '',
     set_default_options: function(options) {
         this.options = options || {};
         _.defaults(this.options, {
@@ -1055,7 +1080,6 @@ session.web.View = session.web.Widget.extend(/** @lends session.web.View# */{
     },
     do_show: function () {
         this.$element.show();
-        this.do_push_state({});
     },
     do_hide: function () {
         this.$element.hide();

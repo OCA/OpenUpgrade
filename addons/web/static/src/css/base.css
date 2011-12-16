@@ -678,7 +678,6 @@ label.error {
     color: #7D7979;
     font-weight: bold;
     padding: 2px 0 2px 10px;
-    margin-top: 4px;
     text-decoration: none;
 }
 .openerp .searchview_group_string:hover {
@@ -695,6 +694,7 @@ label.error {
 }
 .openerp .searchview_group.expanded .searchview_group_content {
     display: block;
+    padding-bottom:3px;
 }
 
 .openerp .searchview_group_content .oe_label, .openerp .searchview_group_content .oe_label_help {
@@ -731,7 +731,7 @@ label.error {
 }
 
 .openerp .oe_search-view-buttons {
-    padding: 10px 0 10px 0;
+    padding: 2px 0 10px 0;
     vertical-align:middle;
 }
 .openerp .oe_search-view-filters-management {

@@ -13,6 +13,7 @@ openerp.web.FormView = openerp.web.View.extend( /** @lends openerp.web.FormView#
     readonly : false,
     form_template: "FormView",
     identifier_prefix: 'formview-',
+    display_name: {toString: function () { return _t('Form'); }},
     /**
      * @constructs openerp.web.FormView
      * @extends openerp.web.View
@@ -117,6 +118,18 @@ openerp.web.FormView = openerp.web.View.extend( /** @lends openerp.web.FormView#
         }
         this.has_been_loaded.resolve();
     },
+
+    do_load_state: function(state) {
+        if (state.id && this.datarecord.id != state.id) {
+            var idx = this.dataset.get_id_index(state.id);
+            if (idx === null) {
+                this.dataset.ids.push(state.id)
+                this.dataset.index = this.dataset.ids.length - 1;
+            }
+            this.do_show();
+        }
+    },
+
     do_show: function () {
         var promise;
         if (this.dataset.index === null) {

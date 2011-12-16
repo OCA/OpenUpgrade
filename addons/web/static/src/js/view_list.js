@@ -4,6 +4,7 @@ var QWeb = openerp.web.qweb;
 openerp.web.views.add('list', 'openerp.web.ListView');
 openerp.web.ListView = openerp.web.View.extend( /** @lends openerp.web.ListView# */ {
     _template: 'ListView',
+    display_name: {toString: function () { return _t('List'); }},
     defaults: {
         // records can be selected one by one
         'selectable': true,
@@ -459,7 +460,31 @@ openerp.web.ListView = openerp.web.View.extend( /** @lends openerp.web.ListView#
                 self.compute_aggregates();
                 reloaded.resolve();
             }));
+        this.do_push_state({
+            page: this.page,
+            limit: this._limit,
+        });
         return reloaded.promise();
+    },
+
+    do_load_state: function(state) {
+        var reload = false;
+        if (state.page && this.page !== state.page) {
+            this.page = state.page;
+            reload = true;
+        }
+        if (state.limit) {
+            if (_.isString(state.limit)) {
+                state.limit = null;
+            }
+            if (state.limit !== this._limit) {
+                this._limit = state.limit;
+                reload = true;
+            }
+        }
+        if (reload) {
+            this.reload_content();
+        }
     },
     /**
      * Handler for the result of eval_domain_and_context, actually perform the
