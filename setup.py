@@ -48,13 +48,13 @@ def py2exe_options():
     if os.name == 'nt':
         import py2exe
         return {
-            "console" : [ { "script": "openerp-server", "icon_resources": [(1, join("pixmaps","openerp-icon.ico"))], }],
+            "console" : [ { "script": "openerp-server", "icon_resources": [(1, join("install","openerp-icon.ico"))], }],
             'options' : {
                 "py2exe": {
                     "skip_archive": 1,
                     "optimize": 2,
                     "dist_dir": 'dist',
-                    "packages": [ "DAV", "HTMLParser", "PIL", "asynchat", "asyncore", "commands", "dateutil", "decimal", "email", "encodings", "imaplib", "lxml", "lxml._elementpath", "lxml.builder", "lxml.etree", "lxml.objectify", "mako", "openerp", "poplib", "pychart", "pydot", "pyparsing", "reportlab", "select", "simplejson", "smtplib", "uuid", "vatnumber" "vobject", "xml", "xml", "xml.dom", "xml.xpath", "yaml", ],
+                    "packages": [ "DAV", "HTMLParser", "PIL", "asynchat", "asyncore", "commands", "dateutil", "decimal", "email", "encodings", "imaplib", "lxml", "lxml._elementpath", "lxml.builder", "lxml.etree", "lxml.objectify", "mako", "openerp", "poplib", "pychart", "pydot", "pyparsing", "reportlab", "select", "simplejson", "smtplib", "uuid", "vatnumber", "vobject", "xml", "xml", "xml.dom", "xml.xpath", "yaml", ],
                     "excludes" : ["Tkconstants","Tkinter","tcl"],
                 }
             }
@@ -92,7 +92,7 @@ setuptools.setup(
           'mako',
           'psycopg2',
           'pydot',
-          'python-dateutil',
+          'python-dateutil < 2',
           'python-ldap',
           'python-openid',
           'pytz',
@@ -111,3 +111,5 @@ setuptools.setup(
       **py2exe_options()
 )
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
