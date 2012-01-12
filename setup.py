@@ -108,6 +108,7 @@ setuptools.setup(
           'vatnumber',
           'vobject',
           'werkzeug',
+          'xlwt',
           'zsi',
       ],
       extras_require = {
