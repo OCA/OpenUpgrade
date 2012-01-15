@@ -611,6 +611,9 @@ class MetaModel(type):
     module_to_models = {}
 
     def __init__(self, name, bases, attrs):
+        # OpenUpgrade: keep a registry of all instances of an object
+        self._registry.append(self)
+
         if not self._register:
             self._register = True
             super(MetaModel, self).__init__(name, bases, attrs)
@@ -632,6 +635,9 @@ class MetaModel(type):
         # Remember which models to instanciate for this module.
         self.module_to_models.setdefault(self._module, []).append(self)
 
+    # http://stackoverflow.com/questions/739882/iterating-over-object-instances-of-a-given-class-in-python
+    def __iter__(cls):
+        return iter(cls._registry)
 
 # Definition of log access columns, automatically added to models if
 # self._log_access is True
@@ -662,6 +668,7 @@ class BaseModel(object):
     may be set to False.
     """
     __metaclass__ = MetaModel
+    _registry = [] # OpenUpgrade class list
     _register = False # Set to false if the model shouldn't be automatically discovered.
     _name = None
     _columns = {}

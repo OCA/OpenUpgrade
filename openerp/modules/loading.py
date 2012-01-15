@@ -35,6 +35,9 @@ import threading
 import zipfile
 import zipimport
 
+import types
+import string
+
 from cStringIO import StringIO
 from os.path import join as opj
 from zipfile import PyZipFile, ZIP_DEFLATED
@@ -70,7 +73,7 @@ def open_openerp_namespace():
                 sys.modules[k[8:]] = v
 
 
-def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=None, report=None):
+def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=None, report=None, registry=None):
     """Migrates+Updates or Installs all module nodes from ``graph``
        :param graph: graph of module nodes to load
        :param status: status dictionary for keeping track of progress
@@ -139,6 +142,126 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
             finally:
                 fp.close()
 
+    fields_logger = logging.getLogger('OpenUpgrade_FIELD')
+    xmlid_logger = logging.getLogger('OpenUpgrade_XMLID')
+    local_registry = {}
+    def get_repr(properties, type='val'):
+        """
+        OpenUpgrade: Return the string representation of the model or field
+        for logging purposes
+        """
+        if type == 'key':
+            props = ['model', 'field']
+        elif type == 'val':
+            props = [
+                'type', 'isfunction', 'relation', 'required', 'selection_keys',
+                'req_default', 'inherits'
+                ]
+        return ','.join([
+                '\"' + string.replace(
+                    string.replace(
+                        properties[prop], '\"', '\''), '\n', '')
+                + '\"' for prop in props
+                ])
+
+    def log_model(model):
+        """
+        OpenUpgrade: Store the characteristics of the BaseModel and its fields
+        in the local registry, so that we can compare changes with the
+        main registry
+        """
+
+        if not model._name: # new in 6.1
+            return
+
+        # persistent models only
+        if isinstance(model, osv.orm.TransientModel):
+            return
+
+        if model._inherits:
+            properties = {
+                'model': model._name,
+                'field': '_inherits',
+                'type': '',
+                'isfunction': '',
+                'relation': '',
+                'required': '',
+                'selection_keys': '',
+                'req_default': '',
+                'inherits': unicode(model._inherits),
+                }
+            local_registry[get_repr(properties, 'key')] = get_repr(
+                properties)
+        for k,v  in model._columns.items():
+            properties = {
+                'model': model._name,
+                'field': k,
+                'type': v._type,
+                'isfunction': (
+                    isinstance(v, osv.fields.function) and 'function' or ''),
+                'relation': (
+                    v._type in ('many2many', 'many2one','one2many')
+                    and v._obj or ''
+                    ),
+                'required': v.required and 'required' or '',
+                'selection_keys': '',
+                'req_default': '',
+                'inherits': '',
+                }
+            if v._type == 'selection':
+                if hasattr(v.selection, "__iter__"):
+                    properties['selection_keys'] = unicode(
+                        sorted([x[0] for x in v.selection]))
+                else:
+                    properties['selection_keys'] = 'function'
+            if v.required and k in model._defaults:
+                if isinstance(model._defaults[k], types.FunctionType):
+                    # todo: in OpenERP 5 (and in 6 as well),
+                    # literals are wrapped in a lambda function
+                    properties['req_default'] = 'function'
+                else:
+                    properties['req_default'] = unicode(
+                        model._defaults[k])
+            local_registry[get_repr(properties, 'key')] = get_repr(
+                properties)
+
+    def compare_registries():
+        """
+        OpenUpgrade: Compare the local registry with the global registry,
+        log any differences and merge the local registry with
+        the global one.
+        """
+        for key in sorted(local_registry.keys()):
+            if key in registry:
+                if registry[key] != local_registry[key]:
+                    fields_logger.info(
+                        '"%s","modify",%s,%s',
+                        package.name, key, local_registry[key])
+            else:
+                fields_logger.info(
+                    '"%s","create",%s,%s',
+                    package.name, key, local_registry[key])
+            registry[key] = local_registry[key]
+
+    def log_xmlids(cr, package_name):
+        """
+        OpenUpgrade: Log all XMLID's owned by this package.
+        TODO: other modules can really easily add items that 'belong' to
+        another module. Needs deeper digging in the load_data methods.
+
+        Need to pass the cursor, as the one passed to the upper method is
+        closed by now.
+        """
+        cr.execute(
+            'select model, name from ir_model_data where module=%s '
+            'order by model, name', (package_name,))
+        for res in cr.fetchall():
+            xmlid_logger.info(
+                ','.join([
+                        "\"" + string.replace(property, '\"', '\'') + "\""
+                        for property in (res[0], res[1], package_name)
+                        ]))
+
     if status is None:
         status = {}
 
@@ -165,8 +288,16 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
         load_openerp_module(package.name)
 
         models = pool.load(cr, package)
+
         loaded_modules.append(package.name)
         if hasattr(package, 'init') or hasattr(package, 'update') or package.state in ('to install', 'to upgrade'):
+            # OpenUpgrade: add this module's models to the registry
+            fields_logger.info('module %s', package.name)
+            local_registry = {}
+            for model in models:
+                log_model(model)
+            compare_registries()
+
             init_module_models(cr, package.name, models)
 
         status['progress'] = float(index) / len(graph)
@@ -218,6 +349,7 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
                 if hasattr(package, kind):
                     delattr(package, kind)
 
+        log_xmlids(cr, package.name) # OpenUpgrade
         cr.commit()
 
     # mark new res_log records as read
@@ -241,7 +373,7 @@ def _check_module_names(cr, module_names):
             incorrect_names = mod_names.difference([x['name'] for x in cr.dictfetchall()])
             _logger.warning('invalid module names, ignored: %s', ", ".join(incorrect_names))
 
-def load_marked_modules(cr, graph, states, force, progressdict, report, loaded_modules):
+def load_marked_modules(cr, graph, states, force, progressdict, report, loaded_modules, registry):
     """Loads modules marked with ``states``, adding them to ``graph`` and
        ``loaded_modules`` and returns a list of installed/upgraded modules."""
     processed_modules = []
@@ -250,7 +382,7 @@ def load_marked_modules(cr, graph, states, force, progressdict, report, loaded_m
         module_list = [name for (name,) in cr.fetchall() if name not in graph]
         new_modules_in_graph = graph.add_modules(cr, module_list, force)
         _logger.debug('Updating graph with %d more modules', len(module_list))
-        loaded, processed = load_module_graph(cr, graph, progressdict, report=report, skip_modules=loaded_modules)
+        loaded, processed = load_module_graph(cr, graph, progressdict, report=report, skip_modules=loaded_modules, registry=registry)
         processed_modules.extend(processed)
         loaded_modules.extend(loaded)
         if not processed: break
@@ -269,6 +401,7 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
     if force_demo:
         force.append('demo')
 
+    registry = {}
     cr = db.cursor()
     try:
         if not openerp.modules.db.is_initialized(cr):
@@ -286,7 +419,7 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
         if 'base' in tools.config['update'] or 'all' in tools.config['update']:
             cr.execute("update ir_module_module set state=%s where name=%s and state=%s", ('to upgrade', 'base', 'installed'))
 
-        # STEP 1: LOAD BASE (must be done before module dependencies can be computed for later steps) 
+        # STEP 1: LOAD BASE (must be done before module dependencies can be computed for later steps)
         graph = openerp.modules.graph.Graph()
         graph.add_module(cr, 'base', force)
         if not graph:
@@ -295,7 +428,7 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
 
         # processed_modules: for cleanup step after install
         # loaded_modules: to avoid double loading
-        loaded_modules, processed_modules = load_module_graph(cr, graph, status, perform_checks=(not update_module), report=report)
+        loaded_modules, processed_modules = load_module_graph(cr, graph, status, perform_checks=(not update_module), report=report, registry=registry)
 
         if tools.config['load_language']:
             for lang in tools.config['load_language'].split(','):
@@ -331,11 +464,11 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
         #            offer a consistent system to the second part: installing
         #            newly selected modules.
         states_to_load = ['installed', 'to upgrade']
-        processed = load_marked_modules(cr, graph, states_to_load, force, status, report, loaded_modules)
+        processed = load_marked_modules(cr, graph, states_to_load, force, status, report, loaded_modules, registry)
         processed_modules.extend(processed)
         if update_module:
             states_to_load = ['to install']
-            processed = load_marked_modules(cr, graph, states_to_load, force, status, report, loaded_modules)
+            processed = load_marked_modules(cr, graph, states_to_load, force, status, report, loaded_modules, registry)
             processed_modules.extend(processed)
 
         # load custom models
