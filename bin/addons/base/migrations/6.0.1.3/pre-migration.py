@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+# TODO
+# Removal of modules that are deprecated
+# e.g. report_analytic_line (incorporated in hr_timesheet_invoice)
 
 from osv import osv
 import pooler

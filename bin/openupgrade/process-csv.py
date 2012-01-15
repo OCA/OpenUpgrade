@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
@@ -19,20 +20,38 @@
 #
 ##############################################################################
 
-""" 
+USAGE = """ 
 
     Standalone runnable to analyse two progressive datase layouts from the
     OpenUpgrade server.
 
+        Usage: %(name)s <old.csv> <new.csv>
+
 """
 
-import  copy, csv, re
-keys = ['module', 'operation', 'model', 'field', 'type', 'isfunction', 'relation', 'required', 'selection_keys', 'req_default', 'inherits']
+import  sys, copy, csv, re
+
+keys = [
+    'module',
+    'operation',
+    'model',
+    'field',
+    'type',
+    'isfunction',
+    'relation',
+    'required',
+    'selection_keys',
+    'req_default',
+    'inherits',
+    ]
 
 def readfile(file):
     fields = []
     readfile = csv.reader(open(file, 'rb'), delimiter=',', quotechar='"')
     for row in readfile:
+        if len(row) != len(keys):
+            print "Skip line %s (%s)" % (row, len(row))
+            continue
         col = 0
         field = {}
         for key in keys:
@@ -100,8 +119,12 @@ def report_generic(new, old, attrs):
             if old[attr] != new[attr]:
                 fieldprint(old, new, attr)
 
-k5 = readfile('5.csv')
-k6 = readfile('6.csv')
+if len(sys.argv) != 3:
+    print USAGE % {'name': sys.argv[0]}
+    exit(1)
+
+k5 = readfile(sys.argv[1])
+k6 = readfile(sys.argv[2])
 
 origlen = len(k5)
 

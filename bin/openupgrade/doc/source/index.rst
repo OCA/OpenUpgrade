@@ -13,6 +13,17 @@ Contents:
 Database analysis
 +++++++++++++++++
 
+Below is an example of how you can review the differences between databases that
+different versions of OpenERP generate, using a module based perspective.
+
+The example is based on an upgrade between OpenERP 5 and 6.0, but it works the
+same for 6.0 and 6.1.
+
+As a sidenote, of course you *can* create an upgrade script that skips one or
+more major releases of OpenERP, but such a script will be useless for other
+users and developers of the OpenUpgrade distribution. If you can, please create
+all the intermediate scripts.
+
 Step 1: Setup OpenERP 5 database
 ================================
 

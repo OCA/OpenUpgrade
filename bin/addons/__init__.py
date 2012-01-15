@@ -22,9 +22,11 @@
 
 import os, sys, imp
 from os.path import join as opj
-import types
 import itertools
 import zipimport
+
+import types
+import string
 
 import osv
 import tools
@@ -697,6 +699,124 @@ def load_module_graph(cr, graph, status=None, registry=None, perform_checks=True
             finally:
                 file.close()
 
+    local_registry = {}
+    def get_repr(properties, type='val'):
+        """ 
+        OpenUpgrade: Return the string representation of the model or field
+        for logging purposes 
+        """
+        if type == 'key':
+            props = ['model', 'field']
+        elif type == 'val':
+            props = [
+                'type', 'isfunction', 'relation', 'required', 'selection_keys',
+                'req_default', 'inherits'
+                ]
+        return ','.join([
+                '\"' + string.replace(
+                    string.replace(
+                        properties[prop], '\"', '\''), '\n','')
+                + '\"' for prop in props
+                ])
+
+    def log_model(model):
+        """                                                                                          
+        OpenUpgrade: Store the characteristics of the BaseModel and its fields
+        in the local registry, so that we can compare changes with the
+        main registry
+        """
+
+        # persistent models only
+        if isinstance(model, osv.osv.osv_memory):
+            return
+
+        if model._inherits:
+            properties = { 
+                'model': model._name,
+                'field': '_inherits',
+                'type': '',
+                'isfunction': '',
+                'relation': '',
+                'required': '',
+                'selection_keys': '',
+                'req_default': '',
+                'inherits': unicode(model._inherits),
+                }
+            local_registry[get_repr(properties, 'key')] = get_repr(
+                properties)
+        for k,v  in model._columns.items():
+            properties = { 
+                'model': model._name,
+                'field': k,
+                'type': v._type,
+                'isfunction': (
+                    isinstance(v, osv.fields.function) and 'function' or ''),
+                'relation': (
+                    v._type in ('many2many', 'many2one','one2many')
+                    and v._obj or ''
+                    ),
+                'required': v.required and 'required' or '',
+                'selection_keys': '',
+                'req_default': '',
+                'inherits': '',
+                }
+            if v._type == 'selection':
+                if hasattr(v.selection, "__iter__"):
+                    properties['selection_keys'] = unicode(
+                        sorted([x[0] for x in v.selection]))
+                else:
+                    properties['selection_keys'] = 'function'
+            if v.required and k in model._defaults:
+                if isinstance(model._defaults[k], types.FunctionType):
+                    # todo: in OpenERP 5 (and in 6 as well),
+                    # literals are wrapped in a lambda function.
+                    properties['req_default'] = 'function'
+                else:
+                    properties['req_default'] = unicode(model._defaults[k])
+            local_registry[get_repr(properties, 'key')] = get_repr(
+                properties)
+
+    def compare_registries():
+        """
+        OpenUpgrade: Store the characteristics of the BaseModel and its fields
+        in the local registry, so that we can compare changes with the
+        main registry
+        """
+        for key in sorted(local_registry.keys()):
+            if key in registry:
+                if registry[key] != local_registry[key]:
+                    logger.notifyChannel(
+                        'OpenUpgrade_FIELD', netsvc.LOG_INFO,
+                        '"%s","modify",%s,%s' % (
+                            package.name, key, local_registry[key]))
+            else:
+                logger.notifyChannel(
+                    'OpenUpgrade_FIELD', netsvc.LOG_INFO,
+                    '"%s","create",%s,%s' % (
+                    package.name, key, local_registry[key]))
+            registry[key] = local_registry[key]
+
+    def log_xmlids(cr, package_name):
+        """
+        OpenUpgrade: Log all XMLID's owned by this package.
+        TODO: other modules can really easily add items that 'belong' to
+        another module. Needs deeper digging in the load_data methods.
+
+        Need to pass the cursor, as the one passed to the upper method is
+        closed by now (or it is in OpenERP 6.1).
+        """
+
+        cr.execute(
+            'select model, name from ir_model_data where module=%s '
+            'order by model, name', (package_name,))
+        for res in cr.fetchall():
+            xmlid_repr = ','.join([
+                    "\"" + string.replace(property, '\"', '\'') + "\""
+                    for property in (res[0], res[1], package_name)
+                    ])
+            logger.notifyChannel(
+                'OpenUpgrade_XMLID', netsvc.LOG_INFO, xmlid_repr)
+
     # **kwargs is passed directly to convert_xml_import
     if not status:
         status = {}
@@ -709,14 +829,6 @@ def load_module_graph(cr, graph, status=None, registry=None, perform_checks=True
     modobj = None
     logger.notifyChannel('init', netsvc.LOG_DEBUG, 'loading %d packages..' % len(graph))
 
-    import string
-    def get_repr(properties, type='val'):
-        if type == 'key':
-            props = ['model', 'field']
-        elif type == 'val':
-            props = ['type', 'isfunction', 'relation', 'required', 'selection_keys', 'req_default', 'inherits']
-        return ','.join(["\"" + string.replace(properties[prop], '\"', '\'') + "\"" for prop in props])
-
     for package in graph:
         if skip_modules and package.name in skip_modules:
             continue
@@ -725,56 +837,14 @@ def load_module_graph(cr, graph, status=None, registry=None, perform_checks=True
         register_class(package.name)
         modules = pool.instanciate(package.name, cr)
 
-        logger.notifyChannel('OpenUpgrade_FIELD', netsvc.LOG_INFO, 'module %s' % (package.name))
-        local_registry = {}
-        for orm_object in osv.orm.orm:
-            if orm_object._inherits:
-                properties = { 
-                    'model': orm_object._name,
-                    'field': '_inherits',
-                    'type': '',
-                    'isfunction': '',
-                    'relation': '',
-                    'required': '',
-                    'selection_keys': '',
-                    'req_default': '',
-                    'inherits': unicode(orm_object._inherits),
-                    }
-                local_registry[get_repr(properties, 'key')] = get_repr(properties)
-            for k,v  in orm_object._columns.items():
-                properties = { 
-                    'model': orm_object._name,
-                    'field': k,
-                    'type': v._type,
-                    'isfunction': isinstance(v, osv.fields.function) and 'function' or '',
-                    'relation': v._type in ('many2many', 'many2one','one2many') and v._obj or '',
-                    'required': v.required and 'required' or '',
-                    'selection_keys': '',
-                    'req_default': '',
-                    'inherits': '',
-                    }
-                if v._type == 'selection':
-                    if hasattr(v.selection, "__iter__"):
-                        properties['selection_keys'] = unicode(sorted([x[0] for x in v.selection]))
-                    else:
-                        properties['selection_keys'] = 'function'
-                if v.required and k in orm_object._defaults:
-                    if isinstance(orm_object._defaults[k], types.FunctionType):
-                        # todo: in OpenERP 5 (and in 6 as well), even constants are a lambda function
-                        # the content of which is very informative
-                        properties['req_default'] = 'function'
-                    else:
-                        properties['req_default'] = unicode(orm_object._defaults[k])
-                local_registry[get_repr(properties, 'key')] = get_repr(properties)
-        for key in sorted(local_registry.keys()):
-            if key in registry:
-                if registry[key] != local_registry[key]:
-                    logger.notifyChannel('OpenUpgrade_FIELD', netsvc.LOG_INFO, '"%s","modify",%s,%s' % (package.name, key, local_registry[key]))
-            else:
-                logger.notifyChannel('OpenUpgrade_FIELD', netsvc.LOG_INFO, '"%s","create",%s,%s' % (package.name, key, local_registry[key]))
-            registry[key] = local_registry[key]
-                       
         if hasattr(package, 'init') or hasattr(package, 'update') or package.state in ('to install', 'to upgrade'):
+            # OpenUpgrade: add this module's models to the registry
+            logger.notifyChannel('OpenUpgrade_FIELD', netsvc.LOG_INFO, 'module %s' % (package.name))
+            local_registry = {}
+            for model in osv.orm.orm:
+                log_model(model)
+            compare_registries()
+
             init_module_objects(cr, package.name, modules)
         cr.commit()
 
@@ -837,11 +907,7 @@ def load_module_graph(cr, graph, status=None, registry=None, perform_checks=True
                     delattr(package, kind)
 
         statusi += 1
-        cr.execute('select model, name from ir_model_data where module=%s order by model, name', (package.name,))
-        for res in cr.fetchall():
-            xmlid_repr = ','.join(["\"" + string.replace(property, '\"', '\'') + "\"" for property in (res[0], res[1], package.name)])
-            logger.notifyChannel('XMLID dump', netsvc.LOG_INFO, xmlid_repr)
-
+        log_xmlids(cr, package.name) # OpenUpgrade
     cr.commit()
 
     return processed_modules
