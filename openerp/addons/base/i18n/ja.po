@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-server\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-12-22 20:22+0000\n"
-"PO-Revision-Date: 2012-02-02 02:57+0000\n"
+"PO-Revision-Date: 2012-02-03 05:35+0000\n"
 "Last-Translator: Akira Hiyama <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-02-02 05:58+0000\n"
+"X-Launchpad-Export-Date: 2012-02-03 05:37+0000\n"
 "X-Generator: Launchpad (build 14738)\n"
 
 #. module: base
@@ -1537,12 +1537,12 @@ msgstr "見積り要求や仕入先請求書といった購入関係のプロセ
 msgid ""
 "If you check this box, your customized translations will be overwritten and "
 "replaced by the official ones."
-msgstr "このチェックボックスをクリックすると、あなたのカスタマイズされた翻訳は公式のそれによって置き換えられ上書きされます。"
+msgstr "このチェックボックスをクリックすると、カスタマイズされた翻訳は公式のそれによって置き換えられ上書きされます。"
 
 #. module: base
 #: field:ir.actions.report.xml,report_rml:0
 msgid "Main report file path"
-msgstr "主要のレポートファイルパス"
+msgstr "主要のレポートファイルのパス"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.ir_action_report_xml
@@ -1557,7 +1557,7 @@ msgstr "レポート"
 msgid ""
 "If set to true, the action will not be displayed on the right toolbar of a "
 "form view."
-msgstr "Trueにセットした場合、このアクションはフォームビューの右のツールバー上に表示されなくなります。"
+msgstr "True にセットすると、このアクションはフォームビューの右のツールバー上に表示されなくなります。"
 
 #. module: base
 #: field:workflow,on_create:0
@@ -1655,12 +1655,12 @@ msgstr "エクスポート翻訳"
 msgid ""
 "Do not display this log if it belongs to the same object the user is working "
 "on"
-msgstr ""
+msgstr "もしそれが、ユーザが作業中の同じオブジェクトに属しているなら、このログを表示しないで下さい。"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_lu
 msgid "Luxembourg - Accounting"
-msgstr ""
+msgstr "ルクセンブルグ - 会計"
 
 #. module: base
 #: model:res.country,name:base.tp
@@ -1684,6 +1684,18 @@ msgid ""
 "%(user_signature)s\n"
 "%(company_name)s"
 msgstr ""
+"日付 : %(date)s\n"
+"\n"
+"%(partner_name)s 様、\n"
+"\n"
+"お支払いいただいていない請求書を添付いたしました。合計金額をご確認下さい。\n"
+"\n"
+"%(followup_amount).2f %(company_currency)s\n"
+"\n"
+"それではよろしくお願いいたします。\n"
+"--\n"
+"%(user_signature)s\n"
+"%(company_name)s"
 
 #. module: base
 #: model:ir.module.module,description:base.module_share
@@ -1705,11 +1717,24 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"このモジュールはOpenERPデータベースに一般的な共有ツールを加えます。\n"
+"========================================================================\n"
+"\n"
+"同僚、顧客、友人などとOpenERPのどんな種類のデータでも共有することを可能にするための\n"
+"共有ボタンをWebクライアントに追加します。\n"
+"\n"
+"その場で新しいユーザとグループを作成し、ユーザは共有されたデータのみにアクセスすることを\n"
+"保証するための適切なアクセス権限と ir.rules を結びつけることで、システムは機能します。\n"
+"\n"
+"これは共同作業、知識共有、他社との同期化などに非常に役立ちます。\n"
+"\n"
+"    "
 
 #. module: base
 #: field:res.currency,accuracy:0
 msgid "Computational Accuracy"
-msgstr "計算の精度"
+msgstr "計算精度"
 
 #. module: base
 #: model:ir.module.module,description:base.module_lunch
@@ -1721,11 +1746,17 @@ msgid ""
 "    Apply Different Category for the product.\n"
 "    "
 msgstr ""
+"\n"
+"    昼食を管理するための基本モジュール\n"
+"\n"
+"    ランチオーダー、現金移動、現金ボックス、商品の追跡を続けます。\n"
+"    商品のために異なったカテゴリを適用します。\n"
+"    "
 
 #. module: base
 #: model:res.country,name:base.kg
 msgid "Kyrgyz Republic (Kyrgyzstan)"
-msgstr ""
+msgstr "キルギス共和国"
 
 #. module: base
 #: model:ir.model,name:base.model_wizard_ir_model_menu_create_line
@@ -1735,7 +1766,7 @@ msgstr ""
 #. module: base
 #: field:ir.attachment,res_id:0
 msgid "Attached ID"
-msgstr ""
+msgstr "添付ID"
 
 #. module: base
 #: model:ir.module.module,description:base.module_base_vat
@@ -1778,11 +1809,34 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"パートナの付加価値税(VAT)番号によるVATの検査\n"
+"========================================\n"
+"\n"
+"このモジュールをインストールした後、パートナのVATフィールドに入力された値が\n"
+"サポート対象国として正当であるか検査されます。国はVAT番号の先頭2文字の国コードから推定されます。\n"
+"例えば、VAT番号が 'BE0477472701' であればベルギーの規則を使用して検査されます。\n"
+"\n"
+"VAT番号の検査レベルは異なった2つのレベルがあります：\n"
+"\n"
+" ・ デフォルトでは国のための知られている検査ルール、通常は簡単なチェックディジットを\n"
+"　　使って簡便なオフラインチェックが実行されます。これは簡単でいつでも利用できますが、\n"
+"　　割り当て済みの番号や正しくない値を許してしまいます。\n"
+" ・ 'VAT VIES Check' オプションが使用可能（ユーザの会社のコンフィギュレーションにある）な\n"
+"　　時は、VAT番号はEU VIESデータベースに問い合わせて、その番号がEU会社として実際に割り当て\n"
+"　　られているかを検査します。これは単純なオフラインチェックに比較して多少時間がかり、\n"
+"　　インターネット接続も必要です。全ての時間に利用可能ではないため、サービスが利用可能でき\n"
+"　　ない時や対象外の国（例えば非EU国）の場合は、簡便なチェックが代わりに実行されます。\n"
+"\n"
+"サポートされている国は現在、EU諸国、およびチリ、コロンビア、メキシコ、ノルウェー、ロシア\n"
+"など非EU諸国が含まれています。サポートされていない国では、国コードのみが検査されます。\n"
+"\n"
+"    "
 
 #. module: base
 #: view:ir.sequence:0
 msgid "Day: %(day)s"
-msgstr ""
+msgstr "日: %(day)s"
 
 #. module: base
 #: model:ir.module.category,description:base.module_category_point_of_sale
@@ -1790,7 +1844,7 @@ msgid ""
 "Helps you get the most out of your points of sales with fast sale encoding, "
 "simplified payment mode encoding, automatic picking lists generation and "
 "more."
-msgstr ""
+msgstr "迅速な販売のコード化、単純化された支払モードのコード化、自動採取リストの生成などにより、販売時点管理の大きな手助けを行います。"
 
 #. module: base
 #: model:res.country,name:base.mv
@@ -1812,6 +1866,17 @@ msgid ""
 "The managers can obtain an easy view of best ideas from all the users.\n"
 "Once installed, check the menu 'Ideas' in the 'Tools' main menu."
 msgstr ""
+"\n"
+"This module allows your user to easily and efficiently participate in "
+"enterprise innovation.\n"
+"============================================================================="
+"===============\n"
+"\n"
+"It allows everybody to express ideas about different subjects.\n"
+"Then, other users can comment on these ideas and vote for particular ideas.\n"
+"Each idea has a score based on the different votes.\n"
+"The managers can obtain an easy view of best ideas from all the users.\n"
+"Once installed, check the menu 'Ideas' in the 'Tools' main menu."
 
 #. module: base
 #: model:ir.module.module,description:base.module_project_caldav
@@ -1824,6 +1889,13 @@ msgid ""
 "on a remote server.\n"
 "    "
 msgstr ""
+"\n"
+"Synchronization between Project Task and Caldav Vtodo.\n"
+"======================================================\n"
+"\n"
+"With the Caldav functionality you can get access to scheduling information\n"
+"on a remote server.\n"
+"    "
 
 #. module: base
 #: model:ir.model,name:base.model_ir_rule
@@ -1833,7 +1905,7 @@ msgstr ""
 #. module: base
 #: selection:ir.cron,interval_type:0
 msgid "Days"
-msgstr ""
+msgstr "日"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_rpc
@@ -1843,44 +1915,44 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_html_view
 msgid "Html View"
-msgstr ""
+msgstr "HTMLビュー"
 
 #. module: base
 #: field:res.currency,position:0
 msgid "Symbol position"
-msgstr ""
+msgstr "記号の位置"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_process
 msgid "Enterprise Process"
-msgstr ""
+msgstr "事業プロセス"
 
 #. module: base
 #: help:ir.cron,function:0
 msgid "Name of the method to be called when this job is processed."
-msgstr ""
+msgstr "このジョブが実行される時に呼ばれるメソッドの名前"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_evaluation
 msgid "Employee Appraisals"
-msgstr ""
+msgstr "従業員評価"
 
 #. module: base
 #: selection:ir.actions.server,state:0
 msgid "Write Object"
-msgstr ""
+msgstr "書き込みオブジェクト"
 
 #. module: base
 #: code:addons/base/res/res_company.py:66
 #: code:addons/base/res/res_partner.py:174
 #, python-format
 msgid " (copy)"
-msgstr ""
+msgstr " （コピー）"
 
 #. module: base
 #: field:res.company,rml_footer1:0
 msgid "General Information Footer"
-msgstr ""
+msgstr "一般的な情報フッター"
 
 #. module: base
 #: view:res.lang:0
@@ -1892,27 +1964,27 @@ msgstr ""
 #: view:res.partner.category:0
 #: field:res.partner.category,partner_ids:0
 msgid "Partners"
-msgstr ""
+msgstr "パートナ"
 
 #. module: base
 #: field:res.partner.category,parent_left:0
 msgid "Left parent"
-msgstr ""
+msgstr "左括弧"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_project_mrp
 msgid "Create Tasks on SO"
-msgstr ""
+msgstr "タスク作成（セールスオーダー）"
 
 #. module: base
 #: field:ir.attachment,res_model:0
 msgid "Attached Model"
-msgstr ""
+msgstr "添付モデル"
 
 #. module: base
 #: field:res.partner.bank,footer:0
 msgid "Display on Reports"
-msgstr ""
+msgstr "表示（レポート）"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_cn
@@ -1935,33 +2007,33 @@ msgstr ""
 #: field:res.request,priority:0
 #: field:res.request.link,priority:0
 msgid "Priority"
-msgstr ""
+msgstr "優先度"
 
 #. module: base
 #: field:workflow.transition,act_from:0
 msgid "Source Activity"
-msgstr ""
+msgstr "ソースアクティビティ"
 
 #. module: base
 #: view:ir.sequence:0
 msgid "Legend (for prefix, suffix)"
-msgstr ""
+msgstr "凡例（prefix、suffix用）"
 
 #. module: base
 #: selection:ir.server.object.lines,type:0
 msgid "Formula"
-msgstr ""
+msgstr "式"
 
 #. module: base
 #: code:addons/base/res/res_users.py:395
 #, python-format
 msgid "Can not remove root user!"
-msgstr ""
+msgstr "rootユーザは取り除くことはできません。"
 
 #. module: base
 #: model:res.country,name:base.mw
 msgid "Malawi"
-msgstr ""
+msgstr "マラウイ"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_ec
@@ -1975,6 +2047,13 @@ msgid ""
 "Accounting chart and localization for Ecuador.\n"
 "    "
 msgstr ""
+"\n"
+"これはエクアドルのためのOpenERPの会計チャートを管理するためのベースモジュールです。\n"
+"============================================================================="
+"=\n"
+"\n"
+"エクアドル用の会計チャートとローカリゼーション\n"
+"    "
 
 #. module: base
 #: code:addons/base/ir/ir_filters.py:38
@@ -1987,12 +2066,12 @@ msgstr ""
 #. module: base
 #: field:res.partner.address,type:0
 msgid "Address Type"
-msgstr ""
+msgstr "アドレスの種類"
 
 #. module: base
 #: view:ir.ui.menu:0
 msgid "Full Path"
-msgstr ""
+msgstr "フルパス"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_br
@@ -2042,7 +2121,7 @@ msgstr ""
 #. module: base
 #: view:res.request:0
 msgid "References"
-msgstr ""
+msgstr "リファレンス"
 
 #. module: base
 #: view:res.lang:0
@@ -2055,12 +2134,12 @@ msgstr ""
 #. module: base
 #: view:ir.ui.view:0
 msgid "Advanced"
-msgstr ""
+msgstr "高度"
 
 #. module: base
 #: model:res.country,name:base.fi
 msgid "Finland"
-msgstr ""
+msgstr "フィンランド"
 
 #. module: base
 #: code:addons/base/res/res_company.py:156
@@ -11374,7 +11453,7 @@ msgstr ""
 #. module: base
 #: field:res.partner.category,parent_right:0
 msgid "Right parent"
-msgstr ""
+msgstr "右括弧"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_auth_openid
