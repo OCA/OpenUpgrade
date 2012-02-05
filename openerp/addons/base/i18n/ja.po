@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-server\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-12-22 20:22+0000\n"
-"PO-Revision-Date: 2012-02-04 04:12+0000\n"
+"PO-Revision-Date: 2012-02-04 21:55+0000\n"
 "Last-Translator: Akira Hiyama <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-02-04 05:28+0000\n"
+"X-Launchpad-Export-Date: 2012-02-05 04:48+0000\n"
 "X-Generator: Launchpad (build 14738)\n"
 
 #. module: base
@@ -2763,29 +2763,22 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"このモジュールはThis module implements all concepts defined by the Getting Things "
-"Done methodology.\n"
+"このモジュールはGetting Things Done（GDT）方法論によって定義されたすべての概念を実行します。\n"
 "============================================================================="
 "======\n"
 "\n"
-"This module implements a simple personnal Todo list based on tasks. It adds "
-"in\n"
-"the project application an editable list of tasks simplified to the minimum\n"
-"required fields.\n"
+"このモジュールはタスクに基づく単純な個人のToDoリストを備えています。\n"
+"それは最小限必要とされる項目をプロジェクトアプリケーションの中に単純化された編集可能な\n"
+"タスクリストを加えます。\n"
 "\n"
-"The todo list is based on the GTD methodology. This world-wide used "
-"methodology\n"
-"is used for personal time management improvement.\n"
+"ToDoリストはGDT方法論をベースとしています。この世界中で使われる方法論は個人の時間の\n"
+"管理の改良のために使われます。\n"
 "\n"
-"Getting Things Done (commonly abbreviated as GTD) is an action management\n"
-"method created by David Allen, and described in a book of the same name.\n"
+"GDTはDavid Allenにより作成された行動管理の方法です。そして、同名の本で説明されています。\n"
 "\n"
-"GTD rests on the principle that a person needs to move tasks out of the mind "
-"by\n"
-"recording them externally. That way, the mind is freed from the job of\n"
-"remembering everything that needs to be done, and can concentrate on "
-"actually\n"
-"performing those tasks.\n"
+"GDTは人間は外部に記録することによって、気持ちの外にタスクを移動させることが必要であると\n"
+"いう原則に基づいています。これによって、終えなければならない仕事の全てを覚えておかねば\n"
+"ならない気持ちから開放され、現在の仕事に集中することができます。\n"
 "    "
 
 #. module: base
@@ -2806,14 +2799,14 @@ msgstr "SMS - ゲートウェイ：clickatell"
 #. module: base
 #: view:ir.actions.server:0
 msgid "Field Mappings"
-msgstr ""
+msgstr "項目マッピング"
 
 #. module: base
 #: code:addons/base/publisher_warranty/publisher_warranty.py:125
 #: code:addons/base/publisher_warranty/publisher_warranty.py:163
 #, python-format
 msgid "Error during communication with the publisher warranty server."
-msgstr ""
+msgstr "発行人保証サーバとの通信途中のエラー"
 
 #. module: base
 #: model:res.groups,name:base.group_sale_manager
@@ -2844,29 +2837,29 @@ msgstr ""
 #. module: base
 #: field:ir.server.object.lines,col1:0
 msgid "Destination"
-msgstr ""
+msgstr "目的地"
 
 #. module: base
 #: model:res.country,name:base.lt
 msgid "Lithuania"
-msgstr ""
+msgstr "リトアニア"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_view_partner_clear_ids
 #: model:ir.model,name:base.model_partner_clear_ids
 #: view:partner.clear.ids:0
 msgid "Clear IDs"
-msgstr ""
+msgstr "IDのクリア"
 
 #. module: base
 #: view:res.groups:0
 msgid "Inherited"
-msgstr ""
+msgstr "継承"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_chart
 msgid "Template of Charts of Accounts"
-msgstr ""
+msgstr "会計チャートのテンプレート"
 
 #. module: base
 #: model:ir.module.module,description:base.module_pad_project
@@ -2876,18 +2869,22 @@ msgid ""
 "==================================================\n"
 "    "
 msgstr ""
+"\n"
+"このモジュールはPADを全てのプロジェクトのかんばんビューに加えます。\n"
+"==================================================\n"
+"    "
 
 #. module: base
 #: model:ir.module.category,description:base.module_category_report_designer
 msgid ""
 "Lets you install various tools to simplify and enhance OpenERP's report "
 "creation."
-msgstr ""
+msgstr "OpenERPのレポート作成を単純化して拡張させるための各種ツールをインストールします。"
 
 #. module: base
 #: view:res.lang:0
 msgid "%y - Year without century [00,99]."
-msgstr ""
+msgstr "%y - ２桁の年[00,99]."
 
 #. module: base
 #: code:addons/base/res/res_company.py:155
@@ -2898,25 +2895,25 @@ msgstr ""
 #. module: base
 #: model:res.country,name:base.si
 msgid "Slovenia"
-msgstr ""
+msgstr "スロベニア"
 
 #. module: base
 #: help:res.currency,name:0
 msgid "Currency Code (ISO 4217)"
-msgstr ""
+msgstr "通貨コード（ISO 4217）"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.res_log_act_window
 #: model:ir.ui.menu,name:base.menu_res_log_act_window
 msgid "Client Logs"
-msgstr ""
+msgstr "顧客ログ"
 
 #. module: base
 #: code:addons/orm.py:1850
 #: code:addons/orm.py:1861
 #, python-format
 msgid "Invalid Object Architecture!"
-msgstr ""
+msgstr "無効なオブジェクトアーキテクチャです。"
 
 #. module: base
 #: model:ir.module.module,description:base.module_product_margin
@@ -2930,6 +2927,12 @@ msgid ""
 "The wizard to launch the report has several options to help you get the data "
 "you need.\n"
 msgstr ""
+"\n"
+"請求書に基づき、販売、購入、マージン、他の興味深いインジケーターを計算するレポートメニューを追加します。========================="
+"============================================================================="
+"=======================\n"
+"\n"
+"このレポートを起動するウィザードは、あなたが必要とするデータを手に入れるための幾つかのオプションを持っています。\n"
 
 #. module: base
 #: code:addons/base/ir/ir_model.py:330
@@ -2941,37 +2944,37 @@ msgstr ""
 #: code:addons/base/module/wizard/base_update_translations.py:38
 #, python-format
 msgid "Error!"
-msgstr ""
+msgstr "エラー"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_fr_rib
 msgid "French RIB Bank Details"
-msgstr ""
+msgstr "フランスの銀行口座証明書（RIB）の詳細"
 
 #. module: base
 #: view:res.lang:0
 msgid "%p - Equivalent of either AM or PM."
-msgstr ""
+msgstr "%p - AMやPMと同等なもの"
 
 #. module: base
 #: view:ir.actions.server:0
 msgid "Iteration Actions"
-msgstr ""
+msgstr "反復アクション"
 
 #. module: base
 #: help:multi_company.default,company_id:0
 msgid "Company where the user is connected"
-msgstr ""
+msgstr "ユーザが関連している会社"
 
 #. module: base
 #: field:publisher_warranty.contract,date_stop:0
 msgid "Ending Date"
-msgstr ""
+msgstr "終了日"
 
 #. module: base
 #: model:res.country,name:base.nz
 msgid "New Zealand"
-msgstr ""
+msgstr "ニュージーランド"
 
 #. module: base
 #: code:addons/orm.py:3860
@@ -2979,7 +2982,7 @@ msgstr ""
 msgid ""
 "One of the records you are trying to modify has already been deleted "
 "(Document type: %s)."
-msgstr ""
+msgstr "更新しようとしたレコードの一つは既に削除されています（ドキュメントタイプ： %s）。"
 
 #. module: base
 #: model:ir.actions.act_window,help:base.action_country
@@ -2988,54 +2991,56 @@ msgid ""
 "partner records. You can create or delete countries to make sure the ones "
 "you are working on will be maintained."
 msgstr ""
+"あなたのパートナのレコードに割り当てることができる全ての国のリストを表示、管理して下さい。あなたは維持を行うためにこれらの国の作成や削除をすることができま"
+"す。"
 
 #. module: base
 #: model:res.country,name:base.nf
 msgid "Norfolk Island"
-msgstr ""
+msgstr "ノーフォーク島"
 
 #. module: base
 #: selection:base.language.install,lang:0
 msgid "Korean (KR) / 한국어 (KR)"
-msgstr ""
+msgstr "韓国"
 
 #. module: base
 #: help:ir.model.fields,model:0
 msgid "The technical name of the model this field belongs to"
-msgstr ""
+msgstr "この項目が属するモデルの専門的名前"
 
 #. module: base
 #: field:ir.actions.server,action_id:0
 #: selection:ir.actions.server,state:0
 msgid "Client Action"
-msgstr ""
+msgstr "顧客行動"
 
 #. module: base
 #: model:res.country,name:base.bd
 msgid "Bangladesh"
-msgstr ""
+msgstr "バングラデシュ"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_project_retro_planning
 msgid "Project Retro-planning"
-msgstr ""
+msgstr "プロジェクトレトロ - 計画"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_stock_planning
 msgid "Master Procurement Schedule"
-msgstr ""
+msgstr "マスター獲得スケジュール"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_module_category
 #: field:ir.module.module,application:0
 #: field:res.groups,category_id:0
 msgid "Application"
-msgstr ""
+msgstr "アプリケーション"
 
 #. module: base
 #: selection:publisher_warranty.contract,state:0
 msgid "Valid"
-msgstr ""
+msgstr "有効"
 
 #. module: base
 #: model:ir.module.module,description:base.module_decimal_precision
@@ -3048,6 +3053,12 @@ msgid ""
 "\n"
 "The decimal precision is configured per company.\n"
 msgstr ""
+"\n"
+"あなたが必要とする異なった用途の価格を正確に設定してください：会計、販売、購入など\n"
+"============================================================================="
+"=========================\n"
+"\n"
+"小数精度は会社ごとに設定されています。\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_pl
@@ -3065,22 +3076,33 @@ msgid ""
 "że wszystkie towary są w obrocie hurtowym.\n"
 "    "
 msgstr ""
+"\n"
+"これはOpenERPのポーランド用の会計表と税金の管理モジュールです。\n"
+"============================================================================="
+"=====\n"
+"\n"
+"To jest moduł do tworzenia wzorcowego planu kont i podstawowych ustawień do "
+"podatków\n"
+"VAT 0%, 7% i 22%. Moduł ustawia też konta do kupna i sprzedaży towarów "
+"zakładając,\n"
+"że wszystkie towary są w obrocie hurtowym.\n"
+"    "
 
 #. module: base
 #: field:ir.actions.client,params_store:0
 msgid "Params storage"
-msgstr ""
+msgstr "ストレージのパラメータ"
 
 #. module: base
 #: code:addons/base/module/module.py:398
 #, python-format
 msgid "Can not upgrade module '%s'. It is not installed."
-msgstr ""
+msgstr "モジュール '%s' はインストールされていないためアップグレードできません。"
 
 #. module: base
 #: model:res.country,name:base.cu
 msgid "Cuba"
-msgstr ""
+msgstr "キューバ"
 
 #. module: base
 #: model:ir.module.module,description:base.module_crm_profiling
@@ -3100,12 +3122,25 @@ msgid ""
 "since it's the same which has been renamed.\n"
 "    "
 msgstr ""
+"\n"
+"This module allows users to perform segmentation within partners.\n"
+"=================================================================\n"
+"\n"
+"It uses the profiles criteria from the earlier segmentation module and "
+"improve it. Thanks to the new concept of questionnaire. You can now regroup "
+"questions into a questionnaire and directly use it on a partner.\n"
+"\n"
+"It also has been merged with the earlier CRM & SRM segmentation tool because "
+"they were overlapping.\n"
+"\n"
+"    ・ メモ： それはリネームされたのでこのモジュールはモジュール分割と互換性はありません。\n"
+"    "
 
 #. module: base
 #: code:addons/report_sxw.py:435
 #, python-format
 msgid "Unknown report type: %s"
-msgstr ""
+msgstr "定義されていないレポートタイプです： %s"
 
 #. module: base
 #: code:addons/base/ir/ir_model.py:277
