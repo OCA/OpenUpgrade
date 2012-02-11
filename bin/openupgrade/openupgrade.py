@@ -5,7 +5,7 @@ import logging
 import tools
 from os.path import join as opj
 
-logger = logging.getLogger('migrate')
+logger = logging.getLogger('OpenUpgrade')
 
 def load_xml(cr, m, filename, idref=None, mode='init'):
     """
@@ -98,12 +98,43 @@ def set_defaults(cr, pool, default_spec):
                             logger.info("model %s, field %s, id %d: no create_uid defined or user does not exist anymore",
                                      (model, field, id))
             else:
-                logger.error("OpenUpgrade: error setting default, field %s with " +
-                          "None default value not in %s' _defaults",
-                          (field, model))
+                error = ("OpenUpgrade: error setting default, field %s with "
+                         "None default value not in %s' _defaults" % (
+                        field, model))
+                logger.error(error)
                 # this exeption seems to get lost in a higher up try block
-                osv.except_osv("Migration: error setting default, field " +
-                               "%s with None default value not in %s' _defaults" %
-                               (field, model), "")
+                osv.except_osv("OpenUpgrade", error)
         else:
             write_value(ids, field, value)
+
+    def logged_query(cr, query, args):
+        res = cr.execute(query, module)
+        if not res:
+            query = query % module
+            logger.warn('No rows affected for query "%s"', query)
+        return res
+
+    def update_module_names(cr, namespec):
+        """
+        Deal with changed module names of certified modules
+        in order to prevent  'certificate not unique' error
+
+        :param namespec: tuple of (name, certificate)
+        """
+        for module in namespec:
+            query = ("UPDATE ir_module_module SET name = %s "
+                     "WHERE certificate = %s")
+            logged_query(cr, query, module)
+
+    def add_ir_model_fields(cr, columnspec):
+        """
+        Typically, new columns on ir_model_fields need to be added in a very
+        early stage in the upgrade process of the base module, in raw sql
+        as they need to be in place before any model gets initialized.
+
+        :param columnspec: tuple of (column name, column type)
+        """
+        for column in namespec:
+            query = 'ALTER TABLE ir_model_fields ADD COLUMN %s %s' % (
+                column)
+            logged_query(cr, query, [])
