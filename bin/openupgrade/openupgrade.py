@@ -7,6 +7,14 @@ from os.path import join as opj
 
 logger = logging.getLogger('OpenUpgrade')
 
+__all__ = [
+    'load_xml',
+    'rename_columns',
+    'set_defaults',
+    'update_module_names',
+    'add_ir_model_fields',
+]    
+
 def load_xml(cr, m, filename, idref=None, mode='init'):
     """
     Load an xml data file from your post script.
@@ -106,35 +114,35 @@ def set_defaults(cr, pool, default_spec):
                 osv.except_osv("OpenUpgrade", error)
         else:
             write_value(ids, field, value)
+    
+def logged_query(cr, query, args):
+    res = cr.execute(query, args)
+    if not res:
+        query = query % args
+        logger.warn('No rows affected for query "%s"', query)
+    return res
 
-    def logged_query(cr, query, args):
-        res = cr.execute(query, module)
-        if not res:
-            query = query % module
-            logger.warn('No rows affected for query "%s"', query)
-        return res
-
-    def update_module_names(cr, namespec):
-        """
-        Deal with changed module names of certified modules
-        in order to prevent  'certificate not unique' error
-
-        :param namespec: tuple of (name, certificate)
-        """
-        for module in namespec:
-            query = ("UPDATE ir_module_module SET name = %s "
-                     "WHERE certificate = %s")
-            logged_query(cr, query, module)
-
-    def add_ir_model_fields(cr, columnspec):
-        """
-        Typically, new columns on ir_model_fields need to be added in a very
-        early stage in the upgrade process of the base module, in raw sql
-        as they need to be in place before any model gets initialized.
-
-        :param columnspec: tuple of (column name, column type)
-        """
-        for column in namespec:
-            query = 'ALTER TABLE ir_model_fields ADD COLUMN %s %s' % (
-                column)
-            logged_query(cr, query, [])
+def update_module_names(cr, namespec):
+    """
+    Deal with changed module names of certified modules
+    in order to prevent  'certificate not unique' error
+    
+    :param namespec: tuple of (name, certificate)
+    """
+    for module in namespec:
+        query = ("UPDATE ir_module_module SET name = %s "
+                 "WHERE certificate = %s")
+        logged_query(cr, query, module)
+        
+def add_ir_model_fields(cr, columnspec):
+    """
+    Typically, new columns on ir_model_fields need to be added in a very
+    early stage in the upgrade process of the base module, in raw sql
+    as they need to be in place before any model gets initialized.
+    
+    :param columnspec: tuple of (column name, column type)
+    """
+    for column in columnspec:
+        query = 'ALTER TABLE ir_model_fields ADD COLUMN %s %s' % (
+            column)
+        logged_query(cr, query, [])
