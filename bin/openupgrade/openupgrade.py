@@ -5,6 +5,8 @@ import logging
 import tools
 from os.path import join as opj
 
+__all__ = ['load_xml', 'rename_columns', 'set_defaults']
+
 logger = logging.getLogger('migrate')
 
 def load_xml(cr, m, filename, idref=None, mode='init'):
