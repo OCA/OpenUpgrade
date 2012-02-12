@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-server\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 00:44+0000\n"
-"PO-Revision-Date: 2012-02-10 21:36+0000\n"
+"PO-Revision-Date: 2012-02-11 06:36+0000\n"
 "Last-Translator: zmmaj <Unknown>\n"
 "Language-Team: Serbian latin <sr@latin@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-02-11 05:07+0000\n"
+"X-Launchpad-Export-Date: 2012-02-12 04:42+0000\n"
 "X-Generator: Launchpad (build 14771)\n"
 
 #. module: base
@@ -922,6 +922,8 @@ msgid ""
 "The module adds google contact in partner address and add google calendar "
 "events details in Meeting"
 msgstr ""
+"MOdul dodaje google kontakt u partnerovu adresu, takodje dodaje i google "
+"kalendar dogadjaja u Upoznavanja."
 
 #. module: base
 #: view:res.users:0
@@ -941,6 +943,15 @@ msgid ""
 "delete on objects and can check logs.\n"
 "    "
 msgstr ""
+"\n"
+"Ovaj modul omogućava Administratorima da prate svaku korisničku radnju nad "
+"svim objektima sistema.\n"
+"============================================================================="
+"===================\n"
+"\n"
+"Administrator može da doda pravila čitanja, pisanje i\n"
+"da btiše po objektima kao i da proverava logove i dnevnike.\n"
+"    "
 
 #. module: base
 #: model:res.partner.category,name:base.res_partner_category_4
@@ -1057,6 +1068,11 @@ msgid ""
 "If Value type is selected, the value will be used directly without "
 "evaluation."
 msgstr ""
+"Izraz koji sadrži specifikaciju vrednosti. \n"
+"Kada je iyabran Tip Formule, ovo polje može biti Python izraz koji može "
+"koristi ime iste vrednosti  za uslovno polje radnje na serveru.\n"
+"Ako je izabran Tip Vrednosti, vrednost će biti korištena direktno bez ikakve "
+"evolucije."
 
 #. module: base
 #: model:res.country,name:base.ad
@@ -1198,6 +1214,23 @@ msgid ""
 "At the end of the month, the planning manager can also check if the encoded "
 "timesheets are respecting the planned time on each analytic account.\n"
 msgstr ""
+"Čuva liniju tvojeg planiranja.\n"
+"Ovaj modul ti olakšava u rukovođenju tvojih planiranja.\n"
+"================================================\n"
+"\n"
+"Ovaj modul je baziran na raćunovodstvenoj analitici i potpuno je integrisan "
+"sa\n"
+"*Karnetima\n"
+"*Upravljanje odmorima\n"
+"*Rukovođenje projektima\n"
+"\n"
+"Tako da, svaki rukovodilac odeljenja može znati ako  neko iz njegovog tima "
+"ima još uvek neraspoređeno vreme za dato planiranje ( uzimajući u obzir "
+"njegovo vreme), ili treba da dovrši još neki posao.\n"
+"\n"
+"Na kraju meseca, Menadžer Planiranja može takođe da proveri, da li se "
+"poklapaju popunjeni karneti sa planiranim vremenom za svaku analitičku "
+"karticu.\n"
 
 #. module: base
 #: selection:ir.property,type:0
@@ -1246,6 +1279,9 @@ msgid ""
 "Lauchpad's web interface (Rosetta). If you need to perform mass translation, "
 "Launchpad also allows uploading full .po files at once"
 msgstr ""
+"Ako želite unaprediti službene prevode koristite Lauchpad internet interfejs "
+"(Rosetta). Ukoliko želite da uradite masovno prevođenje, Launchpad takođe "
+"omogućava učitavanje svih .po datoteka odjednom."
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -1390,6 +1426,10 @@ msgid ""
 "use the accounting application of OpenERP, journals and accounts will be "
 "created automatically based on these data."
 msgstr ""
+"Konfigutišite bankovne račune kompanije i izaberite one koji se moraju "
+"pojaviti na dnu Izveštaja. Možete promeniti raspored bankovnih računa u "
+"pregledu liste. Ako koristite OpenERP tačunovodstvenu aplikaciju, dnevnici i "
+"nalozi će biti automatski kreirani bazirani na ovim podacima."
 
 #. module: base
 #: view:ir.module.module:0
@@ -1463,6 +1503,9 @@ msgid ""
 "        OpenERP Web gantt chart view.\n"
 "        "
 msgstr ""
+"\n"
+"        OpenERP Web gantogram prikaz.\n"
+"        "
 
 #. module: base
 #: report:ir.module.reference.graph:0
