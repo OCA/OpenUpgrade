@@ -228,7 +228,7 @@ OpenUpgrade API
 
 You can use the following functions in your pre and post scripts.
 
-.. automodule:: openupgrade.openupgrade
+.. automodule:: openupgrade
    :members:
 
 Indices and tables

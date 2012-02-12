@@ -17,7 +17,7 @@ import sys, os
 # If your extensions are in another directory, add it here. If the directory
 # is relative to the documentation root, use os.path.abspath to make it
 # absolute, like shown here.
-sys.path.append(os.path.abspath('../../../'))
+sys.path.append(os.path.abspath('../../'))
 
 # General configuration
 # ---------------------
@@ -178,3 +178,26 @@ latex_documents = [
 
 # If false, no module index is generated.
 #latex_use_modindex = True
+
+# Use Mock classes for building on readthedocs.org
+# http://read-the-docs.readthedocs.org/en/latest/faq.html
+class Mock(object):
+    def __init__(self, *args, **kwargs):
+        pass
+
+    def __call__(self, *args, **kwargs):
+        return Mock()
+
+    @classmethod
+    def __getattr__(self, name):
+        if name in ('__file__', '__path__'):
+            return '/dev/null'
+        elif name[0] == name[0].upper():
+            return type(name, (), {})
+        else:
+            return Mock()
+
+MOCK_MODULES = ['osv', 'pooler', 'tools']
+for mod_name in MOCK_MODULES:
+    sys.modules[mod_name] = Mock()
+
