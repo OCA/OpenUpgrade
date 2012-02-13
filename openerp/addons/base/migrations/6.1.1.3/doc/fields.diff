@@ -1,0 +1,42 @@
+Mapped states cancel / skip to 'open' # base         / ir.actions.todo          / state (selection)             : selection_keys is now '['done', 'open']' ('['cancel', 'done', 'open', 'skip']')
+Create the field before in pre-script # base         / ir.model.fields          / serialization_field_id (many2one): NEW relation: ir.model.fields
+Mentioned in user notes # base         / ir.sequence              / implementation (selection)    : NEW required: required, selection_keys: ['no_gap', 'standard'], req_default: standard
+Requiredness analysis # base         / ir.ui.view.custom        / ref_id (many2one)             : now required
+Requiredness analysis # base         / ir.ui.view.custom        / user_id (many2one)            : now required
+Requiredness analysis # base         / ir.values                / key (selection)               : now required
+Requiredness analysis # base         / ir.values                / meta (text)                   : DEL 
+Requiredness analysis # base         / ir.values                / model (char)                  : now required
+Requiredness analysis # base         / ir.values                / name (char)                   : now required
+Requiredness analysis # base         / ir.values                / object (boolean)              : DEL 
+Nothing # base         / res.company              / bank_ids (one2many)           : NEW relation: res.partner.bank
+Mentioned in the user notes # base         / res.company              / name (char)                   : now a function
+Mentioned in the user notes # base         / res.company              / rml_footer2 (char)            : now a function
+Import data # base         / res.country              / address_format (text)         : NEW 
+Set default # base         / res.currency             / position (selection)          : NEW selection_keys: ['after', 'before']
+Nothing # base         / res.currency.rate        / currency_rate_type_id (many2one): NEW relation: res.currency.rate.type
+Nothing # base         / res.currency.rate.type   / name (char)                   : NEW required: required
+Nothing # base         / res.groups               / category_id (many2one)        : NEW relation: ir.module.category
+Set by data # base         / res.groups               / implied_ids (many2many)       : NEW relation: res.groups
+Set default # base         / res.partner.address      / color (integer)               : NEW 
+Todo: required analysis # base         / res.partner.bank         / acc_number (char)             : now required
+Nothing # base         / res.partner.bank         / bank_bic (char)               : NEW 
+Nothing # base         / res.partner.bank         / bank_name (char)              : NEW 
+Nothing # base         / res.partner.bank         / company_id (many2one)         : NEW relation: res.company
+Nothing # base         / res.partner.bank         / footer (boolean)              : NEW 
+Nothing # base         / res.partner.bank.type    / format_layout (text)          : NEW 
+Nothing # base         / res.partner              / color (integer)               : NEW 
+Nothing # base         / res.users                / address_id (many2one)         : DEL relation: res.partner.address
+Converted to 'user_email' # base         / res.users                / email (char)                  : DEL 
+Nothing # base         / res.users                / id (integer)                  : NEW 
+Converted from 'email' field # base         / res.users                / user_email (char)             : not a function anymore
+# 547 fields matched,
+# Direct match: 545
+# Found in other module: 0
+# Found with different name: 0
+# Found with different type: 0
+# In obsolete models: 2
+# New columns: 77
+# new model res.currency.rate.type
+# new model res.log.report
+# Not matched: 11
+# obsolete model res.partner.canal

@@ -10,6 +10,7 @@ logger = logging.getLogger('OpenUpgrade')
 __all__ = [
     'load_xml',
     'rename_columns',
+    'drop_columns',
     'set_defaults',
     'update_module_names',
     'add_ir_model_fields',
@@ -55,10 +56,30 @@ def rename_columns(cr, column_spec):
 
     """
     for table in column_spec.keys():
-        for old, new in column_spec[table]:
+        for (old, new) in column_spec[table]:
             logger.info("table %s, column %s: renaming to %s",
                      table, old, new)
             cr.execute('ALTER TABLE "%s" RENAME "%s" TO "%s"' % (table, old, new,))
+
+def drop_columns(cr, column_spec):
+    """
+    Drop columns but perform an additional check if a column exists.
+    This covers the case of function fields that may or may not be stored.
+    Consider that this may not be obvious: an additional module can govern
+    a function fields' store properties.
+
+    :param column_spec: a list of (table, column) tuples
+    """
+    for (table, column) in column_spec:
+        logger.info("table %s: drop column %s",
+                    table, column)
+        cr.execute('SELECT * from %s LIMIT 1' % table)
+        if column in cr.dictfetchone():
+            cr.execute('ALTER TABLE "%s" RENAME "%s" TO "%s"' % 
+                       table, old, new)
+        else:
+            logger.warn("table %s: column %s did not exist",
+                    table, column)
 
 def set_defaults(cr, pool, default_spec):
     """
@@ -104,7 +125,7 @@ def set_defaults(cr, pool, default_spec):
                         write_value([id], field, obj._defaults[field](obj, cr, fetchdict.get(id, 1), None))
                         if id not in fetchdict:
                             logger.info("model %s, field %s, id %d: no create_uid defined or user does not exist anymore",
-                                     (model, field, id))
+                                     model, field, id)
             else:
                 error = ("OpenUpgrade: error setting default, field %s with "
                          "None default value not in %s' _defaults" % (
@@ -115,8 +136,11 @@ def set_defaults(cr, pool, default_spec):
         else:
             write_value(ids, field, value)
     
-def logged_query(cr, query, args):
+def logged_query(cr, query, args=None):
+    if args is None:
+        args = []
     res = cr.execute(query, args)
+    logger.debug('Running %s', query)
     if not res:
         query = query % args
         logger.warn('No rows affected for query "%s"', query)

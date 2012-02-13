@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <!-- OpenUpgrade: add address format and new currencies -->
+    <data noupdate="1">
+        <record id="au" model="res.country">
+            <field name="address_format" eval="'%(street)s\n%(street2)s %(state_code)s %(zip)s\n%(country_name)s'" />
+        </record>
+        <record id="be" model="res.country">
+            <field name="address_format" eval="'%(street)s\n%(zip)s, %(city)s\n%(country_name)s'" />            
+        </record>
+        <record id="br" model="res.country">
+            <field name="address_format" eval="'%(street)s\n%(street2)s\n%(city)s,%(state_code)s %(zip)s%(country_name)s'" />
+        </record>
+        <record id="ca" model="res.country">
+            <field name="address_format" eval="'%(street)s\n%(street2)s\n%(city)s, %(state_code)s %(zip)s\n%(country_name)s'" />
+        </record>
+        <record id="de" model="res.country">
+            <field name="address_format" eval="'%(street)s\n%(street2)s\n%(zip)s %(city)s\n%(country_name)s'" />            
+        </record>
+        <record id="es" model="res.country">
+            <field name="address_format" eval="'%(street)s\n%(zip)s %(city)s,%(state_name)s\n%(country_name)s'" />            
+        </record>
+        <record id="fr" model="res.country">
+            <field name="address_format" eval="'%(street)s\n%(zip)s %(city)s\n%(country_name)s'" />            
+        </record>
+        <record id="in" model="res.country">
+            <field name="address_format" eval="'%(street)s\n%(street2)s\n%(city)s, %(zip)s\n%(state_name)s%(country_name)s'" />            
+        </record>
+        <record id="nl" model="res.country">
+            <field name="address_format" eval="'%(street)s\n%(street2)s\n%(zip)s %(city)s\n%(country_name)s'" />            
+        </record>
+        <record id="uk" model="res.country">
+            <field name="address_format" eval="'%(street)s\n%(street2)s\n%(city)s\n%(country_name)s\n%(zip)s'" />            
+        </record>
+        <record id="us" model="res.country">
+            <field name="address_format" eval="'%(street)s\n%(street2)s\n%(city)s, %(state_code)s %(zip)s\n%(country_name)s'" />            
+        </record>
+        <!-- VEF was previously VEB -->
+        <record id="VEF" model="res.currency">
+            <field name="name">VEF</field>
+            <field name="symbol">Bs.F</field>
+            <field name="rounding">0.0001</field>
+            <field name="accuracy">4</field>
+            <field name="company_id" ref="main_company"/>
+        </record>
+        <record id="rateVEF" model="res.currency.rate">
+            <field name="rate">5.864</field>
+            <field name="currency_id" ref="VEF"/>
+            <field eval="time.strftime('%Y-01-01')" name="name"/>
+        </record>
+        <record id="ir_mail_server_localhost0" model="ir.mail_server">
+            <field name="name">localhost</field>
+            <field name="smtp_host">localhost</field>
+            <field eval="25" name="smtp_port"/>
+            <field eval="10" name="sequence"/>
+        </record>
+        <record id="XOF" model="res.currency">
+            <field name="name">XOF</field>
+            <field name="symbol">CFA</field>
+            <field name="rounding">1</field>
+            <field name="accuracy">4</field>
+            <field name="company_id" ref="main_company"/>
+        </record>
+        <record id="rateXOF" model="res.currency.rate">
+           <field name="rate">655.957</field>
+           <field name="currency_id" ref="XOF"/>
+           <field eval="time.strftime('%Y-01-01')" name="name"/>
+       </record>
+
+        <record id="XAF" model="res.currency">
+            <field name="name">XAF</field>
+            <field name="symbol">FCFA</field>
+            <field name="rounding">1</field>
+            <field name="accuracy">4</field>
+            <field name="company_id" ref="main_company"/>
+        </record>
+        <record id="rateXAF" model="res.currency.rate">
+           <field name="rate">655.957</field>
+           <field name="currency_id" ref="XAF"/>
+           <field eval="time.strftime('%Y-01-01')" name="name"/>
+       </record>
+
+        <record id="UGX" model="res.currency">
+            <field name="name">UGX</field>
+            <field name="symbol">USh</field>
+            <field name="rounding">1</field>
+            <field name="accuracy">4</field>
+            <field name="company_id" ref="main_company"/>
+        </record>
+        <record id="rateUGX" model="res.currency.rate">
+            <field name="rate">3401.91388</field>
+            <field name="currency_id" ref="UGX"/>
+            <field eval="time.strftime('%Y-01-01')" name="name"/>
+        </record>
+
+        <record id="HNL" model="res.currency">
+            <field name="name">HNL</field>
+            <field name="symbol">L</field>
+            <field name="rounding">0.01</field>
+            <field name="accuracy">4</field>
+            <field name="company_id" ref="main_company"/>
+        </record>
+        <record id="rateHNL" model="res.currency.rate">
+            <field name="rate">25</field>
+            <field name="currency_id" ref="HNL"/>
+            <field eval="time.strftime('%Y-01-01')" name="name"/>
+        </record>
+
+        <!-- Chilean peso -->
+        <record id="CLP" model="res.currency">
+            <field name="name">CLP</field>
+            <field name="symbol">$</field>
+            <field name="rounding">0.01</field>
+            <field name="accuracy">4</field>
+            <field name="company_id" ref="main_company"/>
+        </record>
+        <record id="rateCLP" model="res.currency.rate">
+            <field name="rate">710</field>
+            <field name="currency_id" ref="CLP"/>
+            <field eval="time.strftime('%Y-01-01')" name="name"/>
+        </record>
+
+        <!--  Uruguayan peso -->
+        <record id="UYU" model="res.currency">
+            <field name="name">UYU</field>
+            <field name="symbol">$</field>
+            <field name="rounding">0.01</field>
+            <field name="accuracy">4</field>
+            <field name="company_id" ref="main_company"/>
+        </record>
+        <record id="rateUYU" model="res.currency.rate">
+            <field name="currency_id" ref="UYU" />
+            <field eval="time.strftime('%Y-01-01')" name="name"/>
+            <field name="rate">28.36</field>
+        </record>
+
+    </data>
+</openerp>
