@@ -1,4 +1,4 @@
-# Spanish (Costa Rica) translation for openobject-addons
+# French translation for openobject-addons
 # Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
 # This file is distributed under the same license as the openobject-addons package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 00:35+0000\n"
-"PO-Revision-Date: 2012-02-13 16:07+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Spanish (Costa Rica) <es_CR@li.org>\n"
+"PO-Revision-Date: 2012-02-13 21:29+0000\n"
+"Last-Translator: t.o <Unknown>\n"
+"Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,7 +20,7 @@ msgstr ""
 #. module: account_check_writing
 #: selection:res.company,check_layout:0
 msgid "Check on Top"
-msgstr ""
+msgstr "Chéque en haut"
 
 #. module: account_check_writing
 #: model:ir.actions.act_window,help:account_check_writing.action_write_check
@@ -30,6 +30,11 @@ msgid ""
 "and an amount for the payment, OpenERP will propose to reconcile your "
 "payment with the open supplier invoices or bills.You can print the check"
 msgstr ""
+"Le formulaire de paiement par chèque vous permet de suivre les paiements que "
+"vous faites entre autre par chèques à vos fournisseurs. Quand vous "
+"sélectionnez un fournisseur, un mode de paiement et un montant, OpenERP vous "
+"propose d'associer (lettrer) votre paiement avec la facture fournisseur.. "
+"Vous pouvez imprimer le chèque."
 
 #. module: account_check_writing
 #: view:account.voucher:0
@@ -37,7 +42,7 @@ msgstr ""
 #: model:ir.actions.report.xml,name:account_check_writing.account_print_check_middle
 #: model:ir.actions.report.xml,name:account_check_writing.account_print_check_top
 msgid "Print Check"
-msgstr ""
+msgstr "Imprimer un chèque"
 
 #. module: account_check_writing
 #: selection:res.company,check_layout:0
@@ -51,16 +56,20 @@ msgid ""
 "Check in middle is compatible with Peachtree, ACCPAC and DacEasy. Check on "
 "bottom is compatible with Peachtree, ACCPAC and DacEasy only"
 msgstr ""
+"Chèque en haut est compatible avec Quicken, QuickBooks et Microsoft Money. "
+"\r\n"
+"Chèque  au milieu est compatible avec Peachtree, ACCPAC et DacEasy. \r\n"
+"Chèque en bas est compatible with Peachtree, ACCPAC et DacEasy only"
 
 #. module: account_check_writing
 #: selection:res.company,check_layout:0
 msgid "Check on bottom"
-msgstr ""
+msgstr "Chèque en bas"
 
 #. module: account_check_writing
 #: constraint:res.company:0
 msgid "Error! You can not create recursive companies."
-msgstr ""
+msgstr "Erreur ! Vous ne pouvez pas créer de sociétés récursives"
 
 #. module: account_check_writing
 #: help:account.journal,allow_check_writing:0
@@ -70,19 +79,19 @@ msgstr ""
 #. module: account_check_writing
 #: field:account.journal,allow_check_writing:0
 msgid "Allow Check writing"
-msgstr ""
+msgstr "Autoriser l'émission de chèques"
 
 #. module: account_check_writing
 #: report:account.print.check.bottom:0
 #: report:account.print.check.middle:0
 #: report:account.print.check.top:0
 msgid "Description"
-msgstr ""
+msgstr "Description"
 
 #. module: account_check_writing
 #: model:ir.model,name:account_check_writing.model_account_journal
 msgid "Journal"
-msgstr ""
+msgstr "Journal"
 
 #. module: account_check_writing
 #: model:ir.actions.act_window,name:account_check_writing.action_write_check
@@ -95,19 +104,19 @@ msgstr ""
 #: report:account.print.check.middle:0
 #: report:account.print.check.top:0
 msgid "Discount"
-msgstr ""
+msgstr "Remise"
 
 #. module: account_check_writing
 #: report:account.print.check.bottom:0
 #: report:account.print.check.middle:0
 #: report:account.print.check.top:0
 msgid "Original Amount"
-msgstr ""
+msgstr "Montant original"
 
 #. module: account_check_writing
 #: view:res.company:0
 msgid "Configuration"
-msgstr ""
+msgstr "Configuration"
 
 #. module: account_check_writing
 #: field:account.voucher,allow_check:0
@@ -119,7 +128,7 @@ msgstr ""
 #: report:account.print.check.middle:0
 #: report:account.print.check.top:0
 msgid "Payment"
-msgstr ""
+msgstr "Paiement"
 
 #. module: account_check_writing
 #: field:account.journal,use_preprint_check:0
@@ -129,19 +138,19 @@ msgstr ""
 #. module: account_check_writing
 #: sql_constraint:res.company:0
 msgid "The company name must be unique !"
-msgstr ""
+msgstr "Le nom de la société doit être unique !"
 
 #. module: account_check_writing
 #: report:account.print.check.bottom:0
 #: report:account.print.check.middle:0
 #: report:account.print.check.top:0
 msgid "Due Date"
-msgstr ""
+msgstr "Date"
 
 #. module: account_check_writing
 #: model:ir.model,name:account_check_writing.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Sociétés"
 
 #. module: account_check_writing
 #: view:res.company:0
@@ -154,12 +163,14 @@ msgid ""
 "Configuration error! The currency chosen should be shared by the default "
 "accounts too."
 msgstr ""
+"Problème de configuration ! la devise choisie devrait être aussi celle des "
+"comptes par défaut."
 
 #. module: account_check_writing
 #: report:account.print.check.bottom:0
 #: report:account.print.check.middle:0
 msgid "Balance Due"
-msgstr ""
+msgstr "Solde dû"
 
 #. module: account_check_writing
 #: report:account.print.check.bottom:0
@@ -171,17 +182,17 @@ msgstr ""
 #. module: account_check_writing
 #: model:ir.model,name:account_check_writing.model_account_voucher
 msgid "Accounting Voucher"
-msgstr ""
+msgstr "Justificatif comptable"
 
 #. module: account_check_writing
 #: sql_constraint:account.journal:0
 msgid "The name of the journal must be unique per company !"
-msgstr ""
+msgstr "Le nom du journal doit être unique dans chaque société !"
 
 #. module: account_check_writing
 #: sql_constraint:account.journal:0
 msgid "The code of the journal must be unique per company !"
-msgstr ""
+msgstr "Le code du journal doit être unique dans chaque société !"
 
 #. module: account_check_writing
 #: field:account.voucher,amount_in_word:0
