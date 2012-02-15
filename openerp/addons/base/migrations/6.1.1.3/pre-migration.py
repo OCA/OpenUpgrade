@@ -4,12 +4,11 @@
 # e.g. report_analytic_line (incorporated in hr_timesheet_invoice) in V6
 
 import os
-
 from osv import osv
 import logging
 from openerp.openupgrade import openupgrade
-logger = logging.getLogger('OpenUpgrade')
 
+logger = logging.getLogger('OpenUpgrade')
 me = os.path.realpath( __file__ )
 
 renames = {
@@ -22,10 +21,10 @@ renames = {
     }
 
 module_namespec = [
-    # This is a list of tuples (new module name, certificate)
-    ('plugin_outlook', '001278773815818292125'), # outlook
-    ('plugin_thunderbird', '00899858104035139949'), # thunderbird
-    ('mail', '001056784984222247309'), # mail_gateway
+    # This is a list of tuples (old module name, new module name)
+    ('outlook', 'plugin_outlook'),
+    ('thunderbird', 'plugin_thunderbird'),
+    ('mail_gateway', 'mail'),
     ]
 
 def fix_module_ids(cr):

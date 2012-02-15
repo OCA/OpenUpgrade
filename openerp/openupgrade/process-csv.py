@@ -29,7 +29,8 @@ USAGE = """
 
 """
 
-import  sys, copy, csv, re
+import sys, copy, csv, re
+import changes
 
 keys = [
     'module',
@@ -78,10 +79,17 @@ def equal(dicta, dictb, ignore):
         return False
     return True
 
-def compare(dicta, dictb, fields):
+def compare(dict_old, dict_new, fields):
     for field in fields:
-        if dicta[field] != dictb[field]:
-            return False
+        if field == 'module':
+            if (changes.renamed_modules.get(dict_old[field], dict_old[field]) != dict_new[field]):
+                return False
+        elif field == 'model':
+            if (changes.renamed_models.get(dict_old[field], dict_old[field]) != dict_new[field]):
+                return False
+        else:
+            if dict_old[field] != dict_new[field]:
+                return False
     return True
 
 def search(item, dict, fields):
@@ -187,6 +195,7 @@ for column in k5:
         if column['operation'] == 'create':
             column['operation'] = ''
         fieldprint(column, None, text="DEL " + ", ".join([k + ': ' + str(column[k]) for k in printkeys if column[k]]))
+
 for column in k6:
     # we do not care about newly added function fields
     if not column['isfunction']:

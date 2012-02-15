@@ -18,7 +18,11 @@ __all__ = [
 
 def load_xml(cr, m, filename, idref=None, mode='init'):
     """
-    Load an xml data file from your post script.
+    Load an xml data file from your post script. The usual case for this is the
+    occurrence of newly added essential or useful data in the module that is
+    marked with "noupdate='1'" and without "forcecreate='1'" so that it will
+    not be loaded by the usual upgrade mechanism. Leaving the 'mode' argument to
+    its default 'init' will load the data from your migration script.
     
     Theoretically, you could simply load a stock file from the module, but be 
     careful not to reinitialize any data that could have been customized.
@@ -60,6 +64,17 @@ def rename_columns(cr, column_spec):
             logger.info("table %s, column %s: renaming to %s",
                      table, old, new)
             cr.execute('ALTER TABLE "%s" RENAME "%s" TO "%s"' % (table, old, new,))
+
+def rename_tables(cr, table_spec):
+    """
+    Rename tables. Typically called in the pre script.
+    :param column_spec: a list of tuples (old table name, new table name).
+
+    """
+    for (old, new) in table_spec:
+        logger.info("table %s: renaming to %s",
+                    old, new)
+        cr.execute('ALTER TABLE "%s" RENAME TO "%s"' % (old, new,))
 
 def drop_columns(cr, column_spec):
     """
@@ -149,20 +164,28 @@ def logged_query(cr, query, args=None):
 def update_module_names(cr, namespec):
     """
     Deal with changed module names of certified modules
-    in order to prevent  'certificate not unique' error
+    in order to prevent  'certificate not unique' error,
+    as well as updating the module reference in the
+    XML id.
     
-    :param namespec: tuple of (name, certificate)
+    :param namespec: tuple of (old name, new name)
     """
-    for module in namespec:
+    for (old_name, new_name) in namespec:
         query = ("UPDATE ir_module_module SET name = %s "
-                 "WHERE certificate = %s")
-        logged_query(cr, query, module)
-        
+                 "WHERE name = %s")
+        logged_query(cr, query, (new_name, old_name))
+        query = ("UPDATE ir_model_data SET module = %s "
+                 "WHERE module = %s ")
+        logged_query(cr, query, (new_name, old_name))
+
 def add_ir_model_fields(cr, columnspec):
     """
     Typically, new columns on ir_model_fields need to be added in a very
     early stage in the upgrade process of the base module, in raw sql
     as they need to be in place before any model gets initialized.
+    Do not use for fields with additional SQL constraints, such as a
+    reference to another table or the cascade constraint, but craft your
+    own statement taking them into account.
     
     :param columnspec: tuple of (column name, column type)
     """
