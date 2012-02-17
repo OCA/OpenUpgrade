@@ -12,7 +12,7 @@ project:
 
      * A report facility that displays the user notes per module after an upgrade, and performs an analysis of required fields that were left empty on one or more records in the database, for the administrator to supply values for. Status: not yet developed.
 
-     * For all official addons, migration scripts should be provided for migrating between major releases of OpenERP. This is the goal of the project. For OpenERP 6, there are migration scripts for the *base* and *account* modules (incl. analytic), but not the dependencies *process*, *board* and *product*. For OpenERP 6.1, there are migration scripts for the base module.
+     * For all official addons, migration scripts should be provided for migrating between major releases of OpenERP. This is the goal of the project. For OpenERP 5 -> 6.0, there are migration scripts for the *base* and *account* modules (incl. analytic), but not the dependencies *process*, *board* and *product*. For OpenERP 6.0 -> 6.1, there are migration scripts for modules *base*, *account*, *product*, *board*, *process*, *account_payment*, *base_iban*, *mail_gateway* and partial support for *email_template* (preserves templates but drops previously generated emails).
      
      * Documentation for developers and users. You are currently reading it. The documentation is maintained in the latest server branch. Status: always to be improved upon!
 
