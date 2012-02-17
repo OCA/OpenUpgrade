@@ -12,7 +12,7 @@ Start the openupgrade server with -u all -d <database> --stop-after-init
 Extract a csv file with the database layout per module, using the following
 command::
 
-	grep OpenUpgrade_FIELD <server-6.1.log> |cut -d \: -f 5- | sort > server-6.1.csv
+	grep OpenUpgrade_FIELD <server-6.1.log> |cut -d \  -f 7- | sort > server-6.1.csv
 
 Extract a text file with the XML IDs created per module, using the following
 command (note that this is slightly different from previous server versions)::

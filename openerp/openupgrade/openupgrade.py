@@ -1,24 +1,28 @@
 # -*- coding: utf-8 -*-
+import os
 from osv import osv
 import pooler
 import logging
 import tools
-from os.path import join as opj
 
 logger = logging.getLogger('OpenUpgrade')
 
 __all__ = [
     'load_xml',
     'rename_columns',
+    'rename_tables',
     'drop_columns',
+    'table_exists',
+    'column_exists',
+    'delete_model_workflow',
     'set_defaults',
     'update_module_names',
     'add_ir_model_fields',
 ]    
 
-def load_xml(cr, m, filename, idref=None, mode='init'):
+def load_data(cr, module_name, filename, idref=None, mode='init'):
     """
-    Load an xml data file from your post script. The usual case for this is the
+    Load an xml or csv data file from your post script. The usual case for this is the
     occurrence of newly added essential or useful data in the module that is
     marked with "noupdate='1'" and without "forcecreate='1'" so that it will
     not be loaded by the usual upgrade mechanism. Leaving the 'mode' argument to
@@ -33,7 +37,7 @@ def load_xml(cr, m, filename, idref=None, mode='init'):
     automatically).
 
 
-    :param m: the name of the module
+    :param module_name: the name of the module
     :param filename: the path to the filename, relative to the module \
     directory.
     :param idref: optional hash with ?id mapping cache?
@@ -44,12 +48,20 @@ def load_xml(cr, m, filename, idref=None, mode='init'):
 
     if idref is None:
         idref = {}
-    logger.info('%s: loading %s' % (m, filename))
-    fp = tools.file_open(opj(m, filename))
+    logger.info('%s: loading %s' % (module_name, filename))
+    _, ext = os.path.splitext(filename)
+    pathname = os.path.join(module_name, filename)
+    fp = tools.file_open(pathname)
     try:
-        tools.convert_xml_import(cr, m, fp, idref, mode=mode)
+        if ext == '.csv':
+            noupdate = True
+            tools.convert_csv_import(cr, module_name, pathname, fp.read(), idref, mode, noupdate)
+        else:
+            tools.convert_xml_import(cr, module_name, fp, idref, mode=mode)
     finally:
         fp.close()
+
+load_xml = load_data
 
 def rename_columns(cr, column_spec):
     """
@@ -88,13 +100,29 @@ def drop_columns(cr, column_spec):
     for (table, column) in column_spec:
         logger.info("table %s: drop column %s",
                     table, column)
-        cr.execute('SELECT * from %s LIMIT 1' % table)
-        if column in cr.dictfetchone():
-            cr.execute('ALTER TABLE "%s" RENAME "%s" TO "%s"' % 
-                       table, old, new)
+        if column_exists(cr, table, column):
+            cr.execute('ALTER TABLE "%s" DROP COLUMN "%s"' % 
+                       (table, column))
         else:
             logger.warn("table %s: column %s did not exist",
                     table, column)
+
+def delete_model_workflow(cr, model):
+    """ 
+    Forcefully remove active workflows for obsolete models,
+    to prevent foreign key issues when the orm deletes the model.
+    """
+    logged_query(
+        cr,
+        "DELETE FROM wkf_workitem WHERE act_id in "
+        "( SELECT wkf_activity.id "
+        "  FROM wkf_activity, wkf "
+        "  WHERE wkf_id = wkf.id AND "
+        "  wkf.osv = %s"
+        ")", (model,))
+    logged_query(
+        cr,
+        "DELETE FROM wkf WHERE osv = %s", (model,))
 
 def set_defaults(cr, pool, default_spec):
     """
@@ -160,6 +188,23 @@ def logged_query(cr, query, args=None):
         query = query % args
         logger.warn('No rows affected for query "%s"', query)
     return res
+
+def table_exists(cr, table):
+    """ Check whether a certain table or view exists """
+    cr.execute(
+        'SELECT count(relname) FROM pg_class WHERE relname = %s',
+        (table,))
+    return cr.fetchone()[0] == 1
+
+def column_exists(cr, table, column):
+    """ Check whether a certain column exists """
+    cr.execute(
+        'SELECT count(attname) FROM pg_attribute '
+        'WHERE attrelid = '
+        '( SELECT oid FROM pg_class WHERE relname = %s ) '
+        'AND attname = %s',
+        (table, column));
+    return cr.fetchone()[0] == 1
 
 def update_module_names(cr, namespec):
     """

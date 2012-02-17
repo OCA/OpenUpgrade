@@ -16,6 +16,7 @@ Contents:
    community.rst
    status.rst
    analysis.rst
+   development.rst
    API.rst
 
 You should find the latest version of this documentation here: `<http://readthedocs.org/docs/openupgrade-server>`_

@@ -71,9 +71,16 @@ def set_main_company(cr):
 
 def add_serialization_field(cr):
     """ Add a new field property """
-    openupgrade.logged_query(cr,
+    openupgrade.logged_query(
+        cr,
         "ALTER TABLE ir_model_fields ADD COLUMN serialization_field_id "
         "INTEGER REFERENCES ir_model_fields ON DELETE CASCADE")
+
+def disable_demo_data(cr):
+    """ Disables the renewed loading of demo data """
+    openupgrade.logged_query(
+        cr,
+        "UPDATE ir_module_module SET demo = false")
 
 def migrate(cr, version):
     try:
@@ -86,5 +93,6 @@ def migrate(cr, version):
             cr, module_namespec
             )
         fix_module_ids(cr)
+        disable_demo_data(cr)
     except Exception, e:
         raise osv.except_osv("OpenUpgrade", '%s: %s' % (me, e))

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import os
 from osv import osv
 import pooler, logging
 from openerp.openupgrade import openupgrade
@@ -26,8 +27,8 @@ def migrate(cr, version):
         logger.info("%s called", me)
         pool = pooler.get_pool(cr.dbname)
         openupgrade.set_defaults(cr, pool, defaults)
-        openupgrade.load_xml(cr, 'base', 'migrations/6.1.1.3/data/base_data.xml')
-        openupgrade.load_xml(cr, 'base', 'migrations/6.1.1.3/data/base_security.xml')
-        openupgrade.load_xml(cr, 'base', 'migrations/6.1.1.3/data/ir.model.access.csv')
+        openupgrade.load_data(cr, 'base', 'migrations/6.1.1.3/data/base_data.xml')
+        openupgrade.load_data(cr, 'base', 'migrations/6.1.1.3/data/base_security.xml')
+        openupgrade.load_data(cr, 'base', 'migrations/6.1.1.3/data/ir.model.access.csv')
     except Exception, e:
         raise osv.except_osv("OpenUpgrade", '%s: %s' % (me, e))
