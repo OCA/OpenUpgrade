@@ -7,7 +7,7 @@ from openerp.openupgrade import openupgrade
 from openerp import SUPERUSER_ID
 
 logger = logging.getLogger('OpenUpgrade')
-me = os.path.realpath( __file__ )
+me = __file__
 
 defaults = {
     # False results in column value NULL
@@ -21,10 +21,10 @@ def signal_html_messages(cr, pool):
     msg_obj = pool.get('mail.message')
     messages = msg_obj.search(
         cr, SUPERUSER_ID, [('body_text', '=', '<html>')],
-        limit=0, context={'active_test': False}):
+        limit=0, context={'active_test': False})
     found = 0
     for msg in messages:
-        found += 0
+        found += 1
         msg_obj.write(
             cr, SUPERUSER_ID, {
                 'subtype': 'html',
@@ -40,7 +40,7 @@ def migrate(cr, version):
         pool = pooler.get_pool(cr.dbname)
         openupgrade.set_defaults(cr, pool, defaults)
         signal_html_messages(cr, pool)
-        openupgrade.load_xml(cr, 'base', 'migrations/6.1.1.0/data/mail_data.xml')
-        openupgrade.load_xml(cr, 'base', 'migrations/6.1.1.0/data/ir.model.access.csv')
+        openupgrade.load_data(cr, 'mail', 'migrations/6.1.1.0/data/mail_data.xml')
+        openupgrade.load_data(cr, 'mail', 'migrations/6.1.1.0/data/ir.model.access.csv')
     except Exception, e:
         raise osv.except_osv("OpenUpgrade", '%s: %s' % (me, e))

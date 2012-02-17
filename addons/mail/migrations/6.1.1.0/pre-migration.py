@@ -6,7 +6,7 @@ import logging
 from openerp.openupgrade import openupgrade
 
 logger = logging.getLogger('OpenUpgrade')
-me = os.path.realpath( __file__ )
+me = __file__
 
 column_renames = {
     # this is a mapping per table from old column name
@@ -26,7 +26,7 @@ table_renames = [
 def migrate(cr, version):
     try:
         logger.info("%s called", me)
-        openupgrade.rename_tables(table_renames)
-        openupgrade.rename_columns(column_renames)
+        openupgrade.rename_tables(cr, table_renames)
+        openupgrade.rename_columns(cr, column_renames)
     except Exception, e:
         raise osv.except_osv("OpenUpgrade", '%s: %s' % (me, e))

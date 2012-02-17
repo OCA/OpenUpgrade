@@ -1,2 +1,1 @@
 - This migration script only migrates existing templates. Existing emails generated from templates and the mailboxes that hold them are not supported anymore and will be dropped. In a future version of this script, they may be migrated to the native message format of the 'mail' module.
-- On your templates, the From-field was a reference to an email account. This reference is removed and you should revise the From-field on all of your templates.
