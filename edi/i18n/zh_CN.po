@@ -1,4 +1,4 @@
-# German translation for openobject-addons
+# Chinese (Simplified) translation for openobject-addons
 # Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
 # This file is distributed under the same license as the openobject-addons package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
@@ -8,10 +8,9 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 01:37+0100\n"
-"PO-Revision-Date: 2012-02-16 08:48+0000\n"
-"Last-Translator: Thorsten Vocks (OpenBig.org) <thorsten.vocks@big-"
-"consulting.net>\n"
-"Language-Team: German <de@li.org>\n"
+"PO-Revision-Date: 2012-02-17 03:29+0000\n"
+"Last-Translator: Jeff Wang <wjfonhand@hotmail.com>\n"
+"Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,52 +20,52 @@ msgstr ""
 #. module: edi
 #: sql_constraint:res.currency:0
 msgid "The currency code must be unique per company!"
-msgstr "Der Währungscode muss je Unternehmen eindeutig sein"
+msgstr "每个公司的货币代码必须唯一"
 
 #. module: edi
 #: model:ir.model,name:edi.model_res_partner_address
 msgid "Partner Addresses"
-msgstr "Partner Adressen"
+msgstr "业务伙伴地址"
 
 #. module: edi
 #: sql_constraint:res.company:0
 msgid "The company name must be unique !"
-msgstr "Der Unternehmensname muss eindeutig sein!"
+msgstr "公司名称必须唯一！"
 
 #. module: edi
 #: constraint:res.partner:0
 msgid "Error ! You cannot create recursive associated members."
-msgstr "Fehler! Sie können keine rekursive assoziierte Mitglieder anlegen."
+msgstr "错误，您不能创建循环引用的会员用户"
 
 #. module: edi
 #: field:edi.document,name:0
 msgid "EDI token"
-msgstr "EDI Token"
+msgstr "EDI令牌"
 
 #. module: edi
 #: help:edi.document,name:0
 msgid "Unique identifier for retrieving an EDI document."
-msgstr "Eindeutige Ideentifizierung um ein EDI Dokument zu beziehen"
+msgstr "接收EDI文件的唯一标识符"
 
 #. module: edi
 #: constraint:res.company:0
 msgid "Error! You can not create recursive companies."
-msgstr "Fehler! Sie können keine rekursiven Unternehmen erzeugen."
+msgstr "错误！您不能创建循环的公司。"
 
 #. module: edi
 #: model:ir.model,name:edi.model_res_company
 msgid "Companies"
-msgstr "Unternehmen"
+msgstr "公司"
 
 #. module: edi
 #: sql_constraint:edi.document:0
 msgid "EDI Tokens must be unique!"
-msgstr "EDI Tokens müssen eindeutig sein"
+msgstr "EDI令牌必须唯一"
 
 #. module: edi
 #: model:ir.model,name:edi.model_res_currency
 msgid "Currency"
-msgstr "Währung"
+msgstr "货币"
 
 #. module: edi
 #: code:addons/edi/models/edi.py:153
@@ -75,81 +74,79 @@ msgid ""
 "The document you are trying to import requires the OpenERP `%s` application. "
 "You can install it by connecting as the administrator and opening the "
 "configuration assistant."
-msgstr ""
-"Das zu importierende Dokument benütigt die Anwendung  `%s` . Sie können "
-"diese als administrator installieren und konfigurieren."
+msgstr "你要导入的单据需要OpenERP的 %s 模块。你可以用管理员用户安装并打开配置向导。"
 
 #. module: edi
 #: help:edi.document,document:0
 msgid "EDI document content"
-msgstr "EDI Dokument Inhalt"
+msgstr "EDI文档内容"
 
 #. module: edi
 #: model:ir.model,name:edi.model_edi_document
 msgid "EDI Document"
-msgstr "EDI Dokument"
+msgstr "EDI文档"
 
 #. module: edi
 #: code:addons/edi/models/edi.py:48
 #, python-format
 msgid "'%s' is an invalid external ID"
-msgstr "'%s' ist eine ungültige externe ID"
+msgstr "%s是个无效的外部ID"
 
 #. module: edi
 #: model:ir.model,name:edi.model_res_partner
 msgid "Partner"
-msgstr "Partner"
+msgstr "业务伙伴"
 
 #. module: edi
 #: code:addons/edi/models/edi.py:152
 #, python-format
 msgid "Missing Application"
-msgstr "fehlende Applikation"
+msgstr "不存在此功能"
 
 #. module: edi
 #: field:edi.document,document:0
 msgid "Document"
-msgstr "Dokument"
+msgstr "文件"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi.xml:23
 msgid "View/Print"
-msgstr "Zeige/Drucke"
+msgstr "查看/打印"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi.xml:28
 msgid "Import this document"
-msgstr "Importiere dieses Dokument"
+msgstr "导入这个文件"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi.xml:33
 msgid "Import it into an existing OpenERP instance"
-msgstr "Importe in eine bestehende OpenERP Instanz"
+msgstr "导入已存在的OpenERP实例"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi.xml:36
 msgid "OpenERP instance address:"
-msgstr "OpenERP Instanz Adresse:"
+msgstr "OpenERP实例地址："
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi.xml:39
 msgid "Import"
-msgstr "Importieren"
+msgstr "导入"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi.xml:44
 msgid "Import it into a new OpenERP Online instance"
-msgstr "Importiere in eine neue OpenERP Online Instanz"
+msgstr "导入到一个新的在线OpenERP实例"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi.xml:47
 msgid "Create my new OpenERP instance"
-msgstr "Erezuege meine neue OpenERP Instanz"
+msgstr "创建我的新OpenERP实例"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi.xml:52
 msgid "Import into another application"
-msgstr "Importiere in eine andere Applikation"
+msgstr "导入其他应用程序"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi.xml:54
@@ -157,9 +154,7 @@ msgid ""
 "OpenERP's Electronic Data Interchange documents are based on a generic and "
 "language\n"
 "                            independent"
-msgstr ""
-"Die OpenERP Dokumente für EDI nutzen Standardformate und sind "
-"Plattformunabhängig lesbar."
+msgstr "OpenERP的电子数据交换文档基于标准且语言独立"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi.xml:56
@@ -178,42 +173,39 @@ msgid ""
 "this and what the content of OpenERP EDI documents\n"
 "                            is like in the"
 msgstr ""
-"Serialisation der Dokument Attribute.\n"
-"    Üblicherweise ist es seh einfach ein kleines Plug-In für Ihre bevorzugte "
-"Applikation zu generieren, das \n"
-"    jedwede Art von Dokumenten importieren kann.\n"
-"    Sie können leicht herausfinden, wie man das macht und was der Inhalt der "
-"EDI Dokument ist wie zB in"
+"文档属性的序列化。\n"
+"一般来说在你喜欢的应用程序上新建一个小插件用于导入OpenERP的EDI文档是很简单直接的。你可以在下面找到更多细节信息以及OpenERP的EDI文件有哪"
+"些内容："
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi.xml:60
 msgid "OpenERP documentation"
-msgstr "OpenERP Dokumentation"
+msgstr "OpenERP文档"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi.xml:61
 msgid "To get started immediately,"
-msgstr "Um sofort zu begninnen"
+msgstr "要马上开始，"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi.xml:62
 msgid "see is all it takes to use this EDI document in Python"
-msgstr "Nur das wird für EDI Dokumente in Python gebraucht"
+msgstr "看到的是所有要在这个Python EDI文件中使用的"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi.xml:70
 msgid "You can download the raw EDI document here:"
-msgstr "Sie können das EDI Dokument im Rohformat hier herunterladen."
+msgstr "你可以在这里下载这个EDI文件："
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi.xml:73
 msgid "Download"
-msgstr "Download"
+msgstr "下载"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi.xml:87
 msgid "Powered by"
-msgstr "Powered by"
+msgstr "选择自由，选择"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi.xml:87
@@ -223,130 +215,128 @@ msgstr "OpenERP"
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_account.xml:34
 msgid "Invoice"
-msgstr "Rechnung"
+msgstr "发票"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_account.xml:37
 msgid "Description"
-msgstr "Beschreibung"
+msgstr "描述"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_account.xml:38
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_sale_purchase.xml:41
 msgid "Date"
-msgstr "Datum"
+msgstr "日期"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_account.xml:39
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_sale_purchase.xml:40
 msgid "Your Reference"
-msgstr "Ihre Referenz"
+msgstr "您的单号"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_account.xml:50
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_sale_purchase.xml:57
 msgid "Product Description"
-msgstr "Produkt  Beschreibung"
+msgstr "产品描述"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_account.xml:51
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_sale_purchase.xml:58
 msgid "Quantity"
-msgstr "Menge"
+msgstr "数量"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_account.xml:52
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_sale_purchase.xml:59
 msgid "Unit Price"
-msgstr "Einzelpreis"
+msgstr "单价"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_account.xml:53
 msgid "Discount"
-msgstr "Rabatt"
+msgstr "折扣"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_account.xml:54
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_sale_purchase.xml:61
 msgid "Price"
-msgstr "Preis"
+msgstr "价格"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_account.xml:72
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_sale_purchase.xml:81
 msgid "Net Total:"
-msgstr "Netto:"
+msgstr "不含税合计:"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_account.xml:83
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_sale_purchase.xml:92
 msgid "Taxes:"
-msgstr "Steuern:"
+msgstr "税:"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_account.xml:94
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_sale_purchase.xml:103
 msgid "Total:"
-msgstr "Gesamt:"
+msgstr "合计:"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_account.xml:106
 msgid "Tax"
-msgstr "Steuer"
+msgstr "税"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_account.xml:107
 msgid "Base Amount"
-msgstr "Basisbetrag"
+msgstr "基准额"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_account.xml:108
 msgid "Amount"
-msgstr "Betrag"
+msgstr "金额"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_account.xml:121
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_sale_purchase.xml:113
 msgid "Notes:"
-msgstr "Notizen:"
+msgstr "备注："
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_account.xml:129
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_sale_purchase.xml:121
 msgid "Pay Online"
-msgstr "Online bezahlen"
+msgstr "在线付款"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_account.xml:133
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_sale_purchase.xml:125
 msgid "Paypal"
-msgstr "PayPal"
+msgstr "Paypal"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_account.xml:135
 msgid ""
 "You may directly pay this invoice online via Paypal's secure payment gateway:"
-msgstr ""
-"Sie können diese Rechnung direkt bezahlen indem Sie  Paypal's Sicheres "
-"zahlungsprotal verwenden:"
+msgstr "你可以用Paypal安全支付网关直接在线支付这张发票"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_account.xml:145
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_sale_purchase.xml:137
 msgid "Bank Wire Transfer"
-msgstr "Banküberweisung"
+msgstr "网络银行转账"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_account.xml:147
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_sale_purchase.xml:139
 msgid "Please transfer"
-msgstr "Bitte überweisen."
+msgstr "请转账"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_account.xml:148
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_sale_purchase.xml:140
 msgid "to"
-msgstr "an"
+msgstr "到"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_account.xml:149
@@ -356,41 +346,40 @@ msgid ""
 "mention the invoice\n"
 "                     reference"
 msgstr ""
-"(Postadresse der Rechnung)\n"
-"Bitte verwenden Sie eines der folgenden Bankkonten und \n"
-"vergessen Sie die Rechnungsnummer nicht"
+"（发票抬头的邮寄地址）\n"
+"用以下任意一个银行账号。注意标明发票编号。"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_account.xml:151
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_sale_purchase.xml:143
 msgid "on the transfer:"
-msgstr "Auf der Überweisung"
+msgstr "转账单号："
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_sale_purchase.xml:36
 msgid "Order"
-msgstr "Auftrag"
+msgstr "订单"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_sale_purchase.xml:42
 msgid "Salesman"
-msgstr "Verkäufer"
+msgstr "销售员"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_sale_purchase.xml:43
 msgid "Payment terms"
-msgstr "Zahlungsbedingungen"
+msgstr "付款条件"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_sale_purchase.xml:60
 msgid "Discount(%)"
-msgstr "Skonto(%)"
+msgstr "折扣（%）"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_sale_purchase.xml:127
 msgid ""
 "You may directly pay this order online via Paypal's secure payment gateway:"
-msgstr "Sie können direkt über das Paypal's  Zahlungsportal bezahlen:"
+msgstr "你可以用Paypal安全支付网关直接在线支付这个订单"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi_sale_purchase.xml:141
@@ -400,6 +389,5 @@ msgid ""
 "mention the document\n"
 "                     reference"
 msgstr ""
-"(Postadresse des Auftrags)\n"
-"Bitte verwenden Sie eines der folgenden Bankkonten und \n"
-"vergessen Sie die Auftragsnummer nicht"
+"（订单抬头上的邮寄地址）\n"
+"请使用以下任意一个银行账号。请标明订单编号。"
