@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 01:37+0100\n"
-"PO-Revision-Date: 2012-02-10 14:30+0000\n"
-"Last-Translator: Wei \"oldrev\" Li <oldrev@gmail.com>\n"
+"PO-Revision-Date: 2012-02-17 08:32+0000\n"
+"Last-Translator: Jeff Wang <wjfonhand@hotmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-02-11 05:07+0000\n"
-"X-Generator: Launchpad (build 14771)\n"
+"X-Launchpad-Export-Date: 2012-02-18 04:58+0000\n"
+"X-Generator: Launchpad (build 14814)\n"
 
 #. module: crm
 #: view:crm.lead.report:0
@@ -218,7 +218,7 @@ msgstr "退订"
 #. module: crm
 #: field:crm.meeting,end_type:0
 msgid "Recurrence termination"
-msgstr ""
+msgstr "反复终止"
 
 #. module: crm
 #: code:addons/crm/crm_lead.py:323
@@ -314,7 +314,7 @@ msgstr "潜在业务伙伴"
 #: code:addons/crm/crm_lead.py:735
 #, python-format
 msgid "No Subject"
-msgstr ""
+msgstr "无主题"
 
 #. module: crm
 #: model:crm.case.resource.type,name:crm.type_lead6
@@ -396,7 +396,7 @@ msgstr "更新日期"
 #. module: crm
 #: field:crm.case.section,user_id:0
 msgid "Team Leader"
-msgstr ""
+msgstr "团队领导"
 
 #. module: crm
 #: field:crm.lead2opportunity.partner,name:0
@@ -505,7 +505,7 @@ msgstr "邮件"
 #. module: crm
 #: view:crm.phonecall:0
 msgid "To Do"
-msgstr ""
+msgstr "待办事项"
 
 #. module: crm
 #: selection:crm.lead.report,creation_month:0
@@ -571,7 +571,7 @@ msgstr "默认的开始满意度以'最大间隔'计算. 如果业务伙伴没�
 #. module: crm
 #: field:crm.lead,partner_address_name:0
 msgid "Partner Contact Name"
-msgstr ""
+msgstr "联系人姓名"
 
 #. module: crm
 #: selection:crm.meeting,end_type:0
@@ -614,7 +614,7 @@ msgstr "这会议'%s'已确认"
 #. module: crm
 #: selection:crm.add.note,state:0 selection:crm.lead,state:0
 msgid "In Progress"
-msgstr ""
+msgstr "进行中"
 
 #. module: crm
 #: help:crm.case.section,reply_to:0
@@ -626,7 +626,7 @@ msgstr "'回复到'电子邮件地址填入该业务的团队在系统里设定�
 #. module: crm
 #: field:crm.lead.report,creation_month:0
 msgid "Creation Month"
-msgstr ""
+msgstr "创建月份"
 
 #. module: crm
 #: field:crm.case.section,resource_calendar_id:0
@@ -701,7 +701,7 @@ msgstr "概率(%)"
 #. module: crm
 #: field:crm.lead,company_currency:0
 msgid "Company Currency"
-msgstr ""
+msgstr "公司本位币"
 
 #. module: crm
 #: view:crm.lead:0
@@ -744,7 +744,7 @@ msgstr "停止处理"
 #. module: crm
 #: view:crm.lead.report:0 view:crm.phonecall.report:0
 msgid "Month-1"
-msgstr ""
+msgstr "上月"
 
 #. module: crm
 #: view:crm.phonecall:0
@@ -1007,7 +1007,7 @@ msgstr "如果有效字段设为true，他将允许你忽略在外面将其删�
 #. module: crm
 #: view:crm.lead:0
 msgid "Change Color"
-msgstr ""
+msgstr "改变颜色"
 
 #. module: crm
 #: view:crm.segmentation:0
@@ -1111,7 +1111,7 @@ msgstr "创建日期"
 #. module: crm
 #: view:board.board:0
 msgid "My Opportunities"
-msgstr ""
+msgstr "我的商机"
 
 #. module: crm
 #: model:crm.case.categ,name:crm.categ_oppor5
@@ -1246,7 +1246,7 @@ msgstr "持续时间（分钟）"
 #. module: crm
 #: field:crm.case.channel,name:0
 msgid "Channel Name"
-msgstr ""
+msgstr "渠道名称"
 
 #. module: crm
 #: field:crm.partner2opportunity,name:0 field:crm.phonecall2opportunity,name:0
@@ -1516,7 +1516,7 @@ msgstr ""
 #. module: crm
 #: view:crm.lead:0
 msgid "Mail"
-msgstr ""
+msgstr "邮件"
 
 #. module: crm
 #: model:ir.actions.act_window,name:crm.crm_phonecall_categ_action
@@ -1531,7 +1531,7 @@ msgstr ""
 #. module: crm
 #: model:ir.actions.act_window,name:crm.act_oppor_categ
 msgid "Opportunities By Categories"
-msgstr ""
+msgstr "销售机会分类"
 
 #. module: crm
 #: help:crm.lead,partner_name:0
@@ -1860,7 +1860,7 @@ msgstr "转换为商机"
 #: model:ir.model,name:crm.model_crm_case_channel
 #: model:ir.ui.menu,name:crm.menu_crm_case_channel
 msgid "Channels"
-msgstr ""
+msgstr "渠道"
 
 #. module: crm
 #: view:crm.phonecall:0 selection:crm.phonecall,state:0
@@ -2141,7 +2141,7 @@ msgstr "拒绝"
 #. module: crm
 #: field:crm.lead,user_email:0
 msgid "User Email"
-msgstr ""
+msgstr "用户电子邮件"
 
 #. module: crm
 #: help:crm.lead,optin:0
@@ -2232,7 +2232,7 @@ msgstr "业务开启的天数"
 #. module: crm
 #: selection:crm.meeting,end_type:0
 msgid "Number of repetitions"
-msgstr ""
+msgstr "收件人数量"
 
 #. module: crm
 #: field:crm.lead,phone:0 field:crm.opportunity2phonecall,phone:0
@@ -2327,7 +2327,7 @@ msgstr "杂项"
 #. module: crm
 #: model:ir.actions.act_window,name:crm.open_board_crm
 msgid "Sales"
-msgstr ""
+msgstr "销售"
 
 #. module: crm
 #: code:addons/crm/crm.py:430
@@ -2513,7 +2513,7 @@ msgstr "细分测试"
 #. module: crm
 #: field:crm.lead,user_login:0
 msgid "User Login"
-msgstr ""
+msgstr "用户账户"
 
 #. module: crm
 #: view:crm.segmentation:0
@@ -2639,12 +2639,12 @@ msgstr "强制的/ 可选的"
 #. module: crm
 #: view:crm.lead:0
 msgid "Unassigned Leads"
-msgstr ""
+msgstr "未分配的线索"
 
 #. module: crm
 #: field:crm.lead,subjects:0
 msgid "Subject of Email"
-msgstr ""
+msgstr "邮件主题"
 
 #. module: crm
 #: model:ir.actions.act_window,name:crm.action_view_attendee_form
@@ -2752,7 +2752,7 @@ msgstr ""
 #. module: crm
 #: field:crm.lead,color:0
 msgid "Color Index"
-msgstr ""
+msgstr "颜色索引"
 
 #. module: crm
 #: view:crm.lead:0
@@ -2887,7 +2887,7 @@ msgstr "途径"
 #: view:crm.lead:0 view:crm.lead.report:0 view:crm.meeting:0
 #: view:crm.phonecall:0 view:crm.phonecall.report:0
 msgid "My Sales Team(s)"
-msgstr ""
+msgstr "我的销售团队"
 
 #. module: crm
 #: help:crm.segmentation,exclusif:0
@@ -2926,7 +2926,7 @@ msgstr "从线索创建商机"
 #: model:ir.actions.act_window,name:crm.open_board_statistical_dash
 #: model:ir.ui.menu,name:crm.menu_board_statistics_dash
 msgid "CRM Dashboard"
-msgstr ""
+msgstr "客户关系管理控制台"
 
 #. module: crm
 #: model:crm.case.categ,name:crm.categ_oppor4
@@ -2946,7 +2946,7 @@ msgstr "设类型为"
 #. module: crm
 #: view:crm.meeting:0
 msgid "Mail To"
-msgstr ""
+msgstr "收信人"
 
 #. module: crm
 #: field:crm.meeting,th:0
@@ -3358,7 +3358,7 @@ msgstr "私有的"
 #. module: crm
 #: selection:crm.meeting,class:0
 msgid "Public for Employees"
-msgstr ""
+msgstr "全员可见"
 
 #. module: crm
 #: field:crm.lead,function:0
@@ -3475,7 +3475,7 @@ msgstr "丢失"
 #. module: crm
 #: view:crm.lead:0
 msgid "Edit"
-msgstr ""
+msgstr "编辑"
 
 #. module: crm
 #: field:crm.lead,country_id:0 view:crm.lead.report:0
@@ -3534,7 +3534,7 @@ msgid ""
 "Track from where is coming your leads and opportunities by creating specific "
 "channels that will be maintained at the creation of a document in the "
 "system. Some examples of channels can be: Website, Phone Call, Reseller, etc."
-msgstr ""
+msgstr "渠道用于记录你的销售线索或商机的来源，并记录在这些单据上。例如：网站、电话、经销商等"
 
 #. module: crm
 #: selection:crm.lead2opportunity.partner,name:0
@@ -3565,7 +3565,7 @@ msgstr "序列"
 #. module: crm
 #: model:ir.model,name:crm.model_mail_compose_message
 msgid "E-mail composition wizard"
-msgstr ""
+msgstr "邮件合并向导"
 
 #. module: crm
 #: view:crm.meeting:0
@@ -3602,7 +3602,7 @@ msgstr "年"
 #. module: crm
 #: constraint:res.partner:0
 msgid "Error ! You cannot create recursive associated members."
-msgstr ""
+msgstr "错误，您不能创建循环引用的会员用户"
 
 #. module: crm
 #: model:crm.case.resource.type,name:crm.type_lead8
