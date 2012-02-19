@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:44+0000\n"
-"PO-Revision-Date: 2012-02-17 09:36+0000\n"
-"Last-Translator: ZhangCheng <skyxxzc@gmail.com>\n"
+"PO-Revision-Date: 2012-02-18 11:10+0000\n"
+"Last-Translator: Joshua Jan <popkar77@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-02-18 04:57+0000\n"
+"X-Launchpad-Export-Date: 2012-02-19 05:41+0000\n"
 "X-Generator: Launchpad (build 14814)\n"
 
 #. module: base
@@ -1386,6 +1386,8 @@ msgid ""
 "use the accounting application of OpenERP, journals and accounts will be "
 "created automatically based on these data."
 msgstr ""
+"配置贵公司的银行帐户，并选择那些出现在报表页脚的信息。从列表视图中，您可以重新排列的银行帐户。如果你使用的的OpenERP会计应用，凭证簿和科目基于将这些"
+"数据被自动创建。"
 
 #. module: base
 #: view:ir.module.module:0
@@ -4389,6 +4391,14 @@ msgid ""
 "automatically new claims based on incoming emails.\n"
 "    "
 msgstr ""
+"\n"
+"这个模块允许您跟踪您的客户/供应商索赔和申诉。\n"
+"============================================================================="
+"===\n"
+"\n"
+"它完整集成电子邮件网关使您可以根据传入的电子邮件\n"
+"自动创建新的索赔。\n"
+"    "
 
 #. module: base
 #: selection:workflow.activity,join_mode:0
@@ -5056,6 +5066,13 @@ msgid ""
 "of the survey\n"
 "    "
 msgstr ""
+"\n"
+"此模块用于问卷调查。它依赖不同用户问题的答复或者回顾。\n"
+"==================================\n"
+" 一个问卷可以有多个页面。每个页面可以有多个问题，每个问题会有多个答案。\n"
+" 针对完成的问卷，不同的用户可能给出不同的问题答案。\n"
+" 对于问卷邀请，会发送带有用户名和密码的邮件给业务合作伙伴。\n"
+"    "
 
 #. module: base
 #: model:res.country,name:base.bm
