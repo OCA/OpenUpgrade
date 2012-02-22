@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:44+0000\n"
-"PO-Revision-Date: 2012-02-21 05:45+0000\n"
+"PO-Revision-Date: 2012-02-21 08:02+0000\n"
 "Last-Translator: Jeff Wang <wjfonhand@hotmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-02-21 05:54+0000\n"
+"X-Launchpad-Export-Date: 2012-02-22 04:56+0000\n"
 "X-Generator: Launchpad (build 14838)\n"
 
 #. module: base
@@ -6205,7 +6205,7 @@ msgstr "不能处理模块 \"%s\"，因为找不到外部的依赖：%s"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_be_hr_payroll
 msgid "Belgium - Payroll"
-msgstr ""
+msgstr "比利时-工资模块"
 
 #. module: base
 #: view:publisher_warranty.contract.wizard:0
@@ -6261,6 +6261,17 @@ msgid ""
 "    * Integrated with Holiday Management\n"
 "    "
 msgstr ""
+"\n"
+"通用工资系统 \n"
+"* 员工详细资料 \n"
+"* 员工合同\n"
+"* 签合同的护照 \n"
+"* 津贴 / 扣除\n"
+" * 允许设置基本 / 增长 /净薪酬 \n"
+"* 员工工资表 \n"
+"* 每月工资表记录 \n"
+"* 整合假期的管理\n"
+"    "
 
 #. module: base
 #: selection:ir.cron,interval_type:0
@@ -6462,6 +6473,13 @@ msgid ""
 "an other object.\n"
 "    "
 msgstr ""
+"\n"
+"这个模块允许您完整地管理您的联系人。 它可以让你定义 \n"
+"*联系人不关联合作伙伴，\n"
+" *联系人工作在几个地址（这些地址可能是几个业务伙伴） \n"
+"*联系人几个地址可能是不同职务 它还增加了新的菜单位于 合作伙伴\\联系人 合作伙伴\\职位 "
+"注意，此模块转换成“地址+联系人”的现有地址。这意味着一些地址字段将会丢失（如联系人的姓名），因为这些都应该是在其他对象中定义的。\n"
+"    "
 
 #. module: base
 #: model:ir.actions.act_window,name:base.act_res_partner_event
@@ -6489,6 +6507,8 @@ msgid ""
 "- Action: an action attached to one slot of the given model\n"
 "- Default: a default value for a model field"
 msgstr ""
+"动作：动作附加到模型的一个接口\n"
+"默认值：模型字段的一个默认值"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_partner_addess_tree
@@ -6541,7 +6561,7 @@ msgstr "工作项"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_anonymization
 msgid "Database Anonymization"
-msgstr ""
+msgstr "数据库隐藏"
 
 #. module: base
 #: selection:ir.mail_server,smtp_encryption:0
@@ -6551,7 +6571,7 @@ msgstr "SSL/TLS"
 #. module: base
 #: field:publisher_warranty.contract,check_opw:0
 msgid "OPW"
-msgstr ""
+msgstr "OPW"
 
 #. module: base
 #: field:res.log,secondary:0
@@ -6621,6 +6641,8 @@ msgid ""
 "using the\n"
 "FTP client.\n"
 msgstr ""
+"\n"
+"此模块为文档管理增加了FTP支持。安装了这个模块你不仅可以在OpenERP里访问文档还能通过FTP客户端在文件系统上访问这些文件。\n"
 
 #. module: base
 #: field:ir.model.fields,size:0
@@ -6646,6 +6668,11 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"此模块允许你定义给定的用户默认的职能。常用于用户输入计工单：这些预定义的值默认填充了字段，当然可以修改。当然，如果当前用户没有默认的数据，这些默认值会从员"
+"工记录去取。所以此模块与之前的配置是兼容的。\n"
+"\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_audittrail
@@ -6704,7 +6731,7 @@ msgstr "以色列"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_syscohada
 msgid "OHADA - Accounting"
-msgstr ""
+msgstr "OHADA会计模块"
 
 #. module: base
 #: help:res.bank,bic:0
@@ -6721,6 +6748,9 @@ msgid ""
 "Mexican accounting chart and localization.\n"
 "    "
 msgstr ""
+"\n"
+"墨西哥会计模块\n"
+"    "
 
 #. module: base
 #: field:res.lang,time_format:0
@@ -6944,7 +6974,7 @@ msgstr "决定是否能够翻译此字段的各个取值（激活此字段的翻
 #. module: base
 #: selection:res.currency,position:0
 msgid "After Amount"
-msgstr ""
+msgstr "在金额后面"
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -6988,7 +7018,7 @@ msgstr "源术语"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_timesheet_sheet
 msgid "Timesheets Validation"
-msgstr ""
+msgstr "复核计工单"
 
 #. module: base
 #: model:ir.ui.menu,name:base.menu_main_pm
@@ -7034,7 +7064,7 @@ msgstr "审核"
 #. module: base
 #: help:ir.values,company_id:0
 msgid "If set, action binding only applies for this company"
-msgstr ""
+msgstr "如果不为空，动作只为该公司绑定"
 
 #. module: base
 #: model:res.country,name:base.lc
@@ -7047,7 +7077,7 @@ msgid ""
 "Specify a value only when creating a user or if you're changing the user's "
 "password, otherwise leave empty. After a change of password, the user has to "
 "login again."
-msgstr ""
+msgstr "仅在新建用户或修改该用户的密码时输入此字段值，否则留空。修改密码后，用户必须重新登录。"
 
 #. module: base
 #: view:publisher_warranty.contract:0
@@ -7159,6 +7189,9 @@ msgid ""
 "that have no counterpart in the general financial accounts.\n"
 "    "
 msgstr ""
+"\n"
+"模块定义辅助核算对象\n"
+"    "
 
 #. module: base
 #: field:res.users,signature:0
@@ -7232,11 +7265,13 @@ msgid ""
 "Bank Accounts in OpenERP: the first with the type \"RIB\", the second with "
 "the type \"IBAN\". \n"
 msgstr ""
+"\n"
+"法国银行信息检查 \n"
 
 #. module: base
 #: view:ir.property:0
 msgid "Parameters that are used by all resources."
-msgstr ""
+msgstr "所有资源都使用的参数"
 
 #. module: base
 #: model:res.country,name:base.mz
@@ -7472,6 +7507,14 @@ msgid ""
 "You can assign several contracts per employee.\n"
 "    "
 msgstr ""
+"\n"
+"在管理合同里添加这员工的所有信息： \n"
+"* 婚姻状况\n"
+"* 社保号 \n"
+"* 籍贯，出生日期。。。 \n"
+"\n"
+"您可以为员工签订几份合同。\n"
+"    "
 
 #. module: base
 #: selection:ir.ui.view,type:0
@@ -7496,6 +7539,10 @@ msgid ""
 "crm modules.\n"
 "    "
 msgstr ""
+"\n"
+"此模块在CRM中为一个或多个商机案例添加了快捷方式。这个快捷方式允许你为选中的商机生成销售订单。如果打开了不同的商机（列表）， "
+"它会为每个商机生成一个销售订单。然后关闭商机，并且关联到生成的销售订单上。 如果你已经安装了销售和CRM模块，我建议你安装此模块。\n"
+"    "
 
 #. module: base
 #: model:res.country,name:base.bi
@@ -7520,7 +7567,7 @@ msgstr "Spanish (MX) / Español (MX)"
 #: code:addons/base/publisher_warranty/publisher_warranty.py:145
 #, python-format
 msgid "Please verify your publisher warranty serial number and validity."
-msgstr ""
+msgstr "请验证你官方维护合同的序列号和有效期"
 
 #. module: base
 #: view:res.log:0
@@ -7581,7 +7628,7 @@ msgstr "协会管理"
 #. module: base
 #: help:ir.model,modules:0
 msgid "List of modules in which the object is defined or inherited"
-msgstr ""
+msgstr "此模型在哪些模块里被定义和继承的"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_payroll
@@ -7609,6 +7656,12 @@ msgid ""
 "\n"
 "     "
 msgstr ""
+"\n"
+"允许你在销售订单或出库单上增加发货方式。\n"
+"你可以定义你自己的承运方和发货网格价格。\n"
+"当基于发货单创建发票时，OpenERP可以增加和自动计算运费行。\n"
+"\n"
+"     "
 
 #. module: base
 #: view:workflow.workitem:0
@@ -7693,6 +7746,11 @@ msgid ""
 "Invite OpenERP user feedback, powered by uservoice.\n"
 "    "
 msgstr ""
+"\n"
+"在页眉添加反馈按钮。\n"
+"\n"
+"邀请在uservoice网站上用户反馈。\n"
+"    "
 
 #. module: base
 #: field:res.company,rml_header2:0
@@ -7760,6 +7818,10 @@ msgid ""
 "that exceeds minimum amount set by configuration wizard.\n"
 "    "
 msgstr ""
+"\n"
+"对高于限额的采购订单做两次审核。\n"
+"此模块修改了采购工作流，对超出向导定义的最小金额的订单进行审核。\n"
+"    "
 
 #. module: base
 #: field:res.currency,rounding:0
@@ -7775,14 +7837,14 @@ msgstr "加拿大"
 #: code:addons/base/res/res_company.py:158
 #, python-format
 msgid "Reg: "
-msgstr ""
+msgstr "地区 "
 
 #. module: base
 #: help:res.currency.rate,currency_rate_type_id:0
 msgid ""
 "Allow you to define your own currency rate types, like 'Average' or 'Year to "
 "Date'. Leave empty if you simply want to use the normal 'spot' rate type"
-msgstr ""
+msgstr "允许你定义自己的汇率类型，例如‘平均值’或‘年平均’。如果要使用默认的‘时点’汇率类型，这里留空。"
 
 #. module: base
 #: selection:ir.module.module.dependency,state:0
@@ -7817,6 +7879,9 @@ msgid ""
 "Romanian accounting chart and localization.\n"
 "    "
 msgstr ""
+"\n"
+"罗马尼亚会计模块\n"
+"    "
 
 #. module: base
 #: model:res.country,name:base.cm
@@ -7844,6 +7909,11 @@ msgid ""
 "all the tasks will change accordingly.\n"
 "    "
 msgstr ""
+"\n"
+"按项目的截止日期反推计划。\n"
+"\n"
+"如果项目的截止日期发生了变化，项目下所有任务的开始和截止日期都相应调整。\n"
+"    "
 
 #. module: base
 #: help:res.users,view:0
@@ -7886,7 +7956,7 @@ msgstr "荷兰语 / Nederlands"
 #. module: base
 #: selection:res.company,paper_format:0
 msgid "US Letter"
-msgstr ""
+msgstr "美式信纸"
 
 #. module: base
 #: model:ir.module.module,description:base.module_stock_location
@@ -7989,6 +8059,11 @@ msgid ""
 "Contains the installer for marketing-related modules.\n"
 "    "
 msgstr ""
+"\n"
+"市场营销的菜单\n"
+"\n"
+"包括市场营销相关的模块\n"
+"    "
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_knowledge_management
@@ -8036,6 +8111,11 @@ msgid ""
 "task is completed.\n"
 "\n"
 msgstr ""
+"\n"
+"这个模块在包含服务类产品的需求单和项目管理的任务之间建立了联系 安装了这个模块以后，只要满足下列条件，就会为需求单的每个行创建一个任务： "
+"产品类型为服务型 补货方式为按订单 供应方式为自制 新任务不属于任何项目，但可以手工指定给项目。 当任务完成或取消后，补货单的对应行状态也会更新。 "
+"这个模块适用于针对任务开发票的公司按订单创建任务。\n"
+"\n"
 
 #. module: base
 #: code:addons/base/res/res_config.py:348
@@ -8056,6 +8136,9 @@ msgid ""
 "    Module for the Check writing and check printing  \n"
 "    "
 msgstr ""
+"\n"
+"    用于填写和打印支票的模块  \n"
+"    "
 
 #. module: base
 #: model:res.partner.bank.type,name:base.bank_normal
