@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+B1;2790;0c# -*- coding: utf-8 -*-
 
 from osv import osv
 import pooler, logging
@@ -23,6 +23,7 @@ def migrate(cr, version):
         pool = pooler.get_pool(cr.dbname)
         openupgrade.set_defaults(cr, pool, defaults)
         openupgrade.load_data(cr, 'project', 'migrations/6.1.1.1/data/project_data.xml')
+        openupgrade.load_data(cr, 'project', 'migrations/6.1.1.1/data/project_security.xml')
         openupgrade.load_data(cr, 'project', 'migrations/6.1.1.1/data/ir.model.access.csv')
     except Exception, e:
         raise osv.except_osv("OpenUpgrade", '%s: %s' % (me, e))
