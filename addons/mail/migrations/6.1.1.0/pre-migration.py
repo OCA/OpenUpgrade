@@ -24,9 +24,12 @@ table_renames = [
     ]
 
 def migrate(cr, version):
+    if not version:
+        return
     try:
         logger.info("%s called", me)
-        openupgrade.rename_tables(cr, table_renames)
-        openupgrade.rename_columns(cr, column_renames)
+        if openupgrade.table_exists(cr, 'mailgate_thread'):
+            openupgrade.rename_tables(cr, table_renames)
+            openupgrade.rename_columns(cr, column_renames)
     except Exception, e:
         raise osv.except_osv("OpenUpgrade", '%s: %s' % (me, e))

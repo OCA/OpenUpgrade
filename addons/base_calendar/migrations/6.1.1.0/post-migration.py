@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
-import os
+
 from osv import osv
-import logging
+import pooler, logging
 from openerp.openupgrade import openupgrade
 
+from openerp import SUPERUSER_ID
+
 logger = logging.getLogger('OpenUpgrade')
-me = os.path.realpath( __file__ )
+me = __file__
 
 def migrate(cr, version):
     try:
         logger.info("%s called", me)
-        openupgrade.load_xml(cr, 'account_payment', 'migrations/6.1.1.1/data/account_payment_security.xml')
+        openupgrade.load_data(cr, 'mail', 'migrations/6.1.1.0/data/ir.model.access.csv')
     except Exception, e:
         raise osv.except_osv("OpenUpgrade", '%s: %s' % (me, e))

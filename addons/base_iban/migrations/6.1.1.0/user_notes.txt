@@ -1,2 +1,2 @@
-IBANs are now stored in the same field as regular account numbers.
+IBANs are now stored in the same field as regular account numbers. That means that these domestic account numbers for these accounts will be lost in the upgrade. If you use a module that allows you to fill in the IBAN for regular bank accounts, you will lose the IBAN in the upgrade. You can preserve both if you install account_iban_preserve_domestic on the 6.0 database prior to migration.
 
