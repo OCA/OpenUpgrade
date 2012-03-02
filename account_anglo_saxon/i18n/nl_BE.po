@@ -1,16 +1,16 @@
-# French translation for openobject-addons
-# Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
+# Dutch (Belgium) translation for openobject-addons
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
 # This file is distributed under the same license as the openobject-addons package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 00:35+0000\n"
-"PO-Revision-Date: 2012-03-01 19:30+0000\n"
-"Last-Translator: t.o <Unknown>\n"
-"Language-Team: French <fr@li.org>\n"
+"PO-Revision-Date: 2012-03-01 17:37+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Dutch (Belgium) <nl_BE@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,76 +20,76 @@ msgstr ""
 #. module: account_anglo_saxon
 #: sql_constraint:purchase.order:0
 msgid "Order Reference must be unique per Company!"
-msgstr "La référence de commande doit être unique par société !"
+msgstr ""
 
 #. module: account_anglo_saxon
 #: view:product.category:0
 msgid " Accounting Property"
-msgstr " Propriété de comptabilité"
+msgstr " Boekhoudeigenschap"
 
 #. module: account_anglo_saxon
 #: model:ir.model,name:account_anglo_saxon.model_product_category
 msgid "Product Category"
-msgstr "Catégorie de produit"
+msgstr "Productcategorie"
 
 #. module: account_anglo_saxon
 #: sql_constraint:stock.picking:0
 msgid "Reference must be unique per Company!"
-msgstr "La référence doit être unique par société !"
+msgstr ""
 
 #. module: account_anglo_saxon
 #: constraint:product.category:0
 msgid "Error ! You cannot create recursive categories."
-msgstr "Erreur! Vous ne pouvez pas créer de catégories récursives"
+msgstr ""
 
 #. module: account_anglo_saxon
 #: constraint:account.invoice:0
 msgid "Invalid BBA Structured Communication !"
-msgstr "Structure de communication BBA incorrecte !"
+msgstr ""
 
 #. module: account_anglo_saxon
 #: constraint:product.template:0
 msgid ""
 "Error: The default UOM and the purchase UOM must be in the same category."
 msgstr ""
-"Erreur: l'UdM par défaut et l'UdM d'achat doivent appartenir à la même "
-"catégorie."
+"Fout: de standaardmeeteenheid en de aankoopmeeteenheid moeten in dezelfde "
+"categorie zitten."
 
 #. module: account_anglo_saxon
 #: model:ir.model,name:account_anglo_saxon.model_account_invoice_line
 msgid "Invoice Line"
-msgstr "Ligne de facture"
+msgstr "Factuurlijn"
 
 #. module: account_anglo_saxon
 #: model:ir.model,name:account_anglo_saxon.model_purchase_order
 msgid "Purchase Order"
-msgstr "Bon de commande"
+msgstr "Aankooporder"
 
 #. module: account_anglo_saxon
 #: model:ir.model,name:account_anglo_saxon.model_product_template
 msgid "Product Template"
-msgstr "Modèle de produit"
+msgstr "Productsjabloon"
 
 #. module: account_anglo_saxon
 #: field:product.category,property_account_creditor_price_difference_categ:0
 #: field:product.template,property_account_creditor_price_difference:0
 msgid "Price Difference Account"
-msgstr "Compte d'écart de prix"
+msgstr "Prijsverschillenrekening"
 
 #. module: account_anglo_saxon
 #: model:ir.model,name:account_anglo_saxon.model_account_invoice
 msgid "Invoice"
-msgstr "Facture"
+msgstr "Factuur"
 
 #. module: account_anglo_saxon
 #: model:ir.model,name:account_anglo_saxon.model_stock_picking
 msgid "Picking List"
-msgstr "Opération de manutention"
+msgstr ""
 
 #. module: account_anglo_saxon
 #: sql_constraint:account.invoice:0
 msgid "Invoice Number must be unique per Company!"
-msgstr "Le numéro de facture doit être unique par société !"
+msgstr ""
 
 #. module: account_anglo_saxon
 #: help:product.category,property_account_creditor_price_difference_categ:0
@@ -98,5 +98,3 @@ msgid ""
 "This account will be used to value price difference between purchase price "
 "and cost price."
 msgstr ""
-"Ce compte sera utilisé pour valoriser l'écart de prix entre le prix d'achat "
-"et le prix de revient de l'article."
