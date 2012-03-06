@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 from osv import osv
 import logging
 from openerp.openupgrade import openupgrade

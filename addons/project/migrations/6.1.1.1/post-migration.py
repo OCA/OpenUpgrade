@@ -1,4 +1,4 @@
-B1;2790;0c# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from osv import osv
 import pooler, logging
