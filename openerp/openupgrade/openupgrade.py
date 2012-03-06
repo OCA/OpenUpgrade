@@ -88,6 +88,22 @@ def rename_tables(cr, table_spec):
                     old, new)
         cr.execute('ALTER TABLE "%s" RENAME TO "%s"' % (old, new,))
 
+def rename_models(cr, model_spec):
+    """
+    Rename models. Typically called in the pre script.
+    :param column_spec: a list of tuples (old table name, new table name).
+    
+    Use case: if a model changes name, but still implements equivalent
+    functionality you will want to update references in for instance
+    relation fields.
+
+    """
+    for (old, new) in model_spec:
+        logger.info("model %s: renaming to %s",
+                    old, new)
+        cr.execute('UPDATE ir_model_fields SET relation = %s '
+                   'WHERE relation = %s', (new, old,))
+
 def drop_columns(cr, column_spec):
     """
     Drop columns but perform an additional check if a column exists.
@@ -124,7 +140,7 @@ def delete_model_workflow(cr, model):
         cr,
         "DELETE FROM wkf WHERE osv = %s", (model,))
 
-def set_defaults(cr, pool, default_spec):
+def set_defaults(cr, pool, default_spec, force=False):
     """
     Set default value. Useful for fields that are newly required. Uses orm, so
     call from the post script.
@@ -133,6 +149,12 @@ def set_defaults(cr, pool, default_spec):
     tuples (field, value). None as a value has a special meaning: it assigns \
     the default value. If this value is provided by a function, the function is \
     called as the user that created the resource.
+    :param force: overwrite existing values. To be used for assigning a non- \
+    default value (presumably in the case of a new column). The ORM assigns \
+    the default value as declared in the model in an earlier stage of the \
+    process. Beware of issues with resources loaded from new data that \
+    actually do require the model's default, in combination with the post \
+    script possible being run multiple times.
     """
 
     def write_value(ids, field, value):
@@ -146,7 +168,8 @@ def set_defaults(cr, pool, default_spec):
             raise osv.except_osv("Migration: error setting default, no such model: %s" % model, "")
 
     for field, value in default_spec[model]:
-        ids = obj.search(cr, 1, [(field, '=', False)])
+        domain = not force and [(field, '=', False)] or []
+        ids = obj.search(cr, 1, domain)
         if not ids:
             continue
         if value is None:

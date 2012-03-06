@@ -336,7 +336,13 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
 
             processed_modules.append(package.name)
 
-            migrations.migrate_module(package, 'post')
+            # OpenUpgrade: add 'try' block for logging exceptions
+            # as errors in post scripts seem to be dropped
+            try:
+                migrations.migrate_module(package, 'post')
+            except Exception, e:
+                _logger.error('Error executing post migration script for module %s: %s', package, e)
+                raise
 
             ver = release.major_version + '.' + package.data['version']
             # Set new modules and dependencies
@@ -463,13 +469,23 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
         #            partially installed modules (i.e. installed/to upgrade), to
         #            offer a consistent system to the second part: installing
         #            newly selected modules.
-        states_to_load = ['installed', 'to upgrade']
-        processed = load_marked_modules(cr, graph, states_to_load, force, status, report, loaded_modules, registry)
-        processed_modules.extend(processed)
-        if update_module:
-            states_to_load = ['to install']
-            processed = load_marked_modules(cr, graph, states_to_load, force, status, report, loaded_modules, registry)
-            processed_modules.extend(processed)
+
+        # OpenUpgrade: Loop until no modules are processed
+        # This makes the upgrade a one step process, even when new dependencies
+        # are installed down the road.
+        processed_upgrade = True
+        processed_install = True
+        while processed_upgrade or processed_install:
+            _logger.warning("Starting a new iteration of selecting modules to upgrade")
+            states_to_load = ['installed', 'to upgrade']
+            processed_upgrade = load_marked_modules(cr, graph, states_to_load, force, status, report, loaded_modules, registry)
+            processed_modules.extend(processed_upgrade)
+            if update_module:
+                states_to_load = ['to install']
+                processed_install = load_marked_modules(cr, graph, states_to_load, force, status, report, loaded_modules, registry)
+                processed_modules.extend(processed_install)
+            else:
+                processed_install = False
 
         # load custom models
         cr.execute('select model from ir_model where state=%s', ('manual',))
