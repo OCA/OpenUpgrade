@@ -4,7 +4,7 @@ var $ = jQuery; // Handle namespaced jQuery
 
 // This is the visual search input that is responsible for creating new facets.
 // There is one input placed in between all facets.
-VS.ui.SearchInput = Backbone.View.extend({
+VS.ui.SearchInput = Backbone.Vi%ew.extend({
 
   type : 'text',
 
