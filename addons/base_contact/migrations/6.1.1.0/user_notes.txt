@@ -1,0 +1,21 @@
+Overview:
+- res.partner.address is changed to res.partner.location + contact
+- res.partner.jobs is dropped in favor of using res.partner.address
+- res.partner.contact itself stayed about the same (explicit last_name added)
+
+The following fields from res.partner.jobs no longer have equivalent:
+- 'sequence_contact': fields.integer('Contact Seq.',help='Order of importance of this address in the list of addresses of the linked contact'),
+- 'sequence_partner': fields.integer('Partner Seq.',help='Order of importance of this job title in the list of job title of the linked partner'),
+- 'extension': fields.char('Extension', size=64, help='Internal/External extension phone number'),
+- 'other': fields.char('Other', size=64, help='Additional phone field'),
+- 'date_start': fields.date('Date Start',help="Start date of job(Joining Date)"),
+- 'date_stop': fields.date('Date Stop', help="Last date of job"),
+- 'state': fields.selection([('past', 'Past'),('current', 'Current')], 'State', required=True, help="Status of Address"),
+
+You may want to review your data if you use above fields.
+
+res.partner.job table is not dropped.
+
+Original res.partner.job.id is stored in column x_openupgrade_job_id of
+res.partner.address object, which can be reused later on to migrate above fields
+into notes field or res.partner.address for example.
