@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:44+0000\n"
-"PO-Revision-Date: 2012-03-22 06:43+0000\n"
+"PO-Revision-Date: 2012-03-23 20:18+0000\n"
 "Last-Translator: Dorin <dhongu@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-03-23 05:12+0000\n"
-"X-Generator: Launchpad (build 14996)\n"
+"X-Launchpad-Export-Date: 2012-03-24 05:39+0000\n"
+"X-Generator: Launchpad (build 14981)\n"
 
 #. module: base
 #: model:res.country,name:base.sh
@@ -71,6 +71,18 @@ msgid ""
 "    * Graph of My Remaining Hours by Project\n"
 "    "
 msgstr ""
+"\n"
+"Modulul managementului de proiect urmărește proiectele multi-nivel, "
+"sarcinile, lucruile făcute prin sarcini, etc.\n"
+"============================================================================="
+"=============\n"
+"Este capabil să redea planifiecarea, ordonarea taskurilor, etc.\n"
+"Panou pentru membri proiectului care include:\n"
+"    * listarea sarcinilor deschise\n"
+"    * listarea sarcinilor delegate\n"
+"    * graficul proiectelor mele: plafinicate versus ore totale\n"
+"    * graficul orelor mele ramase în proiect\n"
+"    "
 
 #. module: base
 #: field:base.language.import,code:0
@@ -121,6 +133,8 @@ msgstr "Afișare sfaturi meniu"
 msgid ""
 "Model name on which the method to be called is located, e.g. 'res.partner'."
 msgstr ""
+"Numele modelului unde este localizata metoda ce urmează a fi efectuată, de "
+"exemplu 'res.partner'"
 
 #. module: base
 #: view:ir.module.module:0
@@ -146,6 +160,10 @@ msgid ""
 "\n"
 "This module allows you to create retro planning for managing your events.\n"
 msgstr ""
+"\n"
+"Organizarea și managementul evenimentelor.\n"
+"========================================================\n"
+"Acest modul vă permite să pacificați oranizarea evenimentelor\n"
 
 #. module: base
 #: help:ir.model.fields,domain:0
@@ -166,7 +184,7 @@ msgstr "Referință"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_be_invoice_bba
 msgid "Belgium - Structured Communication"
-msgstr ""
+msgstr "Belgia- Comunicare Structurata"
 
 #. module: base
 #: field:ir.actions.act_window,target:0
@@ -176,7 +194,7 @@ msgstr "Fereastră țintă"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_analytic_plans
 msgid "Sales Analytic Distribution"
-msgstr ""
+msgstr "Distribuție Analitică a Vânzărilor"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_process
@@ -236,7 +254,7 @@ msgstr "creat."
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_tr
 msgid "Turkey - Accounting"
-msgstr ""
+msgstr "Turcia - Contabilitate"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_mrp_subproduct
@@ -348,6 +366,12 @@ msgid ""
 "  - tree_but_open\n"
 "For defaults, an optional condition"
 msgstr ""
+"Pentru acțiune, alegeți unul din următoarele:\n"
+"  -client_multi_actiune\n"
+"  -client_multi_print\n"
+"  -client_actiuni_asemanatoare\n"
+"  -arbore_deschis\n"
+"  Pentru implicit, o condiție opțională"
 
 #. module: base
 #: sql_constraint:res.lang:0
@@ -6942,7 +6966,7 @@ msgstr ""
 #: view:ir.module.module:0
 #, python-format
 msgid "Upgrade"
-msgstr ""
+msgstr "Actualizează"
 
 #. module: base
 #: field:res.partner,address:0
