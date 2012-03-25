@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-server\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 00:44+0000\n"
-"PO-Revision-Date: 2012-03-24 01:00+0000\n"
+"PO-Revision-Date: 2012-03-25 04:24+0000\n"
 "Last-Translator: Akira Hiyama <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-03-24 04:53+0000\n"
+"X-Launchpad-Export-Date: 2012-03-25 05:04+0000\n"
 "X-Generator: Launchpad (build 14981)\n"
 
 #. module: base
@@ -2499,7 +2499,7 @@ msgstr "ホームページウィジット管理"
 #. module: base
 #: field:res.company,rml_header1:0
 msgid "Report Header / Company Slogan"
-msgstr "レポートヘッダ / 会社の標語"
+msgstr "レポートヘッダー / 会社の標語"
 
 #. module: base
 #: model:res.country,name:base.pl
@@ -4494,7 +4494,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"このモジュールは顧客 / サプライヤのクレームや不満の追跡をします。\n"
+"このモジュールは顧客 / 仕入先のクレームや不満の追跡をします。\n"
 "============================================================================="
 "===\n"
 "\n"
@@ -4661,15 +4661,15 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"発注モジュールはサプライヤから商品購入のために発注を生成します。\n"
+"仕入モジュールは仕入先から商品購入のために仕入注文を生成します。\n"
 "============================================================================="
 "============\n"
 "\n"
-"個々の発注に応じたサプライヤの請求が作成されます。\n"
+"特定の仕入注文に応じた仕入先の請求が作成されます。\n"
 "\n"
 "発注管理のダッシュボードは以下を含みます：\n"
-"    ・ 最新の発注\n"
-"    ・ ドラフトの発注\n"
+"    ・ 最新の仕入注文\n"
+"    ・ ドラフトの仕入注文\n"
 "    ・ 月別の発注量と金額のグラフ\n"
 "\n"
 "    "
@@ -4709,7 +4709,7 @@ msgstr "検証"
 #. module: base
 #: view:res.company:0
 msgid "Header/Footer"
-msgstr "ヘッダ/フッタ"
+msgstr "ヘッダー / フッター"
 
 #. module: base
 #: help:ir.mail_server,sequence:0
@@ -5424,11 +5424,11 @@ msgid ""
 "order all your purchase orders.\n"
 msgstr ""
 "\n"
-"このモジュールは発注要求を管理します。\n"
+"このモジュールは仕入要求を管理します。\n"
 "===========================================================\n"
 "\n"
-"発注が作られるときに、あなたは関連する発注要求を救済する機会を持ちます。\n"
-"新しいオブジェクトは再グループ化され容易に追跡を続けることができるので、全ての発注を指示することができます。\n"
+"仕入注文が作られるときに、あなたは関連する要求を保存する機会を持ちます。\n"
+"新しいオブジェクトは再グループ化され容易に追跡を続けることができるので、全ての仕入注文をすることができます。\n"
 
 #. module: base
 #: model:res.country,name:base.hu
@@ -6171,7 +6171,7 @@ msgstr ""
 "    2) 第２ステップとしてCODAトランザクション行の’構造化通信’項目は内部あるいは外部への請求書\n"
 "        （ベルギー構造化通信タイプはサポート済み）の参照項目に対して一致させられます。\n"
 "    3) 前ステップで一致するものが見つからなかった場合、トランザクションの相手方はOpenERPの顧客、\n"
-"        サプライヤレコード上に設定された銀行口座番号を使って特定されます。\n"
+"        仕入先レコード上に設定された銀行口座番号を使って特定されます。\n"
 "    4) 上記のステップが成功しないケースは、さらに手作業による処理を行うために、CODAファイルインポート\n"
 "        ウィザードの’認識できない移動のためのデフォルト口座’項目を使ってトランザクションは生成されます。\n"
 "\n"
@@ -7950,7 +7950,7 @@ msgstr "この順番の次の番号"
 #. module: base
 #: model:res.partner.category,name:base.res_partner_category_11
 msgid "Textile Suppliers"
-msgstr "繊維供給元"
+msgstr "布地仕入先"
 
 #. module: base
 #: selection:ir.actions.url,target:0
@@ -8447,7 +8447,7 @@ msgstr ""
 "    * 以下のようなビジネス要求による倉庫の中の経路の定義：\n"
 "       - 品質管理\n"
 "       - 販売サービスの後\n"
-"       - サプライヤ返品\n"
+"       - 仕入先返品\n"
 "\n"
 "    * レンタル製品の自動返品を生成することでレンタル管理を助けます。\n"
 "\n"
@@ -8472,13 +8472,13 @@ msgstr ""
 "----------\n"
 "プルフローはプッシュフローとは少し異なっています。これは製品の動きの処理には関係せず、\n"
 "むしろ調達した注文の処理に関係します。直接の商品ではなくニーズに依ります。\n"
-"プルフローの古典的な例は、供給に責任を持つ親会社を持つアウトレット会社です。\n"
+"プルフローの古典的な例は、仕入に責任を持つ親会社を持つアウトレット会社です。\n"
 "\n"
-"  [ 顧客 ] <- A - [ アウトレット ] <- B - [ 親会社 ] <~ C ~ [ 供給者 ]\n"
+"  [ 顧客 ] <- A - [ アウトレット ] <- B - [ 親会社 ] <~ C ~ [ 仕入先 ]\n"
 "\n"
-"新しい調達注文（A：例として注文の確認が来ます）がアウトレットに到着すると、それは親会社から要求されたもう一つの調達注文に変換されます（B：プルフローのタ"
-"イプは'move'）。親会社により調達注文Bが処理される時、そしてその製品が在庫切れの時、それは供給者からの発注（C：プルフローのタイプは発注）に変換され"
-"ます。結果として調達注文、ニーズは顧客と供給者の間の全てにプッシュされます。\n"
+"新しい調達注文（A：注文の確認がくる例）がアウトレットに到着すると、それは親会社から要求されたもう一つの調達注文に変換されます（B：プルフローのタイプは'"
+"move'）。親会社により調達注文Bが処理される時、そしてその製品が在庫切れの時、それは仕入先からの仕入注文（C：プルフローのタイプは仕入）に変換されます"
+"。結果として調達注文、ニーズは顧客と仕入先の間の全てにプッシュされます。\n"
 "\n"
 "技術的には、プルフローは調達注文と別に処理することを許します。製品に対しての考慮に依存するのみならず、その製品のニーズを持つ場所（即ち調達注文の目的地）に"
 "依存します。\n"
@@ -9028,7 +9028,7 @@ msgid ""
 "installed the CRM, with the history tab, you can track all the interactions "
 "with a partner such as opportunities, emails, or sales orders issued."
 msgstr ""
-"顧客（システムの他のエリアではパートナと呼ばれる）は、あなたが彼らが将来顧客であるのか、供給者であるのかどうか会社の住所録の管理するのを手助けします。パー"
+"顧客（システムの他のエリアではパートナと呼ばれる）は、あなたが彼らが将来顧客であるのか、仕入先であるのかどうか会社の住所録の管理するのを手助けします。パー"
 "トナのフォームは、会社のアドレスから、価格リストなどの多くの情報、パートナの連絡先まで相互に必要なすべての情報を追跡し、記録することができます。\r\n"
 "CRMをインストールした場合は、履歴タブでパートナと共にオポチュニティ、電子メール、発行された受注など全ての対話を追跡することができます。"
 
@@ -9326,7 +9326,7 @@ msgstr "オブジェクト %s は存在しません。"
 #. module: base
 #: view:res.lang:0
 msgid "%j - Day of the year [001,366]."
-msgstr ""
+msgstr "%j - 年の通算日 [001,366]."
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -9350,16 +9350,24 @@ msgid ""
 "German accounting chart and localization.\n"
 "    "
 msgstr ""
+"\n"
+"Dieses Modul beinhaltet einen deutschen Kontenrahmen basierend auf dem "
+"SKR03.\n"
+"============================================================================="
+"=\n"
+"\n"
+"ドイツの会計表とローカル化\n"
+"    "
 
 #. module: base
 #: field:ir.actions.report.xml,attachment_use:0
 msgid "Reload from Attachment"
-msgstr ""
+msgstr "添付ファイルからリロード"
 
 #. module: base
 #: view:ir.module.module:0
 msgid "Hide technical modules"
-msgstr ""
+msgstr "専門的なモジュールの非表示"
 
 #. module: base
 #: model:ir.module.module,description:base.module_procurement
@@ -9381,38 +9389,50 @@ msgid ""
 "depending on the product's configuration.\n"
 "    "
 msgstr ""
+"\n"
+"このモジュールはコンピュータ調達のためのモジュールです。\n"
+"==============================================\n"
+"\n"
+"MRPプロセスでは、製造注文、仕入注文、在庫割り当てなどを起動されるために調達指示が作成されます。\n"
+"調達注文はシステムにより自動的に生成され、そして問題がある場合を除きユーザには通知されません。\n"
+"問題は生じた場合には、システムは手作業で解決されるべき阻害要因について（組み立てBoM（部品表）の欠如、仕入先の欠落の類い）、ユーザに知らせるために幾つか"
+"の調達例外を発生させます。\n"
+"\n"
+"調達指示は補充を必要とする製品の自動調達のための提案をスケジュールします。この調達は仕入先の仕入注文書かまたは製品の構成に応じてた製造注文のタスクを開始し"
+"ます。\n"
+"    "
 
 #. module: base
 #: model:res.country,name:base.mx
 msgid "Mexico"
-msgstr ""
+msgstr "メキシコ"
 
 #. module: base
 #: code:addons/base/ir/ir_mail_server.py:414
 #, python-format
 msgid "Missing SMTP Server"
-msgstr ""
+msgstr "SMTPサーバが見つかりません。"
 
 #. module: base
 #: field:ir.attachment,name:0
 msgid "Attachment Name"
-msgstr ""
+msgstr "添付ファイル名"
 
 #. module: base
 #: field:base.language.export,data:0
 #: field:base.language.import,data:0
 msgid "File"
-msgstr ""
+msgstr "ファイル"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_view_base_module_upgrade_install
 msgid "Module Upgrade Install"
-msgstr ""
+msgstr "モジュールの更新インストール"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_email_template
 msgid "E-Mail Templates"
-msgstr ""
+msgstr "Eメールテンプレート"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_actions_configuration_wizard
@@ -9480,6 +9500,56 @@ msgid ""
 "\n"
 "                    "
 msgstr ""
+"\n"
+"このモジュールはHTML＋CSSでデザインされたレポートをサポートするためにWebKitライブラリ（wkhtmltopdf）に基づいた新しいレポートエンジ"
+"ンを加えます。\n"
+"\n"
+"============================================================================="
+"========================================\n"
+"\n"
+"モジュール構造といくらかのコードはreport_openofficeモジュールに触発されました。\n"
+"\n"
+"このモジュールは以下をサポートします：\n"
+"　・ HTMLレポート定義\n"
+"　・ マルチヘッダーサポート\n"
+"　・ マルチロゴ\n"
+"　・ 複数会社サポート\n"
+"　・ HTMLとCSS-3サポート（制約は実際のWebKitのバージョンによる）\n"
+"　・ JavaScriptサポート\n"
+"　・ 生のHTMLデバッガ\n"
+"　・ ブック印刷機能\n"
+"　・ 余白の定義\n"
+"　・ 用紙サイズ定義\n"
+"　・ その他\n"
+"\n"
+"複数のヘッダーとロゴは会社ごとに定義することができます。\n"
+"CSSスタイル、ヘッダーとフッターの本体は会社ごとに定義されます。\n"
+"\n"
+"サンプルレポートはwebkit_report_sampleモジュールと次のビデオを参照下さい：\n"
+"　　http://files.me.com/nbessi/06n92k.mov\n"
+"\n"
+"インストール要件\n"
+"-----------------------------\n"
+"このモジュールはPDFとしてHTMLドキュメントをレンダリングするために、wkthtmltopdfライブラリを必要とします。\n"
+"0.9.9以降のバージョンが必要です。Linux、Mac OS X（i386）、Windows（32bits）は以下から。\n"
+"http://code.google.com/p/wkhtmltopdf/\n"
+"\n"
+"OpenERPサーバにライブラリをインストールした後、各会社にwkthtmltopdf実行可能ファイルへのパスの設定が必要です。\n"
+"\n"
+"Linuxでヘッダー / "
+"フッターが見つからない問題を経験している場合は、ライブラリはスタティックバージョンをインストールして下さい。Ubuntuのデフォルトのwkhtmltopd"
+"fはこの問題を持つことが知られています。\n"
+"\n"
+"\n"
+"To Do\n"
+"----\n"
+"\n"
+"・ JavaScriptアックティベーション、ディアクテイベーションサポート\n"
+"・ 校合されたものブック形式のサポート\n"
+"・ 別々のPDFのためのZIP戻り\n"
+"・ WebクライアントのWYSIWYG\n"
+"\n"
+"                    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_gt
@@ -9492,11 +9562,18 @@ msgid ""
 "la moneda del Quetzal. -- Adds accounting chart for Guatemala.  It also "
 "includes taxes and the Quetzal currency"
 msgstr ""
+"\n"
+"これはグアテマラのための会計表管理の基本モジュールです。\n"
+"=====================================================================\n"
+"\n"
+"Agrega una nomenclatura contable para Guatemala. También icluye impuestos y "
+"la moneda del Quetzal. \n"
+"-- グアテマラの会計表が追加されます。また、税とケツァール通貨が含まれています。"
 
 #. module: base
 #: view:res.lang:0
 msgid "%b - Abbreviated month name."
-msgstr ""
+msgstr "%b - 省略形の月の名称"
 
 #. module: base
 #: field:res.partner,supplier:0
@@ -9504,25 +9581,25 @@ msgstr ""
 #: field:res.partner.address,is_supplier_add:0
 #: model:res.partner.category,name:base.res_partner_category_8
 msgid "Supplier"
-msgstr ""
+msgstr "仕入先"
 
 #. module: base
 #: view:ir.actions.server:0
 #: selection:ir.actions.server,state:0
 msgid "Multi Actions"
-msgstr ""
+msgstr "複数のアクション"
 
 #. module: base
 #: view:base.language.export:0
 #: view:base.language.import:0
 #: view:wizard.ir.model.menu.create:0
 msgid "_Close"
-msgstr ""
+msgstr "閉じる"
 
 #. module: base
 #: field:multi_company.default,company_dest_id:0
 msgid "Default Company"
-msgstr ""
+msgstr "デフォルト会社"
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -9532,22 +9609,22 @@ msgstr "スペイン語（エクアドル）/ Español (EC)"
 #. module: base
 #: help:ir.ui.view,xml_id:0
 msgid "ID of the view defined in xml file"
-msgstr ""
+msgstr "XMLファイルで定義されたビューのID"
 
 #. module: base
 #: model:ir.model,name:base.model_base_module_import
 msgid "Import Module"
-msgstr ""
+msgstr "インポートモジュール"
 
 #. module: base
 #: model:res.country,name:base.as
 msgid "American Samoa"
-msgstr ""
+msgstr "アメリカ領サモア"
 
 #. module: base
 #: help:ir.actions.act_window,res_model:0
 msgid "Model name of the object to open in the view window"
-msgstr ""
+msgstr "ビューウィンドウで開くためのオブジェクトのモデル名"
 
 #. module: base
 #: model:ir.module.module,description:base.module_caldav
@@ -9574,27 +9651,47 @@ msgid ""
 "created\n"
 "        CALENDAR_NAME: Name of calendar to access\n"
 msgstr ""
+"\n"
+"このモジュールはCalDAVシステムの基本機能を含んでいます。\n"
+"===========================================================\n"
+"\n"
+" ・ カレンダーにリモートアクセスを提供するWebDAVサーバ\n"
+" ・ WebDAVを使用してカレンダーと同期\n"
+" ・ カレンダーイベントとToDoをOpenERPモデルにカスタマイズ\n"
+" ・ スケジュールの標準フォーマットiCalのインポート / エクスポート機能を提供\n"
+"\n"
+"CalDAVクライアントを利用してカレンダーにアクセスするには以下をポイントします：\n"
+"　　http://HOSTNAME:PORT/webdav/DATABASE_NAME/calendars/users/USERNAME/c\n"
+"\n"
+"WebCalを使ってOpenERPカレンダーにアクセスするためのリモートサイトは以下のようなURLを使います：\n"
+"　　http://HOSTNAME:PORT/webdav/DATABASE_NAME/Calendars/CALENDAR_NAME.ics\n"
+"\n"
+"　　ここで\n"
+"　　　HOSTNAME：OpenERP（WebDAVとともに）が実行されているホスト\n"
+"　　　PORT：OpenERPサーバが実行されているポート（デフォルト：8069）\n"
+"　　　DATABASE_NAME：OpenERPカレンダーが作成されるデータベース名\n"
+"　　　CALENDAR_NAME：アクセスするためのカレンダー名\n"
 
 #. module: base
 #: field:ir.model.fields,selectable:0
 msgid "Selectable"
-msgstr ""
+msgstr "選択可能"
 
 #. module: base
 #: code:addons/base/ir/ir_mail_server.py:199
 #, python-format
 msgid "Everything seems properly set up!"
-msgstr ""
+msgstr "全てのセットアップが適切に行われました。"
 
 #. module: base
 #: field:res.users,date:0
 msgid "Latest Connection"
-msgstr ""
+msgstr "最新の接続"
 
 #. module: base
 #: view:res.request.link:0
 msgid "Request Link"
-msgstr ""
+msgstr "リクエストリンク"
 
 #. module: base
 #: model:ir.module.module,description:base.module_plugin_outlook
@@ -9609,6 +9706,19 @@ msgid ""
 "mail into mail.message with attachments.\n"
 "      "
 msgstr ""
+"\n"
+"これはOutlookプラグインを提供します。\n"
+"=========================================\n"
+"Outlookプラグインによって、あなたはMS OutlookからEメールやその添付ファイルに指定したい\n"
+"オブジェクトの選択ができます。\n"
+"あなたが選択したパートナ、タスク、プロジェクト、分析アカウント、その他のオブジェクトを、\n"
+"選択されたメールメッセージに添付ファイルとともにアーカイブします。\n"
+" plug-in allows you to select an object that you would like to add\n"
+"to your email and its attachments from MS Outlook. You can select a partner, "
+"a task,\n"
+"a project, an analytical account, or any other object and archive selected\n"
+"mail into mail.message with attachments.\n"
+"      "
 
 #. module: base
 #: view:ir.attachment:0
@@ -9625,36 +9735,38 @@ msgid ""
 "use the same timezone that is otherwise used to pick and render date and "
 "time values: your computer's timezone."
 msgstr ""
+"ユーザのタイムゾーンは内部で印刷されたレポートに適切な日付と時間の値を出力するために使用されます。この項目のために値を設定することが大切です。日付と時間を"
+"選んで、レンダリングされるために使われるタイムゾーン（あなたのコンピュータのタイムゾーン）と同じものを使うべきです。"
 
 #. module: base
 #: help:res.country,name:0
 msgid "The full name of the country."
-msgstr ""
+msgstr "国のフルネーム"
 
 #. module: base
 #: selection:ir.actions.server,state:0
 msgid "Iteration"
-msgstr ""
+msgstr "繰り返し"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_project_planning
 msgid "Resources Planing"
-msgstr ""
+msgstr "資源計画"
 
 #. module: base
 #: field:ir.module.module,complexity:0
 msgid "Complexity"
-msgstr ""
+msgstr "複雑さ"
 
 #. module: base
 #: selection:ir.actions.act_window,target:0
 msgid "Inline"
-msgstr ""
+msgstr "インライン"
 
 #. module: base
 #: model:res.partner.bank.type.field,name:base.bank_normal_field_bic
 msgid "bank_bic"
-msgstr ""
+msgstr "BIC（銀行特定コード）"
 
 #. module: base
 #: code:addons/orm.py:3988
@@ -10524,7 +10636,7 @@ msgstr ""
 #. module: base
 #: model:res.partner.category,name:base.res_partner_category_9
 msgid "Components Supplier"
-msgstr ""
+msgstr "部品仕入先"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_purchase_management
@@ -12040,7 +12152,7 @@ msgstr ""
 #. module: base
 #: model:res.partner.category,name:base.res_partner_category_woodsuppliers0
 msgid "Wood Suppliers"
-msgstr ""
+msgstr "木材仕入先"
 
 #. module: base
 #: model:res.country,name:base.tg
@@ -12387,6 +12499,13 @@ msgid ""
 "picking and invoice. The message is triggered by the form's onchange event.\n"
 "    "
 msgstr ""
+"\n"
+"OpenERPオブジェクトの中の警告トリガーのモジュール\n"
+"==============================================\n"
+"\n"
+"警告メッセージは購入注文、仕入注文、収集、請求のようなオブジェクトのために表示させることができます。\n"
+"このメッセージはフォームのonChangeイベントによってトリガーとなります。\n"
+"    "
 
 #. module: base
 #: code:addons/osv.py:150
@@ -13860,7 +13979,7 @@ msgstr ""
 #: model:ir.ui.menu,name:base.menu_procurement_management_supplier_name
 #: view:res.partner:0
 msgid "Suppliers"
-msgstr ""
+msgstr "仕入先"
 
 #. module: base
 #: view:publisher_warranty.contract.wizard:0
@@ -14397,6 +14516,13 @@ msgid ""
 "plans.\n"
 "    "
 msgstr ""
+"\n"
+"この基本モジュールは分析的な分類と仕入注文を管理します。\n"
+"====================================================================\n"
+"\n"
+"ユーザは複数の分析計画を維持することができます。\n"
+"これはあなたに仕入先の仕入注文の行を複数のアカウントと分析計画に分割させます。\n"
+"    "
 
 #. module: base
 #: field:res.company,vat:0
@@ -14794,7 +14920,7 @@ msgstr ""
 #. module: base
 #: view:res.partner:0
 msgid "Supplier Partners"
-msgstr ""
+msgstr "仕入先パートナ"
 
 #. module: base
 #: view:res.config.installer:0
@@ -14992,6 +15118,8 @@ msgid ""
 "Check this box if the partner is a supplier. If it's not checked, purchase "
 "people will not see it when encoding a purchase order."
 msgstr ""
+"パートナが仕入先である場合は、このチェックボックスをオンにして下さい。それをチェックしない場合は、仕入注文をエンコードする際に、仕入の人々はそれを見ること"
+"はできません。"
 
 #. module: base
 #: field:ir.actions.server,trigger_obj_id:0
@@ -15085,7 +15213,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_payment
 msgid "Suppliers Payment Management"
-msgstr ""
+msgstr "仕入先支払管理"
 
 #. module: base
 #: model:res.country,name:base.sv
