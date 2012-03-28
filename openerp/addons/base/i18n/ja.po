@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: openobject-server\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 00:44+0000\n"
-"PO-Revision-Date: 2012-03-27 01:45+0000\n"
+"PO-Revision-Date: 2012-03-28 02:01+0000\n"
 "Last-Translator: Akira Hiyama <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-03-27 04:51+0000\n"
-"X-Generator: Launchpad (build 15011)\n"
+"X-Launchpad-Export-Date: 2012-03-28 04:45+0000\n"
+"X-Generator: Launchpad (build 15027)\n"
 
 #. module: base
 #: model:res.country,name:base.sh
@@ -1282,7 +1282,7 @@ msgstr "テスト"
 #. module: base
 #: field:ir.ui.view_sc,res_id:0
 msgid "Resource Ref."
-msgstr "リソース参照"
+msgstr "リソースの参照"
 
 #. module: base
 #: model:res.country,name:base.gs
@@ -8139,7 +8139,7 @@ msgstr "RML内部ヘッダー"
 #. module: base
 #: field:ir.actions.act_window,search_view_id:0
 msgid "Search View Ref."
-msgstr "リファレンスの検索ビュー"
+msgstr "検索ビューの参照"
 
 #. module: base
 #: field:ir.module.module,installed_version:0
@@ -9015,7 +9015,7 @@ msgstr "香港"
 #. module: base
 #: field:ir.default,ref_id:0
 msgid "ID Ref."
-msgstr "ID参照"
+msgstr "IDの参照"
 
 #. module: base
 #: model:ir.actions.act_window,help:base.action_partner_address_form
@@ -9871,19 +9871,19 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_mrp_repair
 msgid "Repairs Management"
-msgstr ""
+msgstr "修繕管理"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_asset
 msgid "Assets Management"
-msgstr ""
+msgstr "資産管理"
 
 #. module: base
 #: view:ir.model.access:0
 #: view:ir.rule:0
 #: field:ir.rule,global:0
 msgid "Global"
-msgstr ""
+msgstr "グローバル"
 
 #. module: base
 #: model:ir.module.module,description:base.module_stock_planning
@@ -10138,21 +10138,185 @@ msgid ""
 "product, warehouse and company because results\n"
 "   can be unpredictable. The same applies to Forecasts lines.\n"
 msgstr ""
+"\n"
+"MPS（Master Procurement Schedule）は、最小在庫ルールに基づき動作する通常のMRP（Material "
+"Requirements Planning）とは別に手作業の調達計画の作成ができます。\n"
+"============================================================================="
+"========================\n"
+"\n"
+"====================================\n"
+"\n"
+"簡単な用語集\n"
+"--------------\n"
+"・ 在庫期間 - 販売と在庫を予測し計画するための時間の境界（開始日と終了日の間）\n"
+"・ 販売予測 - 関連する在庫期間の間に販売する予定の製品の個数\n"
+"・ 在庫計画 - 関連する在庫期間のために購入または製造する予定の製品の個数\n"
+"\n"
+"s​​ale_forecastモジュール（\"販売予測\"と\"計画\"は総額）によって使用される用語との混同を避けるために、量の値を使用することを強調す"
+"る用語、\"在庫および販売予測\"と\"在庫計画\"を使用します。\n"
+"\n"
+"どこで開始されるか\n"
+"--------------\n"
+"このモジュールは以下の３つのステップでなされます：\n"
+"\n"
+"・ 在庫期間を作成　倉庫 > コンフィギュレーション > 在庫期間メニュー（必須のステップ）\n"
+"・ 予測数量を埋めた販売予測の作成　販売 > 販売予測メニュー\n"
+"　　（オプションのステップ。しかし将来計画に役立つ）\n"
+"・ 実際のMPS計画の作成、残高をチェック、必要な調達を行う。実際の調達は在庫期間の最後のステップ\n"
+"\n"
+"在庫期間のコンフィギュレーション\n"
+"--------------------------\n"
+"倉庫 > コンフィギュレーション > 在庫期間 に期間のために２つのメニューがあります：\n"
+"\n"
+"・ 在庫期間作成 - 日次、週次、月次の自動作成が可能\n"
+"・ 在庫期間 - どんな期間のタイプの作成も日付の変更も期間の状態の変更も可能\n"
+"\n"
+"期間を作るのは最初のステップです。\"在庫期間\"にあるNewボタンを使ってカスタム期間を作成できます。\n"
+"しかし、自動作成アシスタントである\"在庫期間作成\"を使うことを勧められます。\n"
+"\n"
+"備考：\n"
+"\n"
+"・ これらの期間（在庫期間）は金融や他のシステムの期間と完全に異なっています。\n"
+"・ "
+"複数会社を持つ場合、期間は会社ごとには割り当てられません。モジュールは複数の会社には同じ期間を使うもとのしています。もし、異なる会社には異なる期間を使うこ"
+"とを望む場合は、それらは重複を許すため望むように期間を定義して下さい。以下のテキストはそのような期間をどのように使うかを示します。\n"
+"・ "
+"自動的に作成される場合、開始時間は00:00:00、終了時間は23:59:00となります。日々の期間を作成する場合、開始日時は2010年1月31日00:0"
+"0:00、終了日時は2010年1月31日29:59:00となります。それは期間の自動作成の\n"
+"\n"
+"みで機能します。期間を手動で作成する場合は、販売や在庫において間違った値を持つことになるため、その時間には注意しなければなりません。\n"
+"・ 同じ製品に対して重複する期間を使う場合、倉庫と会社の結果は予測できません。\n"
+"・ 現在日付がどの期間にも属さない場合や期間の間に空きがある場合にはその結果は予測できません。\n"
+"\n"
+"販売予測コンフィギュレーション\n"
+"-----------------------------\n"
+"販売 > 販売予測 に販売予測のための幾つかのメニューがあります：\n"
+"\n"
+"・ 販売予測作成 - 自動的にあなたのニーズによる予測ラインを作成できます。\n"
+"・ 販売予測 - 販売予測の管理\n"
+"\n"
+"\"販売予測作成\"メニューは選択された分類の製品の選択された期間、選択された倉庫の予測を作成します。以前の予測をコピーすることも可能です。\n"
+"\n"
+"備考：\n"
+"\n"
+"・ "
+"すでに同じ製品、期間、倉庫の入力が同じユーザにより作られるか検証されている場合、このツールは重複ラインを作りません。もし、他の予測を作成したい場合や適切な"
+"ラインが存在する場合は、以下に示すように手作業で行う必要があります。\n"
+"・ 作成されたラインが他の誰かにより検証された場合、同じ期間、製品、倉庫の他のラインをこのツールを使って作る事ができます。\n"
+"・ "
+"\"前回の予測をコピー\"を選択した場合、作成されたラインの数量と他の設定は、あなたの（あなたが検証したもの、まだ検証されていないがあなたが作成したもの）"
+"以前作成した予測の最後の期間の予測が使われます。\n"
+"\n"
+"\"販売予測フォーム\"の上では主にあなたが\"製品数量\"の予測数量を入力しなければなりません。\n"
+"さらに計算はドラフト予測のために有効です。しかし、検証に設定することでどんな事故的な変更からもあなたのデータを救うことが可能です。\n"
+"検証ボタンのクリックは可能ですが、必須ではありません。\n"
+"\n"
+"数量の予測の代わりに\"製品数量\"項目による予測販売の総額を入力することもできます。\n"
+"システムは製品の販売価格に応じた総額から数量を計算します。\n"
+"\n"
+"フォームの全ての値はフォームで選択した計量単位で表現されます。\n"
+"デフォルトの分類または第二の分類から計量単位を選択することができます。\n"
+"計量単位を変更した場合は、予測製品数量は 新しい計量単位によって再計算されます。\n"
+"\n"
+"販売予測の解決のために製品の\"販売履歴\"を使うことができます。\n"
+"あなたはこのテーブルの先頭と左のパラメータを入力しなければなりません。そして、システムはそれらのパラメータにより販売数量を計算します。\n"
+"そして、所定の販売チームや期間のための結果を得ることができます。\n"
+"\n"
+"MPSまたは調達計画\n"
+"---------------------------\n"
+"MPS計画は、各適切な在庫期間と倉庫のための製品の調達を分析し、状態により駆動させる在庫計画ラインによって構成されます。\n"
+"このメニューは、倉庫 > スケジュール > マスタ調達スケジュール にあります：\n"
+"\n"
+"・ 在庫計画ライン作成 - 多数の計画ラインの自動作成を手助けするウィザード\n"
+"・ マスタ調達スケジュール - 計画ラインの管理\n"
+"\n"
+"同様に、販売予測は販売計画を定義することを提供する方法であり、MPSは調達（購入/製造）を立案することができます。\n"
+"\"在庫計画ライン作成\"ウィザードはMPSを素早く使いこなすことができます。それから\"マスタ調達スケジュール\"メニューからレビューを続行できます。"
+"\n"
+"\n"
+"\"在庫計画ライン作成\"ウィザードによって、所定の製品分類、所定の期間と倉庫のために全てのMPSラインを迅速に作成できます。\n"
+"ウィザードの\"全ての製品の予測\"オプションを有効にした場合、システムは選択された期間と倉庫（このケースには選択された分類は無視されます）の販売予測を持"
+"つ全ての製品のラインを作成します。\n"
+"\n"
+"メニューの\"マスタ調達スケジュール\"の下にある、\"計画出庫\"（Planned Out）と\"計画入庫\"（Planned "
+"In）の数量はいつでも変更できます。そして、もし所定の期間でもっと多くの製品を入手する必要があるかどうかを決めるために\"在庫シミュレーション\"の値の結"
+"果を注視して下さい。\n"
+"\"計画出庫\"は、最初にすでに計画された期間と倉庫のために全て出て行く在庫の動きの合計である\"倉庫予測\"を基にします。\n"
+"もちろん、あなた自身の数量を与えるためにその値を変更することができます。予測を持つ必要はありません\n"
+"\n"
+"。\n"
+"\"計画入庫\"の数量は期間の終わりにおける\"在庫シミュレーション\"に到達するために入手されるべき数量である項目の\"入って来る残り\"を計算するため"
+"に使われます。\n"
+"\"在庫シミュレーション\"数量とフォーム上に見える最小在庫ルールを比較することができます。\n"
+"そして、最小在庫ルールと異なった数量を計画することができます。計算はデフォルトで倉庫全体のために実行されます。もし、計算された倉庫の場所の在庫の値を見たい"
+"のなら\"在庫場所のみ\"をチェックして下さい。\n"
+"\n"
+"\"計画出庫\"、\"計画入庫\"、期間の終わりの\"在庫シミュレーション\"に納得した時には、\"入って来る残り\"数量の調達を作成するために\"入って"
+"来る残り調達\"をクリックできます。\n"
+"調達に対して在庫なのか倉庫の場所を入力するかを決めることができます。\n"
+"\n"
+"もしその製品の調達や購入は望まないが他の倉庫から計算した数量を転送するのなら、\"入って来る残り調達\"の代わりに\"他の倉庫から供給\"をクリックすると"
+"システムは適切な抽出リスト（在庫移動）を作成します。\n"
+"目的地の倉庫内の宛先（在庫または入力）は調達のケース同様に取得されます。\n"
+"\n"
+"\"確認入庫\"、\"確認出庫\"、\"確認入庫前\"、\"計画出庫前\"、\"在庫シミュレーション\"の数量の更新表示をするには\"計画を計算\"をクリ"
+"ックして下さい。\n"
+"\n"
+"フォームの上の全ての値はフォームで選択された計量単位で表現されます。\n"
+"計量単位はデフォルト分類または第二の分類から選択することができます。\n"
+"計量単位を変更する場合は編集可能な数量は新しい計量単位によって再計算されます。その他は\"計画を計算\"をクリックした後に更新されます。\n"
+"\n"
+"在庫シュミレーション数量の計算\n"
+"------------------------------------------\n"
+"在庫シミュレーション値は期間終了時の推定在庫数量です。\n"
+"この計算はいつも現在期間の始まりにおける実際の在庫から始まり、計算数量を加算、減算します。\n"
+"同じ期間（現在期間が計算されるものと同じである）にある時、在庫シミュレーションは以下のように計算されます：\n"
+"\n"
+"在庫シミュレーション ＝ 現在期間の開始時点の在庫 － 計画出庫 ＋ 計画入庫\n"
+"\n"
+"現在の次の期間を計算する場合：\n"
+"\n"
+"在庫シミュレーション ＝ 現在期間の開始時点の在庫 \n"
+"　 － 現在期間の計画出庫 ＋ 現在期間の確認入庫（既に入庫を含む）\n"
+"　 － 計算期間の計画出庫 ＋ 計算期間の計画入庫\n"
+"\n"
+"上で見たように計算期間は前のケースと同じ方式ですが、現在期間は少し違っています。\n"
+"最初にシステムは現在期間のために確認された移動のみを扱っていることに注意して下さい。これは、次の期間に行く前に、現在期間の計画と調達を終えていなければなら"
+"ないことを意味します。\n"
+"\n"
+"将来期間を計画する場合：\n"
+"\n"
+"在庫シミュレーション ＝ 現在期間の開始時点の在庫 \n"
+"　 － 計算済み以前の期間の計画出庫の合計 ＋  計算済み以前の期間の確認入庫（既に入庫を含む）の合計\n"
+"　 － 計算期間の計画出庫 ＋ 計算期間の計画入庫\n"
+"\n"
+"ここで、\"計算済み以前の期間\"は現在から始まる既に計算された１つ前の期間までの全てを示します。\n"
+"\n"
+"備考：\n"
+"\n"
+"・ 年代順にしたがって各期間の計画が継続して作成されなければなりません。そうでない場合の数値は現実を反映していないでしょう。\n"
+"・ "
+"将来の期間のために計画を実行し、本物の確認出庫がいくらか前の計画出庫よりも大きくなった場合は、計画を再度行って他の調達を作ることができます。それは同じ計画"
+"ラインの中で行わねばなりません。もし他の計画ラインで行った場合は、その提案は誤っている可能性があります。\n"
+"・ "
+"幾つかの製品に対して異なった期間を適用したい場合は、２種類の期間（例えば週次と月次）を定義して、異なった期間でそれを使って下さい。例として、いつも製品Aに"
+"は週次を使い、製品Bには月次を使う場合、全ての計算は正しく行われます。異なった倉庫や会社であれば、同じ商品に異なった期間を使うこともできます。しかし、同じ"
+"製品、倉庫、会社で期間が重複するのは結果が予想できないので許されません。同じことは予測ラインにも適用されます。\n"
 
 #. module: base
 #: model:res.country,name:base.mp
 msgid "Northern Mariana Islands"
-msgstr ""
+msgstr "北マリアナ諸島"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_claim_from_delivery
 msgid "Claim on Deliveries"
-msgstr ""
+msgstr "配達におけるクレーム"
 
 #. module: base
 #: model:res.country,name:base.sb
 msgid "Solomon Islands"
-msgstr ""
+msgstr "ソロモン諸島"
 
 #. module: base
 #: code:addons/base/ir/ir_model.py:537
@@ -10163,12 +10327,12 @@ msgstr ""
 #: code:addons/orm.py:4408
 #, python-format
 msgid "AccessError"
-msgstr ""
+msgstr "アクセスエラー"
 
 #. module: base
 #: view:res.request:0
 msgid "Waiting"
-msgstr ""
+msgstr "待機中"
 
 #. module: base
 #: field:ir.exports,resource:0
@@ -10176,7 +10340,7 @@ msgstr ""
 #: view:ir.property:0
 #: field:ir.property,res_id:0
 msgid "Resource"
-msgstr ""
+msgstr "リソース"
 
 #. module: base
 #: view:res.lang:0
@@ -10198,27 +10362,36 @@ msgid ""
 "    * Generates Relationship Graph\n"
 "    "
 msgstr ""
+"\n"
+"このモジュールは再編テキスト形式（RST：Restructured Text format）で選択されたモジュールのテクニカルガイドを生成します。\n"
+"============================================================================="
+"====================\n"
+"\n"
+"　・ これはRSTの実装されたSphinx（http://sphinx.pocoo.org）を使用しています。\n"
+"　・ これはインデックスファイルとモジュールごとに一つのファイルを含むtarファイル（サフィックスが.tgz）を作成します。\n"
+"　・ 関係グラフを生成します。\n"
+"    "
 
 #. module: base
 #: field:res.log,create_date:0
 msgid "Creation Date"
-msgstr ""
+msgstr "作成日"
 
 #. module: base
 #: view:ir.translation:0
 #: model:ir.ui.menu,name:base.menu_translation
 msgid "Translations"
-msgstr ""
+msgstr "翻訳"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_project_gtd
 msgid "Todo Lists"
-msgstr ""
+msgstr "ToDoリスト"
 
 #. module: base
 #: view:ir.actions.report.xml:0
 msgid "Report"
-msgstr ""
+msgstr "レポート"
 
 #. module: base
 #: code:addons/base/ir/ir_mail_server.py:218
@@ -10228,11 +10401,14 @@ msgid ""
 "instead.If SSL is needed, an upgrade to Python 2.6 on the server-side should "
 "do the trick."
 msgstr ""
+"あなたのOpenERPサーバはSMTP-over-"
+"SSLをサポートしていません。代わりにSTARTTLSを使うことができます。SSLが必要な場合は、サーバ側でPython2.6にアップグレードするにはトリ"
+"ックが必要です。"
 
 #. module: base
 #: model:res.country,name:base.ua
 msgid "Ukraine"
-msgstr ""
+msgstr "ウクライナ"
 
 #. module: base
 #: field:ir.module.module,website:0
@@ -10244,37 +10420,37 @@ msgstr "ウェブサイト"
 #. module: base
 #: selection:ir.mail_server,smtp_encryption:0
 msgid "None"
-msgstr ""
+msgstr "なし"
 
 #. module: base
 #: view:ir.module.category:0
 msgid "Module Category"
-msgstr ""
+msgstr "モジュール分類"
 
 #. module: base
 #: view:partner.wizard.ean.check:0
 msgid "Ignore"
-msgstr ""
+msgstr "無視"
 
 #. module: base
 #: report:ir.module.reference.graph:0
 msgid "Reference Guide"
-msgstr ""
+msgstr "リファレンスガイド"
 
 #. module: base
 #: view:ir.values:0
 msgid "Default Value Scope"
-msgstr ""
+msgstr "デフォルト値の範囲"
 
 #. module: base
 #: view:ir.ui.view:0
 msgid "Architecture"
-msgstr ""
+msgstr "アーキテクチャ"
 
 #. module: base
 #: model:res.country,name:base.ml
 msgid "Mali"
-msgstr ""
+msgstr "マリ共和国"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_at
@@ -10284,6 +10460,8 @@ msgid ""
 "review and adapt it with your Accountant, before using it in a live "
 "Environment."
 msgstr ""
+"このモジュールはオーストリアの標準会計表を提供します。これはBMF.gv.atのテンプレートに基づいています。実際の環境で利用する前に、あなたの会計士とと"
+"もにレビューを行い適用させる必要があることを気に留めて下さい。"
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -10293,12 +10471,12 @@ msgstr "フラマン語（ベルギー）/ Vlaams (BE)"
 #. module: base
 #: field:ir.cron,interval_number:0
 msgid "Interval Number"
-msgstr ""
+msgstr "区間数"
 
 #. module: base
 #: model:res.country,name:base.tk
 msgid "Tokelau"
-msgstr ""
+msgstr "トケラウ"
 
 #. module: base
 #: model:ir.module.module,description:base.module_hr_timesheet_sheet
@@ -12900,7 +13078,7 @@ msgstr ""
 #. module: base
 #: field:ir.default,ref_table:0
 msgid "Table Ref."
-msgstr ""
+msgstr "テーブルの参照"
 
 #. module: base
 #: code:addons/base/ir/ir_mail_server.py:443
@@ -13052,7 +13230,7 @@ msgstr ""
 #. module: base
 #: field:ir.ui.view_sc,user_id:0
 msgid "User Ref."
-msgstr ""
+msgstr "ユーザの参照"
 
 #. module: base
 #: code:addons/base/res/res_users.py:118
@@ -13361,7 +13539,7 @@ msgstr ""
 #. module: base
 #: field:ir.actions.act_window,view_id:0
 msgid "View Ref."
-msgstr ""
+msgstr "ビューの参照"
 
 #. module: base
 #: model:ir.module.category,description:base.module_category_sales_management
