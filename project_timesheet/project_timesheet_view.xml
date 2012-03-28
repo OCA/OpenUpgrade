@@ -29,14 +29,13 @@
             <field name="type">kanban</field>
             <field name="inherit_id" ref="project.view_project_kanban"/>
             <field name="arch" type="xml">
-                <field name="timesheets"/>
-                <xpath expr="//td[@class='tasks']" position="after">
-                    <td class="timesheet" align="right">
-                        <t t-if="record.timesheets.raw_value == 1">
-                            <button name="open_timesheet" class="oe_project_buttons" type="object"><img src=".png" width="18" height="18" align="top"/></button>
+                <field name="task" position="after">
+                    <field name="timesheets"/>
+                </field>
+                <xpath expr="//td[@class='buttons']" position="inside">
+                    <t t-if="record.timesheets.raw_value">
+                        <button name="open_timesheets" class="oe_project_buttons" type="object"><img src="/project/static/src/img/timesheet.png" width="18" height="18" align="top"/></button>
                     </t>
-                        
-                    </td>
                 </xpath>
             </field>
         </record>
