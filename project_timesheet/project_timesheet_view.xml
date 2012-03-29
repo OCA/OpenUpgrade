@@ -47,14 +47,17 @@
                     </t>
                 </xpath>
                 <xpath expr="//div[@class='sequence']" position="after">
-                	<div class="sequence">
-                   <kbd class="user">To invoice</kbd>
-                   <div class="manager"><field name="amount_invoiced"/> <field name="currency_id"/></div>
-                   </div>
-                   <div class="sequence">
-	                   <kbd class="user">Hours</kbd>
-	                   <div class="manager"><t t-esc="Math.round(record.total_hours.raw_value-record.effective_hours.raw_value)"/> h</div>
-                   </div>
+		    
+                    <div class="sequence">
+			<button name="open_timesheets" class="oe_to_invoice_buttons" type="object">
+			    <!--<kbd class="to_invoice">To invoice</kbd>-->
+			    <div class="manager">
+				<code>To invoice</code>
+				<strong><field name="amount_invoiced"/></strong>
+			    </div>
+			</button>
+		    </div>
+			
                 </xpath>
             </field>
         </record>
