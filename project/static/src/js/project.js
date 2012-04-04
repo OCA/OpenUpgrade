@@ -9,9 +9,7 @@ openerp.project = function(openerp) {
                     }).mouseout(function() {
                     return $(this).find('.oe_project_kanban_action').hide();
                 });
-                $('.oe_project_kanban_action').click(function(){
-                     $('.dropdown-toggle').dropdown();
-                 })
+                $('.dropdown-toggle').dropdown();
             }
         }
     });
