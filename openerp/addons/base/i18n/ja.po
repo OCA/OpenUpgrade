@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: openobject-server\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 00:44+0000\n"
-"PO-Revision-Date: 2012-04-02 21:12+0000\n"
+"PO-Revision-Date: 2012-04-04 04:18+0000\n"
 "Last-Translator: Akira Hiyama <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-04-03 04:53+0000\n"
-"X-Generator: Launchpad (build 15052)\n"
+"X-Launchpad-Export-Date: 2012-04-04 04:40+0000\n"
+"X-Generator: Launchpad (build 15055)\n"
 
 #. module: base
 #: model:res.country,name:base.sh
@@ -35,7 +35,7 @@ msgstr "日時"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_project_mailgate
 msgid "Tasks-Mail Integration"
-msgstr "タスク‐メール統合"
+msgstr "タスクとメールの統合"
 
 #. module: base
 #: code:addons/fields.py:582
@@ -43,7 +43,7 @@ msgstr "タスク‐メール統合"
 msgid ""
 "The second argument of the many2many field %s must be a SQL table !You used "
 "%s, which is not a valid SQL table name."
-msgstr "多対多項目 %s の第2引数はSQLテーブルでなければなりません。あなたが使った %s は正しいSQLテーブル名ではありません。"
+msgstr "多対多項目 %s の第２引数はSQLテーブルでなければなりません。あなたが使った %s は正しいSQLテーブル名ではありません。"
 
 #. module: base
 #: field:ir.ui.view,arch:0
@@ -167,7 +167,7 @@ msgid ""
 "specified as a Python expression defining a list of triplets. For example: "
 "[('color','=','red')]"
 msgstr ""
-"項目間の関係のために値を限定するための任意のドメインは、Python表現で定義された三択のリストとして定義されています。例えば：[('color','='"
+"項目間の関係のために値を限定するための任意のドメインは、Python表現で定義された３択のリストとして定義されています。例えば：[('color','='"
 ",'red')]"
 
 #. module: base
@@ -178,7 +178,7 @@ msgstr "参照"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_be_invoice_bba
 msgid "Belgium - Structured Communication"
-msgstr "ベルギー－構造化された通信"
+msgstr "ベルギー - 構造化された通信"
 
 #. module: base
 #: field:ir.actions.act_window,target:0
@@ -229,7 +229,7 @@ msgstr ""
 #: code:addons/base/ir/ir_model.py:313
 #, python-format
 msgid "Renaming sparse field \"%s\" is not allowed"
-msgstr ""
+msgstr "スパース項目 %s のりネームは許されていません。"
 
 #. module: base
 #: model:res.country,name:base.sz
@@ -245,7 +245,7 @@ msgstr "作成済"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_tr
 msgid "Turkey - Accounting"
-msgstr "トルコ－会計"
+msgstr "トルコ - 会計"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_mrp_subproduct
@@ -700,7 +700,7 @@ msgstr "カスタム項目は、'x_' で始まる名前を持つ必要があり�
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_mx
 msgid "Mexico - Accounting"
-msgstr "メキシコ－会計"
+msgstr "メキシコ - 会計"
 
 #. module: base
 #: help:ir.actions.server,action_id:0
@@ -780,7 +780,7 @@ msgstr "自動的なアクション"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_ro
 msgid "Romania - Accounting"
-msgstr "ルーマニア－会計"
+msgstr "ルーマニア - 会計"
 
 #. module: base
 #: view:partner.wizard.ean.check:0
@@ -1072,7 +1072,7 @@ msgstr "このグループに加えられたユーザは自動的に次のグル
 #. module: base
 #: view:res.lang:0
 msgid "%B - Full month name."
-msgstr "%B－月名"
+msgstr "%B - 月名"
 
 #. module: base
 #: field:ir.actions.todo,type:0
@@ -1266,7 +1266,7 @@ msgid ""
 "%W - Week number of the year (Monday as the first day of the week) as a "
 "decimal number [00,53]. All days in a new year preceding the first Monday "
 "are considered to be in week 0."
-msgstr "%W－これは年における週の番号（週の初めは月曜）の数値です[00,53]。年初の最初の月曜日の前の数日は週0にあると認識されます。"
+msgstr "%W - これは年における週の番号（週の初めは月曜）の数値です[00,53]。年初の最初の月曜日の前の数日は週0にあると認識されます。"
 
 #. module: base
 #: code:addons/base/module/wizard/base_language_install.py:55
@@ -1473,7 +1473,7 @@ msgstr ""
 #. module: base
 #: view:res.lang:0
 msgid "%Y - Year with century."
-msgstr "%Y－世紀を含む年"
+msgstr "%Y - 世紀を含む年"
 
 #. module: base
 #: model:ir.module.module,description:base.module_web_gantt
@@ -1686,7 +1686,7 @@ msgstr "もしそれが、ユーザが作業中の同じオブジェクトに属
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_lu
 msgid "Luxembourg - Accounting"
-msgstr "ルクセンブルグ－会計"
+msgstr "ルクセンブルグ - 会計"
 
 #. module: base
 #: model:res.country,name:base.tp
@@ -1870,8 +1870,7 @@ msgid ""
 "Helps you get the most out of your points of sales with fast sale encoding, "
 "simplified payment mode encoding, automatic picking lists generation and "
 "more."
-msgstr ""
-"迅速な販売のコード化、単純化された支払モードのコード化、自動ピッキングリストの生成などにより、販売時点管理のために大いなる手助けをします。"
+msgstr "迅速な販売のコード化、単純化された支払モードのコード化、自動集荷リストの生成などにより、販売時点管理のために大いなる手助けをします。"
 
 #. module: base
 #: model:res.country,name:base.mv
@@ -2174,7 +2173,7 @@ msgid ""
 "%U - Week number of the year (Sunday as the first day of the week) as a "
 "decimal number [00,53]. All days in a new year preceding the first Sunday "
 "are considered to be in week 0."
-msgstr "%U－年の週番号（日曜は週の最初の日）10進数値 [00,53]。新年で最初の日曜までの全ての日は週0と認識されます。"
+msgstr "%U - 年の週番号（日曜は週の最初の日）10進数値 [00,53]。新年で最初の日曜までの全ての日は週0と認識されます。"
 
 #. module: base
 #: view:ir.ui.view:0
@@ -2300,7 +2299,7 @@ msgstr ""
 "ジャーナルは責任を持ち、異なる状態に展開する：\n"
 "    ・ ドラフト、オープン、キャンセル、完了\n"
 "\n"
-"バッチ操作は一度に全ての受注の確認、検証、請求書のピッキングといった異なるジャーナルを処理できます。\n"
+"バッチ操作は一度に全ての受注の確認、検証、請求書集荷といった異なるジャーナルを処理できます。\n"
 "\n"
 "バッチ請求方法はパートナごとや受注オーダーごとに構成することもできます。例：\n"
 "    ・ 日々の送付\n"
@@ -2317,7 +2316,7 @@ msgstr "ロゴ"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_cr
 msgid "Costa Rica - Accounting"
-msgstr "コスタリカ－会計"
+msgstr "コスタリカ - 会計"
 
 #. module: base
 #: view:ir.module.module:0
@@ -2842,7 +2841,7 @@ msgstr "ラトビア"
 #. module: base
 #: view:partner.sms.send:0
 msgid "SMS - Gateway: clickatell"
-msgstr "SMS－ゲートウェイ：Clickatell"
+msgstr "SMS - ゲートウェイ：Clickatell"
 
 #. module: base
 #: view:ir.actions.server:0
@@ -2914,7 +2913,7 @@ msgstr "OpenERPのレポート作成を単純化して拡張させるための�
 #. module: base
 #: view:res.lang:0
 msgid "%y - Year without century [00,99]."
-msgstr "%y－２桁の年[00,99]."
+msgstr "%y - ２桁の年[00,99]."
 
 #. module: base
 #: code:addons/base/res/res_company.py:155
@@ -3046,7 +3045,7 @@ msgstr "バングラデシュ"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_project_retro_planning
 msgid "Project Retro-planning"
-msgstr "プロジェクトレトロ－計画"
+msgstr "プロジェクトレトロ - 計画"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_stock_planning
@@ -3658,7 +3657,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"このモジュールは英語とフランス語を管理するモジュールです。－OpenERPのカナダ会計表\n"
+"このモジュールは英語とフランス語を管理するモジュールです。 - OpenERPのカナダ会計表\n"
 "============================================================================="
 "==============\n"
 "\n"
@@ -8027,11 +8026,11 @@ msgid ""
 "     "
 msgstr ""
 "\n"
-"受注オーダーとピッキングに関する配送方法を追加することができます。\n"
+"受注オーダーと集荷に関する配送方法を追加することができます。\n"
 "==============================================================\n"
 "\n"
 "価格によるあなた自身の運搬人や配送グリッドの定義ができます。\n"
-"ピッキングから請求書を作成する場合は、OpenERPは配送の行を追加し計算を行います。\n"
+"集荷から請求書を作成する場合は、OpenERPは配送行を追加し計算を行います。\n"
 "\n"
 "     "
 
@@ -10731,7 +10730,7 @@ msgstr "ヘッダーのプレビュー"
 #. module: base
 #: field:res.company,paper_format:0
 msgid "Paper Format"
-msgstr "用紙フォーマット"
+msgstr "用紙書式"
 
 #. module: base
 #: field:base.language.export,lang:0
@@ -12037,7 +12036,7 @@ msgstr ""
 "Webkitレポートエンジン（report_webkit モジュール）のサンプル\n"
 "========================================================\n"
 "\n"
-"このモジュールにはサンプル請求書レポートと同様に、システムの中の任意のドキュメントにWebkitのレポートエントリを追加するウィザードが含まれています。"
+"このモジュールにはサンプル請求書レポートと同様に、システムの中の任意のドキュメントにWebkitのレポートエントリーを追加するウィザードが含まれています。"
 "\n"
 "\n"
 "ウィザードを呼び出して印刷ボタンを作る必要があります。より詳しい情報は以下を参照して下さい：\n"
@@ -13026,7 +13025,7 @@ msgstr ""
 "OpenERPオブジェクトの中の警告トリガーのモジュール\n"
 "==============================================\n"
 "\n"
-"警告メッセージは受注オーダー、発注オーダー、ピッキング、請求書のようなオブジェクトのために表示させることができます。\n"
+"警告メッセージは受注オーダー、発注オーダー、集荷、請求書のようなオブジェクトのために表示させることができます。\n"
 "このメッセージはフォームのonChangeイベントによってトリガーとなります。\n"
 "    "
 
@@ -13327,7 +13326,7 @@ msgstr "サーバーアクション"
 #. module: base
 #: field:res.partner.bank.type,format_layout:0
 msgid "Format Layout"
-msgstr "フォーマットレイアウト"
+msgstr "書式レイアウト"
 
 #. module: base
 #: field:ir.model.fields,selection:0
@@ -13371,7 +13370,7 @@ msgstr ""
 #. module: base
 #: view:res.lang:0
 msgid "Legends for Date and Time Formats"
-msgstr "日付と時刻フォーマットの凡例"
+msgstr "日付と時刻書式の凡例"
 
 #. module: base
 #: selection:ir.actions.server,state:0
@@ -14139,7 +14138,7 @@ msgstr "分類"
 #: selection:ir.attachment,type:0
 #: selection:ir.property,type:0
 msgid "Binary"
-msgstr "二進数"
+msgstr "バイナリ"
 
 #. module: base
 #: field:ir.actions.server,sms:0
@@ -14175,24 +14174,24 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_users_ldap
 msgid "Authentication via LDAP"
-msgstr ""
+msgstr "LDAPによる認証"
 
 #. module: base
 #: view:workflow.activity:0
 msgid "Conditions"
-msgstr ""
+msgstr "条件"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_partner_other_form
 msgid "Other Partners"
-msgstr ""
+msgstr "その他のパートナ"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_currency_form
 #: model:ir.ui.menu,name:base.menu_action_currency_form
 #: view:res.currency:0
 msgid "Currencies"
-msgstr ""
+msgstr "通貨"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_actions_client
@@ -14203,12 +14202,12 @@ msgstr ""
 #. module: base
 #: help:ir.values,value:0
 msgid "Default value (pickled) or reference to an action"
-msgstr ""
+msgstr "デフォルト値、またはアクションへの参照"
 
 #. module: base
 #: sql_constraint:res.groups:0
 msgid "The name of the group must be unique !"
-msgstr ""
+msgstr "グループ名は一意である必要があります。"
 
 #. module: base
 #: model:ir.module.module,description:base.module_base_report_designer
@@ -14221,26 +14220,33 @@ msgid ""
 "you can modify in OpenOffice. Once you have modified it you can\n"
 "upload the report using the same wizard.\n"
 msgstr ""
+"\n"
+"このモジュールはOpenERPのOpenOfficeプラグインと一緒に使われます。\n"
+"=========================================================\n"
+"\n"
+"このモジュールには、OpenOfficeで変更したsxw（Writer） レポートのインポートとエクスポートの\n"
+"ウィザードが追加されています。あなたはそのレポートを変更した後には、同じウィザードを使って\n"
+"それをアップロードすることができます。\n"
 
 #. module: base
 #: view:ir.sequence:0
 msgid "Hour 00->12: %(h12)s"
-msgstr ""
+msgstr "時 00->12: %(h12)s"
 
 #. module: base
 #: help:res.partner.address,active:0
 msgid "Uncheck the active field to hide the contact."
-msgstr ""
+msgstr "連絡先を隠すためにはアクティブな項目のチェックを外して下さい。"
 
 #. module: base
 #: model:ir.model,name:base.model_res_widget_wizard
 msgid "Add a widget for User"
-msgstr ""
+msgstr "ユーザのウィジットを追加"
 
 #. module: base
 #: model:res.country,name:base.dk
 msgid "Denmark"
-msgstr ""
+msgstr "デンマーク"
 
 #. module: base
 #: model:ir.module.module,description:base.module_base_calendar
@@ -14258,11 +14264,23 @@ msgid ""
 "If you need to manage your meetings, you should install the CRM module.\n"
 "    "
 msgstr ""
+"\n"
+"これはフル機能のカレンダーシステムです。\n"
+"========================================\n"
+"\n"
+"I以下をサポートします。\n"
+"　・ イベントのカレンダー\n"
+"　・ アラート（要求を作成）\n"
+"　・ 定期的なイベント\n"
+"　・ 人々の招待\n"
+"\n"
+"ミーティングを管理したい場合は、CRMモジュールをインストールする必要があります。\n"
+"    "
 
 #. module: base
 #: view:ir.rule:0
 msgid "Rule definition (domain filter)"
-msgstr ""
+msgstr "ルールの定義（ドメインフィルタ）"
 
 #. module: base
 #: model:ir.model,name:base.model_workflow_instance
@@ -14273,7 +14291,7 @@ msgstr ""
 #: code:addons/orm.py:471
 #, python-format
 msgid "Unknown attribute %s in %s "
-msgstr ""
+msgstr "不明な属性 %s in %s "
 
 #. module: base
 #: view:res.lang:0
@@ -14284,7 +14302,7 @@ msgstr ""
 #: code:addons/fields.py:122
 #, python-format
 msgid "undefined get method !"
-msgstr ""
+msgstr "未定義のメソッドを取得しています。"
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -14299,43 +14317,43 @@ msgstr ""
 #. module: base
 #: model:res.country,name:base.ee
 msgid "Estonia"
-msgstr ""
+msgstr "エストニア"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_board
 #: model:ir.ui.menu,name:base.menu_dashboard
 msgid "Dashboards"
-msgstr ""
+msgstr "ダッシュボード"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_procurement
 msgid "Procurements"
-msgstr ""
+msgstr "調達"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_payroll_account
 msgid "Payroll Accounting"
-msgstr ""
+msgstr "給与計算"
 
 #. module: base
 #: help:ir.attachment,type:0
 msgid "Binary File or external URL"
-msgstr ""
+msgstr "バイナリファイルまたは外部URL"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_order_dates
 msgid "Dates on Sales Order"
-msgstr ""
+msgstr "受注日"
 
 #. module: base
 #: view:ir.attachment:0
 msgid "Creation Month"
-msgstr ""
+msgstr "作成月"
 
 #. module: base
 #: model:res.country,name:base.nl
 msgid "Netherlands"
-msgstr ""
+msgstr "オランダ"
 
 #. module: base
 #: model:ir.module.module,description:base.module_edi
@@ -14352,21 +14370,32 @@ msgid ""
 "technical OpenERP documentation at http://doc.openerp.com\n"
 "    "
 msgstr ""
+"\n"
+"他のアプリケーションが使用できる共通のEDIプラットフォームを提供します。\n"
+"==============================================================\n"
+"\n"
+"OpenERPは異なったシステムの間でビジネスドキュメントを交換するために、\n"
+"一般的なEDIフォーマットを規定します。そして、それをインポート、エクスポート\n"
+"するための一般的なメカニズムを提供します。\n"
+"\n"
+"OpenERPのEDIフォーマットについての詳細は以下のOpenERP技術資料にあります。\n"
+"http://doc.openerp.com\n"
+"    "
 
 #. module: base
 #: model:ir.ui.menu,name:base.next_id_4
 msgid "Low Level Objects"
-msgstr ""
+msgstr "低レベルのオブジェクト"
 
 #. module: base
 #: help:ir.values,model:0
 msgid "Model to which this entry applies"
-msgstr ""
+msgstr "このエントリーを適用するモデル"
 
 #. module: base
 #: field:res.country,address_format:0
 msgid "Address Format"
-msgstr ""
+msgstr "アドレスフォーマット"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_values
@@ -14376,7 +14405,7 @@ msgstr ""
 #. module: base
 #: model:res.groups,name:base.group_no_one
 msgid "Technical Features"
-msgstr ""
+msgstr "技術的特長"
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -14390,23 +14419,25 @@ msgid ""
 "Here is what we got instead:\n"
 " %s"
 msgstr ""
+"これは代わりに取得したものです：\n"
+" %s"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_model_data
 #: view:ir.model.data:0
 #: model:ir.ui.menu,name:base.ir_model_data_menu
 msgid "External Identifiers"
-msgstr ""
+msgstr "外部識別子"
 
 #. module: base
 #: model:res.groups,name:base.group_sale_salesman
 msgid "User - Own Leads Only"
-msgstr ""
+msgstr "ユーザ－自身のリードのみ"
 
 #. module: base
 #: model:res.country,name:base.cd
 msgid "Congo, The Democratic Republic of the"
-msgstr ""
+msgstr "コンゴ民主共和国"
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -15391,7 +15422,7 @@ msgstr "スペイン－会計（PGCE 2008）"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_stock_no_autopicking
 msgid "Picking Before Manufacturing"
-msgstr "製造前のピッキング"
+msgstr "製造前の集荷"
 
 #. module: base
 #: model:res.country,name:base.wf
@@ -17151,7 +17182,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_stock_invoice_directly
 msgid "Invoice Picking Directly"
-msgstr "直接ピッキングの請求書"
+msgstr "直接集荷の請求書"
 
 #. module: base
 #: selection:base.language.install,lang:0
