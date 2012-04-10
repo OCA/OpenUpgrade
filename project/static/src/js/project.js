@@ -38,15 +38,21 @@ openerp.project = function(openerp) {
                   });
                 $('#list').replaceWith(my_list);
                 
-                console.log("curreeeeeeenttttttttttt",this.$element.find('.steelblue'))
-                $('#'+ self.id).click(function(){
-                	console.log("curreeeehsfkiash")
-                    //$(this).closest('.oe_project_kanban_vignette').css('background-color', 'steelblue');
-                    $action = $(this).closest('.oe_project_kanban_vignette').addClass(self.kanban_color(2));
-                    //var data = {};
-                    //data[$action.data('name')] = $(this).data('color');
-                    self.view.dataset.write(self.id, {color:2},self.do_reload());
-
+                
+                $('.steelblue').click(function(){
+                    $(this).closest('.oe_project_kanban_vignette').addClass(self.kanban_color(1));
+                });
+                $('.firebrick').click(function(){
+                    $(this).closest('.oe_project_kanban_vignette').addClass(self.kanban_color(2));
+                });
+                $('.khaki').click(function(){
+                    $(this).closest('.oe_project_kanban_vignette').addClass(self.kanban_color(3));
+                });
+                $('.thistle').click(function(){
+                    $(this).closest('.oe_project_kanban_vignette').addClass(self.kanban_color(4));
+                });
+                $('.orange').click(function(){
+                    $(this).closest('.oe_project_kanban_vignette').addClass(self.kanban_color(5));
                 });
             };
             self._super();
