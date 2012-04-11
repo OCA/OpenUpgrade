@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 01:37+0100\n"
-"PO-Revision-Date: 2012-04-05 16:02+0000\n"
-"Last-Translator: gde (OpenERP) <Unknown>\n"
+"PO-Revision-Date: 2012-04-10 21:38+0000\n"
+"Last-Translator: Numérigraphe <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-04-06 05:11+0000\n"
-"X-Generator: Launchpad (build 15060)\n"
+"X-Launchpad-Export-Date: 2012-04-11 05:00+0000\n"
+"X-Generator: Launchpad (build 15070)\n"
 
 #. module: hr_recruitment
 #: help:hr.applicant,active:0
@@ -144,7 +144,7 @@ msgstr "Jour"
 #. module: hr_recruitment
 #: field:hr.applicant,reference:0
 msgid "Refered By"
-msgstr ""
+msgstr "Référence"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0
@@ -220,7 +220,7 @@ msgstr "Mes recrutements"
 #. module: hr_recruitment
 #: field:hr.job,survey_id:0
 msgid "Interview Form"
-msgstr ""
+msgstr "Formulaire d'entretien"
 
 #. module: hr_recruitment
 #: help:hr.job,survey_id:0
@@ -228,6 +228,8 @@ msgid ""
 "Choose an interview form for this job position and you will be able to "
 "print/answer this interview from all applicants who apply for this job"
 msgstr ""
+"Sélectionnez un formulaire d'entretien pour ce poste. Vous pourrez "
+"l'imprimer et y répondre pour chaque candidat ayant postulé pour ce poste."
 
 #. module: hr_recruitment
 #: model:ir.ui.menu,name:hr_recruitment.menu_hr_recruitment_recruitment
@@ -481,6 +483,9 @@ msgid ""
 "forget to specify the department if your recruitment process is different "
 "according to the job position."
 msgstr ""
+" Vérifiez si les étapes suivantes correspondent à votre processus de "
+"recrutement. N'oubliez pas de préciser le service si votre processus de "
+"recrutement est différent selon le poste."
 
 #. module: hr_recruitment
 #: view:hr.recruitment.report:0
@@ -510,7 +515,7 @@ msgstr "Contact"
 #. module: hr_recruitment
 #: help:hr.applicant,salary_expected_extra:0
 msgid "Salary Expected by Applicant, extra advantages"
-msgstr ""
+msgstr "Salaire espéré par le candidat, avantages supplémentaires"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0
@@ -832,7 +837,7 @@ msgstr "Planifier un appel téléphonique"
 #. module: hr_recruitment
 #: field:hr.applicant,salary_proposed_extra:0
 msgid "Proposed Salary Extra"
-msgstr ""
+msgstr "Supplément de salaire proposé"
 
 #. module: hr_recruitment
 #: selection:hr.recruitment.report,month:0
@@ -969,7 +974,7 @@ msgstr "Un partenaire existe déjà avec le même nom."
 #. module: hr_recruitment
 #: view:hr.applicant:0
 msgid "Subject / Applicant"
-msgstr ""
+msgstr "Sujet / candidat"
 
 #. module: hr_recruitment
 #: help:hr.recruitment.degree,sequence:0
@@ -1143,7 +1148,7 @@ msgstr "Séquence"
 #. module: hr_recruitment
 #: model:hr.recruitment.degree,name:hr_recruitment.degree_bachelor
 msgid "Bachelor Degree"
-msgstr ""
+msgstr "Licence"
 
 #. module: hr_recruitment
 #: field:hr.recruitment.job2phonecall,user_id:0
