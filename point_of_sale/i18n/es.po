@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 01:37+0100\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: Borja López Soilán (NeoPolus) <borjalopezsoilan@gmail.com>\n"
+"PO-Revision-Date: 2012-04-11 17:20+0000\n"
+"Last-Translator: Ignacio Ibeas (www.acysos.com) <ignacio@acysos.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-02-18 06:52+0000\n"
-"X-Generator: Launchpad (build 14814)\n"
+"X-Launchpad-Export-Date: 2012-04-12 05:22+0000\n"
+"X-Generator: Launchpad (build 15070)\n"
 
 #. module: point_of_sale
 #: field:report.transaction.pos,product_nb:0
@@ -37,6 +37,12 @@ msgid ""
 "new payment methods directly from menu \"PoS Backend > Configuration > "
 "Payment Methods\"."
 msgstr ""
+"Debe definir que métodos de pago deben estar disponible a través del "
+"terminal punto de venta reutilizando banco y efectivo a través de "
+"\"Contabilidad->Configuración->Contabilidad financiera->Diarios\". "
+"Seleccione un diario y active el campo \"Método de paga para TPV\" en la "
+"pestaña \"Terminal Punto de Venta\". También puede crear nuevos métodos de "
+"pago en el menú \"TPV Backend->Configuración->Métodos de pago\"."
 
 #. module: point_of_sale
 #: view:pos.order:0 view:report.pos.order:0
@@ -46,7 +52,7 @@ msgstr "Hoy"
 #. module: point_of_sale
 #: model:pos.category,name:point_of_sale.plain_water
 msgid "Plain Water"
-msgstr ""
+msgstr "Agua corriente"
 
 #. module: point_of_sale
 #: view:report.cash.register:0
@@ -121,12 +127,14 @@ msgid ""
 "Configuration error! The currency chosen should be shared by the default "
 "accounts too."
 msgstr ""
+"¡Error de configuración! La moneda elegida debería ser también la misma en "
+"las cuentas por defecto"
 
 #. module: point_of_sale
 #: model:ir.actions.act_window,name:point_of_sale.pos_category_action
 #: model:ir.ui.menu,name:point_of_sale.menu_pos_category view:pos.category:0
 msgid "PoS Categories"
-msgstr ""
+msgstr "Categorías TPV"
 
 #. module: point_of_sale
 #: model:ir.actions.act_window,name:point_of_sale.action_box_out
@@ -210,7 +218,7 @@ msgstr "Ventas por mes"
 #. module: point_of_sale
 #: model:pos.category,name:point_of_sale.soda_orange
 msgid "Orange"
-msgstr ""
+msgstr "Naranja"
 
 #. module: point_of_sale
 #: model:ir.actions.act_window,name:point_of_sale.action_report_sales_by_user_pos_today
@@ -247,12 +255,12 @@ msgstr "Informe de ventas"
 #. module: point_of_sale
 #: model:pos.category,name:point_of_sale.beverage
 msgid "Beverages"
-msgstr ""
+msgstr "Bebidas"
 
 #. module: point_of_sale
 #: model:product.template,name:point_of_sale.stella_50cl_product_template
 msgid "Stella Artois 50cl"
-msgstr ""
+msgstr "Stella Artois 50cl"
 
 #. module: point_of_sale
 #: view:pos.details:0
@@ -262,7 +270,7 @@ msgstr "Fechas"
 #. module: point_of_sale
 #: field:pos.category,parent_id:0
 msgid "Parent Category"
-msgstr ""
+msgstr "Categoría padre"
 
 #. module: point_of_sale
 #: report:pos.details:0 report:pos.lines:0 report:pos.payment.report.user:0
@@ -320,7 +328,7 @@ msgstr "Operaciones diarias"
 #: code:addons/point_of_sale/point_of_sale.py:285
 #, python-format
 msgid "Configuration Error !"
-msgstr ""
+msgstr "¡Error de configuración!"
 
 #. module: point_of_sale
 #: model:pos.category,name:point_of_sale.sparkling_water
@@ -365,7 +373,7 @@ msgstr ""
 #. module: point_of_sale
 #: field:pos.category,child_id:0
 msgid "Children Categories"
-msgstr ""
+msgstr "Categorías hijas"
 
 #. module: point_of_sale
 #: field:pos.make.payment,payment_date:0
@@ -414,7 +422,7 @@ msgstr "Cantidad"
 #. module: point_of_sale
 #: field:pos.order.line,name:0
 msgid "Line No"
-msgstr ""
+msgstr "Línea Nº"
 
 #. module: point_of_sale
 #: view:account.bank.statement:0
@@ -425,7 +433,7 @@ msgstr "Período"
 #: code:addons/point_of_sale/wizard/pos_open_statement.py:49
 #, python-format
 msgid "No Cash Register Defined !"
-msgstr ""
+msgstr "No se ha definido un registro de caja!"
 
 #. module: point_of_sale
 #: report:pos.invoice:0
@@ -435,7 +443,7 @@ msgstr "Base:"
 #. module: point_of_sale
 #: field:pos.make.payment,payment_name:0
 msgid "Payment Reference"
-msgstr ""
+msgstr "Referencia del pago"
 
 #. module: point_of_sale
 #: report:pos.details_summary:0
@@ -451,7 +459,7 @@ msgstr ""
 #: code:addons/point_of_sale/point_of_sale.py:408
 #, python-format
 msgid "Customer Invoice"
-msgstr ""
+msgstr "Factura de cliente"
 
 #. module: point_of_sale
 #: view:pos.box.out:0
@@ -511,7 +519,7 @@ msgstr "Tel. :"
 #: model:ir.actions.act_window,name:point_of_sale.action_pos_confirm
 #: model:ir.ui.menu,name:point_of_sale.menu_wizard_pos_confirm
 msgid "Create Sale Entries"
-msgstr ""
+msgstr "Creada entradas de venta"
 
 #. #-#-#-#-#  point_of_sale.pot (OpenERP Server 6.1rc1)  #-#-#-#-#
 #. module: point_of_sale
