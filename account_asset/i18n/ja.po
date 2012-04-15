@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 01:37+0100\n"
-"PO-Revision-Date: 2012-04-14 04:36+0000\n"
+"PO-Revision-Date: 2012-04-15 03:56+0000\n"
 "Last-Translator: Akira Hiyama <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-04-14 04:58+0000\n"
+"X-Launchpad-Export-Date: 2012-04-15 04:42+0000\n"
 "X-Generator: Launchpad (build 15070)\n"
 
 #. module: account_asset
@@ -298,7 +298,7 @@ msgid ""
 "depreciations won't go beyond."
 msgstr ""
 "この方法は日付と減価償却行の数を計算するために使用します。\n"
-"減価償却の数：減価償却の行数と、２つの減価償却の間の時間を固定します。\n"
+"減価償却の数：減価償却行の数と２つの減価償却の間の時間を固定します。\n"
 "終了日：２つの減価償却の間の時間と、減価償却日を超えない日付を選んでください。"
 
 #. module: account_asset
@@ -366,28 +366,28 @@ msgstr "閉じた状態の資産"
 #. module: account_asset
 #: field:account.asset.asset,parent_id:0
 msgid "Parent Asset"
-msgstr ""
+msgstr "親資産"
 
 #. module: account_asset
 #: view:account.asset.history:0
 #: model:ir.model,name:account_asset.model_account_asset_history
 msgid "Asset history"
-msgstr ""
+msgstr "資産履歴"
 
 #. module: account_asset
 #: view:asset.asset.report:0
 msgid "Assets purchased in current year"
-msgstr ""
+msgstr "現在年で購入した資産"
 
 #. module: account_asset
 #: field:account.asset.asset,state:0 field:asset.asset.report,state:0
 msgid "State"
-msgstr ""
+msgstr "状態"
 
 #. module: account_asset
 #: model:ir.model,name:account_asset.model_account_invoice_line
 msgid "Invoice Line"
-msgstr ""
+msgstr "請求行"
 
 #. module: account_asset
 #: constraint:account.move.line:0
@@ -396,38 +396,39 @@ msgid ""
 "currency. You should remove the secondary currency on the account or select "
 "a multi-currency view on the journal."
 msgstr ""
+"選択された仕訳のアカウントは第２の通貨を提供することを強いています。アカウントの第２通貨を削除するか、仕訳で多通貨ビューを選択して下さい。"
 
 #. module: account_asset
 #: view:asset.asset.report:0
 msgid "Month"
-msgstr ""
+msgstr "月"
 
 #. module: account_asset
 #: view:account.asset.asset:0
 msgid "Depreciation Board"
-msgstr ""
+msgstr "減価償却委員会"
 
 #. module: account_asset
 #: model:ir.model,name:account_asset.model_account_move_line
 msgid "Journal Items"
-msgstr ""
+msgstr "仕訳帳項目"
 
 #. module: account_asset
 #: field:asset.asset.report,unposted_value:0
 msgid "Unposted Amount"
-msgstr ""
+msgstr "未転記金額"
 
 #. module: account_asset
 #: field:account.asset.asset,method_time:0
 #: field:account.asset.category,method_time:0
 #: field:account.asset.history,method_time:0
 msgid "Time Method"
-msgstr ""
+msgstr "時間法"
 
 #. module: account_asset
 #: view:account.asset.category:0
 msgid "Analytic information"
-msgstr ""
+msgstr "分析情報"
 
 #. module: account_asset
 #: view:asset.modify:0
@@ -439,13 +440,13 @@ msgstr "資産存続期間の修正"
 msgid ""
 "The date of your Journal Entry is not in the defined period! You should "
 "change the date or remove this constraint from the journal."
-msgstr ""
+msgstr "仕訳の日付が定義された期間ではありません。日付を変更するか仕訳帳からこの制約を削除する必要があります。"
 
 #. module: account_asset
 #: field:account.asset.asset,note:0 field:account.asset.category,note:0
 #: field:account.asset.history,note:0
 msgid "Note"
-msgstr ""
+msgstr "注記"
 
 #. module: account_asset
 #: help:account.asset.asset,method:0 help:account.asset.category,method:0
@@ -454,6 +455,9 @@ msgid ""
 "  * Linear: Calculated on basis of: Gross Value / Number of Depreciations\n"
 "  * Degressive: Calculated on basis of: Remaining Value * Degressive Factor"
 msgstr ""
+"減価償却行の金額を計算するために使う方法を選択して下さい。\n"
+"　・ リニア（定額法）：次の計算：全体の価値 / 減価償却の数\n"
+"　・ 逓減（定率法）：次の計算：残存価値 * 逓減因子"
 
 #. module: account_asset
 #: help:account.asset.asset,method_time:0
@@ -466,82 +470,85 @@ msgid ""
 "  * Ending Date: Choose the time between 2 depreciations and the date the "
 "depreciations won't go beyond."
 msgstr ""
+"減価償却行の日付と数を計算するために使う方式を選択して下さい。\n"
+"　・ 減価償却の数：減価償却行の数と２つの減価償却の間の時間を固定します。\n"
+"　・ 終了日：２つの減価償却の間の時間と、減価償却日を超えない日付を選んでください。"
 
 #. module: account_asset
 #: view:asset.asset.report:0
 msgid "Assets in running state"
-msgstr ""
+msgstr "有効な状態の資産"
 
 #. module: account_asset
 #: view:account.asset.asset:0
 msgid "Closed"
-msgstr ""
+msgstr "閉じられた"
 
 #. module: account_asset
 #: field:account.asset.asset,partner_id:0
 #: field:asset.asset.report,partner_id:0
 msgid "Partner"
-msgstr ""
+msgstr "パートナ"
 
 #. module: account_asset
 #: view:asset.asset.report:0 field:asset.asset.report,depreciation_value:0
 msgid "Amount of Depreciation Lines"
-msgstr ""
+msgstr "減価償却行の金額"
 
 #. module: account_asset
 #: view:asset.asset.report:0
 msgid "Posted depreciation lines"
-msgstr ""
+msgstr "記帳された減価償却行"
 
 #. module: account_asset
 #: constraint:account.move.line:0
 msgid "Company must be the same for its related account and period."
-msgstr ""
+msgstr "会社は関連するアカウントと期間は同じでなければなりません。"
 
 #. module: account_asset
 #: field:account.asset.asset,child_ids:0
 msgid "Children Assets"
-msgstr ""
+msgstr "子資産"
 
 #. module: account_asset
 #: view:asset.asset.report:0
 msgid "Date of depreciation"
-msgstr ""
+msgstr "減価償却日"
 
 #. module: account_asset
 #: field:account.asset.history,user_id:0
 msgid "User"
-msgstr ""
+msgstr "ユーザ"
 
 #. module: account_asset
 #: field:account.asset.history,date:0
 msgid "Date"
-msgstr ""
+msgstr "日付"
 
 #. module: account_asset
 #: view:asset.asset.report:0
 msgid "Assets purchased in current month"
-msgstr ""
+msgstr "現在の月に購入した資産"
 
 #. module: account_asset
 #: constraint:account.move.line:0
 msgid "You can not create journal items on an account of type view."
-msgstr ""
+msgstr "ビュータイプのアカウントでは仕訳項目を作ることはできません。"
 
 #. module: account_asset
 #: view:asset.asset.report:0
 msgid "Extended Filters..."
-msgstr ""
+msgstr "拡張したフィルタ…"
 
 #. module: account_asset
 #: view:account.asset.asset:0 view:asset.depreciation.confirmation.wizard:0
 msgid "Compute"
-msgstr ""
+msgstr "計算"
 
 #. module: account_asset
 #: view:account.asset.category:0
 msgid "Search Asset Category"
-msgstr ""
+msgstr "資産分類の検索"
 
 #. module: account_asset
 #: model:ir.model,name:account_asset.model_asset_depreciation_confirmation_wizard
@@ -551,138 +558,138 @@ msgstr ""
 #. module: account_asset
 #: field:account.asset.asset,active:0
 msgid "Active"
-msgstr ""
+msgstr "有効"
 
 #. module: account_asset
 #: model:ir.actions.wizard,name:account_asset.wizard_asset_close
 msgid "Close asset"
-msgstr ""
+msgstr "閉鎖資産"
 
 #. module: account_asset
 #: field:account.asset.depreciation.line,parent_state:0
 msgid "State of Asset"
-msgstr ""
+msgstr "資産の状態"
 
 #. module: account_asset
 #: field:account.asset.depreciation.line,name:0
 msgid "Depreciation Name"
-msgstr ""
+msgstr "減価償却名"
 
 #. module: account_asset
 #: view:account.asset.asset:0 field:account.asset.asset,history_ids:0
 msgid "History"
-msgstr ""
+msgstr "履歴"
 
 #. module: account_asset
 #: sql_constraint:account.invoice:0
 msgid "Invoice Number must be unique per Company!"
-msgstr ""
+msgstr "請求書番号は会社ごとにユニークでなければいけません。"
 
 #. module: account_asset
 #: field:asset.depreciation.confirmation.wizard,period_id:0
 msgid "Period"
-msgstr ""
+msgstr "期間"
 
 #. module: account_asset
 #: view:account.asset.asset:0
 msgid "General"
-msgstr ""
+msgstr "一般"
 
 #. module: account_asset
 #: field:account.asset.asset,prorata:0 field:account.asset.category,prorata:0
 msgid "Prorata Temporis"
-msgstr ""
+msgstr "プロラタ トンポリス（期間に応じて）"
 
 #. module: account_asset
 #: view:account.asset.category:0
 msgid "Accounting information"
-msgstr ""
+msgstr "会計情報"
 
 #. module: account_asset
 #: model:ir.model,name:account_asset.model_account_invoice
 msgid "Invoice"
-msgstr ""
+msgstr "請求書"
 
 #. module: account_asset
 #: model:ir.actions.act_window,name:account_asset.action_account_asset_asset_form_normal
 msgid "Review Asset Categories"
-msgstr ""
+msgstr "資産分類のレビュー"
 
 #. module: account_asset
 #: view:asset.depreciation.confirmation.wizard:0 view:asset.modify:0
 msgid "Cancel"
-msgstr ""
+msgstr "キャンセル"
 
 #. module: account_asset
 #: selection:account.asset.asset,state:0 selection:asset.asset.report,state:0
 msgid "Close"
-msgstr ""
+msgstr "閉じる"
 
 #. module: account_asset
 #: view:account.asset.asset:0 view:account.asset.category:0
 msgid "Depreciation Method"
-msgstr ""
+msgstr "減価償却法"
 
 #. module: account_asset
 #: field:account.asset.asset,purchase_date:0 view:asset.asset.report:0
 #: field:asset.asset.report,purchase_date:0
 msgid "Purchase Date"
-msgstr ""
+msgstr "購入日"
 
 #. module: account_asset
 #: selection:account.asset.asset,method:0
 #: selection:account.asset.category,method:0
 msgid "Degressive"
-msgstr ""
+msgstr "逓減"
 
 #. module: account_asset
 #: help:asset.depreciation.confirmation.wizard,period_id:0
 msgid ""
 "Choose the period for which you want to automatically post the depreciation "
 "lines of running assets"
-msgstr ""
+msgstr "有効な資産の減価償却行を自動的に記帳したい場合の期間を選択して下さい。"
 
 #. module: account_asset
 #: view:account.asset.asset:0
 msgid "Current"
-msgstr ""
+msgstr "現在"
 
 #. module: account_asset
 #: field:account.asset.depreciation.line,remaining_value:0
 msgid "Amount to Depreciate"
-msgstr ""
+msgstr "減価償却額"
 
 #. module: account_asset
 #: field:account.asset.category,open_asset:0
 msgid "Skip Draft State"
-msgstr ""
+msgstr "ドラフト状態をスキップ"
 
 #. module: account_asset
 #: view:account.asset.asset:0 view:account.asset.category:0
 #: view:account.asset.history:0
 msgid "Depreciation Dates"
-msgstr ""
+msgstr "減価償却日"
 
 #. module: account_asset
 #: field:account.asset.asset,currency_id:0
 msgid "Currency"
-msgstr ""
+msgstr "通貨"
 
 #. module: account_asset
 #: field:account.asset.category,journal_id:0
 msgid "Journal"
-msgstr ""
+msgstr "仕訳帳"
 
 #. module: account_asset
 #: field:account.asset.depreciation.line,depreciated_value:0
 msgid "Amount Already Depreciated"
-msgstr ""
+msgstr "減価償却済額"
 
 #. module: account_asset
 #: field:account.asset.depreciation.line,move_check:0
 #: view:asset.asset.report:0 field:asset.asset.report,move_check:0
 msgid "Posted"
-msgstr ""
+msgstr "記帳済"
 
 #. module: account_asset
 #: help:account.asset.asset,state:0
@@ -693,62 +700,65 @@ msgid ""
 "You can manually close an asset when the depreciation is over. If the last "
 "line of depreciation is posted, the asset automatically goes in that state."
 msgstr ""
+"資産が作成された時、状態はドラフトです。\n"
+"その資産が確認された場合は、状態が有効になりそして減価償却行は会計上記帳されます。\n"
+"減価償却が終わった場合は、手動でその資産を閉じることができます。減価償却の最後の行が記帳された場合は、資産は自動的にその状態になります。"
 
 #. module: account_asset
 #: field:account.asset.category,name:0
 msgid "Name"
-msgstr ""
+msgstr "名前"
 
 #. module: account_asset
 #: help:account.asset.category,open_asset:0
 msgid ""
 "Check this if you want to automatically confirm the assets of this category "
 "when created by invoices."
-msgstr ""
+msgstr "請求書によって作成されたこの分類の資産を自動的に確認したい場合はこれをチェックして下さい。"
 
 #. module: account_asset
 #: view:account.asset.asset:0
 msgid "Set to Draft"
-msgstr ""
+msgstr "ドラフトに設定"
 
 #. module: account_asset
 #: selection:account.asset.asset,method:0
 #: selection:account.asset.category,method:0
 msgid "Linear"
-msgstr ""
+msgstr "リニア"
 
 #. module: account_asset
 #: view:asset.asset.report:0
 msgid "Month-1"
-msgstr ""
+msgstr "月-1"
 
 #. module: account_asset
 #: model:ir.model,name:account_asset.model_account_asset_depreciation_line
 msgid "Asset depreciation line"
-msgstr ""
+msgstr "資産の減価償却行"
 
 #. module: account_asset
 #: field:account.asset.asset,category_id:0 view:account.asset.category:0
 #: field:asset.asset.report,asset_category_id:0
 #: model:ir.model,name:account_asset.model_account_asset_category
 msgid "Asset category"
-msgstr ""
+msgstr "資産分類"
 
 #. module: account_asset
 #: view:asset.asset.report:0
 msgid "Assets purchased in last month"
-msgstr ""
+msgstr "先月購入資産"
 
 #. module: account_asset
 #: code:addons/account_asset/wizard/wizard_asset_compute.py:49
 #, python-format
 msgid "Created Asset Moves"
-msgstr ""
+msgstr "作成済資産の移動"
 
 #. module: account_asset
 #: constraint:account.move.line:0
 msgid "You can not create journal items on closed account."
-msgstr ""
+msgstr "閉じられたアカウントには仕訳項目を作ることはできません。"
 
 #. module: account_asset
 #: model:ir.actions.act_window,help:account_asset.action_asset_asset_report
@@ -757,11 +767,12 @@ msgid ""
 "search can also be used to personalise your Assets reports and so, match "
 "this analysis to your needs;"
 msgstr ""
+"このレポートからは全ての減価償却の全体がわかります。この検索ツールは資産レポートのパーソナライズやニーズにこの分析を一致させるためにも使うことができます。"
 
 #. module: account_asset
 #: help:account.asset.category,method_period:0
 msgid "State here the time between 2 depreciations, in months"
-msgstr ""
+msgstr "２つの減価償却の間の時間をここで明らかにして下さい。"
 
 #. module: account_asset
 #: field:account.asset.asset,method_number:0
@@ -772,25 +783,25 @@ msgstr ""
 #: selection:account.asset.history,method_time:0
 #: field:asset.modify,method_number:0
 msgid "Number of Depreciations"
-msgstr ""
+msgstr "減価償却の数"
 
 #. module: account_asset
 #: view:account.asset.asset:0
 msgid "Create Move"
-msgstr ""
+msgstr "移動の作成"
 
 #. module: account_asset
 #: view:asset.depreciation.confirmation.wizard:0
 msgid "Post Depreciation Lines"
-msgstr ""
+msgstr "減価償却行を記帳"
 
 #. module: account_asset
 #: view:account.asset.asset:0
 msgid "Confirm Asset"
-msgstr ""
+msgstr "資産の確認"
 
 #. module: account_asset
 #: model:ir.actions.act_window,name:account_asset.action_account_asset_asset_tree
 #: model:ir.ui.menu,name:account_asset.menu_action_account_asset_asset_tree
 msgid "Asset Hierarchy"
-msgstr ""
+msgstr "資産の階層"

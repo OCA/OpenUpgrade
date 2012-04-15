@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 01:37+0100\n"
-"PO-Revision-Date: 2012-04-14 04:54+0000\n"
+"PO-Revision-Date: 2012-04-15 03:51+0000\n"
 "Last-Translator: Masaki Yamaya <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-04-14 04:57+0000\n"
+"X-Launchpad-Export-Date: 2012-04-15 04:42+0000\n"
 "X-Generator: Launchpad (build 15070)\n"
 
 #. module: hr_recruitment
@@ -39,7 +39,7 @@ msgstr "応募者の情報源"
 #. module: hr_recruitment
 #: field:hr.recruitment.report,delay_open:0
 msgid "Avg. Delay to Open"
-msgstr "オープンの平均遅れ"
+msgstr "オープンするまでの平均遅れ"
 
 #. module: hr_recruitment
 #: field:hr.recruitment.report,nbr:0
@@ -70,7 +70,7 @@ msgstr "部署"
 #. module: hr_recruitment
 #: field:hr.applicant,date_action:0
 msgid "Next Action Date"
-msgstr "次のアクションの日付"
+msgstr "次の活動の日付"
 
 #. module: hr_recruitment
 #: field:hr.applicant,salary_expected_extra:0
@@ -449,24 +449,24 @@ msgstr "主題"
 #. module: hr_recruitment
 #: field:hr.applicant,email_cc:0
 msgid "Watchers Emails"
-msgstr ""
+msgstr "担当者のEメール"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0
 #: model:ir.actions.act_window,name:hr_recruitment.crm_case_categ0_act_job
 #: model:ir.ui.menu,name:hr_recruitment.menu_crm_case_categ0_act_job
 msgid "Applicants"
-msgstr ""
+msgstr "応募者"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0
 msgid "History Information"
-msgstr ""
+msgstr "履歴情報"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0
 msgid "Dates"
-msgstr ""
+msgstr "日付"
 
 #. module: hr_recruitment
 #: model:ir.actions.act_window,help:hr_recruitment.hr_recruitment_stage_act
@@ -474,211 +474,211 @@ msgid ""
 " Check if the following stages are matching your recruitment process. Don't "
 "forget to specify the department if your recruitment process is different "
 "according to the job position."
-msgstr ""
+msgstr " 次のステージが採用プロセスに合致していればクリックしてください。職種によって採用プロセスが異なる場合には部署名を指定してください。"
 
 #. module: hr_recruitment
 #: view:hr.recruitment.report:0
 msgid "    Month-1    "
-msgstr ""
+msgstr "    １ヶ月目    "
 
 #. module: hr_recruitment
 #: field:hr.recruitment.report,salary_exp:0
 msgid "Salary Expected"
-msgstr ""
+msgstr "期待する給与"
 
 #. module: hr_recruitment
 #: model:ir.model,name:hr_recruitment.model_hr_applicant
 msgid "Applicant"
-msgstr ""
+msgstr "応募者"
 
 #. module: hr_recruitment
 #: help:hr.recruitment.stage,sequence:0
 msgid "Gives the sequence order when displaying a list of stages."
-msgstr ""
+msgstr "ステージの一覧が表示されていたら順序を指定してください。"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0
 msgid "Contact"
-msgstr ""
+msgstr "コンタクト"
 
 #. module: hr_recruitment
 #: help:hr.applicant,salary_expected_extra:0
 msgid "Salary Expected by Applicant, extra advantages"
-msgstr ""
+msgstr "応募者が期待する給与、その他の利点"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0
 msgid "Qualification"
-msgstr ""
+msgstr "資格"
 
 #. module: hr_recruitment
 #: field:hr.applicant,partner_id:0 view:hr.recruitment.report:0
 #: field:hr.recruitment.report,partner_id:0
 msgid "Partner"
-msgstr ""
+msgstr "パートナ"
 
 #. module: hr_recruitment
 #: selection:hr.recruitment.report,month:0
 msgid "March"
-msgstr ""
+msgstr "3月"
 
 #. module: hr_recruitment
 #: model:ir.model,name:hr_recruitment.model_hr_recruitment_stage
 msgid "Stage of Recruitment"
-msgstr ""
+msgstr "採用のステージ"
 
 #. module: hr_recruitment
 #: view:hr.recruitment.stage:0
 #: model:ir.actions.act_window,name:hr_recruitment.hr_recruitment_stage_act
 #: model:ir.ui.menu,name:hr_recruitment.menu_hr_recruitment_stage
 msgid "Stages"
-msgstr ""
+msgstr "ステージ"
 
 #. module: hr_recruitment
 #: view:hr.recruitment.report:0
 msgid "Draft recruitment"
-msgstr ""
+msgstr "指名した採用"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0
 msgid "Delete"
-msgstr ""
+msgstr "削除"
 
 #. module: hr_recruitment
 #: view:hr.recruitment.report:0
 msgid "In progress"
-msgstr ""
+msgstr "進行中"
 
 #. module: hr_recruitment
 #: model:ir.actions.act_window,name:hr_recruitment.hr_recruitment_stage_form_installer
 msgid "Review Recruitment Stages"
-msgstr ""
+msgstr "採用ステージのレビュー"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0
 msgid "Jobs - Recruitment Form"
-msgstr ""
+msgstr "仕事 - 採用用紙"
 
 #. module: hr_recruitment
 #: field:hr.applicant,probability:0
 msgid "Probability"
-msgstr ""
+msgstr "確信度"
 
 #. module: hr_recruitment
 #: selection:hr.recruitment.report,month:0
 msgid "September"
-msgstr ""
+msgstr "9月"
 
 #. module: hr_recruitment
 #: selection:hr.recruitment.report,month:0
 msgid "December"
-msgstr ""
+msgstr "12月"
 
 #. module: hr_recruitment
 #: view:hr.recruitment.report:0
 msgid "Recruitment performed in current year"
-msgstr ""
+msgstr "今年度の採用"
 
 #. module: hr_recruitment
 #: view:hr.recruitment.report:0
 msgid "Recruitment during last month"
-msgstr ""
+msgstr "先月の採用"
 
 #. module: hr_recruitment
 #: view:hr.recruitment.report:0 field:hr.recruitment.report,month:0
 msgid "Month"
-msgstr ""
+msgstr "月"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0
 msgid "Unassigned Recruitments"
-msgstr ""
+msgstr "未割当ての採用"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0
 msgid "Job Info"
-msgstr ""
+msgstr "仕事情報"
 
 #. module: hr_recruitment
 #: model:hr.recruitment.stage,name:hr_recruitment.stage_job2
 msgid "First Interview"
-msgstr ""
+msgstr "最初の面接"
 
 #. module: hr_recruitment
 #: field:hr.applicant,write_date:0
 msgid "Update Date"
-msgstr ""
+msgstr "日付の更新"
 
 #. module: hr_recruitment
 #: view:hired.employee:0
 msgid "Yes"
-msgstr ""
+msgstr "はい"
 
 #. module: hr_recruitment
 #: field:hr.applicant,salary_proposed:0 view:hr.recruitment.report:0
 msgid "Proposed Salary"
-msgstr ""
+msgstr "提案された給与"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0
 msgid "Schedule Meeting"
-msgstr ""
+msgstr "ミーティングを予定する"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0
 msgid "Search Jobs"
-msgstr ""
+msgstr "仕事を探す"
 
 #. module: hr_recruitment
 #: field:hr.recruitment.job2phonecall,category_id:0
 msgid "Category"
-msgstr ""
+msgstr "分類"
 
 #. module: hr_recruitment
 #: field:hr.applicant,partner_name:0
 msgid "Applicant's Name"
-msgstr ""
+msgstr "応募者の氏名"
 
 #. module: hr_recruitment
 #: selection:hr.applicant,priority:0
 #: selection:hr.recruitment.report,priority:0
 msgid "Very Good"
-msgstr ""
+msgstr "良好"
 
 #. module: hr_recruitment
 #: view:hr.recruitment.report:0
 msgid "# Cases"
-msgstr ""
+msgstr "事例の数"
 
 #. module: hr_recruitment
 #: field:hr.applicant,date_open:0
 msgid "Opened"
-msgstr ""
+msgstr "未決"
 
 #. module: hr_recruitment
 #: view:hr.recruitment.report:0
 msgid "Group By ..."
-msgstr ""
+msgstr "分類…"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0 selection:hr.applicant,state:0
 msgid "In Progress"
-msgstr ""
+msgstr "進行中"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0
 msgid "Reset to New"
-msgstr ""
+msgstr "新規に再設定"
 
 #. module: hr_recruitment
 #: help:hr.applicant,salary_expected:0
 msgid "Salary Expected by Applicant"
-msgstr ""
+msgstr "応募者が希望する給与"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0
 msgid "All Initial Jobs"
-msgstr ""
+msgstr "全て最初の仕事"
 
 #. module: hr_recruitment
 #: help:hr.applicant,email_cc:0
@@ -686,48 +686,48 @@ msgid ""
 "These email addresses will be added to the CC field of all inbound and "
 "outbound emails for this record before being sent. Separate multiple email "
 "addresses with a comma"
-msgstr ""
+msgstr "これらのEメールアドレスは送受信するEメールの CC 欄に追加されます。複数のEメールアドレスの間にはコンマを入れてください。"
 
 #. module: hr_recruitment
 #: model:ir.ui.menu,name:hr_recruitment.menu_hr_recruitment_degree
 msgid "Degrees"
-msgstr ""
+msgstr "学位"
 
 #. module: hr_recruitment
 #: field:hr.applicant,date_closed:0 field:hr.recruitment.report,date_closed:0
 msgid "Closed"
-msgstr ""
+msgstr "既決"
 
 #. module: hr_recruitment
 #: view:hr.recruitment.stage:0
 msgid "Stage Definition"
-msgstr ""
+msgstr "ステージの定義"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0
 msgid "Answer"
-msgstr ""
+msgstr "応答"
 
 #. module: hr_recruitment
 #: field:hr.recruitment.report,delay_close:0
 msgid "Avg. Delay to Close"
-msgstr ""
+msgstr "決定に至るまでの平均期間"
 
 #. module: hr_recruitment
 #: help:hr.applicant,salary_proposed:0
 msgid "Salary Proposed by the Organisation"
-msgstr ""
+msgstr "雇用側が提案する給与"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0
 msgid "Meeting"
-msgstr ""
+msgstr "ミーティング"
 
 #. module: hr_recruitment
 #: code:addons/hr_recruitment/hr_recruitment.py:347
 #, python-format
 msgid "No Subject"
-msgstr ""
+msgstr "件名なし"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0
@@ -737,12 +737,12 @@ msgstr ""
 #. module: hr_recruitment
 #: view:hr.applicant:0
 msgid "Communication & History"
-msgstr ""
+msgstr "コミュニケーションと履歴"
 
 #. module: hr_recruitment
 #: selection:hr.recruitment.report,month:0
 msgid "August"
-msgstr ""
+msgstr "8月"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0 field:hr.applicant,type_id:0
@@ -750,116 +750,116 @@ msgstr ""
 #: field:hr.recruitment.report,type_id:0
 #: model:ir.actions.act_window,name:hr_recruitment.hr_recruitment_degree_action
 msgid "Degree"
-msgstr ""
+msgstr "学位"
 
 #. module: hr_recruitment
 #: field:hr.applicant,partner_phone:0
 msgid "Phone"
-msgstr ""
+msgstr "電話"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0
 msgid "Global CC"
-msgstr ""
+msgstr "グローバルCC"
 
 #. module: hr_recruitment
 #: selection:hr.recruitment.report,month:0
 msgid "June"
-msgstr ""
+msgstr "6月"
 
 #. module: hr_recruitment
 #: field:hr.applicant,day_close:0
 msgid "Days to Close"
-msgstr ""
+msgstr "決定日"
 
 #. module: hr_recruitment
 #: field:hr.recruitment.report,user_id:0
 msgid "User"
-msgstr ""
+msgstr "ユーザ"
 
 #. module: hr_recruitment
 #: selection:hr.applicant,priority:0
 #: selection:hr.recruitment.report,priority:0
 msgid "Excellent"
-msgstr ""
+msgstr "優良"
 
 #. module: hr_recruitment
 #: field:hr.applicant,active:0
 msgid "Active"
-msgstr ""
+msgstr "有効"
 
 #. module: hr_recruitment
 #: selection:hr.recruitment.report,month:0
 msgid "November"
-msgstr ""
+msgstr "11月"
 
 #. module: hr_recruitment
 #: view:hr.recruitment.report:0
 msgid "Extended Filters..."
-msgstr ""
+msgstr "拡張したフィルタ…"
 
 #. module: hr_recruitment
 #: field:hr.applicant,response:0
 msgid "Response"
-msgstr ""
+msgstr "応答"
 
 #. module: hr_recruitment
 #: field:hr.recruitment.stage,department_id:0
 msgid "Specific to a Department"
-msgstr ""
+msgstr "部署に特有"
 
 #. module: hr_recruitment
 #: field:hr.recruitment.report,salary_prop_avg:0
 msgid "Avg Salary Proposed"
-msgstr ""
+msgstr "提案された平均給与"
 
 #. module: hr_recruitment
 #: view:hr.recruitment.job2phonecall:0
 #: model:ir.actions.act_window,name:hr_recruitment.action_hr_recruitment_phonecall
 #: model:ir.model,name:hr_recruitment.model_hr_recruitment_job2phonecall
 msgid "Schedule Phone Call"
-msgstr ""
+msgstr "電話の予定"
 
 #. module: hr_recruitment
 #: field:hr.applicant,salary_proposed_extra:0
 msgid "Proposed Salary Extra"
-msgstr ""
+msgstr "提案された追加給与"
 
 #. module: hr_recruitment
 #: selection:hr.recruitment.report,month:0
 msgid "January"
-msgstr ""
+msgstr "１月"
 
 #. module: hr_recruitment
 #: help:hr.applicant,email_from:0
 msgid "These people will receive email."
-msgstr ""
+msgstr "これらの人がEメールを受け取ります。"
 
 #. module: hr_recruitment
 #: selection:hr.applicant,priority:0
 #: selection:hr.recruitment.report,priority:0
 msgid "Not Good"
-msgstr ""
+msgstr "不良"
 
 #. module: hr_recruitment
 #: field:hr.applicant,date:0 field:hr.recruitment.report,date:0
 msgid "Date"
-msgstr ""
+msgstr "日付"
 
 #. module: hr_recruitment
 #: view:hr.recruitment.job2phonecall:0
 msgid "Phone Call Description"
-msgstr ""
+msgstr "電話の内容"
 
 #. module: hr_recruitment
 #: view:hr.recruitment.partner.create:0
 msgid "Are you sure you want to create a partner based on this job request ?"
-msgstr ""
+msgstr "この仕事要求に基づいてパートナを作成しますか？"
 
 #. module: hr_recruitment
 #: view:hired.employee:0
 msgid "Would you like to create an employee ?"
-msgstr ""
+msgstr "従業員を作成しますか？"
 
 #. module: hr_recruitment
 #: model:ir.actions.act_window,help:hr_recruitment.crm_case_categ0_act_job
@@ -872,16 +872,19 @@ msgid ""
 "are indexed automatically, so that you can easily search through their "
 "content."
 msgstr ""
+"このメニューでは採用プロセス中の応募者を記録して全ての活動：ミーティング、面接、電話の会話などを管理することができます。Eメールのデートウェイを設定してお"
+"くと、Eメールが採用担当のEメールアカウントに送られてくると、応募者とその履歴書が自動的に作られます。もしドキュメント管理モジュールをインストールすると、"
+"全てのドキュメント（履歴書と手紙）には自動的にインデックスが付けられて、その内容を簡単に検索することができます。"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0
 msgid "History"
-msgstr ""
+msgstr "履歴"
 
 #. module: hr_recruitment
 #: view:hr.recruitment.report:0
 msgid "Recruitment performed in current month"
-msgstr ""
+msgstr "今月は採用が行われました。"
 
 #. module: hr_recruitment
 #: model:ir.actions.act_window,help:hr_recruitment.hr_recruitment_stage_form_installer
@@ -890,64 +893,65 @@ msgid ""
 "forget to specify the department if your recruitment process is different "
 "according to the job position."
 msgstr ""
+"次のステージが採用プロセスに合致するのであれば、チェックしてください。もし職種によって採用プロセスがkとなる場合には、部署を指定してください。"
 
 #. module: hr_recruitment
 #: field:hr.applicant,partner_address_id:0
 msgid "Partner Contact"
-msgstr ""
+msgstr "パートナー連絡先"
 
 #. module: hr_recruitment
 #: model:hr.recruitment.stage,name:hr_recruitment.stage_job4
 msgid "Contract Proposed"
-msgstr ""
+msgstr "提案された契約"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0 field:hr.applicant,state:0 view:hr.recruitment.report:0
 #: field:hr.recruitment.report,state:0
 msgid "State"
-msgstr ""
+msgstr "状態"
 
 #. module: hr_recruitment
 #: model:hr.recruitment.source,name:hr_recruitment.source_website_company
 msgid "Company Website"
-msgstr ""
+msgstr "会社のウェブサイト"
 
 #. module: hr_recruitment
 #: sql_constraint:hr.recruitment.degree:0
 msgid "The name of the Degree of Recruitment must be unique!"
-msgstr ""
+msgstr "採用の度合いの名前はユニークでなければいけません。"
 
 #. module: hr_recruitment
 #: view:hr.recruitment.report:0 field:hr.recruitment.report,year:0
 msgid "Year"
-msgstr ""
+msgstr "年"
 
 #. module: hr_recruitment
 #: view:hired.employee:0 view:hr.recruitment.job2phonecall:0
 #: view:hr.recruitment.partner.create:0
 msgid "Cancel"
-msgstr ""
+msgstr "キャンセル"
 
 #. module: hr_recruitment
 #: model:ir.actions.act_window,name:hr_recruitment.hr_job_categ_action
 msgid "Applicant Categories"
-msgstr ""
+msgstr "応募者のカテゴリー"
 
 #. module: hr_recruitment
 #: selection:hr.recruitment.report,state:0
 msgid "Open"
-msgstr ""
+msgstr "オープン"
 
 #. module: hr_recruitment
 #: code:addons/hr_recruitment/wizard/hr_recruitment_create_partner_job.py:57
 #, python-format
 msgid "A partner is already existing with the same name."
-msgstr ""
+msgstr "既に同じ名前のパートナがいます。"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0
 msgid "Subject / Applicant"
-msgstr ""
+msgstr "主題 / 応募者"
 
 #. module: hr_recruitment
 #: help:hr.recruitment.degree,sequence:0
@@ -958,194 +962,194 @@ msgstr ""
 #: view:hr.applicant:0 field:hr.applicant,user_id:0
 #: view:hr.recruitment.report:0
 msgid "Responsible"
-msgstr ""
+msgstr "責任担当"
 
 #. module: hr_recruitment
 #: view:hr.recruitment.report:0
 #: model:ir.actions.act_window,name:hr_recruitment.action_hr_recruitment_report_all
 #: model:ir.ui.menu,name:hr_recruitment.menu_hr_recruitment_report_all
 msgid "Recruitment Analysis"
-msgstr ""
+msgstr "採用分析"
 
 #. module: hr_recruitment
 #: view:hired.employee:0
 msgid "Create New Employee"
-msgstr ""
+msgstr "新しい従業員を作る"
 
 #. module: hr_recruitment
 #: model:hr.recruitment.source,name:hr_recruitment.source_linkedin
 msgid "LinkedIn"
-msgstr ""
+msgstr "LinkedIn"
 
 #. module: hr_recruitment
 #: selection:hr.recruitment.report,month:0
 msgid "October"
-msgstr ""
+msgstr "10月"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0
 msgid "Cases By Stage and Estimates"
-msgstr ""
+msgstr "ステージと見積りの事例"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0
 msgid "Reply"
-msgstr ""
+msgstr "返信"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0
 msgid "Interview"
-msgstr ""
+msgstr "面接"
 
 #. module: hr_recruitment
 #: field:hr.recruitment.source,name:0
 msgid "Source Name"
-msgstr ""
+msgstr "情報源の名前"
 
 #. module: hr_recruitment
 #: field:hr.applicant,description:0
 msgid "Description"
-msgstr ""
+msgstr "詳細"
 
 #. module: hr_recruitment
 #: selection:hr.recruitment.report,month:0
 msgid "May"
-msgstr ""
+msgstr "5月"
 
 #. module: hr_recruitment
 #: model:hr.recruitment.stage,name:hr_recruitment.stage_job5
 msgid "Contract Signed"
-msgstr ""
+msgstr "署名済みの契約"
 
 #. module: hr_recruitment
 #: model:hr.recruitment.source,name:hr_recruitment.source_word
 msgid "Word of Mouth"
-msgstr ""
+msgstr "口コミ"
 
 #. module: hr_recruitment
 #: selection:hr.applicant,state:0 selection:hr.recruitment.report,state:0
 #: model:hr.recruitment.stage,name:hr_recruitment.stage_job6
 msgid "Refused"
-msgstr ""
+msgstr "不採用"
 
 #. module: hr_recruitment
 #: code:addons/hr_recruitment/hr_recruitment.py:414
 #, python-format
 msgid "Applicant '%s' is being hired."
-msgstr ""
+msgstr "応募者  '%s' は採用確定"
 
 #. module: hr_recruitment
 #: selection:hr.applicant,state:0 view:hr.recruitment.report:0
 #: selection:hr.recruitment.report,state:0
 msgid "Hired"
-msgstr ""
+msgstr "採用"
 
 #. module: hr_recruitment
 #: selection:hr.applicant,priority:0
 #: selection:hr.recruitment.report,priority:0
 msgid "On Average"
-msgstr ""
+msgstr "平均"
 
 #. module: hr_recruitment
 #: model:ir.model,name:hr_recruitment.model_hr_recruitment_degree
 msgid "Degree of Recruitment"
-msgstr ""
+msgstr "採用の度合い"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0
 msgid "Open Jobs"
-msgstr ""
+msgstr "募集中の仕事"
 
 #. module: hr_recruitment
 #: selection:hr.recruitment.report,month:0
 msgid "February"
-msgstr ""
+msgstr "2月"
 
 #. module: hr_recruitment
 #: field:hr.applicant,name:0 field:hr.recruitment.degree,name:0
 #: field:hr.recruitment.stage,name:0
 msgid "Name"
-msgstr ""
+msgstr "名前"
 
 #. module: hr_recruitment
 #: view:hr.applicant:0
 msgid "Edit"
-msgstr ""
+msgstr "編集"
 
 #. module: hr_recruitment
 #: model:hr.recruitment.stage,name:hr_recruitment.stage_job3
 msgid "Second Interview"
-msgstr ""
+msgstr "2回目の面接"
 
 #. module: hr_recruitment
 #: model:ir.model,name:hr_recruitment.model_hr_recruitment_partner_create
 msgid "Create Partner from job application"
-msgstr ""
+msgstr "応募の中からパートナを作る"
 
 #. module: hr_recruitment
 #: selection:hr.recruitment.report,month:0
 msgid "April"
-msgstr ""
+msgstr "4月"
 
 #. module: hr_recruitment
 #: view:hr.recruitment.report:0
 msgid "Pending recruitment"
-msgstr ""
+msgstr "採用保留"
 
 #. module: hr_recruitment
 #: model:hr.recruitment.source,name:hr_recruitment.source_monster
 msgid "Monster"
-msgstr ""
+msgstr "強力な候補"
 
 #. module: hr_recruitment
 #: model:ir.ui.menu,name:hr_recruitment.menu_hr_job
 msgid "Job Positions"
-msgstr ""
+msgstr "職位"
 
 #. module: hr_recruitment
 #: view:hr.recruitment.report:0
 msgid "In progress recruitment"
-msgstr ""
+msgstr "進行中の採用"
 
 #. module: hr_recruitment
 #: sql_constraint:hr.job:0
 msgid "The name of the job position must be unique per company!"
-msgstr ""
+msgstr "職位名は会社ごとにユニークでなければいけません。"
 
 #. module: hr_recruitment
 #: field:hr.recruitment.degree,sequence:0
 #: field:hr.recruitment.stage,sequence:0
 msgid "Sequence"
-msgstr ""
+msgstr "順序"
 
 #. module: hr_recruitment
 #: model:hr.recruitment.degree,name:hr_recruitment.degree_bachelor
 msgid "Bachelor Degree"
-msgstr ""
+msgstr "学士"
 
 #. module: hr_recruitment
 #: field:hr.recruitment.job2phonecall,user_id:0
 msgid "Assign To"
-msgstr ""
+msgstr "割当て"
 
 #. module: hr_recruitment
 #: code:addons/hr_recruitment/hr_recruitment.py:407
 #, python-format
 msgid "The job request '%s' has been set 'in progress'."
-msgstr ""
+msgstr "仕事の要求 '%s' は進行中に設定されました。"
 
 #. module: hr_recruitment
 #: help:hr.applicant,salary_proposed_extra:0
 msgid "Salary Proposed by the Organisation, extra advantages"
-msgstr ""
+msgstr "会社が希望の給与、追加の利点"
 
 #. module: hr_recruitment
 #: help:hr.recruitment.report,delay_close:0
 #: help:hr.recruitment.report,delay_open:0
 msgid "Number of Days to close the project issue"
-msgstr ""
+msgstr "プロジェクトが終了するまでの日数"
 
 #. module: hr_recruitment
 #: field:hr.applicant,survey:0
 msgid "Survey"
-msgstr ""
+msgstr "調査"
