@@ -7,19 +7,19 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 01:37+0100\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: OpenERP Administrators <Unknown>\n"
+"PO-Revision-Date: 2012-04-18 09:11+0000\n"
+"Last-Translator: ThinkOpen Solutions <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-02-18 06:18+0000\n"
-"X-Generator: Launchpad (build 14814)\n"
+"X-Launchpad-Export-Date: 2012-04-18 09:12+0000\n"
+"X-Generator: Launchpad (build 15108)\n"
 
 #. module: account_voucher
 #: view:sale.receipt.report:0
 msgid "last month"
-msgstr ""
+msgstr "mês anterior"
 
 #. module: account_voucher
 #: view:account.voucher.unreconcile:0
@@ -45,7 +45,7 @@ msgstr "Montante total"
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Open Customer Journal Entries"
-msgstr ""
+msgstr "Aberto ao Cliente Diário entradas"
 
 #. module: account_voucher
 #: code:addons/account_voucher/account_voucher.py:1063
@@ -53,6 +53,8 @@ msgstr ""
 msgid ""
 "You have to configure account base code and account tax code on the '%s' tax!"
 msgstr ""
+"Tem que configurar o código da conta base e código da conta imposto sobre "
+"'%s' imposto!"
 
 #. module: account_voucher
 #: view:account.voucher:0 view:sale.receipt.report:0
@@ -63,7 +65,7 @@ msgstr "Agrupar por..."
 #: code:addons/account_voucher/account_voucher.py:797
 #, python-format
 msgid "Cannot delete Voucher(s) which are already opened or paid !"
-msgstr ""
+msgstr "Não pode apagar Vale(s) que estão abertos ou pagos!"
 
 #. module: account_voucher
 #: view:account.voucher:0
@@ -74,7 +76,7 @@ msgstr "Fornecedor"
 #: view:account.voucher:0
 #: model:ir.actions.act_window,name:account_voucher.act_pay_bills
 msgid "Bill Payment"
-msgstr ""
+msgstr "Pagamento de Contas"
 
 #. module: account_voucher
 #: view:account.statement.from.invoice.lines:0
@@ -82,7 +84,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:account_voucher.action_view_account_statement_from_invoice_lines
 #, python-format
 msgid "Import Entries"
-msgstr ""
+msgstr "Importar entradas"
 
 #. module: account_voucher
 #: model:ir.model,name:account_voucher.model_account_voucher_unreconcile
@@ -92,7 +94,7 @@ msgstr ""
 #. module: account_voucher
 #: selection:sale.receipt.report,month:0
 msgid "March"
-msgstr ""
+msgstr "Março"
 
 #. module: account_voucher
 #: model:ir.actions.act_window,help:account_voucher.action_sale_receipt
@@ -102,11 +104,15 @@ msgid ""
 "automatically and you can record the customer payment related to this sales "
 "receipt."
 msgstr ""
+"Quando vende artigos para um cliente, pode dar-lhe um recibo de venda ou uma "
+"fatura. Quando o recibo de venda for confirmado, ele cria items diários "
+"automaticamente e pode gravar o pagamento do cliente relacionado a este "
+"recibo de venda."
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Pay Bill"
-msgstr ""
+msgstr "Pagar conta"
 
 #. module: account_voucher
 #: field:account.voucher,company_id:0 field:account.voucher.line,company_id:0
@@ -122,12 +128,12 @@ msgstr "Definir para Rascunho"
 #. module: account_voucher
 #: help:account.voucher,reference:0
 msgid "Transaction reference number."
-msgstr ""
+msgstr "Número de referência da transação."
 
 #. module: account_voucher
 #: view:sale.receipt.report:0
 msgid "Group by year of Invoice Date"
-msgstr ""
+msgstr "Agrupar por ano da data de fatura"
 
 #. module: account_voucher
 #: model:ir.actions.act_window,name:account_voucher.action_view_account_voucher_unreconcile
@@ -137,7 +143,7 @@ msgstr ""
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Voucher Statistics"
-msgstr ""
+msgstr "Estatísticas do voucher"
 
 #. module: account_voucher
 #: view:account.voucher:0
@@ -147,12 +153,12 @@ msgstr "Validar"
 #. module: account_voucher
 #: view:sale.receipt.report:0 field:sale.receipt.report,day:0
 msgid "Day"
-msgstr ""
+msgstr "Dia"
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Search Vouchers"
-msgstr ""
+msgstr "Pesquisar vouchers"
 
 #. module: account_voucher
 #: field:account.voucher,writeoff_acc_id:0
@@ -173,23 +179,23 @@ msgstr "Débitos"
 #. module: account_voucher
 #: view:account.statement.from.invoice.lines:0
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 #. module: account_voucher
 #: field:account.voucher.line,reconcile:0
 msgid "Full Reconcile"
-msgstr ""
+msgstr "Reconciliar completo"
 
 #. module: account_voucher
 #: field:account.voucher,date_due:0 field:account.voucher.line,date_due:0
 #: view:sale.receipt.report:0 field:sale.receipt.report,date_due:0
 msgid "Due Date"
-msgstr ""
+msgstr "Data da Dívida"
 
 #. module: account_voucher
 #: field:account.voucher,narration:0
 msgid "Notes"
-msgstr ""
+msgstr "Notas"
 
 #. module: account_voucher
 #: model:ir.actions.act_window,help:account_voucher.action_vendor_receipt
@@ -200,6 +206,11 @@ msgid ""
 "to you automatically the reconciliation of this payment with the open "
 "invoices or sales receipts."
 msgstr ""
+"Pagamento de Vendas permite registar os pagamentos que recebe dos seus "
+"clientes. A fim de registar um pagamento, deve digitar o do cliente, o "
+"método de pagamento (= a diário) e o valor do pagamento. OpenERP irá propor-"
+"lhe automaticamente a reconciliação deste com o pagamento das faturas em "
+"aberto ou recibos de vendas."
 
 #. module: account_voucher
 #: selection:account.voucher,type:0 selection:sale.receipt.report,type:0
@@ -209,7 +220,7 @@ msgstr "Venda"
 #. module: account_voucher
 #: field:account.voucher.line,move_line_id:0
 msgid "Journal Item"
-msgstr ""
+msgstr "Item diário"
 
 #. module: account_voucher
 #: field:account.voucher,is_multi_currency:0
