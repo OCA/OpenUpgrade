@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-04-18 09:12+0000\n"
+"X-Launchpad-Export-Date: 2012-04-19 05:04+0000\n"
 "X-Generator: Launchpad (build 15108)\n"
 
 #. module: hr_holidays
@@ -127,6 +127,8 @@ msgid ""
 "the employee. You can define several allowance types (paid holidays, "
 "sickness, etc.) and manage allowances per type."
 msgstr ""
+"従業員が休暇申請を記録して、マネジャが承認します。休暇が承認されると、それは自動的に従業員の予定に表示されます。休暇タイプ（有給休暇、病欠など）をいくつか"
+"定義して、タイプごとに休暇を管理できます。"
 
 #. module: hr_holidays
 #: model:ir.actions.report.xml,name:hr_holidays.report_holidays_summary
@@ -166,6 +168,10 @@ msgid ""
 "  \n"
 "The state is 'Approved', when holiday request is approved by manager."
 msgstr ""
+"休暇の申請が作られると、それは「草案」状態に設定されます。　　　　　　　　\n"
+"ユーザが休暇申請を確認すると、それは「承認待ち」状態になります。　　　　\n"
+"マネジャが休暇申請を拒否すると、それは「拒否」状態になります。\n"
+"マネジャが休暇申請を承認すると、それは「承認」状態になります。"
 
 #. module: hr_holidays
 #: view:board.board:0
@@ -345,7 +351,7 @@ msgstr "小麦色"
 #. module: hr_holidays
 #: constraint:resource.calendar.leaves:0
 msgid "Error! leave start-date must be lower then leave end-date."
-msgstr "エラー。休暇開始日は休暇終了日の前でなければいけません。"
+msgstr "エラー：休暇開始日は休暇終了日の前でなければいけません。"
 
 #. module: hr_holidays
 #: code:addons/hr_holidays/hr_holidays.py:382
@@ -371,6 +377,9 @@ msgid ""
 "Requests' located in 'Human Resources \\ Leaves' to manage the leave days of "
 "the employees if the configuration does not allow to use this field."
 msgstr ""
+"「法定休暇の残り」の機能は、休暇タイプが１つだけであり、「限度を無効にする」が指定されていない場合(%s "
+"がある)にだけ、使うことができます。さもないと、どの休暇タイプを更新したのか不明になります。\n"
+"もし、従業員の休暇を管理するためにこの項目を使うことができないならば、人材/休暇にある以前のメニュー「休暇申請」と「割当て要求」を使ってください。"
 
 #. module: hr_holidays
 #: view:hr.holidays.status:0
@@ -532,7 +541,7 @@ msgstr "承認すべき休暇"
 #. module: hr_holidays
 #: constraint:hr.employee:0
 msgid "Error ! You cannot create recursive Hierarchy of Employees."
-msgstr "エラー。従業員の反復した階層構造を作ることはできません。"
+msgstr "エラー：従業員の反復した階層構造を作ることはできません。"
 
 #. module: hr_holidays
 #: view:hr.employee:0 field:hr.employee,remaining_leaves:0
@@ -705,7 +714,7 @@ msgstr "日数は0 より大きくなければいけません。"
 msgid ""
 "By Employee: Allocation/Request for individual Employee, By Employee "
 "Category: Allocation/Request for group of employees in category"
-msgstr ""
+msgstr "従業員別：従業員への割当て/申請，従業員カテゴリ：カテゴリ内の従業員グループへの割当て/申請"
 
 #. module: hr_holidays
 #: code:addons/hr_holidays/hr_holidays.py:199
@@ -753,7 +762,7 @@ msgstr "病欠"
 msgid ""
 "If you tick this checkbox, the system will allow, for this section, the "
 "employees to take more leaves than the available ones."
-msgstr ""
+msgstr "このボックスをチェックすると、従業員はこの部分について有効な休暇よりも多くの休暇を取ることができます。"
 
 #. module: hr_holidays
 #: help:hr.holidays.status,leaves_taken:0
@@ -772,7 +781,7 @@ msgstr "スミレ色"
 msgid ""
 "You can assign remaining Legal Leaves for each employee, OpenERP will "
 "automatically create and validate allocation requests."
-msgstr ""
+msgstr "残りの法定休暇を各従業員に割り当てることができます。OpenERPが自動的に割当て要求を作成します。"
 
 #. module: hr_holidays
 #: field:hr.holidays.status,max_leaves:0
@@ -784,7 +793,7 @@ msgstr "最大許容数"
 msgid ""
 "This area is automaticly filled by the user who validate the leave with "
 "second level (If Leave type need second validation)"
-msgstr ""
+msgstr "この部分は、休暇を承認をする第２レベルのユーザによって自動的に入力されます（休暇タイプが第２レベルんの承認が必要な場合）。"
 
 #. module: hr_holidays
 #: view:hr.holidays:0

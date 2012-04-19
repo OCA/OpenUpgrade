@@ -14,13 +14,13 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-04-18 09:12+0000\n"
+"X-Launchpad-Export-Date: 2012-04-19 05:04+0000\n"
 "X-Generator: Launchpad (build 15108)\n"
 
 #. module: idea
 #: help:idea.category,visibility:0
 msgid "If True creator of the idea will be visible to others"
-msgstr "正しければ、アイディアの創案者は他にも見えるでしょう。"
+msgstr "正しければ、アイデアの創案者は他にも見えるでしょう。"
 
 #. module: idea
 #: view:idea.idea:0
@@ -30,7 +30,7 @@ msgstr "状態別"
 #. module: idea
 #: model:ir.actions.act_window,name:idea.action_idea_select
 msgid "Idea select"
-msgstr "アイディアの選択"
+msgstr "アイデアの選択"
 
 #. module: idea
 #: view:idea.idea:0
@@ -54,7 +54,7 @@ msgstr "投票する。"
 #: model:ir.actions.act_window,name:idea.action_report_vote_all
 #: model:ir.ui.menu,name:idea.menu_report_vote_all
 msgid "Ideas Analysis"
-msgstr "アイディア分析"
+msgstr "アイデア分析"
 
 #. module: idea
 #: view:idea.category:0
@@ -72,13 +72,13 @@ msgstr "3月"
 #. module: idea
 #: view:idea.idea:0
 msgid "Accepted Ideas"
-msgstr "受理されたアイディア"
+msgstr "受理されたアイデア"
 
 #. module: idea
 #: code:addons/idea/wizard/idea_post_vote.py:94
 #, python-format
 msgid "Idea must be in 'Open' state before vote for that idea."
-msgstr "アイディアに投票する前に、そのアイディアはオープン状態になければなりません。"
+msgstr "アイデアに投票する前に、そのアイデアはオープン状態になければなりません。"
 
 #. module: idea
 #: view:report.vote:0
@@ -122,7 +122,7 @@ msgstr "キャンセルされました。"
 #. module: idea
 #: view:idea.category:0
 msgid "Category of ideas"
-msgstr "アイディアのカテゴリー"
+msgstr "アイデアのカテゴリー"
 
 #. module: idea
 #: code:addons/idea/idea.py:274
@@ -140,7 +140,7 @@ msgstr "あなたのコメント"
 #. module: idea
 #: model:ir.model,name:idea.model_idea_vote
 msgid "Idea Vote"
-msgstr "アイディア投票"
+msgstr "アイデア投票"
 
 #. module: idea
 #: field:idea.category,parent_id:0
@@ -158,7 +158,7 @@ msgstr "無効"
 #. module: idea
 #: view:idea.vote:0
 msgid "Ideas vote"
-msgstr "アイディア投票"
+msgstr "アイデア投票"
 
 #. module: idea
 #: view:report.vote:0
@@ -170,22 +170,22 @@ msgstr "行数"
 #: code:addons/idea/wizard/idea_post_vote.py:91
 #, python-format
 msgid "You can not give Vote for this idea more than %s times"
-msgstr "このアイディアに %s 回以上、投票することはできません。"
+msgstr "このアイデアに %s 回以上、投票することはできません。"
 
 #. module: idea
 #: view:idea.category:0
 msgid "Ideas Categories"
-msgstr "アイディアカテゴリー"
+msgstr "アイデアカテゴリー"
 
 #. module: idea
 #: help:idea.idea,description:0
 msgid "Content of the idea"
-msgstr "アイディアの内容"
+msgstr "アイデアの内容"
 
 #. module: idea
 #: model:ir.model,name:idea.model_idea_category
 msgid "Idea Category"
-msgstr "アイディアカテゴリー"
+msgstr "アイデアカテゴリー"
 
 #. module: idea
 #: view:idea.idea:0
@@ -209,7 +209,7 @@ msgstr "カテゴリーの名称はユニークでなければなりません。
 #. module: idea
 #: model:ir.model,name:idea.model_idea_select
 msgid "select idea"
-msgstr "アイディアを選んで下さい。"
+msgstr "アイデアを選んで下さい。"
 
 #. module: idea
 #: view:idea.stat:0
@@ -251,12 +251,12 @@ msgstr "良"
 #. module: idea
 #: help:idea.idea,open_date:0
 msgid "Date when an idea opened"
-msgstr "アイディアがオープンになった日付"
+msgstr "アイデアがオープンになった日付"
 
 #. module: idea
 #: view:idea.idea:0
 msgid "Idea Detail"
-msgstr "アイディアの詳細"
+msgstr "アイデアの詳細"
 
 #. module: idea
 #: help:idea.idea,state:0
@@ -265,27 +265,30 @@ msgid ""
 " It is             opened by the user, the state is 'Opened'.            \n"
 "If the idea is accepted, the state is 'Accepted'."
 msgstr ""
+"アイデアを提案すると、それは「草案」状態になります。\n"
+"ユーザがそれを開くと、「オープン」状態になります。\n"
+"アイデアが受理されると、「受理」状態になります。"
 
 #. module: idea
 #: view:idea.idea:0
 msgid "New Ideas"
-msgstr "新しいアイディア"
+msgstr "新しいアイデア"
 
 #. module: idea
 #: view:report.vote:0
 msgid "Idea Vote created last month"
-msgstr "アイディアの投票は先月、作られました。"
+msgstr "アイデアの投票は先月、作られました。"
 
 #. module: idea
 #: field:idea.category,visibility:0
 #: field:idea.idea,visibility:0
 msgid "Open Idea?"
-msgstr "オープンなアイディアですか？"
+msgstr "アイデアを開きますか？"
 
 #. module: idea
 #: view:report.vote:0
 msgid "Idea Vote created in current month"
-msgstr "アイディアの投票は今月、作られました。"
+msgstr "今月、提案されたアイデア"
 
 #. module: idea
 #: selection:report.vote,month:0
@@ -336,7 +339,7 @@ msgstr "ユーザ別の最大投票数"
 #. module: idea
 #: view:idea.vote.stat:0
 msgid "vote_stat of ideas"
-msgstr "アイディアの投票統計"
+msgstr "アイデアの投票統計"
 
 #. module: idea
 #: field:idea.comment,content:0
@@ -368,7 +371,7 @@ msgstr "月"
 #: model:ir.actions.act_window,name:idea.action_idea_idea_categ_open
 #: model:ir.actions.act_window,name:idea.action_idea_idea_open
 msgid "Open Ideas"
-msgstr ""
+msgstr "アイデアを開く"
 
 #. module: idea
 #: view:idea.category:0
@@ -378,7 +381,7 @@ msgstr ""
 #: view:report.vote:0
 #: field:report.vote,category_id:0
 msgid "Category"
-msgstr ""
+msgstr "カテゴリー"
 
 #. module: idea
 #: selection:idea.idea,my_vote:0
@@ -386,44 +389,44 @@ msgstr ""
 #: selection:idea.vote,score:0
 #: selection:idea.vote.stat,score:0
 msgid "Very Good"
-msgstr ""
+msgstr "とても良い"
 
 #. module: idea
 #: selection:idea.idea,state:0
 #: selection:report.vote,idea_state:0
 msgid "Opened"
-msgstr ""
+msgstr "開かれた"
 
 #. module: idea
 #: model:ir.actions.act_window,name:idea.action_idea_vote
 msgid "Idea's Votes"
-msgstr ""
+msgstr "アイデアの投票"
 
 #. module: idea
 #: view:idea.idea:0
 msgid "By Idea Category"
-msgstr ""
+msgstr "アイデアのカテゴリー別"
 
 #. module: idea
 #: view:idea.idea:0
 msgid "New Idea"
-msgstr ""
+msgstr "新しいアイデア"
 
 #. module: idea
 #: model:ir.actions.act_window,name:idea.action_idea_category_tree
 #: model:ir.ui.menu,name:idea.menu_idea_category_tree
 msgid "Ideas by Categories"
-msgstr ""
+msgstr "カテゴリー別のアイデア"
 
 #. module: idea
 #: selection:report.vote,idea_state:0
 msgid "Draft"
-msgstr ""
+msgstr "草案"
 
 #. module: idea
 #: selection:report.vote,month:0
 msgid "August"
-msgstr ""
+msgstr "8月"
 
 #. module: idea
 #: selection:idea.idea,my_vote:0
@@ -431,23 +434,23 @@ msgstr ""
 #: selection:idea.vote,score:0
 #: selection:idea.vote.stat,score:0
 msgid "Normal"
-msgstr ""
+msgstr "通常"
 
 #. module: idea
 #: selection:report.vote,month:0
 msgid "June"
-msgstr ""
+msgstr "6月"
 
 #. module: idea
 #: field:report.vote,creater_id:0
 #: field:report.vote,user_id:0
 msgid "User Name"
-msgstr ""
+msgstr "ユーザ名"
 
 #. module: idea
 #: model:ir.model,name:idea.model_idea_vote_stat
 msgid "Idea Votes Statistics"
-msgstr ""
+msgstr "アイデア投票の統計"
 
 #. module: idea
 #: field:idea.comment,user_id:0
@@ -455,117 +458,117 @@ msgstr ""
 #: field:idea.vote,user_id:0
 #: view:report.vote:0
 msgid "User"
-msgstr ""
+msgstr "ユーザ"
 
 #. module: idea
 #: field:idea.vote,date:0
 msgid "Date"
-msgstr ""
+msgstr "日付"
 
 #. module: idea
 #: selection:report.vote,month:0
 msgid "November"
-msgstr ""
+msgstr "11月"
 
 #. module: idea
 #: field:idea.idea,my_vote:0
 msgid "My Vote"
-msgstr ""
+msgstr "私の投票"
 
 #. module: idea
 #: selection:report.vote,month:0
 msgid "October"
-msgstr ""
+msgstr "10月"
 
 #. module: idea
 #: field:idea.comment,create_date:0
 #: field:idea.idea,created_date:0
 msgid "Creation date"
-msgstr ""
+msgstr "作成日"
 
 #. module: idea
 #: selection:report.vote,month:0
 msgid "January"
-msgstr ""
+msgstr "1月"
 
 #. module: idea
 #: model:ir.model,name:idea.model_idea_idea
 msgid "idea.idea"
-msgstr ""
+msgstr "idea.idea"
 
 #. module: idea
 #: field:idea.category,summary:0
 msgid "Summary"
-msgstr ""
+msgstr "要約"
 
 #. module: idea
 #: field:idea.idea,name:0
 msgid "Idea Summary"
-msgstr ""
+msgstr "アイデアの要約"
 
 #. module: idea
 #: view:idea.post.vote:0
 msgid "Post"
-msgstr ""
+msgstr "投稿"
 
 #. module: idea
 #: view:idea.idea:0
 msgid "History"
-msgstr ""
+msgstr "履歴"
 
 #. module: idea
 #: field:report.vote,date:0
 msgid "Date Order"
-msgstr ""
+msgstr "日付順"
 
 #. module: idea
 #: view:idea.idea:0
 #: field:idea.idea,user_id:0
 #: view:report.vote:0
 msgid "Creator"
-msgstr ""
+msgstr "作成者"
 
 #. module: idea
 #: view:idea.post.vote:0
 #: model:ir.ui.menu,name:idea.menu_give_vote
 msgid "Give Vote"
-msgstr ""
+msgstr "投票する"
 
 #. module: idea
 #: help:idea.idea,vote_limit:0
 msgid "Set to one if  you require only one Vote per user"
-msgstr ""
+msgstr "ユーザ当り1票とするのであれば 1 を設定して下さい。"
 
 #. module: idea
 #: view:idea.idea:0
 msgid "By Creators"
-msgstr ""
+msgstr "作成者別"
 
 #. module: idea
 #: view:idea.post.vote:0
 msgid "Cancel"
-msgstr ""
+msgstr "キャンセル"
 
 #. module: idea
 #: view:idea.select:0
 msgid "Close"
-msgstr ""
+msgstr "締める"
 
 #. module: idea
 #: view:idea.idea:0
 msgid "Open"
-msgstr ""
+msgstr "開く"
 
 #. module: idea
 #: view:idea.idea:0
 #: view:report.vote:0
 msgid "In Progress"
-msgstr ""
+msgstr "進行中"
 
 #. module: idea
 #: view:report.vote:0
 msgid "Idea Vote Analysis"
-msgstr ""
+msgstr "アイデアの投票分析"
 
 #. module: idea
 #: view:idea.idea:0
@@ -574,101 +577,101 @@ msgstr ""
 #: model:ir.ui.menu,name:idea.menu_ideas
 #: model:ir.ui.menu,name:idea.menu_ideas1
 msgid "Ideas"
-msgstr ""
+msgstr "アイデア"
 
 #. module: idea
 #: model:ir.model,name:idea.model_idea_post_vote
 msgid "Post vote"
-msgstr ""
+msgstr "投票する"
 
 #. module: idea
 #: field:idea.vote.stat,score:0
 #: field:report.vote,score:0
 msgid "Score"
-msgstr ""
+msgstr "スコア"
 
 #. module: idea
 #: view:idea.idea:0
 msgid "Votes Statistics"
-msgstr ""
+msgstr "投票統計"
 
 #. module: idea
 #: view:idea.vote:0
 msgid "Comments:"
-msgstr ""
+msgstr "コメント:"
 
 #. module: idea
 #: view:idea.category:0
 #: field:idea.idea,description:0
 #: field:idea.post.vote,note:0
 msgid "Description"
-msgstr ""
+msgstr "詳細"
 
 #. module: idea
 #: selection:report.vote,month:0
 msgid "May"
-msgstr ""
+msgstr "5月"
 
 #. module: idea
 #: selection:idea.idea,state:0
 #: view:report.vote:0
 msgid "Refused"
-msgstr ""
+msgstr "不採用"
 
 #. module: idea
 #: view:idea.vote:0
 msgid "Vote date"
-msgstr ""
+msgstr "投票日"
 
 #. module: idea
 #: selection:report.vote,month:0
 msgid "February"
-msgstr ""
+msgstr "2月"
 
 #. module: idea
 #: field:idea.category,complete_name:0
 msgid "Name"
-msgstr ""
+msgstr "氏名"
 
 #. module: idea
 #: field:idea.vote.stat,nbr:0
 msgid "Number of Votes"
-msgstr ""
+msgstr "投票数"
 
 #. module: idea
 #: view:report.vote:0
 msgid "Month-1"
-msgstr ""
+msgstr "月-1"
 
 #. module: idea
 #: selection:report.vote,month:0
 msgid "April"
-msgstr ""
+msgstr "4月"
 
 #. module: idea
 #: field:idea.idea,count_comments:0
 msgid "Count of comments"
-msgstr ""
+msgstr "コメントの数"
 
 #. module: idea
 #: field:idea.vote,score:0
 msgid "Vote Status"
-msgstr ""
+msgstr "投票状況"
 
 #. module: idea
 #: view:report.vote:0
 msgid "Idea Vote created in current year"
-msgstr ""
+msgstr "今年のアイデア投票"
 
 #. module: idea
 #: field:idea.idea,vote_avg:0
 msgid "Average Score"
-msgstr ""
+msgstr "平均スコア"
 
 #. module: idea
 #: constraint:idea.category:0
 msgid "Error ! You cannot create recursive categories."
-msgstr ""
+msgstr "エラー：再帰カテゴリーを作成することはできません。"
 
 #. module: idea
 #: field:idea.comment,idea_id:0
@@ -680,31 +683,31 @@ msgstr ""
 #: view:report.vote:0
 #: field:report.vote,idea_id:0
 msgid "Idea"
-msgstr ""
+msgstr "アイデア"
 
 #. module: idea
 #: view:idea.idea:0
 msgid "Accept"
-msgstr ""
+msgstr "受理"
 
 #. module: idea
 #: field:idea.post.vote,vote:0
 msgid "Post Vote"
-msgstr ""
+msgstr "投票する。"
 
 #. module: idea
 #: view:report.vote:0
 #: field:report.vote,year:0
 msgid "Year"
-msgstr ""
+msgstr "年"
 
 #. module: idea
 #: code:addons/idea/idea.py:274
 #, python-format
 msgid "You can not vote on a Draft/Accepted/Cancelled ideas."
-msgstr ""
+msgstr "草案 / 受理済み / キャンセルされたアイデアに投票することはできません。"
 
 #. module: idea
 #: view:idea.select:0
 msgid "Select Idea for Vote"
-msgstr ""
+msgstr "投票するアイデアを選んで下さい。"
