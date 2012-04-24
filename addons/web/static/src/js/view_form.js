@@ -986,13 +986,18 @@ instance.web.form.FormRenderingEngine = instance.web.Class.extend({
             return $tag;
         }
     },
-    process_sheet: function() {
-        this.process_form.apply(this, arguments);
+    process_sheet: function($sheet, layout) {
+        var $new_sheet = this.render_element('FormRenderingSheet', layout, $sheet.getAttributes());
+        this.handle_common_properties($new_sheet, $sheet);
+        var $dst = (layout === 'auto') ? $new_sheet.find('group:first') : $new_sheet.find('.oe_form_sheet');
+        $sheet.children().appendTo($dst);
+        $sheet.before($new_sheet).remove();
+        this.process($new_sheet, layout);
     },
     process_form: function($form, layout) {
         var $new_form = this.render_element('FormRenderingForm', layout, $form.getAttributes());
+        this.handle_common_properties($new_form, $form);
         var $dst = (layout === 'auto') ? $new_form.find('group:first') : $new_form;
-        $new_form.attr("modifiers", $form.attr("modifiers"));
         $form.children().appendTo($dst);
         if ($form[0] === this.$form[0]) {
             // If root element, replace it
@@ -1000,7 +1005,7 @@ instance.web.form.FormRenderingEngine = instance.web.Class.extend({
         } else {
             $form.before($new_form).remove();
         }
-        this.process($new_form);
+        this.process($new_form, layout);
     },
     preprocess_field: function($field) {
         var self = this;
@@ -1110,7 +1115,7 @@ instance.web.form.FormRenderingEngine = instance.web.Class.extend({
                         break;
                     case 'label':
                         if ($child.attr('for')) {
-                            $td.attr('width', '1%');
+                            $td.attr('width', '1%').addClass('oe_form_group_cell_label');
                             row_cols--;
                             total--;
                         }
@@ -1416,7 +1421,7 @@ instance.web.form.Widget = instance.web.Widget.extend(_.extend({}, instance.web.
                 opacity: 0.85,
                 trigger: 'hover'
             }, options || {});
-        trigger.tipsy(options);
+        $(trigger).tipsy(options);
     },
     _build_view_fields_values: function(blacklist) {
         var a_dataset = this.view.dataset;
@@ -1704,7 +1709,7 @@ instance.web.form.AbstractField = instance.web.form.Widget.extend(/** @lends ins
             }, this));
         }
         if (instance.connection.debug) {
-            this.do_attach_tooltip(this, this.$element);
+            this.do_attach_tooltip(this, this.view.$element.find('label[for=' + this.id_for_label + ']')[0] || this.$element);
         }
         if (!this.disable_utility_classes) {
             var set_required = function() {
@@ -2072,7 +2077,6 @@ instance.web.form.FieldText = instance.web.form.AbstractField.extend(_.extend({}
     template: 'FieldText',
     initialize_content: function() {
         this.$textarea = this.$element.find('textarea');
-        this.resized = false;
         if (!this.get("effective_readonly")) {
             this.$textarea.change(_.bind(function() {
                 this.set({'value': instance.web.parse_value(this.$textarea.val(), this)});
@@ -2088,9 +2092,8 @@ instance.web.form.FieldText = instance.web.form.AbstractField.extend(_.extend({}
     render_value: function() {
         var show_value = instance.web.format_value(this.get('value'), this, '');
         this.$textarea.val(show_value);
-        if (!this.resized && this.view.options.resize_textareas) {
+        if (show_value && this.view.options.resize_textareas) {
             this.do_resize(this.view.options.resize_textareas);
-            this.resized = true;
         }
     },
     is_syntax_valid: function() {
