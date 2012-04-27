@@ -1149,11 +1149,16 @@ $colour4: #8a89ba
     // }}}
     // FormView.label {{{
     .oe_form
-        label
-            font-weight: bold
         .oe_form_label_help[for], .oe_form_label[for]
             white-space: nowrap
             padding-right: 8px
+            span
+                font-size: 80%
+                color: darkGreen
+                vertical-align: top
+                position: relative
+                top: -4px
+                padding: 0 2px
     // }}}
     // FormView.fields {{{
     .oe_form
@@ -1383,10 +1388,9 @@ $colour4: #8a89ba
             label
                 display: block
                 min-width: 120px
-        .oe_form_group_odd_border > tbody > tr.oe_form_group_row > td.oe_form_group_cell:nth-child(even),
-        .oe_form_group_label_border > tbody > tr.oe_form_group_row > td.oe_form_group_cell:not(:first-child)
-            padding-left: 8px
-
+        .oe_form_group_odd_border > tbody > tr.oe_form_group_row > td.oe_form_group_cell,
+        .oe_form_group_label_border > tbody > tr.oe_form_group_row > td.oe_form_group_cell
+            padding: 2px 2px 2px 8px !important
     // }}}
     // ListView {{{
     .oe_listview_nocontent
@@ -1534,6 +1538,15 @@ $colour4: #8a89ba
             outline: 1px solid blue
         .oe_form_group:hover, .oe_form_group_cell:hover
             outline-color: red
+        .oe_form_group_row_incomplete > td:last-child:after
+            content: "[Incomplete Row]"
+            background: red
+            padding: 2px
+            font-weight: bold
+            color: white
+            float: right
+        .oe_form_group_row_incomplete.oe_form_group_row_newline > td:last-child:after
+            content: "[newline]"
 
     .oe_debug_view
         float: left

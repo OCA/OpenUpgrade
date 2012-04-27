@@ -1394,12 +1394,17 @@
 .openerp .oe_form_autolayout .oe_form_group_cell.oe_form_group_nested {
   padding: 0;
 }
-.openerp .oe_form label {
-  font-weight: bold;
-}
 .openerp .oe_form .oe_form_label_help[for], .openerp .oe_form .oe_form_label[for] {
   white-space: nowrap;
   padding-right: 8px;
+}
+.openerp .oe_form .oe_form_label_help[for] span, .openerp .oe_form .oe_form_label[for] span {
+  font-size: 80%;
+  color: darkGreen;
+  vertical-align: top;
+  position: relative;
+  top: -4px;
+  padding: 0 2px;
 }
 .openerp .oe_form textarea {
   resize: vertical;
@@ -1643,9 +1648,9 @@
   display: block;
   min-width: 120px;
 }
-.openerp .oe_form .oe_form_group_odd_border > tbody > tr.oe_form_group_row > td.oe_form_group_cell:nth-child(even),
-.openerp .oe_form .oe_form_group_label_border > tbody > tr.oe_form_group_row > td.oe_form_group_cell:not(:first-child) {
-  padding-left: 8px;
+.openerp .oe_form .oe_form_group_odd_border > tbody > tr.oe_form_group_row > td.oe_form_group_cell,
+.openerp .oe_form .oe_form_group_label_border > tbody > tr.oe_form_group_row > td.oe_form_group_cell {
+  padding: 2px 2px 2px 8px !important;
 }
 .openerp .oe_listview_nocontent > img {
   float: left;
@@ -1832,6 +1837,17 @@
 }
 .openerp .oe_layout_debugging .oe_form_group:hover, .openerp .oe_layout_debugging .oe_form_group_cell:hover {
   outline-color: red;
+}
+.openerp .oe_layout_debugging .oe_form_group_row_incomplete > td:last-child:after {
+  content: "[Incomplete Row]";
+  background: red;
+  padding: 2px;
+  font-weight: bold;
+  color: white;
+  float: right;
+}
+.openerp .oe_layout_debugging .oe_form_group_row_incomplete.oe_form_group_row_newline > td:last-child:after {
+  content: "[newline]";
 }
 .openerp .oe_debug_view {
   float: left;

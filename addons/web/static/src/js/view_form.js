@@ -720,7 +720,7 @@ instance.web.FormView = instance.web.View.extend({
     },
     get_widgets: function() {
         return _.filter(this.getChildren(), function(obj) {
-            return obj instanceof instance.web.form.Widget;
+            return obj instanceof instance.web.form.FormWidget;
         });
     },
     get_fields_values: function(blacklist) {
@@ -1068,10 +1068,18 @@ instance.web.form.FormRenderingEngine = instance.web.Class.extend({
 
         var children = [];
         $group.children().each(function(a,b,c) {
-            var $child = $(this),
-                colspan = parseInt($child.attr('colspan') || 1, 10),
-                tagName = $child[0].tagName.toLowerCase();
-            if (tagName === 'newline') {
+            var $child = $(this);
+            var colspan = parseInt($child.attr('colspan') || 1, 10);
+            var tagName = $child[0].tagName.toLowerCase();
+            var $td = $('<td/>').addClass('oe_form_group_cell').attr('colspan', colspan);
+            var newline = tagName === 'newline';
+            if ($tr && row_cols > 0 && (newline || row_cols < colspan)) {
+                $tr.addClass('oe_form_group_row_incomplete');
+                if (newline) {
+                    $tr.addClass('oe_form_group_row_newline');
+                }
+            }
+            if (newline) {
                 $tr = null;
                 return;
             }
@@ -1081,7 +1089,6 @@ instance.web.form.FormRenderingEngine = instance.web.Class.extend({
             }
             row_cols -= colspan;
 
-            $td = $('<td/>').addClass('oe_form_group_cell').attr('colspan', colspan);
             // invisibility transfer
             var field_modifiers = JSON.parse($child.attr('modifiers') || '{}');
             var invisible = field_modifiers.invisible;
@@ -1138,11 +1145,13 @@ instance.web.form.FormRenderingEngine = instance.web.Class.extend({
                 }
             });
             var unit = Math.floor(total / row_cols);
-            _.each(to_compute, function($td, i) {
-                var width = parseInt($td.attr('colspan'), 10) * unit;
-                $td.attr('width', ((i == to_compute.length - 1) ? total : width) + '%');
-                total -= width;
-            });
+            if (!$(this).is('.oe_form_group_row_incomplete')) {
+                _.each(to_compute, function($td, i) {
+                    var width = parseInt($td.attr('colspan'), 10) * unit;
+                    $td.attr('width', ((i == to_compute.length - 1) ? total : width) + '%');
+                    total -= width;
+                });
+            }
         });
         _.each(children, function(el) {
             self.process($(el));
@@ -1211,6 +1220,7 @@ instance.web.form.FormRenderingEngine = instance.web.Class.extend({
         if (modifiers.invisible !== undefined)
             new instance.web.form.InvisibilityChanger(this.view, this.view, modifiers.invisible, $new_element);
         $new_element.addClass($node.attr("class") || "");
+        $new_element.attr('style', $node.attr('style'));
     },
 });
 
@@ -1360,9 +1370,9 @@ instance.web.form.InvisibilityChanger = instance.web.Class.extend(_.extend({}, i
     },
 }));
 
-instance.web.form.Widget = instance.web.Widget.extend(_.extend({}, instance.web.form.InvisibilityChangerMixin, {
+instance.web.form.FormWidget = instance.web.Widget.extend(_.extend({}, instance.web.form.InvisibilityChangerMixin, {
     /**
-     * @constructs instance.web.form.Widget
+     * @constructs instance.web.form.FormWidget
      * @extends instance.web.Widget
      *
      * @param view
@@ -1472,7 +1482,7 @@ instance.web.form.Widget = instance.web.Widget.extend(_.extend({}, instance.web.
     }
 }));
 
-instance.web.form.WidgetButton = instance.web.form.Widget.extend({
+instance.web.form.WidgetButton = instance.web.form.FormWidget.extend({
     template: 'WidgetButton',
     init: function(view, node) {
         this._super(view, node);
@@ -1668,10 +1678,10 @@ instance.web.form.FieldInterface = {
  *     a 'changed_value' event that inform the view to trigger on_changes.
  * 
  */
-instance.web.form.AbstractField = instance.web.form.Widget.extend(/** @lends instance.web.form.AbstractField# */{
+instance.web.form.AbstractField = instance.web.form.FormWidget.extend(/** @lends instance.web.form.AbstractField# */{
     /**
      * @constructs instance.web.form.AbstractField
-     * @extends instance.web.form.Widget
+     * @extends instance.web.form.FormWidget
      *
      * @param field_manager
      * @param node
