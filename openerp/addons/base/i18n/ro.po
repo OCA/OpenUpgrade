@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:44+0000\n"
-"PO-Revision-Date: 2012-04-29 19:57+0000\n"
+"PO-Revision-Date: 2012-04-30 16:44+0000\n"
 "Last-Translator: Fekete Mihai <mihai.fekete@etotalpc.ro>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-04-30 05:19+0000\n"
+"X-Launchpad-Export-Date: 2012-05-01 06:03+0000\n"
 "X-Generator: Launchpad (build 15171)\n"
 
 #. module: base
@@ -1901,7 +1901,7 @@ msgstr ""
 #. module: base
 #: model:res.country,name:base.kg
 msgid "Kyrgyz Republic (Kyrgyzstan)"
-msgstr "Kargastan"
+msgstr "Republica Kargaza (Kargastan)"
 
 #. module: base
 #: model:ir.model,name:base.model_wizard_ir_model_menu_create_line
@@ -1954,11 +1954,52 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"Validarea TVA pentru numerele TVA-ul Partenerului\n"
+"========================================\n"
+"\n"
+"Dupa instalarea acestui modul, valorile introduse in campul TVA al "
+"Partenerului vor\n"
+"fi validate pentru toate tarile acceptate. Tara este dedusa din codul\n"
+"de 2 litere care precede numarul TVA-ului, de exemplu ``BE0477472701``\n"
+"va fi validat folosind normele belgiene. \n"
+"\n"
+"Exista doua niveluri diferite ale validarii numarului TVA:\n"
+"\n"
+" * Implicit, fiind efectuata o simpla verificare offline folosind normele "
+"cunoscute de\n"
+"   validare ale tarii respective, de obicei o simpla verificare a cifrelor. "
+"Aceasta este rapida si \n"
+"   disponibila intotdeauna, dar permite numere care este posibil sa nu fie "
+"alocate cu adevarat, \n"
+"   sau care nu mai sunt valabile.\n"
+" *Atunci cand este activata optiunea \"Selectare TVA VIES\" (in configuratia "
+"Companiei\n"
+"   utilizatorului), numerele TVA vor fi in schimb trimise bazei de date EU "
+"VIES\n"
+"   online, care va verifica cu adevarat daca numarul este valabil si alocat "
+"in \n"
+"   prezent unei companii din Uniunea Europeana. Aceasta este putin mai "
+"inceata decat simpla\n"
+"   verificare offline, necesita o conexiune la Internet si este posibil sa "
+"nu fie disponibila\n"
+"   tot timpul. Daca serviciul nu este disponibil sau nu accepta\n"
+"   tara solicitata (de exemplu tari care nu fac parte de Uniunea Europeana), "
+"atunci va fi efectuata o\n"
+"   verificare simpla.\n"
+"\n"
+"Tarile acceptate in prezent includ tarile din Uniunea Europeana, si cateva "
+"tari care nu fac parte\n"
+"din Uniunea Europeana, cum ar fi Chile, Columbia, Mexic, Norvegia sau Rusia. "
+"Pentru tarile care nu sunt acceptate,\n"
+"va fi validat doar codul tarii.\n"
+"\n"
+"    "
 
 #. module: base
 #: view:ir.sequence:0
 msgid "Day: %(day)s"
-msgstr "Ziua: %(day)s"
+msgstr "Ziua: %(zi)s"
 
 #. module: base
 #: model:ir.module.category,description:base.module_category_point_of_sale
@@ -1967,9 +2008,9 @@ msgid ""
 "simplified payment mode encoding, automatic picking lists generation and "
 "more."
 msgstr ""
-"Modul pentru punctele de vînzare.  Codificarea rapidă a vînzărilor, "
-"codificarea simplificată a modalităților de plată, generarea automată a "
-"listelor de produse și altele."
+"Va ajuta sa obtineti cat mai mult de la punctele de vanzare prin codificarea "
+"rapida a vanzarilor, codificarea simplificata a modalitatii de plata, "
+"generarea automată a listelor de produse și altele."
 
 #. module: base
 #: model:res.country,name:base.mv
@@ -1991,6 +2032,18 @@ msgid ""
 "The managers can obtain an easy view of best ideas from all the users.\n"
 "Once installed, check the menu 'Ideas' in the 'Tools' main menu."
 msgstr ""
+"\n"
+"Acest modul permite utilizatorului dumneavoastra sa participe cu usurinta si "
+"in mod eficient la inovarea companiei.\n"
+"============================================================================="
+"==========================\n"
+"\n"
+"Permite tuturor sa isi exprime idei despre diverse subiecte.\n"
+"Apoi, alti utilizatori pot comenta aceste idei si sa voteze anumite idei.\n"
+"FIecare idee are un scor bazat pe voturi diferite.\n"
+"Managerii pot obtine o vizualizare usoara a celor mai bune idei de la toti "
+"utilizatorii.\n"
+"Odata instalat, selectati meniul 'Idei' din meniul principal 'Unelte'."
 
 #. module: base
 #: model:ir.model,name:base.model_ir_rule
@@ -2005,7 +2058,7 @@ msgstr "Zile"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_rpc
 msgid "OpenERP Web web"
-msgstr ""
+msgstr "Retea OpenERP Web"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_html_view
@@ -2020,17 +2073,19 @@ msgstr "Poziție simbol"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_process
 msgid "Enterprise Process"
-msgstr "Procese întreprindere"
+msgstr "Intreprinde proces"
 
 #. module: base
 #: help:ir.cron,function:0
 msgid "Name of the method to be called when this job is processed."
 msgstr ""
+"Numele metodei care va fi folosita atunci cand acesta munca va fi "
+"procesata.Evaluari angajat"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_evaluation
 msgid "Employee Appraisals"
-msgstr ""
+msgstr "Evaluari angajat"
 
 #. module: base
 #: selection:ir.actions.server,state:0
@@ -2047,7 +2102,7 @@ msgstr " (copie)"
 #. module: base
 #: field:res.company,rml_footer1:0
 msgid "General Information Footer"
-msgstr ""
+msgstr "Subsol informatii generale"
 
 #. module: base
 #: view:res.lang:0
@@ -2059,7 +2114,7 @@ msgstr "7. %H:%M:%S      ==> 18:25:20"
 #: view:res.partner.category:0
 #: field:res.partner.category,partner_ids:0
 msgid "Partners"
-msgstr "Partener"
+msgstr "Parteneri"
 
 #. module: base
 #: field:res.partner.category,parent_left:0
@@ -2069,7 +2124,7 @@ msgstr "Parinte stang"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_project_mrp
 msgid "Create Tasks on SO"
-msgstr ""
+msgstr "Creare sarcini in SO"
 
 #. module: base
 #: field:ir.attachment,res_model:0
@@ -2079,7 +2134,7 @@ msgstr "Model Atasat"
 #. module: base
 #: field:res.partner.bank,footer:0
 msgid "Display on Reports"
-msgstr ""
+msgstr "Afisare la Rapoarte"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_cn
@@ -2090,6 +2145,11 @@ msgid ""
 "        ============================================================\n"
 "    "
 msgstr ""
+"\n"
+"        添加中文省份数据\n"
+"        科目类型\\会计科目表模板\\增值税\\辅助核算类别\\管理会计凭证簿\\财务会计凭证簿\n"
+"        ============================================================\n"
+"    "
 
 #. module: base
 #: model:ir.model,name:base.model_ir_model_access
@@ -2123,7 +2183,7 @@ msgstr "Formula"
 #: code:addons/base/res/res_users.py:396
 #, python-format
 msgid "Can not remove root user!"
-msgstr "Nu este posibilă ștergerea utilizatorului 'root' !"
+msgstr "Nu este posibila stergerea utilizatorului root !"
 
 #. module: base
 #: model:res.country,name:base.mw
@@ -2142,6 +2202,12 @@ msgid ""
 "Accounting chart and localization for Ecuador.\n"
 "    "
 msgstr ""
+"\n"
+"Acesta este modulul de baza pentru a gestiona planul de conturi pentru "
+"Ecuador in OpenERP.\n"
+"\n"
+"Planul de conturi si localizarea petru Ecuator.\n"
+"    "
 
 #. module: base
 #: code:addons/base/ir/ir_filters.py:38
@@ -2154,17 +2220,17 @@ msgstr "%s (copie)"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_chart
 msgid "Template of Charts of Accounts"
-msgstr ""
+msgstr "Sablon al Planului de Conturi"
 
 #. module: base
 #: field:res.partner.address,type:0
 msgid "Address Type"
-msgstr "Tip adresa"
+msgstr "Tipul adresei"
 
 #. module: base
 #: view:ir.ui.menu:0
 msgid "Full Path"
-msgstr "Calea completă"
+msgstr "Calea completa"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_br
@@ -2210,6 +2276,48 @@ msgid ""
 "today don't come with any additional paid permission for online use of "
 "'private modules'."
 msgstr ""
+"\n"
+"Modulul de baza pentru localizarea braziliana\n"
+"==========================================\n"
+"\n"
+"Acest modul consta in:\n"
+"\n"
+" - Planul de conturi general brazilian\n"
+" - Taxe braziliene precum:\n"
+"\n"
+"        - IPI\n"
+"        - ICMS\n"
+"        - PIS\n"
+"        - COFINS\n"
+"        - ISS\n"
+"        - IR\n"
+"        - IRPJ\n"
+"        - CSLL\n"
+"\n"
+" - Situatia codului fiscal (SCF) solicitata pentru facturarea fiscala "
+"electronica (NFe)\n"
+"\n"
+"Campul reducere_taxa a fost adaugat de asemenea in "
+"account.tax.templat(sablon.taxa.cont) si "
+"account.tax.objects(obiecte.taxa.cont) pentru a permite calcularea exacta a "
+"anumitor TVA-uri braziliene precum ICMS. Asistentul crearii planulul de "
+"conturi a fost extins pentru a difuza acele date noi in mod corespunzator. \n"
+"\n"
+"Totusi, este important sa observati faptul ca acest modul nu are multe "
+"implementari pe care OpenERP sa le foloseasca in mod corespunzator in "
+"Brazilia. acele implementari (cum ar fi  Facturarea fiscala electronica, "
+"care este deja operationala) sunt aduse de mai mult de 15 module "
+"suplimentare ale proiectului localizarii Launchpad brazilian "
+"https://launchpad.net/openerp.pt-br-localiz si de dependentele lor in ramura "
+"addons suplimentara. Acele module au ca scop pastrarea modularitarii "
+"remarcabile a lui OpenERP, si de aceea ele sunt numeroase, dar mici. Unul "
+"dintre motivele pentru pastrarea acelor module deoparte este faptul ca "
+"liderii Localizarii braziliene necesita drepturi pentru a completa "
+"localizarea, deoarece companiile finanteaza cerintele legale ramase (cum ar "
+"fi in curand registrele contabile, contabilitatea SPED, SPED fiscal si PAF "
+"ECF care inca nu existau in luna septembrie 2011). Acele module au licenta "
+"stricta sub AGPL V3, iar azi nu vin cu nici o permisiune suplimentara "
+"platita pentur utilizarea online a 'modulelor private'."
 
 #. module: base
 #: view:res.request:0
@@ -2223,14 +2331,14 @@ msgid ""
 "decimal number [00,53]. All days in a new year preceding the first Sunday "
 "are considered to be in week 0."
 msgstr ""
-"%U - Numarul săptămânii din an (Duminica este considerată prima zi a "
-"săptămânii) ca număr zecimal [00,53]. Toate zilele dintr-un an nou care "
-"preced prima duminică din an se consideră a fi în săptămâna 0."
+"%U - Numarul saptamanii din an (Duminica este considerata prima zi a "
+"saptamanii) ca numar zecimal din intervalul [00,53]. Toate zilele dintr-un "
+"an nou care preced prima duminica din an se considera a fi in saptamana 0."
 
 #. module: base
 #: view:ir.ui.view:0
 msgid "Advanced"
-msgstr "Setări avansate"
+msgstr "Avansat"
 
 #. module: base
 #: model:res.country,name:base.fi
@@ -2241,7 +2349,7 @@ msgstr "Finlanda"
 #: code:addons/base/res/res_company.py:156
 #, python-format
 msgid "Website: "
-msgstr "Website: "
+msgstr "Pagina de Internet: "
 
 #. module: base
 #: model:ir.ui.menu,name:base.menu_administration
@@ -2260,12 +2368,12 @@ msgstr "Arbore"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_analytic_multicurrency
 msgid "Multi-Currency in Analytic"
-msgstr ""
+msgstr "Valute multiple in Analitic"
 
 #. module: base
 #: view:base.language.export:0
 msgid "https://help.launchpad.net/Translations"
-msgstr "https://help.launchpad.net/Translations"
+msgstr ""
 
 #. module: base
 #: field:ir.actions.act_window,view_mode:0
@@ -2278,6 +2386,8 @@ msgid ""
 "Display this bank account on the footer of printed documents like invoices "
 "and sales orders."
 msgstr ""
+"Afiseaza acest cont bancar la subsolul documentelor imprimate, cum ar fi "
+"facturile si comenzile de vanzare."
 
 #. module: base
 #: view:base.language.import:0
@@ -2285,8 +2395,8 @@ msgid ""
 "When using CSV format, please also check that the first line of your file is "
 "one of the following:"
 msgstr ""
-"Atunci când folositi formatul CSV, vă rugăm să verificati dacă prima linie "
-"din fisier este una dintre următoarele :"
+"Atunci cad folositi formatul CSV, va rugam sa verificati daca prima linie "
+"din fisier este una dintre urmatoarele :"
 
 #. module: base
 #: view:res.log:0
@@ -2296,12 +2406,12 @@ msgstr "Jurnale"
 #. module: base
 #: selection:base.language.install,lang:0
 msgid "Spanish / Español"
-msgstr "Spaniolă / Español"
+msgstr "Spaniola / Español"
 
 #. module: base
 #: selection:base.language.install,lang:0
 msgid "Korean (KP) / 한국어 (KP)"
-msgstr "Coreană (KP) / 한국어 (KP)"
+msgstr "Coreana (KP) / 한국어 (KP)"
 
 #. module: base
 #: view:base.module.update:0
@@ -2310,7 +2420,7 @@ msgid ""
 "newly added modules as well as any change to existing modules."
 msgstr ""
 "Acest asistent va scana toate modulele disponibile pe server pentru a "
-"detecta module adăugate recent, precum și orice modificări făcute modulelor "
+"detecta module adaugate recent, precum si orice modificari facute modulelor "
 "existente."
 
 #. module: base
@@ -2343,21 +2453,50 @@ msgid ""
 "Some statistics by journals are provided.\n"
 "    "
 msgstr ""
+"\n"
+"Modulele jurnaluli de vanzari va permit sa va clasificati vanzarile si "
+"livrarile (liste de produse) intre diferite jurnale. \n"
+"============================================================================="
+"===========================================\n"
+"\n"
+"\n"
+"\n"
+"Acest modul este foarte util companiilor mai mari care\n"
+"functioneaza pe departamente.\n"
+"\n"
+"Puteti folosi jurnalul in diverse scopuri, cum ar fi:\n"
+"    *vanzari separate ale diferitelor departamente.\n"
+"    * jurnale pentru livrari cu camionul sau cu UPS\n"
+"\n"
+"Jurnalele au un responsabil si evolueaza intre diverse statusuri:\n"
+"    *ciorna, deschis, anulat, efectuat.\n"
+"\n"
+"Operatiunile loturilor pot fi procesate in jurnale diferite pentru a\n"
+"confirma toate vanzarile odata, pentru a valida sau a factura ambalarea, "
+"...\n"
+"\n"
+"De asemenea, accepta metode de facturare a loturilor care pot fi configurate "
+"de catre parteneri si comenzi de vanzare, exemple:\n"
+"    *facturare zilnica,\n"
+"    *facturare lunara, ...\n"
+"\n"
+"Sunt oferite unele statistici dupa jurnale.\n"
+"    "
 
 #. module: base
 #: field:res.company,logo:0
 msgid "Logo"
-msgstr "Siglă"
+msgstr "Sigla"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_cr
 msgid "Costa Rica - Accounting"
-msgstr ""
+msgstr "Costa Rica - Contabilitate"
 
 #. module: base
 #: view:ir.module.module:0
 msgid "Uninstall (beta)"
-msgstr "Dezinstalare (beta)"
+msgstr ""
 
 #. module: base
 #: model:ir.module.module,description:base.module_hr_expense
@@ -2378,11 +2517,28 @@ msgid ""
 "re-invoice your customer's expenses if your work by project.\n"
 "    "
 msgstr ""
+"\n"
+"Acest modul are drept scop gestionarea cheltuielilor angajatilor.\n"
+"====================================================\n"
+"\n"
+"Este implementat intregul flux de munca:\n"
+"    *Ciorna cheltuieli\n"
+"    *Confirmare a foii de catre angajat\n"
+"    *Validare de catre managerul lui\n"
+"    *Validare de catre contabil si crearea facturii\n"
+"    *Plata facturii catre angajat\n"
+"\n"
+"Acest modul foloseste de asemenea contabilitatea analitica si este "
+"compatibil cu\n"
+"factura din modului foii de pontaj, astfel incat veti putea re-factura "
+"automat\n"
+"cheltuielile clientului dumneavoastra daca lucrati pe proiect.\n"
+"    "
 
 #. module: base
 #: field:ir.values,action_id:0
 msgid "Action (change only)"
-msgstr "Acțiune (numai în modificare)"
+msgstr "Actiune (modificati doar daca)"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_subscription
@@ -2405,13 +2561,13 @@ msgstr "activ"
 msgid ""
 "Couldn't generate the next id because some partners have an alphabetic id !"
 msgstr ""
-"Id -ul următor nu poate fi generat deoarece există parteneri care au un id "
+"Id -ul urmator nu poate fi generat deoarece unii parteneri au un id "
 "alfabetic !"
 
 #. module: base
 #: view:ir.attachment:0
 msgid "Attachment"
-msgstr "Ataşament"
+msgstr "Atasament"
 
 #. module: base
 #: model:res.country,name:base.ie
@@ -2421,12 +2577,12 @@ msgstr "Irlanda"
 #. module: base
 #: field:base.module.update,update:0
 msgid "Number of modules updated"
-msgstr "Numărul modulelor actualizate"
+msgstr "Numarul modulelor actualizate"
 
 #. module: base
 #: field:ir.cron,function:0
 msgid "Method"
-msgstr "Metodă"
+msgstr "Metoda"
 
 #. module: base
 #: view:res.partner.event:0
@@ -2444,14 +2600,14 @@ msgid ""
 "Views allows you to personalize each view of OpenERP. You can add new "
 "fields, move fields, rename them or delete the ones that you do not need."
 msgstr ""
-"Vizualizările vă permit să personalizați fiecare vizualizare OpenERP. Puteți "
-"adăuga câmpuri noi, le puteți muta, redenumi sau le puteți șterge pe cele de "
-"care nu aveți nevoie."
+"Meniul Vizualizari va permite sa personalizati fiecare vizualizare OpenERP. "
+"Puteti adauga campuri noi, le puteti muta, redenumi sau e puteti sterge pe "
+"cele de care nu aveti nevoie."
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_base_setup
 msgid "Initial Setup Tools"
-msgstr ""
+msgstr "Instrumente de configurare generala"
 
 #. module: base
 #: field:ir.actions.act_window,groups_id:0
@@ -2475,7 +2631,7 @@ msgstr "Grupuri"
 #. module: base
 #: selection:base.language.install,lang:0
 msgid "Spanish (CL) / Español (CL)"
-msgstr "Spaniolă (CL) / Español (CL)"
+msgstr "Spaniola (CL) / Español (CL)"
 
 #. module: base
 #: model:res.country,name:base.bz
@@ -2485,7 +2641,7 @@ msgstr "Belize"
 #. module: base
 #: help:ir.actions.report.xml,header:0
 msgid "Add or not the corporate RML header"
-msgstr "Adaugă sau nu antetul RMl al companiei"
+msgstr "Adauga sau nu antetul RML al companiei"
 
 #. module: base
 #: model:ir.module.module,description:base.module_hr_recruitment
@@ -2504,6 +2660,18 @@ msgid ""
 "system to store and search in your CV base.\n"
 "    "
 msgstr ""
+"\n"
+"Gestioneaza pozitiile locului de munca si procesul de recrutare.\n"
+"=========================================================\n"
+"\n"
+"Este integrat cu modulul de analiza pentru a va permite sa definiti "
+"interviul pentru diferite lucuri de munca.\n"
+"\n"
+"Acest modul este integrat cu mail gateway pentru a urmari automat email-"
+"urile trimise la jobs@YOURCOMPANY.com. Este, de asemenea, integrat cu "
+"sistemul de management al documentelor pentru a pastra si cauta in baza de "
+"CV-uri.\n"
+"    "
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_res_widget_wizard
@@ -2513,7 +2681,7 @@ msgstr "Mangementul Widget-urilor din Pagina Principala"
 #. module: base
 #: field:res.company,rml_header1:0
 msgid "Report Header / Company Slogan"
-msgstr ""
+msgstr "Antet Raport / Sloganul Companiei"
 
 #. module: base
 #: model:res.country,name:base.pl
@@ -2534,7 +2702,7 @@ msgstr ""
 #, python-format
 msgid "A document was modified since you last viewed it (%s:%d)"
 msgstr ""
-"Un document a fost modificat de când l-ați vizualizat ultima dată (%s:%d)"
+"Un document a fost modificat de cand l-ati vizualizat ultima dată (%s:%d)"
 
 #. module: base
 #: view:workflow:0
@@ -2550,7 +2718,7 @@ msgstr "De dezinstalat"
 #. module: base
 #: model:ir.model,name:base.model_ir_sequence
 msgid "ir.sequence"
-msgstr "ir.sequence"
+msgstr "ir.sequence (ir.secventa)"
 
 #. module: base
 #: help:ir.actions.server,expression:0
@@ -2559,14 +2727,14 @@ msgid ""
 "order in Object, and you can have loop on the sales order line. Expression = "
 "`object.order_line`."
 msgstr ""
-"Introduceţi câmpul/expresia care să genereze lista. De exemplu, selectând "
-"comanda de vânzare în Obiecte, puteți parcurge în buclă pozițiile din "
+"Introduceti campul/expresia care va genera lista. De exemplu, selectati "
+"comanda de vanzare in Obiect, si puteti parcurge in bucla pozitiile din "
 "comanda de vanzare. Expresie = `object.order_line`."
 
 #. module: base
 #: field:ir.mail_server,smtp_debug:0
 msgid "Debugging"
-msgstr ""
+msgstr "Depanare"
 
 #. module: base
 #: model:ir.module.module,description:base.module_crm_helpdesk
@@ -2582,6 +2750,18 @@ msgid ""
 "and categorize your interventions with a channel and a priority level.\n"
 "    "
 msgstr ""
+"\n"
+"Managementul Serviciului de asistenta tehnica.\n"
+"===================================\n"
+"\n"
+"La fel ca si inregistrarea si prelucrarea reclamatiilor, Serviciul de "
+"Asistenta tehnica este un instrument\n"
+"bun pentru a tine evidenta interventiilor dumneavoastra. Acest meniu este "
+"mai adaptat comunicarii orale,\n"
+"care nu este in mod necesar relationata unei reclamatii. Selectati un "
+"client, adaugati note\n"
+"si clasificati-va interventiile cu un canal si cu un nivel prioritar.\n"
+"    "
 
 #. module: base
 #: sql_constraint:ir.ui.view_sc:0
@@ -2602,6 +2782,17 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"Modul pentru gestionarea resurselor.\n"
+"===============================\n"
+"\n"
+"O resursa reprezinta ceva care poate fi planificat\n"
+"(un dezvoltator la o sarcina sau un punct de lucru la comenzi de "
+"fabricatie).\n"
+"Acest modul gestioneaza un calendar al resurselor asociat fiecarei resurse.\n"
+"De asemenea, gestioneaza plecarile fiecarei resurse.\n"
+"\n"
+"    "
 
 #. module: base
 #: view:ir.rule:0
@@ -2621,12 +2812,12 @@ msgstr "Republica Democrata Sao Tome si Principe"
 #. module: base
 #: selection:res.partner.address,type:0
 msgid "Invoice"
-msgstr "Factură"
+msgstr "Factura"
 
 #. module: base
 #: selection:base.language.install,lang:0
 msgid "Portugese (BR) / Português (BR)"
-msgstr "Portugheză (BR) / Português (BR)"
+msgstr "Portugheza (BR) / Português (BR)"
 
 #. module: base
 #: model:res.country,name:base.bb
@@ -2642,6 +2833,12 @@ msgid ""
 "\n"
 "Configure servers and trigger synchronization with its database objects.\n"
 msgstr ""
+"\n"
+"Sincronizarea cu toate obiectele.\n"
+"===================================\n"
+"\n"
+"Configureaza servere si declanseaza sincronizarea cu obiectele din baza de "
+"date.\n"
 
 #. module: base
 #: model:res.country,name:base.mg
@@ -2654,7 +2851,7 @@ msgstr "Madagascar"
 msgid ""
 "The Object name must start with x_ and not contain any special character !"
 msgstr ""
-"Numele obiectului trebuie să înceapă cu x_ si să nu contină nici un caracter "
+"Numele obiectului trebuie sa inceapa cu x_ si sa nu contina nici un caracter "
 "special !"
 
 #. module: base
@@ -2677,12 +2874,12 @@ msgstr "Rata curentă"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_idea
 msgid "Ideas"
-msgstr ""
+msgstr "Idei"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_crm
 msgid "Opportunity to Quotation"
-msgstr ""
+msgstr "Oportunitate la cotare"
 
 #. module: base
 #: model:ir.module.module,description:base.module_sale_analytic_plans
@@ -2695,6 +2892,14 @@ msgid ""
 "orders.\n"
 "    "
 msgstr ""
+"\n"
+"Modulul de baza pentru gestionarea distribuirii analitice si a comenzilor de "
+"vanzare.\n"
+"==========================================================================\n"
+"\n"
+"Folosind acest modul veti putea lega conturile analitice de comenzile de "
+"vanzare.\n"
+"    "
 
 #. module: base
 #: field:ir.actions.url,target:0
@@ -2704,22 +2909,22 @@ msgstr "Actiune tintă"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_base_calendar
 msgid "Calendar Layer"
-msgstr ""
+msgstr "Calendar Strat"
 
 #. module: base
 #: model:ir.actions.report.xml,name:base.report_ir_model_overview
 msgid "Model Overview"
-msgstr ""
+msgstr "Model de prezentare generala"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_product_margin
 msgid "Margins by Products"
-msgstr ""
+msgstr "Marje dupa produse"
 
 #. module: base
 #: model:ir.ui.menu,name:base.menu_invoiced
 msgid "Invoicing"
-msgstr ""
+msgstr "Facturare"
 
 #. module: base
 #: field:ir.ui.view_sc,name:0
@@ -2744,7 +2949,7 @@ msgstr "Zimbabwe"
 #. module: base
 #: model:res.country,name:base.io
 msgid "British Indian Ocean Territory"
-msgstr "Teritoriul britanic din Oceanul Indian"
+msgstr "Teritoriile Britanice din Oceanul Indian"
 
 #. module: base
 #: model:ir.ui.menu,name:base.menu_translation_export
@@ -2754,7 +2959,7 @@ msgstr "Import / Export"
 #. module: base
 #: model:ir.actions.todo.category,name:base.category_tools_customization_config
 msgid "Tools / Customization"
-msgstr ""
+msgstr "Instrumente / Personalizare"
 
 #. module: base
 #: field:ir.model.data,res_id:0
@@ -2765,12 +2970,12 @@ msgstr "ID înregistrare"
 #. module: base
 #: field:ir.actions.server,email:0
 msgid "Email Address"
-msgstr "Adresă de email"
+msgstr "Adresa de email"
 
 #. module: base
 #: selection:base.language.install,lang:0
 msgid "French (BE) / Français (BE)"
-msgstr "Franceză (BE) / Français (BE)"
+msgstr "Franceza (BE) / Français (BE)"
 
 #. module: base
 #: view:ir.actions.server:0
@@ -2781,7 +2986,7 @@ msgstr "Actiune server"
 #. module: base
 #: help:ir.actions.client,params:0
 msgid "Arguments sent to the client along withthe view tag"
-msgstr ""
+msgstr "Argumentele trimise clientului impreuna cu eticheta vizualizarii"
 
 #. module: base
 #: model:ir.module.module,description:base.module_project_gtd
@@ -2812,6 +3017,32 @@ msgid ""
 "performing those tasks.\n"
 "    "
 msgstr ""
+"\n"
+"Acest modul implementeaza toate conceptele definite de metodologia "
+"Efectuarii lucrurilor.\n"
+"============================================================================="
+"==========\n"
+"\n"
+"Acest modul implementeaza o lista personala simpla De facut bazata pe "
+"sarcini. Adauga in\n"
+"aplicatia proiectului o lista editabila de sarcini simplificate la minimul\n"
+"campurilor obligatorii.\n"
+"\n"
+"Lista de efectuat se bazeaza pe metodologia Efectuarea lucrurilor. Aceasta "
+"metodologie utilizata\n"
+"in intreaga lume este folosita pentru imbunatatirea managementului timpului "
+"personal.\n"
+"\n"
+"Efectuarea lucrurilor (prescurtat EL) este o metoda actiune de\n"
+"management creata de catre David Allen, si descrisa in cartea cu acelasi "
+"nume.\n"
+"\n"
+"EL are la baza principiul conform caruia o persoana are nevoie sa isi scoata "
+"sarcinile din minte prin\n"
+"inregistrarea lor externa. In acest fel, mintea nu mai trebuie sa tina\n"
+"minte tot ce trebuie facut si se poate concentra pe efectuarea\n"
+"efectiva a acelor sarcini.\n"
+"    "
 
 #. module: base
 #: model:res.country,name:base.tt
@@ -2838,13 +3069,13 @@ msgstr "Aplicatii câmp"
 #: code:addons/base/publisher_warranty/publisher_warranty.py:163
 #, python-format
 msgid "Error during communication with the publisher warranty server."
-msgstr "Eroare în timpul comunicării cu serverul garanției editorului."
+msgstr "Eroare în timpul comunicarii cu serverul garantiei editorului."
 
 #. module: base
 #: model:res.groups,name:base.group_sale_manager
 #: model:res.groups,name:base.group_tool_manager
 msgid "Manager"
-msgstr ""
+msgstr "Manager"
 
 #. module: base
 #: model:ir.ui.menu,name:base.menu_custom
@@ -2881,30 +3112,32 @@ msgstr "Sterge ID-uri"
 #. module: base
 #: view:res.groups:0
 msgid "Inherited"
-msgstr ""
+msgstr "Mostenit"
 
 #. module: base
 #: field:ir.model.fields,serialization_field_id:0
 msgid "Serialization Field"
-msgstr ""
+msgstr "Camp Serializare"
 
 #. module: base
 #: model:ir.module.category,description:base.module_category_report_designer
 msgid ""
 "Lets you install various tools to simplify and enhance OpenERP's report "
 "creation."
-msgstr "Permite instalarea de unelte pentru crearea de rapoarte OpenERP."
+msgstr ""
+"Va permite instalarea unor diverse unelte pentru a simplifica si mari "
+"crearea de rapoarte OpenERP."
 
 #. module: base
 #: view:res.lang:0
 msgid "%y - Year without century [00,99]."
-msgstr "%y - Anul fără secol [00,99]."
+msgstr "%y - An fara secol [00,99]."
 
 #. module: base
 #: code:addons/base/res/res_company.py:155
 #, python-format
 msgid "Fax: "
-msgstr ""
+msgstr "Fax: "
 
 #. module: base
 #: model:res.country,name:base.si
@@ -2914,7 +3147,7 @@ msgstr "Slovenia"
 #. module: base
 #: help:res.currency,name:0
 msgid "Currency Code (ISO 4217)"
-msgstr ""
+msgstr "Codul valutei (ISO 4217)"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.res_log_act_window
