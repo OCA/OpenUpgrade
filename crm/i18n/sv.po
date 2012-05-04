@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.14\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 01:37+0100\n"
-"PO-Revision-Date: 2012-05-02 17:20+0000\n"
+"PO-Revision-Date: 2012-05-03 08:38+0000\n"
 "Last-Translator: Anders Wallenquist <anders.wallenquist@vertel.se>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-05-03 05:59+0000\n"
-"X-Generator: Launchpad (build 15185)\n"
+"X-Launchpad-Export-Date: 2012-05-04 05:19+0000\n"
+"X-Generator: Launchpad (build 15195)\n"
 
 #. module: crm
 #: view:crm.lead.report:0
@@ -816,7 +816,7 @@ msgstr "Reference 2"
 #. module: crm
 #: view:crm.segmentation:0
 msgid "Sales Purchase"
-msgstr "Sales Purchase"
+msgstr ""
 
 #. module: crm
 #: help:crm.case.section,resource_calendar_id:0
@@ -1055,7 +1055,7 @@ msgstr ""
 #. module: crm
 #: view:crm.lead:0
 msgid "Show Sales Team"
-msgstr ""
+msgstr "Visa säljteam"
 
 #. module: crm
 #: view:res.partner:0
@@ -1080,7 +1080,7 @@ msgstr ""
 #. module: crm
 #: model:crm.case.section,name:crm.section_sales_department
 msgid "Sales Department"
-msgstr ""
+msgstr "Försäljningsavdelning"
 
 #. module: crm
 #: selection:crm.segmentation.line,expr_name:0
@@ -1404,7 +1404,7 @@ msgstr ""
 #. module: crm
 #: model:crm.case.section,name:crm.section_sales_marketing_department
 msgid "Sales Marketing Department"
-msgstr ""
+msgstr "Marknadsavdelning"
 
 #. module: crm
 #: view:crm.phonecall.report:0
@@ -1415,7 +1415,7 @@ msgstr ""
 #: help:crm.lead,section_id:0
 msgid ""
 "When sending mails, the default email address is taken from the sales team."
-msgstr ""
+msgstr "När e-post skickas hämtas avsändaradressen från säljteamet"
 
 #. module: crm
 #: view:crm.meeting:0
@@ -1442,7 +1442,7 @@ msgstr ""
 #. module: crm
 #: model:ir.actions.act_window,name:crm.crm_case_section_view_form_installer
 msgid "Define Sales Team"
-msgstr ""
+msgstr "Definiera säljteam"
 
 #. module: crm
 #: model:ir.actions.act_window,help:crm.crm_segmentation_tree-act
@@ -1470,7 +1470,7 @@ msgstr ""
 #. module: crm
 #: model:crm.case.resource.type,name:crm.type_lead1
 msgid "Telesales"
-msgstr ""
+msgstr "Telefonförsäljning"
 
 #. module: crm
 #: view:crm.lead:0
@@ -1547,7 +1547,7 @@ msgstr ""
 #. module: crm
 #: constraint:crm.case.section:0
 msgid "Error ! You cannot create recursive Sales team."
-msgstr ""
+msgstr "Fel ! Du kan inte skapa rekursiva säljteam"
 
 #. module: crm
 #: selection:crm.opportunity2phonecall,action:0
@@ -1569,7 +1569,7 @@ msgstr "Sök möten"
 #. module: crm
 #: selection:crm.segmentation.line,expr_name:0
 msgid "Sale Amount"
-msgstr "Sale Amount"
+msgstr "Försäljningomsättning"
 
 #. module: crm
 #: view:crm.meeting:0
@@ -1590,6 +1590,11 @@ msgid ""
 "mainly used by the sales manager in order to do the periodic review with the "
 "teams of the sales pipeline."
 msgstr ""
+"Affärsmöjlighetsanalysen ger dig en omedelbar bild av dina aktuella "
+"affärsmöjligheter som exempelvis förväntad intäkt, planerade kostnader, "
+"missade deadlines och antal kontakter per affärsmöjlighet. Rapporten används "
+"främst av försäljningschefen för periodisk utvärdering tillsammans med "
+"säljteamen och försäljningsprocessen."
 
 #. module: crm
 #: field:crm.case.categ,name:0 field:crm.lead,name:0
@@ -1609,6 +1614,9 @@ msgid ""
 "organise their sales pipeline. Stages will allow them to easily track how a "
 "specific lead or opportunity is positioned in the sales cycle."
 msgstr ""
+"Lägg till steg till kundämnen och affärsmöjligheter som tillåter dig att "
+"organisera försäljningsprocessen bättre. Stegen kan användas för att följa "
+"upp specifika kundämnen och affärsmöjligheter i säljcykeln."
 
 #. module: crm
 #: model:ir.actions.act_window,name:crm.action_crm_send_mass_convert
@@ -1700,6 +1708,8 @@ msgstr "Potentiell återförsäljare"
 msgid ""
 "When escalating to this team override the saleman with the team leader."
 msgstr ""
+"När eskalering sker till detta team så går du förbi säljaren till "
+"teamledaren."
 
 #. module: crm
 #: field:crm.lead.report,planned_revenue:0
@@ -1830,7 +1840,7 @@ msgstr "Reply-To"
 #. module: crm
 #: view:crm.case.section:0
 msgid "Select stages for this Sales Team"
-msgstr ""
+msgstr "Välj steg för detta säljteam"
 
 #. module: crm
 #: view:board.board:0
@@ -2037,7 +2047,7 @@ msgstr ""
 #: model:ir.model,name:crm.model_crm_case_section
 #: model:ir.ui.menu,name:crm.menu_crm_case_section_act
 msgid "Sales Teams"
-msgstr ""
+msgstr "Säljteam"
 
 #. module: crm
 #: model:ir.model,name:crm.model_crm_lead2partner
@@ -2338,7 +2348,7 @@ msgstr "Övrigt"
 #. module: crm
 #: model:ir.actions.act_window,name:crm.open_board_crm
 msgid "Sales"
-msgstr ""
+msgstr "Kundorder"
 
 #. module: crm
 #: code:addons/crm/crm.py:430
@@ -2347,6 +2357,7 @@ msgid ""
 "You can not escalate, you are already at the top level regarding your sales-"
 "team category."
 msgstr ""
+"Du kan inte eskalera längre, du har nått toppen för denna säljteams-kategori."
 
 #. module: crm
 #: model:crm.case.categ,name:crm.categ_oppor8 view:crm.meeting:0
@@ -2570,12 +2581,12 @@ msgstr ""
 #. module: crm
 #: view:crm.lead2opportunity.partner.mass:0
 msgid "Select Salesman"
-msgstr ""
+msgstr "Välj säljare"
 
 #. module: crm
 #: view:board.board:0
 msgid "Sales Dashboard"
-msgstr ""
+msgstr "Kundorder infopanel"
 
 #. module: crm
 #: field:crm.lead.report,nbr:0 field:crm.phonecall.report,nbr:0
@@ -2753,6 +2764,17 @@ msgid ""
 "opportunities, convert them into quotations, manage related documents, track "
 "all customer related activities, and much more."
 msgstr ""
+"Med affärsmöjligheter kan du administrera och kontrollera din säljprocess "
+"genom att skapa kund-, eller kundämnesrelaterat försäljningsmaterial för att "
+"följa upp potentiella affärer. Information som exempelvis förväntad intäkt, "
+"steg i processen, förväntat avslutsdatum, kommunikationshistoria och mycket "
+"mer kan sparas. Affärsmöjligheter kan knytas till e-post-gateway: ny e-post "
+"kan skapa affärsmöjligheter, som sedan ingår i historiken och konversationen "
+"med kunden.\n"
+"\n"
+"Du och dina team kan planera möten, telefonsamtal från affärsmöjligheter, "
+"konvertera dem till offerter, administrera relaterade dokument, följa upp "
+"alla relaterade kundaktivieteter och mycket mer."
 
 #. module: crm
 #: field:crm.lead,color:0
@@ -2894,7 +2916,7 @@ msgstr "Kanal"
 #: view:crm.lead:0 view:crm.lead.report:0 view:crm.meeting:0
 #: view:crm.phonecall:0 view:crm.phonecall.report:0
 msgid "My Sales Team(s)"
-msgstr ""
+msgstr "Mina säljteam"
 
 #. module: crm
 #: help:crm.segmentation,exclusif:0
@@ -2973,7 +2995,7 @@ msgstr "Dagligen"
 #. module: crm
 #: model:ir.actions.act_window,name:crm.crm_case_stage_form_installer
 msgid "Review Sales Stages"
-msgstr ""
+msgstr "Granska säljstegen"
 
 #. module: crm
 #: model:crm.case.stage,name:crm.stage_lead2
@@ -3141,7 +3163,7 @@ msgstr "Draft"
 #. module: crm
 #: model:ir.actions.act_window,name:crm.crm_case_section_act_tree
 msgid "Cases by Sales Team"
-msgstr ""
+msgstr "Ärenden per säljteam"
 
 #. module: crm
 #: field:crm.meeting,attendee_ids:0
@@ -3466,7 +3488,7 @@ msgstr "Februari"
 #: view:crm.phonecall.report:0 field:crm.phonecall2phonecall,section_id:0
 #: field:res.partner,section_id:0 field:res.users,context_section_id:0
 msgid "Sales Team"
-msgstr ""
+msgstr "Säljteam"
 
 #. module: crm
 #: model:crm.case.stage,name:crm.stage_lead6 view:crm.lead:0
