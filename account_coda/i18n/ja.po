@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 00:35+0000\n"
-"PO-Revision-Date: 2012-05-03 22:21+0000\n"
+"PO-Revision-Date: 2012-05-05 02:19+0000\n"
 "Last-Translator: Akira Hiyama <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-05-04 04:48+0000\n"
+"X-Launchpad-Export-Date: 2012-05-05 04:59+0000\n"
 "X-Generator: Launchpad (build 15195)\n"
 
 #. module: account_coda
@@ -264,7 +264,7 @@ msgstr "参照"
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_07_58
 msgid "Remittance of supplier's bill without guarantee"
-msgstr "保証なしの仕入先請求書送金"
+msgstr "保証なしの仕入先請求送金"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_07_03
@@ -413,7 +413,7 @@ msgstr "加入者へ個別払戻時"
 #. module: account_coda
 #: view:account.coda.trans.category:0
 msgid "CODA Transaction Category"
-msgstr ""
+msgstr "CODA取引分類"
 
 #. module: account_coda
 #: model:account.coda.trans.category,description:account_coda.actrca_067
@@ -423,22 +423,22 @@ msgstr "固定金利繰上 - 拡張"
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_13_07
 msgid "Your repayment instalment credits"
-msgstr ""
+msgstr "あなたの返済分割払いクレジット"
 
 #. module: account_coda
 #: model:account.coda.trans.code,comment:account_coda.actcc_09_13
 msgid "On the account of the head office"
-msgstr ""
+msgstr "本社のアカウント"
 
 #. module: account_coda
 #: constraint:account.bank.statement:0
 msgid "The journal and period chosen have to belong to the same company."
-msgstr ""
+msgstr "選択された仕訳帳と期間は同じ会社に属していなければなりません。"
 
 #. module: account_coda
 #: model:account.coda.comm.type,description:account_coda.acct_115
 msgid "Terminal cash deposit"
-msgstr ""
+msgstr "端末の現金預金"
 
 #. module: account_coda
 #: code:addons/account_coda/wizard/account_coda_import.py:301
@@ -453,28 +453,28 @@ msgstr ""
 #: model:account.coda.trans.code,comment:account_coda.actcc_43_01
 msgid ""
 "Debit of a cheque in foreign currency or in EUR in favour of a foreigner"
-msgstr ""
+msgstr "外国通貨のチェックまたは外国人優遇ユーロの借方"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_47_54
 msgid "Discount abroad"
-msgstr ""
+msgstr "海外割引"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_47_62
 msgid "Remittance of documents abroad - credit after collection"
-msgstr ""
+msgstr "海外証書による送金 - 集金後クレジット"
 
 #. module: account_coda
 #: field:coda.bank.statement.line,name:0
 msgid "Communication"
-msgstr ""
+msgstr "通信"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_00_35
 #: model:account.coda.trans.code,description:account_coda.actcc_00_85
 msgid "Correction"
-msgstr ""
+msgstr "訂正"
 
 #. module: account_coda
 #: code:addons/account_coda/wizard/account_coda_import.py:404
@@ -488,86 +488,90 @@ msgid ""
 "otherwise change the corresponding entry manually in the generated Bank "
 "Statement."
 msgstr ""
+"\n"
+"    銀行取引明細書 %s 行 %s：\n"
+"        パートナレコードが割り当てられていません：同じ銀行口座番号の複数のパートナがあります %s\n"
+"        設定を訂正し再度インポートを実行して下さい。もしくは生成された銀行取引明細書に手動で対応するエントリーを変更して下さい。"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_30_33
 #: model:account.coda.trans.code,description:account_coda.actcc_30_83
 msgid "Value (date) correction"
-msgstr ""
+msgstr "値（日付）訂正"
 
 #. module: account_coda
 #: model:account.coda.trans.category,description:account_coda.actrca_063
 msgid "Rounding differences"
-msgstr ""
+msgstr "丸めの違い"
 
 #. module: account_coda
 #: code:addons/account_coda/wizard/account_coda_import.py:295
 #: code:addons/account_coda/wizard/account_coda_import.py:487
 #, python-format
 msgid "Transaction Category unknown, please consult your bank."
-msgstr ""
+msgstr "不明な取引分類です。銀行にご相談下さい。"
 
 #. module: account_coda
 #: view:account.coda.trans.code:0
 msgid "CODA Transaction Code"
-msgstr ""
+msgstr "CODA取引コード"
 
 #. module: account_coda
 #: model:account.coda.trans.category,description:account_coda.actrca_052
 msgid "Residence state tax"
-msgstr ""
+msgstr "住民税"
 
 #. module: account_coda
 #: model:account.coda.trans.code,comment:account_coda.actcc_03_17
 msgid "Amount of the cheque; if any, charges receive code 37"
-msgstr ""
+msgstr "小切手の金額。存在すれば料金はコード37を受け取ります。"
 
 #. module: account_coda
 #: view:account.coda:0
 msgid "Additional Information"
-msgstr ""
+msgstr "追加情報"
 
 #. module: account_coda
 #: model:account.coda.comm.type,description:account_coda.acct_120
 msgid "Correction of a transaction"
-msgstr ""
+msgstr "取引の訂正"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_01_64
 #: model:account.coda.trans.code,description:account_coda.actcc_41_64
 msgid "Transfer to your account"
-msgstr ""
+msgstr "あなたの口座へ転送"
 
 #. module: account_coda
 #: model:account.coda.comm.type,description:account_coda.acct_124
 msgid "Number of the credit card"
-msgstr ""
+msgstr "クレジットカードの数"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_80_13
 msgid "Renting of safes"
-msgstr ""
+msgstr "金庫の貸借"
 
 #. module: account_coda
 #: help:coda.bank.account,find_bbacom:0
 msgid ""
 "Partner lookup via the 'BBA' Structured Communication field of the Invoice."
-msgstr ""
+msgstr "請求書のBBA通信項目を介してパートナ調査"
 
 #. module: account_coda
 #: model:account.coda.comm.type,description:account_coda.acct_104
 msgid "Equivalent in EUR"
-msgstr ""
+msgstr "ユーロに相当額"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_47_50
 msgid "Remittance of foreign bill credit after collection"
-msgstr ""
+msgstr "訂正後害外請求クレジットの送金"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_03_03
 msgid "Your purchase by payment card"
-msgstr ""
+msgstr "支払カードによる購入"
 
 #. module: account_coda
 #: model:account.coda.trans.type,description:account_coda.actt_1
@@ -578,6 +582,8 @@ msgid ""
 "matter of principle, this type is also used when no detailed data is "
 "following (type 5)."
 msgstr ""
+"顧客により合計された金額；例えば、賃金支払や仕入先になされた支払の再グループファイル、または顧客が支払ったか預け入れした１回分の金額のための訂正の再グルー"
+"プファイル。原則としてこのタイプは、次に続く詳細データがない（タイプ5）時にも利用されます。"
 
 #. module: account_coda
 #: code:addons/account_coda/wizard/account_coda_import.py:519
@@ -587,6 +593,9 @@ msgid ""
 "CODA parsing error on information data record 3.3, seq nr %s!\n"
 "Please report this issue via your OpenERP support channel."
 msgstr ""
+"\n"
+"データレコード3.3のシーケンス番号 %s の情報にCODAの解析エラーがあります。\n"
+"OpenERPのサポートを通じてこの問題を報告して下さい。"
 
 #. module: account_coda
 #: view:coda.bank.statement.line:0
@@ -836,7 +845,7 @@ msgstr ""
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_47_60
 msgid "Remittance of documents abroad - credit under usual reserve"
-msgstr ""
+msgstr "海外証書による送金 - 通常貯められたクレジット"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_04_52
