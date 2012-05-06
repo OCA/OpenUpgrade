@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 00:35+0000\n"
-"PO-Revision-Date: 2012-05-05 02:19+0000\n"
+"PO-Revision-Date: 2012-05-05 21:55+0000\n"
 "Last-Translator: Akira Hiyama <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-05-05 04:59+0000\n"
+"X-Launchpad-Export-Date: 2012-05-06 04:40+0000\n"
 "X-Generator: Launchpad (build 15195)\n"
 
 #. module: account_coda
@@ -134,7 +134,7 @@ msgstr "支払カード経費"
 #. module: account_coda
 #: model:account.coda.trans.category,description:account_coda.actrca_212
 msgid "Warehousing fee"
-msgstr "倉庫費用"
+msgstr "倉庫費"
 
 #. module: account_coda
 #: code:addons/account_coda/account_coda.py:300
@@ -156,7 +156,7 @@ msgstr "財務の一元化"
 #. module: account_coda
 #: model:account.coda.trans.category,description:account_coda.actrca_420
 msgid "Retention charges"
-msgstr "維持費用"
+msgstr "維持費"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_01_50
@@ -197,7 +197,7 @@ msgstr "金額"
 #. module: account_coda
 #: model:account.coda.trans.code,comment:account_coda.actcc_11_70
 msgid "Only with stockbrokers when they deliver the securities to the bank"
-msgstr "銀行に証券を届ける時に株式仲介者のみとともに"
+msgstr "銀行に証券を届ける時の唯一の株式仲介者"
 
 #. module: account_coda
 #: model:account.coda.trans.category,description:account_coda.actrca_413
@@ -274,7 +274,7 @@ msgstr "領収書カード"
 #. module: account_coda
 #: model:account.coda.trans.category,description:account_coda.actrca_207
 msgid "Non-conformity fee"
-msgstr "不適合料金"
+msgstr "不適合料"
 
 #. module: account_coda
 #: model:account.coda.trans.category,description:account_coda.actrca_022
@@ -448,6 +448,8 @@ msgid ""
 "\n"
 "The File contains an invalid Structured Communication Type : %s!"
 msgstr ""
+"\n"
+"ファイルは無効な構造化通信タイプを含んでいます：%s"
 
 #. module: account_coda
 #: model:account.coda.trans.code,comment:account_coda.actcc_43_01
@@ -600,174 +602,174 @@ msgstr ""
 #. module: account_coda
 #: view:coda.bank.statement.line:0
 msgid "Credit Transactions."
-msgstr ""
+msgstr "貸方取引"
 
 #. module: account_coda
 #: field:account.coda.trans.type,type:0
 msgid "Transaction Type"
-msgstr ""
+msgstr "取引タイプ"
 
 #. module: account_coda
 #: model:ir.model,name:account_coda.model_account_coda
 msgid "Object to store CODA Data Files"
-msgstr ""
+msgstr "CODAデータファイルに保存するオブジェクト"
 
 #. module: account_coda
 #: model:account.coda.trans.category,description:account_coda.actrca_029
 msgid "Protest charges"
-msgstr ""
+msgstr "意義申し立て料金"
 
 #. module: account_coda
 #: model:account.coda.trans.category,description:account_coda.actrca_053
 #: model:account.coda.trans.code,description:account_coda.actcc_80_43
 msgid "Printing of forms"
-msgstr ""
+msgstr "フォームの印刷"
 
 #. module: account_coda
 #: model:account.coda.trans.category,description:account_coda.actrca_003
 msgid "Credit commission"
-msgstr ""
+msgstr "クレジット手数料"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_43_58
 msgid "Remittance of foreign cheque credit after collection"
-msgstr ""
+msgstr "訂正後外国小切手クレジットの送金"
 
 #. module: account_coda
 #: model:account.coda.trans.type,description:account_coda.actt_8
 msgid "Detail of 3."
-msgstr ""
+msgstr "3の詳細"
 
 #. module: account_coda
 #: model:account.coda.trans.code,comment:account_coda.actcc_05_58
 msgid ""
 "(cancellation of an undue debit of the debtor at the initiative of the "
 "financial institution or the debtor for lack of cover)"
-msgstr ""
+msgstr "（カバー不足により金融機関または債務者主導で債務者の支払期限に達していない支払のキャンセル）"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_11_11
 msgid "Payable coupons/repayable securities"
-msgstr ""
+msgstr "支払うべきクーポン / 返済すべき有価証券"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_11_50
 msgid "Sale of securities"
-msgstr ""
+msgstr "有価証券の売却"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_01_51
 msgid "Transfer in your favour – initiated by the bank"
-msgstr ""
+msgstr "あなたの支持による転送 - 銀行により開始された"
 
 #. module: account_coda
 #: view:account.coda:0
 #: field:account.coda,coda_data:0
 #: field:account.coda.import,coda_data:0
 msgid "CODA File"
-msgstr ""
+msgstr "CODAファイル"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_03_38
 msgid "Provisionally unpaid"
-msgstr ""
+msgstr "暫定的な未払"
 
 #. module: account_coda
 #: model:account.coda.comm.type,description:account_coda.acct_003
 msgid "RBP data"
-msgstr ""
+msgstr "RBPデータ"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_11_06
 msgid "Share option plan – exercising an option"
-msgstr ""
+msgstr "株式オプションプラン - オプションの行使"
 
 #. module: account_coda
 #: model:account.coda.trans.category,description:account_coda.actrca_051
 msgid "Withholding tax"
-msgstr ""
+msgstr "源泉課税"
 
 #. module: account_coda
 #: model:account.coda.comm.type,description:account_coda.acct_006
 msgid "Information concerning the detail amount"
-msgstr ""
+msgstr "詳細金額に関係する情報"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_43_37
 msgid "Costs relating to payment of foreign cheques"
-msgstr ""
+msgstr "外国小切手の支払に関連する経費"
 
 #. module: account_coda
 #: field:account.coda.trans.code,parent_id:0
 msgid "Family"
-msgstr ""
+msgstr "家族"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_11_66
 msgid "Retrocession of issue commission"
-msgstr ""
+msgstr "発行手数料の返還"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_04_68
 msgid "Credit after Proton payments"
-msgstr ""
+msgstr "Proton支払後のクレジット"
 
 #. module: account_coda
 #: view:coda.bank.statement:0
 #: field:coda.bank.statement,period_id:0
 msgid "Period"
-msgstr ""
+msgstr "期間"
 
 #. module: account_coda
 #: code:addons/account_coda/wizard/account_coda_import.py:588
 #: code:addons/account_coda/wizard/account_coda_import.py:926
 #, python-format
 msgid "CODA Import failed !"
-msgstr ""
+msgstr "CODAインポートが失敗しました。"
 
 #. module: account_coda
 #: model:account.coda.trans.code,comment:account_coda.actcc_09_01
 msgid ""
 "Withdrawal by counter cheque or receipt; cash remitted by the bank clerk"
-msgstr ""
+msgstr "店頭換金小切手または領収書による引出；銀行員による現金送金"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_13_01
 msgid "Short-term loan"
-msgstr ""
+msgstr "短期貸付"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcf_01
 msgid "Domestic or local SEPA credit transfers"
-msgstr ""
+msgstr "国内または地元SEPA（Single Euro Payment Area）送金"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_04_03
 msgid "Settlement credit cards"
-msgstr ""
+msgstr "決済クレジットカード"
 
 #. module: account_coda
 #: model:account.coda.trans.category,description:account_coda.actrca_402
 msgid "Certification costs"
-msgstr ""
+msgstr "証明書経費"
 
 #. module: account_coda
 #: model:account.coda.trans.category,description:account_coda.actrca_015
 msgid "Correspondent charges"
-msgstr ""
+msgstr "通信員費用"
 
 #. module: account_coda
 #: model:account.coda.trans.category,description:account_coda.actrca_415
 #: model:account.coda.trans.code,description:account_coda.actcc_80_39
 msgid "Surety fee"
-msgstr ""
+msgstr "保証料"
 
 #. module: account_coda
 #: model:account.coda.trans.category,description:account_coda.actrca_017
 #: model:account.coda.trans.code,description:account_coda.actcc_80_23
 #: model:account.coda.trans.code,description:account_coda.actcc_80_41
 msgid "Research costs"
-msgstr ""
+msgstr "研究費"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_01_07
@@ -2400,7 +2402,7 @@ msgstr ""
 #. module: account_coda
 #: model:account.coda.comm.type,description:account_coda.acct_005
 msgid "Data concerning the correspondent"
-msgstr ""
+msgstr "通信員に関するデータ"
 
 #. module: account_coda
 #: model:account.coda.trans.code,comment:account_coda.actcc_11_66
