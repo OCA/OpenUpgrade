@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 00:35+0000\n"
-"PO-Revision-Date: 2012-05-05 21:55+0000\n"
+"PO-Revision-Date: 2012-05-07 03:47+0000\n"
 "Last-Translator: Akira Hiyama <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-05-06 04:40+0000\n"
+"X-Launchpad-Export-Date: 2012-05-07 04:37+0000\n"
 "X-Generator: Launchpad (build 15195)\n"
 
 #. module: account_coda
@@ -660,7 +660,7 @@ msgstr "有価証券の売却"
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_01_51
 msgid "Transfer in your favour – initiated by the bank"
-msgstr "あなたの支持による転送 - 銀行により開始された"
+msgstr "好意による転送 - 銀行により開始"
 
 #. module: account_coda
 #: view:account.coda:0
@@ -774,7 +774,7 @@ msgstr "研究費"
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_01_07
 msgid "Collective transfer"
-msgstr ""
+msgstr "集合的な転送"
 
 #. module: account_coda
 #: code:addons/account_coda/wizard/account_coda_import.py:912
@@ -784,13 +784,16 @@ msgid ""
 "\n"
 "Number of statements : "
 msgstr ""
+"\n"
+"\n"
+"取引明細書の数： "
 
 #. module: account_coda
 #: model:account.coda.trans.code,comment:account_coda.actcc_01_05
 #: model:account.coda.trans.code,comment:account_coda.actcc_01_07
 msgid ""
 "The principal will be debited for the total amount of the file entered."
-msgstr ""
+msgstr "元金は入力されたファイルの合計金額で引き落とされます。"
 
 #. module: account_coda
 #: code:addons/account_coda/wizard/account_coda_import.py:332
@@ -801,48 +804,51 @@ msgid ""
 "CODA parsing error on movement data record 2.3, seq nr %s!\n"
 "Please report this issue via your OpenERP support channel."
 msgstr ""
+"\n"
+"データレコード2.3のシーケンス番号 %s の動作にCODAの解析エラーがあります。\n"
+"OpenERPのサポートを通じてこの問題を報告して下さい。"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_01_52
 msgid "Payment in your favour"
-msgstr ""
+msgstr "好意による支払"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_80_08
 msgid "Registering compensation for savings accounts"
-msgstr ""
+msgstr "貯蓄口座の登録報酬"
 
 #. module: account_coda
 #: model:account.coda.trans.code,comment:account_coda.actcc_11_51
 msgid "Company issues paper in return for cash"
-msgstr ""
+msgstr "会社は現金と引き換えに用紙を発行します。"
 
 #. module: account_coda
 #: field:coda.bank.account,journal:0
 #: view:coda.bank.statement:0
 #: field:coda.bank.statement,journal_id:0
 msgid "Journal"
-msgstr ""
+msgstr "仕訳帳"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_03_19
 msgid "Settlement of credit cards"
-msgstr ""
+msgstr "クレジットカードの決済"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_03_87
 msgid "Reimbursement of cheque-related costs"
-msgstr ""
+msgstr "小切手に関連する費用の払戻"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_13_50
 msgid "Settlement of instalment credit"
-msgstr ""
+msgstr "分割払いクレジットの決済"
 
 #. module: account_coda
 #: model:account.coda.trans.code,comment:account_coda.actcc_01_52
 msgid "Payment by a third person"
-msgstr ""
+msgstr "第三者による支払"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_47_60
@@ -852,24 +858,24 @@ msgstr "海外証書による送金 - 通常貯められたクレジット"
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_04_52
 msgid "Loading GSM cards"
-msgstr ""
+msgstr "GSMカードを入れる"
 
 #. module: account_coda
 #: view:coda.bank.statement:0
 #: view:coda.bank.statement.line:0
 #: field:coda.bank.statement.line,note:0
 msgid "Notes"
-msgstr ""
+msgstr "注記"
 
 #. module: account_coda
 #: field:coda.bank.statement,balance_end_real:0
 msgid "Ending Balance"
-msgstr ""
+msgstr "期末残高"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_11_64
 msgid "Your issue"
-msgstr ""
+msgstr "あなたの問題"
 
 #. module: account_coda
 #: code:addons/account_coda/wizard/account_coda_import.py:870
@@ -885,6 +891,15 @@ msgid ""
 "Account Holder Name: %s\n"
 "Date: %s, Starting Balance:  %.2f, Ending Balance: %.2f%s"
 msgstr ""
+"\n"
+"\n"
+"銀行仕訳帳：%s\n"
+"CODAバージョン：%s\n"
+"CODA順序番号：%s\n"
+"取引明細書用紙順序番号：%s\n"
+"銀行口座：%s\n"
+"口座名義：%s\n"
+"日付：%s、期首残高：%.2f、期末残高：%.2f%s"
 
 #. module: account_coda
 #: field:coda.bank.statement.line,val_date:0
@@ -2011,6 +2026,9 @@ msgid ""
 "CODA parsing error on movement data record 2.2, seq nr %s!\n"
 "Please report this issue via your OpenERP support channel."
 msgstr ""
+"\n"
+"データレコード2.2のシーケンス番号 %s の動作にCODAの解析エラーがあります。\n"
+"OpenERPのサポートを通じてこの問題を報告して下さい。"
 
 #. module: account_coda
 #: model:account.coda.comm.type,description:account_coda.acct_001
@@ -3156,6 +3174,9 @@ msgid ""
 "CODA parsing error on information data record 3.2, seq nr %s!\n"
 "Please report this issue via your OpenERP support channel."
 msgstr ""
+"\n"
+"データレコード3.2のシーケンス番号 %s の情報にCODAの解析エラーがあります。\n"
+"OpenERPのサポートを通じてこの問題を報告して下さい。"
 
 #. module: account_coda
 #: model:account.coda.trans.code,description:account_coda.actcc_11_09
