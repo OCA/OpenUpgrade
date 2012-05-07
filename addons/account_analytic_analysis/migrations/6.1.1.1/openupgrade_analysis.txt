@@ -1,0 +1,19 @@
+---account_analytic_analysis---
+account_analytic_analysis / account_analytic_analysis.summary.user / unit_amount (float)           : not a function anymore
+account_analytic_analysis / account_analytic_analysis.summary.month / unit_amount (float)           : not a function anymore
+deleted xml-id of model ir.actions.act_window: account_analytic_analysis.action_account_analytic_managed_overpassed
+deleted xml-id of model ir.ui.menu: account_analytic_analysis.menu_action_account_analytic_managed_overpassed
+deleted xml-id of model ir.ui.menu: account_analytic_analysis.menu_invoicing
+deleted xml-id of model ir.ui.menu: base.menu_main_pm
+deleted xml-id of model ir.ui.view: account_analytic_analysis.view_account_analytic_simplified
+new xml-id of model ir.actions.act_window: account_analytic_analysis.action_account_analytic_overdue
+new xml-id of model ir.actions.act_window: account_analytic_analysis.action_account_analytic_overdue_all
+new xml-id of model ir.cron: account_analytic_analysis.account_analytic_cron
+new xml-id of model ir.model.access: account_analytic_analysis.access_account_analytic_analysis_summary_month_sale
+new xml-id of model ir.model.access: account_analytic_analysis.access_account_analytic_analysis_summary_user_sale
+new xml-id of model ir.ui.menu: account_analytic_analysis.menu_action_account_analytic_overdue
+new xml-id of model ir.ui.menu: account_analytic_analysis.menu_action_account_analytic_overdue_all
+new xml-id of model ir.ui.menu: base.menu_invoiced
+new xml-id of model ir.ui.menu: base.menu_sales
+new xml-id of model ir.ui.view: account_analytic_analysis.account_analytic_account_invoice_stat_form
+new xml-id of model ir.ui.view: account_analytic_analysis.view_account_analytic_account_overdue_search

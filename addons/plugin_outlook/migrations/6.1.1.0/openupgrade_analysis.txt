@@ -1,0 +1,11 @@
+---plugin_outlook---
+deleted xml-id of model ir.actions.act_window: outlook.action_outlook_installer
+deleted xml-id of model ir.actions.act_window: outlook.action_outlook_wizard
+deleted xml-id of model ir.actions.todo: outlook.outlook_installer_todo
+deleted xml-id of model ir.ui.menu: outlook.menu_base_config_plugins_outlook
+deleted xml-id of model ir.ui.view: outlook.view_outlook_installer
+new xml-id of model ir.actions.act_window: plugin_outlook.action_outlook_installer
+new xml-id of model ir.actions.act_window: plugin_outlook.action_outlook_wizard
+new xml-id of model ir.actions.todo: plugin_outlook.outlook_installer_todo
+new xml-id of model ir.ui.menu: plugin_outlook.menu_base_config_plugins_outlook
+new xml-id of model ir.ui.view: plugin_outlook.view_outlook_installer

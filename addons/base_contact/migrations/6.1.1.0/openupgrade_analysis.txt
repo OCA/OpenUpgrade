@@ -1,0 +1,46 @@
+---base_contact---
+base_contact / res.partner.contact      / birthdate (date)              : type is now 'char' ('date')
+base_contact / res.partner.contact      / job_ids (one2many)            : relation is now 'res.partner.address' ('res.partner.job')
+base_contact / res.partner.contact      / name (char)                   : now a function
+base_contact / res.partner.address      / job_ids (one2many)            : DEL relation: res.partner.job
+base_contact / res.partner.contact      / last_name (char)              : NEW required: required
+base_contact / res.partner.location     / city (char)                   : NEW 
+base_contact / res.partner.location     / zip (char)                    : NEW 
+base_contact / res.partner.location     / street2 (char)                : NEW 
+base_contact / res.partner.location     / country_id (many2one)         : NEW relation: res.country
+base_contact / res.partner.location     / company_id (many2one)         : NEW relation: res.company
+base_contact / res.partner.location     / street (char)                 : NEW 
+base_contact / res.partner.location     / state_id (many2one)           : NEW relation: res.country.state
+base_contact / res.partner.location     / job_ids (one2many)            : NEW relation: res.partner.address
+base_contact / res.partner.address      / contact_id (many2one)         : NEW relation: res.partner.contact
+base_contact / res.partner.address      / location_id (many2one)        : NEW relation: res.partner.location
+deleted xml-id of model ir.actions.act_window: base_contact.act_res_partner_jobs
+deleted xml-id of model ir.actions.act_window: base_contact.action_base_contact_installer
+deleted xml-id of model ir.actions.act_window: base_contact.action_res_partner_job
+deleted xml-id of model ir.actions.todo: base_contact.base_contact_installer_todo
+deleted xml-id of model ir.model.access: base_contact.access_res_partner_job
+deleted xml-id of model ir.model.access: base_contact.access_res_partner_job_all
+deleted xml-id of model ir.ui.view: base_contact.view_base_contact_installer
+deleted xml-id of model ir.ui.view: base_contact.view_partner_address_form_inherited1
+deleted xml-id of model ir.ui.view: base_contact.view_partner_address_form_inherited2
+deleted xml-id of model ir.ui.view: base_contact.view_partner_address_form_inherited3
+deleted xml-id of model ir.ui.view: base_contact.view_partner_address_form_inherited4
+deleted xml-id of model ir.ui.view: base_contact.view_partner_address_form_inherited6
+deleted xml-id of model ir.ui.view: base_contact.view_partner_address_tree_inherited1
+deleted xml-id of model ir.ui.view: base_contact.view_partner_form_inherit2
+deleted xml-id of model ir.ui.view: base_contact.view_partner_form_inherit2bis
+deleted xml-id of model ir.ui.view: base_contact.view_partner_form_inherit3
+deleted xml-id of model ir.ui.view: base_contact.view_partner_job_form
+deleted xml-id of model ir.ui.view: base_contact.view_partner_job_tree
+deleted xml-id of model ir.ui.view: base_contact.view_res_partner_address_filter
+deleted xml-id of model process.node: base_contact.process_node_function0
+deleted xml-id of model process.transition: base_contact.process_transition_contacttofunction0
+deleted xml-id of model process.transition: base_contact.process_transition_functiontoaddress0
+deleted xml-id of model res.groups: base.group_sale_manager
+deleted xml-id of model res.groups: base.group_sale_salesman
+new xml-id of model ir.model.access: base_contact.access_res_partner_address_sale_salesman
+new xml-id of model ir.model.access: base_contact.access_res_partner_location
+new xml-id of model ir.model.access: base_contact.access_res_partner_location_sale_salesman
+new xml-id of model ir.ui.menu: base.menu_partner_address_form
+new xml-id of model ir.ui.view: base_contact.view_partner_location_form
+new xml-id of model ir.ui.view: base_contact.view_partner_location_tree

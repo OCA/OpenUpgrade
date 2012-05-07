@@ -1,0 +1,10 @@
+---account_followup---
+account_followup / account_followup.followup / company_id (many2one)         : now required, default = function
+deleted xml-id of model ir.model.access: account_followup.access_account_followup_stat_manager
+new xml-id of model account_followup.followup: account_followup.demo_followup1
+new xml-id of model account_followup.followup.line: account_followup.demo_followup_line1
+new xml-id of model account_followup.followup.line: account_followup.demo_followup_line2
+new xml-id of model account_followup.followup.line: account_followup.demo_followup_line3
+new xml-id of model ir.actions.act_window: account_followup.action_view_account_followup_followup_form
+new xml-id of model ir.actions.todo: account_followup.config_wizard_view_account_followup_followup_form
+new xml-id of model ir.model.access: account_followup.access_account_followup_followup_manager

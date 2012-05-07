@@ -1,0 +1,13 @@
+---base_calendar---
+base_calendar / calendar.todo            / end_type (selection)          : selection_keys is now '['count', 'end_date']' ('['count', 'end_date', 'forever']')
+base_calendar / calendar.event           / end_type (selection)          : selection_keys is now '['count', 'end_date']' ('['count', 'end_date', 'forever']')
+base_calendar / calendar.todo            / edit_all (boolean)            : DEL 
+base_calendar / calendar.todo            / freq (selection)              : DEL selection_keys: ['None', 'daily', 'hourly', 'monthly', 'weekly', 'yearly']
+base_calendar / calendar.event           / edit_all (boolean)            : DEL 
+base_calendar / calendar.event           / freq (selection)              : DEL selection_keys: ['None', 'daily', 'hourly', 'monthly', 'weekly', 'yearly']
+deleted xml-id of model ir.actions.act_window: base_calendar.action_base_calendar_set_exrule
+deleted xml-id of model ir.actions.act_window: base_calendar.action_calendar_event_edit_all
+deleted xml-id of model ir.ui.view: base_calendar.view_base_calendar_set_exrule
+deleted xml-id of model ir.ui.view: base_calendar.view_calendar_event_edit_all
+new xml-id of model ir.model.access: base_calendar.access_calendar_attendee_survey_user
+new xml-id of model res.groups: base.group_survey_user

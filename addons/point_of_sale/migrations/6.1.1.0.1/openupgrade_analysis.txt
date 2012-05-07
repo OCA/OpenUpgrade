@@ -1,0 +1,95 @@
+---point_of_sale---
+point_of_sale / report.pos.order         / state (selection)             : selection_keys is now '['cancel', 'done', 'draft', 'invoiced', 'paid']' ('['advance', 'cancel', 'done', 'draft', 'invoiced', 'paid', 'payment']')
+point_of_sale / pos.order.line           / price_unit (float)            : not a function anymore
+point_of_sale / pos.order.line           / name (char)                   : now required, default = function
+point_of_sale / pos.order                / state (selection)             : selection_keys is now '['cancel', 'done', 'draft', 'invoiced', 'paid']' ('['advance', 'cancel', 'done', 'draft', 'invoiced', 'paid', 'payment']')
+point_of_sale / account.bank.statement.line / journal_id (char)             : relation is now 'account.journal' ('False')
+point_of_sale / account.bank.statement.line / journal_id (char)             : type is now 'many2one' ('char')
+point_of_sale / report.pos.order         / delay_payment (integer)       : DEL 
+point_of_sale / report.pos.order         / date_payment (date)           : DEL required: required
+point_of_sale / report.pos.order         / date_validation (date)        : DEL required: required
+point_of_sale / product.product          / disc_controle (boolean)       : DEL 
+point_of_sale / product.product          / am_out (boolean)              : DEL 
+point_of_sale / pos.order.line           / price_ded (float)             : DEL 
+point_of_sale / pos.order.line           / qty_rfd (float)               : DEL 
+point_of_sale / pos.order.line           / serial_number (char)          : DEL 
+point_of_sale / account.bank.statement.line / is_acc (boolean)              : DEL 
+point_of_sale / account.bank.statement.line / am_out (boolean)              : DEL 
+point_of_sale / stock.picking            / pos_order (many2one)          : DEL relation: pos.order
+point_of_sale / pos.order                / journal_entry (boolean)       : DEL 
+point_of_sale / pos.order                / type_rec (char)               : DEL 
+point_of_sale / pos.order                / date_validity (date)          : DEL required: required, req_default: function
+point_of_sale / pos.order                / user_salesman_id (many2one)   : DEL relation: res.users, required: required, req_default: function
+point_of_sale / pos.order                / first_name (char)             : DEL 
+point_of_sale / pos.order                / note_2 (char)                 : DEL 
+point_of_sale / pos.order                / pickings (one2many)           : DEL relation: stock.picking
+point_of_sale / pos.order                / invoice_wanted (boolean)      : DEL 
+point_of_sale / pos.order                / sale_manager (many2one)       : DEL relation: res.users
+point_of_sale / pos.order                / num_sale (char)               : DEL 
+point_of_sale / pos.order                / price_type (selection)        : DEL required: required, selection_keys: ['tax_excluded'], req_default: tax_excluded
+point_of_sale / pos.order                / remboursed (boolean)          : DEL 
+point_of_sale / pos.order                / contract_number (char)        : DEL 
+point_of_sale / res.company              / max_diff (float)              : DEL 
+point_of_sale / res.company              / company_discount (float)      : DEL 
+point_of_sale / account.journal          / journal_users (many2many)     : DEL relation: res.users
+point_of_sale / account.journal          / special_journal (boolean)     : DEL 
+point_of_sale / pos.category             / parent_id (many2one)          : NEW relation: pos.category
+point_of_sale / pos.category             / child_id (one2many)           : NEW relation: pos.category
+point_of_sale / pos.category             / name (char)                   : NEW required: required
+point_of_sale / pos.category             / sequence (integer)            : NEW 
+point_of_sale / product.product          / pos_categ_id (many2one)       : NEW relation: pos.category
+point_of_sale / account.bank.statement.line / journal_id (char)             : NEW mode: modify
+point_of_sale / account.journal          / journal_user (boolean)        : NEW 
+deleted xml-id of model ir.actions.act_window: point_of_sale.action_add_product
+deleted xml-id of model ir.actions.act_window: point_of_sale.action_pos_get_sale
+deleted xml-id of model ir.actions.act_window: point_of_sale.action_pos_order_accepted
+deleted xml-id of model ir.actions.act_window: point_of_sale.action_pos_order_tree2
+deleted xml-id of model ir.actions.act_window: point_of_sale.action_pos_order_tree3
+deleted xml-id of model ir.actions.act_window: point_of_sale.action_pos_order_tree_open
+deleted xml-id of model ir.actions.act_window: point_of_sale.action_pos_pos_form_user
+deleted xml-id of model ir.actions.act_window: point_of_sale.action_pos_sales_user_today
+deleted xml-id of model ir.actions.act_window: point_of_sale.action_pos_scan_product
+deleted xml-id of model ir.actions.act_window: point_of_sale.action_report_all_closed_cashbox_of_the_day
+deleted xml-id of model ir.actions.act_window: point_of_sale.action_report_pos_payment_repport_date
+deleted xml-id of model ir.actions.act_window: point_of_sale.action_report_pos_sales_user_today_current_user
+deleted xml-id of model ir.actions.act_window: point_of_sale.action_view_pos_return
+deleted xml-id of model ir.actions.act_window.view: point_of_sale.action_product_input_form_tag
+deleted xml-id of model ir.actions.act_window.view: point_of_sale.action_product_input_tree_tag
+deleted xml-id of model ir.actions.act_window.view: point_of_sale.action_product_output_form_tag
+deleted xml-id of model ir.actions.act_window.view: point_of_sale.action_product_output_tree_tag
+deleted xml-id of model ir.actions.report.xml: point_of_sale.pos_payment_report
+deleted xml-id of model ir.actions.report.xml: point_of_sale.pos_payment_report_date
+deleted xml-id of model ir.actions.report.xml: point_of_sale.pos_sales_user_today_current_user
+deleted xml-id of model ir.model.access: point_of_sale.access_account_journal_manager
+deleted xml-id of model ir.model.access: point_of_sale.access_account_journal_pos_manager
+deleted xml-id of model ir.model.access: point_of_sale.access_product_product_packaging_manager
+deleted xml-id of model ir.model.access: point_of_sale.access_product_product_supplierinfo_manager
+deleted xml-id of model ir.model.access: point_of_sale.access_sale_shop_pos_manager
+deleted xml-id of model ir.model.access: point_of_sale.access_sale_shop_pos_system
+deleted xml-id of model ir.ui.menu: point_of_sale.menu_cash_register
+deleted xml-id of model ir.ui.menu: point_of_sale.menu_pos_payment_report_date
+deleted xml-id of model ir.ui.view: point_of_sale.pos_payment_report_date_form
+deleted xml-id of model ir.ui.view: point_of_sale.product_input_output_form_view
+deleted xml-id of model ir.ui.view: point_of_sale.view_add_product
+deleted xml-id of model ir.ui.view: point_of_sale.view_all_closed_cashbox_of_the_day
+deleted xml-id of model ir.ui.view: point_of_sale.view_company_form_pos
+deleted xml-id of model ir.ui.view: point_of_sale.view_pos_get_sale
+deleted xml-id of model ir.ui.view: point_of_sale.view_pos_sales_user_today
+deleted xml-id of model ir.ui.view: point_of_sale.view_pos_sales_user_today_current_user
+deleted xml-id of model ir.ui.view: point_of_sale.view_pos_scan_product
+new xml-id of model ir.actions.act_window: point_of_sale.action_account_journal_form
+new xml-id of model ir.actions.act_window: point_of_sale.action_pos_sale_all
+new xml-id of model ir.actions.act_window: point_of_sale.pos_category_action
+new xml-id of model ir.actions.act_window: point_of_sale.product_normal_action
+new xml-id of model ir.actions.client: point_of_sale.action_pos_pos
+new xml-id of model ir.model.access: point_of_sale.access_product_category_pos_manager
+new xml-id of model ir.model.access: point_of_sale.access_product_category_pos_user
+new xml-id of model ir.ui.menu: point_of_sale.menu_action_account_journal_form_open
+new xml-id of model ir.ui.menu: point_of_sale.menu_point_ofsale_all
+new xml-id of model ir.ui.menu: point_of_sale.menu_point_root_touchscreen
+new xml-id of model ir.ui.menu: point_of_sale.menu_pos_category
+new xml-id of model ir.ui.menu: point_of_sale.menu_wizard_pos_confirm
+new xml-id of model ir.ui.view: point_of_sale.pos_category_form_view
+new xml-id of model ir.ui.view: point_of_sale.pos_category_tree_view
+new xml-id of model ir.ui.view: point_of_sale.product_normal_form_pos_view
+new xml-id of model pos.category: point_of_sale.categ_others

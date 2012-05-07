@@ -1,0 +1,36 @@
+---board---
+deleted xml-id of model ir.actions.act_window: board.action_view_board_note_form
+deleted xml-id of model ir.actions.act_window: board.dashboard_open
+deleted xml-id of model ir.model.access: board.access_board_board
+deleted xml-id of model ir.model.access: board.access_board_board_line
+deleted xml-id of model ir.model.access: board.access_board_board_sale_salesman
+deleted xml-id of model ir.model.access: board.access_board_note
+deleted xml-id of model ir.model.access: board.access_board_note_type
+deleted xml-id of model ir.model.access: board.access_res_log_report
+deleted xml-id of model ir.model.access: board.access_res_log_report_erp_manager
+deleted xml-id of model ir.model.access: board.access_res_log_report_system
+deleted xml-id of model ir.ui.menu: board.admin_menu_dasboard
+deleted xml-id of model ir.ui.menu: board.menu_board_admin
+deleted xml-id of model ir.ui.menu: board.menu_view_board_note_form
+deleted xml-id of model ir.ui.view: board.view_board_note_form
+deleted xml-id of model ir.ui.view: board.view_board_note_search
+deleted xml-id of model ir.ui.view: board.view_board_note_tree
+deleted xml-id of model res.groups: base.group_sale_salesman
+new xml-id of model ir.actions.act_window: board.board_homepage_action
+new xml-id of model ir.actions.client: board.action_application_tiles
+new xml-id of model ir.actions.client: board.action_res_widgets_currency_converter
+new xml-id of model ir.actions.client: board.action_res_widgets_events
+new xml-id of model ir.actions.client: board.action_res_widgets_facebook
+new xml-id of model ir.actions.client: board.action_res_widgets_map
+new xml-id of model ir.actions.client: board.action_res_widgets_note
+new xml-id of model ir.actions.client: board.action_res_widgets_tweets
+new xml-id of model ir.actions.client: board.board_config_overview
+new xml-id of model ir.model.access: board.access_board_board all
+new xml-id of model ir.model.access: board.access_board_board system
+new xml-id of model ir.model.access: board.access_board_board_line all
+new xml-id of model ir.model.access: board.access_board_board_line system
+new xml-id of model ir.model.access: board.access_res_log_report all
+new xml-id of model ir.ui.menu: base.menu_dashboard
+new xml-id of model ir.ui.menu: base.menu_dashboard_admin
+new xml-id of model ir.ui.view: board.board_homepage_view
+new xml-id of model res.users: base.user_admin

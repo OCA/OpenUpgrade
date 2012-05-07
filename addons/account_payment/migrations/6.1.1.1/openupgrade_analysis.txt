@@ -1,0 +1,8 @@
+---account_payment---
+deleted xml-id of model ir.actions.act_window: account_payment.act_account_invoice_2_payment_line
+deleted xml-id of model ir.model.access: account_payment.access_payment_line_invoice
+deleted xml-id of model ir.model.access: account_payment.access_payment_order_accountant
+deleted xml-id of model ir.model.access: account_payment.access_payment_order_invoice
+new xml-id of model ir.rule: account_payment.payment_line_comp_rule
+new xml-id of model ir.rule: account_payment.payment_order_comp_rule
+new xml-id of model res.groups: account.group_account_invoice

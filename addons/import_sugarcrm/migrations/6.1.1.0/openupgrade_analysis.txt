@@ -1,0 +1,25 @@
+---import_sugarcrm---
+import_sugarcrm / import.sugarcrm          / username (char)               : NEW required: required, req_default: admin
+import_sugarcrm / import.sugarcrm          / claim (boolean)               : NEW 
+import_sugarcrm / import.sugarcrm          / account (boolean)             : NEW 
+import_sugarcrm / import.sugarcrm          / document (boolean)            : NEW 
+import_sugarcrm / import.sugarcrm          / project (boolean)             : NEW 
+import_sugarcrm / import.sugarcrm          / url (char)                    : NEW required: required, req_default: http://sugarcrm.example.com/soap.php
+import_sugarcrm / import.sugarcrm          / meeting (boolean)             : NEW 
+import_sugarcrm / import.sugarcrm          / project_task (boolean)        : NEW 
+import_sugarcrm / import.sugarcrm          / instance_name (char)          : NEW 
+import_sugarcrm / import.sugarcrm          / email_history (boolean)       : NEW 
+import_sugarcrm / import.sugarcrm          / contact (boolean)             : NEW 
+import_sugarcrm / import.sugarcrm          / call (boolean)                : NEW 
+import_sugarcrm / import.sugarcrm          / user (boolean)                : NEW 
+import_sugarcrm / import.sugarcrm          / email_from (char)             : NEW 
+import_sugarcrm / import.sugarcrm          / employee (boolean)            : NEW 
+import_sugarcrm / import.sugarcrm          / password (char)               : NEW required: required
+import_sugarcrm / import.sugarcrm          / opportunity (boolean)         : NEW 
+import_sugarcrm / import.sugarcrm          / bug (boolean)                 : NEW 
+new xml-id of model ir.actions.act_window: import_sugarcrm.action_import_sugarcrm
+new xml-id of model ir.model.access: import_sugarcrm.access_import_message_system
+new xml-id of model ir.model.access: import_sugarcrm.access_import_sugarcrm_system
+new xml-id of model ir.ui.menu: import_sugarcrm.menu_sugarcrm_import
+new xml-id of model ir.ui.view: import_sugarcrm.view_import_message_form
+new xml-id of model ir.ui.view: import_sugarcrm.view_import_sugarcrm_form

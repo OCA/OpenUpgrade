@@ -1,0 +1,9 @@
+---crm_claim---
+crm_claim    / crm.claim                / message_ids (one2many)        : relation is now 'mail.message' ('mailgate.message')
+crm_claim    / crm.claim.report         / probability (float)           : DEL 
+crm_claim    / res.partner              / claims_ids (one2many)         : NEW relation: crm.claim
+crm_claim    / crm.claim                / active (boolean)              : NEW 
+deleted xml-id of model ir.ui.menu: crm_claim.menu_crm_claim_stage_act
+new xml-id of model ir.model.access: crm_claim.access_crm_claim_partner_manager
+new xml-id of model ir.ui.view: base.view_crm_partner_info_History1
+new xml-id of model ir.ui.view: crm_claim.view_claim_partner_info_form1

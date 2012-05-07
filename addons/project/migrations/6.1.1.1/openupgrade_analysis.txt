@@ -1,0 +1,73 @@
+---project---
+project      / project.vs.hours         / user_id (many2one)            : NEW relation: res.users
+project      / project.task.history     / user_id (many2one)            : NEW relation: res.users
+project      / project.task.history     / task_id (many2one)            : NEW relation: project.task, required: required
+project      / project.task.history     / type_id (many2one)            : NEW relation: project.task.type
+project      / project.task.history     / kanban_state (selection)      : NEW selection_keys: ['blocked', 'done', 'normal']
+project      / project.task.history     / state (selection)             : NEW selection_keys: ['cancelled', 'done', 'draft', 'open', 'pending']
+project      / project.task.history     / date (date)                   : NEW 
+project      / project.task.history     / planned_hours (float)         : NEW 
+project      / project.task.history     / remaining_hours (float)       : NEW 
+project      / project.task.type        / project_ids (many2many)       : NEW relation: project.project
+project      / project.task.type        / project_default (boolean)     : NEW 
+project      / project.task.history.cumulative / user_id (many2one)            : NEW relation: res.users
+project      / project.task.history.cumulative / task_id (many2one)            : NEW relation: project.task, required: required
+project      / project.task.history.cumulative / end_date (date)               : NEW 
+project      / project.task.history.cumulative / type_id (many2one)            : NEW relation: project.task.type
+project      / project.task.history.cumulative / kanban_state (selection)      : NEW selection_keys: ['blocked', 'done', 'normal']
+project      / project.task.history.cumulative / state (selection)             : NEW selection_keys: ['cancelled', 'done', 'draft', 'open', 'pending']
+project      / project.task.history.cumulative / date (date)                   : NEW 
+project      / project.task.history.cumulative / planned_hours (float)         : NEW 
+project      / project.task.history.cumulative / remaining_hours (float)       : NEW 
+project      / project.task             / color (integer)               : NEW 
+project      / project.task             / kanban_state (selection)      : NEW selection_keys: ['blocked', 'done', 'normal']
+deleted xml-id of model board.note.type: project.note_project_manager_type
+deleted xml-id of model board.note.type: project.note_project_type
+deleted xml-id of model ir.actions.act_window: project.act_res_users_2_project_task_work_month
+deleted xml-id of model ir.actions.act_window: project.action_project_installer
+deleted xml-id of model ir.actions.act_window: project.action_project_task_close
+deleted xml-id of model ir.actions.act_window: project.action_project_vs_planned_total_hours_graph
+deleted xml-id of model ir.actions.act_window: project.action_view_board_note_tree
+deleted xml-id of model ir.actions.act_window: project.action_view_task_tree
+deleted xml-id of model ir.actions.act_window.view: project.open_view_project_vs_planned_total_hours_graph
+deleted xml-id of model ir.actions.act_window.view: project.open_view_project_vs_planned_total_hours_tree
+deleted xml-id of model ir.actions.todo: project.project_installer_todo
+deleted xml-id of model ir.model.access: project.access_account_analytic_account_manager
+deleted xml-id of model ir.model.access: project.access_partner_address_task manager
+deleted xml-id of model ir.model.access: project.access_partner_task manager
+deleted xml-id of model ir.model.access: project.access_project_project_manager
+deleted xml-id of model ir.model.access: project.access_project_task_manager
+deleted xml-id of model ir.model.access: project.access_project_task_type
+deleted xml-id of model ir.model.access: project.access_project_task_work_manager
+deleted xml-id of model ir.model.access: project.access_project_vs_hours_manager
+deleted xml-id of model ir.ui.view: project.view_project_installer
+deleted xml-id of model ir.ui.view: project.view_project_task_close
+deleted xml-id of model res.groups: base.group_sale_salesman
+new xml-id of model ir.actions.act_window: project.action_create_initial_projects_installer
+new xml-id of model ir.actions.act_window: project.action_review_task_stage
+new xml-id of model ir.actions.act_window: project.action_view_task_history_burndown
+new xml-id of model ir.actions.act_window: project.action_view_task_history_cumulative
+new xml-id of model ir.actions.act_window: project.my_open_tasks_action
+new xml-id of model ir.actions.act_window.view: project.open_view_task_list_kanban
+new xml-id of model ir.actions.act_window.view: project.open_view_task_list_tree
+new xml-id of model ir.actions.todo: project.config_wizard_action_create_initial_projects_installer
+new xml-id of model ir.actions.todo: project.config_wizard_action_review_task_stage
+new xml-id of model ir.actions.todo.category: project.category_project_config
+new xml-id of model ir.model.access: project.access_mail_message_project_user
+new xml-id of model ir.model.access: project.access_project_task_history
+new xml-id of model ir.model.access: project.access_project_task_history_cumulative
+new xml-id of model ir.model.access: project.access_resource_calendar
+new xml-id of model ir.ui.menu: project.menu_action_view_task_history_burndown
+new xml-id of model ir.ui.menu: project.menu_action_view_task_history_cumulative
+new xml-id of model ir.ui.menu: project.menu_project_config_project
+new xml-id of model ir.ui.menu: project.project_report_task
+new xml-id of model ir.ui.view: project.task_type_search
+new xml-id of model ir.ui.view: project.view_task_history_burndown_graph
+new xml-id of model ir.ui.view: project.view_task_history_graph
+new xml-id of model ir.ui.view: project.view_task_history_search
+new xml-id of model ir.ui.view: project.view_task_history_tree
+new xml-id of model ir.ui.view: project.view_task_kanban
+new xml-id of model project.task.type: project.project_tt_development
+new xml-id of model project.task.type: project.project_tt_merge
+new xml-id of model project.task.type: project.project_tt_specification
+new xml-id of model project.task.type: project.project_tt_testing

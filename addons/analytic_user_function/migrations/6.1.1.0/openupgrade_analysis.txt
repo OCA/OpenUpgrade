@@ -1,0 +1,5 @@
+---analytic_user_function---
+analytic_user_function / account.analytic.account / user_product_ids (one2many)   : relation is now 'analytic.user.funct.grid' ('analytic_user_funct_grid')
+analytic_user_function / analytic.user.funct.grid / user_id (many2one)            : NEW relation: res.users, required: required
+analytic_user_function / analytic.user.funct.grid / product_id (many2one)         : NEW relation: product.product, required: required
+analytic_user_function / analytic.user.funct.grid / account_id (many2one)         : NEW relation: account.analytic.account, required: required

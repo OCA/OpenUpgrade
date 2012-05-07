@@ -1,0 +1,120 @@
+---account_asset---
+account_asset / account.asset.depreciation.line / asset_id (many2one)           : NEW relation: account.asset.asset, required: required
+account_asset / account.asset.depreciation.line / name (char)                   : NEW required: required
+account_asset / account.asset.depreciation.line / sequence (integer)            : NEW required: required
+account_asset / account.asset.depreciation.line / depreciation_date (char)      : NEW 
+account_asset / account.asset.depreciation.line / amount (float)                : NEW required: required
+account_asset / account.asset.depreciation.line / remaining_value (float)       : NEW required: required
+account_asset / account.asset.depreciation.line / move_id (many2one)            : NEW relation: account.move
+account_asset / account.asset.depreciation.line / depreciated_value (float)     : NEW required: required
+account_asset / account.asset.category   / method_number (integer)       : NEW 
+account_asset / account.asset.category   / account_expense_depreciation_id (many2one): NEW relation: account.account, required: required
+account_asset / account.asset.category   / method_progress_factor (float): NEW 
+account_asset / account.asset.category   / method_end (date)             : NEW 
+account_asset / account.asset.category   / account_asset_id (many2one)   : NEW relation: account.account, required: required
+account_asset / account.asset.category   / account_depreciation_id (many2one): NEW relation: account.account, required: required
+account_asset / account.asset.category   / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+account_asset / account.asset.category   / journal_id (many2one)         : NEW relation: account.journal, required: required
+account_asset / account.asset.category   / note (text)                   : NEW 
+account_asset / account.asset.category   / prorata (boolean)             : NEW 
+account_asset / account.asset.category   / method_time (selection)       : NEW required: required, selection_keys: ['end', 'number'], req_default: number
+account_asset / account.asset.category   / open_asset (boolean)          : NEW 
+account_asset / account.asset.category   / method_period (integer)       : NEW required: required, req_default: 12
+account_asset / account.asset.category   / account_analytic_id (many2one): NEW relation: account.analytic.account
+account_asset / account.asset.category   / method (selection)            : NEW required: required, selection_keys: ['degressive', 'linear'], req_default: linear
+account_asset / account.asset.category   / name (char)                   : NEW required: required
+account_asset / account.move.line        / entry_ids (one2many)          : NEW relation: account.move.line
+account_asset / account.move.line        / asset_id (many2one)           : NEW relation: account.asset.asset
+account_asset / asset.asset.report       / asset_id (many2one)           : NEW relation: account.asset.asset
+account_asset / asset.asset.report       / asset_category_id (many2one)  : NEW relation: account.asset.category
+account_asset / asset.asset.report       / name (char)                   : NEW 
+account_asset / asset.asset.report       / move_check (boolean)          : NEW 
+account_asset / asset.asset.report       / gross_value (float)           : NEW 
+account_asset / asset.asset.report       / depreciation_date (date)      : NEW 
+account_asset / asset.asset.report       / unposted_value (float)        : NEW 
+account_asset / asset.asset.report       / company_id (many2one)         : NEW relation: res.company
+account_asset / asset.asset.report       / state (selection)             : NEW selection_keys: ['close', 'draft', 'open']
+account_asset / asset.asset.report       / depreciation_value (float)    : NEW 
+account_asset / asset.asset.report       / purchase_date (date)          : NEW 
+account_asset / asset.asset.report       / nbr (integer)                 : NEW 
+account_asset / asset.asset.report       / posted_value (float)          : NEW 
+account_asset / asset.asset.report       / partner_id (many2one)         : NEW relation: res.partner
+account_asset / account.invoice.line     / asset_category_id (many2one)  : NEW relation: account.asset.category
+account_asset / account.asset.history    / asset_id (many2one)           : NEW relation: account.asset.asset, required: required
+account_asset / account.asset.history    / method_number (integer)       : NEW 
+account_asset / account.asset.history    / user_id (many2one)            : NEW relation: res.users, required: required, req_default: function
+account_asset / account.asset.history    / name (char)                   : NEW 
+account_asset / account.asset.history    / method_end (date)             : NEW 
+account_asset / account.asset.history    / note (text)                   : NEW 
+account_asset / account.asset.history    / method_time (selection)       : NEW required: required, selection_keys: ['end', 'number']
+account_asset / account.asset.history    / method_period (integer)       : NEW 
+account_asset / account.asset.history    / date (date)                   : NEW required: required, req_default: function
+account_asset / account.asset.asset      / code (char)                   : NEW 
+account_asset / account.asset.asset      / method_end (date)             : NEW 
+account_asset / account.asset.asset      / prorata (boolean)             : NEW 
+account_asset / account.asset.asset      / salvage_value (float)         : NEW 
+account_asset / account.asset.asset      / currency_id (many2one)        : NEW relation: res.currency, required: required, req_default: function
+account_asset / account.asset.asset      / partner_id (many2one)         : NEW relation: res.partner
+account_asset / account.asset.asset      / method_progress_factor (float): NEW 
+account_asset / account.asset.asset      / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+account_asset / account.asset.asset      / note (text)                   : NEW 
+account_asset / account.asset.asset      / parent_id (many2one)          : NEW relation: account.asset.asset
+account_asset / account.asset.asset      / state (selection)             : NEW required: required, selection_keys: ['close', 'draft', 'open'], req_default: draft
+account_asset / account.asset.asset      / method_period (integer)       : NEW required: required, req_default: 12
+account_asset / account.asset.asset      / purchase_date (date)          : NEW required: required, req_default: function
+account_asset / account.asset.asset      / history_ids (one2many)        : NEW relation: account.asset.history
+account_asset / account.asset.asset      / method (selection)            : NEW required: required, selection_keys: ['degressive', 'linear'], req_default: linear
+account_asset / account.asset.asset      / method_number (integer)       : NEW 
+account_asset / account.asset.asset      / depreciation_line_ids (one2many): NEW relation: account.asset.depreciation.line
+account_asset / account.asset.asset      / child_ids (one2many)          : NEW relation: account.asset.asset
+account_asset / account.asset.asset      / method_time (selection)       : NEW required: required, selection_keys: ['end', 'number'], req_default: number
+account_asset / account.asset.asset      / active (boolean)              : NEW 
+account_asset / account.asset.asset      / name (char)                   : NEW required: required
+account_asset / account.asset.asset      / purchase_value (float)        : NEW required: required
+account_asset / account.asset.asset      / account_move_line_ids (one2many): NEW relation: account.move.line
+account_asset / account.asset.asset      / category_id (many2one)        : NEW relation: account.asset.category, required: required
+new xml-id of model ir.actions.act_window: account_asset.act_entries_open
+new xml-id of model ir.actions.act_window: account_asset.action_account_asset_asset_form
+new xml-id of model ir.actions.act_window: account_asset.action_account_asset_asset_form_normal
+new xml-id of model ir.actions.act_window: account_asset.action_account_asset_asset_list_normal
+new xml-id of model ir.actions.act_window: account_asset.action_account_asset_asset_tree
+new xml-id of model ir.actions.act_window: account_asset.action_asset_asset_report
+new xml-id of model ir.actions.act_window: account_asset.action_asset_depreciation_confirmation_wizard
+new xml-id of model ir.actions.act_window: account_asset.action_asset_modify
+new xml-id of model ir.actions.todo: account_asset.asset_category_form_view_todo
+new xml-id of model ir.model.access: account_asset.access_account_asset_asset
+new xml-id of model ir.model.access: account_asset.access_account_asset_asset_manager
+new xml-id of model ir.model.access: account_asset.access_account_asset_category
+new xml-id of model ir.model.access: account_asset.access_account_asset_category_manager
+new xml-id of model ir.model.access: account_asset.access_account_asset_depreciation_line
+new xml-id of model ir.model.access: account_asset.access_account_asset_depreciation_line_manager
+new xml-id of model ir.model.access: account_asset.access_account_asset_history
+new xml-id of model ir.model.access: account_asset.access_account_asset_history_manager
+new xml-id of model ir.model.access: account_asset.access_asset_asset_report
+new xml-id of model ir.model.access: account_asset.access_asset_asset_report_manager
+new xml-id of model ir.rule: account_asset.account_asset_asset_multi_company_rule
+new xml-id of model ir.rule: account_asset.account_asset_category_multi_company_rule
+new xml-id of model ir.ui.menu: account_asset.menu_action_account_asset_asset_form
+new xml-id of model ir.ui.menu: account_asset.menu_action_account_asset_asset_list_normal
+new xml-id of model ir.ui.menu: account_asset.menu_action_account_asset_asset_tree
+new xml-id of model ir.ui.menu: account_asset.menu_action_asset_asset_report
+new xml-id of model ir.ui.menu: account_asset.menu_asset_depreciation_confirmation_wizard
+new xml-id of model ir.ui.menu: account_asset.menu_finance_assets
+new xml-id of model ir.ui.menu: account_asset.menu_finance_config_assets
+new xml-id of model ir.ui.view: account_asset.action_account_asset_report_graph
+new xml-id of model ir.ui.view: account_asset.asset_modify_form
+new xml-id of model ir.ui.view: account_asset.view_account_asset_asset_form
+new xml-id of model ir.ui.view: account_asset.view_account_asset_asset_hierarchy_tree
+new xml-id of model ir.ui.view: account_asset.view_account_asset_asset_tree
+new xml-id of model ir.ui.view: account_asset.view_account_asset_category_form
+new xml-id of model ir.ui.view: account_asset.view_account_asset_category_search
+new xml-id of model ir.ui.view: account_asset.view_account_asset_category_tree
+new xml-id of model ir.ui.view: account_asset.view_account_asset_history_form
+new xml-id of model ir.ui.view: account_asset.view_account_asset_history_tree
+new xml-id of model ir.ui.view: account_asset.view_account_asset_search
+new xml-id of model ir.ui.view: account_asset.view_account_invoice_asset_form
+new xml-id of model ir.ui.view: account_asset.view_account_move_line_filter_inherit
+new xml-id of model ir.ui.view: account_asset.view_account_move_line_form_inherit
+new xml-id of model ir.ui.view: account_asset.view_asset_asset_report_search
+new xml-id of model ir.ui.view: account_asset.view_asset_asset_report_tree
+new xml-id of model ir.ui.view: account_asset.view_asset_depreciation_confirmation_wizard

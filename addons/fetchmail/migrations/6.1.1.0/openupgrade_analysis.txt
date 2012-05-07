@@ -1,0 +1,27 @@
+---fetchmail---
+fetchmail    / fetchmail.server         / attach (boolean)              : NEW 
+fetchmail    / fetchmail.server         / configuration (text)          : NEW 
+fetchmail    / fetchmail.server         / name (char)                   : NEW required: required
+fetchmail    / fetchmail.server         / script (char)                 : NEW 
+fetchmail    / fetchmail.server         / is_ssl (boolean)              : NEW 
+fetchmail    / fetchmail.server         / original (boolean)            : NEW 
+fetchmail    / fetchmail.server         / object_id (many2one)          : NEW relation: ir.model, required: required
+fetchmail    / fetchmail.server         / server (char)                 : NEW 
+fetchmail    / fetchmail.server         / priority (integer)            : NEW 
+fetchmail    / fetchmail.server         / date (datetime)               : NEW 
+fetchmail    / fetchmail.server         / state (selection)             : NEW selection_keys: ['done', 'draft']
+fetchmail    / fetchmail.server         / user (char)                   : NEW 
+fetchmail    / fetchmail.server         / active (boolean)              : NEW 
+fetchmail    / fetchmail.server         / password (char)               : NEW 
+fetchmail    / fetchmail.server         / type (selection)              : NEW required: required, selection_keys: ['imap', 'local', 'pop'], req_default: pop
+fetchmail    / fetchmail.server         / port (integer)                : NEW 
+fetchmail    / fetchmail.server         / message_ids (one2many)        : NEW relation: mail.message
+fetchmail    / fetchmail.server         / action_id (many2one)          : NEW relation: ir.actions.server
+deleted xml-id of model ir.actions.act_window: fetchmail.action_view_mail_message_emails
+deleted xml-id of model ir.model.access: fetchmail.access_email_server
+deleted xml-id of model ir.ui.menu: base.menu_email_gateway_form
+deleted xml-id of model ir.ui.view: fetchmail.mailgate_message_search_view
+deleted xml-id of model ir.ui.view: fetchmail.mailgate_message_tree_view
+new xml-id of model ir.model.access: fetchmail.access_fetchmail_server
+new xml-id of model ir.ui.view: fetchmail.email_message_search_view
+new xml-id of model ir.ui.view: fetchmail.email_message_tree_view

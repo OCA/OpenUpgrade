@@ -1,0 +1,13 @@
+---sale_crm---
+sale_crm     / sale.order               / categ_id (many2one)           : NEW relation: crm.case.categ
+deleted xml-id of model ir.actions.act_window: sale_crm.action_quotation_for_sale_crm
+deleted xml-id of model ir.actions.act_window: sale_crm.action_turnover_by_month
+deleted xml-id of model ir.actions.act_window.view: sale_crm.action_turnover_by_month_graph_view
+deleted xml-id of model ir.actions.act_window.view: sale_crm.action_turnover_by_month_tree_view
+deleted xml-id of model ir.model.access: sale_crm.access_account_invoice_report_salesman
+deleted xml-id of model ir.ui.view: sale_crm.board_crm_form_inherit_child1
+deleted xml-id of model ir.ui.view: sale_crm.board_crm_form_inherit_replace2
+deleted xml-id of model ir.ui.view: sale_crm.view_turnover_by_month_graph
+deleted xml-id of model ir.ui.view: sale_crm.view_turnover_by_month_tree
+new xml-id of model ir.ui.menu: base.menu_base_partner
+new xml-id of model ir.ui.view: sale_crm.board_crm_form_inherit_replace3

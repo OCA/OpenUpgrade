@@ -1,0 +1,309 @@
+---hr_payroll---
+hr_payroll   / hr.payslip.line          / employee_id (many2one)        : now required
+hr_payroll   / hr.payslip.line          / sequence (integer)            : now required, default = 5
+hr_payroll   / hr.payslip.line          / code (char)                   : now required
+hr_payroll   / hr.payslip.line          / slip_id (many2one)            : now required
+hr_payroll   / hr.payslip.line          / total (float)                 : now a function
+hr_payroll   / hr.payslip.line          / category_id (many2one)        : relation is now 'hr.salary.rule.category' ('hr.allounce.deduction.categoty')
+hr_payroll   / hr.payslip               / state (selection)             : selection_keys is now '['cancel', 'done', 'draft', 'verify']' ('['accont_check', 'cancel', 'confirm', 'done', 'draft', 'hr_check', 'new']')
+hr_payroll   / hr.payroll.structure     / company_id (many2one)         : now required, default = function
+hr_payroll   / hr.employee              / otherid (char)                : module is now 'hr' ('hr_payroll')
+hr_payroll   / hr.contract              / visa_no (char)                : module is now 'hr_contract' ('hr_payroll')
+hr_payroll   / hr.contract              / visa_expire (date)            : module is now 'hr_contract' ('hr_payroll')
+hr_payroll   / hr.contract              / permit_no (char)              : module is now 'hr_contract' ('hr_payroll')
+hr_payroll   / hr.employee              / passport_id (many2one)        : DEL relation: hr.passport, mode: modify
+hr_payroll   / hr.employee              / line_ids (one2many)           : DEL relation: hr.payslip.line
+hr_payroll   / hr.payslip.line          / amount_type (selection)       : DEL required: required, selection_keys: ['fix', 'func', 'per'], req_default: function
+hr_payroll   / hr.payslip.line          / base (char)                   : DEL 
+hr_payroll   / hr.payslip.line          / company_contrib (float)       : DEL 
+hr_payroll   / hr.payslip.line          / line_ids (one2many)           : DEL relation: hr.payslip.line.line
+hr_payroll   / hr.payslip.line          / type (selection)              : DEL required: required, selection_keys: ['advance', 'allowance', 'deduction', 'installment', 'leaves', 'loan', 'otherdeduct', 'otherpay']
+hr_payroll   / hr.payslip.line          / function_id (many2one)        : DEL relation: hr.payroll.structure
+hr_payroll   / hr.payslip               / igross (float)                : DEL 
+hr_payroll   / hr.payslip               / deg_id (many2one)             : DEL relation: hr.payroll.structure
+hr_payroll   / hr.payslip               / working_days (float)          : DEL 
+hr_payroll   / hr.payslip               / basic (float)                 : DEL 
+hr_payroll   / hr.payslip               / inet (float)                  : DEL 
+hr_payroll   / hr.payslip               / holiday_days (float)          : DEL 
+hr_payroll   / hr.payslip               / worked_days (float)           : DEL 
+hr_payroll   / hr.payslip               / register_id (many2one)        : DEL relation: hr.payroll.register
+hr_payroll   / hr.payslip               / date (date)                   : DEL 
+hr_payroll   / hr.payslip               / basic_before_leaves (float)   : DEL 
+hr_payroll   / hr.payslip               / leaves (float)                : DEL 
+hr_payroll   / hr.holidays.status       / head_id (many2one)            : DEL relation: hr.allounce.deduction.categoty
+hr_payroll   / hr.holidays.status       / company_id (many2one)         : DEL relation: res.company
+hr_payroll   / hr.holidays.status       / type (selection)              : DEL selection_keys: ['halfpaid', 'paid', 'unpaid']
+hr_payroll   / hr.contract              / working_days_per_week (integer): DEL 
+hr_payroll   / hr.contract              / passport_id (many2one)        : DEL relation: hr.passport
+hr_payroll   / hr.payroll.structure     / line_ids (one2many)           : DEL relation: hr.payslip.line
+hr_payroll   / hr.payslip.worked_days   / code (char)                   : NEW required: required
+hr_payroll   / hr.payslip.worked_days   / name (char)                   : NEW required: required
+hr_payroll   / hr.payslip.worked_days   / sequence (integer)            : NEW required: required, req_default: 10
+hr_payroll   / hr.payslip.worked_days   / payslip_id (many2one)         : NEW relation: hr.payslip, required: required
+hr_payroll   / hr.payslip.worked_days   / number_of_days (float)        : NEW 
+hr_payroll   / hr.payslip.worked_days   / number_of_hours (float)       : NEW 
+hr_payroll   / hr.payslip.worked_days   / contract_id (many2one)        : NEW relation: hr.contract, required: required
+hr_payroll   / hr.contribution.register / note (text)                   : NEW 
+hr_payroll   / hr.contribution.register / register_line_ids (one2many)  : NEW relation: hr.payslip.line
+hr_payroll   / hr.contribution.register / company_id (many2one)         : NEW relation: res.company
+hr_payroll   / hr.contribution.register / name (char)                   : NEW required: required
+hr_payroll   / hr.salary.rule.category  / children_ids (one2many)       : NEW relation: hr.salary.rule.category
+hr_payroll   / hr.salary.rule.category  / code (char)                   : NEW required: required
+hr_payroll   / hr.salary.rule.category  / name (char)                   : NEW required: required
+hr_payroll   / hr.salary.rule.category  / company_id (many2one)         : NEW relation: res.company
+hr_payroll   / hr.salary.rule.category  / note (text)                   : NEW 
+hr_payroll   / hr.salary.rule.category  / parent_id (many2one)          : NEW relation: hr.salary.rule.category
+hr_payroll   / hr.payslip.input         / code (char)                   : NEW required: required
+hr_payroll   / hr.payslip.input         / name (char)                   : NEW required: required
+hr_payroll   / hr.payslip.input         / sequence (integer)            : NEW required: required, req_default: 10
+hr_payroll   / hr.payslip.input         / amount (float)                : NEW 
+hr_payroll   / hr.payslip.input         / payslip_id (many2one)         : NEW relation: hr.payslip, required: required
+hr_payroll   / hr.payslip.input         / contract_id (many2one)        : NEW relation: hr.contract, required: required
+hr_payroll   / hr.payslip.line          / rate (float)                  : NEW 
+hr_payroll   / hr.payslip.line          / appears_on_payslip (boolean)  : NEW 
+hr_payroll   / hr.payslip.line          / condition_range (char)        : NEW 
+hr_payroll   / hr.payslip.line          / amount_fix (float)            : NEW 
+hr_payroll   / hr.payslip.line          / parent_rule_id (many2one)     : NEW relation: hr.salary.rule
+hr_payroll   / hr.payslip.line          / company_id (many2one)         : NEW relation: res.company
+hr_payroll   / hr.payslip.line          / amount_percentage (float)     : NEW 
+hr_payroll   / hr.payslip.line          / condition_range_min (float)   : NEW 
+hr_payroll   / hr.payslip.line          / condition_select (selection)  : NEW required: required, selection_keys: ['none', 'python', 'range'], req_default: none
+hr_payroll   / hr.payslip.line          / amount_percentage_base (char) : NEW 
+hr_payroll   / hr.payslip.line          / child_ids (one2many)          : NEW relation: hr.salary.rule
+hr_payroll   / hr.payslip.line          / register_id (many2one)        : NEW relation: hr.contribution.register
+hr_payroll   / hr.payslip.line          / amount_select (selection)     : NEW required: required, selection_keys: ['code', 'fix', 'percentage'], req_default: fix
+hr_payroll   / hr.payslip.line          / active (boolean)              : NEW 
+hr_payroll   / hr.payslip.line          / condition_range_max (float)   : NEW 
+hr_payroll   / hr.payslip.line          / contract_id (many2one)        : NEW relation: hr.contract, required: required
+hr_payroll   / hr.payslip.line          / condition_python (text)       : NEW required: required, req_default: 
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET > categories.NET * 0.10
+hr_payroll   / hr.payslip.line          / amount_python_compute (text)  : NEW 
+hr_payroll   / hr.payslip.line          / input_ids (one2many)          : NEW relation: hr.rule.input
+hr_payroll   / hr.payslip.line          / salary_rule_id (many2one)     : NEW relation: hr.salary.rule, required: required
+hr_payroll   / hr.payslip.line          / quantity (float)              : NEW 
+hr_payroll   / hr.salary.rule           / code (char)                   : NEW required: required
+hr_payroll   / hr.salary.rule           / sequence (integer)            : NEW required: required, req_default: 5
+hr_payroll   / hr.salary.rule           / appears_on_payslip (boolean)  : NEW 
+hr_payroll   / hr.salary.rule           / condition_range (char)        : NEW 
+hr_payroll   / hr.salary.rule           / amount_fix (float)            : NEW 
+hr_payroll   / hr.salary.rule           / parent_rule_id (many2one)     : NEW relation: hr.salary.rule
+hr_payroll   / hr.salary.rule           / company_id (many2one)         : NEW relation: res.company
+hr_payroll   / hr.salary.rule           / note (text)                   : NEW 
+hr_payroll   / hr.salary.rule           / amount_percentage (float)     : NEW 
+hr_payroll   / hr.salary.rule           / condition_range_min (float)   : NEW 
+hr_payroll   / hr.salary.rule           / condition_select (selection)  : NEW required: required, selection_keys: ['none', 'python', 'range'], req_default: none
+hr_payroll   / hr.salary.rule           / amount_percentage_base (char) : NEW 
+hr_payroll   / hr.salary.rule           / child_ids (one2many)          : NEW relation: hr.salary.rule
+hr_payroll   / hr.salary.rule           / register_id (many2one)        : NEW relation: hr.contribution.register
+hr_payroll   / hr.salary.rule           / amount_select (selection)     : NEW required: required, selection_keys: ['code', 'fix', 'percentage'], req_default: fix
+hr_payroll   / hr.salary.rule           / active (boolean)              : NEW 
+hr_payroll   / hr.salary.rule           / condition_range_max (float)   : NEW 
+hr_payroll   / hr.salary.rule           / name (char)                   : NEW required: required
+hr_payroll   / hr.salary.rule           / condition_python (text)       : NEW required: required, req_default: 
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET > categories.NET * 0.10
+hr_payroll   / hr.salary.rule           / amount_python_compute (text)  : NEW 
+hr_payroll   / hr.salary.rule           / input_ids (one2many)          : NEW relation: hr.rule.input
+hr_payroll   / hr.salary.rule           / category_id (many2one)        : NEW relation: hr.salary.rule.category, required: required
+hr_payroll   / hr.salary.rule           / quantity (char)               : NEW 
+hr_payroll   / hr.rule.input            / code (char)                   : NEW required: required
+hr_payroll   / hr.rule.input            / input_id (many2one)           : NEW relation: hr.salary.rule, required: required
+hr_payroll   / hr.rule.input            / name (char)                   : NEW required: required
+hr_payroll   / hr.payslip               / credit_note (boolean)         : NEW 
+hr_payroll   / hr.payslip               / worked_days_line_ids (one2many): NEW relation: hr.payslip.worked_days
+hr_payroll   / hr.payslip               / date_from (date)              : NEW required: required, req_default: function
+hr_payroll   / hr.payslip               / struct_id (many2one)          : NEW relation: hr.payroll.structure
+hr_payroll   / hr.payslip               / payslip_run_id (many2one)     : NEW relation: hr.payslip.run
+hr_payroll   / hr.payslip               / date_to (date)                : NEW required: required, req_default: function
+hr_payroll   / hr.payslip               / input_line_ids (one2many)     : NEW relation: hr.payslip.input
+hr_payroll   / hr.contract              / schedule_pay (selection)      : NEW selection_keys: ['annually', 'bi-monthly', 'bi-weekly', 'monthly', 'quarterly', 'semi-annually', 'weekly']
+hr_payroll   / hr.payroll.structure     / children_ids (one2many)       : NEW relation: hr.payroll.structure
+hr_payroll   / hr.payroll.structure     / parent_id (many2one)          : NEW relation: hr.payroll.structure
+hr_payroll   / hr.payroll.structure     / rule_ids (many2many)          : NEW relation: hr.salary.rule
+hr_payroll   / hr.payslip.run           / name (char)                   : NEW required: required
+hr_payroll   / hr.payslip.run           / date_end (date)               : NEW required: required, req_default: function
+hr_payroll   / hr.payslip.run           / date_start (date)             : NEW required: required, req_default: function
+hr_payroll   / hr.payslip.run           / slip_ids (one2many)           : NEW relation: hr.payslip
+hr_payroll   / hr.payslip.run           / state (selection)             : NEW selection_keys: ['close', 'draft']
+hr_payroll   / hr.payslip.run           / credit_note (boolean)         : NEW 
+deleted xml-id of model hr.allounce.deduction.categoty: hr_payroll.CA
+deleted xml-id of model hr.allounce.deduction.categoty: hr_payroll.DA
+deleted xml-id of model hr.allounce.deduction.categoty: hr_payroll.ESI
+deleted xml-id of model hr.allounce.deduction.categoty: hr_payroll.FA
+deleted xml-id of model hr.allounce.deduction.categoty: hr_payroll.FC
+deleted xml-id of model hr.allounce.deduction.categoty: hr_payroll.HRA
+deleted xml-id of model hr.allounce.deduction.categoty: hr_payroll.LTA
+deleted xml-id of model hr.allounce.deduction.categoty: hr_payroll.LWP
+deleted xml-id of model hr.allounce.deduction.categoty: hr_payroll.MA
+deleted xml-id of model hr.allounce.deduction.categoty: hr_payroll.NA
+deleted xml-id of model hr.allounce.deduction.categoty: hr_payroll.OTHERA
+deleted xml-id of model hr.allounce.deduction.categoty: hr_payroll.OTHERD
+deleted xml-id of model hr.allounce.deduction.categoty: hr_payroll.PF
+deleted xml-id of model hr.allounce.deduction.categoty: hr_payroll.PT
+deleted xml-id of model hr.allounce.deduction.categoty: hr_payroll.TA
+deleted xml-id of model hr.allounce.deduction.categoty: hr_payroll.TDS
+deleted xml-id of model hr.allounce.deduction.categoty: hr_payroll.TELA
+deleted xml-id of model hr.allounce.deduction.categoty: hr_payroll.WF
+deleted xml-id of model hr.contract.wage.type: hr_payroll.hr_contract_monthly_basic
+deleted xml-id of model ir.actions.act_window: hr_payroll.action_contibution_register_form
+deleted xml-id of model ir.actions.act_window: hr_payroll.action_hr_company_contribution_tree
+deleted xml-id of model ir.actions.act_window: hr_payroll.action_hr_passport_tree
+deleted xml-id of model ir.actions.act_window: hr_payroll.action_hr_payroll_employees_detail
+deleted xml-id of model ir.actions.act_window: hr_payroll.action_hr_payroll_year_salary
+deleted xml-id of model ir.actions.act_window: hr_payroll.action_view_hr_bank_advice_tree
+deleted xml-id of model ir.actions.act_window: hr_payroll.action_view_hr_employee_grade_form
+deleted xml-id of model ir.actions.act_window: hr_payroll.action_view_hr_payroll_register_form
+deleted xml-id of model ir.actions.act_window: hr_payroll.hr_allounce_deduction_tree
+deleted xml-id of model ir.actions.report.xml: hr_payroll.payroll_advice
+deleted xml-id of model ir.actions.report.xml: hr_payroll.salary_payslip
+deleted xml-id of model ir.actions.report.xml: hr_payroll.salary_structure_register
+deleted xml-id of model ir.actions.report.xml: hr_payroll.year_employees_detail
+deleted xml-id of model ir.actions.report.xml: hr_payroll.year_payroll_register
+deleted xml-id of model ir.actions.report.xml: hr_payroll.year_salary_report
+deleted xml-id of model ir.model.access: hr_payroll.access_company_contribution
+deleted xml-id of model ir.model.access: hr_payroll.access_company_contribution_line
+deleted xml-id of model ir.model.access: hr_payroll.access_hr_allounce_deduction_category
+deleted xml-id of model ir.model.access: hr_payroll.access_hr_contibution_register
+deleted xml-id of model ir.model.access: hr_payroll.access_hr_contibution_register_line
+deleted xml-id of model ir.model.access: hr_payroll.access_hr_contract_wage_type
+deleted xml-id of model ir.model.access: hr_payroll.access_hr_passport
+deleted xml-id of model ir.model.access: hr_payroll.access_hr_passport_manager
+deleted xml-id of model ir.model.access: hr_payroll.access_hr_payroll_advice
+deleted xml-id of model ir.model.access: hr_payroll.access_hr_payroll_advice_line
+deleted xml-id of model ir.model.access: hr_payroll.access_hr_payroll_register
+deleted xml-id of model ir.model.access: hr_payroll.access_hr_payroll_structure_manager
+deleted xml-id of model ir.model.access: hr_payroll.access_hr_payslip_line_line
+deleted xml-id of model ir.model.access: hr_payroll.access_hr_payslip_line_manager
+deleted xml-id of model ir.model.access: hr_payroll.access_hr_payslip_manager
+deleted xml-id of model ir.model.access: hr_payroll.access_res_partner_payroll
+deleted xml-id of model ir.sequence: hr_payroll.seq_payment_advice
+deleted xml-id of model ir.sequence: hr_payroll.seq_salary_register
+deleted xml-id of model ir.sequence.type: hr_payroll.seq_type_payment_advice
+deleted xml-id of model ir.sequence.type: hr_payroll.seq_type_salary_register
+deleted xml-id of model ir.ui.menu: hr_payroll.hr_menu_payment_advice
+deleted xml-id of model ir.ui.menu: hr_payroll.hr_menu_payroll_register
+deleted xml-id of model ir.ui.menu: hr_payroll.menu_action_hr_contibution_register_form
+deleted xml-id of model ir.ui.menu: hr_payroll.menu_hr_allounce_deduction_tree
+deleted xml-id of model ir.ui.menu: hr_payroll.menu_hr_company_contribution_tree
+deleted xml-id of model ir.ui.menu: hr_payroll.menu_hr_employee_function
+deleted xml-id of model ir.ui.menu: hr_payroll.menu_hr_payroll_employees_detail
+deleted xml-id of model ir.ui.menu: hr_payroll.menu_wizard_print_year_salary
+deleted xml-id of model ir.ui.view: hr_contract.hr_contract_view_form
+deleted xml-id of model ir.ui.view: hr_payroll.hr_allounce_deduction_categoty_form
+deleted xml-id of model ir.ui.view: hr_payroll.hr_allounce_deduction_categoty_tree
+deleted xml-id of model ir.ui.view: hr_payroll.hr_company_contribution_form
+deleted xml-id of model ir.ui.view: hr_payroll.hr_company_contribution_tree
+deleted xml-id of model ir.ui.view: hr_payroll.hr_contibution_register_form
+deleted xml-id of model ir.ui.view: hr_payroll.hr_contibution_register_line_form
+deleted xml-id of model ir.ui.view: hr_payroll.hr_contibution_register_tree
+deleted xml-id of model ir.ui.view: hr_payroll.hr_passport_form
+deleted xml-id of model ir.ui.view: hr_payroll.hr_passport_tree
+deleted xml-id of model ir.ui.view: hr_payroll.view_allounce_deduction_categoty_filter
+deleted xml-id of model ir.ui.view: hr_payroll.view_employee_passport_form
+deleted xml-id of model ir.ui.view: hr_payroll.view_holiday_status_form1
+deleted xml-id of model ir.ui.view: hr_payroll.view_hr_bank_advice_form
+deleted xml-id of model ir.ui.view: hr_payroll.view_hr_bank_advice_tree
+deleted xml-id of model ir.ui.view: hr_payroll.view_hr_company_contribution_filter
+deleted xml-id of model ir.ui.view: hr_payroll.view_hr_employee_grade_tree
+deleted xml-id of model ir.ui.view: hr_payroll.view_hr_passport_filter
+deleted xml-id of model ir.ui.view: hr_payroll.view_hr_payroll_employees_detail
+deleted xml-id of model ir.ui.view: hr_payroll.view_hr_payroll_register_form
+deleted xml-id of model ir.ui.view: hr_payroll.view_hr_payroll_register_tree
+deleted xml-id of model ir.ui.view: hr_payroll.view_hr_payroll_year_salary
+deleted xml-id of model workflow.activity: hr_payroll.act_confirm
+deleted xml-id of model workflow.activity: hr_payroll.act_hr_check
+deleted xml-id of model workflow.activity: hr_payroll.act_new
+deleted xml-id of model workflow.transition: hr_payroll.t11
+deleted xml-id of model workflow.transition: hr_payroll.t12
+deleted xml-id of model workflow.transition: hr_payroll.t7
+deleted xml-id of model workflow.transition: hr_payroll.t8
+deleted xml-id of model workflow.transition: hr_payroll.t9
+new xml-id of model decimal.precision: hr_payroll.decimal_payroll
+new xml-id of model decimal.precision: hr_payroll.decimal_payroll_rate
+new xml-id of model hr.payroll.structure: hr_payroll.structure_base
+new xml-id of model hr.salary.rule: hr_payroll.hr_rule_basic
+new xml-id of model hr.salary.rule: hr_payroll.hr_rule_net
+new xml-id of model hr.salary.rule: hr_payroll.hr_rule_taxable
+new xml-id of model hr.salary.rule.category: hr_payroll.ALW
+new xml-id of model hr.salary.rule.category: hr_payroll.BASIC
+new xml-id of model hr.salary.rule.category: hr_payroll.COMP
+new xml-id of model hr.salary.rule.category: hr_payroll.DED
+new xml-id of model hr.salary.rule.category: hr_payroll.GROSS
+new xml-id of model hr.salary.rule.category: hr_payroll.NET
+new xml-id of model ir.actions.act_window: hr_payroll.act_children_salary_rules
+new xml-id of model ir.actions.act_window: hr_payroll.act_contribution_reg_payslip_lines
+new xml-id of model ir.actions.act_window: hr_payroll.act_payslip_lines
+new xml-id of model ir.actions.act_window: hr_payroll.action_contribution_register_form
+new xml-id of model ir.actions.act_window: hr_payroll.action_hr_payslip_by_employees
+new xml-id of model ir.actions.act_window: hr_payroll.action_hr_payslip_run_tree
+new xml-id of model ir.actions.act_window: hr_payroll.action_hr_salary_rule_category
+new xml-id of model ir.actions.act_window: hr_payroll.action_hr_salary_rule_category_tree_view
+new xml-id of model ir.actions.act_window: hr_payroll.action_payslip_lines_contribution_register
+new xml-id of model ir.actions.act_window: hr_payroll.action_salary_rule_form
+new xml-id of model ir.actions.act_window: hr_payroll.action_view_hr_payroll_structure_list_form
+new xml-id of model ir.actions.act_window: hr_payroll.action_view_hr_payroll_structure_tree
+new xml-id of model ir.actions.report.xml: hr_payroll.contribution_register
+new xml-id of model ir.actions.report.xml: hr_payroll.payslip_details_report
+new xml-id of model ir.actions.report.xml: hr_payroll.payslip_report
+new xml-id of model ir.model.access: hr_payroll.access_hr_contribution_register
+new xml-id of model ir.model.access: hr_payroll.access_hr_payslip_input_user
+new xml-id of model ir.model.access: hr_payroll.access_hr_payslip_run
+new xml-id of model ir.model.access: hr_payroll.access_hr_payslip_worked_days 
+new xml-id of model ir.model.access: hr_payroll.access_hr_rule_input
+new xml-id of model ir.model.access: hr_payroll.access_hr_salary_rule_category
+new xml-id of model ir.model.access: hr_payroll.access_hr_salary_rule_user
+new xml-id of model ir.rule: hr_payroll.property_rule_employee_payslip
+new xml-id of model ir.ui.menu: hr_payroll.menu_action_hr_contribution_register_form
+new xml-id of model ir.ui.menu: hr_payroll.menu_action_hr_salary_rule_form
+new xml-id of model ir.ui.menu: hr_payroll.menu_hr_payroll_structure_tree
+new xml-id of model ir.ui.menu: hr_payroll.menu_hr_payroll_structure_view
+new xml-id of model ir.ui.menu: hr_payroll.menu_hr_payslip_run
+new xml-id of model ir.ui.menu: hr_payroll.menu_hr_salary_rule_category
+new xml-id of model ir.ui.menu: hr_payroll.menu_hr_salary_rule_category_tree_view
+new xml-id of model ir.ui.view: hr_payroll.hr_contract_form_inherit
+new xml-id of model ir.ui.view: hr_payroll.hr_contribution_register_filter
+new xml-id of model ir.ui.view: hr_payroll.hr_contribution_register_form
+new xml-id of model ir.ui.view: hr_payroll.hr_contribution_register_tree
+new xml-id of model ir.ui.view: hr_payroll.hr_payslip_run_filter
+new xml-id of model ir.ui.view: hr_payroll.hr_payslip_run_form
+new xml-id of model ir.ui.view: hr_payroll.hr_payslip_run_tree
+new xml-id of model ir.ui.view: hr_payroll.hr_salary_rule_category_form
+new xml-id of model ir.ui.view: hr_payroll.hr_salary_rule_category_tree
+new xml-id of model ir.ui.view: hr_payroll.hr_salary_rule_category_tree_view
+new xml-id of model ir.ui.view: hr_payroll.hr_salary_rule_form
+new xml-id of model ir.ui.view: hr_payroll.hr_salary_rule_list
+new xml-id of model ir.ui.view: hr_payroll.hr_salary_rule_tree
+new xml-id of model ir.ui.view: hr_payroll.view_hr_payroll_structure_filter
+new xml-id of model ir.ui.view: hr_payroll.view_hr_payroll_structure_list_view
+new xml-id of model ir.ui.view: hr_payroll.view_hr_payroll_structure_tree
+new xml-id of model ir.ui.view: hr_payroll.view_hr_payslip_by_employees
+new xml-id of model ir.ui.view: hr_payroll.view_hr_payslip_line_filter
+new xml-id of model ir.ui.view: hr_payroll.view_hr_rule_filter
+new xml-id of model ir.ui.view: hr_payroll.view_hr_salary_rule_category_filter
+new xml-id of model ir.ui.view: hr_payroll.view_payslip_lines_contribution_register
+new xml-id of model ir.values: hr_payroll.payslip_lines_contribution_register_value
+new xml-id of model workflow.activity: hr_payroll.act_verify
+new xml-id of model workflow.transition: hr_payroll.t5

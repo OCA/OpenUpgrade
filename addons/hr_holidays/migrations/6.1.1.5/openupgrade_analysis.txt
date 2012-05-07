@@ -1,0 +1,19 @@
+---hr_holidays---
+deleted xml-id of model ir.rule: hr_holidays.property_rule_holidays
+deleted xml-id of model ir.ui.menu: base.menu_hr_dasboard
+deleted xml-id of model ir.ui.menu: base.menu_hr_manager
+deleted xml-id of model ir.ui.menu: base.menu_hr_project
+deleted xml-id of model ir.ui.menu: hr.menu_hr_reporting
+deleted xml-id of model workflow.transition: hr_holidays.t10
+new xml-id of model hr.holidays.status: hr_holidays.holiday_status_comp
+new xml-id of model hr.holidays.status: hr_holidays.holiday_status_unpaid
+new xml-id of model ir.actions.act_window: hr_holidays.hr_holidays_leaves_assign_legal
+new xml-id of model ir.actions.act_window: hr_holidays.request_approve_holidays
+new xml-id of model ir.actions.act_window.view: hr_holidays.action_request_approve_holidays_form
+new xml-id of model ir.actions.act_window.view: hr_holidays.action_request_approve_holidays_tree
+new xml-id of model ir.actions.todo: hr_holidays.hr_holidays_leaves_assign_form_view_todo
+new xml-id of model ir.ui.menu: hr_holidays.menu_request_approve_holidays
+new xml-id of model ir.ui.view: hr_holidays.hr_holidays_leaves_assign_tree_view
+new xml-id of model ir.ui.view: hr_holidays.hr_kanban_view_employees_kanban
+new xml-id of model ir.ui.view: hr_holidays.view_employee_form_leave_inherit
+new xml-id of model ir.ui.view: hr_holidays.view_holiday_status_normal_tree

@@ -1,0 +1,11 @@
+---delivery---
+delivery     / delivery.carrier         / pricelist_ids (one2many)      : NEW relation: delivery.grid
+delivery     / delivery.carrier         / normal_price (float)          : NEW 
+delivery     / delivery.carrier         / amount (float)                : NEW 
+delivery     / delivery.carrier         / free_if_more_than (boolean)   : NEW 
+delivery     / delivery.carrier         / use_detailed_pricelist (boolean): NEW 
+new xml-id of model ir.actions.act_window: delivery.action_define_delivery_steps
+new xml-id of model ir.actions.act_window: delivery.action_delivery_carrier_form1
+new xml-id of model ir.actions.todo: delivery.delivery_method_form_view_todo
+new xml-id of model ir.actions.todo: delivery.todo_define_delivery_steps
+new xml-id of model ir.ui.view: delivery.define_delivery_steps_form

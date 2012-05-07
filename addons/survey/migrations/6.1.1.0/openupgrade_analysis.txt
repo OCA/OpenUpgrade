@@ -1,0 +1,20 @@
+---survey---
+survey       / survey                   / state (selection)             : selection_keys is now '['cancel', 'close', 'open']' ('['cancel', 'close', 'draft', 'open']')
+survey       / survey                   / id (integer)                  : NEW 
+deleted xml-id of model ir.model.access: survey.access_survey_answer_manager
+deleted xml-id of model ir.model.access: survey.access_survey_history_manager
+deleted xml-id of model ir.model.access: survey.access_survey_manager
+deleted xml-id of model ir.model.access: survey.access_survey_page_manager
+deleted xml-id of model ir.model.access: survey.access_survey_question_column_heading_manager
+deleted xml-id of model ir.model.access: survey.access_survey_question_manager
+deleted xml-id of model ir.model.access: survey.access_survey_res_partner_address_manager
+deleted xml-id of model ir.model.access: survey.access_survey_res_partner_manager
+deleted xml-id of model ir.model.access: survey.access_survey_response_answer_manager
+deleted xml-id of model ir.model.access: survey.access_survey_response_line_manager
+deleted xml-id of model ir.model.access: survey.access_survey_response_manager
+deleted xml-id of model res.groups: base.group_sale_salesman
+deleted xml-id of model res.groups: survey.group_survey_user
+new xml-id of model res.groups: base.group_survey_user
+new xml-id of model survey.type: survey.survey_type1
+new xml-id of model survey.type: survey.survey_type2
+new xml-id of model survey.type: survey.survey_type3

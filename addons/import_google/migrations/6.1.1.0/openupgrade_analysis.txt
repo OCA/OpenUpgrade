@@ -1,0 +1,15 @@
+---import_google---
+import_google / google.import.message    / name (text)                   : NEW 
+import_google / crm.case.categ           / user_id (many2one)            : NEW relation: res.users
+new xml-id of model ir.actions.act_window: import_google.act_google_login_contact_form
+new xml-id of model ir.actions.act_window: import_google.act_google_login_form
+new xml-id of model ir.model.access: import_google.access_google_import_message_partner_manager
+new xml-id of model ir.model.access: import_google.access_ir_model_data_partner_manager
+new xml-id of model ir.model.access: import_google.access_res_users_partner_manager
+new xml-id of model ir.ui.menu: import_google.menu_sync_calendar
+new xml-id of model ir.ui.menu: import_google.menu_sync_contact
+new xml-id of model ir.ui.view: import_google.crm_case_form_view_meet_inherit
+new xml-id of model ir.ui.view: import_google.crm_case_tree_view_meet_inherit
+new xml-id of model ir.ui.view: import_google.view_google_import_message_form
+new xml-id of model ir.ui.view: import_google.view_synchronize_google_calendar_import_form
+new xml-id of model ir.ui.view: import_google.view_synchronize_google_contact_import_form

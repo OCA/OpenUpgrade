@@ -1,0 +1,96 @@
+---crm---
+crm          / crm.phonecall            / message_ids (one2many)        : relation is now 'mail.message' ('mailgate.message')
+crm          / crm.phonecall            / name (char)                   : now required
+crm          / crm.meeting              / message_ids (one2many)        : relation is now 'mail.message' ('mailgate.message')
+crm          / crm.meeting              / end_type (selection)          : selection_keys is now '['count', 'end_date']' ('['count', 'end_date', 'forever']')
+crm          / crm.lead                 / street (char)                 : now a function
+crm          / crm.lead                 / city (char)                   : now a function
+crm          / crm.lead                 / zip (char)                    : now a function
+crm          / crm.lead                 / title (many2one)              : now a function
+crm          / crm.lead                 / country_id (many2one)         : now a function
+crm          / crm.lead                 / message_ids (one2many)        : relation is now 'mail.message' ('mailgate.message')
+crm          / crm.lead                 / street2 (char)                : now a function
+crm          / crm.lead                 / mobile (char)                 : now a function
+crm          / crm.lead                 / channel_id (many2one)         : relation is now 'crm.case.channel' ('res.partner.canal')
+crm          / crm.lead                 / state_id (many2one)           : now a function
+crm          / crm.lead.report          / channel_id (many2one)         : relation is now 'crm.case.channel' ('res.partner.canal')
+crm          / crm.case.stage           / type (selection)              : DEL selection_keys: function
+crm          / crm.phonecall            / canal_id (many2one)           : DEL relation: res.partner.canal
+crm          / crm.meeting              / edit_all (boolean)            : DEL 
+crm          / crm.meeting              / freq (selection)              : DEL selection_keys: ['None', 'daily', 'hourly', 'monthly', 'weekly', 'yearly']
+crm          / crm.lead                 / job_ids (one2many)            : DEL relation: res.partner.job
+crm          / crm.lead.report          / month (selection)             : DEL selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+crm          / crm.lead.report          / creation_date (date)          : DEL 
+crm          / crm.lead.report          / day (char)                    : DEL 
+crm          / crm.lead.report          / name (char)                   : DEL 
+crm          / crm.case.stage           / case_default (boolean)        : NEW 
+crm          / crm.lead                 / color (integer)               : NEW 
+crm          / crm.lead                 / contact_id (many2one)         : NEW relation: res.partner.contact
+crm          / crm.lead                 / location_id (many2one)        : NEW relation: res.partner.location
+crm          / crm.lead.report          / creation_day (char)           : NEW 
+crm          / crm.lead.report          / deadline_year (char)          : NEW 
+crm          / crm.lead.report          / deadline_month (selection)    : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+crm          / crm.lead.report          / creation_month (selection)    : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+crm          / crm.lead.report          / creation_year (char)          : NEW 
+crm          / crm.lead.report          / deadline_day (char)           : NEW 
+crm          / crm.case.channel         / active (boolean)              : NEW 
+crm          / crm.case.channel         / name (char)                   : NEW required: required
+deleted xml-id of model board.note.type: crm.note_crm_type
+deleted xml-id of model crm.case.resource.type: crm.type_oppor1
+deleted xml-id of model crm.case.resource.type: crm.type_oppor2
+deleted xml-id of model crm.case.stage: crm.stage_opportunity1
+deleted xml-id of model crm.case.stage: crm.stage_opportunity2
+deleted xml-id of model crm.case.stage: crm.stage_opportunity3
+deleted xml-id of model crm.case.stage: crm.stage_opportunity4
+deleted xml-id of model crm.case.stage: crm.stage_opportunity5
+deleted xml-id of model crm.case.stage: crm.stage_opportunity6
+deleted xml-id of model ir.actions.act_window: crm.act_my_meetings
+deleted xml-id of model ir.actions.act_window: crm.act_sales_pipeline
+deleted xml-id of model ir.actions.act_window: crm.action_crm_installer
+deleted xml-id of model ir.actions.act_window: crm.action_crm_lead2opportunity
+deleted xml-id of model ir.actions.act_window: crm.action_crm_reply_mail
+deleted xml-id of model ir.actions.act_window: crm.action_crm_send_mail
+deleted xml-id of model ir.actions.act_window: crm.crm_opportunity_stage_act
+deleted xml-id of model ir.actions.todo: crm.crm_installer_todo
+deleted xml-id of model ir.model.access: access_crm_lead.all
+deleted xml-id of model ir.model.access: access_crm_phonecall.all
+deleted xml-id of model ir.model.access: crm.access_crm_lead_report_manager
+deleted xml-id of model ir.model.access: crm.access_res_partner_bank_type_crm_manager
+deleted xml-id of model ir.model.access: crm.access_res_partner_canal_manager
+deleted xml-id of model ir.model.access: crm.mail_gateway_mailgate_message_manager
+deleted xml-id of model ir.model.access: crm.mail_gateway_mailgate_message_user
+deleted xml-id of model ir.model.access: crm.mail_gateway_mailgate_thread
+deleted xml-id of model ir.model.access: crm.mail_gateway_mailgate_thread_manager
+deleted xml-id of model ir.ui.menu: crm.menu_board_crm
+deleted xml-id of model ir.ui.menu: crm.menu_crm_opportunity_stage_act
+deleted xml-id of model ir.ui.view: crm.crm_case_inbound_phone_form_view
+deleted xml-id of model ir.ui.view: crm.crm_reply_mail_view
+deleted xml-id of model ir.ui.view: crm.crm_send_new_mail_view
+deleted xml-id of model ir.ui.view: crm.view_crm_installer
+deleted xml-id of model ir.ui.view: crm.view_crm_lead2opportunity_action
+deleted xml-id of model ir.ui.view: crm.view_crm_lead2opportunity_create
+new xml-id of model ir.actions.act_window: crm.action_crm_lead2opportunity_partner
+new xml-id of model ir.actions.act_window: crm.action_crm_send_mass_convert
+new xml-id of model ir.actions.act_window: crm.crm_case_channel_action
+new xml-id of model ir.actions.act_window: crm.crm_case_section_view_form_installer
+new xml-id of model ir.actions.act_window: crm.crm_case_stage_form_installer
+new xml-id of model ir.actions.act_window.view: crm.action_crm_tag_kanban_view_oppor11
+new xml-id of model ir.actions.todo: crm.crm_case_section_installer_todo
+new xml-id of model ir.actions.todo: crm.crm_case_stage_installer_todo
+new xml-id of model ir.model.access: crm.access_crm_case_channel_manager
+new xml-id of model ir.model.access: crm.access_crm_case_channel_user
+new xml-id of model ir.model.access: crm.access_crm_lead_all
+new xml-id of model ir.model.access: crm.access_crm_phonecall_all
+new xml-id of model ir.model.access: crm.mail_gateway_mail_message_user
+new xml-id of model ir.model.access: crm.mail_mail_message_manager
+new xml-id of model ir.model.access: crm.mail_mailgate_thread
+new xml-id of model ir.rule: crm.crm_meeting_global
+new xml-id of model ir.ui.menu: crm.menu_action_resource_calendar_form
+new xml-id of model ir.ui.menu: crm.menu_crm_case_channel
+new xml-id of model ir.ui.view: crm.crm_case_channel_view_form
+new xml-id of model ir.ui.view: crm.crm_case_channel_view_tree
+new xml-id of model ir.ui.view: crm.crm_case_kanban_view_leads
+new xml-id of model ir.ui.view: crm.crm_lead_stage_search
+new xml-id of model ir.ui.view: crm.view_crm_case_scheduled_phonecalls_filter
+new xml-id of model ir.ui.view: crm.view_crm_lead2opportunity_partner_mass
+new xml-id of model res.users: base.user_admin

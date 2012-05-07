@@ -1,0 +1,10 @@
+---plugin_thunderbird---
+deleted xml-id of model ir.actions.act_window: thunderbird.action_thunderbird_installer
+deleted xml-id of model ir.actions.act_window: thunderbird.action_thunderbird_wizard
+deleted xml-id of model ir.actions.todo: thunderbird.thunderbird_installer_todo
+deleted xml-id of model ir.ui.menu: thunderbird.menu_base_config_plugins_thunderbird
+deleted xml-id of model ir.ui.view: thunderbird.view_thunderbird_installer
+new xml-id of model ir.actions.act_window: plugin_thunderbird.action_thunderbird_installer
+new xml-id of model ir.actions.todo: plugin_thunderbird.thunderbird_installer_todo
+new xml-id of model ir.ui.menu: plugin_thunderbird.menu_base_config_plugins_thunderbird
+new xml-id of model ir.ui.view: plugin_thunderbird.view_thunderbird_installer

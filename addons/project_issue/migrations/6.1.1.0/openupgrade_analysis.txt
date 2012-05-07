@@ -1,0 +1,20 @@
+---project_issue---
+project_issue / project.issue            / message_ids (one2many)        : relation is now 'mail.message' ('mailgate.message')
+project_issue / project.issue.report     / canal_id (many2one)           : DEL relation: res.partner.canal
+project_issue / project.issue.report     / assigned_to (many2one)        : DEL relation: res.users
+project_issue / project.issue            / canal_id (many2one)           : DEL relation: res.partner.canal
+project_issue / project.issue            / partner_name (char)           : DEL 
+project_issue / project.issue            / partner_mobile (char)         : DEL 
+project_issue / project.issue            / partner_phone (char)          : DEL 
+project_issue / project.issue.report     / channel_id (many2one)         : NEW relation: crm.case.channel
+project_issue / project.issue            / color (integer)               : NEW 
+project_issue / project.issue            / channel_id (many2one)         : NEW relation: crm.case.channel
+deleted xml-id of model ir.model.access: project_issue.access_mailgate_message_issue_project_user
+deleted xml-id of model ir.model.access: project_issue.access_mailgate_message_project_manager
+deleted xml-id of model ir.model.access: project_issue.access_project_issue_all
+deleted xml-id of model ir.ui.view: project.view_project_resource_form1
+new xml-id of model ir.actions.act_window.view: project_issue.action_crm_tag_kanban_view0
+new xml-id of model ir.model.access: project_issue.access_crm_case_section
+new xml-id of model ir.model.access: project_issue.access_mail_message_issue_project_user
+new xml-id of model ir.model.access: project_issue.access_mail_message_project_manager
+new xml-id of model ir.ui.view: project_issue.project_issue_kanban_view

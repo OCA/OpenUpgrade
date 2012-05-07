@@ -1,0 +1,7 @@
+---crm_todo---
+crm_todo     / crm.lead                 / task_ids (one2many)           : NEW relation: project.task
+crm_todo     / project.task             / lead_id (many2one)            : NEW relation: crm.lead
+new xml-id of model ir.actions.act_window: crm_todo.crm_todo_action
+new xml-id of model ir.ui.menu: crm_todo.menu_crm_todo
+new xml-id of model ir.ui.view: crm_todo.crm_todo_opportunity_add
+new xml-id of model ir.ui.view: crm_todo.project_task_crm_tree

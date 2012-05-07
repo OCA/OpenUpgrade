@@ -1,0 +1,9 @@
+---hr_timesheet_sheet---
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / state_attendance (selection)  : selection_keys is now '['absent', 'present']' ('['absent', 'none', 'present']')
+hr_timesheet_sheet / res.company              / timesheet_range (selection)   : selection_keys is now '['day', 'month', 'week']' ('['day', 'month', 'week', 'year']')
+deleted xml-id of model ir.ui.menu: base.menu_hr_dasboard
+deleted xml-id of model ir.ui.menu: base.menu_hr_manager
+deleted xml-id of model ir.ui.menu: base.menu_hr_project
+new xml-id of model ir.actions.act_window: hr_timesheet_sheet.act_hr_timesheet_sheet_sheet_by_account
+new xml-id of model ir.ui.view: hr_timesheet_sheet.hr_timesheet_day_tree
+new xml-id of model ir.ui.view: hr_timesheet_sheet.hr_timesheet_line_search

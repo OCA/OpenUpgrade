@@ -1,0 +1,7 @@
+---stock_planning---
+stock_planning / stock.sale.forecast      / analyzed_dept_id (many2one)   : DEL relation: hr.department
+stock_planning / stock.sale.forecast      / analyzed_team_id (many2one)   : NEW relation: crm.case.section
+deleted xml-id of model ir.ui.menu: stock_planning.menu_stock_planning_main
+new xml-id of model ir.rule: stock_planning.stock_planning_comp_rule
+new xml-id of model ir.rule: stock_planning.stock_sale_forecast_comp_rule
+new xml-id of model ir.ui.menu: stock_planning.menu_stock_planning_manual

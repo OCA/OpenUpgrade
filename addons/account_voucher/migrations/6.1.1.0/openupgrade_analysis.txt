@@ -1,0 +1,12 @@
+---account_voucher---
+account_voucher / account.voucher          / currency_id (many2one)        : now a function
+account_voucher / account.voucher.line     / reconcile (boolean)           : NEW 
+account_voucher / res.company              / expense_currency_exchange_account_id (many2one): NEW relation: account.account
+account_voucher / res.company              / income_currency_exchange_account_id (many2one): NEW relation: account.account
+account_voucher / account.voucher          / is_multi_currency (boolean)   : NEW 
+account_voucher / account.voucher          / payment_rate (float)          : NEW required: required, req_default: 1.0
+account_voucher / account.voucher          / payment_rate_currency_id (many2one): NEW relation: res.currency, required: required, req_default: function
+deleted xml-id of model ir.actions.report.xml: account_voucher.report_account_voucher_print
+deleted xml-id of model ir.model.access: account_voucher.access_account_voucher_line_accountant
+deleted xml-id of model ir.model.access: account_voucher.access_account_voucher_user
+new xml-id of model ir.ui.view: account_voucher.view_company_inherit_currency_xchange_form

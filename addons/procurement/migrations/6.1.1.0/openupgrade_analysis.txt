@@ -1,0 +1,4 @@
+---procurement---
+procurement  / product.product          / orderpoint_ids (one2many)     : NEW relation: stock.warehouse.orderpoint
+deleted xml-id of model ir.model.access: procurement.access_procurement_stock_manager
+new xml-id of model ir.ui.view: procurement.product_normal_form_view

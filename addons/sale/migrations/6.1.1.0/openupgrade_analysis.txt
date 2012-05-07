@@ -1,0 +1,37 @@
+---sale---
+sale         / sale.order               / create_date (date)            : type is now 'datetime' ('date')
+sale         / sale.report              / uom_name (char)               : DEL 
+sale         / sale.report              / product_uom (many2one)        : NEW relation: product.uom
+deleted xml-id of model board.note.type: sale.note_sale_type
+deleted xml-id of model ir.actions.act_window: sale.action_sale_installer
+deleted xml-id of model ir.actions.todo: sale.sale_installer_todo
+deleted xml-id of model ir.model.access: sale.access_account_fiscalyear_manager
+deleted xml-id of model ir.model.access: sale.access_ir_property_group_sale_manager
+deleted xml-id of model ir.model.access: sale.access_product_product_sale
+deleted xml-id of model ir.model.access: sale.access_product_product_sale_manager
+deleted xml-id of model ir.model.access: sale.access_product_supplierinfo_manager
+deleted xml-id of model ir.model.access: sale.access_product_template_sale
+deleted xml-id of model ir.model.access: sale.access_product_template_sale_manager
+deleted xml-id of model ir.model.access: sale.access_product_uom_manager
+deleted xml-id of model ir.model.access: sale.access_res_partner_bank_type_manager
+deleted xml-id of model ir.model.access: sale.access_sale_order_line_manager
+deleted xml-id of model ir.model.access: sale.access_stock_location_manager
+deleted xml-id of model ir.model.access: sale.access_stock_warehouse_manager
+deleted xml-id of model ir.ui.menu: product.menu_products
+deleted xml-id of model ir.ui.menu: sale.menu_invoiced
+deleted xml-id of model ir.ui.view: sale.view_sale_installer
+new xml-id of model email.template: sale.email_template_edi_sale
+new xml-id of model ir.actions.act_window: sale.action_email_templates
+new xml-id of model ir.actions.act_window: sale.action_turnover_by_month
+new xml-id of model ir.actions.act_window: sale.open_board_sales
+new xml-id of model ir.actions.act_window.view: sale.action_turnover_by_month_graph_view
+new xml-id of model ir.actions.act_window.view: sale.action_turnover_by_month_tree_view
+new xml-id of model ir.actions.server: sale.ir_actions_server_edi_sale
+new xml-id of model ir.model.access: sale.access_account_invoice_report_salesman
+new xml-id of model ir.ui.menu: base.menu_invoiced
+new xml-id of model ir.ui.menu: sale.menu_email_templates
+new xml-id of model ir.ui.menu: sale.menu_sales_configuration_misc
+new xml-id of model ir.ui.view: sale.board_sales_form
+new xml-id of model ir.ui.view: sale.view_turnover_by_month_graph
+new xml-id of model ir.ui.view: sale.view_turnover_by_month_tree
+new xml-id of model res.users: base.user_admin

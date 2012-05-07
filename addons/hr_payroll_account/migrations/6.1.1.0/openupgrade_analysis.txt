@@ -1,0 +1,41 @@
+---hr_payroll_account---
+hr_payroll_account / hr.payslip               / journal_id (many2one)         : now required, default = function
+hr_payroll_account / hr.payslip.line          / analytic_account_id (many2one): DEL relation: account.analytic.account
+hr_payroll_account / hr.payslip.line          / account_id (many2one)         : DEL relation: account.account
+hr_payroll_account / hr.payslip               / move_ids (one2many)           : DEL relation: hr.payslip.account.move
+hr_payroll_account / hr.payslip               / move_payment_ids (many2many)  : DEL relation: account.move.line
+hr_payroll_account / hr.payslip               / move_line_ids (many2many)     : DEL relation: account.move.line
+hr_payroll_account / hr.payslip               / bank_journal_id (many2one)    : DEL relation: account.journal
+hr_payroll_account / hr.holidays.status       / analytic_account_id (many2one): DEL relation: account.analytic.account
+hr_payroll_account / hr.holidays.status       / account_id (many2one)         : DEL relation: account.account
+hr_payroll_account / hr.payroll.structure     / account_id (many2one)         : DEL relation: account.analytic.account
+hr_payroll_account / hr.salary.rule           / analytic_account_id (many2one): NEW relation: account.analytic.account
+hr_payroll_account / hr.salary.rule           / account_credit (many2one)     : NEW relation: account.account
+hr_payroll_account / hr.salary.rule           / account_tax_id (many2one)     : NEW relation: account.tax.code
+hr_payroll_account / hr.salary.rule           / account_debit (many2one)      : NEW relation: account.account
+hr_payroll_account / hr.payslip               / move_id (many2one)            : NEW relation: account.move
+hr_payroll_account / hr.contract              / analytic_account_id (many2one): NEW relation: account.analytic.account
+hr_payroll_account / hr.contract              / journal_id (many2one)         : NEW relation: account.journal
+hr_payroll_account / hr.payslip.run           / journal_id (many2one)         : NEW relation: account.journal, required: required
+deleted xml-id of model ir.model.access: hr_payroll_account.access_hr_payslip_account_move_user
+deleted xml-id of model ir.model.access: hr_payroll_account.access_hr_payslip_line_user
+deleted xml-id of model ir.model.access: hr_payroll_account.access_hr_payslip_user
+deleted xml-id of model ir.ui.view: hr_payroll_account.hr_contibution_register_inherit1_form
+deleted xml-id of model ir.ui.view: hr_payroll_account.hr_contibution_register_inherit_form
+deleted xml-id of model ir.ui.view: hr_payroll_account.hr_contibution_register_inherit_tree
+deleted xml-id of model ir.ui.view: hr_payroll_account.hr_contibution_register_line_inherit_form
+deleted xml-id of model ir.ui.view: hr_payroll_account.hr_employee_payroll_property_form
+deleted xml-id of model ir.ui.view: hr_payroll_account.view_holiday_status_inherit_form1
+deleted xml-id of model ir.ui.view: hr_payroll_account.view_hr_bank_advice_inherit_form
+deleted xml-id of model ir.ui.view: hr_payroll_account.view_hr_payroll_register_inherit_form
+deleted xml-id of model ir.ui.view: hr_payroll_account.view_hr_payroll_register_inherit_tree
+deleted xml-id of model ir.ui.view: hr_payroll_account.view_hr_payslip_form_inherit
+deleted xml-id of model ir.ui.view: hr_payroll_account.view_hr_payslip_form_inherit1
+deleted xml-id of model ir.ui.view: hr_payroll_account.view_hr_payslip_form_inherit_1
+deleted xml-id of model ir.ui.view: hr_payroll_account.view_hr_payslip_line_inherit_form
+deleted xml-id of model ir.ui.view: hr_payroll_account.view_hr_payslip_line_inherit_tree
+new xml-id of model ir.ui.view: hr_payroll_account.hr_contract_form_inherit
+new xml-id of model ir.ui.view: hr_payroll_account.hr_payslip_run_form_inherit
+new xml-id of model ir.ui.view: hr_payroll_account.hr_payslip_run_search_inherit
+new xml-id of model ir.ui.view: hr_payroll_account.hr_payslip_run_tree_inherit
+new xml-id of model ir.ui.view: hr_payroll_account.hr_salary_rule_form_inherit

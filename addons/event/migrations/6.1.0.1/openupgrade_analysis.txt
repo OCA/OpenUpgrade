@@ -1,0 +1,11 @@
+---event---
+event        / event.registration       / contact_id (many2one)         : relation is now 'res.partner.address' ('res.partner.contact')
+event        / event.registration       / message_ids (one2many)        : relation is now 'mail.message' ('mailgate.message')
+event        / event.registration       / log_ids (one2many)            : relation is now 'mail.message' ('mailgate.message')
+event        / event.registration       / id (integer)                  : NEW 
+deleted xml-id of model board.note.type: event.note_association_type
+deleted xml-id of model ir.ui.menu: event.board_associations
+deleted xml-id of model res.groups: base.group_sale_manager
+deleted xml-id of model res.groups: base.group_sale_salesman
+deleted xml-id of model res.groups: marketing.group_marketing_manager
+deleted xml-id of model res.groups: marketing.group_marketing_user

@@ -1,0 +1,11 @@
+---hr_timesheet---
+deleted xml-id of model ir.actions.wizard: hr_timesheet.wizard_hr_timesheet_users
+deleted xml-id of model ir.ui.menu: hr.menu_hr_reporting
+new xml-id of model hr.employee: hr.employee
+new xml-id of model ir.actions.act_window: hr_timesheet.action_define_analytic_structure
+new xml-id of model ir.actions.todo: hr_timesheet.todo_define_analytic_structure
+new xml-id of model ir.model.access: hr_timesheet.access_account_analytic_journal_user
+new xml-id of model ir.model.access: hr_timesheet.access_hr_analytic_timesheet_employee
+new xml-id of model ir.model.access: hr_timesheet.access_hr_analytic_timesheet_user
+new xml-id of model ir.rule: hr_timesheet.property_rule_timesheet_employee
+new xml-id of model ir.rule: hr_timesheet.property_rule_timesheet_manager

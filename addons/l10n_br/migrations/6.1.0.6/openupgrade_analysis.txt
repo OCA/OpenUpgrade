@@ -1,0 +1,144 @@
+---l10n_br---
+l10n_br      / l10n_br_account.cst.template / code (char)                   : NEW required: required
+l10n_br      / l10n_br_account.cst.template / name (char)                   : NEW 
+l10n_br      / l10n_br_account.cst.template / tax_code_template_id (many2one): NEW relation: account.tax.code.template, required: required
+l10n_br      / account.tax.code.template / domain (char)                 : NEW 
+l10n_br      / account.tax.code.template / tax_discount (boolean)        : NEW 
+l10n_br      / account.tax.code         / domain (char)                 : NEW 
+l10n_br      / account.tax.code         / tax_discount (boolean)        : NEW 
+l10n_br      / l10n_br_account.cst      / tax_code_id (many2one)        : NEW relation: account.tax.code, required: required
+l10n_br      / l10n_br_account.cst      / code (char)                   : NEW required: required
+l10n_br      / l10n_br_account.cst      / name (char)                   : NEW 
+l10n_br      / account.tax.template     / type (False)                  : NEW selection_keys: ['balance', 'code', 'fixed', 'none', 'percent', 'quantity'], mode: modify
+l10n_br      / account.tax.template     / tax_discount (boolean)        : NEW 
+l10n_br      / account.tax.template     / base_reduction (float)        : NEW required: required, req_default: 0
+l10n_br      / account.tax.template     / amount_mva (float)            : NEW required: required, req_default: 0
+l10n_br      / account.tax              / type (False)                  : NEW selection_keys: ['balance', 'code', 'fixed', 'none', 'percent', 'quantity'], mode: modify
+l10n_br      / account.tax              / tax_discount (boolean)        : NEW 
+l10n_br      / account.tax              / base_reduction (float)        : NEW required: required, req_default: 0
+l10n_br      / account.tax              / amount_mva (float)            : NEW required: required, req_default: 0
+deleted xml-id of model account.tax.code.template: l10n_br.tax_code_10
+new xml-id of model account.tax.template: l10n_br.tax_template_42
+new xml-id of model account.tax.template: l10n_br.tax_template_43
+new xml-id of model account.tax.template: l10n_br.tax_template_44
+new xml-id of model account.tax.template: l10n_br.tax_template_45
+new xml-id of model account.tax.template: l10n_br.tax_template_46
+new xml-id of model ir.actions.act_window: l10n_br.action_l10n_br_cst_form
+new xml-id of model ir.actions.act_window: l10n_br.action_l10n_br_cst_template_form
+new xml-id of model ir.model.access: l10n_br.l10n_br_account_cst
+new xml-id of model ir.model.access: l10n_br.l10n_br_account_cst_template
+new xml-id of model ir.ui.menu: l10n_br.menu_action_l10n_br_cst
+new xml-id of model ir.ui.menu: l10n_br.menu_action_l10n_br_cst_template
+new xml-id of model ir.ui.view: l10n_br.view_l10n_br_account_tax_form
+new xml-id of model ir.ui.view: l10n_br.view_l10n_br_account_tax_form1
+new xml-id of model ir.ui.view: l10n_br.view_l10n_br_account_tax_form2
+new xml-id of model ir.ui.view: l10n_br.view_l10n_br_account_tax_template_form
+new xml-id of model ir.ui.view: l10n_br.view_l10n_br_account_tax_template_form1
+new xml-id of model ir.ui.view: l10n_br.view_l10n_br_account_tax_template_form2
+new xml-id of model ir.ui.view: l10n_br.view_l10n_br_accout_tax_code_form
+new xml-id of model ir.ui.view: l10n_br.view_l10n_br_accout_tax_code_template_form
+new xml-id of model ir.ui.view: l10n_br.view_l10n_br_cst_form
+new xml-id of model ir.ui.view: l10n_br.view_l10n_br_cst_template_form
+new xml-id of model ir.ui.view: l10n_br.view_l10n_br_cst_template_tree
+new xml-id of model ir.ui.view: l10n_br.view_l10n_br_cst_tree
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_1
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_10
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_100
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_101
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_102
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_103
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_104
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_105
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_106
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_107
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_108
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_109
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_11
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_110
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_111
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_112
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_12
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_13
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_14
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_15
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_16
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_17
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_18
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_19
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_2
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_20
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_21
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_22
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_23
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_24
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_25
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_26
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_27
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_28
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_29
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_3
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_30
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_31
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_32
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_33
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_34
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_35
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_36
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_37
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_38
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_39
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_4
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_40
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_41
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_42
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_43
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_44
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_45
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_46
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_47
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_48
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_49
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_5
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_50
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_51
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_52
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_53
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_54
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_55
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_56
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_57
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_58
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_59
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_6
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_60
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_61
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_62
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_63
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_64
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_65
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_66
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_67
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_68
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_69
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_7
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_70
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_71
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_72
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_73
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_74
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_75
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_76
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_77
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_78
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_79
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_8
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_80
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_9
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_92
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_93
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_94
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_95
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_96
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_97
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_98
+new xml-id of model l10n_br_account.cst.template: l10n_br.l10n_br_cst_template_99

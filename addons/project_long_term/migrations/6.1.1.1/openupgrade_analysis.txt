@@ -1,0 +1,34 @@
+---project_long_term---
+project_long_term / project.phase            / constraint_date_end (date)    : type is now 'datetime' ('date')
+project_long_term / project.phase            / date_end (date)               : type is now 'datetime' ('date')
+project_long_term / project.phase            / date_start (date)             : type is now 'datetime' ('date')
+project_long_term / project.phase            / constraint_date_start (date)  : type is now 'datetime' ('date')
+project_long_term / project.project          / resource_calendar_id (many2one): module is now 'project' ('project_long_term')
+project_long_term / project.phase            / responsible_id (many2one)     : DEL relation: res.users
+project_long_term / project.phase            / resource_ids (one2many)       : DEL relation: project.resource.allocation
+project_long_term / project.phase            / user_force_ids (many2many)    : NEW relation: res.users
+project_long_term / project.phase            / user_ids (one2many)           : NEW relation: project.user.allocation
+project_long_term / project.user.allocation  / date_end (datetime)           : NEW 
+project_long_term / project.user.allocation  / user_id (many2one)            : NEW relation: res.users, required: required
+project_long_term / project.user.allocation  / date_start (datetime)         : NEW 
+project_long_term / project.user.allocation  / phase_id (many2one)           : NEW relation: project.phase, required: required
+deleted xml-id of model ir.actions.act_window: project_long_term.act_project_resource
+deleted xml-id of model ir.actions.act_window: project_long_term.action_project_schedule_tasks
+deleted xml-id of model ir.model.access: project_long_term.access_project_resource_allocation
+deleted xml-id of model ir.model.access: project_long_term.access_project_resource_allocation_manager
+deleted xml-id of model ir.ui.menu: project_long_term.menu_pm_resources_project1
+deleted xml-id of model ir.ui.view: project.view_project_resource_form1
+deleted xml-id of model ir.ui.view: project_long_term.view_project_resource_allocation_calendar
+deleted xml-id of model ir.ui.view: project_long_term.view_project_resource_allocation_form
+deleted xml-id of model ir.ui.view: project_long_term.view_project_resource_allocation_gantt
+deleted xml-id of model ir.ui.view: project_long_term.view_project_resource_allocation_list
+deleted xml-id of model ir.ui.view: project_long_term.view_project_resource_allocation_search
+deleted xml-id of model ir.ui.view: project_long_term.view_project_schedule_tasks
+new xml-id of model ir.model.access: project_long_term.access_project_user_allocation
+new xml-id of model ir.model.access: project_long_term.access_project_user_allocation_manager
+new xml-id of model ir.ui.menu: project_long_term.menu_pm_users_project1
+new xml-id of model ir.ui.view: project_long_term.view_project_user_allocation_calendar
+new xml-id of model ir.ui.view: project_long_term.view_project_user_allocation_form
+new xml-id of model ir.ui.view: project_long_term.view_project_user_allocation_gantt
+new xml-id of model ir.ui.view: project_long_term.view_project_user_allocation_list
+new xml-id of model ir.ui.view: project_long_term.view_project_user_allocation_search

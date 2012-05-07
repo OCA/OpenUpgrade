@@ -1,0 +1,17 @@
+---account_check_writing---
+account_check_writing / account.journal          / use_preprint_check (boolean)  : NEW 
+account_check_writing / account.journal          / allow_check_writing (boolean) : NEW 
+account_check_writing / account.voucher          / amount_in_word (char)         : NEW 
+account_check_writing / res.company              / check_layout (selection)      : NEW selection_keys: ['bottom', 'middle', 'top']
+new xml-id of model ir.actions.act_window: account_check_writing.action_write_check
+new xml-id of model ir.actions.act_window.view: account_check_writing.action_write_check_form
+new xml-id of model ir.actions.act_window.view: account_check_writing.action_write_check_tree
+new xml-id of model ir.actions.report.xml: account_check_writing.account_print_check_bottom
+new xml-id of model ir.actions.report.xml: account_check_writing.account_print_check_middle
+new xml-id of model ir.actions.report.xml: account_check_writing.account_print_check_top
+new xml-id of model ir.sequence: account_check_writing.sequence_check_number
+new xml-id of model ir.sequence.type: account_check_writing.sequence_type_check_number
+new xml-id of model ir.ui.menu: account_check_writing.menu_action_write_check
+new xml-id of model ir.ui.view: account_check_writing.check_format_company
+new xml-id of model ir.ui.view: account_check_writing.view_account_journal_form
+new xml-id of model ir.ui.view: account_check_writing.view_vendor_payment_check_form
