@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 00:37+0000\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2012-05-09 04:54+0000\n"
+"Last-Translator: Fekete Mihai <mihai.fekete@etotalpc.ro>\n"
 "Language-Team: Romanian <ro@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-02-18 07:10+0000\n"
-"X-Generator: Launchpad (build 14814)\n"
+"X-Launchpad-Export-Date: 2012-05-09 05:28+0000\n"
+"X-Generator: Launchpad (build 15213)\n"
 
 #. module: stock_planning
 #: code:addons/stock_planning/wizard/stock_planning_createlines.py:73
@@ -34,8 +34,8 @@ msgid ""
 "warehouse."
 msgstr ""
 "Bifati pentru calcularea locatiei stocului doar pentru depozitul selectat. "
-"Daca nu selectati, calculul se face pentru locatia de intrare, stoc si "
-"iesire a depozitului."
+"Daca nu selectati, calculul se face pentru locatia de intrare, a stocului si "
+"de iesire a depozitului."
 
 #. module: stock_planning
 #: field:stock.planning,maximum_op:0
@@ -46,7 +46,7 @@ msgstr "Regula maxima"
 #: view:stock.planning:0
 #: view:stock.sale.forecast:0
 msgid "Group By..."
-msgstr "Grupează după..."
+msgstr "Grupeaza dupa..."
 
 #. module: stock_planning
 #: help:stock.sale.forecast,product_amt:0
@@ -173,16 +173,20 @@ msgid ""
 "are independent of financial periods. If you need periods other than day-, "
 "week- or month-based, you may also add then manually."
 msgstr ""
+"Acest asistent va ajuta la crearea perioadelor de planificare a stocului. "
+"Aceste perioade sunt independente de perioadele financiare. Daca aveti "
+"nevoie de alte perioade decat cele bazate pe zi-, saptamana-, sau luna-, le "
+"puteti de asemenea adauga manual."
 
 #. module: stock_planning
 #: view:stock.period.createlines:0
 msgid "Create Monthly Periods"
-msgstr "Creare perioade lunare"
+msgstr "Creeaza Perioade Lunar"
 
 #. module: stock_planning
 #: model:ir.model,name:stock_planning.model_stock_period_createlines
 msgid "stock.period.createlines"
-msgstr "stock.period.createlines (stoc.perioada.creeaza_linii)"
+msgstr "stoc.perioada.creeaza_linii"
 
 #. module: stock_planning
 #: field:stock.planning,outgoing_before:0
@@ -198,6 +202,7 @@ msgstr "Toate produsele cu Previziune"
 #: help:stock.planning,maximum_op:0
 msgid "Maximum quantity set in Minimum Stock Rules for this Warehouse"
 msgstr ""
+"Cantitatea maxima setata in Regulile Stocului Minim pentru acest Depozit"
 
 #. module: stock_planning
 #: view:stock.sale.forecast:0
@@ -210,6 +215,9 @@ msgid ""
 "Check to make procurement to stock location of selected warehouse. If not "
 "selected procurement will be made into input location of warehouse."
 msgstr ""
+"Bifati pentru a face aprovizionarea in stocul locatiei depozitului selectat. "
+"Daca nu e selectat, aprovizionarea va fi facuta in locatia de intrare a "
+"depozitului."
 
 #. module: stock_planning
 #: help:stock.planning,already_in:0
@@ -222,7 +230,7 @@ msgstr ""
 #: code:addons/stock_planning/wizard/stock_planning_forecast.py:60
 #, python-format
 msgid "No products in selected category !"
-msgstr "Nici un produs in categoria aleasa !"
+msgstr "Nici un produs in categoria selectata !"
 
 #. module: stock_planning
 #: view:stock.sale.forecast:0
@@ -232,7 +240,7 @@ msgstr "Stoc si Previziune vanzari"
 #. module: stock_planning
 #: model:ir.model,name:stock_planning.model_stock_sale_forecast
 msgid "stock.sale.forecast"
-msgstr "stock.sale.forecast (stoc.vanzare.previziune)"
+msgstr "stoc.previziune.vanzare"
 
 #. module: stock_planning
 #: field:stock.planning,to_procure:0
@@ -299,7 +307,7 @@ msgstr "Perioada3 a acestui utilizator"
 #. module: stock_planning
 #: view:stock.planning:0
 msgid "Stock Planning"
-msgstr "Planificare stoc"
+msgstr "Planificarea stocului"
 
 #. module: stock_planning
 #: field:stock.planning,minimum_op:0
@@ -315,7 +323,7 @@ msgstr "Asigurarea primirii produselor ramase"
 #: view:stock.planning.createlines:0
 #: view:stock.sale.forecast.createlines:0
 msgid "Create"
-msgstr "Creati"
+msgstr "Creeaza"
 
 #. module: stock_planning
 #: model:ir.actions.act_window,name:stock_planning.action_view_stock_planning_form
