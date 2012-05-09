@@ -1,0 +1,23 @@
+---base_contact---
+base_contact / res.partner.contact      / comment (text)                : NEW 
+base_contact / res.partner.contact      / photo (binary)                : NEW 
+base_contact / res.partner.contact      / title (selection)             : relation is now 'res.partner.title' ('False')
+base_contact / res.partner.contact      / title (selection)             : selection_keys is now 'False' ('function')
+base_contact / res.partner.contact      / title (selection)             : type is now 'many2one' ('selection')
+base_contact / res.partner.job          / function (char)               : NEW 
+base_contact / res.partner.job          / function_id (many2one)        : DEL relation: res.partner.function
+deleted xml-id of model ir.ui.menu: base.menu_partner_address_form
+deleted xml-id of model ir.ui.menu: base_contact.menu_action_res_partner_job
+deleted xml-id of model ir.ui.view: base_contact.view_partner_address_form_inherited5
+new xml-id of model ir.actions.act_window: base_contact.action_base_contact_installer
+new xml-id of model ir.actions.todo: base_contact.base_contact_installer_todo
+new xml-id of model ir.model.access: base_contact.access_group_sale_salesman
+new xml-id of model ir.ui.menu: base.menu_procurement_management_supplier
+new xml-id of model ir.ui.menu: base.menu_procurement_management_supplier_name
+new xml-id of model ir.ui.menu: base.menu_purchase_root
+new xml-id of model ir.ui.menu: base_contact.menu_purchases_partner_contact_form
+new xml-id of model ir.ui.view: base_contact.view_base_contact_installer
+new xml-id of model ir.ui.view: base_contact.view_partner_contact_search
+new xml-id of model ir.ui.view: base_contact.view_res_partner_address_filter
+new xml-id of model res.groups: base.group_sale_manager
+new xml-id of model res.groups: base.group_sale_salesman

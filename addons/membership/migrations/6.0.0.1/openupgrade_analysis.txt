@@ -1,0 +1,84 @@
+---membership---
+membership   / membership.membership_line / date (date)                   : NEW 
+membership   / membership.membership_line / member_price (float)          : NEW required: required
+membership   / membership.membership_line / membership_id (many2one)      : NEW relation: product.product, required: required
+membership   / report.membership        / associate_member_id (many2one): NEW relation: res.partner
+membership   / report.membership        / company_id (many2one)         : NEW relation: res.company
+membership   / report.membership        / date_from (datetime)          : NEW 
+membership   / report.membership        / date_to (datetime)            : NEW 
+membership   / report.membership        / membership_id (many2one)      : NEW relation: product.product
+membership   / report.membership        / membership_state (selection)  : NEW selection_keys: ['canceled', 'free', 'invoiced', 'none', 'old', 'paid', 'waiting']
+membership   / report.membership        / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+membership   / report.membership        / num_invoiced (integer)        : NEW 
+membership   / report.membership        / num_paid (integer)            : NEW 
+membership   / report.membership        / num_waiting (integer)         : NEW 
+membership   / report.membership        / partner_id (many2one)         : NEW relation: res.partner
+membership   / report.membership        / tot_earned (float)            : NEW 
+membership   / report.membership        / tot_pending (float)           : NEW 
+membership   / report.membership        / user_id (many2one)            : NEW relation: res.users
+membership   / report.membership        / year (char)                   : NEW 
+deleted xml-id of model ir.actions.act_window.view: membership.action_membership_members_associated_view_form
+deleted xml-id of model ir.actions.act_window.view: membership.action_membership_members_associated_view_tree
+deleted xml-id of model ir.actions.act_window.view: membership.action_membership_members_free_view_form
+deleted xml-id of model ir.actions.act_window.view: membership.action_membership_members_free_view_tree
+deleted xml-id of model ir.actions.act_window.view: membership.action_membership_members_invoiced_view_form
+deleted xml-id of model ir.actions.act_window.view: membership.action_membership_members_invoiced_view_tree
+deleted xml-id of model ir.actions.act_window.view: membership.action_membership_members_old_view_form
+deleted xml-id of model ir.actions.act_window.view: membership.action_membership_members_old_view_tree
+deleted xml-id of model ir.actions.act_window.view: membership.action_membership_members_paid_view_form
+deleted xml-id of model ir.actions.act_window.view: membership.action_membership_members_paid_view_tree
+deleted xml-id of model ir.actions.act_window.view: membership.action_membership_members_waiting_view_form
+deleted xml-id of model ir.actions.act_window.view: membership.action_membership_members_waiting_view_tree
+deleted xml-id of model ir.actions.act_window.view: membership.action_report_partner_member_year_new_tree_view1
+deleted xml-id of model ir.actions.act_window.view: membership.action_report_partner_member_year_new_tree_view2
+deleted xml-id of model ir.actions.act_window.view: membership.action_report_partner_member_year_new_tree_view3
+deleted xml-id of model ir.actions.act_window.view: membership.action_report_partner_member_year_new_tree_view4
+deleted xml-id of model ir.actions.act_window.view: membership.action_report_partner_member_year_tree_view1
+deleted xml-id of model ir.actions.act_window.view: membership.action_report_partner_member_year_tree_view2
+deleted xml-id of model ir.actions.act_window.view: membership.action_report_partner_member_year_tree_view3
+deleted xml-id of model ir.actions.act_window.view: membership.action_report_partner_member_year_tree_view4
+deleted xml-id of model ir.actions.act_window: membership.action_membership_members_associated
+deleted xml-id of model ir.actions.act_window: membership.action_membership_members_free
+deleted xml-id of model ir.actions.act_window: membership.action_membership_members_invoiced
+deleted xml-id of model ir.actions.act_window: membership.action_membership_members_old
+deleted xml-id of model ir.actions.act_window: membership.action_membership_members_paid
+deleted xml-id of model ir.actions.act_window: membership.action_membership_members_waiting
+deleted xml-id of model ir.actions.act_window: membership.action_report_partner_member_year_new_tree
+deleted xml-id of model ir.actions.act_window: membership.action_report_partner_member_year_tree
+deleted xml-id of model ir.actions.wizard: membership.wizard_invoice_membership
+deleted xml-id of model ir.model.access: membership.access_report_partner_member_year
+deleted xml-id of model ir.model.access: membership.access_report_partner_member_year_new
+deleted xml-id of model ir.ui.menu: membership.menu_conf
+deleted xml-id of model ir.ui.menu: membership.menu_members_associated
+deleted xml-id of model ir.ui.menu: membership.menu_members_free
+deleted xml-id of model ir.ui.menu: membership.menu_members_invoiced
+deleted xml-id of model ir.ui.menu: membership.menu_members_old
+deleted xml-id of model ir.ui.menu: membership.menu_members_paid
+deleted xml-id of model ir.ui.menu: membership.menu_members_waiting
+deleted xml-id of model ir.ui.menu: membership.menu_report_partner_member_year
+deleted xml-id of model ir.ui.menu: membership.menu_report_partner_member_year_new
+deleted xml-id of model ir.ui.menu: membership.menu_reporting
+deleted xml-id of model ir.ui.view: membership.membership_members_associated_tree
+deleted xml-id of model ir.ui.view: membership.view_report_partner_member_year_graph1
+deleted xml-id of model ir.ui.view: membership.view_report_partner_member_year_graph2
+deleted xml-id of model ir.ui.view: membership.view_report_partner_member_year_new_graph1
+deleted xml-id of model ir.ui.view: membership.view_report_partner_member_year_new_graph2
+deleted xml-id of model ir.ui.view: membership.view_report_partner_member_year_new_tree1
+deleted xml-id of model ir.ui.view: membership.view_report_partner_member_year_new_tree2
+deleted xml-id of model ir.ui.view: membership.view_report_partner_member_year_tree1
+deleted xml-id of model ir.ui.view: membership.view_report_partner_member_year_tree2
+new xml-id of model ir.actions.act_window.view: membership.action_report_membership_tree_view1
+new xml-id of model ir.actions.act_window.view: membership.action_report_membership_tree_view2
+new xml-id of model ir.actions.act_window: membership.action_membership_invoice_view
+new xml-id of model ir.actions.act_window: membership.action_report_membership_tree
+new xml-id of model ir.model.access: membership.access_report_membership
+new xml-id of model ir.ui.menu: base.menu_association
+new xml-id of model ir.ui.menu: base.menu_report_association
+new xml-id of model ir.ui.menu: membership.menu_report_membership
+new xml-id of model ir.ui.view: membership.membership_product_search_form_view
+new xml-id of model ir.ui.view: membership.view_membership_invoice_view
+new xml-id of model ir.ui.view: membership.view_report_membership_graph1
+new xml-id of model ir.ui.view: membership.view_report_membership_search
+new xml-id of model ir.ui.view: membership.view_report_membership_tree1
+new xml-id of model ir.ui.view: membership.view_res_partner_member_filter
+new xml-id of model ir.ui.view: membership.view_res_partner_member_filter2

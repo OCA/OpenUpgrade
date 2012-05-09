@@ -1,0 +1,123 @@
+---hr_recruitment---
+hr_recruitment / hr.applicant             / active (boolean)              : NEW 
+hr_recruitment / hr.applicant             / availability (integer)        : NEW 
+hr_recruitment / hr.applicant             / company_id (many2one)         : NEW relation: res.company
+hr_recruitment / hr.applicant             / create_date (datetime)        : NEW 
+hr_recruitment / hr.applicant             / date (datetime)               : NEW 
+hr_recruitment / hr.applicant             / date_action (date)            : NEW 
+hr_recruitment / hr.applicant             / date_closed (datetime)        : NEW 
+hr_recruitment / hr.applicant             / date_open (datetime)          : NEW 
+hr_recruitment / hr.applicant             / department_id (many2one)      : NEW relation: hr.department
+hr_recruitment / hr.applicant             / description (text)            : NEW 
+hr_recruitment / hr.applicant             / email_cc (text)               : NEW 
+hr_recruitment / hr.applicant             / email_from (char)             : NEW 
+hr_recruitment / hr.applicant             / job_id (many2one)             : NEW relation: hr.job
+hr_recruitment / hr.applicant             / message_ids (one2many)        : NEW relation: mailgate.message
+hr_recruitment / hr.applicant             / name (char)                   : NEW required: required
+hr_recruitment / hr.applicant             / partner_address_id (many2one) : NEW relation: res.partner.address
+hr_recruitment / hr.applicant             / partner_id (many2one)         : NEW relation: res.partner
+hr_recruitment / hr.applicant             / partner_mobile (char)         : NEW 
+hr_recruitment / hr.applicant             / partner_name (char)           : NEW 
+hr_recruitment / hr.applicant             / partner_phone (char)          : NEW 
+hr_recruitment / hr.applicant             / priority (selection)          : NEW selection_keys: ['1', '2', '3', '4', '5']
+hr_recruitment / hr.applicant             / probability (float)           : NEW 
+hr_recruitment / hr.applicant             / reference (char)              : NEW 
+hr_recruitment / hr.applicant             / response (integer)            : NEW 
+hr_recruitment / hr.applicant             / salary_expected (float)       : NEW 
+hr_recruitment / hr.applicant             / salary_proposed (float)       : NEW 
+hr_recruitment / hr.applicant             / stage_id (many2one)           : NEW relation: hr.recruitment.stage
+hr_recruitment / hr.applicant             / state (selection)             : NEW selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
+hr_recruitment / hr.applicant             / title_action (char)           : NEW 
+hr_recruitment / hr.applicant             / type_id (many2one)            : NEW relation: hr.recruitment.degree
+hr_recruitment / hr.applicant             / user_id (many2one)            : NEW relation: res.users
+hr_recruitment / hr.applicant             / write_date (datetime)         : NEW 
+hr_recruitment / hr.job                   / survey_id (many2one)          : NEW relation: survey
+hr_recruitment / hr.recruitment.degree    / name (char)                   : NEW required: required
+hr_recruitment / hr.recruitment.degree    / sequence (integer)            : NEW 
+hr_recruitment / hr.recruitment.report    / available (float)             : NEW 
+hr_recruitment / hr.recruitment.report    / company_id (many2one)         : NEW relation: res.company
+hr_recruitment / hr.recruitment.report    / date (date)                   : NEW 
+hr_recruitment / hr.recruitment.report    / date_closed (date)            : NEW 
+hr_recruitment / hr.recruitment.report    / day (char)                    : NEW 
+hr_recruitment / hr.recruitment.report    / delay_close (float)           : NEW 
+hr_recruitment / hr.recruitment.report    / delay_open (float)            : NEW 
+hr_recruitment / hr.recruitment.report    / department_id (many2one)      : NEW relation: hr.department
+hr_recruitment / hr.recruitment.report    / job_id (many2one)             : NEW relation: hr.job
+hr_recruitment / hr.recruitment.report    / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+hr_recruitment / hr.recruitment.report    / nbr (integer)                 : NEW 
+hr_recruitment / hr.recruitment.report    / partner_address_id (many2one) : NEW relation: res.partner.address
+hr_recruitment / hr.recruitment.report    / partner_id (many2one)         : NEW relation: res.partner
+hr_recruitment / hr.recruitment.report    / priority (selection)          : NEW selection_keys: ['1', '2', '3', '4', '5']
+hr_recruitment / hr.recruitment.report    / salary_exp (float)            : NEW 
+hr_recruitment / hr.recruitment.report    / salary_prop (float)           : NEW 
+hr_recruitment / hr.recruitment.report    / salary_prop_avg (float)       : NEW 
+hr_recruitment / hr.recruitment.report    / stage_id (many2one)           : NEW relation: hr.recruitment.stage
+hr_recruitment / hr.recruitment.report    / state (selection)             : NEW selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
+hr_recruitment / hr.recruitment.report    / type_id (many2one)            : NEW relation: hr.recruitment.degree
+hr_recruitment / hr.recruitment.report    / user_id (many2one)            : NEW relation: res.users
+hr_recruitment / hr.recruitment.report    / year (char)                   : NEW 
+hr_recruitment / hr.recruitment.stage     / department_id (many2one)      : NEW relation: hr.department
+hr_recruitment / hr.recruitment.stage     / name (char)                   : NEW required: required
+hr_recruitment / hr.recruitment.stage     / requirements (text)           : NEW 
+hr_recruitment / hr.recruitment.stage     / sequence (integer)            : NEW 
+new xml-id of model crm.case.categ: hr_recruitment.categ_job1
+new xml-id of model crm.case.categ: hr_recruitment.categ_job2
+new xml-id of model crm.case.section: hr_recruitment.section_hr_department
+new xml-id of model hr.recruitment.degree: hr_recruitment.degree_bac5
+new xml-id of model hr.recruitment.degree: hr_recruitment.degree_graduate
+new xml-id of model hr.recruitment.degree: hr_recruitment.degree_licenced
+new xml-id of model hr.recruitment.stage: hr_recruitment.stage_job1
+new xml-id of model hr.recruitment.stage: hr_recruitment.stage_job2
+new xml-id of model hr.recruitment.stage: hr_recruitment.stage_job3
+new xml-id of model hr.recruitment.stage: hr_recruitment.stage_job4
+new xml-id of model hr.recruitment.stage: hr_recruitment.stage_job5
+new xml-id of model hr.recruitment.stage: hr_recruitment.stage_job6
+new xml-id of model hr.recruitment.stage: hr_recruitment.stage_job7
+new xml-id of model ir.actions.act_window.view: hr_recruitment.action_hr_sec_form_view_act_job
+new xml-id of model ir.actions.act_window.view: hr_recruitment.action_hr_sec_graph_view_act_job
+new xml-id of model ir.actions.act_window.view: hr_recruitment.action_hr_sec_tree_view_act_job
+new xml-id of model ir.actions.act_window: hr_recruitment.action_applicants_status
+new xml-id of model ir.actions.act_window: hr_recruitment.action_hr_recruitment_partner_create
+new xml-id of model ir.actions.act_window: hr_recruitment.action_hr_recruitment_phonecall
+new xml-id of model ir.actions.act_window: hr_recruitment.action_hr_recruitment_report_all
+new xml-id of model ir.actions.act_window: hr_recruitment.crm_case_categ0_act_job
+new xml-id of model ir.actions.act_window: hr_recruitment.hr_job_categ_action
+new xml-id of model ir.actions.act_window: hr_recruitment.hr_job_stage_act
+new xml-id of model ir.actions.act_window: hr_recruitment.hr_recruitment_degree_action
+new xml-id of model ir.actions.act_window: hr_recruitment.hr_recruitment_stage_act
+new xml-id of model ir.model.access: hr_recruitment.access_crm_meeting_hruser
+new xml-id of model ir.model.access: hr_recruitment.access_crm_phonecall_hruser
+new xml-id of model ir.model.access: hr_recruitment.access_hr_applicant_user
+new xml-id of model ir.model.access: hr_recruitment.access_hr_recruitment_degree
+new xml-id of model ir.model.access: hr_recruitment.access_hr_recruitment_report
+new xml-id of model ir.model.access: hr_recruitment.access_hr_recruitment_stage_user
+new xml-id of model ir.model.access: hr_recruitment.access_mailgate_message_user
+new xml-id of model ir.model.access: hr_recruitment.access_res_partner_address_hr_user
+new xml-id of model ir.model.access: hr_recruitment.access_res_partner_hr_user
+new xml-id of model ir.model.access: hr_recruitment.access_survey_hr_user
+new xml-id of model ir.ui.menu: base.menu_crm_case_job_req_main
+new xml-id of model ir.ui.menu: base.menu_hr_dasboard
+new xml-id of model ir.ui.menu: base.menu_hr_manager
+new xml-id of model ir.ui.menu: hr.menu_hr_reporting
+new xml-id of model ir.ui.menu: hr_recruitment.menu_crm_case_categ0_act_job
+new xml-id of model ir.ui.menu: hr_recruitment.menu_hr_recruitment_degree
+new xml-id of model ir.ui.menu: hr_recruitment.menu_hr_recruitment_recruitment
+new xml-id of model ir.ui.menu: hr_recruitment.menu_hr_recruitment_report_all
+new xml-id of model ir.ui.menu: hr_recruitment.menu_hr_recruitment_stage
+new xml-id of model ir.ui.view: hr_recruitment.board_hr_applicants_status_form
+new xml-id of model ir.ui.view: hr_recruitment.crm_case_form_view_job
+new xml-id of model ir.ui.view: hr_recruitment.crm_case_graph_view_job
+new xml-id of model ir.ui.view: hr_recruitment.crm_case_tree_view_job
+new xml-id of model ir.ui.view: hr_recruitment.hr_applicant_calendar_view
+new xml-id of model ir.ui.view: hr_recruitment.hr_job_survey
+new xml-id of model ir.ui.view: hr_recruitment.hr_recruitment_degree_form
+new xml-id of model ir.ui.view: hr_recruitment.hr_recruitment_degree_tree
+new xml-id of model ir.ui.view: hr_recruitment.hr_recruitment_stage_form
+new xml-id of model ir.ui.view: hr_recruitment.hr_recruitment_stage_tree
+new xml-id of model ir.ui.view: hr_recruitment.view_applicants_status_tree
+new xml-id of model ir.ui.view: hr_recruitment.view_crm_case_jobs_filter
+new xml-id of model ir.ui.view: hr_recruitment.view_hr_recruitment_partner_create
+new xml-id of model ir.ui.view: hr_recruitment.view_hr_recruitment_phonecall
+new xml-id of model ir.ui.view: hr_recruitment.view_hr_recruitment_report_graph
+new xml-id of model ir.ui.view: hr_recruitment.view_hr_recruitment_report_search
+new xml-id of model ir.ui.view: hr_recruitment.view_hr_recruitment_report_tree

@@ -1,0 +1,34 @@
+---account_payment---
+account_payment / payment.line             / bank_statement_line_id (many2one): NEW relation: account.bank.statement.line
+account_payment / payment.mode             / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+account_payment / payment.mode             / type (many2one)               : DEL relation: payment.type, required: required
+account_payment / payment.order            / date_planned (date)           : DEL 
+account_payment / payment.order            / date_scheduled (date)         : NEW 
+deleted xml-id of model ir.actions.act_window: account_payment.action_payment_order_draft
+deleted xml-id of model ir.actions.act_window: account_payment.action_payment_order_open
+deleted xml-id of model ir.actions.wizard: account_payment.wizard_pay_payment
+deleted xml-id of model ir.actions.wizard: account_payment.wizard_populate_payment
+deleted xml-id of model ir.actions.wizard: account_payment.wizard_populate_statement
+deleted xml-id of model ir.model.access: account_payment.access_payment_type
+deleted xml-id of model ir.ui.menu: account_payment.menu_action_payment_order_draft
+deleted xml-id of model ir.ui.menu: account_payment.menu_action_payment_order_form_new
+deleted xml-id of model ir.ui.menu: account_payment.menu_action_payment_order_open
+deleted xml-id of model ir.ui.menu: account_payment.menu_main
+deleted xml-id of model ir.ui.menu: account_payment.next_id_44
+deleted xml-id of model ir.ui.view: account_payment.view_payment_type_form
+new xml-id of model ir.actions.act_window: account_payment.action_account_payment_make_payment
+new xml-id of model ir.actions.act_window: account_payment.action_account_payment_populate_statement
+new xml-id of model ir.actions.act_window: account_payment.action_account_populate_statement_confirm
+new xml-id of model ir.actions.act_window: account_payment.action_create_payment_order
+new xml-id of model ir.model.access: account_payment.access_payment_line_invoice
+new xml-id of model ir.model.access: account_payment.access_payment_order_accountant
+new xml-id of model ir.model.access: account_payment.access_payment_order_invoice
+new xml-id of model ir.model.access: account_payment.access_payment_order_manager
+new xml-id of model ir.rule: account_payment.payment_mode_comp_rule
+new xml-id of model ir.ui.menu: account_payment.menu_main_payment
+new xml-id of model ir.ui.view: account_payment.account_payment_make_payment_view
+new xml-id of model ir.ui.view: account_payment.account_payment_populate_statement_view
+new xml-id of model ir.ui.view: account_payment.view_create_payment_order
+new xml-id of model ir.ui.view: account_payment.view_create_payment_order_lines
+new xml-id of model ir.ui.view: account_payment.view_payment_mode_search
+new xml-id of model ir.ui.view: account_payment.view_payment_order_search

@@ -1,0 +1,165 @@
+---account_voucher---
+account_voucher / account.account          / journal_id (many2one)         : DEL relation: account.journal
+account_voucher / account.account          / level (integer)               : module is now 'account' ('account_voucher')
+account_voucher / account.account          / open_bal (float)              : DEL 
+account_voucher / account.account          / type1 (selection)             : DEL selection_keys: ['cr', 'dr', 'none']
+account_voucher / account.account.template / type1 (selection)             : DEL selection_keys: ['cr', 'dr', 'none']
+account_voucher / account.bank.statement.line / voucher_id (many2one)         : NEW relation: account.voucher
+account_voucher / account.move             / narration (text)              : module is now 'account' ('account_voucher')
+account_voucher / account.voucher          / amount (float)                : now required, default = function
+account_voucher / account.voucher          / analytic_id (many2one)        : NEW relation: account.analytic.account
+account_voucher / account.voucher          / comment (char)                : NEW required: required, req_default: Write-Off
+account_voucher / account.voucher          / date_due (date)               : NEW 
+account_voucher / account.voucher          / line_cr_ids (one2many)        : NEW relation: account.voucher.line
+account_voucher / account.voucher          / line_dr_ids (one2many)        : NEW relation: account.voucher.line
+account_voucher / account.voucher          / line_ids (one2many)           : NEW relation: account.voucher.line
+account_voucher / account.voucher          / move_ids (many2many)          : now a function
+account_voucher / account.voucher          / move_ids (many2many)          : type is now 'one2many' ('many2many')
+account_voucher / account.voucher          / pay_now (selection)           : NEW selection_keys: ['pay_later', 'pay_now']
+account_voucher / account.voucher          / payment_ids (one2many)        : DEL relation: account.voucher.line
+account_voucher / account.voucher          / payment_option (selection)    : NEW required: required, selection_keys: ['with_writeoff', 'without_writeoff'], req_default: without_writeoff
+account_voucher / account.voucher          / pre_line (boolean)            : NEW 
+account_voucher / account.voucher          / reference_type (selection)    : DEL required: required, selection_keys: function, req_default: function
+account_voucher / account.voucher          / tax_amount (float)            : NEW 
+account_voucher / account.voucher          / tax_id (many2one)             : NEW relation: account.tax
+account_voucher / account.voucher          / type (selection)              : selection_keys is now '['payment', 'purchase', 'receipt', 'sale']' ('['bank_pay_voucher', 'bank_rec_voucher', 'cont_voucher', 'journal_pur_voucher', 'journal_sale_vou', 'journal_voucher', 'pay_voucher', 'rec_voucher']')
+account_voucher / account.voucher          / writeoff_acc_id (many2one)    : NEW relation: account.account
+account_voucher / account.voucher.line     / move_line_id (many2one)       : NEW relation: account.move.line
+account_voucher / account.voucher.line     / partner_id (many2one)         : now a function
+account_voucher / account.voucher.line     / ref (char)                    : DEL 
+account_voucher / account.voucher.line     / untax_amount (float)          : NEW 
+account_voucher / account.voucher.line     / voucher_id (many2one)         : now required
+account_voucher / res.currency             / sub_name (char)               : DEL required: required, req_default: function
+account_voucher / sale.receipt.report      / account_id (many2one)         : NEW relation: account.account
+account_voucher / sale.receipt.report      / company_id (many2one)         : NEW relation: res.company
+account_voucher / sale.receipt.report      / currency_id (many2one)        : NEW relation: res.currency
+account_voucher / sale.receipt.report      / date (date)                   : NEW 
+account_voucher / sale.receipt.report      / date_due (date)               : NEW 
+account_voucher / sale.receipt.report      / day (char)                    : NEW 
+account_voucher / sale.receipt.report      / delay_to_pay (float)          : NEW 
+account_voucher / sale.receipt.report      / due_delay (float)             : NEW 
+account_voucher / sale.receipt.report      / journal_id (many2one)         : NEW relation: account.journal
+account_voucher / sale.receipt.report      / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+account_voucher / sale.receipt.report      / nbr (integer)                 : NEW 
+account_voucher / sale.receipt.report      / partner_id (many2one)         : NEW relation: res.partner
+account_voucher / sale.receipt.report      / pay_now (selection)           : NEW selection_keys: ['pay_later', 'pay_now']
+account_voucher / sale.receipt.report      / price_total (float)           : NEW 
+account_voucher / sale.receipt.report      / price_total_tax (float)       : NEW 
+account_voucher / sale.receipt.report      / state (selection)             : NEW selection_keys: ['cancel', 'draft', 'posted', 'proforma']
+account_voucher / sale.receipt.report      / type (selection)              : NEW selection_keys: ['payment', 'purchase', 'receipt', 'sale']
+account_voucher / sale.receipt.report      / user_id (many2one)            : NEW relation: res.users
+account_voucher / sale.receipt.report      / year (char)                   : NEW 
+deleted xml-id of model ir.actions.act_window: account_voucher.act_account_acount_move_line_open1
+deleted xml-id of model ir.actions.act_window: account_voucher.action_other_voucher_list
+deleted xml-id of model ir.actions.act_window: account_voucher.action_payments_bankpay_voucher_list
+deleted xml-id of model ir.actions.act_window: account_voucher.action_payments_cashpay_voucher_list
+deleted xml-id of model ir.actions.act_window: account_voucher.action_payments_voucher_list
+deleted xml-id of model ir.actions.act_window: account_voucher.action_receipt_bakreceipt_voucher_list
+deleted xml-id of model ir.actions.act_window: account_voucher.action_receipt_cashreceipt_voucher_list
+deleted xml-id of model ir.actions.act_window: account_voucher.action_receipt_vou_voucher_list
+deleted xml-id of model ir.actions.act_window: account_voucher.action_view_bank_pay_voucher_form
+deleted xml-id of model ir.actions.act_window: account_voucher.action_view_bank_rec_voucher_form
+deleted xml-id of model ir.actions.act_window: account_voucher.action_view_cash_pay_voucher_form
+deleted xml-id of model ir.actions.act_window: account_voucher.action_view_cash_rec_voucher_form
+deleted xml-id of model ir.actions.act_window: account_voucher.action_view_cont_voucher_form
+deleted xml-id of model ir.actions.act_window: account_voucher.action_view_jour_pur_voucher_form
+deleted xml-id of model ir.actions.act_window: account_voucher.action_view_jour_sale_voucher_form
+deleted xml-id of model ir.actions.act_window: account_voucher.action_view_jour_voucher_form
+deleted xml-id of model ir.actions.report.xml: account_voucher.report_account_voucher
+deleted xml-id of model ir.actions.report.xml: account_voucher.report_account_voucher_amt
+deleted xml-id of model ir.actions.wizard: account_voucher.wizard_account_voucher_open
+deleted xml-id of model ir.ui.menu: account_voucher.menu_action_other_voucher_list
+deleted xml-id of model ir.ui.menu: account_voucher.menu_action_payments_bankpay_voucher_list
+deleted xml-id of model ir.ui.menu: account_voucher.menu_action_payments_cashpay_voucher_list
+deleted xml-id of model ir.ui.menu: account_voucher.menu_action_payments_voucher_list
+deleted xml-id of model ir.ui.menu: account_voucher.menu_action_receipt_bakreceipt_voucher_list
+deleted xml-id of model ir.ui.menu: account_voucher.menu_action_receipt_cashreceipt_voucher_list
+deleted xml-id of model ir.ui.menu: account_voucher.menu_action_receipt_vou_voucher_list
+deleted xml-id of model ir.ui.menu: account_voucher.menu_action_view_bank_pay_voucher_form
+deleted xml-id of model ir.ui.menu: account_voucher.menu_action_view_bank_rec_voucher_form
+deleted xml-id of model ir.ui.menu: account_voucher.menu_action_view_cash_pay_voucher_form
+deleted xml-id of model ir.ui.menu: account_voucher.menu_action_view_cash_rec_voucher_form
+deleted xml-id of model ir.ui.menu: account_voucher.menu_action_view_cont_voucher_form
+deleted xml-id of model ir.ui.menu: account_voucher.menu_action_view_jour_pur_voucher_form
+deleted xml-id of model ir.ui.menu: account_voucher.menu_action_view_jour_sale_voucher_form
+deleted xml-id of model ir.ui.menu: account_voucher.menu_action_view_jour_voucher_form
+deleted xml-id of model ir.ui.menu: account_voucher.menu_action_voucher_list
+deleted xml-id of model ir.ui.menu: account_voucher.menu_wizard_account_voucher_open
+deleted xml-id of model ir.ui.view: account_voucher.account_form1
+deleted xml-id of model ir.ui.view: account_voucher.account_form2
+deleted xml-id of model ir.ui.view: account_voucher.account_move_inherit_new
+deleted xml-id of model ir.ui.view: account_voucher.account_tree1
+deleted xml-id of model ir.ui.view: account_voucher.account_tree2
+deleted xml-id of model ir.ui.view: account_voucher.sub_currency_form
+new xml-id of model ir.actions.act_window.view: account_voucher.action_journal_voucher_form
+new xml-id of model ir.actions.act_window.view: account_voucher.action_journal_voucher_tree
+new xml-id of model ir.actions.act_window.view: account_voucher.action_purchase_receipt_form
+new xml-id of model ir.actions.act_window.view: account_voucher.action_purchase_receipt_tree
+new xml-id of model ir.actions.act_window.view: account_voucher.action_sale_receipt_form
+new xml-id of model ir.actions.act_window.view: account_voucher.action_sale_receipt_tree
+new xml-id of model ir.actions.act_window.view: account_voucher.action_vendor_payment_form
+new xml-id of model ir.actions.act_window.view: account_voucher.action_vendor_payment_tree
+new xml-id of model ir.actions.act_window.view: account_voucher.action_vendor_receipt_form
+new xml-id of model ir.actions.act_window.view: account_voucher.action_vendor_receipt_tree
+new xml-id of model ir.actions.act_window: account_voucher.act_journal_voucher_open
+new xml-id of model ir.actions.act_window: account_voucher.act_pay_bills
+new xml-id of model ir.actions.act_window: account_voucher.act_pay_voucher
+new xml-id of model ir.actions.act_window: account_voucher.action_purchase_receipt
+new xml-id of model ir.actions.act_window: account_voucher.action_review_voucher_list
+new xml-id of model ir.actions.act_window: account_voucher.action_sale_receipt
+new xml-id of model ir.actions.act_window: account_voucher.action_sale_receipt_report_all
+new xml-id of model ir.actions.act_window: account_voucher.action_vendor_payment
+new xml-id of model ir.actions.act_window: account_voucher.action_vendor_receipt
+new xml-id of model ir.actions.act_window: account_voucher.action_view_account_statement_from_invoice
+new xml-id of model ir.actions.act_window: account_voucher.action_view_account_statement_from_invoice_lines
+new xml-id of model ir.actions.act_window: account_voucher.action_view_account_voucher_unreconcile
+new xml-id of model ir.actions.report.xml: account_voucher.report_account_voucher_print
+new xml-id of model ir.model.access: account_voucher.access_account_voucher_invoice
+new xml-id of model ir.model.access: account_voucher.access_account_voucher_line_accountant
+new xml-id of model ir.model.access: account_voucher.access_account_voucher_line_invoice
+new xml-id of model ir.model.access: account_voucher.access_account_voucher_line_manager
+new xml-id of model ir.model.access: account_voucher.access_account_voucher_manager
+new xml-id of model ir.model.access: account_voucher.access_account_voucher_user
+new xml-id of model ir.model.access: account_voucher.access_sale_receipt_report_manager
+new xml-id of model ir.model.access: account_voucher.access_sale_receipt_report_user
+new xml-id of model ir.rule: account_voucher.voucher_comp_rule
+new xml-id of model ir.rule: account_voucher.voucher_line_comp_rule
+new xml-id of model ir.ui.menu: account_voucher.menu_action_purchase_receipt
+new xml-id of model ir.ui.menu: account_voucher.menu_action_sale_receipt
+new xml-id of model ir.ui.menu: account_voucher.menu_action_sale_receipt_report_all
+new xml-id of model ir.ui.menu: account_voucher.menu_action_vendor_payment
+new xml-id of model ir.ui.menu: account_voucher.menu_action_vendor_receipt
+new xml-id of model ir.ui.menu: account_voucher.menu_encode_entries_by_voucher
+new xml-id of model ir.ui.view: account_voucher.account_cash_statement_graph
+new xml-id of model ir.ui.view: account_voucher.view_account_statement_from_invoice
+new xml-id of model ir.ui.view: account_voucher.view_account_statement_from_invoice_lines
+new xml-id of model ir.ui.view: account_voucher.view_account_voucher_unreconcile
+new xml-id of model ir.ui.view: account_voucher.view_bank_statement_form_invoice
+new xml-id of model ir.ui.view: account_voucher.view_bank_statement_form_voucher
+new xml-id of model ir.ui.view: account_voucher.view_bank_statement_tree_voucher
+new xml-id of model ir.ui.view: account_voucher.view_cash_statement_form_voucher
+new xml-id of model ir.ui.view: account_voucher.view_cash_statement_tree_voucher
+new xml-id of model ir.ui.view: account_voucher.view_invoice_customer
+new xml-id of model ir.ui.view: account_voucher.view_invoice_supplier
+new xml-id of model ir.ui.view: account_voucher.view_low_priority_payment_form
+new xml-id of model ir.ui.view: account_voucher.view_purchase_receipt_form
+new xml-id of model ir.ui.view: account_voucher.view_sale_receipt_form
+new xml-id of model ir.ui.view: account_voucher.view_sale_receipt_report_graph
+new xml-id of model ir.ui.view: account_voucher.view_sale_receipt_report_search
+new xml-id of model ir.ui.view: account_voucher.view_sale_receipt_report_tree
+new xml-id of model ir.ui.view: account_voucher.view_vendor_payment_form
+new xml-id of model ir.ui.view: account_voucher.view_vendor_receipt_form
+new xml-id of model ir.ui.view: account_voucher.view_voucher_filter
+new xml-id of model ir.ui.view: account_voucher.view_voucher_filter_customer_pay
+new xml-id of model ir.ui.view: account_voucher.view_voucher_filter_sale
+new xml-id of model ir.ui.view: account_voucher.view_voucher_filter_vendor
+new xml-id of model ir.ui.view: account_voucher.view_voucher_filter_vendor_pay
+new xml-id of model ir.ui.view: account_voucher.view_voucher_line_form
+new xml-id of model workflow.activity: account_voucher.act_cancel
+new xml-id of model workflow.activity: account_voucher.act_done
+new xml-id of model workflow.activity: account_voucher.act_proforma
+new xml-id of model workflow.transition: account_voucher.t2
+new xml-id of model workflow.transition: account_voucher.t6
+new xml-id of model workflow.transition: account_voucher.t7
+new xml-id of model workflow.transition: account_voucher.t8
+new xml-id of model workflow: account_voucher.wkf

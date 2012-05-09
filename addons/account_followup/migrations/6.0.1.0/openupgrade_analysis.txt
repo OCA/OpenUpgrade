@@ -1,0 +1,41 @@
+---account_followup---
+account_followup / account_followup.stat    / account_type (selection)      : DEL selection_keys: function
+account_followup / account_followup.stat    / blocked (boolean)             : NEW 
+account_followup / account_followup.stat    / company_id (many2one)         : NEW relation: res.company
+account_followup / account_followup.stat    / name (many2one)               : DEL relation: res.partner
+account_followup / account_followup.stat    / partner_id (many2one)         : NEW relation: res.partner
+account_followup / account_followup.stat    / period_id (many2one)          : NEW relation: account.period
+account_followup / account_followup.stat.by.partner / balance (float)               : NEW 
+account_followup / account_followup.stat.by.partner / company_id (many2one)         : NEW relation: res.company
+account_followup / account_followup.stat.by.partner / date_followup (date)          : NEW 
+account_followup / account_followup.stat.by.partner / date_move (date)              : NEW 
+account_followup / account_followup.stat.by.partner / date_move_last (date)         : NEW 
+account_followup / account_followup.stat.by.partner / max_followup_id (many2one)    : NEW relation: account_followup.followup.line
+account_followup / account_followup.stat.by.partner / partner_id (many2one)         : NEW relation: res.partner
+deleted xml-id of model ir.actions.act_window: account.act_account_partner_account_move_unreconciled
+deleted xml-id of model ir.actions.wizard: account_followup.action_account_followup_all_wizard
+deleted xml-id of model ir.model.access: account_followup.access_account_followup_followup
+deleted xml-id of model ir.model.access: account_followup.access_account_followup_followup_manager
+deleted xml-id of model ir.model.access: account_followup.access_account_followup_stat
+deleted xml-id of model ir.ui.menu: account_followup.account_followup_wizard_menu
+deleted xml-id of model ir.ui.menu: account_followup.menu_account_move_open_unreconcile
+deleted xml-id of model ir.ui.menu: account_followup.menu_account_move_open_unreconcile_payable
+deleted xml-id of model ir.ui.menu: account_followup.menu_action_followup_stat
+deleted xml-id of model ir.ui.view: account_followup.view_account_followup_stat_form
+new xml-id of model ir.actions.act_window: account_followup.action_account_followup_print
+new xml-id of model ir.actions.act_window: account_followup.action_account_followup_print_all
+new xml-id of model ir.model.access: account_followup.access_account_followup_followup_accountant
+new xml-id of model ir.model.access: account_followup.access_account_followup_stat_by_partner_manager
+new xml-id of model ir.model.access: account_followup.access_account_followup_stat_invoice
+new xml-id of model ir.rule: account_followup.account_followup_comp_rule
+new xml-id of model ir.rule: account_followup.account_followup_stat_by_partner_comp_rule
+new xml-id of model ir.ui.menu: account_followup.account_followup_print_menu
+new xml-id of model ir.ui.menu: account_followup.menu_action_followup_stat_follow
+new xml-id of model ir.ui.view: account_followup.account_followup_stat_by_partner_search
+new xml-id of model ir.ui.view: account_followup.account_followup_stat_by_partner_tree
+new xml-id of model ir.ui.view: account_followup.view_account_followup_filter
+new xml-id of model ir.ui.view: account_followup.view_account_followup_print
+new xml-id of model ir.ui.view: account_followup.view_account_followup_print_all
+new xml-id of model ir.ui.view: account_followup.view_account_followup_print_all_msg
+new xml-id of model ir.ui.view: account_followup.view_account_followup_stat_graph
+new xml-id of model ir.ui.view: account_followup.view_account_followup_stat_search

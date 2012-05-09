@@ -1,0 +1,187 @@
+---sale---
+sale         / mrp.production           / sale_name (char)              : module is now 'sale_mrp' ('sale')
+sale         / mrp.production           / sale_ref (char)               : module is now 'sale_mrp' ('sale')
+sale         / sale.order               / create_date (date)            : NEW 
+sale         / sale.order               / date_confirm (date)           : NEW 
+sale         / sale.order               / incoterm (selection)          : relation is now 'stock.incoterms' ('False')
+sale         / sale.order               / incoterm (selection)          : selection_keys is now 'False' ('function')
+sale         / sale.order               / incoterm (selection)          : type is now 'many2one' ('selection')
+sale         / sale.order.line          / procurement_id (many2one)     : relation is now 'procurement.order' ('mrp.procurement')
+sale         / sale.report              / analytic_account_id (many2one): NEW relation: account.analytic.account
+sale         / sale.report              / categ_id (many2one)           : NEW relation: product.category
+sale         / sale.report              / company_id (many2one)         : NEW relation: res.company
+sale         / sale.report              / date (date)                   : NEW 
+sale         / sale.report              / date_confirm (date)           : NEW 
+sale         / sale.report              / day (char)                    : NEW 
+sale         / sale.report              / delay (float)                 : NEW 
+sale         / sale.report              / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+sale         / sale.report              / nbr (integer)                 : NEW 
+sale         / sale.report              / partner_id (many2one)         : NEW relation: res.partner
+sale         / sale.report              / price_total (float)           : NEW 
+sale         / sale.report              / pricelist_id (many2one)       : NEW relation: product.pricelist
+sale         / sale.report              / product_id (many2one)         : NEW relation: product.product
+sale         / sale.report              / product_uom_qty (float)       : NEW 
+sale         / sale.report              / shipped (boolean)             : NEW 
+sale         / sale.report              / shipped_qty_1 (integer)       : NEW 
+sale         / sale.report              / shop_id (many2one)            : NEW relation: sale.shop
+sale         / sale.report              / state (selection)             : NEW selection_keys: ['cancel', 'done', 'draft', 'invoice_except', 'manual', 'progress', 'shipping_except', 'waiting_date']
+sale         / sale.report              / uom_name (char)               : NEW 
+sale         / sale.report              / user_id (many2one)            : NEW relation: res.users
+sale         / sale.report              / year (char)                   : NEW 
+sale         / sale.shop                / company_id (many2one)         : NEW relation: res.company
+sale         / sale.shop                / payment_account_id (many2many): DEL relation: account.account
+deleted xml-id of model ir.actions.act_window: sale.action_order_line_tree1
+deleted xml-id of model ir.actions.act_window: sale.action_order_tree10
+deleted xml-id of model ir.actions.act_window: sale.action_order_tree3
+deleted xml-id of model ir.actions.act_window: sale.action_order_tree7
+deleted xml-id of model ir.actions.act_window: sale.action_order_tree8
+deleted xml-id of model ir.actions.act_window: sale.action_order_tree9
+deleted xml-id of model ir.actions.act_window: sale.action_order_tree_all
+deleted xml-id of model ir.actions.act_window: sale.action_order_tree_new
+deleted xml-id of model ir.actions.wizard: sale.advance_payment
+deleted xml-id of model ir.actions.wizard: sale.wizard_sale_order_line_invoice
+deleted xml-id of model ir.actions.wizard: sale.wizard_sale_order_make_invoice
+deleted xml-id of model ir.model.access: sale.access_mrp_procurement_salesman
+deleted xml-id of model ir.model.access: sale.access_mrp_property_salesman
+deleted xml-id of model ir.model.access: sale.access_sale_config_picking_policy
+deleted xml-id of model ir.model.access: sale.access_sale_config_picking_policy_manager
+deleted xml-id of model ir.model.access: sale.access_sale_order_line_mrp_user
+deleted xml-id of model ir.model.access: sale.access_sale_order_mrp_user
+deleted xml-id of model ir.model.access: sale.access_sale_shop_admin
+deleted xml-id of model ir.ui.menu: sale.menu_action_order_line_tree1
+deleted xml-id of model ir.ui.menu: sale.menu_action_order_line_tree2
+deleted xml-id of model ir.ui.menu: sale.menu_action_order_line_tree3
+deleted xml-id of model ir.ui.menu: sale.menu_action_order_tree
+deleted xml-id of model ir.ui.menu: sale.menu_action_order_tree10
+deleted xml-id of model ir.ui.menu: sale.menu_action_order_tree2
+deleted xml-id of model ir.ui.menu: sale.menu_action_order_tree3
+deleted xml-id of model ir.ui.menu: sale.menu_action_order_tree4
+deleted xml-id of model ir.ui.menu: sale.menu_action_order_tree5
+deleted xml-id of model ir.ui.menu: sale.menu_action_order_tree7
+deleted xml-id of model ir.ui.menu: sale.menu_action_order_tree8
+deleted xml-id of model ir.ui.menu: sale.menu_action_order_tree9
+deleted xml-id of model ir.ui.menu: sale.menu_action_order_tree_all
+deleted xml-id of model ir.ui.menu: sale.menu_action_order_tree_new
+deleted xml-id of model ir.ui.menu: sale.menu_sale_root
+deleted xml-id of model ir.ui.menu: sale.menu_shop_configuration
+deleted xml-id of model ir.ui.view: sale.view_mrp_production_form_inherit
+deleted xml-id of model res.groups: sale.group_sale_manager
+deleted xml-id of model res.groups: sale.group_sale_user
+deleted xml-id of model res.partner.event.type: sale.event_type_sale_open
+deleted xml-id of model res.roles: sale.res_roles_salesman0
+new xml-id of model board.note.type: sale.note_sale_type
+new xml-id of model ir.actions.act_window: sale.action_order_report_all
+new xml-id of model ir.actions.act_window: sale.action_quotation_for_sale
+new xml-id of model ir.actions.act_window: sale.action_sale_installer
+new xml-id of model ir.actions.act_window: sale.action_sale_order_make_invoice
+new xml-id of model ir.actions.act_window: sale.action_sales_by_partner
+new xml-id of model ir.actions.act_window: sale.action_sales_by_salesman
+new xml-id of model ir.actions.act_window: sale.action_sales_product_total_price
+new xml-id of model ir.actions.act_window: sale.action_view_sale_advance_payment_inv
+new xml-id of model ir.actions.act_window: sale.action_view_sale_open_invoice
+new xml-id of model ir.actions.act_window: sale.action_view_sale_order_line_make_invoice
+new xml-id of model ir.actions.act_window: sale.action_view_sales_by_month
+new xml-id of model ir.actions.act_window: sale.open_board_sales_manager
+new xml-id of model ir.actions.act_window: sale.outgoing_picking_list_to_invoice
+new xml-id of model ir.actions.todo: sale.sale_installer_todo
+new xml-id of model ir.model.access: sale.access_account_account_salesman
+new xml-id of model ir.model.access: sale.access_account_fiscalyear_manager
+new xml-id of model ir.model.access: sale.access_account_fiscalyear_user
+new xml-id of model ir.model.access: sale.access_account_invoice_manager
+new xml-id of model ir.model.access: sale.access_account_invoice_tax_salesman
+new xml-id of model ir.model.access: sale.access_account_tax_user
+new xml-id of model ir.model.access: sale.access_ir_attachment_manager
+new xml-id of model ir.model.access: sale.access_ir_attachment_sales
+new xml-id of model ir.model.access: sale.access_ir_property_group_sale_manager
+new xml-id of model ir.model.access: sale.access_ir_property_sales
+new xml-id of model ir.model.access: sale.access_pricelist_partnerinfo_sale_manager
+new xml-id of model ir.model.access: sale.access_procurement_manager
+new xml-id of model ir.model.access: sale.access_procurement_salesman
+new xml-id of model ir.model.access: sale.access_product_category_sale_manager
+new xml-id of model ir.model.access: sale.access_product_group_res_partner_sale_manager
+new xml-id of model ir.model.access: sale.access_product_packaging_manager
+new xml-id of model ir.model.access: sale.access_product_packaging_sale_manager
+new xml-id of model ir.model.access: sale.access_product_packaging_user
+new xml-id of model ir.model.access: sale.access_product_price_type_sale_manager
+new xml-id of model ir.model.access: sale.access_product_pricelist_sale_manager
+new xml-id of model ir.model.access: sale.access_product_pricelist_sale_user
+new xml-id of model ir.model.access: sale.access_product_pricelist_type_sale_manager
+new xml-id of model ir.model.access: sale.access_product_pricelist_version_sale_manager
+new xml-id of model ir.model.access: sale.access_product_product_sale
+new xml-id of model ir.model.access: sale.access_product_product_sale_manager
+new xml-id of model ir.model.access: sale.access_product_product_sale_user
+new xml-id of model ir.model.access: sale.access_product_supplierinfo_manager
+new xml-id of model ir.model.access: sale.access_product_supplierinfo_sale_manager
+new xml-id of model ir.model.access: sale.access_product_supplierinfo_user
+new xml-id of model ir.model.access: sale.access_product_template_sale
+new xml-id of model ir.model.access: sale.access_product_template_sale_manager
+new xml-id of model ir.model.access: sale.access_product_template_sale_user
+new xml-id of model ir.model.access: sale.access_product_ul_sale_manager
+new xml-id of model ir.model.access: sale.access_product_uom_categ_sale_manager
+new xml-id of model ir.model.access: sale.access_product_uom_manager
+new xml-id of model ir.model.access: sale.access_product_uom_sale_manager
+new xml-id of model ir.model.access: sale.access_product_uom_user
+new xml-id of model ir.model.access: sale.access_report_stock_move_sales
+new xml-id of model ir.model.access: sale.access_res_partner_address_user
+new xml-id of model ir.model.access: sale.access_res_partner_bank_type_field_user
+new xml-id of model ir.model.access: sale.access_res_partner_bank_type_manager
+new xml-id of model ir.model.access: sale.access_res_partner_bank_type_user
+new xml-id of model ir.model.access: sale.access_res_partner_sale_manager
+new xml-id of model ir.model.access: sale.access_res_partner_sale_user
+new xml-id of model ir.model.access: sale.access_sale_account_journal
+new xml-id of model ir.model.access: sale.access_sale_order_accountant
+new xml-id of model ir.model.access: sale.access_sale_order_line_accountant
+new xml-id of model ir.model.access: sale.access_sale_report_manager
+new xml-id of model ir.model.access: sale.access_sale_report_salesman
+new xml-id of model ir.model.access: sale.access_sale_shop_manager
+new xml-id of model ir.model.access: sale.access_sale_shop_sale_manager
+new xml-id of model ir.model.access: sale.access_sale_shop_sale_user
+new xml-id of model ir.model.access: sale.access_stock_location_manager
+new xml-id of model ir.model.access: sale.access_stock_location_user
+new xml-id of model ir.model.access: sale.access_stock_move_manager
+new xml-id of model ir.model.access: sale.access_stock_picking_sales
+new xml-id of model ir.model.access: sale.access_stock_warehouse_manager
+new xml-id of model ir.model.access: sale.access_stock_warehouse_user
+new xml-id of model ir.rule: sale.sale_order_comp_rule
+new xml-id of model ir.rule: sale.sale_order_line_comp_rule
+new xml-id of model ir.rule: sale.sale_order_line_personal_rule
+new xml-id of model ir.rule: sale.sale_order_line_see_all
+new xml-id of model ir.rule: sale.sale_order_personal_rule
+new xml-id of model ir.rule: sale.sale_order_see_all
+new xml-id of model ir.rule: sale.sale_shop_comp_rule
+new xml-id of model ir.ui.menu: base.menu_base_config
+new xml-id of model ir.ui.menu: base.menu_base_partner
+new xml-id of model ir.ui.menu: base.menu_product
+new xml-id of model ir.ui.menu: base.menu_sales
+new xml-id of model ir.ui.menu: base.next_id_64
+new xml-id of model ir.ui.menu: board.menu_dasboard
+new xml-id of model ir.ui.menu: product.menu_products
+new xml-id of model ir.ui.menu: sale.menu_action_picking_list_to_invoice
+new xml-id of model ir.ui.menu: sale.menu_board_sales_manager
+new xml-id of model ir.ui.menu: sale.menu_invoiced
+new xml-id of model ir.ui.menu: sale.menu_invoicing_sales_order_lines
+new xml-id of model ir.ui.menu: sale.menu_report_product_all
+new xml-id of model ir.ui.view: sale.board_sales_manager_form
+new xml-id of model ir.ui.view: sale.mrp_company
+new xml-id of model ir.ui.view: sale.stock_move_sale
+new xml-id of model ir.ui.view: sale.view_order_product_graph
+new xml-id of model ir.ui.view: sale.view_order_product_search
+new xml-id of model ir.ui.view: sale.view_order_product_tree
+new xml-id of model ir.ui.view: sale.view_sale_advance_payment_inv
+new xml-id of model ir.ui.view: sale.view_sale_installer
+new xml-id of model ir.ui.view: sale.view_sale_open_invoice
+new xml-id of model ir.ui.view: sale.view_sale_order_line_make_invoice
+new xml-id of model ir.ui.view: sale.view_sale_order_make_invoice
+new xml-id of model ir.ui.view: sale.view_sales_by_month_tree
+new xml-id of model ir.ui.view: sale.view_sales_by_partner_graph
+new xml-id of model ir.ui.view: sale.view_sales_by_salesman_graph
+new xml-id of model ir.ui.view: sale.view_sales_order_filter
+new xml-id of model ir.ui.view: sale.view_sales_order_line_filter
+new xml-id of model ir.ui.view: sale.view_sales_order_uninvoiced_line_filter
+new xml-id of model ir.ui.view: sale.view_sales_product_total_price_graph
+new xml-id of model ir.ui.view: sale.view_top_quotations_tree
+new xml-id of model ir.values: sale.sale_order_line_make_invoice
+new xml-id of model ir.values: sale.sale_order_make_invoice
+new xml-id of model res.groups: base.group_sale_manager
+new xml-id of model res.groups: base.group_sale_salesman
+new xml-id of model res.groups: base.group_sale_salesman_all_leads

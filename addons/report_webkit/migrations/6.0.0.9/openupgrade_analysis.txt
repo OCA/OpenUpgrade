@@ -1,0 +1,36 @@
+---report_webkit---
+report_webkit / ir.actions.report.xml    / report_webkit_data (text)     : NEW 
+report_webkit / ir.actions.report.xml    / webkit_debug (boolean)        : NEW 
+report_webkit / ir.header_img            / company_id (many2one)         : NEW relation: res.company
+report_webkit / ir.header_img            / img (binary)                  : NEW 
+report_webkit / ir.header_img            / name (char)                   : NEW required: required
+report_webkit / ir.header_img            / type (char)                   : NEW required: required
+report_webkit / ir.header_webkit         / company_id (many2one)         : NEW relation: res.company
+report_webkit / ir.header_webkit         / css (text)                    : NEW 
+report_webkit / ir.header_webkit         / footer_html (text)            : NEW 
+report_webkit / ir.header_webkit         / format (selection)            : NEW required: required, selection_keys: ['A0', 'A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9', 'B0', 'B1', 'B10', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9', 'C5E', 'Comm10E', 'DLE', 'Executive', 'Folio', 'Ledger', 'Legal', 'Letter', 'Tabloid']
+report_webkit / ir.header_webkit         / html (text)                   : NEW 
+report_webkit / ir.header_webkit         / margin_bottom (float)         : NEW 
+report_webkit / ir.header_webkit         / margin_left (float)           : NEW 
+report_webkit / ir.header_webkit         / margin_right (float)          : NEW 
+report_webkit / ir.header_webkit         / margin_top (float)            : NEW 
+report_webkit / ir.header_webkit         / name (char)                   : NEW required: required
+report_webkit / ir.header_webkit         / orientation (selection)       : NEW selection_keys: ['Landscape', 'Portrait']
+report_webkit / res.company              / header_image (many2many)      : NEW relation: ir.header_img
+report_webkit / res.company              / header_webkit (many2many)     : NEW relation: ir.header_webkit
+report_webkit / res.company              / lib_path (char)               : NEW 
+new xml-id of model ir.actions.act_window: report_webkit.action_header_img
+new xml-id of model ir.actions.act_window: report_webkit.action_header_webkit
+new xml-id of model ir.actions.act_window: report_webkit.wizard_ofdo_report_actions
+new xml-id of model ir.header_img: report_webkit.ir_header_img_camptocamplogo0
+new xml-id of model ir.header_webkit: report_webkit.ir_header_webkit_basesample0
+new xml-id of model ir.model.access: report_webkit.access_ir_header_img
+new xml-id of model ir.model.access: report_webkit.access_ir_header_webkit
+new xml-id of model ir.property: report_webkit.ir_property_webkitheaderdefault0
+new xml-id of model ir.ui.menu: report_webkit.menu_header_img
+new xml-id of model ir.ui.menu: report_webkit.menu_header_webkit
+new xml-id of model ir.ui.view: report_webkit.act_report_xml_view
+new xml-id of model ir.ui.view: report_webkit.currency_del_img
+new xml-id of model ir.ui.view: report_webkit.header_img
+new xml-id of model ir.ui.view: report_webkit.header_webkit
+new xml-id of model ir.ui.view: report_webkit.view_report_webkit_actions

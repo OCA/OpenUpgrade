@@ -1,0 +1,126 @@
+---hr_evaluation---
+hr_evaluation / hr.employee              / evaluation_date (date)        : NEW 
+hr_evaluation / hr.employee              / evaluation_plan_id (many2one) : NEW relation: hr_evaluation.plan
+hr_evaluation / hr.evaluation.interview  / _inherits (False)             : NEW 
+hr_evaluation / hr.evaluation.interview  / evaluation_id (many2one)      : NEW relation: hr_evaluation.evaluation
+hr_evaluation / hr.evaluation.interview  / request_id (many2one)         : NEW relation: survey.request, required: required
+hr_evaluation / hr.evaluation.interview  / user_to_review_id (many2one)  : NEW relation: hr.employee
+hr_evaluation / hr.evaluation.report     / closed (date)                 : NEW 
+hr_evaluation / hr.evaluation.report     / create_date (date)            : NEW 
+hr_evaluation / hr.evaluation.report     / day (char)                    : NEW 
+hr_evaluation / hr.evaluation.report     / deadline (date)               : NEW 
+hr_evaluation / hr.evaluation.report     / delay_date (float)            : NEW 
+hr_evaluation / hr.evaluation.report     / employee_id (many2one)        : NEW relation: hr.employee
+hr_evaluation / hr.evaluation.report     / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+hr_evaluation / hr.evaluation.report     / nbr (integer)                 : NEW 
+hr_evaluation / hr.evaluation.report     / overpass_delay (float)        : NEW 
+hr_evaluation / hr.evaluation.report     / plan_id (many2one)            : NEW relation: hr_evaluation.plan
+hr_evaluation / hr.evaluation.report     / progress_bar (float)          : NEW 
+hr_evaluation / hr.evaluation.report     / rating (selection)            : NEW selection_keys: ['0', '1', '2', '3', '4']
+hr_evaluation / hr.evaluation.report     / request_id (many2one)         : NEW relation: survey.request
+hr_evaluation / hr.evaluation.report     / state (selection)             : NEW selection_keys: ['cancel', 'done', 'draft', 'progress', 'wait']
+hr_evaluation / hr.evaluation.report     / year (char)                   : NEW 
+hr_evaluation / hr_evaluation.evaluation / date (date)                   : NEW required: required, req_default: function
+hr_evaluation / hr_evaluation.evaluation / date_close (date)             : NEW 
+hr_evaluation / hr_evaluation.evaluation / employee_id (many2one)        : NEW relation: hr.employee, required: required
+hr_evaluation / hr_evaluation.evaluation / note_action (text)            : NEW 
+hr_evaluation / hr_evaluation.evaluation / note_summary (text)           : NEW 
+hr_evaluation / hr_evaluation.evaluation / plan_id (many2one)            : NEW relation: hr_evaluation.plan, required: required
+hr_evaluation / hr_evaluation.evaluation / progress (float)              : NEW 
+hr_evaluation / hr_evaluation.evaluation / rating (selection)            : NEW selection_keys: ['0', '1', '2', '3', '4']
+hr_evaluation / hr_evaluation.evaluation / state (selection)             : NEW required: required, selection_keys: ['cancel', 'done', 'draft', 'progress', 'wait'], req_default: function
+hr_evaluation / hr_evaluation.evaluation / survey_request_ids (one2many) : NEW relation: hr.evaluation.interview
+hr_evaluation / hr_evaluation.plan       / active (boolean)              : NEW 
+hr_evaluation / hr_evaluation.plan       / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+hr_evaluation / hr_evaluation.plan       / month_first (integer)         : NEW 
+hr_evaluation / hr_evaluation.plan       / month_next (integer)          : NEW 
+hr_evaluation / hr_evaluation.plan       / name (char)                   : NEW required: required
+hr_evaluation / hr_evaluation.plan       / phase_ids (one2many)          : NEW relation: hr_evaluation.plan.phase
+hr_evaluation / hr_evaluation.plan.phase / action (selection)            : NEW required: required, selection_keys: ['bottom-up', 'final', 'self', 'top-down']
+hr_evaluation / hr_evaluation.plan.phase / email_subject (text)          : NEW 
+hr_evaluation / hr_evaluation.plan.phase / mail_body (text)              : NEW 
+hr_evaluation / hr_evaluation.plan.phase / mail_feature (boolean)        : NEW 
+hr_evaluation / hr_evaluation.plan.phase / name (char)                   : NEW required: required
+hr_evaluation / hr_evaluation.plan.phase / plan_id (many2one)            : NEW relation: hr_evaluation.plan
+hr_evaluation / hr_evaluation.plan.phase / send_anonymous_employee (boolean): NEW 
+hr_evaluation / hr_evaluation.plan.phase / send_anonymous_manager (boolean): NEW 
+hr_evaluation / hr_evaluation.plan.phase / send_answer_employee (boolean): NEW 
+hr_evaluation / hr_evaluation.plan.phase / send_answer_manager (boolean) : NEW 
+hr_evaluation / hr_evaluation.plan.phase / sequence (integer)            : NEW 
+hr_evaluation / hr_evaluation.plan.phase / survey_id (many2one)          : NEW relation: survey, required: required
+hr_evaluation / hr_evaluation.plan.phase / wait (boolean)                : NEW 
+hr_evaluation / survey.request           / is_evaluation (boolean)       : NEW 
+new xml-id of model ir.actions.act_window.view: hr_evaluation.action_view_evaluation_calendar
+new xml-id of model ir.actions.act_window.view: hr_evaluation.hr_evaluation_interview_form
+new xml-id of model ir.actions.act_window.view: hr_evaluation.hr_evaluation_interview_tree
+new xml-id of model ir.actions.act_window: hr_evaluation.act_hr_employee_2_hr__evaluation_interview
+new xml-id of model ir.actions.act_window: hr_evaluation.act_hr_evaluation_tree
+new xml-id of model ir.actions.act_window: hr_evaluation.action_evaluation_report_all
+new xml-id of model ir.actions.act_window: hr_evaluation.action_hr_evaluation_interview_tree
+new xml-id of model ir.actions.act_window: hr_evaluation.action_hr_evaluation_send_mail
+new xml-id of model ir.actions.act_window: hr_evaluation.open_view_hr_evaluation_plan_tree
+new xml-id of model ir.actions.act_window: hr_evaluation.open_view_hr_evaluation_tree
+new xml-id of model ir.model.access: hr_evaluation.access_base_calendar_attendee_survey_user
+new xml-id of model ir.model.access: hr_evaluation.access_base_calendar_attendee_tool_user
+new xml-id of model ir.model.access: hr_evaluation.access_hr_evaluation_evaluation_employee
+new xml-id of model ir.model.access: hr_evaluation.access_hr_evaluation_evaluation_user
+new xml-id of model ir.model.access: hr_evaluation.access_hr_evaluation_interview_user
+new xml-id of model ir.model.access: hr_evaluation.access_hr_evaluation_plan_phase_user
+new xml-id of model ir.model.access: hr_evaluation.access_hr_evaluation_plan_user
+new xml-id of model ir.model.access: hr_evaluation.access_hr_evaluation_report
+new xml-id of model ir.model.access: hr_evaluation.access_survey_answer_hr_manager
+new xml-id of model ir.model.access: hr_evaluation.access_survey_answer_hr_user
+new xml-id of model ir.model.access: hr_evaluation.access_survey_history_hr_user
+new xml-id of model ir.model.access: hr_evaluation.access_survey_history_manager
+new xml-id of model ir.model.access: hr_evaluation.access_survey_hr_manager
+new xml-id of model ir.model.access: hr_evaluation.access_survey_page_hr_manager
+new xml-id of model ir.model.access: hr_evaluation.access_survey_page_hr_user
+new xml-id of model ir.model.access: hr_evaluation.access_survey_question_column_heading_hr_manager
+new xml-id of model ir.model.access: hr_evaluation.access_survey_question_column_heading_hr_user
+new xml-id of model ir.model.access: hr_evaluation.access_survey_question_hr_manager
+new xml-id of model ir.model.access: hr_evaluation.access_survey_question_hr_user
+new xml-id of model ir.model.access: hr_evaluation.access_survey_request_hr_manager
+new xml-id of model ir.model.access: hr_evaluation.access_survey_request_hr_user
+new xml-id of model ir.model.access: hr_evaluation.access_survey_response_answer_hr_manager
+new xml-id of model ir.model.access: hr_evaluation.access_survey_response_answer_hr_user
+new xml-id of model ir.model.access: hr_evaluation.access_survey_response_hr_manager
+new xml-id of model ir.model.access: hr_evaluation.access_survey_response_hr_user
+new xml-id of model ir.model.access: hr_evaluation.access_survey_response_line_hr_manager
+new xml-id of model ir.model.access: hr_evaluation.access_survey_response_line_hr_user
+new xml-id of model ir.model.access: hr_evaluation.access_survey_tbl_column_heading_hr_manager
+new xml-id of model ir.model.access: hr_evaluation.access_survey_tbl_column_heading_hr_user
+new xml-id of model ir.model.access: hr_evaluation.access_survey_type_hr_manager
+new xml-id of model ir.model.access: hr_evaluation.access_survey_type_hr_user
+new xml-id of model ir.ui.menu: hr.menu_hr_reporting
+new xml-id of model ir.ui.menu: hr_evaluation.menu_eval_hr
+new xml-id of model ir.ui.menu: hr_evaluation.menu_eval_hr_config
+new xml-id of model ir.ui.menu: hr_evaluation.menu_eval_send_mail
+new xml-id of model ir.ui.menu: hr_evaluation.menu_evaluation_report_all
+new xml-id of model ir.ui.menu: hr_evaluation.menu_open_hr_evaluation_interview_requests
+new xml-id of model ir.ui.menu: hr_evaluation.menu_open_view_hr_evaluation_plan_tree
+new xml-id of model ir.ui.menu: hr_evaluation.menu_open_view_hr_evaluation_tree
+new xml-id of model ir.ui.menu: survey.menu_answer_surveys
+new xml-id of model ir.ui.menu: survey.menu_define_survey
+new xml-id of model ir.ui.menu: survey.menu_survey_form
+new xml-id of model ir.ui.menu: survey.menu_survey_page_form1
+new xml-id of model ir.ui.menu: survey.menu_survey_type_form1
+new xml-id of model ir.ui.menu: survey.menu_surveys
+new xml-id of model ir.ui.view: hr_evaluation.board_hr_evaluation_form
+new xml-id of model ir.ui.view: hr_evaluation.evaluation_search
+new xml-id of model ir.ui.view: hr_evaluation.hr_hr_employee_view_form
+new xml-id of model ir.ui.view: hr_evaluation.view_evaluation_calendar
+new xml-id of model ir.ui.view: hr_evaluation.view_evaluation_report_graph
+new xml-id of model ir.ui.view: hr_evaluation.view_evaluation_report_search
+new xml-id of model ir.ui.view: hr_evaluation.view_evaluation_report_tree
+new xml-id of model ir.ui.view: hr_evaluation.view_hr_evaluation_form
+new xml-id of model ir.ui.view: hr_evaluation.view_hr_evaluation_graph
+new xml-id of model ir.ui.view: hr_evaluation.view_hr_evaluation_interview_form
+new xml-id of model ir.ui.view: hr_evaluation.view_hr_evaluation_interview_search
+new xml-id of model ir.ui.view: hr_evaluation.view_hr_evaluation_interview_tree
+new xml-id of model ir.ui.view: hr_evaluation.view_hr_evaluation_plan_form
+new xml-id of model ir.ui.view: hr_evaluation.view_hr_evaluation_plan_phase_form
+new xml-id of model ir.ui.view: hr_evaluation.view_hr_evaluation_plan_phase_tree
+new xml-id of model ir.ui.view: hr_evaluation.view_hr_evaluation_plan_search
+new xml-id of model ir.ui.view: hr_evaluation.view_hr_evaluation_plan_tree
+new xml-id of model ir.ui.view: hr_evaluation.view_hr_evaluation_send_mail
+new xml-id of model ir.ui.view: hr_evaluation.view_hr_evaluation_tree

@@ -1,0 +1,23 @@
+---account_coda---
+account_coda / account.bank.statement   / coda_id (many2one)            : NEW relation: account.coda
+account_coda / account.coda             / company_id (many2one)         : NEW relation: res.company
+account_coda / account.coda             / date (date)                   : NEW 
+account_coda / account.coda             / journal_id (many2one)         : NEW relation: account.journal
+account_coda / account.coda             / name (binary)                 : NEW 
+account_coda / account.coda             / note (text)                   : NEW 
+account_coda / account.coda             / statement_ids (one2many)      : NEW relation: account.bank.statement
+account_coda / account.coda             / user_id (many2one)            : NEW relation: res.users
+new xml-id of model ir.actions.act_window: account_coda.act_account_payment_account_bank_statement
+new xml-id of model ir.actions.act_window: account_coda.action_account_coda
+new xml-id of model ir.actions.act_window: account_coda.action_account_coda_import
+new xml-id of model ir.model.access: account_coda.access_account_coda
+new xml-id of model ir.model.access: account_coda.access_account_coda_import_user
+new xml-id of model ir.model.access: account_coda.access_account_coda_manager
+new xml-id of model ir.rule: account_coda.account_coda_comp_rule
+new xml-id of model ir.ui.menu: account_coda.menu_account_coda_import
+new xml-id of model ir.ui.menu: account_coda.menu_account_coda_statement
+new xml-id of model ir.ui.view: account_coda.account_coda_import_view
+new xml-id of model ir.ui.view: account_coda.account_coda_note_view
+new xml-id of model ir.ui.view: account_coda.view_aaccount_coda_filter
+new xml-id of model ir.ui.view: account_coda.view_account_coda_form
+new xml-id of model ir.ui.view: account_coda.view_account_coda_tree

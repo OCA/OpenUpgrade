@@ -1,0 +1,51 @@
+---project_planning---
+project_planning / account.analytic.account / planning_ids (one2many)       : NEW relation: report_account_analytic.planning.line
+project_planning / project.task             / planning_line_id (many2one)   : NEW relation: report_account_analytic.planning.line
+project_planning / report_account_analytic.planning / business_days (integer)       : NEW required: required, req_default: 20
+project_planning / report_account_analytic.planning / code (char)                   : NEW 
+project_planning / report_account_analytic.planning / planning_account (one2many)   : NEW relation: report_account_analytic.planning.account
+project_planning / report_account_analytic.planning / planning_user_ids (one2many)  : NEW relation: report_account_analytic.planning.user
+project_planning / report_account_analytic.planning.account / account_id (many2one)         : NEW relation: account.analytic.account
+project_planning / report_account_analytic.planning.account / plan_open (float)             : NEW 
+project_planning / report_account_analytic.planning.account / plan_tasks (float)            : NEW 
+project_planning / report_account_analytic.planning.account / planning_id (many2one)        : NEW relation: report_account_analytic.planning
+project_planning / report_account_analytic.planning.line / task_ids (one2many)           : NEW relation: project.task
+project_planning / report_account_analytic.planning.user / holiday (float)               : NEW 
+project_planning / report_account_analytic.planning.user / plan_open (float)             : NEW 
+project_planning / report_account_analytic.planning.user / plan_tasks (float)            : NEW 
+project_planning / report_account_analytic.planning.user / planning_id (many2one)        : NEW relation: report_account_analytic.planning
+project_planning / report_account_analytic.planning.user / user_id (many2one)            : NEW relation: res.users
+project_planning / res.company              / planning_time_mode_id (many2one): NEW relation: product.uom
+new xml-id of model ir.actions.act_window: project_planning.act_task_of_lines
+new xml-id of model ir.actions.act_window: project_planning.action_account_analytic_planning_form
+new xml-id of model ir.actions.act_window: project_planning.action_account_analytic_planning_stat_dashboard
+new xml-id of model ir.actions.act_window: project_planning.action_account_analytic_planning_stat_form
+new xml-id of model ir.actions.report.xml: project_planning.report_planning
+new xml-id of model ir.model.access: project_planning.access_account_analytic_account_project_manager
+new xml-id of model ir.model.access: project_planning.access_report_account_analytic_planning__project_manager
+new xml-id of model ir.model.access: project_planning.access_report_account_analytic_planning__project_user
+new xml-id of model ir.model.access: project_planning.access_report_account_analytic_planning_account_project_manager
+new xml-id of model ir.model.access: project_planning.access_report_account_analytic_planning_account_project_user
+new xml-id of model ir.model.access: project_planning.access_report_account_analytic_planning_line_project_manager
+new xml-id of model ir.model.access: project_planning.access_report_account_analytic_planning_line_project_user
+new xml-id of model ir.model.access: project_planning.access_report_account_analytic_planning_project_manager
+new xml-id of model ir.model.access: project_planning.access_report_account_analytic_planning_stat_project_manager
+new xml-id of model ir.model.access: project_planning.access_report_account_analytic_planning_stat_project_user
+new xml-id of model ir.ui.menu: base.menu_project_long_term
+new xml-id of model ir.ui.menu: project_planning.menu_board_planning
+new xml-id of model ir.ui.menu: project_planning.menu_report_account_analytic_planning
+new xml-id of model ir.ui.menu: project_planning.menu_report_account_analytic_planning_stat
+new xml-id of model ir.ui.menu: project_planning.next_id_85
+new xml-id of model ir.ui.view: project_planning.account_analytic_planning_line_view_form
+new xml-id of model ir.ui.view: project_planning.account_analytic_planning_line_view_tree
+new xml-id of model ir.ui.view: project_planning.account_analytic_planning_stat_view_form
+new xml-id of model ir.ui.view: project_planning.account_analytic_planning_stat_view_graph
+new xml-id of model ir.ui.view: project_planning.account_analytic_planning_stat_view_search
+new xml-id of model ir.ui.view: project_planning.account_analytic_planning_stat_view_tree
+new xml-id of model ir.ui.view: project_planning.account_analytic_planning_view_form
+new xml-id of model ir.ui.view: project_planning.account_analytic_planning_view_search
+new xml-id of model ir.ui.view: project_planning.account_analytic_planning_view_tree
+new xml-id of model ir.ui.view: project_planning.board_project_planning_form
+new xml-id of model ir.ui.view: project_planning.planning_company
+new xml-id of model ir.ui.view: project_planning.view_project_planning_form
+new xml-id of model ir.ui.view: project_planning.view_task_planning_form

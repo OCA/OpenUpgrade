@@ -1,0 +1,30 @@
+---sale_margin---
+sale_margin  / account.invoice.line     / cost_price (float)            : NEW 
+sale_margin  / report.account.invoice.product / amount (float)                : NEW 
+sale_margin  / report.account.invoice.product / categ_id (many2one)           : NEW relation: product.category
+sale_margin  / report.account.invoice.product / cost_price (float)            : NEW 
+sale_margin  / report.account.invoice.product / date (date)                   : NEW 
+sale_margin  / report.account.invoice.product / day (char)                    : NEW 
+sale_margin  / report.account.invoice.product / margin (float)                : NEW 
+sale_margin  / report.account.invoice.product / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+sale_margin  / report.account.invoice.product / partner_id (many2one)         : NEW relation: res.partner
+sale_margin  / report.account.invoice.product / product_id (many2one)         : NEW relation: product.product
+sale_margin  / report.account.invoice.product / quantity (float)              : NEW 
+sale_margin  / report.account.invoice.product / state (selection)             : NEW selection_keys: ['cancel', 'draft', 'open', 'paid', 'proforma']
+sale_margin  / report.account.invoice.product / type (selection)              : NEW selection_keys: ['in_invoice', 'in_refund', 'out_invoice', 'out_refund']
+sale_margin  / report.account.invoice.product / year (char)                   : NEW 
+sale_margin  / sale.order.line          / purchase_price (float)        : NEW 
+sale_margin  / stock.picking            / invoice_ids (many2many)       : NEW relation: account.invoice
+new xml-id of model ir.actions.act_window: sale_margin.action_report_account_invoice_report
+new xml-id of model ir.model.access: sale_margin.access_report_account_invoice_product
+new xml-id of model ir.ui.menu: sale_margin.menu_report_account_invoice_product
+new xml-id of model ir.ui.menu: sale_margin.menu_report_account_invoice_reoirt
+new xml-id of model ir.ui.view: sale_margin.sale_margin_sale_order
+new xml-id of model ir.ui.view: sale_margin.sale_margin_sale_order_line
+new xml-id of model ir.ui.view: sale_margin.sale_margin_sale_order_line_form
+new xml-id of model ir.ui.view: sale_margin.sale_margin_sale_order_line_tree
+new xml-id of model ir.ui.view: sale_margin.sale_margin_sale_order_tree
+new xml-id of model ir.ui.view: sale_margin.view_picking_margin_out_form
+new xml-id of model ir.ui.view: sale_margin.view_report_account_invoice_filter
+new xml-id of model ir.ui.view: sale_margin.view_report_account_invoice_graph
+new xml-id of model ir.ui.view: sale_margin.view_report_account_invoice_tree

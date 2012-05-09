@@ -1,0 +1,90 @@
+---hr_expense---
+hr_expense   / hr.expense.expense       / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+hr_expense   / hr.expense.expense       / department_id (many2one)      : NEW relation: hr.department
+hr_expense   / hr.expense.report        / analytic_account (many2one)   : NEW relation: account.analytic.account
+hr_expense   / hr.expense.report        / company_id (many2one)         : NEW relation: res.company
+hr_expense   / hr.expense.report        / currency_id (many2one)        : NEW relation: res.currency
+hr_expense   / hr.expense.report        / date (date)                   : NEW 
+hr_expense   / hr.expense.report        / date_confirm (date)           : NEW 
+hr_expense   / hr.expense.report        / date_valid (date)             : NEW 
+hr_expense   / hr.expense.report        / day (char)                    : NEW 
+hr_expense   / hr.expense.report        / delay_confirm (float)         : NEW 
+hr_expense   / hr.expense.report        / delay_valid (float)           : NEW 
+hr_expense   / hr.expense.report        / department_id (many2one)      : NEW relation: hr.department
+hr_expense   / hr.expense.report        / employee_id (many2one)        : NEW relation: hr.employee
+hr_expense   / hr.expense.report        / invoice_id (many2one)         : NEW relation: account.invoice
+hr_expense   / hr.expense.report        / invoiced (integer)            : NEW 
+hr_expense   / hr.expense.report        / journal_id (many2one)         : NEW relation: account.journal
+hr_expense   / hr.expense.report        / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+hr_expense   / hr.expense.report        / nbr (integer)                 : NEW 
+hr_expense   / hr.expense.report        / no_of_account (integer)       : NEW 
+hr_expense   / hr.expense.report        / no_of_products (integer)      : NEW 
+hr_expense   / hr.expense.report        / price_average (float)         : NEW 
+hr_expense   / hr.expense.report        / price_total (float)           : NEW 
+hr_expense   / hr.expense.report        / product_id (many2one)         : NEW relation: product.product
+hr_expense   / hr.expense.report        / product_qty (float)           : NEW 
+hr_expense   / hr.expense.report        / state (selection)             : NEW selection_keys: ['accepted', 'cancelled', 'confirm', 'draft', 'invoiced', 'paid']
+hr_expense   / hr.expense.report        / user_id (many2one)            : NEW relation: res.users
+hr_expense   / hr.expense.report        / year (char)                   : NEW 
+deleted xml-id of model ir.actions.act_window: hr_expense.expense_all_confirm
+deleted xml-id of model ir.actions.act_window: hr_expense.expense_all_draft
+deleted xml-id of model ir.actions.act_window: hr_expense.expense_all_invoiced
+deleted xml-id of model ir.actions.act_window: hr_expense.expense_all_valid
+deleted xml-id of model ir.actions.act_window: hr_expense.expense_my
+deleted xml-id of model ir.actions.act_window: hr_expense.expense_my_confirm
+deleted xml-id of model ir.actions.act_window: hr_expense.expense_my_draft
+deleted xml-id of model ir.actions.act_window: hr_expense.expense_my_new
+deleted xml-id of model ir.model.access: hr_expense.access_hr_expense_expense
+deleted xml-id of model ir.model.access: hr_expense.access_hr_expense_line
+deleted xml-id of model ir.ui.menu: hr_expense.menu_expense_all_confirm
+deleted xml-id of model ir.ui.menu: hr_expense.menu_expense_all_draft
+deleted xml-id of model ir.ui.menu: hr_expense.menu_expense_all_invoiced
+deleted xml-id of model ir.ui.menu: hr_expense.menu_expense_all_valid
+deleted xml-id of model ir.ui.menu: hr_expense.menu_expense_my
+deleted xml-id of model ir.ui.menu: hr_expense.menu_expense_my_confirm
+deleted xml-id of model ir.ui.menu: hr_expense.menu_expense_my_draft
+deleted xml-id of model ir.ui.menu: hr_expense.menu_expense_my_new
+deleted xml-id of model res.roles: hr_expense.HR
+deleted xml-id of model res.roles: hr_expense.HR_INV
+deleted xml-id of model workflow.transition: hr_expense.t5
+new xml-id of model ir.actions.act_window: hr_expense.action_employee_expense
+new xml-id of model ir.actions.act_window: hr_expense.action_hr_expense_report_all
+new xml-id of model ir.actions.act_window: hr_expense.action_my_expense
+new xml-id of model ir.model.access: hr.access_account_journal_column_hruser
+new xml-id of model ir.model.access: hr.access_account_journal_view_hruser
+new xml-id of model ir.model.access: hr_expense.access_account_analytic_journal_user
+new xml-id of model ir.model.access: hr_expense.access_account_analytic_line_user
+new xml-id of model ir.model.access: hr_expense.access_account_fiscalyear_user
+new xml-id of model ir.model.access: hr_expense.access_account_invoice_line_user
+new xml-id of model ir.model.access: hr_expense.access_account_invoice_tax_user
+new xml-id of model ir.model.access: hr_expense.access_account_invoice_user
+new xml-id of model ir.model.access: hr_expense.access_account_journal_period_manager
+new xml-id of model ir.model.access: hr_expense.access_account_journal_user
+new xml-id of model ir.model.access: hr_expense.access_account_move_line_user
+new xml-id of model ir.model.access: hr_expense.access_account_move_user
+new xml-id of model ir.model.access: hr_expense.access_account_period_user
+new xml-id of model ir.model.access: hr_expense.access_hr_expense_expense_employee
+new xml-id of model ir.model.access: hr_expense.access_hr_expense_expense_user
+new xml-id of model ir.model.access: hr_expense.access_hr_expense_line_employee
+new xml-id of model ir.model.access: hr_expense.access_hr_expense_line_user
+new xml-id of model ir.model.access: hr_expense.access_hr_expense_report_manager
+new xml-id of model ir.model.access: hr_expense.access_product_price_type_user
+new xml-id of model ir.model.access: hr_expense.access_product_product_hr_expense_user
+new xml-id of model ir.model.access: hr_expense.access_product_template_hr_expense_user
+new xml-id of model ir.model.access: hr_expense.access_product_uom_hr_expense_user
+new xml-id of model ir.rule: hr_expense.property_rule_expense
+new xml-id of model ir.rule: hr_expense.property_rule_expense_employee
+new xml-id of model ir.rule: hr_expense.property_rule_expense_manager
+new xml-id of model ir.ui.menu: base.menu_hr_dasboard
+new xml-id of model ir.ui.menu: base.menu_hr_manager
+new xml-id of model ir.ui.menu: base.menu_hr_project
+new xml-id of model ir.ui.menu: hr.menu_hr_reporting
+new xml-id of model ir.ui.menu: hr_expense.menu_hr_expense_report_all
+new xml-id of model ir.ui.view: hr_expense.board_hr_expense_form
+new xml-id of model ir.ui.view: hr_expense.board_hr_manager_expense_form
+new xml-id of model ir.ui.view: hr_expense.view_editable_expenses_tree
+new xml-id of model ir.ui.view: hr_expense.view_hr_expense_filter
+new xml-id of model ir.ui.view: hr_expense.view_hr_expense_report_graph
+new xml-id of model ir.ui.view: hr_expense.view_hr_expense_report_search
+new xml-id of model ir.ui.view: hr_expense.view_hr_expense_report_tree
+new xml-id of model workflow.transition: hr_expense.t11

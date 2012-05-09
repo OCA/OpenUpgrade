@@ -1,0 +1,18 @@
+---project_issue_sheet---
+project_issue_sheet / account.analytic.line    / create_date (datetime)        : NEW 
+project_issue_sheet / hr.analytic.timesheet    / issue_id (many2one)           : NEW relation: project.issue
+project_issue_sheet / project.issue            / timesheet_ids (one2many)      : NEW relation: hr.analytic.timesheet
+new xml-id of model ir.model.access: project_issue_sheet.access_account_analytic_journal_project_manager
+new xml-id of model ir.model.access: project_issue_sheet.access_account_analytic_journal_project_user
+new xml-id of model ir.model.access: project_issue_sheet.access_account_fiscalyear_project_manager
+new xml-id of model ir.model.access: project_issue_sheet.access_account_fiscalyear_project_user
+new xml-id of model ir.model.access: project_issue_sheet.access_account_invoice_project_manager
+new xml-id of model ir.model.access: project_issue_sheet.access_account_invoice_project_user
+new xml-id of model ir.model.access: project_issue_sheet.access_analytic_account_line_project_user
+new xml-id of model ir.model.access: project_issue_sheet.access_hr_analytic_timesheet_project_manager
+new xml-id of model ir.model.access: project_issue_sheet.access_hr_analytic_timesheet_project_user
+new xml-id of model ir.model.access: project_issue_sheet.access_hr_timesheet_invoice_factor_project_manager
+new xml-id of model ir.model.access: project_issue_sheet.access_hr_timesheet_invoice_factor_project_user
+new xml-id of model ir.model.access: project_issue_sheet.access_hr_timesheet_sheet_sheet_project_manager
+new xml-id of model ir.model.access: project_issue_sheet.access_hr_timesheet_sheet_sheet_project_user
+new xml-id of model ir.ui.view: project_issue_sheet.project_issue_form_view

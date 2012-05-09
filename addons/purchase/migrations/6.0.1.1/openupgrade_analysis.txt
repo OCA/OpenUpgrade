@@ -1,0 +1,182 @@
+---purchase---
+purchase     / procurement.order        / purchase_id (many2one)        : NEW relation: purchase.order
+purchase     / purchase.order           / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+purchase     / purchase.order           / create_uid (many2one)         : NEW relation: res.users
+purchase     / purchase.order           / invoice_id (many2one)         : DEL relation: account.invoice
+purchase     / purchase.order           / invoice_ids (many2many)       : NEW relation: account.invoice
+purchase     / purchase.order           / minimum_planned_date (datetime): type is now 'date' ('datetime')
+purchase     / purchase.order.line      / date_planned (datetime)       : type is now 'date' ('datetime')
+purchase     / purchase.report          / category_id (many2one)        : NEW relation: product.category
+purchase     / purchase.report          / company_id (many2one)         : NEW relation: res.company
+purchase     / purchase.report          / date (date)                   : NEW 
+purchase     / purchase.report          / date_approve (date)           : NEW 
+purchase     / purchase.report          / day (char)                    : NEW 
+purchase     / purchase.report          / delay (float)                 : NEW 
+purchase     / purchase.report          / delay_pass (float)            : NEW 
+purchase     / purchase.report          / dest_address_id (many2one)    : NEW relation: res.partner.address
+purchase     / purchase.report          / expected_date (date)          : NEW 
+purchase     / purchase.report          / location_id (many2one)        : NEW relation: stock.location
+purchase     / purchase.report          / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+purchase     / purchase.report          / name (char)                   : NEW 
+purchase     / purchase.report          / nbr (integer)                 : NEW 
+purchase     / purchase.report          / negociation (float)           : NEW 
+purchase     / purchase.report          / partner_address_id (many2one) : NEW relation: res.partner.address
+purchase     / purchase.report          / partner_id (many2one)         : NEW relation: res.partner
+purchase     / purchase.report          / price_average (float)         : NEW 
+purchase     / purchase.report          / price_standard (float)        : NEW 
+purchase     / purchase.report          / price_total (float)           : NEW 
+purchase     / purchase.report          / pricelist_id (many2one)       : NEW relation: product.pricelist
+purchase     / purchase.report          / product_id (many2one)         : NEW relation: product.product
+purchase     / purchase.report          / product_uom (many2one)        : NEW relation: product.uom, required: required
+purchase     / purchase.report          / quantity (float)              : NEW 
+purchase     / purchase.report          / state (selection)             : NEW selection_keys: ['approved', 'cancel', 'confirmed', 'done', 'draft', 'except_invoice', 'except_picking', 'wait']
+purchase     / purchase.report          / user_id (many2one)            : NEW relation: res.users
+purchase     / purchase.report          / validator (many2one)          : NEW relation: res.users
+purchase     / purchase.report          / warehouse_id (many2one)       : NEW relation: stock.warehouse
+deleted xml-id of model ir.actions.act_window: purchase.purchase_form_action2
+deleted xml-id of model ir.actions.act_window: purchase.purchase_form_action3
+deleted xml-id of model ir.actions.act_window: purchase.purchase_form_action4
+deleted xml-id of model ir.actions.act_window: purchase.purchase_form_action_new
+deleted xml-id of model ir.actions.wizard: purchase.purchase_order_merge
+deleted xml-id of model ir.ui.menu: purchase.menu_purchase_form_action3
+deleted xml-id of model ir.ui.menu: purchase.menu_purchase_form_action4
+deleted xml-id of model ir.ui.menu: purchase.menu_purchase_form_action_new
+deleted xml-id of model ir.ui.menu: purchase.menu_purchase_order_draft
+deleted xml-id of model ir.ui.menu: purchase.menu_purchase_root
+deleted xml-id of model res.partner.event.type: purchase.event_type_purchase_open
+deleted xml-id of model res.roles: purchase.res_roles_purchase0
+new xml-id of model ir.actions.act_window.view: purchase.action_supplier_address_form_view1
+new xml-id of model ir.actions.act_window.view: purchase.action_supplier_address_form_view2
+new xml-id of model ir.actions.act_window.view: purchase.open_view_negotiation_by_supplier_graph
+new xml-id of model ir.actions.act_window.view: purchase.open_view_negotiation_by_supplier_tree
+new xml-id of model ir.actions.act_window.view: purchase.open_view_purchase_order_monthly_categ_graph
+new xml-id of model ir.actions.act_window.view: purchase.open_view_purchase_order_monthly_categ_tree
+new xml-id of model ir.actions.act_window.view: purchase.purchase_line_form_action_form2
+new xml-id of model ir.actions.act_window.view: purchase.purchase_line_form_action_tree2
+new xml-id of model ir.actions.act_window: purchase.action_current_purchases
+new xml-id of model ir.actions.act_window: purchase.action_invoice_pending
+new xml-id of model ir.actions.act_window: purchase.action_negotiation_by_supplier
+new xml-id of model ir.actions.act_window: purchase.action_po_per_month_tree
+new xml-id of model ir.actions.act_window: purchase.action_purchase_by_supplier
+new xml-id of model ir.actions.act_window: purchase.action_purchase_install_module
+new xml-id of model ir.actions.act_window: purchase.action_purchase_order_by_user_all
+new xml-id of model ir.actions.act_window: purchase.action_purchase_order_monthly_categ_graph
+new xml-id of model ir.actions.act_window: purchase.action_purchase_order_report_all
+new xml-id of model ir.actions.act_window: purchase.action_purchase_order_report_graph
+new xml-id of model ir.actions.act_window: purchase.action_qty_per_product
+new xml-id of model ir.actions.act_window: purchase.action_stock_move_report_po
+new xml-id of model ir.actions.act_window: purchase.action_supplier_address_form
+new xml-id of model ir.actions.act_window: purchase.action_total_price_by_product_by_state
+new xml-id of model ir.actions.act_window: purchase.action_view_purchase_line_invoice
+new xml-id of model ir.actions.act_window: purchase.action_view_purchase_order_group
+new xml-id of model ir.actions.act_window: purchase.open_board_purchase
+new xml-id of model ir.actions.act_window: purchase.purchase_draft
+new xml-id of model ir.actions.act_window: purchase.purchase_line_form_action2
+new xml-id of model ir.actions.act_window: purchase.purchase_rfq
+new xml-id of model ir.actions.act_window: purchase.purchase_waiting
+new xml-id of model ir.actions.todo: purchase.purchase_installer_todo
+new xml-id of model ir.model.access: purchase.access_account_account_purchase_manager
+new xml-id of model ir.model.access: purchase.access_account_analytic_line
+new xml-id of model ir.model.access: purchase.access_account_fiscal_position_purchase_user
+new xml-id of model ir.model.access: purchase.access_account_fiscalyear
+new xml-id of model ir.model.access: purchase.access_account_invoice_line_purchase
+new xml-id of model ir.model.access: purchase.access_account_invoice_line_purchase_manager
+new xml-id of model ir.model.access: purchase.access_account_invoice_purchase
+new xml-id of model ir.model.access: purchase.access_account_invoice_purchase_manager
+new xml-id of model ir.model.access: purchase.access_account_invoice_tax_purchase
+new xml-id of model ir.model.access: purchase.access_account_journal
+new xml-id of model ir.model.access: purchase.access_account_journal_manager
+new xml-id of model ir.model.access: purchase.access_account_journal_period
+new xml-id of model ir.model.access: purchase.access_account_journal_purchase_manager
+new xml-id of model ir.model.access: purchase.access_account_move
+new xml-id of model ir.model.access: purchase.access_account_move_line
+new xml-id of model ir.model.access: purchase.access_account_move_reconcile
+new xml-id of model ir.model.access: purchase.access_account_period
+new xml-id of model ir.model.access: purchase.access_account_sequence_fiscalyear_purchase_user
+new xml-id of model ir.model.access: purchase.access_ir_property_group_purchase_manager
+new xml-id of model ir.model.access: purchase.access_pricelist_partnerinfo_purchase_manager
+new xml-id of model ir.model.access: purchase.access_product_category_purchase_manager
+new xml-id of model ir.model.access: purchase.access_product_group_res_partner_purchase_manager
+new xml-id of model ir.model.access: purchase.access_product_packaging_purchase_manager
+new xml-id of model ir.model.access: purchase.access_product_price_type_purchase_manager
+new xml-id of model ir.model.access: purchase.access_product_pricelist_item_purchase_manager
+new xml-id of model ir.model.access: purchase.access_product_pricelist_purchase_manager
+new xml-id of model ir.model.access: purchase.access_product_pricelist_type_purchase_manager
+new xml-id of model ir.model.access: purchase.access_product_pricelist_version_purchase_manager
+new xml-id of model ir.model.access: purchase.access_product_product_purchase_manager
+new xml-id of model ir.model.access: purchase.access_product_product_purchase_user
+new xml-id of model ir.model.access: purchase.access_product_supplierinfo_purchase_manager
+new xml-id of model ir.model.access: purchase.access_product_template_purchase_manager
+new xml-id of model ir.model.access: purchase.access_product_template_purchase_user
+new xml-id of model ir.model.access: purchase.access_product_ul_purchase_manager
+new xml-id of model ir.model.access: purchase.access_product_uom_categ_purchase_manager
+new xml-id of model ir.model.access: purchase.access_product_uom_purchase_manager
+new xml-id of model ir.model.access: purchase.access_report_purchase_order
+new xml-id of model ir.model.access: purchase.access_report_purchase_order_user
+new xml-id of model ir.model.access: purchase.access_report_stock_move
+new xml-id of model ir.model.access: purchase.access_report_stock_move_user
+new xml-id of model ir.model.access: purchase.access_res_partner_address_purchase_user
+new xml-id of model ir.model.access: purchase.access_res_partner_purchase_manager
+new xml-id of model ir.model.access: purchase.access_res_partner_purchase_user
+new xml-id of model ir.model.access: purchase.access_stock_location_purchase_manager
+new xml-id of model ir.model.access: purchase.access_stock_production_lot_revision
+new xml-id of model ir.model.access: purchase.access_stock_production_lot_user
+new xml-id of model ir.model.access: purchase.access_stock_tracking_purchase_user
+new xml-id of model ir.rule: purchase.purchase_order_comp_rule
+new xml-id of model ir.rule: purchase.purchase_order_line_comp_rule
+new xml-id of model ir.ui.menu: base.menu_procurement_management_supplier
+new xml-id of model ir.ui.menu: base.menu_procurement_management_supplier_name
+new xml-id of model ir.ui.menu: base.menu_purchase_root
+new xml-id of model ir.ui.menu: base.next_id_73
+new xml-id of model ir.ui.menu: purchase.menu_action_picking_tree4
+new xml-id of model ir.ui.menu: purchase.menu_action_picking_tree_in_move
+new xml-id of model ir.ui.menu: purchase.menu_action_purchase_order_report_all
+new xml-id of model ir.ui.menu: purchase.menu_action_stock_move_report_po
+new xml-id of model ir.ui.menu: purchase.menu_board_purchase
+new xml-id of model ir.ui.menu: purchase.menu_procurement_management
+new xml-id of model ir.ui.menu: purchase.menu_procurement_management_inventory
+new xml-id of model ir.ui.menu: purchase.menu_procurement_management_invoice
+new xml-id of model ir.ui.menu: purchase.menu_procurement_management_pending_invoice
+new xml-id of model ir.ui.menu: purchase.menu_procurement_management_product
+new xml-id of model ir.ui.menu: purchase.menu_procurement_partner_contact_form
+new xml-id of model ir.ui.menu: purchase.menu_product_by_category_purchase_form
+new xml-id of model ir.ui.menu: purchase.menu_product_category_config_purchase
+new xml-id of model ir.ui.menu: purchase.menu_product_in_config_purchase
+new xml-id of model ir.ui.menu: purchase.menu_product_pricelist_action2_purchase
+new xml-id of model ir.ui.menu: purchase.menu_product_pricelist_action_purhase
+new xml-id of model ir.ui.menu: purchase.menu_purchase_config_pricelist
+new xml-id of model ir.ui.menu: purchase.menu_purchase_config_purchase
+new xml-id of model ir.ui.menu: purchase.menu_purchase_deshboard
+new xml-id of model ir.ui.menu: purchase.menu_purchase_line_order_draft
+new xml-id of model ir.ui.menu: purchase.menu_purchase_product_pricelist_type
+new xml-id of model ir.ui.menu: purchase.menu_purchase_rfq
+new xml-id of model ir.ui.menu: purchase.menu_purchase_unit_measure_purchase
+new xml-id of model ir.ui.menu: purchase.menu_purchase_uom_categ_form_action
+new xml-id of model ir.ui.menu: purchase.menu_purchase_uom_form_action
+new xml-id of model ir.ui.view: purchase.board_purchase_form
+new xml-id of model ir.ui.view: purchase.mrp_company
+new xml-id of model ir.ui.view: purchase.purchase_order_graph
+new xml-id of model ir.ui.view: purchase.purchase_order_line_form2
+new xml-id of model ir.ui.view: purchase.purchase_order_line_search
+new xml-id of model ir.ui.view: purchase.stock_move_purchase
+new xml-id of model ir.ui.view: purchase.view_negotiation_by_supplier_graph
+new xml-id of model ir.ui.view: purchase.view_negotiation_by_supplier_tree
+new xml-id of model ir.ui.view: purchase.view_po_per_month_tree
+new xml-id of model ir.ui.view: purchase.view_procurement_form_inherit
+new xml-id of model ir.ui.view: purchase.view_purchase_by_supplier_graph
+new xml-id of model ir.ui.view: purchase.view_purchase_install_module_form
+new xml-id of model ir.ui.view: purchase.view_purchase_line_invoice
+new xml-id of model ir.ui.view: purchase.view_purchase_order_by_user_graph
+new xml-id of model ir.ui.view: purchase.view_purchase_order_filter
+new xml-id of model ir.ui.view: purchase.view_purchase_order_group
+new xml-id of model ir.ui.view: purchase.view_purchase_order_monthly_categ_graph
+new xml-id of model ir.ui.view: purchase.view_purchase_order_monthly_categ_tree
+new xml-id of model ir.ui.view: purchase.view_purchase_order_qty_amount_graph
+new xml-id of model ir.ui.view: purchase.view_purchase_order_search
+new xml-id of model ir.ui.view: purchase.view_purchase_order_tree
+new xml-id of model ir.ui.view: purchase.view_qty_per_product_graph
+new xml-id of model ir.ui.view: purchase.view_total_price_by_product_by_state_graph
+new xml-id of model workflow.activity: purchase.act_buy
+new xml-id of model workflow.transition: procurement.trans_confirm_mto_purchase
+new xml-id of model workflow.transition: purchase.trans_buy_cancel
+new xml-id of model workflow.transition: purchase.trans_buy_make_done

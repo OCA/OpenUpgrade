@@ -1,0 +1,48 @@
+---resource---
+resource     / resource.calendar        / attendance_ids (one2many)     : NEW relation: resource.calendar.attendance
+resource     / resource.calendar        / company_id (many2one)         : NEW relation: res.company
+resource     / resource.calendar        / manager (many2one)            : NEW relation: res.users
+resource     / resource.calendar        / name (char)                   : NEW required: required
+resource     / resource.calendar.attendance / calendar_id (many2one)        : NEW relation: resource.calendar, required: required
+resource     / resource.calendar.attendance / date_from (date)              : NEW 
+resource     / resource.calendar.attendance / dayofweek (selection)         : NEW selection_keys: ['0', '1', '2', '3', '4', '5', '6']
+resource     / resource.calendar.attendance / hour_from (float)             : NEW required: required
+resource     / resource.calendar.attendance / hour_to (float)               : NEW required: required
+resource     / resource.calendar.attendance / name (char)                   : NEW required: required
+resource     / resource.calendar.leaves / calendar_id (many2one)        : NEW relation: resource.calendar
+resource     / resource.calendar.leaves / date_from (datetime)          : NEW required: required
+resource     / resource.calendar.leaves / date_to (datetime)            : NEW required: required
+resource     / resource.calendar.leaves / name (char)                   : NEW 
+resource     / resource.calendar.leaves / resource_id (many2one)        : NEW relation: resource.resource
+resource     / resource.resource        / active (boolean)              : NEW 
+resource     / resource.resource        / calendar_id (many2one)        : NEW relation: resource.calendar
+resource     / resource.resource        / code (char)                   : NEW 
+resource     / resource.resource        / company_id (many2one)         : NEW relation: res.company
+resource     / resource.resource        / name (char)                   : NEW required: required
+resource     / resource.resource        / resource_type (selection)     : NEW required: required, selection_keys: ['material', 'user'], req_default: user
+resource     / resource.resource        / time_efficiency (float)       : NEW required: required, req_default: 1
+resource     / resource.resource        / user_id (many2one)            : NEW relation: res.users
+new xml-id of model ir.actions.act_window: resource.action_resource_calendar_form
+new xml-id of model ir.actions.act_window: resource.action_resource_calendar_leave_tree
+new xml-id of model ir.actions.act_window: resource.action_resource_resource_tree
+new xml-id of model ir.actions.act_window: resource.resource_calendar_closing_days
+new xml-id of model ir.actions.act_window: resource.resource_calendar_resources_leaves
+new xml-id of model ir.model.access: resource.access_resource_calendar
+new xml-id of model ir.model.access: resource.access_resource_calendar_attendance
+new xml-id of model ir.model.access: resource.access_resource_calendar_leaves
+new xml-id of model ir.model.access: resource.access_resource_resource
+new xml-id of model ir.model.access: resource.access_resource_resource_all
+new xml-id of model ir.ui.menu: resource.menu_resource_config
+new xml-id of model ir.ui.menu: resource.menu_view_resource_calendar_leaves_search
+new xml-id of model ir.ui.view: resource.resource_calendar_form
+new xml-id of model ir.ui.view: resource.resource_calendar_leave_form
+new xml-id of model ir.ui.view: resource.resource_calendar_leave_tree
+new xml-id of model ir.ui.view: resource.resource_resource_form
+new xml-id of model ir.ui.view: resource.resource_resource_tree
+new xml-id of model ir.ui.view: resource.view_resource_calendar
+new xml-id of model ir.ui.view: resource.view_resource_calendar_attendance_form
+new xml-id of model ir.ui.view: resource.view_resource_calendar_attendance_tree
+new xml-id of model ir.ui.view: resource.view_resource_calendar_leaves_search
+new xml-id of model ir.ui.view: resource.view_resource_calendar_search
+new xml-id of model ir.ui.view: resource.view_resource_calendar_tree
+new xml-id of model ir.ui.view: resource.view_resource_resource_search

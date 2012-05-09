@@ -1,0 +1,17 @@
+---audittrail---
+audittrail   / audittrail.log           / method (selection)            : selection_keys is now 'False' ('['create', 'read', 'unlink', 'write']')
+audittrail   / audittrail.log           / method (selection)            : type is now 'char' ('selection')
+audittrail   / audittrail.rule          / log_action (boolean)          : NEW 
+audittrail   / audittrail.rule          / log_workflow (boolean)        : NEW 
+deleted xml-id of model ir.actions.act_window: audittrail.action_audittrail_rule_tree_sub
+deleted xml-id of model ir.actions.wizard: audittrail.wizard_audittrail_log
+deleted xml-id of model ir.model.access: audittrail.access_audittrail_log_group_system
+deleted xml-id of model ir.model.access: audittrail.access_audittrail_logline_group_system
+deleted xml-id of model ir.model.access: audittrail.access_audittrail_rule_group_system
+deleted xml-id of model ir.ui.menu: audittrail.menu_action_audittrail
+deleted xml-id of model ir.ui.menu: audittrail.menu_action_audittrail_rule_tree_sub
+deleted xml-id of model ir.ui.menu: audittrail.menu_action_log_tree2
+new xml-id of model ir.actions.act_window: audittrail.action_audittrail_view_log
+new xml-id of model ir.ui.view: audittrail.view_audittrail_log_search
+new xml-id of model ir.ui.view: audittrail.view_audittrail_rule_search
+new xml-id of model ir.ui.view: audittrail.view_audittrail_view_log

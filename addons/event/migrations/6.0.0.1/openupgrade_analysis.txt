@@ -1,0 +1,148 @@
+---event---
+event        / event.event              / _inherits (False)             : DEL 
+event        / event.event              / address_id (many2one)         : NEW relation: res.partner.address
+event        / event.event              / child_ids (one2many)          : NEW relation: event.event
+event        / event.event              / company_id (many2one)         : NEW relation: res.company
+event        / event.event              / language (char)               : NEW 
+event        / event.event              / main_speaker_id (many2one)    : NEW relation: res.partner
+event        / event.event              / name (char)                   : NEW required: required
+event        / event.event              / note (text)                   : NEW 
+event        / event.event              / parent_id (many2one)          : NEW relation: event.event
+event        / event.event              / pricelist_id (many2one)       : NEW relation: product.pricelist
+event        / event.event              / registration_ids (one2many)   : NEW relation: event.registration
+event        / event.event              / reply_to (char)               : NEW 
+event        / event.event              / speaker_confirmed (boolean)   : NEW 
+event        / event.event              / speaker_ids (many2many)       : NEW relation: res.partner
+event        / event.event              / user_id (many2one)            : NEW relation: res.users
+event        / event.registration       / _inherits (False)             : DEL 
+event        / event.registration       / active (boolean)              : NEW 
+event        / event.registration       / badge_ids (one2many)          : NEW relation: event.registration.badge
+event        / event.registration       / badge_name (char)             : DEL 
+event        / event.registration       / badge_partner (char)          : DEL 
+event        / event.registration       / badge_title (char)            : DEL 
+event        / event.registration       / case_id (many2one)            : DEL relation: crm.case
+event        / event.registration       / create_date (datetime)        : NEW 
+event        / event.registration       / date_closed (datetime)        : NEW 
+event        / event.registration       / description (text)            : NEW 
+event        / event.registration       / email_cc (text)               : NEW 
+event        / event.registration       / email_from (char)             : NEW 
+event        / event.registration       / event_product (char)          : NEW 
+event        / event.registration       / invoice_label (char)          : DEL required: required
+event        / event.registration       / log_ids (one2many)            : NEW relation: mailgate.message
+event        / event.registration       / message_ids (one2many)        : NEW relation: mailgate.message
+event        / event.registration       / name (char)                   : NEW 
+event        / event.registration       / nb_register (integer)         : now required, default = 1
+event        / event.registration       / partner_id (many2one)         : NEW relation: res.partner
+event        / event.registration       / ref (reference)               : NEW 
+event        / event.registration       / ref2 (reference)              : NEW 
+event        / event.registration       / state (selection)             : NEW selection_keys: ['cancel', 'done', 'draft', 'open']
+event        / event.registration       / unit_price (float)            : now required
+event        / event.registration       / user_id (many2one)            : NEW relation: res.users
+event        / event.registration       / write_date (datetime)         : NEW 
+event        / event.registration.badge / address_id (many2one)         : NEW relation: res.partner.address
+event        / event.registration.badge / name (char)                   : NEW required: required
+event        / event.registration.badge / registration_id (many2one)    : NEW relation: event.registration, required: required
+event        / event.registration.badge / title (char)                  : NEW 
+event        / report.event.registration / company_id (many2one)         : NEW relation: res.company
+event        / report.event.registration / date (date)                   : NEW 
+event        / report.event.registration / date_begin (datetime)         : DEL required: required
+event        / report.event.registration / date_end (datetime)           : DEL required: required
+event        / report.event.registration / event_id (many2one)           : NEW relation: event.event, required: required
+event        / report.event.registration / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+event        / report.event.registration / name (char)                   : DEL 
+event        / report.event.registration / nbevent (integer)             : NEW 
+event        / report.event.registration / product_id (many2one)         : NEW relation: product.product
+event        / report.event.registration / speaker_id (many2one)         : NEW relation: res.partner
+event        / report.event.registration / state (selection)             : NEW required: required, selection_keys: ['cancel', 'confirm', 'done', 'draft']
+event        / report.event.registration / total (float)                 : NEW 
+event        / report.event.registration / type (many2one)               : NEW relation: event.type
+event        / report.event.registration / user_id (many2one)            : NEW relation: res.users
+event        / report.event.registration / year (char)                   : NEW 
+event        / res.partner              / event_ids (one2many)          : NEW relation: event.event
+event        / res.partner              / event_registration_ids (one2many): NEW relation: event.registration
+event        / res.partner              / speaker (boolean)             : NEW 
+deleted xml-id of model crm.case.section: event.case_section_event
+deleted xml-id of model ir.actions.act_window: event.action_event_categories
+deleted xml-id of model ir.actions.act_window: event.action_event_registration
+deleted xml-id of model ir.actions.act_window: event.action_event_type_registration
+deleted xml-id of model ir.actions.act_window: event.action_event_view_confirm
+deleted xml-id of model ir.actions.act_window: event.action_event_view_draft
+deleted xml-id of model ir.actions.act_window: event.action_new_event_form
+deleted xml-id of model ir.actions.act_window: event.action_registration_confirm
+deleted xml-id of model ir.actions.act_window: event.action_registration_draft
+deleted xml-id of model ir.actions.wizard: event.event_confirm_registration
+deleted xml-id of model ir.actions.wizard: event.event_reg_invoice
+deleted xml-id of model ir.actions.wizard: event.wizard_event_reg_partners
+deleted xml-id of model ir.actions.wizard: event.wizard_event_registration
+deleted xml-id of model ir.model.access: event.access_report_event_type_registration
+deleted xml-id of model ir.sequence.type: event.seq_section_code
+deleted xml-id of model ir.sequence: event.seq_section_code1
+deleted xml-id of model ir.ui.menu: event.menu_action_event_categories
+deleted xml-id of model ir.ui.menu: event.menu_action_registration_confirm
+deleted xml-id of model ir.ui.menu: event.menu_action_registration_draft
+deleted xml-id of model ir.ui.menu: event.menu_event_config
+deleted xml-id of model ir.ui.menu: event.menu_event_event_confirm
+deleted xml-id of model ir.ui.menu: event.menu_event_event_draft
+deleted xml-id of model ir.ui.menu: event.menu_event_main
+deleted xml-id of model ir.ui.menu: event.menu_event_new_event
+deleted xml-id of model ir.ui.menu: event.menu_report_event
+deleted xml-id of model ir.ui.menu: event.menu_report_event_type_registration
+deleted xml-id of model ir.ui.view: event.event_registration_form
+deleted xml-id of model ir.ui.view: event.event_registration_tree
+deleted xml-id of model ir.ui.view: event.report_event_type_registration_graph
+deleted xml-id of model ir.ui.view: event.report_event_type_registration_tree
+new xml-id of model board.note.type: event.note_association_type
+new xml-id of model ir.actions.act_window.view: event.action_report_event_registration_graph
+new xml-id of model ir.actions.act_window.view: event.action_report_event_registration_tree
+new xml-id of model ir.actions.act_window: event.act_event_list_register_event
+new xml-id of model ir.actions.act_window: event.act_event_reg
+new xml-id of model ir.actions.act_window: event.act_event_view
+new xml-id of model ir.actions.act_window: event.act_register_event_partner
+new xml-id of model ir.actions.act_window: event.action_event_confirm
+new xml-id of model ir.actions.act_window: event.action_event_confirm_registration
+new xml-id of model ir.actions.act_window: event.action_make_invoices
+new xml-id of model ir.actions.act_window: event.action_partner_event_registration
+new xml-id of model ir.actions.act_window: event.action_report_event_registration
+new xml-id of model ir.actions.act_window: event.open_board_associations_manager
+new xml-id of model ir.model.access: event.access_account_account_invoice_manager
+new xml-id of model ir.model.access: event.access_crm_case_section_manager
+new xml-id of model ir.model.access: event.access_event_event_manager
+new xml-id of model ir.model.access: event.access_event_event_sale_salesman
+new xml-id of model ir.model.access: event.access_event_registration_badge
+new xml-id of model ir.model.access: event.access_event_registration_badge_manager
+new xml-id of model ir.model.access: event.access_event_registration_manager
+new xml-id of model ir.model.access: event.access_event_registration_sale_user
+new xml-id of model ir.model.access: event.access_product_product
+new xml-id of model ir.ui.menu: base.marketing_menu
+new xml-id of model ir.ui.menu: base.menu_association
+new xml-id of model ir.ui.menu: base.menu_event_association
+new xml-id of model ir.ui.menu: base.menu_event_main
+new xml-id of model ir.ui.menu: base.menu_marketing_config_association
+new xml-id of model ir.ui.menu: base.menu_marketing_config_root
+new xml-id of model ir.ui.menu: base.menu_report_association
+new xml-id of model ir.ui.menu: event.board_associations
+new xml-id of model ir.ui.menu: event.menu_action_registration_association
+new xml-id of model ir.ui.menu: event.menu_board_associations_manager
+new xml-id of model ir.ui.menu: event.menu_event_event_assiciation
+new xml-id of model ir.ui.menu: event.menu_event_type_association
+new xml-id of model ir.ui.view: event.board_associations_manager_form
+new xml-id of model ir.ui.view: event.view_event_calendar
+new xml-id of model ir.ui.view: event.view_event_confirm
+new xml-id of model ir.ui.view: event.view_event_confirm_registration
+new xml-id of model ir.ui.view: event.view_event_graph
+new xml-id of model ir.ui.view: event.view_event_make_invoice
+new xml-id of model ir.ui.view: event.view_event_partner_info_form
+new xml-id of model ir.ui.view: event.view_event_registration_calendar
+new xml-id of model ir.ui.view: event.view_event_registration_form
+new xml-id of model ir.ui.view: event.view_event_registration_graph
+new xml-id of model ir.ui.view: event.view_event_registration_tree
+new xml-id of model ir.ui.view: event.view_event_search
+new xml-id of model ir.ui.view: event.view_partner_event_registration
+new xml-id of model ir.ui.view: event.view_registration_search
+new xml-id of model ir.ui.view: event.view_report_event_reg_graph
+new xml-id of model ir.ui.view: event.view_report_event_registration_search
+new xml-id of model ir.ui.view: event.view_speaker_partner_info_form
+new xml-id of model res.groups: base.group_sale_manager
+new xml-id of model res.groups: base.group_sale_salesman
+new xml-id of model res.groups: marketing.group_marketing_manager
+new xml-id of model res.groups: marketing.group_marketing_user

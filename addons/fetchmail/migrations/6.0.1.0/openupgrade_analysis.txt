@@ -1,0 +1,32 @@
+---fetchmail---
+fetchmail    / email.server             / action_id (many2one)          : NEW relation: ir.actions.server
+fetchmail    / email.server             / active (boolean)              : NEW 
+fetchmail    / email.server             / attach (boolean)              : NEW 
+fetchmail    / email.server             / date (date)                   : NEW 
+fetchmail    / email.server             / is_ssl (boolean)              : NEW 
+fetchmail    / email.server             / message_ids (one2many)        : NEW relation: mailgate.message
+fetchmail    / email.server             / name (char)                   : NEW required: required
+fetchmail    / email.server             / note (text)                   : NEW 
+fetchmail    / email.server             / object_id (many2one)          : NEW relation: ir.model, required: required
+fetchmail    / email.server             / password (char)               : NEW required: required
+fetchmail    / email.server             / port (integer)                : NEW required: required
+fetchmail    / email.server             / priority (integer)            : NEW 
+fetchmail    / email.server             / server (char)                 : NEW required: required
+fetchmail    / email.server             / state (selection)             : NEW selection_keys: ['done', 'draft', 'waiting']
+fetchmail    / email.server             / type (selection)              : NEW selection_keys: ['imap', 'pop']
+fetchmail    / email.server             / user (char)                   : NEW required: required
+fetchmail    / email.server             / user_id (many2one)            : NEW relation: res.users
+fetchmail    / mailgate.message         / server_id (many2one)          : NEW relation: email.server
+fetchmail    / mailgate.message         / server_type (selection)       : NEW selection_keys: ['imap', 'pop']
+new xml-id of model ir.actions.act_window: fetchmail.act_server_history
+new xml-id of model ir.actions.act_window: fetchmail.action_email_server_tree
+new xml-id of model ir.actions.act_window: fetchmail.action_view_mail_message_emails
+new xml-id of model ir.cron: fetchmail.ir_cron_mail_gateway_action
+new xml-id of model ir.model.access: fetchmail.access_email_server
+new xml-id of model ir.ui.menu: base.menu_email_gateway_form
+new xml-id of model ir.ui.menu: fetchmail.menu_action_fetchmail_server_tree
+new xml-id of model ir.ui.view: fetchmail.mailgate_message_search_view
+new xml-id of model ir.ui.view: fetchmail.mailgate_message_tree_view
+new xml-id of model ir.ui.view: fetchmail.view_email_server_form
+new xml-id of model ir.ui.view: fetchmail.view_email_server_search
+new xml-id of model ir.ui.view: fetchmail.view_email_server_tree

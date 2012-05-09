@@ -1,0 +1,103 @@
+---hr_timesheet_invoice---
+hr_timesheet_invoice / report.account.analytic.line.to.invoice / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+hr_timesheet_invoice / report.timesheet.line    / account_id (many2one)         : NEW relation: account.analytic.account
+hr_timesheet_invoice / report.timesheet.line    / cost (float)                  : NEW 
+hr_timesheet_invoice / report.timesheet.line    / date (date)                   : NEW 
+hr_timesheet_invoice / report.timesheet.line    / day (char)                    : NEW 
+hr_timesheet_invoice / report.timesheet.line    / general_account_id (many2one) : NEW relation: account.account
+hr_timesheet_invoice / report.timesheet.line    / invoice_id (many2one)         : NEW relation: account.invoice
+hr_timesheet_invoice / report.timesheet.line    / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+hr_timesheet_invoice / report.timesheet.line    / name (char)                   : NEW 
+hr_timesheet_invoice / report.timesheet.line    / product_id (many2one)         : NEW relation: product.product
+hr_timesheet_invoice / report.timesheet.line    / quantity (float)              : NEW 
+hr_timesheet_invoice / report.timesheet.line    / user_id (many2one)            : NEW relation: res.users
+hr_timesheet_invoice / report_timesheet.account / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+hr_timesheet_invoice / report_timesheet.account.date / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+hr_timesheet_invoice / report_timesheet.user    / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+deleted xml-id of model ir.actions.act_window: hr_timesheet_invoice.action_draft_analytic_accounts
+deleted xml-id of model ir.actions.act_window: hr_timesheet_invoice.action_hr_analytic_timesheet_tree_invoiced
+deleted xml-id of model ir.actions.act_window: hr_timesheet_invoice.action_hr_analytic_timesheet_tree_invoiced_my
+deleted xml-id of model ir.actions.act_window: hr_timesheet_invoice.action_open_analytic_accounts
+deleted xml-id of model ir.actions.act_window: hr_timesheet_invoice.action_open_invoice_analytic_accounts
+deleted xml-id of model ir.actions.act_window: hr_timesheet_invoice.action_pending_analytic_accounts
+deleted xml-id of model ir.actions.wizard: hr_timesheet_invoice.account_analytic_account_cost_ledger_report
+deleted xml-id of model ir.actions.wizard: hr_timesheet_invoice.account_analytic_profit
+deleted xml-id of model ir.actions.wizard: hr_timesheet_invoice.hr_timesheet_final_invoice_create
+deleted xml-id of model ir.actions.wizard: hr_timesheet_invoice.hr_timesheet_invoice_create
+deleted xml-id of model ir.ui.menu: hr_timesheet_invoice.menu_action_draft_analytic_accounts
+deleted xml-id of model ir.ui.menu: hr_timesheet_invoice.menu_action_open_analytic_accounts
+deleted xml-id of model ir.ui.menu: hr_timesheet_invoice.menu_action_open_invoice_analytic_accounts
+deleted xml-id of model ir.ui.menu: hr_timesheet_invoice.menu_action_pending_analytic_accounts
+deleted xml-id of model ir.ui.menu: hr_timesheet_invoice.menu_hr_analytic_timesheet_tree_invoiced
+deleted xml-id of model ir.ui.menu: hr_timesheet_invoice.menu_hr_analytic_timesheet_tree_invoiced_my
+deleted xml-id of model ir.ui.menu: hr_timesheet_invoice.print_account_analytic_profit
+new xml-id of model hr_timesheet_invoice.factor: hr_timesheet_invoice.timesheet_invoice_factor1
+new xml-id of model hr_timesheet_invoice.factor: hr_timesheet_invoice.timesheet_invoice_factor2
+new xml-id of model hr_timesheet_invoice.factor: hr_timesheet_invoice.timesheet_invoice_factor3
+new xml-id of model ir.actions.act_window: hr_timesheet_invoice.act_acc_analytic_acc_2_report_acc_analytic_line_to_invoice
+new xml-id of model ir.actions.act_window: hr_timesheet_invoice.act_account_analytic_account_2_report_timehsheet_account
+new xml-id of model ir.actions.act_window: hr_timesheet_invoice.act_my_account
+new xml-id of model ir.actions.act_window: hr_timesheet_invoice.act_res_users_2_report_timehsheet_account
+new xml-id of model ir.actions.act_window: hr_timesheet_invoice.act_res_users_2_report_timesheet_invoice
+new xml-id of model ir.actions.act_window: hr_timesheet_invoice.act_res_users_2_report_timesheet_user
+new xml-id of model ir.actions.act_window: hr_timesheet_invoice.action_account_analytic_line_to_invoice
+new xml-id of model ir.actions.act_window: hr_timesheet_invoice.action_analytic_account_tree
+new xml-id of model ir.actions.act_window: hr_timesheet_invoice.action_hr_timesheet_analytic_profit
+new xml-id of model ir.actions.act_window: hr_timesheet_invoice.action_hr_timesheet_invoice_cost_ledger
+new xml-id of model ir.actions.act_window: hr_timesheet_invoice.action_hr_timesheet_invoice_create
+new xml-id of model ir.actions.act_window: hr_timesheet_invoice.action_hr_timesheet_invoice_create_final
+new xml-id of model ir.actions.act_window: hr_timesheet_invoice.action_timesheet_account_date_stat_all
+new xml-id of model ir.actions.act_window: hr_timesheet_invoice.action_timesheet_account_stat_all
+new xml-id of model ir.actions.act_window: hr_timesheet_invoice.action_timesheet_invoice_stat_all
+new xml-id of model ir.actions.act_window: hr_timesheet_invoice.action_timesheet_line_stat_all
+new xml-id of model ir.actions.act_window: hr_timesheet_invoice.action_timesheet_uninvoiced_line
+new xml-id of model ir.actions.act_window: hr_timesheet_invoice.action_timesheet_user_stat_all
+new xml-id of model ir.model.access: hr_timesheet_invoice.access_account_invoice_hr_user
+new xml-id of model ir.model.access: hr_timesheet_invoice.access_account_invoice_tax_hr_manager
+new xml-id of model ir.model.access: hr_timesheet_invoice.access_report_account_analytic_line_to_invoice
+new xml-id of model ir.model.access: hr_timesheet_invoice.access_report_account_analytic_line_to_invoice_manager
+new xml-id of model ir.model.access: hr_timesheet_invoice.access_report_analytic_account_close
+new xml-id of model ir.model.access: hr_timesheet_invoice.access_report_analytic_account_close_manager
+new xml-id of model ir.model.access: hr_timesheet_invoice.access_report_timesheet_account
+new xml-id of model ir.model.access: hr_timesheet_invoice.access_report_timesheet_account_date
+new xml-id of model ir.model.access: hr_timesheet_invoice.access_report_timesheet_invoice
+new xml-id of model ir.model.access: hr_timesheet_invoice.access_report_timesheet_line_employee
+new xml-id of model ir.model.access: hr_timesheet_invoice.access_report_timesheet_user
+new xml-id of model ir.ui.menu: hr_timesheet_invoice.menu_hr_timesheet_analytic_profit
+new xml-id of model ir.ui.view: hr_timesheet_invoice.account_analytic_line_to_invoice_view_filter
+new xml-id of model ir.ui.view: hr_timesheet_invoice.account_analytic_line_to_invoice_view_form
+new xml-id of model ir.ui.view: hr_timesheet_invoice.account_analytic_line_to_invoice_view_graph
+new xml-id of model ir.ui.view: hr_timesheet_invoice.account_analytic_line_to_invoice_view_tree
+new xml-id of model ir.ui.view: hr_timesheet_invoice.board_hr_timesheet_uninvoiced_form
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_account_analytic_line_search_inherit
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_analytic_account_close_form
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_analytic_account_close_tree
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_analytic_account_graph
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_hr_timesheet_analytic_profit
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_hr_timesheet_invoice_cost_ledger
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_hr_timesheet_invoice_create
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_hr_timesheet_invoice_create_final
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_hr_timesheet_invoice_factor_search
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_timesheet_account_date_form
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_timesheet_account_date_graph
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_timesheet_account_date_graph_account
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_timesheet_account_date_search
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_timesheet_account_date_tree
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_timesheet_account_form
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_timesheet_account_graph
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_timesheet_account_search
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_timesheet_account_tree
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_timesheet_invoice_form
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_timesheet_invoice_graph
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_timesheet_invoice_search
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_timesheet_invoice_tree
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_timesheet_line_graph
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_timesheet_line_search
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_timesheet_line_tree
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_timesheet_uninvoiced_line_tree
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_timesheet_user_form
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_timesheet_user_graph
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_timesheet_user_search
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_timesheet_user_tree
+new xml-id of model ir.values: hr_timesheet_invoice.hr_timesheet_invoice_create_final_values
+new xml-id of model ir.values: hr_timesheet_invoice.hr_timesheet_invoice_create_values

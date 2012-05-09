@@ -1,0 +1,36 @@
+---stock_location---
+stock_location / product.product          / flow_pull_ids (one2many)      : NEW relation: product.pulled.flow
+stock_location / product.pulled.flow      / cancel_cascade (boolean)      : NEW 
+stock_location / product.pulled.flow      / company_id (many2one)         : NEW relation: res.company
+stock_location / product.pulled.flow      / invoice_state (selection)     : NEW required: required, selection_keys: ['2binvoiced', 'invoiced', 'none'], req_default: none
+stock_location / product.pulled.flow      / journal_id (many2one)         : NEW relation: stock.journal
+stock_location / product.pulled.flow      / location_id (many2one)        : NEW relation: stock.location, required: required
+stock_location / product.pulled.flow      / location_src_id (many2one)    : NEW relation: stock.location
+stock_location / product.pulled.flow      / name (char)                   : NEW required: required
+stock_location / product.pulled.flow      / partner_address_id (many2one) : NEW relation: res.partner.address
+stock_location / product.pulled.flow      / picking_type (selection)      : NEW required: required, selection_keys: ['in', 'internal', 'out'], req_default: out
+stock_location / product.pulled.flow      / procure_method (selection)    : NEW required: required, selection_keys: ['make_to_order', 'make_to_stock'], req_default: make_to_stock
+stock_location / product.pulled.flow      / product_id (many2one)         : NEW relation: product.product
+stock_location / product.pulled.flow      / type_proc (selection)         : NEW required: required, selection_keys: ['buy', 'move', 'produce'], req_default: move
+stock_location / stock.location.path      / company_id (many2one)         : NEW relation: res.company
+stock_location / stock.location.path      / invoice_state (selection)     : NEW required: required, selection_keys: ['2binvoiced', 'invoiced', 'none'], req_default: none
+stock_location / stock.location.path      / journal_id (many2one)         : NEW relation: stock.journal
+stock_location / stock.location.path      / location_dest_id (many2one)   : now required
+stock_location / stock.location.path      / location_from_id (many2one)   : now required
+stock_location / stock.location.path      / picking_type (selection)      : NEW required: required, selection_keys: ['in', 'internal', 'out'], req_default: internal
+stock_location / stock.move               / cancel_cascade (boolean)      : NEW 
+deleted xml-id of model ir.model.access: stock_location.access_stock_location_path_partner_manager
+new xml-id of model ir.model.access: stock_location.access_product_pulled_flow
+new xml-id of model ir.model.access: stock_location.access_product_pulled_flow_internal
+new xml-id of model ir.model.access: stock_location.access_product_pulled_flow_manager
+new xml-id of model ir.model.access: stock_location.access_product_pulled_flow_salemanager
+new xml-id of model ir.model.access: stock_location.access_product_pulled_flow_stock_manager
+new xml-id of model ir.model.access: stock_location.access_product_pulled_flow_user
+new xml-id of model ir.model.access: stock_location.access_stock_location_path
+new xml-id of model ir.model.access: stock_location.access_stock_location_path_internal_user
+new xml-id of model ir.model.access: stock_location.access_stock_location_path_sale_manager
+new xml-id of model ir.model.access: stock_location.access_stock_location_path_stock_manager
+new xml-id of model ir.model.access: stock_location.access_stock_location_path_stock_user
+new xml-id of model workflow.activity: stock_location.act_move
+new xml-id of model workflow.transition: stock_location.trans_confirm_mto_buy01
+new xml-id of model workflow.transition: stock_location.trans_confirm_mto_buy02

@@ -1,0 +1,50 @@
+---hr_contract---
+hr_contract  / hr.contract              / advantages (text)             : NEW 
+hr_contract  / hr.contract              / advantages_gross (float)      : NEW 
+hr_contract  / hr.contract              / advantages_net (float)        : NEW 
+hr_contract  / hr.contract              / function (many2one)           : DEL relation: res.partner.function
+hr_contract  / hr.contract              / job_id (many2one)             : NEW relation: hr.job
+hr_contract  / hr.contract              / trial_date_end (date)         : NEW 
+hr_contract  / hr.contract              / trial_date_start (date)       : NEW 
+hr_contract  / hr.contract              / type_id (many2one)            : NEW relation: hr.contract.type, required: required
+hr_contract  / hr.contract              / working_hours (many2one)      : NEW relation: resource.calendar
+hr_contract  / hr.contract              / working_hours_per_day (integer): DEL 
+hr_contract  / hr.contract.type         / name (char)                   : NEW required: required
+hr_contract  / hr.employee              / audiens_num (char)            : DEL 
+hr_contract  / hr.employee              / marital_status (many2one)     : DEL relation: hr.employee.marital.status
+hr_contract  / hr.employee              / vehicle (char)                : NEW 
+hr_contract  / hr.employee              / vehicle_distance (integer)    : NEW 
+hr_contract  / hr.employee.marital.status / description (text)            : module is now 'hr' ('hr_contract')
+hr_contract  / hr.employee.marital.status / name (char)                   : module is now 'hr' ('hr_contract')
+deleted xml-id of model hr.employee.marital.status: hr_contract.hr_employee_marital_status_divorced
+deleted xml-id of model hr.employee.marital.status: hr_contract.hr_employee_marital_status_married
+deleted xml-id of model hr.employee.marital.status: hr_contract.hr_employee_marital_status_single
+deleted xml-id of model hr.employee.marital.status: hr_contract.hr_employee_marital_status_widower
+deleted xml-id of model ir.actions.act_window: hr_contract.action_hr_marital_status
+deleted xml-id of model ir.model.access: hr_contract.access_hr_contract
+deleted xml-id of model ir.model.access: hr_contract.access_hr_contract_user
+deleted xml-id of model ir.model.access: hr_contract.access_hr_contract_wage_type
+deleted xml-id of model ir.model.access: hr_contract.access_hr_contract_wage_type_contract
+deleted xml-id of model ir.model.access: hr_contract.access_hr_contract_wage_type_period
+deleted xml-id of model ir.model.access: hr_contract.access_hr_contract_wage_type_period_contract
+deleted xml-id of model ir.model.access: hr_contract.access_hr_employee_contract
+deleted xml-id of model ir.model.access: hr_contract.access_hr_employee_marital_status
+deleted xml-id of model ir.ui.menu: hr_contract.hr_menu_marital_status
+deleted xml-id of model ir.ui.view: hr_contract.hr_hr_employee_marital_status_form
+deleted xml-id of model res.groups: hr_contract.group_hr_contract
+new xml-id of model hr.contract.type: hr_contract.hr_contract_type_emp
+new xml-id of model hr.contract.type: hr_contract.hr_contract_type_sub
+new xml-id of model hr.contract.type: hr_contract.hr_contract_type_wrkr
+new xml-id of model ir.actions.act_window: hr_contract.act_hr_employee_2_hr_contract
+new xml-id of model ir.actions.act_window: hr_contract.action_hr_contract_type
+new xml-id of model ir.model.access: hr_contract.access_hr_contract_manager
+new xml-id of model ir.model.access: hr_contract.access_hr_contract_type_manager
+new xml-id of model ir.model.access: hr_contract.access_hr_resource_calendar_user
+new xml-id of model ir.model.access: hr_contract.access_hr_resource_manager
+new xml-id of model ir.ui.menu: hr_contract.hr_menu_contract_type
+new xml-id of model ir.ui.view: hr_contract.hr_contract_type_view_form
+new xml-id of model ir.ui.view: hr_contract.hr_contract_type_view_search
+new xml-id of model ir.ui.view: hr_contract.hr_contract_type_view_tree
+new xml-id of model ir.ui.view: hr_contract.hr_contract_view_search
+new xml-id of model ir.ui.view: hr_contract.hr_contract_wage_type_period_view_search
+new xml-id of model ir.ui.view: hr_contract.hr_contract_wage_type_view_search

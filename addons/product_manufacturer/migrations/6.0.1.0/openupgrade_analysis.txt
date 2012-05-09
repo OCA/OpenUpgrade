@@ -1,0 +1,12 @@
+---product_manufacturer---
+product_manufacturer / product.manufacturer.attribute / name (char)                   : NEW required: required
+product_manufacturer / product.manufacturer.attribute / product_id (many2one)         : NEW relation: product.product
+product_manufacturer / product.manufacturer.attribute / value (char)                  : NEW 
+product_manufacturer / product.product          / attribute_ids (one2many)      : NEW relation: product.manufacturer.attribute
+product_manufacturer / product.product          / manufacturer (many2one)       : NEW relation: res.partner
+product_manufacturer / product.product          / manufacturer_pname (char)     : NEW 
+product_manufacturer / product.product          / manufacturer_pref (char)      : NEW 
+new xml-id of model ir.model.access: product_manufacturer.access_product_manufacturer_attribute
+new xml-id of model ir.ui.view: product_manufacturer.product_manufacturer_attribute_form_view
+new xml-id of model ir.ui.view: product_manufacturer.product_manufacturer_attribute_tree_view
+new xml-id of model ir.ui.view: product_manufacturer.view_product_form_expiry

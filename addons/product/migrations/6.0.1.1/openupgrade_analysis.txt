@@ -1,0 +1,69 @@
+---product---
+product      / product.category         / type (selection)              : NEW selection_keys: ['normal', 'view']
+product      / product.packaging        / name (char)                   : type is now 'text' ('char')
+product      / product.pricelist        / company_id (many2one)         : NEW relation: res.company
+product      / product.supplierinfo     / company_id (many2one)         : NEW relation: res.company
+product      / product.supplierinfo     / min_qty (float)               : NEW required: required
+product      / product.supplierinfo     / product_uom (many2one)        : NEW relation: product.uom
+product      / product.supplierinfo     / qty (float)                   : now a function
+product      / product.ul               / type (selection)              : selection_keys is now '['box', 'pack', 'pallet', 'unit']' ('['box', 'pack', 'palet', 'unit']')
+product      / product.uom              / factor_inv (float)            : now required
+product      / product.uom              / factor_inv_data (float)       : DEL 
+product      / product.uom              / uom_type (selection)          : NEW required: required, selection_keys: ['bigger', 'reference', 'smaller'], req_default: reference
+deleted xml-id of model ir.actions.wizard: product.report_wizard_price
+deleted xml-id of model ir.model.access: product.access_ir_property_group_product_manager
+deleted xml-id of model ir.model.access: product.access_pricelist_partnerinfo_manager
+deleted xml-id of model ir.model.access: product.access_product_category_manager
+deleted xml-id of model ir.model.access: product.access_product_packaging_manager
+deleted xml-id of model ir.model.access: product.access_product_price_type_manager
+deleted xml-id of model ir.model.access: product.access_product_pricelist_item_manager
+deleted xml-id of model ir.model.access: product.access_product_pricelist_manager
+deleted xml-id of model ir.model.access: product.access_product_pricelist_type_manager
+deleted xml-id of model ir.model.access: product.access_product_pricelist_version_manager
+deleted xml-id of model ir.model.access: product.access_product_product_manager
+deleted xml-id of model ir.model.access: product.access_product_product_user
+deleted xml-id of model ir.model.access: product.access_product_supplierinfo_manager
+deleted xml-id of model ir.model.access: product.access_product_template_manager
+deleted xml-id of model ir.model.access: product.access_product_ul_manager
+deleted xml-id of model ir.model.access: product.access_product_uom_categ_manager
+deleted xml-id of model ir.model.access: product.access_product_uom_manager
+deleted xml-id of model ir.ui.menu: product.menu_config_product
+deleted xml-id of model ir.ui.menu: product.menu_main_product
+deleted xml-id of model ir.ui.menu: product.menu_price
+deleted xml-id of model ir.ui.menu: product.menu_product_category_action
+deleted xml-id of model ir.ui.menu: product.menu_product_price_type_action
+deleted xml-id of model ir.ui.menu: product.menu_product_pricelist_type_action
+deleted xml-id of model res.groups: product.group_product_manager
+new xml-id of model decimal.precision: product.decimal_account
+new xml-id of model decimal.precision: product.decimal_product_uom
+new xml-id of model decimal.precision: product.decimal_purchase
+new xml-id of model decimal.precision: product.decimal_sale
+new xml-id of model decimal.precision: product.decimal_stock_weight
+new xml-id of model ir.actions.act_window: product.action_product_price_list
+new xml-id of model ir.actions.act_window: product.product_normal_action_puchased
+new xml-id of model ir.actions.act_window: product.product_template_action_tree
+new xml-id of model ir.model.access: product.access_product_product_employee
+new xml-id of model ir.rule: product.product_comp_rule
+new xml-id of model ir.ui.menu: base.menu_product
+new xml-id of model ir.ui.menu: base.menu_sale_config_sales
+new xml-id of model ir.ui.menu: product.menu_product_price_type
+new xml-id of model ir.ui.menu: product.menu_product_pricelist_type_action2
+new xml-id of model ir.ui.menu: product.menu_products_category
+new xml-id of model ir.ui.menu: product.prod_config_main
+new xml-id of model ir.ui.view: product.product_pricelist_view_search
+new xml-id of model ir.ui.view: product.product_search_form_view
+new xml-id of model ir.ui.view: product.view_product_price_list
+new xml-id of model ir.ui.view_sc: product.ir_ui_view_sc_product0
+new xml-id of model product.category: product.cat0
+new xml-id of model product.uom.categ: product.uom_categ_length
+new xml-id of model product.uom.categ: product.uom_categ_wtime
+new xml-id of model product.uom: product.product_uom_cm
+new xml-id of model product.uom: product.product_uom_gram
+new xml-id of model product.uom: product.product_uom_km
+new xml-id of model product.uom: product.product_uom_meter
+new xml-id of model product.uom: product.product_uom_ton
+new xml-id of model product.uom: product.uom_day
+new xml-id of model product.uom: product.uom_hour
+new xml-id of model res.groups: base.group_sale_manager
+new xml-id of model res.groups: base.group_sale_salesman
+new xml-id of model res.groups: product.group_product_variant

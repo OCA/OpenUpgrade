@@ -1,0 +1,26 @@
+---sale_crm---
+sale_crm     / sale.order               / section_id (many2one)         : NEW relation: crm.case.section
+deleted xml-id of model ir.actions.wizard: sale_crm.sale_crm_make_case_wizard
+deleted xml-id of model ir.actions.wizard: sale_crm.sale_crm_wizard
+deleted xml-id of model process.node: sale_crm.process_node_contractanalytic0
+deleted xml-id of model process.node: sale_crm.process_node_contractpricelist0
+deleted xml-id of model process.node: sale_crm.process_node_crmopportunity0
+deleted xml-id of model process.node: sale_crm.process_node_crmquotation0
+deleted xml-id of model process.transition: sale_crm.process_transition_crmopportunityquotation
+deleted xml-id of model process.transition: sale_crm.process_transition_opportunityanalytic0
+deleted xml-id of model process.transition: sale_crm.process_transition_opportunitypricelist0
+deleted xml-id of model process.transition: sale_crm.process_transition_opportunityquotation0
+new xml-id of model ir.actions.act_window.view: sale_crm.action_turnover_by_month_graph_view
+new xml-id of model ir.actions.act_window.view: sale_crm.action_turnover_by_month_tree_view
+new xml-id of model ir.actions.act_window: sale_crm.action_crm_make_sale
+new xml-id of model ir.actions.act_window: sale_crm.action_quotation_for_sale_crm
+new xml-id of model ir.actions.act_window: sale_crm.action_turnover_by_month
+new xml-id of model ir.model.access: sale_crm.access_account_invoice_report_salesman
+new xml-id of model ir.ui.view: sale_crm.board_crm_form_inherit_child1
+new xml-id of model ir.ui.view: sale_crm.board_crm_form_inherit_replace1
+new xml-id of model ir.ui.view: sale_crm.board_crm_form_inherit_replace2
+new xml-id of model ir.ui.view: sale_crm.sale_view_inherit123
+new xml-id of model ir.ui.view: sale_crm.view_crm_make_sale
+new xml-id of model ir.ui.view: sale_crm.view_sales_order_filter_inherit
+new xml-id of model ir.ui.view: sale_crm.view_turnover_by_month_graph
+new xml-id of model ir.ui.view: sale_crm.view_turnover_by_month_tree

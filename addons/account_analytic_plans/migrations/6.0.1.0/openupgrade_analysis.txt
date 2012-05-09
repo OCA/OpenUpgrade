@@ -1,0 +1,19 @@
+---account_analytic_plans---
+account_analytic_plans / account.bank.statement.line / analytics_id (many2one)       : NEW relation: account.analytic.plan.instance
+deleted xml-id of model ir.actions.wizard: account_analytic_plans.account_analytic_account_inverted_balance_report
+deleted xml-id of model ir.actions.wizard: account_analytic_plans.create_model
+deleted xml-id of model ir.ui.menu: account_analytic_plans.menu_account_analytic_plan_instance_action
+deleted xml-id of model ir.ui.view: account_analytic_plans.view_account_move_form_inherit
+new xml-id of model ir.actions.act_window: account_analytic_plans.action_account_crossovered_analytic
+new xml-id of model ir.actions.act_window: account_analytic_plans.action_analytic_plan_create_model
+new xml-id of model ir.ui.menu: account_analytic_plans.menu_account_analytic_multi_plan_action
+new xml-id of model ir.ui.view: account_analytic_plans.account_analytic_plan_search
+new xml-id of model ir.ui.view: account_analytic_plans.view_account_crossovered_analytic
+new xml-id of model ir.ui.view: account_analytic_plans.view_analytic_plan_create_model
+new xml-id of model ir.ui.view: account_analytic_plans.view_analytic_plan_create_model_msg
+new xml-id of model ir.ui.view: account_analytic_plans.view_bank_statement_inherit_form
+new xml-id of model ir.ui.view: account_analytic_plans.view_move_form_inherit
+new xml-id of model ir.ui.view: account_analytic_plans.view_move_line_form_1_inherit
+new xml-id of model ir.ui.view: account_analytic_plans.view_move_line_tree_inherit
+new xml-id of model ir.values: account_analytic_plans.account_crossovered_analytic_values
+new xml-id of model res.users: base.user_root

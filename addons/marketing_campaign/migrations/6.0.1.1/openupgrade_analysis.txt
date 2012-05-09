@@ -1,0 +1,128 @@
+---marketing_campaign---
+marketing_campaign / campaign.analysis        / activity_id (many2one)        : NEW relation: marketing.campaign.activity
+marketing_campaign / campaign.analysis        / campaign_id (many2one)        : NEW relation: marketing.campaign
+marketing_campaign / campaign.analysis        / count (integer)               : NEW 
+marketing_campaign / campaign.analysis        / date (date)                   : NEW 
+marketing_campaign / campaign.analysis        / day (char)                    : NEW 
+marketing_campaign / campaign.analysis        / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+marketing_campaign / campaign.analysis        / partner_id (many2one)         : NEW relation: res.partner
+marketing_campaign / campaign.analysis        / res_id (integer)              : NEW 
+marketing_campaign / campaign.analysis        / revenue (float)               : NEW 
+marketing_campaign / campaign.analysis        / segment_id (many2one)         : NEW relation: marketing.campaign.segment
+marketing_campaign / campaign.analysis        / state (selection)             : NEW selection_keys: ['cancelled', 'done', 'exception', 'todo']
+marketing_campaign / campaign.analysis        / year (char)                   : NEW 
+marketing_campaign / marketing.campaign       / activity_ids (one2many)       : NEW relation: marketing.campaign.activity
+marketing_campaign / marketing.campaign       / fixed_cost (float)            : NEW 
+marketing_campaign / marketing.campaign       / mode (selection)              : NEW required: required, selection_keys: ['active', 'manual', 'test', 'test_realtime'], req_default: function
+marketing_campaign / marketing.campaign       / name (char)                   : NEW required: required
+marketing_campaign / marketing.campaign       / object_id (many2one)          : NEW relation: ir.model, required: required
+marketing_campaign / marketing.campaign       / partner_field_id (many2one)   : NEW relation: ir.model.fields
+marketing_campaign / marketing.campaign       / state (selection)             : NEW selection_keys: ['cancelled', 'done', 'draft', 'running']
+marketing_campaign / marketing.campaign.activity / campaign_id (many2one)        : NEW relation: marketing.campaign, required: required
+marketing_campaign / marketing.campaign.activity / condition (text)              : NEW required: required, req_default: function
+marketing_campaign / marketing.campaign.activity / email_template_id (many2one)  : NEW relation: email.template
+marketing_campaign / marketing.campaign.activity / from_ids (one2many)           : NEW relation: marketing.campaign.transition
+marketing_campaign / marketing.campaign.activity / keep_if_condition_not_met (boolean): NEW 
+marketing_campaign / marketing.campaign.activity / name (char)                   : NEW required: required
+marketing_campaign / marketing.campaign.activity / report_directory_id (many2one): NEW relation: document.directory
+marketing_campaign / marketing.campaign.activity / report_id (many2one)          : NEW relation: ir.actions.report.xml
+marketing_campaign / marketing.campaign.activity / revenue (float)               : NEW 
+marketing_campaign / marketing.campaign.activity / server_action_id (many2one)   : NEW relation: ir.actions.server
+marketing_campaign / marketing.campaign.activity / signal (char)                 : NEW 
+marketing_campaign / marketing.campaign.activity / start (boolean)               : NEW 
+marketing_campaign / marketing.campaign.activity / to_ids (one2many)             : NEW relation: marketing.campaign.transition
+marketing_campaign / marketing.campaign.activity / type (selection)              : NEW required: required, selection_keys: ['action', 'email', 'report'], req_default: function
+marketing_campaign / marketing.campaign.activity / variable_cost (float)         : NEW 
+marketing_campaign / marketing.campaign.segment / campaign_id (many2one)        : NEW relation: marketing.campaign, required: required
+marketing_campaign / marketing.campaign.segment / date_done (datetime)          : NEW 
+marketing_campaign / marketing.campaign.segment / date_run (datetime)           : NEW 
+marketing_campaign / marketing.campaign.segment / ir_filter_id (many2one)       : NEW relation: ir.filters
+marketing_campaign / marketing.campaign.segment / name (char)                   : NEW required: required
+marketing_campaign / marketing.campaign.segment / state (selection)             : NEW selection_keys: ['cancelled', 'done', 'draft', 'running']
+marketing_campaign / marketing.campaign.segment / sync_last_date (datetime)     : NEW 
+marketing_campaign / marketing.campaign.segment / sync_mode (selection)         : NEW selection_keys: ['all', 'create_date', 'write_date']
+marketing_campaign / marketing.campaign.transition / activity_from_id (many2one)   : NEW relation: marketing.campaign.activity, required: required
+marketing_campaign / marketing.campaign.transition / activity_to_id (many2one)     : NEW relation: marketing.campaign.activity, required: required
+marketing_campaign / marketing.campaign.transition / interval_nbr (integer)        : NEW required: required, req_default: 1
+marketing_campaign / marketing.campaign.transition / interval_type (selection)     : NEW required: required, selection_keys: ['days', 'hours', 'months', 'years'], req_default: days
+marketing_campaign / marketing.campaign.transition / trigger (selection)           : NEW required: required, selection_keys: ['auto', 'cosmetic', 'time'], req_default: time
+marketing_campaign / marketing.campaign.workitem / activity_id (many2one)        : NEW relation: marketing.campaign.activity, required: required
+marketing_campaign / marketing.campaign.workitem / date (datetime)               : NEW 
+marketing_campaign / marketing.campaign.workitem / error_msg (text)              : NEW 
+marketing_campaign / marketing.campaign.workitem / partner_id (many2one)         : NEW relation: res.partner
+marketing_campaign / marketing.campaign.workitem / res_id (integer)              : NEW 
+marketing_campaign / marketing.campaign.workitem / segment_id (many2one)         : NEW relation: marketing.campaign.segment
+marketing_campaign / marketing.campaign.workitem / state (selection)             : NEW selection_keys: ['cancelled', 'done', 'exception', 'todo']
+marketing_campaign / res.partner              / workitem_ids (one2many)       : NEW relation: marketing.campaign.workitem
+new xml-id of model ir.actions.act_window: marketing_campaign.act_marketing_campaing_followup
+new xml-id of model ir.actions.act_window: marketing_campaign.act_marketing_campaing_segment_opened
+new xml-id of model ir.actions.act_window: marketing_campaign.act_marketing_campaing_stat
+new xml-id of model ir.actions.act_window: marketing_campaign.action_campaign_analysis_all
+new xml-id of model ir.actions.act_window: marketing_campaign.action_marketing_campaign_form
+new xml-id of model ir.actions.act_window: marketing_campaign.action_marketing_campaign_segment_form
+new xml-id of model ir.actions.act_window: marketing_campaign.action_marketing_campaign_workitem
+new xml-id of model ir.cron: marketing_campaign.ir_cron_marketing_campaign_every_day
+new xml-id of model ir.cron: marketing_campaign.ir_cron_marketing_campaign_every_hour
+new xml-id of model ir.model.access: marketing_campaign.access_email_template_account_manager
+new xml-id of model ir.model.access: marketing_campaign.access_email_template_account_user
+new xml-id of model ir.model.access: marketing_campaign.access_email_template_manager
+new xml-id of model ir.model.access: marketing_campaign.access_email_template_user
+new xml-id of model ir.model.access: marketing_campaign.access_marketing_campaign_activity_campaign_manager
+new xml-id of model ir.model.access: marketing_campaign.access_marketing_campaign_activity_campaignadmin
+new xml-id of model ir.model.access: marketing_campaign.access_marketing_campaign_admin
+new xml-id of model ir.model.access: marketing_campaign.access_marketing_campaign_analysis_campaign_manager
+new xml-id of model ir.model.access: marketing_campaign.access_marketing_campaign_analysis_campaignadmin
+new xml-id of model ir.model.access: marketing_campaign.access_marketing_campaign_manager
+new xml-id of model ir.model.access: marketing_campaign.access_marketing_campaign_segment_campaign_manager
+new xml-id of model ir.model.access: marketing_campaign.access_marketing_campaign_segment_campaignadmin
+new xml-id of model ir.model.access: marketing_campaign.access_marketing_campaign_segment_system
+new xml-id of model ir.model.access: marketing_campaign.access_marketing_campaign_system
+new xml-id of model ir.model.access: marketing_campaign.access_marketing_campaign_transition_campaign_manager
+new xml-id of model ir.model.access: marketing_campaign.access_marketing_campaign_transition_campaignadmin
+new xml-id of model ir.model.access: marketing_campaign.access_marketing_campaign_workitem_all
+new xml-id of model ir.model.access: marketing_campaign.access_marketing_campaign_workitem_campaign_manager
+new xml-id of model ir.model.access: marketing_campaign.access_marketing_campaign_workitem_campaignadmin
+new xml-id of model ir.model.access: marketing_campaign.access_marketing_campaign_workitem_system
+new xml-id of model ir.ui.menu: base.menu_report_marketing
+new xml-id of model ir.ui.menu: marketing_campaign.menu_action_campaign_analysis_all
+new xml-id of model ir.ui.menu: marketing_campaign.menu_action_marketing_campaign_workitem
+new xml-id of model ir.ui.menu: marketing_campaign.menu_marketing_campaign
+new xml-id of model ir.ui.menu: marketing_campaign.menu_marketing_campaign_form
+new xml-id of model ir.ui.menu: marketing_campaign.menu_marketing_campaign_segment_form
+new xml-id of model ir.ui.menu: marketing_campaign.menu_marketing_configuration
+new xml-id of model ir.ui.view: base.view_crm_partner_info_History
+new xml-id of model ir.ui.view: marketing_campaign.view_campaign_analysis_search
+new xml-id of model ir.ui.view: marketing_campaign.view_campaign_analysis_tree
+new xml-id of model ir.ui.view: marketing_campaign.view_marketing_campaign_activity_form
+new xml-id of model ir.ui.view: marketing_campaign.view_marketing_campaign_activity_tree
+new xml-id of model ir.ui.view: marketing_campaign.view_marketing_campaign_diagram
+new xml-id of model ir.ui.view: marketing_campaign.view_marketing_campaign_form
+new xml-id of model ir.ui.view: marketing_campaign.view_marketing_campaign_search
+new xml-id of model ir.ui.view: marketing_campaign.view_marketing_campaign_segment_form
+new xml-id of model ir.ui.view: marketing_campaign.view_marketing_campaign_segment_search
+new xml-id of model ir.ui.view: marketing_campaign.view_marketing_campaign_segment_tree
+new xml-id of model ir.ui.view: marketing_campaign.view_marketing_campaign_tree
+new xml-id of model ir.ui.view: marketing_campaign.view_marketing_campaign_workitem_form
+new xml-id of model ir.ui.view: marketing_campaign.view_marketing_campaign_workitem_search
+new xml-id of model ir.ui.view: marketing_campaign.view_marketing_campaign_workitem_tree
+new xml-id of model ir.ui.view: marketing_campaign.view_workitem_partner_info_form
+new xml-id of model workflow.activity: marketing_campaign.act_marketing_campaign_cancel
+new xml-id of model workflow.activity: marketing_campaign.act_marketing_campaign_done
+new xml-id of model workflow.activity: marketing_campaign.act_marketing_campaign_draft
+new xml-id of model workflow.activity: marketing_campaign.act_marketing_campaign_running
+new xml-id of model workflow.activity: marketing_campaign.act_marketing_campaign_segment_cancel
+new xml-id of model workflow.activity: marketing_campaign.act_marketing_campaign_segment_done
+new xml-id of model workflow.activity: marketing_campaign.act_marketing_campaign_segment_draft
+new xml-id of model workflow.activity: marketing_campaign.act_marketing_campaign_segment_running
+new xml-id of model workflow.transition: marketing_campaign.trans_campaign_cancelled_draft
+new xml-id of model workflow.transition: marketing_campaign.trans_campaign_done_draft
+new xml-id of model workflow.transition: marketing_campaign.trans_campaign_running_cancel
+new xml-id of model workflow.transition: marketing_campaign.trans_campaign_running_done
+new xml-id of model workflow.transition: marketing_campaign.trans_campaign_segment_done_draft
+new xml-id of model workflow.transition: marketing_campaign.trans_campaign_segment_running_cancel
+new xml-id of model workflow.transition: marketing_campaign.trans_campaign_segment_running_done
+new xml-id of model workflow.transition: marketing_campaign.trans_campaign_segment_set_to_draft
+new xml-id of model workflow.transition: marketing_campaign.trans_marketing_campaign_draft_running
+new xml-id of model workflow.transition: marketing_campaign.trans_marketing_campaign_segment_draft_running
+new xml-id of model workflow: marketing_campaign.wkf_marketing_campaign
+new xml-id of model workflow: marketing_campaign.wkf_marketing_campaign_segment

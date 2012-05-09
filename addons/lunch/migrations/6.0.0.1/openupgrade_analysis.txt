@@ -1,0 +1,91 @@
+---lunch---
+lunch        / lunch.cashbox            / manager (many2one)            : NEW relation: res.users
+lunch        / lunch.cashbox            / name (char)                   : NEW required: required
+lunch        / lunch.cashmove           / active (boolean)              : NEW 
+lunch        / lunch.cashmove           / amount (float)                : NEW 
+lunch        / lunch.cashmove           / box (many2one)                : NEW relation: lunch.cashbox, required: required
+lunch        / lunch.cashmove           / create_date (datetime)        : NEW 
+lunch        / lunch.cashmove           / name (char)                   : NEW 
+lunch        / lunch.cashmove           / user_cashmove (many2one)      : NEW relation: res.users, required: required
+lunch        / lunch.category           / name (char)                   : NEW required: required
+lunch        / lunch.order              / cashmove (many2one)           : NEW relation: lunch.cashmove
+lunch        / lunch.order              / category (many2one)           : NEW relation: lunch.category
+lunch        / lunch.order              / date (date)                   : NEW 
+lunch        / lunch.order              / descript (char)               : NEW 
+lunch        / lunch.order              / product (many2one)            : NEW relation: lunch.product, required: required
+lunch        / lunch.order              / state (selection)             : NEW selection_keys: ['confirmed', 'draft']
+lunch        / lunch.order              / user_id (many2one)            : NEW relation: res.users, required: required, req_default: function
+lunch        / lunch.product            / active (boolean)              : NEW 
+lunch        / lunch.product            / category_id (many2one)        : NEW relation: lunch.category
+lunch        / lunch.product            / description (char)            : NEW 
+lunch        / lunch.product            / name (char)                   : NEW required: required
+lunch        / lunch.product            / price (float)                 : NEW 
+lunch        / report.lunch.amount      / amount (float)                : NEW 
+lunch        / report.lunch.amount      / box (many2one)                : NEW relation: lunch.cashbox
+lunch        / report.lunch.amount      / date (date)                   : NEW 
+lunch        / report.lunch.amount      / day (char)                    : NEW 
+lunch        / report.lunch.amount      / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+lunch        / report.lunch.amount      / user_id (many2one)            : NEW relation: res.users
+lunch        / report.lunch.amount      / year (char)                   : NEW 
+lunch        / report.lunch.order       / box_name (char)               : NEW 
+lunch        / report.lunch.order       / date (date)                   : NEW 
+lunch        / report.lunch.order       / day (char)                    : NEW 
+lunch        / report.lunch.order       / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+lunch        / report.lunch.order       / price_total (float)           : NEW 
+lunch        / report.lunch.order       / user_id (many2one)            : NEW relation: res.users
+lunch        / report.lunch.order       / year (char)                   : NEW 
+new xml-id of model ir.actions.act_window: lunch.action_lunch_cashbox_clean
+new xml-id of model ir.actions.act_window: lunch.action_lunch_cashbox_clean_values
+new xml-id of model ir.actions.act_window: lunch.action_lunch_cashbox_form
+new xml-id of model ir.actions.act_window: lunch.action_lunch_cashmove_form
+new xml-id of model ir.actions.act_window: lunch.action_lunch_category_form
+new xml-id of model ir.actions.act_window: lunch.action_lunch_order_cancel
+new xml-id of model ir.actions.act_window: lunch.action_lunch_order_cancel_values
+new xml-id of model ir.actions.act_window: lunch.action_lunch_order_confirm
+new xml-id of model ir.actions.act_window: lunch.action_lunch_order_confirm_values
+new xml-id of model ir.actions.act_window: lunch.action_lunch_order_form
+new xml-id of model ir.actions.act_window: lunch.action_lunch_product_form
+new xml-id of model ir.actions.act_window: lunch.action_report_lunch_amount_tree
+new xml-id of model ir.actions.act_window: lunch.action_report_lunch_order_all
+new xml-id of model ir.actions.report.xml: lunch.report_lunch_order
+new xml-id of model ir.model.access: lunch.access_lunch_cashbox_user
+new xml-id of model ir.model.access: lunch.access_lunch_cashmove_user
+new xml-id of model ir.model.access: lunch.access_lunch_category_manager
+new xml-id of model ir.model.access: lunch.access_lunch_order_user
+new xml-id of model ir.model.access: lunch.access_lunch_product_user
+new xml-id of model ir.model.access: lunch.access_report_lunch_amount_manager
+new xml-id of model ir.model.access: lunch.access_report_lunch_order_manager
+new xml-id of model ir.ui.menu: base.menu_lunch_reporting
+new xml-id of model ir.ui.menu: base.menu_lunch_survey_root
+new xml-id of model ir.ui.menu: lunch.menu_lunch
+new xml-id of model ir.ui.menu: lunch.menu_lunch_cashbox_form
+new xml-id of model ir.ui.menu: lunch.menu_lunch_cashmove_form
+new xml-id of model ir.ui.menu: lunch.menu_lunch_category_form
+new xml-id of model ir.ui.menu: lunch.menu_lunch_category_root_configuration
+new xml-id of model ir.ui.menu: lunch.menu_lunch_order_form
+new xml-id of model ir.ui.menu: lunch.menu_lunch_product_form
+new xml-id of model ir.ui.menu: lunch.menu_lunch_report_amount_tree
+new xml-id of model ir.ui.menu: lunch.menu_lunch_reporting_order
+new xml-id of model ir.ui.view: lunch.view_lunch_cashbox_clean
+new xml-id of model ir.ui.view: lunch.view_lunch_cashbox_form
+new xml-id of model ir.ui.view: lunch.view_lunch_cashbox_tree
+new xml-id of model ir.ui.view: lunch.view_lunch_cashmove_filter
+new xml-id of model ir.ui.view: lunch.view_lunch_cashmove_form
+new xml-id of model ir.ui.view: lunch.view_lunch_cashmove_tree
+new xml-id of model ir.ui.view: lunch.view_lunch_category_form
+new xml-id of model ir.ui.view: lunch.view_lunch_category_tree
+new xml-id of model ir.ui.view: lunch.view_lunch_order_cancel
+new xml-id of model ir.ui.view: lunch.view_lunch_order_confirm
+new xml-id of model ir.ui.view: lunch.view_lunch_order_filter
+new xml-id of model ir.ui.view: lunch.view_lunch_order_form
+new xml-id of model ir.ui.view: lunch.view_lunch_order_tree
+new xml-id of model ir.ui.view: lunch.view_lunch_product_form
+new xml-id of model ir.ui.view: lunch.view_lunch_product_search
+new xml-id of model ir.ui.view: lunch.view_lunch_product_tree
+new xml-id of model ir.ui.view: lunch.view_report_lunch_amount_form
+new xml-id of model ir.ui.view: lunch.view_report_lunch_amount_search
+new xml-id of model ir.ui.view: lunch.view_report_lunch_amount_tree
+new xml-id of model ir.ui.view: lunch.view_report_lunch_order_search
+new xml-id of model ir.ui.view: lunch.view_report_lunch_order_tree
+new xml-id of model res.groups: base.group_tool_manager
+new xml-id of model res.groups: base.group_tool_user

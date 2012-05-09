@@ -1,0 +1,121 @@
+---hr_holidays---
+hr_holidays  / hr.holidays              / case_id (many2one)            : relation is now 'crm.meeting' ('crm.case')
+hr_holidays  / hr.holidays              / category_id (many2one)        : NEW relation: hr.employee.category
+hr_holidays  / hr.holidays              / holiday_status (many2one)     : DEL relation: hr.holidays.status, required: required
+hr_holidays  / hr.holidays              / holiday_status_id (many2one)  : NEW relation: hr.holidays.status, required: required
+hr_holidays  / hr.holidays              / holiday_type (selection)      : NEW required: required, selection_keys: ['category', 'employee'], req_default: employee
+hr_holidays  / hr.holidays              / holiday_user_id (many2one)    : DEL relation: hr.holidays.per.user
+hr_holidays  / hr.holidays              / linked_request_ids (one2many) : NEW relation: hr.holidays
+hr_holidays  / hr.holidays              / manager_id2 (many2one)        : NEW relation: hr.employee
+hr_holidays  / hr.holidays              / number_of_days (float)        : now a function
+hr_holidays  / hr.holidays              / number_of_days_temp (float)   : NEW 
+hr_holidays  / hr.holidays              / parent_id (many2one)          : NEW relation: hr.holidays
+hr_holidays  / hr.holidays              / state (selection)             : selection_keys is now '['cancel', 'confirm', 'draft', 'refuse', 'validate', 'validate1']' ('['cancel', 'confirm', 'draft', 'refuse', 'validate']')
+hr_holidays  / hr.holidays              / type (selection)              : NEW required: required, selection_keys: ['add', 'remove'], req_default: remove
+hr_holidays  / hr.holidays              / user_id (many2one)            : now a function
+hr_holidays  / hr.holidays.remaining.leaves.user / leave_type (char)             : NEW 
+hr_holidays  / hr.holidays.remaining.leaves.user / name (char)                   : NEW 
+hr_holidays  / hr.holidays.remaining.leaves.user / no_of_leaves (integer)        : NEW 
+hr_holidays  / hr.holidays.remaining.leaves.user / user_id (many2one)            : NEW relation: res.users
+hr_holidays  / hr.holidays.status       / categ_id (many2one)           : NEW relation: crm.case.categ
+hr_holidays  / hr.holidays.status       / color_name (selection)        : selection_keys is now '['black', 'blue', 'brown', 'ivory', 'lavender', 'lightblue', 'lightcoral', 'lightcyan', 'lightgreen', 'lightpink', 'lightsalmon', 'lightyellow', 'magenta', 'red', 'violet', 'wheat']' ('['black', 'brown', 'ivory', 'lavender', 'lightblue', 'lightcoral', 'lightcyan', 'lightgreen', 'lightpink', 'lightsalmon', 'lightyellow', 'magenta', 'red', 'violet', 'wheat']')
+hr_holidays  / hr.holidays.status       / double_validation (boolean)   : NEW 
+hr_holidays  / hr.holidays.status       / section_id (many2one)         : DEL relation: crm.case.section
+hr_holidays  / resource.calendar.leaves / holiday_id (many2one)         : NEW relation: hr.holidays
+deleted xml-id of model ir.actions.act_window: hr_holidays.action_all_holiday
+deleted xml-id of model ir.actions.act_window: hr_holidays.action_holiday_waiting
+deleted xml-id of model ir.actions.act_window: hr_holidays.action_holidays_per_user
+deleted xml-id of model ir.actions.act_window: hr_holidays.action_my_holiday
+deleted xml-id of model ir.actions.act_window: hr_holidays.action_my_holiday_available
+deleted xml-id of model ir.actions.act_window: hr_holidays.action_my_holiday_draft
+deleted xml-id of model ir.actions.act_window: hr_holidays.action_my_holiday_refuse
+deleted xml-id of model ir.actions.act_window: hr_holidays.action_my_holiday_validate
+deleted xml-id of model ir.actions.act_window: hr_holidays.action_my_holiday_waiting
+deleted xml-id of model ir.actions.wizard: hr_holidays.holidays_summary
+deleted xml-id of model ir.actions.wizard: hr_holidays.wizard_holidays_summary
+deleted xml-id of model ir.model.access: hr_holidays.access_hr_holidays_per_user
+deleted xml-id of model ir.ui.menu: hr_holidays.menu_action_all_holiday
+deleted xml-id of model ir.ui.menu: hr_holidays.menu_action_holiday_waiting
+deleted xml-id of model ir.ui.menu: hr_holidays.menu_action_my_holiday
+deleted xml-id of model ir.ui.menu: hr_holidays.menu_action_my_holiday_available
+deleted xml-id of model ir.ui.menu: hr_holidays.menu_action_my_holiday_draft
+deleted xml-id of model ir.ui.menu: hr_holidays.menu_action_my_holiday_refuse
+deleted xml-id of model ir.ui.menu: hr_holidays.menu_action_my_holiday_validate
+deleted xml-id of model ir.ui.menu: hr_holidays.menu_action_my_holiday_waiting
+deleted xml-id of model ir.ui.menu: hr_holidays.menu_holidays_summary
+deleted xml-id of model ir.ui.menu: hr_holidays.menu_open_holidays_per_user
+deleted xml-id of model ir.ui.view: hr_holidays.view_holidays_per_user_form
+deleted xml-id of model ir.ui.view: hr_holidays.view_holidays_per_user_graph
+deleted xml-id of model ir.ui.view: hr_holidays.view_holidays_per_user_tree
+deleted xml-id of model process.node: hr_holidays.process_node_approved0
+deleted xml-id of model process.node: hr_holidays.process_node_calendar0
+deleted xml-id of model process.node: hr_holidays.process_node_holidays0
+deleted xml-id of model process.node: hr_holidays.process_node_holidaysdefinition0
+deleted xml-id of model process.node: hr_holidays.process_node_holidaysrequest0
+deleted xml-id of model process.node: hr_holidays.process_node_legaldeclaration0
+deleted xml-id of model process.node: hr_holidays.process_node_refused0
+deleted xml-id of model process.process: hr_holidays.process_process_holidaysprocess0
+deleted xml-id of model process.transition.action: hr_holidays.process_transition_action_confirm0
+deleted xml-id of model process.transition.action: hr_holidays.process_transition_action_reufse0
+deleted xml-id of model process.transition.action: hr_holidays.process_transition_action_validate0
+deleted xml-id of model process.transition: hr_holidays.process_transition_approvedrequest0
+deleted xml-id of model process.transition: hr_holidays.process_transition_employeedeclaration0
+deleted xml-id of model process.transition: hr_holidays.process_transition_employeeholidays0
+deleted xml-id of model process.transition: hr_holidays.process_transition_holidaysdefrequest0
+deleted xml-id of model process.transition: hr_holidays.process_transition_refusedrequest0
+deleted xml-id of model process.transition: hr_holidays.process_transition_setholiday0
+deleted xml-id of model res.roles: hr_holidays.HR_holidays
+deleted xml-id of model workflow.activity: hr_holidays.act_cancel
+deleted xml-id of model workflow.transition: hr_holidays.t5
+deleted xml-id of model workflow.transition: hr_holidays.t7
+new xml-id of model hr.holidays.status: hr_holidays.holiday_status_cl
+new xml-id of model hr.holidays.status: hr_holidays.holiday_status_sl
+new xml-id of model ir.actions.act_window.view: hr_holidays.action_open_allocation_holidays_form
+new xml-id of model ir.actions.act_window.view: hr_holidays.action_open_allocation_holidays_tree
+new xml-id of model ir.actions.act_window.view: hr_holidays.action_open_ask_holidays_calendar
+new xml-id of model ir.actions.act_window.view: hr_holidays.action_open_ask_holidays_form
+new xml-id of model ir.actions.act_window.view: hr_holidays.action_open_ask_holidays_tree
+new xml-id of model ir.actions.act_window: hr_holidays.action_hr_available_holidays_report
+new xml-id of model ir.actions.act_window: hr_holidays.action_hr_holidays_leaves_by_month
+new xml-id of model ir.actions.act_window: hr_holidays.action_hr_holidays_summary_dept
+new xml-id of model ir.actions.act_window: hr_holidays.action_hr_holidays_summary_employee
+new xml-id of model ir.actions.act_window: hr_holidays.action_view_holiday_status_manager_board
+new xml-id of model ir.actions.act_window: hr_holidays.open_allocation_holidays
+new xml-id of model ir.actions.act_window: hr_holidays.open_company_allocation
+new xml-id of model ir.model.access: hr_holidays.access_hr_holidays_employee
+new xml-id of model ir.model.access: hr_holidays.access_hr_holidays_remain_user
+new xml-id of model ir.model.access: hr_holidays.access_hr_holydays_status_employee
+new xml-id of model ir.model.access: hr_holidays.access_resource_calendar_leaves_manager
+new xml-id of model ir.rule: hr_holidays.property_rule_holidays
+new xml-id of model ir.rule: hr_holidays.property_rule_holidays_employee
+new xml-id of model ir.rule: hr_holidays.property_rule_holidays_manager
+new xml-id of model ir.ui.menu: base.menu_hr_dasboard
+new xml-id of model ir.ui.menu: base.menu_hr_manager
+new xml-id of model ir.ui.menu: base.menu_hr_project
+new xml-id of model ir.ui.menu: hr.menu_hr_reporting
+new xml-id of model ir.ui.menu: hr.menu_open_view_attendance_reason_config
+new xml-id of model ir.ui.menu: hr_holidays.menu_account_central_journal
+new xml-id of model ir.ui.menu: hr_holidays.menu_hr_available_holidays_report_tree
+new xml-id of model ir.ui.menu: hr_holidays.menu_hr_reporting_holidays
+new xml-id of model ir.ui.menu: hr_holidays.menu_open_allocation_holidays
+new xml-id of model ir.ui.menu: hr_holidays.menu_open_company_allocation
+new xml-id of model ir.ui.view: hr_holidays.allocation_company_new
+new xml-id of model ir.ui.view: hr_holidays.allocation_leave_new
+new xml-id of model ir.ui.view: hr_holidays.board_hr_holidays_leave_by_month_form
+new xml-id of model ir.ui.view: hr_holidays.board_hr_holidays_manager_form
+new xml-id of model ir.ui.view: hr_holidays.resource_calendar_leave_form_inherit
+new xml-id of model ir.ui.view: hr_holidays.view_holiday_allocation_tree
+new xml-id of model ir.ui.view: hr_holidays.view_holiday_new_calendar
+new xml-id of model ir.ui.view: hr_holidays.view_holiday_simple
+new xml-id of model ir.ui.view: hr_holidays.view_holidays_status_filter
+new xml-id of model ir.ui.view: hr_holidays.view_hr_holidays_filter
+new xml-id of model ir.ui.view: hr_holidays.view_hr_holidays_remaining_leaves_user_graph
+new xml-id of model ir.ui.view: hr_holidays.view_hr_holidays_remaining_leaves_user_tree
+new xml-id of model ir.ui.view: hr_holidays.view_hr_holidays_status_search
+new xml-id of model ir.ui.view: hr_holidays.view_hr_holidays_summary_dept
+new xml-id of model ir.ui.view: hr_holidays.view_hr_holidays_summary_employee
+new xml-id of model ir.values: hr_holidays.hr_holidays_summary_employee_value
+new xml-id of model workflow.activity: hr_holidays.act_validate1
+new xml-id of model workflow.transition: hr_holidays.t10
+new xml-id of model workflow.transition: hr_holidays.t11
+new xml-id of model workflow.transition: hr_holidays.t8

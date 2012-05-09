@@ -1,0 +1,105 @@
+---hr---
+hr           / hr.department            / manager_id (many2one)         : relation is now 'hr.employee' ('res.users')
+hr           / hr.department            / member_ids (many2many)        : relation is now 'hr.employee' ('res.users')
+hr           / hr.department            / member_ids (many2many)        : type is now 'one2many' ('many2many')
+hr           / hr.employee              / _inherits (False)             : NEW 
+hr           / hr.employee              / active (boolean)              : DEL 
+hr           / hr.employee              / bank_account_id (many2one)    : NEW relation: res.partner.bank
+hr           / hr.employee              / category_id (many2one)        : DEL relation: hr.employee.category
+hr           / hr.employee              / category_ids (many2many)      : NEW relation: hr.employee.category
+hr           / hr.employee              / coach_id (many2one)           : NEW relation: hr.employee
+hr           / hr.employee              / company_id (many2one)         : DEL relation: res.company
+hr           / hr.employee              / department_id (many2one)      : NEW relation: hr.department
+hr           / hr.employee              / gender (selection)            : selection_keys is now '['female', 'male']' ('['', 'female', 'male']')
+hr           / hr.employee              / identification_id (char)      : NEW 
+hr           / hr.employee              / job_id (many2one)             : NEW relation: hr.job
+hr           / hr.employee              / marital (selection)           : relation is now 'hr.employee.marital.status' ('False')
+hr           / hr.employee              / marital (selection)           : selection_keys is now 'False' ('['divorced', 'maried', 'other', 'unmaried']')
+hr           / hr.employee              / marital (selection)           : type is now 'many2one' ('selection')
+hr           / hr.employee              / mobile_phone (char)           : NEW 
+hr           / hr.employee              / name (char)                   : DEL required: required
+hr           / hr.employee              / otherid (char)                : module is now 'hr_payroll' ('hr')
+hr           / hr.employee              / parent_id (many2one)          : now a function
+hr           / hr.employee              / passport_id (char)            : NEW 
+hr           / hr.employee              / photo (binary)                : NEW 
+hr           / hr.employee              / resource_id (many2one)        : NEW relation: resource.resource, required: required
+hr           / hr.employee              / user_id (many2one)            : DEL relation: res.users
+hr           / hr.job                   / company_id (many2one)         : NEW relation: res.company
+hr           / hr.job                   / department_id (many2one)      : NEW relation: hr.department
+hr           / hr.job                   / description (text)            : NEW 
+hr           / hr.job                   / employee_ids (one2many)       : NEW relation: hr.employee
+hr           / hr.job                   / expected_employees (integer)  : NEW 
+hr           / hr.job                   / name (char)                   : NEW required: required
+hr           / hr.job                   / requirements (text)           : NEW 
+hr           / hr.job                   / state (selection)             : NEW required: required, selection_keys: ['old', 'open', 'recruit'], req_default: open
+hr           / res.users                / context_department_id (many2one): NEW relation: hr.department
+deleted xml-id of model ir.actions.act_window: hr.edit_workgroup
+deleted xml-id of model ir.actions.act_window: hr.open_module_tree_department_tree
+deleted xml-id of model ir.actions.act_window: hr.open_view_employee_new
+deleted xml-id of model ir.model.access: hr.access_hr_department
+deleted xml-id of model ir.model.access: hr.access_hr_department_manager
+deleted xml-id of model ir.model.access: hr.access_hr_employee
+deleted xml-id of model ir.model.access: hr.access_hr_employee_category
+deleted xml-id of model ir.model.access: hr.access_hr_employee_category_manager
+deleted xml-id of model ir.model.access: hr.access_hr_timesheet
+deleted xml-id of model ir.model.access: hr.access_hr_timesheet_group
+deleted xml-id of model ir.model.access: hr.access_hr_timesheet_group_manager
+deleted xml-id of model ir.model.access: hr.access_hr_timesheet_manager
+deleted xml-id of model ir.ui.menu: hr.menu_department_def
+deleted xml-id of model ir.ui.menu: hr.menu_department_tree
+deleted xml-id of model ir.ui.menu: hr.menu_edit_workgroup
+deleted xml-id of model ir.ui.menu: hr.menu_hr_reporting
+deleted xml-id of model ir.ui.menu: hr.menu_open_view_employee_list
+deleted xml-id of model ir.ui.menu: hr.menu_open_view_employee_new
+deleted xml-id of model ir.ui.menu: hr.menu_open_view_employee_tree
+deleted xml-id of model ir.ui.view: hr.create_group
+deleted xml-id of model ir.ui.view: hr.view_timesheet_form
+deleted xml-id of model ir.ui.view: hr.view_timesheet_tree
+deleted xml-id of model res.groups: hr.group_hr_manager
+deleted xml-id of model res.groups: hr.group_hr_user
+new xml-id of model hr.employee.marital.status: hr.hr_employee_marital_status_divorced
+new xml-id of model hr.employee.marital.status: hr.hr_employee_marital_status_married
+new xml-id of model hr.employee.marital.status: hr.hr_employee_marital_status_single
+new xml-id of model hr.employee.marital.status: hr.hr_employee_marital_status_widower
+new xml-id of model hr.employee: hr.employee
+new xml-id of model ir.actions.act_window: hr.action_hr_installer
+new xml-id of model ir.actions.act_window: hr.action_hr_job
+new xml-id of model ir.actions.act_window: hr.action_hr_marital_status
+new xml-id of model ir.actions.act_window: hr.hr_employee_normal_action_tree
+new xml-id of model ir.actions.act_window: hr.open_board_hr
+new xml-id of model ir.actions.act_window: hr.open_board_hr_manager
+new xml-id of model ir.actions.todo: hr.hr_installer_todo
+new xml-id of model ir.model.access: hr.access_hr_department_employee
+new xml-id of model ir.model.access: hr.access_hr_department_user
+new xml-id of model ir.model.access: hr.access_hr_employee_category_emp
+new xml-id of model ir.model.access: hr.access_hr_employee_category_user
+new xml-id of model ir.model.access: hr.access_hr_employee_marital_status_manager
+new xml-id of model ir.model.access: hr.access_hr_employee_resource_user
+new xml-id of model ir.model.access: hr.access_hr_employee_system_user
+new xml-id of model ir.model.access: hr.access_hr_employee_user
+new xml-id of model ir.model.access: hr.access_hr_job_user
+new xml-id of model ir.model.access: hr.access_hr_res_partner_address
+new xml-id of model ir.model.access: hr.access_ir_property_hr_user
+new xml-id of model ir.ui.menu: base.dashboard
+new xml-id of model ir.ui.menu: base.menu_crm_case_job_req_main
+new xml-id of model ir.ui.menu: hr.hr_menu_marital_status
+new xml-id of model ir.ui.menu: hr.menu_hr_department_tree
+new xml-id of model ir.ui.menu: hr.menu_hr_deshboard
+new xml-id of model ir.ui.menu: hr.menu_hr_job
+new xml-id of model ir.ui.menu: hr.menu_hr_main
+new xml-id of model ir.ui.menu: hr.menu_hr_management
+new xml-id of model ir.ui.menu: hr.menu_view_employee_category_configuration_form
+new xml-id of model ir.ui.view: hr.board_hr_form
+new xml-id of model ir.ui.view: hr.board_hr_manager_form
+new xml-id of model ir.ui.view: hr.hr_hr_employee_marital_status_form
+new xml-id of model ir.ui.view: hr.hr_hr_employee_marital_status_tree
+new xml-id of model ir.ui.view: hr.view_department_filter
+new xml-id of model ir.ui.view: hr.view_department_form_simple_modif_inherited1
+new xml-id of model ir.ui.view: hr.view_employee_filter
+new xml-id of model ir.ui.view: hr.view_hr_installer
+new xml-id of model ir.ui.view: hr.view_hr_job_form
+new xml-id of model ir.ui.view: hr.view_hr_job_tree
+new xml-id of model ir.ui.view: hr.view_job_filter
+new xml-id of model ir.values: hr.hr_employee_category_open
+new xml-id of model res.groups: base.group_hr_manager
+new xml-id of model res.groups: base.group_hr_user

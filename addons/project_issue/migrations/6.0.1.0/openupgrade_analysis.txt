@@ -1,0 +1,118 @@
+---project_issue---
+project_issue / project.issue            / active (boolean)              : NEW 
+project_issue / project.issue            / canal_id (many2one)           : NEW relation: res.partner.canal
+project_issue / project.issue            / categ_id (many2one)           : NEW relation: crm.case.categ
+project_issue / project.issue            / company_id (many2one)         : NEW relation: res.company
+project_issue / project.issue            / create_date (datetime)        : NEW 
+project_issue / project.issue            / date (datetime)               : NEW 
+project_issue / project.issue            / date_action_last (datetime)   : NEW 
+project_issue / project.issue            / date_action_next (datetime)   : NEW 
+project_issue / project.issue            / date_closed (datetime)        : NEW 
+project_issue / project.issue            / date_deadline (date)          : NEW 
+project_issue / project.issue            / date_open (datetime)          : NEW 
+project_issue / project.issue            / description (text)            : NEW 
+project_issue / project.issue            / duration (float)              : NEW 
+project_issue / project.issue            / email_cc (char)               : NEW 
+project_issue / project.issue            / email_from (char)             : NEW 
+project_issue / project.issue            / id (integer)                  : NEW 
+project_issue / project.issue            / message_ids (one2many)        : NEW relation: mailgate.message
+project_issue / project.issue            / name (char)                   : NEW required: required
+project_issue / project.issue            / partner_address_id (many2one) : NEW relation: res.partner.address
+project_issue / project.issue            / partner_id (many2one)         : NEW relation: res.partner
+project_issue / project.issue            / partner_mobile (char)         : NEW 
+project_issue / project.issue            / partner_name (char)           : NEW 
+project_issue / project.issue            / partner_phone (char)          : NEW 
+project_issue / project.issue            / priority (selection)          : NEW selection_keys: ['1', '2', '3', '4', '5']
+project_issue / project.issue            / project_id (many2one)         : NEW relation: project.project
+project_issue / project.issue            / section_id (many2one)         : NEW relation: crm.case.section
+project_issue / project.issue            / state (selection)             : NEW selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
+project_issue / project.issue            / task_id (many2one)            : NEW relation: project.task
+project_issue / project.issue            / type_id (many2one)            : NEW relation: project.task.type
+project_issue / project.issue            / user_id (many2one)            : NEW relation: res.users
+project_issue / project.issue            / version_id (many2one)         : NEW relation: project.issue.version
+project_issue / project.issue            / write_date (datetime)         : NEW 
+project_issue / project.issue.report     / assigned_to (many2one)        : NEW relation: res.users
+project_issue / project.issue.report     / canal_id (many2one)           : NEW relation: res.partner.canal
+project_issue / project.issue.report     / categ_id (many2one)           : NEW relation: crm.case.categ
+project_issue / project.issue.report     / company_id (many2one)         : NEW relation: res.company
+project_issue / project.issue.report     / creation_date (date)          : NEW 
+project_issue / project.issue.report     / date_closed (date)            : NEW 
+project_issue / project.issue.report     / day (char)                    : NEW 
+project_issue / project.issue.report     / delay_close (float)           : NEW 
+project_issue / project.issue.report     / delay_open (float)            : NEW 
+project_issue / project.issue.report     / email (integer)               : NEW 
+project_issue / project.issue.report     / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+project_issue / project.issue.report     / name (char)                   : NEW 
+project_issue / project.issue.report     / nbr (integer)                 : NEW 
+project_issue / project.issue.report     / opening_date (date)           : NEW 
+project_issue / project.issue.report     / partner_id (many2one)         : NEW relation: res.partner
+project_issue / project.issue.report     / priority (selection)          : NEW selection_keys: ['1', '2', '3', '4', '5']
+project_issue / project.issue.report     / project_id (many2one)         : NEW relation: project.project
+project_issue / project.issue.report     / section_id (many2one)         : NEW relation: crm.case.section
+project_issue / project.issue.report     / state (selection)             : NEW selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
+project_issue / project.issue.report     / task_id (many2one)            : NEW relation: project.task
+project_issue / project.issue.report     / type_id (many2one)            : NEW relation: project.task.type
+project_issue / project.issue.report     / user_id (many2one)            : NEW relation: res.users
+project_issue / project.issue.report     / version_id (many2one)         : NEW relation: project.issue.version
+project_issue / project.issue.report     / working_hours_close (float)   : NEW 
+project_issue / project.issue.report     / working_hours_open (float)    : NEW 
+project_issue / project.issue.version    / active (boolean)              : NEW 
+project_issue / project.issue.version    / name (char)                   : NEW required: required
+project_issue / project.project          / project_escalation_id (many2one): NEW relation: project.project
+project_issue / project.project          / reply_to (char)               : NEW 
+new xml-id of model crm.case.categ: project_issue.bug_categ
+new xml-id of model crm.case.categ: project_issue.feature_request_categ
+new xml-id of model ir.actions.act_window.view: project_issue.action_crm_tag_calendar_view0
+new xml-id of model ir.actions.act_window.view: project_issue.action_crm_tag_form_view0
+new xml-id of model ir.actions.act_window.view: project_issue.action_crm_tag_tree_view0
+new xml-id of model ir.actions.act_window.view: project_issue.action_project_issue_report_graph
+new xml-id of model ir.actions.act_window.view: project_issue.action_project_issue_report_tree
+new xml-id of model ir.actions.act_window: project_issue.act_project_project_2_project_issue_all
+new xml-id of model ir.actions.act_window: project_issue.action_project_issue_graph_stage
+new xml-id of model ir.actions.act_window: project_issue.action_project_issue_graph_state
+new xml-id of model ir.actions.act_window: project_issue.action_project_issue_report
+new xml-id of model ir.actions.act_window: project_issue.action_view_current_project_issue_tree
+new xml-id of model ir.actions.act_window: project_issue.action_view_my_open_project_issue_tree
+new xml-id of model ir.actions.act_window: project_issue.action_view_my_project_issue_tree
+new xml-id of model ir.actions.act_window: project_issue.action_view_pending_project_issue_tree
+new xml-id of model ir.actions.act_window: project_issue.open_board_project_issue
+new xml-id of model ir.actions.act_window: project_issue.project_issue_categ_act0
+new xml-id of model ir.actions.act_window: project_issue.project_issue_categ_action
+new xml-id of model ir.actions.act_window: project_issue.project_issue_version_action
+new xml-id of model ir.model.access: project_issue.access_crm_case_categ_id
+new xml-id of model ir.model.access: project_issue.access_mailgate_message_issue_project_user
+new xml-id of model ir.model.access: project_issue.access_mailgate_message_project_manager
+new xml-id of model ir.model.access: project_issue.access_project_issue_all
+new xml-id of model ir.model.access: project_issue.access_project_issue_report_all
+new xml-id of model ir.model.access: project_issue.access_project_issue_report_user
+new xml-id of model ir.model.access: project_issue.access_project_issue_user
+new xml-id of model ir.model.access: project_issue.access_project_issue_version_project
+new xml-id of model ir.model.access: project_issue.access_project_issue_version_project_user
+new xml-id of model ir.model.access: project_issue.access_resource_calendar_project_manager
+new xml-id of model ir.ui.menu: project_issue.menu_deshboard_project_issue
+new xml-id of model ir.ui.menu: project_issue.menu_project_confi
+new xml-id of model ir.ui.menu: project_issue.menu_project_issue_category_act
+new xml-id of model ir.ui.menu: project_issue.menu_project_issue_report_tree
+new xml-id of model ir.ui.menu: project_issue.menu_project_issue_track
+new xml-id of model ir.ui.menu: project_issue.menu_project_issue_version_act
+new xml-id of model ir.ui.view: project.view_project_resource_form1
+new xml-id of model ir.ui.view: project_issue.board_my_project_issue_form
+new xml-id of model ir.ui.view: project_issue.board_project_issue_form
+new xml-id of model ir.ui.view: project_issue.project_feature_tree_view
+new xml-id of model ir.ui.view: project_issue.project_issue_board_tree_view
+new xml-id of model ir.ui.view: project_issue.project_issue_calendar_view
+new xml-id of model ir.ui.view: project_issue.project_issue_form_view
+new xml-id of model ir.ui.view: project_issue.project_issue_tree_view
+new xml-id of model ir.ui.view: project_issue.project_issue_version_form_view
+new xml-id of model ir.ui.view: project_issue.project_issue_version_search_view
+new xml-id of model ir.ui.view: project_issue.view_my_open_project_issue_graph
+new xml-id of model ir.ui.view: project_issue.view_project_feature_filter
+new xml-id of model ir.ui.view: project_issue.view_project_form_inherited
+new xml-id of model ir.ui.view: project_issue.view_project_issue_filter
+new xml-id of model ir.ui.view: project_issue.view_project_issue_graph_stage
+new xml-id of model ir.ui.view: project_issue.view_project_issue_report_filter
+new xml-id of model ir.ui.view: project_issue.view_project_issue_report_graph
+new xml-id of model ir.ui.view: project_issue.view_project_issue_report_tree
+new xml-id of model project.issue.version: project_issue.type1
+new xml-id of model project.issue.version: project_issue.type2
+new xml-id of model project.issue.version: project_issue.type3

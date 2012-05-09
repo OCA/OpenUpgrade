@@ -1,0 +1,526 @@
+---crm---
+crm          / base.action.rule         / act_categ_id (many2one)       : NEW relation: crm.case.categ
+crm          / base.action.rule         / act_mail_to_partner (boolean) : NEW 
+crm          / base.action.rule         / act_section_id (many2one)     : NEW relation: crm.case.section
+crm          / base.action.rule         / regex_history (char)          : NEW 
+crm          / base.action.rule         / trg_categ_id (many2one)       : NEW relation: crm.case.categ
+crm          / base.action.rule         / trg_max_history (integer)     : NEW 
+crm          / base.action.rule         / trg_section_id (many2one)     : NEW relation: crm.case.section
+crm          / crm.case.categ           / object_id (many2one)          : NEW relation: ir.model
+crm          / crm.case.categ           / probability (float)           : DEL required: required, req_default: function
+crm          / crm.case.resource.type   / name (char)                   : NEW required: required
+crm          / crm.case.resource.type   / section_id (many2one)         : NEW relation: crm.case.section
+crm          / crm.case.section         / change_responsible (boolean)  : NEW 
+crm          / crm.case.section         / member_ids (many2many)        : NEW relation: res.users
+crm          / crm.case.section         / note (text)                   : NEW 
+crm          / crm.case.section         / resource_calendar_id (many2one): NEW relation: resource.calendar
+crm          / crm.case.section         / sequence (integer)            : DEL 
+crm          / crm.case.section         / stage_ids (many2many)         : NEW relation: crm.case.stage
+crm          / crm.case.section         / working_hours (float)         : NEW 
+crm          / crm.case.stage           / on_change (boolean)           : NEW 
+crm          / crm.case.stage           / probability (float)           : NEW required: required, req_default: function
+crm          / crm.case.stage           / requirements (text)           : NEW 
+crm          / crm.case.stage           / section_ids (many2many)       : NEW relation: crm.case.section
+crm          / crm.case.stage           / type (selection)              : NEW selection_keys: function
+crm          / crm.lead                 / active (boolean)              : NEW 
+crm          / crm.lead                 / birthdate (char)              : NEW 
+crm          / crm.lead                 / categ_id (many2one)           : NEW relation: crm.case.categ
+crm          / crm.lead                 / channel_id (many2one)         : NEW relation: res.partner.canal
+crm          / crm.lead                 / city (char)                   : NEW 
+crm          / crm.lead                 / company_id (many2one)         : NEW relation: res.company
+crm          / crm.lead                 / contact_name (char)           : NEW 
+crm          / crm.lead                 / country_id (many2one)         : NEW relation: res.country
+crm          / crm.lead                 / create_date (datetime)        : NEW 
+crm          / crm.lead                 / date_action (date)            : NEW 
+crm          / crm.lead                 / date_action_last (datetime)   : NEW 
+crm          / crm.lead                 / date_action_next (datetime)   : NEW 
+crm          / crm.lead                 / date_closed (datetime)        : NEW 
+crm          / crm.lead                 / date_deadline (date)          : NEW 
+crm          / crm.lead                 / date_open (datetime)          : NEW 
+crm          / crm.lead                 / description (text)            : NEW 
+crm          / crm.lead                 / email (char)                  : NEW 
+crm          / crm.lead                 / email_cc (text)               : NEW 
+crm          / crm.lead                 / email_from (char)             : NEW 
+crm          / crm.lead                 / fax (char)                    : NEW 
+crm          / crm.lead                 / function (char)               : NEW 
+crm          / crm.lead                 / id (integer)                  : NEW 
+crm          / crm.lead                 / job_ids (one2many)            : NEW relation: res.partner.job
+crm          / crm.lead                 / message_ids (one2many)        : NEW relation: mailgate.message
+crm          / crm.lead                 / mobile (char)                 : NEW 
+crm          / crm.lead                 / name (char)                   : NEW 
+crm          / crm.lead                 / optin (boolean)               : NEW 
+crm          / crm.lead                 / optout (boolean)              : NEW 
+crm          / crm.lead                 / partner_address_id (many2one) : NEW relation: res.partner.address
+crm          / crm.lead                 / partner_id (many2one)         : NEW relation: res.partner
+crm          / crm.lead                 / partner_name (char)           : NEW 
+crm          / crm.lead                 / phone (char)                  : NEW 
+crm          / crm.lead                 / planned_revenue (float)       : NEW 
+crm          / crm.lead                 / priority (selection)          : NEW selection_keys: ['1', '2', '3', '4', '5']
+crm          / crm.lead                 / probability (float)           : NEW 
+crm          / crm.lead                 / ref (reference)               : NEW 
+crm          / crm.lead                 / ref2 (reference)              : NEW 
+crm          / crm.lead                 / referred (char)               : NEW 
+crm          / crm.lead                 / section_id (many2one)         : NEW relation: crm.case.section
+crm          / crm.lead                 / stage_id (many2one)           : NEW relation: crm.case.stage
+crm          / crm.lead                 / state (selection)             : NEW selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
+crm          / crm.lead                 / state_id (many2one)           : NEW relation: res.country.state
+crm          / crm.lead                 / street (char)                 : NEW 
+crm          / crm.lead                 / street2 (char)                : NEW 
+crm          / crm.lead                 / title (many2one)              : NEW relation: res.partner.title
+crm          / crm.lead                 / title_action (char)           : NEW 
+crm          / crm.lead                 / type (selection)              : NEW selection_keys: ['lead', 'opportunity']
+crm          / crm.lead                 / type_id (many2one)            : NEW relation: crm.case.resource.type
+crm          / crm.lead                 / user_id (many2one)            : NEW relation: res.users
+crm          / crm.lead                 / write_date (datetime)         : NEW 
+crm          / crm.lead                 / zip (char)                    : NEW 
+crm          / crm.lead.report          / categ_id (many2one)           : NEW relation: crm.case.categ
+crm          / crm.lead.report          / channel_id (many2one)         : NEW relation: res.partner.canal
+crm          / crm.lead.report          / company_id (many2one)         : NEW relation: res.company
+crm          / crm.lead.report          / country_id (many2one)         : NEW relation: res.country
+crm          / crm.lead.report          / create_date (datetime)        : NEW 
+crm          / crm.lead.report          / creation_date (date)          : NEW 
+crm          / crm.lead.report          / date_closed (date)            : NEW 
+crm          / crm.lead.report          / day (char)                    : NEW 
+crm          / crm.lead.report          / delay_close (float)           : NEW 
+crm          / crm.lead.report          / delay_expected (float)        : NEW 
+crm          / crm.lead.report          / delay_open (float)            : NEW 
+crm          / crm.lead.report          / email (integer)               : NEW 
+crm          / crm.lead.report          / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+crm          / crm.lead.report          / name (char)                   : NEW 
+crm          / crm.lead.report          / nbr (integer)                 : NEW 
+crm          / crm.lead.report          / opening_date (date)           : NEW 
+crm          / crm.lead.report          / partner_id (many2one)         : NEW relation: res.partner
+crm          / crm.lead.report          / planned_revenue (float)       : NEW 
+crm          / crm.lead.report          / priority (selection)          : NEW selection_keys: ['1', '2', '3', '4', '5']
+crm          / crm.lead.report          / probability (float)           : NEW 
+crm          / crm.lead.report          / probable_revenue (float)      : NEW 
+crm          / crm.lead.report          / section_id (many2one)         : NEW relation: crm.case.section
+crm          / crm.lead.report          / stage_id (many2one)           : NEW relation: crm.case.stage
+crm          / crm.lead.report          / state (selection)             : NEW selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
+crm          / crm.lead.report          / type (selection)              : NEW selection_keys: ['lead', 'opportunity']
+crm          / crm.lead.report          / type_id (many2one)            : NEW relation: crm.case.resource.type
+crm          / crm.lead.report          / user_id (many2one)            : NEW relation: res.users
+crm          / crm.meeting              / active (boolean)              : NEW 
+crm          / crm.meeting              / alarm_id (many2one)           : NEW relation: res.alarm
+crm          / crm.meeting              / allday (boolean)              : NEW 
+crm          / crm.meeting              / attendee_ids (many2many)      : NEW relation: calendar.attendee
+crm          / crm.meeting              / base_calendar_alarm_id (many2one): NEW relation: calendar.alarm
+crm          / crm.meeting              / base_calendar_url (char)      : NEW 
+crm          / crm.meeting              / byday (selection)             : NEW selection_keys: ['-1', '1', '2', '3', '4', '5']
+crm          / crm.meeting              / categ_id (many2one)           : NEW relation: crm.case.categ
+crm          / crm.meeting              / class (selection)             : NEW selection_keys: ['confidential', 'private', 'public']
+crm          / crm.meeting              / count (integer)               : NEW 
+crm          / crm.meeting              / create_date (datetime)        : NEW 
+crm          / crm.meeting              / date (datetime)               : NEW 
+crm          / crm.meeting              / date_action_last (datetime)   : NEW 
+crm          / crm.meeting              / date_action_next (datetime)   : NEW 
+crm          / crm.meeting              / date_closed (datetime)        : NEW 
+crm          / crm.meeting              / date_deadline (datetime)      : NEW 
+crm          / crm.meeting              / day (integer)                 : NEW 
+crm          / crm.meeting              / description (text)            : NEW 
+crm          / crm.meeting              / duration (float)              : NEW 
+crm          / crm.meeting              / edit_all (boolean)            : NEW 
+crm          / crm.meeting              / email_from (char)             : NEW 
+crm          / crm.meeting              / end_date (date)               : NEW 
+crm          / crm.meeting              / end_type (selection)          : NEW selection_keys: ['count', 'end_date', 'forever']
+crm          / crm.meeting              / exdate (text)                 : NEW 
+crm          / crm.meeting              / exrule (char)                 : NEW 
+crm          / crm.meeting              / fr (boolean)                  : NEW 
+crm          / crm.meeting              / freq (selection)              : NEW selection_keys: ['None', 'daily', 'hourly', 'monthly', 'weekly', 'yearly']
+crm          / crm.meeting              / id (integer)                  : NEW 
+crm          / crm.meeting              / interval (integer)            : NEW 
+crm          / crm.meeting              / location (char)               : NEW 
+crm          / crm.meeting              / message_ids (one2many)        : NEW relation: mailgate.message
+crm          / crm.meeting              / mo (boolean)                  : NEW 
+crm          / crm.meeting              / month_list (selection)        : NEW selection_keys: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+crm          / crm.meeting              / name (char)                   : NEW required: required
+crm          / crm.meeting              / opportunity_id (many2one)     : NEW relation: crm.lead
+crm          / crm.meeting              / organizer (char)              : NEW 
+crm          / crm.meeting              / organizer_id (many2one)       : NEW relation: res.users
+crm          / crm.meeting              / partner_address_id (many2one) : NEW relation: res.partner.address
+crm          / crm.meeting              / partner_id (many2one)         : NEW relation: res.partner
+crm          / crm.meeting              / phonecall_id (many2one)       : NEW relation: crm.phonecall
+crm          / crm.meeting              / recurrency (boolean)          : NEW 
+crm          / crm.meeting              / recurrent_id (datetime)       : NEW 
+crm          / crm.meeting              / recurrent_uid (integer)       : NEW 
+crm          / crm.meeting              / rrule_type (selection)        : NEW selection_keys: ['daily', 'monthly', 'none', 'weekly', 'yearly']
+crm          / crm.meeting              / sa (boolean)                  : NEW 
+crm          / crm.meeting              / section_id (many2one)         : NEW relation: crm.case.section
+crm          / crm.meeting              / select1 (selection)           : NEW selection_keys: ['date', 'day']
+crm          / crm.meeting              / sequence (integer)            : NEW 
+crm          / crm.meeting              / show_as (selection)           : NEW selection_keys: ['busy', 'free']
+crm          / crm.meeting              / state (selection)             : NEW selection_keys: ['cancel', 'done', 'draft', 'open']
+crm          / crm.meeting              / su (boolean)                  : NEW 
+crm          / crm.meeting              / th (boolean)                  : NEW 
+crm          / crm.meeting              / tu (boolean)                  : NEW 
+crm          / crm.meeting              / user_id (many2one)            : NEW relation: res.users
+crm          / crm.meeting              / vtimezone (selection)         : NEW selection_keys: function
+crm          / crm.meeting              / we (boolean)                  : NEW 
+crm          / crm.meeting              / week_list (selection)         : NEW selection_keys: ['FR', 'MO', 'SA', 'SU', 'TH', 'TU', 'WE']
+crm          / crm.meeting              / write_date (datetime)         : NEW 
+crm          / crm.phonecall            / active (boolean)              : NEW 
+crm          / crm.phonecall            / canal_id (many2one)           : NEW relation: res.partner.canal
+crm          / crm.phonecall            / categ_id (many2one)           : NEW relation: crm.case.categ
+crm          / crm.phonecall            / company_id (many2one)         : NEW relation: res.company
+crm          / crm.phonecall            / create_date (datetime)        : NEW 
+crm          / crm.phonecall            / date (datetime)               : NEW 
+crm          / crm.phonecall            / date_action_last (datetime)   : NEW 
+crm          / crm.phonecall            / date_action_next (datetime)   : NEW 
+crm          / crm.phonecall            / date_closed (datetime)        : NEW 
+crm          / crm.phonecall            / date_open (datetime)          : NEW 
+crm          / crm.phonecall            / description (text)            : NEW 
+crm          / crm.phonecall            / duration (float)              : NEW 
+crm          / crm.phonecall            / email_from (char)             : NEW 
+crm          / crm.phonecall            / id (integer)                  : NEW 
+crm          / crm.phonecall            / message_ids (one2many)        : NEW relation: mailgate.message
+crm          / crm.phonecall            / name (char)                   : NEW 
+crm          / crm.phonecall            / opportunity_id (many2one)     : NEW relation: crm.lead
+crm          / crm.phonecall            / partner_address_id (many2one) : NEW relation: res.partner.address
+crm          / crm.phonecall            / partner_id (many2one)         : NEW relation: res.partner
+crm          / crm.phonecall            / partner_mobile (char)         : NEW 
+crm          / crm.phonecall            / partner_phone (char)          : NEW 
+crm          / crm.phonecall            / priority (selection)          : NEW selection_keys: ['1', '2', '3', '4', '5']
+crm          / crm.phonecall            / section_id (many2one)         : NEW relation: crm.case.section
+crm          / crm.phonecall            / state (selection)             : NEW selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
+crm          / crm.phonecall            / user_id (many2one)            : NEW relation: res.users
+crm          / crm.phonecall.report     / categ_id (many2one)           : NEW relation: crm.case.categ
+crm          / crm.phonecall.report     / company_id (many2one)         : NEW relation: res.company
+crm          / crm.phonecall.report     / create_date (datetime)        : NEW 
+crm          / crm.phonecall.report     / creation_date (date)          : NEW 
+crm          / crm.phonecall.report     / date_closed (date)            : NEW 
+crm          / crm.phonecall.report     / day (char)                    : NEW 
+crm          / crm.phonecall.report     / delay_close (float)           : NEW 
+crm          / crm.phonecall.report     / delay_open (float)            : NEW 
+crm          / crm.phonecall.report     / duration (float)              : NEW 
+crm          / crm.phonecall.report     / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+crm          / crm.phonecall.report     / name (char)                   : NEW 
+crm          / crm.phonecall.report     / nbr (integer)                 : NEW 
+crm          / crm.phonecall.report     / opening_date (date)           : NEW 
+crm          / crm.phonecall.report     / partner_id (many2one)         : NEW relation: res.partner
+crm          / crm.phonecall.report     / priority (selection)          : NEW selection_keys: ['1', '2', '3', '4', '5']
+crm          / crm.phonecall.report     / section_id (many2one)         : NEW relation: crm.case.section
+crm          / crm.phonecall.report     / state (selection)             : NEW selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
+crm          / crm.phonecall.report     / user_id (many2one)            : NEW relation: res.users
+crm          / res.partner              / meeting_ids (one2many)        : NEW relation: crm.meeting
+crm          / res.partner              / opportunity_ids (one2many)    : NEW relation: crm.lead
+crm          / res.partner              / phonecall_ids (one2many)      : NEW relation: crm.phonecall
+crm          / res.partner              / section_id (many2one)         : NEW relation: crm.case.section
+crm          / res.users                / context_section_id (many2one) : NEW relation: crm.case.section
+deleted xml-id of model ir.actions.act_window: crm.act_crm_case_categ_crm_case_opened
+deleted xml-id of model ir.actions.act_window: crm.act_crm_case_section_crm_case_opened
+deleted xml-id of model ir.actions.act_window: crm.act_res_partner_2_crm_case_opened
+deleted xml-id of model ir.actions.act_window: crm.act_res_partner_canal_2_crm_case_opened
+deleted xml-id of model ir.actions.act_window: crm.act_res_users_2_crm_case_opened
+deleted xml-id of model ir.actions.act_window: crm.crm_case_categ-act
+deleted xml-id of model ir.actions.act_window: crm.crm_case_categ0-act
+deleted xml-id of model ir.actions.act_window: crm.crm_case_categ0-act_my
+deleted xml-id of model ir.actions.act_window: crm.crm_case_categ0-act_my_open
+deleted xml-id of model ir.actions.act_window: crm.crm_case_categ0-act_open
+deleted xml-id of model ir.actions.act_window: crm.crm_case_history-act
+deleted xml-id of model ir.actions.act_window: crm.crm_case_history_my-act
+deleted xml-id of model ir.actions.act_window: crm.crm_case_rule-act
+deleted xml-id of model ir.actions.act_window: crm.crm_case_section_open_act
+deleted xml-id of model ir.actions.report.xml: crm.crm_business_opportunities_report
+deleted xml-id of model ir.actions.wizard: crm.wizard_case_section_menu
+deleted xml-id of model ir.cron: crm.ir_cron_crm_action
+deleted xml-id of model ir.model.access: crm.access_crm_case
+deleted xml-id of model ir.model.access: crm.access_crm_case_history
+deleted xml-id of model ir.model.access: crm.access_crm_case_history_manager
+deleted xml-id of model ir.model.access: crm.access_crm_case_log
+deleted xml-id of model ir.model.access: crm.access_crm_case_log_manager
+deleted xml-id of model ir.model.access: crm.access_crm_case_manger
+deleted xml-id of model ir.model.access: crm.access_crm_case_rule
+deleted xml-id of model ir.model.access: crm.access_crm_case_rule_manager
+deleted xml-id of model ir.ui.menu: crm.menu_crm
+deleted xml-id of model ir.ui.menu: crm.menu_crm_case_categ-act
+deleted xml-id of model ir.ui.menu: crm.menu_crm_case_categ0-act
+deleted xml-id of model ir.ui.menu: crm.menu_crm_case_categ0-act_my
+deleted xml-id of model ir.ui.menu: crm.menu_crm_case_categ0-act_my_open
+deleted xml-id of model ir.ui.menu: crm.menu_crm_case_categ0-act_open
+deleted xml-id of model ir.ui.menu: crm.menu_crm_case_history-act
+deleted xml-id of model ir.ui.menu: crm.menu_crm_case_history-act_main
+deleted xml-id of model ir.ui.menu: crm.menu_crm_case_history_my-act
+deleted xml-id of model ir.ui.menu: crm.menu_crm_case_rule-act
+deleted xml-id of model ir.ui.menu: crm.menu_crm_case_section_act_tree
+deleted xml-id of model ir.ui.menu: crm.menu_crm_configuration
+deleted xml-id of model ir.ui.menu: crm.menu_wizard_case_section_menu
+deleted xml-id of model ir.ui.menu: crm.next_id_51
+deleted xml-id of model ir.ui.menu: crm.next_id_52
+deleted xml-id of model ir.ui.menu: crm.next_id_53
+deleted xml-id of model ir.ui.view: crm.crm_case-view
+deleted xml-id of model ir.ui.view: crm.crm_case_calendar-view
+deleted xml-id of model ir.ui.view: crm.crm_case_history-view
+deleted xml-id of model ir.ui.view: crm.crm_case_history_tree-view
+deleted xml-id of model ir.ui.view: crm.crm_case_log_tree-view
+deleted xml-id of model ir.ui.view: crm.crm_case_rule-view
+deleted xml-id of model ir.ui.view: crm.crm_case_rule_tree-view
+deleted xml-id of model ir.ui.view: crm.crm_case_tree-view
+deleted xml-id of model ir.ui.view: crm.res_partner_events-wopartner-view
+deleted xml-id of model ir.values: crm.ir_open_section_case
+deleted xml-id of model res.groups: crm.group_crm_manager
+deleted xml-id of model res.groups: crm.group_crm_user
+deleted xml-id of model res.partner.event.type: crm.event_type_case_cancel
+deleted xml-id of model res.partner.event.type: crm.event_type_case_close
+deleted xml-id of model res.partner.event.type: crm.event_type_case_create
+deleted xml-id of model res.partner.event.type: crm.event_type_case_open
+deleted xml-id of model res.partner.event.type: crm.event_type_case_pending
+deleted xml-id of model res.request.link: crm.req_link_case
+new xml-id of model board.note.type: crm.note_crm_type
+new xml-id of model crm.case.categ: crm.categ_meet1
+new xml-id of model crm.case.categ: crm.categ_meet2
+new xml-id of model crm.case.categ: crm.categ_meet3
+new xml-id of model crm.case.categ: crm.categ_oppor1
+new xml-id of model crm.case.categ: crm.categ_oppor2
+new xml-id of model crm.case.categ: crm.categ_oppor3
+new xml-id of model crm.case.categ: crm.categ_oppor4
+new xml-id of model crm.case.categ: crm.categ_oppor5
+new xml-id of model crm.case.categ: crm.categ_oppor6
+new xml-id of model crm.case.categ: crm.categ_oppor7
+new xml-id of model crm.case.categ: crm.categ_oppor8
+new xml-id of model crm.case.categ: crm.categ_phone1
+new xml-id of model crm.case.categ: crm.categ_phone2
+new xml-id of model crm.case.resource.type: crm.type_lead1
+new xml-id of model crm.case.resource.type: crm.type_lead2
+new xml-id of model crm.case.resource.type: crm.type_lead3
+new xml-id of model crm.case.resource.type: crm.type_lead4
+new xml-id of model crm.case.resource.type: crm.type_lead5
+new xml-id of model crm.case.resource.type: crm.type_lead6
+new xml-id of model crm.case.resource.type: crm.type_lead7
+new xml-id of model crm.case.resource.type: crm.type_lead8
+new xml-id of model crm.case.resource.type: crm.type_oppor1
+new xml-id of model crm.case.resource.type: crm.type_oppor2
+new xml-id of model crm.case.section: crm.section_sales_department
+new xml-id of model crm.case.stage: crm.stage_lead1
+new xml-id of model crm.case.stage: crm.stage_lead2
+new xml-id of model crm.case.stage: crm.stage_lead3
+new xml-id of model crm.case.stage: crm.stage_lead4
+new xml-id of model crm.case.stage: crm.stage_lead5
+new xml-id of model crm.case.stage: crm.stage_lead6
+new xml-id of model crm.case.stage: crm.stage_opportunity1
+new xml-id of model crm.case.stage: crm.stage_opportunity2
+new xml-id of model crm.case.stage: crm.stage_opportunity3
+new xml-id of model crm.case.stage: crm.stage_opportunity4
+new xml-id of model crm.case.stage: crm.stage_opportunity5
+new xml-id of model crm.case.stage: crm.stage_opportunity6
+new xml-id of model ir.actions.act_window.view: crm.act_my_oppor_form_view
+new xml-id of model ir.actions.act_window.view: crm.act_my_oppor_tree_view
+new xml-id of model ir.actions.act_window.view: crm.action_crm_tag_calendar_meet
+new xml-id of model ir.actions.act_window.view: crm.action_crm_tag_calendar_meet_partner
+new xml-id of model ir.actions.act_window.view: crm.action_crm_tag_calendar_phone0
+new xml-id of model ir.actions.act_window.view: crm.action_crm_tag_calendar_phone_incoming0
+new xml-id of model ir.actions.act_window.view: crm.action_crm_tag_calendar_phone_outgoing0
+new xml-id of model ir.actions.act_window.view: crm.action_crm_tag_form__meet
+new xml-id of model ir.actions.act_window.view: crm.action_crm_tag_form_meet_partner
+new xml-id of model ir.actions.act_window.view: crm.action_crm_tag_form_phone0
+new xml-id of model ir.actions.act_window.view: crm.action_crm_tag_form_phone_incoming0
+new xml-id of model ir.actions.act_window.view: crm.action_crm_tag_form_phone_outgoing0
+new xml-id of model ir.actions.act_window.view: crm.action_crm_tag_form_view_leads_all
+new xml-id of model ir.actions.act_window.view: crm.action_crm_tag_form_view_oppor11
+new xml-id of model ir.actions.act_window.view: crm.action_crm_tag_gantt_meet
+new xml-id of model ir.actions.act_window.view: crm.action_crm_tag_gantt_meet_partner
+new xml-id of model ir.actions.act_window.view: crm.action_crm_tag_graph_view_oppor11
+new xml-id of model ir.actions.act_window.view: crm.action_crm_tag_tree_meet
+new xml-id of model ir.actions.act_window.view: crm.action_crm_tag_tree_meet_partner
+new xml-id of model ir.actions.act_window.view: crm.action_crm_tag_tree_phone0
+new xml-id of model ir.actions.act_window.view: crm.action_crm_tag_tree_phone_incoming0
+new xml-id of model ir.actions.act_window.view: crm.action_crm_tag_tree_phone_outgoing0
+new xml-id of model ir.actions.act_window.view: crm.action_crm_tag_tree_view_leads_all
+new xml-id of model ir.actions.act_window.view: crm.action_crm_tag_tree_view_oppor11
+new xml-id of model ir.actions.act_window.view: crm.action_report_crm_lead_graph
+new xml-id of model ir.actions.act_window.view: crm.action_report_crm_lead_tree
+new xml-id of model ir.actions.act_window.view: crm.action_report_crm_opportunity_graph
+new xml-id of model ir.actions.act_window.view: crm.action_report_crm_opportunity_tree
+new xml-id of model ir.actions.act_window.view: crm.action_report_crm_phonecall_graph
+new xml-id of model ir.actions.act_window.view: crm.action_report_crm_phonecall_tree
+new xml-id of model ir.actions.act_window: crm.act_crm_opportunity_crm_meeting_new
+new xml-id of model ir.actions.act_window: crm.act_crm_opportunity_crm_phonecall_new
+new xml-id of model ir.actions.act_window: crm.act_my_meetings
+new xml-id of model ir.actions.act_window: crm.act_my_oppor
+new xml-id of model ir.actions.act_window: crm.act_my_oppor_stage
+new xml-id of model ir.actions.act_window: crm.act_oppor_categ
+new xml-id of model ir.actions.act_window: crm.act_oppor_stage_user
+new xml-id of model ir.actions.act_window: crm.act_opportunity_stage
+new xml-id of model ir.actions.act_window: crm.act_sales_pipeline
+new xml-id of model ir.actions.act_window: crm.action_crm_add_note
+new xml-id of model ir.actions.act_window: crm.action_crm_installer
+new xml-id of model ir.actions.act_window: crm.action_crm_lead2opportunity
+new xml-id of model ir.actions.act_window: crm.action_crm_lead2partner
+new xml-id of model ir.actions.act_window: crm.action_crm_phonecall2partner
+new xml-id of model ir.actions.act_window: crm.action_crm_reply_mail
+new xml-id of model ir.actions.act_window: crm.action_crm_send_mail
+new xml-id of model ir.actions.act_window: crm.action_merge_opportunities
+new xml-id of model ir.actions.act_window: crm.action_report_crm_lead
+new xml-id of model ir.actions.act_window: crm.action_report_crm_opportunity
+new xml-id of model ir.actions.act_window: crm.action_report_crm_phonecall
+new xml-id of model ir.actions.act_window: crm.action_view_attendee_form
+new xml-id of model ir.actions.act_window: crm.action_view_crm_partner2opportunity
+new xml-id of model ir.actions.act_window: crm.crm_case_categ_meet
+new xml-id of model ir.actions.act_window: crm.crm_case_categ_meet_create_partner
+new xml-id of model ir.actions.act_window: crm.crm_case_categ_phone0
+new xml-id of model ir.actions.act_window: crm.crm_case_categ_phone_create_partner
+new xml-id of model ir.actions.act_window: crm.crm_case_categ_phone_incoming0
+new xml-id of model ir.actions.act_window: crm.crm_case_categ_phone_outgoing0
+new xml-id of model ir.actions.act_window: crm.crm_case_category_act_leads_all
+new xml-id of model ir.actions.act_window: crm.crm_case_category_act_oppor11
+new xml-id of model ir.actions.act_window: crm.crm_case_resource_type_act
+new xml-id of model ir.actions.act_window: crm.crm_case_stage_act
+new xml-id of model ir.actions.act_window: crm.crm_lead_categ_action
+new xml-id of model ir.actions.act_window: crm.crm_lead_stage_act
+new xml-id of model ir.actions.act_window: crm.crm_meeting_categ_action
+new xml-id of model ir.actions.act_window: crm.crm_opportunity_stage_act
+new xml-id of model ir.actions.act_window: crm.crm_partner2opportunity
+new xml-id of model ir.actions.act_window: crm.crm_phonecall_categ_action
+new xml-id of model ir.actions.act_window: crm.merge_opportunity_act
+new xml-id of model ir.actions.act_window: crm.open_board_crm
+new xml-id of model ir.actions.act_window: crm.open_board_statistical_dash
+new xml-id of model ir.actions.act_window: crm.opportunity2phonecall_act
+new xml-id of model ir.actions.act_window: crm.phonecall2opportunity_act
+new xml-id of model ir.actions.act_window: crm.phonecall_to_phonecall_act
+new xml-id of model ir.actions.todo: crm.crm_installer_todo
+new xml-id of model ir.model.access: access_crm_lead.all
+new xml-id of model ir.model.access: access_crm_phonecall.all
+new xml-id of model ir.model.access: crm.access_base_action_rule_manager
+new xml-id of model ir.model.access: crm.access_calendar_attendee_crm_manager
+new xml-id of model ir.model.access: crm.access_calendar_attendee_crm_user
+new xml-id of model ir.model.access: crm.access_crm_case_resource_type_manager
+new xml-id of model ir.model.access: crm.access_crm_case_resource_type_user
+new xml-id of model ir.model.access: crm.access_crm_case_section_user
+new xml-id of model ir.model.access: crm.access_crm_case_stage
+new xml-id of model ir.model.access: crm.access_crm_case_stage_manager
+new xml-id of model ir.model.access: crm.access_crm_lead
+new xml-id of model ir.model.access: crm.access_crm_lead_manager
+new xml-id of model ir.model.access: crm.access_crm_lead_partner_manager
+new xml-id of model ir.model.access: crm.access_crm_lead_report_manager
+new xml-id of model ir.model.access: crm.access_crm_lead_report_user
+new xml-id of model ir.model.access: crm.access_crm_meeting
+new xml-id of model ir.model.access: crm.access_crm_meeting_all
+new xml-id of model ir.model.access: crm.access_crm_meeting_manager
+new xml-id of model ir.model.access: crm.access_crm_meeting_partner_manager
+new xml-id of model ir.model.access: crm.access_crm_phonecall
+new xml-id of model ir.model.access: crm.access_crm_phonecall_manager
+new xml-id of model ir.model.access: crm.access_crm_phonecall_partner_manager
+new xml-id of model ir.model.access: crm.access_crm_phonecall_report_manager
+new xml-id of model ir.model.access: crm.access_crm_phonecall_report_user
+new xml-id of model ir.model.access: crm.access_crm_segmentation_line_user
+new xml-id of model ir.model.access: crm.access_crm_segmentation_user
+new xml-id of model ir.model.access: crm.access_res_partner
+new xml-id of model ir.model.access: crm.access_res_partner_address
+new xml-id of model ir.model.access: crm.access_res_partner_address_manager
+new xml-id of model ir.model.access: crm.access_res_partner_bank_type_crm_manager
+new xml-id of model ir.model.access: crm.access_res_partner_bank_type_crm_user
+new xml-id of model ir.model.access: crm.access_res_partner_canal_manager
+new xml-id of model ir.model.access: crm.access_res_partner_category
+new xml-id of model ir.model.access: crm.access_res_partner_category_manager
+new xml-id of model ir.model.access: crm.access_res_partner_manager
+new xml-id of model ir.model.access: crm.mail_gateway_mailgate_message_manager
+new xml-id of model ir.model.access: crm.mail_gateway_mailgate_message_user
+new xml-id of model ir.model.access: crm.mail_gateway_mailgate_thread
+new xml-id of model ir.model.access: crm.mail_gateway_mailgate_thread_manager
+new xml-id of model ir.rule: crm.crm_rule_all_lead
+new xml-id of model ir.rule: crm.crm_rule_personal_lead
+new xml-id of model ir.ui.menu: base.menu_base_config
+new xml-id of model ir.ui.menu: base.menu_base_partner
+new xml-id of model ir.ui.menu: base.menu_crm_config_lead
+new xml-id of model ir.ui.menu: base.menu_crm_config_opportunity
+new xml-id of model ir.ui.menu: base.menu_sale_config_sales
+new xml-id of model ir.ui.menu: base.menu_sales
+new xml-id of model ir.ui.menu: base.next_id_64
+new xml-id of model ir.ui.menu: board.menu_dasboard
+new xml-id of model ir.ui.menu: crm.menu_attendee_invitations
+new xml-id of model ir.ui.menu: crm.menu_board_crm
+new xml-id of model ir.ui.menu: crm.menu_board_statistics_dash
+new xml-id of model ir.ui.menu: crm.menu_crm_case_categ0_act_leads
+new xml-id of model ir.ui.menu: crm.menu_crm_case_categ_meet
+new xml-id of model ir.ui.menu: crm.menu_crm_case_meeting-act
+new xml-id of model ir.ui.menu: crm.menu_crm_case_opp
+new xml-id of model ir.ui.menu: crm.menu_crm_case_phone
+new xml-id of model ir.ui.menu: crm.menu_crm_case_phone_inbound
+new xml-id of model ir.ui.menu: crm.menu_crm_case_phone_outbound
+new xml-id of model ir.ui.menu: crm.menu_crm_case_phonecall-act
+new xml-id of model ir.ui.menu: crm.menu_crm_case_resource_type_act
+new xml-id of model ir.ui.menu: crm.menu_crm_config_phonecall
+new xml-id of model ir.ui.menu: crm.menu_crm_lead_categ
+new xml-id of model ir.ui.menu: crm.menu_crm_lead_stage_act
+new xml-id of model ir.ui.menu: crm.menu_crm_opportunity_stage_act
+new xml-id of model ir.ui.menu: crm.menu_meeting_sale
+new xml-id of model ir.ui.menu: crm.menu_report_crm_leads_tree
+new xml-id of model ir.ui.menu: crm.menu_report_crm_opportunities_tree
+new xml-id of model ir.ui.menu: crm.menu_report_crm_phonecalls_tree
+new xml-id of model ir.ui.view: crm.attendee_form_view_inherit
+new xml-id of model ir.ui.view: crm.board_crm_form
+new xml-id of model ir.ui.view: crm.board_crm_statistical_form
+new xml-id of model ir.ui.view: crm.crm_add_new_note_view
+new xml-id of model ir.ui.view: crm.crm_case_calendar_view_leads
+new xml-id of model ir.ui.view: crm.crm_case_calendar_view_meet
+new xml-id of model ir.ui.view: crm.crm_case_form_view_leads
+new xml-id of model ir.ui.view: crm.crm_case_form_view_meet
+new xml-id of model ir.ui.view: crm.crm_case_form_view_oppor
+new xml-id of model ir.ui.view: crm.crm_case_gantt_view_meet
+new xml-id of model ir.ui.view: crm.crm_case_graph_view_opportunity
+new xml-id of model ir.ui.view: crm.crm_case_inbound_phone_form_view
+new xml-id of model ir.ui.view: crm.crm_case_inbound_phone_tree_view
+new xml-id of model ir.ui.view: crm.crm_case_my_open_oppor
+new xml-id of model ir.ui.view: crm.crm_case_phone_calendar_view
+new xml-id of model ir.ui.view: crm.crm_case_phone_form_view
+new xml-id of model ir.ui.view: crm.crm_case_phone_tree_view
+new xml-id of model ir.ui.view: crm.crm_case_resource_type_form
+new xml-id of model ir.ui.view: crm.crm_case_resource_type_tree
+new xml-id of model ir.ui.view: crm.crm_case_stage_form
+new xml-id of model ir.ui.view: crm.crm_case_stage_tree
+new xml-id of model ir.ui.view: crm.crm_case_tree_view_leads
+new xml-id of model ir.ui.view: crm.crm_case_tree_view_meet
+new xml-id of model ir.ui.view: crm.crm_case_tree_view_oppor
+new xml-id of model ir.ui.view: crm.crm_reply_mail_view
+new xml-id of model ir.ui.view: crm.crm_send_new_mail_view
+new xml-id of model ir.ui.view: crm.merge_opportunity_form
+new xml-id of model ir.ui.view: crm.opportunity2phonecall_view
+new xml-id of model ir.ui.view: crm.phonecall2opportunity_view
+new xml-id of model ir.ui.view: crm.phonecall_to_phonecall_view
+new xml-id of model ir.ui.view: crm.view_base_action_rule_line_form1
+new xml-id of model ir.ui.view: crm.view_base_action_rule_line_form2
+new xml-id of model ir.ui.view: crm.view_base_action_rule_line_form3
+new xml-id of model ir.ui.view: crm.view_base_action_rule_line_form4
+new xml-id of model ir.ui.view: crm.view_crm_case_leads_filter
+new xml-id of model ir.ui.view: crm.view_crm_case_meetings_filter
+new xml-id of model ir.ui.view: crm.view_crm_case_opportunities_filter
+new xml-id of model ir.ui.view: crm.view_crm_case_phonecalls_filter
+new xml-id of model ir.ui.view: crm.view_crm_installer
+new xml-id of model ir.ui.view: crm.view_crm_lead2opportunity_action
+new xml-id of model ir.ui.view: crm.view_crm_lead2opportunity_create
+new xml-id of model ir.ui.view: crm.view_crm_lead2opportunity_partner
+new xml-id of model ir.ui.view: crm.view_crm_lead2partner
+new xml-id of model ir.ui.view: crm.view_crm_opportunity_categ_graph
+new xml-id of model ir.ui.view: crm.view_crm_opportunity_stage_graph
+new xml-id of model ir.ui.view: crm.view_crm_opportunity_user_graph1
+new xml-id of model ir.ui.view: crm.view_crm_opportunity_user_stage_graph
+new xml-id of model ir.ui.view: crm.view_crm_partner2opportunity
+new xml-id of model ir.ui.view: crm.view_crm_partner_info_form1
+new xml-id of model ir.ui.view: crm.view_crm_phonecall2partner
+new xml-id of model ir.ui.view: crm.view_crm_phonecall2partner_create
+new xml-id of model ir.ui.view: crm.view_partners_form_crm1
+new xml-id of model ir.ui.view: crm.view_partners_form_crm3
+new xml-id of model ir.ui.view: crm.view_partners_tree_crm2
+new xml-id of model ir.ui.view: crm.view_report_crm_lead_filter
+new xml-id of model ir.ui.view: crm.view_report_crm_lead_graph
+new xml-id of model ir.ui.view: crm.view_report_crm_lead_tree
+new xml-id of model ir.ui.view: crm.view_report_crm_oppor_graph
+new xml-id of model ir.ui.view: crm.view_report_crm_opportunity_graph
+new xml-id of model ir.ui.view: crm.view_report_crm_opportunity_tree
+new xml-id of model ir.ui.view: crm.view_report_crm_phonecall_filter
+new xml-id of model ir.ui.view: crm.view_report_crm_phonecall_graph
+new xml-id of model ir.ui.view: crm.view_report_crm_phonecall_tree
+new xml-id of model ir.ui.view: crm.view_users_form_simple_modif_inherited1
+new xml-id of model ir.ui.view: crm.view_users_form_simple_modif_inherited2
+new xml-id of model ir.ui.view_sc: crm.ir_ui_view_sc_calendar0
+new xml-id of model process.node: crm.process_node_leads0
+new xml-id of model process.node: crm.process_node_meeting0
+new xml-id of model process.node: crm.process_node_opportunities0
+new xml-id of model process.node: crm.process_node_partner0
+new xml-id of model process.process: crm.process_process_contractprocess0
+new xml-id of model process.transition: crm.process_transition_leadopportunity0
+new xml-id of model process.transition: crm.process_transition_leadpartner0
+new xml-id of model process.transition: crm.process_transition_opportunitymeeting0
+new xml-id of model res.groups: base.group_sale_manager
+new xml-id of model res.groups: base.group_sale_salesman
+new xml-id of model res.groups: base.group_sale_salesman_all_leads
+new xml-id of model res.request.link: crm.request_link_meeting

@@ -1,0 +1,108 @@
+---stock_planning---
+stock_planning / stock.period             / date_start (datetime)         : NEW required: required
+stock_planning / stock.period             / date_stop (datetime)          : NEW required: required
+stock_planning / stock.period             / name (char)                   : NEW required: required
+stock_planning / stock.period             / state (selection)             : NEW selection_keys: ['close', 'draft', 'open']
+stock_planning / stock.planning           / active_uom (many2one)         : NEW relation: product.uom
+stock_planning / stock.planning           / already_in (float)            : NEW 
+stock_planning / stock.planning           / already_out (float)           : NEW 
+stock_planning / stock.planning           / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+stock_planning / stock.planning           / confirmed_forecasts_only (boolean): NEW 
+stock_planning / stock.planning           / history (text)                : NEW 
+stock_planning / stock.planning           / incoming (float)              : NEW 
+stock_planning / stock.planning           / incoming_before (float)       : NEW 
+stock_planning / stock.planning           / incoming_left (float)         : NEW 
+stock_planning / stock.planning           / outgoing (float)              : NEW 
+stock_planning / stock.planning           / outgoing_before (float)       : NEW 
+stock_planning / stock.planning           / outgoing_left (float)         : NEW 
+stock_planning / stock.planning           / period_id (many2one)          : NEW relation: stock.period, required: required
+stock_planning / stock.planning           / planned_outgoing (float)      : NEW required: required, req_default: 0.0
+stock_planning / stock.planning           / procure_to_stock (boolean)    : NEW 
+stock_planning / stock.planning           / product_id (many2one)         : NEW relation: product.product, required: required
+stock_planning / stock.planning           / product_uom (many2one)        : NEW relation: product.uom, required: required
+stock_planning / stock.planning           / product_uom_categ (many2one)  : NEW relation: product.uom.categ
+stock_planning / stock.planning           / product_uos_categ (many2one)  : NEW relation: product.uom.categ
+stock_planning / stock.planning           / state (selection)             : NEW selection_keys: ['done', 'draft']
+stock_planning / stock.planning           / stock_only (boolean)          : NEW 
+stock_planning / stock.planning           / stock_simulation (float)      : NEW 
+stock_planning / stock.planning           / stock_start (float)           : NEW 
+stock_planning / stock.planning           / stock_supply_location (boolean): NEW 
+stock_planning / stock.planning           / supply_warehouse_id (many2one): NEW relation: stock.warehouse
+stock_planning / stock.planning           / to_procure (float)            : NEW required: required, req_default: 0.0
+stock_planning / stock.planning           / warehouse_id (many2one)       : NEW relation: stock.warehouse, required: required
+stock_planning / stock.sale.forecast      / active_uom (many2one)         : NEW relation: product.uom
+stock_planning / stock.sale.forecast      / analyze_company (boolean)     : NEW 
+stock_planning / stock.sale.forecast      / analyzed_dept_id (many2one)   : NEW relation: hr.department
+stock_planning / stock.sale.forecast      / analyzed_period1_id (many2one): NEW relation: stock.period
+stock_planning / stock.sale.forecast      / analyzed_period1_per_company (float): NEW 
+stock_planning / stock.sale.forecast      / analyzed_period1_per_dept (float): NEW 
+stock_planning / stock.sale.forecast      / analyzed_period1_per_user (float): NEW 
+stock_planning / stock.sale.forecast      / analyzed_period1_per_warehouse (float): NEW 
+stock_planning / stock.sale.forecast      / analyzed_period2_id (many2one): NEW relation: stock.period
+stock_planning / stock.sale.forecast      / analyzed_period2_per_company (float): NEW 
+stock_planning / stock.sale.forecast      / analyzed_period2_per_dept (float): NEW 
+stock_planning / stock.sale.forecast      / analyzed_period2_per_user (float): NEW 
+stock_planning / stock.sale.forecast      / analyzed_period2_per_warehouse (float): NEW 
+stock_planning / stock.sale.forecast      / analyzed_period3_id (many2one): NEW relation: stock.period
+stock_planning / stock.sale.forecast      / analyzed_period3_per_company (float): NEW 
+stock_planning / stock.sale.forecast      / analyzed_period3_per_dept (float): NEW 
+stock_planning / stock.sale.forecast      / analyzed_period3_per_user (float): NEW 
+stock_planning / stock.sale.forecast      / analyzed_period3_per_warehouse (float): NEW 
+stock_planning / stock.sale.forecast      / analyzed_period4_id (many2one): NEW relation: stock.period
+stock_planning / stock.sale.forecast      / analyzed_period4_per_company (float): NEW 
+stock_planning / stock.sale.forecast      / analyzed_period4_per_dept (float): NEW 
+stock_planning / stock.sale.forecast      / analyzed_period4_per_user (float): NEW 
+stock_planning / stock.sale.forecast      / analyzed_period4_per_warehouse (float): NEW 
+stock_planning / stock.sale.forecast      / analyzed_period5_id (many2one): NEW relation: stock.period
+stock_planning / stock.sale.forecast      / analyzed_period5_per_company (float): NEW 
+stock_planning / stock.sale.forecast      / analyzed_period5_per_dept (float): NEW 
+stock_planning / stock.sale.forecast      / analyzed_period5_per_user (float): NEW 
+stock_planning / stock.sale.forecast      / analyzed_period5_per_warehouse (float): NEW 
+stock_planning / stock.sale.forecast      / analyzed_user_id (many2one)   : NEW relation: res.users
+stock_planning / stock.sale.forecast      / analyzed_warehouse_id (many2one): NEW relation: stock.warehouse
+stock_planning / stock.sale.forecast      / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+stock_planning / stock.sale.forecast      / create_uid (many2one)         : NEW relation: res.users
+stock_planning / stock.sale.forecast      / name (char)                   : NEW 
+stock_planning / stock.sale.forecast      / period_id (many2one)          : NEW relation: stock.period, required: required
+stock_planning / stock.sale.forecast      / product_amt (float)           : NEW 
+stock_planning / stock.sale.forecast      / product_id (many2one)         : NEW relation: product.product, required: required
+stock_planning / stock.sale.forecast      / product_qty (float)           : NEW required: required
+stock_planning / stock.sale.forecast      / product_uom (many2one)        : NEW relation: product.uom, required: required
+stock_planning / stock.sale.forecast      / product_uom_categ (many2one)  : NEW relation: product.uom.categ
+stock_planning / stock.sale.forecast      / product_uos_categ (many2one)  : NEW relation: product.uom.categ
+stock_planning / stock.sale.forecast      / state (selection)             : NEW selection_keys: ['draft', 'validated']
+stock_planning / stock.sale.forecast      / user_id (many2one)            : NEW relation: res.users
+stock_planning / stock.sale.forecast      / warehouse_id (many2one)       : NEW relation: stock.warehouse, required: required
+new xml-id of model ir.actions.act_window: stock_planning.action_stock_period_createlines_form
+new xml-id of model ir.actions.act_window: stock_planning.action_stock_period_form
+new xml-id of model ir.actions.act_window: stock_planning.action_stock_planning_createlines_form
+new xml-id of model ir.actions.act_window: stock_planning.action_stock_sale_forecast_createlines_form
+new xml-id of model ir.actions.act_window: stock_planning.action_view_stock_planning_form
+new xml-id of model ir.actions.act_window: stock_planning.action_view_stock_sale_forecast_form
+new xml-id of model ir.model.access: stock_planning.access_stock_period_manager
+new xml-id of model ir.model.access: stock_planning.access_stock_planning_manager
+new xml-id of model ir.model.access: stock_planning.access_stock_planning_user
+new xml-id of model ir.model.access: stock_planning.access_stock_sale_forecast_manager
+new xml-id of model ir.model.access: stock_planning.access_stock_sale_forecast_user
+new xml-id of model ir.ui.menu: stock_planning.menu_stock_period
+new xml-id of model ir.ui.menu: stock_planning.menu_stock_period_creatlines
+new xml-id of model ir.ui.menu: stock_planning.menu_stock_period_main
+new xml-id of model ir.ui.menu: stock_planning.menu_stock_planning
+new xml-id of model ir.ui.menu: stock_planning.menu_stock_planning_createlines
+new xml-id of model ir.ui.menu: stock_planning.menu_stock_planning_main
+new xml-id of model ir.ui.menu: stock_planning.menu_stock_sale_forecast
+new xml-id of model ir.ui.menu: stock_planning.menu_stock_sale_forecast_all
+new xml-id of model ir.ui.menu: stock_planning.menu_stock_sale_forecast_createlines
+new xml-id of model ir.ui.view: stock_planning.view_stock_period_createlines_form
+new xml-id of model ir.ui.view: stock_planning.view_stock_period_form
+new xml-id of model ir.ui.view: stock_planning.view_stock_period_search
+new xml-id of model ir.ui.view: stock_planning.view_stock_period_tree
+new xml-id of model ir.ui.view: stock_planning.view_stock_planning_createlines_form
+new xml-id of model ir.ui.view: stock_planning.view_stock_planning_filter
+new xml-id of model ir.ui.view: stock_planning.view_stock_planning_form
+new xml-id of model ir.ui.view: stock_planning.view_stock_planning_tree
+new xml-id of model ir.ui.view: stock_planning.view_stock_sale_forecast_createlines_form
+new xml-id of model ir.ui.view: stock_planning.view_stock_sale_forecast_filter
+new xml-id of model ir.ui.view: stock_planning.view_stock_sale_forecast_form
+new xml-id of model ir.ui.view: stock_planning.view_stock_sale_forecast_graph
+new xml-id of model ir.ui.view: stock_planning.view_stock_sale_forecast_tree

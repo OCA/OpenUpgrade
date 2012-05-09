@@ -1,0 +1,11 @@
+---product_expiry---
+product_expiry / product.product          / alert_time (integer)          : NEW 
+product_expiry / product.product          / life_time (integer)           : NEW 
+product_expiry / product.product          / removal_time (integer)        : NEW 
+product_expiry / product.product          / use_time (integer)            : NEW 
+product_expiry / stock.production.lot     / alert_date (datetime)         : NEW 
+product_expiry / stock.production.lot     / life_date (datetime)          : NEW 
+product_expiry / stock.production.lot     / removal_date (datetime)       : NEW 
+product_expiry / stock.production.lot     / use_date (datetime)           : NEW 
+new xml-id of model ir.ui.view: product_expiry.view_move_form_expiry
+new xml-id of model ir.ui.view: product_expiry.view_product_form_expiry

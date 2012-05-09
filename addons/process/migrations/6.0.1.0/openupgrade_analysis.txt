@@ -1,0 +1,11 @@
+---process---
+process      / process.transition       / group_ids (many2many)         : NEW relation: res.groups
+process      / process.transition       / role_ids (many2many)          : DEL relation: res.roles
+deleted xml-id of model ir.model.access: process.access_process_condition_manager
+deleted xml-id of model ir.model.access: process.access_process_node_manager
+deleted xml-id of model ir.model.access: process.access_process_process_manager
+deleted xml-id of model ir.model.access: process.access_process_transition_action_manager
+deleted xml-id of model ir.model.access: process.access_process_transition_manager
+new xml-id of model ir.ui.view: process.view_process_filter
+new xml-id of model ir.ui.view: process.view_process_node_filter
+new xml-id of model ir.ui.view: process.view_process_transition_filter

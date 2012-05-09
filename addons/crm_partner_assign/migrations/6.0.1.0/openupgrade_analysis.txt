@@ -1,0 +1,65 @@
+---crm_partner_assign---
+crm_partner_assign / crm.lead                 / date_assign (date)            : NEW 
+crm_partner_assign / crm.lead                 / partner_assigned_id (many2one): NEW relation: res.partner
+crm_partner_assign / crm.lead                 / partner_latitude (float)      : NEW 
+crm_partner_assign / crm.lead                 / partner_longitude (float)     : NEW 
+crm_partner_assign / crm.lead.report.assign   / categ_id (many2one)           : NEW relation: crm.case.categ
+crm_partner_assign / crm.lead.report.assign   / company_id (many2one)         : NEW relation: res.company
+crm_partner_assign / crm.lead.report.assign   / country_id (many2one)         : NEW relation: res.country
+crm_partner_assign / crm.lead.report.assign   / create_date (datetime)        : NEW 
+crm_partner_assign / crm.lead.report.assign   / creation_date (date)          : NEW 
+crm_partner_assign / crm.lead.report.assign   / date_closed (date)            : NEW 
+crm_partner_assign / crm.lead.report.assign   / day (char)                    : NEW 
+crm_partner_assign / crm.lead.report.assign   / delay_close (float)           : NEW 
+crm_partner_assign / crm.lead.report.assign   / delay_expected (float)        : NEW 
+crm_partner_assign / crm.lead.report.assign   / delay_open (float)            : NEW 
+crm_partner_assign / crm.lead.report.assign   / grade_id (many2one)           : NEW relation: res.partner.grade
+crm_partner_assign / crm.lead.report.assign   / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+crm_partner_assign / crm.lead.report.assign   / name (char)                   : NEW 
+crm_partner_assign / crm.lead.report.assign   / nbr (integer)                 : NEW 
+crm_partner_assign / crm.lead.report.assign   / opening_date (date)           : NEW 
+crm_partner_assign / crm.lead.report.assign   / partner_assigned_id (many2one): NEW relation: res.partner
+crm_partner_assign / crm.lead.report.assign   / partner_date (date)           : NEW 
+crm_partner_assign / crm.lead.report.assign   / partner_id (many2one)         : NEW relation: res.partner
+crm_partner_assign / crm.lead.report.assign   / planned_revenue (float)       : NEW 
+crm_partner_assign / crm.lead.report.assign   / priority (selection)          : NEW selection_keys: ['1', '2', '3', '4', '5']
+crm_partner_assign / crm.lead.report.assign   / probability (float)           : NEW 
+crm_partner_assign / crm.lead.report.assign   / probability_max (float)       : NEW 
+crm_partner_assign / crm.lead.report.assign   / probable_revenue (float)      : NEW 
+crm_partner_assign / crm.lead.report.assign   / section_id (many2one)         : NEW relation: crm.case.section
+crm_partner_assign / crm.lead.report.assign   / stage_id (many2one)           : NEW relation: crm.case.stage
+crm_partner_assign / crm.lead.report.assign   / state (selection)             : NEW selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
+crm_partner_assign / crm.lead.report.assign   / type (selection)              : NEW selection_keys: ['lead', 'opportunity']
+crm_partner_assign / crm.lead.report.assign   / user_id (many2one)            : NEW relation: res.users
+crm_partner_assign / res.partner              / date_localization (date)      : NEW 
+crm_partner_assign / res.partner              / grade_id (many2one)           : NEW relation: res.partner.grade
+crm_partner_assign / res.partner              / opportunity_assigned_ids (one2many): NEW relation: crm.lead
+crm_partner_assign / res.partner              / partner_latitude (float)      : NEW 
+crm_partner_assign / res.partner              / partner_longitude (float)     : NEW 
+crm_partner_assign / res.partner              / partner_weight (integer)      : NEW 
+crm_partner_assign / res.partner.grade        / active (boolean)              : NEW 
+crm_partner_assign / res.partner.grade        / name (char)                   : NEW 
+crm_partner_assign / res.partner.grade        / sequence (integer)            : NEW 
+new xml-id of model ir.actions.act_window.view: crm_partner_assign.action_report_crm_lead_assign_graph
+new xml-id of model ir.actions.act_window.view: crm_partner_assign.action_report_crm_opportunity_assign_tree
+new xml-id of model ir.actions.act_window: crm_partner_assign.action_report_crm_opportunity_assign
+new xml-id of model ir.actions.act_window: crm_partner_assign.crm_lead_forward_to_partner_act
+new xml-id of model ir.actions.act_window: crm_partner_assign.res_partner_grade_action
+new xml-id of model ir.model.access: crm_partner_assign.access_ crm_lead_report_assign
+new xml-id of model ir.model.access: crm_partner_assign.access_ crm_lead_report_assign_all
+new xml-id of model ir.model.access: crm_partner_assign.access_res_partner_grade
+new xml-id of model ir.model.access: crm_partner_assign.access_res_partner_grade_manager
+new xml-id of model ir.ui.menu: crm_partner_assign.menu_report_crm_opportunities_assign_tree
+new xml-id of model ir.ui.menu: crm_partner_assign.menu_res_partner_grade_action
+new xml-id of model ir.ui.view: crm_partner_assign.crm_lead_forward_to_partner_form
+new xml-id of model ir.ui.view: crm_partner_assign.crm_lead_forward_to_partner_form1
+new xml-id of model ir.ui.view: crm_partner_assign.view_crm_opportunity_geo_assign_form
+new xml-id of model ir.ui.view: crm_partner_assign.view_crm_opportunity_geo_assign_tree
+new xml-id of model ir.ui.view: crm_partner_assign.view_crm_partner_geo_form
+new xml-id of model ir.ui.view: crm_partner_assign.view_partner_grade_form
+new xml-id of model ir.ui.view: crm_partner_assign.view_partner_grade_tree
+new xml-id of model ir.ui.view: crm_partner_assign.view_report_crm_lead_assign_filter
+new xml-id of model ir.ui.view: crm_partner_assign.view_report_crm_lead_assign_graph
+new xml-id of model ir.ui.view: crm_partner_assign.view_report_crm_opportunity_assign_tree
+new xml-id of model ir.ui.view: crm_partner_assign.view_res_partner_filter_assign
+new xml-id of model ir.ui.view: crm_partner_assign.view_res_partner_filter_assign_tree

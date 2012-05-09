@@ -1,0 +1,51 @@
+---base_synchro---
+base_synchro / base.synchro.obj         / action (selection)            : NEW required: required, selection_keys: ['b', 'd', 'u'], req_default: function
+base_synchro / base.synchro.obj         / active (boolean)              : NEW 
+base_synchro / base.synchro.obj         / avoid_ids (one2many)          : NEW relation: base.synchro.obj.avoid
+base_synchro / base.synchro.obj         / domain (char)                 : NEW required: required, req_default: function
+base_synchro / base.synchro.obj         / line_id (one2many)            : NEW relation: base.synchro.obj.line
+base_synchro / base.synchro.obj         / model_id (many2one)           : NEW relation: ir.model, required: required
+base_synchro / base.synchro.obj         / name (char)                   : NEW required: required
+base_synchro / base.synchro.obj         / sequence (integer)            : NEW 
+base_synchro / base.synchro.obj         / server_id (many2one)          : NEW relation: base.synchro.server, required: required
+base_synchro / base.synchro.obj         / synchronize_date (datetime)   : NEW 
+base_synchro / base.synchro.obj.avoid   / name (char)                   : NEW required: required
+base_synchro / base.synchro.obj.avoid   / obj_id (many2one)             : NEW relation: base.synchro.obj, required: required
+base_synchro / base.synchro.obj.line    / local_id (integer)            : NEW 
+base_synchro / base.synchro.obj.line    / name (datetime)               : NEW required: required, req_default: function
+base_synchro / base.synchro.obj.line    / obj_id (many2one)             : NEW relation: base.synchro.obj
+base_synchro / base.synchro.obj.line    / remote_id (integer)           : NEW 
+base_synchro / base.synchro.server      / login (char)                  : NEW required: required
+base_synchro / base.synchro.server      / name (char)                   : NEW required: required
+base_synchro / base.synchro.server      / obj_ids (one2many)            : NEW relation: base.synchro.obj
+base_synchro / base.synchro.server      / password (char)               : NEW required: required
+base_synchro / base.synchro.server      / server_db (char)              : NEW required: required
+base_synchro / base.synchro.server      / server_port (integer)         : NEW required: required, req_default: function
+base_synchro / base.synchro.server      / server_url (char)             : NEW required: required
+new xml-id of model ir.actions.act_window: base_synchro.action_base_synchro_obj_line_tree
+new xml-id of model ir.actions.act_window: base_synchro.action_base_synchro_server_tree
+new xml-id of model ir.actions.act_window: base_synchro.action_transfer_tree
+new xml-id of model ir.actions.act_window: base_synchro.action_view_base_synchro
+new xml-id of model ir.actions.act_window: base_synchro.actions_regclass_tree
+new xml-id of model ir.actions.act_window: base_synchro.actions_transfer_line_form
+new xml-id of model ir.model.access: base_synchro. base_synchro_obj
+new xml-id of model ir.model.access: base_synchro.base_synchro_obj_avoid
+new xml-id of model ir.model.access: base_synchro.base_synchro_obj_line
+new xml-id of model ir.model.access: base_synchro.base_synchro_server
+new xml-id of model ir.ui.menu: base_synchro.menu_action_base_synchro_obj_line_tree
+new xml-id of model ir.ui.menu: base_synchro.menu_action_view_base_synchro
+new xml-id of model ir.ui.menu: base_synchro.next_id_62
+new xml-id of model ir.ui.menu: base_synchro.next_id_63
+new xml-id of model ir.ui.menu: base_synchro.synch_config
+new xml-id of model ir.ui.menu: base_synchro.synchro_server_tree_menu_id
+new xml-id of model ir.ui.menu: base_synchro.transfer_menu_id
+new xml-id of model ir.ui.view: base_synchro.ir_filters_regclass_tree
+new xml-id of model ir.ui.view: base_synchro.ir_filters_transfer_line_form
+new xml-id of model ir.ui.view: base_synchro.view_base_synchro
+new xml-id of model ir.ui.view: base_synchro.view_base_synchro_finish
+new xml-id of model ir.ui.view: base_synchro.view_base_synchro_server_form
+new xml-id of model ir.ui.view: base_synchro.view_base_synchro_server_tree
+new xml-id of model ir.ui.view: base_synchro.view_regclass_tree
+new xml-id of model ir.ui.view: base_synchro.view_transfer_form
+new xml-id of model ir.ui.view: base_synchro.view_transfer_line_form
+new xml-id of model ir.ui.view: base_synchro.view_transfer_line_tree

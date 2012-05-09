@@ -1,0 +1,108 @@
+---document---
+document     / document.directory       / company_id (many2one)         : NEW relation: res.company
+document     / document.directory       / dctx_ids (one2many)           : NEW relation: document.directory.dctx
+document     / document.directory       / file_type (char)              : DEL 
+document     / document.directory       / resource_field (many2one)     : NEW relation: ir.model.fields
+document     / document.directory       / resource_find_all (boolean)   : NEW required: required, req_default: True
+document     / document.directory       / storage_id (many2one)         : NEW relation: document.storage
+document     / document.directory.content / prefix (char)                 : NEW 
+document     / document.directory.content.type / mimetype (char)               : NEW 
+document     / document.directory.dctx  / dir_id (many2one)             : NEW relation: document.directory, required: required
+document     / document.directory.dctx  / expr (char)                   : NEW required: required
+document     / document.directory.dctx  / field (char)                  : NEW required: required
+document     / document.storage         / create_date (datetime)        : NEW 
+document     / document.storage         / create_uid (many2one)         : NEW relation: res.users
+document     / document.storage         / dir_ids (one2many)            : NEW relation: document.directory
+document     / document.storage         / group_ids (many2many)         : NEW relation: res.groups
+document     / document.storage         / name (char)                   : NEW required: required
+document     / document.storage         / online (boolean)              : NEW required: required, req_default: function
+document     / document.storage         / path (char)                   : NEW 
+document     / document.storage         / readonly (boolean)            : NEW 
+document     / document.storage         / type (selection)              : NEW required: required, selection_keys: ['db', 'filestore', 'realstore'], req_default: function
+document     / document.storage         / user_id (many2one)            : NEW relation: res.users
+document     / document.storage         / write_date (datetime)         : NEW 
+document     / document.storage         / write_uid (many2one)          : NEW relation: res.users
+document     / ir.attachment            / db_datas (binary)             : NEW 
+document     / ir.attachment            / group_ids (many2many)         : DEL relation: res.groups
+document     / ir.attachment            / parent_id (many2one)          : now required, default = function
+document     / ir.attachment            / store_method (selection)      : DEL selection_keys: ['db', 'fs', 'link']
+document     / ir.attachment            / title (char)                  : DEL 
+document     / report.document.user     / datas_fname (char)            : NEW 
+document     / report.files.partner     / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+deleted xml-id of model ir.actions.url: document.action_document_browse
+deleted xml-id of model ir.actions.wizard: document.wizard_document_browse
+deleted xml-id of model ir.model.access: document.access_document_configuation_wizard
+deleted xml-id of model ir.model.access: document.access_document_configuation_wizard_sytem
+deleted xml-id of model ir.ui.menu: document.menu_document
+deleted xml-id of model ir.ui.menu: document.menu_document_browse
+deleted xml-id of model ir.ui.menu: document.menu_document_configuration
+deleted xml-id of model res.groups: document.group_document_manager
+new xml-id of model board.note.type: document.note_document_type
+new xml-id of model document.storage: document.storage_default
+new xml-id of model ir.actions.act_window.view: document.action_dir_view1
+new xml-id of model ir.actions.act_window.view: document.action_dir_view2
+new xml-id of model ir.actions.act_window: document.act_res_partner_document
+new xml-id of model ir.actions.act_window: document.action_document_storage_form
+new xml-id of model ir.actions.act_window: document.action_view_all_document_tree1
+new xml-id of model ir.actions.act_window: document.action_view_document_by_resourcetype_graph
+new xml-id of model ir.actions.act_window: document.action_view_files_by_month_graph
+new xml-id of model ir.actions.act_window: document.action_view_files_by_partner
+new xml-id of model ir.actions.act_window: document.action_view_size_month
+new xml-id of model ir.actions.act_window: document.action_view_user_graph
+new xml-id of model ir.actions.act_window: document.action_view_wall
+new xml-id of model ir.actions.act_window: document.open_board_document_manager
+new xml-id of model ir.actions.act_window: document.open_board_document_manager1
+new xml-id of model ir.actions.act_window: document.zoom_directory
+new xml-id of model ir.model.access: document.access_document_directory_dctx_all
+new xml-id of model ir.model.access: document.access_document_directory_dctx_group_document_manager
+new xml-id of model ir.model.access: document.access_document_directory_dctx_group_system
+new xml-id of model ir.model.access: document.access_document_directory_group_knowledge
+new xml-id of model ir.model.access: document.access_document_storage_group_document_manager
+new xml-id of model ir.model.access: document.access_document_storage_group_system
+new xml-id of model ir.model.access: document.access_document_storage_group_user
+new xml-id of model ir.model.access: document.access_ir_attachment_group_system
+new xml-id of model ir.model.access: document.access_ir_attachment_group_user
+new xml-id of model ir.model.access: document.access_report_document_file_group_document_manager
+new xml-id of model ir.model.access: document.access_report_document_file_group_system
+new xml-id of model ir.model.access: document.access_report_document_user_group_document_manager
+new xml-id of model ir.model.access: document.access_report_document_user_group_system
+new xml-id of model ir.model.access: document.access_report_document_user_knowledgeuser
+new xml-id of model ir.model.access: document.access_report_document_wall_group_document_manager
+new xml-id of model ir.model.access: document.access_report_document_wall_group_system
+new xml-id of model ir.model.access: document.access_report_files_partner_group_document_manager
+new xml-id of model ir.model.access: document.access_report_files_partner_group_system
+new xml-id of model ir.model.access: document.access_res_partner_group_user
+new xml-id of model ir.rule: document.ir_rule_documentmodifyowndirectories0
+new xml-id of model ir.rule: document.ir_rule_readpublicdirectories0
+new xml-id of model ir.ui.menu: document.menu_document_doc
+new xml-id of model ir.ui.menu: document.menu_document_management_configuration
+new xml-id of model ir.ui.menu: document.menu_document_storage_media
+new xml-id of model ir.ui.menu: document.menu_reporting
+new xml-id of model ir.ui.menu: document.menu_reports_document
+new xml-id of model ir.ui.menu: document.menu_reports_document_manager
+new xml-id of model ir.ui.menu: document.menu_reports_document_manager1
+new xml-id of model ir.ui.menu: knowledge.menu_document
+new xml-id of model ir.ui.menu: knowledge.menu_document_configuration
+new xml-id of model ir.ui.view: document.board_document_manager_form
+new xml-id of model ir.ui.view: document.board_document_manager_form1
+new xml-id of model ir.ui.view: document.view_attach_filter_inherit0
+new xml-id of model ir.ui.view: document.view_attach_filter_inherit2
+new xml-id of model ir.ui.view: document.view_document_by_resourcetype_graph
+new xml-id of model ir.ui.view: document.view_document_directory_filter
+new xml-id of model ir.ui.view: document.view_document_storage_filter
+new xml-id of model ir.ui.view: document.view_document_storage_form
+new xml-id of model ir.ui.view: document.view_document_storage_tree
+new xml-id of model ir.ui.view: document.view_document_user_form
+new xml-id of model ir.ui.view: document.view_document_user_tree
+new xml-id of model ir.ui.view: document.view_document_wall_form
+new xml-id of model ir.ui.view: document.view_document_wall_tree
+new xml-id of model ir.ui.view: document.view_files_by_month_graph
+new xml-id of model ir.ui.view: document.view_files_by_month_tree
+new xml-id of model ir.ui.view: document.view_files_by_partner_form
+new xml-id of model ir.ui.view: document.view_files_by_partner_graph
+new xml-id of model ir.ui.view: document.view_files_by_partner_tree
+new xml-id of model ir.ui.view: document.view_report_document_user_search
+new xml-id of model ir.ui.view: document.view_size_month
+new xml-id of model ir.ui.view: document.view_size_month_tree
+new xml-id of model ir.ui.view: document.view_user_graph
+new xml-id of model res.groups: base.group_document_user

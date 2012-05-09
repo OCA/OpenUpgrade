@@ -1,0 +1,38 @@
+---account_budget---
+account_budget / account.budget.post      / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+account_budget / account.budget.post      / dotation_ids (one2many)       : DEL relation: account.budget.post.dotation
+account_budget / crossovered.budget       / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+deleted xml-id of model ir.actions.report.xml: account_budget.account_analytic_account_budget
+deleted xml-id of model ir.actions.wizard: account_budget.account_analytic_account_budget_report
+deleted xml-id of model ir.actions.wizard: account_budget.wizard_budget_report
+deleted xml-id of model ir.actions.wizard: account_budget.wizard_budget_spread
+deleted xml-id of model ir.actions.wizard: account_budget.wizard_crossovered_budget_menu
+deleted xml-id of model ir.actions.wizard: account_budget.wizard_crossovered_budget_menu_1
+deleted xml-id of model ir.model.access: account_budget.access_account_budget_post_dotation
+deleted xml-id of model ir.ui.view: account_budget.view_account_analytic_account_form_inherit_cci
+deleted xml-id of model ir.ui.view: account_budget.view_budget_post_dotation_form
+deleted xml-id of model ir.ui.view: account_budget.view_budget_post_dotation_tree
+deleted xml-id of model res.roles: account_budget.crossovered_budget_role
+new xml-id of model ir.actions.act_window: account_budget.action_account_budget_analytic
+new xml-id of model ir.actions.act_window: account_budget.action_account_budget_crossvered_report
+new xml-id of model ir.actions.act_window: account_budget.action_account_budget_crossvered_summary_report
+new xml-id of model ir.actions.act_window: account_budget.action_account_budget_report
+new xml-id of model ir.model.access: account_budget.access_account_budget_post_accountant
+new xml-id of model ir.model.access: account_budget.access_crossovered_budget_accountant
+new xml-id of model ir.model.access: account_budget.access_crossovered_budget_lines_accountant
+new xml-id of model ir.rule: account_budget.budget_comp_rule
+new xml-id of model ir.rule: account_budget.budget_lines_comp_rule
+new xml-id of model ir.rule: account_budget.budget_post_comp_rule
+new xml-id of model ir.ui.menu: account_budget.next_id_pos
+new xml-id of model ir.ui.view: account_budget.account_budget_analytic_view
+new xml-id of model ir.ui.view: account_budget.account_budget_crossvered_report_view
+new xml-id of model ir.ui.view: account_budget.account_budget_crossvered_summary_report_view
+new xml-id of model ir.ui.view: account_budget.account_budget_report_view
+new xml-id of model ir.ui.view: account_budget.view_account_analytic_account_form_inherit_budget
+new xml-id of model ir.ui.view: account_budget.view_budget_post_search
+new xml-id of model ir.ui.view: account_budget.view_crossovered_budget_search
+new xml-id of model ir.values: account_budget.account_budget_analytic_values
+new xml-id of model ir.values: account_budget.account_budget_crossvered_report_values
+new xml-id of model ir.values: account_budget.account_budget_crossvered_summary_report_values
+new xml-id of model ir.values: account_budget.account_budget_report_values
+new xml-id of model workflow.transition: account_budget.t6

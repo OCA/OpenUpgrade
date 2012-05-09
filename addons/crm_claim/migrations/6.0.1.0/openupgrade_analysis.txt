@@ -1,0 +1,86 @@
+---crm_claim---
+crm_claim    / crm.claim                / action_next (char)            : NEW 
+crm_claim    / crm.claim                / categ_id (many2one)           : NEW relation: crm.case.categ
+crm_claim    / crm.claim                / cause (text)                  : NEW 
+crm_claim    / crm.claim                / company_id (many2one)         : NEW relation: res.company
+crm_claim    / crm.claim                / create_date (datetime)        : NEW 
+crm_claim    / crm.claim                / date (datetime)               : NEW 
+crm_claim    / crm.claim                / date_action_next (datetime)   : NEW 
+crm_claim    / crm.claim                / date_closed (datetime)        : NEW 
+crm_claim    / crm.claim                / date_deadline (date)          : NEW 
+crm_claim    / crm.claim                / description (text)            : NEW 
+crm_claim    / crm.claim                / email_cc (text)               : NEW 
+crm_claim    / crm.claim                / email_from (char)             : NEW 
+crm_claim    / crm.claim                / id (integer)                  : NEW 
+crm_claim    / crm.claim                / message_ids (one2many)        : NEW relation: mailgate.message
+crm_claim    / crm.claim                / name (char)                   : NEW required: required
+crm_claim    / crm.claim                / partner_address_id (many2one) : NEW relation: res.partner.address
+crm_claim    / crm.claim                / partner_id (many2one)         : NEW relation: res.partner
+crm_claim    / crm.claim                / partner_phone (char)          : NEW 
+crm_claim    / crm.claim                / priority (selection)          : NEW selection_keys: ['1', '2', '3', '4', '5']
+crm_claim    / crm.claim                / ref (reference)               : NEW 
+crm_claim    / crm.claim                / resolution (text)             : NEW 
+crm_claim    / crm.claim                / section_id (many2one)         : NEW relation: crm.case.section
+crm_claim    / crm.claim                / stage_id (many2one)           : NEW relation: crm.case.stage
+crm_claim    / crm.claim                / state (selection)             : NEW selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
+crm_claim    / crm.claim                / type_action (selection)       : NEW selection_keys: ['correction', 'prevention']
+crm_claim    / crm.claim                / user_fault (char)             : NEW 
+crm_claim    / crm.claim                / user_id (many2one)            : NEW relation: res.users
+crm_claim    / crm.claim                / write_date (datetime)         : NEW 
+crm_claim    / crm.claim.report         / categ_id (many2one)           : NEW relation: crm.case.categ
+crm_claim    / crm.claim.report         / company_id (many2one)         : NEW relation: res.company
+crm_claim    / crm.claim.report         / create_date (datetime)        : NEW 
+crm_claim    / crm.claim.report         / date_closed (date)            : NEW 
+crm_claim    / crm.claim.report         / date_deadline (date)          : NEW 
+crm_claim    / crm.claim.report         / day (char)                    : NEW 
+crm_claim    / crm.claim.report         / delay_close (float)           : NEW 
+crm_claim    / crm.claim.report         / delay_expected (float)        : NEW 
+crm_claim    / crm.claim.report         / email (integer)               : NEW 
+crm_claim    / crm.claim.report         / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+crm_claim    / crm.claim.report         / name (char)                   : NEW 
+crm_claim    / crm.claim.report         / nbr (integer)                 : NEW 
+crm_claim    / crm.claim.report         / partner_id (many2one)         : NEW relation: res.partner
+crm_claim    / crm.claim.report         / priority (selection)          : NEW selection_keys: ['1', '2', '3', '4', '5']
+crm_claim    / crm.claim.report         / probability (float)           : NEW 
+crm_claim    / crm.claim.report         / section_id (many2one)         : NEW relation: crm.case.section
+crm_claim    / crm.claim.report         / stage_id (many2one)           : NEW relation: crm.case.stage
+crm_claim    / crm.claim.report         / state (selection)             : NEW selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
+crm_claim    / crm.claim.report         / type_action (selection)       : NEW selection_keys: ['correction', 'prevention']
+crm_claim    / crm.claim.report         / user_id (many2one)            : NEW relation: res.users
+new xml-id of model crm.case.categ: crm_claim.categ_claim1
+new xml-id of model crm.case.categ: crm_claim.categ_claim2
+new xml-id of model crm.case.categ: crm_claim.categ_claim3
+new xml-id of model crm.case.resource.type: crm_claim.type_claim1
+new xml-id of model crm.case.resource.type: crm_claim.type_claim2
+new xml-id of model crm.case.section: crm.section_sales_department
+new xml-id of model crm.case.stage: crm_claim.stage_claim1
+new xml-id of model crm.case.stage: crm_claim.stage_claim2
+new xml-id of model crm.case.stage: crm_claim.stage_claim3
+new xml-id of model crm.case.stage: crm_claim.stage_claim5
+new xml-id of model ir.actions.act_window.view: crm_claim.action_crm_tag_calendar_claim0
+new xml-id of model ir.actions.act_window.view: crm_claim.action_crm_tag_form_claim0
+new xml-id of model ir.actions.act_window.view: crm_claim.action_crm_tag_tree_claim0
+new xml-id of model ir.actions.act_window.view: crm_claim.action_report_crm_claim_graph
+new xml-id of model ir.actions.act_window.view: crm_claim.action_report_crm_claim_tree
+new xml-id of model ir.actions.act_window: crm_claim.act_claim_partner
+new xml-id of model ir.actions.act_window: crm_claim.act_claim_partner_address
+new xml-id of model ir.actions.act_window: crm_claim.action_report_crm_claim
+new xml-id of model ir.actions.act_window: crm_claim.crm_case_categ_claim0
+new xml-id of model ir.actions.act_window: crm_claim.crm_claim_categ_action
+new xml-id of model ir.actions.act_window: crm_claim.crm_claim_stage_act
+new xml-id of model ir.model.access: crm_claim.access_crm_claim_manager
+new xml-id of model ir.model.access: crm_claim.access_crm_claim_report_manager
+new xml-id of model ir.model.access: crm_claim.access_crm_claim_user
+new xml-id of model ir.ui.menu: base.menu_aftersale
+new xml-id of model ir.ui.menu: crm_claim.menu_config_claim
+new xml-id of model ir.ui.menu: crm_claim.menu_crm_case_claim-act
+new xml-id of model ir.ui.menu: crm_claim.menu_crm_case_claims
+new xml-id of model ir.ui.menu: crm_claim.menu_crm_claim_stage_act
+new xml-id of model ir.ui.menu: crm_claim.menu_report_crm_claim_tree
+new xml-id of model ir.ui.view: crm_claim.crm_case_claims_calendar_view
+new xml-id of model ir.ui.view: crm_claim.crm_case_claims_form_view
+new xml-id of model ir.ui.view: crm_claim.crm_case_claims_tree_view
+new xml-id of model ir.ui.view: crm_claim.view_crm_case_claims_filter
+new xml-id of model ir.ui.view: crm_claim.view_report_crm_claim_filter
+new xml-id of model ir.ui.view: crm_claim.view_report_crm_claim_graph
+new xml-id of model ir.ui.view: crm_claim.view_report_crm_claim_tree

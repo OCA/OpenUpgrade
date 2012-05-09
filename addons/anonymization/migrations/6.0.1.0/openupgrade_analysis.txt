@@ -1,0 +1,68 @@
+---anonymization---
+anonymization / ir.model.fields.anonymization / field_id (many2one)           : NEW relation: ir.model.fields
+anonymization / ir.model.fields.anonymization / field_name (char)             : NEW required: required
+anonymization / ir.model.fields.anonymization / model_id (many2one)           : NEW relation: ir.model
+anonymization / ir.model.fields.anonymization / model_name (char)             : NEW required: required
+anonymization / ir.model.fields.anonymization / state (selection)             : NEW required: required, selection_keys: ['anonymized', 'clear', 'not_existing'], req_default: function
+anonymization / ir.model.fields.anonymization.history / date (datetime)               : NEW required: required
+anonymization / ir.model.fields.anonymization.history / direction (selection)         : NEW required: required, selection_keys: ['anonymized -> clear', 'clear -> anonymized']
+anonymization / ir.model.fields.anonymization.history / field_ids (many2many)         : NEW relation: ir.model.fields.anonymization
+anonymization / ir.model.fields.anonymization.history / filepath (char)               : NEW 
+anonymization / ir.model.fields.anonymization.history / msg (text)                    : NEW 
+anonymization / ir.model.fields.anonymization.history / state (selection)             : NEW required: required, selection_keys: ['done', 'in_exception', 'started']
+new xml-id of model ir.actions.act_window: anonymization.action_ir_model_fields_anonymization_history_tree
+new xml-id of model ir.actions.act_window: anonymization.action_ir_model_fields_anonymization_tree
+new xml-id of model ir.actions.act_window: anonymization.action_ir_model_fields_anonymize_wizard
+new xml-id of model ir.model.access: anonymization.access_ir_model_fields_anonymization_group_system
+new xml-id of model ir.model.access: anonymization.access_ir_model_fields_anonymization_history_group_system
+new xml-id of model ir.model.access: anonymization.access_ir_model_fields_anonymization_history_user
+new xml-id of model ir.model.access: anonymization.access_ir_model_fields_anonymization_user
+new xml-id of model ir.model.access: anonymization.access_ir_model_fields_anonymize_wizard_group_system
+new xml-id of model ir.model.access: anonymization.access_ir_model_fields_anonymize_wizard_user
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_account_analytic_line_amount
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_account_invoice_amount_tax
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_account_invoice_amount_total
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_account_invoice_amount_untaxed
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_account_invoice_check_total
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_account_invoice_line_price_subtotal
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_account_invoice_line_price_unit
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_account_invoice_residual
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_account_invoice_tax_amount
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_account_invoice_tax_base
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_account_move_line_amount_currency
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_account_move_line_amount_taxed
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_account_move_line_credit
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_account_move_line_debit
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_account_move_line_tax_amount
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_product_name
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_purchase_order_amount_tax
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_purchase_order_amount_total
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_purchase_order_amount_untaxed
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_purchase_order_line_price_unit
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_address_city
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_address_email
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_address_fax
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_address_mobile
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_address_name
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_address_phone
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_address_street
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_address_street2
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_address_zip
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_code
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_name
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_users_name
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_users_signature
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_sale_order_amount_tax
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_sale_order_amount_total
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_sale_order_amount_untaxed
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_sale_order_line_discount
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_sale_order_line_price_unit
+new xml-id of model ir.ui.menu: anonymization.menu_administration_anonymization
+new xml-id of model ir.ui.menu: anonymization.menu_administration_anonymization_fields
+new xml-id of model ir.ui.menu: anonymization.menu_administration_anonymization_history
+new xml-id of model ir.ui.menu: anonymization.menu_administration_anonymization_wizard
+new xml-id of model ir.ui.view: anonymization.view_ir_model_fields_anonymization_form
+new xml-id of model ir.ui.view: anonymization.view_ir_model_fields_anonymization_history_form
+new xml-id of model ir.ui.view: anonymization.view_ir_model_fields_anonymization_history_tree
+new xml-id of model ir.ui.view: anonymization.view_ir_model_fields_anonymization_tree
+new xml-id of model ir.ui.view: anonymization.view_ir_model_fields_anonymize_wizard_form

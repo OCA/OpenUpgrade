@@ -1,0 +1,72 @@
+---crm_helpdesk---
+crm_helpdesk / crm.helpdesk             / active (boolean)              : NEW 
+crm_helpdesk / crm.helpdesk             / canal_id (many2one)           : NEW relation: res.partner.canal
+crm_helpdesk / crm.helpdesk             / categ_id (many2one)           : NEW relation: crm.case.categ
+crm_helpdesk / crm.helpdesk             / company_id (many2one)         : NEW relation: res.company
+crm_helpdesk / crm.helpdesk             / create_date (datetime)        : NEW 
+crm_helpdesk / crm.helpdesk             / date (datetime)               : NEW 
+crm_helpdesk / crm.helpdesk             / date_action_last (datetime)   : NEW 
+crm_helpdesk / crm.helpdesk             / date_action_next (datetime)   : NEW 
+crm_helpdesk / crm.helpdesk             / date_closed (datetime)        : NEW 
+crm_helpdesk / crm.helpdesk             / date_deadline (date)          : NEW 
+crm_helpdesk / crm.helpdesk             / description (text)            : NEW 
+crm_helpdesk / crm.helpdesk             / duration (float)              : NEW 
+crm_helpdesk / crm.helpdesk             / email_cc (text)               : NEW 
+crm_helpdesk / crm.helpdesk             / email_from (char)             : NEW 
+crm_helpdesk / crm.helpdesk             / id (integer)                  : NEW 
+crm_helpdesk / crm.helpdesk             / message_ids (one2many)        : NEW relation: mailgate.message
+crm_helpdesk / crm.helpdesk             / name (char)                   : NEW required: required
+crm_helpdesk / crm.helpdesk             / partner_address_id (many2one) : NEW relation: res.partner.address
+crm_helpdesk / crm.helpdesk             / partner_id (many2one)         : NEW relation: res.partner
+crm_helpdesk / crm.helpdesk             / planned_cost (float)          : NEW 
+crm_helpdesk / crm.helpdesk             / planned_revenue (float)       : NEW 
+crm_helpdesk / crm.helpdesk             / priority (selection)          : NEW selection_keys: ['1', '2', '3', '4', '5']
+crm_helpdesk / crm.helpdesk             / probability (float)           : NEW 
+crm_helpdesk / crm.helpdesk             / ref (reference)               : NEW 
+crm_helpdesk / crm.helpdesk             / ref2 (reference)              : NEW 
+crm_helpdesk / crm.helpdesk             / section_id (many2one)         : NEW relation: crm.case.section
+crm_helpdesk / crm.helpdesk             / state (selection)             : NEW selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
+crm_helpdesk / crm.helpdesk             / user_id (many2one)            : NEW relation: res.users
+crm_helpdesk / crm.helpdesk             / write_date (datetime)         : NEW 
+crm_helpdesk / crm.helpdesk.report      / canal_id (many2one)           : NEW relation: res.partner.canal
+crm_helpdesk / crm.helpdesk.report      / categ_id (many2one)           : NEW relation: crm.case.categ
+crm_helpdesk / crm.helpdesk.report      / company_id (many2one)         : NEW relation: res.company
+crm_helpdesk / crm.helpdesk.report      / create_date (date)            : NEW 
+crm_helpdesk / crm.helpdesk.report      / date_closed (date)            : NEW 
+crm_helpdesk / crm.helpdesk.report      / date_deadline (date)          : NEW 
+crm_helpdesk / crm.helpdesk.report      / day (char)                    : NEW 
+crm_helpdesk / crm.helpdesk.report      / delay_close (float)           : NEW 
+crm_helpdesk / crm.helpdesk.report      / delay_expected (float)        : NEW 
+crm_helpdesk / crm.helpdesk.report      / email (integer)               : NEW 
+crm_helpdesk / crm.helpdesk.report      / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+crm_helpdesk / crm.helpdesk.report      / name (char)                   : NEW 
+crm_helpdesk / crm.helpdesk.report      / nbr (integer)                 : NEW 
+crm_helpdesk / crm.helpdesk.report      / partner_id (many2one)         : NEW relation: res.partner
+crm_helpdesk / crm.helpdesk.report      / planned_cost (float)          : NEW 
+crm_helpdesk / crm.helpdesk.report      / priority (selection)          : NEW selection_keys: ['1', '2', '3', '4', '5']
+crm_helpdesk / crm.helpdesk.report      / section_id (many2one)         : NEW relation: crm.case.section
+crm_helpdesk / crm.helpdesk.report      / state (selection)             : NEW selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
+crm_helpdesk / crm.helpdesk.report      / user_id (many2one)            : NEW relation: res.users
+new xml-id of model ir.actions.act_window.view: crm_helpdesk.action_crm_sec_calendar_view_act111
+new xml-id of model ir.actions.act_window.view: crm_helpdesk.action_crm_sec_form_view_act111
+new xml-id of model ir.actions.act_window.view: crm_helpdesk.action_crm_sec_tree_view_act111
+new xml-id of model ir.actions.act_window.view: crm_helpdesk.action_report_crm_helpdesk_graph
+new xml-id of model ir.actions.act_window.view: crm_helpdesk.action_report_crm_helpdesk_tree
+new xml-id of model ir.actions.act_window: crm_helpdesk.action_report_crm_helpdesk
+new xml-id of model ir.actions.act_window: crm_helpdesk.crm_case_helpdesk_act111
+new xml-id of model ir.actions.act_window: crm_helpdesk.crm_helpdesk_categ_action
+new xml-id of model ir.model.access: crm_helpdesk.access_crm_helpdesk_manager
+new xml-id of model ir.model.access: crm_helpdesk.access_crm_helpdesk_user
+new xml-id of model ir.model.access: crm_helpdesk.access_report_crm_helpdesk_manager
+new xml-id of model ir.ui.menu: base.menu_aftersale
+new xml-id of model ir.ui.menu: crm_helpdesk.menu_config_helpdesk
+new xml-id of model ir.ui.menu: crm_helpdesk.menu_crm_case_helpdesk-act
+new xml-id of model ir.ui.menu: crm_helpdesk.menu_help_support_main
+new xml-id of model ir.ui.menu: crm_helpdesk.menu_report_crm_helpdesks_tree
+new xml-id of model ir.ui.view: crm_helpdesk.crm_case_form_view_helpdesk
+new xml-id of model ir.ui.view: crm_helpdesk.crm_case_helpdesk_calendar_view
+new xml-id of model ir.ui.view: crm_helpdesk.crm_case_tree_view_helpdesk
+new xml-id of model ir.ui.view: crm_helpdesk.view_crm_case_helpdesk_filter
+new xml-id of model ir.ui.view: crm_helpdesk.view_report_crm_helpdesk_filter
+new xml-id of model ir.ui.view: crm_helpdesk.view_report_crm_helpdesk_graph
+new xml-id of model ir.ui.view: crm_helpdesk.view_report_crm_helpdesk_tree

@@ -1,0 +1,9 @@
+---decimal_precision---
+decimal_precision / decimal.precision        / digits (integer)              : NEW required: required, req_default: 2
+decimal_precision / decimal.precision        / name (char)                   : NEW required: required
+new xml-id of model ir.actions.act_window: decimal_precision.action_decimal_precision_form
+new xml-id of model ir.model.access: decimal_precision.access_decimal_precision_all
+new xml-id of model ir.model.access: decimal_precision.access_decimal_precision_config
+new xml-id of model ir.ui.menu: decimal_precision.menu_decimal_precision_form
+new xml-id of model ir.ui.view: decimal_precision.view_decimal_precision_form
+new xml-id of model ir.ui.view: decimal_precision.view_decimal_precision_tree

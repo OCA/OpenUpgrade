@@ -1,0 +1,60 @@
+---project_gtd---
+project_gtd  / project.gtd.context      / project_default_id (many2one) : DEL relation: project.project, required: required
+project_gtd  / project.gtd.timebox      / child_ids (one2many)          : DEL relation: project.gtd.timebox
+project_gtd  / project.gtd.timebox      / col_date_start (boolean)      : DEL 
+project_gtd  / project.gtd.timebox      / col_deadline (boolean)        : DEL 
+project_gtd  / project.gtd.timebox      / col_effective_hours (boolean) : DEL 
+project_gtd  / project.gtd.timebox      / col_planned_hours (boolean)   : DEL 
+project_gtd  / project.gtd.timebox      / col_priority (boolean)        : DEL 
+project_gtd  / project.gtd.timebox      / col_project (boolean)         : DEL 
+project_gtd  / project.gtd.timebox      / context1_id (many2one)        : DEL relation: project.gtd.context, required: required
+project_gtd  / project.gtd.timebox      / context2_id (many2one)        : DEL relation: project.gtd.context
+project_gtd  / project.gtd.timebox      / context3_id (many2one)        : DEL relation: project.gtd.context
+project_gtd  / project.gtd.timebox      / context4_id (many2one)        : DEL relation: project.gtd.context
+project_gtd  / project.gtd.timebox      / context5_id (many2one)        : DEL relation: project.gtd.context
+project_gtd  / project.gtd.timebox      / context6_id (many2one)        : DEL relation: project.gtd.context
+project_gtd  / project.gtd.timebox      / icon (selection)              : NEW selection_keys: function
+project_gtd  / project.gtd.timebox      / parent_id (many2one)          : DEL relation: project.gtd.timebox
+project_gtd  / project.gtd.timebox      / sequence (integer)            : NEW 
+project_gtd  / project.gtd.timebox      / task1_ids (one2many)          : DEL relation: project.task
+project_gtd  / project.gtd.timebox      / task2_ids (one2many)          : DEL relation: project.task
+project_gtd  / project.gtd.timebox      / task3_ids (one2many)          : DEL relation: project.task
+project_gtd  / project.gtd.timebox      / task4_ids (one2many)          : DEL relation: project.task
+project_gtd  / project.gtd.timebox      / task5_ids (one2many)          : DEL relation: project.task
+project_gtd  / project.gtd.timebox      / task6_ids (one2many)          : DEL relation: project.task
+project_gtd  / project.gtd.timebox      / task_ids (one2many)           : DEL relation: project.task
+project_gtd  / project.gtd.timebox      / type (selection)              : DEL required: required, selection_keys: ['daily', 'monthly', 'other', 'weekly'], req_default: function
+project_gtd  / project.gtd.timebox      / user_id (many2one)            : DEL relation: res.users, required: required
+deleted xml-id of model ir.actions.act_window: project_gtd.act_timebox_tasks
+deleted xml-id of model ir.actions.act_window: project_gtd.act_timebox_tasks_my_deadline_open
+deleted xml-id of model ir.actions.act_window: project_gtd.act_timebox_tasks_my_inbox
+deleted xml-id of model ir.actions.act_window: project_gtd.act_timebox_tasks_my_open
+deleted xml-id of model ir.actions.act_window: project_gtd.act_timebox_tasks_my_pending
+deleted xml-id of model ir.actions.act_window: project_gtd.open_gtd_task_inbox
+deleted xml-id of model ir.actions.act_window: project_gtd.open_gtd_timebox_all
+deleted xml-id of model ir.actions.act_window: project_gtd.open_gtd_timebox_tree_my
+deleted xml-id of model ir.actions.act_window: project_gtd.project_normal_action_tree
+deleted xml-id of model ir.actions.wizard: project_gtd.open_gtd_timebox_daily
+deleted xml-id of model ir.actions.wizard: project_gtd.open_gtd_timebox_empty
+deleted xml-id of model ir.actions.wizard: project_gtd.open_gtd_timebox_fill
+deleted xml-id of model ir.ui.menu: project_gtd.menu_open_gtd_time
+deleted xml-id of model ir.ui.menu: project_gtd.menu_open_gtd_time_my_timeboxes
+deleted xml-id of model ir.ui.menu: project_gtd.menu_open_time
+deleted xml-id of model ir.ui.menu: project_gtd.menu_open_time_allinbox
+deleted xml-id of model ir.ui.menu: project_gtd.menu_open_time_daily_inbox
+deleted xml-id of model ir.ui.menu: project_gtd.menu_open_time_myinbox
+deleted xml-id of model ir.ui.view: project_gtd.task_inbox_view
+deleted xml-id of model ir.ui.view: project_gtd.view_gtd_timebox_treelist
+deleted xml-id of model ir.values: project_gtd.ir_project_category_open
+new xml-id of model ir.actions.act_window: project_gtd.action_project_gtd_empty
+new xml-id of model ir.actions.act_window: project_gtd.action_project_gtd_fill
+new xml-id of model ir.model.access: project_gtd.access_project_gtd_context_manager
+new xml-id of model ir.model.access: project_gtd.access_project_gtd_context_user
+new xml-id of model ir.model.access: project_gtd.access_project_gtd_timebox_manager
+new xml-id of model ir.model.access: project_gtd.access_project_gtd_timebox_user
+new xml-id of model ir.ui.view: project_gtd.project_task_tree
+new xml-id of model ir.ui.view: project_gtd.view_project_gtd_empty
+new xml-id of model ir.ui.view: project_gtd.view_project_gtd_fill
+new xml-id of model ir.values: project_gtd.project_gtd_empty_values
+new xml-id of model ir.values: project_gtd.project_gtd_fill_values
+new xml-id of model res.groups: project_gtd.group_project_getting

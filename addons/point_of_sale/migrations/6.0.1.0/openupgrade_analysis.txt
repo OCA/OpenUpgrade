@@ -1,0 +1,293 @@
+---point_of_sale---
+point_of_sale / account.bank.statement.line / am_out (boolean)              : NEW 
+point_of_sale / account.bank.statement.line / is_acc (boolean)              : NEW 
+point_of_sale / account.bank.statement.line / pos_statement_id (many2one)   : NEW relation: pos.order
+point_of_sale / account.journal          / auto_cash (boolean)           : NEW 
+point_of_sale / account.journal          / check_dtls (boolean)          : NEW 
+point_of_sale / account.journal          / journal_users (many2many)     : NEW relation: res.users
+point_of_sale / account.journal          / special_journal (boolean)     : NEW 
+point_of_sale / pos.order                / account_receivable (many2one) : DEL relation: account.account, required: required, req_default: function
+point_of_sale / pos.order                / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+point_of_sale / pos.order                / contract_number (char)        : NEW 
+point_of_sale / pos.order                / first_name (char)             : NEW 
+point_of_sale / pos.order                / journal_entry (boolean)       : NEW 
+point_of_sale / pos.order                / last_out_picking (many2one)   : DEL relation: stock.picking
+point_of_sale / pos.order                / note_2 (char)                 : NEW 
+point_of_sale / pos.order                / num_sale (char)               : NEW 
+point_of_sale / pos.order                / payments (one2many)           : DEL relation: pos.payment
+point_of_sale / pos.order                / picking_id (many2one)         : NEW relation: stock.picking
+point_of_sale / pos.order                / price_type (selection)        : NEW required: required, selection_keys: ['tax_excluded'], req_default: tax_excluded
+point_of_sale / pos.order                / remboursed (boolean)          : NEW 
+point_of_sale / pos.order                / sale_manager (many2one)       : NEW relation: res.users
+point_of_sale / pos.order                / salesman_id (many2one)        : DEL relation: res.users
+point_of_sale / pos.order                / state (selection)             : selection_keys is now '['advance', 'cancel', 'done', 'draft', 'invoiced', 'paid', 'payment']' ('['cancel', 'done', 'draft', 'invoiced', 'paid']')
+point_of_sale / pos.order                / statement_ids (one2many)      : NEW relation: account.bank.statement.line
+point_of_sale / pos.order                / type_rec (char)               : NEW 
+point_of_sale / pos.order                / user_salesman_id (many2one)   : NEW relation: res.users, required: required, req_default: function
+point_of_sale / pos.order.line           / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+point_of_sale / pos.order.line           / notice (char)                 : NEW required: required, req_default: function
+point_of_sale / pos.order.line           / price_ded (float)             : NEW 
+point_of_sale / pos.order.line           / price_unit (float)            : now a function
+point_of_sale / pos.order.line           / qty_rfd (float)               : NEW 
+point_of_sale / pos.order.line           / serial_number (char)          : NEW 
+point_of_sale / product.product          / am_out (boolean)              : NEW 
+point_of_sale / product.product          / disc_controle (boolean)       : NEW 
+point_of_sale / product.product          / expense_pdt (boolean)         : NEW 
+point_of_sale / product.product          / income_pdt (boolean)          : NEW 
+point_of_sale / report.cash.register     / balance_end_real (float)      : NEW 
+point_of_sale / report.cash.register     / balance_start (float)         : NEW 
+point_of_sale / report.cash.register     / date (date)                   : NEW 
+point_of_sale / report.cash.register     / day (char)                    : NEW 
+point_of_sale / report.cash.register     / journal_id (many2one)         : NEW relation: account.journal
+point_of_sale / report.cash.register     / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+point_of_sale / report.cash.register     / state (selection)             : NEW selection_keys: ['confirm', 'draft', 'open']
+point_of_sale / report.cash.register     / user_id (many2one)            : NEW relation: res.users
+point_of_sale / report.cash.register     / year (char)                   : NEW 
+point_of_sale / report.pos.order         / average_price (float)         : NEW 
+point_of_sale / report.pos.order         / company_id (many2one)         : NEW relation: res.company
+point_of_sale / report.pos.order         / date (date)                   : NEW 
+point_of_sale / report.pos.order         / date_payment (date)           : NEW required: required
+point_of_sale / report.pos.order         / date_validation (date)        : NEW required: required
+point_of_sale / report.pos.order         / day (char)                    : NEW 
+point_of_sale / report.pos.order         / delay_payment (integer)       : NEW 
+point_of_sale / report.pos.order         / delay_validation (integer)    : NEW 
+point_of_sale / report.pos.order         / journal_id (many2one)         : NEW relation: account.journal
+point_of_sale / report.pos.order         / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+point_of_sale / report.pos.order         / nbr (integer)                 : NEW 
+point_of_sale / report.pos.order         / partner_id (many2one)         : NEW relation: res.partner
+point_of_sale / report.pos.order         / price_total (float)           : NEW 
+point_of_sale / report.pos.order         / product_id (many2one)         : NEW relation: product.product
+point_of_sale / report.pos.order         / product_qty (integer)         : NEW 
+point_of_sale / report.pos.order         / shop_id (many2one)            : NEW relation: sale.shop
+point_of_sale / report.pos.order         / state (selection)             : NEW selection_keys: ['advance', 'cancel', 'done', 'draft', 'invoiced', 'paid', 'payment']
+point_of_sale / report.pos.order         / total_discount (float)        : NEW 
+point_of_sale / report.pos.order         / user_id (many2one)            : NEW relation: res.users
+point_of_sale / report.pos.order         / year (char)                   : NEW 
+point_of_sale / report.sales.by.margin.pos / date_order (date)             : NEW required: required
+point_of_sale / report.sales.by.margin.pos / net_margin_per_qty (float)    : NEW 
+point_of_sale / report.sales.by.margin.pos / product_name (char)           : NEW 
+point_of_sale / report.sales.by.margin.pos / qty (float)                   : NEW 
+point_of_sale / report.sales.by.margin.pos / total (float)                 : NEW 
+point_of_sale / report.sales.by.margin.pos / user_id (many2one)            : NEW relation: res.users
+point_of_sale / report.sales.by.margin.pos.month / date_order (date)             : NEW required: required
+point_of_sale / report.sales.by.margin.pos.month / net_margin_per_qty (float)    : NEW 
+point_of_sale / report.sales.by.margin.pos.month / product_name (char)           : NEW 
+point_of_sale / report.sales.by.margin.pos.month / qty (float)                   : NEW 
+point_of_sale / report.sales.by.margin.pos.month / total (float)                 : NEW 
+point_of_sale / report.sales.by.margin.pos.month / user_id (many2one)            : NEW relation: res.users
+point_of_sale / report.sales.by.user.pos / amount (float)                : NEW 
+point_of_sale / report.sales.by.user.pos / date_order (date)             : NEW required: required
+point_of_sale / report.sales.by.user.pos / qty (float)                   : NEW 
+point_of_sale / report.sales.by.user.pos / user_id (many2one)            : NEW relation: res.users
+point_of_sale / report.sales.by.user.pos.month / amount (float)                : NEW 
+point_of_sale / report.sales.by.user.pos.month / date_order (date)             : NEW required: required
+point_of_sale / report.sales.by.user.pos.month / qty (float)                   : NEW 
+point_of_sale / report.sales.by.user.pos.month / user_id (many2one)            : NEW relation: res.users
+point_of_sale / report.transaction.pos   / disc (float)                  : NEW 
+point_of_sale / report.transaction.pos   / invoice_am (float)            : NEW 
+point_of_sale / report.transaction.pos   / invoice_id (many2one)         : relation is now 'False' ('account.invoice')
+point_of_sale / report.transaction.pos   / invoice_id (many2one)         : type is now 'float' ('many2one')
+point_of_sale / report.transaction.pos   / jl_id (many2one)              : NEW relation: account.journal
+point_of_sale / report.transaction.pos   / product_nb (float)            : NEW 
+point_of_sale / res.company              / company_discount (float)      : NEW 
+point_of_sale / res.company              / max_diff (float)              : NEW 
+deleted xml-id of model ir.actions.report.xml: point_of_sale.pos_receipt
+deleted xml-id of model ir.actions.wizard: point_of_sale.pos_add_product
+deleted xml-id of model ir.actions.wizard: point_of_sale.pos_confirm
+deleted xml-id of model ir.actions.wizard: point_of_sale.pos_discount
+deleted xml-id of model ir.actions.wizard: point_of_sale.pos_payment
+deleted xml-id of model ir.actions.wizard: point_of_sale.pos_refund
+deleted xml-id of model ir.actions.wizard: point_of_sale.pos_sale_get
+deleted xml-id of model ir.actions.wizard: point_of_sale.pos_scan_product
+deleted xml-id of model ir.actions.wizard: point_of_sale.wizard_default_journal
+deleted xml-id of model ir.model.access: point_of_sale.access_pos_payment
+deleted xml-id of model ir.sequence.type: point_of_sale.seq_type_pos_payment
+deleted xml-id of model ir.sequence: point_of_sale.seq_pos_payment
+deleted xml-id of model ir.ui.menu: point_of_sale.menu_action_pos_order_line
+deleted xml-id of model ir.ui.menu: point_of_sale.menu_action_pos_order_line_day
+deleted xml-id of model ir.ui.menu: point_of_sale.menu_action_pos_order_tree2
+deleted xml-id of model ir.ui.menu: point_of_sale.menu_action_pos_order_tree3
+deleted xml-id of model ir.ui.menu: point_of_sale.menu_point_config
+deleted xml-id of model ir.ui.menu: point_of_sale.menu_trans_pos_tree
+deleted xml-id of model ir.ui.menu: point_of_sale.menu_trans_pos_tree_month
+deleted xml-id of model ir.ui.menu: point_of_sale.menu_trans_pos_tree_today
+deleted xml-id of model ir.ui.menu: point_of_sale.menu_wizard_default_journal
+deleted xml-id of model res.roles: point_of_sale.role_pos
+new xml-id of model ir.actions.act_window.view: point_of_sale.act_cash_statement1_all
+new xml-id of model ir.actions.act_window.view: point_of_sale.act_cash_statement2_all
+new xml-id of model ir.actions.act_window.view: point_of_sale.act_cash_statement_all_register
+new xml-id of model ir.actions.act_window.view: point_of_sale.act_cash_statement_all_register1
+new xml-id of model ir.actions.act_window.view: point_of_sale.action_product_input_form_tag
+new xml-id of model ir.actions.act_window.view: point_of_sale.action_product_input_tree_tag
+new xml-id of model ir.actions.act_window.view: point_of_sale.action_product_output_form_tag
+new xml-id of model ir.actions.act_window.view: point_of_sale.action_product_output_tree_tag
+new xml-id of model ir.actions.act_window: point_of_sale.act_pos_open_statement
+new xml-id of model ir.actions.act_window: point_of_sale.action_add_product
+new xml-id of model ir.actions.act_window: point_of_sale.action_box_entries
+new xml-id of model ir.actions.act_window: point_of_sale.action_box_out
+new xml-id of model ir.actions.act_window: point_of_sale.action_new_bank_statement_all_tree
+new xml-id of model ir.actions.act_window: point_of_sale.action_new_bank_statement_tree
+new xml-id of model ir.actions.act_window: point_of_sale.action_pos_all_sales_lines
+new xml-id of model ir.actions.act_window: point_of_sale.action_pos_close_statement
+new xml-id of model ir.actions.act_window: point_of_sale.action_pos_confirm
+new xml-id of model ir.actions.act_window: point_of_sale.action_pos_discount
+new xml-id of model ir.actions.act_window: point_of_sale.action_pos_get_sale
+new xml-id of model ir.actions.act_window: point_of_sale.action_pos_invoice
+new xml-id of model ir.actions.act_window: point_of_sale.action_pos_open_statement
+new xml-id of model ir.actions.act_window: point_of_sale.action_pos_order_accepted
+new xml-id of model ir.actions.act_window: point_of_sale.action_pos_order_line_form
+new xml-id of model ir.actions.act_window: point_of_sale.action_pos_order_tree_open
+new xml-id of model ir.actions.act_window: point_of_sale.action_pos_payment
+new xml-id of model ir.actions.act_window: point_of_sale.action_pos_payment_report
+new xml-id of model ir.actions.act_window: point_of_sale.action_pos_pos_form_user
+new xml-id of model ir.actions.act_window: point_of_sale.action_pos_sales_user_today
+new xml-id of model ir.actions.act_window: point_of_sale.action_pos_scan_product
+new xml-id of model ir.actions.act_window: point_of_sale.action_product_input
+new xml-id of model ir.actions.act_window: point_of_sale.action_product_output
+new xml-id of model ir.actions.act_window: point_of_sale.action_report_all_closed_cashbox_of_the_day
+new xml-id of model ir.actions.act_window: point_of_sale.action_report_cash_register_all
+new xml-id of model ir.actions.act_window: point_of_sale.action_report_pos_details
+new xml-id of model ir.actions.act_window: point_of_sale.action_report_pos_order_all
+new xml-id of model ir.actions.act_window: point_of_sale.action_report_pos_payment
+new xml-id of model ir.actions.act_window: point_of_sale.action_report_pos_payment_report_user
+new xml-id of model ir.actions.act_window: point_of_sale.action_report_pos_payment_repport_date
+new xml-id of model ir.actions.act_window: point_of_sale.action_report_pos_receipt
+new xml-id of model ir.actions.act_window: point_of_sale.action_report_pos_sale_user
+new xml-id of model ir.actions.act_window: point_of_sale.action_report_pos_sales_user_today_current_user
+new xml-id of model ir.actions.act_window: point_of_sale.action_report_sales_by_margin_pos_month
+new xml-id of model ir.actions.act_window: point_of_sale.action_report_sales_by_margin_pos_today
+new xml-id of model ir.actions.act_window: point_of_sale.action_report_sales_by_user_pos_month
+new xml-id of model ir.actions.act_window: point_of_sale.action_report_sales_by_user_pos_today
+new xml-id of model ir.actions.act_window: point_of_sale.action_view_pos_return
+new xml-id of model ir.actions.report.xml: point_of_sale.account_statement
+new xml-id of model ir.actions.report.xml: point_of_sale.all_closed_cashbox_of_the_day
+new xml-id of model ir.actions.report.xml: point_of_sale.pos_payment_report
+new xml-id of model ir.actions.report.xml: point_of_sale.pos_payment_report_date
+new xml-id of model ir.actions.report.xml: point_of_sale.pos_payment_report_user
+new xml-id of model ir.actions.report.xml: point_of_sale.pos_sales_user
+new xml-id of model ir.actions.report.xml: point_of_sale.pos_sales_user_today
+new xml-id of model ir.actions.report.xml: point_of_sale.pos_sales_user_today_current_user
+new xml-id of model ir.actions.report.xml: point_of_sale.pos_users_product_re
+new xml-id of model ir.model.access: point_of_sale.access_account_analytic_account
+new xml-id of model ir.model.access: point_of_sale.access_account_analytic_line
+new xml-id of model ir.model.access: point_of_sale.access_account_bank_statement
+new xml-id of model ir.model.access: point_of_sale.access_account_bank_statement_line
+new xml-id of model ir.model.access: point_of_sale.access_account_bank_statement_line_manager
+new xml-id of model ir.model.access: point_of_sale.access_account_bank_statement_manager
+new xml-id of model ir.model.access: point_of_sale.access_account_cashbox_line
+new xml-id of model ir.model.access: point_of_sale.access_account_cashbox_line_manager
+new xml-id of model ir.model.access: point_of_sale.access_account_fiscalyear_pos_manager
+new xml-id of model ir.model.access: point_of_sale.access_account_fiscalyear_pos_user
+new xml-id of model ir.model.access: point_of_sale.access_account_invoice_line_pos
+new xml-id of model ir.model.access: point_of_sale.access_account_invoice_line_pos_manager
+new xml-id of model ir.model.access: point_of_sale.access_account_invoice_manager
+new xml-id of model ir.model.access: point_of_sale.access_account_invoice_pos
+new xml-id of model ir.model.access: point_of_sale.access_account_invoice_pos_manager
+new xml-id of model ir.model.access: point_of_sale.access_account_invoice_tax_pos
+new xml-id of model ir.model.access: point_of_sale.access_account_invoice_tax_pos_manager
+new xml-id of model ir.model.access: point_of_sale.access_account_journal
+new xml-id of model ir.model.access: point_of_sale.access_account_journal_column
+new xml-id of model ir.model.access: point_of_sale.access_account_journal_column_manager
+new xml-id of model ir.model.access: point_of_sale.access_account_journal_manager
+new xml-id of model ir.model.access: point_of_sale.access_account_journal_period_manager
+new xml-id of model ir.model.access: point_of_sale.access_account_journal_period_user
+new xml-id of model ir.model.access: point_of_sale.access_account_journal_view
+new xml-id of model ir.model.access: point_of_sale.access_account_journal_view_manager
+new xml-id of model ir.model.access: point_of_sale.access_account_move
+new xml-id of model ir.model.access: point_of_sale.access_account_move_line
+new xml-id of model ir.model.access: point_of_sale.access_account_move_line_manager
+new xml-id of model ir.model.access: point_of_sale.access_account_period_pos
+new xml-id of model ir.model.access: point_of_sale.access_account_period_pos_manager
+new xml-id of model ir.model.access: point_of_sale.access_account_sequence_fiscalyear_manager
+new xml-id of model ir.model.access: point_of_sale.access_ir_property_pos_manager
+new xml-id of model ir.model.access: point_of_sale.access_pos_order_line_manager
+new xml-id of model ir.model.access: point_of_sale.access_pos_order_manager
+new xml-id of model ir.model.access: point_of_sale.access_product_category_manager
+new xml-id of model ir.model.access: point_of_sale.access_product_pricelist_manager
+new xml-id of model ir.model.access: point_of_sale.access_product_product
+new xml-id of model ir.model.access: point_of_sale.access_product_product_packaging_manager
+new xml-id of model ir.model.access: point_of_sale.access_product_product_packaging_user
+new xml-id of model ir.model.access: point_of_sale.access_product_product_pos_manager
+new xml-id of model ir.model.access: point_of_sale.access_product_product_supplierinfo_manager
+new xml-id of model ir.model.access: point_of_sale.access_product_product_supplierinfo_user
+new xml-id of model ir.model.access: point_of_sale.access_product_template_pos_manager
+new xml-id of model ir.model.access: point_of_sale.access_product_template_pos_user
+new xml-id of model ir.model.access: point_of_sale.access_product_uom_manager
+new xml-id of model ir.model.access: point_of_sale.access_report_check_register
+new xml-id of model ir.model.access: point_of_sale.access_report_pos_order
+new xml-id of model ir.model.access: point_of_sale.access_report_sales_by_margin_pos
+new xml-id of model ir.model.access: point_of_sale.access_report_sales_by_margin_pos_month
+new xml-id of model ir.model.access: point_of_sale.access_report_sales_by_user_pos
+new xml-id of model ir.model.access: point_of_sale.access_report_sales_by_user_pos_month
+new xml-id of model ir.model.access: point_of_sale.access_res_partner_manager
+new xml-id of model ir.model.access: point_of_sale.access_sale_shop_pos_manager
+new xml-id of model ir.model.access: point_of_sale.access_sale_shop_pos_system
+new xml-id of model ir.model.access: point_of_sale.access_stock_location_manager
+new xml-id of model ir.model.access: point_of_sale.access_stock_warehouse_manager
+new xml-id of model ir.ui.menu: point_of_sale.menu_all_menu_all_register
+new xml-id of model ir.ui.menu: point_of_sale.menu_cash_register
+new xml-id of model ir.ui.menu: point_of_sale.menu_close_statement
+new xml-id of model ir.ui.menu: point_of_sale.menu_open_statement
+new xml-id of model ir.ui.menu: point_of_sale.menu_point_config_product
+new xml-id of model ir.ui.menu: point_of_sale.menu_point_of_sale
+new xml-id of model ir.ui.menu: point_of_sale.menu_point_of_sale_product
+new xml-id of model ir.ui.menu: point_of_sale.menu_point_open_config
+new xml-id of model ir.ui.menu: point_of_sale.menu_pos_details
+new xml-id of model ir.ui.menu: point_of_sale.menu_pos_payment_report_date
+new xml-id of model ir.ui.menu: point_of_sale.menu_pos_products
+new xml-id of model ir.ui.menu: point_of_sale.menu_report_cash_register_all
+new xml-id of model ir.ui.menu: point_of_sale.menu_report_pos_order_all
+new xml-id of model ir.ui.menu: point_of_sale.menu_wizard_enter_jrnl
+new xml-id of model ir.ui.menu: point_of_sale.menu_wizard_enter_jrnl2
+new xml-id of model ir.ui.menu: point_of_sale.products_for_input_operations
+new xml-id of model ir.ui.menu: point_of_sale.products_for_output_operations
+new xml-id of model ir.ui.view: point_of_sale.pos_payment_report_date_form
+new xml-id of model ir.ui.view: point_of_sale.pos_payment_report_user_form
+new xml-id of model ir.ui.view: point_of_sale.product_input_output_form_view
+new xml-id of model ir.ui.view: point_of_sale.product_normal_form_view
+new xml-id of model ir.ui.view: point_of_sale.view_account_journal_pos_user_form
+new xml-id of model ir.ui.view: point_of_sale.view_add_product
+new xml-id of model ir.ui.view: point_of_sale.view_all_closed_cashbox_of_the_day
+new xml-id of model ir.ui.view: point_of_sale.view_box_entries
+new xml-id of model ir.ui.view: point_of_sale.view_cash_statement_pos_tree
+new xml-id of model ir.ui.view: point_of_sale.view_company_form_pos
+new xml-id of model ir.ui.view: point_of_sale.view_pos_box_out
+new xml-id of model ir.ui.view: point_of_sale.view_pos_close_statement
+new xml-id of model ir.ui.view: point_of_sale.view_pos_confirm
+new xml-id of model ir.ui.view: point_of_sale.view_pos_confirm_cash_statement_filter
+new xml-id of model ir.ui.view: point_of_sale.view_pos_details
+new xml-id of model ir.ui.view: point_of_sale.view_pos_discount
+new xml-id of model ir.ui.view: point_of_sale.view_pos_get_sale
+new xml-id of model ir.ui.view: point_of_sale.view_pos_open_cash_statement_filter
+new xml-id of model ir.ui.view: point_of_sale.view_pos_open_statement
+new xml-id of model ir.ui.view: point_of_sale.view_pos_order_filter
+new xml-id of model ir.ui.view: point_of_sale.view_pos_order_tree_all_sales_lines
+new xml-id of model ir.ui.view: point_of_sale.view_pos_payment
+new xml-id of model ir.ui.view: point_of_sale.view_pos_payment_report
+new xml-id of model ir.ui.view: point_of_sale.view_pos_receipt
+new xml-id of model ir.ui.view: point_of_sale.view_pos_sale_user
+new xml-id of model ir.ui.view: point_of_sale.view_pos_sales_user_today
+new xml-id of model ir.ui.view: point_of_sale.view_pos_sales_user_today_current_user
+new xml-id of model ir.ui.view: point_of_sale.view_pos_scan_product
+new xml-id of model ir.ui.view: point_of_sale.view_report_cash_register_search
+new xml-id of model ir.ui.view: point_of_sale.view_report_cash_register_tree
+new xml-id of model ir.ui.view: point_of_sale.view_report_pos_order_search
+new xml-id of model ir.ui.view: point_of_sale.view_report_pos_order_tree
+new xml-id of model ir.ui.view: point_of_sale.view_report_sales_by_margin_pos_calendar
+new xml-id of model ir.ui.view: point_of_sale.view_report_sales_by_margin_pos_form
+new xml-id of model ir.ui.view: point_of_sale.view_report_sales_by_margin_pos_graph
+new xml-id of model ir.ui.view: point_of_sale.view_report_sales_by_margin_pos_month_calendar
+new xml-id of model ir.ui.view: point_of_sale.view_report_sales_by_margin_pos_month_form
+new xml-id of model ir.ui.view: point_of_sale.view_report_sales_by_margin_pos_month_graph
+new xml-id of model ir.ui.view: point_of_sale.view_report_sales_by_margin_pos_month_tree
+new xml-id of model ir.ui.view: point_of_sale.view_report_sales_by_margin_pos_tree
+new xml-id of model ir.ui.view: point_of_sale.view_report_sales_by_user_pos_calendar
+new xml-id of model ir.ui.view: point_of_sale.view_report_sales_by_user_pos_form
+new xml-id of model ir.ui.view: point_of_sale.view_report_sales_by_user_pos_graph
+new xml-id of model ir.ui.view: point_of_sale.view_report_sales_by_user_pos_month_calendar
+new xml-id of model ir.ui.view: point_of_sale.view_report_sales_by_user_pos_month_form
+new xml-id of model ir.ui.view: point_of_sale.view_report_sales_by_user_pos_month_graph
+new xml-id of model ir.ui.view: point_of_sale.view_report_sales_by_user_pos_month_tree
+new xml-id of model ir.ui.view: point_of_sale.view_report_sales_by_user_pos_tree
+new xml-id of model ir.ui.view: point_of_sale.view_report_transaction_pos_calendar
+new xml-id of model ir.ui.view: point_of_sale.view_report_transaction_pos_graph

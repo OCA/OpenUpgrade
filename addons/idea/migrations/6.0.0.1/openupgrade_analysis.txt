@@ -1,0 +1,65 @@
+---idea---
+idea         / idea.category            / visibility (boolean)          : NEW 
+idea         / idea.idea                / create_date (datetime)        : DEL 
+idea         / idea.idea                / created_date (datetime)       : NEW 
+idea         / idea.idea                / name (char)                   : NEW required: required
+idea         / idea.idea                / open_date (datetime)          : NEW 
+idea         / idea.idea                / title (char)                  : DEL required: required
+idea         / idea.idea                / visibility (boolean)          : NEW 
+idea         / idea.idea                / vote_limit (integer)          : NEW 
+idea         / idea.vote                / comment (text)                : NEW 
+idea         / idea.vote                / date (datetime)               : NEW 
+idea         / report.vote              / category_id (many2one)        : NEW relation: idea.category
+idea         / report.vote              / creater_id (many2one)         : NEW relation: res.users
+idea         / report.vote              / date (date)                   : NEW 
+idea         / report.vote              / day (char)                    : NEW 
+idea         / report.vote              / idea_id (many2one)            : NEW relation: idea.idea
+idea         / report.vote              / idea_state (selection)        : NEW selection_keys: ['cancel', 'close', 'draft', 'open']
+idea         / report.vote              / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+idea         / report.vote              / nbr (integer)                 : NEW 
+idea         / report.vote              / score (integer)               : NEW 
+idea         / report.vote              / user_id (many2one)            : NEW relation: res.users
+idea         / report.vote              / year (char)                   : NEW 
+deleted xml-id of model ir.actions.act_window: idea.action_idea_idea_draft_my
+deleted xml-id of model ir.actions.act_window: idea.action_idea_idea_my_idea
+deleted xml-id of model ir.actions.act_window: idea.action_idea_idea_open_my
+deleted xml-id of model ir.model.access: idea.access_idea_category
+deleted xml-id of model ir.model.access: idea.access_idea_category_system
+deleted xml-id of model ir.model.access: idea.access_idea_comment
+deleted xml-id of model ir.model.access: idea.access_idea_idea
+deleted xml-id of model ir.model.access: idea.access_idea_vote
+deleted xml-id of model ir.model.access: idea.access_idea_vote_stat
+deleted xml-id of model ir.ui.menu: idea.menu_config
+deleted xml-id of model ir.ui.menu: idea.menu_idea_idea_draft_my
+deleted xml-id of model ir.ui.menu: idea.menu_idea_idea_my_idea
+deleted xml-id of model ir.ui.menu: idea.menu_idea_idea_open
+deleted xml-id of model ir.ui.menu: idea.menu_idea_idea_open_my
+deleted xml-id of model ir.ui.menu: idea.menu_reporting
+deleted xml-id of model ir.ui.menu: idea.menu_tools
+deleted xml-id of model ir.ui.view: idea.view_idea_comment_tree
+deleted xml-id of model workflow.transition: idea.t3
+deleted xml-id of model workflow.transition: idea.t5
+new xml-id of model ir.actions.act_window: idea.action_idea_post_vote
+new xml-id of model ir.actions.act_window: idea.action_idea_select
+new xml-id of model ir.actions.act_window: idea.action_report_vote_all
+new xml-id of model ir.model.access: idea.access_idea_category_user
+new xml-id of model ir.model.access: idea.access_idea_comment_user
+new xml-id of model ir.model.access: idea.access_idea_idea_user
+new xml-id of model ir.model.access: idea.access_idea_vote_manager
+new xml-id of model ir.model.access: idea.access_idea_vote_stat_user
+new xml-id of model ir.model.access: idea.access_idea_vote_user
+new xml-id of model ir.model.access: idea.access_report_vote_manager
+new xml-id of model ir.ui.menu: base.menu_lunch_reporting
+new xml-id of model ir.ui.menu: base.menu_lunch_survey_root
+new xml-id of model ir.ui.menu: idea.menu_give_vote
+new xml-id of model ir.ui.menu: idea.menu_idea_reporting
+new xml-id of model ir.ui.menu: idea.menu_report_vote_all
+new xml-id of model ir.ui.view: idea.view_idea_category_search
+new xml-id of model ir.ui.view: idea.view_idea_idea_search
+new xml-id of model ir.ui.view: idea.view_idea_post_vote
+new xml-id of model ir.ui.view: idea.view_idea_select
+new xml-id of model ir.ui.view: idea.view_idea_vote_search
+new xml-id of model ir.ui.view: idea.view_report_vote_search
+new xml-id of model ir.ui.view: idea.view_report_vote_tree
+new xml-id of model res.groups: base.group_tool_manager
+new xml-id of model res.groups: base.group_tool_user

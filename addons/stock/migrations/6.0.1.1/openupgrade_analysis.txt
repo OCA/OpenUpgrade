@@ -1,0 +1,342 @@
+---stock---
+stock        / product.product          / valuation (selection)         : NEW required: required, selection_keys: ['manual_periodic', 'real_time'], req_default: function
+stock        / report.stock.inventory   / company_id (many2one)         : NEW relation: res.company
+stock        / report.stock.inventory   / date (datetime)               : NEW 
+stock        / report.stock.inventory   / location_id (many2one)        : NEW relation: stock.location
+stock        / report.stock.inventory   / location_type (selection)     : NEW required: required, selection_keys: ['customer', 'internal', 'inventory', 'procurement', 'production', 'supplier', 'transit', 'view']
+stock        / report.stock.inventory   / partner_id (many2one)         : NEW relation: res.partner.address
+stock        / report.stock.inventory   / prodlot_id (many2one)         : NEW relation: stock.production.lot
+stock        / report.stock.inventory   / product_categ_id (many2one)   : NEW relation: product.category
+stock        / report.stock.inventory   / product_id (many2one)         : NEW relation: product.product
+stock        / report.stock.inventory   / product_qty (float)           : NEW 
+stock        / report.stock.inventory   / state (selection)             : NEW selection_keys: ['assigned', 'cancel', 'confirmed', 'done', 'draft', 'waiting']
+stock        / report.stock.inventory   / value (float)                 : NEW required: required
+stock        / report.stock.lines.date  / create_date (datetime)        : DEL 
+stock        / report.stock.lines.date  / date (datetime)               : NEW 
+stock        / report.stock.move        / categ_id (many2one)           : NEW relation: product.category
+stock        / report.stock.move        / company_id (many2one)         : NEW relation: res.company
+stock        / report.stock.move        / date (date)                   : NEW 
+stock        / report.stock.move        / day (char)                    : NEW 
+stock        / report.stock.move        / day_diff (float)              : NEW 
+stock        / report.stock.move        / day_diff1 (float)             : NEW 
+stock        / report.stock.move        / day_diff2 (float)             : NEW 
+stock        / report.stock.move        / location_dest_id (many2one)   : NEW relation: stock.location
+stock        / report.stock.move        / location_id (many2one)        : NEW relation: stock.location
+stock        / report.stock.move        / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+stock        / report.stock.move        / partner_id (many2one)         : NEW relation: res.partner.address
+stock        / report.stock.move        / picking_id (many2one)         : NEW relation: stock.picking
+stock        / report.stock.move        / product_id (many2one)         : NEW relation: product.product
+stock        / report.stock.move        / product_qty (integer)         : NEW 
+stock        / report.stock.move        / product_qty_in (integer)      : NEW 
+stock        / report.stock.move        / product_qty_out (integer)     : NEW 
+stock        / report.stock.move        / state (selection)             : NEW selection_keys: ['assigned', 'cancel', 'confirmed', 'done', 'draft', 'waiting']
+stock        / report.stock.move        / stock_journal (many2one)      : NEW relation: stock.journal
+stock        / report.stock.move        / type (selection)              : NEW required: required, selection_keys: ['in', 'internal', 'other', 'out']
+stock        / report.stock.move        / value (float)                 : NEW required: required
+stock        / report.stock.move        / year (char)                   : NEW 
+stock        / stock.inventory          / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+stock        / stock.inventory          / state (selection)             : selection_keys is now '['cancel', 'confirm', 'done', 'draft']' ('['done', 'draft']')
+stock        / stock.inventory.line     / prod_lot_id (many2one)        : NEW relation: stock.production.lot
+stock        / stock.journal            / name (char)                   : NEW required: required
+stock        / stock.journal            / user_id (many2one)            : NEW relation: res.users
+stock        / stock.location           / account_id (many2one)         : DEL relation: account.account
+stock        / stock.location           / allocation_method (selection) : DEL required: required, selection_keys: ['fifo', 'lifo', 'nearest'], req_default: function
+stock        / stock.location           / chained_company_id (many2one) : NEW relation: res.company
+stock        / stock.location           / chained_journal_id (many2one) : NEW relation: stock.journal
+stock        / stock.location           / chained_picking_type (selection): NEW selection_keys: ['in', 'internal', 'out']
+stock        / stock.location           / company_id (many2one)         : NEW relation: res.company
+stock        / stock.location           / icon (selection)              : selection_keys is now 'function' ('['STOCK_ABOUT', 'STOCK_ADD', 'STOCK_APPLY', 'STOCK_BOLD', 'STOCK_CANCEL', 'STOCK_CDROM', 'STOCK_CLEAR', 'STOCK_CLOSE', 'STOCK_COLOR_PICKER', 'STOCK_CONNECT', 'STOCK_CONVERT', 'STOCK_COPY', 'STOCK_CUT', 'STOCK_DELETE', 'STOCK_DIALOG_AUTHENTICATION', 'STOCK_DIALOG_ERROR', 'STOCK_DIALOG_INFO', 'STOCK_DIALOG_QUESTION', 'STOCK_DIALOG_WARNING', 'STOCK_DIRECTORY', 'STOCK_DISCONNECT', 'STOCK_DND', 'STOCK_DND_MULTIPLE', 'STOCK_EDIT', 'STOCK_EXECUTE', 'STOCK_FILE', 'STOCK_FIND', 'STOCK_FIND_AND_REPLACE', 'STOCK_FLOPPY', 'STOCK_GOTO_BOTTOM', 'STOCK_GOTO_FIRST', 'STOCK_GOTO_LAST', 'STOCK_GOTO_TOP', 'STOCK_GO_BACK', 'STOCK_GO_DOWN', 'STOCK_GO_FORWARD', 'STOCK_GO_UP', 'STOCK_HARDDISK', 'STOCK_HELP', 'STOCK_HOME', 'STOCK_INDENT', 'STOCK_INDEX', 'STOCK_ITALIC', 'STOCK_JUMP_TO', 'STOCK_JUSTIFY_CENTER', 'STOCK_JUSTIFY_FILL', 'STOCK_JUSTIFY_LEFT', 'STOCK_JUSTIFY_RIGHT', 'STOCK_MEDIA_FORWARD', 'STOCK_MEDIA_NEXT', 'STOCK_MEDIA_PAUSE', 'STOCK_MEDIA_PLAY', 'STOCK_MEDIA_PREVIOUS', 'STOCK_MEDIA_RECORD', 'STOCK_MEDIA_REWIND', 'STOCK_MEDIA_STOP', 'STOCK_MISSING_IMAGE', 'STOCK_NETWORK', 'STOCK_NEW', 'STOCK_NO', 'STOCK_OK', 'STOCK_OPEN', 'STOCK_PASTE', 'STOCK_PREFERENCES', 'STOCK_PRINT', 'STOCK_PRINT_PREVIEW', 'STOCK_PROPERTIES', 'STOCK_QUIT', 'STOCK_REDO', 'STOCK_REFRESH', 'STOCK_REMOVE', 'STOCK_REVERT_TO_SAVED', 'STOCK_SAVE', 'STOCK_SAVE_AS', 'STOCK_SELECT_COLOR', 'STOCK_SELECT_FONT', 'STOCK_SORT_ASCENDING', 'STOCK_SORT_DESCENDING', 'STOCK_SPELL_CHECK', 'STOCK_STOP', 'STOCK_STRIKETHROUGH', 'STOCK_UNDELETE', 'STOCK_UNDERLINE', 'STOCK_UNDO', 'STOCK_UNINDENT', 'STOCK_YES', 'STOCK_ZOOM_100', 'STOCK_ZOOM_FIT', 'STOCK_ZOOM_IN', 'STOCK_ZOOM_OUT', 'terp-account', 'terp-administration', 'terp-calendar', 'terp-crm', 'terp-graph', 'terp-hr', 'terp-mrp', 'terp-partner', 'terp-product', 'terp-project', 'terp-purchase', 'terp-report', 'terp-sale', 'terp-stock', 'terp-tools']')
+stock        / stock.location           / scrap_location (boolean)      : NEW 
+stock        / stock.location           / usage (selection)             : selection_keys is now '['customer', 'internal', 'inventory', 'procurement', 'production', 'supplier', 'transit', 'view']' ('['customer', 'internal', 'inventory', 'procurement', 'production', 'supplier', 'view']')
+stock        / stock.location           / valuation_in_account_id (many2one): NEW relation: account.account
+stock        / stock.location           / valuation_out_account_id (many2one): NEW relation: account.account
+stock        / stock.move               / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+stock        / stock.move               / create_date (datetime)        : NEW 
+stock        / stock.move               / date (datetime)               : now required, default = function
+stock        / stock.move               / date_expected (datetime)      : NEW required: required, req_default: function
+stock        / stock.move               / date_planned (datetime)       : DEL required: required, req_default: function
+stock        / stock.move               / price_currency_id (many2one)  : NEW relation: res.currency
+stock        / stock.picking            / active (boolean)              : DEL 
+stock        / stock.picking            / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+stock        / stock.picking            / stock_journal_id (many2one)   : NEW relation: stock.journal
+stock        / stock.picking            / type (selection)              : selection_keys is now '['in', 'internal', 'out']' ('['delivery', 'in', 'internal', 'out']')
+stock        / stock.production.lot     / company_id (many2one)         : NEW relation: res.company
+stock        / stock.production.lot     / move_ids (one2many)           : NEW relation: stock.move
+stock        / stock.production.lot     / prefix (char)                 : NEW 
+stock        / stock.report.prodlots    / name (float)                  : DEL 
+stock        / stock.report.prodlots    / qty (float)                   : NEW 
+stock        / stock.report.tracklots   / location_id (many2one)        : NEW relation: stock.location
+stock        / stock.report.tracklots   / name (float)                  : NEW 
+stock        / stock.report.tracklots   / product_id (many2one)         : NEW relation: product.product
+stock        / stock.report.tracklots   / tracking_id (many2one)        : NEW relation: stock.tracking
+stock        / stock.warehouse          / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+deleted xml-id of model ir.actions.act_window.view: stock.action_invoice_tree6_view1
+deleted xml-id of model ir.actions.act_window.view: stock.action_invoice_tree6_view2
+deleted xml-id of model ir.actions.act_window.view: stock.action_invoice_tree6_view2_cal
+deleted xml-id of model ir.actions.act_window.view: stock.action_picking_form_view1
+deleted xml-id of model ir.actions.act_window.view: stock.action_picking_form_view2
+deleted xml-id of model ir.actions.act_window.view: stock.action_picking_form_view2_cal
+deleted xml-id of model ir.actions.act_window.view: stock.action_picking_tree2_out_view1
+deleted xml-id of model ir.actions.act_window.view: stock.action_picking_tree2_out_view2
+deleted xml-id of model ir.actions.act_window.view: stock.action_picking_tree2_out_view2_cal
+deleted xml-id of model ir.actions.act_window.view: stock.action_picking_tree3_out_view1
+deleted xml-id of model ir.actions.act_window.view: stock.action_picking_tree3_out_view2
+deleted xml-id of model ir.actions.act_window.view: stock.action_picking_tree3_out_view2_cal
+deleted xml-id of model ir.actions.act_window.view: stock.action_picking_tree_delivery_view1
+deleted xml-id of model ir.actions.act_window.view: stock.action_picking_tree_delivery_view1_toproc
+deleted xml-id of model ir.actions.act_window.view: stock.action_picking_tree_delivery_view1_waiting
+deleted xml-id of model ir.actions.act_window.view: stock.action_picking_tree_delivery_view2
+deleted xml-id of model ir.actions.act_window.view: stock.action_picking_tree_delivery_view2_calendar
+deleted xml-id of model ir.actions.act_window.view: stock.action_picking_tree_delivery_view2_toproc
+deleted xml-id of model ir.actions.act_window.view: stock.action_picking_tree_delivery_view2_toproc_cal
+deleted xml-id of model ir.actions.act_window.view: stock.action_picking_tree_delivery_view2_waiting
+deleted xml-id of model ir.actions.act_window.view: stock.action_picking_tree_delivery_view2_waiting_cal
+deleted xml-id of model ir.actions.act_window: stock.act_product_product_2_stock_report_prodlots
+deleted xml-id of model ir.actions.act_window: stock.act_stock_location_2_stock_report_prodlots
+deleted xml-id of model ir.actions.act_window: stock.act_stock_picking_move_wizard
+deleted xml-id of model ir.actions.act_window: stock.act_stock_production_lot_2_stock_report_prodlots
+deleted xml-id of model ir.actions.act_window: stock.action_inventory_form_new
+deleted xml-id of model ir.actions.act_window: stock.action_location_tree_3
+deleted xml-id of model ir.actions.act_window: stock.action_move_form3
+deleted xml-id of model ir.actions.act_window: stock.action_move_form4
+deleted xml-id of model ir.actions.act_window: stock.action_picking_all
+deleted xml-id of model ir.actions.act_window: stock.action_picking_calendar_delivery
+deleted xml-id of model ir.actions.act_window: stock.action_picking_form
+deleted xml-id of model ir.actions.act_window: stock.action_picking_tree2
+deleted xml-id of model ir.actions.act_window: stock.action_picking_tree2_delivery
+deleted xml-id of model ir.actions.act_window: stock.action_picking_tree3
+deleted xml-id of model ir.actions.act_window: stock.action_picking_tree3_delivery
+deleted xml-id of model ir.actions.act_window: stock.action_picking_tree5
+deleted xml-id of model ir.actions.act_window: stock.action_picking_tree7
+deleted xml-id of model ir.actions.act_window: stock.action_picking_tree8
+deleted xml-id of model ir.actions.act_window: stock.action_picking_tree9
+deleted xml-id of model ir.actions.act_window: stock.action_picking_tree_delivery
+deleted xml-id of model ir.actions.act_window: stock.action_stock_report_prodlots_form
+deleted xml-id of model ir.actions.report.xml: stock.report_lot_location
+deleted xml-id of model ir.actions.wizard: stock.action2
+deleted xml-id of model ir.actions.wizard: stock.action4
+deleted xml-id of model ir.actions.wizard: stock.action_lot2
+deleted xml-id of model ir.actions.wizard: stock.action_lot4
+deleted xml-id of model ir.actions.wizard: stock.location_product
+deleted xml-id of model ir.actions.wizard: stock.make_picking
+deleted xml-id of model ir.actions.wizard: stock.move_split
+deleted xml-id of model ir.actions.wizard: stock.partial_picking
+deleted xml-id of model ir.actions.wizard: stock.return_picking
+deleted xml-id of model ir.actions.wizard: stock.track_line
+deleted xml-id of model ir.actions.wizard: stock.wizard_fill_inventory
+deleted xml-id of model ir.actions.wizard: stock.wizard_invoice_onshipping
+deleted xml-id of model ir.actions.wizard: stock.wizard_merge_inventory
+deleted xml-id of model ir.actions.wizard: stock.wizard_merge_inventory_zero
+deleted xml-id of model ir.model.access: stock.access_stock_inventory
+deleted xml-id of model ir.model.access: stock.access_stock_inventory_line
+deleted xml-id of model ir.model.access: stock.access_stock_lines_date
+deleted xml-id of model ir.model.access: stock.access_stock_location_product_manager
+deleted xml-id of model ir.model.access: stock.access_stock_move
+deleted xml-id of model ir.model.access: stock.access_stock_picking
+deleted xml-id of model ir.model.access: stock.access_stock_picking_move_wizard
+deleted xml-id of model ir.model.access: stock.access_stock_production_lot
+deleted xml-id of model ir.model.access: stock.access_stock_tracking
+deleted xml-id of model ir.sequence.type: stock.seq_type_picking
+deleted xml-id of model ir.sequence: stock.seq_picking
+deleted xml-id of model ir.ui.menu: stock.menu_action_incoterms_tree
+deleted xml-id of model ir.ui.menu: stock.menu_action_inventory_form_draft
+deleted xml-id of model ir.ui.menu: stock.menu_action_inventory_form_new
+deleted xml-id of model ir.ui.menu: stock.menu_action_location_tree_3
+deleted xml-id of model ir.ui.menu: stock.menu_action_move_form3
+deleted xml-id of model ir.ui.menu: stock.menu_action_move_form4
+deleted xml-id of model ir.ui.menu: stock.menu_action_picking_all
+deleted xml-id of model ir.ui.menu: stock.menu_action_picking_form
+deleted xml-id of model ir.ui.menu: stock.menu_action_picking_tree3
+deleted xml-id of model ir.ui.menu: stock.menu_action_picking_tree3_delivery
+deleted xml-id of model ir.ui.menu: stock.menu_action_picking_tree5
+deleted xml-id of model ir.ui.menu: stock.menu_action_picking_tree7
+deleted xml-id of model ir.ui.menu: stock.menu_action_picking_tree8
+deleted xml-id of model ir.ui.menu: stock.menu_action_picking_tree9
+deleted xml-id of model ir.ui.menu: stock.menu_action_picking_tree_delivery
+deleted xml-id of model ir.ui.menu: stock.menu_picking_calendar_delivery
+deleted xml-id of model ir.ui.menu: stock.menu_picking_waiting
+deleted xml-id of model ir.ui.menu: stock.menu_picking_waiting_delivery
+deleted xml-id of model ir.ui.menu: stock.menu_stock_report_prodlots
+deleted xml-id of model ir.ui.menu: stock.menu_traceability_low
+deleted xml-id of model ir.ui.menu: stock.next_id_62
+deleted xml-id of model ir.ui.view: stock.stock_picking_move_wizard_form
+deleted xml-id of model ir.ui.view: stock.stock_report_prodlots_tree
+deleted xml-id of model ir.ui.view: stock.view_location_tree_3
+deleted xml-id of model ir.ui.view: stock.view_picking_delivery_form
+deleted xml-id of model ir.ui.view: stock.view_picking_delivery_tree
+new xml-id of model board.note.type: stock.note_warehouse_type
+new xml-id of model decimal.precision: stock.decimal_shipping_delay
+new xml-id of model ir.actions.act_window.view: stock.action_invoice_tree5_out
+new xml-id of model ir.actions.act_window.view: stock.action_invoice_tree5_view2_out
+new xml-id of model ir.actions.act_window.view: stock.action_invoice_tree5_viewout_cal
+new xml-id of model ir.actions.act_window.view: stock.action_move_out_picking_form
+new xml-id of model ir.actions.act_window.view: stock.action_move_out_picking_tree
+new xml-id of model ir.actions.act_window.view: stock.action_move_reception_picking_form
+new xml-id of model ir.actions.act_window.view: stock.action_move_reception_picking_tree
+new xml-id of model ir.actions.act_window.view: stock.action_picking_tree6_form_view
+new xml-id of model ir.actions.act_window.view: stock.action_picking_tree6_tree_view
+new xml-id of model ir.actions.act_window: stock.act_stock_return_picking
+new xml-id of model ir.actions.act_window: stock.act_stock_tracking_lot_2_stock_report_tracklots
+new xml-id of model ir.actions.act_window: stock.action_incoming_product_board
+new xml-id of model ir.actions.act_window: stock.action_out_picking_move
+new xml-id of model ir.actions.act_window: stock.action_outgoing_product_board
+new xml-id of model ir.actions.act_window: stock.action_partial_picking
+new xml-id of model ir.actions.act_window: stock.action_picking_tree_out
+new xml-id of model ir.actions.act_window: stock.action_reception_picking_move
+new xml-id of model ir.actions.act_window: stock.action_stock_incoming_product_delay
+new xml-id of model ir.actions.act_window: stock.action_stock_inventory_report
+new xml-id of model ir.actions.act_window: stock.action_stock_invoice_onshipping
+new xml-id of model ir.actions.act_window: stock.action_stock_journal_form
+new xml-id of model ir.actions.act_window: stock.action_stock_move_report
+new xml-id of model ir.actions.act_window: stock.action_stock_outgoing_product_delay
+new xml-id of model ir.actions.act_window: stock.action_view_change_product_quantity
+new xml-id of model ir.actions.act_window: stock.action_view_change_standard_price
+new xml-id of model ir.actions.act_window: stock.action_view_stock_fill_inventory
+new xml-id of model ir.actions.act_window: stock.action_view_stock_inventory_line_split
+new xml-id of model ir.actions.act_window: stock.action_view_stock_location_product
+new xml-id of model ir.actions.act_window: stock.action_view_stock_merge_inventories
+new xml-id of model ir.actions.act_window: stock.move_consume
+new xml-id of model ir.actions.act_window: stock.move_scrap
+new xml-id of model ir.actions.act_window: stock.open_board_warehouse
+new xml-id of model ir.actions.act_window: stock.split_into
+new xml-id of model ir.actions.act_window: stock.track_line
+new xml-id of model ir.actions.act_window: stock.track_line_old
+new xml-id of model ir.actions.report.xml: stock.report_stock_inventory_move
+new xml-id of model ir.actions.server: stock.action_partial_move_server
+new xml-id of model ir.model.access: stock.access_account_account_stock_manager
+new xml-id of model ir.model.access: stock.access_account_fiscalyear
+new xml-id of model ir.model.access: stock.access_account_invoice_line_user
+new xml-id of model ir.model.access: stock.access_account_invoice_tax_user
+new xml-id of model ir.model.access: stock.access_account_invoice_user
+new xml-id of model ir.model.access: stock.access_account_journal_stock_manager
+new xml-id of model ir.model.access: stock.access_account_journal_user
+new xml-id of model ir.model.access: stock.access_ir_property_group_stock_manager
+new xml-id of model ir.model.access: stock.access_pricelist_partnerinfo_stock_manager
+new xml-id of model ir.model.access: stock.access_product_category_stock_manager
+new xml-id of model ir.model.access: stock.access_product_group_res_partner_stock_manager
+new xml-id of model ir.model.access: stock.access_product_packaging_stock_manager
+new xml-id of model ir.model.access: stock.access_product_price_type_stock_manager
+new xml-id of model ir.model.access: stock.access_product_pricelist_item_sale_manager
+new xml-id of model ir.model.access: stock.access_product_pricelist_item_stock_manager
+new xml-id of model ir.model.access: stock.access_product_pricelist_stock_manager
+new xml-id of model ir.model.access: stock.access_product_pricelist_type_stock_manager
+new xml-id of model ir.model.access: stock.access_product_pricelist_version_stock_manager
+new xml-id of model ir.model.access: stock.access_product_product_stock_manager
+new xml-id of model ir.model.access: stock.access_product_product_stock_user
+new xml-id of model ir.model.access: stock.access_product_supplierinfo_stock_manager
+new xml-id of model ir.model.access: stock.access_product_template_stock_manager
+new xml-id of model ir.model.access: stock.access_product_template_stock_user
+new xml-id of model ir.model.access: stock.access_product_ul_stock_manager
+new xml-id of model ir.model.access: stock.access_product_uom_categ_stock_manager
+new xml-id of model ir.model.access: stock.access_product_uom_stock_manager
+new xml-id of model ir.model.access: stock.access_report_stock_inventory_manager
+new xml-id of model ir.model.access: stock.access_report_stock_inventory_user
+new xml-id of model ir.model.access: stock.access_report_stock_move_manager
+new xml-id of model ir.model.access: stock.access_report_stock_move_user
+new xml-id of model ir.model.access: stock.access_stock_incoterms_manager
+new xml-id of model ir.model.access: stock.access_stock_inventory_line_manager
+new xml-id of model ir.model.access: stock.access_stock_inventory_line_user
+new xml-id of model ir.model.access: stock.access_stock_inventory_manager
+new xml-id of model ir.model.access: stock.access_stock_inventory_user
+new xml-id of model ir.model.access: stock.access_stock_journal_manager
+new xml-id of model ir.model.access: stock.access_stock_journal_user
+new xml-id of model ir.model.access: stock.access_stock_lines_date_manager
+new xml-id of model ir.model.access: stock.access_stock_lines_date_user
+new xml-id of model ir.model.access: stock.access_stock_location_sale_manager
+new xml-id of model ir.model.access: stock.access_stock_location_stock_manager
+new xml-id of model ir.model.access: stock.access_stock_move_manager
+new xml-id of model ir.model.access: stock.access_stock_move_user
+new xml-id of model ir.model.access: stock.access_stock_picking_manager
+new xml-id of model ir.model.access: stock.access_stock_picking_user
+new xml-id of model ir.model.access: stock.access_stock_production_lot_manager
+new xml-id of model ir.model.access: stock.access_stock_production_lot_user
+new xml-id of model ir.model.access: stock.access_stock_report_tracklots
+new xml-id of model ir.model.access: stock.access_stock_tracking_manager
+new xml-id of model ir.model.access: stock.access_stock_tracking_sales_user
+new xml-id of model ir.model.access: stock.access_stock_tracking_user
+new xml-id of model ir.rule: stock.stock_inventory_comp_rule
+new xml-id of model ir.rule: stock.stock_inventory_line_comp_rule
+new xml-id of model ir.rule: stock.stock_location_comp_rule
+new xml-id of model ir.rule: stock.stock_move_rule
+new xml-id of model ir.rule: stock.stock_picking_rule
+new xml-id of model ir.rule: stock.stock_warehouse_comp_rule
+new xml-id of model ir.sequence.type: stock.seq_type_picking_in
+new xml-id of model ir.sequence.type: stock.seq_type_picking_internal
+new xml-id of model ir.sequence.type: stock.seq_type_picking_out
+new xml-id of model ir.sequence: stock.seq_picking_in
+new xml-id of model ir.sequence: stock.seq_picking_internal
+new xml-id of model ir.sequence: stock.seq_picking_out
+new xml-id of model ir.ui.menu: stock.menu_action_incoterm_open
+new xml-id of model ir.ui.menu: stock.menu_action_pdct_in
+new xml-id of model ir.ui.menu: stock.menu_action_pdct_out
+new xml-id of model ir.ui.menu: stock.menu_action_stock_inventory_report
+new xml-id of model ir.ui.menu: stock.menu_action_stock_journal_form
+new xml-id of model ir.ui.menu: stock.menu_action_stock_move_report
+new xml-id of model ir.ui.menu: stock.menu_board_warehouse
+new xml-id of model ir.ui.menu: stock.menu_dashboard_stock
+new xml-id of model ir.ui.menu: stock.menu_product_by_category_stock_form
+new xml-id of model ir.ui.menu: stock.menu_product_category_config_stock
+new xml-id of model ir.ui.menu: stock.menu_product_in_config_stock
+new xml-id of model ir.ui.menu: stock.menu_product_packaging_stock_action
+new xml-id of model ir.ui.menu: stock.menu_stock_inventory_control
+new xml-id of model ir.ui.menu: stock.menu_stock_product
+new xml-id of model ir.ui.menu: stock.menu_stock_products_menu
+new xml-id of model ir.ui.menu: stock.menu_stock_products_moves
+new xml-id of model ir.ui.menu: stock.menu_stock_unit_measure_stock
+new xml-id of model ir.ui.menu: stock.menu_stock_uom_categ_form_action
+new xml-id of model ir.ui.menu: stock.menu_stock_uom_form_action
+new xml-id of model ir.ui.menu: stock.menu_stock_warehouse_mgmt
+new xml-id of model ir.ui.menu: stock.menu_warehouse_config
+new xml-id of model ir.ui.view: stock.board_warehouse_form
+new xml-id of model ir.ui.view: stock.name_form
+new xml-id of model ir.ui.view: stock.product_search_form_view_stock
+new xml-id of model ir.ui.view: stock.report_stock_lines_date_search
+new xml-id of model ir.ui.view: stock.search_product_lot_filter
+new xml-id of model ir.ui.view: stock.search_stock_packs
+new xml-id of model ir.ui.view: stock.stock_move_memory_form_in
+new xml-id of model ir.ui.view: stock.stock_move_memory_form_out
+new xml-id of model ir.ui.view: stock.stock_move_memory_tree_in
+new xml-id of model ir.ui.view: stock.stock_move_memory_tree_out
+new xml-id of model ir.ui.view: stock.view_change_product_quantity
+new xml-id of model ir.ui.view: stock.view_change_standard_price
+new xml-id of model ir.ui.view: stock.view_inventory_filter
+new xml-id of model ir.ui.view: stock.view_location_graph
+new xml-id of model ir.ui.view: stock.view_location_search
+new xml-id of model ir.ui.view: stock.view_move_form_reception_picking
+new xml-id of model ir.ui.view: stock.view_move_search
+new xml-id of model ir.ui.view: stock.view_move_search_reception_incoming_picking
+new xml-id of model ir.ui.view: stock.view_move_search_reception_outcoming_picking
+new xml-id of model ir.ui.view: stock.view_move_tree_reception_picking
+new xml-id of model ir.ui.view: stock.view_move_tree_reception_picking_board
+new xml-id of model ir.ui.view: stock.view_picking_in_search
+new xml-id of model ir.ui.view: stock.view_picking_internal_search
+new xml-id of model ir.ui.view: stock.view_picking_out_search
+new xml-id of model ir.ui.view: stock.view_product_standard_price_form
+new xml-id of model ir.ui.view: stock.view_split_in_lots
+new xml-id of model ir.ui.view: stock.view_split_in_lots_inherit
+new xml-id of model ir.ui.view: stock.view_stock_fill_inventory
+new xml-id of model ir.ui.view: stock.view_stock_graph
+new xml-id of model ir.ui.view: stock.view_stock_graph_board
+new xml-id of model ir.ui.view: stock.view_stock_inventory_graph
+new xml-id of model ir.ui.view: stock.view_stock_inventory_search
+new xml-id of model ir.ui.view: stock.view_stock_inventory_tree
+new xml-id of model ir.ui.view: stock.view_stock_invoice_onshipping
+new xml-id of model ir.ui.view: stock.view_stock_journal_filter
+new xml-id of model ir.ui.view: stock.view_stock_journal_form
+new xml-id of model ir.ui.view: stock.view_stock_journal_tree
+new xml-id of model ir.ui.view: stock.view_stock_location_product
+new xml-id of model ir.ui.view: stock.view_stock_move_consume_wizard
+new xml-id of model ir.ui.view: stock.view_stock_move_scrap_wizard
+new xml-id of model ir.ui.view: stock.view_stock_move_split_wizard
+new xml-id of model ir.ui.view: stock.view_stock_move_track_wizard
+new xml-id of model ir.ui.view: stock.view_stock_picking_filter
+new xml-id of model ir.ui.view: stock.view_stock_search
+new xml-id of model ir.ui.view: stock.view_stock_tree
+new xml-id of model ir.values: stock.ir_open_partial_move_wizard
+new xml-id of model res.partner: base.main_partner
+new xml-id of model stock.incoterms: stock.incoterm_DAP
+new xml-id of model stock.incoterms: stock.incoterm_DAT
+new xml-id of model stock.journal: stock.journal_delivery
+new xml-id of model stock.location: stock.stock_location_scrapped
+new xml-id of model workflow.activity: stock.act_cancel_inv
+new xml-id of model workflow.transition: stock.trans_assigned_move_done

@@ -1,0 +1,18 @@
+---project_messages---
+project_messages / project.messages         / create_date (datetime)        : NEW 
+project_messages / project.messages         / from_id (many2one)            : NEW relation: res.users, required: required, req_default: function
+project_messages / project.messages         / message (text)                : NEW required: required
+project_messages / project.messages         / project_id (many2one)         : NEW relation: project.project, required: required
+project_messages / project.messages         / to_id (many2one)              : NEW relation: res.users
+project_messages / project.project          / message_ids (one2many)        : NEW relation: project.messages
+new xml-id of model ir.actions.act_window: project_messages.act_project_messages
+new xml-id of model ir.actions.act_window: project_messages.action_view_project_editable_messages_tree
+new xml-id of model ir.actions.act_window: project_messages.messages_form
+new xml-id of model ir.model.access: project_messages.access_project_message_project_user
+new xml-id of model ir.model.access: project_messages.access_project_messages
+new xml-id of model ir.model.access: project_messages.access_project_messages_manager
+new xml-id of model ir.ui.menu: project_messages.menu_messages_form
+new xml-id of model ir.ui.view: project_messages.view_phase_project_form1
+new xml-id of model ir.ui.view: project_messages.view_project_message_form
+new xml-id of model ir.ui.view: project_messages.view_project_message_tree
+new xml-id of model ir.ui.view: project_messages.view_project_messages_search

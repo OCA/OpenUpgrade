@@ -1,0 +1,15 @@
+---document_ics---
+document_ics / crm.meeting              / code (char)                   : NEW 
+document_ics / document.directory.content / fname_field (char)            : NEW 
+document_ics / document.directory.content / ics_object_id (many2one)      : DEL relation: ir.model
+document_ics / document.directory.content / obj_iterate (boolean)         : NEW 
+document_ics / document.directory.content / object_id (many2one)          : NEW relation: ir.model
+document_ics / document.directory.ics.fields / expr (char)                   : NEW 
+document_ics / document.directory.ics.fields / fn (selection)                : NEW required: required, selection_keys: ['const', 'field', 'hours'], req_default: function
+deleted xml-id of model ir.model.access: document_ics.access_document_ics_crm_wizard
+deleted xml-id of model ir.sequence.type: document_ics.seq_type_crm_case_code
+deleted xml-id of model ir.sequence: document_ics.seq_sale_order
+deleted xml-id of model ir.ui.view: document_ics.view_case_inherit_form
+deleted xml-id of model ir.ui.view: document_ics.view_case_inherit_form1
+new xml-id of model ir.ui.view: document_ics.view_document_directory_form_1
+new xml-id of model ir.ui.view: document_ics.view_meeting_inherit_form

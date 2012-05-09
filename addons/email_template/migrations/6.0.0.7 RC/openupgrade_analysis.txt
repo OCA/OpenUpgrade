@@ -1,0 +1,107 @@
+---email_template---
+email_template / email.template           / allowed_groups (many2many)    : NEW relation: res.groups
+email_template / email.template           / attachment_ids (many2many)    : NEW relation: ir.attachment
+email_template / email.template           / copyvalue (char)              : NEW 
+email_template / email.template           / def_bcc (char)                : NEW 
+email_template / email.template           / def_body_html (text)          : NEW 
+email_template / email.template           / def_body_text (text)          : NEW 
+email_template / email.template           / def_cc (char)                 : NEW 
+email_template / email.template           / def_subject (char)            : NEW 
+email_template / email.template           / def_to (char)                 : NEW 
+email_template / email.template           / file_name (char)              : NEW 
+email_template / email.template           / from_account (many2one)       : NEW relation: email_template.account
+email_template / email.template           / lang (char)                   : NEW 
+email_template / email.template           / message_id (char)             : NEW 
+email_template / email.template           / model_int_name (char)         : NEW 
+email_template / email.template           / model_object_field (many2one) : NEW relation: ir.model.fields
+email_template / email.template           / name (char)                   : NEW required: required
+email_template / email.template           / null_value (char)             : NEW 
+email_template / email.template           / object_name (many2one)        : NEW relation: ir.model
+email_template / email.template           / ref_ir_act_window (many2one)  : NEW relation: ir.actions.act_window
+email_template / email.template           / ref_ir_value (many2one)       : NEW relation: ir.values
+email_template / email.template           / reply_to (char)               : NEW 
+email_template / email.template           / report_template (many2one)    : NEW relation: ir.actions.report.xml
+email_template / email.template           / sub_model_object_field (many2one): NEW relation: ir.model.fields
+email_template / email.template           / sub_object (many2one)         : NEW relation: ir.model
+email_template / email.template           / table_html (text)             : NEW 
+email_template / email.template           / template_language (selection) : NEW required: required, selection_keys: ['mako'], req_default: function
+email_template / email.template           / track_campaign_item (boolean) : NEW 
+email_template / email.template           / use_sign (boolean)            : NEW 
+email_template / email_template.account   / auto_delete (boolean)         : NEW 
+email_template / email_template.account   / company (selection)           : NEW required: required, selection_keys: ['no', 'yes'], req_default: function
+email_template / email_template.account   / email_id (char)               : NEW required: required
+email_template / email_template.account   / name (char)                   : NEW required: required, req_default: function
+email_template / email_template.account   / send_pref (selection)         : NEW required: required, selection_keys: ['alternative', 'html', 'mixed', 'text'], req_default: function
+email_template / email_template.account   / smtppass (char)               : NEW 
+email_template / email_template.account   / smtpport (integer)            : NEW required: required, req_default: function
+email_template / email_template.account   / smtpserver (char)             : NEW required: required, req_default: function
+email_template / email_template.account   / smtpssl (boolean)             : NEW 
+email_template / email_template.account   / smtptls (boolean)             : NEW 
+email_template / email_template.account   / smtpuname (char)              : NEW 
+email_template / email_template.account   / state (selection)             : NEW required: required, selection_keys: ['approved', 'draft', 'suspended'], req_default: function
+email_template / email_template.account   / user (many2one)               : NEW relation: res.users, required: required, req_default: function
+email_template / email_template.mailbox   / account_id (many2one)         : NEW relation: email_template.account, required: required
+email_template / email_template.mailbox   / attachments_ids (many2many)   : NEW relation: ir.attachment
+email_template / email_template.mailbox   / body_html (text)              : NEW 
+email_template / email_template.mailbox   / body_text (text)              : NEW 
+email_template / email_template.mailbox   / date_mail (datetime)          : NEW 
+email_template / email_template.mailbox   / email_bcc (char)              : NEW 
+email_template / email_template.mailbox   / email_cc (char)               : NEW 
+email_template / email_template.mailbox   / email_from (char)             : NEW 
+email_template / email_template.mailbox   / email_to (char)               : NEW 
+email_template / email_template.mailbox   / folder (selection)            : NEW required: required, selection_keys: ['drafts', 'outbox', 'sent', 'trash'], req_default: function
+email_template / email_template.mailbox   / history (text)                : NEW 
+email_template / email_template.mailbox   / mail_type (selection)         : NEW selection_keys: ['multipart/alternative', 'multipart/mixed', 'multipart/related', 'text/html', 'text/plain']
+email_template / email_template.mailbox   / message_id (char)             : NEW 
+email_template / email_template.mailbox   / reply_to (char)               : NEW 
+email_template / email_template.mailbox   / server_ref (integer)          : NEW 
+email_template / email_template.mailbox   / state (selection)             : NEW required: required, selection_keys: ['na', 'sending'], req_default: function
+email_template / email_template.mailbox   / subject (char)                : NEW 
+new xml-id of model ir.actions.act_window: email_template.action_email_template_account_tree_all
+new xml-id of model ir.actions.act_window: email_template.action_email_template_mailbox
+new xml-id of model ir.actions.act_window: email_template.action_email_template_tree_all
+new xml-id of model ir.actions.act_window: email_template.wizard_email_template_preview
+new xml-id of model ir.cron: email_template.ir_cron_mail_scheduler_action
+new xml-id of model ir.model.access: email_template.access_email_template
+new xml-id of model ir.model.access: email_template.access_email_template_account
+new xml-id of model ir.model.access: email_template.access_email_template_account_manager
+new xml-id of model ir.model.access: email_template.access_email_template_account_system
+new xml-id of model ir.model.access: email_template.access_email_template_mailbox
+new xml-id of model ir.model.access: email_template.access_email_template_mailbox_manager
+new xml-id of model ir.model.access: email_template.access_email_template_mailbox_system
+new xml-id of model ir.model.access: email_template.access_email_template_manager
+new xml-id of model ir.model.access: email_template.access_email_template_system
+new xml-id of model ir.ui.menu: base.marketing_menu
+new xml-id of model ir.ui.menu: base.menu_emails
+new xml-id of model ir.ui.menu: base.menu_lunch_survey_root
+new xml-id of model ir.ui.menu: base.menu_marketing_config_root
+new xml-id of model ir.ui.menu: email_template.menu_email_account_all_tools
+new xml-id of model ir.ui.menu: email_template.menu_email_template
+new xml-id of model ir.ui.menu: email_template.menu_email_template_account_all
+new xml-id of model ir.ui.menu: email_template.menu_email_template_all
+new xml-id of model ir.ui.menu: email_template.menu_email_template_all_tools
+new xml-id of model ir.ui.menu: email_template.menu_email_template_config_tools
+new xml-id of model ir.ui.menu: email_template.menu_email_template_configuration
+new xml-id of model ir.ui.menu: email_template.menu_email_template_mails_tools
+new xml-id of model ir.ui.menu: email_template.menu_email_template_personal_mails
+new xml-id of model ir.ui.menu: email_template.menu_email_template_tools
+new xml-id of model ir.ui.view: email_template.email_template_account_form
+new xml-id of model ir.ui.view: email_template.email_template_account_tree
+new xml-id of model ir.ui.view: email_template.email_template_form
+new xml-id of model ir.ui.view: email_template.email_template_mailbox_form
+new xml-id of model ir.ui.view: email_template.email_template_preview_form
+new xml-id of model ir.ui.view: email_template.email_template_send_wizard_form
+new xml-id of model ir.ui.view: email_template.email_template_tree
+new xml-id of model ir.ui.view: email_template.view_email_template_account_search
+new xml-id of model ir.ui.view: email_template.view_email_template_mailbox_search
+new xml-id of model ir.ui.view: email_template.view_email_template_mailbox_tree
+new xml-id of model ir.ui.view: email_template.view_email_template_search
+new xml-id of model workflow.activity: email_template.act_approved
+new xml-id of model workflow.activity: email_template.act_draft
+new xml-id of model workflow.activity: email_template.act_dummy
+new xml-id of model workflow.activity: email_template.act_suspended
+new xml-id of model workflow.transition: email_template.trans_approved_suspended
+new xml-id of model workflow.transition: email_template.trans_awaiting_approved
+new xml-id of model workflow.transition: email_template.trans_suspended_dummy
+new xml-id of model workflow.transition: email_template.trans_suspended_reapproved
+new xml-id of model workflow: email_template.wkf_email_template_setting

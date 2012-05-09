@@ -1,0 +1,107 @@
+---hr_timesheet_sheet---
+hr_timesheet_sheet / hr.timesheet.report      / account_id (many2one)         : NEW relation: account.analytic.account
+hr_timesheet_sheet / hr.timesheet.report      / company_id (many2one)         : NEW relation: res.company
+hr_timesheet_sheet / hr.timesheet.report      / cost (float)                  : NEW 
+hr_timesheet_sheet / hr.timesheet.report      / date (date)                   : NEW 
+hr_timesheet_sheet / hr.timesheet.report      / day (char)                    : NEW 
+hr_timesheet_sheet / hr.timesheet.report      / general_account_id (many2one) : NEW relation: account.account
+hr_timesheet_sheet / hr.timesheet.report      / journal_id (many2one)         : NEW relation: account.analytic.journal
+hr_timesheet_sheet / hr.timesheet.report      / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+hr_timesheet_sheet / hr.timesheet.report      / name (char)                   : NEW 
+hr_timesheet_sheet / hr.timesheet.report      / product_id (many2one)         : NEW relation: product.product
+hr_timesheet_sheet / hr.timesheet.report      / quantity (float)              : NEW 
+hr_timesheet_sheet / hr.timesheet.report      / user_id (many2one)            : NEW relation: res.users
+hr_timesheet_sheet / hr.timesheet.report      / year (char)                   : NEW 
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / company_id (many2one)         : NEW relation: res.company
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / department_id (many2one)      : NEW relation: hr.department
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / employee_id (many2one)        : NEW relation: hr.employee, required: required, req_default: function
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / user_id (many2one)            : now a function
+hr_timesheet_sheet / timesheet.report         / account_id (many2one)         : NEW relation: account.analytic.account
+hr_timesheet_sheet / timesheet.report         / company_id (many2one)         : NEW relation: res.company
+hr_timesheet_sheet / timesheet.report         / cost (float)                  : NEW 
+hr_timesheet_sheet / timesheet.report         / date_current (date)           : NEW required: required
+hr_timesheet_sheet / timesheet.report         / date_from (date)              : NEW 
+hr_timesheet_sheet / timesheet.report         / date_to (date)                : NEW 
+hr_timesheet_sheet / timesheet.report         / day (char)                    : NEW 
+hr_timesheet_sheet / timesheet.report         / department_id (many2one)      : NEW relation: hr.department
+hr_timesheet_sheet / timesheet.report         / general_account_id (many2one) : NEW relation: account.account
+hr_timesheet_sheet / timesheet.report         / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+hr_timesheet_sheet / timesheet.report         / name (char)                   : NEW 
+hr_timesheet_sheet / timesheet.report         / nbr (integer)                 : NEW 
+hr_timesheet_sheet / timesheet.report         / product_id (many2one)         : NEW relation: product.product
+hr_timesheet_sheet / timesheet.report         / quantity (float)              : NEW 
+hr_timesheet_sheet / timesheet.report         / state (selection)             : NEW selection_keys: ['confirm', 'done', 'draft', 'new']
+hr_timesheet_sheet / timesheet.report         / to_invoice (many2one)         : NEW relation: hr_timesheet_invoice.factor
+hr_timesheet_sheet / timesheet.report         / total_attendance (float)      : NEW 
+hr_timesheet_sheet / timesheet.report         / total_diff (float)            : NEW 
+hr_timesheet_sheet / timesheet.report         / total_timesheet (float)       : NEW 
+hr_timesheet_sheet / timesheet.report         / user_id (many2one)            : NEW relation: res.users
+hr_timesheet_sheet / timesheet.report         / year (char)                   : NEW 
+deleted xml-id of model ir.actions.act_window: hr_timesheet_sheet.act_hr_timesheet_sheet_form_all_confirm
+deleted xml-id of model ir.actions.act_window: hr_timesheet_sheet.act_hr_timesheet_sheet_form_all_valid
+deleted xml-id of model ir.actions.act_window: hr_timesheet_sheet.act_hr_timesheet_sheet_form_my
+deleted xml-id of model ir.actions.act_window: hr_timesheet_sheet.act_hr_timesheet_sheet_form_my_confirm
+deleted xml-id of model ir.actions.act_window: hr_timesheet_sheet.act_hr_timesheet_sheet_sheet_by_account
+deleted xml-id of model ir.actions.act_window: hr_timesheet_sheet.act_hr_timesheet_sheet_unvalidate
+deleted xml-id of model ir.actions.wizard: hr_timesheet_sheet.act_hr_timesheet_sheet_form_department_confirm
+deleted xml-id of model ir.actions.wizard: hr_timesheet_sheet.act_hr_timesheet_sheet_form_department_current
+deleted xml-id of model ir.actions.wizard: hr_timesheet_sheet.act_hr_timesheet_sheet_form_department_validate
+deleted xml-id of model ir.actions.wizard: hr_timesheet_sheet.act_hr_timesheet_sheet_form_my_current
+deleted xml-id of model ir.model.access: hr_timesheet_sheet.access_hr_timesheet_sheet_sheet
+deleted xml-id of model ir.ui.menu: hr_timesheet_sheet.menu_act_hr_timesheet_sheet_form_all_confirm
+deleted xml-id of model ir.ui.menu: hr_timesheet_sheet.menu_act_hr_timesheet_sheet_form_all_valid
+deleted xml-id of model ir.ui.menu: hr_timesheet_sheet.menu_act_hr_timesheet_sheet_form_department_confirm
+deleted xml-id of model ir.ui.menu: hr_timesheet_sheet.menu_act_hr_timesheet_sheet_form_department_current
+deleted xml-id of model ir.ui.menu: hr_timesheet_sheet.menu_act_hr_timesheet_sheet_form_department_validate
+deleted xml-id of model ir.ui.menu: hr_timesheet_sheet.menu_act_hr_timesheet_sheet_form_my
+deleted xml-id of model ir.ui.menu: hr_timesheet_sheet.menu_act_hr_timesheet_sheet_form_my_confirm
+deleted xml-id of model ir.ui.menu: hr_timesheet_sheet.menu_hr_timesheet_sheet_unvalidate
+deleted xml-id of model ir.ui.menu: hr_timesheet_sheet.next_id_60
+deleted xml-id of model ir.ui.view: hr_timesheet_sheet.hr_timesheet_day_form
+deleted xml-id of model ir.ui.view: hr_timesheet_sheet.hr_timesheet_day_tree
+deleted xml-id of model process.node: hr_timesheet_sheet.process_node_analyticcost0
+deleted xml-id of model process.node: hr_timesheet_sheet.process_node_phonecall0
+deleted xml-id of model process.node: hr_timesheet_sheet.process_node_review0
+deleted xml-id of model process.node: hr_timesheet_sheet.process_node_timesheetconfirming0
+deleted xml-id of model process.node: hr_timesheet_sheet.process_node_timesheetline0
+deleted xml-id of model process.transition.action: hr_timesheet_sheet.process_transition_action_reviewtimesheet0
+deleted xml-id of model process.transition: hr_timesheet_sheet.process_transition_confirmtimesheetsheet0
+deleted xml-id of model process.transition: hr_timesheet_sheet.process_transition_createanalyticcose0
+deleted xml-id of model process.transition: hr_timesheet_sheet.process_transition_phonecallencoding0
+deleted xml-id of model process.transition: hr_timesheet_sheet.process_transition_reviewofwork0
+deleted xml-id of model res.roles: hr_timesheet_sheet.HR
+deleted xml-id of model res.roles: hr_timesheet_sheet.res_roles_hr0
+new xml-id of model ir.actions.act_window: hr_timesheet_sheet.act_hr_employee_2_hr_timesheet
+new xml-id of model ir.actions.act_window: hr_timesheet_sheet.action_hr_timesheet_current_open
+new xml-id of model ir.actions.act_window: hr_timesheet_sheet.action_hr_timesheet_report_stat_all
+new xml-id of model ir.actions.act_window: hr_timesheet_sheet.action_hr_timesheet_sheet_graph
+new xml-id of model ir.actions.act_window: hr_timesheet_sheet.action_timesheet_report_stat_all
+new xml-id of model ir.actions.act_window: hr_timesheet_sheet.action_week_attendance_graph
+new xml-id of model ir.actions.server: hr_timesheet_sheet.ir_actions_server_timsheet_sheet
+new xml-id of model ir.model.access: hr_timesheet_sheet.access_hr_analytic_timesheet_system_user
+new xml-id of model ir.model.access: hr_timesheet_sheet.access_hr_timesheet_report
+new xml-id of model ir.model.access: hr_timesheet_sheet.access_hr_timesheet_sheet_sheet_system_employee
+new xml-id of model ir.model.access: hr_timesheet_sheet.access_hr_timesheet_sheet_sheet_user
+new xml-id of model ir.model.access: hr_timesheet_sheet.access_timesheet_report
+new xml-id of model ir.rule: hr_timesheet_sheet.timesheet_comp_rule
+new xml-id of model ir.ui.menu: base.menu_hr_dasboard
+new xml-id of model ir.ui.menu: base.menu_hr_manager
+new xml-id of model ir.ui.menu: base.menu_hr_project
+new xml-id of model ir.ui.menu: hr_timesheet_sheet.menu_hr_timesheet_report_all
+new xml-id of model ir.ui.menu: hr_timesheet_sheet.menu_timesheet_report_all
+new xml-id of model ir.ui.view: hr_timesheet_sheet.board_hr_week_attendace_form
+new xml-id of model ir.ui.view: hr_timesheet_sheet.hr_timesheet_account_filter
+new xml-id of model ir.ui.view: hr_timesheet_sheet.hr_timesheet_sheet_graph
+new xml-id of model ir.ui.view: hr_timesheet_sheet.view_attendance_tree_who
+new xml-id of model ir.ui.view: hr_timesheet_sheet.view_hr_attendance_filter
+new xml-id of model ir.ui.view: hr_timesheet_sheet.view_hr_timesheet_current_open
+new xml-id of model ir.ui.view: hr_timesheet_sheet.view_hr_timesheet_report_graph
+new xml-id of model ir.ui.view: hr_timesheet_sheet.view_hr_timesheet_report_search
+new xml-id of model ir.ui.view: hr_timesheet_sheet.view_hr_timesheet_report_tree
+new xml-id of model ir.ui.view: hr_timesheet_sheet.view_hr_timesheet_sheet_filter
+new xml-id of model ir.ui.view: hr_timesheet_sheet.view_hr_timesheet_sheet_graph
+new xml-id of model ir.ui.view: hr_timesheet_sheet.view_timesheet_report_graph
+new xml-id of model ir.ui.view: hr_timesheet_sheet.view_timesheet_report_search
+new xml-id of model ir.ui.view: hr_timesheet_sheet.view_timesheet_report_tree
+new xml-id of model process.node: hr_timesheet_sheet.process_node_workontask0
+new xml-id of model process.transition: hr_timesheet_sheet.process_transition_tasktimesheet0

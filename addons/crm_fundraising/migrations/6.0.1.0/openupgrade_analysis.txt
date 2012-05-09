@@ -1,0 +1,89 @@
+---crm_fundraising---
+crm_fundraising / crm.fundraising          / active (boolean)              : NEW 
+crm_fundraising / crm.fundraising          / canal_id (many2one)           : NEW relation: res.partner.canal
+crm_fundraising / crm.fundraising          / categ_id (many2one)           : NEW relation: crm.case.categ
+crm_fundraising / crm.fundraising          / company_id (many2one)         : NEW relation: res.company
+crm_fundraising / crm.fundraising          / create_date (datetime)        : NEW 
+crm_fundraising / crm.fundraising          / date (datetime)               : NEW 
+crm_fundraising / crm.fundraising          / date_action_last (datetime)   : NEW 
+crm_fundraising / crm.fundraising          / date_action_next (datetime)   : NEW 
+crm_fundraising / crm.fundraising          / date_closed (datetime)        : NEW 
+crm_fundraising / crm.fundraising          / date_deadline (date)          : NEW 
+crm_fundraising / crm.fundraising          / description (text)            : NEW 
+crm_fundraising / crm.fundraising          / duration (float)              : NEW 
+crm_fundraising / crm.fundraising          / email_cc (text)               : NEW 
+crm_fundraising / crm.fundraising          / email_from (char)             : NEW 
+crm_fundraising / crm.fundraising          / id (integer)                  : NEW 
+crm_fundraising / crm.fundraising          / message_ids (one2many)        : NEW relation: mailgate.message
+crm_fundraising / crm.fundraising          / name (char)                   : NEW required: required
+crm_fundraising / crm.fundraising          / partner_address_id (many2one) : NEW relation: res.partner.address
+crm_fundraising / crm.fundraising          / partner_id (many2one)         : NEW relation: res.partner
+crm_fundraising / crm.fundraising          / partner_mobile (char)         : NEW 
+crm_fundraising / crm.fundraising          / partner_name (char)           : NEW 
+crm_fundraising / crm.fundraising          / partner_name2 (char)          : NEW 
+crm_fundraising / crm.fundraising          / partner_phone (char)          : NEW 
+crm_fundraising / crm.fundraising          / planned_cost (float)          : NEW 
+crm_fundraising / crm.fundraising          / planned_revenue (float)       : NEW 
+crm_fundraising / crm.fundraising          / priority (selection)          : NEW selection_keys: ['1', '2', '3', '4', '5']
+crm_fundraising / crm.fundraising          / probability (float)           : NEW 
+crm_fundraising / crm.fundraising          / ref (reference)               : NEW 
+crm_fundraising / crm.fundraising          / ref2 (reference)              : NEW 
+crm_fundraising / crm.fundraising          / section_id (many2one)         : NEW relation: crm.case.section
+crm_fundraising / crm.fundraising          / stage_id (many2one)           : NEW relation: crm.case.stage
+crm_fundraising / crm.fundraising          / state (selection)             : NEW selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
+crm_fundraising / crm.fundraising          / type_id (many2one)            : NEW relation: crm.case.resource.type
+crm_fundraising / crm.fundraising          / user_id (many2one)            : NEW relation: res.users
+crm_fundraising / crm.fundraising          / write_date (datetime)         : NEW 
+crm_fundraising / crm.fundraising.report   / amount_revenue (float)        : NEW 
+crm_fundraising / crm.fundraising.report   / amount_revenue_prob (float)   : NEW 
+crm_fundraising / crm.fundraising.report   / categ_id (many2one)           : NEW relation: crm.case.categ
+crm_fundraising / crm.fundraising.report   / company_id (many2one)         : NEW relation: res.company
+crm_fundraising / crm.fundraising.report   / create_date (datetime)        : NEW 
+crm_fundraising / crm.fundraising.report   / day (char)                    : NEW 
+crm_fundraising / crm.fundraising.report   / delay_close (float)           : NEW 
+crm_fundraising / crm.fundraising.report   / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+crm_fundraising / crm.fundraising.report   / name (char)                   : NEW 
+crm_fundraising / crm.fundraising.report   / nbr (integer)                 : NEW 
+crm_fundraising / crm.fundraising.report   / partner_id (many2one)         : NEW relation: res.partner
+crm_fundraising / crm.fundraising.report   / planned_cost (float)          : NEW 
+crm_fundraising / crm.fundraising.report   / probability (float)           : NEW 
+crm_fundraising / crm.fundraising.report   / section_id (many2one)         : NEW relation: crm.case.section
+crm_fundraising / crm.fundraising.report   / state (selection)             : NEW selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
+crm_fundraising / crm.fundraising.report   / type_id (many2one)            : NEW relation: crm.case.resource.type
+crm_fundraising / crm.fundraising.report   / user_id (many2one)            : NEW relation: res.users
+new xml-id of model crm.case.categ: crm_fundraising.categ_fund1
+new xml-id of model crm.case.categ: crm_fundraising.categ_fund2
+new xml-id of model crm.case.categ: crm_fundraising.categ_fund3
+new xml-id of model crm.case.categ: crm_fundraising.categ_fund4
+new xml-id of model crm.case.resource.type: crm_fundraising.type_fund1
+new xml-id of model crm.case.resource.type: crm_fundraising.type_fund2
+new xml-id of model crm.case.resource.type: crm_fundraising.type_fund3
+new xml-id of model crm.case.resource.type: crm_fundraising.type_fund4
+new xml-id of model ir.actions.act_window.view: crm_fundraising.action_crm_tag_form_view_fund_all1
+new xml-id of model ir.actions.act_window.view: crm_fundraising.action_crm_tag_graph_view_fund_all1
+new xml-id of model ir.actions.act_window.view: crm_fundraising.action_crm_tag_tree_view_fund_all1
+new xml-id of model ir.actions.act_window.view: crm_fundraising.action_report_crm_fundrising_graph
+new xml-id of model ir.actions.act_window.view: crm_fundraising.action_report_crm_fundrising_tree
+new xml-id of model ir.actions.act_window: crm_fundraising.action_report_crm_fundraising
+new xml-id of model ir.actions.act_window: crm_fundraising.crm_case_category_act_fund_all1
+new xml-id of model ir.actions.act_window: crm_fundraising.crm_fund_categ_action
+new xml-id of model ir.actions.act_window: crm_fundraising.crm_fundraising_stage_act
+new xml-id of model ir.model.access: crm_fundraising.access_crm_fundraising_manager
+new xml-id of model ir.model.access: crm_fundraising.access_crm_fundraising_report_manager
+new xml-id of model ir.model.access: crm_fundraising.access_crm_fundraising_report_user
+new xml-id of model ir.model.access: crm_fundraising.access_crm_fundraising_user
+new xml-id of model ir.ui.menu: base.menu_fundrising
+new xml-id of model ir.ui.menu: crm_fundraising.menu_config_fundrising
+new xml-id of model ir.ui.menu: crm_fundraising.menu_crm_case_fund_raise
+new xml-id of model ir.ui.menu: crm_fundraising.menu_crm_case_fundraising-act
+new xml-id of model ir.ui.menu: crm_fundraising.menu_crm_fundraising_stage_act
+new xml-id of model ir.ui.menu: crm_fundraising.menu_report_crm_fundraising_tree
+new xml-id of model ir.ui.view: crm_fundraising.crm_case_calendar_view_fund
+new xml-id of model ir.ui.view: crm_fundraising.crm_case_form_view_fund
+new xml-id of model ir.ui.view: crm_fundraising.crm_case_graph_view_fund
+new xml-id of model ir.ui.view: crm_fundraising.crm_case_tree_view_fund
+new xml-id of model ir.ui.view: crm_fundraising.view_crm_case_fund_filter
+new xml-id of model ir.ui.view: crm_fundraising.view_report_crm_fundraising_filter
+new xml-id of model ir.ui.view: crm_fundraising.view_report_crm_fundraising_form
+new xml-id of model ir.ui.view: crm_fundraising.view_report_crm_fundraising_graph
+new xml-id of model ir.ui.view: crm_fundraising.view_report_crm_fundraising_tree

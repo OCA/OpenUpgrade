@@ -1,0 +1,43 @@
+---document_webdav---
+document_webdav / document.directory       / dav_prop_ids (one2many)       : NEW relation: document.webdav.dir.property
+document_webdav / document.webdav.dir.property / create_date (datetime)        : NEW 
+document_webdav / document.webdav.dir.property / create_uid (many2one)         : NEW relation: res.users
+document_webdav / document.webdav.dir.property / dir_id (many2one)             : NEW relation: document.directory
+document_webdav / document.webdav.dir.property / do_subst (boolean)            : NEW required: required, req_default: False
+document_webdav / document.webdav.dir.property / name (char)                   : NEW required: required
+document_webdav / document.webdav.dir.property / namespace (char)              : NEW required: required
+document_webdav / document.webdav.dir.property / value (text)                  : NEW 
+document_webdav / document.webdav.dir.property / write_date (datetime)         : NEW 
+document_webdav / document.webdav.dir.property / write_uid (many2one)          : NEW relation: res.users
+document_webdav / document.webdav.file.property / create_date (datetime)        : NEW 
+document_webdav / document.webdav.file.property / create_uid (many2one)         : NEW relation: res.users
+document_webdav / document.webdav.file.property / do_subst (boolean)            : NEW required: required, req_default: False
+document_webdav / document.webdav.file.property / file_id (many2one)            : NEW relation: ir.attachment
+document_webdav / document.webdav.file.property / name (char)                   : NEW required: required
+document_webdav / document.webdav.file.property / namespace (char)              : NEW required: required
+document_webdav / document.webdav.file.property / value (text)                  : NEW 
+document_webdav / document.webdav.file.property / write_date (datetime)         : NEW 
+document_webdav / document.webdav.file.property / write_uid (many2one)          : NEW relation: res.users
+new xml-id of model document.directory: document_webdav.document_directory_groups0
+new xml-id of model document.directory: document_webdav.document_directory_locations0
+new xml-id of model document.directory: document_webdav.document_directory_principals0
+new xml-id of model document.directory: document_webdav.document_directory_resources0
+new xml-id of model document.directory: document_webdav.document_directory_uids1
+new xml-id of model document.directory: document_webdav.document_directory_users1
+new xml-id of model document.webdav.dir.property: document_webdav.document_webdav_dir_property_currentuserprincipal0
+new xml-id of model document.webdav.dir.property: document_webdav.document_webdav_dir_property_principalurl0
+new xml-id of model ir.actions.act_window: document_webdav.action_dir_props_form
+new xml-id of model ir.actions.act_window: document_webdav.action_file_props_form
+new xml-id of model ir.model.access: document_webdav.access_webdav_dir_property_all
+new xml-id of model ir.model.access: document_webdav.access_webdav_dir_property_group_doc_manager
+new xml-id of model ir.model.access: document_webdav.access_webdav_dir_property_group_system
+new xml-id of model ir.model.access: document_webdav.access_webdav_file_property_all
+new xml-id of model ir.ui.menu: document_webdav.menu_dir_props
+new xml-id of model ir.ui.menu: document_webdav.menu_file_props
+new xml-id of model ir.ui.view: document_webdav.view_dir_props_filter
+new xml-id of model ir.ui.view: document_webdav.view_dir_props_form
+new xml-id of model ir.ui.view: document_webdav.view_dir_props_tree
+new xml-id of model ir.ui.view: document_webdav.view_document_directory_form1
+new xml-id of model ir.ui.view: document_webdav.view_file_props_filter
+new xml-id of model ir.ui.view: document_webdav.view_file_props_form
+new xml-id of model ir.ui.view: document_webdav.view_file_props_tree

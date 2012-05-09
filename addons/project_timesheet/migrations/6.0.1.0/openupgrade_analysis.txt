@@ -1,0 +1,34 @@
+---project_timesheet---
+project_timesheet / project.task.work        / hr_analytic_timesheet_id (integer): relation is now 'hr.analytic.timesheet' ('False')
+project_timesheet / project.task.work        / hr_analytic_timesheet_id (integer): type is now 'many2one' ('integer')
+project_timesheet / report.timesheet.task.user / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+project_timesheet / report.timesheet.task.user / year (char)                   : NEW 
+new xml-id of model ir.actions.act_window: project_timesheet.action_project_timesheet_bill_task
+new xml-id of model ir.actions.act_window: project_timesheet.action_report_timesheet_task_user
+new xml-id of model ir.model.access: project_timesheet.access_hr_analytic_timesheet_user
+new xml-id of model ir.model.access: project_timesheet.access_hr_timesheet_sheet_sheet_user
+new xml-id of model ir.model.access: project_timesheet.access_report_timesheet_task_user_manager
+new xml-id of model ir.ui.menu: base.menu_main_pm
+new xml-id of model ir.ui.menu: base.menu_project_management_time_tracking
+new xml-id of model ir.ui.menu: hr.menu_hr_reporting
+new xml-id of model ir.ui.menu: project_timesheet.menu_act_project_management_timesheet_sheet_form
+new xml-id of model ir.ui.menu: project_timesheet.menu_hr_timesheet_sign_in
+new xml-id of model ir.ui.menu: project_timesheet.menu_project_billing
+new xml-id of model ir.ui.menu: project_timesheet.menu_project_billing_line
+new xml-id of model ir.ui.menu: project_timesheet.menu_project_working_hours
+new xml-id of model ir.ui.menu: project_timesheet.menu_timesheet_task_user
+new xml-id of model ir.ui.view: project_timesheet.project_invoice_form
+new xml-id of model ir.ui.view: project_timesheet.project_invoice_form_cutomer
+new xml-id of model ir.ui.view: project_timesheet.project_invoice_search
+new xml-id of model ir.ui.view: project_timesheet.view_account_analytic_line_form_inherit_account_id
+new xml-id of model ir.ui.view: project_timesheet.view_account_analytic_line_search_account_inherit
+new xml-id of model ir.ui.view: project_timesheet.view_account_analytic_line_tree_inherit_account_id
+new xml-id of model ir.ui.view: project_timesheet.view_report_timesheet_task_user_search
+new xml-id of model ir.ui.view: project_timesheet.view_report_timesheet_task_user_tree
+new xml-id of model ir.ui.view: project_timesheet.view_task_hour_per_month_graph
+new xml-id of model process.node: project_timesheet.process_node_taskwork0
+new xml-id of model process.node: project_timesheet.process_node_timesheettask0
+new xml-id of model process.node: project_timesheet.process_node_triggerinvoice0
+new xml-id of model process.transition: project_timesheet.process_transition_filltimesheet0
+new xml-id of model process.transition: project_timesheet.process_transition_taskencoding0
+new xml-id of model process.transition: project_timesheet.process_transition_taskinvoice0

@@ -1,0 +1,6 @@
+---sale_layout---
+sale_layout  / sale.order               / abstract_line_ids (one2many)  : NEW relation: sale.order.line
+sale_layout  / sale.order.line          / layout_type (selection)       : NEW required: required, selection_keys: ['article', 'break', 'line', 'subtotal', 'text', 'title'], req_default: article
+new xml-id of model ir.actions.act_window: sale.action_order_line_tree2
+new xml-id of model ir.actions.report.xml: sale_layout.sale_order_1
+new xml-id of model ir.ui.view: sale_layout.view_order_form_inherit_1

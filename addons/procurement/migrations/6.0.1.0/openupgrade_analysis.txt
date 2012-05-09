@@ -1,0 +1,100 @@
+---procurement---
+procurement  / procurement.order        / close_move (boolean)          : NEW required: required, req_default: 0
+procurement  / procurement.order        / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+procurement  / procurement.order        / date_close (datetime)         : NEW 
+procurement  / procurement.order        / date_planned (datetime)       : NEW required: required, req_default: function
+procurement  / procurement.order        / location_id (many2one)        : NEW relation: stock.location, required: required
+procurement  / procurement.order        / message (char)                : NEW 
+procurement  / procurement.order        / move_id (many2one)            : NEW relation: stock.move
+procurement  / procurement.order        / name (char)                   : NEW required: required
+procurement  / procurement.order        / note (text)                   : NEW 
+procurement  / procurement.order        / origin (char)                 : NEW 
+procurement  / procurement.order        / priority (selection)          : NEW required: required, selection_keys: ['0', '1', '2', '3'], req_default: 1
+procurement  / procurement.order        / procure_method (selection)    : NEW required: required, selection_keys: ['make_to_order', 'make_to_stock'], req_default: make_to_order
+procurement  / procurement.order        / product_id (many2one)         : NEW relation: product.product, required: required
+procurement  / procurement.order        / product_qty (float)           : NEW required: required
+procurement  / procurement.order        / product_uom (many2one)        : NEW relation: product.uom, required: required
+procurement  / procurement.order        / product_uos (many2one)        : NEW relation: product.uom
+procurement  / procurement.order        / product_uos_qty (float)       : NEW 
+procurement  / procurement.order        / state (selection)             : NEW required: required, selection_keys: ['cancel', 'confirmed', 'done', 'draft', 'exception', 'ready', 'running', 'waiting'], req_default: draft
+procurement  / stock.warehouse.orderpoint / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+new xml-id of model ir.actions.act_window: procurement.act_make_procurement
+new xml-id of model ir.actions.act_window: procurement.act_procurement_2_stock_warehouse_orderpoint
+new xml-id of model ir.actions.act_window: procurement.act_product_product_2_stock_warehouse_orderpoint
+new xml-id of model ir.actions.act_window: procurement.act_stock_warehouse_2_stock_warehouse_orderpoint
+new xml-id of model ir.actions.act_window: procurement.action_compute_schedulers
+new xml-id of model ir.actions.act_window: procurement.action_orderpoint_form
+new xml-id of model ir.actions.act_window: procurement.action_procurement_compute
+new xml-id of model ir.actions.act_window: procurement.procurement_action
+new xml-id of model ir.actions.act_window: procurement.procurement_action5
+new xml-id of model ir.actions.act_window: procurement.procurement_action_board
+new xml-id of model ir.actions.act_window: procurement.procurement_exceptions
+new xml-id of model ir.cron: procurement.ir_cron_scheduler_action
+new xml-id of model ir.model.access: procurement.access_mrp_property
+new xml-id of model ir.model.access: procurement.access_mrp_property_group
+new xml-id of model ir.model.access: procurement.access_procurement
+new xml-id of model ir.model.access: procurement.access_procurement_stock_manager
+new xml-id of model ir.model.access: procurement.access_procurement_stock_user
+new xml-id of model ir.model.access: procurement.access_stock_warehouse_orderpoint
+new xml-id of model ir.model.access: procurement.access_stock_warehouse_orderpoint_system
+new xml-id of model ir.rule: procurement.procurement_rule
+new xml-id of model ir.rule: procurement.stock_warehouse_orderpoint_rule
+new xml-id of model ir.sequence.type: procurement.sequence_mrp_op_type
+new xml-id of model ir.sequence: procurement.sequence_mrp_op
+new xml-id of model ir.ui.menu: procurement.menu_stock_order_points
+new xml-id of model ir.ui.menu: procurement.menu_stock_proc_schedulers
+new xml-id of model ir.ui.menu: procurement.menu_stock_procurement
+new xml-id of model ir.ui.menu: procurement.menu_stock_procurement_action
+new xml-id of model ir.ui.menu: procurement.menu_stock_sched
+new xml-id of model ir.ui.view: procurement.board_mrp_procurement_form
+new xml-id of model ir.ui.view: procurement.mrp_company
+new xml-id of model ir.ui.view: procurement.procurement_form_view
+new xml-id of model ir.ui.view: procurement.procurement_tree_view
+new xml-id of model ir.ui.view: procurement.procurement_tree_view_board
+new xml-id of model ir.ui.view: procurement.view_compute_procurment_wizard
+new xml-id of model ir.ui.view: procurement.view_compute_schedulers_wizard
+new xml-id of model ir.ui.view: procurement.view_make_procurment_wizard
+new xml-id of model ir.ui.view: procurement.view_procurement_compute_wizard
+new xml-id of model ir.ui.view: procurement.view_procurement_filter
+new xml-id of model ir.ui.view: procurement.view_warehouse_orderpoint_form
+new xml-id of model ir.ui.view: procurement.view_warehouse_orderpoint_tree
+new xml-id of model ir.ui.view: procurement.warehouse_orderpoint_search
+new xml-id of model process.node: procurement.process_node_procureproducts0
+new xml-id of model process.node: procurement.process_node_serviceonorder0
+new xml-id of model process.process: procurement.process_process_procurementprocess0
+new xml-id of model process.process: procurement.process_process_serviceproductprocess0
+new xml-id of model workflow.activity: procurement.act_cancel
+new xml-id of model workflow.activity: procurement.act_confirm
+new xml-id of model workflow.activity: procurement.act_confirm_mto
+new xml-id of model workflow.activity: procurement.act_confirm_mts
+new xml-id of model workflow.activity: procurement.act_confirm_wait
+new xml-id of model workflow.activity: procurement.act_done
+new xml-id of model workflow.activity: procurement.act_draft
+new xml-id of model workflow.activity: procurement.act_make_done
+new xml-id of model workflow.activity: procurement.act_make_to_stock
+new xml-id of model workflow.activity: procurement.act_produce_check
+new xml-id of model workflow.activity: procurement.act_produce_service
+new xml-id of model workflow.activity: procurement.act_wait_done
+new xml-id of model workflow.transition: procurement.trans_confirm_cancel
+new xml-id of model workflow.transition: procurement.trans_confirm_cancel2
+new xml-id of model workflow.transition: procurement.trans_confirm_confirm_wait
+new xml-id of model workflow.transition: procurement.trans_confirm_mto_cancel
+new xml-id of model workflow.transition: procurement.trans_confirm_mto_confirm
+new xml-id of model workflow.transition: procurement.trans_confirm_mto_produce_check
+new xml-id of model workflow.transition: procurement.trans_confirm_mto_purchase
+new xml-id of model workflow.transition: procurement.trans_confirm_mts_cancel
+new xml-id of model workflow.transition: procurement.trans_confirm_mts_confirm
+new xml-id of model workflow.transition: procurement.trans_confirm_mts_make_to_stock
+new xml-id of model workflow.transition: procurement.trans_confirm_wait_confirm_mto
+new xml-id of model workflow.transition: procurement.trans_confirm_wait_confirm_mts
+new xml-id of model workflow.transition: procurement.trans_confirm_wait_done
+new xml-id of model workflow.transition: procurement.trans_confirm_waiting_cancel
+new xml-id of model workflow.transition: procurement.trans_draft_cancel
+new xml-id of model workflow.transition: procurement.trans_draft_confirm
+new xml-id of model workflow.transition: procurement.trans_make_done_confirm
+new xml-id of model workflow.transition: procurement.trans_make_done_done
+new xml-id of model workflow.transition: procurement.trans_make_to_stock_make_done
+new xml-id of model workflow.transition: procurement.trans_produce_service_cancel
+new xml-id of model workflow.transition: procurement.trans_produce_service_make_done
+new xml-id of model workflow.transition: procurement.trans_product_check_produce_service
+new xml-id of model workflow: procurement.wkf_procurement

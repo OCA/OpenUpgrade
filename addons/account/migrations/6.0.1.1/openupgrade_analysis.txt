@@ -1,0 +1,714 @@
+---account---
+account      / account.account          / check_history (boolean)       : DEL 
+account      / account.account          / type (selection)              : selection_keys is now '['closed', 'consolidation', 'liquidity', 'other', 'payable', 'receivable', 'view']' ('['closed', 'consolidation', 'other', 'payable', 'receivable', 'view']')
+account      / account.account.template / nocreate (boolean)            : NEW 
+account      / account.account.template / type (selection)              : selection_keys is now '['closed', 'consolidation', 'liquidity', 'other', 'payable', 'receivable', 'view']' ('['closed', 'consolidation', 'other', 'payable', 'receivable', 'view']')
+account      / account.account.type     / note (text)                   : NEW 
+account      / account.account.type     / partner_account (boolean)     : DEL 
+account      / account.account.type     / report_type (selection)       : NEW required: required, selection_keys: ['asset', 'expense', 'income', 'liability', 'none'], req_default: none
+account      / account.account.type     / sequence (integer)            : DEL 
+account      / account.analytic.account / active (boolean)              : DEL 
+account      / account.analytic.account / balance (float)               : module is now 'analytic' ('account')
+account      / account.analytic.account / child_ids (one2many)          : module is now 'analytic' ('account')
+account      / account.analytic.account / code (char)                   : module is now 'analytic' ('account')
+account      / account.analytic.account / company_id (many2one)         : module is now 'analytic' ('account')
+account      / account.analytic.account / complete_name (char)          : module is now 'analytic' ('account')
+account      / account.analytic.account / contact_id (many2one)         : module is now 'analytic' ('account')
+account      / account.analytic.account / credit (float)                : module is now 'analytic' ('account')
+account      / account.analytic.account / date (date)                   : module is now 'analytic' ('account')
+account      / account.analytic.account / date_start (date)             : module is now 'analytic' ('account')
+account      / account.analytic.account / debit (float)                 : module is now 'analytic' ('account')
+account      / account.analytic.account / description (text)            : module is now 'analytic' ('account')
+account      / account.analytic.account / line_ids (one2many)           : module is now 'analytic' ('account')
+account      / account.analytic.account / name (char)                   : module is now 'analytic' ('account')
+account      / account.analytic.account / parent_id (many2one)          : module is now 'analytic' ('account')
+account      / account.analytic.account / partner_id (many2one)         : module is now 'analytic' ('account')
+account      / account.analytic.account / quantity (float)              : module is now 'analytic' ('account')
+account      / account.analytic.account / quantity_max (float)          : module is now 'analytic' ('account')
+account      / account.analytic.account / state (selection)             : module is now 'analytic' ('account')
+account      / account.analytic.account / state (selection)             : selection_keys is now '['cancelled', 'close', 'draft', 'open', 'pending', 'template']' ('['close', 'draft', 'open', 'pending']')
+account      / account.analytic.account / type (selection)              : module is now 'analytic' ('account')
+account      / account.analytic.account / user_id (many2one)            : module is now 'analytic' ('account')
+account      / account.analytic.journal / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+account      / account.analytic.line    / account_id (many2one)         : module is now 'analytic' ('account')
+account      / account.analytic.line    / amount (float)                : module is now 'analytic' ('account')
+account      / account.analytic.line    / date (date)                   : module is now 'analytic' ('account')
+account      / account.analytic.line    / name (char)                   : module is now 'analytic' ('account')
+account      / account.analytic.line    / unit_amount (float)           : module is now 'analytic' ('account')
+account      / account.analytic.line    / user_id (many2one)            : module is now 'analytic' ('account')
+account      / account.bank.statement   / closing_date (datetime)       : NEW 
+account      / account.bank.statement   / ending_details_ids (one2many) : NEW relation: account.cashbox.line
+account      / account.bank.statement   / starting_details_ids (one2many): NEW relation: account.cashbox.line
+account      / account.bank.statement   / state (selection)             : selection_keys is now '['confirm', 'draft', 'open']' ('['confirm', 'draft']')
+account      / account.bank.statement   / user_id (many2one)            : NEW relation: res.users
+account      / account.bank.statement.line / analytic_account_id (many2one): NEW relation: account.analytic.account
+account      / account.bank.statement.line / reconcile_id (many2one)       : DEL relation: account.bank.statement.reconcile
+account      / account.bank.statement.line / sequence (integer)            : NEW 
+account      / account.cashbox.line     / ending_id (many2one)          : NEW relation: account.bank.statement
+account      / account.cashbox.line     / number (integer)              : NEW 
+account      / account.cashbox.line     / pieces (float)                : NEW 
+account      / account.cashbox.line     / starting_id (many2one)        : NEW relation: account.bank.statement
+account      / account.chart.template   / property_reserve_and_surplus_account (many2one): NEW relation: account.account.template
+account      / account.entries.report   / account_id (many2one)         : NEW relation: account.account
+account      / account.entries.report   / amount_currency (float)       : NEW 
+account      / account.entries.report   / analytic_account_id (many2one): NEW relation: account.analytic.account
+account      / account.entries.report   / balance (float)               : NEW 
+account      / account.entries.report   / company_id (many2one)         : NEW relation: res.company
+account      / account.entries.report   / credit (float)                : NEW 
+account      / account.entries.report   / currency_id (many2one)        : NEW relation: res.currency
+account      / account.entries.report   / date (date)                   : NEW 
+account      / account.entries.report   / date_created (date)           : NEW 
+account      / account.entries.report   / date_maturity (date)          : NEW 
+account      / account.entries.report   / day (char)                    : NEW 
+account      / account.entries.report   / debit (float)                 : NEW 
+account      / account.entries.report   / fiscalyear_id (many2one)      : NEW relation: account.fiscalyear
+account      / account.entries.report   / journal_id (many2one)         : NEW relation: account.journal
+account      / account.entries.report   / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+account      / account.entries.report   / move_line_state (selection)   : NEW selection_keys: ['draft', 'valid']
+account      / account.entries.report   / move_state (selection)        : NEW selection_keys: ['draft', 'posted']
+account      / account.entries.report   / nbr (integer)                 : NEW 
+account      / account.entries.report   / partner_id (many2one)         : NEW relation: res.partner
+account      / account.entries.report   / period_id (many2one)          : NEW relation: account.period
+account      / account.entries.report   / product_id (many2one)         : NEW relation: product.product
+account      / account.entries.report   / product_uom_id (many2one)     : NEW relation: product.uom
+account      / account.entries.report   / quantity (float)              : NEW 
+account      / account.entries.report   / reconcile_id (many2one)       : NEW relation: account.move.reconcile
+account      / account.entries.report   / ref (char)                    : NEW 
+account      / account.entries.report   / type (selection)              : NEW selection_keys: ['cash', 'closed', 'consolidation', 'other', 'payable', 'receivable', 'view']
+account      / account.entries.report   / user_type (many2one)          : NEW relation: account.account.type
+account      / account.entries.report   / year (char)                   : NEW 
+account      / account.fiscalyear       / company_id (many2one)         : now required, default = function
+account      / account.invoice          / internal_number (char)        : NEW 
+account      / account.invoice          / number (char)                 : now a function
+account      / account.invoice          / partner_bank (many2one)       : DEL relation: res.partner.bank
+account      / account.invoice          / partner_bank_id (many2one)    : NEW relation: res.partner.bank
+account      / account.invoice          / user_id (many2one)            : NEW relation: res.users
+account      / account.invoice.report   / account_id (many2one)         : NEW relation: account.account
+account      / account.invoice.report   / address_contact_id (many2one) : NEW relation: res.partner.address
+account      / account.invoice.report   / address_invoice_id (many2one) : NEW relation: res.partner.address
+account      / account.invoice.report   / categ_id (many2one)           : NEW relation: product.category
+account      / account.invoice.report   / company_id (many2one)         : NEW relation: res.company
+account      / account.invoice.report   / currency_id (many2one)        : NEW relation: res.currency
+account      / account.invoice.report   / currency_rate (float)         : NEW 
+account      / account.invoice.report   / date (date)                   : NEW 
+account      / account.invoice.report   / date_due (date)               : NEW 
+account      / account.invoice.report   / day (char)                    : NEW 
+account      / account.invoice.report   / delay_to_pay (float)          : NEW 
+account      / account.invoice.report   / due_delay (float)             : NEW 
+account      / account.invoice.report   / fiscal_position (many2one)    : NEW relation: account.fiscal.position
+account      / account.invoice.report   / journal_id (many2one)         : NEW relation: account.journal
+account      / account.invoice.report   / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+account      / account.invoice.report   / nbr (integer)                 : NEW 
+account      / account.invoice.report   / partner_bank_id (many2one)    : NEW relation: res.partner.bank
+account      / account.invoice.report   / partner_id (many2one)         : NEW relation: res.partner
+account      / account.invoice.report   / payment_term (many2one)       : NEW relation: account.payment.term
+account      / account.invoice.report   / period_id (many2one)          : NEW relation: account.period
+account      / account.invoice.report   / price_average (float)         : NEW 
+account      / account.invoice.report   / price_total (float)           : NEW 
+account      / account.invoice.report   / price_total_tax (float)       : NEW 
+account      / account.invoice.report   / product_id (many2one)         : NEW relation: product.product
+account      / account.invoice.report   / product_qty (float)           : NEW 
+account      / account.invoice.report   / residual (float)              : NEW 
+account      / account.invoice.report   / state (selection)             : NEW selection_keys: ['cancel', 'draft', 'open', 'paid', 'proforma', 'proforma2']
+account      / account.invoice.report   / type (selection)              : NEW selection_keys: ['in_invoice', 'in_refund', 'out_invoice', 'out_refund']
+account      / account.invoice.report   / uom_name (char)               : NEW 
+account      / account.invoice.report   / user_id (many2one)            : NEW relation: res.users
+account      / account.invoice.report   / year (char)                   : NEW 
+account      / account.journal          / active (boolean)              : DEL 
+account      / account.journal          / code (char)                   : now required
+account      / account.journal          / company_id (many2one)         : not a function anymore
+account      / account.journal          / company_id (many2one)         : now required, default = function
+account      / account.journal          / invoice_sequence_id (many2one): DEL relation: ir.sequence
+account      / account.journal          / type (selection)              : selection_keys is now '['bank', 'cash', 'general', 'purchase', 'purchase_refund', 'sale', 'sale_refund', 'situation']' ('['cash', 'general', 'purchase', 'sale', 'situation']')
+account      / account.model            / ref (char)                    : DEL 
+account      / account.model.line       / analytic_account_id (many2one): NEW relation: account.analytic.account
+account      / account.model.line       / date (selection)              : DEL required: required, selection_keys: ['partner', 'today'], req_default: function
+account      / account.model.line       / ref (char)                    : DEL 
+account      / account.move             / type (selection)              : DEL selection_keys: ['bank_pay_voucher', 'bank_rec_voucher', 'cont_voucher', 'journal_pur_voucher', 'journal_sale_vou', 'journal_voucher', 'pay_voucher', 'rec_voucher']
+account      / account.move.line        / amount_taxed (float)          : DEL 
+account      / account.move.line        / centralisation (selection)    : selection_keys is now '['credit', 'currency', 'debit', 'normal']' ('['credit', 'debit', 'normal']')
+account      / account.move.line        / move_id (many2one)            : now required
+account      / account.move.line        / ref (char)                    : now a function
+account      / account.tax              / tax_group (selection)         : DEL selection_keys: ['other', 'vat']
+account      / account.tax.template     / price_include (boolean)       : NEW 
+account      / account.tax.template     / tax_group (selection)         : DEL selection_keys: ['other', 'vat']
+account      / account.tax.template     / type (selection)              : selection_keys is now '['balance', 'code', 'fixed', 'none', 'percent']' ('['code', 'fixed', 'none', 'percent']')
+account      / analytic.entries.report  / account_id (many2one)         : NEW relation: account.analytic.account
+account      / analytic.entries.report  / amount (float)                : NEW 
+account      / analytic.entries.report  / company_id (many2one)         : NEW relation: res.company, required: required
+account      / analytic.entries.report  / currency_id (many2one)        : NEW relation: res.currency, required: required
+account      / analytic.entries.report  / date (date)                   : NEW 
+account      / analytic.entries.report  / day (char)                    : NEW 
+account      / analytic.entries.report  / general_account_id (many2one) : NEW relation: account.account, required: required
+account      / analytic.entries.report  / journal_id (many2one)         : NEW relation: account.analytic.journal, required: required
+account      / analytic.entries.report  / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+account      / analytic.entries.report  / move_id (many2one)            : NEW relation: account.move.line, required: required
+account      / analytic.entries.report  / name (char)                   : NEW 
+account      / analytic.entries.report  / nbr (integer)                 : NEW 
+account      / analytic.entries.report  / partner_id (many2one)         : NEW relation: res.partner
+account      / analytic.entries.report  / product_id (many2one)         : NEW relation: product.product, required: required
+account      / analytic.entries.report  / product_uom_id (many2one)     : NEW relation: product.uom, required: required
+account      / analytic.entries.report  / unit_amount (float)           : NEW 
+account      / analytic.entries.report  / user_id (many2one)            : NEW relation: res.users
+account      / analytic.entries.report  / year (char)                   : NEW 
+account      / report.account.sales     / account_id (many2one)         : NEW relation: account.account
+account      / report.account.sales     / amount_total (float)          : NEW 
+account      / report.account.sales     / currency_id (many2one)        : NEW relation: res.currency
+account      / report.account.sales     / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+account      / report.account.sales     / name (char)                   : NEW 
+account      / report.account.sales     / period_id (many2one)          : NEW relation: account.period
+account      / report.account.sales     / product_id (many2one)         : NEW relation: product.product
+account      / report.account.sales     / quantity (float)              : NEW 
+account      / report.account_type.sales / amount_total (float)          : NEW 
+account      / report.account_type.sales / currency_id (many2one)        : NEW relation: res.currency
+account      / report.account_type.sales / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+account      / report.account_type.sales / name (char)                   : NEW 
+account      / report.account_type.sales / period_id (many2one)          : NEW relation: account.period
+account      / report.account_type.sales / product_id (many2one)         : NEW relation: product.product
+account      / report.account_type.sales / quantity (float)              : NEW 
+account      / report.account_type.sales / user_type (many2one)          : NEW relation: account.account.type
+account      / res.partner              / contract_ids (one2many)       : NEW relation: account.analytic.account
+account      / res.partner              / invoice_ids (one2many)        : NEW relation: account.invoice.line
+account      / res.partner              / last_reconciliation_date (datetime): NEW 
+deleted xml-id of model account.journal.column: account.bank_col11
+deleted xml-id of model account.journal.column: account.bank_col12
+deleted xml-id of model account.journal.column: account.journal_col10
+deleted xml-id of model account.journal.column: account.journal_col25
+deleted xml-id of model account.journal.column: account.journal_col26
+deleted xml-id of model account.journal.column: account.journal_col7
+deleted xml-id of model ir.actions.act_window.view: account.act_res_partner_2_account_invoice_opened_view1
+deleted xml-id of model ir.actions.act_window.view: account.act_res_partner_2_account_invoice_opened_view2
+deleted xml-id of model ir.actions.act_window.view: account.action_invoice_tree10_view1
+deleted xml-id of model ir.actions.act_window.view: account.action_invoice_tree10_view2
+deleted xml-id of model ir.actions.act_window.view: account.action_invoice_tree11_view1
+deleted xml-id of model ir.actions.act_window.view: account.action_invoice_tree11_view2
+deleted xml-id of model ir.actions.act_window.view: account.action_invoice_tree12_view1
+deleted xml-id of model ir.actions.act_window.view: account.action_invoice_tree12_view2
+deleted xml-id of model ir.actions.act_window.view: account.action_invoice_tree13_view1
+deleted xml-id of model ir.actions.act_window.view: account.action_invoice_tree13_view2
+deleted xml-id of model ir.actions.act_window.view: account.action_invoice_tree5_view1
+deleted xml-id of model ir.actions.act_window.view: account.action_invoice_tree5_view2
+deleted xml-id of model ir.actions.act_window.view: account.action_invoice_tree6_view1
+deleted xml-id of model ir.actions.act_window.view: account.action_invoice_tree6_view2
+deleted xml-id of model ir.actions.act_window.view: account.action_invoice_tree7_view1
+deleted xml-id of model ir.actions.act_window.view: account.action_invoice_tree7_view2
+deleted xml-id of model ir.actions.act_window.view: account.action_invoice_tree8_view1
+deleted xml-id of model ir.actions.act_window.view: account.action_invoice_tree8_view2
+deleted xml-id of model ir.actions.act_window.view: account.action_invoice_tree9_view1
+deleted xml-id of model ir.actions.act_window.view: account.action_invoice_tree9_view2
+deleted xml-id of model ir.actions.act_window: account.act_acc_analytic_acc_2_report_hr_timesheet_invoice_journal
+deleted xml-id of model ir.actions.act_window: account.act_account_analytic_account_2_account_invoice_line
+deleted xml-id of model ir.actions.act_window: account.act_account_invoice_account_move_unreconciled
+deleted xml-id of model ir.actions.act_window: account.act_account_partner_account_move_unreconciled
+deleted xml-id of model ir.actions.act_window: account.action_account_analytic_journal_tree2
+deleted xml-id of model ir.actions.act_window: account.action_account_config_wizard_form
+deleted xml-id of model ir.actions.act_window: account.action_bank_statement_reconciliation_form
+deleted xml-id of model ir.actions.act_window: account.action_bank_statement_tree2
+deleted xml-id of model ir.actions.act_window: account.action_invoice_tree10
+deleted xml-id of model ir.actions.act_window: account.action_invoice_tree11
+deleted xml-id of model ir.actions.act_window: account.action_invoice_tree12
+deleted xml-id of model ir.actions.act_window: account.action_invoice_tree13
+deleted xml-id of model ir.actions.act_window: account.action_invoice_tree1_new
+deleted xml-id of model ir.actions.act_window: account.action_invoice_tree2_new
+deleted xml-id of model ir.actions.act_window: account.action_invoice_tree3_new
+deleted xml-id of model ir.actions.act_window: account.action_invoice_tree4_new
+deleted xml-id of model ir.actions.act_window: account.action_invoice_tree5
+deleted xml-id of model ir.actions.act_window: account.action_invoice_tree6
+deleted xml-id of model ir.actions.act_window: account.action_invoice_tree7
+deleted xml-id of model ir.actions.act_window: account.action_invoice_tree8
+deleted xml-id of model ir.actions.act_window: account.action_invoice_tree9
+deleted xml-id of model ir.actions.act_window: account.action_move_line_form_encode_by_move
+deleted xml-id of model ir.actions.act_window: account.action_wizard_company_setup_form
+deleted xml-id of model ir.actions.act_window: account.analytic_account_form
+deleted xml-id of model ir.actions.act_window: account.report_account_analytic_journal_tree
+deleted xml-id of model ir.actions.act_window: account.report_account_analytic_journal_tree_month
+deleted xml-id of model ir.actions.report.xml: account.account_analytic_account_analytic_check
+deleted xml-id of model ir.actions.todo: account.config_fiscalyear
+deleted xml-id of model ir.actions.todo: account.config_wizard_account_base_setup_form
+deleted xml-id of model ir.actions.wizard: account.account_analytic_account_analytic_check_report
+deleted xml-id of model ir.actions.wizard: account.account_analytic_account_balance_report
+deleted xml-id of model ir.actions.wizard: account.account_analytic_account_cost_ledger_report
+deleted xml-id of model ir.actions.wizard: account.account_analytic_account_inverted_balance_report
+deleted xml-id of model ir.actions.wizard: account.account_analytic_account_journal_report
+deleted xml-id of model ir.actions.wizard: account.account_analytic_account_quantity_cost_ledger_report
+deleted xml-id of model ir.actions.wizard: account.action_account_analytic_line
+deleted xml-id of model ir.actions.wizard: account.action_account_bank_reconcile_tree
+deleted xml-id of model ir.actions.wizard: account.action_move_journal_line_form
+deleted xml-id of model ir.actions.wizard: account.action_move_journal_line_form_select
+deleted xml-id of model ir.actions.wizard: account.wizard_account_balance_report
+deleted xml-id of model ir.actions.wizard: account.wizard_account_chart
+deleted xml-id of model ir.actions.wizard: account.wizard_account_use_model
+deleted xml-id of model ir.actions.wizard: account.wizard_aged_trial_balance
+deleted xml-id of model ir.actions.wizard: account.wizard_analytic_account_chart
+deleted xml-id of model ir.actions.wizard: account.wizard_automatic_reconcile
+deleted xml-id of model ir.actions.wizard: account.wizard_balance_report
+deleted xml-id of model ir.actions.wizard: account.wizard_central_journal
+deleted xml-id of model ir.actions.wizard: account.wizard_fiscalyear_close
+deleted xml-id of model ir.actions.wizard: account.wizard_fiscalyear_close_state
+deleted xml-id of model ir.actions.wizard: account.wizard_general_journal
+deleted xml-id of model ir.actions.wizard: account.wizard_general_ledger
+deleted xml-id of model ir.actions.wizard: account.wizard_general_ledger_report
+deleted xml-id of model ir.actions.wizard: account.wizard_generate_subscription
+deleted xml-id of model ir.actions.wizard: account.wizard_invoice_pay
+deleted xml-id of model ir.actions.wizard: account.wizard_invoice_refund
+deleted xml-id of model ir.actions.wizard: account.wizard_invoice_state_cancel
+deleted xml-id of model ir.actions.wizard: account.wizard_invoice_state_confirm
+deleted xml-id of model ir.actions.wizard: account.wizard_line_account_use_model
+deleted xml-id of model ir.actions.wizard: account.wizard_move_line_select
+deleted xml-id of model ir.actions.wizard: account.wizard_open_closed_fiscalyear
+deleted xml-id of model ir.actions.wizard: account.wizard_paid_open
+deleted xml-id of model ir.actions.wizard: account.wizard_partner_balance_report
+deleted xml-id of model ir.actions.wizard: account.wizard_period_close
+deleted xml-id of model ir.actions.wizard: account.wizard_populate_statement_from_inv
+deleted xml-id of model ir.actions.wizard: account.wizard_print_journal
+deleted xml-id of model ir.actions.wizard: account.wizard_reconcile
+deleted xml-id of model ir.actions.wizard: account.wizard_reconcile_select
+deleted xml-id of model ir.actions.wizard: account.wizard_reconcile_unreconcile
+deleted xml-id of model ir.actions.wizard: account.wizard_third_party_ledger
+deleted xml-id of model ir.actions.wizard: account.wizard_unreconcile
+deleted xml-id of model ir.actions.wizard: account.wizard_unreconcile_select
+deleted xml-id of model ir.actions.wizard: account.wizard_validate_account_moves
+deleted xml-id of model ir.actions.wizard: account.wizard_validate_account_moves_line
+deleted xml-id of model ir.actions.wizard: account.wizard_vat_declaration
+deleted xml-id of model ir.model.access: account.access_account_account_product_manager
+deleted xml-id of model ir.model.access: account.access_account_analytic_line_uinvoice
+deleted xml-id of model ir.model.access: account.access_account_bank_accounts_wizard
+deleted xml-id of model ir.model.access: account.access_account_bank_statement_reconcile
+deleted xml-id of model ir.model.access: account.access_account_bank_statement_reconcile_line
+deleted xml-id of model ir.model.access: account.access_account_config_wizard_account_manager
+deleted xml-id of model ir.model.access: account.access_account_config_wizard_system_manager
+deleted xml-id of model ir.model.access: account.access_account_journal_product_manager
+deleted xml-id of model ir.model.access: account.access_account_tax_code_uinvoice
+deleted xml-id of model ir.model.access: account.access_account_tax_uinvoice
+deleted xml-id of model ir.model.access: account.access_fiscalyear_seq
+deleted xml-id of model ir.model.access: account.access_report_hr_timesheet_invoice_journal
+deleted xml-id of model ir.model.access: account.access_wizard_company_setup
+deleted xml-id of model ir.model.access: account.access_wizard_company_setup_manager
+deleted xml-id of model ir.model.access: account.access_wizard_company_setup_user
+deleted xml-id of model ir.model.access: account.access_wizard_multi_charts_accounts
+deleted xml-id of model ir.ui.menu: account.account_analytic_chart_balance
+deleted xml-id of model ir.ui.menu: account.account_analytic_def_chart
+deleted xml-id of model ir.ui.menu: account.account_analytic_form
+deleted xml-id of model ir.ui.menu: account.account_entries_analytic_entries
+deleted xml-id of model ir.ui.menu: account.menu_account_balance_report
+deleted xml-id of model ir.ui.menu: account.menu_account_use_model
+deleted xml-id of model ir.ui.menu: account.menu_action_account_bank_reconcile_check_tree
+deleted xml-id of model ir.ui.menu: account.menu_action_account_bank_reconcile_tree
+deleted xml-id of model ir.ui.menu: account.menu_action_account_journal_period_tree
+deleted xml-id of model ir.ui.menu: account.menu_action_account_tree
+deleted xml-id of model ir.ui.menu: account.menu_action_invoice_tree10
+deleted xml-id of model ir.ui.menu: account.menu_action_invoice_tree11
+deleted xml-id of model ir.ui.menu: account.menu_action_invoice_tree12
+deleted xml-id of model ir.ui.menu: account.menu_action_invoice_tree13
+deleted xml-id of model ir.ui.menu: account.menu_action_invoice_tree1_new
+deleted xml-id of model ir.ui.menu: account.menu_action_invoice_tree2_new
+deleted xml-id of model ir.ui.menu: account.menu_action_invoice_tree3_new
+deleted xml-id of model ir.ui.menu: account.menu_action_invoice_tree4_new
+deleted xml-id of model ir.ui.menu: account.menu_action_invoice_tree6
+deleted xml-id of model ir.ui.menu: account.menu_action_invoice_tree7
+deleted xml-id of model ir.ui.menu: account.menu_action_invoice_tree8
+deleted xml-id of model ir.ui.menu: account.menu_action_invoice_tree9
+deleted xml-id of model ir.ui.menu: account.menu_action_move_line_form
+deleted xml-id of model ir.ui.menu: account.menu_action_move_line_search
+deleted xml-id of model ir.ui.menu: account.menu_action_subscription_form_new
+deleted xml-id of model ir.ui.menu: account.menu_action_subscription_form_running
+deleted xml-id of model ir.ui.menu: account.menu_bank_statement_draft_tree
+deleted xml-id of model ir.ui.menu: account.menu_bank_statement_tree2
+deleted xml-id of model ir.ui.menu: account.menu_central_journal
+deleted xml-id of model ir.ui.menu: account.menu_encode_entries_by_move
+deleted xml-id of model ir.ui.menu: account.menu_finance_invoice
+deleted xml-id of model ir.ui.menu: account.menu_general_journal
+deleted xml-id of model ir.ui.menu: account.menu_generic_report
+deleted xml-id of model ir.ui.menu: account.menu_invoice_draft
+deleted xml-id of model ir.ui.menu: account.menu_partner_balance
+deleted xml-id of model ir.ui.menu: account.menu_print_journal
+deleted xml-id of model ir.ui.menu: account.menu_reconcile_select
+deleted xml-id of model ir.ui.menu: account.menu_third_party_ledger
+deleted xml-id of model ir.ui.menu: account.menu_unreconcile_select
+deleted xml-id of model ir.ui.menu: account.menu_wizard
+deleted xml-id of model ir.ui.menu: account.menu_wizard_open_closed_fy
+deleted xml-id of model ir.ui.menu: account.menu_wizard_vat_declaration
+deleted xml-id of model ir.ui.menu: account.next_id_20
+deleted xml-id of model ir.ui.menu: account.next_id_29
+deleted xml-id of model ir.ui.menu: account.next_id_30
+deleted xml-id of model ir.ui.menu: account.next_id_41
+deleted xml-id of model ir.ui.menu: account.next_id_42
+deleted xml-id of model ir.ui.menu: account.next_id_43
+deleted xml-id of model ir.ui.menu: account.report_account_analytic_journal_print
+deleted xml-id of model ir.ui.menu: account.report_account_analytic_journal_print_month
+deleted xml-id of model ir.ui.view: account.view_account_config_wizard_form
+deleted xml-id of model ir.ui.view: account.view_bank_statement_reconcile
+deleted xml-id of model ir.ui.view: account.view_bank_statement_reconcile_form
+deleted xml-id of model ir.ui.view: account.wizard_company_setup_form
+deleted xml-id of model ir.values: account.ir_open_account_account
+deleted xml-id of model ir.values: account.ir_open_account_journal_analytic
+deleted xml-id of model res.roles: account.res_role_period
+deleted xml-id of model res.roles: account.res_roles_invoice0
+deleted xml-id of model workflow.activity: account.act_proforma
+deleted xml-id of model workflow.transition: account.pro2_to_paid
+deleted xml-id of model workflow.transition: account.t11
+deleted xml-id of model workflow.transition: account.t3
+deleted xml-id of model workflow.transition: account.t5
+deleted xml-id of model workflow.transition: account.t7
+new xml-id of model account.analytic.journal: account.analytic_journal_sale
+new xml-id of model account.journal.column: account.bank_col20
+new xml-id of model account.journal.column: account.bank_col20_multi
+new xml-id of model account.journal.column: account.sp_journal_col1
+new xml-id of model account.journal.column: account.sp_journal_col10
+new xml-id of model account.journal.column: account.sp_journal_col11
+new xml-id of model account.journal.column: account.sp_journal_col2
+new xml-id of model account.journal.column: account.sp_journal_col20
+new xml-id of model account.journal.column: account.sp_journal_col24
+new xml-id of model account.journal.column: account.sp_journal_col3
+new xml-id of model account.journal.column: account.sp_journal_col4
+new xml-id of model account.journal.column: account.sp_journal_col5
+new xml-id of model account.journal.column: account.sp_journal_col6
+new xml-id of model account.journal.column: account.sp_journal_col7
+new xml-id of model account.journal.column: account.sp_journal_col8
+new xml-id of model account.journal.column: account.sp_journal_col9
+new xml-id of model account.journal.column: account.sp_refund_journal_col1
+new xml-id of model account.journal.column: account.sp_refund_journal_col10
+new xml-id of model account.journal.column: account.sp_refund_journal_col11
+new xml-id of model account.journal.column: account.sp_refund_journal_col2
+new xml-id of model account.journal.column: account.sp_refund_journal_col20
+new xml-id of model account.journal.column: account.sp_refund_journal_col24
+new xml-id of model account.journal.column: account.sp_refund_journal_col3
+new xml-id of model account.journal.column: account.sp_refund_journal_col4
+new xml-id of model account.journal.column: account.sp_refund_journal_col5
+new xml-id of model account.journal.column: account.sp_refund_journal_col6
+new xml-id of model account.journal.column: account.sp_refund_journal_col7
+new xml-id of model account.journal.column: account.sp_refund_journal_col8
+new xml-id of model account.journal.column: account.sp_refund_journal_col9
+new xml-id of model account.journal.view: account.account_sp_journal_view
+new xml-id of model account.journal.view: account.account_sp_refund_journal_view
+new xml-id of model board.note.type: account.note_account_type
+new xml-id of model ir.actions.act_window.view: account.act_cash_statement1_all
+new xml-id of model ir.actions.act_window.view: account.act_cash_statement2_all
+new xml-id of model ir.actions.act_window.view: account.act_cash_statement3_all
+new xml-id of model ir.actions.act_window.view: account.action_bank_statement_form_bank
+new xml-id of model ir.actions.act_window.view: account.action_bank_statement_periodic_form_bank
+new xml-id of model ir.actions.act_window.view: account.action_bank_statement_periodic_tree_bank
+new xml-id of model ir.actions.act_window.view: account.action_bank_statement_tree_bank
+new xml-id of model ir.actions.act_window: account.act_account_invoice_partner_relation
+new xml-id of model ir.actions.act_window: account.act_account_move_to_account_move_line_open
+new xml-id of model ir.actions.act_window: account.act_account_renew_view
+new xml-id of model ir.actions.act_window: account.action_account_addtmpl_wizard_form
+new xml-id of model ir.actions.act_window: account.action_account_aged_balance_view
+new xml-id of model ir.actions.act_window: account.action_account_analytic_balance
+new xml-id of model ir.actions.act_window: account.action_account_analytic_chart
+new xml-id of model ir.actions.act_window: account.action_account_analytic_cost
+new xml-id of model ir.actions.act_window: account.action_account_analytic_cost_ledger_journal
+new xml-id of model ir.actions.act_window: account.action_account_analytic_invert_balance
+new xml-id of model ir.actions.act_window: account.action_account_analytic_journal
+new xml-id of model ir.actions.act_window: account.action_account_automatic_reconcile
+new xml-id of model ir.actions.act_window: account.action_account_balance_menu
+new xml-id of model ir.actions.act_window: account.action_account_bank_reconcile_tree
+new xml-id of model ir.actions.act_window: account.action_account_bs_report
+new xml-id of model ir.actions.act_window: account.action_account_central_journal
+new xml-id of model ir.actions.act_window: account.action_account_change_currency
+new xml-id of model ir.actions.act_window: account.action_account_chart
+new xml-id of model ir.actions.act_window: account.action_account_common_menu
+new xml-id of model ir.actions.act_window: account.action_account_configuration_installer
+new xml-id of model ir.actions.act_window: account.action_account_entries_report_all
+new xml-id of model ir.actions.act_window: account.action_account_fiscalyear_close
+new xml-id of model ir.actions.act_window: account.action_account_fiscalyear_close_state
+new xml-id of model ir.actions.act_window: account.action_account_general_journal
+new xml-id of model ir.actions.act_window: account.action_account_general_ledger_menu
+new xml-id of model ir.actions.act_window: account.action_account_installer
+new xml-id of model ir.actions.act_window: account.action_account_invoice_cancel
+new xml-id of model ir.actions.act_window: account.action_account_invoice_confirm
+new xml-id of model ir.actions.act_window: account.action_account_invoice_refund
+new xml-id of model ir.actions.act_window: account.action_account_invoice_report_all
+new xml-id of model ir.actions.act_window: account.action_account_journal_view
+new xml-id of model ir.actions.act_window: account.action_account_manual_reconcile
+new xml-id of model ir.actions.act_window: account.action_account_moves_all_a
+new xml-id of model ir.actions.act_window: account.action_account_moves_bank
+new xml-id of model ir.actions.act_window: account.action_account_moves_purchase
+new xml-id of model ir.actions.act_window: account.action_account_moves_sale
+new xml-id of model ir.actions.act_window: account.action_account_open_closed_fiscalyear
+new xml-id of model ir.actions.act_window: account.action_account_partner_balance
+new xml-id of model ir.actions.act_window: account.action_account_partner_ledger
+new xml-id of model ir.actions.act_window: account.action_account_partner_reconcile
+new xml-id of model ir.actions.act_window: account.action_account_period_close
+new xml-id of model ir.actions.act_window: account.action_account_pl_report
+new xml-id of model ir.actions.act_window: account.action_account_print_journal
+new xml-id of model ir.actions.act_window: account.action_account_receivable_graph
+new xml-id of model ir.actions.act_window: account.action_account_reconcile_select
+new xml-id of model ir.actions.act_window: account.action_account_state_open
+new xml-id of model ir.actions.act_window: account.action_account_subscription_generate
+new xml-id of model ir.actions.act_window: account.action_account_tax_chart
+new xml-id of model ir.actions.act_window: account.action_account_unreconcile
+new xml-id of model ir.actions.act_window: account.action_account_unreconcile_reconcile
+new xml-id of model ir.actions.act_window: account.action_account_unreconcile_select
+new xml-id of model ir.actions.act_window: account.action_account_use_model_create_entry
+new xml-id of model ir.actions.act_window: account.action_account_vat_declaration
+new xml-id of model ir.actions.act_window: account.action_aged_income
+new xml-id of model ir.actions.act_window: account.action_aged_receivable
+new xml-id of model ir.actions.act_window: account.action_aged_receivable_graph
+new xml-id of model ir.actions.act_window: account.action_analytic_entries_report
+new xml-id of model ir.actions.act_window: account.action_analytic_open
+new xml-id of model ir.actions.act_window: account.action_bank_statement_periodic_tree
+new xml-id of model ir.actions.act_window: account.action_company_analysis_tree
+new xml-id of model ir.actions.act_window: account.action_draft_customer_invoices_dashboard
+new xml-id of model ir.actions.act_window: account.action_invoice_tree_pending_invoice
+new xml-id of model ir.actions.act_window: account.action_move_journal_line
+new xml-id of model ir.actions.act_window: account.action_open_journal_button
+new xml-id of model ir.actions.act_window: account.action_project_account_analytic_line_form
+new xml-id of model ir.actions.act_window: account.action_report_account_sales_tree_all
+new xml-id of model ir.actions.act_window: account.action_report_account_type_sales_tree_all
+new xml-id of model ir.actions.act_window: account.action_treasory_graph
+new xml-id of model ir.actions.act_window: account.action_validate_account_move
+new xml-id of model ir.actions.act_window: account.action_validate_account_move_line
+new xml-id of model ir.actions.act_window: account.action_view_account_move_line_reconcile
+new xml-id of model ir.actions.act_window: account.action_view_account_use_model
+new xml-id of model ir.actions.act_window: account.action_view_bank_statement_tree
+new xml-id of model ir.actions.act_window: account.action_view_created_invoice_dashboard
+new xml-id of model ir.actions.act_window: account.action_view_move_line
+new xml-id of model ir.actions.act_window: account.open_board_account
+new xml-id of model ir.actions.report.xml: account.account_account_balance_landscape
+new xml-id of model ir.actions.report.xml: account.account_general_ledger_landscape
+new xml-id of model ir.actions.server: account.ir_actions_server_action_wizard_multi_chart
+new xml-id of model ir.actions.todo: account.account_configuration_installer_todo
+new xml-id of model ir.actions.todo: account.account_installer_todo
+new xml-id of model ir.model.access: account.access_account_account_invoice
+new xml-id of model ir.model.access: account.access_account_account_sale_manager
+new xml-id of model ir.model.access: account.access_account_account_type_invoice
+new xml-id of model ir.model.access: account.access_account_analytic_accountant
+new xml-id of model ir.model.access: account.access_account_analytic_line_invoice
+new xml-id of model ir.model.access: account.access_account_analytic_line_manager
+new xml-id of model ir.model.access: account.access_account_bank_statement_manager
+new xml-id of model ir.model.access: account.access_account_cashbox_line
+new xml-id of model ir.model.access: account.access_account_entries_report_employee
+new xml-id of model ir.model.access: account.access_account_entries_report_invoice
+new xml-id of model ir.model.access: account.access_account_entries_report_manager
+new xml-id of model ir.model.access: account.access_account_entries_report_user
+new xml-id of model ir.model.access: account.access_account_invoice_accountant
+new xml-id of model ir.model.access: account.access_account_invoice_line_accountant
+new xml-id of model ir.model.access: account.access_account_invoice_line_manager
+new xml-id of model ir.model.access: account.access_account_invoice_manager
+new xml-id of model ir.model.access: account.access_account_invoice_report
+new xml-id of model ir.model.access: account.access_account_invoice_tax_accountant
+new xml-id of model ir.model.access: account.access_account_invoice_tax_manager
+new xml-id of model ir.model.access: account.access_account_invoice_tax_sale_manager
+new xml-id of model ir.model.access: account.access_account_journal_column_invoice
+new xml-id of model ir.model.access: account.access_account_journal_sale_manager
+new xml-id of model ir.model.access: account.access_account_journal_view_invoice
+new xml-id of model ir.model.access: account.access_account_model_line_manager
+new xml-id of model ir.model.access: account.access_account_model_manager
+new xml-id of model ir.model.access: account.access_account_move_line_manager
+new xml-id of model ir.model.access: account.access_account_move_manager
+new xml-id of model ir.model.access: account.access_account_move_reconcile_manager
+new xml-id of model ir.model.access: account.access_account_sequence_fiscal_year_invoice
+new xml-id of model ir.model.access: account.access_account_sequence_fiscal_year_sale_manager
+new xml-id of model ir.model.access: account.access_account_sequence_fiscal_year_sale_user
+new xml-id of model ir.model.access: account.access_account_subscription_line_manager
+new xml-id of model ir.model.access: account.access_account_subscription_manager
+new xml-id of model ir.model.access: account.access_account_tax_code
+new xml-id of model ir.model.access: account.access_account_tax_code_accountant
+new xml-id of model ir.model.access: account.access_account_tax_internal_user
+new xml-id of model ir.model.access: account.access_account_tax_sale_manager
+new xml-id of model ir.model.access: account.access_analytic_entries_report_manager
+new xml-id of model ir.model.access: account.access_product_product_account_user
+new xml-id of model ir.model.access: account.access_report_account_receivable
+new xml-id of model ir.model.access: account.access_report_account_receivable_invoice
+new xml-id of model ir.model.access: account.access_report_account_receivable_user
+new xml-id of model ir.model.access: account.access_report_account_sales
+new xml-id of model ir.model.access: account.access_report_account_type_sales
+new xml-id of model ir.model.access: account.access_report_aged_receivable
+new xml-id of model ir.model.access: account.access_report_invoice_created
+new xml-id of model ir.model.access: account.access_res_partner_address_accountant
+new xml-id of model ir.model.access: account.access_res_partner_address_invoice
+new xml-id of model ir.model.access: account.access_res_partner_group_account_manager
+new xml-id of model ir.model.access: account.access_temp_range
+new xml-id of model ir.rule: account.account_comp_rule
+new xml-id of model ir.rule: account.account_fiscal_position_comp_rule
+new xml-id of model ir.rule: account.account_model_comp_rule
+new xml-id of model ir.rule: account.account_move_comp_rule
+new xml-id of model ir.rule: account.account_move_line_comp_rule
+new xml-id of model ir.rule: account.analytic_journal_comp_rule
+new xml-id of model ir.rule: account.analytic_journal_comp_rule_false
+new xml-id of model ir.rule: account.fiscal_year_comp_rule
+new xml-id of model ir.rule: account.invoice_comp_rule
+new xml-id of model ir.rule: account.journal_comp_rule
+new xml-id of model ir.rule: account.journal_period_comp_rule
+new xml-id of model ir.rule: account.period_comp_rule
+new xml-id of model ir.rule: account.tax_code_comp_rule
+new xml-id of model ir.rule: account.tax_comp_rule
+new xml-id of model ir.sequence.type: account.cash_sequence_statement_type
+new xml-id of model ir.sequence: account.cash_sequence_statement
+new xml-id of model ir.sequence: account.sequence_bank_journal
+new xml-id of model ir.sequence: account.sequence_cash_journal
+new xml-id of model ir.sequence: account.sequence_check_journal
+new xml-id of model ir.sequence: account.sequence_refund_purchase_journal
+new xml-id of model ir.sequence: account.sequence_refund_sales_journal
+new xml-id of model ir.ui.menu: account.account_template_accounts
+new xml-id of model ir.ui.menu: account.account_template_taxes
+new xml-id of model ir.ui.menu: account.final_accounting_reports
+new xml-id of model ir.ui.menu: account.journal_cash_move_lines
+new xml-id of model ir.ui.menu: account.menu_account_bs_report
+new xml-id of model ir.ui.menu: account.menu_account_central_journal
+new xml-id of model ir.ui.menu: account.menu_account_customer
+new xml-id of model ir.ui.menu: account.menu_account_general_journal
+new xml-id of model ir.ui.menu: account.menu_account_partner_balance_report
+new xml-id of model ir.ui.menu: account.menu_account_partner_ledger
+new xml-id of model ir.ui.menu: account.menu_account_pl_report
+new xml-id of model ir.ui.menu: account.menu_account_pp_statements
+new xml-id of model ir.ui.menu: account.menu_account_print_journal
+new xml-id of model ir.ui.menu: account.menu_account_supplier
+new xml-id of model ir.ui.menu: account.menu_account_vat_declaration
+new xml-id of model ir.ui.menu: account.menu_act_ir_actions_bleble
+new xml-id of model ir.ui.menu: account.menu_action_account_entries_report_all
+new xml-id of model ir.ui.menu: account.menu_action_account_invoice_report_all
+new xml-id of model ir.ui.menu: account.menu_action_account_journal_view
+new xml-id of model ir.ui.menu: account.menu_action_account_moves_all
+new xml-id of model ir.ui.menu: account.menu_action_account_moves_bank
+new xml-id of model ir.ui.menu: account.menu_action_analytic_entries_report
+new xml-id of model ir.ui.menu: account.menu_action_manual_recurring
+new xml-id of model ir.ui.menu: account.menu_analytic
+new xml-id of model ir.ui.menu: account.menu_board_account
+new xml-id of model ir.ui.menu: account.menu_configuration_misc
+new xml-id of model ir.ui.menu: account.menu_dashboard_acc
+new xml-id of model ir.ui.menu: account.menu_eaction_account_moves_purchase
+new xml-id of model ir.ui.menu: account.menu_eaction_account_moves_sale
+new xml-id of model ir.ui.menu: account.menu_finance_bank_and_cash
+new xml-id of model ir.ui.menu: account.menu_finance_generic_reporting
+new xml-id of model ir.ui.menu: account.menu_finance_management_belgian_reports
+new xml-id of model ir.ui.menu: account.menu_finance_payables
+new xml-id of model ir.ui.menu: account.menu_finance_periodical_processing_billing
+new xml-id of model ir.ui.menu: account.menu_finance_receivables
+new xml-id of model ir.ui.menu: account.menu_finance_reporting_budgets
+new xml-id of model ir.ui.menu: account.menu_finance_statistic_report_statement
+new xml-id of model ir.ui.menu: account.menu_general_Balance_report
+new xml-id of model ir.ui.menu: account.menu_journals
+new xml-id of model ir.ui.menu: account.menu_journals_report
+new xml-id of model ir.ui.menu: account.menu_manual_reconcile
+new xml-id of model ir.ui.menu: account.menu_menu_Bank_process
+new xml-id of model ir.ui.menu: account.menu_wizard_account_open_closed_fiscalyear
+new xml-id of model ir.ui.menu: account.periodical_processing_invoicing
+new xml-id of model ir.ui.menu: account.periodical_processing_journal_entries_validation
+new xml-id of model ir.ui.menu: account.periodical_processing_reconciliation
+new xml-id of model ir.ui.view: account.account_aged_balance_view
+new xml-id of model ir.ui.view: account.account_analytic_balance_view
+new xml-id of model ir.ui.view: account.account_analytic_chart_view
+new xml-id of model ir.ui.view: account.account_analytic_cost_ledger_journal_view
+new xml-id of model ir.ui.view: account.account_analytic_cost_view
+new xml-id of model ir.ui.view: account.account_analytic_invert_balance_view
+new xml-id of model ir.ui.view: account.account_analytic_journal_view
+new xml-id of model ir.ui.view: account.account_automatic_reconcile_view
+new xml-id of model ir.ui.view: account.account_automatic_reconcile_view1
+new xml-id of model ir.ui.view: account.account_bs_report_view
+new xml-id of model ir.ui.view: account.account_cash_statement_graph
+new xml-id of model ir.ui.view: account.account_common_report_view
+new xml-id of model ir.ui.view: account.account_invoice_cancel_view
+new xml-id of model ir.ui.view: account.account_invoice_confirm_view
+new xml-id of model ir.ui.view: account.account_move_graph
+new xml-id of model ir.ui.view: account.account_move_line_graph
+new xml-id of model ir.ui.view: account.account_move_line_reconcile_writeoff
+new xml-id of model ir.ui.view: account.account_partner_balance_view
+new xml-id of model ir.ui.view: account.account_partner_ledger_view
+new xml-id of model ir.ui.view: account.account_partner_reconcile_view
+new xml-id of model ir.ui.view: account.account_pl_report_view
+new xml-id of model ir.ui.view: account.account_report_balance_view
+new xml-id of model ir.ui.view: account.account_report_general_journal_view
+new xml-id of model ir.ui.view: account.account_report_general_ledger_view
+new xml-id of model ir.ui.view: account.account_report_general_ledger_view_inherit
+new xml-id of model ir.ui.view: account.account_report_print_journal
+new xml-id of model ir.ui.view: account.account_unreconcile_reconcile_view
+new xml-id of model ir.ui.view: account.account_unreconcile_view
+new xml-id of model ir.ui.view: account.board_account_form
+new xml-id of model ir.ui.view: account.board_view_created_invoice
+new xml-id of model ir.ui.view: account.open_journal_button_view
+new xml-id of model ir.ui.view: account.report_hr_timesheet_invoice_journal_search
+new xml-id of model ir.ui.view: account.validate_account_move_line_view
+new xml-id of model ir.ui.view: account.validate_account_move_view
+new xml-id of model ir.ui.view: account.view_account_addtmpl_wizard_form
+new xml-id of model ir.ui.view: account.view_account_analytic_account_search
+new xml-id of model ir.ui.view: account.view_account_analytic_entries_search
+new xml-id of model ir.ui.view: account.view_account_analytic_line_filter
+new xml-id of model ir.ui.view: account.view_account_bank_statement_filter
+new xml-id of model ir.ui.view: account.view_account_central_journal
+new xml-id of model ir.ui.view: account.view_account_change_currency
+new xml-id of model ir.ui.view: account.view_account_chart
+new xml-id of model ir.ui.view: account.view_account_chart_template_seacrh
+new xml-id of model ir.ui.view: account.view_account_configuration_installer
+new xml-id of model ir.ui.view: account.view_account_entries_report_graph
+new xml-id of model ir.ui.view: account.view_account_entries_report_search
+new xml-id of model ir.ui.view: account.view_account_entries_report_tree
+new xml-id of model ir.ui.view: account.view_account_fiscalyear_close
+new xml-id of model ir.ui.view: account.view_account_fiscalyear_close_state
+new xml-id of model ir.ui.view: account.view_account_fiscalyear_search
+new xml-id of model ir.ui.view: account.view_account_invoice_filter
+new xml-id of model ir.ui.view: account.view_account_invoice_refund
+new xml-id of model ir.ui.view: account.view_account_invoice_report_graph
+new xml-id of model ir.ui.view: account.view_account_invoice_report_search
+new xml-id of model ir.ui.view: account.view_account_invoice_report_tree
+new xml-id of model ir.ui.view: account.view_account_journal_search
+new xml-id of model ir.ui.view: account.view_account_journal_view_search
+new xml-id of model ir.ui.view: account.view_account_journal_view_tree
+new xml-id of model ir.ui.view: account.view_account_list
+new xml-id of model ir.ui.view: account.view_account_modules_installer
+new xml-id of model ir.ui.view: account.view_account_move_bank_reconcile
+new xml-id of model ir.ui.view: account.view_account_move_filter
+new xml-id of model ir.ui.view: account.view_account_move_journal_form
+new xml-id of model ir.ui.view: account.view_account_move_line_filter
+new xml-id of model ir.ui.view: account.view_account_move_line_reconcile_full
+new xml-id of model ir.ui.view: account.view_account_move_line_reconcile_select
+new xml-id of model ir.ui.view: account.view_account_move_line_unreconcile_select
+new xml-id of model ir.ui.view: account.view_account_open_closed_fiscalyear
+new xml-id of model ir.ui.view: account.view_account_period_close
+new xml-id of model ir.ui.view: account.view_account_period_search
+new xml-id of model ir.ui.view: account.view_account_position_template_search
+new xml-id of model ir.ui.view: account.view_account_search
+new xml-id of model ir.ui.view: account.view_account_state_open
+new xml-id of model ir.ui.view: account.view_account_subscription_generate
+new xml-id of model ir.ui.view: account.view_account_tax_chart
+new xml-id of model ir.ui.view: account.view_account_tax_search
+new xml-id of model ir.ui.view: account.view_account_tax_template_search
+new xml-id of model ir.ui.view: account.view_account_template_search
+new xml-id of model ir.ui.view: account.view_account_type_search
+new xml-id of model ir.ui.view: account.view_account_use_model
+new xml-id of model ir.ui.view: account.view_account_use_model_create_entry
+new xml-id of model ir.ui.view: account.view_account_vat_declaration
+new xml-id of model ir.ui.view: account.view_aged_recv_graph
+new xml-id of model ir.ui.view: account.view_aged_recv_tree
+new xml-id of model ir.ui.view: account.view_analytic_entries_report_search
+new xml-id of model ir.ui.view: account.view_analytic_entries_report_tree
+new xml-id of model ir.ui.view: account.view_analytic_journal_search
+new xml-id of model ir.ui.view: account.view_bank_statement_form2
+new xml-id of model ir.ui.view: account.view_bank_statement_periodic_form
+new xml-id of model ir.ui.view: account.view_bank_statement_search
+new xml-id of model ir.ui.view: account.view_cash_statement_tree
+new xml-id of model ir.ui.view: account.view_company_analysis_tree
+new xml-id of model ir.ui.view: account.view_company_inherit_1_form
+new xml-id of model ir.ui.view: account.view_crm_case_user_form
+new xml-id of model ir.ui.view: account.view_crm_case_user_graph
+new xml-id of model ir.ui.view: account.view_crm_case_user_tree
+new xml-id of model ir.ui.view: account.view_model_search
+new xml-id of model ir.ui.view: account.view_payment_term_search
+new xml-id of model ir.ui.view: account.view_project_account_analytic_line_form
+new xml-id of model ir.ui.view: account.view_report_account_sales_graph
+new xml-id of model ir.ui.view: account.view_report_account_sales_search
+new xml-id of model ir.ui.view: account.view_report_account_sales_tree
+new xml-id of model ir.ui.view: account.view_report_account_type_sales_form
+new xml-id of model ir.ui.view: account.view_report_account_type_sales_graph
+new xml-id of model ir.ui.view: account.view_report_account_type_sales_search
+new xml-id of model ir.ui.view: account.view_report_account_type_sales_tree
+new xml-id of model ir.ui.view: account.view_res_partner_reconcile
+new xml-id of model ir.ui.view: account.view_subscription_search
+new xml-id of model ir.ui.view: account.view_tax_code_search
+new xml-id of model ir.ui.view: account.view_tax_code_template_search
+new xml-id of model ir.ui.view: account.view_treasory_graph
+new xml-id of model ir.values: account.account_analytic_balance_values
+new xml-id of model ir.values: account.account_analytic_cost_ledger_journal_values
+new xml-id of model ir.values: account.account_analytic_cost_values
+new xml-id of model ir.values: account.account_analytic_invert_balance_values
+new xml-id of model ir.values: account.account_analytic_journal_values
+new xml-id of model ir.values: account.account_unreconcile_reconcile_values
+new xml-id of model ir.values: account.account_unreconcile_values
+new xml-id of model ir.values: account.action_account_balance_report_values1
+new xml-id of model ir.values: account.action_account_general_ledger_values
+new xml-id of model ir.values: account.action_account_move_line_reconcile_prompt_values
+new xml-id of model ir.values: account.action_idea_post_vote_values
+new xml-id of model ir.values: account.action_partner_reconcile_actino
+new xml-id of model ir.values: account.ir_account_move_line_select
+new xml-id of model ir.values: account.validate_account_move_line_values

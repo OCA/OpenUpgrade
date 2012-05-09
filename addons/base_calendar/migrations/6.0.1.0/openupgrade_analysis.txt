@@ -1,0 +1,174 @@
+---base_calendar---
+base_calendar / calendar.alarm           / action (selection)            : NEW required: required, selection_keys: ['audio', 'display', 'email', 'procedure'], req_default: email
+base_calendar / calendar.alarm           / active (boolean)              : NEW 
+base_calendar / calendar.alarm           / alarm_id (many2one)           : NEW relation: res.alarm
+base_calendar / calendar.alarm           / attach (binary)               : NEW 
+base_calendar / calendar.alarm           / attendee_ids (many2many)      : NEW relation: calendar.attendee
+base_calendar / calendar.alarm           / description (text)            : NEW 
+base_calendar / calendar.alarm           / duration (integer)            : NEW 
+base_calendar / calendar.alarm           / event_date (datetime)         : NEW 
+base_calendar / calendar.alarm           / event_end_date (datetime)     : NEW 
+base_calendar / calendar.alarm           / model_id (many2one)           : NEW relation: ir.model
+base_calendar / calendar.alarm           / name (char)                   : NEW 
+base_calendar / calendar.alarm           / repeat (integer)              : NEW 
+base_calendar / calendar.alarm           / res_id (integer)              : NEW 
+base_calendar / calendar.alarm           / state (selection)             : NEW selection_keys: ['done', 'draft', 'run', 'stop']
+base_calendar / calendar.alarm           / trigger_date (datetime)       : NEW 
+base_calendar / calendar.alarm           / trigger_duration (integer)    : NEW required: required, req_default: 5
+base_calendar / calendar.alarm           / trigger_interval (selection)  : NEW required: required, selection_keys: ['days', 'hours', 'minutes'], req_default: minutes
+base_calendar / calendar.alarm           / trigger_occurs (selection)    : NEW required: required, selection_keys: ['after', 'before'], req_default: before
+base_calendar / calendar.alarm           / trigger_related (selection)   : NEW required: required, selection_keys: ['end', 'start'], req_default: start
+base_calendar / calendar.alarm           / user_id (many2one)            : NEW relation: res.users
+base_calendar / calendar.attendee        / availability (selection)      : NEW selection_keys: ['busy', 'free']
+base_calendar / calendar.attendee        / child_ids (many2many)         : NEW relation: calendar.attendee
+base_calendar / calendar.attendee        / cutype (selection)            : NEW selection_keys: ['group', 'individual', 'resource', 'room', 'unknown']
+base_calendar / calendar.attendee        / dir (char)                    : NEW 
+base_calendar / calendar.attendee        / email (char)                  : NEW 
+base_calendar / calendar.attendee        / member (char)                 : NEW 
+base_calendar / calendar.attendee        / parent_ids (many2many)        : NEW relation: calendar.attendee
+base_calendar / calendar.attendee        / partner_address_id (many2one) : NEW relation: res.partner.address
+base_calendar / calendar.attendee        / ref (reference)               : NEW 
+base_calendar / calendar.attendee        / role (selection)              : NEW selection_keys: ['chair', 'non-participant', 'opt-participant', 'req-participant']
+base_calendar / calendar.attendee        / rsvp (boolean)                : NEW 
+base_calendar / calendar.attendee        / state (selection)             : NEW selection_keys: ['accepted', 'declined', 'delegated', 'needs-action', 'tentative']
+base_calendar / calendar.attendee        / user_id (many2one)            : NEW relation: res.users
+base_calendar / calendar.event           / active (boolean)              : NEW 
+base_calendar / calendar.event           / alarm_id (many2one)           : NEW relation: res.alarm
+base_calendar / calendar.event           / allday (boolean)              : NEW 
+base_calendar / calendar.event           / attendee_ids (many2many)      : NEW relation: calendar.attendee
+base_calendar / calendar.event           / base_calendar_alarm_id (many2one): NEW relation: calendar.alarm
+base_calendar / calendar.event           / base_calendar_url (char)      : NEW 
+base_calendar / calendar.event           / byday (selection)             : NEW selection_keys: ['-1', '1', '2', '3', '4', '5']
+base_calendar / calendar.event           / class (selection)             : NEW selection_keys: ['confidential', 'private', 'public']
+base_calendar / calendar.event           / count (integer)               : NEW 
+base_calendar / calendar.event           / create_date (datetime)        : NEW 
+base_calendar / calendar.event           / date (datetime)               : NEW 
+base_calendar / calendar.event           / date_deadline (datetime)      : NEW 
+base_calendar / calendar.event           / day (integer)                 : NEW 
+base_calendar / calendar.event           / description (text)            : NEW 
+base_calendar / calendar.event           / duration (float)              : NEW 
+base_calendar / calendar.event           / edit_all (boolean)            : NEW 
+base_calendar / calendar.event           / end_date (date)               : NEW 
+base_calendar / calendar.event           / end_type (selection)          : NEW selection_keys: ['count', 'end_date', 'forever']
+base_calendar / calendar.event           / exdate (text)                 : NEW 
+base_calendar / calendar.event           / exrule (char)                 : NEW 
+base_calendar / calendar.event           / fr (boolean)                  : NEW 
+base_calendar / calendar.event           / freq (selection)              : NEW selection_keys: ['None', 'daily', 'hourly', 'monthly', 'weekly', 'yearly']
+base_calendar / calendar.event           / id (integer)                  : NEW 
+base_calendar / calendar.event           / interval (integer)            : NEW 
+base_calendar / calendar.event           / location (char)               : NEW 
+base_calendar / calendar.event           / mo (boolean)                  : NEW 
+base_calendar / calendar.event           / month_list (selection)        : NEW selection_keys: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+base_calendar / calendar.event           / name (char)                   : NEW 
+base_calendar / calendar.event           / organizer (char)              : NEW 
+base_calendar / calendar.event           / organizer_id (many2one)       : NEW relation: res.users
+base_calendar / calendar.event           / recurrency (boolean)          : NEW 
+base_calendar / calendar.event           / recurrent_id (datetime)       : NEW 
+base_calendar / calendar.event           / recurrent_uid (integer)       : NEW 
+base_calendar / calendar.event           / rrule_type (selection)        : NEW selection_keys: ['daily', 'monthly', 'none', 'weekly', 'yearly']
+base_calendar / calendar.event           / sa (boolean)                  : NEW 
+base_calendar / calendar.event           / select1 (selection)           : NEW selection_keys: ['date', 'day']
+base_calendar / calendar.event           / sequence (integer)            : NEW 
+base_calendar / calendar.event           / show_as (selection)           : NEW selection_keys: ['busy', 'free']
+base_calendar / calendar.event           / state (selection)             : NEW selection_keys: ['cancelled', 'confirmed', 'tentative']
+base_calendar / calendar.event           / su (boolean)                  : NEW 
+base_calendar / calendar.event           / th (boolean)                  : NEW 
+base_calendar / calendar.event           / tu (boolean)                  : NEW 
+base_calendar / calendar.event           / user_id (many2one)            : NEW relation: res.users
+base_calendar / calendar.event           / vtimezone (selection)         : NEW selection_keys: function
+base_calendar / calendar.event           / we (boolean)                  : NEW 
+base_calendar / calendar.event           / week_list (selection)         : NEW selection_keys: ['FR', 'MO', 'SA', 'SU', 'TH', 'TU', 'WE']
+base_calendar / calendar.todo            / active (boolean)              : NEW 
+base_calendar / calendar.todo            / alarm_id (many2one)           : NEW relation: res.alarm
+base_calendar / calendar.todo            / allday (boolean)              : NEW 
+base_calendar / calendar.todo            / attendee_ids (many2many)      : NEW relation: calendar.attendee
+base_calendar / calendar.todo            / base_calendar_alarm_id (many2one): NEW relation: calendar.alarm
+base_calendar / calendar.todo            / base_calendar_url (char)      : NEW 
+base_calendar / calendar.todo            / byday (selection)             : NEW selection_keys: ['-1', '1', '2', '3', '4', '5']
+base_calendar / calendar.todo            / class (selection)             : NEW selection_keys: ['confidential', 'private', 'public']
+base_calendar / calendar.todo            / count (integer)               : NEW 
+base_calendar / calendar.todo            / create_date (datetime)        : NEW 
+base_calendar / calendar.todo            / date_deadline (datetime)      : NEW 
+base_calendar / calendar.todo            / day (integer)                 : NEW 
+base_calendar / calendar.todo            / description (text)            : NEW 
+base_calendar / calendar.todo            / duration (integer)            : NEW 
+base_calendar / calendar.todo            / edit_all (boolean)            : NEW 
+base_calendar / calendar.todo            / end_date (date)               : NEW 
+base_calendar / calendar.todo            / end_type (selection)          : NEW selection_keys: ['count', 'end_date', 'forever']
+base_calendar / calendar.todo            / exdate (text)                 : NEW 
+base_calendar / calendar.todo            / exrule (char)                 : NEW 
+base_calendar / calendar.todo            / fr (boolean)                  : NEW 
+base_calendar / calendar.todo            / freq (selection)              : NEW selection_keys: ['None', 'daily', 'hourly', 'monthly', 'weekly', 'yearly']
+base_calendar / calendar.todo            / id (integer)                  : NEW 
+base_calendar / calendar.todo            / interval (integer)            : NEW 
+base_calendar / calendar.todo            / location (char)               : NEW 
+base_calendar / calendar.todo            / mo (boolean)                  : NEW 
+base_calendar / calendar.todo            / month_list (selection)        : NEW selection_keys: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+base_calendar / calendar.todo            / name (char)                   : NEW 
+base_calendar / calendar.todo            / organizer (char)              : NEW 
+base_calendar / calendar.todo            / organizer_id (many2one)       : NEW relation: res.users
+base_calendar / calendar.todo            / recurrency (boolean)          : NEW 
+base_calendar / calendar.todo            / recurrent_id (datetime)       : NEW 
+base_calendar / calendar.todo            / recurrent_uid (integer)       : NEW 
+base_calendar / calendar.todo            / rrule_type (selection)        : NEW selection_keys: ['daily', 'monthly', 'none', 'weekly', 'yearly']
+base_calendar / calendar.todo            / sa (boolean)                  : NEW 
+base_calendar / calendar.todo            / select1 (selection)           : NEW selection_keys: ['date', 'day']
+base_calendar / calendar.todo            / sequence (integer)            : NEW 
+base_calendar / calendar.todo            / show_as (selection)           : NEW selection_keys: ['busy', 'free']
+base_calendar / calendar.todo            / state (selection)             : NEW selection_keys: ['cancelled', 'confirmed', 'tentative']
+base_calendar / calendar.todo            / su (boolean)                  : NEW 
+base_calendar / calendar.todo            / th (boolean)                  : NEW 
+base_calendar / calendar.todo            / tu (boolean)                  : NEW 
+base_calendar / calendar.todo            / user_id (many2one)            : NEW relation: res.users
+base_calendar / calendar.todo            / vtimezone (selection)         : NEW selection_keys: function
+base_calendar / calendar.todo            / we (boolean)                  : NEW 
+base_calendar / calendar.todo            / week_list (selection)         : NEW selection_keys: ['FR', 'MO', 'SA', 'SU', 'TH', 'TU', 'WE']
+base_calendar / res.alarm                / active (boolean)              : NEW 
+base_calendar / res.alarm                / duration (integer)            : NEW 
+base_calendar / res.alarm                / name (char)                   : NEW required: required
+base_calendar / res.alarm                / repeat (integer)              : NEW 
+base_calendar / res.alarm                / trigger_duration (integer)    : NEW required: required, req_default: 5
+base_calendar / res.alarm                / trigger_interval (selection)  : NEW required: required, selection_keys: ['days', 'hours', 'minutes'], req_default: minutes
+base_calendar / res.alarm                / trigger_occurs (selection)    : NEW required: required, selection_keys: ['after', 'before'], req_default: before
+base_calendar / res.alarm                / trigger_related (selection)   : NEW required: required, selection_keys: ['end', 'start'], req_default: start
+new xml-id of model ir.actions.act_window: base_calendar.action_base_calendar_set_exrule
+new xml-id of model ir.actions.act_window: base_calendar.action_calendar_event_edit_all
+new xml-id of model ir.actions.act_window: base_calendar.action_res_alarm_view
+new xml-id of model ir.actions.act_window: base_calendar.action_view_attendee_form
+new xml-id of model ir.actions.act_window: base_calendar.action_view_calendar_invite_attendee_wizard
+new xml-id of model ir.actions.act_window: base_calendar.action_view_event
+new xml-id of model ir.cron: base_calendar.ir_cron_scheduler_alarm
+new xml-id of model ir.model.access: base_calendar.access_calendar_alarm
+new xml-id of model ir.model.access: base_calendar.access_calendar_attendee
+new xml-id of model ir.model.access: base_calendar.access_calendar_event
+new xml-id of model ir.model.access: base_calendar.access_calendar_todo
+new xml-id of model ir.model.access: base_calendar.access_res_alarm
+new xml-id of model ir.ui.menu: base.menu_calendar_configuration
+new xml-id of model ir.ui.menu: base_calendar.menu_attendee_invitations
+new xml-id of model ir.ui.menu: base_calendar.menu_crm_meeting_avail_alarm
+new xml-id of model ir.ui.menu: base_calendar.menu_events
+new xml-id of model ir.ui.view: base_calendar.base_calendar_attendee_form_view
+new xml-id of model ir.ui.view: base_calendar.base_calendar_attendee_search_view
+new xml-id of model ir.ui.view: base_calendar.base_calendar_attendee_tree_view
+new xml-id of model ir.ui.view: base_calendar.event_calendar_view
+new xml-id of model ir.ui.view: base_calendar.event_form_view
+new xml-id of model ir.ui.view: base_calendar.event_tree_view
+new xml-id of model ir.ui.view: base_calendar.res_alarm_form_view
+new xml-id of model ir.ui.view: base_calendar.res_alarm_tree_view
+new xml-id of model ir.ui.view: base_calendar.view_base_calendar_set_exrule
+new xml-id of model ir.ui.view: base_calendar.view_calendar_event_edit_all
+new xml-id of model ir.ui.view: base_calendar.view_calendar_event_filter
+new xml-id of model ir.ui.view: base_calendar.view_calendar_invite_attendee_wizard
+new xml-id of model res.alarm: base_calendar.alarm1
+new xml-id of model res.alarm: base_calendar.alarm10
+new xml-id of model res.alarm: base_calendar.alarm11
+new xml-id of model res.alarm: base_calendar.alarm12
+new xml-id of model res.alarm: base_calendar.alarm2
+new xml-id of model res.alarm: base_calendar.alarm3
+new xml-id of model res.alarm: base_calendar.alarm4
+new xml-id of model res.alarm: base_calendar.alarm5
+new xml-id of model res.alarm: base_calendar.alarm6
+new xml-id of model res.alarm: base_calendar.alarm7
+new xml-id of model res.alarm: base_calendar.alarm8
+new xml-id of model res.alarm: base_calendar.alarm9
+new xml-id of model res.request.link: base_calendar.request_link_meeting

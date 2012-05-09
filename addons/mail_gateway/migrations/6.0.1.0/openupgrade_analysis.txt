@@ -1,0 +1,40 @@
+---mail_gateway---
+mail_gateway / mailgate.message         / attachment_ids (many2many)    : NEW relation: ir.attachment
+mail_gateway / mailgate.message         / date (datetime)               : NEW 
+mail_gateway / mailgate.message         / description (text)            : NEW 
+mail_gateway / mailgate.message         / email_bcc (char)              : NEW 
+mail_gateway / mailgate.message         / email_cc (char)               : NEW 
+mail_gateway / mailgate.message         / email_from (char)             : NEW 
+mail_gateway / mailgate.message         / email_to (char)               : NEW 
+mail_gateway / mailgate.message         / history (boolean)             : NEW 
+mail_gateway / mailgate.message         / message (text)                : NEW 
+mail_gateway / mailgate.message         / message_id (char)             : NEW 
+mail_gateway / mailgate.message         / model (char)                  : NEW 
+mail_gateway / mailgate.message         / name (text)                   : NEW 
+mail_gateway / mailgate.message         / partner_id (many2one)         : NEW relation: res.partner
+mail_gateway / mailgate.message         / ref_id (char)                 : NEW 
+mail_gateway / mailgate.message         / references (text)             : NEW 
+mail_gateway / mailgate.message         / res_id (integer)              : NEW 
+mail_gateway / mailgate.message         / user_id (many2one)            : NEW relation: res.users
+mail_gateway / mailgate.thread          / message_ids (one2many)        : NEW relation: mailgate.message
+mail_gateway / res.partner              / emails (one2many)             : NEW relation: mailgate.message
+new xml-id of model ir.actions.act_window.view: mail_gateway.action_view_mailgate_thread_view1
+new xml-id of model ir.actions.act_window.view: mail_gateway.action_view_mailgate_thread_view2
+new xml-id of model ir.actions.act_window: mail_gateway.act_res_partner_emails
+new xml-id of model ir.actions.act_window: mail_gateway.act_res_partner_open_email
+new xml-id of model ir.actions.act_window: mail_gateway.action_view_mail_message
+new xml-id of model ir.actions.act_window: mail_gateway.action_view_mailgate_message
+new xml-id of model ir.actions.act_window: mail_gateway.action_view_mailgate_thread
+new xml-id of model ir.model.access: mail_gateway.mail_gateway_mailgate_message
+new xml-id of model ir.model.access: mail_gateway.mail_gateway_mailgate_message_partner_manager
+new xml-id of model ir.model.access: mail_gateway.mail_gateway_mailgate_thread
+new xml-id of model ir.model.access: mail_gateway.mail_gateway_message_internal_user
+new xml-id of model ir.ui.menu: base.menu_email_gateway_form
+new xml-id of model ir.ui.menu: base.menu_mail_gateway
+new xml-id of model ir.ui.view: base.view_crm_partner_info_History
+new xml-id of model ir.ui.view: mail_gateway.view_emails_partner_info_form
+new xml-id of model ir.ui.view: mail_gateway.view_mailgate_message_form
+new xml-id of model ir.ui.view: mail_gateway.view_mailgate_message_search
+new xml-id of model ir.ui.view: mail_gateway.view_mailgate_message_tree
+new xml-id of model ir.ui.view: mail_gateway.view_mailgate_thread_form
+new xml-id of model ir.ui.view: mail_gateway.view_mailgate_thread_tree

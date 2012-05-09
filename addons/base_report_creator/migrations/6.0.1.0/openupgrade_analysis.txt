@@ -1,0 +1,15 @@
+---base_report_creator---
+base_report_creator / base_report_creator.report / menu_id (many2one)            : NEW relation: ir.ui.menu
+base_report_creator / base_report_creator.report / state (selection)             : DEL required: required, selection_keys: ['draft', 'valid'], req_default: function
+deleted xml-id of model ir.actions.act_window: base_report_creator.base_report_creator_action_tree
+deleted xml-id of model ir.actions.wizard: base_report_creator.wizard_menu_create
+deleted xml-id of model ir.actions.wizard: base_report_creator.wizard_report_open
+deleted xml-id of model ir.ui.menu: base_report_creator.menu_base_report_creator_action
+deleted xml-id of model ir.ui.menu: base_report_creator.menu_base_report_creator_action_config
+deleted xml-id of model ir.ui.view: base_report_creator.base_report_creator_tree_simple
+deleted xml-id of model ir.values: base_report_creator.ir_open_report
+deleted xml-id of model ir.values: base_report_creator.ir_open_report_multi
+new xml-id of model ir.actions.act_window: base_report_creator.action_report_menu_create
+new xml-id of model ir.ui.menu: base.menu_custom_reports
+new xml-id of model ir.ui.view: base_report_creator.view_report_filter
+new xml-id of model ir.ui.view: base_report_creator.view_report_menu_create

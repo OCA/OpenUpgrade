@@ -1,0 +1,223 @@
+---survey---
+survey       / res.users                / survey_id (many2many)         : NEW relation: survey
+survey       / survey                   / date_close (datetime)         : NEW 
+survey       / survey                   / date_open (datetime)          : NEW 
+survey       / survey                   / history (one2many)            : NEW relation: survey.history
+survey       / survey                   / invited_user_ids (many2many)  : NEW relation: res.users
+survey       / survey                   / max_response_limit (integer)  : NEW 
+survey       / survey                   / note (text)                   : NEW 
+survey       / survey                   / page_ids (one2many)           : NEW relation: survey.page
+survey       / survey                   / response_user (integer)       : NEW 
+survey       / survey                   / responsible_id (many2one)     : NEW relation: res.users
+survey       / survey                   / send_response (boolean)       : NEW 
+survey       / survey                   / state (selection)             : NEW selection_keys: ['cancel', 'close', 'draft', 'open']
+survey       / survey                   / title (char)                  : NEW required: required
+survey       / survey                   / tot_comp_survey (integer)     : NEW 
+survey       / survey                   / tot_start_survey (integer)    : NEW 
+survey       / survey                   / type (many2one)               : NEW relation: survey.type
+survey       / survey                   / users (many2many)             : NEW relation: res.users
+survey       / survey.answer            / answer (char)                 : NEW required: required
+survey       / survey.answer            / in_visible_answer_type (boolean): NEW 
+survey       / survey.answer            / menu_choice (text)            : NEW 
+survey       / survey.answer            / question_id (many2one)        : NEW relation: survey.question
+survey       / survey.answer            / sequence (integer)            : NEW 
+survey       / survey.answer            / type (selection)              : NEW required: required, selection_keys: ['char', 'date', 'datetime', 'email', 'float', 'integer', 'selection'], req_default: function
+survey       / survey.history           / date (datetime)               : NEW 
+survey       / survey.history           / survey_id (many2one)          : NEW relation: survey
+survey       / survey.history           / user_id (many2one)            : NEW relation: res.users
+survey       / survey.page              / note (text)                   : NEW 
+survey       / survey.page              / question_ids (one2many)       : NEW relation: survey.question
+survey       / survey.page              / sequence (integer)            : NEW 
+survey       / survey.page              / survey_id (many2one)          : NEW relation: survey
+survey       / survey.page              / title (char)                  : NEW required: required
+survey       / survey.question          / allow_comment (boolean)       : NEW 
+survey       / survey.question          / answer_choice_ids (one2many)  : NEW relation: survey.answer
+survey       / survey.question          / column_heading_ids (one2many) : NEW relation: survey.question.column.heading
+survey       / survey.question          / column_name (char)            : NEW 
+survey       / survey.question          / comment_column (boolean)      : NEW 
+survey       / survey.question          / comment_field_type (selection): NEW selection_keys: ['char', 'text']
+survey       / survey.question          / comment_label (char)          : NEW 
+survey       / survey.question          / comment_maximum_date (date)   : NEW 
+survey       / survey.question          / comment_maximum_float (float) : NEW 
+survey       / survey.question          / comment_maximum_no (integer)  : NEW 
+survey       / survey.question          / comment_minimum_date (date)   : NEW 
+survey       / survey.question          / comment_minimum_float (float) : NEW 
+survey       / survey.question          / comment_minimum_no (integer)  : NEW 
+survey       / survey.question          / comment_valid_err_msg (text)  : NEW 
+survey       / survey.question          / comment_valid_type (selection): NEW selection_keys: ['do_not_validate', 'must_be_date', 'must_be_decimal_number', 'must_be_email_address', 'must_be_specific_length', 'must_be_whole_number']
+survey       / survey.question          / descriptive_text (text)       : NEW 
+survey       / survey.question          / in_visible_answer_type (boolean): NEW 
+survey       / survey.question          / in_visible_menu_choice (boolean): NEW 
+survey       / survey.question          / in_visible_rating_weight (boolean): NEW 
+survey       / survey.question          / is_comment_require (boolean)  : NEW 
+survey       / survey.question          / is_require_answer (boolean)   : NEW 
+survey       / survey.question          / is_validation_require (boolean): NEW 
+survey       / survey.question          / make_comment_field (boolean)  : NEW 
+survey       / survey.question          / make_comment_field_err_msg (text): NEW 
+survey       / survey.question          / maximum_req_ans (integer)     : NEW 
+survey       / survey.question          / minimum_req_ans (integer)     : NEW 
+survey       / survey.question          / no_of_rows (integer)          : NEW 
+survey       / survey.question          / numeric_required_sum (integer): NEW 
+survey       / survey.question          / numeric_required_sum_err_msg (text): NEW 
+survey       / survey.question          / page_id (many2one)            : NEW relation: survey.page, required: required
+survey       / survey.question          / question (char)               : NEW required: required
+survey       / survey.question          / rating_allow_one_column_require (boolean): NEW 
+survey       / survey.question          / req_ans (integer)             : NEW 
+survey       / survey.question          / req_error_msg (text)          : NEW 
+survey       / survey.question          / required_type (selection)     : NEW selection_keys: ['a range', 'all', 'at least', 'at most', 'exactly']
+survey       / survey.question          / sequence (integer)            : NEW 
+survey       / survey.question          / type (selection)              : NEW required: required, selection_keys: ['comment', 'date', 'date_and_time', 'descriptive_text', 'matrix_of_choices_only_multi_ans', 'matrix_of_choices_only_one_ans', 'matrix_of_drop_down_menus', 'multiple_choice_multiple_ans', 'multiple_choice_only_one_ans', 'multiple_textboxes', 'multiple_textboxes_diff_type', 'numerical_textboxes', 'rating_scale', 'single_textbox', 'table'], req_default: function
+survey       / survey.question          / validation_maximum_date (date): NEW 
+survey       / survey.question          / validation_maximum_float (float): NEW 
+survey       / survey.question          / validation_maximum_no (integer): NEW 
+survey       / survey.question          / validation_minimum_date (date): NEW 
+survey       / survey.question          / validation_minimum_float (float): NEW 
+survey       / survey.question          / validation_minimum_no (integer): NEW 
+survey       / survey.question          / validation_type (selection)   : NEW selection_keys: ['do_not_validate', 'must_be_date', 'must_be_decimal_number', 'must_be_email_address', 'must_be_specific_length', 'must_be_whole_number']
+survey       / survey.question          / validation_valid_err_msg (text): NEW 
+survey       / survey.question.column.heading / in_visible_menu_choice (boolean): NEW 
+survey       / survey.question.column.heading / in_visible_rating_weight (boolean): NEW 
+survey       / survey.question.column.heading / menu_choice (text)            : NEW 
+survey       / survey.question.column.heading / question_id (many2one)        : NEW relation: survey.question
+survey       / survey.question.column.heading / rating_weight (integer)       : NEW 
+survey       / survey.question.column.heading / title (char)                  : NEW required: required
+survey       / survey.request           / date_deadline (date)          : NEW 
+survey       / survey.request           / email (char)                  : NEW 
+survey       / survey.request           / response (many2one)           : NEW relation: survey.response
+survey       / survey.request           / state (selection)             : NEW selection_keys: ['cancel', 'done', 'draft', 'waiting_answer']
+survey       / survey.request           / survey_id (many2one)          : NEW relation: survey, required: required
+survey       / survey.request           / user_id (many2one)            : NEW relation: res.users
+survey       / survey.response          / date_create (datetime)        : NEW required: required
+survey       / survey.response          / question_ids (one2many)       : NEW relation: survey.response.line
+survey       / survey.response          / response_type (selection)     : NEW required: required, selection_keys: ['link', 'manually'], req_default: function
+survey       / survey.response          / state (selection)             : NEW selection_keys: ['done', 'skip']
+survey       / survey.response          / survey_id (many2one)          : NEW relation: survey, required: required
+survey       / survey.response          / user_id (many2one)            : NEW relation: res.users
+survey       / survey.response.answer   / answer (char)                 : NEW 
+survey       / survey.response.answer   / answer_id (many2one)          : NEW relation: survey.answer, required: required
+survey       / survey.response.answer   / column_id (many2one)          : NEW relation: survey.question.column.heading
+survey       / survey.response.answer   / comment (text)                : NEW 
+survey       / survey.response.answer   / comment_field (char)          : NEW 
+survey       / survey.response.answer   / response_id (many2one)        : NEW relation: survey.response.line
+survey       / survey.response.answer   / value_choice (char)           : NEW 
+survey       / survey.response.line     / comment (text)                : NEW 
+survey       / survey.response.line     / date_create (datetime)        : NEW required: required
+survey       / survey.response.line     / question_id (many2one)        : NEW relation: survey.question
+survey       / survey.response.line     / response_answer_ids (one2many): NEW relation: survey.response.answer
+survey       / survey.response.line     / response_id (many2one)        : NEW relation: survey.response
+survey       / survey.response.line     / response_table_ids (one2many) : NEW relation: survey.tbl.column.heading
+survey       / survey.response.line     / single_text (char)            : NEW 
+survey       / survey.response.line     / state (selection)             : NEW selection_keys: ['done', 'draft', 'skip']
+survey       / survey.tbl.column.heading / column_id (many2one)          : NEW relation: survey.question.column.heading
+survey       / survey.tbl.column.heading / name (integer)                : NEW 
+survey       / survey.tbl.column.heading / response_table_id (many2one)  : NEW relation: survey.response.line
+survey       / survey.tbl.column.heading / value (char)                  : NEW 
+survey       / survey.type              / code (char)                   : NEW 
+survey       / survey.type              / name (char)                   : NEW required: required
+new xml-id of model ir.actions.act_window: survey.act_survey_answer
+new xml-id of model ir.actions.act_window: survey.act_survey_page_question
+new xml-id of model ir.actions.act_window: survey.act_survey_pages
+new xml-id of model ir.actions.act_window: survey.act_survey_question
+new xml-id of model ir.actions.act_window: survey.action_act_view_survey_send_invitation
+new xml-id of model ir.actions.act_window: survey.action_browse_survey_response
+new xml-id of model ir.actions.act_window: survey.action_survey_form1
+new xml-id of model ir.actions.act_window: survey.action_survey_page_form
+new xml-id of model ir.actions.act_window: survey.action_survey_question_form
+new xml-id of model ir.actions.act_window: survey.action_survey_request_tree
+new xml-id of model ir.actions.act_window: survey.action_survey_type_form
+new xml-id of model ir.actions.act_window: survey.action_view_survey_name
+new xml-id of model ir.actions.act_window: survey.action_view_survey_print
+new xml-id of model ir.actions.act_window: survey.action_view_survey_print_answer
+new xml-id of model ir.actions.act_window: survey.action_view_survey_print_statistics
+new xml-id of model ir.actions.act_window: survey.action_view_survey_question_message
+new xml-id of model ir.actions.act_window: survey.action_view_survey_send_invitation
+new xml-id of model ir.actions.act_window: survey.action_view_survey_send_invitation_log
+new xml-id of model ir.actions.report.xml: survey.report_survey_form
+new xml-id of model ir.actions.report.xml: survey.survey_analysis
+new xml-id of model ir.actions.report.xml: survey.survey_browse_response
+new xml-id of model ir.model.access: survey.access_survey_answer_manager
+new xml-id of model ir.model.access: survey.access_survey_answer_survey_user
+new xml-id of model ir.model.access: survey.access_survey_answer_user
+new xml-id of model ir.model.access: survey.access_survey_history_manager
+new xml-id of model ir.model.access: survey.access_survey_history_survey_user
+new xml-id of model ir.model.access: survey.access_survey_history_user
+new xml-id of model ir.model.access: survey.access_survey_manager
+new xml-id of model ir.model.access: survey.access_survey_page_manager
+new xml-id of model ir.model.access: survey.access_survey_page_survey_user
+new xml-id of model ir.model.access: survey.access_survey_page_user
+new xml-id of model ir.model.access: survey.access_survey_question_column_heading_manager
+new xml-id of model ir.model.access: survey.access_survey_question_column_heading_survey_user
+new xml-id of model ir.model.access: survey.access_survey_question_column_heading_user
+new xml-id of model ir.model.access: survey.access_survey_question_manager
+new xml-id of model ir.model.access: survey.access_survey_question_survey_user
+new xml-id of model ir.model.access: survey.access_survey_question_user
+new xml-id of model ir.model.access: survey.access_survey_request_manager
+new xml-id of model ir.model.access: survey.access_survey_res_partner_address_manager
+new xml-id of model ir.model.access: survey.access_survey_res_partner_address_user
+new xml-id of model ir.model.access: survey.access_survey_res_partner_manager
+new xml-id of model ir.model.access: survey.access_survey_res_partner_user
+new xml-id of model ir.model.access: survey.access_survey_response_answer_manager
+new xml-id of model ir.model.access: survey.access_survey_response_answer_survey_user
+new xml-id of model ir.model.access: survey.access_survey_response_answer_user
+new xml-id of model ir.model.access: survey.access_survey_response_line_manager
+new xml-id of model ir.model.access: survey.access_survey_response_line_survey_user
+new xml-id of model ir.model.access: survey.access_survey_response_line_user
+new xml-id of model ir.model.access: survey.access_survey_response_manager
+new xml-id of model ir.model.access: survey.access_survey_response_survey_user
+new xml-id of model ir.model.access: survey.access_survey_response_user
+new xml-id of model ir.model.access: survey.access_survey_survey_user
+new xml-id of model ir.model.access: survey.access_survey_tbl_column_heading_manager
+new xml-id of model ir.model.access: survey.access_survey_type_manager
+new xml-id of model ir.model.access: survey.access_survey_user
+new xml-id of model ir.ui.menu: base.menu_lunch_reporting
+new xml-id of model ir.ui.menu: survey.menu_answer_surveys
+new xml-id of model ir.ui.menu: survey.menu_browse_survey_response
+new xml-id of model ir.ui.menu: survey.menu_define_survey
+new xml-id of model ir.ui.menu: survey.menu_print_survey_answer
+new xml-id of model ir.ui.menu: survey.menu_print_survey_form
+new xml-id of model ir.ui.menu: survey.menu_print_survey_statistics
+new xml-id of model ir.ui.menu: survey.menu_reporting
+new xml-id of model ir.ui.menu: survey.menu_run_survey_form
+new xml-id of model ir.ui.menu: survey.menu_survey_form
+new xml-id of model ir.ui.menu: survey.menu_survey_page_form1
+new xml-id of model ir.ui.menu: survey.menu_survey_type_form1
+new xml-id of model ir.ui.menu: survey.menu_surveys
+new xml-id of model ir.ui.view: survey.survey_answer_form
+new xml-id of model ir.ui.view: survey.survey_answer_tree
+new xml-id of model ir.ui.view: survey.survey_form
+new xml-id of model ir.ui.view: survey.survey_page_form
+new xml-id of model ir.ui.view: survey.survey_page_tree
+new xml-id of model ir.ui.view: survey.survey_page_wizard_test1
+new xml-id of model ir.ui.view: survey.survey_question_column_heading_form
+new xml-id of model ir.ui.view: survey.survey_question_column_heading_tree
+new xml-id of model ir.ui.view: survey.survey_question_form
+new xml-id of model ir.ui.view: survey.survey_question_search
+new xml-id of model ir.ui.view: survey.survey_question_tree
+new xml-id of model ir.ui.view: survey.survey_question_wizard_test
+new xml-id of model ir.ui.view: survey.survey_request_form
+new xml-id of model ir.ui.view: survey.survey_request_search
+new xml-id of model ir.ui.view: survey.survey_request_tree
+new xml-id of model ir.ui.view: survey.survey_response_answer_form
+new xml-id of model ir.ui.view: survey.survey_response_answer_tree
+new xml-id of model ir.ui.view: survey.survey_response_form
+new xml-id of model ir.ui.view: survey.survey_response_line_form
+new xml-id of model ir.ui.view: survey.survey_response_line_tree
+new xml-id of model ir.ui.view: survey.survey_response_tree
+new xml-id of model ir.ui.view: survey.survey_search
+new xml-id of model ir.ui.view: survey.survey_tree
+new xml-id of model ir.ui.view: survey.survey_type_form
+new xml-id of model ir.ui.view: survey.survey_type_tree
+new xml-id of model ir.ui.view: survey.view_survey_answer
+new xml-id of model ir.ui.view: survey.view_survey_name
+new xml-id of model ir.ui.view: survey.view_survey_page_filter
+new xml-id of model ir.ui.view: survey.view_survey_print
+new xml-id of model ir.ui.view: survey.view_survey_print_answer
+new xml-id of model ir.ui.view: survey.view_survey_print_statistics
+new xml-id of model ir.ui.view: survey.view_survey_question_message
+new xml-id of model ir.ui.view: survey.view_survey_question_message1
+new xml-id of model ir.ui.view: survey.view_survey_send_invitation
+new xml-id of model ir.ui.view: survey.view_survey_send_invitation_log
+new xml-id of model res.groups: base.group_sale_salesman
+new xml-id of model res.groups: base.group_tool_manager
+new xml-id of model res.groups: base.group_tool_user
+new xml-id of model res.groups: survey.group_survey_user

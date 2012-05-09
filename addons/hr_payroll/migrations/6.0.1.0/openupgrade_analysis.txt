@@ -1,0 +1,250 @@
+---hr_payroll---
+hr_payroll   / company.contribution     / active (boolean)              : NEW 
+hr_payroll   / company.contribution     / amount_type (selection)       : NEW selection_keys: ['fix', 'func', 'per']
+hr_payroll   / company.contribution     / category_id (many2one)        : NEW relation: hr.allounce.deduction.categoty
+hr_payroll   / company.contribution     / code (char)                   : NEW required: required
+hr_payroll   / company.contribution     / company_id (many2one)         : NEW relation: res.company
+hr_payroll   / company.contribution     / contribute_per (float)        : NEW 
+hr_payroll   / company.contribution     / gratuity (boolean)            : NEW 
+hr_payroll   / company.contribution     / line_ids (one2many)           : NEW relation: company.contribution.line
+hr_payroll   / company.contribution     / name (char)                   : NEW required: required
+hr_payroll   / company.contribution     / note (text)                   : NEW 
+hr_payroll   / company.contribution.line / amount_type (selection)       : NEW selection_keys: ['fix']
+hr_payroll   / company.contribution.line / contribution_id (many2one)    : NEW relation: company.contribution
+hr_payroll   / company.contribution.line / from_val (float)              : NEW 
+hr_payroll   / company.contribution.line / name (char)                   : NEW 
+hr_payroll   / company.contribution.line / sequence (integer)            : NEW 
+hr_payroll   / company.contribution.line / to_val (float)                : NEW 
+hr_payroll   / company.contribution.line / value (float)                 : NEW 
+hr_payroll   / hr.allounce.deduction.categoty / base (text)                   : NEW required: required, req_default: function
+hr_payroll   / hr.allounce.deduction.categoty / code (char)                   : NEW required: required
+hr_payroll   / hr.allounce.deduction.categoty / company_id (many2one)         : NEW relation: res.company
+hr_payroll   / hr.allounce.deduction.categoty / condition (char)              : NEW required: required, req_default: function
+hr_payroll   / hr.allounce.deduction.categoty / contribute_ids (one2many)     : NEW relation: company.contribution
+hr_payroll   / hr.allounce.deduction.categoty / name (char)                   : NEW required: required
+hr_payroll   / hr.allounce.deduction.categoty / note (text)                   : NEW 
+hr_payroll   / hr.allounce.deduction.categoty / sequence (integer)            : NEW required: required, req_default: function
+hr_payroll   / hr.allounce.deduction.categoty / state (char)                  : NEW 
+hr_payroll   / hr.allounce.deduction.categoty / type (selection)              : NEW required: required, selection_keys: ['advance', 'allowance', 'deduction', 'installment', 'leaves', 'loan', 'otherdeduct', 'otherpay']
+hr_payroll   / hr.allounce.deduction.categoty / user_id (char)                : NEW 
+hr_payroll   / hr.contibution.register  / company_id (many2one)         : NEW relation: res.company
+hr_payroll   / hr.contibution.register  / name (char)                   : NEW required: required
+hr_payroll   / hr.contibution.register  / note (text)                   : NEW 
+hr_payroll   / hr.contibution.register  / register_line_ids (one2many)  : NEW relation: hr.contibution.register.line
+hr_payroll   / hr.contibution.register.line / code (char)                   : NEW 
+hr_payroll   / hr.contibution.register.line / comp_deduction (float)        : NEW 
+hr_payroll   / hr.contibution.register.line / date (date)                   : NEW 
+hr_payroll   / hr.contibution.register.line / emp_deduction (float)         : NEW 
+hr_payroll   / hr.contibution.register.line / employee_id (many2one)        : NEW relation: hr.employee, required: required
+hr_payroll   / hr.contibution.register.line / name (char)                   : NEW required: required
+hr_payroll   / hr.contibution.register.line / register_id (many2one)        : NEW relation: hr.contibution.register
+hr_payroll   / hr.contract              / passport_id (many2one)        : NEW relation: hr.passport
+hr_payroll   / hr.contract              / permit_no (char)              : NEW 
+hr_payroll   / hr.contract              / struct_id (many2one)          : NEW relation: hr.payroll.structure
+hr_payroll   / hr.contract              / visa_expire (date)            : NEW 
+hr_payroll   / hr.contract              / visa_no (char)                : NEW 
+hr_payroll   / hr.contract              / working_days_per_week (integer): NEW 
+hr_payroll   / hr.contract.wage.type    / type (False)                  : NEW selection_keys: ['basic', 'gross', 'net'], mode: modify
+hr_payroll   / hr.employee              / line_ids (one2many)           : NEW relation: hr.payslip.line
+hr_payroll   / hr.employee              / passport_id (many2one)        : NEW relation: hr.passport, mode: modify
+hr_payroll   / hr.employee              / slip_ids (one2many)           : NEW relation: hr.payslip
+hr_payroll   / hr.holidays.status       / company_id (many2one)         : NEW relation: res.company
+hr_payroll   / hr.holidays.status       / head_id (many2one)            : NEW relation: hr.allounce.deduction.categoty
+hr_payroll   / hr.holidays.status       / type (selection)              : NEW selection_keys: ['halfpaid', 'paid', 'unpaid']
+hr_payroll   / hr.passport              / address_id (many2one)         : NEW relation: res.partner.address
+hr_payroll   / hr.passport              / contracts_ids (one2many)      : NEW relation: hr.contract
+hr_payroll   / hr.passport              / country_id (many2one)         : NEW relation: res.country, required: required
+hr_payroll   / hr.passport              / date_expire (date)            : NEW required: required
+hr_payroll   / hr.passport              / date_issue (date)             : NEW required: required
+hr_payroll   / hr.passport              / employee_id (many2one)        : NEW relation: hr.employee, required: required
+hr_payroll   / hr.passport              / name (char)                   : NEW required: required
+hr_payroll   / hr.passport              / note (text)                   : NEW 
+hr_payroll   / hr.payroll.advice        / chaque_nos (char)             : NEW 
+hr_payroll   / hr.payroll.advice        / company_id (many2one)         : NEW relation: res.company
+hr_payroll   / hr.payroll.advice        / date (date)                   : NEW 
+hr_payroll   / hr.payroll.advice        / line_ids (one2many)           : NEW relation: hr.payroll.advice.line
+hr_payroll   / hr.payroll.advice        / name (char)                   : NEW required: required
+hr_payroll   / hr.payroll.advice        / note (text)                   : NEW 
+hr_payroll   / hr.payroll.advice        / number (char)                 : NEW 
+hr_payroll   / hr.payroll.advice        / register_id (many2one)        : NEW relation: hr.payroll.register
+hr_payroll   / hr.payroll.advice        / state (selection)             : NEW selection_keys: ['cancel', 'confirm', 'draft']
+hr_payroll   / hr.payroll.advice.line   / advice_id (many2one)          : NEW relation: hr.payroll.advice
+hr_payroll   / hr.payroll.advice.line   / amount (float)                : NEW 
+hr_payroll   / hr.payroll.advice.line   / bysal (float)                 : NEW 
+hr_payroll   / hr.payroll.advice.line   / employee_id (many2one)        : NEW relation: hr.employee, required: required
+hr_payroll   / hr.payroll.advice.line   / flag (char)                   : NEW required: required, req_default: function
+hr_payroll   / hr.payroll.advice.line   / name (char)                   : NEW required: required
+hr_payroll   / hr.payroll.register      / active (boolean)              : NEW 
+hr_payroll   / hr.payroll.register      / bank_id (many2one)            : NEW relation: res.bank
+hr_payroll   / hr.payroll.register      / company_id (many2one)         : NEW relation: res.company
+hr_payroll   / hr.payroll.register      / date (date)                   : NEW required: required, req_default: function
+hr_payroll   / hr.payroll.register      / line_ids (one2many)           : NEW relation: hr.payslip
+hr_payroll   / hr.payroll.register      / name (char)                   : NEW required: required
+hr_payroll   / hr.payroll.register      / note (text)                   : NEW 
+hr_payroll   / hr.payroll.register      / number (char)                 : NEW 
+hr_payroll   / hr.payroll.register      / state (selection)             : NEW selection_keys: ['accont_check', 'cancel', 'confirm', 'done', 'draft', 'hr_check', 'new']
+hr_payroll   / hr.payroll.structure     / code (char)                   : NEW required: required
+hr_payroll   / hr.payroll.structure     / company_id (many2one)         : NEW relation: res.company
+hr_payroll   / hr.payroll.structure     / line_ids (one2many)           : NEW relation: hr.payslip.line
+hr_payroll   / hr.payroll.structure     / name (char)                   : NEW required: required
+hr_payroll   / hr.payroll.structure     / note (text)                   : NEW 
+hr_payroll   / hr.payslip               / basic (float)                 : NEW 
+hr_payroll   / hr.payslip               / basic_before_leaves (float)   : NEW 
+hr_payroll   / hr.payslip               / company_id (many2one)         : NEW relation: res.company
+hr_payroll   / hr.payslip               / contract_id (many2one)        : NEW relation: hr.contract
+hr_payroll   / hr.payslip               / date (date)                   : NEW 
+hr_payroll   / hr.payslip               / deg_id (many2one)             : NEW relation: hr.payroll.structure
+hr_payroll   / hr.payslip               / employee_id (many2one)        : NEW relation: hr.employee, required: required
+hr_payroll   / hr.payslip               / holiday_days (float)          : NEW 
+hr_payroll   / hr.payslip               / igross (float)                : NEW 
+hr_payroll   / hr.payslip               / inet (float)                  : NEW 
+hr_payroll   / hr.payslip               / leaves (float)                : NEW 
+hr_payroll   / hr.payslip               / line_ids (one2many)           : NEW relation: hr.payslip.line
+hr_payroll   / hr.payslip               / name (char)                   : NEW 
+hr_payroll   / hr.payslip               / note (text)                   : NEW 
+hr_payroll   / hr.payslip               / number (char)                 : NEW 
+hr_payroll   / hr.payslip               / paid (boolean)                : NEW 
+hr_payroll   / hr.payslip               / register_id (many2one)        : NEW relation: hr.payroll.register
+hr_payroll   / hr.payslip               / state (selection)             : NEW selection_keys: ['accont_check', 'cancel', 'confirm', 'done', 'draft', 'hr_check', 'new']
+hr_payroll   / hr.payslip               / worked_days (float)           : NEW 
+hr_payroll   / hr.payslip               / working_days (float)          : NEW 
+hr_payroll   / hr.payslip.line          / amount (float)                : NEW 
+hr_payroll   / hr.payslip.line          / amount_type (selection)       : NEW required: required, selection_keys: ['fix', 'func', 'per'], req_default: function
+hr_payroll   / hr.payslip.line          / base (char)                   : NEW 
+hr_payroll   / hr.payslip.line          / category_id (many2one)        : NEW relation: hr.allounce.deduction.categoty, required: required
+hr_payroll   / hr.payslip.line          / code (char)                   : NEW 
+hr_payroll   / hr.payslip.line          / company_contrib (float)       : NEW 
+hr_payroll   / hr.payslip.line          / employee_id (many2one)        : NEW relation: hr.employee
+hr_payroll   / hr.payslip.line          / function_id (many2one)        : NEW relation: hr.payroll.structure
+hr_payroll   / hr.payslip.line          / line_ids (one2many)           : NEW relation: hr.payslip.line.line
+hr_payroll   / hr.payslip.line          / name (char)                   : NEW required: required
+hr_payroll   / hr.payslip.line          / note (text)                   : NEW 
+hr_payroll   / hr.payslip.line          / sequence (integer)            : NEW 
+hr_payroll   / hr.payslip.line          / slip_id (many2one)            : NEW relation: hr.payslip
+hr_payroll   / hr.payslip.line          / total (float)                 : NEW 
+hr_payroll   / hr.payslip.line          / type (selection)              : NEW required: required, selection_keys: ['advance', 'allowance', 'deduction', 'installment', 'leaves', 'loan', 'otherdeduct', 'otherpay']
+hr_payroll   / hr.payslip.line.line     / amount_type (selection)       : NEW selection_keys: ['fix']
+hr_payroll   / hr.payslip.line.line     / from_val (float)              : NEW 
+hr_payroll   / hr.payslip.line.line     / name (char)                   : NEW 
+hr_payroll   / hr.payslip.line.line     / sequence (integer)            : NEW 
+hr_payroll   / hr.payslip.line.line     / slipline_id (many2one)        : NEW relation: hr.payslip.line
+hr_payroll   / hr.payslip.line.line     / to_val (float)                : NEW 
+hr_payroll   / hr.payslip.line.line     / value (float)                 : NEW 
+new xml-id of model hr.allounce.deduction.categoty: hr_payroll.CA
+new xml-id of model hr.allounce.deduction.categoty: hr_payroll.DA
+new xml-id of model hr.allounce.deduction.categoty: hr_payroll.ESI
+new xml-id of model hr.allounce.deduction.categoty: hr_payroll.FA
+new xml-id of model hr.allounce.deduction.categoty: hr_payroll.FC
+new xml-id of model hr.allounce.deduction.categoty: hr_payroll.HRA
+new xml-id of model hr.allounce.deduction.categoty: hr_payroll.LTA
+new xml-id of model hr.allounce.deduction.categoty: hr_payroll.LWP
+new xml-id of model hr.allounce.deduction.categoty: hr_payroll.MA
+new xml-id of model hr.allounce.deduction.categoty: hr_payroll.NA
+new xml-id of model hr.allounce.deduction.categoty: hr_payroll.OTHERA
+new xml-id of model hr.allounce.deduction.categoty: hr_payroll.OTHERD
+new xml-id of model hr.allounce.deduction.categoty: hr_payroll.PF
+new xml-id of model hr.allounce.deduction.categoty: hr_payroll.PT
+new xml-id of model hr.allounce.deduction.categoty: hr_payroll.TA
+new xml-id of model hr.allounce.deduction.categoty: hr_payroll.TDS
+new xml-id of model hr.allounce.deduction.categoty: hr_payroll.TELA
+new xml-id of model hr.allounce.deduction.categoty: hr_payroll.WF
+new xml-id of model hr.contract.wage.type: hr_payroll.hr_contract_monthly_basic
+new xml-id of model ir.actions.act_window: hr_payroll.act_hr_employee_payslip_list
+new xml-id of model ir.actions.act_window: hr_payroll.action_contibution_register_form
+new xml-id of model ir.actions.act_window: hr_payroll.action_hr_company_contribution_tree
+new xml-id of model ir.actions.act_window: hr_payroll.action_hr_passport_tree
+new xml-id of model ir.actions.act_window: hr_payroll.action_hr_payroll_employees_detail
+new xml-id of model ir.actions.act_window: hr_payroll.action_hr_payroll_year_salary
+new xml-id of model ir.actions.act_window: hr_payroll.action_view_hr_bank_advice_tree
+new xml-id of model ir.actions.act_window: hr_payroll.action_view_hr_employee_grade_form
+new xml-id of model ir.actions.act_window: hr_payroll.action_view_hr_payroll_register_form
+new xml-id of model ir.actions.act_window: hr_payroll.action_view_hr_payslip_form
+new xml-id of model ir.actions.act_window: hr_payroll.hr_allounce_deduction_tree
+new xml-id of model ir.actions.report.xml: hr_payroll.payroll_advice
+new xml-id of model ir.actions.report.xml: hr_payroll.salary_payslip
+new xml-id of model ir.actions.report.xml: hr_payroll.salary_structure_register
+new xml-id of model ir.actions.report.xml: hr_payroll.year_employees_detail
+new xml-id of model ir.actions.report.xml: hr_payroll.year_payroll_register
+new xml-id of model ir.actions.report.xml: hr_payroll.year_salary_report
+new xml-id of model ir.model.access: hr_payroll.access_company_contribution
+new xml-id of model ir.model.access: hr_payroll.access_company_contribution_line
+new xml-id of model ir.model.access: hr_payroll.access_hr_allounce_deduction_category
+new xml-id of model ir.model.access: hr_payroll.access_hr_contibution_register
+new xml-id of model ir.model.access: hr_payroll.access_hr_contibution_register_line
+new xml-id of model ir.model.access: hr_payroll.access_hr_contract_wage_type
+new xml-id of model ir.model.access: hr_payroll.access_hr_passport
+new xml-id of model ir.model.access: hr_payroll.access_hr_passport_manager
+new xml-id of model ir.model.access: hr_payroll.access_hr_payroll_advice
+new xml-id of model ir.model.access: hr_payroll.access_hr_payroll_advice_line
+new xml-id of model ir.model.access: hr_payroll.access_hr_payroll_register
+new xml-id of model ir.model.access: hr_payroll.access_hr_payroll_structure
+new xml-id of model ir.model.access: hr_payroll.access_hr_payroll_structure_manager
+new xml-id of model ir.model.access: hr_payroll.access_hr_payslip
+new xml-id of model ir.model.access: hr_payroll.access_hr_payslip_line
+new xml-id of model ir.model.access: hr_payroll.access_hr_payslip_line_line
+new xml-id of model ir.model.access: hr_payroll.access_hr_payslip_line_manager
+new xml-id of model ir.model.access: hr_payroll.access_hr_payslip_manager
+new xml-id of model ir.model.access: hr_payroll.access_res_partner_payroll
+new xml-id of model ir.sequence.type: hr_payroll.seq_type_payment_advice
+new xml-id of model ir.sequence.type: hr_payroll.seq_type_salary_register
+new xml-id of model ir.sequence.type: hr_payroll.seq_type_salary_slip
+new xml-id of model ir.sequence: hr_payroll.seq_payment_advice
+new xml-id of model ir.sequence: hr_payroll.seq_salary_register
+new xml-id of model ir.sequence: hr_payroll.seq_salary_slip
+new xml-id of model ir.ui.menu: hr_payroll.hr_menu_payment_advice
+new xml-id of model ir.ui.menu: hr_payroll.hr_menu_payroll_register
+new xml-id of model ir.ui.menu: hr_payroll.menu_action_hr_contibution_register_form
+new xml-id of model ir.ui.menu: hr_payroll.menu_department_tree
+new xml-id of model ir.ui.menu: hr_payroll.menu_hr_allounce_deduction_tree
+new xml-id of model ir.ui.menu: hr_payroll.menu_hr_company_contribution_tree
+new xml-id of model ir.ui.menu: hr_payroll.menu_hr_employee_function
+new xml-id of model ir.ui.menu: hr_payroll.menu_hr_payroll_employees_detail
+new xml-id of model ir.ui.menu: hr_payroll.menu_hr_payroll_reporting
+new xml-id of model ir.ui.menu: hr_payroll.menu_hr_root_payroll
+new xml-id of model ir.ui.menu: hr_payroll.menu_wizard_print_year_salary
+new xml-id of model ir.ui.menu: hr_payroll.payroll_configure
+new xml-id of model ir.ui.view: hr_contract.hr_contract_view_form
+new xml-id of model ir.ui.view: hr_contract.hr_hr_employee_view_form2
+new xml-id of model ir.ui.view: hr_payroll.hr_allounce_deduction_categoty_form
+new xml-id of model ir.ui.view: hr_payroll.hr_allounce_deduction_categoty_tree
+new xml-id of model ir.ui.view: hr_payroll.hr_company_contribution_form
+new xml-id of model ir.ui.view: hr_payroll.hr_company_contribution_tree
+new xml-id of model ir.ui.view: hr_payroll.hr_contibution_register_form
+new xml-id of model ir.ui.view: hr_payroll.hr_contibution_register_line_form
+new xml-id of model ir.ui.view: hr_payroll.hr_contibution_register_tree
+new xml-id of model ir.ui.view: hr_payroll.hr_passport_form
+new xml-id of model ir.ui.view: hr_payroll.hr_passport_tree
+new xml-id of model ir.ui.view: hr_payroll.view_allounce_deduction_categoty_filter
+new xml-id of model ir.ui.view: hr_payroll.view_employee_passport_form
+new xml-id of model ir.ui.view: hr_payroll.view_holiday_status_form1
+new xml-id of model ir.ui.view: hr_payroll.view_hr_bank_advice_form
+new xml-id of model ir.ui.view: hr_payroll.view_hr_bank_advice_tree
+new xml-id of model ir.ui.view: hr_payroll.view_hr_company_contribution_filter
+new xml-id of model ir.ui.view: hr_payroll.view_hr_employee_grade_form
+new xml-id of model ir.ui.view: hr_payroll.view_hr_employee_grade_tree
+new xml-id of model ir.ui.view: hr_payroll.view_hr_passport_filter
+new xml-id of model ir.ui.view: hr_payroll.view_hr_payroll_employees_detail
+new xml-id of model ir.ui.view: hr_payroll.view_hr_payroll_register_form
+new xml-id of model ir.ui.view: hr_payroll.view_hr_payroll_register_tree
+new xml-id of model ir.ui.view: hr_payroll.view_hr_payroll_year_salary
+new xml-id of model ir.ui.view: hr_payroll.view_hr_payslip_filter
+new xml-id of model ir.ui.view: hr_payroll.view_hr_payslip_form
+new xml-id of model ir.ui.view: hr_payroll.view_hr_payslip_line_form
+new xml-id of model ir.ui.view: hr_payroll.view_hr_payslip_line_tree
+new xml-id of model ir.ui.view: hr_payroll.view_hr_payslip_tree
+new xml-id of model workflow.activity: hr_payroll.act_cancel
+new xml-id of model workflow.activity: hr_payroll.act_confirm
+new xml-id of model workflow.activity: hr_payroll.act_done
+new xml-id of model workflow.activity: hr_payroll.act_draft
+new xml-id of model workflow.activity: hr_payroll.act_hr_check
+new xml-id of model workflow.activity: hr_payroll.act_new
+new xml-id of model workflow.transition: hr_payroll.t1
+new xml-id of model workflow.transition: hr_payroll.t11
+new xml-id of model workflow.transition: hr_payroll.t12
+new xml-id of model workflow.transition: hr_payroll.t2
+new xml-id of model workflow.transition: hr_payroll.t3
+new xml-id of model workflow.transition: hr_payroll.t4
+new xml-id of model workflow.transition: hr_payroll.t7
+new xml-id of model workflow.transition: hr_payroll.t8
+new xml-id of model workflow.transition: hr_payroll.t9
+new xml-id of model workflow: hr_payroll.wkf

@@ -1,0 +1,40 @@
+---base_action_rule---
+base_action_rule / base.action.rule         / act_email_cc (char)           : NEW 
+base_action_rule / base.action.rule         / act_email_from (char)         : NEW 
+base_action_rule / base.action.rule         / act_email_to (char)           : NEW 
+base_action_rule / base.action.rule         / act_mail_body (text)          : NEW 
+base_action_rule / base.action.rule         / act_mail_to_email (char)      : NEW 
+base_action_rule / base.action.rule         / act_mail_to_user (boolean)    : NEW 
+base_action_rule / base.action.rule         / act_mail_to_watchers (boolean): NEW 
+base_action_rule / base.action.rule         / act_method (char)             : NEW 
+base_action_rule / base.action.rule         / act_remind_attach (boolean)   : NEW 
+base_action_rule / base.action.rule         / act_remind_partner (boolean)  : NEW 
+base_action_rule / base.action.rule         / act_remind_user (boolean)     : NEW 
+base_action_rule / base.action.rule         / act_reply_to (char)           : NEW 
+base_action_rule / base.action.rule         / act_state (selection)         : NEW selection_keys: function
+base_action_rule / base.action.rule         / act_user_id (many2one)        : NEW relation: res.users
+base_action_rule / base.action.rule         / active (boolean)              : NEW 
+base_action_rule / base.action.rule         / create_date (datetime)        : NEW 
+base_action_rule / base.action.rule         / filter_id (many2one)          : NEW relation: ir.filters
+base_action_rule / base.action.rule         / last_run (datetime)           : NEW 
+base_action_rule / base.action.rule         / model_id (many2one)           : NEW relation: ir.model, required: required
+base_action_rule / base.action.rule         / name (char)                   : NEW required: required
+base_action_rule / base.action.rule         / regex_name (char)             : NEW 
+base_action_rule / base.action.rule         / sequence (integer)            : NEW 
+base_action_rule / base.action.rule         / server_action_id (many2one)   : NEW relation: ir.actions.server
+base_action_rule / base.action.rule         / trg_date_range (integer)      : NEW 
+base_action_rule / base.action.rule         / trg_date_range_type (selection): NEW selection_keys: ['day', 'hour', 'minutes', 'month']
+base_action_rule / base.action.rule         / trg_date_type (selection)     : NEW selection_keys: ['action_last', 'create', 'date', 'deadline', 'none']
+base_action_rule / base.action.rule         / trg_partner_categ_id (many2one): NEW relation: res.partner.category
+base_action_rule / base.action.rule         / trg_partner_id (many2one)     : NEW relation: res.partner
+base_action_rule / base.action.rule         / trg_state_from (selection)    : NEW selection_keys: function
+base_action_rule / base.action.rule         / trg_state_to (selection)      : NEW selection_keys: function
+base_action_rule / base.action.rule         / trg_user_id (many2one)        : NEW relation: res.users
+new xml-id of model ir.actions.act_window: base_action_rule.base_action_rule_act
+new xml-id of model ir.cron: base_action_rule.ir_cron_crm_action
+new xml-id of model ir.model.access: base_action_rule.access_base_action_rule
+new xml-id of model ir.model.access: base_action_rule.access_base_action_rule_config
+new xml-id of model ir.ui.menu: base.menu_base_action_rule
+new xml-id of model ir.ui.menu: base_action_rule.menu_base_action_rule_form
+new xml-id of model ir.ui.view: base_action_rule.view_base_action_rule_form
+new xml-id of model ir.ui.view: base_action_rule.view_base_action_rule_tree

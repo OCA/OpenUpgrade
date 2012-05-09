@@ -1,0 +1,262 @@
+---auction---
+auction      / aie.category             / child_ids (one2many)          : NEW relation: aie.category
+auction      / aie.category             / code (char)                   : NEW 
+auction      / aie.category             / name (char)                   : NEW required: required
+auction      / aie.category             / parent_id (many2one)          : NEW relation: aie.category
+auction      / auction.lot.category     / aie_categ (selection)         : relation is now 'aie.category' ('False')
+auction      / auction.lot.category     / aie_categ (selection)         : selection_keys is now 'False' ('['1', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '2', '24', '25', '26', '27', '3', '30', '31', '33', '37', '4', '41', '42', '43', '45', '46', '47', '48', '5', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '8', '9']')
+auction      / auction.lot.category     / aie_categ (selection)         : type is now 'many2one' ('selection')
+auction      / auction.lots             / paid_vnd (boolean)            : now a function
+auction      / report.auction           / auction (many2one)            : NEW relation: auction.dates
+auction      / report.auction           / avg_estimation (float)        : NEW 
+auction      / report.auction           / avg_price (float)             : NEW 
+auction      / report.auction           / buyer (many2one)              : NEW relation: res.partner
+auction      / report.auction           / buyer_login (char)            : NEW 
+auction      / report.auction           / date (date)                   : NEW 
+auction      / report.auction           / day (char)                    : NEW 
+auction      / report.auction           / gross_revenue (float)         : NEW 
+auction      / report.auction           / lot_type (selection)          : NEW selection_keys: function
+auction      / report.auction           / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+auction      / report.auction           / net_margin (float)            : NEW 
+auction      / report.auction           / net_revenue (float)           : NEW 
+auction      / report.auction           / object (integer)              : NEW 
+auction      / report.auction           / seller (many2one)             : NEW relation: res.partner
+auction      / report.auction           / state (selection)             : NEW selection_keys: ['draft', 'sold', 'unsold']
+auction      / report.auction           / total_price (float)           : NEW 
+auction      / report.auction           / user_id (many2one)            : NEW relation: res.users
+auction      / report.auction           / year (char)                   : NEW 
+auction      / report.object.encoded    / adj (integer)                 : NEW 
+auction      / report.object.encoded    / gross_revenue (float)         : NEW 
+auction      / report.object.encoded    / net_revenue (float)           : NEW 
+auction      / report.object.encoded    / obj_margin (float)            : NEW 
+deleted xml-id of model ir.actions.act_window.view: auction.action_auction_lots_open_view1
+deleted xml-id of model ir.actions.act_window.view: auction.action_auction_lots_open_view2
+deleted xml-id of model ir.actions.act_window: auction.action_all_objects_sold
+deleted xml-id of model ir.actions.act_window: auction.action_all_objects_to_sell
+deleted xml-id of model ir.actions.act_window: auction.action_all_objects_unplanned
+deleted xml-id of model ir.actions.act_window: auction.action_all_objects_unsold
+deleted xml-id of model ir.actions.act_window: auction.action_auction_buyer_reporting
+deleted xml-id of model ir.actions.act_window: auction.action_auction_buyer_reporting2
+deleted xml-id of model ir.actions.act_window: auction.action_auction_buyer_reporting_all1
+deleted xml-id of model ir.actions.act_window: auction.action_auction_buyer_reporting_all2
+deleted xml-id of model ir.actions.act_window: auction.action_auction_dates1
+deleted xml-id of model ir.actions.act_window: auction.action_auction_dates_old
+deleted xml-id of model ir.actions.act_window: auction.action_auction_report_allmonth_view1
+deleted xml-id of model ir.actions.act_window: auction.action_auction_report_allmonth_view2
+deleted xml-id of model ir.actions.act_window: auction.action_auction_report_thismonth_view2
+deleted xml-id of model ir.actions.act_window: auction.action_auction_reporting1
+deleted xml-id of model ir.actions.act_window: auction.action_auction_reporting_all1
+deleted xml-id of model ir.actions.act_window: auction.action_auction_reporting_all2
+deleted xml-id of model ir.actions.act_window: auction.action_bids_form
+deleted xml-id of model ir.actions.act_window: auction.action_report_auction_estimation_adj_category_manager_tree
+deleted xml-id of model ir.actions.act_window: auction.action_report_auction_estimation_adj_category_member_tree
+deleted xml-id of model ir.actions.act_window: auction.action_report_auction_sign_in_out_manager_tree1
+deleted xml-id of model ir.actions.act_window: auction.action_report_auction_sign_in_out_member_tree1
+deleted xml-id of model ir.actions.act_window: auction.action_report_latest_doposit_manager_tree
+deleted xml-id of model ir.actions.act_window: auction.action_report_latest_objects_manager_tree
+deleted xml-id of model ir.actions.act_window: auction.action_report_object_by_auction
+deleted xml-id of model ir.actions.act_window: auction.action_report_object_encoded_manager_tree
+deleted xml-id of model ir.actions.act_window: auction.action_report_object_encoded_member_tree
+deleted xml-id of model ir.actions.act_window: auction.action_unclassified_objects
+deleted xml-id of model ir.actions.act_window: auction.auction_lots_open
+deleted xml-id of model ir.actions.act_window: auction.b11
+deleted xml-id of model ir.actions.act_window: auction.menu_view_auction_deposit_tree
+deleted xml-id of model ir.actions.act_window: auction.view_report_object_by_auction
+deleted xml-id of model ir.actions.wizard: auction.auction_catalog_flagy
+deleted xml-id of model ir.actions.wizard: auction.auction_wizard_able_taken
+deleted xml-id of model ir.actions.wizard: auction.auction_wizard_enable_taken
+deleted xml-id of model ir.actions.wizard: auction.auction_wizard_payer_sel
+deleted xml-id of model ir.actions.wizard: auction.wizard_change_auction
+deleted xml-id of model ir.actions.wizard: auction.wizard_emporte
+deleted xml-id of model ir.actions.wizard: auction.wizard_invoice
+deleted xml-id of model ir.actions.wizard: auction.wizard_invoice_buyer1
+deleted xml-id of model ir.actions.wizard: auction.wizard_map_user
+deleted xml-id of model ir.actions.wizard: auction.wizard_numerotate_automatic
+deleted xml-id of model ir.actions.wizard: auction.wizard_numerotate_lot
+deleted xml-id of model ir.actions.wizard: auction.wizard_pay
+deleted xml-id of model ir.actions.wizard: auction.wizard_results
+deleted xml-id of model ir.actions.wizard: auction.wizard_send
+deleted xml-id of model ir.actions.wizard: auction.wizard_sms
+deleted xml-id of model ir.model.access: auction.access_auction_dates
+deleted xml-id of model ir.model.access: auction.access_auction_deposit
+deleted xml-id of model ir.model.access: auction.access_report_attendance
+deleted xml-id of model ir.model.access: auction.access_report_auction_estimation_adj_category
+deleted xml-id of model ir.model.access: auction.access_report_auction_view
+deleted xml-id of model ir.model.access: auction.access_report_auction_view2
+deleted xml-id of model ir.model.access: auction.access_report_buyer_auction
+deleted xml-id of model ir.model.access: auction.access_report_buyer_auction2
+deleted xml-id of model ir.model.access: auction.access_report_deposit_border
+deleted xml-id of model ir.model.access: auction.access_report_object_encoded_manager
+deleted xml-id of model ir.model.access: auction.access_report_seller_auction
+deleted xml-id of model ir.model.access: auction.access_report_seller_auction2
+deleted xml-id of model ir.model.access: auction.access_report_unclassified_objects
+deleted xml-id of model ir.ui.menu: auction.auction_objects_menu
+deleted xml-id of model ir.ui.menu: auction.auction_report_auction_menu
+deleted xml-id of model ir.ui.menu: auction.auction_report_buyer_menu
+deleted xml-id of model ir.ui.menu: auction.auction_report_employees_menu
+deleted xml-id of model ir.ui.menu: auction.auction_report_manager_menu
+deleted xml-id of model ir.ui.menu: auction.auction_report_seller_menu
+deleted xml-id of model ir.ui.menu: auction.menu_action_bids_form
+deleted xml-id of model ir.ui.menu: auction.menu_all_objects_sold1
+deleted xml-id of model ir.ui.menu: auction.menu_all_objects_to_sell
+deleted xml-id of model ir.ui.menu: auction.menu_all_objects_unclassified
+deleted xml-id of model ir.ui.menu: auction.menu_all_objects_unplanned1
+deleted xml-id of model ir.ui.menu: auction.menu_all_objects_unsold
+deleted xml-id of model ir.ui.menu: auction.menu_auction_allmonth_view1
+deleted xml-id of model ir.ui.menu: auction.menu_auction_allmonth_view2
+deleted xml-id of model ir.ui.menu: auction.menu_auction_dates_new
+deleted xml-id of model ir.ui.menu: auction.menu_auction_dates_next_by_auction
+deleted xml-id of model ir.ui.menu: auction.menu_auction_dates_old
+deleted xml-id of model ir.ui.menu: auction.menu_buyer_allmonth_view1
+deleted xml-id of model ir.ui.menu: auction.menu_buyer_allmonth_view2
+deleted xml-id of model ir.ui.menu: auction.menu_report_auction_adjudication_tree
+deleted xml-id of model ir.ui.menu: auction.menu_report_auction_estimation_adj_category_manager
+deleted xml-id of model ir.ui.menu: auction.menu_report_auction_estimation_adj_category_member
+deleted xml-id of model ir.ui.menu: auction.menu_report_auction_object_date_tree
+deleted xml-id of model ir.ui.menu: auction.menu_report_auction_object_date_tree1_my
+deleted xml-id of model ir.ui.menu: auction.menu_report_auction_sign_in_out_manager_tree1
+deleted xml-id of model ir.ui.menu: auction.menu_report_auction_sign_in_out_member_tree1
+deleted xml-id of model ir.ui.menu: auction.menu_report_deposit_tree_m
+deleted xml-id of model ir.ui.menu: auction.menu_report_deposit_tree_member
+deleted xml-id of model ir.ui.menu: auction.menu_report_latest_doposit_tree
+deleted xml-id of model ir.ui.menu: auction.menu_report_latest_doposit_tree_manager
+deleted xml-id of model ir.ui.menu: auction.menu_seller_allmonth_view1
+deleted xml-id of model ir.ui.menu: auction.menu_seller_allmonth_view2
+deleted xml-id of model ir.ui.view: auction.auction_lot_simplified
+deleted xml-id of model ir.ui.view: auction.auction_lots_sell_form
+deleted xml-id of model ir.ui.view: auction.v12
+deleted xml-id of model ir.ui.view: auction.v5
+deleted xml-id of model ir.ui.view: auction.v7
+deleted xml-id of model ir.ui.view: auction.view_auction_buyer_form
+deleted xml-id of model ir.ui.view: auction.view_auction_buyer_form2
+deleted xml-id of model ir.ui.view: auction.view_auction_buyer_tree
+deleted xml-id of model ir.ui.view: auction.view_auction_buyer_tree2
+deleted xml-id of model ir.ui.view: auction.view_auction_deposit_tree
+deleted xml-id of model ir.ui.view: auction.view_auction_form
+deleted xml-id of model ir.ui.view: auction.view_auction_form2
+deleted xml-id of model ir.ui.view: auction.view_auction_graph
+deleted xml-id of model ir.ui.view: auction.view_auction_graph2
+deleted xml-id of model ir.ui.view: auction.view_auction_reports_form
+deleted xml-id of model ir.ui.view: auction.view_auction_reports_form2
+deleted xml-id of model ir.ui.view: auction.view_auction_reports_tree
+deleted xml-id of model ir.ui.view: auction.view_auction_reports_tree2
+deleted xml-id of model ir.ui.view: auction.view_auction_tree
+deleted xml-id of model ir.ui.view: auction.view_auction_tree2
+deleted xml-id of model ir.ui.view: auction.view_report_auction_estimation_adj_category_form
+deleted xml-id of model ir.ui.view: auction.view_report_auction_estimation_adj_category_graph
+deleted xml-id of model ir.ui.view: auction.view_report_auction_sign_in_out_graph1
+deleted xml-id of model ir.ui.view: auction.view_report_auction_sign_in_out_tree1
+deleted xml-id of model ir.ui.view: auction.view_report_object_encoded_form
+deleted xml-id of model ir.ui.view: auction.view_report_object_encoded_manager_graph
+deleted xml-id of model ir.ui.view: auction.view_report_object_encoded_manager_tree
+deleted xml-id of model ir.ui.view: auction.view_report_unclassified_objects
+deleted xml-id of model ir.ui.view: auction.view_report_unplanned_object_form
+deleted xml-id of model ir.ui.view: auction.view_report_unplanned_object_tree
+deleted xml-id of model ir.values: auction.ir_open_auction_lots
+deleted xml-id of model ir.values: auction.ir_open_auction_lots_adj
+new xml-id of model aie.category: auction.aie_category_afrart_view
+new xml-id of model aie.category: auction.aie_category_afrec_view
+new xml-id of model aie.category: auction.aie_category_anti_view
+new xml-id of model aie.category: auction.aie_category_argen_view
+new xml-id of model aie.category: auction.aie_category_artfrom_view
+new xml-id of model aie.category: auction.aie_category_book_view
+new xml-id of model aie.category: auction.aie_category_caob_view
+new xml-id of model aie.category: auction.aie_category_carpet_view
+new xml-id of model aie.category: auction.aie_category_cartoon_view
+new xml-id of model aie.category: auction.aie_category_chf_view
+new xml-id of model aie.category: auction.aie_category_clock_view
+new xml-id of model aie.category: auction.aie_category_collect_view
+new xml-id of model aie.category: auction.aie_category_con_art_view
+new xml-id of model aie.category: auction.aie_category_con_cshe_view
+new xml-id of model aie.category: auction.aie_category_con_curi_view
+new xml-id of model aie.category: auction.aie_category_con_ome_view
+new xml-id of model aie.category: auction.aie_category_con_paint_view
+new xml-id of model aie.category: auction.aie_category_con_pht_view
+new xml-id of model aie.category: auction.aie_category_con_scul_view
+new xml-id of model aie.category: auction.aie_category_con_view
+new xml-id of model aie.category: auction.aie_category_cwa_view
+new xml-id of model aie.category: auction.aie_category_engr_view
+new xml-id of model aie.category: auction.aie_category_furn_view
+new xml-id of model aie.category: auction.aie_category_gart_view
+new xml-id of model aie.category: auction.aie_category_jew_view
+new xml-id of model aie.category: auction.aie_category_light_view
+new xml-id of model aie.category: auction.aie_category_metal_view
+new xml-id of model aie.category: auction.aie_category_mi_view
+new xml-id of model aie.category: auction.aie_category_mini_view
+new xml-id of model aie.category: auction.aie_category_oart_view
+new xml-id of model aie.category: auction.aie_category_othr_view
+new xml-id of model aie.category: auction.aie_category_owm_view
+new xml-id of model aie.category: auction.aie_category_paint_view
+new xml-id of model aie.category: auction.aie_category_pcg_view
+new xml-id of model aie.category: auction.aie_category_pst_view
+new xml-id of model aie.category: auction.aie_category_rel_view
+new xml-id of model aie.category: auction.aie_category_sbe_view
+new xml-id of model aie.category: auction.aie_category_sin_view
+new xml-id of model aie.category: auction.aie_category_tin_view
+new xml-id of model aie.category: auction.aie_category_ty_view
+new xml-id of model aie.category: auction.aie_category_uncla_view
+new xml-id of model aie.category: auction.aie_category_vrs_view
+new xml-id of model aie.category: auction.aie_category_wne_view
+new xml-id of model board.note.type: auction.note_auction_type1
+new xml-id of model ir.actions.act_window: auction.act_auction_lot_open_bid
+new xml-id of model ir.actions.act_window: auction.action_auction_catalog_flagey_wizard
+new xml-id of model ir.actions.act_window: auction.action_auction_lots_auction_move
+new xml-id of model ir.actions.act_window: auction.action_auction_lots_make_invoice
+new xml-id of model ir.actions.act_window: auction.action_auction_lots_make_invoice_buyer
+new xml-id of model ir.actions.act_window: auction.action_auction_lots_sms_send
+new xml-id of model ir.actions.act_window: auction.action_auction_pay_buy
+new xml-id of model ir.actions.act_window: auction.action_auction_taken
+new xml-id of model ir.actions.act_window: auction.action_report_auction
+new xml-id of model ir.actions.act_window: auction.action_report_auction_lots_estimation_adj_category_tree
+new xml-id of model ir.actions.act_window: auction.action_report_object_encoded_tree
+new xml-id of model ir.actions.act_window: auction.action_view_auction_buyer_map
+new xml-id of model ir.actions.act_window: auction.open_board_auction
+new xml-id of model ir.model.access: auction.access_aie_category
+new xml-id of model ir.model.access: auction.access_auction_account_analytic_journal
+new xml-id of model ir.model.access: auction.access_auction_account_analytic_line
+new xml-id of model ir.model.access: auction.access_auction_account_fiscalyear
+new xml-id of model ir.model.access: auction.access_auction_account_invoice
+new xml-id of model ir.model.access: auction.access_auction_account_invoice_line
+new xml-id of model ir.model.access: auction.access_auction_account_invoice_tax
+new xml-id of model ir.model.access: auction.access_auction_account_journal
+new xml-id of model ir.model.access: auction.access_auction_account_journal_period
+new xml-id of model ir.model.access: auction.access_auction_account_move
+new xml-id of model ir.model.access: auction.access_auction_account_move_line
+new xml-id of model ir.model.access: auction.access_auction_account_period
+new xml-id of model ir.model.access: auction.access_auction_account_tax
+new xml-id of model ir.model.access: auction.access_auction_account_tax_user
+new xml-id of model ir.model.access: auction.access_auction_bid_line_manager
+new xml-id of model ir.model.access: auction.access_auction_bid_manager
+new xml-id of model ir.model.access: auction.access_auction_dates_manager
+new xml-id of model ir.model.access: auction.access_auction_dates_user
+new xml-id of model ir.model.access: auction.access_auction_deposit_manager
+new xml-id of model ir.model.access: auction.access_auction_deposit_user
+new xml-id of model ir.model.access: auction.access_auction_lot_category_manager
+new xml-id of model ir.model.access: auction.access_auction_lot_history_manager
+new xml-id of model ir.model.access: auction.access_auction_lots_manager
+new xml-id of model ir.model.access: auction.access_report_auction
+new xml-id of model ir.ui.menu: auction.menu_board_auction
+new xml-id of model ir.ui.menu: auction.menu_board_auction_open
+new xml-id of model ir.ui.menu: auction.menu_report_auction
+new xml-id of model ir.ui.view: auction.auction_dates_calendar_view
+new xml-id of model ir.ui.view: auction.auction_deposit_calendar_view
+new xml-id of model ir.ui.view: auction.board_auction_form1
+new xml-id of model ir.ui.view: auction.view_auction_bid_filter
+new xml-id of model ir.ui.view: auction.view_auction_buyer_map
+new xml-id of model ir.ui.view: auction.view_auction_catalog_flagey_wizard
+new xml-id of model ir.ui.view: auction.view_auction_dates_filter
+new xml-id of model ir.ui.view: auction.view_auction_lot_tree
+new xml-id of model ir.ui.view: auction.view_auction_lots_auction_move
+new xml-id of model ir.ui.view: auction.view_auction_lots_filter
+new xml-id of model ir.ui.view: auction.view_auction_lots_make_invoice
+new xml-id of model ir.ui.view: auction.view_auction_lots_make_invoice_buyer
+new xml-id of model ir.ui.view: auction.view_auction_lots_sms_send
+new xml-id of model ir.ui.view: auction.view_auction_pay_buy
+new xml-id of model ir.ui.view: auction.view_auction_taken
+new xml-id of model ir.ui.view: auction.view_deposit_border_filter
+new xml-id of model ir.ui.view: auction.view_report_auction_graph
+new xml-id of model ir.ui.view: auction.view_report_auction_lots_estimation_adj_category_graph
+new xml-id of model ir.ui.view: auction.view_report_auction_search
+new xml-id of model ir.ui.view: auction.view_report_auction_tree
+new xml-id of model res.groups: auction.group_auction_manager
+new xml-id of model res.groups: auction.group_auction_user

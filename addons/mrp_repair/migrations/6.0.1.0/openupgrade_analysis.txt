@@ -1,0 +1,37 @@
+---mrp_repair---
+mrp_repair   / mrp.repair.line          / prodlot_id (many2one)         : NEW relation: stock.production.lot
+deleted xml-id of model ir.actions.act_window: mrp_repair.action_repair_2binvoiced_tree
+deleted xml-id of model ir.actions.act_window: mrp_repair.action_repair_order_form
+deleted xml-id of model ir.actions.act_window: mrp_repair.action_repair_progress_tree
+deleted xml-id of model ir.actions.act_window: mrp_repair.action_repair_quotation_tree
+deleted xml-id of model ir.actions.act_window: mrp_repair.action_repair_ready_tree
+deleted xml-id of model ir.actions.wizard: mrp_repair.action_cancel_repair
+deleted xml-id of model ir.actions.wizard: mrp_repair.wizard_mrp_repair_make_invoice
+deleted xml-id of model ir.ui.menu: mrp_repair.menu_repair_2binvoiced
+deleted xml-id of model ir.ui.menu: mrp_repair.menu_repair_form
+deleted xml-id of model ir.ui.menu: mrp_repair.menu_repair_progress
+deleted xml-id of model ir.ui.menu: mrp_repair.menu_repair_quotation
+deleted xml-id of model ir.ui.menu: mrp_repair.menu_repair_ready
+new xml-id of model ir.actions.act_window: mrp_repair.act_mrp_repair_invoice
+new xml-id of model ir.actions.act_window: mrp_repair.action_cancel_repair
+new xml-id of model ir.model.access: mrp_repair.access_account_invoice_line_manager
+new xml-id of model ir.model.access: mrp_repair.access_account_invoice_line_user
+new xml-id of model ir.model.access: mrp_repair.access_account_invoice_manager
+new xml-id of model ir.model.access: mrp_repair.access_account_invoice_user
+new xml-id of model ir.model.access: mrp_repair.access_account_journal_manager
+new xml-id of model ir.model.access: mrp_repair.access_account_journal_user
+new xml-id of model ir.model.access: mrp_repair.access_account_tax_manager
+new xml-id of model ir.model.access: mrp_repair.access_account_tax_user
+new xml-id of model ir.model.access: mrp_repair.access_mrp_repair_fee_mgr
+new xml-id of model ir.model.access: mrp_repair.access_mrp_repair_fee_user_mrp
+new xml-id of model ir.model.access: mrp_repair.access_product_price_type_manager
+new xml-id of model ir.model.access: mrp_repair.access_product_price_type_user
+new xml-id of model ir.model.access: mrp_repair.access_product_pricelist_manager
+new xml-id of model ir.model.access: mrp_repair.access_product_pricelist_user
+new xml-id of model ir.model.access: mrp_repair.access_stock_production_lot_manager
+new xml-id of model ir.model.access: mrp_repair.access_stock_production_lot_revision_manager
+new xml-id of model ir.model.access: mrp_repair.access_stock_production_lot_revision_user
+new xml-id of model ir.model.access: mrp_repair.access_stock_production_lot_user
+new xml-id of model ir.ui.view: mrp_repair.view_cancel_repair
+new xml-id of model ir.ui.view: mrp_repair.view_make_invoice
+new xml-id of model ir.ui.view: mrp_repair.view_repair_order_form_filter

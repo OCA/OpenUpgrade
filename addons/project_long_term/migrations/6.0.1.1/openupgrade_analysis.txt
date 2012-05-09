@@ -1,0 +1,85 @@
+---project_long_term---
+project_long_term / project.phase            / constraint_date_end (date)    : NEW 
+project_long_term / project.phase            / constraint_date_start (date)  : NEW 
+project_long_term / project.phase            / date_end (date)               : NEW 
+project_long_term / project.phase            / date_start (date)             : NEW 
+project_long_term / project.phase            / duration (float)              : NEW required: required
+project_long_term / project.phase            / name (char)                   : NEW required: required
+project_long_term / project.phase            / next_phase_ids (many2many)    : NEW relation: project.phase
+project_long_term / project.phase            / previous_phase_ids (many2many): NEW relation: project.phase
+project_long_term / project.phase            / product_uom (many2one)        : NEW relation: product.uom, required: required, req_default: function
+project_long_term / project.phase            / project_id (many2one)         : NEW relation: project.project, required: required
+project_long_term / project.phase            / resource_ids (one2many)       : NEW relation: project.resource.allocation
+project_long_term / project.phase            / responsible_id (many2one)     : NEW relation: res.users
+project_long_term / project.phase            / sequence (integer)            : NEW 
+project_long_term / project.phase            / state (selection)             : NEW required: required, selection_keys: ['cancelled', 'done', 'draft', 'open', 'pending'], req_default: draft
+project_long_term / project.phase            / task_ids (one2many)           : NEW relation: project.task
+project_long_term / project.project          / phase_ids (one2many)          : NEW relation: project.phase
+project_long_term / project.project          / resource_calendar_id (many2one): NEW relation: resource.calendar
+project_long_term / project.resource.allocation / date_end (date)               : NEW 
+project_long_term / project.resource.allocation / date_start (date)             : NEW 
+project_long_term / project.resource.allocation / phase_id (many2one)           : NEW relation: project.phase, required: required
+project_long_term / project.resource.allocation / resource_id (many2one)        : NEW relation: resource.resource, required: required
+project_long_term / project.resource.allocation / useability (float)            : NEW 
+project_long_term / project.task             / phase_id (many2one)           : NEW relation: project.phase
+new xml-id of model ir.actions.act_window: project_long_term.act_project_phase
+new xml-id of model ir.actions.act_window: project_long_term.act_project_phase_list
+new xml-id of model ir.actions.act_window: project_long_term.act_project_phases
+new xml-id of model ir.actions.act_window: project_long_term.act_project_resource
+new xml-id of model ir.actions.act_window: project_long_term.act_resouce_allocation
+new xml-id of model ir.actions.act_window: project_long_term.action_project_compute_phases
+new xml-id of model ir.actions.act_window: project_long_term.action_project_compute_tasks
+new xml-id of model ir.actions.act_window: project_long_term.action_project_schedule_tasks
+new xml-id of model ir.actions.act_window: project_long_term.project_phase_task_list
+new xml-id of model ir.model.access: project_long_term.access_project_phase
+new xml-id of model ir.model.access: project_long_term.access_project_phase_manager
+new xml-id of model ir.model.access: project_long_term.access_project_resource_allocation
+new xml-id of model ir.model.access: project_long_term.access_project_resource_allocation_manager
+new xml-id of model ir.model.access: project_long_term.access_resource_calendar_leaves_user
+new xml-id of model ir.model.access: project_long_term.access_resource_resource_manager
+new xml-id of model ir.model.access: project_long_term.access_resource_resource_user
+new xml-id of model ir.ui.menu: base.menu_project_long_term
+new xml-id of model ir.ui.menu: project_long_term.menu_compute_phase
+new xml-id of model ir.ui.menu: project_long_term.menu_compute_tasks
+new xml-id of model ir.ui.menu: project_long_term.menu_phase_schedule
+new xml-id of model ir.ui.menu: project_long_term.menu_pm_resources_project1
+new xml-id of model ir.ui.menu: project_long_term.menu_project_phase
+new xml-id of model ir.ui.menu: project_long_term.menu_project_phase_list
+new xml-id of model ir.ui.menu: project_long_term.menu_resouce_allocation
+new xml-id of model ir.ui.menu: project_long_term.menu_view_resource
+new xml-id of model ir.ui.menu: project_long_term.menu_view_resource_calendar
+new xml-id of model ir.ui.menu: project_long_term.menu_view_resource_calendar_leaves
+new xml-id of model ir.ui.view: project.view_project_resource_form1
+new xml-id of model ir.ui.view: project_long_term.view_phase_task_form2
+new xml-id of model ir.ui.view: project_long_term.view_phase_task_search_form
+new xml-id of model ir.ui.view: project_long_term.view_phase_task_search_form_group
+new xml-id of model ir.ui.view: project_long_term.view_phase_task_search_form_tree
+new xml-id of model ir.ui.view: project_long_term.view_project_compute_phases_select
+new xml-id of model ir.ui.view: project_long_term.view_project_compute_tasks
+new xml-id of model ir.ui.view: project_long_term.view_project_phase_calendar
+new xml-id of model ir.ui.view: project_long_term.view_project_phase_form
+new xml-id of model ir.ui.view: project_long_term.view_project_phase_gantt
+new xml-id of model ir.ui.view: project_long_term.view_project_phase_list
+new xml-id of model ir.ui.view: project_long_term.view_project_phase_search
+new xml-id of model ir.ui.view: project_long_term.view_project_resource_allocation_calendar
+new xml-id of model ir.ui.view: project_long_term.view_project_resource_allocation_form
+new xml-id of model ir.ui.view: project_long_term.view_project_resource_allocation_gantt
+new xml-id of model ir.ui.view: project_long_term.view_project_resource_allocation_list
+new xml-id of model ir.ui.view: project_long_term.view_project_resource_allocation_search
+new xml-id of model ir.ui.view: project_long_term.view_project_schedule_tasks
+new xml-id of model workflow.activity: project_long_term.act_cancel_phase
+new xml-id of model workflow.activity: project_long_term.act_draft
+new xml-id of model workflow.activity: project_long_term.act_phase_done
+new xml-id of model workflow.activity: project_long_term.act_phase_pending
+new xml-id of model workflow.activity: project_long_term.act_start_phase
+new xml-id of model workflow.transition: project_long_term.t0
+new xml-id of model workflow.transition: project_long_term.t1
+new xml-id of model workflow.transition: project_long_term.t2
+new xml-id of model workflow.transition: project_long_term.t3
+new xml-id of model workflow.transition: project_long_term.t4
+new xml-id of model workflow.transition: project_long_term.t5
+new xml-id of model workflow.transition: project_long_term.t6
+new xml-id of model workflow.transition: project_long_term.t7
+new xml-id of model workflow.transition: project_long_term.t8
+new xml-id of model workflow.transition: project_long_term.t9
+new xml-id of model workflow: project_long_term.wkf_phase

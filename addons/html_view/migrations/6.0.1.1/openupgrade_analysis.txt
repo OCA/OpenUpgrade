@@ -1,0 +1,10 @@
+---html_view---
+html_view    / html.view                / bank_ids (one2many)           : NEW relation: res.partner.bank
+html_view    / html.view                / comp_id (many2one)            : NEW relation: res.company
+html_view    / html.view                / name (char)                   : NEW required: required
+new xml-id of model ir.actions.act_window: html_view.action_html_view_form
+new xml-id of model ir.model.access: html_view.access_html_view
+new xml-id of model ir.model.access: html_view.access_html_view_sale_manager
+new xml-id of model ir.model.access: html_view.access_html_view_sale_user
+new xml-id of model ir.ui.menu: html_view.html_form
+new xml-id of model ir.ui.view: html_view.html_view_form

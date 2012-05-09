@@ -1,0 +1,14 @@
+---report_intrastat---
+report_intrastat / report.intrastat         / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+report_intrastat / report.intrastat         / name (many2one)               : relation is now 'False' ('account.period')
+report_intrastat / report.intrastat         / name (many2one)               : type is now 'char' ('many2one')
+deleted xml-id of model ir.actions.act_window: report_intrastat.action_report_intrastat_tree
+deleted xml-id of model ir.model.access: report_intrastat.access_report_intrastat_code_product_manager
+deleted xml-id of model ir.ui.menu: report_intrastat.menu_report_intrastat
+deleted xml-id of model ir.ui.menu: report_intrastat.next_id_89
+deleted xml-id of model ir.ui.menu: report_intrastat.next_id_90
+new xml-id of model ir.model.access: report_intrastat.access_report_intrastat_code_purchase_manager
+new xml-id of model ir.model.access: report_intrastat.access_report_intrastat_code_sale_manager
+new xml-id of model ir.model.access: report_intrastat.access_report_intrastat_code_stock_manager
+new xml-id of model ir.ui.view: report_intrastat.view_report_intrastat_search
+new xml-id of model res.country: base.be

@@ -1,0 +1,107 @@
+---project_scrum---
+project_scrum / project.project          / product_owner_id (many2one)   : NEW relation: res.users
+project_scrum / project.project          / scrum (integer)               : NEW 
+project_scrum / project.project          / sprint_size (integer)         : NEW 
+project_scrum / project.scrum.meeting    / date (date)                   : NEW required: required, req_default: function
+project_scrum / project.scrum.meeting    / name (char)                   : NEW 
+project_scrum / project.scrum.meeting    / project_id (many2one)         : NEW relation: project.project
+project_scrum / project.scrum.meeting    / question_backlog (text)       : NEW 
+project_scrum / project.scrum.meeting    / question_blocks (text)        : NEW 
+project_scrum / project.scrum.meeting    / question_today (text)         : NEW 
+project_scrum / project.scrum.meeting    / question_yesterday (text)     : NEW 
+project_scrum / project.scrum.meeting    / sprint_id (many2one)          : NEW relation: project.scrum.sprint, required: required
+project_scrum / project.scrum.meeting    / task_ids (many2many)          : NEW relation: project.task
+project_scrum / project.scrum.product.backlog / active (boolean)              : NEW 
+project_scrum / project.scrum.product.backlog / create_date (datetime)        : NEW 
+project_scrum / project.scrum.product.backlog / expected_hours (float)        : NEW 
+project_scrum / project.scrum.product.backlog / name (char)                   : NEW required: required
+project_scrum / project.scrum.product.backlog / note (text)                   : NEW 
+project_scrum / project.scrum.product.backlog / project_id (many2one)         : NEW relation: project.project, required: required
+project_scrum / project.scrum.product.backlog / sequence (integer)            : NEW 
+project_scrum / project.scrum.product.backlog / sprint_id (many2one)          : NEW relation: project.scrum.sprint
+project_scrum / project.scrum.product.backlog / state (selection)             : NEW required: required, selection_keys: ['cancel', 'done', 'draft', 'open', 'pending'], req_default: draft
+project_scrum / project.scrum.product.backlog / tasks_id (one2many)           : NEW relation: project.task
+project_scrum / project.scrum.product.backlog / user_id (many2one)            : NEW relation: res.users
+project_scrum / project.scrum.sprint     / backlog_ids (one2many)        : NEW relation: project.scrum.product.backlog
+project_scrum / project.scrum.sprint     / date_start (date)             : NEW required: required, req_default: function
+project_scrum / project.scrum.sprint     / date_stop (date)              : NEW required: required
+project_scrum / project.scrum.sprint     / meeting_ids (one2many)        : NEW relation: project.scrum.meeting
+project_scrum / project.scrum.sprint     / name (char)                   : NEW required: required
+project_scrum / project.scrum.sprint     / product_owner_id (many2one)   : NEW relation: res.users, required: required
+project_scrum / project.scrum.sprint     / project_id (many2one)         : NEW relation: project.project, required: required
+project_scrum / project.scrum.sprint     / retrospective (text)          : NEW 
+project_scrum / project.scrum.sprint     / review (text)                 : NEW 
+project_scrum / project.scrum.sprint     / scrum_master_id (many2one)    : NEW relation: res.users, required: required
+project_scrum / project.scrum.sprint     / state (selection)             : NEW required: required, selection_keys: ['cancel', 'done', 'draft', 'open', 'pending'], req_default: draft
+project_scrum / project.task             / product_backlog_id (many2one) : NEW relation: project.scrum.product.backlog
+new xml-id of model ir.actions.act_window: project_scrum.act_scrum_sprint_2_product_backlog
+new xml-id of model ir.actions.act_window: project_scrum.act_scrum_sprint_2_project_task
+new xml-id of model ir.actions.act_window: project_scrum.action_meeting_form
+new xml-id of model ir.actions.act_window: project_scrum.action_postpone_wizard
+new xml-id of model ir.actions.act_window: project_scrum.action_product_backlog_form
+new xml-id of model ir.actions.act_window: project_scrum.action_project_scrum_email
+new xml-id of model ir.actions.act_window: project_scrum.action_scrum_backlog_merge
+new xml-id of model ir.actions.act_window: project_scrum.action_scrum_backlog_to_sprint
+new xml-id of model ir.actions.act_window: project_scrum.action_scrum_backlog_to_task
+new xml-id of model ir.actions.act_window: project_scrum.action_sprint_all_dashboard_tree
+new xml-id of model ir.actions.act_window: project_scrum.action_sprint_all_tree
+new xml-id of model ir.actions.act_window: project_scrum.action_sprint_backlog_open
+new xml-id of model ir.actions.act_window: project_scrum.action_sprint_task_open
+new xml-id of model ir.actions.act_window: project_scrum.action_view_backlog_progress_graph
+new xml-id of model ir.actions.act_window: project_scrum.action_view_my_scrum_sprint_tree
+new xml-id of model ir.actions.act_window: project_scrum.action_view_task_progress_graph
+new xml-id of model ir.actions.act_window: project_scrum.dblc_proj
+new xml-id of model ir.actions.act_window: project_scrum.dblc_proj2
+new xml-id of model ir.actions.act_window: project_scrum.open_board_project_scrum
+new xml-id of model ir.actions.report.xml: project_scrum.report_scrum_sprint_burndown_chart
+new xml-id of model ir.model.access: project_scrum.access_product_uom_project_manager
+new xml-id of model ir.model.access: project_scrum.access_product_uom_project_user
+new xml-id of model ir.model.access: project_scrum.access_scrum_meeting
+new xml-id of model ir.model.access: project_scrum.access_scrum_meeting_manager
+new xml-id of model ir.model.access: project_scrum.access_scrum_product_backlog
+new xml-id of model ir.model.access: project_scrum.access_scrum_product_backlog_manager
+new xml-id of model ir.model.access: project_scrum.access_scrum_sprint
+new xml-id of model ir.model.access: project_scrum.access_scrum_sprint_manager
+new xml-id of model ir.ui.menu: project_scrum.menu_action_meeting_form
+new xml-id of model ir.ui.menu: project_scrum.menu_action_product_backlog_form
+new xml-id of model ir.ui.menu: project_scrum.menu_action_sprint_all_tree
+new xml-id of model ir.ui.menu: project_scrum.menu_deshboard_scurm
+new xml-id of model ir.ui.menu: project_scrum.menu_scrum
+new xml-id of model ir.ui.view: project_scrum.board_my_scrum_sprint_form
+new xml-id of model ir.ui.view: project_scrum.board_project_scrum_form
+new xml-id of model ir.ui.view: project_scrum.postpone_wizard_form
+new xml-id of model ir.ui.view: project_scrum.scrum_backlog_merge_view
+new xml-id of model ir.ui.view: project_scrum.scrum_merge_project_id_view
+new xml-id of model ir.ui.view: project_scrum.view_backlog_progress_graph
+new xml-id of model ir.ui.view: project_scrum.view_project_project_form
+new xml-id of model ir.ui.view: project_scrum.view_project_scrum_email
+new xml-id of model ir.ui.view: project_scrum.view_scrum_backlog_to_sprint
+new xml-id of model ir.ui.view: project_scrum.view_scrum_backlog_to_task
+new xml-id of model ir.ui.view: project_scrum.view_scrum_meeting_calendar
+new xml-id of model ir.ui.view: project_scrum.view_scrum_meeting_form
+new xml-id of model ir.ui.view: project_scrum.view_scrum_meeting_search
+new xml-id of model ir.ui.view: project_scrum.view_scrum_meeting_tree
+new xml-id of model ir.ui.view: project_scrum.view_scrum_product_backlog_form
+new xml-id of model ir.ui.view: project_scrum.view_scrum_product_backlog_search
+new xml-id of model ir.ui.view: project_scrum.view_scrum_product_backlog_tree
+new xml-id of model ir.ui.view: project_scrum.view_scrum_sprint_calendar
+new xml-id of model ir.ui.view: project_scrum.view_scrum_sprint_dashboard_tree
+new xml-id of model ir.ui.view: project_scrum.view_scrum_sprint_form
+new xml-id of model ir.ui.view: project_scrum.view_scrum_sprint_project_dashboard_tree
+new xml-id of model ir.ui.view: project_scrum.view_scrum_sprint_search
+new xml-id of model ir.ui.view: project_scrum.view_scrum_sprint_tree
+new xml-id of model ir.ui.view: project_scrum.view_task_form2
+new xml-id of model ir.ui.view: project_scrum.view_task_form3
+new xml-id of model ir.ui.view: project_scrum.view_task_progress_graph
+new xml-id of model ir.ui.view: project_scrum.view_task_search_form2
+new xml-id of model ir.ui.view: project_scrum.view_task_search_form3
+new xml-id of model ir.ui.view: project_scrum.view_task_tree2
+new xml-id of model ir.values: project_scrum.ir_scrum_project_backlog
+new xml-id of model ir.values: project_scrum.ir_scrum_project_task
+new xml-id of model ir.values: project_scrum.ir_scrum_sprint_open_sprint
+new xml-id of model ir.values: project_scrum.ir_scrum_sprint_open_task
+new xml-id of model ir.values: project_scrum.scrum_backlog_merge_values
+new xml-id of model ir.values: project_scrum.scrum_backlog_to_sprint_values
+new xml-id of model ir.values: project_scrum.scrum_backlog_to_task_values
+new xml-id of model process.node: project_scrum.process_node_productbacklog0
+new xml-id of model process.transition: project_scrum.process_transition_backlogtask0

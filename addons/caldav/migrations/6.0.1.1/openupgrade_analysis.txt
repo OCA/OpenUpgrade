@@ -1,0 +1,144 @@
+---caldav---
+caldav       / basic.calendar           / calendar_color (char)         : NEW 
+caldav       / basic.calendar           / calendar_order (integer)      : NEW 
+caldav       / basic.calendar           / collection_id (many2one)      : NEW relation: document.directory, required: required
+caldav       / basic.calendar           / create_date (datetime)        : NEW 
+caldav       / basic.calendar           / description (text)            : NEW 
+caldav       / basic.calendar           / has_webcal (boolean)          : NEW required: required, req_default: False
+caldav       / basic.calendar           / line_ids (one2many)           : NEW relation: basic.calendar.lines
+caldav       / basic.calendar           / name (char)                   : NEW 
+caldav       / basic.calendar           / type (selection)              : NEW selection_keys: ['vevent', 'vtodo']
+caldav       / basic.calendar           / user_id (many2one)            : NEW relation: res.users
+caldav       / basic.calendar           / write_date (datetime)         : NEW 
+caldav       / basic.calendar.alias     / cal_line_id (many2one)        : NEW relation: basic.calendar.lines, required: required
+caldav       / basic.calendar.alias     / name (char)                   : NEW required: required
+caldav       / basic.calendar.alias     / res_id (integer)              : NEW required: required
+caldav       / basic.calendar.attributes / name (char)                   : NEW required: required
+caldav       / basic.calendar.attributes / type (selection)              : NEW required: required, selection_keys: ['alarm', 'attendee', 'vevent', 'vtodo']
+caldav       / basic.calendar.fields    / expr (char)                   : NEW 
+caldav       / basic.calendar.fields    / field_id (many2one)           : NEW relation: ir.model.fields
+caldav       / basic.calendar.fields    / fn (selection)                : NEW selection_keys: ['const', 'datetime_utc', 'field', 'hours']
+caldav       / basic.calendar.fields    / mapping (text)                : NEW 
+caldav       / basic.calendar.fields    / name (many2one)               : NEW relation: basic.calendar.attributes, required: required
+caldav       / basic.calendar.fields    / type_id (many2one)            : NEW relation: basic.calendar.lines, required: required
+caldav       / basic.calendar.lines     / calendar_id (many2one)        : NEW relation: basic.calendar, required: required
+caldav       / basic.calendar.lines     / domain (char)                 : NEW 
+caldav       / basic.calendar.lines     / mapping_ids (one2many)        : NEW relation: basic.calendar.fields
+caldav       / basic.calendar.lines     / name (selection)              : NEW selection_keys: ['attendee', 'valarm', 'vevent', 'vtodo']
+caldav       / basic.calendar.lines     / object_id (many2one)          : NEW relation: ir.model
+caldav       / document.directory       / calendar_collection (boolean) : NEW 
+caldav       / document.directory       / calendar_ids (one2many)       : NEW relation: basic.calendar
+new xml-id of model basic.calendar.attributes: caldav.field_alarm_action
+new xml-id of model basic.calendar.attributes: caldav.field_alarm_attach
+new xml-id of model basic.calendar.attributes: caldav.field_alarm_attendee
+new xml-id of model basic.calendar.attributes: caldav.field_alarm_description
+new xml-id of model basic.calendar.attributes: caldav.field_alarm_duration
+new xml-id of model basic.calendar.attributes: caldav.field_alarm_repeat
+new xml-id of model basic.calendar.attributes: caldav.field_alarm_summary
+new xml-id of model basic.calendar.attributes: caldav.field_alarm_trigger_duration
+new xml-id of model basic.calendar.attributes: caldav.field_alarm_trigger_interval
+new xml-id of model basic.calendar.attributes: caldav.field_alarm_trigger_occurs
+new xml-id of model basic.calendar.attributes: caldav.field_alarm_trigger_related
+new xml-id of model basic.calendar.attributes: caldav.field_attendee_cn
+new xml-id of model basic.calendar.attributes: caldav.field_attendee_cutype
+new xml-id of model basic.calendar.attributes: caldav.field_attendee_delegated-from
+new xml-id of model basic.calendar.attributes: caldav.field_attendee_delegated-to
+new xml-id of model basic.calendar.attributes: caldav.field_attendee_dir
+new xml-id of model basic.calendar.attributes: caldav.field_attendee_language
+new xml-id of model basic.calendar.attributes: caldav.field_attendee_member
+new xml-id of model basic.calendar.attributes: caldav.field_attendee_partstat
+new xml-id of model basic.calendar.attributes: caldav.field_attendee_role
+new xml-id of model basic.calendar.attributes: caldav.field_attendee_rsvp
+new xml-id of model basic.calendar.attributes: caldav.field_attendee_sent-by
+new xml-id of model basic.calendar.attributes: caldav.field_event_attendee
+new xml-id of model basic.calendar.attributes: caldav.field_event_class
+new xml-id of model basic.calendar.attributes: caldav.field_event_comment
+new xml-id of model basic.calendar.attributes: caldav.field_event_contact
+new xml-id of model basic.calendar.attributes: caldav.field_event_created
+new xml-id of model basic.calendar.attributes: caldav.field_event_description
+new xml-id of model basic.calendar.attributes: caldav.field_event_dtend
+new xml-id of model basic.calendar.attributes: caldav.field_event_dtstamp
+new xml-id of model basic.calendar.attributes: caldav.field_event_dtstart
+new xml-id of model basic.calendar.attributes: caldav.field_event_duration
+new xml-id of model basic.calendar.attributes: caldav.field_event_exdate
+new xml-id of model basic.calendar.attributes: caldav.field_event_exrule
+new xml-id of model basic.calendar.attributes: caldav.field_event_location
+new xml-id of model basic.calendar.attributes: caldav.field_event_organizer
+new xml-id of model basic.calendar.attributes: caldav.field_event_priority
+new xml-id of model basic.calendar.attributes: caldav.field_event_rdate
+new xml-id of model basic.calendar.attributes: caldav.field_event_recurrence-id
+new xml-id of model basic.calendar.attributes: caldav.field_event_related
+new xml-id of model basic.calendar.attributes: caldav.field_event_resources
+new xml-id of model basic.calendar.attributes: caldav.field_event_rrule
+new xml-id of model basic.calendar.attributes: caldav.field_event_rstatus
+new xml-id of model basic.calendar.attributes: caldav.field_event_seq
+new xml-id of model basic.calendar.attributes: caldav.field_event_status
+new xml-id of model basic.calendar.attributes: caldav.field_event_summary
+new xml-id of model basic.calendar.attributes: caldav.field_event_transp
+new xml-id of model basic.calendar.attributes: caldav.field_event_uid
+new xml-id of model basic.calendar.attributes: caldav.field_event_url
+new xml-id of model basic.calendar.attributes: caldav.field_event_valarm
+new xml-id of model basic.calendar.attributes: caldav.field_event_vtimezone
+new xml-id of model basic.calendar.attributes: caldav.field_event_x-openobject-model
+new xml-id of model basic.calendar.attributes: caldav.field_todo_attendee
+new xml-id of model basic.calendar.attributes: caldav.field_todo_class
+new xml-id of model basic.calendar.attributes: caldav.field_todo_comment
+new xml-id of model basic.calendar.attributes: caldav.field_todo_completed
+new xml-id of model basic.calendar.attributes: caldav.field_todo_description
+new xml-id of model basic.calendar.attributes: caldav.field_todo_dtstart
+new xml-id of model basic.calendar.attributes: caldav.field_todo_due
+new xml-id of model basic.calendar.attributes: caldav.field_todo_duration
+new xml-id of model basic.calendar.attributes: caldav.field_todo_exdate
+new xml-id of model basic.calendar.attributes: caldav.field_todo_exrule
+new xml-id of model basic.calendar.attributes: caldav.field_todo_location
+new xml-id of model basic.calendar.attributes: caldav.field_todo_organizer
+new xml-id of model basic.calendar.attributes: caldav.field_todo_percent
+new xml-id of model basic.calendar.attributes: caldav.field_todo_priority
+new xml-id of model basic.calendar.attributes: caldav.field_todo_rrule
+new xml-id of model basic.calendar.attributes: caldav.field_todo_seq
+new xml-id of model basic.calendar.attributes: caldav.field_todo_status
+new xml-id of model basic.calendar.attributes: caldav.field_todo_summary
+new xml-id of model basic.calendar.attributes: caldav.field_todo_uid
+new xml-id of model basic.calendar.attributes: caldav.field_todo_url
+new xml-id of model basic.calendar.attributes: caldav.field_todo_valarm
+new xml-id of model basic.calendar.attributes: caldav.field_todo_vtimezone
+new xml-id of model document.directory.dctx: caldav.document_directory_dctx_0
+new xml-id of model document.directory: caldav.document_directory_c0
+new xml-id of model document.directory: caldav.document_directory_calendars0
+new xml-id of model document.directory: caldav.document_directory_groups1
+new xml-id of model document.directory: caldav.document_directory_resources1
+new xml-id of model document.directory: caldav.document_directory_uids0
+new xml-id of model document.directory: caldav.document_directory_users0
+new xml-id of model document.directory: document.dir_calendars
+new xml-id of model document.webdav.dir.property: caldav.document_webdav_dir_property_calendarhomeset0
+new xml-id of model ir.actions.act_window.view: caldav.action_caldav_view1
+new xml-id of model ir.actions.act_window.view: caldav.action_caldav_view2
+new xml-id of model ir.actions.act_window.view: caldav.action_dir_view1
+new xml-id of model ir.actions.act_window.view: caldav.action_dir_view2
+new xml-id of model ir.actions.act_window: caldav.action_caldav_form
+new xml-id of model ir.actions.act_window: caldav.action_calendar_collection_form
+new xml-id of model ir.actions.act_window: caldav.action_calendar_event_export_values
+new xml-id of model ir.actions.act_window: caldav.action_calendar_event_import_values
+new xml-id of model ir.actions.act_window: caldav.action_calendar_event_subscribe
+new xml-id of model ir.actions.act_window: caldav.action_calendar_event_subscribe_values
+new xml-id of model ir.actions.act_window: document.action_document_directory_form
+new xml-id of model ir.model.access: caldav.access_basic_calendar
+new xml-id of model ir.model.access: caldav.access_basic_calendar_alias
+new xml-id of model ir.model.access: caldav.access_basic_calendar_attributes
+new xml-id of model ir.model.access: caldav.access_basic_calendar_fields
+new xml-id of model ir.model.access: caldav.access_basic_calendar_lines
+new xml-id of model ir.ui.menu: caldav.menu_caldav_directories
+new xml-id of model ir.ui.menu: caldav.menu_calendar
+new xml-id of model ir.ui.menu: caldav.menu_calendar_collection
+new xml-id of model ir.ui.view: caldav.caldav_browse_form
+new xml-id of model ir.ui.view: caldav.user_prefernce_form
+new xml-id of model ir.ui.view: caldav.view_caldav_form
+new xml-id of model ir.ui.view: caldav.view_caldav_search
+new xml-id of model ir.ui.view: caldav.view_caldav_tree
+new xml-id of model ir.ui.view: caldav.view_calendar_collection_form
+new xml-id of model ir.ui.view: caldav.view_calendar_collection_tree
+new xml-id of model ir.ui.view: caldav.view_calendar_event_export
+new xml-id of model ir.ui.view: caldav.view_calendar_event_import
+new xml-id of model ir.ui.view: caldav.view_calendar_event_import_display
+new xml-id of model ir.ui.view: caldav.view_calendar_event_subscribe
+new xml-id of model ir.ui.view: caldav.view_calendar_event_subscribe_display

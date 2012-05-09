@@ -1,0 +1,20 @@
+---delivery---
+delivery     / delivery.grid.line       / operator (selection)          : selection_keys is now '['<=', '==', '>=']' ('['<=', '=', '>=']')
+delivery     / stock.picking            / carrier_tracking_ref (char)   : NEW 
+delivery     / stock.picking            / number_of_packages (integer)  : NEW 
+deleted xml-id of model ir.actions.act_window: delivery.action_picking_tree5
+deleted xml-id of model ir.actions.wizard: delivery.wizard_deliver_line_add
+deleted xml-id of model ir.model.access: delivery.access_delivery_carrier_stock_worker
+deleted xml-id of model ir.ui.menu: delivery.menu_action_picking_tree3
+deleted xml-id of model ir.ui.menu: delivery.menu_action_picking_tree5
+deleted xml-id of model ir.ui.view: delivery.view_picking_withcarrier_delivery_form
+new xml-id of model ir.actions.act_window: delivery.action_delivery_cost
+new xml-id of model ir.actions.report.xml: delivery.report_shipping
+new xml-id of model ir.ui.view: delivery.edit_project_multicompany
+new xml-id of model ir.ui.view: delivery.view_delivery_order_inherit_stock
+new xml-id of model ir.ui.view: delivery.view_make_delivery_wizard
+new xml-id of model ir.ui.view: delivery.view_move_reception_picking_withweight_form
+new xml-id of model ir.ui.view: delivery.view_move_withweight_form
+new xml-id of model ir.ui.view: delivery.view_picking_withcarrier_out_move_form
+new xml-id of model ir.ui.view: delivery.view_picking_withweight_in_move_form
+new xml-id of model ir.ui.view: delivery.view_picking_withweight_internal_move_form

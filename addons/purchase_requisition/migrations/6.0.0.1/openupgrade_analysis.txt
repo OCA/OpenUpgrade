@@ -1,0 +1,46 @@
+---purchase_requisition---
+purchase_requisition / procurement.order        / requisition_id (many2one)     : NEW relation: purchase.requisition
+purchase_requisition / product.product          / purchase_requisition (boolean): NEW 
+purchase_requisition / purchase.order           / requisition_id (many2one)     : NEW relation: purchase.requisition
+purchase_requisition / purchase.requisition     / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+purchase_requisition / purchase.requisition     / date_end (datetime)           : NEW 
+purchase_requisition / purchase.requisition     / date_start (datetime)         : NEW 
+purchase_requisition / purchase.requisition     / description (text)            : NEW 
+purchase_requisition / purchase.requisition     / exclusive (selection)         : NEW required: required, selection_keys: ['exclusive', 'multiple'], req_default: multiple
+purchase_requisition / purchase.requisition     / line_ids (one2many)           : NEW relation: purchase.requisition.line
+purchase_requisition / purchase.requisition     / name (char)                   : NEW required: required, req_default: function
+purchase_requisition / purchase.requisition     / origin (char)                 : NEW 
+purchase_requisition / purchase.requisition     / purchase_ids (one2many)       : NEW relation: purchase.order
+purchase_requisition / purchase.requisition     / state (selection)             : NEW required: required, selection_keys: ['cancel', 'done', 'draft', 'in_progress'], req_default: draft
+purchase_requisition / purchase.requisition     / user_id (many2one)            : NEW relation: res.users
+purchase_requisition / purchase.requisition     / warehouse_id (many2one)       : NEW relation: stock.warehouse
+purchase_requisition / purchase.requisition.line / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+purchase_requisition / purchase.requisition.line / product_id (many2one)         : NEW relation: product.product
+purchase_requisition / purchase.requisition.line / product_qty (float)           : NEW 
+purchase_requisition / purchase.requisition.line / product_uom_id (many2one)     : NEW relation: product.uom
+purchase_requisition / purchase.requisition.line / requisition_id (many2one)     : NEW relation: purchase.requisition
+new xml-id of model ir.actions.act_window: purchase_requisition.act_res_partner_2_purchase_order
+new xml-id of model ir.actions.act_window: purchase_requisition.action_purchase_requisition
+new xml-id of model ir.actions.act_window: purchase_requisition.action_purchase_requisition_partner
+new xml-id of model ir.actions.report.xml: purchase_requisition.report_purchase_requisition
+new xml-id of model ir.model.access: purchase_requisition.access_purchase_requisition
+new xml-id of model ir.model.access: purchase_requisition.access_purchase_requisition_line_manager
+new xml-id of model ir.model.access: purchase_requisition.access_purchase_requisition_line_purchase_user
+new xml-id of model ir.model.access: purchase_requisition.access_purchase_requisition_line_stock_manager
+new xml-id of model ir.model.access: purchase_requisition.access_purchase_requisition_manager
+new xml-id of model ir.model.access: purchase_requisition.access_purchase_requisition_stock_manager
+new xml-id of model ir.rule: purchase_requisition.purchase_requisition_comp_rule
+new xml-id of model ir.rule: purchase_requisition.purchase_requisition_line_comp_rule
+new xml-id of model ir.sequence.type: purchase_requisition.seq_type_purchase_requisition
+new xml-id of model ir.sequence: purchase_requisition.seq_purchase_requisition
+new xml-id of model ir.ui.menu: purchase_requisition.menu_purchase_requisition_pro_mgt
+new xml-id of model ir.ui.view: purchase_requisition.procurement_normal_form_view_inherit
+new xml-id of model ir.ui.view: purchase_requisition.product_normal_form_view_inherit
+new xml-id of model ir.ui.view: purchase_requisition.purchase_order_form_inherit
+new xml-id of model ir.ui.view: purchase_requisition.purchase_order_search_inherit
+new xml-id of model ir.ui.view: purchase_requisition.view_purchase_requisition_filter
+new xml-id of model ir.ui.view: purchase_requisition.view_purchase_requisition_form
+new xml-id of model ir.ui.view: purchase_requisition.view_purchase_requisition_partner
+new xml-id of model ir.ui.view: purchase_requisition.view_purchase_requisition_tree
+new xml-id of model res.groups: purchase_requisition.group_purchase_requisition_manager
+new xml-id of model res.groups: purchase_requisition.group_purchase_requisition_user

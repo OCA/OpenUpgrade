@@ -1,0 +1,40 @@
+---wiki---
+wiki         / wiki.groups              / child_ids (one2many)          : DEL relation: wiki.groups
+wiki         / wiki.groups              / menu_id (many2one)            : NEW relation: ir.ui.menu
+wiki         / wiki.groups              / method (selection)            : NEW selection_keys: ['list', 'page', 'tree']
+wiki         / wiki.groups              / parent_id (many2one)          : DEL relation: wiki.groups
+wiki         / wiki.wiki                / child_ids (one2many)          : NEW relation: wiki.wiki
+wiki         / wiki.wiki                / parent_id (many2one)          : NEW relation: wiki.wiki
+deleted xml-id of model ir.actions.act_window: wiki.act_view_diff
+deleted xml-id of model ir.actions.wizard: wiki.wizard_group_menu_create
+deleted xml-id of model ir.actions.wizard: wiki.wizard_make_index
+deleted xml-id of model ir.actions.wizard: wiki.wizard_open_page
+deleted xml-id of model ir.model.access: wiki.wiki_groups_link
+deleted xml-id of model ir.model.access: wiki.wiki_wizard_wiki_history_show_diff
+deleted xml-id of model ir.ui.menu: wiki.menu_action_history
+deleted xml-id of model ir.ui.menu: wiki.menu_action_wiki_groups_browse
+deleted xml-id of model ir.ui.menu: wiki.menu_document
+deleted xml-id of model ir.ui.menu: wiki.menu_document2
+deleted xml-id of model ir.ui.menu: wiki.menu_document_configuration
+deleted xml-id of model ir.ui.view: wiki.view_wiki_history_diff
+new xml-id of model ir.actions.act_window: wiki.action_view_wiki_make_index
+new xml-id of model ir.actions.act_window: wiki.action_view_wiki_make_index_values
+new xml-id of model ir.actions.act_window: wiki.action_view_wiki_show_diff
+new xml-id of model ir.actions.act_window: wiki.action_view_wiki_show_diff_values
+new xml-id of model ir.actions.act_window: wiki.action_view_wiki_wiki_page_open
+new xml-id of model ir.actions.act_window: wiki.action_wiki_create_menu
+new xml-id of model ir.actions.act_window: wiki.action_wiki_review
+new xml-id of model ir.model.access: wiki.access_wiki_wiki_sale_manager
+new xml-id of model ir.model.access: wiki.wiki_wiki_user
+new xml-id of model ir.ui.menu: knowledge.menu_document
+new xml-id of model ir.ui.menu: knowledge.menu_document_configuration
+new xml-id of model ir.ui.menu: wiki.menu_wiki_configuration
+new xml-id of model ir.ui.view: wiki.view_wiki_create_menu
+new xml-id of model ir.ui.view: wiki.view_wiki_filter
+new xml-id of model ir.ui.view: wiki.view_wiki_make_index
+new xml-id of model ir.ui.view: wiki.view_wiki_show_diff
+new xml-id of model ir.ui.view: wiki.view_wiki_tree_children
+new xml-id of model ir.ui.view: wiki.view_wiki_wiki_page_open
+new xml-id of model res.groups: base.group_document_user
+new xml-id of model res.groups: base.group_sale_manager
+new xml-id of model res.groups: base.group_sale_salesman

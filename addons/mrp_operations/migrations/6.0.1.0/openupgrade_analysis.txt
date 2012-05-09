@@ -1,0 +1,45 @@
+---mrp_operations---
+mrp_operations / mrp.production.workcenter.line / date_finished (datetime)      : NEW 
+mrp_operations / mrp.production.workcenter.line / date_finnished (datetime)     : DEL 
+mrp_operations / mrp.workorder            / date (date)                   : NEW 
+mrp_operations / mrp.workorder            / day (char)                    : NEW 
+mrp_operations / mrp.workorder            / delay (float)                 : NEW 
+mrp_operations / mrp.workorder            / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+mrp_operations / mrp.workorder            / nbr (integer)                 : NEW 
+mrp_operations / mrp.workorder            / product_id (many2one)         : NEW relation: product.product
+mrp_operations / mrp.workorder            / product_qty (float)           : NEW 
+mrp_operations / mrp.workorder            / production_id (many2one)      : NEW relation: mrp.production
+mrp_operations / mrp.workorder            / state (selection)             : NEW selection_keys: ['cancel', 'done', 'draft', 'pause', 'startworking']
+mrp_operations / mrp.workorder            / total_cycles (float)          : NEW 
+mrp_operations / mrp.workorder            / total_hours (float)           : NEW 
+mrp_operations / mrp.workorder            / workcenter_id (many2one)      : NEW relation: mrp.workcenter
+mrp_operations / mrp.workorder            / year (char)                   : NEW 
+deleted xml-id of model ir.actions.act_window: mrp_operations.mrp_production_wc_action
+deleted xml-id of model ir.ui.menu: mrp_operations.menu_mrp_production_code_action
+deleted xml-id of model ir.ui.menu: mrp_operations.menu_mrp_production_operation_action
+deleted xml-id of model ir.ui.menu: mrp_operations.menu_mrp_production_wc_action
+deleted xml-id of model ir.ui.menu: mrp_operations.menu_mrp_production_wc_confirm_action
+deleted xml-id of model ir.ui.menu: mrp_operations.menu_mrp_production_wc_draft_action
+deleted xml-id of model ir.ui.menu: mrp_operations.menu_mrp_production_wc_draft_action_planning
+new xml-id of model ir.actions.act_window.view: mrp_operations.action_report_mrp_workorder_graph
+new xml-id of model ir.actions.act_window.view: mrp_operations.action_report_mrp_workorder_tree
+new xml-id of model ir.actions.act_window: mrp_operations.action_report_mrp_workorder
+new xml-id of model ir.actions.act_window: mrp_operations.mrp_production_wc_resource_planning
+new xml-id of model ir.model.access: mrp_operations.access_mrp_operations_operation_code_manager
+new xml-id of model ir.model.access: mrp_operations.access_mrp_operations_operation_manager
+new xml-id of model ir.model.access: mrp_operations.access_mrp_production_manager
+new xml-id of model ir.model.access: mrp_operations.access_mrp_production_user
+new xml-id of model ir.model.access: mrp_operations.access_mrp_production_workcenter_line
+new xml-id of model ir.model.access: mrp_operations.access_mrp_production_workcenter_line_manager
+new xml-id of model ir.model.access: mrp_operations.access_mrp_workorder_manager
+new xml-id of model ir.ui.menu: mrp_operations.menu_mrp_production_wc_action_planning
+new xml-id of model ir.ui.menu: mrp_operations.menu_mrp_production_wc_order
+new xml-id of model ir.ui.menu: mrp_operations.menu_mrp_production_wc_resource_planning
+new xml-id of model ir.ui.menu: mrp_operations.menu_report_mrp_workorders_tree
+new xml-id of model ir.ui.view: mrp_operations.mrp_production_form_inherit_view
+new xml-id of model ir.ui.view: mrp_operations.mrp_production_form_inherit_view2
+new xml-id of model ir.ui.view: mrp_operations.view_mrp_production_workcenter_form_view_filter
+new xml-id of model ir.ui.view: mrp_operations.view_report_mrp_workorder_filter
+new xml-id of model ir.ui.view: mrp_operations.view_report_mrp_workorder_graph
+new xml-id of model ir.ui.view: mrp_operations.view_report_mrp_workorder_tree
+new xml-id of model ir.ui.view: mrp_operations.workcenter_line_resource_gantt

@@ -1,0 +1,184 @@
+---project---
+project      / project.project          / _inherits (False)             : NEW 
+project      / project.project          / analytic_account_id (many2one): NEW relation: account.analytic.account, required: required
+project      / project.project          / category_id (many2one)        : DEL relation: account.analytic.account
+project      / project.project          / child_id (one2many)           : DEL relation: project.project
+project      / project.project          / contact_id (many2one)         : DEL relation: res.partner.address
+project      / project.project          / date_end (date)               : DEL 
+project      / project.project          / date_start (date)             : DEL 
+project      / project.project          / manager (many2one)            : DEL relation: res.users
+project      / project.project          / name (char)                   : DEL required: required
+project      / project.project          / notes (text)                  : DEL 
+project      / project.project          / parent_id (many2one)          : DEL relation: project.project
+project      / project.project          / partner_id (many2one)         : DEL relation: res.partner
+project      / project.project          / sequence (integer)            : NEW 
+project      / project.project          / state (selection)             : DEL required: required, selection_keys: ['cancelled', 'done', 'open', 'pending', 'template'], req_default: function
+project      / project.project          / timesheet_id (many2one)       : DEL relation: hr.timesheet.group
+project      / project.project          / type_ids (many2many)          : NEW relation: project.task.type
+project      / project.task             / active (boolean)              : now a function
+project      / project.task             / child_ids (one2many)          : type is now 'many2many' ('one2many')
+project      / project.task             / company_id (many2one)         : NEW relation: res.company
+project      / project.task             / create_date (datetime)        : NEW 
+project      / project.task             / date_close (datetime)         : DEL 
+project      / project.task             / date_deadline (datetime)      : type is now 'date' ('datetime')
+project      / project.task             / date_end (datetime)           : NEW 
+project      / project.task             / id (integer)                  : NEW 
+project      / project.task             / parent_id (many2one)          : DEL relation: project.task
+project      / project.task             / parent_ids (many2many)        : NEW relation: project.task
+project      / project.task             / type (many2one)               : DEL relation: project.task.type
+project      / project.task             / type_id (many2one)            : NEW relation: project.task.type
+project      / project.task.type        / sequence (integer)            : NEW 
+project      / project.vs.hours         / planned_hours (float)         : NEW 
+project      / project.vs.hours         / project (char)                : NEW required: required
+project      / project.vs.hours         / remaining_hours (float)       : NEW 
+project      / project.vs.hours         / state (selection)             : NEW required: required, selection_keys: ['cancelled', 'close', 'draft', 'open', 'pending', 'template']
+project      / project.vs.hours         / total_hours (float)           : NEW 
+project      / report.project.task.user / company_id (many2one)         : NEW relation: res.company
+project      / report.project.task.user / date_deadline (date)          : NEW 
+project      / report.project.task.user / date_end (date)               : NEW 
+project      / report.project.task.user / date_start (date)             : NEW 
+project      / report.project.task.user / day (char)                    : NEW 
+project      / report.project.task.user / delay_endings_days (float)    : NEW 
+project      / report.project.task.user / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+project      / report.project.task.user / nbr (integer)                 : NEW 
+project      / report.project.task.user / no_of_days (integer)          : NEW 
+project      / report.project.task.user / opening_days (float)          : NEW 
+project      / report.project.task.user / partner_id (many2one)         : NEW relation: res.partner
+project      / report.project.task.user / priority (selection)          : NEW selection_keys: ['0', '1', '2', '3', '4']
+project      / report.project.task.user / progress (float)              : NEW 
+project      / report.project.task.user / remaining_hours (float)       : NEW 
+project      / report.project.task.user / state (selection)             : NEW selection_keys: ['cancelled', 'done', 'draft', 'open', 'pending']
+project      / report.project.task.user / total_hours (float)           : NEW 
+project      / report.project.task.user / type_id (many2one)            : NEW relation: project.task.type
+project      / report.project.task.user / year (char)                   : NEW 
+project      / res.company              / project_time_mode (selection) : DEL selection_keys: ['day', 'hours', 'month', 'week']
+project      / res.company              / project_time_mode_id (many2one): NEW relation: product.uom
+project      / res.partner              / task_ids (one2many)           : NEW relation: project.task
+project      / res.users                / context_project_id (many2one) : NEW relation: project.project
+project      / task.by.days             / day (char)                    : NEW required: required
+project      / task.by.days             / project_id (many2one)         : NEW relation: project.project
+project      / task.by.days             / state (selection)             : NEW required: required, selection_keys: ['cancelled', 'done', 'draft', 'open', 'pending']
+project      / task.by.days             / total_task (float)            : NEW 
+deleted xml-id of model ir.actions.act_window: project.act_project_project_2_project_task_new
+deleted xml-id of model ir.actions.act_window: project.act_project_project_2_project_task_opened
+deleted xml-id of model ir.actions.act_window: project.action_config_compute_remaining
+deleted xml-id of model ir.actions.act_window: project.action_view_task4
+deleted xml-id of model ir.actions.act_window: project.action_view_task5_pending
+deleted xml-id of model ir.actions.act_window: project.action_view_task5_prog
+deleted xml-id of model ir.actions.act_window: project.action_view_task5_prog_draft
+deleted xml-id of model ir.actions.act_window: project.action_view_task5_prog_prog
+deleted xml-id of model ir.actions.act_window: project.action_view_task6_prog
+deleted xml-id of model ir.actions.act_window: project.action_view_task7
+deleted xml-id of model ir.actions.act_window: project.action_view_task_new
+deleted xml-id of model ir.actions.act_window: project.open_view_my_project
+deleted xml-id of model ir.actions.act_window: project.open_view_my_project_my_run
+deleted xml-id of model ir.actions.act_window: project.open_view_my_project_open
+deleted xml-id of model ir.actions.act_window: project.open_view_project
+deleted xml-id of model ir.actions.act_window: project.open_view_project_open
+deleted xml-id of model ir.actions.report.xml: project.report_project_project_gantt
+deleted xml-id of model ir.actions.report.xml: project.report_project_task_gantt
+deleted xml-id of model ir.actions.wizard: project.wizard_attachment_task
+deleted xml-id of model ir.actions.wizard: project.wizard_close_task
+deleted xml-id of model ir.actions.wizard: project.wizard_delegate_task
+deleted xml-id of model ir.model.access: project.access_config_compute_remaining
+deleted xml-id of model ir.model.access: project.access_config_compute_remaining_manager
+deleted xml-id of model ir.ui.menu: project.menu_action_view_task4
+deleted xml-id of model ir.ui.menu: project.menu_action_view_task6_prog
+deleted xml-id of model ir.ui.menu: project.menu_action_view_task7
+deleted xml-id of model ir.ui.menu: project.menu_action_view_task_new
+deleted xml-id of model ir.ui.menu: project.menu_all_project
+deleted xml-id of model ir.ui.menu: project.menu_main
+deleted xml-id of model ir.ui.menu: project.menu_open_view_my_project
+deleted xml-id of model ir.ui.menu: project.menu_open_view_my_project_my_run
+deleted xml-id of model ir.ui.menu: project.menu_open_view_my_project_open
+deleted xml-id of model ir.ui.menu: project.menu_open_view_project
+deleted xml-id of model ir.ui.menu: project.menu_open_view_project_open
+deleted xml-id of model ir.ui.menu: project.menu_task_types
+deleted xml-id of model ir.ui.menu: project.menu_tasks
+deleted xml-id of model ir.ui.menu: project.menu_tasks_yours_pending
+deleted xml-id of model ir.ui.menu: project.menu_tasks_yours_prog
+deleted xml-id of model ir.ui.menu: project.menu_tasks_yours_prog_draft
+deleted xml-id of model ir.ui.menu: project.menu_tasks_yours_prog_prog
+deleted xml-id of model ir.ui.menu: project.menu_template_project
+deleted xml-id of model ir.ui.view: project.my_pending_task
+deleted xml-id of model ir.ui.view: project.view_config_compute_remaining
+deleted xml-id of model ir.ui.view: project.view_my_project
+deleted xml-id of model ir.ui.view: project.view_project_list
+deleted xml-id of model process.node: project.process_node_triggerinvoice0
+deleted xml-id of model process.transition: project.process_transition_taskinvoice0
+deleted xml-id of model res.groups: project.group_project_finance
+new xml-id of model account.analytic.account: project.all_projects_account
+new xml-id of model board.note.type: project.note_project_manager_type
+new xml-id of model board.note.type: project.note_project_type
+new xml-id of model ir.actions.act_window.view: project.open_view_project_vs_planned_total_hours_graph
+new xml-id of model ir.actions.act_window.view: project.open_view_project_vs_planned_total_hours_tree
+new xml-id of model ir.actions.act_window.view: project.open_view_project_vs_remaining_hours_graph
+new xml-id of model ir.actions.act_window.view: project.open_view_project_vs_remaining_hours_tree
+new xml-id of model ir.actions.act_window: project.act_my_account
+new xml-id of model ir.actions.act_window: project.act_my_project
+new xml-id of model ir.actions.act_window: project.action_project_installer
+new xml-id of model ir.actions.act_window: project.action_project_task_close
+new xml-id of model ir.actions.act_window: project.action_project_task_delegate
+new xml-id of model ir.actions.act_window: project.action_project_task_reevaluate
+new xml-id of model ir.actions.act_window: project.action_project_task_user_tree
+new xml-id of model ir.actions.act_window: project.action_project_vs_planned_total_hours_graph
+new xml-id of model ir.actions.act_window: project.action_project_vs_remaining_hours_graph
+new xml-id of model ir.actions.act_window: project.action_task_by_days_graph
+new xml-id of model ir.actions.act_window: project.action_view_board_note_tree
+new xml-id of model ir.actions.act_window: project.action_view_delegate_task_tree
+new xml-id of model ir.actions.act_window: project.action_view_task_overpassed_draft
+new xml-id of model ir.actions.act_window: project.action_view_task_tree
+new xml-id of model ir.actions.act_window: project.action_view_task_tree_deadline
+new xml-id of model ir.actions.act_window: project.open_board_project
+new xml-id of model ir.actions.todo: project.project_installer_todo
+new xml-id of model ir.model.access: project.access_account_analytic_account
+new xml-id of model ir.model.access: project.access_account_analytic_account_manager
+new xml-id of model ir.model.access: project.access_account_analytic_line_project
+new xml-id of model ir.model.access: project.access_partner_address_task manager
+new xml-id of model ir.model.access: project.access_partner_address_task user
+new xml-id of model ir.model.access: project.access_partner_task manager
+new xml-id of model ir.model.access: project.access_partner_task user
+new xml-id of model ir.model.access: project.access_project_on_partner
+new xml-id of model ir.model.access: project.access_project_project_sale_user
+new xml-id of model ir.model.access: project.access_project_task_sale_user
+new xml-id of model ir.model.access: project.access_project_vs_hours
+new xml-id of model ir.model.access: project.access_project_vs_hours_manager
+new xml-id of model ir.model.access: project.access_report_project_task_user
+new xml-id of model ir.model.access: project.access_task_by_days
+new xml-id of model ir.model.access: project.access_task_on_partner
+new xml-id of model ir.rule: project.project_comp_rule
+new xml-id of model ir.rule: project.project_manager_all_project_tasks_rule
+new xml-id of model ir.rule: project.task_comp_rule
+new xml-id of model ir.rule: project.task_visibility_rule
+new xml-id of model ir.ui.menu: base.menu_main_pm
+new xml-id of model ir.ui.menu: base.menu_project_report
+new xml-id of model ir.ui.menu: project.menu_board_project
+new xml-id of model ir.ui.menu: project.menu_project_management
+new xml-id of model ir.ui.menu: project.menu_project_task_user_tree
+new xml-id of model ir.ui.menu: project.menu_task_types_view
+new xml-id of model ir.ui.menu: project.menu_tasks_config
+new xml-id of model ir.ui.menu: project.next_id_86
+new xml-id of model ir.ui.view: base.view_crm_partner_info_History
+new xml-id of model ir.ui.view: project.board_project_form
+new xml-id of model ir.ui.view: project.view_delegated_task_tree
+new xml-id of model ir.ui.view: project.view_project_installer
+new xml-id of model ir.ui.view: project.view_project_project_filter
+new xml-id of model ir.ui.view: project.view_project_project_gantt
+new xml-id of model ir.ui.view: project.view_project_task_close
+new xml-id of model ir.ui.view: project.view_project_task_delegate
+new xml-id of model ir.ui.view: project.view_project_task_reevaluate
+new xml-id of model ir.ui.view: project.view_project_users_form_simple
+new xml-id of model ir.ui.view: project.view_project_vs_planned_total_hours_graph
+new xml-id of model ir.ui.view: project.view_project_vs_planned_total_hours_tree
+new xml-id of model ir.ui.view: project.view_project_vs_remaining_hours_graph
+new xml-id of model ir.ui.view: project.view_project_vs_remaining_hours_tree
+new xml-id of model ir.ui.view: project.view_task_by_days_graph
+new xml-id of model ir.ui.view: project.view_task_by_days_tree
+new xml-id of model ir.ui.view: project.view_task_partner_info_form
+new xml-id of model ir.ui.view: project.view_task_project_user_graph
+new xml-id of model ir.ui.view: project.view_task_project_user_search
+new xml-id of model ir.ui.view: project.view_task_project_user_tree
+new xml-id of model ir.ui.view: project.view_task_search_form
+new xml-id of model ir.ui.view: project.view_task_tree
+new xml-id of model ir.ui.view: project.view_users_form_project_modif_inherited1
+new xml-id of model res.groups: base.group_sale_salesman

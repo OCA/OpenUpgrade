@@ -1,0 +1,41 @@
+---hr_payroll_account---
+hr_payroll_account / hr.contibution.register  / account_id (many2one)         : NEW relation: account.account
+hr_payroll_account / hr.contibution.register  / analytic_account_id (many2one): NEW relation: account.analytic.account
+hr_payroll_account / hr.contibution.register.line / period_id (many2one)          : NEW relation: account.period
+hr_payroll_account / hr.holidays.status       / account_id (many2one)         : NEW relation: account.account
+hr_payroll_account / hr.holidays.status       / analytic_account_id (many2one): NEW relation: account.analytic.account
+hr_payroll_account / hr.payroll.advice        / account_id (many2one)         : NEW relation: account.account
+hr_payroll_account / hr.payroll.register      / bank_journal_id (many2one)    : NEW relation: account.journal
+hr_payroll_account / hr.payroll.register      / journal_id (many2one)         : NEW relation: account.journal
+hr_payroll_account / hr.payroll.register      / period_id (many2one)          : NEW relation: account.period
+hr_payroll_account / hr.payroll.structure     / account_id (many2one)         : NEW relation: account.analytic.account
+hr_payroll_account / hr.payslip               / bank_journal_id (many2one)    : NEW relation: account.journal
+hr_payroll_account / hr.payslip               / journal_id (many2one)         : NEW relation: account.journal
+hr_payroll_account / hr.payslip               / move_ids (one2many)           : NEW relation: hr.payslip.account.move
+hr_payroll_account / hr.payslip               / move_line_ids (many2many)     : NEW relation: account.move.line
+hr_payroll_account / hr.payslip               / move_payment_ids (many2many)  : NEW relation: account.move.line
+hr_payroll_account / hr.payslip               / period_id (many2one)          : NEW relation: account.period
+hr_payroll_account / hr.payslip.account.move  / move_id (many2one)            : NEW relation: account.move
+hr_payroll_account / hr.payslip.account.move  / name (char)                   : NEW required: required
+hr_payroll_account / hr.payslip.account.move  / sequence (integer)            : NEW 
+hr_payroll_account / hr.payslip.account.move  / slip_id (many2one)            : NEW relation: hr.payslip
+hr_payroll_account / hr.payslip.line          / account_id (many2one)         : NEW relation: account.account
+hr_payroll_account / hr.payslip.line          / analytic_account_id (many2one): NEW relation: account.analytic.account
+new xml-id of model ir.model.access: hr_payroll_account.access_hr_payslip_account_move_user
+new xml-id of model ir.model.access: hr_payroll_account.access_hr_payslip_line_user
+new xml-id of model ir.model.access: hr_payroll_account.access_hr_payslip_user
+new xml-id of model ir.ui.view: hr_payroll_account.hr_contibution_register_inherit1_form
+new xml-id of model ir.ui.view: hr_payroll_account.hr_contibution_register_inherit_form
+new xml-id of model ir.ui.view: hr_payroll_account.hr_contibution_register_inherit_tree
+new xml-id of model ir.ui.view: hr_payroll_account.hr_contibution_register_line_inherit_form
+new xml-id of model ir.ui.view: hr_payroll_account.hr_employee_payroll_property_form
+new xml-id of model ir.ui.view: hr_payroll_account.view_holiday_status_inherit_form1
+new xml-id of model ir.ui.view: hr_payroll_account.view_hr_bank_advice_inherit_form
+new xml-id of model ir.ui.view: hr_payroll_account.view_hr_payroll_register_inherit_form
+new xml-id of model ir.ui.view: hr_payroll_account.view_hr_payroll_register_inherit_tree
+new xml-id of model ir.ui.view: hr_payroll_account.view_hr_payslip_form_inherit
+new xml-id of model ir.ui.view: hr_payroll_account.view_hr_payslip_form_inherit1
+new xml-id of model ir.ui.view: hr_payroll_account.view_hr_payslip_form_inherit_1
+new xml-id of model ir.ui.view: hr_payroll_account.view_hr_payslip_inherit_form
+new xml-id of model ir.ui.view: hr_payroll_account.view_hr_payslip_line_inherit_form
+new xml-id of model ir.ui.view: hr_payroll_account.view_hr_payslip_line_inherit_tree
