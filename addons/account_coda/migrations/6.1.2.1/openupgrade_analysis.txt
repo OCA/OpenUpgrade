@@ -1,70 +1,70 @@
 ---account_coda---
-account_coda / account.coda             / statement_ids (one2many)      : relation is now 'coda.bank.statement' ('account.bank.statement')
-account_coda / account.coda             / name (binary)                 : type is now 'char' ('binary')
 account_coda / account.bank.statement   / coda_id (many2one)            : DEL relation: account.coda
+account_coda / account.bank.statement   / coda_statement_id (many2one)  : NEW relation: coda.bank.statement
+account_coda / account.bank.statement.line.global / coda_statement_line_ids (one2many): NEW relation: coda.bank.statement.line
+account_coda / account.coda             / coda_creation_date (date)     : NEW 
+account_coda / account.coda             / coda_data (binary)            : NEW 
 account_coda / account.coda             / journal_id (many2one)         : DEL relation: account.journal
-account_coda / coda.bank.account        / def_payable (many2one)        : NEW relation: account.account, required: required
-account_coda / coda.bank.account        / transfer_account (many2one)   : NEW relation: account.account, required: required
-account_coda / coda.bank.account        / journal (many2one)            : NEW relation: account.journal
-account_coda / coda.bank.account        / coda_st_naming (char)         : NEW 
-account_coda / coda.bank.account        / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
-account_coda / coda.bank.account        / find_partner (boolean)        : NEW required: required, req_default: True
-account_coda / coda.bank.account        / bank_id (many2one)            : NEW relation: res.partner.bank, required: required
-account_coda / coda.bank.account        / currency (many2one)           : NEW relation: res.currency, required: required, req_default: function
-account_coda / coda.bank.account        / state (selection)             : NEW required: required, selection_keys: ['info', 'normal'], req_default: normal
-account_coda / coda.bank.account        / find_bbacom (boolean)         : NEW required: required, req_default: True
-account_coda / coda.bank.account        / description2 (char)           : NEW 
-account_coda / coda.bank.account        / description1 (char)           : NEW 
-account_coda / coda.bank.account        / active (boolean)              : NEW 
-account_coda / coda.bank.account        / def_receivable (many2one)     : NEW relation: account.account, required: required
-account_coda / coda.bank.account        / awaiting_account (many2one)   : NEW relation: account.account, required: required
-account_coda / coda.bank.account        / name (char)                   : NEW required: required
-account_coda / account.coda.trans.code  / comment (text)                : NEW 
-account_coda / account.coda.trans.code  / parent_id (many2one)          : NEW relation: account.coda.trans.code
-account_coda / account.coda.trans.code  / code (char)                   : NEW required: required
-account_coda / account.coda.trans.code  / type (selection)              : NEW required: required, selection_keys: ['code', 'family']
-account_coda / account.coda.trans.code  / description (char)            : NEW 
-account_coda / account.coda.trans.category / category (char)               : NEW required: required
-account_coda / account.coda.trans.category / description (char)            : NEW 
+account_coda / account.coda             / name (binary)                 : type is now 'char' ('binary')
+account_coda / account.coda             / statement_ids (one2many)      : relation is now 'coda.bank.statement' ('account.bank.statement')
 account_coda / account.coda.comm.type   / code (char)                   : NEW required: required
 account_coda / account.coda.comm.type   / description (char)            : NEW 
+account_coda / account.coda.trans.category / category (char)               : NEW required: required
+account_coda / account.coda.trans.category / description (char)            : NEW 
+account_coda / account.coda.trans.code  / code (char)                   : NEW required: required
+account_coda / account.coda.trans.code  / comment (text)                : NEW 
+account_coda / account.coda.trans.code  / description (char)            : NEW 
+account_coda / account.coda.trans.code  / parent_id (many2one)          : NEW relation: account.coda.trans.code
+account_coda / account.coda.trans.code  / type (selection)              : NEW required: required, selection_keys: ['code', 'family']
+account_coda / account.coda.trans.type  / description (text)            : NEW 
 account_coda / account.coda.trans.type  / parent_id (many2one)          : NEW relation: account.coda.trans.type
 account_coda / account.coda.trans.type  / type (char)                   : NEW required: required
-account_coda / account.coda.trans.type  / description (text)            : NEW 
-account_coda / coda.bank.statement.line / partner_id (many2one)         : NEW relation: res.partner
-account_coda / coda.bank.statement.line / counterparty_name (char)      : NEW 
-account_coda / coda.bank.statement.line / globalisation_level (integer) : NEW 
-account_coda / coda.bank.statement.line / statement_id (many2one)       : NEW relation: coda.bank.statement, required: required
-account_coda / coda.bank.statement.line / ref (char)                    : NEW 
-account_coda / coda.bank.statement.line / sequence (integer)            : NEW 
+account_coda / coda.bank.account        / active (boolean)              : NEW 
+account_coda / coda.bank.account        / awaiting_account (many2one)   : NEW relation: account.account, required: required
+account_coda / coda.bank.account        / bank_id (many2one)            : NEW relation: res.partner.bank, required: required
+account_coda / coda.bank.account        / coda_st_naming (char)         : NEW 
+account_coda / coda.bank.account        / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+account_coda / coda.bank.account        / currency (many2one)           : NEW relation: res.currency, required: required, req_default: function
+account_coda / coda.bank.account        / def_payable (many2one)        : NEW relation: account.account, required: required
+account_coda / coda.bank.account        / def_receivable (many2one)     : NEW relation: account.account, required: required
+account_coda / coda.bank.account        / description1 (char)           : NEW 
+account_coda / coda.bank.account        / description2 (char)           : NEW 
+account_coda / coda.bank.account        / find_bbacom (boolean)         : NEW required: required, req_default: True
+account_coda / coda.bank.account        / find_partner (boolean)        : NEW required: required, req_default: True
+account_coda / coda.bank.account        / journal (many2one)            : NEW relation: account.journal
+account_coda / coda.bank.account        / name (char)                   : NEW required: required
+account_coda / coda.bank.account        / state (selection)             : NEW required: required, selection_keys: ['info', 'normal'], req_default: normal
+account_coda / coda.bank.account        / transfer_account (many2one)   : NEW relation: account.account, required: required
+account_coda / coda.bank.statement      / balance_end_real (float)      : NEW 
+account_coda / coda.bank.statement      / balance_start (float)         : NEW 
+account_coda / coda.bank.statement      / coda_bank_account_id (many2one): NEW relation: coda.bank.account
+account_coda / coda.bank.statement      / coda_id (many2one)            : NEW relation: account.coda
+account_coda / coda.bank.statement      / currency (many2one)           : NEW relation: res.currency, required: required, req_default: function
+account_coda / coda.bank.statement      / date (date)                   : NEW required: required
+account_coda / coda.bank.statement      / journal_id (many2one)         : NEW relation: account.journal
+account_coda / coda.bank.statement      / line_ids (one2many)           : NEW relation: coda.bank.statement.line
+account_coda / coda.bank.statement      / name (char)                   : NEW required: required
+account_coda / coda.bank.statement      / period_id (many2one)          : NEW relation: account.period, required: required, req_default: function
+account_coda / coda.bank.statement      / statement_id (many2one)       : NEW relation: account.bank.statement
+account_coda / coda.bank.statement      / type (selection)              : NEW required: required, selection_keys: ['info', 'normal'], req_default: normal
+account_coda / coda.bank.statement.line / account_id (many2one)         : NEW relation: account.account
+account_coda / coda.bank.statement.line / amount (float)                : NEW 
+account_coda / coda.bank.statement.line / counterparty_bic (char)       : NEW 
 account_coda / coda.bank.statement.line / counterparty_currency (char)  : NEW 
+account_coda / coda.bank.statement.line / counterparty_name (char)      : NEW 
+account_coda / coda.bank.statement.line / counterparty_number (char)    : NEW 
+account_coda / coda.bank.statement.line / date (date)                   : NEW required: required
+account_coda / coda.bank.statement.line / globalisation_amount (float)  : NEW 
+account_coda / coda.bank.statement.line / globalisation_id (many2one)   : NEW relation: account.bank.statement.line.global
+account_coda / coda.bank.statement.line / globalisation_level (integer) : NEW 
 account_coda / coda.bank.statement.line / name (char)                   : NEW required: required
 account_coda / coda.bank.statement.line / note (text)                   : NEW 
-account_coda / coda.bank.statement.line / globalisation_id (many2one)   : NEW relation: account.bank.statement.line.global
-account_coda / coda.bank.statement.line / amount (float)                : NEW 
-account_coda / coda.bank.statement.line / counterparty_number (char)    : NEW 
-account_coda / coda.bank.statement.line / counterparty_bic (char)       : NEW 
-account_coda / coda.bank.statement.line / date (date)                   : NEW required: required
-account_coda / coda.bank.statement.line / val_date (date)               : NEW 
-account_coda / coda.bank.statement.line / globalisation_amount (float)  : NEW 
+account_coda / coda.bank.statement.line / partner_id (many2one)         : NEW relation: res.partner
+account_coda / coda.bank.statement.line / ref (char)                    : NEW 
+account_coda / coda.bank.statement.line / sequence (integer)            : NEW 
+account_coda / coda.bank.statement.line / statement_id (many2one)       : NEW relation: coda.bank.statement, required: required
 account_coda / coda.bank.statement.line / type (selection)              : NEW required: required, selection_keys: ['communication', 'customer', 'general', 'globalisation', 'information', 'supplier']
-account_coda / coda.bank.statement.line / account_id (many2one)         : NEW relation: account.account
-account_coda / coda.bank.statement      / coda_id (many2one)            : NEW relation: account.coda
-account_coda / coda.bank.statement      / statement_id (many2one)       : NEW relation: account.bank.statement
-account_coda / coda.bank.statement      / coda_bank_account_id (many2one): NEW relation: coda.bank.account
-account_coda / coda.bank.statement      / balance_start (float)         : NEW 
-account_coda / coda.bank.statement      / journal_id (many2one)         : NEW relation: account.journal
-account_coda / coda.bank.statement      / currency (many2one)           : NEW relation: res.currency, required: required, req_default: function
-account_coda / coda.bank.statement      / period_id (many2one)          : NEW relation: account.period, required: required, req_default: function
-account_coda / coda.bank.statement      / date (date)                   : NEW required: required
-account_coda / coda.bank.statement      / line_ids (one2many)           : NEW relation: coda.bank.statement.line
-account_coda / coda.bank.statement      / type (selection)              : NEW required: required, selection_keys: ['info', 'normal'], req_default: normal
-account_coda / coda.bank.statement      / balance_end_real (float)      : NEW 
-account_coda / coda.bank.statement      / name (char)                   : NEW required: required
-account_coda / account.bank.statement   / coda_statement_id (many2one)  : NEW relation: coda.bank.statement
-account_coda / account.coda             / coda_data (binary)            : NEW 
-account_coda / account.coda             / coda_creation_date (date)     : NEW 
-account_coda / account.bank.statement.line.global / coda_statement_line_ids (one2many): NEW relation: coda.bank.statement.line
+account_coda / coda.bank.statement.line / val_date (date)               : NEW 
 deleted xml-id of model ir.actions.act_window: account_coda.act_account_payment_account_bank_statement
 deleted xml-id of model ir.actions.act_window: account_coda.action_account_coda
 deleted xml-id of model ir.model.access: account_coda.access_account_coda

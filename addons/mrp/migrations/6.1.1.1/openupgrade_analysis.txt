@@ -1,11 +1,11 @@
 ---mrp---
 mrp          / mrp.production           / user_id (many2one)            : NEW relation: res.users
 deleted xml-id of model board.note.type: mrp.note_sale_type
+deleted xml-id of model ir.actions.act_window.view: mrp.action_report_mrp_production_order_graph
+deleted xml-id of model ir.actions.act_window.view: mrp.action_report_mrp_production_order_tree
 deleted xml-id of model ir.actions.act_window: mrp.action_mrp_installer
 deleted xml-id of model ir.actions.act_window: mrp.action_report_mrp_production_order
 deleted xml-id of model ir.actions.act_window: mrp.action_report_workcenter_load_tree
-deleted xml-id of model ir.actions.act_window.view: mrp.action_report_mrp_production_order_graph
-deleted xml-id of model ir.actions.act_window.view: mrp.action_report_mrp_production_order_tree
 deleted xml-id of model ir.actions.todo: mrp.mrp_installer_todo
 deleted xml-id of model ir.model.access: mrp.access_account_account_mrp_manager
 deleted xml-id of model ir.model.access: mrp.access_board_board_manager
@@ -29,10 +29,10 @@ deleted xml-id of model workflow.transition: mrp.trans_produce_make_done
 new xml-id of model ir.actions.act_window: mrp.act_product_manufacturing_open
 new xml-id of model ir.actions.act_window: mrp.action_configure_workcenter
 new xml-id of model ir.actions.act_window: mrp.product_form_config_action
+new xml-id of model ir.actions.todo.category: mrp.category_mrp_config
 new xml-id of model ir.actions.todo: mrp.config_wizard_res_product_installer
 new xml-id of model ir.actions.todo: mrp.todo_action_configure_workcenter
 new xml-id of model ir.actions.todo: mrp.todo_action_create_bill_of_materials
-new xml-id of model ir.actions.todo.category: mrp.category_mrp_config
 new xml-id of model ir.rule: mrp.mrp_routing_rule
 new xml-id of model ir.rule: mrp.mrp_routing_workcenter_rule
 new xml-id of model workflow.transition: procurement.trans_produce_make_done

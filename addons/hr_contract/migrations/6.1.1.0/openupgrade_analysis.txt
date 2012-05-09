@@ -1,12 +1,12 @@
 ---hr_contract---
-hr_contract  / hr.contract              / wage_type_id (many2one)       : DEL relation: hr.contract.wage.type, required: required
 hr_contract  / hr.contract              / advantages_gross (float)      : DEL 
 hr_contract  / hr.contract              / advantages_net (float)        : DEL 
-deleted xml-id of model hr.contract.wage.type: hr_contract.hr_contract_monthly_gross
-deleted xml-id of model hr.contract.wage.type: hr_contract.hr_contract_monthly_net
+hr_contract  / hr.contract              / wage_type_id (many2one)       : DEL relation: hr.contract.wage.type, required: required
 deleted xml-id of model hr.contract.wage.type.period: hr_contract.hr_contract_wage_type_period_daily
 deleted xml-id of model hr.contract.wage.type.period: hr_contract.hr_contract_wage_type_period_monthly
 deleted xml-id of model hr.contract.wage.type.period: hr_contract.hr_contract_wage_type_period_weekly
+deleted xml-id of model hr.contract.wage.type: hr_contract.hr_contract_monthly_gross
+deleted xml-id of model hr.contract.wage.type: hr_contract.hr_contract_monthly_net
 deleted xml-id of model ir.actions.act_window: hr_contract.action_hr_contract_wage_type
 deleted xml-id of model ir.actions.act_window: hr_contract.action_hr_contract_wage_type_period
 deleted xml-id of model ir.model.access: hr_contract.access_hr_contract_wage_type_period_user

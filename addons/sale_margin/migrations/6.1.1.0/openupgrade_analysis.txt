@@ -1,6 +1,6 @@
 ---sale_margin---
-sale_margin  / stock.picking            / invoice_ids (many2many)       : DEL relation: account.invoice
 sale_margin  / account.invoice.line     / cost_price (float)            : DEL 
+sale_margin  / stock.picking            / invoice_ids (many2many)       : DEL relation: account.invoice
 deleted xml-id of model ir.actions.act_window: sale_margin.action_report_account_invoice_report
 deleted xml-id of model ir.model.access: sale_margin.access_report_account_invoice_product
 deleted xml-id of model ir.ui.menu: sale_margin.menu_report_account_invoice_product

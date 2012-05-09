@@ -1,6 +1,6 @@
 ---import_google---
-import_google / google.import.message    / name (text)                   : NEW 
 import_google / crm.case.categ           / user_id (many2one)            : NEW relation: res.users
+import_google / google.import.message    / name (text)                   : NEW 
 new xml-id of model ir.actions.act_window: import_google.act_google_login_contact_form
 new xml-id of model ir.actions.act_window: import_google.act_google_login_form
 new xml-id of model ir.model.access: import_google.access_google_import_message_partner_manager

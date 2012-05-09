@@ -1,19 +1,19 @@
 ---base_contact---
+base_contact / res.partner.address      / contact_id (many2one)         : NEW relation: res.partner.contact
+base_contact / res.partner.address      / job_ids (one2many)            : DEL relation: res.partner.job
+base_contact / res.partner.address      / location_id (many2one)        : NEW relation: res.partner.location
 base_contact / res.partner.contact      / birthdate (date)              : type is now 'char' ('date')
 base_contact / res.partner.contact      / job_ids (one2many)            : relation is now 'res.partner.address' ('res.partner.job')
-base_contact / res.partner.contact      / name (char)                   : now a function
-base_contact / res.partner.address      / job_ids (one2many)            : DEL relation: res.partner.job
 base_contact / res.partner.contact      / last_name (char)              : NEW required: required
+base_contact / res.partner.contact      / name (char)                   : now a function
 base_contact / res.partner.location     / city (char)                   : NEW 
-base_contact / res.partner.location     / zip (char)                    : NEW 
-base_contact / res.partner.location     / street2 (char)                : NEW 
-base_contact / res.partner.location     / country_id (many2one)         : NEW relation: res.country
 base_contact / res.partner.location     / company_id (many2one)         : NEW relation: res.company
-base_contact / res.partner.location     / street (char)                 : NEW 
-base_contact / res.partner.location     / state_id (many2one)           : NEW relation: res.country.state
+base_contact / res.partner.location     / country_id (many2one)         : NEW relation: res.country
 base_contact / res.partner.location     / job_ids (one2many)            : NEW relation: res.partner.address
-base_contact / res.partner.address      / contact_id (many2one)         : NEW relation: res.partner.contact
-base_contact / res.partner.address      / location_id (many2one)        : NEW relation: res.partner.location
+base_contact / res.partner.location     / state_id (many2one)           : NEW relation: res.country.state
+base_contact / res.partner.location     / street (char)                 : NEW 
+base_contact / res.partner.location     / street2 (char)                : NEW 
+base_contact / res.partner.location     / zip (char)                    : NEW 
 deleted xml-id of model ir.actions.act_window: base_contact.act_res_partner_jobs
 deleted xml-id of model ir.actions.act_window: base_contact.action_base_contact_installer
 deleted xml-id of model ir.actions.act_window: base_contact.action_res_partner_job

@@ -1,12 +1,12 @@
 ---hr_recruitment---
-hr_recruitment / hr.recruitment.report    / priority (selection)          : selection_keys is now '['', '1', '2', '3', '4', '5']' ('['1', '2', '3', '4', '5']')
+hr_recruitment / hr.applicant             / color (integer)               : NEW 
 hr_recruitment / hr.applicant             / message_ids (one2many)        : relation is now 'mail.message' ('mailgate.message')
 hr_recruitment / hr.applicant             / priority (selection)          : selection_keys is now '['', '1', '2', '3', '4', '5']' ('['1', '2', '3', '4', '5']')
-hr_recruitment / hr.recruitment.source    / name (char)                   : NEW required: required
-hr_recruitment / hr.applicant             / color (integer)               : NEW 
 hr_recruitment / hr.applicant             / salary_expected_extra (char)  : NEW 
 hr_recruitment / hr.applicant             / salary_proposed_extra (char)  : NEW 
 hr_recruitment / hr.applicant             / source_id (many2one)          : NEW relation: hr.recruitment.source
+hr_recruitment / hr.recruitment.report    / priority (selection)          : selection_keys is now '['', '1', '2', '3', '4', '5']' ('['1', '2', '3', '4', '5']')
+hr_recruitment / hr.recruitment.source    / name (char)                   : NEW required: required
 deleted xml-id of model crm.case.categ: hr_recruitment.categ_job1
 deleted xml-id of model crm.case.categ: hr_recruitment.categ_job2
 deleted xml-id of model crm.case.section: hr_recruitment.section_hr_department
@@ -19,10 +19,10 @@ new xml-id of model hr.recruitment.source: hr_recruitment.source_linkedin
 new xml-id of model hr.recruitment.source: hr_recruitment.source_monster
 new xml-id of model hr.recruitment.source: hr_recruitment.source_website_company
 new xml-id of model hr.recruitment.source: hr_recruitment.source_word
+new xml-id of model ir.actions.act_window.view: hr_recruitment.action_hr_sec_kanban_view_act_job
 new xml-id of model ir.actions.act_window: hr_recruitment.action_hr_recruitment_hired_employee
 new xml-id of model ir.actions.act_window: hr_recruitment.hr_recruitment_source_action
 new xml-id of model ir.actions.act_window: hr_recruitment.hr_recruitment_stage_form_installer
-new xml-id of model ir.actions.act_window.view: hr_recruitment.action_hr_sec_kanban_view_act_job
 new xml-id of model ir.actions.todo: hr_recruitment.hr_recruitment_stage_form_todo
 new xml-id of model ir.model.access: hr_recruitment.access_hr_recruitment_source_all
 new xml-id of model ir.model.access: hr_recruitment.access_hr_recruitment_source_hr_officer
@@ -34,7 +34,6 @@ new xml-id of model ir.ui.view: hr_recruitment.hr_kanban_view_applicant
 new xml-id of model ir.ui.view: hr_recruitment.hr_recruitment_source_form
 new xml-id of model ir.ui.view: hr_recruitment.hr_recruitment_source_tree
 new xml-id of model ir.ui.view: hr_recruitment.view_hr_recruitment_hired_employee
-new xml-id of model survey: hr_recruitment.survey_job_0
 new xml-id of model survey.answer: hr_recruitment.survey_answer_job_0
 new xml-id of model survey.answer: hr_recruitment.survey_answer_job_1
 new xml-id of model survey.answer: hr_recruitment.survey_answer_job_10
@@ -61,6 +60,11 @@ new xml-id of model survey.answer: hr_recruitment.survey_answer_job_9
 new xml-id of model survey.page: hr_recruitment.survey_page_job_0
 new xml-id of model survey.page: hr_recruitment.survey_page_job_1
 new xml-id of model survey.page: hr_recruitment.survey_page_job_2
+new xml-id of model survey.question.column.heading: hr_recruitment.survey_question_column_heading_job_0
+new xml-id of model survey.question.column.heading: hr_recruitment.survey_question_column_heading_job_1
+new xml-id of model survey.question.column.heading: hr_recruitment.survey_question_column_heading_job_2
+new xml-id of model survey.question.column.heading: hr_recruitment.survey_question_column_heading_job_3
+new xml-id of model survey.question.column.heading: hr_recruitment.survey_question_column_heading_job_4
 new xml-id of model survey.question: hr_recruitment.survey_question_job_0
 new xml-id of model survey.question: hr_recruitment.survey_question_job_1
 new xml-id of model survey.question: hr_recruitment.survey_question_job_2
@@ -69,8 +73,4 @@ new xml-id of model survey.question: hr_recruitment.survey_question_job_4
 new xml-id of model survey.question: hr_recruitment.survey_question_job_5
 new xml-id of model survey.question: hr_recruitment.survey_question_job_6
 new xml-id of model survey.question: hr_recruitment.survey_question_job_7
-new xml-id of model survey.question.column.heading: hr_recruitment.survey_question_column_heading_job_0
-new xml-id of model survey.question.column.heading: hr_recruitment.survey_question_column_heading_job_1
-new xml-id of model survey.question.column.heading: hr_recruitment.survey_question_column_heading_job_2
-new xml-id of model survey.question.column.heading: hr_recruitment.survey_question_column_heading_job_3
-new xml-id of model survey.question.column.heading: hr_recruitment.survey_question_column_heading_job_4
+new xml-id of model survey: hr_recruitment.survey_job_0

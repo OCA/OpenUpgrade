@@ -1,14 +1,13 @@
 ---l10n_ch---
-l10n_ch      / res.partner.bank         / my_bank (boolean)             : NEW 
+l10n_ch      / res.company              / bvr_scan_line_font_size (float): NEW 
+l10n_ch      / res.company              / bvr_scan_line_horz (float)    : NEW 
 l10n_ch      / res.company              / bvr_scan_line_letter_spacing (float): NEW 
 l10n_ch      / res.company              / bvr_scan_line_vert (float)    : NEW 
-l10n_ch      / res.company              / bvr_scan_line_horz (float)    : NEW 
-l10n_ch      / res.company              / bvr_scan_line_font_size (float): NEW 
+l10n_ch      / res.partner.bank         / my_bank (boolean)             : NEW 
 deleted xml-id of model ir.ui.view: l10n_ch.dta_save_view
 deleted xml-id of model ir.ui.view: l10n_ch.l10nch_view_res_partner_bank
 deleted xml-id of model ir.ui.view: l10n_ch.view_partner_bank_form
 deleted xml-id of model ir.ui.view: l10n_ch.view_partner_bank_form2
-deleted xml-id of model res.partner.bank.type: l10n_ch.dta_iban
 deleted xml-id of model res.partner.bank.type.field: l10n_ch.acc_num_field_bvbank
 deleted xml-id of model res.partner.bank.type.field: l10n_ch.bank_field_bvbank
 deleted xml-id of model res.partner.bank.type.field: l10n_ch.bank_field_bvpost
@@ -20,6 +19,7 @@ deleted xml-id of model res.partner.bank.type.field: l10n_ch.bvr_num_field_bvrpo
 deleted xml-id of model res.partner.bank.type.field: l10n_ch.iban_field
 deleted xml-id of model res.partner.bank.type.field: l10n_ch.iban_field_iban
 deleted xml-id of model res.partner.bank.type.field: l10n_ch.post_field_bvpost
+deleted xml-id of model res.partner.bank.type: l10n_ch.dta_iban
 new xml-id of model account.account.type: l10n_ch.account_type_view_assets
 new xml-id of model account.account.type: l10n_ch.account_type_view_expense
 new xml-id of model account.account.type: l10n_ch.account_type_view_income

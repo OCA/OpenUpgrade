@@ -1,20 +1,20 @@
 ---product---
-product      / product.supplierinfo     / product_uom (many2one)        : now a function
+product      / product.category         / parent_left (integer)         : NEW 
+product      / product.category         / parent_right (integer)        : NEW 
 product      / product.product          / color (integer)               : NEW 
 product      / product.product          / product_image (binary)        : NEW 
-product      / product.category         / parent_right (integer)        : NEW 
-product      / product.category         / parent_left (integer)         : NEW 
+product      / product.supplierinfo     / product_uom (many2one)        : now a function
 deleted xml-id of model ir.actions.act_window: product.product_pricelist_type_action
 deleted xml-id of model ir.ui.menu: product.menu_product_pricelist_type_action2
 deleted xml-id of model ir.ui.view: product.product_pricelist_type_view
 deleted xml-id of model res.groups: base.group_sale_manager
 deleted xml-id of model res.groups: base.group_sale_salesman
 new xml-id of model decimal.precision: product.decimal_product_uos
+new xml-id of model ir.actions.act_window.view: product.open_view_product_form1
+new xml-id of model ir.actions.act_window.view: product.open_view_product_tree1
 new xml-id of model ir.actions.act_window: product.product_form_config_action
 new xml-id of model ir.actions.act_window: product.product_normal_action_sell
 new xml-id of model ir.actions.act_window: product.product_pricelist_action_for_purchase
-new xml-id of model ir.actions.act_window.view: product.open_view_product_form1
-new xml-id of model ir.actions.act_window.view: product.open_view_product_tree1
 new xml-id of model ir.actions.todo: product.config_wizard_res_product_installer
 new xml-id of model ir.model.access: product.access_product_product_sale_manager
 new xml-id of model ir.model.access: product.access_product_template_sale_manager

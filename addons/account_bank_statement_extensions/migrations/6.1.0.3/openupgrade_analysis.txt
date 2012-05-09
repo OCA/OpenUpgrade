@@ -1,26 +1,26 @@
 ---account_bank_statement_extensions---
+account_bank_statement_extensions / account.bank.statement.line / counterparty_bic (char)       : NEW 
+account_bank_statement_extensions / account.bank.statement.line / counterparty_currency (char)  : NEW 
+account_bank_statement_extensions / account.bank.statement.line / counterparty_name (char)      : NEW 
+account_bank_statement_extensions / account.bank.statement.line / counterparty_number (char)    : NEW 
+account_bank_statement_extensions / account.bank.statement.line / globalisation_id (many2one)   : NEW relation: account.bank.statement.line.global
+account_bank_statement_extensions / account.bank.statement.line / state (selection)             : NEW required: required, selection_keys: ['confirm', 'draft'], req_default: draft
+account_bank_statement_extensions / account.bank.statement.line / val_date (date)               : NEW 
+account_bank_statement_extensions / account.bank.statement.line.global / amount (float)                : NEW 
 account_bank_statement_extensions / account.bank.statement.line.global / bank_statement_line_ids (one2many): NEW relation: account.bank.statement.line
+account_bank_statement_extensions / account.bank.statement.line.global / child_ids (one2many)          : NEW relation: account.bank.statement.line.global
 account_bank_statement_extensions / account.bank.statement.line.global / code (char)                   : NEW required: required, req_default: function
 account_bank_statement_extensions / account.bank.statement.line.global / name (char)                   : NEW required: required, req_default: /
-account_bank_statement_extensions / account.bank.statement.line.global / child_ids (one2many)          : NEW relation: account.bank.statement.line.global
 account_bank_statement_extensions / account.bank.statement.line.global / parent_id (many2one)          : NEW relation: account.bank.statement.line.global
-account_bank_statement_extensions / account.bank.statement.line.global / amount (float)                : NEW 
 account_bank_statement_extensions / account.bank.statement.line.global / type (selection)              : NEW required: required, selection_keys: ['coda', 'iso20022', 'manual']
-account_bank_statement_extensions / account.bank.statement.line / counterparty_number (char)    : NEW 
-account_bank_statement_extensions / account.bank.statement.line / counterparty_name (char)      : NEW 
-account_bank_statement_extensions / account.bank.statement.line / state (selection)             : NEW required: required, selection_keys: ['confirm', 'draft'], req_default: draft
-account_bank_statement_extensions / account.bank.statement.line / counterparty_currency (char)  : NEW 
-account_bank_statement_extensions / account.bank.statement.line / globalisation_id (many2one)   : NEW relation: account.bank.statement.line.global
-account_bank_statement_extensions / account.bank.statement.line / counterparty_bic (char)       : NEW 
-account_bank_statement_extensions / account.bank.statement.line / val_date (date)               : NEW 
 new xml-id of model ir.actions.act_window: account_bank_statement_extensions.action_bank_statement_line
 new xml-id of model ir.actions.act_window: account_bank_statement_extensions.action_cancel_statement_line
 new xml-id of model ir.actions.act_window: account_bank_statement_extensions.action_confirm_statement_line
 new xml-id of model ir.actions.report.xml: account_bank_statement_extensions.bank_statement_balance_report
 new xml-id of model ir.model.access: account_bank_statement_extensions.access_bank_statement_line_global_manager
 new xml-id of model ir.model.access: account_bank_statement_extensions.access_bank_statement_line_global_user
-new xml-id of model ir.sequence: account_bank_statement_extensions.sequence_reconcile_seq
 new xml-id of model ir.sequence.type: account_bank_statement_extensions.sequence_reconcile
+new xml-id of model ir.sequence: account_bank_statement_extensions.sequence_reconcile_seq
 new xml-id of model ir.ui.menu: account_bank_statement_extensions.bank_statement_line
 new xml-id of model ir.ui.view: account_bank_statement_extensions.view_bank_statement_form_add_fields
 new xml-id of model ir.ui.view: account_bank_statement_extensions.view_bank_statement_line_filter

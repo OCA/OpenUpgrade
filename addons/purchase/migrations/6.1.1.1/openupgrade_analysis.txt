@@ -1,4 +1,6 @@
 ---purchase---
+deleted xml-id of model ir.actions.act_window.view: purchase.open_view_negotiation_by_supplier_graph
+deleted xml-id of model ir.actions.act_window.view: purchase.open_view_negotiation_by_supplier_tree
 deleted xml-id of model ir.actions.act_window: purchase.action_current_purchases
 deleted xml-id of model ir.actions.act_window: purchase.action_negotiation_by_supplier
 deleted xml-id of model ir.actions.act_window: purchase.action_po_per_month_tree
@@ -6,8 +8,6 @@ deleted xml-id of model ir.actions.act_window: purchase.action_purchase_by_suppl
 deleted xml-id of model ir.actions.act_window: purchase.action_purchase_install_module
 deleted xml-id of model ir.actions.act_window: purchase.action_qty_per_product
 deleted xml-id of model ir.actions.act_window: purchase.action_total_price_by_product_by_state
-deleted xml-id of model ir.actions.act_window.view: purchase.open_view_negotiation_by_supplier_graph
-deleted xml-id of model ir.actions.act_window.view: purchase.open_view_negotiation_by_supplier_tree
 deleted xml-id of model ir.actions.todo: purchase.purchase_installer_todo
 deleted xml-id of model ir.ui.menu: purchase.menu_purchase_product_pricelist_type
 deleted xml-id of model ir.ui.view: purchase.view_negotiation_by_supplier_graph
@@ -23,9 +23,9 @@ new xml-id of model ir.actions.act_window: purchase.action_import_create_supplie
 new xml-id of model ir.actions.act_window: purchase.action_picking_tree4_picking_to_invoice
 new xml-id of model ir.actions.act_window: purchase.action_purchase_config
 new xml-id of model ir.actions.server: purchase.ir_actions_server_edi_purchase
+new xml-id of model ir.actions.todo.category: purchase.category_purchase_config
 new xml-id of model ir.actions.todo: purchase.config_wizard_action_import_create_supplier_installer
 new xml-id of model ir.actions.todo: purchase.todo_purchase_config
-new xml-id of model ir.actions.todo.category: purchase.category_purchase_config
 new xml-id of model ir.ui.menu: purchase.menu_action_picking_tree4_picking_to_invoice
 new xml-id of model ir.ui.menu: purchase.menu_configuration_misc
 new xml-id of model ir.ui.menu: purchase.menu_email_templates

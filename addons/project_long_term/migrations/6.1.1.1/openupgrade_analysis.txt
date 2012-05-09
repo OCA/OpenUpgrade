@@ -1,17 +1,17 @@
 ---project_long_term---
 project_long_term / project.phase            / constraint_date_end (date)    : type is now 'datetime' ('date')
+project_long_term / project.phase            / constraint_date_start (date)  : type is now 'datetime' ('date')
 project_long_term / project.phase            / date_end (date)               : type is now 'datetime' ('date')
 project_long_term / project.phase            / date_start (date)             : type is now 'datetime' ('date')
-project_long_term / project.phase            / constraint_date_start (date)  : type is now 'datetime' ('date')
-project_long_term / project.project          / resource_calendar_id (many2one): module is now 'project' ('project_long_term')
-project_long_term / project.phase            / responsible_id (many2one)     : DEL relation: res.users
 project_long_term / project.phase            / resource_ids (one2many)       : DEL relation: project.resource.allocation
+project_long_term / project.phase            / responsible_id (many2one)     : DEL relation: res.users
 project_long_term / project.phase            / user_force_ids (many2many)    : NEW relation: res.users
 project_long_term / project.phase            / user_ids (one2many)           : NEW relation: project.user.allocation
+project_long_term / project.project          / resource_calendar_id (many2one): module is now 'project' ('project_long_term')
 project_long_term / project.user.allocation  / date_end (datetime)           : NEW 
-project_long_term / project.user.allocation  / user_id (many2one)            : NEW relation: res.users, required: required
 project_long_term / project.user.allocation  / date_start (datetime)         : NEW 
 project_long_term / project.user.allocation  / phase_id (many2one)           : NEW relation: project.phase, required: required
+project_long_term / project.user.allocation  / user_id (many2one)            : NEW relation: res.users, required: required
 deleted xml-id of model ir.actions.act_window: project_long_term.act_project_resource
 deleted xml-id of model ir.actions.act_window: project_long_term.action_project_schedule_tasks
 deleted xml-id of model ir.model.access: project_long_term.access_project_resource_allocation

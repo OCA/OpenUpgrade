@@ -1,23 +1,23 @@
 ---crm_partner_assign---
-crm_partner_assign / crm.lead.report.assign   / partner_date (date)           : DEL 
+crm_partner_assign / crm.lead.report.assign   / date_assign (date)            : NEW 
 crm_partner_assign / crm.lead.report.assign   / name (char)                   : DEL 
-crm_partner_assign / crm.partner.report.assign / user_id (many2one)            : NEW relation: res.users
-crm_partner_assign / crm.partner.report.assign / date_partnership (date)       : NEW 
+crm_partner_assign / crm.lead.report.assign   / partner_date (date)           : DEL 
+crm_partner_assign / crm.lead.report.assign   / year (char)                   : NEW 
 crm_partner_assign / crm.partner.report.assign / activation (many2one)         : NEW relation: res.partner.activation
 crm_partner_assign / crm.partner.report.assign / country_id (many2one)         : NEW relation: res.country
-crm_partner_assign / crm.partner.report.assign / section_id (many2one)         : NEW relation: crm.case.section
-crm_partner_assign / crm.partner.report.assign / grade_id (many2one)           : NEW relation: res.partner.grade
-crm_partner_assign / crm.partner.report.assign / period_id (many2one)          : NEW relation: account.period
-crm_partner_assign / crm.partner.report.assign / opp (integer)                 : NEW 
-crm_partner_assign / crm.partner.report.assign / turnover (float)              : NEW 
-crm_partner_assign / crm.partner.report.assign / partner_id (many2one)         : NEW relation: res.partner
+crm_partner_assign / crm.partner.report.assign / date_partnership (date)       : NEW 
 crm_partner_assign / crm.partner.report.assign / date_review (date)            : NEW 
-crm_partner_assign / crm.lead.report.assign   / year (char)                   : NEW 
-crm_partner_assign / crm.lead.report.assign   / date_assign (date)            : NEW 
-crm_partner_assign / res.partner              / date_partnership (date)       : NEW 
+crm_partner_assign / crm.partner.report.assign / grade_id (many2one)           : NEW relation: res.partner.grade
+crm_partner_assign / crm.partner.report.assign / opp (integer)                 : NEW 
+crm_partner_assign / crm.partner.report.assign / partner_id (many2one)         : NEW relation: res.partner
+crm_partner_assign / crm.partner.report.assign / period_id (many2one)          : NEW relation: account.period
+crm_partner_assign / crm.partner.report.assign / section_id (many2one)         : NEW relation: crm.case.section
+crm_partner_assign / crm.partner.report.assign / turnover (float)              : NEW 
+crm_partner_assign / crm.partner.report.assign / user_id (many2one)            : NEW relation: res.users
 crm_partner_assign / res.partner              / activation (many2one)         : NEW relation: res.partner.activation
-crm_partner_assign / res.partner              / date_review_next (date)       : NEW 
+crm_partner_assign / res.partner              / date_partnership (date)       : NEW 
 crm_partner_assign / res.partner              / date_review (date)            : NEW 
+crm_partner_assign / res.partner              / date_review_next (date)       : NEW 
 crm_partner_assign / res.partner.activation   / name (char)                   : NEW required: required
 crm_partner_assign / res.partner.activation   / sequence (integer)            : NEW 
 deleted xml-id of model ir.ui.view: crm_partner_assign.crm_lead_forward_to_partner_form1

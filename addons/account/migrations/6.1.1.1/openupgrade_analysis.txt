@@ -1,45 +1,45 @@
 ---account---
+account      / account.account          / financial_report_ids (many2many): NEW relation: account.financial.report
+account      / account.account.template / chart_template_id (many2one)  : NEW relation: account.chart.template
 account      / account.account.template / code (char)                   : now required
+account      / account.account.template / financial_report_ids (many2many): NEW relation: account.financial.report
+account      / account.account.type     / report_type (selection)       : now a function
+account      / account.account.type     / sign (selection)              : DEL required: required, selection_keys: [-1, 1], req_default: 1
+account      / account.chart.template   / code_digits (integer)         : NEW required: required, req_default: 6
+account      / account.chart.template   / complete_tax_set (boolean)    : NEW 
+account      / account.chart.template   / parent_id (many2one)          : NEW relation: account.chart.template
+account      / account.chart.template   / property_account_expense_opening (many2one): NEW relation: account.account.template
+account      / account.chart.template   / property_account_income_opening (many2one): NEW relation: account.account.template
+account      / account.chart.template   / visible (boolean)             : NEW 
+account      / account.financial.report / account_ids (many2many)       : NEW relation: account.account
+account      / account.financial.report / account_report_id (many2one)  : NEW relation: account.financial.report
+account      / account.financial.report / account_type_ids (many2many)  : NEW relation: account.account.type
+account      / account.financial.report / children_ids (one2many)       : NEW relation: account.financial.report
+account      / account.financial.report / display_detail (selection)    : NEW selection_keys: ['detail_flat', 'detail_with_hierarchy', 'no_detail']
+account      / account.financial.report / name (char)                   : NEW required: required
+account      / account.financial.report / parent_id (many2one)          : NEW relation: account.financial.report
+account      / account.financial.report / sequence (integer)            : NEW 
+account      / account.financial.report / sign (selection)              : NEW required: required, selection_keys: [-1, 1], req_default: 1
+account      / account.financial.report / style_overwrite (selection)   : NEW selection_keys: [0, 1, 2, 3, 4, 5, 6]
+account      / account.financial.report / type (selection)              : NEW selection_keys: ['account_report', 'account_type', 'accounts', 'sum']
+account      / account.fiscal.position  / active (boolean)              : NEW 
+account      / account.fiscal.position.template / note (text)                   : NEW 
+account      / account.invoice.report   / account_line_id (many2one)    : NEW relation: account.account
+account      / account.invoice.report   / price_total_tax (float)       : DEL 
+account      / account.journal          / refund_journal (boolean)      : DEL 
+account      / account.move             / balance (float)               : NEW 
 account      / account.move.line        / journal_id (many2one)         : now a function
 account      / account.move.line        / period_id (many2one)          : now a function
-account      / account.account.type     / report_type (selection)       : now a function
-account      / account.journal          / refund_journal (boolean)      : DEL 
-account      / account.account.type     / sign (selection)              : DEL required: required, selection_keys: [-1, 1], req_default: 1
-account      / account.invoice.report   / price_total_tax (float)       : DEL 
-account      / account.account          / financial_report_ids (many2many): NEW relation: account.financial.report
-account      / res.company              / paypal_account (char)         : NEW 
+account      / account.tax.code         / sequence (integer)            : NEW 
+account      / account.treasury.report  / balance (float)               : NEW 
 account      / account.treasury.report  / company_id (many2one)         : NEW relation: res.company
 account      / account.treasury.report  / credit (float)                : NEW 
+account      / account.treasury.report  / date (date)                   : NEW 
+account      / account.treasury.report  / debit (float)                 : NEW 
 account      / account.treasury.report  / fiscalyear_id (many2one)      : NEW relation: account.fiscalyear
 account      / account.treasury.report  / period_id (many2one)          : NEW relation: account.period
-account      / account.treasury.report  / debit (float)                 : NEW 
-account      / account.treasury.report  / date (date)                   : NEW 
-account      / account.treasury.report  / balance (float)               : NEW 
-account      / account.account.template / financial_report_ids (many2many): NEW relation: account.financial.report
-account      / account.account.template / chart_template_id (many2one)  : NEW relation: account.chart.template
-account      / account.move             / balance (float)               : NEW 
-account      / account.fiscal.position  / active (boolean)              : NEW 
-account      / account.chart.template   / complete_tax_set (boolean)    : NEW 
-account      / account.chart.template   / code_digits (integer)         : NEW required: required, req_default: 6
-account      / account.chart.template   / property_account_income_opening (many2one): NEW relation: account.account.template
-account      / account.chart.template   / property_account_expense_opening (many2one): NEW relation: account.account.template
-account      / account.chart.template   / visible (boolean)             : NEW 
-account      / account.chart.template   / parent_id (many2one)          : NEW relation: account.chart.template
-account      / account.financial.report / children_ids (one2many)       : NEW relation: account.financial.report
-account      / account.financial.report / name (char)                   : NEW required: required
-account      / account.financial.report / sequence (integer)            : NEW 
-account      / account.financial.report / style_overwrite (selection)   : NEW selection_keys: [0, 1, 2, 3, 4, 5, 6]
-account      / account.financial.report / sign (selection)              : NEW required: required, selection_keys: [-1, 1], req_default: 1
-account      / account.financial.report / parent_id (many2one)          : NEW relation: account.financial.report
-account      / account.financial.report / account_type_ids (many2many)  : NEW relation: account.account.type
-account      / account.financial.report / account_ids (many2many)       : NEW relation: account.account
-account      / account.financial.report / display_detail (selection)    : NEW selection_keys: ['detail_flat', 'detail_with_hierarchy', 'no_detail']
-account      / account.financial.report / account_report_id (many2one)  : NEW relation: account.financial.report
-account      / account.financial.report / type (selection)              : NEW selection_keys: ['account_report', 'account_type', 'accounts', 'sum']
-account      / account.tax.code         / sequence (integer)            : NEW 
+account      / res.company              / paypal_account (char)         : NEW 
 account      / res.partner.bank         / journal_id (many2one)         : NEW relation: account.journal
-account      / account.invoice.report   / account_line_id (many2one)    : NEW relation: account.account
-account      / account.fiscal.position.template / note (text)                   : NEW 
 deleted xml-id of model board.note.type: account.note_account_type
 deleted xml-id of model ir.actions.act_window: account.action_account_bs_report
 deleted xml-id of model ir.actions.act_window: account.action_account_installer
@@ -72,16 +72,16 @@ deleted xml-id of model ir.model.access: account.access_account_tax_code_manager
 deleted xml-id of model ir.model.access: account.access_report_account_receivable
 deleted xml-id of model ir.model.access: account.access_report_account_receivable_user
 deleted xml-id of model ir.rule: account.analytic_journal_comp_rule_false
-deleted xml-id of model ir.sequence: account.seq_in_invoice
-deleted xml-id of model ir.sequence: account.seq_in_refund
-deleted xml-id of model ir.sequence: account.seq_out_invoice
-deleted xml-id of model ir.sequence: account.seq_out_refund
-deleted xml-id of model ir.sequence: account.sequence_journal
 deleted xml-id of model ir.sequence.type: account.seq_type_in_invoice
 deleted xml-id of model ir.sequence.type: account.seq_type_in_refund
 deleted xml-id of model ir.sequence.type: account.seq_type_out_invoice
 deleted xml-id of model ir.sequence.type: account.seq_type_out_refund
 deleted xml-id of model ir.sequence.type: account.sequence_journal_type
+deleted xml-id of model ir.sequence: account.seq_in_invoice
+deleted xml-id of model ir.sequence: account.seq_in_refund
+deleted xml-id of model ir.sequence: account.seq_out_invoice
+deleted xml-id of model ir.sequence: account.seq_out_refund
+deleted xml-id of model ir.sequence: account.sequence_journal
 deleted xml-id of model ir.ui.menu: account.menu_account_bs_report
 deleted xml-id of model ir.ui.menu: account.menu_account_pl_report
 deleted xml-id of model ir.ui.view: account.account_bs_report_view
@@ -104,11 +104,11 @@ new xml-id of model account.financial.report: account.account_financial_report_l
 new xml-id of model account.financial.report: account.account_financial_report_liabilitysum0
 new xml-id of model account.financial.report: account.account_financial_report_profitandloss0
 new xml-id of model account.financial.report: account.account_financial_report_profitloss_toreport0
-new xml-id of model account.payment.term: account.account_payment_term_advance
-new xml-id of model account.payment.term: account.account_payment_term_net
 new xml-id of model account.payment.term.line: account.account_payment_term_line_advance1
 new xml-id of model account.payment.term.line: account.account_payment_term_line_advance2
 new xml-id of model account.payment.term.line: account.account_payment_term_line_net
+new xml-id of model account.payment.term: account.account_payment_term_advance
+new xml-id of model account.payment.term: account.account_payment_term_net
 new xml-id of model decimal.precision: account.decimal_payment
 new xml-id of model email.template: account.email_template_edi_invoice
 new xml-id of model ir.actions.act_window: account.action_account_financial_report_tree
@@ -126,11 +126,11 @@ new xml-id of model ir.actions.act_window: account.action_review_payment_terms_i
 new xml-id of model ir.actions.act_window: account.action_view_financial_accounts_installer
 new xml-id of model ir.actions.report.xml: account.account_journal_sale_purchase
 new xml-id of model ir.actions.server: account.ir_actions_server_edi_invoice
+new xml-id of model ir.actions.todo.category: account.category_accounting_configuration
 new xml-id of model ir.actions.todo: account.account_configuration_bank_todo
 new xml-id of model ir.actions.todo: account.review_financial_journals_todo
 new xml-id of model ir.actions.todo: account.review_payment_terms_todo
 new xml-id of model ir.actions.todo: account.view_financial_accounts_todo
-new xml-id of model ir.actions.todo.category: account.category_accounting_configuration
 new xml-id of model ir.model.access: account.access_account_analytic_journal_user
 new xml-id of model ir.model.access: account.access_account_financial_report
 new xml-id of model ir.model.access: account.access_account_financial_report_invoice

@@ -1,22 +1,22 @@
 ---l10n_br---
+l10n_br      / account.tax              / amount_mva (float)            : NEW required: required, req_default: 0
+l10n_br      / account.tax              / base_reduction (float)        : NEW required: required, req_default: 0
+l10n_br      / account.tax              / tax_discount (boolean)        : NEW 
+l10n_br      / account.tax              / type (False)                  : NEW selection_keys: ['balance', 'code', 'fixed', 'none', 'percent', 'quantity'], mode: modify
+l10n_br      / account.tax.code         / domain (char)                 : NEW 
+l10n_br      / account.tax.code         / tax_discount (boolean)        : NEW 
+l10n_br      / account.tax.code.template / domain (char)                 : NEW 
+l10n_br      / account.tax.code.template / tax_discount (boolean)        : NEW 
+l10n_br      / account.tax.template     / amount_mva (float)            : NEW required: required, req_default: 0
+l10n_br      / account.tax.template     / base_reduction (float)        : NEW required: required, req_default: 0
+l10n_br      / account.tax.template     / tax_discount (boolean)        : NEW 
+l10n_br      / account.tax.template     / type (False)                  : NEW selection_keys: ['balance', 'code', 'fixed', 'none', 'percent', 'quantity'], mode: modify
+l10n_br      / l10n_br_account.cst      / code (char)                   : NEW required: required
+l10n_br      / l10n_br_account.cst      / name (char)                   : NEW 
+l10n_br      / l10n_br_account.cst      / tax_code_id (many2one)        : NEW relation: account.tax.code, required: required
 l10n_br      / l10n_br_account.cst.template / code (char)                   : NEW required: required
 l10n_br      / l10n_br_account.cst.template / name (char)                   : NEW 
 l10n_br      / l10n_br_account.cst.template / tax_code_template_id (many2one): NEW relation: account.tax.code.template, required: required
-l10n_br      / account.tax.code.template / domain (char)                 : NEW 
-l10n_br      / account.tax.code.template / tax_discount (boolean)        : NEW 
-l10n_br      / account.tax.code         / domain (char)                 : NEW 
-l10n_br      / account.tax.code         / tax_discount (boolean)        : NEW 
-l10n_br      / l10n_br_account.cst      / tax_code_id (many2one)        : NEW relation: account.tax.code, required: required
-l10n_br      / l10n_br_account.cst      / code (char)                   : NEW required: required
-l10n_br      / l10n_br_account.cst      / name (char)                   : NEW 
-l10n_br      / account.tax.template     / type (False)                  : NEW selection_keys: ['balance', 'code', 'fixed', 'none', 'percent', 'quantity'], mode: modify
-l10n_br      / account.tax.template     / tax_discount (boolean)        : NEW 
-l10n_br      / account.tax.template     / base_reduction (float)        : NEW required: required, req_default: 0
-l10n_br      / account.tax.template     / amount_mva (float)            : NEW required: required, req_default: 0
-l10n_br      / account.tax              / type (False)                  : NEW selection_keys: ['balance', 'code', 'fixed', 'none', 'percent', 'quantity'], mode: modify
-l10n_br      / account.tax              / tax_discount (boolean)        : NEW 
-l10n_br      / account.tax              / base_reduction (float)        : NEW required: required, req_default: 0
-l10n_br      / account.tax              / amount_mva (float)            : NEW required: required, req_default: 0
 deleted xml-id of model account.tax.code.template: l10n_br.tax_code_10
 new xml-id of model account.tax.template: l10n_br.tax_template_42
 new xml-id of model account.tax.template: l10n_br.tax_template_43

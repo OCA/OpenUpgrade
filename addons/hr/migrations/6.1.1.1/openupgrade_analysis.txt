@@ -1,13 +1,13 @@
 ---hr---
-hr           / hr.job                   / no_of_recruitment (float)     : not a function anymore
-hr           / hr.job                   / expected_employees (integer)  : type is now 'float' ('integer')
-hr           / hr.job                   / expected_employees (integer)  : now a function
+hr           / hr.employee              / color (integer)               : NEW 
 hr           / hr.employee              / marital (many2one)            : relation is now 'False' ('hr.employee.marital.status')
-hr           / hr.employee              / marital (many2one)            : type is now 'selection' ('many2one')
 hr           / hr.employee              / marital (many2one)            : selection_keys is now '['divorced', 'married', 'single', 'widower']' ('False')
+hr           / hr.employee              / marital (many2one)            : type is now 'selection' ('many2one')
 hr           / hr.employee              / parent_id (many2one)          : not a function anymore
 hr           / hr.employee.category     / employee_ids (many2many)      : NEW relation: hr.employee
-hr           / hr.employee              / color (integer)               : NEW 
+hr           / hr.job                   / expected_employees (integer)  : now a function
+hr           / hr.job                   / expected_employees (integer)  : type is now 'float' ('integer')
+hr           / hr.job                   / no_of_recruitment (float)     : not a function anymore
 deleted xml-id of model hr.employee.marital.status: hr.hr_employee_marital_status_divorced
 deleted xml-id of model hr.employee.marital.status: hr.hr_employee_marital_status_married
 deleted xml-id of model hr.employee.marital.status: hr.hr_employee_marital_status_single
@@ -22,14 +22,14 @@ deleted xml-id of model ir.ui.menu: hr.menu_hr_deshboard
 deleted xml-id of model ir.ui.view: hr.hr_hr_employee_marital_status_form
 deleted xml-id of model ir.ui.view: hr.hr_hr_employee_marital_status_tree
 deleted xml-id of model ir.ui.view: hr.view_hr_installer
-new xml-id of model ir.actions.act_window: hr.action_create_hr_employee_installer
-new xml-id of model ir.actions.act_window: hr.view_department_form_installer
 new xml-id of model ir.actions.act_window.view: hr.open_view_employee_list_my_form2
 new xml-id of model ir.actions.act_window.view: hr.open_view_employee_list_my_kanban
 new xml-id of model ir.actions.act_window.view: hr.open_view_employee_list_my_tree2
+new xml-id of model ir.actions.act_window: hr.action_create_hr_employee_installer
+new xml-id of model ir.actions.act_window: hr.view_department_form_installer
+new xml-id of model ir.actions.todo.category: hr.category_hr_management_config
 new xml-id of model ir.actions.todo: hr.config_wizard_action_create_hr_employee_installer
 new xml-id of model ir.actions.todo: hr.view_department_form_todo
-new xml-id of model ir.actions.todo.category: hr.category_hr_management_config
 new xml-id of model ir.rule: hr.hr_dept_comp_rule
 new xml-id of model ir.rule: hr.hr_job_comp_rule
 new xml-id of model ir.ui.menu: hr.menu_hr_dashboard

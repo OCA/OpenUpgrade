@@ -1,13 +1,13 @@
 ---mail---
-mail_gateway / res.partner              / emails (one2many)             : relation is now 'mail.message' ('mailgate.message')
 mail         / mail.thread              / message_ids (one2many)        : NEW relation: mail.message
+mail_gateway / res.partner              / emails (one2many)             : relation is now 'mail.message' ('mailgate.message')
+deleted xml-id of model ir.actions.act_window.view: mail_gateway.action_view_mailgate_thread_view1
+deleted xml-id of model ir.actions.act_window.view: mail_gateway.action_view_mailgate_thread_view2
 deleted xml-id of model ir.actions.act_window: mail_gateway.act_res_partner_emails
 deleted xml-id of model ir.actions.act_window: mail_gateway.act_res_partner_open_email
 deleted xml-id of model ir.actions.act_window: mail_gateway.action_view_mail_message
 deleted xml-id of model ir.actions.act_window: mail_gateway.action_view_mailgate_message
 deleted xml-id of model ir.actions.act_window: mail_gateway.action_view_mailgate_thread
-deleted xml-id of model ir.actions.act_window.view: mail_gateway.action_view_mailgate_thread_view1
-deleted xml-id of model ir.actions.act_window.view: mail_gateway.action_view_mailgate_thread_view2
 deleted xml-id of model ir.model.access: mail_gateway.mail_gateway_mailgate_message
 deleted xml-id of model ir.model.access: mail_gateway.mail_gateway_mailgate_message_partner_manager
 deleted xml-id of model ir.model.access: mail_gateway.mail_gateway_mailgate_thread
@@ -20,13 +20,13 @@ deleted xml-id of model ir.ui.view: mail_gateway.view_mailgate_message_search
 deleted xml-id of model ir.ui.view: mail_gateway.view_mailgate_message_tree
 deleted xml-id of model ir.ui.view: mail_gateway.view_mailgate_thread_form
 deleted xml-id of model ir.ui.view: mail_gateway.view_mailgate_thread_tree
+new xml-id of model ir.actions.act_window.view: mail.action_view_mailgate_thread_view1
+new xml-id of model ir.actions.act_window.view: mail.action_view_mailgate_thread_view2
 new xml-id of model ir.actions.act_window: base.action_partner_mass_mail
 new xml-id of model ir.actions.act_window: mail.act_res_partner_emails
 new xml-id of model ir.actions.act_window: mail.action_email_compose_message_wizard
 new xml-id of model ir.actions.act_window: mail.action_view_mail_message
 new xml-id of model ir.actions.act_window: mail.action_view_mailgate_thread
-new xml-id of model ir.actions.act_window.view: mail.action_view_mailgate_thread_view1
-new xml-id of model ir.actions.act_window.view: mail.action_view_mailgate_thread_view2
 new xml-id of model ir.cron: mail.ir_cron_mail_scheduler_action
 new xml-id of model ir.model.access: mail.access_mail_message
 new xml-id of model ir.model.access: mail.access_mail_thread

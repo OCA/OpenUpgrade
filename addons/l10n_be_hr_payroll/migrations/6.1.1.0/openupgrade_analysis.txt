@@ -1,21 +1,28 @@
 ---l10n_be_hr_payroll---
+l10n_be_hr_payroll / hr.contract              / additional_net_amount (float) : NEW 
+l10n_be_hr_payroll / hr.contract              / car_company_amount (float)    : NEW 
+l10n_be_hr_payroll / hr.contract              / car_employee_deduction (float): NEW 
+l10n_be_hr_payroll / hr.contract              / insurance_employee_deduction (float): NEW 
+l10n_be_hr_payroll / hr.contract              / meal_voucher_amount (float)   : NEW 
+l10n_be_hr_payroll / hr.contract              / meal_voucher_employee_deduction (float): NEW 
+l10n_be_hr_payroll / hr.contract              / misc_advantage_amount (float) : NEW 
+l10n_be_hr_payroll / hr.contract              / misc_onss_deduction (float)   : NEW 
+l10n_be_hr_payroll / hr.contract              / retained_net_amount (float)   : NEW 
+l10n_be_hr_payroll / hr.contract              / travel_reimbursement_amount (float): NEW 
+l10n_be_hr_payroll / hr.employee              / disabled_children_bool (boolean): NEW 
+l10n_be_hr_payroll / hr.employee              / disabled_children_number (integer): NEW 
 l10n_be_hr_payroll / hr.employee              / disabled_spouse_bool (boolean): NEW 
 l10n_be_hr_payroll / hr.employee              / resident_bool (boolean)       : NEW 
 l10n_be_hr_payroll / hr.employee              / spouse_fiscal_status (selection): NEW selection_keys: ['with income', 'without income']
-l10n_be_hr_payroll / hr.employee              / disabled_children_number (integer): NEW 
-l10n_be_hr_payroll / hr.employee              / disabled_children_bool (boolean): NEW 
-l10n_be_hr_payroll / hr.contract              / misc_onss_deduction (float)   : NEW 
-l10n_be_hr_payroll / hr.contract              / retained_net_amount (float)   : NEW 
-l10n_be_hr_payroll / hr.contract              / additional_net_amount (float) : NEW 
-l10n_be_hr_payroll / hr.contract              / car_employee_deduction (float): NEW 
-l10n_be_hr_payroll / hr.contract              / meal_voucher_employee_deduction (float): NEW 
-l10n_be_hr_payroll / hr.contract              / meal_voucher_amount (float)   : NEW 
-l10n_be_hr_payroll / hr.contract              / car_company_amount (float)    : NEW 
-l10n_be_hr_payroll / hr.contract              / travel_reimbursement_amount (float): NEW 
-l10n_be_hr_payroll / hr.contract              / insurance_employee_deduction (float): NEW 
-l10n_be_hr_payroll / hr.contract              / misc_advantage_amount (float) : NEW 
 new xml-id of model hr.payroll.structure: l10n_be_hr_payroll.hr_payroll_salary_structure_employee
 new xml-id of model hr.payroll.structure: l10n_be_hr_payroll.hr_payroll_salary_structure_worker
+new xml-id of model hr.salary.rule.category: hr_payroll.COMP
+new xml-id of model hr.salary.rule.category: l10n_be_hr_payroll.hr_payroll_head_child_alw
+new xml-id of model hr.salary.rule.category: l10n_be_hr_payroll.hr_payroll_head_div_impos
+new xml-id of model hr.salary.rule.category: l10n_be_hr_payroll.hr_payroll_head_div_net
+new xml-id of model hr.salary.rule.category: l10n_be_hr_payroll.hr_payroll_head_onss
+new xml-id of model hr.salary.rule.category: l10n_be_hr_payroll.hr_payroll_head_pp
+new xml-id of model hr.salary.rule.category: l10n_be_hr_payroll.hr_payroll_head_salary
 new xml-id of model hr.salary.rule: l10n_be_hr_payroll.1
 new xml-id of model hr.salary.rule: l10n_be_hr_payroll.10
 new xml-id of model hr.salary.rule: l10n_be_hr_payroll.100
@@ -1469,12 +1476,5 @@ new xml-id of model hr.salary.rule: l10n_be_hr_payroll.hr_payroll_rules_reim_tra
 new xml-id of model hr.salary.rule: l10n_be_hr_payroll.hr_payroll_rules_retained_net
 new xml-id of model hr.salary.rule: l10n_be_hr_payroll.hr_payroll_rules_spouse_handicap
 new xml-id of model hr.salary.rule: l10n_be_hr_payroll.hr_payroll_rules_suppl_net
-new xml-id of model hr.salary.rule.category: hr_payroll.COMP
-new xml-id of model hr.salary.rule.category: l10n_be_hr_payroll.hr_payroll_head_child_alw
-new xml-id of model hr.salary.rule.category: l10n_be_hr_payroll.hr_payroll_head_div_impos
-new xml-id of model hr.salary.rule.category: l10n_be_hr_payroll.hr_payroll_head_div_net
-new xml-id of model hr.salary.rule.category: l10n_be_hr_payroll.hr_payroll_head_onss
-new xml-id of model hr.salary.rule.category: l10n_be_hr_payroll.hr_payroll_head_pp
-new xml-id of model hr.salary.rule.category: l10n_be_hr_payroll.hr_payroll_head_salary
 new xml-id of model ir.ui.view: l10n_be_hr_payroll.hr_contract_form_l10n_be_inherit
 new xml-id of model ir.ui.view: l10n_be_hr_payroll.hr_employee_form__l10n_be_view_for

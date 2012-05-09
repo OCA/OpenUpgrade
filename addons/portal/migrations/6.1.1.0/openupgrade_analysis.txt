@@ -1,14 +1,14 @@
 ---portal---
-portal       / res.portal               / menu_action_id (many2one)     : NEW relation: ir.actions.act_window
-portal       / res.portal               / parent_menu_id (many2one)     : NEW relation: ir.ui.menu
-portal       / res.portal               / widget_ids (one2many)         : NEW relation: res.portal.widget
-portal       / res.portal               / url (char)                    : NEW 
 portal       / res.portal               / _inherits (False)             : NEW 
 portal       / res.portal               / group_id (many2one)           : NEW relation: res.groups, required: required
-portal       / res.users                / partner_id (many2one)         : NEW relation: res.partner
+portal       / res.portal               / menu_action_id (many2one)     : NEW relation: ir.actions.act_window
+portal       / res.portal               / parent_menu_id (many2one)     : NEW relation: ir.ui.menu
+portal       / res.portal               / url (char)                    : NEW 
+portal       / res.portal               / widget_ids (one2many)         : NEW relation: res.portal.widget
 portal       / res.portal.widget        / portal_id (many2one)          : NEW relation: res.portal
-portal       / res.portal.widget        / widget_id (many2one)          : NEW relation: res.widget, required: required
 portal       / res.portal.widget        / sequence (integer)            : NEW 
+portal       / res.portal.widget        / widget_id (many2one)          : NEW relation: res.widget, required: required
+portal       / res.users                / partner_id (many2one)         : NEW relation: res.partner
 new xml-id of model ir.actions.act_window: portal.address_wizard_action
 new xml-id of model ir.actions.act_window: portal.partner_wizard_action
 new xml-id of model ir.actions.act_window: portal.portal_list_action
