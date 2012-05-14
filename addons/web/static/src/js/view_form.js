@@ -1118,8 +1118,6 @@ instance.web.form.FormRenderingEngine = instance.web.form.FormRenderingEngineInt
             // invisibility transfer
             var field_modifiers = JSON.parse($child.attr('modifiers') || '{}');
             var invisible = field_modifiers.invisible;
-            field_modifiers.invisible = undefined;
-            $child.attr('modifiers', JSON.stringify(field_modifiers));
             self.handle_common_properties($td, $("<dummy>").attr("modifiers", JSON.stringify({invisible: invisible})));
 
             $tr.append($td.append($child));
@@ -1371,17 +1369,27 @@ instance.web.form.InvisibilityChangerMixin = {
                 instance.web.form.compute_domain(this._ic_invisible_modifier, this._ic_field_manager.fields);
             this.set({"invisible": result});
         });
-        this.set({invisible: this._ic_invisible_modifier === true});
+        this.set({invisible: this._ic_invisible_modifier === true, force_invisible: false});
+        var check = function() {
+            if (this.get("invisible") || this.get('force_invisible')) {
+                this.set({"effective_invisible": true});
+            } else {
+                this.set({"effective_invisible": false});
+            }
+        };
+        this.on('change:invisible', this, check);
+        this.on('change:force_invisible', this, check);
+        _.bind(check, this)();
     },
     start: function() {
         var check_visibility = function() {
-            if (this.get("invisible")) {
+            if (this.get("effective_invisible")) {
                 this.$element.hide();
             } else {
                 this.$element.show();
             }
         };
-        this.on("change:invisible", this, check_visibility);
+        this.on("change:effective_invisible", this, check_visibility);
         _.bind(check_visibility, this)();
     },
 };
@@ -3063,7 +3071,8 @@ instance.web.form.FieldMany2ManyTags = instance.web.form.AbstractField.extend(_.
         this._super.apply(this, arguments);
         instance.web.form.CompletionFieldMixin.init.call(this);
         this.set({"value": []});
-        this.display_orderer = new instance.web.DropMisordered();
+        this._display_orderer = new instance.web.DropMisordered();
+        this._drop_shown = false;
     },
     start: function() {
         this._super();
@@ -3085,7 +3094,7 @@ instance.web.form.FieldMany2ManyTags = instance.web.form.AbstractField.extend(_.
             },
             ext: {
                 autocomplete: {
-                    selectFromDropdown: function(a, b, c) {
+                    selectFromDropdown: function() {
                         $(this).trigger('hideDropdown');
                         var index = Number(this.selectedSuggestionElement().children().children().data('index'));
                         var data = self.search_result[index];
@@ -3139,8 +3148,19 @@ instance.web.form.FieldMany2ManyTags = instance.web.form.AbstractField.extend(_.
             pop.on_write_completed.add_last(function() {
                 self.render_value();
             });
+        }).bind('hideDropdown', function() {
+            self._drop_shown = false;
+        }).bind('hideDropdown', function() {
+            self._drop_shown = true;
         });
         self.tags = self.$text.textext()[0].tags();
+        $("textarea", this.$element).focusout(function() {
+            $("textarea", this.$element).val("");
+        }).keydown(function(e) {
+            if (event.keyCode === 9 && self._drop_shown) {
+                self.$text.textext()[0].autocomplete().selectFromDropdown();
+            }
+        });
     },
     set_value: function(value_) {
         value_ = value_ || [];
@@ -3182,7 +3202,7 @@ instance.web.form.FieldMany2ManyTags = instance.web.form.AbstractField.extend(_.
             }
         };
         if (! self.get('values') || self.get('values').length > 0) {
-            this.display_orderer.add(dataset.name_get(self.get("value"))).then(handle_names);
+            this._display_orderer.add(dataset.name_get(self.get("value"))).then(handle_names);
         } else {
             handle_names([]);
         }
