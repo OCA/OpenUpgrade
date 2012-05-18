@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 00:36+0000\n"
-"PO-Revision-Date: 2012-05-17 04:10+0000\n"
+"PO-Revision-Date: 2012-05-18 04:37+0000\n"
 "Last-Translator: Akira Hiyama <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-05-17 04:36+0000\n"
+"X-Launchpad-Export-Date: 2012-05-18 04:40+0000\n"
 "X-Generator: Launchpad (build 15259)\n"
 
 #. module: auction
@@ -219,7 +219,7 @@ msgstr "1月"
 msgid ""
 "If the active field is set to False, it will allow you to hide the auction "
 "lot category without removing it."
-msgstr "アクティブな項目をFalseに設定すると、項目を削除することなくオークションのロット分類を非表示にできます。"
+msgstr "アクティブな項目をFalseに設定すると、項目を削除することなくオークションの出品物分類を非表示にできます。"
 
 #. module: auction
 #: view:auction.lots:0
@@ -234,7 +234,7 @@ msgstr "合計価格"
 #. module: auction
 #: view:auction.lots:0
 msgid "Total Adj."
-msgstr "調整合計"
+msgstr "合計落札"
 
 #. module: auction
 #: view:auction.lots.sms.send:0
@@ -313,7 +313,7 @@ msgstr "オブジェクト画像"
 #: code:addons/auction/wizard/auction_lots_buyer_map.py:70
 #, python-format
 msgid "No buyer is set for this lot."
-msgstr "このロットのために買い手がセットされていません。"
+msgstr "この出品物には買い手がセットされていません。"
 
 #. module: auction
 #: code:addons/auction/auction.py:578
@@ -354,7 +354,7 @@ msgstr "パートナへの買い手ユーザ名のマップ"
 #. module: auction
 #: view:auction.lots:0
 msgid "Search Auction Lots"
-msgstr "オークションロットの検索"
+msgstr "オークション出品物の検索"
 
 #. module: auction
 #: field:report.auction,net_revenue:0
@@ -394,7 +394,7 @@ msgstr "6月"
 #: code:addons/auction/wizard/auction_catalog_flagey_report.py:63
 #, python-format
 msgid "No Lots belong to this Auction Date"
-msgstr "このオークション日付に沿うロットはありません。"
+msgstr "このオークション日付に沿う出品物はありません。"
 
 #. module: auction
 #: view:auction.lots:0
@@ -497,7 +497,7 @@ msgstr "買い手の結果"
 #. module: auction
 #: field:auction.bid_line,price:0
 msgid "Maximum Price"
-msgstr "最大価格"
+msgstr "最高価格"
 
 #. module: auction
 #: help:auction.dates,auction1:0
@@ -512,7 +512,7 @@ msgstr "オークションの動作"
 #. module: auction
 #: help:auction.dates,buyer_costs:0
 msgid "Account tax for buyer"
-msgstr "買い手の口座税金"
+msgstr "買い手に対する口座の税金"
 
 #. module: auction
 #: view:auction.dates:0
@@ -522,7 +522,7 @@ msgstr "次のオークション"
 #. module: auction
 #: view:auction.taken:0
 msgid "Select lots which are Sold"
-msgstr "売却済ロットの選択"
+msgstr "売却済出品物の選択"
 
 #. module: auction
 #: field:auction.lots,statement_id:0
@@ -614,7 +614,7 @@ msgstr "オブジェクトの数"
 #. module: auction
 #: field:auction.lots,lot_est2:0
 msgid "Maximum Estimation"
-msgstr "見積りの最大値"
+msgstr "見積りの最高"
 
 #. module: auction
 #: field:auction.lots,buyer_price:0
@@ -671,7 +671,7 @@ msgstr "間接経費"
 #. module: auction
 #: help:auction.dates,seller_costs:0
 msgid "Account tax for seller"
-msgstr "出品者の口座の税金"
+msgstr "出品者に対する口座の税金"
 
 #. module: auction
 #: code:addons/auction/wizard/auction_lots_invoice.py:67
@@ -762,7 +762,7 @@ msgstr "入札ID"
 #. module: auction
 #: report:auction.total.rml:0
 msgid "Min Estimate:"
-msgstr "最低見積り額："
+msgstr "最低見積り："
 
 #. module: auction
 #: selection:report.auction,month:0
@@ -803,7 +803,7 @@ msgstr "出品者経費（12%）"
 #. module: auction
 #: field:aie.category,parent_id:0
 msgid "Parent aie Category"
-msgstr ""
+msgstr "親は分類を持つ"
 
 #. module: auction
 #: view:report.auction:0
@@ -814,87 +814,87 @@ msgstr "オークション概要"
 #: view:auction.lots.make.invoice:0
 #: view:auction.lots.make.invoice.buyer:0
 msgid "(Keep empty for automatic number)"
-msgstr ""
+msgstr "（自動番号のため空のままとして下さい）"
 
 #. module: auction
 #: code:addons/auction/auction.py:578
 #, python-format
 msgid "No Invoice Address"
-msgstr ""
+msgstr "請求書住所がありません。"
 
 #. module: auction
 #: model:ir.actions.report.xml,name:auction.v_huissier
 msgid "Bailiffs Listing"
-msgstr ""
+msgstr "執行官リスト"
 
 #. module: auction
 #: code:addons/auction/wizard/auction_lots_numerotate.py:103
 #: code:addons/auction/wizard/auction_lots_numerotate.py:129
 #, python-format
 msgid "This record does not exist !"
-msgstr ""
+msgstr "このレコードは存在しません。"
 
 #. module: auction
 #: field:auction.pay.buy,total:0
 msgid "Total Amount"
-msgstr ""
+msgstr "合計金額"
 
 #. module: auction
 #: help:auction.pay.buy,amount:0
 msgid "Amount For First Bank Statement"
-msgstr ""
+msgstr "第１の銀行取引明細書の金額"
 
 #. module: auction
 #: model:ir.model,name:auction.model_report_auction_object_date
 #: view:report.auction.object.date:0
 msgid "Objects per day"
-msgstr ""
+msgstr "１日あたりのオブジェクト"
 
 #. module: auction
 #: help:auction.lots,author_right:0
 msgid "Account tax for author commission"
-msgstr ""
+msgstr "作者手数料の口座の税金"
 
 #. module: auction
 #: model:product.template,name:auction.monproduit_product_template
 msgid "Oeuvres a 21%"
-msgstr ""
+msgstr "作品は21％"
 
 #. module: auction
 #: field:report.object.encoded,adj:0
 msgid "Adj."
-msgstr ""
+msgstr "落札"
 
 #. module: auction
 #: field:auction.lot.history,name:0
 #: field:report.auction.adjudication,date:0
 msgid "Date"
-msgstr ""
+msgstr "日付"
 
 #. module: auction
 #: field:auction.lots,obj_ret:0
 msgid "Price retired"
-msgstr ""
+msgstr "撤退価格"
 
 #. module: auction
 #: view:auction.deposit:0
 msgid "Extra Costs"
-msgstr ""
+msgstr "その他経費"
 
 #. module: auction
 #: view:auction.lots.buyer_map:0
 msgid "Map "
-msgstr ""
+msgstr "マップ "
 
 #. module: auction
 #: field:auction.lots,paid_ach:0
 msgid "Buyer Invoice Reconciled"
-msgstr ""
+msgstr "買い手請求書消し込み済"
 
 #. module: auction
 #: field:auction.deposit,date_dep:0
 msgid "Deposit date"
-msgstr "預け入れ日"
+msgstr "預入日"
 
 #. module: auction
 #: model:ir.actions.report.xml,name:auction.id_deposit
@@ -904,22 +904,22 @@ msgstr "預け金"
 #. module: auction
 #: field:auction.deposit,specific_cost_ids:0
 msgid "Specific Costs"
-msgstr ""
+msgstr "特別な経費"
 
 #. module: auction
 #: report:buyer.list:0
 msgid "To pay ("
-msgstr ""
+msgstr "支払先（"
 
 #. module: auction
 #: model:account.tax,name:auction.tax_buyer
 msgid "Buyer Costs (20%)"
-msgstr ""
+msgstr "買い手経費（20%）"
 
 #. module: auction
 #: model:ir.ui.menu,name:auction.menu_board_auction
 msgid "Dashboard"
-msgstr ""
+msgstr "ダッシュボード"
 
 #. module: auction
 #: view:auction.dates:0
@@ -927,33 +927,33 @@ msgstr ""
 #: model:ir.ui.menu,name:auction.auction_date_menu
 #: model:ir.ui.menu,name:auction.menu_auction_dates_next1
 msgid "Auctions"
-msgstr ""
+msgstr "オークション"
 
 #. module: auction
 #: view:board.board:0
 msgid "Total Adjudications"
-msgstr ""
+msgstr "合計落札"
 
 #. module: auction
 #: model:ir.model,name:auction.model_auction_lots_make_invoice
 msgid "Make invoice"
-msgstr ""
+msgstr "請求書作成"
 
 #. module: auction
 #: selection:report.auction,month:0
 msgid "November"
-msgstr ""
+msgstr "11月"
 
 #. module: auction
 #: view:auction.dates:0
 #: view:auction.lots:0
 msgid "History"
-msgstr ""
+msgstr "履歴"
 
 #. module: auction
 #: field:aie.category,code:0
 msgid "Code"
-msgstr ""
+msgstr "コード"
 
 #. module: auction
 #: report:auction.code_bar_lot:0
@@ -963,65 +963,65 @@ msgstr ""
 #. module: auction
 #: model:ir.actions.report.xml,name:auction.v_report_barcode_lot
 msgid "Barcode batch"
-msgstr ""
+msgstr "バーコードのひと束"
 
 #. module: auction
 #: report:report.auction.buyer.result:0
 msgid "Num"
-msgstr ""
+msgstr "番号"
 
 #. module: auction
 #: view:auction.catalog.flagey:0
 #: view:auction.taken:0
 msgid "Cancel"
-msgstr ""
+msgstr "キャンセル"
 
 #. module: auction
 #: view:auction.lots:0
 msgid "Buyer's Payment History"
-msgstr ""
+msgstr "買い手支払履歴"
 
 #. module: auction
 #: view:auction.artists:0
 #: field:auction.artists,biography:0
 msgid "Biography"
-msgstr ""
+msgstr "生い立ち"
 
 #. module: auction
 #: view:auction.lots:0
 msgid "Inventory"
-msgstr ""
+msgstr "在庫"
 
 #. module: auction
 #: view:auction.pay.buy:0
 msgid "Pay"
-msgstr ""
+msgstr "支払"
 
 #. module: auction
 #: view:auction.lots.make.invoice:0
 msgid "Create Invoices for Seller"
-msgstr ""
+msgstr "出品者請求書の作成"
 
 #. module: auction
 #: field:report.object.encoded,obj_margin:0
 msgid "Net margin"
-msgstr ""
+msgstr "実質利鞘"
 
 #. module: auction
 #: help:auction.lots,lot_local:0
 msgid "Auction Location"
-msgstr ""
+msgstr "オークションの場所"
 
 #. module: auction
 #: view:auction.dates:0
 msgid "Analytic"
-msgstr ""
+msgstr "分析"
 
 #. module: auction
 #: help:auction.lots,paid_ach:0
 msgid ""
 "When state of Buyer Invoice is 'Paid', this field is selected as True."
-msgstr ""
+msgstr "買い手請求書が支払済状態である場合、この項目はTrueとして選択されます。"
 
 #. module: auction
 #: report:bids.lots:0
@@ -1032,38 +1032,38 @@ msgstr ""
 #. module: auction
 #: selection:auction.deposit,method:0
 msgid "Decrease limit of 10%"
-msgstr ""
+msgstr "上限を10%減少させる"
 
 #. module: auction
 #: field:auction.dates,adj_total:0
 #: field:report.auction.adjudication,adj_total:0
 msgid "Total Adjudication"
-msgstr ""
+msgstr "合計落札"
 
 #. module: auction
 #: model:ir.actions.act_window,name:auction.action_auction_lots_make_invoice_buyer
 msgid "Invoice Buyer objects"
-msgstr ""
+msgstr "請求書の買い手オブジェクト"
 
 #. module: auction
 #: view:report.auction:0
 msgid "My Auction"
-msgstr ""
+msgstr "マイオークション"
 
 #. module: auction
 #: help:auction.lots,gross_margin:0
 msgid "(Gross Revenue*100.0)/ Object Price"
-msgstr ""
+msgstr "（総収入*100.0） / オブジェクト価格"
 
 #. module: auction
 #: field:auction.bid,contact_tel:0
 msgid "Contact Number"
-msgstr ""
+msgstr "連絡先番号"
 
 #. module: auction
 #: view:auction.lots:0
 msgid "Price"
-msgstr ""
+msgstr "価格"
 
 #. module: auction
 #: report:bids.phones.details:0
@@ -1073,13 +1073,13 @@ msgstr ""
 #. module: auction
 #: view:auction.deposit:0
 msgid "Photos"
-msgstr ""
+msgstr "写真"
 
 #. module: auction
 #: field:auction.lots.make.invoice,number:0
 #: field:auction.lots.make.invoice.buyer,number:0
 msgid "Invoice Number"
-msgstr ""
+msgstr "請求書番号"
 
 #. module: auction
 #: code:addons/auction/wizard/auction_lots_buyer_map.py:87
@@ -1090,32 +1090,32 @@ msgstr ""
 #: code:addons/auction/wizard/auction_lots_numerotate.py:173
 #, python-format
 msgid "Active IDs not Found"
-msgstr ""
+msgstr "アクティブIDが見つかりません。"
 
 #. module: auction
 #: code:addons/auction/wizard/auction_aie_send.py:166
 #: code:addons/auction/wizard/auction_aie_send_result.py:117
 #, python-format
 msgid "Connection to WWW.Auction-in-Europe.com failed !"
-msgstr ""
+msgstr "WWW.Auction-in-Europe.com への接続が失敗しました。"
 
 #. module: auction
 #: model:ir.actions.act_window,name:auction.act_auction_lot_open_bid
 #: model:ir.actions.act_window,name:auction.action_bid_open
 msgid "Open Bids"
-msgstr ""
+msgstr "公開入札"
 
 #. module: auction
 #: model:ir.actions.act_window,name:auction.open_board_auction
 msgid "Auction board"
-msgstr ""
+msgstr "オークション委員会"
 
 #. module: auction
 #: field:aie.category,name:0
 #: view:auction.artists:0
 #: report:bids.lots:0
 msgid "Name"
-msgstr ""
+msgstr "氏名"
 
 #. module: auction
 #: field:auction.deposit,name:0
@@ -1128,17 +1128,17 @@ msgstr "預け入れ人目録"
 #: code:addons/auction/auction.py:692
 #, python-format
 msgid "The Buyer has no Invoice Address."
-msgstr ""
+msgstr "買い手には請求書住所がありません。"
 
 #. module: auction
 #: model:ir.actions.act_window,name:auction.action_report_auction_adjudication_tree
 msgid "Auction Adjudication Report"
-msgstr ""
+msgstr "オークション落札レポート"
 
 #. module: auction
 #: field:auction.lots.sms.send,user:0
 msgid "Login"
-msgstr ""
+msgstr "ログイン"
 
 #. module: auction
 #: model:ir.model,name:auction.model_report_auction_adjudication
@@ -1148,49 +1148,49 @@ msgstr ""
 #. module: auction
 #: model:ir.actions.report.xml,name:auction.seller_lots_3
 msgid "Seller Form"
-msgstr ""
+msgstr "出品者フォーム"
 
 #. module: auction
 #: field:auction.lots,lot_type:0
 #: field:report.auction,lot_type:0
 msgid "Object category"
-msgstr ""
+msgstr "オブジェクト分類"
 
 #. module: auction
 #: view:auction.taken:0
 msgid "Mark Lots"
-msgstr ""
+msgstr "出品物としてマーク"
 
 #. module: auction
 #: model:ir.model,name:auction.model_auction_lots
 msgid "Auction Object"
-msgstr ""
+msgstr "オークションオブジェクト"
 
 #. module: auction
 #: field:auction.lots,obj_num:0
 #: field:auction.lots.enable,confirm_en:0
 msgid "Catalog Number"
-msgstr ""
+msgstr "カタログ番号"
 
 #. module: auction
 #: view:auction.dates:0
 msgid "Accounting"
-msgstr ""
+msgstr "会計"
 
 #. module: auction
 #: model:ir.actions.report.xml,name:auction.bid_phone
 msgid "Bids phones"
-msgstr ""
+msgstr "電話入札"
 
 #. module: auction
 #: field:report.auction,avg_estimation:0
 msgid "Avg estimation"
-msgstr ""
+msgstr "平均予想"
 
 #. module: auction
 #: report:auction.total.rml:0
 msgid "Debit:"
-msgstr ""
+msgstr "借方："
 
 #. module: auction
 #: code:addons/auction/wizard/auction_aie_send.py:166
@@ -1199,12 +1199,12 @@ msgstr ""
 #: code:addons/auction/wizard/auction_lots_numerotate.py:145
 #, python-format
 msgid "Error"
-msgstr ""
+msgstr "エラー"
 
 #. module: auction
 #: field:auction.lots,author_right:0
 msgid "Author rights"
-msgstr ""
+msgstr "著作権"
 
 #. module: auction
 #: view:auction.bid:0
@@ -1213,17 +1213,17 @@ msgstr ""
 #: view:auction.lots:0
 #: view:report.auction:0
 msgid "Group By..."
-msgstr ""
+msgstr "グループ化…"
 
 #. module: auction
 #: view:report.auction:0
 msgid "Auction during last month."
-msgstr ""
+msgstr "先月間のオークション"
 
 #. module: auction
 #: help:auction.dates,journal_id:0
 msgid "Account journal for buyer"
-msgstr ""
+msgstr "買い手のための口座仕訳帳"
 
 #. module: auction
 #: field:auction.bid,bid_lines:0
@@ -1231,60 +1231,60 @@ msgstr ""
 #: report:bids.lots:0
 #: model:ir.model,name:auction.model_auction_bid_line
 msgid "Bid"
-msgstr ""
+msgstr "入札"
 
 #. module: auction
 #: view:report.object.encoded:0
 msgid "Total net rev."
-msgstr ""
+msgstr "合計総収入"
 
 #. module: auction
 #: view:auction.lots.buyer_map:0
 msgid "Update"
-msgstr ""
+msgstr "更新"
 
 #. module: auction
 #: report:auction.total.rml:0
 #: model:ir.ui.menu,name:auction.auction_seller_menu
 msgid "Sellers"
-msgstr ""
+msgstr "出品者"
 
 #. module: auction
 #: view:auction.dates:0
 msgid "Draft Auction"
-msgstr ""
+msgstr "ドラフトオークション"
 
 #. module: auction
 #: help:auction.lots,lot_est2:0
 msgid "Maximum Estimate Price"
-msgstr ""
+msgstr "最高見積り額"
 
 #. module: auction
 #: view:auction.lots:0
 msgid "Notes"
-msgstr ""
+msgstr "注記"
 
 #. module: auction
 #: view:auction.lots.auction.move:0
 msgid "Move to Auction date"
-msgstr ""
+msgstr "オークション日に移動"
 
 #. module: auction
 #: report:auction.total.rml:0
 msgid "# of unsold items:"
-msgstr ""
+msgstr "売れ残り項目の数："
 
 #. module: auction
 #: view:auction.dates:0
 msgid "Create Invoices"
-msgstr ""
+msgstr "請求書を作成"
 
 #. module: auction
 #: field:auction.bid,auction_id:0
 #: view:auction.dates:0
 #: field:auction.lots.auction.move,auction_id:0
 msgid "Auction Date"
-msgstr ""
+msgstr "オークション日"
 
 #. module: auction
 #: report:auction.code_bar_lot:0
@@ -1294,167 +1294,167 @@ msgstr ""
 #. module: auction
 #: report:buyer.list:0
 msgid "Adj.("
-msgstr ""
+msgstr "落札（"
 
 #. module: auction
 #: model:ir.actions.report.xml,name:auction.lot_list_inv
 msgid "Lots List - Landscape"
-msgstr ""
+msgstr "出品物リスト - 横向き"
 
 #. module: auction
 #: view:auction.artists:0
 msgid "Author/Artist"
-msgstr ""
+msgstr "著者 / 作者"
 
 #. module: auction
 #: field:auction.lots,ach_login:0
 #: field:auction.lots.buyer_map,ach_login:0
 msgid "Buyer Username"
-msgstr ""
+msgstr "買い手ユーザ名"
 
 #. module: auction
 #: field:auction.lot.category,priority:0
 msgid "Priority"
-msgstr ""
+msgstr "優先度"
 
 #. module: auction
 #: view:board.board:0
 #: model:ir.actions.act_window,name:auction.action_report_latest_objects_tree
 msgid "Latest objects"
-msgstr ""
+msgstr "最新オブジェクト"
 
 #. module: auction
 #: field:auction.lots,lot_local:0
 msgid "Location"
-msgstr ""
+msgstr "場所"
 
 #. module: auction
 #: view:report.auction:0
 msgid "Month -1"
-msgstr ""
+msgstr "月 -1"
 
 #. module: auction
 #: help:auction.lots,is_ok:0
 msgid "When buyer pay for bank statement', this field is marked"
-msgstr ""
+msgstr "買い手が銀行取引明細書の支払をした時にこの項目はマークされます。"
 
 #. module: auction
 #: field:auction.lots,ach_emp:0
 msgid "Taken Away"
-msgstr ""
+msgstr "取り除き済"
 
 #. module: auction
 #: view:report.object.encoded:0
 msgid "Total gross rev."
-msgstr ""
+msgstr "合計総収入"
 
 #. module: auction
 #: help:auction.lots,lot_est1:0
 msgid "Minimum Estimate Price"
-msgstr ""
+msgstr "最低見積り額"
 
 #. module: auction
 #: view:auction.deposit:0
 msgid "Deposit Date"
-msgstr "預け入れ日"
+msgstr "預入日"
 
 #. module: auction
 #: code:addons/auction/wizard/auction_lots_numerotate.py:145
 #, python-format
 msgid "This lot does not exist !"
-msgstr ""
+msgstr "この出品物は存在しません。"
 
 #. module: auction
 #: selection:report.auction,month:0
 msgid "July"
-msgstr ""
+msgstr "7月"
 
 #. module: auction
 #: field:auction.bid_line,call:0
 msgid "To be Called"
-msgstr ""
+msgstr "呼称"
 
 #. module: auction
 #: view:auction.lots:0
 #: model:ir.actions.act_window,name:auction.action_report_auction_lots_estimation_adj_category_tree
 msgid "Min est/Adj/Max est"
-msgstr ""
+msgstr "最低見積り / 落札 / 最高見積り"
 
 #. module: auction
 #: field:auction.lots,lot_est1:0
 msgid "Minimum Estimation"
-msgstr ""
+msgstr "最低見積り額"
 
 #. module: auction
 #: model:ir.model,name:auction.model_auction_lots_sms_send
 msgid "Sms send "
-msgstr ""
+msgstr "SMS送信済 "
 
 #. module: auction
 #: view:auction.lots.auction.move:0
 #: model:ir.actions.act_window,name:auction.action_auction_lots_auction_move
 msgid "Change Auction Date"
-msgstr ""
+msgstr "オークション日変更"
 
 #. module: auction
 #: field:auction.artists,birth_death_dates:0
 msgid "Lifespan"
-msgstr ""
+msgstr "寿命"
 
 #. module: auction
 #: view:auction.deposit:0
 #: field:auction.deposit,method:0
 msgid "Withdrawned method"
-msgstr ""
+msgstr "取り下げ方法"
 
 #. module: auction
 #: view:auction.dates:0
 msgid "Buyer Commissions"
-msgstr ""
+msgstr "買い手手数料"
 
 #. module: auction
 #: model:ir.actions.act_window,name:auction.action_report_auction
 #: model:ir.ui.menu,name:auction.menu_report_auction
 msgid "Auction Analysis"
-msgstr ""
+msgstr "オークション分析"
 
 #. module: auction
 #: code:addons/auction/wizard/auction_pay_buy.py:80
 #, python-format
 msgid "Payment aborted !"
-msgstr ""
+msgstr "支払は中止されました。"
 
 #. module: auction
 #: field:auction.lot.history,price:0
 msgid "Withdrawn price"
-msgstr ""
+msgstr "取り下げ価格"
 
 #. module: auction
 #: view:auction.dates:0
 msgid "Beginning of the auction"
-msgstr ""
+msgstr "オークションの開始"
 
 #. module: auction
 #: help:auction.pay.buy,statement_id3:0
 msgid "Third Bank Statement For Buyer"
-msgstr ""
+msgstr "買い手の第３の銀行取引明細書"
 
 #. module: auction
 #: view:report.auction:0
 #: field:report.auction,month:0
 #: field:report.auction.object.date,month:0
 msgid "Month"
-msgstr ""
+msgstr "月"
 
 #. module: auction
 #: report:auction.total.rml:0
 msgid "Max Estimate:"
-msgstr ""
+msgstr "最高見積り"
 
 #. module: auction
 #: view:auction.lots:0
 msgid "Statistical"
-msgstr ""
+msgstr "統計的"
 
 #. module: auction
 #: model:ir.model,name:auction.model_auction_deposit
@@ -1464,23 +1464,23 @@ msgstr "オークション預け金境界"
 #. module: auction
 #: model:ir.actions.act_window,name:auction.action_report_object_encoded_tree
 msgid "Object statistics"
-msgstr ""
+msgstr "オブジェクト統計値"
 
 #. module: auction
 #: help:auction.lots,net_margin:0
 msgid "(Net Revenue * 100)/ Object Price"
-msgstr ""
+msgstr "（実質収入*100） / オブジェクト価格"
 
 #. module: auction
 #: model:ir.model,name:auction.model_auction_lot_history
 msgid "Lot History"
-msgstr ""
+msgstr "出品物履歴"
 
 #. module: auction
 #: view:auction.lots.make.invoice:0
 #: view:auction.lots.make.invoice.buyer:0
 msgid "Create invoices"
-msgstr ""
+msgstr "請求書作成"
 
 #. module: auction
 #: model:account.tax.code,name:auction.account_tax_code_id5
@@ -1490,17 +1490,17 @@ msgstr ""
 #. module: auction
 #: model:ir.model,name:auction.model_auction_lots_buyer_map
 msgid "Map Buyer"
-msgstr ""
+msgstr "消費税5%"
 
 #. module: auction
 #: report:buyer.list:0
 msgid "Lot"
-msgstr ""
+msgstr "出品物"
 
 #. module: auction
 #: model:ir.actions.act_window,name:auction.action_report_auction_object_date_tree
 msgid "Auction Object Date"
-msgstr ""
+msgstr "オークションオブジェクト日"
 
 #. module: auction
 #: model:ir.model,name:auction.model_auction_artists
@@ -1649,7 +1649,7 @@ msgstr ""
 #. module: auction
 #: view:report.auction.adjudication:0
 msgid "Total adjudication"
-msgstr ""
+msgstr "合計落札"
 
 #. module: auction
 #: selection:auction.deposit,method:0
@@ -1659,7 +1659,7 @@ msgstr ""
 #. module: auction
 #: field:auction.taken,lot_ids:0
 msgid "Lots Emportes"
-msgstr ""
+msgstr "出品物獲得"
 
 #. module: auction
 #: field:auction.lots,net_margin:0
@@ -1761,22 +1761,22 @@ msgstr ""
 #. module: auction
 #: model:ir.actions.act_window,name:auction.act_auction_lot_line_open
 msgid "Open lots"
-msgstr ""
+msgstr "出品物を開く"
 
 #. module: auction
 #: model:ir.actions.act_window,name:auction.act_auction_lot_open_deposit
 msgid "Deposit slip"
-msgstr "預け入れ伝票"
+msgstr "預入伝票"
 
 #. module: auction
 #: model:ir.model,name:auction.model_auction_lots_enable
 msgid "Lots Enable"
-msgstr ""
+msgstr "出品物の有効化"
 
 #. module: auction
 #: view:auction.lots:0
 msgid "Lots"
-msgstr ""
+msgstr "出品物"
 
 #. module: auction
 #: model:ir.actions.act_window,name:auction.action_auction_artist
@@ -1846,7 +1846,7 @@ msgstr ""
 msgid ""
 "Provide deposit information: seller, Withdrawned Method, Object, Deposit "
 "Costs"
-msgstr "預け金情報の提供：出品者、払出方法、オブジェクト、預け金経費"
+msgstr "預け金情報の提供：出品者、取り下げ方法、オブジェクト、預け金経費"
 
 #. module: auction
 #: field:auction.lots,net_revenue:0
@@ -1941,7 +1941,7 @@ msgstr ""
 #. module: auction
 #: view:board.board:0
 msgid "Min/Adj/Max"
-msgstr ""
+msgstr "最低 / 落札 / 最高"
 
 #. module: auction
 #: view:auction.catalog.flagey:0
@@ -1971,7 +1971,7 @@ msgstr ""
 #. module: auction
 #: field:auction.deposit.cost,account:0
 msgid "Destination Account"
-msgstr ""
+msgstr "宛先アカウント"
 
 #. module: auction
 #: model:ir.ui.menu,name:auction.auction_config_menu
@@ -2013,7 +2013,7 @@ msgstr ""
 #. module: auction
 #: model:ir.model,name:auction.model_auction_lots_able
 msgid "Lots able"
-msgstr ""
+msgstr "出品可能"
 
 #. module: auction
 #: model:account.tax.code,name:auction.account_tax_code_id3
@@ -2045,7 +2045,7 @@ msgstr ""
 #. module: auction
 #: model:ir.model,name:auction.model_auction_lot_category
 msgid "Auction Lots Category"
-msgstr ""
+msgstr "オークション出品物分類"
 
 #. module: auction
 #: model:account.tax.code,name:auction.account_tax_code_id2
@@ -2071,7 +2071,7 @@ msgstr ""
 #. module: auction
 #: view:report.object.encoded:0
 msgid "Total adj."
-msgstr ""
+msgstr "合計落札"
 
 #. module: auction
 #: view:auction.deposit:0
@@ -2096,7 +2096,7 @@ msgstr "オークション概要のツリービュー"
 #. module: auction
 #: report:report.auction.buyer.result:0
 msgid "Adj"
-msgstr ""
+msgstr "落札"
 
 #. module: auction
 #: view:auction.dates:0
@@ -2265,12 +2265,12 @@ msgstr ""
 #. module: auction
 #: field:auction.lots,obj_price:0
 msgid "Adjudication price"
-msgstr ""
+msgstr "落札価格"
 
 #. module: auction
 #: field:auction.dates,acc_income:0
 msgid "Income Account"
-msgstr ""
+msgstr "損益勘定"
 
 #. module: auction
 #: field:auction.lots.sms.send,password:0
@@ -2300,12 +2300,12 @@ msgstr ""
 #. module: auction
 #: report:auction.total.rml:0
 msgid "Adjudication:"
-msgstr ""
+msgstr "落札："
 
 #. module: auction
 #: model:ir.actions.report.xml,name:auction.details_bids_phones
 msgid "Bids per lot (phone)"
-msgstr ""
+msgstr "出品物ごとの入札（電話）"
 
 #. module: auction
 #: field:report.auction,buyer_login:0
