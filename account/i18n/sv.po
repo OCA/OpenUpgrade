@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.14\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:35+0000\n"
-"PO-Revision-Date: 2012-05-24 12:14+0000\n"
+"PO-Revision-Date: 2012-05-24 22:31+0000\n"
 "Last-Translator: Anders Wallenquist <anders.wallenquist@vertel.se>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-05-24 21:34+0000\n"
+"X-Launchpad-Export-Date: 2012-05-25 05:16+0000\n"
 "X-Generator: Launchpad (build 15288)\n"
 
 #. module: account
@@ -77,13 +77,13 @@ msgstr "Kontovaluta"
 #. module: account
 #: view:account.tax:0
 msgid "Children Definition"
-msgstr ""
+msgstr "Barndefinitioner"
 
 #. module: account
 #: code:addons/account/account_bank_statement.py:302
 #, python-format
 msgid "Journal item \"%s\" is not valid."
-msgstr ""
+msgstr "Journalposten %s är inte giltig"
 
 #. module: account
 #: model:ir.model,name:account.model_report_aged_receivable
@@ -171,7 +171,7 @@ msgstr "Varning!"
 #: code:addons/account/account.py:3112
 #, python-format
 msgid "Miscellaneous Journal"
-msgstr "Övrigjournal"
+msgstr "Övrig journal"
 
 #. module: account
 #: field:account.fiscal.position.account,account_src_id:0
@@ -207,9 +207,9 @@ msgid ""
 "invoice) to create analytic entries, OpenERP will look for a matching "
 "journal of the same type."
 msgstr ""
-"Ger typ av analytisk journal. När det behövs ett dokument (t.ex. en faktura) "
-"för att skapa analytiska poster, kommer OpenERP leta efter en matchande "
-"journal av samma typ."
+"Ger typ av objektjournal. När det behövs ett dokument (t.ex. en faktura) för "
+"att skapa objektposter, kommer OpenERP leta efter en matchande journal av "
+"samma typ."
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_account_tax_template_form
@@ -257,7 +257,7 @@ msgstr "Belgiska rapporter"
 #: code:addons/account/account_move_line.py:1200
 #, python-format
 msgid "You can not add/modify entries in a closed journal."
-msgstr "You can not add/modify entries in a closed journal."
+msgstr "Du kan inte lägga till/ändra poster i en stängd journal"
 
 #. module: account
 #: help:account.account,user_type:0
@@ -374,6 +374,9 @@ msgid ""
 "OpenERP. Journal items are created by OpenERP if you use Bank Statements, "
 "Cash Registers, or Customer/Supplier payments."
 msgstr ""
+"Denna vy används för att registrera uppgifter massivt i OpenERP. "
+"Journalobjekt skapas av OpenERP om du använder kontoutdrag, kassaapparater "
+"eller kund-/leverantörsbetalningar."
 
 #. module: account
 #: constraint:account.move.line:0
@@ -477,6 +480,11 @@ msgid ""
 "amount of each area of the tax declaration for your country. It’s presented "
 "in a hierarchical structure, which can be modified to fit your needs."
 msgstr ""
+"Skattetabellen är en trädvy som återspeglar strukturen i de skatteklasser "
+"(eller skattekoder) och visar den aktuella skattesituationen. Tabellen "
+"representerar den mängd varje område av deklarationen för ditt land. Det "
+"presenteras i en hierarkisk struktur, som kan ändras för att passa dina "
+"behov."
 
 #. module: account
 #: view:account.analytic.line:0
@@ -1580,7 +1588,7 @@ msgstr "Grupper"
 #: field:account.invoice,amount_untaxed:0
 #: field:report.invoice.created,amount_untaxed:0
 msgid "Untaxed"
-msgstr "Untaxed"
+msgstr "Före skatt"
 
 #. module: account
 #: view:account.partner.reconcile.process:0
@@ -1877,7 +1885,7 @@ msgstr "Fel! Du kan inte skapa rekursiva företag."
 #. module: account
 #: model:ir.actions.report.xml,name:account.account_journal_sale_purchase
 msgid "Sale/Purchase Journal"
-msgstr ""
+msgstr "Sälj-/inköpsjournal"
 
 #. module: account
 #: view:account.analytic.account:0
@@ -2739,6 +2747,11 @@ msgid ""
 "Note that journal entries that are automatically created by the system are "
 "always skipping that state."
 msgstr ""
+"Markera den här rutan om du inte vill att nya journalposter att passera "
+"genom \"utkast\" läget och i stället går direkt till \"bokförd\" utan någon "
+"manuell validering.\n"
+"Observera att journalposter som automatiskt skapas av systemet alltid hoppar "
+"över detta tillstånd."
 
 #. module: account
 #: model:ir.actions.server,name:account.ir_actions_server_action_wizard_multi_chart
@@ -3003,7 +3016,7 @@ msgstr "Tax Template List"
 #. module: account
 #: model:ir.ui.menu,name:account.menu_account_print_sale_purchase_journal
 msgid "Sale/Purchase Journals"
-msgstr ""
+msgstr "Sälj-/inköpsjournal"
 
 #. module: account
 #: help:account.account,currency_mode:0
@@ -3416,7 +3429,7 @@ msgstr ""
 #. module: account
 #: model:ir.actions.act_window,name:account.action_account_print_sale_purchase_journal
 msgid "Print Sale/Purchase Journal"
-msgstr ""
+msgstr "Skriv ut sälj-/inköpsjournal"
 
 #. module: account
 #: field:account.invoice.report,state:0
@@ -3827,7 +3840,7 @@ msgstr "Bokföring"
 #. module: account
 #: view:account.entries.report:0
 msgid "Journal Entries with period in current year"
-msgstr ""
+msgstr "Journalposter med period inom året"
 
 #. module: account
 #: help:account.central.journal,amount_currency:0
@@ -4426,7 +4439,7 @@ msgstr "Det fungerar som standardkonto för kreditbelopp"
 #: view:validate.account.move:0
 #: view:validate.account.move.lines:0
 msgid "Post Journal Entries"
-msgstr "Bokför journaltransaktioner"
+msgstr "Bokför journalposter"
 
 #. module: account
 #: selection:account.invoice,state:0
@@ -4617,7 +4630,7 @@ msgstr "Fakturerad"
 #. module: account
 #: view:account.move:0
 msgid "Posted Journal Entries"
-msgstr ""
+msgstr "Bokförda journalposter"
 
 #. module: account
 #: view:account.use.model:0
@@ -4688,7 +4701,7 @@ msgstr ""
 #. module: account
 #: view:account.move:0
 msgid "Journal Entries to Review"
-msgstr ""
+msgstr "Journalposter att granska"
 
 #. module: account
 #: view:account.bank.statement:0
@@ -6575,7 +6588,7 @@ msgstr "Pythonkod"
 #. module: account
 #: view:account.entries.report:0
 msgid "Journal Entries with period in current period"
-msgstr ""
+msgstr "Journalposter i aktuell period"
 
 #. module: account
 #: help:account.journal,update_posted:0
@@ -6703,7 +6716,7 @@ msgstr ""
 #: model:ir.ui.menu,name:account.menu_action_move_journal_line_form
 #: model:ir.ui.menu,name:account.menu_finance_entries
 msgid "Journal Entries"
-msgstr ""
+msgstr "Journalposter"
 
 #. module: account
 #: help:account.partner.ledger,page_split:0
@@ -6764,7 +6777,7 @@ msgstr ""
 #: code:addons/account/report/common_report_header.py:67
 #, python-format
 msgid "All Entries"
-msgstr "All Entries"
+msgstr "Alla poster"
 
 #. module: account
 #: constraint:product.template:0
@@ -7067,7 +7080,7 @@ msgstr "Account Tax Template"
 #. module: account
 #: view:account.journal.select:0
 msgid "Are you sure you want to open Journal Entries?"
-msgstr ""
+msgstr "Är du säker på att du vill öppna journalposten?"
 
 #. module: account
 #: view:account.state.open:0
@@ -7446,7 +7459,7 @@ msgstr "Sales Journal"
 #: code:addons/account/wizard/account_move_journal.py:104
 #, python-format
 msgid "Open Journal Items !"
-msgstr ""
+msgstr "Öppna verifikat !"
 
 #. module: account
 #: model:ir.model,name:account.model_account_invoice_tax
@@ -7478,7 +7491,7 @@ msgstr ""
 #. module: account
 #: view:account.move:0
 msgid "Unposted Journal Entries"
-msgstr ""
+msgstr "Icke bokförda journalposter"
 
 #. module: account
 #: view:product.product:0
@@ -7584,7 +7597,7 @@ msgstr "Case Code"
 #. module: account
 #: view:validate.account.move:0
 msgid "Post Journal Entries of a Journal"
-msgstr ""
+msgstr "Bokför journalposter"
 
 #. module: account
 #: view:product.product:0
@@ -8434,7 +8447,7 @@ msgstr "Payment Term Line"
 #: code:addons/account/account.py:3109
 #, python-format
 msgid "Purchase Journal"
-msgstr "Purchase Journal"
+msgstr "Inköpsjournal"
 
 #. module: account
 #: view:account.invoice.refund:0
@@ -10133,7 +10146,7 @@ msgstr "Intervall"
 #. module: account
 #: view:account.analytic.line:0
 msgid "Analytic Journal Items related to a purchase journal."
-msgstr ""
+msgstr "Objektjournal med poster relaterade till inköpsjournalen"
 
 #. module: account
 #: help:account.account,type:0
@@ -10241,6 +10254,13 @@ msgid ""
 "may keep several types of specialized journals such as a cash journal, "
 "purchase journal, sales journal..."
 msgstr ""
+"Skapa och hantera ditt företags journaler från denna meny. En journal som "
+"används för att registrera transaktioner för alla redovisningsdata knutet "
+"till den dagliga verksamheten i ditt företag som använder dubbel bokföring "
+"system. Beroende på arten av sin verksamhet och antalet dagliga "
+"transaktioner kan ett företag ha flera typer av specialiserade journaler som "
+"till exempel journalen för kontantförsäljning,  inköpsjournalen och "
+"försäljningsjournalen ..."
 
 #. module: account
 #: view:account.payment.term:0
@@ -10255,7 +10275,7 @@ msgstr "Objektkontoplan"
 #. module: account
 #: help:account.invoice,residual:0
 msgid "Remaining amount due."
-msgstr "Remaining amount due."
+msgstr "Utestående belopp"
 
 #. module: account
 #: model:ir.ui.menu,name:account.menu_finance_statistic_report_statement
@@ -10283,6 +10303,11 @@ msgid ""
 "created by the system on document validation (invoices, bank statements...) "
 "and will be created in 'Posted' state."
 msgstr ""
+"Alla manuellt skapade nya journalposter är vanligtvis i statusen \"icke "
+"bokförda\", men du kan ställa in alternativet att hoppa över detta tillstånd "
+"på journalen posterna är knuten till. I så fall kommer de att bete sig som "
+"journalposter skapas automatiskt av systemet på dokumentvalidering "
+"(fakturor, kontoutdrag ...) och kommer att skapas i \"bokfört\" tillstånd."
 
 #. module: account
 #: view:account.fiscal.position.template:0
@@ -10678,6 +10703,13 @@ msgid ""
 "certain amount of information. They have to be certified by an external "
 "auditor annually."
 msgstr ""
+"Skapa och hantera de konton du behöver för att registrera journalposter. Ett "
+"konto är en del av en huvudbok som låter ditt företag att registrera alla "
+"typer av debet och kredit transaktioner. Företag presenterar sina "
+"årsredovisningar i två huvuddelar: den balans-och resultaträkningen "
+"(resultaträkning). Den årliga redovisning för ett bolag är skyldiga enligt "
+"lag att lämna ut en viss mängd information. De måste vara certifierad av en "
+"extern revisor årligen om företaget uppfyller en av flera kriterier."
 
 #. module: account
 #: help:account.move.line,amount_residual_currency:0

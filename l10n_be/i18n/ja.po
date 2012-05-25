@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-05-24 21:35+0000\n"
+"X-Launchpad-Export-Date: 2012-05-25 05:16+0000\n"
 "X-Generator: Launchpad (build 15288)\n"
 
 #. module: l10n_be
@@ -37,7 +37,7 @@ msgstr "このウィザードはVATの詳細とパートナ毎の合計請求済
 #. module: l10n_be
 #: model:account.account.type,name:l10n_be.user_type_tiers_receiv
 msgid "Tiers - Recevable"
-msgstr "層 - 受入可能"
+msgstr "層 - 受取勘定"
 
 #. module: l10n_be
 #: code:addons/l10n_be/wizard/l10n_be_vat_intra.py:102
@@ -134,50 +134,50 @@ msgstr "ファイルを作成しました。"
 #. module: l10n_be
 #: view:partner.vat.intra:0
 msgid "_Close"
-msgstr ""
+msgstr "閉じる"
 
 #. module: l10n_be
 #: code:addons/l10n_be/wizard/l10n_be_account_vat_declaration.py:131
 #, python-format
 msgid "Save XML For Vat declaration"
-msgstr ""
+msgstr "VAT申告用XMLの保存"
 
 #. module: l10n_be
 #: view:partner.vat.list_13:0
 msgid "Customers"
-msgstr ""
+msgstr "顧客"
 
 #. module: l10n_be
 #: model:account.account.type,name:l10n_be.user_type_tax_in
 msgid "Taxes à l'entrée"
-msgstr ""
+msgstr "入口税"
 
 #. module: l10n_be
 #: help:l1on_be.vat.declaration,ask_restitution:0
 msgid "It indicates whether a resitution is to made or not?"
-msgstr ""
+msgstr "それは還付されたかどうかを示します。"
 
 #. module: l10n_be
 #: model:ir.actions.act_window,name:l10n_be.action_vat_declaration
 msgid "Vat Declaraion"
-msgstr ""
+msgstr "VAT申告"
 
 #. module: l10n_be
 #: view:partner.vat.intra:0
 #: field:partner.vat.intra,no_vat:0
 msgid "Partner With No VAT"
-msgstr ""
+msgstr "VAT対象外パートナ"
 
 #. module: l10n_be
 #: model:account.account.type,name:l10n_be.user_type_immo
 msgid "Immobilisation"
-msgstr ""
+msgstr "固定化"
 
 #. module: l10n_be
 #: view:l1on_be.vat.declaration:0
 #: view:partner.vat.intra:0
 msgid "Company"
-msgstr ""
+msgstr "会社"
 
 #. module: l10n_be
 #: model:ir.model,name:l10n_be.model_partner_vat_13
@@ -187,140 +187,140 @@ msgstr ""
 #. module: l10n_be
 #: model:ir.ui.menu,name:l10n_be.partner_vat_listing
 msgid "Annual Listing Of VAT-Subjected Customers"
-msgstr ""
+msgstr "VAT対象顧客の年間リスト"
 
 #. module: l10n_be
 #: view:partner.vat.list_13:0
 msgid "XML File has been Created."
-msgstr ""
+msgstr "XMLファイルは作成されました。"
 
 #. module: l10n_be
 #: help:l1on_be.vat.declaration,client_nihil:0
 msgid ""
 "Tick this case only if it concerns only the last statement on the civil or "
 "cessation of activity"
-msgstr ""
+msgstr "これは民間の最新の取引明細書または活動の中止に関連する場合のみに、このケースをチェックして下さい。"
 
 #. module: l10n_be
 #: view:partner.vat.list_13:0
 msgid "Select Fiscal Year"
-msgstr ""
+msgstr "会計年度選択"
 
 #. module: l10n_be
 #: field:l1on_be.vat.declaration,ask_restitution:0
 msgid "Ask Restitution"
-msgstr ""
+msgstr "還付請求"
 
 #. module: l10n_be
 #: model:ir.model,name:l10n_be.model_partner_vat_intra
 #: model:ir.ui.menu,name:l10n_be.l10_be_vat_intra
 msgid "Partner VAT Intra"
-msgstr ""
+msgstr "パートナのVAT内部"
 
 #. module: l10n_be
 #: model:ir.ui.menu,name:l10n_be.l10_be_vat_declaration
 #: view:l1on_be.vat.declaration:0
 msgid "Periodical VAT Declaration"
-msgstr ""
+msgstr "周期的なVAT申請"
 
 #. module: l10n_be
 #: view:partner.vat.intra:0
 msgid "Note: "
-msgstr ""
+msgstr "注記： "
 
 #. module: l10n_be
 #: view:partner.vat.intra:0
 msgid "_Preview"
-msgstr ""
+msgstr "プレビュー"
 
 #. module: l10n_be
 #: model:account.account.type,name:l10n_be.user_type_tiers_payable
 msgid "Tiers - Payable"
-msgstr ""
+msgstr "層 - 支払債務"
 
 #. module: l10n_be
 #: field:l1on_be.vat.declaration,tax_code_id:0
 #: field:partner.vat.intra,tax_code_id:0
 msgid "Tax Code"
-msgstr ""
+msgstr "税金コード"
 
 #. module: l10n_be
 #: view:partner.vat.intra:0
 msgid "Periods"
-msgstr ""
+msgstr "期間"
 
 #. module: l10n_be
 #: model:account.account.type,name:l10n_be.user_type_produit
 msgid "Produit"
-msgstr ""
+msgstr "製品"
 
 #. module: l10n_be
 #: help:partner.vat.intra,test_xml:0
 msgid "Sets the XML output as test file"
-msgstr ""
+msgstr "テストファイルとしてXML出力を設定"
 
 #. module: l10n_be
 #: model:account.account.type,name:l10n_be.user_type_view
 msgid "Vue"
-msgstr ""
+msgstr "ビュー"
 
 #. module: l10n_be
 #: view:l1on_be.vat.declaration:0
 msgid "Ok"
-msgstr ""
+msgstr "OK"
 
 #. module: l10n_be
 #: field:l1on_be.vat.declaration,ask_payment:0
 msgid "Ask Payment"
-msgstr ""
+msgstr "支払要請"
 
 #. module: l10n_be
 #: help:partner.vat.intra,no_vat:0
 msgid ""
 "The Partner whose VAT number is not defined they doesn't include in XML File."
-msgstr ""
+msgstr "パートナのVAT番号はXMLファイルに含まれておらず、定義されていません。"
 
 #. module: l10n_be
 #: field:partner.vat_13,limit_amount:0
 msgid "Limit Amount"
-msgstr ""
+msgstr "限度額"
 
 #. module: l10n_be
 #: model:ir.model,name:l10n_be.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "会社"
 
 #. module: l10n_be
 #: view:partner.vat.intra:0
 msgid "Create _XML"
-msgstr ""
+msgstr "XMLの作成"
 
 #. module: l10n_be
 #: help:partner.vat.intra,period_ids:0
 msgid ""
 "Select here the period(s) you want to include in your intracom declaration"
-msgstr ""
+msgstr "内部定義に含めたい期間をここで定義して下さい。"
 
 #. module: l10n_be
 #: view:partner.vat_13:0
 msgid "View Customers"
-msgstr ""
+msgstr "顧客ビュー"
 
 #. module: l10n_be
 #: code:addons/l10n_be/wizard/l10n_be_vat_intra.py:102
 #, python-format
 msgid "The period code you entered is not valid."
-msgstr ""
+msgstr "入力の期間コードは有効ではありません。"
 
 #. module: l10n_be
 #: view:l1on_be.vat.declaration:0
 msgid "Is Last Declaration"
-msgstr ""
+msgstr "最終申請"
 
 #. module: l10n_be
 #: model:account.account.type,name:l10n_be.user_type_stock
 msgid "Stock et Encours"
-msgstr ""
+msgstr "株式と未払"
 
 #. module: l10n_be
 #: field:l1on_be.vat.declaration,client_nihil:0
@@ -332,7 +332,7 @@ msgstr ""
 msgid ""
 "This identifies the representative of the sending company. This is a string "
 "of 14 characters"
-msgstr ""
+msgstr "これは送信会社の代表者を識別します。これは14文字の文字列です。"
 
 #. module: l10n_be
 #: code:addons/l10n_be/wizard/l10n_be_account_vat_declaration.py:75
@@ -340,22 +340,22 @@ msgstr ""
 #: code:addons/l10n_be/wizard/l10n_be_vat_intra.py:98
 #, python-format
 msgid "Data Insufficient"
-msgstr ""
+msgstr "データ不足です。"
 
 #. module: l10n_be
 #: model:ir.ui.menu,name:l10n_be.menu_finance_belgian_statement
 msgid "Belgium Statements"
-msgstr ""
+msgstr "ベルギー取引明細書"
 
 #. module: l10n_be
 #: model:ir.actions.act_window,name:l10n_be.action_vat_intra
 msgid "Partner Vat Intra"
-msgstr ""
+msgstr "パートナのVAT内部"
 
 #. module: l10n_be
 #: view:l1on_be.vat.declaration:0
 msgid "Declare Periodical VAT"
-msgstr ""
+msgstr "定期的VATの定義"
 
 #. module: l10n_be
 #: model:ir.model,name:l10n_be.model_partner_vat_list_13
@@ -365,19 +365,19 @@ msgstr ""
 #. module: l10n_be
 #: view:l1on_be.vat.declaration:0
 msgid "Save xml"
-msgstr ""
+msgstr "XMLを保存"
 
 #. module: l10n_be
 #: field:partner.vat.intra,mand_id:0
 msgid "MandataireId"
-msgstr ""
+msgstr "代理人"
 
 #. module: l10n_be
 #: field:l1on_be.vat.declaration,file_save:0
 #: field:partner.vat.intra,file_save:0
 #: field:partner.vat.list_13,file_save:0
 msgid "Save File"
-msgstr ""
+msgstr "ファイルを保存"
 
 #. module: l10n_be
 #: help:partner.vat.intra,period_code:0
@@ -392,23 +392,31 @@ msgid ""
 "      YYYY stands for the year (4 positions).\n"
 "    "
 msgstr ""
+"ここで内部定義のための期間コードを設定しなければなりません。フォーマット：ppyyyy\n"
+"      PPで月を示す場合：01から12\n"
+"      PPで3ヶ月間を示す場合：31、32、33、34\n"
+"          最初の数字は3ヶ月間を示します。\n"
+"          ２番目の数字は3ヶ月間の識別です。\n"
+"      PPで会計年度を示す場合：00\n"
+"      YYYYは年（4桁）\n"
+"    "
 
 #. module: l10n_be
 #: field:l1on_be.vat.declaration,name:0
 #: field:partner.vat.intra,name:0
 #: field:partner.vat.list_13,name:0
 msgid "File Name"
-msgstr ""
+msgstr "ファイル名"
 
 #. module: l10n_be
 #: model:account.account.type,name:l10n_be.user_type_tax_out
 msgid "Taxes à la sortie"
-msgstr ""
+msgstr "出口税"
 
 #. module: l10n_be
 #: model:account.account.type,name:l10n_be.user_type_tax
 msgid "Tax"
-msgstr ""
+msgstr "税金"
 
 #. module: l10n_be
 #: code:addons/l10n_be/wizard/l10n_be_account_vat_declaration.py:75
@@ -416,80 +424,80 @@ msgstr ""
 #: code:addons/l10n_be/wizard/l10n_be_vat_intra.py:98
 #, python-format
 msgid "No VAT Number Associated with Main Company!"
-msgstr ""
+msgstr "主会社と関係したVAT番号がありません。"
 
 #. module: l10n_be
 #: model:ir.model,name:l10n_be.model_l1on_be_vat_declaration
 msgid "Vat Declaration"
-msgstr ""
+msgstr "VAT申請"
 
 #. module: l10n_be
 #: view:partner.vat.intra:0
 #: field:partner.vat.intra,country_ids:0
 msgid "European Countries"
-msgstr ""
+msgstr "ヨーロッパ諸国"
 
 #. module: l10n_be
 #: model:ir.actions.act_window,name:l10n_be.action_partner_vat_listing_13
 #: view:partner.vat_13:0
 msgid "Partner VAT Listing"
-msgstr ""
+msgstr "パートナVATリスト"
 
 #. module: l10n_be
 #: view:partner.vat.intra:0
 msgid "General Information"
-msgstr ""
+msgstr "一般情報"
 
 #. module: l10n_be
 #: view:partner.vat.intra:0
 msgid "Create an XML file for Vat Intra"
-msgstr ""
+msgstr "VAT内部のXMLファイルの作成"
 
 #. module: l10n_be
 #: field:partner.vat.intra,period_code:0
 msgid "Period Code"
-msgstr ""
+msgstr "期間コード"
 
 #. module: l10n_be
 #: model:account.account.type,name:l10n_be.user_type_financiers
 msgid "Financier"
-msgstr ""
+msgstr "出資者"
 
 #. module: l10n_be
 #: field:partner.vat_13,year:0
 msgid "Year"
-msgstr ""
+msgstr "年"
 
 #. module: l10n_be
 #: view:partner.vat_13:0
 msgid "Cancel"
-msgstr ""
+msgstr "キャンセル"
 
 #. module: l10n_be
 #: view:l1on_be.vat.declaration:0
 #: view:partner.vat.intra:0
 #: view:partner.vat.list_13:0
 msgid "Close"
-msgstr ""
+msgstr "閉じる"
 
 #. module: l10n_be
 #: code:addons/l10n_be/wizard/l10n_be_vat_intra.py:105
 #, python-format
 msgid "Please select at least one Period."
-msgstr ""
+msgstr "少なくとも１つの期間を選択して下さい。"
 
 #. module: l10n_be
 #: help:l1on_be.vat.declaration,ask_payment:0
 msgid "It indicates whether a payment is to made or not?"
-msgstr ""
+msgstr "支払をしたかどうかを示します。"
 
 #. module: l10n_be
 #: view:partner.vat.intra:0
 msgid "Partner VAT intra"
-msgstr ""
+msgstr "パートナVAT内部"
 
 #. module: l10n_be
 #: code:addons/l10n_be/wizard/l10n_be_partner_vat_listing.py:47
 #, python-format
 msgid "No data for the selected Year."
-msgstr ""
+msgstr "選択した年にデータがありません。"
