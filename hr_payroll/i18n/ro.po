@@ -7,38 +7,38 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.0-rc2\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 01:37+0100\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: Fekete Mihai <mihai.fekete@etotalpc.ro>\n"
+"PO-Revision-Date: 2012-05-25 19:26+0000\n"
+"Last-Translator: Fekete Mihai <mihai@erpsystems.ro>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-05-17 05:45+0000\n"
-"X-Generator: Launchpad (build 15259)\n"
+"X-Launchpad-Export-Date: 2012-05-26 05:54+0000\n"
+"X-Generator: Launchpad (build 15288)\n"
 
 #. module: hr_payroll
 #: field:hr.payslip.line,condition_select:0
 #: field:hr.salary.rule,condition_select:0
 msgid "Condition Based on"
-msgstr ""
+msgstr "Conditie bazata pe"
 
 #. module: hr_payroll
 #: selection:hr.contract,schedule_pay:0
 msgid "Monthly"
-msgstr ""
+msgstr "Lunar"
 
 #. module: hr_payroll
 #: view:hr.payslip:0 field:hr.payslip,line_ids:0
 #: model:ir.actions.act_window,name:hr_payroll.act_contribution_reg_payslip_lines
 msgid "Payslip Lines"
-msgstr ""
+msgstr "Linii Fluturas de salariu"
 
 #. module: hr_payroll
 #: view:hr.payslip.line:0
 #: model:ir.model,name:hr_payroll.model_hr_salary_rule_category
 #: report:paylip.details:0
 msgid "Salary Rule Category"
-msgstr ""
+msgstr "Regula Categorie salariala"
 
 #. module: hr_payroll
 #: help:hr.salary.rule.category,parent_id:0
@@ -46,6 +46,8 @@ msgid ""
 "Linking a salary category to its parent is used only for the reporting "
 "purpose."
 msgstr ""
+"Conectarea unei categorii salariale la principal este utilizata doar in "
+"scopul raportarii."
 
 #. module: hr_payroll
 #: view:hr.payslip:0 view:hr.payslip.line:0 view:hr.salary.rule:0
@@ -61,13 +63,13 @@ msgstr "Stari"
 #: field:hr.payslip.line,input_ids:0 view:hr.salary.rule:0
 #: field:hr.salary.rule,input_ids:0
 msgid "Inputs"
-msgstr ""
+msgstr "Input-uri"
 
 #. module: hr_payroll
 #: field:hr.payslip.line,parent_rule_id:0
 #: field:hr.salary.rule,parent_rule_id:0
 msgid "Parent Salary Rule"
-msgstr ""
+msgstr "Regula salariala principala"
 
 #. module: hr_payroll
 #: field:hr.employee,slip_ids:0 view:hr.payslip:0 view:hr.payslip.run:0
@@ -80,7 +82,7 @@ msgstr "Fluturasi de salariu"
 #: field:hr.payroll.structure,parent_id:0
 #: field:hr.salary.rule.category,parent_id:0
 msgid "Parent"
-msgstr ""
+msgstr "Parinte"
 
 #. module: hr_payroll
 #: report:paylip.details:0 report:payslip:0
@@ -93,12 +95,12 @@ msgstr "("
 #: field:hr.payslip.line,company_id:0 field:hr.salary.rule,company_id:0
 #: field:hr.salary.rule.category,company_id:0
 msgid "Company"
-msgstr "Companie"
+msgstr "Compania"
 
 #. module: hr_payroll
 #: view:hr.payslip:0
 msgid "Done Slip"
-msgstr ""
+msgstr "Fluturas de salariu efectuat"
 
 #. module: hr_payroll
 #: report:paylip.details:0 report:payslip:0
@@ -108,18 +110,18 @@ msgstr ","
 #. module: hr_payroll
 #: view:hr.payslip:0 view:hr.payslip.run:0
 msgid "Set to Draft"
-msgstr "Setare ca ciornă"
+msgstr "Setati ca ciorna"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_salary_rule
 msgid "hr.salary.rule"
-msgstr ""
+msgstr "ru.regula.salarizare"
 
 #. module: hr_payroll
 #: field:hr.payslip,payslip_run_id:0
 #: model:ir.model,name:hr_payroll.model_hr_payslip_run
 msgid "Payslip Batches"
-msgstr ""
+msgstr "Fluturas loturi"
 
 #. module: hr_payroll
 #: view:hr.payslip.employees:0
@@ -127,12 +129,15 @@ msgid ""
 "This wizard will generate payslips for all selected employee(s) based on the "
 "dates and credit note specified on Payslips Run."
 msgstr ""
+"Acest asistent va genera fluturasi de salariu pentru toti angajatii "
+"selectati pe baza datelor si a notelor de credit specificate in Executarea "
+"Fluturasilor de salariu."
 
 #. module: hr_payroll
 #: report:contribution.register.lines:0 report:paylip.details:0
 #: report:payslip:0
 msgid "Quantity/Rate"
-msgstr ""
+msgstr "Cantitate/Rata"
 
 #. module: hr_payroll
 #: field:hr.payslip.input,payslip_id:0 field:hr.payslip.line,slip_id:0
@@ -144,13 +149,13 @@ msgstr "Fluturas de salariu"
 #. module: hr_payroll
 #: view:hr.payslip.employees:0
 msgid "Generate"
-msgstr ""
+msgstr "Generati"
 
 #. module: hr_payroll
 #: help:hr.payslip.line,amount_percentage_base:0
 #: help:hr.salary.rule,amount_percentage_base:0
 msgid "result will be affected to a variable"
-msgstr ""
+msgstr "rezultatul va fi afectat de o variabila"
 
 #. module: hr_payroll
 #: report:contribution.register.lines:0
@@ -160,27 +165,29 @@ msgstr "Total:"
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.act_children_salary_rules
 msgid "All Children Rules"
-msgstr ""
+msgstr "Toate regulile subordonate"
 
 #. module: hr_payroll
 #: view:hr.payslip:0 view:hr.salary.rule:0
 msgid "Input Data"
-msgstr ""
+msgstr "Introducere Date"
 
 #. module: hr_payroll
 #: constraint:hr.payslip:0
 msgid "Payslip 'Date From' must be before 'Date To'."
 msgstr ""
+"'Data de la' de pe fluturasul de salariu trebuie sa fie inainte de 'Data "
+"pana la'."
 
 #. module: hr_payroll
 #: view:hr.payslip:0 view:hr.salary.rule.category:0
 msgid "Notes"
-msgstr ""
+msgstr "Note"
 
 #. module: hr_payroll
 #: view:hr.payslip:0
 msgid "Salary Computation"
-msgstr "Calcul salarii"
+msgstr "Calcul Salariu"
 
 #. module: hr_payroll
 #: report:contribution.register.lines:0 field:hr.payslip.input,amount:0
@@ -202,51 +209,51 @@ msgstr "Alte informatii"
 #. module: hr_payroll
 #: help:hr.payslip.line,amount_select:0 help:hr.salary.rule,amount_select:0
 msgid "The computation method for the rule amount."
-msgstr ""
+msgstr "Metoda de calcul pentru regula sumei."
 
 #. module: hr_payroll
 #: view:payslip.lines.contribution.register:0
 msgid "Contribution Register's Payslip Lines"
-msgstr ""
+msgstr "Linii Fluturasi de salariu dupa Registrul contributiei"
 
 #. module: hr_payroll
 #: code:addons/hr_payroll/wizard/hr_payroll_payslips_by_employees.py:52
 #, python-format
 msgid "Warning !"
-msgstr ""
+msgstr "Avertizare !"
 
 #. module: hr_payroll
 #: report:paylip.details:0
 msgid "Details by Salary Rule Category:"
-msgstr ""
+msgstr "Detalii dupa Categoria regulii salariale"
 
 #. module: hr_payroll
 #: report:paylip.details:0 report:payslip:0
 msgid "Note"
-msgstr ""
+msgstr "Nota"
 
 #. module: hr_payroll
 #: field:hr.payroll.structure,code:0 field:hr.payslip,number:0
 #: report:paylip.details:0 report:payslip:0
 msgid "Reference"
-msgstr ""
+msgstr "Referinta"
 
 #. module: hr_payroll
 #: view:hr.payslip:0
 msgid "Draft Slip"
-msgstr ""
+msgstr "Fluturas de salariu ciorna"
 
 #. module: hr_payroll
 #: code:addons/hr_payroll/hr_payroll.py:422
 #, python-format
 msgid "Normal Working Days paid at 100%"
-msgstr ""
+msgstr "Zile lucratoare obisnuite platite 100%"
 
 #. module: hr_payroll
 #: field:hr.payslip.line,condition_range_max:0
 #: field:hr.salary.rule,condition_range_max:0
 msgid "Maximum Range"
-msgstr ""
+msgstr "Marja maxima"
 
 #. module: hr_payroll
 #: report:paylip.details:0 report:payslip:0
@@ -256,17 +263,17 @@ msgstr "Nr de identificare"
 #. module: hr_payroll
 #: field:hr.payslip,struct_id:0
 msgid "Structure"
-msgstr ""
+msgstr "Structura"
 
 #. module: hr_payroll
 #: help:hr.employee,total_wage:0
 msgid "Sum of all current contract's wage of employee."
-msgstr ""
+msgstr "Suma tuturor salariilor pe baza de contract ale angajatului"
 
 #. module: hr_payroll
 #: view:hr.payslip:0
 msgid "Total Working Days"
-msgstr ""
+msgstr "Total Zile lucratoare"
 
 #. module: hr_payroll
 #: help:hr.payslip.line,code:0 help:hr.salary.rule,code:0
@@ -274,21 +281,23 @@ msgid ""
 "The code of salary rules can be used as reference in computation of other "
 "rules. In that case, it is case sensitive."
 msgstr ""
+"Codul regulilor salariale poate fi folosit ca referinta la calculul altor "
+"reguli. In acest caz, este sensibil la majuscule."
 
 #. module: hr_payroll
 #: selection:hr.contract,schedule_pay:0
 msgid "Weekly"
-msgstr ""
+msgstr "Saptamanal(a)"
 
 #. module: hr_payroll
 #: field:hr.payslip.line,rate:0
 msgid "Rate (%)"
-msgstr ""
+msgstr "Rata (%)"
 
 #. module: hr_payroll
 #: view:hr.payslip:0
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmati"
 
 #. module: hr_payroll
 #: model:ir.actions.report.xml,name:hr_payroll.payslip_report
@@ -299,7 +308,7 @@ msgstr "Fluturas de salariu al angajatului"
 #: help:hr.payslip.line,condition_range_max:0
 #: help:hr.salary.rule,condition_range_max:0
 msgid "The maximum amount, applied for this rule."
-msgstr ""
+msgstr "Suma maxima, aplicata pentru aceasta regula."
 
 #. module: hr_payroll
 #: help:hr.payslip.line,condition_python:0
@@ -308,16 +317,18 @@ msgid ""
 "Applied this rule for calculation if condition is true. You can specify "
 "condition like basic > 1000."
 msgstr ""
+"Aplicati aceasta regula pentru calcul daca conditia este adevarata. Puteti "
+"specifica conditia ca baza > 1000."
 
 #. module: hr_payroll
 #: view:hr.payslip.employees:0
 msgid "Payslips by Employees"
-msgstr ""
+msgstr "Fluturasi de salariu dupa Angajati"
 
 #. module: hr_payroll
 #: selection:hr.contract,schedule_pay:0
 msgid "Quarterly"
-msgstr ""
+msgstr "Trimestrial"
 
 #. module: hr_payroll
 #: field:hr.payslip,state:0 field:hr.payslip.run,state:0
@@ -331,11 +342,15 @@ msgid ""
 "for Meal Voucher having fixed amount of 1€ per worked day can have its "
 "quantity defined in expression like worked_days.WORK100.number_of_days."
 msgstr ""
+"Este folosit la calculul procentajului si al sumei fixe. De ex. O regula "
+"pentru Tichetul de masa care are suma fixa de 1 € pe ziua lucratoare poate "
+"avea cantitatea definita intr-o expresie precum "
+"zile_lucrate.MUNCA100.numarul_de_zile."
 
 #. module: hr_payroll
 #: view:hr.salary.rule:0
 msgid "Search Salary Rule"
-msgstr ""
+msgstr "Cautati Regula salariala"
 
 #. module: hr_payroll
 #: field:hr.payslip,employee_id:0 field:hr.payslip.line,employee_id:0
@@ -346,12 +361,12 @@ msgstr "Angajat"
 #. module: hr_payroll
 #: selection:hr.contract,schedule_pay:0
 msgid "Semi-annually"
-msgstr ""
+msgstr "Semi-anual"
 
 #. module: hr_payroll
 #: view:hr.salary.rule:0
 msgid "Children definition"
-msgstr ""
+msgstr "Definitie copii"
 
 #. module: hr_payroll
 #: report:paylip.details:0 report:payslip:0
@@ -361,29 +376,29 @@ msgstr "Email"
 #. module: hr_payroll
 #: view:hr.payslip.run:0
 msgid "Search Payslip Batches"
-msgstr ""
+msgstr "Cautati Loturi Fluturasi de salariu"
 
 #. module: hr_payroll
 #: field:hr.payslip.line,amount_percentage_base:0
 #: field:hr.salary.rule,amount_percentage_base:0
 msgid "Percentage based on"
-msgstr ""
+msgstr "Procent bazat pe"
 
 #. module: hr_payroll
 #: help:hr.payslip.line,amount_percentage:0
 #: help:hr.salary.rule,amount_percentage:0
 msgid "For example, enter 50.0 to apply a percentage of 50%"
-msgstr ""
+msgstr "De exemplu, introduceti 50.0 pentru a aplica un procent de 50%"
 
 #. module: hr_payroll
 #: field:hr.payslip,paid:0
 msgid "Made Payment Order ? "
-msgstr ""
+msgstr "Faceti Ordinul de plata? "
 
 #. module: hr_payroll
 #: report:contribution.register.lines:0
 msgid "PaySlip Lines by Contribution Register"
-msgstr ""
+msgstr "Linii fluturas de salariu dupa Contributia inregistrata"
 
 #. module: hr_payroll
 #: help:hr.payslip,state:0
@@ -394,16 +409,24 @@ msgid ""
 "* If the payslip is confirmed then state is set to 'Done'.            \n"
 "* When user cancel payslip the state is 'Rejected'."
 msgstr ""
+"* Atunci cand este creat fluturasul de salariu, starea este 'Ciorna'.        "
+"    \n"
+"* Daca fluturasul de salariu este in verificare, starea este 'In asteptare'. "
+"           \n"
+"* Daca fluturasul este confirmat, atunci starea este setata pe 'Efectuat'.   "
+"         \n"
+"* Atunci cand utilizatorul anuleaza fluturasul de salariu, starea este "
+"'Respins'."
 
 #. module: hr_payroll
 #: field:hr.payslip.worked_days,number_of_days:0
 msgid "Number of Days"
-msgstr ""
+msgstr "Numarul de zile"
 
 #. module: hr_payroll
 #: selection:hr.payslip,state:0
 msgid "Rejected"
-msgstr ""
+msgstr "Respins"
 
 #. module: hr_payroll
 #: view:hr.payroll.structure:0 field:hr.payroll.structure,rule_ids:0
@@ -411,23 +434,23 @@ msgstr ""
 #: model:ir.actions.act_window,name:hr_payroll.action_salary_rule_form
 #: model:ir.ui.menu,name:hr_payroll.menu_action_hr_salary_rule_form
 msgid "Salary Rules"
-msgstr ""
+msgstr "Reguli salariale"
 
 #. module: hr_payroll
 #: code:addons/hr_payroll/hr_payroll.py:337
 #, python-format
 msgid "Refund: "
-msgstr ""
+msgstr "Rambursare "
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_payslip_lines_contribution_register
 msgid "PaySlip Lines by Contribution Registers"
-msgstr ""
+msgstr "Linii Fluturas de salariu dupa Registrele de contributie"
 
 #. module: hr_payroll
 #: view:hr.payslip:0 selection:hr.payslip,state:0 view:hr.payslip.run:0
 msgid "Done"
-msgstr ""
+msgstr "Efectuat"
 
 #. module: hr_payroll
 #: field:hr.payslip.line,appears_on_payslip:0
@@ -448,26 +471,28 @@ msgid ""
 "If the active field is set to false, it will allow you to hide the salary "
 "rule without removing it."
 msgstr ""
+"Daca campul activ este setat pe fals, va va permite sa ascundeti regula "
+"salariala fara a o sterge."
 
 #. module: hr_payroll
 #: view:hr.payslip:0
 msgid "Worked Days & Inputs"
-msgstr ""
+msgstr "Zile lucrate & Inregistrari"
 
 #. module: hr_payroll
 #: field:hr.payslip,details_by_salary_rule_category:0
 msgid "Details by Salary Rule Category"
-msgstr ""
+msgstr "Detalii dupa Categoria Regulii salariale"
 
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.action_payslip_lines_contribution_register
 msgid "PaySlip Lines"
-msgstr ""
+msgstr "Linii fluturas de salariu"
 
 #. module: hr_payroll
 #: help:hr.payslip.line,register_id:0 help:hr.salary.rule,register_id:0
 msgid "Eventual third party involved in the salary payment of the employees."
-msgstr ""
+msgstr "Partea terta implicata in plata salariului angajatilor."
 
 #. module: hr_payroll
 #: field:hr.payslip.worked_days,number_of_hours:0
