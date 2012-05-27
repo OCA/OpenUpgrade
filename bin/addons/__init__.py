@@ -50,6 +50,15 @@ import logging
 
 logger = netsvc.Logger()
 
+### OpenUpgrade
+def table_exists(cr, table):
+    """ Check whether a certain table or view exists """
+    cr.execute(
+        'SELECT count(relname) FROM pg_class WHERE relname = %s',
+        (table,))
+    return cr.fetchone()[0] == 1
+### End of OpenUpgrade
+
 _ad = os.path.abspath(opj(tools.ustr(tools.config['root_path']), u'addons'))     # default addons path (base)
 ad_paths= map(lambda m: os.path.abspath(tools.ustr(m.strip())), tools.config['addons_path'].split(','))
 
@@ -698,7 +707,7 @@ def load_module_graph(cr, graph, status=None, registry=None, perform_checks=True
                     tools.convert_xml_import(cr, module_name, file, id_map, mode, noupdate)
             finally:
                 file.close()
-
+                
     local_registry = {}
     def get_repr(properties, type='val'):
         """ 
@@ -730,24 +739,12 @@ def load_module_graph(cr, graph, status=None, registry=None, perform_checks=True
         if isinstance(model, osv.osv.osv_memory):
             return
 
+        model_registry = local_registry.setdefault(
+                model._name, {})
         if model._inherits:
+            model_registry['_inherits'] = {'_inherits': unicode(model._inherits)}
+        for k, v in model._columns.items():
             properties = { 
-                'model': model._name,
-                'field': '_inherits',
-                'type': '',
-                'isfunction': '',
-                'relation': '',
-                'required': '',
-                'selection_keys': '',
-                'req_default': '',
-                'inherits': unicode(model._inherits),
-                }
-            local_registry[get_repr(properties, 'key')] = get_repr(
-                properties)
-        for k,v  in model._columns.items():
-            properties = { 
-                'model': model._name,
-                'field': k,
                 'type': v._type,
                 'isfunction': (
                     isinstance(v, osv.fields.function) and 'function' or ''),
@@ -773,49 +770,70 @@ def load_module_graph(cr, graph, status=None, registry=None, perform_checks=True
                     properties['req_default'] = 'function'
                 else:
                     properties['req_default'] = unicode(model._defaults[k])
-            local_registry[get_repr(properties, 'key')] = get_repr(
-                properties)
+            for key, value in properties.items():
+                if value:
+                    model_registry.setdefault(k, {})[key] = value
 
-    def compare_registries():
+    def get_record_id(cr, module, model, field, mode):
         """
-        OpenUpgrade: Store the characteristics of the BaseModel and its fields
-        in the local registry, so that we can compare changes with the
-        main registry
+        OpenUpgrade: get or create the id from the record table matching
+        the key parameter values
         """
-        for key in sorted(local_registry.keys()):
-            if key in registry:
-                if registry[key] != local_registry[key]:
-                    logger.notifyChannel(
-                        'OpenUpgrade_FIELD', netsvc.LOG_INFO,
-                        '"%s","modify",%s,%s' % (
-                            package.name, key, local_registry[key]))
-            else:
-                logger.notifyChannel(
-                    'OpenUpgrade_FIELD', netsvc.LOG_INFO,
-                    '"%s","create",%s,%s' % (
-                    package.name, key, local_registry[key]))
-            registry[key] = local_registry[key]
-
-    def log_xmlids(cr, package_name):
-        """
-        OpenUpgrade: Log all XMLID's owned by this package.
-        TODO: other modules can really easily add items that 'belong' to
-        another module. Needs deeper digging in the load_data methods.
-
-        Need to pass the cursor, as the one passed to the upper method is
-        closed by now (or it is in OpenERP 6.1).
-        """
-
         cr.execute(
-            'select model, name from ir_model_data where module=%s '
-            'order by model, name', (package_name,))
-        for res in cr.fetchall():
-            xmlid_repr = ','.join([
-                    "\"" + string.replace(property, '\"', '\'') + "\""
-                    for property in (res[0], res[1], package_name)
-                    ])
-            logger.notifyChannel(
-                'OpenUpgrade_XMLID', netsvc.LOG_INFO, xmlid_repr)
+            "SELECT id FROM openupgrade_record "
+            "WHERE module = %s AND model = %s AND "
+            "field = %s AND mode = %s AND type = %s",
+            (module, model, field, mode, 'field')
+            )
+        record = cr.fetchone()
+        if record:
+            return record[0]
+        cr.execute(
+            "INSERT INTO openupgrade_record "
+            "(module, model, field, mode, type) "
+            "VALUES (%s, %s, %s, %s, %s)",
+            (module, model, field, mode, 'field')
+            )
+        cr.execute(
+            "SELECT id FROM openupgrade_record "
+            "WHERE module = %s AND model = %s AND "
+            "field = %s AND mode = %s AND type = %s",
+            (module, model, field, mode, 'field')
+            )
+        return cr.fetchone()[0]
+        
+    def compare_registries(cr, module):
+        """
+        OpenUpgrade: Compare the local registry with the global registry,
+        log any differences and merge the local registry with
+        the global one.
+        """
+        if not table_exists(cr, 'openupgrade_record'):
+            return
+        for model, fields in local_registry.items():
+            registry.setdefault(model, {})
+            for field, attributes in fields.items():
+                old_field = registry[model].setdefault(field, {})
+                mode = old_field and 'modify' or 'create'
+                record_id = False
+                for key, value in attributes.items():
+                    if key not in old_field or old_field[key] != value:
+                        if not record_id:
+                            record_id = get_record_id(
+                                cr, module, model, field, mode)
+                        cr.execute(
+                            "SELECT id FROM openupgrade_attribute "
+                            "WHERE name = %s AND value = %s AND "
+                            "record_id = %s",
+                            (key, value, record_id)
+                            )
+                        if not cr.fetchone():
+                            cr.execute(
+                                "INSERT INTO openupgrade_attribute "
+                                "(name, value, record_id) VALUES (%s, %s, %s)",
+                                (key, value, record_id)
+                                )
+                        old_field[key] = value
 
     # **kwargs is passed directly to convert_xml_import
     if not status:
@@ -839,11 +857,10 @@ def load_module_graph(cr, graph, status=None, registry=None, perform_checks=True
 
         if hasattr(package, 'init') or hasattr(package, 'update') or package.state in ('to install', 'to upgrade'):
             # OpenUpgrade: add this module's models to the registry
-            logger.notifyChannel('OpenUpgrade_FIELD', netsvc.LOG_INFO, 'module %s' % (package.name))
             local_registry = {}
-            for model in osv.orm.orm:
+            for model in modules:
                 log_model(model)
-            compare_registries()
+            compare_registries(cr, package.name)
 
             init_module_objects(cr, package.name, modules)
         cr.commit()
@@ -907,7 +924,6 @@ def load_module_graph(cr, graph, status=None, registry=None, perform_checks=True
                     delattr(package, kind)
 
         statusi += 1
-        log_xmlids(cr, package.name) # OpenUpgrade
     cr.commit()
 
     return processed_modules

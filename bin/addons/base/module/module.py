@@ -590,19 +590,22 @@ class module(osv.osv):
         # The POT file will be incorrectly named, but that should not
         # matter since the web client is not going to use it, only the PO
         # files.
-        translations_file = cStringIO.StringIO(
-            addons.zip_directory(self._translations_subdir(module), False))
-        translations_archive = zipfile.ZipFile(translations_file)
+        translations_zip = addons.zip_directory(self._translations_subdir(module), False)
+        # SR: add this check on empty zip file.
+        # This prevented the installation of the share module
+        if translations_zip:
+            translations_file = cStringIO.StringIO(translations_zip)
+            translations_archive = zipfile.ZipFile(translations_file)
 
-        for path in translations_archive.namelist():
-            web_path = os.path.join(
-                'web', 'po', 'messages', os.path.basename(path))
-            web_archive.writestr(
-                web_path,
-                translations_archive.read(path))
+            for path in translations_archive.namelist():
+                web_path = os.path.join(
+                    'web', 'po', 'messages', os.path.basename(path))
+                web_archive.writestr(
+                    web_path,
+                    translations_archive.read(path))
 
-        translations_archive.close()
-        translations_file.close()
+            translations_archive.close()
+            translations_file.close()
 
         web_archive.close()
         try:

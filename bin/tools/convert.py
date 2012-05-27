@@ -57,6 +57,8 @@ from tools import SKIPPED_ELEMENT_TYPES, cache
 unsafe_eval = eval
 from tools.safe_eval import safe_eval as eval
 
+from openupgrade import openupgrade_log
+
 class ConvertError(Exception):
     def __init__(self, doc, orig_excpt):
         self.d = doc
@@ -282,6 +284,7 @@ form: module.record_id""" % (xml_id,)
 
         if len(id) > 64:
             self.logger.error('id: %s is to long (max: 64)', id)
+        openupgrade_log.log_xml_id(self.cr, self.module, xml_id)
 
     def _tag_delete(self, cr, rec, data_node=None):
         d_model = rec.get("model",'')
