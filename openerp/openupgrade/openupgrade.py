@@ -4,11 +4,12 @@ from osv import osv
 import pooler
 import logging
 import tools
+import openupgrade_tools
 
 logger = logging.getLogger('OpenUpgrade')
 
 __all__ = [
-    'load_xml',
+    'load_data',
     'rename_columns',
     'rename_tables',
     'drop_columns',
@@ -61,7 +62,9 @@ def load_data(cr, module_name, filename, idref=None, mode='init'):
     finally:
         fp.close()
 
+# for backwards compatibility
 load_xml = load_data
+table_exists = openupgrade_tools.table_exists
 
 def rename_columns(cr, column_spec):
     """
@@ -211,13 +214,6 @@ def logged_query(cr, query, args=None):
         query = query % args
         logger.warn('No rows affected for query "%s"', query)
     return res
-
-def table_exists(cr, table):
-    """ Check whether a certain table or view exists """
-    cr.execute(
-        'SELECT count(relname) FROM pg_class WHERE relname = %s',
-        (table,))
-    return cr.fetchone()[0] == 1
 
 def column_exists(cr, table, column):
     """ Check whether a certain column exists """

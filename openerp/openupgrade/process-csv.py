@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
@@ -20,21 +19,21 @@
 #
 ##############################################################################
 
-USAGE = """ 
+#####################################################################
+#   library providing a function to analyse two progressive database
+#   layouts from the OpenUpgrade server.
+#####################################################################
 
-    Standalone runnable to analyse two progressive datase layouts from the
-    OpenUpgrade server.
+import copy
 
-        Usage: %(name)s <old.csv> <new.csv>
-
-"""
-
-import sys, copy, csv, re
-import changes
+try:
+    from openerp.addons.openupgrade_records.lib import apriori
+except ImportError:
+    from openupgrade_records.lib import apriori
 
 keys = [
     'module',
-    'operation',
+    'mode',
     'model',
     'field',
     'type',
@@ -46,168 +45,196 @@ keys = [
     'inherits',
     ]
 
-def readfile(file):
-    fields = []
-    readfile = csv.reader(open(file, 'rb'), delimiter=',', quotechar='"')
-    for row in readfile:
-        if len(row) != len(keys):
-            print "Skip line %s (%s)" % (row, len(row))
-            continue
-        col = 0
-        field = {}
-        for key in keys:
-            field[key] = row[col]
-            col += 1
-        field['matched'] = False
-        fields.append(field)
-    return fields
+def module_map(module):
+    return apriori.renamed_modules.get(
+        module, module)
 
-def equal(dicta, dictb, ignore):
-    ka = dicta.keys()
-    kb = dictb.keys()
-    kbstatic = dictb.keys()
-    for keyset in [ ka, kb, kbstatic ]:
-        for k in ignore:
-            keyset.remove(k)
-    for k in ka:
-        if k not in kbstatic:
-            return False
-        if dicta[k] != dictb[k]:
-            return False
-        kb.remove(k)
-    if kb:
-        return False
-    return True
-
-def compare(dict_old, dict_new, fields):
+def compare_records(dict_old, dict_new, fields):
+    """
+    Check equivalence of two OpenUpgrade field representations
+    with respect to the keys in the 'fields' arguments.
+    Take apriori knowledge into account for mapped modules or
+    model names.
+    Return True of False.
+    """
     for field in fields:
         if field == 'module':
-            if (changes.renamed_modules.get(dict_old[field], dict_old[field]) != dict_new[field]):
+            if (module_map(dict_old[field]) != dict_new[field]):
                 return False
         elif field == 'model':
-            if (changes.renamed_models.get(dict_old[field], dict_old[field]) != dict_new[field]):
+            if (apriori.renamed_models.get(
+                    dict_old[field], dict_old[field]) != dict_new[field]):
                 return False
         else:
             if dict_old[field] != dict_new[field]:
                 return False
     return True
 
-def search(item, dict, fields):
-    for i in dict:
-        if not compare(item, i, fields):
+def search(item, item_list, fields):
+    """
+    Find a match of a dictionary in a list of similar dictionaries
+    with respect to the keys in the 'fields' arguments.
+    Return the item if found or None.
+    """
+    for i in item_list:
+        if not compare_records(item, i, fields):
             continue
         return i
     return None
 
-def fieldprint(old, new, field='NOT SPECIFIED', text=None):
-#    repr = 'module %s, model %s, field %s (%s)' % (old['module'], old['model'], old['field'], old['type'])
+def fieldprint(old, new, field, text, reprs):
     fieldrepr = "%s (%s)" % (old['field'], old['type'])
-    repr = '%s / %s / %s' % (old['module'].ljust(12), old['model'].ljust(24), fieldrepr.ljust(30))
+    repr = '%s / %s / %s' % (
+        old['module'].ljust(12), old['model'].ljust(24), fieldrepr.ljust(30))
     if text:
-        print "%s: %s" % (repr, text)
+        reprs.setdefault(module_map(old['module']), []).append(
+            "%s: %s" % (repr, text))
     else:
-        print "%s: %s is now \'%s\' ('%s')" % (repr, field, new[field], old[field])
+        reprs.setdefault(module_map(old['module']), []).append(
+            "%s: %s is now \'%s\' ('%s')" % (
+                repr, field, new[field], old[field]))
 
-def report_generic(new, old, attrs):
+def report_generic(new, old, attrs, reprs):
     for attr in attrs:
         if attr == 'required':
             if old[attr] != new['required'] and new['required']:
                 text = "now required"
-                if column['req_default']:
-                    text += ', default = %s' % column['req_default']
-                fieldprint(old, new, text=text)
+                if new['req_default']:
+                    text += ', default = %s' % new['req_default']
+                fieldprint(old, new, None, text, reprs)
         elif attr == 'isfunction':
             if old['isfunction'] != new['isfunction']:
                 if new['isfunction']:
                     text = "now a function"
                 else:
                     text = "not a function anymore"
-                fieldprint(old, new, text=text)
+                fieldprint(old, new, None, text, reprs)
         else:
             if old[attr] != new[attr]:
-                fieldprint(old, new, attr)
+                fieldprint(old, new, attr, None, reprs)
 
-if len(sys.argv) != 3:
-    print USAGE % {'name': sys.argv[0]}
-    exit(1)
+def compare_sets(old_records, new_records):
+    """
+    Compare a set of OpenUpgrade field representations.
+    Try to match the equivalent fields in both sets.
+    Return a textual representation of changes in a dictionary with
+    module names as keys. Special case is the 'general' key
+    which contains overall remarks and matching statistics.
+    """
+    reprs = {'general': []}
 
-k5 = readfile(sys.argv[1])
-k6 = readfile(sys.argv[2])
+    for record in old_records + new_records:
+        record['matched'] = False
+    origlen = len(old_records)
+    new_models = set([ column['model'] for column in new_records ])
+    old_models = set([ column['model'] for column in old_records ])
 
-origlen = len(k5)
-
-models6 = set([ column['model'] for column in k6 ])
-models5 = set([ column['model'] for column in k5 ])
-
-matched_direct = 0
-matched_other_module = 0
-matched_other_type = 0
-matched_other_name = 0
-in_obsolete_models = 0
-
-obsolete_models = []
-for model in models5:
-    if model not in models6:
-        obsolete_models.append(model)
-        print '# obsolete model %s' % model
-
-for column in copy.copy(k5):
-    if column['model'] in obsolete_models:
-        k5.remove(column)
-        in_obsolete_models += 1
-
-for model in models6:
-    if model not in models5:
-        print '# new model %s' % model
+    matched_direct = 0
+    matched_other_module = 0
+    matched_other_type = 0
+    matched_other_name = 0
+    in_obsolete_models = 0
     
-def match(match_fields, report_fields, warn=False):
-    count = 0
-    for column in copy.copy(k5):
-        found = search(column, k6, match_fields)
+    obsolete_models = []
+    for model in old_models:
+        if model not in new_models:
+            obsolete_models.append(model)
+            reprs['general'].append('obsolete model %s' % model)
+
+    for column in copy.copy(old_records):
+        if column['model'] in obsolete_models:
+            old_records.remove(column)
+            in_obsolete_models += 1
+
+    for model in new_models:
+        if model not in old_models:
+            reprs['general'].append('new model %s' % model)
+    
+    def match(match_fields, report_fields, warn=False):
+        count = 0
+        for column in copy.copy(old_records):
+            found = search(column, new_records, match_fields)
+            if found:
+                if warn:
+                    pass
+                    #print "Tentatively"
+                report_generic(found, column, report_fields, reprs)
+                old_records.remove(column)
+                new_records.remove(found)
+                count += 1
+        return count
+
+    matched_direct = match(
+        ['module', 'mode', 'model', 'field'],
+        ['relation', 'type', 'selection_keys', 'inherits', 'isfunction', 'required'])
+
+    # other module, same type and operation
+    matched_other_module = match(
+        ['mode', 'model', 'field', 'type'],
+        ['module', 'relation', 'selection_keys', 'inherits', 'isfunction', 'required'])
+
+    # other module, same operation, other type
+    matched_other_type = match(
+        ['mode', 'model', 'field'],
+        ['relation', 'type', 'selection_keys', 'inherits', 'isfunction', 'required'])
+
+    # fields with other names
+    #matched_other_name = match(
+    # ['module', 'type', 'relation'],
+    # ['field', 'relation', 'type', 'selection_keys',
+    #   'inherits', 'isfunction', 'required'], warn=True)
+
+    printkeys = [
+        'relation', 'required', 'selection_keys',
+        'req_default', 'inherits', 'mode'
+        ]
+    for column in old_records:
+        # we do not care about removed function fields
+        if not column['isfunction']:
+            if column['mode'] == 'create':
+                column['mode'] = ''
+            fieldprint(
+                column, None, None, "DEL " + ", ".join(
+                    [k + ': ' + str(column[k]) for k in printkeys if column[k]]
+                    ), reprs)
+
+    for column in new_records:
+        # we do not care about newly added function fields
+        if not column['isfunction']:
+            if column['mode'] == 'create':
+                column['mode'] = ''
+            fieldprint(
+                column, None, None, "NEW " + ", ".join(
+                    [k + ': ' + str(column[k]) for k in printkeys if column[k]]
+                    ), reprs)
+
+    for line in [
+        "# %d fields matched," % (origlen - len(old_records)),
+        "# Direct match: %d" % matched_direct,
+        "# Found in other module: %d" % matched_other_module,
+        "# Found with different type: %d" % matched_other_type,
+        "# Found with different name: %d" % matched_other_name,
+        "# In obsolete models: %d" % in_obsolete_models,
+        "# Not matched: %d" % len(old_records),
+        "# New columns: %d" % len(new_records),
+        ]:
+        reprs['general'].append(line)
+    return reprs
+
+def compare_xml_sets(old_records, new_records):
+    reprs = {}
+    match_fields = ['module', 'model', 'name']
+    for column in copy.copy(old_records):
+        found = search(column, new_records, match_fields)
         if found:
-            if warn:
-                print "Tentatively"
-            report_generic(found, column, report_fields)
-            k5.remove(column)
-            k6.remove(found)
-            count += 1
-    return count
-
-matched_direct = match(['module', 'operation', 'model', 'field'],
-                       ['relation', 'type', 'selection_keys', 'inherits', 'isfunction', 'required'])
-
-# other module, same type and operation
-matched_other_module = match(['operation', 'model', 'field', 'type'],
-                             ['module', 'relation', 'selection_keys', 'inherits', 'isfunction', 'required'])
-
-# other module, same operation, other type
-matched_other_type = match(['operation', 'model', 'field'],
-                           ['relation', 'type', 'selection_keys', 'inherits', 'isfunction', 'required'])
-
-# fields with other names
-#matched_other_name = match(['module', 'type', 'relation'],
-#                           ['field', 'relation', 'type', 'selection_keys', 'inherits', 'isfunction', 'required'], warn=True)
-
-printkeys = ['relation', 'required', 'selection_keys', 'req_default', 'inherits', 'operation']
-for column in k5:
-    # we do not care about removed function fields
-    if not column['isfunction']:
-        if column['operation'] == 'create':
-            column['operation'] = ''
-        fieldprint(column, None, text="DEL " + ", ".join([k + ': ' + str(column[k]) for k in printkeys if column[k]]))
-
-for column in k6:
-    # we do not care about newly added function fields
-    if not column['isfunction']:
-        if column['operation'] == 'create':
-            column['operation'] = ''
-        fieldprint(column, None, text="NEW " + ", ".join([k + ': ' + str(column[k]) for k in printkeys if column[k]]))
-
-print "# %d fields matched," % (origlen - len(k5))
-print "# Direct match: %d" % matched_direct
-print "# Found in other module: %d" % matched_other_module
-print "# Found with different type: %d" % matched_other_type
-print "# Found with different name: %d" % matched_other_name
-print "# In obsolete models: %d" % in_obsolete_models
-print "# Not matched: %d" % len(k5)
-print "# New columns: %d" % len(k6)
+            old_records.remove(column)
+            new_records.remove(found)
+    for entry in sorted(
+        old_records, key=lambda k: '%s%s' % (k['model'].ljust(128), k['name'])):
+        reprs.setdefault(module_map(entry['module']), []).append(
+            'deleted xml-id of model %s: %s' % (entry['model'], entry['name']))
+    for entry in sorted(
+        new_records, key=lambda k: '%s%s' % (k['model'].ljust(128), k['name'])):
+        reprs.setdefault(module_map(entry['module']), []).append(
+            'new xml-id of model %s: %s' % (entry['model'], entry['name']))
+    return reprs

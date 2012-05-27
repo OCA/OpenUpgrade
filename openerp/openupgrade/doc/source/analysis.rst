@@ -1,20 +1,22 @@
 Database analysis
 +++++++++++++++++
 
-In this chapter you will find more information on how you can review the
-differences between databases that
-different versions of OpenERP generate, using a module based perspective.
+Database analysis files are now included in the openupgrade-addons
+distribution, so if you need to develop migration scripts for the
+standard modules you do not need to run the analysis process yourself.
+You can find the analysis file in the module's migrations directory
+under the current version, in a file called openupgrade_analysis.txt
 
-The process of migrating a module from OpenERP 5 to OpenERP 6.0 is the same as
-migrating a module from OpenERP 6.0 to OpenERP 6.1, but the OpenERP log file is
-formatted slightly different in 6.1, so it needs to be processed accordingly.
+The analysis of the base module is included in the openupgrade-server
+distribution. This module includes an additional file,
+openupgrade_general_log.txt. This file contains some statistics as well
+as the analysis records of modules that could not be found in the target
+release of OpenERP.
 
 .. toctree::
    :maxdepth: 2
 
-   install5
-   install6
-   install61
+   analyse
    xmlids
    format
    strategies

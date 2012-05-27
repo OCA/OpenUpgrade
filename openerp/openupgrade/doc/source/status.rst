@@ -16,3 +16,9 @@ project:
      
      * Documentation for developers and users. You are currently reading it. The documentation is maintained in the latest server branch. Status: always to be improved upon!
 
+.. toctree::
+   :maxdepth: 2
+
+   modules60-61
+
+

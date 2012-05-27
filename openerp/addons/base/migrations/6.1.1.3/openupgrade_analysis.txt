@@ -1,0 +1,178 @@
+---base---
+base         / ir.actions.act_window    / menus (char)                  : DEL 
+base         / ir.actions.act_window    / target (selection)            : selection_keys is now '['current', 'inline', 'new']' ('['current', 'new']')
+base         / ir.actions.act_window.view / view_mode (selection)         : selection_keys is now '['calendar', 'form', 'gantt', 'graph', 'kanban', 'tree']' ('['calendar', 'form', 'gantt', 'graph', 'tree']')
+base         / ir.actions.client        / name (char)                   : NEW required: required
+base         / ir.actions.client        / params_store (binary)         : NEW 
+base         / ir.actions.client        / tag (char)                    : NEW required: required
+base         / ir.actions.client        / type (char)                   : NEW required: required, req_default: ir.actions.client
+base         / ir.actions.client        / usage (char)                  : NEW 
+base         / ir.actions.todo          / category_id (many2one)        : NEW relation: ir.actions.todo.category
+base         / ir.actions.todo          / restart (selection)           : DEL required: required, selection_keys: ['always', 'never', 'onskip'], req_default: onskip
+base         / ir.actions.todo          / state (selection)             : selection_keys is now '['done', 'open']' ('['cancel', 'done', 'open', 'skip']')
+base         / ir.actions.todo          / type (selection)              : NEW required: required, selection_keys: ['automatic', 'manual', 'once'], req_default: manual
+base         / ir.actions.todo.category / name (char)                   : NEW required: required
+base         / ir.actions.todo.category / sequence (integer)            : NEW 
+base         / ir.actions.todo.category / wizards_ids (one2many)        : NEW relation: ir.actions.todo
+base         / ir.mail_server           / name (char)                   : NEW required: required
+base         / ir.mail_server           / sequence (integer)            : NEW 
+base         / ir.mail_server           / smtp_debug (boolean)          : NEW 
+base         / ir.mail_server           / smtp_encryption (selection)   : NEW required: required, selection_keys: ['none', 'ssl', 'starttls'], req_default: none
+base         / ir.mail_server           / smtp_host (char)              : NEW required: required
+base         / ir.mail_server           / smtp_pass (char)              : NEW 
+base         / ir.mail_server           / smtp_port (integer)           : NEW required: required, req_default: 25
+base         / ir.mail_server           / smtp_user (char)              : NEW 
+base         / ir.model.fields          / serialization_field_id (many2one): NEW relation: ir.model.fields
+base         / ir.module.category       / description (text)            : NEW 
+base         / ir.module.category       / module_ids (one2many)         : NEW relation: ir.module.module
+base         / ir.module.category       / sequence (integer)            : NEW 
+base         / ir.module.category       / visible (boolean)             : NEW 
+base         / ir.module.module         / application (boolean)         : NEW 
+base         / ir.module.module         / auto_install (boolean)        : NEW 
+base         / ir.module.module         / complexity (selection)        : NEW selection_keys: ['easy', 'expert', 'normal']
+base         / ir.module.module         / icon (char)                   : NEW 
+base         / ir.module.module         / sequence (integer)            : NEW 
+base         / ir.module.module         / web (boolean)                 : DEL 
+base         / ir.sequence              / implementation (selection)    : NEW required: required, selection_keys: ['no_gap', 'standard'], req_default: standard
+base         / ir.translation           / module (char)                 : DEL 
+base         / ir.translation           / xml_id (char)                 : DEL 
+base         / ir.ui.view               / type (selection)              : selection_keys is now '['calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'mdx', 'search', 'tree']' ('['calendar', 'diagram', 'form', 'gantt', 'graph', 'mdx', 'search', 'tree']')
+base         / ir.ui.view.custom        / ref_id (many2one)             : now required
+base         / ir.ui.view.custom        / user_id (many2one)            : now required
+base         / ir.values                / key (selection)               : now required, default = action
+base         / ir.values                / meta (text)                   : DEL 
+base         / ir.values                / model (char)                  : now required
+base         / ir.values                / name (char)                   : now required
+base         / ir.values                / object (boolean)              : DEL 
+base         / res.bank                 / code (char)                   : module is now 'l10n_ch' ('base')
+base         / res.company              / bank_ids (one2many)           : NEW relation: res.partner.bank
+base         / res.company              / company_registry (char)       : NEW 
+base         / res.company              / name (char)                   : now a function
+base         / res.company              / paper_format (selection)      : NEW required: required, selection_keys: ['a4', 'us_letter'], req_default: a4
+base         / res.company              / rml_footer2 (char)            : now a function
+base         / res.country              / address_format (text)         : NEW 
+base         / res.currency             / position (selection)          : NEW selection_keys: ['after', 'before']
+base         / res.currency.rate        / currency_rate_type_id (many2one): NEW relation: res.currency.rate.type
+base         / res.currency.rate.type   / name (char)                   : NEW required: required
+base         / res.groups               / category_id (many2one)        : NEW relation: ir.module.category
+base         / res.groups               / implied_ids (many2many)       : NEW relation: res.groups
+base         / res.partner              / color (integer)               : NEW 
+base         / res.partner.address      / color (integer)               : NEW 
+base         / res.partner.bank         / acc_number (char)             : now required
+base         / res.partner.bank         / bank_bic (char)               : NEW 
+base         / res.partner.bank         / bank_name (char)              : NEW 
+base         / res.partner.bank         / company_id (many2one)         : NEW relation: res.company
+base         / res.partner.bank         / footer (boolean)              : NEW 
+base         / res.partner.bank.type    / format_layout (text)          : NEW 
+base         / res.users                / address_id (many2one)         : DEL relation: res.partner.address
+base         / res.users                / email (char)                  : DEL 
+base         / res.users                / id (integer)                  : NEW 
+base         / res.users                / user_email (char)             : not a function anymore
+deleted xml-id of model ir.actions.act_window: base.act_values_form
+deleted xml-id of model ir.actions.act_window: base.action_config_simple_view_form
+deleted xml-id of model ir.actions.act_window: base.action_config_user_form
+deleted xml-id of model ir.actions.act_window: base.action_view_base_module_upgrade_window
+deleted xml-id of model ir.actions.act_window: base.res_partner_canal-act
+deleted xml-id of model ir.actions.server: base.action_start_configurator
+deleted xml-id of model ir.actions.todo: base.config_wizard_simple_view
+deleted xml-id of model ir.actions.todo: base.config_wizard_step_user
+deleted xml-id of model ir.actions.wizard: base.wizard_server_action_create
+deleted xml-id of model ir.model.access: base.access_ir_ui_view_custom_group_system
+deleted xml-id of model ir.model.access: base.access_ir_values_group_erp_manager
+deleted xml-id of model ir.model.access: base.access_res_partner_canal_group_partner_manager
+deleted xml-id of model ir.model.access: base.access_res_partner_canal_group_user
+deleted xml-id of model ir.ui.menu: base.menu_crm_config_lead
+deleted xml-id of model ir.ui.menu: base.menu_res_partner_canal-act
+deleted xml-id of model ir.ui.menu: base.menu_view_base_module_configuration
+deleted xml-id of model ir.ui.menu: base.menu_view_base_module_import
+deleted xml-id of model ir.ui.view: base.res_partner_canal-view
+deleted xml-id of model ir.ui.view: base.res_partner_canal-view-tree
+deleted xml-id of model ir.ui.view: base.values_view_form
+deleted xml-id of model ir.ui.view: base.values_view_tree
+deleted xml-id of model ir.ui.view: base.view_confirm_simple_view_form
+deleted xml-id of model ir.ui.view: base.view_users_configuration_form
+deleted xml-id of model ir.ui.view_sc: base.ir_ui_view_sc_configuration
+deleted xml-id of model ir.values: base.action_todo_config
+deleted xml-id of model res.currency.rate: base.rateVEB
+deleted xml-id of model res.currency: base.VEB
+deleted xml-id of model res.partner.bank.type.field: base.bank_normal_field
+deleted xml-id of model res.partner.bank.type.field: base.bank_normal_field_contry
+new xml-id of model ir.actions.act_window.view: base.action_values_defaults_form_view
+new xml-id of model ir.actions.act_window.view: base.action_values_defaults_tree_view
+new xml-id of model ir.actions.act_window: base.act_values_form_defaults
+new xml-id of model ir.actions.act_window: base.action_currency_rate_type_form
+new xml-id of model ir.actions.act_window: base.action_ir_mail_server_list
+new xml-id of model ir.actions.act_window: base.action_res_partner_bank_account_form
+new xml-id of model ir.actions.act_window: base.action_res_partner_bank_type_form
+new xml-id of model ir.actions.act_window: base.bank_account_update
+new xml-id of model ir.actions.act_window: base.ir_config_list_action
+new xml-id of model ir.actions.report.xml: base.preview_report
+new xml-id of model ir.actions.todo.category: base.category_administration_config
+new xml-id of model ir.actions.todo.category: base.category_sales_management_config
+new xml-id of model ir.actions.todo.category: base.category_tools_customization_config
+new xml-id of model ir.mail_server: base.ir_mail_server_localhost0
+new xml-id of model ir.model.access: base.access_ir_actions_client
+new xml-id of model ir.model.access: base.access_ir_actions_todo_category
+new xml-id of model ir.model.access: base.access_ir_mail_server_all
+new xml-id of model ir.model.access: base.access_res_currency_rate_type_group_all
+new xml-id of model ir.module.category: base.module_category_account_voucher
+new xml-id of model ir.module.category: base.module_category_accounting_and_finance
+new xml-id of model ir.module.category: base.module_category_administration
+new xml-id of model ir.module.category: base.module_category_customer_relationship_management
+new xml-id of model ir.module.category: base.module_category_hidden
+new xml-id of model ir.module.category: base.module_category_human_resources
+new xml-id of model ir.module.category: base.module_category_knowledge_management
+new xml-id of model ir.module.category: base.module_category_localization
+new xml-id of model ir.module.category: base.module_category_localization_account_charts
+new xml-id of model ir.module.category: base.module_category_manufacturing
+new xml-id of model ir.module.category: base.module_category_marketing
+new xml-id of model ir.module.category: base.module_category_point_of_sale
+new xml-id of model ir.module.category: base.module_category_project_management
+new xml-id of model ir.module.category: base.module_category_purchase_management
+new xml-id of model ir.module.category: base.module_category_report_designer
+new xml-id of model ir.module.category: base.module_category_sales_management
+new xml-id of model ir.module.category: base.module_category_specific_industry_applications
+new xml-id of model ir.module.category: base.module_category_tools
+new xml-id of model ir.module.category: base.module_category_usability
+new xml-id of model ir.module.category: base.module_category_warehouse_management
+new xml-id of model ir.rule: base.ir_ui_view_custom_personal
+new xml-id of model ir.rule: base.ir_values_default_rule
+new xml-id of model ir.ui.menu: base.ir_config_menu
+new xml-id of model ir.ui.menu: base.menu_action_res_partner_bank_form
+new xml-id of model ir.ui.menu: base.menu_action_res_partner_bank_typeform
+new xml-id of model ir.ui.menu: base.menu_email
+new xml-id of model ir.ui.menu: base.menu_mail_servers
+new xml-id of model ir.ui.menu: base.menu_values_form_defaults
+new xml-id of model ir.ui.view: base.contacts_kanban_view
+new xml-id of model ir.ui.view: base.ir_actions_todo_category_form
+new xml-id of model ir.ui.view: base.ir_actions_todo_category_tree
+new xml-id of model ir.ui.view: base.ir_mail_server_form
+new xml-id of model ir.ui.view: base.ir_mail_server_list
+new xml-id of model ir.ui.view: base.module_view_kanban
+new xml-id of model ir.ui.view: base.res_partner_kanban_view
+new xml-id of model ir.ui.view: base.user_groups_view
+new xml-id of model ir.ui.view: base.values_view_form_defaults
+new xml-id of model ir.ui.view: base.view_currency_rate_type_form
+new xml-id of model ir.ui.view: base.view_currency_rate_type_search
+new xml-id of model ir.ui.view: base.view_currency_search
+new xml-id of model ir.ui.view: base.view_ir_config_form
+new xml-id of model ir.ui.view: base.view_ir_config_list
+new xml-id of model ir.ui.view: base.view_ir_config_search
+new xml-id of model ir.ui.view: base.view_ir_mail_server_search
+new xml-id of model ir.ui.view: base.view_partner_bank_search
+new xml-id of model res.country: base.ax
+new xml-id of model res.country: base.bl
+new xml-id of model res.country: base.bq
+new xml-id of model res.country: base.cw
+new xml-id of model res.country: base.gg
+new xml-id of model res.country: base.im
+new xml-id of model res.country: base.je
+new xml-id of model res.country: base.mf
+new xml-id of model res.country: base.ps
+new xml-id of model res.country: base.ss
+new xml-id of model res.country: base.sx
+new xml-id of model res.currency.rate: base.rateUYU
+new xml-id of model res.currency.rate: base.rateVEF
+new xml-id of model res.currency: base.UYU
+new xml-id of model res.currency: base.VEF
+new xml-id of model res.partner.bank.type.field: base.bank_normal_field_bic

@@ -1,15 +1,14 @@
 XML IDs
 ========
-Create a diff file of the XML IDs between the two database versions:
+The OpenUpgrade analysis files give a representation of the XML IDs that a
+module defines, in comparison with the previous release of the module.
 
-       diff xmlids-5.txt xmlids-6.txt > xmlids.diff
-
-This will give you a clear overview of the resources that are created by the
-modules. If you accidentally created the analysis from databases containing
+Note, that if you run your own analysis on databases containing
 demo data, you will get a lot of noise here. 
 
 XML IDs which do not occur in the updated version of all installed modules
-will be removed automatically by the OpenERP server. 
+will be removed automatically by the OpenERP server, if they do not have
+the noupdate attribute. 
 
 You can ignore most entries here, most notably
 
@@ -63,4 +62,3 @@ More interesting are
 
 [1] You might want to use this information to semi-automatically audit any manual
 customizations. This subject falls out of scope of this project for now)
-

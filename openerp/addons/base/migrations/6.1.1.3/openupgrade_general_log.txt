@@ -1,0 +1,248 @@
+---general---
+# 5021 fields matched,
+# Direct match: 4708
+# Found in other module: 6
+# Found with different name: 0
+# Found with different type: 1
+# In obsolete models: 306
+# New columns: 646
+# Not matched: 187
+new model account.asset.asset
+new model account.asset.category
+new model account.asset.depreciation.line
+new model account.asset.history
+new model account.bank.statement.line.global
+new model account.coda.comm.type
+new model account.coda.trans.category
+new model account.coda.trans.code
+new model account.coda.trans.type
+new model account.financial.report
+new model account.treasury.report
+new model analytic.user.funct.grid
+new model asset.asset.report
+new model coda.bank.account
+new model coda.bank.statement
+new model coda.bank.statement.line
+new model crm.case.channel
+new model crm.partner.report.assign
+new model edi.document
+new model fetchmail.server
+new model google.import.message
+new model hr.contribution.register
+new model hr.payslip.input
+new model hr.payslip.run
+new model hr.payslip.worked_days
+new model hr.recruitment.source
+new model hr.rule.input
+new model hr.salary.rule
+new model hr.salary.rule.category
+new model import.sugarcrm
+new model ir.actions.client
+new model ir.actions.todo.category
+new model ir.mail_server
+new model l10n_br_account.cst
+new model l10n_br_account.cst.template
+new model mail.thread
+new model pos.category
+new model project.task.history
+new model project.task.history.cumulative
+new model project.user.allocation
+new model res.currency.rate.type
+new model res.partner.activation
+new model res.partner.location
+new model res.portal
+new model res.portal.widget
+obsolete model account.report_libroiva
+obsolete model analytic_user_funct_grid
+obsolete model base_report_creator.report
+obsolete model base_report_creator.report.fields
+obsolete model base_report_creator.report.filter
+obsolete model board.note
+obsolete model board.note.type
+obsolete model company.contribution
+obsolete model company.contribution.line
+obsolete model document.directory.ics.fields
+obsolete model email.server
+obsolete model email.template
+obsolete model email_template.account
+obsolete model email_template.mailbox
+obsolete model hr.allounce.deduction.categoty
+obsolete model hr.contibution.register
+obsolete model hr.contibution.register.line
+obsolete model hr.contract.wage.type
+obsolete model hr.contract.wage.type.period
+obsolete model hr.employee.marital.status
+obsolete model hr.passport
+obsolete model hr.payroll.advice
+obsolete model hr.payroll.advice.line
+obsolete model hr.payroll.register
+obsolete model hr.payslip.account.move
+obsolete model hr.payslip.line.line
+obsolete model mailgate.message
+obsolete model mailgate.thread
+obsolete model mrp.production.order
+obsolete model project.resource.allocation
+obsolete model report.account.invoice.product
+obsolete model res.partner.canal
+obsolete model res.partner.job
+ERROR: module not in list of installed modules:
+---project_caldav---
+project_caldav / project.task             / alarm_id (many2one)           : DEL relation: res.alarm
+project_caldav / project.task             / allday (boolean)              : DEL 
+project_caldav / project.task             / attendee_ids (many2many)      : DEL relation: calendar.attendee
+project_caldav / project.task             / base_calendar_alarm_id (many2one): DEL relation: calendar.alarm
+project_caldav / project.task             / base_calendar_url (char)      : DEL 
+project_caldav / project.task             / byday (selection)             : DEL selection_keys: ['-1', '1', '2', '3', '4', '5']
+project_caldav / project.task             / class (selection)             : DEL selection_keys: ['confidential', 'private', 'public']
+project_caldav / project.task             / count (integer)               : DEL 
+project_caldav / project.task             / day (integer)                 : DEL 
+project_caldav / project.task             / duration (integer)            : DEL 
+project_caldav / project.task             / edit_all (boolean)            : DEL 
+project_caldav / project.task             / end_date (date)               : DEL 
+project_caldav / project.task             / end_type (selection)          : DEL selection_keys: ['count', 'end_date', 'forever']
+project_caldav / project.task             / exdate (text)                 : DEL 
+project_caldav / project.task             / exrule (char)                 : DEL 
+project_caldav / project.task             / fr (boolean)                  : DEL 
+project_caldav / project.task             / freq (selection)              : DEL selection_keys: ['None', 'daily', 'hourly', 'monthly', 'weekly', 'yearly']
+project_caldav / project.task             / interval (integer)            : DEL 
+project_caldav / project.task             / location (char)               : DEL 
+project_caldav / project.task             / mo (boolean)                  : DEL 
+project_caldav / project.task             / month_list (selection)        : DEL selection_keys: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+project_caldav / project.task             / organizer (char)              : DEL 
+project_caldav / project.task             / organizer_id (many2one)       : DEL relation: res.users
+project_caldav / project.task             / recurrency (boolean)          : DEL 
+project_caldav / project.task             / recurrent_id (datetime)       : DEL 
+project_caldav / project.task             / recurrent_uid (integer)       : DEL 
+project_caldav / project.task             / rrule_type (selection)        : DEL selection_keys: ['daily', 'monthly', 'none', 'weekly', 'yearly']
+project_caldav / project.task             / sa (boolean)                  : DEL 
+project_caldav / project.task             / select1 (selection)           : DEL selection_keys: ['date', 'day']
+project_caldav / project.task             / show_as (selection)           : DEL selection_keys: ['busy', 'free']
+project_caldav / project.task             / su (boolean)                  : DEL 
+project_caldav / project.task             / th (boolean)                  : DEL 
+project_caldav / project.task             / tu (boolean)                  : DEL 
+project_caldav / project.task             / vtimezone (selection)         : DEL selection_keys: function
+project_caldav / project.task             / we (boolean)                  : DEL 
+project_caldav / project.task             / week_list (selection)         : DEL selection_keys: ['FR', 'MO', 'SA', 'SU', 'TH', 'TU', 'WE']
+project_caldav / project.task             / write_date (datetime)         : DEL 
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_0
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_1
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_10
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_11
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_12
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_13
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_14
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_15
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_16
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_17
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_18
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_19
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_2
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_20
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_21
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_22
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_226
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_23
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_24
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_25
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_27
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_28
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_29
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_3
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_30
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_31
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_32
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_33
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_34
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_35
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_36
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_37
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_38
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_4
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_5
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_6
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_7
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_8
+deleted xml-id of model basic.calendar.fields: project_caldav.basic_calendar_fields_9
+deleted xml-id of model basic.calendar.fields: project_caldav.map_alarm_1
+deleted xml-id of model basic.calendar.fields: project_caldav.map_alarm_10
+deleted xml-id of model basic.calendar.fields: project_caldav.map_alarm_11
+deleted xml-id of model basic.calendar.fields: project_caldav.map_alarm_2
+deleted xml-id of model basic.calendar.fields: project_caldav.map_alarm_3
+deleted xml-id of model basic.calendar.fields: project_caldav.map_alarm_4
+deleted xml-id of model basic.calendar.fields: project_caldav.map_alarm_5
+deleted xml-id of model basic.calendar.fields: project_caldav.map_alarm_6
+deleted xml-id of model basic.calendar.fields: project_caldav.map_alarm_7
+deleted xml-id of model basic.calendar.fields: project_caldav.map_alarm_8
+deleted xml-id of model basic.calendar.fields: project_caldav.map_alarm_9
+deleted xml-id of model basic.calendar.fields: project_caldav.map_attendee_1
+deleted xml-id of model basic.calendar.fields: project_caldav.map_attendee_10
+deleted xml-id of model basic.calendar.fields: project_caldav.map_attendee_11
+deleted xml-id of model basic.calendar.fields: project_caldav.map_attendee_2
+deleted xml-id of model basic.calendar.fields: project_caldav.map_attendee_3
+deleted xml-id of model basic.calendar.fields: project_caldav.map_attendee_4
+deleted xml-id of model basic.calendar.fields: project_caldav.map_attendee_5
+deleted xml-id of model basic.calendar.fields: project_caldav.map_attendee_6
+deleted xml-id of model basic.calendar.fields: project_caldav.map_attendee_7
+deleted xml-id of model basic.calendar.fields: project_caldav.map_attendee_8
+deleted xml-id of model basic.calendar.fields: project_caldav.map_attendee_9
+deleted xml-id of model basic.calendar.fields: project_caldav.map_todo_1
+deleted xml-id of model basic.calendar.fields: project_caldav.map_todo_10
+deleted xml-id of model basic.calendar.fields: project_caldav.map_todo_11
+deleted xml-id of model basic.calendar.fields: project_caldav.map_todo_12
+deleted xml-id of model basic.calendar.fields: project_caldav.map_todo_13
+deleted xml-id of model basic.calendar.fields: project_caldav.map_todo_14
+deleted xml-id of model basic.calendar.fields: project_caldav.map_todo_15
+deleted xml-id of model basic.calendar.fields: project_caldav.map_todo_16
+deleted xml-id of model basic.calendar.fields: project_caldav.map_todo_17
+deleted xml-id of model basic.calendar.fields: project_caldav.map_todo_18
+deleted xml-id of model basic.calendar.fields: project_caldav.map_todo_19
+deleted xml-id of model basic.calendar.fields: project_caldav.map_todo_2
+deleted xml-id of model basic.calendar.fields: project_caldav.map_todo_3
+deleted xml-id of model basic.calendar.fields: project_caldav.map_todo_4
+deleted xml-id of model basic.calendar.fields: project_caldav.map_todo_5
+deleted xml-id of model basic.calendar.fields: project_caldav.map_todo_7
+deleted xml-id of model basic.calendar.fields: project_caldav.map_todo_9
+deleted xml-id of model basic.calendar.lines: caldav.calendar_lines_alarm2
+deleted xml-id of model basic.calendar.lines: caldav.calendar_lines_attendee2
+deleted xml-id of model basic.calendar.lines: caldav.calendar_lines_todo
+deleted xml-id of model basic.calendar.lines: project_caldav.basic_calendar_lines_attendee0
+deleted xml-id of model basic.calendar.lines: project_caldav.basic_calendar_lines_valarm0
+deleted xml-id of model basic.calendar.lines: project_caldav.basic_calendar_lines_vtodo0
+deleted xml-id of model basic.calendar: caldav.basic_calendar2
+deleted xml-id of model basic.calendar: project_caldav.basic_calendar_tasks0
+deleted xml-id of model ir.ui.view: project_caldav.view_project_caldav_task_form
+deleted xml-id of model ir.ui.view: project_caldav.view_project_caldav_task_form1
+deleted xml-id of model ir.ui.view: project_caldav.view_project_caldav_task_form2
+deleted xml-id of model ir.ui.view: project_caldav.view_project_caldav_task_form3
+deleted xml-id of model ir.ui.view: project_caldav.view_project_caldav_task_form4
+ERROR: module not in list of installed modules:
+---base_report_creator---
+deleted xml-id of model ir.actions.act_window: base_report_creator.action_report_menu_create
+deleted xml-id of model ir.actions.act_window: base_report_creator.base_report_creator_action
+deleted xml-id of model ir.actions.wizard: base_report_creator.wizard_set_filter_fields
+deleted xml-id of model ir.model.access: base_report_creator.access_base_report_creator_report
+deleted xml-id of model ir.model.access: base_report_creator.access_base_report_creator_report_fields
+deleted xml-id of model ir.model.access: base_report_creator.access_base_report_creator_report_filter
+deleted xml-id of model ir.ui.menu: base.menu_custom_reports
+deleted xml-id of model ir.ui.view: base.view_model_fields_tree
+deleted xml-id of model ir.ui.view: base_report_creator.base_report_creator_form
+deleted xml-id of model ir.ui.view: base_report_creator.base_report_creator_tree
+deleted xml-id of model ir.ui.view: base_report_creator.view_report_filter
+deleted xml-id of model ir.ui.view: base_report_creator.view_report_menu_create
+ERROR: module not in list of installed modules:
+---document_ics---
+document_ics / crm.meeting              / code (char)                   : DEL 
+document_ics / document.directory.content / fname_field (char)            : DEL 
+document_ics / document.directory.content / ics_domain (char)             : DEL 
+document_ics / document.directory.content / ics_field_ids (one2many)      : DEL relation: document.directory.ics.fields
+document_ics / document.directory.content / obj_iterate (boolean)         : DEL 
+document_ics / document.directory.content / object_id (many2one)          : DEL relation: ir.model
+deleted xml-id of model document.directory.content.type: document_ics.ics
+deleted xml-id of model ir.actions.act_window: document_ics.action_view_document_ics_config_directories
+deleted xml-id of model ir.actions.todo: document_ics.config_wizard_step_case_section_menu
+deleted xml-id of model ir.model.access: document_ics.access_document_directory_ics_fields_all
+deleted xml-id of model ir.model.access: document_ics.access_document_directory_ics_fields_manager
+deleted xml-id of model ir.ui.view: document_ics.view_document_directory_form
+deleted xml-id of model ir.ui.view: document_ics.view_document_directory_form_1
+deleted xml-id of model ir.ui.view: document_ics.view_document_ics_config_directories
+deleted xml-id of model ir.ui.view: document_ics.view_meeting_inherit_form
