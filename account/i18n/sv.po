@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.14\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:35+0000\n"
-"PO-Revision-Date: 2012-05-30 21:46+0000\n"
+"PO-Revision-Date: 2012-05-31 16:33+0000\n"
 "Last-Translator: Anders Wallenquist <anders.wallenquist@vertel.se>\n"
 "Language-Team: Svenska <swedish@openerp.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-05-31 05:30+0000\n"
-"X-Generator: Launchpad (build 15322)\n"
+"X-Launchpad-Export-Date: 2012-06-01 05:50+0000\n"
+"X-Generator: Launchpad (build 15342)\n"
 
 #. module: account
 #: view:account.invoice.report:0
@@ -816,6 +816,8 @@ msgid ""
 "Taxes are missing!\n"
 "Click on compute button."
 msgstr ""
+"Skatter saknas!\n"
+"Klicka på beräknaknappen."
 
 #. module: account
 #: model:ir.model,name:account.model_account_subscription_line
@@ -949,6 +951,8 @@ msgid ""
 "You cannot validate this journal entry because account \"%s\" does not "
 "belong to chart of accounts \"%s\"!"
 msgstr ""
+"Du kan inte validera denna journalpost eftersom kontot \"% s\" inte hör till "
+"kontoplanen \"% s\"!"
 
 #. module: account
 #: code:addons/account/account_move_line.py:835
@@ -957,6 +961,8 @@ msgid ""
 "This account does not allow reconciliation! You should update the account "
 "definition to change this."
 msgstr ""
+"Det här kontot tillåter inte avstämning! Du bör uppdatera kontodefinitionen "
+"för att ändra på detta."
 
 #. module: account
 #: view:account.invoice:0
@@ -1019,12 +1025,15 @@ msgid ""
 "amount.If the tax account is base tax code, this field will contain the "
 "basic amount(without tax)."
 msgstr ""
+"Om skattekontot är en skattekontokod, kommer detta fält innehålla "
+"skattedelen. Om skattekontot är basskattekod, innehåller det här fältet  "
+"taxerat belopp  (utan skatt)."
 
 #. module: account
 #: code:addons/account/account.py:2596
 #, python-format
 msgid "I can not locate a parent code for the template account!"
-msgstr ""
+msgstr "Förälderkonto saknas för kontomallen!"
 
 #. module: account
 #: view:account.analytic.line:0
@@ -1081,7 +1090,7 @@ msgstr "Kontonamn"
 #: field:account.chart.template,property_reserve_and_surplus_account:0
 #: field:res.company,property_reserve_and_surplus_account:0
 msgid "Reserve and Profit/Loss Account"
-msgstr ""
+msgstr "Reserverad vinst/förlust-konto"
 
 #. module: account
 #: field:report.account.receivable,name:0
@@ -1100,6 +1109,8 @@ msgid ""
 "You cannot change the type of account from '%s' to '%s' type as it contains "
 "journal items!"
 msgstr ""
+"Du kan inte ändra typen av konto från '%s' till '%s' typ eftersom den har "
+"transaktioner!"
 
 #. module: account
 #: field:account.report.general.ledger,sortby:0
@@ -1519,6 +1530,10 @@ msgid ""
 "entry per accounting document: invoice, refund, supplier payment, bank "
 "statements, etc."
 msgstr ""
+"Ett verifikat består av flera transaktioner, som alla är antingen debit-"
+"eller kredit-transaktion. OpenERP skapar automatiskt ett verifikat per "
+"redovisningsdokument: faktura, återbetalning, leverantör betalning, "
+"kontoutdrag, etc."
 
 #. module: account
 #: view:account.entries.report:0
@@ -1537,7 +1552,7 @@ msgstr ""
 #. module: account
 #: model:ir.model,name:account.model_temp_range
 msgid "A Temporary table used for Dashboard view"
-msgstr ""
+msgstr "En temporärtabell används för infopanelvyn"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_invoice_tree4
@@ -1640,6 +1655,12 @@ msgid ""
 "the Payment column of a line, you can press F1 to open the reconciliation "
 "form."
 msgstr ""
+"Ett bankutdrag är en sammanfattning av alla finansiella transaktioner som "
+"sker under en viss tidsperiod på ett inlåningskonto, ett kreditkort eller "
+"någon annan typ av finansiellt konto. Det ingående balans kommer att "
+"föreslås automatiskt och utgående balans återfinns på ditt kontoutdrag. När "
+"du är i betalningskolumnen i en rad kan du trycka på F1 för att öppna "
+"avstämningsformuläret."
 
 #. module: account
 #: report:account.analytic.account.cost_ledger:0
@@ -2203,7 +2224,7 @@ msgstr "Beskrivning"
 #: code:addons/account/account.py:3119
 #, python-format
 msgid "ECNJ"
-msgstr ""
+msgstr "ECNJ"
 
 #. module: account
 #: view:account.subscription:0
@@ -3211,6 +3232,15 @@ msgid ""
 " 'Unreconciled' will copy only the journal items that were unreconciled on "
 "the first day of the new fiscal year."
 msgstr ""
+"Ställ in metoden som ska användas för att generera årsavslutsposter för alla "
+"konton av detta slag.\n"
+"\n"
+"  \"Ingen\" betyder att ingenting kommer att ske.\n"
+"  \"Balans\" i allmänhet användas för kontantkonton.\n"
+"  \"Detalj\" kommer att kopiera varje befintligt verifikat i det föregående "
+"året, även de avstämda.\n"
+"  \"Oavstämd\" kommer att kopiera endast oavstämda verifikat från första "
+"dagen av det nya räkenskapsåret."
 
 #. module: account
 #: code:addons/account/wizard/account_open_closed_fiscalyear.py:39
@@ -3495,6 +3525,11 @@ msgid ""
 "amount greater than the total invoiced amount. The latest line of your "
 "payment term must be of type 'balance' to avoid rounding issues."
 msgstr ""
+"Kan inte skapa fakturan!\n"
+"Det relaterade betalningsvillkoret är förmodligen felkonfigurerad eftersom "
+"det ger ett beräknat belopp som är större än det fakturerade totalbeloppet. "
+"Den senaste raden av din betalning tid måste vara av typen \"balans\" för "
+"att undvika avrundningfrågor."
 
 #. module: account
 #: report:account.invoice:0
@@ -3952,7 +3987,7 @@ msgstr "Medelkurs"
 #: field:account.common.account.report,display_account:0
 #: field:account.report.general.ledger,display_account:0
 msgid "Display Accounts"
-msgstr ""
+msgstr "Visningskonton"
 
 #. module: account
 #: view:account.state.open:0
@@ -3994,7 +4029,7 @@ msgstr ""
 #. module: account
 #: view:account.move.line:0
 msgid "Posted Journal Items"
-msgstr ""
+msgstr "Bokförda tranksationer"
 
 #. module: account
 #: view:account.tax.template:0
@@ -4364,7 +4399,7 @@ msgstr "res_config_contents"
 #. module: account
 #: view:account.unreconcile:0
 msgid "Unreconciliate transactions"
-msgstr ""
+msgstr "Oavstämda transaktioner"
 
 #. module: account
 #: help:account.chart.template,visible:0
@@ -4374,6 +4409,9 @@ msgid ""
 "you want to generate accounts of this template only when loading its child "
 "template."
 msgstr ""
+"Sätt den här till falskt om du inte vill att mallen ska användas aktivt i "
+"guiden som genererar kontoplan från mallar, detta är användbart endast när "
+"du vill skapa kontomallen först när du fyller i dess barnmall."
 
 #. module: account
 #: view:account.use.model:0
