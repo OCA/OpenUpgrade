@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:44+0000\n"
-"PO-Revision-Date: 2012-06-04 14:16+0000\n"
+"PO-Revision-Date: 2012-06-05 17:50+0000\n"
 "Last-Translator: Fekete Mihai <mihai@erpsystems.ro>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-06-05 05:16+0000\n"
+"X-Launchpad-Export-Date: 2012-06-06 05:30+0000\n"
 "X-Generator: Launchpad (build 15353)\n"
 
 #. module: base
@@ -9381,11 +9381,14 @@ msgid ""
 "serialization field, instead of having its own database column. This cannot "
 "be changed after creation."
 msgstr ""
+"Daca este setat, acest camp va fi stocat in structura rara a campului "
+"serializare, in loc sa aiba propria coloana cu date. Acesta nu poate fi "
+"modificat dupa creare."
 
 #. module: base
 #: view:res.partner.bank:0
 msgid "Bank accounts belonging to one of your companies"
-msgstr ""
+msgstr "Conturi bancare ce apartin uneia dintre companiile dumneavoastra"
 
 #. module: base
 #: help:res.users,action_id:0
@@ -9393,18 +9396,18 @@ msgid ""
 "If specified, this action will be opened at logon for this user, in addition "
 "to the standard menu."
 msgstr ""
-"Daca este specificata, aceasta actiune va fi deschisa la conectarea acestui "
+"Daca este specificat, aceasta actiune va fi deschisa la conectarea acestui "
 "utilizator, pe langa meniul standard."
 
 #. module: base
 #: selection:ir.module.module,complexity:0
 msgid "Easy"
-msgstr ""
+msgstr "Usor"
 
 #. module: base
 #: view:ir.values:0
 msgid "Client Actions"
-msgstr "Acțiuni Client"
+msgstr "Actiuni Client"
 
 #. module: base
 #: help:ir.actions.server,trigger_obj_id:0
@@ -9412,6 +9415,8 @@ msgid ""
 "The field on the current object that links to the target object record (must "
 "be a many2one, or an integer field with the record ID)"
 msgstr ""
+"Campul obiectului actual care face legatura la inregistrarea obiectului "
+"tinta (trebuie sa fie many2one, sau un camp integrala cu ID-ul inregistrarii)"
 
 #. module: base
 #: code:addons/base/module/module.py:423
@@ -9420,13 +9425,13 @@ msgid ""
 "You try to upgrade a module that depends on the module: %s.\n"
 "But this module is not available in your system."
 msgstr ""
-"Încercați să actualizați un modul care depinde de modulul: %s.\n"
-"Dar acest modul nu este disponibil în sistemul dumneavoastră."
+"Incercati sa actualizati un modul care depinde de modulul: %s.\n"
+"Dar acest modul nu este disponibil in sistemul dumneavoastra."
 
 #. module: base
 #: field:workflow.transition,act_to:0
 msgid "Destination Activity"
-msgstr "Activitate destinatie"
+msgstr "Destinatie Activitate"
 
 #. module: base
 #: help:res.currency,position:0
@@ -9434,16 +9439,17 @@ msgid ""
 "Determines where the currency symbol should be placed after or before the "
 "amount."
 msgstr ""
+"Determina locul unde trebuie plasat simbolul monedei, inainte sau dupa suma."
 
 #. module: base
 #: model:ir.model,name:base.model_base_update_translations
 msgid "base.update.translations"
-msgstr "base.update.translations"
+msgstr "baza.actualizare.traduceri"
 
 #. module: base
 #: field:res.partner.category,parent_id:0
 msgid "Parent Category"
-msgstr "Categoria părinte"
+msgstr "Categoria superioara"
 
 #. module: base
 #: selection:ir.property,type:0
@@ -9459,18 +9465,18 @@ msgstr "Contact"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_at
 msgid "Austria - Accounting"
-msgstr ""
+msgstr "Austria - Contabilitate"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_ui_menu
 msgid "ir.ui.menu"
-msgstr "ir.ui.menu"
+msgstr "ir.ui.meniu"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_project_management
 #: model:ir.module.module,shortdesc:base.module_project
 msgid "Project Management"
-msgstr "Managementul proiectelor"
+msgstr "Managementul Proiectelor"
 
 #. module: base
 #: model:res.country,name:base.us
@@ -9480,12 +9486,12 @@ msgstr "Statele Unite"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_crm_fundraising
 msgid "Fundraising"
-msgstr ""
+msgstr "Strangere de fonduri"
 
 #. module: base
 #: view:ir.module.module:0
 msgid "Cancel Uninstall"
-msgstr "Anularea dezinstalării"
+msgstr "Anulati dezinstalarea"
 
 #. module: base
 #: view:res.bank:0
@@ -9497,7 +9503,7 @@ msgstr "Comunicare"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_analytic
 msgid "Analytic Accounting"
-msgstr ""
+msgstr "Contabilitate Analitica"
 
 #. module: base
 #: view:ir.actions.report.xml:0
@@ -9507,18 +9513,18 @@ msgstr "Raport RML"
 #. module: base
 #: model:ir.model,name:base.model_ir_server_object_lines
 msgid "ir.server.object.lines"
-msgstr "ir.server.object.lines"
+msgstr "ir.linii.obiect.server"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_be
 msgid "Belgium - Accounting"
-msgstr ""
+msgstr "Belgia - Contabilitate"
 
 #. module: base
 #: code:addons/base/module/module.py:622
 #, python-format
 msgid "Module %s: Invalid Quality Certificate"
-msgstr "Modul %s: Certificat de calitate invalid"
+msgstr "Modulul %s: Certificat de Calitate Nevalid"
 
 #. module: base
 #: model:res.country,name:base.kw
@@ -9528,7 +9534,7 @@ msgstr "Kuwait"
 #. module: base
 #: field:workflow.workitem,inst_id:0
 msgid "Instance"
-msgstr "Instantă"
+msgstr "Instanta"
 
 #. module: base
 #: help:ir.actions.report.xml,attachment:0
@@ -9537,9 +9543,9 @@ msgid ""
 "Keep empty to not save the printed reports. You can use a python expression "
 "with the object and time variables."
 msgstr ""
-"Acesta este numele de fișier al atașamentului folosit pentru a pastra "
-"rezultatul tipăririi. Dacă nu îl completați, rapoartele listate nu vor fi "
-"salvate. Puteți folosi o expresie python cu variabilele obiect și timp."
+"Acesta este numele de fisier al atasamentului folosit pentru arhivarea "
+"rezultatului tiparirii. Lasati necompletat pentru a nu salva rapoartele "
+"tiparite. Puteti folosi o expresie python cu variabilele obiect si timp."
 
 #. module: base
 #: sql_constraint:ir.model.data:0
@@ -9547,6 +9553,7 @@ msgid ""
 "You cannot have multiple records with the same external ID in the same "
 "module!"
 msgstr ""
+"Nu puteti avea inregistrari multiple cu acelasi ID extern in acelasi modul!"
 
 #. module: base
 #: selection:ir.property,type:0
