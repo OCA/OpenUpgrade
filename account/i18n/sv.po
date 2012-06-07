@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.14\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:35+0000\n"
-"PO-Revision-Date: 2012-06-04 13:10+0000\n"
+"PO-Revision-Date: 2012-06-06 21:08+0000\n"
 "Last-Translator: Anders Wallenquist <anders.wallenquist@vertel.se>\n"
-"Language-Team: Svenska <swedish@openerp.com>\n"
+"Language-Team: Svenska <info@openerpsweden.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-06-05 05:17+0000\n"
+"X-Launchpad-Export-Date: 2012-06-07 05:11+0000\n"
 "X-Generator: Launchpad (build 15353)\n"
 
 #. module: account
@@ -45,7 +45,7 @@ msgstr ""
 #. module: account
 #: view:account.move.reconcile:0
 msgid "Journal Entry Reconcile"
-msgstr "Avstämning av journalpost"
+msgstr "Avstämning av verifikat"
 
 #. module: account
 #: view:account.account:0
@@ -722,7 +722,7 @@ msgid ""
 "The date of your Journal Entry is not in the defined period! You should "
 "change the date or remove this constraint from the journal."
 msgstr ""
-"Transaktionsdatumet är inte inom den definierade perioden! Du bör ändra "
+"Verifikationsdatumet är inte inom den definierade perioden! Du bör ändra "
 "datum eller ta bort denna begränsning från journalen."
 
 #. module: account
@@ -957,7 +957,7 @@ msgid ""
 "You cannot validate this journal entry because account \"%s\" does not "
 "belong to chart of accounts \"%s\"!"
 msgstr ""
-"Du kan inte validera denna journalpost eftersom kontot \"% s\" inte hör till "
+"Du kan inte validera detta verifikat eftersom kontot \"% s\" inte hör till "
 "kontoplanen \"% s\"!"
 
 #. module: account
@@ -1291,6 +1291,8 @@ msgid ""
 "You can not use this general account in this journal, check the tab 'Entry "
 "Controls' on the related journal !"
 msgstr ""
+"Du kan inte använda detta allmänna konto i denna journal, kontrollera fliken "
+"\"gränskontroll\" på den relaterade journalen !"
 
 #. module: account
 #: field:account.move.line.reconcile,trans_nbr:0
@@ -1730,6 +1732,8 @@ msgid ""
 "Cancel Invoice: Creates the refund invoice, validate and reconcile it to "
 "cancel the current invoice."
 msgstr ""
+"Avbryt faktura: Skapar kreditfaktura, validera och stämma av dem att för att "
+"avbryta det aktuella fakturan."
 
 #. module: account
 #: model:ir.ui.menu,name:account.periodical_processing_invoicing
@@ -1893,7 +1897,7 @@ msgstr "Baserad på"
 #: field:account.invoice,move_id:0
 #: field:account.invoice,move_name:0
 msgid "Journal Entry"
-msgstr "Registrera verifikation"
+msgstr "Verifikat"
 
 #. module: account
 #: view:account.tax:0
@@ -1964,6 +1968,9 @@ msgid ""
 "will be added, Loss : Amount will be deducted.), as calculated in Profit & "
 "Loss Report"
 msgstr ""
+"Detta konto används för överföring av vinst/förlust (Om det är Vinst: "
+"beloppet kommer att adderas, förlust: belopp kommer att dras bort), beräknat "
+"i enlighet med resultaträkningsrapporten"
 
 #. module: account
 #: model:process.node,note:account.process_node_reconciliation0
@@ -2020,6 +2027,9 @@ msgid ""
 "currency. You should remove the secondary currency on the account or select "
 "a multi-currency view on the journal."
 msgstr ""
+"Det valda kontot till ditt verifikat tvingar fram användandet av en sekundär "
+"valuta. Du bör ta bort den sekundära valutan på kontot eller välj en multi-"
+"valuta-vy för journalen."
 
 #. module: account
 #: model:ir.actions.act_window,help:account.action_account_financial_report_tree
@@ -2186,6 +2196,9 @@ msgid ""
 "Put a sequence in the journal definition for automatic numbering or create a "
 "sequence manually for this piece."
 msgstr ""
+"Kan inte skapa en automatisk löpnummerserie för denna del!\n"
+"Välj ett löpnummer i journaldefinitionen för automatisk numrering eller "
+"skapa ett sekvensnummer manuellt."
 
 #. module: account
 #: code:addons/account/account.py:787
@@ -2616,7 +2629,7 @@ msgstr ""
 #. module: account
 #: model:ir.model,name:account.model_account_move_line_reconcile_writeoff
 msgid "Account move line reconcile (writeoff)"
-msgstr ""
+msgstr "Transaktionsavstämning (avskrivning)"
 
 #. module: account
 #: model:account.account.type,name:account.account_type_tax
@@ -2707,12 +2720,13 @@ msgstr "Ref"
 #. module: account
 #: help:account.move.line,tax_code_id:0
 msgid "The Account can either be a base tax code or a tax code account."
-msgstr ""
+msgstr "Kontot kan antingen vara en skattebaskod eller ett skattekodkonto."
 
 #. module: account
 #: sql_constraint:account.model.line:0
 msgid "Wrong credit or debit value in model, they must be positive!"
 msgstr ""
+"Felaktigt kredit eller debet-värde i modellen, de måste vara positiva!"
 
 #. module: account
 #: model:ir.ui.menu,name:account.menu_automatic_reconcile
@@ -2759,7 +2773,7 @@ msgstr "Parent Tax Account"
 #: code:addons/account/wizard/account_change_currency.py:59
 #, python-format
 msgid "New currency is not configured properly !"
-msgstr ""
+msgstr "Nya valutan är inte korrekt konfigurerad !"
 
 #. module: account
 #: view:account.subscription.generate:0
@@ -2767,6 +2781,8 @@ msgid ""
 "Automatically generate entries based on what has been entered in the  system "
 "before a specific date."
 msgstr ""
+"Automatisk skapade transaktioner på grundval av inmatningar i systemet före "
+"ett visst datum."
 
 #. module: account
 #: view:account.aged.trial.balance:0
@@ -2850,6 +2866,8 @@ msgid ""
 "You need an Opening journal with centralisation checked to set the initial "
 "balance!"
 msgstr ""
+"Du behöver en öppningsjournal med centralisering kryssad för att sätta "
+"ingående balanser!"
 
 #. module: account
 #: view:account.invoice.tax:0
@@ -2861,7 +2879,7 @@ msgstr "Skattedeklarationsrubriker"
 #. module: account
 #: view:account.account:0
 msgid "Unrealized Gains and losses"
-msgstr ""
+msgstr "Orealiserade vinster och förluster"
 
 #. module: account
 #: model:ir.ui.menu,name:account.menu_account_customer
@@ -2883,12 +2901,12 @@ msgstr "Period till"
 #: selection:report.account.sales,month:0
 #: selection:report.account_type.sales,month:0
 msgid "August"
-msgstr "Augusti"
+msgstr "augusti"
 
 #. module: account
 #: model:process.transition,note:account.process_transition_paymentreconcile0
 msgid "Payment entries are the second input of the reconciliation."
-msgstr ""
+msgstr "Betalningstransationer är den andra inmatningen för en avstämning"
 
 #. module: account
 #: selection:account.entries.report,month:0
@@ -2897,7 +2915,7 @@ msgstr ""
 #: selection:report.account.sales,month:0
 #: selection:report.account_type.sales,month:0
 msgid "October"
-msgstr "Oktober"
+msgstr "oktober"
 
 #. module: account
 #: help:account.move.line,quantity:0
@@ -2905,6 +2923,9 @@ msgid ""
 "The optional quantity expressed by this line, eg: number of product sold. "
 "The quantity is not a legal requirement but is very useful for some reports."
 msgstr ""
+"Den valfria mängden uttrycks av den här raden, t.ex.: antal sålda produkter. "
+"Mängden är inte ett rättsligt krav, men är mycket användbart för vissa "
+"rapporter."
 
 #. module: account
 #: view:account.payment.term.line:0
@@ -2932,7 +2953,7 @@ msgstr "Om värde saknas används perioden från (faktura)datum."
 #: help:account.bank.statement,account_id:0
 msgid ""
 "used in statement reconciliation domain, but shouldn't be used elswhere."
-msgstr ""
+msgstr "används i avstämning domänen, men bör inte användas annorstädes."
 
 #. module: account
 #: field:account.invoice.tax,base_amount:0
@@ -2946,6 +2967,8 @@ msgid ""
 "You can not delete an invoice which is open or paid. We suggest you to "
 "refund it instead."
 msgstr ""
+"Du kan inte radera en faktura som är öppen eller betalats. Vi föreslår att "
+"du krediterar den i stället."
 
 #. module: account
 #: field:wizard.multi.charts.accounts,sale_tax:0
@@ -2965,6 +2988,9 @@ msgid ""
 "between the creation date or the creation date of the entries plus the "
 "partner payment terms."
 msgstr ""
+"Förfallodagen för de genererade posterna för denna modell. Du kan välja "
+"mellan datum för skapande eller datum för skapande av de uppgifter samt "
+"företagens betalningsvillkor."
 
 #. module: account
 #: model:ir.ui.menu,name:account.menu_finance_accounting
@@ -2997,6 +3023,8 @@ msgid ""
 "Tax base different!\n"
 "Click on compute to update the tax base."
 msgstr ""
+"Skatteunderlag avviker!\n"
+"Klicka på beräkna för att uppdatera skattebasen."
 
 #. module: account
 #: field:account.partner.ledger,page_split:0
@@ -3188,7 +3216,7 @@ msgstr "Kund och leverantörsreskontra"
 #. module: account
 #: help:account.journal.column,sequence:0
 msgid "Gives the sequence order to journal column."
-msgstr ""
+msgstr "Ger ordningsföljd för journalkolumnerna"
 
 #. module: account
 #: help:account.account,currency_id:0
@@ -3373,7 +3401,7 @@ msgstr "Moms:"
 #. module: account
 #: constraint:account.invoice:0
 msgid "Invalid BBA Structured Communication !"
-msgstr ""
+msgstr "Ogiltig BBA-strukturerad kommunikation!"
 
 #. module: account
 #: help:account.analytic.line,amount_currency:0
@@ -3381,6 +3409,8 @@ msgid ""
 "The amount expressed in the related account currency if not equal to the "
 "company one."
 msgstr ""
+"Det belopp som uttrycks i den berörda kontovalutan om inte lika med första "
+"bolaget."
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_account_unreconcile
@@ -3405,7 +3435,7 @@ msgstr "Skattetabell"
 #: code:addons/account/account_cash_statement.py:314
 #, python-format
 msgid "The closing balance should be the same than the computed balance!"
-msgstr ""
+msgstr "Stängningsbalansen bör vara samma som beräknad balans!"
 
 #. module: account
 #: view:account.journal:0
@@ -3828,6 +3858,8 @@ msgid ""
 "centralised counterpart box in the related journal from the configuration "
 "menu."
 msgstr ""
+"Du kan inte skapa en faktura på en centraliserad journal. Avmarkera "
+"centraliserade rutan i motsatt journal på konfigurationsmenyn."
 
 #. module: account
 #: field:account.account,name:0
@@ -3922,6 +3954,7 @@ msgid ""
 "Print Report with the currency column if the currency is different then the "
 "company currency"
 msgstr ""
+"Skriv ut rapport med valutakolumnen om valutan avviker från bolagsvalutan"
 
 #. module: account
 #: help:account.account,unrealized_gain_loss:0
@@ -3929,6 +3962,8 @@ msgid ""
 "Value of Loss or Gain due to changes in exchange rate when doing multi-"
 "currency transactions."
 msgstr ""
+"Värdet på förlust eller vinst beror på förändringar i växelkursen när man "
+"gör flera valutatransaktioner."
 
 #. module: account
 #: view:account.analytic.line:0
@@ -4082,7 +4117,7 @@ msgstr "Genväg"
 #. module: account
 #: constraint:account.fiscalyear:0
 msgid "Error! The start date of the fiscal year must be before his end date."
-msgstr ""
+msgstr "Fel! Startdatum för verksamhetsåret måste vara före slutdatum."
 
 #. module: account
 #: view:account.account:0
@@ -4126,6 +4161,8 @@ msgid ""
 "This account will be used to value outgoing stock for the current product "
 "category using sale price"
 msgstr ""
+"Detta konto kommer att användas för att värdera utgående lager för den "
+"aktuella produktkategorin utifrån försäljningspriset"
 
 #. module: account
 #: selection:account.automatic.reconcile,power:0
@@ -4139,6 +4176,8 @@ msgid ""
 "You haven't supplied enough argument to compute the initial balance, please "
 "select a period and journal in the context."
 msgstr ""
+"Du har inte levererat tillräckligt argument för att beräkna den ursprungliga "
+"balansen, välj en period och tidskriften i sammanhanget."
 
 #. module: account
 #: model:process.transition,note:account.process_transition_supplieranalyticcost0
@@ -4184,6 +4223,9 @@ msgid ""
 "some non legal fields or you must unconfirm the journal entry first! \n"
 "%s"
 msgstr ""
+"Du kan inte göra denna ändring på ett bokfört verifikat! Du kan endast ändra "
+"icke legala uppgifter alternativt göra verifikatet icke bokfört! \n"
+"%s"
 
 #. module: account
 #: field:res.company,paypal_account:0
@@ -4249,6 +4291,7 @@ msgstr "Kundens bokföringsinställningar"
 #: help:res.company,paypal_account:0
 msgid "Paypal username (usually email) for receiving online payments."
 msgstr ""
+"Paypal-användarnamn (vanligtvis e-post) för att ta emot betalningar online."
 
 #. module: account
 #: selection:account.aged.trial.balance,target_move:0
@@ -4277,7 +4320,7 @@ msgstr "All Posted Entries"
 #: code:addons/account/account_bank_statement.py:367
 #, python-format
 msgid "Statement %s is confirmed, journal items are created."
-msgstr "Kontoutdrag %s är konfirmerad, journaltransaktioner har skapats."
+msgstr "Kontoutdrag %s är konfirmerad, transaktioner har skapats."
 
 #. module: account
 #: field:report.aged.receivable,name:0
@@ -4342,7 +4385,7 @@ msgstr "Kontoplan"
 #. module: account
 #: selection:account.financial.report,style_overwrite:0
 msgid "Main Title 1 (bold, underlined)"
-msgstr ""
+msgstr "Huvudtitel 1 (fet, understruken)"
 
 #. module: account
 #: report:account.analytic.account.balance:0
@@ -4396,12 +4439,12 @@ msgstr "Inte implementerat"
 #. module: account
 #: field:account.chart.template,visible:0
 msgid "Can be Visible?"
-msgstr ""
+msgstr "Kan vara synlig?"
 
 #. module: account
 #: model:ir.model,name:account.model_account_journal_select
 msgid "Account Journal Select"
-msgstr ""
+msgstr "Kontojournalval"
 
 #. module: account
 #: view:account.tax.template:0
@@ -4479,7 +4522,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:account.action_model_form
 #: model:ir.ui.menu,name:account.menu_action_model_form
 msgid "Recurring Models"
-msgstr ""
+msgstr "Mallar för återkommande transaktioner"
 
 #. module: account
 #: code:addons/account/account_move_line.py:1251
@@ -5371,7 +5414,7 @@ msgstr "Återbetalning till kund"
 #: constraint:account.move:0
 msgid ""
 "You can not create more than one move per period on centralized journal"
-msgstr ""
+msgstr "Du kan inte skapa mer än en transaktion per period i huvudboken."
 
 #. module: account
 #: field:account.tax,ref_tax_sign:0
@@ -5784,6 +5827,9 @@ msgid ""
 "document shows your debit and credit taking in consideration some criteria "
 "you can choose by using the search tool."
 msgstr ""
+"Från denna vy, har en analys av dina olika finansiella konton. Dokumentet "
+"visar din debet och kredit att ta i beaktande vissa kriterier som du kan "
+"välja med hjälp av sökverktyget."
 
 #. module: account
 #: model:ir.actions.act_window,help:account.action_tax_code_list
@@ -5945,7 +5991,7 @@ msgstr "Återbetalningar till kund"
 #. module: account
 #: field:account.account,foreign_balance:0
 msgid "Foreign Balance"
-msgstr ""
+msgstr "Främmande balans"
 
 #. module: account
 #: field:account.journal.period,name:0
@@ -6125,6 +6171,10 @@ msgid ""
 "choice assumes that the set of tax defined for the chosen template is "
 "complete"
 msgstr ""
+"Denna boolean hjälper dig att välja om du vill föreslå för användaren att "
+"koda försäljning och priser köper eller använder de vanliga M2O fälten. Det "
+"sista valet förutsätter att uppsättningen av skatt som definierats för den "
+"valda mallen är klar"
 
 #. module: account
 #: report:account.vat.declaration:0
@@ -6139,7 +6189,7 @@ msgstr "Företag"
 #. module: account
 #: view:account.invoice.report:0
 msgid "Open and Paid Invoices"
-msgstr ""
+msgstr "Öppna och betalade fakturor"
 
 #. module: account
 #: selection:account.financial.report,display_detail:0
@@ -6401,6 +6451,8 @@ msgid ""
 "You cannot change the owner company of an account that already contains "
 "journal items."
 msgstr ""
+"D kan inte ändra kontots bolag för ett konto som det redan registrerats "
+"transaktioner på."
 
 #. module: account
 #: code:addons/account/wizard/account_report_aged_partner_balance.py:58
@@ -6419,7 +6471,7 @@ msgstr "Återbetalning till leverantör"
 #. module: account
 #: model:ir.ui.menu,name:account.menu_dashboard_acc
 msgid "Dashboard"
-msgstr ""
+msgstr "Infopanel"
 
 #. module: account
 #: field:account.bank.statement,move_line_ids:0
@@ -6481,7 +6533,7 @@ msgstr ""
 #. module: account
 #: field:account.installer,has_default_company:0
 msgid "Has Default Company"
-msgstr ""
+msgstr "Har standardbolag"
 
 #. module: account
 #: model:ir.model,name:account.model_account_sequence_fiscalyear
@@ -6503,12 +6555,12 @@ msgstr "Objektjournal"
 #: code:addons/account/account.py:622
 #, python-format
 msgid "You can not desactivate an account that contains some journal items."
-msgstr ""
+msgstr "Du kan inte avaktivera ett konto som innhar transaktioner."
 
 #. module: account
 #: view:account.entries.report:0
 msgid "Reconciled"
-msgstr ""
+msgstr "Avstämd"
 
 #. module: account
 #: report:account.invoice:0
@@ -6529,7 +6581,7 @@ msgstr "Utgiftskategorikonto"
 #. module: account
 #: view:account.bank.statement:0
 msgid "Cash Transactions"
-msgstr ""
+msgstr "Kontanttransaktioner"
 
 #. module: account
 #: code:addons/account/wizard/account_state_open.py:37
@@ -6553,13 +6605,13 @@ msgstr "Anteckningar"
 #. module: account
 #: model:ir.model,name:account.model_analytic_entries_report
 msgid "Analytic Entries Statistics"
-msgstr ""
+msgstr "Objektstatistik"
 
 #. module: account
 #: code:addons/account/account.py:624
 #, python-format
 msgid "You can not remove an account containing journal items."
-msgstr ""
+msgstr "Du kan inte radera ett konto som har transaktioner."
 
 #. module: account
 #: code:addons/account/account_analytic_line.py:145
@@ -6571,7 +6623,7 @@ msgstr "Entries: "
 #. module: account
 #: view:account.use.model:0
 msgid "Create manual recurring entries in a chosen journal."
-msgstr ""
+msgstr "Skapa manuella återkommande verifikat i en vald journal."
 
 #. module: account
 #: help:res.partner.bank,currency_id:0
@@ -6595,6 +6647,12 @@ msgid ""
 "account. From this view, you can create and manage the account types you "
 "need for your company."
 msgstr ""
+"Kontotyp används för att bestämma hur ett konto används i varje journal. Den "
+"uppskov metoden för en kontotyp avgör processen för årsbokslutet. Rapporter "
+"såsom balansräkningen och resultaträkningen använder kategorin (vinst / "
+"förlust eller balansräkning). Till exempel kan kontotyp vara kopplat till "
+"ett tillgångskonto, kostnad konto eller betalas konto. Från denna vy kan du "
+"skapa och hantera kontotyper du behöver för ditt företag."
 
 #. module: account
 #: selection:account.account.type,report_type:0
@@ -6772,6 +6830,11 @@ msgid ""
 "reconcile in a series of accounts. It finds entries for each partner where "
 "the amounts correspond."
 msgstr ""
+"För en faktura skall anses som betald, måste fakturan uppgifterna förenas "
+"med motparter, vanligen betalningar. Med automatisk avstämning "
+"funktionaliteten gör OpenERP egen sökning efter poster till förena i en "
+"serie av konton. Den finner poster för varje partner om de belopp som "
+"motsvarar."
 
 #. module: account
 #: view:account.move:0
@@ -6918,6 +6981,8 @@ msgid ""
 "Check this box if you are unsure of that journal entry and if you want to "
 "note it as 'to be reviewed' by an accounting expert."
 msgstr ""
+"Kryssa denna ruta om det finns oklarheter på detta verifikat och du vill "
+"märka det 'att granskas av bokföringsexpert'."
 
 #. module: account
 #: field:account.chart.template,complete_tax_set:0
@@ -7067,7 +7132,7 @@ msgstr "Källdokument"
 #: code:addons/account/account.py:1432
 #, python-format
 msgid "You can not delete a posted journal entry \"%s\"!"
-msgstr ""
+msgstr "Du kan inte radera ett bokfört verifikat \"%s\"!"
 
 #. module: account
 #: selection:account.partner.ledger,filter:0
@@ -7540,7 +7605,7 @@ msgstr "Sales Journal"
 #: code:addons/account/wizard/account_move_journal.py:104
 #, python-format
 msgid "Open Journal Items !"
-msgstr "Öppna verifikat !"
+msgstr "Öppna transaktioner !"
 
 #. module: account
 #: model:ir.model,name:account.model_account_invoice_tax
@@ -7772,7 +7837,7 @@ msgstr ""
 #. module: account
 #: help:account.invoice,move_id:0
 msgid "Link to the automatically generated Journal Items."
-msgstr ""
+msgstr "Länk till automatiskt genererade transaktioner."
 
 #. module: account
 #: selection:account.installer,period:0
@@ -8051,7 +8116,7 @@ msgstr ""
 #: help:account.account,reconcile:0
 msgid ""
 "Check this box if this account allows reconciliation of journal items."
-msgstr ""
+msgstr "Kryssa denna ruta om kontot tillåter avstämning av transaktioner."
 
 #. module: account
 #: help:account.period,state:0
@@ -8359,6 +8424,8 @@ msgid ""
 "You can check this box to mark this journal item as a litigation with the "
 "associated partner"
 msgstr ""
+"Du kan kryssa denna ruta för att märka denna transaktion som tvistig med det "
+"relaterade företaget"
 
 #. module: account
 #: field:account.move.line,reconcile_partial_id:0
@@ -8389,6 +8456,8 @@ msgid ""
 "No period defined for this date: %s !\n"
 "Please create one."
 msgstr ""
+"Ingen perdion definierad för detta datum: %s !\n"
+"Vänligen skapa en."
 
 #. module: account
 #: model:process.transition,name:account.process_transition_filestatement0
@@ -8548,7 +8617,7 @@ msgstr "Skriv ut momsrapport"
 #. module: account
 #: view:account.model.line:0
 msgid "Journal Entry Model Line"
-msgstr ""
+msgstr "Verifikatmallrad"
 
 #. module: account
 #: view:account.invoice:0
@@ -8581,6 +8650,8 @@ msgid ""
 "The residual amount on a receivable or payable of a journal entry expressed "
 "in the company currency."
 msgstr ""
+"Återstående belopp på en fordran eller skuld från ett verifikat uttryckt i "
+"bolagets valuta"
 
 #. module: account
 #: view:account.tax.code:0
@@ -9498,6 +9569,8 @@ msgid ""
 "It indicates that the invoice has been paid and the journal entry of the "
 "invoice has been reconciled with one or several journal entries of payment."
 msgstr ""
+"Detta indikerar att fakturan är betald och fakturans verifikat har stämts av "
+"med en eller flera betalningstransaktioner."
 
 #. module: account
 #: view:account.invoice:0
@@ -9654,7 +9727,7 @@ msgstr ""
 #. module: account
 #: view:account.model:0
 msgid "Journal Entry Model"
-msgstr ""
+msgstr "Verifikatmall"
 
 #. module: account
 #: code:addons/account/wizard/account_use_model.py:44
@@ -9929,7 +10002,7 @@ msgstr "Det finns inget intäktskonto för denna produkt: \"%s\" (id:%d)"
 #. module: account
 #: constraint:account.move.line:0
 msgid "You can not create journal items on closed account."
-msgstr ""
+msgstr "Du kan inte skapa transaktioner på ett stängt konto"
 
 #. module: account
 #: field:account.account,unrealized_gain_loss:0
@@ -10188,7 +10261,7 @@ msgstr "Fel! Du kan inte skapa rekursiva analyskonton."
 #. module: account
 #: selection:account.print.journal,sort_selection:0
 msgid "Journal Entry Number"
-msgstr ""
+msgstr "Verifikatnummer"
 
 #. module: account
 #: view:account.subscription:0
@@ -10238,6 +10311,10 @@ msgid ""
 "payable/receivable are for partners accounts (for debit/credit "
 "computations), closed for depreciated accounts."
 msgstr ""
+"\"interna Typ\" används för funktioner som finns på olika typer av konton: "
+"visa kan inte ha transaktioner, konsolidering är konton som kan ha "
+"underkonton står för koncernredovisning, skulder/fordringar är för företags "
+"konton (för debet/kredit-beräkningar ), stängt för avlutade konton."
 
 #. module: account
 #: selection:account.balance.report,display_account:0
@@ -10798,3 +10875,5 @@ msgid ""
 "The residual amount on a receivable or payable of a journal entry expressed "
 "in its currency (maybe different of the company currency)."
 msgstr ""
+"Återstående belopp på en fordran eller skuld på ett verifikat uttryckt i sin "
+"valuta (kan skilja sig från bolagsvalutan)."
