@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 01:37+0100\n"
-"PO-Revision-Date: 2012-06-09 05:38+0000\n"
+"PO-Revision-Date: 2012-06-09 21:05+0000\n"
 "Last-Translator: Akira Hiyama <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-06-09 05:38+0000\n"
+"X-Launchpad-Export-Date: 2012-06-10 04:37+0000\n"
 "X-Generator: Launchpad (build 15376)\n"
 
 #. module: project
@@ -46,12 +46,12 @@ msgstr "前月"
 #. module: project
 #: view:report.project.task.user:0
 msgid "My tasks"
-msgstr "マイタスク"
+msgstr "私のタスク"
 
 #. module: project
 #: field:project.project,warn_customer:0
 msgid "Warn Partner"
-msgstr "パートナ警告"
+msgstr "パートナに警告"
 
 #. module: project
 #: help:project.task.reevaluate,remaining_hours:0
@@ -172,12 +172,12 @@ msgstr "タスクが閉じられた時に顧客に送信される警告メッセ
 #. module: project
 #: view:project.task:0 view:project.task.history.cumulative:0
 msgid "My Tasks"
-msgstr "マイタスク"
+msgstr "私のタスク"
 
 #. module: project
 #: constraint:project.task:0
 msgid "Error ! You cannot create recursive tasks."
-msgstr "エラーです。　再帰的なタスクを作成することはできません。"
+msgstr "エラー。再帰的なタスクを作成することはできません。"
 
 #. module: project
 #: field:project.task,company_id:0 field:project.task.work,company_id:0
@@ -228,7 +228,7 @@ msgstr "テンプレートを基本とした新プロジェクト"
 #. module: project
 #: constraint:project.project:0
 msgid "Error! You cannot assign escalation to the same project!"
-msgstr "エラー。同じプロジェクトに段階的拡大の割当はできません。"
+msgstr "エラー。同じプロジェクトに拡大の割当はできません。"
 
 #. module: project
 #: selection:report.project.task.user,priority:0
@@ -244,7 +244,7 @@ msgstr "このタスクを委任したいユーザ"
 #. module: project
 #: view:report.project.task.user:0
 msgid "My Task"
-msgstr "マイタスク"
+msgstr "私のタスク"
 
 #. module: project
 #: view:report.project.task.user:0 field:report.project.task.user,day:0
@@ -284,7 +284,7 @@ msgstr "メンバー"
 #: view:board.board:0
 #: model:ir.actions.act_window,name:project.my_open_tasks_action
 msgid "My Open Tasks"
-msgstr "実行中マイタスク"
+msgstr "実行中の私のタスク"
 
 #. module: project
 #: code:addons/project/wizard/mail_compose_message.py:43
@@ -434,7 +434,7 @@ msgstr "テスト"
 #: code:addons/project/project.py:829
 #, python-format
 msgid "Task '%s' closed"
-msgstr "タスク %s を閉じました。"
+msgstr "タスク %s を閉じられました。"
 
 #. module: project
 #: model:ir.model,name:project.model_account_analytic_account
@@ -527,7 +527,7 @@ msgstr "テンプレート"
 #. module: project
 #: model:ir.actions.act_window,name:project.act_my_project
 msgid "My projects"
-msgstr "マイプロジェクト"
+msgstr "私のプロジェクト"
 
 #. module: project
 #: constraint:res.company:0
@@ -625,7 +625,7 @@ msgstr "%s（コピー）"
 #. module: project
 #: view:report.project.task.user:0
 msgid "OverPass delay"
-msgstr "進行上の遅延"
+msgstr "期限超過遅延"
 
 #. module: project
 #: selection:project.task,priority:0
@@ -711,7 +711,7 @@ msgstr "委任されたタイトル"
 #: view:project.task:0 view:project.task.history.cumulative:0
 #: view:report.project.task.user:0
 msgid "My Projects"
-msgstr "マイプロジェクト"
+msgstr "私のプロジェクト"
 
 #. module: project
 #: view:project.task:0
@@ -764,7 +764,7 @@ msgstr ""
 #: code:addons/project/project.py:903
 #, python-format
 msgid "The task '%s' is opened."
-msgstr "タスク %s を開きます。"
+msgstr "タスク %s は開かれています。"
 
 #. module: project
 #: view:project.task:0
@@ -850,7 +850,7 @@ msgstr "評価"
 #. module: project
 #: view:board.board:0
 msgid "My Board"
-msgstr "マイボード"
+msgstr "私のボード"
 
 #. module: project
 #: model:ir.actions.act_window,name:project.open_task_type_form
@@ -1354,7 +1354,7 @@ msgid ""
 "don't forget to setup the right unit of measure in your employees."
 msgstr ""
 "これはプロジェクトとタスクの中で使われる単位をセットします。\n"
-"プロジェクトにリンクする時刻表（プロジェクトタイムシートモジュール）を使用する場合は、従業員の中に正しい単位を設定することを忘れないで下さい。"
+"プロジェクトにリンクする勤務表（プロジェクトタイムシートモジュール）を使用する場合は、従業員の中に正しい単位を設定することを忘れないで下さい。"
 
 #. module: project
 #: code:addons/project/wizard/mail_compose_message.py:43
@@ -1414,7 +1414,7 @@ msgstr "拡張フィルタ…"
 #: code:addons/project/project.py:1148
 #, python-format
 msgid "Please delete the project linked with this account first."
-msgstr ""
+msgstr "最初にこのアカウントにリンクしているプロジェクトを削除して下さい。"
 
 #. module: project
 #: field:project.task,total_hours:0 field:project.vs.hours,total_hours:0
@@ -1442,7 +1442,7 @@ msgstr "委任したユーザを指定する必要があります。"
 #: code:addons/project/project.py:862
 #, python-format
 msgid "Task '%s' set in progress"
-msgstr "タスク %s は進行中にセットされました。"
+msgstr "タスク %s は進行中にセットしました。"
 
 #. module: project
 #: view:project.project:0
@@ -1456,8 +1456,8 @@ msgid ""
 "projects. It enables you to connect projects with budgets, planning, cost "
 "and revenue analysis, timesheets on projects, etc."
 msgstr ""
-"プロジェクトの財務管理を必要とする場合は、このプロジェクトをリンクします。すると、予算、計画、費用収益分析、プロジェクトの勤務時間表などとプロジェクトを接"
-"続することが可能になります。"
+"プロジェクトの財務管理を必要とする場合は、このプロジェクトをリンクします。すると、予算、計画、費用収益分析、プロジェクトの勤務表などとプロジェクトを接続す"
+"ることが可能になります。"
 
 #. module: project
 #: view:project.project:0 view:project.task:0 selection:project.task,state:0
@@ -1467,40 +1467,40 @@ msgstr ""
 #: view:report.project.task.user:0 selection:report.project.task.user,state:0
 #: view:res.partner:0 selection:task.by.days,state:0
 msgid "Done"
-msgstr ""
+msgstr "完了"
 
 #. module: project
 #: view:report.project.task.user:0 field:report.project.task.user,year:0
 msgid "Year"
-msgstr ""
+msgstr "年"
 
 #. module: project
 #: model:process.transition.action,name:project.process_transition_action_draftcanceltask0
 #: model:process.transition.action,name:project.process_transition_action_opencanceltask0
 #: view:project.project:0 view:project.task:0
 msgid "Cancel"
-msgstr ""
+msgstr "キャンセル"
 
 #. module: project
 #: selection:project.vs.hours,state:0
 msgid "Close"
-msgstr ""
+msgstr "閉じる"
 
 #. module: project
 #: model:process.node,name:project.process_node_opentask0
 msgid "Open task"
-msgstr ""
+msgstr "タスクを開く"
 
 #. module: project
 #: model:process.transition.action,name:project.process_transition_action_draftopentask0
 #: view:project.project:0 selection:project.vs.hours,state:0
 msgid "Open"
-msgstr ""
+msgstr "開く"
 
 #. module: project
 #: view:project.project:0
 msgid "ID: %(task_id)s"
-msgstr ""
+msgstr "ID：%(task_id)s"
 
 #. module: project
 #: view:project.task:0 selection:project.task,state:0
@@ -1514,7 +1514,7 @@ msgstr "進行中"
 #. module: project
 #: view:project.task.history.cumulative:0
 msgid "Task's Analysis"
-msgstr ""
+msgstr "タスクの分析"
 
 #. module: project
 #: code:addons/project/project.py:789
@@ -1523,6 +1523,8 @@ msgid ""
 "Child task still open.\n"
 "Please cancel or complete child task first."
 msgstr ""
+"子タスクがまだ開いています。\n"
+"最初に子タスクをキャンセルするか終わらせて下さい。"
 
 #. module: project
 #: view:project.task.type:0
@@ -1532,29 +1534,29 @@ msgstr "全てのプロジェクトに共通の工程"
 #. module: project
 #: constraint:project.task:0
 msgid "Error ! Task end-date must be greater then task start-date"
-msgstr ""
+msgstr "エラーです。タスクの終了日は開始日以降の日付に設定しなければなりません。"
 
 #. module: project
 #: field:project.task.history,user_id:0
 #: field:project.task.history.cumulative,user_id:0
 msgid "Responsible"
-msgstr ""
+msgstr "担当"
 
 #. module: project
 #: field:project.project,resource_calendar_id:0
 msgid "Working Time"
-msgstr ""
+msgstr "作業時間"
 
 #. module: project
 #: view:project.project:0
 msgid "Projects in which I am a manager"
-msgstr ""
+msgstr "私がマネジャであるプロジェクト"
 
 #. module: project
 #: code:addons/project/project.py:959
 #, python-format
 msgid "The task '%s' is pending."
-msgstr ""
+msgstr "タスク %s は保留中です。"
 
 #. module: project
 #: model:ir.model,name:project.model_project_vs_hours
@@ -1564,7 +1566,7 @@ msgstr " プロジェクト対時間数"
 #. module: project
 #: view:project.task.delegate:0
 msgid "Delegated Task"
-msgstr ""
+msgstr "委任されたタスク"
 
 #. module: project
 #: help:project.project,effective_hours:0
@@ -1577,7 +1579,7 @@ msgstr "このプロジェクトと子のプロジェクトに関連する全タ
 #: selection:project.task,priority:0
 #: selection:report.project.task.user,priority:0
 msgid "Very Low"
-msgstr ""
+msgstr "非常に低い"
 
 #. module: project
 #: help:project.project,resource_calendar_id:0
@@ -1587,27 +1589,27 @@ msgstr "ガントチャートレポートを調整するための時刻表労働
 #. module: project
 #: field:project.project,warn_manager:0
 msgid "Warn Manager"
-msgstr ""
+msgstr "マネジャに警告"
 
 #. module: project
 #: field:report.project.task.user,delay_endings_days:0
 msgid "Overpassed Deadline"
-msgstr ""
+msgstr "締切超過"
 
 #. module: project
 #: model:ir.actions.act_window,name:project.action_view_task_tree_deadline
 msgid "My Task's Deadlines"
-msgstr ""
+msgstr "私のタスクの締切"
 
 #. module: project
 #: model:ir.actions.act_window,name:project.action_project_task_reevaluate
 msgid "Re-evaluate Task"
-msgstr ""
+msgstr "再評価タスク"
 
 #. module: project
 #: model:project.task.type,name:project.project_tt_development
 msgid "Development"
-msgstr ""
+msgstr "開発"
 
 #. module: project
 #: view:board.board:0
@@ -1618,27 +1620,27 @@ msgstr "プロジェクト毎の私の残り時間数"
 #: field:project.task,description:0 view:project.task.type:0
 #: field:project.task.type,description:0
 msgid "Description"
-msgstr ""
+msgstr "説明"
 
 #. module: project
 #: selection:report.project.task.user,priority:0
 msgid "Urgent"
-msgstr ""
+msgstr "緊急"
 
 #. module: project
 #: selection:report.project.task.user,month:0
 msgid "May"
-msgstr ""
+msgstr "5月"
 
 #. module: project
 #: view:project.task.delegate:0
 msgid "Validation Task"
-msgstr ""
+msgstr "検証タスク"
 
 #. module: project
 #: field:task.by.days,total_task:0
 msgid "Total tasks"
-msgstr ""
+msgstr "タスク合計"
 
 #. module: project
 #: help:project.task.type,project_default:0
@@ -1653,17 +1655,17 @@ msgstr ""
 #: model:ir.actions.act_window,name:project.action_view_delegate_task_tree
 #: view:project.task:0
 msgid "My Delegated Tasks"
-msgstr ""
+msgstr "私の委任タスク"
 
 #. module: project
 #: view:project.project:0
 msgid "Task: %(name)s"
-msgstr ""
+msgstr "タスク：%(name)s"
 
 #. module: project
 #: field:project.task.delegate,user_id:0
 msgid "Assign To"
-msgstr ""
+msgstr "割当先"
 
 #. module: project
 #: field:project.project,progress_rate:0 view:report.project.task.user:0
@@ -1674,28 +1676,28 @@ msgstr "進捗"
 #. module: project
 #: field:project.project,effective_hours:0 field:project.task.work,hours:0
 msgid "Time Spent"
-msgstr ""
+msgstr "消費時間"
 
 #. module: project
 #: model:ir.actions.act_window,name:project.act_my_account
 msgid "My accounts to invoice"
-msgstr ""
+msgstr "私の請求書のアカウント"
 
 #. module: project
 #: model:project.task.type,name:project.project_tt_merge
 msgid "Deployment"
-msgstr ""
+msgstr "配置"
 
 #. module: project
 #: field:project.project,tasks:0
 msgid "Project tasks"
-msgstr ""
+msgstr "プロジェクトのタスク"
 
 #. module: project
 #: code:addons/project/project.py:851
 #, python-format
 msgid "The task '%s' is done"
-msgstr ""
+msgstr "タスク %s は完了です。"
 
 #. module: project
 #: help:project.project,total_hours:0
@@ -1707,45 +1709,45 @@ msgstr "このプロジェクトと子のプロジェクトに関連する全タ
 #. module: project
 #: field:project.task.type,project_default:0
 msgid "Common to All Projects"
-msgstr ""
+msgstr "全製品共通"
 
 #. module: project
 #: model:process.transition,note:project.process_transition_opendonetask0
 msgid "When task is completed, it will come into the done state."
-msgstr ""
+msgstr "タスクが完了した時、完了状態になります。"
 
 #. module: project
 #: view:project.project:0
 msgid "Customer"
-msgstr ""
+msgstr "顧客"
 
 #. module: project
 #: view:project.project:0 view:project.task:0
 #: field:project.task.history,end_date:0
 #: field:project.task.history.cumulative,end_date:0
 msgid "End Date"
-msgstr ""
+msgstr "終了日"
 
 #. module: project
 #: selection:report.project.task.user,month:0
 msgid "February"
-msgstr ""
+msgstr "2月"
 
 #. module: project
 #: model:ir.actions.act_window,name:project.action_task_by_days_graph
 #: model:ir.model,name:project.model_task_by_days view:task.by.days:0
 msgid "Task By Days"
-msgstr ""
+msgstr "日毎のタスク"
 
 #. module: project
 #: sql_constraint:res.company:0
 msgid "The company name must be unique !"
-msgstr ""
+msgstr "会社名は固有でなければいけません。"
 
 #. module: project
 #: view:project.task:0
 msgid "Edit"
-msgstr ""
+msgstr "編集"
 
 #. module: project
 #: model:process.node,note:project.process_node_opentask0
@@ -1755,27 +1757,27 @@ msgstr "作業時間数をエンコード"
 #. module: project
 #: field:project.task.work,name:0
 msgid "Work summary"
-msgstr ""
+msgstr "作業の概要"
 
 #. module: project
 #: view:project.task.history.cumulative:0
 msgid "Month-2"
-msgstr ""
+msgstr "月-2"
 
 #. module: project
 #: help:report.project.task.user,closing_days:0
 msgid "Number of Days to close the task"
-msgstr ""
+msgstr "タスクを閉じるための日数"
 
 #. module: project
 #: view:project.task.history.cumulative:0 view:report.project.task.user:0
 msgid "Month-1"
-msgstr ""
+msgstr "月-1"
 
 #. module: project
 #: selection:report.project.task.user,month:0
 msgid "April"
-msgstr ""
+msgstr "4月"
 
 #. module: project
 #: field:project.task,effective_hours:0
@@ -1785,17 +1787,17 @@ msgstr "消費時間数"
 #. module: project
 #: view:project.project:0 view:project.task:0
 msgid "Miscelleanous"
-msgstr ""
+msgstr "その他"
 
 #. module: project
 #: model:process.transition,name:project.process_transition_opendonetask0
 msgid "Open Done Task"
-msgstr ""
+msgstr "完了タスクを開く"
 
 #. module: project
 #: view:project.task.type:0
 msgid "Common"
-msgstr ""
+msgstr "共通"
 
 #. module: project
 #: view:project.task:0
@@ -1812,13 +1814,13 @@ msgstr "工程は全てのプロジェクトで共有されるかひとつのプ
 #. module: project
 #: help:project.project,sequence:0
 msgid "Gives the sequence order when displaying a list of Projects."
-msgstr ""
+msgstr "プロジェクトのリストを表示する時に並び順を与えます。"
 
 #. module: project
 #: code:addons/project/wizard/mail_compose_message.py:64
 #, python-format
 msgid "Task '%s' Closed"
-msgstr ""
+msgstr "タスク %s は閉じられました。"
 
 #. module: project
 #: field:project.task,id:0
@@ -1829,33 +1831,33 @@ msgstr ""
 #: model:ir.actions.act_window,name:project.action_view_task_history_burndown
 #: model:ir.ui.menu,name:project.menu_action_view_task_history_burndown
 msgid "Burndown Chart"
-msgstr ""
+msgstr "バーンダウンチャート"
 
 #. module: project
 #: model:ir.actions.act_window,name:project.act_res_users_2_project_task_opened
 msgid "Assigned Tasks"
-msgstr ""
+msgstr "タスクの割当"
 
 #. module: project
 #: model:ir.actions.act_window,name:project.action_view_task_overpassed_draft
 msgid "Overpassed Tasks"
-msgstr ""
+msgstr "期限超過タスク"
 
 #. module: project
 #: view:report.project.task.user:0
 msgid "Current Year"
-msgstr ""
+msgstr "今年"
 
 #. module: project
 #: constraint:res.partner:0
 msgid "Error ! You cannot create recursive associated members."
-msgstr ""
+msgstr "エラー：再帰的なメンバーを作ることはできません。"
 
 #. module: project
 #: field:project.project,priority:0 field:project.project,sequence:0
 #: field:project.task,sequence:0 field:project.task.type,sequence:0
 msgid "Sequence"
-msgstr ""
+msgstr "順序"
 
 #. module: project
 #: model:ir.actions.act_window,name:project.action_project_vs_remaining_hours_graph
@@ -1868,7 +1870,7 @@ msgstr "プロジェクト毎の残り時間数"
 msgid ""
 "Footer added at the beginning of the email for the warning message sent to "
 "the customer when a task is closed."
-msgstr ""
+msgstr "タスクが閉じられるときに顧客に送信される警告メッセージのためのEメールの先頭にフッターを追加しました。"
 
 #. module: project
 #: model:ir.actions.act_window,help:project.open_view_project_all
@@ -1882,63 +1884,67 @@ msgid ""
 "to invoice the time spent on a project task, you can find project tasks to "
 "be invoiced in the billing section."
 msgstr ""
+"プロジェクトはリソースを割り当てることによって実行されるタスクや問題のセットを含んでいます。プロジェクトは尾やプロジェクトの子として階層的に構造化できます"
+"。これはプロジェクト期間のサイクルに広がるさまざまな段階で、大きなプロジェクト構造を設計できます。各ユーザは通常作業するタスクや問題を自動的に振り分けるた"
+"めに、各自の好みによるデフォルトプロジェクトをセットできます。プロジェクトのタスクで消費した時間を請求することを選択したら、請求セクションで請求するプロジ"
+"ェクトのタスクを見つけることができます。"
 
 #. module: project
 #: view:project.task:0 view:project.task.work:0
 msgid "Task Work"
-msgstr ""
+msgstr "タスク作業"
 
 #. module: project
 #: field:project.task.delegate,state:0
 msgid "Validation State"
-msgstr ""
+msgstr "検証状態"
 
 #. module: project
 #: code:addons/project/project.py:882
 #, python-format
 msgid "Task '%s' cancelled"
-msgstr ""
+msgstr "タスク %s はキャンセルされました。"
 
 #. module: project
 #: help:project.task.delegate,planned_hours_me:0
 msgid ""
 "Estimated time for you to validate the work done by the user to whom you "
 "delegate this task"
-msgstr ""
+msgstr "あなたが委任したこのタスクの、ユーザによる作業完了をあなたが検証するための予想時間"
 
 #. module: project
 #: view:project.project:0 model:res.groups,name:project.group_project_manager
 msgid "Manager"
-msgstr ""
+msgstr "マネジャ"
 
 #. module: project
 #: field:project.task,create_date:0
 msgid "Create Date"
-msgstr ""
+msgstr "作成日"
 
 #. module: project
 #: code:addons/project/project.py:890
 #, python-format
 msgid "The task '%s' is cancelled."
-msgstr ""
+msgstr "タスク %s はキャンセル済です。"
 
 #. module: project
 #: view:project.task:0 view:res.partner:0
 msgid "For changing to open state"
-msgstr ""
+msgstr "状態を開くと目の変更"
 
 #. module: project
 #: model:ir.model,name:project.model_res_partner view:project.project:0
 #: field:project.task,partner_id:0 view:report.project.task.user:0
 #: field:report.project.task.user,partner_id:0
 msgid "Partner"
-msgstr ""
+msgstr "パートナ"
 
 #. module: project
 #: code:addons/project/project.py:804
 #, python-format
 msgid "Send Email after close task"
-msgstr ""
+msgstr "タスクを閉じた後にEメールを送信"
 
 #. module: project
 #: view:project.project:0 field:project.project,type_ids:0
@@ -1949,12 +1955,12 @@ msgstr "タスク工程"
 #. module: project
 #: model:process.node,note:project.process_node_taskbydelegate0
 msgid "Delegate your task to the other user"
-msgstr ""
+msgstr "他のユーザへタスクを委任"
 
 #. module: project
 #: view:project.project:0 field:project.project,warn_footer:0
 msgid "Mail Footer"
-msgstr ""
+msgstr "メールフッター"
 
 #. module: project
 #: view:project.task:0 view:project.task.history.cumulative:0
