@@ -108,9 +108,18 @@ def rename_columns(cr, column_spec):
 def rename_tables(cr, table_spec):
     """
     Rename tables. Typically called in the pre script.
-    :param column_spec: a list of tuples (old table name, new table name).
+    This function also renames the id sequence if it exists and if it is
+    not modified in the same run.
+
+    :param table_spec: a list of tuples (old table name, new table name).
 
     """
+    # Append id sequences
+    to_rename = [x[0] for x in table_spec]
+    for old, new in list(table_spec):
+        if (table_exists(cr, old + '_id_seq') and
+            old + '_id_seq' not in to_rename): 
+            table_spec.append((old + '_id_seq', new + '_id_seq'))
     for (old, new) in table_spec:
         logger.info("table %s: renaming to %s",
                     old, new)
@@ -119,7 +128,7 @@ def rename_tables(cr, table_spec):
 def rename_models(cr, model_spec):
     """
     Rename models. Typically called in the pre script.
-    :param column_spec: a list of tuples (old model name, new model name).
+    :param model_spec: a list of tuples (old model name, new model name).
     
     Use case: if a model changes name, but still implements equivalent
     functionality you will want to update references in for instance
