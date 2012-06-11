@@ -50,14 +50,7 @@ import logging
 
 logger = netsvc.Logger()
 
-### OpenUpgrade
-def table_exists(cr, table):
-    """ Check whether a certain table or view exists """
-    cr.execute(
-        'SELECT count(relname) FROM pg_class WHERE relname = %s',
-        (table,))
-    return cr.fetchone()[0] == 1
-### End of OpenUpgrade
+from openupgrade import openupgrade
 
 _ad = os.path.abspath(opj(tools.ustr(tools.config['root_path']), u'addons'))     # default addons path (base)
 ad_paths= map(lambda m: os.path.abspath(tools.ustr(m.strip())), tools.config['addons_path'].split(','))
@@ -808,7 +801,7 @@ def load_module_graph(cr, graph, status=None, registry=None, perform_checks=True
         log any differences and merge the local registry with
         the global one.
         """
-        if not table_exists(cr, 'openupgrade_record'):
+        if not openupgrade.table_exists(cr, 'openupgrade_record'):
             return
         for model, fields in local_registry.items():
             registry.setdefault(model, {})
@@ -848,10 +841,9 @@ def load_module_graph(cr, graph, status=None, registry=None, perform_checks=True
     logger.notifyChannel('init', netsvc.LOG_DEBUG, 'loading %d packages..' % len(graph))
 
     for package in graph:
-        if skip_modules and package.name in skip_modules:
-            continue
         logger.notifyChannel('init', netsvc.LOG_INFO, 'module %s: loading objects' % package.name)
-        migrations.migrate_module(package, 'pre')
+        if package.name not in skip_modules['pre']:
+            migrations.migrate_module(package, 'pre')
         register_class(package.name)
         modules = pool.instanciate(package.name, cr)
 
@@ -864,13 +856,14 @@ def load_module_graph(cr, graph, status=None, registry=None, perform_checks=True
 
             init_module_objects(cr, package.name, modules)
         cr.commit()
+        skip_modules['pre'].append(package.name)
 
     for package in graph:
         status['progress'] = (float(statusi)+0.1) / len(graph)
         m = package.name
         mid = package.id
 
-        if skip_modules and m in skip_modules:
+        if package.name in skip_modules['post']:
             continue
 
         if modobj is None:
@@ -923,6 +916,7 @@ def load_module_graph(cr, graph, status=None, registry=None, perform_checks=True
                 if hasattr(package, kind):
                     delattr(package, kind)
 
+        skip_modules['post'].append(package.name)
         statusi += 1
     cr.commit()
 
@@ -964,6 +958,7 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
 
     registry = {}
 
+    skip_modules = {'pre': [], 'post': []}
     try:
         processed_modules = []
         report = tools.assertion_report()
@@ -977,7 +972,7 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
         if not graph:
             logger.notifyChannel('init', netsvc.LOG_CRITICAL, 'module base cannot be loaded! (hint: verify addons-path)')
             raise osv.osv.except_osv(_('Could not load base module'), _('module base cannot be loaded! (hint: verify addons-path)'))
-        processed_modules.extend(load_module_graph(cr, graph, status, perform_checks=(not update_module), registry=registry, report=report))
+        processed_modules.extend(load_module_graph(cr, graph, status, perform_checks=(not update_module), registry=registry, report=report, skip_modules=skip_modules))
 
         if tools.config['load_language']:
             for lang in tools.config['load_language'].split(','):
@@ -1021,13 +1016,15 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
             if not module_list:
                 break
 
+            # OpenUpgrade: forcefeeding module dependencies into the graph
+            module_list = openupgrade.add_module_dependencies(cr, module_list)
             new_modules_in_graph = upgrade_graph(graph, cr, module_list, force)
             if new_modules_in_graph == 0:
                 # nothing to load
                 break
 
             logger.notifyChannel('init', netsvc.LOG_DEBUG, 'Updating graph with %d more modules' % (len(module_list)))
-            processed_modules.extend(load_module_graph(cr, graph, status, registry=registry, report=report, skip_modules=processed_modules))
+            processed_modules.extend(load_module_graph(cr, graph, status, registry=registry, report=report, skip_modules=skip_modules))
 
         # load custom models
         cr.execute('select model from ir_model where state=%s', ('manual',))

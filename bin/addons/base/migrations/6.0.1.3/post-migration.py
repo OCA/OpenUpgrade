@@ -1,18 +1,58 @@
 # -*- coding: utf-8 -*-
 
-from osv import osv
 import pooler, logging
 from openupgrade import openupgrade
-log = logging.getLogger('migrate')
+logger = logging.getLogger('migrate')
+MODULE="base"
+
+obsolete_modules = [
+    'account_report',
+    'account_reporting',
+    'account_tax_include',
+    'board_account',
+    'board_sale',
+    'report_account', 
+    'report_analytic',
+    'report_analytic_line',
+    'report_crm',
+    'report_purchase',
+    'report_sale',
+    'pxgo_bank_statement_analytic',
+]
+
+def set_defaults_on_act_window(cr):
+    """ The act window model has a constraint
+    that checks the validity of the model on it.
+    At migration time, this is inconvenient.
+    Therefore, we set the defaults through SQL
+
+    Replaces setting the following defaults
+    #'ir.actions.act_window': [
+    #    ('auto_search', True),
+    #    ('context', '{}'),
+    #    ('multi', False),
+    #    ],    
+
+    """
+    cr.execute("""
+        UPDATE ir_act_window
+        SET auto_search = true,
+            multi = false
+        """)
+    cr.execute("""
+        UPDATE ir_act_window
+        SET context = '{}'
+        WHERE context is NULL
+        """)
+    cr.execute("""
+        UPDATE ir_act_window
+        SET context = '{}'
+        WHERE context is NULL
+        """)
 
 defaults = {
     # False results in column value NULL
     # None value triggers a call to the model's default function 
-    'ir.actions.act_window': [
-        ('auto_search', True),
-        ('context', '{}'),
-        ('multi', False),
-        ],    
     'ir.actions.todo': [
         ('restart', 'onskip'),
         ],
@@ -96,13 +136,14 @@ def mgr_res_partner_address(cr, pool):
     # In the pre script, we renamed the old function column, a many2one
     # to res.partner.function
     cr.execute(
-        "UPDATE res_partner_address SET function = res_partner_function.name " +
-        "FROM res_partner_function " +
-        "WHERE res_partner_function.id = res_partner_address.tmp_mgr_function"
-        )
-    cr.execute("ALTER TABLE res_partner_address DROP COLUMN tmp_mgr_function CASCADE")
-    cr.execute("DROP TABLE res_partner_function")
-
+        "UPDATE res_partner_address "
+        "SET function = openupgrade_legacy_res_partner_function.name "
+        "FROM openupgrade_legacy_res_partner_function "
+        "WHERE openupgrade_legacy_res_partner_function.id "
+        "= res_partner_address.tmp_mgr_function")
+    cr.execute(
+        "ALTER TABLE res_partner_address "
+        "DROP COLUMN tmp_mgr_function CASCADE")
     # and the reverse: 'title' is now a many2one on res_partner_title
     cr.execute(
         "SELECT id, tmp_mgr_title FROM res_partner_address WHERE title IS NULL " +
@@ -139,10 +180,9 @@ def mgr_default_bank(cr, pool):
         if bank_ids:
             bank_id = bank_ids[0]
         else:
-            bank_id = bank_obj.create(cursor, uid, dict(
-                    code = info.code or 'UNKNOW',
-                    name = info.name or _('Unknown Bank'),
-                    ))
+            bank_id = bank_obj.create(cr, 1, dict(
+                    code = 'UNKNOW',
+                    name = 'Unknown Bank')),
         partner_bank_obj.write(cr, 1, partner_bank_ids, {'bank': bank_id})
             
 def mgr_roles_to_groups(cr, pool):
@@ -208,24 +248,35 @@ def mgr_res_users(cr):
         "AND ir_actions.usage = 'menu'"
         )
 
+def mark_obsolete_modules(cr):
+    """
+    Remove modules that are known to be obsolete
+    in this version of the OpenERP server.
+    """
+    openupgrade.logged_query(
+        cr, """
+        UPDATE
+            ir_module_module
+        SET 
+            state='to remove'
+        WHERE
+            state='installed'
+            AND name in %s
+        """,
+        (tuple(obsolete_modules),))
+
+@openupgrade.migrate()
 def migrate(cr, version):
-    try:
-        
-        log.info("post-set-defaults.py now called")
-        # this method called in a try block too
-        pool = pooler.get_pool(cr.dbname)
-
-        openupgrade.set_defaults(cr, pool, defaults)
-
-        mgr_ir_rule(cr, pool)
-        mgr_res_partner_address(cr, pool)
-        mgr_res_partner(cr, pool)
-        mgr_default_bank(cr, pool)
-        mgr_roles_to_groups(cr, pool)
-        mgr_res_currency(cr, pool)
-        mgr_ir_module_module(cr)
-        mgr_res_users(cr)
-    except Exception, e:
-        log.info("Migration: error in post-set-defaults.py: %s" % e)
-        raise
+    pool = pooler.get_pool(cr.dbname)
+    set_defaults_on_act_window(cr)
+    openupgrade.set_defaults(cr, pool, defaults)
+    mgr_ir_rule(cr, pool)
+    mgr_res_partner_address(cr, pool)
+    mgr_res_partner(cr, pool)
+    mgr_default_bank(cr, pool)
+    mgr_roles_to_groups(cr, pool)
+    mgr_res_currency(cr, pool)
+    mgr_ir_module_module(cr)
+    mgr_res_users(cr)
+    mark_obsolete_modules(cr)
 

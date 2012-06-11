@@ -3,11 +3,18 @@
 # Removal of modules that are deprecated
 # e.g. report_analytic_line (incorporated in hr_timesheet_invoice)
 
-from osv import osv
 import pooler
 import logging
 from openupgrade import openupgrade
+
 log = logging.getLogger('migrate')
+MODULE = 'base'
+
+module_namespec = [
+    # This is a list of tuples (old module name, new module name)
+    ('profile_association', 'association'),
+    ('report_analytic_planning', 'project_planning'),
+]
 
 renames = {
     # this is a mapping per table from old column name
@@ -26,6 +33,11 @@ renames = {
         ('role_id', 'tmp_mgr_role_id'),
         ],
     }
+
+renamed_xmlids = [
+    ('sale.group_sale_manager', 'base.group_sale_manager'),
+    ('sale.group_sale_user', 'base.group_sale_salesman'),
+]
 
 def mgr_ir_model_fields(cr):
     cr.execute('ALTER TABLE ir_model_fields ADD COLUMN selectable BOOLEAN')
@@ -54,20 +66,18 @@ def mgr_fix_test_results(cr):
                "AND ir_model_data.model = 'res.currency.rate' " +
                "AND ir_model_data.name = 'rateINR'")
     if not cr.rowcount:
-        import pdb
-        pdb.set_trace()
         raise osv.except_osv("Migration: error setting INR rate in demo data, no row found", "")
 
+@openupgrade.migrate()
 def migrate(cr, version):
-    try:
-        # this method called in a try block too
-        log.info("base:pre.py now called")
-        pool = pooler.get_pool(cr.dbname)
-        openupgrade.rename_columns(cr, renames)
-        mgr_ir_model_fields(cr)
-        mgr_company_id(cr)
-        mgr_fix_test_results(cr)
-    except Exception, e:
-        log.info("Migration: error in pre-convert-fields.py: %s", e)
-        osv.except_osv("Migration: error in pre-convert-fields.py: %s" % e, "")
-        raise
+    openupgrade.update_module_names(
+        cr, module_namespec
+        )
+    openupgrade.rename_columns(cr, renames)
+    openupgrade.rename_xmlids(cr, renamed_xmlids)
+    mgr_ir_model_fields(cr)
+    mgr_company_id(cr)
+    mgr_fix_test_results(cr)
+    openupgrade.rename_tables(
+        cr, [('res_partner_function',
+              'openupgrade_legacy_res_partner_function')])

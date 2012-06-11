@@ -1,5 +1,26 @@
 # -*- coding: utf-8 -*-
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution
+#    This module copyright (C) 2011-2012 Therp BV (<http://therp.nl>)
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+
 import os
+import inspect
 from osv import osv
 import pooler
 import logging
@@ -9,16 +30,20 @@ import openupgrade_tools
 logger = logging.getLogger('OpenUpgrade')
 
 __all__ = [
+    'migrate',
     'load_data',
     'rename_columns',
     'rename_tables',
     'drop_columns',
     'table_exists',
     'column_exists',
+    'logged_query',
     'delete_model_workflow',
     'set_defaults',
     'update_module_names',
     'add_ir_model_fields',
+    'rename_models',
+    'rename_xmlids',
 ]    
 
 def load_data(cr, module_name, filename, idref=None, mode='init'):
@@ -94,7 +119,7 @@ def rename_tables(cr, table_spec):
 def rename_models(cr, model_spec):
     """
     Rename models. Typically called in the pre script.
-    :param column_spec: a list of tuples (old table name, new table name).
+    :param column_spec: a list of tuples (old model name, new model name).
     
     Use case: if a model changes name, but still implements equivalent
     functionality you will want to update references in for instance
@@ -106,6 +131,24 @@ def rename_models(cr, model_spec):
                     old, new)
         cr.execute('UPDATE ir_model_fields SET relation = %s '
                    'WHERE relation = %s', (new, old,))
+    # TODO: signal where the model occurs in references to ir_model
+
+def rename_xmlids(cr, xmlids_spec):
+    """
+    Rename XML IDs. Typically called in the pre script.
+    One usage example is when an ID changes module. In OpenERP 6 for example,
+    a number of res_groups IDs moved to module base from other modules (
+    although they were still being defined in their respective module).
+    """
+    for (old, new) in xmlids_spec:
+        if not old.split('.') or not new.split('.'):
+            logger.error(
+            'Cannot rename XMLID %s to %s: need the module '
+            'reference to be specified in the IDs' % (old, new))
+        else:
+            query = ("UPDATE ir_model_data SET module = %s, name = %s "
+                     "WHERE module = %s and name = %s")
+            logged_query(cr, query, tuple(new.split('.') + old.split('.')))
 
 def drop_columns(cr, column_spec):
     """
@@ -161,8 +204,8 @@ def set_defaults(cr, pool, default_spec, force=False):
     """
 
     def write_value(ids, field, value):
-        logger.info("model %s, field %s: setting default value of %d resources to %s",
-                 model, field, len(ids), unicode(value))
+        logger.debug("model %s, field %s: setting default value of resources %s to %s",
+                 model, field, ids, unicode(value))
         obj.write(cr, 1, ids, {field: value})
 
     for model in default_spec.keys():
@@ -170,40 +213,42 @@ def set_defaults(cr, pool, default_spec, force=False):
         if not obj:
             raise osv.except_osv("Migration: error setting default, no such model: %s" % model, "")
 
-    for field, value in default_spec[model]:
-        domain = not force and [(field, '=', False)] or []
-        ids = obj.search(cr, 1, domain)
-        if not ids:
-            continue
-        if value is None:
-            # Set the value by calling the _defaults of the object.
-            # Typically used for company_id on various models, and in that
-            # case the result depends on the user associated with the object.
-            # We retrieve create_uid for this purpose and need to call the _defaults
-            # function per resource. Otherwise, write all resources at once.
-            if field in obj._defaults:
-                if not callable(obj._defaults[field]):
-                    write_value(ids, field, obj._defaults[field])
+        for field, value in default_spec[model]:
+            domain = not force and [(field, '=', False)] or []
+            ids = obj.search(cr, 1, domain)
+            if not ids:
+                continue
+            if value is None:
+                # Set the value by calling the _defaults of the object.
+                # Typically used for company_id on various models, and in that
+                # case the result depends on the user associated with the object.
+                # We retrieve create_uid for this purpose and need to call the _defaults
+                # function per resource. Otherwise, write all resources at once.
+                if field in obj._defaults:
+                    if not callable(obj._defaults[field]):
+                        write_value(ids, field, obj._defaults[field])
+                    else:
+                        # existence users is covered by foreign keys, so this is not needed
+                        # cr.execute("SELECT %s.id, res_users.id FROM %s LEFT OUTER JOIN res_users ON (%s.create_uid = res_users.id) WHERE %s.id IN %s" %
+                        #                     (obj._table, obj._table, obj._table, obj._table, tuple(ids),))
+                        cr.execute("SELECT id, COALESCE(create_uid, 1) FROM %s " % obj._table + "WHERE id in %s", (tuple(ids),))
+                        # Execute the function once per user_id
+                        user_id_map = {}
+                        for row in cr.fetchall():
+                            user_id_map.setdefault(row[1], []).append(row[0])
+                        for user_id in user_id_map:
+                            write_value(
+                                user_id_map[user_id], field,
+                                obj._defaults[field](obj, cr, user_id, None))
                 else:
-                    # existence users is covered by foreign keys, so this is not needed
-                    # cr.execute("SELECT %s.id, res_users.id FROM %s LEFT OUTER JOIN res_users ON (%s.create_uid = res_users.id) WHERE %s.id IN %s" %
-                    #                     (obj._table, obj._table, obj._table, obj._table, tuple(ids),))
-                    cr.execute("SELECT id, COALESCE(create_uid, 1) FROM %s " % obj._table + "WHERE id in %s", (tuple(ids),))
-                    fetchdict = dict(cr.fetchall())
-                    for id in ids:
-                        write_value([id], field, obj._defaults[field](obj, cr, fetchdict.get(id, 1), None))
-                        if id not in fetchdict:
-                            logger.info("model %s, field %s, id %d: no create_uid defined or user does not exist anymore",
-                                     model, field, id)
+                    error = ("OpenUpgrade: error setting default, field %s with "
+                             "None default value not in %s' _defaults" % (
+                            field, model))
+                    logger.error(error)
+                    # this exeption seems to get lost in a higher up try block
+                    osv.except_osv("OpenUpgrade", error)
             else:
-                error = ("OpenUpgrade: error setting default, field %s with "
-                         "None default value not in %s' _defaults" % (
-                        field, model))
-                logger.error(error)
-                # this exeption seems to get lost in a higher up try block
-                osv.except_osv("OpenUpgrade", error)
-        else:
-            write_value(ids, field, value)
+                write_value(ids, field, value)
     
 def logged_query(cr, query, args=None):
     if args is None:
@@ -257,3 +302,63 @@ def add_ir_model_fields(cr, columnspec):
         query = 'ALTER TABLE ir_model_fields ADD COLUMN %s %s' % (
             column)
         logged_query(cr, query, [])
+        
+def add_module_dependencies(cr, module_list):
+    """
+    Select (new) dependencies from the modules in the list
+    so that we can inject them into the graph at upgrade
+    time. Used in the modified OpenUpgrade Server,
+    not to be used in migration scripts
+    """
+    if not module_list:
+        return module_list
+    cr.execute("""
+        SELECT ir_module_module_dependency.name
+        FROM
+            ir_module_module,
+            ir_module_module_dependency
+        WHERE
+            module_id = ir_module_module.id
+            AND ir_module_module.name in %s
+        """, (tuple(module_list),))
+    dependencies = [x[0] for x in cr.fetchall()]
+    return list(set(module_list + dependencies))
+
+def migrate():
+    """
+    This is the decorator for the migrate() function
+    in migration scripts.
+    Return when the 'version' argument is not defined,
+    and log execeptions.
+    Retrieve debug context data from the frame above for
+    logging purposes.
+    """
+    def wrap(func):
+        def wrapped_function(cr, version):
+            stage =  'unknown'
+            module = 'unknown'
+            filename = 'unknown'
+            try:
+                frame = inspect.getargvalues(inspect.stack()[1][0])
+                stage = frame.locals['stage']
+                module = frame.locals['pkg'].name
+                filename = frame.locals['fp'].name
+            except Exception, e:
+                logger.error(
+                    "'migrate' decorator: failed to inspect "
+                    "the frame above: %s" % e)
+                pass
+            if not version:
+                return
+            logger.info(
+                "%s: %s-migration script called with version %s" %
+                (module, stage, version))
+            try:
+                # The actual function is called here
+                func(cr, version)
+            except Exception, e:
+                logger.error(
+                    "%s: error in migration script %s: %s" % 
+                    (module, filename, e))
+        return wrapped_function
+    return wrap
