@@ -65,15 +65,6 @@ from openerp.modules.module import \
 
 _logger = logging.getLogger(__name__)
 
-### OpenUpgrade
-def table_exists(cr, table):
-    """ Check whether a certain table or view exists """
-    cr.execute(
-        'SELECT count(relname) FROM pg_class WHERE relname = %s',
-        (table,))
-    return cr.fetchone()[0] == 1
-### End of OpenUpgrade
-
 def open_openerp_namespace():
     # See comment for open_openerp_namespace.
     if openerp.conf.deprecation.open_openerp_namespace:
@@ -250,12 +241,13 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
         return cr.fetchone()[0]
 
     def compare_registries(cr, module):
+        from openerp.openupgrade import openupgrade
         """
         OpenUpgrade: Compare the local registry with the global registry,
         log any differences and merge the local registry with
         the global one.
         """
-        if not table_exists(cr, 'openupgrade_record'):
+        if not openupgrade.table_exists(cr, 'openupgrade_record'):
             return
         for model, fields in local_registry.items():
             registry.setdefault(model, {})
@@ -285,6 +277,9 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
     if status is None:
         status = {}
 
+    if skip_modules is None:
+        skip_modules=[]
+
     processed_modules = []
     loaded_modules = []
     pool = pooler.get_pool(cr.dbname)
@@ -297,11 +292,12 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
 
     # register, instantiate and initialize models for each modules
     for index, package in enumerate(graph):
+
+        if package.name in skip_modules or package.name in loaded_modules:
+            continue
+
         module_name = package.name
         module_id = package.id
-
-        if skip_modules and module_name in skip_modules:
-            continue
 
         _logger.info('module %s: loading objects', package.name)
         migrations.migrate_module(package, 'pre')
@@ -400,11 +396,13 @@ def _check_module_names(cr, module_names):
 def load_marked_modules(cr, graph, states, force, progressdict, report, loaded_modules, registry):
     """Loads modules marked with ``states``, adding them to ``graph`` and
        ``loaded_modules`` and returns a list of installed/upgraded modules."""
+    from openerp.openupgrade import openupgrade
     processed_modules = []
     while True:
         cr.execute("SELECT name from ir_module_module WHERE state IN %s" ,(tuple(states),))
         module_list = [name for (name,) in cr.fetchall() if name not in graph]
-        new_modules_in_graph = graph.add_modules(cr, module_list, force)
+        module_list = openupgrade.add_module_dependencies(cr, module_list)
+        graph.add_modules(cr, module_list, force)
         _logger.debug('Updating graph with %d more modules', len(module_list))
         loaded, processed = load_module_graph(cr, graph, progressdict, report=report, skip_modules=loaded_modules, registry=registry)
         processed_modules.extend(processed)
@@ -502,6 +500,7 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
                 states_to_load = ['to install']
                 processed_install = load_marked_modules(cr, graph, states_to_load, force, status, report, loaded_modules, registry)
                 processed_modules.extend(processed_install)
+                loaded_modules.extend(processed_install)
             else:
                 processed_install = False
 
