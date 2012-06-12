@@ -2737,7 +2737,6 @@ instance.web.form.FieldOne2Many = instance.web.form.AbstractField.extend({
         this.dataset.o2m = this;
         this.dataset.parent_view = this.view;
         this.dataset.child_name = this.name;
-        //this.dataset.child_name = 
         this.dataset.on_change.add_last(function() {
             self.trigger_on_change();
         });
@@ -2769,6 +2768,11 @@ instance.web.form.FieldOne2Many = instance.web.form.AbstractField.extend({
         modes = !!modes ? modes.split(",") : ["tree"];
         var views = [];
         _.each(modes, function(mode) {
+            if (! _.include(["list", "tree", "graph", "kanban"], mode)) {
+                instance.webclient.notification.warn(
+                    _.str.sprintf("View type '%s' is not supported in One2Many.", mode));
+                return;
+            }
             var view = {
                 view_id: false,
                 view_type: mode == "tree" ? "list" : mode,
@@ -2790,6 +2794,7 @@ instance.web.form.FieldOne2Many = instance.web.form.AbstractField.extend({
                 view.options.not_interactible_on_create = true;
             } else if (view.view_type === "kanban") {
                 view.options.confirm_on_delete = false;
+                view.options.sortable = false;
                 if (self.get("effective_readonly")) {
                     view.options.action_buttons = false;
                     view.options.quick_creatable = false;
@@ -3309,6 +3314,7 @@ instance.web.form.FieldMany2Many = instance.web.form.AbstractField.extend({
                     'addable': self.get("effective_readonly") ? null : _t("Add"),
                     'deletable': self.get("effective_readonly") ? false : true,
                     'selectable': self.multi_selection,
+                    'sortable': false,
             });
         var embedded = (this.field.views || {}).tree;
         if (embedded) {
