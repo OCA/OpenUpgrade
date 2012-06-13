@@ -913,6 +913,10 @@ instance.web.form.FormRenderingEngine = instance.web.form.FormRenderingEngineInt
     },
     set_fields_view: function(fvg) {
         this.fvg = fvg;
+        this.version = parseFloat(this.fvg.arch.attrs.version);
+        if (isNaN(this.version)) {
+            this.version = 6.1;
+        }
     },
     set_tags_registry: function(tags_registry) {
         this.tags_registry = tags_registry;
@@ -922,8 +926,15 @@ instance.web.form.FormRenderingEngine = instance.web.form.FormRenderingEngineInt
     },
     // Backward compatibility tools, current default version: v6.1
     process_version: function() {
+        if (this.version < 7.0) {
+            this.$form.find('form:first').wrapInner('<group col="4"/>');
+            this.$form.find('page').each(function() {
+                if (!$(this).parents('field').length) {
+                    $(this).wrapInner('<group col="4"/>');
+                }
+            });
+        }
         selector = 'form[version!="7.0"] page,form[version!="7.0"]';
-        this.$form.find(selector).add(this.$form.filter(selector)).wrapInner('<group col="4"/>');
     },
     render_to: function($target) {
         var self = this;
@@ -934,7 +945,7 @@ instance.web.form.FormRenderingEngine = instance.web.form.FormRenderingEngineInt
         var xml = instance.web.json_node_to_xml(this.fvg.arch);
         this.$form = $('<div class="oe_form">' + xml + '</div>');
 
-        this.process_version()
+        this.process_version();
 
         this.fields_to_init = [];
         this.tags_to_init = [];
@@ -2730,6 +2741,7 @@ instance.web.form.FieldOne2Many = instance.web.form.AbstractField.extend({
     },
     start: function() {
         this._super.apply(this, arguments);
+        this.$element.addClass('oe_form_field_one2many');
 
         var self = this;
 
@@ -3271,6 +3283,7 @@ instance.web.form.FieldMany2Many = instance.web.form.AbstractField.extend({
     },
     start: function() {
         this._super.apply(this, arguments);
+        this.$element.addClass('oe_form_field_many2many');
 
         var self = this;
 
@@ -3279,7 +3292,7 @@ instance.web.form.FieldMany2Many = instance.web.form.AbstractField.extend({
         this.dataset.on_unlink.add_last(function(ids) {
             self.dataset_changed();
         });
-        
+
         this.is_setted.then(function() {
             self.load_view();
         });
@@ -3292,7 +3305,7 @@ instance.web.form.FieldMany2Many = instance.web.form.AbstractField.extend({
                     });
                 });
             });
-        })
+        });
     },
     set_value: function(value_) {
         value_ = value_ || [];
@@ -4085,14 +4098,6 @@ instance.web.form.FieldBinaryFile = instance.web.form.FieldBinary.extend({
 
 instance.web.form.FieldBinaryImage = instance.web.form.FieldBinary.extend({
     template: 'FieldBinaryImage',
-    initialize_content: function() {
-        this._super();
-        if (!this.get("effective_readonly")) {
-            this.$element.find('.oe_form_field_image_controls').show();
-        } else {
-            this.$element.find('.oe_form_field_image_controls').hide();
-        }
-    },
     set_value: function(value_) {
         this._super.apply(this, arguments);
         this.render_value();
