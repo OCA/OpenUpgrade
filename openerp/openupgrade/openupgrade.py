@@ -382,5 +382,6 @@ def migrate():
                 logger.error(
                     "%s: error in migration script %s: %s" % 
                     (module, filename, e))
+                raise
         return wrapped_function
     return wrap
