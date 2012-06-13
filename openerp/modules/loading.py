@@ -290,6 +290,10 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
     cr.execute("select (now() at time zone 'UTC')::timestamp")
     dt_before_load = cr.fetchone()[0]
 
+    #suppress commits to have the upgrade of one module in just one transation
+    cr.commit_org = cr.commit
+    cr.commit = lambda *args: None
+
     # register, instantiate and initialize models for each modules
     for index, package in enumerate(graph):
 
@@ -357,6 +361,7 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
                 migrations.migrate_module(package, 'post')
             except Exception, e:
                 _logger.error('Error executing post migration script for module %s: %s', package, e)
+                cr.close()
                 raise
 
             ver = release.major_version + '.' + package.data['version']
@@ -370,11 +375,11 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
                 if hasattr(package, kind):
                     delattr(package, kind)
 
-        cr.commit()
+        cr.commit_org()
 
     # mark new res_log records as read
     cr.execute("update res_log set read=True where create_date >= %s", (dt_before_load,))
-
+    cr.commit = cr.commit_org
     cr.commit()
 
     return loaded_modules, processed_modules

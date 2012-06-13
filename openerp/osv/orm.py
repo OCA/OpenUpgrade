@@ -2965,11 +2965,14 @@ class BaseModel(object):
                                 # add the NOT NULL constraint
                                 cr.commit()
                                 try:
+                                    cr.execute('SAVEPOINT add_constraint');
                                     cr.execute('ALTER TABLE "%s" ALTER COLUMN "%s" SET NOT NULL' % (self._table, k), log_exceptions=False)
+                                    cr.execute('RELEASE SAVEPOINT add_constraint');
                                     cr.commit()
                                     _schema.debug("Table '%s': column '%s': added NOT NULL constraint",
                                         self._table, k)
                                 except Exception:
+                                    cr.execute('ROLLBACK TO SAVEPOINT add_constraint');
                                     msg = "Table '%s': unable to set a NOT NULL constraint on column '%s' !\n"\
                                         "If you want to have it, you should update the records and execute manually:\n"\
                                         "ALTER TABLE %s ALTER COLUMN %s SET NOT NULL"
