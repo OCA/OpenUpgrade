@@ -14,7 +14,7 @@
         <field name="users" eval="[(4, ref('base.user_root'))]"/>
     </record>
 
-    <record model="ir.ui.menu" id="menu_definitions">
+    <record model="ir.ui.menu" id="base.menu_definitions">
         <field name="groups_id" eval="[(6,0,[ref('group_project_manager')])]"/>
     </record>
 
@@ -28,6 +28,11 @@
         <field name="implied_ids" eval="[(4, ref('group_tasks_work_on_tasks'))]"/>
         <field name="category_id" ref="base.module_category_hidden"/>
     </record>		
+
+    <record id="group_delegate_task" model="res.groups">
+        <field name="name">Task Delegation</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
 
     <record model="ir.rule" id="project_comp_rule">
         <field name="name">Project multi-company</field>
