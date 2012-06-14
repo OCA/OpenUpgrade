@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.0-rc1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:44+0000\n"
-"PO-Revision-Date: 2012-05-03 08:55+0000\n"
-"Last-Translator: Bayuka <bayuka1988@gmail.com>\n"
+"PO-Revision-Date: 2012-06-14 03:50+0000\n"
+"Last-Translator: gobi <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-05-04 05:19+0000\n"
-"X-Generator: Launchpad (build 15195)\n"
+"X-Launchpad-Export-Date: 2012-06-14 04:56+0000\n"
+"X-Generator: Launchpad (build 15405)\n"
 
 #. module: base
 #: model:res.country,name:base.sh
@@ -34,7 +34,7 @@ msgstr "Огноо Цаг"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_project_mailgate
 msgid "Tasks-Mail Integration"
-msgstr ""
+msgstr "Даалгавар-Имэйл Уялдаа"
 
 #. module: base
 #: code:addons/fields.py:582
@@ -71,6 +71,22 @@ msgid ""
 "    * Graph of My Remaining Hours by Project\n"
 "    "
 msgstr ""
+"\n"
+"Төслийн менежментийн модуль нь олон түвшинтэй төсөл, даалгавар, ажилуудыг "
+"хөтөлдөг.\n"
+"============================================================================="
+"=========\n"
+"\n"
+"Түүнчлэн даалгаврын төлөвлөгөө, дэс дараа зэрэгийг дүрслэн харуулдаг.\n"
+"\n"
+"Төслийн гишүүд нь хяналтын самбарын хувьд дараах боломжоор хангагддаг. "
+"Үүнд:\n"
+"--------------------------------------------\n"
+"    * Өөрийн нээлттэй даалгаврууд\n"
+"    * Өөрийн ацагласан даалгаврууд\n"
+"    * Өөрийн төслийн график: Төвөвлөсөн болон Биелсэн цаг\n"
+"    * Төслийн үлдэгдэл цагийн график\n"
+"    "
 
 #. module: base
 #: field:base.language.import,code:0
@@ -108,6 +124,8 @@ msgid ""
 "Helps you manage your projects and tasks by tracking them, generating "
 "plannings, etc..."
 msgstr ""
+"Даалгаврыг хөтлөх, төлөвлөх зэрэг боломжийн тусламжтайгаар төсөл болон "
+"даалгаврыг менеж хийхэд тусладаг"
 
 #. module: base
 #: field:ir.actions.act_window,display_menu_tip:0
@@ -118,7 +136,7 @@ msgstr "Дэлгэцийн цэсний тайлбар"
 #: help:ir.cron,model:0
 msgid ""
 "Model name on which the method to be called is located, e.g. 'res.partner'."
-msgstr ""
+msgstr "Метод дуудагдах моделийн нэр. Тухайлбал 'res.partner'."
 
 #. module: base
 #: view:ir.module.module:0
@@ -131,7 +149,7 @@ msgstr "Үүссэн"
 msgid ""
 "You can not write in this document (%s) ! Be sure your user belongs to one "
 "of these groups: %s."
-msgstr ""
+msgstr "Та (%s) баримтад бичиж болно ! Та харъяалагдах ёстой групп: %s."
 
 #. module: base
 #: model:ir.module.module,description:base.module_event_project
@@ -142,6 +160,11 @@ msgid ""
 "\n"
 "This module allows you to create retro planning for managing your events.\n"
 msgstr ""
+"\n"
+"Үйлд явлын зохион байгуулалт болон менежмент.\n"
+"======================================\n"
+"\n"
+"Энэ модуль нь үйл явдлыг менеж хийх төлөвлөгөөг гаргахад тусалдаг.\n"
 
 #. module: base
 #: help:ir.model.fields,domain:0
@@ -150,6 +173,8 @@ msgid ""
 "specified as a Python expression defining a list of triplets. For example: "
 "[('color','=','red')]"
 msgstr ""
+"Нэмэлт дөмэйн нь холбоост талбарын боломжит утгыг хязгаарладаг бөгөөд Python-"
+"ий гурвалсан жагсаалтаар илэрхийлэгддэг. Тухайлбал: [('color','=','red')]"
 
 #. module: base
 #: field:res.partner,ref:0
@@ -159,7 +184,7 @@ msgstr "Дугаар"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_be_invoice_bba
 msgid "Belgium - Structured Communication"
-msgstr ""
+msgstr "Белги - Суурьтай Нийгэмлэг"
 
 #. module: base
 #: field:ir.actions.act_window,target:0
@@ -169,23 +194,23 @@ msgstr "Ашиглах цонх"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_analytic_plans
 msgid "Sales Analytic Distribution"
-msgstr ""
+msgstr "Борлуулалтын Шинжилгээний Тархалт"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_process
 msgid "Process"
-msgstr ""
+msgstr "Процесс"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_analytic_journal_billing_rate
 msgid "Billing Rates on Contracts"
-msgstr ""
+msgstr "Гэрээний тооцооны ханш"
 
 #. module: base
 #: code:addons/base/res/res_users.py:558
 #, python-format
 msgid "Warning!"
-msgstr ""
+msgstr "Анхааруулга!"
 
 #. module: base
 #: code:addons/base/ir/ir_model.py:344
@@ -194,6 +219,9 @@ msgid ""
 "Properties of base fields cannot be altered in this manner! Please modify "
 "them through Python code, preferably through a custom addon!"
 msgstr ""
+"Үндсэн талбаруудын шинж ийм замаар засварлах боломжгүй! Тэдгээрийг Python "
+"кодын түвшинд засна, ерөнхийдөө өөриймшүүлэх нэмэлт модулиар шийдэх нь "
+"зохимжтой!"
 
 #. module: base
 #: code:addons/osv.py:129
@@ -210,7 +238,7 @@ msgstr "ir.ui.view.custom"
 #: code:addons/base/ir/ir_model.py:313
 #, python-format
 msgid "Renaming sparse field \"%s\" is not allowed"
-msgstr ""
+msgstr "Тархмал талбар \"%s\"-г нэрийг солих боломжгүй"
 
 #. module: base
 #: model:res.country,name:base.sz
@@ -221,17 +249,17 @@ msgstr "Швецарь"
 #: code:addons/orm.py:4206
 #, python-format
 msgid "created."
-msgstr ""
+msgstr "үүсгэсэн."
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_tr
 msgid "Turkey - Accounting"
-msgstr ""
+msgstr "Түрк - Санхүү"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_mrp_subproduct
 msgid "MRP Subproducts"
-msgstr ""
+msgstr "MRP Дэд бүтээгдэхүүн"
 
 #. module: base
 #: code:addons/base/module/module.py:390
@@ -265,7 +293,7 @@ msgstr "Инуит хэл / ᐃᓄᒃᑎᑐᑦ"
 #: model:ir.module.category,name:base.module_category_sales_management
 #: model:ir.module.module,shortdesc:base.module_sale
 msgid "Sales Management"
-msgstr ""
+msgstr "Борлуулалтын менежмент"
 
 #. module: base
 #: view:res.partner:0
@@ -361,23 +389,23 @@ msgstr "Визардын нэр"
 #. module: base
 #: model:res.groups,name:base.group_partner_manager
 msgid "Partner Manager"
-msgstr ""
+msgstr "Харилцагчийн Менежер"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_customer_relationship_management
 msgid "Customer Relationship Management"
-msgstr ""
+msgstr "Захиалагчийн Харилцааны Менежмент"
 
 #. module: base
 #: view:ir.module.module:0
 msgid "Extra"
-msgstr ""
+msgstr "Нэмэлт"
 
 #. module: base
 #: code:addons/orm.py:2526
 #, python-format
 msgid "Invalid group_by"
-msgstr ""
+msgstr "Буруу бүлгэлэлт group_by"
 
 #. module: base
 #: field:ir.module.category,child_ids:0
@@ -455,11 +483,13 @@ msgid ""
 "One of the records you are trying to modify has already been deleted "
 "(Document type: %s)."
 msgstr ""
+"Таны засварлах гэж байгаа бичлэг чинь аль хэдий нь устгагдсан байна "
+"(Баримтын төрөл: %s)."
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_pad_project
 msgid "Specifications on PADs"
-msgstr ""
+msgstr "PAD дээрх дэлгэрэнгүй тодорхойлолт"
 
 #. module: base
 #: help:ir.filters,user_id:0
@@ -471,7 +501,7 @@ msgstr ""
 #. module: base
 #: help:res.partner,website:0
 msgid "Website of Partner."
-msgstr ""
+msgstr "Харилцагчийн Веб сайт."
 
 #. module: base
 #: help:ir.actions.act_window,views:0
@@ -500,7 +530,7 @@ msgstr "Огнооны хэлбэр"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_base_report_designer
 msgid "OpenOffice Report Designer"
-msgstr ""
+msgstr "OpenOffice Тайлан Зохиомжлогч"
 
 #. module: base
 #: field:res.bank,email:0
@@ -722,7 +752,7 @@ msgstr "Иордан"
 #. module: base
 #: help:ir.cron,nextcall:0
 msgid "Next planned execution date for this job."
-msgstr ""
+msgstr "Энэ ажил дээр дараагийн товлосон огноо."
 
 #. module: base
 #: code:addons/base/ir/ir_model.py:139
@@ -738,7 +768,7 @@ msgstr "Эритрея"
 #. module: base
 #: sql_constraint:res.company:0
 msgid "The company name must be unique !"
-msgstr ""
+msgstr "Компаний нэр үл давхцах байх ёстой !"
 
 #. module: base
 #: view:res.config:0
@@ -839,7 +869,7 @@ msgstr "Албани хэл / Shqip"
 #. module: base
 #: model:ir.ui.menu,name:base.menu_crm_config_opportunity
 msgid "Opportunities"
-msgstr ""
+msgstr "Боломжууд"
 
 #. module: base
 #: model:ir.model,name:base.model_base_language_export
@@ -864,7 +894,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_document_webdav
 msgid "Shared Repositories (WebDAV)"
-msgstr ""
+msgstr "Дундын агуулах (WebDAV)"
 
 #. module: base
 #: model:ir.module.module,description:base.module_import_google
@@ -876,7 +906,7 @@ msgstr ""
 #. module: base
 #: view:res.users:0
 msgid "Email Preferences"
-msgstr ""
+msgstr "Имэйл тохиргоо"
 
 #. module: base
 #: model:ir.module.module,description:base.module_audittrail
@@ -920,7 +950,7 @@ msgstr "Испани"
 #. module: base
 #: view:base.module.update:0
 msgid "Please be patient, as this operation may take a few seconds..."
-msgstr ""
+msgstr "Тэвчээртэй байна уу, энэ үйлдэл ердөө хэдхэн секунд л болно..."
 
 #. module: base
 #: help:ir.actions.act_window,domain:0
@@ -968,7 +998,7 @@ msgstr "Ниу"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_membership
 msgid "Membership Management"
-msgstr ""
+msgstr "Гишүүнчлэлийн менежмент"
 
 #. module: base
 #: selection:ir.module.module,license:0
@@ -995,7 +1025,7 @@ msgstr "Дугаарын төрөл хүсэх"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_google_base_account
 msgid "Google Users"
-msgstr ""
+msgstr "Google Хэрэглэгчид"
 
 #. module: base
 #: help:ir.server.object.lines,value:0
@@ -1020,7 +1050,7 @@ msgstr "Дэд ангилалууд"
 #. module: base
 #: model:ir.model,name:base.model_ir_config_parameter
 msgid "ir.config_parameter"
-msgstr ""
+msgstr "ir.config_parameter"
 
 #. module: base
 #: selection:base.language.export,format:0
@@ -1058,7 +1088,7 @@ msgstr "Төрөл"
 #. module: base
 #: field:ir.mail_server,smtp_user:0
 msgid "Username"
-msgstr ""
+msgstr "Хэрэглэгчийн нэр"
 
 #. module: base
 #: code:addons/orm.py:398
@@ -1077,13 +1107,13 @@ msgstr "Гуам (USA)"
 #: code:addons/base/res/res_users.py:558
 #, python-format
 msgid "Setting empty passwords is not allowed for security reasons!"
-msgstr ""
+msgstr "Нууцлалын шалтгаанаар хоосон нууц үг зөвшөөрөгдөхгүй!"
 
 #. module: base
 #: code:addons/base/ir/ir_mail_server.py:192
 #, python-format
 msgid "Connection test failed!"
-msgstr ""
+msgstr "Холболтын тест амжилтгүй боллоо!"
 
 #. module: base
 #: selection:ir.actions.server,state:0
@@ -1205,7 +1235,7 @@ msgstr ""
 #. module: base
 #: field:ir.mail_server,smtp_port:0
 msgid "SMTP Port"
-msgstr ""
+msgstr "SMTP Порт"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_import_sugarcrm
@@ -1227,12 +1257,12 @@ msgstr ""
 #: code:addons/base/module/wizard/base_language_install.py:55
 #, python-format
 msgid "Language Pack"
-msgstr ""
+msgstr "Хэлний Багц"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_tests
 msgid "Tests"
-msgstr ""
+msgstr "Тест"
 
 #. module: base
 #: field:ir.ui.view_sc,res_id:0
@@ -1263,7 +1293,7 @@ msgstr "Маршалын арлууд"
 #: code:addons/base/ir/ir_model.py:368
 #, python-format
 msgid "Changing the model of a field is forbidden!"
-msgstr ""
+msgstr "Моделийн талбарыг өөрчлөх явдал зөвшөөрөгдөхгүй!"
 
 #. module: base
 #: model:res.country,name:base.ht
@@ -1299,7 +1329,7 @@ msgstr ""
 #: code:addons/base/res/res_users.py:222
 #, python-format
 msgid "Operation Canceled"
-msgstr ""
+msgstr "Үйлдэл Цуцлагдсан"
 
 #. module: base
 #: help:base.language.export,lang:0
@@ -1310,12 +1340,12 @@ msgstr "Шинэ хэл экспортлож байна, та хэл сонго�
 #: model:ir.module.module,shortdesc:base.module_document
 #: model:ir.module.module,shortdesc:base.module_knowledge
 msgid "Document Management System"
-msgstr ""
+msgstr "Баримтын Менежментийн Систем"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_crm_claim
 msgid "Claims Management"
-msgstr ""
+msgstr "Гомдлын Менежмент"
 
 #. module: base
 #: model:ir.ui.menu,name:base.menu_purchase_root
@@ -1569,7 +1599,7 @@ msgstr "Урсгал"
 #: model:ir.module.category,name:base.module_category_warehouse_management
 #: model:ir.module.module,shortdesc:base.module_stock
 msgid "Warehouse Management"
-msgstr ""
+msgstr "Агуулахын менежмент"
 
 #. module: base
 #: model:ir.model,name:base.model_res_request_link
@@ -1783,7 +1813,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_html_view
 msgid "Html View"
-msgstr ""
+msgstr "HTML Харагдац"
 
 #. module: base
 #: field:res.currency,position:0
@@ -2019,7 +2049,7 @@ msgstr ""
 #. module: base
 #: model:ir.ui.menu,name:base.menu_administration
 msgid "Settings"
-msgstr ""
+msgstr "Тохиргоо"
 
 #. module: base
 #: selection:ir.actions.act_window,view_type:0
@@ -2033,7 +2063,7 @@ msgstr "Мод"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_analytic_multicurrency
 msgid "Multi-Currency in Analytic"
-msgstr ""
+msgstr "Шинжилгээ дахь Олон Валют"
 
 #. module: base
 #: view:base.language.export:0
