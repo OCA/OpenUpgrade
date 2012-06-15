@@ -2543,6 +2543,7 @@ instance.web.form.FieldMany2One = instance.web.form.AbstractField.extend(_.exten
         var tip_delay = 200;
         var tip_duration = 3000;
         var anyoneLoosesFocus = function() {
+            var used = false;
             if (self.floating) {
                 if (self.last_search.length > 0) {
                     if (self.last_search[0][0] != self.get("value")) {
@@ -2550,13 +2551,17 @@ instance.web.form.FieldMany2One = instance.web.form.AbstractField.extend(_.exten
                         self.display_value["" + self.last_search[0][0]] = self.last_search[0][1];
                         self.set({value: self.last_search[0][0]});
                     } else {
+                        used = true;
                         self.render_value();
                     }
                 } else {
+                    used = true;
                     self.set({value: false});
+                    self.render_value();
                 }
+                self.floating = false;
             }
-            if (! self.get("value")) {
+            if (used) {
                 tip_def.reject();
                 untip_def.reject();
                 tip_def = $.Deferred();
@@ -2603,7 +2608,8 @@ instance.web.form.FieldMany2One = instance.web.form.AbstractField.extend(_.exten
                 e.preventDefault();
             },
             html: true,
-            close: anyoneLoosesFocus,
+            // disabled to solve a bug, but may cause others
+            //close: anyoneLoosesFocus,
             minLength: 0,
             delay: 0
         });
@@ -2781,9 +2787,7 @@ instance.web.form.FieldOne2Many = instance.web.form.AbstractField.extend({
         var views = [];
         _.each(modes, function(mode) {
             if (! _.include(["list", "tree", "graph", "kanban"], mode)) {
-                instance.webclient.notification.warn(
-                    _.str.sprintf("View type '%s' is not supported in One2Many.", mode));
-                return;
+                throw new Error(_.str.sprintf("View type '%s' is not supported in One2Many.", mode));
             }
             var view = {
                 view_id: false,
@@ -3988,7 +3992,7 @@ instance.web.form.FieldBinary = instance.web.form.AbstractField.extend(_.extend(
     },
     initialize_content: function() {
         this.$element.find('input.oe-binary-file').change(this.on_file_change);
-        this.$element.find('button.oe-binary-file-save').click(this.on_save_as);
+        this.$element.find('button.oe_binary_file_save').click(this.on_save_as);
         this.$element.find('.oe-binary-file-clear').click(this.on_clear);
     },
     human_filesize : function(size) {
@@ -4018,6 +4022,7 @@ instance.web.form.FieldBinary = instance.web.form.AbstractField.extend(_.extend(
             // TODO: use openerp web crashmanager
             console.warn("Error while uploading file : ", name);
         } else {
+            this.filename = name;
             this.on_file_uploaded_and_valid.apply(this, arguments);
         }
         this.$element.find('.oe-binary-progress').hide();
@@ -4025,20 +4030,33 @@ instance.web.form.FieldBinary = instance.web.form.AbstractField.extend(_.extend(
     },
     on_file_uploaded_and_valid: function(size, name, content_type, file_base64) {
     },
-    on_save_as: function() {
-        $.blockUI();
-        this.session.get_file({
-            url: '/web/binary/saveas_ajax',
-            data: {data: JSON.stringify({
-                model: this.view.dataset.model,
-                id: (this.view.datarecord.id || ''),
-                field: this.name,
-                filename_field: (this.node.attrs.filename || ''),
-                context: this.view.dataset.get_context()
-            })},
-            complete: $.unblockUI,
-            error: instance.webclient.crashmanager.on_rpc_error
-        });
+    on_save_as: function(ev) {
+        var value = this.get('value');
+        if (!value) {
+            this.do_warn(_t("Save As..."), _t("The field is empty, there's nothing to save !"));
+            ev.stopPropagation();
+        } else if (this._dirty_flag) {
+            var link = this.$('.oe_binary_file_save_data')[0];
+            link.download = this.filename || "download.bin"; // Works on only on Google Chrome
+            //link.target = '_blank';
+            link.href = "data:application/octet-stream;base64," + value;
+        } else {
+            $.blockUI();
+            this.session.get_file({
+                url: '/web/binary/saveas_ajax',
+                data: {data: JSON.stringify({
+                    model: this.view.dataset.model,
+                    id: (this.view.datarecord.id || ''),
+                    field: this.name,
+                    filename_field: (this.node.attrs.filename || ''),
+                    context: this.view.dataset.get_context()
+                })},
+                complete: $.unblockUI,
+                error: instance.webclient.crashmanager.on_rpc_error
+            });
+            ev.stopPropagation();
+            return false;
+        }
     },
     on_clear: function() {
         if (this.get('value') !== false) {
