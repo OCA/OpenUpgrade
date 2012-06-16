@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.0-rc1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:44+0000\n"
-"PO-Revision-Date: 2012-06-15 03:49+0000\n"
+"PO-Revision-Date: 2012-06-15 15:28+0000\n"
 "Last-Translator: gobi <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-06-15 04:59+0000\n"
-"X-Generator: Launchpad (build 15414)\n"
+"X-Launchpad-Export-Date: 2012-06-16 05:16+0000\n"
+"X-Generator: Launchpad (build 15419)\n"
 
 #. module: base
 #: model:res.country,name:base.sh
@@ -1935,6 +1935,8 @@ msgid ""
 "simplified payment mode encoding, automatic picking lists generation and "
 "more."
 msgstr ""
+"Борлуулалтын цаг дээр хурдан боловсруулалт, хялбар төлбөрийн горим, автомат "
+"түүврийн жагсаалт бэлдэх зэрэгт тусладаг."
 
 #. module: base
 #: model:res.country,name:base.mv
@@ -2120,6 +2122,13 @@ msgid ""
 "Accounting chart and localization for Ecuador.\n"
 "    "
 msgstr ""
+"\n"
+"Энэ нь OpenERP-д Эквадорийн дансны модыг менеж хийх суурь модуль юм.\n"
+"============================================================================="
+"=\n"
+"\n"
+"Дансны модны Эквадорын хувилбар.\n"
+"    "
 
 #. module: base
 #: code:addons/base/ir/ir_filters.py:38
@@ -2132,7 +2141,7 @@ msgstr "%s (copy)"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_chart
 msgid "Template of Charts of Accounts"
-msgstr ""
+msgstr "Дансны Модны Үлгэр"
 
 #. module: base
 #: field:res.partner.address,type:0
@@ -2219,7 +2228,7 @@ msgstr "Финланд"
 #: code:addons/base/res/res_company.py:156
 #, python-format
 msgid "Website: "
-msgstr ""
+msgstr "Вебсайт: "
 
 #. module: base
 #: model:ir.ui.menu,name:base.menu_administration
@@ -2256,6 +2265,8 @@ msgid ""
 "Display this bank account on the footer of printed documents like invoices "
 "and sales orders."
 msgstr ""
+"Энэ банкны дансны хуудасны хөлд нэхэмлэх, борлуулалтын баримт дээрхтэй "
+"ижилээр хэвлэнэ."
 
 #. module: base
 #: view:base.language.import:0
@@ -2263,6 +2274,8 @@ msgid ""
 "When using CSV format, please also check that the first line of your file is "
 "one of the following:"
 msgstr ""
+"CSV форматыг хэрэглэж байх үедээ файлын эхний мөр нь дараахын аль нэг байгаа "
+"эсэхийг шалга:"
 
 #. module: base
 #: view:res.log:0
@@ -2285,6 +2298,8 @@ msgid ""
 "This wizard will scan all module repositories on the server side to detect "
 "newly added modules as well as any change to existing modules."
 msgstr ""
+"Энэ харилцах цонх нь сервер дээрх бүх модулийн агуулахыг шалгаж шинээр "
+"нэмэгдсэн модуль, өөрчлөгдсөн модуль байгаа эсэхийг шалгадаг."
 
 #. module: base
 #: model:ir.module.module,description:base.module_sale_journal
@@ -2316,6 +2331,32 @@ msgid ""
 "Some statistics by journals are provided.\n"
 "    "
 msgstr ""
+"\n"
+"Борлуулалтын журналь модуль нь таны борлуулалт, түгээлтийг ялгаатай "
+"журналуудад ангилгах боломжийг олгодог.\n"
+"============================================================================="
+"===========================================\n"
+"\n"
+"Энэ модуль нь олон хэлтэстэй томоохон компаниудад маш \n"
+"зохимжтой байдаг.\n"
+"\n"
+"Журналыг олон зорилгоор ашиглаж болно. Тухайлбал:\n"
+"    * Борлуулалтыг хэлтсээр тусгаарлах\n"
+"    * Түгээлтийг машинаар эсвэл шуудан үйлчилгээгээр ангилах\n"
+"\n"
+"Журнал өөрийн үүрэгтэй бөгөөд төлөвүүдтэй байна. Төлөв нь:\n"
+"    * ноорог, нээлттэй, цуцлагдсан, хийгдсэн.\n"
+"\n"
+"Бүлэг үйлдлүүд журналууд дээр бөөнөөр биелж бүх борлуулалтыг бөөнд нь "
+"шалгах, нэхэмжлэх зэрэг үйлдлийг хийж болно.\n"
+"\n"
+"Мөн энэ нь бөөнд нэхэмжлэх арга нь харилцагчаар, борлуулалтын захиалгаар "
+"тохируулагдаж болно. Жишээлбэл:\n"
+"    * өдөр тутамын нэхэмжлэл,\n"
+"    * сар тутамын нэхэмжлэл, ...\n"
+"\n"
+"Журналаар зарим статистик гардаг.\n"
+"    "
 
 #. module: base
 #: field:res.company,logo:0
@@ -2325,7 +2366,7 @@ msgstr "Лого"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_cr
 msgid "Costa Rica - Accounting"
-msgstr ""
+msgstr "Коста Рика - Санхүү"
 
 #. module: base
 #: view:ir.module.module:0
@@ -2351,16 +2392,32 @@ msgid ""
 "re-invoice your customer's expenses if your work by project.\n"
 "    "
 msgstr ""
+"\n"
+"Энэ модуль нь ажилчдын зардлыг менеж хийх зорилготой.\n"
+"===============================================\n"
+"\n"
+"Хэрэгждэг бүхэл ажлын урсгал нь:\n"
+"    * Ноорог зардал\n"
+"    * Шаардах хуудас ажилтан үүсгэх\n"
+"    * Менежерийн хяналт\n"
+"    * Нягтлан хянаж нэхэмжлэл үүсгэх\n"
+"    * Шаардахын төлбөр ажилчинд олгогдох\n"
+"\n"
+"Энэ модуль нь мөн шинжилгээний санхүүтэй холбогдож ажилладаг бөгөөд \n"
+"цагийн хуваарьтай мөн холбогддог. Тиймээс ажил нь хэрэв төслийн ажил байвал "
+"\n"
+"захиалагчаас уг зардлыг автоматаар давхар нэхэмжлэх боломжийг олгодог.\n"
+"    "
 
 #. module: base
 #: field:ir.values,action_id:0
 msgid "Action (change only)"
-msgstr ""
+msgstr "Үйлдэл (зөвхөн өөрчлөлт)"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_subscription
 msgid "Recurring Documents"
-msgstr ""
+msgstr "Давтагдах Баримт"
 
 #. module: base
 #: model:res.country,name:base.bs
@@ -2399,7 +2456,7 @@ msgstr "Шинэчлэгдсэн модулийн тоо"
 #. module: base
 #: field:ir.cron,function:0
 msgid "Method"
-msgstr ""
+msgstr "Метод"
 
 #. module: base
 #: view:res.partner.event:0
@@ -2417,11 +2474,13 @@ msgid ""
 "Views allows you to personalize each view of OpenERP. You can add new "
 "fields, move fields, rename them or delete the ones that you do not need."
 msgstr ""
+"Харагдац нь OpenERP-н бүхэл харагдацыг өөриймшүүлэх боломжийг олгодог. Та "
+"шинэ талбар нэмэх, талбар зөөх, нэрийг өөрчлөх, устгах боломжтой болдог."
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_base_setup
 msgid "Initial Setup Tools"
-msgstr ""
+msgstr "Анхны Суулгах Багажууд"
 
 #. module: base
 #: field:ir.actions.act_window,groups_id:0
@@ -2455,7 +2514,7 @@ msgstr "Белиз"
 #. module: base
 #: help:ir.actions.report.xml,header:0
 msgid "Add or not the corporate RML header"
-msgstr ""
+msgstr "RML толгойг нэмэх эсвэл холбохгүй байх"
 
 #. module: base
 #: model:ir.module.module,description:base.module_hr_recruitment
@@ -2474,16 +2533,27 @@ msgid ""
 "system to store and search in your CV base.\n"
 "    "
 msgstr ""
+"\n"
+"Ажлын байр, ажилтан авах процессыг менеж хийдэг.\n"
+"==================================================\n"
+"\n"
+"Энэ нь судалгаа авах модультай уялдаж ялгаатай ажлуудад ялгаатай "
+"ярилцлагуудыг тодорхойлох боломжийг олгодог.\n"
+"\n"
+"Энэ модуль нь mail gateway-тэй холбогдож jobs@танайкомпани.mn хаягт ирсэн "
+"имэйлийг автоматаар хянадаг. Энэ нь мөн баримтын модультай холбогдож CV-г "
+"хадгалах, хайх боломжийг бүрдүүлдэг.\n"
+"    "
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_res_widget_wizard
 msgid "Homepage Widgets Management"
-msgstr ""
+msgstr "Нүүр хуудасны Виджетийн Менежмент"
 
 #. module: base
 #: field:res.company,rml_header1:0
 msgid "Report Header / Company Slogan"
-msgstr ""
+msgstr "Тайлангийн Толгой / Компаний Уриа"
 
 #. module: base
 #: model:res.country,name:base.pl
@@ -2503,7 +2573,7 @@ msgstr ""
 #: code:addons/orm.py:3615
 #, python-format
 msgid "A document was modified since you last viewed it (%s:%d)"
-msgstr ""
+msgstr "Барим таныг хамгийн сүүлд үзсэнээс хойш өөрчлөгдсөн байна (%s:%d)"
 
 #. module: base
 #: view:workflow:0
@@ -2535,7 +2605,7 @@ msgstr ""
 #. module: base
 #: field:ir.mail_server,smtp_debug:0
 msgid "Debugging"
-msgstr ""
+msgstr "Дебагдаж байна"
 
 #. module: base
 #: model:ir.module.module,description:base.module_crm_helpdesk
@@ -2551,6 +2621,15 @@ msgid ""
 "and categorize your interventions with a channel and a priority level.\n"
 "    "
 msgstr ""
+"\n"
+"Туслах Төвийн Менежмент\n"
+"====================\n"
+"\n"
+"Гомдолыг бичиж авч боловсруулдагтай төстэйгээр Туслах, Дэмжих төвийн хувьд "
+"өөрийн оролцоо хөтлөх нь зохимжтой байдаг.  Гэхдээ энэ аман харилцаанд илүү "
+"зохимжтой. Өөрөөр хэлбэл гомдол хамаагүй байж болно. Иймээс захиалагчийг "
+"сонгож тэмдэглэл хөтлөх, өөрийн оролцоог суваг, урьтамжаар нь хөтлөж болно.\n"
+"    "
 
 #. module: base
 #: sql_constraint:ir.ui.view_sc:0
@@ -2571,6 +2650,17 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"Нөөцийн менежментийн модуль.\n"
+"===============================\n"
+"\n"
+"Нөөц гэдэг нь цагилбарт хуваарилж болох ямар ч зүйлиг хэлнэ\n"
+"(даалгаврыг гүйцэтгэх хөгжүүлэгч, үйлдвэрлэлийн захиалга дахь дамжлагын "
+"ажлын төв, гэх мэт).\n"
+"Энэ модуль нь бүх нөөцтэй холбогдсон нөөцийн цагалбарыг менеж хийдэг.\n"
+"Түүнчлэн бүх нөөцүүдийн амралт, чөлөөг менеж хийнэ.\n"
+"\n"
+"    "
 
 #. module: base
 #: view:ir.rule:0
@@ -2611,6 +2701,12 @@ msgid ""
 "\n"
 "Configure servers and trigger synchronization with its database objects.\n"
 msgstr ""
+"\n"
+"Бүх обьекттой ижилтгэх\n"
+"=================================\n"
+"\n"
+"Сервер болон триггерийг үүний өгөгдлийн баазын обьекттой ижилтгэх явдлыг "
+"тохируулна.\n"
 
 #. module: base
 #: model:res.country,name:base.mg
@@ -2646,12 +2742,12 @@ msgstr "Өнөөгийн ханш"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_idea
 msgid "Ideas"
-msgstr ""
+msgstr "Санаанууд"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_crm
 msgid "Opportunity to Quotation"
-msgstr ""
+msgstr "Боломжийн үнийн санал"
 
 #. module: base
 #: model:ir.module.module,description:base.module_sale_analytic_plans
@@ -2664,6 +2760,13 @@ msgid ""
 "orders.\n"
 "    "
 msgstr ""
+"\n"
+"шинжилгээт түгээлт, борлуулалтын захиалгыг менеж хийх үндсэн модуль.\n"
+"=================================================================\n"
+"\n"
+"Энэ модулийн тусламжтайгаар шинжилгээний дансдыг борлуулалтын захиалгатай "
+"холбодог.\n"
+"    "
 
 #. module: base
 #: field:ir.actions.url,target:0
@@ -2673,22 +2776,22 @@ msgstr "Үйлдлийн бай"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_base_calendar
 msgid "Calendar Layer"
-msgstr ""
+msgstr "Цаглабарын Зохиомж"
 
 #. module: base
 #: model:ir.actions.report.xml,name:base.report_ir_model_overview
 msgid "Model Overview"
-msgstr ""
+msgstr "Моделийн Тойм"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_product_margin
 msgid "Margins by Products"
-msgstr ""
+msgstr "Захалбар Бүтээгдэхүүнээр"
 
 #. module: base
 #: model:ir.ui.menu,name:base.menu_invoiced
 msgid "Invoicing"
-msgstr ""
+msgstr "Нэхэмжлэл"
 
 #. module: base
 #: field:ir.ui.view_sc,name:0
@@ -2723,13 +2826,13 @@ msgstr "Импорт / Экспорт"
 #. module: base
 #: model:ir.actions.todo.category,name:base.category_tools_customization_config
 msgid "Tools / Customization"
-msgstr ""
+msgstr "Багаж / Өөриймшүүлэлт"
 
 #. module: base
 #: field:ir.model.data,res_id:0
 #: field:ir.values,res_id:0
 msgid "Record ID"
-msgstr ""
+msgstr "Бичлэгийн ID"
 
 #. module: base
 #: field:ir.actions.server,email:0
@@ -2750,7 +2853,7 @@ msgstr "Сервер үйлдэл"
 #. module: base
 #: help:ir.actions.client,params:0
 msgid "Arguments sent to the client along withthe view tag"
-msgstr ""
+msgstr "Клиент рүү харах таагийн хамт илгээгдсэн аргумент"
 
 #. module: base
 #: model:ir.module.module,description:base.module_project_gtd
@@ -2781,6 +2884,25 @@ msgid ""
 "performing those tasks.\n"
 "    "
 msgstr ""
+"\n"
+"Энэ нь Ажлыг Амжуулах аргачлалын бүх зарчмуудыг хэрэгжүүлсэн модуль юм.\n"
+"============================================================================="
+"======\n"
+"\n"
+"Энэ модуль нь даалгавар суурилсан хувийн хийх ажлыг хялбар жагсаалтыг "
+"агуулдаг. Энэ нь төслийн аппликэшнд\n"
+"засварлах боломжтой маш цөөн талбартай ажлын жагсаалтыг нэмдэг. \n"
+"\n"
+"Ажлын жагсаалт нь АА арга дээр суурилдаг. Энэ нь дэлхий даяар хэрэглэгддэг\n"
+"хувийн цагийн менежментийн сайжруулсан арга юм.\n"
+"\n"
+"Ажлыг Амжуулах (АА) гэдэг нь David Allen-ий бичсэн Getting Things Done ном "
+"дээр суурилсан арга юм.\n"
+"\n"
+"АА-н гол санаа нь хүн толгойндоо ажлыг санах хэрэггүй хаа нэгт сануулаад "
+"толгойноос мартах тухай юм.\n"
+"Ингэснээр сэтгэл чөлөөтэй болж зөвхөн одоо хийж байгаа ажилдаа төвлөрдөг.\n"
+"    "
 
 #. module: base
 #: model:res.country,name:base.tt
@@ -2807,13 +2929,13 @@ msgstr "Талбарын зурагжуулалт"
 #: code:addons/base/publisher_warranty/publisher_warranty.py:163
 #, python-format
 msgid "Error during communication with the publisher warranty server."
-msgstr ""
+msgstr "Зохиогчийн Баталгааны сервертэй холбогдоход алдаа гарлаа."
 
 #. module: base
 #: model:res.groups,name:base.group_sale_manager
 #: model:res.groups,name:base.group_tool_manager
 msgid "Manager"
-msgstr ""
+msgstr "Менежер"
 
 #. module: base
 #: model:ir.ui.menu,name:base.menu_custom
@@ -2850,12 +2972,12 @@ msgstr "IDs Арилгах"
 #. module: base
 #: view:res.groups:0
 msgid "Inherited"
-msgstr ""
+msgstr "Удамшсан"
 
 #. module: base
 #: field:ir.model.fields,serialization_field_id:0
 msgid "Serialization Field"
-msgstr ""
+msgstr "Сериал Талбар"
 
 #. module: base
 #: model:ir.module.category,description:base.module_category_report_designer
@@ -2863,17 +2985,19 @@ msgid ""
 "Lets you install various tools to simplify and enhance OpenERP's report "
 "creation."
 msgstr ""
+"OpenERP-н тайлан үүсгэх ажлыг хялбарчлах төрөл бүрийн багажийг суулгах "
+"боломжийг олгодог."
 
 #. module: base
 #: view:res.lang:0
 msgid "%y - Year without century [00,99]."
-msgstr ""
+msgstr "%y - Зуун үгүй он [00,99]."
 
 #. module: base
 #: code:addons/base/res/res_company.py:155
 #, python-format
 msgid "Fax: "
-msgstr ""
+msgstr "Факс: "
 
 #. module: base
 #: model:res.country,name:base.si
@@ -2883,20 +3007,20 @@ msgstr "Словени"
 #. module: base
 #: help:res.currency,name:0
 msgid "Currency Code (ISO 4217)"
-msgstr ""
+msgstr "Валютийн Код (ISO 4217)"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.res_log_act_window
 #: model:ir.ui.menu,name:base.menu_res_log_act_window
 msgid "Client Logs"
-msgstr ""
+msgstr "Клиентийн Лог"
 
 #. module: base
 #: code:addons/orm.py:1883
 #: code:addons/orm.py:1894
 #, python-format
 msgid "Invalid Object Architecture!"
-msgstr ""
+msgstr "Обьектийн буруу архитектур!"
 
 #. module: base
 #: code:addons/base/ir/ir_model.py:311
@@ -2915,7 +3039,7 @@ msgstr "Алдаа!"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_fr_rib
 msgid "French RIB Bank Details"
-msgstr ""
+msgstr "Францын RIB банкын дэлгэрэнгүй"
 
 #. module: base
 #: view:res.lang:0
@@ -2950,6 +3074,10 @@ msgid ""
 "==================================================\n"
 "    "
 msgstr ""
+"\n"
+"Энэ модуль нь бүх төслийн канбан харагдацад PAD-г нэмдэг\n"
+"==================================================\n"
+"    "
 
 #. module: base
 #: model:ir.actions.act_window,help:base.action_country
@@ -2958,6 +3086,8 @@ msgid ""
 "partner records. You can create or delete countries to make sure the ones "
 "you are working on will be maintained."
 msgstr ""
+"Харилцагчийн бичлэг рүү нэмэгдэж болох бүх улсыг харж, менеж хийнэ. Улсыг "
+"нэмж, хасч болно."
 
 #. module: base
 #: model:res.partner.category,name:base.res_partner_category_7
@@ -2977,7 +3107,7 @@ msgstr "Солонгос (KR) / 한국어 (KR)"
 #. module: base
 #: help:ir.model.fields,model:0
 msgid "The technical name of the model this field belongs to"
-msgstr ""
+msgstr "Энэ талбар харъяалагддаг моделийн техникийн нэр"
 
 #. module: base
 #: field:ir.actions.server,action_id:0
@@ -2993,19 +3123,19 @@ msgstr "Бангладеш"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_project_retro_planning
 msgid "Project Retro-planning"
-msgstr ""
+msgstr "Төслийн сунгах төлөвлөгөө"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_stock_planning
 msgid "Master Procurement Schedule"
-msgstr ""
+msgstr "Татан авалтын мастер төлөвлөгөө"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_module_category
 #: field:ir.module.module,application:0
 #: field:res.groups,category_id:0
 msgid "Application"
-msgstr ""
+msgstr "Аппликэшн"
 
 #. module: base
 #: selection:publisher_warranty.contract,state:0
@@ -3023,6 +3153,13 @@ msgid ""
 "\n"
 "The decimal precision is configured per company.\n"
 msgstr ""
+"\n"
+"Үнийн нарийвчлалыг байдлыг санхүү, борлуулалт, худалдан авалт зэрэгийн "
+"шалтгаануудаар нарийвчлан тохируулна.\n"
+"============================================================================="
+"=========================\n"
+"\n"
+"Аравны орон нь компаниар тохируулагдана.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_pl
@@ -3044,7 +3181,7 @@ msgstr ""
 #. module: base
 #: field:ir.actions.client,params_store:0
 msgid "Params storage"
-msgstr ""
+msgstr "Парамтерийн хадагалалт"
 
 #. module: base
 #: code:addons/base/module/module.py:409
@@ -3157,7 +3294,7 @@ msgstr "Давтах Үйлдлийн Тохиргоо"
 #. module: base
 #: selection:publisher_warranty.contract,state:0
 msgid "Canceled"
-msgstr ""
+msgstr "Цуцлагдсан"
 
 #. module: base
 #: model:res.country,name:base.at
@@ -3200,7 +3337,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_wiki_quality_manual
 msgid "Wiki: Quality Manual"
-msgstr ""
+msgstr "Wiki: Чанарын Гарын Авлага"
 
 #. module: base
 #: selection:ir.actions.act_window.view,view_mode:0
@@ -3228,7 +3365,7 @@ msgstr "ХН хэлтэс"
 #. module: base
 #: model:ir.ui.menu,name:base.menu_dashboard_admin
 msgid "Administration Dashboard"
-msgstr ""
+msgstr "Админы хянах самбар"
 
 #. module: base
 #: code:addons/orm.py:4408
