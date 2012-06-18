@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 01:37+0100\n"
-"PO-Revision-Date: 2012-06-16 19:10+0000\n"
+"PO-Revision-Date: 2012-06-18 04:09+0000\n"
 "Last-Translator: Akira Hiyama <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-06-17 04:35+0000\n"
+"X-Launchpad-Export-Date: 2012-06-18 05:27+0000\n"
 "X-Generator: Launchpad (build 15419)\n"
 
 #. module: sale
@@ -140,7 +140,7 @@ msgstr "配達基準の請求書"
 #. module: sale
 #: view:sale.order:0
 msgid "Order Line"
-msgstr ""
+msgstr "オーダー行"
 
 #. module: sale
 #: model:ir.actions.act_window,help:sale.action_order_form
@@ -153,6 +153,9 @@ msgid ""
 "configuration of the sales order, a draft invoice will be generated so that "
 "you just have to confirm it when you want to bill your customer."
 msgstr ""
+"受注オーダーは顧客からの見積とオーダーの管理と助けます。OpenERPは見積の作成から開始することを提案します。それが確認されると見積は受注オーダーに変換"
+"されます。受注オーダーはタスク、配達オーダー、製造オーダー、発注などを引き起こすようにOpenERPは製品の幾つかのタイプを取り扱うことができます。受注オ"
+"ーダーの設定を基本として、ドラフト請求書は顧客に請求したい時に、確認しなければならないように作成されます。"
 
 #. module: sale
 #: help:sale.order,invoice_quantity:0
@@ -163,42 +166,44 @@ msgid ""
 "the product is a service, shipped quantities means hours spent on the "
 "associated tasks."
 msgstr ""
+"受注オーダーは請求書案（ドラフト請求書）を自動的に作成します。オーダーされたものと、配達された数量は同じでは無いかもしれません。あなたはオーダー基準または"
+"出荷数量基準のどちらで請求するのかを決める必要があります。製品がサービスである場合は、出荷数量は関連したタスクに費やされた時間を意味します。"
 
 #. module: sale
 #: field:sale.shop,payment_default_id:0
 msgid "Default Payment Term"
-msgstr ""
+msgstr "デフォルト支払条件"
 
 #. module: sale
 #: field:sale.config.picking_policy,deli_orders:0
 msgid "Based on Delivery Orders"
-msgstr ""
+msgstr "配達オーダー基準"
 
 #. module: sale
 #: field:sale.config.picking_policy,time_unit:0
 msgid "Main Working Time Unit"
-msgstr ""
+msgstr "主作業時間単位"
 
 #. module: sale
 #: view:sale.order:0 view:sale.order.line:0 field:sale.order.line,state:0
 #: view:sale.report:0
 msgid "State"
-msgstr ""
+msgstr "状態"
 
 #. module: sale
 #: report:sale.order:0
 msgid "Disc.(%)"
-msgstr ""
+msgstr "割引（%）"
 
 #. module: sale
 #: view:sale.report:0 field:sale.report,price_total:0
 msgid "Total Price"
-msgstr ""
+msgstr "合計価格"
 
 #. module: sale
 #: help:sale.make.invoice,grouped:0
 msgid "Check the box to group the invoices for the same customers"
-msgstr ""
+msgstr "同じ顧客のために請求書をグループ化するにはこのボックスをチェックします。"
 
 #. module: sale
 #: view:sale.order:0
