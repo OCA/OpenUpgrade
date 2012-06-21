@@ -19,31 +19,16 @@
 #
 ##############################################################################
 
-import pooler
 from openupgrade import openupgrade
 
-defaults = {
-    # False results in column value NULL
-    # None value triggers a call to the model's default function 
-    'account.fiscalyear': [
-        ('company_id', None),
-        ],    
-    'account.journal': [
-        ('company_id', None),
-        ],    
-    'account.analytic.account': [
-        ('currency_id', None),
-        ],    
-    'account.analytic.journal': [
-        ('company_id', None),
-        ],    
-    'account.invoice': [
-        ('user_id', None),
-        ],    
+column_renames = {
+    # this is a mapping per table from old column name
+    # to new column name
+    'hr_timesheet_sheet_sheet': [
+        ('user_id', 'openupgrade_legacy_user_id'),
+        ],
     }
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    pool = pooler.get_pool(cr.dbname)
-    openupgrade.set_defaults(cr, pool, defaults)
-    openupgrade.load_xml(cr, 'account', 'migrations/6.0.1.1/data.xml')
+    openupgrade.rename_columns(cr, column_renames)

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <!-- The following changes may already be loaded upon
+	the auto-installation of the procurement module when
+	a v5 database with mrp installed is being upgraded
+	to v6 -->
+
+        <!-- OpenERP 6 changes the code of these resources -->
+        <record id="sequence_mrp_op_type" model="ir.sequence.type">
+	    <field name="code">stock.orderpoint</field>
+        </record>
+        <record id="sequence_mrp_op" model="ir.sequence.type">
+	    <field name="code">stock.orderpoint</field>
+        </record>
+	<!-- change the model of the scheduled task -->
+        <record id="ir_cron_scheduler_action" model="ir.cron">
+            <field eval="'procurement.order'" name="model"/>
+        </record>
+    </data>
+</openerp>
+        

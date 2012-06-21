@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+	<!-- OpenUpgrade: add new product and UOM categories -->
+        <record id="cat0" model="product.category">
+            <field name="name">All products</field>
+        </record>
+        <record id="uom_categ_wtime" model="product.uom.categ">
+            <field name="name">Working Time</field>
+        </record>
+        <record id="uom_categ_length" model="product.uom.categ">
+            <field name="name">Length / Distance</field>
+        </record>
+	<!-- OpenUpgrade: add factor and/or rounding properties -->
+        <record id="product_uom_unit" model="product.uom">
+            <field name="factor" eval="1.0"/>
+            <field name="rounding" eval="1.0"/>
+        </record>
+        <record id="product_uom_kgm" model="product.uom">
+            <field name="factor" eval="1"/>
+        </record>
+	<!-- OpenUpgrade: add new UOMs -->
+        <record id="product_uom_gram" model="product.uom">
+            <field name="category_id" ref="product_uom_categ_kgm"/>
+            <field name="name">g</field>
+            <field name="factor" eval="1000"/>
+            <field name="uom_type">smaller</field>
+        </record>
+        <record id="uom_hour" model="product.uom">
+            <field name="name">Hour</field>
+            <field eval="uom_categ_wtime" name="category_id"/>
+            <field name="factor" eval="8.0"/>
+            <field name="uom_type">smaller</field>
+        </record>
+        <record id="uom_day" model="product.uom">
+            <field name="name">Day</field>
+            <field eval="uom_categ_wtime" name="category_id"/>
+            <field name="factor" eval="1.0"/>
+        </record>
+        <record id="product_uom_ton" model="product.uom">
+            <field name="category_id" ref="product_uom_categ_kgm"/>
+            <!-- 'tonne' is the most common spelling in english-speaking countries,
+                 the alternative is 'metric ton' in the US, abbreviated as 'mt' -->
+            <field name="name">tonne</field>
+            <field name="factor" eval="0.001"/>
+            <field name="uom_type">bigger</field>
+        </record>
+        <record id="product_uom_meter" model="product.uom">
+            <field name="category_id" ref="uom_categ_length"/>
+            <field name="name">m</field>
+            <field name="factor" eval="1.0"/>
+        </record>
+        <record id="product_uom_km" model="product.uom">
+            <field name="category_id" ref="uom_categ_length"/>
+            <field name="name">km</field>
+            <field name="factor" eval="0.001"/>
+            <field name="uom_type">bigger</field>
+        </record>
+        <record id="product_uom_cm" model="product.uom">
+            <field name="category_id" ref="uom_categ_length"/>
+            <field name="name">cm</field>
+            <field name="factor" eval="100"/>
+            <field name="uom_type">smaller</field>
+        </record>
+    </data>
+</openerp>

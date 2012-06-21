@@ -19,31 +19,29 @@
 #
 ##############################################################################
 
-import pooler
 from openupgrade import openupgrade
 
-defaults = {
-    # False results in column value NULL
-    # None value triggers a call to the model's default function 
-    'account.fiscalyear': [
-        ('company_id', None),
-        ],    
-    'account.journal': [
-        ('company_id', None),
-        ],    
-    'account.analytic.account': [
-        ('currency_id', None),
-        ],    
-    'account.analytic.journal': [
-        ('company_id', None),
-        ],    
-    'account.invoice': [
-        ('user_id', None),
-        ],    
+logger = logging.getLogger('OpenUpgrade: purchase')
+
+column_renames = {
+    # this is a mapping per table from old column name
+    # to new column name
+    'purchase_order': [
+        ('invoice_id', 'openupgrade_legacy_invoice_id')
+        ],
     }
+
+renamed_xmlids = [
+    ('mrp.act_buy', 'purchase.act_buy'),
+    ('mrp.trans_buy_make_done', 'purchase.trans_buy_make_done'),
+    ('mrp.trans_buy_cancel', 'purchase.trans_buy_cancel'),
+]   
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    pool = pooler.get_pool(cr.dbname)
-    openupgrade.set_defaults(cr, pool, defaults)
-    openupgrade.load_xml(cr, 'account', 'migrations/6.0.1.1/data.xml')
+    openupgrade.rename_columns(cr, column_renames)
+    openupgrade.rename_xmlids(cr, renamed_xmlids)
+    logger.warn(
+        'TODO: check whether datetime field preserves '
+        'content when migrated to date field '
+        '(purchase_order.minimum_planned_date and po_line.date_planned)')

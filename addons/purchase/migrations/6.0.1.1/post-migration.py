@@ -22,28 +22,29 @@
 import pooler
 from openupgrade import openupgrade
 
-defaults = {
+defaults_force = {
     # False results in column value NULL
     # None value triggers a call to the model's default function 
-    'account.fiscalyear': [
+    'purchase.order': [
         ('company_id', None),
-        ],    
-    'account.journal': [
-        ('company_id', None),
-        ],    
-    'account.analytic.account': [
-        ('currency_id', None),
-        ],    
-    'account.analytic.journal': [
-        ('company_id', None),
-        ],    
-    'account.invoice': [
-        ('user_id', None),
         ],    
     }
+
+def set_order_invoice_ids(cr, pool):
+    """
+    Migrate many2one to many2many
+    """
+    order_pool = pool.get('purchase.order')
+    cr.execute('SELECT id, openupgrade_legacy_invoice_id '
+               'FROM purchase_order '
+               'WHERE openupgrade_legacy_invoice_id IS NOT NULL')
+    for row in cr.fetchall():
+        order_pool.write(
+            cr, 1, row[0], {'invoice_ids': [(4, row[1])]})
 
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
-    openupgrade.set_defaults(cr, pool, defaults)
-    openupgrade.load_xml(cr, 'account', 'migrations/6.0.1.1/data.xml')
+    openupgrade.set_defaults(cr, pool, defaults_force, force=True)
+    set_order_invoice_ids(cr, pool)
+    openupgrade.load_xml(cr, 'purchase', 'migrations/6.0.1.1/data.xml')

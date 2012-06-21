@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <!-- Add a standard scrap location -->
+        <record id="stock_location_scrapped" model="stock.location">
+            <field name="name">Scrapped</field>
+            <field name="location_id" ref="stock_location_locations_virtual"/>
+            <field name="scrap_location">True</field>
+            <field name="usage">inventory</field>
+            <field name="company_id"></field>
+        </record>
+        <!-- The new stock journal -->
+        <record id="journal_delivery" model="stock.journal">
+            <field name="name">Delivery Orders</field>
+        </record>
+        <!-- update the output location with the new fields -->
+        <record id="stock_location_output" model="stock.location">
+            <field name="chained_auto_packing">transparent</field>
+            <field name="chained_picking_type">out</field>
+            <field name="chained_journal_id" ref="journal_delivery"/>
+        </record>
+        <!-- new sequences -->
+        <!-- We copied the old single sequence and sequence type
+        to these 'in' resources, but we still want to update the
+        name and code -->
+        <record id="seq_type_picking_in" model="ir.sequence.type">
+            <field name="name">Picking IN</field>
+            <field name="code">stock.picking.in</field>
+        </record>
+        
+        <record id="seq_type_picking_out" model="ir.sequence.type">
+            <field name="name">Picking OUT</field>
+            <field name="code">stock.picking.out</field>
+        </record>
+        
+        <record id="seq_type_picking_internal" model="ir.sequence.type">
+            <field name="name">Picking INT</field>
+            <field name="code">stock.picking.internal</field>
+        </record>
+
+        <record id="seq_picking_in" model="ir.sequence">
+            <field name="name">Picking IN</field>
+            <field name="code">stock.picking.in</field>
+            <field name="prefix">IN/</field>
+            <field name="padding">5</field>
+        </record>
+        
+        <record id="seq_picking_out" model="ir.sequence">
+            <field name="name">Picking OUT</field>
+            <field name="code">stock.picking.out</field>
+            <field name="prefix">OUT/</field>
+            <field name="padding">5</field>
+        </record>
+        
+        <record id="seq_picking_internal" model="ir.sequence">
+            <field name="name">Picking INT</field>
+            <field name="code">stock.picking.internal</field>
+            <field name="prefix">INT/</field>
+            <field name="padding">5</field>
+        </record>
+    </data>
+</openerp>

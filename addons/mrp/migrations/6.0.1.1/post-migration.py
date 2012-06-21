@@ -22,28 +22,43 @@
 import pooler
 from openupgrade import openupgrade
 
-defaults = {
-    # False results in column value NULL
-    # None value triggers a call to the model's default function 
-    'account.fiscalyear': [
-        ('company_id', None),
-        ],    
-    'account.journal': [
-        ('company_id', None),
-        ],    
-    'account.analytic.account': [
-        ('currency_id', None),
-        ],    
-    'account.analytic.journal': [
-        ('company_id', None),
-        ],    
-    'account.invoice': [
-        ('user_id', None),
-        ],    
-    }
+defaults_force = {
+    'mrp.bom': [('company_id', None)],
+    'mrp.production': [('company_id', None)],
+    'mrp.routing': [('company_id', None)],
+    'mrp.workcenter': [('company_id', None)],
+}
+
+def create_workcenter_resources(cr, pool):
+    # note: set default value for company_id 
+    # on the workcenter 
+    # after running this function
+    workcenter_pool = pool.get('mrp.workcenter')
+    resource_pool = pool.get('resource.resource')
+    cr.execute("""
+SELECT
+    id,
+    openupgrade_legacy_code,
+    openupgrade_legacy_name,
+    openupgrade_legacy_active
+FROM
+    mrp_workcenter
+WHERE
+    resource_id is NULL""")
+
+    for row in cr.fetchall():
+        resource_id = resource_pool.create(
+            cr, 1, 
+            {
+             'code': row[1],
+             'name': row[2],
+             'active': row[3],
+             'resource_type': 'material',
+             })
+        workcenter_pool.write(
+            cr, 1, row[0], {'resource_id': resource_id})
 
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
-    openupgrade.set_defaults(cr, pool, defaults)
-    openupgrade.load_xml(cr, 'account', 'migrations/6.0.1.1/data.xml')
+    create_workcenter_resources(cr, pool)

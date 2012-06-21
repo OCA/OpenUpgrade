@@ -22,28 +22,14 @@
 import pooler
 from openupgrade import openupgrade
 
-defaults = {
-    # False results in column value NULL
-    # None value triggers a call to the model's default function 
-    'account.fiscalyear': [
-        ('company_id', None),
-        ],    
-    'account.journal': [
-        ('company_id', None),
-        ],    
-    'account.analytic.account': [
-        ('currency_id', None),
-        ],    
-    'account.analytic.journal': [
-        ('company_id', None),
-        ],    
-    'account.invoice': [
-        ('user_id', None),
-        ],    
-    }
+defaults_force = {
+    'product.category': [('type', 'normal')],
+    #'product.pricelist': [('company_id', None)], # no default function present
+    'product.supplierinfo': [('company_id', None)],
+}
 
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
-    openupgrade.set_defaults(cr, pool, defaults)
-    openupgrade.load_xml(cr, 'account', 'migrations/6.0.1.1/data.xml')
+    openupgrade.set_defaults(cr, pool, defaults_force, force=True)
+    openupgrade.load_data(cr, 'product', 'migrations/6.0.1.1/data.xml')

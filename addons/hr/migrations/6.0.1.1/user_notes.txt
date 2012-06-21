@@ -1,0 +1,6 @@
+This upgrade consists of the following changes:
+- Marital status is now a choice from a lookup table
+  previously provided by the hr contract module
+- An employee can now have multiple categories
+- The employee model is integrated with the resource model
+- Departments now have employees as their member type, not system users

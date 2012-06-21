@@ -1,0 +1,2 @@
+This upgrade closely integrates projects with analytic accounts. Project parent relations will be preserved in the analytic account structure. Projects without a parent will be gathered under a new 'Projects' analytic account. Beware also of projects that point to the same analytic account.
+The company project time mode is now a relation to a UOM. The 'day' and 'hour' values are mapped automatically, but if your company time mode was set to 'week' or 'month', you should create a UOM in the system and select it under this setting.
