@@ -1,0 +1,15 @@
+Gross and net advantages have been dropped and incorporated into the more
+general framework of hr_payroll.
+
+The values of those fields have been evacuated to
+openupgrade_legacy_6_1_0_final_0_advantages_net
+openupgrade_legacy_6_1_0_final_0_advantages_gross
+
+If you want to add them to the notes field, run following query:
+---
+update hr_contract set notes=
+coalesce(notes||E'\n', '') || 'gross advantages: ' || 
+coalesce(cast(openupgrade_legacy_6_1_0_final_0_advantages_gross as varchar), '') 
+|| E'\nnet advantages: ' || 
+coalesce(cast(openupgrade_legacy_6_1_0_final_0_advantages_net as varchar), '');
+---
