@@ -1,5 +1,12 @@
-Gross and net advantages have been dropped and incorporated into the more
-general framework of hr_payroll.
+hr.contract.wage.type and hr.contract.wage.type.period have been dropped and
+incorporated into hr_payroll.
+
+These tables still exist in the database.
+
+In case you don't want to step over to hr_payroll, you might want to consider
+hr_contract_legacy.
+
+Also gross and net advantages have been dropped and incorporated into hr_payroll.
 
 The values of those fields have been evacuated to
 openupgrade_legacy_6_1_0_final_0_advantages_net
