@@ -1,9 +1,27 @@
 # -*- coding: utf-8 -*-
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution
+#    This migration script copyright (C) 2012 Therp BV (<http://therp.nl>)
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
 
 import pooler, logging
 from openupgrade import openupgrade
-logger = logging.getLogger('migrate')
-MODULE="base"
+logger = logging.getLogger('OpenUpgrade: base')
 
 obsolete_modules = [
     'account_report',
@@ -19,6 +37,24 @@ obsolete_modules = [
     'report_sale',
     'pxgo_bank_statement_analytic',
 ]
+
+def set_defaults_on_ir_attachment(cr):
+    """ ir.attachment is littered with
+    overrides that instanciate the model on which
+    the attachment is sitting. This makes it impossible
+    to write defaults to this model using the ORM
+    while upgrading the base module
+    
+    'ir.attachment': [
+        ('type', 'binary'), # new required field, so
+                            # covered by the ORM
+        ('company_id', None),
+        ],
+
+    """
+    logger.warn(
+        "Not setting company_id for model ir.attachment. "
+        "To be implemented in the service module.")
 
 def set_defaults_on_act_window(cr):
     """ The act window model has a constraint
@@ -55,10 +91,6 @@ defaults = {
     # None value triggers a call to the model's default function 
     'ir.actions.todo': [
         ('restart', 'onskip'),
-        ],
-    'ir.attachment': [
-        ('type', 'binary'),
-        ('company_id', None),
         ],
     'ir.rule': [
         ('perm_create', True),
@@ -269,6 +301,7 @@ def mark_obsolete_modules(cr):
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     set_defaults_on_act_window(cr)
+    set_defaults_on_ir_attachment(cr)
     openupgrade.set_defaults(cr, pool, defaults)
     mgr_ir_rule(cr, pool)
     mgr_res_partner_address(cr, pool)

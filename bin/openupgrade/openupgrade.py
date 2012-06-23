@@ -21,6 +21,7 @@
 
 import os
 import inspect
+import traceback
 from osv import osv
 import pooler
 import logging
@@ -369,5 +370,6 @@ def migrate():
                 logger.error(
                     "%s: error in migration script %s: %s" % 
                     (module, filename, e))
+                logger.error(traceback.format_exc())
         return wrapped_function
     return wrap
