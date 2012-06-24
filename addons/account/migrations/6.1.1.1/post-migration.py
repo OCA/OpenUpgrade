@@ -45,6 +45,7 @@ def migrate(cr, version):
         openupgrade.load_data(cr, 'account', 'migrations/6.1.1.1/data/data_account_type.xml')
         openupgrade.load_data(cr, 'account', 'migrations/6.1.1.1/data/account_financial_report_data.xml')
         openupgrade.load_data(cr, 'account', 'migrations/6.1.1.1/data/invoice_action_data.xml')
+        openupgrade.load_data(cr, 'account', 'migrations/6.1.1.1/data/null_values.xml')
         write_account_report_type(cr)
 
     except Exception, e:

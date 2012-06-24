@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data noupdate="1">
+        <record id="action_account_analytic_journal_open_form" model="ir.actions.act_window">
+            <field name="name">Analytic Journal Items</field>
+            <field name="res_model">account.analytic.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="domain"></field>
+        </record>
+        <!--      <act_window context="{'search_default_account_id': [active_id], 'search_default_user_id': False}" id="act_acc_analytic_acc_5_report_hr_timesheet_invoice_journal" name="All Analytic Entries" res_model="account.analytic.line" src_model="account.analytic.account" view_mode="tree,form" view_type="form" context="{}" /> /-->
+        <record id="act_acc_analytic_acc_5_report_hr_timesheet_invoice_journal" model="ir.actions.act_window">
+            <field name="name">All Analytic Entries</field>
+            <field name="context">{'search_default_user_id': False}</field>
+            <field name="res_model">account.analytic.line</field>
+            <field name="src_model">account.analytic.account</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+        </record>
+  </data>
+</openerp>
