@@ -7,19 +7,19 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.14\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 01:37+0100\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: OpenERP Administrators <Unknown>\n"
+"PO-Revision-Date: 2012-06-25 20:57+0000\n"
+"Last-Translator: Anders Wallenquist <anders.wallenquist@vertel.se>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-05-17 05:44+0000\n"
-"X-Generator: Launchpad (build 15259)\n"
+"X-Launchpad-Export-Date: 2012-06-26 05:46+0000\n"
+"X-Generator: Launchpad (build 15482)\n"
 
 #. module: hr_holidays
 #: selection:hr.holidays.status,color_name:0
 msgid "Blue"
-msgstr ""
+msgstr "Blå"
 
 #. module: hr_holidays
 #: field:hr.holidays,holiday_type:0
@@ -39,12 +39,12 @@ msgstr ""
 #. module: hr_holidays
 #: view:hr.holidays:0
 msgid "Leaves Management"
-msgstr ""
+msgstr "Närvarohantering"
 
 #. module: hr_holidays
 #: view:hr.holidays:0
 msgid "Group By..."
-msgstr ""
+msgstr "Gruppera på..."
 
 #. module: hr_holidays
 #: view:hr.holidays:0
@@ -54,7 +54,7 @@ msgstr ""
 #. module: hr_holidays
 #: view:hr.holidays:0 field:hr.holidays,department_id:0
 msgid "Department"
-msgstr ""
+msgstr "Avdelning"
 
 #. module: hr_holidays
 #: model:ir.actions.act_window,name:hr_holidays.request_approve_holidays
@@ -74,7 +74,7 @@ msgstr ""
 #. module: hr_holidays
 #: view:hr.holidays:0
 msgid " Month-1"
-msgstr ""
+msgstr " Månad-1"
 
 #. module: hr_holidays
 #: selection:hr.holidays.status,color_name:0
@@ -84,12 +84,12 @@ msgstr "Brun"
 #. module: hr_holidays
 #: view:hr.holidays:0
 msgid "Remaining Days"
-msgstr ""
+msgstr "Återstående dagar"
 
 #. module: hr_holidays
 #: selection:hr.holidays,holiday_type:0
 msgid "By Employee"
-msgstr ""
+msgstr "Per anställd"
 
 #. module: hr_holidays
 #: help:hr.holidays,employee_id:0
@@ -141,7 +141,7 @@ msgstr "Godkänd"
 #. module: hr_holidays
 #: field:hr.employee,last_login:0
 msgid "Latest Connection"
-msgstr ""
+msgstr "Senaste kontakt"
 
 #. module: hr_holidays
 #: view:hr.holidays:0
@@ -172,27 +172,27 @@ msgstr ""
 #: model:ir.ui.menu,name:hr_holidays.menu_hr_reporting_holidays
 #: model:ir.ui.menu,name:hr_holidays.menu_open_ask_holidays
 msgid "Leaves"
-msgstr ""
+msgstr "Frånvaro"
 
 #. module: hr_holidays
 #: model:ir.model,name:hr_holidays.model_hr_holidays
 msgid "Leave"
-msgstr ""
+msgstr "Lämna"
 
 #. module: hr_holidays
 #: model:ir.ui.menu,name:hr_holidays.menu_request_approve_holidays
 msgid "Leave Requests to Approve"
-msgstr ""
+msgstr "Frånvaroansökan att godkänna"
 
 #. module: hr_holidays
 #: model:ir.ui.menu,name:hr_holidays.menu_account_central_journal
 msgid "Leaves by Department"
-msgstr ""
+msgstr "Frånvaro per avdelning"
 
 #. module: hr_holidays
 #: selection:hr.employee,current_leave_state:0 selection:hr.holidays,state:0
 msgid "Cancelled"
-msgstr ""
+msgstr "Avbruten"
 
 #. module: hr_holidays
 #: help:hr.holidays,type:0
@@ -212,13 +212,13 @@ msgstr ""
 #. module: hr_holidays
 #: view:hr.holidays.status:0
 msgid "Validation"
-msgstr ""
+msgstr "Granskning"
 
 #. module: hr_holidays
 #: code:addons/hr_holidays/hr_holidays.py:377
 #, python-format
 msgid "Warning !"
-msgstr ""
+msgstr "Varning !"
 
 #. module: hr_holidays
 #: field:hr.holidays.status,color_name:0
@@ -244,14 +244,14 @@ msgstr ""
 #: model:ir.model,name:hr_holidays.model_hr_holidays_status
 #: model:ir.ui.menu,name:hr_holidays.menu_open_view_holiday_status
 msgid "Leave Type"
-msgstr ""
+msgstr "Frånvarotyp"
 
 #. module: hr_holidays
 #: code:addons/hr_holidays/hr_holidays.py:199
 #: code:addons/hr_holidays/hr_holidays.py:344
 #, python-format
 msgid "Warning!"
-msgstr ""
+msgstr "Varning!"
 
 #. module: hr_holidays
 #: selection:hr.holidays.status,color_name:0
@@ -295,7 +295,7 @@ msgstr "Återstående semestrar"
 #. module: hr_holidays
 #: view:hr.holidays:0 field:hr.holidays,state:0
 msgid "State"
-msgstr ""
+msgstr "Status"
 
 #. module: hr_holidays
 #: model:ir.model,name:hr_holidays.model_hr_holidays_remaining_leaves_user
@@ -312,12 +312,12 @@ msgstr "Anställd"
 #. module: hr_holidays
 #: selection:hr.employee,current_leave_state:0 selection:hr.holidays,state:0
 msgid "New"
-msgstr ""
+msgstr "Ny"
 
 #. module: hr_holidays
 #: view:hr.holidays:0
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 
 #. module: hr_holidays
 #: selection:hr.holidays.status,color_name:0
@@ -389,7 +389,7 @@ msgstr ""
 #. module: hr_holidays
 #: selection:hr.employee,current_leave_state:0 selection:hr.holidays,state:0
 msgid "Waiting Approval"
-msgstr ""
+msgstr "Väntar på godkännande"
 
 #. module: hr_holidays
 #: field:hr.holidays.summary.employee,emp:0
@@ -411,7 +411,7 @@ msgstr ""
 #. module: hr_holidays
 #: field:hr.holidays,parent_id:0
 msgid "Parent"
-msgstr ""
+msgstr "Överliggande"
 
 #. module: hr_holidays
 #: selection:hr.holidays.status,color_name:0
@@ -421,7 +421,7 @@ msgstr "Lavendel"
 #. module: hr_holidays
 #: view:hr.holidays:0
 msgid "Month"
-msgstr ""
+msgstr "Månad"
 
 #. module: hr_holidays
 #: view:hr.holidays:0
@@ -444,7 +444,7 @@ msgstr ""
 #. module: hr_holidays
 #: view:hr.holidays:0 field:hr.holidays,category_id:0
 msgid "Category"
-msgstr ""
+msgstr "Kategori"
 
 #. module: hr_holidays
 #: help:hr.holidays.status,max_leaves:0

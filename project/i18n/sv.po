@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.14\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 01:37+0100\n"
-"PO-Revision-Date: 2012-06-24 12:33+0000\n"
+"PO-Revision-Date: 2012-06-25 14:50+0000\n"
 "Last-Translator: Anders Wallenquist <anders.wallenquist@vertel.se>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-06-25 05:34+0000\n"
+"X-Launchpad-Export-Date: 2012-06-26 05:47+0000\n"
 "X-Generator: Launchpad (build 15482)\n"
 
 #. module: project
@@ -45,7 +45,7 @@ msgstr "Föregående månad"
 #. module: project
 #: view:report.project.task.user:0
 msgid "My tasks"
-msgstr "Mina uppgifter"
+msgstr "Mina aktiviteter"
 
 #. module: project
 #: field:project.project,warn_customer:0
@@ -146,7 +146,7 @@ msgstr "Projektmedlemmar"
 #. module: project
 #: model:process.node,name:project.process_node_taskbydelegate0
 msgid "Task by delegate"
-msgstr "Uppgifter per deltagare"
+msgstr "Aktiviteter per deltagare"
 
 #. module: project
 #: selection:report.project.task.user,month:0
@@ -156,12 +156,12 @@ msgstr "mars"
 #. module: project
 #: view:project.task:0
 msgid "Delegated tasks"
-msgstr "Delegerade uppgifter"
+msgstr "Delegerade aktiviteter"
 
 #. module: project
 #: field:project.task,child_ids:0
 msgid "Delegated Tasks"
-msgstr "Delegerade uppgifter"
+msgstr "Delegerade aktiviteter"
 
 #. module: project
 #: help:project.project,warn_header:0
@@ -175,7 +175,7 @@ msgstr ""
 #. module: project
 #: view:project.task:0 view:project.task.history.cumulative:0
 msgid "My Tasks"
-msgstr "Mina uppgifter"
+msgstr "Mina aktiviteter"
 
 #. module: project
 #: constraint:project.task:0
@@ -191,7 +191,7 @@ msgstr "Bolag"
 #. module: project
 #: view:report.project.task.user:0
 msgid "Pending tasks"
-msgstr "Uppgifter på vänt"
+msgstr "Vilande aktiviteter"
 
 #. module: project
 #: field:project.task.delegate,prefix:0
@@ -247,7 +247,7 @@ msgstr "En användare vill delegera detta ärende till"
 #. module: project
 #: view:report.project.task.user:0
 msgid "My Task"
-msgstr "Mina uppgifter"
+msgstr "Mina aktiviteter"
 
 #. module: project
 #: view:report.project.task.user:0 field:report.project.task.user,day:0
@@ -287,7 +287,7 @@ msgstr "Medlemmar"
 #: view:board.board:0
 #: model:ir.actions.act_window,name:project.my_open_tasks_action
 msgid "My Open Tasks"
-msgstr "Mina öppna uppgifter"
+msgstr "Mina öppna aktiviteter"
 
 #. module: project
 #: code:addons/project/wizard/mail_compose_message.py:43
@@ -363,7 +363,7 @@ msgstr ""
 #. module: project
 #: view:project.task:0
 msgid "Show only tasks having a deadline"
-msgstr "Visa endast uppgifter med tidsfrist"
+msgstr "Visa endast aktiviteter med tidsfrist"
 
 #. module: project
 #: selection:project.task,state:0 selection:project.task.history,state:0
@@ -411,7 +411,7 @@ msgstr "Innevarande månad"
 #. module: project
 #: model:process.transition,note:project.process_transition_delegate0
 msgid "Delegates tasks to the other user"
-msgstr "Delegerar uppgifter till den andra användaren"
+msgstr "Delegerar aktiviteter till den andra användaren"
 
 #. module: project
 #: view:project.project:0 view:project.task:0 view:report.project.task.user:0
@@ -441,7 +441,7 @@ msgstr "Test"
 #: code:addons/project/project.py:829
 #, python-format
 msgid "Task '%s' closed"
-msgstr "Task '%s' closed"
+msgstr "Aktivitet '%s' stängd"
 
 #. module: project
 #: model:ir.model,name:project.model_account_analytic_account
@@ -575,7 +575,7 @@ msgstr "Pågående aktiviteter"
 #. module: project
 #: help:project.project,progress_rate:0
 msgid "Percent of tasks closed according to the total of tasks todo."
-msgstr "Procentuell andel av avslutade uppgifter."
+msgstr "Procentuell andel av avslutade aktiviteter."
 
 #. module: project
 #: view:project.task.delegate:0
@@ -684,7 +684,7 @@ msgstr "Information"
 #. module: project
 #: view:project.task:0 view:project.task.history.cumulative:0
 msgid "Unassigned Tasks"
-msgstr "Ej tilldelade uppgifter"
+msgstr "Ej tilldelade aktiviteter"
 
 #. module: project
 #: view:report.project.task.user:0
@@ -735,7 +735,7 @@ msgstr "juli"
 #. module: project
 #: view:project.task.history.burndown:0
 msgid "Burndown Chart of Tasks"
-msgstr "Burndown diagram över uppgifter"
+msgstr "Burndowndiagram över aktiviteter"
 
 #. module: project
 #: field:project.task,date_start:0 field:report.project.task.user,date_start:0
@@ -909,7 +909,7 @@ msgstr "Projektaktivitetsdelegering"
 #: model:process.process,name:project.process_process_tasksprocess0
 #: view:project.task:0 view:res.partner:0 field:res.partner,task_ids:0
 msgid "Tasks"
-msgstr "Uppgifter"
+msgstr "Aktiviteter"
 
 #. module: project
 #: view:project.project:0
@@ -933,14 +933,15 @@ msgid ""
 "configuration. With the project_mrp module, sales orders can create tasks "
 "automatically when they are confirmed."
 msgstr ""
-"En uppgift är ett arbete eller aktivietet som måste genomföras. Varje "
-"användare arbetar i sin egen lista över uppgifter där han kan rapportera "
-"nedlagd tid och framsteg. Han kan arbeta och stänga uppgiften själv eller "
-"delegera den till en annan användare. När en uppgift delegeras, får sätts "
-"uppgiften i vänteläge och öppnas igen när du granskat resultatet och målet "
-"med uppgiften uppnått.  Om du installerar project_timesheet-modulen kan "
-"nedlagt arbete faktureras på grundval av projektet. Med project_mrp-modulen "
-"kan säljorder skapa uppgifter automatiskt när de bekräftas."
+"En aktivitet är ett arbete eller uppgift som måste genomföras. Varje "
+"användare arbetar i sin egen lista över aktiviteter där användaren själv kan "
+"rapportera nedlagd tid och framsteg. Han kan arbeta och stänga uppgiften "
+"själv eller delegera den till en annan användare. När en aktivitet "
+"delegeras, sätts aktiviteten i vänteläge och öppnas igen när resultatet av "
+"delegeringen är granskat och målet med aktiviteten uppnått.  Om du "
+"installerar project_timesheet-modulen kan nedlagt arbete faktureras på "
+"grundval av projektet. Med project_mrp-modulen kan säljorder skapa uppgifter "
+"automatiskt när de bekräftas."
 
 #. module: project
 #: selection:report.project.task.user,month:0
@@ -985,7 +986,7 @@ msgstr "Månad"
 #. module: project
 #: model:ir.actions.act_window,name:project.dblc_proj
 msgid "Project's tasks"
-msgstr "Projektets uppgifter"
+msgstr "Projektets aktiviteter"
 
 #. module: project
 #: model:ir.model,name:project.model_project_task_type
@@ -1036,7 +1037,7 @@ msgstr "Klart för fortsättning"
 #. module: project
 #: view:project.task:0 field:project.task,parent_ids:0
 msgid "Parent Tasks"
-msgstr "Föräldrauppgifter"
+msgstr "Överliggande aktiviteter"
 
 #. module: project
 #: selection:project.task,kanban_state:0
@@ -1124,7 +1125,7 @@ msgstr "Medlem"
 #. module: project
 #: view:project.task:0 view:project.task.history.cumulative:0
 msgid "Project Tasks"
-msgstr "Projektuppgifter"
+msgstr "Projektaktiviteter"
 
 #. module: project
 #: help:project.task.delegate,planned_hours:0
@@ -1164,9 +1165,9 @@ msgid ""
 "the planned hours, the average number of days to open or close a task, etc."
 msgstr ""
 "Med denna rapport kan du analysera effektiviteten för dina projekt och dina "
-"projektdeltagare. Du kan analysera stora mängder av uppgifter, nedlagd tid "
+"projektdeltagare. Du kan analysera stora mängder av aktiviteter, nedlagd tid "
 "jämfört med de planerade timmar, det genomsnittliga antalet dagar för att "
-"öppna eller stänga en uppgift etc."
+"öppna eller stänga en aktivitet etc."
 
 #. module: project
 #: view:project.task:0
@@ -1218,7 +1219,7 @@ msgstr "Projektnamn"
 #: model:ir.model,name:project.model_project_task_history
 #: model:ir.model,name:project.model_project_task_history_cumulative
 msgid "History of Tasks"
-msgstr "Uppgifternas historia"
+msgstr "Aktivitetshistorik"
 
 #. module: project
 #: help:project.task.delegate,state:0
@@ -1255,7 +1256,7 @@ msgstr "Dagar i behandling"
 #: model:ir.actions.act_window,name:project.open_board_project
 #: model:ir.ui.menu,name:project.menu_board_project
 msgid "Project Dashboard"
-msgstr "Projekt dashboard"
+msgstr "Projektinfopanel"
 
 #. module: project
 #: view:project.task:0
@@ -1270,7 +1271,7 @@ msgstr "Användare"
 #. module: project
 #: field:project.project,active:0
 msgid "Active"
-msgstr "Active"
+msgstr "Aktiv"
 
 #. module: project
 #: view:report.project.task.user:0
@@ -1297,7 +1298,7 @@ msgstr "Projektet '%s' har stängts."
 #. module: project
 #: view:project.task.history.cumulative:0
 msgid "Tasks's Cumulative Flow"
-msgstr "Uppgifters kummulativa flöde"
+msgstr "Aktiviteters kummulativa flöde"
 
 #. module: project
 #: view:project.task:0
@@ -1385,7 +1386,7 @@ msgid ""
 "If you use the timesheet linked to projects (project_timesheet module), "
 "don't forget to setup the right unit of measure in your employees."
 msgstr ""
-"Detta ställer in den måttenhet som används i projekt och uppgifter.\n"
+"Detta ställer in den måttenhet som används i projekt och aktiviteter.\n"
 "Om du använder tidrapporten kopplad till projekt (project_timesheet "
 "modulen), glöm inte att ställa in rätt måttenhet för dina medarbetare."
 
@@ -1394,7 +1395,7 @@ msgstr ""
 #: code:addons/project/wizard/mail_compose_message.py:45
 #, python-format
 msgid "Error"
-msgstr "Error"
+msgstr "Fel"
 
 #. module: project
 #: model:ir.actions.act_window,name:project.act_res_users_2_project_project
@@ -1477,7 +1478,7 @@ msgstr "Användaren som ärendet delegeras till måste anges"
 #: code:addons/project/project.py:862
 #, python-format
 msgid "Task '%s' set in progress"
-msgstr "Task '%s' set in progress"
+msgstr "Aktivitet '%s' satt i status framsteg"
 
 #. module: project
 #: view:project.project:0
@@ -1602,7 +1603,7 @@ msgstr " Projekt vs timmar"
 #. module: project
 #: view:project.task.delegate:0
 msgid "Delegated Task"
-msgstr "Delegerade uppgifter"
+msgstr "Delegerade aktiviteter"
 
 #. module: project
 #: help:project.project,effective_hours:0
@@ -1637,7 +1638,7 @@ msgstr "Passerad tidsfrist"
 #. module: project
 #: model:ir.actions.act_window,name:project.action_view_task_tree_deadline
 msgid "My Task's Deadlines"
-msgstr "Tidsfrist för mina uppgifter"
+msgstr "Tidsfrist för mina aktiviteter"
 
 #. module: project
 #: model:ir.actions.act_window,name:project.action_project_task_reevaluate
@@ -1694,7 +1695,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:project.action_view_delegate_task_tree
 #: view:project.task:0
 msgid "My Delegated Tasks"
-msgstr "Mina delegerade uppgifter"
+msgstr "Mina delegerade aktiviteter"
 
 #. module: project
 #: view:project.project:0
@@ -1730,7 +1731,7 @@ msgstr "Driftsättning"
 #. module: project
 #: field:project.project,tasks:0
 msgid "Project tasks"
-msgstr "Projektuppgifter"
+msgstr "Projektaktiviteter"
 
 #. module: project
 #: code:addons/project/project.py:851
@@ -1833,7 +1834,7 @@ msgstr "Övrigt"
 #. module: project
 #: model:process.transition,name:project.process_transition_opendonetask0
 msgid "Open Done Task"
-msgstr "Öppna avslutade uppgifter"
+msgstr "Öppna avslutade aktiviteter"
 
 #. module: project
 #: view:project.task.type:0
@@ -1930,14 +1931,15 @@ msgid ""
 "to invoice the time spent on a project task, you can find project tasks to "
 "be invoiced in the billing section."
 msgstr ""
-"Ett projekt innehåller en uppsättning uppgifter eller frågor som kommer att "
-"utföras av dina tilldelade resurser. Ett projekt kan vara hierarkiskt "
-"uppbyggt med barn / förälder-relationer mellan projekten. Detta gör att du "
-"kan beskriva stora och komplexa projektstrukturer med olika faser fördelade "
-"över projektets löptid. Varje användare kan ställa in sitt standardprojekt i "
-"sina egna inställningar för att automatiskt filtrera uppgifter eller frågor "
-"som just han brukar fungera på. Om du väljer att fakturera nedlagd tid, kan "
-"du hitta projektuppgifter som ska faktureras i faktureringsfliken."
+"Ett projekt innehåller en uppsättning aktiviteter eller ärenden som kommer "
+"att utföras av dina tilldelade resurser. Ett projekt kan vara hierarkiskt "
+"uppbyggt med över-/underliggande-relationer mellan projekten. Detta gör att "
+"du kan beskriva stora och komplexa projektstrukturer med olika faser "
+"fördelade över projektets löptid. Varje användare kan ställa in sitt "
+"standardprojekt i sina egna inställningar för att automatiskt filtrera "
+"uppgifter eller frågor som just han brukar fungera på. Om du väljer att "
+"fakturera nedlagd tid, kan du hitta projektuppgifter som ska faktureras i "
+"faktureringsfliken."
 
 #. module: project
 #: view:project.task:0 view:project.task.work:0
@@ -1953,7 +1955,7 @@ msgstr "Granskningsstatus"
 #: code:addons/project/project.py:882
 #, python-format
 msgid "Task '%s' cancelled"
-msgstr "Task '%s' cancelled"
+msgstr "Aktivitet '%s' avbruten"
 
 #. module: project
 #: help:project.task.delegate,planned_hours_me:0
