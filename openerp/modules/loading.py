@@ -293,6 +293,8 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
     #suppress commits to have the upgrade of one module in just one transation
     cr.commit_org = cr.commit
     cr.commit = lambda *args: None
+    cr.rollback_org = cr.rollback
+    cr.rollback = lambda *args: None
 
     # register, instantiate and initialize models for each modules
     for index, package in enumerate(graph):

@@ -1423,11 +1423,13 @@ class BaseModel(object):
                 position = data.get(filename, 0)
 
         while position<len(datas):
+            cr.execute('SAVEPOINT process_lines');
             (res, position, warning, res_id, xml_id) = \
                     process_liness(self, datas, [], current_module, self._name, fields_def, position=position)
             if len(warning):
-                cr.rollback()
+                cr.execute('ROLLBACK TO SAVEPOINT process_lines');
                 return -1, res, 'Line ' + str(position) +' : ' + '!\n'.join(warning), ''
+            cr.execute('RELEASE SAVEPOINT process_lines');
 
             try:
                 ir_model_data_obj._update(cr, uid, self._name,
@@ -1458,6 +1460,7 @@ class BaseModel(object):
         lng = context.get('lang', False) or 'en_US'
         trans = self.pool.get('ir.translation')
         error_msgs = []
+        cr.execute('SAVEPOINT validate');
         for constraint in self._constraints:
             fun, msg, fields = constraint
             if not fun(self, cr, uid, ids):
@@ -1477,9 +1480,10 @@ class BaseModel(object):
                 )
                 self._invalids.update(fields)
         if error_msgs:
-            cr.rollback()
+            cr.execute('ROLLBACK TO SAVEPOINT validate');
             raise except_orm('ValidateError', '\n'.join(error_msgs))
         else:
+            cr.execute('RELEASE SAVEPOINT validate');
             self._invalids.clear()
 
     def default_get(self, cr, uid, fields_list, context=None):
@@ -3246,12 +3250,13 @@ class BaseModel(object):
             sql_actions.sort(key=lambda x: x['order'])
             for sql_action in [action for action in sql_actions if action['execute']]:
                 try:
+                    cr.execute('SAVEPOINT add_constraint2');
                     cr.execute(sql_action['query'])
-                    cr.commit()
+                    cr.execute('RELEASE SAVEPOINT add_constraint2');
                     _schema.debug(sql_action['msg_ok'])
                 except:
                     _schema.warning(sql_action['msg_err'])
-                    cr.rollback()
+                    cr.execute('ROLLBACK TO SAVEPOINT add_constraint2');
 
 
     def _execute_sql(self, cr):
