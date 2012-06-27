@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.14\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 01:37+0100\n"
-"PO-Revision-Date: 2012-06-25 20:57+0000\n"
+"PO-Revision-Date: 2012-06-26 08:05+0000\n"
 "Last-Translator: Anders Wallenquist <anders.wallenquist@vertel.se>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-06-26 05:46+0000\n"
+"X-Launchpad-Export-Date: 2012-06-27 06:14+0000\n"
 "X-Generator: Launchpad (build 15482)\n"
 
 #. module: hr_holidays
@@ -290,7 +290,7 @@ msgstr ""
 #. module: hr_holidays
 #: field:hr.holidays.status,remaining_leaves:0
 msgid "Remaining Leaves"
-msgstr "Återstående semestrar"
+msgstr "Återstående frånvaro"
 
 #. module: hr_holidays
 #: view:hr.holidays:0 field:hr.holidays,state:0
@@ -327,7 +327,7 @@ msgstr "Röd"
 #. module: hr_holidays
 #: view:hr.holidays.remaining.leaves.user:0
 msgid "Leaves by Type"
-msgstr ""
+msgstr "Frånvarotyp"
 
 #. module: hr_holidays
 #: selection:hr.holidays.status,color_name:0
@@ -456,7 +456,7 @@ msgstr ""
 #. module: hr_holidays
 #: view:board.board:0
 msgid "All Employee Leaves"
-msgstr ""
+msgstr "All personalfrånvaro"
 
 #. module: hr_holidays
 #: selection:hr.holidays.status,color_name:0
@@ -477,7 +477,7 @@ msgstr "Svart"
 #. module: hr_holidays
 #: model:ir.actions.act_window,name:hr_holidays.hr_holidays_leaves_assign_legal
 msgid "Allocate Leaves for Employees"
-msgstr ""
+msgstr "Allokera frånvaro för personal"
 
 #. module: hr_holidays
 #: field:resource.calendar.leaves,holiday_id:0
@@ -503,7 +503,7 @@ msgstr "Både beslutad och godkönd"
 #. module: hr_holidays
 #: field:hr.holidays.status,leaves_taken:0
 msgid "Leaves Already Taken"
-msgstr ""
+msgstr "Frånvaro redan tagen"
 
 #. module: hr_holidays
 #: field:hr.holidays,user_id:0
@@ -524,7 +524,7 @@ msgstr "Aktiv"
 #. module: hr_holidays
 #: model:ir.actions.act_window,name:hr_holidays.action_view_holiday_status_manager_board
 msgid "Leaves To Validate"
-msgstr ""
+msgstr "Frånvaro att granska"
 
 #. module: hr_holidays
 #: constraint:hr.employee:0
@@ -534,7 +534,7 @@ msgstr ""
 #. module: hr_holidays
 #: view:hr.employee:0 field:hr.employee,remaining_leaves:0
 msgid "Remaining Legal Leaves"
-msgstr ""
+msgstr "Återstående semester"
 
 #. module: hr_holidays
 #: field:hr.holidays,manager_id:0
@@ -551,7 +551,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:hr_holidays.open_company_allocation
 #: model:ir.ui.menu,name:hr_holidays.menu_open_company_allocation
 msgid "Leaves Summary"
-msgstr ""
+msgstr "Frånvarosummering"
 
 #. module: hr_holidays
 #: view:hr.holidays:0
@@ -567,7 +567,7 @@ msgstr ""
 #. module: hr_holidays
 #: view:hr.employee:0
 msgid "Assign Leaves"
-msgstr ""
+msgstr "Tilldela frånvaro"
 
 #. module: hr_holidays
 #: selection:hr.holidays.status,color_name:0
@@ -577,7 +577,7 @@ msgstr "Ljusblå"
 #. module: hr_holidays
 #: view:hr.holidays:0
 msgid "My Department Leaves"
-msgstr ""
+msgstr "Min avdelnings frånvaro"
 
 #. module: hr_holidays
 #: field:hr.employee,current_leave_state:0
@@ -620,7 +620,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:hr_holidays.action_hr_available_holidays_report
 #: model:ir.ui.menu,name:hr_holidays.menu_hr_available_holidays_report_tree
 msgid "Leaves Analysis"
-msgstr ""
+msgstr "Frånvaroanalys"
 
 #. module: hr_holidays
 #: view:hr.holidays.summary.dept:0 view:hr.holidays.summary.employee:0
@@ -670,7 +670,7 @@ msgstr ""
 #: view:hr.holidays:0
 #: model:ir.actions.act_window,name:hr_holidays.action_hr_holidays_leaves_by_month
 msgid "My Leaves"
-msgstr ""
+msgstr "Mina frånvaro"
 
 #. module: hr_holidays
 #: selection:hr.holidays,holiday_type:0
@@ -690,7 +690,7 @@ msgstr "Beskrivning"
 #. module: hr_holidays
 #: model:hr.holidays.status,name:hr_holidays.holiday_status_cl
 msgid "Legal Leaves"
-msgstr ""
+msgstr "Semester"
 
 #. module: hr_holidays
 #: sql_constraint:hr.holidays:0
@@ -723,7 +723,7 @@ msgstr "Välj semestertyp"
 #. module: hr_holidays
 #: field:hr.holidays.remaining.leaves.user,no_of_leaves:0
 msgid "Remaining leaves"
-msgstr ""
+msgstr "Återstående frånvaro"
 
 #. module: hr_holidays
 #: field:hr.holidays.summary.dept,depts:0
@@ -743,7 +743,7 @@ msgstr ""
 #. module: hr_holidays
 #: model:hr.holidays.status,name:hr_holidays.holiday_status_sl
 msgid "Sick Leaves"
-msgstr ""
+msgstr "Sjukfrånvaro"
 
 #. module: hr_holidays
 #: help:hr.holidays.status,limit:0
