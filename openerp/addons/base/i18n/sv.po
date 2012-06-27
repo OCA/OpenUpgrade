@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:44+0000\n"
-"PO-Revision-Date: 2012-06-25 10:48+0000\n"
+"PO-Revision-Date: 2012-06-26 07:48+0000\n"
 "Last-Translator: Anders Wallenquist <anders.wallenquist@vertel.se>\n"
 "Language-Team: <>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-06-26 05:46+0000\n"
+"X-Launchpad-Export-Date: 2012-06-27 06:13+0000\n"
 "X-Generator: Launchpad (build 15482)\n"
 
 #. module: base
@@ -3009,7 +3009,7 @@ msgstr "Bangladesh"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_project_retro_planning
 msgid "Project Retro-planning"
-msgstr "Projekt retro-plannering"
+msgstr "Projekt-retroplannering"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_stock_planning
@@ -4164,7 +4164,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_project_issue_sheet
 msgid "Timesheet on Issues"
-msgstr ""
+msgstr "Tidrapporter på ärenden"
 
 #. module: base
 #: model:res.partner.title,name:base.res_partner_title_ltd
@@ -5428,7 +5428,7 @@ msgstr "Fält"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_project_long_term
 msgid "Long Term Projects"
-msgstr "Långsiktiga projekt"
+msgstr "Långtidsprojekt"
 
 #. module: base
 #: model:res.country,name:base.ve
@@ -7094,7 +7094,7 @@ msgstr ""
 #. module: base
 #: model:ir.ui.menu,name:base.menu_project_long_term
 msgid "Long Term Planning"
-msgstr "Långsiktig planering"
+msgstr "Långtidsplanering"
 
 #. module: base
 #: field:ir.actions.server,message:0
@@ -11324,7 +11324,7 @@ msgstr "Åtgärd"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_event_project
 msgid "Retro-Planning on Events"
-msgstr ""
+msgstr "Retroplannering av evenemang"
 
 #. module: base
 #: code:addons/custom.py:555
@@ -11546,6 +11546,13 @@ msgid ""
 "handle an issue.\n"
 "                "
 msgstr ""
+"\n"
+"Denna modul tillför tidrapporter på ärenden/bugghantering i projekt\n"
+"======================================================\n"
+"\n"
+"Arbetsloggar kan administreras för att ge underlag till de timmar ägnade åt "
+"ett visst ärende.\n"
+"                "
 
 #. module: base
 #: model:ir.actions.act_window,name:base.ir_sequence_form
@@ -13870,6 +13877,25 @@ msgid ""
 "state are scheduled with taking the phase's start date\n"
 "    "
 msgstr ""
+"\n"
+"Longtidsplanerings-modul som spårar planering, schemaläggning och "
+"resursfördelning.\n"
+"====================================================================\n"
+"\n"
+"egenskaper\n"
+"--------\n"
+"* Hantera stora projekt.\n"
+"* Definiera olika faser av projekt.\n"
+"* Beräkna Fasschemaläggning: Beräkna startdatum och slutdatum för de faser "
+"som är i preliminär, öppen och i vilande tillstånd för givna projekt.\n"
+"      Om ingen projekt anges så alla i anspråktas utkastet, öppen och "
+"pågående faserna.\n"
+"* Beräkna schemaläggning: Det här fungerar samma som schemaläggaren knappen "
+"på project.phase. Det tar projektet som argument och beräknar alla öppna, "
+"preliminära och pågående aktiviteter.\n"
+"* Schemalägg aktivieteter: Alla preliminära, vilande och öppna planeras med "
+"fasens startdatum\n"
+"    "
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_workflow_activity_form
@@ -14854,6 +14880,18 @@ msgid ""
 "and decide on their status as they evolve.\n"
 "    "
 msgstr ""
+"\n"
+"Denna modul tillför ärendehantering och buggadministration till Projekt.\n"
+"=========================================================\n"
+"\n"
+"OpenERP tillåter dig hantera ärenden och problem som kan uppstå i ett "
+"projekt\n"
+"såsom buggar i ett system, klagomål eller materialproblem, En listvy ger en "
+"snabb \n"
+"överblick över ärendestocken, tilldela enskilda ärenden till handläggare och "
+"ge \n"
+"dem status i den takt de utvecklas.\n"
+"    "
 
 #. module: base
 #: field:res.groups,full_name:0
@@ -15616,7 +15654,7 @@ msgstr "Turks and Caicos Islands"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_fetchmail_project_issue
 msgid "eMail Gateway for Project Issues"
-msgstr "E-postbrygga för projektproblem"
+msgstr "E-postbrygga för projektärenden"
 
 #. module: base
 #: field:res.partner.bank,partner_id:0
@@ -15669,6 +15707,8 @@ msgid ""
 "Manage relations with prospects and customers using leads, opportunities, "
 "requests or issues."
 msgstr ""
+"Administrera relationen mellan prospektiva kunder och kunder med kundämnen, "
+"affärsmöjligheter,  önskemål eller ärenden."
 
 #. module: base
 #: selection:res.partner.address,type:0

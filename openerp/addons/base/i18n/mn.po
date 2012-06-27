@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.0-rc1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:44+0000\n"
-"PO-Revision-Date: 2012-06-25 18:30+0000\n"
+"PO-Revision-Date: 2012-06-27 02:39+0000\n"
 "Last-Translator: gobi <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-06-26 05:46+0000\n"
+"X-Launchpad-Export-Date: 2012-06-27 06:13+0000\n"
 "X-Generator: Launchpad (build 15482)\n"
 
 #. module: base
@@ -10797,6 +10797,12 @@ msgid ""
 "This module is the base module for other multi-company modules.\n"
 "    "
 msgstr ""
+"\n"
+"Энэ модуль нь олон компаний орчныг мееж хийдэг.\n"
+"=======================================================\n"
+"\n"
+"Энэ модуль нь олон компаний бусад бүх модулийн суурь модуль юм.\n"
+"    "
 
 #. module: base
 #: sql_constraint:res.currency:0
@@ -11982,6 +11988,8 @@ msgid ""
 "Customized views are used when users reorganize the content of their "
 "dashboard views (via web client)"
 msgstr ""
+"Өөриймшүүлсэн харагдац нь хэрэглэгчид хянах самбарын агуулгын харагдах "
+"байдлыг өөрчилөх тохиолдолд хэрэглэгддэг (веб клиентээс хийдэг)"
 
 #. module: base
 #: help:publisher_warranty.contract,check_opw:0
@@ -12242,7 +12250,7 @@ msgstr "Арилгах Ids гэж юу вэ? "
 #. module: base
 #: view:res.partner.bank:0
 msgid "Information About the Bank"
-msgstr ""
+msgstr "Банкны тухай мэдээлэл"
 
 #. module: base
 #: help:ir.actions.server,condition:0
@@ -12260,6 +12268,17 @@ msgid ""
 " - uid: current user id\n"
 " - context: current context"
 msgstr ""
+"Үйлдэл биелэхийн өмнө нөхцөл шалгагдаж хэрэв нөхцөл хангагдаагүй байвал "
+"ажиллахаас сэргийлдэг.\n"
+"Жишээлбэл: object.list_price > 5000\n"
+"Энэ python илэрхийлэл нь дараах утгуудыг хэрэглэх боломжтой:\n"
+" - self: үйлдэл өдөөгдсөн бичлэгний ORM модель \n"
+" - object or obj: үйлдэл өдөөгдсөн бичлэгийн browse_record\n"
+" - pool: ORM model pool (i.e. self.pool)\n"
+" - time: Python time модуль\n"
+" - cr: database cursor\n"
+" - uid: идэвхтэй хэрэглэгчийн id\n"
+" - context: идэвхтэй context"
 
 #. module: base
 #: view:ir.rule:0
@@ -12296,7 +12315,7 @@ msgstr "Бүгдийг зогсоох"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_analytic_user_function
 msgid "Jobs on Contracts"
-msgstr ""
+msgstr "Гэрээний Ажлууд"
 
 #. module: base
 #: model:ir.module.module,description:base.module_import_sugarcrm
@@ -12306,6 +12325,10 @@ msgid ""
 "            \"Contacts\", \"Employees\", Meetings, Phonecalls, Emails, and "
 "Project, Project Tasks Data into OpenERP Module."
 msgstr ""
+"Энэ модуль нь SugarCRM-н \"Сэжим\", \"Боломж\", \"Хэрэглэгчид\", \"Дансд\", "
+"\n"
+"            \"Холбогч\", \"Ажилчид\", Уулзалт, Утасны дуудлагууд, Имэйлүүд, "
+"Төсөл, Төслийн даалгаврын өгөгдлийг OpenERP-д импортлох модуль юм."
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_publisher_warranty_contract_add_wizard
@@ -12394,7 +12417,7 @@ msgstr "Маркетингийн компанит ажил"
 #: code:addons/base/publisher_warranty/publisher_warranty.py:144
 #, python-format
 msgid "Contract validation error"
-msgstr ""
+msgstr "Гэрээ шалгалтын алдаа"
 
 #. module: base
 #: field:ir.values,key2:0
@@ -12409,7 +12432,7 @@ msgstr "Мужын нэр"
 #. module: base
 #: view:res.lang:0
 msgid "Update Languague Terms"
-msgstr ""
+msgstr "Хэлний нэр томъёонуудыг шинэчил"
 
 #. module: base
 #: field:workflow.activity,join_mode:0
@@ -12424,7 +12447,7 @@ msgstr "Цагийн бүс"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_wiki_faq
 msgid "Wiki: Internal FAQ"
-msgstr ""
+msgstr "Вики: Дотоод FAQ"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_actions_report_xml
@@ -12509,6 +12532,10 @@ msgid ""
 "not connect to the system. You can assign them groups in order to give them "
 "specific access to the applications they need to use in the system."
 msgstr ""
+"Систем рүү холбогдох хэрэглэгчдийг үүсгэж, менеж хийнэ. Систем рүү тодорхой "
+"хугацаагаар холбогдохгүй хэрэглэгчдийг идэвхгүй болгох ажлыг мөн хийх "
+"боломжтой. Системийг хэрхэн хэрэглээнээс хамаарсан группыг хэрэглэгчдэд "
+"оноож өгөх ажлыг мөн хийх боломжтой."
 
 #. module: base
 #: selection:ir.module.module,complexity:0
@@ -13862,6 +13889,9 @@ msgid ""
 "OpenERP. They are launched during the installation of new modules, but you "
 "can choose to restart some wizards manually from this menu."
 msgstr ""
+"Эдгээр тохиргооны харилцах цонхууд нь шинэ OpenERP суулгацыг тохируулахад "
+"тусладаг. Эдгээр нь шинэ модуль суулгах явцад дуудагдаж ажилладаг боловч "
+"зарим тохиргооны харилцах цонхыг гараараа эндээс дахин ажиллуулах боломжтой."
 
 #. module: base
 #: view:res.company:0
@@ -14367,6 +14397,8 @@ msgid ""
 "Create and manage the companies that will be managed by OpenERP from here. "
 "Shops or subsidiaries can be created and maintained from here."
 msgstr ""
+"OpenERP-р менеж хийгдэх компаниудыг эндээс үүсгэж, удирдана. Дэлгүүр эсвэл "
+"салбарууд мөн эндээс үүсгэгдэж тохируулагдана."
 
 #. module: base
 #: model:res.country,name:base.id
@@ -15558,6 +15590,10 @@ msgid ""
 "be assigned to specific groups in order to make them accessible to some "
 "users within the system."
 msgstr ""
+"OpenERP-д харагдах менюны зүйлүүдийг менеж хийх, өөриймшүүлэх ажлыг эндээс "
+"хийнэ. Ямарваа зүйлийг устгахдаа урд талын тэмдэглэгээг тэмдэглээд идэвхжсэн "
+"устгах товчийг дарж устгана. Менюний зүйл нь тодорхой бүлгүүдэд оноогдож "
+"болох ба ингэснээр тэд хандах боломжтой болно."
 
 #. module: base
 #: field:ir.ui.view,field_parent:0
