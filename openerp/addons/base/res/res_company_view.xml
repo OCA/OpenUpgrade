@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
-        <menuitem id="menu_res_company_global" parent="base.menu_administration" name="Companies" sequence="2"/>
+        <menuitem id="menu_res_company_global" parent="base.menu_administration" name="Companies" sequence="2"
+            groups="base.group_no_one"/>
 
         <menuitem id="menu_custom_multicompany" parent="base.menu_custom" name="Multi-Companies" sequence="50"/>
 
@@ -172,7 +173,7 @@
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
                 <search string="Multi Company">
-                    <field name="name"/>
+                    <field name="name" string="Name"/>
                     <field name="company_id" widget="selection"/>
                     <field name="company_dest_id" widget="selection"/>
                     <field name="object_id"/>
