@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:37+0000\n"
-"PO-Revision-Date: 2012-06-26 22:23+0000\n"
+"PO-Revision-Date: 2012-06-27 07:10+0000\n"
 "Last-Translator: Anders Wallenquist <anders.wallenquist@vertel.se>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-06-27 06:14+0000\n"
-"X-Generator: Launchpad (build 15482)\n"
+"X-Launchpad-Export-Date: 2012-06-28 05:12+0000\n"
+"X-Generator: Launchpad (build 15505)\n"
 
 #. module: project_scrum
 #: view:project.scrum.backlog.assign.sprint:0
@@ -138,7 +138,7 @@ msgstr "För att byta till delegerat läge"
 #: code:addons/project_scrum/wizard/project_scrum_backlog_sprint.py:62
 #, python-format
 msgid "Product Backlog '%s' is assigned to sprint %s"
-msgstr "Produktens ärendestock '%s' är knuten till sprinten '%s'"
+msgstr "Produktärendet '%s' är knuten till sprinten '%s'"
 
 #. module: project_scrum
 #: model:ir.actions.act_window,name:project_scrum.dblc_proj
@@ -149,7 +149,7 @@ msgstr "Visa projektets ärendestock"
 #: view:project.scrum.product.backlog:0
 #: view:project.scrum.sprint:0
 msgid "Set to Draft"
-msgstr "Sätt till preliminär"
+msgstr "Sätt till utkast"
 
 #. module: project_scrum
 #: model:ir.model,name:project_scrum.model_project_scrum_backlog_merge
@@ -208,7 +208,7 @@ msgstr ""
 #. module: project_scrum
 #: view:project.scrum.product.backlog:0
 msgid "Backlogs Assigned To Current Sprints"
-msgstr "Ärendestock knuten til aktuell sprint"
+msgstr "Ärenden knutna till aktuell sprint"
 
 #. module: project_scrum
 #: view:project.scrum.product.backlog:0
@@ -297,7 +297,7 @@ msgstr "Påträffade hinder:"
 #. module: project_scrum
 #: view:project.scrum.product.backlog:0
 msgid "Backlogs Not Assigned To Sprints."
-msgstr "Ärenden ej knutna till sprint"
+msgstr "Ärenden utan sprint"
 
 #. module: project_scrum
 #: view:project.scrum.sprint:0
@@ -438,7 +438,7 @@ msgstr "avvaktande"
 #. module: project_scrum
 #: model:ir.model,name:project_scrum.model_project_scrum_backlog_assign_sprint
 msgid "Assign sprint to backlogs"
-msgstr "Tilldela sprint till ärendestock"
+msgstr "Tilldela sprint till ärenden"
 
 #. module: project_scrum
 #: help:project.scrum.sprint,expected_hours:0
@@ -736,7 +736,7 @@ msgid ""
 "linked to this project."
 msgstr ""
 "Om du har [?] i projektets namn, betyder detta att det inte finns något "
-"objekt kopplat till projektet."
+"objektkonto kopplat till projektet."
 
 #. module: project_scrum
 #: field:project.scrum.product.backlog,sequence:0
@@ -776,7 +776,7 @@ msgstr "Stäng"
 #: view:project.scrum.sprint:0
 #: selection:project.scrum.sprint,state:0
 msgid "Open"
-msgstr "Öppna"
+msgstr "Öppen"
 
 #. module: project_scrum
 #: view:project.scrum.sprint:0
@@ -793,7 +793,7 @@ msgstr "Information"
 #: code:addons/project_scrum/wizard/project_scrum_backlog_sprint.py:57
 #, python-format
 msgid "Product Backlog '%s' is converted into Task %d."
-msgstr "Produktärendestock '%s' är konverterad till aktivitet %d."
+msgstr "Produktärendet '%s' är konverterad till aktivitet %d."
 
 #. module: project_scrum
 #: view:project.scrum.product.backlog:0
@@ -909,8 +909,8 @@ msgid ""
 "If Active field is set to true, it will allow you to hide the product "
 "backlog without removing it."
 msgstr ""
-"Om aktivt fält är satt till sant, kommer produktärendestocken att döljas i "
-"stället för att radera den."
+"Om aktivt fält är satt till sant, kommer ärendet att döljas i stället för "
+"att raderas."
 
 #. module: project_scrum
 #: help:project.scrum.product.backlog,task_hours:0
