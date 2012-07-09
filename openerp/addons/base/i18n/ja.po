@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-server\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 00:44+0000\n"
-"PO-Revision-Date: 2012-07-07 21:04+0000\n"
+"PO-Revision-Date: 2012-07-08 22:23+0000\n"
 "Last-Translator: Akira Hiyama <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-07-08 04:41+0000\n"
+"X-Launchpad-Export-Date: 2012-07-09 04:50+0000\n"
 "X-Generator: Launchpad (build 15558)\n"
 
 #. module: base
@@ -2042,7 +2042,7 @@ msgstr "優先度"
 #. module: base
 #: field:workflow.transition,act_from:0
 msgid "Source Activity"
-msgstr "ソースアクティビティ"
+msgstr "元の活動"
 
 #. module: base
 #: view:ir.sequence:0
@@ -2435,7 +2435,7 @@ msgstr "一般的な説明"
 #. module: base
 #: view:workflow.activity:0
 msgid "Workflow Activity"
-msgstr "ワークフローアクティビティ"
+msgstr "ワークフロー活動"
 
 #. module: base
 #: model:ir.actions.act_window,help:base.action_ui_view
@@ -6002,7 +6002,7 @@ msgstr "南極大陸"
 msgid ""
 "Source activity. When this activity is over, the condition is tested to "
 "determine if we can start the ACT_TO activity."
-msgstr "ソースアクティビティ。そのアクティビティを終えた時に、ACT_TO活動を始めるかどうか条件がテストされます。"
+msgstr "元の活動。その活動を終えた時に、ACT_TO活動を始めるかどうか条件がテストされます。"
 
 #. module: base
 #: model:res.partner.category,name:base.res_partner_category_3
@@ -8874,7 +8874,7 @@ msgstr ""
 #. module: base
 #: field:workflow.transition,act_to:0
 msgid "Destination Activity"
-msgstr "行先のアクティビティ"
+msgstr "宛先の活動"
 
 #. module: base
 #: help:res.currency,position:0
@@ -12203,7 +12203,7 @@ msgstr "モジュール更新結果"
 #: view:workflow.activity:0
 #: field:workflow.workitem,act_id:0
 msgid "Activity"
-msgstr "アクティビティ"
+msgstr "活動"
 
 #. module: base
 #: view:res.partner:0
@@ -15653,7 +15653,7 @@ msgstr ""
 #: view:workflow:0
 #: field:workflow,activities:0
 msgid "Activities"
-msgstr "アクティビティ"
+msgstr "活動"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_product
@@ -15865,7 +15865,7 @@ msgstr "DBパスワードの暗号化"
 #. module: base
 #: help:workflow.transition,act_to:0
 msgid "The destination activity."
-msgstr "行先のアクティビティ"
+msgstr "宛先の活動"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_check_writing
