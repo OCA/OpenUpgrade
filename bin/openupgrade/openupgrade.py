@@ -105,6 +105,7 @@ def rename_columns(cr, column_spec):
             logger.info("table %s, column %s: renaming to %s",
                      table, old, new)
             cr.execute('ALTER TABLE "%s" RENAME "%s" TO "%s"' % (table, old, new,))
+            cr.execute('DROP INDEX IF EXISTS "%s_%s_index"' % (table, old))
 
 def rename_tables(cr, table_spec):
     """
