@@ -1423,6 +1423,7 @@ class BaseModel(object):
                 position = data.get(filename, 0)
 
         while position<len(datas):
+            #use savepoints for opgenupgrade instead of transactions
             cr.execute('SAVEPOINT process_lines');
             (res, position, warning, res_id, xml_id) = \
                     process_liness(self, datas, [], current_module, self._name, fields_def, position=position)
@@ -1460,6 +1461,7 @@ class BaseModel(object):
         lng = context.get('lang', False) or 'en_US'
         trans = self.pool.get('ir.translation')
         error_msgs = []
+        #use savepoints for opgenupgrade instead of transactions
         cr.execute('SAVEPOINT validate');
         for constraint in self._constraints:
             fun, msg, fields = constraint
@@ -2969,6 +2971,7 @@ class BaseModel(object):
                                 # add the NOT NULL constraint
                                 cr.commit()
                                 try:
+                                    #use savepoints for opgenupgrade instead of transactions
                                     cr.execute('SAVEPOINT add_constraint');
                                     cr.execute('ALTER TABLE "%s" ALTER COLUMN "%s" SET NOT NULL' % (self._table, k), log_exceptions=False)
                                     cr.execute('RELEASE SAVEPOINT add_constraint');
@@ -3250,6 +3253,7 @@ class BaseModel(object):
             sql_actions.sort(key=lambda x: x['order'])
             for sql_action in [action for action in sql_actions if action['execute']]:
                 try:
+                    #use savepoints for opgenupgrade instead of transactions
                     cr.execute('SAVEPOINT add_constraint2');
                     cr.execute(sql_action['query'])
                     cr.execute('RELEASE SAVEPOINT add_constraint2');
