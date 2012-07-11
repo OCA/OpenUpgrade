@@ -198,15 +198,13 @@ instance.web_kanban.KanbanView = instance.web.View.extend({
             var def = $.Deferred();
             self.do_clear_groups();
             self.dataset.read_slice(self.fields_keys.concat(['__last_update']), { 'limit': self.limit }).then(function(records) {
-                if (_.isEmpty(records)) {
-                    self.no_result();
-                    def.reject();
-                } else {
-                    var kgroup = new instance.web_kanban.KanbanGroup(self, records, null, self.dataset);
-                    self.do_add_groups([kgroup]).then(function() {
-                        def.resolve();
-                    });
-                }
+                var kgroup = new instance.web_kanban.KanbanGroup(self, records, null, self.dataset);
+                self.do_add_groups([kgroup]).then(function() {
+                    if (_.isEmpty(records)) {
+                        self.no_result();
+                    }
+                    def.resolve();
+                });
             }).then(null, function() {
                 def.reject();
             });
@@ -221,7 +219,6 @@ instance.web_kanban.KanbanView = instance.web.View.extend({
             group.destroy();
         });
         this.groups = [];
-        this.$element.find('.oe_kanban_groups_headers, .oe_kanban_groups_records').empty();
     },
     do_add_groups: function(groups) {
         var self = this;
@@ -229,7 +226,7 @@ instance.web_kanban.KanbanView = instance.web.View.extend({
             self.groups[group.undefined_title ? 'unshift' : 'push'](group);
         });
         var groups_started = _.map(this.groups, function(group) {
-            return group.appendTo(self.$element.find('.oe_kanban_groups_headers'));
+            return group.insertBefore(self.$element.find('.oe_kanban_groups_headers td:last'));
         });
         return $.when.apply(null, groups_started).then(function () {
             self.on_groups_started();
@@ -396,7 +393,7 @@ instance.web_kanban.KanbanGroup = instance.web.OldWidget.extend({
             self.quick.replace($(".oe_kanban_no_group_qc_placeholder"));
         }
         this.$records = $(QWeb.render('KanbanView.group_records_container', { widget : this}));
-        this.$records.appendTo(this.view.$element.find('.oe_kanban_groups_records'));
+        this.$records.insertBefore(this.view.$element.find('.oe_kanban_groups_records td:last'));
         this.$element.find(".oe_kanban_fold_icon").click(function() {
             self.do_toggle_fold();
             self.view.compute_groups_width();
@@ -751,6 +748,9 @@ instance.web_kanban.KanbanRecord = instance.web.OldWidget.extend({
         if (cache !== undefined) {
             // Set the cache duration in seconds.
             url += '&cache=' + parseInt(cache, 10);
+        }
+        if (this.record[field] && this.record[field].value && ! /^\d+(\.\d*)? \w+$/.test(this.record[field].value)) {
+            url = 'data:image/png;base64,' + this.record[field].value;
         }
         return url;
     },
