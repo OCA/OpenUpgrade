@@ -2742,6 +2742,19 @@ class orm(orm_template):
             for order, f, k in todo_update_store:
                 todo_end.append((order, self._update_store, (f, k)))
 
+            # OpenUpgrade: remove dangling references from ir_model_data
+            cr.execute("""
+                DELETE FROM ir_model_data
+                WHERE model = \'%s\'
+                AND res_id not in (
+                    SELECT id FROM %s
+                )
+                """ % (self._name, self._table))
+            if cr.rowcount:
+                self.__logger.debug(
+                    "Removed %s dangling reference(s) to resources of model %s "
+                    "in ir_model_data", cr.rowcount, self._name)
+
         else:
             cr.execute("SELECT relname FROM pg_class WHERE relkind IN ('r','v') AND relname=%s", (self._table,))
             create = not bool(cr.fetchone())
