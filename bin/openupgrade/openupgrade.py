@@ -328,7 +328,9 @@ def get_legacy_name(original_name):
     :param original_name: the original name of the column
     :param version: current version as passed to migrate()
     """
-    return 'openupgrade_legacy_'+('_').join(map(str, release.version_info))+'_'+original_name
+    return 'openupgrade_legacy_%s_%s' % (
+        release.major_version.replace('.', '_'),
+        original_name)
         
 def add_module_dependencies(cr, module_list):
     """
