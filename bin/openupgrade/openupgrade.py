@@ -21,10 +21,11 @@
 
 import os
 import inspect
+import logging
 import traceback
+import release
 from osv import osv
 import pooler
-import logging
 import tools
 import openupgrade_tools
 
@@ -45,6 +46,7 @@ __all__ = [
     'add_ir_model_fields',
     'rename_models',
     'rename_xmlids',
+    'get_legacy_name',
 ]    
 
 def load_data(cr, module_name, filename, idref=None, mode='init'):
@@ -142,7 +144,10 @@ def rename_models(cr, model_spec):
                     old, new)
         cr.execute('UPDATE ir_model_fields SET relation = %s '
                    'WHERE relation = %s', (new, old,))
-    # TODO: signal where the model occurs in references to ir_model
+        cr.execute('UPDATE ir_model_data SET model = %s '
+                   'WHERE model = %s', (new, old,))
+        #TODO: update foreign keys using
+        #http://stackoverflow.com/questions/1152260/postgres-sql-to-list-table-foreign-keys
 
 def rename_xmlids(cr, xmlids_spec):
     """
@@ -313,6 +318,17 @@ def add_ir_model_fields(cr, columnspec):
         query = 'ALTER TABLE ir_model_fields ADD COLUMN %s %s' % (
             column)
         logged_query(cr, query, [])
+
+def get_legacy_name(original_name):
+    """
+    Returns a versioned name for legacy tables/columns/etc
+    Use this function instead of some custom name to avoid
+    collisions with future or past legacy tables/columns/etc
+
+    :param original_name: the original name of the column
+    :param version: current version as passed to migrate()
+    """
+    return 'openupgrade_legacy_'+('_').join(map(str, release.version_info))+'_'+original_name
         
 def add_module_dependencies(cr, module_list):
     """
@@ -372,5 +388,6 @@ def migrate():
                     "%s: error in migration script %s: %s" % 
                     (module, filename, e))
                 logger.error(traceback.format_exc())
+                raise
         return wrapped_function
     return wrap
