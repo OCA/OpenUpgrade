@@ -98,7 +98,7 @@ class Graph(dict):
         
         # force additional dependencies for the upgrade process if given
         # in config file
-        forced_deps=tools.config.get_misc('openupgrade', 'force_deps', {})
+        forced_deps=tools.config.get_misc('openupgrade', 'force_deps', '{}')
         forced_deps=tools.config.get_misc('openupgrade', 'force_deps_'+release.version, forced_deps)
         forced_deps=tools.safe_eval.safe_eval(forced_deps)
 
