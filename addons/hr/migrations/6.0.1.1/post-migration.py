@@ -91,6 +91,11 @@ def set_user_department(cr, pool):
     to membership by employee. 
     In OpenERP 6, an employee can only be in a single
     department.
+
+    When the department is written on the employee record,
+    the manager is taken to be the head of the department in 6.0.
+    This change was reverted in 6.1. To accomodate migrations to 6.1,
+    restore the original manager 
     """
     employee_pool = pool.get('hr.employee')
     cr.execute("""
@@ -115,6 +120,11 @@ WHERE
             else:
                 employee_pool.write(
                     cr, 1, employee_id, {'department_id': row[1]})
+
+    openupgrade.logged_query(cr, """
+        UPDATE hr_employee
+        SET parent_id = %s
+    """ % openupgrade.get_legacy_name('parent_id'))
 
 def set_marital(cr, pool):
     """

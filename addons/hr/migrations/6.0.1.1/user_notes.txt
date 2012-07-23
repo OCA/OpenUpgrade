@@ -4,3 +4,5 @@ This upgrade consists of the following changes:
 - An employee can now have multiple categories
 - The employee model is integrated with the resource model
 - Departments now have employees as their member type, not system users
+
+Note that in 6.0, the employee's manager is derived from the head of the department but the field is not actually written until you assign a new department to an employee in OpenERP 6.0. As in 6.1 this change is reverted, this migrationtakes care to preserve the users' managers. If you migrate from 5.0 to 6.1 without actually using the system in OpenERP 6.0, you will be able to keep the originally assigned managers on the employee records.

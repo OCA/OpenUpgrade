@@ -34,7 +34,7 @@ column_renames = {
         ('company_id', 'openupgrade_legacy_company_id'),
         ('category_id', 'openupgrade_legacy_category_id'),
         ('marital', 'openupgrade_legacy_marital'),
-        ('parent_id', 'openupgrade_legacy_parent_id'),
+        ('parent_id', openupgrade.get_legacy_name('parent_id')),
         ]
     }
 
