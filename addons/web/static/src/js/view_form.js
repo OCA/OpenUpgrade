@@ -151,7 +151,7 @@ instance.web.FormView = instance.web.View.extend(instance.web.form.FieldManagerM
             this.sidebar.add_items('other', [
                 { label: _t('Delete'), callback: self.on_button_delete },
                 { label: _t('Duplicate'), callback: self.on_button_duplicate },
-                { label: _t('Set Default'), callback: function (item) { self.open_defaults_dialog(); } },
+                { label: _t('Set Default'), callback: function (item) { self.open_defaults_dialog(); } }
             ]);
         }
 
@@ -684,8 +684,12 @@ instance.web.FormView = instance.web.View.extend(instance.web.form.FieldManagerM
     },
     on_button_cancel: function(event) {
         if (this.can_be_discarded()) {
-            this.to_view_mode();
-            this.on_record_loaded(this.datarecord);
+            if (this.get('actual_mode') === 'create') {
+                this.trigger('history_back');
+            } else {
+                this.to_view_mode();
+                this.on_record_loaded(this.datarecord);
+            }
         }
         return false;
     },
@@ -2694,6 +2698,7 @@ instance.web.form.FieldMany2One = instance.web.form.AbstractField.extend(instanc
         this.on("change:value", this, function() {
             this.floating = false;
             this.render_value();
+            this.$('.oe_m2o_cm_button').css({'visibility': this.is_false() ? 'hidden' : 'visible'});
         });
     },
     initialize_content: function() {
@@ -2707,10 +2712,20 @@ instance.web.form.FieldMany2One = instance.web.form.AbstractField.extend(instanc
 
         self.$input.tipsy({
             title: function() {
-                return "No element was selected, you should create or select one from the dropdown list.";
+                return QWeb.render('Tipsy.alert', {
+                    message: "No element was selected, you should create or select one from the dropdown list."
+                });
             },
             trigger:'manual',
             fade: true,
+            gravity: 's',
+            html: true,
+            opacity: 1,
+            offset: 4,
+        });
+
+        self.$input.on('focus', function() {
+            self.$input.tipsy("hide");
         });
 
         this.$drop_down = this.$element.find(".oe_m2o_drop_down_button");
@@ -2764,7 +2779,7 @@ instance.web.form.FieldMany2One = instance.web.form.AbstractField.extend(instanc
         var tip_def = $.Deferred();
         var untip_def = $.Deferred();
         var tip_delay = 200;
-        var tip_duration = 3000;
+        var tip_duration = 15000;
         var anyoneLoosesFocus = function() {
             var used = false;
             if (self.floating) {
@@ -3625,7 +3640,7 @@ instance.web.form.FieldMany2ManyTags = instance.web.form.AbstractField.extend(in
         $("textarea", this.$element).focusout(function() {
             self.$text.trigger("setInputData", "");
         }).keydown(function(e) {
-            if (event.keyCode === 9 && self._drop_shown) {
+            if (e.which === $.ui.keyCode.TAB && self._drop_shown) {
                 self.$text.textext()[0].autocomplete().selectFromDropdown();
             }
         });
