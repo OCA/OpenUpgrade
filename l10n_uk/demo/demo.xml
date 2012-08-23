@@ -1,6 +1,6 @@
 <openerp>
 <data noupdate="1">       
-        <record id="smartmode" model="res.partner">
+        <record id="smartmode1" model="res.partner">
             <field name="name">SmartMode LTD</field>
             <field name="is_company">1</field>
             <field name="street">12, Hill Lane</field>
@@ -14,7 +14,7 @@
 
         <record id="res_partner_address_1" model="res.partner">
             <field name="name">Vadim Chobanu</field>
-            <field name="parent_id" ref="smartmode"/>
+            <field name="parent_id" ref="smartmode1"/>
             <field name="use_parent_address" eval="1"/>
             <field name="email">vadim@smartmode.co.uk</field>
             <field name="active">1</field>
