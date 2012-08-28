@@ -960,15 +960,12 @@ instance.web.FormView = instance.web.View.extend(instance.web.form.FieldManagerM
                     return false;
                 }
                 var displayed = value;
-                switch (field.field.type) {
-                case 'selection':
+                if (field instanceof instance.web.form.FieldSelection) {
                     displayed = _(field.values).find(function (option) {
                             return option[0] === value;
                         })[1];
-                    break;
-                case 'many2one':
+                } else if (field instanceof instance.web.form.FieldMany2One) {
                     displayed = field.get_displayed();
-                    break;
                 }
 
                 return {
@@ -2859,7 +2856,6 @@ instance.web.form.FieldMany2One = instance.web.form.AbstractField.extend(instanc
                     self.display_value["" + item.id] = item.name;
                     self.set({value: item.id});
                 } else if (item.action) {
-                    self.floating = true;
                     item.action();
                     // Cancel widget blurring, to avoid form blur event
                     self.trigger('focused');
@@ -4635,19 +4631,31 @@ instance.web.form.FieldBinaryImage = instance.web.form.FieldBinary.extend({
         this.render_value();
     },
     render_value: function() {
+        var self = this;
         var url;
         if (this.get('value') && ! /^\d+(\.\d*)? \w+$/.test(this.get('value'))) {
             url = 'data:image/png;base64,' + this.get('value');
         } else if (this.get('value')) {
             var id = escape(JSON.stringify(this.view.datarecord.id || null));
+            var field = this.name;
+            if (this.options.preview_image)
+                field = this.options.preview_image;
             url = '/web/binary/image?session_id=' + this.session.session_id + '&model=' +
-                this.view.dataset.model +'&id=' + id + '&field=' + this.name + '&t=' + (new Date().getTime());
+                this.view.dataset.model +'&id=' + id + '&field=' + field + '&t=' + (new Date().getTime());
         } else {
             url = "/web/static/src/img/placeholder.png";
         }
-        var img = QWeb.render("FieldBinaryImage-img", { widget: this, url: url });
+        var $img = $(QWeb.render("FieldBinaryImage-img", { widget: this, url: url }));
         this.$element.find('> img').remove();
-        this.$element.prepend(img);
+        this.$element.prepend($img);
+        $img.load(function() {
+            if (! self.options.size)
+                return;
+            $img.css("max-width", "" + self.options.size[0] + "px");
+            $img.css("max-height", "" + self.options.size[1] + "px");
+            $img.css("margin-left", "" + (self.options.size[0] - $img.width()) / 2 + "px");
+            $img.css("margin-top", "" + (self.options.size[1] - $img.height()) / 2 + "px");
+        });
     },
     on_file_change: function() {
         this.render_value();
@@ -4726,14 +4734,12 @@ instance.web.form.FieldStatus = instance.web.form.AbstractField.extend({
             // statusbar_visible attribute of the field. For example:
             // statusbar_visible="draft,open".
             var selection = this.field.selection;
-            console.log(selection);
             for(var i=0; i< selection.length; i++) {
                 var key = selection[i][0];
                 if(key == this.selected_value || !this.options.visible || this.options.visible.indexOf(key) != -1) {
                     this.selection.push(selection[i]);
                 }
             }
-            console.log(this.selection);
             this.render_elements();
         }
     },
