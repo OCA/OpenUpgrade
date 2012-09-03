@@ -326,6 +326,7 @@ class test_mail(common.TransactionCase):
 
         # Mail data
         _subject = 'Pigs'
+        _subject_reply = 'Re: Pigs'
         _mail_subject = '%s posted on %s' % (user_admin.name, group_pigs.name)
         _body_text = 'Pigs rules'
         _msg_body1 = '<pre>Pigs rules</pre>'
@@ -373,22 +374,27 @@ class test_mail(common.TransactionCase):
         self.assertEqual(len(notif_ids), 4, 'mail.message: too much notifications created')
         self.assertEqual(set(msg_pids), set(test_pids), 'mail.message partner_ids incorrect')
 
-        # CASE2: reply to last comment with attachments
+        # CASE2: reply to last comment (update its subject) with attachments
+        message.write({'subject': _subject})
         compose_id = mail_compose.create(cr, uid,
             {'attachment_ids': [(0, 0, _attachments[0]), (0, 0, _attachments[1])]},
             {'mail.compose.message.mode': 'reply', 'default_model': 'mail.thread', 'default_res_id': self.group_pigs_id, 'active_id': message.id})
         compose = mail_compose.browse(cr, uid, compose_id)
 
         # Test: form view methods
-        # Test: model, res_id, parent_id
+        # Test: model, res_id, parent_id, content_subtype
         self.assertEqual(compose.model,  'mail.group', 'mail.compose.message incorrect model')
         self.assertEqual(compose.res_id, self.group_pigs_id, 'mail.compose.message incorrect res_id')
         self.assertEqual(compose.parent_id.id, message.id, 'mail.compose.message incorrect parent_id')
+        self.assertEqual(compose.content_subtype, 'html', 'mail.compose.message incorrect content_subtype')
 
         # Post the comment, get created message
         mail_compose.send_mail(cr, uid, [compose_id])
         group_pigs.refresh()
         message = group_pigs.message_ids[0]
+        # Test: subject as Re:.., body in html
+        self.assertEqual(message.subject, _subject_reply, 'mail.message incorrect subject')
+        self.assertIn('Administrator wrote:<blockquote><pre>Pigs rules</pre></blockquote></div>', message.body, 'mail.message body is incorrect')
         # Test: attachments
         for i in range(len(message.attachment_ids)):
             self.assertEqual(message.attachment_ids[i].name, _attachments[i]['name'], 'mail.message attachment name incorrect')
@@ -406,25 +412,16 @@ class test_mail(common.TransactionCase):
         # Post the comment, get created message
         mail_compose.send_mail(cr, uid, [compose_id], {'default_res_id': -1, 'active_ids': [self.group_pigs_id]})
         group_pigs.refresh()
-        msg = group_pigs.message_ids[0]
+        message = group_pigs.message_ids[0]
         # Test: last message on Pigs = last created message
         test_msg = self.mail_message.browse(cr, uid, self.mail_message.search(cr, uid, [], limit=1))[0]
-        self.assertEqual(msg.id, test_msg.id, 'Pigs did not receive its mass mailing message')
+        self.assertEqual(message.id, test_msg.id, 'Pigs did not receive its mass mailing message')
         # Test: mail.message: subject, body
-        self.assertEqual(msg.subject, _subject, 'mail.message subject is incorrect')
-        self.assertEqual(msg.body, group_pigs.description, 'mail.message body is incorrect')
+        self.assertEqual(message.subject, _subject, 'mail.message subject is incorrect')
+        self.assertEqual(message.body, group_pigs.description, 'mail.message body is incorrect')
 
     def test_30_message_read(self):
         """ Tests designed for message_read. """
-        def _simplify_struct(read_dict):
-            res = []
-            for val in read_dict:
-                current = {'_id': val['id']}
-                if val.get('child_ids'):
-                    current['child_ids'] = _simplify_struct(val.get('child_ids'))
-                res.append(current)
-            return res
-
         # TDE NOTE: this test is not finished, as the message_read method is not fully specified.
         # It wil be updated as soon as we have fixed specs !
         cr, uid  = self.cr, self.uid
@@ -432,38 +429,31 @@ class test_mail(common.TransactionCase):
 
         # Test message_read_tree_flatten that flattens a thread according to a given thread_level
         import copy
-        tree = [
-            {'id': 1, 'child_ids':[
-                {'id': 3, 'child_ids': [] },
-                {'id': 4, 'child_ids': [
-                    {'id': 5, 'child_ids': []},
-                    {'id': 12, 'child_ids': []},
+        tree = [{'id': 1, 'child_ids':[
+                    {'id': 3, 'child_ids': [] },
+                    {'id': 4, 'child_ids': [
+                        {'id': 5, 'child_ids': []},
+                        {'id': 12, 'child_ids': []},
+                        ] },
+                    {'id': 8, 'child_ids': [
+                        {'id': 10, 'child_ids': []},
+                        ] },
                     ] },
-                {'id': 8, 'child_ids': [
-                    {'id': 10, 'child_ids': []},
+                {'id': 2, 'child_ids': [
+                    {'id': 7, 'child_ids': [
+                        {'id': 9, 'child_ids': []},
+                        ] },
                     ] },
-                ] },
-            {'id': 2, 'child_ids': [
-                {'id': 7, 'child_ids': [
-                    {'id': 9, 'child_ids': []},
+                {'id': 6, 'child_ids': [
+                    {'id': 11, 'child_ids': [] },
                     ] },
-                ] },
-            {'id': 6, 'child_ids': [
-                {'id': 11, 'child_ids': [] },
-                ] },
-            ]
+                ]
         new_tree = self.mail_message.message_read_tree_flatten(cr, uid, copy.deepcopy(tree), 0, 0)
-        # self.mail_message._debug_print_tree(new_tree)
-        # print '-------------------'
         self.assertTrue(len(new_tree) == 12, 'Flattening wrongly produced')
         new_tree = self.mail_message.message_read_tree_flatten(cr, uid, copy.deepcopy(tree), 0, 1)
-        # self.mail_message._debug_print_tree(new_tree)
-        # print '-------------------'
         self.assertTrue(len(new_tree) == 3 and len(new_tree[0]['child_ids']) == 6 and len(new_tree[1]['child_ids']) == 2 and len(new_tree[2]['child_ids']) == 1,
             'Flattening wrongly produced')
         new_tree = self.mail_message.message_read_tree_flatten(cr, uid, copy.deepcopy(tree), 0, 2)
-        # self.mail_message._debug_print_tree(new_tree)
-        # print '-------------------'
         self.assertTrue(len(new_tree) == 3 and len(new_tree[0]['child_ids']) == 3 and len(new_tree[0]['child_ids'][1]) == 2,
             'Flattening wrongly produced')
 
@@ -483,12 +473,10 @@ class test_mail(common.TransactionCase):
 
         # Second try: read with thread_level 1
         tree = self.mail_message.message_read(cr, uid, ids=False, domain=[('model', '=', 'mail.group'), ('res_id', '=', self.group_pigs_id)], thread_level=1)
-        # self.mail_message._debug_print_tree(tree)
         self.assertTrue(len(tree) == 2 and len(tree[1]['child_ids']) == 3, 'Incorrect number of child in message_read')
 
         # Third try: read with thread_level 2
         tree = self.mail_message.message_read(cr, uid, ids=False, domain=[('model', '=', 'mail.group'), ('res_id', '=', self.group_pigs_id)], thread_level=2)
-        # self.mail_message._debug_print_tree(tree)
         self.assertTrue(len(tree) == 2 and len(tree[1]['child_ids']) == 2 and len(tree[1]['child_ids'][0]['child_ids']) == 1, 'Incorrect number of child in message_read')
 
     def test_40_needaction(self):
