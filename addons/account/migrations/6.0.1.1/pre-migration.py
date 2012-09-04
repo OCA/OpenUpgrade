@@ -45,4 +45,8 @@ def migrate(cr, version):
     # changes data type of one of the columns
     sql.drop_view_if_exists(cr, 'report_invoice_created')
     mgr_refund_journal_type(cr)
-
+    # company of account_period needs to be updated before defaults
+    # are applied
+    cr.execute('alter table account_period add column company_id integer')
+    cr.execute('update account_period set company_id=(select '+
+    'company_id from res_users where id=account_period.create_uid)')
