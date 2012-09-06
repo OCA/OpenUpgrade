@@ -20,7 +20,9 @@
             </button>
             <span class="oe_alternative" style="display: none">
                 <span class="oe_fade">or</span>
-                <a href="#" class="oe_bold oe_kanban_add_column">Add a new column</a>
+                <div class="oe_bounce_container">
+                    <a href="#" class="oe_bold oe_kanban_add_column">Add a new column</a>
+                </div>
             </span>
         </t>
     </t>
@@ -30,7 +32,7 @@
         <t t-if="widget.view.group_by">
             <div class="oe_kanban_header">
                 <t t-if="widget.view._is_quick_create_enabled()">
-                    <div class="oe_kanban_add oe_e">]</div>
+                    <div class="oe_kanban_add oe_e" original-title="Quick create">]</div>
                 </t>
                     <div class="oe_dropdown_toggle oe_dropdown_kanban">
                         <span class="oe_e">í</span>
