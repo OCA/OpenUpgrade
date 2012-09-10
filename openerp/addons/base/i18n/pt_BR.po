@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:44+0000\n"
-"PO-Revision-Date: 2012-08-01 01:15+0000\n"
+"PO-Revision-Date: 2012-09-10 02:17+0000\n"
 "Last-Translator: Fábio Martinelli - http://zupy.com.br "
 "<webmaster@guaru.net>\n"
 "Language-Team: <pt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-08-28 09:17+0000\n"
-"X-Generator: Launchpad (build 15864)\n"
+"X-Launchpad-Export-Date: 2012-09-10 04:59+0000\n"
+"X-Generator: Launchpad (build 15924)\n"
 
 #. module: base
 #: model:res.country,name:base.sh
@@ -196,7 +196,7 @@ msgstr "Bélgica - comunicação estruturada"
 #. module: base
 #: field:ir.actions.act_window,target:0
 msgid "Target Window"
-msgstr "Janela Destino"
+msgstr "Janela de destino"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_analytic_plans
@@ -382,7 +382,7 @@ msgstr ""
 #. module: base
 #: sql_constraint:res.lang:0
 msgid "The name of the language must be unique !"
-msgstr "O nome da língua deve ser único !"
+msgstr "O nome do idioma deve ser único!"
 
 #. module: base
 #: model:ir.module.module,description:base.module_import_base
@@ -452,7 +452,7 @@ msgstr "Regras de ação automatizada"
 #. module: base
 #: view:ir.attachment:0
 msgid "Owner"
-msgstr "Dono"
+msgstr "Proprietário"
 
 #. module: base
 #: field:ir.actions.act_window,src_model:0
@@ -610,8 +610,8 @@ msgid ""
 "If you check this, then the second time the user prints with same attachment "
 "name, it returns the previous report."
 msgstr ""
-"Se marcar esta opção, na segunda vez que usar a impressora com o mesmo "
-"anexo, usará a impressora anterior"
+"Se você marcar esta opção, na segunda vez que o usuário imprimir com o mesmo "
+"nome de anexo, retornará a impressão anterior."
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_layout
@@ -1035,7 +1035,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:base.action_view_base_module_upgrade
 #: model:ir.model,name:base.model_base_module_upgrade
 msgid "Module Upgrade"
-msgstr "Atualizar múdlos"
+msgstr "Atualizar Módulos"
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -1147,7 +1147,7 @@ msgstr ""
 #. module: base
 #: view:res.lang:0
 msgid "%B - Full month name."
-msgstr "%B - Nome do mes completo"
+msgstr "%B - Nome do mês completo"
 
 #. module: base
 #: field:ir.actions.todo,type:0
@@ -1169,7 +1169,7 @@ msgstr "Tipo"
 #. module: base
 #: field:ir.mail_server,smtp_user:0
 msgid "Username"
-msgstr "Nome do usuário"
+msgstr "Nome de usuário"
 
 #. module: base
 #: code:addons/orm.py:398
@@ -1235,7 +1235,7 @@ msgstr "Registro #%d do %s não foi encontrado, não é possível copiar!"
 #. module: base
 #: field:ir.module.module,contributors:0
 msgid "Contributors"
-msgstr "Contribuidores"
+msgstr "Colaboradores"
 
 #. module: base
 #: model:ir.module.module,description:base.module_project_planning
@@ -1298,7 +1298,7 @@ msgstr "Uganda"
 #. module: base
 #: field:ir.model.access,perm_unlink:0
 msgid "Delete Access"
-msgstr "Acesso deletado"
+msgstr "Excluir Acesso"
 
 #. module: base
 #: model:res.country,name:base.ne
@@ -1445,7 +1445,7 @@ msgstr "Sistema de gestão de documentos"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_crm_claim
 msgid "Claims Management"
-msgstr "Gestão de reclamações"
+msgstr "Gestão de Solicitações"
 
 #. module: base
 #: model:ir.ui.menu,name:base.menu_purchase_root
@@ -1470,10 +1470,10 @@ msgid ""
 "use the accounting application of OpenERP, journals and accounts will be "
 "created automatically based on these data."
 msgstr ""
-"Configurar contas de banco da sua empresa e selecione aqueles que devem "
-"aparecer no rodapé do relatório. Você pode reordenar contas bancárias de "
-"exibição de lista. Se você usar o aplicativo de contabilidade do OpenERP, "
-"diários e contas serão criadas automaticamente com base nos dados."
+"Configure as contas bancárias da empresa e escolha quais deverão aparecer no "
+"rodapé do relatório. Você pode reordenar na listagem. Se você usar o "
+"aplicativo de Contabilidade do OpenERP, os diários e contas serão criadas "
+"automaticamente com base nesses dados."
 
 #. module: base
 #: view:ir.module.module:0
@@ -2174,17 +2174,17 @@ msgstr "%s (cópia)"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_chart
 msgid "Template of Charts of Accounts"
-msgstr "Modelo de gráficos de contas"
+msgstr "Modelo de Plano de Contas"
 
 #. module: base
 #: field:res.partner.address,type:0
 msgid "Address Type"
-msgstr "Tipo de endereço"
+msgstr "Tipo de Endereço"
 
 #. module: base
 #: view:ir.ui.menu:0
 msgid "Full Path"
-msgstr "Endereço completo"
+msgstr "Caminho Completo"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_br
@@ -2284,7 +2284,7 @@ msgid ""
 "decimal number [00,53]. All days in a new year preceding the first Sunday "
 "are considered to be in week 0."
 msgstr ""
-"%U - Número da semana do ano (Domingo com oo primeiro dia da semana) com 2 "
+"%U - Número da semana do ano (Domingo como o primeiro dia da semana) com 2 "
 "decimais [00,53]. Todos os dias, em um novo ano que precede o primeiro "
 "domingo são considerados na semana 0."
 
@@ -2646,7 +2646,7 @@ msgstr "Editor de Workflow"
 #: selection:ir.module.module,state:0
 #: selection:ir.module.module.dependency,state:0
 msgid "To be removed"
-msgstr "Para ser removido"
+msgstr "A ser removido"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_sequence
@@ -2913,7 +2913,7 @@ msgstr "Frances(BE) / Frances(BE)"
 #: view:ir.actions.server:0
 #: field:workflow.activity,action_id:0
 msgid "Server Action"
-msgstr "Ação de servidor"
+msgstr "Ação de Servidor"
 
 #. module: base
 #: help:ir.actions.client,params:0
@@ -2968,7 +2968,7 @@ msgstr "SMS - Gateway: clickatell"
 #. module: base
 #: view:ir.actions.server:0
 msgid "Field Mappings"
-msgstr "Mapeando campos"
+msgstr "Mapeamentos de Campo"
 
 #. module: base
 #: code:addons/base/publisher_warranty/publisher_warranty.py:125
@@ -3090,7 +3090,7 @@ msgstr ""
 #. module: base
 #: view:res.lang:0
 msgid "%p - Equivalent of either AM or PM."
-msgstr "%p - Equivalente de cada uma das AM ou PM."
+msgstr "%p - Equivalente a AM ou PM."
 
 #. module: base
 #: view:ir.actions.server:0
@@ -3412,7 +3412,7 @@ msgstr "Setor de RH"
 #. module: base
 #: model:ir.ui.menu,name:base.menu_dashboard_admin
 msgid "Administration Dashboard"
-msgstr "Painel de administração"
+msgstr "Painel de Administração"
 
 #. module: base
 #: code:addons/orm.py:4408
@@ -3434,7 +3434,7 @@ msgstr "Dependência de módulos"
 #. module: base
 #: selection:publisher_warranty.contract.wizard,state:0
 msgid "Draft"
-msgstr "Rascunho"
+msgstr "Provisório"
 
 #. module: base
 #: selection:res.users,view:0
@@ -3503,7 +3503,7 @@ msgstr "Administrador RH"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_contract
 msgid "Employee Contracts"
-msgstr "Contratos de empregado"
+msgstr "Contratos de Funcionários"
 
 #. module: base
 #: model:ir.module.module,description:base.module_wiki_faq
@@ -3529,7 +3529,7 @@ msgstr ""
 #. module: base
 #: constraint:res.company:0
 msgid "Error! You can not create recursive companies."
-msgstr "Erro! Voce não pode criar empresas recursivas"
+msgstr "Erro! Você não pode criar empresas recursivas."
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_res_users
@@ -3556,7 +3556,7 @@ msgstr "Tratamento para o contato"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_product_manufacturer
 msgid "Products Manufacturers"
-msgstr "Fabricantes de produtos"
+msgstr "Fabricantes dos Produtos"
 
 #. module: base
 #: code:addons/base/ir/ir_mail_server.py:217
@@ -3640,7 +3640,7 @@ msgstr "Alemanha / Deutsch"
 #. module: base
 #: view:ir.actions.server:0
 msgid "Fields Mapping"
-msgstr "Mapendo campos"
+msgstr "Mapeamento de Campos"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_dashboard
@@ -3964,12 +3964,12 @@ msgstr ""
 #. module: base
 #: constraint:res.partner:0
 msgid "Error ! You cannot create recursive associated members."
-msgstr "Erro! Você não pode criar recursiva a membros associados."
+msgstr "Erro! Você não pode criar membros associados recursivamente."
 
 #. module: base
 #: view:res.payterm:0
 msgid "Payment Term"
-msgstr "Condições de Pagamento"
+msgstr "Prazo de Pagamento"
 
 #. module: base
 #: selection:res.lang,direction:0
@@ -4068,7 +4068,7 @@ msgstr ""
 #. module: base
 #: view:ir.model:0
 msgid "Create a Menu"
-msgstr "Criar um menu"
+msgstr "Criar um Menu"
 
 #. module: base
 #: help:res.partner,vat:0
@@ -4161,7 +4161,7 @@ msgstr ""
 #. module: base
 #: view:ir.actions.todo:0
 msgid "Search Actions"
-msgstr "Ações de pesquisa"
+msgstr "Ações da Pesquisa"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_view_partner_wizard_ean_check
@@ -4563,7 +4563,7 @@ msgstr "Planos de Contas"
 #. module: base
 #: view:res.request:0
 msgid "Request Date"
-msgstr "Data da Mensagem"
+msgstr "Data de Solicitação:"
 
 #. module: base
 #: code:addons/base/module/wizard/base_export_language.py:52
@@ -4809,7 +4809,7 @@ msgstr "Setor de Telecom"
 #. module: base
 #: field:workflow.transition,trigger_model:0
 msgid "Trigger Object"
-msgstr "Objeto a disparar"
+msgstr "Acionar Objeto"
 
 #. module: base
 #: sql_constraint:ir.sequence.type:0
@@ -4819,7 +4819,7 @@ msgstr "`code` precisa ser único."
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_expense
 msgid "Expenses Management"
-msgstr "Gerenciamento de despesas"
+msgstr "Controle de Despesas"
 
 #. module: base
 #: view:workflow.activity:0
@@ -4852,7 +4852,7 @@ msgstr "Marketing"
 #. module: base
 #: view:res.partner.bank:0
 msgid "Bank account"
-msgstr "Conta Bancaria"
+msgstr "Conta Bancária"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_gr
@@ -4872,7 +4872,7 @@ msgstr "Tipo de Sequencia"
 #. module: base
 #: view:ir.ui.view.custom:0
 msgid "Customized Architecture"
-msgstr "Arquitetura Customisada"
+msgstr "Arquitetura Personalizada"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_gantt
@@ -5167,7 +5167,7 @@ msgstr "Validação do Número do IVA"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_crm_partner_assign
 msgid "Partners Geo-Localization"
-msgstr "Parceiros Geo-localização"
+msgstr "Geo-Localização dos Parceiros"
 
 #. module: base
 #: model:res.country,name:base.ke
@@ -5298,7 +5298,7 @@ msgstr "Esse contrato já está registrado no sistema."
 #: model:ir.actions.act_window,name:base.action_res_partner_bank_type_form
 #: model:ir.ui.menu,name:base.menu_action_res_partner_bank_typeform
 msgid "Bank Account Types"
-msgstr "Tipos de contas bancárias"
+msgstr "Tipos de Contas Bancárias"
 
 #. module: base
 #: help:ir.sequence,suffix:0
@@ -5379,7 +5379,7 @@ msgstr "Mauritius"
 #: view:ir.model.access:0
 #: view:ir.rule:0
 msgid "Full Access"
-msgstr "Acesso completo"
+msgstr "Acesso Completo"
 
 #. module: base
 #: view:ir.actions.act_window:0
@@ -5453,7 +5453,7 @@ msgstr "Hungria"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_recruitment
 msgid "Recruitment Process"
-msgstr "Processo de Recrutamento"
+msgstr "Processo de Seleção"
 
 #. module: base
 #: model:res.country,name:base.br
@@ -5494,7 +5494,7 @@ msgstr "Espanhol (PA) / Español (PA)"
 #: view:res.currency:0
 #: field:res.currency,rate_ids:0
 msgid "Rates"
-msgstr "Preços"
+msgstr "Taxas"
 
 #. module: base
 #: model:res.country,name:base.sy
@@ -5539,7 +5539,7 @@ msgstr ""
 #. module: base
 #: selection:res.request,state:0
 msgid "draft"
-msgstr "esboço"
+msgstr "Provisório"
 
 #. module: base
 #: selection:ir.property,type:0
@@ -5741,7 +5741,7 @@ msgstr "Campo"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_project_long_term
 msgid "Long Term Projects"
-msgstr "Projectos de longo prazo"
+msgstr "Projetos de Longo Prazo"
 
 #. module: base
 #: model:res.country,name:base.ve
@@ -5761,7 +5761,7 @@ msgstr "Zâmbia"
 #. module: base
 #: view:ir.actions.todo:0
 msgid "Launch Configuration Wizard"
-msgstr "Assistente de configuração"
+msgstr "Iniciar o Assistente de Configuração"
 
 #. module: base
 #: help:res.partner,user_id:0
@@ -6017,7 +6017,7 @@ msgstr "Web"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_lunch
 msgid "Lunch Orders"
-msgstr "Abir Ordens"
+msgstr "Pedidos de Almoço"
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -6175,7 +6175,7 @@ msgstr "Testar"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_kanban
 msgid "Base Kanban"
-msgstr ""
+msgstr "Painéis Kanban"
 
 #. module: base
 #: view:ir.actions.act_window:0
@@ -6196,7 +6196,7 @@ msgstr "Título"
 #: field:base.module.import,state:0
 #: field:base.module.update,state:0
 msgid "state"
-msgstr "status"
+msgstr "situação"
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_analytic_analysis
@@ -6330,7 +6330,7 @@ msgstr ""
 #. module: base
 #: field:res.partner.bank.type.field,bank_type_id:0
 msgid "Bank Type"
-msgstr "Tipo de banco"
+msgstr "Tipo de Banco"
 
 #. module: base
 #: code:addons/base/res/res_users.py:87
@@ -6394,7 +6394,7 @@ msgstr "res.partner.title"
 #. module: base
 #: view:res.partner.bank:0
 msgid "Bank Account Owner"
-msgstr "Titular da conta bancária"
+msgstr "Titular da Conta Bancária"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_uncategorized
@@ -6446,7 +6446,7 @@ msgstr "Guadalupe (em francês)"
 #: code:addons/base/res/res_lang.py:191
 #, python-format
 msgid "User Error"
-msgstr "Erro de usuário"
+msgstr "Erro do Usuário"
 
 #. module: base
 #: help:workflow.transition,signal:0
@@ -13286,7 +13286,7 @@ msgstr "ir.actions.client"
 #. module: base
 #: help:ir.values,value:0
 msgid "Default value (pickled) or reference to an action"
-msgstr ""
+msgstr "Valor padrão (selecionado) ou referencia a uma ação"
 
 #. module: base
 #: sql_constraint:res.groups:0
