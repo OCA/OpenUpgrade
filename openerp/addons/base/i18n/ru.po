@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:44+0000\n"
-"PO-Revision-Date: 2012-09-12 14:36+0000\n"
+"PO-Revision-Date: 2012-09-13 13:27+0000\n"
 "Last-Translator: Chertykov Denis <chertykov@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-09-13 05:00+0000\n"
+"X-Launchpad-Export-Date: 2012-09-14 05:12+0000\n"
 "X-Generator: Launchpad (build 15944)\n"
 
 #. module: base
@@ -504,7 +504,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_pad_project
 msgid "Specifications on PADs"
-msgstr ""
+msgstr "Спецификации блокнотов"
 
 #. module: base
 #: help:ir.filters,user_id:0
@@ -2644,7 +2644,7 @@ msgid ""
 "`object.order_line`."
 msgstr ""
 "Введите поле/выражение, которое возвращает список. Например, выберите счёт в "
-"Object, и Вы сможете получить все позиции в счёте на оплату. Выражение = "
+"Object, и Вы сможете получить все позиции в заказе продаж. Выражение = "
 "`object.order_line`."
 
 #. module: base
@@ -3125,6 +3125,10 @@ msgid ""
 "==================================================\n"
 "    "
 msgstr ""
+"\n"
+"Этот модуль добавляет блокнот во все канбан виды проекта\n"
+"==================================================\n"
+"    "
 
 #. module: base
 #: model:ir.actions.act_window,help:base.action_country
@@ -3725,7 +3729,7 @@ msgstr ""
 "\n"
 "Рабочий процесс с шагами подтверждения:\n"
 "-------------------------------\n"
-"    * предложение цен -> заказ на продажу -> выставление счёта\n"
+"    * предложение цен -> заказ продаж -> выставление счёта\n"
 "\n"
 "Способы выставления счёта:\n"
 "------------------\n"
@@ -4823,7 +4827,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"Модуль закупки для создания заказа на закупку для приобретения товаров у "
+"Модуль закупки для создания заказа закупки для приобретения товаров у "
 "поставщика.\n"
 "============================================================================="
 "============\n"
@@ -5623,7 +5627,7 @@ msgstr ""
 "Когда создан заказ закупки, вы получаете предложение для сохранения "
 "связанного требования.\n"
 "Этот новый объект перегруппирует и позволит вам легко отследить и "
-"упорядочить все ваши заказы снабжения.\n"
+"упорядочить все ваши заказы закупок.\n"
 
 #. module: base
 #: model:res.country,name:base.hu
@@ -6516,7 +6520,7 @@ msgstr "Тест"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_kanban
 msgid "Base Kanban"
-msgstr ""
+msgstr "База канбан"
 
 #. module: base
 #: view:ir.actions.act_window:0
@@ -8322,6 +8326,23 @@ msgid ""
 "Secondly, price differences between actual purchase price and fixed product "
 "standard price are booked on a separate account"
 msgstr ""
+"\n"
+"Этот модуль поддерживает англо-саксонскую бухгалтерскую методологию путём "
+"смены бухгалтерской логики складских операций.\n"
+"============================================================================="
+"========================================\n"
+"\n"
+"Различие бухгалтерий между англо-саксонскими странами\n"
+"и рейнскими, или также называемыми континентальными странами, заключается в "
+"моменте взятия цены поставленных товаров против цены продаж.\n"
+"Англо-саксонская бухгалтерия берёт цену когда создан счёт продаж, "
+"континентальная бухгалтерия будет брать цену в момент доставки товаров.\n"
+"Этот модуль добавит данную функциональность, используя промежуточный счёт "
+"для сохранения значения поставленных товаров, и запишет дубликат\n"
+"этого промежуточного счёта, когда создан счёт для переноса этой суммы на "
+"дебетовый или кредитовый счёт.\n"
+"Во вторых, разница цены между ценой действительной закупки и фиксированной "
+"стандартной ценой продукта заносится на отдельный счёт"
 
 #. module: base
 #: field:res.partner,title:0
@@ -8763,7 +8784,7 @@ msgstr ""
 "     - При получении товара, он попадает в место контроля качества, затем "
 "сохраняется на полке 2.\n"
 "     - При доставке покупателю: Комплектовочный список -> Упаковка -> Заказ "
-"доставки из ворота A\n"
+"доставки из выхода A\n"
 "    "
 
 #. module: base
@@ -12012,7 +12033,7 @@ msgstr "Шлюз e-mail для претендентов"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_coda
 msgid "Belgium - Import bank CODA statements"
-msgstr ""
+msgstr "Бельгия - Импорт банковских выписок CODA"
 
 #. module: base
 #: field:ir.cron,interval_type:0
@@ -14126,6 +14147,14 @@ msgid ""
 "(by default, http://ietherpad.com/).\n"
 "    "
 msgstr ""
+"\n"
+"Добавляет расширенную поддержку веб-блокнота EtherPad в веб-клиент.\n"
+"===================================================================\n"
+"\n"
+"Позволяет компании решить какая копия EtherPad должна быть использована для "
+"связи с новым блокнотом\n"
+"(по умолчанию, http://ietherpad.com/).\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_uk
@@ -14161,6 +14190,32 @@ msgid ""
 "    * http://controlchaos.com\n"
 "    "
 msgstr ""
+"\n"
+"Этот модуль реализует все концепции определённые методологией управления "
+"проектом Scrum для ИТ компаний.\n"
+"============================================================================="
+"============================\n"
+"\n"
+"    * Проект со спринтами, владелец продукта, мастер Scrum\n"
+"    * Спринты с обзорами, дневные встречи, обратные связи\n"
+"    * Задолженность проекта\n"
+"    * Задолженность спринта\n"
+"\n"
+"Это добавляет некоторые концепции в модуль управления проектом:\n"
+"    * Средне-срочную, долго-срочную дорожную карту\n"
+"    * Клиентские/функциональные запросы в сравнении с техническими\n"
+"\n"
+"Он также создаёт новую отчётность:\n"
+"    * диаграмму прожига\n"
+"\n"
+"Проекты и задачи Scrum наследуются из реальных проектов и\n"
+"задач, так что вы можете продолжить работу по обычным задачам, которые будут "
+"также\n"
+"включать задачи из проектов Scrum.\n"
+"\n"
+"Дополнительная информация по методологии на:\n"
+"    * http://controlchaos.com\n"
+"    "
 
 #. module: base
 #: code:addons/base/ir/ir_model.py:371
@@ -14223,7 +14278,7 @@ msgstr ""
 #. module: base
 #: help:ir.cron,args:0
 msgid "Arguments to be passed to the method, e.g. (uid,)."
-msgstr ""
+msgstr "Аргументы, передаваемые методу, напр. (uid,)."
 
 #. module: base
 #: model:res.partner.category,name:base.res_partner_category_5
@@ -14296,6 +14351,20 @@ msgid ""
 "in the form of pdf file. Implements a dashboard for My Current Evaluations\n"
 "         "
 msgstr ""
+"\n"
+"Возможность создания оценки работников.\n"
+"=======================================\n"
+"\n"
+"Может быть создана оценка по подчинённым работникам,\n"
+"как младшим, так и их руководителям. Оценка делается по плану\n"
+"по которому могут быть созданы различные опросы и может быть определено, "
+"какой\n"
+"уровень подчинения работника заполняется и каковы финальное собеседование и "
+"оценка\n"
+"сделанная руководителем. Каждая оценка заполненная работниками может быть "
+"просмотрена\n"
+"в форме файла pdf. Реализована панель для моих текущих оценок\n"
+"         "
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -14357,7 +14426,7 @@ msgstr "Неверные критерии поиска"
 #. module: base
 #: view:ir.mail_server:0
 msgid "Connection Information"
-msgstr ""
+msgstr "Сведения о соединении"
 
 #. module: base
 #: view:ir.attachment:0
@@ -14389,6 +14458,8 @@ msgid ""
 "External Key/Identifier that can be used for data integration with third-"
 "party systems"
 msgstr ""
+"Внешний ключ/идентификатор который может быть использован для интеграции "
+"данных с системами третьих сторон"
 
 #. module: base
 #: model:ir.module.module,description:base.module_mrp_operations
@@ -14423,6 +14494,39 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"Этот модуль добавляет в строки операций заказа производства состояние, дату "
+"начала, дату завершения (во вкладке \"Рабочие центры\").\n"
+"============================================================================="
+"================================\\n\n"
+"\n"
+"Состояния: черновик, подтвердить, сделан, отмена\n"
+"При завершении/подтверждении, отмене производственных заказов устанавливает "
+"все строки состояния в соответствующее состояние\n"
+"\n"
+"Создаёт меню:\n"
+"    Производство > Производство > Наряды\n"
+"\n"
+"Которое является видом строк по \"Рабочим центрам\" в заказе производства.\n"
+"\n"
+"Добавляет в вид формы заказа производства кнопки под вкладкой рабочего "
+"центра:\n"
+"    * начать (устанавливает состояние для подтверждения), устанавливает дату "
+"начала\n"
+"    * сделан (устанавливает состояние в сделан), устанавливает дату "
+"завершения\n"
+"    * установить в черновик (устанавливает состояние в черновик)\n"
+"    * отмена устанавливает состояние в отмена\n"
+"\n"
+"Когда заказ производства становится \"готовым для изготовления\", операции "
+"должны\n"
+"стать 'подтверждёнными'. Когда заказ производства сделан, все операции\n"
+"должны стать сделанными.\n"
+"\n"
+"Поле задержки - задержка (конечная дата - начальная дата).\n"
+"Так что мы можем сравнить теоретическую задержку и реальную задержку.\n"
+"\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_auction
@@ -14446,6 +14550,24 @@ msgid ""
 "    * Objects By Day (graph)\n"
 "    "
 msgstr ""
+"\n"
+"Этот модуль управляет записями артистов, предметами аукциона, покупателями и "
+"продавцами.\n"
+"============================================================================="
+"====\n"
+"\n"
+"Он полностью управляет аукционом так, как обслуживает ставки,\n"
+"отслеживает проданные предметы вместе с оплаченными\n"
+"и не оплаченными объектами, включая доставку предметов.\n"
+"\n"
+"Панель для аукциона включает:\n"
+"    * последние объекты (список)\n"
+"    * последние депозиты (список)\n"
+"    * статистики объектов (список)\n"
+"    * итоговые результаты (график)\\n\n"
+"    * мин./рез./макс. (график)\n"
+"    * объекты по дню (график)\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_base_crypt
@@ -14482,6 +14604,41 @@ msgid ""
 "\n"
 "                    "
 msgstr ""
+"\n"
+"Заменяет простые текстовые пароли в базе данных на защищённые хэши\n"
+"===============================================================\n"
+"Для существующей базы пользователей, удаление простых текстовых\n"
+"паролей осуществляется немедленно, когда вы устанавите base_crypt.\n"
+"\n"
+"Все пароли будут заменены на защищённые, изменённые, шифрованные\n"
+"хэши, предотвращающие чтение кем-либо оригинального пароля в\n"
+"базе данных.\n"
+"\n"
+"После установки этого модуля невозможно восстановление\n"
+"забытого пароля, есть только одно решение для этой ситуации -\n"
+"администратор может задать новый пароль.\n"
+"\n"
+"Предупреждение защиты\n"
+"++++++++++++++++\n"
+"Установка этого модуля не означает, что вы можете игнорировать другие "
+"настройки защиты,\n"
+"поскольку пароль остаётся не зашифрованным при передаче по сети, если вы\n"
+"не используете защищённый протокол, такой как XML-RPCS или HTTPS.\n"
+"Это также не защищает основу содержимого базы данных, которая может\n"
+"содержать критические данные. Соответствующие средства защиты необходимо "
+"осуществить\n"
+"системному администратору во всех областях, таких как: защита резервирования "
+"базы\n"
+"данных, системных файлов, удалённого доступа к системе, физического доступа "
+"к серверу, и т.д.\n"
+"\n"
+"Взаимодействие с аутентификацией LDAP\n"
+"+++++++++++++++++++++++++++++++++++\n"
+"Этот модуль сейчас не совместим с модулем ``user_ldap`` и\n"
+"будет полностью лишать возможности LDAP аутентификации, если установлен "
+"одновременно.\n"
+"\n"
+"                    "
 
 #. module: base
 #: field:ir.actions.act_window,view_id:0
@@ -14491,12 +14648,12 @@ msgstr "Ссылка на вид"
 #. module: base
 #: model:ir.module.category,description:base.module_category_sales_management
 msgid "Helps you handle your quotations, sale orders and invoicing."
-msgstr ""
+msgstr "Помогает вам обрабатывать ваши предложения, заказы продаж и счета."
 
 #. module: base
 #: field:res.groups,implied_ids:0
 msgid "Inherits"
-msgstr ""
+msgstr "Наследует"
 
 #. module: base
 #: selection:ir.translation,type:0
@@ -14506,7 +14663,7 @@ msgstr "Выбор"
 #. module: base
 #: field:ir.module.module,icon:0
 msgid "Icon URL"
-msgstr ""
+msgstr "URL иконки"
 
 #. module: base
 #: field:ir.actions.act_window,type:0
@@ -14541,6 +14698,16 @@ msgid ""
 "Chad, Togo.\n"
 "    "
 msgstr ""
+"Этот модуль реализует план счетов для области OHADA.\n"
+"    Он позволяет любой компании или объединению управлять финансовым "
+"учётом.\n"
+"    Страны, которые используют OHADA следующие:\n"
+"    Бенин, Буркина Фасо, Камерун, Центрально Африканская Республика, Коморы, "
+"Конго,\n"
+"    Берег Слоновой Кости, Габон, Гвинея, Гвинея Биссау,\n"
+"    Экваториальная Гвинея, Мали, Нигер, Демократическая Республика Конго, "
+"Сенегал, Чад, Того.\n"
+"    "
 
 #. module: base
 #: view:base.language.import:0
@@ -14582,7 +14749,7 @@ msgstr "Коста-Рика"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_base_module_doc_rst
 msgid "Generate Docs of Modules"
-msgstr ""
+msgstr "Документирование модулей"
 
 #. module: base
 #: model:res.company,overdue_msg:base.main_company
@@ -14594,11 +14761,16 @@ msgid ""
 "queries regarding your account, please contact us.\n"
 "Thank you in advance.\n"
 msgstr ""
+"Наши записи показывают, что следующие платежи по прежнему не оплачены.\n"
+"Если они уже были оплачены, пожалуйста проигнорируйте это сообщение. \n"
+"Тем не менее, если у Вас есть какие-либо вопросы, касающиеся вашего счета, \n"
+"пожалуйста, свяжитесь с нами.\n"
+"Спасибо заранее.\n"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_users_ldap
 msgid "Authentication via LDAP"
-msgstr ""
+msgstr "Авторизация с помощью LDAP"
 
 #. module: base
 #: view:workflow.activity:0
@@ -14621,12 +14793,12 @@ msgstr "Валюты"
 #: model:ir.model,name:base.model_ir_actions_client
 #: selection:ir.ui.menu,action:0
 msgid "ir.actions.client"
-msgstr ""
+msgstr "ir.actions.client"
 
 #. module: base
 #: help:ir.values,value:0
 msgid "Default value (pickled) or reference to an action"
-msgstr ""
+msgstr "Значение по умолчанию или ссылка на действие"
 
 #. module: base
 #: sql_constraint:res.groups:0
@@ -14644,6 +14816,13 @@ msgid ""
 "you can modify in OpenOffice. Once you have modified it you can\n"
 "upload the report using the same wizard.\n"
 msgstr ""
+"\n"
+"Этот модуль используется совместно с OpenERP плагином OpenOffice.\n"
+"=========================================================\n"
+"\n"
+"Этот модуль добавляет мастер для импорта/экспорта .sxw отчёта, который\n"
+"вы можете изменить в OpenOffice. После того как вы измените его, вы можете\n"
+"выгрузить отчёт используя тот же самый мастер.\n"
 
 #. module: base
 #: view:ir.sequence:0
@@ -14681,11 +14860,23 @@ msgid ""
 "If you need to manage your meetings, you should install the CRM module.\n"
 "    "
 msgstr ""
+"\n"
+"Это полнофункциональная календарная система.\n"
+"========================================\n"
+"\n"
+"Она поддерживает:\n"
+"    - Календарь событий\n"
+"    - Тревоги (создание запросов)\n"
+"    - Повторные события\n"
+"    - Приглашения людям\n"
+"\n"
+"Если вам нужно управлять вашими встречами, вы должны установить модуль CRM.\n"
+"    "
 
 #. module: base
 #: view:ir.rule:0
 msgid "Rule definition (domain filter)"
-msgstr ""
+msgstr "Определение правила (фильтр ограничений)"
 
 #. module: base
 #: model:ir.model,name:base.model_workflow_instance
@@ -14733,12 +14924,12 @@ msgstr "Инфо-панели"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_procurement
 msgid "Procurements"
-msgstr ""
+msgstr "Снабжение"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_payroll_account
 msgid "Payroll Accounting"
-msgstr ""
+msgstr "Учёт заработной платы"
 
 #. module: base
 #: help:ir.attachment,type:0
@@ -14748,12 +14939,12 @@ msgstr "Двоичный файл или внешний URL"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_order_dates
 msgid "Dates on Sales Order"
-msgstr ""
+msgstr "Даты по заказу продаж"
 
 #. module: base
 #: view:ir.attachment:0
 msgid "Creation Month"
-msgstr ""
+msgstr "Месяц создания"
 
 #. module: base
 #: model:res.country,name:base.nl
@@ -14775,6 +14966,19 @@ msgid ""
 "technical OpenERP documentation at http://doc.openerp.com\n"
 "    "
 msgstr ""
+"\n"
+"Предоставляет общую платформу , которую могут использовать другие "
+"приложения\n"
+"==============================================================\n"
+"\n"
+"ОЭД(EDI) - обмен электронными документами\n"
+"OpenERP определяет общий формат ОЭД для обмена деловыми\n"
+"документами между различными системами и предусматривает общие\n"
+"механизмы для их импорта и экспорта.\n"
+"\n"
+"Более подробно о формате ОЭД OpenERP можно найти в\n"
+"технической документацииl OpenERP на http://doc.openerp.com\n"
+"    "
 
 #. module: base
 #: model:ir.ui.menu,name:base.next_id_4
@@ -14784,12 +14988,12 @@ msgstr "Объекты нижнего уровня"
 #. module: base
 #: help:ir.values,model:0
 msgid "Model to which this entry applies"
-msgstr ""
+msgstr "Модель, к которой применяется эта запись"
 
 #. module: base
 #: field:res.country,address_format:0
 msgid "Address Format"
-msgstr ""
+msgstr "Формат адреса"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_values
@@ -14799,7 +15003,7 @@ msgstr "Значения"
 #. module: base
 #: model:res.groups,name:base.group_no_one
 msgid "Technical Features"
-msgstr ""
+msgstr "Технические характеристики"
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -14813,18 +15017,20 @@ msgid ""
 "Here is what we got instead:\n"
 " %s"
 msgstr ""
+"Вот, что мы получили вместо:\n"
+" %s"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_model_data
 #: view:ir.model.data:0
 #: model:ir.ui.menu,name:base.ir_model_data_menu
 msgid "External Identifiers"
-msgstr ""
+msgstr "Внешние идентификаторы"
 
 #. module: base
 #: model:res.groups,name:base.group_sale_salesman
 msgid "User - Own Leads Only"
-msgstr ""
+msgstr "Только кандидаты принадлежащие пользователю"
 
 #. module: base
 #: model:res.country,name:base.cd
@@ -14868,7 +15074,7 @@ msgstr "Количество звонков"
 #: code:addons/base/res/res_bank.py:189
 #, python-format
 msgid "BANK"
-msgstr ""
+msgstr "БАНК"
 
 #. module: base
 #: view:base.module.upgrade:0
@@ -14907,7 +15113,7 @@ msgstr ""
 #. module: base
 #: view:res.config:0
 msgid "Apply"
-msgstr ""
+msgstr "Применить"
 
 #. module: base
 #: field:res.request,trigger_date:0
@@ -14931,11 +15137,14 @@ msgid ""
 "        OpenERP Web kanban view.\n"
 "        "
 msgstr ""
+"\n"
+"        OpenERP веб канбан вид.\n"
+"        "
 
 #. module: base
 #: model:ir.ui.menu,name:base.menu_project_management_time_tracking
 msgid "Time Tracking"
-msgstr ""
+msgstr "Учет времени"
 
 #. module: base
 #: view:res.partner.category:0
@@ -14954,6 +15163,8 @@ msgid ""
 "Helps you manage your inventory and main stock operations: delivery orders, "
 "receptions, etc."
 msgstr ""
+"Помогает управлять инвентаризацией и основными складскими операциями : "
+"заказами доставки, получениями и т.д."
 
 #. module: base
 #: model:ir.model,name:base.model_base_module_update
@@ -15058,6 +15269,101 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"Добавляет поддержку авторизации через LDAP сервер.\n"
+"===============================================\n"
+"Этот модуль позволяет пользователям входить с их именем пользователя и "
+"паролём LDAP,\n"
+"и автоматически создаст на лету пользователей для OpenERP.\n"
+"\n"
+"**Примечание**: этот модуль работает только на серверах имеющих "
+"установленный модуль\n"
+"``ldap`` Python-а.\n"
+"\n"
+"Настройка\n"
+"+++++++++++++\n"
+"После установки этого модуля, вам нужно настроить параметры\n"
+"LDAP во вкладке настройки подробностей компании.\n"
+"Различные компании могут иметь отличающиеся серверы LDAP, поскольку\n"
+"они имеют уникальные имена пользователей (имена пользователей в\n"
+"OpenERP нужны уникальные, даже для многих компаний).\n"
+"\n"
+"Анонимная связь LDAP также поддерживается (для тех серверов LDAP,\n"
+"которые это разрешают), при простейшем сохранении пустыми пользователя и "
+"пароля LDAP\n"
+"в настройках LDAP. Это делает **не** позволительной\n"
+"анонимную аутентификацию для пользователей, это только для учётной записи "
+"мастера\n"
+"LDAP, которая используется для проверки существовал ли пользователь перед\n"
+"попыткой его аутентификации.\n"
+"\n"
+"Защита соединения с STARTTLS доступна для серверов LDAP\n"
+"поддерживающих её, при разрешении параметра TLS в настройках\n"
+"LDAP.\n"
+"\n"
+"Для дальнейших установки параметров настройки LDAP, обратитесь к странице\n"
+"руководства ldap.conf: manpage:`ldap.conf(5)`.\n"
+"\n"
+"Соображения защиты\n"
+"+++++++++++++++++++++++\n"
+"Пароли пользователей LDAP никогда не сохраняются в базе данных OpenERP,\n"
+"LDAP сервер запрашивается всякий раз, когда пользователю нужно быть\n"
+"авторизованным. Не происходит дублирования паролей, и\n"
+"пароли обслуживаются только в одном месте.\n"
+"\n"
+"OpenERP не обслуживает изменение паролей в LDAP, так что\n"
+"любые изменения пароля должны быть проведены другими средствами\n"
+"непосредственно в каталоге LDAP (для пользователей LDAP).\n"
+"\n"
+"Возможно также иметь локальных пользователей OpenERP в\n"
+"базе данных наряду с LDAP-авторизованными пользователями (учётная запись\n"
+"администратора - очевидный пример).\n"
+"\n"
+"Вот как это работает:\n"
+"\n"
+"  * Система сначала пытается аутентифицировать пользователей через\n"
+"    локальную базу данных OpenERP;\n"
+"  * если эта аутентификация не проходит (например из-за того, что\n"
+"    у пользователя нет локального пароля), система пытается\n"
+"    авторизоваться через LDAP;\n"
+"\n"
+"Поскольку пользователи LDAP имеют по умолчанию пустые пароли в локальной\n"
+"базе данных OpenERP (что означает нет доступа), первый шаг\n"
+"всегда проваливается и запрашивается сервер LDAP для выполнения\n"
+"авторизации.\n"
+"\n"
+"Разрешение STARTTLS предполагает, что запрос авторизации к\n"
+"серверу LDAP зашифрован.\n"
+"\n"
+"Шаблон пользователя\n"
+"+++++++++++++\n"
+"В настройках LDAP в форме компании, возможно\n"
+"выбрать *Шаблон пользователя*. Если задан, этот пользователь будет "
+"использован как\n"
+"шаблон для создания локальных пользователей несмотря на то, что кто-то "
+"авторизуется\n"
+"первое время через LDAP.\n"
+"Это позволяет сделать предустановку групп по умолчанию и меню\n"
+"для новых пользователей.\n"
+"\n"
+"**Внимание**: если вы задаёте пароль для шаблона пользователя,\n"
+"этот пароль будет назначен как локальный пароль для каждого нового\n"
+"пользователя LDAP, эффективнее задание *мастер пароля* для этих\n"
+"пользователей (до его ручного изменения). Обычно вам это не нужно.\n"
+"Один простой путь для задания шаблона пользователя - единожды войти как\n"
+"допустимый пользователь LDAP, позволить OpenERP создать пустого локального "
+"пользователя с\n"
+"тем же именем (и пустым паролём), затем переименовать этого нового "
+"пользователя\n"
+"на пользователя, который не существует в LDAP, и задать его\n"
+"группы по вашему желанию.\n"
+"\n"
+"Взаимодействие с шифрацией базы\n"
+"+++++++++++++++++++++++++++\n"
+"Модуль base_crypt не совместим с этим модулем, и\n"
+"отключит аутентификацию LDAP, если установлен одновременно.\n"
+"\n"
+"    "
 
 #. module: base
 #: field:res.request.history,body:0
@@ -15068,7 +15374,7 @@ msgstr "Содержимое"
 #: code:addons/base/ir/ir_mail_server.py:199
 #, python-format
 msgid "Connection test succeeded!"
-msgstr ""
+msgstr "Проверка соединения удалось!"
 
 #. module: base
 #: view:partner.massmail.wizard:0
@@ -15112,11 +15418,13 @@ msgid ""
 "Please define at least one SMTP server, or provide the SMTP parameters "
 "explicitly."
 msgstr ""
+"Определите, пожалуйста, хотя бы один SMTP сервер, или точно предоставьте "
+"параметры SMTP."
 
 #. module: base
 #: view:ir.attachment:0
 msgid "Filter on my documents"
-msgstr ""
+msgstr "Фильтр по моим документам"
 
 #. module: base
 #: help:ir.actions.server,code:0
@@ -15124,6 +15432,9 @@ msgid ""
 "Python code to be executed if condition is met.\n"
 "It is a Python block that can use the same values as for the condition field"
 msgstr ""
+"Код Python-а для исполнения, если выполнено условие.\n"
+"Это блок Python-а, который может использовать те же самые значения, как и "
+"для поля условия"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_partner_supplier_form
@@ -15155,7 +15466,7 @@ msgstr "Габон"
 #. module: base
 #: model:res.groups,name:base.group_multi_company
 msgid "Multi Companies"
-msgstr ""
+msgstr "Мульти-компании"
 
 #. module: base
 #: view:ir.model:0
@@ -15174,7 +15485,7 @@ msgstr "Гренландия"
 #. module: base
 #: model:res.groups,name:base.group_sale_salesman_all_leads
 msgid "User - All Leads"
-msgstr ""
+msgstr "Пользователь - все кандидаты"
 
 #. module: base
 #: field:res.partner.bank,acc_number:0
@@ -15187,6 +15498,8 @@ msgid ""
 "Example: GLOBAL_RULE_1 AND GLOBAL_RULE_2 AND ( (GROUP_A_RULE_1 OR "
 "GROUP_A_RULE_2) OR (GROUP_B_RULE_1 OR GROUP_B_RULE_2) )"
 msgstr ""
+"Пример: GLOBAL_RULE_1 AND GLOBAL_RULE_2 AND ( (GROUP_A_RULE_1 OR "
+"GROUP_A_RULE_2) OR (GROUP_B_RULE_1 OR GROUP_B_RULE_2) )"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_th
@@ -15223,6 +15536,25 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"Этот модуль позволяет вовремя вычислять заказы снабжения.\n"
+"==================================================================\n"
+"\n"
+"Если вы установили этот модуль, вам больше не понадобится регулярное "
+"выполнение\n"
+"планировщика снабжения (но у вас остаётся необходимость запуска планировщика "
+"\n"
+"минимума заказа, или, например, установить его ежедневный запуск.)\n"
+"Все заказы снабжения будут обработаны немедленно, что может в некоторых\n"
+"случаях вызвать небольшое влияние на производительность.\n"
+"\n"
+"Это может также увеличить размер вашего запаса, поскольку продукты "
+"запасаются как только\n"
+"возможно и диапазон времени планировщика никак не принимается во внимание.\n"
+"В этом случае, вы никак не можете использовать приоритеты по различным "
+"комплектованиям.\n"
+"\n"
+"    "
 
 #. module: base
 #: model:res.country,name:base.cy
@@ -15239,7 +15571,7 @@ msgstr "Тема"
 #. module: base
 #: selection:res.currency,position:0
 msgid "Before Amount"
-msgstr ""
+msgstr "Предварительный итог"
 
 #. module: base
 #: field:res.request,act_from:0
@@ -15260,12 +15592,12 @@ msgstr "Потребители"
 #. module: base
 #: view:res.company:0
 msgid "Set Bank Accounts"
-msgstr ""
+msgstr "Задать банковские счета"
 
 #. module: base
 #: field:ir.actions.client,tag:0
 msgid "Client action tag"
-msgstr ""
+msgstr "Тег действия клиента"
 
 #. module: base
 #: code:addons/base/res/res_lang.py:189
@@ -15277,7 +15609,7 @@ msgstr ""
 #. module: base
 #: field:ir.values,model_id:0
 msgid "Model (change only)"
-msgstr ""
+msgstr "Модель (только смена)"
 
 #. module: base
 #: model:ir.module.module,description:base.module_marketing_campaign_crm_demo
@@ -15290,12 +15622,19 @@ msgid ""
 "marketing_campaign.\n"
 "    "
 msgstr ""
+"\n"
+"Демо данные для модуля marketing_campaign.\n"
+"============================================\n"
+"\n"
+"Создаёт демо данные типа возможностей, кампаний и сегментов для модуля "
+"marketing_campaign.\n"
+"    "
 
 #. module: base
 #: selection:ir.actions.act_window.view,view_mode:0
 #: selection:ir.ui.view,type:0
 msgid "Kanban"
-msgstr ""
+msgstr "Kanban"
 
 #. module: base
 #: code:addons/base/ir/ir_model.py:251
@@ -15310,12 +15649,12 @@ msgstr ""
 #. module: base
 #: view:ir.filters:0
 msgid "Current User"
-msgstr ""
+msgstr "Текущий пользователь"
 
 #. module: base
 #: field:res.company,company_registry:0
 msgid "Company Registry"
-msgstr ""
+msgstr "Регистрация компании"
 
 #. module: base
 #: view:ir.actions.report.xml:0
@@ -15327,7 +15666,7 @@ msgstr "Прочее"
 #: view:ir.mail_server:0
 #: model:ir.ui.menu,name:base.menu_mail_servers
 msgid "Outgoing Mail Servers"
-msgstr ""
+msgstr "Сервера отправки почты"
 
 #. module: base
 #: model:res.country,name:base.cn
@@ -15340,6 +15679,8 @@ msgid ""
 "The object that should receive the workflow signal (must have an associated "
 "workflow)"
 msgstr ""
+"Объект, который должен получить сигнал рабочего процесса (должен иметь "
+"связанный рабочий процесс)"
 
 #. module: base
 #: model:ir.module.category,description:base.module_category_account_voucher
@@ -15347,6 +15688,8 @@ msgid ""
 "Allows you to create your invoices and track the payments. It is an easier "
 "version of the accounting module for managers who are not accountants."
 msgstr ""
+"Позволяет Вам выставлять счета и отслеживать платежи. Это упрощенная версия "
+"бухгалтерского модуля для менеджеров, не являющихся бухгалтерами."
 
 #. module: base
 #: model:res.country,name:base.eh
@@ -15356,7 +15699,7 @@ msgstr "Западная Сахара"
 #. module: base
 #: model:ir.module.category,name:base.module_category_account_voucher
 msgid "Invoicing & Payments"
-msgstr ""
+msgstr "Выставление счетов и платежи"
 
 #. module: base
 #: model:ir.actions.act_window,help:base.action_res_company_form
@@ -15559,11 +15902,28 @@ msgid ""
 "using it, otherwise it may crash.\n"
 "    "
 msgstr ""
+"\n"
+"Назначение этого модуля - проверка качества других модулей.\n"
+"================================================================\n"
+"\n"
+"Он определяет мастер по списку модулей в OpenERP, который позволяет вам\n"
+"оценить их по различным критериям, таким как: соответствие стандартам\n"
+"кодирования OpenERP, эффективной скорости...\n"
+"\n"
+"Этот модуль предусматривает также общий фреймворк для определения вашего "
+"собственного теста качества.\n"
+"Для дальнейшей информации, программисты могут заглянуть в "
+"base_module_quality\\README.txt\n"
+"\n"
+"ВНИМАНИЕ: этот модуль не может работать как ZIP-файл, вы должны распаковать "
+"его перед\n"
+"использованием, иначе он может потерпеть крах.\n"
+"    "
 
 #. module: base
 #: field:res.partner.bank,bank_name:0
 msgid "Bank Name"
-msgstr ""
+msgstr "Название банка"
 
 #. module: base
 #: model:res.country,name:base.ki
@@ -15596,6 +15956,20 @@ msgid ""
 "supplier in the routing of the assembly operation.\n"
 "    "
 msgstr ""
+"\n"
+"Этот модуль промежуточного процесса комплектования для обеспечения сырьем "
+"производственных заказов.\n"
+"============================================================================="
+"====================\n"
+"\n"
+"Один пример использования этого модуля - управление производством сделанным "
+"вашими\n"
+"поставщиками (суб-договорными). Для выполнения этого, задайте собираемый "
+"товар,\n"
+"который является суб-договорным для \"Нет авто-комплектования\" и помещён в "
+"место хранения\n"
+"поставщика в маршрутизации операции сборки.\n"
+"    "
 
 #. module: base
 #: view:ir.actions.server:0
@@ -15609,6 +15983,9 @@ msgid ""
 "are available. To add a new language, you can use the 'Load an Official "
 "Translation' wizard available from the 'Administration' menu."
 msgstr ""
+"Язык по умолчанию используемый для графического интерфейса пользователя, "
+"когда доступны переводы. Для добавления нового языка вы можете использовать "
+"мастер 'Загрузить официальный перевод' доступный из меню 'Администрирование'."
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_es
@@ -15642,7 +16019,7 @@ msgstr "Файл .CSV"
 #: code:addons/base/res/res_company.py:154
 #, python-format
 msgid "Phone: "
-msgstr ""
+msgstr "Телефон: "
 
 #. module: base
 #: field:res.company,account_no:0
@@ -15677,11 +16054,19 @@ msgid ""
 "plans.\n"
 "    "
 msgstr ""
+"\n"
+"Основной модуль для управления разнесением аналитики и заказами закупки.\n"
+"====================================================================\n"
+"\n"
+"Позволяет пользователю поддерживать различные аналитические планы. Позволяет "
+"вам разбить\n"
+"позицию заказа закупки на несколько счетов и аналитических планов.\n"
+"    "
 
 #. module: base
 #: field:res.company,vat:0
 msgid "Tax ID"
-msgstr ""
+msgstr "ID налога"
 
 #. module: base
 #: field:ir.model.fields,field_description:0
@@ -15793,6 +16178,26 @@ msgid ""
 "state are scheduled with taking the phase's start date\n"
 "    "
 msgstr ""
+"\n"
+"Модуль управления долгосрочным проектом, который отслеживает планирование, "
+"планировщики, назначение ресурсов.\n"
+"============================================================================="
+"==============\n"
+"\n"
+"Возможности\n"
+"--------\n"
+"    * Управление большим проектом.\n"
+"    * Определение различных этапов проекта.\n"
+"    * Подсчёт планирования этапа: подсчёт даты начала и конечной даты этапов "
+"данного проекта, которые в состоянии черновик, открыто и ожидание.\n"
+"      Если не задан проект, то будут приняты все этапы: черновик, открыто и "
+"ожидание.\n"
+"    * Подсчёт планирования задачи - работает также как кнопка планировщика "
+"по этапу проекта. Он принимает проект в качестве аргумента и подсчитывает "
+"задачи на всех этапах: черновик, открыто и ожидание.\n"
+"    * Планирование задач: все задачи, которые в состоянии: черновик, "
+"ожидание и открыто, запланированы с принятием начальной даты этапа\n"
+"    "
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_workflow_activity_form
@@ -15805,7 +16210,7 @@ msgstr "Действия"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_product
 msgid "Products & Pricelists"
-msgstr ""
+msgstr "Товары и прайс-листы"
 
 #. module: base
 #: field:ir.actions.act_window,auto_refresh:0
@@ -15831,7 +16236,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_stock_no_autopicking
 msgid "Picking Before Manufacturing"
-msgstr ""
+msgstr "Комплектование перед изготовлением"
 
 #. module: base
 #: model:res.country,name:base.wf
@@ -15851,12 +16256,12 @@ msgstr "Греция"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_calendar
 msgid "web calendar"
-msgstr ""
+msgstr "веб-календарь"
 
 #. module: base
 #: field:ir.model.data,name:0
 msgid "External Identifier"
-msgstr ""
+msgstr "Внешний идентификатор"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.grant_menu_access
@@ -15887,7 +16292,7 @@ msgstr "Действия"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_delivery
 msgid "Delivery Costs"
-msgstr ""
+msgstr "Стоимость доставки"
 
 #. module: base
 #: code:addons/base/ir/ir_cron.py:293
@@ -15896,6 +16301,8 @@ msgid ""
 "This cron task is currently being executed and may not be modified, please "
 "try again in a few minutes"
 msgstr ""
+"Эта задача планировщика (cron) сейчас исполняется и не может быть изменена, "
+"попытайтесь, пожалуйста, снова через несколько минут"
 
 #. module: base
 #: model:ir.module.module,description:base.module_product_expiry
@@ -15912,6 +16319,17 @@ msgid ""
 "\n"
 "Used, for example, in food industries."
 msgstr ""
+"\n"
+"Отслеживает различные даты по товарам и партиям производства.\n"
+"======================================================\n"
+"\n"
+"Могут быть отслежены следующие даты:\n"
+"    - конец жизни\n"
+"    - срок годности\n"
+"    - дата удаления\n"
+"    - дата предупреждения\n"
+"\n"
+"Используется, например, в пищевой промышленности."
 
 #. module: base
 #: field:ir.exports.line,export_id:0
@@ -15941,6 +16359,9 @@ msgid ""
 "        OpenERP Web process view.\n"
 "        "
 msgstr ""
+"\n"
+"        Вид веб процесса OpenERP.\n"
+"        "
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_chart
@@ -15951,6 +16372,11 @@ msgid ""
 "\n"
 "Deactivates minimal chart of accounts.\n"
 msgstr ""
+"\n"
+"Удаление минимального плана счетов.\n"
+"=============================\n"
+"\n"
+"Деактивирует минимальный план счетов.\n"
 
 #. module: base
 #: code:addons/base/ir/ir_actions.py:653
@@ -15988,7 +16414,7 @@ msgstr "Ошибка"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_base_crypt
 msgid "DB Password Encryption"
-msgstr ""
+msgstr "Шифрование пароля БД"
 
 #. module: base
 #: help:workflow.transition,act_to:0
@@ -15998,7 +16424,7 @@ msgstr "Целевое действие."
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_check_writing
 msgid "Check writing"
-msgstr ""
+msgstr "Проверьте написание"
 
 #. module: base
 #: model:ir.module.module,description:base.module_sale_layout
@@ -16014,6 +16440,16 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"Этот модуль предоставляет возможности улучшения макета заказа продаж.\n"
+"=======================================================================\n"
+"\n"
+"Он даёт вам возможность\n"
+"    * упорядочить все позиции заказа продаж\n"
+"    * добавить заголовки, строки комментариев, строки подитогов\n"
+"    * чертить горизонтальные линии и помещать разрывы страниц\n"
+"\n"
+"    "
 
 #. module: base
 #: view:base.module.update:0
@@ -16030,7 +16466,7 @@ msgstr "Техническое руководство"
 #. module: base
 #: view:res.company:0
 msgid "Address Information"
-msgstr ""
+msgstr "Адресная информация"
 
 #. module: base
 #: model:res.country,name:base.tz
@@ -16055,7 +16491,7 @@ msgstr "Остров Рождества"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_livechat
 msgid "Live Chat Support"
-msgstr ""
+msgstr "Техподдержка в режиме живого общения"
 
 #. module: base
 #: view:ir.actions.server:0
@@ -16074,11 +16510,14 @@ msgid ""
 "        OpenERP Web dashboard view.\n"
 "        "
 msgstr ""
+"\n"
+"        Вид веб панели OpenERP.\n"
+"        "
 
 #. module: base
 #: view:res.partner:0
 msgid "Supplier Partners"
-msgstr ""
+msgstr "Партнёры-поставщики"
 
 #. module: base
 #: view:res.config.installer:0
@@ -16117,7 +16556,7 @@ msgstr "Проверка штрих-кода"
 #. module: base
 #: view:res.partner:0
 msgid "Customer Partners"
-msgstr ""
+msgstr "Партнеры-заказчики"
 
 #. module: base
 #: sql_constraint:res.users:0
@@ -16153,6 +16592,16 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"Этот модуль показывает основные процессы существующие в выбранных модулях и "
+"их последовательность.\n"
+"============================================================================="
+"=========================\n"
+"\n"
+"Примечание: это применимо к модулям содержащим modulename_process_xml\n"
+"например: product/process/product_process_xml\n"
+"\n"
+"    "
 
 #. module: base
 #: field:res.users,menu_tips:0
@@ -16182,7 +16631,7 @@ msgstr "Внутренние верхний/нижний колонтитулы"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_crm
 msgid "CRM"
-msgstr ""
+msgstr "CRM"
 
 #. module: base
 #: code:addons/base/module/wizard/base_export_language.py:59
@@ -16207,7 +16656,7 @@ msgstr "_Экспорт"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_followup
 msgid "Followup Management"
-msgstr ""
+msgstr "Управление напоминаниями"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_fr
@@ -16252,12 +16701,14 @@ msgstr ""
 #. module: base
 #: selection:ir.mail_server,smtp_encryption:0
 msgid "TLS (STARTTLS)"
-msgstr ""
+msgstr "TLS (STARTTLS)"
 
 #. module: base
 #: help:ir.actions.act_window,usage:0
 msgid "Used to filter menu and home actions from the user form."
 msgstr ""
+"Используется для фильтрации действий меню и домашней страницы из формы "
+"пользователя."
 
 #. module: base
 #: model:res.country,name:base.sa
@@ -16268,11 +16719,13 @@ msgstr "Саудовская Аравия"
 #: help:res.company,rml_header1:0
 msgid "Appears by default on the top right corner of your printed documents."
 msgstr ""
+"Используется для фильтрации действий меню и домашней страницы из формы "
+"пользователя."
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_fetchmail_crm_claim
 msgid "eMail Gateway for CRM Claim"
-msgstr ""
+msgstr "Шлюз e-mail для CRM претензии"
 
 #. module: base
 #: help:res.partner,supplier:0
@@ -16281,8 +16734,7 @@ msgid ""
 "people will not see it when encoding a purchase order."
 msgstr ""
 "Установите флажок, если контрагент является поставщиком. Если он не "
-"установлен, контрагента не будет видно при выборке, составлении заказ на "
-"покупку."
+"установлен, контрагента не будет видно при  составлении заказа закупки."
 
 #. module: base
 #: field:ir.actions.server,trigger_obj_id:0
@@ -16339,6 +16791,9 @@ msgid ""
 "later is slower than the former but forbids any gap in the sequence (while "
 "they are possible in the former)."
 msgstr ""
+"Предложены две реализации нумерации объектов: стандартная и без промежутка. "
+"Последняя более медленна, чем первая, но не позволяет любые промежутки в "
+"нумерации (в то время как они возможны в первой)."
 
 #. module: base
 #: model:res.country,name:base.gn
@@ -16373,12 +16828,12 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,description:base.module_auth_openid
 msgid "Allow users to login through OpenID."
-msgstr ""
+msgstr "Разрешить пользователям авторизоваться через OpenID."
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_payment
 msgid "Suppliers Payment Management"
-msgstr ""
+msgstr "Управление оплатами поставщикам"
 
 #. module: base
 #: model:res.country,name:base.sv
@@ -16416,11 +16871,22 @@ msgid ""
 "After installing the module, it adds a menu to define a custom report in\n"
 "the Administration / Customization / Reporting menu.\n"
 msgstr ""
+"\n"
+"Этот модуль позволяет вам создать любой статистический отчёт по различным "
+"объектам.\n"
+"=========================================================================\n"
+"\n"
+"Это конструктор SQL запроса и просмотрщик\n"
+"для конечных пользователей.\n"
+"\n"
+"После установки модуля, он добавляет меню для определения пользовательского "
+"отчёта в\n"
+"меню Администрирование/Подстройка/Отчётность.\n"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_report_designer
 msgid "Report Designer"
-msgstr ""
+msgstr "Дизайнер отчетов"
 
 #. module: base
 #: model:ir.ui.menu,name:base.menu_address_book
@@ -16450,6 +16916,9 @@ msgid ""
 "        OpenERP Web calendar view.\n"
 "        "
 msgstr ""
+"\n"
+"        Вид веб календаря OpenERP.\n"
+"        "
 
 #. module: base
 #: model:ir.ui.menu,name:base.menu_crm_config_lead
@@ -16477,6 +16946,8 @@ msgstr "И"
 msgid ""
 "Database identifier of the record to which this applies. 0 = for all records"
 msgstr ""
+"Идентификатор записи базы данных к которому это относится. 0 = для всех "
+"записей"
 
 #. module: base
 #: field:ir.model.fields,relation:0
@@ -16486,7 +16957,7 @@ msgstr "Отношение объекта"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_voucher
 msgid "eInvoicing & Payments"
-msgstr ""
+msgstr "Эл. счета и платежи"
 
 #. module: base
 #: view:ir.rule:0
@@ -16558,7 +17029,7 @@ msgstr "Подчиненной поле"
 #. module: base
 #: view:ir.rule:0
 msgid "Detailed algorithm:"
-msgstr ""
+msgstr "Подробный алгоритм:"
 
 #. module: base
 #: field:ir.actions.act_window,usage:0
@@ -16579,7 +17050,7 @@ msgstr "workflow.workitem"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_profile_tools
 msgid "Miscellaneous Tools"
-msgstr ""
+msgstr "Разные инструменты"
 
 #. module: base
 #: model:ir.module.category,description:base.module_category_tools
@@ -16587,6 +17058,8 @@ msgid ""
 "Lets you install various interesting but non-essential tools like Survey, "
 "Lunch and Ideas box."
 msgstr ""
+"Позволяет установить интересные, но не обязательные инструменты: Обзор, Ланч "
+"и Коробка идей."
 
 #. module: base
 #: selection:ir.module.module,state:0
@@ -16617,6 +17090,26 @@ msgid ""
 "Print product labels with barcode.\n"
 "    "
 msgstr ""
+"\n"
+"Это основной модуль для управления товарами и прайс-листами в OpenERP.\n"
+"========================================================================\n"
+"\n"
+"Товары поддерживают варианты, различные методы ценообразования, информацию\n"
+"поставщиков, изготовление в запас/по заказу, различные единицы измерения,\n"
+"комплектование и свойства.\n"
+"\n"
+"Прайс-листы поддерживают:\n"
+"    * Многоуровневую скидку (по товару, категории, количествам)\n"
+"    * Подсчёт цены основанный на различных критериях:\n"
+"        * другой прайс-лист,\n"
+"        * себестоимость,\n"
+"        * список цен,\n"
+"        * цена поставщика...\n"
+"\n"
+"Предпочтения прайс-листов по товару и/или партнёрам.\n"
+"\n"
+"Печать меток товара со штрих-кодом.\n"
+"    "
 
 #. module: base
 #: report:ir.module.reference.graph:0
@@ -16637,7 +17130,7 @@ msgstr "Вы не можете удалить поле '%s' !"
 #. module: base
 #: view:res.users:0
 msgid "Allowed Companies"
-msgstr ""
+msgstr "Допустимые компании"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_de
@@ -16647,7 +17140,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_auction
 msgid "Auction Houses"
-msgstr ""
+msgstr "Аукционные дома"
 
 #. module: base
 #: field:ir.ui.menu,web_icon:0
@@ -16663,7 +17156,7 @@ msgstr "Выполнить запланированные обновления"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_journal
 msgid "Invoicing Journals"
-msgstr ""
+msgstr "Журналы выставления счетов"
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -16710,6 +17203,13 @@ msgid ""
 "Add \"Support\" button in header from where you can access OpenERP Support.\n"
 "    "
 msgstr ""
+"\n"
+"Обеспечивает поддержку живого чата для тех, укого есть договор поддержки.\n"
+"===================================================================\n"
+"\n"
+"Добавляет кнопку \"Поддержка\" button в заголовке формы доступа к поддержке "
+"OpenERP.\n"
+"    "
 
 #. module: base
 #: model:ir.model,name:base.model_base_module_configuration
@@ -16724,6 +17224,10 @@ msgid ""
 "        This module provides the core of the OpenERP web client.\n"
 "        "
 msgstr ""
+"\n"
+"        Модуль ядра веб OpenERP.\n"
+"        Этот модуль предоставляет ядро веб-клиента OpenERP.\n"
+"        "
 
 #. module: base
 #: sql_constraint:res.country:0
@@ -16761,7 +17265,7 @@ msgstr "Аруба"
 #: code:addons/base/module/wizard/base_module_import.py:60
 #, python-format
 msgid "File is not a zip file!"
-msgstr ""
+msgstr "Файл не является zip архивом !"
 
 #. module: base
 #: model:res.country,name:base.ar
@@ -16781,6 +17285,16 @@ msgid ""
 "and decide on their status as they evolve.\n"
 "    "
 msgstr ""
+"\n"
+"Этот модуль предоставляет управление проблемами/ошибками в проекте.\n"
+"=======================================================\n"
+"\n"
+"OpenERP позволяет вам управлять проблемами, которые вы можете встретить в "
+"проекте\n"
+"типа ошибок в системе, жалоб клиента или поломок материала.\n"
+"Вид списка позволяет руководителю быстро проверить проблемы, поручить их\n"
+"и определить их состояние развития.\n"
+"    "
 
 #. module: base
 #: field:res.groups,full_name:0
@@ -16795,7 +17309,7 @@ msgstr "Бахрейн"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web
 msgid "web"
-msgstr ""
+msgstr "веб"
 
 #. module: base
 #: field:res.bank,fax:0
@@ -16869,7 +17383,7 @@ msgstr "Компания"
 #. module: base
 #: model:ir.module.category,name:base.module_category_report_designer
 msgid "Advanced Reporting"
-msgstr ""
+msgstr "Расширенные отчеты"
 
 #. module: base
 #: selection:ir.actions.act_window,target:0
@@ -16929,7 +17443,7 @@ msgstr ""
 #: code:addons/orm.py:791
 #, python-format
 msgid "Serialization field `%s` not found for sparse field `%s`!"
-msgstr ""
+msgstr "Поле последовательности `%s` не найдено для поля распределения `%s`!"
 
 #. module: base
 #: model:res.country,name:base.jm
@@ -16940,7 +17454,7 @@ msgstr "Ямайка"
 #: field:res.partner,color:0
 #: field:res.partner.address,color:0
 msgid "Color Index"
-msgstr ""
+msgstr "Цветовая палитра"
 
 #. module: base
 #: model:ir.actions.act_window,help:base.action_partner_category_form
@@ -16970,12 +17484,12 @@ msgstr "Внимание"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_edi
 msgid "Electronic Data Interchange (EDI)"
-msgstr ""
+msgstr "Обмен электронными данными (ОЭД)"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_tools
 msgid "Extra Tools"
-msgstr ""
+msgstr "Доп. инструменты"
 
 #. module: base
 #: model:res.country,name:base.vg
@@ -17039,6 +17553,48 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"Шаблоны e-mail (упрощённая версия оригинальной Power Email от Openlabs)\n"
+"============================================================================="
+"\n"
+"\n"
+"Позволяет вам разработать полные шаблоны e-mail связанные с любым документом "
+"OpenERP (заказами\n"
+"продаж, счетами и т.д.), включая отправителя, получателя, тему, тело (HTML "
+"и\n"
+"текст). Вы также можете автоматически прикрепить файлы к вашим шаблонам, или "
+"распечатать и\n"
+"прикрепить отчёт.\n"
+"\n"
+"Для продвинутого использования, шаблоны могут включать динамические атрибуты "
+"документа\n"
+"связанными с ним. Например, вы можете использовать название страны "
+"партнёра,\n"
+"когда ему пишите, также предусматривая сохранение умолчаний в случае если "
+"атрибут\n"
+"не определён. Каждый шаблон содержит встроенный ассистент для помощи по\n"
+"включению этих динамических значений.\n"
+"\n"
+"Если вы разрешите возможность, ассистент составления появится также на "
+"боковой панели\n"
+"документов OpenERP для которых применим шаблон (например, счетов).\n"
+"Это служит быстрым способом для отправки новой почты основанной на шаблоне, "
+"после\n"
+"просмотра и изменения содержимого при необходимости.\n"
+"Этот ассистент составления будет также включён в систему массовой рассылки, "
+"при вызове\n"
+"сразу для многих документов.\n"
+"\n"
+"Эти шаблоны e-mail являются также сердцем системы кампании маркетинга\n"
+"(см. приложение ``marketing_campaign``), если вам нужно автоматизировать "
+"большие\n"
+"кампании по любому документу OpenERP.\n"
+"\n"
+"Техническое замечание: была взята только система шаблонизации оригинальной "
+"Power Email\n"
+"от Openlabs\n"
+"\n"
+"    "
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -17048,7 +17604,7 @@ msgstr "Чешский / Čeština"
 #. module: base
 #: model:ir.module.category,name:base.module_category_generic_modules
 msgid "Generic Modules"
-msgstr ""
+msgstr "Общие модули"
 
 #. module: base
 #: model:ir.actions.act_window,help:base.action_partner_supplier_form
@@ -17087,11 +17643,25 @@ msgid ""
 "to set up a management by affair.\n"
 "    "
 msgstr ""
+"\n"
+"Этот модуль реализует табельную систему.\n"
+"==========================================\n"
+"\n"
+"Каждый работник может ввести и отследить время затраченное на различные "
+"проекты.\n"
+"Проект - счёт аналитики и затраченное на проект время создаёт стоимости на\n"
+"счету аналитики.\n"
+"\n"
+"Предусмотрены подборки отчётности по времени и отслеживание работника.\n"
+"\n"
+"Он полностью интегрирован с модулем учёта стоимости. Это позволяет\n"
+"настроить управление по делу.\n"
+"    "
 
 #. module: base
 #: help:ir.mail_server,smtp_port:0
 msgid "SMTP Port. Usually 465 for SSL, and 25 or 587 for other cases."
-msgstr ""
+msgstr "Порт SMTP. Обычно 465 для SSL, и 25 или 587 для других случаев."
 
 #. module: base
 #: view:ir.sequence:0
@@ -17159,6 +17729,39 @@ msgid ""
 "    * Opportunities by Stage (graph)\n"
 "    * Planned Revenue by Stage and User (graph)\n"
 msgstr ""
+"\n"
+"Это общее управление взаимоотношениями с покупателями (CRM) в OpenERP.\n"
+"=====================================================\\n\n"
+"\n"
+"Эта система позволяет группировать людей для разумного и эффективного "
+"управления\n"
+"кандидатами, предложениями, встречами, телефонными звонками и т.п.\n"
+"Она управляет ключевыми задачами, такими как общение, идентификация, "
+"приоретизация,\n"
+"назначение, разрешение проблем и уведомление.\n"
+"\n"
+"OpenERP полагает, что все дела успешно отслеживаются по пользователям, "
+"покупателям и\n"
+"поставщикам. Она может автоматически отсылать напоминания, обострять запрос, "
+"запускать\n"
+"конкретные методы и другие действия основанные на правилах вашего "
+"предприятия.\n"
+"\n"
+"Главная задумка этой системы в том, что пользователи не вынуждены делать что-"
+"то\n"
+"особенное. Они могут только отправить e-mail отслеживателю запроса. OpenERP "
+"поблагодарит\n"
+"их за сообщение, автоматически направив его соответствующему начальнику, и "
+"убедится в том,\n"
+" что вся будущая переписка отправится в правильное место.\n"
+"\n"
+"Модуль CRM имеет почтовый шлюз для синхронизации интерфейса\n"
+"сообщений и OpenERP.\n"
+"\n"
+"Создаёт панель для CRM, которая включает:\n"
+"    * Предложения по категориям (график)\n"
+"    * Предложения по этапу (график)\n"
+"    * Плановый доход по этапу и пользователю (график)\n"
 
 #. module: base
 #: model:ir.module.category,description:base.module_category_accounting_and_finance
@@ -17166,11 +17769,13 @@ msgid ""
 "Helps you handle your accounting needs, if you are not an accountant, we "
 "suggest you to install only the Invoicing."
 msgstr ""
+"Помогает вам обрабатывать потребности вашего учета, если вы не бухгалтер, мы "
+"рекомендуем вам установить только выставление счетов."
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_plugin_thunderbird
 msgid "Thunderbird Plug-In"
-msgstr ""
+msgstr "Дополнение для Thunderbird"
 
 #. module: base
 #: model:ir.model,name:base.model_res_country
@@ -17188,7 +17793,7 @@ msgstr "Страна"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_project_messages
 msgid "In-Project Messaging System"
-msgstr ""
+msgstr "Внутри-проектная система сообщений"
 
 #. module: base
 #: model:res.country,name:base.pn
@@ -17202,11 +17807,14 @@ msgid ""
 "        OpenERP Web test suite.\n"
 "        "
 msgstr ""
+"\n"
+"        Набор тестов OpenERP веб.\n"
+"        "
 
 #. module: base
 #: view:ir.values:0
 msgid "Action Bindings/Defaults"
-msgstr ""
+msgstr "Привязка действий/умолчаний"
 
 #. module: base
 #: view:ir.rule:0
@@ -17221,7 +17829,7 @@ msgstr ""
 #: view:res.partner:0
 #: view:res.partner.address:0
 msgid "Change Color"
-msgstr ""
+msgstr "Изменить цвет"
 
 #. module: base
 #: model:res.partner.category,name:base.res_partner_category_15
@@ -17259,7 +17867,7 @@ msgstr ""
 #. module: base
 #: field:ir.module.module,auto_install:0
 msgid "Automatic Installation"
-msgstr ""
+msgstr "Автоматическая установка"
 
 #. module: base
 #: model:res.country,name:base.jp
@@ -17311,6 +17919,33 @@ msgid ""
 "Leads.\n"
 "    "
 msgstr ""
+"\n"
+"Этот модуль автоматизации нахождения кандидатов через маркетинговые кампании "
+"(кампании фактически могут быть определены по любому ресурсу, не только по "
+"кандидатам CRM).\n"
+"============================================================================="
+"============================================================\n"
+"\n"
+"Кампании являются динамическими и много-канальными. Процесс следующий:\n"
+"    * Разработка маркетинговых кампаний типа рабочих процессов, включая "
+"шаблоны e-mail для отправки, отчёты для печати и отправка по e-mail, "
+"действия подстройки и т.п.\n"
+"    * Определение входных сегментов, которые выберут элементы для кампании "
+"(например, кандидаты из определённых стран и т.п.)\n"
+"    * Запуск вашей кампании в режиме имитации для проверки в реальном "
+"времени или ускоренном, и её точная настройка\n"
+"    * Вы можете также запустить реальную кампанию в ручном режиме, когда "
+"каждое действие требует ручное подтверждение\n"
+"    * В итоге, запустите кампанию по настоящему и наблюдайте статистику как "
+"кампания делает всё полностью автоматически.\n"
+"\n"
+"Пока кампания выполняется, вы конечно можете продолжить подстройку "
+"параметров, входных сегментов, рабочего процесса и т.п.\n"
+"\n"
+"Учтите: если вам нужны демо данные, вы можете установить модуль "
+"маркетинговой кампании crm_demo, но это приведет к установке приложения "
+"CRM.\n"
+"    "
 
 #. module: base
 #: selection:ir.actions.act_window.view,view_mode:0
@@ -17362,7 +17997,7 @@ msgstr "Локализация"
 #. module: base
 #: field:ir.sequence,implementation:0
 msgid "Implementation"
-msgstr ""
+msgstr "Реализация"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_ve
@@ -17389,7 +18024,7 @@ msgstr "Условие"
 #. module: base
 #: help:res.currency,rate:0
 msgid "The rate of the currency to the currency of rate 1."
-msgstr ""
+msgstr "Курс валюты к валюте с курсом 1."
 
 #. module: base
 #: field:ir.ui.view,name:0
@@ -17404,7 +18039,7 @@ msgstr "Совместный репозиторий (FTP)"
 #. module: base
 #: model:ir.model,name:base.model_res_groups
 msgid "Access Groups"
-msgstr ""
+msgstr "Группы доступа"
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -17478,7 +18113,7 @@ msgstr "Банковские счета"
 #: field:ir.model,modules:0
 #: field:ir.model.fields,modules:0
 msgid "In modules"
-msgstr ""
+msgstr "В модулях"
 
 #. module: base
 #: model:res.country,name:base.sl
@@ -17499,7 +18134,7 @@ msgstr "Острова Тёркс и Кайкос"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_fetchmail_project_issue
 msgid "eMail Gateway for Project Issues"
-msgstr ""
+msgstr "Шлюз e-mail для проблем проекта"
 
 #. module: base
 #: field:res.partner.bank,partner_id:0
@@ -17523,6 +18158,8 @@ msgid ""
 "Helps you manage your manufacturing processes and generate reports on those "
 "processes."
 msgstr ""
+"Помагает вам управлять процессами производства и создавать отчеты об этих "
+"процессах."
 
 #. module: base
 #: help:ir.sequence,number_increment:0
@@ -17552,6 +18189,8 @@ msgid ""
 "Manage relations with prospects and customers using leads, opportunities, "
 "requests or issues."
 msgstr ""
+"Управляет отношениями между перспективами и покупателями используя "
+"кандидатов, предложения, запросы или проблемы."
 
 #. module: base
 #: selection:res.partner.address,type:0
@@ -17567,7 +18206,7 @@ msgstr "Корпорация"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_purchase_requisition
 msgid "Purchase Requisitions"
-msgstr ""
+msgstr "Требования закупки"
 
 #. module: base
 #: selection:ir.cron,interval_type:0
@@ -17588,7 +18227,7 @@ msgstr "Контрагенты: "
 #. module: base
 #: field:res.partner.bank,name:0
 msgid "Bank Account"
-msgstr ""
+msgstr "Банковский счет"
 
 #. module: base
 #: model:res.country,name:base.kp
@@ -17609,7 +18248,7 @@ msgstr "Контекст"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_mrp
 msgid "Sales and MRP Management"
-msgstr ""
+msgstr "Управление продажами и планированием производственных ресурсов (MRP)"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_partner_sms_send
@@ -17642,6 +18281,13 @@ msgid ""
 "are accessible if installed.\n"
 "    "
 msgstr ""
+"\n"
+"Общая основа для модулей инструментов.\n"
+"==============================\n"
+"\n"
+"Создаёт пункт меню для инструментов откуда доступны инструменты типа опрос, "
+"2-й завтрак, идея, и т.п., если установлены.\n"
+"    "
 
 #. module: base
 #: field:ir.exports,name:0
@@ -17690,6 +18336,20 @@ msgid ""
 "    A + B + C -> D + E\n"
 "    "
 msgstr ""
+"\n"
+"Этот модуль позволяет вам производить несколько продуктов по одному заказу "
+"производства.\n"
+"============================================================================="
+"\n"
+"\n"
+"Вы можете настроить суб-продукты в спецификации материала.\n"
+"\n"
+"Без этого модуля:\n"
+"    А + Б + В -> Г\n"
+"\n"
+"с этим модулем:\n"
+"    А + Б + В -> Г + Д\n"
+"    "
 
 #. module: base
 #: model:res.country,name:base.lk
@@ -17722,6 +18382,30 @@ msgid ""
 "module.\n"
 "    "
 msgstr ""
+"\n"
+"Этот модуль позволяет вам создавать новые модули без разработки.\n"
+"======================================================================\n"
+"\n"
+"Он записывает все операции над объектами в течении сессии записи и\n"
+"производит .ZIP модуль. Итак вы можете создать свой собственный модуль прямо "
+"из\n"
+"клиента OpenERP.\n"
+"\n"
+"Эта версия работает для создания и изменения существующих записей. Он "
+"перевычисляет\n"
+"зависимости и связи для всех типов виджетов (многие-к-одному, многие-ко-"
+"многим, ...).\n"
+"Он также поддерживает техпроцессы и данные демо/обновления.\n"
+"\n"
+"Это должно помочь вам легко создать используемые и публикуемые модули\n"
+"для пользовательских настроек и демо/тестовых данных.\n"
+"\n"
+"Как его использовать:\n"
+"Запустите Администрирование/Подстройка/Создание модуля/Экспорт подстроек как "
+"мастер модуля.\n"
+"Выберите критерии даты и времени записи и объекты для записи и запишите "
+"модуль.\n"
+"    "
 
 #. module: base
 #: selection:base.language.install,lang:0

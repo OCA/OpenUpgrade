@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:44+0000\n"
-"PO-Revision-Date: 2012-09-12 14:29+0000\n"
+"PO-Revision-Date: 2012-09-13 13:17+0000\n"
 "Last-Translator: Erwin <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-09-13 05:00+0000\n"
+"X-Launchpad-Export-Date: 2012-09-14 05:12+0000\n"
 "X-Generator: Launchpad (build 15944)\n"
 
 #. module: base
@@ -3036,6 +3036,10 @@ msgid ""
 "since it's the same which has been renamed.\n"
 "    "
 msgstr ""
+"\n"
+"Met deze module kunt u relaties segmenten/indelen op basis van vragen.\n"
+"===========================================================\n"
+"    "
 
 #. module: base
 #: code:addons/report_sxw.py:434
@@ -4605,6 +4609,20 @@ msgid ""
 "above. Specify the interval information and partner to be invoice.\n"
 "    "
 msgstr ""
+"\n"
+"Maak herhalende documenten (abonnementen).\n"
+"=======================================\n"
+"\n"
+"Met deze module kunt u een nieuw document maken en een abonnement hieraan "
+"koppelen.\n"
+"\n"
+"U kunt bijvoorbeeld een factuur automatisch periodiek laten aanmaken. Dit "
+"doet u door:\n"
+"* Maak een document type gebaseerd op het object factuur\n"
+"* Maak een abonnement aan waarvan de bron het document is, zoals aangemaakt "
+"bij stap 1.\n"
+"* Specificeer het interval en de klant voor de factuur\n"
+"    "
 
 #. module: base
 #: field:ir.actions.server,srcmodel_id:0
@@ -5640,6 +5658,31 @@ msgid ""
 "Budgets per Budgets.\n"
 "\n"
 msgstr ""
+"\n"
+"Deze module geeft accountants de mogelijkheid om kostenplaats- en "
+"overlappende budgetten te beheren.\n"
+"============================================================================="
+"==========\n"
+"\n"
+"Wanneer de hoofdbudgetten en onderliggende budgetten zijn gedefinieerd (in "
+"financieel/budgetten)\n"
+"kunnen de projectmanagers de geplande bedragen invoeren per kostenplaats.\n"
+"\n"
+"De accountant heeft de mogelijkheid om alle gebudgetteerde bedragen te zien "
+"van ieder\n"
+"budget en hoofdbudget, zodat het totale gebudgetteerde bedrag niet groter of "
+"lager \n"
+"is dan wat was gebudgetteerd. deze informatie kan ook als grafiek worden "
+"bekeken.\n"
+"\n"
+"Er zijn drie rapportages beschikbaar:\n"
+"1. Deze is beschikbaar bij de lijst van budgetten. Het geeft de spreiding "
+"van deze budgetten weer over de kostenplaatsen per hoofdbudget.\n"
+"2. Dit is een totaal van het eerste rapport. het geeft alleen de spreiding "
+"weer voor de geselecteerde budgetten van de kostenplaatsen.\n"
+"3. Dit rapport is beschikbaar bij de kostenplaats. Het geeft de spreiding "
+"weer van de geselecteerde kostenplaats van het hoofdbudget, per budget.\n"
+"\n"
 
 #. module: base
 #: help:res.lang,iso_code:0
@@ -6453,6 +6496,11 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"Met deze module kunt u aangeven welk factureerproduct moet worden gebruikt "
+"als een werknemer uren boekt op het contract/kostenplaats.\n"
+"\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_audittrail
@@ -6676,7 +6724,7 @@ msgstr "Vink aan als de relatie een werknemer is."
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_crm_profiling
 msgid "Customer Profiling"
-msgstr ""
+msgstr "Klant profiling"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_project_issue
@@ -10273,6 +10321,20 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"Deze module geeft u de mogelijkheid om het standaard factuurtarief te "
+"definiëren per kostenplaats.\n"
+"============================================================================="
+"====\n"
+"\n"
+"Dit wordt vaak gebruikt wanneer een werknemer zijn urenstaat invult. De "
+"waarden worden dan automatisch ingevuld, maar de mogelijkheid om deze aan te "
+"passen blijft bestaan.\n"
+"\n"
+"Indien geen gegevens zijn ingevoerd voor de rekening, wordt de standaard "
+"waarde van de kostenplaats gebruikt.\n"
+"\n"
+"    "
 
 #. module: base
 #: model:ir.ui.menu,name:base.menu_fundrising
@@ -10601,7 +10663,7 @@ msgstr ""
 "Maak een claim van een uitgaande levering.\n"
 "===================================\n"
 "\n"
-"Voegt claim link toe aan een uitgaande order.\n"
+"Voegt claim link toe aan een uitgaande levering.\n"
 
 #. module: base
 #: view:ir.model:0
@@ -11374,7 +11436,7 @@ msgstr "Alles stoppen"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_analytic_user_function
 msgid "Jobs on Contracts"
-msgstr ""
+msgstr "Werknemerfunctie per contract/kostenplaats"
 
 #. module: base
 #: model:ir.module.module,description:base.module_import_sugarcrm
@@ -13697,6 +13759,18 @@ msgid ""
 "supplier in the routing of the assembly operation.\n"
 "    "
 msgstr ""
+"\n"
+"Deze module maakt het mogelijk een tussentijdse verzamelproces mogelijk voor "
+"de ontvangst van grondstoffen aan productieorders.\n"
+"============================================================================="
+"================\n"
+"\n"
+"Dit kunt u bijvoorbeeld gebruiken indien u productie uitbesteed aan uw "
+"leverancier/onderaannemer.\n"
+"Zet in dit geval bij de grondstof de optie \"Automatisch verzamelen\" uit en "
+"zet de locatie van de leverancier\n"
+"in de routing van de assemblage verwerking.\n"
+"    "
 
 #. module: base
 #: view:ir.actions.server:0
@@ -14401,7 +14475,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_fetchmail_crm_claim
 msgid "eMail Gateway for CRM Claim"
-msgstr "E-mail gateway voor CRM Claims"
+msgstr "E-mail Gateway voor CRM Claims"
 
 #. module: base
 #: help:res.partner,supplier:0
