@@ -830,6 +830,10 @@ instance.web.ListView = instance.web.View.extend( /** @lends instance.web.ListVi
         this.$el.prepend(
             $('<div class="oe_view_nocontent">').html(this.options.action.help)
         );
+        var create_nocontent = this.$buttons;
+        this.$el.find('.oe_view_nocontent').click(function() {
+            create_nocontent.effect('bounce', {distance: 18, times: 5}, 150);
+        });
     }
 });
 instance.web.ListView.List = instance.web.Class.extend( /** @lends instance.web.ListView.List# */{
@@ -1045,7 +1049,11 @@ instance.web.ListView.List = instance.web.Class.extend( /** @lends instance.web.
         var row = cells.join('');
         this.$current
             .children('tr:not([data-id])').remove().end()
-            .append(new Array(count - this.records.length + 1).join(row));
+            .append(new Array(count - this.records.length + 1).join(row)).click(
+                function() {
+                    $('button.oe_list_add').effect('bounce', {distance: 18, times: 5}, 150);
+                }
+            );
     },
     /**
      * Gets the ids of all currently selected records, if any
