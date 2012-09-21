@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:44+0000\n"
-"PO-Revision-Date: 2012-09-17 09:07+0000\n"
+"PO-Revision-Date: 2012-09-20 14:09+0000\n"
 "Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
 "Language-Team: German <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-09-18 05:30+0000\n"
-"X-Generator: Launchpad (build 15966)\n"
+"X-Launchpad-Export-Date: 2012-09-21 04:58+0000\n"
+"X-Generator: Launchpad (build 15985)\n"
 
 #. module: base
 #: model:res.country,name:base.sh
@@ -5336,6 +5336,18 @@ msgid ""
 "modules like share, lunch, pad, idea, survey and subscription.\n"
 "    "
 msgstr ""
+"\n"
+"Modul zur Installation von versteckten Extras wie Lunch, Survey, Idee, "
+"Teilen, usw.\n"
+"============================================================================="
+"==============\n"
+"\n"
+"Macht versteckte Extra Konfigurationen verfügbar, mittels denen Sie Module "
+"wie\n"
+"Teilen (gemeinsam nutzen), Mittagessen (lunch), pad, Idee, Fragebogen und "
+"Abonnement \n"
+"einrichten können.\n"
+"    "
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_specific_industry_applications
@@ -9198,7 +9210,7 @@ msgstr "Kontakt"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_at
 msgid "Austria - Accounting"
-msgstr "Österreich - Buchhaltung"
+msgstr "Österreichische Buchführung"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_ui_menu
@@ -9557,7 +9569,7 @@ msgstr "Plattform für Zusammenarbeit"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_anglo_saxon
 msgid "Anglo-Saxon Accounting"
-msgstr "Angelsächsische Buchungslogik"
+msgstr "Angelsächsische Buchführung"
 
 #. module: base
 #: model:res.country,name:base.np
@@ -10756,7 +10768,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,description:base.module_google_base_account
 msgid "The module adds google user in res user"
-msgstr ""
+msgstr "Dieses Modul fügt google-Benutzer in res.user ein"
 
 #. module: base
 #: selection:base.language.install,state:0
@@ -10905,6 +10917,7 @@ msgstr "Just in Time Terminierung"
 #: model:ir.module.module,shortdesc:base.module_account_bank_statement_extensions
 msgid "Bank Statement extensions to support e-banking"
 msgstr ""
+"Erweiterung bezüglich Bank-Kontoauszügen zur Unterstützung von eBanking"
 
 #. module: base
 #: view:ir.actions.server:0
@@ -10983,6 +10996,19 @@ msgid ""
 "fund status.\n"
 "    "
 msgstr ""
+"\n"
+"Beschaffung von Fördermitteln.\n"
+"==============================\n"
+"\n"
+"Wenn Sie Ihre Organisation oder eine Kampagne unterstützen wollen, können "
+"Sie alle\n"
+"Maßnahmen zur Beschaffung von Geldern hier nachvollziehen. Das Menü eröffnet "
+"eine\n"
+"Liste in der Sie Spendenbeschreibungen, eMail, Verlauf und "
+"Erfolgswahrscheinlichkeiten.\n"
+"Einige Aktionsschaltflächen ermöglichen die einfache Veränderung ihres "
+"Mittelstatus\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_margin
@@ -11056,6 +11082,12 @@ msgid ""
 "This module is the base module for other multi-company modules.\n"
 "    "
 msgstr ""
+"\n"
+"Dieses Modul dient der Verwaltung einer Mehrfach-Unternehmens-Umgebung.\n"
+"=================================================================\n"
+"\n"
+"Dieses Modul ist die Basis für andere Module für Mehrfach-Unternehmen.\n"
+"    "
 
 #. module: base
 #: sql_constraint:res.currency:0
@@ -11168,6 +11200,33 @@ msgid ""
 "module named account_voucher.\n"
 "    "
 msgstr ""
+"\n"
+"Finanzbuchhaltung und Finanzverwaltung.\n"
+"====================================\n"
+"\n"
+"Modul für Finanzen und Buchhaltung liefert:\n"
+"----------------------------------------------------------------------\n"
+"Allgemeine Finanzbuchhaltung\n"
+"Kostenstellenrechnung\n"
+"Mandantenfähigkeit\n"
+"Steuerverwaltung\n"
+"Budgetverwaltung\n"
+"Kunden- und Lieferantenrechnungen\n"
+"Kontoauszüge der Bank\n"
+"Mahnwesen Partnerbezogen\n"
+"\n"
+"Erzeugt eine Pinnwand für Buchhalter mit:\n"
+"* Liste zu bewilligender Kundenrechnungen\n"
+"* Unternehmensanalyse\n"
+"* Diagramm überfälliger Forderungen\n"
+"* Diagramm der Finanzen\n"
+"\n"
+"Die Prozesse, wie Führung des Hauptbuchs, werden durch vorgegebene "
+"Finanzberichte (Verschiebung von Einträgen\n"
+"oder Gruppierung werden im Berichtsblatt eingestellt) im bestimmten "
+"Geschäftsjahr. Zur Vorbereitung von \n"
+"Gutschriften gibt es ein separates Modul namens account_voucher.\n"
+"    "
 
 #. module: base
 #: help:ir.actions.act_window,view_type:0
@@ -11236,6 +11295,12 @@ msgid ""
 "- SSL/TLS: SMTP sessions are encrypted with SSL/TLS through a dedicated port "
 "(default: 465)"
 msgstr ""
+"Wählen Sie das Verbindungs-Verschlüsselungs-Schema:\n"
+" - Keine: SMTP-Sitzungen erfolgen im Klartext.\n"
+" - TLS (STARTTLS): TLS -Verschlüsselung wird zu Beginn der SMTP-Sitzung "
+"angefordert (empfohlen)\n"
+" - SSL/TLS: SMTP-Sitzungen sind mit SSL/TLS über einen didizierten Port "
+"(Standard 465) verschlüsselt"
 
 #. module: base
 #: view:ir.model:0
@@ -11254,6 +11319,14 @@ msgid ""
 "modules like base_report_designer and base_report_creator.\n"
 "    "
 msgstr ""
+"\n"
+"Installationsassistent für versteckte Berichtsmodule.\n"
+"===============================================\n"
+"\n"
+"Macht versteckte Berichtsmodule verfügbar. Mit diesen können Sie dann Module "
+"wie\n"
+"base_report_designer und base_report_creator installieren.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_base_synchro
@@ -11315,7 +11388,7 @@ msgstr "Ansicht"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_wiki_sale_faq
 msgid "Wiki: Sale FAQ"
-msgstr ""
+msgstr "Wiki: Verkaufs-FAQ"
 
 #. module: base
 #: selection:ir.module.module,state:0
@@ -11359,6 +11432,13 @@ msgid ""
 "outlook, Sunbird, ical, ...\n"
 "    "
 msgstr ""
+"\n"
+"Ermöglicht die Sysnchronisierung mit Kalendern anderer Anwendungen.\n"
+"===============================================================\n"
+"\n"
+"Ermöglicht Ihnen den Abgleich der OpenERP-Kalender mit denen Ihres Telefons, "
+"von Outlook, Sunbird, iCal, ...\n"
+"    "
 
 #. module: base
 #: model:res.country,name:base.lr
@@ -11448,7 +11528,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_google_map
 msgid "Google Maps on Customers"
-msgstr ""
+msgstr "Kunden in Google-Maps finden"
 
 #. module: base
 #: model:ir.actions.report.xml,name:base.preview_report
@@ -11557,12 +11637,12 @@ msgstr "Fehler !"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_marketing_campaign_crm_demo
 msgid "Marketing Campaign - Demo"
-msgstr ""
+msgstr "Beispiel einer Marketing-Kampagne"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_fetchmail_hr_recruitment
 msgid "eMail Gateway for Applicants"
-msgstr ""
+msgstr "eMail Zugang für Bewerber"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_coda
@@ -11589,7 +11669,7 @@ msgstr "Diese Methode existiert zwischenzeitlich nicht mehr"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_import_google
 msgid "Google Import"
-msgstr ""
+msgstr "Google-Import"
 
 #. module: base
 #: model:res.partner.category,name:base.res_partner_category_12
@@ -11665,7 +11745,7 @@ msgstr "Zu erledigen"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_product_visible_discount
 msgid "Prices Visible Discounts"
-msgstr ""
+msgstr "Sichtbare Preisnachlässe"
 
 #. module: base
 #: field:ir.attachment,datas:0
@@ -11906,6 +11986,12 @@ msgid ""
 "Provide Templates for Chart of Accounts, Taxes for Uruguay\n"
 "\n"
 msgstr ""
+"\n"
+"Allgemeiner Kontenplan für Uruguay\n"
+"================================\n"
+"\n"
+"Liefert Vorlagen für Kontenplan und Steuern für Uruguay.\n"
+"\n"
 
 #. module: base
 #: help:res.company,bank_ids:0
