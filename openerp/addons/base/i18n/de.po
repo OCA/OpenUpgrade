@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:44+0000\n"
-"PO-Revision-Date: 2012-09-26 21:06+0000\n"
+"PO-Revision-Date: 2012-09-27 09:34+0000\n"
 "Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
 "Language-Team: German <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-09-27 05:01+0000\n"
-"X-Generator: Launchpad (build 16033)\n"
+"X-Launchpad-Export-Date: 2012-09-28 04:55+0000\n"
+"X-Generator: Launchpad (build 16043)\n"
 
 #. module: base
 #: model:res.country,name:base.sh
@@ -12073,7 +12073,7 @@ msgstr "Estonian / Eesti keel"
 #. module: base
 #: field:res.partner,email:0
 msgid "E-mail"
-msgstr "E-Mail"
+msgstr "EMail"
 
 #. module: base
 #: selection:ir.module.module,license:0
@@ -12116,6 +12116,16 @@ msgid ""
 "    http://files.me.com/nbessi/06n92k.mov\n"
 "                    "
 msgstr ""
+"\n"
+"Beispiele für den Webkit-Berichtserzeuger (report_webkit).\n"
+"===================================================\n"
+"\n"
+"Eine Beispiel-Rechnung wird mit eingerichtet, als auch ein Assistent um\n"
+"Webkit-Berichte jedem Dokument des Systems hinzuzufügen.\n"
+"\n"
+"Sie müssen nur noch die \"Druck\"-Schalter mittels Assistent anlegen.\n"
+"Siehe auch: http://files.me.com/nbessi/06n92k.mov\n"
+"                    "
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -12145,8 +12155,8 @@ msgid ""
 "You can not read this document (%s) ! Be sure your user belongs to one of "
 "these groups: %s."
 msgstr ""
-"Sie haben kein Leserecht für diesen Satz (%s) ! Stellen Sie sicher, dass der "
-"Benutzer Mitglied der folgenden Gruppe ist: %s."
+"Sie haben kein Leserecht für dieses Dokument (%s)! Stellen Sie sicher, dass "
+"Sie Mitglied der folgenden Gruppe sind: %s."
 
 #. module: base
 #: view:res.bank:0
@@ -12173,7 +12183,7 @@ msgstr "Installierte Version"
 #. module: base
 #: selection:base.language.install,lang:0
 msgid "Mongolian / монгол"
-msgstr "Mongolian / монгол"
+msgstr "Mongolisch / монгол"
 
 #. module: base
 #: model:res.country,name:base.mr
@@ -12199,22 +12209,32 @@ msgid ""
 "    * Product Attributes\n"
 "    "
 msgstr ""
+"\n"
+"Ein Modul, welches Hersteller-Information im Produktformular hinzu.\n"
+"==========================================================\n"
+"\n"
+"Sie können die folgenden Angaben zu Produkten erfassen:\n"
+"    * Hersteller\n"
+"    * Produktname beim Hersteller\n"
+"    * Produktkennung (Bestellnummer) des Herstellers\n"
+"    * Produktmerkmale\n"
+"    "
 
 #. module: base
 #: model:ir.model,name:base.model_ir_actions_todo_category
 msgid "Configuration Wizard Category"
-msgstr "Konfigurations Assistent Kategorie"
+msgstr "Assistent zur Konfiguration der Kategorien"
 
 #. module: base
 #: view:base.module.update:0
 msgid "Module update result"
-msgstr "Modul Aktualisierung Ergebnis"
+msgstr "Ergebnis der Modulaktualisierung"
 
 #. module: base
 #: view:workflow.activity:0
 #: field:workflow.workitem,act_id:0
 msgid "Activity"
-msgstr "Aktion"
+msgstr "Aktivität"
 
 #. module: base
 #: view:res.partner:0
@@ -12225,7 +12245,7 @@ msgstr "Postanschrift"
 #. module: base
 #: field:res.company,parent_id:0
 msgid "Parent Company"
-msgstr "Konzern"
+msgstr "Stamm-Unternehmen"
 
 #. module: base
 #: model:ir.module.module,description:base.module_base_iban
@@ -12240,6 +12260,15 @@ msgid ""
 "accounts with a single statement.\n"
 "    "
 msgstr ""
+"\n"
+"Dieses Modul stellt die Basis für IBAN (Intern. Bank Accounting Number) -"
+"Bankkonten mit Gültigkeitsprüfung.\n"
+"============================================================================="
+"==============\n"
+"\n"
+"Bietet die Möglichkeit richtig dargestellte lokale Bankkonten durch IBAN-"
+"Konten in einem Ausdruck.\n"
+"    "
 
 #. module: base
 #: model:ir.model,name:base.model_ir_mail_server
@@ -12269,7 +12298,7 @@ msgstr ""
 #. module: base
 #: field:res.currency.rate,rate:0
 msgid "Rate"
-msgstr "Zinskondition"
+msgstr "Wechselkurs"
 
 #. module: base
 #: model:res.country,name:base.cg
@@ -12295,7 +12324,7 @@ msgstr "Bundesland"
 #. module: base
 #: model:ir.ui.menu,name:base.next_id_5
 msgid "Sequences & Identifiers"
-msgstr "Sequenzen und Identifizierungsmerkmale"
+msgstr "Folgen- und Identifizierungsmerkmale"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_th
@@ -12307,6 +12336,12 @@ msgid ""
 "Thai accounting chart and localization.\n"
 "    "
 msgstr ""
+"\n"
+"Kontenrahmen für Thailand.\n"
+"===============================\n"
+"\n"
+"Thailändische Kontenrahmen und Lokalisierung.\n"
+"    "
 
 #. module: base
 #: model:res.country,name:base.kn
@@ -12330,6 +12365,14 @@ msgid ""
 "    * Company Contribution Management\n"
 "    "
 msgstr ""
+"\n"
+"Allgemeine Lohnbuchhaltung.\n"
+"==========================\n"
+"\n"
+"    * Spesenerfassung\n"
+"    * Auszahlungserfassung\n"
+"    * Verwaltung von Unternehmensbeiträgen\n"
+"    "
 
 #. module: base
 #: code:addons/base/res/res_currency.py:190
@@ -12339,9 +12382,10 @@ msgid ""
 "for the currency: %s \n"
 "at the date: %s"
 msgstr ""
-"Konnte keinen Wechselkurs ermitteln, \n"
-"für die Währung  %s \n"
-"am Stichtag: %s"
+"Konnte für die \n"
+"Währung  %s am\n"
+"Stichtag: %s\n"
+"keinen Wechselkurs ermitteln."
 
 #. module: base
 #: model:ir.module.module,description:base.module_point_of_sale
@@ -12361,6 +12405,20 @@ msgid ""
 "    * Allow to refund former sales.\n"
 "    "
 msgstr ""
+"\n"
+"Dieses Modul stellt einen schnellen und einfachen Verkaufsvorgang zur "
+"Verfügung.\n"
+"====================================================================\n"
+"\n"
+"Hauptmerkmale:\n"
+"    * Schnelle Erfassung der Verkäufe.\n"
+"    * Auswahl einer Zahlweise (einfach) oder mehrere Zahlungen mit versch. "
+"Zahlweisen.\n"
+"    * Rückgeldermittlung.\n"
+"    * Anlegen und Bestätigung der Kommissionierung (autom.)\n"
+"    * Benutzer kann Rechnung autom. anlegen.\n"
+"    * Ermöglicht vorige Verkäufe gutzuschreiben.\n"
+"    "
 
 #. module: base
 #: model:ir.actions.act_window,help:base.action_ui_view_custom
@@ -12368,8 +12426,8 @@ msgid ""
 "Customized views are used when users reorganize the content of their "
 "dashboard views (via web client)"
 msgstr ""
-"Individuelle Ansichten werden aktuell z.B für die persönliche Pinnwand "
-"Ansichte eingesetzt."
+"Individuelle Ansichten werden aktuell z. B. für die persönliche Pinnwand-"
+"Ansichten eingesetzt."
 
 #. module: base
 #: help:publisher_warranty.contract,check_opw:0
@@ -12377,6 +12435,8 @@ msgid ""
 "Checked if this is an OpenERP Publisher's Warranty contract (versus older "
 "contract types"
 msgstr ""
+"Anwählen, wenn dies ein OpenERP Herausgeber-Gewährleistungsvertrag ist (im "
+"Gegensatz zu älteren Vertragsarten)"
 
 #. module: base
 #: field:ir.model.fields,model:0
@@ -12422,7 +12482,7 @@ msgstr ""
 #. module: base
 #: help:ir.model.fields,model_id:0
 msgid "The model this field belongs to"
-msgstr "Das Datenmodell zu dem dieses Feld angehört."
+msgstr "Das Datenmodell dem dieses Feld angehört."
 
 #. module: base
 #: model:res.country,name:base.mq
@@ -12440,11 +12500,21 @@ msgid ""
 "for Wiki Sale FAQ.\n"
 "    "
 msgstr ""
+"\n"
+"Dieses Modul stellt eine Wiki mit Vorlagen zu Fragen & Antworten des "
+"Verkaufs zur Verfügung.\n"
+"============================================================================="
+"=\n"
+"\n"
+"Es werden Beispieldaten angelegt. Dabei werden eine Wiki-Gruppe und eine "
+"Wiki-Seite als\n"
+"Grundlage für eine Wiki mit \"Fragen & Antworten zum Verkauf\" angelegt.\n"
+"    "
 
 #. module: base
 #: view:ir.sequence.type:0
 msgid "Sequences Type"
-msgstr "Sequenz Typ"
+msgstr "Folgenart"
 
 #. module: base
 #: model:ir.module.module,description:base.module_base_action_rule
@@ -12462,6 +12532,19 @@ msgid ""
 "trigger an automatic reminder email.\n"
 "    "
 msgstr ""
+"\n"
+"Dieses Modul führt regelbasierte Aktionen auf Objekte in das System ein.\n"
+"=============================================================\n"
+"\n"
+"Automatisierte Aktionen verwenden Sie für automatisch ausgelöste Aktionen\n"
+"in den unterschiedlichsten Sichten.\n"
+"\n"
+"Beispiel: Einem Fall in Vorverhandlungen (Leads) mit einem bestimmten \n"
+"Benutzer wird automatisch ein bestimmtes Verkaufsteam zugewiesen. Oder\n"
+"eine nach 14 Tagen unverändert im Zustand \"wartend\" befindliche \n"
+"Gelegenheit löst automatisch eine Erinnerungs-Mitteilung an den \n"
+"zuständigen Mitarbeiter aus.\n"
+"    "
 
 #. module: base
 #: model:ir.actions.act_window,name:base.res_request-act
@@ -12503,6 +12586,15 @@ msgid ""
 "The wizard to launch the report has several options to help you get the data "
 "you need.\n"
 msgstr ""
+"\n"
+"Fügt Berichte zum Menü der Produkte hinzu, welches Verkaufszahlen, Käufe, "
+"Margen und \n"
+"andere interessante Indikatoren aus Rechnungen errechnet.\n"
+"==========================================================================\n"
+"\n"
+"Der Assistent bietet für die Berichterstellung diverse Optionen, um bei der "
+"Ermittelung der \n"
+"gewünschten Daten behilflich zu sein.\n"
 
 #. module: base
 #: model:res.country,name:base.al
@@ -12536,27 +12628,28 @@ msgid ""
 "Please be patient, this operation may take a few minutes (depending on the "
 "number of modules currently installed)..."
 msgstr ""
-"Geduld ! Dieser Vorgang kann einige Zeit dauern (in Abhängigkeit von der "
-"Anzahl der installierten Module)"
+"Bitte geduldig sein! Dieser Vorgang kann einige Zeit dauern (Abhängig von "
+"der Anzahl derzeit installierter Module)"
 
 #. module: base
 #: field:ir.ui.menu,child_id:0
 msgid "Child IDs"
-msgstr "untergeordnete ID's"
+msgstr "untergeordnete Kennungen"
 
 #. module: base
 #: code:addons/base/ir/ir_actions.py:748
 #: code:addons/base/ir/ir_actions.py:751
 #, python-format
 msgid "Problem in configuration `Record Id` in Server Action!"
-msgstr "Problem in Konfiguration 'Datensatznummer' in der Server Aktion!"
+msgstr ""
+"Problem mit der Konfiguration der 'Datensatznummer' in Server-Aktion!"
 
 #. module: base
 #: code:addons/orm.py:2682
 #: code:addons/orm.py:2692
 #, python-format
 msgid "ValidateError"
-msgstr "ValidierungsFehler"
+msgstr "Validierungsfehler"
 
 #. module: base
 #: view:base.module.import:0
@@ -12575,6 +12668,13 @@ msgid ""
 "Price and Cost Price.\n"
 "    "
 msgstr ""
+"\n"
+"Dieses Modul fügt die \"Marge\" auf Verkaufsaufträge hinzu.\n"
+"================================================\n"
+"\n"
+"Dies gibt die Gewinnspanne durch Berechnung der Differenz zwischen \n"
+"Einzelpreis (VK) und Anschaffungskosten (EK) an.\n"
+"    "
 
 #. module: base
 #: model:ir.actions.act_window,help:base.action_res_bank_form
@@ -12585,12 +12685,12 @@ msgstr ""
 #. module: base
 #: view:base.module.import:0
 msgid "Import module"
-msgstr "Import Module"
+msgstr "Import-Modul"
 
 #. module: base
 #: field:ir.actions.server,loop_action:0
 msgid "Loop Action"
-msgstr "Schleife Aktion"
+msgstr "Wiederholungsaktion"
 
 #. module: base
 #: help:ir.actions.report.xml,report_file:0
@@ -12598,7 +12698,7 @@ msgid ""
 "The path to the main report file (depending on Report Type) or NULL if the "
 "content is in another field"
 msgstr ""
-"Das Verzeichnis zum Hauptreport (je nach Report Typ) oder NULL, wenn der "
+"Das Verzeichnis zum Hauptreport (je nach Reportart) oder NULL, wenn der "
 "Inhalt in einem anderen Feld steht"
 
 #. module: base
@@ -12612,7 +12712,7 @@ msgstr "Laos"
 #: field:res.company,email:0
 #: field:res.users,user_email:0
 msgid "Email"
-msgstr "E-Mail:"
+msgstr "EMail"
 
 #. module: base
 #: field:res.users,action_id:0
@@ -12660,6 +12760,17 @@ msgid ""
 " - uid: current user id\n"
 " - context: current context"
 msgstr ""
+"Bedingung, die geprüft wird bevor die Aktion ausgeführt wird, anderenfalls "
+"die Auführung unterbindet.\n"
+"Beispiel: object.list_price > 5000\n"
+"Es ist ein Python-Ausdruck der folgende Werte nutzen kann:\n"
+"- self: ORM-Modell des Datensatzes über den die Aktion ausgelöst wurde\n"
+"- object oder obj: browse_record über den die Aktion ausgelöst wurde\n"
+"- pool: Pool des ORM-Modells (also z. B. : self.pool)\n"
+"- time: Python Zeitmodul\n"
+"- cr: Datenbank-Cursor\n"
+"- uid: Nutzerkennung des aktuellen Benutzers\n"
+"- context: Aktueller Kontext"
 
 #. module: base
 #: view:ir.rule:0
@@ -12685,17 +12796,17 @@ msgstr "Andere geschützte"
 #. module: base
 #: model:res.country,name:base.ec
 msgid "Ecuador"
-msgstr "Ekuador"
+msgstr "Equador"
 
 #. module: base
 #: selection:workflow.activity,kind:0
 msgid "Stop All"
-msgstr "Stop"
+msgstr "Alle stoppen"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_analytic_user_function
 msgid "Jobs on Contracts"
-msgstr ""
+msgstr "Vertragsarbeiten"
 
 #. module: base
 #: model:ir.module.module,description:base.module_import_sugarcrm
@@ -12705,13 +12816,18 @@ msgid ""
 "            \"Contacts\", \"Employees\", Meetings, Phonecalls, Emails, and "
 "Project, Project Tasks Data into OpenERP Module."
 msgstr ""
+"Dieses Modul importiert \"Leads\", \"Gelegenheiten\", \"Benutzer\", "
+"\"Konten\", \"Kontakte\",\n"
+"\"Mitarbeiter\", \"Termine\", \"Anrufe\", \"EMails\" und \"Projekte\" bzw. "
+"\"Projektaufgaben\" \n"
+"in das OpenERP-System."
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_publisher_warranty_contract_add_wizard
 #: model:ir.ui.menu,name:base.menu_publisher_warranty_contract_add
 #: view:publisher_warranty.contract.wizard:0
 msgid "Register a Contract"
-msgstr "Registrieren"
+msgstr "Vertrag aufnehmen"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_ve
@@ -12722,6 +12838,13 @@ msgid ""
 "\n"
 "Este módulo es para manejar un catálogo de cuentas ejemplo para Venezuela.\n"
 msgstr ""
+"\n"
+"Dieses Modul Modul stellt Kontenrahmen der Buchhaltung in Venezuela für "
+"OpenERP zur Verfügung.\n"
+"============================================================================="
+"=====\n"
+"\n"
+"Este módulo es para manejar un catálogo de cuentas ejemplo para Venezuela.\n"
 
 #. module: base
 #: view:ir.model.data:0
@@ -12736,7 +12859,7 @@ msgstr "3.  %x ,%X         ==> 12/05/08, 18:25:20"
 #. module: base
 #: selection:ir.model.fields,on_delete:0
 msgid "Cascade"
-msgstr "Kaskadierend"
+msgstr "Mehrstufig"
 
 #. module: base
 #: field:workflow.transition,group_id:0
@@ -12756,7 +12879,7 @@ msgstr ""
 #. module: base
 #: selection:base.language.install,lang:0
 msgid "Arabic / الْعَرَبيّة"
-msgstr "Arabic / الْعَرَبيّة"
+msgstr "Arabisch / الْعَرَبيّة"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_hello
@@ -12766,7 +12889,7 @@ msgstr "Hallo"
 #. module: base
 #: view:ir.actions.configuration.wizard:0
 msgid "Next Configuration Step"
-msgstr "Nächste Konfiguration"
+msgstr "Nächster Konfigurationsschritt"
 
 #. module: base
 #: field:res.groups,comment:0
@@ -12785,12 +12908,12 @@ msgstr "Personalleiter"
 #: field:ir.rule,domain_force:0
 #: field:res.partner.title,domain:0
 msgid "Domain"
-msgstr "Domain"
+msgstr "Domäne"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_marketing_campaign
 msgid "Marketing Campaigns"
-msgstr "Marketing Kampagnen"
+msgstr "Marketing-Kampagnen"
 
 #. module: base
 #: code:addons/base/publisher_warranty/publisher_warranty.py:144
@@ -12816,7 +12939,7 @@ msgstr "Aktualisere Übersetzungen"
 #. module: base
 #: field:workflow.activity,join_mode:0
 msgid "Join Mode"
-msgstr "Anschlußmodus"
+msgstr "Vereinigungs-Modus"
 
 #. module: base
 #: field:res.users,context_tz:0
@@ -12826,7 +12949,7 @@ msgstr "Zeitzone"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_wiki_faq
 msgid "Wiki: Internal FAQ"
-msgstr ""
+msgstr "Wiki: Interne Fragen & Antworten"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_actions_report_xml
@@ -12847,13 +12970,23 @@ msgid ""
 "handle an issue.\n"
 "                "
 msgstr ""
+"\n"
+"Dieses Modul fügt Unterstützung für Zeitnachweise zu Problemen und -Fehlern "
+"der Projektplanung hinzu.\n"
+"============================================================================="
+"===========\n"
+"\n"
+"Arbeitsprotokolle (Rapporte) können verwendet werden, um die für "
+"Problembehebung und \n"
+"Fehlerbeseitigung aufgebrachte Zeit festzuhalten und Nachweis zu führen.\n"
+"                "
 
 #. module: base
 #: model:ir.actions.act_window,name:base.ir_sequence_form
 #: view:ir.sequence:0
 #: model:ir.ui.menu,name:base.menu_ir_sequence_form
 msgid "Sequences"
-msgstr "Sequenzen"
+msgstr "Folgen"
 
 #. module: base
 #: model:res.partner.title,shortcut:base.res_partner_title_miss
@@ -12868,7 +13001,9 @@ msgstr "ir.ui.view"
 #. module: base
 #: help:res.lang,code:0
 msgid "This field is used to set/get locales for user"
-msgstr "Dieses Feld bestimmt die LOCAL Variable für diese Benutzer"
+msgstr ""
+"Mit diesem Feld wird die \"locale\" (Ländereinstellungen) des Benutzers "
+"festgelegt"
 
 #. module: base
 #: model:res.partner.category,name:base.res_partner_category_2
@@ -12882,7 +13017,7 @@ msgid ""
 "Unable to install module \"%s\" because an external dependency is not met: %s"
 msgstr ""
 "Es ist nicht möglich das Modul \"%s\" zu installieren, da eine Abhängigkeit "
-"nicht erfüllt werden kann: %s"
+"nicht erfüllt ist: %s"
 
 #. module: base
 #: view:ir.module.module:0
@@ -12902,7 +13037,7 @@ msgstr "Weißrussland"
 #: field:ir.actions.server,name:0
 #: field:ir.actions.url,name:0
 msgid "Action Name"
-msgstr "Aktion Bezeichnung"
+msgstr "Aktionsbezeichnung"
 
 #. module: base
 #: model:ir.actions.act_window,help:base.action_res_users
@@ -12925,7 +13060,7 @@ msgstr "Normal"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_purchase_double_validation
 msgid "Double Validation on Purchases"
-msgstr ""
+msgstr "Doppelte Kontrolle bei Bestellungen"
 
 #. module: base
 #: field:res.bank,street2:0
@@ -12937,7 +13072,7 @@ msgstr "Straße 2"
 #. module: base
 #: model:ir.actions.act_window,name:base.action_view_base_module_update
 msgid "Module Update"
-msgstr "Module aktualisieren"
+msgstr "Modulaktualisierung"
 
 #. module: base
 #: code:addons/base/module/wizard/base_module_upgrade.py:95
@@ -13009,7 +13144,7 @@ msgstr "Grenada"
 #. module: base
 #: view:ir.actions.server:0
 msgid "Trigger Configuration"
-msgstr "Bericht konfigurieren"
+msgstr "Auslösung konfigurieren"
 
 #. module: base
 #: view:base.language.install:0
@@ -13028,6 +13163,14 @@ msgid ""
 "picking and invoice. The message is triggered by the form's onchange event.\n"
 "    "
 msgstr ""
+"\n"
+"Modul zur Auslösung von Warnungen in OpenERP-Objekten.\n"
+"==================================================\n"
+"\n"
+"Warn-Hinweise können für Objekte, wie Verkaufsaufträge, Bestellungen,\n"
+"Kommissionierungen und Rechnungen, ausgelöst werden. Die Mitteilung \n"
+"wird ausgelöst durch das Onchange-Ereignis des jeweiligen Formulars.\n"
+"    "
 
 #. module: base
 #: code:addons/osv.py:150
@@ -13088,6 +13231,17 @@ msgid ""
 "it to all the users.\n"
 "    "
 msgstr ""
+"\n"
+"Dieses Modul ergänzt die Funktionalität Mitteilungen aus der "
+"Projektbearbeitung heraus zu versenden.\n"
+"============================================================================="
+"=======\n"
+"\n"
+"Ein Anwender kann hiermit individuelle Mitteilungen an andere Benutzer "
+"verschicken.\n"
+"Es sind sogar \"Rundschreiben\" möglich, bei denen eine Mitteilung an alle "
+"anderen versendet werden.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr
@@ -13126,6 +13280,15 @@ msgid ""
 "This module gives the details of the goods traded between the countries of "
 "European Union "
 msgstr ""
+"\n"
+"Dieses Modul fügt Intrastat-Berichte in das System ein.\n"
+"===============================================\n"
+"\n"
+"Das Modul ergänzt Produkt-Details für den Handel zwischen Ländern \n"
+"der Europäischen Union (EU) gem. der EG-Verordnung Nr. 638/2004 über \n"
+"die Gemeinschaftsstatistiken des Warenverkehrs zwischen Mitgliedstaaten.\n"
+"Die Abgabe dieser Meldungen ist in allen EU-Mitgliedstaaten i. d. R. "
+"verbindlich. "
 
 #. module: base
 #: model:ir.module.module,description:base.module_stock_invoice_directly
@@ -13138,6 +13301,13 @@ msgid ""
 "the invoicing wizard if the delivery is to be invoiced.\n"
 "    "
 msgstr ""
+"\n"
+"Rechnungsassisten für Lieferungen.\n"
+"===============================\n"
+"\n"
+"Wenn Sie Waren versenden oder anliefern, hilft Ihnen dieses Modul\n"
+"über einen Assistenten die Lieferung in Rechnung zu stellen.\n"
+"    "
 
 #. module: base
 #: code:addons/orm.py:1388
@@ -13154,7 +13324,7 @@ msgstr "Standard"
 #. module: base
 #: view:partner.wizard.ean.check:0
 msgid "Correct EAN13"
-msgstr "richtige EAN13"
+msgstr "Richtiger EAN13"
 
 #. module: base
 #: selection:res.company,paper_format:0
@@ -13200,11 +13370,28 @@ msgid ""
 "lines: Unit price=225, Discount=0,00, Net price=225\n"
 "    "
 msgstr ""
+"\n"
+"Dieses Modul berechnet Rabatte für Auftrags- und Rechnungspositionen bezogen "
+"auf des Partners Preisliste.\n"
+"============================================================================="
+"============\n"
+"\n"
+"Hiermit wird eine neue Kontrollbox \"Sichtbarer Rabatt\" im Formular der "
+"Preisliste hinzugefügt.\n"
+"\n"
+"Beispiel:\n"
+"    Das Produkt PC1 beim Partner Asustek: Listenpreis=450, aus der "
+"Preisliste von \n"
+"        Asustek ergibt sich ein Preis von 225\n"
+"    Wenn nun die Kontrollbox aktiviert wird, erhalten wir auf dem Auftrag: \n"
+"        Einzelpreis=450, Rabatt=50 (%), Nettopreis=225\n"
+"    Mit deaktivierter Kontrollbox: Einzelpreis=Nettopreis=225, Rabatt=0.\n"
+"    "
 
 #. module: base
 #: field:ir.module.module,shortdesc:0
 msgid "Short Description"
-msgstr "Kurzbeschreibung"
+msgstr "Kurzbezeichnung"
 
 #. module: base
 #: field:res.country,code:0
@@ -13234,7 +13421,7 @@ msgstr "Wähle Feldmerkmal"
 #. module: base
 #: field:res.request.history,date_sent:0
 msgid "Date sent"
-msgstr "Sendedatum"
+msgstr "Versanddatum"
 
 #. module: base
 #: view:ir.sequence:0
@@ -13259,7 +13446,7 @@ msgstr "Monat: %(month)s"
 #: field:res.widget.user,sequence:0
 #: field:wizard.ir.model.menu.create.line,sequence:0
 msgid "Sequence"
-msgstr "Sequenz"
+msgstr "Reihenfolge"
 
 #. module: base
 #: model:res.country,name:base.tn
@@ -13292,7 +13479,7 @@ msgstr "Entwurf und Aktiv"
 #: view:ir.actions.server:0
 #: model:ir.ui.menu,name:base.menu_server_action
 msgid "Server Actions"
-msgstr "Server Aktion"
+msgstr "Server-Aktion"
 
 #. module: base
 #: field:res.partner.bank.type,format_layout:0
@@ -13328,11 +13515,26 @@ msgid ""
 "HR Applicant and Project Issue from selected mails.\n"
 "      "
 msgstr ""
+"\n"
+"Dieses Modul wird für das Thunderbird-Plugin benötig, damit dieses "
+"funktionieren kann.\n"
+"========================================================================\n"
+"\n"
+"Das Plugin erlaubt Ihnen die Archivierung von EMail mitsamt Anhängen in "
+"OpenERP-Objekten.\n"
+"Sie können einen Partner, einer Aufgabe, ein Projekt, ein analytisches Konto "
+"oder ein beliebiges \n"
+"anderes Objekt in OpenERP auswählen und die gewünschte EMail als .eml-Datei "
+"dem Objekt als\n"
+"Anhang anfügen. Sie können aus der EMail neue Dokumente, in den Bereichen "
+"Kunden-Leads,\n"
+"Personal-Bewerber und Projekt-Problembearbeitung, anlegen.\n"
+"      "
 
 #. module: base
 #: view:res.lang:0
 msgid "Legends for Date and Time Formats"
-msgstr "Legende Datum und Zeit"
+msgstr "Legende für Datum- und Zeit-Darstellungen"
 
 #. module: base
 #: selection:ir.actions.server,state:0
@@ -13347,7 +13549,7 @@ msgstr "Verwaltung von Emails"
 #. module: base
 #: field:ir.actions.server,trigger_name:0
 msgid "Trigger Signal"
-msgstr "Signalauslöser"
+msgstr "Auslösesignal"
 
 #. module: base
 #: code:addons/base/res/res_users.py:119
@@ -13374,18 +13576,29 @@ msgid ""
 "    * Repair quotation report\n"
 "    * Notes for the technician and for the final customer\n"
 msgstr ""
+"\n"
+"Aufgabe dieses Moduls ist die Verwaltung von Produktreparaturen.\n"
+"========================================================\n"
+"\n"
+"Die folgenden Aufgaben werden durch das Modul zur Verfügung gestellt:\n"
+"    * Zu reparierende Produkte hinzufügen und löschen\n"
+"    * Auswirkung auf Lagerbestände\n"
+"    * Rechnungsstellung (Produkte wie auch Leistung)\n"
+"    * Umsetzung von Garantie- und Gewährleitsungskonzepten\n"
+"    * Ausdruck von Reparaturangeboten\n"
+"    * Hinweise für den Techniker wie auch den Endkunden\n"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_country_state
 #: model:ir.ui.menu,name:base.menu_country_state_partner
 msgid "Fed. States"
-msgstr "Partner Regionen"
+msgstr "Bundesländer / Regionen"
 
 #. module: base
 #: view:ir.model:0
 #: view:res.groups:0
 msgid "Access Rules"
-msgstr "Berechtigungen Regeln"
+msgstr "Zugriffsberechtigungen"
 
 #. module: base
 #: model:ir.module.module,description:base.module_knowledge
@@ -13399,11 +13612,19 @@ msgid ""
 "document and Wiki based Hidden.\n"
 "    "
 msgstr ""
+"\n"
+"Installationsmodul für versteckte, wissens-bezogene Module.\n"
+"===================================================\n"
+"\n"
+"Macht die Konfiguration der Wissensanwendung verfügbar, über die Sie \n"
+"die versteckten Module Dokument-Wissen und Wiki-Wissen installieren\n"
+"können.\n"
+"    "
 
 #. module: base
 #: field:res.groups,trans_implied_ids:0
 msgid "Transitively inherits"
-msgstr "Vorübergehende Vererbung"
+msgstr "Erbt übergangsweise"
 
 #. module: base
 #: field:ir.default,ref_table:0
@@ -13454,7 +13675,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_analytic_plans
 msgid "Multiple Analytic Plans"
-msgstr ""
+msgstr "Mehrschichtige analytische Pläne"
 
 #. module: base
 #: model:ir.module.module,description:base.module_project_timesheet
@@ -13470,6 +13691,18 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"Abgleich von Arbeit/Aufgaben aus Projekten mit Einträgen ausZeitnachweisen.\n"
+"==================================================================\n"
+"\n"
+"Dieses Modul gibt Ihnen die Möglichkeit Aufgaben aus dem Projektmanagement\n"
+"in Zeitnachweis-Einträge für bestimmte Mitarbeiter und an bestimmten Daten "
+"zu \n"
+"überführen, wobei sowohl auf Projekt- wie auch die Zeitnachweiseseite "
+"effektiv \n"
+"Einträge angelegt, bearbeitet und gelöscht werden können.\n"
+"\n"
+"    "
 
 #. module: base
 #: view:ir.sequence:0
@@ -13585,7 +13818,7 @@ msgstr ""
 "    * Produkt Rückblick\n"
 "    * Sprint Rückblick\n"
 "\n"
-"Esfügt einige Konzepte dem Modul Projekt-Management hinzu:\n"
+"Es fügt einige Konzepte dem Modul Projekt-Management hinzu:\n"
 "    * Mittel- und Langfristige Vorausplanung (Road-Maps)\n"
 "    * Kunden- und Funktionale Anfragen vs. Technischer Anfragen\n"
 "\n"
@@ -14913,7 +15146,7 @@ msgstr "Zypern"
 #: field:partner.massmail.wizard,subject:0
 #: field:res.request,name:0
 msgid "Subject"
-msgstr "Thema"
+msgstr "Betreff"
 
 #. module: base
 #: selection:res.currency,position:0
