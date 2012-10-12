@@ -627,6 +627,7 @@ instance.web.Reload = function(parent, params) {
         hash = "#menu_id=" + menu_id;
     }
     var url = l.protocol + "//" + l.host + l.pathname + search + hash;
+    window.onerror = function() {};
     window.location = url;
 };
 instance.web.client_actions.add("reload", "instance.web.Reload");
@@ -1020,15 +1021,13 @@ instance.web.WebClient = instance.web.Client.extend({
 
         var state = $.bbq.getState(true);
         var action = {
-            'type': 'ir.actions.client',
-            'tag': 'login',
-            'params': state
+            type: 'ir.actions.client',
+            tag: 'login',
+            _push_me: false,
         };
 
         this.action_manager.do_action(action);
         this.action_manager.inner_widget.on('login_successful', this, function() {
-            this.do_push_state(state);
-            this._current_state = null;     // ensure the state will be loaded
             this.show_application();        // will load the state we just pushed
         });
     },
@@ -1104,6 +1103,7 @@ instance.web.WebClient = instance.web.Client.extend({
                     });
                 });
             } else {
+                state._push_me = false;  // no need to push state back...
                 this.action_manager.do_load_state(state, !!this._current_state);
             }
         }
