@@ -176,7 +176,13 @@ instance.web.ActionManager = instance.web.Widget.extend({
                     state['action'] = this.inner_action.id;
                 } else if (this.inner_action.type == 'ir.actions.client') {
                     state['action'] = this.inner_action.tag;
-                    state = _.extend(this.inner_action.params || {}, state);
+                    var params = {};
+                    _.each(this.inner_action.params, function(v, k) {
+                        if(_.isString(v) || _.isNumber(v)) {
+                            params[k] = v;
+                        }
+                    });
+                    state = _.extend(params || {}, state);
                 }
             }
             if(!this.dialog) {
@@ -290,8 +296,9 @@ instance.web.ActionManager = instance.web.Widget.extend({
                     buttons: { "Close": function() { $(this).dialog("close"); }},
                     dialogClass: executor.klass
                 });
-                if(on_close)
-                    this.dialog.on_close.add(on_close);
+                if (on_close) {
+                    this.dialog.on("dialog_close", this, on_close);
+                }
             } else {
                 this.dialog_widget.destroy();
             }
