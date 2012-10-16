@@ -290,19 +290,24 @@ instance.web.ActionManager = instance.web.Widget.extend({
         }
         var widget = executor.widget();
         if (executor.action.target === 'new') {
-            if (this.dialog === null) {
-                // These buttons will be overwrited by <footer> if any
+            if (this.dialog === null || this.dialog.isDestroyed()) {
                 this.dialog = new instance.web.Dialog(this, {
-                    buttons: { "Close": function() { $(this).dialog("close"); }},
-                    dialogClass: executor.klass
+                    buttons: {"Close": function() {$(this).dialog("close")}},
+                    dialogClass: executor.klass,
                 });
-                if (on_close) {
-                    this.dialog.on("dialog_close", this, on_close);
-                }
+                if (on_close)
+                    this.dialog.on("closing", null, on_close);
+                this.dialog.init_dialog();
             } else {
                 this.dialog_widget.destroy();
             }
             this.dialog.dialog_title = executor.action.name;
+            if (widget instanceof instance.web.ViewManager) {
+                _.extend(widget.flags, {
+                    $buttons: this.dialog.$buttons,
+                    footer_to_buttons: true,
+                });
+            }
             this.dialog_widget = widget;
             var initialized = this.dialog_widget.appendTo(this.dialog.$el);
             this.dialog.open();
@@ -494,13 +499,6 @@ instance.web.ViewManager =  instance.web.Widget.extend({
                     } else {
                         container.hide();
                         controller.do_hide();
-                    }
-                    // put the <footer> in the dialog's buttonpane
-                    if (self.$el.parent('.ui-dialog-content') && self.$el.find('footer')) {
-                        self.$el.parent('.ui-dialog-content').parent().find('div.ui-dialog-buttonset').hide()
-                        self.$el.find('footer').appendTo(
-                            self.$el.parent('.ui-dialog-content').parent().find('div.ui-dialog-buttonpane')
-                        );
                     }
                 }
             });
