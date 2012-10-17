@@ -28,7 +28,12 @@ import pooler
 import tools
 import openupgrade_tools
 
+# The server log level has not been set at this point
+# so to log at loglevel debug we need to set it
+# manually here. As a consequence, DEBUG messages from
+# this file are always logged
 logger = logging.getLogger('OpenUpgrade')
+logger.setLevel(logging.DEBUG)
 
 __all__ = [
     'migrate',
@@ -267,10 +272,8 @@ def logged_query(cr, query, args=None):
         args = []
     res = cr.execute(query, args)
     logger.debug('Running %s', query)
-    if not res:
-        query = query % args
-        logger.warn('No rows affected for query "%s"', query)
-    return res
+    logger.debug('%s rows affected', cr.rowcount)
+    return cr.rowcount
 
 def column_exists(cr, table, column):
     """ Check whether a certain column exists """
