@@ -3,13 +3,15 @@
 # Removal of modules that are deprecated
 # e.g. report_analytic_line (incorporated in hr_timesheet_invoice) in V6
 
-import os
-from osv import osv
 import logging
+from osv import osv
 from openerp.openupgrade import openupgrade
 
 logger = logging.getLogger('OpenUpgrade')
-me = os.path.realpath( __file__ )
+
+update_timezone_statement = """update "%(table)s" set "%(column)s"="%(column)s"-
+(interval '1 second')*
+extract(timezone from cast("%(column)s" as timestamp with time zone))"""
 
 renames = {
     # this is a mapping per table from old column name
@@ -82,17 +84,29 @@ def disable_demo_data(cr):
         cr,
         "UPDATE ir_module_module SET demo = false")
 
+def migrate_timestamps(cr):
+    cr.execute("""
+        select attname,relname from pg_class join pg_attribute 
+            on pg_class.oid=pg_attribute.attrelid 
+        where pg_attribute.atttypid in 
+            (select oid from pg_type where typname='timestamp')
+            and relkind='r'
+    """)
+    for row in cr.fetchall():
+        logger.info('fixing UTC offset for %(table)s.%(column)s' %
+                {'table': row[1], 'column': row[0]})
+        cr.execute(update_timezone_statement % 
+                {'table': row[1], 'column': row[0]})
+
+@openupgrade.migrate()
 def migrate(cr, version):
-    try:
-        logger.info("%s called", me)
-        add_serialization_field(cr)
-        set_main_company(cr)
-        openupgrade.rename_columns(cr, renames)
-        res_users_email(cr)
-        openupgrade.update_module_names(
-            cr, module_namespec
-            )
-        fix_module_ids(cr)
-        disable_demo_data(cr)
-    except Exception, e:
-        raise osv.except_osv("OpenUpgrade", '%s: %s' % (me, e))
+    migrate_timestamps(cr)
+    add_serialization_field(cr)
+    set_main_company(cr)
+    openupgrade.rename_columns(cr, renames)
+    res_users_email(cr)
+    openupgrade.update_module_names(
+        cr, module_namespec
+        )
+    fix_module_ids(cr)
+    disable_demo_data(cr)
