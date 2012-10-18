@@ -25,7 +25,6 @@
     display: none !important;
   }
 }
-
 .openerp.openerp_webclient_container {
   height: 100%;
   position: relative;
@@ -2916,11 +2915,21 @@ div.ui-widget-overlay {
 }
 
 @media print {
-  .oe_header_row, ul.oe_header, div.oe_mail_thread_action, .oe_mail_recthread_actions, .oe_button_box, .oe_form button, button.oe_invite, .oe_form header {
+  .oe_header_row, ul.oe_header, div.oe_mail_thread_action, .oe_mail_recthread_actions, .oe_button_box, .oe_form button, button.oe_invite, .oe_form header, .openerp .oe_notebook > li.ui-state-default {
     display: none;
   }
 
-  .openerp .oe_application .oe_form_sheet {
+  .oe_list_content button, .oe_list_content input[type=checkbox] {
+    display: none;
+  }
+
+  .openerp .tree_header button {
+    display: none;
+  }
+  .openerp .oe_notebook > li.ui-tabs-selected {
+    display: block;
+  }
+  .openerp .oe_application .oe_form_sheet, .openerp .oe_application .oe_form_sheetbg {
     border: none;
   }
 }
