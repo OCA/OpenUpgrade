@@ -125,6 +125,7 @@ instance.web.FormView = instance.web.View.extend(instance.web.form.FieldManagerM
             self.check_actual_mode();
             self.on("change:actual_mode", self, self.init_pager);
             self.init_pager();
+            self.widgetAccesskey();
         });
         self.on("load_record", self, self.load_record);
         instance.web.bus.on('clear_uncommitted_changes', this, function(e) {
@@ -215,6 +216,16 @@ instance.web.FormView = instance.web.View.extend(instance.web.form.FieldManagerM
          });
 
         return $.when();
+    },
+    widgetAccesskey:function(){
+        $(document).keydown(function(e){
+            if(e.keyCode === $.ui.keyCode.ALT) {
+                $("[accesskey] span").addClass('accessactive');
+            }
+            e.stopPropagation();
+        }).keyup(function(e){
+                $("[accesskey] span").removeClass('accessactive');
+        });
     },
     widgetFocused: function() {
         // Clear click flag if used to focus a widget
