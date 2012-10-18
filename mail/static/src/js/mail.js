@@ -17,6 +17,7 @@ openerp.mail = function(session) {
      */
 
     session.web.FormView = session.web.FormView.extend({
+
         do_action: function(action, on_close) {
             if (action.res_model == 'mail.compose.message') {
 
@@ -45,6 +46,7 @@ openerp.mail = function(session) {
 
             }
             return this._super(action, on_close);
+
         },
     });
 
