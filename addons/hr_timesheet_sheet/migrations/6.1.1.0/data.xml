@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        <!-- OpenUpgrade: overwrite the original code definition
+        from 6.0 that still has the ids argument -->
+        <record id="ir_actions_server_timsheet_sheet" model="ir.actions.server">
+            <field eval="&quot;&quot;&quot;action = pool.get('hr.timesheet.current.open').open_timesheet(cr, uid, None, context)&quot;&quot;&quot;" name="code"/>
+        </record>
+    </data>
+</openerp>

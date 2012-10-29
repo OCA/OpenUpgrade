@@ -42,6 +42,14 @@ def purge_resource_ref(cr):
 @openupgrade.migrate()
 def migrate(cr, version):
     purge_resource_ref(cr)
+    openupgrade.rename_columns(cr, {
+            # many2many table square dance
+            'employee_category_rel': [
+                ('emp_id', 'emp_id_tmp'),
+                ('category_id', 'emp_id'),
+                ('emp_id_tmp', 'category_id'),
+                ],
+            })
     openupgrade.rename_tables(cr, [('hr_employee_marital_status', openupgrade.get_legacy_name('hr_employee_marital_status'))])
     openupgrade.rename_columns(cr, 
             {
