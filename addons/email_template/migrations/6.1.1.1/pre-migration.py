@@ -19,8 +19,6 @@
 #
 ##############################################################################
 
-import os
-from osv import osv
 import logging
 from openerp.openupgrade import openupgrade
 
@@ -59,14 +57,10 @@ def fix_email_from(cr):
         "FROM email_template_account WHERE "
         "email_template.from_account = email_template_account.id")
 
+@openupgrade.migrate()
 def migrate(cr, version):
     if not version:
         return
-    try:
-        logger.info("%s called", me)
-        if not openupgrade.column_exists(cr, 'email_template', 'user_signature'):
-            openupgrade.rename_columns(cr, column_renames)
-            fix_email_from(cr)
-            openupgrade.delete_model_workflow(cr, 'email_template.account')
-    except Exception, e:
-        raise osv.except_osv("OpenUpgrade", '%s: %s' % (me, e))
+    openupgrade.rename_columns(cr, column_renames)
+    fix_email_from(cr)
+    openupgrade.delete_model_workflow(cr, 'email_template.account')
