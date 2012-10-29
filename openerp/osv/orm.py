@@ -3057,11 +3057,14 @@ class BaseModel(object):
                                 cr.execute('CREATE INDEX "%s_%s_index" ON "%s" ("%s")' % (self._table, k, self._table, k))
                             if f.required:
                                 try:
-                                    cr.commit()
+                                    #use savepoints for openupgrade instead of transactions
+                                    cr.execute('SAVEPOINT add_constraint');
                                     cr.execute('ALTER TABLE "%s" ALTER COLUMN "%s" SET NOT NULL' % (self._table, k), log_exceptions=False)
                                     _schema.debug("Table '%s': column '%s': added a NOT NULL constraint",
                                         self._table, k)
+                                    cr.execute('RELEASE SAVEPOINT add_constraint');
                                 except Exception:
+                                    cr.execute('ROLLBACK TO SAVEPOINT add_constraint');
                                     msg = "WARNING: unable to set column %s of table %s not null !\n"\
                                         "Try to re-run: openerp-server --update=module\n"\
                                         "If it doesn't work, update records and execute manually:\n"\
