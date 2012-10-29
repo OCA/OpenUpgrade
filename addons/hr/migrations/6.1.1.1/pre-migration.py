@@ -21,8 +21,27 @@
 
 from openerp.openupgrade import openupgrade
 
+def purge_resource_ref(cr):
+    """ 
+    Workaround for https://bugs.launchpad.net/openobject-addons/+bug/769632
+    when the administrator user has been removed
+    """
+    cr.execute("""
+            SELECT COUNT(id) FROM ir_model_data
+            WHERE module = 'hr'
+            AND name = 'employee'"""
+               )
+    if not cr.fetchone()[0]:
+        openupgrade.logged_query(
+            cr, """
+            DELETE FROM ir_model_data
+            WHERE module = 'hr'
+            AND name = 'employee_resource_resource'"""
+            )
+
 @openupgrade.migrate()
 def migrate(cr, version):
+    purge_resource_ref(cr)
     openupgrade.rename_tables(cr, [('hr_employee_marital_status', openupgrade.get_legacy_name('hr_employee_marital_status'))])
     openupgrade.rename_columns(cr, 
             {
