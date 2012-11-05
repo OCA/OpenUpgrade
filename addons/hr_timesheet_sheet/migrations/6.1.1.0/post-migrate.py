@@ -21,7 +21,7 @@
 
 from openerp.openupgrade import openupgrade
 
-@openupgrade.migrate
+@openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.load_data(
         cr, 'hr_timesheet_sheet', 'migrations/6.1.1.0/data.xml')
