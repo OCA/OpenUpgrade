@@ -91,6 +91,7 @@ def migrate_timestamps(cr):
         where pg_attribute.atttypid in 
             (select oid from pg_type where typname='timestamp')
             and relkind='r'
+        order by relname, attname='date_to'
     """)
     for row in cr.fetchall():
         logger.info('fixing UTC offset for %(table)s.%(column)s' %
