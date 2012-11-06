@@ -36,7 +36,11 @@ def migrate_analytic(cr, pool):
     Transfer obsolete values from projects to their analytic accounts.
     Create analytic account if necessary. Take care not to overwrite 
     existing values on analytic accounts
+
+    All project states are valid for analytic account except for
+    'done' -> 'close'.
     """
+    state_map = {'done': 'close'}
     project_pool = pool.get('project.project')
     analytic_pool = pool.get('account.analytic.account')
     project_ids = project_pool.search(
@@ -71,7 +75,7 @@ def migrate_analytic(cr, pool):
                   'name': row[6] or False,
                   'description': row[7] or False,
                   'partner_id': row[8] or False,
-                  'state': row[9] or False,
+                  'state': state_map.get(row[9], row[9]) or False,
                   })
             project_pool.write(
                 cr, 1, row[0],
