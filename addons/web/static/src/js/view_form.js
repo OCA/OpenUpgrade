@@ -2493,6 +2493,10 @@ instance.web.form.FieldDatetime = instance.web.form.AbstractField.extend(instanc
         if (this.datewidget && this.datewidget.$input) {
             this.datewidget.$input.focus();
         }
+    },
+    set_dimensions: function (height, width) {
+        this._super(height, width);
+        this.datewidget.$input.css('height', height);
     }
 });
 
@@ -3919,11 +3923,11 @@ instance.web.form.One2ManyFormView = instance.web.FormView.extend({
 });
 
 var lazy_build_o2m_kanban_view = function() {
-if (! instance.web_kanban || instance.web.form.One2ManyKanbanView)
-    return;
-instance.web.form.One2ManyKanbanView = instance.web_kanban.KanbanView.extend({
-});
-}
+    if (! instance.web_kanban || instance.web.form.One2ManyKanbanView)
+        return;
+    instance.web.form.One2ManyKanbanView = instance.web_kanban.KanbanView.extend({
+    });
+};
 
 instance.web.form.FieldMany2ManyTags = instance.web.form.AbstractField.extend(instance.web.form.CompletionFieldMixin, instance.web.form.ReinitializeFieldMixin, {
     template: "FieldMany2ManyTags",
@@ -3938,7 +3942,7 @@ instance.web.form.FieldMany2ManyTags = instance.web.form.AbstractField.extend(in
         if (this.get("effective_readonly"))
             return;
         var self = this;
-        self.$text = $("textarea", this.$el);
+        self.$text = this.$("textarea");
         self.$text.textext({
             plugins : 'tags arrow autocomplete',
             autocomplete: {
@@ -3962,9 +3966,8 @@ instance.web.form.FieldMany2ManyTags = instance.web.form.AbstractField.extend(in
                 },
                 tags: {
                     isTagAllowed: function(tag) {
-                        if (! tag.name)
-                            return false;
-                        return true;
+                        return !!tag.name;
+
                     },
                     removeTag: function(tag) {
                         var id = tag.data("id");
@@ -3996,7 +3999,7 @@ instance.web.form.FieldMany2ManyTags = instance.web.form.AbstractField.extend(in
             self._drop_shown = true;
         });
         self.tags = self.$text.textext()[0].tags();
-        $("textarea", this.$el).focusout(function() {
+        self.$text.focusout(function() {
             self.$text.trigger("setInputData", "");
         }).keydown(function(e) {
             if (e.which === $.ui.keyCode.TAB && self._drop_shown) {
@@ -4021,7 +4024,7 @@ instance.web.form.FieldMany2ManyTags = instance.web.form.AbstractField.extend(in
     render_value: function() {
         var self = this;
         var dataset = new instance.web.DataSetStatic(this, this.field.relation, self.build_context());
-        var values = self.get("value")
+        var values = self.get("value");
         var handle_names = function(data) {
             if (self.isDestroyed())
                 return;
@@ -4032,7 +4035,7 @@ instance.web.form.FieldMany2ManyTags = instance.web.form.AbstractField.extend(in
             data = _.map(values, function(el) { return indexed[el]; });
             if (! self.get("effective_readonly")) {
                 self.tags.containerElement().children().remove();
-                $("textarea", self.$el).css("padding-left", "3px");
+                self.$('textarea').css("padding-left", "3px");
                 self.tags.addTags(_.map(data, function(el) {return {name: el[1], id:el[0]};}));
             } else {
                 self.$el.html(QWeb.render("FieldMany2ManyTag", {elements: data}));
