@@ -1280,7 +1280,7 @@ openerp.mail = function (session) {
                 this.compose_message.do_show_compact();
             }
 
-            this.$('.oe_wall_no_message').remove();
+            this.$('.oe_view_nocontent').remove();
 
 
             if (dom_insert_after) {
@@ -1529,7 +1529,6 @@ openerp.mail = function (session) {
                 'display_indented_thread': -1,
                 'show_reply_button': false,
                 'show_read_unread_button': false,
-                'show_compose_message': this.view.is_action_enabled('edit'),
                 'show_compact_message': 1,
             }, this.node.params);
 
@@ -1555,9 +1554,10 @@ openerp.mail = function (session) {
                 return;
             }
 
-            this.node.params = _.extend({
-                'message_ids': this.getParent().fields.message_ids ? this.getParent().fields.message_ids.get_value() : undefined,
-            }, this.node.params);
+            this.node.params = _.extend(this.node.params, {
+                'message_ids': this.get_value(),
+                'show_compose_message': this.view.is_action_enabled('edit'),
+            });
             this.node.context = {
                 'default_res_id': this.view.datarecord.id || false,
                 'default_model': this.view.model || false,
@@ -1570,7 +1570,6 @@ openerp.mail = function (session) {
             // create and render Thread widget
             this.root = new mail.Widget(this, _.extend(this.node, {
                 'domain' : (this.domain || []).concat([['model', '=', this.view.model], ['res_id', '=', this.view.datarecord.id]]),
-                
             }));
 
             return this.root.replace(this.$('.oe_mail-placeholder'));
