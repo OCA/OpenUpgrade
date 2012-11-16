@@ -841,10 +841,11 @@ class ir_model_data(osv.osv):
                 if self.pool.get(model):
                     _logger.info('Deleting %s@%s', res_id, model)
                     try:
+                        cr.execute('SAVEPOINT ir_model_data_delete');
                         self.pool.get(model).unlink(cr, uid, [res_id])
-                        cr.commit()
+                        cr.execute('RELEASE SAVEPOINT ir_model_data_delete');
                     except Exception:
-                        cr.rollback()
+                        cr.execute('ROLLBACK TO SAVEPOINT ir_model_data_delete');
                         _logger.warning(
                             'Could not delete obsolete record with id: %d of model %s\n'
                             'There should be some relation that points to this resource\n'
