@@ -89,3 +89,4 @@ def migrate(cr, version):
                 'hr_job', 
                 openupgrade.get_legacy_name('expected_employees')
             )])
+    openupgrade.load_data(cr, 'hr', 'migrations/6.1.1.1/data/hr_security.xml')
