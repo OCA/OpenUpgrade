@@ -27,6 +27,25 @@ from openerp.openupgrade import openupgrade
 logger = logging.getLogger('OpenUpgrade')
 me = __file__
 
+def prevent_account_installer(cr):
+    """
+    If the account installer has not run, e.g. 
+    after manual installation of account chart
+    and if the company country is set, the 
+    account module will install a random
+    chart on upgrading...
+    """
+    cr.execute("""
+        UPDATE ir_actions_todo
+        SET state = 'done'
+        WHERE state = 'open'
+            AND id IN (
+            SELECT res_id
+            FROM ir_model_data
+            WHERE name = 'account_configuration_installer_todo'
+            AND module = 'account')
+    """)
+
 def migrate(cr, version):
     try:
         logger.info("%s called", me)
@@ -55,6 +74,7 @@ def migrate(cr, version):
         else:
             logger.info("%s: account type table, column report type"
                         "has already been preserved", me)
+        prevent_account_installer(cr)
 
     except Exception, e:
         raise osv.except_osv("OpenUpgrade", '%s: %s' % (me, e))
