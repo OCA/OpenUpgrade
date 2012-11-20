@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:44+0000\n"
-"PO-Revision-Date: 2012-11-18 16:34+0000\n"
-"Last-Translator: Csaba TOTH <csaba.toth@i3rendszerhaz.hu>\n"
+"PO-Revision-Date: 2012-11-19 20:30+0000\n"
+"Last-Translator: krnkris <Unknown>\n"
 "Language-Team: Hungarian <openerp-hungarian-team@lists.launchpad.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-11-19 04:59+0000\n"
-"X-Generator: Launchpad (build 16278)\n"
+"X-Launchpad-Export-Date: 2012-11-20 05:16+0000\n"
+"X-Generator: Launchpad (build 16286)\n"
 
 #. module: base
 #: model:res.country,name:base.sh
@@ -71,6 +71,21 @@ msgid ""
 "    * Graph of My Remaining Hours by Project\n"
 "    "
 msgstr ""
+"\n"
+"Terv irányító modul nyomon követi a többszintű terveket, feladatokat, "
+"feladatokon elvégzett munkákat, stb.\n"
+"============================================================================="
+"=========\n"
+"\n"
+"Terveket tud átadni, feladatokat rendelni, stb.\n"
+"\n"
+"Műszerfal a terv résztvevőinek, mely magában foglalja:\n"
+"--------------------------------------------\n"
+"    * A nyitott feladataim listáját\n"
+"    * Képviselt feladataim listáját\n"
+"    * Terveim grafikonját: Tervezett a teljes oraszám függvényében\n"
+"    * Grafikon a megmaradt tervre szánt órák számával\n"
+"    "
 
 #. module: base
 #: field:base.language.import,code:0
@@ -120,7 +135,7 @@ msgstr "Menü Tippek Megjelenítése"
 #: help:ir.cron,model:0
 msgid ""
 "Model name on which the method to be called is located, e.g. 'res.partner'."
-msgstr ""
+msgstr "Modell név ahogyan az megnevezve megtalálható, p.l. 'res.partner'."
 
 #. module: base
 #: view:ir.module.module:0
@@ -171,7 +186,7 @@ msgstr "Hivatkozás"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_be_invoice_bba
 msgid "Belgium - Structured Communication"
-msgstr ""
+msgstr "Belgium - Szerkesztett kommunikáció"
 
 #. module: base
 #: field:ir.actions.act_window,target:0
@@ -589,7 +604,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_layout
 msgid "Sales Orders Print Layout"
-msgstr ""
+msgstr "Vevői rendelés nyomtatási forma"
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -2080,6 +2095,13 @@ msgid ""
 "Accounting chart and localization for Ecuador.\n"
 "    "
 msgstr ""
+"\n"
+"Ez az alap Ecuadori OpenERP könyvelési csomag.\n"
+"============================================================================="
+"=\n"
+"\n"
+"Ecuadori könyvelési számlatükrök és lokalizáció.\n"
+"    "
 
 #. module: base
 #: code:addons/base/ir/ir_filters.py:38
@@ -2178,12 +2200,12 @@ msgstr "Finnország"
 #: code:addons/base/res/res_company.py:156
 #, python-format
 msgid "Website: "
-msgstr ""
+msgstr "Weboldal: "
 
 #. module: base
 #: model:ir.ui.menu,name:base.menu_administration
 msgid "Settings"
-msgstr ""
+msgstr "Beállítások"
 
 #. module: base
 #: selection:ir.actions.act_window,view_type:0
@@ -2197,7 +2219,7 @@ msgstr "Fa"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_analytic_multicurrency
 msgid "Multi-Currency in Analytic"
-msgstr ""
+msgstr "Több-deviza az analitikához"
 
 #. module: base
 #: view:base.language.export:0
@@ -2215,6 +2237,8 @@ msgid ""
 "Display this bank account on the footer of printed documents like invoices "
 "and sales orders."
 msgstr ""
+"Nyomtatott dokumentum, mint számla és vevői megrendelés, lábrészében ezt a "
+"bankszámlaszámot tüntesse fel."
 
 #. module: base
 #: view:base.language.import:0
@@ -2323,7 +2347,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_subscription
 msgid "Recurring Documents"
-msgstr ""
+msgstr "Ismétlődő dokumentumok"
 
 #. module: base
 #: model:res.country,name:base.bs
@@ -2362,7 +2386,7 @@ msgstr "A frissített modulok száma"
 #. module: base
 #: field:ir.cron,function:0
 msgid "Method"
-msgstr ""
+msgstr "Módszer"
 
 #. module: base
 #: view:res.partner.event:0
@@ -2387,7 +2411,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_base_setup
 msgid "Initial Setup Tools"
-msgstr ""
+msgstr "Elsődleges beállítási eszköz"
 
 #. module: base
 #: field:ir.actions.act_window,groups_id:0
@@ -2449,7 +2473,7 @@ msgstr "Honlap grafikus elemeinek kezelése"
 #. module: base
 #: field:res.company,rml_header1:0
 msgid "Report Header / Company Slogan"
-msgstr ""
+msgstr "Jelentés fejléc / Vállalat jelmondata"
 
 #. module: base
 #: model:res.country,name:base.pl
@@ -2612,12 +2636,12 @@ msgstr "Aktuális Árfolyam"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_idea
 msgid "Ideas"
-msgstr ""
+msgstr "Ötletek"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_crm
 msgid "Opportunity to Quotation"
-msgstr ""
+msgstr "Lehetőség árajánlat adásra"
 
 #. module: base
 #: model:ir.module.module,description:base.module_sale_analytic_plans
@@ -2630,6 +2654,14 @@ msgid ""
 "orders.\n"
 "    "
 msgstr ""
+"\n"
+"Elemzések osztályozásának és vevői rendeléseknek az alap rendszerező "
+"modulja.\n"
+"=================================================================\n"
+"\n"
+"Ezzel a modullal elemzési számlákat lehet hozzárendelni a vevői "
+"megrendelésekhez.\n"
+"    "
 
 #. module: base
 #: field:ir.actions.url,target:0
@@ -2644,17 +2676,17 @@ msgstr ""
 #. module: base
 #: model:ir.actions.report.xml,name:base.report_ir_model_overview
 msgid "Model Overview"
-msgstr ""
+msgstr "Minta áttekintés"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_product_margin
 msgid "Margins by Products"
-msgstr ""
+msgstr "Termék szerinti leválogatás"
 
 #. module: base
 #: model:ir.ui.menu,name:base.menu_invoiced
 msgid "Invoicing"
-msgstr ""
+msgstr "Számlázás"
 
 #. module: base
 #: field:ir.ui.view_sc,name:0
@@ -2689,13 +2721,13 @@ msgstr "Import / Export"
 #. module: base
 #: model:ir.actions.todo.category,name:base.category_tools_customization_config
 msgid "Tools / Customization"
-msgstr ""
+msgstr "Eszközök / Testreszabás"
 
 #. module: base
 #: field:ir.model.data,res_id:0
 #: field:ir.values,res_id:0
 msgid "Record ID"
-msgstr ""
+msgstr "Rekordazonosító ID"
 
 #. module: base
 #: field:ir.actions.server,email:0
