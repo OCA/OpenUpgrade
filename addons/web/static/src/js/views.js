@@ -809,6 +809,9 @@ instance.web.ViewManagerAction = instance.web.ViewManager.extend({
             case 'toggle_layout_outline':
                 current_view.rendering_engine.toggle_layout_debugging();
                 break;
+            case 'set_defaults':
+                current_view.open_defaults_dialog();
+                break;
             case 'translate':
                 this.do_action({
                     name: "Technical Translation",
@@ -1331,7 +1334,7 @@ instance.web.View = instance.web.Widget.extend({
         new instance.web.DataExport(this, this.dataset).open();
     },
     sidebar_eval_context: function () {
-        return $.when();
+        return $.when({});
     },
     /**
      * Asks the view to reload itself, if the reloading is asynchronous should
