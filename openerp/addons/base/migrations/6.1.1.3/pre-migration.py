@@ -91,6 +91,7 @@ def migrate_timestamps(cr):
         where pg_attribute.atttypid in 
             (select oid from pg_type where typname='timestamp')
             and relkind='r'
+            and not (relname='project_task_work' and attname='date')
         order by relname, attname='date_to'
     """)
     for row in cr.fetchall():
