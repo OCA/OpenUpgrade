@@ -21,6 +21,7 @@
 
 import types
 from openerp.osv.orm import TransientModel
+from openerp.osv import fields
 from openerp.openupgrade.openupgrade import table_exists
 
 # A collection of functions used in 
@@ -69,7 +70,7 @@ def log_model(model, local_registry):
         properties = { 
             'type': v._type,
             'isfunction': (
-                isinstance(v, osv.fields.function) and 'function' or ''),
+                isinstance(v, fields.function) and 'function' or ''),
             'relation': (
                 v._type in ('many2many', 'many2one','one2many')
                 and v._obj or ''
