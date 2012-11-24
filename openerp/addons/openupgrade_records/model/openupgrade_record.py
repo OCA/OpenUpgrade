@@ -32,7 +32,7 @@ openupgrade_record()
 
 class openupgrade_attribute(osv.osv):
     _name = 'openupgrade.attribute'
-    _rec_name = 'attribute_id'
+    _rec_name = 'name'
     _columns = {
         'name': fields.char(
             'Name', size=24,
