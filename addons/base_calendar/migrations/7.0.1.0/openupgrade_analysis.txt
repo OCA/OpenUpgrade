@@ -1,0 +1,51 @@
+---base_calendar---
+base_calendar / calendar.attendee        / partner_address_id (many2one) : DEL relation: res.partner.address
+base_calendar / calendar.attendee        / partner_id (many2one)         : not a function anymore
+base_calendar / calendar.event           / date (datetime)               : now required
+base_calendar / calendar.event           / date_deadline (datetime)      : now required
+base_calendar / calendar.event           / partner_ids (many2many)       : NEW relation: res.partner
+base_calendar / calendar.event           / rrule_type (selection)        : selection_keys is now '['daily', 'monthly', 'weekly', 'yearly']' ('['daily', 'monthly', 'none', 'weekly', 'yearly']')
+base_calendar / calendar.todo            / date_deadline (datetime)      : now required
+base_calendar / calendar.todo            / partner_ids (many2many)       : NEW relation: res.partner
+base_calendar / calendar.todo            / rrule_type (selection)        : selection_keys is now '['daily', 'monthly', 'weekly', 'yearly']' ('['daily', 'monthly', 'none', 'weekly', 'yearly']')
+base_calendar / crm.meeting              / categ_ids (many2many)         : NEW relation: crm.meeting.type
+base_calendar / crm.meeting              / date_open (datetime)          : NEW 
+base_calendar / crm.meeting              / message_comment_ids (one2many): NEW relation: mail.message
+base_calendar / crm.meeting              / partner_ids (many2many)       : NEW relation: res.partner
+base_calendar / crm.meeting.type         / name (char)                   : NEW required: required
+deleted xml-id of model ir.actions.act_window: base_calendar.action_view_attendee_form
+deleted xml-id of model ir.actions.act_window: base_calendar.action_view_calendar_invite_attendee_wizard
+deleted xml-id of model ir.ui.menu: base_calendar.menu_attendee_invitations
+deleted xml-id of model ir.ui.view: base_calendar.base_calendar_attendee_form_view
+deleted xml-id of model ir.ui.view: base_calendar.base_calendar_attendee_search_view
+deleted xml-id of model ir.ui.view: base_calendar.base_calendar_attendee_tree_view
+deleted xml-id of model ir.ui.view: base_calendar.view_calendar_invite_attendee_wizard
+new xml-id of model crm.meeting.type: base_calendar.categ_meet1
+new xml-id of model crm.meeting.type: base_calendar.categ_meet2
+new xml-id of model crm.meeting.type: base_calendar.categ_meet3
+new xml-id of model crm.meeting.type: base_calendar.categ_meet4
+new xml-id of model crm.meeting.type: base_calendar.categ_meet5
+new xml-id of model ir.actions.act_window.view: base_calendar.action_view_crm_meeting_calendar
+new xml-id of model ir.actions.act_window.view: base_calendar.action_view_crm_meeting_form
+new xml-id of model ir.actions.act_window.view: base_calendar.action_view_crm_meeting_gantt
+new xml-id of model ir.actions.act_window.view: base_calendar.action_view_crm_meeting_tree
+new xml-id of model ir.actions.act_window: base_calendar.action_crm_meeting
+new xml-id of model ir.actions.act_window: base_calendar.action_crm_meeting_type
+new xml-id of model ir.actions.server: base_calendar.actions_server_crm_meeting_read
+new xml-id of model ir.actions.server: base_calendar.actions_server_crm_meeting_unread
+new xml-id of model ir.model.access: base_calendar.access_crm_meeting
+new xml-id of model ir.model.access: base_calendar.access_crm_meeting_all
+new xml-id of model ir.model.access: base_calendar.access_crm_meeting_manager
+new xml-id of model ir.model.access: base_calendar.access_crm_meeting_partner_manager
+new xml-id of model ir.model.access: base_calendar.access_crm_meeting_type_manager
+new xml-id of model ir.ui.menu: base_calendar.mail_menu_calendar
+new xml-id of model ir.ui.menu: base_calendar.menu_crm_meeting_type
+new xml-id of model ir.ui.view: base_calendar.view_crm_meeting_calendar
+new xml-id of model ir.ui.view: base_calendar.view_crm_meeting_form
+new xml-id of model ir.ui.view: base_calendar.view_crm_meeting_gantt
+new xml-id of model ir.ui.view: base_calendar.view_crm_meeting_search
+new xml-id of model ir.ui.view: base_calendar.view_crm_meeting_tree
+new xml-id of model ir.ui.view: base_calendar.view_crm_meeting_type_tree
+new xml-id of model ir.values: base_calendar.action_crm_meeting_read
+new xml-id of model ir.values: base_calendar.action_crm_meeting_unread
+new xml-id of model res.request.link: base_calendar.request_link_event

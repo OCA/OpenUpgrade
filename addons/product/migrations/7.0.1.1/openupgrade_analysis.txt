@@ -1,0 +1,38 @@
+---product---
+product      / product.product          / image (binary)                : NEW 
+product      / product.product          / message_comment_ids (one2many): NEW relation: mail.message
+product      / product.product          / message_ids (one2many)        : NEW relation: mail.message
+product      / product.product          / product_image (binary)        : DEL 
+product      / product.template         / loc_case (char)               : module is now 'stock' ('product')
+product      / product.template         / loc_rack (char)               : module is now 'stock' ('product')
+product      / product.template         / loc_row (char)                : module is now 'stock' ('product')
+product      / product.template         / procure_method (selection)    : module is now 'procurement' ('product')
+product      / product.template         / purchase_ok (boolean)         : module is now 'purchase' ('product')
+product      / product.template         / sale_delay (float)            : module is now 'stock' ('product')
+product      / product.template         / supply_method (selection)     : module is now 'procurement' ('product')
+product      / product.template         / type (selection)              : selection_keys is now '['consu', 'service']' ('['consu', 'product', 'service']')
+deleted xml-id of model decimal.precision: product.decimal_purchase
+deleted xml-id of model decimal.precision: product.decimal_sale
+deleted xml-id of model ir.actions.act_window: product.product_form_config_action
+deleted xml-id of model ir.actions.todo: product.config_wizard_res_product_installer
+deleted xml-id of model product.category: product.cat0
+deleted xml-id of model product.product: product.product_consultant
+deleted xml-id of model product.uom: product.uom_day
+deleted xml-id of model product.uom: product.uom_hour
+new xml-id of model decimal.precision: product.decimal_discount
+new xml-id of model decimal.precision: product.decimal_price
+new xml-id of model ir.actions.act_window.view: product.open_view_product_kanban1
+new xml-id of model product.category: product.product_category_1
+new xml-id of model product.category: product.product_category_all
+new xml-id of model product.product: product.product_product_consultant
+new xml-id of model product.uom.categ: product.product_uom_categ_vol
+new xml-id of model product.uom: product.product_uom_day
+new xml-id of model product.uom: product.product_uom_dozen
+new xml-id of model product.uom: product.product_uom_hour
+new xml-id of model product.uom: product.product_uom_litre
+new xml-id of model res.groups: product.group_costing_method
+new xml-id of model res.groups: product.group_mrp_properties
+new xml-id of model res.groups: product.group_purchase_pricelist
+new xml-id of model res.groups: product.group_sale_pricelist
+new xml-id of model res.groups: product.group_stock_packaging
+new xml-id of model res.groups: product.group_uom

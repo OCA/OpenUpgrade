@@ -1,0 +1,6 @@
+---sale_crm---
+sale_crm     / sale.order               / categ_id (many2one)           : DEL relation: crm.case.categ
+sale_crm     / sale.order               / categ_ids (many2many)         : NEW relation: crm.case.categ
+deleted xml-id of model ir.ui.menu: base.menu_base_partner
+deleted xml-id of model ir.ui.view: sale_crm.board_crm_form_inherit_replace1
+deleted xml-id of model ir.ui.view: sale_crm.board_crm_form_inherit_replace3

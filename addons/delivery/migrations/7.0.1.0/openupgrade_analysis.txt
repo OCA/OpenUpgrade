@@ -1,0 +1,18 @@
+---delivery---
+delivery     / stock.picking.out        / carrier_id (many2one)         : NEW relation: delivery.carrier
+delivery     / stock.picking.out        / carrier_tracking_ref (char)   : NEW 
+delivery     / stock.picking.out        / number_of_packages (integer)  : NEW 
+delivery     / stock.picking.out        / volume (float)                : NEW 
+deleted xml-id of model ir.actions.act_window: delivery.action_define_delivery_steps
+deleted xml-id of model ir.actions.act_window: delivery.action_delivery_carrier_form1
+deleted xml-id of model ir.actions.act_window: delivery.action_delivery_cost
+deleted xml-id of model ir.actions.todo: delivery.delivery_method_form_view_todo
+deleted xml-id of model ir.actions.todo: delivery.todo_define_delivery_steps
+deleted xml-id of model ir.ui.view: delivery.define_delivery_steps_form
+deleted xml-id of model ir.ui.view: delivery.edit_project_multicompany
+deleted xml-id of model ir.ui.view: delivery.view_make_delivery_wizard
+deleted xml-id of model ir.ui.view: delivery.view_move_reception_picking_withweight_form
+deleted xml-id of model ir.ui.view: delivery.view_picking_withcarrier_out_move_form
+deleted xml-id of model ir.ui.view: delivery.view_picking_withweight_in_form
+deleted xml-id of model ir.ui.view: delivery.view_picking_withweight_in_move_form
+new xml-id of model ir.ui.view: delivery.view_picking_withcarrier_in_form

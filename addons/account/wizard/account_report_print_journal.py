@@ -42,10 +42,10 @@ class account_print_journal(osv.osv_memory):
 
     def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
         '''
-        used to set the domain on 'journal_ids' field: we exclude or only propose the journals of type 
+        used to set the domain on 'journal_ids' field: we exclude or only propose the journals of type
         sale/purchase (+refund) accordingly to the presence of the key 'sale_purchase_only' in the context.
         '''
-        if context is None: 
+        if context is None:
             context = {}
         res = super(account_print_journal, self).fields_view_get(cr, uid, view_id=view_id, view_type=view_type, context=context, toolbar=toolbar, submenu=submenu)
         doc = etree.XML(res['arch'])
