@@ -1,0 +1,217 @@
+#!/usr/bin/python
+
+import os
+import sys
+import StringIO
+import psycopg2
+import psycopg2.extensions
+from optparse import OptionParser
+from ConfigParser import SafeConfigParser
+from bzrlib.branch import Branch
+from bzrlib.repository import Repository
+from bzrlib.workingtree import WorkingTree
+import bzrlib.plugin
+import bzrlib.builtins
+import bzrlib.info
+
+migrations={
+  '6.1': {
+      'addons': {
+          'addons': 'lp:openupgrade-addons',
+          'banking': 'lp:banking-addons',
+          'web': {'url': 'lp:openerp-web/6.1', 'addons_dir': 'addons'},
+        },
+      'server': {
+          'url': 'lp:openupgrade-server', 
+          'addons_dir': os.path.join('openerp','addons'),
+          'root_dir': os.path.join(''),
+          'cmd': 'openerp-server --update=all --database=%(db)s '+
+            '--config=%(config)s --stop-after-init --no-xmlrpc --no-netrpc',
+        },
+    },
+  '6.0': {
+      'addons': {
+          'addons': 'lp:openupgrade-addons/6.0',
+          'banking': 'lp:banking-addons/6.0',
+        },
+      'server': {
+          'url': 'lp:openupgrade-server/6.0',
+          'addons_dir': os.path.join('bin','addons'),
+          'root_dir': os.path.join('bin'),
+          'cmd': 'bin/openerp-server.py --update=all --database=%(db)s '+
+            '--config=%(config)s --stop-after-init --no-xmlrpc --no-netrpc',
+        },
+    },
+}
+config = SafeConfigParser()
+parser = OptionParser(description="""Migrate script for the impatient or lazy.
+Makes a copy of your database, downloads the files necessary to migrate
+it as requested and runs the migration on the copy (so your original 
+database will not be touched). While the migration is running only errors are 
+shown, for a detailed log see ${branch-dir}/migration.log
+""")
+parser.add_option("-C", "--config", action="store", type="string", 
+        dest="config", 
+        help="current openerp config (required)")
+parser.add_option("-D", "--database", action="store", type="string", 
+        dest="database", 
+        help="current openerp database (required if not given in config)")
+parser.add_option("-B", "--branch-dir", action="store", type="string", 
+        dest="branch_dir", 
+        help="the directory to download openupgrade-server code to [%default]", 
+        default='/var/tmp/openupgrade')
+parser.add_option("-R", "--run-migrations", action="store", type="string", 
+        dest="migrations", 
+        help="comma separated list of migrations to run\n\n"+
+                ','.join(sorted([a for a in migrations]))+
+                "\n(required)")
+parser.add_option("-A", "--add", action="store", type="string", dest="add",
+        help="load a python module that declares on dict 'migrations' which is"+
+        " merged with the one of this script (see the source for details)")
+parser.add_option("-I", "--inplace", action="store_true", dest="inplace",
+        help="don't copy database before attempting upgrade (dangerous)")
+(options, args) = parser.parse_args()
+
+if (not options.config or not options.migrations 
+        or not reduce(lambda a,b: a and (b in migrations), 
+                        options.migrations.split(','), True)):
+  parser.print_help()
+  sys.exit()
+
+config.read(options.config)
+
+db_user=config.get('options', 'db_user')
+db_name=options.database or config.get('options', 'db_name')
+
+if not db_name or db_name=='' or db_name.isspace() or db_name.lower()=='false':
+  parser.print_help()
+  sys.exit()
+
+if options.inplace:
+  db=db_name
+else:
+  db=db_name+'_migrated'
+
+if options.add:
+    merge_migrations={}
+    if os.path.isfile(options.add):
+        import imp
+        merge_migrations_mod=imp.load_source('merge_migrations_mod', 
+                options.add)
+        merge_migrations=merge_migrations_mod.migrations
+    else:
+        merge_migrations=eval(options.add)
+
+    def deep_update(dict1, dict2):
+        result={}
+        for (name,value) in dict1.iteritems():
+            if dict2.has_key(name):
+                if isinstance(dict1[name], dict) and isinstance(dict2[name], 
+                    dict):
+                    result[name]=deep_update(dict1[name], dict2[name])
+                else:
+                    result[name]=dict2[name]
+            else:
+                result[name]=dict1[name]
+        for (name,value) in dict2.iteritems():
+            if name not in dict1:
+                result[name]=value
+        return result
+
+    migrations=deep_update(migrations, merge_migrations)
+
+for version in options.migrations.split(','):
+    if version not in migrations:
+        print '%s is not a valid version! (valid verions are %s)' % (version,
+                ','.join(sorted([a for a in migrations])))
+
+bzrlib.plugin.load_plugins()
+bzrlib.trace.enable_default_logging()
+logfile=os.path.join(options.branch_dir,'migration.log')
+
+if not os.path.exists(options.branch_dir):
+    os.mkdir(options.branch_dir)
+
+for version in options.migrations.split(','):
+    if not os.path.exists(os.path.join(options.branch_dir,version)):
+        os.mkdir(os.path.join(options.branch_dir,version))
+    for (name,url) in dict(migrations[version]['addons'], 
+            server=migrations[version]['server']['url']).iteritems():
+        link=url.get('link', False) if isinstance(url, dict) else False
+        url=url['url'] if isinstance(url, dict) else url
+        if os.path.exists(os.path.join(options.branch_dir,version,name)):
+            if link:
+                continue
+            cmd_revno=bzrlib.builtins.cmd_revno()
+            cmd_revno.outf=StringIO.StringIO()
+            cmd_revno.run(location=os.path.join(options.branch_dir,version,
+                name))
+            print 'updating %s rev%s' %(os.path.join(version,name),
+                    cmd_revno.outf.getvalue().strip())
+            cmd_pull=bzrlib.builtins.cmd_pull()
+            cmd_pull.outf=StringIO.StringIO()
+            cmd_pull.outf.encoding='utf8'
+            cmd_pull.run(directory=os.path.join(options.branch_dir,version,
+                name), overwrite=True)
+            if hasattr(cmd_pull, '_operation'):
+                cmd_pull.cleanup_now()
+            print 'now at rev'+cmd_revno.outf.getvalue().strip()
+        else:
+            if link:
+                print 'linking %s to %s'%(url, 
+                        os.path.join(options.branch_dir,version,name))
+                os.symlink(url, os.path.join(options.branch_dir,version,name))
+            else:
+                print 'getting '+url
+                cmd_branch=bzrlib.builtins.cmd_branch()
+                cmd_branch.outf=StringIO.StringIO()
+                cmd_branch.run(url, os.path.join(options.branch_dir,version,
+                    name))
+
+if not options.inplace:
+    print('copying database %(db_name)s to %(db)s...' % {'db_name': db_name, 
+                                                         'db': db})
+    conn=psycopg2.connect(database=db_name, user=db_user)
+    conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
+    cur=conn.cursor()
+    cur.execute('drop database if exists "%(db)s"' % {'db': db})
+    cur.execute('create database "%(db)s"' % {'db': db})
+    cur.close()
+    os.system(('pg_dump --format=custom --user=%(user)s %(db_name)s | pg_restore '+
+    '--dbname=%(db)s') % {
+        'user': db_user, 
+        'db_name': db_name, 
+        'db': db,
+        })
+
+for version in options.migrations.split(','):
+  print 'running migration for '+version
+  config.set('options', 'without_demo', 'True')
+  config.set('options', 'logfile', logfile)
+  config.set('options', 'port', 'False')
+  config.set('options', 'netport', 'False')
+  config.set('options', 'xmlrpc_port', 'False')
+  config.set('options', 'netrpc_port', 'False')
+  config.set('options', 'addons_path', 
+   ','.join([os.path.join(options.branch_dir,
+       version,'server',migrations[version]['server']['addons_dir'])] +
+       [
+           os.path.join(options.branch_dir,version,name,
+               url.get('addons_dir', '') if isinstance(url, dict) else '') 
+           for (name,url) in migrations[version]['addons'].iteritems()
+       ]
+       )
+   )
+  config.set('options', 'root_path', os.path.join(options.branch_dir,version,
+      'server', migrations[version]['server']['root_dir']))
+  config.write(open(
+      os.path.join(options.branch_dir,version,'server.cfg'), 'w+'))
+  os.system(
+          os.path.join(options.branch_dir,version,'server',
+              migrations[version]['server']['cmd'] % {
+                  'db': db, 
+                  'config': os.path.join(options.branch_dir,version,
+                      'server.cfg')
+                  }
+              )
+          )
