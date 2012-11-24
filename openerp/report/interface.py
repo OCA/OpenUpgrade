@@ -42,7 +42,11 @@ def toxml(value):
 
 class report_int(netsvc.Service):
     def __init__(self, name):
-        assert not self.exists(name), 'The report "%s" already exists!' % name
+        # OpenUpgrade: while reinitializing modules, need to be robust
+        # against existing reports (triggered by delivery module)
+        if self.exists(name):
+            return False
+        # assert not self.exists(name), 'The report "%s" already exists!' % name
         super(report_int, self).__init__(name)
         if not name.startswith('report.'):
             raise Exception('ConceptionError, bad report name, should start with "report."')
