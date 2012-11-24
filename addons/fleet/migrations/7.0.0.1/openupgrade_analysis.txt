@@ -1,0 +1,236 @@
+---fleet---
+fleet        / fleet.contract.state     / name (char)                   : NEW required: required
+fleet        / fleet.service.type       / category (selection)          : NEW required: required, selection_keys: ['both', 'contract', 'service']
+fleet        / fleet.service.type       / name (char)                   : NEW required: required
+fleet        / fleet.vehicle            / acquisition_date (date)       : NEW 
+fleet        / fleet.vehicle            / car_value (float)             : NEW 
+fleet        / fleet.vehicle            / co2 (float)                   : NEW 
+fleet        / fleet.vehicle            / color (char)                  : NEW 
+fleet        / fleet.vehicle            / company_id (many2one)         : NEW relation: res.company
+fleet        / fleet.vehicle            / doors (integer)               : NEW 
+fleet        / fleet.vehicle            / driver (many2one)             : NEW relation: res.partner
+fleet        / fleet.vehicle            / fuel_type (selection)         : NEW selection_keys: ['diesel', 'electric', 'gasoline', 'hybrid']
+fleet        / fleet.vehicle            / horsepower (integer)          : NEW 
+fleet        / fleet.vehicle            / horsepower_tax (float)        : NEW 
+fleet        / fleet.vehicle            / license_plate (char)          : NEW required: required
+fleet        / fleet.vehicle            / location (char)               : NEW 
+fleet        / fleet.vehicle            / log_contracts (one2many)      : NEW relation: fleet.vehicle.log.contract
+fleet        / fleet.vehicle            / log_fuel (one2many)           : NEW relation: fleet.vehicle.log.fuel
+fleet        / fleet.vehicle            / log_services (one2many)       : NEW relation: fleet.vehicle.log.services
+fleet        / fleet.vehicle            / message_comment_ids (one2many): NEW relation: mail.message
+fleet        / fleet.vehicle            / message_ids (one2many)        : NEW relation: mail.message
+fleet        / fleet.vehicle            / model_id (many2one)           : NEW relation: fleet.vehicle.model, required: required
+fleet        / fleet.vehicle            / odometer_unit (selection)     : NEW required: required, selection_keys: ['kilometers', 'miles'], req_default: kilometers
+fleet        / fleet.vehicle            / power (integer)               : NEW 
+fleet        / fleet.vehicle            / seats (integer)               : NEW 
+fleet        / fleet.vehicle            / state (many2one)              : NEW relation: fleet.vehicle.state
+fleet        / fleet.vehicle            / tag_ids (many2many)           : NEW relation: fleet.vehicle.tag
+fleet        / fleet.vehicle            / transmission (selection)      : NEW selection_keys: ['automatic', 'manual']
+fleet        / fleet.vehicle            / vin_sn (char)                 : NEW 
+fleet        / fleet.vehicle.cost       / amount (float)                : NEW 
+fleet        / fleet.vehicle.cost       / auto_generated (boolean)      : NEW required: required
+fleet        / fleet.vehicle.cost       / contract_id (many2one)        : NEW relation: fleet.vehicle.log.contract
+fleet        / fleet.vehicle.cost       / cost_ids (one2many)           : NEW relation: fleet.vehicle.cost
+fleet        / fleet.vehicle.cost       / cost_subtype (many2one)       : NEW relation: fleet.service.type
+fleet        / fleet.vehicle.cost       / cost_type (selection)         : NEW required: required, selection_keys: ['contract', 'fuel', 'other', 'services'], req_default: other
+fleet        / fleet.vehicle.cost       / date (date)                   : NEW 
+fleet        / fleet.vehicle.cost       / odometer_id (many2one)        : NEW relation: fleet.vehicle.odometer
+fleet        / fleet.vehicle.cost       / parent_id (many2one)          : NEW relation: fleet.vehicle.cost
+fleet        / fleet.vehicle.cost       / vehicle_id (many2one)         : NEW relation: fleet.vehicle, required: required
+fleet        / fleet.vehicle.log.contract / _inherits (False)             : NEW 
+fleet        / fleet.vehicle.log.contract / cost_frequency (selection)    : NEW required: required, selection_keys: ['daily', 'monthly', 'no', 'weekly', 'yearly'], req_default: no
+fleet        / fleet.vehicle.log.contract / cost_generated (float)        : NEW 
+fleet        / fleet.vehicle.log.contract / cost_id (many2one)            : NEW relation: fleet.vehicle.cost, required: required
+fleet        / fleet.vehicle.log.contract / expiration_date (date)        : NEW 
+fleet        / fleet.vehicle.log.contract / generated_cost_ids (one2many) : NEW relation: fleet.vehicle.cost
+fleet        / fleet.vehicle.log.contract / ins_ref (char)                : NEW 
+fleet        / fleet.vehicle.log.contract / insurer_id (many2one)         : NEW relation: res.partner
+fleet        / fleet.vehicle.log.contract / notes (text)                  : NEW 
+fleet        / fleet.vehicle.log.contract / purchaser_id (many2one)       : NEW relation: res.partner
+fleet        / fleet.vehicle.log.contract / start_date (date)             : NEW 
+fleet        / fleet.vehicle.log.contract / state (selection)             : NEW selection_keys: ['closed', 'open', 'toclose']
+fleet        / fleet.vehicle.log.fuel   / _inherits (False)             : NEW 
+fleet        / fleet.vehicle.log.fuel   / cost_id (many2one)            : NEW relation: fleet.vehicle.cost, required: required
+fleet        / fleet.vehicle.log.fuel   / inv_ref (char)                : NEW 
+fleet        / fleet.vehicle.log.fuel   / liter (float)                 : NEW 
+fleet        / fleet.vehicle.log.fuel   / notes (text)                  : NEW 
+fleet        / fleet.vehicle.log.fuel   / price_per_liter (float)       : NEW 
+fleet        / fleet.vehicle.log.fuel   / purchaser_id (many2one)       : NEW relation: res.partner
+fleet        / fleet.vehicle.log.fuel   / vendor_id (many2one)          : NEW relation: res.partner
+fleet        / fleet.vehicle.log.services / _inherits (False)             : NEW 
+fleet        / fleet.vehicle.log.services / cost_id (many2one)            : NEW relation: fleet.vehicle.cost, required: required
+fleet        / fleet.vehicle.log.services / inv_ref (char)                : NEW 
+fleet        / fleet.vehicle.log.services / notes (text)                  : NEW 
+fleet        / fleet.vehicle.log.services / purchaser_id (many2one)       : NEW relation: res.partner
+fleet        / fleet.vehicle.log.services / vendor_id (many2one)          : NEW relation: res.partner
+fleet        / fleet.vehicle.model      / brand (many2one)              : NEW relation: fleet.vehicle.model.brand, required: required
+fleet        / fleet.vehicle.model      / modelname (char)              : NEW required: required
+fleet        / fleet.vehicle.model      / vendors (many2many)           : NEW relation: res.partner
+fleet        / fleet.vehicle.model.brand / image (binary)                : NEW 
+fleet        / fleet.vehicle.model.brand / name (char)                   : NEW required: required
+fleet        / fleet.vehicle.odometer   / date (date)                   : NEW 
+fleet        / fleet.vehicle.odometer   / value (float)                 : NEW 
+fleet        / fleet.vehicle.odometer   / vehicle_id (many2one)         : NEW relation: fleet.vehicle, required: required
+fleet        / fleet.vehicle.state      / name (char)                   : NEW required: required
+fleet        / fleet.vehicle.state      / sequence (integer)            : NEW 
+fleet        / fleet.vehicle.tag        / name (char)                   : NEW required: required
+new xml-id of model fleet.service.type: fleet.type_contract_leasing
+new xml-id of model fleet.service.type: fleet.type_contract_omnium
+new xml-id of model fleet.service.type: fleet.type_contract_repairing
+new xml-id of model fleet.service.type: fleet.type_service_1
+new xml-id of model fleet.service.type: fleet.type_service_10
+new xml-id of model fleet.service.type: fleet.type_service_11
+new xml-id of model fleet.service.type: fleet.type_service_12
+new xml-id of model fleet.service.type: fleet.type_service_13
+new xml-id of model fleet.service.type: fleet.type_service_14
+new xml-id of model fleet.service.type: fleet.type_service_15
+new xml-id of model fleet.service.type: fleet.type_service_16
+new xml-id of model fleet.service.type: fleet.type_service_17
+new xml-id of model fleet.service.type: fleet.type_service_18
+new xml-id of model fleet.service.type: fleet.type_service_19
+new xml-id of model fleet.service.type: fleet.type_service_2
+new xml-id of model fleet.service.type: fleet.type_service_20
+new xml-id of model fleet.service.type: fleet.type_service_21
+new xml-id of model fleet.service.type: fleet.type_service_22
+new xml-id of model fleet.service.type: fleet.type_service_23
+new xml-id of model fleet.service.type: fleet.type_service_24
+new xml-id of model fleet.service.type: fleet.type_service_25
+new xml-id of model fleet.service.type: fleet.type_service_26
+new xml-id of model fleet.service.type: fleet.type_service_27
+new xml-id of model fleet.service.type: fleet.type_service_28
+new xml-id of model fleet.service.type: fleet.type_service_29
+new xml-id of model fleet.service.type: fleet.type_service_3
+new xml-id of model fleet.service.type: fleet.type_service_30
+new xml-id of model fleet.service.type: fleet.type_service_31
+new xml-id of model fleet.service.type: fleet.type_service_32
+new xml-id of model fleet.service.type: fleet.type_service_33
+new xml-id of model fleet.service.type: fleet.type_service_34
+new xml-id of model fleet.service.type: fleet.type_service_35
+new xml-id of model fleet.service.type: fleet.type_service_36
+new xml-id of model fleet.service.type: fleet.type_service_37
+new xml-id of model fleet.service.type: fleet.type_service_38
+new xml-id of model fleet.service.type: fleet.type_service_39
+new xml-id of model fleet.service.type: fleet.type_service_4
+new xml-id of model fleet.service.type: fleet.type_service_40
+new xml-id of model fleet.service.type: fleet.type_service_41
+new xml-id of model fleet.service.type: fleet.type_service_42
+new xml-id of model fleet.service.type: fleet.type_service_43
+new xml-id of model fleet.service.type: fleet.type_service_44
+new xml-id of model fleet.service.type: fleet.type_service_45
+new xml-id of model fleet.service.type: fleet.type_service_46
+new xml-id of model fleet.service.type: fleet.type_service_47
+new xml-id of model fleet.service.type: fleet.type_service_48
+new xml-id of model fleet.service.type: fleet.type_service_49
+new xml-id of model fleet.service.type: fleet.type_service_5
+new xml-id of model fleet.service.type: fleet.type_service_50
+new xml-id of model fleet.service.type: fleet.type_service_51
+new xml-id of model fleet.service.type: fleet.type_service_52
+new xml-id of model fleet.service.type: fleet.type_service_53
+new xml-id of model fleet.service.type: fleet.type_service_6
+new xml-id of model fleet.service.type: fleet.type_service_7
+new xml-id of model fleet.service.type: fleet.type_service_8
+new xml-id of model fleet.service.type: fleet.type_service_9
+new xml-id of model fleet.service.type: fleet.type_service_refueling
+new xml-id of model fleet.service.type: fleet.type_service_service_1
+new xml-id of model fleet.service.type: fleet.type_service_service_10
+new xml-id of model fleet.service.type: fleet.type_service_service_11
+new xml-id of model fleet.service.type: fleet.type_service_service_12
+new xml-id of model fleet.service.type: fleet.type_service_service_13
+new xml-id of model fleet.service.type: fleet.type_service_service_14
+new xml-id of model fleet.service.type: fleet.type_service_service_15
+new xml-id of model fleet.service.type: fleet.type_service_service_16
+new xml-id of model fleet.service.type: fleet.type_service_service_17
+new xml-id of model fleet.service.type: fleet.type_service_service_18
+new xml-id of model fleet.service.type: fleet.type_service_service_19
+new xml-id of model fleet.service.type: fleet.type_service_service_2
+new xml-id of model fleet.service.type: fleet.type_service_service_3
+new xml-id of model fleet.service.type: fleet.type_service_service_5
+new xml-id of model fleet.service.type: fleet.type_service_service_6
+new xml-id of model fleet.service.type: fleet.type_service_service_7
+new xml-id of model fleet.service.type: fleet.type_service_service_8
+new xml-id of model fleet.service.type: fleet.type_service_service_9
+new xml-id of model fleet.vehicle.tag: fleet.vehicle_tag_break
+new xml-id of model fleet.vehicle.tag: fleet.vehicle_tag_compact
+new xml-id of model fleet.vehicle.tag: fleet.vehicle_tag_convertible
+new xml-id of model fleet.vehicle.tag: fleet.vehicle_tag_junior
+new xml-id of model fleet.vehicle.tag: fleet.vehicle_tag_leasing
+new xml-id of model fleet.vehicle.tag: fleet.vehicle_tag_purchased
+new xml-id of model fleet.vehicle.tag: fleet.vehicle_tag_sedan
+new xml-id of model fleet.vehicle.tag: fleet.vehicle_tag_senior
+new xml-id of model ir.actions.act_window: fleet.act_renew_contract
+new xml-id of model ir.actions.act_window: fleet.action_fleet_reporting_costs
+new xml-id of model ir.actions.act_window: fleet.action_fleet_reporting_costs_non_effective
+new xml-id of model ir.actions.act_window: fleet.action_fleet_vehicle_costs_graph
+new xml-id of model ir.actions.act_window: fleet.action_fleet_vehicle_kanban
+new xml-id of model ir.actions.act_window: fleet.action_fleet_vehicle_log_contract_graph
+new xml-id of model ir.actions.act_window: fleet.action_fleet_vehicle_log_fuel_graph
+new xml-id of model ir.actions.act_window: fleet.action_fleet_vehicle_log_services_graph
+new xml-id of model ir.actions.act_window: fleet.fleet_vehicle_act
+new xml-id of model ir.actions.act_window: fleet.fleet_vehicle_costs_act
+new xml-id of model ir.actions.act_window: fleet.fleet_vehicle_log_contract_act
+new xml-id of model ir.actions.act_window: fleet.fleet_vehicle_log_fuel_act
+new xml-id of model ir.actions.act_window: fleet.fleet_vehicle_log_services_act
+new xml-id of model ir.actions.act_window: fleet.fleet_vehicle_model_act
+new xml-id of model ir.actions.act_window: fleet.fleet_vehicle_model_brand_act
+new xml-id of model ir.actions.act_window: fleet.fleet_vehicle_odometer_act
+new xml-id of model ir.actions.act_window: fleet.fleet_vehicle_service_types_act
+new xml-id of model ir.actions.act_window: fleet.fleet_vehicle_state_act
+new xml-id of model ir.actions.act_window: fleet.open_board_fleet
+new xml-id of model ir.cron: fleet.ir_cron_contract_costs_generator
+new xml-id of model ir.model.access: fleet.access_fleet_contract_state
+new xml-id of model ir.model.access: fleet.access_fleet_vehicle_cost
+new xml-id of model ir.model.access: fleet.fleet_service_type_access_right
+new xml-id of model ir.model.access: fleet.fleet_vehicle_access_right
+new xml-id of model ir.model.access: fleet.fleet_vehicle_log_contract_access_right
+new xml-id of model ir.model.access: fleet.fleet_vehicle_log_fuel_access_right
+new xml-id of model ir.model.access: fleet.fleet_vehicle_log_services_access_right
+new xml-id of model ir.model.access: fleet.fleet_vehicle_model_access_right
+new xml-id of model ir.model.access: fleet.fleet_vehicle_model_brand_access_right
+new xml-id of model ir.model.access: fleet.fleet_vehicle_odometer_access_right
+new xml-id of model ir.model.access: fleet.fleet_vehicle_state_access_right
+new xml-id of model ir.model.access: fleet.fleet_vehicle_tag_access_right
+new xml-id of model ir.ui.menu: fleet.fleet_configuration
+new xml-id of model ir.ui.menu: fleet.fleet_vehicle_costs_menu
+new xml-id of model ir.ui.menu: fleet.fleet_vehicle_log_contract_menu
+new xml-id of model ir.ui.menu: fleet.fleet_vehicle_log_fuel_menu
+new xml-id of model ir.ui.menu: fleet.fleet_vehicle_log_services_menu
+new xml-id of model ir.ui.menu: fleet.fleet_vehicle_menu
+new xml-id of model ir.ui.menu: fleet.fleet_vehicle_model_brand_menu
+new xml-id of model ir.ui.menu: fleet.fleet_vehicle_model_menu
+new xml-id of model ir.ui.menu: fleet.fleet_vehicle_odometer_menu
+new xml-id of model ir.ui.menu: fleet.fleet_vehicle_service_types_menu
+new xml-id of model ir.ui.menu: fleet.fleet_vehicle_state_menu
+new xml-id of model ir.ui.menu: fleet.fleet_vehicles
+new xml-id of model ir.ui.menu: fleet.menu_fleet_dashboard
+new xml-id of model ir.ui.menu: fleet.menu_fleet_reporting
+new xml-id of model ir.ui.menu: fleet.menu_fleet_reporting_costs
+new xml-id of model ir.ui.menu: fleet.menu_fleet_reporting_indicative_costs
+new xml-id of model ir.ui.menu: fleet.menu_root
+new xml-id of model ir.ui.view: fleet.board_fleet_form
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_costs_form
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_costs_graph
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_costs_search
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_costs_tree
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_form
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_kanban
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_log_contract_form
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_log_contract_graph
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_log_contract_tree
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_log_fuel_form
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_log_fuel_graph
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_log_fuel_tree
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_log_services_form
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_log_services_graph
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_log_services_tree
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_model_brand_form
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_model_brand_kanban
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_model_brand_tree
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_model_form
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_model_tree
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_odometer_form
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_odometer_graph
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_odometer_tree
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_search
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_service_types_tree
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_state_tree
+new xml-id of model ir.ui.view: fleet.fleet_vehicle_tree

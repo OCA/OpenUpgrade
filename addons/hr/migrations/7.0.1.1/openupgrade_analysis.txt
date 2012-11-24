@@ -1,0 +1,35 @@
+---hr---
+hr           / hr.employee              / address_home_id (many2one)    : relation is now 'res.partner' ('res.partner.address')
+hr           / hr.employee              / address_id (many2one)         : relation is now 'res.partner' ('res.partner.address')
+hr           / hr.employee              / image (binary)                : NEW 
+hr           / hr.employee              / photo (binary)                : DEL 
+hr           / hr.job                   / message_comment_ids (one2many): NEW relation: mail.message
+hr           / hr.job                   / message_ids (one2many)        : NEW relation: mail.message
+hr           / hr.job                   / state (selection)             : selection_keys is now '['open', 'recruit']' ('['old', 'open', 'recruit']')
+hr           / res.users                / context_department_id (many2one): DEL relation: hr.department
+hr           / res.users                / employee_ids (one2many)       : NEW relation: hr.employee
+deleted xml-id of model ir.actions.act_window.view: hr.open_view_employee_list_my_form2
+deleted xml-id of model ir.actions.act_window.view: hr.open_view_employee_list_my_kanban
+deleted xml-id of model ir.actions.act_window.view: hr.open_view_employee_list_my_tree2
+deleted xml-id of model ir.actions.act_window: hr.action_create_hr_employee_installer
+deleted xml-id of model ir.actions.act_window: hr.open_board_hr_manager
+deleted xml-id of model ir.actions.todo.category: hr.category_hr_management_config
+deleted xml-id of model ir.actions.todo: hr.config_wizard_action_create_hr_employee_installer
+deleted xml-id of model ir.actions.todo: hr.view_department_form_todo
+deleted xml-id of model ir.model.access: hr.access_hr_res_partner_address
+deleted xml-id of model ir.ui.menu: hr.menu_hr_dashboard_manager
+deleted xml-id of model ir.ui.menu: hr.menu_hr_dashboard_user
+deleted xml-id of model ir.ui.menu: hr.menu_view_employee_category_configuration_form
+deleted xml-id of model ir.ui.view: hr.board_hr_manager_form
+deleted xml-id of model ir.ui.view: hr.view_department_form_simple_modif_inherited1
+deleted xml-id of model ir.ui.view: hr.view_users_form_inherit
+new xml-id of model ir.actions.act_window: hr.action_human_resources_configuration
+new xml-id of model ir.actions.act_window: hr.open_payroll_modules
+new xml-id of model ir.actions.client: hr.action_client_hr_menu
+new xml-id of model ir.actions.todo: base.open_menu
+new xml-id of model ir.ui.menu: hr.menu_hr_reporting_timesheet
+new xml-id of model ir.ui.menu: hr.menu_human_resources_configuration
+new xml-id of model ir.ui.view: hr.view_hr_job_employee_form
+new xml-id of model ir.ui.view: hr.view_human_resources_configuration
+new xml-id of model mail.message: hr.module_install_notification
+new xml-id of model res.groups: base.group_user

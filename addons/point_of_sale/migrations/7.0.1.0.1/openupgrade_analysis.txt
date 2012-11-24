@@ -1,0 +1,114 @@
+---point_of_sale---
+point_of_sale / account.bank.statement   / pos_session_id (many2one)     : NEW relation: pos.session
+point_of_sale / account.bank.statement.line / journal_id (char)             : DEL mode: modify
+point_of_sale / account.journal          / amount_authorized_diff (float): NEW 
+point_of_sale / account.journal          / auto_cash (boolean)           : DEL 
+point_of_sale / account.journal          / check_dtls (boolean)          : DEL 
+point_of_sale / account.journal          / self_checkout_payment_method (boolean): NEW 
+point_of_sale / pos.category             / image (binary)                : NEW 
+point_of_sale / pos.config               / group_by (boolean)            : NEW 
+point_of_sale / pos.config               / iface_cashdrawer (boolean)    : NEW 
+point_of_sale / pos.config               / iface_electronic_scale (boolean): NEW 
+point_of_sale / pos.config               / iface_payment_terminal (boolean): NEW 
+point_of_sale / pos.config               / iface_print_via_proxy (boolean): NEW 
+point_of_sale / pos.config               / iface_self_checkout (boolean) : NEW 
+point_of_sale / pos.config               / iface_vkeyboard (boolean)     : NEW 
+point_of_sale / pos.config               / journal_id (many2one)         : NEW relation: account.journal
+point_of_sale / pos.config               / journal_ids (many2many)       : NEW relation: account.journal
+point_of_sale / pos.config               / name (char)                   : NEW required: required
+point_of_sale / pos.config               / sequence_id (many2one)        : NEW relation: ir.sequence
+point_of_sale / pos.config               / session_ids (one2many)        : NEW relation: pos.session
+point_of_sale / pos.config               / shop_id (many2one)            : NEW relation: sale.shop, required: required, req_default: function
+point_of_sale / pos.config               / state (selection)             : NEW required: required, selection_keys: ['active', 'deprecated', 'inactive'], req_default: active
+point_of_sale / pos.order                / pos_reference (char)          : NEW 
+point_of_sale / pos.order                / sale_journal (many2one)       : now a function
+point_of_sale / pos.order                / session_id (many2one)         : NEW relation: pos.session
+point_of_sale / pos.order                / shop_id (many2one)            : now a function
+point_of_sale / pos.session              / config_id (many2one)          : NEW relation: pos.config, required: required
+point_of_sale / pos.session              / name (char)                   : NEW required: required, req_default: /
+point_of_sale / pos.session              / order_ids (one2many)          : NEW relation: pos.order
+point_of_sale / pos.session              / start_at (datetime)           : NEW 
+point_of_sale / pos.session              / state (selection)             : NEW required: required, selection_keys: ['closed', 'closing_control', 'opened', 'opening_control'], req_default: opening_control
+point_of_sale / pos.session              / statement_ids (one2many)      : NEW relation: account.bank.statement
+point_of_sale / pos.session              / stop_at (datetime)            : NEW 
+point_of_sale / pos.session              / user_id (many2one)            : NEW relation: res.users, required: required, req_default: function
+point_of_sale / product.product          / available_in_pos (boolean)    : NEW 
+point_of_sale / product.product          / to_weight (boolean)           : NEW 
+point_of_sale / res.users                / ean13 (char)                  : NEW 
+point_of_sale / res.users                / pos_config (many2one)         : NEW relation: pos.config
+deleted xml-id of model ir.actions.act_window: point_of_sale.action_box_entries
+deleted xml-id of model ir.actions.act_window: point_of_sale.action_box_out
+deleted xml-id of model ir.actions.act_window: point_of_sale.action_pos_close_statement
+deleted xml-id of model ir.actions.act_window: point_of_sale.action_pos_confirm
+deleted xml-id of model ir.actions.act_window: point_of_sale.action_pos_sale_all
+deleted xml-id of model ir.actions.act_window: point_of_sale.action_product_input
+deleted xml-id of model ir.actions.act_window: point_of_sale.action_product_output
+deleted xml-id of model ir.actions.act_window: point_of_sale.action_report_cash_register_all
+deleted xml-id of model ir.model.access: point_of_sale.access_pos_config_journal
+deleted xml-id of model ir.model.access: point_of_sale.access_pos_config_journal_manager
+deleted xml-id of model ir.model.access: point_of_sale.access_report_check_register
+deleted xml-id of model ir.ui.menu: point_of_sale.menu_all_menu_all_register
+deleted xml-id of model ir.ui.menu: point_of_sale.menu_close_statement
+deleted xml-id of model ir.ui.menu: point_of_sale.menu_open_statement
+deleted xml-id of model ir.ui.menu: point_of_sale.menu_point_ofsale_all
+deleted xml-id of model ir.ui.menu: point_of_sale.menu_point_open_config
+deleted xml-id of model ir.ui.menu: point_of_sale.menu_point_root_touchscreen
+deleted xml-id of model ir.ui.menu: point_of_sale.menu_report_cash_register_all
+deleted xml-id of model ir.ui.menu: point_of_sale.menu_wizard_enter_jrnl
+deleted xml-id of model ir.ui.menu: point_of_sale.menu_wizard_enter_jrnl2
+deleted xml-id of model ir.ui.menu: point_of_sale.menu_wizard_pos_confirm
+deleted xml-id of model ir.ui.menu: point_of_sale.products_for_input_operations
+deleted xml-id of model ir.ui.menu: point_of_sale.products_for_output_operations
+deleted xml-id of model ir.ui.view: point_of_sale.product_normal_form_pos_view
+deleted xml-id of model ir.ui.view: point_of_sale.view_box_entries
+deleted xml-id of model ir.ui.view: point_of_sale.view_pos_box_out
+deleted xml-id of model ir.ui.view: point_of_sale.view_pos_close_statement
+deleted xml-id of model ir.ui.view: point_of_sale.view_report_cash_register_search
+deleted xml-id of model ir.ui.view: point_of_sale.view_report_cash_register_tree
+new xml-id of model ir.actions.act_window: point_of_sale.act_pos_config_sessions
+new xml-id of model ir.actions.act_window: point_of_sale.act_pos_session_orders
+new xml-id of model ir.actions.act_window: point_of_sale.action_pos_box_in
+new xml-id of model ir.actions.act_window: point_of_sale.action_pos_box_out
+new xml-id of model ir.actions.act_window: point_of_sale.action_pos_config_pos
+new xml-id of model ir.actions.act_window: point_of_sale.action_pos_session
+new xml-id of model ir.actions.act_window: point_of_sale.action_pos_session_opening
+new xml-id of model ir.actions.client: point_of_sale.action_client_pos_menu
+new xml-id of model ir.actions.report.xml: point_of_sale.report_user_label
+new xml-id of model ir.actions.todo: base.open_menu
+new xml-id of model ir.model.access: point_of_sale.access_account_journal_cashbox_line
+new xml-id of model ir.model.access: point_of_sale.access_ir_sequence_manager
+new xml-id of model ir.model.access: point_of_sale.access_pos_config_user
+new xml-id of model ir.model.access: point_of_sale.access_pos_session_user
+new xml-id of model ir.rule: point_of_sale.rule_pos_multi_company
+new xml-id of model ir.sequence.type: point_of_sale.seq_type_pos_session
+new xml-id of model ir.sequence: point_of_sale.seq_pos_session
+new xml-id of model ir.ui.menu: point_of_sale.menu_pos_config_pos
+new xml-id of model ir.ui.menu: point_of_sale.menu_pos_session_all
+new xml-id of model ir.ui.menu: point_of_sale.menu_pos_session_opening
+new xml-id of model ir.ui.view: point_of_sale.pos_ean13_generator
+new xml-id of model ir.ui.view: point_of_sale.pos_session_opening_form_view
+new xml-id of model ir.ui.view: point_of_sale.res_users_form_preference_view
+new xml-id of model ir.ui.view: point_of_sale.res_users_form_view
+new xml-id of model ir.ui.view: point_of_sale.view_partner_property_form
+new xml-id of model ir.ui.view: point_of_sale.view_pos_config_form
+new xml-id of model ir.ui.view: point_of_sale.view_pos_config_search
+new xml-id of model ir.ui.view: point_of_sale.view_pos_config_tree
+new xml-id of model ir.ui.view: point_of_sale.view_pos_session_form
+new xml-id of model ir.ui.view: point_of_sale.view_pos_session_search
+new xml-id of model ir.ui.view: point_of_sale.view_pos_session_tree
+new xml-id of model mail.message: point_of_sale.module_install_notification
+new xml-id of model pos.config: point_of_sale.pos_config_main
+new xml-id of model product.product: point_of_sale.unreferenced_product
+new xml-id of model workflow.activity: point_of_sale.act_close
+new xml-id of model workflow.activity: point_of_sale.act_closing_control
+new xml-id of model workflow.activity: point_of_sale.act_open
+new xml-id of model workflow.activity: point_of_sale.act_opening_control
+new xml-id of model workflow.activity: point_of_sale.act_start
+new xml-id of model workflow.transition: point_of_sale.trans_closing_control_to_close
+new xml-id of model workflow.transition: point_of_sale.trans_closing_control_to_close_no_control
+new xml-id of model workflow.transition: point_of_sale.trans_open_to_close
+new xml-id of model workflow.transition: point_of_sale.trans_open_to_closing_control
+new xml-id of model workflow.transition: point_of_sale.trans_opening_control_to_open
+new xml-id of model workflow.transition: point_of_sale.trans_start_to_open
+new xml-id of model workflow.transition: point_of_sale.trans_start_to_opening_control
+new xml-id of model workflow: point_of_sale.wkf_pos_session

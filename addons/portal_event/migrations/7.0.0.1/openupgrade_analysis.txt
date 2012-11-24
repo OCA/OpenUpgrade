@@ -1,0 +1,9 @@
+---portal_event---
+portal_event / event.event              / visibility (selection)        : NEW selection_keys: ['private', 'public']
+new xml-id of model ir.actions.act_window: portal_event.action_event_view
+new xml-id of model ir.model.access: portal_event.access_event
+new xml-id of model ir.model.access: portal_event.access_registration
+new xml-id of model ir.rule: portal_event.portal_event_rule
+new xml-id of model ir.rule: portal_event.portal_registration_rule
+new xml-id of model ir.ui.menu: portal_event.portal_company_events
+new xml-id of model ir.ui.view: portal_event.view_event_form_portal

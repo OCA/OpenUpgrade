@@ -1,0 +1,64 @@
+---sale_stock---
+sale_stock   / sale.order               / invoice_quantity (False)      : NEW selection_keys: ['order', 'procurement'], mode: modify
+sale_stock   / sale.order               / order_policy (False)          : NEW selection_keys: ['manual', 'picking', 'prepaid'], mode: modify
+sale_stock   / sale.order               / state (False)                 : NEW selection_keys: ['cancel', 'done', 'draft', 'invoice_except', 'manual', 'progress', 'sent', 'shipping_except', 'waiting_date'], mode: modify
+sale_stock   / sale.report              / state (False)                 : NEW selection_keys: ['cancel', 'done', 'draft', 'invoice_except', 'manual', 'progress', 'shipping_except', 'waiting_date'], mode: modify
+sale_stock   / stock.picking.out        / sale_id (many2one)            : NEW relation: sale.order
+new xml-id of model ir.model.access: sale_stock.access_procurement_manager
+new xml-id of model ir.model.access: sale_stock.access_procurement_salesman
+new xml-id of model ir.model.access: sale_stock.access_product_packaging_manager
+new xml-id of model ir.model.access: sale_stock.access_product_packaging_sale_manager
+new xml-id of model ir.model.access: sale_stock.access_product_packaging_user
+new xml-id of model ir.model.access: sale_stock.access_report_stock_move_sales
+new xml-id of model ir.model.access: sale_stock.access_sale_order_line_stock_worker
+new xml-id of model ir.model.access: sale_stock.access_sale_order_stock_worker
+new xml-id of model ir.model.access: sale_stock.access_stock_location_user
+new xml-id of model ir.model.access: sale_stock.access_stock_move_manager
+new xml-id of model ir.model.access: sale_stock.access_stock_move_salesman
+new xml-id of model ir.model.access: sale_stock.access_stock_picking_sales
+new xml-id of model ir.model.access: sale_stock.access_stock_picking_salesman
+new xml-id of model ir.model.access: sale_stock.access_stock_warehouse_orderpoint_sale_salesman
+new xml-id of model ir.model.access: sale_stock.access_stock_warehouse_user
+new xml-id of model ir.ui.menu: sale_stock.menu_action_shop_form
+new xml-id of model ir.ui.view: sale_stock.mrp_company
+new xml-id of model ir.ui.view: sale_stock.view_order_form_inherit
+new xml-id of model ir.ui.view: sale_stock.view_order_product_tree_inherit
+new xml-id of model ir.ui.view: sale_stock.view_sale_shop_form_inherit
+new xml-id of model ir.ui.view: sale_stock.view_sales_config_sale_stock
+new xml-id of model ir.ui.view: sale_stock.view_shop_tree_inherit
+new xml-id of model process.condition: sale_stock.process_condition_conditionafterdelivery0
+new xml-id of model process.node: sale_stock.process_node_deliveryorder0
+new xml-id of model process.node: sale_stock.process_node_invoiceafterdelivery0
+new xml-id of model process.node: sale_stock.process_node_packinglist0
+new xml-id of model process.node: sale_stock.process_node_saleorderprocurement0
+new xml-id of model process.node: sale_stock.process_node_saleprocurement0
+new xml-id of model process.transition.action: sale_stock.process_transition_action_assign0
+new xml-id of model process.transition.action: sale_stock.process_transition_action_cancel1
+new xml-id of model process.transition.action: sale_stock.process_transition_action_cancel2
+new xml-id of model process.transition.action: sale_stock.process_transition_action_cancelassignation0
+new xml-id of model process.transition.action: sale_stock.process_transition_action_forceassignation0
+new xml-id of model process.transition.action: sale_stock.process_transition_action_validate0
+new xml-id of model process.transition: sale_stock.process_transition_deliver0
+new xml-id of model process.transition: sale_stock.process_transition_invoiceafterdelivery0
+new xml-id of model process.transition: sale_stock.process_transition_packing0
+new xml-id of model process.transition: sale_stock.process_transition_saleorderprocurement0
+new xml-id of model process.transition: sale_stock.process_transition_saleprocurement0
+new xml-id of model res.groups: sale_stock.group_invoice_deli_orders
+new xml-id of model sale.shop: sale.sale_shop_1
+new xml-id of model workflow.activity: sale_stock.act_cancel3
+new xml-id of model workflow.activity: sale_stock.act_ship
+new xml-id of model workflow.activity: sale_stock.act_ship_cancel
+new xml-id of model workflow.activity: sale_stock.act_ship_end
+new xml-id of model workflow.activity: sale_stock.act_ship_except
+new xml-id of model workflow.activity: sale_stock.act_wait_ship
+new xml-id of model workflow.transition: sale_stock.trans_router_wait_invoice_shipping
+new xml-id of model workflow.transition: sale_stock.trans_router_wait_ship
+new xml-id of model workflow.transition: sale_stock.trans_ship_end_done
+new xml-id of model workflow.transition: sale_stock.trans_ship_except_ship
+new xml-id of model workflow.transition: sale_stock.trans_ship_except_ship_cancel
+new xml-id of model workflow.transition: sale_stock.trans_ship_except_ship_end
+new xml-id of model workflow.transition: sale_stock.trans_ship_ship_end
+new xml-id of model workflow.transition: sale_stock.trans_ship_ship_except
+new xml-id of model workflow.transition: sale_stock.trans_wait_invoice_invoice
+new xml-id of model workflow.transition: sale_stock.trans_wait_ship_cancel3
+new xml-id of model workflow.transition: sale_stock.trans_wait_ship_ship

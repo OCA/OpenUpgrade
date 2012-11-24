@@ -1,0 +1,12 @@
+---account_analytic_analysis---
+account_analytic_analysis / account.analytic.account / fix_price_invoices (boolean)  : NEW 
+account_analytic_analysis / account.analytic.account / hours_qtt_est (float)         : NEW 
+account_analytic_analysis / account.analytic.account / invoice_on_timesheets (boolean): NEW 
+deleted xml-id of model ir.ui.view: account_analytic_analysis.account_analytic_account_invoice_stat_form
+deleted xml-id of model ir.ui.view: account_analytic_analysis.view_account_analytic_account_tree_c2c_2
+deleted xml-id of model ir.ui.view: hr_timesheet.account_analytic_account_form_form
+new xml-id of model ir.actions.act_window: account_analytic_analysis.action_sales_order
+new xml-id of model ir.actions.act_window: account_analytic_analysis.template_of_contract_action
+new xml-id of model ir.ui.menu: account_analytic_analysis.menu_template_of_contract_action
+new xml-id of model ir.ui.view: account_analytic_analysis.account_analytic_account_form_form
+new xml-id of model res.users: base.user_root

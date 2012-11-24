@@ -1,0 +1,7 @@
+---project_long_term---
+project_long_term / account.analytic.account / use_phases (boolean)          : NEW 
+project_long_term / project.task             / phase_id (many2one)           : DEL relation: project.phase
+new xml-id of model ir.model.access: project_long_term.access_project_resource_calendar_attendance
+new xml-id of model ir.ui.view: project_long_term.analytic_account_inherited_phase_form
+new xml-id of model ir.ui.view: project_long_term.project_phase_form
+new xml-id of model ir.ui.view: project_long_term.view_project_kanban_phase

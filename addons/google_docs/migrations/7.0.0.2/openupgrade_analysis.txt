@@ -1,0 +1,10 @@
+---google_docs---
+google_docs  / google.docs.config       / gdocs_resource_id (char)      : NEW required: required
+google_docs  / google.docs.config       / model_id (many2one)           : NEW relation: ir.model, required: required
+google_docs  / google.docs.config       / name_template (char)          : NEW required: required, req_default: gdoc_%(name)s
+new xml-id of model ir.actions.act_window: google_docs.action_google_docs_users_config
+new xml-id of model ir.model.access: google_docs.access_google_docs
+new xml-id of model ir.ui.menu: google_docs.menu_gdocs_config
+new xml-id of model ir.ui.menu: google_docs.menu_gdocs_model_config
+new xml-id of model ir.ui.view: google_docs.view_google_docs_config_form
+new xml-id of model ir.ui.view: google_docs.view_google_docs_config_tree
