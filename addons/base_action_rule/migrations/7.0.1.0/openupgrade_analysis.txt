@@ -1,0 +1,19 @@
+---base_action_rule---
+base_action_rule / base.action.rule         / act_email_cc (char)           : DEL 
+base_action_rule / base.action.rule         / act_email_from (char)         : DEL 
+base_action_rule / base.action.rule         / act_email_to (char)           : DEL 
+base_action_rule / base.action.rule         / act_followers (many2many)     : NEW relation: res.partner
+base_action_rule / base.action.rule         / act_mail_body (text)          : DEL 
+base_action_rule / base.action.rule         / act_mail_to_email (char)      : DEL 
+base_action_rule / base.action.rule         / act_mail_to_user (boolean)    : DEL 
+base_action_rule / base.action.rule         / act_mail_to_watchers (boolean): DEL 
+base_action_rule / base.action.rule         / act_method (char)             : DEL 
+base_action_rule / base.action.rule         / act_remind_attach (boolean)   : DEL 
+base_action_rule / base.action.rule         / act_remind_partner (boolean)  : DEL 
+base_action_rule / base.action.rule         / act_remind_user (boolean)     : DEL 
+base_action_rule / base.action.rule         / act_reply_to (char)           : DEL 
+base_action_rule / base.action.rule         / server_action_id (many2one)   : DEL relation: ir.actions.server
+base_action_rule / base.action.rule         / server_action_ids (one2many)  : NEW relation: ir.actions.server
+base_action_rule / base.action.rule         / trg_date_type (selection)     : selection_keys is now '['action_last', 'create', 'date', 'deadline', 'none', 'write']' ('['action_last', 'create', 'date', 'deadline', 'none']')
+base_action_rule / ir.actions.server        / action_rule_id (many2one)     : NEW relation: base.action.rule
+deleted xml-id of model ir.ui.menu: base.menu_base_action_rule

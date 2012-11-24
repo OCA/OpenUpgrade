@@ -1,0 +1,4 @@
+---fetchmail---
+fetchmail    / fetchmail.server         / message_ids (one2many)        : relation is now 'mail.mail' ('mail.message')
+fetchmail    / mail.mail                / fetchmail_server_id (many2one): NEW relation: fetchmail.server
+deleted xml-id of model ir.ui.view: fetchmail.email_message_search_view

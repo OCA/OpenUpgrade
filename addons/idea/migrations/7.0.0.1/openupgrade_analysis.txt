@@ -1,0 +1,52 @@
+---idea---
+idea         / idea.category            / child_ids (one2many)          : DEL relation: idea.category
+idea         / idea.category            / parent_id (many2one)          : DEL relation: idea.category
+idea         / idea.category            / summary (text)                : DEL 
+idea         / idea.category            / visibility (boolean)          : DEL 
+idea         / idea.idea                / category_id (many2one)        : DEL relation: idea.category, required: required
+idea         / idea.idea                / category_ids (many2many)      : NEW relation: idea.category
+idea         / idea.idea                / comment_ids (one2many)        : DEL relation: idea.comment
+idea         / idea.idea                / create_uid (many2one)         : NEW relation: res.users, required: required
+idea         / idea.idea                / created_date (datetime)       : DEL 
+idea         / idea.idea                / message_comment_ids (one2many): NEW relation: mail.message
+idea         / idea.idea                / message_ids (one2many)        : NEW relation: mail.message
+idea         / idea.idea                / open_date (datetime)          : DEL 
+idea         / idea.idea                / stat_vote_ids (one2many)      : DEL relation: idea.vote.stat
+idea         / idea.idea                / user_id (many2one)            : DEL relation: res.users, required: required, req_default: function
+idea         / idea.idea                / visibility (boolean)          : DEL 
+idea         / idea.idea                / vote_ids (one2many)           : DEL relation: idea.vote
+idea         / idea.idea                / vote_limit (integer)          : DEL 
+deleted xml-id of model ir.actions.act_window: idea.action_idea_category_tree
+deleted xml-id of model ir.actions.act_window: idea.action_idea_idea_categ_open
+deleted xml-id of model ir.actions.act_window: idea.action_idea_idea_open
+deleted xml-id of model ir.actions.act_window: idea.action_idea_post_vote
+deleted xml-id of model ir.actions.act_window: idea.action_idea_select
+deleted xml-id of model ir.actions.act_window: idea.action_idea_vote
+deleted xml-id of model ir.actions.act_window: idea.action_idea_vote_stat
+deleted xml-id of model ir.actions.act_window: idea.action_report_vote_all
+deleted xml-id of model ir.model.access: idea.access_idea_comment_user
+deleted xml-id of model ir.model.access: idea.access_idea_vote_stat_user
+deleted xml-id of model ir.model.access: idea.access_idea_vote_user
+deleted xml-id of model ir.model.access: idea.access_report_vote_manager
+deleted xml-id of model ir.ui.menu: base.menu_lunch_reporting
+deleted xml-id of model ir.ui.menu: idea.menu_give_vote
+deleted xml-id of model ir.ui.menu: idea.menu_idea_category_tree
+deleted xml-id of model ir.ui.menu: idea.menu_idea_reporting
+deleted xml-id of model ir.ui.menu: idea.menu_idea_vote
+deleted xml-id of model ir.ui.menu: idea.menu_idea_vote_stat
+deleted xml-id of model ir.ui.menu: idea.menu_ideas1
+deleted xml-id of model ir.ui.menu: idea.menu_report_vote_all
+deleted xml-id of model ir.ui.view: idea.view_idea_post_vote
+deleted xml-id of model ir.ui.view: idea.view_idea_select
+deleted xml-id of model ir.ui.view: idea.view_idea_stat_form
+deleted xml-id of model ir.ui.view: idea.view_idea_vote_form
+deleted xml-id of model ir.ui.view: idea.view_idea_vote_search
+deleted xml-id of model ir.ui.view: idea.view_idea_vote_stat_form
+deleted xml-id of model ir.ui.view: idea.view_idea_vote_stat_graph
+deleted xml-id of model ir.ui.view: idea.view_idea_vote_stat_tree
+deleted xml-id of model ir.ui.view: idea.view_idea_vote_tree
+deleted xml-id of model ir.ui.view: idea.view_report_vote_search
+deleted xml-id of model ir.ui.view: idea.view_report_vote_tree
+deleted xml-id of model ir.values: idea.action_idea_idea_categ_open_val
+deleted xml-id of model res.groups: base.group_tool_manager
+new xml-id of model ir.ui.menu: base.menu_tools

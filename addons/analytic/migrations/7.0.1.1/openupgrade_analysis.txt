@@ -1,0 +1,12 @@
+---analytic---
+analytic     / account.analytic.account / contact_id (many2one)         : DEL relation: res.partner.address
+analytic     / account.analytic.account / manager_id (many2one)         : NEW relation: res.users
+analytic     / account.analytic.account / message_comment_ids (one2many): NEW relation: mail.message
+analytic     / account.analytic.account / message_ids (one2many)        : NEW relation: mail.message
+analytic     / account.analytic.account / template_id (many2one)        : NEW relation: account.analytic.account
+analytic     / account.analytic.account / type (selection)              : now required, default = normal
+analytic     / account.analytic.account / type (selection)              : selection_keys is now '['contract', 'normal', 'template', 'view']' ('['normal', 'view']')
+new xml-id of model ir.sequence.type: analytic.seq_type_analytic_account_main
+new xml-id of model ir.sequence: analytic.seq_analytic_account_base
+new xml-id of model ir.ui.view: analytic.view_account_analytic_account_form
+new xml-id of model mail.message.subtype: analytic.mt_account_status

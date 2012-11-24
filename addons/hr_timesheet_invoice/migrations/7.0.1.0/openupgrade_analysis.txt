@@ -1,0 +1,15 @@
+---hr_timesheet_invoice---
+hr_timesheet_invoice / account.analytic.line    / general_account_id (False)    : NEW req_default: function, mode: modify
+hr_timesheet_invoice / account.analytic.line    / journal_id (False)            : NEW req_default: function, mode: modify
+deleted xml-id of model ir.actions.act_window: hr_timesheet_invoice.act_account_analytic_account_2_report_timehsheet_account
+deleted xml-id of model ir.actions.act_window: hr_timesheet_invoice.act_my_account
+deleted xml-id of model ir.actions.act_window: hr_timesheet_invoice.action_hr_timesheet_invoice_cost_ledger
+deleted xml-id of model ir.actions.act_window: hr_timesheet_invoice.action_timesheet_uninvoiced_line
+deleted xml-id of model ir.actions.report.xml: hr_timesheet_invoice.account_analytic_account_cost_ledger
+deleted xml-id of model ir.ui.view: hr_timesheet_invoice.board_hr_timesheet_uninvoiced_form
+deleted xml-id of model ir.ui.view: hr_timesheet_invoice.view_hr_timesheet_invoice_cost_ledger
+deleted xml-id of model ir.ui.view: hr_timesheet_invoice.view_timesheet_uninvoiced_line_tree
+new xml-id of model hr_timesheet_invoice.factor: hr_timesheet_invoice.timesheet_invoice_factor4
+new xml-id of model ir.ui.view: hr_timesheet_invoice.view_hr_timesheet_line_search_to_invoice
+new xml-id of model mail.message.subtype: hr_timesheet_invoice.mt_account_canceled
+new xml-id of model mail.message.subtype: hr_timesheet_invoice.mt_account_closed

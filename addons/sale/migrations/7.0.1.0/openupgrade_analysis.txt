@@ -1,0 +1,153 @@
+---sale---
+sale         / res.company              / security_lead (float)         : module is now 'sale_stock' ('sale')
+sale         / res.partner              / sale_order_ids (one2many)     : NEW relation: sale.order
+sale         / sale.order               / incoterm (many2one)           : module is now 'sale_stock' ('sale')
+sale         / sale.order               / invoice_quantity (selection)  : selection_keys is now '['order']' ('['order', 'procurement']')
+sale         / sale.order               / message_comment_ids (one2many): NEW relation: mail.message
+sale         / sale.order               / message_ids (one2many)        : NEW relation: mail.message
+sale         / sale.order               / order_policy (selection)      : selection_keys is now '['manual']' ('['manual', 'picking', 'postpaid', 'prepaid']')
+sale         / sale.order               / partner_invoice_id (many2one) : relation is now 'res.partner' ('res.partner.address')
+sale         / sale.order               / partner_order_id (many2one)   : DEL relation: res.partner.address, required: required, req_default: function
+sale         / sale.order               / partner_shipping_id (many2one): relation is now 'res.partner' ('res.partner.address')
+sale         / sale.order               / picked_rate (float)           : module is now 'sale_stock' ('sale')
+sale         / sale.order               / picking_ids (one2many)        : module is now 'sale_stock' ('sale')
+sale         / sale.order               / picking_ids (one2many)        : relation is now 'stock.picking.out' ('stock.picking')
+sale         / sale.order               / picking_policy (selection)    : module is now 'sale_stock' ('sale')
+sale         / sale.order               / shipped (boolean)             : module is now 'sale_stock' ('sale')
+sale         / sale.order               / state (selection)             : selection_keys is now '['cancel', 'done', 'draft', 'invoice_except', 'manual', 'progress', 'sent', 'waiting_date']' ('['cancel', 'done', 'draft', 'invoice_except', 'manual', 'progress', 'shipping_except', 'waiting_date']')
+sale         / sale.order.line          / address_allotment_id (many2one): relation is now 'res.partner' ('res.partner.address')
+sale         / sale.order.line          / delay (float)                 : module is now 'sale_stock' ('sale')
+sale         / sale.order.line          / move_ids (one2many)           : module is now 'sale_stock' ('sale')
+sale         / sale.order.line          / name (char)                   : type is now 'text' ('char')
+sale         / sale.order.line          / notes (text)                  : DEL 
+sale         / sale.order.line          / number_packages (integer)     : module is now 'sale_stock' ('sale')
+sale         / sale.order.line          / procurement_id (many2one)     : module is now 'sale_stock' ('sale')
+sale         / sale.order.line          / product_packaging (many2one)  : module is now 'sale_stock' ('sale')
+sale         / sale.order.line          / property_ids (many2many)      : module is now 'sale_stock' ('sale')
+sale         / sale.report              / shipped (boolean)             : module is now 'sale_stock' ('sale')
+sale         / sale.report              / shipped_qty_1 (integer)       : module is now 'sale_stock' ('sale')
+sale         / sale.report              / state (selection)             : selection_keys is now '['cancel', 'done', 'draft', 'invoice_except', 'manual', 'progress', 'waiting_date']' ('['cancel', 'done', 'draft', 'invoice_except', 'manual', 'progress', 'shipping_except', 'waiting_date']')
+sale         / sale.shop                / warehouse_id (many2one)       : module is now 'sale_stock' ('sale')
+sale         / stock.move               / sale_line_id (many2one)       : module is now 'sale_stock' ('sale')
+sale         / stock.picking            / sale_id (many2one)            : module is now 'sale_stock' ('sale')
+deleted xml-id of model ir.actions.act_window.view: sale.action_turnover_by_month_graph_view
+deleted xml-id of model ir.actions.act_window.view: sale.action_turnover_by_month_tree_view
+deleted xml-id of model ir.actions.act_window: sale.action_config_picking_policy
+deleted xml-id of model ir.actions.act_window: sale.action_order_form
+deleted xml-id of model ir.actions.act_window: sale.action_order_tree2
+deleted xml-id of model ir.actions.act_window: sale.action_order_tree4
+deleted xml-id of model ir.actions.act_window: sale.action_order_tree5
+deleted xml-id of model ir.actions.act_window: sale.action_sales_by_partner
+deleted xml-id of model ir.actions.act_window: sale.action_sales_by_salesman
+deleted xml-id of model ir.actions.act_window: sale.action_sales_product_total_price
+deleted xml-id of model ir.actions.act_window: sale.action_view_sale_open_invoice
+deleted xml-id of model ir.actions.act_window: sale.action_view_sales_by_month
+deleted xml-id of model ir.actions.act_window: sale.open_board_sales_manager
+deleted xml-id of model ir.actions.act_window: sale.outgoing_picking_list_to_invoice
+deleted xml-id of model ir.actions.server: sale.ir_actions_server_edi_sale
+deleted xml-id of model ir.actions.todo: sale.config_wizard_step_sale_picking_policy
+deleted xml-id of model ir.model.access: sale.access_procurement_manager
+deleted xml-id of model ir.model.access: sale.access_procurement_salesman
+deleted xml-id of model ir.model.access: sale.access_product_packaging_manager
+deleted xml-id of model ir.model.access: sale.access_product_packaging_sale_manager
+deleted xml-id of model ir.model.access: sale.access_product_packaging_user
+deleted xml-id of model ir.model.access: sale.access_report_stock_move_sales
+deleted xml-id of model ir.model.access: sale.access_res_partner_address_user
+deleted xml-id of model ir.model.access: sale.access_sale_order_line_stock_worker
+deleted xml-id of model ir.model.access: sale.access_sale_order_stock_worker
+deleted xml-id of model ir.model.access: sale.access_stock_location_user
+deleted xml-id of model ir.model.access: sale.access_stock_move_manager
+deleted xml-id of model ir.model.access: sale.access_stock_move_salesman
+deleted xml-id of model ir.model.access: sale.access_stock_picking_sales
+deleted xml-id of model ir.model.access: sale.access_stock_picking_salesman
+deleted xml-id of model ir.model.access: sale.access_stock_warehouse_user
+deleted xml-id of model ir.ui.menu: base.menu_sales
+deleted xml-id of model ir.ui.menu: board.menu_dasboard
+deleted xml-id of model ir.ui.menu: sale.menu_action_picking_list_to_invoice
+deleted xml-id of model ir.ui.menu: sale.menu_action_shop_form
+deleted xml-id of model ir.ui.menu: sale.menu_board_sales_manager
+deleted xml-id of model ir.ui.menu: sale.menu_email_templates
+deleted xml-id of model ir.ui.menu: sale.menu_sales_configuration_misc
+deleted xml-id of model ir.ui.view: sale.board_sales_manager_form
+deleted xml-id of model ir.ui.view: sale.mrp_company
+deleted xml-id of model ir.ui.view: sale.stock_move_sale
+deleted xml-id of model ir.ui.view: sale.stock_picking_inherit_sale
+deleted xml-id of model ir.ui.view: sale.stock_picking_out_inherit_sale
+deleted xml-id of model ir.ui.view: sale.view_config_picking_policy
+deleted xml-id of model ir.ui.view: sale.view_order_line_graph
+deleted xml-id of model ir.ui.view: sale.view_sale_open_invoice
+deleted xml-id of model ir.ui.view: sale.view_sales_by_month_tree
+deleted xml-id of model ir.ui.view: sale.view_sales_by_partner_graph
+deleted xml-id of model ir.ui.view: sale.view_sales_by_salesman_graph
+deleted xml-id of model ir.ui.view: sale.view_sales_product_total_price_graph
+deleted xml-id of model ir.ui.view: sale.view_top_quotations_tree
+deleted xml-id of model process.condition: sale.process_condition_conditionafterdelivery0
+deleted xml-id of model process.node: sale.process_node_deliveryorder0
+deleted xml-id of model process.node: sale.process_node_invoiceafterdelivery0
+deleted xml-id of model process.node: sale.process_node_packinglist0
+deleted xml-id of model process.node: sale.process_node_saleorderprocurement0
+deleted xml-id of model process.node: sale.process_node_saleprocurement0
+deleted xml-id of model process.transition.action: sale.process_transition_action_assign0
+deleted xml-id of model process.transition.action: sale.process_transition_action_cancel1
+deleted xml-id of model process.transition.action: sale.process_transition_action_cancel2
+deleted xml-id of model process.transition.action: sale.process_transition_action_cancelassignation0
+deleted xml-id of model process.transition.action: sale.process_transition_action_forceassignation0
+deleted xml-id of model process.transition.action: sale.process_transition_action_validate0
+deleted xml-id of model process.transition: sale.process_transition_deliver0
+deleted xml-id of model process.transition: sale.process_transition_invoiceafterdelivery0
+deleted xml-id of model process.transition: sale.process_transition_packing0
+deleted xml-id of model process.transition: sale.process_transition_saleorderprocurement0
+deleted xml-id of model process.transition: sale.process_transition_saleprocurement0
+deleted xml-id of model res.users: base.user_admin
+deleted xml-id of model sale.shop: sale.shop
+deleted xml-id of model workflow.activity: sale.act_cancel3
+deleted xml-id of model workflow.activity: sale.act_ship
+deleted xml-id of model workflow.activity: sale.act_ship_cancel
+deleted xml-id of model workflow.activity: sale.act_ship_end
+deleted xml-id of model workflow.activity: sale.act_ship_except
+deleted xml-id of model workflow.activity: sale.act_wait_ship
+deleted xml-id of model workflow.transition: sale.trans_router_wait_invoice_shipping
+deleted xml-id of model workflow.transition: sale.trans_router_wait_ship
+deleted xml-id of model workflow.transition: sale.trans_ship_end_done
+deleted xml-id of model workflow.transition: sale.trans_ship_except_ship
+deleted xml-id of model workflow.transition: sale.trans_ship_except_ship_cancel
+deleted xml-id of model workflow.transition: sale.trans_ship_except_ship_end
+deleted xml-id of model workflow.transition: sale.trans_ship_ship_end
+deleted xml-id of model workflow.transition: sale.trans_ship_ship_except
+deleted xml-id of model workflow.transition: sale.trans_wait_invoice_invoice
+deleted xml-id of model workflow.transition: sale.trans_wait_ship_cancel3
+deleted xml-id of model workflow.transition: sale.trans_wait_ship_ship
+new xml-id of model ir.actions.act_window: sale.action_orders
+new xml-id of model ir.actions.act_window: sale.action_orders_exception
+new xml-id of model ir.actions.act_window: sale.action_orders_in_progress
+new xml-id of model ir.actions.act_window: sale.action_quotations
+new xml-id of model ir.actions.client: sale.action_client_sale_menu
+new xml-id of model ir.actions.server: sale.actions_server_sale_order_read
+new xml-id of model ir.actions.server: sale.actions_server_sale_order_unread
+new xml-id of model ir.actions.todo: base.open_menu
+new xml-id of model ir.model.access: sale.access_account_move_line_salesman
+new xml-id of model ir.ui.menu: base.menu_sale_config
+new xml-id of model ir.ui.menu: base.menu_sales_configuration_misc
+new xml-id of model ir.ui.menu: sale.menu_dashboard_sales
+new xml-id of model ir.ui.menu: sale.menu_sale_quotations
+new xml-id of model ir.ui.view: sale.crm_lead_partner_kanban_view
+new xml-id of model ir.ui.view: sale.res_partner_address_type
+new xml-id of model ir.ui.view: sale.res_partner_view_buttons
+new xml-id of model ir.ui.view: sale.view_account_config
+new xml-id of model ir.ui.view: sale.view_order_form_editable_list
+new xml-id of model ir.ui.view: sale.view_quotation_tree
+new xml-id of model ir.ui.view: sale.view_sales_config
+new xml-id of model ir.values: sale.action_sale_order_read
+new xml-id of model ir.values: sale.action_sale_order_unread
+new xml-id of model mail.message: sale.module_install_notification
+new xml-id of model res.groups: sale.group_analytic_accounting
+new xml-id of model res.groups: sale.group_delivery_invoice_address
+new xml-id of model res.groups: sale.group_discount_per_so_line
+new xml-id of model res.groups: sale.group_invoice_so_lines
+new xml-id of model res.groups: sale.group_mrp_properties
+new xml-id of model res.users: base.user_root
+new xml-id of model sale.shop: sale.sale_shop_1
+new xml-id of model workflow.activity: sale.act_sent
+new xml-id of model workflow.transition: sale.trans_draft_sent
+new xml-id of model workflow.transition: sale.trans_sent_cancel
+new xml-id of model workflow.transition: sale.trans_sent_router

@@ -1,0 +1,47 @@
+---portal---
+portal       / portal.payment.acquirer  / form_template (text)          : NEW required: required
+portal       / portal.payment.acquirer  / name (char)                   : NEW required: required
+portal       / portal.payment.acquirer  / visible (boolean)             : NEW 
+portal       / res.groups               / is_portal (boolean)           : NEW 
+portal       / res.users                / partner_id (many2one)         : module is now 'base' ('portal')
+portal       / res.users                / partner_id (many2one)         : now required
+deleted xml-id of model ir.actions.act_window: portal.address_wizard_action
+deleted xml-id of model ir.actions.act_window: portal.portal_list_action
+deleted xml-id of model ir.model.access: portal.access_all
+deleted xml-id of model ir.model.access: portal.access_manager
+deleted xml-id of model ir.model.access: portal.access_widget_all
+deleted xml-id of model ir.model.access: portal.access_widget_manager
+deleted xml-id of model ir.module.category: portal.module_category_portal
+deleted xml-id of model ir.ui.menu: portal.portal_list_menu
+deleted xml-id of model ir.ui.view: portal.portal_form_view
+deleted xml-id of model ir.ui.view: portal.portal_list_view
+deleted xml-id of model ir.ui.view: portal.view_users_form
+deleted xml-id of model ir.ui.view: portal.wizard_user_form_view
+deleted xml-id of model res.groups: portal.group_portal_manager
+deleted xml-id of model res.groups: portal.group_portal_officer
+new xml-id of model ir.actions.act_window: portal.action_acquirer_list
+new xml-id of model ir.actions.act_window: portal.action_jobs
+new xml-id of model ir.actions.act_window: portal.action_news
+new xml-id of model ir.model.access: portal.access_acquirer
+new xml-id of model ir.model.access: portal.access_acquirer_all
+new xml-id of model ir.model.access: portal.access_mail_message_portal
+new xml-id of model ir.model.access: portal.access_res_partner
+new xml-id of model ir.model.access: portal.access_res_partner_address
+new xml-id of model ir.model.access: portal.access_res_partner_category
+new xml-id of model ir.model.access: portal.access_res_partner_title
+new xml-id of model ir.ui.menu: portal.portal_after_sales
+new xml-id of model ir.ui.menu: portal.portal_company
+new xml-id of model ir.ui.menu: portal.portal_company_news
+new xml-id of model ir.ui.menu: portal.portal_invoices_payements
+new xml-id of model ir.ui.menu: portal.portal_jobs
+new xml-id of model ir.ui.menu: portal.portal_orders
+new xml-id of model ir.ui.menu: portal.portal_projects
+new xml-id of model ir.ui.view: portal.acquirer_form
+new xml-id of model ir.ui.view: portal.acquirer_list
+new xml-id of model ir.ui.view: portal.acquirer_search
+new xml-id of model ir.ui.view: portal.group_form_view
+new xml-id of model ir.ui.view: portal.group_search_view
+new xml-id of model mail.group: portal.company_jobs
+new xml-id of model mail.group: portal.company_news_feed
+new xml-id of model portal.payment.acquirer: portal.paypal_acquirer
+new xml-id of model res.groups: portal.group_portal

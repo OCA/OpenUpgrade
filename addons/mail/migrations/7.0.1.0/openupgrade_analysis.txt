@@ -1,0 +1,160 @@
+---mail---
+mail         / ir.ui.menu               / mail_group_id (many2one)      : NEW relation: mail.group
+mail         / mail.alias               / alias_defaults (text)         : NEW required: required, req_default: {}
+mail         / mail.alias               / alias_force_thread_id (integer): NEW 
+mail         / mail.alias               / alias_model_id (many2one)     : NEW relation: ir.model, required: required
+mail         / mail.alias               / alias_name (char)             : NEW required: required
+mail         / mail.alias               / alias_user_id (many2one)      : NEW relation: res.users
+mail         / mail.favorite            / message_id (many2one)         : NEW relation: mail.message, required: required
+mail         / mail.favorite            / user_id (many2one)            : NEW relation: res.users, required: required
+mail         / mail.followers           / partner_id (many2one)         : NEW relation: res.partner, required: required
+mail         / mail.followers           / res_id (integer)              : NEW 
+mail         / mail.followers           / res_model (char)              : NEW required: required
+mail         / mail.followers           / subtype_ids (many2many)       : NEW relation: mail.message.subtype
+mail         / mail.group               / _inherits (False)             : NEW 
+mail         / mail.group               / alias_id (many2one)           : NEW relation: mail.alias, required: required
+mail         / mail.group               / description (text)            : NEW 
+mail         / mail.group               / group_ids (many2many)         : NEW relation: res.groups
+mail         / mail.group               / group_public_id (many2one)    : NEW relation: res.groups
+mail         / mail.group               / image (binary)                : NEW 
+mail         / mail.group               / menu_id (many2one)            : NEW relation: ir.ui.menu, required: required
+mail         / mail.group               / message_comment_ids (one2many): NEW relation: mail.message
+mail         / mail.group               / message_ids (one2many)        : NEW relation: mail.message
+mail         / mail.group               / public (selection)            : NEW required: required, selection_keys: ['groups', 'private', 'public'], req_default: groups
+mail         / mail.mail                / _inherits (False)             : NEW 
+mail         / mail.mail                / auto_delete (boolean)         : NEW 
+mail         / mail.mail                / body_html (text)              : NEW 
+mail         / mail.mail                / email_cc (char)               : NEW 
+mail         / mail.mail                / email_from (char)             : NEW 
+mail         / mail.mail                / email_to (text)               : NEW 
+mail         / mail.mail                / mail_message_id (many2one)    : NEW relation: mail.message, required: required
+mail         / mail.mail                / mail_server_id (many2one)     : NEW relation: ir.mail_server
+mail         / mail.mail                / notification (boolean)        : NEW 
+mail         / mail.mail                / references (text)             : NEW 
+mail         / mail.mail                / reply_to (char)               : NEW 
+mail         / mail.mail                / state (selection)             : NEW selection_keys: ['cancel', 'exception', 'outgoing', 'received', 'sent']
+mail         / mail.message             / attachment_ids (many2many)    : NEW relation: ir.attachment
+mail         / mail.message             / author_id (many2one)          : NEW relation: res.partner
+mail         / mail.message             / body (html)                   : NEW 
+mail         / mail.message             / child_ids (one2many)          : NEW relation: mail.message
+mail         / mail.message             / date (datetime)               : NEW 
+mail         / mail.message             / email_from (char)             : NEW 
+mail         / mail.message             / favorite_user_ids (many2many) : NEW relation: res.users
+mail         / mail.message             / message_id (char)             : NEW 
+mail         / mail.message             / model (char)                  : NEW 
+mail         / mail.message             / notification_ids (one2many)   : NEW relation: mail.notification
+mail         / mail.message             / notified_partner_ids (many2many): NEW relation: res.partner
+mail         / mail.message             / parent_id (many2one)          : NEW relation: mail.message
+mail         / mail.message             / partner_ids (many2many)       : NEW relation: res.partner
+mail         / mail.message             / res_id (integer)              : NEW 
+mail         / mail.message             / subject (char)                : NEW 
+mail         / mail.message             / subtype_id (many2one)         : NEW relation: mail.message.subtype
+mail         / mail.message             / type (selection)              : NEW selection_keys: ['comment', 'email', 'notification']
+mail         / mail.message             / vote_user_ids (many2many)     : NEW relation: res.users
+mail         / mail.message.subtype     / default (boolean)             : NEW 
+mail         / mail.message.subtype     / name (char)                   : NEW required: required
+mail         / mail.message.subtype     / res_model (char)              : NEW 
+mail         / mail.notification        / message_id (many2one)         : NEW relation: mail.message, required: required
+mail         / mail.notification        / partner_id (many2one)         : NEW relation: res.partner, required: required
+mail         / mail.notification        / read (boolean)                : NEW 
+mail         / mail.thread              / message_comment_ids (one2many): NEW relation: mail.message
+mail         / mail.vote                / message_id (many2one)         : NEW relation: mail.message, required: required
+mail         / mail.vote                / user_id (many2one)            : NEW relation: res.users, required: required
+mail         / res.partner              / emails (one2many)             : DEL relation: mail.message
+mail         / res.partner              / message_comment_ids (one2many): NEW relation: mail.message
+mail         / res.partner              / message_ids (one2many)        : NEW relation: mail.message
+mail         / res.partner              / notification_email_send (selection): NEW required: required, selection_keys: ['all', 'comment', 'email', 'none'], req_default: function
+mail         / res.users                / _inherits (False)             : NEW mode: modify
+mail         / res.users                / alias_id (many2one)           : NEW relation: mail.alias, required: required
+deleted xml-id of model ir.actions.act_window.view: mail.action_view_mailgate_thread_view1
+deleted xml-id of model ir.actions.act_window.view: mail.action_view_mailgate_thread_view2
+deleted xml-id of model ir.actions.act_window: mail.act_res_partner_emails
+deleted xml-id of model ir.actions.act_window: mail.action_view_mailgate_thread
+deleted xml-id of model ir.model.access: mail.access_mail_message
+deleted xml-id of model ir.model.access: mail.access_mail_thread
+deleted xml-id of model ir.ui.menu: mail.menu_email_message
+deleted xml-id of model ir.ui.view: base.view_crm_partner_info_History
+deleted xml-id of model ir.ui.view: mail.view_email_message_form
+deleted xml-id of model ir.ui.view: mail.view_email_message_search
+deleted xml-id of model ir.ui.view: mail.view_email_message_tree
+deleted xml-id of model ir.ui.view: mail.view_mailgate_thread_form
+deleted xml-id of model ir.ui.view: mail.view_mailgate_thread_tree
+new xml-id of model ir.actions.act_window: mail.action_view_favorites
+new xml-id of model ir.actions.act_window: mail.action_view_followers
+new xml-id of model ir.actions.act_window: mail.action_view_groups
+new xml-id of model ir.actions.act_window: mail.action_view_mail_alias
+new xml-id of model ir.actions.act_window: mail.action_view_mail_mail
+new xml-id of model ir.actions.act_window: mail.action_view_message_subtype
+new xml-id of model ir.actions.act_window: mail.action_view_notifications
+new xml-id of model ir.actions.client: mail.action_mail_archives_feeds
+new xml-id of model ir.actions.client: mail.action_mail_group_feeds
+new xml-id of model ir.actions.client: mail.action_mail_inbox_feeds
+new xml-id of model ir.actions.client: mail.action_mail_star_feeds
+new xml-id of model ir.actions.client: mail.action_mail_to_me_feeds
+new xml-id of model ir.cron: mail.ir_cron_module_update_notification
+new xml-id of model ir.model.access: mail.access_mail_alias_all
+new xml-id of model ir.model.access: mail.access_mail_alias_system
+new xml-id of model ir.model.access: mail.access_mail_alias_user
+new xml-id of model ir.model.access: mail.access_mail_favorite_all
+new xml-id of model ir.model.access: mail.access_mail_followers_all
+new xml-id of model ir.model.access: mail.access_mail_followers_system
+new xml-id of model ir.model.access: mail.access_mail_group_all
+new xml-id of model ir.model.access: mail.access_mail_group_user
+new xml-id of model ir.model.access: mail.access_mail_mail_all
+new xml-id of model ir.model.access: mail.access_mail_mail_system
+new xml-id of model ir.model.access: mail.access_mail_mail_user
+new xml-id of model ir.model.access: mail.access_mail_message_all
+new xml-id of model ir.model.access: mail.access_mail_message_group_user
+new xml-id of model ir.model.access: mail.access_mail_message_subtype_all
+new xml-id of model ir.model.access: mail.access_mail_notification_all
+new xml-id of model ir.model.access: mail.access_mail_notification_group_user
+new xml-id of model ir.model.access: mail.access_mail_notification_system
+new xml-id of model ir.model.access: mail.access_mail_thread_all
+new xml-id of model ir.model.access: mail.access_mail_vote_all
+new xml-id of model ir.model.access: mail.access_publisher_warranty_contract_all
+new xml-id of model ir.rule: mail.mail_followers_read_write_own
+new xml-id of model ir.rule: mail.mail_group_public_and_joined
+new xml-id of model ir.rule: mail.mail_notification_read_write_own
+new xml-id of model ir.ui.menu: mail.mail_alias_menu
+new xml-id of model ir.ui.menu: mail.mail_allgroups
+new xml-id of model ir.ui.menu: mail.mail_archivesfeeds
+new xml-id of model ir.ui.menu: mail.mail_feeds
+new xml-id of model ir.ui.menu: mail.mail_feeds_main
+new xml-id of model ir.ui.menu: mail.mail_group_root
+new xml-id of model ir.ui.menu: mail.mail_inboxfeeds
+new xml-id of model ir.ui.menu: mail.mail_my_stuff
+new xml-id of model ir.ui.menu: mail.mail_starfeeds
+new xml-id of model ir.ui.menu: mail.mail_tomefeeds
+new xml-id of model ir.ui.menu: mail.menu_email_favorites
+new xml-id of model ir.ui.menu: mail.menu_email_followers
+new xml-id of model ir.ui.menu: mail.menu_email_notifications
+new xml-id of model ir.ui.menu: mail.menu_mail_mail
+new xml-id of model ir.ui.menu: mail.menu_mail_message
+new xml-id of model ir.ui.menu: mail.menu_message_subtype
+new xml-id of model ir.ui.view: mail.mail_wizard_invite_form
+new xml-id of model ir.ui.view: mail.view_followers_tree
+new xml-id of model ir.ui.view: mail.view_general_configuration_mail_alias_domain
+new xml-id of model ir.ui.view: mail.view_group_form
+new xml-id of model ir.ui.view: mail.view_group_kanban
+new xml-id of model ir.ui.view: mail.view_group_search
+new xml-id of model ir.ui.view: mail.view_group_tree
+new xml-id of model ir.ui.view: mail.view_mail_alias_form
+new xml-id of model ir.ui.view: mail.view_mail_alias_search
+new xml-id of model ir.ui.view: mail.view_mail_alias_tree
+new xml-id of model ir.ui.view: mail.view_mail_favorite_form
+new xml-id of model ir.ui.view: mail.view_mail_favorite_tree
+new xml-id of model ir.ui.view: mail.view_mail_form
+new xml-id of model ir.ui.view: mail.view_mail_message_subtype_form
+new xml-id of model ir.ui.view: mail.view_mail_search
+new xml-id of model ir.ui.view: mail.view_mail_subscription_form
+new xml-id of model ir.ui.view: mail.view_mail_tree
+new xml-id of model ir.ui.view: mail.view_message_form
+new xml-id of model ir.ui.view: mail.view_message_search
+new xml-id of model ir.ui.view: mail.view_message_subtype_tree
+new xml-id of model ir.ui.view: mail.view_message_tree
+new xml-id of model ir.ui.view: mail.view_notification_tree
+new xml-id of model ir.ui.view: mail.view_users_form_mail
+new xml-id of model ir.ui.view: mail.view_users_form_simple_modif_mail
+new xml-id of model mail.group: mail.group_all_employees
+new xml-id of model mail.message.subtype: mail.mt_comment
+new xml-id of model mail.message: mail.module_install_notification
