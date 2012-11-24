@@ -20,7 +20,7 @@
 ##############################################################################
 
 import types
-import osv
+from openerp.osv.orm import TransientModel
 from openerp.openupgrade.openupgrade import table_exists
 
 # A collection of functions used in 
@@ -58,7 +58,7 @@ def log_model(model, local_registry):
         return
 
     # persistent models only
-    if isinstance(model, osv.orm.TransientModel):
+    if isinstance(model, TransientModel):
         return
 
     model_registry = local_registry.setdefault(
