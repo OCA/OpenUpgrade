@@ -95,12 +95,21 @@ class Graph(dict):
             force = []
         packages = []
         len_graph = len(self)
+        
+        # force additional dependencies for the upgrade process if given
+        # in config file
+        forced_deps=tools.config.get_misc('openupgrade', 'force_deps', '{}')
+        forced_deps=tools.config.get_misc('openupgrade', 'force_deps_'+release.version, forced_deps)
+        forced_deps=tools.safe_eval.safe_eval(forced_deps)
+
         for module in module_list:
             # This will raise an exception if no/unreadable descriptor file.
             # NOTE The call to load_information_from_description_file is already
             # done by db.initialize, so it is possible to not do it again here.
             info = openerp.modules.module.load_information_from_description_file(module)
+
             if info and info['installable']:
+                info['depends'].extend(forced_deps.get(module, []))
                 packages.append((module, info)) # TODO directly a dict, like in get_modules_with_version
             else:
                 _logger.warning('module %s: not installable, skipped', module)
