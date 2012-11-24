@@ -45,7 +45,7 @@ from openerp.tools.translate import _
 from openerp.modules.module import initialize_sys_path, \
     load_openerp_module, init_module_models
 
-from openupgrade import openupgrade_loading
+from openerp.openupgrade import openupgrade_loading
 _logger = logging.getLogger(__name__)
 
 def open_openerp_namespace():
@@ -135,7 +135,7 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
     if status is None:
         status = {}
 
-    if skip_modules=None:
+    if skip_modules is None:
         skip_modules = []
         
     processed_modules = []

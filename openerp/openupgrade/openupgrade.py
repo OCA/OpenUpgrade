@@ -22,10 +22,7 @@
 import os
 import inspect
 import logging
-import release
-import osv
-import pooler
-import tools
+from openerp import release, osv, pooler, tools
 import openupgrade_tools
 
 # The server log level has not been set at this point
