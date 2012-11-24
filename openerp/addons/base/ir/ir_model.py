@@ -35,6 +35,8 @@ from openerp.tools import config
 from openerp.tools.translate import _
 from openerp.osv.orm import except_orm, browse_record, MAGIC_COLUMNS
 
+from openerp.openupgrade import openupgrade_log
+
 _logger = logging.getLogger(__name__)
 
 MODULE_UNINSTALL_FLAG = '_force_unlink'
@@ -920,6 +922,10 @@ class ir_model_data(osv.osv):
         return super(ir_model_data,self).unlink(cr, uid, ids, context=context)
 
     def _update(self,cr, uid, model, module, values, xml_id=False, store=True, noupdate=False, mode='init', res_id=False, context=None):
+        #OpenUpgrade: log entry (used in csv import)
+        if xml_id:
+            openupgrade_log.log_xml_id(cr, module, xml_id)
+
         model_obj = self.pool.get(model)
         if not context:
             context = {}
@@ -1141,6 +1147,15 @@ class ir_model_data(osv.osv):
             for (model, res_id) in to_unlink:
                 if self.pool.get(model):
                     _logger.info('Deleting %s@%s', res_id, model)
-                    self.pool.get(model).unlink(cr, uid, [res_id])
+                    try:
+                        cr.execute('SAVEPOINT ir_model_data_delete');
+                        self.pool.get(model).unlink(cr, uid, [res_id])
+                        cr.execute('RELEASE SAVEPOINT ir_model_data_delete')
+                    except Exception:
+                        cr.execute('ROLLBACK TO SAVEPOINT ir_model_data_delete');
+                        _logger.warning(
+                            'Could not delete obsolete record with id: %d of model %s\n'
+                            'Please refer to the log message right above',
+                            res_id, model)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -628,6 +628,9 @@ class MetaModel(type):
     module_to_models = {}
 
     def __init__(self, name, bases, attrs):
+        # OpenUpgrade: keep a registry of all instances of an object
+        self._registry.append(self)
+
         if not self._register:
             self._register = True
             super(MetaModel, self).__init__(name, bases, attrs)
@@ -650,6 +653,9 @@ class MetaModel(type):
         if not self._custom:
             self.module_to_models.setdefault(self._module, []).append(self)
 
+    # http://stackoverflow.com/questions/739882/iterating-over-object-instances-of-a-given-class-in-python
+    def __iter__(cls):
+        return iter(cls._registry)
 
 # Definition of log access columns, automatically added to models if
 # self._log_access is True
@@ -681,6 +687,7 @@ class BaseModel(object):
     """
     __metaclass__ = MetaModel
     _auto = True # create database backend
+    _registry = [] # OpenUpgrade class list
     _register = False # Set to false if the model shouldn't be automatically discovered.
     _name = None
     _columns = {}
@@ -1306,6 +1313,7 @@ class BaseModel(object):
 
         position = 0
         try:
+            cr.execute('SAVEPOINT convert_records')
             for res_id, xml_id, res, info in self._convert_records(cr, uid,
                             self._extract_records(cr, uid, fields, datas,
                                                   context=context, log=log),
@@ -1323,8 +1331,9 @@ class BaseModel(object):
                     if context.get('defer_parent_store_computation'):
                         self._parent_store_compute(cr)
                     cr.commit()
+            cr.execute('RELEASE SAVEPOINT convert_records')
         except Exception, e:
-            cr.rollback()
+            cr.execute('ROLLBACK TO SAVEPOINT convert_records')
             return -1, {}, 'Line %d : %s' % (position + 1, tools.ustr(e)), ''
 
         if context.get('defer_parent_store_computation'):
@@ -3192,11 +3201,15 @@ class BaseModel(object):
                                 # add the NOT NULL constraint
                                 cr.commit()
                                 try:
+                                    #use savepoints for openupgrade instead of transactions
+                                    cr.execute('SAVEPOINT add_constraint');
                                     cr.execute('ALTER TABLE "%s" ALTER COLUMN "%s" SET NOT NULL' % (self._table, k), log_exceptions=False)
+                                    cr.execute('RELEASE SAVEPOINT add_constraint');
                                     cr.commit()
                                     _schema.debug("Table '%s': column '%s': added NOT NULL constraint",
                                         self._table, k)
                                 except Exception:
+                                    cr.execute('ROLLBACK TO SAVEPOINT add_constraint');
                                     msg = "Table '%s': unable to set a NOT NULL constraint on column '%s' !\n"\
                                         "If you want to have it, you should update the records and execute manually:\n"\
                                         "ALTER TABLE %s ALTER COLUMN %s SET NOT NULL"
@@ -3274,11 +3287,14 @@ class BaseModel(object):
                                 cr.execute('CREATE INDEX "%s_%s_index" ON "%s" ("%s")' % (self._table, k, self._table, k))
                             if f.required:
                                 try:
-                                    cr.commit()
+                                    #use savepoints for openupgrade instead of transactions
+                                    cr.execute('SAVEPOINT add_constraint');
                                     cr.execute('ALTER TABLE "%s" ALTER COLUMN "%s" SET NOT NULL' % (self._table, k), log_exceptions=False)
                                     _schema.debug("Table '%s': column '%s': added a NOT NULL constraint",
                                         self._table, k)
+                                    cr.execute('RELEASE SAVEPOINT add_constraint');
                                 except Exception:
+                                    cr.execute('ROLLBACK TO SAVEPOINT add_constraint');
                                     msg = "WARNING: unable to set column %s of table %s not null !\n"\
                                         "Try to re-run: openerp-server --update=module\n"\
                                         "If it doesn't work, update records and execute manually:\n"\
@@ -3473,12 +3489,14 @@ class BaseModel(object):
             sql_actions.sort(key=lambda x: x['order'])
             for sql_action in [action for action in sql_actions if action['execute']]:
                 try:
+                    #use savepoints for openupgrade instead of transactions
+                    cr.execute('SAVEPOINT add_constraint2');
                     cr.execute(sql_action['query'])
-                    cr.commit()
+                    cr.execute('RELEASE SAVEPOINT add_constraint2');
                     _schema.debug(sql_action['msg_ok'])
                 except:
                     _schema.warning(sql_action['msg_err'])
-                    cr.rollback()
+                    cr.execute('ROLLBACK TO SAVEPOINT add_constraint2');
 
 
     def _execute_sql(self, cr):
