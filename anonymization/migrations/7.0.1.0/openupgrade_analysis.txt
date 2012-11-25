@@ -1,0 +1,26 @@
+---anonymization---
+anonymization / ir.model.fields.anonymization / state (selection)             : selection_keys is now '['anonymized', 'clear', 'not_existing']' ('['anonymized', 'clear', 'new', 'not_existing']')
+anonymization / ir.model.fields.anonymization.migration.fix / field_name (char)             : NEW 
+anonymization / ir.model.fields.anonymization.migration.fix / model_name (char)             : NEW 
+anonymization / ir.model.fields.anonymization.migration.fix / query (text)                  : NEW 
+anonymization / ir.model.fields.anonymization.migration.fix / query_type (selection)        : NEW selection_keys: ['python', 'sql']
+anonymization / ir.model.fields.anonymization.migration.fix / sequence (integer)            : NEW 
+anonymization / ir.model.fields.anonymization.migration.fix / target_version (char)         : NEW 
+deleted xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_address_city
+deleted xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_address_email
+deleted xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_address_fax
+deleted xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_address_mobile
+deleted xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_address_name
+deleted xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_address_phone
+deleted xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_address_street
+deleted xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_address_street2
+deleted xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_address_zip
+new xml-id of model ir.model.access: anonymization.access_ir_model_fields_anonymization_migration_fix
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_city
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_email
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_fax
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_mobile
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_phone
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_street
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_street2
+new xml-id of model ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_zip

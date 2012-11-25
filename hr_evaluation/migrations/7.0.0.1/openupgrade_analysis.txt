@@ -1,0 +1,17 @@
+---hr_evaluation---
+hr_evaluation / hr.evaluation.interview  / message_comment_ids (one2many): NEW relation: mail.message
+hr_evaluation / hr.evaluation.interview  / message_ids (one2many)        : NEW relation: mail.message
+hr_evaluation / hr.evaluation.report     / progress_bar (float)          : DEL 
+hr_evaluation / hr_evaluation.evaluation / message_comment_ids (one2many): NEW relation: mail.message
+hr_evaluation / hr_evaluation.evaluation / message_ids (one2many)        : NEW relation: mail.message
+hr_evaluation / hr_evaluation.evaluation / progress (float)              : DEL 
+deleted xml-id of model hr_evaluation.plan.phase: hr_evaluation.hr_evaluation_plan_phase_finalinterviewwithmanager0
+deleted xml-id of model hr_evaluation.plan.phase: hr_evaluation.hr_evaluation_plan_phase_sendtomanagers0
+deleted xml-id of model hr_evaluation.plan.phase: hr_evaluation.hr_evaluation_plan_phase_sendtosubordinates0
+deleted xml-id of model ir.actions.todo: hr_evaluation.todo_evaluation_plans_installer
+deleted xml-id of model ir.ui.menu: hr.menu_hr_reporting
+deleted xml-id of model ir.ui.view: hr_evaluation.view_hr_evaluation_graph
+deleted xml-id of model survey.answer: hr_evaluation.survey_answer_98
+new xml-id of model ir.actions.todo: base.open_menu
+new xml-id of model ir.model.access: hr_evaluation.access_survey_tbl_column_heading_hr_employee
+new xml-id of model mail.message: hr_evaluation.module_install_notification

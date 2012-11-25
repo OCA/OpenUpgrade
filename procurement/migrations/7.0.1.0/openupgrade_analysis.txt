@@ -1,0 +1,10 @@
+---procurement---
+procurement  / procurement.order        / message_comment_ids (one2many): NEW relation: mail.message
+procurement  / procurement.order        / message_ids (one2many)        : NEW relation: mail.message
+procurement  / product.template         / type (False)                  : NEW selection_keys: ['consu', 'product', 'service'], mode: modify
+deleted xml-id of model ir.actions.act_window: procurement.act_product_product_2_stock_warehouse_orderpoint
+deleted xml-id of model ir.ui.view: procurement.product_normal_form_view
+new xml-id of model ir.actions.act_window: procurement.product_open_orderpoint
+new xml-id of model ir.ui.view: procurement.product_form_view_procurement_button
+new xml-id of model ir.ui.view: procurement.product_search_form_view_procurment
+new xml-id of model ir.ui.view: procurement.product_template_form_view_procurement

@@ -1,0 +1,95 @@
+---stock---
+stock        / report.stock.inventory   / month (selection)             : selection_keys is now '['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']' ('['01', '02', '03', '04', '05', '06', '07', '08', '09']')
+stock        / report.stock.inventory   / partner_id (many2one)         : relation is now 'res.partner' ('res.partner.address')
+stock        / report.stock.inventory   / scrap_location (boolean)      : NEW 
+stock        / report.stock.move        / partner_id (many2one)         : relation is now 'res.partner' ('res.partner.address')
+stock        / stock.location           / address_id (many2one)         : DEL relation: res.partner.address
+stock        / stock.location           / partner_id (many2one)         : NEW relation: res.partner
+stock        / stock.move               / address_id (many2one)         : DEL relation: res.partner.address
+stock        / stock.move               / partner_id (many2one)         : not a function anymore
+stock        / stock.picking            / address_id (many2one)         : DEL relation: res.partner.address
+stock        / stock.picking            / message_comment_ids (one2many): NEW relation: mail.message
+stock        / stock.picking            / message_ids (one2many)        : NEW relation: mail.message
+stock        / stock.picking            / partner_id (many2one)         : not a function anymore
+stock        / stock.picking.in         / auto_picking (boolean)        : NEW 
+stock        / stock.picking.in         / backorder_id (many2one)       : NEW relation: stock.picking.in
+stock        / stock.picking.in         / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+stock        / stock.picking.in         / date (datetime)               : NEW 
+stock        / stock.picking.in         / date_done (datetime)          : NEW 
+stock        / stock.picking.in         / invoice_state (selection)     : NEW required: required, selection_keys: ['2binvoiced', 'invoiced', 'none'], req_default: none
+stock        / stock.picking.in         / location_dest_id (many2one)   : NEW relation: stock.location
+stock        / stock.picking.in         / location_id (many2one)        : NEW relation: stock.location
+stock        / stock.picking.in         / message_comment_ids (one2many): NEW relation: mail.message
+stock        / stock.picking.in         / message_ids (one2many)        : NEW relation: mail.message
+stock        / stock.picking.in         / move_lines (one2many)         : NEW relation: stock.move
+stock        / stock.picking.in         / move_type (selection)         : NEW required: required, selection_keys: ['direct', 'one'], req_default: direct
+stock        / stock.picking.in         / name (char)                   : NEW 
+stock        / stock.picking.in         / note (text)                   : NEW 
+stock        / stock.picking.in         / origin (char)                 : NEW 
+stock        / stock.picking.in         / partner_id (many2one)         : NEW relation: res.partner
+stock        / stock.picking.in         / state (selection)             : NEW selection_keys: ['assigned', 'auto', 'cancel', 'confirmed', 'done', 'draft']
+stock        / stock.picking.in         / stock_journal_id (many2one)   : NEW relation: stock.journal
+stock        / stock.picking.in         / type (selection)              : NEW required: required, selection_keys: ['in', 'internal', 'out'], req_default: in
+stock        / stock.picking.out        / auto_picking (boolean)        : NEW 
+stock        / stock.picking.out        / backorder_id (many2one)       : NEW relation: stock.picking.out
+stock        / stock.picking.out        / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+stock        / stock.picking.out        / date (datetime)               : NEW 
+stock        / stock.picking.out        / date_done (datetime)          : NEW 
+stock        / stock.picking.out        / invoice_state (selection)     : NEW required: required, selection_keys: ['2binvoiced', 'invoiced', 'none'], req_default: none
+stock        / stock.picking.out        / location_dest_id (many2one)   : NEW relation: stock.location
+stock        / stock.picking.out        / location_id (many2one)        : NEW relation: stock.location
+stock        / stock.picking.out        / message_comment_ids (one2many): NEW relation: mail.message
+stock        / stock.picking.out        / message_ids (one2many)        : NEW relation: mail.message
+stock        / stock.picking.out        / move_lines (one2many)         : NEW relation: stock.move
+stock        / stock.picking.out        / move_type (selection)         : NEW required: required, selection_keys: ['direct', 'one'], req_default: direct
+stock        / stock.picking.out        / name (char)                   : NEW 
+stock        / stock.picking.out        / note (text)                   : NEW 
+stock        / stock.picking.out        / origin (char)                 : NEW 
+stock        / stock.picking.out        / partner_id (many2one)         : NEW relation: res.partner
+stock        / stock.picking.out        / state (selection)             : NEW selection_keys: ['assigned', 'auto', 'cancel', 'confirmed', 'done', 'draft']
+stock        / stock.picking.out        / stock_journal_id (many2one)   : NEW relation: stock.journal
+stock        / stock.picking.out        / type (selection)              : NEW required: required, selection_keys: ['in', 'internal', 'out'], req_default: out
+stock        / stock.warehouse          / partner_address_id (many2one) : DEL relation: res.partner.address
+stock        / stock.warehouse          / partner_id (many2one)         : NEW relation: res.partner
+deleted xml-id of model ir.actions.act_window: stock.act_relate_picking
+deleted xml-id of model ir.actions.act_window: stock.action_incoming_product_board
+deleted xml-id of model ir.actions.act_window: stock.action_outgoing_product_board
+deleted xml-id of model ir.actions.todo.category: stock.category_stock_management_config
+deleted xml-id of model ir.ui.menu: stock.menu_dashboard_stock
+deleted xml-id of model ir.ui.view: product.product_kanban_view
+deleted xml-id of model ir.ui.view: stock.view_move_form_reception_picking
+deleted xml-id of model ir.ui.view: stock.view_move_search_reception_incoming_picking
+deleted xml-id of model ir.ui.view: stock.view_move_search_reception_outcoming_picking
+deleted xml-id of model ir.ui.view: stock.view_normal_property_form
+deleted xml-id of model ir.ui.view: stock.view_normal_stock_property_form
+deleted xml-id of model ir.ui.view: stock.view_stock_picking_filter
+new xml-id of model ir.actions.act_window.view: stock.action_stock_move_form_all
+new xml-id of model ir.actions.act_window.view: stock.action_stock_move_tree_all
+new xml-id of model ir.actions.act_window: stock.act_stock_return_picking_in
+new xml-id of model ir.actions.act_window: stock.act_stock_return_picking_out
+new xml-id of model ir.actions.act_window: stock.action_deliver_move
+new xml-id of model ir.actions.act_window: stock.action_receive_move
+new xml-id of model ir.actions.act_window: stock.action_stock_config_settings
+new xml-id of model ir.actions.client: stock.action_client_warehouse_menu
+new xml-id of model ir.actions.report.xml: stock.report_picking_list_in
+new xml-id of model ir.actions.report.xml: stock.report_picking_list_out
+new xml-id of model ir.actions.todo: base.open_menu
+new xml-id of model ir.model.access: stock.access_board_stock_user
+new xml-id of model ir.model.access: stock.access_stock_move_warehouse_manager
+new xml-id of model ir.model.access: stock.access_stock_picking_in_manager
+new xml-id of model ir.model.access: stock.access_stock_picking_in_user
+new xml-id of model ir.model.access: stock.access_stock_picking_out_manager
+new xml-id of model ir.model.access: stock.access_stock_picking_out_user
+new xml-id of model ir.ui.menu: stock.menu_stock_config_settings
+new xml-id of model ir.ui.view: stock.product_kanban_stock_view
+new xml-id of model ir.ui.view: stock.stock_picking_in_calendar
+new xml-id of model ir.ui.view: stock.stock_picking_out_calendar
+new xml-id of model ir.ui.view: stock.view_move_picking_form
+new xml-id of model ir.ui.view: stock.view_move_picking_tree
+new xml-id of model ir.ui.view: stock.view_normal_procurement_locations_form
+new xml-id of model ir.ui.view: stock.view_stock_config_settings
+new xml-id of model mail.message: stock.module_install_notification
+new xml-id of model res.groups: stock.group_inventory_valuation
+new xml-id of model res.groups: stock.group_locations
+new xml-id of model res.groups: stock.group_production_lot
+new xml-id of model res.groups: stock.group_tracking_lot

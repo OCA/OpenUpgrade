@@ -1,0 +1,37 @@
+---note---
+note         / note.note                / color (integer)               : NEW 
+note         / note.note                / date_done (date)              : NEW 
+note         / note.note                / memo (html)                   : NEW 
+note         / note.note                / message_comment_ids (one2many): NEW relation: mail.message
+note         / note.note                / message_ids (one2many)        : NEW relation: mail.message
+note         / note.note                / open (boolean)                : NEW 
+note         / note.note                / sequence (integer)            : NEW 
+note         / note.note                / stage_ids (many2many)         : NEW relation: note.stage
+note         / note.note                / tag_ids (many2many)           : NEW relation: note.tag
+note         / note.stage               / fold (boolean)                : NEW 
+note         / note.stage               / name (char)                   : NEW required: required
+note         / note.stage               / sequence (integer)            : NEW 
+note         / note.stage               / user_id (many2one)            : NEW relation: res.users, required: required, req_default: function
+note         / note.tag                 / name (char)                   : NEW required: required
+new xml-id of model ir.actions.act_window: note.action_note_note
+new xml-id of model ir.actions.act_window: note.action_note_stage
+new xml-id of model ir.model.access: note.access_note_note
+new xml-id of model ir.model.access: note.access_note_stage
+new xml-id of model ir.model.access: note.access_note_tag
+new xml-id of model ir.rule: note.note_note_rule_global
+new xml-id of model ir.rule: note.note_stage_rule_global
+new xml-id of model ir.ui.menu: note.menu_note_notes
+new xml-id of model ir.ui.menu: note.menu_notes_stage
+new xml-id of model ir.ui.view: note.view_general_settings_note_form
+new xml-id of model ir.ui.view: note.view_note_note_filter
+new xml-id of model ir.ui.view: note.view_note_note_form
+new xml-id of model ir.ui.view: note.view_note_note_kanban
+new xml-id of model ir.ui.view: note.view_note_note_tree
+new xml-id of model ir.ui.view: note.view_note_stage_form
+new xml-id of model ir.ui.view: note.view_note_stage_tree
+new xml-id of model note.stage: note.note_stage_01
+new xml-id of model note.stage: note.note_stage_02
+new xml-id of model note.stage: note.note_stage_03
+new xml-id of model note.stage: note.note_stage_04
+new xml-id of model res.groups: base.group_user
+new xml-id of model res.groups: note.group_note_fancy

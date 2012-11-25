@@ -1,0 +1,7 @@
+---sale_journal---
+sale_journal / stock.picking.in         / invoice_type_id (many2one)    : NEW relation: sale_journal.invoice.type
+sale_journal / stock.picking.out        / invoice_type_id (many2one)    : NEW relation: sale_journal.invoice.type
+new xml-id of model ir.ui.view: sale_journal.view_picking_in_search
+new xml-id of model ir.ui.view: sale_journal.view_picking_internal_search
+new xml-id of model ir.ui.view: sale_journal.view_picking_out_search
+new xml-id of model ir.ui.view: sale_journal.view_sales_order_search

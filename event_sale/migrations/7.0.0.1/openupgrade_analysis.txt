@@ -1,0 +1,6 @@
+---event_sale---
+event_sale   / product.product          / event_ok (boolean)            : NEW 
+event_sale   / product.product          / event_type_id (many2one)      : NEW relation: event.type
+event_sale   / sale.order.line          / event_id (many2one)           : NEW relation: event.event
+new xml-id of model ir.ui.view: event_sale.event_order_line
+new xml-id of model ir.ui.view: event_sale.event_sale_order

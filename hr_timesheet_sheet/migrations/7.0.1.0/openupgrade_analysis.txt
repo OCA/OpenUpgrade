@@ -1,0 +1,12 @@
+---hr_timesheet_sheet---
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / date_current (date)           : DEL required: required, req_default: function
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / message_comment_ids (one2many): NEW relation: mail.message
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / message_ids (one2many)        : NEW relation: mail.message
+hr_timesheet_sheet / timesheet.report         / date (date)                   : NEW 
+deleted xml-id of model ir.actions.act_window: hr_timesheet_sheet.action_hr_timesheet_sheet_graph
+deleted xml-id of model ir.ui.view: hr_timesheet_sheet.hr_timesheet_sheet_graph
+deleted xml-id of model ir.ui.view: hr_timesheet_sheet.hr_timesheet_sheet_tree
+new xml-id of model ir.actions.todo: base.open_menu
+new xml-id of model ir.ui.view: hr_timesheet_sheet.hr_timesheet_sheet_employee_extd_form
+new xml-id of model ir.ui.view: hr_timesheet_sheet.view_hr_timehseet_config_settings
+new xml-id of model mail.message: hr_timesheet_sheet.hr_timesheet_module_install_notification

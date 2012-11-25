@@ -1,0 +1,16 @@
+---account_voucher---
+account_voucher / account.voucher          / active (boolean)              : NEW 
+account_voucher / account.voucher          / message_comment_ids (one2many): NEW relation: mail.message
+account_voucher / account.voucher          / message_ids (one2many)        : NEW relation: mail.message
+deleted xml-id of model ir.actions.act_window: account_voucher.action_view_account_statement_from_invoice
+deleted xml-id of model ir.actions.act_window: account_voucher.action_view_account_voucher_unreconcile
+deleted xml-id of model ir.ui.view: account_voucher.view_account_statement_from_invoice
+deleted xml-id of model ir.ui.view: account_voucher.view_account_voucher_unreconcile
+deleted xml-id of model ir.ui.view: account_voucher.view_bank_statement_tree_voucher
+deleted xml-id of model ir.ui.view: account_voucher.view_company_inherit_currency_xchange_form
+new xml-id of model ir.actions.client: account_voucher.action_client_invoice_menu
+new xml-id of model ir.actions.todo: base.open_menu
+new xml-id of model ir.ui.view: account_voucher.view_account_settings_currency_xchange_form
+new xml-id of model ir.ui.view: account_voucher.view_vendor_receipt_dialog_form
+new xml-id of model mail.message.subtype: account_voucher.mt_voucher
+new xml-id of model mail.message: account_voucher.module_install_notification
