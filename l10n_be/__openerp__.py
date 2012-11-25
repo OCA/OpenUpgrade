@@ -72,7 +72,9 @@ Wizards provided by this module:
         'fiscal_templates.xml',
         'account_fiscal_position_tax_template.xml',
         'security/ir.model.access.csv',
-        'l10n_be_wizard.yml'
+        # OpenUpgrade: automatic chart installation is inconvenient
+        # for database analysis
+        #'l10n_be_wizard.yml'
     ],
     'demo': [],
     'installable': True,
