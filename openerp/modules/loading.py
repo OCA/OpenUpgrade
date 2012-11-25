@@ -243,7 +243,8 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
 
         cr.commit_org()
     
-    cr.commit_org()
+    cr.commit = cr.commit_org
+    cr.commit()
 
     return loaded_modules, processed_modules
 
