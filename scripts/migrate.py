@@ -17,12 +17,12 @@ import bzrlib.info
 migrations={
   '6.1': {
       'addons': {
-          'addons': 'lp:openupgrade-addons',
-          'banking': 'lp:banking-addons',
+          'addons': 'lp:openupgrade-addons/6.1',
+          'banking': 'lp:banking-addons/6.1',
           'web': {'url': 'lp:openerp-web/6.1', 'addons_dir': 'addons'},
         },
       'server': {
-          'url': 'lp:openupgrade-server', 
+          'url': 'lp:openupgrade-server/6.1', 
           'addons_dir': os.path.join('openerp','addons'),
           'root_dir': os.path.join(''),
           'cmd': 'openerp-server --update=all --database=%(db)s '+
