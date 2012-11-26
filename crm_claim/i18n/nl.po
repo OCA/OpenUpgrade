@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-11-24 02:52+0000\n"
-"PO-Revision-Date: 2012-11-24 21:22+0000\n"
+"PO-Revision-Date: 2012-11-25 13:01+0000\n"
 "Last-Translator: Erwin van der Ploeg (Endian Solutions) <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-11-25 06:25+0000\n"
+"X-Launchpad-Export-Date: 2012-11-26 04:42+0000\n"
 "X-Generator: Launchpad (build 16293)\n"
 
 #. module: crm_claim
@@ -23,6 +23,8 @@ msgid ""
 "This stage is not visible, for example in status bar or kanban view, when "
 "there are no records in that stage to display."
 msgstr ""
+"Deze fase is niet zichtbaar, in bijvoorbeeld de statusbalk of kanban "
+"weergave, wanneer er geen records in deze fase zijn om weer te geven."
 
 #. module: crm_claim
 #: field:crm.claim.report,nbr:0
@@ -46,6 +48,8 @@ msgid ""
 "Allows you to configure your incoming mail server, and create claims from "
 "incoming emails."
 msgstr ""
+"Geeft u de mogelijkheid om uw inkomende mailserver in te stellen en klachten "
+"aan te maken van binnenkomende e-mails."
 
 #. module: crm_claim
 #: model:ir.model,name:crm_claim.model_crm_claim_stage
@@ -91,6 +95,15 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Klik hier om een nieuwe klachtencategorie aan te maken\n"
+"              </p><p>\n"
+"                Maak klachten categorieën aan om uw klachten beter te "
+"classificeren\n"
+"                en te beheersen. Bijvoorbeeld: preventieve actie of "
+"correctieve actie.\n"
+"              </p>\n"
+"            "
 
 #. module: crm_claim
 #: view:crm.claim.report:0
@@ -352,7 +365,7 @@ msgstr "Data"
 #. module: crm_claim
 #: help:crm.claim,email_from:0
 msgid "Destination email for email gateway."
-msgstr ""
+msgstr "bestemming e-mail voor de e-mail gateway"
 
 #. module: crm_claim
 #: code:addons/crm_claim/crm_claim.py:199
@@ -368,11 +381,15 @@ msgid ""
 "is related to the status 'Close', when your document reaches this stage, it "
 "will be automatically have the 'closed' status."
 msgstr ""
+"De status van een fase. De status van uw document wordt automatisch "
+"aangepast overeenkomstig de gekozen fase. Bijvoorbeeld, als een fase is "
+"gerelateerd aan status 'Sluiten', dan krijgt het automatisch de status "
+"'Gesloten'  wanneer uw document deze fase bereikt."
 
 #. module: crm_claim
 #: view:crm.claim:0
 msgid "Settle"
-msgstr ""
+msgstr "Regelen"
 
 #. module: crm_claim
 #: model:ir.ui.menu,name:crm_claim.menu_claim_stage_view
@@ -547,7 +564,7 @@ msgstr "Normaal"
 #. module: crm_claim
 #: help:crm.claim.stage,sequence:0
 msgid "Used to order stages. Lower is better."
-msgstr ""
+msgstr "Wordt gebruikt om fases te sorteren. Lager is beter."
 
 #. module: crm_claim
 #: selection:crm.claim.report,month:0
@@ -589,6 +606,19 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Klik hier om een nieuwe fase te maken voor het verwerken van "
+"klachten.\n"
+"              </p><p>\n"
+"                U kunt een klachtenfase maken zodat u de fase van iedere "
+"klacht\n"
+"                in het systeem kan categoriseren. De fases "
+"vertegenwoordigen\n"
+"                de stappen die moeten worden doorlopen voor het behandelen "
+"van\n"
+"                de klacht.\n"
+"              </p>\n"
+"            "
 
 #. module: crm_claim
 #: help:crm.claim,state:0
@@ -599,6 +629,10 @@ msgid ""
 "the case needs to be reviewed then the status is                       set "
 "to 'Pending'."
 msgstr ""
+"De status is ingesteld op 'Concept' wanneer de klacht wordt aangemaakt. Als "
+"de klacht in behandeling is, is de status ingesteld op 'Open'. wanneer de "
+"klacht is afgewerkt, wordt de status ingesteld op 'Gereed'. Indien de klacht "
+"moet worden gecontroleerd, wordt de status op ingesteld op 'In afwachting'."
 
 #. module: crm_claim
 #: field:crm.claim,active:0
@@ -871,7 +905,7 @@ msgstr "Mijn klacht(en)"
 #. module: crm_claim
 #: model:crm.claim.stage,name:crm_claim.stage_claim2
 msgid "Settled"
-msgstr ""
+msgstr "Geregeld"
 
 #. module: crm_claim
 #: help:crm.claim,message_ids:0
@@ -892,7 +926,7 @@ msgstr "Maak een klacht van een inkomende mail"
 #. module: crm_claim
 #: field:crm.claim.stage,sequence:0
 msgid "Sequence"
-msgstr ""
+msgstr "Reeks"
 
 #. module: crm_claim
 #: view:crm.claim:0
@@ -914,7 +948,7 @@ msgstr "Verkoopteam"
 #. module: crm_claim
 #: constraint:res.partner:0
 msgid "Error: Invalid ean code"
-msgstr ""
+msgstr "Fout: Ongeldige EAN-code"
 
 #. module: crm_claim
 #: view:crm.claim:0
@@ -927,11 +961,13 @@ msgid ""
 "Link between stages and sales teams. When set, this limitate the current "
 "stage to the selected sales teams."
 msgstr ""
+"Koppeling tussen fases en verkoopteams. Wanneer aangevinkt wordt deze fase "
+"beperkt tot de geselecteerde verkoopteams."
 
 #. module: crm_claim
 #: help:crm.claim.stage,case_refused:0
 msgid "Refused stages are specific stages for done."
-msgstr ""
+msgstr "Gewijgerde fases zijn specifieke fases voor de status gereed."
 
 #~ msgid "Partner Contact"
 #~ msgstr "Contactpersoon relatie"

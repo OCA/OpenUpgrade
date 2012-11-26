@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-11-24 02:51+0000\n"
-"PO-Revision-Date: 2012-11-24 17:32+0000\n"
+"PO-Revision-Date: 2012-11-25 16:49+0000\n"
 "Last-Translator: ccdos <ccdos@163.com>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-11-25 06:30+0000\n"
+"X-Launchpad-Export-Date: 2012-11-26 04:42+0000\n"
 "X-Generator: Launchpad (build 16293)\n"
 
 #. module: mail
@@ -30,7 +30,7 @@ msgstr "关注者表单"
 #. module: mail
 #: model:ir.model,name:mail.model_publisher_warranty_contract
 msgid "publisher_warranty.contract"
-msgstr ""
+msgstr "publisher_warranty.contract"
 
 #. module: mail
 #: field:mail.compose.message,author_id:0
@@ -118,7 +118,7 @@ msgstr "显示要读的消息"
 msgid ""
 "Email address of the sender. This field is set when no matching partner is "
 "found for incoming emails."
-msgstr ""
+msgstr "发送者的Email地址。当收取的email没有对应的合作伙伴时，此字段被设置"
 
 #. module: mail
 #: code:addons/mail/wizard/invite.py:36
@@ -194,7 +194,7 @@ msgid ""
 "Medium-sized photo of the group. It is automatically resized as a 128x128px "
 "image, with aspect ratio preserved. Use this field in form views or some "
 "kanban views."
-msgstr ""
+msgstr "群组的中等尺寸照片。它们被缩放为128x128px，纵横比保留。表单视图或者一些看板视图使用这个字段。"
 
 #. module: mail
 #: view:mail.mail:0
@@ -217,7 +217,7 @@ msgstr "线程"
 #: code:addons/mail/static/src/xml/mail.xml:37
 #, python-format
 msgid "&ograve"
-msgstr ""
+msgstr "&o 严重"
 
 #. module: mail
 #: field:base.config.settings,alias_domain:0
@@ -284,7 +284,7 @@ msgstr "已取消"
 #: code:addons/mail/static/src/xml/mail.xml:262
 #, python-format
 msgid "unlike"
-msgstr "不同意"
+msgstr "-1"
 
 #. module: mail
 #: field:mail.mail,reply_to:0
@@ -381,7 +381,7 @@ msgid ""
 "The model (OpenERP Document Kind) to which this alias corresponds. Any "
 "incoming email that does not reply to an existing record will cause the "
 "creation of a new record of this model (e.g. a Project Task)"
-msgstr ""
+msgstr "相应于这个别名对应的模型（Openerp的单据种类）。任何一封没有回复某个存在的记录的来邮，将导致此模块中新记录的创立。"
 
 #. module: mail
 #: selection:mail.compose.message,type:0
@@ -438,7 +438,7 @@ msgstr "设置这些消息在收藏夹的用户"
 #. module: mail
 #: model:ir.model,name:mail.model_base_config_settings
 msgid "base.config.settings"
-msgstr ""
+msgstr "base.config.settings"
 
 #. module: mail
 #: field:mail.compose.message,to_read:0
@@ -592,7 +592,7 @@ msgstr "<div>您被邀请关注这个文件.</div>"
 #: field:mail.compose.message,parent_id:0
 #: field:mail.message,parent_id:0
 msgid "Parent Message"
-msgstr ""
+msgstr "父消息"
 
 #. module: mail
 #: field:mail.compose.message,res_id:0
@@ -612,8 +612,10 @@ msgid ""
 "                </p>\n"
 "            "
 msgstr ""
-"<b>没有私人消息</b>\n"
-"                </p><p>\n"
+"<p>\n"
+"               <b>没有私人消息</b>\n"
+"                </p>\n"
+"                <p>\n"
 "                    这个列表包含了发给你的消息.\n"
 "                </p>\n"
 "            "
@@ -628,7 +630,7 @@ msgstr "研究与开发"
 #: code:addons/mail/static/src/xml/mail.xml:61
 #, python-format
 msgid "/web/binary/upload_attachment"
-msgstr ""
+msgstr "/web/binary/upload_attachment"
 
 #. module: mail
 #: model:ir.model,name:mail.model_mail_thread
@@ -688,7 +690,7 @@ msgstr "关注资源的模型"
 #: code:addons/mail/static/src/xml/mail.xml:261
 #, python-format
 msgid "like"
-msgstr "同意"
+msgstr "+1"
 
 #. module: mail
 #: view:mail.compose.message:0
@@ -711,7 +713,7 @@ msgstr "联系人"
 #. module: mail
 #: model:ir.model,name:mail.model_ir_ui_menu
 msgid "ir.ui.menu"
-msgstr ""
+msgstr "ir.ui.menu"
 
 #. module: mail
 #: view:mail.message:0
@@ -736,7 +738,7 @@ msgstr "下列合作伙伴选择用email 接收但没有关联的email地址："
 msgid ""
 "A Python dictionary that will be evaluated to provide default values when "
 "creating new records for this alias."
-msgstr ""
+msgstr "当创建别名的新记录时，一个Python字典被提供作为默认值"
 
 #. module: mail
 #: help:mail.compose.message,notified_partner_ids:0
@@ -766,6 +768,12 @@ msgid ""
 "                </p>\n"
 "            "
 msgstr ""
+"<p>\n"
+"                    <b>幸运！</b>你的收件箱是空的.\n"
+"                </p><p>\n"
+"                    你的收件箱包含了你的私人消息或者发给你的邮件 ，包括你关注的文档或者个人的信息。\n"
+"                </p>\n"
+"            "
 
 #. module: mail
 #: field:mail.mail,notification:0
@@ -998,7 +1006,7 @@ msgid ""
 "Optional ID of a thread (record) to which all incoming messages will be "
 "attached, even if they did not reply to it. If set, this will disable the "
 "creation of new records completely."
-msgstr ""
+msgstr "所有的来邮都将附上一条线索（记录）选配的ID，即使它们不曾回复过它。如果设置了，这个将完全阻止新记录的创建。"
 
 #. module: mail
 #: help:mail.message.subtype,name:0
@@ -1009,6 +1017,7 @@ msgid ""
 "subtypes allow to precisely tune the notifications the user want to receive "
 "on its wall."
 msgstr ""
+"消息子类型给了消息更精确的类型，特别是系统通知。例如：关于新记录建立的通知，或者流程中阶段被改变。消息子类型允许你精确地调整用户想要收到的消息。"
 
 #. module: mail
 #: sql_constraint:res.groups:0
@@ -1170,6 +1179,8 @@ msgid ""
 "the sender (From) address, or will use the Administrator account if no "
 "system user is found for that address."
 msgstr ""
+"记录所有者是根据在此别名上接受邮件来创立的。\r\n"
+"若此字段无设置，系统将依据收发地址来寻找正确的所有者，如果在那个地址上没有系统使用者可以找到的话，将使用admin账户。"
 
 #. module: mail
 #: model:ir.actions.client,help:mail.action_mail_star_feeds
@@ -1184,6 +1195,13 @@ msgid ""
 "                </p>\n"
 "            "
 msgstr ""
+"<p>\n"
+"                    <b>非待办事项!</b>\n"
+"                </p><p>\n"
+"                    当你处理收件箱里的信息时，你能标记一部分为  <i>待办事项</i>. \n"
+"                    从这个菜单，你能处理你所有的待办事项。\n"
+"                </p>\n"
+"            "
 
 #. module: mail
 #: view:mail.favorite:0
@@ -1313,7 +1331,7 @@ msgstr "收件人"
 #. module: mail
 #: model:ir.model,name:mail.model_mail_message_subtype
 msgid "mail_message_subtype"
-msgstr ""
+msgstr "mail_message_subtype"
 
 #. module: mail
 #: selection:mail.group,public:0
@@ -1386,6 +1404,9 @@ msgid ""
 "\n"
 "(Document type: %s, Operation: %s)"
 msgstr ""
+"由于安全限制，请求的操作不能被完成。请联系你的系统管理员。\n"
+"\n"
+"(单据类型: %s, 操作: %s)"
 
 #. module: mail
 #: selection:res.partner,notification_email_send:0
@@ -1412,7 +1433,7 @@ msgstr "合作伙伴邮件地址没找到"
 #: view:mail.mail:0
 #: selection:mail.mail,state:0
 msgid "Sent"
-msgstr "发送"
+msgstr "已发送"
 
 #. module: mail
 #: model:ir.actions.act_window,name:mail.action_view_favorites
@@ -1576,7 +1597,7 @@ msgstr "错误，您不能创建循环引用的会员用户"
 msgid ""
 "Author of the message. If not set, email_from may hold an email address that "
 "did not match any partner."
-msgstr ""
+msgstr "消息的作者。如果没设置，email_from 可能保存一个不匹配任何合作伙伴的 email地址，"
 
 #. module: mail
 #: help:mail.mail,email_cc:0

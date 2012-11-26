@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-11-24 02:52+0000\n"
-"PO-Revision-Date: 2012-11-24 18:48+0000\n"
+"PO-Revision-Date: 2012-11-25 13:43+0000\n"
 "Last-Translator: Erwin van der Ploeg (Endian Solutions) <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-11-25 05:54+0000\n"
+"X-Launchpad-Export-Date: 2012-11-26 04:41+0000\n"
 "X-Generator: Launchpad (build 16293)\n"
 
 #, python-format
@@ -384,7 +384,7 @@ msgstr "(Rekening) Aflettering ongedaan maken"
 #. module: account
 #: field:account.config.settings,module_account_budget:0
 msgid "Budget management"
-msgstr ""
+msgstr "Budget management"
 
 #. module: account
 #: view:product.template:0
@@ -405,7 +405,7 @@ msgstr ""
 #. module: account
 #: field:account.config.settings,group_multi_currency:0
 msgid "Allow multi currencies"
-msgstr ""
+msgstr "Toestaan meerdere valuta"
 
 #. module: account
 #: code:addons/account/account_invoice.py:73
@@ -451,7 +451,7 @@ msgstr ""
 #: view:account.invoice.report:0
 #: field:account.invoice.report,user_id:0
 msgid "Salesperson"
-msgstr ""
+msgstr "Verkoper"
 
 #. module: account
 #: model:ir.model,name:account.model_account_tax_template
@@ -545,7 +545,7 @@ msgstr "Het bedrag uitgedrukt in een optionele andere valuta."
 #. module: account
 #: view:account.journal:0
 msgid "Available Coins"
-msgstr ""
+msgstr "Beschikbare munten"
 
 #. module: account
 #: field:accounting.report,enable_filter:0
@@ -674,7 +674,7 @@ msgstr "De accountant bevestigt het afschrift."
 #: code:addons/account/static/src/xml/account_move_reconciliation.xml:31
 #, python-format
 msgid "Nothing to reconcile"
-msgstr ""
+msgstr "Niets af te letteren"
 
 #. module: account
 #: field:account.config.settings,decimal_precision:0
@@ -970,7 +970,7 @@ msgstr "Rekening kostenplaatsdagboek"
 #. module: account
 #: view:account.invoice:0
 msgid "Send by Email"
-msgstr ""
+msgstr "Verzenden via e-mail"
 
 #. module: account
 #: help:account.central.journal,amount_currency:0
@@ -995,7 +995,7 @@ msgstr ""
 #. module: account
 #: model:mail.message.subtype,name:account.mt_invoice_new
 msgid "created"
-msgstr ""
+msgstr "aangemaakt"
 
 #. module: account
 #: selection:account.entries.report,month:0
@@ -1059,7 +1059,7 @@ msgstr "Tot"
 #. module: account
 #: field:account.config.settings,purchase_journal_id:0
 msgid "Purchase journal"
-msgstr ""
+msgstr "Inkoopboek"
 
 #. module: account
 #: code:addons/account/account.py:1374
@@ -1174,7 +1174,7 @@ msgstr "Code"
 #. module: account
 #: view:account.config.settings:0
 msgid "Features"
-msgstr ""
+msgstr "Opties"
 
 #. module: account
 #: code:addons/account/account.py:2323
@@ -1263,7 +1263,7 @@ msgstr ""
 #. module: account
 #: view:account.invoice:0
 msgid "Refund "
-msgstr ""
+msgstr "Crediteer "
 
 #. module: account
 #: help:account.config.settings,company_footer:0
@@ -1290,7 +1290,7 @@ msgstr "Kasregisters"
 #. module: account
 #: field:account.config.settings,sale_refund_journal_id:0
 msgid "Sale refund journal"
-msgstr ""
+msgstr "Credit verkoopboek"
 
 #. module: account
 #: model:ir.actions.act_window,help:account.action_view_bank_statement_tree
@@ -1326,7 +1326,7 @@ msgstr "Begin van de periode"
 #. module: account
 #: view:account.tax:0
 msgid "Refunds"
-msgstr ""
+msgstr "Credits"
 
 #. module: account
 #: model:process.transition,name:account.process_transition_confirmstatementfromdraft0
@@ -1396,7 +1396,7 @@ msgstr "Uitgaande Valutakoers"
 #. module: account
 #: field:account.config.settings,chart_template_id:0
 msgid "Template"
-msgstr ""
+msgstr "Sjabloon"
 
 #. module: account
 #: selection:account.analytic.journal,type:0
@@ -1566,12 +1566,12 @@ msgstr "Opties overzicht"
 #. module: account
 #: field:account.fiscalyear.close.state,fy_id:0
 msgid "Fiscal Year to Close"
-msgstr ""
+msgstr "Af te sluiten boekjaar"
 
 #. module: account
 #: field:account.config.settings,sale_sequence_prefix:0
 msgid "Invoice sequence"
-msgstr ""
+msgstr "Factuurnummer reeks"
 
 #. module: account
 #: model:ir.model,name:account.model_account_entries_report
@@ -1594,7 +1594,7 @@ msgstr ""
 #. module: account
 #: field:account.invoice.report,state:0
 msgid "Invoice Status"
-msgstr ""
+msgstr "Factuurstatus"
 
 #. module: account
 #: view:account.invoice.report:0
@@ -1679,7 +1679,7 @@ msgstr "Sla 'Concept' status over voor handmatige boekingen"
 #: code:addons/account/wizard/account_report_common.py:159
 #, python-format
 msgid "Not implemented."
-msgstr ""
+msgstr "Niet geïmplementeerd."
 
 #. module: account
 #: view:account.invoice.refund:0
@@ -1689,7 +1689,7 @@ msgstr "Creditfactuur"
 #. module: account
 #: view:account.config.settings:0
 msgid "eInvoicing & Payments"
-msgstr ""
+msgstr "Bonnen & Betalingen"
 
 #. module: account
 #: view:account.analytic.cost.ledger.journal.report:0
@@ -1771,7 +1771,7 @@ msgstr "Onbelast"
 #. module: account
 #: view:account.journal:0
 msgid "Advanced Settings"
-msgstr ""
+msgstr "Geavanceerde instellingen"
 
 #. module: account
 #: view:account.bank.statement:0
@@ -1870,7 +1870,7 @@ msgstr "Boekingsjaar-reeks"
 #. module: account
 #: field:account.config.settings,group_analytic_accounting:0
 msgid "Analytic accounting"
-msgstr ""
+msgstr "Kostenplaatsen"
 
 #. module: account
 #: report:account.overdue:0
@@ -2055,7 +2055,7 @@ msgstr ""
 #. module: account
 #: model:account.journal.view,name:account.account_journal_bank_view
 msgid "Bank/Cash Journal View"
-msgstr ""
+msgstr "Bank/kas dagboekweergave"
 
 #. module: account
 #: report:account.journal.period.print.sale.purchase:0
@@ -2090,7 +2090,7 @@ msgstr ""
 #. module: account
 #: view:account.period:0
 msgid "Duration"
-msgstr ""
+msgstr "Tijdsduur"
 
 #. module: account
 #: view:account.bank.statement:0
@@ -2160,7 +2160,7 @@ msgstr "Bedrag credit"
 #: field:account.bank.statement,message_ids:0
 #: field:account.invoice,message_ids:0
 msgid "Messages"
-msgstr ""
+msgstr "Berichten"
 
 #. module: account
 #: view:account.vat.declaration:0
@@ -2258,7 +2258,7 @@ msgstr "Factuuranalyse"
 #. module: account
 #: model:ir.model,name:account.model_mail_compose_message
 msgid "Email composition wizard"
-msgstr ""
+msgstr "E-mail samenstellen wizard"
 
 #. module: account
 #: model:ir.model,name:account.model_account_period_close
@@ -2304,7 +2304,7 @@ msgstr ""
 #. module: account
 #: field:account.config.settings,currency_id:0
 msgid "Default company currency"
-msgstr ""
+msgstr "Standaard bedrijfsvaluta"
 
 #. module: account
 #: field:account.invoice,move_id:0
@@ -2358,7 +2358,7 @@ msgstr "Geldig"
 #: field:account.bank.statement,message_follower_ids:0
 #: field:account.invoice,message_follower_ids:0
 msgid "Followers"
-msgstr ""
+msgstr "Volgers"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_account_print_journal
@@ -2379,7 +2379,7 @@ msgstr "Grootboek meerjarige proefbalans"
 #. module: account
 #: view:account.fiscalyear.close.state:0
 msgid "Close Fiscal Year"
-msgstr ""
+msgstr "Afsluiten boekjaar"
 
 #. module: account
 #: model:process.node,note:account.process_node_reconciliation0
@@ -2407,7 +2407,7 @@ msgstr ""
 #. module: account
 #: field:account.invoice.report,uom_name:0
 msgid "Reference Unit of Measure"
-msgstr ""
+msgstr "Maateenheid referentie"
 
 #. module: account
 #: help:account.journal,allow_date:0
@@ -2423,12 +2423,12 @@ msgstr ""
 #: code:addons/account/static/src/xml/account_move_reconciliation.xml:8
 #, python-format
 msgid "Good job!"
-msgstr ""
+msgstr "Goed gedaan!"
 
 #. module: account
 #: field:account.config.settings,module_account_asset:0
 msgid "Assets management"
-msgstr ""
+msgstr "Assets management"
 
 #. module: account
 #: view:account.account:0

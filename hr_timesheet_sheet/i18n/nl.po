@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-11-24 02:51+0000\n"
-"PO-Revision-Date: 2012-11-24 21:55+0000\n"
-"Last-Translator: Erwin van der Ploeg (Endian Solutions) <Unknown>\n"
+"PO-Revision-Date: 2012-11-25 22:01+0000\n"
+"Last-Translator: Mario Gielissen <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-11-25 06:09+0000\n"
+"X-Launchpad-Export-Date: 2012-11-26 04:42+0000\n"
 "X-Generator: Launchpad (build 16293)\n"
 
 #. module: hr_timesheet_sheet
@@ -28,6 +28,7 @@ msgstr "Formulier"
 #: constraint:hr.attendance:0
 msgid "Error ! Sign in (resp. Sign out) must follow Sign out (resp. Sign in)"
 msgstr ""
+"Fout! Login (resp. Log uit) moet volgen na uitloggen (resp. Inloggen)"
 
 #. module: hr_timesheet_sheet
 #: field:hr.timesheet.report,quantity:0
@@ -150,7 +151,7 @@ msgstr "Gebaseerd op de urenstaat"
 #: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:384
 #, python-format
 msgid "You cannot modify an entry in a confirmed timesheet."
-msgstr ""
+msgstr "U kunt geen wijziging doen in een geaccordeerde tijdsregistratie."
 
 #. module: hr_timesheet_sheet
 #: view:hr.timesheet.report:0
@@ -199,7 +200,7 @@ msgstr "Urenstaking activiteiten"
 #: code:addons/hr_timesheet_sheet/wizard/hr_timesheet_current.py:38
 #, python-format
 msgid "Please create an employee and associate it with this user."
-msgstr ""
+msgstr "Maak een personeelslid aan en koppel deze aan de gebruiker."
 
 #. module: hr_timesheet_sheet
 #: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:388
@@ -448,7 +449,7 @@ msgstr "Juli"
 #. module: hr_timesheet_sheet
 #: field:hr.config.settings,timesheet_range:0
 msgid "Validate timesheets every"
-msgstr ""
+msgstr "Valideer tijdsregistratie ieder"
 
 #. module: hr_timesheet_sheet
 #: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:73
@@ -750,7 +751,7 @@ msgstr "Urenstaat bereik"
 #: field:hr_timesheet_sheet.sheet,message_comment_ids:0
 #: help:hr_timesheet_sheet.sheet,message_comment_ids:0
 msgid "Comments and emails"
-msgstr ""
+msgstr "Opmerkingen en e-mails."
 
 #. module: hr_timesheet_sheet
 #: selection:hr.timesheet.report,month:0
@@ -836,6 +837,7 @@ msgstr "Rekening zoeken"
 #, python-format
 msgid "You cannot modify an entry in a confirmed timesheet"
 msgstr ""
+"U kunt geen wijziging aanbrengen in een geaccordeerde urenregistratie"
 
 #. module: hr_timesheet_sheet
 #: help:res.company,timesheet_max_difference:0
@@ -1110,7 +1112,7 @@ msgstr "Factuur tarief"
 #: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:408
 #, python-format
 msgid "User Error!"
-msgstr ""
+msgstr "Gebruikersfout!"
 
 #. module: hr_timesheet_sheet
 #: view:hr_timesheet_sheet.sheet.day:0
@@ -1125,7 +1127,7 @@ msgstr "Goedkeuren"
 #. module: hr_timesheet_sheet
 #: help:hr_timesheet_sheet.sheet,message_ids:0
 msgid "Messages and communication history"
-msgstr ""
+msgstr "Berichten en communicatie historie"
 
 #. module: hr_timesheet_sheet
 #: field:hr_timesheet_sheet.sheet,account_ids:0
@@ -1147,7 +1149,7 @@ msgstr "#Totaal aanwezigheid"
 #. module: hr_timesheet_sheet
 #: view:hr.timesheet.current.open:0
 msgid "or"
-msgstr ""
+msgstr "of"
 
 #. module: hr_timesheet_sheet
 #: field:hr.timesheet.report,cost:0
