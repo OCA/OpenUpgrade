@@ -1033,7 +1033,8 @@ instance.web.FormView = instance.web.View.extend(instance.web.form.FieldManagerM
                         || field.get("readonly")
                         || field.field.type === 'one2many'
                         || field.field.type === 'many2many'
-                        || field.field.type === 'binary') {
+                        || field.field.type === 'binary'
+                        || field.password) {
                     return false;
                 }
 
@@ -1681,11 +1682,11 @@ instance.web.form.compute_domain = function(expr, fields) {
         switch (op.toLowerCase()) {
             case '=':
             case '==':
-                stack.push(field_value == val);
+                stack.push(_.isEqual(field_value, val));
                 break;
             case '!=':
             case '<>':
-                stack.push(field_value != val);
+                stack.push(!_.isEqual(field_value, val));
                 break;
             case '<':
                 stack.push(field_value < val);
@@ -2246,7 +2247,9 @@ instance.web.form.FieldChar = instance.web.form.AbstractField.extend(instance.we
         var self = this;
         var $input = this.$el.find('input');
         $input.change(function() {
-            self.internal_set_value(self.parse_value($input.val()));
+            if(self.is_syntax_valid()){
+                self.internal_set_value(self.parse_value($input.val()));
+            }
         });
         this.setupFocus($input);
     },
@@ -4238,16 +4241,14 @@ instance.web.form.FieldMany2ManyKanban = instance.web.form.AbstractField.extend(
         var self = this;
 
         self.load_view();
-        this.is_loaded.done(function() {
-            self.on("change:effective_readonly", self, function() {
-                self.is_loaded = self.is_loaded.then(function() {
-                    self.kanban_view.destroy();
-                    return $.when(self.load_view()).done(function() {
-                        self.render_value();
-                    });
+        self.on("change:effective_readonly", self, function() {
+            self.is_loaded = self.is_loaded.then(function() {
+                self.kanban_view.destroy();
+                return $.when(self.load_view()).done(function() {
+                    self.render_value();
                 });
             });
-        })
+        });
     },
     set_value: function(value_) {
         value_ = value_ || [];
