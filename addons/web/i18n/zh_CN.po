@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openerp-web\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-11-30 18:13+0000\n"
-"PO-Revision-Date: 2012-11-29 15:41+0000\n"
+"PO-Revision-Date: 2012-12-01 15:05+0000\n"
 "Last-Translator: ccdos <ccdos@163.com>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-01 05:21+0000\n"
+"X-Launchpad-Export-Date: 2012-12-02 04:44+0000\n"
 "X-Generator: Launchpad (build 16319)\n"
 
 #. module: web
@@ -59,7 +59,7 @@ msgstr "小于等于"
 #: code:addons/web/static/src/js/chrome.js:393
 #, python-format
 msgid "Please enter your previous password"
-msgstr ""
+msgstr "请输入你以前的密码："
 
 #. module: web
 #. openerp-web
@@ -82,7 +82,7 @@ msgstr "更改主控密码"
 #: code:addons/web/static/src/js/chrome.js:491
 #, python-format
 msgid "Do you really want to delete the database: %s ?"
-msgstr ""
+msgstr "你确信要删除数据库: %s ?"
 
 #. module: web
 #. openerp-web
@@ -96,7 +96,7 @@ msgstr "搜索 %(field)s ： %(value)s"
 #: code:addons/web/static/src/js/chrome.js:537
 #, python-format
 msgid "Access Denied"
-msgstr ""
+msgstr "访问被拒绝"
 
 #. module: web
 #. openerp-web
@@ -120,7 +120,7 @@ msgstr "备份数据库"
 #: code:addons/web/static/src/js/dates.js:53
 #, python-format
 msgid "'%s' is not a valid date"
-msgstr ""
+msgstr "'%s' 格式错，不是一个有效的日期"
 
 #. module: web
 #. openerp-web
@@ -147,7 +147,7 @@ msgstr "文件"
 #: code:addons/web/controllers/main.py:842
 #, python-format
 msgid "You cannot leave any password empty."
-msgstr ""
+msgstr "你不能让任何密码为空。"
 
 #. module: web
 #. openerp-web
@@ -206,7 +206,7 @@ msgstr "多对一搜索字段目前不支持多个默认值"
 #: code:addons/web/static/src/js/view_form.js:1242
 #, python-format
 msgid "Widget type '%s' is not implemented"
-msgstr ""
+msgstr "Widget 类型 '%s' 尚未实现"
 
 #. module: web
 #. openerp-web
@@ -235,7 +235,7 @@ msgstr "无字符串"
 #: code:addons/web/static/src/js/formats.js:282
 #, python-format
 msgid "'%s' is not a correct time"
-msgstr ""
+msgstr "'%s' 是个正确的时间"
 
 #. module: web
 #. openerp-web
@@ -270,7 +270,7 @@ msgstr "未定义"
 #: code:addons/web/static/src/js/view_form.js:4831
 #, python-format
 msgid "File Upload"
-msgstr ""
+msgstr "文件上传"
 
 #. module: web
 #. openerp-web
@@ -334,7 +334,7 @@ msgstr "更改密码"
 #: code:addons/web/static/src/js/view_form.js:3382
 #, python-format
 msgid "View type '%s' is not supported in One2Many."
-msgstr ""
+msgstr "视图类型 '%s'在 One2Many 中不支持。"
 
 #. module: web
 #. openerp-web
@@ -349,7 +349,7 @@ msgstr "下载"
 #: code:addons/web/static/src/js/formats.js:266
 #, python-format
 msgid "'%s' is not a correct datetime"
-msgstr ""
+msgstr "'%s' 格式错误，不是一个正确的日期时间"
 
 #. module: web
 #. openerp-web
@@ -377,13 +377,13 @@ msgstr "下拉列表："
 #: code:addons/web/static/src/js/view_form.js:869
 #, python-format
 msgid "The following fields are invalid:"
-msgstr ""
+msgstr "下列字段无效："
 
 #. module: web
 #: code:addons/web/controllers/main.py:863
 #, python-format
 msgid "Languages"
-msgstr ""
+msgstr "语言"
 
 #. module: web
 #. openerp-web
@@ -404,7 +404,7 @@ msgstr "导入"
 #: code:addons/web/static/src/js/chrome.js:543
 #, python-format
 msgid "Could not restore the database"
-msgstr ""
+msgstr "不能恢复数据库"
 
 #. module: web
 #. openerp-web
@@ -519,7 +519,7 @@ msgstr "有不支持的操作符 %s ，过滤条件 %s 有误"
 #: code:addons/web/static/src/js/formats.js:242
 #, python-format
 msgid "'%s' is not a correct float"
-msgstr ""
+msgstr "'%s' 不是一个正确的实数格式"
 
 #. module: web
 #. openerp-web
@@ -533,7 +533,7 @@ msgstr "已还原"
 #: code:addons/web/static/src/js/view_list.js:392
 #, python-format
 msgid "%d-%d of %d"
-msgstr ""
+msgstr "(%d-%d) 总 %d"
 
 #. module: web
 #. openerp-web
@@ -554,7 +554,7 @@ msgstr ""
 #: code:addons/web/static/src/js/view_form.js:2345
 #, python-format
 msgid "Resource error"
-msgstr ""
+msgstr "资源错误"
 
 #. module: web
 #. openerp-web
@@ -575,7 +575,7 @@ msgstr "打印工作流"
 #: code:addons/web/static/src/js/chrome.js:396
 #, python-format
 msgid "Please confirm your new password"
-msgstr ""
+msgstr "请确认你的新密码"
 
 #. module: web
 #. openerp-web
@@ -668,14 +668,14 @@ msgstr "动作标识："
 #: code:addons/web/static/src/xml/base.xml:453
 #, python-format
 msgid "Your user's preference timezone does not match your browser timezone:"
-msgstr ""
+msgstr "用户选项中的时区设置跟浏览器的 时区不匹配"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/view_form.js:1238
 #, python-format
 msgid "Field '%s' specified in view could not be found."
-msgstr ""
+msgstr "视图中指定的字段'%s' 找不到。"
 
 #. module: web
 #. openerp-web
@@ -703,7 +703,7 @@ msgstr "Bytes,Kb,Mb,Gb,Tb,Pb,Eb,Zb,Yb"
 #: code:addons/web/static/src/js/chrome.js:481
 #, python-format
 msgid "The database has been duplicated."
-msgstr ""
+msgstr "数据库已经被复制"
 
 #. module: web
 #. openerp-web
@@ -794,7 +794,7 @@ msgstr "结束符："
 #: code:addons/web/static/src/xml/base.xml:458
 #, python-format
 msgid "Browser's timezone"
-msgstr ""
+msgstr "浏览器的时区"
 
 #. module: web
 #. openerp-web
@@ -839,7 +839,7 @@ msgstr "OpenERP.com"
 #: code:addons/web/static/src/js/view_form.js:2316
 #, python-format
 msgid "Can't send email to invalid e-mail address"
-msgstr ""
+msgstr "不能发送email到错误的email第hi"
 
 #. module: web
 #. openerp-web
@@ -860,7 +860,7 @@ msgstr "首选项"
 #: code:addons/web/static/src/js/view_form.js:434
 #, python-format
 msgid "Wrong on change format: %s"
-msgstr ""
+msgstr "改变格式错误：%s"
 
 #. module: web
 #. openerp-web
@@ -875,7 +875,7 @@ msgstr "删除数据库"
 #: code:addons/web/static/src/xml/base.xml:462
 #, python-format
 msgid "Click here to change your user's timezone."
-msgstr ""
+msgstr "单击以改变用户的时区设置"
 
 #. module: web
 #. openerp-web
@@ -921,21 +921,21 @@ msgstr "用户名"
 #: code:addons/web/static/src/js/chrome.js:481
 #, python-format
 msgid "Duplicating database"
-msgstr ""
+msgstr "复制数据库"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/chrome.js:563
 #, python-format
 msgid "Password has been changed successfully"
-msgstr ""
+msgstr "密码被成功修改"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/view_list_editable.js:781
 #, python-format
 msgid "The form's data can not be discarded"
-msgstr ""
+msgstr "这个表单的数据不能被作废。"
 
 #. module: web
 #. openerp-web
@@ -970,6 +970,10 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"本地求值失败\n"
+"%s\n"
+"\n"
+"%s"
 
 #. module: web
 #. openerp-web
@@ -1004,7 +1008,7 @@ msgstr "创建日期："
 #: code:addons/web/controllers/main.py:851
 #, python-format
 msgid "Error, password not changed !"
-msgstr ""
+msgstr "错误，密码未改变！"
 
 #. module: web
 #. openerp-web
@@ -1026,7 +1030,7 @@ msgstr "/web/binary/upload_attachment"
 #: code:addons/web/static/src/js/chrome.js:563
 #, python-format
 msgid "Changed Password"
-msgstr ""
+msgstr "已更改密码"
 
 #. module: web
 #. openerp-web
@@ -1060,14 +1064,14 @@ msgstr "备份"
 #: code:addons/web/static/src/js/dates.js:80
 #, python-format
 msgid "'%s' is not a valid time"
-msgstr ""
+msgstr "'%s'格式错，不是正确的时间"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/formats.js:274
 #, python-format
 msgid "'%s' is not a correct date"
-msgstr ""
+msgstr "'%s'格式错，不是正确的日期"
 
 #. module: web
 #. openerp-web
@@ -1121,7 +1125,7 @@ msgstr "最后修改者："
 #: code:addons/web/static/src/xml/base.xml:466
 #, python-format
 msgid "Timezone mismatch"
-msgstr ""
+msgstr "时区不一致"
 
 #. module: web
 #. openerp-web
@@ -1188,7 +1192,7 @@ msgstr "添加高级过滤器"
 #: code:addons/web/controllers/main.py:844
 #, python-format
 msgid "The new password and its confirmation must be identical."
-msgstr ""
+msgstr "新密码与再次输入的密码必须相同。"
 
 #. module: web
 #. openerp-web
@@ -1203,7 +1207,7 @@ msgstr "恢复数据库"
 #: code:addons/web/static/src/js/chrome.js:645
 #, python-format
 msgid "Login"
-msgstr ""
+msgstr "登录"
 
 #. module: web
 #. openerp-web
@@ -1246,7 +1250,7 @@ msgstr "按 %s 分组"
 #: code:addons/web/static/src/js/view_form.js:151
 #, python-format
 msgid "No data provided."
-msgstr ""
+msgstr "没有数据被提供"
 
 #. module: web
 #. openerp-web
@@ -1317,7 +1321,7 @@ msgstr "%(page)d/%(page_count)d"
 #: code:addons/web/static/src/js/chrome.js:397
 #, python-format
 msgid "The confirmation does not match the password"
-msgstr ""
+msgstr "确认的密码不匹配"
 
 #. module: web
 #. openerp-web
@@ -1354,7 +1358,7 @@ msgstr "如果 CSV 文件包含多标题行，那么在导入期间将跳过多�
 #: code:addons/web/static/src/xml/base.xml:393
 #, python-format
 msgid "99+"
-msgstr ""
+msgstr "99+"
 
 #. module: web
 #. openerp-web
@@ -1368,7 +1372,7 @@ msgstr "1. 导入 .CSV 文件"
 #: code:addons/web/static/src/js/chrome.js:645
 #, python-format
 msgid "No database selected !"
-msgstr ""
+msgstr "没有选择数据库"
 
 #. module: web
 #. openerp-web
@@ -1406,7 +1410,7 @@ msgstr "等于"
 #: code:addons/web/static/src/js/views.js:1455
 #, python-format
 msgid "Could not serialize XML"
-msgstr ""
+msgstr "不能序列化 XML"
 
 #. module: web
 #. openerp-web
@@ -1510,14 +1514,14 @@ msgstr "树形"
 #: code:addons/web/controllers/main.py:766
 #, python-format
 msgid "Could not drop database !"
-msgstr ""
+msgstr "不能删除数据库！"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/formats.js:227
 #, python-format
 msgid "'%s' is not a correct integer"
-msgstr ""
+msgstr "'%s' 不是正确的证书格式"
 
 #. module: web
 #. openerp-web
@@ -1538,7 +1542,7 @@ msgstr "发现未知字段 %s ，过滤条件 %s 有误"
 #: code:addons/web/static/src/js/views.js:1421
 #, python-format
 msgid "Node [%s] is not a JSONified XML node"
-msgstr ""
+msgstr "节点 [%s] 不是JSON化的XML节点"
 
 #. module: web
 #. openerp-web
@@ -1552,7 +1556,7 @@ msgstr "高级搜索..."
 #: code:addons/web/static/src/js/chrome.js:499
 #, python-format
 msgid "Dropping database"
-msgstr ""
+msgstr "删除数据库"
 
 #. module: web
 #. openerp-web
@@ -1575,7 +1579,7 @@ msgstr "是"
 #: code:addons/web/static/src/js/view_form.js:4831
 #, python-format
 msgid "There was a problem while uploading your file"
-msgstr ""
+msgstr "上传文件时发生了问题"
 
 #. module: web
 #. openerp-web
@@ -1617,7 +1621,7 @@ msgstr "%d 年前"
 #: code:addons/web/static/src/js/view_list.js:1019
 #, python-format
 msgid "Unknown m2m command %s"
-msgstr ""
+msgstr "未知的 m2m命令%s"
 
 #. module: web
 #. openerp-web
@@ -1640,14 +1644,14 @@ msgstr "新数据库名称："
 #: code:addons/web/static/src/js/chrome.js:394
 #, python-format
 msgid "Please enter your new password"
-msgstr ""
+msgstr "请输入您的新密码"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/views.js:1463
 #, python-format
 msgid "Could not parse string to xml"
-msgstr ""
+msgstr "不能解析字符串为xml"
 
 #. module: web
 #. openerp-web
@@ -1696,7 +1700,7 @@ msgstr "版权所有 © 2004-TODAY OpenERP SA。保留所有权利。"
 #: code:addons/web/static/src/js/view_form.js:2345
 #, python-format
 msgid "This resource is empty"
-msgstr ""
+msgstr "资源是空的"
 
 #. module: web
 #. openerp-web
@@ -1754,7 +1758,7 @@ msgstr "查看字段"
 #: code:addons/web/static/src/xml/base.xml:330
 #, python-format
 msgid "Confirm New Password:"
-msgstr ""
+msgstr "确认新密码："
 
 #. module: web
 #. openerp-web
@@ -1922,7 +1926,7 @@ msgstr "类型："
 #: code:addons/web/static/src/js/chrome.js:538
 #, python-format
 msgid "Incorrect super-administrator password"
-msgstr ""
+msgstr "错误的管理员密码"
 
 #. module: web
 #. openerp-web
@@ -2028,7 +2032,7 @@ msgstr "是否载入演示数据："
 #: code:addons/web/static/src/js/dates.js:26
 #, python-format
 msgid "'%s' is not a valid datetime"
-msgstr ""
+msgstr "'%s' 格式错，不是一个正确的日期时间"
 
 #. module: web
 #. openerp-web
@@ -2115,7 +2119,7 @@ msgstr "下载“%s”"
 #: code:addons/web/static/src/js/view_form.js:324
 #, python-format
 msgid "New"
-msgstr ""
+msgstr "新建"
 
 #. module: web
 #. openerp-web
@@ -2195,7 +2199,7 @@ msgstr "关于 OpenERP"
 #: code:addons/web/static/src/js/formats.js:297
 #, python-format
 msgid "'%s' is not a correct date, datetime nor time"
-msgstr ""
+msgstr "'%s'格式错， 不是正确的日期，日期时间，也不是时间"
 
 #. module: web
 #: code:addons/web/controllers/main.py:1306
@@ -2262,7 +2266,7 @@ msgstr "否"
 #: code:addons/web/static/src/js/formats.js:309
 #, python-format
 msgid "'%s' is not convertible to date, datetime nor time"
-msgstr ""
+msgstr "'%s' 无法转换为日期，日期时间 和 时间"
 
 #. module: web
 #. openerp-web
@@ -2336,7 +2340,7 @@ msgstr "字段为空，没有需要保存的值！"
 #: code:addons/web/static/src/js/view_list.js:1327
 #, python-format
 msgid "%s (%d)"
-msgstr ""
+msgstr "%s (%d)"
 
 #. module: web
 #. openerp-web
@@ -2413,14 +2417,14 @@ msgstr "字段："
 #: code:addons/web/static/src/js/chrome.js:499
 #, python-format
 msgid "The database %s has been dropped"
-msgstr ""
+msgstr "数据库 %s 被删除"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:456
 #, python-format
 msgid "User's timezone"
-msgstr ""
+msgstr "用户的时区"
 
 #. module: web
 #. openerp-web
@@ -2449,7 +2453,7 @@ msgstr "特殊："
 #, python-format
 msgid ""
 "The old password you provided is incorrect, your password was not changed."
-msgstr ""
+msgstr "你提供的原密码是错误的，密码没有改变"
 
 #. module: web
 #. openerp-web
