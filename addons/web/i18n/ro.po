@@ -8,21 +8,21 @@ msgstr ""
 "Project-Id-Version: openerp-web\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-11-30 18:13+0000\n"
-"PO-Revision-Date: 2012-12-09 17:26+0000\n"
+"PO-Revision-Date: 2012-12-15 21:55+0000\n"
 "Last-Translator: Fekete Mihai <mihai@erpsystems.ro>\n"
 "Language-Team: Romanian <ro@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-10 04:44+0000\n"
-"X-Generator: Launchpad (build 16341)\n"
+"X-Launchpad-Export-Date: 2012-12-16 05:07+0000\n"
+"X-Generator: Launchpad (build 16372)\n"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:133
 #, python-format
 msgid "Default language:"
-msgstr "Limba implicită:"
+msgstr "Limba implicita:"
 
 #. module: web
 #. openerp-web
@@ -36,14 +36,14 @@ msgstr "acum %d minute"
 #: code:addons/web/static/src/js/coresetup.js:621
 #, python-format
 msgid "Still loading...<br />Please be patient."
-msgstr ""
+msgstr "Inca se incarca...<br />Va rugam sa aveti rabdare."
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/search.js:1834
 #, python-format
 msgid "%(field)s %(operator)s \"%(value)s\""
-msgstr ""
+msgstr "%(field)s %(operator)s \"%(value)s\""
 
 #. module: web
 #. openerp-web
@@ -59,7 +59,7 @@ msgstr "mai mic sau egal cu"
 #: code:addons/web/static/src/js/chrome.js:393
 #, python-format
 msgid "Please enter your previous password"
-msgstr ""
+msgstr "Va rugam sa introduceti parola anterioara"
 
 #. module: web
 #. openerp-web
@@ -68,42 +68,42 @@ msgstr ""
 #: code:addons/web/static/src/xml/base.xml:282
 #, python-format
 msgid "Master password:"
-msgstr "Parola administrator:"
+msgstr "Parola principala:"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:274
 #, python-format
 msgid "Change Master Password"
-msgstr ""
+msgstr "Schimba Parola Principala"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/chrome.js:491
 #, python-format
 msgid "Do you really want to delete the database: %s ?"
-msgstr ""
+msgstr "Doriti intr-adevar sa stergeti baza de date: %s?"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/search.js:1400
 #, python-format
 msgid "Search %(field)s at: %(value)s"
-msgstr ""
+msgstr "Cauta %(field)s la: %(value)s"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/chrome.js:537
 #, python-format
 msgid "Access Denied"
-msgstr ""
+msgstr "Acces Interzis"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/coresetup.js:594
 #, python-format
 msgid "about an hour ago"
-msgstr ""
+msgstr "aproximativ o ora in urma"
 
 #. module: web
 #. openerp-web
@@ -112,7 +112,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/base.xml:216
 #, python-format
 msgid "Backup Database"
-msgstr ""
+msgstr "Copie de rezerva Baza de date"
 
 #. module: web
 #. openerp-web
@@ -120,7 +120,7 @@ msgstr ""
 #: code:addons/web/static/src/js/dates.js:53
 #, python-format
 msgid "'%s' is not a valid date"
-msgstr ""
+msgstr "'%s' nu este o data valida"
 
 #. module: web
 #. openerp-web
@@ -134,20 +134,20 @@ msgstr "Iata o previzualizare a fisierului pe care nu l-am putut importa:"
 #: code:addons/web/static/src/js/coresetup.js:592
 #, python-format
 msgid "about a minute ago"
-msgstr ""
+msgstr "aproximativ un minut in urma"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:1272
 #, python-format
 msgid "File"
-msgstr ""
+msgstr "Fisier"
 
 #. module: web
 #: code:addons/web/controllers/main.py:842
 #, python-format
 msgid "You cannot leave any password empty."
-msgstr ""
+msgstr "Nu puteti lasa necompletat campul parola."
 
 #. module: web
 #. openerp-web
@@ -171,7 +171,7 @@ msgstr "Parola Administrator:"
 #: code:addons/web/static/src/xml/base.xml:1349
 #, python-format
 msgid "Select"
-msgstr "Selectati"
+msgstr "Selecteaza"
 
 #. module: web
 #. openerp-web
@@ -200,20 +200,21 @@ msgstr "Data Ultimei Modificari:"
 #, python-format
 msgid "M2O search fields do not currently handle multiple default values"
 msgstr ""
+"Campurile de cautare M2O nu se ocupa in prezent de valori implicite multiple"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/view_form.js:1242
 #, python-format
 msgid "Widget type '%s' is not implemented"
-msgstr ""
+msgstr "Tipul de widget '%s' nu este implementat"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:1583
 #, python-format
 msgid "Share with all users"
-msgstr ""
+msgstr "Imparte cu toti utilizatorii"
 
 #. module: web
 #. openerp-web
@@ -235,7 +236,7 @@ msgstr "(fara clauza)"
 #: code:addons/web/static/src/js/formats.js:282
 #, python-format
 msgid "'%s' is not a correct time"
-msgstr ""
+msgstr "'%s' nu este un timp corect"
 
 #. module: web
 #. openerp-web
@@ -270,49 +271,49 @@ msgstr "Nedefinit(a)"
 #: code:addons/web/static/src/js/view_form.js:4831
 #, python-format
 msgid "File Upload"
-msgstr ""
+msgstr "Incarcare Fisier"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/coresetup.js:598
 #, python-format
 msgid "about a month ago"
-msgstr ""
+msgstr "aproximativ o luna in urma"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:1575
 #, python-format
 msgid "Custom Filters"
-msgstr ""
+msgstr "Filtre Personalizate"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:1311
 #, python-format
 msgid "Button Type:"
-msgstr "Tipul Butonului:"
+msgstr "Tip Buton:"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:419
 #, python-format
 msgid "OpenERP SA Company"
-msgstr "Companiei OpenERP SA"
+msgstr "Compania OpenERP SA"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/search.js:1555
 #, python-format
 msgid "Custom Filter"
-msgstr ""
+msgstr "Filtru Personalizat"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:159
 #, python-format
 msgid "Duplicate Database"
-msgstr ""
+msgstr "Copiaza Baza de date"
 
 #. module: web
 #. openerp-web
@@ -327,14 +328,14 @@ msgstr ""
 #: code:addons/web/static/src/xml/base.xml:336
 #, python-format
 msgid "Change Password"
-msgstr "Schimbati Parola"
+msgstr "Schimba Parola"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/view_form.js:3382
 #, python-format
 msgid "View type '%s' is not supported in One2Many."
-msgstr ""
+msgstr "Vizualizarea de tip '%s' nu este acceptata in One2Many."
 
 #. module: web
 #. openerp-web
@@ -349,7 +350,7 @@ msgstr "Descarca"
 #: code:addons/web/static/src/js/formats.js:266
 #, python-format
 msgid "'%s' is not a correct datetime"
-msgstr ""
+msgstr "'%s' nu este o data corecta"
 
 #. module: web
 #. openerp-web
@@ -377,20 +378,20 @@ msgstr "Selectie:"
 #: code:addons/web/static/src/js/view_form.js:869
 #, python-format
 msgid "The following fields are invalid:"
-msgstr ""
+msgstr "Urmatoarele campuri sunt nevalide:"
 
 #. module: web
 #: code:addons/web/controllers/main.py:863
 #, python-format
 msgid "Languages"
-msgstr ""
+msgstr "Limbi"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:1245
 #, python-format
 msgid "...Upload in progress..."
-msgstr ""
+msgstr "...Descarcare in curs..."
 
 #. module: web
 #. openerp-web
@@ -404,21 +405,21 @@ msgstr "Importa"
 #: code:addons/web/static/src/js/chrome.js:543
 #, python-format
 msgid "Could not restore the database"
-msgstr ""
+msgstr "Baza de date nu a putut fi restabilita"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/view_form.js:4811
 #, python-format
 msgid "File upload"
-msgstr ""
+msgstr "Incarcare fisier"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/view_form.js:3775
 #, python-format
 msgid "Action Button"
-msgstr ""
+msgstr "Buton Actiune"
 
 #. module: web
 #. openerp-web
@@ -440,42 +441,42 @@ msgstr "contine"
 #: code:addons/web/static/src/js/coresetup.js:624
 #, python-format
 msgid "Take a minute to get a coffee,<br />because it's loading..."
-msgstr ""
+msgstr "Faceti o pauza de cafea,<br /> pentru ca se incarca..."
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:413
 #, python-format
 msgid "Activate the developer mode"
-msgstr ""
+msgstr "Activeaza modulul programare"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/chrome.js:324
 #, python-format
 msgid "Loading (%d)"
-msgstr "Incarca (%d)"
+msgstr "Se incarca (%d)"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/search.js:1116
 #, python-format
 msgid "GroupBy"
-msgstr ""
+msgstr "GrupeazaDupa"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/view_list.js:684
 #, python-format
 msgid "You must select at least one record."
-msgstr ""
+msgstr "Trebuie sa selectati cel putin o inregistrare."
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:529
 #, python-format
 msgid "View Log (perm_read)"
-msgstr "Vizualizeaza Jurnalul (perm_read)"
+msgstr "Vizualizare Jurnalul (perm_read)"
 
 #. module: web
 #. openerp-web
@@ -496,7 +497,7 @@ msgstr "Relatii:"
 #: code:addons/web/static/src/js/coresetup.js:591
 #, python-format
 msgid "less than a minute ago"
-msgstr ""
+msgstr "cu mai putin de un minut in urma"
 
 #. module: web
 #. openerp-web
@@ -517,7 +518,7 @@ msgstr "Operator nesustinut %s in domeniul %s"
 #: code:addons/web/static/src/js/formats.js:242
 #, python-format
 msgid "'%s' is not a correct float"
-msgstr ""
+msgstr "'%s' nu este o stabilizare corecta"
 
 #. module: web
 #. openerp-web
@@ -531,21 +532,21 @@ msgstr "Recuperat(a)"
 #: code:addons/web/static/src/js/view_list.js:392
 #, python-format
 msgid "%d-%d of %d"
-msgstr ""
+msgstr "%d-%d din %d"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/view_form.js:2841
 #, python-format
 msgid "Create and Edit..."
-msgstr ""
+msgstr "Creeaza si Editeaza..."
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/pyeval.js:731
 #, python-format
 msgid "Unknown nonliteral type "
-msgstr ""
+msgstr "Tip nonliteral necunoscut "
 
 #. module: web
 #. openerp-web
@@ -566,14 +567,14 @@ msgstr "nu este"
 #: code:addons/web/static/src/xml/base.xml:544
 #, python-format
 msgid "Print Workflow"
-msgstr ""
+msgstr "Tipareste Fluxul de lucru"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/chrome.js:396
 #, python-format
 msgid "Please confirm your new password"
-msgstr ""
+msgstr "Va rugam sa confirmati parola noua"
 
 #. module: web
 #. openerp-web
@@ -594,21 +595,21 @@ msgstr "Pentru mai multe informatii vizitati"
 #: code:addons/web/static/src/xml/base.xml:1834
 #, python-format
 msgid "Add All Info..."
-msgstr ""
+msgstr "Adauga Toate Informatiile..."
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:1658
 #, python-format
 msgid "Export Formats"
-msgstr "Formate Export"
+msgstr "Exporta Formate"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:952
 #, python-format
 msgid "On change:"
-msgstr "La modificare:"
+msgstr "In schimbare:"
 
 #. module: web
 #. openerp-web
@@ -622,7 +623,7 @@ msgstr "Model %s campuri"
 #: code:addons/web/static/src/js/view_list.js:890
 #, python-format
 msgid "Setting 'id' attribute on existing record %s"
-msgstr ""
+msgstr "Setarea atributului 'identificare' la inregistrarea existenta %s"
 
 #. module: web
 #. openerp-web
@@ -667,13 +668,15 @@ msgstr "ID Actiune:"
 #, python-format
 msgid "Your user's preference timezone does not match your browser timezone:"
 msgstr ""
+"Fusul orar dorit de utilizatorul dumneavoastra nu se potriveste cu fusul "
+"orar al browserului dumneavoastra:"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/view_form.js:1238
 #, python-format
 msgid "Field '%s' specified in view could not be found."
-msgstr ""
+msgstr "Campul '%s' specificat in vizualizare nu a putut fi gasit."
 
 #. module: web
 #. openerp-web
@@ -694,21 +697,21 @@ msgstr "Parola veche:"
 #: code:addons/web/static/src/js/formats.js:113
 #, python-format
 msgid "Bytes,Kb,Mb,Gb,Tb,Pb,Eb,Zb,Yb"
-msgstr ""
+msgstr "Biti,Kb,Mb,Gb,Tb,Pb,Eb,Zb,Yb"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/chrome.js:481
 #, python-format
 msgid "The database has been duplicated."
-msgstr ""
+msgstr "Baza de date a fost copiata."
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:1600
 #, python-format
 msgid "Apply"
-msgstr ""
+msgstr "Aplica"
 
 #. module: web
 #. openerp-web
@@ -737,7 +740,7 @@ msgstr "Eroare E-mail"
 #: code:addons/web/static/src/js/coresetup.js:596
 #, python-format
 msgid "a day ago"
-msgstr ""
+msgstr "cu o zi in urma"
 
 #. module: web
 #. openerp-web
@@ -762,6 +765,10 @@ msgid ""
 "\n"
 "Are you sure you want to leave this page ?"
 msgstr ""
+"Avertizare, inregistrarea a fost modificata, schimbarile dumneavoastra vor "
+"fi ignorate.\n"
+"\n"
+"Sunteti sigur(a) ca doriti sa inchideti aceasta pagina?"
 
 #. module: web
 #. openerp-web
@@ -782,21 +789,21 @@ msgstr "Traducere tehnica"
 #: code:addons/web/static/src/xml/base.xml:1772
 #, python-format
 msgid "Delimiter:"
-msgstr "Delimitator:"
+msgstr "Demarcare:"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:458
 #, python-format
 msgid "Browser's timezone"
-msgstr ""
+msgstr "Fusul orar al browser-ului"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:1580
 #, python-format
 msgid "Filter name"
-msgstr ""
+msgstr "Numele filtrului"
 
 #. module: web
 #. openerp-web
@@ -813,14 +820,14 @@ msgstr "-- Actiuni --"
 #: code:addons/web/static/src/xml/base.xml:1680
 #, python-format
 msgid "Add"
-msgstr "Adaugati"
+msgstr "Adauga"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:530
 #, python-format
 msgid "Toggle Form Layout Outline"
-msgstr ""
+msgstr "Pozitioneaza Aspectul Formatului Formularului"
 
 #. module: web
 #. openerp-web
@@ -834,14 +841,14 @@ msgstr "OpenERP.com"
 #: code:addons/web/static/src/js/view_form.js:2316
 #, python-format
 msgid "Can't send email to invalid e-mail address"
-msgstr "Nu pot trimite e-mail la o adresa de email  nevalida"
+msgstr "Nu se poate trimite e-mail la o adresa de email nevalida"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:614
 #, python-format
 msgid "Add..."
-msgstr ""
+msgstr "Adauga..."
 
 #. module: web
 #. openerp-web
@@ -855,7 +862,7 @@ msgstr "Preferinte"
 #: code:addons/web/static/src/js/view_form.js:434
 #, python-format
 msgid "Wrong on change format: %s"
-msgstr ""
+msgstr "Eroare la modificarea formatului: %s"
 
 #. module: web
 #. openerp-web
@@ -863,7 +870,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/base.xml:185
 #, python-format
 msgid "Drop Database"
-msgstr ""
+msgstr "Renunta la Baza de date"
 
 #. module: web
 #. openerp-web
@@ -871,6 +878,7 @@ msgstr ""
 #, python-format
 msgid "Click here to change your user's timezone."
 msgstr ""
+"Click aici pentru a schimba fusul orar al utilizatorului dumneavoastra."
 
 #. module: web
 #. openerp-web
@@ -884,7 +892,7 @@ msgstr "Parametri de modificare:"
 #: code:addons/web/static/src/xml/base.xml:605
 #, python-format
 msgid "Delete this attachment"
-msgstr ""
+msgstr "Sterge acest atasament"
 
 #. module: web
 #. openerp-web
@@ -894,7 +902,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/base.xml:1587
 #, python-format
 msgid "Save"
-msgstr "Salvati"
+msgstr "Salveaza"
 
 #. module: web
 #. openerp-web
@@ -902,7 +910,7 @@ msgstr "Salvati"
 #: code:addons/web/static/src/xml/base.xml:355
 #, python-format
 msgid "More"
-msgstr ""
+msgstr "Mai mult(e)"
 
 #. module: web
 #. openerp-web
@@ -916,21 +924,21 @@ msgstr "Nume de utilizator"
 #: code:addons/web/static/src/js/chrome.js:481
 #, python-format
 msgid "Duplicating database"
-msgstr ""
+msgstr "Copiere baza de date"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/chrome.js:563
 #, python-format
 msgid "Password has been changed successfully"
-msgstr ""
+msgstr "Parola a fost modificata cu succes"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/view_list_editable.js:781
 #, python-format
 msgid "The form's data can not be discarded"
-msgstr ""
+msgstr "Datele formularului nu pot fi inlaturate"
 
 #. module: web
 #. openerp-web
@@ -965,6 +973,10 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"Eroare de evaluare locala\n"
+"%s\n"
+"\n"
+"%s"
 
 #. module: web
 #. openerp-web
@@ -992,21 +1004,21 @@ msgstr "Vizualizare Jurnal (%s)"
 #: code:addons/web/static/src/xml/base.xml:558
 #, python-format
 msgid "Creation Date:"
-msgstr "Creare Data:"
+msgstr "Data Crearii:"
 
 #. module: web
 #: code:addons/web/controllers/main.py:806
 #: code:addons/web/controllers/main.py:851
 #, python-format
 msgid "Error, password not changed !"
-msgstr ""
+msgstr "Eroare, parola nu a fost schimbata !"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/view_form.js:4810
 #, python-format
 msgid "The selected file exceed the maximum file size of %s."
-msgstr ""
+msgstr "Fisierul selectat depaseste dimensiunea maxima a fisierului de %s."
 
 #. module: web
 #. openerp-web
@@ -1014,21 +1026,21 @@ msgstr ""
 #: code:addons/web/static/src/xml/base.xml:1275
 #, python-format
 msgid "/web/binary/upload_attachment"
-msgstr ""
+msgstr "/web/binar/incarca_atasament"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/chrome.js:563
 #, python-format
 msgid "Changed Password"
-msgstr ""
+msgstr "Parola modificata"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:1406
 #, python-format
 msgid "Search"
-msgstr "Cautati"
+msgstr "Cauta"
 
 #. module: web
 #. openerp-web
@@ -1039,7 +1051,7 @@ msgstr "Cautati"
 #: code:addons/web/static/src/js/view_form.js:4313
 #, python-format
 msgid "Open: "
-msgstr "Deschideti: "
+msgstr "Deschide: "
 
 #. module: web
 #. openerp-web
@@ -1055,14 +1067,14 @@ msgstr "Copie de rezerva"
 #: code:addons/web/static/src/js/dates.js:80
 #, python-format
 msgid "'%s' is not a valid time"
-msgstr ""
+msgstr "'%s' nu este o ora valida"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/formats.js:274
 #, python-format
 msgid "'%s' is not a correct date"
-msgstr ""
+msgstr "\"%s' nu este o data corecta"
 
 #. module: web
 #. openerp-web
@@ -1076,14 +1088,14 @@ msgstr "(neetichetat)"
 #: code:addons/web/static/src/js/coresetup.js:597
 #, python-format
 msgid "%d days ago"
-msgstr ""
+msgstr "acum %d zile in urma"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:1449
 #, python-format
 msgid "(Any existing filter with the same name will be replaced)"
-msgstr "(Toate filtrele existente cu acelasși nume vor fi inlocuite)"
+msgstr "(Toate filtrele existente cu acelasi nume vor fi inlocuite)"
 
 #. module: web
 #. openerp-web
@@ -1093,7 +1105,7 @@ msgstr "(Toate filtrele existente cu acelasși nume vor fi inlocuite)"
 #: code:addons/web/static/src/xml/base.xml:1835
 #, python-format
 msgid "Cancel"
-msgstr "Anulati"
+msgstr "Anuleaza"
 
 #. module: web
 #. openerp-web
@@ -1116,7 +1128,7 @@ msgstr "Ultimele Modificari efectuate de:"
 #: code:addons/web/static/src/xml/base.xml:466
 #, python-format
 msgid "Timezone mismatch"
-msgstr ""
+msgstr "Nepotrivire de fus orar"
 
 #. module: web
 #. openerp-web
