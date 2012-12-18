@@ -93,7 +93,7 @@ class res_partner_contact(osv.osv):
             return bool(value == 1)
 
         exists = table_exists(self._table)
-        super(res_partner_contact, self)._auto_init(cr, context)
+        result = super(res_partner_contact, self)._auto_init(cr, context)
 
         if not exists:
             cr.execute("""
@@ -107,6 +107,8 @@ class res_partner_contact(osv.osv):
             cr.execute("alter table res_partner_address add contact_id int references res_partner_contact")
             cr.execute("update res_partner_address set contact_id=id")
             cr.execute("select setval('res_partner_contact_id_seq', (select max(id)+1 from res_partner_contact))")
+
+        return result
 
 res_partner_contact()
 
