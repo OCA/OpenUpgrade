@@ -19,17 +19,17 @@
 #
 ##############################################################################
 
-import math
-import openerp
-from osv import osv, fields
-from openerp import SUPERUSER_ID
-import re
-import tools
-from tools.translate import _
-import logging
-import pooler
-import pytz
+import datetime
 from lxml import etree
+import math
+import pytz
+import re
+
+import openerp
+from openerp import SUPERUSER_ID
+from openerp import pooler, tools
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
 
 class format_address(object):
     def fields_view_get_address(self, cr, uid, arch, context={}):
@@ -178,6 +178,12 @@ class res_partner(osv.osv, format_address):
             result[obj.id] = tools.image_get_resized_images(obj.image)
         return result
 
+    def _get_tz_offset(self, cr, uid, ids, name, args, context=None):
+        result = dict.fromkeys(ids, False)
+        for obj in self.browse(cr, uid, ids, context=context):
+            result[obj.id] = datetime.datetime.now(pytz.timezone(obj.tz or 'GMT')).strftime('%z')
+        return result
+
     def _set_image(self, cr, uid, id, name, value, args, context=None):
         return self.write(cr, uid, [id], {'image': tools.image_resize_image_big(value)}, context=context)
 
@@ -195,15 +201,12 @@ class res_partner(osv.osv, format_address):
             help="The partner's timezone, used to output proper date and time values inside printed reports. "
                  "It is important to set a value for this field. You should use the same timezone "
                  "that is otherwise used to pick and render date and time values: your computer's timezone."),
+        'tz_offset': fields.function(_get_tz_offset, type='char', size=5, string='Timezone offset', invisible=True),
         'user_id': fields.many2one('res.users', 'Salesperson', help='The internal user that is in charge of communicating with this contact if any.'),
         'vat': fields.char('TIN', size=32, help="Tax Identification Number. Check the box if this contact is subjected to taxes. Used by the some of the legal statements."),
         'bank_ids': fields.one2many('res.partner.bank', 'partner_id', 'Banks'),
         'website': fields.char('Website', size=64, help="Website of Partner or Company"),
         'comment': fields.text('Notes'),
-        'address': fields.one2many('res.partner.address', 'partner_id', 'Addresses',
-                deprecated="The address information is now directly stored on each Partner record. "\
-                           "Multiple contacts with their own address can be added via the child_ids relationship. "\
-                           "This field will be removed as of OpenERP 7.1."),
         'category_id': fields.many2many('res.partner.category', id1='partner_id', id2='category_id', string='Tags'),
         'credit_limit': fields.float(string='Credit Limit'),
         'ean13': fields.char('EAN13', size=13),
@@ -301,7 +304,7 @@ class res_partner(osv.osv, format_address):
         if default is None:
             default = {}
         name = self.read(cr, uid, [id], ['name'], context)[0]['name']
-        default.update({'name': _('%s (copy)') % (name)})
+        default.update({'name': _('%s (copy)') % name})
         return super(res_partner, self).copy(cr, uid, id, default, context)
 
     def onchange_type(self, cr, uid, ids, is_company, context=None):
@@ -508,27 +511,10 @@ class res_partner(osv.osv, format_address):
             result[adr] = address_dict.get(adr, default_address)
         return result
 
-    def gen_next_ref(self, cr, uid, ids):
-        if len(ids) != 1:
-            return True
-
-        # compute the next number ref
-        cr.execute("select ref from res_partner where ref is not null order by char_length(ref) desc, ref desc limit 1")
-        res = cr.dictfetchall()
-        ref = res and res[0]['ref'] or '0'
-        try:
-            nextref = int(ref)+1
-        except:
-            raise osv.except_osv(_('Warning'), _("Couldn't generate the next id because some partners have an alphabetic id !"))
-
-        # update the current partner
-        cr.execute("update res_partner set ref=%s where id=%s", (nextref, ids[0]))
-        return True
-
     def view_header_get(self, cr, uid, view_id, view_type, context):
         res = super(res_partner, self).view_header_get(cr, uid, view_id, view_type, context)
         if res: return res
-        if (not context.get('category_id', False)):
+        if not context.get('category_id', False):
             return False
         return _('Partners: ')+self.pool.get('res.partner.category').browse(cr, uid, context['category_id'], context).name
 
@@ -547,7 +533,7 @@ class res_partner(osv.osv, format_address):
         The purpose of this function is to build and return an address formatted accordingly to the
         standards of the country where it belongs.
 
-        :param address: browse record of the res.partner.address to format
+        :param address: browse record of the res.partner to format
         :returns: the address formatted in a display that fit its country habits (or the default ones
             if not country is specified)
         :rtype: string
@@ -572,56 +558,5 @@ class res_partner(osv.osv, format_address):
         elif address.parent_id:
             address_format = '%(company_name)s\n' + address_format
         return address_format % args
-
-# res.partner.address is deprecated; it is still there for backward compability only and will be removed in next version
-class res_partner_address(osv.osv):
-    _table = "res_partner"
-    _name = 'res.partner.address'
-    _order = 'type, name'
-    _columns = {
-        'parent_id': fields.many2one('res.partner', 'Company', ondelete='set null', select=True),
-        'partner_id': fields.related('parent_id', type='many2one', relation='res.partner', string='Partner'),   # for backward compatibility
-        'type': fields.selection( [ ('default','Default'),('invoice','Invoice'), ('delivery','Delivery'), ('contact','Contact'), ('other','Other') ],'Address Type', help="Used to select automatically the right address according to the context in sales and purchases documents."),
-        'function': fields.char('Function', size=128),
-        'title': fields.many2one('res.partner.title','Title'),
-        'name': fields.char('Contact Name', size=64, select=1),
-        'street': fields.char('Street', size=128),
-        'street2': fields.char('Street2', size=128),
-        'zip': fields.char('Zip', change_default=True, size=24),
-        'city': fields.char('City', size=128),
-        'state_id': fields.many2one("res.country.state", 'Fed. State', domain="[('country_id','=',country_id)]"),
-        'country_id': fields.many2one('res.country', 'Country'),
-        'email': fields.char('Email', size=240),
-        'phone': fields.char('Phone', size=64),
-        'fax': fields.char('Fax', size=64),
-        'mobile': fields.char('Mobile', size=64),
-        'birthdate': fields.char('Birthdate', size=64),
-        'is_customer_add': fields.related('partner_id', 'customer', type='boolean', string='Customer'),
-        'is_supplier_add': fields.related('partner_id', 'supplier', type='boolean', string='Supplier'),
-        'active': fields.boolean('Active', help="Uncheck the active field to hide the contact."),
-        'company_id': fields.many2one('res.company', 'Company',select=1),
-        'color': fields.integer('Color Index'),
-    }
-
-    _defaults = {
-        'active': True,
-        'company_id': lambda s,cr,uid,c: s.pool.get('res.company')._company_default_get(cr, uid, 'res.partner', context=c),
-        'color': 0,
-        'type': 'default',
-    }
-
-    def write(self, cr, uid, ids, vals, context=None):
-        logging.getLogger('res.partner').warning("Deprecated use of res.partner.address")
-        if 'partner_id' in vals:
-            vals['parent_id'] = vals.get('partner_id')
-            del(vals['partner_id'])
-        return self.pool.get('res.partner').write(cr, uid, ids, vals, context=context)
-
-    def create(self, cr, uid, vals, context=None):
-        logging.getLogger('res.partner').warning("Deprecated use of res.partner.address")
-        if 'partner_id' in vals:
-            vals['parent_id'] = vals.get('partner_id')
-            del(vals['partner_id'])
-        return self.pool.get('res.partner').create(cr, uid, vals, context=context)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

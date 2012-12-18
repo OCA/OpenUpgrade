@@ -72,7 +72,10 @@ class ir_model(osv.osv):
         models = self.browse(cr, uid, ids, context=context)
         res = dict.fromkeys(ids)
         for model in models:
-            res[model.id] = self.pool.get(model.model).is_transient()
+            if self.pool.get(model.model):
+                res[model.id] = self.pool.get(model.model).is_transient()
+            else:
+                _logger.error('Missing model %s' % (model.model, ))
         return res
 
     def _search_osv_memory(self, cr, uid, model, name, domain, context=None):
@@ -157,9 +160,10 @@ class ir_model(osv.osv):
         if context is None: context = {}
         if isinstance(ids, (int, long)):
             ids = [ids]
-        if not context.get(MODULE_UNINSTALL_FLAG) and \
-                any(model.state != 'manual' for model in self.browse(cr, user, ids, context)):
-            raise except_orm(_('Error'), _("Model '%s' contains module data and cannot be removed!") % (model.name,))
+        if not context.get(MODULE_UNINSTALL_FLAG):
+            for model in self.browse(cr, user, ids, context):
+                if model.state != 'manual':
+                    raise except_orm(_('Error'), _("Model '%s' contains module data and cannot be removed!") % (model.name,))
 
         self._drop_table(cr, user, ids, context)
         res = super(ir_model, self).unlink(cr, user, ids, context)
@@ -208,6 +212,7 @@ class ir_model(osv.osv):
         else:
             x_name = a._columns.keys()[0]
         x_custom_model._rec_name = x_name
+        a._rec_name = x_name
 
 class ir_model_fields(osv.osv):
     _name = 'ir.model.fields'
@@ -254,7 +259,7 @@ class ir_model_fields(osv.osv):
         'selection': "",
         'domain': "[]",
         'name': 'x_',
-        'state': lambda self,cr,uid,ctx={}: (ctx and ctx.get('manual',False)) and 'manual' or 'base',
+        'state': lambda self,cr,uid,ctx=None: (ctx and ctx.get('manual',False)) and 'manual' or 'base',
         'on_delete': 'set null',
         'select_level': '0',
         'size': 64,
@@ -269,7 +274,7 @@ class ir_model_fields(osv.osv):
         except Exception:
             _logger.warning('Invalid selection list definition for fields.selection', exc_info=True)
             raise except_orm(_('Error'),
-                    _("The Selection Options expression is not a valid Pythonic expression." \
+                    _("The Selection Options expression is not a valid Pythonic expression."
                       "Please provide an expression in the [('key','Label'), ...] format."))
 
         check = True
@@ -512,7 +517,7 @@ class ir_model_constraint(Model):
             # double-check we are really going to delete all the owners of this schema element
             cr.execute("""SELECT id from ir_model_constraint where name=%s""", (data.name,))
             external_ids = [x[0] for x in cr.fetchall()]
-            if (set(external_ids)-ids_set):
+            if set(external_ids)-ids_set:
                 # as installed modules have defined this element we must not delete it!
                 continue
 
@@ -565,13 +570,12 @@ class ir_model_relation(Model):
         ids.reverse()
         for data in self.browse(cr, uid, ids, context):
             model = data.model
-            model_obj = self.pool.get(model)
             name = openerp.tools.ustr(data.name)
 
             # double-check we are really going to delete all the owners of this schema element
             cr.execute("""SELECT id from ir_model_relation where name = %s""", (data.name,))
             external_ids = [x[0] for x in cr.fetchall()]
-            if (set(external_ids)-ids_set):
+            if set(external_ids)-ids_set:
                 # as installed modules have defined this element we must not delete it!
                 continue
 
@@ -583,7 +587,7 @@ class ir_model_relation(Model):
 
         # drop m2m relation tables
         for table in to_drop_table:
-            cr.execute('DROP TABLE %s CASCADE'% (table),)
+            cr.execute('DROP TABLE %s CASCADE'% table,)
             _logger.info('Dropped table %s', table)
 
         cr.commit()
@@ -860,7 +864,7 @@ class ir_model_data(osv.osv):
         res = self.read(cr, uid, data_id, ['model', 'res_id'])
         if not res['res_id']:
             raise ValueError('No such external ID currently defined in the system: %s.%s' % (module, xml_id))
-        return (res['model'], res['res_id'])
+        return res['model'], res['res_id']
 
     def get_object(self, cr, uid, module, xml_id, context=None):
         """Returns a browsable record for the given module name and xml_id or raise ValueError if not found"""
@@ -905,7 +909,7 @@ class ir_model_data(osv.osv):
         # records created during module install should not display the messages of OpenChatter
         context = dict(context, install_mode=True)
         if xml_id and ('.' in xml_id):
-            assert len(xml_id.split('.'))==2, _("'%s' contains too many dots. XML ids should not contain dots ! These are used to refer to other modules data, as in module.reference_id") % (xml_id)
+            assert len(xml_id.split('.'))==2, _("'%s' contains too many dots. XML ids should not contain dots ! These are used to refer to other modules data, as in module.reference_id") % xml_id
             module, xml_id = xml_id.split('.')
         if (not xml_id) and (not self.doinit):
             return False
@@ -1075,7 +1079,6 @@ class ir_model_data(osv.osv):
                                 if model == 'ir.model.fields')
 
         ir_model_relation = self.pool.get('ir.model.relation')
-        relation_ids = ir_model_relation.search(cr, uid, [('module', 'in', modules_to_remove)])
         ir_module_module = self.pool.get('ir.module.module')
         modules_to_remove_ids = ir_module_module.search(cr, uid, [('name', 'in', modules_to_remove)])
         relation_ids = ir_model_relation.search(cr, uid, [('module', 'in', modules_to_remove_ids)])

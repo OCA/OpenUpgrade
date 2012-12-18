@@ -23,6 +23,8 @@ import logging
 import time
 
 import openerp
+from openerp.osv import osv
+from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
 
@@ -98,6 +100,8 @@ class ir_sequence(openerp.osv.osv.osv):
 
         There is no access rights check.
         """
+        if number_increment == 0:
+             raise osv.except_osv(_('Warning!'),_("Increment number must not be zero."))
         assert isinstance(id, (int, long))
         sql = "CREATE SEQUENCE ir_sequence_%03d INCREMENT BY %%s START WITH %%s" % id
         cr.execute(sql, (number_increment, number_next))
@@ -122,6 +126,8 @@ class ir_sequence(openerp.osv.osv.osv):
 
         There is no access rights check.
         """
+        if number_increment == 0:
+             raise osv.except_osv(_('Warning!'),_("Increment number must not be zero."))
         assert isinstance(id, (int, long))
         cr.execute("""
             ALTER SEQUENCE ir_sequence_%03d INCREMENT BY %%s RESTART WITH %%s
@@ -133,7 +139,7 @@ class ir_sequence(openerp.osv.osv.osv):
         values = self._add_missing_default_values(cr, uid, values, context)
         values['id'] = super(ir_sequence, self).create(cr, uid, values, context)
         if values['implementation'] == 'standard':
-            f = self._create_sequence(cr, values['id'], values['number_increment'], values['number_next'])
+            self._create_sequence(cr, values['id'], values['number_increment'], values['number_next'])
         return values['id']
 
     def unlink(self, cr, uid, ids, context=None):

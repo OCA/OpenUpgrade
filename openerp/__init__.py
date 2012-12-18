@@ -26,6 +26,7 @@
 SUPERUSER_ID = 1
 
 import addons
+import cli
 import conf
 import loglevels
 import modules
@@ -39,7 +40,6 @@ import service
 import sql_db
 import test
 import tools
-import wizard
 import workflow
 # backward compatilbility
 # TODO: This is for the web addons, can be removed later.

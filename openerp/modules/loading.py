@@ -105,7 +105,10 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
 
         """
         for filename in package.data[kind]:
-            _logger.info("module %s: loading %s", module_name, filename)
+            if kind == 'test':
+                _logger.log(logging.TEST, "module %s: loading %s", module_name, filename)
+            else:
+                _logger.info("module %s: loading %s", module_name, filename)
             _, ext = os.path.splitext(filename)
             pathname = os.path.join(module_name, filename)
             fp = tools.file_open(pathname)
@@ -144,9 +147,13 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
     migrations = openerp.modules.migration.MigrationManager(cr, graph)
     _logger.debug('loading %d packages...', len(graph))
 
-    # get db timestamp
-    cr.execute("select (now() at time zone 'UTC')::timestamp")
-    dt_before_load = cr.fetchone()[0]
+    # Query manual fields for all models at once and save them on the registry
+    # so the initialization code for each model does not have to do it
+    # one model at a time.
+    pool.fields_by_model = {}
+    cr.execute('SELECT * FROM ir_model_fields WHERE state=%s', ('manual',))
+    for field in cr.dictfetchall():
+        pool.fields_by_model.setdefault(field['model'], []).append(field)
 
     #suppress commits to have the upgrade of one module in just one transation
     cr.commit_org = cr.commit
@@ -167,6 +174,7 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
         load_openerp_module(package.name)
 
         models = pool.load(cr, package)
+
         loaded_modules.append(package.name)
         if hasattr(package, 'init') or hasattr(package, 'update') or package.state in ('to install', 'to upgrade'):
             # OpenUpgrade: add this module's models to the registry
@@ -242,6 +250,10 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
                     delattr(package, kind)
 
         cr.commit_org()
+
+    # The query won't be valid for models created later (i.e. custom model
+    # created after the registry has been loaded), so empty its result.
+    pool.fields_by_model = None
     
     cr.commit = cr.commit_org
     cr.commit()
@@ -262,7 +274,7 @@ def _check_module_names(cr, module_names):
             incorrect_names = mod_names.difference([x['name'] for x in cr.dictfetchall()])
             _logger.warning('invalid module names, ignored: %s', ", ".join(incorrect_names))
 
-def load_marked_modules(cr, graph, states, force, progressdict, report, loaded_modules, registry):
+def load_marked_modules(cr, graph, states, force, progressdict, report, loaded_modules, perform_checks, registry):
     """Loads modules marked with ``states``, adding them to ``graph`` and
        ``loaded_modules`` and returns a list of installed/upgraded modules."""
     processed_modules = []
@@ -272,7 +284,7 @@ def load_marked_modules(cr, graph, states, force, progressdict, report, loaded_m
         module_list = openupgrade_loading.add_module_dependencies(cr, module_list)
         graph.add_modules(cr, module_list, force)
         _logger.debug('Updating graph with %d more modules', len(module_list))
-        loaded, processed = load_module_graph(cr, graph, progressdict, report=report, skip_modules=loaded_modules, registry=registry)
+        loaded, processed = load_module_graph(cr, graph, progressdict, report=report, skip_modules=loaded_modules, perform_checks=perform_checks, registry=registry)
         processed_modules.extend(processed)
         loaded_modules.extend(loaded)
         if not processed: break
@@ -318,7 +330,7 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
         # processed_modules: for cleanup step after install
         # loaded_modules: to avoid double loading
         report = pool._assertion_report
-        loaded_modules, processed_modules = load_module_graph(cr, graph, status, perform_checks=(not update_module), report=report, registry=registry)
+        loaded_modules, processed_modules = load_module_graph(cr, graph, status, perform_checks=update_module, report=report, registry=registry)
 
         if tools.config['load_language']:
             for lang in tools.config['load_language'].split(','):
@@ -365,11 +377,11 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
         while processed_upgrade or processed_install:
             _logger.warning("Starting a new iteration of selecting modules to upgrade")
             states_to_load = ['installed', 'to upgrade', 'to_remove']
-            processed_upgrade = load_marked_modules(cr, graph, states_to_load, force, status, report, loaded_modules, registry)
+            processed_upgrade = load_marked_modules(cr, graph, states_to_load, force, status, report, loaded_modules, update_module, registry)
             processed_modules.extend(processed_upgrade)
             if update_module:
                 states_to_load = ['to install']
-                processed_install = load_marked_modules(cr, graph, states_to_load, force, status, report, loaded_modules, registry)
+                processed_install = load_marked_modules(cr, graph, states_to_load, force, status, report, loaded_modules, update_module, registry)
                 processed_modules.extend(processed_install)
                 loaded_modules.extend(processed_install)
             else:

@@ -19,9 +19,6 @@
 #
 ##############################################################################
 
-import sys
-import openerp.netsvc as netsvc
-import openerp.osv as base
 import openerp.pooler as pooler
 from openerp.tools.safe_eval import safe_eval as eval
 
@@ -46,6 +43,8 @@ def _eval_expr(cr, ident, workitem, action):
     assert action, 'You used a NULL action in a workflow, use dummy node instead.'
     for line in action.split('\n'):
         line = line.strip()
+        if not line:
+            continue
         uid=ident[0]
         model=ident[1]
         ids=[ident[2]]

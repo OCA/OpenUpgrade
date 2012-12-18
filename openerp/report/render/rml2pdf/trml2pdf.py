@@ -96,10 +96,10 @@ class NumberedCanvas(canvas.Canvas):
         key=self._pageCounter
         if not self.pages.get(key,False):
             while not self.pages.get(key,False):
-                key = key + 1
+                key += 1
         self.setFont("Helvetica", 8)
         self.drawRightString((self._pagesize[0]-30), (self._pagesize[1]-40),
-            "Page %(this)i of %(total)i" % {
+            " %(this)i / %(total)i" % {
                'this': self._pageNumber+1,
                'total': self.pages.get(key,False),
             }
@@ -118,15 +118,19 @@ class NumberedCanvas(canvas.Canvas):
         self._doc.SaveToFile(self._filename, self)
 
 class PageCount(platypus.Flowable):
+    def __init__(self, story_count=0):
+        platypus.Flowable.__init__(self)
+        self.story_count = story_count
+
     def draw(self):
-        self.canv.beginForm("pageCount")
+        self.canv.beginForm("pageCount%d" % self.story_count)
         self.canv.setFont("Helvetica", utils.unit_get(str(8)))
         self.canv.drawString(0, 0, str(self.canv.getPageNumber()))
         self.canv.endForm()
 
 class PageReset(platypus.Flowable):
     def draw(self):
-        self.canv._pageNumber = 0
+        self.canv._doPageReset = True
 
 class _rml_styles(object,):
     def __init__(self, nodes, localcontext):
@@ -264,18 +268,18 @@ class _rml_doc(object):
 
         if fontname not in pdfmetrics._fonts:
             pdfmetrics.registerFont(TTFont(fontname, filename))
-        if (mode == 'all'):
+        if mode == 'all':
             addMapping(face, 0, 0, fontname)    #normal
             addMapping(face, 0, 1, fontname)    #italic
             addMapping(face, 1, 0, fontname)    #bold
             addMapping(face, 1, 1, fontname)    #italic and bold
         elif (mode== 'normal') or (mode == 'regular'):
             addMapping(face, 0, 0, fontname)    #normal
-        elif (mode == 'italic'):
+        elif mode == 'italic':
             addMapping(face, 0, 1, fontname)    #italic
-        elif (mode == 'bold'):
+        elif mode == 'bold':
             addMapping(face, 1, 0, fontname)    #bold
-        elif (mode == 'bolditalic'):
+        elif mode == 'bolditalic':
             addMapping(face, 1, 1, fontname)    #italic and bold
 
     def _textual_image(self, node):
@@ -343,7 +347,7 @@ class _rml_canvas(object):
             if n.tag == 'pageCount':
                 if x or y:
                     self.canvas.translate(x,y)
-                self.canvas.doForm('pageCount')
+                self.canvas.doForm('pageCount%s' % (self.canvas._storyCount,))
                 if x or y:
                     self.canvas.translate(-x,-y)
             if n.tag == 'pageNumber':
@@ -598,7 +602,7 @@ class _rml_Illustration(platypus.flowables.Flowable):
         self.height = utils.unit_get(node.get('height'))
         self.self2 = self2
     def wrap(self, *args):
-        return (self.width, self.height)
+        return self.width, self.height
     def draw(self):
         drw = _rml_draw(self.localcontext ,self.node,self.styles, images=self.self2.images, path=self.self2.path, title=self.self2.title)
         drw.render(self.canv, None)
@@ -878,8 +882,15 @@ class EndFrameFlowable(ActionFlowable):
         ActionFlowable.__init__(self,('frameEnd',resume))
 
 class TinyDocTemplate(platypus.BaseDocTemplate):
+
+    def beforeDocument(self):
+        # Store some useful value directly inside canvas, so it's available
+        # on flowable drawing (needed for proper PageCount handling)
+        self.canv._doPageReset = False
+        self.canv._storyCount = 0
+
     def ___handle_pageBegin(self):
-        self.page = self.page + 1
+        self.page += 1
         self.pageTemplate.beforeDrawPage(self.canv,self)
         self.pageTemplate.checkPageSize(self.canv,self)
         self.pageTemplate.onPage(self.canv,self)
@@ -893,12 +904,24 @@ class TinyDocTemplate(platypus.BaseDocTemplate):
                 self.frame = f
                 break
         self.handle_frameBegin()
-    def afterFlowable(self, flowable):
-        if isinstance(flowable, PageReset):
-            self.canv._pageCount=self.page
-            self.page=0
-            self.canv._flag=True
+
+    def afterPage(self):
+        if self.canv._doPageReset:
+            # Following a <pageReset/> tag:
+            # - we reset page number to 0
+            # - we add  an new PageCount flowable (relative to the current
+            #   story number), but not for NumeredCanvas at is handle page
+            #   count itself)
+            # NOTE: _rml_template render() method add a PageReset flowable at end
+            #   of each story, so we're sure to pass here at least once per story.
+            if not isinstance(self.canv, NumberedCanvas):
+                self.handle_flowable([ PageCount(story_count=self.canv._storyCount) ])
+            self.canv._pageCount = self.page
+            self.page = 0
+            self.canv._flag = True
             self.canv._pageNumber = 0
+            self.canv._doPageReset = False
+            self.canv._storyCount += 1
 
 class _rml_template(object):
     def __init__(self, localcontext, out, node, doc, images=None, path='.', title=None):
@@ -965,7 +988,6 @@ class _rml_template(object):
             self.doc_tmpl.afterFlowable(fis)
             self.doc_tmpl.build(fis,canvasmaker=NumberedCanvas)
         else:
-            fis.append(PageCount())
             self.doc_tmpl.build(fis)
 
 def parseNode(rml, localcontext=None, fout=None, images=None, path='.', title=None):
