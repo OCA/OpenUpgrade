@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2012-11-24 02:52+0000\n"
-"PO-Revision-Date: 2011-04-19 10:53+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-12-03 16:02+0000\n"
+"PO-Revision-Date: 2012-11-24 12:53+0000\n"
+"Last-Translator: Kaare Pettersen <Unknown>\n"
 "Language-Team: Norwegian Bokmal <nb@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-11-24 06:30+0000\n"
-"X-Generator: Launchpad (build 16293)\n"
+"X-Launchpad-Export-Date: 2012-12-04 05:35+0000\n"
+"X-Generator: Launchpad (build 16335)\n"
 
 #. module: account_payment
 #: model:ir.actions.act_window,help:account_payment.action_payment_order_tree
@@ -107,11 +107,6 @@ msgid "Due Date"
 msgstr "Forfallsdato"
 
 #. module: account_payment
-#: view:account.move.line:0
-msgid "Account Entry Line"
-msgstr "Konto kommandolinjen"
-
-#. module: account_payment
 #: view:payment.order.create:0
 msgid "_Add to payment order"
 msgstr "_Legg Til betaling for"
@@ -123,21 +118,25 @@ msgid "Payment Populate statement"
 msgstr ""
 
 #. module: account_payment
+#: code:addons/account_payment/account_invoice.py:43
+#, python-format
+msgid ""
+"You cannot cancel an invoice which has already been imported in a payment "
+"order. Remove it from the following payment order : %s."
+msgstr ""
+
+#. module: account_payment
+#: code:addons/account_payment/account_invoice.py:43
 #: code:addons/account_payment/account_move_line.py:110
 #, python-format
 msgid "Error!"
-msgstr ""
+msgstr "Feil!"
 
 #. module: account_payment
 #: report:payment.order:0
 #: view:payment.order:0
 msgid "Amount"
 msgstr "Beløp"
-
-#. module: account_payment
-#: sql_constraint:account.move.line:0
-msgid "Wrong credit or debit value in accounting entry !"
-msgstr "Feil kredit eller debet beløp i regnskaps oppføringen !"
 
 #. module: account_payment
 #: view:payment.order:0
@@ -166,24 +165,10 @@ msgid "The payment line name must be unique!"
 msgstr "Betalingen linjen må være unikt!"
 
 #. module: account_payment
-#: constraint:account.invoice:0
-msgid "Invalid BBA Structured Communication !"
-msgstr "Ugyldig BBA Strukturert Kommunikasjon!"
-
-#. module: account_payment
 #: model:ir.actions.act_window,name:account_payment.action_payment_order_tree
 #: model:ir.ui.menu,name:account_payment.menu_action_payment_order_form
 msgid "Payment Orders"
 msgstr "Betalings ordre."
-
-#. module: account_payment
-#: constraint:account.move.line:0
-msgid ""
-"The date of your Journal Entry is not in the defined period! You should "
-"change the date or remove this constraint from the journal."
-msgstr ""
-"Datoen for din bilagsregistrering ikke er i den definerte perioden! Du bør "
-"endre datoen eller fjerne denne begrensningen fra tidsskriftet."
 
 #. module: account_payment
 #: selection:payment.order,date_prefered:0
@@ -235,7 +220,7 @@ msgstr "Strukturert."
 #. module: account_payment
 #: view:account.bank.statement:0
 msgid "Import Payment Lines"
-msgstr ""
+msgstr "Import betaling linjer."
 
 #. module: account_payment
 #: view:payment.line:0
@@ -274,12 +259,7 @@ msgstr ""
 #. module: account_payment
 #: field:payment.order,date_created:0
 msgid "Creation Date"
-msgstr ""
-
-#. module: account_payment
-#: view:account.move.line:0
-msgid "Total debit"
-msgstr "Total belastning."
+msgstr "Opprettelses dato."
 
 #. module: account_payment
 #: help:payment.mode,journal:0
@@ -340,11 +320,6 @@ msgid "Partner"
 msgstr "Partner"
 
 #. module: account_payment
-#: constraint:account.move.line:0
-msgid "Account and Period must belong to the same company."
-msgstr ""
-
-#. module: account_payment
 #: field:payment.line,bank_statement_line_id:0
 msgid "Bank statement line"
 msgstr "Kontoutskrift linje."
@@ -358,17 +333,6 @@ msgstr "Forfallsdato"
 #: field:account.invoice,amount_to_pay:0
 msgid "Amount to be paid"
 msgstr "Beløpet Søm skål betales."
-
-#. module: account_payment
-#: constraint:account.move.line:0
-msgid ""
-"The selected account of your Journal Entry forces to provide a secondary "
-"currency. You should remove the secondary currency on the account or select "
-"a multi-currency view on the journal."
-msgstr ""
-"Den valgte kontoen av dine Bilagsregistrering blir tvunget for å gi en "
-"sekundær valuta. Du bør fjerne den sekundære valuta på konto eller velg en "
-"flervaluta syn på tidsskriftet."
 
 #. module: account_payment
 #: report:payment.order:0
@@ -435,7 +399,7 @@ msgstr "Kladd"
 #: view:payment.order:0
 #: field:payment.order,state:0
 msgid "Status"
-msgstr ""
+msgstr "Status."
 
 #. module: account_payment
 #: help:payment.line,communication2:0
@@ -451,11 +415,6 @@ msgstr "Adressen til Bestilling Kunden."
 #: view:account.payment.populate.statement:0
 msgid "Populate Statement:"
 msgstr "Fyller erklæringen:"
-
-#. module: account_payment
-#: view:account.move.line:0
-msgid "Total credit"
-msgstr "Total kredit"
 
 #. module: account_payment
 #: help:payment.order,date_scheduled:0
@@ -488,7 +447,7 @@ msgstr "Søk"
 #. module: account_payment
 #: field:payment.order,user_id:0
 msgid "Responsible"
-msgstr ""
+msgstr "Ansvarlig."
 
 #. module: account_payment
 #: field:payment.line,date:0
@@ -503,7 +462,7 @@ msgstr "Totalt:"
 #. module: account_payment
 #: field:payment.order,date_done:0
 msgid "Execution Date"
-msgstr ""
+msgstr "Gjennomføring dato."
 
 #. module: account_payment
 #: view:account.payment.populate.statement:0
@@ -533,17 +492,12 @@ msgstr "Bestillings kunde."
 #. module: account_payment
 #: model:ir.model,name:account_payment.model_account_payment_make_payment
 msgid "Account make payment"
-msgstr ""
+msgstr "Konto gjør betaling."
 
 #. module: account_payment
 #: report:payment.order:0
 msgid "Invoice Ref"
 msgstr "Faktura referanse."
-
-#. module: account_payment
-#: sql_constraint:account.invoice:0
-msgid "Invoice Number must be unique per Company!"
-msgstr "Fakturanummer må være unik pr. firma!"
 
 #. module: account_payment
 #: field:payment.line,name:0
@@ -626,7 +580,7 @@ msgstr "Kommunikasjon 2."
 #. module: account_payment
 #: field:payment.order,date_scheduled:0
 msgid "Scheduled Date"
-msgstr ""
+msgstr "Planlagt dato."
 
 #. module: account_payment
 #: view:account.payment.make.payment:0
@@ -687,11 +641,6 @@ msgid "Name"
 msgstr "Navn"
 
 #. module: account_payment
-#: constraint:account.move.line:0
-msgid "You cannot create journal items on an account of type view."
-msgstr ""
-
-#. module: account_payment
 #: report:payment.order:0
 msgid "Bank Account"
 msgstr "Bank konto."
@@ -726,19 +675,14 @@ msgstr "Lag bestilling."
 #. module: account_payment
 #: field:payment.order,date_prefered:0
 msgid "Preferred Date"
-msgstr ""
+msgstr "Foretrukne dato."
 
 #. module: account_payment
 #: view:account.payment.make.payment:0
 #: view:account.payment.populate.statement:0
 #: view:payment.order.create:0
 msgid "or"
-msgstr ""
-
-#. module: account_payment
-#: constraint:account.move.line:0
-msgid "You cannot create journal items on closed account."
-msgstr ""
+msgstr "eller."
 
 #. module: account_payment
 #: help:payment.mode,bank_id:0
@@ -757,6 +701,22 @@ msgstr "Bankkonto for betaling modus."
 #~ "Når banken er bekreftet staten er satt til \"bekreftet\".\n"
 #~ "Da ordren er betalt staten Ferdig."
 
+#~ msgid "Account Entry Line"
+#~ msgstr "Konto kommandolinjen"
+
+#~ msgid "Wrong credit or debit value in accounting entry !"
+#~ msgstr "Feil kredit eller debet beløp i regnskaps oppføringen !"
+
+#~ msgid ""
+#~ "The date of your Journal Entry is not in the defined period! You should "
+#~ "change the date or remove this constraint from the journal."
+#~ msgstr ""
+#~ "Datoen for din bilagsregistrering ikke er i den definerte perioden! Du bør "
+#~ "endre datoen eller fjerne denne begrensningen fra tidsskriftet."
+
+#~ msgid "Invalid BBA Structured Communication !"
+#~ msgstr "Ugyldig BBA Strukturert Kommunikasjon!"
+
 #, python-format
 #~ msgid "Error !"
 #~ msgstr "Feil !"
@@ -764,8 +724,23 @@ msgstr "Bankkonto for betaling modus."
 #~ msgid "Execution date"
 #~ msgstr "Iverksettelses datoen."
 
+#~ msgid "Total debit"
+#~ msgstr "Total belastning."
+
 #~ msgid "State"
 #~ msgstr "Stat"
+
+#~ msgid ""
+#~ "The selected account of your Journal Entry forces to provide a secondary "
+#~ "currency. You should remove the secondary currency on the account or select "
+#~ "a multi-currency view on the journal."
+#~ msgstr ""
+#~ "Den valgte kontoen av dine Bilagsregistrering blir tvunget for å gi en "
+#~ "sekundær valuta. Du bør fjerne den sekundære valuta på konto eller velg en "
+#~ "flervaluta syn på tidsskriftet."
+
+#~ msgid "Total credit"
+#~ msgstr "Total kredit"
 
 #, python-format
 #~ msgid "No partner defined on entry line"
@@ -779,6 +754,9 @@ msgstr "Bankkonto for betaling modus."
 
 #~ msgid "User"
 #~ msgstr "Bruker"
+
+#~ msgid "Invoice Number must be unique per Company!"
+#~ msgstr "Fakturanummer må være unik pr. firma!"
 
 #~ msgid "Import payment lines"
 #~ msgstr "Importer betaling linjer."

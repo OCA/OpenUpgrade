@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2012-11-24 02:51+0000\n"
-"PO-Revision-Date: 2012-11-07 23:15+0000\n"
+"POT-Creation-Date: 2012-12-03 16:02+0000\n"
+"PO-Revision-Date: 2012-12-18 21:34+0000\n"
 "Last-Translator: Dusan Laznik <laznik@mentis.si>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-11-24 06:05+0000\n"
-"X-Generator: Launchpad (build 16293)\n"
+"X-Launchpad-Export-Date: 2012-12-19 05:15+0000\n"
+"X-Generator: Launchpad (build 16378)\n"
 
 #. module: mrp
 #: help:mrp.config.settings,module_mrp_repair:0
@@ -27,7 +27,7 @@ msgid ""
 "                    * Repair quotation report\n"
 "                    * Notes for the technician and for the final customer.\n"
 "                This installs the module mrp_repair."
-msgstr ""
+msgstr "Upravljanje popravil izdelkov(garancija)."
 
 #. module: mrp
 #: report:mrp.production.order:0
@@ -42,12 +42,12 @@ msgstr "Lokacija za iskanje komponent"
 #. module: mrp
 #: field:mrp.production,workcenter_lines:0
 msgid "Work Centers Utilisation"
-msgstr "Zasedenost delovnih centrov"
+msgstr "Zasedenost delovnih faz"
 
 #. module: mrp
 #: view:mrp.routing.workcenter:0
 msgid "Routing Work Centers"
-msgstr ""
+msgstr "Zaporedje delovnih faz"
 
 #. module: mrp
 #: field:mrp.production.workcenter.line,cycle:0
@@ -79,7 +79,7 @@ msgstr "Odpis izdelkov"
 #. module: mrp
 #: view:mrp.workcenter:0
 msgid "Mrp Workcenter"
-msgstr ""
+msgstr "Delovna faza"
 
 #. module: mrp
 #: model:ir.actions.act_window,name:mrp.mrp_routing_action
@@ -95,14 +95,14 @@ msgstr "Išči po kosovnici"
 #. module: mrp
 #: model:process.node,note:mrp.process_node_stockproduct1
 msgid "For stockable products and consumables"
-msgstr ""
+msgstr "Za"
 
 #. module: mrp
 #: help:mrp.bom,message_unread:0
 #: help:mrp.production,message_unread:0
 #: help:mrp.production.workcenter.line,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr ""
+msgstr "Če je izbrano, zahtevajo nova sporočila vašo pozornost."
 
 #. module: mrp
 #: help:mrp.routing.workcenter,cycle_nbr:0
@@ -114,7 +114,7 @@ msgstr ""
 #. module: mrp
 #: view:product.product:0
 msgid "False"
-msgstr ""
+msgstr "Napačno"
 
 #. module: mrp
 #: view:mrp.bom:0
@@ -199,15 +199,15 @@ msgid "For purchased material"
 msgstr "Za nabavljeni material"
 
 #. module: mrp
-#: view:mrp.production:0
-msgid "Total Qty"
+#: field:mrp.config.settings,module_mrp_operations:0
+msgid "Allow detailed planning of work order"
 msgstr ""
 
 #. module: mrp
 #: code:addons/mrp/mrp.py:648
 #, python-format
 msgid "Cannot cancel manufacturing order!"
-msgstr ""
+msgstr "Delovnega naloga ni možno preklicati!"
 
 #. module: mrp
 #: field:mrp.workcenter,costs_cycle_account_id:0
@@ -233,7 +233,7 @@ msgstr "Informacije o kapacitetah"
 #. module: mrp
 #: field:mrp.routing,workcenter_lines:0
 msgid "Work Centers"
-msgstr "Delovne enote"
+msgstr "Delovne faze"
 
 #. module: mrp
 #: model:ir.actions.act_window,help:mrp.mrp_routing_action
@@ -308,11 +308,6 @@ msgid "Manage Routings"
 msgstr ""
 
 #. module: mrp
-#: sql_constraint:product.product:0
-msgid "Error ! Ending Date cannot be set before Beginning Date."
-msgstr ""
-
-#. module: mrp
 #: model:ir.model,name:mrp.model_mrp_product_produce
 msgid "Product Produce"
 msgstr "Končani izdelki"
@@ -321,11 +316,6 @@ msgstr "Končani izdelki"
 #: constraint:mrp.bom:0
 msgid "Error ! You cannot create recursive BoM."
 msgstr "Napaka ! (Rekurzivna kosovnica)"
-
-#. module: mrp
-#: constraint:stock.move:0
-msgid "You must assign a serial number for this product."
-msgstr ""
 
 #. module: mrp
 #: model:ir.model,name:mrp.model_mrp_routing_workcenter
@@ -357,7 +347,6 @@ msgstr ""
 
 #. module: mrp
 #: sql_constraint:mrp.production:0
-#: sql_constraint:stock.picking:0
 msgid "Reference must be unique per Company!"
 msgstr "Referenca mora biti enoznačna"
 
@@ -382,7 +371,7 @@ msgstr ""
 #. module: mrp
 #: field:mrp.workcenter,product_id:0
 msgid "Work Center Product"
-msgstr "Izdelek Delovnega Centra"
+msgstr "Izdelek Delovne faze"
 
 #. module: mrp
 #: view:mrp.production:0
@@ -408,7 +397,7 @@ msgstr ""
 #: field:mrp.production,product_qty:0
 #: field:mrp.production.product.line,product_qty:0
 msgid "Product Quantity"
-msgstr ""
+msgstr "Količina"
 
 #. module: mrp
 #: help:mrp.production,picking_id:0
@@ -491,17 +480,12 @@ msgstr "Struktura kosovnice"
 #: code:addons/mrp/mrp.py:1043
 #, python-format
 msgid "Manufacturing order has been <b>canceled</b>."
-msgstr ""
+msgstr "Delovni nalog je  <b>preklican</b>."
 
 #. module: mrp
 #: model:process.node,note:mrp.process_node_serviceproduct0
 msgid "Product type is service"
 msgstr "Vrsta izdelka je usluga"
-
-#. module: mrp
-#: sql_constraint:res.company:0
-msgid "The company name must be unique !"
-msgstr "Ime podjetja mora biti unikatno !"
 
 #. module: mrp
 #: help:mrp.workcenter,costs_cycle:0
@@ -531,7 +515,7 @@ msgstr "Povpraševanje"
 #: view:mrp.product_price:0
 #: view:mrp.workcenter.load:0
 msgid "or"
-msgstr ""
+msgstr "ali"
 
 #. module: mrp
 #: model:process.transition,note:mrp.process_transition_billofmaterialrouting0
@@ -544,12 +528,12 @@ msgstr ""
 #: view:mrp.production:0
 #: field:mrp.production,move_created_ids:0
 msgid "Products to Produce"
-msgstr ""
+msgstr "Predvideni izdelki"
 
 #. module: mrp
 #: view:mrp.config.settings:0
 msgid "Apply"
-msgstr ""
+msgstr "Uporabi"
 
 #. module: mrp
 #: view:mrp.routing:0
@@ -586,7 +570,7 @@ msgstr ""
 #. module: mrp
 #: field:mrp.bom,child_complete_ids:0
 msgid "BoM Hierarchy"
-msgstr ""
+msgstr "Sestava kosovnice"
 
 #. module: mrp
 #: model:process.transition,name:mrp.process_transition_stockproduction0
@@ -615,7 +599,7 @@ msgstr ""
 #. module: mrp
 #: field:mrp.bom,bom_lines:0
 msgid "BoM Lines"
-msgstr ""
+msgstr "Postavke kosovnice"
 
 #. module: mrp
 #: field:mrp.workcenter,time_start:0
@@ -670,13 +654,6 @@ msgstr "Komponente sestavnice"
 #: model:ir.model,name:mrp.model_stock_move
 msgid "Stock Move"
 msgstr "Prenos zaloge"
-
-#. module: mrp
-#: constraint:product.product:0
-msgid ""
-"You provided an invalid \"EAN13 Barcode\" reference. You may use the "
-"\"Internal Reference\" field instead."
-msgstr ""
 
 #. module: mrp
 #: model:ir.ui.menu,name:mrp.menu_mrp_planning
@@ -1021,7 +998,7 @@ msgstr "Možno dati v zalogo"
 #: code:addons/mrp/report/price.py:130
 #, python-format
 msgid "Work Center name"
-msgstr "Ime delovne eote"
+msgstr "Ime delovne faze"
 
 #. module: mrp
 #: field:mrp.routing,code:0
@@ -1087,17 +1064,17 @@ msgid "BOM Name"
 msgstr ""
 
 #. module: mrp
-#: constraint:stock.move:0
-msgid "You try to assign a lot which is not from the same product."
-msgstr ""
-
-#. module: mrp
 #: model:ir.actions.act_window,name:mrp.act_product_manufacturing_open
 #: model:ir.actions.act_window,name:mrp.mrp_production_action
 #: model:ir.actions.act_window,name:mrp.mrp_production_action_planning
 #: model:ir.ui.menu,name:mrp.menu_mrp_production_action
 #: view:mrp.production:0
 msgid "Manufacturing Orders"
+msgstr ""
+
+#. module: mrp
+#: selection:mrp.production,state:0
+msgid "Awaiting Raw Materials"
 msgstr ""
 
 #. module: mrp
@@ -1155,7 +1132,7 @@ msgstr ""
 #. module: mrp
 #: help:mrp.workcenter,costs_hour:0
 msgid "Specify Cost of Work Center per hour."
-msgstr "Cena delovne enote na uro"
+msgstr "Cena delovne faze na uro"
 
 #. module: mrp
 #: help:mrp.workcenter,capacity_per_cycle:0
@@ -1292,7 +1269,7 @@ msgstr ""
 #. module: mrp
 #: view:report.workcenter.load:0
 msgid "Work Center load"
-msgstr "Zasedenost delovnega centra"
+msgstr "Zasedenost delovne faze"
 
 #. module: mrp
 #: help:mrp.production,location_dest_id:0
@@ -1617,7 +1594,7 @@ msgstr ""
 #: view:mrp.workcenter:0
 #: field:report.workcenter.load,workcenter_id:0
 msgid "Work Center"
-msgstr ""
+msgstr "Delovna faza"
 
 #. module: mrp
 #: field:mrp.workcenter,capacity_per_cycle:0
@@ -1954,11 +1931,6 @@ msgid "Manufacturing Efficiency"
 msgstr ""
 
 #. module: mrp
-#: constraint:res.company:0
-msgid "Error! You can not create recursive companies."
-msgstr ""
-
-#. module: mrp
 #: field:mrp.bom,message_follower_ids:0
 #: field:mrp.production,message_follower_ids:0
 #: field:mrp.production.workcenter.line,message_follower_ids:0
@@ -2018,8 +1990,8 @@ msgid "Type of period"
 msgstr ""
 
 #. module: mrp
-#: field:mrp.config.settings,module_mrp_operations:0
-msgid "Allow detailed planning of work order"
+#: view:mrp.production:0
+msgid "Total Qty"
 msgstr ""
 
 #. module: mrp
@@ -2110,11 +2082,6 @@ msgid "Assignment from stock."
 msgstr ""
 
 #. module: mrp
-#: selection:mrp.production,state:0
-msgid "Waiting Goods"
-msgstr ""
-
-#. module: mrp
 #: code:addons/mrp/report/price.py:139
 #, python-format
 msgid "Cost Price per Unit of Measure"
@@ -2177,11 +2144,6 @@ msgstr ""
 #: field:mrp.production.workcenter.line,message_comment_ids:0
 #: help:mrp.production.workcenter.line,message_comment_ids:0
 msgid "Comments and emails"
-msgstr ""
-
-#. module: mrp
-#: constraint:stock.move:0
-msgid "You cannot move products from or to a location of the type view."
 msgstr ""
 
 #. module: mrp
@@ -2668,6 +2630,9 @@ msgstr ""
 
 #~ msgid "Default UOM"
 #~ msgstr "Privzeta EM"
+
+#~ msgid "The company name must be unique !"
+#~ msgstr "Ime podjetja mora biti unikatno !"
 
 #~ msgid "Error: Invalid ean code"
 #~ msgstr "Napaka: neveljavna EAN črtna koda"

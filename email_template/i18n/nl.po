@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2012-11-24 02:52+0000\n"
-"PO-Revision-Date: 2012-07-02 15:02+0000\n"
+"POT-Creation-Date: 2012-12-03 16:03+0000\n"
+"PO-Revision-Date: 2012-11-24 18:28+0000\n"
 "Last-Translator: Erwin van der Ploeg (Endian Solutions) <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-11-24 06:45+0000\n"
-"X-Generator: Launchpad (build 16293)\n"
+"X-Launchpad-Export-Date: 2012-12-04 05:47+0000\n"
+"X-Generator: Launchpad (build 16335)\n"
 
 #. module: email_template
 #: field:email.template,email_from:0
@@ -43,7 +43,7 @@ msgstr "Opt-Out"
 #: field:email.template,email_to:0
 #: field:email_template.preview,email_to:0
 msgid "To (Emails)"
-msgstr ""
+msgstr "Naar (E-mails)"
 
 #. module: email_template
 #: field:email.template,mail_server_id:0
@@ -77,7 +77,7 @@ msgstr ""
 #. module: email_template
 #: view:email.template:0
 msgid "Remove context action"
-msgstr ""
+msgstr "Verwijder context actie"
 
 #. module: email_template
 #: help:email.template,mail_server_id:0
@@ -96,10 +96,9 @@ msgid "Report Filename"
 msgstr "Bestandsnaam overzicht"
 
 #. module: email_template
-#: constraint:res.partner:0
-msgid "Error ! You cannot create recursive associated members."
-msgstr ""
-"Fout! Het is niet mogelijk om recursieve geassocieerde leden te maken"
+#: view:email.template:0
+msgid "Preview"
+msgstr "Voorbeeld"
 
 #. module: email_template
 #: field:email.template,reply_to:0
@@ -110,7 +109,7 @@ msgstr "Antwoord aan"
 #. module: email_template
 #: view:mail.compose.message:0
 msgid "Use template"
-msgstr ""
+msgstr "Gebruik sjabloon"
 
 #. module: email_template
 #: field:email.template,body_html:0
@@ -122,12 +121,7 @@ msgstr "Berichttekst"
 #: code:addons/email_template/email_template.py:218
 #, python-format
 msgid "%s (copy)"
-msgstr ""
-
-#. module: email_template
-#: view:email.template:0
-msgid "Preview"
-msgstr ""
+msgstr "%s (kopie)"
 
 #. module: email_template
 #: help:email.template,user_signature:0
@@ -147,7 +141,7 @@ msgstr "SMTP-server"
 #. module: email_template
 #: view:mail.compose.message:0
 msgid "Save as new template"
-msgstr ""
+msgstr "Opslaan als nieuw sjabloon"
 
 #. module: email_template
 #: help:email.template,sub_object:0
@@ -175,12 +169,6 @@ msgstr ""
 "aanduidingen bevatten )\n"
 "De verlenging kan worden weggelaten en zal dan uit het rapporttype worden "
 "afgeleid."
-
-#. module: email_template
-#: code:addons/email_template/email_template.py:205
-#, python-format
-msgid "Warning"
-msgstr "Waarschuwing"
 
 #. module: email_template
 #: field:email.template,ref_ir_act_window:0
@@ -222,7 +210,7 @@ msgstr ""
 #. module: email_template
 #: view:email.template:0
 msgid "Dynamic Value Builder"
-msgstr ""
+msgstr "Dynamic Value Builder"
 
 #. module: email_template
 #: model:ir.actions.act_window,name:email_template.wizard_email_template_preview
@@ -264,12 +252,12 @@ msgstr "Geavanceerd"
 #. module: email_template
 #: view:email_template.preview:0
 msgid "Preview of"
-msgstr ""
+msgstr "Voorbeeld van"
 
 #. module: email_template
 #: view:email_template.preview:0
 msgid "Using sample document"
-msgstr ""
+msgstr "Gebruik voorbeeld document"
 
 #. module: email_template
 #: view:email.template:0
@@ -374,7 +362,7 @@ msgstr ""
 #: field:email.template,email_recipients:0
 #: field:email_template.preview,email_recipients:0
 msgid "To (Partners)"
-msgstr ""
+msgstr "Naar (Relaties)"
 
 #. module: email_template
 #: field:email.template,auto_delete:0
@@ -401,7 +389,7 @@ msgstr "Gerelateerde document model"
 #. module: email_template
 #: view:email.template:0
 msgid "Addressing"
-msgstr ""
+msgstr "Adresering"
 
 #. module: email_template
 #: help:email.template,email_recipients:0
@@ -432,7 +420,7 @@ msgstr "Cc"
 #: field:email.template,model_id:0
 #: field:email_template.preview,model_id:0
 msgid "Applies to"
-msgstr ""
+msgstr "Heeft betrekking op"
 
 #. module: email_template
 #: field:email.template,sub_model_object_field:0
@@ -483,9 +471,10 @@ msgstr ""
 "doelveld selecteren binnen de bestemming document model (sub-model)."
 
 #. module: email_template
-#: constraint:res.partner:0
-msgid "Error: Invalid ean code"
-msgstr ""
+#: code:addons/email_template/email_template.py:205
+#, python-format
+msgid "Warning"
+msgstr "Waarschuwing"
 
 #. module: email_template
 #: field:email.template,user_signature:0
@@ -502,7 +491,7 @@ msgstr "Relatie"
 #: field:email.template,null_value:0
 #: field:email_template.preview,null_value:0
 msgid "Default Value"
-msgstr ""
+msgstr "Standaardwaarde"
 
 #. module: email_template
 #: help:email.template,attachment_ids:0
@@ -525,7 +514,7 @@ msgstr ""
 #. module: email_template
 #: view:email.template:0
 msgid "Contents"
-msgstr ""
+msgstr "Inhoud"
 
 #. module: email_template
 #: field:email.template,subject:0
@@ -1388,6 +1377,10 @@ msgstr "Onderwerp"
 #~ msgid "Message references, such as identifiers of previous messages"
 #~ msgstr "Bericht referenties, zoals identifiers van vorige berichten"
 
+#~ msgid "Error ! You cannot create recursive associated members."
+#~ msgstr ""
+#~ "Fout! Het is niet mogelijk om recursieve geassocieerde leden te maken"
+
 #~ msgid "Delivery Failed"
 #~ msgstr "Afleveren mislukt"
 
@@ -1457,9 +1450,3 @@ msgstr "Onderwerp"
 
 #~ msgid "Related Document model"
 #~ msgstr "Gerelateerde document model"
-
-#~ msgid "Rich-text Contents"
-#~ msgstr "Rich-tekst inhoud"
-
-#~ msgid "Text Contents"
-#~ msgstr "Tekst inhoud"

@@ -22,12 +22,12 @@
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import time
-import pooler
-from osv import fields, osv
-from tools.translate import _
-from tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP, float_compare
-import decimal_precision as dp
-import netsvc
+from openerp import pooler
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP, float_compare
+import openerp.addons.decimal_precision as dp
+from openerp import netsvc
 
 class sale_shop(osv.osv):
     _name = "sale.shop"
@@ -201,12 +201,12 @@ class sale_order(osv.osv):
             help="""This field controls how invoice and delivery operations are synchronized.
   - With 'Before Delivery', a draft invoice is created, and it must be paid before delivery."""),
         'pricelist_id': fields.many2one('product.pricelist', 'Pricelist', required=True, readonly=True, states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}, help="Pricelist for current sales order."),
-        'currency_id': fields.related('pricelist_id', 'currency_id', type="many2one", relation="res.currency", readonly=True, required=True),
+        'currency_id': fields.related('pricelist_id', 'currency_id', type="many2one", relation="res.currency", string="Currency", readonly=True, required=True),
         'project_id': fields.many2one('account.analytic.account', 'Contract / Analytic', readonly=True, states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}, help="The analytic account related to a sales order."),
 
         'order_line': fields.one2many('sale.order.line', 'order_id', 'Order Lines', readonly=True, states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}),
         'invoice_ids': fields.many2many('account.invoice', 'sale_order_invoice_rel', 'order_id', 'invoice_id', 'Invoices', readonly=True, help="This is the list of invoices that have been generated for this sales order. The same sales order may have been invoiced in several times (by line for example)."),
-        'invoiced_rate': fields.function(_invoiced_rate, string='Invoiced', type='float'),
+        'invoiced_rate': fields.function(_invoiced_rate, string='Invoiced Ratio', type='float'),
         'invoiced': fields.function(_invoiced, string='Paid',
             fnct_search=_invoiced_search, type='boolean', help="It indicates that an invoice has been paid."),
         'invoice_exists': fields.function(_invoice_exists, string='Invoiced',
@@ -242,7 +242,7 @@ class sale_order(osv.osv):
         'order_policy': 'manual',
         'state': 'draft',
         'user_id': lambda obj, cr, uid, context: uid,
-        'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'sale.order'),
+        'name': lambda obj, cr, uid, context: '/',
         'invoice_quantity': 'order',
         'partner_invoice_id': lambda self, cr, uid, context: context.get('partner_id', False) and self.pool.get('res.partner').address_get(cr, uid, [context['partner_id']], ['invoice'])['invoice'],
         'partner_shipping_id': lambda self, cr, uid, context: context.get('partner_id', False) and self.pool.get('res.partner').address_get(cr, uid, [context['partner_id']], ['delivery'])['delivery'],
@@ -295,12 +295,16 @@ class sale_order(osv.osv):
         }
         return {'warning': warning, 'value': value}
 
-    def onchange_partner_id(self, cr, uid, ids, part):
+    def onchange_partner_id(self, cr, uid, ids, part, context=None):
         if not part:
             return {'value': {'partner_invoice_id': False, 'partner_shipping_id': False,  'payment_term': False, 'fiscal_position': False}}
 
-        addr = self.pool.get('res.partner').address_get(cr, uid, [part], ['delivery', 'invoice', 'contact'])
-        part = self.pool.get('res.partner').browse(cr, uid, part)
+        part = self.pool.get('res.partner').browse(cr, uid, part, context=context)
+        #if the chosen partner is not a company and has a parent company, use the parent to choose the delivery, the 
+        #invoicing addresses and all the fields related to the partner.
+        if part.parent_id and not part.is_company:
+            part = part.parent_id
+        addr = self.pool.get('res.partner').address_get(cr, uid, [part.id], ['delivery', 'invoice', 'contact'])
         pricelist = part.property_product_pricelist and part.property_product_pricelist.id or False
         payment_term = part.property_payment_term and part.property_payment_term.id or False
         fiscal_position = part.property_account_position and part.property_account_position.id or False
@@ -317,6 +321,8 @@ class sale_order(osv.osv):
         return {'value': val}
 
     def create(self, cr, uid, vals, context=None):
+        if vals.get('name','/')=='/':
+            vals['name'] = self.pool.get('ir.sequence').get(cr, uid, 'sale.order') or '/'
         order =  super(sale_order, self).create(cr, uid, vals, context=context)
         if order:
             self.create_send_note(cr, uid, [order], context=context)
@@ -355,7 +361,7 @@ class sale_order(osv.osv):
             'type': 'out_invoice',
             'reference': order.client_order_ref or order.name,
             'account_id': order.partner_id.property_account_receivable.id,
-            'partner_id': order.partner_id.id,
+            'partner_id': order.partner_invoice_id.id,
             'journal_id': journal_ids[0],
             'invoice_line': [(6, 0, lines)],
             'currency_id': order.pricelist_id.currency_id.id,
@@ -469,7 +475,7 @@ class sale_order(osv.osv):
                 return False
         return True
 
-    def action_invoice_create(self, cr, uid, ids, grouped=False, states=None, date_inv = False, context=None):
+    def action_invoice_create(self, cr, uid, ids, grouped=False, states=None, date_invoice = False, context=None):
         if states is None:
             states = ['confirmed', 'done', 'exception']
         res = False
@@ -482,8 +488,8 @@ class sale_order(osv.osv):
             context = {}
         # If date was specified, use it as date invoiced, usefull when invoices are generated this month and put the
         # last day of the last month as invoice date
-        if date_inv:
-            context['date_inv'] = date_inv
+        if date_invoice:
+            context['date_invoice'] = date_invoice
         for o in self.browse(cr, uid, ids, context=context):
             currency_id = o.pricelist_id.currency_id.id
             if (o.partner_id.id in partner_currency) and (partner_currency[o.partner_id.id] <> currency_id):
@@ -526,55 +532,17 @@ class sale_order(osv.osv):
         return res
 
     def action_invoice_cancel(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
-        for sale in self.browse(cr, uid, ids, context=context):
-            for line in sale.order_line:
-                #
-                # Check if the line is invoiced (has asociated invoice
-                # lines from non-cancelled invoices).
-                #
-                invoiced = False
-                for iline in line.invoice_lines:
-                    if iline.invoice_id and iline.invoice_id.state != 'cancel':
-                        invoiced = True
-                        break
-                # Update the line (only when needed)
-                if line.invoiced != invoiced:
-                    self.pool.get('sale.order.line').write(cr, uid, [line.id], {'invoiced': invoiced}, context=context)
-        self.write(cr, uid, ids, {'state': 'invoice_except', 'invoice_ids': False}, context=context)
+        self.write(cr, uid, ids, {'state': 'invoice_except'}, context=context)
         return True
 
     def action_invoice_end(self, cr, uid, ids, context=None):
-        for order in self.browse(cr, uid, ids, context=context):
-            #
-            # Update the sale order lines state (and invoiced flag).
-            #
-            for line in order.order_line:
-                vals = {}
-                #
-                # Check if the line is invoiced (has asociated invoice
-                # lines from non-cancelled invoices).
-                #
-                invoiced = False
-                for iline in line.invoice_lines:
-                    if iline.invoice_id and iline.invoice_id.state != 'cancel':
-                        invoiced = True
-                        break
-                if line.invoiced != invoiced:
-                    vals['invoiced'] = invoiced
-                # If the line was in exception state, now it gets confirmed.
+        for this in self.browse(cr, uid, ids, context=context):
+            for line in this.order_line:
                 if line.state == 'exception':
-                    vals['state'] = 'confirmed'
-                # Update the line (only when needed).
-                if vals:
-                    self.pool.get('sale.order.line').write(cr, uid, [line.id], vals, context=context)
-            #
-            # Update the sales order state.
-            #
-            if order.state == 'invoice_except':
-                self.write(cr, uid, [order.id], {'state': 'progress'}, context=context)
-            self.invoice_paid_send_note(cr, uid, [order.id], context=context)
+                    line.write({'state': 'confirmed'})
+            if this.state == 'invoice_except':
+                this.write({'state': 'progress'})
+            this.invoice_paid_send_note()
         return True
 
     def action_cancel(self, cr, uid, ids, context=None):
@@ -728,15 +696,30 @@ class sale_order_line(osv.osv):
         except Exception, ex:
             return False
 
+    def _fnct_line_invoiced(self, cr, uid, ids, field_name, args, context=None):
+        res = dict.fromkeys(ids, False)
+        for this in self.browse(cr, uid, ids, context=context):
+            res[this.id] = this.invoice_lines and \
+                all(iline.invoice_id.state != 'cancel' for iline in this.invoice_lines) 
+        return res
+
+    def _order_lines_from_invoice(self, cr, uid, ids, context=None):
+        # direct access to the m2m table is the less convoluted way to achieve this (and is ok ACL-wise)
+        cr.execute("""SELECT DISTINCT sol.id FROM sale_order_invoice_rel rel JOIN
+                                                  sale_order_line sol ON (sol.order_id = rel.order_id)
+                                    WHERE rel.invoice_id = ANY(%s)""", (list(ids),))
+        return [i[0] for i in cr.fetchall()]
+
     _name = 'sale.order.line'
     _description = 'Sales Order Line'
     _columns = {
         'order_id': fields.many2one('sale.order', 'Order Reference', required=True, ondelete='cascade', select=True, readonly=True, states={'draft':[('readonly',False)]}),
-        'name': fields.text('Description', size=256, required=True, select=True, readonly=True, states={'draft': [('readonly', False)]}),
+        'name': fields.text('Description', required=True, select=True, readonly=True, states={'draft': [('readonly', False)]}),
         'sequence': fields.integer('Sequence', help="Gives the sequence order when displaying a list of sales order lines."),
         'product_id': fields.many2one('product.product', 'Product', domain=[('sale_ok', '=', True)], change_default=True),
         'invoice_lines': fields.many2many('account.invoice.line', 'sale_order_line_invoice_rel', 'order_line_id', 'invoice_id', 'Invoice Lines', readonly=True),
-        'invoiced': fields.boolean('Invoiced', readonly=True),
+        'invoiced': fields.function(_fnct_line_invoiced, string='Invoiced', type='boolean',
+            store={'account.invoice': (_order_lines_from_invoice, ['state'], 10)}),
         'price_unit': fields.float('Unit Price', required=True, digits_compute= dp.get_precision('Product Price'), readonly=True, states={'draft': [('readonly', False)]}),
         'type': fields.selection([('make_to_stock', 'from stock'), ('make_to_order', 'on order')], 'Procurement Method', required=True, readonly=True, states={'draft': [('readonly', False)]},
          help="From stock: When needed, the product is taken from the stock or we wait for replenishment.\nOn order: When needed, the product is purchased or produced."),
@@ -759,14 +742,13 @@ class sale_order_line(osv.osv):
         'salesman_id':fields.related('order_id', 'user_id', type='many2one', relation='res.users', store=True, string='Salesperson'),
         'company_id': fields.related('order_id', 'company_id', type='many2one', relation='res.company', string='Company', store=True, readonly=True),
     }
-    _order = 'sequence, id'
+    _order = 'order_id desc, sequence'
     _defaults = {
         'product_uom' : _get_uom_id,
         'discount': 0.0,
         'product_uom_qty': 1,
         'product_uos_qty': 1,
         'sequence': 10,
-        'invoiced': 0,
         'state': 'draft',
         'type': 'make_to_stock',
         'price_unit': 0.0,
@@ -799,7 +781,7 @@ class sale_order_line(osv.osv):
         if not line.invoiced:
             if not account_id:
                 if line.product_id:
-                    account_id = line.product_id.product_tmpl_id.property_account_income.id
+                    account_id = line.product_id.property_account_income.id
                     if not account_id:
                         account_id = line.product_id.categ_id.property_account_income_categ.id
                     if not account_id:
@@ -849,7 +831,6 @@ class sale_order_line(osv.osv):
             if vals:
                 inv_id = self.pool.get('account.invoice.line').create(cr, uid, vals, context=context)
                 cr.execute('insert into sale_order_line_invoice_rel (order_line_id,invoice_id) values (%s,%s)', (line.id, inv_id))
-                self.write(cr, uid, [line.id], {'invoiced': True})
                 sales.add(line.order_id.id)
                 create_ids.append(inv_id)
         # Trigger workflow events
@@ -897,7 +878,7 @@ class sale_order_line(osv.osv):
     def copy_data(self, cr, uid, id, default=None, context=None):
         if not default:
             default = {}
-        default.update({'state': 'draft',  'invoiced': False, 'invoice_lines': []})
+        default.update({'state': 'draft',  'invoice_lines': []})
         return super(sale_order_line, self).copy_data(cr, uid, id, default, context=context)
 
     def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,

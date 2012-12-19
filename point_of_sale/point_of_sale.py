@@ -19,22 +19,20 @@
 #
 ##############################################################################
 
-import pdb
-import openerp
-import addons
-import openerp.addons.product.product
-
-import time
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-import logging
-
-import netsvc
-from osv import fields, osv
-import tools
-from tools.translate import _
 from decimal import Decimal
-import decimal_precision as dp
+import logging
+import pdb
+import time
+
+import openerp
+from openerp import netsvc, tools
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
+import openerp.addons.decimal_precision as dp
+import openerp.addons.product.product
 
 _logger = logging.getLogger(__name__)
 
@@ -618,9 +616,10 @@ class pos_order(osv.osv):
         return session_ids and session_ids[0] or False
 
     def _default_pricelist(self, cr, uid, context=None):
-        res = self.pool.get('sale.shop').search(cr, uid, [], context=context)
-        if res:
-            shop = self.pool.get('sale.shop').browse(cr, uid, res[0], context=context)
+        session_ids = self._default_session(cr, uid, context) 
+        if session_ids:
+            session_record = self.pool.get('pos.session').browse(cr, uid, session_ids, context=context)
+            shop = self.pool.get('sale.shop').browse(cr, uid, session_record.config_id.shop_id.id, context=context)
             return shop.pricelist_id and shop.pricelist_id.id or False
         return False
 

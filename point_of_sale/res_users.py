@@ -1,6 +1,9 @@
 #!/usr/bin/env python
-from osv import osv, fields
+
 import math
+
+from openerp.osv import osv, fields
+
 import openerp.addons.product.product
 
 
@@ -19,7 +22,7 @@ class res_users(osv.osv):
 
     def edit_ean(self, cr, uid, ids, context):
         return {
-            'name': "Edit Ean",
+            'name': "Edit EAN",
             'type': 'ir.actions.act_window',
             'view_type': 'form',
             'view_mode': 'form',

@@ -19,11 +19,12 @@
 #
 ##############################################################################
 
-from osv import osv, fields
-from osv.orm import intersect, except_orm
-import tools.sql
-from tools.translate import _
-from decimal_precision import decimal_precision as dp
+from openerp.osv import osv, fields
+from openerp.osv.orm import intersect, except_orm
+import openerp.tools
+from openerp.tools.translate import _
+
+from openerp.addons.decimal_precision import decimal_precision as dp
 
 
 class account_analytic_account(osv.osv):
@@ -75,15 +76,21 @@ class account_analytic_account(osv.osv):
                     res[id][f] = 0.0
                 res2 = {}
                 for account in accounts:
-                    cr.execute("SELECT product_id, user_id, to_invoice, sum(unit_amount), product_uom_id, name " \
-                            "FROM account_analytic_line as line " \
-                            "WHERE account_id = %s " \
-                                "AND invoice_id is NULL AND to_invoice IS NOT NULL " \
-                            "GROUP BY product_id, user_id, to_invoice, product_uom_id, name", (account.id,))
+                    cr.execute("""
+                        SELECT product_id, sum(amount), user_id, to_invoice, sum(unit_amount), product_uom_id, line.name
+                        FROM account_analytic_line line
+                            LEFT JOIN account_analytic_journal journal ON (journal.id = line.journal_id)
+                        WHERE account_id = %s
+                            AND journal.type != 'purchase'
+                            AND invoice_id IS NULL
+                            AND to_invoice IS NOT NULL
+                        GROUP BY product_id, user_id, to_invoice, product_uom_id, line.name""", (account.id,))
 
                     res[account.id][f] = 0.0
-                    for product_id, user_id, factor_id, qty, uom, line_name in cr.fetchall():
-                        price = self.pool.get('account.analytic.line')._get_invoice_price(cr, uid, account, product_id, user_id, qty, context)
+                    for product_id, price, user_id, factor_id, qty, uom, line_name in cr.fetchall():
+                        price = -price
+                        if product_id:
+                            price = self.pool.get('account.analytic.line')._get_invoice_price(cr, uid, account, product_id, user_id, qty, context)
                         factor = self.pool.get('hr_timesheet_invoice.factor').browse(cr, uid, factor_id, context=context)
                         res[account.id][f] += price * qty * (100-factor.factor or 0.0) / 100.0
 
@@ -296,11 +303,14 @@ class account_analytic_account(osv.osv):
     def _timesheet_ca_invoiced_calc(self, cr, uid, ids, name, arg, context=None):
         lines_obj = self.pool.get('account.analytic.line')
         res = {}
+        inv_ids = []
         for account in self.browse(cr, uid, ids, context=context):
             res[account.id] = 0.0
             line_ids = lines_obj.search(cr, uid, [('account_id','=', account.id), ('invoice_id','!=',False), ('to_invoice','!=', False), ('journal_id.type', '=', 'general')], context=context)
             for line in lines_obj.browse(cr, uid, line_ids, context=context):
-                res[account.id] += line.invoice_id.amount_untaxed
+                if line.invoice_id not in inv_ids:
+                    inv_ids.append(line.invoice_id)
+                    res[account.id] += line.invoice_id.amount_untaxed
         return res
 
     def _remaining_ca_calc(self, cr, uid, ids, name, arg, context=None):
@@ -509,7 +519,7 @@ class account_analytic_account_summary_user(osv.osv):
     }
 
     def init(self, cr):
-        tools.sql.drop_view_if_exists(cr, 'account_analytic_analysis_summary_user')
+        openerp.tools.sql.drop_view_if_exists(cr, 'account_analytic_analysis_summary_user')
         cr.execute('''CREATE OR REPLACE VIEW account_analytic_analysis_summary_user AS (
             with mu as
                 (select max(id) as max_user from res_users)
@@ -544,7 +554,7 @@ class account_analytic_account_summary_month(osv.osv):
     }
 
     def init(self, cr):
-        tools.sql.drop_view_if_exists(cr, 'account_analytic_analysis_summary_month')
+        openerp.tools.sql.drop_view_if_exists(cr, 'account_analytic_analysis_summary_month')
         cr.execute('CREATE VIEW account_analytic_analysis_summary_month AS (' \
                 'SELECT ' \
                     '(TO_NUMBER(TO_CHAR(d.month, \'YYYYMM\'), \'999999\') + (d.account_id  * 1000000::bigint))::bigint AS id, ' \

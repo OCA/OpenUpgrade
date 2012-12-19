@@ -11,9 +11,8 @@
             }</field>
             <field name="params" eval="&quot;{
                 'domain': [
-                  ('notification_ids.partner_id.user_ids', 'in', [uid]),
                   ('to_read', '=', True),
-                  ('favorite_user_ids', 'not in', [uid])
+                  ('starred', '=', False),
                 ],
                 'view_mailbox': True,
                 'view_inbox': True,
@@ -40,9 +39,12 @@
               'search_default_message_unread': True
             }</field>
             <field name="params" eval="&quot;{
-                'domain': [('partner_ids.user_ids', 'in', [uid])],
+                'domain': [
+                    ('partner_ids.user_ids', 'in', [uid])
+                ],
                 'view_mailbox': True,
-                'read_action': 'read', }&quot;"/>
+                'read_action': 'read',
+                'show_compose_message': False }&quot;"/>
             <field name="help" type="html">
                 <p>
                     <b>No private message.</b>
@@ -62,12 +64,15 @@
               'search_default_message_unread': True
             }</field>
             <field name="params" eval="&quot;{
-                'domain': [('favorite_user_ids', 'in', [uid])],
+                'domain': [
+                    ('starred', '=', True),
+                ],
                 'view_mailbox': True,
-                'read_action': 'read', }&quot;"/>
+                'read_action': 'read',
+                'compose_as_todo': True }&quot;"/>
             <field name="help" type="html">
                 <p>
-                    <b>No todo!</b>
+                    <b>No todo.</b>
                 </p><p>
                     When you process messages in your inbox, you can mark some
                     as <i>todo</i>. From this menu, you can process all your todo.
@@ -80,12 +85,16 @@
             <field name="tag">mail.wall</field>
             <field name="context">{
               'default_model': 'res.users', 
-              'default_res_id': uid, 
-              'search_default_message_read': True
+              'default_res_id': uid
             }</field>
             <field name="params" eval="&quot;{
-                'domain': ['|', ('notification_ids.partner_id.user_ids', 'in', [uid]), ('author_id.user_ids', 'in', [uid])],
-                'view_mailbox': True, }&quot;"/>
+                'domain': [
+                    '|',
+                    ('notification_ids.partner_id.user_ids', 'in', [uid]),
+                    ('author_id.user_ids', 'in', [uid]),
+                ],
+                'view_mailbox': True,
+                'show_compose_message': False }&quot;"/>
             <field name="help" type="html">
                 <p>
                     No message found and no message sent yet.

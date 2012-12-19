@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-11-24 02:52+0000\n"
-"PO-Revision-Date: 2012-08-13 12:13+0000\n"
-"Last-Translator: Omar (Pexego) <bronxkds@hotmail.com>\n"
+"PO-Revision-Date: 2012-12-11 21:47+0000\n"
+"Last-Translator: Ana Juaristi Olalde <ajuaristio@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-11-24 06:54+0000\n"
-"X-Generator: Launchpad (build 16293)\n"
+"X-Launchpad-Export-Date: 2012-12-12 04:41+0000\n"
+"X-Generator: Launchpad (build 16361)\n"
 
 #. module: document_page
 #: view:document.page:0
@@ -22,7 +22,7 @@ msgstr ""
 #: selection:document.page,type:0
 #: model:ir.actions.act_window,name:document_page.action_category
 msgid "Category"
-msgstr ""
+msgstr "Categoría"
 
 #. module: document_page
 #: view:document.page:0
@@ -45,7 +45,7 @@ msgstr "Menú"
 #: view:document.page:0
 #: model:ir.model,name:document_page.model_document_page
 msgid "Document Page"
-msgstr ""
+msgstr "Página de documento"
 
 #. module: document_page
 #: model:ir.actions.act_window,name:document_page.action_related_page_history
@@ -68,13 +68,15 @@ msgstr "Agrupar por..."
 #. module: document_page
 #: view:document.page:0
 msgid "Template"
-msgstr ""
+msgstr "Plantilla"
 
 #. module: document_page
 #: view:document.page:0
 msgid ""
 "that will be used as a content template for all new page of this category."
 msgstr ""
+"esto será usado como una plantilla de contenido para todas las páginas de "
+"esta categoría."
 
 #. module: document_page
 #: field:document.page,name:0
@@ -89,27 +91,27 @@ msgstr "Asistente crear menú"
 #. module: document_page
 #: field:document.page,type:0
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #. module: document_page
 #: model:ir.model,name:document_page.model_wizard_document_page_history_show_diff
 msgid "wizard.document.page.history.show_diff"
-msgstr ""
+msgstr "wizard.document.page.history.show_diff"
 
 #. module: document_page
 #: field:document.page.history,create_uid:0
 msgid "Modified By"
-msgstr ""
+msgstr "Modificado por"
 
 #. module: document_page
 #: view:document.page.create.menu:0
 msgid "or"
-msgstr ""
+msgstr "o"
 
 #. module: document_page
 #: help:document.page,type:0
 msgid "Page type"
-msgstr ""
+msgstr "Tipo de página"
 
 #. module: document_page
 #: view:document.page.create.menu:0
@@ -120,18 +122,18 @@ msgstr "Información del menú"
 #: view:document.page.history:0
 #: model:ir.model,name:document_page.model_document_page_history
 msgid "Document Page History"
-msgstr ""
+msgstr "Historia de página de documento"
 
 #. module: document_page
 #: model:ir.ui.menu,name:document_page.menu_page_history
 msgid "Pages history"
-msgstr ""
+msgstr "Historial de páginas"
 
 #. module: document_page
 #: code:addons/document_page/document_page.py:129
 #, python-format
 msgid "There are no changes in revisions."
-msgstr ""
+msgstr "No hay cambios en las revisiones."
 
 #. module: document_page
 #: field:document.page.history,create_date:0
@@ -155,7 +157,7 @@ msgstr "Páginas"
 #. module: document_page
 #: model:ir.ui.menu,name:document_page.menu_category
 msgid "Categories"
-msgstr ""
+msgstr "Categorías"
 
 #. module: document_page
 #: field:document.page.create.menu,menu_parent_id:0
@@ -172,11 +174,12 @@ msgstr "Creado en"
 #, python-format
 msgid "You need to select minimum one or maximum two history revisions!"
 msgstr ""
+"¡Necesita seleccionar mínimo una y máximo dos revisiones de historial!"
 
 #. module: document_page
 #: model:ir.actions.act_window,name:document_page.action_history
 msgid "Page history"
-msgstr ""
+msgstr "Historial de página"
 
 #. module: document_page
 #: field:document.page.history,summary:0
@@ -186,12 +189,12 @@ msgstr "Resumen"
 #. module: document_page
 #: model:ir.actions.act_window,help:document_page.action_page
 msgid "Create web pages"
-msgstr ""
+msgstr "Crear páginas Web"
 
 #. module: document_page
 #: view:document.page.history:0
 msgid "Document History"
-msgstr ""
+msgstr "Historial del Documento"
 
 #. module: document_page
 #: field:document.page.create.menu,menu_name:0
@@ -201,12 +204,12 @@ msgstr "Nombre menú"
 #. module: document_page
 #: field:document.page.history,page_id:0
 msgid "Page"
-msgstr ""
+msgstr "Página"
 
 #. module: document_page
 #: field:document.page,history_ids:0
 msgid "History"
-msgstr ""
+msgstr "Historial"
 
 #. module: document_page
 #: field:document.page,write_date:0
@@ -223,14 +226,14 @@ msgstr "Crear menú"
 #. module: document_page
 #: field:document.page,display_content:0
 msgid "Displayed Content"
-msgstr ""
+msgstr "Contenido mostrado"
 
 #. module: document_page
 #: code:addons/document_page/document_page.py:129
 #: code:addons/document_page/wizard/document_page_show_diff.py:50
 #, python-format
 msgid "Warning!"
-msgstr ""
+msgstr "¡Advertencia!"
 
 #. module: document_page
 #: view:document.page.create.menu:0
@@ -246,164 +249,9 @@ msgstr "Dif."
 #. module: document_page
 #: view:document.page:0
 msgid "Document Type"
-msgstr ""
+msgstr "Tipo de documento"
 
 #. module: document_page
 #: field:document.page,child_ids:0
 msgid "Children"
-msgstr ""
-
-#~ msgid "Display Method"
-#~ msgstr "Método de visualización"
-
-#~ msgid "Open Page"
-#~ msgstr "Abrir página"
-
-#~ msgid "Indicates that this pages have a table of contents or not"
-#~ msgstr "Indica si estas páginas tienen una tabla de contenidos o no."
-
-#~ msgid "Minor edit"
-#~ msgstr "Edición menor"
-
-#~ msgid "Child Pages"
-#~ msgstr "Páginas hijas"
-
-#~ msgid "Parent Page"
-#~ msgstr "Página padre"
-
-#~ msgid "History Lines"
-#~ msgstr "Líneas historial"
-
-#~ msgid "Page Content"
-#~ msgstr "Contenido página"
-
-#, python-format
-#~ msgid "Warning !"
-#~ msgstr "¡Aviso!"
-
-#, python-format
-#~ msgid "There are no changes in revisions"
-#~ msgstr "No hay cambios en revisiones"
-
-#~ msgid "Description"
-#~ msgstr "Descripción"
-
-#~ msgid "Needs Review"
-#~ msgstr "Necesita revisión"
-
-#~ msgid ""
-#~ "Indicates that this page should be reviewed, raising the attention of other "
-#~ "contributors"
-#~ msgstr ""
-#~ "Indica que esta página debería ser revisada, captando la atención de otros "
-#~ "colaboradores."
-
-#~ msgid "Tree"
-#~ msgstr "Árbol"
-
-#~ msgid "Page Template"
-#~ msgstr "Plantilla de página"
-
-#~ msgid "Keywords"
-#~ msgstr "Palabras clave"
-
-#~ msgid ""
-#~ "With Wiki Pages you can share ideas and questions with your coworkers. You "
-#~ "can create a new document that can be linked to one or several applications "
-#~ "(CRM, Sales, etc.). You can use keywords to ease access to your wiki pages. "
-#~ "There is a basic wiki editing for text format."
-#~ msgstr ""
-#~ "Con páginas wiki puede compartir ideas y preguntas con sus compañeros de "
-#~ "trabajo. Puede crear un nuevo documento que puede ser relacionado con una o "
-#~ "varias aplicaciones (CRM, Ventas, etc.). Puede utilizar palabras clave para "
-#~ "facilitar el acceso a sus páginas wiki. Existe un editor básico para el "
-#~ "formato texto del wiki."
-
-#, python-format
-#~ msgid "Warning"
-#~ msgstr "Advertencia"
-
-#~ msgid "Required to select home page if display method is Home Page"
-#~ msgstr ""
-#~ "Es obligado seleccionar la página de inicio si el método de visualización es "
-#~ "Página inicial."
-
-#~ msgid "Want to create a Index on Selected Pages ? "
-#~ msgstr "¿Desea crear un índice sobre las páginas seleccionadas? "
-
-#~ msgid "Group Description"
-#~ msgstr "Descripción grupo"
-
-#~ msgid "Want to open a wiki page? "
-#~ msgstr "¿Desea abrir una página wiki? "
-
-#~ msgid "Text area"
-#~ msgstr "Área de texto"
-
-#~ msgid "Meta Information"
-#~ msgstr "Meta información"
-
-#~ msgid "Notes"
-#~ msgstr "Notas"
-
-#~ msgid "List"
-#~ msgstr "Lista"
-
-#~ msgid "Created Date"
-#~ msgstr "Fecha de creación"
-
-#~ msgid "All Page Histories"
-#~ msgstr "Todos los historiales de páginas"
-
-#~ msgid "Define the default behaviour of the menu created on this group"
-#~ msgstr "Define el comportamiento por defecto del menú creado en este grupo."
-
-#~ msgid "Close"
-#~ msgstr "Cerrar"
-
-#~ msgid "Wiki Id"
-#~ msgstr "ID Wiki"
-
-#~ msgid "Home Page"
-#~ msgstr "Página inicial"
-
-#~ msgid "Allows you to link with the other page with in the current topic"
-#~ msgstr "Le permite enlazar con la otra página dentro del tema actual."
-
-#~ msgid "Modification Information"
-#~ msgstr "Información modificación"
-
-#~ msgid "Wiki"
-#~ msgstr "Wiki"
-
-#~ msgid "Configuration"
-#~ msgstr "Configuración"
-
-#~ msgid "Create Index"
-#~ msgstr "Crear índice"
-
-#, python-format
-#~ msgid "You need to select minimum 1 or maximum 2 history revision!"
-#~ msgstr ""
-#~ "¡Debe seleccionar como mínimo 1 o como máximo 2 revisiones históricas!"
-
-#~ msgid "This is a major edit ?"
-#~ msgstr "¿Es ésta una edición mayor?"
-
-#~ msgid "Topic"
-#~ msgstr "Tema"
-
-#~ msgid "Modify By"
-#~ msgstr "Modificado por"
-
-#~ msgid "wiz open page"
-#~ msgstr "asistente abrir página"
-
-#~ msgid "Need Review"
-#~ msgstr "Necesita revisión"
-
-#~ msgid "Pages Waiting Review"
-#~ msgstr "Páginas esperando revisión"
-
-#~ msgid "Search Page"
-#~ msgstr "Buscar página"
+msgstr "Hijos"

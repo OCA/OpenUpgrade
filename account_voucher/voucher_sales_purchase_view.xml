@@ -62,7 +62,7 @@
                 <form string="Sale voucher" version="7.0">
                 <header>
                     <button name="proforma_voucher" string="Validate" states="draft" class="oe_highlight"/>
-                    <button name="%(act_pay_voucher)d" context="{'narration':narration, 'title':'Customer Payment', 'type':'receipt', 'partner_id':partner_id, 'reference':reference, 'amount':amount}" type="action" string="Pay" attrs="{'invisible':['|',('pay_now','=','pay_now'),'|',('state','=','draft'), ('paid','=',True)]}" class="oe_highlight"/>
+                    <button name="%(act_pay_voucher)d" context="{'narration':narration, 'title':'Customer Payment', 'type':'receipt', 'partner_id':partner_id, 'reference':reference, 'amount':amount}" type="action" string="Validate Payment" attrs="{'invisible':['|',('pay_now','=','pay_now'),'|',('state','=','draft'), ('paid','=',True)]}" class="oe_highlight"/>
                     <button name="cancel_voucher" string="Cancel" states="draft,proforma" />
                     <button name="cancel_voucher" string="Cancel" type="object" states="posted" confirm="Are you sure you want to cancel this receipt?"/>
                     <button name="action_cancel_draft" type="object" states="cancel" string="Set to Draft"/>
@@ -101,7 +101,7 @@
                                     <field name="tax_id" 
                                         on_change="onchange_price(line_cr_ids, tax_id, partner_id)"
                                         widget="selection" nolabel="1"
-					placeholder="Select tax..."
+					placeholder="Tax"
                                         domain="[('type_tax_use','in',('sale','all')), ('parent_id', '=', False)]"/>
                                     <field name="tax_amount" nolabel="1"/>
                                     <div class="oe_subtotal_footer_separator">
@@ -264,7 +264,7 @@
                                     <field name="tax_id" 
                                         on_change="onchange_price(line_dr_ids, tax_id, partner_id)"
                                         widget="selection" nolabel="1"
-					placeholder="Select tax..."
+					placeholder="Tax"
 
                                         domain="[('type_tax_use','in',('purchase','all')), ('parent_id', '=', False)]"
                                         />
