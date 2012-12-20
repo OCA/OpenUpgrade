@@ -1,0 +1,28 @@
+---account_test---
+account_test / accounting.assert.test   / active (boolean)              : NEW 
+account_test / accounting.assert.test   / code_exec (text)              : NEW required: required, req_default: res = []
+cr.execute("select id, code from account_journal")
+for record in cr.dictfetchall():
+    res.append(record['code'])
+result = res
+
+account_test / accounting.assert.test   / desc (text)                   : NEW 
+account_test / accounting.assert.test   / name (char)                   : NEW required: required
+account_test / accounting.assert.test   / sequence (integer)            : NEW 
+new xml-id of model accounting.assert.test: account_test.account_test_01
+new xml-id of model accounting.assert.test: account_test.account_test_02
+new xml-id of model accounting.assert.test: account_test.account_test_03
+new xml-id of model accounting.assert.test: account_test.account_test_04
+new xml-id of model accounting.assert.test: account_test.account_test_05
+new xml-id of model accounting.assert.test: account_test.account_test_05_2
+new xml-id of model accounting.assert.test: account_test.account_test_06
+new xml-id of model accounting.assert.test: account_test.account_test_06_1
+new xml-id of model accounting.assert.test: account_test.account_test_07
+new xml-id of model accounting.assert.test: account_test.account_test_08
+new xml-id of model ir.actions.act_window: account_test.action_accounting_assert
+new xml-id of model ir.actions.report.xml: account_test.account_assert_test_report
+new xml-id of model ir.model.access: account_test.access_accounting_assert_test
+new xml-id of model ir.model.access: account_test.access_accounting_assert_test_manager
+new xml-id of model ir.ui.menu: account_test.menu_action_license
+new xml-id of model ir.ui.view: account_test.account_assert_form
+new xml-id of model ir.ui.view: account_test.account_assert_tree
