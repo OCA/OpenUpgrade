@@ -2,7 +2,6 @@
 project_issue / account.analytic.account / use_issues (boolean)          : NEW 
 project_issue / project.issue            / categ_id (many2one)           : DEL relation: crm.case.categ
 project_issue / project.issue            / categ_ids (many2many)         : NEW relation: project.category
-project_issue / project.issue            / message_comment_ids (one2many): NEW relation: mail.message
 project_issue / project.issue            / partner_address_id (many2one) : DEL relation: res.partner.address
 project_issue / project.issue            / stage_id (many2one)           : NEW relation: project.task.type
 project_issue / project.issue            / state (selection)             : now a function
@@ -23,16 +22,12 @@ deleted xml-id of model ir.ui.menu: project_issue.menu_deshboard_project_issue
 deleted xml-id of model ir.ui.view: project_issue.board_project_issue_form
 deleted xml-id of model ir.ui.view: project_issue.view_my_open_project_issue_graph
 deleted xml-id of model ir.ui.view: project_issue.view_project_issue_graph_stage
-new xml-id of model ir.actions.server: project_issue.actions_server_project_issue_read
-new xml-id of model ir.actions.server: project_issue.actions_server_project_issue_unread
 new xml-id of model ir.actions.todo: base.open_menu
 new xml-id of model ir.model.access: project_issue.access_project_issue_manager
 new xml-id of model ir.model.access: project_issue.access_project_issue_salesman
 new xml-id of model ir.ui.view: project_issue.analytic_account_inherited_issue_form
 new xml-id of model ir.ui.view: project_issue.view_config_settings
 new xml-id of model ir.ui.view: project_issue.view_project_kanban_inherited
-new xml-id of model ir.values: project_issue.action_project_issue_read
-new xml-id of model ir.values: project_issue.action_project_issue_unread
 new xml-id of model mail.message.subtype: mail.mt_issue_canceled
 new xml-id of model mail.message.subtype: mail.mt_issue_change
 new xml-id of model mail.message.subtype: mail.mt_issue_closed
