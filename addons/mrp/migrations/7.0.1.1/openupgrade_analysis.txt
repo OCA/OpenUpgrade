@@ -1,10 +1,7 @@
 ---mrp---
-mrp          / mrp.bom                  / message_comment_ids (one2many): NEW relation: mail.message
 mrp          / mrp.bom                  / message_ids (one2many)        : NEW relation: mail.message
 mrp          / mrp.bom                  / revision_ids (one2many)       : DEL relation: mrp.bom.revision
-mrp          / mrp.production           / message_comment_ids (one2many): NEW relation: mail.message
 mrp          / mrp.production           / message_ids (one2many)        : NEW relation: mail.message
-mrp          / mrp.production.workcenter.line / message_comment_ids (one2many): NEW relation: mail.message
 mrp          / mrp.production.workcenter.line / message_ids (one2many)        : NEW relation: mail.message
 mrp          / procurement.order        / production_id (many2one)      : NEW relation: mrp.production
 deleted xml-id of model ir.actions.act_window: mrp.act_product_product_2_mrp_bom
@@ -18,17 +15,22 @@ deleted xml-id of model ir.model.access: mrp.access_mrp_bom_revision
 deleted xml-id of model ir.model.access: mrp.access_mrp_bom_revision_manager
 deleted xml-id of model ir.model.access: mrp.access_procurement_stock_worker
 deleted xml-id of model ir.model.access: mrp.access_res_partner_address
+deleted xml-id of model ir.model.access: mrp.access_stock_warehouse_orderpoint_manager
 deleted xml-id of model ir.ui.menu: mrp.menus_dash_mrp
 deleted xml-id of model ir.ui.view: mrp.mrp_bom_revision_form
 deleted xml-id of model ir.ui.view: mrp.mrp_bom_revision_tree
 deleted xml-id of model ir.ui.view: mrp.mrp_production_lot_form_view
 deleted xml-id of model ir.ui.view: mrp.mrp_production_lot_tree_view
+deleted xml-id of model workflow.transition: mrp.trans_product_check_produce
+deleted xml-id of model workflow.transition: procurement.trans_confirm_confirm_wait
+deleted xml-id of model workflow.transition: procurement.trans_produce_make_done
 new xml-id of model ir.actions.act_window: mrp.action_mrp_configuration
 new xml-id of model ir.actions.act_window: mrp.product_open_bom
 new xml-id of model ir.actions.act_window: mrp.product_supply_method_produce
 new xml-id of model ir.actions.client: mrp.action_client_mrp_menu
 new xml-id of model ir.actions.todo: base.open_menu
 new xml-id of model ir.model.access: mrp.access_mrp_bom_purchase_manager
+new xml-id of model ir.model.access: mrp.access_stock_warehouse_orderpoint_user
 new xml-id of model ir.ui.menu: base.menu_mrp_config
 new xml-id of model ir.ui.menu: mrp.menu_mrp_product_form
 new xml-id of model ir.ui.view: mrp.product_form_view_bom_button
@@ -36,3 +38,5 @@ new xml-id of model ir.ui.view: mrp.product_product_normal_form_supply_view
 new xml-id of model ir.ui.view: mrp.view_mrp_config
 new xml-id of model mail.message: mrp.module_install_notification
 new xml-id of model res.groups: mrp.group_mrp_routings
+new xml-id of model workflow.transition: mrp.trans_confirm_mto_need_production
+new xml-id of model workflow.transition: mrp.trans_produce_finished_prod

@@ -1,6 +1,5 @@
 ---hr_timesheet_sheet---
 hr_timesheet_sheet / hr_timesheet_sheet.sheet / date_current (date)           : DEL required: required, req_default: function
-hr_timesheet_sheet / hr_timesheet_sheet.sheet / message_comment_ids (one2many): NEW relation: mail.message
 hr_timesheet_sheet / hr_timesheet_sheet.sheet / message_ids (one2many)        : NEW relation: mail.message
 hr_timesheet_sheet / timesheet.report         / date (date)                   : NEW 
 deleted xml-id of model ir.actions.act_window: hr_timesheet_sheet.action_hr_timesheet_sheet_graph
