@@ -1,13 +1,14 @@
 ---general---
-# 5126 fields matched,
-# Direct match: 4314
-# Found in other module: 168
+# 5117 fields matched,
+# Direct match: 4270
+# Found in other module: 80
 # Found with different name: 0
-# Found with different type: 0
-# In obsolete models: 644
-# New columns: 985
-# Not matched: 235
+# Found with different type: 1
+# In obsolete models: 766
+# New columns: 988
+# Not matched: 244
 new model account.journal.cashbox.line
+new model accounting.assert.test
 new model auth.oauth.provider
 new model base_import.tests.models.char
 new model base_import.tests.models.char.noreadonly
@@ -53,14 +54,12 @@ new model lunch.alert
 new model lunch.order.line
 new model lunch.product.category
 new model mail.alias
-new model mail.favorite
 new model mail.followers
 new model mail.group
 new model mail.mail
 new model mail.message
 new model mail.message.subtype
 new model mail.notification
-new model mail.vote
 new model note.note
 new model note.stage
 new model note.tag
@@ -74,6 +73,13 @@ new model report.lunch.order.line
 new model stock.picking.in
 new model stock.picking.out
 new model web_tests_demo.model
+obsolete model account.coda
+obsolete model account.coda.comm.type
+obsolete model account.coda.trans.category
+obsolete model account.coda.trans.code
+obsolete model account.coda.trans.type
+obsolete model account.journal.column
+obsolete model account.journal.view
 obsolete model aie.category
 obsolete model analytic_journal_rate_grid
 obsolete model auction.artists
@@ -96,8 +102,12 @@ obsolete model basic.calendar.fields
 obsolete model basic.calendar.lines
 obsolete model board.board
 obsolete model board.board.line
+obsolete model coda.bank.account
+obsolete model coda.bank.statement
+obsolete model coda.bank.statement.line
 obsolete model crm.fundraising
 obsolete model crm.fundraising.report
+obsolete model document.storage
 obsolete model edi.document
 obsolete model event.registration.badge
 obsolete model google.import.message
@@ -138,6 +148,7 @@ obsolete model report_account_analytic.planning.stat
 obsolete model report_account_analytic.planning.user
 obsolete model res.log
 obsolete model res.log.report
+obsolete model res.partner.address
 obsolete model res.partner.contact
 obsolete model res.partner.event
 obsolete model res.partner.location
@@ -352,52 +363,12 @@ deleted xml-id of model ir.actions.act_window: sale.action_order_line_tree2
 deleted xml-id of model ir.actions.report.xml: sale_layout.sale_order_1
 deleted xml-id of model ir.ui.view: sale_layout.view_order_form_inherit_1
 ERROR: module not in list of installed modules:
----wiki---
-deleted xml-id of model ir.actions.act_window: wiki.act_wiki_group_open
-deleted xml-id of model ir.actions.act_window: wiki.act_wiki_wiki_history
-deleted xml-id of model ir.actions.act_window: wiki.action_history
-deleted xml-id of model ir.actions.act_window: wiki.action_view_wiki_make_index
-deleted xml-id of model ir.actions.act_window: wiki.action_view_wiki_make_index_values
-deleted xml-id of model ir.actions.act_window: wiki.action_view_wiki_show_diff
-deleted xml-id of model ir.actions.act_window: wiki.action_view_wiki_show_diff_values
-deleted xml-id of model ir.actions.act_window: wiki.action_view_wiki_wiki_page_open
-deleted xml-id of model ir.actions.act_window: wiki.action_wiki
-deleted xml-id of model ir.actions.act_window: wiki.action_wiki_create_menu
-deleted xml-id of model ir.actions.act_window: wiki.action_wiki_groups
-deleted xml-id of model ir.actions.act_window: wiki.action_wiki_groups_browse
-deleted xml-id of model ir.actions.act_window: wiki.action_wiki_review
-deleted xml-id of model ir.model.access: wiki.access_wiki_wiki_sale_manager
-deleted xml-id of model ir.model.access: wiki.wiki_groups
-deleted xml-id of model ir.model.access: wiki.wiki_groups_all
-deleted xml-id of model ir.model.access: wiki.wiki_wiki
-deleted xml-id of model ir.model.access: wiki.wiki_wiki_all
-deleted xml-id of model ir.model.access: wiki.wiki_wiki_history
-deleted xml-id of model ir.model.access: wiki.wiki_wiki_user
-deleted xml-id of model ir.ui.menu: knowledge.menu_document
-deleted xml-id of model ir.ui.menu: knowledge.menu_document_configuration
-deleted xml-id of model ir.ui.menu: wiki.menu_action_wiki_groups
-deleted xml-id of model ir.ui.menu: wiki.menu_action_wiki_wiki
-deleted xml-id of model ir.ui.menu: wiki.menu_wiki_configuration
-deleted xml-id of model ir.ui.view: wiki.view_wiki_create_menu
-deleted xml-id of model ir.ui.view: wiki.view_wiki_filter
-deleted xml-id of model ir.ui.view: wiki.view_wiki_form
-deleted xml-id of model ir.ui.view: wiki.view_wiki_history_tree
-deleted xml-id of model ir.ui.view: wiki.view_wiki_make_index
-deleted xml-id of model ir.ui.view: wiki.view_wiki_show_diff
-deleted xml-id of model ir.ui.view: wiki.view_wiki_tree
-deleted xml-id of model ir.ui.view: wiki.view_wiki_tree_children
-deleted xml-id of model ir.ui.view: wiki.view_wiki_wiki_page_open
-deleted xml-id of model ir.ui.view: wiki.wiki_group_form
-deleted xml-id of model ir.ui.view: wiki.wiki_group_tree
-deleted xml-id of model ir.ui.view: wiki.wiki_history_form
-deleted xml-id of model ir.values: wiki.ir_open_wiki_pages
-deleted xml-id of model res.groups: base.group_document_user
-deleted xml-id of model wiki.groups: wiki.wiki_groups_wikiformatting0
-deleted xml-id of model wiki.wiki: wiki.wiki_wiki_main
-deleted xml-id of model wiki.wiki: wiki.wiki_wiki_quickstart0
-ERROR: module not in list of installed modules:
 ---base_tools---
 deleted xml-id of model ir.ui.menu: base.menu_tools
+ERROR: module not in list of installed modules:
+---fetchmail_crm---
+deleted xml-id of model ir.actions.act_window: fetchmail_crm.action_create_crm_leads_from_email_account
+deleted xml-id of model ir.actions.todo: fetchmail_crm.config_wizard_action_create_crm_leads_from_email_account
 ERROR: module not in list of installed modules:
 ---html_view---
 deleted xml-id of model ir.actions.act_window: html_view.action_html_view_form
@@ -424,54 +395,6 @@ deleted xml-id of model ir.actions.act_window: event_project.act_event_task
 deleted xml-id of model ir.actions.act_window: event_project.action_event_project
 deleted xml-id of model ir.ui.view: event_project.view_event_form_inherited
 deleted xml-id of model ir.ui.view: event_project.view_event_project
-ERROR: module not in list of installed modules:
----stock_planning---
-deleted xml-id of model ir.actions.act_window: stock_planning.action_stock_period_createlines_form
-deleted xml-id of model ir.actions.act_window: stock_planning.action_stock_period_form
-deleted xml-id of model ir.actions.act_window: stock_planning.action_stock_planning_createlines_form
-deleted xml-id of model ir.actions.act_window: stock_planning.action_stock_sale_forecast_createlines_form
-deleted xml-id of model ir.actions.act_window: stock_planning.action_view_stock_planning_form
-deleted xml-id of model ir.actions.act_window: stock_planning.action_view_stock_sale_forecast_form
-deleted xml-id of model ir.model.access: stock_planning.access_stock_period_manager
-deleted xml-id of model ir.model.access: stock_planning.access_stock_planning_manager
-deleted xml-id of model ir.model.access: stock_planning.access_stock_planning_user
-deleted xml-id of model ir.model.access: stock_planning.access_stock_sale_forecast_manager
-deleted xml-id of model ir.model.access: stock_planning.access_stock_sale_forecast_user
-deleted xml-id of model ir.rule: stock_planning.stock_planning_comp_rule
-deleted xml-id of model ir.rule: stock_planning.stock_sale_forecast_comp_rule
-deleted xml-id of model ir.ui.menu: stock_planning.menu_stock_period
-deleted xml-id of model ir.ui.menu: stock_planning.menu_stock_period_creatlines
-deleted xml-id of model ir.ui.menu: stock_planning.menu_stock_period_main
-deleted xml-id of model ir.ui.menu: stock_planning.menu_stock_planning
-deleted xml-id of model ir.ui.menu: stock_planning.menu_stock_planning_createlines
-deleted xml-id of model ir.ui.menu: stock_planning.menu_stock_planning_manual
-deleted xml-id of model ir.ui.menu: stock_planning.menu_stock_sale_forecast
-deleted xml-id of model ir.ui.menu: stock_planning.menu_stock_sale_forecast_all
-deleted xml-id of model ir.ui.menu: stock_planning.menu_stock_sale_forecast_createlines
-deleted xml-id of model ir.ui.view: stock_planning.view_stock_period_createlines_form
-deleted xml-id of model ir.ui.view: stock_planning.view_stock_period_form
-deleted xml-id of model ir.ui.view: stock_planning.view_stock_period_search
-deleted xml-id of model ir.ui.view: stock_planning.view_stock_period_tree
-deleted xml-id of model ir.ui.view: stock_planning.view_stock_planning_createlines_form
-deleted xml-id of model ir.ui.view: stock_planning.view_stock_planning_filter
-deleted xml-id of model ir.ui.view: stock_planning.view_stock_planning_form
-deleted xml-id of model ir.ui.view: stock_planning.view_stock_planning_tree
-deleted xml-id of model ir.ui.view: stock_planning.view_stock_sale_forecast_createlines_form
-deleted xml-id of model ir.ui.view: stock_planning.view_stock_sale_forecast_filter
-deleted xml-id of model ir.ui.view: stock_planning.view_stock_sale_forecast_form
-deleted xml-id of model ir.ui.view: stock_planning.view_stock_sale_forecast_graph
-deleted xml-id of model ir.ui.view: stock_planning.view_stock_sale_forecast_tree
-ERROR: module not in list of installed modules:
----mrp_subproduct---
-mrp_subproduct / mrp.bom                  / sub_products (one2many)       : module is now 'mrp_byproduct' ('mrp_subproduct')
-mrp_subproduct / mrp.subproduct           / bom_id (many2one)             : module is now 'mrp_byproduct' ('mrp_subproduct')
-mrp_subproduct / mrp.subproduct           / product_id (many2one)         : module is now 'mrp_byproduct' ('mrp_subproduct')
-mrp_subproduct / mrp.subproduct           / product_qty (float)           : module is now 'mrp_byproduct' ('mrp_subproduct')
-mrp_subproduct / mrp.subproduct           / product_uom (many2one)        : module is now 'mrp_byproduct' ('mrp_subproduct')
-mrp_subproduct / mrp.subproduct           / subproduct_type (selection)   : module is now 'mrp_byproduct' ('mrp_subproduct')
-deleted xml-id of model ir.model.access: mrp_subproduct.access_mrp_subproduct_manager
-deleted xml-id of model ir.model.access: mrp_subproduct.access_mrp_subproduct_user
-deleted xml-id of model ir.ui.view: mrp_subproduct.mrp_subproduct_view
 ERROR: module not in list of installed modules:
 ---project_messages---
 project_messages / project.project          / message_ids (one2many)        : module is now 'project' ('project_messages')
@@ -749,25 +672,6 @@ ERROR: module not in list of installed modules:
 ---report_webkit_sample---
 deleted xml-id of model ir.actions.report.xml: report_webkit_sample.report_webkit_html
 ERROR: module not in list of installed modules:
----users_ldap---
-users_ldap   / res.company              / ldaps (one2many)              : module is now 'auth_ldap' ('users_ldap')
-users_ldap   / res.company.ldap         / company (many2one)            : module is now 'auth_ldap' ('users_ldap')
-users_ldap   / res.company.ldap         / create_user (boolean)         : module is now 'auth_ldap' ('users_ldap')
-users_ldap   / res.company.ldap         / ldap_base (char)              : module is now 'auth_ldap' ('users_ldap')
-users_ldap   / res.company.ldap         / ldap_binddn (char)            : module is now 'auth_ldap' ('users_ldap')
-users_ldap   / res.company.ldap         / ldap_filter (char)            : module is now 'auth_ldap' ('users_ldap')
-users_ldap   / res.company.ldap         / ldap_password (char)          : module is now 'auth_ldap' ('users_ldap')
-users_ldap   / res.company.ldap         / ldap_server (char)            : module is now 'auth_ldap' ('users_ldap')
-users_ldap   / res.company.ldap         / ldap_server_port (integer)    : module is now 'auth_ldap' ('users_ldap')
-users_ldap   / res.company.ldap         / ldap_tls (boolean)            : module is now 'auth_ldap' ('users_ldap')
-users_ldap   / res.company.ldap         / sequence (integer)            : module is now 'auth_ldap' ('users_ldap')
-users_ldap   / res.company.ldap         / user (many2one)               : module is now 'auth_ldap' ('users_ldap')
-deleted xml-id of model ir.actions.act_window: users_ldap.action_ldap_installer
-deleted xml-id of model ir.actions.todo: users_ldap.config_wizard_action_ldap_installer
-deleted xml-id of model ir.model.access: users_ldap.access_res_company_ldap
-deleted xml-id of model ir.ui.view: users_ldap.company_form_view
-deleted xml-id of model ir.ui.view: users_ldap.view_ldap_installer_form
-ERROR: module not in list of installed modules:
 ---fetchmail_hr_recruitment---
 deleted xml-id of model ir.actions.act_window: fetchmail_hr_recruitment.action_link_applicant_to_email_account
 deleted xml-id of model ir.actions.todo: fetchmail_hr_recruitment.config_wizard_action_link_applicant_to_email_account
@@ -891,13 +795,44 @@ ERROR: module not in list of installed modules:
 ---import_base---
 deleted xml-id of model ir.ui.menu: import_base.menu_import_crm
 ERROR: module not in list of installed modules:
----fetchmail_crm---
-deleted xml-id of model ir.actions.act_window: fetchmail_crm.action_create_crm_leads_from_email_account
-deleted xml-id of model ir.actions.todo: fetchmail_crm.config_wizard_action_create_crm_leads_from_email_account
+---stock_planning---
+deleted xml-id of model ir.actions.act_window: stock_planning.action_stock_period_createlines_form
+deleted xml-id of model ir.actions.act_window: stock_planning.action_stock_period_form
+deleted xml-id of model ir.actions.act_window: stock_planning.action_stock_planning_createlines_form
+deleted xml-id of model ir.actions.act_window: stock_planning.action_stock_sale_forecast_createlines_form
+deleted xml-id of model ir.actions.act_window: stock_planning.action_view_stock_planning_form
+deleted xml-id of model ir.actions.act_window: stock_planning.action_view_stock_sale_forecast_form
+deleted xml-id of model ir.model.access: stock_planning.access_stock_period_manager
+deleted xml-id of model ir.model.access: stock_planning.access_stock_planning_manager
+deleted xml-id of model ir.model.access: stock_planning.access_stock_planning_user
+deleted xml-id of model ir.model.access: stock_planning.access_stock_sale_forecast_manager
+deleted xml-id of model ir.model.access: stock_planning.access_stock_sale_forecast_user
+deleted xml-id of model ir.rule: stock_planning.stock_planning_comp_rule
+deleted xml-id of model ir.rule: stock_planning.stock_sale_forecast_comp_rule
+deleted xml-id of model ir.ui.menu: stock_planning.menu_stock_period
+deleted xml-id of model ir.ui.menu: stock_planning.menu_stock_period_creatlines
+deleted xml-id of model ir.ui.menu: stock_planning.menu_stock_period_main
+deleted xml-id of model ir.ui.menu: stock_planning.menu_stock_planning
+deleted xml-id of model ir.ui.menu: stock_planning.menu_stock_planning_createlines
+deleted xml-id of model ir.ui.menu: stock_planning.menu_stock_planning_manual
+deleted xml-id of model ir.ui.menu: stock_planning.menu_stock_sale_forecast
+deleted xml-id of model ir.ui.menu: stock_planning.menu_stock_sale_forecast_all
+deleted xml-id of model ir.ui.menu: stock_planning.menu_stock_sale_forecast_createlines
+deleted xml-id of model ir.ui.view: stock_planning.view_stock_period_createlines_form
+deleted xml-id of model ir.ui.view: stock_planning.view_stock_period_form
+deleted xml-id of model ir.ui.view: stock_planning.view_stock_period_search
+deleted xml-id of model ir.ui.view: stock_planning.view_stock_period_tree
+deleted xml-id of model ir.ui.view: stock_planning.view_stock_planning_createlines_form
+deleted xml-id of model ir.ui.view: stock_planning.view_stock_planning_filter
+deleted xml-id of model ir.ui.view: stock_planning.view_stock_planning_form
+deleted xml-id of model ir.ui.view: stock_planning.view_stock_planning_tree
+deleted xml-id of model ir.ui.view: stock_planning.view_stock_sale_forecast_createlines_form
+deleted xml-id of model ir.ui.view: stock_planning.view_stock_sale_forecast_filter
+deleted xml-id of model ir.ui.view: stock_planning.view_stock_sale_forecast_form
+deleted xml-id of model ir.ui.view: stock_planning.view_stock_sale_forecast_graph
+deleted xml-id of model ir.ui.view: stock_planning.view_stock_sale_forecast_tree
 ERROR: module not in list of installed modules:
 ---base_contact---
-base_contact / res.partner.address      / contact_id (many2one)         : DEL relation: res.partner.contact
-base_contact / res.partner.address      / location_id (many2one)        : DEL relation: res.partner.location
 deleted xml-id of model ir.actions.act_window: base_contact.action_partner_contact_form
 deleted xml-id of model ir.model.access: base_contact.access_group_sale_salesman
 deleted xml-id of model ir.model.access: base_contact.access_res_partner_address_sale_salesman
@@ -1053,84 +988,17 @@ deleted xml-id of model ir.ui.view: caldav.view_calendar_event_import_display
 deleted xml-id of model ir.ui.view: caldav.view_calendar_event_subscribe
 deleted xml-id of model ir.ui.view: caldav.view_calendar_event_subscribe_display
 ERROR: module not in list of installed modules:
+---base_crypt---
+base_crypt   / res.users                / password (False)              : module is now 'auth_crypt' ('base_crypt')
+ERROR: module not in list of installed modules:
 ---project_mailgate---
 project_mailgate / project.task             / message_ids (one2many)        : module is now 'project' ('project_mailgate')
 deleted xml-id of model ir.model.access: project_mailgate.access_mail_message_project_user
 deleted xml-id of model ir.ui.view: project_mailgate.view_task_mailgate_form
 ERROR: module not in list of installed modules:
 ---account_coda---
-account_coda / account.bank.statement   / coda_statement_id (many2one)  : module is now 'l10n_be_coda' ('account_coda')
-account_coda / account.bank.statement.line.global / coda_statement_line_ids (one2many): module is now 'l10n_be_coda' ('account_coda')
-account_coda / account.coda             / coda_creation_date (date)     : module is now 'l10n_be_coda' ('account_coda')
-account_coda / account.coda             / coda_data (binary)            : module is now 'l10n_be_coda' ('account_coda')
-account_coda / account.coda             / company_id (many2one)         : module is now 'l10n_be_coda' ('account_coda')
-account_coda / account.coda             / date (date)                   : module is now 'l10n_be_coda' ('account_coda')
-account_coda / account.coda             / name (char)                   : module is now 'l10n_be_coda' ('account_coda')
-account_coda / account.coda             / note (text)                   : module is now 'l10n_be_coda' ('account_coda')
-account_coda / account.coda             / statement_ids (one2many)      : module is now 'l10n_be_coda' ('account_coda')
-account_coda / account.coda             / user_id (many2one)            : module is now 'l10n_be_coda' ('account_coda')
-account_coda / account.coda.comm.type   / code (char)                   : module is now 'l10n_be_coda' ('account_coda')
-account_coda / account.coda.comm.type   / description (char)            : module is now 'l10n_be_coda' ('account_coda')
-account_coda / account.coda.trans.category / category (char)               : module is now 'l10n_be_coda' ('account_coda')
-account_coda / account.coda.trans.category / description (char)            : module is now 'l10n_be_coda' ('account_coda')
-account_coda / account.coda.trans.code  / code (char)                   : module is now 'l10n_be_coda' ('account_coda')
-account_coda / account.coda.trans.code  / comment (text)                : module is now 'l10n_be_coda' ('account_coda')
-account_coda / account.coda.trans.code  / description (char)            : module is now 'l10n_be_coda' ('account_coda')
-account_coda / account.coda.trans.code  / parent_id (many2one)          : module is now 'l10n_be_coda' ('account_coda')
-account_coda / account.coda.trans.code  / type (selection)              : module is now 'l10n_be_coda' ('account_coda')
-account_coda / account.coda.trans.type  / description (text)            : module is now 'l10n_be_coda' ('account_coda')
-account_coda / account.coda.trans.type  / parent_id (many2one)          : module is now 'l10n_be_coda' ('account_coda')
-account_coda / account.coda.trans.type  / type (char)                   : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.account        / active (boolean)              : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.account        / awaiting_account (many2one)   : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.account        / bank_id (many2one)            : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.account        / coda_st_naming (char)         : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.account        / company_id (many2one)         : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.account        / currency (many2one)           : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.account        / def_payable (many2one)        : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.account        / def_receivable (many2one)     : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.account        / description1 (char)           : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.account        / description2 (char)           : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.account        / find_bbacom (boolean)         : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.account        / find_partner (boolean)        : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.account        / journal (many2one)            : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.account        / name (char)                   : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.account        / state (selection)             : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.account        / transfer_account (many2one)   : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement      / balance_end (float)           : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement      / balance_end_real (float)      : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement      / balance_start (float)         : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement      / coda_bank_account_id (many2one): module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement      / coda_id (many2one)            : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement      / company_id (many2one)         : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement      / currency (many2one)           : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement      / date (date)                   : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement      / journal_id (many2one)         : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement      / line_ids (one2many)           : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement      / name (char)                   : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement      / period_id (many2one)          : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement      / statement_id (many2one)       : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement      / type (selection)              : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement.line / account_id (many2one)         : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement.line / amount (float)                : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement.line / coda_bank_account_id (many2one): module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement.line / company_id (many2one)         : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement.line / counterparty_bic (char)       : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement.line / counterparty_currency (char)  : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement.line / counterparty_name (char)      : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement.line / counterparty_number (char)    : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement.line / date (date)                   : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement.line / globalisation_amount (float)  : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement.line / globalisation_id (many2one)   : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement.line / globalisation_level (integer) : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement.line / name (char)                   : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement.line / note (text)                   : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement.line / partner_id (many2one)         : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement.line / ref (char)                    : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement.line / sequence (integer)            : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement.line / statement_id (many2one)       : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement.line / type (selection)              : module is now 'l10n_be_coda' ('account_coda')
-account_coda / coda.bank.statement.line / val_date (date)               : module is now 'l10n_be_coda' ('account_coda')
+account_coda / account.bank.statement   / coda_statement_id (many2one)  : DEL relation: coda.bank.statement
+account_coda / account.bank.statement.line.global / coda_statement_line_ids (one2many): DEL relation: coda.bank.statement.line
 deleted xml-id of model account.coda.comm.type: account_coda.acct_001
 deleted xml-id of model account.coda.comm.type: account_coda.acct_002
 deleted xml-id of model account.coda.comm.type: account_coda.acct_003
