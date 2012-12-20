@@ -3,7 +3,6 @@ sale         / res.company              / security_lead (float)         : module
 sale         / res.partner              / sale_order_ids (one2many)     : NEW relation: sale.order
 sale         / sale.order               / incoterm (many2one)           : module is now 'sale_stock' ('sale')
 sale         / sale.order               / invoice_quantity (selection)  : selection_keys is now '['order']' ('['order', 'procurement']')
-sale         / sale.order               / message_comment_ids (one2many): NEW relation: mail.message
 sale         / sale.order               / message_ids (one2many)        : NEW relation: mail.message
 sale         / sale.order               / order_policy (selection)      : selection_keys is now '['manual']' ('['manual', 'picking', 'postpaid', 'prepaid']')
 sale         / sale.order               / partner_invoice_id (many2one) : relation is now 'res.partner' ('res.partner.address')
@@ -17,6 +16,7 @@ sale         / sale.order               / shipped (boolean)             : module
 sale         / sale.order               / state (selection)             : selection_keys is now '['cancel', 'done', 'draft', 'invoice_except', 'manual', 'progress', 'sent', 'waiting_date']' ('['cancel', 'done', 'draft', 'invoice_except', 'manual', 'progress', 'shipping_except', 'waiting_date']')
 sale         / sale.order.line          / address_allotment_id (many2one): relation is now 'res.partner' ('res.partner.address')
 sale         / sale.order.line          / delay (float)                 : module is now 'sale_stock' ('sale')
+sale         / sale.order.line          / invoiced (boolean)            : now a function
 sale         / sale.order.line          / move_ids (one2many)           : module is now 'sale_stock' ('sale')
 sale         / sale.order.line          / name (char)                   : type is now 'text' ('char')
 sale         / sale.order.line          / notes (text)                  : DEL 
@@ -122,12 +122,9 @@ new xml-id of model ir.actions.act_window: sale.action_orders_exception
 new xml-id of model ir.actions.act_window: sale.action_orders_in_progress
 new xml-id of model ir.actions.act_window: sale.action_quotations
 new xml-id of model ir.actions.client: sale.action_client_sale_menu
-new xml-id of model ir.actions.server: sale.actions_server_sale_order_read
-new xml-id of model ir.actions.server: sale.actions_server_sale_order_unread
 new xml-id of model ir.actions.todo: base.open_menu
 new xml-id of model ir.model.access: sale.access_account_move_line_salesman
 new xml-id of model ir.ui.menu: base.menu_sale_config
-new xml-id of model ir.ui.menu: base.menu_sales_configuration_misc
 new xml-id of model ir.ui.menu: sale.menu_dashboard_sales
 new xml-id of model ir.ui.menu: sale.menu_sale_quotations
 new xml-id of model ir.ui.view: sale.crm_lead_partner_kanban_view
@@ -137,8 +134,6 @@ new xml-id of model ir.ui.view: sale.view_account_config
 new xml-id of model ir.ui.view: sale.view_order_form_editable_list
 new xml-id of model ir.ui.view: sale.view_quotation_tree
 new xml-id of model ir.ui.view: sale.view_sales_config
-new xml-id of model ir.values: sale.action_sale_order_read
-new xml-id of model ir.values: sale.action_sale_order_unread
 new xml-id of model mail.message: sale.module_install_notification
 new xml-id of model res.groups: sale.group_analytic_accounting
 new xml-id of model res.groups: sale.group_delivery_invoice_address

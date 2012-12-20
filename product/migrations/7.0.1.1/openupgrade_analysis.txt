@@ -1,6 +1,5 @@
 ---product---
 product      / product.product          / image (binary)                : NEW 
-product      / product.product          / message_comment_ids (one2many): NEW relation: mail.message
 product      / product.product          / message_ids (one2many)        : NEW relation: mail.message
 product      / product.product          / product_image (binary)        : DEL 
 product      / product.template         / loc_case (char)               : module is now 'stock' ('product')
@@ -22,6 +21,7 @@ deleted xml-id of model product.uom: product.uom_hour
 new xml-id of model decimal.precision: product.decimal_discount
 new xml-id of model decimal.precision: product.decimal_price
 new xml-id of model ir.actions.act_window.view: product.open_view_product_kanban1
+new xml-id of model ir.model.access: product.access_product_category_sale_manager
 new xml-id of model product.category: product.product_category_1
 new xml-id of model product.category: product.product_category_all
 new xml-id of model product.product: product.product_product_consultant

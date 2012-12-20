@@ -2,7 +2,6 @@
 hr_holidays  / hr.employee              / last_login (datetime)         : module is now 'hr' ('hr_holidays')
 hr_holidays  / hr.holidays              / case_id (many2one)            : DEL relation: crm.meeting
 hr_holidays  / hr.holidays              / meeting_id (many2one)         : NEW relation: crm.meeting
-hr_holidays  / hr.holidays              / message_comment_ids (one2many): NEW relation: mail.message
 hr_holidays  / hr.holidays              / message_ids (one2many)        : NEW relation: mail.message
 hr_holidays  / hr.holidays.status       / categ_id (many2one)           : relation is now 'crm.meeting.type' ('crm.case.categ')
 deleted xml-id of model ir.actions.act_window: hr_holidays.action_view_holiday_status_manager_board
@@ -21,15 +20,11 @@ new xml-id of model ir.actions.act_window.view: hr_holidays.action_request_appro
 new xml-id of model ir.actions.act_window.view: hr_holidays.action_request_approve_allocation_tree
 new xml-id of model ir.actions.act_window: hr_holidays.act_hr_leave_request_to_meeting
 new xml-id of model ir.actions.act_window: hr_holidays.request_approve_allocation
-new xml-id of model ir.actions.server: hr_holidays.actions_server_holidays_read
-new xml-id of model ir.actions.server: hr_holidays.actions_server_holidays_unread
 new xml-id of model ir.actions.todo: base.open_menu
 new xml-id of model ir.model.access: hr_holidays.access_crm_meeting_type_manager
 new xml-id of model ir.model.access: hr_holidays.access_resource_calendar_leaves_user
 new xml-id of model ir.rule: hr_holidays.property_rule_holidays_officer
 new xml-id of model ir.ui.menu: hr_holidays.menu_request_approve_allocation
-new xml-id of model ir.values: hr_holidays.action_holidays_read
-new xml-id of model ir.values: hr_holidays.action_holidays_unread
 new xml-id of model mail.message: hr_holidays.module_install_notification
 new xml-id of model workflow.transition: hr_holidays.holiday_confirm2refuse
 new xml-id of model workflow.transition: hr_holidays.holiday_confirm2validate

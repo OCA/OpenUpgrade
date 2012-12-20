@@ -8,7 +8,6 @@ stock        / stock.location           / partner_id (many2one)         : NEW re
 stock        / stock.move               / address_id (many2one)         : DEL relation: res.partner.address
 stock        / stock.move               / partner_id (many2one)         : not a function anymore
 stock        / stock.picking            / address_id (many2one)         : DEL relation: res.partner.address
-stock        / stock.picking            / message_comment_ids (one2many): NEW relation: mail.message
 stock        / stock.picking            / message_ids (one2many)        : NEW relation: mail.message
 stock        / stock.picking            / partner_id (many2one)         : not a function anymore
 stock        / stock.picking.in         / auto_picking (boolean)        : NEW 
@@ -19,7 +18,6 @@ stock        / stock.picking.in         / date_done (datetime)          : NEW
 stock        / stock.picking.in         / invoice_state (selection)     : NEW required: required, selection_keys: ['2binvoiced', 'invoiced', 'none'], req_default: none
 stock        / stock.picking.in         / location_dest_id (many2one)   : NEW relation: stock.location
 stock        / stock.picking.in         / location_id (many2one)        : NEW relation: stock.location
-stock        / stock.picking.in         / message_comment_ids (one2many): NEW relation: mail.message
 stock        / stock.picking.in         / message_ids (one2many)        : NEW relation: mail.message
 stock        / stock.picking.in         / move_lines (one2many)         : NEW relation: stock.move
 stock        / stock.picking.in         / move_type (selection)         : NEW required: required, selection_keys: ['direct', 'one'], req_default: direct
@@ -38,7 +36,6 @@ stock        / stock.picking.out        / date_done (datetime)          : NEW
 stock        / stock.picking.out        / invoice_state (selection)     : NEW required: required, selection_keys: ['2binvoiced', 'invoiced', 'none'], req_default: none
 stock        / stock.picking.out        / location_dest_id (many2one)   : NEW relation: stock.location
 stock        / stock.picking.out        / location_id (many2one)        : NEW relation: stock.location
-stock        / stock.picking.out        / message_comment_ids (one2many): NEW relation: mail.message
 stock        / stock.picking.out        / message_ids (one2many)        : NEW relation: mail.message
 stock        / stock.picking.out        / move_lines (one2many)         : NEW relation: stock.move
 stock        / stock.picking.out        / move_type (selection)         : NEW required: required, selection_keys: ['direct', 'one'], req_default: direct
@@ -75,7 +72,6 @@ new xml-id of model ir.actions.report.xml: stock.report_picking_list_in
 new xml-id of model ir.actions.report.xml: stock.report_picking_list_out
 new xml-id of model ir.actions.todo: base.open_menu
 new xml-id of model ir.model.access: stock.access_board_stock_user
-new xml-id of model ir.model.access: stock.access_stock_move_warehouse_manager
 new xml-id of model ir.model.access: stock.access_stock_picking_in_manager
 new xml-id of model ir.model.access: stock.access_stock_picking_in_user
 new xml-id of model ir.model.access: stock.access_stock_picking_out_manager

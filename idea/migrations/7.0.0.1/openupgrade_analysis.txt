@@ -8,7 +8,6 @@ idea         / idea.idea                / category_ids (many2many)      : NEW re
 idea         / idea.idea                / comment_ids (one2many)        : DEL relation: idea.comment
 idea         / idea.idea                / create_uid (many2one)         : NEW relation: res.users, required: required
 idea         / idea.idea                / created_date (datetime)       : DEL 
-idea         / idea.idea                / message_comment_ids (one2many): NEW relation: mail.message
 idea         / idea.idea                / message_ids (one2many)        : NEW relation: mail.message
 idea         / idea.idea                / open_date (datetime)          : DEL 
 idea         / idea.idea                / stat_vote_ids (one2many)      : DEL relation: idea.vote.stat

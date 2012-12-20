@@ -1,4 +1,9 @@
 ---auth_ldap---
+deleted xml-id of model ir.actions.act_window: users_ldap.action_ldap_installer
+deleted xml-id of model ir.actions.todo: users_ldap.config_wizard_action_ldap_installer
+deleted xml-id of model ir.model.access: users_ldap.access_res_company_ldap
+deleted xml-id of model ir.ui.view: users_ldap.company_form_view
+deleted xml-id of model ir.ui.view: users_ldap.view_ldap_installer_form
 new xml-id of model ir.actions.act_window: auth_ldap.action_ldap_installer
 new xml-id of model ir.actions.todo: auth_ldap.config_wizard_action_ldap_installer
 new xml-id of model ir.model.access: auth_ldap.access_res_company_ldap

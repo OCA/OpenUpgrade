@@ -1,6 +1,5 @@
 ---mrp_repair---
 mrp_repair   / mrp.repair               / address_id (many2one)         : relation is now 'res.partner' ('res.partner.address')
 mrp_repair   / mrp.repair               / default_address_id (many2one) : relation is now 'res.partner' ('res.partner.address')
-mrp_repair   / mrp.repair               / message_comment_ids (one2many): NEW relation: mail.message
 mrp_repair   / mrp.repair               / message_ids (one2many)        : NEW relation: mail.message
 mrp_repair   / mrp.repair               / partner_invoice_id (many2one) : relation is now 'res.partner' ('res.partner.address')

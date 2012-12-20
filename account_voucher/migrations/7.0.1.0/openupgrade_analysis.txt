@@ -1,6 +1,5 @@
 ---account_voucher---
 account_voucher / account.voucher          / active (boolean)              : NEW 
-account_voucher / account.voucher          / message_comment_ids (one2many): NEW relation: mail.message
 account_voucher / account.voucher          / message_ids (one2many)        : NEW relation: mail.message
 deleted xml-id of model ir.actions.act_window: account_voucher.action_view_account_statement_from_invoice
 deleted xml-id of model ir.actions.act_window: account_voucher.action_view_account_voucher_unreconcile

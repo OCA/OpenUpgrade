@@ -8,7 +8,6 @@ event        / event.event              / mail_auto_confirm (boolean)   : DEL
 event        / event.event              / mail_auto_registr (boolean)   : DEL 
 event        / event.event              / mail_confirm (text)           : DEL 
 event        / event.event              / mail_registr (text)           : DEL 
-event        / event.event              / message_comment_ids (one2many): NEW relation: mail.message
 event        / event.event              / message_ids (one2many)        : NEW relation: mail.message
 event        / event.event              / parent_id (many2one)          : DEL relation: event.event
 event        / event.event              / pricelist_id (many2one)       : DEL relation: product.pricelist
@@ -25,7 +24,6 @@ event        / event.registration       / email_cc (text)               : DEL
 event        / event.registration       / email_from (char)             : DEL 
 event        / event.registration       / event_product (char)          : DEL 
 event        / event.registration       / invoice_id (many2one)         : DEL relation: account.invoice
-event        / event.registration       / message_comment_ids (one2many): NEW relation: mail.message
 event        / event.registration       / origin (char)                 : NEW 
 event        / event.registration       / partner_invoice_id (many2one) : DEL relation: res.partner
 event        / event.registration       / phone (char)                  : NEW 
@@ -78,10 +76,6 @@ new xml-id of model email.template: event.confirmation_event
 new xml-id of model email.template: event.confirmation_registration
 new xml-id of model ir.actions.act_window: event.act_event_view_registration
 new xml-id of model ir.actions.client: event.action_client_event_menu
-new xml-id of model ir.actions.server: event.actions_server_event_event_read
-new xml-id of model ir.actions.server: event.actions_server_event_event_unread
-new xml-id of model ir.actions.server: event.actions_server_event_registration_read
-new xml-id of model ir.actions.server: event.actions_server_event_registration_unread
 new xml-id of model ir.actions.todo: base.open_menu
 new xml-id of model ir.model.access: event.access_event_event_portal
 new xml-id of model ir.model.access: event.access_event_registration_portal
@@ -92,10 +86,6 @@ new xml-id of model ir.rule: event.report_event_registration_comp_rule
 new xml-id of model ir.ui.menu: event.event_main_menu
 new xml-id of model ir.ui.menu: event.menu_reporting_events
 new xml-id of model ir.ui.view: event.view_event_kanban
-new xml-id of model ir.values: event.action_event_event_read
-new xml-id of model ir.values: event.action_event_event_unread
-new xml-id of model ir.values: event.action_event_registration_read
-new xml-id of model ir.values: event.action_event_registration_unread
 new xml-id of model ir.values: event.default_value_event_mail_confirmation
 new xml-id of model ir.values: event.default_value_registration_mail_confirmation
 new xml-id of model mail.message.subtype: event.mt_event_registration

@@ -4,7 +4,6 @@ project      / project.category         / name (char)                   : NEW re
 project      / project.project          / alias_id (many2one)           : NEW relation: mail.alias, required: required
 project      / project.project          / alias_model (selection)       : NEW required: required, selection_keys: function, req_default: project.task
 project      / project.project          / color (integer)               : NEW 
-project      / project.project          / message_comment_ids (one2many): NEW relation: mail.message
 project      / project.project          / privacy_visibility (selection): NEW required: required, selection_keys: ['followers', 'public'], req_default: public
 project      / project.project          / state (selection)             : NEW required: required, selection_keys: ['cancelled', 'close', 'draft', 'open', 'pending', 'template'], req_default: open
 project      / project.project          / warn_customer (boolean)       : DEL 
@@ -12,7 +11,6 @@ project      / project.project          / warn_footer (text)            : DEL
 project      / project.project          / warn_header (text)            : DEL 
 project      / project.project          / warn_manager (boolean)        : DEL 
 project      / project.task             / categ_ids (many2many)         : NEW relation: project.category
-project      / project.task             / message_comment_ids (one2many): NEW relation: mail.message
 project      / project.task             / stage_id (many2one)           : NEW relation: project.task.type
 project      / project.task             / state (selection)             : now a function
 project      / project.task             / type_id (many2one)            : DEL relation: project.task.type
@@ -62,10 +60,6 @@ deleted xml-id of model ir.ui.view: project.view_task_history_burndown_graph
 deleted xml-id of model ir.ui.view: project.view_users_form_project_modif_inherited1
 new xml-id of model ir.actions.act_window: project.action_config_settings
 new xml-id of model ir.actions.client: project.action_client_project_menu
-new xml-id of model ir.actions.server: project.actions_server_project_read
-new xml-id of model ir.actions.server: project.actions_server_project_task_read
-new xml-id of model ir.actions.server: project.actions_server_project_task_unread
-new xml-id of model ir.actions.server: project.actions_server_project_unread
 new xml-id of model ir.actions.todo: base.open_menu
 new xml-id of model ir.model.access: project.access_account_analytic_account_user
 new xml-id of model ir.model.access: project.access_project_category
@@ -82,10 +76,6 @@ new xml-id of model ir.ui.menu: project.menu_projects
 new xml-id of model ir.ui.view: project.analytic_account_inherited_form
 new xml-id of model ir.ui.view: project.view_config_settings
 new xml-id of model ir.ui.view: project.view_project_kanban
-new xml-id of model ir.values: project.action_project_read
-new xml-id of model ir.values: project.action_project_task_read
-new xml-id of model ir.values: project.action_project_task_unread
-new xml-id of model ir.values: project.action_project_unread
 new xml-id of model mail.message.subtype: project.mt_project_canceled
 new xml-id of model mail.message.subtype: project.mt_project_closed
 new xml-id of model mail.message.subtype: project.mt_project_new

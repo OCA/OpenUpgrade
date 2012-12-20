@@ -2,7 +2,6 @@
 account      / account.bank.statement   / closing_details_ids (one2many): NEW relation: account.cashbox.line
 account      / account.bank.statement   / details_ids (one2many)        : NEW relation: account.cashbox.line
 account      / account.bank.statement   / ending_details_ids (one2many) : DEL relation: account.cashbox.line
-account      / account.bank.statement   / message_comment_ids (one2many): NEW relation: mail.message
 account      / account.bank.statement   / message_ids (one2many)        : NEW relation: mail.message
 account      / account.bank.statement   / opening_details_ids (one2many): NEW relation: account.cashbox.line
 account      / account.bank.statement   / starting_details_ids (one2many): DEL relation: account.cashbox.line
@@ -15,7 +14,6 @@ account      / account.cashbox.line     / starting_id (many2one)        : DEL re
 account      / account.chart.template   / property_reserve_and_surplus_account (many2one): DEL relation: account.account.template
 account      / account.invoice          / address_contact_id (many2one) : DEL relation: res.partner.address
 account      / account.invoice          / address_invoice_id (many2one) : DEL relation: res.partner.address, required: required
-account      / account.invoice          / message_comment_ids (one2many): NEW relation: mail.message
 account      / account.invoice          / message_ids (one2many)        : NEW relation: mail.message
 account      / account.invoice          / sent (boolean)                : NEW 
 account      / account.invoice          / supplier_invoice_number (char): NEW 
@@ -23,30 +21,119 @@ account      / account.invoice.line     / name (char)                   : type i
 account      / account.invoice.line     / note (text)                   : DEL 
 account      / account.invoice.report   / address_contact_id (many2one) : DEL relation: res.partner.address
 account      / account.invoice.report   / address_invoice_id (many2one) : DEL relation: res.partner.address
+account      / account.invoice.report   / delay_to_pay (float)          : DEL 
+account      / account.invoice.report   / due_delay (float)             : DEL 
 account      / account.invoice.tax      / account_analytic_id (many2one): NEW relation: account.analytic.account
 account      / account.journal          / cash_control (boolean)        : NEW 
 account      / account.journal          / cashbox_line_ids (one2many)   : NEW relation: account.journal.cashbox.line
 account      / account.journal          / internal_account_id (many2one): NEW relation: account.account
 account      / account.journal          / loss_account_id (many2one)    : NEW relation: account.account
 account      / account.journal          / profit_account_id (many2one)  : NEW relation: account.account
+account      / account.journal          / view_id (many2one)            : DEL relation: account.journal.view, required: required
 account      / account.journal          / with_last_closing_balance (boolean): NEW 
 account      / account.journal.cashbox.line / journal_id (many2one)         : NEW relation: account.journal, required: required
 account      / account.journal.cashbox.line / pieces (float)                : NEW 
+account      / account.move.reconcile   / opening_reconciliation (boolean): NEW 
+account      / account.payment.term.line / name (char)                   : DEL required: required
+account      / account.payment.term.line / sequence (integer)            : DEL required: required, req_default: 5
 account      / account.tax              / account_analytic_collected_id (many2one): NEW relation: account.analytic.account
 account      / account.tax              / account_analytic_paid_id (many2one): NEW relation: account.analytic.account
 account      / res.company              / expects_chart_of_accounts (boolean): NEW 
 account      / res.company              / tax_calculation_rounding_method (selection): NEW selection_keys: ['round_globally', 'round_per_line']
+deleted xml-id of model account.journal.column: account.bank_col1
+deleted xml-id of model account.journal.column: account.bank_col10
+deleted xml-id of model account.journal.column: account.bank_col10_multi
+deleted xml-id of model account.journal.column: account.bank_col17_multi
+deleted xml-id of model account.journal.column: account.bank_col18_multi
+deleted xml-id of model account.journal.column: account.bank_col1_multi
+deleted xml-id of model account.journal.column: account.bank_col2
+deleted xml-id of model account.journal.column: account.bank_col20
+deleted xml-id of model account.journal.column: account.bank_col20_multi
+deleted xml-id of model account.journal.column: account.bank_col23
+deleted xml-id of model account.journal.column: account.bank_col23_multi
+deleted xml-id of model account.journal.column: account.bank_col2_multi
+deleted xml-id of model account.journal.column: account.bank_col3
+deleted xml-id of model account.journal.column: account.bank_col3_multi
+deleted xml-id of model account.journal.column: account.bank_col4
+deleted xml-id of model account.journal.column: account.bank_col4_multi
+deleted xml-id of model account.journal.column: account.bank_col5
+deleted xml-id of model account.journal.column: account.bank_col5_multi
+deleted xml-id of model account.journal.column: account.bank_col6
+deleted xml-id of model account.journal.column: account.bank_col6_multi
+deleted xml-id of model account.journal.column: account.bank_col7
+deleted xml-id of model account.journal.column: account.bank_col7_multi
+deleted xml-id of model account.journal.column: account.bank_col9
+deleted xml-id of model account.journal.column: account.bank_col9_multi
+deleted xml-id of model account.journal.column: account.journal_col1
+deleted xml-id of model account.journal.column: account.journal_col11
+deleted xml-id of model account.journal.column: account.journal_col2
+deleted xml-id of model account.journal.column: account.journal_col24
+deleted xml-id of model account.journal.column: account.journal_col3
+deleted xml-id of model account.journal.column: account.journal_col4
+deleted xml-id of model account.journal.column: account.journal_col5
+deleted xml-id of model account.journal.column: account.journal_col6
+deleted xml-id of model account.journal.column: account.journal_col8
+deleted xml-id of model account.journal.column: account.journal_col9
+deleted xml-id of model account.journal.column: account.sp_journal_col1
+deleted xml-id of model account.journal.column: account.sp_journal_col10
+deleted xml-id of model account.journal.column: account.sp_journal_col11
+deleted xml-id of model account.journal.column: account.sp_journal_col2
+deleted xml-id of model account.journal.column: account.sp_journal_col20
+deleted xml-id of model account.journal.column: account.sp_journal_col24
+deleted xml-id of model account.journal.column: account.sp_journal_col3
+deleted xml-id of model account.journal.column: account.sp_journal_col4
+deleted xml-id of model account.journal.column: account.sp_journal_col5
+deleted xml-id of model account.journal.column: account.sp_journal_col6
+deleted xml-id of model account.journal.column: account.sp_journal_col7
+deleted xml-id of model account.journal.column: account.sp_journal_col8
+deleted xml-id of model account.journal.column: account.sp_journal_col9
+deleted xml-id of model account.journal.column: account.sp_refund_journal_col1
+deleted xml-id of model account.journal.column: account.sp_refund_journal_col10
+deleted xml-id of model account.journal.column: account.sp_refund_journal_col11
+deleted xml-id of model account.journal.column: account.sp_refund_journal_col2
+deleted xml-id of model account.journal.column: account.sp_refund_journal_col20
+deleted xml-id of model account.journal.column: account.sp_refund_journal_col24
+deleted xml-id of model account.journal.column: account.sp_refund_journal_col3
+deleted xml-id of model account.journal.column: account.sp_refund_journal_col4
+deleted xml-id of model account.journal.column: account.sp_refund_journal_col5
+deleted xml-id of model account.journal.column: account.sp_refund_journal_col6
+deleted xml-id of model account.journal.column: account.sp_refund_journal_col7
+deleted xml-id of model account.journal.column: account.sp_refund_journal_col8
+deleted xml-id of model account.journal.column: account.sp_refund_journal_col9
+deleted xml-id of model account.journal.view: account.account_journal_bank_view
+deleted xml-id of model account.journal.view: account.account_journal_bank_view_multi
+deleted xml-id of model account.journal.view: account.account_journal_view
+deleted xml-id of model account.journal.view: account.account_sp_journal_view
+deleted xml-id of model account.journal.view: account.account_sp_refund_journal_view
+deleted xml-id of model account.payment.term.line: account.account_payment_term_line
+deleted xml-id of model account.payment.term.line: account.account_payment_term_line_advance1
+deleted xml-id of model account.payment.term.line: account.account_payment_term_line_advance2
+deleted xml-id of model account.payment.term: account.account_payment_term
+deleted xml-id of model account.payment.term: account.account_payment_term_advance
 deleted xml-id of model ir.actions.act_window.view: account.action_bank_statement_periodic_form_bank
 deleted xml-id of model ir.actions.act_window.view: account.action_bank_statement_periodic_tree_bank
+deleted xml-id of model ir.actions.act_window.view: account.action_move_line_search_view1
+deleted xml-id of model ir.actions.act_window.view: account.action_move_line_search_view2
 deleted xml-id of model ir.actions.act_window: account.act_acc_analytic_acc_5_report_hr_timesheet_invoice_journal
+deleted xml-id of model ir.actions.act_window: account.act_account_acount_move_line_open
 deleted xml-id of model ir.actions.act_window: account.action_account_analytic_journal_tree
+deleted xml-id of model ir.actions.act_window: account.action_account_fiscalyear_form
+deleted xml-id of model ir.actions.act_window: account.action_account_journal_view
+deleted xml-id of model ir.actions.act_window: account.action_account_moves_bank
+deleted xml-id of model ir.actions.act_window: account.action_account_moves_purchase
+deleted xml-id of model ir.actions.act_window: account.action_account_moves_sale
+deleted xml-id of model ir.actions.act_window: account.action_account_period_form
 deleted xml-id of model ir.actions.act_window: account.action_aged_income
 deleted xml-id of model ir.actions.act_window: account.action_aged_receivable
 deleted xml-id of model ir.actions.act_window: account.action_bank_statement_periodic_tree
+deleted xml-id of model ir.actions.act_window: account.action_move_line_search
+deleted xml-id of model ir.actions.act_window: account.action_move_line_tree1
 deleted xml-id of model ir.actions.act_window: account.action_review_financial_journals_installer
 deleted xml-id of model ir.actions.act_window: account.action_review_payment_terms_installer
 deleted xml-id of model ir.actions.act_window: account.action_treasory_graph
+deleted xml-id of model ir.actions.act_window: account.action_view_account_use_model
 deleted xml-id of model ir.actions.act_window: account.action_view_financial_accounts_installer
+deleted xml-id of model ir.actions.act_window: account.action_view_move_line
 deleted xml-id of model ir.actions.report.xml: account.account_account_balance_landscape
 deleted xml-id of model ir.actions.report.xml: account.account_aged_partner_balance
 deleted xml-id of model ir.actions.report.xml: account.account_financial_report
@@ -57,12 +144,23 @@ deleted xml-id of model ir.actions.todo: account.account_configuration_bank_todo
 deleted xml-id of model ir.actions.todo: account.review_financial_journals_todo
 deleted xml-id of model ir.actions.todo: account.review_payment_terms_todo
 deleted xml-id of model ir.actions.todo: account.view_financial_accounts_todo
+deleted xml-id of model ir.model.access: account.access_account_journal_column
+deleted xml-id of model ir.model.access: account.access_account_journal_column_invoice
+deleted xml-id of model ir.model.access: account.access_account_journal_view
+deleted xml-id of model ir.model.access: account.access_account_journal_view_invoice
 deleted xml-id of model ir.model.access: account.access_res_partner_address_accountant
 deleted xml-id of model ir.model.access: account.access_res_partner_address_invoice
 deleted xml-id of model ir.sequence.type: account.seq_type_analytic_account
 deleted xml-id of model ir.sequence: account.seq_analytic_account
 deleted xml-id of model ir.ui.menu: account.menu_act_ir_actions_bleble
+deleted xml-id of model ir.ui.menu: account.menu_action_account_fiscalyear_form
+deleted xml-id of model ir.ui.menu: account.menu_action_account_journal_view
+deleted xml-id of model ir.ui.menu: account.menu_action_account_moves_bank
+deleted xml-id of model ir.ui.menu: account.menu_action_account_period_form
+deleted xml-id of model ir.ui.menu: account.menu_action_manual_recurring
 deleted xml-id of model ir.ui.menu: account.menu_dashboard_acc
+deleted xml-id of model ir.ui.menu: account.menu_eaction_account_moves_purchase
+deleted xml-id of model ir.ui.menu: account.menu_eaction_account_moves_sale
 deleted xml-id of model ir.ui.menu: account.menu_finance_statistic_report_statement
 deleted xml-id of model ir.ui.menu: account.menu_menu_Bank_process
 deleted xml-id of model ir.ui.view: account.account_move_graph
@@ -72,10 +170,19 @@ deleted xml-id of model ir.ui.view: account.report_hr_timesheet_invoice_journal_
 deleted xml-id of model ir.ui.view: account.report_hr_timesheet_invoice_journal_search
 deleted xml-id of model ir.ui.view: account.report_hr_timesheet_invoice_journal_tree
 deleted xml-id of model ir.ui.view: account.view_account_analytic_account_form
+deleted xml-id of model ir.ui.view: account.view_account_journal_view_form
+deleted xml-id of model ir.ui.view: account.view_account_journal_view_search
+deleted xml-id of model ir.ui.view: account.view_account_journal_view_tree
+deleted xml-id of model ir.ui.view: account.view_account_move_journal_form
 deleted xml-id of model ir.ui.view: account.view_bank_statement_periodic_form
 deleted xml-id of model ir.ui.view: account.view_company_inherit_1_form
+deleted xml-id of model ir.ui.view: account.view_journal_column_form
+deleted xml-id of model ir.ui.view: account.view_journal_column_tree
+deleted xml-id of model ir.ui.view: account.view_move_line_tax_tree
 deleted xml-id of model ir.ui.view: account.view_res_partner_reconcile
 deleted xml-id of model ir.ui.view: account.view_treasory_graph
+deleted xml-id of model ir.values: account.ir_account_move_line_select
+deleted xml-id of model ir.values: account.ir_open_tax_move_line
 new xml-id of model account.account.template: account.conf_a_expense
 new xml-id of model account.account.template: account.conf_a_pay
 new xml-id of model account.account.template: account.conf_a_recv
@@ -112,6 +219,10 @@ new xml-id of model account.fiscal.position.tax.template: account.fiscal_positio
 new xml-id of model account.fiscal.position.tax.template: account.fiscal_position_tax_exempt
 new xml-id of model account.fiscal.position.template: account.fiscal_position_normal_taxes_template1
 new xml-id of model account.fiscal.position.template: account.fiscal_position_tax_exempt_template2
+new xml-id of model account.payment.term.line: account.account_payment_term_line_15days
+new xml-id of model account.payment.term.line: account.account_payment_term_line_immediate
+new xml-id of model account.payment.term: account.account_payment_term_15days
+new xml-id of model account.payment.term: account.account_payment_term_immediate
 new xml-id of model account.tax.code.template: account.tax_code_balance_net
 new xml-id of model account.tax.code.template: account.tax_code_base_net
 new xml-id of model account.tax.code.template: account.tax_code_base_purchases
@@ -144,6 +255,8 @@ new xml-id of model account.tax.template: account.otaxr
 new xml-id of model account.tax.template: account.otaxs
 new xml-id of model account.tax.template: account.otaxx
 new xml-id of model ir.actions.act_window: account.action_account_config
+new xml-id of model ir.actions.act_window: account.action_account_fiscalyear
+new xml-id of model ir.actions.act_window: account.action_account_period
 new xml-id of model ir.actions.act_window: account.action_cash_box_in
 new xml-id of model ir.actions.act_window: account.action_cash_box_out
 new xml-id of model ir.actions.act_window: account.open_account_charts_modules
@@ -151,8 +264,9 @@ new xml-id of model ir.actions.todo: account.action_wizard_multi_chart_todo
 new xml-id of model ir.model.access: account.access_account_journal_cashbox_line
 new xml-id of model ir.rule: account.entry_analysis_comp_rule
 new xml-id of model ir.ui.menu: account.menu_account_config
+new xml-id of model ir.ui.menu: account.menu_action_account_fiscalyear
+new xml-id of model ir.ui.menu: account.menu_action_account_period
 new xml-id of model ir.ui.menu: account.menu_finance_reports
-new xml-id of model ir.ui.menu: account.menu_manual_reconcile_bank
 new xml-id of model ir.ui.view: account.cash_box_in_form
 new xml-id of model ir.ui.view: account.cash_box_out_form
 new xml-id of model ir.ui.view: account.view_account_config_settings

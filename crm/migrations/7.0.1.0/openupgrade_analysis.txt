@@ -3,7 +3,6 @@ crm          / base.action.rule         / act_mail_to_partner (boolean) : DEL
 crm          / crm.case.section         / _inherits (False)             : NEW 
 crm          / crm.case.section         / alias_id (many2one)           : NEW relation: mail.alias, required: required
 crm          / crm.case.section         / allow_unlink (boolean)        : DEL 
-crm          / crm.case.section         / message_comment_ids (one2many): NEW relation: mail.message
 crm          / crm.case.section         / message_ids (one2many)        : NEW relation: mail.message
 crm          / crm.case.stage           / fold (boolean)                : NEW 
 crm          / crm.case.stage           / state (selection)             : NEW required: required, selection_keys: ['cancel', 'done', 'draft', 'open', 'pending'], req_default: open
@@ -18,7 +17,6 @@ crm          / crm.lead                 / contact_id (many2one)         : DEL re
 crm          / crm.lead                 / country_id (many2one)         : not a function anymore
 crm          / crm.lead                 / email (char)                  : DEL 
 crm          / crm.lead                 / location_id (many2one)        : DEL relation: res.partner.location
-crm          / crm.lead                 / message_comment_ids (one2many): NEW relation: mail.message
 crm          / crm.lead                 / mobile (char)                 : not a function anymore
 crm          / crm.lead                 / name (char)                   : now required
 crm          / crm.lead                 / opt_out (boolean)             : NEW 
@@ -34,6 +32,7 @@ crm          / crm.lead                 / street2 (char)                : not a 
 crm          / crm.lead                 / title (many2one)              : not a function anymore
 crm          / crm.lead                 / zip (char)                    : not a function anymore
 crm          / crm.lead.report          / categ_id (many2one)           : DEL relation: crm.case.categ
+crm          / crm.lead.report          / email (integer)               : DEL 
 crm          / crm.meeting              / active (boolean)              : module is now 'base_calendar' ('crm')
 crm          / crm.meeting              / alarm_id (many2one)           : module is now 'base_calendar' ('crm')
 crm          / crm.meeting              / allday (boolean)              : module is now 'base_calendar' ('crm')
@@ -73,8 +72,8 @@ crm          / crm.meeting              / organizer_id (many2one)       : module
 crm          / crm.meeting              / partner_address_id (many2one) : DEL relation: res.partner.address
 crm          / crm.meeting              / partner_id (many2one)         : DEL relation: res.partner
 crm          / crm.meeting              / recurrency (boolean)          : module is now 'base_calendar' ('crm')
-crm          / crm.meeting              / recurrent_id (datetime)       : module is now 'base_calendar' ('crm')
-crm          / crm.meeting              / recurrent_uid (integer)       : module is now 'base_calendar' ('crm')
+crm          / crm.meeting              / recurrent_id (datetime)       : type is now 'integer' ('datetime')
+crm          / crm.meeting              / recurrent_uid (integer)       : DEL 
 crm          / crm.meeting              / rrule (char)                  : module is now 'base_calendar' ('crm')
 crm          / crm.meeting              / rrule_type (selection)        : module is now 'base_calendar' ('crm')
 crm          / crm.meeting              / rrule_type (selection)        : selection_keys is now '['daily', 'monthly', 'weekly', 'yearly']' ('['daily', 'monthly', 'none', 'weekly', 'yearly']')
@@ -96,7 +95,6 @@ crm          / crm.meeting              / write_date (datetime)         : module
 crm          / crm.payment.mode         / name (char)                   : NEW required: required
 crm          / crm.payment.mode         / section_id (many2one)         : NEW relation: crm.case.section
 crm          / crm.phonecall            / id (integer)                  : DEL 
-crm          / crm.phonecall            / message_comment_ids (one2many): NEW relation: mail.message
 crm          / crm.phonecall            / partner_address_id (many2one) : DEL relation: res.partner.address
 crm          / crm.segmentation         / som_interval (integer)        : DEL 
 crm          / crm.segmentation         / som_interval_decrease (float) : DEL 
@@ -123,6 +121,8 @@ deleted xml-id of model ir.actions.act_window: crm.act_my_oppor
 deleted xml-id of model ir.actions.act_window: crm.act_my_oppor_stage
 deleted xml-id of model ir.actions.act_window: crm.act_oppor_categ
 deleted xml-id of model ir.actions.act_window: crm.action_crm_add_note
+deleted xml-id of model ir.actions.act_window: crm.action_crm_lead2partner
+deleted xml-id of model ir.actions.act_window: crm.action_crm_phonecall2partner
 deleted xml-id of model ir.actions.act_window: crm.action_view_attendee_form
 deleted xml-id of model ir.actions.act_window: crm.action_view_crm_partner2opportunity
 deleted xml-id of model ir.actions.act_window: crm.crm_case_categ_meet
@@ -133,6 +133,7 @@ deleted xml-id of model ir.actions.act_window: crm.crm_case_stage_form_installer
 deleted xml-id of model ir.actions.act_window: crm.crm_meeting_categ_action
 deleted xml-id of model ir.actions.act_window: crm.crm_partner2opportunity
 deleted xml-id of model ir.actions.act_window: crm.open_board_crm
+deleted xml-id of model ir.actions.act_window: crm.phonecall2opportunity_act
 deleted xml-id of model ir.actions.todo: crm.crm_case_section_installer_todo
 deleted xml-id of model ir.actions.todo: crm.crm_case_stage_installer_todo
 deleted xml-id of model ir.model.access: crm.access_crm_meeting
@@ -159,14 +160,20 @@ deleted xml-id of model ir.ui.view: crm.crm_case_gantt_view_meet
 deleted xml-id of model ir.ui.view: crm.crm_case_graph_view_opportunity
 deleted xml-id of model ir.ui.view: crm.crm_case_my_open_oppor
 deleted xml-id of model ir.ui.view: crm.crm_case_tree_view_meet
+deleted xml-id of model ir.ui.view: crm.phonecall2opportunity_view
 deleted xml-id of model ir.ui.view: crm.view_base_action_rule_line_form2
 deleted xml-id of model ir.ui.view: crm.view_base_action_rule_line_form3
 deleted xml-id of model ir.ui.view: crm.view_base_action_rule_line_form4
 deleted xml-id of model ir.ui.view: crm.view_crm_case_meetings_filter
 deleted xml-id of model ir.ui.view: crm.view_crm_case_scheduled_phonecalls_filter
+deleted xml-id of model ir.ui.view: crm.view_crm_lead2partner
 deleted xml-id of model ir.ui.view: crm.view_crm_opportunity_categ_graph
 deleted xml-id of model ir.ui.view: crm.view_crm_opportunity_user_graph1
+deleted xml-id of model ir.ui.view: crm.view_crm_partner2opportunity
 deleted xml-id of model ir.ui.view: crm.view_crm_partner_info_form1
+deleted xml-id of model ir.ui.view: crm.view_crm_phonecall2partner
+deleted xml-id of model ir.ui.view: crm.view_crm_phonecall2partner_create
+deleted xml-id of model ir.ui.view: crm.view_partners_form_crm3
 deleted xml-id of model ir.ui.view: crm.view_partners_tree_crm2
 deleted xml-id of model ir.ui.view: crm.view_report_crm_oppor_graph
 deleted xml-id of model ir.ui.view: crm.view_users_form_simple_modif_inherited1
@@ -184,6 +191,7 @@ new xml-id of model crm.payment.mode: crm.payment_mode_1
 new xml-id of model crm.payment.mode: crm.payment_mode_2
 new xml-id of model crm.payment.mode: crm.payment_mode_3
 new xml-id of model crm.payment.mode: crm.payment_mode_4
+new xml-id of model email.template: crm.email_template_opportunity_mail
 new xml-id of model ir.actions.act_window.view: crm.relate_partner_opportunities_form
 new xml-id of model ir.actions.act_window.view: crm.relate_partner_opportunities_kanban
 new xml-id of model ir.actions.act_window.view: crm.relate_partner_opportunities_tree
@@ -191,10 +199,6 @@ new xml-id of model ir.actions.act_window: crm.action_crm_payment_mode
 new xml-id of model ir.actions.act_window: crm.crm_meeting_partner
 new xml-id of model ir.actions.act_window: crm.relate_partner_opportunities
 new xml-id of model ir.actions.client: crm.action_client_crm_menu
-new xml-id of model ir.actions.server: crm.actions_server_crm_lead_read
-new xml-id of model ir.actions.server: crm.actions_server_crm_lead_unread
-new xml-id of model ir.actions.server: crm.actions_server_crm_phonecall_read
-new xml-id of model ir.actions.server: crm.actions_server_crm_phonecall_unread
 new xml-id of model ir.actions.todo: base.open_menu
 new xml-id of model ir.model.access: crm.access_crm_payment_mode
 new xml-id of model ir.model.access: crm.access_crm_payment_mode_user
@@ -202,7 +206,6 @@ new xml-id of model ir.rule: crm.crm_rule_all_phones
 new xml-id of model ir.rule: crm.crm_rule_personal_phonecall
 new xml-id of model ir.ui.menu: base.menu_import_crm
 new xml-id of model ir.ui.menu: base.menu_sale_config
-new xml-id of model ir.ui.menu: base.menu_sales_configuration_misc
 new xml-id of model ir.ui.menu: crm.menu_crm_leads
 new xml-id of model ir.ui.menu: crm.menu_crm_opportunities
 new xml-id of model ir.ui.menu: crm.menu_crm_payment_mode_act
@@ -212,10 +215,6 @@ new xml-id of model ir.ui.view: crm.res_partner_view_buttons
 new xml-id of model ir.ui.view: crm.view_crm_payment_mode_form
 new xml-id of model ir.ui.view: crm.view_crm_payment_mode_tree
 new xml-id of model ir.ui.view: crm.view_sale_config_settings
-new xml-id of model ir.values: crm.action_crm_lead_read
-new xml-id of model ir.values: crm.action_crm_lead_unread
-new xml-id of model ir.values: crm.action_crm_phonecall_read
-new xml-id of model ir.values: crm.action_crm_phonecall_unread
 new xml-id of model mail.alias: crm.default_sales_alias
 new xml-id of model mail.message.subtype: mail.mt_crm_lost
 new xml-id of model mail.message.subtype: mail.mt_crm_stage
