@@ -15,6 +15,46 @@ document_page / document.page.history    / create_date (datetime)        : NEW
 document_page / document.page.history    / create_uid (many2one)         : NEW relation: res.users
 document_page / document.page.history    / page_id (many2one)            : NEW relation: document.page
 document_page / document.page.history    / summary (char)                : NEW 
+deleted xml-id of model ir.actions.act_window: wiki.act_wiki_group_open
+deleted xml-id of model ir.actions.act_window: wiki.act_wiki_wiki_history
+deleted xml-id of model ir.actions.act_window: wiki.action_history
+deleted xml-id of model ir.actions.act_window: wiki.action_view_wiki_make_index
+deleted xml-id of model ir.actions.act_window: wiki.action_view_wiki_make_index_values
+deleted xml-id of model ir.actions.act_window: wiki.action_view_wiki_show_diff
+deleted xml-id of model ir.actions.act_window: wiki.action_view_wiki_show_diff_values
+deleted xml-id of model ir.actions.act_window: wiki.action_view_wiki_wiki_page_open
+deleted xml-id of model ir.actions.act_window: wiki.action_wiki
+deleted xml-id of model ir.actions.act_window: wiki.action_wiki_create_menu
+deleted xml-id of model ir.actions.act_window: wiki.action_wiki_groups
+deleted xml-id of model ir.actions.act_window: wiki.action_wiki_groups_browse
+deleted xml-id of model ir.actions.act_window: wiki.action_wiki_review
+deleted xml-id of model ir.model.access: wiki.access_wiki_wiki_sale_manager
+deleted xml-id of model ir.model.access: wiki.wiki_groups
+deleted xml-id of model ir.model.access: wiki.wiki_groups_all
+deleted xml-id of model ir.model.access: wiki.wiki_wiki
+deleted xml-id of model ir.model.access: wiki.wiki_wiki_all
+deleted xml-id of model ir.model.access: wiki.wiki_wiki_history
+deleted xml-id of model ir.model.access: wiki.wiki_wiki_user
+deleted xml-id of model ir.ui.menu: knowledge.menu_document_configuration
+deleted xml-id of model ir.ui.menu: wiki.menu_action_wiki_groups
+deleted xml-id of model ir.ui.menu: wiki.menu_action_wiki_wiki
+deleted xml-id of model ir.ui.menu: wiki.menu_wiki_configuration
+deleted xml-id of model ir.ui.view: wiki.view_wiki_create_menu
+deleted xml-id of model ir.ui.view: wiki.view_wiki_filter
+deleted xml-id of model ir.ui.view: wiki.view_wiki_form
+deleted xml-id of model ir.ui.view: wiki.view_wiki_history_tree
+deleted xml-id of model ir.ui.view: wiki.view_wiki_make_index
+deleted xml-id of model ir.ui.view: wiki.view_wiki_show_diff
+deleted xml-id of model ir.ui.view: wiki.view_wiki_tree
+deleted xml-id of model ir.ui.view: wiki.view_wiki_tree_children
+deleted xml-id of model ir.ui.view: wiki.view_wiki_wiki_page_open
+deleted xml-id of model ir.ui.view: wiki.wiki_group_form
+deleted xml-id of model ir.ui.view: wiki.wiki_group_tree
+deleted xml-id of model ir.ui.view: wiki.wiki_history_form
+deleted xml-id of model ir.values: wiki.ir_open_wiki_pages
+deleted xml-id of model wiki.groups: wiki.wiki_groups_wikiformatting0
+deleted xml-id of model wiki.wiki: wiki.wiki_wiki_main
+deleted xml-id of model wiki.wiki: wiki.wiki_wiki_quickstart0
 new xml-id of model ir.actions.act_window: document_page.action_category
 new xml-id of model ir.actions.act_window: document_page.action_history
 new xml-id of model ir.actions.act_window: document_page.action_page
@@ -30,7 +70,6 @@ new xml-id of model ir.ui.menu: document_page.menu_category
 new xml-id of model ir.ui.menu: document_page.menu_page
 new xml-id of model ir.ui.menu: document_page.menu_page_history
 new xml-id of model ir.ui.menu: document_page.menu_wiki
-new xml-id of model ir.ui.menu: knowledge.menu_document
 new xml-id of model ir.ui.view: document_page.view_wiki_create_menu
 new xml-id of model ir.ui.view: document_page.view_wiki_filter
 new xml-id of model ir.ui.view: document_page.view_wiki_form
@@ -39,4 +78,3 @@ new xml-id of model ir.ui.view: document_page.view_wiki_show_diff
 new xml-id of model ir.ui.view: document_page.view_wiki_tree
 new xml-id of model ir.ui.view: document_page.view_wiki_tree_children
 new xml-id of model ir.ui.view: document_page.wiki_history_form
-new xml-id of model res.groups: base.group_document_user

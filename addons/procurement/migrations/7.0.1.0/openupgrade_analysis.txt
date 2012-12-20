@@ -1,10 +1,18 @@
 ---procurement---
-procurement  / procurement.order        / message_comment_ids (one2many): NEW relation: mail.message
 procurement  / procurement.order        / message_ids (one2many)        : NEW relation: mail.message
+procurement  / procurement.order        / name (char)                   : type is now 'text' ('char')
 procurement  / product.template         / type (False)                  : NEW selection_keys: ['consu', 'product', 'service'], mode: modify
 deleted xml-id of model ir.actions.act_window: procurement.act_product_product_2_stock_warehouse_orderpoint
 deleted xml-id of model ir.ui.view: procurement.product_normal_form_view
+deleted xml-id of model workflow.activity: procurement.act_produce_check
+deleted xml-id of model workflow.activity: procurement.act_produce_service
+deleted xml-id of model workflow.transition: procurement.trans_confirm_mto_produce_check
+deleted xml-id of model workflow.transition: procurement.trans_confirm_mto_purchase
+deleted xml-id of model workflow.transition: procurement.trans_produce_service_cancel
+deleted xml-id of model workflow.transition: procurement.trans_produce_service_make_done
+deleted xml-id of model workflow.transition: procurement.trans_product_check_produce_service
 new xml-id of model ir.actions.act_window: procurement.product_open_orderpoint
 new xml-id of model ir.ui.view: procurement.product_form_view_procurement_button
 new xml-id of model ir.ui.view: procurement.product_search_form_view_procurment
 new xml-id of model ir.ui.view: procurement.product_template_form_view_procurement
+new xml-id of model workflow.transition: procurement.trans_confirm_mto_make_done

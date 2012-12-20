@@ -1,4 +1,7 @@
 ---delivery---
+delivery     / sale.order               / id (integer)                  : DEL 
+delivery     / stock.move               / weight_uom_id (many2one)      : NEW relation: product.uom, required: required, req_default: function
+delivery     / stock.picking            / weight_uom_id (many2one)      : NEW relation: product.uom, required: required, req_default: function
 delivery     / stock.picking.out        / carrier_id (many2one)         : NEW relation: delivery.carrier
 delivery     / stock.picking.out        / carrier_tracking_ref (char)   : NEW 
 delivery     / stock.picking.out        / number_of_packages (integer)  : NEW 

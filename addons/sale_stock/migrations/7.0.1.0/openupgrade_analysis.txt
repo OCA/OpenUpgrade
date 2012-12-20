@@ -4,6 +4,7 @@ sale_stock   / sale.order               / order_policy (False)          : NEW se
 sale_stock   / sale.order               / state (False)                 : NEW selection_keys: ['cancel', 'done', 'draft', 'invoice_except', 'manual', 'progress', 'sent', 'shipping_except', 'waiting_date'], mode: modify
 sale_stock   / sale.report              / state (False)                 : NEW selection_keys: ['cancel', 'done', 'draft', 'invoice_except', 'manual', 'progress', 'shipping_except', 'waiting_date'], mode: modify
 sale_stock   / stock.picking.out        / sale_id (many2one)            : NEW relation: sale.order
+new xml-id of model ir.actions.act_window: sale_stock.outgoing_picking_list_to_invoice
 new xml-id of model ir.model.access: sale_stock.access_procurement_manager
 new xml-id of model ir.model.access: sale_stock.access_procurement_salesman
 new xml-id of model ir.model.access: sale_stock.access_product_packaging_manager
@@ -19,8 +20,12 @@ new xml-id of model ir.model.access: sale_stock.access_stock_picking_sales
 new xml-id of model ir.model.access: sale_stock.access_stock_picking_salesman
 new xml-id of model ir.model.access: sale_stock.access_stock_warehouse_orderpoint_sale_salesman
 new xml-id of model ir.model.access: sale_stock.access_stock_warehouse_user
+new xml-id of model ir.ui.menu: sale_stock.menu_action_picking_list_to_invoice
 new xml-id of model ir.ui.menu: sale_stock.menu_action_shop_form
 new xml-id of model ir.ui.view: sale_stock.mrp_company
+new xml-id of model ir.ui.view: sale_stock.stock_move_sale
+new xml-id of model ir.ui.view: sale_stock.stock_picking_inherit_sale
+new xml-id of model ir.ui.view: sale_stock.stock_picking_out_inherit_sale
 new xml-id of model ir.ui.view: sale_stock.view_order_form_inherit
 new xml-id of model ir.ui.view: sale_stock.view_order_product_tree_inherit
 new xml-id of model ir.ui.view: sale_stock.view_sale_shop_form_inherit

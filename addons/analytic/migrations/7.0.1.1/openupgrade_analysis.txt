@@ -1,7 +1,6 @@
 ---analytic---
 analytic     / account.analytic.account / contact_id (many2one)         : DEL relation: res.partner.address
 analytic     / account.analytic.account / manager_id (many2one)         : NEW relation: res.users
-analytic     / account.analytic.account / message_comment_ids (one2many): NEW relation: mail.message
 analytic     / account.analytic.account / message_ids (one2many)        : NEW relation: mail.message
 analytic     / account.analytic.account / template_id (many2one)        : NEW relation: account.analytic.account
 analytic     / account.analytic.account / type (selection)              : now required, default = normal

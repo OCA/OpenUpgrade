@@ -1,6 +1,5 @@
 ---hr_expense---
 hr_expense   / hr.expense.expense       / invoice_id (many2one)         : DEL relation: account.invoice
-hr_expense   / hr.expense.expense       / message_comment_ids (one2many): NEW relation: mail.message
 hr_expense   / hr.expense.expense       / message_ids (one2many)        : NEW relation: mail.message
 hr_expense   / hr.expense.expense       / ref (char)                    : DEL 
 hr_expense   / hr.expense.expense       / state (selection)             : selection_keys is now '['accepted', 'cancelled', 'confirm', 'done', 'draft']' ('['accepted', 'cancelled', 'confirm', 'draft', 'invoiced', 'paid']')
@@ -12,6 +11,8 @@ hr_expense   / hr.expense.report        / state (selection)             : select
 hr_expense   / hr.expense.report        / voucher_id (many2one)         : NEW relation: account.voucher
 deleted xml-id of model ir.actions.act_window: hr_expense.action_employee_expense
 deleted xml-id of model ir.actions.todo: hr_expense.product_normal_form_view_todo
+deleted xml-id of model ir.model.access: hr.access_account_journal_column_hruser
+deleted xml-id of model ir.model.access: hr.access_account_journal_view_hruser
 deleted xml-id of model ir.ui.menu: hr.menu_hr_reporting
 deleted xml-id of model ir.ui.view: hr_expense.board_hr_manager_expense_form
 deleted xml-id of model workflow.activity: hr_expense.act_invoice

@@ -1,5 +1,4 @@
 ---crm_claim---
-crm_claim    / crm.claim                / message_comment_ids (one2many): NEW relation: mail.message
 crm_claim    / crm.claim                / partner_address_id (many2one) : DEL relation: res.partner.address
 crm_claim    / crm.claim                / stage_id (many2one)           : relation is now 'crm.claim.stage' ('crm.case.stage')
 crm_claim    / crm.claim                / state (selection)             : now a function
@@ -22,9 +21,6 @@ new xml-id of model crm.claim.stage: crm_claim.stage_claim2
 new xml-id of model crm.claim.stage: crm_claim.stage_claim3
 new xml-id of model crm.claim.stage: crm_claim.stage_claim5
 new xml-id of model ir.model.access: crm_claim.access_crm_claim_stage_user
-new xml-id of model ir.ui.menu: base.menu_definitions
-new xml-id of model ir.ui.menu: base.menu_main_pm
-new xml-id of model ir.ui.menu: base.menu_project_config_project
 new xml-id of model ir.ui.menu: base.menu_project_report
 new xml-id of model ir.ui.menu: crm_claim.menu_claim_stage_view
 new xml-id of model ir.ui.view: crm_claim.crm_claim_stage_form

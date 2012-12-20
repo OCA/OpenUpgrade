@@ -1,27 +1,52 @@
 ---document---
+document     / document.directory       / storage_id (many2one)         : DEL relation: document.storage
+document     / ir.attachment            / db_datas (binary)             : module is now 'base' ('document')
+document     / ir.attachment            / file_size (integer)           : module is now 'base' ('document')
+document     / ir.attachment            / store_fname (char)            : module is now 'base' ('document')
+document     / process.node             / directory_id (many2one)       : DEL relation: document.directory
 document     / report.document.user     / user (char)                   : now a function
+deleted xml-id of model document.directory: document.dir_partner_category
+deleted xml-id of model document.directory: document.dir_product
+deleted xml-id of model document.directory: document.dir_project
+deleted xml-id of model document.directory: document.dir_sale_order
+deleted xml-id of model document.directory: document.dir_sale_order_all
+deleted xml-id of model document.directory: document.dir_sale_order_quote
+deleted xml-id of model document.storage: document.storage_default
+deleted xml-id of model ir.actions.act_window: document.action_document_storage_form
 deleted xml-id of model ir.actions.act_window: document.action_view_files_by_partner
 deleted xml-id of model ir.actions.act_window: document.action_view_user_graph
 deleted xml-id of model ir.actions.act_window: document.action_view_wall
+deleted xml-id of model ir.actions.act_window: document.open_board_document_manager
 deleted xml-id of model ir.actions.act_window: document.open_board_document_manager1
 deleted xml-id of model ir.actions.todo.category: document.category_knowledge_mgmt_config
+deleted xml-id of model ir.model.access: document.access_document_storage_group_document_manager
+deleted xml-id of model ir.model.access: document.access_document_storage_group_system
+deleted xml-id of model ir.model.access: document.access_document_storage_group_user
 deleted xml-id of model ir.model.access: document.access_report_document_wall_group_document
 deleted xml-id of model ir.model.access: document.access_report_document_wall_group_document_manager
 deleted xml-id of model ir.model.access: document.access_report_document_wall_group_system
 deleted xml-id of model ir.model.access: document.access_report_files_partner_group_document
 deleted xml-id of model ir.model.access: document.access_report_files_partner_group_document_manager
+deleted xml-id of model ir.ui.menu: document.menu_document_storage_media
 deleted xml-id of model ir.ui.menu: document.menu_reporting
+deleted xml-id of model ir.ui.menu: document.menu_reports_document
 deleted xml-id of model ir.ui.menu: document.menu_reports_document_manager
 deleted xml-id of model ir.ui.menu: document.menu_reports_document_manager1
 deleted xml-id of model ir.ui.menu: knowledge.menu_document
+deleted xml-id of model ir.ui.view: document.board_document_manager_form
 deleted xml-id of model ir.ui.view: document.board_document_manager_form1
 deleted xml-id of model ir.ui.view: document.view_attachment_form_inherit
 deleted xml-id of model ir.ui.view: document.view_document_by_resourcetype_graph
+deleted xml-id of model ir.ui.view: document.view_document_storage_filter
+deleted xml-id of model ir.ui.view: document.view_document_storage_form
+deleted xml-id of model ir.ui.view: document.view_document_storage_tree
 deleted xml-id of model ir.ui.view: document.view_document_wall_form
 deleted xml-id of model ir.ui.view: document.view_document_wall_tree
 deleted xml-id of model ir.ui.view: document.view_files_by_partner_form
 deleted xml-id of model ir.ui.view: document.view_files_by_partner_graph
 deleted xml-id of model ir.ui.view: document.view_files_by_partner_tree
+deleted xml-id of model ir.ui.view: document.view_process_form_inherit1
+deleted xml-id of model ir.ui.view: document.view_process_node_form_inherit1
 deleted xml-id of model ir.ui.view: document.view_user_graph
 new xml-id of model ir.actions.act_window: document.action_view_files_by_user_graph
 new xml-id of model ir.ui.view: document.view_files_by_user_graph

@@ -1,9 +1,9 @@
 ---purchase---
 purchase     / purchase.order           / dest_address_id (many2one)    : relation is now 'res.partner' ('res.partner.address')
 purchase     / purchase.order           / journal_id (many2one)         : NEW relation: account.journal
-purchase     / purchase.order           / message_comment_ids (one2many): NEW relation: mail.message
 purchase     / purchase.order           / message_ids (one2many)        : NEW relation: mail.message
 purchase     / purchase.order           / partner_address_id (many2one) : DEL relation: res.partner.address, required: required, req_default: function
+purchase     / purchase.order           / payment_term_id (many2one)    : NEW relation: account.payment.term
 purchase     / purchase.order           / picking_ids (one2many)        : relation is now 'stock.picking.in' ('stock.picking')
 purchase     / purchase.order           / state (selection)             : selection_keys is now '['approved', 'cancel', 'confirmed', 'done', 'draft', 'except_invoice', 'except_picking', 'sent']' ('['approved', 'cancel', 'confirmed', 'done', 'draft', 'except_invoice', 'except_picking', 'wait']')
 purchase     / purchase.order.line      / name (char)                   : type is now 'text' ('char')
@@ -37,12 +37,11 @@ deleted xml-id of model ir.ui.menu: purchase.menu_purchase_deshboard
 deleted xml-id of model ir.ui.view: purchase.stock_picking_inherit_purchase
 deleted xml-id of model ir.ui.view: purchase.view_picking_in_search_picking_to_invoice
 deleted xml-id of model ir.ui.view: purchase.view_purchase_config
+deleted xml-id of model workflow.transition: procurement.trans_confirm_mto_purchase
 new xml-id of model ir.actions.act_window: purchase.act_res_partner_2_supplier_invoices
 new xml-id of model ir.actions.act_window: purchase.action_purchase_configuration
 new xml-id of model ir.actions.act_window: purchase.purchase_pricelist_version_action
 new xml-id of model ir.actions.client: purchase.action_client_purchase_menu
-new xml-id of model ir.actions.server: purchase.actions_server_purchase_order_read
-new xml-id of model ir.actions.server: purchase.actions_server_purchase_order_unread
 new xml-id of model ir.actions.todo: base.open_menu
 new xml-id of model ir.model.access: purchase.access_stock_warehouse_orderpoint_manager
 new xml-id of model ir.ui.menu: purchase.menu_product_pricelist_action2_purchase_type
@@ -59,12 +58,10 @@ new xml-id of model ir.ui.view: purchase.view_product_account_purchase_ok_form
 new xml-id of model ir.ui.view: purchase.view_product_supplier_inherit
 new xml-id of model ir.ui.view: purchase.view_purchase_configuration
 new xml-id of model ir.ui.view: purchase.view_template_purchase_ok_form
-new xml-id of model ir.values: purchase.action_purchase_order_read
-new xml-id of model ir.values: purchase.action_purchase_order_unread
 new xml-id of model mail.message: purchase.module_install_notification
 new xml-id of model res.groups: purchase.group_analytic_accounting
-new xml-id of model res.groups: purchase.group_delivery_invoice_address
 new xml-id of model workflow.activity: purchase.act_sent
+new xml-id of model workflow.transition: purchase.trans_confirm_mto_purchase
 new xml-id of model workflow.transition: purchase.trans_draft_sent
 new xml-id of model workflow.transition: purchase.trans_sent_cancel
 new xml-id of model workflow.transition: purchase.trans_sent_confirmed

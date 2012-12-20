@@ -1,7 +1,6 @@
 ---hr_recruitment---
 hr_recruitment / hr.applicant             / categ_ids (many2many)         : NEW relation: hr.applicant_category
 hr_recruitment / hr.applicant             / emp_id (many2one)             : NEW relation: hr.employee
-hr_recruitment / hr.applicant             / message_comment_ids (one2many): NEW relation: mail.message
 hr_recruitment / hr.applicant             / partner_address_id (many2one) : DEL relation: res.partner.address
 hr_recruitment / hr.applicant             / state (selection)             : now a function
 hr_recruitment / hr.applicant_category    / name (char)                   : NEW required: required
@@ -23,15 +22,11 @@ deleted xml-id of model ir.ui.menu: hr_recruitment.menu_hr_job
 deleted xml-id of model ir.ui.view: hr_recruitment.view_hr_recruitment_phonecall
 new xml-id of model crm.meeting.type: hr_recruitment.categ_meet_interview
 new xml-id of model ir.actions.act_window: hr_recruitment.act_hr_applicant_to_meeting
-new xml-id of model ir.actions.server: hr_recruitment.actions_server_applicant_read
-new xml-id of model ir.actions.server: hr_recruitment.actions_server_applicant_unread
 new xml-id of model ir.actions.todo: base.open_menu
 new xml-id of model ir.model.access: hr_recruitment.access_hr_applicant_category
 new xml-id of model ir.model.access: hr_recruitment.access_hr_applicant_category_manager
 new xml-id of model ir.ui.menu: hr.menu_hr_job
 new xml-id of model ir.ui.view: hr_recruitment.view_hr_apll_config_settings
-new xml-id of model ir.values: hr_recruitment.action_applicant_read
-new xml-id of model ir.values: hr_recruitment.action_applicant_unread
 new xml-id of model mail.alias: hr_recruitment.mail_alias_jobs
 new xml-id of model mail.message.subtype: hr_recruitment.mt_applicant_new
 new xml-id of model mail.message.subtype: hr_recruitment.mt_hired
