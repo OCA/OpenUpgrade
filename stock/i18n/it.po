@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:04+0000\n"
-"PO-Revision-Date: 2012-12-21 23:00+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2012-12-22 23:57+0000\n"
+"Last-Translator: Alessandro Camilli <a.camilli@yahoo.it>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-22 07:34+0000\n"
+"X-Launchpad-Export-Date: 2012-12-23 05:08+0000\n"
 "X-Generator: Launchpad (build 16378)\n"
 
 #. module: stock
@@ -33,11 +33,14 @@ msgid ""
 "Shirts, for the same \"Linux T-Shirt\", you may have variants on  sizes or "
 "colors; S, M, L, XL, XXL."
 msgstr ""
+"Consente di gestire diverse varianti per prodotto. Ad esempio, se si vendeno "
+"t-shirts, per la stessa \"Linux T-Shirt\", si possono avere le varianti su "
+"tagle e colori; S, M, L, XL, XXL."
 
 #. module: stock
 #: model:ir.model,name:stock.model_stock_move_split_lines
 msgid "Stock move Split lines"
-msgstr ""
+msgstr "Suddivisione righe movimento di magazzino"
 
 #. module: stock
 #: help:product.category,property_stock_account_input_categ:0
@@ -48,6 +51,11 @@ msgid ""
 "value for all products in this category. It can also directly be set on each "
 "product"
 msgstr ""
+"Durante un inventario, le contropartite per ogni movimento di magazzino "
+"verranno scritte in questo conto, almeno fino a quando un conto specifico "
+"non verrà specificato sulla locazione di magazzino sorgente. Questo è il "
+"valore di default per tutti i prodotti in questa categoria. Può essere anche "
+"impostato direttamente su ogni prodotto."
 
 #. module: stock
 #: view:stock.picking.out:0
@@ -84,7 +92,7 @@ msgstr "Tracciabilità a monte"
 #: field:stock.picking.in,date_done:0
 #: field:stock.picking.out,date_done:0
 msgid "Date of Transfer"
-msgstr ""
+msgstr "Data dello spostamento"
 
 #. module: stock
 #: field:product.product,track_outgoing:0
@@ -110,7 +118,7 @@ msgstr "Numero revisione"
 #. module: stock
 #: view:stock.move:0
 msgid "Orders processed Today or planned for Today"
-msgstr ""
+msgstr "Ordini evasi oggi o pianificati per oggi"
 
 #. module: stock
 #: view:stock.partial.move.line:0
@@ -126,7 +134,7 @@ msgstr "Movimenti prodotto"
 #: code:addons/stock/stock.py:2580
 #, python-format
 msgid "Please provide proper quantity."
-msgstr ""
+msgstr "Si prega di fornire una quantità valida."
 
 #. module: stock
 #: model:ir.ui.menu,name:stock.menu_stock_inventory_control
@@ -147,12 +155,13 @@ msgstr ""
 #, python-format
 msgid "You cannot perform this operation on more than one Stock Inventories."
 msgstr ""
+"Non è possibile eseguire questazione su più di un inventario di magazzino."
 
 #. module: stock
 #: code:addons/stock/wizard/stock_change_product_qty.py:91
 #, python-format
 msgid "Quantity cannot be negative."
-msgstr ""
+msgstr "La quantità non può essere negativa."
 
 #. module: stock
 #: view:stock.picking:0
@@ -199,7 +208,7 @@ msgstr "Inventari fisici"
 #. module: stock
 #: selection:stock.location.product,type:0
 msgid "Analyse a Period"
-msgstr ""
+msgstr "Analizza un periodo"
 
 #. module: stock
 #: view:report.stock.move:0
@@ -216,14 +225,14 @@ msgstr "In entrata"
 #: code:addons/stock/wizard/stock_move.py:223
 #, python-format
 msgid "Unable to assign all lots to this move!"
-msgstr ""
+msgstr "Impossibile assegnare tutti i lotti a questo movimento!"
 
 #. module: stock
 #: help:stock.move,partner_id:0
 msgid ""
 "Optional address where goods are to be delivered, specifically used for "
 "allotment"
-msgstr ""
+msgstr "Indirizzo opzionale al quale la merce verrà inviata"
 
 #. module: stock
 #: model:ir.actions.server,name:stock.action_partial_move_server
@@ -240,18 +249,18 @@ msgstr "Non è possibile cancellare alcun record!"
 #. module: stock
 #: view:stock.picking:0
 msgid "Delivery orders to invoice"
-msgstr ""
+msgstr "Ordini di consegna da fatturare"
 
 #. module: stock
 #: view:stock.picking:0
 msgid "Assigned Delivery Orders"
-msgstr ""
+msgstr "Ordini di consegna assegnati"
 
 #. module: stock
 #: code:addons/stock/wizard/stock_change_standard_price.py:107
 #, python-format
 msgid "Active ID is not set in Context."
-msgstr ""
+msgstr "Active ID non impostato nel context."
 
 #. module: stock
 #: selection:stock.picking,invoice_state:0
@@ -330,7 +339,7 @@ msgstr ""
 #. module: stock
 #: view:product.product:0
 msgid "Forecasted:"
-msgstr ""
+msgstr "Previsti:"
 
 #. module: stock
 #: view:stock.partial.move:0
@@ -380,6 +389,7 @@ msgstr "Raggruppa per Partner"
 #: help:stock.picking.out,move_type:0
 msgid "It specifies goods to be deliver partially or all at once"
 msgstr ""
+"Specifica se la merce va spedita parzialmente o in un'unica soluzione"
 
 #. module: stock
 #: model:ir.model,name:stock.model_res_partner
@@ -397,7 +407,7 @@ msgstr "Partner"
 #. module: stock
 #: field:stock.config.settings,module_claim_from_delivery:0
 msgid "Allow claim on deliveries"
-msgstr ""
+msgstr "Reclami su consegne"
 
 #. module: stock
 #: selection:stock.return.picking,invoice_state:0
@@ -407,18 +417,18 @@ msgstr "Nessuna fatturazione"
 #. module: stock
 #: view:stock.move:0
 msgid "Stock moves that have been processed"
-msgstr ""
+msgstr "Movimenti di magazzini processati"
 
 #. module: stock
 #: field:stock.inventory.line.split,use_exist:0
 #: field:stock.move.split,use_exist:0
 msgid "Existing Serial Numbers"
-msgstr ""
+msgstr "Numeri seriali esistenti"
 
 #. module: stock
 #: model:res.groups,name:stock.group_inventory_valuation
 msgid "Manage Inventory valuation"
-msgstr ""
+msgstr "Gestisci valorizzazione inventario"
 
 #. module: stock
 #: model:stock.location,name:stock.stock_location_suppliers
@@ -438,7 +448,7 @@ msgstr "Movimenti per questo pacco"
 #. module: stock
 #: view:stock.picking.in:0
 msgid "Incoming Shipments Available"
-msgstr ""
+msgstr "Spedizioni in entrata disponibili"
 
 #. module: stock
 #: selection:report.stock.inventory,location_type:0
@@ -449,7 +459,7 @@ msgstr "Punto di Stoccaggio Interno"
 #. module: stock
 #: view:stock.move:0
 msgid "Split in Serial Number"
-msgstr ""
+msgstr "Suddividi in numeri seriali"
 
 #. module: stock
 #: view:stock.location:0
@@ -464,12 +474,12 @@ msgstr "Valore Reale Magazzino"
 #. module: stock
 #: field:report.stock.move,day_diff2:0
 msgid "Lag (Days)"
-msgstr ""
+msgstr "Ritardo"
 
 #. module: stock
 #: selection:stock.picking.out,state:0
 msgid "Ready to Deliver"
-msgstr ""
+msgstr "Pronto per la consegna"
 
 #. module: stock
 #: model:ir.model,name:stock.model_action_traceability
@@ -507,7 +517,7 @@ msgstr "In Q.tà"
 #. module: stock
 #: model:ir.actions.client,name:stock.action_client_warehouse_menu
 msgid "Open Warehouse Menu"
-msgstr ""
+msgstr "Apre il menù Magazzino"
 
 #. module: stock
 #: field:stock.warehouse,lot_output_id:0
@@ -523,7 +533,7 @@ msgstr "Dividi in"
 #. module: stock
 #: field:stock.config.settings,module_product_expiry:0
 msgid "Expiry date on serial numbers"
-msgstr ""
+msgstr "Data di scadenza sui lotti"
 
 #. module: stock
 #: field:stock.move,price_currency_id:0
@@ -533,7 +543,7 @@ msgstr "Valuta per prezzo medio"
 #. module: stock
 #: view:product.product:0
 msgid "Stock and Expected Variations"
-msgstr ""
+msgstr "Giacenza e variazioni attese"
 
 #. module: stock
 #: help:product.category,property_stock_valuation_account_id:0
@@ -545,7 +555,7 @@ msgstr ""
 #. module: stock
 #: field:stock.config.settings,group_stock_tracking_lot:0
 msgid "Track serial number on logistic units (pallets)"
-msgstr ""
+msgstr "Gestisci numeri di serie sulle unità logistiche (pallets)"
 
 #. module: stock
 #: help:product.template,sale_delay:0

@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:04+0000\n"
-"PO-Revision-Date: 2012-12-21 23:00+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2012-12-22 22:29+0000\n"
+"Last-Translator: Felix Schubert <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-22 06:55+0000\n"
+"X-Launchpad-Export-Date: 2012-12-23 05:07+0000\n"
 "X-Generator: Launchpad (build 16378)\n"
 
 #. module: account
@@ -259,7 +259,7 @@ msgstr "Auswertungen für Belgien"
 #. module: account
 #: model:mail.message.subtype,name:account.mt_invoice_validated
 msgid "Validated"
-msgstr ""
+msgstr "Bestätigt"
 
 #. module: account
 #: model:account.account.type,name:account.account_type_income_view1
@@ -474,7 +474,7 @@ msgstr ""
 #. module: account
 #: help:account.bank.statement.line,name:0
 msgid "Originator to Beneficiary Information"
-msgstr ""
+msgstr "Auftrageber oder Begünstigter"
 
 #. module: account
 #. openerp-web
@@ -495,6 +495,8 @@ msgstr "Kontenplan Vorlage"
 #: selection:account.invoice.refund,filter_refund:0
 msgid "Modify: create refund, reconcile and create a new draft invoice"
 msgstr ""
+"Bearbeiten: Gutschriften erstellen, Kontenabstimmung und neue "
+"Rechnungsentwürfe anlegen"
 
 #. module: account
 #: help:account.config.settings,tax_calculation_rounding_method:0
@@ -805,7 +807,7 @@ msgstr "Konfigurieren Sie Ihre Hausbanken"
 #. module: account
 #: view:account.invoice.refund:0
 msgid "Create Refund"
-msgstr ""
+msgstr "Gutschrift anlegen"
 
 #. module: account
 #: constraint:account.move.line:0
@@ -835,7 +837,7 @@ msgstr "Möchten Sie diese Buchungen erzeugen?"
 #: code:addons/account/account_invoice.py:1329
 #, python-format
 msgid "Invoice partially paid: %s%s of %s%s (%s%s remaining)."
-msgstr ""
+msgstr "Rechnungsteilzahlung: %s%s über %s%s (%s%s Restbetrag)."
 
 #. module: account
 #: view:account.invoice:0
@@ -1058,7 +1060,7 @@ msgstr "Einkauf Journal"
 #. module: account
 #: model:mail.message.subtype,description:account.mt_invoice_paid
 msgid "Invoice paid"
-msgstr ""
+msgstr "Rechnung bezahlt"
 
 #. module: account
 #: view:validate.account.move:0
@@ -1952,7 +1954,7 @@ msgstr "Verkäufe nach Kontotypen"
 #: model:account.payment.term,name:account.account_payment_term_15days
 #: model:account.payment.term,note:account.account_payment_term_15days
 msgid "15 Days"
-msgstr ""
+msgstr "15 Tage"
 
 #. module: account
 #: model:ir.ui.menu,name:account.periodical_processing_invoicing
@@ -2096,7 +2098,7 @@ msgstr "Beleg Entwurf"
 #. module: account
 #: model:mail.message.subtype,description:account.mt_invoice_validated
 msgid "Invoice validated"
-msgstr ""
+msgstr "Rechnung bestätigt"
 
 #. module: account
 #: field:account.config.settings,module_account_check_writing:0
@@ -2834,7 +2836,7 @@ msgstr "Einstellungen Finanzbuchhaltung"
 #. module: account
 #: selection:account.invoice.refund,filter_refund:0
 msgid "Create a draft refund"
-msgstr ""
+msgstr "Gutschriftsentwurf anlegen"
 
 #. module: account
 #: view:account.partner.reconcile.process:0
@@ -3390,7 +3392,7 @@ msgstr ""
 #: view:account.unreconcile:0
 #: view:account.unreconcile.reconcile:0
 msgid "Unreconcile Transactions"
-msgstr ""
+msgstr "Nicht abgestimmte Buchungen"
 
 #. module: account
 #: field:wizard.multi.charts.accounts,only_one_chart_template:0
@@ -3589,7 +3591,7 @@ msgstr "Anzahl Stellen für Konto"
 #. module: account
 #: field:res.partner,property_supplier_payment_term:0
 msgid "Supplier Payment Term"
-msgstr ""
+msgstr "Zahlungsbedingungen des Lieferanten"
 
 #. module: account
 #: view:account.fiscalyear:0
@@ -3664,7 +3666,7 @@ msgstr "Elektronische Datei"
 #. module: account
 #: field:account.move.line,reconcile:0
 msgid "Reconcile Ref"
-msgstr ""
+msgstr "Abstimmungsref."
 
 #. module: account
 #: field:account.config.settings,has_chart_of_accounts:0
@@ -3765,6 +3767,88 @@ msgid ""
 "</div>\n"
 "            "
 msgstr ""
+"\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    \n"
+"    <p>Hallo ${object.partner_id.name},</p>\n"
+"    \n"
+"    <p>Es steht eine neue Rechnung für Sie zum Abruf bereit: </p>\n"
+"    \n"
+"    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
+"        &nbsp;&nbsp;<strong>RECHNUNGSINFORMATIONEN</strong><br />\n"
+"        &nbsp;&nbsp;Rechnungsnummer: <strong>${object.number}</strong><br "
+"/>\n"
+"        &nbsp;&nbsp;Rechnungsbetrag: <strong>${object.amount_total} "
+"${object.currency_id.name}</strong><br />\n"
+"        &nbsp;&nbsp;Rechnungsdatum: ${object.date_invoice}<br />\n"
+"        % if object.origin:\n"
+"        &nbsp;&nbsp;Bestellnummer: ${object.origin}<br />\n"
+"        % endif\n"
+"        % if object.user_id:\n"
+"        &nbsp;&nbsp;Ihr Ansprechpartner: <a "
+"href=\"mailto:${object.user_id.email or "
+"''}?subject=Invoice%20${object.number}\">${object.user_id.name}</a>\n"
+"        % endif\n"
+"    </p>\n"
+"    \n"
+"    % if object.paypal_url:\n"
+"    <br/>\n"
+"    <p>Sie können die Rechnung per PayPal überweisen:</p>\n"
+"        <a style=\"margin-left: 120px;\" href=\"${object.paypal_url}\">\n"
+"            <img class=\"oe_edi_paypal_button\" "
+"src=\"https://www.paypal.com/en_US/i/btn/btn_paynowCC_LG.gif\"/>\n"
+"        </a>\n"
+"    % endif\n"
+"    \n"
+"    <br/>\n"
+"    <p>Bei Fragen stehen wir Ihnen gerne zur Verfügung.</p>\n"
+"    <p>Danke das Sie ${object.company_id.name or 'uns'} gewählt haben!</p>\n"
+"    <br/>\n"
+"    <br/>\n"
+"    <div style=\"width: 375px; margin: 0px; padding: 0px; background-color: "
+"#8E0000; border-top-left-radius: 5px 5px; border-top-right-radius: 5px 5px; "
+"background-repeat: repeat no-repeat;\">\n"
+"        <h3 style=\"margin: 0px; padding: 2px 14px; font-size: 12px; color: "
+"#DDD;\">\n"
+"            <strong style=\"text-"
+"transform:uppercase;\">${object.company_id.name}</strong></h3>\n"
+"    </div>\n"
+"    <div style=\"width: 347px; margin: 0px; padding: 5px 14px; line-height: "
+"16px; background-color: #F2F2F2;\">\n"
+"        <span style=\"color: #222; margin-bottom: 5px; display: block; \">\n"
+"        % if object.company_id.street:\n"
+"            ${object.company_id.street}<br/>\n"
+"        % endif\n"
+"        % if object.company_id.street2:\n"
+"            ${object.company_id.street2}<br/>\n"
+"        % endif\n"
+"        % if object.company_id.city or object.company_id.zip:\n"
+"            ${object.company_id.zip} ${object.company_id.city}<br/>\n"
+"        % endif\n"
+"        % if object.company_id.country_id:\n"
+"            ${object.company_id.state_id and ('%s, ' % "
+"object.company_id.state_id.name) or ''} ${object.company_id.country_id.name "
+"or ''}<br/>\n"
+"        % endif\n"
+"        </span>\n"
+"        % if object.company_id.phone:\n"
+"            <div style=\"margin-top: 0px; margin-right: 0px; margin-bottom: "
+"0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: "
+"0px; padding-left: 0px; \">\n"
+"                Telefon:&nbsp; ${object.company_id.phone}\n"
+"            </div>\n"
+"        % endif\n"
+"        % if object.company_id.website:\n"
+"            <div>\n"
+"                Web :&nbsp;<a "
+"href=\"${object.company_id.website}\">${object.company_id.website}</a>\n"
+"            </div>\n"
+"        %endif\n"
+"        <p></p>\n"
+"    </div>\n"
+"</div>\n"
+"            "
 
 #. module: account
 #: view:account.period:0
@@ -4762,6 +4846,8 @@ msgid ""
 "This payment term will be used instead of the default one for sale orders "
 "and customer invoices"
 msgstr ""
+"Diese Zahlungsbedingung statt der Standardzahlungsbedingung für Angeobte und "
+"Kundenrechnungen verwenden"
 
 #. module: account
 #: view:account.config.settings:0
@@ -4784,12 +4870,12 @@ msgstr ""
 #. module: account
 #: view:account.move.line:0
 msgid "Posted Journal Items"
-msgstr "Quittierte Buchungen"
+msgstr "Buchungssätze"
 
 #. module: account
 #: field:account.move.line,blocked:0
 msgid "No Follow-up"
-msgstr ""
+msgstr "Keine Zahlungserinnerung"
 
 #. module: account
 #: view:account.tax.template:0
@@ -4962,7 +5048,7 @@ msgstr "Kontoart"
 #. module: account
 #: selection:account.journal,type:0
 msgid "Bank and Checks"
-msgstr ""
+msgstr "Bank und Schecks"
 
 #. module: account
 #: field:account.account.template,note:0
@@ -5092,7 +5178,7 @@ msgstr "Kontenplan Finanzkonten"
 #. module: account
 #: field:account.invoice,reference_type:0
 msgid "Payment Reference"
-msgstr ""
+msgstr "Zahlungsreferenz"
 
 #. module: account
 #: selection:account.financial.report,style_overwrite:0
@@ -5166,7 +5252,7 @@ msgstr "Auszugleichende Buchungszeilen"
 #. module: account
 #: model:ir.model,name:account.model_account_tax_template
 msgid "Templates for Taxes"
-msgstr ""
+msgstr "Vorlagen für Steuern"
 
 #. module: account
 #: sql_constraint:account.period:0
@@ -5468,7 +5554,7 @@ msgstr "Abgerechnet"
 #. module: account
 #: view:account.move:0
 msgid "Posted Journal Entries"
-msgstr "Quittierte Buchungen"
+msgstr "Buchungssätze"
 
 #. module: account
 #: view:account.use.model:0
@@ -6225,7 +6311,7 @@ msgstr "Produkt Menge"
 #: selection:account.move,state:0
 #: view:account.move.line:0
 msgid "Unposted"
-msgstr "Nicht quittiert"
+msgstr "Nicht gebucht"
 
 #. module: account
 #: view:account.change.currency:0
@@ -6313,6 +6399,8 @@ msgid ""
 "This payment term will be used instead of the default one for purchase "
 "orders and supplier invoices"
 msgstr ""
+"Diese Zahlungsbedinungen werden anstatt der Standardzahlungsbedingung für "
+"Lieferantenaufträge und -rechnungen verwendet"
 
 #. module: account
 #: help:account.automatic.reconcile,power:0
@@ -7153,6 +7241,13 @@ msgid ""
 "due date, make sure that the payment term is not set on the invoice. If you "
 "keep the payment term and the due date empty, it means direct payment."
 msgstr ""
+"Wenn Sie Zahlungsbedingungen verwenden, wird das Fälligkeitsdatum "
+"automatisch bei der Erzeugung der Buchungssätze berechnet. Die "
+"Zahlungsbedingung kann mehrere Fälligkeitsdaten berechnen, z.B. bei "
+"Fälligkeit von 50% sofort und 50% in 30 Tagen. Wenn Sie jedoch ein "
+"Fälligkeitsdatum manuell setzen möchten, stellen Sie sicher das keine "
+"Zahlungsbedingung ausgewählt ist. Wenn Sie sowohl Zahlungsbedingung als auch "
+"das Fälligkeitsdatum frei lassen, wird die Rechnung sofort fällig gesetzt."
 
 #. module: account
 #: code:addons/account/account.py:414
@@ -7398,6 +7493,9 @@ msgid ""
 "If you unreconcile transactions, you must also verify all the actions that "
 "are linked to those transactions because they will not be disabled"
 msgstr ""
+"Wenn Sie die Kontenabstimmung rückgängig machen wollen, stellen Sie sicher "
+"das alle auf diese Buchungen bezogenen Aktionen rückgängig gemacht wurden, "
+"da sie nicht automatisiert zurückgesetzt werden"
 
 #. module: account
 #: view:account.account.template:0
@@ -7572,7 +7670,7 @@ msgstr "Manuell"
 #. module: account
 #: selection:account.invoice.refund,filter_refund:0
 msgid "Cancel: create refund and reconcile"
-msgstr ""
+msgstr "Abbrechen: Gutschrift erzeugen und verbuchen"
 
 #. module: account
 #: code:addons/account/wizard/account_report_aged_partner_balance.py:58
@@ -7792,7 +7890,7 @@ msgstr ""
 #. module: account
 #: field:account.invoice,paypal_url:0
 msgid "Paypal Url"
-msgstr ""
+msgstr "PayPal URL"
 
 #. module: account
 #: field:account.config.settings,module_account_voucher:0
@@ -8022,7 +8120,7 @@ msgstr "Dieses Konto fungiert als Standard Debitorenkonto"
 #. module: account
 #: view:account.entries.report:0
 msgid "Posted entries"
-msgstr "Quittierte Buchungen"
+msgstr "Buchungen"
 
 #. module: account
 #: help:account.payment.term.line,value_amount:0
@@ -8412,7 +8510,7 @@ msgstr ""
 #. module: account
 #: view:account.move:0
 msgid "Unposted Journal Entries"
-msgstr "Nicht Quittierte Buchungen"
+msgstr "Buchungssatz Vorschläge"
 
 #. module: account
 #: help:account.invoice.refund,date:0
@@ -9212,6 +9310,7 @@ msgstr "Kontoartkonfiguration"
 #: model:email.template,subject:account.email_template_edi_invoice
 msgid "${object.company_id.name} Invoice (Ref ${object.number or 'n/a'})"
 msgstr ""
+"${object.company_id.name} Rechnungsnummer ( ${object.number or 'n/a'})"
 
 #. module: account
 #: code:addons/account/account_move_line.py:1211
@@ -9652,7 +9751,7 @@ msgstr "Erzeugt Sequenz für Anzeige der Bankdetails bei Buchungen"
 #. module: account
 #: model:process.transition,note:account.process_transition_validentries0
 msgid "Accountant validates the accounting entries coming from the invoice."
-msgstr "Ein Buchhalter quittiert die Buchungssätze einer Rechnung"
+msgstr "Ein Buchhalter verbucht die Buchungssätze einer Rechnung"
 
 #. module: account
 #: view:account.entries.report:0
@@ -10313,7 +10412,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.menu,name:account.menu_finance_periodical_processing
 msgid "Periodic Processing"
-msgstr ""
+msgstr "Periodische Verarbeitung"
 
 #. module: account
 #: view:account.invoice.report:0
@@ -10393,7 +10492,7 @@ msgstr "Fälligkeitsdatum"
 #: model:account.payment.term,name:account.account_payment_term_immediate
 #: model:account.payment.term,note:account.account_payment_term_immediate
 msgid "Immediate Payment"
-msgstr ""
+msgstr "Sofortige Zahlung"
 
 #. module: account
 #: code:addons/account/account.py:1464
@@ -10878,7 +10977,7 @@ msgstr "Zeitraum auswählen"
 #: selection:account.move,state:0
 #: view:account.move.line:0
 msgid "Posted"
-msgstr "Quittiert"
+msgstr "Gebucht"
 
 #. module: account
 #: report:account.account.balance:0
@@ -11705,7 +11804,7 @@ msgstr "Aufwandskonto für Produktvorlage"
 #. module: account
 #: field:res.partner,property_payment_term:0
 msgid "Customer Payment Term"
-msgstr ""
+msgstr "Zahlungsbedingunen für Kunden"
 
 #. module: account
 #: help:accounting.report,label_filter:0

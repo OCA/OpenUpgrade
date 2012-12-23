@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:04+0000\n"
-"PO-Revision-Date: 2012-12-21 23:00+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2012-12-23 01:37+0000\n"
+"Last-Translator: 盈通 ccdos <ccdos@163.com>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-22 07:33+0000\n"
+"X-Launchpad-Export-Date: 2012-12-23 05:08+0000\n"
 "X-Generator: Launchpad (build 16378)\n"
 
 #. module: sale
@@ -165,7 +165,7 @@ msgstr "未开票已送货明细"
 #. module: sale
 #: model:mail.message.subtype,description:sale.mt_order_confirmed
 msgid "Quotation confirmed"
-msgstr ""
+msgstr "报价已经确认"
 
 #. module: sale
 #: selection:sale.order,state:0
@@ -251,12 +251,12 @@ msgstr "定金必须是正的"
 #. module: sale
 #: help:sale.config.settings,group_discount_per_so_line:0
 msgid "Allows you to apply some discount per sales order line."
-msgstr ""
+msgstr "允许在每个销售订单行 应用折扣"
 
 #. module: sale
 #: view:sale.order.line:0
 msgid "Sales Order Lines that are in 'done' state"
-msgstr ""
+msgstr "销售订单行在完成状态"
 
 #. module: sale
 #: selection:sale.order.line,type:0
@@ -471,7 +471,7 @@ msgstr "传真:"
 #, python-format
 msgid ""
 "In order to delete a confirmed sales order, you must cancel it before !"
-msgstr ""
+msgstr "要删除已经确认的订单，你必须先取消"
 
 #. module: sale
 #: view:sale.order:0
@@ -507,7 +507,7 @@ msgstr "销售订单"
 #. module: sale
 #: model:res.groups,name:sale.group_invoice_so_lines
 msgid "Enable Invoicing Sales order lines"
-msgstr ""
+msgstr "允许逐行开票"
 
 #. module: sale
 #: model:ir.model,name:sale.model_sale_order_line
@@ -522,7 +522,7 @@ msgstr "预付款总额"
 #. module: sale
 #: help:sale.order,invoice_exists:0
 msgid "It indicates that sales order has at least one invoice."
-msgstr ""
+msgstr "它表明,销售订单至少有一个发票。"
 
 #. module: sale
 #: help:sale.config.settings,group_sale_pricelist:0
@@ -541,7 +541,7 @@ msgstr "每个合同里，一个员工能有不同的角色"
 #. module: sale
 #: selection:sale.advance.payment.inv,advance_payment_method:0
 msgid "Invoice the whole sales order"
-msgstr ""
+msgstr "为整个销售订单开票"
 
 #. module: sale
 #: field:sale.shop,payment_default_id:0
@@ -562,7 +562,7 @@ msgstr "准备基于计工单的发票"
 #: code:addons/sale/sale.py:812
 #, python-format
 msgid "You cannot cancel a sales order line that has already been invoiced."
-msgstr ""
+msgstr "你不能取消已经开票的销售订单行"
 
 #. module: sale
 #: view:account.invoice.report:0
@@ -590,7 +590,7 @@ msgstr "允许使用不同的计量单位"
 #. module: sale
 #: model:mail.message.subtype,name:sale.mt_order_confirmed
 msgid "Sales Order Confirmed"
-msgstr ""
+msgstr "销售订单已经确认"
 
 #. module: sale
 #: view:sale.order:0
@@ -638,7 +638,7 @@ msgstr "总价"
 #. module: sale
 #: help:account.config.settings,group_analytic_account_for_sales:0
 msgid "Allows you to specify an analytic account on sales orders."
-msgstr ""
+msgstr "运行你在销售订单指定一个辅助核算项"
 
 #. module: sale
 #: help:sale.config.settings,module_sale_journal:0
@@ -712,7 +712,7 @@ msgstr "今年的销售订单"
 #. module: sale
 #: model:res.groups,name:sale.group_delivery_invoice_address
 msgid "Addresses in Sales Orders"
-msgstr ""
+msgstr "在销售订单中的地址"
 
 #. module: sale
 #: field:sale.advance.payment.inv,qtty:0
@@ -729,7 +729,7 @@ msgstr "合计:"
 #. module: sale
 #: view:sale.order.line:0
 msgid "Sales Order Lines ready to be invoiced"
-msgstr ""
+msgstr "销售订单行已经被开票"
 
 #. module: sale
 #: view:sale.report:0
@@ -872,7 +872,7 @@ msgstr "创建和查看发票"
 #. module: sale
 #: view:sale.order.line:0
 msgid "Sales order lines done"
-msgstr ""
+msgstr "销售订单行完成"
 
 #. module: sale
 #: field:sale.make.invoice,grouped:0
@@ -953,7 +953,7 @@ msgstr "月"
 #. module: sale
 #: field:sale.order,currency_id:0
 msgid "Currency"
-msgstr ""
+msgstr "币种"
 
 #. module: sale
 #: view:sale.order.line:0
@@ -990,7 +990,7 @@ msgstr "商店名"
 #. module: sale
 #: view:sale.order:0
 msgid "My Sales Orders"
-msgstr ""
+msgstr "我的销售订单"
 
 #. module: sale
 #: report:sale.order:0
@@ -1014,7 +1014,7 @@ msgstr "预付款发票"
 msgid ""
 "To allow your salesman to make invoices for sales order lines using the menu "
 "'Lines to Invoice'."
-msgstr ""
+msgstr "允许销售员用“逐行开票”菜单为销售订单行开票"
 
 #. module: sale
 #: model:ir.actions.client,name:sale.action_client_sale_menu
@@ -1025,7 +1025,7 @@ msgstr "打开销售订单"
 #: code:addons/sale/sale.py:592
 #, python-format
 msgid "You cannot confirm a sales order which has no line."
-msgstr ""
+msgstr "不能确认没有明细行的销售订单"
 
 #. module: sale
 #: selection:sale.report,state:0
@@ -1041,7 +1041,7 @@ msgstr "客户没有定义 ！"
 #. module: sale
 #: field:sale.config.settings,module_sale_stock:0
 msgid "Trigger delivery orders automatically from sales orders"
-msgstr ""
+msgstr "自动从销售订单触发发运单"
 
 #. module: sale
 #: view:sale.make.invoice:0
@@ -1111,7 +1111,7 @@ msgstr "税额。"
 #. module: sale
 #: field:sale.order,invoiced_rate:0
 msgid "Invoiced Ratio"
-msgstr ""
+msgstr "开票率"
 
 #. module: sale
 #: selection:sale.order,order_policy:0
@@ -1174,7 +1174,7 @@ msgstr "是一个关注者"
 msgid ""
 "Sales Order Lines that are confirmed, done or in exception state and haven't "
 "yet been invoiced"
-msgstr ""
+msgstr "已经确认、完成或者意外状态和还没开票的销售订单"
 
 #. module: sale
 #: model:ir.model,name:sale.model_sale_report
@@ -1259,7 +1259,7 @@ msgid ""
 "Select a product of type service which is called 'Advance Product'.\n"
 "                You may have to create it and set it as a default value on "
 "this field."
-msgstr ""
+msgstr "选择一个叫做“预付款产品”的服务类型的产品，。你可以在这个字段创建并且设置默认值。"
 
 #. module: sale
 #: selection:sale.report,month:0
@@ -1269,7 +1269,7 @@ msgstr "1月"
 #. module: sale
 #: field:sale.config.settings,group_discount_per_so_line:0
 msgid "Allow setting a discount on the sales order lines"
-msgstr ""
+msgstr "允许逐行设置折扣"
 
 #. module: sale
 #: model:ir.actions.act_window,name:sale.action_orders_in_progress
@@ -1297,7 +1297,7 @@ msgstr ""
 #. module: sale
 #: field:sale.order,paypal_url:0
 msgid "Paypal Url"
-msgstr ""
+msgstr "Paypal Url"
 
 #. module: sale
 #: help:sale.order,project_id:0
@@ -1529,13 +1529,13 @@ msgstr "没价格表！： "
 #. module: sale
 #: view:sale.order:0
 msgid "Sales Order "
-msgstr ""
+msgstr "销售订单 "
 
 #. module: sale
 #: model:mail.message.subtype,description:sale.mt_order_sent
 #: model:mail.message.subtype,name:sale.mt_order_sent
 msgid "Quotation send"
-msgstr ""
+msgstr "报价单发送"
 
 #. module: sale
 #: view:sale.order.line:0
@@ -1582,7 +1582,7 @@ msgstr "你不能对有不同货币结算的同一个业务伙伴的销售订单
 #. module: sale
 #: view:sale.advance.payment.inv:0
 msgid "Invoice Sales Order"
-msgstr ""
+msgstr "销售订单开票"
 
 #. module: sale
 #: help:sale.order,invoice_quantity:0
@@ -1872,7 +1872,7 @@ msgstr "行上的属性"
 #. module: sale
 #: selection:sale.order,state:0
 msgid "Sale to Invoice"
-msgstr "销售到发票"
+msgstr "销售待开票"
 
 #. module: sale
 #: view:sale.order:0
@@ -2043,7 +2043,7 @@ msgstr "来自销售订单"
 #. module: sale
 #: view:sale.order.line:0
 msgid "Confirmed sales order lines, not yet delivered"
-msgstr ""
+msgstr "已经确认但是还没有发运的订单行"
 
 #. module: sale
 #: model:process.transition,note:sale.process_transition_saleinvoice0
@@ -2086,7 +2086,7 @@ msgstr "待开票的销售订单"
 #. module: sale
 #: field:sale.config.settings,group_invoice_so_lines:0
 msgid "Generate invoices based on the sales order lines"
-msgstr ""
+msgstr "基于销售订单行生成发票"
 
 #. module: sale
 #: view:sale.advance.payment.inv:0

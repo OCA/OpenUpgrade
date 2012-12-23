@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:05+0000\n"
-"PO-Revision-Date: 2012-12-22 21:52+0000\n"
+"PO-Revision-Date: 2012-12-22 21:36+0000\n"
 "Last-Translator: Erwin van der Ploeg (Endian Solutions) <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,12 +17,9 @@ msgstr ""
 "X-Launchpad-Export-Date: 2012-12-23 05:08+0000\n"
 "X-Generator: Launchpad (build 16378)\n"
 
-#. module: auth_crypt
-#: field:res.users,password_crypt:0
-msgid "Encrypted Password"
-msgstr "Encrypted wachtwoord"
-
-#. module: auth_crypt
-#: model:ir.model,name:auth_crypt.model_res_users
-msgid "Users"
-msgstr "Gebruikers"
+#. module: portal_anonymous
+#. openerp-web
+#: code:addons/portal_anonymous/static/src/xml/portal_anonymous.xml:8
+#, python-format
+msgid "Login"
+msgstr "Login"

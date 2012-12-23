@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:04+0000\n"
-"PO-Revision-Date: 2012-12-21 23:00+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2012-12-22 15:15+0000\n"
+"Last-Translator: Erwin van der Ploeg (Endian Solutions) <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-22 06:55+0000\n"
+"X-Launchpad-Export-Date: 2012-12-23 05:07+0000\n"
 "X-Generator: Launchpad (build 16378)\n"
 
 #. module: account
@@ -260,7 +260,7 @@ msgstr "Belgische overzichten"
 #. module: account
 #: model:mail.message.subtype,name:account.mt_invoice_validated
 msgid "Validated"
-msgstr ""
+msgstr "Gevalideerd"
 
 #. module: account
 #: model:account.account.type,name:account.account_type_income_view1
@@ -497,6 +497,7 @@ msgstr "Grootboekschema sjabloon"
 #: selection:account.invoice.refund,filter_refund:0
 msgid "Modify: create refund, reconcile and create a new draft invoice"
 msgstr ""
+"Bewerken: maak credit factuur, letter af en maak nieuwe concept factuur."
 
 #. module: account
 #: help:account.config.settings,tax_calculation_rounding_method:0
@@ -808,7 +809,7 @@ msgstr "Bankrekeningen van het bedrijf instellen"
 #. module: account
 #: view:account.invoice.refund:0
 msgid "Create Refund"
-msgstr ""
+msgstr "Maak credit factuur"
 
 #. module: account
 #: constraint:account.move.line:0
@@ -838,7 +839,7 @@ msgstr "Weet u zeker dat u boekingen wilt maken?"
 #: code:addons/account/account_invoice.py:1329
 #, python-format
 msgid "Invoice partially paid: %s%s of %s%s (%s%s remaining)."
-msgstr ""
+msgstr "Factuur gedeeltelijk betaald %s%s van %s%s (%s%s resterend)"
 
 #. module: account
 #: view:account.invoice:0
@@ -1060,7 +1061,7 @@ msgstr "Inkoopboek"
 #. module: account
 #: model:mail.message.subtype,description:account.mt_invoice_paid
 msgid "Invoice paid"
-msgstr ""
+msgstr "Factuur betaald"
 
 #. module: account
 #: view:validate.account.move:0
@@ -1739,7 +1740,7 @@ msgstr "Code"
 #. module: account
 #: field:account.config.settings,company_footer:0
 msgid "Bank accounts footer preview"
-msgstr ""
+msgstr "Bank rekening vet voorbeeld"
 
 #. module: account
 #: selection:account.account,type:0
@@ -1909,7 +1910,7 @@ msgstr "Verkopen per rekeningtype"
 #: model:account.payment.term,name:account.account_payment_term_15days
 #: model:account.payment.term,note:account.account_payment_term_15days
 msgid "15 Days"
-msgstr ""
+msgstr "15 dagen"
 
 #. module: account
 #: model:ir.ui.menu,name:account.periodical_processing_invoicing
@@ -2049,7 +2050,7 @@ msgstr "Voorlopige overzicht"
 #. module: account
 #: model:mail.message.subtype,description:account.mt_invoice_validated
 msgid "Invoice validated"
-msgstr ""
+msgstr "Factuur gevalideerd"
 
 #. module: account
 #: field:account.config.settings,module_account_check_writing:0
@@ -2445,7 +2446,7 @@ msgstr "Open boekingen"
 #. module: account
 #: field:account.config.settings,purchase_refund_sequence_next:0
 msgid "Next supplier credit note number"
-msgstr ""
+msgstr "Volgende credit Inkoopfactuur nummer"
 
 #. module: account
 #: field:account.automatic.reconcile,account_ids:0
@@ -2491,7 +2492,7 @@ msgstr "30 dagen netto"
 #: code:addons/account/account_cash_statement.py:256
 #, python-format
 msgid "You do not have rights to open this %s journal !"
-msgstr ""
+msgstr "U heeft niet voldoende rechten om dit %s dagboek te openen!"
 
 #. module: account
 #: model:res.groups,name:account.group_supplier_inv_check_total
@@ -2750,7 +2751,7 @@ msgstr "Rekening instellingen"
 #. module: account
 #: selection:account.invoice.refund,filter_refund:0
 msgid "Create a draft refund"
-msgstr ""
+msgstr "Maak concept credit factuur"
 
 #. module: account
 #: view:account.partner.reconcile.process:0
@@ -2881,7 +2882,7 @@ msgstr ""
 #. module: account
 #: field:account.config.settings,purchase_sequence_next:0
 msgid "Next supplier invoice number"
-msgstr ""
+msgstr "Volgende Inkoopfactuur nummer"
 
 #. module: account
 #: view:account.analytic.cost.ledger.journal.report:0
@@ -3269,7 +3270,7 @@ msgstr ""
 #: view:account.unreconcile:0
 #: view:account.unreconcile.reconcile:0
 msgid "Unreconcile Transactions"
-msgstr ""
+msgstr "Niet afgeletterde transacties"
 
 #. module: account
 #: field:wizard.multi.charts.accounts,only_one_chart_template:0
@@ -3467,7 +3468,7 @@ msgstr "Aantal cijfers voor gebruik in rekeningcode"
 #. module: account
 #: field:res.partner,property_supplier_payment_term:0
 msgid "Supplier Payment Term"
-msgstr ""
+msgstr "Leveranciers betalingscondities"
 
 #. module: account
 #: view:account.fiscalyear:0
@@ -3540,12 +3541,12 @@ msgstr "Digitaal bestand"
 #. module: account
 #: field:account.move.line,reconcile:0
 msgid "Reconcile Ref"
-msgstr ""
+msgstr "Afletter ref."
 
 #. module: account
 #: field:account.config.settings,has_chart_of_accounts:0
 msgid "Company has a chart of accounts"
-msgstr ""
+msgstr "Bedrijf heeft een grootboekschema"
 
 #. module: account
 #: model:ir.model,name:account.model_account_tax_code_template
@@ -3645,7 +3646,7 @@ msgstr ""
 #. module: account
 #: view:account.period:0
 msgid "Account Period"
-msgstr ""
+msgstr "Boekperiode"
 
 #. module: account
 #: help:account.account,currency_id:0
@@ -3939,7 +3940,7 @@ msgstr "Transfers"
 #. module: account
 #: field:account.config.settings,expects_chart_of_accounts:0
 msgid "This company has its own chart of accounts"
-msgstr ""
+msgstr "Dit bedrijf heeft zijnerven grootboekschema"
 
 #. module: account
 #: view:account.chart:0
@@ -4235,7 +4236,7 @@ msgstr ""
 #. module: account
 #: field:account.config.settings,group_check_supplier_invoice_total:0
 msgid "Check the total of supplier invoices"
-msgstr ""
+msgstr "Controleer het totaal aan inkoopfacturen"
 
 #. module: account
 #: view:account.tax:0
@@ -4324,7 +4325,7 @@ msgstr "Belasting-code vermenigvuldigingsfactor"
 #. module: account
 #: field:account.config.settings,complete_tax_set:0
 msgid "Complete set of taxes"
-msgstr ""
+msgstr "Complete set van belastingen"
 
 #. module: account
 #: field:account.account,name:0
@@ -4601,7 +4602,7 @@ msgstr "Geboekte journaalposten"
 #. module: account
 #: field:account.move.line,blocked:0
 msgid "No Follow-up"
-msgstr ""
+msgstr "Geen betalingsherinnering"
 
 #. module: account
 #: view:account.tax.template:0
@@ -4873,7 +4874,7 @@ msgstr "Rekeningstelsel"
 #. module: account
 #: field:account.invoice,reference_type:0
 msgid "Payment Reference"
-msgstr ""
+msgstr "Betaalteferentie"
 
 #. module: account
 #: selection:account.financial.report,style_overwrite:0
@@ -4947,7 +4948,7 @@ msgstr ""
 #. module: account
 #: model:ir.model,name:account.model_account_tax_template
 msgid "Templates for Taxes"
-msgstr ""
+msgstr "Belasting sjablonen"
 
 #. module: account
 #: sql_constraint:account.period:0
@@ -4957,7 +4958,7 @@ msgstr "Per bedrijf moet de naam van de periode uniek zijn."
 #. module: account
 #: help:wizard.multi.charts.accounts,currency_id:0
 msgid "Currency as per company's country."
-msgstr ""
+msgstr "Valuta volgens land van bedrijf"
 
 #. module: account
 #: view:account.tax:0
@@ -5349,7 +5350,7 @@ msgstr "Actief"
 #: view:account.bank.statement:0
 #: field:account.journal,cash_control:0
 msgid "Cash Control"
-msgstr ""
+msgstr "Kas controle"
 
 #. module: account
 #: field:account.analytic.balance,date2:0
@@ -5419,7 +5420,7 @@ msgstr "Mutaties"
 #: field:account.bank.statement,details_ids:0
 #: view:account.journal:0
 msgid "CashBox Lines"
-msgstr ""
+msgstr "Kassa regels"
 
 #. module: account
 #: model:ir.model,name:account.model_account_vat_declaration
@@ -5854,7 +5855,7 @@ msgstr "Begin periode"
 #. module: account
 #: model:account.account.type,name:account.account_type_asset_view1
 msgid "Asset View"
-msgstr ""
+msgstr "Activa weergave"
 
 #. module: account
 #: model:ir.model,name:account.model_account_common_account_report
@@ -6367,7 +6368,7 @@ msgstr "Balans berekend op basis van d openingsbalans en de transactieregels"
 #. module: account
 #: field:account.journal,loss_account_id:0
 msgid "Loss Account"
-msgstr ""
+msgstr "Verlies rekening"
 
 #. module: account
 #: field:account.tax,account_collected_id:0
@@ -6790,7 +6791,7 @@ msgstr "Percentage"
 #. module: account
 #: selection:account.config.settings,tax_calculation_rounding_method:0
 msgid "Round globally"
-msgstr ""
+msgstr "Globaal afronden"
 
 #. module: account
 #: selection:account.report.general.ledger,sortby:0
@@ -6898,7 +6899,7 @@ msgstr "Gebruikersfout!"
 #. module: account
 #: view:account.open.closed.fiscalyear:0
 msgid "Discard"
-msgstr ""
+msgstr "Negeren"
 
 #. module: account
 #: selection:account.account,type:0
@@ -6916,7 +6917,7 @@ msgstr "Kostenplaats journaalposten"
 #. module: account
 #: field:account.config.settings,has_default_company:0
 msgid "Has default company"
-msgstr ""
+msgstr "Heeft standaard bedrijf"
 
 #. module: account
 #: view:account.fiscalyear.close:0
@@ -7270,7 +7271,7 @@ msgstr "Handmatig"
 #. module: account
 #: selection:account.invoice.refund,filter_refund:0
 msgid "Cancel: create refund and reconcile"
-msgstr ""
+msgstr "Annuleren: maak credit factuur en letter af"
 
 #. module: account
 #: code:addons/account/wizard/account_report_aged_partner_balance.py:58
@@ -7324,7 +7325,7 @@ msgstr "Journaalposten"
 #: code:addons/account/wizard/account_invoice_refund.py:147
 #, python-format
 msgid "No period found on the invoice."
-msgstr ""
+msgstr "Geen periode gevonden voor de factuur"
 
 #. module: account
 #: help:account.partner.ledger,page_split:0
@@ -7485,7 +7486,7 @@ msgstr ""
 #. module: account
 #: field:account.invoice,paypal_url:0
 msgid "Paypal Url"
-msgstr ""
+msgstr "Paypal Url"
 
 #. module: account
 #: field:account.config.settings,module_account_voucher:0
@@ -7683,7 +7684,7 @@ msgstr "Bedrag"
 #: view:account.bank.statement:0
 #: field:account.bank.statement,closing_details_ids:0
 msgid "Closing Cashbox Lines"
-msgstr ""
+msgstr "Kassa regels afsluiten"
 
 #. module: account
 #: view:account.bank.statement:0
@@ -7724,7 +7725,7 @@ msgstr "Groepeer op jaar of factuurdatum"
 #. module: account
 #: field:account.config.settings,purchase_tax_rate:0
 msgid "Purchase tax (%)"
-msgstr ""
+msgstr "Inkoop belastingen (%)"
 
 #. module: account
 #: help:res.partner,credit:0
@@ -7790,7 +7791,7 @@ msgstr "Openingsboekingen voor de omzetrekening"
 #. module: account
 #: field:account.config.settings,group_proforma_invoices:0
 msgid "Allow pro-forma invoices"
-msgstr ""
+msgstr "Proforma facturen toestaan"
 
 #. module: account
 #: view:account.bank.statement:0
@@ -8579,7 +8580,7 @@ msgstr "Kostenplaats kosten"
 #. module: account
 #: view:account.config.settings:0
 msgid "No Fiscal Year Defined for This Company"
-msgstr ""
+msgstr "Geen boekjaar gedefinieerd voor di bedrijf"
 
 #. module: account
 #: view:account.invoice:0
