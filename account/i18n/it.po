@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:04+0000\n"
-"PO-Revision-Date: 2012-12-22 13:23+0000\n"
+"PO-Revision-Date: 2012-12-23 09:42+0000\n"
 "Last-Translator: Davide Corio - agilebg.com <davide.corio@agilebg.com>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-23 05:08+0000\n"
+"X-Launchpad-Export-Date: 2012-12-24 05:10+0000\n"
 "X-Generator: Launchpad (build 16378)\n"
 
 #. module: account
@@ -476,7 +476,7 @@ msgstr ""
 #. module: account
 #: help:account.bank.statement.line,name:0
 msgid "Originator to Beneficiary Information"
-msgstr ""
+msgstr "Originator to Beneficiary Information"
 
 #. module: account
 #. openerp-web
@@ -4755,6 +4755,8 @@ msgid ""
 "This payment term will be used instead of the default one for sale orders "
 "and customer invoices"
 msgstr ""
+"Questo termine di pagamento verrà usato al posto di quello di default per "
+"gli ordini di vendita e le fatture fornitore"
 
 #. module: account
 #: view:account.config.settings:0
@@ -4782,7 +4784,7 @@ msgstr "Registrazioni contabili validate"
 #. module: account
 #: field:account.move.line,blocked:0
 msgid "No Follow-up"
-msgstr ""
+msgstr "Nessun follow-up"
 
 #. module: account
 #: view:account.tax.template:0
@@ -7389,6 +7391,8 @@ msgid ""
 "If you unreconcile transactions, you must also verify all the actions that "
 "are linked to those transactions because they will not be disabled"
 msgstr ""
+"Se si annulla la riconciliazione, è altrettanto necessario verificare che le "
+"azioni collegate alle transazioni siccome non verranno disabilitate"
 
 #. module: account
 #: view:account.account.template:0
@@ -7563,7 +7567,7 @@ msgstr "Manuale"
 #. module: account
 #: selection:account.invoice.refund,filter_refund:0
 msgid "Cancel: create refund and reconcile"
-msgstr ""
+msgstr "Annulla: crea nota di credito e riconcilia"
 
 #. module: account
 #: code:addons/account/wizard/account_report_aged_partner_balance.py:58
@@ -7783,7 +7787,7 @@ msgstr ""
 #. module: account
 #: field:account.invoice,paypal_url:0
 msgid "Paypal Url"
-msgstr ""
+msgstr "URL Paypal"
 
 #. module: account
 #: field:account.config.settings,module_account_voucher:0
@@ -8501,7 +8505,7 @@ msgstr ""
 #. module: account
 #: field:account.move.line,amount_residual_currency:0
 msgid "Residual Amount in Currency"
-msgstr ""
+msgstr "Importo residuo in valuta"
 
 #. module: account
 #: field:account.config.settings,sale_refund_sequence_prefix:0
@@ -8555,6 +8559,8 @@ msgid ""
 "Refund base on this type. You can not Modify and Cancel if the invoice is "
 "already reconciled"
 msgstr ""
+"Nota di credito basata su questo tipo. Non è possibile modifica o annullare "
+"se la fattura è già stata riconciliata"
 
 #. module: account
 #: field:account.bank.statement.line,sequence:0
@@ -8663,7 +8669,7 @@ msgstr "Transazioni di Riconciliazione"
 #. module: account
 #: model:ir.ui.menu,name:account.menu_finance_legal_statement
 msgid "Legal Reports"
-msgstr "Scritture legali"
+msgstr "Stampe fiscali"
 
 #. module: account
 #: field:account.tax.code,sum_period:0
@@ -9128,7 +9134,7 @@ msgstr "Bilancio finale"
 #. module: account
 #: field:account.journal,centralisation:0
 msgid "Centralized Counterpart"
-msgstr ""
+msgstr "Contropartita centralizzata"
 
 #. module: account
 #: help:account.move.line,blocked:0
@@ -10312,7 +10318,7 @@ msgstr "Non è possibile creare movimenti per diverse aziende."
 #. module: account
 #: model:ir.ui.menu,name:account.menu_finance_periodical_processing
 msgid "Periodic Processing"
-msgstr ""
+msgstr "Elaborazione periodica"
 
 #. module: account
 #: view:account.invoice.report:0
@@ -10392,7 +10398,7 @@ msgstr "Data scadenza"
 #: model:account.payment.term,name:account.account_payment_term_immediate
 #: model:account.payment.term,note:account.account_payment_term_immediate
 msgid "Immediate Payment"
-msgstr ""
+msgstr "Pagamento immediato"
 
 #. module: account
 #: code:addons/account/account.py:1464
@@ -10616,7 +10622,7 @@ msgstr ""
 #. module: account
 #: field:account.bank.statement.line,name:0
 msgid "OBI"
-msgstr ""
+msgstr "OBI"
 
 #. module: account
 #: help:res.partner,property_account_payable:0
@@ -11701,7 +11707,7 @@ msgstr "Conto spese per il prodotto"
 #. module: account
 #: field:res.partner,property_payment_term:0
 msgid "Customer Payment Term"
-msgstr ""
+msgstr "Termine di pagamento cliente"
 
 #. module: account
 #: help:accounting.report,label_filter:0

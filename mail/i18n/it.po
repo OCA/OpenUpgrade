@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:04+0000\n"
-"PO-Revision-Date: 2012-12-21 23:00+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2012-12-24 00:05+0000\n"
+"Last-Translator: Sergio Corato <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-22 07:21+0000\n"
+"X-Launchpad-Export-Date: 2012-12-24 05:10+0000\n"
 "X-Generator: Launchpad (build 16378)\n"
 
 #. module: mail
@@ -46,7 +46,7 @@ msgstr "Destinatario messaggio"
 #. module: mail
 #: help:mail.message.subtype,default:0
 msgid "Activated by default when subscribing."
-msgstr ""
+msgstr "Attivati di default quando sottoscritto."
 
 #. module: mail
 #: view:mail.message:0
@@ -85,7 +85,7 @@ msgstr "Componi Email"
 #: code:addons/mail/static/src/xml/mail.xml:132
 #, python-format
 msgid "Add them into recipients and followers"
-msgstr ""
+msgstr "Aggiungere ai destinatari e ai followers"
 
 #. module: mail
 #: view:mail.group:0
@@ -127,12 +127,12 @@ msgstr "Wizard composizione email"
 #: code:addons/mail/static/src/xml/mail_followers.xml:23
 #, python-format
 msgid "Add others"
-msgstr ""
+msgstr "Aggiungi altri"
 
 #. module: mail
 #: field:mail.message.subtype,parent_id:0
 msgid "Parent"
-msgstr ""
+msgstr "Genitore"
 
 #. module: mail
 #: field:mail.group,message_unread:0
@@ -204,7 +204,7 @@ msgstr ""
 #: code:addons/mail/static/src/xml/mail.xml:194
 #, python-format
 msgid "Uploading error"
-msgstr ""
+msgstr "Errore caricamento"
 
 #. module: mail
 #: model:mail.group,name:mail.group_support
@@ -290,7 +290,7 @@ msgstr "Caricamento"
 #: code:addons/mail/static/src/xml/mail_followers.xml:52
 #, python-format
 msgid "more."
-msgstr ""
+msgstr "altro."
 
 #. module: mail
 #: help:mail.compose.message,type:0
@@ -309,6 +309,9 @@ msgid ""
 "automatic subscription on a related document. The field is used to compute "
 "getattr(related_document.relation_field)."
 msgstr ""
+"Campo usato per collegare il relativo modello al modello sotto-tipo quando "
+"viene usata la sottoscrizione automatica su un documento collegato. Il campo "
+"è usato per calcolare getattr(related_document.relation_field)."
 
 #. module: mail
 #: selection:mail.mail,state:0
@@ -422,7 +425,7 @@ msgstr ""
 #. module: mail
 #: field:mail.message.subtype,relation_field:0
 msgid "Relation field"
-msgstr ""
+msgstr "Campo di relazione"
 
 #. module: mail
 #: selection:mail.compose.message,type:0
@@ -678,7 +681,7 @@ msgstr "Avanzate"
 #: code:addons/mail/static/src/xml/mail.xml:226
 #, python-format
 msgid "Move to Inbox"
-msgstr ""
+msgstr "Sposta nella Posta in Arrivo"
 
 #. module: mail
 #: code:addons/mail/wizard/mail_compose_message.py:165
@@ -779,7 +782,7 @@ msgstr ""
 #. module: mail
 #: model:ir.model,name:mail.model_mail_message_subtype
 msgid "Message subtypes"
-msgstr ""
+msgstr "Sottotipi di Messaggio"
 
 #. module: mail
 #: help:mail.compose.message,notified_partner_ids:0
@@ -812,11 +815,11 @@ msgid ""
 "            "
 msgstr ""
 "<p>\n"
-"                    <b>Ben fatto!</b> La tua inbox è vuota.\n"
+"                    <b>Ben fatto!</b> La tua Posta in arrivo è vuota.\n"
 "                </p><p>\n"
-"                    La tua inbox contiene messaggi privati o email inviate a "
-"te\n"
-"                    così come informazioni riguardanti documento o persone\n"
+"                    La tua Posta in arrivo contiene messaggi privati o email "
+"inviate a te\n"
+"                    così come informazioni riguardanti documenti o persone\n"
 "                    che segui.\n"
 "                </p>\n"
 "            "
@@ -1719,8 +1722,8 @@ msgstr ""
 "<p>\n"
 "                    <b>Nessun todo.</b>\n"
 "                </p><p>\n"
-"                    Quando si processanno messaggi nella propria inbox, è "
-"possibile marcarne\n"
+"                    Quando si processanno messaggi nella propria Posta in "
+"arrivo, è possibile marcarne\n"
 "                    alcuni come <i>todo</i>. Da questo menù, è possibile "
 "processare i propri todo.\n"
 "                </p>\n"
@@ -1756,7 +1759,7 @@ msgstr "Solo email"
 #: model:ir.actions.client,name:mail.action_mail_inbox_feeds
 #: model:ir.ui.menu,name:mail.mail_inboxfeeds
 msgid "Inbox"
-msgstr "Inbox"
+msgstr "Posta in arrivo"
 
 #. module: mail
 #. openerp-web
