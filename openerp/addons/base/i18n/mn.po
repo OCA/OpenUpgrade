@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-server\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:04+0000\n"
-"PO-Revision-Date: 2012-12-23 05:41+0000\n"
+"PO-Revision-Date: 2012-12-25 02:46+0000\n"
 "Last-Translator: gobi <Unknown>\n"
 "Language-Team: Mongolian <mn@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-24 05:09+0000\n"
+"X-Launchpad-Export-Date: 2012-12-25 05:15+0000\n"
 "X-Generator: Launchpad (build 16378)\n"
 
 #. module: base
@@ -59,7 +59,7 @@ msgstr ""
 #: field:ir.ui.view,arch:0
 #: field:ir.ui.view.custom,arch:0
 msgid "View Architecture"
-msgstr "Дэлгэцийн архитектур"
+msgstr "Харагдацын архитектур"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_sale_stock
@@ -74,12 +74,12 @@ msgstr "Цоорхой үгүй"
 #. module: base
 #: selection:base.language.install,lang:0
 msgid "Hungarian / Magyar"
-msgstr "Унгар / Magyar"
+msgstr "Унгар / Мажаар"
 
 #. module: base
 #: selection:base.language.install,lang:0
 msgid "Spanish (PY) / Español (PY)"
-msgstr "Спани хэл (PY) / Español (PY)"
+msgstr "Испани хэл (PY) / Español (PY)"
 
 #. module: base
 #: model:ir.module.category,description:base.module_category_project_management
@@ -1784,6 +1784,15 @@ msgid ""
 "with a single statement.\n"
 "    "
 msgstr ""
+"\n"
+"Энэ модуль нь IBAN буюу ОУ-ын банкны дансны дугаарын суурийг суулгаж, түүний "
+"хүчин төгөлдөр эсэхийг шалгадаг.\n"
+"============================================================================="
+"=========================================\n"
+"\n"
+"Дансны хуулга дахь IBAN данснаас тухайн банкны дотоодын дансыг задлан гаргах "
+"боломжийг бүрдүүлдэг.\n"
+"    "
 
 #. module: base
 #: view:ir.module.module:0
@@ -1840,7 +1849,7 @@ msgstr "Хэрэв тодорхойвол уг хэрэглэгч системд
 #. module: base
 #: model:res.country,name:base.mf
 msgid "Saint Martin (French part)"
-msgstr ""
+msgstr "Гэгээн Мартин (Франц хэсэг)"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_exports
@@ -5686,7 +5695,7 @@ msgstr "Худалдан авалт"
 #. module: base
 #: selection:base.language.install,lang:0
 msgid "Portuguese (BR) / Português (BR)"
-msgstr ""
+msgstr "Португал хэл (BR) / Português (BR)"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_needaction_mixin
@@ -5981,7 +5990,7 @@ msgstr "Хамгаалалт"
 #. module: base
 #: selection:base.language.install,lang:0
 msgid "Portuguese / Português"
-msgstr ""
+msgstr "Португал хэл / Português"
 
 #. module: base
 #: code:addons/base/ir/ir_model.py:366
@@ -6952,6 +6961,9 @@ msgid ""
 "deleting it (if you delete a native record rule, it may be re-created when "
 "you reload the module."
 msgstr ""
+"Хэрэв идэвхтэй талбарын тэмдэглэгээг арилгавал бичлэгийн дүрмийг "
+"устгалгүйгээр идэвхгүй болгоно (хэрэв анхны бичлэгийн дүрмийг устгавал "
+"модулийг дахин шинэчлэхэд ахин үүсч магадгүй байдаг)"
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -6968,6 +6980,12 @@ msgid ""
 "Allows users to create custom dashboard.\n"
 "    "
 msgstr ""
+"\n"
+"Хэрэглэгчид өөриймшүүлсэн хянах самбар үүсгэх боломжийг олгодог.\n"
+"========================================\n"
+"\n"
+"Хэрэглэгчид өөрсдийн хүссэн хянах самбар үүсгэх боломжийг олгодог.\n"
+"    "
 
 #. module: base
 #: model:ir.actions.act_window,name:base.ir_access_act
@@ -7107,18 +7125,22 @@ msgid ""
 "========================\n"
 "\n"
 msgstr ""
+"\n"
+"OpenERP вебийн канбан харагдац.\n"
+"========================\n"
+"\n"
 
 #. module: base
 #: code:addons/base/ir/ir_fields.py:182
 #, python-format
 msgid "'%s' does not seem to be a number for field '%%(field)s'"
-msgstr ""
+msgstr "'%s' нь '%%(field)s' талбарын утга биш бололтой"
 
 #. module: base
 #: help:res.country.state,name:0
 msgid ""
 "Administrative divisions of a country. E.g. Fed. State, Departement, Canton"
-msgstr ""
+msgstr "Улсын засаг захиргааны нэгж. Тухайлбал: Холбоо. Муж, Хэсэг, Аймаг"
 
 #. module: base
 #: view:res.partner.bank:0
@@ -7128,7 +7150,7 @@ msgstr "Миний Банкууд"
 #. module: base
 #: sql_constraint:ir.filters:0
 msgid "Filter names must be unique"
-msgstr ""
+msgstr "Шүүлтүүрийн нэрүүд үл давхцах байх ёстой"
 
 #. module: base
 #: help:multi_company.default,object_id:0
@@ -7138,12 +7160,12 @@ msgstr "Энэ дүрэм нөлөөлсөн обьектууд"
 #. module: base
 #: selection:ir.actions.act_window,target:0
 msgid "Inline View"
-msgstr ""
+msgstr "Мөр доторх харагдац"
 
 #. module: base
 #: field:ir.filters,is_default:0
 msgid "Default filter"
-msgstr ""
+msgstr "Анхны шүүлтүүр"
 
 #. module: base
 #: report:ir.module.reference:0
@@ -7272,7 +7294,7 @@ msgstr "Малайз"
 #: code:addons/base/ir/ir_sequence.py:130
 #, python-format
 msgid "Increment number must not be zero."
-msgstr ""
+msgstr "Нэмэгдэх утга тэг биш байх ёстой"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_cancel
@@ -7282,7 +7304,7 @@ msgstr "Журналын Бичилтийг Цуцлах"
 #. module: base
 #: field:res.partner,tz_offset:0
 msgid "Timezone offset"
-msgstr ""
+msgstr "Цагийн бүсийн шилжилт"
 
 #. module: base
 #: model:ir.module.module,description:base.module_marketing_campaign
@@ -7321,6 +7343,33 @@ msgid ""
 "      CRM Leads.\n"
 "    "
 msgstr ""
+"\n"
+"Энэ модуль нь маркетингийн компанит ажлаар сэжимийг автоматжуулдаг (компанит "
+"ажил нь бүх төрлийн нөөц байж болно. Зөвхөн CRM сэжимээр хязгаарлагдахгүй).\n"
+"============================================================================="
+"============================================================\n"
+"\n"
+"Компанит ажил нь динамик бөгөөд олон суваг юм. Процесс нь дараах байдалтай:\n"
+"    * Маркетингийн компанит ажлыг ажлын ургсал шигээр зохиомжлох хэрэгтэй "
+"бөгөөд үүнд имэйл үлгэр, хэвлэх илгээх тайлангууд, өөриймшүүлсэн үйлдлүүд "
+"зэрэг зүйлс хамаарна.\n"
+"    * Компанит ажилд хэрэглэгдэх сегментүүдийг тодорхойлно. (ө.х зөвхөн "
+"тодорхой хэдэн улсаас сэжмийг авна гэх мэт.)\n"
+"    * Тестийн горимд компанит ажлыг симулаци хийж туршиж болно. Ингээд өшөө "
+"нарийвчлан тохируулж болно.\n"
+"    * Гар горимоор жинхэнэ компанит ажлыг эхлүүлж болно. Ингээд бүх үйлдэл "
+"гар шалгалтыг шаардах болно.\n"
+"    * Эцэст нь компанит ажлыг эхлүүлж бүх зүйлс бүрэн автомат хийгдэж "
+"байгааг статистикуудаар харж эхлэнэ.\n"
+"\n"
+"Компанит ажил явагдаж байх үед ч гэсэн сегментчлэл, ажлын урсгал зэрэгийг "
+"нарийвчлан тохируулах ажлыг үргэлжлүүлэн хийх боломжтйо.\n"
+"\n"
+"Санамж: Хэрэв танд туршилтын үзүүлэн өгөгдөл хэрэгтэй бол "
+"marketing_campaign_crm_demo модулийг суулгаж болно. Гэхдээ энэ нь мөн CRM "
+"модулийн туршилтын өгөгдөлтэй суулгадаг тул илүүж туршилтын өгөгдөл сэжимүүд "
+"үүсдэгийг анхаарах хэрэгтэй.\n"
+"    "
 
 #. module: base
 #: help:ir.mail_server,smtp_debug:0
@@ -7343,6 +7392,12 @@ msgid ""
 "Price and Cost Price.\n"
 "    "
 msgstr ""
+"\n"
+"Энэ модуль нь борлуулалтын захиалга дээр 'Тодотгол' нэмдэг.\n"
+"=============================================\n"
+"\n"
+"Нэгж үнэ, Өртөг үнийг харьцуулан бохир ашгийг харуулдаг.\n"
+"    "
 
 #. module: base
 #: selection:ir.actions.todo,type:0
@@ -7372,6 +7427,8 @@ msgstr "Кэйп Вэрде"
 #: model:res.groups,comment:base.group_sale_salesman
 msgid "the user will have access to his own data in the sales application."
 msgstr ""
+"Хэрэглэгч нь борлуулалтын аппликэйшн дахь өөрийн өгөгдөл рүү хандах "
+"хандалттай болно."
 
 #. module: base
 #: model:res.groups,comment:base.group_user
@@ -7379,6 +7436,8 @@ msgid ""
 "the user will be able to manage his own human resources stuff (leave "
 "request, timesheets, ...), if he is linked to an employee in the system."
 msgstr ""
+"хэрэв хэрэглэгч нь ажилтантай холбогдсон байвал хүний нөөцийн өөрийн зүйлсээ "
+"(чөлөө хүсэлт, цагийн хуудас, ....) менежмент хийх боломжтой болно."
 
 #. module: base
 #: code:addons/orm.py:2246
@@ -7515,7 +7574,7 @@ msgstr "Жил"
 #: view:ir.config_parameter:0
 #: model:ir.ui.menu,name:base.ir_config_menu
 msgid "System Parameters"
-msgstr ""
+msgstr "Системийн параметрүүд"
 
 #. module: base
 #: help:ir.actions.client,tag:0
@@ -7571,7 +7630,7 @@ msgstr "Хөндлөнгийн Хяналтын Ул Мөр"
 #: code:addons/base/ir/ir_fields.py:264
 #, python-format
 msgid "Value '%s' not found in selection field '%%(field)s'"
-msgstr ""
+msgstr "'%s' гэсэн утга '%%(field)s' сонгох талбарт олдсонгүй"
 
 #. module: base
 #: model:res.country,name:base.sd
@@ -7663,7 +7722,7 @@ msgstr "Израйл"
 #: code:addons/base/res/res_config.py:443
 #, python-format
 msgid "Cannot duplicate configuration!"
-msgstr ""
+msgstr "Тохиргоог хувилж чадахгүй!"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_syscohada
@@ -7688,12 +7747,12 @@ msgstr "Цагийн формат"
 #. module: base
 #: field:res.company,rml_header3:0
 msgid "RML Internal Header for Landscape Reports"
-msgstr ""
+msgstr "Хэвтээ тайланд зориулсан RML дотоод толгой"
 
 #. module: base
 #: model:res.groups,name:base.group_partner_manager
 msgid "Contact Creation"
-msgstr ""
+msgstr "Холбогчийг Үүсгэх"
 
 #. module: base
 #: view:ir.module.module:0
@@ -7745,11 +7804,17 @@ msgid ""
 "This module provides the core of the OpenERP Web Client.\n"
 "        "
 msgstr ""
+"\n"
+"OpenERP вебийн цөм модуль\n"
+"========================\n"
+"\n"
+"Энэ модуль нь OpenERP веб клиентийн цөм модуль болно.\n"
+"        "
 
 #. module: base
 #: view:ir.sequence:0
 msgid "Week of the Year: %(woy)s"
-msgstr ""
+msgstr "Жил дэх долоо хоног: %(woy)s"
 
 #. module: base
 #: field:res.users,id:0
@@ -7818,7 +7883,7 @@ msgstr "Харилцагчийн гарчиг"
 #: code:addons/base/ir/ir_fields.py:227
 #, python-format
 msgid "Use the format '%s'"
-msgstr ""
+msgstr "'%s' форматыг ашигла"
 
 #. module: base
 #: help:ir.actions.act_window,auto_refresh:0
@@ -7850,12 +7915,12 @@ msgstr "Ажлын элементүүд"
 #: code:addons/base/res/res_bank.py:195
 #, python-format
 msgid "Invalid Bank Account Type Name format."
-msgstr ""
+msgstr "Банкны Дансны Төрөлийн нэрийн формат буруу"
 
 #. module: base
 #: view:ir.filters:0
 msgid "Filters visible only for one user"
-msgstr ""
+msgstr "Шүүлтүүр нь зөвхөн хэрэглэгчид харагдана"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_attachment
@@ -7919,7 +7984,7 @@ msgstr ""
 #. module: base
 #: model:res.groups,comment:base.group_hr_user
 msgid "the user will be able to approve document created by employees."
-msgstr ""
+msgstr "хэрэглэгч нь ажилтнуудын үүсгэсэн баримтуудыг батладаг байна."
 
 #. module: base
 #: field:ir.ui.menu,needaction_enabled:0
@@ -7978,7 +8043,7 @@ msgstr "Модел амжилттай импортлогдлоо !"
 #: view:ir.model.constraint:0
 #: model:ir.ui.menu,name:base.ir_model_constraint_menu
 msgid "Model Constraints"
-msgstr ""
+msgstr "Моделийн Хязгаарлалтууд"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_workflow_transition_form
@@ -8033,7 +8098,7 @@ msgstr "Сомали"
 #. module: base
 #: model:res.partner.title,shortcut:base.res_partner_title_doctor
 msgid "Dr."
-msgstr ""
+msgstr "Др."
 
 #. module: base
 #: model:res.groups,name:base.group_user
