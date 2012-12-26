@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-server\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:04+0000\n"
-"PO-Revision-Date: 2012-12-21 23:09+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2012-12-25 10:48+0000\n"
+"Last-Translator: Stanislav Hanzhin <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-22 06:51+0000\n"
+"X-Launchpad-Export-Date: 2012-12-26 05:17+0000\n"
 "X-Generator: Launchpad (build 16378)\n"
 
 #. module: base
@@ -25,21 +25,25 @@ msgid ""
 "================================================\n"
 "    "
 msgstr ""
+"\n"
+"Модуль для проверки написания и проверки печати.\n"
+"================================================\n"
+"    "
 
 #. module: base
 #: model:res.country,name:base.sh
 msgid "Saint Helena"
-msgstr "Остров Святой Елены"
+msgstr "Остров Св. Елены"
 
 #. module: base
 #: view:ir.actions.report.xml:0
 msgid "Other Configuration"
-msgstr "Другие настройки"
+msgstr "Прочие настройки"
 
 #. module: base
 #: selection:ir.property,type:0
 msgid "DateTime"
-msgstr "DateTime"
+msgstr "Дата и время"
 
 #. module: base
 #: code:addons/fields.py:643
@@ -66,7 +70,7 @@ msgstr "Предложение, заказ продажи, доставка и �
 #. module: base
 #: selection:ir.sequence,implementation:0
 msgid "No gap"
-msgstr "Неразрывно"
+msgstr "Без пропусков"
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -95,13 +99,13 @@ msgstr "Сенсорный интерфейс для магазинов"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_in_hr_payroll
 msgid "Indian Payroll"
-msgstr ""
+msgstr "Индийская платежная ведомость"
 
 #. module: base
 #: help:ir.cron,model:0
 msgid ""
 "Model name on which the method to be called is located, e.g. 'res.partner'."
-msgstr "Имя модели, метод которого будет вызван. Например \"res.partner\""
+msgstr "Имя модели, метод которой будет вызван. Например \"res.partner\""
 
 #. module: base
 #: view:ir.module.module:0
@@ -123,6 +127,17 @@ msgid ""
 "    * Product Attributes\n"
 "    "
 msgstr ""
+"\n"
+"Модуль который добавляет производителей и характеристики на форму продукта.\n"
+"===================================================================\n"
+"\n"
+"Теперь вы можете определить следующее для продукта:\n"
+"-----------------------------------------------\n"
+"    * Производитель\n"
+"    * Наименование продукта у производителя\n"
+"    * Код продукта у производителя\n"
+"    * Характеристики продукта\n"
+"    "
 
 #. module: base
 #: field:ir.actions.client,params:0
@@ -159,7 +174,7 @@ msgstr ""
 #. module: base
 #: field:res.partner,ref:0
 msgid "Reference"
-msgstr "Ссылка"
+msgstr "Обозначение"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_be_invoice_bba
@@ -174,7 +189,7 @@ msgstr "Окно назначения"
 #. module: base
 #: field:ir.actions.report.xml,report_rml:0
 msgid "Main Report File Path"
-msgstr "Главный путь к файлу отчета"
+msgstr "Путь к главному файлу отчёта"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_analytic_plans
@@ -195,6 +210,16 @@ msgid ""
 "revenue\n"
 "reports."
 msgstr ""
+"\n"
+"Генерируйте Счета из Затрат, Записей расписания.\n"
+"========================================================\n"
+"\n"
+"Модуль для генерации счетов основанных на издержках (человеческие ресурсы, "
+"затраты, ...).\n"
+"\n"
+"Можно определять прайс-листы в аналитическом счете, делать некоторые "
+"теоретические отчеты \n"
+"о доходах."
 
 #. module: base
 #: code:addons/base/ir/ir_sequence.py:104
@@ -202,7 +227,7 @@ msgstr ""
 #: code:addons/base/res/res_users.py:467
 #, python-format
 msgid "Warning!"
-msgstr "Предупреждение!"
+msgstr "Внимание!"
 
 #. module: base
 #: code:addons/base/ir/ir_model.py:399
