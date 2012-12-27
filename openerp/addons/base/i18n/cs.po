@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-server\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:04+0000\n"
-"PO-Revision-Date: 2012-12-25 16:41+0000\n"
-"Last-Translator: ARESTshop <admin@arestshop.cz>\n"
+"PO-Revision-Date: 2012-12-26 22:15+0000\n"
+"Last-Translator: Jan Grmela <grmela@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-26 05:16+0000\n"
+"X-Launchpad-Export-Date: 2012-12-27 05:52+0000\n"
 "X-Generator: Launchpad (build 16378)\n"
 
 #. module: base
@@ -249,7 +249,7 @@ msgstr "ir.ui.view.custom"
 #: code:addons/base/ir/ir_model.py:368
 #, python-format
 msgid "Renaming sparse field \"%s\" is not allowed"
-msgstr ""
+msgstr "Přejmenování řídkého pole \"%s\" není povoleno"
 
 #. module: base
 #: model:res.country,name:base.sz
@@ -265,7 +265,7 @@ msgstr "vytvořeno."
 #. module: base
 #: field:ir.actions.report.xml,report_xsl:0
 msgid "XSL Path"
-msgstr ""
+msgstr "Cesta XSL"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_tr
@@ -291,7 +291,7 @@ msgstr "Inuktitut / ᐃᓄᒃᑎᑐᑦ"
 #. module: base
 #: model:res.groups,name:base.group_multi_currency
 msgid "Multi Currencies"
-msgstr ""
+msgstr "Různé měny"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_cl
@@ -303,6 +303,12 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"Chilská účtová osnova a lokalizace daní.\n"
+"==============================================\n"
+"Plan contable chileno e impuestos de acuerdo a disposiciones vigentes\n"
+"\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale
@@ -315,6 +321,8 @@ msgid ""
 "The internal user that is in charge of communicating with this contact if "
 "any."
 msgstr ""
+"Interní uživatel zodpovědný za komunikaci s tímto kontaktem (pokud je "
+"nějaký)."
 
 #. module: base
 #: view:res.partner:0
@@ -475,6 +483,8 @@ msgid ""
 "Invalid date/time format directive specified. Please refer to the list of "
 "allowed directives, displayed when you edit a language."
 msgstr ""
+"Chybná specifikace formátu data/času. Prosím, projděte si seznam povolených "
+"direktiv zobrazený při editaci jazyka."
 
 #. module: base
 #: code:addons/orm.py:4152
@@ -497,12 +507,12 @@ msgstr ""
 #. module: base
 #: field:ir.model.relation,name:0
 msgid "Relation Name"
-msgstr ""
+msgstr "Název relace"
 
 #. module: base
 #: view:ir.rule:0
 msgid "Create Access Right"
-msgstr ""
+msgstr "Vytvořit přístupové právo"
 
 #. module: base
 #: model:res.country,name:base.tv
@@ -552,7 +562,7 @@ msgstr "Francouzská Guyana"
 #. module: base
 #: model:ir.module.module,summary:base.module_hr
 msgid "Jobs, Departments, Employees Details"
-msgstr ""
+msgstr "Zaměstnání, oddělení, podrobnosti zaměstnanců"
 
 #. module: base
 #: model:ir.module.module,description:base.module_analytic
@@ -568,6 +578,14 @@ msgid ""
 "that have no counterpart in the general financial accounts.\n"
 "    "
 msgstr ""
+"\n"
+"Modul pro definici analytických účtů účetnictví.\n"
+"===============================================\n"
+"\n"
+"V OpenERP jsou sice analytické účty propojeny s hlavními účty, jsou však\n"
+"zcela nezávislé. Můžete tedy zadat rozličné analytické operace které\n"
+"nemají žádnou souvislost s hlavními finančními účty.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_idea
@@ -591,6 +609,19 @@ msgid ""
 "* Use emails to automatically confirm and send acknowledgements for any "
 "event registration\n"
 msgstr ""
+"\n"
+"Organizace a správa událostí.\n"
+"======================================\n"
+"\n"
+"Modul vám umožňuje efektivně organizovat události a všechny související "
+"úlohy: plánování, sledování registrací,\n"
+"účasti, atd.\n"
+"\n"
+"Klíčové vlastnosti\n"
+"------------\n"
+"* Spravujte své události a registrace\n"
+"* Použijte e-mail pro automatické potvrzování a odesílání potvrzení "
+"registrace na kteroukoli  událost\n"
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -626,6 +657,22 @@ msgid ""
 "    A + B + C -> D + E\n"
 "    "
 msgstr ""
+"\n"
+"Tento modul vám umožňuje vyrobit několik výrobků z jednoho výrobního "
+"postupu.\n"
+"============================================================================="
+"\n"
+"\n"
+"Polotovary můžete nastavit v kusovníku.\n"
+"\n"
+"Bez tohoto modulu:\n"
+"--------------------\n"
+"    A + B + C -> D\n"
+"\n"
+"S tímto modulem:\n"
+"-----------------\n"
+"    A + B + C -> D + E\n"
+"    "
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -690,7 +737,7 @@ msgstr "Nepřeložené"
 #. module: base
 #: view:ir.mail_server:0
 msgid "Outgoing Mail Server"
-msgstr ""
+msgstr "Odchozí poštovní server"
 
 #. module: base
 #: help:ir.actions.act_window,context:0
@@ -763,6 +810,33 @@ msgid ""
 "module named account_voucher.\n"
 "    "
 msgstr ""
+"\n"
+"Účetnictví a finanční management.\n"
+"====================================\n"
+"\n"
+"Finanční a účetní modul, který pokrývá:\n"
+"--------------------------------------------\n"
+"    * Obecné účetnictví\n"
+"    * Nákladové/analytické účetnictví\n"
+"    * Účetnictví třetích stran\n"
+"    * Správu daní\n"
+"    * Rozpočty\n"
+"    * Přijaté a vydané faktury\n"
+"    * Výpisy z účtu\n"
+"    * Vzájemné zápočty závazků a pohledávek\n"
+"\n"
+"Modul vytváří dashboard pro účetní, který zahrnuje:\n"
+"--------------------------------------------------\n"
+"    * Seznam vydaných faktur ke schválení\n"
+"    * Analýzu společnosti\n"
+"    * Graf majetku\n"
+"\n"
+"Procesy jako vedení hlavní účetní knihy jsou prováděny prostřednictvím "
+"definovaných finančních žurnálů (zadávání nebo shlukování probíhá "
+"prostřednictvím žurnálu)\n"
+"určitého finančního roku. Pro přípravu potvrzení je zde modul nazvaný "
+"account_voucher.\n"
+"    "
 
 #. module: base
 #: view:ir.model:0
@@ -780,6 +854,12 @@ msgid ""
 "Contains the installer for marketing-related modules.\n"
 "    "
 msgstr ""
+"\n"
+"Menu marketingu.\n"
+"===================\n"
+"\n"
+"Obsahuje instalátor pro moduly související s marketingem.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_web_linkedin
@@ -790,6 +870,11 @@ msgid ""
 "This module provides the Integration of the LinkedIn with OpenERP.\n"
 "        "
 msgstr ""
+"\n"
+"Modul OpenERP Web pro LinkedIn.\n"
+"============================\n"
+"Tento modul poskytuje integraci LinkedIn s OpenERP.\n"
+"        "
 
 #. module: base
 #: help:ir.actions.act_window,src_model:0
