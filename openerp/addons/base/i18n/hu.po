@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-server\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:04+0000\n"
-"PO-Revision-Date: 2012-12-21 23:09+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2012-12-27 22:35+0000\n"
+"Last-Translator: Balint (eSolve) <Unknown>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-22 06:48+0000\n"
+"X-Launchpad-Export-Date: 2012-12-28 05:35+0000\n"
 "X-Generator: Launchpad (build 16378)\n"
 
 #. module: base
@@ -786,7 +786,7 @@ msgstr ""
 #. module: base
 #: field:res.company,logo_web:0
 msgid "Logo Web"
-msgstr ""
+msgstr "Web logó"
 
 #. module: base
 #: code:addons/base/ir/ir_model.py:339
@@ -932,7 +932,7 @@ msgstr "Jordánia"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_hr
 msgid "Croatia - RRIF 2012 COA"
-msgstr ""
+msgstr "Horvátország  - Croatia - RRIF 2012 COA"
 
 #. module: base
 #: help:ir.cron,nextcall:0
@@ -1316,6 +1316,37 @@ msgid ""
 "* Planned Revenue by Stage and User (graph)\n"
 "* Opportunities by Stage (graph)\n"
 msgstr ""
+"\n"
+"Általános OpenERP Ügyfélszolgálati kapcsolat tervező /Customer Relationship "
+"Management/\n"
+"====================================================\n"
+"\n"
+"Ez az alkalmazás lehetővé teszi egy csoport ember vezetőinek, "
+"lehetőségeiknek, találkozóiknak és telefonálásaiknak ésszerű és hatékony "
+"irányítását.\n"
+"\n"
+"A fő feladatok, mint kommunikáció, azonosítás, prioritás, kiosztás, eredmény "
+"és figyelmeztetések megszervezését.\n"
+"\n"
+"OpenERP biztosítja minden esemény felhasználó, vevő és beszállító általi "
+"nyomon követhetőségét. automatikusan tud emlékeztetőt, igény "
+"visszaigazolást, speciális mód kapcsolást és egyéb más műveletet véghezvinni "
+"a vállalkozás szabályai alapján.\n"
+"\n"
+"A legjobb ebben a rendszerben, hogy a felhasználóknak nem kell semmi "
+"speciálisat elvégeznie. A CRM modulnak egy email átjárója van a "
+"szinkronizációs csatolóval az email és az OpenERP között. Így, a "
+"felhasználók az igénylő felé tudnak csak emailt küldeni.\n"
+"\n"
+"OpenERP gondoskodik az email-ekről, automatikusan a megfelelő személyzethez "
+"eljuttatva azt, ami biztosítja, hogy a további levelezés a megfelelő helyre "
+"kerüljön.\n"
+"\n"
+"\n"
+"Dashboard/ Műszerfal a CRM-hez ami magában foglalja:\n"
+"-------------------------------\n"
+"* Tervezett bevétel szintek és felhasználók szerint (grafikon)\n"
+"* Lehetőségek szintek szerint (grafikon)\n"
 
 #. module: base
 #: selection:base.language.export,format:0
@@ -1340,7 +1371,7 @@ msgstr "Dokumentum model"
 #. module: base
 #: view:res.users:0
 msgid "Change the user password."
-msgstr ""
+msgstr "Változtassa meg a felhasználói jelszót."
 
 #. module: base
 #: view:res.lang:0
@@ -1413,6 +1444,50 @@ msgid ""
 "come with any additional paid permission for online use of 'private "
 "modules'.\n"
 msgstr ""
+"\n"
+"Brazil alap lokalizációs modul\n"
+"\n"
+"Base module for the Brazilian localization\n"
+"==========================================\n"
+"\n"
+"This module consists in:\n"
+"\n"
+" - Generic Brazilian chart of accounts\n"
+" - Brazilian taxes such as:\n"
+"\n"
+"        - IPI\n"
+"        - ICMS\n"
+"        - PIS\n"
+"        - COFINS\n"
+"        - ISS\n"
+"        - IR\n"
+"        - IRPJ\n"
+"        - CSLL\n"
+"\n"
+"The field tax_discount has also been added in the account.tax.template and \n"
+"account.tax objects to allow the proper computation of some Brazilian VATs \n"
+"such as ICMS. The chart of account creation wizard has been extended to \n"
+"propagate those new data properly.\n"
+"\n"
+"It's important to note however that this module lack many implementations to "
+"\n"
+"use OpenERP properly in Brazil. Those implementations (such as the "
+"electronic \n"
+"fiscal Invoicing which is already operational) are brought by more than 15 \n"
+"additional modules of the Brazilian Launchpad localization project \n"
+"https://launchpad.net/openerp.pt-br-localiz and their dependencies in the \n"
+"extra addons branch. Those modules aim at not breaking with the remarkable \n"
+"OpenERP modularity, this is why they are numerous but small. One of the \n"
+"reasons for maintaining those modules apart is that Brazilian Localization \n"
+"leaders need commit rights agility to complete the localization as companies "
+"\n"
+"fund the remaining legal requirements (such as soon fiscal ledgers, \n"
+"accounting SPED, fiscal SPED and PAF ECF that are still missing as September "
+"\n"
+"2011). Those modules are also strictly licensed under AGPL V3 and today "
+"don't \n"
+"come with any additional paid permission for online use of 'private "
+"modules'.\n"
 
 #. module: base
 #: code:addons/orm.py:406
@@ -1479,7 +1554,7 @@ msgstr "Dél-Korea"
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_si
 msgid "Kontni načrt za gospodarske družbe"
-msgstr ""
+msgstr "Kontni načrt za gospodarske družbe"
 
 #. module: base
 #: code:addons/orm.py:4917
@@ -1860,6 +1935,18 @@ msgid ""
 "    * the main taxes used in Luxembourg\n"
 "    * default fiscal position for local, intracom, extracom "
 msgstr ""
+"\n"
+"Luxenburgi számlatükör\n"
+"\n"
+"\n"
+"This is the base module to manage the accounting chart for Luxembourg.\n"
+"======================================================================\n"
+"\n"
+"    * the Luxembourg Official Chart of Accounts (law of June 2009 + 2011 "
+"chart and Taxes),\n"
+"    * the Tax Code Chart for Luxembourg\n"
+"    * the main taxes used in Luxembourg\n"
+"    * default fiscal position for local, intracom, extracom "
 
 #. module: base
 #: code:addons/base/module/wizard/base_update_translations.py:39
@@ -2221,7 +2308,7 @@ msgstr "Olvasási Hozzáférés"
 #. module: base
 #: help:ir.attachment,res_id:0
 msgid "The record id this is attached to"
-msgstr ""
+msgstr "A rekord azonosító melyhez kapcsolódik"
 
 #. module: base
 #: model:ir.module.module,description:base.module_share
@@ -2646,7 +2733,7 @@ msgstr "Módszer"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_auth_crypt
 msgid "Password Encryption"
-msgstr ""
+msgstr "Jelszó titkosítás"
 
 #. module: base
 #: view:workflow.activity:0
@@ -2716,7 +2803,7 @@ msgstr ""
 #. module: base
 #: field:change.password.user,new_passwd:0
 msgid "New Password"
-msgstr ""
+msgstr "Új Jelszó"
 
 #. module: base
 #: model:ir.actions.act_window,help:base.action_ui_view
@@ -2776,6 +2863,10 @@ msgid ""
 "=================================\n"
 " "
 msgstr ""
+"\n"
+"A portál eléréséhez névtelen bejelentkezés elérés engedélyezése.\n"
+"=================================\n"
+" "
 
 #. module: base
 #: model:res.country,name:base.ge
@@ -3181,6 +3272,17 @@ msgid ""
 "        * Files by Partner (graph)\n"
 "        * Files Size by Month (graph)\n"
 msgstr ""
+"\n"
+"Ez egy komplett dokumentum kezelő rendszer.\n"
+"==============================================\n"
+"    * Felhasználó azonosítás\n"
+"    * Dokumentum indexálás:- .pptx és .docx fájlok nem támogatottak Windows "
+"oprendszeren.\n"
+"    * Dashboard / Műszerfal a dokumentumokhoz mely magában foglalja:\n"
+"        * Új fájl (lista)\n"
+"        * Fájlok a forrás típusa szerint (grafikon)\n"
+"        * Fájlok partnerek szerint (grafikon)\n"
+"        * Fájlok méret szerint havi lebontásban (grafikon)\n"
 
 #. module: base
 #: view:ir.actions.report.xml:0
@@ -3379,6 +3481,14 @@ msgid ""
 "This module is currently not compatible with the ``user_ldap`` module and\n"
 "will disable LDAP authentication completely if installed at the same time.\n"
 msgstr ""
+"\n"
+"Titkosított jelszavak\n"
+"==================\n"
+"\n"
+"LDAP azonosítással integrálva:\n"
+"-------------------------------------\n"
+"Ez a modul nem kompatibilis a ``user_ldap`` modullal és\n"
+"kiiktatja a teljes LDAP azonosítást, ha az egyszerre telepítésre került.\n"
 
 #. module: base
 #: model:res.groups,name:base.group_hr_manager
@@ -3784,7 +3894,7 @@ msgstr ""
 #. module: base
 #: field:res.company,rml_header1:0
 msgid "Company Tagline"
-msgstr ""
+msgstr "Vállalat mottója"
 
 #. module: base
 #: code:addons/base/res/res_users.py:668
@@ -4513,7 +4623,7 @@ msgstr "Recursivity Detected."
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_et
 msgid "Ethiopia - Accounting"
-msgstr ""
+msgstr "Etióp könyvelés - Ethiopia - Accounting"
 
 #. module: base
 #: code:addons/base/module/module.py:366
@@ -4654,6 +4764,32 @@ msgid ""
 "      payslip interface, but not in the payslip report\n"
 "    "
 msgstr ""
+"\n"
+"Francia bérszámfejtés \n"
+"\n"
+"\n"
+"French Payroll Rules.\n"
+"=====================\n"
+"\n"
+"    - Configuration of hr_payroll for French localization\n"
+"    - All main contributions rules for French payslip, for 'cadre' and 'non-"
+"cadre'\n"
+"    - New payslip report\n"
+"\n"
+"TODO:\n"
+"-----\n"
+"    - Integration with holidays module for deduction and allowance\n"
+"    - Integration with hr_payroll_account for the automatic "
+"account_move_line\n"
+"      creation from the payslip\n"
+"    - Continue to integrate the contribution. Only the main contribution "
+"are\n"
+"      currently implemented\n"
+"    - Remake the report under webkit\n"
+"    - The payslip.line with appears_in_payslip = False should appears in "
+"the\n"
+"      payslip interface, but not in the payslip report\n"
+"    "
 
 #. module: base
 #: model:res.country,name:base.pm
@@ -4881,6 +5017,43 @@ msgid ""
 ".. _link: http://puc.com.co/normatividad/\n"
 "    "
 msgstr ""
+"\n"
+"Kolumbia számlatükör \n"
+"\n"
+"\n"
+"Chart of account for Colombia\n"
+"=============================\n"
+"\n"
+"Source of this chart of account is here_.\n"
+"\n"
+"All the documentation available in this website is embeded in this module, "
+"to\n"
+"be sure when you open OpenERP it has all necesary information to manage \n"
+"accounting en Colombia.\n"
+"\n"
+"The law that enable this chart of account as valid for this country is \n"
+"available in this other link_.\n"
+"\n"
+"This module has the intention to put available out of the box the chart of \n"
+"account for Colombia in Openerp.\n"
+"\n"
+"We recommend install the module account_anglo_sxon to be able to have the "
+"cost\n"
+"accounting correctly setted in out invoices.\n"
+"\n"
+"After installing this module, the Configuration wizard for accounting is "
+"launched.\n"
+"    * We have the account templates which can be helpful to generate Charts "
+"of Accounts.\n"
+"    * On that particular wizard, you will be asked to pass the name of the "
+"company,\n"
+"      the chart template to follow, the no. of digits to generate, the code "
+"for your\n"
+"      account and bank account, currency to create journals.\n"
+"\n"
+".. _here: http://puc.com.co/\n"
+".. _link: http://puc.com.co/normatividad/\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_bank_statement_extensions
@@ -4958,7 +5131,7 @@ msgstr "Kft."
 #. module: base
 #: model:ir.actions.server,name:base.action_run_ir_action_todo
 msgid "Run Remaining Action Todo"
-msgstr ""
+msgstr "Még hátralévő elvégendő műveletek futtatása"
 
 #. module: base
 #: field:res.partner,ean13:0
@@ -5245,7 +5418,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,summary:base.module_sale
 msgid "Quotations, Sales Orders, Invoicing"
-msgstr ""
+msgstr "Árajánlatok, Megrendelések, Számlázás"
 
 #. module: base
 #: field:res.partner,parent_id:0
@@ -5320,6 +5493,14 @@ msgid ""
 "invite.\n"
 "\n"
 msgstr ""
+"\n"
+"Ez a modul az OpenERP emlékeztetőit szerkeszti a rendszeren belül egy külső "
+"szerkesztővel\n"
+"=================================================================\n"
+"\n"
+"Az írásos emlékeztetőinek valós idejű frissítésére a meghívott felhasználó "
+"részére.\n"
+"\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_sequence
@@ -5495,6 +5676,15 @@ msgid ""
 "    * Commitment Date\n"
 "    * Effective Date\n"
 msgstr ""
+"\n"
+"A megrendelésekhez további információk hozzáadása.\n"
+"===================================================\n"
+"\n"
+"A következő dátumokat tudja a megrendelésekhez hozzáadni:\n"
+"------------------------------------------------------------\n"
+"    * Igénylés dátuma\n"
+"    * kötelezettség dátuma\n"
+"    * Tényleges teljesítés dátuma\n"
 
 #. module: base
 #: field:ir.actions.server,srcmodel_id:0
@@ -5877,7 +6067,7 @@ msgstr "Google Docs integráció"
 #. module: base
 #: help:ir.attachment,res_model:0
 msgid "The database object this attachment will be attached to"
-msgstr ""
+msgstr "Ez az adatbázis objektum melléklet ehhez lesz adva"
 
 #. module: base
 #: code:addons/base/ir/ir_fields.py:327
@@ -6134,7 +6324,7 @@ msgstr "Teljes hozzáférés"
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_pt
 msgid "Plano de contas SNC para Portugal"
-msgstr ""
+msgstr "Portugál könyvelés - Plano de contas SNC para Portugal"
 
 #. module: base
 #: view:ir.actions.act_window:0
@@ -6202,6 +6392,12 @@ msgid ""
 "Collects web application usage with Google Analytics.\n"
 "    "
 msgstr ""
+"\n"
+"Google Analytics.\n"
+"=================\n"
+"\n"
+"Web alkalmazás használati kimutatása a Google Analytics-al.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_recruitment
@@ -7091,6 +7287,10 @@ msgid ""
 "===============================================\n"
 "    "
 msgstr ""
+"\n"
+"A felhasználók belépésének és jelszó megváltoztatásának engedélyezése\n"
+"===============================================\n"
+"    "
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_usability
@@ -7303,7 +7503,7 @@ msgstr "Nem kategorizált"
 #. module: base
 #: view:res.partner:0
 msgid "Phone:"
-msgstr ""
+msgstr "Telefon:"
 
 #. module: base
 #: field:res.partner,is_company:0
@@ -7863,6 +8063,36 @@ msgid ""
 " http://www.rrif.hr/dok/preuzimanje/rrif-rp2012.rar\n"
 "\n"
 msgstr ""
+"\n"
+"Horvát lokalizáció \n"
+"\n"
+"Croatian localisation.\n"
+"======================\n"
+"\n"
+"Author: Goran Kliska, Slobodni programi d.o.o., Zagreb\n"
+"        http://www.slobodni-programi.hr\n"
+"\n"
+"Contributions:\n"
+"  Tomislav Bošnjaković, Storm Computers: tipovi konta\n"
+"  Ivan Vađić, Slobodni programi: tipovi konta\n"
+"\n"
+"Description:\n"
+"\n"
+"Croatian Chart of Accounts (RRIF ver.2012)\n"
+"\n"
+"RRIF-ov računski plan za poduzetnike za 2012.\n"
+"Vrste konta\n"
+"Kontni plan prema RRIF-u, dorađen u smislu kraćenja naziva i dodavanja "
+"analitika\n"
+"Porezne grupe prema poreznoj prijavi\n"
+"Porezi PDV obrasca\n"
+"Ostali porezi \n"
+"Osnovne fiskalne pozicije\n"
+"\n"
+"Izvori podataka:\n"
+" http://www.rrif.hr/dok/preuzimanje/rrif-rp2011.rar\n"
+" http://www.rrif.hr/dok/preuzimanje/rrif-rp2012.rar\n"
+"\n"
 
 #. module: base
 #: view:ir.actions.act_window:0
@@ -8217,7 +8447,7 @@ msgstr "Egyesült Királyság"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_pa
 msgid "Panama Localization Chart Account"
-msgstr ""
+msgstr "Panama lokalizáció - Panama Localization Chart Account"
 
 #. module: base
 #: help:res.partner.category,active:0
@@ -8816,7 +9046,7 @@ msgstr "Északi-Mariana-szigetek"
 #. module: base
 #: field:change.password.user,user_login:0
 msgid "User Login"
-msgstr ""
+msgstr "Felhasználói belépés"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_hn
@@ -9087,7 +9317,7 @@ msgstr "Ez az ablak"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_portal_anonymous
 msgid "Anonymous portal"
-msgstr ""
+msgstr "Névtelen portál"
 
 #. module: base
 #: field:base.language.export,format:0
@@ -9475,7 +9705,7 @@ msgstr "init"
 #: view:res.partner:0
 #: field:res.partner,user_id:0
 msgid "Salesperson"
-msgstr "Eladó"
+msgstr "Értékesítő"
 
 #. module: base
 #: view:res.lang:0
@@ -10449,6 +10679,10 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"Bolíviai szmlatükör és adózás\n"
+"\n"
+"    "
 
 #. module: base
 #: view:res.lang:0
@@ -11325,7 +11559,7 @@ msgstr "Egyéni gyorsbillentyűk"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_si
 msgid "Slovenian - Accounting"
-msgstr ""
+msgstr "Slovén számlatükör"
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_cancel
@@ -11558,6 +11792,40 @@ msgid ""
 "launchpad:\n"
 "https://launchpad.net/openerp-swiss-localization\n"
 msgstr ""
+"\n"
+"Svájci lokalizáció\n"
+"\n"
+"Swiss localization :\n"
+"====================\n"
+"**Multilang swiss STERCHI account chart and taxes**\n"
+" **Author:** Camptocamp SA\n"
+"\n"
+" **Donors:** Hasa Sàrl, Open Net Sàrl and Prisme Solutions Informatique SA\n"
+"\n"
+" **Translators:** brain-tec AG, Agile Business Group\n"
+"\n"
+"**This release will introduce major changes to l10n_ch.**\n"
+"\n"
+"Due to important refactoring needs and the Switzerland adoption of new "
+"international payment standard during 2013-2014. We have reorganised the "
+"swiss localization addons this way:\n"
+"\n"
+"- **l10n_ch**: Multilang swiss STERCHI account chart and taxes (official "
+"addon)\n"
+"- **l10n_ch_base_bank**: Technical module that introduces a new and "
+"simplified version of bank type management\n"
+"- **l10n_ch_bank**: List of swiss banks\n"
+"- **l10n_ch_zip**: List of swiss postal zip\n"
+"- **l10n_ch_dta**: Support of dta payment protocol (will be deprecated end "
+"2014)\n"
+"- **l10n_ch_payment_slip**: Support of ESR/BVR payment slip report and "
+"reconciliation. Report refactored with easy element positioning.\n"
+"- **l10n_ch_sepa**: Alpha implementation of PostFinance SEPA/PAIN support "
+"will be completed during 2013/2014\n"
+"\n"
+"The modules will be soon available on OpenERP swiss localization on "
+"launchpad:\n"
+"https://launchpad.net/openerp-swiss-localization\n"
 
 #. module: base
 #: model:res.country,name:base.nt
@@ -11892,7 +12160,7 @@ msgstr ""
 #. module: base
 #: field:ir.attachment,store_fname:0
 msgid "Stored Filename"
-msgstr ""
+msgstr "Tárolt fájlnév"
 
 #. module: base
 #: field:res.partner,use_parent_address:0
@@ -12135,7 +12403,7 @@ msgstr "Időköz egysége"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_portal_stock
 msgid "Portal Stock"
-msgstr ""
+msgstr "Raktár potál"
 
 #. module: base
 #: field:workflow.activity,kind:0
@@ -12369,7 +12637,7 @@ msgstr "PostgreSQL érintés vagy idegen kulcs név."
 #. module: base
 #: view:res.company:0
 msgid "Click to set your company logo."
-msgstr ""
+msgstr "Kattintson a vállalati logó beállításához."
 
 #. module: base
 #: view:res.lang:0
@@ -12918,7 +13186,7 @@ msgstr "Sorszám típusok"
 #. module: base
 #: view:res.partner:0
 msgid "Mobile:"
-msgstr ""
+msgstr "Mobil:"
 
 #. module: base
 #: code:addons/base/res/res_bank.py:195
@@ -13916,7 +14184,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_bo
 msgid "Bolivia Localization Chart Account"
-msgstr ""
+msgstr "Bolíviai lokalizáció"
 
 #. module: base
 #: model:ir.module.module,description:base.module_plugin_thunderbird
@@ -14421,7 +14689,7 @@ msgstr "Kiválasztás"
 #: model:ir.actions.act_window,name:base.change_password_wizard_action
 #: view:res.users:0
 msgid "Change Password"
-msgstr ""
+msgstr "Jelszó megváltoztatása"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_es
@@ -15973,7 +16241,7 @@ msgstr ""
 #. module: base
 #: view:res.partner:0
 msgid "Fax:"
-msgstr ""
+msgstr "Fax:"
 
 #. module: base
 #: selection:ir.ui.view,type:0
@@ -16539,7 +16807,7 @@ msgstr "Rendszer konfigurálása kész"
 #. module: base
 #: field:ir.attachment,db_datas:0
 msgid "Database Data"
-msgstr ""
+msgstr "Adatbázis adat"
 
 #. module: base
 #: model:res.country,name:base.tc
@@ -16785,7 +17053,7 @@ msgstr "Thaiföld"
 #. module: base
 #: model:ir.model,name:base.model_change_password_wizard
 msgid "Change Password Wizard"
-msgstr ""
+msgstr "Jelszó megváltoztatás varázsló"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_account_voucher
@@ -16943,7 +17211,7 @@ msgstr "Íráshoz alkamaz"
 #. module: base
 #: field:ir.ui.menu,parent_left:0
 msgid "Parent Left"
-msgstr ""
+msgstr "Bal szülő"
 
 #. module: base
 #: model:ir.module.module,description:base.module_document_page
@@ -17059,6 +17327,9 @@ msgid ""
 "    - Regional State listings\n"
 "    "
 msgstr ""
+"\n"
+"Etióp lokalizáció\n"
+"    "
 
 #. module: base
 #: view:res.users:0
@@ -17889,7 +18160,7 @@ msgstr "Kanada - Könyvelés"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_co
 msgid "Colombian - Accounting"
-msgstr ""
+msgstr "Kolumbiai - könyvelés"
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_voucher

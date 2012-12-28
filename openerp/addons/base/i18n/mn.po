@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-server\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:04+0000\n"
-"PO-Revision-Date: 2012-12-25 02:46+0000\n"
+"PO-Revision-Date: 2012-12-27 14:12+0000\n"
 "Last-Translator: gobi <Unknown>\n"
 "Language-Team: Mongolian <mn@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-26 05:17+0000\n"
+"X-Launchpad-Export-Date: 2012-12-28 05:35+0000\n"
 "X-Generator: Launchpad (build 16378)\n"
 
 #. module: base
@@ -7961,6 +7961,25 @@ msgid ""
 "* In a module, so that administrators and users of OpenERP who do not\n"
 "  need or want an online import can avoid it being available to users.\n"
 msgstr ""
+"\n"
+"OpenERP-н шинэ өргөтгөсөн файл импорт\n"
+"======================================\n"
+"\n"
+"openerp-н файл импортыг дахин хэрэгжүүлсэн:\n"
+"\n"
+"* Сервер тал дээр, өмнөх систем дээр ихэнх логикийг клиент тал дээр оруулсан "
+"нь давхардсан (клиент хооронд) хүч хөдөлмөр болж байсан. Клиентгүйгээр (Шууд "
+"RPC холболт болон бусад хэлбэрийн автоматжуулалт) хэрэглэхэд маш төвөгтэй "
+"байсан. Түүнчлэн импорт/экспорт нь гурваас олон төсөл дамжсан тохиолдолд маш "
+"төвөгтэй болж байв.\n"
+"\n"
+"* Илүү өргөтгөсөн аргачлалаар, хэрэглэгчид болон харилцагчид өөрсдийн "
+"хэрэглэх өөр форматаас (тухайлбал OpenDocument файлууд) импортлох боломжтой "
+"бөгөөд энэ нь өөрсдийн өгөгдлийг боловсруулах ажлын урсгалыг илүү хялбар "
+"болгож өгдөг.\n"
+"\n"
+"* Модуль дотор, Файл импортлох шаардлагагүй OpenERP-н администратор болон "
+"хэрэглэгчидэд үүнийг нээлттэй байлгах явдлаас зайлсхийх хэрэгтэй.\n"
 
 #. module: base
 #: selection:res.currency,position:0
@@ -7989,7 +8008,7 @@ msgstr "хэрэглэгч нь ажилтнуудын үүсгэсэн бари
 #. module: base
 #: field:ir.ui.menu,needaction_enabled:0
 msgid "Target model uses the need action mechanism"
-msgstr ""
+msgstr "Зорилтот модель нь үйлдэл шаардах механизмыг хэрэглэж байна"
 
 #. module: base
 #: help:ir.model.fields,relation:0
@@ -8120,6 +8139,16 @@ msgid ""
 "their status quickly as they evolve.\n"
 "    "
 msgstr ""
+"\n"
+"Төсөлд зориулсан Асуудал/Алдааны хөтлөх менежмент\n"
+"=========================================\n"
+"Энэ аппликэйшн нь төсөлд учирах асууудлууд буюу системийн алдаа, "
+"үйлчлүүлэгчийн гомдол, материалын эвдрэл гэх мэтийг  менежмент хийх "
+"боломжийг олгодог.\n"
+"\n"
+"Энэ нь менежер асуудлыг хурдан шалгаж, хариуцагчийг томилж, цаашид төлөв "
+"дээр үндэслэн шийдвэр гаргах боломжийг олгодог.\n"
+"    "
 
 #. module: base
 #: field:ir.model.access,perm_create:0
@@ -8146,6 +8175,19 @@ msgid ""
 "up a management by affair.\n"
 "    "
 msgstr ""
+"\n"
+"Энэ модуль нь цагийн хуудсын системийг хэрэгжүүлдэг.\n"
+"==========================================\n"
+"\n"
+"Ажилтан бүр төслүүд дээр зарцуулсан цагаа бөглөж, хөтлөх боломжтой.\n"
+"Төсөл гэдэг нь шинжилгээний данс бөгөөд төсөл дээр зарцуулсан цаг нь "
+"шинжилгээний дансын өртөг болно.\n"
+"\n"
+"Цаг, ажилтны бүртгэл хяналтаас маш олон тайланг харах боломжтой.\n"
+"\n"
+"Энэ нь өртөгийн дансны модультай бүрэн уялдсан. Энэ үйл ажиллагааны "
+"менежментийг зохицуулах боломжийг олгоно.\n"
+"    "
 
 #. module: base
 #: field:res.bank,state:0
@@ -8162,7 +8204,7 @@ msgstr "Хуулбар"
 #. module: base
 #: field:ir.model.data,display_name:0
 msgid "Record Name"
-msgstr ""
+msgstr "Бичлэгийн Нэр"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_actions_client
@@ -8178,7 +8220,7 @@ msgstr "Британий энэтхэгийн далайн нутаг"
 #. module: base
 #: model:ir.actions.server,name:base.action_server_module_immediate_install
 msgid "Module Immediate Install"
-msgstr ""
+msgstr "Модулийг Даруй Суулгах"
 
 #. module: base
 #: view:ir.actions.server:0
@@ -8228,7 +8270,7 @@ msgstr "Орчуулагдах"
 #. module: base
 #: help:base.language.import,code:0
 msgid "ISO Language and Country code, e.g. en_US"
-msgstr ""
+msgstr "ISO Хэл болон Улсын код, ж: en_US"
 
 #. module: base
 #: model:res.country,name:base.vn
@@ -8300,7 +8342,7 @@ msgstr "Олон баримтад."
 #: view:res.users:0
 #: view:wizard.ir.model.menu.create:0
 msgid "or"
-msgstr ""
+msgstr "эсвэл"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_accountant
@@ -8328,11 +8370,22 @@ msgid ""
 "trigger an automatic reminder email.\n"
 "    "
 msgstr ""
+"\n"
+"Энэ модуль нь үйлдлийн дүрмийг дурын обьект дээр үүсгэх боломжийг олгодог.\n"
+"============================================================\n"
+"\n"
+"Төрөл бүрийн дэлгэцүүдэд үйлдлүүдийг автоматаар ажиллуулахдаа автомат "
+"үйлдлүүдийг ашигла.\n"
+"\n"
+"Жишээ: тодорхой хэрэглэгчийн үүсгэсэн сэжим нь тодорхой борлуулалтын багт "
+"хуваарилагддаг, эсвэл 14 хоносон боломжийн хувьд автоматаар сануулга имэйл "
+"илгээдэг зэрэг үйлдлийг автоматжуулж болох юм.\n"
+"    "
 
 #. module: base
 #: field:res.partner,function:0
 msgid "Job Position"
-msgstr ""
+msgstr "Албан тушаал"
 
 #. module: base
 #: view:res.partner:0
@@ -8374,7 +8427,7 @@ msgstr "Хойд марианы арлууд"
 #. module: base
 #: field:change.password.user,user_login:0
 msgid "User Login"
-msgstr ""
+msgstr "Хэрэглэгч Нэвтрэх"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_hn
@@ -8429,6 +8482,26 @@ msgid ""
 "      are scheduled with taking the phase's start date.\n"
 "    "
 msgstr ""
+"\n"
+"Урт Хугацааны Төслийн Менежментийн модуль нь төлөвлөлт, цагалбар, нөөц "
+"хуваарьлалтыг хянаж хөтөлдөг.\n"
+"============================================================================="
+"==============\n"
+"\n"
+"Онцлог, боломж\n"
+"--------\n"
+"    * Том төслийг менеж хийдэг.\n"
+"    * Төслийн төрөл бүрийн шатыг тодорхойлдог. \n"
+"    * Шатын хуанлын цагалбарыг тооцоолох: Өгөгдсөн төслийн ноорог, нээлттэй, "
+"хүлээгдэж байгаа шатуудын эхлэх дуусах огноог тооцоолно. \n"
+"      Хэрэв төсөл өгөгдөөгүй байвал бүх төслүүдийн шатуудын хувьд "
+"тооцоолно.\n"
+"    * Даалгаврын цаглабарыг тооцоолох: Энэ төслийн шатын цагалбар "
+"тооцоолохтой ижил ажиллана. Харин бүх ноорог, нээлттэй, хүлээгдэж байгаа "
+"даалгавруудын хувьд тооцоолно.\n"
+"    * Даалгаврын Цагалбар: Бүх ноорог, нээлттэй, хүлээгдэж байгаа "
+"даалгавруудын эхлэх огноо нь шатуудын эхлэх огнооноос эхлэн хуваарьлагдана\n"
+"    "
 
 #. module: base
 #: code:addons/orm.py:2020
@@ -8453,7 +8526,7 @@ msgstr ""
 #. module: base
 #: model:res.partner.category,name:base.res_partner_category_14
 msgid "Manufacturer"
-msgstr ""
+msgstr "Үйлдвэрлэгч"
 
 #. module: base
 #: help:res.users,company_id:0
@@ -8534,6 +8607,10 @@ msgid ""
 "use the same timezone that is otherwise used to pick and render date and "
 "time values: your computer's timezone."
 msgstr ""
+"Харилцагчийн цагийн бүс, хэвлэх тайлан дотор зөв огноо болон цагийг гаргахад "
+"хэрэглэгддэг. Энэ талбарын утгыг тааруулах явдал нь маш чухал. Ижил цагийн "
+"бүсийг хэрэглэх нь зохимжтой бөгөөд үгүй тохиолдолд огноо, цагийг харуулахад "
+"хэрэглэдэнэ: таны компьютерийн цагийн бүс"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_analytic_default
@@ -8548,7 +8625,7 @@ msgstr "mdx"
 #. module: base
 #: view:ir.cron:0
 msgid "Scheduled Action"
-msgstr ""
+msgstr "Товлосон Үйлдэл"
 
 #. module: base
 #: model:res.country,name:base.bi
@@ -8588,6 +8665,12 @@ msgid ""
 "=============\n"
 "    "
 msgstr ""
+"\n"
+"Энэ модуль нь үйл явдал болон порталь модулиуд суусан байвал үйл явдал меню "
+"болон зарим боломжийг таны портал руу нэмдэг.\n"
+"============================================================================="
+"=============\n"
+"    "
 
 #. module: base
 #: help:ir.sequence,number_next:0
@@ -8602,7 +8685,7 @@ msgstr ""
 #. module: base
 #: view:ir.rule:0
 msgid "Rule Definition (Domain Filter)"
-msgstr ""
+msgstr "Дүрмийн тодорхойлолт (Дөмэйн шүүлтүүр)"
 
 #. module: base
 #: selection:ir.actions.act_url,target:0
@@ -8612,7 +8695,7 @@ msgstr "Энэ цонх"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_portal_anonymous
 msgid "Anonymous portal"
-msgstr ""
+msgstr "Нэр үгүй порталь"
 
 #. module: base
 #: field:base.language.export,format:0
@@ -8667,7 +8750,7 @@ msgstr "Нууц үг"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_portal_claim
 msgid "Portal Claim"
-msgstr ""
+msgstr "Порталь Гомдол"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_pe
@@ -8681,6 +8764,9 @@ msgid ""
 "Allow users to login through OAuth2 Provider.\n"
 "=============================================\n"
 msgstr ""
+"\n"
+"OAuth2 үйлчилгээ үзүүлэгчээр логин хийх боломжийг хэрэглэгчдэд олгоно.\n"
+"=============================================\n"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_model_fields
@@ -8735,7 +8821,7 @@ msgstr "Хайлтын дэлгэц"
 #. module: base
 #: help:res.users,partner_id:0
 msgid "Partner-related data of the user"
-msgstr ""
+msgstr "Хэрэглэгчийн харилцагчтай холбоотой өгөгдөл"
 
 #. module: base
 #: model:ir.module.module,description:base.module_crm_todo
@@ -8745,6 +8831,10 @@ msgid ""
 "==========================================\n"
 "    "
 msgstr ""
+"\n"
+"CRM сэжим, боломжийн хийх ажлын жагсаалт.\n"
+"==========================================\n"
+"    "
 
 #. module: base
 #: view:ir.mail_server:0
@@ -8846,6 +8936,33 @@ msgid ""
 "(technically: Server Actions) to be triggered for each incoming mail.\n"
 "    "
 msgstr ""
+"\n"
+"Ирж байгаа имэйлийг POP / IMAP серверүүдээс хүлээж авдаг.\n"
+"=============================================\n"
+"\n"
+"POP/IMAP имэйлийн параметрүүдийг тохируулаад энэ хаягт ирж байгаа "
+"имэйлүүдийг OpenERP-руу татаж авдаг. Бүх POP3/IMAP серверүүд дэмжигддэг. "
+"SSL/TLS серверүүд ч дэмжигдэнэ.\n"
+"\n"
+"Энэ нь имэйл оролцсон OpenERP-н маш олон ажлын урсгал дээр төрөл бүрийн "
+"баримтыг үүсгэж болно. Тухайлбал:\n"
+"\n"
+" * CRM Сэжим/Боломж\n"
+" * CRM Гомдол\n"
+" * Төслийн асуудал\n"
+" * Төслийн даалгавар\n"
+" * Хүний Нөөц Бүрдүүлэлт (Өргөдөл гаргагч)\n"
+" * гм.\n"
+"\n"
+"Өөрт хэрэг болох модулийг суулгаад баримтын төрлийг (Сэжим, Төслийн асуудал, "
+"гм) имэйл хаягуудад оноож өгнө. Эдгээр хаягт ирсэн имэйлүүд нь харгалзах "
+"баримтуудыг автоматаар үүсгэнэ. Эдгээрт шууд OpenERP дотроосоо хариулж болох "
+"бөгөөд хариу нь эргээд энэ баримт дээрээ ирж бүх харилцаа нь ярилцлага "
+"байдлаар бүгд нэг дор хөтлөгддөг.\n"
+"\n"
+"Бүр цаашилбал өөрийн тодорхойлсон үйдлийг (техник түвшинд бол: Серверийн "
+"Үйлдлүүд) ирж байгаа имэйл дээр ажиллуулж болно.\n"
+"    "
 
 #. module: base
 #: field:res.currency,rounding:0
@@ -8860,7 +8977,7 @@ msgstr "Канад"
 #. module: base
 #: view:base.language.export:0
 msgid "Launchpad"
-msgstr ""
+msgstr "Launchpad"
 
 #. module: base
 #: help:res.currency.rate,currency_rate_type_id:0
@@ -8919,12 +9036,12 @@ msgstr "Зохиомол талбар"
 #. module: base
 #: model:ir.module.module,summary:base.module_account_accountant
 msgid "Financial and Analytic Accounting"
-msgstr ""
+msgstr "Санхүү болон Шинжилгээний Санхүү"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_portal_project
 msgid "Portal Project"
-msgstr ""
+msgstr "Порталь Төсөл"
 
 #. module: base
 #: model:res.country,name:base.cc
@@ -8942,7 +9059,7 @@ msgstr "init"
 #: view:res.partner:0
 #: field:res.partner,user_id:0
 msgid "Salesperson"
-msgstr ""
+msgstr "Худалдагч"
 
 #. module: base
 #: view:res.lang:0
@@ -8957,7 +9074,7 @@ msgstr "Банкны төрөл талбарууд"
 #. module: base
 #: constraint:ir.rule:0
 msgid "Rules can not be applied on Transient models."
-msgstr ""
+msgstr "Завсрын модель дээр дүрэм хэрэглэгдэх боломжгүй"
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -9010,7 +9127,7 @@ msgstr "SMTP нэвтрэх заавал биш нууц үг"
 #: code:addons/base/ir/ir_model.py:720
 #, python-format
 msgid "Sorry, you are not allowed to modify this document."
-msgstr ""
+msgstr "Уучлаарай, та энэ баримтыг засварлах зөвшөөрөл байхгүй"
 
 #. module: base
 #: code:addons/base/res/res_config.py:349
@@ -9049,7 +9166,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_base_import
 msgid "Base import"
-msgstr ""
+msgstr "Суурь импорт"
 
 #. module: base
 #: report:ir.module.reference:0
@@ -9101,7 +9218,7 @@ msgstr "Франц хэл (CH) / Français (CH)"
 #. module: base
 #: model:res.partner.category,name:base.res_partner_category_13
 msgid "Distributor"
-msgstr ""
+msgstr "Түгээгч"
 
 #. module: base
 #: help:ir.actions.server,subject:0
@@ -9193,6 +9310,43 @@ msgid ""
 "of creation of distribution models.\n"
 "        "
 msgstr ""
+"\n"
+"Энэ модуль нь ерөнхий журналын дагууд хэд хэдэн шинжилгээний төлөвлөгөөг "
+"хэрэглэх боломжийг олгодог.\n"
+"============================================================================="
+"======\n"
+"\n"
+"Энд нэг  нэхэмжлэл болон бичилт батлагдахад олон шинжилгээний мөр үүсдэг.\n"
+"\n"
+"Тухайлбал, дараах шинжилгээний бүтэцийг тодорхойлж болно:\n"
+"  Төслүүд\n"
+"      Төсөл 1\n"
+"          Дэд төсөл 1.1\n"
+"          Дэд төсөл 1.2\n"
+"\n"
+"      Төсөл 2\n"
+"  Борлуулалтын ажилтан\n"
+"      Eric\n"
+"      Fabien\n"
+"\n"
+"Энд бидэнд хөр төлөвлөгөө байна: Төслүүд болон Борлуулалтын ажилтан. "
+"Нэхэмжлэлийн мөр нь шинжилгээний бичилтийг хоёр төлөвлөгөөнд хоюуланд нь "
+"бичиж чаддаг байх ёстой. : Дэд төсөл 1.1 болон\n"
+"Fabien. Дүн нь мөн хоёр хуваагдаж чаддаг байх ёстой. Дараах жишээнд хоёр дэд "
+"төсөлд нөлөөлдөг боловч нэг борлуулалтын ажилтанд холбогдох тохиолдлыг "
+"харууллаа:\n"
+"\n"
+"Төлөвлөгөө1:\n"
+"    Дэд төсөл 1.1 : 50%\n"
+"    Дэд төсөл 1.2 : 50%\n"
+"Төлөвлөгөө2:\n"
+"    Eric: 100%\n"
+"\n"
+"Тэгэхээр энэ нэхэмжлэл батлагдахад нэг бичилтэнд 3 шинжилгээний мөр үүсэх "
+"ёстой. \n"
+"Шинжилгээний төлөвлөгөө нь үүсэх үед нь тархах дээд доод хязгаарын хувийг "
+"хянана.\n"
+"        "
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_sequence
@@ -9202,7 +9356,7 @@ msgstr "Бичлэгүүдийн Дарааллын Дугаарлалт"
 #. module: base
 #: view:base.language.export:0
 msgid "POEdit"
-msgstr ""
+msgstr "POEdit"
 
 #. module: base
 #: view:ir.values:0
@@ -9212,12 +9366,12 @@ msgstr "Клиеитийн үйлдэл"
 #. module: base
 #: field:res.partner.bank.type,field_ids:0
 msgid "Type Fields"
-msgstr ""
+msgstr "Төрөл Талбарууд"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_hr_recruitment
 msgid "Jobs, Recruitment, Applications, Job Interviews"
-msgstr ""
+msgstr "Ажлууд, Ажилтан авах, Горилогчид, Ажлын ярилцлага"
 
 #. module: base
 #: code:addons/base/module/module.py:540
