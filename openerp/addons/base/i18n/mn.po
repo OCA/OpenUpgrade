@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-server\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:04+0000\n"
-"PO-Revision-Date: 2012-12-30 07:59+0000\n"
+"PO-Revision-Date: 2013-01-02 02:10+0000\n"
 "Last-Translator: gobi <Unknown>\n"
 "Language-Team: Mongolian <mn@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-31 05:15+0000\n"
+"X-Launchpad-Export-Date: 2013-01-02 05:24+0000\n"
 "X-Generator: Launchpad (build 16378)\n"
 
 #. module: base
@@ -10721,6 +10721,15 @@ msgid ""
 "If set to true it allows user to cancel entries & invoices.\n"
 "    "
 msgstr ""
+"\n"
+"Санхүүгийн бичилтийг цуцлах боломжийг олгодог.\n"
+"====================================\n"
+"\n"
+"Энэ модуль нь 'Бичилтийг цуцлахыг зөвшөөрөх' талбарыг журналийн бичилтийн "
+"маягт харагдац дээр нэмдэг.\n"
+"Хэрэв үнэн бол хэрэглэгчийг бичилт болон нэхэмжлэлийг цуцлах боломжийг "
+"олгодог.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_plugin
@@ -10738,7 +10747,7 @@ msgstr "Модел"
 #: code:addons/base/module/module.py:500
 #, python-format
 msgid "The `base` module cannot be uninstalled"
-msgstr ""
+msgstr "`base` модулийн суулгацыг арилгах боломжгүй"
 
 #. module: base
 #: code:addons/base/ir/ir_cron.py:247
@@ -10765,7 +10774,7 @@ msgstr "osv_memory.autovacuum"
 #: code:addons/base/ir/ir_model.py:721
 #, python-format
 msgid "Sorry, you are not allowed to create this kind of document."
-msgstr ""
+msgstr "Уучлаарай, та энэ төрөлийн баримт үүсгэх зөвшөөрөл байхгүй байна."
 
 #. module: base
 #: field:base.language.export,lang:0
@@ -10807,7 +10816,7 @@ msgstr "%H - Цаг (24-цагаарх) [00,23]."
 #. module: base
 #: field:ir.model.fields,on_delete:0
 msgid "On Delete"
-msgstr ""
+msgstr "Устгахад"
 
 #. module: base
 #: code:addons/base/ir/ir_model.py:342
@@ -10842,6 +10851,12 @@ msgid ""
 "=======================================================\n"
 "    "
 msgstr ""
+"\n"
+"Энэ модуль нь хэрэв crm болон portal суулгагдсан байвал холбогч хуудсыг "
+"(сэжимийг илгээх үед холбогч маягтын тусламжтайгаар) порталь руу нэмдэг.\n"
+"============================================================================="
+"=======================================================\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_us
@@ -10868,7 +10883,7 @@ msgstr "Цуцлах"
 #: code:addons/orm.py:1506
 #, python-format
 msgid "Unknown database identifier '%s'"
-msgstr ""
+msgstr "Өгөгдлийн баазын үл мэдэгдэх хувийн нэр '%s'"
 
 #. module: base
 #: selection:base.language.export,format:0
@@ -10883,6 +10898,10 @@ msgid ""
 "=========================\n"
 "\n"
 msgstr ""
+"\n"
+"Openerp веб диаграмм харагдац.\n"
+"=========================\n"
+"\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_ch
@@ -10954,12 +10973,33 @@ msgid ""
 "Accounting/Invoicing settings.\n"
 "    "
 msgstr ""
+"\n"
+"Энэ модуль нь борлуулалт болон портал модулиуд суулгагдмагц Sales менюг "
+"порталь нэмдэг.\n"
+"============================================================================="
+"=========\n"
+"\n"
+"Энэ модулийг суулгасан дараагаар портал хэрэглэгчид дараах менюгээр "
+"дамжуулан өөрсдийн баримтууд руу хандах боломжтой:\n"
+"\n"
+"  - Үнийн санал\n"
+"  - Борлуулалтын захиалга\n"
+"  - Хүргэлтийн захиалга\n"
+"  - Бараанууд (зөвхөн нийтийнх)\n"
+"  - Нэхэмжлэл\n"
+"  - Төлбөр/Буцаалт\n"
+"\n"
+"Хэрэв онлайн төлбөр тохируулагдсан бол портал хэрэглэгчид төлөгдөөгүй "
+"өөрсдийн Борлуулалтын захиалга, нэхэмжлэл зэрэгийг төлөх мөн боломжтой. "
+"Paypal анхныхаараа байдаг, ердөө Санхүү/Нэхэмжлэлийн тохиргоо дотор Paypal "
+"дансыг хялбархнаар тохируулах боломжтой.\n"
+"    "
 
 #. module: base
 #: code:addons/base/ir/ir_fields.py:316
 #, python-format
 msgid "external id"
-msgstr ""
+msgstr "гадаад id"
 
 #. module: base
 #: view:ir.model:0
@@ -11133,7 +11173,7 @@ msgstr "Египет"
 #. module: base
 #: view:ir.attachment:0
 msgid "Creation"
-msgstr ""
+msgstr "Үүсгэх"
 
 #. module: base
 #: help:ir.actions.server,model_id:0
@@ -11210,7 +11250,7 @@ msgstr ""
 #. module: base
 #: field:ir.attachment,store_fname:0
 msgid "Stored Filename"
-msgstr ""
+msgstr "Хадгалсан файлын нэр"
 
 #. module: base
 #: field:res.partner,use_parent_address:0
