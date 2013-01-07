@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:04+0000\n"
-"PO-Revision-Date: 2013-01-06 01:09+0000\n"
+"PO-Revision-Date: 2013-01-06 10:00+0000\n"
 "Last-Translator: Thorsten Vocks (OpenBig.org) <thorsten.vocks@big-"
 "consulting.net>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-01-06 05:30+0000\n"
-"X-Generator: Launchpad (build 16393)\n"
+"X-Launchpad-Export-Date: 2013-01-07 05:44+0000\n"
+"X-Generator: Launchpad (build 16402)\n"
 
 #. module: crm
 #: view:crm.lead.report:0
@@ -928,7 +928,7 @@ msgstr "Ausgehende Anrufe"
 #. module: crm
 #: view:crm.lead:0
 msgid "Mark Won"
-msgstr "Markiere als erfolgreich angeschlossen"
+msgstr "Erfolgreich verkauft"
 
 #. module: crm
 #: model:ir.filters,name:crm.filter_usa_lead
@@ -938,7 +938,7 @@ msgstr "Interessenten aus der USA"
 #. module: crm
 #: view:crm.lead:0
 msgid "Mark Lost"
-msgstr "Markiere als nicht erfolgreich abgeschlossen"
+msgstr "Nicht erfolgreich verkauft"
 
 #. module: crm
 #: model:ir.filters,name:crm.filter_draft_lead
@@ -1195,6 +1195,19 @@ msgid ""
 "          </p>\n"
 "        "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"          Klicken Sie zur Erstellung einer neuen Chance.\n"
+"          </p><p>\n"
+"          OpenERP ermöglicht die Verfolgung aller Vertriebsaktionen und\n"
+"          die vorausschauende Planung potenzieller Umsätze.\n"
+"          </p><p>\n"
+"          Sie können Termine und Anrufe für Ihre Chancen einplanen, "
+"konkrete\n"
+"          Angebote ableiten, beliebige Dokumente speichern, Nachrichten "
+"senden,\n"
+"          empfangen und verfolgen, etc. \n"
+"          </p>\n"
+"        "
 
 #. module: crm
 #: field:crm.segmentation,partner_id:0
@@ -1888,7 +1901,7 @@ msgstr "Erwarteter Umsatz"
 #. module: crm
 #: view:crm.lead:0
 msgid "Referrer"
-msgstr "Wiederkehrer"
+msgstr "Hinweisgeber"
 
 #. module: crm
 #: help:crm.lead,type:0
@@ -2452,7 +2465,7 @@ msgstr ""
 #. module: crm
 #: field:crm.case.stage,fold:0
 msgid "Fold by Default"
-msgstr "Verzeichnis als Standard"
+msgstr "Zugeklappt als Standard"
 
 #. module: crm
 #: field:crm.case.stage,state:0
@@ -2488,7 +2501,7 @@ msgstr "Bestätigt"
 #. module: crm
 #: model:ir.model,name:crm.model_crm_partner_binding
 msgid "Handle partner binding or generation in CRM wizards."
-msgstr ""
+msgstr "Partner verknüpfen oder erstellen in CRM Assistenten"
 
 #. module: crm
 #: model:ir.actions.act_window,name:crm.act_oppor_stage_user
@@ -2540,16 +2553,17 @@ msgid ""
 "        "
 msgstr ""
 "<p class=\"oe_view_nocontent_create\">\n"
-"            Klicken Sie zur Erstellung eines noch nicht qualifizierten "
-"Interessenten.\n"
+"            Klicken Sie zur Erstellung eines noch zu qualifizierenden "
+"potenziellen Interessenten.\n"
 "          </p><p>\n"
-"            Nutzen Sie die Interessenten als zusätzliche vorgelagerte "
-"Qualifizierung Ihrer Chancen.\n"
+"            Nutzen Sie Interessenten als zusätzliche vorgelagerte "
+"Qualifizierung Ihrer Chancen oder Kunden.\n"
 "            Es kann sich dabei konkret um eine Visitenkarte handeln, ein "
 "ausgefülltes Webformular,\n"
-"            oder eine Datei mit noch unqualifizierten Daten. Sobald dann "
-"eine Qualifizierung erfolgt ist, \n"
-"            kann dann der Vorgang in eine Chance umgewandelt werden.\n"
+"            oder eine Datei mit noch unqualifizierten Adressdaten. Sobald "
+"dann eine weitere Qualifizierung\n"
+"            erfolgt ist, kann der Interessent in eine Chance umgewandelt "
+"werden.\n"
 "          </p>\n"
 "        "
 
@@ -2710,7 +2724,7 @@ msgstr "August"
 #: model:mail.message.subtype,name:crm.mt_lead_lost
 #: model:mail.message.subtype,name:crm.mt_salesteam_lead_lost
 msgid "Opportunity Lost"
-msgstr "Verlorene Chance"
+msgstr "Chance ohne Verkauf"
 
 #. module: crm
 #: field:crm.lead.report,deadline_month:0
@@ -2809,7 +2823,7 @@ msgstr "Aufgezeichete Anrufe"
 #: model:mail.message.subtype,name:crm.mt_lead_won
 #: model:mail.message.subtype,name:crm.mt_salesteam_lead_won
 msgid "Opportunity Won"
-msgstr "Gewonnene Chance"
+msgstr "Chance mit Verkauf"
 
 #. module: crm
 #: model:ir.actions.act_window,name:crm.crm_case_section_act_tree
@@ -3195,7 +3209,7 @@ msgstr "Newsletter"
 #. module: crm
 #: model:mail.message.subtype,name:crm.mt_salesteam_lead_stage
 msgid "Opportunity Stage Changed"
-msgstr ""
+msgstr "Neue Stufe bei Chance erreicht"
 
 #. module: crm
 #: model:ir.actions.act_window,help:crm.crm_lead_stage_act
