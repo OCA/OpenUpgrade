@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: openobject-server\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:04+0000\n"
-"PO-Revision-Date: 2013-01-05 12:06+0000\n"
+"PO-Revision-Date: 2013-01-06 20:01+0000\n"
 "Last-Translator: Fekete Mihai <mihai@erpsystems.ro>\n"
 "Language-Team: Romanian <ro@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-01-06 05:30+0000\n"
-"X-Generator: Launchpad (build 16393)\n"
+"X-Launchpad-Export-Date: 2013-01-07 05:43+0000\n"
+"X-Generator: Launchpad (build 16402)\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_check_writing
@@ -13018,6 +13018,32 @@ msgid ""
 "    Reporting / Accounting / **Follow-ups Analysis\n"
 "\n"
 msgstr ""
+"\n"
+"Modul pentru automatizarea scrisorilor pentru facturi neplatite, cu memento-"
+"uri multi-nivel.\n"
+"=========================================================================\n"
+"\n"
+"Puteti defini niveluri multiple de memento-uri prin meniul:\n"
+"---------------------------------------------------------------\n"
+"    Configurare / Niveluri Follow-up\n"
+"    \n"
+"Odata definit, puteti tipari automat memento-uri in fiecare zi pur si simplu "
+"facand click pe meniul:\n"
+"-----------------------------------------------------------------------------"
+"-------------------------\n"
+"    Plata Follow-Up / Trimite Email si scrisori\n"
+"\n"
+"Va genera un PDF / trimite email-uri / configureaza actiuni manuale in "
+"functie de diferitele niveluri \n"
+"ale memento-urilor definite. Puteti defini diferite politici pentru companii "
+"diferite. \n"
+"\n"
+"Observati faptul ca daca doriti sa verificati nivelul de follow-up pentru un "
+"anumit partener/inregistrare cont, o puteti face din meniul:\n"
+"-----------------------------------------------------------------------------"
+"-------------------------------------\n"
+"    Raportare / Contabilitate / ** Analiza Follow-ups\n"
+"\n"
 
 #. module: base
 #: code:addons/base/ir/ir_model.py:728
@@ -13526,7 +13552,7 @@ msgstr "Citeste Dreptul de Acces"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_analytic_user_function
 msgid "Jobs on Contracts"
-msgstr ""
+msgstr "Locuri de munca cu Contracte"
 
 #. module: base
 #: code:addons/base/res/res_lang.py:187
@@ -15295,7 +15321,7 @@ msgstr ""
 #. module: base
 #: field:ir.actions.report.xml,report_sxw:0
 msgid "SXW Path"
-msgstr ""
+msgstr "Ruta SXW"
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_asset
@@ -15312,6 +15338,17 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"Managementul activelor financiare si contabile.\n"
+"==========================================\n"
+"\n"
+"Acest modul gestioneaza avtivele detinute de o companie sau de o persoana. "
+"Va tine \n"
+"evidenta deprecierilor care au avut loc la activele respective. Si permite "
+"crearea de Miscari \n"
+"ale liniilor deprecierii.\n"
+"\n"
+"    "
 
 #. module: base
 #: field:ir.cron,numbercall:0
@@ -15328,7 +15365,7 @@ msgstr "BANCA"
 #: model:ir.module.category,name:base.module_category_point_of_sale
 #: model:ir.module.module,shortdesc:base.module_point_of_sale
 msgid "Point of Sale"
-msgstr ""
+msgstr "Punct de Vanzare"
 
 #. module: base
 #: model:ir.module.module,description:base.module_mail
@@ -15364,6 +15401,37 @@ msgid ""
 "email is actually sent.\n"
 "    "
 msgstr ""
+"\n"
+"Retele Sociale orientate spre afaceri\n"
+"===================================\n"
+"Modulul Retele Sociale furnizeaza un strat de abstractizare unificat de "
+"retele sociale, permitand aplicatiilor sa afiseze un istoric\n"
+"complet al conversatiilor in documente cu un sistem complet integrat de "
+"gestionare a email-urilor si mesajelor.\n"
+"\n"
+"Le permite utilizatorilor sa citeasca si sa trimita atat mesaje cat si email-"
+"uri. De asemenea, ofera o pagina avans combinata cu un mecanism de abonare "
+"care permite urmarirea documentelor si mentinerea constanta la curent cu "
+"cele mai recente stiri.\n"
+"\n"
+"Caracteristici Principale\n"
+"-------------\n"
+"* Istoric nou si reinnoit al conversatiilor pentru orice document OpenERP "
+"care poate functiona ca subiect de discutie\n"
+"* Mecanism de abonare care va fi actualizat cu mesaje noi despre documente "
+"interesante\n"
+"* Pagina avans unificata pentru a vedea mesajele recente si activitatea din "
+"documentele urmarite\n"
+"* Comunicarea utilizatorului prin pagina avans\n"
+"* Design discutii filetate in documente\n"
+"* Se bazeaza pe serverul global de iesire email-uri - un sistem integrat de "
+"management al email-urilor - care permite trimiterea de email-uri cu un "
+"motor de procesare configurabil bazat pe un programator\n"
+"* Include un asistent de compozitie email-uri generic si extensibil, care se "
+"poate transforma intr-un asistent de trimitere email-uri in masa, si este "
+"capabil sa interpreteze *expresii substituente* simple care vor fi inlocuite "
+"cu date dinamice atunci cand fiecare email este trimis.\n"
+"    "
 
 #. module: base
 #: help:ir.actions.server,sequence:0
@@ -15404,6 +15472,12 @@ msgid ""
 "Provide Templates for Chart of Accounts, Taxes for Uruguay.\n"
 "\n"
 msgstr ""
+"\n"
+"Plan de Conturi General.\n"
+"==========================\n"
+"\n"
+"Furnizeaza Sabloane pentru Planul de Conturi, Taxe pentru Uruguay.\n"
+"\n"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_gr
@@ -15489,6 +15563,27 @@ msgid ""
 "actually performing those tasks.\n"
 "    "
 msgstr ""
+"\n"
+"Implementeaza conceptele metodologiei \"Getting Things Done\" (Cum sa facem "
+"lucrurile) \n"
+"===========================================================\n"
+"\n"
+"Acest modul implementeaza o lista simpla si personala cu ceea ce trebuie "
+"efectuat bazata pe sarcini. Adauga o lista editabila cu sarcini simplificate "
+"la minim, campuri obligatorii in aplicatia proiectului.\n"
+"\n"
+"Lista cu ceea ce trebuie efectuat se bazeaza pe metodologia GTD. Aceasta "
+"metodologie folosita in lumea intreaga este utilizata pentru imbunatatirea "
+"managementului timpului personal.\n"
+"\n"
+"Getting Things Done (prescurtat GTD) este o metoda de management al actiunii "
+"creata de David Allen, si descrisa intr-o carte cu acelasi nume.\n"
+"\n"
+"GTD se bazeaza pe principiul ca o persoana trebuie sa isi mute sarcinile din "
+"minte inregistrandu-le extern. In acest fel, mintea este eliberata de "
+"sarcina de a tine minte tot ceea ce trebuie efectuat, si se poate concentra "
+"pe efectuarea efectiva a acelor sarcini.\n"
+"    "
 
 #. module: base
 #: field:res.users,menu_id:0
@@ -15529,7 +15624,7 @@ msgstr "Filtrarea documentelor mele"
 #. module: base
 #: model:ir.module.module,summary:base.module_project_gtd
 msgid "Personal Tasks, Contexts, Timeboxes"
-msgstr ""
+msgstr "Sarcini, Contexte, Casute temporale personale"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_cr
@@ -15551,6 +15646,23 @@ msgid ""
 "please go to http://translations.launchpad.net/openerp-costa-rica.\n"
 "    "
 msgstr ""
+"\n"
+"Plan de conturi pentru Costa Rica.\n"
+"=================================\n"
+"\n"
+"Include:\n"
+"---------\n"
+"    * tip.cont\n"
+"    * sablon.cont.cont\n"
+"    * sablon.taxa.cont\n"
+"    * sablon.cod.fiscal.cont\n"
+"    * sablon.grafic.cont\n"
+"\n"
+"Totul este in limba spaniola, cu traducere in engleza. Sunt binevenite si "
+"alte traduceri,\n"
+"va rugam sa mergeti la http://translations.launchpad.net/openerp-costa-"
+"rica.\n"
+"    "
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_partner_supplier_form
@@ -15577,7 +15689,7 @@ msgstr "Gabon"
 #. module: base
 #: model:ir.module.module,summary:base.module_stock
 msgid "Inventory, Logistic, Storage"
-msgstr ""
+msgstr "Inventar, Logistica, Depozitare"
 
 #. module: base
 #: view:ir.actions.act_window:0
@@ -15631,7 +15743,7 @@ msgstr "Noua Caledonie (Franceza)"
 #. module: base
 #: field:ir.model,osv_memory:0
 msgid "Transient Model"
-msgstr ""
+msgstr "Model tranzitoriu"
 
 #. module: base
 #: model:res.country,name:base.cy
@@ -15641,7 +15753,7 @@ msgstr "Cipru"
 #. module: base
 #: field:res.users,new_password:0
 msgid "Set Password"
-msgstr ""
+msgstr "Configureaza Parola"
 
 #. module: base
 #: field:ir.actions.server,subject:0
@@ -15669,6 +15781,22 @@ msgid ""
 "invoice and send propositions for membership renewal.\n"
 "    "
 msgstr ""
+"\n"
+"Acest modul va permite sa gestionati toate operatiunile pentru gestionarea "
+"calitatii de membru.\n"
+"=========================================================================\n"
+"\n"
+"Accepta diferite tipuri de membri:\n"
+"--------------------------------------\n"
+"    * Membru gratuit\n"
+"    * Membru asociat (de exemplu, un grup se aboneaza pentru toate "
+"filialele)\n"
+"    * Membri cotizanti\n"
+"    * Preturi speciale pentru membri\n"
+"\n"
+"Este integrat cu vanzari si contabilitate pentru a va permite sa facturati\n"
+"si sa trimiteti automat propuneri pentru reinnoirea calitatii de membru.\n"
+"    "
 
 #. module: base
 #: selection:res.currency,position:0
@@ -15689,7 +15817,7 @@ msgstr "Preferinte"
 #. module: base
 #: model:res.partner.category,name:base.res_partner_category_9
 msgid "Components Buyer"
-msgstr ""
+msgstr "Cumparator Componente"
 
 #. module: base
 #: model:ir.module.module,description:base.module_web_tests_demo
@@ -15701,6 +15829,13 @@ msgid ""
 "Test suite example, same code as that used in the testing documentation.\n"
 "    "
 msgstr ""
+"\n"
+"OpenERP Web demonstratie a unei suite de testare\n"
+"================================\n"
+"\n"
+"Exemple suita de testare, acelasi cod ca si cel folosit in documentatia de "
+"testare.\n"
+"    "
 
 #. module: base
 #: help:ir.cron,function:0
@@ -15775,7 +15910,7 @@ msgstr "Servere Iesire E-mail-uri"
 #. module: base
 #: model:ir.ui.menu,name:base.menu_custom
 msgid "Technical"
-msgstr ""
+msgstr "Tehnic"
 
 #. module: base
 #: model:res.country,name:base.cn
@@ -15842,6 +15977,20 @@ msgid ""
 "routing of the assembly operation.\n"
 "    "
 msgstr ""
+"\n"
+"Acest modul permite un proces intermediar de ridicare pentru a furniza "
+"materia prima pentru comenzile de productie.\n"
+"============================================================================="
+"====================\n"
+"\n"
+"Un exemplu de utilizare a acestui modul este gestionarea productiei "
+"efectuata de\n"
+"furnizorii dumneavoastra (sub-contractare). Pentru a obtine acest lucru, "
+"setati produsul asamblat care este\n"
+"sub-contractat pe 'Fara Ridicare Automata' si puneti licatia furnizorului "
+"in\n"
+"rutarea operatiunii de asamblare.\n"
+"    "
 
 #. module: base
 #: help:multi_company.default,expression:0
@@ -15902,11 +16051,21 @@ msgid ""
 "automatically new claims based on incoming emails.\n"
 "    "
 msgstr ""
+"\n"
+"\n"
+"Gestioneaza Reclamatile Clientilor.\n"
+"=======================\n"
+"Aceasta aplicatie va permite sa tineti evidenta revendicarilor si "
+"reclamatiilor clientilor/furnizorilor.\n"
+"\n"
+"Este complet integrat cu email gateway astfel incat puteti crea\n"
+"automat revendicari noi bazate pe email-urile primite.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_test
 msgid "Accounting Consistency Tests"
-msgstr ""
+msgstr "Teste ale Consistentei Contabile"
 
 #. module: base
 #: model:ir.module.module,description:base.module_purchase_double_validation
@@ -15920,6 +16079,14 @@ msgid ""
 "exceeds minimum amount set by configuration wizard.\n"
 "    "
 msgstr ""
+"\n"
+"Validarea dubla a achizitiilor care depasesc suma minima.\n"
+"=========================================================\n"
+"\n"
+"Acest modul modifica fluxul de lucru al achizitiilor pentru a valida "
+"achizitiile care\n"
+"depasesc numa minima setata de wizardul de configurare.\n"
+"    "
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_administration
@@ -15961,6 +16128,9 @@ msgid ""
 "128x128px image, with aspect ratio preserved. Use this field in form views "
 "or some kanban views."
 msgstr ""
+"Imagine de dimensiune medie a acestui contact. Este redimensionata automat "
+"ca o imagine de 128x128 pixeli, cu raportul aspectului pastrat. Folositi "
+"acest camp in vizualizarile formularului sau in vizualizari kanban."
 
 #. module: base
 #: view:base.update.translations:0
@@ -15999,7 +16169,7 @@ msgstr "ctiunea care va fi lansata"
 #: field:ir.model,modules:0
 #: field:ir.model.fields,modules:0
 msgid "In Modules"
-msgstr ""
+msgstr "In Module"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_contacts
@@ -16015,7 +16185,7 @@ msgstr "ir.tip.secventa"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_be_hr_payroll_account
 msgid "Belgium - Payroll with Accounting"
-msgstr ""
+msgstr "Belgia - Salarizare cu Contabilitate"
 
 #. module: base
 #: selection:base.language.export,format:0
@@ -16046,6 +16216,15 @@ msgid ""
 "    - InfoLogic UK counties listing\n"
 "    - a few other adaptations"
 msgstr ""
+"\n"
+"Aceasta este cea mai recenta localizare OpenERP necesara pentru a rula "
+"contabilitatea OpenERP pentru SME Anglia cu:\n"
+"============================================================================="
+"====================\n"
+"    - un plan de conturi CT600\n"
+"    - structura fiscala TVA100\n"
+"    - listare InfoLogic a tarilor UK\n"
+"    - alte cateva adaptari"
 
 #. module: base
 #: selection:ir.model,state:0
@@ -16073,7 +16252,7 @@ msgstr "ID Taxa"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_bank_statement_extensions
 msgid "Bank Statement Extensions to Support e-banking"
-msgstr ""
+msgstr "Extensii Extrase de cont pentru Asistenta e-banking"
 
 #. module: base
 #: field:ir.model.fields,field_description:0
@@ -16103,7 +16282,7 @@ msgstr "Zair"
 #. module: base
 #: model:ir.module.module,summary:base.module_project
 msgid "Projects, Tasks"
-msgstr ""
+msgstr "Proiecte, Sarcini"
 
 #. module: base
 #: field:ir.attachment,res_id:0
@@ -16122,7 +16301,7 @@ msgstr "Informatii"
 #: code:addons/base/ir/ir_fields.py:146
 #, python-format
 msgid "false"
-msgstr ""
+msgstr "fals"
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_analytic_analysis
@@ -16136,6 +16315,16 @@ msgid ""
 "Adds menu to show relevant information to each manager.You can also view the "
 "report of account analytic summary user-wise as well as month-wise.\n"
 msgstr ""
+"\n"
+"Acest modul este pentru modificarea vizualizarii contului analitic pentru a "
+"vedea date importante pentru managerul de proiecte al companiilor de "
+"servicii.\n"
+"============================================================================="
+"======================================\n"
+"\n"
+"Adauga un meniu pentru afisarea informatiilor relevante fiecarui manager. De "
+"asemenea, puteti vizualiza raportul de sinteza al\n"
+"contului analitic pe utilizator si pe luna.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_hr_payroll_account
@@ -16149,6 +16338,14 @@ msgid ""
 "    * Company Contribution Management\n"
 "    "
 msgstr ""
+"\n"
+"Sistem general de Salarizare integrat cu Contabilitate.\n"
+"==================================================\n"
+"\n"
+"    * Codare Chelutuieli\n"
+"    * Codare Plati\n"
+"    * Managementul Contributiilor Companiei\n"
+"    "
 
 #. module: base
 #: field:res.partner.category,parent_right:0
@@ -16192,6 +16389,8 @@ msgid ""
 "The user this filter is private to. When left empty the filter is public and "
 "available to all users."
 msgstr ""
+"Utilizatorul caruia ii apartine acest filtru. Atunci cand este lasat "
+"necempletat, filtrul este public si disponibil tuturor utilizatorilor."
 
 #. module: base
 #: field:ir.actions.act_window,auto_refresh:0
@@ -16231,7 +16430,7 @@ msgstr "Campul osv_memorie poate fi comparat doar cu operatorul = si !=."
 #. module: base
 #: view:res.partner:0
 msgid "Fax:"
-msgstr ""
+msgstr "Fax:"
 
 #. module: base
 #: selection:ir.ui.view,type:0
