@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:04+0000\n"
-"PO-Revision-Date: 2013-01-20 11:59+0000\n"
+"PO-Revision-Date: 2013-01-24 10:50+0000\n"
 "Last-Translator: Erwin van der Ploeg (Endian Solutions) <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-01-21 05:27+0000\n"
-"X-Generator: Launchpad (build 16430)\n"
+"X-Launchpad-Export-Date: 2013-01-25 06:04+0000\n"
+"X-Generator: Launchpad (build 16445)\n"
 
 #. module: account
 #: model:process.transition,name:account.process_transition_supplierreconcilepaid0
@@ -1867,6 +1867,21 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Klik hier om een nieuwe rekeningsoort aan te maken.\n"
+"              </p><p>\n"
+"                 Een categorie van een grootboekrekeningen wordt gebruikt om "
+"\n"
+"                 te bepalen hoe een rekening wordt gebruikt bij een dagboek. "
+"\n"
+"                 De afsluitmethode van een categorie bepaald de verwerking "
+"van \n"
+"                 de jaarlijkse afsluiting. Rapporten zoals de balans en de "
+"winst&verlies \n"
+"                 rekening gebruiken de categorie (Winst/verlies of balans). "
+"\n"
+"              </p>\n"
+"            "
 
 #. module: account
 #: report:account.invoice:0
@@ -2210,6 +2225,8 @@ msgid ""
 "This journal already contains items for this period, therefore you cannot "
 "modify its company field."
 msgstr ""
+"Dit dagboek bevat al regels voor deze periode, het is zodoende niet mogelijk "
+"om het veld bedrijf te wijzigen."
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_project_account_analytic_line_form
@@ -2699,6 +2716,8 @@ msgid ""
 "You cannot change the type of account from 'Closed' to any other type as it "
 "contains journal items!"
 msgstr ""
+"Het is niet mogelijk om de rekening van 'Gesloten' te wijzigen naar een "
+"ander soort, omdat het reeds regels bevat!"
 
 #. module: account
 #: field:account.invoice.report,account_line_id:0
@@ -2900,6 +2919,22 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Klik voor het maken van een journaalpost.\n"
+"              </p><p>\n"
+"                Een journaalpost bestaat uit verschillende boekingen. Elk "
+"daarvan \n"
+"                is ofwel een debet- of een credit-transactie. \n"
+"                </p><p>\n"
+"               OpenERP genereert automatisch één journaalpost per "
+"financieel\n"
+"               boekstuk: factuur, credit factuur, betaling aan een "
+"leverancier, bankafschrift, etc.).\n"
+"               U hoeft dus alleen/hoofdzakelijk handmatige journaalposten "
+"aan te maken \n"
+"               voor memoriaal boekingen.\n"
+"              </p>\n"
+"            "
 
 #. module: account
 #: help:account.invoice,payment_term:0
@@ -3115,6 +3150,25 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Klik voor het maken van een nieuw boekjaar.\n"
+"              </p><p>\n"
+"                Definieer naar behoefte de boekjaren van uw bedrijf. Een \n"
+"                financieel jaar is een periode waarop aan het einde de "
+"bedrijfsresultaten\n"
+"                worden opgemaakt (veelal 12 maanden). Als men refereert naar "
+"het \n"
+"                financiële jaar, dan is dit het jaar waarin deze eindigt. "
+"Bijvoorbeeld: \n"
+"                Als het financiële jaar van een bedrijf eindigt op 30 "
+"november 2011, \n"
+"               dan wordt bij alles tussen 1 december 2010 en 30 november "
+"2011 \n"
+"               gerefereerd aan het financiële jaar 2011. Het is niet "
+"verplicht om \n"
+"               een kalenderjaar te volgen.\n"
+"              </p>\n"
+"            "
 
 #. module: account
 #: view:account.common.report:0
@@ -3191,12 +3245,14 @@ msgid ""
 "Selected invoice(s) cannot be confirmed as they are not in 'Draft' or 'Pro-"
 "Forma' state."
 msgstr ""
+"Geselecteerde facturen kunnen niet bevestigd worden omdat deze zich niet in "
+"de 'Concept' of 'Proforma' status bevinden."
 
 #. module: account
 #: code:addons/account/account.py:1062
 #, python-format
 msgid "You should choose the periods that belong to the same company."
-msgstr ""
+msgstr "U dient de periodes te selecteren welke toebehoren aan het bedrijf."
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_report_account_sales_tree_all
@@ -3209,7 +3265,7 @@ msgstr "Verkopen per grootboekrekening"
 #: code:addons/account/account.py:1411
 #, python-format
 msgid "You cannot delete a posted journal entry \"%s\"."
-msgstr ""
+msgstr "Het is niet mogelijk een geboekte regel te verwijderen \"%s\"."
 
 #. module: account
 #: view:account.invoice:0
@@ -3236,6 +3292,8 @@ msgid ""
 "This journal already contains items, therefore you cannot modify its company "
 "field."
 msgstr ""
+"Dit dagboek bevat al regels, het iz zodoende niet mogelijk het veld bedrijf "
+"te wijzigen."
 
 #. module: account
 #: code:addons/account/account.py:409
@@ -3244,6 +3302,8 @@ msgid ""
 "You need an Opening journal with centralisation checked to set the initial "
 "balance."
 msgstr ""
+"U dient een peningsbalans opgeven in een openingsdagboek met de instelling "
+"'gecentraliseerde tegenboeking'."
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_tax_code_list
@@ -3895,6 +3955,11 @@ msgid ""
 "quotations with a button \"Pay with  Paypal\" in automated emails or through "
 "the OpenERP portal."
 msgstr ""
+"Paypal rekening (e-mail) voor het ontvangen van online betalingen "
+"(creditcard, atc.). Indien u een Paypal rekening instelt, is het mogelijk "
+"voor uw klanten om hun facturen of offertes te betalen door te klikken op de "
+"knop \"Betaal met Paypal\", in de automatische e-mails of in het OpenERP "
+"portaal."
 
 #. module: account
 #: code:addons/account/account_move_line.py:535
@@ -3905,6 +3970,10 @@ msgid ""
 "You can create one in the menu: \n"
 "Configuration/Journals/Journals."
 msgstr ""
+"Kan geen dagboek van het soort %s vinden voor dit bedrijf.\n"
+"\n"
+"U kunt deze aanmaken in het menu:\n"
+"Instellingen/Dagboeken/Dagboeken."
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_account_unreconcile
@@ -3972,6 +4041,8 @@ msgid ""
 "You have not supplied enough arguments to compute the initial balance, "
 "please select a period and a journal in the context."
 msgstr ""
+"U heeft niet genoeg gegevens opgegeven om de openingsbalans te berekenen. "
+"Selecteer een periode en een dagboek in de context."
 
 #. module: account
 #: model:ir.actions.report.xml,name:account.account_transfers
@@ -4022,6 +4093,21 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Klik voor het maken van een fractuur.\n"
+"              </p><p>\n"
+"                Met OpenERP's digitaal factureren heeft u de mogelijkheid\n"
+"                om uw betalingen te vereenvoudigen en te versnellen. Uw "
+"klanten ontvangen de\n"
+"                factuur per e-mail en kunnen deze online betalen en/of "
+"importeren in hun\n"
+"                eigen systeem\n"
+"              </p><p>\n"
+"                Alle communicatie met uw klant wordt automatisch weergegeven "
+"onder\n"
+"                aan iedere factuur\n"
+"              </p>\n"
+"            "
 
 #. module: account
 #: field:account.tax.code,name:0
@@ -4053,6 +4139,9 @@ msgid ""
 "You cannot modify a posted entry of this journal.\n"
 "First you should set the journal to allow cancelling entries."
 msgstr ""
+"U kunt geen boekingen in dit dagboek wijzigen of annuleren!\n"
+"U dient 'Maak het annuleren boekingen mogelijk' in het betreffende dagboek "
+"aan te vinken indien u dit wilt doen."
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_account_print_sale_purchase_journal
@@ -4077,6 +4166,8 @@ msgid ""
 "There is no fiscal year defined for this date.\n"
 "Please create one from the configuration of the accounting menu."
 msgstr ""
+"Er is geen boekjaar voor deze datum gedefinieerd!\n"
+"Maak een boekjaar aan in de instellingen van het menu Financieel."
 
 #. module: account
 #: view:account.addtmpl.wizard:0
@@ -4088,7 +4179,7 @@ msgstr "Rekening aanmaken"
 #: code:addons/account/wizard/account_fiscalyear_close.py:62
 #, python-format
 msgid "The entries to reconcile should belong to the same company."
-msgstr ""
+msgstr "De af te letteren regels moeten behoren tot hetzelfde bedrijf."
 
 #. module: account
 #: field:account.invoice.tax,tax_amount:0
@@ -4109,6 +4200,7 @@ msgstr "Detail"
 #: help:account.config.settings,default_purchase_tax:0
 msgid "This purchase tax will be assigned by default on new products."
 msgstr ""
+"Deze inkoopbelasting zal standaard worden toegewezen aan nieuwe producten."
 
 #. module: account
 #: report:account.invoice:0
@@ -4291,6 +4383,8 @@ msgid ""
 "When monthly periods are created. The status is 'Draft'. At the end of "
 "monthly period it is in 'Done' status."
 msgstr ""
+"Wanneer maandelijkse periodes zijn gemaakt is de status 'Concept'. Aan het "
+"einde van een maandelijkse periode is de status 'Gereed'."
 
 #. module: account
 #: view:account.invoice.report:0
@@ -4323,7 +4417,7 @@ msgstr "Crediteuren"
 #: code:addons/account/wizard/account_fiscalyear_close.py:88
 #, python-format
 msgid "The periods to generate opening entries cannot be found."
-msgstr ""
+msgstr "De periodes om een opening te maken zijn niet gevonden."
 
 #. module: account
 #: model:process.node,name:account.process_node_supplierpaymentorder0
@@ -4389,7 +4483,7 @@ msgstr "Geen ongeconfigureerd bedrijf!"
 #. module: account
 #: field:res.company,expects_chart_of_accounts:0
 msgid "Expects a Chart of Accounts"
-msgstr ""
+msgstr "Verwacht een grootboek rekeningschema"
 
 #. module: account
 #: field:account.move.line,date:0
@@ -4400,7 +4494,7 @@ msgstr "Boek datum"
 #: code:addons/account/wizard/account_fiscalyear_close.py:100
 #, python-format
 msgid "The journal must have default credit and debit account."
-msgstr ""
+msgstr "Het dagboek heeft een standaard credit en debet rekening nodig."
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_bank_tree
@@ -4580,7 +4674,7 @@ msgstr "(Factuur mag niet afgeletterd zijn als u deze wilt openen)"
 #. module: account
 #: field:account.tax,account_analytic_collected_id:0
 msgid "Invoice Tax Analytic Account"
-msgstr ""
+msgstr "Factuur belastingen kostenplaats"
 
 #. module: account
 #: field:account.chart,period_from:0
@@ -4618,6 +4712,8 @@ msgid ""
 "This payment term will be used instead of the default one for sale orders "
 "and customer invoices"
 msgstr ""
+"Deze betalingsvoorwaarde zal worden gebruikt in plaats van de standaard- "
+"voor verkooporders en facturen."
 
 #. module: account
 #: view:account.config.settings:0
@@ -4625,6 +4721,8 @@ msgid ""
 "If you put \"%(year)s\" in the prefix, it will be replaced by the current "
 "year."
 msgstr ""
+"Als u \"%(year)s\" in de prefix invoert, dan zal dit worden vervangen door "
+"het huidige jaar."
 
 #. module: account
 #: help:account.account,active:0
@@ -4662,6 +4760,9 @@ msgid ""
 "9.99 EUR, whereas a decimal precision of 4 will allow journal  entries like: "
 "0.0231 EUR."
 msgstr ""
+"Een voorbeeld. Een decimale precisie van 2 staat journaalpostregels toe "
+"zoals 9,99 EUR. Een decimale precisie van 4 staat journaalpostregels toe van "
+"0,0231 EUR."
 
 #. module: account
 #: field:account.account,shortcut:0
@@ -4725,13 +4826,24 @@ msgid ""
 "          </p>\n"
 "        "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"            Klik voro het aanmaken van een nieuwe bankrekening. \n"
+"          </p><p>\n"
+"            Stel uw bedrijf bankrekening in en selecteer die moet worden\n"
+"            vermeld als rapport voettekst. \n"
+"          </p><p>\n"
+"           Als u de boekhoudmodule van OpenERP gebruikt, dan zullen \n"
+"          dagboeken en rekeningen automatisch worden aangemaakt\n"
+"          op basis van deze gegevens.\n"
+"          </p>\n"
+"        "
 
 #. module: account
 #: constraint:account.tax.code.template:0
 msgid ""
 "Error!\n"
 "You cannot create recursive Tax Codes."
-msgstr ""
+msgstr "Fout! U kunt geen herhalende belastingrubrieken maken."
 
 #. module: account
 #: constraint:account.period:0
@@ -4739,6 +4851,8 @@ msgid ""
 "Error!\n"
 "The duration of the Period(s) is/are invalid."
 msgstr ""
+"Fout!\n"
+"De duur van de periode(s) is/zijn ongeldig."
 
 #. module: account
 #: field:account.entries.report,month:0
@@ -4756,6 +4870,8 @@ msgstr "Maand"
 #, python-format
 msgid "You cannot change the code of account which contains journal items!"
 msgstr ""
+"Het is niet mogelijk de de code van de rekening te wijzigen, welke al regels "
+"bevat!"
 
 #. module: account
 #: field:account.config.settings,purchase_sequence_prefix:0
@@ -4791,7 +4907,7 @@ msgstr "Rek. type"
 #. module: account
 #: selection:account.journal,type:0
 msgid "Bank and Checks"
-msgstr ""
+msgstr "Bank en Cheques."
 
 #. module: account
 #: field:account.account.template,note:0
@@ -4819,7 +4935,7 @@ msgstr "Laat leeg voor vandaag"
 #: view:account.bank.statement:0
 #: field:account.cashbox.line,subtotal_closing:0
 msgid "Closing Subtotal"
-msgstr ""
+msgstr "Afsluit subtotaal"
 
 #. module: account
 #: field:account.tax,base_code_id:0
@@ -4875,7 +4991,7 @@ msgstr "Vink dit aan wanneer u ook rekeningen wilt tonen met een nul-saldo."
 #. module: account
 #: field:account.move.reconcile,opening_reconciliation:0
 msgid "Opening Entries Reconciliation"
-msgstr ""
+msgstr "Afletteren openingsbelans"
 
 #. module: account
 #. openerp-web
@@ -4984,7 +5100,7 @@ msgstr "Creditfacturen"
 #: view:account.move.line:0
 #: model:ir.actions.act_window,name:account.action_account_manual_reconcile
 msgid "Journal Items to Reconcile"
-msgstr ""
+msgstr "Af te letteren journaalpostregels"
 
 #. module: account
 #: model:ir.model,name:account.model_account_tax_template
@@ -5341,6 +5457,8 @@ msgid ""
 "Set the account that will be set by default on invoice tax lines for "
 "invoices. Leave empty to use the expense account."
 msgstr ""
+"Stel de rekening in welke standaard wordt ingesteld bij belastingregels bij "
+"facturen. Laat leeg om de kostenrekening te gebruiken."
 
 #. module: account
 #: code:addons/account/account.py:890
@@ -5551,6 +5669,8 @@ msgstr "Doelrekening"
 msgid ""
 "Move cannot be deleted if linked to an invoice. (Invoice: %s - Move ID:%s)"
 msgstr ""
+"Mutatie kan niet worden verwijderd, als deze is gekoppeld aan een factuur. "
+"(Factuur: %s - Mutatie ID:%s)"
 
 #. module: account
 #: view:account.bank.statement:0
@@ -5623,7 +5743,7 @@ msgstr "Jaar"
 #. module: account
 #: help:account.invoice,sent:0
 msgid "It indicates that the invoice has been sent."
-msgstr ""
+msgstr "Het geeft aan dat de factuur is verzonden."
 
 #. module: account
 #: field:account.tax.template,description:0
@@ -6032,7 +6152,7 @@ msgstr "Betaaldatum"
 #: view:account.bank.statement:0
 #: field:account.bank.statement,opening_details_ids:0
 msgid "Opening Cashbox Lines"
-msgstr ""
+msgstr "Opening kasregels"
 
 #. module: account
 #: view:account.analytic.account:0
@@ -6110,7 +6230,7 @@ msgstr ""
 #: code:addons/account/wizard/account_report_aged_partner_balance.py:56
 #, python-format
 msgid "You must set a period length greater than 0."
-msgstr ""
+msgstr "U dient een periode lengte in te geven welke groter is dan 0."
 
 #. module: account
 #: view:account.fiscal.position.template:0
@@ -6359,6 +6479,21 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Klik voor het aanmaken van een grootboekrekening.\n"
+"              </p><p>\n"
+"                Een grootboekrekening is onderdeel van een grootboek\n"
+"                wat uw bedrijf in staat stelt om allerlei debet- en "
+"creditboekingen\n"
+"                te registreren. Bedrijven presenteren de volgende "
+"jaarstukken:\n"
+"                de balans en de winst- en verliesrekening. Met het "
+"publiceren van de\n"
+"                jaarstukken kunnen bedrijven voldoen aan de wettelijke "
+"verplichting om \n"
+"               een bepaalde hoeveelheid informatie prijs te geven.\n"
+"              </p>\n"
+"            "
 
 #. module: account
 #: view:account.invoice.report:0
@@ -6768,6 +6903,7 @@ msgstr "Debiteuren"
 #: constraint:account.move.line:0
 msgid "You cannot create journal items on closed account."
 msgstr ""
+"Het is niet mogelijk om journaalposten te maken op een gesloten rekening."
 
 #. module: account
 #: code:addons/account/account_invoice.py:610
@@ -9856,6 +9992,8 @@ msgid ""
 "Set the account that will be set by default on invoice tax lines for "
 "refunds. Leave empty to use the expense account."
 msgstr ""
+"Stel de rekening in welke standaard wordt ingesteld bij belastingregels bij "
+"credit facturen. Laat leeg om de kostenrekening te gebruiken."
 
 #. module: account
 #: help:account.addtmpl.wizard,cparent_id:0

@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:04+0000\n"
-"PO-Revision-Date: 2012-12-25 20:58+0000\n"
+"PO-Revision-Date: 2013-01-24 21:53+0000\n"
 "Last-Translator: Erwin van der Ploeg (Endian Solutions) <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-01-18 06:45+0000\n"
-"X-Generator: Launchpad (build 16430)\n"
+"X-Launchpad-Export-Date: 2013-01-25 06:05+0000\n"
+"X-Generator: Launchpad (build 16445)\n"
 
 #. module: hr_holidays
 #: selection:hr.holidays.status,color_name:0
@@ -39,6 +39,8 @@ msgid ""
 "You cannot modify a leave request that has been approved. Contact a human "
 "resource manager."
 msgstr ""
+"U kunt een verlofaanvraag niet wijzigen, welke reeds is goedgekeurd. Neem "
+"contact op met personeelsbeheer."
 
 #. module: hr_holidays
 #: help:hr.holidays.status,remaining_leaves:0
@@ -75,7 +77,7 @@ msgstr "Afdeling"
 #: model:ir.actions.act_window,name:hr_holidays.request_approve_allocation
 #: model:ir.ui.menu,name:hr_holidays.menu_request_approve_allocation
 msgid "Allocation Requests to Approve"
-msgstr ""
+msgstr "Toewijzing verlofaanvragen"
 
 #. module: hr_holidays
 #: help:hr.holidays,category_id:0
@@ -108,6 +110,8 @@ msgid ""
 "The default duration interval between the start date and the end date is 8 "
 "hours.  Feel free to adapt it to your needs."
 msgstr ""
+"De standaard duur interval tussen de begindatum en de einddatum is 8 uur. U "
+"bent vrij om dit aan te passen aan uw wensen."
 
 #. module: hr_holidays
 #: model:mail.message.subtype,description:hr_holidays.mt_holidays_refused
@@ -930,7 +934,7 @@ msgstr "Modus"
 #: selection:hr.holidays.summary.dept,holiday_type:0
 #: selection:hr.holidays.summary.employee,holiday_type:0
 msgid "Both Approved and Confirmed"
-msgstr ""
+msgstr "Beide bevestigd en goedgekeurd"
 
 #. module: hr_holidays
 #: view:hr.holidays:0
@@ -948,7 +952,7 @@ msgstr "Berichten en communicatie historie"
 #: sql_constraint:hr.holidays:0
 #, python-format
 msgid "The start date must be anterior to the end date."
-msgstr ""
+msgstr "De begindatum moet voor de einddatum liggen."
 
 #. module: hr_holidays
 #: model:ir.model,name:hr_holidays.model_hr_holidays
