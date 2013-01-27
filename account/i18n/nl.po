@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:04+0000\n"
-"PO-Revision-Date: 2013-01-25 11:17+0000\n"
+"PO-Revision-Date: 2013-01-26 12:14+0000\n"
 "Last-Translator: Erwin van der Ploeg (Endian Solutions) <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-01-26 05:37+0000\n"
+"X-Launchpad-Export-Date: 2013-01-27 05:09+0000\n"
 "X-Generator: Launchpad (build 16451)\n"
 
 #. module: account
@@ -1931,6 +1931,16 @@ msgid ""
 "should choose 'Round per line' because you certainly want the sum of your "
 "tax-included line subtotals to be equal to the total amount with taxes."
 msgstr ""
+"Als u 'Afronden per regel' kiest dan wordt voor elke belasting het bedrag "
+"eerst berekend en afgerond voor elke inkooporder-, verkooporder en "
+"factuurregel en vervolgens worden deze afgeronde bedragen opgeteld, wat "
+"leidt tot het totale bedrag voor deze belasting. Als u 'Globaal Afrond' dan "
+"wordt voor elke belasting het bedrag berekend voor elke  inkooporder-, "
+"verkooporder en factuurregel, dan zullen deze bedragen worden opgeteld en "
+"uiteindelijk wordt dit totale belastingbedrag afgerond. Als u verkoopt met "
+"prijzen inclusief belastingen, moet u kiezen voor 'Afronden per regel', "
+"omdat u er zeker van wilt zijn dat de som van uw regels gelijk zijn aan het "
+"totale bedrag met belastingen."
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_report_account_type_sales_tree_all
@@ -5255,6 +5265,10 @@ msgid ""
 "You can create one in the menu: \n"
 "Configuration\\Journals\\Journals."
 msgstr ""
+"Kan geen enkel dagboek %s vinden voor dit bedrijf.\n"
+"\n"
+"U kunt deze aanmaken in het menu:\n"
+"Instellingen\\Dagboeken\\Dagboeken."
 
 #. module: account
 #: report:account.vat.declaration:0
@@ -5854,6 +5868,9 @@ msgid ""
 "Put a sequence in the journal definition for automatic numbering or create a "
 "sequence manually for this piece."
 msgstr ""
+"Het is niet mogelijk om een automatische reeks aan te maken voor dit deel.\n"
+"Stel een reeks in bij het dagboek voor automatische nummering of maak voor "
+"dit deel handmatig een reeks aan."
 
 #. module: account
 #: view:account.invoice:0
@@ -6059,6 +6076,8 @@ msgstr "BeLasti gen en totalen opnieuw berekenen"
 #, python-format
 msgid "You cannot modify/delete a journal with entries for this period."
 msgstr ""
+"Het is niet mogelijk het dagboek aan te passen of te verwijderen voor deze "
+"periode."
 
 #. module: account
 #: field:account.tax.template,include_base_amount:0
@@ -6090,6 +6109,8 @@ msgstr "Bedrag berekening"
 #, python-format
 msgid "You can not add/modify entries in a closed period %s of journal %s."
 msgstr ""
+"Het is niet mogelijk om regels toe te voegen  of aan te passen in een "
+"gesloten periode %s van dagboek %s."
 
 #. module: account
 #: view:account.journal:0
@@ -6313,6 +6334,8 @@ msgid ""
 "This payment term will be used instead of the default one for purchase "
 "orders and supplier invoices"
 msgstr ""
+"Dit betaaltermijn wordt gebruikt in plaats van het standaard betaaltermijn "
+"voor inkooporders en inkoopfacturen."
 
 #. module: account
 #: help:account.automatic.reconcile,power:0
@@ -6834,6 +6857,8 @@ msgid ""
 "You cannot cancel an invoice which is partially paid. You need to "
 "unreconcile related payment entries first."
 msgstr ""
+"Het is niet mogelijk een factuur te annuleren, welke al gedeeltelijk betaald "
+"is. U dient de afgeletterde betaling eerst ongedaan te maken."
 
 #. module: account
 #: field:product.template,taxes_id:0
@@ -6868,6 +6893,16 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Klik voor het aanmaken van een credit factuur van uw "
+"leverancier.\n"
+"              </p><p>\n"
+"                In plaats van het handmatig maken van de credit factuur, "
+"kunt u ook rechtstreeks\n"
+"                een credit factuur genereren en deze afletteren bij de "
+"bijbehorende inkoopfactuur.\n"
+"              </p>\n"
+"            "
 
 #. module: account
 #: field:account.tax,type:0
@@ -7012,6 +7047,8 @@ msgstr ""
 #, python-format
 msgid "Invoice line account's company and invoice's compnay does not match."
 msgstr ""
+"Het bedrijf ingesteld op de factuurregel grootboekrekening en het bedrijf "
+"van de factuur komen niet overheen."
 
 #. module: account
 #: view:account.invoice:0
@@ -7887,6 +7924,9 @@ msgid ""
 "You cannot define children to an account with internal type different of "
 "\"View\"."
 msgstr ""
+"Instellingen fout!\n"
+"U kunt geen onderliggende rekeningen maken bij een rekening van het interne "
+"soort \"Weergave\""
 
 #. module: account
 #: model:ir.model,name:account.model_accounting_report
@@ -8249,6 +8289,20 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p>\n"
+"                Klik om een kostenplaats toe te voegen.\n"
+"              </p><p>\n"
+"                Het normale grootboekschema heeft een structuur volgen\n"
+"                de wettelijke richtlijnen voor boekhouden. De kostenplaats\n"
+"                rekeningen kunt u vrij inrichten naar uw behoeften. \n"
+"              </p><p>\n"
+"                Kostenplaatsen worden normaliter gebruikt bij contracten,\n"
+"                projecten en/of afdelingen. De meeste acties uitgevoerd "
+"door\n"
+"                OpenERP (facturen, urenstaten, declaraties, etc.) genereren\n"
+"                kostenplaatsboekingen.\n"
+"              </p>\n"
+"            "
 
 #. module: account
 #: model:account.account.type,name:account.data_account_type_view
@@ -8374,6 +8428,8 @@ msgid ""
 "This date will be used as the invoice date for credit note and period will "
 "be chosen accordingly!"
 msgstr ""
+"Deze datum wordt gebruikt als de factuurdatum voor de credit factuur. De "
+"periode wordt op basis van deze periode bepaald."
 
 #. module: account
 #: view:product.template:0
@@ -8387,6 +8443,8 @@ msgid ""
 "You have to set a code for the bank account defined on the selected chart of "
 "accounts."
 msgstr ""
+"U dient een grootboekrekening, van het geselecteerde grootboekschema, in te "
+"stellen voor de bankrekening."
 
 #. module: account
 #: model:ir.ui.menu,name:account.menu_manual_reconcile
@@ -8552,6 +8610,8 @@ msgid ""
 "Error!\n"
 "You cannot create recursive accounts."
 msgstr ""
+"Fout!\n"
+"Het is niet mogelijk om herhalende rekeningen te maken."
 
 #. module: account
 #: model:ir.model,name:account.model_cash_box_in
@@ -9375,6 +9435,8 @@ msgstr "De code van de rekening moet uniek zijn per bedrijf!"
 #: help:product.template,property_account_expense:0
 msgid "This account will be used to value outgoing stock using cost price."
 msgstr ""
+"Deze rekening wordt gebruikt om de uitgaande voorraad te waarderen tegen "
+"kostprijs."
 
 #. module: account
 #: view:account.invoice:0
@@ -9690,6 +9752,8 @@ msgstr ""
 #, python-format
 msgid "You cannot deactivate an account that contains journal items."
 msgstr ""
+"Het is niet mogelijk ene rekening inactief te maken, als deze nog regels "
+"bevat."
 
 #. module: account
 #: selection:account.tax,applicable_type:0
@@ -10819,6 +10883,8 @@ msgstr "Provincies"
 #: help:product.template,property_account_income:0
 msgid "This account will be used to value outgoing stock using sale price."
 msgstr ""
+"Deze rekening wordt gebruikt om de uitgaande voorraad te waarderen tegen "
+"verkoopprijs."
 
 #. module: account
 #: field:account.invoice,check_total:0
@@ -11267,6 +11333,18 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Klik voor het aanmaken vaneen nieuwe belastingrubriek.\n"
+"              </p><p>\n"
+"                Afhankelijk van het land, is een belastingrubriek is meestal "
+"een in te vullen\n"
+"                veld in uw belastingaanfifte. Met OpenERP kunt u bepalen hoe "
+"de\n"
+"                fiscale structuur en elke belasting berekening zal worden "
+"geregistreerd in\n"
+"                een of meerdere belastingrubrieken.\n"
+"              </p>\n"
+"            "
 
 #. module: account
 #: selection:account.entries.report,month:0
@@ -11293,6 +11371,18 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Selecteer de periode en het dagboek wat u wilt vullen.\n"
+"              </p><p>\n"
+"                Deze weergave kan worden gebruikt door accountants om\n"
+"                snel journaalposten te registreren in OpenERP. Indien u ee\n"
+"                leveranciersfactuur wilt registreren, start dan met het "
+"registreren\n"
+"                van een regel voor kostenrekening. OpenERP zal vervolgens\n"
+"                automatisch de belasting, gerelateerd aan deze rekening\n"
+"                voorstellen, alsmede de tegenrekening \"Crediteuren\".\n"
+"              </p>\n"
+"            "
 
 #. module: account
 #: help:account.invoice.line,account_id:0
@@ -11351,6 +11441,8 @@ msgid ""
 "You cannot remove/deactivate an account which is set on a customer or "
 "supplier."
 msgstr ""
+"Het is niet mogelijk een grootboekrekening te verwijderen of inactief te "
+"maken, als deze is ingesteld bij een klant of leverancier."
 
 #. module: account
 #: model:ir.model,name:account.model_validate_account_move_lines
@@ -11362,6 +11454,8 @@ msgstr "Daboekregels bevestigen"
 msgid ""
 "The fiscal position will determine taxes and accounts used for the partner."
 msgstr ""
+"De fiscale positie bepaald de belastingen en rekeningen welke worden "
+"gebruikt bij de relatie."
 
 #. module: account
 #: model:process.node,note:account.process_node_supplierpaidinvoice0
@@ -11393,7 +11487,7 @@ msgstr "Handmatige Factuur Belasting"
 #: code:addons/account/account_invoice.py:554
 #, python-format
 msgid "The payment term of supplier does not have a payment term line."
-msgstr ""
+msgstr "Het betaaltermijn van de leverancier heeft geen betaaltermijnregels."
 
 #. module: account
 #: field:account.account,parent_right:0
@@ -11532,7 +11626,7 @@ msgstr "Kostenrekening op product sjabloon"
 #. module: account
 #: field:res.partner,property_payment_term:0
 msgid "Customer Payment Term"
-msgstr ""
+msgstr "Betaaltermijn klant"
 
 #. module: account
 #: help:accounting.report,label_filter:0
