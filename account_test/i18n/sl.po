@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:05+0000\n"
-"PO-Revision-Date: 2013-01-26 18:45+0000\n"
+"PO-Revision-Date: 2013-01-27 12:43+0000\n"
 "Last-Translator: Dušan Laznik (Mentis) <laznik@mentis.si>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-01-27 05:09+0000\n"
+"X-Launchpad-Export-Date: 2013-01-28 05:58+0000\n"
 "X-Generator: Launchpad (build 16451)\n"
 
 #. module: account_test
@@ -84,13 +84,13 @@ msgstr "Test 2: Otvoritev poslovnega leta"
 msgid ""
 "Check that reconciled invoice for Sales/Purchases has reconciled entries for "
 "Payable and Receivable Accounts"
-msgstr ""
+msgstr "Preveri račune in vknjižbe v saldakontih"
 
 #. module: account_test
 #: model:accounting.assert.test,desc:account_test.account_test_03
 msgid ""
 "Check if movement lines are balanced and have the same date and period"
-msgstr ""
+msgstr "Preveri če so vknjižbe usklajene in imajo isto obdobje in datum."
 
 #. module: account_test
 #: field:accounting.assert.test,name:0
@@ -117,7 +117,7 @@ msgstr "Preveri da če plačani računi niso v statusu 'Odprto'"
 msgid ""
 "Check that reconciled account moves, that define Payable and Receivable "
 "accounts, are belonging to reconciled invoices"
-msgstr ""
+msgstr "Preveri vknjižbe v saldakontih in račune."
 
 #. module: account_test
 #: view:accounting.assert.test:0
@@ -137,7 +137,7 @@ msgstr "Opis"
 #. module: account_test
 #: model:accounting.assert.test,desc:account_test.account_test_06_1
 msgid "Check that there's no move for any account with « View » account type"
-msgstr ""
+msgstr "Preveri da ni nobene vknjižbe na kontih vrste « Pogled »"
 
 #. module: account_test
 #: model:accounting.assert.test,name:account_test.account_test_08
@@ -176,7 +176,7 @@ msgstr "accounting.assert.test"
 #: model:accounting.assert.test,name:account_test.account_test_05
 msgid ""
 "Test 5.1 : Payable and Receivable accountant lines of reconciled invoices"
-msgstr ""
+msgstr "Test 5.1 : Postavke saldakontov in računi"
 
 #. module: account_test
 #: field:accounting.assert.test,code_exec:0
@@ -189,6 +189,7 @@ msgid ""
 "Check on bank statement that the Closing Balance = Starting Balance + sum of "
 "statement lines"
 msgstr ""
+"Preveri da je na bančnih izpiskih Končni saldo=Začetni saldo+vsota postavk"
 
 #. module: account_test
 #: model:accounting.assert.test,name:account_test.account_test_07
@@ -203,7 +204,7 @@ msgstr "Test 3: Vknjižbe"
 #. module: account_test
 #: model:accounting.assert.test,name:account_test.account_test_05_2
 msgid "Test 5.2 : Reconcilied invoices and Payable/Receivable accounts"
-msgstr ""
+msgstr "Test 5.2 : Računi in konti terjatev in obveznosti"
 
 #. module: account_test
 #: view:accounting.assert.test:0
@@ -245,16 +246,21 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"               Nov test.\n"
+"              </p>\n"
+"            "
 
 #. module: account_test
 #: model:accounting.assert.test,desc:account_test.account_test_01
 msgid "Check the balance: Debit sum = Credit sum"
-msgstr ""
+msgstr "Preveri saldo : Kredit=Debit"
 
 #. module: account_test
 #: model:accounting.assert.test,desc:account_test.account_test_08
 msgid "Check that general accounts and partners on account moves are active"
 msgstr ""
+"Preveri če so glavni konti in partnerji na  kontih nastavljen na \"Aktivno\""
 
 #. module: account_test
 #: model:accounting.assert.test,name:account_test.account_test_06_1

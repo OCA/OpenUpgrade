@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:06+0000\n"
-"PO-Revision-Date: 2013-01-27 01:14+0000\n"
+"PO-Revision-Date: 2013-01-27 08:01+0000\n"
 "Last-Translator: Danimar Ribeiro <danimaribeiro@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-01-27 05:09+0000\n"
+"X-Launchpad-Export-Date: 2013-01-28 05:58+0000\n"
 "X-Generator: Launchpad (build 16451)\n"
 
 #. module: fleet
@@ -780,7 +780,7 @@ msgstr "Unidade do odometro"
 #. module: fleet
 #: model:fleet.service.type,name:fleet.type_service_30
 msgid "Intake Manifold Gasket Replacement"
-msgstr ""
+msgstr "Substituição da Junta coletor de admissão"
 
 #. module: fleet
 #: selection:fleet.vehicle.log.contract,cost_frequency:0
@@ -1570,12 +1570,12 @@ msgstr "Propriedades Gerais"
 #. module: fleet
 #: model:fleet.service.type,name:fleet.type_service_21
 msgid "Exhaust Manifold Replacement"
-msgstr ""
+msgstr "Substituição do coletor do escape"
 
 #. module: fleet
 #: model:fleet.service.type,name:fleet.type_service_47
 msgid "Transmission Filter Replacement"
-msgstr ""
+msgstr "Substituição do filtro de transmissão"
 
 #. module: fleet
 #: model:fleet.service.type,name:fleet.type_service_service_10
@@ -1763,7 +1763,7 @@ msgstr "Veículo"
 #: view:fleet.vehicle.log.contract:0
 #: view:fleet.vehicle.log.services:0
 msgid "Included Services"
-msgstr ""
+msgstr "Serviços inclusos"
 
 #. module: fleet
 #: model:ir.actions.act_window,help:fleet.action_fleet_vehicle_kanban
@@ -1914,48 +1914,48 @@ msgstr "Custos  mensais com contrato"
 #: field:fleet.vehicle,model_id:0
 #: view:fleet.vehicle.model:0
 msgid "Model"
-msgstr ""
+msgstr "Modelo"
 
 #. module: fleet
 #: model:fleet.service.type,name:fleet.type_service_41
 msgid "Spark Plug Replacement"
-msgstr ""
+msgstr "Substituição de vela de ignição"
 
 #. module: fleet
 #: help:fleet.vehicle,message_ids:0
 msgid "Messages and communication history"
-msgstr ""
+msgstr "Histórico de mensagens e comunicação"
 
 #. module: fleet
 #: model:ir.model,name:fleet.model_fleet_vehicle
 msgid "Information on a vehicle"
-msgstr ""
+msgstr "Informações do veículo"
 
 #. module: fleet
 #: help:fleet.vehicle,co2:0
 msgid "CO2 emissions of the vehicle"
-msgstr ""
+msgstr "Emissões de CO2 do veículo"
 
 #. module: fleet
 #: model:fleet.service.type,name:fleet.type_service_53
 msgid "Windshield Wiper(s) Replacement"
-msgstr ""
+msgstr "Substituição do limpador de para-brisa"
 
 #. module: fleet
 #: view:fleet.vehicle.log.contract:0
 #: field:fleet.vehicle.log.contract,generated_cost_ids:0
 msgid "Generated Costs"
-msgstr ""
+msgstr "Custos Gerados"
 
 #. module: fleet
 #: field:fleet.vehicle.state,sequence:0
 msgid "Sequence"
-msgstr ""
+msgstr "Seqüência"
 
 #. module: fleet
 #: field:fleet.vehicle,color:0
 msgid "Color"
-msgstr ""
+msgstr "Cor"
 
 #. module: fleet
 #: model:ir.actions.act_window,help:fleet.fleet_vehicle_service_types_act
@@ -1968,79 +1968,88 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Clique para criar um novo tipo de Serviço\n"
+"              </p><p>\n"
+"                Cada tipo de serviço pode ser usado em contratos, ou apenas "
+"serviços ou ambos.\n"
+"              </p>\n"
+"            "
 
 #. module: fleet
 #: view:board.board:0
 msgid "Services Costs"
-msgstr ""
+msgstr "Custos em Serviços"
 
 #. module: fleet
 #: code:addons/fleet/fleet.py:47
 #, python-format
 msgid "Emptying the odometer value of a vehicle is not allowed."
-msgstr ""
+msgstr "Zerar o valor do odômetro de um veículo não é permitido."
 
 #. module: fleet
 #: help:fleet.vehicle,seats:0
 msgid "Number of seats of the vehicle"
-msgstr ""
+msgstr "Numero de assentos do veículo"
 
 #. module: fleet
 #: model:res.groups,name:fleet.group_fleet_manager
 msgid "Manager"
-msgstr ""
+msgstr "Administrador"
 
 #. module: fleet
 #: view:fleet.vehicle.log.services:0
 msgid "Cost"
-msgstr ""
+msgstr "Custo"
 
 #. module: fleet
 #: model:fleet.service.type,name:fleet.type_service_39
 msgid "Rotate Tires"
-msgstr ""
+msgstr "Rodizio de pneus"
 
 #. module: fleet
 #: model:fleet.service.type,name:fleet.type_service_42
 msgid "Starter Replacement"
-msgstr ""
+msgstr "Substituição de motor de partida"
 
 #. module: fleet
 #: view:fleet.vehicle.cost:0
 #: field:fleet.vehicle.cost,year:0
 msgid "Year"
-msgstr ""
+msgstr "Ano"
 
 #. module: fleet
 #: help:fleet.vehicle,license_plate:0
 msgid "License plate number of the vehicle (ie: plate number for a car)"
-msgstr ""
+msgstr "Número da placa do veículo"
 
 #. module: fleet
 #: model:ir.model,name:fleet.model_fleet_contract_state
 msgid "Contains the different possible status of a leasing contract"
-msgstr ""
+msgstr "Contém os possíveis valores de um contrato leasing"
 
 #. module: fleet
 #: view:fleet.vehicle:0
 msgid "show the contract for this vehicle"
-msgstr ""
+msgstr "mostra os contratos para este veículo"
 
 #. module: fleet
 #: view:fleet.vehicle.log.services:0
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #. module: fleet
 #: help:fleet.service.type,category:0
 msgid ""
 "Choose wheter the service refer to contracts, vehicle services or both"
 msgstr ""
+"Escolha se os serviços referem-se aos contratos, serviços de veículos, ou "
+"ambos."
 
 #. module: fleet
 #: help:fleet.vehicle.cost,cost_type:0
 msgid "For internal purpose only"
-msgstr ""
+msgstr "Para propósitos internos apenas"
 
 #. module: fleet
 #: help:fleet.vehicle.state,sequence:0
