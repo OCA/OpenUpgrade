@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:06+0000\n"
-"PO-Revision-Date: 2013-01-31 15:36+0000\n"
+"PO-Revision-Date: 2013-02-02 11:18+0000\n"
 "Last-Translator: Erwin van der Ploeg (Endian Solutions) <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-02-01 05:49+0000\n"
-"X-Generator: Launchpad (build 16455)\n"
+"X-Launchpad-Export-Date: 2013-02-03 05:29+0000\n"
+"X-Generator: Launchpad (build 16462)\n"
 
 #. module: procurement
 #: model:ir.ui.menu,name:procurement.menu_stock_sched
@@ -54,6 +54,8 @@ msgid ""
 "required quantities are always\n"
 "                           available"
 msgstr ""
+"benodigde hoeveelheden zijn altijd\n"
+"                          beschikbaar"
 
 #. module: procurement
 #: view:product.product:0
@@ -428,6 +430,8 @@ msgid ""
 "use the available\n"
 "                           inventory"
 msgstr ""
+"gebruik de beschikbare\n"
+"                           voorraad"
 
 #. module: procurement
 #: model:ir.model,name:procurement.model_procurement_order
@@ -538,6 +542,8 @@ msgid ""
 "You have to select a product unit of measure in the same category than the "
 "default unit of measure of the product"
 msgstr ""
+"U dient een product maateenheid in dezelfde categorie als de standaard "
+"maateenheid."
 
 #. module: procurement
 #: view:procurement.order:0
@@ -643,6 +649,8 @@ msgid ""
 "Please check the quantity in procurement order(s) for the product \"%s\", it "
 "should not be 0 or less!"
 msgstr ""
+"Controleer de hoeveelheid in de verwerving order(s) voor het product \"%s\". "
+"Deze zou niet 0 of lager moeten zijn!"
 
 #. module: procurement
 #: field:procurement.order,date_planned:0
@@ -726,6 +734,10 @@ msgid ""
 "for replenishment. \n"
 "Make to Order: When needed, the product is purchased or produced."
 msgstr ""
+"Maak op voorraad: Wanneer benodigd wordt het product van voorraad gehaald of "
+"er wordt gewacht op een aanvulling. \n"
+"Maak op bestelling: Wanneeer benodigd wordt het product beteld of "
+"geproduceerd."
 
 #. module: procurement
 #: field:mrp.property,composition:0
@@ -802,6 +814,9 @@ msgid ""
 "procurement to bring the forecasted quantity to the Quantity specified as "
 "Max Quantity."
 msgstr ""
+"Wannneer de voorraad onder de Minimale voorraad gaat, zal OpenERP "
+"verwervingen genereren om de virtuele voorraad aan te vullen titaan de "
+"maximale voorraad."
 
 #. module: procurement
 #: model:ir.model,name:procurement.model_procurement_order_compute_all
@@ -909,7 +924,7 @@ msgstr "De manier van verwerving hangt af van het product type."
 #. module: procurement
 #: view:product.product:0
 msgid "When you sell this product, OpenERP will"
-msgstr ""
+msgstr "Wanneer u dit product verkoopt zal OpenERP"
 
 #. module: procurement
 #: view:procurement.order:0
@@ -941,6 +956,8 @@ msgstr "Aanvulopdracht regels"
 #, python-format
 msgid "Cannot delete Procurement Order(s) which are in %s state."
 msgstr ""
+"Het is niet mogelijk om verwerving order(s) te verwijderen welke zich in de "
+"%s status bevindend"
 
 #. module: procurement
 #: field:procurement.order,product_uos:0
@@ -1030,4 +1047,4 @@ msgstr "VERW %d: van order - %3.2f %-5s - %s"
 #: code:addons/procurement/procurement.py:338
 #, python-format
 msgid "Products reserved from stock."
-msgstr ""
+msgstr "Producten gereserveerd van voorraad."
