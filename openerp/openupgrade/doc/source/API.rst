@@ -17,6 +17,6 @@ step, provided that a migration script to 6.1 exists as well.
    except ImportError:
         from openerp.openupgrade import openupgrade
 
-.. automodule:: openupgrade
+.. automodule:: openupgrade.openupgrade
    :members:
 
