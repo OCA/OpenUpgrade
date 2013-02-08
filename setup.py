@@ -115,7 +115,9 @@ setuptools.setup(
           'psycopg2',
           'pydot',
           'python-dateutil < 2',
-          'python-ldap', # optional
+          # OpenUpgrade: documentation on readthedocs.org does not build
+          # properly if an install of python-ldap is attempted
+          # 'python-ldap', # optional
           'python-openid',
           'pytz',
           'pywebdav',
