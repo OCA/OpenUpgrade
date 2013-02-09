@@ -1,16 +1,16 @@
-# Mongolian translation for openobject-addons
-# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# English (United Kingdom) translation for openobject-addons
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
 # This file is distributed under the same license as the openobject-addons package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:04+0000\n"
-"PO-Revision-Date: 2013-02-08 07:03+0000\n"
-"Last-Translator: gobi <Unknown>\n"
-"Language-Team: Mongolian <mn@li.org>\n"
+"PO-Revision-Date: 2013-02-08 16:07+0000\n"
+"Last-Translator: mrx5682 <Unknown>\n"
+"Language-Team: English (United Kingdom) <en_GB@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,7 +20,7 @@ msgstr ""
 #. module: account_voucher
 #: field:account.bank.statement.line,voucher_id:0
 msgid "Reconciliation"
-msgstr "Тулгалт"
+msgstr "Reconciliation"
 
 #. module: account_voucher
 #: model:ir.model,name:account_voucher.model_account_config_settings
@@ -31,28 +31,28 @@ msgstr "account.config.settings"
 #: code:addons/account_voucher/account_voucher.py:357
 #, python-format
 msgid "Write-Off"
-msgstr "Зөрүү"
+msgstr "Write-Off"
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Payment Ref"
-msgstr "Төлбөрийн Сурвалж"
+msgstr "Payment Ref"
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Total Amount"
-msgstr "Нийт дүн"
+msgstr "Total Amount"
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Open Customer Journal Entries"
-msgstr "Нээлттэй харилцагчийн журналийн бичилт"
+msgstr "Open Customer Journal Entries"
 
 #. module: account_voucher
 #: view:account.voucher:0
 #: view:sale.receipt.report:0
 msgid "Group By..."
-msgstr "Бүлэглэх..."
+msgstr "Group By..."
 
 #. module: account_voucher
 #: help:account.voucher,writeoff_amount:0
@@ -60,76 +60,76 @@ msgid ""
 "Computed as the difference between the amount stated in the voucher and the "
 "sum of allocation on the voucher lines."
 msgstr ""
-"Ваучерт бичигдсэн дүн болон ваучерийн мөрүүдэд хуваарилагдсан нийлбэр "
-"дүнгийн ялгавраар тооцоологддог."
+"Computed as the difference between the amount stated in the voucher and the "
+"sum of allocation on the voucher lines."
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "(Update)"
-msgstr "(Шинэчлэх)"
+msgstr "(Update)"
 
 #. module: account_voucher
 #: view:account.voucher:0
 #: model:ir.actions.act_window,name:account_voucher.act_pay_bills
 msgid "Bill Payment"
-msgstr "Төлбөр тооцоо"
+msgstr "Bill Payment"
 
 #. module: account_voucher
 #: view:account.statement.from.invoice.lines:0
 #: model:ir.actions.act_window,name:account_voucher.action_view_account_statement_from_invoice_lines
 msgid "Import Entries"
-msgstr "Бичилт оруулах"
+msgstr "Import Entries"
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Voucher Entry"
-msgstr "Ваучерийн бичилт"
+msgstr "Voucher Entry"
 
 #. module: account_voucher
 #: selection:sale.receipt.report,month:0
 msgid "March"
-msgstr "3-р сар"
+msgstr "March"
 
 #. module: account_voucher
 #: field:account.voucher,message_unread:0
 msgid "Unread Messages"
-msgstr "Уншаагүй Мессеж"
+msgstr "Unread Messages"
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Pay Bill"
-msgstr "Тооцоо хийх"
+msgstr "Pay Bill"
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Are you sure you want to cancel this receipt?"
-msgstr "Та энэ тасалбарыг хэрэгсэхгүй болгохдоо итгэлтэй байна уу?"
+msgstr "Are you sure you want to cancel this receipt?"
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Set to Draft"
-msgstr "Ноороглох"
+msgstr "Set to Draft"
 
 #. module: account_voucher
 #: help:account.voucher,reference:0
 msgid "Transaction reference number."
-msgstr "Гүйлгээний кодын дугаар."
+msgstr "Transaction reference number."
 
 #. module: account_voucher
 #: view:sale.receipt.report:0
 msgid "Group by year of Invoice Date"
-msgstr "Нэхэмжилсэн Огнооны Жилээр нь Бүлэглэх"
+msgstr "Group by year of Invoice Date"
 
 #. module: account_voucher
 #: view:sale.receipt.report:0
 #: field:sale.receipt.report,user_id:0
 msgid "Salesperson"
-msgstr "Худалдагч"
+msgstr "Salesperson"
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Voucher Statistics"
-msgstr "Ваучерийн статистик"
+msgstr ""
 
 #. module: account_voucher
 #: code:addons/account_voucher/account_voucher.py:1533
@@ -138,18 +138,17 @@ msgid ""
 "You can not change the journal as you already reconciled some statement "
 "lines!"
 msgstr ""
-"Та өмнө нь хуулгын мөрийг тулгачихсан тул журнал хөтлөлтийг өөрчлөж чадахгүй."
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Validate"
-msgstr "Батламжлах"
+msgstr ""
 
 #. module: account_voucher
 #: model:ir.actions.act_window,name:account_voucher.action_vendor_payment
 #: model:ir.ui.menu,name:account_voucher.menu_action_vendor_payment
 msgid "Supplier Payments"
-msgstr "Нийлүүлэгчийн Төлбөр"
+msgstr ""
 
 #. module: account_voucher
 #: model:ir.actions.act_window,help:account_voucher.action_purchase_receipt
@@ -166,34 +165,34 @@ msgstr ""
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Search Vouchers"
-msgstr "Ваучераар хайх"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,writeoff_acc_id:0
 msgid "Counterpart Account"
-msgstr "Гүйцээлтийн данс"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,account_id:0
 #: field:account.voucher.line,account_id:0
 #: field:sale.receipt.report,account_id:0
 msgid "Account"
-msgstr "Бүртгэл"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,line_dr_ids:0
 msgid "Debits"
-msgstr "Дебит"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.statement.from.invoice.lines:0
 msgid "Ok"
-msgstr "Тийм"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher.line,reconcile:0
 msgid "Full Reconcile"
-msgstr "Бүтэн гүйцээлт"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,date_due:0
@@ -201,56 +200,56 @@ msgstr "Бүтэн гүйцээлт"
 #: view:sale.receipt.report:0
 #: field:sale.receipt.report,date_due:0
 msgid "Due Date"
-msgstr "Эцсийн огноо"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,narration:0
 msgid "Notes"
-msgstr "Тэмдэглэл"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,message_ids:0
 msgid "Messages"
-msgstr "Зурвасууд"
+msgstr ""
 
 #. module: account_voucher
 #: model:ir.actions.act_window,name:account_voucher.action_purchase_receipt
 #: model:ir.ui.menu,name:account_voucher.menu_action_purchase_receipt
 msgid "Purchase Receipts"
-msgstr "Худалдан авалтын талон"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher.line,move_line_id:0
 msgid "Journal Item"
-msgstr "Журналын бичилт"
+msgstr ""
 
 #. module: account_voucher
 #: code:addons/account_voucher/account_voucher.py:496
 #: code:addons/account_voucher/account_voucher.py:967
 #, python-format
 msgid "Error!"
-msgstr "Алдаа!"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher.line,amount:0
 msgid "Amount"
-msgstr "Дүн"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Payment Options"
-msgstr "Төлбөрйин сонголт"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Other Information"
-msgstr "Бусад мэдээлэл"
+msgstr ""
 
 #. module: account_voucher
 #: selection:account.voucher,state:0
 #: selection:sale.receipt.report,state:0
 msgid "Cancelled"
-msgstr "Цуцлагдсан"
+msgstr ""
 
 #. module: account_voucher
 #: code:addons/account_voucher/account_voucher.py:1139
@@ -258,7 +257,6 @@ msgstr "Цуцлагдсан"
 msgid ""
 "You have to configure account base code and account tax code on the '%s' tax!"
 msgstr ""
-"'%s' дансны суурь код болон дансны татварын кодыг тохируулах шаардлагатай!"
 
 #. module: account_voucher
 #: model:ir.actions.act_window,help:account_voucher.action_sale_receipt
@@ -277,39 +275,38 @@ msgstr ""
 #: help:account.voucher,message_unread:0
 msgid "If checked new messages require your attention."
 msgstr ""
-"Хэрэв тэмдэглэгдсэн бол таныг шинэ зурвасуудад анхаарал хандуулахыг шаардана."
 
 #. module: account_voucher
 #: model:ir.model,name:account_voucher.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr "Банкны тайлангийн мөр"
+msgstr ""
 
 #. module: account_voucher
 #: view:sale.receipt.report:0
 #: field:sale.receipt.report,day:0
 msgid "Day"
-msgstr "Өдөр"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,tax_id:0
 msgid "Tax"
-msgstr "Татвар"
+msgstr ""
 
 #. module: account_voucher
 #: code:addons/account_voucher/account_voucher.py:867
 #, python-format
 msgid "Invalid Action!"
-msgstr "Буруу Үйлдэл!"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,comment:0
 msgid "Counterpart Comment"
-msgstr "Гүйцээлтийн тайлбар"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher.line,account_analytic_id:0
 msgid "Analytic Account"
-msgstr "Аналитик Данс"
+msgstr ""
 
 #. module: account_voucher
 #: help:account.voucher,message_summary:0
@@ -317,23 +314,21 @@ msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
 msgstr ""
-"Чаатлагчийн хураангуйг агуулна (зурвасын тоо,...). Энэ хураангуй нь шууд "
-"html форматтай бөгөөд канбан харагдацад шууд орж харагдах боломжтой."
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Total Allocation"
-msgstr "Нийт төлөх дүн"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Payment Information"
-msgstr "Төлбөрийн мэдээлэл"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "(update)"
-msgstr "(шинэчлэх)"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
@@ -341,31 +336,31 @@ msgstr "(шинэчлэх)"
 #: view:sale.receipt.report:0
 #: selection:sale.receipt.report,state:0
 msgid "Draft"
-msgstr "Ноорог"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.bank.statement:0
 msgid "Import Invoices"
-msgstr "Нэхэмжлэх Импортлох"
+msgstr ""
 
 #. module: account_voucher
 #: code:addons/account_voucher/account_voucher.py:1098
 #, python-format
 msgid "Wrong voucher line"
-msgstr "Буруу ваучерийн мөр"
+msgstr ""
 
 #. module: account_voucher
 #: selection:account.voucher,pay_now:0
 #: selection:sale.receipt.report,pay_now:0
 msgid "Pay Later or Group Funds"
-msgstr "Дараа төлбөрт эсвэл Бүлэг Төлөлт"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 #: selection:account.voucher,type:0
 #: selection:sale.receipt.report,type:0
 msgid "Receipt"
-msgstr "Талон"
+msgstr ""
 
 #. module: account_voucher
 #: code:addons/account_voucher/account_voucher.py:1004
@@ -379,64 +374,64 @@ msgstr ""
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Sales Lines"
-msgstr "Борлуулалтын Мөрүүд"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 #: field:account.voucher,period_id:0
 msgid "Period"
-msgstr "Мөчлөг"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 #: code:addons/account_voucher/account_voucher.py:199
 #, python-format
 msgid "Supplier"
-msgstr "Нийлүүлэгч"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Supplier Voucher"
-msgstr "Нийлүүлэгчийн ваучер"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,message_follower_ids:0
 msgid "Followers"
-msgstr "Дагагчид"
+msgstr ""
 
 #. module: account_voucher
 #: selection:account.voucher.line,type:0
 msgid "Debit"
-msgstr "Дебит"
+msgstr ""
 
 #. module: account_voucher
 #: code:addons/account_voucher/account_voucher.py:1533
 #, python-format
 msgid "Unable to change journal !"
-msgstr "Журнал өөрчлөх боломжгүй!"
+msgstr ""
 
 #. module: account_voucher
 #: view:sale.receipt.report:0
 #: field:sale.receipt.report,nbr:0
 msgid "# of Voucher Lines"
-msgstr "Ваучерийн мөрийн тоо"
+msgstr ""
 
 #. module: account_voucher
 #: view:sale.receipt.report:0
 #: field:sale.receipt.report,type:0
 msgid "Type"
-msgstr "Төрөл"
+msgstr ""
 
 #. module: account_voucher
 #: view:sale.receipt.report:0
 msgid "Pro-forma Vouchers"
-msgstr "Урьдчилсан ваучер"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 #: model:ir.actions.act_window,name:account_voucher.act_journal_voucher_open
 msgid "Voucher Entries"
-msgstr "Ваучерийн бичилт"
+msgstr ""
 
 #. module: account_voucher
 #: model:ir.actions.act_window,help:account_voucher.action_vendor_payment
@@ -453,37 +448,37 @@ msgstr ""
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Open Supplier Journal Entries"
-msgstr "Нийлүүлэгчийн Журналын Бичилтүүдийг Нээх"
+msgstr ""
 
 #. module: account_voucher
 #: model:ir.actions.act_window,name:account_voucher.action_review_voucher_list
 msgid "Vouchers Entries"
-msgstr "Ваучерийн бичилтүүд"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,name:0
 msgid "Memo"
-msgstr "Санамж"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Are you sure to unreconcile and cancel this record ?"
-msgstr "Тулгалтыг арилгаж, бичлэгийг устгахдаа та итгэлтэй байна уу ?"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,is_multi_currency:0
 msgid "Multi Currency Voucher"
-msgstr "Олон Валютын Ваучер"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Bill Information"
-msgstr "Тооцооний мэдээлэл"
+msgstr ""
 
 #. module: account_voucher
 #: selection:sale.receipt.report,month:0
 msgid "July"
-msgstr "7-р сар"
+msgstr ""
 
 #. module: account_voucher
 #: help:account.voucher,state:0
@@ -501,35 +496,35 @@ msgstr ""
 #. module: account_voucher
 #: field:account.voucher,writeoff_amount:0
 msgid "Difference Amount"
-msgstr "Зөрүү дүн"
+msgstr ""
 
 #. module: account_voucher
 #: view:sale.receipt.report:0
 #: field:sale.receipt.report,due_delay:0
 msgid "Avg. Due Delay"
-msgstr "Дундаж Хугацаа Хэтрэлт"
+msgstr ""
 
 #. module: account_voucher
 #: code:addons/account_voucher/invoice.py:34
 #, python-format
 msgid "Pay Invoice"
-msgstr "Төлбөрийн нэхэмжлэл"
+msgstr ""
 
 #. module: account_voucher
 #: code:addons/account_voucher/account_voucher.py:1139
 #, python-format
 msgid "No Account Base Code and Account Tax Code!"
-msgstr "Дансны Суурь код болон Дансны Татварын Код алга байна!"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,tax_amount:0
 msgid "Tax Amount"
-msgstr "Татварын дүн"
+msgstr ""
 
 #. module: account_voucher
 #: view:sale.receipt.report:0
 msgid "Validated Vouchers"
-msgstr "Шалгагдсан Ваучерууд"
+msgstr ""
 
 #. module: account_voucher
 #: model:ir.actions.act_window,help:account_voucher.action_vendor_receipt
@@ -551,23 +546,23 @@ msgstr ""
 #: field:account.config.settings,expense_currency_exchange_account_id:0
 #: field:res.company,expense_currency_exchange_account_id:0
 msgid "Loss Exchange Rate Account"
-msgstr "Солилцооны Ханшийн Алдагдлын данс"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Paid Amount"
-msgstr "Төлөх дүн"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,payment_option:0
 msgid "Payment Difference"
-msgstr "Зөрүүг шийдэх"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 #: field:account.voucher,audit:0
 msgid "To Review"
-msgstr "Үзлэг хийх"
+msgstr ""
 
 #. module: account_voucher
 #: code:addons/account_voucher/account_voucher.py:1011
@@ -575,7 +570,7 @@ msgstr "Үзлэг хийх"
 #: code:addons/account_voucher/account_voucher.py:1180
 #, python-format
 msgid "change"
-msgstr "зөрүү"
+msgstr ""
 
 #. module: account_voucher
 #: code:addons/account_voucher/account_voucher.py:1000
@@ -589,12 +584,12 @@ msgstr ""
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Expense Lines"
-msgstr "Зардлын мөрүүд"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Sale voucher"
-msgstr "Ваучер худалдах"
+msgstr ""
 
 #. module: account_voucher
 #: help:account.voucher,is_multi_currency:0
@@ -602,60 +597,59 @@ msgid ""
 "Fields with internal purpose only that depicts if the voucher is a multi "
 "currency one or not"
 msgstr ""
-"Дотоод зориулалттай талбар бөгөөд ваучер нь олон валют эсэхийг тодорхойлдог"
 
 #. module: account_voucher
 #: view:account.invoice:0
 msgid "Register Payment"
-msgstr "Төлбөр Бүртгэх"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.statement.from.invoice.lines,line_ids:0
 msgid "Invoices"
-msgstr "Нэхэмжлэл"
+msgstr ""
 
 #. module: account_voucher
 #: selection:sale.receipt.report,month:0
 msgid "December"
-msgstr "12-р сар"
+msgstr ""
 
 #. module: account_voucher
 #: view:sale.receipt.report:0
 msgid "Group by month of Invoice Date"
-msgstr "Нэхэмжлэлийн огнооны сараар нь бүлэглэх"
+msgstr ""
 
 #. module: account_voucher
 #: view:sale.receipt.report:0
 #: field:sale.receipt.report,month:0
 msgid "Month"
-msgstr "Сар"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,currency_id:0
 #: field:account.voucher.line,currency_id:0
 #: field:sale.receipt.report,currency_id:0
 msgid "Currency"
-msgstr "Валют"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.statement.from.invoice.lines:0
 msgid "Payable and Receivables"
-msgstr "Өглөг болон Авлага"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Voucher Payment"
-msgstr "Ваучэр Төлбөр"
+msgstr ""
 
 #. module: account_voucher
 #: field:sale.receipt.report,state:0
 msgid "Voucher Status"
-msgstr "Ваучерийн Төлөв"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Are you sure to unreconcile this record?"
-msgstr "Та энэ бичлэгийг тулгахгүй болихдоо итгэлтэй байна уу?"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,company_id:0
@@ -663,68 +657,68 @@ msgstr "Та энэ бичлэгийг тулгахгүй болихдоо ит�
 #: view:sale.receipt.report:0
 #: field:sale.receipt.report,company_id:0
 msgid "Company"
-msgstr "Компани"
+msgstr ""
 
 #. module: account_voucher
 #: help:account.voucher,paid:0
 msgid "The Voucher has been totally paid."
-msgstr "Ваучер бүрэн төлөгдлөө."
+msgstr ""
 
 #. module: account_voucher
 #: selection:account.voucher,payment_option:0
 msgid "Reconcile Payment Balance"
-msgstr "Төлбөрийн үлдэгдлийг гүйцээх"
+msgstr ""
 
 #. module: account_voucher
 #: code:addons/account_voucher/account_voucher.py:963
 #, python-format
 msgid "Configuration Error !"
-msgstr "Тохиргооны алдаа !"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 #: view:sale.receipt.report:0
 msgid "Draft Vouchers"
-msgstr "Ноорог Ваучер"
+msgstr ""
 
 #. module: account_voucher
 #: view:sale.receipt.report:0
 #: field:sale.receipt.report,price_total_tax:0
 msgid "Total With Tax"
-msgstr "Татвартай нийлбэр"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Purchase Voucher"
-msgstr "Худалдан Авалтын Ваучер"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 #: field:account.voucher,state:0
 #: view:sale.receipt.report:0
 msgid "Status"
-msgstr "Төлөв"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Allocation"
-msgstr "Төлөх дүн"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.statement.from.invoice.lines:0
 #: view:account.voucher:0
 msgid "or"
-msgstr "эсвэл"
+msgstr ""
 
 #. module: account_voucher
 #: selection:sale.receipt.report,month:0
 msgid "August"
-msgstr "8-р сар"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Validate Payment"
-msgstr "Төлбөр Шалгах"
+msgstr ""
 
 #. module: account_voucher
 #: help:account.voucher,audit:0
@@ -732,13 +726,11 @@ msgid ""
 "Check this box if you are unsure of that journal entry and if you want to "
 "note it as 'to be reviewed' by an accounting expert."
 msgstr ""
-"Хэрэв та энэ гүйлгээг хүлээн зөвшөөрөхгүй байгаа бөгөөд та энэ гүйлгээг "
-"санхүүгийн мэргэжилтнээр хэлэлцүүлэхийг хүсч байвал сонго."
 
 #. module: account_voucher
 #: selection:sale.receipt.report,month:0
 msgid "October"
-msgstr "10-р сар"
+msgstr ""
 
 #. module: account_voucher
 #: code:addons/account_voucher/account_voucher.py:964
@@ -749,29 +741,29 @@ msgstr ""
 #. module: account_voucher
 #: selection:sale.receipt.report,month:0
 msgid "June"
-msgstr "6-р сар"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,payment_rate_currency_id:0
 msgid "Payment Rate Currency"
-msgstr "Төлбөрийн Ханшийн Валют"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,paid:0
 msgid "Paid"
-msgstr "Төлөгдсөн"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 #: model:ir.actions.act_window,name:account_voucher.action_sale_receipt
 #: model:ir.ui.menu,name:account_voucher.menu_action_sale_receipt
 msgid "Sales Receipts"
-msgstr "Борлуулалтын талон"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,message_is_follower:0
 msgid "Is a Follower"
-msgstr "Дагагч эсэх"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,analytic_id:0
@@ -783,33 +775,33 @@ msgstr ""
 #: field:account.voucher.line,date_original:0
 #: field:sale.receipt.report,date:0
 msgid "Date"
-msgstr "Огноо"
+msgstr ""
 
 #. module: account_voucher
 #: selection:sale.receipt.report,month:0
 msgid "November"
-msgstr "11-р сар"
+msgstr ""
 
 #. module: account_voucher
 #: view:sale.receipt.report:0
 msgid "Extended Filters..."
-msgstr "Өргөтгөсөн Шүүлтүүр..."
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,paid_amount_in_company_currency:0
 msgid "Paid Amount in Company Currency"
-msgstr "Төлөгдсөн Дүн компаний валютаар"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.bank.statement.line,amount_reconciled:0
 msgid "Amount reconciled"
-msgstr "Тулгагдсан дүн"
+msgstr ""
 
 #. module: account_voucher
 #: selection:account.voucher,pay_now:0
 #: selection:sale.receipt.report,pay_now:0
 msgid "Pay Directly"
-msgstr "Шууд төлөх"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher.line,type:0
@@ -819,7 +811,7 @@ msgstr ""
 #. module: account_voucher
 #: field:account.voucher,pre_line:0
 msgid "Previous Payments ?"
-msgstr "Өмнөх төлбөрүүд ?"
+msgstr ""
 
 #. module: account_voucher
 #: code:addons/account_voucher/account_voucher.py:1098
@@ -830,100 +822,100 @@ msgstr ""
 #. module: account_voucher
 #: selection:sale.receipt.report,month:0
 msgid "January"
-msgstr "1-р сар"
+msgstr ""
 
 #. module: account_voucher
 #: model:ir.actions.act_window,name:account_voucher.action_voucher_list
 #: model:ir.ui.menu,name:account_voucher.menu_encode_entries_by_voucher
 msgid "Journal Vouchers"
-msgstr "Журнал Ваучер"
+msgstr ""
 
 #. module: account_voucher
 #: model:ir.model,name:account_voucher.model_res_company
 msgid "Companies"
-msgstr "Компаниуд"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,message_summary:0
 msgid "Summary"
-msgstr "Хураангуй"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,active:0
 msgid "Active"
-msgstr "Идэвхтэй"
+msgstr ""
 
 #. module: account_voucher
 #: code:addons/account_voucher/account_voucher.py:968
 #, python-format
 msgid "Please define a sequence on the journal."
-msgstr "Энэ журналд дараалaл тодорхойлон уу."
+msgstr ""
 
 #. module: account_voucher
 #: model:ir.actions.act_window,name:account_voucher.act_pay_voucher
 #: model:ir.actions.act_window,name:account_voucher.action_vendor_receipt
 #: model:ir.ui.menu,name:account_voucher.menu_action_vendor_receipt
 msgid "Customer Payments"
-msgstr "Захиалагчийн төлбөр"
+msgstr ""
 
 #. module: account_voucher
 #: model:ir.actions.act_window,name:account_voucher.action_sale_receipt_report_all
 #: model:ir.ui.menu,name:account_voucher.menu_action_sale_receipt_report_all
 #: view:sale.receipt.report:0
 msgid "Sales Receipts Analysis"
-msgstr "Борлуулалтын талоны шинжилгээ"
+msgstr ""
 
 #. module: account_voucher
 #: view:sale.receipt.report:0
 msgid "Group by Invoice Date"
-msgstr "Нэхэмжлэлийн Огноогоор Бүлэглэх"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Post"
-msgstr "Илгээх"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Invoices and outstanding transactions"
-msgstr "Нэхэмжлэл болон төлөгдөөгүй гүйлгээнүүд"
+msgstr ""
 
 #. module: account_voucher
 #: view:sale.receipt.report:0
 #: field:sale.receipt.report,price_total:0
 msgid "Total Without Tax"
-msgstr "Татваргүй нийлбэр"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Bill Date"
-msgstr "Тооцоо бодсон огноо"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Unreconcile"
-msgstr "Гүйцээлтийг цуцлах"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 #: model:ir.model,name:account_voucher.model_account_voucher
 msgid "Accounting Voucher"
-msgstr "Санхүүгийн ваучер"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,number:0
 msgid "Number"
-msgstr "Дугаар"
+msgstr ""
 
 #. module: account_voucher
 #: selection:account.voucher.line,type:0
 msgid "Credit"
-msgstr "Кредит"
+msgstr ""
 
 #. module: account_voucher
 #: model:ir.model,name:account_voucher.model_account_bank_statement
 msgid "Bank Statement"
-msgstr "Банкны хуулга"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.bank.statement:0
@@ -933,76 +925,76 @@ msgstr ""
 #. module: account_voucher
 #: selection:sale.receipt.report,month:0
 msgid "September"
-msgstr "9-р сар"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Sales Information"
-msgstr "Борлуулалтын Мэдээлэл"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 #: field:account.voucher.line,voucher_id:0
 #: model:res.request.link,name:account_voucher.req_link_voucher
 msgid "Voucher"
-msgstr "Ваучер"
+msgstr ""
 
 #. module: account_voucher
 #: model:ir.model,name:account_voucher.model_account_invoice
 msgid "Invoice"
-msgstr "Нэхэмжлэл"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Voucher Items"
-msgstr "Ваучерийн зүйлүүд"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.statement.from.invoice.lines:0
 #: view:account.voucher:0
 msgid "Cancel"
-msgstr "Цуцлах"
+msgstr ""
 
 #. module: account_voucher
 #: model:ir.actions.client,name:account_voucher.action_client_invoice_menu
 msgid "Open Invoicing Menu"
-msgstr "Нэхэмжлэлийн Цэсийг Нээх"
+msgstr ""
 
 #. module: account_voucher
 #: selection:account.voucher,state:0
 #: view:sale.receipt.report:0
 #: selection:sale.receipt.report,state:0
 msgid "Pro-forma"
-msgstr "Урьтал"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 #: field:account.voucher,move_ids:0
 msgid "Journal Items"
-msgstr "Журналын бичилтүүд"
+msgstr ""
 
 #. module: account_voucher
 #: code:addons/account_voucher/account_voucher.py:496
 #, python-format
 msgid "Please define default credit/debit accounts on the journal \"%s\"."
-msgstr "Журналд үндсэн кредит/дебит дансаа тодорхойлно уу \"%s\"."
+msgstr ""
 
 #. module: account_voucher
 #: selection:account.voucher,type:0
 #: selection:sale.receipt.report,type:0
 msgid "Purchase"
-msgstr "Худалдан авалт"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.invoice:0
 #: view:account.voucher:0
 msgid "Pay"
-msgstr "Төлөх"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Currency Options"
-msgstr "Валютын сонголт"
+msgstr ""
 
 #. module: account_voucher
 #: help:account.voucher,payment_option:0
@@ -1012,9 +1004,6 @@ msgid ""
 "either choose to keep open this difference on the partner's account, or "
 "reconcile it with the payment(s)"
 msgstr ""
-"Энэ сонголтоор та төлөх дүн болон төлж буй дүн хоёрыг зөрүүг хэрхэхийг "
-"шийдвэрлэх болно. Та энэ зөрүүг харилцагчийн үлдэгдэл хэвээр үлдээх эсвэл "
-"төлөлтөөр гүйцээх"
 
 #. module: account_voucher
 #: model:ir.actions.act_window,help:account_voucher.action_sale_receipt_report_all
@@ -1032,32 +1021,32 @@ msgstr ""
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Posted Vouchers"
-msgstr "Илгээгдсэн Ваучерууд"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,payment_rate:0
 msgid "Exchange Rate"
-msgstr "Хөрвүүлэлтийн ханш"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Payment Method"
-msgstr "Төлбөрийн хэлбэр"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher.line,name:0
 msgid "Description"
-msgstr "Тайлбар"
+msgstr ""
 
 #. module: account_voucher
 #: selection:sale.receipt.report,month:0
 msgid "May"
-msgstr "5-р сар"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Sale Receipt"
-msgstr "Борлуулалтын Тасалбар"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
@@ -1065,28 +1054,28 @@ msgstr "Борлуулалтын Тасалбар"
 #: view:sale.receipt.report:0
 #: field:sale.receipt.report,journal_id:0
 msgid "Journal"
-msgstr "Журнал"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Internal Notes"
-msgstr "Дотоод тэмдэглэл"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 #: field:account.voucher,line_cr_ids:0
 msgid "Credits"
-msgstr "Кредит"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher.line,amount_original:0
 msgid "Original Amount"
-msgstr "Жинхэнэ дүн"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Purchase Receipt"
-msgstr "Худалдан авалтын баримт"
+msgstr ""
 
 #. module: account_voucher
 #: help:account.voucher,payment_rate:0
@@ -1094,8 +1083,6 @@ msgid ""
 "The specific rate that will be used, in this voucher, between the selected "
 "currency (in 'Payment Rate Currency' field)  and the voucher currency."
 msgstr ""
-"Энд тодорхойлсон ханш нь уг ваучерийн валют болон нэхэмжлэлийн валют "
-"хоорондын хөрвүүлэлтэд хэрэглэгдэнэ."
 
 #. module: account_voucher
 #: view:account.voucher:0
@@ -1104,7 +1091,7 @@ msgstr ""
 #: field:sale.receipt.report,pay_now:0
 #: selection:sale.receipt.report,type:0
 msgid "Payment"
-msgstr "Төлбөр"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
@@ -1112,33 +1099,33 @@ msgstr "Төлбөр"
 #: view:sale.receipt.report:0
 #: selection:sale.receipt.report,state:0
 msgid "Posted"
-msgstr "Батлагдсан"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Customer"
-msgstr "Захиалагч"
+msgstr ""
 
 #. module: account_voucher
 #: selection:sale.receipt.report,month:0
 msgid "February"
-msgstr "2-р сар"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Supplier Invoices and Outstanding transactions"
-msgstr "Нийлүүлэгчийн Нэхэмжлэлүүд болон Хэтэрсэн гүйлгээнүүд"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,reference:0
 msgid "Ref #"
-msgstr "Код #"
+msgstr ""
 
 #. module: account_voucher
 #: view:sale.receipt.report:0
 #: field:sale.receipt.report,year:0
 msgid "Year"
-msgstr "Жил"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.config.settings,income_currency_exchange_account_id:0
@@ -1150,43 +1137,43 @@ msgstr ""
 #: selection:account.voucher,type:0
 #: selection:sale.receipt.report,type:0
 msgid "Sale"
-msgstr "Борлуулалт"
+msgstr ""
 
 #. module: account_voucher
 #: selection:sale.receipt.report,month:0
 msgid "April"
-msgstr "4-р сар"
+msgstr ""
 
 #. module: account_voucher
 #: help:account.voucher,tax_id:0
 msgid "Only for tax excluded from price"
-msgstr "Зөвхөн үнээс ялгагдсан татваруудын хувьд"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,type:0
 msgid "Default Type"
-msgstr "Анхны Утга Төрөл"
+msgstr ""
 
 #. module: account_voucher
 #: help:account.voucher,message_ids:0
 msgid "Messages and communication history"
-msgstr "Зурвас болон харилцсан түүх"
+msgstr ""
 
 #. module: account_voucher
 #: model:ir.model,name:account_voucher.model_account_statement_from_invoice_lines
 msgid "Entries by Statement from Invoices"
-msgstr "Бичилтүүд Нэхэмжлэлийн Хуулгуудаар"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
 #: field:account.voucher,amount:0
 msgid "Total"
-msgstr "Дүн"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,move_id:0
 msgid "Account Entry"
-msgstr "Дансны бичилт"
+msgstr ""
 
 #. module: account_voucher
 #: constraint:account.bank.statement.line:0
@@ -1199,45 +1186,45 @@ msgstr ""
 #: code:addons/account_voucher/account_voucher.py:867
 #, python-format
 msgid "Cannot delete voucher(s) which are already opened or paid."
-msgstr "Нэгэнт нээчихсэн эсвэл төлөгдчихсөн ваучер устгагдах боломжгүй."
+msgstr ""
 
 #. module: account_voucher
 #: help:account.voucher,date:0
 msgid "Effective date for accounting entries"
-msgstr "Санхүүгийн бичилт хийхэд зохистой огноо"
+msgstr ""
 
 #. module: account_voucher
 #: model:mail.message.subtype,name:account_voucher.mt_voucher_state_change
 msgid "Status Change"
-msgstr "Төлөв Өөрчлөх"
+msgstr ""
 
 #. module: account_voucher
 #: selection:account.voucher,payment_option:0
 msgid "Keep Open"
-msgstr "Нээлттэй үлдээх"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher,line_ids:0
 #: view:account.voucher.line:0
 #: model:ir.model,name:account_voucher.model_account_voucher_line
 msgid "Voucher Lines"
-msgstr "Ваучерийн мөр"
+msgstr ""
 
 #. module: account_voucher
 #: view:sale.receipt.report:0
 #: field:sale.receipt.report,delay_to_pay:0
 msgid "Avg. Delay To Pay"
-msgstr "Төлбөрийн Дүндаж Хэтрэлт"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher.line,untax_amount:0
 msgid "Untax Amount"
-msgstr "Татвар татахгүй дүн"
+msgstr ""
 
 #. module: account_voucher
 #: model:ir.model,name:account_voucher.model_sale_receipt_report
 msgid "Sales Receipt Statistics"
-msgstr "Борлуулалтын төлбөрийн баримтын статистик"
+msgstr ""
 
 #. module: account_voucher
 #: view:account.voucher:0
@@ -1246,24 +1233,24 @@ msgstr "Борлуулалтын төлбөрийн баримтын стати�
 #: view:sale.receipt.report:0
 #: field:sale.receipt.report,partner_id:0
 msgid "Partner"
-msgstr "Харилцагч"
+msgstr ""
 
 #. module: account_voucher
 #: field:account.voucher.line,amount_unreconciled:0
 msgid "Open Balance"
-msgstr "Төлөгдөөгүй үлдэгдэл"
+msgstr ""
 
 #. module: account_voucher
 #: model:mail.message.subtype,description:account_voucher.mt_voucher_state_change
 msgid "Status <b>changed</b>"
-msgstr "Төлөв  <b>өөрчлөгдлөө</b>"
+msgstr ""
 
 #. module: account_voucher
 #: code:addons/account_voucher/account_voucher.py:1000
 #: code:addons/account_voucher/account_voucher.py:1004
 #, python-format
 msgid "Insufficient Configuration!"
-msgstr "Тохиргоо Дутуу байна!"
+msgstr ""
 
 #. module: account_voucher
 #: help:account.voucher,active:0

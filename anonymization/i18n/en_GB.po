@@ -1,16 +1,16 @@
-# Mongolian translation for openobject-addons
-# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# English (United Kingdom) translation for openobject-addons
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
 # This file is distributed under the same license as the openobject-addons package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:05+0000\n"
-"PO-Revision-Date: 2013-02-08 07:10+0000\n"
-"Last-Translator: gobi <Unknown>\n"
-"Language-Team: Mongolian <mn@li.org>\n"
+"PO-Revision-Date: 2013-02-08 19:45+0000\n"
+"Last-Translator: mrx5682 <Unknown>\n"
+"Language-Team: English (United Kingdom) <en_GB@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,27 +20,27 @@ msgstr ""
 #. module: anonymization
 #: model:ir.model,name:anonymization.model_ir_model_fields_anonymize_wizard
 msgid "ir.model.fields.anonymize.wizard"
-msgstr ""
+msgstr "ir.model.fields.anonymize.wizard"
 
 #. module: anonymization
 #: field:ir.model.fields.anonymization,model_id:0
 msgid "Object"
-msgstr "Обьект"
+msgstr "Object"
 
 #. module: anonymization
 #: model:ir.model,name:anonymization.model_ir_model_fields_anonymization_migration_fix
 msgid "ir.model.fields.anonymization.migration.fix"
-msgstr ""
+msgstr "ir.model.fields.anonymization.migration.fix"
 
 #. module: anonymization
 #: field:ir.model.fields.anonymization.migration.fix,target_version:0
 msgid "Target Version"
-msgstr ""
+msgstr "Target Version"
 
 #. module: anonymization
 #: selection:ir.model.fields.anonymization.migration.fix,query_type:0
 msgid "sql"
-msgstr ""
+msgstr "sql"
 
 #. module: anonymization
 #: code:addons/anonymization/anonymization.py:91
@@ -50,32 +50,35 @@ msgid ""
 "are anonymized, while some fields are not anonymized. You should try to "
 "solve this problem before trying to create, write or delete fields."
 msgstr ""
+"The database anonymization is currently in an unstable state. Some fields "
+"are anonymized, while some fields are not anonymized. You should try to "
+"solve this problem before trying to create, write or delete fields."
 
 #. module: anonymization
 #: field:ir.model.fields.anonymization,field_name:0
 msgid "Field Name"
-msgstr "Талбарын нэр"
+msgstr "Field Name"
 
 #. module: anonymization
 #: field:ir.model.fields.anonymization,field_id:0
 #: field:ir.model.fields.anonymization.migration.fix,field_name:0
 msgid "Field"
-msgstr "Талбар"
+msgstr "Field"
 
 #. module: anonymization
 #: selection:ir.model.fields.anonymization,state:0
 msgid "New"
-msgstr "Шинэ"
+msgstr "New"
 
 #. module: anonymization
 #: field:ir.model.fields.anonymize.wizard,file_import:0
 msgid "Import"
-msgstr ""
+msgstr "Import"
 
 #. module: anonymization
 #: model:ir.model,name:anonymization.model_ir_model_fields_anonymization
 msgid "ir.model.fields.anonymization"
-msgstr ""
+msgstr "ir.model.fields.anonymization"
 
 #. module: anonymization
 #: code:addons/anonymization/anonymization.py:300
@@ -84,56 +87,58 @@ msgid ""
 "Before executing the anonymization process, you should make a backup of your "
 "database."
 msgstr ""
+"Before executing the anonymization process, you should make a backup of your "
+"database."
 
 #. module: anonymization
 #: field:ir.model.fields.anonymization.history,state:0
 #: field:ir.model.fields.anonymize.wizard,state:0
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #. module: anonymization
 #: field:ir.model.fields.anonymization.history,direction:0
 msgid "Direction"
-msgstr "Чиглэл"
+msgstr "Direction"
 
 #. module: anonymization
 #: model:ir.actions.act_window,name:anonymization.action_ir_model_fields_anonymization_tree
 #: view:ir.model.fields.anonymization:0
 #: model:ir.ui.menu,name:anonymization.menu_administration_anonymization_fields
 msgid "Anonymized Fields"
-msgstr ""
+msgstr "Anonymized Fields"
 
 #. module: anonymization
 #: model:ir.ui.menu,name:anonymization.menu_administration_anonymization
 msgid "Database anonymization"
-msgstr ""
+msgstr "Database anonymization"
 
 #. module: anonymization
 #: selection:ir.model.fields.anonymization.history,direction:0
 msgid "clear -> anonymized"
-msgstr ""
+msgstr "clear -> anonymized"
 
 #. module: anonymization
 #: selection:ir.model.fields.anonymization,state:0
 #: selection:ir.model.fields.anonymize.wizard,state:0
 msgid "Anonymized"
-msgstr ""
+msgstr "Anonymized"
 
 #. module: anonymization
 #: field:ir.model.fields.anonymization,state:0
 msgid "unknown"
-msgstr ""
+msgstr "unknown"
 
 #. module: anonymization
 #: code:addons/anonymization/anonymization.py:448
 #, python-format
 msgid "Anonymized value is None. This cannot happens."
-msgstr ""
+msgstr "Anonymized value is None. This cannot happens."
 
 #. module: anonymization
 #: field:ir.model.fields.anonymization.history,filepath:0
 msgid "File path"
-msgstr "Файлын зам"
+msgstr ""
 
 #. module: anonymization
 #: help:ir.model.fields.anonymize.wizard,file_import:0
@@ -145,7 +150,7 @@ msgstr ""
 #. module: anonymization
 #: field:ir.model.fields.anonymization.history,date:0
 msgid "Date"
-msgstr "Огноо"
+msgstr ""
 
 #. module: anonymization
 #: field:ir.model.fields.anonymize.wizard,file_export:0
@@ -168,7 +173,7 @@ msgstr ""
 #. module: anonymization
 #: view:ir.model.fields.anonymize.wizard:0
 msgid "Database Anonymization"
-msgstr "Өгөгдлийн Баазыг Нэргүйжүүлэх"
+msgstr ""
 
 #. module: anonymization
 #: model:ir.ui.menu,name:anonymization.menu_administration_anonymization_wizard
@@ -184,7 +189,7 @@ msgstr ""
 #: view:ir.model.fields.anonymization.history:0
 #: field:ir.model.fields.anonymization.history,field_ids:0
 msgid "Fields"
-msgstr "Талбарууд"
+msgstr ""
 
 #. module: anonymization
 #: selection:ir.model.fields.anonymization,state:0
@@ -223,7 +228,7 @@ msgstr ""
 #. module: anonymization
 #: selection:ir.model.fields.anonymize.wizard,state:0
 msgid "Unstable"
-msgstr "Тогтмол биш"
+msgstr ""
 
 #. module: anonymization
 #: selection:ir.model.fields.anonymization.history,state:0
@@ -233,7 +238,7 @@ msgstr ""
 #. module: anonymization
 #: selection:ir.model.fields.anonymization,state:0
 msgid "Not Existing"
-msgstr "Байхгүй"
+msgstr ""
 
 #. module: anonymization
 #: field:ir.model.fields.anonymization,model_name:0
@@ -271,7 +276,7 @@ msgstr ""
 #: code:addons/anonymization/anonymization.py:448
 #, python-format
 msgid "Error !"
-msgstr "Алдаа!"
+msgstr ""
 
 #. module: anonymization
 #: model:ir.actions.act_window,name:anonymization.action_ir_model_fields_anonymize_wizard
@@ -282,7 +287,7 @@ msgstr ""
 #. module: anonymization
 #: field:ir.model.fields.anonymize.wizard,name:0
 msgid "File Name"
-msgstr "Файлын нэр"
+msgstr ""
 
 #. module: anonymization
 #: field:ir.model.fields.anonymization.migration.fix,sequence:0
@@ -297,7 +302,7 @@ msgstr ""
 #. module: anonymization
 #: selection:ir.model.fields.anonymization.history,state:0
 msgid "Started"
-msgstr "Эхэлсэн"
+msgstr ""
 
 #. module: anonymization
 #: code:addons/anonymization/anonymization.py:389
@@ -308,7 +313,7 @@ msgstr ""
 #. module: anonymization
 #: selection:ir.model.fields.anonymization.history,state:0
 msgid "Done"
-msgstr "Хийсэн"
+msgstr ""
 
 #. module: anonymization
 #: field:ir.model.fields.anonymization.migration.fix,query:0
@@ -321,7 +326,7 @@ msgstr ""
 #: field:ir.model.fields.anonymization.history,msg:0
 #: field:ir.model.fields.anonymize.wizard,msg:0
 msgid "Message"
-msgstr "Зурвас"
+msgstr ""
 
 #. module: anonymization
 #: code:addons/anonymization/anonymization.py:65

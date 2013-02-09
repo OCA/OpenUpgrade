@@ -1,16 +1,16 @@
-# Mongolian translation for openobject-addons
-# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# English (United Kingdom) translation for openobject-addons
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
 # This file is distributed under the same license as the openobject-addons package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:05+0000\n"
-"PO-Revision-Date: 2013-02-08 07:08+0000\n"
-"Last-Translator: gobi <Unknown>\n"
-"Language-Team: Mongolian <mn@li.org>\n"
+"PO-Revision-Date: 2013-02-08 19:50+0000\n"
+"Last-Translator: mrx5682 <Unknown>\n"
+"Language-Team: English (United Kingdom) <en_GB@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,38 +20,38 @@ msgstr ""
 #. module: analytic
 #: field:account.analytic.account,child_ids:0
 msgid "Child Accounts"
-msgstr "Дэд дансууд"
+msgstr "Child Accounts"
 
 #. module: analytic
 #: selection:account.analytic.account,state:0
 msgid "In Progress"
-msgstr "Боловсруулж байна"
+msgstr "In Progress"
 
 #. module: analytic
 #: code:addons/analytic/analytic.py:229
 #, python-format
 msgid "Contract: "
-msgstr "Гэрээ: "
+msgstr "Contract: "
 
 #. module: analytic
 #: selection:account.analytic.account,state:0
 msgid "Template"
-msgstr "Загвар"
+msgstr "Template"
 
 #. module: analytic
 #: view:account.analytic.account:0
 msgid "End Date"
-msgstr "Дуусах огноо"
+msgstr "End Date"
 
 #. module: analytic
 #: help:account.analytic.line,unit_amount:0
 msgid "Specifies the amount of quantity to count."
-msgstr "Тоо ширхэгийг тоолох хэмжээг тооцоолох"
+msgstr "Specifies the amount of quantity to count."
 
 #. module: analytic
 #: field:account.analytic.account,debit:0
 msgid "Debit"
-msgstr "Дебит"
+msgstr "Debit"
 
 #. module: analytic
 #: help:account.analytic.account,type:0
@@ -64,7 +64,7 @@ msgid ""
 "the validity and the invoicing options for this account.\n"
 "The special type 'Template of Contract' allows you to define a template with "
 "default data that you can reuse easily."
-msgstr ""
+msgstr "I"
 
 #. module: analytic
 #: view:account.analytic.account:0
@@ -79,99 +79,108 @@ msgid ""
 "the\n"
 "                                        customer."
 msgstr ""
+"Once the end date of the contract is\n"
+"                                        passed or the maximum number of "
+"service\n"
+"                                        units (e.g. support contract) is\n"
+"                                        reached, the account manager is "
+"notified \n"
+"                                        by email to renew the contract with "
+"the\n"
+"                                        customer."
 
 #. module: analytic
 #: selection:account.analytic.account,type:0
 msgid "Contract or Project"
-msgstr "Гэрээ эсвэл Төсөл"
+msgstr "Contract or Project"
 
 #. module: analytic
 #: field:account.analytic.account,name:0
 msgid "Account/Contract Name"
-msgstr "Данс/Гэрээний толгой"
+msgstr "Account/Contract Name"
 
 #. module: analytic
 #: field:account.analytic.account,manager_id:0
 msgid "Account Manager"
-msgstr "Дансны менежер"
+msgstr "Account Manager"
 
 #. module: analytic
 #: field:account.analytic.account,message_follower_ids:0
 msgid "Followers"
-msgstr "Дагагчид"
+msgstr "Followers"
 
 #. module: analytic
 #: selection:account.analytic.account,state:0
 msgid "Closed"
-msgstr "Хаасан"
+msgstr "Closed"
 
 #. module: analytic
 #: model:mail.message.subtype,name:analytic.mt_account_pending
 msgid "Contract to Renew"
-msgstr "Шинэчлэх Гэрээ"
+msgstr "Contract to Renew"
 
 #. module: analytic
 #: selection:account.analytic.account,state:0
 msgid "New"
-msgstr "Шинэ"
+msgstr "New"
 
 #. module: analytic
 #: field:account.analytic.account,user_id:0
 msgid "Project Manager"
-msgstr "Төслийн Менежер"
+msgstr "Project Manager"
 
 #. module: analytic
 #: field:account.analytic.account,state:0
 msgid "Status"
-msgstr "Төлөв"
+msgstr "Status"
 
 #. module: analytic
 #: code:addons/analytic/analytic.py:268
 #, python-format
 msgid "%s (copy)"
-msgstr "%s (хуулбар)"
+msgstr "%s (copy)"
 
 #. module: analytic
 #: model:ir.model,name:analytic.model_account_analytic_line
 msgid "Analytic Line"
-msgstr "Аналитик шугам"
+msgstr "Analytic Line"
 
 #. module: analytic
 #: field:account.analytic.account,description:0
 #: field:account.analytic.line,name:0
 msgid "Description"
-msgstr "Тайлбар"
+msgstr "Description"
 
 #. module: analytic
 #: field:account.analytic.account,message_unread:0
 msgid "Unread Messages"
-msgstr "Уншаагүй Зурвасууд"
+msgstr "Unread Messages"
 
 #. module: analytic
 #: constraint:account.analytic.account:0
 msgid "Error! You cannot create recursive analytic accounts."
-msgstr "Алдаа! Та тойрог хамааралтай шинжилгээний данс үүсгэж чадахгүй."
+msgstr "Error! You cannot create recursive analytic accounts."
 
 #. module: analytic
 #: field:account.analytic.account,company_id:0
 #: field:account.analytic.line,company_id:0
 msgid "Company"
-msgstr "Компани"
+msgstr "Company"
 
 #. module: analytic
 #: view:account.analytic.account:0
 msgid "Renewal"
-msgstr "Шинэтгэл"
+msgstr "Renewal"
 
 #. module: analytic
 #: help:account.analytic.account,message_ids:0
 msgid "Messages and communication history"
-msgstr "Зурвас болон харилцсан түүх"
+msgstr "Messages and communication history"
 
 #. module: analytic
 #: model:mail.message.subtype,description:analytic.mt_account_opened
 msgid "Stage <b>opened</b>"
-msgstr ""
+msgstr "Stage <b>opened</b>"
 
 #. module: analytic
 #: help:account.analytic.account,quantity_max:0
@@ -179,6 +188,8 @@ msgid ""
 "Sets the higher limit of time to work on the contract, based on the "
 "timesheet. (for instance, number of hours in a limited support contract.)"
 msgstr ""
+"Sets the higher limit of time to work on the contract, based on the "
+"timesheet. (for instance, number of hours in a limited support contract.)"
 
 #. module: analytic
 #: code:addons/analytic/analytic.py:160
@@ -191,20 +202,22 @@ msgid ""
 "consolidation purposes of several companies charts with different "
 "currencies, for example."
 msgstr ""
-"Хэрэв компани сонгосон бол валют нь компаний валюттай ижил байх ёстой. \n"
-"Компанийг арилгаад валютыг солиж болно. Үүнийг зөвхөн 'Харагдац' төрлийн "
-"данс дээр л хийх боломжтой. Энэ нь олон компаний ялгаатай валюттай дансдыг "
-"нэгтгэхэд туйлын хэрэгтэй."
+"If you set a company, the currency selected has to be the same as it's "
+"currency. \n"
+"You can remove the company belonging, and thus change the currency, only on "
+"analytic account of type 'view'. This can be really usefull for "
+"consolidation purposes of several companies charts with different "
+"currencies, for example."
 
 #. module: analytic
 #: field:account.analytic.account,message_is_follower:0
 msgid "Is a Follower"
-msgstr "Дагагч эсэх"
+msgstr ""
 
 #. module: analytic
 #: field:account.analytic.line,user_id:0
 msgid "User"
-msgstr "Хэрэглэгч"
+msgstr ""
 
 #. module: analytic
 #: model:mail.message.subtype,description:analytic.mt_account_pending
@@ -214,17 +227,17 @@ msgstr ""
 #. module: analytic
 #: field:account.analytic.line,date:0
 msgid "Date"
-msgstr "Огноо"
+msgstr ""
 
 #. module: analytic
 #: model:mail.message.subtype,name:analytic.mt_account_closed
 msgid "Contract Finished"
-msgstr "Гэрээ дууссан"
+msgstr ""
 
 #. module: analytic
 #: view:account.analytic.account:0
 msgid "Terms and Conditions"
-msgstr "Гэрээний заалт/нөхцөл"
+msgstr ""
 
 #. module: analytic
 #: help:account.analytic.line,amount:0
@@ -232,127 +245,124 @@ msgid ""
 "Calculated by multiplying the quantity and the price given in the Product's "
 "cost price. Always expressed in the company main currency."
 msgstr ""
-"Барааны өртөг үнэнд өгөгдсөн тоо ширхэг болон үнийг үржүүлж тооцоолоогдсон. "
-"Үргэлж компанийн үндсэн мөнгөн тэмдэгтэд илэрхийлэгддэг."
 
 #. module: analytic
 #: field:account.analytic.account,partner_id:0
 msgid "Customer"
-msgstr "Үйлчлүүлэгч"
+msgstr ""
 
 #. module: analytic
 #: field:account.analytic.account,child_complete_ids:0
 msgid "Account Hierarchy"
-msgstr "Дансны Мөчир"
+msgstr ""
 
 #. module: analytic
 #: field:account.analytic.account,message_ids:0
 msgid "Messages"
-msgstr "Зурвасууд"
+msgstr ""
 
 #. module: analytic
 #: field:account.analytic.account,parent_id:0
 msgid "Parent Analytic Account"
-msgstr "Эцэг аналитик данс"
+msgstr ""
 
 #. module: analytic
 #: view:account.analytic.account:0
 msgid "Contract Information"
-msgstr "Гэрээний Мэдээлэл"
+msgstr ""
 
 #. module: analytic
 #: field:account.analytic.account,template_id:0
 #: selection:account.analytic.account,type:0
 msgid "Template of Contract"
-msgstr "Гэрээний үлгэр"
+msgstr ""
 
 #. module: analytic
 #: field:account.analytic.account,message_summary:0
 msgid "Summary"
-msgstr "Хураангуй"
+msgstr ""
 
 #. module: analytic
 #: field:account.analytic.account,quantity_max:0
 msgid "Prepaid Service Units"
-msgstr "Урдчилсан Төлбөрт Үйлчилгээний Нэгжүүд"
+msgstr ""
 
 #. module: analytic
 #: field:account.analytic.account,credit:0
 msgid "Credit"
-msgstr "Кредит"
+msgstr ""
 
 #. module: analytic
 #: model:mail.message.subtype,name:analytic.mt_account_opened
 msgid "Contract Opened"
-msgstr "Нээгдсэн Гэрээ"
+msgstr ""
 
 #. module: analytic
 #: model:mail.message.subtype,description:analytic.mt_account_closed
 msgid "Contract <b>closed</b>"
-msgstr "Гэрээ <b>хаагдсан</b>"
+msgstr ""
 
 #. module: analytic
 #: selection:account.analytic.account,state:0
 msgid "Cancelled"
-msgstr "Цуцлагдсан"
+msgstr ""
 
 #. module: analytic
 #: selection:account.analytic.account,type:0
 msgid "Analytic View"
-msgstr "Шинжилгээний Харагдац"
+msgstr ""
 
 #. module: analytic
 #: field:account.analytic.account,balance:0
 msgid "Balance"
-msgstr "Тэнцэл"
+msgstr ""
 
 #. module: analytic
 #: help:account.analytic.account,message_unread:0
 msgid "If checked new messages require your attention."
 msgstr ""
-"Хэрэв тэмдэглэгдсэн бол таныг шинэ зурвасуудад анхаарал хандуулахыг шаардана."
 
 #. module: analytic
 #: selection:account.analytic.account,state:0
 msgid "To Renew"
-msgstr "Шинэчлэх"
+msgstr ""
 
 #. module: analytic
 #: field:account.analytic.account,quantity:0
 #: field:account.analytic.line,unit_amount:0
 msgid "Quantity"
-msgstr "Тоо хэмжээ"
+msgstr ""
 
 #. module: analytic
 #: field:account.analytic.account,date:0
 msgid "Date End"
-msgstr "Дуусах огноо"
+msgstr ""
 
 #. module: analytic
 #: field:account.analytic.account,code:0
 msgid "Reference"
-msgstr "Код"
+msgstr ""
 
 #. module: analytic
 #: code:addons/analytic/analytic.py:160
 #, python-format
 msgid "Error!"
-msgstr "Алдаа!"
+msgstr ""
 
 #. module: analytic
 #: model:res.groups,name:analytic.group_analytic_accounting
 msgid "Analytic Accounting"
-msgstr "Аналитик санхүү"
+msgstr ""
 
 #. module: analytic
 #: field:account.analytic.line,amount:0
 msgid "Amount"
-msgstr "Дүн"
+msgstr ""
 
 #. module: analytic
 #: field:account.analytic.account,complete_name:0
 msgid "Full Account Name"
-msgstr "Дансны бүтэн нэр"
+msgstr ""
 
 #. module: analytic
 #: view:account.analytic.account:0
@@ -360,12 +370,12 @@ msgstr "Дансны бүтэн нэр"
 #: field:account.analytic.line,account_id:0
 #: model:ir.model,name:analytic.model_account_analytic_account
 msgid "Analytic Account"
-msgstr "Аналитик Данс"
+msgstr ""
 
 #. module: analytic
 #: field:account.analytic.account,currency_id:0
 msgid "Currency"
-msgstr "Валют"
+msgstr ""
 
 #. module: analytic
 #: help:account.analytic.account,message_summary:0
@@ -373,25 +383,23 @@ msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
 msgstr ""
-"Чаатлагчийн хураангуйг агуулна (зурвасын тоо,...). Энэ хураангуй нь шууд "
-"html форматтай бөгөөд канбан харагдацад шууд орж харагдах боломжтой."
 
 #. module: analytic
 #: field:account.analytic.account,type:0
 msgid "Type of Account"
-msgstr "Дансны Төрөл"
+msgstr ""
 
 #. module: analytic
 #: field:account.analytic.account,date_start:0
 msgid "Start Date"
-msgstr "Эхлэх огноо"
+msgstr ""
 
 #. module: analytic
 #: constraint:account.analytic.line:0
 msgid "You cannot create analytic line on view account."
-msgstr "Та харагдац данс дээр шинжилгээний мөр үүсгэж чадахгүй"
+msgstr ""
 
 #. module: analytic
 #: field:account.analytic.account,line_ids:0
 msgid "Analytic Entries"
-msgstr "Аналитик бичилт"
+msgstr ""
