@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:04+0000\n"
-"PO-Revision-Date: 2013-02-08 09:52+0000\n"
+"PO-Revision-Date: 2013-02-09 09:50+0000\n"
 "Last-Translator: Amar Zayasaikhan <chup.mono@gmail.com>\n"
 "Language-Team: Mongolian <mn@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-02-09 05:29+0000\n"
+"X-Launchpad-Export-Date: 2013-02-10 05:24+0000\n"
 "X-Generator: Launchpad (build 16482)\n"
 
 #. module: hr_timesheet_sheet
@@ -23,7 +23,7 @@ msgstr ""
 #: field:hr_timesheet_sheet.sheet.account,sheet_id:0
 #: field:hr_timesheet_sheet.sheet.day,sheet_id:0
 msgid "Sheet"
-msgstr "Цаг бүртгэл"
+msgstr "Хуудас"
 
 #. module: hr_timesheet_sheet
 #: model:process.transition,name:hr_timesheet_sheet.process_transition_timesheetdraft0
@@ -67,7 +67,7 @@ msgstr "Хэлтэс"
 #. module: hr_timesheet_sheet
 #: model:process.transition,name:hr_timesheet_sheet.process_transition_tasktimesheet0
 msgid "Task timesheet"
-msgstr "Даалгаврын цаг бүртгэл"
+msgstr "Даалгаврын цагийн хуудас"
 
 #. module: hr_timesheet_sheet
 #: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:73
@@ -146,7 +146,7 @@ msgstr "Үндсэн цагийн хуудас"
 #: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:397
 #, python-format
 msgid "You cannot modify an entry in a confirmed timesheet."
-msgstr ""
+msgstr "Та баталгаажсан цагийн хуудсыг орж өөрчлөх боломжгүй."
 
 #. module: hr_timesheet_sheet
 #: view:hr.timesheet.report:0
@@ -407,7 +407,7 @@ msgstr "Нийт цаг"
 #: model:ir.actions.act_window,name:hr_timesheet_sheet.act_hr_timesheet_sheet_form
 #: model:ir.ui.menu,name:hr_timesheet_sheet.menu_act_hr_timesheet_sheet_form
 msgid "Timesheets to Validate"
-msgstr ""
+msgstr "Батлах цагийн хуудсууд"
 
 #. module: hr_timesheet_sheet
 #: view:hr.timesheet.report:0
@@ -471,7 +471,7 @@ msgstr "#Тоо ширхэг"
 #: view:hr_timesheet_sheet.sheet.day:0
 #: field:hr_timesheet_sheet.sheet.day,total_timesheet:0
 msgid "Total Timesheet"
-msgstr "Цаг бүртгэлийн нийт цаг"
+msgstr "Нийт цагийн хуудас"
 
 #. module: hr_timesheet_sheet
 #: view:hr_timesheet_sheet.sheet:0
@@ -517,7 +517,7 @@ msgstr "12 сар"
 #. module: hr_timesheet_sheet
 #: view:hr.timesheet.current.open:0
 msgid "It will open your current timesheet"
-msgstr "Таны одоогийн цаг бүртгэлийг нээнэ."
+msgstr "Таны одоогийн цагийн хуудсыг нээнэ"
 
 #. module: hr_timesheet_sheet
 #: selection:hr.config.settings,timesheet_range:0
@@ -758,7 +758,7 @@ msgstr "Хураангуй"
 #: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:215
 #, python-format
 msgid "You cannot delete a timesheet which have attendance entries."
-msgstr ""
+msgstr "Та ирцийн бүртгэл хийгдсэн цагийн хуудас устгах боломжгүй."
 
 #. module: hr_timesheet_sheet
 #: view:hr_timesheet_sheet.sheet:0
@@ -801,7 +801,7 @@ msgstr "Данс Хайх"
 #: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:428
 #, python-format
 msgid "You cannot modify an entry in a confirmed timesheet"
-msgstr ""
+msgstr "Та батлагдсан цагийн хуудсыг өөрчлөх боломжгүй"
 
 #. module: hr_timesheet_sheet
 #: help:res.company,timesheet_max_difference:0
@@ -862,7 +862,7 @@ msgstr "Цуцлах"
 #. module: hr_timesheet_sheet
 #: model:process.node,name:hr_timesheet_sheet.process_node_validatedtimesheet0
 msgid "Validated"
-msgstr "Батлах"
+msgstr "Батлагдсан"
 
 #. module: hr_timesheet_sheet
 #: model:process.node,name:hr_timesheet_sheet.process_node_invoiceonwork0
@@ -878,7 +878,7 @@ msgstr "Цаг бүртгэлийг дансаар харах"
 #: code:addons/hr_timesheet_sheet/wizard/hr_timesheet_current.py:50
 #, python-format
 msgid "Open Timesheet"
-msgstr "Цагийн бүртгэлийг Нээх"
+msgstr "Цагийн хуудас нээх"
 
 #. module: hr_timesheet_sheet
 #: view:hr.timesheet.report:0
@@ -891,7 +891,7 @@ msgstr "Огнооны жилээр бүлэглэх"
 #: code:addons/hr_timesheet_sheet/static/src/xml/timesheet.xml:56
 #, python-format
 msgid "Click to add projects, contracts or analytic accounts."
-msgstr ""
+msgstr "Төсөл, гэрээ, шинжилгээний данс нэмэхийн тулд дар"
 
 #. module: hr_timesheet_sheet
 #: model:process.node,note:hr_timesheet_sheet.process_node_validatedtimesheet0
@@ -928,7 +928,7 @@ msgstr "Дэлгэрэнгүй"
 #. module: hr_timesheet_sheet
 #: model:ir.model,name:hr_timesheet_sheet.model_hr_analytic_timesheet
 msgid "Timesheet Line"
-msgstr "Цаг бүртгэлийн өгөгдөл"
+msgstr "Цагийн хуудасны мөр"
 
 #. module: hr_timesheet_sheet
 #: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:213
@@ -1005,7 +1005,7 @@ msgstr "Зөрүү"
 #: code:addons/hr_timesheet_sheet/hr_timesheet_sheet.py:64
 #, python-format
 msgid "You cannot duplicate a timesheet."
-msgstr ""
+msgstr "Та цагийн хуудсыг хувилбах боломжгүй."
 
 #. module: hr_timesheet_sheet
 #: selection:hr_timesheet_sheet.sheet,state_attendance:0
@@ -1093,7 +1093,7 @@ msgstr "Зурвас болон харилцсан түүх"
 #. module: hr_timesheet_sheet
 #: field:hr_timesheet_sheet.sheet,account_ids:0
 msgid "Analytic accounts"
-msgstr "Аналитик данс"
+msgstr "Шинжилгээний данс"
 
 #. module: hr_timesheet_sheet
 #: view:timesheet.report:0
@@ -1115,7 +1115,7 @@ msgstr "Өртөг"
 #. module: hr_timesheet_sheet
 #: field:timesheet.report,date_current:0
 msgid "Current date"
-msgstr "Өнөөдөр"
+msgstr "Одоогийн огноо"
 
 #. module: hr_timesheet_sheet
 #: model:process.process,name:hr_timesheet_sheet.process_process_hrtimesheetprocess0
@@ -1158,4 +1158,4 @@ msgstr "Журнал"
 #. module: hr_timesheet_sheet
 #: model:ir.actions.act_window,name:hr_timesheet_sheet.act_hr_timesheet_sheet_sheet_by_day
 msgid "Timesheet by Day"
-msgstr "Өдрийн цаг бүртгэл"
+msgstr "Цагийн хуудас өдрөөр"
