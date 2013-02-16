@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:04+0000\n"
-"PO-Revision-Date: 2013-02-14 11:09+0000\n"
-"Last-Translator: soyoko <Unknown>\n"
+"PO-Revision-Date: 2013-02-15 11:41+0000\n"
+"Last-Translator: Altangerel <worstnaemeva@gmail.com>\n"
 "Language-Team: Mongolian <mn@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-02-15 05:24+0000\n"
+"X-Launchpad-Export-Date: 2013-02-16 05:40+0000\n"
 "X-Generator: Launchpad (build 16491)\n"
 
 #. module: sale
@@ -112,7 +112,7 @@ msgstr "Борлуулалтын захиалга батлагдсан огно�
 #. module: sale
 #: field:account.config.settings,module_sale_analytic_plans:0
 msgid "Use multiple analytic accounts on sales"
-msgstr ""
+msgstr "Борлуулалт дээр олон шинжилгээний данс хэргэлэх"
 
 #. module: sale
 #: selection:sale.report,month:0
@@ -179,7 +179,7 @@ msgstr "Ноорог үнийн санал"
 #. module: sale
 #: field:sale.order,partner_shipping_id:0
 msgid "Delivery Address"
-msgstr ""
+msgstr "Хүргэх Хаяг"
 
 #. module: sale
 #: view:sale.report:0
@@ -249,7 +249,7 @@ msgstr ""
 #. module: sale
 #: view:sale.order.line:0
 msgid "Sales Order Lines that are in 'done' state"
-msgstr ""
+msgstr "'Хийгдсэн' төлөвт орсон борлуулалтын захиалгын мөрүүд"
 
 #. module: sale
 #: selection:sale.order.line,type:0
@@ -259,12 +259,12 @@ msgstr "Захиалга"
 #. module: sale
 #: field:sale.order,message_ids:0
 msgid "Messages"
-msgstr ""
+msgstr "Зурвасууд"
 
 #. module: sale
 #: field:sale.report,state:0
 msgid "Order Status"
-msgstr ""
+msgstr "Захиалгын төлөв"
 
 #. module: sale
 #: field:sale.order,amount_tax:0
@@ -280,7 +280,7 @@ msgstr "Татваргүй дүн"
 #. module: sale
 #: field:sale.config.settings,module_project:0
 msgid "Project"
-msgstr ""
+msgstr "Төсөл"
 
 #. module: sale
 #: code:addons/sale/sale.py:360
@@ -290,7 +290,7 @@ msgstr ""
 #: code:addons/sale/sale.py:772
 #, python-format
 msgid "Error!"
-msgstr ""
+msgstr "Алдаа!"
 
 #. module: sale
 #: report:sale.order:0
@@ -338,12 +338,13 @@ msgstr ""
 #. module: sale
 #: model:ir.model,name:sale.model_mail_compose_message
 msgid "Email composition wizard"
-msgstr ""
+msgstr "Имэйл үүсгэх харилцах цонх"
 
 #. module: sale
 #: help:sale.order,message_unread:0
 msgid "If checked new messages require your attention."
 msgstr ""
+"Хэрэв тэмдэглэгдсэн бол таныг шинэ зурвасуудад анхаарал хандуулахыг шаардана."
 
 #. module: sale
 #: selection:sale.order,state:0
@@ -382,7 +383,7 @@ msgstr "Борлуулалтын захиалга үүсгэгдсэн огно�
 #. module: sale
 #: view:res.partner:0
 msgid "False"
-msgstr ""
+msgstr "Худал"
 
 #. module: sale
 #: help:sale.advance.payment.inv,advance_payment_method:0
@@ -403,7 +404,7 @@ msgstr "Нэхэмжлэл үүсгэх"
 #. module: sale
 #: report:sale.order:0
 msgid "Tax"
-msgstr ""
+msgstr "Татвар"
 
 #. module: sale
 #: code:addons/sale/sale.py:270
@@ -411,7 +412,7 @@ msgstr ""
 #: code:addons/sale/sale.py:976
 #, python-format
 msgid "Invalid Action!"
-msgstr ""
+msgstr "Буруу Үйлдэл!"
 
 #. module: sale
 #: help:sale.order,state:0
@@ -441,6 +442,8 @@ msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
 msgstr ""
+"Чаатлагчийн хураангуйг агуулна (зурвасын тоо,...). Энэ хураангуй нь шууд "
+"html форматтай бөгөөд канбан харагдацад шууд орж харагдах боломжтой."
 
 #. module: sale
 #: help:sale.order.line,sequence:0
@@ -463,12 +466,12 @@ msgstr "Факс:"
 #, python-format
 msgid ""
 "In order to delete a confirmed sales order, you must cancel it before !"
-msgstr ""
+msgstr "Борлуулалтын захиалгыг устгахын тулд, та эхлээд цуцална уу!"
 
 #. module: sale
 #: view:sale.order:0
 msgid "(update)"
-msgstr ""
+msgstr "(шинэчлэх)"
 
 #. module: sale
 #: model:ir.model,name:sale.model_res_partner
@@ -480,7 +483,7 @@ msgstr "Харилцагч"
 #. module: sale
 #: view:sale.config.settings:0
 msgid "Contract Features"
-msgstr ""
+msgstr "Гэрээний боломжууд"
 
 #. module: sale
 #: code:addons/sale/sale.py:280
@@ -514,7 +517,7 @@ msgstr "Урьдчилгаа дүн"
 #. module: sale
 #: help:sale.order,invoice_exists:0
 msgid "It indicates that sales order has at least one invoice."
-msgstr ""
+msgstr "Энэ нь Борлуулалтын захиалга дор хаяж нэг нэхэмжлэлтэйг илэрхийлнэ."
 
 #. module: sale
 #: help:sale.config.settings,group_sale_pricelist:0
@@ -526,7 +529,7 @@ msgstr ""
 #. module: sale
 #: field:sale.config.settings,module_analytic_user_function:0
 msgid "One employee can have different roles per contract"
-msgstr ""
+msgstr "Нэг ажилчин гэрээнд өөр өөр үүрэгтэй байж болно."
 
 #. module: sale
 #: selection:sale.advance.payment.inv,advance_payment_method:0
@@ -553,6 +556,7 @@ msgstr ""
 #, python-format
 msgid "You cannot cancel a sales order line that has already been invoiced."
 msgstr ""
+"Хэдийнээ нэхэмжлэгдсэн борлуулалтын захиалгын мөрүүдийг цуцлах боломжгүй."
 
 #. module: sale
 #: view:account.invoice.report:0
@@ -580,7 +584,7 @@ msgstr ""
 #. module: sale
 #: model:mail.message.subtype,name:sale.mt_order_confirmed
 msgid "Sales Order Confirmed"
-msgstr ""
+msgstr "Борлуулалтын захиалга Батлагдсан"
 
 #. module: sale
 #: view:sale.order:0
@@ -590,7 +594,7 @@ msgstr "Хараахан батлагдаагүй Борлуулалтын За�
 #. module: sale
 #: view:sale.order:0
 msgid "Print"
-msgstr ""
+msgstr "Хэвлэх"
 
 #. module: sale
 #: report:sale.order:0
@@ -612,7 +616,7 @@ msgstr "Хөнг.(%)"
 #: code:addons/sale/sale.py:756
 #, python-format
 msgid "Please define income account for this product: \"%s\" (id:%d)."
-msgstr ""
+msgstr "Энэ бараанд орлогын данс тодорхойлно уу: \"%s\" (id:%d)."
 
 #. module: sale
 #: field:sale.order.line,invoice_lines:0
@@ -629,6 +633,7 @@ msgstr "Нийт Үнэ"
 #: help:account.config.settings,group_analytic_account_for_sales:0
 msgid "Allows you to specify an analytic account on sales orders."
 msgstr ""
+"Борлуулалтын захиалга дээр шинжилгээний данс тодорхойлох боломжийг олгоно."
 
 #. module: sale
 #: help:sale.config.settings,module_sale_journal:0
@@ -659,7 +664,7 @@ msgstr "Цаг"
 #. module: sale
 #: field:res.partner,sale_order_count:0
 msgid "# of Sales Order"
-msgstr ""
+msgstr "# Борлуулалтын захиалгын тоо"
 
 #. module: sale
 #: help:sale.config.settings,timesheet:0
@@ -700,7 +705,7 @@ msgstr "Борлуулалтын захиалгын захиалсан он"
 #. module: sale
 #: model:res.groups,name:sale.group_delivery_invoice_address
 msgid "Addresses in Sales Orders"
-msgstr ""
+msgstr "Борлуулалтын Захиалга дахь Хаягууд"
 
 #. module: sale
 #: field:sale.advance.payment.inv,qtty:0
@@ -717,7 +722,7 @@ msgstr "Нийт :"
 #. module: sale
 #: view:sale.order.line:0
 msgid "Sales Order Lines ready to be invoiced"
-msgstr ""
+msgstr "Нэхэмжлэхэд бэлэн Борлуулалтын Захиалгын Мөрүүд"
 
 #. module: sale
 #: view:sale.report:0
@@ -757,7 +762,7 @@ msgstr ""
 #. module: sale
 #: view:sale.config.settings:0
 msgid "Default Options"
-msgstr ""
+msgstr "Үндсэн Тохиргоо"
 
 #. module: sale
 #: code:addons/sale/sale.py:953
@@ -765,12 +770,12 @@ msgstr ""
 #: code:addons/sale/wizard/sale_make_invoice_advance.py:95
 #, python-format
 msgid "Configuration Error!"
-msgstr ""
+msgstr "Тохиргооны алдаа!"
 
 #. module: sale
 #: field:account.config.settings,group_analytic_account_for_sales:0
 msgid "Analytic accounting for sales"
-msgstr ""
+msgstr "Борлуулалтын Шинжилгээний Санхүү"
 
 #. module: sale
 #: view:sale.order:0
@@ -791,7 +796,7 @@ msgstr ""
 #. module: sale
 #: view:sale.order:0
 msgid "Send by Email"
-msgstr ""
+msgstr "Е-майлээр илгээх"
 
 #. module: sale
 #: code:addons/sale/edi/sale_order.py:140
@@ -807,7 +812,7 @@ msgstr ""
 #. module: sale
 #: view:sale.config.settings:0
 msgid "Invoicing Process"
-msgstr ""
+msgstr "Нэхэмжлэх үйл явц"
 
 #. module: sale
 #: view:sale.order:0
@@ -817,13 +822,13 @@ msgstr "Огноо"
 #. module: sale
 #: view:sale.order:0
 msgid "Sales Order done"
-msgstr ""
+msgstr "Борлуулалтын Захиалга хийгдэж дууслаа"
 
 #. module: sale
 #: code:addons/sale/sale.py:361
 #, python-format
 msgid "Please define sales journal for this company: \"%s\" (id:%d)."
-msgstr ""
+msgstr "Энэ компанид борлуулалтын журнал тодорхойно уу: \"%s\" (id:%d)."
 
 #. module: sale
 #: model:ir.actions.act_window,name:sale.act_res_partner_2_sale_order
@@ -840,7 +845,7 @@ msgstr "Төлсөн"
 #: help:sale.config.settings,group_uom:0
 msgid ""
 "Allows you to select and maintain different units of measure for products."
-msgstr ""
+msgstr "Барааны хэмжих нэгж болон тоо хэмжээг өөрчлөх боломжийг олгоно."
 
 #. module: sale
 #: view:sale.report:0
@@ -850,12 +855,12 @@ msgstr "Хэмжих нэгжийн код"
 #. module: sale
 #: view:sale.advance.payment.inv:0
 msgid "Create and View Invoice"
-msgstr ""
+msgstr "Нэхэмжлэл Үүсгээд Харах"
 
 #. module: sale
 #: view:sale.order.line:0
 msgid "Sales order lines done"
-msgstr ""
+msgstr "Борлуулалтын Захиалгийн Мөрүүд хийгдэж дууслаа"
 
 #. module: sale
 #: field:sale.make.invoice,grouped:0
@@ -901,7 +906,7 @@ msgstr ""
 #. module: sale
 #: view:sale.order.line.make.invoice:0
 msgid "Create & View Invoice"
-msgstr ""
+msgstr "Нэхэмжлэл Үүсгэх ба Харах"
 
 #. module: sale
 #: view:board.board:0
@@ -922,7 +927,7 @@ msgstr "12 сар"
 #. module: sale
 #: view:sale.config.settings:0
 msgid "Contracts Management"
-msgstr ""
+msgstr "Гэрээний Менежмент"
 
 #. module: sale
 #: view:sale.order.line:0
@@ -938,7 +943,7 @@ msgstr "Сар"
 #. module: sale
 #: field:sale.order,currency_id:0
 msgid "Currency"
-msgstr ""
+msgstr "Валют"
 
 #. module: sale
 #: view:sale.order.line:0
@@ -955,7 +960,7 @@ msgstr "Барааны ангилал"
 #: code:addons/sale/sale.py:558
 #, python-format
 msgid "Cannot cancel this sales order!"
-msgstr ""
+msgstr "Энэ борлуулалтын захиалга цуцлах боломжгүй!"
 
 #. module: sale
 #: view:sale.order:0
@@ -975,7 +980,7 @@ msgstr "Дэлгүүрийн нэр"
 #. module: sale
 #: view:sale.order:0
 msgid "My Sales Orders"
-msgstr ""
+msgstr "Миний Борлуулалтын Захиалгууд"
 
 #. module: sale
 #: report:sale.order:0
@@ -1010,7 +1015,7 @@ msgstr ""
 #: code:addons/sale/sale.py:592
 #, python-format
 msgid "You cannot confirm a sales order which has no line."
-msgstr ""
+msgstr "Та мөргүй борлуулалтын захиалга батлаж болохгүй"
 
 #. module: sale
 #: selection:sale.report,state:0
@@ -1068,7 +1073,7 @@ msgstr ""
 #. module: sale
 #: field:sale.order,project_id:0
 msgid "Contract / Analytic"
-msgstr ""
+msgstr "Гэрээ / Шинжилгээ"
 
 #. module: sale
 #: selection:sale.order,state:0
@@ -1079,7 +1084,7 @@ msgstr "Хуваарь хүлээж байна"
 #. module: sale
 #: field:sale.order,note:0
 msgid "Terms and conditions"
-msgstr ""
+msgstr "Заалт болон нөхцөлүүд"
 
 #. module: sale
 #: model:ir.actions.act_window,name:sale.action_orders
@@ -1152,7 +1157,7 @@ msgstr "Борлуулалтын шинжилгээ"
 #. module: sale
 #: field:sale.order,message_is_follower:0
 msgid "Is a Follower"
-msgstr ""
+msgstr "Дагагч эсэх"
 
 #. module: sale
 #: view:sale.order.line:0
@@ -1180,7 +1185,7 @@ msgstr "Огноо"
 #: view:sale.report:0
 #: field:sale.report,user_id:0
 msgid "Salesperson"
-msgstr ""
+msgstr "Худалдагч"
 
 #. module: sale
 #: selection:sale.report,month:0
@@ -1294,7 +1299,7 @@ msgstr "Борлуулалтын захиалгатай холбогдсон ш�
 #. module: sale
 #: view:sale.order:0
 msgid "View Invoice"
-msgstr ""
+msgstr "Нэхэмжлэл Харах"
 
 #. module: sale
 #: field:sale.advance.payment.inv,advance_payment_method:0
@@ -1370,7 +1375,7 @@ msgstr "Онцгой тохиолдлыг үл хэрэгс"
 #. module: sale
 #: help:sale.order,partner_shipping_id:0
 msgid "Delivery address for current sales order."
-msgstr ""
+msgstr "Идэвхтэй борлуулалтын захиалгын хүргэх хаяг."
 
 #. module: sale
 #: field:sale.config.settings,module_sale_margin:0
@@ -1512,7 +1517,7 @@ msgstr "Цуцлах"
 #. module: sale
 #: field:sale.order,message_follower_ids:0
 msgid "Followers"
-msgstr ""
+msgstr "Дагагчид"
 
 #. module: sale
 #: code:addons/sale/sale.py:937
@@ -1523,7 +1528,7 @@ msgstr "Үнийн жагсаалт алга ! : "
 #. module: sale
 #: view:sale.order:0
 msgid "Sales Order "
-msgstr ""
+msgstr "Борлуулалтын Захиалга "
 
 #. module: sale
 #: model:mail.message.subtype,description:sale.mt_order_sent
@@ -1539,7 +1544,7 @@ msgstr "Нэхэмжлээгүй захиалга хайх"
 #. module: sale
 #: model:ir.model,name:sale.model_account_config_settings
 msgid "account.config.settings"
-msgstr ""
+msgstr "account.config.settings"
 
 #. module: sale
 #: sql_constraint:sale.order:0
@@ -1638,7 +1643,7 @@ msgstr "Нэгж үнэ"
 #. module: sale
 #: selection:sale.advance.payment.inv,advance_payment_method:0
 msgid "Percentage"
-msgstr ""
+msgstr "Хувь"
 
 #. module: sale
 #: view:sale.order:0
@@ -1756,7 +1761,7 @@ msgstr ""
 #: code:addons/sale/wizard/sale_make_invoice_advance.py:96
 #, python-format
 msgid "There is no income account defined for this product: \"%s\" (id:%d)."
-msgstr ""
+msgstr "Дараах бараанд Орлогын данс тодорхойлогдоогүй байна: \"%s\"(id:%d)."
 
 #. module: sale
 #: selection:sale.report,month:0
@@ -1840,7 +1845,7 @@ msgstr ""
 #. module: sale
 #: view:res.partner:0
 msgid "sale.group_delivery_invoice_address"
-msgstr ""
+msgstr "sale.group_delivery_invoice_address"
 
 #. module: sale
 #: code:addons/sale/sale.py:773
@@ -1863,7 +1868,7 @@ msgstr ""
 #. module: sale
 #: selection:sale.order,state:0
 msgid "Sale to Invoice"
-msgstr ""
+msgstr "Нэхэмжлэх борлуулалт"
 
 #. module: sale
 #: view:sale.order:0
@@ -1915,7 +1920,7 @@ msgstr ""
 #. module: sale
 #: model:ir.model,name:sale.model_sale_config_settings
 msgid "sale.config.settings"
-msgstr ""
+msgstr "sale.config.settings"
 
 #. module: sale
 #: selection:sale.report,month:0
@@ -1962,7 +1967,7 @@ msgstr "Захиалгыг бэлтгэж байна"
 #: code:addons/sale/wizard/sale_make_invoice.py:43
 #, python-format
 msgid "Warning!"
-msgstr ""
+msgstr "Анхааруулга!"
 
 #. module: sale
 #: model:ir.actions.act_window,name:sale.action_order_tree
@@ -1993,12 +1998,12 @@ msgstr ""
 #. module: sale
 #: field:sale.order,message_summary:0
 msgid "Summary"
-msgstr ""
+msgstr "Хураангуй"
 
 #. module: sale
 #: help:sale.order,message_ids:0
 msgid "Messages and communication history"
-msgstr ""
+msgstr "Зурвас болон харилцсан түүх"
 
 #. module: sale
 #: view:sale.order:0
@@ -2085,7 +2090,7 @@ msgstr ""
 #: view:sale.make.invoice:0
 #: view:sale.order.line.make.invoice:0
 msgid "or"
-msgstr ""
+msgstr "эсвэл"
 
 #. module: sale
 #: model:ir.actions.act_window,name:sale.action_order_line_product_tree
