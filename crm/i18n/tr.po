@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:04+0000\n"
-"PO-Revision-Date: 2013-02-15 21:41+0000\n"
+"PO-Revision-Date: 2013-02-16 18:40+0000\n"
 "Last-Translator: Ayhan KIZILTAN <Unknown>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-02-16 05:39+0000\n"
+"X-Launchpad-Export-Date: 2013-02-17 05:23+0000\n"
 "X-Generator: Launchpad (build 16491)\n"
 
 #. module: crm
@@ -1004,6 +1004,9 @@ msgid ""
 "Allows you to track your customers/suppliers claims and grievances.\n"
 "                    This installs the module crm_claim."
 msgstr ""
+"Müşterlerinizin/tedarikçilerinizin şikayetlerini ve ihtilafları izlemenizi "
+"sağlar.\n"
+"                    crm_claim Modülünü kurar."
 
 #. module: crm
 #: model:crm.case.stage,name:crm.stage_lead6
@@ -1214,6 +1217,8 @@ msgid ""
 "This field is used to distinguish stages related to Leads from stages "
 "related to Opportunities, or to specify stages available for both types."
 msgstr ""
+"Bu alan, Adaylarla ilgili aşamaları Fırsatlarla ilgili aşamaları ayırt etmek "
+"için ya da her iki tür için de aşamalar belirlemek için kullanılır."
 
 #. module: crm
 #: model:mail.message.subtype,name:crm.mt_lead_create
@@ -1294,6 +1299,10 @@ msgid ""
 "set to 'Done'. If the case needs to be reviewed then the Status is  set to "
 "'Pending'."
 msgstr ""
+"Bir durum oluşturulduğunda Durumu 'Taslak' olarak ayarlanır. Durum "
+"sürmekteyse Durumu 'Açık' olarak ayarlanır. Durum tamamlandığında ise Durumu "
+"'Yapıldı' olarak ayarlanır. Durum gözden geçirilmeyi gerektiriyorsa Durumu "
+"'Bekliyor' olarak ayarlanır."
 
 #. module: crm
 #: model:crm.case.section,name:crm.crm_case_section_1
@@ -1318,6 +1327,8 @@ msgid ""
 "Phone Calls Assigned to the current user or with a team having the current "
 "user as team leader"
 msgstr ""
+"Geçerli kullanıcıya ya da geçerli kullanıcının takım önderi olduğu takıma "
+"Atanmış Telefon Çağrıları"
 
 #. module: crm
 #: view:crm.segmentation:0
@@ -1602,6 +1613,9 @@ msgid ""
 "stage. For example, if a stage is related to the status 'Close', when your "
 "document reaches this stage, it is automatically closed."
 msgstr ""
+"Belgenizin durumu seçilen aşamaya bağlı olarak otomatikman değişecektir. "
+"Örneğin; bir aşama 'Kapalı' durumla ilişkiliyse, belgeniz bu aşamaya "
+"ulaştığında otomatikman kapatılır."
 
 #. module: crm
 #: view:crm.lead2opportunity.partner.mass:0
@@ -1936,6 +1950,7 @@ msgid ""
 "The name of the future partner company that will be created while converting "
 "the lead into opportunity"
 msgstr ""
+"Adayı fırsata dönüştürürken oluşturulacak gelecek paydaş firmanın adı"
 
 #. module: crm
 #: field:crm.opportunity2phonecall,note:0
@@ -2124,6 +2139,8 @@ msgid ""
 "Follow this salesteam to automatically track the events associated to users "
 "of this team."
 msgstr ""
+"Bu takımın kullanıcılarına bağlı olayları otomatikman izlemek için bu satış "
+"takını takip edin."
 
 #. module: crm
 #: view:crm.lead:0
@@ -2136,6 +2153,8 @@ msgid ""
 "The email address associated with this team. New emails received will "
 "automatically create new leads assigned to the team."
 msgstr ""
+"Bu satış takımı ile ilişkili eposta adresi. Yeni epostalar alınması "
+"otomatikman bu takıma atanmış yeni adaylar oluşturacaktır."
 
 #. module: crm
 #: view:crm.lead:0
@@ -2236,6 +2255,8 @@ msgid ""
 "This stage is not visible, for example in status bar or kanban view, when "
 "there are no records in that stage to display."
 msgstr ""
+"Aşama görünür değil, örneğin; durum çubuğunda ya da kanban görünümünde, o "
+"aşamada görüntülenecek hiç kayıt yoksa."
 
 #. module: crm
 #: field:crm.lead.report,nbr:0
@@ -2251,7 +2272,7 @@ msgstr "Durumun bağlı olduğu satış takımı"
 #. module: crm
 #: model:crm.case.resource.type,name:crm.type_lead6
 msgid "Banner Ads"
-msgstr ""
+msgstr "Reklam Afişi"
 
 #. module: crm
 #: field:crm.merge.opportunity,opportunity_ids:0
@@ -2301,7 +2322,7 @@ msgstr "Nesne Adı"
 #. module: crm
 #: view:crm.phonecall:0
 msgid "Phone Calls Assigned to Me or My Team(s)"
-msgstr ""
+msgstr "Bana ya da Takım(lar)ıma Atanmış Telefon Çağrıları"
 
 #. module: crm
 #: view:crm.lead:0
@@ -2646,7 +2667,7 @@ msgstr "Takım Üyeleri"
 #: view:crm.opportunity2phonecall:0
 #: view:crm.phonecall2phonecall:0
 msgid "Schedule/Log a Call"
-msgstr ""
+msgstr "Planla/Bir Çağrı Bağla"
 
 #. module: crm
 #: field:crm.lead,planned_cost:0
@@ -2806,7 +2827,7 @@ msgstr "Çağrı Günlüğü"
 #. module: crm
 #: help:sale.config.settings,group_fund_raising:0
 msgid "Allows you to trace and manage your activities for fund raising."
-msgstr ""
+msgstr "Kaynak yaratma etkinliklerinizi yönetmenizi ve izlemenizi sağlar."
 
 #. module: crm
 #: field:crm.meeting,phonecall_id:0
@@ -2817,7 +2838,7 @@ msgstr "TelefonÇağrısı"
 #. module: crm
 #: view:crm.phonecall.report:0
 msgid "Phone calls that are assigned to one of the sale teams I manage"
-msgstr ""
+msgstr "Yönettiğim satış takımlarından birine atanmış telefon çağrıları"
 
 #. module: crm
 #: view:crm.lead:0
