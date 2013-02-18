@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:04+0000\n"
-"PO-Revision-Date: 2013-02-15 11:41+0000\n"
-"Last-Translator: Altangerel <worstnaemeva@gmail.com>\n"
+"PO-Revision-Date: 2013-02-17 14:13+0000\n"
+"Last-Translator: gobi <Unknown>\n"
 "Language-Team: Mongolian <mn@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-02-16 05:40+0000\n"
+"X-Launchpad-Export-Date: 2013-02-18 05:26+0000\n"
 "X-Generator: Launchpad (build 16491)\n"
 
 #. module: sale
@@ -36,7 +36,7 @@ msgstr "Борлуулалт хянах самбар"
 #: code:addons/sale/wizard/sale_make_invoice_advance.py:92
 #, python-format
 msgid "There is no income account defined as global property."
-msgstr ""
+msgstr "Глобаль үзүүлэлт дээр орлогын данс тодорхойлогдоогүй байна."
 
 #. module: sale
 #: model:ir.actions.act_window,name:sale.action_order_line_tree2
@@ -83,6 +83,13 @@ msgid ""
 "invoice automatically.\n"
 "            It installs the account_analytic_analysis module."
 msgstr ""
+"Захиалагчийн гэрээний нөхцлийг тодорхойлох боломжийг олгоно: \n"
+"            нэхэмжлэх арга (тогтмол үнэ, цагийн хуудас, урьдчилгаа "
+"нэхэмжлэл),\n"
+"            (650€/өдөрт нэг хөгжүүлэгчид), үргэлжлэх хугацаа (нэг жилийн "
+"дэмжлэгийн гэрээ).\n"
+"            Гэрээний явцыг ажиглах боломжтой болох ба нэхэмжлэх боломжтой. \n"
+"            Энэ нь account_analytic_analysis модулийг суулгана."
 
 #. module: sale
 #: model:email.template,report_name:sale.email_template_edi_sale
@@ -124,6 +131,8 @@ msgstr "3 сар"
 #, python-format
 msgid "First cancel all invoices attached to this sales order."
 msgstr ""
+"Эхлээд энэ борлуулалтын захиалгад холбогдох бүх нэхэмжлэлүүдийг цуцлах "
+"хэрэгтэй."
 
 #. module: sale
 #: view:sale.order:0
@@ -192,6 +201,7 @@ msgstr "Аналитик данс"
 #: field:sale.config.settings,module_sale_journal:0
 msgid "Allow batch invoicing of delivery orders through journals"
 msgstr ""
+"Журналаар дамжуулан хүргэх захиалгуудыг багцаар нь нэхэмжлэх боломжтой."
 
 #. module: sale
 #: field:sale.order.line,price_subtotal:0
@@ -222,7 +232,7 @@ msgstr "Агуулахын багтаамж"
 #. module: sale
 #: field:sale.config.settings,time_unit:0
 msgid "The default working time unit for services is"
-msgstr ""
+msgstr "Үйчилгээний хэмжих нэгжийн анхны утга нь"
 
 #. module: sale
 #: field:sale.order.line,product_uom:0
@@ -239,12 +249,13 @@ msgstr "Буруу өгөгдөл"
 #: code:addons/sale/wizard/sale_make_invoice_advance.py:102
 #, python-format
 msgid "The value of Advance Amount must be positive."
-msgstr ""
+msgstr "Урьдчилгааны дүн нь эерэг утгатай байх ёстой."
 
 #. module: sale
 #: help:sale.config.settings,group_discount_per_so_line:0
 msgid "Allows you to apply some discount per sales order line."
 msgstr ""
+"Борлуулалтын захиалгын зарим мөрүүдэд хөнгөлөлт хэрэглэх боломжийг олгодог."
 
 #. module: sale
 #: view:sale.order.line:0
@@ -304,6 +315,9 @@ msgid ""
 "replenishment.\n"
 "On order: When needed, the product is purchased or produced."
 msgstr ""
+"Агуулахаас: Шаардлагатай болсон үед барааг агуулахаас авна эсвэл нөхөн "
+"дүүртэл хүлээнэ.\n"
+"Захиалгад: Шаардлагатай болсон үед барааг худалдаж авна эсвэл үйлдвэрлэнэ."
 
 #. module: sale
 #: help:sale.config.settings,module_analytic_user_function:0
@@ -316,6 +330,13 @@ msgid ""
 "available.\n"
 "                This installs the module analytic_user_function."
 msgstr ""
+"Өгөгдсөн данс дээр тусгай хэрэглэгч дээр үндсэн функц нь юу байхыг "
+"тодорхойлох боломжийг олгодог.\n"
+"                Энэ нь хэрэглэгч цагийн хуудсаа шивихэд ихэвчлэн "
+"хэрэглэгдэнэ. Утга нь авагдаж талбарууд нь \n"
+"                автоматаар бөглөгдөнө. \n"
+"                Гэхдээ эдгээр утгыг өөрчлөх боломж байсаар байна. \n"
+"                Энэ нь analytic_user_function модулийг суулгадаг."
 
 #. module: sale
 #: selection:sale.order,state:0
@@ -333,7 +354,7 @@ msgstr ""
 #. module: sale
 #: selection:sale.order,state:0
 msgid "Quotation Sent"
-msgstr ""
+msgstr "Үнийн санал илгээгдсэн"
 
 #. module: sale
 #: model:ir.model,name:sale.model_mail_compose_message
@@ -394,6 +415,12 @@ msgid ""
 "                Use Some Order Lines to invoice a selection of the sales "
 "order lines."
 msgstr ""
+"Бүгд гэдэгийг ашиглаж эцсийн нэхэмжлэлийг үүсгэхэд ашиглана.\n"
+"                Хувийг ашиглаж нийт дүнгийн тодорхой хувийг нэхэмжлэнэ.\n"
+"                Тогтмол үнийг ашиглаж дүнгийн тодорхой дүнг урьдчилан "
+"нэхэмжлэнэ.\n"
+"                Захиалгын зарим мөрийг ашиглаж борлуулалтын захиалгын зарим "
+"мөрийг нэхэмжлэнэ."
 
 #. module: sale
 #: view:sale.make.invoice:0
@@ -424,6 +451,12 @@ msgid ""
 "The 'Waiting Schedule' status is set when the invoice is confirmed           "
 "    but waiting for the scheduler to run on the order date."
 msgstr ""
+"Үнийн санал эсвэл борлуулалтын захиалгын төлөвийг өгнө.\n"
+"Нэхэмжлэл батлах үед цуцлахад (Нэхэмжлэлийн Саатал) төлөв нь автоматаар "
+"саатал төлөвтэй болно. Эсвэл бэлтгэх үед цуцалсан бол (Хүргэлтийн Саатал) "
+"төлөв нь автоматаар саатал төлөвтэй болно. \n"
+"'Товыг хүлээж буй' төлөв нь нэхэмжлэл батлагдахад олгогдоно гэхдээ товлогч "
+"захиалга дээр ажиллахыг хүлээнэ."
 
 #. module: sale
 #: field:sale.report,date_confirm:0
@@ -449,6 +482,7 @@ msgstr ""
 #: help:sale.order.line,sequence:0
 msgid "Gives the sequence order when displaying a list of sales order lines."
 msgstr ""
+"Борлуулалтын захиалгын мөрүүдийг харуулах дэс дарааллын эрэмбийг өгнө."
 
 #. module: sale
 #: view:sale.report:0
@@ -502,7 +536,7 @@ msgstr "Борлуулалтын захиалга"
 #. module: sale
 #: model:res.groups,name:sale.group_invoice_so_lines
 msgid "Enable Invoicing Sales order lines"
-msgstr ""
+msgstr "Борлуулалтын захиалгын мөрүүдийг нэхэмжлэхийг зөвшөөрнө"
 
 #. module: sale
 #: model:ir.model,name:sale.model_sale_order_line
@@ -525,6 +559,9 @@ msgid ""
 "Allows to manage different prices based on rules per category of customers.\n"
 "Example: 10% for retailers, promotion of 5 EUR on this product, etc."
 msgstr ""
+"Захиалагчийн ангилалын дүрэм дээр суурилан ялгаатай үнүүдийг менежмент хийх "
+"боломжийг олгоно.\n"
+"Жишээ: жижиглэн борлуулалтын 10%, энэ бараанд 5еврогийн урамшуулал, гм."
 
 #. module: sale
 #: field:sale.config.settings,module_analytic_user_function:0
@@ -534,7 +571,7 @@ msgstr "Нэг ажилчин гэрээнд өөр өөр үүрэгтэй ба
 #. module: sale
 #: selection:sale.advance.payment.inv,advance_payment_method:0
 msgid "Invoice the whole sales order"
-msgstr ""
+msgstr "Бөөний борлуулалтын захиалгыг нэхэмжлэх"
 
 #. module: sale
 #: field:sale.shop,payment_default_id:0
@@ -549,7 +586,7 @@ msgstr "Батлах"
 #. module: sale
 #: field:sale.config.settings,timesheet:0
 msgid "Prepare invoices based on timesheets"
-msgstr ""
+msgstr "Цагийн хуудас дээр суурилсан нэхэмжлэл бэлдэх"
 
 #. module: sale
 #: code:addons/sale/sale.py:812
@@ -579,7 +616,7 @@ msgstr "Жил"
 #. module: sale
 #: field:sale.config.settings,group_uom:0
 msgid "Allow using different units of measures"
-msgstr ""
+msgstr "Ялгаатай хэмжих нэгжийг хэрэглэж боломжийг олгоно"
 
 #. module: sale
 #: model:mail.message.subtype,name:sale.mt_order_confirmed
@@ -643,6 +680,9 @@ msgid ""
 "                and perform batch operations on journals.\n"
 "                This installs the module sale_journal."
 msgstr ""
+"Борлуулалт, хүргэлтийг ялгаатай журнал хооронд ангилах боломжийг олгоно,\n"
+"                журнал дээр багц үйлдэл хийх боломжийг мөн олгоно.\n"
+"                Энэ нь sale_journal модулийг суулгана."
 
 #. module: sale
 #: help:sale.make.invoice,grouped:0
@@ -675,6 +715,11 @@ msgid ""
 "user-wise as well as month wise.\n"
 "                This installs the module account_analytic_analysis."
 msgstr ""
+"Үйлчилгээний компаний төслийн менежерт чухал өгөгдлийн харуулахын тулд "
+"дансны шинжилгээний харагдацыг засварлана.\n"
+"                Хэрэглэгчээр, сараар санхүүгийн шинжилгээний хураангуйг "
+"харах боломжтой.\n"
+"                Энэ нь account_analytic_analysis модулийг суулгадаг."
 
 #. module: sale
 #: field:sale.order,create_date:0
@@ -758,6 +803,15 @@ msgid ""
 "             \n"
 "* The 'Cancelled' status is set when a user cancel the sales order related."
 msgstr ""
+"* Холбогдох борлуулалтын захиалга нь ноорог байхад төлөв нь 'Ноорог' байна.  "
+"                   \n"
+"* Холбогдох борлуулалтын захиалга батлагдсан дараа төлөв нь 'Батлагдсан' "
+"болно.                     \n"
+"* Холбогдох борлуулалтын захиалга нь саатсан тохиоллдолд төлөв нь 'Саатал' "
+"болно.                     \n"
+"* Борлуулалтын захиалгын мөр нь бэлтгэгдсэн бол 'Хийгдсэн' төлөвтэй болно.   "
+"                  \n"
+"* Холбогдох борлуулалтын захиалгыг цуцласан үед төлөв нь 'Цуцлагдсан' болно."
 
 #. module: sale
 #: view:sale.config.settings:0
@@ -792,6 +846,8 @@ msgid ""
 "After clicking 'Show Lines to Invoice', select lines to invoice and create "
 "the invoice from the 'More' dropdown menu."
 msgstr ""
+"'Нэхэмжлэх мөрүүдийг харуулах'-г дарсан дараа, нэхэмжлэх мөрүүдийг сонгоод "
+"'Цааш үзэх' менюгээс сонгож нэхэмжлэлийг үүсгэнэ."
 
 #. module: sale
 #: view:sale.order:0
@@ -807,7 +863,7 @@ msgstr "EDI Үнийн жагсаалт (%s)"
 #. module: sale
 #: selection:sale.order,order_policy:0
 msgid "On Delivery Order"
-msgstr ""
+msgstr "Хүргэх Захиалга дээр"
 
 #. module: sale
 #: view:sale.config.settings:0
@@ -970,7 +1026,7 @@ msgstr "Дахин нэхэмжлэл үүсгэх"
 #. module: sale
 #: field:sale.config.settings,module_warning:0
 msgid "Allow configuring alerts by customer or products"
-msgstr ""
+msgstr "Захиалагчаар эсвэл бараагаар дохиог тохируулах боломжийг олгоно"
 
 #. module: sale
 #: field:sale.shop,name:0
@@ -1005,11 +1061,13 @@ msgid ""
 "To allow your salesman to make invoices for sales order lines using the menu "
 "'Lines to Invoice'."
 msgstr ""
+"'Нэхэмжлэх мөрүүд' менюг ашиглан борлуулалтын ажилтанд нэхэмжлэлийг "
+"борлуулалтын захиалгын мөрүүдээр нэхэмжлэх боломжийг олгоно."
 
 #. module: sale
 #: model:ir.actions.client,name:sale.action_client_sale_menu
 msgid "Open Sale Menu"
-msgstr ""
+msgstr "Борлуулалт Менюг нээх"
 
 #. module: sale
 #: code:addons/sale/sale.py:592
@@ -1031,7 +1089,7 @@ msgstr "Захиалагч тодорхойлогдоогүй байна !"
 #. module: sale
 #: field:sale.config.settings,module_sale_stock:0
 msgid "Trigger delivery orders automatically from sales orders"
-msgstr ""
+msgstr "Борлуулалтын захиалгаас хүргэх захиалгыг автоматаар үүсгэнэ"
 
 #. module: sale
 #: view:sale.make.invoice:0
@@ -1048,7 +1106,7 @@ msgstr "Батлагдсан"
 #: code:addons/sale/wizard/sale_make_invoice_advance.py:106
 #, python-format
 msgid "Advance of %s %%"
-msgstr ""
+msgstr "%s %% урьдчилгаа"
 
 #. module: sale
 #: model:ir.model,name:sale.model_sale_order_line_make_invoice
@@ -1068,7 +1126,7 @@ msgstr "Имэйл Үлгэрүүд"
 #. module: sale
 #: help:sale.order.line,address_allotment_id:0
 msgid "A partner to whom the particular product needs to be allotted."
-msgstr ""
+msgstr "Барааг тусгайлан үлдээх харилцагч"
 
 #. module: sale
 #: field:sale.order,project_id:0
@@ -1101,12 +1159,12 @@ msgstr "Татварын дүн."
 #. module: sale
 #: field:sale.order,invoiced_rate:0
 msgid "Invoiced Ratio"
-msgstr ""
+msgstr "Нэхэмжилсэн Харьцаа"
 
 #. module: sale
 #: selection:sale.order,order_policy:0
 msgid "On Demand"
-msgstr ""
+msgstr "Шаардмагц"
 
 #. module: sale
 #: selection:sale.report,month:0
@@ -1141,6 +1199,15 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Шинэ дэлгүүр үүсгэхдээ дарна.\n"
+"              </p><p>\n"
+"                Бүх үнийн санал, борлуулалтын захиалга нь дэлгүүрт "
+"холбогддог \n"
+"                байх ёстой. Дэлгүүр нь мөн барааг хаанаас хүргэх агуулахыг "
+"тодорхойлдог. \n"
+"              </p>\n"
+"            "
 
 #. module: sale
 #: view:sale.order.line:0
@@ -1165,6 +1232,8 @@ msgid ""
 "Sales Order Lines that are confirmed, done or in exception state and haven't "
 "yet been invoiced"
 msgstr ""
+"Борлуулалтын захиалгын батлагдсан, хийгдсэн, саатсан төлөвтэй боловч "
+"хараахан нэхэмжлэгдээгүй байгаа мөрүүд."
 
 #. module: sale
 #: model:ir.model,name:sale.model_sale_report
@@ -1244,6 +1313,10 @@ msgid ""
 "Manage Related Stock.\n"
 "                    This installs the module sale_stock."
 msgstr ""
+"Үнийн санал, Борлуулалтын захиалгыг Захиалгын төрөл бүрийн бодлого ашиглан "
+"үүсгэх боломжийг олгохоос гадна холбогдох нөөцийг менежмент хийх боломжийг "
+"олгоно.\n"
+"                                      Энэ нь sale_stock модулийг суулгадаг."
 
 #. module: sale
 #: help:sale.advance.payment.inv,product_id:0
@@ -1252,6 +1325,9 @@ msgid ""
 "                You may have to create it and set it as a default value on "
 "this field."
 msgstr ""
+"'Урьдчилгаа Бараа' нэртэй үйлчилгээ төрөлтэй барааг сонгоно уу.\n"
+"                Энэ талбарын анхны утга байлгахаар энэ барааг үүсгэж, "
+"тохируулж болно."
 
 #. module: sale
 #: selection:sale.report,month:0
@@ -1262,6 +1338,7 @@ msgstr "1 сар"
 #: field:sale.config.settings,group_discount_per_so_line:0
 msgid "Allow setting a discount on the sales order lines"
 msgstr ""
+"Борлуулалтын захиалгын мөрүүд дээр хөнгөлөлт тохируулах боломжийг олгодог"
 
 #. module: sale
 #: model:ir.actions.act_window,name:sale.action_orders_in_progress

@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-21 17:06+0000\n"
-"PO-Revision-Date: 2013-02-17 04:00+0000\n"
+"PO-Revision-Date: 2013-02-17 13:06+0000\n"
 "Last-Translator: gobi <Unknown>\n"
 "Language-Team: Mongolian <mn@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-02-17 05:23+0000\n"
+"X-Launchpad-Export-Date: 2013-02-18 05:26+0000\n"
 "X-Generator: Launchpad (build 16491)\n"
 
 #. module: product
@@ -2207,6 +2207,8 @@ msgid ""
 "Consumable: Will not imply stock management for this product. \n"
 "Stockable product: Will imply stock management for this product."
 msgstr ""
+"Хангамжийн: Энэ барааны хувьд нөөцийн менежмент хийгдэхгүй. \n"
+"Хадгалах бараа: Энэ бараанд нөөцийн менежмент хийгдэнэ."
 
 #. module: product
 #: help:product.pricelist.type,key:0
@@ -2226,6 +2228,14 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Шинэ бараа үүсгэхдээ дарна.\n"
+"              </p><p>\n"
+"                Худалдаж авдаг, борлуулдаг бүх зүйлд барааг үүсгэх \n"
+"                ёстой бөгөөд энэ нь бодит бараа байхаас гадна \n"
+"                үйлчилгээ байж бас болно.\n"
+"              </p>\n"
+"            "
 
 #. module: product
 #: view:product.product:0
@@ -2243,6 +2253,8 @@ msgid ""
 "A category of the view type is a virtual category that can be used as the "
 "parent of another category to create a hierarchical structure."
 msgstr ""
+"Харагдац төрлийн ангилал нь хуурмаг ангилал бөгөөд өөр ангилалаар эцэгээр "
+"ашиглагдаж мөчирлөсөн бүтцийг бий болгоход хэрэглэгддэг."
 
 #. module: product
 #: selection:product.ul,type:0
@@ -2255,6 +2267,8 @@ msgid ""
 "Specify a template if this rule only applies to one product template. Keep "
 "empty otherwise."
 msgstr ""
+"Хэрэв энэ дүрэм барааны нэг л үлгэрт үйлчлэх бол үлгэрийг зааж өгнө. Үгүй "
+"бол хоосон үлдээнэ."
 
 #. module: product
 #: model:product.template,description:product.product_product_2_product_template
@@ -2262,6 +2276,8 @@ msgid ""
 "This type of service include assistance for security questions, system "
 "configuration requirements, implementation or special needs."
 msgstr ""
+"Энэ төрлийн үйлчилгээ нь нууцлалын асуудлууд, системийн тохиргооны "
+"шаардлага, нэвтрүүлэлт, тусгай хэрэгцээ зэрэгт туслах үйлчилгээнүүд байдаг."
 
 #. module: product
 #: field:product.product,image:0
@@ -2290,12 +2306,12 @@ msgstr "Тайлбар"
 #. module: product
 #: model:res.groups,name:product.group_stock_packaging
 msgid "Manage Product Packaging"
-msgstr ""
+msgstr "Барааны баглааг менежмент хийнэ"
 
 #. module: product
 #: model:product.category,name:product.product_category_2
 msgid "Internal"
-msgstr ""
+msgstr "Дотоод"
 
 #. module: product
 #: model:product.template,name:product.product_product_45_product_template
@@ -2364,6 +2380,21 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Үнийн хүснэгт үүсгэхдээ дарна.\n"
+"              </p><p>\n"
+"                Үнийн хүснэгт гэдэг нь худалдан авах үнийг тооцоолж гаргаж \n"
+"                ирэх дүрмүүдийг агуулдаг. Анхны үнийн хүснэгт нь ганцхан \n"
+"                дүрмийг агуулж байдаг; энэ нь барааны маягтын өртөг үнийг \n"
+"                хэрэглэдэг. Хэрэв маш хялбар шаардлагатай бол захиалагчийн \n"
+"                үнийн хүснэгтйин талаар санаа зовох шаардлагагүй.\n"
+"              </p><p>\n"
+"                Гэхдээ зарим тохиолдолд нийлүүлэгчийн төвөгтэй үнийн \n"
+"                хүснэгтийг хэрэглэх тохиолдлууд байдаг. Тухайлбал тоо \n"
+"                хэмжээнээс хамаарсан, одоогийн зарласан урамшууллаас \n"
+"                хамаарсан зэрэг үнийн хүснэгтийн дүрмүүдийг хэрэглэж болно.\n"
+"              </p>\n"
+"            "
 
 #. module: product
 #: selection:product.template,mes_type:0
@@ -2388,7 +2419,7 @@ msgstr "Үнийн хэлбэлзэлийн доод хэмжээ"
 #. module: product
 #: model:res.groups,name:product.group_uom
 msgid "Manage Multiple Units of Measure"
-msgstr ""
+msgstr "Олон хэмжих нэгжийг менежмент хийх"
 
 #. module: product
 #: help:product.packaging,weight:0
@@ -2398,7 +2429,7 @@ msgstr "Баглаа, тавиур эсвэл хайрцагны савласа�
 #. module: product
 #: view:product.uom:0
 msgid "e.g: 1 * (this unit) = ratio * (reference unit)"
-msgstr ""
+msgstr "ө.х: 1 * (энэ нэгж) = харьцаа * (сурвалж нэгж)"
 
 #. module: product
 #: model:product.template,description:product.product_product_25_product_template
@@ -2423,6 +2454,8 @@ msgid ""
 "Average delay in days to produce this product. In the case of multi-level "
 "BOM, the manufacturing lead times of the components will be added."
 msgstr ""
+"Энэ барааг үйлдвэрлэхэд зарцуулагддаг дундаж хугацаа. Олон түвшний жортой "
+"тохиолдолд үйлдвэрлэлийн урьтал хугацаанууд нь хоорондоо нэмэгдэнэ."
 
 #. module: product
 #: model:product.template,name:product.product_assembly_product_template
@@ -2445,6 +2478,13 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Шинэ хэмжих нэгж нэмэхдээ дарна.\n"
+"              </p><p>\n"
+"                Ижил ангилал дахь олон хэмжих нэгжүүдийн хооронд \n"
+"                хөрвөх харьцааг тодорхойлж өгнө.\n"
+"              </p>\n"
+"            "
 
 #. module: product
 #: model:product.template,name:product.product_product_11_product_template
@@ -2498,6 +2538,9 @@ msgid ""
 "image, with aspect ratio preserved. Use this field anywhere a small image is "
 "required."
 msgstr ""
+"Барааны жижиг хэмжээт зураг. Энэ нь автоматаар 64x64px хэмжээтэй болно, "
+"харьцаа нь гэхдээ хадгалагдана. Энэ талбарыг жижиг зураг хэрэгцээтэй газарт "
+"хаана ч хамаагүй хэрэглэж болно."
 
 #. module: product
 #: model:product.template,name:product.product_product_40_product_template
@@ -2507,12 +2550,12 @@ msgstr ""
 #. module: product
 #: selection:product.uom,uom_type:0
 msgid "Reference Unit of Measure for this category"
-msgstr ""
+msgstr "Ангилалын сурвалж хэмжих нэгж"
 
 #. module: product
 #: field:product.supplierinfo,product_uom:0
 msgid "Supplier Unit of Measure"
-msgstr ""
+msgstr "Нийлүүлэгчийн хэмжих нэгж"
 
 #. module: product
 #: view:product.product:0
@@ -2552,6 +2595,20 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Үнийн хүснэгт үүсгэхдээ дарна\n"
+"              </p><p>\n"
+"                Үнийн хүснэгт гэдэг нь барааны зарах үнийг тооцоолж гаргах \n"
+"                дүрмүүдийг агуулдаг.\n"
+"              </p><p>\n"
+"                Үнийн хүснэгт нь олон хувилбар (2010, 2011, 2010 оны 2 сарын "
+"\n"
+"                хямдрал, гм.) агуулж болох бөгөөд хувилбар бүр нь олон \n"
+"                дүрэмтэй байж болно.\n"
+"                (ө.х. барааны ангилалын захиалагчийн үнэ нь нийлүүлэгчийн \n"
+"                үнийг 1.80-р үржүүлнэ гэх мэт дүрэм байж болно).\n"
+"              </p>\n"
+"            "
 
 #. module: product
 #: model:ir.model,name:product.model_product_template
@@ -2627,6 +2684,8 @@ msgid ""
 "Conversion between Units of Measure can only occur if they belong to the "
 "same category. The conversion will be made based on the ratios."
 msgstr ""
+"Хэмжих нэгжийг хооронд нь хөрвүүлэх явдал нь зөвхөн нэг ангилалд хамаарч "
+"байвал л хийгдэнэ. Хөрвүүлэлт нь харьцаан дээр суурилж явагдана."
 
 #. module: product
 #: constraint:product.category:0
@@ -2640,16 +2699,19 @@ msgid ""
 "128x128px image, with aspect ratio preserved, only when the image exceeds "
 "one of those sizes. Use this field in form views or some kanban views."
 msgstr ""
+"Барааны дунд хэмжээт зураг. Энэ нь автоматаар 128x128px хэмжээтэй болох "
+"бөгөөд харьцаа нь хадгалагдана. Энэ зурагийг зарим маягт харагдац болон "
+"канбан харагдацад хэрэглэж болно."
 
 #. module: product
 #: view:product.uom:0
 msgid "e.g: 1 * (reference unit) = ratio * (this unit)"
-msgstr ""
+msgstr "ө.х: 1 * (сурвалж нэгж) = харьцаа * (энэ нэгж)"
 
 #. module: product
 #: help:product.supplierinfo,qty:0
 msgid "This is a quantity which is converted into Default Unit of Measure."
-msgstr ""
+msgstr "Энэ нь Анхны хэмжих нэгж рүү хөрвүүлэгдсэн тоо хэмжээ."
 
 #. module: product
 #: help:product.template,volume:0
