@@ -43,6 +43,12 @@ def data():
             base = os.path.join('pytz', root[len(tzdir) + 1:])
             r[base] = [os.path.join(root, f) for f in filenames]
 
+        import docutils
+        dudir = os.path.dirname(docutils.__file__)
+        for root, _, filenames in os.walk(dudir):
+            base = os.path.join('docutils', root[len(dudir) + 1:])
+            r[base] = [os.path.join(root, f) for f in filenames if not f.endswith(('.py', '.pyc', '.pyo'))]
+
     return r.items()
 
 def gen_manifest():
@@ -62,7 +68,7 @@ def py2exe_options():
                     "skip_archive": 1,
                     "optimize": 2,
                     "dist_dir": 'dist',
-                    "packages": [ "DAV", "HTMLParser", "PIL", "asynchat", "asyncore", "commands", "dateutil", "decimal", "docutils", "email", "encodings", "imaplib", "Jinja2", "lxml", "lxml._elementpath", "lxml.builder", "lxml.etree", "lxml.objectify", "mako", "openerp", "poplib", "pychart", "pydot", "pyparsing", "pytz", "reportlab", "select", "simplejson", "smtplib", "uuid", "vatnumber", "vobject", "xml", "xml.dom", "yaml", ],
+                    "packages": [ "DAV", "HTMLParser", "PIL", "asynchat", "asyncore", "commands", "dateutil", "decimal", "docutils", "email", "encodings", "imaplib", "jinja2", "lxml", "lxml._elementpath", "lxml.builder", "lxml.etree", "lxml.objectify", "mako", "openerp", "poplib", "pychart", "pydot", "pyparsing", "pytz", "reportlab", "select", "simplejson", "smtplib", "uuid", "vatnumber", "vobject", "xml", "xml.dom", "yaml", ],
                     "excludes" : ["Tkconstants","Tkinter","tcl"],
                 }
             }
@@ -112,7 +118,7 @@ setuptools.setup(
           'mock',
           'PIL', # windows binary http://www.lfd.uci.edu/~gohlke/pythonlibs/
           'psutil', # windows binary code.google.com/p/psutil/downloads/list
-          'psycopg2',
+          'psycopg2 >= 2.2',
           'pydot',
           'python-dateutil < 2',
           'python-ldap', # optional

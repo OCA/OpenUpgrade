@@ -319,7 +319,13 @@ class WorkerHTTP(Worker):
         fcntl.fcntl(client, fcntl.F_SETFD, flags)
         # do request using WorkerBaseWSGIServer monkey patched with socket
         self.server.socket = client
-        self.server.process_request(client,addr)
+        # tolerate broken pipe when the http client closes the socket before
+        # receiving the full reply
+        try:
+            self.server.process_request(client,addr)
+        except IOError, e:
+            if e.errno != errno.EPIPE:
+                raise
         self.request_count += 1
 
     def process_work(self):
@@ -355,12 +361,17 @@ class WorkerCron(Worker):
         time.sleep(interval)
 
     def process_work(self):
+        rpc_request = logging.getLogger('openerp.netsvc.rpc.request')
+        rpc_request_flag = rpc_request.isEnabledFor(logging.DEBUG)
         _logger.debug("WorkerCron (%s) polling for jobs", self.pid)
         if config['db_name']:
             db_names = config['db_name'].split(',')
         else:
             db_names = openerp.netsvc.ExportService._services['db'].exp_list(True)
         for db_name in db_names:
+            if rpc_request_flag:
+                start_time = time.time()
+                start_rss, start_vms = psutil.Process(os.getpid()).get_memory_info()
             while True:
                 # acquired = openerp.addons.base.ir.ir_cron.ir_cron._acquire_job(db_name)
                 # TODO why isnt openerp.addons.base defined ?
@@ -371,7 +382,12 @@ class WorkerCron(Worker):
             # dont keep cursors in multi database mode
             if len(db_names) > 1:
                 openerp.sql_db.close_db(db_name)
-        # TODO Each job should be considered as one request instead of each db
+            if rpc_request_flag:
+                end_time = time.time()
+                end_rss, end_vms = psutil.Process(os.getpid()).get_memory_info()
+                logline = '%s time:%.3fs mem: %sk -> %sk (diff: %sk)' % (db_name, end_time - start_time, start_vms / 1024, end_vms / 1024, (end_vms - start_vms)/1024)
+                _logger.debug("WorkerCron (%s) %s", self.pid, logline)
+        # TODO Each job should be considered as one request instead of each run
         self.request_count += 1
 
     def start(self):

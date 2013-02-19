@@ -3,7 +3,7 @@
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
-#    Copyright (C) 2010-2012 OpenERP s.a. (<http://openerp.com>).
+#    Copyright (C) 2010-2013 OpenERP s.a. (<http://openerp.com>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -36,14 +36,12 @@ import openerp.modules.graph
 import openerp.modules.migration
 import openerp.osv as osv
 import openerp.pooler as pooler
-import openerp.release as release
 import openerp.tools as tools
 from openerp import SUPERUSER_ID
 
-from openerp import SUPERUSER_ID
 from openerp.tools.translate import _
 from openerp.modules.module import initialize_sys_path, \
-    load_openerp_module, init_module_models
+    load_openerp_module, init_module_models, adapt_version
 
 from openerp.openupgrade import openupgrade_loading
 _logger = logging.getLogger(__name__)
@@ -145,7 +143,7 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
     loaded_modules = []
     pool = pooler.get_pool(cr.dbname)
     migrations = openerp.modules.migration.MigrationManager(cr, graph)
-    _logger.debug('loading %d packages...', len(graph))
+    _logger.info('loading %d modules...', len(graph))
 
     # Query manual fields for all models at once and save them on the registry
     # so the initialization code for each model does not have to do it
@@ -169,7 +167,7 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
         if package.name in skip_modules or package.name in loaded_modules:
              continue
 
-        _logger.info('module %s: loading objects', package.name)
+        _logger.debug('module %s: loading objects', package.name)
         migrations.migrate_module(package, 'pre')
         load_openerp_module(package.name)
 
@@ -238,7 +236,7 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
                 cr.close()
                 raise
 
-            ver = release.major_version + '.' + package.data['version']
+            ver = adapt_version(package.data['version'])
             # Set new modules and dependencies
             modobj.write(cr, SUPERUSER_ID, [module_id], {'state': 'installed', 'latest_version': ver})
             # Update translations for all installed languages
@@ -463,6 +461,11 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
             _logger.error('At least one test failed when loading the modules.')
         else:
             _logger.info('Modules loaded.')
+
+        # STEP 7: call _register_hook on every model
+        for model in pool.models.values():
+            model._register_hook(cr)
+
     finally:
         cr.close()
 

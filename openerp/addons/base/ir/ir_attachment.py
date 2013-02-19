@@ -21,11 +21,14 @@
 
 import hashlib
 import itertools
+import logging
 import os
 import re
 
 from openerp import tools
 from openerp.osv import fields,osv
+
+_logger = logging.getLogger(__name__)
 
 class ir_attachment(osv.osv):
     """Attachments are used to link binary files or url to any openerp document.
@@ -107,6 +110,8 @@ class ir_attachment(osv.osv):
             full_path = self._full_path(cr, uid, location, fname)
             try:
                 os.unlink(full_path)
+            except OSError:
+                _logger.error("_file_delete could not unlink %s",full_path)
             except IOError:
                 # Harmless and needed for race conditions
                 _logger.error("_file_delete could not unlink %s",full_path)
