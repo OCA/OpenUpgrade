@@ -1,21 +1,21 @@
 # Romanian translation for openobject-addons
-# Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
 # This file is distributed under the same license as the openobject-addons package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2012-12-03 16:03+0000\n"
-"PO-Revision-Date: 2011-01-19 21:16+0000\n"
-"Last-Translator: Mihai Satmarean <Unknown>\n"
+"POT-Creation-Date: 2012-12-21 17:05+0000\n"
+"PO-Revision-Date: 2013-01-11 12:27+0000\n"
+"Last-Translator: Fekete Mihai <mihai@erpsystems.ro>\n"
 "Language-Team: Romanian <ro@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-04 05:52+0000\n"
-"X-Generator: Launchpad (build 16335)\n"
+"X-Launchpad-Export-Date: 2013-01-18 06:40+0000\n"
+"X-Generator: Launchpad (build 16430)\n"
 
 #. module: crm_partner_assign
 #: field:crm.lead.report.assign,delay_close:0
@@ -25,7 +25,7 @@ msgstr "Intarziere la inchidere"
 #. module: crm_partner_assign
 #: field:crm.lead.forward.to.partner,author_id:0
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #. module: crm_partner_assign
 #: field:crm.lead.report.assign,planned_revenue:0
@@ -38,11 +38,13 @@ msgid ""
 "Message type: email for email message, notification for system message, "
 "comment for other messages such as user replies"
 msgstr ""
+"Tipul de mesaj: email pentru mesaj email, notificare pentru mesajul sistem, "
+"comentariu pentru alte mesaje, cum ar fi raspunsurile utilizatorului"
 
 #. module: crm_partner_assign
 #: field:crm.lead.report.assign,nbr:0
 msgid "# of Cases"
-msgstr "# din Cazuri"
+msgstr "# de Cazuri"
 
 #. module: crm_partner_assign
 #: view:crm.lead.report.assign:0
@@ -53,7 +55,7 @@ msgstr "Grupeaza dupa..."
 #. module: crm_partner_assign
 #: help:crm.lead.forward.to.partner,body:0
 msgid "Automatically sanitized HTML contents"
-msgstr ""
+msgstr "Continuturi HTML cenzurate automat"
 
 #. module: crm_partner_assign
 #: view:crm.lead:0
@@ -66,9 +68,14 @@ msgid "Geo Localize"
 msgstr "Localizare Geo"
 
 #. module: crm_partner_assign
+#: field:crm.lead.forward.to.partner,starred:0
+msgid "Starred"
+msgstr "Marcat cu asterisc"
+
+#. module: crm_partner_assign
 #: view:crm.lead.forward.to.partner:0
 msgid "Body"
-msgstr "Corp"
+msgstr "Continut"
 
 #. module: crm_partner_assign
 #: help:crm.lead.forward.to.partner,email_from:0
@@ -76,11 +83,13 @@ msgid ""
 "Email address of the sender. This field is set when no matching partner is "
 "found for incoming emails."
 msgstr ""
+"Adresa de email a expeditorului. Acest camp este setat atunci cand nu este "
+"gasit nici un partener care sa se potriveasca email-urilor primite."
 
 #. module: crm_partner_assign
 #: view:crm.partner.report.assign:0
 msgid "Date Partnership"
-msgstr ""
+msgstr "Data Parteneriatului"
 
 #. module: crm_partner_assign
 #: selection:crm.lead.report.assign,type:0
@@ -106,7 +115,7 @@ msgstr "Companie"
 #. module: crm_partner_assign
 #: field:crm.lead.forward.to.partner,notification_ids:0
 msgid "Notifications"
-msgstr ""
+msgstr "Notificari"
 
 #. module: crm_partner_assign
 #: field:crm.lead.report.assign,date_assign:0
@@ -118,7 +127,7 @@ msgstr "Data partener"
 #: view:crm.partner.report.assign:0
 #: view:res.partner:0
 msgid "Salesperson"
-msgstr ""
+msgstr "Agent de vanzari"
 
 #. module: crm_partner_assign
 #: selection:crm.lead.report.assign,priority:0
@@ -139,12 +148,7 @@ msgstr "Identificator unic mesaj"
 #. module: crm_partner_assign
 #: field:res.partner,date_review_next:0
 msgid "Next Partner Review"
-msgstr ""
-
-#. module: crm_partner_assign
-#: field:crm.lead.forward.to.partner,favorite_user_ids:0
-msgid "Favorite"
-msgstr ""
+msgstr "Urmatoarea Verificare a Partenerului"
 
 #. module: crm_partner_assign
 #: selection:crm.lead.forward.to.partner,history_mode:0
@@ -170,12 +174,12 @@ msgstr "Alocare Geo"
 #. module: crm_partner_assign
 #: model:ir.model,name:crm_partner_assign.model_crm_lead_forward_to_partner
 msgid "Email composition wizard"
-msgstr ""
+msgstr "Wizardul de compunere email-uri"
 
 #. module: crm_partner_assign
 #: field:crm.partner.report.assign,turnover:0
 msgid "Turnover"
-msgstr ""
+msgstr "Cifra de afaceri"
 
 #. module: crm_partner_assign
 #: field:crm.lead.report.assign,date_closed:0
@@ -194,18 +198,18 @@ msgstr ""
 #. module: crm_partner_assign
 #: view:res.partner:0
 msgid "Partner Activation"
-msgstr ""
+msgstr "Activare Partener"
 
 #. module: crm_partner_assign
 #: selection:crm.lead.forward.to.partner,type:0
 msgid "System notification"
-msgstr ""
+msgstr "Notificare sistem"
 
 #. module: crm_partner_assign
 #: code:addons/crm_partner_assign/wizard/crm_forward_to_partner.py:77
 #, python-format
 msgid "Lead forward"
-msgstr ""
+msgstr "Redirectioneaza"
 
 #. module: crm_partner_assign
 #: field:crm.lead.report.assign,probability:0
@@ -258,18 +262,6 @@ msgid "Priority"
 msgstr "Prioritate"
 
 #. module: crm_partner_assign
-#: help:crm.lead.forward.to.partner,author_id:0
-msgid ""
-"Author of the message. If not set, email_from may hold an email address that "
-"did not match any partner."
-msgstr ""
-
-#. module: crm_partner_assign
-#: help:crm.lead.forward.to.partner,favorite_user_ids:0
-msgid "Users that set this message in their favorites"
-msgstr ""
-
-#. module: crm_partner_assign
 #: field:crm.lead.report.assign,delay_expected:0
 msgid "Overpassed Deadline"
 msgstr "Termen limita depasit"
@@ -283,7 +275,7 @@ msgstr "Tip"
 #. module: crm_partner_assign
 #: selection:crm.lead.forward.to.partner,type:0
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #. module: crm_partner_assign
 #: help:crm.lead,partner_assigned_id:0
@@ -298,7 +290,7 @@ msgstr "Cel mai scazut (cea mai scazuta)"
 #. module: crm_partner_assign
 #: view:crm.partner.report.assign:0
 msgid "Date Invoice"
-msgstr ""
+msgstr "Data Facturii"
 
 #. module: crm_partner_assign
 #: field:crm.lead.forward.to.partner,template_id:0
@@ -323,12 +315,12 @@ msgstr "Data crearii"
 #. module: crm_partner_assign
 #: model:ir.model,name:crm_partner_assign.model_res_partner_activation
 msgid "res.partner.activation"
-msgstr ""
+msgstr "res.activare.partener"
 
 #. module: crm_partner_assign
 #: field:crm.lead.forward.to.partner,parent_id:0
 msgid "Parent Message"
-msgstr ""
+msgstr "Mesaj Principal"
 
 #. module: crm_partner_assign
 #: field:crm.lead.forward.to.partner,res_id:0
@@ -358,7 +350,7 @@ msgstr "Iulie"
 #. module: crm_partner_assign
 #: view:crm.partner.report.assign:0
 msgid "Date Review"
-msgstr ""
+msgstr "Verificarea Datei"
 
 #. module: crm_partner_assign
 #: view:crm.lead.report.assign:0
@@ -370,12 +362,12 @@ msgstr "Etapa"
 #: view:crm.lead.report.assign:0
 #: field:crm.lead.report.assign,state:0
 msgid "Status"
-msgstr ""
+msgstr "Stare"
 
 #. module: crm_partner_assign
 #: field:crm.lead.forward.to.partner,to_read:0
 msgid "To read"
-msgstr ""
+msgstr "De citit"
 
 #. module: crm_partner_assign
 #: code:addons/crm_partner_assign/wizard/crm_forward_to_partner.py:77
@@ -430,12 +422,12 @@ msgstr "Numarul de zile pana la inchiderea cazului"
 #: help:crm.lead.forward.to.partner,notified_partner_ids:0
 msgid ""
 "Partners that have a notification pushing this message in their mailboxes"
-msgstr ""
+msgstr "Partenerii care au o notificare ce a dus la primirea acestui mesaj"
 
 #. module: crm_partner_assign
 #: selection:crm.lead.forward.to.partner,type:0
 msgid "Comment"
-msgstr ""
+msgstr "Comentariu"
 
 #. module: crm_partner_assign
 #: field:res.partner,partner_weight:0
@@ -463,7 +455,7 @@ msgstr "Decembrie"
 #. module: crm_partner_assign
 #: help:crm.lead.forward.to.partner,vote_user_ids:0
 msgid "Users that voted for this message"
-msgstr ""
+msgstr "Utilizatorii care au votat pentru acest mesaj"
 
 #. module: crm_partner_assign
 #: view:crm.lead.report.assign:0
@@ -479,13 +471,13 @@ msgstr "Data deschiderii"
 #. module: crm_partner_assign
 #: field:crm.lead.forward.to.partner,child_ids:0
 msgid "Child Messages"
-msgstr ""
+msgstr "Mesaje secundare"
 
 #. module: crm_partner_assign
 #: field:crm.partner.report.assign,date_review:0
 #: field:res.partner,date_review:0
 msgid "Latest Partner Review"
-msgstr ""
+msgstr "Verificarea cea mai Recenta a Partenerului"
 
 #. module: crm_partner_assign
 #: field:crm.lead.forward.to.partner,subject:0
@@ -495,17 +487,17 @@ msgstr "Subiect"
 #. module: crm_partner_assign
 #: view:crm.lead.forward.to.partner:0
 msgid "or"
-msgstr ""
+msgstr "sau"
 
 #. module: crm_partner_assign
 #: field:crm.lead.forward.to.partner,body:0
 msgid "Contents"
-msgstr ""
+msgstr "Cuprins"
 
 #. module: crm_partner_assign
 #: field:crm.lead.forward.to.partner,vote_user_ids:0
 msgid "Votes"
-msgstr ""
+msgstr "Voturi"
 
 #. module: crm_partner_assign
 #: view:crm.lead.report.assign:0
@@ -513,10 +505,17 @@ msgid "#Opportunities"
 msgstr "#Oportunitati"
 
 #. module: crm_partner_assign
+#: help:crm.lead.forward.to.partner,starred:0
+msgid "Current user has a starred notification linked to this message"
+msgstr ""
+"Utilizatorul actual are o notificare marcata cu asterisc atasata acestui "
+"mesaj"
+
+#. module: crm_partner_assign
 #: field:crm.partner.report.assign,date_partnership:0
 #: field:res.partner,date_partnership:0
 msgid "Partnership Date"
-msgstr ""
+msgstr "Data Parteneriatului"
 
 #. module: crm_partner_assign
 #: view:crm.lead:0
@@ -537,7 +536,7 @@ msgstr "Scazut(a)"
 #: view:crm.lead.report.assign:0
 #: selection:crm.lead.report.assign,state:0
 msgid "Closed"
-msgstr "Inchis"
+msgstr "Inchis(a)"
 
 #. module: crm_partner_assign
 #: model:ir.actions.act_window,name:crm_partner_assign.action_crm_send_mass_forward
@@ -568,7 +567,7 @@ msgstr "August"
 #. module: crm_partner_assign
 #: help:crm.lead.forward.to.partner,record_name:0
 msgid "Name get of the related document."
-msgstr ""
+msgstr "Obtine numele documentului asociat"
 
 #. module: crm_partner_assign
 #: selection:crm.lead.report.assign,priority:0
@@ -665,12 +664,12 @@ msgstr "Veniturile planificate"
 #. module: crm_partner_assign
 #: view:res.partner:0
 msgid "Partner Review"
-msgstr ""
+msgstr "Verificare Partener"
 
 #. module: crm_partner_assign
 #: field:crm.partner.report.assign,period_id:0
 msgid "Invoice Period"
-msgstr ""
+msgstr "Perioada de facturare"
 
 #. module: crm_partner_assign
 #: model:ir.model,name:crm_partner_assign.model_res_partner_grade
@@ -691,7 +690,7 @@ msgstr "Atasamente"
 #. module: crm_partner_assign
 #: field:crm.lead.forward.to.partner,record_name:0
 msgid "Message Record Name"
-msgstr ""
+msgstr "Numele Inregistrarii Mesajului"
 
 #. module: crm_partner_assign
 #: field:res.partner.activation,sequence:0
@@ -706,6 +705,8 @@ msgid ""
 "Cannot contact geolocation servers. Please make sure that your internet "
 "connection is up and running (%s)."
 msgstr ""
+"Serverele geolocalizare nu pot fi contactate. Va rugam sa va asigurati ca "
+"aveti conexiune la internet (%s)."
 
 #. module: crm_partner_assign
 #: selection:crm.lead.report.assign,month:0
@@ -732,12 +733,12 @@ msgstr "Deschideti"
 #. module: crm_partner_assign
 #: field:crm.lead.forward.to.partner,subtype_id:0
 msgid "Subtype"
-msgstr ""
+msgstr "Subtip"
 
 #. module: crm_partner_assign
 #: field:res.partner,date_localization:0
 msgid "Geo Localization Date"
-msgstr "Data Localizare Geo"
+msgstr "Data Geo Localizare"
 
 #. module: crm_partner_assign
 #: view:crm.lead.report.assign:0
@@ -747,12 +748,12 @@ msgstr "Actual(a)"
 #. module: crm_partner_assign
 #: model:ir.model,name:crm_partner_assign.model_crm_lead
 msgid "Lead/Opportunity"
-msgstr ""
+msgstr "Pista/Oportunitate"
 
 #. module: crm_partner_assign
 #: field:crm.lead.forward.to.partner,notified_partner_ids:0
 msgid "Notified partners"
-msgstr ""
+msgstr "Parteneri instiintati"
 
 #. module: crm_partner_assign
 #: view:crm.lead.forward.to.partner:0
@@ -783,7 +784,7 @@ msgstr "Venituri probabile"
 #: field:res.partner,activation:0
 #: view:res.partner.activation:0
 msgid "Activation"
-msgstr ""
+msgstr "Activare"
 
 #. module: crm_partner_assign
 #: view:crm.lead:0
@@ -794,7 +795,12 @@ msgstr "Partener alocat"
 #. module: crm_partner_assign
 #: field:res.partner,grade_id:0
 msgid "Partner Level"
-msgstr ""
+msgstr "Nivel Partener"
+
+#. module: crm_partner_assign
+#: help:crm.lead.forward.to.partner,to_read:0
+msgid "Current user has an unread notification linked to this message"
+msgstr "Utilizatorul actual are o notificare necitita atasata acestui mesaj"
 
 #. module: crm_partner_assign
 #: selection:crm.lead.report.assign,type:0
@@ -820,7 +826,7 @@ msgstr "Nume"
 #: model:ir.actions.act_window,name:crm_partner_assign.res_partner_activation_act
 #: model:ir.ui.menu,name:crm_partner_assign.res_partner_activation_config_mi
 msgid "Partner Activations"
-msgstr ""
+msgstr "Activari Partener"
 
 #. module: crm_partner_assign
 #: view:crm.lead.report.assign:0
@@ -863,6 +869,8 @@ msgid ""
 "Technical field holding the message notifications. Use notified_partner_ids "
 "to access notified partners."
 msgstr ""
+"Camp tehnic ce contine mesajele de notificare. Folositi notifice_partner_ids "
+"(id-uri_partener_instiintat) pentru a accesa partenerii instiintati."
 
 #. module: crm_partner_assign
 #: view:crm.partner.report.assign:0
@@ -877,12 +885,12 @@ msgstr "Raport pista MRC"
 #. module: crm_partner_assign
 #: field:crm.lead.forward.to.partner,composition_mode:0
 msgid "Composition mode"
-msgstr ""
+msgstr "Modul de compunere"
 
 #. module: crm_partner_assign
 #: field:crm.lead.forward.to.partner,model:0
 msgid "Related Document Model"
-msgstr ""
+msgstr "Model Document Asociat"
 
 #. module: crm_partner_assign
 #: selection:crm.lead.forward.to.partner,history_mode:0
@@ -890,9 +898,13 @@ msgid "Case Information"
 msgstr "Informatii caz"
 
 #. module: crm_partner_assign
-#: help:crm.lead.forward.to.partner,to_read:0
-msgid "Functional field to search for messages the current user has to read"
+#: help:crm.lead.forward.to.partner,author_id:0
+msgid ""
+"Author of the message. If not set, email_from may hold an email address that "
+"did not match any partner."
 msgstr ""
+"Autorul mesajului. Daca nu este selectat, email_from (expeditor_email) poate "
+"sa contina o adresa de email care nu s-a potrivit cu nici un partener."
 
 #. module: crm_partner_assign
 #: model:ir.model,name:crm_partner_assign.model_crm_partner_report_assign
@@ -907,12 +919,12 @@ msgstr "Ridicat(a)"
 #. module: crm_partner_assign
 #: field:crm.lead.forward.to.partner,partner_ids:0
 msgid "Additional contacts"
-msgstr ""
+msgstr "Persoane de contact suplimentare"
 
 #. module: crm_partner_assign
 #: help:crm.lead.forward.to.partner,parent_id:0
 msgid "Initial thread message."
-msgstr ""
+msgstr "Continutul mesajului initial."
 
 #. module: crm_partner_assign
 #: field:crm.lead.report.assign,create_date:0
@@ -932,204 +944,3 @@ msgstr "Filtre"
 #: model:ir.model,name:crm_partner_assign.model_res_partner
 msgid "Partner"
 msgstr "Partener"
-
-#~ msgid "State"
-#~ msgstr "Stare"
-
-#~ msgid "7 Days"
-#~ msgstr "7 Zile"
-
-#~ msgid "Contact"
-#~ msgstr "Contact"
-
-#~ msgid "Category"
-#~ msgstr "Categorie"
-
-#~ msgid "Error ! You can not create recursive associated members."
-#~ msgstr "Eroare ! Nu puteţi crea membri asociaţi recursiv."
-
-#~ msgid "unknown"
-#~ msgstr "necunoscut"
-
-#~ msgid "Unchanged"
-#~ msgstr "Neschimbat"
-
-#~ msgid "Last 30 Days"
-#~ msgstr "Ultimele 30 de zile"
-
-#~ msgid "Message Body"
-#~ msgstr "Corpul mesajului"
-
-#~ msgid "Send to"
-#~ msgstr "Trimite catre"
-
-#~ msgid "Reply-to of the Sales team defined on this case"
-#~ msgstr "Raspuns al echipei de vanzari definita la acest caz"
-
-#~ msgid ""
-#~ "These addresses will receive a copy of this email. To modify the permanent "
-#~ "CC list, edit the global CC field of this case"
-#~ msgstr ""
-#~ "Aceste adrese vor primi o copie a acestui email. Pentru a modifica lista "
-#~ "permanenta CC, editati campul CC global al acestui caz"
-
-#~ msgid ""
-#~ "\n"
-#~ "This is the module used by OpenERP SA to redirect customers to his "
-#~ "partners,\n"
-#~ "based on geolocalization.\n"
-#~ "    "
-#~ msgstr ""
-#~ "\n"
-#~ "Acesta este modulul folosit de catre OpenERP SA pentru a redirectiona "
-#~ "clientii catre parteneri, \n"
-#~ "pe baza geolocalizarii\n"
-#~ "    "
-
-#~ msgid "HTML formatting?"
-#~ msgstr "Formatare HTML?"
-
-#~ msgid "Select this if you want to send email with HTML formatting."
-#~ msgstr "Selectati daca doriti sa trimiteti email-uri in format HTML"
-
-#~ msgid "Reply To"
-#~ msgstr "Raspuns la"
-
-#~ msgid "Partner Geo-Localisation"
-#~ msgstr "Geo-Localizare partener"
-
-#~ msgid "CC"
-#~ msgstr "CC"
-
-#~ msgid "Set New State To"
-#~ msgstr "Setati starea noua pe"
-
-#~ msgid "Send new email"
-#~ msgstr "Trimite un email nou"
-
-#~ msgid "crm.lead"
-#~ msgstr "crm.pista"
-
-#~ msgid "Permanently delete emails after sending"
-#~ msgstr "Sterge definitiv email-urile dupa ce sunt trimise"
-
-#~ msgid "Message type"
-#~ msgstr "Tip de mesaj"
-
-#~ msgid "Message recipients"
-#~ msgstr "Destinatari mesaj"
-
-#~ msgid "#Partner"
-#~ msgstr "#Partener"
-
-#~ msgid "Plain-text version of the message"
-#~ msgstr "Versiune text-simplu a mesajului"
-
-#, python-format
-#~ msgid ""
-#~ "Could not contact geolocation servers, please make sure you have a working "
-#~ "internet connection (%s)"
-#~ msgstr ""
-#~ "Nu au putut fi contactate serverele geolocalizare, va rugam sa va asigurati "
-#~ "ca aveti o conexiune la internet functionabila (%s)"
-
-#~ msgid "Text contents"
-#~ msgstr "Cuprins text"
-
-#~ msgid ""
-#~ "Add here all attachments of the current document you want to include in the "
-#~ "Email."
-#~ msgstr ""
-#~ "Adaugati aici toate atasamentele pentru documentul curent daca doriti sa le "
-#~ "includeti in Email."
-
-#~ msgid "Rich-text/HTML version of the message"
-#~ msgstr "Rich-text/versiune HTML a mesajului"
-
-#~ msgid "Auto Delete"
-#~ msgstr "Sterge Automat"
-
-#~ msgid "Blind carbon copy message recipients"
-#~ msgstr ""
-#~ "Destinatari bcc (blind carbon copy) (copie carbon invizibila) ai mesajului"
-
-#~ msgid "Related Document model"
-#~ msgstr "Model Document asociat"
-
-#~ msgid "Use Template"
-#~ msgstr "Folositi Sablonul"
-
-#~ msgid "Salesman"
-#~ msgstr "Agent de vanzari"
-
-#~ msgid "Referred Partner"
-#~ msgstr "Partener mentionat"
-
-#~ msgid "Rich-text contents"
-#~ msgstr "Continuturi rich-text (text imbogatit)"
-
-#~ msgid "Cc"
-#~ msgstr "Cc (copie carbon)"
-
-#~ msgid "References"
-#~ msgstr "Referinte"
-
-#~ msgid "# of Partner"
-#~ msgstr "# Partener"
-
-#~ msgid "To"
-#~ msgstr "Catre"
-
-#~ msgid "Partner name"
-#~ msgstr "Nume partener"
-
-#~ msgid "Carbon copy message recipients"
-#~ msgstr "Destinatari mesaj copie carbon (Cc)"
-
-#~ msgid ""
-#~ "Full message headers, e.g. SMTP session headers (usually available on "
-#~ "inbound messages only)"
-#~ msgstr ""
-#~ "Antete mesaje complete, de exemplu antetele sesiunii SMTP (de obicei "
-#~ "disponibile doar pentru mesajele primite)"
-
-#~ msgid "Reply-To"
-#~ msgstr "Raspunde"
-
-#~ msgid "Address"
-#~ msgstr "Adresa"
-
-#~ msgid "Email Address"
-#~ msgstr "Adresa de email"
-
-#~ msgid "Message headers"
-#~ msgstr "Antete mesaj"
-
-#~ msgid "Bcc"
-#~ msgstr "Bcc (blind carbon copy) (copie carbon invizibila)"
-
-#~ msgid "Error ! You cannot create recursive associated members."
-#~ msgstr "Eroare ! Nu puteti crea membri asociati recursiv."
-
-#~ msgid "E-mail composition wizard"
-#~ msgstr "Asistent compunere e-mail"
-
-#~ msgid "Preferred response address for the message"
-#~ msgstr "Adresa de raspuns preferata pentru mesaj"
-
-#~ msgid ""
-#~ "Type of message, usually 'html' or 'plain', used to select plaintext or rich "
-#~ "text contents accordingly"
-#~ msgstr ""
-#~ "Tipul de mesaj, de obicei 'html' sau 'simplu', folosit pentru a selecta ca "
-#~ "atare cuprinsul textului simplu sau textului imbogatit"
-
-#~ msgid ""
-#~ "Message sender, taken from user preferences. If empty, this is not a mail "
-#~ "but a message."
-#~ msgstr ""
-#~ "Expeditorul mesajului, luat din preferintele utilizatorului. Daca este lasat "
-#~ "necompletat, acesta nu este un e-mail, ci un mesaj."
-
-#~ msgid "Message references, such as identifiers of previous messages"
-#~ msgstr "Referinte mesaj, cum ar fi identificatorii mesajelor precedente"

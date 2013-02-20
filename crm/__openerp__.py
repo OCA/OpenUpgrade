@@ -54,6 +54,7 @@ Dashboard for CRM will include:
         'base_status',
         'process',
         'mail',
+        'email_template',
         'base_calendar',
         'resource',
         'board',
@@ -77,7 +78,6 @@ Dashboard for CRM will include:
 
         'crm_view.xml',
 
-        'crm_action_rule_view.xml',
         'crm_lead_view.xml',
         'crm_lead_menu.xml',
 
@@ -108,7 +108,6 @@ Dashboard for CRM will include:
         'test/process/lead2opportunity_assign_salesmen.yml',
         'test/process/merge_opportunity.yml',
         'test/process/cancel_lead.yml',
-        'test/process/action_rule.yml',
         'test/process/segmentation.yml',
         'test/process/phonecalls.yml',
         'test/ui/crm_demo.yml',
@@ -118,6 +117,6 @@ Dashboard for CRM will include:
     'installable': True,
     'application': True,
     'auto_install': False,
-    'images': ['images/sale_crm_crm_dashboard.png', 'images/crm_dashboard.jpeg','images/leads.jpeg','images/meetings.jpeg','images/opportunities.jpeg','images/outbound_calls.jpeg','images/stages.jpeg'],
+    'images': ['images/crm_dashboard.png', 'images/customers.png','images/leads.png','images/opportunities_kanban.png','images/opportunities_form.png','images/opportunities_calendar.png','images/opportunities_graph.png','images/logged_calls.png','images/scheduled_calls.png','images/stages.png'],
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -1,8 +1,34 @@
 function openerp_pos_db(instance, module){ 
 
-    /* PosLS is a LocalStorage based implementation of the point of sale database,
-       it performs better for few products, but does not scale beyond 500 products. 
-       */
+    /* The db module was intended to be used to store all the data needed to run the Point
+     * of Sale in offline mode. (Products, Categories, Orders, ...) It would also use WebSQL 
+     * or IndexedDB to make the searching and sorting products faster. It turned out not to be 
+     * a so good idea after all. 
+     * 
+     * First it is difficult to make the Point of Sale truly independant of the server. A lot
+     * of functionality cannot realistically run offline, like generating invoices. 
+     *
+     * IndexedDB turned out to be complicated and slow as hell, and loading all the data at the
+     * start made the point of sale take forever to load over small connections. 
+     *
+     * LocalStorage has a hard 5.0MB on chrome. For those kind of sizes, it is just better 
+     * to put the data in memory and it's not too big to download each time you launch the PoS.
+     *
+     * So at this point we are dropping the support for offline mode, and this module doesn't really
+     * make sense anymore. But if at some point you want to store millions of products and if at
+     * that point indexedDB has improved to the point it is usable, you can just implement this API. 
+     *
+     * You would also need to change the way the models are loaded at the start to not reload all your
+     * product data. 
+     */ 
+
+    /* PosLS is a localstorage based implementation of the point of sale database.
+     * FIXME: The Products definitions and categories are stored on the locastorage even tough they're 
+     * always reloaded at launch. This could induce a slowdown because the data needs to be reparsed from
+     * JSON before each operation. If you have a huge amount of products (around 25000) it can also 
+     * blow the 5.0MB localstorage limit. 
+     */
+
     module.PosLS = instance.web.Class.extend({
         name: 'openerp_pos_ls', //the prefix of the localstorage data
         limit: 100,  // the maximum number of results returned by a search
@@ -14,6 +40,10 @@ function openerp_pos_db(instance, module){
             //cache the data in memory to avoid roundtrips to the localstorage
             this.cache = {};
 
+            this.product_by_id = {};
+            this.product_by_ean13 = {};
+            this.product_by_category_id = {};
+
             this.category_by_id = {};
             this.root_category_id  = 0;
             this.category_products = {};
@@ -23,6 +53,7 @@ function openerp_pos_db(instance, module){
             this.category_search_string = {};
             this.packagings_by_id = {};
             this.packagings_by_product_id = {};
+            this.packagings_by_ean13 = {};
         },
         /* returns the category object from its id. If you pass a list of id as parameters, you get
          * a list of category objects. 
@@ -110,6 +141,7 @@ function openerp_pos_db(instance, module){
         },
         /* saves a record store to the database */
         save: function(store,data){
+            var str_data = JSON.stringify(data);
             localStorage[this.name + '_' + store] = JSON.stringify(data);
             this.cache[store] = data;
         },
@@ -125,8 +157,7 @@ function openerp_pos_db(instance, module){
             return str + '\n';
         },
         add_products: function(products){
-            var stored_products = this.load('products',{}); 
-            var stored_categories = this.load('categories',{});
+            var stored_categories = this.product_by_category_id;
 
             if(!products instanceof Array){
                 products = [products];
@@ -159,10 +190,11 @@ function openerp_pos_db(instance, module){
                     }
                     this.category_search_string[ancestor] += search_string; 
                 }
-                stored_products[product.id] = product;
+                this.product_by_id[product.id] = product;
+                if(product.ean13){
+                    this.product_by_ean13[product.ean13] = product;
+                }
             }
-            this.save('products',stored_products);
-            this.save('categories',stored_categories);
         },
         add_packagings: function(packagings){
             for(var i = 0, len = packagings.length; i < len; i++){
@@ -172,6 +204,9 @@ function openerp_pos_db(instance, module){
                     this.packagings_by_product_id[pack.product_id[0]] = [];
                 }
                 this.packagings_by_product_id[pack.product_id[0]].push(pack);
+                if(pack.ean13){
+                    this.packagings_by_ean13[pack.ean13] = pack;
+                }
             }
         },
         /* removes all the data from the database. TODO : being able to selectively remove data */
@@ -191,31 +226,24 @@ function openerp_pos_db(instance, module){
             return count;
         },
         get_product_by_id: function(id){
-            return this.load('products',{})[id];
+            return this.product_by_id[id];
         },
         get_product_by_ean13: function(ean13){
-            var products = this.load('products',{});
-            for(var i in products){
-                if( products[i] && products[i].ean13 === ean13){
-                    return products[i];
-                }
+            if(this.product_by_ean13[ean13]){
+                return this.product_by_ean13[ean13];
             }
-            for(var p in this.packagings_by_id){
-                var pack = this.packagings_by_id[p];
-                if( pack.ean === ean13){
-                    return products[pack.product_id[0]];
-                }
+            var pack = this.packagings_by_ean13[ean13];
+            if(pack){
+                return this.product_by_id[pack.product_id[0]];
             }
             return undefined;
         },
         get_product_by_category: function(category_id){
-            var stored_categories = this.load('categories',{});
-            var stored_products   = this.load('products',{});
-            var product_ids  = stored_categories[category_id];
+            var product_ids  = this.product_by_category_id[category_id];
             var list = [];
             if (product_ids) {
                 for (var i = 0, len = Math.min(product_ids.length, this.limit); i < len; i++) {
-                    list.push(stored_products[product_ids[i]]);
+                    list.push(this.product_by_id[product_ids[i]]);
                 }
             }
             return list;
@@ -247,12 +275,9 @@ function openerp_pos_db(instance, module){
         },
         remove_order: function(order_id){
             var orders = this.load('orders',[]);
-            console.log('Remove order:',order_id);
-            console.log('Order count:',orders.length);
             orders = _.filter(orders, function(order){
                 return order.id !== order_id;
             });
-            console.log('Order count:',orders.length);
             this.save('orders',orders);
         },
         get_orders: function(){

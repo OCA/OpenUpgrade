@@ -21,10 +21,13 @@
 
 import base64
 import logging
-from openerp import tools
+from urllib import urlencode
+from urlparse import urljoin
 
+from openerp import tools
 from openerp import SUPERUSER_ID
 from openerp.osv import fields, osv
+from openerp.osv.orm import except_orm
 from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
@@ -74,6 +77,13 @@ class mail_mail(osv.Model):
         'state': 'outgoing',
         'email_from': lambda self, cr, uid, ctx=None: self._get_default_from(cr, uid, ctx),
     }
+
+    def default_get(self, cr, uid, fields, context=None):
+        # protection for `default_type` values leaking from menu action context (e.g. for invoices)
+        # To remove when automatic context propagation is removed in web client
+        if context and context.get('default_type') and context.get('default_type') not in self._all_columns['type'].column.selection:
+            context = dict(context, default_type = None)
+        return super(mail_mail, self).default_get(cr, uid, fields, context=context)
 
     def create(self, cr, uid, values, context=None):
         if 'notification' not in values and values.get('mail_message_id'):
@@ -147,7 +157,7 @@ class mail_mail(osv.Model):
             :param browse_record partner: specific recipient partner
         """
         if force or (not mail.subject and mail.model and mail.res_id):
-            return '%s posted on %s' % (mail.author_id.name, mail.record_name)
+            return 'Re: %s' % (mail.record_name)
         return mail.subject
 
     def send_get_mail_body(self, cr, uid, mail, partner=None, context=None):
@@ -158,7 +168,43 @@ class mail_mail(osv.Model):
             :param browse_record mail: mail.mail browse_record
             :param browse_record partner: specific recipient partner
         """
-        return mail.body_html
+        body = mail.body_html
+        # partner is a user, link to a related document (incentive to install portal)
+        if partner and partner.user_ids and mail.model and mail.res_id \
+                and self.check_access_rights(cr, partner.user_ids[0].id, 'read', raise_exception=False):
+            related_user = partner.user_ids[0]
+            try:
+                self.pool.get(mail.model).check_access_rule(cr, related_user.id, [mail.res_id], 'read', context=context)
+                base_url = self.pool.get('ir.config_parameter').get_param(cr, uid, 'web.base.url')
+                # the parameters to encode for the query and fragment part of url
+                query = {'db': cr.dbname}
+                fragment = {
+                    'login': related_user.login,
+                    'model': mail.model,
+                    'id': mail.res_id,
+                }
+                url = urljoin(base_url, "?%s#%s" % (urlencode(query), urlencode(fragment)))
+                text = _("""<p>Access this document <a href="%s">directly in OpenERP</a></p>""") % url
+                body = tools.append_content_to_html(body, ("<div><p>%s</p></div>" % text), plaintext=False)
+            except except_orm, e:
+                pass
+        return body
+
+    def send_get_mail_reply_to(self, cr, uid, mail, partner=None, context=None):
+        """ Return a specific ir_email body. The main purpose of this method
+            is to be inherited by Portal, to add a link for signing in, in
+            each notification email a partner receives.
+
+            :param browse_record mail: mail.mail browse_record
+            :param browse_record partner: specific recipient partner
+        """
+        if mail.reply_to:
+            return mail.reply_to
+        if not mail.model or not mail.res_id:
+            return False
+        if not hasattr(self.pool.get(mail.model), 'message_get_reply_to'):
+            return False
+        return self.pool.get(mail.model).message_get_reply_to(cr, uid, [mail.res_id], context=context)[0]
 
     def send_get_email_dict(self, cr, uid, mail, partner=None, context=None):
         """ Return a dictionary for specific email values, depending on a
@@ -169,6 +215,7 @@ class mail_mail(osv.Model):
         """
         body = self.send_get_mail_body(cr, uid, mail, partner=partner, context=context)
         subject = self.send_get_mail_subject(cr, uid, mail, partner=partner, context=context)
+        reply_to = self.send_get_mail_reply_to(cr, uid, mail, partner=partner, context=context)
         body_alternative = tools.html2plaintext(body)
         email_to = [partner.email] if partner else tools.email_split(mail.email_to)
         return {
@@ -176,6 +223,7 @@ class mail_mail(osv.Model):
             'body_alternative': body_alternative,
             'subject': subject,
             'email_to': email_to,
+            'reply_to': reply_to,
         }
 
     def send(self, cr, uid, ids, auto_commit=False, recipient_ids=None, context=None):
@@ -219,7 +267,7 @@ class mail_mail(osv.Model):
                         body = email.get('body'),
                         body_alternative = email.get('body_alternative'),
                         email_cc = tools.email_split(mail.email_cc),
-                        reply_to = mail.reply_to,
+                        reply_to = email.get('reply_to'),
                         attachments = attachments,
                         message_id = mail.message_id,
                         references = mail.references,

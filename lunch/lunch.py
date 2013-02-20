@@ -94,9 +94,8 @@ class lunch_order(osv.Model):
         """
         today = datetime.now().isoweekday()
         assert 1 <= today <= 7, "Should be between 1 and 7"
-        mapping = dict((idx, name) for idx, name in enumerate('monday tuestday wednesday thursday friday saturday sunday'.split()))
-        if today in mapping:
-            return mapping[today]
+        mapping = dict((idx, name) for idx, name in enumerate('days monday tuesday wednesday thursday friday saturday sunday'.split()))
+        return alert[mapping[today]]
 
     def can_display_alert(self, alert):
         """ 
@@ -108,6 +107,7 @@ class lunch_order(osv.Model):
         elif alert.alter_type == 'week':
             #the alert is activated during some days of the week
             return self.check_day(alert)
+        return True # alter_type == 'days' (every day)
 
     def _default_alerts_get(self, cr, uid, context=None):
         """ 
@@ -372,12 +372,25 @@ class lunch_order_line(osv.Model):
             cash_ids = [cash.id for cash in order_line.cashmove]
             cashmove_ref.unlink(cr, uid, cash_ids, context=context)
         return self._update_order_lines(cr, uid, ids, context=context)
+    
+    def _get_line_order_ids(self, cr, uid, ids, context=None):
+        """
+        return the list of lunch.order.lines ids to which belong the  lunch.order 'ids'
+        """
+        result = set()
+        for lunch_order in self.browse(cr, uid, ids, context=context):
+            for lines in lunch_order.order_line_ids:
+                result.add(lines.id)
+        return list(result)
 
     _columns = {
         'name': fields.related('product_id', 'name', readonly=True),
         'order_id': fields.many2one('lunch.order', 'Order', ondelete='cascade'),
         'product_id': fields.many2one('lunch.product', 'Product', required=True),
-        'date': fields.related('order_id', 'date', type='date', string="Date", readonly=True, store=True),
+        'date': fields.related('order_id', 'date', type='date', string="Date", readonly=True, store={
+            'lunch.order': (_get_line_order_ids, ['date'], 10), 
+            'lunch.order.line': (lambda self, cr, uid, ids, ctx: ids, [], 10),
+            }),
         'supplier': fields.related('product_id', 'supplier', type='many2one', relation='res.partner', string="Supplier", readonly=True, store=True),
         'user_id': fields.related('order_id', 'user_id', type='many2one', relation='res.users', string='User', readonly=True, store=True),
         'note': fields.text('Note'),

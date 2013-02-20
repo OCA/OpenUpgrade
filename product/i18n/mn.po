@@ -1,21 +1,21 @@
 # Mongolian translation for openobject-addons
-# Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
 # This file is distributed under the same license as the openobject-addons package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2012-12-03 16:03+0000\n"
-"PO-Revision-Date: 2012-05-10 17:54+0000\n"
-"Last-Translator: Raphael Collet (OpenERP) <Unknown>\n"
+"POT-Creation-Date: 2012-12-21 17:06+0000\n"
+"PO-Revision-Date: 2013-02-17 13:06+0000\n"
+"Last-Translator: gobi <Unknown>\n"
 "Language-Team: Mongolian <mn@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-04 05:32+0000\n"
-"X-Generator: Launchpad (build 16335)\n"
+"X-Launchpad-Export-Date: 2013-02-18 05:26+0000\n"
+"X-Generator: Launchpad (build 16491)\n"
 
 #. module: product
 #: field:product.packaging,rows:0
@@ -25,7 +25,7 @@ msgstr "Давхаргын тоо"
 #. module: product
 #: help:product.pricelist.item,base:0
 msgid "Base price for computation."
-msgstr ""
+msgstr "Тооцооллын суурь үнэ"
 
 #. module: product
 #: help:product.product,seller_qty:0
@@ -33,14 +33,9 @@ msgid "This is minimum quantity to purchase from Main Supplier."
 msgstr "Үндсэн нийлүүлэгчээс нэг удаад нийлүүлэх доод хэмжээ"
 
 #. module: product
-#: model:product.uom,name:product.product_uom_day
-msgid "Day"
-msgstr "Өдөр"
-
-#. module: product
 #: model:product.template,name:product.product_product_34_product_template
 msgid "Webcam"
-msgstr ""
+msgstr "Веб камер"
 
 #. module: product
 #: field:product.product,incoming_qty:0
@@ -50,12 +45,12 @@ msgstr "Ирж буй"
 #. module: product
 #: view:product.product:0
 msgid "Product Name"
-msgstr ""
+msgstr "Барааны нэр"
 
 #. module: product
 #: view:product.template:0
 msgid "Second Unit of Measure"
-msgstr ""
+msgstr "Хоёр дахь хэмжих нэгж"
 
 #. module: product
 #: help:res.partner,property_product_pricelist:0
@@ -78,7 +73,7 @@ msgstr "Тогтмол"
 #. module: product
 #: model:product.template,name:product.product_product_10_product_template
 msgid "Mouse, Optical"
-msgstr ""
+msgstr "Хулгана, Оптик"
 
 #. module: product
 #: view:product.template:0
@@ -95,11 +90,12 @@ msgstr "Дүрмийн нэр"
 msgid ""
 "Base price to compute the customer price. Sometimes called the catalog price."
 msgstr ""
+"Захиалагчийн үнийг тооцоолох суурь үнэ. Заримдаа каталогийн үнэ гэдэг."
 
 #. module: product
 #: model:product.template,name:product.product_product_3_product_template
 msgid "PC Assemble SC234"
-msgstr ""
+msgstr "PC Assemble SC234"
 
 #. module: product
 #: help:product.product,message_summary:0
@@ -107,21 +103,23 @@ msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
 msgstr ""
+"Чаатлагчийн хураангуйг агуулна (зурвасын тоо,...). Энэ хураангуй нь шууд "
+"html форматтай бөгөөд канбан харагдацад шууд орж харагдах боломжтой."
 
 #. module: product
-#: code:addons/product/pricelist.py:177
-#: code:addons/product/product.py:206
+#: code:addons/product/pricelist.py:179
+#: code:addons/product/product.py:208
 #, python-format
 msgid "Warning!"
-msgstr ""
+msgstr "Анхааруулга!"
 
 #. module: product
 #: field:product.product,image_small:0
 msgid "Small-sized image"
-msgstr ""
+msgstr "Жижиг-хэмжээт зураг"
 
 #. module: product
-#: code:addons/product/product.py:174
+#: code:addons/product/product.py:176
 #, python-format
 msgid ""
 "Conversion from Product UoM %s to Default UoM %s is not possible as they "
@@ -129,11 +127,6 @@ msgid ""
 msgstr ""
 "Барааны %s хэмжих нэгжээс анхны %s хэмжих нэгж рүү хөрвүүлэх боломжгүй. Учир "
 "нь эдгээр нь өөр хэмжих нэгжийн ангилалд байна."
-
-#. module: product
-#: model:product.uom,name:product.product_uom_dozen
-msgid "Dozen"
-msgstr "Олон тооны"
 
 #. module: product
 #: selection:product.template,cost_method:0
@@ -148,7 +141,7 @@ msgstr "Уг үнийн дүрмийн нэрлэлт, тайлбарлалт."
 #. module: product
 #: field:product.template,uos_coeff:0
 msgid "Unit of Measure -> UOS Coeff"
-msgstr ""
+msgstr "Хэмжих нэгж -> х.н-н коэф"
 
 #. module: product
 #: field:product.price_list,price_list:0
@@ -158,7 +151,7 @@ msgstr "Үнийн хүснэгт"
 #. module: product
 #: model:product.template,name:product.product_product_4_product_template
 msgid "PC Assemble SC349"
-msgstr ""
+msgstr "PC Assemble SC349"
 
 #. module: product
 #: help:product.product,seller_delay:0
@@ -193,7 +186,7 @@ msgid "Product Type"
 msgstr "Барааны төрөл"
 
 #. module: product
-#: code:addons/product/product.py:410
+#: code:addons/product/product.py:412
 #, python-format
 msgid "Products: "
 msgstr "Бараа: "
@@ -204,6 +197,8 @@ msgid ""
 "Error! You cannot define the decimal precision of 'Account' as greater than "
 "the rounding factor of the company's main currency"
 msgstr ""
+"Алдаа! Та \"Данс\"-ны нарийвчлалын оронг компаний үндсэн валютын "
+"нарийвчлалын оронгоос ихээр тааруулж чадахгүй"
 
 #. module: product
 #: field:product.category,parent_id:0
@@ -213,7 +208,7 @@ msgstr "Эцэг ангилал"
 #. module: product
 #: model:product.template,description:product.product_product_33_product_template
 msgid "Headset for laptop PC with USB connector."
-msgstr ""
+msgstr "USB холболттой нөөтбүүкийн чихэвч"
 
 #. module: product
 #: model:product.category,name:product.product_category_all
@@ -231,6 +226,8 @@ msgid ""
 "Error! You cannot define a rounding factor for the company's main currency "
 "that is smaller than the decimal precision of 'Account'."
 msgstr ""
+"Алдаа! Та компаний үндсэн валютын нарийвчлалын оронг \"Данс\"-ны "
+"нарийвчлалын оронгоос багаар тааруулж чадахгүй."
 
 #. module: product
 #: help:product.product,outgoing_qty:0
@@ -245,6 +242,15 @@ msgid ""
 "Otherwise, this includes goods leaving any Stock Location with 'internal' "
 "type."
 msgstr ""
+"Гарахаар төлөвлөгдсөн барааны тоо хэмжээ.\n"
+"\n"
+"Энэ нь нэг Нөөцийн байршилын хүрээнд энэ байрлал болон бүх дэд байрлалаас "
+"гарах бараанууд.\n"
+"Энэ нь нэг Агуулахын хүрээнд энэ агуулах болон бүх дэд байрлалаас гарах "
+"бараанууд.\n"
+"Энэ нь нэг дэлгүүрийн хүрээнд дэлгүүрийн агуулахын бүх дэд байрлалаас гарах "
+"бараанууд.\n"
+"Бусад тохиолдолд, 'дотоод' гэсэн төрөлөөс гарах бүх бараанууд."
 
 #. module: product
 #: model:product.template,description_sale:product.product_product_42_product_template
@@ -252,6 +258,8 @@ msgid ""
 "Office Editing Software with word processing, spreadsheets, presentations, "
 "graphics, and databases..."
 msgstr ""
+"Баримт, хүснэгт, илтгэл, хүснэгт, өгөгдлийн бааз зэрэгийн засварлагч оффисын "
+"програм хангамжууд..."
 
 #. module: product
 #: field:product.product,seller_id:0
@@ -273,6 +281,8 @@ msgstr "Савлагаа"
 msgid ""
 "If unchecked, it will allow you to hide the product without removing it."
 msgstr ""
+"Идэвхтэй талбарын тэмдэглэгээг арилгаснаар барааг арилгахгүйгээр нуух "
+"боломжтой."
 
 #. module: product
 #: view:product.product:0
@@ -282,14 +292,9 @@ msgid "Category"
 msgstr "Ангилал"
 
 #. module: product
-#: model:product.uom,name:product.product_uom_litre
-msgid "Litre"
-msgstr ""
-
-#. module: product
 #: model:product.template,name:product.product_product_25_product_template
 msgid "Laptop E5023"
-msgstr ""
+msgstr "Laptop E5023"
 
 #. module: product
 #: help:product.packaging,ul_qty:0
@@ -299,7 +304,7 @@ msgstr "Савлагааны тоо хэмжээ давхаргаар"
 #. module: product
 #: model:product.template,name:product.product_product_30_product_template
 msgid "Pen drive, SP-4"
-msgstr ""
+msgstr "Pen drive, SP-4"
 
 #. module: product
 #: field:product.packaging,qty:0
@@ -309,7 +314,7 @@ msgstr "Тоо хэмжээ савлагаагаар"
 #. module: product
 #: model:product.template,name:product.product_product_29_product_template
 msgid "Pen drive, SP-2"
-msgstr ""
+msgstr "Pen drive, SP-2"
 
 #. module: product
 #: view:product.product:0
@@ -353,6 +358,15 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Баглааны шинэ төрөл нэмэхдээ дарна.\n"
+"              </p><p>\n"
+"                Баглааны төрөл нь хэмжээс болон баглаан дахь барааны \n"
+"                тоог тодорхойлно. Энэ нь сонгосон баглаагаар зөв тооны \n"
+"                бараа борлуулах ажлыг борлуулалтын ажилтанд \n"
+"                боломжийг олгодог. \n"
+"              </p>\n"
+"            "
 
 #. module: product
 #: field:product.template,product_manager:0
@@ -362,7 +376,7 @@ msgstr "Барааны менежер"
 #. module: product
 #: model:product.template,name:product.product_product_7_product_template
 msgid "17” LCD Monitor"
-msgstr ""
+msgstr "17” LCD Monitor"
 
 #. module: product
 #: field:product.supplierinfo,product_name:0
@@ -388,7 +402,7 @@ msgstr "Савлагааны уртын хэмжээ"
 #. module: product
 #: field:product.product,message_summary:0
 msgid "Summary"
-msgstr ""
+msgstr "Хураангуй"
 
 #. module: product
 #: help:product.template,weight_net:0
@@ -412,6 +426,8 @@ msgid ""
 "Specify a product if this rule only applies to one product. Keep empty "
 "otherwise."
 msgstr ""
+"Хэрэв энэ дүрэм зөвхөн нэг бараанд үйлчилдэг бол барааг зааж өг. Үгүй бол "
+"хоосон үлдээ."
 
 #. module: product
 #: model:product.uom.categ,name:product.product_uom_categ_kgm
@@ -431,6 +447,16 @@ msgid ""
 "Otherwise, this includes goods stored in any Stock Location with 'internal' "
 "type."
 msgstr ""
+"Тоо хэмжээний таамаглал (тооцоологдохдоо  Гарт байгаа тоо хэмжээ - Гарах + "
+"Ирэх)\n"
+"Нэг хадгалах байрлалын хувьд энэ байрлал болон бүх дэд байрлалд агуулагдаж "
+"байгаа бараанууд хамаарна.\n"
+"Нэг агуулахын хувьд агуулахын бүх хадгалах байрлал болон бүх дэд байрлал дах "
+"бараанууд хамаарна.\n"
+"Нэг дэлгүүрийн хувьд энэ дэлгүүрийн агуулахын бүх хадгалах байрлал болон бүх "
+"дэд байрлал дах бараанууд хамаарна.\n"
+"Бусад тохиолдолд энэ нөөцийн байрлалын 'Дотоод' төрөлтэй байрлалын бараанууд "
+"хамаарна."
 
 #. module: product
 #: field:product.packaging,height:0
@@ -440,12 +466,12 @@ msgstr "Өндөр"
 #. module: product
 #: view:product.product:0
 msgid "Procurements"
-msgstr ""
+msgstr "Татан авалт"
 
 #. module: product
 #: model:res.groups,name:product.group_mrp_properties
 msgid "Manage Properties of Product"
-msgstr ""
+msgstr "Барааны үзүүлэлтүүдийг менежмент хийнэ"
 
 #. module: product
 #: help:product.uom,factor:0
@@ -454,6 +480,9 @@ msgid ""
 "Measure for this category:\n"
 "1 * (reference unit) = ratio * (this unit)"
 msgstr ""
+"Энэ хэмжих нэгж нь хэр зэрэг их эсвэл бага гэдэг нь энэ ангилалын сурвалж "
+"хэмжих нэгжтэй жишсэнээр илэрхийлэгдэнэ: \n"
+"1 * (сурвалж нэгж) = харьцаа * (энэ нэгж)"
 
 #. module: product
 #: model:ir.model,name:product.model_pricelist_partnerinfo
@@ -488,7 +517,7 @@ msgstr "Борлуулалт & Худалдан авалт"
 #. module: product
 #: model:product.template,name:product.product_product_44_product_template
 msgid "GrapWorks Software"
-msgstr ""
+msgstr "GrapWorks програм хангамж"
 
 #. module: product
 #: model:product.uom.categ,name:product.uom_categ_wtime
@@ -498,7 +527,7 @@ msgstr "Ажлын цаг"
 #. module: product
 #: model:product.template,name:product.product_product_42_product_template
 msgid "Office Suite"
-msgstr ""
+msgstr "Оффисын Багц"
 
 #. module: product
 #: field:product.template,mes_type:0
@@ -508,7 +537,12 @@ msgstr "Хэмжих төрөл"
 #. module: product
 #: model:product.template,name:product.product_product_32_product_template
 msgid "Headset standard"
-msgstr ""
+msgstr "Чихэвчийн стандарт"
+
+#. module: product
+#: model:product.uom,name:product.product_uom_day
+msgid "Day(s)"
+msgstr "Өдөр(үүд)"
 
 #. module: product
 #: help:product.product,incoming_qty:0
@@ -523,6 +557,15 @@ msgid ""
 "Otherwise, this includes goods arriving to any Stock Location with "
 "'internal' type."
 msgstr ""
+"Ирэхээр төлөвлөгдсөн бараануудын тоо хэмжээ.\n"
+"Нэг хадгалах байрлалын хувьд энэ байрлал болон бүх дэд байрлалд агуулагдаж "
+"байгаа бараанууд хамаарна.\n"
+"Нэг агуулахын хувьд агуулахын бүх хадгалах байрлал болон бүх дэд байрлал дах "
+"бараанууд хамаарна.\n"
+"Нэг дэлгүүрийн хувьд энэ дэлгүүрийн агуулахын бүх хадгалах байрлал болон бүх "
+"дэд байрлал дах бараанууд хамаарна.\n"
+"Бусад тохиолдолд энэ нөөцийн байрлалын 'Дотоод' төрөлтэй байрлалын бараанууд "
+"хамаарна."
 
 #. module: product
 #: constraint:product.template:0
@@ -530,6 +573,8 @@ msgid ""
 "Error: The default Unit of Measure and the purchase Unit of Measure must be "
 "in the same category."
 msgstr ""
+"Алдаа: Хэмжих нэгжийн анхны утга болон борлуулалтын хэмжих нэгжийн анхны "
+"утга нь нэг ангилалд байх ёстой."
 
 #. module: product
 #: model:ir.model,name:product.model_product_uom_categ
@@ -544,7 +589,7 @@ msgstr "20x20x40 хайрцаг"
 #. module: product
 #: field:product.template,warranty:0
 msgid "Warranty"
-msgstr ""
+msgstr "Баталгаа"
 
 #. module: product
 #: view:product.pricelist.item:0
@@ -557,25 +602,23 @@ msgid ""
 "You provided an invalid \"EAN13 Barcode\" reference. You may use the "
 "\"Internal Reference\" field instead."
 msgstr ""
+"Та буруу \"EAN13 Barcode\" оруулсан байна. Магадгүй оронд нь \"Дотоод Код\" "
+"талбарыг ашигласан нь зөв байх."
 
 #. module: product
 #: model:res.groups,name:product.group_purchase_pricelist
 msgid "Purchase Pricelists"
-msgstr ""
+msgstr "Худалдан авалтын үнийн хүснэгт"
 
 #. module: product
 #: model:product.template,name:product.product_product_5_product_template
 msgid "PC Assemble + Custom (PC on Demand)"
-msgstr ""
+msgstr "PC Угсаргаа + Захиалгат (PC шаардсан дор)"
 
 #. module: product
-#: model:process.transition,note:product.process_transition_supplierofproduct0
-msgid ""
-"1 or several supplier(s) can be linked to a product. All information stands "
-"in the product form."
-msgstr ""
-"Бараанд нэг эсвэл олон нийлүүлэгч холбогдож болно. Бүх мэдээлэл барааны "
-"формд багтана."
+#: model:product.template,description:product.product_product_27_product_template
+msgid "Custom Laptop based on customer's requirement."
+msgstr "Захаиалагчийн шаардлага дээр тулгуурасан өөриймшүүлсэн нөөтбүүк"
 
 #. module: product
 #: help:product.packaging,width:0
@@ -583,15 +626,15 @@ msgid "The width of the package"
 msgstr "Савлагааны өргөний хэмжээ"
 
 #. module: product
-#: code:addons/product/product.py:359
+#: code:addons/product/product.py:361
 #, python-format
 msgid "Unit of Measure categories Mismatch!"
-msgstr ""
+msgstr "Ангилалын Хэмжих Нэгж таарахгүй байна!"
 
 #. module: product
 #: model:product.template,name:product.product_product_36_product_template
 msgid "Blank DVD-RW"
-msgstr ""
+msgstr "Хоосон DVD-RW"
 
 #. module: product
 #: selection:product.category,type:0
@@ -611,7 +654,7 @@ msgstr "Зүүн Эцэг"
 #. module: product
 #: help:product.pricelist.item,price_max_margin:0
 msgid "Specify the maximum amount of margin over the base price."
-msgstr ""
+msgstr "Суурь үнэ хэдий хэмжээгээр хамгийн их байх тодтоголны дээд хязгаар"
 
 #. module: product
 #: constraint:product.pricelist.item:0
@@ -619,11 +662,13 @@ msgid ""
 "Error! You cannot assign the Main Pricelist as Other Pricelist in PriceList "
 "Item!"
 msgstr ""
+"Алдаа! Үнийн жагсаалтын зүйлд Үндсэн үнийн жагсаалтыг Өөр үнийн жагсаалтаар "
+"оноох боломжгүй!"
 
 #. module: product
 #: view:product.price_list:0
 msgid "or"
-msgstr ""
+msgstr "эсвэл"
 
 #. module: product
 #: constraint:product.packaging:0
@@ -638,12 +683,12 @@ msgstr "Хамгийн бага тоо"
 #. module: product
 #: model:product.template,name:product.product_product_12_product_template
 msgid "Mouse, Wireless"
-msgstr ""
+msgstr "Хулгана, утасгүй"
 
 #. module: product
 #: model:product.template,name:product.product_product_22_product_template
 msgid "Processor Core i5 2.70 Ghz"
-msgstr ""
+msgstr "Processor Core i5 2.70 Ghz"
 
 #. module: product
 #: model:ir.model,name:product.model_product_price_type
@@ -679,15 +724,16 @@ msgstr ""
 #. module: product
 #: model:product.template,name:product.product_product_18_product_template
 msgid "HDD SH-2"
-msgstr ""
+msgstr "HDD SH-2"
 
 #. module: product
 #: model:product.template,name:product.product_product_17_product_template
 msgid "HDD SH-1"
-msgstr ""
+msgstr "HDD SH-1"
 
 #. module: product
 #: field:product.supplierinfo,name:0
+#: field:product.template,seller_ids:0
 msgid "Supplier"
 msgstr "Нийлүүлэгч"
 
@@ -698,6 +744,9 @@ msgid ""
 "period (usually every year). \n"
 "Average Price: The cost price is recomputed at each incoming shipment."
 msgstr ""
+"Стандарт үнэ: Тодорхой мөчлөгийн (ихэвчлэн жил тутам) төгсгөлд гараар "
+"шинэчлэдэг өртөг үнэ.\n"
+"Дундаж үнэ: Ирж буй хүргэлт тутамд тооцоологддог өртөг үнэ."
 
 #. module: product
 #: field:product.product,qty_available:0
@@ -712,12 +761,12 @@ msgstr "Үнийн нэр"
 #. module: product
 #: help:product.product,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr ""
+msgstr "Хэрэв тэмдэглэгдсэн бол шинэ зурвас нь анхаарал татахыг шаардана."
 
 #. module: product
-#: model:product.category,name:product.product_category_1
-msgid "Saleable"
-msgstr ""
+#: field:product.product,ean13:0
+msgid "EAN13 Barcode"
+msgstr "EAN13 зураасан код"
 
 #. module: product
 #: model:ir.actions.act_window,name:product.action_product_price_list
@@ -731,17 +780,17 @@ msgstr "Үнийн хүснэгт"
 #. module: product
 #: field:product.product,virtual_available:0
 msgid "Forecasted Quantity"
-msgstr ""
+msgstr "Тоо хэмжээний урьдчилсан таамаг"
 
 #. module: product
 #: view:product.product:0
 msgid "Purchase"
-msgstr ""
+msgstr "Худалдан авалт"
 
 #. module: product
 #: model:product.template,name:product.product_product_33_product_template
 msgid "Headset USB"
-msgstr ""
+msgstr "USB чихэвч"
 
 #. module: product
 #: view:product.template:0
@@ -751,7 +800,7 @@ msgstr "Нийлүүлэгч"
 #. module: product
 #: model:res.groups,name:product.group_sale_pricelist
 msgid "Sales Pricelists"
-msgstr ""
+msgstr "Борлуулалтын үнийн хүснэгт"
 
 #. module: product
 #: view:product.pricelist.item:0
@@ -771,7 +820,7 @@ msgstr "Барааны нийлүүлэгч"
 #. module: product
 #: model:product.template,name:product.product_product_28_product_template
 msgid "External Hard disk"
-msgstr ""
+msgstr "Гадаад хатуу диск"
 
 #. module: product
 #: help:product.template,standard_price:0
@@ -779,6 +828,8 @@ msgid ""
 "Cost price of the product used for standard stock valuation in accounting "
 "and used as a base price on purchase orders."
 msgstr ""
+"Барааны өртөг үнэ бөгөөд санхүүд барааг үнэлэхэд хэрэглэгдэнэ мөн худалдан "
+"авалтын захиалгын суурь үнээр ашиглагдана."
 
 #. module: product
 #: field:product.category,child_id:0
@@ -789,6 +840,11 @@ msgstr "Дэд ангиллууд"
 #: field:product.pricelist.version,date_end:0
 msgid "End Date"
 msgstr "Дуусах өдөр"
+
+#. module: product
+#: model:product.uom,name:product.product_uom_litre
+msgid "Liter(s)"
+msgstr "Литер"
 
 #. module: product
 #: view:product.price_list:0
@@ -823,7 +879,6 @@ msgstr "Түлхүүр"
 #. module: product
 #: model:ir.actions.report.xml,name:product.report_product_pricelist
 #: model:ir.model,name:product.model_product_pricelist
-#: field:product.product,price:0
 #: field:product.product,pricelist_id:0
 #: view:product.supplierinfo:0
 msgid "Pricelist"
@@ -831,7 +886,7 @@ msgstr "Үнийн хүснэгт"
 
 #. module: product
 #: model:product.uom,name:product.product_uom_hour
-msgid "Hour"
+msgid "Hour(s)"
 msgstr "Цаг"
 
 #. module: product
@@ -845,9 +900,13 @@ msgid "Partner"
 msgstr "Харилцагч"
 
 #. module: product
-#: model:product.template,description:product.product_product_27_product_template
-msgid "Custom Laptop based on customer's requirement."
+#: model:process.transition,note:product.process_transition_supplierofproduct0
+msgid ""
+"1 or several supplier(s) can be linked to a product. All information stands "
+"in the product form."
 msgstr ""
+"Бараанд нэг эсвэл олон нийлүүлэгч холбогдож болно. Бүх мэдээлэл барааны "
+"формд багтана."
 
 #. module: product
 #: field:product.pricelist.item,price_round:0
@@ -857,12 +916,12 @@ msgstr "Үнэ тоймлолт"
 #. module: product
 #: model:product.template,name:product.product_product_1_product_template
 msgid "On Site Monitoring"
-msgstr ""
+msgstr "Газар дээрх ажиглалт"
 
 #. module: product
 #: view:product.template:0
 msgid "days"
-msgstr ""
+msgstr "өдрүүд"
 
 #. module: product
 #: model:process.node,name:product.process_node_supplier0
@@ -881,7 +940,7 @@ msgstr "Валют"
 #. module: product
 #: model:product.template,name:product.product_product_46_product_template
 msgid "Datacard"
-msgstr ""
+msgstr "Өгөгдлийн карт"
 
 #. module: product
 #: help:product.template,uos_coeff:0
@@ -889,6 +948,8 @@ msgid ""
 "Coefficient to convert default Unit of Measure to Unit of Sale\n"
 " uos = uom * coeff"
 msgstr ""
+"Анхны хэмжих нэгжийг Борлуулалтын хэмжих нэгж рүү хөрвүүлэх коэфициент\n"
+" бхн = хн * коэф"
 
 #. module: product
 #: model:ir.actions.act_window,name:product.product_category_action_form
@@ -905,17 +966,12 @@ msgstr "Татан авалт & Байршил"
 #. module: product
 #: model:product.template,name:product.product_product_20_product_template
 msgid "Motherboard I9P57"
-msgstr ""
+msgstr "Motherboard I9P57"
 
 #. module: product
 #: field:product.packaging,weight:0
 msgid "Total Package Weight"
 msgstr "Савлагааны нийт жин"
-
-#. module: product
-#: field:product.product,seller_info_id:0
-msgid "unknown"
-msgstr "үл мэдэгдэх"
 
 #. module: product
 #: help:product.packaging,code:0
@@ -930,7 +986,7 @@ msgstr "Барааны үнийн төрөл"
 #. module: product
 #: field:product.product,message_is_follower:0
 msgid "Is a Follower"
-msgstr ""
+msgstr "Дагагч уу"
 
 #. module: product
 #: field:product.product,price_extra:0
@@ -949,6 +1005,8 @@ msgid ""
 "Measure in this category:\n"
 "1 * (this unit) = ratio * (reference unit)"
 msgstr ""
+"Ангилалын сурвалж хэмжих нэгжээс хэмжих нэгж нь хэд дахин их болох:\n"
+"1 * (энэ нэгж) = харьцаа * (сурвалж нэгж)"
 
 #. module: product
 #: view:product.template:0
@@ -967,11 +1025,12 @@ msgid ""
 "Specify the minimum quantity that needs to be bought/sold for the rule to "
 "apply."
 msgstr ""
+"Дүрэм хэрэгжих худалдан авах/борлуулалх хамгийн бага тоо хэмжээг зааж өгнө"
 
 #. module: product
 #: help:product.pricelist.version,date_start:0
 msgid "First valid date for the version."
-msgstr ""
+msgstr "Хувилбарын эхний зав огноо"
 
 #. module: product
 #: help:product.supplierinfo,delay:0
@@ -992,6 +1051,10 @@ msgid ""
 "512MB RAM\n"
 "HDD SH-1"
 msgstr ""
+"17\" LCD Monitor\n"
+"Processor AMD 8-Core\n"
+"512MB RAM\n"
+"HDD SH-1"
 
 #. module: product
 #: selection:product.template,type:0
@@ -1006,7 +1069,7 @@ msgstr "Код"
 #. module: product
 #: model:product.template,name:product.product_product_27_product_template
 msgid "Laptop Customized"
-msgstr ""
+msgstr "Өөриймшүүлсэн Laptop"
 
 #. module: product
 #: model:ir.model,name:product.model_product_ul
@@ -1016,7 +1079,7 @@ msgstr "Тээвэрлэх нэгж"
 #. module: product
 #: model:product.template,name:product.product_product_35_product_template
 msgid "Blank CD"
-msgstr ""
+msgstr "Хоосон CD"
 
 #. module: product
 #: field:pricelist.partnerinfo,suppinfo_id:0
@@ -1040,6 +1103,18 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Шинэ бараа үүсгэхдээ дарна.\n"
+"              </p><p>\n"
+"                Борлуулдаг бүх зүйлдээ бараа үүсгэнэ. Энэ бодит бараа эсвэл "
+"\n"
+"                захиалагчид үзүүлдэг үйлчилгээ байж болно.\n"
+"              </p><p>\n"
+"                Барааны маягт нь борлуулалтын процессыг хялбаршуулах олон \n"
+"                тооны мэдээллийг агуулдаг: үнэ, үнийн саналд анхаарах \n"
+"                тэмдэглэл, санхүүгийн өгөгдөл, татан авах арга, гм.\n"
+"              </p>\n"
+"            "
 
 #. module: product
 #: view:product.price_list:0
@@ -1049,7 +1124,7 @@ msgstr "Цуцлах"
 #. module: product
 #: model:product.template,description:product.product_product_37_product_template
 msgid "All in one hi-speed printer with fax and scanner."
-msgstr ""
+msgstr "Факс болон сканнертай бүгдийг багтаасан принтер"
 
 #. module: product
 #: help:product.supplierinfo,min_qty:0
@@ -1058,6 +1133,9 @@ msgid ""
 "Product Unit of Measure if not empty, in the default unit of measure of the "
 "product otherwise."
 msgstr ""
+"Энэ нийлүүлэгчээс худалдан авах хамгийн бага тоо хэмжээ, энэ нь "
+"нийлүүлэгчийн хэмжих нэгж хоосон биш нийлүүлэгчийн хэмжих нэгжээр "
+"илэрхийлэгдэнэ үгүй бол барааны хэмжих нэгжээр илэрхийлэгдэнэ"
 
 #. module: product
 #: view:product.product:0
@@ -1091,6 +1169,11 @@ msgid "Right Parent"
 msgstr "Баруун Эцэг"
 
 #. module: product
+#: field:product.product,price:0
+msgid "Price"
+msgstr "Үнэ"
+
+#. module: product
 #: field:product.pricelist.item,price_surcharge:0
 msgid "Price Surcharge"
 msgstr "Үнийн хэлбэлзэл дүнгээр"
@@ -1099,17 +1182,17 @@ msgstr "Үнийн хэлбэлзэл дүнгээр"
 #: field:product.product,code:0
 #: field:product.product,default_code:0
 msgid "Internal Reference"
-msgstr ""
+msgstr "Дотоод Сурвалж"
 
 #. module: product
 #: model:product.template,name:product.product_product_8_product_template
 msgid "USB Keyboard, QWERTY"
-msgstr ""
+msgstr "USB гар, QWERTY"
 
 #. module: product
 #: model:product.category,name:product.product_category_9
 msgid "Softwares"
-msgstr ""
+msgstr "Програм хангамжууд"
 
 #. module: product
 #: field:product.product,packaging:0
@@ -1131,12 +1214,12 @@ msgstr "Нэр"
 #. module: product
 #: model:product.category,name:product.product_category_4
 msgid "Computers"
-msgstr ""
+msgstr "Компьютер"
 
 #. module: product
 #: help:product.product,message_ids:0
 msgid "Messages and communication history"
-msgstr ""
+msgstr "Зурвасдсан болон харилцсан түүх"
 
 #. module: product
 #: model:product.uom,name:product.product_uom_kgm
@@ -1156,13 +1239,18 @@ msgstr "км"
 #. module: product
 #: field:product.template,standard_price:0
 msgid "Cost"
-msgstr ""
+msgstr "Өртөг"
 
 #. module: product
 #: help:product.category,sequence:0
 msgid ""
 "Gives the sequence order when displaying a list of product categories."
 msgstr "Барааны харгалзах ангилалын хувьд эрэмбэ дарааллыг тодорхойлно."
+
+#. module: product
+#: model:product.uom,name:product.product_uom_dozen
+msgid "Dozen(s)"
+msgstr "Олон тооны"
 
 #. module: product
 #: field:product.uom,factor:0
@@ -1201,13 +1289,13 @@ msgstr "Борлуулалтын нэгж"
 #. module: product
 #: field:product.product,message_unread:0
 msgid "Unread Messages"
-msgstr ""
+msgstr "Уншаагүй зурвасууд"
 
 #. module: product
 #: model:ir.actions.act_window,name:product.product_uom_categ_form_action
 #: model:ir.ui.menu,name:product.menu_product_uom_categ_form_action
 msgid "Unit of Measure Categories"
-msgstr ""
+msgstr "Ангилалын Хэмжих Нэгж"
 
 #. module: product
 #: help:product.product,seller_id:0
@@ -1225,7 +1313,7 @@ msgstr "Үйлчилгээ"
 #. module: product
 #: help:product.product,ean13:0
 msgid "International Article Number used for product identification."
-msgstr ""
+msgstr "Барааны Олон улсын хувийн дугаар"
 
 #. module: product
 #: model:ir.actions.act_window,help:product.product_category_action
@@ -1239,9 +1327,15 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p>\n"
+"                Энэ нь бараанууд ангиллаар жагсаагдсан бүх барааны \n"
+"                жагсаалт. Аливаа ангилал дээр дарж тухайн ангилал \n"
+"                болон дэд ангилалд хамаарах бүх жагсаалтыг авна.\n"
+"              </p>\n"
+"            "
 
 #. module: product
-#: code:addons/product/product.py:359
+#: code:addons/product/product.py:361
 #, python-format
 msgid ""
 "New Unit of Measure '%s' must belong to same Unit of Measure category '%s' "
@@ -1249,6 +1343,10 @@ msgid ""
 "you may deactivate this product from the 'Procurements' tab and create a new "
 "one."
 msgstr ""
+"Шинэ хэмжих нэгж '%s' нь Ангилалын хэмжих нэгж '%s'-тай ижил ангилалд буюу "
+"хуучин хэмжих нэгж  '%s'-нхтэй ижил байх ёстой. Хэрэв хэмжих нэгжийг "
+"солимоор байвал 'Татан авалт' хавтсаас барааг идэвхгүй болгоод шинийг "
+"үүсгэнэ."
 
 #. module: product
 #: model:ir.actions.act_window,name:product.product_normal_action
@@ -1275,7 +1373,7 @@ msgstr "Тавиур эсвэл хайрцагийн давхаргын тоо"
 #. module: product
 #: help:product.pricelist.item,price_min_margin:0
 msgid "Specify the minimum amount of margin over the base price."
-msgstr ""
+msgstr "Суурь үнээс дээш тохируулах хамгийн бага дүн"
 
 #. module: product
 #: field:product.template,weight_net:0
@@ -1293,12 +1391,7 @@ msgstr "Савлагааны хэмжигдэхүүн"
 msgid ""
 "This field holds the image used as image for the product, limited to "
 "1024x1024px."
-msgstr ""
-
-#. module: product
-#: field:product.template,seller_ids:0
-msgid "Partners"
-msgstr "Харилцагч"
+msgstr "Энэ талбар барааны зурагыг агуулна. 1024x1024px-р хязгаарлагдана."
 
 #. module: product
 #: help:product.pricelist.item,categ_id:0
@@ -1306,22 +1399,29 @@ msgid ""
 "Specify a product category if this rule only applies to products belonging "
 "to this category or its children categories. Keep empty otherwise."
 msgstr ""
+"Хэрэв энэ дүрэм зөвхөн энэ ангилал болон бүх дэд ангилалд үйлчлэхээр бол "
+"ангилалыг сонгоно. Үгүй бол хоосон үлдээнэ."
 
 #. module: product
 #: view:product.product:0
 msgid "Inventory"
-msgstr ""
+msgstr "Тооллого"
 
 #. module: product
-#: code:addons/product/product.py:736
+#: field:product.product,seller_info_id:0
+msgid "Supplier Info"
+msgstr "Нийлүүлэгчийн мэдээлэл"
+
+#. module: product
+#: code:addons/product/product.py:729
 #, python-format
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (хуулбар)"
 
 #. module: product
 #: model:product.template,name:product.product_product_2_product_template
 msgid "On Site Assistance"
-msgstr ""
+msgstr "Газар дээрх тусламж"
 
 #. module: product
 #: model:product.template,name:product.product_product_39_product_template
@@ -1411,7 +1511,7 @@ msgstr "Жин"
 #. module: product
 #: view:product.product:0
 msgid "Description for Quotations"
-msgstr ""
+msgstr "Үнийн саналын тайлбар"
 
 #. module: product
 #: help:pricelist.partnerinfo,price:0
@@ -1419,6 +1519,8 @@ msgid ""
 "This price will be considered as a price for the supplier Unit of Measure if "
 "any or the default Unit of Measure of the product otherwise"
 msgstr ""
+"Хэрэв нийлүүлэгчийн хэмжих нэгж тодорхойлогдсон бол нийлүүлэгчийн хэмжих "
+"нэгжээр үнэ гэж үзэгдэнэ. Байхгүй байвал барааны хэмжих нэгжээрх үнэ байна."
 
 #. module: product
 #: field:product.template,uom_po_id:0
@@ -1433,20 +1535,13 @@ msgstr "Бүлэглэх..."
 #. module: product
 #: field:product.product,image_medium:0
 msgid "Medium-sized image"
-msgstr ""
+msgstr "Дунд-хэмжээт зураг"
 
 #. module: product
 #: selection:product.ul,type:0
-#: model:product.uom,name:product.product_uom_unit
 #: model:product.uom.categ,name:product.product_uom_categ_unit
 msgid "Unit"
-msgstr "Тоологдох"
-
-#. module: product
-#: code:addons/product/product.py:588
-#, python-format
-msgid "Product has been <b>created</b>."
-msgstr ""
+msgstr "Ширхэг"
 
 #. module: product
 #: field:product.pricelist.version,date_start:0
@@ -1482,6 +1577,14 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Үнийн хүснэгтийн хувилбар нэмэхдээ дарна.\n"
+"              </p><p>\n"
+"                Үнийн хүснэгтэд нэгээс олон хувилбар байж болно. \n"
+"                Хувилбар бүр нь тодорхой хугацаанд хүчинтэй байна. \n"
+"                Тухайлбал: Үндсэн үнэ, Зуны хямдрал гэх мэт\n"
+"              </p>\n"
+"            "
 
 #. module: product
 #: help:product.template,uom_po_id:0
@@ -1495,7 +1598,7 @@ msgstr ""
 #. module: product
 #: view:product.pricelist:0
 msgid "Products Price"
-msgstr ""
+msgstr "Барааны Үнэ"
 
 #. module: product
 #: model:product.template,description:product.product_product_26_product_template
@@ -1505,6 +1608,10 @@ msgid ""
 "Hi-Speed 234Q Processor\n"
 "QWERTY keyboard"
 msgstr ""
+"17\" Monitor\n"
+"6GB RAM\n"
+"Hi-Speed 234Q Processor\n"
+"QWERTY keyboard"
 
 #. module: product
 #: field:product.uom,rounding:0
@@ -1514,23 +1621,23 @@ msgstr "Тоймлох нарийвчлал"
 #. module: product
 #: view:product.product:0
 msgid "Consumable products"
-msgstr ""
+msgstr "Хангамжийн бараа"
 
 #. module: product
 #: model:product.template,name:product.product_product_21_product_template
 msgid "Motherboard A20Z7"
-msgstr ""
+msgstr "Motherboard A20Z7"
 
 #. module: product
 #: model:product.template,description:product.product_product_1_product_template
 #: model:product.template,description_sale:product.product_product_1_product_template
 msgid "This type of service include basic monitoring of products."
-msgstr ""
+msgstr "Энэ үйлчилгээний төрөл нь барааны суурь ажиглалтыг агуулдаг."
 
 #. module: product
 #: help:product.pricelist.version,date_end:0
 msgid "Last valid date for the version."
-msgstr ""
+msgstr "Хувилбарын хамгийн сүүлийн зөв огноо"
 
 #. module: product
 #: model:product.template,name:product.product_product_19_product_template
@@ -1557,9 +1664,9 @@ msgid "Pricelist Name"
 msgstr "Үнийн хүснэгтийн нэр"
 
 #. module: product
-#: field:product.product,ean13:0
-msgid "EAN13 Barcode"
-msgstr ""
+#: model:product.category,name:product.product_category_1
+msgid "Saleable"
+msgstr "Борлуулж болох"
 
 #. module: product
 #: sql_constraint:product.uom:0
@@ -1569,7 +1676,7 @@ msgstr "Хэмжих нэгжийн хөрвүүлэлтийн коэффице�
 #. module: product
 #: model:product.template,name:product.product_product_24_product_template
 msgid "Graphics Card"
-msgstr ""
+msgstr "График Карт"
 
 #. module: product
 #: help:product.packaging,ean:0
@@ -1589,7 +1696,7 @@ msgstr "Хоосон савны жин"
 #. module: product
 #: model:product.template,name:product.product_product_41_product_template
 msgid "Windows Home Server 2011"
-msgstr ""
+msgstr "Windows Home Server 2011"
 
 #. module: product
 #: field:product.price.type,field:0
@@ -1599,7 +1706,7 @@ msgstr "Барааны талбар"
 #. module: product
 #: model:product.template,description:product.product_product_5_product_template
 msgid "Custom computer assembled on order based on customer's requirement."
-msgstr ""
+msgstr "Захиалагчийн шаардлага дээр суурилан захиалгаар угсарсан компьютер"
 
 #. module: product
 #: model:ir.actions.act_window,name:product.product_price_type_action
@@ -1615,7 +1722,7 @@ msgstr "Агуулахын бүх үйлдэлд ашиглах үндсэн х�
 #. module: product
 #: view:product.product:0
 msgid "Sales"
-msgstr ""
+msgstr "Борлуулалт"
 
 #. module: product
 #: model:ir.actions.act_window,help:product.product_uom_categ_form_action
@@ -1631,6 +1738,14 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Ангилалд шинэ хэмжих нэгж нэмэхдээ дарна.\n"
+"              </p><p>\n"
+"                Нэг ангилалд хамаарах хэмжих нэгжүүд нь хоорондоо "
+"хөрвүүлэгдэх боломжтой байдаг. Тухайлбал: <i>'Хугацаа'</i> ангилалын хувьд, "
+"дараах хэмжих нэгжүүдтэй байж болно: Цаг, өдөр\n"
+"              </p>\n"
+"            "
 
 #. module: product
 #: help:pricelist.partnerinfo,min_quantity:0
@@ -1638,11 +1753,14 @@ msgid ""
 "The minimal quantity to trigger this rule, expressed in the supplier Unit of "
 "Measure if any or in the default Unit of Measure of the product otherrwise."
 msgstr ""
+"Энэ дүрмийг өдөөх хамгийн бага тоо хэмжээ. Энэ нь хэрэв нийлүүлэгчийн хэмжих "
+"нэгж тодорхойлогдсон байвал нийлүүлэгчийн хэмжих нэгжээр илэрхийлэгдэнэ үгүй "
+"бол барааны хэмжих нэгжээр илэрхийлэгдэнэ."
 
 #. module: product
 #: selection:product.uom,uom_type:0
 msgid "Smaller than the reference Unit of Measure"
-msgstr ""
+msgstr "Сурвалж Хэмжих нэгжээс бага"
 
 #. module: product
 #: model:product.pricelist,name:product.list0
@@ -1658,7 +1776,7 @@ msgstr "Нийлүүлэгчийн барааны код"
 #: help:product.pricelist,active:0
 msgid ""
 "If unchecked, it will allow you to hide the pricelist without removing it."
-msgstr ""
+msgstr "Хэрэв сонгоогүй бол үнийн хүснэгтийг устгахгүйгээр нууна."
 
 #. module: product
 #: selection:product.ul,type:0
@@ -1685,7 +1803,7 @@ msgstr "Бараа"
 #. module: product
 #: view:product.product:0
 msgid "Price:"
-msgstr ""
+msgstr "Үнэ:"
 
 #. module: product
 #: field:product.template,weight:0
@@ -1727,11 +1845,12 @@ msgstr "Барааны нийлүүлэгчийн жагсаалтад урьт�
 #: constraint:product.pricelist.item:0
 msgid "Error! The minimum margin should be lower than the maximum margin."
 msgstr ""
+"Алдаа! Хамгийн бага тохируулга нь хамгийн их тохируулгаас бага байх ёстой."
 
 #. module: product
 #: model:res.groups,name:product.group_uos
 msgid "Manage Secondary Unit of Measure"
-msgstr ""
+msgstr "Хоёрдогч хэмжих нэгжийг менежмент хийх"
 
 #. module: product
 #: help:product.uom,rounding:0
@@ -1739,6 +1858,8 @@ msgid ""
 "The computed quantity will be a multiple of this value. Use 1.0 for a Unit "
 "of Measure that cannot be further split, such as a piece."
 msgstr ""
+"Тооцоолсон тоо хэмжээ нь эдгээрийн үржвэр байна. 1.0 гэсэн тоог цааш үл "
+"хуваагдах нэгжид хэрэглэнэ. Жишээлбэл ширхэг."
 
 #. module: product
 #: view:product.pricelist.item:0
@@ -1763,7 +1884,7 @@ msgstr ""
 #. module: product
 #: selection:product.uom,uom_type:0
 msgid "Bigger than the reference Unit of Measure"
-msgstr ""
+msgstr "Сурвалж хэмжих нэгжээс их"
 
 #. module: product
 #: model:product.template,name:product.product_product_consultant_product_template
@@ -1774,7 +1895,7 @@ msgstr "Үйлчилгээ"
 #. module: product
 #: view:product.template:0
 msgid "Internal Description"
-msgstr ""
+msgstr "Дотоод тайлбар"
 
 #. module: product
 #: model:product.template,name:product.product_product_48_product_template
@@ -1787,12 +1908,15 @@ msgid ""
 "Sepcify a unit of measure here if invoicing is made in another unit of "
 "measure than inventory. Keep empty to use the default unit of measure."
 msgstr ""
+"Хэрэв тооллогын хэмжих нэгжээс өөр хэмжих нэгжээр нэхэмжлэл хийгдсэн бол тэр "
+"хэмжих нэгжийг энд зааж өгнө. Анхны хэмжих нэгжийг хэрэглэхээр бол хоосон "
+"үлдээнэ."
 
 #. module: product
-#: code:addons/product/product.py:206
+#: code:addons/product/product.py:208
 #, python-format
 msgid "Cannot change the category of existing Unit of Measure '%s'."
-msgstr ""
+msgstr "Одоо байгаа хэмжих нэгж '%s'-н ангилалыг солих боломжгүй."
 
 #. module: product
 #: help:product.packaging,height:0
@@ -1825,7 +1949,7 @@ msgid "Default Unit of Measure"
 msgstr "Үндсэн хэмжих нэгж"
 
 #. module: product
-#: code:addons/product/pricelist.py:375
+#: code:addons/product/pricelist.py:377
 #, python-format
 msgid "Partner section of the product form"
 msgstr "Нийлүүлэгчийн санал болгосон үнэ"
@@ -1848,13 +1972,18 @@ msgstr "Энэ бараа нь push/pull жишээгээр тохируулаг
 #. module: product
 #: field:product.product,message_ids:0
 msgid "Messages"
-msgstr ""
+msgstr "Зурвасууд"
 
 #. module: product
-#: code:addons/product/product.py:174
+#: model:product.uom,name:product.product_uom_unit
+msgid "Unit(s)"
+msgstr "Нэгж"
+
+#. module: product
+#: code:addons/product/product.py:176
 #, python-format
 msgid "Error!"
-msgstr ""
+msgstr "Алдаа!"
 
 #. module: product
 #: field:product.packaging,length:0
@@ -1869,7 +1998,7 @@ msgstr "Урт / Зай"
 #. module: product
 #: model:product.category,name:product.product_category_8
 msgid "Components"
-msgstr ""
+msgstr "Бүрэлдэхүүнүүд"
 
 #. module: product
 #: model:ir.model,name:product.model_product_pricelist_type
@@ -1880,7 +2009,7 @@ msgstr "Үнийн хүснэгтийн төрөл"
 #. module: product
 #: model:product.category,name:product.product_category_6
 msgid "External Devices"
-msgstr ""
+msgstr "Гадаад Төхөөрөмжүүд"
 
 #. module: product
 #: field:product.product,color:0
@@ -1890,7 +2019,7 @@ msgstr "Өнгөний Индекс"
 #. module: product
 #: help:product.template,sale_ok:0
 msgid "Specify if the product can be selected in a sales order line."
-msgstr ""
+msgstr "Хэрэв бараа борлуулалтын захиалгын мөрд харагдахаар бол зааж өгнө"
 
 #. module: product
 #: view:product.product:0
@@ -1948,11 +2077,22 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Шинэ барааг тодорхойлохдоо дарна.\n"
+"              </p><p>\n"
+"                Худалдаж авдаг бүх зүйлдээ барааг тодорхойлно. Энэ нь бодит "
+"бараа байж болохоос гадна авдаг үйлчилгээ, дэд гэрээт ажлууд байж болно.\n"
+"              </p><p>\n"
+"                Барааны маягт нь худалдан авах процессыг автоматжуулах олон "
+"тооны мэдээллийг агуулдаг: үнэ, татан авалтын логистик, санхүүгийн өгөгдөл, "
+"боломжит нийлүүлэгчид, гм.\n"
+"              </p>\n"
+"            "
 
 #. module: product
 #: model:product.template,description_sale:product.product_product_44_product_template
 msgid "Full featured image editing software."
-msgstr ""
+msgstr "Зураг засварлах бүрэн хэмжээний програм хангамж"
 
 #. module: product
 #: model:ir.model,name:product.model_product_pricelist_version
@@ -1974,12 +2114,12 @@ msgstr ""
 #. module: product
 #: field:product.product,message_follower_ids:0
 msgid "Followers"
-msgstr ""
+msgstr "Дагагчид"
 
 #. module: product
 #: view:product.product:0
 msgid "Sale Conditions"
-msgstr ""
+msgstr "Борлуулалтын Нөхцөл"
 
 #. module: product
 #: view:product.packaging:0
@@ -1995,7 +2135,7 @@ msgstr "Үнийн хүснэгтийн нэр"
 #. module: product
 #: view:product.product:0
 msgid "Description for Suppliers"
-msgstr ""
+msgstr "Нийлүүлэгчийн тайлбар"
 
 #. module: product
 #: field:product.supplierinfo,delay:0
@@ -2005,7 +2145,7 @@ msgstr "Хүргэлтийн урьтал хугацаа"
 #. module: product
 #: view:product.product:0
 msgid "months"
-msgstr ""
+msgstr "сар"
 
 #. module: product
 #: help:product.uom,active:0
@@ -2022,7 +2162,7 @@ msgstr "Нийлүүлэлтийн урьтал хугацаа"
 #. module: product
 #: model:ir.model,name:product.model_decimal_precision
 msgid "decimal.precision"
-msgstr ""
+msgstr "decimal.precision"
 
 #. module: product
 #: selection:product.ul,type:0
@@ -2035,6 +2175,8 @@ msgid ""
 "Specify the fixed amount to add or substract(if negative) to the amount "
 "calculated with the discount."
 msgstr ""
+"Хөнгөлөлт тооцсон дүн дээр нэмэх эсвэл хасах (хэрэв сөрөг бол) тогтол дүнг "
+"зааж өгнө."
 
 #. module: product
 #: help:product.product,qty_available:0
@@ -2049,6 +2191,15 @@ msgid ""
 "Otherwise, this includes goods stored in any Stock Location with 'internal' "
 "type."
 msgstr ""
+"Барааны одоогийн тоо хэмжээ.\n"
+"Нэг хадгалах байрлалын хувьд энэ байрлал болон бүх дэд байрлалд агуулагдаж "
+"байгаа бараанууд хамаарна.\n"
+"Нэг агуулахын хувьд агуулахын бүх хадгалах байрлал болон бүх дэд байрлал дах "
+"бараанууд хамаарна.\n"
+"Нэг дэлгүүрийн хувьд энэ дэлгүүрийн агуулахын бүх хадгалах байрлал болон бүх "
+"дэд байрлал дах бараанууд хамаарна.\n"
+"Бусад тохиолдолд энэ нөөцийн байрлалын 'Дотоод' төрөлтэй байрлалын бараанууд "
+"хамаарна."
 
 #. module: product
 #: help:product.template,type:0
@@ -2056,6 +2207,8 @@ msgid ""
 "Consumable: Will not imply stock management for this product. \n"
 "Stockable product: Will imply stock management for this product."
 msgstr ""
+"Хангамжийн: Энэ барааны хувьд нөөцийн менежмент хийгдэхгүй. \n"
+"Хадгалах бараа: Энэ бараанд нөөцийн менежмент хийгдэнэ."
 
 #. module: product
 #: help:product.pricelist.type,key:0
@@ -2075,6 +2228,14 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Шинэ бараа үүсгэхдээ дарна.\n"
+"              </p><p>\n"
+"                Худалдаж авдаг, борлуулдаг бүх зүйлд барааг үүсгэх \n"
+"                ёстой бөгөөд энэ нь бодит бараа байхаас гадна \n"
+"                үйлчилгээ байж бас болно.\n"
+"              </p>\n"
+"            "
 
 #. module: product
 #: view:product.product:0
@@ -2092,6 +2253,8 @@ msgid ""
 "A category of the view type is a virtual category that can be used as the "
 "parent of another category to create a hierarchical structure."
 msgstr ""
+"Харагдац төрлийн ангилал нь хуурмаг ангилал бөгөөд өөр ангилалаар эцэгээр "
+"ашиглагдаж мөчирлөсөн бүтцийг бий болгоход хэрэглэгддэг."
 
 #. module: product
 #: selection:product.ul,type:0
@@ -2104,6 +2267,8 @@ msgid ""
 "Specify a template if this rule only applies to one product template. Keep "
 "empty otherwise."
 msgstr ""
+"Хэрэв энэ дүрэм барааны нэг л үлгэрт үйлчлэх бол үлгэрийг зааж өгнө. Үгүй "
+"бол хоосон үлдээнэ."
 
 #. module: product
 #: model:product.template,description:product.product_product_2_product_template
@@ -2111,6 +2276,8 @@ msgid ""
 "This type of service include assistance for security questions, system "
 "configuration requirements, implementation or special needs."
 msgstr ""
+"Энэ төрлийн үйлчилгээ нь нууцлалын асуудлууд, системийн тохиргооны "
+"шаардлага, нэвтрүүлэлт, тусгай хэрэгцээ зэрэгт туслах үйлчилгээнүүд байдаг."
 
 #. module: product
 #: field:product.product,image:0
@@ -2139,12 +2306,12 @@ msgstr "Тайлбар"
 #. module: product
 #: model:res.groups,name:product.group_stock_packaging
 msgid "Manage Product Packaging"
-msgstr ""
+msgstr "Барааны баглааг менежмент хийнэ"
 
 #. module: product
 #: model:product.category,name:product.product_category_2
 msgid "Internal"
-msgstr ""
+msgstr "Дотоод"
 
 #. module: product
 #: model:product.template,name:product.product_product_45_product_template
@@ -2163,7 +2330,7 @@ msgid "Normal"
 msgstr "Хэвийн"
 
 #. module: product
-#: code:addons/product/pricelist.py:177
+#: code:addons/product/pricelist.py:179
 #, python-format
 msgid ""
 "At least one pricelist has no active version !\n"
@@ -2213,17 +2380,26 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Үнийн хүснэгт үүсгэхдээ дарна.\n"
+"              </p><p>\n"
+"                Үнийн хүснэгт гэдэг нь худалдан авах үнийг тооцоолж гаргаж \n"
+"                ирэх дүрмүүдийг агуулдаг. Анхны үнийн хүснэгт нь ганцхан \n"
+"                дүрмийг агуулж байдаг; энэ нь барааны маягтын өртөг үнийг \n"
+"                хэрэглэдэг. Хэрэв маш хялбар шаардлагатай бол захиалагчийн \n"
+"                үнийн хүснэгтйин талаар санаа зовох шаардлагагүй.\n"
+"              </p><p>\n"
+"                Гэхдээ зарим тохиолдолд нийлүүлэгчийн төвөгтэй үнийн \n"
+"                хүснэгтийг хэрэглэх тохиолдлууд байдаг. Тухайлбал тоо \n"
+"                хэмжээнээс хамаарсан, одоогийн зарласан урамшууллаас \n"
+"                хамаарсан зэрэг үнийн хүснэгтийн дүрмүүдийг хэрэглэж болно.\n"
+"              </p>\n"
+"            "
 
 #. module: product
 #: selection:product.template,mes_type:0
 msgid "Variable"
 msgstr "Хувьсах"
-
-#. module: product
-#: field:product.product,message_comment_ids:0
-#: help:product.product,message_comment_ids:0
-msgid "Comments and emails"
-msgstr ""
 
 #. module: product
 #: field:product.template,rental:0
@@ -2243,7 +2419,7 @@ msgstr "Үнийн хэлбэлзэлийн доод хэмжээ"
 #. module: product
 #: model:res.groups,name:product.group_uom
 msgid "Manage Multiple Units of Measure"
-msgstr ""
+msgstr "Олон хэмжих нэгжийг менежмент хийх"
 
 #. module: product
 #: help:product.packaging,weight:0
@@ -2253,7 +2429,7 @@ msgstr "Баглаа, тавиур эсвэл хайрцагны савласа�
 #. module: product
 #: view:product.uom:0
 msgid "e.g: 1 * (this unit) = ratio * (reference unit)"
-msgstr ""
+msgstr "ө.х: 1 * (энэ нэгж) = харьцаа * (сурвалж нэгж)"
 
 #. module: product
 #: model:product.template,description:product.product_product_25_product_template
@@ -2278,6 +2454,8 @@ msgid ""
 "Average delay in days to produce this product. In the case of multi-level "
 "BOM, the manufacturing lead times of the components will be added."
 msgstr ""
+"Энэ барааг үйлдвэрлэхэд зарцуулагддаг дундаж хугацаа. Олон түвшний жортой "
+"тохиолдолд үйлдвэрлэлийн урьтал хугацаанууд нь хоорондоо нэмэгдэнэ."
 
 #. module: product
 #: model:product.template,name:product.product_assembly_product_template
@@ -2300,6 +2478,13 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Шинэ хэмжих нэгж нэмэхдээ дарна.\n"
+"              </p><p>\n"
+"                Ижил ангилал дахь олон хэмжих нэгжүүдийн хооронд \n"
+"                хөрвөх харьцааг тодорхойлж өгнө.\n"
+"              </p>\n"
+"            "
 
 #. module: product
 #: model:product.template,name:product.product_product_11_product_template
@@ -2353,6 +2538,9 @@ msgid ""
 "image, with aspect ratio preserved. Use this field anywhere a small image is "
 "required."
 msgstr ""
+"Барааны жижиг хэмжээт зураг. Энэ нь автоматаар 64x64px хэмжээтэй болно, "
+"харьцаа нь гэхдээ хадгалагдана. Энэ талбарыг жижиг зураг хэрэгцээтэй газарт "
+"хаана ч хамаагүй хэрэглэж болно."
 
 #. module: product
 #: model:product.template,name:product.product_product_40_product_template
@@ -2362,12 +2550,12 @@ msgstr ""
 #. module: product
 #: selection:product.uom,uom_type:0
 msgid "Reference Unit of Measure for this category"
-msgstr ""
+msgstr "Ангилалын сурвалж хэмжих нэгж"
 
 #. module: product
 #: field:product.supplierinfo,product_uom:0
 msgid "Supplier Unit of Measure"
-msgstr ""
+msgstr "Нийлүүлэгчийн хэмжих нэгж"
 
 #. module: product
 #: view:product.product:0
@@ -2381,7 +2569,7 @@ msgid "15” LCD Monitor"
 msgstr ""
 
 #. module: product
-#: code:addons/product/pricelist.py:374
+#: code:addons/product/pricelist.py:376
 #: field:product.pricelist.item,base_pricelist_id:0
 #, python-format
 msgid "Other Pricelist"
@@ -2407,6 +2595,20 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Үнийн хүснэгт үүсгэхдээ дарна\n"
+"              </p><p>\n"
+"                Үнийн хүснэгт гэдэг нь барааны зарах үнийг тооцоолж гаргах \n"
+"                дүрмүүдийг агуулдаг.\n"
+"              </p><p>\n"
+"                Үнийн хүснэгт нь олон хувилбар (2010, 2011, 2010 оны 2 сарын "
+"\n"
+"                хямдрал, гм.) агуулж болох бөгөөд хувилбар бүр нь олон \n"
+"                дүрэмтэй байж болно.\n"
+"                (ө.х. барааны ангилалын захиалагчийн үнэ нь нийлүүлэгчийн \n"
+"                үнийг 1.80-р үржүүлнэ гэх мэт дүрэм байж болно).\n"
+"              </p>\n"
+"            "
 
 #. module: product
 #: model:ir.model,name:product.model_product_template
@@ -2482,6 +2684,8 @@ msgid ""
 "Conversion between Units of Measure can only occur if they belong to the "
 "same category. The conversion will be made based on the ratios."
 msgstr ""
+"Хэмжих нэгжийг хооронд нь хөрвүүлэх явдал нь зөвхөн нэг ангилалд хамаарч "
+"байвал л хийгдэнэ. Хөрвүүлэлт нь харьцаан дээр суурилж явагдана."
 
 #. module: product
 #: constraint:product.category:0
@@ -2495,16 +2699,19 @@ msgid ""
 "128x128px image, with aspect ratio preserved, only when the image exceeds "
 "one of those sizes. Use this field in form views or some kanban views."
 msgstr ""
+"Барааны дунд хэмжээт зураг. Энэ нь автоматаар 128x128px хэмжээтэй болох "
+"бөгөөд харьцаа нь хадгалагдана. Энэ зурагийг зарим маягт харагдац болон "
+"канбан харагдацад хэрэглэж болно."
 
 #. module: product
 #: view:product.uom:0
 msgid "e.g: 1 * (reference unit) = ratio * (this unit)"
-msgstr ""
+msgstr "ө.х: 1 * (сурвалж нэгж) = харьцаа * (энэ нэгж)"
 
 #. module: product
 #: help:product.supplierinfo,qty:0
 msgid "This is a quantity which is converted into Default Unit of Measure."
-msgstr ""
+msgstr "Энэ нь Анхны хэмжих нэгж рүү хөрвүүлэгдсэн тоо хэмжээ."
 
 #. module: product
 #: help:product.template,volume:0
@@ -2515,1097 +2722,3 @@ msgstr "Эзлэхүүн m3-ээр."
 #: field:product.pricelist.item,price_discount:0
 msgid "Price Discount"
 msgstr "Үнийн хөнгөлөлт"
-
-#~ msgid "Net weight"
-#~ msgstr "Цэвэр жин"
-
-#~ msgid "Sellable"
-#~ msgstr "Зарж болох"
-
-#~ msgid "Customer Price"
-#~ msgstr "Зарах үнэ"
-
-#~ msgid "Rentable Product"
-#~ msgstr "Түрээслэж болох"
-
-#~ msgid "Prices Types"
-#~ msgstr "Үнийн төрөл"
-
-#~ msgid "Weigths"
-#~ msgstr "Жин"
-
-#~ msgid "Virtual Stock"
-#~ msgstr "Ирээдүйн үлдэгдэл"
-
-#~ msgid "Configuration"
-#~ msgstr "Тохиргоо"
-
-#~ msgid "Number of Layer"
-#~ msgstr "Давхаргын тоо"
-
-#~ msgid "Error ! You can not create recursive categories."
-#~ msgstr "Алдаа! Рекурсив ангилал үүсгэж болохгүй."
-
-#~ msgid "Mouse"
-#~ msgstr "Хулгана"
-
-#~ msgid "Create new Product"
-#~ msgstr "Шинэ бараа үүсгэх"
-
-#~ msgid "Processor AMD Athlon XP 1800+"
-#~ msgstr "Процессор AMD Athlon XP 1800+"
-
-#~ msgid "Priority"
-#~ msgstr "Урьтамж"
-
-#~ msgid "Supplier Info"
-#~ msgstr "Нийлүүлэгчийн мэдээлэл"
-
-#~ msgid "Partner Product Name"
-#~ msgstr "Харилцагчийн барааны нэр"
-
-#~ msgid "Invalid XML for View Architecture!"
-#~ msgstr "Дэлгэцийн XML алдаатай!"
-
-#~ msgid "Rack"
-#~ msgstr "Раак"
-
-#~ msgid "Row"
-#~ msgstr "Мөр"
-
-#~ msgid "Real Stock"
-#~ msgstr "Бодит үлдэгдэл"
-
-#~ msgid "Can be sold"
-#~ msgstr "Зарж болох"
-
-#~ msgid "Gross weight"
-#~ msgstr "Бохир жин"
-
-#~ msgid "Phone Help"
-#~ msgstr "Утсаар туслах"
-
-#~ msgid "Codes"
-#~ msgstr "Код"
-
-#~ msgid "Warranty (months)"
-#~ msgstr "Баталгаа (сар)"
-
-#~ msgid "Price type"
-#~ msgstr "Үнийн төрөл"
-
-#~ msgid "High speed processor config"
-#~ msgstr "Өндөр хурдны процессор"
-
-#~ msgid "Prices & Suppliers"
-#~ msgstr "Үнэ & Нийлүүлэгч"
-
-#~ msgid "Delivery Delay"
-#~ msgstr "Хүргэлтийн хүлээлт"
-
-#~ msgid "KGM"
-#~ msgstr "Кг"
-
-#~ msgid "Procure Method"
-#~ msgstr "Нийлүүлэх арга"
-
-#~ msgid "Invalid model name in the action definition."
-#~ msgstr "Үйлдлийн тодорхойлолтод буруу моделийн нэр байна."
-
-#~ msgid "Silent fan"
-#~ msgstr "Чимээгүй сэнс"
-
-#~ msgid "The number of layer on a palet or box"
-#~ msgstr "Палет эсвэл хайраг дэх давхаргын тоо"
-
-#~ msgid "Prices Computations"
-#~ msgstr "Үнийн тооцоолол"
-
-#~ msgid "Default UoM"
-#~ msgstr "Үндсэн хэмжих нэгж"
-
-#~ msgid "Keyboard"
-#~ msgstr "Гар"
-
-#~ msgid "In Production"
-#~ msgstr "Үйлдвэрлэх шатанд"
-
-#~ msgid "Factor"
-#~ msgstr "Фактор"
-
-#~ msgid "UOM"
-#~ msgstr "Хэмжих нэгж"
-
-#~ msgid "PC"
-#~ msgstr "PC"
-
-#~ msgid "Error: UOS must be in a different category than the UOM"
-#~ msgstr "Алдаа: Борлуулах нэгжийн ангилал хэмжих нэгжийнхээс өөр байх ёстой"
-
-#~ msgid "UoM Category"
-#~ msgstr "Хэмжих нэгжийн ангилал"
-
-#~ msgid ""
-#~ "Name of the product for this partner, will be used when printing a request "
-#~ "for quotation. Keep empty to use the internal one."
-#~ msgstr ""
-#~ "Үнийн санал асуух үед хэвлэгдэх нийлүүлэгчийн барааны нэр. Хэрэв дотоод нэр "
-#~ "ашиглах бол хоосон орхино."
-
-#~ msgid "Suppliers of Product"
-#~ msgstr "Барааны нийлүүлэгчид"
-
-#~ msgid ""
-#~ "Error: The default UOM and the purchase UOM must be in the same category."
-#~ msgstr ""
-#~ "Алдаа: Үндсэн нэгж худалдан авах нэгж хоёул нэг ангилалд хамаарах ёстой."
-
-#~ msgid "Rate"
-#~ msgstr "Харьцаа"
-
-#~ msgid "Buy"
-#~ msgstr "Худалдаж авах"
-
-#~ msgid "IT components"
-#~ msgstr "IT эд ангиуд"
-
-#~ msgid "Purchase UoM"
-#~ msgstr "Худалдан авах нэгж"
-
-#~ msgid "Medium PC"
-#~ msgstr "Дундаж PC"
-
-#~ msgid "Second UoM"
-#~ msgstr "Хоёрдогч нэгж"
-
-#~ msgid "Partner Product Code"
-#~ msgstr "Харилцагчийн барааны код"
-
-#~ msgid "The total number of products you can put by palet or box."
-#~ msgstr "Палет эсвэл хайрцагаар савлаж болох барааны нийт тоо."
-
-#~ msgid "Produce"
-#~ msgstr "Үйлдвэрлэх"
-
-#~ msgid "Products Categories"
-#~ msgstr "Барааны ангилал"
-
-#~ msgid ""
-#~ "Coefficient to convert UOM to UOS\n"
-#~ " uom = uos * coeff"
-#~ msgstr ""
-#~ "Хэмжих нэгжийг зарах нэгж рүү хөрвүүлэх коэффициент\n"
-#~ " uom = uos * coeff"
-
-#~ msgid "The weight of a full of products palet or box."
-#~ msgstr "Палет эсвэл хайрцагын бүтэн жин."
-
-#~ msgid "Private"
-#~ msgstr "Хувийн"
-
-#~ msgid "DDR 512MB PC400"
-#~ msgstr "DDR 512MB PC400"
-
-#~ msgid ""
-#~ "Futur stock for this product according to the selected location or all "
-#~ "internal if none have been selected. Computed as: Real Stock - Outgoing + "
-#~ "Incoming."
-#~ msgstr ""
-#~ "Сонгосон эсвэл бүх дотоод байрлал (сонголт байхгүй бол) дээрх энэ барааны "
-#~ "ирээдүйн үлдэгдэл. Ирээдүйн үлдэгдэл = Бодид үлдэгдэл  - Гарч байгаа + Ирж "
-#~ "байгаа."
-
-#~ msgid ""
-#~ "The minimal quantity to purchase for this supplier, expressed in the default "
-#~ "unit of measure."
-#~ msgstr ""
-#~ "Энэ нийлүүлэгчээс худалдан авалт хийх хамгийн бага хэмжээ, үндсэн хэмжих "
-#~ "нэгжээр илэрхийлэгдсэн."
-
-#~ msgid "Kit Keyboard + Mouse"
-#~ msgstr "Kit гар + Хулгана"
-
-#~ msgid "Processor AMD Athlon XP 2200+"
-#~ msgstr "Processor AMD Athlon XP 2200+"
-
-#~ msgid "Starting date for this pricelist version to be valid."
-#~ msgstr "Үнийн хувилбар хэрэгжиж эхлэх огноо."
-
-#~ msgid "You can see the list of suppliers for that product."
-#~ msgstr "Тухайн барааны нийлүүлэгчдийн жагсаалтыг харж болно."
-
-#~ msgid "Units of Measure Categories"
-#~ msgstr "Хэмжих нэгжийн ангилал"
-
-#~ msgid "Product Process"
-#~ msgstr "Бараа боловсруулах"
-
-#~ msgid "HDD on demand"
-#~ msgstr "HDD on demand"
-
-#~ msgid "Miscelleanous"
-#~ msgstr "Бусад"
-
-#~ msgid ""
-#~ "This pricelist will be used, instead of the default one,                     "
-#~ "for sales to the current partner"
-#~ msgstr "Харилцагчийн борлуулалтад энэ үнийн жагсаалт ашиглагдана."
-
-#~ msgid ""
-#~ "Determine if the product can be visible in the list of product within a "
-#~ "selection from a sale order line."
-#~ msgstr ""
-#~ "Борлуулах захиалгын барааны жагсаалтад энэ бараа харагдах эсэхийг заана."
-
-#~ msgid ""
-#~ "Quantities of products that are planned to leave in selected locations or "
-#~ "all internal if none have been selected."
-#~ msgstr ""
-#~ "Сонгосон эсвэл бүх дотоод (сонголт хийгээгүй) байрлалаас гарахаар "
-#~ "төлөвлөгдсөн барааны тоо хэмжээ."
-
-#~ msgid "HDD Seagate 7200.8 80GB"
-#~ msgstr "HDD Seagate 7200.8 80GB"
-
-#~ msgid "HDD Seagate 7200.8 160GB"
-#~ msgstr "HDD Seagate 7200.8 160GB"
-
-#~ msgid "Processor on demand"
-#~ msgstr "Processor on demand"
-
-#~ msgid "IT components kits"
-#~ msgstr "IT эд ангиуд"
-
-#~ msgid "Regular processor config"
-#~ msgstr "Энгийн процессор"
-
-#~ msgid "Basic PC"
-#~ msgstr "Үндсэн PC"
-
-#~ msgid ""
-#~ "Current quantities of products in selected locations or all internal if none "
-#~ "have been selected."
-#~ msgstr "Сонгосон эсвэл бүх байрлал дээрх барааны тоо хэмжээ."
-
-#~ msgid "DDR 256MB PC400"
-#~ msgstr "DDR 256MB PC400"
-
-#~ msgid "Complete PC With Peripherals"
-#~ msgstr "Иж бүрэн PC"
-
-#~ msgid "Mainboard ASUStek A7V8X-X"
-#~ msgstr "ASUStek A7V8X-X эх хавтан"
-
-#~ msgid ""
-#~ "Unit of Measure of a category can be converted between each others in the "
-#~ "same category."
-#~ msgstr ""
-#~ "Хэмжих нэгж нь тухайн ангилал дотроо өөр нэгж рүү хөрвүүлэгдэж болно."
-
-#~ msgid ""
-#~ "The coefficient for the formula:\n"
-#~ "1 (base unit) = coeff (this unit). Rate = 1 / Factor."
-#~ msgstr ""
-#~ "Дараахь томъёоны коэффициент:\n"
-#~ "1 (суурь нэгж) = коэфф (энэ нэгж). Харьцаа = 1 / Фактор."
-
-#~ msgid "ATX Mid-size Tower"
-#~ msgstr "ATX Mid-size Tower"
-
-#~ msgid ""
-#~ "Default Unit of Measure used for purchase orders. It must in the same "
-#~ "category than the default unit of measure."
-#~ msgstr ""
-#~ "Худалдан авалтад хэрэглэх үндсэн хэмжих нэгж. Энэ нь үндсэн хэмжих нэгжийн "
-#~ "ангилалтай адил байх ёстой."
-
-#~ msgid "Product suppliers, with their product name, price, etc."
-#~ msgstr "Барааны нийлүүлэгчид, барааны нэр, үнэ зэрэг."
-
-#~ msgid "Mainboard ASUStek A7N8X"
-#~ msgstr "ASUStek A7N8X эх хавтан"
-
-#~ msgid "Basic+ PC (assembly on order)"
-#~ msgstr "Үндсэн+ PC (захиалгаар угсарна)"
-
-#~ msgid "Price list"
-#~ msgstr "Үнийн жагсаалт"
-
-#~ msgid "Dello Computer"
-#~ msgstr "Dello Компьютер"
-
-#~ msgid "Storage Localisation"
-#~ msgstr "Хадгалах байрлал"
-
-#~ msgid "HDD Seagate 7200.8 120GB"
-#~ msgstr "HDD Seagate 7200.8 120GB"
-
-#~ msgid ""
-#~ "This is the average time between the confirmation of the customer order and "
-#~ "the delivery of the finished products. It's the time you promise to your "
-#~ "customers."
-#~ msgstr ""
-#~ "Хэрэглэгчийн захиалга батлагдсанаас хойш эцсийн бүтээгдэхүүнийг хүргэх "
-#~ "хүртэлх дундаж хугацаа. Ө.х хэрэглэгчид амлалт өгөх хугацаа."
-
-#~ msgid "Regular case fan 80mm"
-#~ msgstr "80mm ердийн үүрэн сэнс"
-
-#~ msgid "Computer Stuff"
-#~ msgstr "Компьютер хэрэгсэл"
-
-#~ msgid ""
-#~ "The computed quantity will be a multiple of this value. Use 1.0 for products "
-#~ "that can not be split."
-#~ msgstr ""
-#~ "Энэ утгаар үржүүлж тоо ширхэгийг тооцоолно. Хуваалт хийхгүй барааны хувьд "
-#~ "1.0 гэж сонгоно."
-
-#~ msgid ""
-#~ "The coefficient for the formula:\n"
-#~ "coeff (base unit) = 1 (this unit). Factor = 1 / Rate."
-#~ msgstr ""
-#~ "Дараахь томъёоны коэффициент:\n"
-#~ "коэф (суурь нэгж) = 1 (энэ нэгж). Фактор = 1 / Харьцаа."
-
-#~ msgid "RAM on demand"
-#~ msgstr "RAM on demand"
-
-#~ msgid ""
-#~ "Code of the product for this partner, will be used when printing a request "
-#~ "for quotation. Keep empty to use the internal one."
-#~ msgstr ""
-#~ "Харилцагчийн барааны код, энэ нь үнийн хүсэлт хэвлэхэд хэрэглэгдэнэ. Дотоод "
-#~ "код ашиглах бол хоосон орхино."
-
-#~ msgid "Customizable PC"
-#~ msgstr "Угсармал PC"
-
-#~ msgid ""
-#~ "Gives the different ways to package the same product. This has no impact on "
-#~ "the packing order and is mainly used if you use the EDI module."
-#~ msgstr ""
-#~ "Нэг барааг өөр өөрөөр багцлах аргууд. Багцлах дараалалд нөлөөлөхгүй бөгөөд "
-#~ "үндсэндээ EDI модульд хэрэглэгддэг."
-
-#~ msgid ""
-#~ "Average time to produce this product. This is only for the production order "
-#~ "and, if it is a multi-level bill of material, it's only for the level of "
-#~ "this product. Different delays will be summed for all levels and purchase "
-#~ "orders."
-#~ msgstr ""
-#~ "Барааг үйлдвэрлэх дундаж хугацаа. Зөвхөн үйлдвэрлэлийн захиалгад "
-#~ "зориулагдсан бөгөөд хэрэв нийлмэл орцтой бараа бол зөвхөн энэ барааны "
-#~ "түвшинд л хамаатай. Бусад саатлуудыг нэмж тооцогдоно."
-
-#~ msgid ""
-#~ "Delay in days between the confirmation of the purchase order and the "
-#~ "reception of the products in your warehouse. Used by the scheduler for "
-#~ "automatic computation of the purchase order planning."
-#~ msgstr ""
-#~ "Захиалга батлагдсанаас хойш агуулахад ирэх хугацаа. Систем худалдан авах "
-#~ "захиалгын хуваарь тооцоолоход хэрэглэгдэнэ."
-
-#~ msgid ""
-#~ "The cost of the product for accounting stock valuation. It can serves as a "
-#~ "base price for supplier price."
-#~ msgstr ""
-#~ "Агуулахын дансны үнэлгээ нь бүтээгдэхүүний үнэ юм. Нийлүүлэгчийн үнэ нь "
-#~ "үндсэн үнэ учраас энэ нь сервис болно."
-
-#~ msgid "Onsite Senior Intervention"
-#~ msgstr "Onsite Senior Intervention"
-
-#~ msgid "Onsite Intervention"
-#~ msgstr "Орон нутгийн оролцоо"
-
-#~ msgid ""
-#~ "Error: The default UOM and the Supplier Product UOM must be in the same "
-#~ "category."
-#~ msgstr ""
-#~ "Алдаа: Анхны хэм.нэгж болон Нийлүүлэгчийн Барааны хэм.нэгж нь ижил категорит "
-#~ "байх ёстой."
-
-#~ msgid "UoM"
-#~ msgstr "Хэмжих нэгж"
-
-#~ msgid "Reference"
-#~ msgstr "Код"
-
-#~ msgid "Wood 2mm"
-#~ msgstr "Мод 2мм"
-
-#~ msgid "  e.g: 1 * (this unit) = ratio * (reference unit)"
-#~ msgstr "  Ж: 1 * (энэ нэгж) = харьцаа * (сурвалж нэгж)"
-
-#~ msgid "Worker"
-#~ msgstr "Ажилтан"
-
-#~ msgid "Restaurant Expenses"
-#~ msgstr "Рестораны Зардал"
-
-#~ msgid "Metal Cleats"
-#~ msgstr "Төмөр Тах"
-
-#~ msgid "KIT Shelf of 100cm"
-#~ msgstr "100см-н багажны тавиур"
-
-#~ msgid "Side Panel"
-#~ msgstr "Хажуугийн Самбар"
-
-#~ msgid "  e.g: 1 * (reference unit) = ratio * (this unit)"
-#~ msgstr "  ж: 1 * (сурвалж нэгж) = харьцаа * (энэ нэгж)"
-
-#~ msgid "g"
-#~ msgstr "гр"
-
-#~ msgid "Shelf of 200cm"
-#~ msgstr "200см-н Тавиур"
-
-#~ msgid "Ratio & Precision"
-#~ msgstr "Харьцаа ба Нарийвчлал"
-
-#~ msgid "Kitchen Design Project"
-#~ msgstr "Гал Тогооны Зохиомжийн Төсөл"
-
-#~ msgid "Bigger than the reference UoM"
-#~ msgstr "Сурвалж хэм.нэгж-с их/том"
-
-#~ msgid "To Sell"
-#~ msgstr "Борлуулах"
-
-#~ msgid "Stockable"
-#~ msgstr "Агуулж болох"
-
-#~ msgid "Marketable Services"
-#~ msgstr "Сурталчилж болох Үйлчилгээ"
-
-#~ msgid "m"
-#~ msgstr "м"
-
-#~ msgid "Procurement Method"
-#~ msgstr "Татан авах арга"
-
-#, python-format
-#~ msgid " (copy)"
-#~ msgstr " (Хуулах)"
-
-#~ msgid "Rack 200cm"
-#~ msgstr "200см-н сараалжин тавиур"
-
-#~ msgid "Wood Lintel 4m"
-#~ msgstr "Модон Тотго 4м"
-
-#~ msgid "Marketable Products"
-#~ msgstr "Сурталчилж болох Бараа"
-
-#~ msgid "Misc"
-#~ msgstr "Янз бүрийн"
-
-#~ msgid ""
-#~ "How many times this UoM is smaller than the reference UoM in this category:\n"
-#~ "1 * (reference unit) = ratio * (this unit)"
-#~ msgstr ""
-#~ "Энэ хэм.нэгж нь энэ категори дах сурвалж хэм.нэгжээс хэд дахин бага:\n"
-#~ "1 * (сурвалж нэгж) = харьцаа * (энэ нэгж)"
-
-#~ msgid "Smaller than the reference UoM"
-#~ msgstr "Сурвалж хэм.нэгжээс бага, жижиг"
-
-#~ msgid "Rear Panel SHE200"
-#~ msgstr "Сүүлийн Самбар SHE200"
-
-#~ msgid "Employee"
-#~ msgstr "Ажилтан"
-
-#~ msgid "Shelf of 100cm"
-#~ msgstr "100см-н Тавиур"
-
-#~ msgid "Rear Panel SHE100"
-#~ msgstr "Сүүлийн Самбар SHE100"
-
-#~ msgid "Hotel Expenses"
-#~ msgstr "Зочид Буудлын Зардал"
-
-#~ msgid ""
-#~ "How many times this UoM is bigger than the reference UoM in this category:\n"
-#~ "1 * (this unit) = ratio * (reference unit)"
-#~ msgstr ""
-#~ "Энэ категори дахь сурвалж хэм.нэгжээс хэд дахин их хэм.нэгж болох:\n"
-#~ "1 * (энэ нэгж) = ratio * (сурвалж нэгж)"
-
-#~ msgid "Rack 100cm"
-#~ msgstr "100см-ийн сараалжин тавиур"
-
-#~ msgid "Shelves"
-#~ msgstr "Тавиур"
-
-#~ msgid "Close"
-#~ msgstr "Хаах"
-
-#~ msgid "tonne"
-#~ msgstr "тонн"
-
-#~ msgid "Assembly Section"
-#~ msgstr "Цуглуулах, угсрах Хэсэг"
-
-#~ msgid ""
-#~ "The computed quantity will be a multiple of this value. Use 1.0 for a UoM "
-#~ "that cannot be further split, such as a piece."
-#~ msgstr ""
-#~ "Тооцоологдсон үр дүн нь энэ тооны үржвэр байна. Цаашид хувааж задрахгүй "
-#~ "хэм.нэгжийн хувьд 1.0 гэсэн утгыг хэрэглэ."
-
-#~ msgid ""
-#~ "Quantities of products that are planned to arrive in selected locations or "
-#~ "all internal if none have been selected."
-#~ msgstr ""
-#~ "Сонгосон эсвэл бүх дотоод байрлал (байрлал сонгоогүй бол) дээр ирэхээр "
-#~ "төлөвлөгдсөн барааны тоо хэмжээ."
-
-#~ msgid ""
-#~ "Set a template if this rule only apply to a template of product. Keep empty "
-#~ "for all products"
-#~ msgstr ""
-#~ "Уг дүрэм нь зөвхөн сонгосон барааны загварт үйлчилнэ. Харин хоосон орхивол "
-#~ "бүх загварт үйлчилнэ"
-
-#~ msgid "UoM Type"
-#~ msgstr "Хэмжих нэгжийн төрөл"
-
-#~ msgid "Pricelists Types"
-#~ msgstr "Үнийн жагсаалтын төрөл"
-
-#, python-format
-#~ msgid "Warning !"
-#~ msgstr "Анхааруулга !"
-
-#~ msgid "Tells the user if he can use the product or not."
-#~ msgstr "Хэрэглэгчид уг барааг хэрэглэж болох эсэхийг илэрхийлнэ."
-
-#~ msgid ""
-#~ "Base price for computing the customer price. Sometimes called the catalog "
-#~ "price."
-#~ msgstr "Худалдах үнийг тооцоолох суурь үнэ. Өөрөөр хэлбэл каталоги үнэ."
-
-#~ msgid ""
-#~ "Produce will generate production order or tasks, according to the product "
-#~ "type. Purchase will trigger purchase orders when requested."
-#~ msgstr ""
-#~ "Тухайн барааны төрлөөс хамаараад үйлдвэрлэлийн захиалга эсвэл худалдан "
-#~ "авалтын захиалга тус тус үүсгэж нөөцийг хэмжээг нэмэгдүүлнэ."
-
-#~ msgid "To Purchase"
-#~ msgstr "Худалдан авах"
-
-#~ msgid "If Other Pricelist"
-#~ msgstr "Хэрэв өөр үнийн хүснэгт"
-
-#~ msgid ""
-#~ "Set a product if this rule only apply to one product. Keep empty for all "
-#~ "products"
-#~ msgstr ""
-#~ "Уг дүрэм нь зөвхөн сонгосон бараанд үйлчилнэ. Харин хоосон орхивол бүх "
-#~ "бараанд үйлчилнэ."
-
-#~ msgid "Characteristics"
-#~ msgstr "Онцлог шинжүүд"
-
-#~ msgid ""
-#~ "Future stock for this product according to the selected locations or all "
-#~ "internal if none have been selected. Computed as: Real Stock - Outgoing + "
-#~ "Incoming."
-#~ msgstr ""
-#~ "Сонгосон эсвэл бүх дотоод байрлал (байрлал сонгоогүй бол) дээрх ирээдүйн "
-#~ "үлдэгдэл. Тооцоолол : Бодит үлдэгдэл - Гарах түгээлт + Ирэх нийлүүлэлт"
-
-#~ msgid "PCE"
-#~ msgstr "Ширхэг"
-
-#~ msgid "The mode for computing the price for this rule."
-#~ msgstr "Уг дүрмээр үнэ тооцоолоход хэрэглэгдэх суурь үнэ."
-
-#~ msgid "Miscellaneous"
-#~ msgstr "Бусад зүйлс"
-
-#~ msgid "Rules Test Match"
-#~ msgstr "Үнийн дүрэм, томьёолол"
-
-#~ msgid "EAN13"
-#~ msgstr "EAN13.код"
-
-#~ msgid ""
-#~ "Quantity conversions may happen automatically between Units of Measure in "
-#~ "the same category, according to their respective ratios."
-#~ msgstr ""
-#~ "Ижил ангилалын хэмжих нэгж бүхий тоо хэмжээнүүд хоорондоо хөрвүүлэлтийн "
-#~ "коэффицентын тусламжтайгаар хөрвүүлэгдэнэ. (автоматаар)"
-
-#~ msgid "This is use as task responsible"
-#~ msgstr "Энэ талбар нь ажил хариуцуулах үед хэрэглэгдэнэ"
-
-#~ msgid "Sales Properties"
-#~ msgstr "Борлуулалтын хэрэглэгдэхүүн"
-
-#~ msgid ""
-#~ "The rule only applies if the partner buys/sells more than this quantity."
-#~ msgstr "Харилцагч уг хэмжээнээс илүүг зарах/авах үед уг дүрэм үйлчилнэ."
-
-#~ msgid "List Price"
-#~ msgstr "Зарах үнэ"
-
-#~ msgid "Unit of Measure Properties"
-#~ msgstr "Хэмжих нэгжийн хэрэглэгдэхүүн"
-
-#~ msgid ""
-#~ "Product's cost for accounting stock valuation. It is the base price for the "
-#~ "supplier price."
-#~ msgstr ""
-#~ "Санхүү бүртгэлд хөтлөх барааны өртөг. Нийлүүлэгчийн санал болгосон үнээс "
-#~ "үүдэлтэй."
-
-#~ msgid "This is a quantity which is converted into Default Uom."
-#~ msgstr "Энэ бол үндсэн хэмжих нэгжид хөрвүүлсэн тоо хэмжээ"
-
-#~ msgid ""
-#~ "Create and manage your packaging dimensions and types you want to be "
-#~ "maintained in your system."
-#~ msgstr "Таны системд хэрэглэх савлагаанууд тэдгээрийн хэмжээс, төрөл зүйлс."
-
-#~ msgid "Reference UoM for this category"
-#~ msgstr "Уг ангилалын язгуур хэмжигдэхүүн"
-
-#~ msgid "The weight of the empty UL"
-#~ msgstr "Хоосон хайрцагын жин"
-
-#~ msgid "Extended Filters..."
-#~ msgstr "Өргөтгөсөн хайлт..."
-
-#~ msgid ""
-#~ "Error ! You cannot assign the Main Pricelist as Other Pricelist in PriceList "
-#~ "Item!"
-#~ msgstr ""
-#~ "Алдаа ! Бусад үнийн хүснэгт талбарт тухайн дүрмийн харьяалагдах үнийн "
-#~ "хүснэгтийг сонгож болохгүй!"
-
-#~ msgid "Seq"
-#~ msgstr "Дугаар"
-
-#~ msgid "Calculate Product Price per unit base on pricelist version."
-#~ msgstr "Барааны нэгж үнийг үнийн хүснэгтийн хувилбар бүрээр тооцоолох"
-
-#~ msgid "Ending date for this pricelist version to be valid."
-#~ msgstr "Уг үнийн хувилбарын хүчинтэй байх хугацааны төгсгөл."
-
-#~ msgid ""
-#~ "Average delay in days to produce this product. This is only for the "
-#~ "production order and, if it is a multi-level bill of material, it's only for "
-#~ "the level of this product. Different lead times will be summed for all "
-#~ "levels and purchase orders."
-#~ msgstr ""
-#~ "Тухайн барааг нэг удаад үйлдвэрлэх дундаж хугацаа (өдрөөр). Энэ нь зөвхөн "
-#~ "үйлдвэрлэлийн захиалгад хэрэглэгдэх бөгөөд бөгөөд хэрэв олон тооны түүхий "
-#~ "эдтэй тохиолдолд зөвхөн тухайн түвшинд ойлгогдоно. Ялгаатай урьтал "
-#~ "хугацаанууд нь түүхий эд материалын төвшин болон худалдан авалтын захиалга "
-#~ "дээр нийлбэрлэгдэнэ."
-
-#~ msgid ""
-#~ "The Object name must start with x_ and not contain any special character !"
-#~ msgstr ""
-#~ "Объектын нэрний эхлэл x_ байх ёстой бөгөөд бусад тусгай тэмдэгтийг агуулж "
-#~ "болохгүй !"
-
-#~ msgid "Default UOM"
-#~ msgstr "Үндсэн хэмжих нэгж"
-
-#~ msgid ""
-#~ "Will change the way procurements are processed. Consumables are stockable "
-#~ "products with infinite stock, or for use when you have no inventory "
-#~ "management in the system."
-#~ msgstr ""
-#~ "Хангамжийн материал нь дуусдаггүй агуулахын бараа гэсэн үг бөгөөд тооллого "
-#~ "хийдэггүй системд хэрэглэгдэнэ. Нийлүүлэлтийн аргын хувьд өөр."
-
-#~ msgid "Product Description"
-#~ msgstr "Барааны тайлбар"
-
-#~ msgid "Case"
-#~ msgstr "Хайрцаг"
-
-#~ msgid "Can be Purchased"
-#~ msgstr "Худалдан авч болох"
-
-#~ msgid "Default Unit Of Measure"
-#~ msgstr "Үндсэн хэмжих нэгж"
-
-#~ msgid "Products & Pricelists"
-#~ msgstr "Бараа & Үнэ хүснэгт"
-
-#~ msgid ""
-#~ "Used by companies that manage two units of measure: invoicing and inventory "
-#~ "management. For example, in food industries, you will manage a stock of ham "
-#~ "but invoice in Kg. Keep empty to use the default UOM."
-#~ msgstr ""
-#~ "Нэг барааны хоёр хэмжих нэгж ашигладаг байгууллагад хэрэглэгдэнэ. Жишээлбэл, "
-#~ "хүнсний үйлдвэрлэлд, махыг гулуузаар тоолж кг-р нэхэмжилж болно. Үндсэн ганц "
-#~ "хэмжих нэгж хэрэглэх бол хоосон үлдээ."
-
-#~ msgid ""
-#~ "Set a category of product if this rule only apply to products of a category "
-#~ "and his childs. Keep empty for all products"
-#~ msgstr ""
-#~ "Уг дүрэм нь сонгосон ангилалын бараануудад үйлчилнэ. Хоосон орхивол бүх "
-#~ "бараанд үйлчилнэ."
-
-#~ msgid ""
-#~ "Standard Price: the cost price is fixed and recomputed periodically (usually "
-#~ "at the end of the year), Average Price: the cost price is recomputed at each "
-#~ "reception of products."
-#~ msgstr ""
-#~ "Стандарт өртөг: өртөг тогтмол байх бөгөөд тодорхой хугацааны эцэст (ихэвчлэн "
-#~ "жилийн эцэст) гараар өөрчлөнө, Дундаж өртөг: барааг худалдан авах бүрт "
-#~ "өртөгийг автоматаар шинэчлэн тогтооно."
-
-#~ msgid "UOM -> UOS Coeff"
-#~ msgstr "Х.Н -> Х.Х.Н (Коэф)"
-
-#~ msgid ""
-#~ "Coefficient to convert UOM to UOS\n"
-#~ " uos = uom * coeff"
-#~ msgstr ""
-#~ "Үндсэн хэмжих нэгжийг хоёрдогч хэмжих нэгж рүү хөрвүүлэх коэффициент\n"
-#~ "хоёрдогч = үндсэн * коэффициент"
-
-#~ msgid ""
-#~ "Forecast quantity (computed as Quantity On Hand - Outgoing + Incoming)\n"
-#~ "In a context with a single Stock Location, this includes goods stored at "
-#~ "this Location, or any of its children.\n"
-#~ "In a context with a single Warehouse, this includes goods stored in the "
-#~ "Stock Location of this Warehouse, or any of its children.\n"
-#~ "In a context with a single Shop, this includes goods stored in the Stock "
-#~ "Location of the Warehouse of this Shop, or any of its children.\n"
-#~ "Otherwise, this includes goods stored in any Stock Location typed as "
-#~ "'internal'."
-#~ msgstr ""
-#~ "Таамагласан тоо ширхэг (Байгаа тоо ширхэг - Гарах - Орох гэсэн байдлаар "
-#~ "тооцоологддог)\n"
-#~ "Барааны нэг байрлалын хувьд энэ байрлал болон охин байрлалууд дахь барааг "
-#~ "хамрана. \n"
-#~ "Нэг агуулахын хувьд энэ агуулах дахь бүх байрлалууд дахь барааг хамрана. \n"
-#~ "Нэг дэлгүүрийн хувьд энэ дэлгүүр дахь бүх байрлалууд болон энэ дэлгүүрийн "
-#~ "бүх агуулах дахь барааг хамрана. \n"
-#~ "Бусад тохиолдолд  'дотоод' төрөлтэй бүх байрлалыг хамрана."
-
-#~ msgid "Quantity Available"
-#~ msgstr "Байгаа тоо хэмжээ"
-
-#, python-format
-#~ msgid ""
-#~ "New UoM '%s' must belong to same UoM category '%s' as of old UoM '%s'. If "
-#~ "you need to change the unit of measure, you may desactivate this product "
-#~ "from the 'Procurement & Locations' tab and create a new one."
-#~ msgstr ""
-#~ "Шинэ хэмжих нэгж '%s' нь ижилхэн ангилал '%s'-д буюу хуучин хэмжих нэгж '%s'-"
-#~ "тай ижил ангилал байх ёстой. Хэрэв хэмжих нэгжийг солих шаардлагатай байгаа "
-#~ "бол энэ барааг 'Татан авалт & Байрлал' хавтаст идэвхгүй болгоод шинийг "
-#~ "үүсгэнэ үү."
-
-#~ msgid "Service on Timesheet"
-#~ msgstr "Цаг бүртгэлийн хуудас дахь үйлчилгээ"
-
-#, python-format
-#~ msgid "Cannot change the category of existing UoM '%s'."
-#~ msgstr "Одоо байгаа хэмжих нэгж '%s'-ийн ангилалыг солих боломжгүй."
-
-#~ msgid ""
-#~ "A price list contains rules to be evaluated in order to compute the purchase "
-#~ "or sales price for all the partners assigned to a price list. Price lists "
-#~ "have several versions (2010, 2011, Promotion of February 2010, etc.) and "
-#~ "each version has several rules. Example: the customer price of a product "
-#~ "category will be based on the supplier price multiplied by 1.80."
-#~ msgstr ""
-#~ "Үнийн хүснэгт нь холбогдсон харилцагчтай худалдан авалт, борлуулалт явуулах "
-#~ "үед үнийг тооцоолох бүх дүрмийг агуулж байдаг.\r\n"
-#~ "Үнийн хүснэгт бүр нь хэд хэдэн үнийн хувилбар (2010, 2011, 2010 оны "
-#~ "урамшуулал, гм) -тай байж болно. Жишээлбэл: Худалдан авагчийн үнэ нь "
-#~ "нийлүүлэгчийн үнийг 1.80-р үржүүлсэн дүрэм байж болох юм."
-
-#~ msgid ""
-#~ "Products can be purchased and/or sold. They can be raw materials, stockable "
-#~ "products, consumables or services. The Product form contains detailed "
-#~ "information about your products related to procurement logistics, sales "
-#~ "price, product category, suppliers and so on."
-#~ msgstr ""
-#~ "Бараа нь хулалдаж авах болон борлуулж болдог. Эдгээр нь түүхий эд, хадгалах "
-#~ "бараа, хангамжийн бараа, үйлчилгээ зэрэг байж болно. Барааны форм нь татан "
-#~ "авж хангах, борлуулах үнэ, барааны ангилал, нийлүүлэгч гэх мэт маш олон "
-#~ "дэлгэрэнгүй мэдээллийг агуулдаг."
-
-#~ msgid ""
-#~ "Create a product form for everything you buy or sell. Specify a supplier if "
-#~ "the product can be purchased."
-#~ msgstr ""
-#~ "Худалдаж авдаг, зардаг бүх л төрлийн бараа үүсгэх форм. Хэрэв бараа нь "
-#~ "худалдаж авч болдог бол нийлүүлэгчийг зааж өгнө үү."
-
-#~ msgid ""
-#~ "Current quantity of products.\n"
-#~ "In a context with a single Stock Location, this includes goods stored at "
-#~ "this Location, or any of its children.\n"
-#~ "In a context with a single Warehouse, this includes goods stored in the "
-#~ "Stock Location of this Warehouse, or any of its children.\n"
-#~ "In a context with a single Shop, this includes goods stored in the Stock "
-#~ "Location of the Warehouse of this Shop, or any of its children.\n"
-#~ "Otherwise, this includes goods stored in any Stock Location typed as "
-#~ "'internal'."
-#~ msgstr ""
-#~ "Барааны одоогийн тоо хэмжээ.\n"
-#~ "Нэг хадгалах байрлалтай тохиолдолд энэ тоо нь энэ байрлал болон түүний дэд "
-#~ "байрлалууд дахь тоо хэмжээ байна.\n"
-#~ "Нэг агуулахтай тохиолдолд энэ тоо нь энэ агуулахын хадгалах байрлал болон "
-#~ "түүний дэд байрлалууд дахь тоо хэмжээ байна.\n"
-#~ "Нэг дэлгүүртэй тохиолдолд энэ дэлгүүрийн агуулахын хадгалах байрлал болон "
-#~ "түүний дэд байрлалууд дахь тоо хэмжээ байна.\n"
-#~ "Бусад тохиолдолд, 'дотоод' гэсэн төрлийн хадгалах байрлалууд дахь барааны "
-#~ "тоо хэмжээ байна."
-
-#~ msgid "Cabinet"
-#~ msgstr "Кабинет"
-
-#~ msgid ""
-#~ "You must define a Product for everything you buy or sell. Products can be "
-#~ "raw materials, stockable products, consumables or services. The Product form "
-#~ "contains detailed information about your products related to procurement "
-#~ "logistics, sales price, product category, suppliers and so on."
-#~ msgstr ""
-#~ "Зардаг, худалдаж авдаг бүх бараагаа тодорхойлсон байх ёстой. Бараа гэдэг нь "
-#~ "түүхий эд, хадгалах бараа, хангамжийн материал, үйлчилгээ зэрэг байна. "
-#~ "Барааны форм нь барааны татан авч хангах, борлуулах үнэ, барааны ангилал, "
-#~ "нийлүүлэгч гэх мэт олон тооны дэлгэрэнгүй мэдээллийг агуулдаг."
-
-#~ msgid ""
-#~ "If the active field is set to False, it will allow you to hide the pricelist "
-#~ "without removing it."
-#~ msgstr ""
-#~ "Хэрэв итэдвхтэй талбар нь False буюу Худал бол үнийн хүснэгтийг "
-#~ "устгалгүйгээр нуудаг."
-
-#~ msgid ""
-#~ "Here is a list of all your products classified by category. You can click a "
-#~ "category to get the list of all products linked to this category or to a "
-#~ "child of this category."
-#~ msgstr ""
-#~ "Бүх барааны ангилалаар ангилагдсан жагсаалт. Барааны ангилал дарж тухайн "
-#~ "ангилалын бараанууд болон дэд ангилалын жагсаалтыг харах боломжтой."
-
-#~ msgid "Wood 10mm"
-#~ msgstr "Банз 10мм"
-
-#~ msgid "Create or Import Products"
-#~ msgstr "Бараануудыг үүсгэх буюу импортлох"
-
-#~ msgid ""
-#~ "Quantity of products that are planned to leave.\n"
-#~ "In a context with a single Stock Location, this includes goods leaving from "
-#~ "this Location, or any of its children.\n"
-#~ "In a context with a single Warehouse, this includes goods leaving from the "
-#~ "Stock Location of this Warehouse, or any of its children.\n"
-#~ "In a context with a single Shop, this includes goods leaving from the Stock "
-#~ "Location of the Warehouse of this Shop, or any of its children.\n"
-#~ "Otherwise, this includes goods leaving from any Stock Location typed as "
-#~ "'internal'."
-#~ msgstr ""
-#~ "Гарахаар төлөвлөгдсөн барааны тоо хэмжээ.\n"
-#~ "\n"
-#~ "Нэг Хадгалах Байрлалтай тохиолдолд энэ байрлал болон түүний дэд бүх "
-#~ "байрлалаас гарах тоо хэмжээ байна.\n"
-#~ "Нэг Агуулахтай тохиолдолд энэ агуулахын хадгалах байрлал болон түүний дэд "
-#~ "бүх байрлалаас гарах тоо хэмжээ байна.\n"
-#~ "Нэг дэлгүүртэй тохилдолд энэ дэлгүүрийн агуулахын хадгалах байрлал болон "
-#~ "түүний дэд бүх байрлалаас гарах тоо хэмжээ байна.\n"
-#~ "Бусад тохиолдолд 'дотоод' төрлийн бүх хадгалах байрлал дээрээс гарах тоо "
-#~ "хэмжээ байна."
-
-#, python-format
-#~ msgid "Error !"
-#~ msgstr "Алдаа !"
-
-#~ msgid ""
-#~ "Will change the way procurements are processed. Consumable are product where "
-#~ "you don't manage stock."
-#~ msgstr ""
-#~ "Татан авалтыг боловсруулах аргыг өөрчлөнө. Хангамжийн бараа гэдэг нь "
-#~ "нөөцлөлтийг менеж хийдэггүй бараанууд юм."
-
-#, python-format
-#~ msgid "Warning"
-#~ msgstr "Анхааруулга"
-
-#~ msgid ""
-#~ "Set a category of product if this rule only apply to products of a category "
-#~ "and his children. Keep empty for all products"
-#~ msgstr ""
-#~ "Хэрэв энэ дүрэмийг барааны ангилал болон дэд ангилалууд дахь бараануудад "
-#~ "хэрэглэхээр бол барааны ангилалыг сонго. Хэрэв хоосон бол бүх бараанд "
-#~ "хамаарна."
-
-#~ msgid "UoM Categories"
-#~ msgstr "Хэмжих нэгжийн ангилал"
-
-#~ msgid "Assembly Service"
-#~ msgstr "Угсрах Үйлчилгээ"
-
-#~ msgid "Supplier UoM"
-#~ msgstr "Нийлүүлэгчийн Хэм.Нэгж"
-
-#~ msgid ""
-#~ "This price will be considered as a price for the supplier UoM if any or the "
-#~ "default Unit of Measure of the product otherwise"
-#~ msgstr ""
-#~ "Энэ нь үнэ нь нийлүүлэгчийн хэмжих нэгж байгаа тохиолдолд нийлүүлэгчийн "
-#~ "хэмжих нэгжээр үгүй бол барааны хэмжих нэгжээр илэрхийлэгдсэн үнэ юм."
-
-#~ msgid "Wooden Table"
-#~ msgstr "Модон Ширээ"
-
-#~ msgid ""
-#~ "Quantity of products that are planned to arrive.\n"
-#~ "In a context with a single Stock Location, this includes goods arriving to "
-#~ "this Location, or any of its children.\n"
-#~ "In a context with a single Warehouse, this includes goods arriving to the "
-#~ "Stock Location of this Warehouse, or any of its children.\n"
-#~ "In a context with a single Shop, this includes goods arriving to the Stock "
-#~ "Location of the Warehouse of this Shop, or any of its children.\n"
-#~ "Otherwise, this includes goods arriving to any Stock Location typed as "
-#~ "'internal'."
-#~ msgstr ""
-#~ "Ирэхээр төлөвлөгдсөн барааны тоо хэмжээ.\n"
-#~ "Нэг хадгалах байрлалтай тохиолдолд энэ байрлал болон бүх дэд байрлалууд "
-#~ "ирэхээр төлөвлөгдсөн тоо хэмжээ байна.\n"
-#~ "Нэг агуулахтай тохиолдолд энэ агуулахын хадгалах байрлал болон бүх дэд "
-#~ "байрлалууд ирэхээр төлөвлөгдсөн тоо хэмжээ байна.\n"
-#~ "Нэг дэлгүүртэй тохиолдолд энэ дэлгүүрийн агуулахын хадгалах байрлал болон "
-#~ "бүх дэд байрлалууд ирэхээр төлөвлөгдсөн тоо хэмжээ байна.\n"
-#~ "Бусад тохиолдолд 'дотоод' төрөлтэй бүх хадгалах байрлалд ирэхээр "
-#~ "төлөвлөгдсөн тоо хэмжээ байна."
-
-#, python-format
-#~ msgid "UoM categories Mismatch!"
-#~ msgstr "Хэмжих нэгжийн ангилалууд таарахгүй байна!"
-
-#~ msgid ""
-#~ "Create and manage the units of measure categories you want to be used in "
-#~ "your system. If several units of measure are in the same category, they can "
-#~ "be converted to each other. For example, in the unit of measure category "
-#~ "\"Time\", you will have the following UoM: Hours, Days."
-#~ msgstr ""
-#~ "Системдээ хэрэглэхийг хүссэн хэмжих нэгжийн ангилалуудыг энд үүсгэж менеж "
-#~ "хийнэ. Хэрэв нэг ангилалд хэд хэдэн хэмжих нэгж тодорхойлогдсон бол тэдгээр "
-#~ "нь хоорондоо хөрвөж болно. Жишээлбэл: хэмжих нэгжийн ангилалд \"Хугацаа\" "
-#~ "гэж байвал \"Цаг\", \"Хоног\" гэсэн хэмжих нэгжүүдийг тодорхойлох боломжтой "
-#~ "юм."
-
-#~ msgid ""
-#~ "There can be more than one version of a pricelist. Here you can create and "
-#~ "manage new versions of a price list. Some examples of versions: 2010, 2011, "
-#~ "Summer Promotion, etc."
-#~ msgstr ""
-#~ "Үнийн хүснэгтийн нэгээс олон хувилбар байх боломжтой. Энд үнийн хүснэгтийн "
-#~ "хувилбаруудыг үүсгэж менеж хийнэ. Тухайлбал: 2010, 2011, Зуны хямдрал, гм."
-
-#~ msgid ""
-#~ "Create and manage the units of measure you want to be used in your system. "
-#~ "You can define a conversion rate between several Units of Measure within the "
-#~ "same category."
-#~ msgstr ""
-#~ "Өөрийн системдээ хэрэглэхийг хүссэн хэмжих нэгжүүдийг тодорхойлж менеж "
-#~ "хийнэ. Ижил ангилал дах хэмжих нэгжүүдийг хөрвүүлэх харьцааг тодорхойлох "
-#~ "боломжтой."
-
-#~ msgid ""
-#~ "The minimal quantity to purchase to this supplier, expressed in the supplier "
-#~ "Product UoM if not empty, in the default unit of measure of the product "
-#~ "otherwise."
-#~ msgstr ""
-#~ "Энэ нийлүүлэгчээс худалдаж авах хамгийн бага тоо хэмжээ. Хэрэв нийлүүлэгчийн "
-#~ "хэмжих нэгж нь хоосон биш бол нийлүүлэгчийн хэмжих нэгжээр илэрхийлэгдэнэ. "
-#~ "Үгүй бол барааны анхны хэмжих нэгжээр илэрхийлэгдэнэ."
-
-#~ msgid "Error ! You cannot create recursive associated members."
-#~ msgstr "Алдаа ! Тойрч холбогдсон гишүүдийг үүсгэх боломжгүй."
-
-#~ msgid "Shelf Panel"
-#~ msgstr "Тавиур"
-
-#~ msgid ""
-#~ "If the active field is set to False, it will allow you to hide the product "
-#~ "without removing it."
-#~ msgstr ""
-#~ "Хэрэв идэвхтэй талбар тэмдэглэгдээгүй буюу False байвал барааг устгахгүйгээр "
-#~ "нуух боломжийг олгоно."
-
-#~ msgid "Both stockable and consumable products"
-#~ msgstr "Хадгалах болон Хангамжийн бараанууд хоюулаа"
-
-#~ msgid ""
-#~ "'Make to Stock': When needed, take from the stock or wait until re-"
-#~ "supplying. 'Make to Order': When needed, purchase or produce for the "
-#~ "procurement request."
-#~ msgstr ""
-#~ "'Нөөцлүүлэх': хэрэгтэй үед агуулахаас авдаг эсвэл агуулахад ирэхийг "
-#~ "хүлээдэг. 'Захиалуулах': хэрэгтэй үед худалдан авах эсвэл үйлдвэрлэх "
-#~ "захиалга өгдөг."
-
-#~ msgid "t"
-#~ msgstr "t"
-
-#~ msgid "Product UoS View"
-#~ msgstr "Барааны Борлуулах Нэгжийн Харагдац"
-
-#~ msgid ""
-#~ "Determines if the product can be visible in the list of product within a "
-#~ "selection from a sale order line."
-#~ msgstr "Уг барааг борлуулалтын захиалга дээр сонгож захиалах эсэх."
-
-#~ msgid ""
-#~ "The minimal quantity to trigger this rule, expressed in the supplier UoM if "
-#~ "any or in the default UoM of the product otherrwise."
-#~ msgstr ""
-#~ "Энэ дүрэмийг ажиллуулах хамгийн бага тоо хэмжээ. Хэрэв нийлүүлэгчийн хэмжих "
-#~ "нэгж байгаа бол нийлүүлэгчийн хэмжих нэгжээр илэрхийлэгдэнэ эсвэл барааны "
-#~ "хэмжих нэгжийн анхны утга."
-
-#~ msgid ""
-#~ "Determine if the product is visible in the list of products within a "
-#~ "selection from a purchase order line."
-#~ msgstr ""
-#~ "Уг бараа худалдан авах захиалгын сонголтон харагдах эсэхийг тодорхойлно."
-
-#~ msgid "Customer Lead Time"
-#~ msgstr "Захиалагчийн урьтал хугацаа"
-
-#~ msgid ""
-#~ "This is the average delay in days between the confirmation of the customer "
-#~ "order and the delivery of the finished products. It's the time you promise "
-#~ "to your customers."
-#~ msgstr ""
-#~ "Захиалагчийн захиалгыг баталгаажуулснаас хойш хүргэлт хийгдэх хүртэлх "
-#~ "зарцуулагдаж буй дандаж хугацаа (хоног). Энэ таны захиалагчдаа амлаж болох "
-#~ "хугацаа юм."
-
-#~ msgid "Supply method"
-#~ msgstr "Нийлүүлэх арга"
-
-#~ msgid "Make to Stock"
-#~ msgstr "Нөөцлүүлэх"
-
-#~ msgid "Make to Order"
-#~ msgstr "Захиалуулах"
-
-#~ msgid ""
-#~ "Produce will generate production order or tasks, according to the product "
-#~ "type. Buy will trigger purchase orders when requested."
-#~ msgstr ""
-#~ "Үйлдвэрлэх гэдэг нь барааны төрөлөөс хамааруулан холбогдох үйлдвэрлэлийн "
-#~ "захиалга юмуу даалгаврыг үүсгэдэг. Худалдан авах гэдэг нь худалдан авах "
-#~ "захиалга үүсгэдэг."

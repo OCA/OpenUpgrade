@@ -1,21 +1,21 @@
 # Mongolian translation for openobject-addons
-# Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
 # This file is distributed under the same license as the openobject-addons package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2012-12-03 16:04+0000\n"
-"PO-Revision-Date: 2012-09-21 14:03+0000\n"
-"Last-Translator: OpenERP Administrators <Unknown>\n"
+"POT-Creation-Date: 2012-12-21 17:06+0000\n"
+"PO-Revision-Date: 2013-02-15 11:43+0000\n"
+"Last-Translator: gobi <Unknown>\n"
 "Language-Team: Mongolian <mn@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-04 05:54+0000\n"
-"X-Generator: Launchpad (build 16335)\n"
+"X-Launchpad-Export-Date: 2013-02-16 05:40+0000\n"
+"X-Generator: Launchpad (build 16491)\n"
 
 #. module: sale_stock
 #: help:sale.config.settings,group_invoice_deli_orders:0
@@ -25,22 +25,9 @@ msgid ""
 msgstr ""
 
 #. module: sale_stock
-#: code:addons/sale_stock/sale_stock.py:470
-#, python-format
-msgid "Delivery Order <em>%s</em> <b>scheduled</b> for %s."
-msgstr ""
-
-#. module: sale_stock
 #: model:process.node,name:sale_stock.process_node_deliveryorder0
 msgid "Delivery Order"
 msgstr "Хүргэлтийн захиалга"
-
-#. module: sale_stock
-#: help:sale.config.settings,group_sale_delivery_address:0
-msgid ""
-"Allows you to specify different delivery and invoice addresses on a sale "
-"order."
-msgstr ""
 
 #. module: sale_stock
 #: model:ir.actions.act_window,name:sale_stock.outgoing_picking_list_to_invoice
@@ -49,7 +36,7 @@ msgid "Deliveries to Invoice"
 msgstr ""
 
 #. module: sale_stock
-#: code:addons/sale_stock/sale_stock.py:569
+#: code:addons/sale_stock/sale_stock.py:544
 #, python-format
 msgid "Picking Information ! : "
 msgstr "Бэлтгэх Мэдээлэл ! : "
@@ -60,7 +47,7 @@ msgid "Pick List"
 msgstr "Хүргэлтийн баримт"
 
 #. module: sale_stock
-#: code:addons/sale_stock/sale_stock.py:564
+#: code:addons/sale_stock/sale_stock.py:539
 #, python-format
 msgid ""
 "You selected a quantity of %d Units.\n"
@@ -115,7 +102,7 @@ msgstr ""
 "татахаар үүсгэгдэнэ."
 
 #. module: sale_stock
-#: code:addons/sale_stock/sale_stock.py:640
+#: code:addons/sale_stock/sale_stock.py:615
 #, python-format
 msgid "Error!"
 msgstr ""
@@ -126,7 +113,7 @@ msgid "Shipping Policy"
 msgstr "Захиалга гүйцэтгэх арга"
 
 #. module: sale_stock
-#: code:addons/sale_stock/sale_stock.py:641
+#: code:addons/sale_stock/sale_stock.py:616
 #, python-format
 msgid ""
 "You cannot make an advance on a sales order                      that is "
@@ -146,7 +133,7 @@ msgstr "Борлуулалтын захиалгын мөр бүрийн тата
 #. module: sale_stock
 #: model:ir.model,name:sale_stock.model_stock_move
 msgid "Stock Move"
-msgstr "Барааны хөдөлгөөн"
+msgstr ""
 
 #. module: sale_stock
 #: code:addons/sale_stock/sale_stock.py:161
@@ -160,22 +147,13 @@ msgid "Project Timesheet"
 msgstr ""
 
 #. module: sale_stock
-#: help:sale.config.settings,module_delivery:0
-msgid ""
-"Allows you to add delivery methods in sale orders and delivery orders.\n"
-"                You can define your own carrier and delivery grids for "
-"prices.\n"
-"                This installs the module delivery."
-msgstr ""
-
-#. module: sale_stock
 #: field:sale.config.settings,group_sale_delivery_address:0
 msgid "Allow a different address for delivery and invoicing "
-msgstr ""
+msgstr "Нэхэмжлэл болон хүргэлтийн хаягийг өөр байх боломжийг олгоно "
 
 #. module: sale_stock
-#: code:addons/sale_stock/sale_stock.py:571
-#: code:addons/sale_stock/sale_stock.py:622
+#: code:addons/sale_stock/sale_stock.py:546
+#: code:addons/sale_stock/sale_stock.py:597
 #, python-format
 msgid "Configuration Error!"
 msgstr ""
@@ -252,14 +230,14 @@ msgid "Delivery Lead Time"
 msgstr "Хүргэлтийн урьтал хугацаа"
 
 #. module: sale_stock
-#: view:sale.order:0
-msgid "View Delivery Order"
-msgstr ""
+#: model:process.node,note:sale_stock.process_node_deliveryorder0
+msgid "Document of the move to the customer."
+msgstr "Захиалгачийн хөдөлгөөний баримт."
 
 #. module: sale_stock
-#: selection:sale.config.settings,default_order_policy:0
-msgid "Invoice based on sales orders"
-msgstr ""
+#: view:sale.order:0
+msgid "View Delivery Order"
+msgstr "Хүргэлтийн захиалга харах"
 
 #. module: sale_stock
 #: field:sale.order.line,move_ids:0
@@ -317,20 +295,19 @@ msgstr ""
 "захиалгын тохиргооны параметрээс шалтаалуулан эхлүүлнэ. "
 
 #. module: sale_stock
+#: help:sale.config.settings,group_mrp_properties:0
+msgid "Allows you to tag sales order lines with properties."
+msgstr ""
+
+#. module: sale_stock
 #: field:sale.config.settings,group_invoice_deli_orders:0
 msgid "Generate invoices after and based on delivery orders"
 msgstr ""
 
 #. module: sale_stock
-#: code:addons/sale_stock/sale_stock.py:473
-#, python-format
-msgid "Order <b>delivered</b>."
-msgstr ""
-
-#. module: sale_stock
 #: field:sale.config.settings,module_delivery:0
 msgid "Allow adding shipping costs"
-msgstr ""
+msgstr "Хүргэлтийн зардал нэмэхийг зөвшөөрөх"
 
 #. module: sale_stock
 #: view:sale.order:0
@@ -347,6 +324,15 @@ msgstr "Савалгаа"
 msgid ""
 "International Commercial Terms are a series of predefined commercial terms "
 "used in international transactions."
+msgstr ""
+
+#. module: sale_stock
+#: help:sale.config.settings,module_delivery:0
+msgid ""
+"Allows you to add delivery methods in sales orders and delivery orders.\n"
+"                You can define your own carrier and delivery grids for "
+"prices.\n"
+"                This installs the module delivery."
 msgstr ""
 
 #. module: sale_stock
@@ -379,7 +365,7 @@ msgstr ""
 #: code:addons/sale_stock/sale_stock.py:206
 #, python-format
 msgid "Cannot cancel sales order!"
-msgstr ""
+msgstr "Борлуулалтын захиалгыг цуцлах боломжгүй !"
 
 #. module: sale_stock
 #: model:ir.model,name:sale_stock.model_sale_shop
@@ -403,7 +389,7 @@ msgstr "Шинж чанар"
 #. module: sale_stock
 #: field:sale.config.settings,group_mrp_properties:0
 msgid "Product properties on order lines"
-msgstr ""
+msgstr "Захиалгын мөрүүд дахь барааны үзүүлэлтүүд"
 
 #. module: sale_stock
 #: help:sale.config.settings,default_order_policy:0
@@ -436,6 +422,13 @@ msgid ""
 msgstr ""
 
 #. module: sale_stock
+#: help:sale.config.settings,group_sale_delivery_address:0
+msgid ""
+"Allows you to specify different delivery and invoice addresses on a sales "
+"order."
+msgstr ""
+
+#. module: sale_stock
 #: model:process.node,note:sale_stock.process_node_saleprocurement0
 msgid ""
 "One Procurement order for each sales order line and for each of the "
@@ -450,7 +443,7 @@ msgid "Assign"
 msgstr "Хувиарлах"
 
 #. module: sale_stock
-#: code:addons/sale_stock/sale_stock.py:617
+#: code:addons/sale_stock/sale_stock.py:592
 #, python-format
 msgid "Not enough stock ! : "
 msgstr "Бараа хүрэлцэхгүй байна ! : "
@@ -471,9 +464,9 @@ msgid ""
 msgstr ""
 
 #. module: sale_stock
-#: model:process.node,note:sale_stock.process_node_deliveryorder0
-msgid "Document of the move to the customer."
-msgstr "Захиалгачийн хөдөлгөөний баримт."
+#: selection:sale.config.settings,default_order_policy:0
+msgid "Invoice based on sales orders"
+msgstr ""
 
 #. module: sale_stock
 #: model:process.node,name:sale_stock.process_node_invoiceafterdelivery0
@@ -511,11 +504,6 @@ msgid "Create Invoice"
 msgstr "Нэхэмжлэл үүсгэх"
 
 #. module: sale_stock
-#: help:sale.config.settings,group_mrp_properties:0
-msgid "Allows you to tag sale order lines with properties."
-msgstr ""
-
-#. module: sale_stock
 #: field:sale.config.settings,task_work:0
 msgid "Prepare invoices based on task's activities"
 msgstr ""
@@ -526,7 +514,7 @@ msgid "Sales Advance Payment Invoice"
 msgstr "Борлуулалтын Урьдчилгаа Төлбөрийн Нэхэмжлэл"
 
 #. module: sale_stock
-#: code:addons/sale_stock/sale_stock.py:522
+#: code:addons/sale_stock/sale_stock.py:497
 #, python-format
 msgid "You must first cancel stock moves attached to this sales order line."
 msgstr ""
@@ -534,7 +522,7 @@ msgstr ""
 "цуцлах хэрэгтэй."
 
 #. module: sale_stock
-#: code:addons/sale_stock/sale_stock.py:560
+#: code:addons/sale_stock/sale_stock.py:535
 #, python-format
 msgid "(n/a)"
 msgstr "(б/гүй)"
@@ -545,10 +533,10 @@ msgid "Incoterm"
 msgstr "Худалдааны нөхцөл"
 
 #. module: sale_stock
-#: code:addons/sale_stock/sale_stock.py:521
+#: code:addons/sale_stock/sale_stock.py:496
 #, python-format
 msgid "Cannot cancel sales order line!"
-msgstr ""
+msgstr "Борлуулалтын захиалгын мөрийг цуцлаж болохгүй !"
 
 #. module: sale_stock
 #: model:process.transition.action,name:sale_stock.process_transition_action_cancelassignation0
@@ -598,7 +586,7 @@ msgid "Ignore Exception"
 msgstr "Онцгой тохиолдлыг үл хэрэгс"
 
 #. module: sale_stock
-#: code:addons/sale_stock/sale_stock.py:613
+#: code:addons/sale_stock/sale_stock.py:588
 #, python-format
 msgid ""
 "You plan to sell %.2f %s but you only have %.2f %s available !\n"
@@ -610,12 +598,12 @@ msgstr ""
 #. module: sale_stock
 #: view:sale.order:0
 msgid "Recreate Delivery Order"
-msgstr ""
+msgstr "Хүргэлтийн захиалгыг дахин үүсгэх"
 
 #. module: sale_stock
 #: help:sale.config.settings,group_multiple_shops:0
 msgid "This allows to configure and use multiple shops."
-msgstr ""
+msgstr "Олон дэлгүүр үүсгэх, тохируулах боломжийг олгоно."
 
 #. module: sale_stock
 #: field:sale.order,picked_rate:0

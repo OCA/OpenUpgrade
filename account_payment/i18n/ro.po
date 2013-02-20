@@ -1,20 +1,21 @@
-# Translation of OpenERP Server.
-# This file contains the translation of the following modules:
-#	* account_payment
+# Romanian translation for openobject-addons
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the openobject-addons package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 6.0dev\n"
-"Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2012-12-03 16:02+0000\n"
-"PO-Revision-Date: 2011-04-26 18:16+0000\n"
-"Last-Translator: filsys <office@filsystem.ro>\n"
-"Language-Team: \n"
+"Project-Id-Version: openobject-addons\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-12-21 17:05+0000\n"
+"PO-Revision-Date: 2013-01-13 19:23+0000\n"
+"Last-Translator: Fekete Mihai <mihai@erpsystems.ro>\n"
+"Language-Team: Romanian <ro@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-04 05:35+0000\n"
-"X-Generator: Launchpad (build 16335)\n"
+"X-Launchpad-Export-Date: 2013-01-18 06:33+0000\n"
+"X-Generator: Launchpad (build 16430)\n"
 
 #. module: account_payment
 #: model:ir.actions.act_window,help:account_payment.action_payment_order_tree
@@ -28,6 +29,14 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<clasa p=\"oe_vizualizare_niciuncontinut_creeaza\">\n"
+"                Faceti click pentru a crea un ordin de plata.\n"
+"              </p><p>\n"
+"                Un ordin de plata este o solicitare de plata din partea "
+"companiei cumneavoastra de a plati o\n"
+"                factura a furnizorului sau o rambursare clientului.\n"
+"              </p>\n"
+"            "
 
 #. module: account_payment
 #: field:payment.line,currency:0
@@ -123,13 +132,15 @@ msgid ""
 "You cannot cancel an invoice which has already been imported in a payment "
 "order. Remove it from the following payment order : %s."
 msgstr ""
+"Nu puteti anula o factura care a fost deja importata intr-un ordin de plata. "
+"Stergeti-o din urmatorul ordin de plata : %s."
 
 #. module: account_payment
 #: code:addons/account_payment/account_invoice.py:43
 #: code:addons/account_payment/account_move_line.py:110
 #, python-format
 msgid "Error!"
-msgstr ""
+msgstr "Eroare!"
 
 #. module: account_payment
 #: report:payment.order:0
@@ -150,7 +161,7 @@ msgstr "Anulat(a)"
 #. module: account_payment
 #: model:ir.actions.act_window,name:account_payment.action_payment_order_tree_new
 msgid "New Payment Order"
-msgstr "Ordin de plata nou"
+msgstr "Ordin de Plata Nou"
 
 #. module: account_payment
 #: report:payment.order:0
@@ -194,6 +205,9 @@ msgid ""
 " Once the bank is confirmed the status is set to 'Confirmed'.\n"
 " Then the order is paid the status is 'Done'."
 msgstr ""
+"Atunci cand este emis un ordin, starea este 'Ciorna'.\n"
+" Odata ce banca il confirma, starea este setata pe 'Confirmat'.\n"
+" Atunci cand ordinul este platit, starea este 'Efectuat'."
 
 #. module: account_payment
 #: view:payment.order:0
@@ -219,13 +233,13 @@ msgstr "Structurat"
 #. module: account_payment
 #: view:account.bank.statement:0
 msgid "Import Payment Lines"
-msgstr ""
+msgstr "Importa Liniile Platii"
 
 #. module: account_payment
 #: view:payment.line:0
 #: view:payment.order:0
 msgid "Transaction Information"
-msgstr "Informatii despre tranzactie"
+msgstr "Informatii despre Tranzactie"
 
 #. module: account_payment
 #: model:ir.actions.act_window,name:account_payment.action_payment_mode_form
@@ -261,12 +275,12 @@ msgstr ""
 #. module: account_payment
 #: field:payment.order,date_created:0
 msgid "Creation Date"
-msgstr ""
+msgstr "Data Crearii"
 
 #. module: account_payment
 #: help:payment.mode,journal:0
 msgid "Bank or Cash Journal for the Payment Mode"
-msgstr "Jurnal Bancar sau de Numerar pentru Modalitatea de plata"
+msgstr "Registru Bancar sau de Numerar pentru Modalitatea de plata"
 
 #. module: account_payment
 #: selection:payment.order,date_prefered:0
@@ -369,7 +383,7 @@ msgstr "Cont de plata Completare extras"
 #: code:addons/account_payment/account_move_line.py:110
 #, python-format
 msgid "There is no partner defined on the entry line."
-msgstr ""
+msgstr "Nu exista nici un partener definit pe linia inregistrarii."
 
 #. module: account_payment
 #: help:payment.mode,name:0
@@ -401,7 +415,7 @@ msgstr "Ciorna"
 #: view:payment.order:0
 #: field:payment.order,state:0
 msgid "Status"
-msgstr ""
+msgstr "Stare"
 
 #. module: account_payment
 #: help:payment.line,communication2:0
@@ -450,7 +464,7 @@ msgstr "Cauta"
 #. module: account_payment
 #: field:payment.order,user_id:0
 msgid "Responsible"
-msgstr ""
+msgstr "Responsabil"
 
 #. module: account_payment
 #: field:payment.line,date:0
@@ -465,7 +479,7 @@ msgstr "Total:"
 #. module: account_payment
 #: field:payment.order,date_done:0
 msgid "Execution Date"
-msgstr ""
+msgstr "Data executarii"
 
 #. module: account_payment
 #: view:account.payment.populate.statement:0
@@ -583,7 +597,7 @@ msgstr "Comunicare 2"
 #. module: account_payment
 #: field:payment.order,date_scheduled:0
 msgid "Scheduled Date"
-msgstr ""
+msgstr "Data programata"
 
 #. module: account_payment
 #: view:account.payment.make.payment:0
@@ -594,7 +608,7 @@ msgstr "Sunteti sigur ca doriti sa faceti plata?"
 #: view:payment.mode:0
 #: field:payment.mode,journal:0
 msgid "Journal"
-msgstr "Jurnal"
+msgstr "Registru"
 
 #. module: account_payment
 #: field:payment.mode,bank_id:0
@@ -610,7 +624,7 @@ msgstr "Confirmati Platile"
 #: field:payment.line,company_currency:0
 #: report:payment.order:0
 msgid "Company Currency"
-msgstr "Moneda companiei"
+msgstr "Moneda Companiei"
 
 #. module: account_payment
 #: model:ir.ui.menu,name:account_payment.menu_main_payment
@@ -663,7 +677,7 @@ msgstr "creare.ordin.de.plata"
 #. module: account_payment
 #: field:payment.line,order_id:0
 msgid "Order"
-msgstr "Comanda"
+msgstr "Ordin"
 
 #. module: account_payment
 #: field:payment.order,total:0
@@ -679,210 +693,16 @@ msgstr "Faceti plata"
 #. module: account_payment
 #: field:payment.order,date_prefered:0
 msgid "Preferred Date"
-msgstr ""
+msgstr "Data Preferata"
 
 #. module: account_payment
 #: view:account.payment.make.payment:0
 #: view:account.payment.populate.statement:0
 #: view:payment.order.create:0
 msgid "or"
-msgstr ""
+msgstr "sau"
 
 #. module: account_payment
 #: help:payment.mode,bank_id:0
 msgid "Bank Account for the Payment Mode"
 msgstr "Contul bancar pentru Modalitatea de plata"
-
-#~ msgid "Account Entry Line"
-#~ msgstr "Linie inregistrare contabila"
-
-#~ msgid "Scheduled date if fixed"
-#~ msgstr "Data programata, daca este stabilita"
-
-#~ msgid "State"
-#~ msgstr "Stare"
-
-#, python-format
-#~ msgid "Error !"
-#~ msgstr "Eroare !"
-
-#~ msgid "Execution date"
-#~ msgstr "Data executiei"
-
-#~ msgid "_Cancel"
-#~ msgstr "_Anulare"
-
-#~ msgid "User"
-#~ msgstr "Utilizator"
-
-#~ msgid "Import payment lines"
-#~ msgstr "Import linii plata"
-
-#~ msgid "Code"
-#~ msgstr "Cod"
-
-#~ msgid "Invalid model name in the action definition."
-#~ msgstr "Nume invalid de model în definirea acţiunii"
-
-#~ msgid "Execution date:"
-#~ msgstr "Data efectuării"
-
-#~ msgid "Suitable bank types"
-#~ msgstr "Tipuri de bănci adecvate"
-
-#~ msgid "Payment Management"
-#~ msgstr "Gestiune plăţi"
-
-#~ msgid "Invalid XML for View Architecture!"
-#~ msgstr "XML invalid pentru arhitectura machetei de afișare !"
-
-#~ msgid "Reference:"
-#~ msgstr "Referință:"
-
-#~ msgid "Date"
-#~ msgstr "Dată"
-
-#~ msgid "Maturity Date"
-#~ msgstr "Data scadentă"
-
-#~ msgid "Populate payment"
-#~ msgstr "Populează plata"
-
-#~ msgid "Specify the Code for Payment Type"
-#~ msgstr "Specificare cod tip de plată"
-
-#~ msgid "Draft Payment Order"
-#~ msgstr "Ordin de plată în schiţă"
-
-#~ msgid ""
-#~ "The Object name must start with x_ and not contain any special character !"
-#~ msgstr ""
-#~ "Numele obiectului trebuie să înceapă cu x_ şi să nu conţină nici un caracter "
-#~ "special !"
-
-#~ msgid "Pay"
-#~ msgstr "Plăteşte"
-
-#~ msgid "Destination Bank account"
-#~ msgstr "Cont bancar destinaţie"
-
-#~ msgid "Cash Journal for the Payment Mode"
-#~ msgstr "Jurnal numerar pentru modul de plată"
-
-#~ msgid "_Search"
-#~ msgstr "_Căutare"
-
-#~ msgid "_Add"
-#~ msgstr "_Adăugare"
-
-#~ msgid "Payment type"
-#~ msgstr "Tip plată"
-
-#~ msgid "Populate Statement with Payment lines"
-#~ msgstr "Populează extrasul de cont cu linii din plăţi"
-
-#~ msgid "Payment Orders to Validate"
-#~ msgstr "Ordine de plată de validat"
-
-#~ msgid "Select the Payment Type for the Payment Mode."
-#~ msgstr "Selectare tip plată corespunzator pentru mod de plată"
-
-#~ msgid "You can not create move line on closed account."
-#~ msgstr "Nu puteti crea o linie de miscare intr-un cont inchis."
-
-#~ msgid ""
-#~ "When an order is placed the state is 'Draft'.\n"
-#~ " Once the bank is confirmed the state is set to 'Confirmed'.\n"
-#~ " Then the order is paid the state is 'Done'."
-#~ msgstr ""
-#~ "Atunci cand o comanda este plasata, starea este 'Ciorna'. \n"
-#~ "   Odata ce este confirmata banca, starea este setata pe 'Confirmat'. \n"
-#~ "   Apoi, atunci cand comanda este platita, starea este 'Efectuat'."
-
-#~ msgid ""
-#~ "\n"
-#~ "This module provides :\n"
-#~ "* a more efficient way to manage invoice payment.\n"
-#~ "* a basic mechanism to easily plug various automated payment.\n"
-#~ "    "
-#~ msgstr ""
-#~ "\n"
-#~ "Acest modul ofera : \n"
-#~ "\n"
-#~ "* un mod mai eficient de a gestiona plata facturii. \n"
-#~ "\n"
-#~ "*un mecanism de baza pentru a conecta cu usurinta diverse plati automate.\n"
-#~ "    "
-
-#~ msgid "Company must be same for its related account and period."
-#~ msgstr "Compania trebuie sa fie aceeasi pentru contul si perioada asociate."
-
-#~ msgid ""
-#~ "A payment order is a payment request from your company to pay a supplier "
-#~ "invoice or a customer credit note. Here you can register all payment orders "
-#~ "that should be done, keep track of all payment orders and mention the "
-#~ "invoice reference and the partner the payment should be done for."
-#~ msgstr ""
-#~ "Un ordin de plata este o cerere de plata din partea companiei dumneavoastra "
-#~ "de a plati o factura a furnizorului sau o nota de credit a clientului. Aici "
-#~ "puteti inregistra toate ordinele de plata care trebuie efectuate, puteti "
-#~ "tine evidenta tuturor ordinelor de plata si puteti mentiona referinta "
-#~ "facturii si partenerul pentru care trebuie efectuata plata."
-
-#~ msgid "You can not create move line on view account."
-#~ msgstr "Nu puteti crea linia miscarii in vizualizarea contului."
-
-#~ msgid "Preferred date"
-#~ msgstr "Data preferata"
-
-#~ msgid ""
-#~ "The date of your Journal Entry is not in the defined period! You should "
-#~ "change the date or remove this constraint from the journal."
-#~ msgstr ""
-#~ "Data Inregistrarii in Jurnal nu se afla in perioada definita! Ar trebui sa "
-#~ "schimbati data sau sa eliminati aceasta restrictie din jurnal."
-
-#~ msgid "Invalid BBA Structured Communication !"
-#~ msgstr "Comunicare Structurata BBA Invalida !"
-
-#~ msgid "Wrong credit or debit value in accounting entry !"
-#~ msgstr ""
-#~ "Valoare gresita a creditului sau debitului in inregistrarea contabila !"
-
-#~ msgid "Total debit"
-#~ msgstr "Debit total"
-
-#~ msgid ""
-#~ "The selected account of your Journal Entry forces to provide a secondary "
-#~ "currency. You should remove the secondary currency on the account or select "
-#~ "a multi-currency view on the journal."
-#~ msgstr ""
-#~ "Contul selectat din Inregistrarea in Jurnal solicita furnizarea unei monede "
-#~ "secundare. Ar trebui sa stergeti moneda secundara din cont sau sa selectati "
-#~ "o vizualizare multi-moneda in jurnal."
-
-#~ msgid "Total credit"
-#~ msgstr "Credit total"
-
-#~ msgid "You can not create journal items on an account of type view."
-#~ msgstr ""
-#~ "Nu puteti crea elemente ale jurnalului intr-un cont de tipul vizualizare."
-
-#, python-format
-#~ msgid "No partner defined on entry line"
-#~ msgstr "Nu a fost definit niciun partener in linia inregistrarii"
-
-#~ msgid "Creation date"
-#~ msgstr "Data crearii"
-
-#~ msgid "Invoice Number must be unique per Company!"
-#~ msgstr "Numarul Facturii trebuie sa fie unic per Companie!"
-
-#~ msgid "Company must be the same for its related account and period."
-#~ msgstr "Compania trebuie sa fie aceeasi pentru contul si perioada asociata."
-
-#~ msgid "You can not create journal items on closed account."
-#~ msgstr "Nu puteti crea elemente ale jurnalului intr-un cont inchis."
-
-#~ msgid "Payment mode"
-#~ msgstr "Modalitate de plata"

@@ -165,6 +165,7 @@ function openerp_pos_widgets(instance, module){ //module is instance.point_of_sa
             this.set_numpad_state(options.numpadState);
             this.pos.bind('change:selectedOrder', this.change_selected_order, this);
             this.bind_orderline_events();
+            this.orderlinewidgets = [];
         },
         set_numpad_state: function(numpadState) {
         	if (this.numpadState) {
@@ -185,7 +186,7 @@ function openerp_pos_widgets(instance, module){ //module is instance.point_of_sa
                 }else if( mode === 'discount'){
                     order.getSelectedLine().set_discount(val);
                 }else if( mode === 'price'){
-                    order.getSelectedLine().set_price(val);
+                    order.getSelectedLine().set_unit_price(val);
                 }
         	} else {
         	    this.pos.get('selectedOrder').destroy();
@@ -210,6 +211,16 @@ function openerp_pos_widgets(instance, module){ //module is instance.point_of_sa
             var self = this;
             this._super();
 
+            // freeing subwidgets
+            
+            if(this.scrollbar){
+                this.scrollbar.destroy();
+            }
+            for(var i = 0, len = this.orderlinewidgets.length; i < len; i++){
+                this.orderlinewidgets[i].destroy();
+            }
+            this.orderlinewidgets = [];
+
             if(this.display_mode === 'maximized'){
                 $('.point-of-sale .order-container').css({'bottom':'0px'});
             }else if(this.display_mode === 'actionbar'){
@@ -227,6 +238,7 @@ function openerp_pos_widgets(instance, module){ //module is instance.point_of_sa
             	line.on('order_line_selected', self, self.update_numpad);
                 line.on('order_line_refreshed', self, self.update_summary);
                 line.appendTo($content);
+                self.orderlinewidgets.push(line);
             }, this));
             this.update_numpad();
             this.update_summary();
@@ -257,8 +269,10 @@ function openerp_pos_widgets(instance, module){ //module is instance.point_of_sa
         },
         update_summary: function(){
             var order = this.pos.get('selectedOrder');
-            var total = order ? order.getTotal() : 0;
-            this.$('.summary .value.total').html(this.format_currency(total));
+            var total     = order ? order.getTotalTaxIncluded() : 0;
+            var taxes     = order ? total - order.getTotalTaxExcluded() : 0;
+            this.$('.summary .total > .value').html(this.format_currency(total));
+            this.$('.summary .total .subentry .value').html(this.format_currency(taxes));
         },
         set_display_mode: function(mode){
             if(this.display_mode !== mode){
@@ -299,23 +313,33 @@ function openerp_pos_widgets(instance, module){ //module is instance.point_of_sa
         },
         changeAmount: function(event) {
             var newAmount = event.currentTarget.value;
-            if (newAmount && !isNaN(newAmount)) {
-            	this.amount = parseFloat(newAmount);
-                this.payment_line.set_amount(this.amount);
+            var amount = parseFloat(newAmount);
+            if(!isNaN(amount)){
+                this.amount = amount;
+                this.payment_line.set_amount(amount);
             }
         },
         changedAmount: function() {
-        	if (this.amount !== this.payment_line.get_amount())
+        	if (this.amount !== this.payment_line.get_amount()){
         		this.renderElement();
+            }
         },
         renderElement: function() {
             var self = this;
             this.name =   this.payment_line.get_cashregister().get('journal_id')[1];
             this._super();
-            this.$('input').keyup(_.bind(this.changeAmount, this));
+            this.$('input').keyup(function(event){
+                self.changeAmount(event);
+            });
             this.$('.delete-payment-line').click(function() {
                 self.trigger('delete_payment_line', self);
             });
+        },
+        focus: function(){
+            var val = this.$('input')[0].value;
+            this.$('input')[0].focus();
+            this.$('input')[0].value = val;
+            this.$('input')[0].select();
         },
     });
 
@@ -571,7 +595,7 @@ function openerp_pos_widgets(instance, module){ //module is instance.point_of_sa
             var self = this;
             this._super(parent,options);
             this.model = options.model;
-            this.product_list = [];
+            this.productwidgets = [];
             this.weight = options.weight || 0;
             this.show_scale = options.show_scale || false;
             this.next_screen = options.next_screen || false;
@@ -584,20 +608,25 @@ function openerp_pos_widgets(instance, module){ //module is instance.point_of_sa
         renderElement: function() {
             var self = this;
             this._super();
-            this.product_list = []; 
-            this.pos.get('products')
-                .chain()
-                .map(function(product) {
-                    var product = new module.ProductWidget(self, {
-                            model: product,
-                            weight: self.weight,
-                            click_product_action: self.click_product_action,
-                    })
-                    self.product_list.push(product);
-                    return product;
-                })
-                .invoke('appendTo', this.$('.product-list'));
 
+            // free subwidgets  memory from previous renders
+            
+            for(var i = 0, len = this.productwidgets.length; i < len; i++){
+                this.productwidgets[i].destroy();
+            }
+            this.productwidgets = []; 
+            if(this.scrollbar){
+                this.scrollbar.destroy();
+            }
+            var products = this.pos.get('products').models || [];
+            for(var i = 0, len = products.length; i < len; i++){
+                var product = new module.ProductWidget(self, {
+                    model: products[i],
+                    click_product_action: this.click_product_action,
+                });
+                this.productwidgets.push(product);
+                product.appendTo(this.$('.product-list'));
+            }
             this.scrollbar = new module.ScrollbarWidget(this,{
                 target_widget:   this,
                 target_selector: '.product-list-scroller',

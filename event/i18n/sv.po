@@ -1,20 +1,21 @@
-# Translation of OpenERP Server.
-# This file contains the translation of the following modules:
-#	* event
+# Swedish translation for openobject-addons
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the openobject-addons package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.14\n"
-"Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2012-12-03 16:03+0000\n"
-"PO-Revision-Date: 2011-06-03 14:09+0000\n"
-"Last-Translator: Stefan Lind <Unknown>\n"
-"Language-Team: \n"
+"Project-Id-Version: openobject-addons\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-12-21 17:05+0000\n"
+"PO-Revision-Date: 2013-01-17 23:45+0000\n"
+"Last-Translator: Mikael Dúi Bolinder <dui@outlook.com>\n"
+"Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-04 05:13+0000\n"
-"X-Generator: Launchpad (build 16335)\n"
+"X-Launchpad-Export-Date: 2013-01-18 06:42+0000\n"
+"X-Generator: Launchpad (build 16430)\n"
 
 #. module: event
 #: view:event.event:0
@@ -25,7 +26,7 @@ msgstr "Mina evenemang"
 #. module: event
 #: field:event.registration,nb_register:0
 msgid "Number of Participants"
-msgstr ""
+msgstr "Antal deltagare"
 
 #. module: event
 #: field:event.event,register_attended:0
@@ -58,25 +59,14 @@ msgid ""
 msgstr ""
 
 #. module: event
-#: code:addons/event/event.py:305
-#, python-format
-msgid "Event has been <b>cancelled</b>."
-msgstr ""
-
-#. module: event
 #: field:event.registration,date_open:0
 msgid "Registration Date"
 msgstr "Registreringsdatum"
 
 #. module: event
-#: help:event.registration,origin:0
-msgid "Name of the sale order which create the registration"
-msgstr ""
-
-#. module: event
 #: field:event.event,type:0
 msgid "Type of Event"
-msgstr ""
+msgstr "Evenemangstyp"
 
 #. module: event
 #: model:event.event,name:event.event_0
@@ -88,7 +78,7 @@ msgstr "Bon Jovi-konsert"
 #: selection:event.registration,state:0
 #: selection:report.event.registration,registration_state:0
 msgid "Attended"
-msgstr ""
+msgstr "Deltog"
 
 #. module: event
 #: selection:report.event.registration,month:0
@@ -98,7 +88,7 @@ msgstr "Mars"
 #. module: event
 #: view:event.registration:0
 msgid "Send Email"
-msgstr ""
+msgstr "Skicka e-post"
 
 #. module: event
 #: field:event.event,company_id:0
@@ -120,15 +110,14 @@ msgid "Default Maximum Registration"
 msgstr ""
 
 #. module: event
-#: help:event.event,message_unread:0
-#: help:event.registration,message_unread:0
-msgid "If checked new messages require your attention."
-msgstr ""
+#: view:report.event.registration:0
+msgid "Display"
+msgstr "Visa"
 
 #. module: event
 #: field:event.event,register_avail:0
 msgid "Available Registrations"
-msgstr ""
+msgstr "Tillgängliga registreringar"
 
 #. module: event
 #: view:event.registration:0
@@ -139,12 +128,12 @@ msgstr "Evenemangsregistrering"
 #. module: event
 #: model:ir.module.category,description:event.module_category_event_management
 msgid "Helps you manage your Events."
-msgstr ""
+msgstr "Hjälper dig att hantera dina evenemang."
 
 #. module: event
 #: view:report.event.registration:0
 msgid "Day"
-msgstr ""
+msgstr "Dag"
 
 #. module: event
 #: view:report.event.registration:0
@@ -178,7 +167,7 @@ msgstr ""
 #: view:report.event.registration:0
 #: field:report.event.registration,user_id_registration:0
 msgid "Register"
-msgstr ""
+msgstr "Registrera"
 
 #. module: event
 #: field:event.event,message_ids:0
@@ -197,12 +186,12 @@ msgid "Registrations"
 msgstr "Anmälan"
 
 #. module: event
-#: code:addons/event/event.py:95
-#: code:addons/event/event.py:108
-#: code:addons/event/event.py:400
+#: code:addons/event/event.py:89
+#: code:addons/event/event.py:100
+#: code:addons/event/event.py:355
 #, python-format
 msgid "Error!"
-msgstr ""
+msgstr "Fel!"
 
 #. module: event
 #: view:event.event:0
@@ -234,8 +223,9 @@ msgid "Opera of Verdi"
 msgstr "Verdis opera"
 
 #. module: event
-#: view:report.event.registration:0
-msgid "Display"
+#: help:event.event,message_unread:0
+#: help:event.registration,message_unread:0
+msgid "If checked new messages require your attention."
 msgstr ""
 
 #. module: event
@@ -255,14 +245,9 @@ msgid "False"
 msgstr ""
 
 #. module: event
-#: model:mail.message.subtype,name:event.mt_event_registration
-msgid "New Registrations"
-msgstr ""
-
-#. module: event
 #: field:event.registration,event_end_date:0
 msgid "Event End Date"
-msgstr ""
+msgstr "Evenemangets slutdatum"
 
 #. module: event
 #: help:event.event,message_summary:0
@@ -273,21 +258,16 @@ msgid ""
 msgstr ""
 
 #. module: event
-#: selection:report.event.registration,month:0
-msgid "May"
-msgstr "Maj"
-
-#. module: event
 #: view:report.event.registration:0
 msgid "Registrations in confirmed or done state"
 msgstr "Bekräftade eller klara anmälningar"
 
 #. module: event
-#: code:addons/event/event.py:114
-#: code:addons/event/event.py:116
+#: code:addons/event/event.py:106
+#: code:addons/event/event.py:108
 #, python-format
 msgid "Warning!"
-msgstr ""
+msgstr "Varning!"
 
 #. module: event
 #: view:event.event:0
@@ -303,8 +283,8 @@ msgid "Partner"
 msgstr "Partner"
 
 #. module: event
-#: model:ir.actions.server,name:event.actions_server_event_event_read
-msgid "Event: Mark read"
+#: help:event.type,default_registration_min:0
+msgid "It will select this default minimum value when you choose this event"
 msgstr ""
 
 #. module: event
@@ -335,7 +315,7 @@ msgstr "Bekräftad"
 #. module: event
 #: view:event.registration:0
 msgid "Participant"
-msgstr ""
+msgstr "Deltagare"
 
 #. module: event
 #: view:event.registration:0
@@ -346,12 +326,12 @@ msgstr "Bekräfta"
 #. module: event
 #: view:event.event:0
 msgid "Organized by"
-msgstr ""
+msgstr "Organiserad av"
 
 #. module: event
 #: view:event.event:0
 msgid "Register with this event"
-msgstr ""
+msgstr "Registrera för det här evenemanget"
 
 #. module: event
 #: help:event.type,default_email_registration:0
@@ -363,13 +343,13 @@ msgstr ""
 #. module: event
 #: view:event.event:0
 msgid "Only"
-msgstr ""
+msgstr "Endast"
 
 #. module: event
 #: field:event.event,message_follower_ids:0
 #: field:event.registration,message_follower_ids:0
 msgid "Followers"
-msgstr ""
+msgstr "Följare"
 
 #. module: event
 #: view:event.event:0
@@ -382,7 +362,7 @@ msgstr "Plats"
 #: view:event.registration:0
 #: field:event.registration,message_unread:0
 msgid "Unread Messages"
-msgstr ""
+msgstr "Olästa meddelanden"
 
 #. module: event
 #: view:event.registration:0
@@ -401,15 +381,15 @@ msgid "Email"
 msgstr "Epost"
 
 #. module: event
-#: code:addons/event/event.py:367
+#: code:addons/event/event.py:329
 #, python-format
 msgid "New registration confirmed: %s."
-msgstr ""
+msgstr "Nya registreringar bekräftade %s."
 
 #. module: event
 #: view:event.event:0
 msgid "Upcoming"
-msgstr ""
+msgstr "Kommande"
 
 #. module: event
 #: field:event.registration,create_date:0
@@ -447,7 +427,7 @@ msgstr "Bekräftade anmälningar"
 #. module: event
 #: view:event.event:0
 msgid "Starting Date"
-msgstr ""
+msgstr "Startdatum"
 
 #. module: event
 #: view:event.event:0
@@ -470,26 +450,9 @@ msgid "Speaker who will be giving speech at the event."
 msgstr "Talare som kommer framträda på evenemanget"
 
 #. module: event
-#: code:addons/event/event.py:457
-#, python-format
-msgid "Registration has been <b>created</b>."
-msgstr ""
-
-#. module: event
 #: view:event.event:0
 msgid "Cancel Event"
 msgstr "Avbryt evenemang"
-
-#. module: event
-#: code:addons/event/event.py:398
-#, python-format
-msgid "State set to Done"
-msgstr ""
-
-#. module: event
-#: model:ir.actions.server,name:event.actions_server_event_registration_read
-msgid "Event registration : Mark read"
-msgstr ""
 
 #. module: event
 #: model:ir.actions.act_window,name:event.act_event_reg
@@ -500,7 +463,7 @@ msgstr "Evenemangens anmälningsgrad"
 #. module: event
 #: view:event.event:0
 msgid "Event Category"
-msgstr ""
+msgstr "Evenemangskategori"
 
 #. module: event
 #: field:event.event,register_prospect:0
@@ -510,7 +473,7 @@ msgstr "Icke bekräftade anmälningar"
 #. module: event
 #: model:ir.actions.client,name:event.action_client_event_menu
 msgid "Open Event Menu"
-msgstr ""
+msgstr "Öppna evenemangsmenyn"
 
 #. module: event
 #: view:report.event.registration:0
@@ -539,6 +502,11 @@ msgid "December"
 msgstr "December"
 
 #. module: event
+#: help:event.registration,origin:0
+msgid "Reference of the sales order which created the registration"
+msgstr ""
+
+#. module: event
 #: field:report.event.registration,draft_state:0
 msgid " # No of Draft Registrations"
 msgstr " # antal preliminära anmälningar"
@@ -563,7 +531,7 @@ msgstr ""
 #. module: event
 #: view:event.event:0
 msgid "Finish Event"
-msgstr ""
+msgstr "Slutför evenemang"
 
 #. module: event
 #: view:event.registration:0
@@ -573,7 +541,7 @@ msgstr "Anmälan är obekräftad"
 #. module: event
 #: view:event.event:0
 msgid "Event Description"
-msgstr ""
+msgstr "Evenemangsbeskrivning"
 
 #. module: event
 #: field:event.event,date_begin:0
@@ -583,21 +551,15 @@ msgstr "Startdatum"
 #. module: event
 #: view:event.confirm:0
 msgid "or"
-msgstr ""
-
-#. module: event
-#: code:addons/event/event.py:315
-#, python-format
-msgid "Event has been <b>done</b>."
-msgstr ""
+msgstr "eller"
 
 #. module: event
 #: help:res.partner,speaker:0
 msgid "Check this box if this contact is a speaker."
-msgstr ""
+msgstr "Om markerad så är den här kontakten en talare."
 
 #. module: event
-#: code:addons/event/event.py:116
+#: code:addons/event/event.py:108
 #, python-format
 msgid "No Tickets Available!"
 msgstr ""
@@ -635,13 +597,12 @@ msgid ""
 msgstr ""
 
 #. module: event
-#: code:addons/event/event.py:462
-#, python-format
-msgid "Registration has been set as <b>draft</b>."
-msgstr ""
+#: field:event.event,user_id:0
+msgid "Responsible User"
+msgstr "Ansvarig användare"
 
 #. module: event
-#: code:addons/event/event.py:108
+#: code:addons/event/event.py:100
 #, python-format
 msgid ""
 "The total of confirmed registration for the event '%s' does not meet the "
@@ -678,12 +639,6 @@ msgid "Events which are in New state"
 msgstr "Nya evenemang"
 
 #. module: event
-#: code:addons/event/event.py:404
-#, python-format
-msgid "State set to Cancel"
-msgstr ""
-
-#. module: event
 #: view:event.event:0
 #: model:ir.actions.act_window,name:event.action_event_view
 #: model:ir.actions.act_window,name:event.open_board_associations_manager
@@ -694,7 +649,7 @@ msgstr ""
 #: model:ir.ui.menu,name:event.menu_reporting_events
 #: view:res.partner:0
 msgid "Events"
-msgstr "Händelser"
+msgstr "Evenemang"
 
 #. module: event
 #: view:event.event:0
@@ -707,7 +662,7 @@ msgstr ""
 #. module: event
 #: field:event.event,city:0
 msgid "city"
-msgstr ""
+msgstr "stad"
 
 #. module: event
 #: selection:report.event.registration,month:0
@@ -717,7 +672,7 @@ msgstr "Augusti"
 #. module: event
 #: field:event.event,zip:0
 msgid "zip"
-msgstr ""
+msgstr "postnummer"
 
 #. module: event
 #: field:res.partner,event_ids:0
@@ -728,7 +683,7 @@ msgstr "Okänd"
 #. module: event
 #: field:event.event,street2:0
 msgid "Street2"
-msgstr ""
+msgstr "Gata 2"
 
 #. module: event
 #: selection:report.event.registration,month:0
@@ -747,12 +702,12 @@ msgstr ""
 #: help:event.event,message_ids:0
 #: help:event.registration,message_ids:0
 msgid "Messages and communication history"
-msgstr ""
+msgstr "Meddelande- och kommunikationshistorik"
 
 #. module: event
 #: field:event.registration,phone:0
 msgid "Phone"
-msgstr ""
+msgstr "Telefon"
 
 #. module: event
 #: model:email.template,body_html:event.confirmation_event
@@ -772,13 +727,13 @@ msgstr ""
 #: field:event.event,message_is_follower:0
 #: field:event.registration,message_is_follower:0
 msgid "Is a Follower"
-msgstr ""
+msgstr "Är en följare"
 
 #. module: event
 #: field:event.registration,user_id:0
 #: model:res.groups,name:event.group_event_user
 msgid "User"
-msgstr ""
+msgstr "Användare"
 
 #. module: event
 #: view:event.confirm:0
@@ -792,7 +747,7 @@ msgstr ""
 #. module: event
 #: view:event.event:0
 msgid "(confirmed:"
-msgstr ""
+msgstr "(bekräftad:"
 
 #. module: event
 #: view:event.registration:0
@@ -800,10 +755,9 @@ msgid "My Registrations"
 msgstr "Mina anmälningar"
 
 #. module: event
-#: code:addons/event/event.py:310
-#, python-format
-msgid "Event has been set to <b>draft</b>."
-msgstr ""
+#: selection:report.event.registration,month:0
+msgid "November"
+msgstr "November"
 
 #. module: event
 #: view:report.event.registration:0
@@ -811,22 +765,14 @@ msgid "Extended Filters..."
 msgstr "Utökat filter..."
 
 #. module: event
-#: field:event.event,message_comment_ids:0
-#: help:event.event,message_comment_ids:0
-#: field:event.registration,message_comment_ids:0
-#: help:event.registration,message_comment_ids:0
-msgid "Comments and emails"
-msgstr ""
-
-#. module: event
 #: selection:report.event.registration,month:0
 msgid "October"
 msgstr "Oktober"
 
 #. module: event
-#: model:ir.actions.server,name:event.actions_server_event_registration_unread
-msgid "Event registration : Mark unread"
-msgstr ""
+#: selection:report.event.registration,month:0
+msgid "January"
+msgstr "Januari"
 
 #. module: event
 #: view:event.event:0
@@ -835,12 +781,13 @@ msgstr "Sätt till preliminär"
 
 #. module: event
 #: view:event.event:0
+#: view:event.registration:0
 #: view:res.partner:0
 msgid "Confirm Registration"
 msgstr "Bekräfta anmälan"
 
 #. module: event
-#: code:addons/event/event.py:95
+#: code:addons/event/event.py:89
 #, python-format
 msgid ""
 "You have already set a registration for this event as 'Attended'. Please "
@@ -855,17 +802,11 @@ msgstr "Datum"
 #. module: event
 #: view:event.event:0
 msgid "Email Configuration"
-msgstr ""
+msgstr "E-postkonfiguration"
 
 #. module: event
 #: field:event.type,default_registration_min:0
 msgid "Default Minimum Registration"
-msgstr ""
-
-#. module: event
-#: code:addons/event/event.py:368
-#, python-format
-msgid "Registration confirmed."
 msgstr ""
 
 #. module: event
@@ -888,8 +829,9 @@ msgstr ""
 
 #. module: event
 #: view:event.event:0
+#: view:event.registration:0
 msgid "Attended the Event"
-msgstr ""
+msgstr "Deltog på evenemanget"
 
 #. module: event
 #: constraint:event.event:0
@@ -897,15 +839,10 @@ msgid "Error ! Closing Date cannot be set before Beginning Date."
 msgstr "Fel ! Slutdatum kan inte sättas före startdatum."
 
 #. module: event
-#: code:addons/event/event.py:400
+#: code:addons/event/event.py:355
 #, python-format
 msgid "You must wait for the starting day of the event to do this action."
 msgstr ""
-
-#. module: event
-#: field:event.event,user_id:0
-msgid "Responsible User"
-msgstr "Ansvarig användare"
 
 #. module: event
 #: selection:event.event,state:0
@@ -916,7 +853,7 @@ msgstr "Klar"
 #. module: event
 #: view:report.event.registration:0
 msgid "Show Confirmed Registrations"
-msgstr ""
+msgstr "Visa bekräftade registreringar"
 
 #. module: event
 #: view:event.confirm:0
@@ -929,16 +866,16 @@ msgid "Reply-to Email"
 msgstr ""
 
 #. module: event
-#: code:addons/event/event.py:114
+#: code:addons/event/event.py:106
 #, python-format
 msgid "Only %d Seats are Available!"
-msgstr ""
+msgstr "Endast %d platser är tillgängliga!"
 
 #. module: event
 #: model:email.template,subject:event.confirmation_event
 #: model:email.template,subject:event.confirmation_registration
 msgid "Your registration at ${object.event_id.name}"
-msgstr ""
+msgstr "Din registrering för ${object.event_id.name}"
 
 #. module: event
 #: view:event.registration:0
@@ -954,7 +891,7 @@ msgstr ""
 #. module: event
 #: view:event.event:0
 msgid "Unsubscribe"
-msgstr ""
+msgstr "Avsluta prenumeration"
 
 #. module: event
 #: view:event.event:0
@@ -965,7 +902,7 @@ msgstr "Ansvarig"
 #. module: event
 #: view:report.event.registration:0
 msgid "Registration contact"
-msgstr ""
+msgstr "Registreringskontakt"
 
 #. module: event
 #: view:report.event.registration:0
@@ -977,13 +914,7 @@ msgstr "Talare"
 #. module: event
 #: view:event.event:0
 msgid "Upcoming events from today"
-msgstr ""
-
-#. module: event
-#: code:addons/event/event.py:300
-#, python-format
-msgid "Event has been <b>created</b>."
-msgstr ""
+msgstr "Kommande evenemang från idag"
 
 #. module: event
 #: model:event.event,name:event.event_2
@@ -992,8 +923,9 @@ msgstr ""
 
 #. module: event
 #: model:ir.actions.act_window,name:event.act_event_view_registration
+#: model:mail.message.subtype,name:event.mt_event_registration
 msgid "New Registration"
-msgstr ""
+msgstr "Ny registrering"
 
 #. module: event
 #: field:event.event,note:0
@@ -1008,13 +940,12 @@ msgstr " # antal bekräftade anmälningar"
 #. module: event
 #: field:report.event.registration,name_registration:0
 msgid "Participant / Contact Name"
-msgstr ""
+msgstr "Deltagar-/kontaktnamn"
 
 #. module: event
-#: code:addons/event/event.py:320
-#, python-format
-msgid "Event has been <b>confirmed</b>."
-msgstr ""
+#: selection:report.event.registration,month:0
+msgid "May"
+msgstr "Maj"
 
 #. module: event
 #: view:res.partner:0
@@ -1025,16 +956,6 @@ msgstr "Evenemangsanmälan"
 #: view:event.event:0
 msgid "No ticket available."
 msgstr ""
-
-#. module: event
-#: help:event.type,default_registration_min:0
-msgid "It will select this default minimum value when you choose this event"
-msgstr ""
-
-#. module: event
-#: selection:report.event.registration,month:0
-msgid "January"
-msgstr "Januari"
 
 #. module: event
 #: field:event.event,register_max:0
@@ -1077,11 +998,6 @@ msgid "Country"
 msgstr "Land"
 
 #. module: event
-#: selection:report.event.registration,month:0
-msgid "November"
-msgstr "November"
-
-#. module: event
 #: view:res.partner:0
 msgid "Close Registration"
 msgstr "Stäng anmälan"
@@ -1089,7 +1005,7 @@ msgstr "Stäng anmälan"
 #. module: event
 #: field:event.registration,origin:0
 msgid "Source Document"
-msgstr ""
+msgstr "Källdokument"
 
 #. module: event
 #: selection:report.event.registration,month:0
@@ -1135,14 +1051,8 @@ msgstr ""
 
 #. module: event
 #: view:event.event:0
-#: model:ir.actions.act_window,name:event.act_register_event_partner
-msgid "Subscribe"
-msgstr "Prenumerera"
-
-#. module: event
-#: view:event.event:0
 msgid "available."
-msgstr ""
+msgstr "tillgänglig."
 
 #. module: event
 #: field:event.registration,event_begin_date:0
@@ -1153,12 +1063,12 @@ msgstr "Evenemangsstartdatum"
 #. module: event
 #: view:report.event.registration:0
 msgid "Participant / Contact"
-msgstr ""
+msgstr "Deltagare/kontakt"
 
 #. module: event
 #: view:event.event:0
 msgid "Current Registrations"
-msgstr ""
+msgstr "Nuvarande registreringar"
 
 #. module: event
 #: model:email.template,body_html:event.confirmation_registration
@@ -1184,9 +1094,10 @@ msgid ""
 msgstr ""
 
 #. module: event
-#: model:ir.actions.server,name:event.actions_server_event_event_unread
-msgid "Event: Mark unread"
-msgstr ""
+#: view:event.event:0
+#: model:ir.actions.act_window,name:event.act_register_event_partner
+msgid "Subscribe"
+msgstr "Prenumerera"
 
 #. module: event
 #: model:res.groups,name:event.group_event_manager
@@ -1215,485 +1126,3 @@ msgstr "År"
 #: field:event.event,speaker_confirmed:0
 msgid "Speaker Confirmed"
 msgstr "Talare bekräftad"
-
-#~ msgid "Configuration"
-#~ msgstr "Konfiguration"
-
-#~ msgid ""
-#~ "The Object name must start with x_ and not contain any special character !"
-#~ msgstr ""
-#~ "Objektnamnet måste börja med x_ och får inte innehålla några specialtecken!"
-
-#~ msgid ""
-#~ "Organization and management of events.\n"
-#~ "\n"
-#~ "    This module allow you\n"
-#~ "        * to manage your events and their registrations\n"
-#~ "        * to use emails to automatically confirm and send acknowledgements "
-#~ "for any registration to an event\n"
-#~ "        * ...\n"
-#~ "\n"
-#~ "    Note that:\n"
-#~ "    - You can define new types of events in\n"
-#~ "                Events / Configuration / Types of Events\n"
-#~ "    - You can access predefined reports about number of registration per "
-#~ "event or per event category in :\n"
-#~ "                Events / Reporting\n"
-#~ msgstr ""
-#~ "Organization and management of events.\n"
-#~ "\n"
-#~ "    This module allow you\n"
-#~ "        * to manage your events and their registrations\n"
-#~ "        * to use emails to automatically confirm and send acknowledgements "
-#~ "for any registration to an event\n"
-#~ "        * ...\n"
-#~ "\n"
-#~ "    Note that:\n"
-#~ "    - You can define new types of events in\n"
-#~ "                Events / Configuration / Types of Events\n"
-#~ "    - You can access predefined reports about number of registration per "
-#~ "event or per event category in :\n"
-#~ "                Events / Reporting\n"
-
-#~ msgid "Invoice Information"
-#~ msgstr "Fakturainformation"
-
-#~ msgid "Make Invoices"
-#~ msgstr "Skapa fakturor"
-
-#~ msgid "Title"
-#~ msgstr "Titel"
-
-#~ msgid "Invoice Date"
-#~ msgstr "Fakturadatum"
-
-#~ msgid "Last 7 Days"
-#~ msgstr "Senaste 7 dagarna"
-
-#~ msgid "Subtotal"
-#~ msgstr "Deltotal"
-
-#~ msgid "Make Invoice"
-#~ msgstr "Skapa faktura"
-
-#~ msgid "Reply-To"
-#~ msgstr "Svara till"
-
-#~ msgid "Pricelist"
-#~ msgstr "Prislista"
-
-#~ msgid "event.registration.badge"
-#~ msgstr "event.registration.badge"
-
-#~ msgid "Partner Contact"
-#~ msgstr "Partner kontakt"
-
-#, python-format
-#~ msgid "Customer Invoices"
-#~ msgstr "Kundfakturor"
-
-#~ msgid "Extra Info"
-#~ msgstr "Extra Info"
-
-#~ msgid "Event type"
-#~ msgstr "Händelsetyp"
-
-#~ msgid "Reference"
-#~ msgstr "Referens"
-
-#~ msgid "Emails"
-#~ msgstr "Epost"
-
-#~ msgid "Send New Email"
-#~ msgstr "Skicka ett nytt epost meddelande"
-
-#, python-format
-#~ msgid "Warning !"
-#~ msgstr "Varning !"
-
-#~ msgid "Misc"
-#~ msgstr "Övrigt"
-
-#, python-format
-#~ msgid "Error !"
-#~ msgstr "Fel !"
-
-#~ msgid "Reply"
-#~ msgstr "Svara"
-
-#~ msgid "To be Invoiced"
-#~ msgstr "Att faktureras"
-
-#~ msgid "Dates"
-#~ msgstr "Datum"
-
-#~ msgid "Quantity"
-#~ msgstr "Antal"
-
-#~ msgid "Last 30 Days"
-#~ msgstr "Senaste 30 dagarna"
-
-#~ msgid "Contact"
-#~ msgstr "Kontakt"
-
-#~ msgid "Group the invoices"
-#~ msgstr "Gruppera fakturorna"
-
-#~ msgid "Invoice Name"
-#~ msgstr "Fakturanamn"
-
-#~ msgid "Partner Invoiced"
-#~ msgstr "Partner fakturerad"
-
-#, python-format
-#~ msgid "Invoiced"
-#~ msgstr "Fakturerad"
-
-#~ msgid "Create invoices"
-#~ msgstr "Skapa fakturor"
-
-#~ msgid "Reference 2"
-#~ msgstr "Referens 2"
-
-#~ msgid "Message"
-#~ msgstr "Meddelande"
-
-#~ msgid "Do you really want to create the invoice(s) ?"
-#~ msgstr "Vill du verkligen skapa fakturan/fakturorna ?"
-
-#~ msgid "Beginning Date"
-#~ msgstr "Startdatum"
-
-#~ msgid "Closed"
-#~ msgstr "Stängd"
-
-#~ msgid "Error ! You can not create recursive associated members."
-#~ msgstr "Fel! Du kan inte skapa rekursivt kopplade medlemmar."
-
-#~ msgid "Active"
-#~ msgstr "Aktiv"
-
-#~ msgid "Language"
-#~ msgstr "Språk"
-
-#~ msgid "Invoice"
-#~ msgstr "Faktura"
-
-#~ msgid "Attachments"
-#~ msgstr "Bilagor"
-
-#~ msgid "Current"
-#~ msgstr "Nuvarande"
-
-#, python-format
-#~ msgid "Open"
-#~ msgstr "Öppna"
-
-#~ msgid "Close"
-#~ msgstr "Stäng"
-
-#~ msgid "Product"
-#~ msgstr "Produkt"
-
-#~ msgid "Start date"
-#~ msgstr "Startdatum"
-
-#~ msgid "Closing date"
-#~ msgstr "Stängningsdatum"
-
-#~ msgid "Details"
-#~ msgstr "Detaljer"
-
-#~ msgid "Address"
-#~ msgstr "Adress"
-
-#~ msgid "Confirmation for Event Registration"
-#~ msgstr "Bekräftelse för evenemangsregistering"
-
-#~ msgid "Confirmation Email"
-#~ msgstr "Bekräftelsemeddelande"
-
-#~ msgid "Registration Email"
-#~ msgstr "Registeringse-post"
-
-#, python-format
-#~ msgid "Registration doesn't have any partner to invoice."
-#~ msgstr "Registreringen saknar företag att fakturera"
-
-#~ msgid "_Close"
-#~ msgstr "_Stäng"
-
-#~ msgid "Event Details"
-#~ msgstr "Evenemangsdetaljer"
-
-#~ msgid "Invoiced Registrations only"
-#~ msgstr "Endast fakturerbara registreringar"
-
-#~ msgid "Parent Event"
-#~ msgstr "Överliggande evenemang"
-
-#~ msgid "Pricelist version for current event."
-#~ msgstr "Prislisteversion för aktuellt evenemang"
-
-#~ msgid "Add Internal Note"
-#~ msgstr "Lägg till intern notering"
-
-#~ msgid "The email address put in the 'Reply-To' of all emails sent by OpenERP"
-#~ msgstr "E-post-adressen för 'Svara-till' för all e-post skickad med OpenERP"
-
-#~ msgid "Total of Prospect Registrations"
-#~ msgstr "Totalt förväntade anmälningar"
-
-#~ msgid "Ticket for Opera"
-#~ msgstr "Operabiljett"
-
-#~ msgid "Mail Auto Confirm"
-#~ msgstr "Automatisk e-post-bekräftan"
-
-#~ msgid "Event Dashboard"
-#~ msgstr "Evenemangsinfopanel"
-
-#~ msgid "Number of Registrations or Tickets"
-#~ msgstr "Antal anmälningar eller biljetter"
-
-#~ msgid "Event Make Invoice"
-#~ msgstr "Evenemangsfakturering"
-
-#~ msgid "Other Speakers"
-#~ msgstr "Andra talare"
-
-#~ msgid "Badges"
-#~ msgstr "Brickor"
-
-#~ msgid "Registration Confirmation"
-#~ msgstr "Anmälningsbekräftelse"
-
-#~ msgid "Provide Minimum Number of Registrations"
-#~ msgstr "Tillhandahåll minsta antal anmälningar"
-
-#~ msgid "My Sales Team(s)"
-#~ msgstr "Mina säljlag"
-
-#~ msgid "Type"
-#~ msgstr "Typ"
-
-#~ msgid "Mail Auto Register"
-#~ msgstr "Automatisk e-postanmälan"
-
-#~ msgid "History Information"
-#~ msgstr "Historikinformation"
-
-#~ msgid "    Month-1    "
-#~ msgstr "    Månad-1    "
-
-#~ msgid "Event Done"
-#~ msgstr "Evenemang genomfört"
-
-#~ msgid "Events States"
-#~ msgstr "Evenemangsetapper"
-
-#~ msgid "Mailing"
-#~ msgstr "E-posta"
-
-#~ msgid "Speakers"
-#~ msgstr "Talare"
-
-#~ msgid ""
-#~ "These email addresses will be added to the CC field of all inbound and "
-#~ "outbound emails for this record before being sent. Separate multiple email "
-#~ "addresses with a comma"
-#~ msgstr ""
-#~ "Dessa e-postadresser läggs till kopie-fältet på alla inkommande och utgående "
-#~ "meddelanden för denna post innan de skickas. Separera flera adresser med "
-#~ "komma."
-
-#~ msgid "Error ! You cannot create recursive event."
-#~ msgstr "Fel ! Du kan inte skapa rekursiva evenemang."
-
-#~ msgid ""
-#~ "The invoices of this event registration will be created with this Product. "
-#~ "Thus it allows you to set the default label and the accounting info you want "
-#~ "by default on these invoices."
-#~ msgstr ""
-#~ "Fakturor från detta evenemang skapas med denna produkt. Detta låter dig ange "
-#~ "standardtext och konteringsinformation för dessa fakturor."
-
-#~ msgid "Child Events"
-#~ msgstr "Underliggande evenemang"
-
-#~ msgid "Number of Registration"
-#~ msgstr "Antal anmälningar"
-
-#~ msgid "CC"
-#~ msgstr "Kopia"
-
-#~ msgid "These people will receive email."
-#~ msgstr "De här personerna kommer att ta emot e-post."
-
-#~ msgid "Write Date"
-#~ msgstr "Avtalsdatum"
-
-#~ msgid "Ticket for Concert"
-#~ msgstr "Konsertbiljett"
-
-#~ msgid "Beginning date"
-#~ msgstr "Startdatum"
-
-#~ msgid "History"
-#~ msgstr "Historik"
-
-#~ msgid "Auto Confirmation Email"
-#~ msgstr "Automatiskt bekräftelsemeddelande"
-
-#~ msgid "Event by Registration"
-#~ msgstr "Evenemang per anmälan"
-
-#, python-format
-#~ msgid "Event related doesn't have any product defined"
-#~ msgstr "Relarerat evenemang saknar produkt"
-
-#~ msgid "Conference on ERP Buisness"
-#~ msgstr "Konferens på ämnet affärssystem"
-
-#~ msgid "Events created in current month"
-#~ msgstr "Evenemang skapade i innevarande månad"
-
-#~ msgid "Unit Price"
-#~ msgstr "Styckpris"
-
-#~ msgid "Registration Cost"
-#~ msgstr "Anmälningsavgift"
-
-#, python-format
-#~ msgid "Auto Confirmation: [%s] %s"
-#~ msgstr "Automatisk bekräftelse: [%s] %s"
-
-#~ msgid "Ticket for Conference"
-#~ msgstr "Konferensbiljett"
-
-#~ msgid "Events Type"
-#~ msgstr "Evenemangstyp"
-
-#~ msgid "Sale Team"
-#~ msgstr "Säljlag"
-
-#~ msgid "  event Registration "
-#~ msgstr "  evenemangsanmälan "
-
-#~ msgid "Beginning Date of Event"
-#~ msgstr "Evenemangets startdatum"
-
-#, python-format
-#~ msgid "Auto Registration: [%s] %s"
-#~ msgstr "Automatisk anmälan: [%s] %s"
-
-#~ msgid "_Subcribe"
-#~ msgstr "_Prenumerera"
-
-#~ msgid "Error ! You cannot create recursive associated members."
-#~ msgstr "Fel ! Du kan inte ansluta medlemmar rekursivt"
-
-#, python-format
-#~ msgid "Registration is set as Cannot be invoiced"
-#~ msgstr "Anmälan är inställd för att inte faktureras"
-
-#~ msgid "Event For Registration"
-#~ msgstr "Evenemang för anmälningar"
-
-#~ msgid "This email will be sent when someone subscribes to the event."
-#~ msgstr ""
-#~ "Detta e-postmeddelande kommer skickas när någon prenumererar på evenemanget."
-
-#~ msgid ""
-#~ "Check this box if you want to use automatic emailing for new registration."
-#~ msgstr ""
-#~ "Kryssa denna ruta om du vill använda automatiska e-postmeddelanden för nya "
-#~ "anmälningar."
-
-#~ msgid "Events created in last month"
-#~ msgstr "Skapade evenemang förra månaden"
-
-#~ msgid "Events created in current year"
-#~ msgstr "Evenemang skapade i år"
-
-#~ msgid "Closing Date of Event"
-#~ msgstr "Evenemangets avslutsdatum"
-
-#~ msgid "Type of Event like Seminar, Exhibition, Conference, Training."
-#~ msgstr "Evenemangstyp som seminarium, utställning, konferens, utbildning."
-
-#~ msgid "Registration Email Body"
-#~ msgstr "Anmälningse-post-meddelande"
-
-#~ msgid ""
-#~ "This email will be sent when the event gets confirmed or when someone "
-#~ "subscribes to a confirmed event. This is also the email sent to remind "
-#~ "someone about the event."
-#~ msgstr ""
-#~ "Detta e-postmeddelande skickas när evenemanget blir bekräftad eller när "
-#~ "någon prenumererar på ett bekräftat evenemang. Detta är också meddelandet "
-#~ "för att påminna någon om evenemanget."
-
-#~ msgid ""
-#~ "Check this box if you want to use automatic confirmation emailing or "
-#~ "reminder."
-#~ msgstr ""
-#~ "Markera den här rutan om du vill använda automatisk bekräftelse-e-post eller "
-#~ "påminnelse."
-
-#~ msgid "Total of Open and Done Registrations"
-#~ msgstr "Totalt antal öppna och klara anmälningar"
-
-#~ msgid "Provide Maximum Number of Registrations"
-#~ msgstr "Tillhandahåll maximalt antal registreringar"
-
-#, python-format
-#~ msgid "Registered partner doesn't have an address to make the invoice."
-#~ msgstr ""
-#~ "Registrerat företag saknar adressuppgifter för att kunna skapa fakturan"
-
-#~ msgid "Confirmation Email Body"
-#~ msgstr "Bekräftekse e-post-text"
-
-#~ msgid ""
-#~ "This will be the default price used as registration cost when invoicing this "
-#~ "event. Note that you can specify a specific amount for each registration."
-#~ msgstr ""
-#~ "Detta kommer att vara standardpriset som anmälningskostnad vid fakturering "
-#~ "av detta evenemang. Observera att du kan ange ett visst belopp för varje "
-#~ "anmälning."
-
-#, python-format
-#~ msgid "Invoice cannot be created if the registration is in %s state."
-#~ msgstr "Fakturering inte möjlig när anmälan är i %s-status"
-
-#~ msgid "Auto Registration Email"
-#~ msgstr "Automatisk anmälningsmeddelande"
-
-#~ msgid ""
-#~ "Event is the low level object used by meeting and others documents that "
-#~ "should be synchronized with mobile devices or calendar applications through "
-#~ "caldav. Most of the users should work in the Calendar menu, and not in the "
-#~ "list of events."
-#~ msgstr ""
-#~ "Evenenang är ett lågnivåobjekt som används av mötes- och andra dokument som "
-#~ "bör synkroniseras med mobila enheter eller kalendertillämpningar via CalDAV. "
-#~ "De flesta av användarna bör arbeta i menyn Kalender och inte i listan över "
-#~ "evenemang."
-
-#~ msgid "Total"
-#~ msgstr "Totalt"
-
-#~ msgid ""
-#~ "If event is created, the state is 'Draft'.If event is confirmed for the "
-#~ "particular dates the state is set to 'Confirmed'. If the event is over, the "
-#~ "state is set to 'Done'.If event is cancelled the state is set to 'Cancelled'."
-#~ msgstr ""
-#~ "När evenemang skapas är status \"Utkast\". Om evenemanget bekräftas för de "
-#~ "särskilda datum som status är satt till \"Bekräftat\". Om evenemanget är "
-#~ "avslutat, är status inställt på \"Klar\". Om evenemanget ställs in status är "
-#~ "satt till \"Inställt\"."
-
-#, python-format
-#~ msgid "Warning: The Event '%s' has reached its Maximum Limit (%s)."
-#~ msgstr "Varning: Evenemanget '%s' är fulltecknat (%s)."

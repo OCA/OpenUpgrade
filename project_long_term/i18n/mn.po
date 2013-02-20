@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2012-12-03 16:04+0000\n"
-"PO-Revision-Date: 2012-06-24 13:23+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-12-21 17:06+0000\n"
+"PO-Revision-Date: 2013-02-15 01:54+0000\n"
+"Last-Translator: gobi <Unknown>\n"
 "Language-Team: Mongolian <mn@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-04 05:51+0000\n"
-"X-Generator: Launchpad (build 16335)\n"
+"X-Launchpad-Export-Date: 2013-02-16 05:40+0000\n"
+"X-Generator: Launchpad (build 16491)\n"
 
 #. module: project_long_term
 #: help:project.phase,constraint_date_end:0
@@ -34,6 +34,14 @@ msgstr "Хийгдэж байна"
 #: view:project.project:0
 msgid "Phases"
 msgstr "Шатууд"
+
+#. module: project_long_term
+#: model:ir.actions.act_window,name:project_long_term.act_resouce_allocation
+#: model:ir.ui.menu,name:project_long_term.menu_resouce_allocation
+#: view:project.phase:0
+#: view:project.user.allocation:0
+msgid "Team Planning"
+msgstr "Багийн төлөвлөлт"
 
 #. module: project_long_term
 #: field:project.phase,user_ids:0
@@ -83,12 +91,12 @@ msgstr "Шатуудыг Товыг Гаргах"
 #: view:project.phase:0
 #: field:project.phase,state:0
 msgid "Status"
-msgstr ""
+msgstr "Төлөв"
 
 #. module: project_long_term
 #: field:project.compute.phases,target_project:0
 msgid "Action"
-msgstr ""
+msgstr "Үйлдэл"
 
 #. module: project_long_term
 #: view:project.phase:0
@@ -120,7 +128,7 @@ msgstr "Шинэ"
 #. module: project_long_term
 #: field:project.phase,product_uom:0
 msgid "Duration Unit of Measure"
-msgstr ""
+msgstr "Үргэлжлэх хугацааны хэмжих нэгж"
 
 #. module: project_long_term
 #: model:ir.ui.menu,name:project_long_term.menu_view_resource_calendar_leaves
@@ -144,22 +152,16 @@ msgid "In Progress Phases"
 msgstr "Боловсруулагдаж байгаа Шатууд"
 
 #. module: project_long_term
-#: code:addons/project_long_term/project_long_term.py:141
+#: code:addons/project_long_term/project_long_term.py:140
 #, python-format
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (хуулбар)"
 
 #. module: project_long_term
 #: code:addons/project_long_term/wizard/project_compute_phases.py:48
 #, python-format
 msgid "Please specify a project to schedule."
 msgstr "Төслийн товийг зааж өгнө үү."
-
-#. module: project_long_term
-#: view:project.compute.phases:0
-#: view:project.compute.tasks:0
-msgid "or"
-msgstr ""
 
 #. module: project_long_term
 #: view:project.phase:0
@@ -181,13 +183,13 @@ msgstr "Хамгийн бага эхлэх огноо"
 #: help:project.phase,product_uom:0
 msgid ""
 "Unit of Measure (Unit of Measure) is the unit of measurement for Duration"
-msgstr ""
+msgstr "Хэмжих нэгж гэдэг нь үргэлжлэх хугацааны хэмжих нэгж"
 
 #. module: project_long_term
 #: help:project.phase,user_ids:0
 msgid ""
 "The resources on the project can be computed automatically by the scheduler."
-msgstr ""
+msgstr "Төслийн нөөц нь товлогчоор автоматаар тооцоологдох боломжтой."
 
 #. module: project_long_term
 #: field:project.phase,sequence:0
@@ -198,11 +200,7 @@ msgstr "Дараалал"
 #: help:account.analytic.account,use_phases:0
 msgid "Check this field if you plan to use phase-based scheduling"
 msgstr ""
-
-#. module: project_long_term
-#: help:project.user.allocation,date_start:0
-msgid "Starting Date"
-msgstr "Эхлэх огноо"
+"Хэрэв шат дээр суурилсан төлөвлөлтийг хэрэглэхээр бол энэ талбарыг сонгоно"
 
 #. module: project_long_term
 #: help:project.phase,state:0
@@ -213,6 +211,11 @@ msgid ""
 "           \n"
 " If the phase is over, the status is set to 'Done'."
 msgstr ""
+"Шат үүсгэгдсэн даруйдаа 'Ноорог' төлөвтэй байна.\n"
+" Шат эхлэмэгцээ 'Хийгдэж буй' төлөвтэй болно.\n"
+" Хэрэв шат ревюү хийгдэх шаардлагатай бол 'Хүлээгдэж буй' төлөвтэй болно.    "
+"                              \n"
+" Хэрэв шат дууссанм бол 'Хийгдсэн' төлөвтэй болно."
 
 #. module: project_long_term
 #: field:project.phase,progress:0
@@ -252,10 +255,9 @@ msgid "Pending Phases"
 msgstr "Хүлээгдэж байгаа шатууд"
 
 #. module: project_long_term
-#: code:addons/project_long_term/project_long_term.py:126
-#, python-format
-msgid "Day"
-msgstr "Өдөр"
+#: help:project.user.allocation,date_start:0
+msgid "Starting Date"
+msgstr "Эхлэх огноо"
 
 #. module: project_long_term
 #: view:project.phase:0
@@ -319,7 +321,7 @@ msgstr "Даалгаврын Дэлгэрэнгүй"
 #. module: project_long_term
 #: field:project.project,phase_count:0
 msgid "Open Phases"
-msgstr ""
+msgstr "Нээлттэй Шатууд"
 
 #. module: project_long_term
 #: help:project.phase,date_end:0
@@ -416,7 +418,7 @@ msgstr "Шатуудын жагсаалтыг харуулах дарааллы�
 #. module: project_long_term
 #: model:ir.actions.act_window,name:project_long_term.project_phase_task_list
 msgid "Tasks"
-msgstr ""
+msgstr "Даалгаврууд"
 
 #. module: project_long_term
 #: help:project.user.allocation,date_end:0
@@ -461,7 +463,7 @@ msgstr "Сар"
 #. module: project_long_term
 #: model:ir.model,name:project_long_term.model_account_analytic_account
 msgid "Analytic Account"
-msgstr ""
+msgstr "Шинжилгээний Данс"
 
 #. module: project_long_term
 #: field:project.phase,constraint_date_end:0
@@ -513,61 +515,7 @@ msgid "Name"
 msgstr "Нэр"
 
 #. module: project_long_term
-#: model:ir.actions.act_window,name:project_long_term.act_resouce_allocation
-#: model:ir.ui.menu,name:project_long_term.menu_resouce_allocation
-#: view:project.phase:0
-#: view:project.user.allocation:0
-msgid "Planning of Users"
-msgstr "Хэрэглэгчдийг Төлөвлөх"
-
-#~ msgid "Error! project start-date must be lower then project end-date."
-#~ msgstr "Алдаа! төслийн эхлэх огноо дуусах огноогоос бага байх ёстой."
-
-#~ msgid "Schedule"
-#~ msgstr "Тов"
-
-#~ msgid "Error ! You cannot create recursive tasks."
-#~ msgstr "Алдаа ! Та рекурсив цэс үүсгэж болохгүй!"
-
-#~ msgid "UoM (Unit of Measure) is the unit of measurement for Duration"
-#~ msgstr "Х.Н (Хэмжих Нэгж) гэдэг нь үргэлжлэх хугацааг хэмжих нэгж юм."
-
-#~ msgid "Error! You cannot assign escalation to the same project!"
-#~ msgstr "Алдаа! Ижил төсөлд томруулалтыг олгох боломжгүй."
-
-#, python-format
-#~ msgid " (copy)"
-#~ msgstr " (хувилах)"
-
-#~ msgid "_Cancel"
-#~ msgstr "_Цуцлах"
-
-#~ msgid "State"
-#~ msgstr "Төлөв"
-
-#~ msgid "Duration UoM"
-#~ msgstr "Үргэлжлэх Х.Н"
-
-#~ msgid ""
-#~ "The ressources on the project can be computed automatically by the scheduler"
-#~ msgstr "Төсөл дахь нөөц нь товлогчоор автоматаар тооцоологдож болно."
-
-#~ msgid "Error ! Task end-date must be greater then task start-date"
-#~ msgstr ""
-#~ "Алдаа ! Даалгаврын дуусах хугацаа нь эхлэх хугацаанаасаа хойно байх ёстой"
-
-#~ msgid ""
-#~ "If the phase is created the state 'Draft'.\n"
-#~ " If the phase is started, the state becomes 'In Progress'.\n"
-#~ " If review is needed the phase is in 'Pending' state.                        "
-#~ "          \n"
-#~ " If the phase is over, the states is set to 'Done'."
-#~ msgstr ""
-#~ "Хэрэв шат үүсгэгдсэн бол төлөв нь 'Ноорог' болно.\n"
-#~ " Хэрэв шат эхлэсэн бол төлөв нь 'Хийгдэж байна' болно.\n"
-#~ " Хэрэв шат үзлэг хийгдэх хэрэгтэй бол 'Хүлээгдэж буй' төлөвтэй болно.        "
-#~ "                          \n"
-#~ " Хэрэв шат дууссан бол 'Хийгдсэн' төлөвтэй болно."
-
-#~ msgid "Displaying settings"
-#~ msgstr "Тохиргоонууд харуулах"
+#: view:project.compute.phases:0
+#: view:project.compute.tasks:0
+msgid "or"
+msgstr "эсвэл"

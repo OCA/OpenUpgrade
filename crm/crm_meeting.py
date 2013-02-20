@@ -20,8 +20,6 @@
 ##############################################################################
 
 from openerp.osv import fields, osv
-from openerp import tools
-from openerp.tools.translate import _
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -36,32 +34,6 @@ class crm_meeting(osv.Model):
         'opportunity_id': fields.many2one ('crm.lead', 'Opportunity', domain="[('type', '=', 'opportunity')]"),
     }
 
-    def create(self, cr, uid, vals, context=None):
-        obj_id = super(crm_meeting, self).create(cr, uid, vals, context=context)
-        self.create_send_note(cr, uid, [obj_id], context=context)
-        return obj_id
-
-    def create_send_note(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
-        # update context: if come from phonecall, default state values can make the message_post crash
-        context.pop('default_state', False)
-        for meeting in self.browse(cr, uid, ids, context=context):
-            # in the message, transpose meeting.date to the timezone of the current user
-            meeting_date = fields.DT.datetime.strptime(meeting.date, tools.DEFAULT_SERVER_DATETIME_FORMAT)
-            meeting_date_tz = fields.datetime.context_timestamp(cr, uid, meeting_date, context=context).strftime(tools.DATETIME_FORMATS_MAP['%+'] + " (%Z)")
-            if meeting.opportunity_id: # meeting can be create from phonecalls or opportunities, therefore checking for the parent
-                lead = meeting.opportunity_id
-                message = _("Meeting linked to the opportunity <em>%s</em> has been <b>created</b> and <b>scheduled</b> on <em>%s</em>.") % (lead.name, meeting_date_tz)
-                lead.message_post(body=message)
-            elif meeting.phonecall_id:
-                phonecall = meeting.phonecall_id
-                message = _("Meeting linked to the phonecall <em>%s</em> has been <b>created</b> and <b>scheduled</b> on <em>%s</em>.") % (phonecall.name, meeting_date_tz)
-                phonecall.message_post(body=message)
-            else:
-                message = _("A meeting has been <b>scheduled</b> on <em>%s</em>.") % (meeting_date_tz)
-            meeting.message_post(body=message)
-        return True
 
 class calendar_attendee(osv.osv):
     """ Calendar Attendee """
@@ -95,25 +67,5 @@ class calendar_attendee(osv.osv):
                         string='Event Type', type="many2one", \
                         relation="crm.case.categ", multi='categ_id'),
     }
-
-class res_users(osv.osv):
-    _name = 'res.users'
-    _inherit = 'res.users'
-
-    def create(self, cr, uid, data, context=None):
-        user_id = super(res_users, self).create(cr, uid, data, context=context)
-
-        # add shortcut unless 'noshortcut' is True in context
-        if not(context and context.get('noshortcut', False)):
-            data_obj = self.pool.get('ir.model.data')
-            try:
-                data_id = data_obj._get_id(cr, uid, 'crm', 'ir_ui_view_sc_calendar0')
-                view_id  = data_obj.browse(cr, uid, data_id, context=context).res_id
-                self.pool.get('ir.ui.view_sc').copy(cr, uid, view_id, default = {
-                                            'user_id': user_id}, context=context)
-            except:
-                # Tolerate a missing shortcut. See product/product.py for similar code.
-                _logger.debug('Skipped meetings shortcut for user "%s".', data.get('name','<new'))
-        return user_id
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

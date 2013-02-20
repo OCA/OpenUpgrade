@@ -360,7 +360,7 @@ Andrew</field>
             <field name="type_id" ref="type_lead5"/>
             <field name="categ_ids" eval="[(6, 0, [categ_oppor5])]"/>
             <field name="priority">2</field>
-            <field eval="time.strftime('%Y-%m-30')" name="date_deadline"/>
+            <field eval="time.strftime('%Y-%m-28')" name="date_deadline"/>
             <field eval="time.strftime('%Y-%m-1')" name="date_action"/>
             <field name="title_action">Convert to quote</field>
             <field name="section_id" ref="crm_case_section_1"/>
@@ -402,9 +402,9 @@ Andrew</field>
             <field name="contact_name">Leland Martinez</field>
             <field name="email_from">info@deltapc.com</field>
             <field name="partner_name">Delta PC</field>
-            <field name="city">Fremont</field>
+            <field name="city">London</field>
             <field name="street">3661 Station Street</field>
-            <field name="country_id" ref="base.us"/>
+            <field name="country_id" ref="base.uk"/>
             <field name="partner_id" ref="base.res_partner_4"/>
             <field name="type_id" ref="type_lead8"/>
             <field name="categ_ids" eval="[(6, 0, [categ_oppor4,categ_oppor6])]"/>

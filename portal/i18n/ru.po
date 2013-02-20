@@ -1,21 +1,21 @@
 # Russian translation for openobject-addons
-# Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
 # This file is distributed under the same license as the openobject-addons package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2012-12-03 16:03+0000\n"
-"PO-Revision-Date: 2011-07-11 09:51+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-12-21 17:05+0000\n"
+"PO-Revision-Date: 2013-01-17 10:16+0000\n"
+"Last-Translator: Denis Karataev <dskarataev@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-04 05:53+0000\n"
-"X-Generator: Launchpad (build 16335)\n"
+"X-Launchpad-Export-Date: 2013-01-18 06:58+0000\n"
+"X-Generator: Launchpad (build 16430)\n"
 
 #. module: portal
 #: view:portal.payment.acquirer:0
@@ -27,6 +27,7 @@ msgstr ""
 #, python-format
 msgid "Please select at least one user to share with"
 msgstr ""
+"Пожалуйста выберите как минимум одного пользователя, с кем поделиться"
 
 #. module: portal
 #: view:portal.wizard:0
@@ -37,58 +38,68 @@ msgid ""
 "                        If necessary, you can fix any contact's email "
 "address directly in the list."
 msgstr ""
+"Выберите какие контакты должны принадлежать порталу в списке ниже.\n"
+"                        Адрес эл. почты каждого выбранного контакта должен "
+"быть действующим и уникальным.\n"
+"                        Если необходимо, вы можете исправить некоторые "
+"адреса эл. почты прямо в этом списке."
 
 #. module: portal
-#: code:addons/portal/wizard/share_wizard.py:54
-#, python-format
-msgid "Please select at least one group to share with"
-msgstr ""
+#: model:mail.group,name:portal.company_jobs
+msgid "Company Jobs"
+msgstr "Вакансии компании"
 
 #. module: portal
-#: model:ir.ui.menu,name:portal.company_news_feed_ir_ui_menu
-msgid "Company's news"
-msgstr ""
+#: view:portal.payment.acquirer:0
+msgid "amount: the total amount to pay, as a float"
+msgstr "сумма: общая сумма оплаты, число с плавающей точкой"
 
 #. module: portal
 #: view:portal.wizard.user:0
 msgid "Contacts"
-msgstr ""
+msgstr "Контакты"
 
 #. module: portal
 #: view:share.wizard:0
 #: field:share.wizard,group_ids:0
 msgid "Existing groups"
-msgstr ""
+msgstr "Существующие группы"
 
 #. module: portal
 #: view:res.groups:0
 msgid "Portal Groups"
-msgstr ""
+msgstr "Группы портала"
 
 #. module: portal
 #: field:portal.wizard,welcome_message:0
 msgid "Invitation Message"
-msgstr ""
+msgstr "Приглашение"
 
 #. module: portal
 #: view:res.groups:0
 msgid "Non-Portal Groups"
-msgstr ""
+msgstr "Группы не связанные с порталом"
+
+#. module: portal
+#: code:addons/portal/wizard/share_wizard.py:54
+#, python-format
+msgid "Please select at least one group to share with"
+msgstr "Пожалуйста выберите как минимум одну группу с которой поделиться"
 
 #. module: portal
 #: view:share.wizard:0
 msgid "Details"
-msgstr ""
+msgstr "Подробности"
 
 #. module: portal
 #: model:ir.ui.menu,name:portal.portal_orders
 msgid "Quotations and Sales Orders"
-msgstr ""
+msgstr "Заявки и заказы продаж"
 
 #. module: portal
 #: view:portal.payment.acquirer:0
 msgid "reference: the reference number of the document to pay"
-msgstr ""
+msgstr "ссылка: ссылка на номер документа для оплаты"
 
 #. module: portal
 #: help:portal.payment.acquirer,visible:0
@@ -100,12 +111,12 @@ msgstr ""
 #. module: portal
 #: model:ir.model,name:portal.model_share_wizard
 msgid "Share Wizard"
-msgstr ""
+msgstr "Мастер совместного доступа"
 
 #. module: portal
 #: field:portal.wizard.user,email:0
 msgid "Email"
-msgstr ""
+msgstr "Эл. почта"
 
 #. module: portal
 #: model:ir.actions.client,help:portal.action_news
@@ -115,27 +126,41 @@ msgid ""
 "                </p>\n"
 "            "
 msgstr ""
+"<p>\n"
+"                    У вас нет непрочитанных новостей компании.\n"
+"                </p>\n"
+"            "
 
 #. module: portal
-#: view:portal.wizard:0
-msgid "or"
+#: code:addons/portal/wizard/portal_wizard.py:194
+#, python-format
+msgid ""
+"You must have an email address in your User Preferences to send emails."
 msgstr ""
+"Чтобы отправлять письма, вам нужно указать эл. почту в настройках "
+"пользователя."
 
 #. module: portal
 #: model:ir.actions.client,name:portal.action_jobs
 #: model:ir.ui.menu,name:portal.portal_jobs
 msgid "Jobs"
-msgstr ""
+msgstr "Вакансии"
 
 #. module: portal
 #: field:portal.wizard,user_ids:0
 msgid "Users"
-msgstr ""
+msgstr "Пользователи"
 
 #. module: portal
-#: code:addons/portal/acquirer.py:74
+#: code:addons/portal/acquirer.py:82
 #, python-format
 msgid "Pay safely online"
+msgstr "Оплатить безопасно онлайн"
+
+#. module: portal
+#: code:addons/portal/acquirer.py:77
+#, python-format
+msgid "No online payment acquirers configured"
 msgstr ""
 
 #. module: portal
@@ -154,7 +179,7 @@ msgstr ""
 #: code:addons/portal/wizard/share_wizard.py:38
 #, python-format
 msgid "Users you already shared with"
-msgstr ""
+msgstr "Пользователи с которыми вы уже поделились"
 
 #. module: portal
 #: model:ir.actions.client,help:portal.action_jobs
@@ -166,8 +191,10 @@ msgid ""
 msgstr ""
 
 #. module: portal
-#: model:ir.ui.menu,name:portal.company_jobs_ir_ui_menu
-msgid "Company's jobs"
+#: view:portal.payment.acquirer:0
+msgid ""
+", so it may use Mako expressions.\n"
+"                                The Mako evaluation context provides:"
 msgstr ""
 
 #. module: portal
@@ -176,7 +203,7 @@ msgstr ""
 #: field:res.groups,is_portal:0
 #: model:res.groups,name:portal.group_portal
 msgid "Portal"
-msgstr ""
+msgstr "Портал"
 
 #. module: portal
 #: code:addons/portal/wizard/portal_wizard.py:34
@@ -185,9 +212,9 @@ msgid "Your OpenERP account at %(company)s"
 msgstr ""
 
 #. module: portal
-#: view:portal.payment.acquirer:0
-msgid "cr: the current database cursor"
-msgstr ""
+#: model:res.groups,name:portal.group_anonymous
+msgid "Anonymous"
+msgstr "Анонимно"
 
 #. module: portal
 #: field:portal.wizard.user,in_portal:0
@@ -198,12 +225,12 @@ msgstr ""
 #: model:ir.actions.client,name:portal.action_news
 #: model:ir.ui.menu,name:portal.portal_company_news
 msgid "News"
-msgstr ""
+msgstr "Новости"
 
 #. module: portal
 #: model:ir.ui.menu,name:portal.portal_after_sales
 msgid "After Sale Services"
-msgstr ""
+msgstr "Послепродажное обслуживание"
 
 #. module: portal
 #: model:res.groups,comment:portal.group_portal
@@ -217,51 +244,44 @@ msgstr ""
 #: model:ir.actions.act_window,name:portal.action_acquirer_list
 #: view:portal.payment.acquirer:0
 msgid "Payment Acquirers"
-msgstr ""
+msgstr "Получатели платежа"
 
 #. module: portal
 #: model:ir.ui.menu,name:portal.portal_projects
 msgid "Projects"
-msgstr ""
+msgstr "Проекты"
 
 #. module: portal
 #: model:ir.actions.client,name:portal.action_mail_inbox_feeds_portal
 #: model:ir.ui.menu,name:portal.portal_inbox
 msgid "Inbox"
-msgstr ""
+msgstr "Входящие"
 
 #. module: portal
 #: view:share.wizard:0
 #: field:share.wizard,user_ids:0
 msgid "Existing users"
-msgstr ""
+msgstr "Существующие пользователи"
 
 #. module: portal
 #: field:portal.wizard.user,wizard_id:0
 msgid "Wizard"
-msgstr ""
-
-#. module: portal
-#: view:portal.payment.acquirer:0
-msgid ""
-", so it may use Mako expressions.\n"
-"                                The Mako evaluation context provides:"
-msgstr ""
+msgstr "Мастер"
 
 #. module: portal
 #: field:portal.payment.acquirer,name:0
 msgid "Name"
-msgstr ""
+msgstr "Название"
 
 #. module: portal
 #: model:ir.model,name:portal.model_res_groups
 msgid "Access Groups"
-msgstr ""
+msgstr "Группы доступа"
 
 #. module: portal
 #: view:portal.payment.acquirer:0
 msgid "uid: the current user id"
-msgstr ""
+msgstr "uid: id текущего пользователя"
 
 #. module: portal
 #: view:portal.payment.acquirer:0
@@ -271,46 +291,42 @@ msgid ""
 msgstr ""
 
 #. module: portal
-#: view:portal.payment.acquirer:0
-msgid "amount: the total amount to pay, as a float"
-msgstr ""
-
-#. module: portal
 #: help:res.groups,is_portal:0
 msgid "If checked, this group is usable as a portal."
-msgstr ""
+msgstr "Если отмечено, эта группа может использоваться в портале."
 
 #. module: portal
 #: field:portal.payment.acquirer,form_template:0
 msgid "Payment form template (HTML)"
-msgstr ""
+msgstr "Платеж из шаблона (HTML)"
 
 #. module: portal
 #: field:portal.wizard.user,partner_id:0
 msgid "Contact"
-msgstr ""
+msgstr "Контакт"
 
 #. module: portal
 #: model:ir.model,name:portal.model_mail_mail
 msgid "Outgoing Mails"
-msgstr ""
+msgstr "Исходящие письма"
 
 #. module: portal
-#: code:addons/portal/wizard/portal_wizard.py:194
+#: code:addons/portal/wizard/portal_wizard.py:193
 #, python-format
 msgid "Email required"
-msgstr ""
+msgstr "Требуется эл. почта"
 
 #. module: portal
 #: model:ir.ui.menu,name:portal.portal_messages
 msgid "Messaging"
-msgstr ""
+msgstr "Сообщения"
 
 #. module: portal
-#: code:addons/portal/wizard/portal_wizard.py:195
-#, python-format
+#: model:res.groups,comment:portal.group_anonymous
 msgid ""
-"You must have an email address in your User Preferences to send emails."
+"Anonymous users have specific access rights (such as record rules and "
+"restricted menus).\n"
+"                They usually do not belong to the usual OpenERP groups."
 msgstr ""
 
 #. module: portal
@@ -319,10 +335,20 @@ msgid "Online Payment Acquirer"
 msgstr ""
 
 #. module: portal
-#: view:portal.payment.acquirer:0
+#: model:mail.group,name:portal.company_news_feed
+msgid "Company News"
+msgstr "Новости компании"
+
+#. module: portal
+#: code:addons/portal/acquirer.py:76
+#, python-format
 msgid ""
-"object: the document on which the payment form is rendered (usually an "
-"invoice or sale order record)"
+"You can finish the configuration in the <a href=\"%s\">Bank&Cash settings</a>"
+msgstr ""
+
+#. module: portal
+#: view:portal.payment.acquirer:0
+msgid "cr: the current database cursor"
 msgstr ""
 
 #. module: portal
@@ -339,16 +365,33 @@ msgid ""
 "                </p>\n"
 "            "
 msgstr ""
+"<p>\n"
+"                    Поздравляем! Во входящих пусто.\n"
+"                </p><p>\n"
+"                    Ваши входящие содержат личные сообщения или\n"
+"                    эл. почту отправленную вам а также информацию по "
+"документам\n"
+"                    или людям которых вы отслеживаете.\n"
+"                </p>\n"
+"            "
+
+#. module: portal
+#: view:portal.payment.acquirer:0
+msgid ""
+"object: the document on which the payment form is rendered (usually an "
+"invoice or sales order record)"
+msgstr ""
 
 #. module: portal
 #: help:portal.wizard,welcome_message:0
 msgid "This text is included in the email sent to new users of the portal."
 msgstr ""
+"Этот текст был включен в письмо, отправленное новому пользователю портала."
 
 #. module: portal
 #: model:ir.ui.menu,name:portal.portal_company
 msgid "About Us"
-msgstr ""
+msgstr "О нас"
 
 #. module: portal
 #: view:portal.payment.acquirer:0
@@ -385,6 +428,11 @@ msgid ""
 msgstr ""
 
 #. module: portal
+#: view:portal.wizard:0
+msgid "or"
+msgstr "или"
+
+#. module: portal
 #: model:portal.payment.acquirer,form_template:portal.paypal_acquirer
 msgid ""
 "\n"
@@ -409,7 +457,7 @@ msgstr ""
 #. module: portal
 #: model:ir.model,name:portal.model_portal_wizard_user
 msgid "Portal User Config"
-msgstr ""
+msgstr "Настройка пользователя портала"
 
 #. module: portal
 #: view:portal.payment.acquirer:0
@@ -421,23 +469,23 @@ msgstr ""
 #. module: portal
 #: field:portal.payment.acquirer,visible:0
 msgid "Visible"
-msgstr ""
+msgstr "Видимый"
 
 #. module: portal
 #: code:addons/portal/wizard/share_wizard.py:39
 #, python-format
 msgid "Existing Groups (e.g Portal Groups)"
-msgstr ""
+msgstr "Существующие группы (например группы портала)"
 
 #. module: portal
 #: view:portal.wizard:0
 msgid "Cancel"
-msgstr ""
+msgstr "Отмена"
 
 #. module: portal
 #: view:portal.wizard:0
 msgid "Apply"
-msgstr ""
+msgstr "Применить"
 
 #. module: portal
 #: view:portal.payment.acquirer:0
@@ -452,7 +500,7 @@ msgid ""
 msgstr ""
 
 #. module: portal
-#: code:addons/portal/mail_mail.py:40
+#: code:addons/portal/mail_mail.py:42
 #, python-format
 msgid ""
 "Access your personal documents through <a href=\"%s\">our Customer Portal</a>"
@@ -461,7 +509,7 @@ msgstr ""
 #. module: portal
 #: view:portal.payment.acquirer:0
 msgid "Form Template"
-msgstr ""
+msgstr "Шаблон формы"
 
 #. module: portal
 #: model:ir.actions.act_window,name:portal.partner_wizard_action

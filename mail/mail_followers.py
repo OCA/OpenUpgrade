@@ -75,13 +75,6 @@ class mail_notification(osv.Model):
         if not cr.fetchone():
             cr.execute('CREATE INDEX mail_notification_partner_id_read_starred_message_id ON mail_notification (partner_id, read, starred, message_id)')
 
-    def create(self, cr, uid, vals, context=None):
-        """ Override of create to check that we can not create a notification
-            for a message the user can not read. """
-        if self.pool.get('mail.message').check_access_rights(cr, uid, 'read'):
-            return super(mail_notification, self).create(cr, uid, vals, context=context)
-        return False
-
     def get_partners_to_notify(self, cr, uid, message, context=None):
         """ Return the list of partners to notify, based on their preferences.
 
@@ -92,9 +85,6 @@ class mail_notification(osv.Model):
             if notification.read:
                 continue
             partner = notification.partner_id
-            # Do not send an email to the writer
-            if partner.user_ids and partner.user_ids[0].id == uid:
-                continue
             # Do not send to partners without email address defined
             if not partner.email:
                 continue
@@ -114,8 +104,8 @@ class mail_notification(osv.Model):
         """ Send by email the notification depending on the user preferences """
         if context is None:
             context = {}
-        # mail_noemail (do not send email) or no partner_ids: do not send, return
-        if context.get('mail_noemail'):
+        # mail_notify_noemail (do not send email) or no partner_ids: do not send, return
+        if context.get('mail_notify_noemail'):
             return True
         # browse as SUPERUSER_ID because of access to res_partner not necessarily allowed
         msg = self.pool.get('mail.message').browse(cr, SUPERUSER_ID, msg_id, context=context)
@@ -136,13 +126,26 @@ class mail_notification(osv.Model):
         if signature:
             body_html = tools.append_content_to_html(body_html, signature, plaintext=True, container_tag='div')
 
+        # email_from: partner-user alias or partner email or mail.message email_from
+        if msg.author_id and msg.author_id.user_ids and msg.author_id.user_ids[0].alias_domain and msg.author_id.user_ids[0].alias_name:
+            email_from = '%s <%s@%s>' % (msg.author_id.name, msg.author_id.user_ids[0].alias_name, msg.author_id.user_ids[0].alias_domain)
+        elif msg.author_id:
+            email_from = '%s <%s>' % (msg.author_id.name, msg.author_id.email)
+        else:
+            email_from = msg.email_from
+
         mail_values = {
             'mail_message_id': msg.id,
             'email_to': [],
             'auto_delete': True,
             'body_html': body_html,
+            'email_from': email_from,
             'state': 'outgoing',
         }
         mail_values['email_to'] = ', '.join(mail_values['email_to'])
         email_notif_id = mail_mail.create(cr, uid, mail_values, context=context)
-        return mail_mail.send(cr, uid, [email_notif_id], recipient_ids=notify_partner_ids, context=context)
+        try:
+            return mail_mail.send(cr, uid, [email_notif_id], recipient_ids=notify_partner_ids, context=context)
+        except Exception:
+            return False
+

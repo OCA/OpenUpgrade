@@ -184,7 +184,14 @@ class account_invoice(osv.osv):
     _inherit = ['mail.thread']
     _description = 'Invoice'
     _order = "id desc"
-
+    _track = {
+        'type': {
+        },
+        'state': {
+            'account.mt_invoice_paid': lambda self, cr, uid, obj, ctx=None: obj['state'] == 'paid' and obj['type'] in ('out_invoice', 'out_refund'),
+            'account.mt_invoice_validated': lambda self, cr, uid, obj, ctx=None: obj['state'] == 'open' and obj['type'] in ('out_invoice', 'out_refund'),
+        },
+    }
     _columns = {
         'name': fields.char('Description', size=64, select=True, readonly=True, states={'draft':[('readonly',False)]}),
         'origin': fields.char('Source Document', size=64, help="Reference of the document that produced this invoice.", readonly=True, states={'draft':[('readonly',False)]}),
@@ -194,7 +201,7 @@ class account_invoice(osv.osv):
             ('in_invoice','Supplier Invoice'),
             ('out_refund','Customer Refund'),
             ('in_refund','Supplier Refund'),
-            ],'Type', readonly=True, select=True, change_default=True),
+            ],'Type', readonly=True, select=True, change_default=True, track_visibility='always'),
 
         'number': fields.related('move_id','name', type='char', readonly=True, size=64, relation='account.move', store=True, string='Number'),
         'internal_number': fields.char('Invoice Number', size=32, readonly=True, help="Unique number of the invoice, computed automatically when the invoice is created."),
@@ -210,7 +217,7 @@ class account_invoice(osv.osv):
             ('open','Open'),
             ('paid','Paid'),
             ('cancel','Cancelled'),
-            ],'Status', select=True, readonly=True,
+            ],'Status', select=True, readonly=True, track_visibility='onchange',
             help=' * The \'Draft\' status is used when a user is encoding a new and unconfirmed Invoice. \
             \n* The \'Pro-forma\' when invoice is in Pro-forma status,invoice does not have an invoice number. \
             \n* The \'Open\' status is used when user create invoice,a invoice number is generated.Its in open status till user does not pay invoice. \
@@ -221,8 +228,8 @@ class account_invoice(osv.osv):
         'date_due': fields.date('Due Date', readonly=True, states={'draft':[('readonly',False)]}, select=True,
             help="If you use payment terms, the due date will be computed automatically at the generation "\
                 "of accounting entries. The payment term may compute several due dates, for example 50% now and 50% in one month, but if you want to force a due date, make sure that the payment term is not set on the invoice. If you keep the payment term and the due date empty, it means direct payment."),
-        'partner_id': fields.many2one('res.partner', 'Partner', change_default=True, readonly=True, required=True, states={'draft':[('readonly',False)]}),
-        'payment_term': fields.many2one('account.payment.term', 'Payment Term',readonly=True, states={'draft':[('readonly',False)]},
+        'partner_id': fields.many2one('res.partner', 'Partner', change_default=True, readonly=True, required=True, states={'draft':[('readonly',False)]}, track_visibility='always'),
+        'payment_term': fields.many2one('account.payment.term', 'Payment Terms',readonly=True, states={'draft':[('readonly',False)]},
             help="If you use payment terms, the due date will be computed automatically at the generation "\
                 "of accounting entries. If you keep the payment term and the due date empty, it means direct payment. "\
                 "The payment term may compute several due dates, for example 50% now, 50% in one month."),
@@ -233,7 +240,7 @@ class account_invoice(osv.osv):
         'tax_line': fields.one2many('account.invoice.tax', 'invoice_id', 'Tax Lines', readonly=True, states={'draft':[('readonly',False)]}),
 
         'move_id': fields.many2one('account.move', 'Journal Entry', readonly=True, select=1, ondelete='restrict', help="Link to the automatically generated Journal Items."),
-        'amount_untaxed': fields.function(_amount_all, digits_compute=dp.get_precision('Account'), string='Untaxed',
+        'amount_untaxed': fields.function(_amount_all, digits_compute=dp.get_precision('Account'), string='Subtotal', track_visibility='always',
             store={
                 'account.invoice': (lambda self, cr, uid, ids, c={}: ids, ['invoice_line'], 20),
                 'account.invoice.tax': (_get_invoice_tax, None, 20),
@@ -254,7 +261,7 @@ class account_invoice(osv.osv):
                 'account.invoice.line': (_get_invoice_line, ['price_unit','invoice_line_tax_id','quantity','discount','invoice_id'], 20),
             },
             multi='all'),
-        'currency_id': fields.many2one('res.currency', 'Currency', required=True, readonly=True, states={'draft':[('readonly',False)]}),
+        'currency_id': fields.many2one('res.currency', 'Currency', required=True, readonly=True, states={'draft':[('readonly',False)]}, track_visibility='always'),
         'journal_id': fields.many2one('account.journal', 'Journal', required=True, readonly=True, states={'draft':[('readonly',False)]}),
         'company_id': fields.many2one('res.company', 'Company', required=True, change_default=True, readonly=True, states={'draft':[('readonly',False)]}),
         'check_total': fields.float('Verification Total', digits_compute=dp.get_precision('Account'), readonly=True, states={'draft':[('readonly',False)]}),
@@ -278,7 +285,7 @@ class account_invoice(osv.osv):
             help="Remaining amount due."),
         'payment_ids': fields.function(_compute_lines, relation='account.move.line', type="many2many", string='Payments'),
         'move_name': fields.char('Journal Entry', size=64, readonly=True, states={'draft':[('readonly',False)]}),
-        'user_id': fields.many2one('res.users', 'Salesperson', readonly=True, states={'draft':[('readonly',False)]}),
+        'user_id': fields.many2one('res.users', 'Salesperson', readonly=True, track_visibility='onchange', states={'draft':[('readonly',False)]}),
         'fiscal_position': fields.many2one('account.fiscal.position', 'Fiscal Position', readonly=True, states={'draft':[('readonly',False)]})
     }
     _defaults = {
@@ -301,7 +308,7 @@ class account_invoice(osv.osv):
         '''
         Find the partner for which the accounting entries will be created
         '''
-        #if the chosen partner is not a company and has a parent company, use the parent for the journal entries 
+        #if the chosen partner is not a company and has a parent company, use the parent for the journal entries
         #because you want to invoice 'Agrolait, accounting department' but the journal items are for 'Agrolait'
         part = inv.partner_id
         if part.parent_id and not part.is_company:
@@ -373,10 +380,7 @@ class account_invoice(osv.osv):
         if context is None:
             context = {}
         try:
-            res = super(account_invoice, self).create(cr, uid, vals, context)
-            if res:
-                self.create_send_note(cr, uid, [res], context=context)
-            return res
+            return super(account_invoice, self).create(cr, uid, vals, context)
         except Exception, e:
             if '"journal_id" viol' in e.args[0]:
                 raise orm.except_orm(_('Configuration Error!'),
@@ -415,7 +419,7 @@ class account_invoice(osv.osv):
         try:
             compose_form_id = ir_model_data.get_object_reference(cr, uid, 'mail', 'email_compose_message_wizard_form')[1]
         except ValueError:
-            compose_form_id = False 
+            compose_form_id = False
         ctx = dict(context)
         ctx.update({
             'default_model': 'account.invoice',
@@ -440,7 +444,6 @@ class account_invoice(osv.osv):
         if context is None:
             context = {}
         self.write(cr, uid, ids, {'state':'paid'}, context=context)
-        self.confirm_paid_send_note(cr, uid, ids, context=context)
         return True
 
     def unlink(self, cr, uid, ids, context=None):
@@ -448,11 +451,15 @@ class account_invoice(osv.osv):
             context = {}
         invoices = self.read(cr, uid, ids, ['state','internal_number'], context=context)
         unlink_ids = []
+
         for t in invoices:
-            if t['state'] in ('draft', 'cancel') and t['internal_number']== False:
-                unlink_ids.append(t['id'])
+            if t['state'] not in ('draft', 'cancel'):
+                raise openerp.exceptions.Warning(_('You cannot delete an invoice which is not draft or cancelled. You should refund it instead.'))
+            elif t['internal_number']:
+                raise openerp.exceptions.Warning(_('You cannot delete an invoice after it has been validated (and received a number).  You can set it back to "Draft" state and modify its content, then re-confirm it.'))
             else:
-                raise osv.except_osv(_('Invalid Action!'), _('You can not delete an invoice which is not cancelled. You should refund it instead.'))
+                unlink_ids.append(t['id'])
+
         osv.osv.unlink(self, cr, uid, unlink_ids, context=context)
         return True
 
@@ -537,11 +544,11 @@ class account_invoice(osv.osv):
         return result
 
     def onchange_payment_term_date_invoice(self, cr, uid, ids, payment_term_id, date_invoice):
-        res = {}        
+        res = {}
         if not date_invoice:
             date_invoice = time.strftime('%Y-%m-%d')
         if not payment_term_id:
-            return {'value':{'date_due': date_invoice}} #To make sure the invoice has a due date when no payment term 
+            return {'value':{'date_due': date_invoice}} #To make sure the invoice has a due date when no payment term
         pterm_list = self.pool.get('account.payment.term').compute(cr, uid, payment_term_id, value=1, date_ref=date_invoice)
         if pterm_list:
             pterm_list = [line[0] for line in pterm_list]
@@ -1047,13 +1054,12 @@ class account_invoice(osv.osv):
         self.write(cr, uid, ids, {})
 
         for obj_inv in self.browse(cr, uid, ids, context=context):
-            id = obj_inv.id
             invtype = obj_inv.type
             number = obj_inv.number
             move_id = obj_inv.move_id and obj_inv.move_id.id or False
             reference = obj_inv.reference or ''
 
-            self.write(cr, uid, ids, {'internal_number':number})
+            self.write(cr, uid, ids, {'internal_number': number})
 
             if invtype in ('in_invoice', 'in_refund'):
                 if not reference:
@@ -1074,13 +1080,6 @@ class account_invoice(osv.osv):
                     'WHERE account_move_line.move_id = %s ' \
                         'AND account_analytic_line.move_id = account_move_line.id',
                         (ref, move_id))
-
-            for inv_id, name in self.name_get(cr, uid, [id]):
-                ctx = context.copy()
-                if obj_inv.type in ('out_invoice', 'out_refund'):
-                    ctx = self.get_log_context(cr, uid, context=ctx)
-                message = _("Invoice  '%s' is validated.") % name
-                self.message_post(cr, uid, [inv_id], body=message, context=context)
         return True
 
     def action_cancel(self, cr, uid, ids, context=None):
@@ -1109,7 +1108,6 @@ class account_invoice(osv.osv):
             # will be automatically deleted too
             account_move_obj.unlink(cr, uid, move_ids, context=context)
         self._log_event(cr, uid, ids, -1.0, 'Cancel Invoice')
-        self.invoice_cancel_send_note(cr, uid, ids, context=context)
         return True
 
     ###################
@@ -1151,6 +1149,11 @@ class account_invoice(osv.osv):
         return self.name_get(cr, user, ids, context)
 
     def _refund_cleanup_lines(self, cr, uid, lines, context=None):
+        """Convert records to dict of values suitable for one2many line creation
+
+            :param list(browse_record) lines: records to convert
+            :return: list of command tuple for one2many line creation [(0, 0, dict of valueis), ...]
+        """
         clean_lines = []
         for line in lines:
             clean_line = {}
@@ -1332,43 +1335,14 @@ class account_invoice(osv.osv):
         else:
             code = invoice.currency_id.symbol
             # TODO: use currency's formatting function
-            msg = _("Invoice '%s' is paid partially: %s%s of %s%s (%s%s remaining).") % \
-                    (name, pay_amount, code, invoice.amount_total, code, total, code)
+            msg = _("Invoice partially paid: %s%s of %s%s (%s%s remaining).") % \
+                    (pay_amount, code, invoice.amount_total, code, total, code)
             self.message_post(cr, uid, [inv_id], body=msg, context=context)
             self.pool.get('account.move.line').reconcile_partial(cr, uid, line_ids, 'manual', context)
 
         # Update the stored value (fields.function), so we write to trigger recompute
         self.pool.get('account.invoice').write(cr, uid, ids, {}, context=context)
         return True
-
-    # -----------------------------------------
-    # OpenChatter notifications and need_action
-    # -----------------------------------------
-
-    def _get_document_type(self, type):
-        type_dict = {
-                # Translation markers will have no effect at runtime, only used to properly flag export
-                'out_invoice': _('Customer invoice'),
-                'in_invoice': _('Supplier invoice'),
-                'out_refund': _('Customer Refund'),
-                'in_refund': _('Supplier Refund'),
-        }
-        return type_dict.get(type, 'Invoice')
-
-    def create_send_note(self, cr, uid, ids, context=None):
-        for obj in self.browse(cr, uid, ids, context=context):
-            self.message_post(cr, uid, [obj.id], body=_("%s <b>created</b>.") % (self._get_document_type(obj.type)),
-                subtype="account.mt_invoice_new", context=context)
-
-    def confirm_paid_send_note(self, cr, uid, ids, context=None):
-         for obj in self.browse(cr, uid, ids, context=context):
-            self.message_post(cr, uid, [obj.id], body=_("%s <b>paid</b>.") % (self._get_document_type(obj.type)),
-                subtype="account.mt_invoice_paid", context=context)
-
-    def invoice_cancel_send_note(self, cr, uid, ids, context=None):
-        for obj in self.browse(cr, uid, ids, context=context):
-            self.message_post(cr, uid, [obj.id], body=_("%s <b>cancelled</b>.") % (self._get_document_type(obj.type)),
-                context=context)
 
 
 class account_invoice_line(osv.osv):
@@ -1415,7 +1389,7 @@ class account_invoice_line(osv.osv):
         'product_id': fields.many2one('product.product', 'Product', ondelete='set null', select=True),
         'account_id': fields.many2one('account.account', 'Account', required=True, domain=[('type','<>','view'), ('type', '<>', 'closed')], help="The income or expense account related to the selected product."),
         'price_unit': fields.float('Unit Price', required=True, digits_compute= dp.get_precision('Product Price')),
-        'price_subtotal': fields.function(_amount_line, string='Subtotal', type="float",
+        'price_subtotal': fields.function(_amount_line, string='Amount', type="float",
             digits_compute= dp.get_precision('Account'), store=True),
         'quantity': fields.float('Quantity', digits_compute= dp.get_precision('Product Unit of Measure'), required=True),
         'discount': fields.float('Discount (%)', digits_compute= dp.get_precision('Discount')),
@@ -1429,7 +1403,12 @@ class account_invoice_line(osv.osv):
         # XXX this gets the default account for the user's company,
         # it should get the default account for the invoice's company
         # however, the invoice's company does not reach this point
-        prop = self.pool.get('ir.property').get(cr, uid, 'property_account_income_categ', 'product.category', context=context)
+        if context is None:
+            context = {}
+        if context.get('type') in ('out_invoice','out_refund'):
+            prop = self.pool.get('ir.property').get(cr, uid, 'property_account_income_categ', 'product.category', context=context)
+        else:
+            prop = self.pool.get('ir.property').get(cr, uid, 'property_account_expense_categ', 'product.category', context=context)
         return prop and prop.id or False
 
     _defaults = {
@@ -1519,11 +1498,10 @@ class account_invoice_line(osv.osv):
             new_price = res_final['value']['price_unit'] * currency.rate
             res_final['value']['price_unit'] = new_price
 
-        if result['uos_id'] != res.uom_id.id:
-            selected_uom = self.pool.get('product.uom_id').browse(cr, uid, result['uos_id'], context=context)
-            if res.uom_id.category_id.id == selected_uom.category_id.id:
-                new_price = res_final['value']['price_unit'] * uom_id.factor_inv
-                res_final['value']['price_unit'] = new_price
+        if result['uos_id'] and result['uos_id'] != res.uom_id.id:
+            selected_uom = self.pool.get('product.uom').browse(cr, uid, result['uos_id'], context=context)
+            new_price = self.pool.get('product.uom')._compute_price(cr, uid, res.uom_id.id, res_final['value']['price_unit'], result['uos_id'])
+            res_final['value']['price_unit'] = new_price
         return res_final
 
     def uos_id_change(self, cr, uid, ids, product, uom, qty=0, name='', type='out_invoice', partner_id=False, fposition_id=False, price_unit=False, currency_id=False, context=None, company_id=None):
@@ -1779,12 +1757,13 @@ class res_partner(osv.osv):
         return super(res_partner, self).copy(cr, uid, id, default, context)
 
 
-class mail_compose_message(osv.osv):
+class mail_compose_message(osv.Model):
     _inherit = 'mail.compose.message'
 
     def send_mail(self, cr, uid, ids, context=None):
         context = context or {}
         if context.get('default_model') == 'account.invoice' and context.get('default_res_id') and context.get('mark_invoice_as_sent'):
+            context = dict(context, mail_post_autofollow=True)
             self.pool.get('account.invoice').write(cr, uid, [context['default_res_id']], {'sent': True}, context=context)
         return super(mail_compose_message, self).send_mail(cr, uid, ids, context=context)
 

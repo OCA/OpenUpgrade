@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2012-12-03 16:04+0000\n"
-"PO-Revision-Date: 2012-07-11 03:11+0000\n"
+"POT-Creation-Date: 2012-12-21 17:06+0000\n"
+"PO-Revision-Date: 2013-02-15 02:05+0000\n"
 "Last-Translator: gobi <Unknown>\n"
 "Language-Team: Mongolian <mn@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-04 05:39+0000\n"
-"X-Generator: Launchpad (build 16335)\n"
+"X-Launchpad-Export-Date: 2013-02-16 05:40+0000\n"
+"X-Generator: Launchpad (build 16491)\n"
 
 #. module: project_timesheet
 #: view:report.timesheet.task.user:0
@@ -63,11 +63,6 @@ msgid "Group By..."
 msgstr "Бүлэглэх..."
 
 #. module: project_timesheet
-#: model:process.node,note:project_timesheet.process_node_triggerinvoice0
-msgid "Trigger invoices from sale order lines"
-msgstr "Борлуулалтын захиалгын мөрөөс нэхэмжлэх үүсгэх"
-
-#. module: project_timesheet
 #: selection:report.timesheet.task.user,month:0
 msgid "October"
 msgstr "10-р сар"
@@ -77,7 +72,7 @@ msgstr "10-р сар"
 #: view:project.project:0
 #, python-format
 msgid "Timesheets"
-msgstr ""
+msgstr "Цагийн хуудас"
 
 #. module: project_timesheet
 #: view:project.project:0
@@ -171,7 +166,7 @@ msgstr "Шинэчлэх Гэрээнүүд"
 #. module: project_timesheet
 #: view:project.project:0
 msgid "Hours"
-msgstr ""
+msgstr "Цаг"
 
 #. module: project_timesheet
 #: view:report.timesheet.task.user:0
@@ -182,12 +177,6 @@ msgstr "Огнооны сараар бүлэглэх"
 #: model:ir.model,name:project_timesheet.model_project_task
 msgid "Task"
 msgstr "Даалгавар"
-
-#. module: project_timesheet
-#: model:ir.actions.act_window,name:project_timesheet.action_project_timesheet_bill_task
-#: model:ir.ui.menu,name:project_timesheet.menu_project_billing_line
-msgid "Invoice Tasks Work"
-msgstr "Даалгаврын Ажлыг Нэхэмжлэх"
 
 #. module: project_timesheet
 #: view:report.timesheet.task.user:0
@@ -325,6 +314,11 @@ msgid "Invoicing"
 msgstr "Нэхэмжлэл"
 
 #. module: project_timesheet
+#: model:process.node,note:project_timesheet.process_node_triggerinvoice0
+msgid "Trigger invoices from sales order lines"
+msgstr ""
+
+#. module: project_timesheet
 #: code:addons/project_timesheet/project_timesheet.py:100
 #, python-format
 msgid ""
@@ -345,6 +339,12 @@ msgstr ""
 #: model:process.node,note:project_timesheet.process_node_taskwork0
 msgid "Work on task"
 msgstr "Даалгавар дахь ажил"
+
+#. module: project_timesheet
+#: model:ir.actions.act_window,name:project_timesheet.action_project_timesheet_bill_task
+#: model:ir.ui.menu,name:project_timesheet.menu_project_billing_line
+msgid "Invoice Tasks"
+msgstr ""
 
 #. module: project_timesheet
 #: model:ir.actions.act_window,name:project_timesheet.action_report_timesheet_task_user
@@ -372,7 +372,7 @@ msgstr "Даалгавар дуусмагц харгалзах нэхэмжлэ�
 #: code:addons/project_timesheet/project_timesheet.py:266
 #, python-format
 msgid "Invalid Action!"
-msgstr ""
+msgstr "Буруу Үйлдэл!"
 
 #. module: project_timesheet
 #: view:report.timesheet.task.user:0
@@ -403,119 +403,3 @@ msgstr "Он"
 #: model:process.transition,name:project_timesheet.process_transition_filltimesheet0
 msgid "Fill Timesheet"
 msgstr "Цагийн хуудсыг бөглөх"
-
-#~ msgid "Error ! Task end-date must be greater then task start-date"
-#~ msgstr ""
-#~ "Алдаа ! Даалгаврын дуусах хугацаа нь эхлэх хугацаанаасаа хойно байх ёстой"
-
-#, python-format
-#~ msgid "No employee defined for user \"%s\". You must create one."
-#~ msgstr ""
-#~ "\"%s\" хэрэглэгчид ажилчин тодохойлогдоогүй байна. Тодорхойлох хэрэгтэй."
-
-#~ msgid ""
-#~ "You will find here all works made on tasks that you can invoice.\n"
-#~ "In order to invoice the time spent on a project, you must define the\n"
-#~ "pricelist and the field 'Invoice Task Work' on the tab 'Billing' of\n"
-#~ "the project form."
-#~ msgstr ""
-#~ "Нэхэмжилж болох даалгаврууд дээр хийсэн ажлыг та энд харна.\n"
-#~ "Даалгавар дээр зарцууслан хугацааг нэхэмжлэхийн тулд үнийн хүснэгтийг "
-#~ "тодорхойлох ёстой бөгөөд төслийн формын 'Төлбөр, тооцоо' хавтас дээр "
-#~ "нэхэмжлэх даалгавруудыг тохируулах ёстой."
-
-#~ msgid "Task Hours in current month"
-#~ msgstr "Энэ сар дахь даалгаврын цаг"
-
-#, python-format
-#~ msgid ""
-#~ "You cannot delete a partner which is assigned to project, we suggest you to "
-#~ "uncheck the active box!"
-#~ msgstr ""
-#~ "Та төсөлд оноогдсон харилцагчийг устгах боломжгүй, тиймээс идэвхтэй "
-#~ "тэмдэглэгээг арилгахыг зөвлөе!"
-
-#~ msgid ""
-#~ "You will find here the contracts related to your customer projects in order "
-#~ "to track the invoicing progress."
-#~ msgstr ""
-#~ "Энд захиалагчийн төсөлтэй холбогдсон гэрээнүүдийг харах болно. Энэ нь "
-#~ "нэхэмжлэх явцыг зөвх хянахад туслана."
-
-#, python-format
-#~ msgid "Invalid action !"
-#~ msgstr "Алдаатай үйлдэл !"
-
-#~ msgid "Error ! You cannot create recursive tasks."
-#~ msgstr "Алдаа ! Та рекурсив цэс үүсгэж болохгүй!"
-
-#~ msgid "Error! project start-date must be lower then project end-date."
-#~ msgstr "Алдаа! төслийн эхлэх огноо дуусах огноогоос бага байх ёстой."
-
-#~ msgid "Error! You cannot assign escalation to the same project!"
-#~ msgstr "Алдаа! Ижил төсөлд томруулалтыг олгох боломжгүй."
-
-#~ msgid "Bill Tasks Works"
-#~ msgstr "Даалгаврын ажлуудын тооцоо"
-
-#~ msgid "Customer"
-#~ msgstr "Захиалагч"
-
-#~ msgid "Task Hours in current year"
-#~ msgstr "Энэ жилийн даалгаврын цаг"
-
-#~ msgid "Invoicing Data"
-#~ msgstr "Нэхэмжлэх өгөгдөл"
-
-#~ msgid "Task hours of last month"
-#~ msgstr "Өнгөрсөн сарын ажлын цагууд"
-
-#, python-format
-#~ msgid ""
-#~ "You cannot select a Analytic Account which is in Close or Cancelled state"
-#~ msgstr ""
-#~ "Хаагдсан эсвэл Цуцлагдсан төлөвтэй Шинжилгээний Дансыг сонгох боломжгүй"
-
-#, python-format
-#~ msgid ""
-#~ "No product defined on the related employee.\n"
-#~ "Fill in the timesheet tab of the employee form."
-#~ msgstr ""
-#~ "Холбогдох ажилтан дээр бараа тодорхойлогдоогүй байна.\n"
-#~ "Ажилтны формын цагийн хуудас хавтас дээр бөглөнө үү."
-
-#~ msgid "Error ! You cannot create recursive associated members."
-#~ msgstr "Алдаа ! Рекурсив холбогдсон гишүүдийг үүсгэх боломжгүй."
-
-#~ msgid " Month-1 "
-#~ msgstr " Сар-1 "
-
-#~ msgid "Invoice Task Work"
-#~ msgstr "Даалгаврын Ажлыг Нэхэмжлэх"
-
-#~ msgid "My Timesheet"
-#~ msgstr "Өөрийн цагийн хуудас"
-
-#~ msgid "You can not create analytic line on view account."
-#~ msgstr "Харагдац төрлийн данс дээр шинжилгээний мөрийг үүсгэх боломжгүй."
-
-#, python-format
-#~ msgid ""
-#~ "No product and product category property account defined on the related "
-#~ "employee.\n"
-#~ "Fill in the timesheet tab of the employee form."
-#~ msgstr ""
-#~ "Холбогдох ажилтан дээр бараа болон барааны ангилалын үзүүлэлтийн данс "
-#~ "тодорхойлогдоогүй байна.\n"
-#~ "Ажилтны формын цагийн хуудас хавтсыг бөглөнө үү."
-
-#, python-format
-#~ msgid ""
-#~ "No journal defined on the related employee.\n"
-#~ "Fill in the timesheet tab of the employee form."
-#~ msgstr ""
-#~ "Холбогдох ажилтанд журнал тодорхойлогдоогүй байна.\n"
-#~ "Ажилтны формын цагийн хуудас хавтасыг бөглө."
-
-#~ msgid "Timesheet Lines"
-#~ msgstr "Цагийн хуудсын мөрүүд"

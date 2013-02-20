@@ -1,21 +1,21 @@
 # Turkish translation for openobject-addons
-# Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
 # This file is distributed under the same license as the openobject-addons package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2012-12-03 16:03+0000\n"
-"PO-Revision-Date: 2012-05-10 17:34+0000\n"
-"Last-Translator: Raphael Collet (OpenERP) <Unknown>\n"
+"POT-Creation-Date: 2012-12-21 17:05+0000\n"
+"PO-Revision-Date: 2013-02-08 13:18+0000\n"
+"Last-Translator: Ediz Duman <neps1192@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-04 05:50+0000\n"
-"X-Generator: Launchpad (build 16335)\n"
+"X-Launchpad-Export-Date: 2013-02-09 05:28+0000\n"
+"X-Generator: Launchpad (build 16482)\n"
 
 #. module: base_calendar
 #: selection:calendar.alarm,trigger_related:0
@@ -44,7 +44,7 @@ msgstr ""
 #: selection:calendar.todo,rrule_type:0
 #: selection:crm.meeting,rrule_type:0
 msgid "Week(s)"
-msgstr ""
+msgstr "Hafta(lar)"
 
 #. module: base_calendar
 #: field:calendar.event,we:0
@@ -68,13 +68,7 @@ msgstr "Yinelenen Toplantı"
 #. module: base_calendar
 #: model:crm.meeting.type,name:base_calendar.categ_meet5
 msgid "Feedback Meeting"
-msgstr ""
-
-#. module: base_calendar
-#: code:addons/base_calendar/crm_meeting.py:117
-#, python-format
-msgid "Meeting <b>completed</b>."
-msgstr ""
+msgstr "Geribildirim Toplantısı"
 
 #. module: base_calendar
 #: model:ir.actions.act_window,name:base_calendar.action_res_alarm_view
@@ -151,7 +145,7 @@ msgstr "Davet türünü belirle"
 #: view:crm.meeting:0
 #: field:crm.meeting,message_unread:0
 msgid "Unread Messages"
-msgstr ""
+msgstr "Okunmamış Mesajlar"
 
 #. module: base_calendar
 #: selection:calendar.event,week_list:0
@@ -172,7 +166,7 @@ msgstr "Tüm Gün"
 #: field:calendar.todo,vtimezone:0
 #: field:crm.meeting,vtimezone:0
 msgid "Timezone"
-msgstr "Saat dilimi"
+msgstr "ZamanDilimi"
 
 #. module: base_calendar
 #: selection:calendar.attendee,availability:0
@@ -186,7 +180,7 @@ msgstr "Serbest"
 #. module: base_calendar
 #: help:crm.meeting,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr ""
+msgstr "Eğer işaretlenirse yeni mesajlar dikkatinizi gerektirecek"
 
 #. module: base_calendar
 #: help:calendar.attendee,rsvp:0
@@ -213,7 +207,7 @@ msgstr "Etkinlik Ref"
 #: field:calendar.todo,tu:0
 #: field:crm.meeting,tu:0
 msgid "Tue"
-msgstr "Sa"
+msgstr "Sal"
 
 #. module: base_calendar
 #: selection:calendar.event,byday:0
@@ -238,12 +232,12 @@ msgstr "Sonuncu"
 #. module: base_calendar
 #: help:crm.meeting,message_ids:0
 msgid "Messages and communication history"
-msgstr ""
+msgstr "Mesajlar ve İletişim Geçmişi"
 
 #. module: base_calendar
 #: field:crm.meeting,message_ids:0
 msgid "Messages"
-msgstr ""
+msgstr "Mesajlar"
 
 #. module: base_calendar
 #: selection:calendar.alarm,trigger_interval:0
@@ -257,7 +251,7 @@ msgid "To"
 msgstr "Kime"
 
 #. module: base_calendar
-#: code:addons/base_calendar/base_calendar.py:1225
+#: code:addons/base_calendar/base_calendar.py:1255
 #, python-format
 msgid "Error!"
 msgstr "Hata!"
@@ -270,12 +264,19 @@ msgstr "Başkan"
 #. module: base_calendar
 #: view:crm.meeting:0
 msgid "My Meetings"
-msgstr ""
+msgstr "Toplantılarım"
 
 #. module: base_calendar
 #: selection:calendar.alarm,action:0
 msgid "Procedure"
 msgstr "Yöntem"
+
+#. module: base_calendar
+#: field:calendar.event,recurrent_id:0
+#: field:calendar.todo,recurrent_id:0
+#: field:crm.meeting,recurrent_id:0
+msgid "Recurrent ID"
+msgstr "Tekrarlayan ID"
 
 #. module: base_calendar
 #: selection:calendar.event,state:0
@@ -302,22 +303,22 @@ msgstr "Katılımcının iştirak durumu"
 #. module: base_calendar
 #: view:crm.meeting:0
 msgid "Mail To"
-msgstr ""
+msgstr "Kime"
 
 #. module: base_calendar
 #: field:crm.meeting,name:0
 msgid "Meeting Subject"
-msgstr ""
+msgstr "Toplantı Konusu"
 
 #. module: base_calendar
 #: view:calendar.event:0
 msgid "End of Recurrence"
-msgstr ""
+msgstr "Tekrar sonu"
 
 #. module: base_calendar
 #: view:calendar.event:0
 msgid "Group By..."
-msgstr "Gruplandır..."
+msgstr "Gruplan İle..."
 
 #. module: base_calendar
 #: view:calendar.event:0
@@ -333,17 +334,12 @@ msgstr "Görüşmenin tekrarlanacağı günü seç"
 #: view:crm.meeting:0
 #: model:ir.actions.act_window,name:base_calendar.action_crm_meeting
 msgid "Meetings"
-msgstr ""
+msgstr "Toplantılar"
 
 #. module: base_calendar
-#: selection:calendar.attendee,cutype:0
-msgid "Room"
-msgstr "Oda"
-
-#. module: base_calendar
-#: field:calendar.event,recurrent_id:0
-#: field:calendar.todo,recurrent_id:0
-#: field:crm.meeting,recurrent_id:0
+#: field:calendar.event,recurrent_id_date:0
+#: field:calendar.todo,recurrent_id_date:0
+#: field:crm.meeting,recurrent_id_date:0
 msgid "Recurrent ID date"
 msgstr "Yinelenen Kimlik tarihi"
 
@@ -364,13 +360,15 @@ msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
 msgstr ""
+"Mesajlaşma özetini tutar (mesajların sayısı, ...). Bu özet kanban "
+"ekranlarına eklenebilmesi için html biçimindedir."
 
 #. module: base_calendar
-#: code:addons/base_calendar/base_calendar.py:388
-#: code:addons/base_calendar/base_calendar.py:417
-#: code:addons/base_calendar/base_calendar.py:980
-#: code:addons/base_calendar/base_calendar.py:982
-#: code:addons/base_calendar/base_calendar.py:1430
+#: code:addons/base_calendar/base_calendar.py:399
+#: code:addons/base_calendar/base_calendar.py:444
+#: code:addons/base_calendar/base_calendar.py:1008
+#: code:addons/base_calendar/base_calendar.py:1010
+#: code:addons/base_calendar/base_calendar.py:1455
 #, python-format
 msgid "Warning!"
 msgstr "Uyarı!"
@@ -448,7 +446,7 @@ msgstr "Katılımcılar"
 #. module: base_calendar
 #: view:calendar.event:0
 msgid "Confirm"
-msgstr "Onayla"
+msgstr "Onaylama"
 
 #. module: base_calendar
 #: model:ir.model,name:base_calendar.model_calendar_todo
@@ -487,14 +485,14 @@ msgstr "Ayın günü"
 #. module: base_calendar
 #: field:crm.meeting,message_follower_ids:0
 msgid "Followers"
-msgstr ""
+msgstr "Takipçiler"
 
 #. module: base_calendar
 #: field:calendar.event,location:0
 #: field:calendar.todo,location:0
 #: field:crm.meeting,location:0
 msgid "Location"
-msgstr "Konum"
+msgstr "Lokasyon"
 
 #. module: base_calendar
 #: selection:calendar.attendee,role:0
@@ -507,7 +505,7 @@ msgstr "Katılım gerekli"
 #: field:calendar.todo,show_as:0
 #: field:crm.meeting,show_as:0
 msgid "Show Time as"
-msgstr "Saati şöyle göster"
+msgstr "Zamanı şöyle göster"
 
 #. module: base_calendar
 #: selection:calendar.alarm,action:0
@@ -516,9 +514,9 @@ msgid "Email"
 msgstr "Eposta"
 
 #. module: base_calendar
-#: model:ir.actions.server,name:base_calendar.actions_server_crm_meeting_unread
-msgid "CRM Meeting: Mark unread"
-msgstr ""
+#: selection:calendar.attendee,cutype:0
+msgid "Room"
+msgstr "Oda"
 
 #. module: base_calendar
 #: selection:calendar.alarm,state:0
@@ -531,31 +529,29 @@ msgid "Event alarm information"
 msgstr "Etkinlik alarm bilgisi"
 
 #. module: base_calendar
-#: code:addons/base_calendar/base_calendar.py:982
+#: code:addons/base_calendar/base_calendar.py:1010
 #, python-format
 msgid "Count cannot be negative or 0."
-msgstr ""
+msgstr "Sayım negatif ya da 0 olamaz."
 
 #. module: base_calendar
 #: field:crm.meeting,create_date:0
 msgid "Creation Date"
-msgstr ""
+msgstr "Oluşturma Tarihi"
 
 #. module: base_calendar
-#: code:addons/base_calendar/crm_meeting.py:111
 #: view:crm.meeting:0
 #: model:ir.model,name:base_calendar.model_crm_meeting
 #: model:res.request.link,name:base_calendar.request_link_meeting
-#, python-format
 msgid "Meeting"
-msgstr ""
+msgstr "Toplantı"
 
 #. module: base_calendar
 #: selection:calendar.event,rrule_type:0
 #: selection:calendar.todo,rrule_type:0
 #: selection:crm.meeting,rrule_type:0
 msgid "Month(s)"
-msgstr ""
+msgstr "Ay"
 
 #. module: base_calendar
 #: view:calendar.event:0
@@ -575,11 +571,9 @@ msgid "Caldav URL"
 msgstr "Caldav URL si"
 
 #. module: base_calendar
-#: field:calendar.event,recurrent_uid:0
-#: field:calendar.todo,recurrent_uid:0
-#: field:crm.meeting,recurrent_uid:0
-msgid "Recurrent ID"
-msgstr "Tekrarlayan ID"
+#: model:ir.model,name:base_calendar.model_mail_wizard_invite
+msgid "Invite wizard"
+msgstr "Davet sihirbazı"
 
 #. module: base_calendar
 #: selection:calendar.event,month_list:0
@@ -603,7 +597,7 @@ msgstr "Per"
 #. module: base_calendar
 #: view:crm.meeting:0
 msgid "Meeting Details"
-msgstr ""
+msgstr "Toplantı Ayrıntıları"
 
 #. module: base_calendar
 #: field:calendar.attendee,child_ids:0
@@ -611,24 +605,24 @@ msgid "Delegrated To"
 msgstr "Şuna Yetkilendirildi"
 
 #. module: base_calendar
-#: code:addons/base_calendar/crm_meeting.py:94
+#: code:addons/base_calendar/crm_meeting.py:102
 #, python-format
 msgid "The following contacts have no email address :"
-msgstr ""
+msgstr "Aşağıdaki kişilerin e-posta adresini Yok :"
 
 #. module: base_calendar
 #: selection:calendar.event,rrule_type:0
 #: selection:calendar.todo,rrule_type:0
 #: selection:crm.meeting,rrule_type:0
 msgid "Year(s)"
-msgstr ""
+msgstr "Yıl"
 
 #. module: base_calendar
 #: view:crm.meeting.type:0
 #: model:ir.actions.act_window,name:base_calendar.action_crm_meeting_type
 #: model:ir.ui.menu,name:base_calendar.menu_crm_meeting_type
 msgid "Meeting Types"
-msgstr ""
+msgstr "Toplantı Türü"
 
 #. module: base_calendar
 #: field:calendar.event,create_date:0
@@ -646,12 +640,12 @@ msgstr "Çalışanlara açık"
 #. module: base_calendar
 #: view:crm.meeting:0
 msgid "hours"
-msgstr ""
+msgstr "saat"
 
 #. module: base_calendar
 #: field:calendar.attendee,partner_id:0
 msgid "Contact"
-msgstr "İlgili"
+msgstr "Kontak"
 
 #. module: base_calendar
 #: field:calendar.attendee,language:0
@@ -663,12 +657,12 @@ msgstr "Dil"
 #: field:calendar.todo,end_date:0
 #: field:crm.meeting,end_date:0
 msgid "Repeat Until"
-msgstr "kadar tekrarla"
+msgstr "Kadar Tekrarla"
 
 #. module: base_calendar
 #: view:crm.meeting:0
 msgid "Options"
-msgstr ""
+msgstr "Şeçenekler"
 
 #. module: base_calendar
 #: selection:calendar.event,byday:0
@@ -707,7 +701,7 @@ msgstr "Salı"
 #. module: base_calendar
 #: field:crm.meeting,categ_ids:0
 msgid "Tags"
-msgstr ""
+msgstr "Etiketler"
 
 #. module: base_calendar
 #: view:calendar.event:0
@@ -718,12 +712,6 @@ msgstr "Elverişlilik"
 #: selection:calendar.attendee,cutype:0
 msgid "Individual"
 msgstr "Bireysel"
-
-#. module: base_calendar
-#: code:addons/base_calendar/crm_meeting.py:114
-#, python-format
-msgid "Meeting <b>confirmed</b>."
-msgstr ""
 
 #. module: base_calendar
 #: help:calendar.event,count:0
@@ -747,12 +735,12 @@ msgstr "Belirli aralıklarla olayın otomatik olarak tekrarlamasına izin ver"
 #. module: base_calendar
 #: model:ir.ui.menu,name:base_calendar.mail_menu_calendar
 msgid "Calendar"
-msgstr ""
+msgstr "Takvim"
 
 #. module: base_calendar
 #: field:calendar.attendee,cn:0
 msgid "Common name"
-msgstr "Genel ad"
+msgstr "Genel adı"
 
 #. module: base_calendar
 #: selection:calendar.attendee,state:0
@@ -760,10 +748,11 @@ msgid "Declined"
 msgstr "Reddedildi"
 
 #. module: base_calendar
-#: code:addons/base_calendar/base_calendar.py:1430
+#: code:addons/base_calendar/base_calendar.py:1455
 #, python-format
 msgid "Group by date is not supported, use the calendar view instead."
 msgstr ""
+"Tarihe göre Grup desteklenmiyor, bunun yerine takvim görünümünü kullanın"
 
 #. module: base_calendar
 #: view:calendar.event:0
@@ -795,13 +784,6 @@ msgstr "Gizlilik"
 #: model:ir.model,name:base_calendar.model_res_alarm
 msgid "Basic Alarm Information"
 msgstr "Temel Alarm Bilgisi"
-
-#. module: base_calendar
-#: field:calendar.event,mo:0
-#: field:calendar.todo,mo:0
-#: field:crm.meeting,mo:0
-msgid "Mon"
-msgstr "Pzt"
 
 #. module: base_calendar
 #: field:calendar.event,fr:0
@@ -847,7 +829,7 @@ msgstr "Ek"
 #. module: base_calendar
 #: field:crm.meeting,date_closed:0
 msgid "Closed"
-msgstr ""
+msgstr "Kapatıldı"
 
 #. module: base_calendar
 #: view:calendar.event:0
@@ -872,7 +854,7 @@ msgstr "Tekrar Sayısı"
 #. module: base_calendar
 #: model:crm.meeting.type,name:base_calendar.categ_meet2
 msgid "Internal Meeting"
-msgstr ""
+msgstr "Dahili Toplantı"
 
 #. module: base_calendar
 #: view:calendar.event:0
@@ -889,7 +871,7 @@ msgstr "Olaylar"
 #: field:calendar.todo,state:0
 #: field:crm.meeting,state:0
 msgid "Status"
-msgstr ""
+msgstr "Durumu"
 
 #. module: base_calendar
 #: help:calendar.attendee,email:0
@@ -899,7 +881,7 @@ msgstr "Davetli Kişinin Epostası"
 #. module: base_calendar
 #: model:crm.meeting.type,name:base_calendar.categ_meet1
 msgid "Customer Meeting"
-msgstr ""
+msgstr "Müşteri Toplantısı"
 
 #. module: base_calendar
 #: help:calendar.attendee,dir:0
@@ -925,7 +907,7 @@ msgstr "Pazartesi"
 #. module: base_calendar
 #: model:crm.meeting.type,name:base_calendar.categ_meet4
 msgid "Open Discussion"
-msgstr ""
+msgstr "Açık Tartışmaları"
 
 #. module: base_calendar
 #: model:ir.model,name:base_calendar.model_ir_model
@@ -949,7 +931,7 @@ msgstr "Etkinlik Tarihi"
 #. module: base_calendar
 #: view:crm.meeting:0
 msgid "Invitations"
-msgstr ""
+msgstr "Davetler"
 
 #. module: base_calendar
 #: view:calendar.event:0
@@ -960,7 +942,7 @@ msgstr "Bu"
 #. module: base_calendar
 #: field:crm.meeting,write_date:0
 msgid "Write Date"
-msgstr ""
+msgstr "Yazım Tarihi"
 
 #. module: base_calendar
 #: field:calendar.attendee,delegated_from:0
@@ -970,7 +952,7 @@ msgstr "Temsil Edilen"
 #. module: base_calendar
 #: field:crm.meeting,message_is_follower:0
 msgid "Is a Follower"
-msgstr ""
+msgstr "Bir Takipçi mi"
 
 #. module: base_calendar
 #: field:calendar.attendee,user_id:0
@@ -1002,10 +984,11 @@ msgid "Indicate the groups that the attendee belongs to"
 msgstr "Katılanın bağlı olduğu grubu belirt"
 
 #. module: base_calendar
-#: field:crm.meeting,message_comment_ids:0
-#: help:crm.meeting,message_comment_ids:0
-msgid "Comments and emails"
-msgstr ""
+#: field:calendar.event,mo:0
+#: field:calendar.todo,mo:0
+#: field:crm.meeting,mo:0
+msgid "Mon"
+msgstr "Pzt"
 
 #. module: base_calendar
 #: selection:calendar.event,month_list:0
@@ -1028,7 +1011,7 @@ msgstr "Belirsiz"
 #: constraint:calendar.todo:0
 #: constraint:crm.meeting:0
 msgid "Error ! End date cannot be set before start date."
-msgstr ""
+msgstr "Hata! Bitiş tarihi başlangıç ​​tarihinden önce ayarlanamaz."
 
 #. module: base_calendar
 #: field:calendar.alarm,trigger_occurs:0
@@ -1047,7 +1030,7 @@ msgstr "Ocak"
 #: field:calendar.alarm,trigger_related:0
 #: field:res.alarm,trigger_related:0
 msgid "Related to"
-msgstr "Bağlı olduğu"
+msgstr "İlişkili"
 
 #. module: base_calendar
 #: field:calendar.alarm,trigger_interval:0
@@ -1056,16 +1039,11 @@ msgid "Interval"
 msgstr "Aralık"
 
 #. module: base_calendar
-#: model:ir.actions.server,name:base_calendar.actions_server_crm_meeting_read
-msgid "CRM Meeting: Mark read"
-msgstr ""
-
-#. module: base_calendar
 #: selection:calendar.event,week_list:0
 #: selection:calendar.todo,week_list:0
 #: selection:crm.meeting,week_list:0
 msgid "Wednesday"
-msgstr "Çarşamba"
+msgstr "Çarşamba"
 
 #. module: base_calendar
 #: field:calendar.alarm,name:0
@@ -1084,7 +1062,7 @@ msgid "Active"
 msgstr "Etkin"
 
 #. module: base_calendar
-#: code:addons/base_calendar/base_calendar.py:388
+#: code:addons/base_calendar/base_calendar.py:399
 #, python-format
 msgid "You cannot duplicate a calendar attendee."
 msgstr "Takvim katılımcısını çoğaltamazsınız."
@@ -1097,7 +1075,7 @@ msgstr "Ay içinde görüşmenin tekrarlanacağı günü seç"
 #. module: base_calendar
 #: field:calendar.alarm,action:0
 msgid "Action"
-msgstr "Eylem"
+msgstr "İşlem"
 
 #. module: base_calendar
 #: help:calendar.alarm,duration:0
@@ -1127,14 +1105,14 @@ msgstr "Alarm tetiklendiğinde başlatılacak eylemi tanımlar"
 #. module: base_calendar
 #: view:crm.meeting:0
 msgid "Starting at"
-msgstr ""
+msgstr "Başlama"
 
 #. module: base_calendar
 #: selection:calendar.event,end_type:0
 #: selection:calendar.todo,end_type:0
 #: selection:crm.meeting,end_type:0
 msgid "End date"
-msgstr "Bitiş tarihi"
+msgstr "Tarihi'de"
 
 #. module: base_calendar
 #: view:calendar.event:0
@@ -1156,12 +1134,12 @@ msgstr ""
 #: field:calendar.todo,end_type:0
 #: field:crm.meeting,end_type:0
 msgid "Recurrence Termination"
-msgstr ""
+msgstr "Tekrar Sonlandırma"
 
 #. module: base_calendar
 #: view:crm.meeting:0
 msgid "Until"
-msgstr ""
+msgstr "Kadar"
 
 #. module: base_calendar
 #: view:res.alarm:0
@@ -1171,17 +1149,17 @@ msgstr "Anımsatma Ayrıntıları"
 #. module: base_calendar
 #: model:crm.meeting.type,name:base_calendar.categ_meet3
 msgid "Off-site Meeting"
-msgstr ""
+msgstr "Dışarı Toplantısı"
 
 #. module: base_calendar
 #: view:crm.meeting:0
 msgid "Day of Month"
-msgstr ""
+msgstr "Ayın Günü"
 
 #. module: base_calendar
 #: selection:calendar.alarm,state:0
 msgid "Done"
-msgstr "Bitti"
+msgstr "Biten"
 
 #. module: base_calendar
 #: help:calendar.event,interval:0
@@ -1193,12 +1171,12 @@ msgstr "Her (Gün/Hafta/Ay/Yıl) Tekrarla"
 #. module: base_calendar
 #: view:crm.meeting:0
 msgid "All Day?"
-msgstr ""
+msgstr "Tüm Gün?"
 
 #. module: base_calendar
 #: view:calendar.event:0
 msgid "Cancel"
-msgstr "Vazgeç"
+msgstr "İptal"
 
 #. module: base_calendar
 #: model:ir.actions.act_window,help:base_calendar.action_crm_meeting
@@ -1214,6 +1192,14 @@ msgid ""
 "          </p>\n"
 "        "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"            Yeni bir toplantı planlamak için tıklayın.\n"
+"          </p><p>\n"
+"            Takvim çalışanlar arasında paylaşılır ve çalışan tatilleri \n"
+"            ya da iş fırsatları gibi diğer uygulamalarla \n"
+"            tam entegredir.\n"
+"          </p>\n"
+"        "
 
 #. module: base_calendar
 #: help:calendar.alarm,description:0
@@ -1233,10 +1219,10 @@ msgstr "Sorumlu Kullanıcı"
 #. module: base_calendar
 #: view:crm.meeting:0
 msgid "Select Weekdays"
-msgstr ""
+msgstr "Haftanıngünleri seçin"
 
 #. module: base_calendar
-#: code:addons/base_calendar/base_calendar.py:1489
+#: code:addons/base_calendar/base_calendar.py:1514
 #: selection:calendar.attendee,availability:0
 #: selection:calendar.event,show_as:0
 #: selection:calendar.todo,show_as:0
@@ -1270,14 +1256,14 @@ msgstr "Yineleme"
 #: selection:calendar.todo,week_list:0
 #: selection:crm.meeting,week_list:0
 msgid "Thursday"
-msgstr "Perşembe"
+msgstr "Perşembe"
 
 #. module: base_calendar
 #: field:calendar.event,exrule:0
 #: field:calendar.todo,exrule:0
 #: field:crm.meeting,exrule:0
 msgid "Exception Rule"
-msgstr "Muafşyet Kuralı"
+msgstr "İstisna Kural"
 
 #. module: base_calendar
 #: help:calendar.attendee,language:0
@@ -1314,7 +1300,7 @@ msgstr "Ay"
 #: selection:calendar.todo,rrule_type:0
 #: selection:crm.meeting,rrule_type:0
 msgid "Day(s)"
-msgstr ""
+msgstr "Gün"
 
 #. module: base_calendar
 #: view:calendar.event:0
@@ -1363,12 +1349,17 @@ msgstr "ir.values"
 #. module: base_calendar
 #: view:crm.meeting:0
 msgid "Search Meetings"
-msgstr ""
+msgstr "Toplantı Aramam"
+
+#. module: base_calendar
+#: model:ir.model,name:base_calendar.model_ir_attachment
+msgid "ir.attachment"
+msgstr "ir.ek"
 
 #. module: base_calendar
 #: model:ir.model,name:base_calendar.model_crm_meeting_type
 msgid "Meeting Type"
-msgstr ""
+msgstr "Toplantı Türü"
 
 #. module: base_calendar
 #: selection:calendar.attendee,state:0
@@ -1394,11 +1385,19 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Yeni bir uyarı türü ayarlamak için tıklayın.\n"
+"              </p><p>\n"
+"                Takvim etkinlikleri ve toplantılara atanabilecek "
+"özelleştirilmiş \n"
+"                bir takvim uyarısı türü tanımlayabilirsiniz.\n"
+"              </p>\n"
+"            "
 
 #. module: base_calendar
 #: selection:crm.meeting,state:0
 msgid "Unconfirmed"
-msgstr ""
+msgstr "Onaysız"
 
 #. module: base_calendar
 #: help:calendar.attendee,sent_by:0
@@ -1418,7 +1417,7 @@ msgstr "Bitiş Tarihi"
 #: selection:calendar.todo,month_list:0
 #: selection:crm.meeting,month_list:0
 msgid "February"
-msgstr "Şubat"
+msgstr "Şubat"
 
 #. module: base_calendar
 #: selection:calendar.attendee,cutype:0
@@ -1429,7 +1428,7 @@ msgstr "Kaynak"
 #: field:crm.meeting.type,name:0
 #: field:res.alarm,name:0
 msgid "Name"
-msgstr "Ad"
+msgstr "Adı"
 
 #. module: base_calendar
 #: field:calendar.event,exdate:0
@@ -1448,6 +1447,11 @@ msgstr ""
 "kullanılacak metni içerir."
 
 #. module: base_calendar
+#: model:ir.model,name:base_calendar.model_mail_message
+msgid "Message"
+msgstr "Mesaj"
+
+#. module: base_calendar
 #: field:calendar.event,base_calendar_alarm_id:0
 #: field:calendar.todo,base_calendar_alarm_id:0
 #: field:crm.meeting,base_calendar_alarm_id:0
@@ -1457,7 +1461,7 @@ msgstr "Alarm"
 #. module: base_calendar
 #: field:calendar.attendee,sent_by_uid:0
 msgid "Sent By User"
-msgstr "Şu Kullanıcı tarafından gönderildi"
+msgstr "Gönderen Kullanıcı"
 
 #. module: base_calendar
 #: selection:calendar.event,month_list:0
@@ -1467,10 +1471,10 @@ msgid "April"
 msgstr "Nisan"
 
 #. module: base_calendar
-#: code:addons/base_calendar/crm_meeting.py:98
+#: code:addons/base_calendar/crm_meeting.py:106
 #, python-format
 msgid "Email addresses not found"
-msgstr ""
+msgstr "E-posta adresleri bulunamadı"
 
 #. module: base_calendar
 #: view:calendar.event:0
@@ -1482,13 +1486,13 @@ msgstr "Yineleme Dönemi"
 #: field:calendar.todo,week_list:0
 #: field:crm.meeting,week_list:0
 msgid "Weekday"
-msgstr "Hafta İçi"
+msgstr "HaftanınGünü"
 
 #. module: base_calendar
-#: code:addons/base_calendar/base_calendar.py:980
+#: code:addons/base_calendar/base_calendar.py:1008
 #, python-format
 msgid "Interval cannot be negative."
-msgstr ""
+msgstr "Aralıklı negatif olamaz"
 
 #. module: base_calendar
 #: field:calendar.event,byday:0
@@ -1498,10 +1502,10 @@ msgid "By day"
 msgstr "Gündüz"
 
 #. module: base_calendar
-#: code:addons/base_calendar/base_calendar.py:417
+#: code:addons/base_calendar/base_calendar.py:444
 #, python-format
 msgid "First you have to specify the date of the invitation."
-msgstr ""
+msgstr "İlk davet tarihinden belirtmeniz gerekir."
 
 #. module: base_calendar
 #: field:calendar.alarm,model_id:0
@@ -1518,7 +1522,7 @@ msgstr "Ses"
 #: field:calendar.todo,id:0
 #: field:crm.meeting,id:0
 msgid "ID"
-msgstr "Kimlik"
+msgstr "ID"
 
 #. module: base_calendar
 #: selection:calendar.attendee,role:0
@@ -1530,7 +1534,7 @@ msgstr "Bilgi Amaçlı"
 #: field:calendar.todo,select1:0
 #: field:crm.meeting,select1:0
 msgid "Option"
-msgstr "Seçenek"
+msgstr "Opsiyon"
 
 #. module: base_calendar
 #: model:ir.model,name:base_calendar.model_calendar_attendee
@@ -1540,12 +1544,12 @@ msgstr "Katılımcı Bilgisi"
 #. module: base_calendar
 #: field:calendar.alarm,res_id:0
 msgid "Resource ID"
-msgstr "Kaynak Kimliği"
+msgstr "Kaynak ID"
 
 #. module: base_calendar
 #: selection:calendar.attendee,state:0
 msgid "Needs Action"
-msgstr "Eylem Gerekir"
+msgstr "Gereki İşlemler"
 
 #. module: base_calendar
 #: field:calendar.attendee,sent_by:0
@@ -1557,7 +1561,7 @@ msgstr "Gönderen"
 #: field:calendar.todo,sequence:0
 #: field:crm.meeting,sequence:0
 msgid "Sequence"
-msgstr "Diziliş"
+msgstr "Sıralama"
 
 #. module: base_calendar
 #: help:calendar.event,alarm_id:0
@@ -1570,7 +1574,7 @@ msgstr "Bu sefer etkinlik başlamadan önce alarm ayarla"
 #: view:calendar.event:0
 #: view:crm.meeting:0
 msgid "Accept"
-msgstr "Kabul et"
+msgstr "Kabulet"
 
 #. module: base_calendar
 #: selection:calendar.event,week_list:0
@@ -1584,7 +1588,7 @@ msgstr "Cumartesi"
 #: field:calendar.todo,interval:0
 #: field:crm.meeting,interval:0
 msgid "Repeat Every"
-msgstr ""
+msgstr "Herzaman Tekrarla"
 
 #. module: base_calendar
 #: selection:calendar.event,byday:0
@@ -1639,316 +1643,3 @@ msgstr ""
 #: selection:crm.meeting,byday:0
 msgid "Fifth"
 msgstr "Beşinci"
-
-#~ msgid "Title"
-#~ msgstr "Unvan"
-
-#~ msgid "Invited User"
-#~ msgstr "Davetli Kullanıcı"
-
-#~ msgid " "
-#~ msgstr " "
-
-#~ msgid "Hourly"
-#~ msgstr "Saatlik"
-
-#~ msgid "The chosen company is not in the allowed companies for this user"
-#~ msgstr "Seçilen firma bu kullanıcı için izin verilen şirketler arasında yok"
-
-#~ msgid "Monthly"
-#~ msgstr "Aylık"
-
-#~ msgid "Required to Join"
-#~ msgstr "Katılım Gerekir"
-
-#~ msgid "Invitation"
-#~ msgstr "Davet"
-
-#~ msgid "Show as"
-#~ msgstr "Göster"
-
-#, python-format
-#~ msgid "Warning !"
-#~ msgstr "Uyarı !"
-
-#~ msgid "Yearly"
-#~ msgstr "Yıllık"
-
-#~ msgid "Show time as"
-#~ msgstr "Saati şöyle göster"
-
-#~ msgid "Edit all Occurrences"
-#~ msgstr "Bütün olayları düzenle"
-
-#~ msgid "Secondly"
-#~ msgstr "İkinci olarak"
-
-#~ msgid "Invitation type"
-#~ msgstr "Davet türü"
-
-#~ msgid ""
-#~ "Full featured calendar system that supports:\n"
-#~ "    - Calendar of events\n"
-#~ "    - Alerts (create requests)\n"
-#~ "    - Recurring events\n"
-#~ "    - Invitations to people"
-#~ msgstr ""
-#~ "Çok özellikli takvim sistemi şunları destekler:\n"
-#~ "    - Takvim etkinlikleri\n"
-#~ "    - Uyarılar (istekler oluşturun)\n"
-#~ "    - Yinelenen etkinlikler\n"
-#~ "    - Kişilerin davet edilmesi"
-
-#~ msgid "Deadline"
-#~ msgstr "Bitiş tarihi"
-
-#~ msgid "Basic Calendar Functionality"
-#~ msgstr "Temel Takvim İşlevselliği"
-
-#~ msgid "Provide external email address who will receive this invitation."
-#~ msgstr "Bu daveti alacak olanın dış eposta adresini verin."
-
-#~ msgid "Years"
-#~ msgstr "Yıl"
-
-#~ msgid "Edit all Occurrences  of recurrent Meeting."
-#~ msgstr "Yinelenen Toplantıya ait bütün Olayları Düzenle."
-
-#~ msgid "Edit all events"
-#~ msgstr "Bütün etkinlikleri düzenle"
-
-#~ msgid "Send mail?"
-#~ msgstr "Posta gönderilsin mi?"
-
-#~ msgid "Event Detail"
-#~ msgstr "Etkinlik Ayrıntısı"
-
-#~ msgid "Partner related to contact"
-#~ msgstr "İlgiliye ait paydaş"
-
-#~ msgid "Confidential"
-#~ msgstr "Gizli"
-
-#~ msgid "Select range to Exclude"
-#~ msgstr "Hariç tutulacak alanı seç"
-
-#~ msgid ""
-#~ "Create specific calendar alarms that may be assigned to calendar events or "
-#~ "meetings."
-#~ msgstr ""
-#~ "Takvim etkinliklerine ve toplantılarına atanabilecek özel takvim alarmları "
-#~ "oluştur."
-
-#~ msgid "Forever"
-#~ msgstr "Sonsuz"
-
-#~ msgid "_Cancel"
-#~ msgstr "_Vazgeç"
-
-#~ msgid "Set Exclude range"
-#~ msgstr "Hariç tutulacak alanı ayarla"
-
-#~ msgid "Required Reply"
-#~ msgstr "Yanıt İsteniyor"
-
-#~ msgid "Partner Contacts"
-#~ msgstr "Paydaş İlgilileri"
-
-#~ msgid "_Ok"
-#~ msgstr "_Tamam"
-
-#~ msgid "Delegate"
-#~ msgstr "Yetkili"
-
-#~ msgid "Mark as"
-#~ msgstr "olarak İşaretle"
-
-#~ msgid "Partner"
-#~ msgstr "Paydaş"
-
-#~ msgid "Daily"
-#~ msgstr "Günlük"
-
-#~ msgid "Check this if you want to send an Email to Invited Person"
-#~ msgstr "Davet edile kişiye Eposta göndermek isterseniz bunu işaretleyin"
-
-#, python-format
-#~ msgid "Can not Duplicate"
-#~ msgstr "Çoğaltılamaz"
-
-#~ msgid "ir.attachment"
-#~ msgstr "ir.ek"
-
-#~ msgid "Delegation Info"
-#~ msgstr "Temsilci Bilgisi"
-
-#~ msgid "_Save"
-#~ msgstr "_Sakla"
-
-#~ msgid "My Role"
-#~ msgstr "Rolüm"
-
-#~ msgid "Edit All"
-#~ msgstr "Hepsini Düzenle"
-
-#~ msgid "Contacts"
-#~ msgstr "İlgililer"
-
-#~ msgid "Weeks"
-#~ msgstr "Haftalar"
-
-#, python-format
-#~ msgid "Count can not be Negative"
-#~ msgstr "Olumsuz olamayacakları say"
-
-#~ msgid "Set Exrule"
-#~ msgstr "İstisna Kuralını Ayarla"
-
-#~ msgid "End of recurrency"
-#~ msgstr "Yineleme sonu"
-
-#~ msgid "Invitation From"
-#~ msgstr "Davet Eden"
-
-#~ msgid "Invite Attendees"
-#~ msgstr "Katılımcıları Davet"
-
-#~ msgid "Data"
-#~ msgstr "Veri"
-
-#~ msgid "Count"
-#~ msgstr "Say"
-
-#~ msgid "No Repeat"
-#~ msgstr "Yineleme Yok"
-
-#, python-format
-#~ msgid "Interval can not be Negative"
-#~ msgstr "Aralık Eksi olamaz"
-
-#~ msgid "Select whom you want to Invite"
-#~ msgstr "Davet edeceğinizi kimseyi seçin"
-
-#~ msgid "Calendar Edit all event"
-#~ msgstr "Bütün etkinlikleri Takvimini Düzenle"
-
-#~ msgid "You can not have two users with the same login !"
-#~ msgstr "Aynı kullanıcı adı ile iki kullanıcı oluşturamazsınız !"
-
-#~ msgid "Frequency"
-#~ msgstr "Sıklık"
-
-#~ msgid "Weekly"
-#~ msgstr "Haftalık"
-
-#~ msgid "State"
-#~ msgstr "Durum"
-
-#~ msgid "To Review"
-#~ msgstr "İncelenecek"
-
-#~ msgid "of"
-#~ msgstr "ın"
-
-#~ msgid "Repeat every"
-#~ msgstr "Yineler"
-
-#~ msgid "Event Invitations"
-#~ msgstr "Etkinlik Davetleri"
-
-#~ msgid "Fix amout of times"
-#~ msgstr "Süre Miktarını Düzelt"
-
-#~ msgid "Tentative"
-#~ msgstr "Belirsiz"
-
-#~ msgid "Search Invitations"
-#~ msgstr "Davetiye Ara"
-
-#~ msgid "Invite People"
-#~ msgstr "Kişi Davet Et"
-
-#~ msgid "Type"
-#~ msgstr "Tür"
-
-#~ msgid "Minutely"
-#~ msgstr "Dakikalık"
-
-#~ msgid "Objects"
-#~ msgstr "Nesneler"
-
-#, python-format
-#~ msgid "Please Apply Recurrency before applying Exception Rule."
-#~ msgstr "İstisna Kuralını uygulamadan önce lütfen Yineleme Uygulayın."
-
-#~ msgid "Months"
-#~ msgstr "Aylar"
-
-#~ msgid "Invite"
-#~ msgstr "Davet et"
-
-#, python-format
-#~ msgid "Couldn't Invite because date is not specified!"
-#~ msgstr "Davet edilemez, çünkü tarih belirtilmemiş!"
-
-#~ msgid "Invitation To"
-#~ msgstr "Davetiye Gönder"
-
-#~ msgid "Internal User"
-#~ msgstr "İç Kullanıcı"
-
-#~ msgid "Way to end reccurency"
-#~ msgstr "Yineleme sonlandırma yolu"
-
-#~ msgid "res.users"
-#~ msgstr "res.users"
-
-#~ msgid "External Email"
-#~ msgstr "Dış Eposta"
-
-#~ msgid ""
-#~ "Defines a rule or repeating pattern for recurring events\n"
-#~ "e.g.: Every other month on the last Sunday of the month for 10 occurrences:  "
-#~ "      FREQ=MONTHLY;INTERVAL=2;COUNT=10;BYDAY=-1SU"
-#~ msgstr ""
-#~ "Yinelenen olaylar için tekrarlama modeli kuralı tanımlar\n"
-#~ "Örneğin: İki ayda bir ayın pazar günü için 10 oluşum: "
-#~ "SIKLIK=AYLIK;ARALIK=2;SAYI=10;GÜNLÜK=-1PAZ"
-
-#~ msgid "Invitation Type"
-#~ msgstr "Davetiye Tipi"
-
-#, python-format
-#~ msgid "Group by date not supported, use the calendar view instead"
-#~ msgstr ""
-#~ "Tarihe göre gruplama desteklenmiyor, Bunun yerine takvim görünümü kullanın"
-
-#, python-format
-#~ msgid "%s must have an email  address to send mail"
-#~ msgstr "%s nin e-posta gönderebilmesi için e-posta adresi olmalı"
-
-#, python-format
-#~ msgid "Interval cannot be negative"
-#~ msgstr "Aralık negatif olamaz"
-
-#~ msgid "Accepted Invitations"
-#~ msgstr "Kabul edilmiş davetler"
-
-#, python-format
-#~ msgid "Count cannot be negative"
-#~ msgstr "Sayı negatif olamaz"
-
-#~ msgid "Declined Invitations"
-#~ msgstr "Reddedilmiş Davetler"
-
-#~ msgid "Recurrence termination"
-#~ msgstr "Tekrarları sonlandırma"
-
-#~ msgid "Each model must be unique!"
-#~ msgstr "Her model eşşiz olmalı!"
-
-#~ msgid "Invitations To Review"
-#~ msgstr "İncelenecek Davetler"
-
-#~ msgid "Delegated Invitations"
-#~ msgstr "Yetkilendirilmiş Davetiyeler"

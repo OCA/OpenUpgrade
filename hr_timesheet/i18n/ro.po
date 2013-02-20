@@ -1,20 +1,21 @@
-# Translation of OpenERP Server.
-# This file contains the translation of the following modules:
-#	* hr_timesheet
+# Romanian translation for openobject-addons
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the openobject-addons package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 6.0dev_rc3\n"
-"Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2012-12-03 16:02+0000\n"
-"PO-Revision-Date: 2012-05-10 17:50+0000\n"
-"Last-Translator: filsys <office@filsystem.ro>\n"
-"Language-Team: \n"
+"Project-Id-Version: openobject-addons\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-12-21 17:04+0000\n"
+"PO-Revision-Date: 2013-01-28 18:11+0000\n"
+"Last-Translator: Fekete Mihai <mihai@erpsystems.ro>\n"
+"Language-Team: Romanian <ro@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-04 05:33+0000\n"
-"X-Generator: Launchpad (build 16335)\n"
+"X-Launchpad-Export-Date: 2013-01-29 06:18+0000\n"
+"X-Generator: Launchpad (build 16451)\n"
 
 #. module: hr_timesheet
 #: model:ir.actions.act_window,help:hr_timesheet.act_analytic_cost_revenue
@@ -41,6 +42,29 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<p>\n"
+"                Nu exista inca nici o activitate in acest contract.\n"
+"              </p><p>\n"
+"                In OpenERP, contractele si proiectele sunt implementate "
+"folosind\n"
+"                conturi analitice. Astfel, puteti tine evidenta costurilor "
+"si a veniturilor pentru a analiza\n"
+"                limitele cu usurinta.\n"
+"              </p><p>\n"
+"                Costurile vor fi create automat atunci cand inregistrati "
+"facturile\n"
+"                furnizorilor, cheltuieli sau fise de pontaj.\n"
+"              </p><p>\n"
+"                Veniturile vor fi create automat atunci cand creati "
+"facturile\n"
+"                clientilor. Facurile clientilor pot fi create pe baza "
+"comenzilor de vanzare\n"
+"                (facturi cu preturi fixe), fiselor de pontaj (bazate pe "
+"lucrul efectuat) sau\n"
+"                pe cheltuieli (de exemplu refacturarea consturilor de "
+"transport).\n"
+"              </p>\n"
+"            "
 
 #. module: hr_timesheet
 #: code:addons/hr_timesheet/report/user_timesheet.py:44
@@ -75,7 +99,7 @@ msgstr ""
 #. module: hr_timesheet
 #: field:hr.employee,uom_id:0
 msgid "Unit of Measure"
-msgstr ""
+msgstr "Unitatea de Masura"
 
 #. module: hr_timesheet
 #: field:hr.employee,journal_id:0
@@ -103,7 +127,7 @@ msgstr "Fisa de pontaj"
 #: code:addons/hr_timesheet/wizard/hr_timesheet_print_employee.py:43
 #, python-format
 msgid "Please define employee for this user!"
-msgstr ""
+msgstr "Va rugam sa definiti angajatul pentru acest utilizator!"
 
 #. module: hr_timesheet
 #: code:addons/hr_timesheet/report/user_timesheet.py:44
@@ -129,7 +153,7 @@ msgstr "Vineri"
 #: model:ir.actions.act_window,name:hr_timesheet.act_hr_timesheet_line_evry1_all_form
 #: model:ir.ui.menu,name:hr_timesheet.menu_hr_working_hours
 msgid "Timesheet Activities"
-msgstr ""
+msgstr "Activitati in Fisa de pontaj"
 
 #. module: hr_timesheet
 #: field:hr.sign.out.project,analytic_amount:0
@@ -166,12 +190,12 @@ msgstr "Tipariti Fisa de pontaj a angajatilor"
 #: code:addons/hr_timesheet/wizard/hr_timesheet_sign_in_out.py:132
 #, python-format
 msgid "Please define employee for your user."
-msgstr ""
+msgstr "Va rugam sa definiti angajatul pentru utilizatorul dumneavoastra."
 
 #. module: hr_timesheet
 #: model:ir.actions.act_window,name:hr_timesheet.act_analytic_cost_revenue
 msgid "Costs & Revenues"
-msgstr ""
+msgstr "Costuri & Venituri"
 
 #. module: hr_timesheet
 #: code:addons/hr_timesheet/report/user_timesheet.py:44
@@ -188,17 +212,17 @@ msgstr "Cont analitic"
 #. module: hr_timesheet
 #: view:account.analytic.account:0
 msgid "Costs and Revenues"
-msgstr ""
+msgstr "Costuri si Venituri"
 
 #. module: hr_timesheet
-#: code:addons/hr_timesheet/hr_timesheet.py:141
-#: code:addons/hr_timesheet/hr_timesheet.py:146
-#: code:addons/hr_timesheet/hr_timesheet.py:177
-#: code:addons/hr_timesheet/hr_timesheet.py:179
+#: code:addons/hr_timesheet/hr_timesheet.py:144
+#: code:addons/hr_timesheet/hr_timesheet.py:149
+#: code:addons/hr_timesheet/hr_timesheet.py:180
+#: code:addons/hr_timesheet/hr_timesheet.py:182
 #: code:addons/hr_timesheet/wizard/hr_timesheet_print_employee.py:43
 #, python-format
 msgid "Warning!"
-msgstr ""
+msgstr "Avertisment!"
 
 #. module: hr_timesheet
 #: field:hr.analytic.timesheet,partner_id:0
@@ -244,6 +268,17 @@ msgid ""
 "              </p>\n"
 "            "
 msgstr ""
+"<clasa p=\"oe_vizualizare_niciuncontinut_creeaza\">\n"
+"                Dati click pentru a inregistra activitatile.\n"
+"              </p><p>\n"
+"                Puteti sa inregistrati si sa tineti evidenta programului de "
+"lucru pentru fiecare proiect in fiecare\n"
+"                zi. Fiecare ora petrecuta la proiect va deveni un cost in "
+"contabilitatea\n"
+"                analitica/contract si poate fi refacturata\n"
+"                clientilor daca este necesar.\n"
+"              </p>\n"
+"            "
 
 #. module: hr_timesheet
 #: view:hr.analytical.timesheet.employee:0
@@ -254,7 +289,7 @@ msgstr "Tipariti"
 #. module: hr_timesheet
 #: help:account.analytic.account,use_timesheets:0
 msgid "Check this field if this project manages timesheets"
-msgstr ""
+msgstr "Selectati acest camp daca acest proiect gestioneaza fisele de pontaj"
 
 #. module: hr_timesheet
 #: view:hr.analytical.timesheet.users:0
@@ -280,7 +315,7 @@ msgstr "Data de inceput"
 #: code:addons/hr_timesheet/wizard/hr_timesheet_sign_in_out.py:77
 #, python-format
 msgid "Please define cost unit for this employee."
-msgstr ""
+msgstr "Va rugam sa definiti costul unitar pentru acest angajat."
 
 #. module: hr_timesheet
 #: help:hr.employee,product_id:0
@@ -288,12 +323,15 @@ msgid "Specifies employee's designation as a product with type 'service'."
 msgstr "Specifica numirea angajatului drept un produs de tipul 'servici'."
 
 #. module: hr_timesheet
-#: code:addons/hr_timesheet/hr_timesheet.py:179
+#: code:addons/hr_timesheet/hr_timesheet.py:182
 #, python-format
 msgid ""
 "No analytic account is defined on the project.\n"
 "Please set one or we cannot automatically fill the timesheet."
 msgstr ""
+"Nici un cont analitic nu este definit pentru proiect.\n"
+"Va rugam sa configurati unul, in caz contrar nu vom putea completa automat "
+"fisa de pontaj."
 
 #. module: hr_timesheet
 #: view:hr.analytic.timesheet:0
@@ -301,12 +339,15 @@ msgid "Total cost"
 msgstr "Cost total"
 
 #. module: hr_timesheet
-#: code:addons/hr_timesheet/hr_timesheet.py:177
+#: code:addons/hr_timesheet/hr_timesheet.py:180
 #, python-format
 msgid ""
 "No 'Analytic Journal' is defined for employee %s \n"
 "Define an employee for the selected user and assign an 'Analytic Journal'!"
 msgstr ""
+"Nici un 'Registru Analitic' nu este definit pentru angajatul %s \n"
+"Definiti un angajat pentru utilizatorul selectat si atribuiti un 'Registru "
+"Analitic'!"
 
 #. module: hr_timesheet
 #: code:addons/hr_timesheet/report/user_timesheet.py:41
@@ -348,12 +389,12 @@ msgstr "Descrierea muncii"
 #: view:hr.sign.in.project:0
 #: view:hr.sign.out.project:0
 msgid "or"
-msgstr ""
+msgstr "sau"
 
 #. module: hr_timesheet
 #: xsl:hr.analytical.timesheet:0
 msgid "Timesheet by Employee"
-msgstr ""
+msgstr "Fisa de Pontaj dupa Angajat"
 
 #. module: hr_timesheet
 #: model:ir.actions.report.xml,name:hr_timesheet.report_user_timesheet
@@ -372,7 +413,9 @@ msgid "Define your Analytic Structure"
 msgstr "Definiti-va Structura Analitica"
 
 #. module: hr_timesheet
+#: code:addons/hr_timesheet/wizard/hr_timesheet_sign_in_out.py:146
 #: view:hr.sign.in.project:0
+#, python-format
 msgid "Sign in / Sign out"
 msgstr "Pontaj Intrare / Iesire"
 
@@ -414,12 +457,14 @@ msgid "August"
 msgstr "August"
 
 #. module: hr_timesheet
-#: code:addons/hr_timesheet/hr_timesheet.py:146
+#: code:addons/hr_timesheet/hr_timesheet.py:149
 #, python-format
 msgid ""
 "No analytic journal defined for '%s'.\n"
 "You should assign an analytic journal on the employee form."
 msgstr ""
+"Nici un registru analitic nu este definit pentru '%s'.\n"
+"Ar trebui sa atribuiti un registru analitic pentru formularul angajatului."
 
 #. module: hr_timesheet
 #: code:addons/hr_timesheet/report/user_timesheet.py:41
@@ -434,7 +479,7 @@ msgstr "Iunie"
 #: field:hr.sign.in.project,state:0
 #: field:hr.sign.out.project,state:0
 msgid "Current Status"
-msgstr ""
+msgstr "Stara Actuala"
 
 #. module: hr_timesheet
 #: view:hr.analytic.timesheet:0
@@ -500,7 +545,7 @@ msgstr "ID angajat"
 #. module: hr_timesheet
 #: view:hr.analytical.timesheet.users:0
 msgid "Period"
-msgstr ""
+msgstr "Perioada"
 
 #. module: hr_timesheet
 #: view:hr.sign.out.project:0
@@ -608,12 +653,14 @@ msgid "Sign Out By Project"
 msgstr "Pontaj la iesire dupa Proiect"
 
 #. module: hr_timesheet
-#: code:addons/hr_timesheet/hr_timesheet.py:141
+#: code:addons/hr_timesheet/hr_timesheet.py:144
 #, python-format
 msgid ""
 "Please create an employee for this user, using the menu: Human Resources > "
 "Employees."
 msgstr ""
+"Va rugam sa creati un angajat pentru acest utilizator, folosind meniul: "
+"Resurse Umane > Angajati."
 
 #. module: hr_timesheet
 #: view:hr.analytical.timesheet.users:0
@@ -643,7 +690,7 @@ msgstr "Aprilie"
 #: code:addons/hr_timesheet/wizard/hr_timesheet_sign_in_out.py:132
 #, python-format
 msgid "User Error!"
-msgstr ""
+msgstr "Eroare utilizator!"
 
 #. module: hr_timesheet
 #: view:hr.sign.in.project:0
@@ -659,7 +706,7 @@ msgstr "An"
 #. module: hr_timesheet
 #: view:hr.analytic.timesheet:0
 msgid "Duration"
-msgstr ""
+msgstr "Durata"
 
 #. module: hr_timesheet
 #: view:hr.analytic.timesheet:0
@@ -676,233 +723,3 @@ msgstr "Total"
 #: view:hr.sign.out.project:0
 msgid "Change Work"
 msgstr "Schimbati activitatea"
-
-#, python-format
-#~ msgid "No cost unit defined for this employee !"
-#~ msgstr "Nici o unitate de cost nu este definita pentru acest salariat !"
-
-#, python-format
-#~ msgid "UserError"
-#~ msgstr "EroareUtilizator"
-
-#~ msgid "Day"
-#~ msgstr "Zi"
-
-#~ msgid "My Working Hours"
-#~ msgstr "Programul meu de lucru"
-
-#, python-format
-#~ msgid "ValidateError"
-#~ msgstr "EroareValidare"
-
-#~ msgid "Choose Users"
-#~ msgstr "Alege utilizatorii"
-
-#~ msgid "Timesheet line"
-#~ msgstr "Linie foaie de pontaj"
-
-#~ msgid "To be invoiced"
-#~ msgstr "De facturat"
-
-#~ msgid "User"
-#~ msgstr "Utilizator"
-
-#~ msgid "Analysis stats"
-#~ msgstr "Analiza statistica"
-
-#~ msgid "Employee's name"
-#~ msgstr "Nume salariat"
-
-#~ msgid "Choose your month"
-#~ msgstr "Alegeti luna"
-
-#~ msgid "Working Hours"
-#~ msgstr "Ore de lucru"
-
-#~ msgid "Analytic line"
-#~ msgstr "Linie analitica"
-
-#~ msgid "Error: Invalid ean code"
-#~ msgstr "Eroare : cod EAN invalid"
-
-#~ msgid "Analysis summary"
-#~ msgstr "Rezumat analiză"
-
-#~ msgid "Key dates"
-#~ msgstr "Date importante"
-
-#~ msgid "Current state"
-#~ msgstr "Starea curenta"
-
-#~ msgid ""
-#~ "Error ! You cannot select a department for which the employee is the manager."
-#~ msgstr ""
-#~ "Eroare ! Nu puteti selecta un departament la care angajatul este managerul."
-
-#~ msgid "Service on Timesheet"
-#~ msgstr "Serviciu pe foaia de pontaj"
-
-#~ msgid "Categories"
-#~ msgstr "Categorii"
-
-#~ msgid ""
-#~ "\n"
-#~ "This module implements a timesheet system. Each employee can encode and\n"
-#~ "track their time spent on the different projects. A project is an\n"
-#~ "analytic account and the time spent on a project generates costs on\n"
-#~ "the analytic account.\n"
-#~ "\n"
-#~ "Lots of reporting on time and employee tracking are provided.\n"
-#~ "\n"
-#~ "It is completely integrated with the cost accounting module. It allows you\n"
-#~ "to set up a management by affair.\n"
-#~ "    "
-#~ msgstr ""
-#~ "\n"
-#~ "Acest modul implementează un sistem al foilor de pontaj. Fiecare angajat isi "
-#~ "poate coda\n"
-#~ "si tine evidenta timpului petrecut cu diferite proiecte. Un proiect este un\n"
-#~ "cont analitic, iar timpul petrecut la un proiect generează cheltuieli in\n"
-#~ "contul analitic.\n"
-#~ "\n"
-#~ "Sunt oferite o multime de rapoarte pentru timpul si evidenta angajatilor.\n"
-#~ "\n"
-#~ "Este integrat complet cu modulul contabilitătii costurilor. Vă permite să\n"
-#~ "setati un management după afacere.\n"
-#~ "    "
-
-#~ msgid "Human Resources (Timesheet encoding)"
-#~ msgstr "Resurse Umane (Codare foaie de pontaj)"
-
-#~ msgid ""
-#~ "Through Working Hours you can register your working hours by project every "
-#~ "day."
-#~ msgstr ""
-#~ "Prin Programul de lucru puteti vă puteti inregistra orele de lucru după "
-#~ "proiect in fiecare zi."
-
-#, python-format
-#~ msgid ""
-#~ "Analytic journal is not defined for employee %s \n"
-#~ "Define an employee for the selected user and assign an analytic journal!"
-#~ msgstr ""
-#~ "Jurnalul analitic nu este definit pentru angajatul %s \n"
-#~ "Definiti un angajat pentru utilizatorul selectat si atribuiti-i un jurnal "
-#~ "analitic!"
-
-#~ msgid "Error ! You cannot create recursive Hierarchy of Employees."
-#~ msgstr "Eroare ! Nu puteti crea Ierarhii recursive ale Angajatilor."
-
-#~ msgid "Anlytic account"
-#~ msgstr "Cont analitic"
-
-#~ msgid "Invoicing"
-#~ msgstr "Facturare"
-
-#~ msgid "Partner Id"
-#~ msgstr "Id Partener"
-
-#, python-format
-#~ msgid ""
-#~ "No analytic journal available for this employee.\n"
-#~ "Define an employee for the selected user and assign an analytic journal."
-#~ msgstr ""
-#~ "Nu exista jurnal analitic disponibil pentru acest salariat.\n"
-#~ "Definiți un salariat pentru utilizatorul selectat și atribuiți-i un jurnal "
-#~ "analitic."
-
-#~ msgid "Hour"
-#~ msgstr "Oră"
-
-#~ msgid "Error: UOS must be in a different category than the UOM"
-#~ msgstr ""
-#~ "UOS (unitatea de masura la livrare) trebuie să fie într-o categorie diferită "
-#~ "de UOM (unitatea de măsură pe stoc)"
-
-#~ msgid "Invalid XML for View Architecture!"
-#~ msgstr "XML invalid pentru arhitectura machetei de afișare !"
-
-#~ msgid "Working Time"
-#~ msgstr "Timp de lucru"
-
-#~ msgid ""
-#~ "Error: The default UOM and the purchase UOM must be in the same category."
-#~ msgstr ""
-#~ "Eroare: unitatea de masură implicită și unitatea de masură de aprovizionare "
-#~ "trebuie să facă parte din aceeasi categorie."
-
-#~ msgid ""
-#~ "The Object name must start with x_ and not contain any special character !"
-#~ msgstr ""
-#~ "Numele obiectului trebuie să înceapă cu x_ și să nu conțină nici un caracter "
-#~ "special !"
-
-#, python-format
-#~ msgid "No employee defined for your user !"
-#~ msgstr "Nici un angajat nu este definit pentru utilizatorul dumneavoastra !"
-
-#~ msgid "Today"
-#~ msgstr "Astazi"
-
-#~ msgid "Work done stats"
-#~ msgstr "Statistica sarcini efectuate"
-
-#~ msgid "UoM"
-#~ msgstr "UdeM"
-
-#, python-format
-#~ msgid "Warning"
-#~ msgstr "Atentionare"
-
-#, python-format
-#~ msgid "Warning !"
-#~ msgstr "Avertizare !"
-
-#~ msgid "Sign In/Out By Project"
-#~ msgstr "Intrare/Iesire dupa Proiect"
-
-#~ msgid "You cannot modify an entry in a Confirmed/Done timesheet !."
-#~ msgstr ""
-#~ "Nu puteti modifica o inregistrare dintr-o fisa de pontaj "
-#~ "Confirmata/Efectuata !."
-
-#~ msgid "Timesheet Lines"
-#~ msgstr "Linii Fisa de pontaj"
-
-#~ msgid "This wizard will print monthly timesheet"
-#~ msgstr "Acest wizard va imprima fisa de pontaj lunara"
-
-#~ msgid "Print My Timesheet"
-#~ msgstr "Tipareste Fisa mea de pontaj"
-
-#~ msgid "My Timesheet"
-#~ msgstr "Fisa mea de pontaj"
-
-#~ msgid "Stats by month"
-#~ msgstr "Statistici dupa luna"
-
-#~ msgid "Invoice Analysis"
-#~ msgstr "Analiza facturii"
-
-#~ msgid ""
-#~ "Through this menu you can register and follow your workings hours by project "
-#~ "every day."
-#~ msgstr ""
-#~ "Prin acest meniu va puteti inregistra si urmari orele lucrate la proiect in "
-#~ "fiecare zi."
-
-#, python-format
-#~ msgid ""
-#~ "No analytic account defined on the project.\n"
-#~ "Please set one or we can not automatically fill the timesheet."
-#~ msgstr ""
-#~ "Nici un cont analitic nu este definit pentru acest  proiect.\n"
-#~ "Configurati unul, altfel nu va fi posibila completarea automata a fiselor de "
-#~ "pontaj."
-
-#, python-format
-#~ msgid "No employee defined for this user"
-#~ msgstr "Nu exista nici un angajat definit pentru acest utilizator"
-
-#~ msgid "Stats by user"
-#~ msgstr "Statistici dupa utilizator"

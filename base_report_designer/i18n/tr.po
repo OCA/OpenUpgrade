@@ -1,20 +1,21 @@
-# Translation of OpenERP Server.
-# This file contains the translation of the following modules:
-# 	* base_report_designer
+# Turkish translation for openobject-addons
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the openobject-addons package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 6.0dev\n"
-"Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2012-11-24 02:52+0000\n"
-"PO-Revision-Date: 2012-11-27 20:20+0000\n"
-"Last-Translator: Ahmet Altınışık <Unknown>\n"
-"Language-Team: \n"
+"Project-Id-Version: openobject-addons\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-12-21 17:05+0000\n"
+"PO-Revision-Date: 2013-02-08 14:11+0000\n"
+"Last-Translator: Ayhan KIZILTAN <Unknown>\n"
+"Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-11-28 04:41+0000\n"
-"X-Generator: Launchpad (build 16309)\n"
+"X-Launchpad-Export-Date: 2013-02-09 05:29+0000\n"
+"X-Generator: Launchpad (build 16482)\n"
 
 #. module: base_report_designer
 #: model:ir.model,name:base_report_designer.model_base_report_sxw
@@ -38,12 +39,12 @@ msgstr ""
 #. module: base_report_designer
 #: view:base.report.sxw:0
 msgid "Upload the modified report"
-msgstr "Değişen raporu yükle"
+msgstr "Değiştirilen raporu yükle"
 
 #. module: base_report_designer
 #: view:base.report.file.sxw:0
 msgid "The .SXW report"
-msgstr ".SXW Raporu"
+msgstr ".SXW raporu"
 
 #. module: base_report_designer
 #: model:ir.model,name:base_report_designer.model_base_report_designer_installer
@@ -53,7 +54,7 @@ msgstr "base_report_designer.installer"
 #. module: base_report_designer
 #: model:ir.model,name:base_report_designer.model_base_report_rml_save
 msgid "base.report.rml.save"
-msgstr "Temel.rapor.rml.kaydet"
+msgstr "temel.rapor.rml.kaydet"
 
 #. module: base_report_designer
 #: view:base_report_designer.installer:0
@@ -90,7 +91,7 @@ msgstr "Dosya adı"
 #: view:base.report.file.sxw:0
 #: view:base.report.sxw:0
 msgid "Get a report"
-msgstr "Bir Rapor al"
+msgstr "Bir rapor al"
 
 #. module: base_report_designer
 #: view:base_report_designer.installer:0
@@ -101,12 +102,12 @@ msgstr "OpenERP Rapor Tasarımcısı"
 #. module: base_report_designer
 #: view:base.report.sxw:0
 msgid "Continue"
-msgstr "Devam"
+msgstr "Sürdür"
 
 #. module: base_report_designer
 #: field:base.report.rml.save,file_rml:0
 msgid "Save As"
-msgstr "Farklı kaydet"
+msgstr "Farklı Kaydet"
 
 #. module: base_report_designer
 #: help:base_report_designer.installer,plugin_file:0
@@ -120,7 +121,7 @@ msgstr ""
 #. module: base_report_designer
 #: view:base.report.rml.save:0
 msgid "Save RML FIle"
-msgstr "RML dosyasını Kaydet"
+msgstr "RML Dosyasını Kaydet"
 
 #. module: base_report_designer
 #: field:base.report.file.sxw,file_sxw:0
@@ -191,46 +192,3 @@ msgstr "ir.actions.report.xml"
 #: view:base.report.sxw:0
 msgid "Select your report"
 msgstr "Raporunuzu Seçiniz"
-
-#~ msgid "Close"
-#~ msgstr "Kapat"
-
-#~ msgid "Operation"
-#~ msgstr "Operasyon"
-
-#~ msgid "Report designer interface module"
-#~ msgstr "Rapor tasarımcısı arayüz modülü"
-
-#~ msgid "_Close"
-#~ msgstr "_Kapat"
-
-#~ msgid "The RML report"
-#~ msgstr "RML Raporu"
-
-#~ msgid "Configuration Progress"
-#~ msgstr "Yapılandırma gidişatı"
-
-#~ msgid "Skip"
-#~ msgstr "Atla"
-
-#~ msgid "Image"
-#~ msgstr "Resim"
-
-#~ msgid ""
-#~ "\n"
-#~ "This module is used along with OpenERP OpenOffice plugin.\n"
-#~ "You have to first install the plugin which is available at\n"
-#~ "http://www.openerp.com\n"
-#~ "\n"
-#~ "This module adds wizards to Import/Export .sxw report that\n"
-#~ "you can modify in OpenOffice.Once you have modified it you can\n"
-#~ "upload the report using the same wizard.\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Bu modül OpenERP OpenOffice eklentisi ile birlikte çalışır.\n"
-#~ "Öncelikle http://www.openerp.com adresindeki eklentiyi\n"
-#~ "kurmalısınız..\n"
-#~ "\n"
-#~ "Bu modül OpenOffice ile düzenleyebileceğiniz .sxw rapor\n"
-#~ "dosyalarınızı OpenERP'ye kaydedebileceğiniz bir sihirbaz\n"
-#~ "kuracak.\n"

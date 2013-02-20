@@ -1,21 +1,21 @@
 # Turkish translation for openobject-addons
-# Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
 # This file is distributed under the same license as the openobject-addons package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2012-12-03 16:03+0000\n"
-"PO-Revision-Date: 2011-04-25 11:45+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-12-21 17:06+0000\n"
+"PO-Revision-Date: 2013-02-16 19:51+0000\n"
+"Last-Translator: Ayhan KIZILTAN <Unknown>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-04 05:48+0000\n"
-"X-Generator: Launchpad (build 16335)\n"
+"X-Launchpad-Export-Date: 2013-02-17 05:23+0000\n"
+"X-Generator: Launchpad (build 16491)\n"
 
 #. module: procurement
 #: model:ir.ui.menu,name:procurement.menu_stock_sched
@@ -41,18 +41,12 @@ msgstr ""
 #. module: procurement
 #: view:stock.warehouse.orderpoint:0
 msgid "Group By..."
-msgstr "Gruplandır..."
+msgstr "Grupla İle..."
 
 #. module: procurement
 #: help:stock.warehouse.orderpoint,procurement_draft_ids:0
 msgid "Draft procurement of the product and location of that orderpoint"
 msgstr "Sipariş noktası konumunun ve ürünün taslak tedariki"
-
-#. module: procurement
-#: code:addons/procurement/procurement.py:290
-#, python-format
-msgid "No supplier defined for this product !"
-msgstr "Bu ürün için tedarikçi tanımı yok!"
 
 #. module: procurement
 #: view:product.product:0
@@ -79,13 +73,12 @@ msgstr "Tedarik Yöntemi"
 #. module: procurement
 #: selection:product.template,supply_method:0
 msgid "Manufacture"
-msgstr ""
+msgstr "Üretim"
 
 #. module: procurement
-#: code:addons/procurement/procurement.py:307
-#, python-format
-msgid "No address defined for the supplier"
-msgstr "Tedarikçi için bir adres tanımlanmaış!"
+#: model:process.process,name:procurement.process_process_serviceproductprocess0
+msgid "Service"
+msgstr "Hizmet"
 
 #. module: procurement
 #: model:ir.actions.act_window,name:procurement.action_procurement_compute
@@ -95,7 +88,7 @@ msgstr "Sadece Minimum Stok Kuralını Hesapla"
 #. module: procurement
 #: view:stock.warehouse.orderpoint:0
 msgid "Rules"
-msgstr ""
+msgstr "Kurallar"
 
 #. module: procurement
 #: field:procurement.order,company_id:0
@@ -106,11 +99,10 @@ msgstr "Firma"
 #. module: procurement
 #: field:procurement.order,product_uos_qty:0
 msgid "UoS Quantity"
-msgstr "2.Br. Miktarı"
+msgstr "UoS Miktarı"
 
 #. module: procurement
 #: view:procurement.order:0
-#: field:procurement.order,name:0
 msgid "Reason"
 msgstr "Neden"
 
@@ -122,12 +114,12 @@ msgstr "Tedarikleri Hesapla"
 #. module: procurement
 #: field:procurement.order,message:0
 msgid "Latest error"
-msgstr "Son Hata"
+msgstr "Son hata"
 
 #. module: procurement
 #: field:stock.warehouse.orderpoint,product_min_qty:0
 msgid "Minimum Quantity"
-msgstr ""
+msgstr "Minimum Miktar"
 
 #. module: procurement
 #: help:mrp.property,composition:0
@@ -138,11 +130,6 @@ msgstr "Sadece bilgi amaçlıdır, hesaplamalarda kullanılmaz."
 #: field:stock.warehouse.orderpoint,procurement_id:0
 msgid "Latest procurement"
 msgstr "Son tedarik"
-
-#. module: procurement
-#: view:procurement.order:0
-msgid "Notes"
-msgstr "Notlar"
 
 #. module: procurement
 #: model:ir.actions.act_window,help:procurement.action_orderpoint_form
@@ -164,7 +151,7 @@ msgstr ""
 #. module: procurement
 #: field:procurement.order,message_ids:0
 msgid "Messages"
-msgstr ""
+msgstr "Mesajlar"
 
 #. module: procurement
 #: help:procurement.order,message:0
@@ -174,17 +161,22 @@ msgstr "Tedarik emirlerini işlerken bir kuraldışılık oluştu."
 #. module: procurement
 #: view:product.product:0
 msgid "Products"
-msgstr ""
+msgstr "Ürünler"
 
 #. module: procurement
 #: selection:procurement.order,state:0
 msgid "Cancelled"
-msgstr ""
+msgstr "İptalEdillen"
+
+#. module: procurement
+#: view:procurement.order:0
+msgid "Permanent Procurement Exceptions"
+msgstr "Kalıcı Tedarik İstisnaları"
 
 #. module: procurement
 #: help:procurement.order,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr ""
+msgstr "Eğer işaretliyse yeni iletiler ilginizi gerektirir."
 
 #. module: procurement
 #: view:procurement.order.compute.all:0
@@ -197,15 +189,15 @@ msgid "Stock Move"
 msgstr "Stok Hareketi"
 
 #. module: procurement
-#: model:ir.model,name:procurement.model_procurement_order_compute_all
-msgid "Compute all schedulers"
-msgstr "Tüm Planlamacıları Hesapla"
+#: view:product.product:0
+msgid "Stockable products"
+msgstr "Stoklanabilir Ürünler"
 
 #. module: procurement
 #: code:addons/procurement/procurement.py:137
 #, python-format
 msgid "Invalid Action!"
-msgstr ""
+msgstr "Geçersiz İşlem!"
 
 #. module: procurement
 #: help:procurement.order,message_summary:0
@@ -213,6 +205,8 @@ msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
 msgstr ""
+"Sohbetçi özetini tutar (mesajların sayısı, ...). Bu özet kanban ekranlarına "
+"eklenebilmesi için html biçimindedir."
 
 #. module: procurement
 #: selection:procurement.order,state:0
@@ -243,11 +237,6 @@ msgid ""
 msgstr ""
 
 #. module: procurement
-#: view:product.product:0
-msgid "Stockable products"
-msgstr ""
-
-#. module: procurement
 #: selection:procurement.order,state:0
 msgid "Confirmed"
 msgstr "Onaylandı"
@@ -255,19 +244,13 @@ msgstr "Onaylandı"
 #. module: procurement
 #: view:procurement.order:0
 msgid "Retry"
-msgstr "Yeniden Dene"
-
-#. module: procurement
-#: code:addons/procurement/procurement.py:498
-#, python-format
-msgid "Procurement <b>confirmed</b>."
-msgstr ""
+msgstr "Yeniden"
 
 #. module: procurement
 #: view:procurement.order.compute:0
 #: view:procurement.orderpoint.compute:0
 msgid "Parameters"
-msgstr "Katsayılar"
+msgstr "Paremetreler"
 
 #. module: procurement
 #: view:procurement.order:0
@@ -277,7 +260,7 @@ msgstr "Onayla"
 #. module: procurement
 #: view:stock.warehouse.orderpoint:0
 msgid "Quantity Multiple"
-msgstr ""
+msgstr "Çoklu Miktar"
 
 #. module: procurement
 #: help:procurement.order,origin:0
@@ -289,7 +272,7 @@ msgstr "Open ERP, bu tedariği başlatan belgeyi otomatik olarak kapamıştır."
 #. module: procurement
 #: view:stock.warehouse.orderpoint:0
 msgid "Procurement Orders to Process"
-msgstr "İşlenecek Tedarik Emirleri"
+msgstr "İşlenecek Tedarik siparişleri"
 
 #. module: procurement
 #: model:ir.model,name:procurement.model_stock_warehouse_orderpoint
@@ -297,10 +280,10 @@ msgid "Minimum Inventory Rule"
 msgstr "Minimum Envanter Kuralı"
 
 #. module: procurement
-#: code:addons/procurement/procurement.py:395
+#: code:addons/procurement/procurement.py:369
 #, python-format
 msgid "Procurement '%s' is in exception: "
-msgstr "Tedarik '%s' de kuraldışılık var: "
+msgstr "Tedarik '%s' de istisnalar var: "
 
 #. module: procurement
 #: field:procurement.order,priority:0
@@ -310,17 +293,17 @@ msgstr "Öncelik"
 #. module: procurement
 #: view:stock.warehouse.orderpoint:0
 msgid "Reordering Rules Search"
-msgstr ""
+msgstr "Sipariş yenileme Kuralı Ara"
 
 #. module: procurement
-#: field:procurement.order,message_summary:0
-msgid "Summary"
-msgstr ""
+#: selection:procurement.order,state:0
+msgid "Waiting"
+msgstr "Bekleyen"
 
 #. module: procurement
 #: field:procurement.order,message_follower_ids:0
 msgid "Followers"
-msgstr ""
+msgstr "Takipçiler"
 
 #. module: procurement
 #: field:procurement.order,location_id:0
@@ -332,7 +315,7 @@ msgstr "Lokasyon"
 #. module: procurement
 #: model:ir.model,name:procurement.model_stock_picking
 msgid "Picking List"
-msgstr "Paket Listesi"
+msgstr "Seçim Listesi"
 
 #. module: procurement
 #: field:make.procurement,warehouse_id:0
@@ -355,7 +338,7 @@ msgstr "SATIN %d: stoktan - %3.2f %-5s - %s"
 #. module: procurement
 #: model:ir.model,name:procurement.model_procurement_order_compute
 msgid "Compute Procurement"
-msgstr "Satınalmayı Hesapla"
+msgstr "Tedarik Hesaplama"
 
 #. module: procurement
 #: field:res.company,schedule_range:0
@@ -365,7 +348,7 @@ msgstr "Zamanlayıcı Gün Aralığı"
 #. module: procurement
 #: view:make.procurement:0
 msgid "Ask New Products"
-msgstr "Yeni Ürün İste"
+msgstr "Yeni Ürün Sor"
 
 #. module: procurement
 #: field:make.procurement,date_planned:0
@@ -375,7 +358,7 @@ msgstr "Planlanan Tarih"
 #. module: procurement
 #: view:procurement.order:0
 msgid "Group By"
-msgstr "Grupla"
+msgstr "Grupla İle"
 
 #. module: procurement
 #: field:make.procurement,qty:0
@@ -384,7 +367,7 @@ msgid "Quantity"
 msgstr "Miktar"
 
 #. module: procurement
-#: code:addons/procurement/procurement.py:390
+#: code:addons/procurement/procurement.py:364
 #, python-format
 msgid "Not enough stock and no minimum orderpoint rule defined."
 msgstr "Yeterli stok yok ve minimum sipariş noktası kuralı tanımlı değil!"
@@ -399,13 +382,7 @@ msgstr "Ölçü Birimi"
 #: selection:procurement.order,procure_method:0
 #: selection:product.template,procure_method:0
 msgid "Make to Stock"
-msgstr ""
-
-#. module: procurement
-#: code:addons/procurement/procurement.py:501
-#, python-format
-msgid "Procurement <b>cancelled</b>."
-msgstr ""
+msgstr "Stok Yap"
 
 #. module: procurement
 #: model:ir.actions.act_window,help:procurement.procurement_action
@@ -440,7 +417,7 @@ msgstr ""
 #. module: procurement
 #: model:ir.ui.menu,name:procurement.menu_stock_procurement
 msgid "Automatic Procurements"
-msgstr "Otomatik Satınalmalar"
+msgstr "Otomatik Tedarikler"
 
 #. module: procurement
 #: view:product.product:0
@@ -454,17 +431,17 @@ msgstr ""
 #: model:process.process,name:procurement.process_process_procurementprocess0
 #: view:procurement.order:0
 msgid "Procurement"
-msgstr "Satınalma"
+msgstr "Tedarik"
 
 #. module: procurement
 #: model:ir.actions.act_window,name:procurement.procurement_action
 msgid "Procurement Orders"
-msgstr "Satınalma Siparişleri"
+msgstr "Tedarik Siparişleri"
 
 #. module: procurement
 #: view:procurement.order:0
 msgid "To Fix"
-msgstr "Sabitlemek"
+msgstr "Sabitleme"
 
 #. module: procurement
 #: view:procurement.order:0
@@ -485,7 +462,7 @@ msgstr "Özellik"
 #: model:ir.actions.act_window,name:procurement.act_make_procurement
 #: view:make.procurement:0
 msgid "Procurement Request"
-msgstr "Satınalma İsteği"
+msgstr "Tedarik İsteği"
 
 #. module: procurement
 #: view:procurement.orderpoint.compute:0
@@ -493,19 +470,14 @@ msgid "Compute Stock"
 msgstr "Stok Hesapla"
 
 #. module: procurement
-#: model:process.process,name:procurement.process_process_serviceproductprocess0
-msgid "Service"
-msgstr "Hizmet"
-
-#. module: procurement
 #: field:stock.warehouse.orderpoint,procurement_draft_ids:0
 msgid "Related Procurement Orders"
-msgstr "İlgili Satınalma Emirleri"
+msgstr "İlgili Tedarik Siparişleri"
 
 #. module: procurement
 #: field:procurement.order,message_unread:0
 msgid "Unread Messages"
-msgstr ""
+msgstr "Okunmamış mesajlar"
 
 #. module: procurement
 #: selection:mrp.property,composition:0
@@ -554,7 +526,7 @@ msgstr ""
 #: field:procurement.order,product_uom:0
 #: field:stock.warehouse.orderpoint,product_uom:0
 msgid "Product Unit of Measure"
-msgstr ""
+msgstr "Ürün Ölçü Birimi"
 
 #. module: procurement
 #: constraint:stock.warehouse.orderpoint:0
@@ -566,7 +538,7 @@ msgstr ""
 #. module: procurement
 #: view:procurement.order:0
 msgid "Procurement Lines"
-msgstr "Satınalma Kalemleri"
+msgstr "Tedarik Satırları"
 
 #. module: procurement
 #: view:product.product:0
@@ -598,7 +570,7 @@ msgstr "Taslak"
 #: model:ir.ui.menu,name:procurement.menu_stock_proc_schedulers
 #: view:procurement.order.compute.all:0
 msgid "Run Schedulers"
-msgstr ""
+msgstr "Zamanlayıcıları Çalıştır"
 
 #. module: procurement
 #: view:procurement.order.compute:0
@@ -609,17 +581,17 @@ msgstr "Bu sihirbaz satınalmaları zamanlayacaktır."
 #: view:procurement.order:0
 #: field:procurement.order,state:0
 msgid "Status"
-msgstr "Durum"
+msgstr "Durumu"
 
 #. module: procurement
 #: selection:product.template,supply_method:0
 msgid "Buy"
-msgstr ""
+msgstr "Alma"
 
 #. module: procurement
 #: view:product.product:0
 msgid "for the delivery order."
-msgstr ""
+msgstr "teslimat sipariş için."
 
 #. module: procurement
 #: selection:procurement.order,priority:0
@@ -637,15 +609,15 @@ msgstr ""
 #. module: procurement
 #: field:stock.warehouse.orderpoint,product_max_qty:0
 msgid "Maximum Quantity"
-msgstr ""
+msgstr "Maksimum Miktar"
 
 #. module: procurement
 #: field:procurement.order,message_is_follower:0
 msgid "Is a Follower"
-msgstr ""
+msgstr "Bir Takipçisi mi"
 
 #. module: procurement
-#: code:addons/procurement/procurement.py:392
+#: code:addons/procurement/procurement.py:366
 #, python-format
 msgid "Not enough stock."
 msgstr "Yeterli stok yok."
@@ -653,25 +625,19 @@ msgstr "Yeterli stok yok."
 #. module: procurement
 #: field:stock.warehouse.orderpoint,active:0
 msgid "Active"
-msgstr "Aktif"
+msgstr "Etkin"
 
 #. module: procurement
 #: model:process.node,name:procurement.process_node_procureproducts0
 msgid "Procure Products"
-msgstr "Ürünleri Satınal"
+msgstr "Tedarik Ürünleri"
 
 #. module: procurement
-#: code:addons/procurement/procurement.py:336
+#: code:addons/procurement/procurement.py:311
 #, python-format
 msgid ""
 "Please check the quantity in procurement order(s) for the product \"%s\", it "
 "should not be 0 or less!"
-msgstr ""
-
-#. module: procurement
-#: field:procurement.order,message_comment_ids:0
-#: help:procurement.order,message_comment_ids:0
-msgid "Comments and emails"
 msgstr ""
 
 #. module: procurement
@@ -715,23 +681,17 @@ msgstr "Satınalma miktarı bu katsayıya yuvarlanır."
 #. module: procurement
 #: model:ir.model,name:procurement.model_res_company
 msgid "Companies"
-msgstr "Şirketler"
+msgstr "Firmalar"
 
 #. module: procurement
 #: view:procurement.order:0
 msgid "Extra Information"
-msgstr "Ekstra Bilgi"
+msgstr "Ekstra Bilgisi"
 
 #. module: procurement
-#: help:procurement.order,name:0
-msgid "Procurement name."
-msgstr "Satınalma adı."
-
-#. module: procurement
-#: code:addons/procurement/procurement.py:297
-#, python-format
-msgid "No default supplier defined for this product"
-msgstr "Bu ürün için varsayılan tedarikçi tanımlanmamış"
+#: field:procurement.order,message_summary:0
+msgid "Summary"
+msgstr "Özet"
 
 #. module: procurement
 #: sql_constraint:stock.warehouse.orderpoint:0
@@ -751,7 +711,7 @@ msgstr "Kapanış Tarihi"
 #. module: procurement
 #: view:res.company:0
 msgid "Logistics"
-msgstr ""
+msgstr "Lojistik"
 
 #. module: procurement
 #: help:product.template,procure_method:0
@@ -767,7 +727,7 @@ msgid "Properties composition"
 msgstr "Bileşim Özellikleri"
 
 #. module: procurement
-#: code:addons/procurement/procurement.py:335
+#: code:addons/procurement/procurement.py:310
 #, python-format
 msgid "Data Insufficient !"
 msgstr "Yetersiz Bilgi !"
@@ -785,25 +745,19 @@ msgid "Misc"
 msgstr "Çeşitli"
 
 #. module: procurement
-#: code:addons/procurement/procurement.py:504
-#, python-format
-msgid "Procurement <b>done</b>."
-msgstr ""
-
-#. module: procurement
 #: field:stock.move,procurements:0
 msgid "Procurements"
-msgstr "Satınalmalar"
+msgstr "Tedarikler"
 
 #. module: procurement
 #: view:procurement.order:0
 msgid "Run Procurement"
-msgstr "Satınalmayı Çalıştır"
+msgstr "Tedarik Çalıştır"
 
 #. module: procurement
 #: selection:procurement.order,state:0
 msgid "Done"
-msgstr "Tamamlandı"
+msgstr "Biten"
 
 #. module: procurement
 #: view:make.procurement:0
@@ -812,12 +766,12 @@ msgstr "Tamamlandı"
 #: view:procurement.order.compute.all:0
 #: view:procurement.orderpoint.compute:0
 msgid "Cancel"
-msgstr "Vazgeç"
+msgstr "İptal"
 
 #. module: procurement
 #: field:stock.warehouse.orderpoint,logic:0
 msgid "Reordering Mode"
-msgstr "Tekrar Sipariş Verme Modu"
+msgstr "Tekrar Sipariş Modu"
 
 #. module: procurement
 #: field:procurement.order,origin:0
@@ -827,16 +781,13 @@ msgstr "Kaynak Belge"
 #. module: procurement
 #: selection:procurement.order,priority:0
 msgid "Not urgent"
-msgstr "Acil Değil"
+msgstr "Acil değil"
 
 #. module: procurement
-#: model:ir.actions.act_window,name:procurement.procurement_action5
-#: model:ir.actions.act_window,name:procurement.procurement_action_board
-#: model:ir.actions.act_window,name:procurement.procurement_exceptions
-#: model:ir.ui.menu,name:procurement.menu_stock_procurement_action
-#: view:procurement.order:0
-msgid "Procurement Exceptions"
-msgstr "Satınalma İstisnaları"
+#: model:ir.actions.act_window,name:procurement.product_open_orderpoint
+#: view:product.product:0
+msgid "Orderpoints"
+msgstr "SiparişNoktası"
 
 #. module: procurement
 #: help:stock.warehouse.orderpoint,product_max_qty:0
@@ -847,9 +798,9 @@ msgid ""
 msgstr ""
 
 #. module: procurement
-#: view:procurement.order:0
-msgid "Permanent Procurement Exceptions"
-msgstr "Kalıcı Satınalma İstisnaları"
+#: model:ir.model,name:procurement.model_procurement_order_compute_all
+msgid "Compute all schedulers"
+msgstr "Tüm Planlamacıları Hesapla"
 
 #. module: procurement
 #: view:procurement.order:0
@@ -859,13 +810,16 @@ msgstr "Geç"
 #. module: procurement
 #: view:board.board:0
 msgid "Procurements in Exception"
-msgstr "İstisnai Satınalmalar"
+msgstr "İstisnai Tedarikler"
 
 #. module: procurement
-#: model:ir.actions.act_window,name:procurement.product_open_orderpoint
-#: view:product.product:0
-msgid "Orderpoints"
-msgstr ""
+#: model:ir.actions.act_window,name:procurement.procurement_action5
+#: model:ir.actions.act_window,name:procurement.procurement_action_board
+#: model:ir.actions.act_window,name:procurement.procurement_exceptions
+#: model:ir.ui.menu,name:procurement.menu_stock_procurement_action
+#: view:procurement.order:0
+msgid "Procurement Exceptions"
+msgstr "Tedarik İstisnaları"
 
 #. module: procurement
 #: field:product.product,orderpoint_ids:0
@@ -910,6 +864,7 @@ msgstr "Geçici"
 #. module: procurement
 #: field:mrp.property,description:0
 #: field:mrp.property.group,description:0
+#: field:procurement.order,name:0
 msgid "Description"
 msgstr "Açıklama"
 
@@ -921,7 +876,7 @@ msgstr "Acil"
 #. module: procurement
 #: selection:procurement.order,state:0
 msgid "Running"
-msgstr "Çalışma"
+msgstr "Çalışan"
 
 #. module: procurement
 #: model:process.node,name:procurement.process_node_serviceonorder0
@@ -931,14 +886,9 @@ msgid "Make to Order"
 msgstr "Sipariş Ver"
 
 #. module: procurement
-#: selection:procurement.order,state:0
-msgid "Waiting"
-msgstr "Beklemede"
-
-#. module: procurement
 #: field:product.template,supply_method:0
 msgid "Supply Method"
-msgstr ""
+msgstr "Tedarik Metodu"
 
 #. module: procurement
 #: field:procurement.order,move_id:0
@@ -964,7 +914,7 @@ msgstr "Geçici Satınalma İstisnaları"
 #: field:mrp.property,name:0
 #: field:stock.warehouse.orderpoint,name:0
 msgid "Name"
-msgstr "Ad"
+msgstr "Adı"
 
 #. module: procurement
 #: selection:mrp.property,composition:0
@@ -978,7 +928,7 @@ msgstr "maks"
 #: model:ir.ui.menu,name:procurement.menu_stock_order_points
 #: view:stock.warehouse.orderpoint:0
 msgid "Reordering Rules"
-msgstr ""
+msgstr "Yeniden Siparişleme Kuralı"
 
 #. module: procurement
 #: code:addons/procurement/procurement.py:138
@@ -989,12 +939,12 @@ msgstr ""
 #. module: procurement
 #: field:procurement.order,product_uos:0
 msgid "Product UoS"
-msgstr "Stok 2.Birim"
+msgstr "Ürün UoS"
 
 #. module: procurement
 #: model:ir.model,name:procurement.model_product_template
 msgid "Product Template"
-msgstr ""
+msgstr "Ürün Temaları"
 
 #. module: procurement
 #: view:procurement.orderpoint.compute:0
@@ -1007,7 +957,7 @@ msgstr ""
 #. module: procurement
 #: view:procurement.order:0
 msgid "Search Procurement"
-msgstr "Satınalma Arama"
+msgstr "Tedarik Arama"
 
 #. module: procurement
 #: help:res.company,schedule_range:0
@@ -1031,30 +981,19 @@ msgid "Automatic Orderpoint"
 msgstr "Otomatik Sipariş Noktası"
 
 #. module: procurement
-#: view:procurement.order:0
-msgid "Procurement Details"
-msgstr "Satınalma Detayları"
-
-#. module: procurement
 #: help:procurement.order,message_ids:0
 msgid "Messages and communication history"
-msgstr ""
+msgstr "Mesajlar ve iletişim geçmişi"
 
 #. module: procurement
 #: view:procurement.order:0
 msgid "Procurement started late"
-msgstr "Satınalma geç başladı"
-
-#. module: procurement
-#: code:addons/procurement/procurement.py:495
-#, python-format
-msgid "Procurement <b>created</b>."
-msgstr ""
+msgstr "Tedarik geç başladı"
 
 #. module: procurement
 #: selection:mrp.property,composition:0
 msgid "min"
-msgstr "dk"
+msgstr "dak"
 
 #. module: procurement
 #: view:make.procurement:0
@@ -1062,7 +1001,7 @@ msgstr "dk"
 #: view:procurement.order.compute.all:0
 #: view:procurement.orderpoint.compute:0
 msgid "or"
-msgstr ""
+msgstr "veya"
 
 #. module: procurement
 #: code:addons/procurement/schedulers.py:134
@@ -1073,7 +1012,7 @@ msgstr "ZAMANLAYICI"
 #. module: procurement
 #: view:product.product:0
 msgid "Request Procurement"
-msgstr ""
+msgstr "Tedarik Talepleri"
 
 #. module: procurement
 #: code:addons/procurement/schedulers.py:87
@@ -1082,273 +1021,7 @@ msgid "PROC %d: on order - %3.2f %-5s - %s"
 msgstr "SATIN %d: siparişte - %3.2f %-5s - %s"
 
 #. module: procurement
-#: code:addons/procurement/procurement.py:364
+#: code:addons/procurement/procurement.py:338
 #, python-format
 msgid "Products reserved from stock."
-msgstr ""
-
-#~ msgid "Minimum Stock Rules Search"
-#~ msgstr "Minimum Stok Kuralı Arama"
-
-#~ msgid ""
-#~ "When the virtual stock goes belong the Min Quantity, OpenERP generates a "
-#~ "procurement to bring the virtual stock to the Max Quantity."
-#~ msgstr ""
-#~ "Stok Min. Değer altına indiğinde, OpenERP stoğu Max. Değere getirecek bir "
-#~ "satınalma oluşturur."
-
-#~ msgid "State"
-#~ msgstr "Durum"
-
-#~ msgid "Product & Location"
-#~ msgstr "Ürün & Lokasyon Bilgisi"
-
-#~ msgid "Max Quantity"
-#~ msgstr "Max Miktar"
-
-#~ msgid "References"
-#~ msgstr "Referanslar"
-
-#, python-format
-#~ msgid "Invalid action !"
-#~ msgstr "Geçersiz eylem !"
-
-#~ msgid "Configuration"
-#~ msgstr "Yapılandırma"
-
-#, python-format
-#~ msgid ""
-#~ "Please check the Quantity in Procurement Order(s), it should not be less "
-#~ "than 1!"
-#~ msgstr ""
-#~ "Lütfen satınalma sipariş(ler)indeki miktarı kontrol ediniz, 1 günden az "
-#~ "olamaz!"
-
-#~ msgid "Min Quantity"
-#~ msgstr "Min. Miktar"
-
-#~ msgid "You try to assign a lot which is not from the same product"
-#~ msgstr "Aynı üründen olmayan bir sarf atamaya çalışıyorsunuz"
-
-#~ msgid "Locations"
-#~ msgstr "Lokasyonlar"
-
-#~ msgid "from stock"
-#~ msgstr "Stoktan"
-
-#~ msgid "General Information"
-#~ msgstr "Genel Bilgi"
-
-#~ msgid "Current"
-#~ msgstr "Mevcut"
-
-#~ msgid "Details"
-#~ msgstr "Detaylar"
-
-#~ msgid "Product UoM"
-#~ msgstr "Birim"
-
-#~ msgid "Planification"
-#~ msgstr "Planlama"
-
-#~ msgid ""
-#~ "A procurement order is used to record a need for a specific product at a "
-#~ "specific location. A procurement order is usually created automatically from "
-#~ "sales orders, a Pull Logistics rule or Minimum Stock Rules. When the "
-#~ "procurement order is confirmed, it automatically creates the necessary "
-#~ "operations to fullfil the need: purchase order proposition, manufacturing "
-#~ "order, etc."
-#~ msgstr ""
-#~ "Bir satınalma emri belirli bir lokasyondaki belirli bir ürün için gerekli "
-#~ "olan şeyi kaydetmek için kullanılır. Satınalma emri genellikle satış "
-#~ "emirlerinden, Pull Logistics kuralı veya Minimum Stok Kurallarından otomatik "
-#~ "olarak oluşturulur. Satınalma emri onaylandığında, satınalma emri teklifi, "
-#~ "üretim emri vb. gereklilikleri sağlamak için gerekli operasyonları otomatik "
-#~ "olarak oluşturur."
-
-#~ msgid ""
-#~ "\n"
-#~ "    This is the module for computing Procurements.\n"
-#~ "    "
-#~ msgstr ""
-#~ "\n"
-#~ "    Bu modül Satınalmaları hesaplamak içindir.\n"
-#~ "    "
-
-#~ msgid ""
-#~ "When the virtual stock goes belong the Max Quantity, OpenERP generates a "
-#~ "procurement to bring the virtual stock to the Max Quantity."
-#~ msgstr ""
-#~ "Sanal stok Max Miktara ulaşırken, OpenERP sanal stoğu Max Miktara getirmek "
-#~ "için bir satınalma oluşturur."
-
-#~ msgid ""
-#~ "This wizard allows you to run all procurement, production and/or purchase "
-#~ "orders that should be processed based on their configuration. By default, "
-#~ "the scheduler is launched automatically every night by OpenERP. You can use "
-#~ "this menu to force it to be launched now. Note that it runs in the "
-#~ "background, you may have to wait for a few minutes until it has finished "
-#~ "computing."
-#~ msgstr ""
-#~ "Bu sihirbaz, yapılandırmaları bazında işlenmeleri gereken satınalma, ürün "
-#~ "ve/veya satınalma siparişlerini çalıştırmanıza olanak sağlar. Varsayılan "
-#~ "olarak, zamanlayıcı OpenERP tarafından her gece otomatik olarak başlatılır. "
-#~ "Bu menüyü şimdi başlatmaya zorlamak için kullanabilirsiniz. Arkaplanda "
-#~ "çalıştığını unutmayın, hesaplama işlemini tamamlayana kadar kadar birkaç "
-#~ "dakika beklemek zorunda kalabilirsiniz."
-
-#~ msgid "You must assign a production lot for this product"
-#~ msgstr "Bu ürün için bir üretim grubu atamanız gerekir"
-
-#~ msgid "Procurement Reason"
-#~ msgstr "Satınalma Nedeni"
-
-#, python-format
-#~ msgid "Cannot delete Procurement Order(s) which are in %s State!"
-#~ msgstr "%s Durumunda olan Satınalma Emirleri silinemez!"
-
-#~ msgid "The procurement quantity will by rounded up to this multiple."
-#~ msgstr "Satınalma miktarı bu çarpana yuvarlanacaktır."
-
-#~ msgid "Quantity Rules"
-#~ msgstr "Miktar Kuralları"
-
-#~ msgid "Product UOM"
-#~ msgstr "Birim"
-
-#~ msgid "UOM"
-#~ msgstr "UOM"
-
-#~ msgid ""
-#~ "This wizard will plan the procurement for this product. This procurement may "
-#~ "generate task, production orders or purchase orders."
-#~ msgstr ""
-#~ "Bu sihirbaz bu ürün için satınalmayı planlayacaktır. Bu satınalma görev, "
-#~ "üretim emirleri veya satınalma emirleri oluşturabilir."
-
-#~ msgid "MRP & Logistics Scheduler"
-#~ msgstr "MRP ve Lojistik Zamanlayıcı"
-
-#, python-format
-#~ msgid "from stock: products assigned."
-#~ msgstr "stoktan: ürünler atandı."
-
-#~ msgid "Compute Schedulers"
-#~ msgstr "Zamanlayıcıları Hesapla"
-
-#~ msgid ""
-#~ "Procurement Orders represent the need for a certain quantity of products, at "
-#~ "a given time, in a given location. Sales Orders are one typical source of "
-#~ "Procurement Orders (but these are distinct documents). Depending on the "
-#~ "procurement parameters and the product configuration, the procurement engine "
-#~ "will attempt to satisfy the need by reserving products from stock, ordering "
-#~ "products from a supplier, or passing a manufacturing order, etc. A "
-#~ "Procurement Exception occurs when the system cannot find a way to fulfill a "
-#~ "procurement. Some exceptions will resolve themselves automatically, but "
-#~ "others require manual intervention (those are identified by a specific error "
-#~ "message)."
-#~ msgstr ""
-#~ "Satınalma Emirleri belirli bir tarih ve belirli bir lokasyondaki belirli bir "
-#~ "ürün miktarını temsil eder. Satış Emirleri Satınalma Emirleri için tipik bir "
-#~ "kaynaktır (ancak bunlar ayrı belgelerdir). Satınalma parametrelerine ve ürün "
-#~ "yapılandırmasına bağlı olarak, satınalma motoru stoktan ürünleri rezerve "
-#~ "ederek, bir tedarikçiden ürünleri sipariş ederek, bir üretim emri geçerek "
-#~ "vb. şekilde ihtiyacı karşılama girişiminde bulunacaktır. Sistem bir "
-#~ "satınalma karşılama yöntemi bulamadığında bir Satınalma İstisnası meydana "
-#~ "gelir. Bazı istisnalar kendi kendilerini otomatik olarak çözecektir, ancak "
-#~ "bazıları manuel müdahale gerektirir (bunlar özel bir hata mesajıyla "
-#~ "belirtilir)."
-
-#~ msgid "on order"
-#~ msgstr "sipariş üzerine"
-
-#~ msgid ""
-#~ "When a procurement is created the state is set to 'Draft'.\n"
-#~ " If the procurement is confirmed, the state is set to 'Confirmed'.           "
-#~ " \n"
-#~ "After confirming the state is set to 'Running'.\n"
-#~ " If any exception arises in the order then the state is set to 'Exception'.\n"
-#~ " Once the exception is removed the state becomes 'Ready'.\n"
-#~ " It is in 'Waiting'. state when the procurement is waiting for another one "
-#~ "to finish."
-#~ msgstr ""
-#~ "Tedarik ilk  'Taslak' durumunda oluşturulur.\n"
-#~ " Tedarik onaylandığında durumu 'Onaylandı' olur.            \n"
-#~ "Onaylandıktan sonra durumu 'Yolda' olur.\n"
-#~ " Bir istisna oluşursa durumu 'İstisna' olur.\n"
-#~ " İstisna kaldırıldıktan sonra 'Hazır' durumuna geçer.\n"
-#~ " Başka bir tedariğin tamamlanmasını bekliyorsa 'Beklemede' durumundadır."
-
-#~ msgid "Error! You can not create recursive companies."
-#~ msgstr "Hata! Yinelemeli şirketler oluşturamazsınız."
-
-#, python-format
-#~ msgid "No minimum orderpoint rule defined."
-#~ msgstr "Enaz siparişnoktası kuralı tanımlanmamış."
-
-#, python-format
-#~ msgid ""
-#~ "Here is the procurement scheduling report.\n"
-#~ "\n"
-#~ "        Start Time: %s \n"
-#~ "        End Time: %s \n"
-#~ "        Total Procurements processed: %d \n"
-#~ "        Procurements with exceptions: %d \n"
-#~ "        Skipped Procurements (scheduled date outside of scheduler range) %d "
-#~ "\n"
-#~ "\n"
-#~ "        Exceptions:\n"
-#~ msgstr ""
-#~ "Bu satınalma planlama raporudur.\n"
-#~ "\n"
-#~ "        Başlama Tarihi: %s \n"
-#~ "        Bitiş Tarihi: %s \n"
-#~ "        Toplam İşlenen Satınalmalar: %d \n"
-#~ "        Satınalma İstisnaları: %d \n"
-#~ "        Atlanan Satınalmalar (planlama alanı dışındaki planlanan tarih ) %d "
-#~ "\n"
-#~ "\n"
-#~ "        İstisnalar:\n"
-
-#~ msgid ""
-#~ "When the virtual stock goes below the Min Quantity, OpenERP generates a "
-#~ "procurement to bring the virtual stock to the Quantity specified as Max "
-#~ "Quantity."
-#~ msgstr ""
-#~ "Sanal stok Enaz Miktarın altına düştüğünde, OpenERP sanal stoğu Ençok Miktar "
-#~ "olarak belirlenen Stoğa getirmek için bir satınalma oluşturur."
-
-#~ msgid "Minimum Stock Rule"
-#~ msgstr "Enaz Stok Kuralı"
-
-#, python-format
-#~ msgid ""
-#~ "Please check the quantity in procurement order(s), it should not be 0 or "
-#~ "less!"
-#~ msgstr ""
-#~ "Lütfen Satınalma Sipariş(ler)indeki miktarı kontrol edin, 0 ya da daha az "
-#~ "olmamalı!"
-
-#~ msgid "You can not move products from or to a location of the type view."
-#~ msgstr "Görünüm tipindeki bir konuma ürün giriş çıkışı yapamazsınız."
-
-#~ msgid "Error: Invalid ean code"
-#~ msgstr "Hata: Geçersiz ean kodu"
-
-#, python-format
-#~ msgid "Cannot delete Procurement Order(s) which are in %s state!"
-#~ msgstr "%s Durumundaki Satınalma Sipariş(ler)i silimemiyor!"
-
-#~ msgid "Reference must be unique per Company!"
-#~ msgstr "Referans her şirket için benzersiz olmalı!"
-
-#~ msgid "The company name must be unique !"
-#~ msgstr "Firma adı benzersiz olmalı !"
-
-#~ msgid ""
-#~ "When the virtual stock goes below the Min Quantity specified for this field, "
-#~ "OpenERP generates a procurement to bring the virtual stock to the Max "
-#~ "Quantity."
-#~ msgstr ""
-#~ "Sanal stok bu alan için belirlenen Enaz Miktarın altına düşerse, OpenERP "
-#~ "sanal stoğu Ençok Miktara getirmek için bir satınalma oluşturur."
+msgstr "Ürünler stoktan ayrılmış"

@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2012-12-03 16:02+0000\n"
-"PO-Revision-Date: 2012-12-18 14:27+0000\n"
+"POT-Creation-Date: 2012-12-21 17:04+0000\n"
+"PO-Revision-Date: 2013-02-06 20:11+0000\n"
 "Last-Translator: Fekete Mihai <mihai@erpsystems.ro>\n"
 "Language-Team: Romanian <ro@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-19 05:17+0000\n"
-"X-Generator: Launchpad (build 16378)\n"
+"X-Launchpad-Export-Date: 2013-02-07 05:41+0000\n"
+"X-Generator: Launchpad (build 16477)\n"
 
 #. module: note
 #: field:note.note,memo:0
@@ -36,7 +36,7 @@ msgstr "Saptamana aceasta"
 #. module: note
 #: model:ir.model,name:note.model_base_config_settings
 msgid "base.config.settings"
-msgstr ""
+msgstr "base.config.settings (setari.config.de_baza)"
 
 #. module: note
 #: model:ir.model,name:note.model_note_tag
@@ -83,6 +83,24 @@ msgid ""
 "          </p>\n"
 "        "
 msgstr ""
+"<clasa p=\"oe_vizualizare_niciuncontinut_creeaza\">\n"
+"            Faceti click pentru a adauga o nota personala.\n"
+"          </p><p>\n"
+"            Folositi notele pentru a organiza sarcinile sau notele "
+"personale. Toate\n"
+"            notele sunt private; nimeni altcineva nu va putea sa le vada. "
+"Totusi,\n"
+"            puteti sa impartasiti unele note cu alti oameni, invitand adepti "
+"sa\n"
+"            vizualizeze nota. (Util pentru procesele verbale ale sedintelor, "
+"mai ales daca\n"
+"            activati caracteristica suport pentru scrierea in colaborare).\n"
+"          </p><p>\n"
+"            Puteti personaliza modul de procesare al notelor/sarcinilor "
+"dumneavoastra adaugand,\n"
+"            stergand sau modificand coloane.\n"
+"          </p>\n"
+"        "
 
 #. module: note
 #: model:note.stage,name:note.demo_note_stage_01
@@ -98,7 +116,7 @@ msgstr "Utilizatori"
 #. module: note
 #: view:note.note:0
 msgid "í"
-msgstr ""
+msgstr "í"
 
 #. module: note
 #: view:note.stage:0
@@ -118,7 +136,7 @@ msgstr "necunoscut"
 #. module: note
 #: view:note.note:0
 msgid "By sticky note Category"
-msgstr ""
+msgstr "Dupa Categoria nota adeziva"
 
 #. module: note
 #: help:note.note,message_unread:0
@@ -157,10 +175,10 @@ msgid "Categories"
 msgstr "Categorii"
 
 #. module: note
-#: field:note.note,message_comment_ids:0
-#: help:note.note,message_comment_ids:0
-msgid "Comments and emails"
-msgstr "Comentarii si e-mailuri"
+#: view:note.note:0
+#: field:note.note,stage_id:0
+msgid "Stage"
+msgstr "Etapa"
 
 #. module: note
 #: field:note.tag,name:0
@@ -196,11 +214,6 @@ msgstr "Nota Etapa"
 #: field:note.note,message_summary:0
 msgid "Summary"
 msgstr "Rezumat"
-
-#. module: note
-#: help:note.stage,sequence:0
-msgid "Used to order the note stages"
-msgstr "Utilizată pentru a comanda etapele notei"
 
 #. module: note
 #: field:note.note,stage_ids:0
@@ -274,10 +287,9 @@ msgid "Owner"
 msgstr "Deținător"
 
 #. module: note
-#: view:note.note:0
-#: field:note.note,stage_id:0
-msgid "Stage"
-msgstr "Etapa"
+#: help:note.stage,sequence:0
+msgid "Used to order the note stages"
+msgstr "Utilizat pentru a ordona etapele notei"
 
 #. module: note
 #: field:note.note,date_done:0
