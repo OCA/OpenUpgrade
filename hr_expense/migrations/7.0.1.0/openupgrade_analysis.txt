@@ -22,5 +22,8 @@ new xml-id of model ir.actions.act_window: hr_expense.hr_expense_product
 new xml-id of model ir.actions.todo: base.open_menu
 new xml-id of model ir.model.access: hr_expense.access_account_journal_employee
 new xml-id of model ir.ui.menu: hr_expense.menu_hr_product
+new xml-id of model mail.message.subtype: hr_expense.mt_expense_approved
+new xml-id of model mail.message.subtype: hr_expense.mt_expense_confirmed
+new xml-id of model mail.message.subtype: hr_expense.mt_expense_refused
 new xml-id of model mail.message: hr_expense.module_install_notification
 new xml-id of model workflow.activity: hr_expense.act_done

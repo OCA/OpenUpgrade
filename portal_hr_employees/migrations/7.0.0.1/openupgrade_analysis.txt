@@ -2,7 +2,8 @@
 portal_hr_employees / hr.employee              / public_info (text)            : NEW 
 portal_hr_employees / hr.employee              / visibility (selection)        : NEW selection_keys: ['private', 'public']
 new xml-id of model ir.actions.act_window: portal_hr_employees.action_team
-new xml-id of model ir.model.access: portal_hr_employees.access_hr_employee_user
+new xml-id of model ir.model.access: portal_hr_employees.access_hr_employee_anonymous
+new xml-id of model ir.model.access: portal_hr_employees.access_hr_employee_portal
 new xml-id of model ir.ui.view: portal_hr_employees.crm_contact_us
 new xml-id of model ir.ui.view: portal_hr_employees.portal_hr_kanban_view_employees
 new xml-id of model ir.ui.view: portal_hr_employees.portal_view_employee_filter

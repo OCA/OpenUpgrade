@@ -256,9 +256,11 @@ new xml-id of model account.tax.template: account.otaxs
 new xml-id of model account.tax.template: account.otaxx
 new xml-id of model ir.actions.act_window: account.action_account_config
 new xml-id of model ir.actions.act_window: account.action_account_fiscalyear
+new xml-id of model ir.actions.act_window: account.action_account_items
 new xml-id of model ir.actions.act_window: account.action_account_period
 new xml-id of model ir.actions.act_window: account.action_cash_box_in
 new xml-id of model ir.actions.act_window: account.action_cash_box_out
+new xml-id of model ir.actions.act_window: account.action_tax_code_items
 new xml-id of model ir.actions.act_window: account.open_account_charts_modules
 new xml-id of model ir.actions.todo: account.action_wizard_multi_chart_todo
 new xml-id of model ir.model.access: account.access_account_journal_cashbox_line
@@ -272,7 +274,8 @@ new xml-id of model ir.ui.view: account.cash_box_out_form
 new xml-id of model ir.ui.view: account.view_account_config_settings
 new xml-id of model ir.ui.view: account.view_bank_statement_form_journal_items
 new xml-id of model ir.ui.view: account.view_move_line_tree_reconcile
-new xml-id of model mail.message.subtype: account.mt_invoice_new
+new xml-id of model ir.values: account.ir_values_account_partner_ledger
 new xml-id of model mail.message.subtype: account.mt_invoice_paid
+new xml-id of model mail.message.subtype: account.mt_invoice_validated
 new xml-id of model res.groups: account.group_proforma_invoices
 new xml-id of model res.groups: account.group_supplier_inv_check_total
