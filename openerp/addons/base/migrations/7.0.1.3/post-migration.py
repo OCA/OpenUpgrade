@@ -20,9 +20,10 @@
 ##############################################################################
 
 from openupgrade import openupgrade
-from openerp import SUPERUSER_ID
+from openerp import pooler, SUPERUSER_ID
 
 force_defaults = {
+    'ir.mail_server': [('active', True)],
     'ir.model.access': [('active', True)],
     'ir.rule': [('active', True)],
     'res.company': [('custom_footer', True)],
@@ -32,6 +33,20 @@ force_defaults = {
     # employees
     'res.partner': [('is_company', True)],
 }
+
+def migrate_ir_translation(cr):
+    openupgrade.logged_query(
+        cr,
+        """ UPDATE ir_translation
+            SET state = 'translated'
+            WHERE length(value) > 0;
+        """)
+    openupgrade.logged_query(
+        cr,
+        """ UPDATE ir_translation
+            SET state = 'to_translate'
+            WHERE state is NULL;
+        """)
 
 def migrate_company(cr):
     """
@@ -48,15 +63,15 @@ def migrate_partner_address(cr, pool):
 
     TODO: break hard when base_contact is installed
     """
-    partner_obj = self.pool.get('res.partner')
+    partner_obj = pool.get('res.partner')
     cr.execute(
         "ALTER TABLE res_partner_address "
         "ADD column openupgrade_7_migrated_to_partner_id "
         " INTEGER")
     cr.execute(
-        "ALTER TABLE 'res_partner_address' ADD FOREIGN KEY "
-        "'openupgrade_7_migrated_to_partner_id' "
-        "REFERENCES 'res_partner' ON DELETE SET NULL")
+        "ALTER TABLE res_partner_address ADD FOREIGN KEY "
+        "(openupgrade_7_migrated_to_partner_id) "
+        "REFERENCES res_partner ON DELETE SET NULL")
     fields = [
         'id', 'birthdate', 'city', 'country_id', 'email', 'fax', 'function',
         'mobile', 'phone', 'state_id', 'street', 'street2', 'type', 'zip',
@@ -72,25 +87,24 @@ def migrate_partner_address(cr, pool):
         already in vals. Register the created partner_id
         on the obsolete address table
         """
-        for key, value in defaults:
+        for key in defaults:
             if key not in vals:
-                vals[key] = value
+                vals[key] = defaults[key]
 
         partner_id = partner_obj.create(cr, SUPERUSER_ID, vals)
         cr.execute(
-            "UPDATE res_partner_addres "
+            "UPDATE res_partner_address "
             "SET openupgrade_7_migrated_to_partner_id = %s "
             "WHERE id = %s",
             (partner_id, address_id))
 
-    def process_address_type(cr, typeclause, args=None):
+    def process_address_type(cr, whereclause, args=None):
         """
-        Migrate addresses to partners, based on sql type clause
+        Migrate addresses to partners, based on sql WHERE clause
         """
         cr.execute(
             "SELECT " + ', '.join(fields) + " FROM res_partner_address "
-            "WHERE type " + typeclause, args or ()
-            )
+            "WHERE " + whereclause, args or ())
         for row in cr.fetchall():
             row_cleaned = [val or False for val in row]
             address = dict(zip(fields, row_cleaned))
@@ -99,14 +113,15 @@ def migrate_partner_address(cr, pool):
                 # list of values that we should not overwrite
                 # in existing partners
                 'customer': False,
-                'is_company': partner_vals['type'] != 'contact'
+                'is_company': address['type'] != 'contact',
+                'type': address['type'],
+                'name': address['name'] or '/',
                 }
-            del partner_vals['id']
-            del partner_vals['partner_id']
+            for f in ['name', 'id', 'type', 'partner_id']:
+                del partner_vals[f]
             if not address['partner_id']:
                 # Dangling addresses, create with not is_company,
                 # not supplier and not customer
-                partner_vals['name'] = partner_vals['name'] or '/'
                 create_partner(address['id'], partner_vals, partner_defaults)
             else:
                 if address['partner_id'] not in partner_found:
@@ -117,7 +132,6 @@ def migrate_partner_address(cr, pool):
                 else:
                     # any following address for an existing partner
                     partner_vals.update({
-                            'name': partner_vals['name'] or '/',
                             'is_company': False,
                             'parent_id': address['partner_id']})
                     create_partner(
@@ -125,33 +139,47 @@ def migrate_partner_address(cr, pool):
             processed_ids.append(address['id'])
 
     # Process all addresses, default type first 
-    process_address_type(cr, "= 'default'")
-    process_address_type(cr, "IS NULL")
-    process_address_type(cr, "= ''")
-    process_address_type(cr, "NOT IN %s", (tuple(processed_ids),))
+    process_address_type(cr, "type = 'default'")
+    process_address_type(cr, "type IS NULL OR type = ''")
+    process_address_type(cr, "id NOT IN %s", (tuple(processed_ids),))
 
-def create_users_partner(cr, pool):
-    """ Users now have an inherits on res.partner """
-    partner_obj = self.pool.get('res.partner')
+def update_users_partner(cr, pool):
+    """ 
+    Now that the fields exist on the model, finish
+    the work of create_users_partner() in the pre script
+    """
+    partner_obj = pool.get('res.partner')
+    # Effectively remove excess partner for user admin
+    # Maybe better to exclude user_root while creating?
+    cr.execute(
+        "SELECT openupgrade_7_created_partner_id "
+        "FROM res_users "
+        "WHERE openupgrade_7_created_partner_id IS NOT NULL "
+        "AND openupgrade_7_created_partner_id != partner_id")
+    partner_obj.unlink(
+        cr, SUPERUSER_ID,
+        [row[1] for row in cr.fetchall()])
     cr.execute(
         # Can't use orm as these fields to not appear on the model
         # anymore
-        "SELECT name, context_lang, context_tz, user_email, active "
-        "FROM res_users WHERE partner_id IS NULL")
+        "SELECT id, openupgrade_7_created_partner_id, context_lang, "
+        "context_tz, " + openupgrade.get_legacy_name('user_email') + " "
+        "FROM res_users "
+        "WHERE openupgrade_7_created_partner_id IS NOT NULL")
     for row in cr.fetchall():
-        user_id = row.pop(0)
-        partner_vals = dict(
-            zip(['name', 'lang', 'tz', 'email', 'active'], row))
-        partner_vals.update({
-                'user_ids': [(4, user_id)],
-                'customer': False,
-                })
-        partner_obj.create(cr, SUPERUSER_ID, partner_vals)
+        partner_vals = {
+            'user_ids': [(4, row[0])],
+            'lang': row[2] or False,
+            'tz': row[3] or False,
+            'email': row[4] or False,
+            }
+        partner_obj.write(cr, SUPERUSER_ID, row[1], partner_vals)
 
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
-    openupgrade_set_defaults(cr, pool, force_defaults, force=True)
+    openupgrade.set_defaults(cr, pool, force_defaults, force=True)
+    migrate_ir_translation(cr)
     migrate_company(cr)
     migrate_partner_address(cr, pool)
-    create_users_partner(cr, pool)
+    update_users_partner(cr, pool)

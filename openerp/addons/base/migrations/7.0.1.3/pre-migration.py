@@ -37,38 +37,112 @@ module_namespec = [
 
 column_renames = {
     # login_date: orm can map timestamps to date
-    'res_users': [('date', 'login_date')],
+    'res_users': [
+        ('date', 'login_date'),
+        ('user_email', openupgrade.get_legacy_name('user_email')),
+        ]
 }
 
-renamed_xmlids = []
-
-def migrate_ir_translation(cr):
-    cr.logged_query(
-        cr,
-        """ UPDATE ir_translation
-            SET state = 'translated'
-            WHERE length(value) > 0;
-        """)
-    cr.logged_query(
-        cr,
-        """ UPDATE ir_translation
-            SET state = 'to_translate'
-            WHERE state is NULL;
-        """)
+xmlid_renames = []
 
 def migrate_ir_attachment(cr):
     # Data is now stored in db_datas column
     # and datas is a function field like in the document module
-    if not openupgrade.column_exists('ir_attachment', 'db_datas'):
+    if not openupgrade.column_exists(cr, 'ir_attachment', 'db_datas'):
         openupgrade.rename_columns(
-            cr, {'ir_attachment': ('datas', 'db_datas')})
+            cr, {'ir_attachment': [('datas', 'db_datas')]})
+
+def update_base_sql(cr):
+    """
+    Inject snippets of 
+    openerp/addons/base/base.sql
+    """
+    cr.execute("""
+CREATE TABLE ir_model_constraint (
+    id serial NOT NULL,
+    create_uid integer,
+    create_date timestamp without time zone,
+    write_date timestamp without time zone,
+    write_uid integer,
+    date_init timestamp without time zone,
+    date_update timestamp without time zone,
+    module integer NOT NULL references ir_module_module on delete restrict,
+    model integer NOT NULL references ir_model on delete restrict,
+    type character varying(1) NOT NULL,
+    name character varying(128) NOT NULL
+);
+CREATE TABLE ir_model_relation (
+    id serial NOT NULL,
+    create_uid integer,
+    create_date timestamp without time zone,
+    write_date timestamp without time zone,
+    write_uid integer,
+    date_init timestamp without time zone,
+    date_update timestamp without time zone,
+    module integer NOT NULL references ir_module_module on delete restrict,
+    model integer NOT NULL references ir_model on delete restrict,
+    name character varying(128) NOT NULL
+);  
+""")
+
+def create_users_partner(cr):
+    """
+    Users now have an inherits on res.partner.
+    Transferred fields include lang, tz and email
+    but these fields do not exist on the partner table
+    at this point. We'll pick this up in the post
+    script.
+
+    If other modules define defaults on the partner
+    model, their migration scripts should put them
+    into place for these entries.
+
+    If other modules set additional columns to
+    required, the following will break. We may
+    want to have a look at disabling triggers
+    at that point,
+    """
+    if not openupgrade.column_exists(
+        cr, 'res_users', 'partner_id'):
+        cr.execute(
+            "ALTER TABLE res_users "
+            "ADD column partner_id "
+            " INTEGER")
+        cr.execute(
+            "ALTER TABLE res_users ADD FOREIGN KEY "
+            "(partner_id) "
+            "REFERENCES res_partner ON DELETE SET NULL")
+    cr.execute(
+        "ALTER TABLE res_users "
+        "ADD column openupgrade_7_created_partner_id "
+        " INTEGER")
+    cr.execute(
+        "ALTER TABLE res_users ADD FOREIGN KEY "
+        "(openupgrade_7_created_partner_id) "
+        "REFERENCES res_partner ON DELETE SET NULL")
+    cr.execute(
+        "SELECT id, name, active FROM res_users "
+        "WHERE partner_id IS NULL")
+    for row in cr.fetchall():
+        cr.execute(
+            "INSERT INTO res_partner "
+            "(name, active) "
+            "VALUES(%s,%s) RETURNING id", row[1:])
+        partner_id = cr.fetchone()[0]
+        cr.execute(
+            "UPDATE res_users "
+            "SET partner_id = %s, "
+            "openupgrade_7_created_partner_id = %s "
+            "WHERE id = %s", (partner_id, partner_id, row[0]))
 
 @openupgrade.migrate()
 def migrate(cr, version):
+    update_base_sql(cr)
     openupgrade.update_module_names(
         cr, module_namespec
         )
+    openupgrade.drop_columns(cr, [('ir_actions_todo', 'action_id')])
     openupgrade.rename_columns(cr, column_renames)
-    openupgrade.rename_xmlids(cr, xmlids_renames)
-    migrate_ir_translation(cr)
+    openupgrade.rename_xmlids(cr, xmlid_renames)
     migrate_ir_attachment(cr)
+    create_users_partner(cr)
