@@ -19,9 +19,7 @@
 #
 ##############################################################################
 
-# TODO: migrate ir.actions.todo wrt. action_id -> ir.actions.actions (prev. ir.actions.act_window)
 # Maybe: investigate impact of 'model' field on ir.translation
-# Maybe: ir.ui.menu now has _parent_store = True. Are parent_left/right computed automatically?
 # Ignored: removal of integer_big which openerp 6.1 claims is currently unused
 
 from openupgrade import openupgrade
