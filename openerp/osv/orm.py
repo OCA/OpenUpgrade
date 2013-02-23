@@ -1971,7 +1971,10 @@ class BaseModel(object):
                 msg = "\n * ".join([r[0] for r in res])
                 msg += "\n\nEither you wrongly customized this view, or some modules bringing those views are not compatible with your current data model"
                 _logger.error(msg)
-                raise except_orm('View error', msg)
+                # OpenUpgrade: do not raise for unknown fields, as these
+                # can be triggered on old views that still have to be
+                # replaced by the upgrade procedure
+                #     raise except_orm('View error', msg)
         return arch, fields
 
     def _get_default_form_view(self, cr, user, context=None):
