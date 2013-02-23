@@ -19,6 +19,7 @@ base         / ir.actions.todo          / category_id (many2one)        : DEL re
 base         / ir.actions.wizard        / help (text)                   : NEW 
 base         / ir.attachment            / datas (binary)                : now a function
 base         / ir.filters               / is_default (boolean)          : NEW 
+base         / ir.mail_server           / active (boolean)              : NEW 
 base         / ir.model.access          / active (boolean)              : NEW 
 base         / ir.model.constraint      / date_init (datetime)          : NEW 
 base         / ir.model.constraint      / date_update (datetime)        : NEW 
@@ -181,8 +182,11 @@ new xml-id of model ir.actions.act_window.view: base.action_partner_tree_view1
 new xml-id of model ir.actions.act_window: base.action_inventory_form
 new xml-id of model ir.actions.act_window: base.action_model_constraint
 new xml-id of model ir.actions.act_window: base.action_model_relation
+new xml-id of model ir.actions.act_window: base.change_password_wizard_action
 new xml-id of model ir.actions.act_window: base.company_normal_action_tree
 new xml-id of model ir.actions.client: base.action_client_base_menu
+new xml-id of model ir.actions.client: base.modules_act_cl
+new xml-id of model ir.actions.client: base.modules_updates_act_cl
 new xml-id of model ir.actions.server: base.action_run_ir_action_todo
 new xml-id of model ir.actions.server: base.action_server_module_immediate_install
 new xml-id of model ir.actions.todo: base.open_menu
@@ -203,9 +207,13 @@ new xml-id of model ir.ui.menu: base.menu_custom_multicompany
 new xml-id of model ir.ui.menu: base.menu_ir_actions_todo
 new xml-id of model ir.ui.menu: base.menu_ir_cron
 new xml-id of model ir.ui.menu: base.menu_ir_property
+new xml-id of model ir.ui.menu: base.menu_module_updates
 new xml-id of model ir.ui.menu: base.menu_reporting_config
 new xml-id of model ir.ui.menu: base.menu_reporting_dashboard
 new xml-id of model ir.ui.menu: base.menu_sales
+new xml-id of model ir.ui.menu: base.module_mi
+new xml-id of model ir.ui.view: base.change_password_wizard_user_tree_view
+new xml-id of model ir.ui.view: base.change_password_wizard_view
 new xml-id of model ir.ui.view: base.view_groups_search
 new xml-id of model ir.ui.view: base.view_inventory_form
 new xml-id of model ir.ui.view: base.view_inventory_search
