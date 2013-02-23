@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    This module copyright (C) 2011-2012 Therp BV (<http://therp.nl>)
+#    This module copyright (C) 2011-2013 Therp BV (<http://therp.nl>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -324,8 +324,9 @@ def get_legacy_name(original_name):
     :param original_name: the original name of the column
     :param version: current version as passed to migrate()
     """
-    return 'openupgrade_legacy_'+('_').join(map(str, release.version_info))+'_'+original_name
-        
+    return 'openupgrade_legacy_'+('_').join(
+        map(str, release.version_info[0:2]))+'_'+original_name
+
 def migrate():
     """
     This is the decorator for the migrate() function
