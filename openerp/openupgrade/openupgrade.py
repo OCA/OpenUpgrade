@@ -22,7 +22,7 @@
 import os
 import inspect
 import logging
-from openerp import release, osv, pooler, tools
+from openerp import release, osv, pooler, tools, SUPERUSER_ID
 import openupgrade_tools
 
 # The server log level has not been set at this point
@@ -220,7 +220,9 @@ def set_defaults(cr, pool, default_spec, force=False):
     def write_value(ids, field, value):
         logger.debug("model %s, field %s: setting default value of resources %s to %s",
                  model, field, ids, unicode(value))
-        obj.write(cr, 1, ids, {field: value})
+        for res_id in ids:
+            # Iterating over ids here as a workaround for lp:1131653
+            obj.write(cr, SUPERUSER_ID, [res_id], {field: value})
 
     for model in default_spec.keys():
         obj = pool.get(model)
@@ -229,7 +231,7 @@ def set_defaults(cr, pool, default_spec, force=False):
 
         for field, value in default_spec[model]:
             domain = not force and [(field, '=', False)] or []
-            ids = obj.search(cr, 1, domain)
+            ids = obj.search(cr, SUPERUSER_ID, domain)
             if not ids:
                 continue
             if value is None:
