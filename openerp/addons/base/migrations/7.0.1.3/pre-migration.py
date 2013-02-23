@@ -34,7 +34,8 @@ module_namespec = [
 ]
 
 column_renames = {
-    # login_date: orm can map timestamps to date
+    # login_date: field type changed as well, but
+    # orm can map timestamp fields to date field
     'res_users': [
         ('date', 'login_date'),
         ('user_email', openupgrade.get_legacy_name('user_email')),
@@ -44,16 +45,17 @@ column_renames = {
 xmlid_renames = []
 
 def migrate_ir_attachment(cr):
-    # Data is now stored in db_datas column
-    # and datas is a function field like in the document module
+    # Data is now stored in db_datas column and datas is a function field
+    # like in the document module in 6.1. If the db_datas column already
+    # exist, presume that this module was installed and do nothing.
     if not openupgrade.column_exists(cr, 'ir_attachment', 'db_datas'):
         openupgrade.rename_columns(
             cr, {'ir_attachment': [('datas', 'db_datas')]})
 
 def update_base_sql(cr):
     """
-    Inject snippets of 
-    openerp/addons/base/base.sql
+    Inject snippets of openerp/addons/base/base.sql, needed
+    to upgrade the base module.
     """
     cr.execute("""
 CREATE TABLE ir_model_constraint (
@@ -99,6 +101,11 @@ def create_users_partner(cr):
     required, the following will break. We may
     want to have a look at disabling triggers
     at that point,
+
+    We'll create both the partner column and a custom column
+    to track the partners we create here. These are not necessarily
+    the same, especially if you have a custom module implementing
+    similar behaviour for 6.1.
     """
     if not openupgrade.column_exists(
         cr, 'res_users', 'partner_id'):
@@ -109,7 +116,7 @@ def create_users_partner(cr):
         cr.execute(
             "ALTER TABLE res_users ADD FOREIGN KEY "
             "(partner_id) "
-            "REFERENCES res_partner ON DELETE SET NULL")
+            "REFERENCES res_partner ON DELETE RESTRICT")
     cr.execute(
         "ALTER TABLE res_users "
         "ADD column openupgrade_7_created_partner_id "
@@ -118,6 +125,11 @@ def create_users_partner(cr):
         "ALTER TABLE res_users ADD FOREIGN KEY "
         "(openupgrade_7_created_partner_id) "
         "REFERENCES res_partner ON DELETE SET NULL")
+    cr.execute(
+        "SELECT res_id FROM ir_model_data "
+        "WHERE module='base' and name='user_root'")
+    user_root = cr.fetchone()
+    user_root_id = user_root and user_root[0] or 0
     cr.execute(
         "SELECT id, name, active FROM res_users "
         "WHERE partner_id IS NULL")
@@ -132,6 +144,14 @@ def create_users_partner(cr):
             "SET partner_id = %s, "
             "openupgrade_7_created_partner_id = %s "
             "WHERE id = %s", (partner_id, partner_id, row[0]))
+        if row[0] == user_root_id:
+            # Insert XML ID so that the partner for the admin user
+            # does not get created again when loading the data
+            cr.execute(
+                "INSERT INTO ir_model_data "
+                "(res_id, model, module, name, noupdate) "
+                "VALUES(%s, 'res.partner', 'base', 'partner_root', TRUE) ",
+                (partner_id,))
 
 @openupgrade.migrate()
 def migrate(cr, version):

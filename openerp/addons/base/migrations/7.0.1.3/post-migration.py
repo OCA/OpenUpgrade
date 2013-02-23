@@ -149,18 +149,8 @@ def update_users_partner(cr, pool):
     the work of create_users_partner() in the pre script
     """
     partner_obj = pool.get('res.partner')
-    # Effectively remove excess partner for user admin
-    # Maybe better to exclude user_root while creating?
     cr.execute(
-        "SELECT openupgrade_7_created_partner_id "
-        "FROM res_users "
-        "WHERE openupgrade_7_created_partner_id IS NOT NULL "
-        "AND openupgrade_7_created_partner_id != partner_id")
-    partner_obj.unlink(
-        cr, SUPERUSER_ID,
-        [row[1] for row in cr.fetchall()])
-    cr.execute(
-        # Can't use orm as these fields to not appear on the model
+        # Can't use orm as these fields do not appear on the model
         # anymore
         "SELECT id, openupgrade_7_created_partner_id, context_lang, "
         "context_tz, " + openupgrade.get_legacy_name('user_email') + " "
