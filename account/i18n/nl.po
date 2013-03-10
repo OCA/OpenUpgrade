@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-03-07 08:37+0000\n"
-"PO-Revision-Date: 2013-03-08 07:05+0000\n"
+"PO-Revision-Date: 2013-03-09 09:51+0000\n"
 "Last-Translator: Erwin van der Ploeg (Endian Solutions) <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-03-09 05:37+0000\n"
+"X-Launchpad-Export-Date: 2013-03-10 05:14+0000\n"
 "X-Generator: Launchpad (build 16523)\n"
 
 #. module: account
@@ -6428,6 +6428,10 @@ msgid ""
 "number).  You can set it back to \"Draft\" state and modify its content, "
 "then re-confirm it."
 msgstr ""
+"Het is niet mogelijk een factuur te verwijderen nadat deze is bevestigd (en "
+"een factuurnummer heeft gekregen). U kunt de factuur terugzetten naar "
+"'Concept' an vervolgens de inhoud aanpassen. Vervolgens kunt u de factuur "
+"opnieuw bevestigen."
 
 #. module: account
 #: help:account.automatic.reconcile,power:0
@@ -7641,7 +7645,7 @@ msgstr "Maak boeking"
 #. module: account
 #: view:account.open.closed.fiscalyear:0
 msgid "Cancel Fiscal Year Closing Entries"
-msgstr ""
+msgstr "Einde boekjaar boekingen annuleren"
 
 #. module: account
 #: selection:account.account.type,report_type:0
@@ -8808,6 +8812,8 @@ msgid ""
 "You cannot delete an invoice which is not draft or cancelled. You should "
 "refund it instead."
 msgstr ""
+"Het is niet mogelijk een factuur te verwijderen welke niet in concept of "
+"geannuleerd is. U dient de factuur te crediteren."
 
 #. module: account
 #: model:ir.ui.menu,name:account.menu_finance_legal_statement
@@ -9128,7 +9134,7 @@ msgid ""
 msgstr ""
 "Dit geeft u de mogelijkheid om het versturen van betalingsherinneringen, met "
 "verschillende herinneringsniveaus, te automatiseren.\n"
-"                 Dit installeert de module account_followup."
+"                Dit installeert de module account_followup."
 
 #. module: account
 #: field:account.automatic.reconcile,period_id:0
