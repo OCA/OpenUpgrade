@@ -1,0 +1,9 @@
+Addresses are migrated to partners. For further reference, a new column openupgrade_7_migrated_to_partner_id will contain the newly created partner that originates from the entry in the old res_partner_address_table.
+
+Technical changes in the table layout of users and attachments are processed.
+
+Partner events are dropped
+
+Mail servers and access rules can now be deactivated.
+
+Users are now automatically a partner. This script creates partners for existing users.
