@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-server\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-03-07 08:36+0000\n"
-"PO-Revision-Date: 2013-04-02 21:13+0000\n"
+"PO-Revision-Date: 2013-04-03 21:58+0000\n"
 "Last-Translator: Ayhan KIZILTAN <Unknown>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-04-03 15:02+0000\n"
+"X-Launchpad-Export-Date: 2013-04-04 14:56+0000\n"
 "X-Generator: Launchpad (build 16546)\n"
 
 #. module: base
@@ -26,7 +26,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"Çek yazımı ve basımı için modül.\n"
+"Çek Yazma ve Bastırma Modülü.\n"
 "================================================\n"
 "    "
 
@@ -171,6 +171,9 @@ msgid ""
 "specified as a Python expression defining a list of triplets. For example: "
 "[('color','=','red')]"
 msgstr ""
+"ilişki alanlarında olası değerleri sınırlayacak seçmeli etki alanı adı, bir "
+"üçlü liste olarak tanımlanan bir Python ifadesi olarak belirlenmiştir. "
+"Örneğin: [('renk','=','kırmızı')]"
 
 #. module: base
 #: field:res.partner,ref:0
@@ -307,6 +310,12 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"Şili hesap planı ve yerel vergi.\n"
+"==============================================\n"
+"Plan contable chileno e impuestos de acuerdo a disposiciones vigentes\n"
+"\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale
@@ -318,7 +327,7 @@ msgstr "Satış Yönetimi"
 msgid ""
 "The internal user that is in charge of communicating with this contact if "
 "any."
-msgstr ""
+msgstr "Eğer varsa, bu kişi ile iletişime görevlendirilmiş iç kullanıcı."
 
 #. module: base
 #: view:res.partner:0
@@ -346,6 +355,8 @@ msgid ""
 "Database ID of record to open in form view, when ``view_mode`` is set to "
 "'form' only"
 msgstr ""
+"\"view_mode\" yalnızca 'form' olarak ayarlandığındaki görünüm formında "
+"açılacak kaydın Veritabanı ID i"
 
 #. module: base
 #: help:ir.values,key2:0
@@ -357,6 +368,12 @@ msgid ""
 "  - tree_but_open\n"
 "For defaults, an optional condition"
 msgstr ""
+"İşlemler için, olası işlem yuvaları: \n"
+"  - client_action_multi\n"
+"  - client_print_multi\n"
+"  - client_action_relate\n"
+"  - tree_but_open\n"
+"Varsayılanlar için, seçmeli bir koşul"
 
 #. module: base
 #: sql_constraint:res.lang:0
