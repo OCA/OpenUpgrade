@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-03-07 08:37+0000\n"
-"PO-Revision-Date: 2013-04-06 05:41+0000\n"
-"Last-Translator: gobi <Unknown>\n"
+"PO-Revision-Date: 2013-04-08 05:26+0000\n"
+"Last-Translator: erdenebold <erdenebold10@gmail.com>\n"
 "Language-Team: Mongolian <mn@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-04-07 06:00+0000\n"
+"X-Launchpad-Export-Date: 2013-04-08 06:20+0000\n"
 "X-Generator: Launchpad (build 16550)\n"
 
 #. module: mrp
@@ -91,7 +91,7 @@ msgstr "Шугам"
 #. module: mrp
 #: view:mrp.bom:0
 msgid "Search Bill Of Material"
-msgstr "Жор Хайх"
+msgstr "Орц Хайх"
 
 #. module: mrp
 #: model:process.node,note:mrp.process_node_stockproduct1
@@ -214,7 +214,7 @@ msgstr ""
 #: code:addons/mrp/mrp.py:633
 #, python-format
 msgid "Cannot cancel manufacturing order!"
-msgstr ""
+msgstr "Үйлдвэрийн захиалгыг цуцлах боломжгүй!"
 
 #. module: mrp
 #: field:mrp.workcenter,costs_cycle_account_id:0
@@ -497,7 +497,7 @@ msgstr ""
 #: view:mrp.bom:0
 #: report:mrp.production.order:0
 msgid "Bill Of Material"
-msgstr "Жор"
+msgstr "Орц"
 
 #. module: mrp
 #: help:mrp.routing,location_id:0
@@ -682,7 +682,7 @@ msgstr "Энэ бараанд орц тодорхойлогдоогүй байн
 #: model:ir.actions.act_window,name:mrp.mrp_bom_form_action2
 #: model:ir.ui.menu,name:mrp.menu_mrp_bom_form_action2
 msgid "Bill of Material Components"
-msgstr "Жорын бүрдэлүүд"
+msgstr "Орцын бүрдэлүүд"
 
 #. module: mrp
 #: model:ir.model,name:mrp.model_stock_move
@@ -907,7 +907,7 @@ msgid ""
 "All product quantities must be greater than 0.\n"
 "You should install the mrp_byproduct module if you want to manage extra "
 "products on BoMs !"
-msgstr ""
+msgstr "Бүх бүтээгдэхүүнийг тоог 0-оос эхэлж үүсгэнэ."
 
 #. module: mrp
 #: view:mrp.production:0
@@ -1167,7 +1167,7 @@ msgstr "Хийгдэж байгаа үйлдвэрлэлийн захиалгу�
 #. module: mrp
 #: model:ir.actions.client,name:mrp.action_client_mrp_menu
 msgid "Open MRP Menu"
-msgstr ""
+msgstr "Нээлттэй MRP цэс"
 
 #. module: mrp
 #: model:ir.actions.act_window,name:mrp.mrp_production_action4
@@ -1194,7 +1194,7 @@ msgstr "Циклийн Өртөг"
 #: code:addons/mrp/wizard/change_production_qty.py:88
 #, python-format
 msgid "Cannot find bill of material for this product."
-msgstr ""
+msgstr "Энэ бараа материалаар хайх боломжгүй."
 
 #. module: mrp
 #: selection:mrp.workcenter.load,measure_unit:0
@@ -1271,7 +1271,7 @@ msgstr "Үйлдвэрлэлийг эхлүүлэхэд бэлэн Үйлдвэ�
 #: field:mrp.production,bom_id:0
 #: model:process.node,name:mrp.process_node_billofmaterial0
 msgid "Bill of Material"
-msgstr "Жор"
+msgstr "Орц"
 
 #. module: mrp
 #: view:mrp.workcenter.load:0
@@ -1540,7 +1540,7 @@ msgstr "БЗ Дугаар"
 #: code:addons/mrp/mrp.py:505
 #, python-format
 msgid "Cannot delete a manufacturing order in state '%s'."
-msgstr ""
+msgstr "Үйлдвэрлэлийн захиалгын '%s' төлөвт устгах боломжгүй."
 
 #. module: mrp
 #: selection:mrp.production,state:0
@@ -1840,7 +1840,7 @@ msgstr "1 циклийн хугацаа (цагаар)"
 #. module: mrp
 #: view:mrp.production:0
 msgid "Cancel Production"
-msgstr ""
+msgstr "Үйлдвэрлэлийг цуцлах"
 
 #. module: mrp
 #: model:ir.actions.report.xml,name:mrp.report_mrp_production_report
@@ -2326,7 +2326,7 @@ msgstr ""
 msgid ""
 "a manufacturing\n"
 "                        order"
-msgstr ""
+msgstr "үйлдвэрлэл"
 
 #. module: mrp
 #: field:mrp.config.settings,group_mrp_properties:0
@@ -2427,7 +2427,7 @@ msgstr "Нөөцийн Амралт, Чөлөө"
 #. module: mrp
 #: help:mrp.bom,sequence:0
 msgid "Gives the sequence order when displaying a list of bills of material."
-msgstr "Жорын жагсаалтыг харуулах дэс дарааллыг өгдөг."
+msgstr "Орцын жагсаалтыг харуулах дэс дарааллыг өгдөг."
 
 #. module: mrp
 #: model:ir.model,name:mrp.model_mrp_config_settings
