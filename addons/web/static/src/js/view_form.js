@@ -765,7 +765,11 @@ instance.web.FormView = instance.web.View.extend(instance.web.form.FieldManagerM
         this.has_been_loaded.done(function() {
             if (self.datarecord.id && confirm(_t("Do you really want to delete this record?"))) {
                 self.dataset.unlink([self.datarecord.id]).done(function() {
-                    self.execute_pager_action('next');
+                    if (self.dataset.size()) {
+                        self.execute_pager_action('next');
+                    } else {
+                        self.do_action('history_back');
+                    }
                     def.resolve();
                 });
             } else {
@@ -802,6 +806,8 @@ instance.web.FormView = instance.web.View.extend(instance.web.form.FieldManagerM
             if (save_obj.error)
                 return $.Deferred().reject();
             return $.when.apply($, save_obj.ret);
+        }).done(function() {
+            self.$el.removeClass('oe_form_dirty');
         });
     },
     _process_save: function(save_obj) {
@@ -1444,6 +1450,9 @@ instance.web.form.FormRenderingEngine = instance.web.form.FormRenderingEngineInt
             $(this).children().each(function() {
                 var $td = $(this),
                     $child = $td.children(':first');
+                if ($child.attr('cell-class')) {
+                    $td.addClass($child.attr('cell-class'));
+                }
                 switch ($child[0].tagName.toLowerCase()) {
                     case 'separator':
                         break;
@@ -1520,7 +1529,7 @@ instance.web.form.FormRenderingEngine = instance.web.form.FormRenderingEngineInt
             if (! page.__ic)
                 return;
             page.__ic.on("change:effective_invisible", null, function() {
-                if (!page.__ic.get('effective_invisible')) {
+                if (!page.__ic.get('effective_invisible') && page.autofocus) {
                     $new_notebook.tabs('select', i);
                     return;
                 }
@@ -2126,7 +2135,7 @@ instance.web.form.AbstractField = instance.web.form.FormWidget.extend(instance.w
         value without triggering a re-rendering.
     */
     internal_set_value: function(value_) {
-        var tmp = this.no_render;
+        var tmp = this.no_rerender;
         this.no_rerender = true;
         this.set({'value': value_});
         this.no_rerender = tmp;
@@ -3281,7 +3290,7 @@ instance.web.form.FieldMany2One = instance.web.form.AbstractField.extend(instanc
         }
         if (! no_recurse) {
             var dataset = new instance.web.DataSetStatic(this, this.field.relation, self.build_context());
-            dataset.name_get([self.get("value")]).done(function(data) {
+            this.alive(dataset.name_get([self.get("value")])).done(function(data) {
                 self.display_value["" + self.get("value")] = data[0][1];
                 self.render_value(true);
             });
