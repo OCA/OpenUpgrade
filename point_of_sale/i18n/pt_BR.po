@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-03-07 08:37+0000\n"
-"PO-Revision-Date: 2013-04-20 04:17+0000\n"
+"PO-Revision-Date: 2013-04-20 22:44+0000\n"
 "Last-Translator: Thiago Tognoli <Unknown>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-04-20 06:48+0000\n"
+"X-Launchpad-Export-Date: 2013-04-21 05:32+0000\n"
 "X-Generator: Launchpad (build 16567)\n"
 
 #. module: point_of_sale
@@ -115,7 +115,7 @@ msgstr "Detalhes das Vendas"
 #. module: point_of_sale
 #: constraint:pos.config:0
 msgid "You cannot have two cash controls in one Point Of Sale !"
-msgstr "Você não pode ter dois controles de caixa em um ponto de venda!"
+msgstr "Você não pode ter dois controles de caixa em um Ponto de Venda!"
 
 #. module: point_of_sale
 #: field:pos.payment.report.user,user_id:0
@@ -157,9 +157,7 @@ msgid ""
 "touchscreen interface."
 msgstr ""
 "Você deve controlar o valor na caixa registradora, antes\n"
-"                                                                             "
-"                                             de iniciar as vendas através da "
-"interface de toque."
+"                          de iniciar as vendas através da interface de toque."
 
 #. module: point_of_sale
 #: report:account.statement:0
@@ -229,7 +227,7 @@ msgstr "Pesando"
 #. module: point_of_sale
 #: model:product.template,name:point_of_sale.fenouil_fenouil_product_template
 msgid "Fennel"
-msgstr "erva-doce"
+msgstr "Erva Doce"
 
 #. module: point_of_sale
 #. openerp-web
@@ -288,7 +286,7 @@ msgstr "Mostrar Configuração"
 #. module: point_of_sale
 #: report:pos.lines:0
 msgid "Disc. (%)"
-msgstr "Desconto (%)"
+msgstr "Desc. (%)"
 
 #. module: point_of_sale
 #: report:pos.details:0
@@ -408,7 +406,7 @@ msgstr "Abrir Caixa Registradora"
 #. module: point_of_sale
 #: view:pos.session.opening:0
 msgid "Select your Point of Sale"
-msgstr "Escolha seu Ponto de Vendas"
+msgstr "Escolha seu Ponto de Venda"
 
 #. module: point_of_sale
 #: field:report.sales.by.margin.pos,total:0
@@ -444,13 +442,13 @@ msgstr "Para Pesar"
 #: code:addons/point_of_sale/static/src/xml/pos.xml:476
 #, python-format
 msgid "Hardware Events"
-msgstr "Eventos do Hardware"
+msgstr "Eventos do Equipamento"
 
 #. module: point_of_sale
 #: code:addons/point_of_sale/point_of_sale.py:301
 #, python-format
 msgid "You should assign a Point of Sale to your session."
-msgstr "Você precisa associar um Ponto de Vendas a sua sessão."
+msgstr "Você precisa associar um Ponto de Venda a sua sessão."
 
 #. module: point_of_sale
 #: view:pos.order.line:0
@@ -498,7 +496,7 @@ msgstr ""
 #. module: point_of_sale
 #: view:pos.session.opening:0
 msgid ") is \""
-msgstr ") é \""
+msgstr ") está \""
 
 #. module: point_of_sale
 #: model:product.template,name:point_of_sale.Onions_product_template
@@ -522,12 +520,12 @@ msgstr "Em Andamento"
 #: view:pos.session:0
 #: field:pos.session,opening_details_ids:0
 msgid "Opening Cash Control"
-msgstr "Controle de Abertura de Caixa"
+msgstr "Abrindo Controle de Caixa"
 
 #. module: point_of_sale
 #: help:res.users,ean13:0
 msgid "BarCode"
-msgstr "Código de barras"
+msgstr "Código de Barras"
 
 #. module: point_of_sale
 #: help:pos.category,image_medium:0
@@ -943,7 +941,7 @@ msgstr "Jonagold apples"
 #: model:ir.model,name:point_of_sale.model_account_journal
 #: field:report.pos.order,journal_id:0
 msgid "Journal"
-msgstr "Registro"
+msgstr "Diário"
 
 #. module: point_of_sale
 #: view:pos.session:0
@@ -953,7 +951,7 @@ msgstr "Demonstrativos"
 #. module: point_of_sale
 #: report:pos.details:0
 msgid "Sales total(Revenue)"
-msgstr "Vendas Totais"
+msgstr "Total de vendas (Receita)"
 
 #. module: point_of_sale
 #: help:pos.config,group_by:0
@@ -2172,7 +2170,7 @@ msgstr "Tomates em Conjunto"
 #. module: point_of_sale
 #: model:ir.actions.client,name:point_of_sale.action_pos_pos
 msgid "Start Point of Sale"
-msgstr "Iniciar Ponto de Vendas"
+msgstr "Iniciar Ponto de Venda"
 
 #. module: point_of_sale
 #. openerp-web
@@ -2793,7 +2791,7 @@ msgstr "Vendas por Margem de Usuário"
 #: report:pos.invoice:0
 #, python-format
 msgid "Taxes:"
-msgstr "Taxas:"
+msgstr "Impostos:"
 
 #. module: point_of_sale
 #: model:product.template,name:point_of_sale.pepsi_max_33cl_product_template
@@ -3800,7 +3798,7 @@ msgstr "Abrindo Sessão do PDV"
 #. module: point_of_sale
 #: field:pos.order.line,price_subtotal:0
 msgid "Subtotal w/o Tax"
-msgstr "Subtotal Sem Taxas"
+msgstr "Subtotal Sem Impostos"
 
 #. module: point_of_sale
 #. openerp-web
