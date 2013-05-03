@@ -25,7 +25,6 @@ from openerp import pooler, SUPERUSER_ID
 force_defaults = {
     'ir.mail_server': [('active', True)],
     'ir.model.access': [('active', True)],
-    'ir.rule': [('active', True)],
     'res.company': [('custom_footer', True)],
     # We'll have to adapt the default for is_company in specific
     # modules. For instance, a migration script for hr
@@ -169,6 +168,10 @@ def update_users_partner(cr, pool):
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     openupgrade.set_defaults(cr, pool, force_defaults, force=True)
+    #circumvent orm when writing to record rules as the orm needs the
+    #record rule's model to be instantiatable, which goes wrong at this
+    #point for most models
+    cr.execute('update ir_rule set active=True')
     migrate_ir_translation(cr)
     migrate_company(cr)
     migrate_partner_address(cr, pool)
