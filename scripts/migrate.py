@@ -15,10 +15,23 @@ import bzrlib.builtins
 import bzrlib.info
 
 migrations={
+  '7.0': {
+      'addons': {
+          'addons': 'lp:openupgrade-addons/7.0',
+          'web': {'url': 'lp:openerp-web/7.0', 'addons_dir': 'addons'},
+        },
+      'server': {
+          'url': 'lp:openupgrade-server/7.0', 
+          'addons_dir': os.path.join('openerp','addons'),
+          'root_dir': os.path.join(''),
+          'cmd': 'openerp-server --update=all --database=%(db)s '+
+            '--config=%(config)s --stop-after-init --no-xmlrpc --no-netrpc',
+        },
+    },
   '6.1': {
       'addons': {
-          'addons': 'lp:openupgrade-addons',
-          'banking': 'lp:banking-addons',
+          'addons': 'lp:openupgrade-addons/6.1',
+          'banking': 'lp:banking-addons/6.1',
           'web': {'url': 'lp:openerp-web/6.1', 'addons_dir': 'addons'},
         },
       'server': {
@@ -148,13 +161,13 @@ for version in options.migrations.split(','):
                 name))
             print 'updating %s rev%s' %(os.path.join(version,name),
                     cmd_revno.outf.getvalue().strip())
-            cmd_pull=bzrlib.builtins.cmd_pull()
-            cmd_pull.outf=StringIO.StringIO()
-            cmd_pull.outf.encoding='utf8'
-            cmd_pull.run(directory=os.path.join(options.branch_dir,version,
-                name), overwrite=True)
-            if hasattr(cmd_pull, '_operation'):
-                cmd_pull.cleanup_now()
+            cmd_update=bzrlib.builtins.cmd_update()
+            cmd_update.outf=StringIO.StringIO()
+            cmd_update.outf.encoding='utf8'
+            cmd_update.run(dir=os.path.join(options.branch_dir,version,
+                name))
+            if hasattr(cmd_update, '_operation'):
+                cmd_update.cleanup_now()
             print 'now at rev'+cmd_revno.outf.getvalue().strip()
         else:
             if link:
@@ -163,10 +176,10 @@ for version in options.migrations.split(','):
                 os.symlink(url, os.path.join(options.branch_dir,version,name))
             else:
                 print 'getting '+url
-                cmd_branch=bzrlib.builtins.cmd_branch()
-                cmd_branch.outf=StringIO.StringIO()
-                cmd_branch.run(url, os.path.join(options.branch_dir,version,
-                    name))
+                cmd_checkout=bzrlib.builtins.cmd_checkout()
+                cmd_checkout.outf=StringIO.StringIO()
+                cmd_checkout.run(url, os.path.join(options.branch_dir,version,
+                    name), lightweight=True)
 
 if not options.inplace:
     print('copying database %(db_name)s to %(db)s...' % {'db_name': db_name, 
