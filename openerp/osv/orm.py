@@ -1036,7 +1036,7 @@ class BaseModel(object):
                 'required': bool(field['required']),
                 'readonly': bool(field['readonly']),
                 'domain': eval(field['domain']) if field['domain'] else None,
-                'size': field['size'],
+                'size': field['size'] or None,
                 'ondelete': field['on_delete'],
                 'translate': (field['translate']),
                 'manual': True,
@@ -4453,7 +4453,6 @@ class BaseModel(object):
             upd1 += ",%s,(now() at time zone 'UTC'),%s,(now() at time zone 'UTC')"
             upd2.extend((user, user))
         cr.execute('insert into "'+self._table+'" (id'+upd0+") values ("+str(id_new)+upd1+')', tuple(upd2))
-        self.check_access_rule(cr, user, [id_new], 'create', context=context)
         upd_todo.sort(lambda x, y: self._columns[x].priority-self._columns[y].priority)
 
         if self._parent_store and not context.get('defer_parent_store_computation'):
@@ -4506,6 +4505,7 @@ class BaseModel(object):
                 self.name_get(cr, user, [id_new], context=context)[0][1] + \
                 "' " + _("created.")
             self.log(cr, user, id_new, message, True, context=context)
+        self.check_access_rule(cr, user, [id_new], 'create', context=context)
         self._workflow_trigger(cr, user, [id_new], 'trg_create', context=context)
         return id_new
 
@@ -4813,8 +4813,8 @@ class BaseModel(object):
                 order_field = order_split[0].strip()
                 order_direction = order_split[1].strip() if len(order_split) == 2 else ''
                 inner_clause = None
-                if order_field == 'id':
-                    order_by_elements.append('"%s"."id" %s' % (self._table, order_direction))
+                if order_field == 'id' or (self._log_access and order_field in LOG_ACCESS_COLUMNS.keys()):
+                    order_by_elements.append('"%s"."%s" %s' % (self._table, order_field, order_direction))
                 elif order_field in self._columns:
                     order_column = self._columns[order_field]
                     if order_column._classic_read:
@@ -4832,6 +4832,8 @@ class BaseModel(object):
                         inner_clause = self._generate_m2o_order_by(order_field, query)
                     else:
                         continue  # ignore non-readable or "non-joinable" fields
+                else:
+                    raise ValueError( _("Sorting field %s not found on model %s") %( order_field, self._name))
                 if inner_clause:
                     if isinstance(inner_clause, list):
                         for clause in inner_clause:
@@ -5084,20 +5086,18 @@ class BaseModel(object):
         :param parent: optional parent field name (default: ``self._parent_name = parent_id``)
         :return: **True** if the operation can proceed safely, or **False** if an infinite loop is detected.
         """
-
         if not parent:
             parent = self._parent_name
-        ids_parent = ids[:]
-        query = 'SELECT distinct "%s" FROM "%s" WHERE id IN %%s' % (parent, self._table)
-        while ids_parent:
-            ids_parent2 = []
-            for i in range(0, len(ids), cr.IN_MAX):
-                sub_ids_parent = ids_parent[i:i+cr.IN_MAX]
-                cr.execute(query, (tuple(sub_ids_parent),))
-                ids_parent2.extend(filter(None, map(lambda x: x[0], cr.fetchall())))
-            ids_parent = ids_parent2
-            for i in ids_parent:
-                if i in ids:
+
+        # must ignore 'active' flag, ir.rules, etc. => direct SQL query
+        query = 'SELECT "%s" FROM "%s" WHERE id = %%s' % (parent, self._table)
+        for id in ids:
+            current_id = id
+            while current_id is not None:
+                cr.execute(query, (current_id,))
+                result = cr.fetchone()
+                current_id = result[0] if result else None
+                if current_id == id:
                     return False
         return True
 

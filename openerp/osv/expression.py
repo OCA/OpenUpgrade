@@ -199,7 +199,7 @@ def normalize_domain(domain):
             expected -= 1
         else:
             expected += op_arity.get(token, 0) - 1
-    assert expected == 0
+    assert expected == 0, 'This domain is syntactically not correct: %s' % (domain)
     return result
 
 
@@ -598,6 +598,15 @@ class ExtendedLeaf(object):
         self.leaf = normalize_leaf(self.leaf)
         return True
 
+def create_substitution_leaf(leaf, new_elements, new_model=None):
+    """ From a leaf, create a new leaf (based on the new_elements tuple
+        and new_model), that will have the same join context. Used to
+        insert equivalent leafs in the processing stack. """
+    if new_model is None:
+        new_model = leaf.model
+    new_join_context = [tuple(context) for context in leaf.join_context]
+    new_leaf = ExtendedLeaf(new_elements, new_model, join_context=new_join_context)
+    return new_leaf
 
 class expression(object):
     """ Parse a domain expression
@@ -715,16 +724,6 @@ class expression(object):
                     return ids + recursive_children(ids2, model, parent_field)
                 return [(left, 'in', recursive_children(ids, left_model, parent or left_model._parent_name))]
 
-        def create_substitution_leaf(leaf, new_elements, new_model=None):
-            """ From a leaf, create a new leaf (based on the new_elements tuple
-                and new_model), that will have the same join context. Used to
-                insert equivalent leafs in the processing stack. """
-            if new_model is None:
-                new_model = leaf.model
-            new_join_context = [tuple(context) for context in leaf.join_context]
-            new_leaf = ExtendedLeaf(new_elements, new_model, join_context=new_join_context)
-            return new_leaf
-
         def pop():
             """ Pop a leaf to process. """
             return self.stack.pop()
@@ -792,7 +791,7 @@ class expression(object):
                 leaf.add_join_context(next_model, working_model._inherits[next_model._name], 'id', working_model._inherits[next_model._name])
                 push(leaf)
 
-            elif not field and left == 'id' and operator == 'child_of':
+            elif left == 'id' and operator == 'child_of':
                 ids2 = to_ids(right, working_model, context)
                 dom = child_of_domain(left, ids2, working_model)
                 for dom_leaf in reversed(dom):
@@ -1153,7 +1152,8 @@ class expression(object):
                 params = []
             else:
                 # '=?' behaves like '=' in other cases
-                query, params = self.__leaf_to_sql((left, '=', right), model)
+                query, params = self.__leaf_to_sql(
+                    create_substitution_leaf(eleaf, (left, '=', right), model))
 
         elif left == 'id':
             query = '%s.id %s %%s' % (table_alias, operator)

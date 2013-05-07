@@ -83,7 +83,8 @@ class view(osv.osv):
     }
     _defaults = {
         'arch': '<?xml version="1.0"?>\n<tree string="My view">\n\t<field name="name"/>\n</tree>',
-        'priority': 16
+        'priority': 16,
+        'type': 'tree',
     }
     _order = "priority,name"
 
@@ -99,7 +100,7 @@ class view(osv.osv):
             else:
                 inferred_type = etree.fromstring(values['arch'].encode('utf8')).tag
             values['name'] = "%s %s" % (values['model'], inferred_type)
-        return super(osv.osv, self).create(cr, uid, values, context)
+        return super(view, self).create(cr, uid, values, context)
 
     def _relaxng(self):
         if not self._relaxng_validator:
