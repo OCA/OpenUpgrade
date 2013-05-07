@@ -22,6 +22,7 @@
 import time
 from lxml import etree
 import openerp.addons.decimal_precision as dp
+import openerp.exceptions
 
 from openerp import netsvc
 from openerp import pooler
@@ -98,6 +99,8 @@ class account_invoice(osv.osv):
                 for m in invoice.move_id.line_id:
                     if m.account_id.type in ('receivable','payable'):
                         result[invoice.id] += m.amount_residual_currency
+            #prevent the residual amount on the invoice to be less than 0
+            result[invoice.id] = max(result[invoice.id], 0.0)            
         return result
 
     # Give Journal Items related to the payment reconciled to this invoice
@@ -304,16 +307,7 @@ class account_invoice(osv.osv):
         ('number_uniq', 'unique(number, company_id, journal_id, type)', 'Invoice Number must be unique per Company!'),
     ]
 
-    def _find_partner(self, inv):
-        '''
-        Find the partner for which the accounting entries will be created
-        '''
-        #if the chosen partner is not a company and has a parent company, use the parent for the journal entries
-        #because you want to invoice 'Agrolait, accounting department' but the journal items are for 'Agrolait'
-        part = inv.partner_id
-        if part.parent_id and not part.is_company:
-            part = part.parent_id
-        return part
+
 
 
     def fields_view_get(self, cr, uid, view_id=None, view_type=False, context=None, toolbar=False, submenu=False):
@@ -375,18 +369,6 @@ class account_invoice(osv.osv):
         view_id = res and res[1] or False
         context['view_id'] = view_id
         return context
-
-    def create(self, cr, uid, vals, context=None):
-        if context is None:
-            context = {}
-        try:
-            return super(account_invoice, self).create(cr, uid, vals, context)
-        except Exception, e:
-            if '"journal_id" viol' in e.args[0]:
-                raise orm.except_orm(_('Configuration Error!'),
-                     _('There is no Sale/Purchase Journal(s) defined.'))
-            else:
-                raise orm.except_orm(_('Unknown Error!'), str(e))
 
     def invoice_print(self, cr, uid, ids, context=None):
         '''
@@ -979,7 +961,7 @@ class account_invoice(osv.osv):
 
             date = inv.date_invoice or time.strftime('%Y-%m-%d')
 
-            part = self._find_partner(inv)
+            part = self.pool.get("res.partner")._find_accounting_partner(inv.partner_id)
 
             line = map(lambda x:(0,0,self.line_get_convert(cr, uid, x, part.id, date, context=ctx)),iml)
 
@@ -1278,9 +1260,7 @@ class account_invoice(osv.osv):
             ref = invoice.reference
         else:
             ref = self._convert_ref(cr, uid, invoice.number)
-        partner = invoice.partner_id
-        if partner.parent_id and not partner.is_company:
-            partner = partner.parent_id
+        partner = self.pool['res.partner']._find_accounting_partner(invoice.partner_id)
         # Pay attention to the sign for both debit/credit AND amount_currency
         l1 = {
             'debit': direction * pay_amount>0 and direction * pay_amount,
@@ -1750,6 +1730,18 @@ class res_partner(osv.osv):
     _columns = {
         'invoice_ids': fields.one2many('account.invoice.line', 'partner_id', 'Invoices', readonly=True),
     }
+
+    def _find_accounting_partner(self, partner):
+        '''
+        Find the partner for which the accounting entries will be created
+        '''
+        # FIXME: after 7.0, to replace by function field partner.commercial_partner_id
+
+        #if the chosen partner is not a company and has a parent company, use the parent for the journal entries
+        #because you want to invoice 'Agrolait, accounting department' but the journal items are for 'Agrolait'
+        while not partner.is_company and partner.parent_id:
+            partner = partner.parent_id
+        return partner
 
     def copy(self, cr, uid, id, default=None, context=None):
         default = default or {}
