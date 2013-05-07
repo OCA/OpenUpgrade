@@ -31,7 +31,6 @@ migrations={
   '6.1': {
       'addons': {
           'addons': 'lp:openupgrade-addons/6.1',
-          'banking': 'lp:banking-addons/6.1',
           'web': {'url': 'lp:openerp-web/6.1', 'addons_dir': 'addons'},
         },
       'server': {
@@ -45,7 +44,6 @@ migrations={
   '6.0': {
       'addons': {
           'addons': 'lp:openupgrade-addons/6.0',
-          'banking': 'lp:banking-addons/6.0',
         },
       'server': {
           'url': 'lp:openupgrade-server/6.0',
@@ -75,12 +73,15 @@ parser.add_option("-B", "--branch-dir", action="store", type="string",
         default='/var/tmp/openupgrade')
 parser.add_option("-R", "--run-migrations", action="store", type="string", 
         dest="migrations", 
-        help="comma separated list of migrations to run\n\n"+
+        help="comma separated list of migrations to run, ie. \""+
                 ','.join(sorted([a for a in migrations]))+
-                "\n(required)")
+                "\" (required)")
 parser.add_option("-A", "--add", action="store", type="string", dest="add",
-        help="load a python module that declares on dict 'migrations' which is"+
-        " merged with the one of this script (see the source for details)")
+        help="load a python module that declares a dict 'migrations' which is "+
+        "merged with the one of this script (see the source for details). "
+        "You also can pass a string that evaluates to a dict. For the banking "
+        "addons, pass "
+        "\"{'6.1': {'addons': {'banking': 'lp:banking-addons/6.1'}}}\"")
 parser.add_option("-I", "--inplace", action="store_true", dest="inplace",
         help="don't copy database before attempting upgrade (dangerous)")
 (options, args) = parser.parse_args()
