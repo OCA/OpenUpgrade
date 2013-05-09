@@ -34,7 +34,7 @@ migrations={
           'web': {'url': 'lp:openerp-web/6.1', 'addons_dir': 'addons'},
         },
       'server': {
-          'url': 'lp:openupgrade-server', 
+          'url': 'lp:openupgrade-server/6.1', 
           'addons_dir': os.path.join('openerp','addons'),
           'root_dir': os.path.join(''),
           'cmd': 'openerp-server --update=all --database=%(db)s '+
