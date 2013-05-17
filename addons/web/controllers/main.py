@@ -281,8 +281,9 @@ def concat_files(file_list, reader=None, intersperse=""):
 
     if reader is None:
         def reader(f):
-            with open(f, 'rb') as fp:
-                return fp.read()
+            import codecs
+            with codecs.open(f, 'rb', "utf-8-sig") as fp:
+                return fp.read().encode("utf-8")
 
     files_content = []
     for fname in file_list:
@@ -1379,7 +1380,7 @@ class Binary(openerpweb.Controller):
         else:
             try:
                 # create an empty registry
-                registry = openerp.modules.registry.Registry(dbname.lower())
+                registry = openerp.modules.registry.Registry(dbname)
                 with registry.cursor() as cr:
                     cr.execute("""SELECT c.logo_web
                                     FROM res_users u
@@ -1439,7 +1440,7 @@ class Action(openerpweb.Controller):
         else:
             return False
 
-class Export(View):
+class Export(openerpweb.Controller):
     _cp_path = "/web/export"
 
     @openerpweb.jsonrequest
@@ -1580,7 +1581,7 @@ class Export(View):
             (prefix + '/' + k, prefix_string + '/' + v)
             for k, v in self.fields_info(req, model, export_fields).iteritems())
 
-    #noinspection PyPropertyDefinition
+class ExportFormat(object):
     @property
     def content_type(self):
         """ Provides the format's content type """
@@ -1628,7 +1629,7 @@ class Export(View):
                      ('Content-Type', self.content_type)],
             cookies={'fileToken': int(token)})
 
-class CSVExport(Export):
+class CSVExport(ExportFormat, http.Controller):
     _cp_path = '/web/export/csv'
     fmt = {'tag': 'csv', 'label': 'CSV'}
 
@@ -1663,7 +1664,7 @@ class CSVExport(Export):
         fp.close()
         return data
 
-class ExcelExport(Export):
+class ExcelExport(ExportFormat, http.Controller):
     _cp_path = '/web/export/xls'
     fmt = {
         'tag': 'xls',
@@ -1702,7 +1703,7 @@ class ExcelExport(Export):
         fp.close()
         return data
 
-class Reports(View):
+class Reports(openerpweb.Controller):
     _cp_path = "/web/report"
     POLLING_DELAY = 0.25
     TYPES_MAPPING = {
