@@ -3,6 +3,7 @@ auth_signup  / res.partner              / signup_expiration (datetime)  : NEW
 auth_signup  / res.partner              / signup_token (char)           : NEW 
 auth_signup  / res.partner              / signup_type (char)            : NEW 
 new xml-id of model email.template: auth_signup.reset_password_email
+new xml-id of model email.template: auth_signup.set_password_email
 new xml-id of model ir.actions.act_window: base.action_res_users
 new xml-id of model ir.config_parameter: auth_signup.default_template_user_config
 new xml-id of model ir.ui.view: auth_signup.res_users_form_view
