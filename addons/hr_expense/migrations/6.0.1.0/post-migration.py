@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    This migration script copyright (C) 2012 Therp BV (<http://therp.nl>)
+#    This migration script copyright (C) 2012-2013 Therp BV (<http://therp.nl>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -32,3 +32,15 @@ defaults_force = {
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     openupgrade.set_defaults(cr, pool, defaults_force, force=True)
+    openupgrade.load_xml(
+        cr, 'account',
+        'migrations/6.0.1.0/data/hr_expense_workflow.xml')
+    # Fix existing workflow instances
+    openupgrade.logged_query(
+        cr, 
+        """
+            UPDATE wkf_instance SET state = 'active'
+            WHERE res_type = 'hr.expense.expense'
+            AND res_id IN 
+                (select id from hr_expense_expense where state = 'cancelled');
+        """)
