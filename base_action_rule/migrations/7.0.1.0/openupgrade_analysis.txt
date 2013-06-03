@@ -12,8 +12,22 @@ base_action_rule / base.action.rule         / act_remind_attach (boolean)   : DE
 base_action_rule / base.action.rule         / act_remind_partner (boolean)  : DEL 
 base_action_rule / base.action.rule         / act_remind_user (boolean)     : DEL 
 base_action_rule / base.action.rule         / act_reply_to (char)           : DEL 
+base_action_rule / base.action.rule         / act_state (selection)         : DEL selection_keys: function
+base_action_rule / base.action.rule         / filter_pre_id (many2one)      : NEW relation: ir.filters
+base_action_rule / base.action.rule         / regex_name (char)             : DEL 
 base_action_rule / base.action.rule         / server_action_id (many2one)   : DEL relation: ir.actions.server
-base_action_rule / base.action.rule         / server_action_ids (one2many)  : NEW relation: ir.actions.server
-base_action_rule / base.action.rule         / trg_date_type (selection)     : selection_keys is now '['action_last', 'create', 'date', 'deadline', 'none', 'write']' ('['action_last', 'create', 'date', 'deadline', 'none']')
-base_action_rule / ir.actions.server        / action_rule_id (many2one)     : NEW relation: base.action.rule
+base_action_rule / base.action.rule         / server_action_ids (many2many) : NEW relation: ir.actions.server
+base_action_rule / base.action.rule         / trg_date_id (many2one)        : NEW relation: ir.model.fields
+base_action_rule / base.action.rule         / trg_date_type (selection)     : DEL selection_keys: ['action_last', 'create', 'date', 'deadline', 'none']
+base_action_rule / base.action.rule         / trg_partner_categ_id (many2one): DEL relation: res.partner.category
+base_action_rule / base.action.rule         / trg_partner_id (many2one)     : DEL relation: res.partner
+base_action_rule / base.action.rule         / trg_state_from (selection)    : DEL selection_keys: function
+base_action_rule / base.action.rule         / trg_state_to (selection)      : DEL selection_keys: function
+base_action_rule / base.action.rule         / trg_user_id (many2one)        : DEL relation: res.users
+base_action_rule / base.action.rule.lead.test / active (boolean)              : NEW 
+base_action_rule / base.action.rule.lead.test / date_action_last (datetime)   : NEW 
+base_action_rule / base.action.rule.lead.test / name (char)                   : NEW required: required
+base_action_rule / base.action.rule.lead.test / partner_id (many2one)         : NEW relation: res.partner
+base_action_rule / base.action.rule.lead.test / state (selection)             : NEW selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
+base_action_rule / base.action.rule.lead.test / user_id (many2one)            : NEW relation: res.users
 deleted xml-id of model ir.ui.menu: base.menu_base_action_rule

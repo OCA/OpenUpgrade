@@ -49,7 +49,10 @@ mail         / mail.message             / subtype_id (many2one)         : NEW re
 mail         / mail.message             / type (selection)              : NEW selection_keys: ['comment', 'email', 'notification']
 mail         / mail.message             / vote_user_ids (many2many)     : NEW relation: res.users
 mail         / mail.message.subtype     / default (boolean)             : NEW 
+mail         / mail.message.subtype     / description (text)            : NEW 
 mail         / mail.message.subtype     / name (char)                   : NEW required: required
+mail         / mail.message.subtype     / parent_id (many2one)          : NEW relation: mail.message.subtype
+mail         / mail.message.subtype     / relation_field (char)         : NEW 
 mail         / mail.message.subtype     / res_model (char)              : NEW 
 mail         / mail.notification        / message_id (many2one)         : NEW relation: mail.message, required: required
 mail         / mail.notification        / partner_id (many2one)         : NEW relation: res.partner, required: required
