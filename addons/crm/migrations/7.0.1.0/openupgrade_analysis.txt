@@ -1,5 +1,11 @@
 ---crm---
+crm          / base.action.rule         / act_categ_id (many2one)       : DEL relation: crm.case.categ
 crm          / base.action.rule         / act_mail_to_partner (boolean) : DEL 
+crm          / base.action.rule         / act_section_id (many2one)     : DEL relation: crm.case.section
+crm          / base.action.rule         / regex_history (char)          : DEL 
+crm          / base.action.rule         / trg_categ_id (many2one)       : DEL relation: crm.case.categ
+crm          / base.action.rule         / trg_max_history (integer)     : DEL 
+crm          / base.action.rule         / trg_section_id (many2one)     : DEL relation: crm.case.section
 crm          / crm.case.section         / _inherits (False)             : NEW 
 crm          / crm.case.section         / alias_id (many2one)           : NEW relation: mail.alias, required: required
 crm          / crm.case.section         / allow_unlink (boolean)        : DEL 
@@ -161,6 +167,7 @@ deleted xml-id of model ir.ui.view: crm.crm_case_graph_view_opportunity
 deleted xml-id of model ir.ui.view: crm.crm_case_my_open_oppor
 deleted xml-id of model ir.ui.view: crm.crm_case_tree_view_meet
 deleted xml-id of model ir.ui.view: crm.phonecall2opportunity_view
+deleted xml-id of model ir.ui.view: crm.view_base_action_rule_line_form1
 deleted xml-id of model ir.ui.view: crm.view_base_action_rule_line_form2
 deleted xml-id of model ir.ui.view: crm.view_base_action_rule_line_form3
 deleted xml-id of model ir.ui.view: crm.view_base_action_rule_line_form4
@@ -216,9 +223,16 @@ new xml-id of model ir.ui.view: crm.view_crm_payment_mode_form
 new xml-id of model ir.ui.view: crm.view_crm_payment_mode_tree
 new xml-id of model ir.ui.view: crm.view_sale_config_settings
 new xml-id of model mail.alias: crm.default_sales_alias
-new xml-id of model mail.message.subtype: mail.mt_crm_lost
-new xml-id of model mail.message.subtype: mail.mt_crm_stage
-new xml-id of model mail.message.subtype: mail.mt_crm_won
+new xml-id of model mail.message.subtype: crm.mt_lead_convert_to_opportunity
+new xml-id of model mail.message.subtype: crm.mt_lead_create
+new xml-id of model mail.message.subtype: crm.mt_lead_lost
+new xml-id of model mail.message.subtype: crm.mt_lead_stage
+new xml-id of model mail.message.subtype: crm.mt_lead_won
+new xml-id of model mail.message.subtype: crm.mt_salesteam_lead
+new xml-id of model mail.message.subtype: crm.mt_salesteam_lead_lost
+new xml-id of model mail.message.subtype: crm.mt_salesteam_lead_opportunity
+new xml-id of model mail.message.subtype: crm.mt_salesteam_lead_stage
+new xml-id of model mail.message.subtype: crm.mt_salesteam_lead_won
 new xml-id of model mail.message: crm.module_install_notification
 new xml-id of model res.groups: crm.group_fund_raising
 new xml-id of model res.users: base.user_root

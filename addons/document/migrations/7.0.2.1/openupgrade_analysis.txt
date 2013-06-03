@@ -6,11 +6,6 @@ document     / ir.attachment            / store_fname (char)            : module
 document     / process.node             / directory_id (many2one)       : DEL relation: document.directory
 document     / report.document.user     / user (char)                   : now a function
 deleted xml-id of model document.directory: document.dir_partner_category
-deleted xml-id of model document.directory: document.dir_product
-deleted xml-id of model document.directory: document.dir_project
-deleted xml-id of model document.directory: document.dir_sale_order
-deleted xml-id of model document.directory: document.dir_sale_order_all
-deleted xml-id of model document.directory: document.dir_sale_order_quote
 deleted xml-id of model document.storage: document.storage_default
 deleted xml-id of model ir.actions.act_window: document.action_document_storage_form
 deleted xml-id of model ir.actions.act_window: document.action_view_files_by_partner
