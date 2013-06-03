@@ -19,13 +19,9 @@
 #
 ##############################################################################
 
-from osv import osv
-import pooler, logging
+import pooler
 from openerp import SUPERUSER_ID
 from openerp.openupgrade import openupgrade
-
-logger = logging.getLogger('OpenUpgrade')
-me = __file__
 
 def write_account_report_type(cr):
     pool = pooler.get_pool(cr.dbname)
@@ -39,15 +35,35 @@ def write_account_report_type(cr):
     openupgrade.drop_columns(
         cr, [('account_account_type', 'report_type_tmp')])
 
-def migrate(cr, version):
-    try:
-        logger.info("%s called", me)
-        openupgrade.load_data(cr, 'account', 'migrations/6.1.1.1/data/data_account_type.xml')
-        openupgrade.load_data(cr, 'account', 'migrations/6.1.1.1/data/account_financial_report_data.xml')
-        openupgrade.load_data(cr, 'account', 'migrations/6.1.1.1/data/invoice_action_data.xml')
-        openupgrade.load_data(cr, 'account', 'migrations/6.1.1.1/data/null_values.xml')
-        write_account_report_type(cr)
+def assign_tax_code_sequence(cr):
+    """
+    Tax codes in the tax report (on the same level in the hierarchy)
+    are now sorted by 'sequence'. Previously, the tax report was sorted
+    by tax code's 'code'. The sequence in new installations is derived
+    from tax code templates, so existing tax codes cannot be updated by
+    XML ID. Therefore, assign a sequence based on the tax code's code.
+    """
+    cr.execute("""
+        UPDATE account_tax_code AS atc
+        SET sequence = (
+            SELECT 5 * COUNT(*)
+            FROM account_tax_code
+            WHERE code < atc.code);
+        """)
 
-    except Exception, e:
-        raise osv.except_osv("BREAK", "OpenUpgrade", '%s: %s' % (me, e))
-        raise osv.except_osv("OpenUpgrade", '%s: %s' % (me, e))
+@openupgrade.migrate()
+def migrate(cr, version):
+    openupgrade.load_data(
+        cr, 'account',
+        'migrations/6.1.1.1/data/data_account_type.xml')
+    openupgrade.load_data(
+        cr, 'account',
+        'migrations/6.1.1.1/data/account_financial_report_data.xml')
+    openupgrade.load_data(
+        cr, 'account',
+        'migrations/6.1.1.1/data/invoice_action_data.xml')
+    openupgrade.load_data(
+        cr, 'account',
+        'migrations/6.1.1.1/data/null_values.xml')
+    write_account_report_type(cr)
+    assign_tax_code_sequence(cr)
