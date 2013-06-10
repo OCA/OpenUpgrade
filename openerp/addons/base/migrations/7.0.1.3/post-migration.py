@@ -164,6 +164,18 @@ def update_users_partner(cr, pool):
             }
         partner_obj.write(cr, SUPERUSER_ID, row[1], partner_vals)
 
+def reset_currency_companies(cr, pool):
+    """
+    Having a company on currencies affects multicompany databases
+    https://bugs.launchpad.net/openobject-server/+bug/1111298
+    """
+    currency_ids = pool.get('res.currency').search(
+        cr, SUPERUSER_ID, [('company_id', '!=', False)],
+        {'active_test': False})
+    pool.get('res.currency').write(
+        cr, SUPERUSER_ID, currency_ids,
+        {'company_id': False})
+
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
@@ -176,3 +188,4 @@ def migrate(cr, version):
     migrate_company(cr)
     migrate_partner_address(cr, pool)
     update_users_partner(cr, pool)
+    reset_currency_companies(cr, pool)
