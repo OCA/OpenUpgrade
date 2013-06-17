@@ -171,7 +171,7 @@ def reset_currency_companies(cr, pool):
     """
     currency_ids = pool.get('res.currency').search(
         cr, SUPERUSER_ID, [('company_id', '!=', False)],
-        {'active_test': False})
+        context={'active_test': False})
     pool.get('res.currency').write(
         cr, SUPERUSER_ID, currency_ids,
         {'company_id': False})
