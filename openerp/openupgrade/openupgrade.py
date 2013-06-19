@@ -329,6 +329,19 @@ def get_legacy_name(original_name):
     return 'openupgrade_legacy_'+('_').join(
         map(str, release.version_info[0:2]))+'_'+original_name
 
+def many2one2many2many(cr, model, table, field, source_field=None):
+    if source_field is None:
+        source_field = get_legacy_name(field)
+
+    cr.execute('SELECT id, %(field)s '
+               'FROM %(table)s '
+               'WHERE %(field)s is not null' % {
+                   'table': table,
+                   'field': source_field,
+                   })
+    for row in cr.fetchall():
+        model.write(cr, SUPERUSER_ID, row[0], {field: [(4, row[1])]})
+
 def migrate():
     """
     This is the decorator for the migrate() function
