@@ -43,6 +43,9 @@ column_renames = {
 }
 
 xmlid_renames = []
+model_renames = [
+    ('ir.actions.url', 'ir.actions.act_url'),
+    ]
 
 def migrate_ir_attachment(cr):
     # Data is now stored in db_datas column and datas is a function field
@@ -162,5 +165,6 @@ def migrate(cr, version):
     openupgrade.drop_columns(cr, [('ir_actions_todo', 'action_id')])
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.rename_xmlids(cr, xmlid_renames)
+    openupgrade.rename_models(cr, model_renames)
     migrate_ir_attachment(cr)
     create_users_partner(cr)

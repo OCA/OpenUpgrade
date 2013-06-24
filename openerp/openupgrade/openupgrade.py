@@ -143,6 +143,8 @@ def rename_models(cr, model_spec):
     for (old, new) in model_spec:
         logger.info("model %s: renaming to %s",
                     old, new)
+        cr.execute('UPDATE ir_model SET model = %s '
+                   'WHERE model = %s', (new, old,))
         cr.execute('UPDATE ir_model_fields SET relation = %s '
                    'WHERE relation = %s', (new, old,))
     # TODO: signal where the model occurs in references to ir_model
