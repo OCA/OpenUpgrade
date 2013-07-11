@@ -131,7 +131,7 @@ class openupgrade_analysis_wizard(osv.osv_memory):
                 if res[key]:
                     contents += '\n'
             if key in res_xml:
-                contents += '\n'.join([unicode(line) for line in sorted(res_xml[key])])
+                contents += '\n'.join([unicode(line) for line in res_xml[key]])
                 if res_xml[key]:
                     contents += '\n'
             if key == 'general':
