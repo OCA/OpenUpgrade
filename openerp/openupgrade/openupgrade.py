@@ -202,6 +202,44 @@ def delete_model_workflow(cr, model):
         cr,
         "DELETE FROM wkf WHERE osv = %s", (model,))
 
+def warn_possible_dataloss(cr, pool, old_module, fields):
+    """
+    Use that function in the following case : 
+    if a field of a model was moved from a 'A' module to a 'B' module. 
+    ('B' depend on 'A'), 
+    This function will test if 'B' is installed. 
+    If not, count the number of different value and possibly warn the user.
+    Use orm, so call from the post script.
+    
+    :param old_module: name of the old module
+    :param fields: list of dictionnary with the following keys :
+        'table' : name of the table where the field is.
+        'field' : name of the field that are moving.
+        'new_module' : name of the new module
+    """
+    module_obj = pool.get('ir.module.module')
+    for field in fields: 
+        module_ids = module_obj.search(cr, SUPERUSER_ID, [
+                ('name', '=', field['new_module']),
+                ('state', 'in', ['installed', 'to upgrade', 'to install'])
+            ])
+        if not module_ids: 
+            cr.execute("SELECT count(*) FROM (SELECT %s from %s group by %s) as tmp" \
+                %(field['field'], field['table'], field['field']))
+            row = cr.fetchone()
+            if row[0] == 1: 
+                # not a problem, that field was'nt used. Just a loss of fonctionnality
+                logger.info("'%s' in module '%s' has moved in module " \
+                    "'%s' that is not installed : " \
+                    "Users'll loose fonctionnalities" \
+                    %(field['field'], old_module, field['new_module']))
+            else: 
+                # there is data loss after the migration.
+                logger.warning("'%s' in module '%s' has moved in module " \
+                    "'%s' that is not installed : " \
+                    "There was %s differentes values in this field." \
+                    %(field['field'], old_module, field['new_module'], row[0]))
+
 def set_defaults(cr, pool, default_spec, force=False):
     """
     Set default value. Useful for fields that are newly required. Uses orm, so
