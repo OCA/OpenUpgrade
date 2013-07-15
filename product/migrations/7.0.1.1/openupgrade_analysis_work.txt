@@ -1,0 +1,67 @@
+---product---
+
+product      / product.product          / product_image (binary)        : DEL 
+product      / product.product          / image (binary)                : NEW 
+### -> just renamed
+
+product      / product.product          / message_ids (one2many)        : NEW relation: mail.message
+### -> new fonctionality of mail module : OK.
+
+product      / product.template         / type (selection)              : selection_keys is now '['consu', 'service']' ('['consu', 'product', 'service']')
+### -> more selection_keys : OK
+
+product      / product.template         / loc_case (char)               : module is now 'stock' ('product')
+product      / product.template         / loc_rack (char)               : module is now 'stock' ('product')
+product      / product.template         / loc_row (char)                : module is now 'stock' ('product')
+product      / product.template         / procure_method (selection)    : module is now 'procurement' ('product')
+product      / product.template         / purchase_ok (boolean)         : module is now 'purchase' ('product')
+product      / product.template         / sale_delay (float)            : module is now 'stock' ('product')
+product      / product.template         / supply_method (selection)     : module is now 'procurement' ('product')
+### TODO -> test if stock, procurement and purchase are installed.
+
+deleted xml-id of model decimal.precision: product.decimal_sale
+new     xml-id of model decimal.precision: product.decimal_price 
+### (replace previous xml-id) (Cf. : use in 'sale/sale.py')
+
+deleted xml-id of model decimal.precision: product.decimal_purchase 
+### Deleted. merged with "product.decimal_account" (Cf. use in 'purchase/purchase.py')
+
+new     xml-id of model decimal.precision: product.decimal_discount # New : OK
+
+deleted xml-id of model product.category: product.cat0
+new     xml-id of model product.category: product.product_category_all 
+### (replace previous xml-id)
+
+new     xml-id of model product.category: product.product_category_1 # New : OK
+
+deleted xml-id of model product.product: product.product_consultant
+new     xml-id of model product.product: product.product_product_consultant 
+### (replace previous xml-id)
+
+deleted xml-id of model product.uom: product.uom_day
+new     xml-id of model product.uom: product.product_uom_day 
+### (replace previous xml-id)
+
+deleted xml-id of model product.uom: product.uom_hour
+new     xml-id of model product.uom: product.product_uom_hour 
+### (replace previous xml-id)
+
+new     xml-id of model product.uom: product.product_uom_dozen # New : OK
+new     xml-id of model product.uom: product.product_uom_litre # New : OK
+
+new     xml-id of model product.uom.categ: product.product_uom_categ_vol # New : OK
+
+-- System XML IDs (Nothing to do)--
+deleted xml-id of model ir.actions.act_window: product.product_form_config_action
+new     xml-id of model ir.actions.act_window.view: product.open_view_product_kanban1
+
+deleted xml-id of model ir.actions.todo: product.config_wizard_res_product_installer
+
+new     xml-id of model ir.model.access: product.access_product_category_sale_manager
+
+new     xml-id of model res.groups: product.group_costing_method
+new     xml-id of model res.groups: product.group_mrp_properties
+new     xml-id of model res.groups: product.group_purchase_pricelist
+new     xml-id of model res.groups: product.group_sale_pricelist
+new     xml-id of model res.groups: product.group_stock_packaging
+new     xml-id of model res.groups: product.group_uom
