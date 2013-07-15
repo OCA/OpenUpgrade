@@ -24,9 +24,11 @@ new xml-id of model mail.message.subtype: analytic.mt_account_closed    # mail.m
 new xml-id of model mail.message.subtype: analytic.mt_account_opened    # mail.message.subtype is NEW : OK.
 new xml-id of model mail.message.subtype: analytic.mt_account_pending   # mail.message.subtype is NEW : OK.
 
-
-### System XML IDs belows : Nothing to do)
-
 new xml-id of model ir.sequence.type: analytic.seq_type_analytic_account_main
+### previously in module "account" and named "seq_type_analytic_account". Rename xml : OK
+
 new xml-id of model ir.sequence: analytic.seq_analytic_account_base
+### previously in module "account" and named "seq_analytic_account". Rename xml : OK
+
+### System XML IDs belows : (Nothing to do)
 new xml-id of model ir.ui.view: analytic.view_account_analytic_account_form

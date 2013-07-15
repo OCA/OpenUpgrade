@@ -21,6 +21,11 @@
 
 from openupgrade import openupgrade
 
+xmlid_renames = [
+    ('account.seq_type_analytic_account', 'analytic.seq_type_analytic_account_main'),
+    ('account.seq_analytic_account', 'analytic.seq_analytic_account_base'),
+]
+
 @openupgrade.migrate()
 def migrate(cr, version):
-    pass
+    openupgrade.rename_xmlids(cr, xmlid_renames)
