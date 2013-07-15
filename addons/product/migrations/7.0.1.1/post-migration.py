@@ -20,8 +20,9 @@
 ##############################################################################
 
 from openupgrade import openupgrade
-from openerp import pooler, SUPERUSER_ID
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    pass
+    openupgrade.load_xml(
+        cr, 'product',
+        'migrations/7.0.1.1/data.xml')
