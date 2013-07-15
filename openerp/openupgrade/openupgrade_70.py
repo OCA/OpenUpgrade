@@ -2,7 +2,7 @@
 ##############################################################################
 #
 # OpenERP, Open Source Management Solution
-# This migration script copyright (C) Georges Abitbol
+# This migration script copyright (C) 2013-today Sylvain LE GAL
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -30,8 +30,8 @@ def get_partner_id_from_partner_address_id(cr, partner_address_id):
     cr.execute("""
         SELECT openupgrade_7_migrated_to_partner_id 
         FROM res_partner_address
-        WHERE id=%s""" \
-        %(partner_address_id))
+        WHERE id=%s""",
+        (partner_address_id,))
     return cr.fetchone()[0]
     
 def get_partner_id_from_user_id(cr, user_id):
@@ -42,6 +42,6 @@ def get_partner_id_from_user_id(cr, user_id):
     cr.execute("""
         SELECT partner_id 
         FROM res_users 
-        WHERE id=%s""" \
-        %(user_id))
+        WHERE id=%s""",
+        (user_id,))
     return cr.fetchone()[0]
