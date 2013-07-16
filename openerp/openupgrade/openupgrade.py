@@ -331,6 +331,13 @@ def get_legacy_name(original_name):
     return 'openupgrade_legacy_'+('_').join(
         map(str, release.version_info[0:2]))+'_'+original_name
 
+def message(cr, message, *args, **kwargs):
+    """
+    Log handler for non-critical notifications about the upgrade.
+    To be extended with logging to a table for reporting purposes.
+    """
+    logger.warn(message, *args, **kwargs)
+
 def migrate():
     """
     This is the decorator for the migrate() function
