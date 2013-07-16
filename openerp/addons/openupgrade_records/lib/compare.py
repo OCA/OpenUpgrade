@@ -241,10 +241,10 @@ def compare_xml_sets(old_records, new_records):
     )
     for entry in sorted_records:
         if 'old' in entry:
-            content = 'deleted xml-id of model %s: %s' % (entry['model'],
+            content = 'DEL %s: %s' % (entry['model'],
                                                           entry['name'])
         elif 'new' in entry:
-            content = 'new xml-id of model %s: %s' % (entry['model'],
+            content = 'NEW %s: %s' % (entry['model'],
                                                       entry['name'])
         reprs.setdefault(module_map(entry['module']), []).append(content)
     return reprs
