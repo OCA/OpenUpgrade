@@ -1,4 +1,4 @@
----lunch---
+---Fields in module 'lunch'---
 lunch        / lunch.alert              / active_from (float)           : NEW required: required, req_default: 7
 lunch        / lunch.alert              / active_to (float)             : NEW required: required, req_default: 23
 lunch        / lunch.alert              / alter_type (selection)        : NEW required: required, selection_keys: ['days', 'specific', 'week'], req_default: specific
@@ -47,113 +47,114 @@ lunch        / report.lunch.order.line  / note (text)                   : NEW
 lunch        / report.lunch.order.line  / price_total (float)           : NEW 
 lunch        / report.lunch.order.line  / user_id (many2one)            : NEW relation: res.users
 lunch        / report.lunch.order.line  / year (char)                   : NEW 
-deleted xml-id of model ir.actions.act_window: lunch.action_create_cashbox
-deleted xml-id of model ir.actions.act_window: lunch.action_lunch_cashbox_clean
-deleted xml-id of model ir.actions.act_window: lunch.action_lunch_cashbox_clean_values
-deleted xml-id of model ir.actions.act_window: lunch.action_lunch_cashbox_form
-deleted xml-id of model ir.actions.act_window: lunch.action_lunch_category_form
-deleted xml-id of model ir.actions.act_window: lunch.action_lunch_order_cancel
-deleted xml-id of model ir.actions.act_window: lunch.action_lunch_order_cancel_values
-deleted xml-id of model ir.actions.act_window: lunch.action_lunch_order_confirm
-deleted xml-id of model ir.actions.act_window: lunch.action_lunch_order_confirm_values
-deleted xml-id of model ir.actions.act_window: lunch.action_lunch_product_form
-deleted xml-id of model ir.actions.act_window: lunch.action_report_lunch_amount_tree
-deleted xml-id of model ir.actions.act_window: lunch.action_report_lunch_order_all
-deleted xml-id of model ir.actions.act_window: lunch.view_lunch_product_form_installer
-deleted xml-id of model ir.actions.todo: lunch.action_create_cashbox_todo
-deleted xml-id of model ir.actions.todo: lunch.view_lunch_product_form_todo
-deleted xml-id of model ir.model.access: lunch.access_lunch_cashbox_user
-deleted xml-id of model ir.model.access: lunch.access_lunch_cashmove_user
-deleted xml-id of model ir.model.access: lunch.access_lunch_category_manager
-deleted xml-id of model ir.model.access: lunch.access_lunch_order_user
-deleted xml-id of model ir.model.access: lunch.access_lunch_product_user
-deleted xml-id of model ir.model.access: lunch.access_report_lunch_amount_manager
-deleted xml-id of model ir.model.access: lunch.access_report_lunch_order_manager
-deleted xml-id of model ir.ui.menu: base.menu_lunch_reporting
-deleted xml-id of model ir.ui.menu: base.menu_lunch_survey_root
-deleted xml-id of model ir.ui.menu: lunch.menu_lunch_cashbox_form
-deleted xml-id of model ir.ui.menu: lunch.menu_lunch_category_form
-deleted xml-id of model ir.ui.menu: lunch.menu_lunch_category_root_configuration
-deleted xml-id of model ir.ui.menu: lunch.menu_lunch_product_form
-deleted xml-id of model ir.ui.menu: lunch.menu_lunch_report_amount_tree
-deleted xml-id of model ir.ui.menu: lunch.menu_lunch_reporting_order
-deleted xml-id of model ir.ui.view: lunch.view_lunch_cashbox_clean
-deleted xml-id of model ir.ui.view: lunch.view_lunch_cashbox_form
-deleted xml-id of model ir.ui.view: lunch.view_lunch_cashbox_tree
-deleted xml-id of model ir.ui.view: lunch.view_lunch_cashmove_form
-deleted xml-id of model ir.ui.view: lunch.view_lunch_cashmove_tree
-deleted xml-id of model ir.ui.view: lunch.view_lunch_category_form
-deleted xml-id of model ir.ui.view: lunch.view_lunch_category_tree
-deleted xml-id of model ir.ui.view: lunch.view_lunch_order_cancel
-deleted xml-id of model ir.ui.view: lunch.view_lunch_order_confirm
-deleted xml-id of model ir.ui.view: lunch.view_lunch_order_filter
-deleted xml-id of model ir.ui.view: lunch.view_lunch_order_form
-deleted xml-id of model ir.ui.view: lunch.view_lunch_order_tree
-deleted xml-id of model ir.ui.view: lunch.view_lunch_product_form
-deleted xml-id of model ir.ui.view: lunch.view_lunch_product_search
-deleted xml-id of model ir.ui.view: lunch.view_lunch_product_tree
-deleted xml-id of model ir.ui.view: lunch.view_report_lunch_amount_form
-deleted xml-id of model ir.ui.view: lunch.view_report_lunch_amount_search
-deleted xml-id of model ir.ui.view: lunch.view_report_lunch_amount_tree
-deleted xml-id of model ir.ui.view: lunch.view_report_lunch_order_search
-deleted xml-id of model ir.ui.view: lunch.view_report_lunch_order_tree
-deleted xml-id of model res.groups: base.group_tool_manager
-deleted xml-id of model res.groups: base.group_tool_user
-new xml-id of model ir.actions.act_window: lunch.action_lunch_alert
-new xml-id of model ir.actions.act_window: lunch.action_lunch_cashmove
-new xml-id of model ir.actions.act_window: lunch.action_lunch_control_accounts
-new xml-id of model ir.actions.act_window: lunch.action_lunch_control_suppliers
-new xml-id of model ir.actions.act_window: lunch.action_lunch_order_by_supplier_form
-new xml-id of model ir.actions.act_window: lunch.action_lunch_order_tree
-new xml-id of model ir.actions.act_window: lunch.action_lunch_product_categories
-new xml-id of model ir.actions.act_window: lunch.action_lunch_products
-new xml-id of model ir.actions.act_window: lunch.cancel_order_lines
-new xml-id of model ir.actions.act_window: lunch.order_order_lines
-new xml-id of model ir.actions.act_window: lunch.validate_order_lines
-new xml-id of model ir.model.access: lunch.access_lunch_cancel
-new xml-id of model ir.model.access: lunch.access_lunch_validation
-new xml-id of model ir.model.access: lunch.access_report_order_line
-new xml-id of model ir.model.access: lunch.alert_manager
-new xml-id of model ir.model.access: lunch.alert_user
-new xml-id of model ir.model.access: lunch.cashmove_manager
-new xml-id of model ir.model.access: lunch.cashmove_user
-new xml-id of model ir.model.access: lunch.order_line_manager
-new xml-id of model ir.model.access: lunch.order_line_user
-new xml-id of model ir.model.access: lunch.order_manager
-new xml-id of model ir.model.access: lunch.order_user
-new xml-id of model ir.model.access: lunch.product_category_manager
-new xml-id of model ir.model.access: lunch.product_category_user
-new xml-id of model ir.model.access: lunch.product_manager
-new xml-id of model ir.model.access: lunch.product_user
-new xml-id of model ir.module.category: lunch.module_lunch_category
-new xml-id of model ir.ui.menu: lunch.menu_lunch_admin
-new xml-id of model ir.ui.menu: lunch.menu_lunch_alert
-new xml-id of model ir.ui.menu: lunch.menu_lunch_cash
-new xml-id of model ir.ui.menu: lunch.menu_lunch_cashmove
-new xml-id of model ir.ui.menu: lunch.menu_lunch_config
-new xml-id of model ir.ui.menu: lunch.menu_lunch_control_accounts
-new xml-id of model ir.ui.menu: lunch.menu_lunch_control_suppliers
-new xml-id of model ir.ui.menu: lunch.menu_lunch_order_by_supplier_form
-new xml-id of model ir.ui.menu: lunch.menu_lunch_order_tree
-new xml-id of model ir.ui.menu: lunch.menu_lunch_product_categories
-new xml-id of model ir.ui.menu: lunch.menu_lunch_products
-new xml-id of model ir.ui.menu: lunch.menu_lunch_title
-new xml-id of model ir.ui.view: lunch.alert_form_view
-new xml-id of model ir.ui.view: lunch.alert_search_view
-new xml-id of model ir.ui.view: lunch.alert_tree_view
-new xml-id of model ir.ui.view: lunch.cancel_order_lines_view
-new xml-id of model ir.ui.view: lunch.casmove_form_view
-new xml-id of model ir.ui.view: lunch.casmove_tree_view
-new xml-id of model ir.ui.view: lunch.lunch_order_line_search_view
-new xml-id of model ir.ui.view: lunch.order_order_lines_view
-new xml-id of model ir.ui.view: lunch.orders_form_view
-new xml-id of model ir.ui.view: lunch.orders_order_lines_tree_view
-new xml-id of model ir.ui.view: lunch.orders_tree_view
-new xml-id of model ir.ui.view: lunch.product_category_form_view
-new xml-id of model ir.ui.view: lunch.products_form_view
-new xml-id of model ir.ui.view: lunch.products_tree_view
-new xml-id of model ir.ui.view: lunch.validate_order_lines_view
-new xml-id of model ir.ui.view: lunch.view_lunch_employee_payment_filter
-new xml-id of model ir.ui.view: lunch.view_search_my_order
-new xml-id of model res.groups: lunch.group_lunch_manager
-new xml-id of model res.groups: lunch.group_lunch_user
+---XML records in module 'lunch'---
+NEW ir.actions.act_window: lunch.action_lunch_alert
+NEW ir.actions.act_window: lunch.action_lunch_cashmove
+NEW ir.actions.act_window: lunch.action_lunch_control_accounts
+NEW ir.actions.act_window: lunch.action_lunch_control_suppliers
+NEW ir.actions.act_window: lunch.action_lunch_order_by_supplier_form
+NEW ir.actions.act_window: lunch.action_lunch_order_tree
+NEW ir.actions.act_window: lunch.action_lunch_product_categories
+NEW ir.actions.act_window: lunch.action_lunch_products
+NEW ir.actions.act_window: lunch.cancel_order_lines
+NEW ir.actions.act_window: lunch.order_order_lines
+NEW ir.actions.act_window: lunch.validate_order_lines
+DEL ir.actions.act_window: lunch.action_create_cashbox
+DEL ir.actions.act_window: lunch.action_lunch_cashbox_clean
+DEL ir.actions.act_window: lunch.action_lunch_cashbox_clean_values
+DEL ir.actions.act_window: lunch.action_lunch_cashbox_form
+DEL ir.actions.act_window: lunch.action_lunch_category_form
+DEL ir.actions.act_window: lunch.action_lunch_order_cancel
+DEL ir.actions.act_window: lunch.action_lunch_order_cancel_values
+DEL ir.actions.act_window: lunch.action_lunch_order_confirm
+DEL ir.actions.act_window: lunch.action_lunch_order_confirm_values
+DEL ir.actions.act_window: lunch.action_lunch_product_form
+DEL ir.actions.act_window: lunch.action_report_lunch_amount_tree
+DEL ir.actions.act_window: lunch.action_report_lunch_order_all
+DEL ir.actions.act_window: lunch.view_lunch_product_form_installer
+DEL ir.actions.todo: lunch.action_create_cashbox_todo
+DEL ir.actions.todo: lunch.view_lunch_product_form_todo
+NEW ir.model.access: lunch.access_lunch_cancel
+NEW ir.model.access: lunch.access_lunch_validation
+NEW ir.model.access: lunch.access_report_order_line
+NEW ir.model.access: lunch.alert_manager
+NEW ir.model.access: lunch.alert_user
+NEW ir.model.access: lunch.cashmove_manager
+NEW ir.model.access: lunch.cashmove_user
+NEW ir.model.access: lunch.order_line_manager
+NEW ir.model.access: lunch.order_line_user
+NEW ir.model.access: lunch.order_manager
+NEW ir.model.access: lunch.order_user
+NEW ir.model.access: lunch.product_category_manager
+NEW ir.model.access: lunch.product_category_user
+NEW ir.model.access: lunch.product_manager
+NEW ir.model.access: lunch.product_user
+DEL ir.model.access: lunch.access_lunch_cashbox_user
+DEL ir.model.access: lunch.access_lunch_cashmove_user
+DEL ir.model.access: lunch.access_lunch_category_manager
+DEL ir.model.access: lunch.access_lunch_order_user
+DEL ir.model.access: lunch.access_lunch_product_user
+DEL ir.model.access: lunch.access_report_lunch_amount_manager
+DEL ir.model.access: lunch.access_report_lunch_order_manager
+NEW ir.module.category: lunch.module_lunch_category
+NEW ir.ui.menu: lunch.menu_lunch_admin
+NEW ir.ui.menu: lunch.menu_lunch_alert
+NEW ir.ui.menu: lunch.menu_lunch_cash
+NEW ir.ui.menu: lunch.menu_lunch_cashmove
+NEW ir.ui.menu: lunch.menu_lunch_config
+NEW ir.ui.menu: lunch.menu_lunch_control_accounts
+NEW ir.ui.menu: lunch.menu_lunch_control_suppliers
+NEW ir.ui.menu: lunch.menu_lunch_order_by_supplier_form
+NEW ir.ui.menu: lunch.menu_lunch_order_tree
+NEW ir.ui.menu: lunch.menu_lunch_product_categories
+NEW ir.ui.menu: lunch.menu_lunch_products
+NEW ir.ui.menu: lunch.menu_lunch_title
+DEL ir.ui.menu: base.menu_lunch_reporting
+DEL ir.ui.menu: base.menu_lunch_survey_root
+DEL ir.ui.menu: lunch.menu_lunch_cashbox_form
+DEL ir.ui.menu: lunch.menu_lunch_category_form
+DEL ir.ui.menu: lunch.menu_lunch_category_root_configuration
+DEL ir.ui.menu: lunch.menu_lunch_product_form
+DEL ir.ui.menu: lunch.menu_lunch_report_amount_tree
+DEL ir.ui.menu: lunch.menu_lunch_reporting_order
+NEW ir.ui.view: lunch.alert_form_view
+NEW ir.ui.view: lunch.alert_search_view
+NEW ir.ui.view: lunch.alert_tree_view
+NEW ir.ui.view: lunch.cancel_order_lines_view
+NEW ir.ui.view: lunch.casmove_form_view
+NEW ir.ui.view: lunch.casmove_tree_view
+NEW ir.ui.view: lunch.lunch_order_line_search_view
+NEW ir.ui.view: lunch.order_order_lines_view
+NEW ir.ui.view: lunch.orders_form_view
+NEW ir.ui.view: lunch.orders_order_lines_tree_view
+NEW ir.ui.view: lunch.orders_tree_view
+NEW ir.ui.view: lunch.product_category_form_view
+NEW ir.ui.view: lunch.products_form_view
+NEW ir.ui.view: lunch.products_tree_view
+NEW ir.ui.view: lunch.validate_order_lines_view
+NEW ir.ui.view: lunch.view_lunch_employee_payment_filter
+NEW ir.ui.view: lunch.view_search_my_order
+DEL ir.ui.view: lunch.view_lunch_cashbox_clean
+DEL ir.ui.view: lunch.view_lunch_cashbox_form
+DEL ir.ui.view: lunch.view_lunch_cashbox_tree
+DEL ir.ui.view: lunch.view_lunch_cashmove_form
+DEL ir.ui.view: lunch.view_lunch_cashmove_tree
+DEL ir.ui.view: lunch.view_lunch_category_form
+DEL ir.ui.view: lunch.view_lunch_category_tree
+DEL ir.ui.view: lunch.view_lunch_order_cancel
+DEL ir.ui.view: lunch.view_lunch_order_confirm
+DEL ir.ui.view: lunch.view_lunch_order_filter
+DEL ir.ui.view: lunch.view_lunch_order_form
+DEL ir.ui.view: lunch.view_lunch_order_tree
+DEL ir.ui.view: lunch.view_lunch_product_form
+DEL ir.ui.view: lunch.view_lunch_product_search
+DEL ir.ui.view: lunch.view_lunch_product_tree
+DEL ir.ui.view: lunch.view_report_lunch_amount_form
+DEL ir.ui.view: lunch.view_report_lunch_amount_search
+DEL ir.ui.view: lunch.view_report_lunch_amount_tree
+DEL ir.ui.view: lunch.view_report_lunch_order_search
+DEL ir.ui.view: lunch.view_report_lunch_order_tree
+NEW res.groups: lunch.group_lunch_manager
+NEW res.groups: lunch.group_lunch_user
+DEL res.groups: base.group_tool_manager
+DEL res.groups: base.group_tool_user

@@ -1,6 +1,7 @@
----hr_payroll---
+---Fields in module 'hr_payroll'---
 hr_payroll   / hr.contribution.register / partner_id (many2one)         : NEW relation: res.partner
-deleted xml-id of model ir.ui.view: hr_contract.hr_hr_employee_view_form2
-new xml-id of model hr.contribution.register: hr_payroll.contrib_register_employees
-new xml-id of model ir.ui.view: hr_payroll.payroll_hr_employee_view_form
-new xml-id of model ir.ui.view: hr_payroll.view_hr_config_inherit
+---XML records in module 'hr_payroll'---
+NEW hr.contribution.register: hr_payroll.contrib_register_employees
+NEW ir.ui.view: hr_payroll.payroll_hr_employee_view_form
+NEW ir.ui.view: hr_payroll.view_hr_config_inherit
+DEL ir.ui.view: hr_contract.hr_hr_employee_view_form2

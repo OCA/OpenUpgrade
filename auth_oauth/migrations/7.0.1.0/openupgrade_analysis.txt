@@ -1,4 +1,4 @@
----auth_oauth---
+---Fields in module 'auth_oauth'---
 auth_oauth   / auth.oauth.provider      / auth_endpoint (char)          : NEW 
 auth_oauth   / auth.oauth.provider      / body (char)                   : NEW 
 auth_oauth   / auth.oauth.provider      / client_id (char)              : NEW 
@@ -12,11 +12,12 @@ auth_oauth   / auth.oauth.provider      / validation_endpoint (char)    : NEW
 auth_oauth   / res.users                / oauth_access_token (char)     : NEW 
 auth_oauth   / res.users                / oauth_provider_id (many2one)  : NEW relation: auth.oauth.provider
 auth_oauth   / res.users                / oauth_uid (char)              : NEW 
-new xml-id of model auth.oauth.provider: auth_oauth.provider_facebook
-new xml-id of model auth.oauth.provider: auth_oauth.provider_google
-new xml-id of model auth.oauth.provider: auth_oauth.provider_openerp
-new xml-id of model ir.actions.act_window: auth_oauth.action_oauth_provider
-new xml-id of model ir.model.access: auth_oauth.access_auth_oauth_provider
-new xml-id of model ir.ui.menu: auth_oauth.menu_oauth_providers
-new xml-id of model ir.ui.view: auth_oauth.view_oauth_provider_form
-new xml-id of model ir.ui.view: auth_oauth.view_oauth_provider_list
+---XML records in module 'auth_oauth'---
+NEW auth.oauth.provider: auth_oauth.provider_facebook
+NEW auth.oauth.provider: auth_oauth.provider_google
+NEW auth.oauth.provider: auth_oauth.provider_openerp
+NEW ir.actions.act_window: auth_oauth.action_oauth_provider
+NEW ir.model.access: auth_oauth.access_auth_oauth_provider
+NEW ir.ui.menu: auth_oauth.menu_oauth_providers
+NEW ir.ui.view: auth_oauth.view_oauth_provider_form
+NEW ir.ui.view: auth_oauth.view_oauth_provider_list

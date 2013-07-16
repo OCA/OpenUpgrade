@@ -1,4 +1,4 @@
----email_template---
+---Fields in module 'email_template'---
 email_template / email.template           / attachment_ids (many2many)    : NEW relation: ir.attachment
 email_template / email.template           / auto_delete (boolean)         : NEW 
 email_template / email.template           / body_html (text)              : NEW 
@@ -22,5 +22,6 @@ email_template / email.template           / sub_model_object_field (many2one): N
 email_template / email.template           / sub_object (many2one)         : NEW relation: ir.model
 email_template / email.template           / subject (char)                : NEW 
 email_template / email.template           / user_signature (boolean)      : NEW 
-deleted xml-id of model ir.model.access: email_template.access_email_template_manager
-deleted xml-id of model ir.model.access: email_template.access_email_template_preview_system
+---XML records in module 'email_template'---
+DEL ir.model.access: email_template.access_email_template_manager
+DEL ir.model.access: email_template.access_email_template_preview_system

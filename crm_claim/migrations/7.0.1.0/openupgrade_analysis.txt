@@ -1,4 +1,4 @@
----crm_claim---
+---Fields in module 'crm_claim'---
 crm_claim    / crm.claim                / partner_address_id (many2one) : DEL relation: res.partner.address
 crm_claim    / crm.claim                / stage_id (many2one)           : relation is now 'crm.claim.stage' ('crm.case.stage')
 crm_claim    / crm.claim                / state (selection)             : now a function
@@ -9,20 +9,21 @@ crm_claim    / crm.claim.stage          / name (char)                   : NEW re
 crm_claim    / crm.claim.stage          / section_ids (many2many)       : NEW relation: crm.case.section
 crm_claim    / crm.claim.stage          / sequence (integer)            : NEW 
 crm_claim    / crm.claim.stage          / state (selection)             : NEW required: required, selection_keys: ['cancel', 'done', 'draft', 'open', 'pending'], req_default: draft
-deleted xml-id of model crm.case.section: crm.section_sales_department
-deleted xml-id of model crm.case.stage: crm_claim.stage_claim1
-deleted xml-id of model crm.case.stage: crm_claim.stage_claim2
-deleted xml-id of model crm.case.stage: crm_claim.stage_claim3
-deleted xml-id of model crm.case.stage: crm_claim.stage_claim5
-deleted xml-id of model ir.actions.act_window: crm_claim.act_claim_partner_address
-deleted xml-id of model ir.ui.view: base.view_crm_partner_info_History1
-new xml-id of model crm.claim.stage: crm_claim.stage_claim1
-new xml-id of model crm.claim.stage: crm_claim.stage_claim2
-new xml-id of model crm.claim.stage: crm_claim.stage_claim3
-new xml-id of model crm.claim.stage: crm_claim.stage_claim5
-new xml-id of model ir.model.access: crm_claim.access_crm_claim_stage_user
-new xml-id of model ir.ui.menu: base.menu_project_report
-new xml-id of model ir.ui.menu: crm_claim.menu_claim_stage_view
-new xml-id of model ir.ui.view: crm_claim.crm_claim_stage_form
-new xml-id of model ir.ui.view: crm_claim.crm_claim_stage_tree
-new xml-id of model ir.ui.view: crm_claim.view_project_config_claim
+---XML records in module 'crm_claim'---
+DEL crm.case.section: crm.section_sales_department
+DEL crm.case.stage: crm_claim.stage_claim1
+DEL crm.case.stage: crm_claim.stage_claim2
+DEL crm.case.stage: crm_claim.stage_claim3
+DEL crm.case.stage: crm_claim.stage_claim5
+NEW crm.claim.stage: crm_claim.stage_claim1
+NEW crm.claim.stage: crm_claim.stage_claim2
+NEW crm.claim.stage: crm_claim.stage_claim3
+NEW crm.claim.stage: crm_claim.stage_claim5
+DEL ir.actions.act_window: crm_claim.act_claim_partner_address
+NEW ir.model.access: crm_claim.access_crm_claim_stage_user
+NEW ir.ui.menu: base.menu_project_report
+NEW ir.ui.menu: crm_claim.menu_claim_stage_view
+NEW ir.ui.view: crm_claim.crm_claim_stage_form
+NEW ir.ui.view: crm_claim.crm_claim_stage_tree
+NEW ir.ui.view: crm_claim.view_project_config_claim
+DEL ir.ui.view: base.view_crm_partner_info_History1

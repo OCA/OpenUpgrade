@@ -1,4 +1,4 @@
----event---
+---Fields in module 'event'---
 event        / event.event              / address_id (many2one)         : relation is now 'res.partner' ('res.partner.address')
 event        / event.event              / child_ids (one2many)          : DEL relation: event.event
 event        / event.event              / email_confirmation_id (many2one): NEW relation: email.template
@@ -48,46 +48,47 @@ event        / report.event.registration / state (selection)             : DEL r
 event        / report.event.registration / total (float)                 : DEL 
 event        / report.event.registration / type (many2one)               : DEL relation: event.type
 event        / report.event.registration / user_id_registration (many2one): NEW relation: res.users
-deleted xml-id of model ir.actions.act_window: event.action_event_confirm_registration
-deleted xml-id of model ir.actions.act_window: event.action_make_invoices
-deleted xml-id of model ir.actions.act_window: event.action_partner_event_registration
-deleted xml-id of model ir.model.access: event.access_account_account_invoice_manager
-deleted xml-id of model ir.model.access: event.access_crm_case_section_manager
-deleted xml-id of model ir.model.access: event.access_event_event_manager
-deleted xml-id of model ir.model.access: event.access_event_event_sale_salesman
-deleted xml-id of model ir.model.access: event.access_event_registration_badge
-deleted xml-id of model ir.model.access: event.access_event_registration_badge_manager
-deleted xml-id of model ir.model.access: event.access_event_registration_manager
-deleted xml-id of model ir.model.access: event.access_event_registration_sale_user
-deleted xml-id of model ir.model.access: event.access_product_product
-deleted xml-id of model ir.ui.menu: base.marketing_menu
-deleted xml-id of model ir.ui.menu: base.menu_association
-deleted xml-id of model ir.ui.menu: base.menu_event_association
-deleted xml-id of model ir.ui.menu: base.menu_marketing_config_association
-deleted xml-id of model ir.ui.menu: event.menu_action_registration_association
-deleted xml-id of model ir.ui.menu: event.menu_event_event_assiciation
-deleted xml-id of model ir.ui.menu: event.menu_event_type_association
-deleted xml-id of model ir.ui.view: event.view_event_confirm_registration
-deleted xml-id of model ir.ui.view: event.view_event_graph
-deleted xml-id of model ir.ui.view: event.view_event_make_invoice
-deleted xml-id of model ir.ui.view: event.view_partner_event_registration
-deleted xml-id of model ir.ui.view: event.view_speaker_partner_info_form
-new xml-id of model email.template: event.confirmation_event
-new xml-id of model email.template: event.confirmation_registration
-new xml-id of model ir.actions.act_window: event.act_event_view_registration
-new xml-id of model ir.actions.client: event.action_client_event_menu
-new xml-id of model ir.actions.todo: base.open_menu
-new xml-id of model ir.model.access: event.access_event_event_portal
-new xml-id of model ir.model.access: event.access_event_registration_portal
-new xml-id of model ir.module.category: event.module_category_event_management
-new xml-id of model ir.rule: event.event_event_comp_rule
-new xml-id of model ir.rule: event.event_registration_comp_rule
-new xml-id of model ir.rule: event.report_event_registration_comp_rule
-new xml-id of model ir.ui.menu: event.event_main_menu
-new xml-id of model ir.ui.menu: event.menu_reporting_events
-new xml-id of model ir.ui.view: event.view_event_kanban
-new xml-id of model ir.values: event.default_value_event_mail_confirmation
-new xml-id of model ir.values: event.default_value_registration_mail_confirmation
-new xml-id of model mail.message.subtype: event.mt_event_registration
-new xml-id of model res.groups: event.group_event_manager
-new xml-id of model res.groups: event.group_event_user
+---XML records in module 'event'---
+NEW email.template: event.confirmation_event
+NEW email.template: event.confirmation_registration
+NEW ir.actions.act_window: event.act_event_view_registration
+DEL ir.actions.act_window: event.action_event_confirm_registration
+DEL ir.actions.act_window: event.action_make_invoices
+DEL ir.actions.act_window: event.action_partner_event_registration
+NEW ir.actions.client: event.action_client_event_menu
+NEW ir.actions.todo: base.open_menu
+NEW ir.model.access: event.access_event_event_portal
+NEW ir.model.access: event.access_event_registration_portal
+DEL ir.model.access: event.access_account_account_invoice_manager
+DEL ir.model.access: event.access_crm_case_section_manager
+DEL ir.model.access: event.access_event_event_manager
+DEL ir.model.access: event.access_event_event_sale_salesman
+DEL ir.model.access: event.access_event_registration_badge
+DEL ir.model.access: event.access_event_registration_badge_manager
+DEL ir.model.access: event.access_event_registration_manager
+DEL ir.model.access: event.access_event_registration_sale_user
+DEL ir.model.access: event.access_product_product
+NEW ir.module.category: event.module_category_event_management
+NEW ir.rule: event.event_event_comp_rule
+NEW ir.rule: event.event_registration_comp_rule
+NEW ir.rule: event.report_event_registration_comp_rule
+NEW ir.ui.menu: event.event_main_menu
+NEW ir.ui.menu: event.menu_reporting_events
+DEL ir.ui.menu: base.marketing_menu
+DEL ir.ui.menu: base.menu_association
+DEL ir.ui.menu: base.menu_event_association
+DEL ir.ui.menu: base.menu_marketing_config_association
+DEL ir.ui.menu: event.menu_action_registration_association
+DEL ir.ui.menu: event.menu_event_event_assiciation
+DEL ir.ui.menu: event.menu_event_type_association
+NEW ir.ui.view: event.view_event_kanban
+DEL ir.ui.view: event.view_event_confirm_registration
+DEL ir.ui.view: event.view_event_graph
+DEL ir.ui.view: event.view_event_make_invoice
+DEL ir.ui.view: event.view_partner_event_registration
+DEL ir.ui.view: event.view_speaker_partner_info_form
+NEW ir.values: event.default_value_event_mail_confirmation
+NEW ir.values: event.default_value_registration_mail_confirmation
+NEW mail.message.subtype: event.mt_event_registration
+NEW res.groups: event.group_event_manager
+NEW res.groups: event.group_event_user

@@ -1,4 +1,4 @@
----hr_recruitment---
+---Fields in module 'hr_recruitment'---
 hr_recruitment / hr.applicant             / categ_ids (many2many)         : NEW relation: hr.applicant_category
 hr_recruitment / hr.applicant             / emp_id (many2one)             : NEW relation: hr.employee
 hr_recruitment / hr.applicant             / partner_address_id (many2one) : DEL relation: res.partner.address
@@ -11,25 +11,26 @@ hr_recruitment / hr.recruitment.report    / partner_address_id (many2one) : DEL 
 hr_recruitment / hr.recruitment.report    / salary_exp_avg (float)        : NEW 
 hr_recruitment / hr.recruitment.stage     / fold (boolean)                : NEW 
 hr_recruitment / hr.recruitment.stage     / state (selection)             : NEW required: required, selection_keys: ['cancel', 'done', 'draft', 'open', 'pending'], req_default: draft
-deleted xml-id of model ir.actions.act_window: hr_recruitment.action_hr_recruitment_phonecall
-deleted xml-id of model ir.actions.act_window: hr_recruitment.hr_job_categ_action
-deleted xml-id of model ir.actions.todo: hr_recruitment.hr_recruitment_stage_form_todo
-deleted xml-id of model ir.model.access: hr_recruitment.access_crm_phonecall_hruser
-deleted xml-id of model ir.model.access: hr_recruitment.access_mail_message_user
-deleted xml-id of model ir.model.access: hr_recruitment.access_res_partner_address_hr_user
-deleted xml-id of model ir.ui.menu: hr.menu_hr_reporting
-deleted xml-id of model ir.ui.menu: hr_recruitment.menu_hr_job
-deleted xml-id of model ir.ui.view: hr_recruitment.view_hr_recruitment_phonecall
-new xml-id of model crm.meeting.type: hr_recruitment.categ_meet_interview
-new xml-id of model ir.actions.act_window: hr_recruitment.act_hr_applicant_to_meeting
-new xml-id of model ir.actions.todo: base.open_menu
-new xml-id of model ir.model.access: hr_recruitment.access_hr_applicant_category
-new xml-id of model ir.model.access: hr_recruitment.access_hr_applicant_category_manager
-new xml-id of model ir.ui.menu: hr.menu_hr_job
-new xml-id of model ir.ui.view: hr_recruitment.view_hr_apll_config_settings
-new xml-id of model mail.alias: hr_recruitment.mail_alias_jobs
-new xml-id of model mail.message.subtype: hr_recruitment.mt_applicant_hired
-new xml-id of model mail.message.subtype: hr_recruitment.mt_applicant_refused
-new xml-id of model mail.message.subtype: hr_recruitment.mt_job_new_applicant
-new xml-id of model mail.message.subtype: hr_recruitment.mt_stage_changed
-new xml-id of model mail.message: hr_recruitment.module_install_notification
+---XML records in module 'hr_recruitment'---
+NEW crm.meeting.type: hr_recruitment.categ_meet_interview
+NEW ir.actions.act_window: hr_recruitment.act_hr_applicant_to_meeting
+DEL ir.actions.act_window: hr_recruitment.action_hr_recruitment_phonecall
+DEL ir.actions.act_window: hr_recruitment.hr_job_categ_action
+NEW ir.actions.todo: base.open_menu
+DEL ir.actions.todo: hr_recruitment.hr_recruitment_stage_form_todo
+NEW ir.model.access: hr_recruitment.access_hr_applicant_category
+NEW ir.model.access: hr_recruitment.access_hr_applicant_category_manager
+DEL ir.model.access: hr_recruitment.access_crm_phonecall_hruser
+DEL ir.model.access: hr_recruitment.access_mail_message_user
+DEL ir.model.access: hr_recruitment.access_res_partner_address_hr_user
+NEW ir.ui.menu: hr.menu_hr_job
+DEL ir.ui.menu: hr.menu_hr_reporting
+DEL ir.ui.menu: hr_recruitment.menu_hr_job
+NEW ir.ui.view: hr_recruitment.view_hr_apll_config_settings
+DEL ir.ui.view: hr_recruitment.view_hr_recruitment_phonecall
+NEW mail.alias: hr_recruitment.mail_alias_jobs
+NEW mail.message: hr_recruitment.module_install_notification
+NEW mail.message.subtype: hr_recruitment.mt_applicant_hired
+NEW mail.message.subtype: hr_recruitment.mt_applicant_refused
+NEW mail.message.subtype: hr_recruitment.mt_job_new_applicant
+NEW mail.message.subtype: hr_recruitment.mt_stage_changed

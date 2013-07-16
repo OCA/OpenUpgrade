@@ -1,7 +1,8 @@
----project_mrp---
+---Fields in module 'project_mrp'---
 project_mrp  / project.task             / procurement_id (many2one)     : DEL relation: procurement.order
-new xml-id of model ir.ui.view: project_mrp.product_product_normal_form_supply_view
-new xml-id of model workflow.activity: project_mrp.act_produce_service
-new xml-id of model workflow.transition: project_mrp.trans_produce_service_cancel
-new xml-id of model workflow.transition: project_mrp.trans_produce_service_make_done
-new xml-id of model workflow.transition: project_mrp.trans_product_check_produce_service
+---XML records in module 'project_mrp'---
+NEW ir.ui.view: project_mrp.product_product_normal_form_supply_view
+NEW workflow.activity: project_mrp.act_produce_service
+NEW workflow.transition: project_mrp.trans_produce_service_cancel
+NEW workflow.transition: project_mrp.trans_produce_service_make_done
+NEW workflow.transition: project_mrp.trans_product_check_produce_service

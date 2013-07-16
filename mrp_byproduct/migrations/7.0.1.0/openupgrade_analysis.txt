@@ -1,8 +1,9 @@
----mrp_byproduct---
-deleted xml-id of model ir.model.access: mrp_subproduct.access_mrp_subproduct_manager
-deleted xml-id of model ir.model.access: mrp_subproduct.access_mrp_subproduct_user
-deleted xml-id of model ir.ui.view: mrp_subproduct.mrp_subproduct_view
-new xml-id of model ir.model.access: mrp_byproduct.access_mrp_subproduct_all
-new xml-id of model ir.model.access: mrp_byproduct.access_mrp_subproduct_manager
-new xml-id of model ir.model.access: mrp_byproduct.access_mrp_subproduct_user
-new xml-id of model ir.ui.view: mrp_byproduct.mrp_subproduct_view
+---Fields in module 'mrp_byproduct'---
+---XML records in module 'mrp_byproduct'---
+NEW ir.model.access: mrp_byproduct.access_mrp_subproduct_all
+NEW ir.model.access: mrp_byproduct.access_mrp_subproduct_manager
+NEW ir.model.access: mrp_byproduct.access_mrp_subproduct_user
+DEL ir.model.access: mrp_subproduct.access_mrp_subproduct_manager
+DEL ir.model.access: mrp_subproduct.access_mrp_subproduct_user
+NEW ir.ui.view: mrp_byproduct.mrp_subproduct_view
+DEL ir.ui.view: mrp_subproduct.mrp_subproduct_view

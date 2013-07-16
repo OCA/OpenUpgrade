@@ -1,17 +1,18 @@
----base_setup---
-deleted xml-id of model ir.actions.act_window: base_setup.action_base_setup_company
-deleted xml-id of model ir.actions.act_window: base_setup.action_config_access_other_user
-deleted xml-id of model ir.actions.act_window: base_setup.action_import_create_installer
-deleted xml-id of model ir.actions.act_window: base_setup.action_user_preferences_config_form
-deleted xml-id of model ir.actions.todo: base_setup.base_setup_company_todo
-deleted xml-id of model ir.actions.todo: base_setup.config_action_user_preferences_config_form
-deleted xml-id of model ir.actions.todo: base_setup.config_wizard_action_config_user_form
-deleted xml-id of model ir.actions.todo: base_setup.config_wizard_action_import_create_installer
-deleted xml-id of model ir.ui.view: base_setup.view_user_preferences_config_form
-new xml-id of model ir.actions.act_window: base_setup.action_general_configuration
-new xml-id of model ir.actions.act_window: base_setup.action_sale_config
-new xml-id of model ir.ui.menu: base.menu_res_company_global
-new xml-id of model ir.ui.menu: base_setup.menu_general_configuration
-new xml-id of model ir.ui.view: base_setup.res_partner_kanban_view
-new xml-id of model ir.ui.view: base_setup.view_general_configuration
-new xml-id of model ir.ui.view: base_setup.view_sale_config_settings
+---Fields in module 'base_setup'---
+---XML records in module 'base_setup'---
+NEW ir.actions.act_window: base_setup.action_general_configuration
+NEW ir.actions.act_window: base_setup.action_sale_config
+DEL ir.actions.act_window: base_setup.action_base_setup_company
+DEL ir.actions.act_window: base_setup.action_config_access_other_user
+DEL ir.actions.act_window: base_setup.action_import_create_installer
+DEL ir.actions.act_window: base_setup.action_user_preferences_config_form
+DEL ir.actions.todo: base_setup.base_setup_company_todo
+DEL ir.actions.todo: base_setup.config_action_user_preferences_config_form
+DEL ir.actions.todo: base_setup.config_wizard_action_config_user_form
+DEL ir.actions.todo: base_setup.config_wizard_action_import_create_installer
+NEW ir.ui.menu: base.menu_res_company_global
+NEW ir.ui.menu: base_setup.menu_general_configuration
+NEW ir.ui.view: base_setup.res_partner_kanban_view
+NEW ir.ui.view: base_setup.view_general_configuration
+NEW ir.ui.view: base_setup.view_sale_config_settings
+DEL ir.ui.view: base_setup.view_user_preferences_config_form

@@ -1,16 +1,17 @@
----account_analytic_analysis---
+---Fields in module 'account_analytic_analysis'---
 account_analytic_analysis / account.analytic.account / fix_price_invoices (boolean)  : NEW 
 account_analytic_analysis / account.analytic.account / hours_qtt_est (float)         : NEW 
 account_analytic_analysis / account.analytic.account / invoice_on_timesheets (boolean): NEW 
-deleted xml-id of model ir.ui.view: account_analytic_analysis.account_analytic_account_invoice_stat_form
-deleted xml-id of model ir.ui.view: account_analytic_analysis.view_account_analytic_account_tree_c2c_2
-deleted xml-id of model ir.ui.view: hr_timesheet.account_analytic_account_form_form
-new xml-id of model email.template: account_analytic_analysis.account_analytic_cron_email_template
-new xml-id of model ir.actions.act_window: account_analytic_analysis.action_sales_order
-new xml-id of model ir.actions.act_window: account_analytic_analysis.template_of_contract_action
-new xml-id of model ir.ui.menu: account_analytic_analysis.menu_template_of_contract_action
-new xml-id of model ir.ui.view: account_analytic_analysis.account_analytic_account_form_form
-new xml-id of model ir.ui.view: account_analytic_analysis.view_account_analytic_account_template_required
-new xml-id of model ir.ui.view: account_analytic_analysis.view_sales_config
-new xml-id of model res.groups: account_analytic_analysis.group_template_required
-new xml-id of model res.users: base.user_root
+---XML records in module 'account_analytic_analysis'---
+NEW email.template: account_analytic_analysis.account_analytic_cron_email_template
+NEW ir.actions.act_window: account_analytic_analysis.action_sales_order
+NEW ir.actions.act_window: account_analytic_analysis.template_of_contract_action
+NEW ir.ui.menu: account_analytic_analysis.menu_template_of_contract_action
+NEW ir.ui.view: account_analytic_analysis.account_analytic_account_form_form
+NEW ir.ui.view: account_analytic_analysis.view_account_analytic_account_template_required
+NEW ir.ui.view: account_analytic_analysis.view_sales_config
+DEL ir.ui.view: account_analytic_analysis.account_analytic_account_invoice_stat_form
+DEL ir.ui.view: account_analytic_analysis.view_account_analytic_account_tree_c2c_2
+DEL ir.ui.view: hr_timesheet.account_analytic_account_form_form
+NEW res.groups: account_analytic_analysis.group_template_required
+NEW res.users: base.user_root
