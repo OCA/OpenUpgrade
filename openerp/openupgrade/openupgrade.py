@@ -330,17 +330,13 @@ def get_legacy_name(original_name):
     return 'openupgrade_legacy_'+('_').join(
         map(str, release.version_info[0:2]))+'_'+original_name
 
-def m2o_to_m2m(cr, model, table, field, source_field=None):
+def m2o_to_m2m(cr, model, table, field, source_field):
     """
     :param model: The target model
     :param table: The source table
     :param field: The field name of the target model
-    :parm source_field: the many2one column on the source table. \
-    If None, the legacy name for parameter 'field' is used.
+    :param source_field: the many2one column on the source table.
     """
-    if source_field is None:
-        source_field = get_legacy_name(field)
-
     cr.execute('SELECT id, %(field)s '
                'FROM %(table)s '
                'WHERE %(field)s is not null' % {
