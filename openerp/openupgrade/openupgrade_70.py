@@ -2,7 +2,8 @@
 ##############################################################################
 #
 # OpenERP, Open Source Management Solution
-# This migration script copyright (C) 2013-today Sylvain LE GAL
+# This module copyright (C) 2013 Sylvain LE GAL
+#                       (C) 2013 Therp BV
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -22,17 +23,32 @@
 # This module provides simple tools for openupgrade migration, specific for the
 # 6.1 -> 7.0.
 
-def get_partner_id_from_partner_address_id(cr, partner_address_id):
+from openerp.openupgrade import openupgrade
+from openerp import SUPERUSER_ID
+
+def set_partner_id_from_partner_address_id(
+        cr, pool, model_name, partner_field, address_field, table=None):
     """
-        Get the new partner_id from old partner_address_id.
-        :param partner_address_id : res_partner_address previously used.
+    Set the new partner_id on any table with migrated contact ids
+
+    :param model_name: the model name of the target table
+    :param partner_field: the column in the target model's table \
+                          that will store the new partner when found
+    :param address_field: the legacy field in the model's table \
+                    that contains the old address in the model's table
+    :param table: override the target model's table name in case it was renamed               
+    :returns: nothing
     """
+    model = pool.get(model_name)
+    table = table or model._table
+    # Cannot use cursor's string substitution for table names
     cr.execute("""
-        SELECT openupgrade_7_migrated_to_partner_id 
-        FROM res_partner_address
-        WHERE id=%s""",
-        (partner_address_id,))
-    return cr.fetchone()[0]
+        SELECT target.id, address.openupgrade_7_migrated_to_partner_id
+        FROM %s as target,
+             res_partner_address as address
+        WHERE address.id = target.%s""" % (table, address_field))
+    for row in cr.fetchall():
+        model.write(cr, row[0], SUPERUSER_ID, {partner_field: row[1]})
     
 def get_partner_id_from_user_id(cr, user_id):
     """
