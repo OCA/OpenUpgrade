@@ -212,7 +212,7 @@ def warn_possible_dataloss(cr, pool, old_module, fields):
     Use orm, so call from the post script.
     
     :param old_module: name of the old module
-    :param fields: list of dictionnary with the following keys :
+    :param fields: list of dictionary with the following keys :
         'table' : name of the table where the field is.
         'field' : name of the field that are moving.
         'new_module' : name of the new module
@@ -224,21 +224,25 @@ def warn_possible_dataloss(cr, pool, old_module, fields):
                 ('state', 'in', ['installed', 'to upgrade', 'to install'])
             ])
         if not module_ids: 
-            cr.execute("SELECT count(*) FROM (SELECT %s from %s group by %s) as tmp" \
-                %(field['field'], field['table'], field['field']))
+            cr.execute(
+                "SELECT count(*) FROM (SELECT %s from %s group by %s) "
+                "as tmp" % (
+                    field['field'], field['table'], field['field']))
             row = cr.fetchone()
             if row[0] == 1: 
-                # not a problem, that field was'nt used. Just a loss of fonctionnality
+                # not a problem, that field wasn't used.
+                # Just a loss of functionality
                 logger.info("'%s' in module '%s' has moved in module " \
                     "'%s' that is not installed : " \
                     "Users'll loose fonctionnalities" \
                     %(field['field'], old_module, field['new_module']))
             else: 
                 # there is data loss after the migration.
-                logger.warning("'%s' in module '%s' has moved in module " \
-                    "'%s' that is not installed : " \
-                    "There was %s differentes values in this field." \
-                    %(field['field'], old_module, field['new_module'], row[0]))
+                message(
+                    "'%s' in module '%s' has moved in module "
+                    "'%s' that is not installed : "
+                    "There was %s different values in this field.",
+                    field['field'], old_module, field['new_module'], row[0])
 
 def set_defaults(cr, pool, default_spec, force=False):
     """
