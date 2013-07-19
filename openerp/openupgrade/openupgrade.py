@@ -239,10 +239,11 @@ def warn_possible_dataloss(cr, pool, old_module, fields):
             else: 
                 # there is data loss after the migration.
                 message(
-                    "'%s' in module '%s' has moved in module "
-                    "'%s' that is not installed : "
+                    cr, old_module,
+                    "Field '%s' has moved to module "
+                    "'%s' that is not installed: "
                     "There was %s different values in this field.",
-                    field['field'], old_module, field['new_module'], row[0])
+                    field['field'], field['new_module'], row[0])
 
 def set_defaults(cr, pool, default_spec, force=False):
     """
@@ -372,6 +373,15 @@ def get_legacy_name(original_name):
     """
     return 'openupgrade_legacy_'+('_').join(
         map(str, release.version_info[0:2]))+'_'+original_name
+
+def message(cr, module, message, *args, **kwargs):
+    """
+    Log handler for non-critical notifications about the upgrade.
+    To be extended with logging to a table for reporting purposes.
+    """
+    argslist = list(args)
+    argslist.insert(0, module)
+    logger.warn("Module %s: " + message, *argslist, **kwargs)
 
 def migrate():
     """
