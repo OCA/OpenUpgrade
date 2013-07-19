@@ -48,6 +48,7 @@ __all__ = [
     'rename_models',
     'rename_xmlids',
     'get_legacy_name',
+    'm2o_to_m2m',
 ]    
 
 def load_data(cr, module_name, filename, idref=None, mode='init'):
@@ -329,7 +330,14 @@ def get_legacy_name(original_name):
     return 'openupgrade_legacy_'+('_').join(
         map(str, release.version_info[0:2]))+'_'+original_name
 
-def many2one2many2many(cr, model, table, field, source_field=None):
+def m2o_to_m2m(cr, model, table, field, source_field=None):
+    """
+    :param model: The target model
+    :param table: The source table
+    :param field: The field name of the target model
+    :parm source_field: the many2one column on the source table. \
+    If None, the legacy name for parameter 'field' is used.
+    """
     if source_field is None:
         source_field = get_legacy_name(field)
 
