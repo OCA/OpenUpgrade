@@ -85,3 +85,6 @@ def migrate(cr, version):
     migrate_invoice_notes(cr, pool)
     migrate_invoice_names(cr, pool)
     lock_closing_reconciliations(cr, pool)
+    openupgrade.load_xml(
+        cr, 'account',
+        'migrations/7.0.1.1/data.xml')
