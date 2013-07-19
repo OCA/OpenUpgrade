@@ -26,6 +26,13 @@ xmlid_renames = [
     ('account.seq_analytic_account', 'analytic.seq_analytic_account_base'),
 ]
 
+column_renames = {
+    'account_analytic_account': [
+        ('contact_id', openupgrade.get_legacy_name('contact_id'))
+        ]
+    }
+
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_xmlids(cr, xmlid_renames)
+    openupgrade.rename_columns(cr, column_renames)

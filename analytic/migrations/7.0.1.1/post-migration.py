@@ -23,23 +23,6 @@ from openupgrade import openupgrade
 from openupgrade import openupgrade_70
 from openerp import pooler, SUPERUSER_ID
 
-def migrate_partner_address(cr, pool):
-    """ 
-    Manage partner changes in 'account.analytic.account'.
-    Use obsolete 'contact_id' field to fill 'partner_id' if 'contact_id' is not null.
-    Otherwise, use partner_id.
-    """
-    analytic_obj = pool.get('account.analytic.account')
-    cr.execute("""
-        SELECT id, contact_id
-        FROM account_analytic_account
-        WHERE contact_id is not null; """)
-    for row in cr.dictfetchall():
-        vals = {
-            'partner_id': openupgrade_70.get_partner_id_from_partner_address_id(cr, row['contact_id']),
-            }
-        analytic_obj.write(cr, SUPERUSER_ID, row['id'], vals)
-
 def fill_manager_id(cr, pool): 
     """
     Fill the new field 'manager_id' depending on account_analytic_account.partner_id.user_id
@@ -60,5 +43,7 @@ def fill_manager_id(cr, pool):
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
-    migrate_partner_address(cr, pool)
+    openupgrade_70.set_partner_id_from_partner_address_id(
+        cr, pool, 'account.analytic.account',
+        'partner_id', openupgrade.get_legacy_name('contact_id'))
     fill_manager_id(cr, pool)
