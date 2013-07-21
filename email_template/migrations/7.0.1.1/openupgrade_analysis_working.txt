@@ -1,0 +1,46 @@
+---Fields in module 'email_template'---
+### To convert to body_html if that is empty
+email_template / email.template           / body_text (text)              : DEL 
+
+### Ignore useless fields from former inherit on mail.message
+email_template / email.template           / date (datetime)               : DEL 
+email_template / email.template           / headers (text)                : DEL 
+email_template / email.template           / message_id (char)             : DEL 
+email_template / email.template           / original (binary)             : DEL 
+email_template / email.template           / partner_id (many2one)         : DEL relation: res.partner
+email_template / email.template           / references (text)             : DEL 
+email_template / email.template           / res_id (integer)              : DEL 
+email_template / email.template           / state (selection)             : DEL selection_keys: ['cancel', 'exception', 'outgoing', 'received', 'sent']
+email_template / email.template           / subtype (char)                : DEL 
+email_template / email.template           / user_id (many2one)            : DEL relation: res.users
+
+### Mention the loss of BCCs in the user notes
+email_template / email.template           / email_bcc (char)              : DEL 
+
+### Ignore new field (list of partner ids?)
+email_template / email.template           / email_recipients (char)       : NEW 
+
+### Ignore previously unused field
+email_template / email.template           / track_campaign_item (boolean) : DEL 
+
+### Ignore this TransientModel.
+### The analysis cannot distinguish Models from TransientModels that inherit from Model
+email_template / email_template.preview   / body_text (text)              : DEL 
+email_template / email_template.preview   / date (datetime)               : DEL 
+email_template / email_template.preview   / email_bcc (char)              : DEL 
+email_template / email_template.preview   / email_recipients (char)       : NEW 
+email_template / email_template.preview   / headers (text)                : DEL 
+email_template / email_template.preview   / message_id (char)             : DEL 
+email_template / email_template.preview   / original (binary)             : DEL 
+email_template / email_template.preview   / partner_id (many2one)         : DEL relation: res.partner
+email_template / email_template.preview   / references (text)             : DEL 
+email_template / email_template.preview   / state (selection)             : DEL selection_keys: ['cancel', 'exception', 'outgoing', 'received', 'sent']
+email_template / email_template.preview   / subtype (char)                : DEL 
+email_template / email_template.preview   / track_campaign_item (boolean) : DEL 
+email_template / email_template.preview   / user_id (many2one)            : DEL relation: res.users
+# Ignore this TransientModel
+email_template / mail.compose.message     / template_id (selection)       : NEW selection_keys: function
+---XML records in module 'email_template'---
+DEL ir.model.access: email_template.access_email_template_manager
+DEL ir.model.access: email_template.access_email_template_preview_system
+NEW ir.ui.view: email_template.res_partner_opt_out_search
