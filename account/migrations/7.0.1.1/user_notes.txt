@@ -1,6 +1,7 @@
 This is an incomplete migration of the account module. You can only use this version safely if you have not used cash boxes.
 
-Two features are now only available for users that are allowed to use them on their user records: creation of pro-forma invoices, and checking the total amount of a supplier invoice.
+OpenERP 7.0 in general has a more finegrained control over which users can access which features. The features can be configured through the Access tab on the user record. Two existing features are now governed by these settings: creation of pro-forma invoices, and checking the total amount of a supplier invoice. You need to review these settings if you want them to be available to certain users.
+
 Invoice rounding before tax application can now be configured globally or per line. Please review this setting in your financial configuration.
 If you use point of sale, you will want to configure profit and loss accounts on the relevant journals.
 
