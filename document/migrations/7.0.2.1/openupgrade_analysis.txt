@@ -1,47 +1,48 @@
----document---
+---Fields in module 'document'---
 document     / document.directory       / storage_id (many2one)         : DEL relation: document.storage
 document     / ir.attachment            / db_datas (binary)             : module is now 'base' ('document')
 document     / ir.attachment            / file_size (integer)           : module is now 'base' ('document')
 document     / ir.attachment            / store_fname (char)            : module is now 'base' ('document')
 document     / process.node             / directory_id (many2one)       : DEL relation: document.directory
 document     / report.document.user     / user (char)                   : now a function
-deleted xml-id of model document.directory: document.dir_partner_category
-deleted xml-id of model document.storage: document.storage_default
-deleted xml-id of model ir.actions.act_window: document.action_document_storage_form
-deleted xml-id of model ir.actions.act_window: document.action_view_files_by_partner
-deleted xml-id of model ir.actions.act_window: document.action_view_user_graph
-deleted xml-id of model ir.actions.act_window: document.action_view_wall
-deleted xml-id of model ir.actions.act_window: document.open_board_document_manager
-deleted xml-id of model ir.actions.act_window: document.open_board_document_manager1
-deleted xml-id of model ir.actions.todo.category: document.category_knowledge_mgmt_config
-deleted xml-id of model ir.model.access: document.access_document_storage_group_document_manager
-deleted xml-id of model ir.model.access: document.access_document_storage_group_system
-deleted xml-id of model ir.model.access: document.access_document_storage_group_user
-deleted xml-id of model ir.model.access: document.access_report_document_wall_group_document
-deleted xml-id of model ir.model.access: document.access_report_document_wall_group_document_manager
-deleted xml-id of model ir.model.access: document.access_report_document_wall_group_system
-deleted xml-id of model ir.model.access: document.access_report_files_partner_group_document
-deleted xml-id of model ir.model.access: document.access_report_files_partner_group_document_manager
-deleted xml-id of model ir.ui.menu: document.menu_document_storage_media
-deleted xml-id of model ir.ui.menu: document.menu_reporting
-deleted xml-id of model ir.ui.menu: document.menu_reports_document
-deleted xml-id of model ir.ui.menu: document.menu_reports_document_manager
-deleted xml-id of model ir.ui.menu: document.menu_reports_document_manager1
-deleted xml-id of model ir.ui.menu: knowledge.menu_document
-deleted xml-id of model ir.ui.view: document.board_document_manager_form
-deleted xml-id of model ir.ui.view: document.board_document_manager_form1
-deleted xml-id of model ir.ui.view: document.view_attachment_form_inherit
-deleted xml-id of model ir.ui.view: document.view_document_by_resourcetype_graph
-deleted xml-id of model ir.ui.view: document.view_document_storage_filter
-deleted xml-id of model ir.ui.view: document.view_document_storage_form
-deleted xml-id of model ir.ui.view: document.view_document_storage_tree
-deleted xml-id of model ir.ui.view: document.view_document_wall_form
-deleted xml-id of model ir.ui.view: document.view_document_wall_tree
-deleted xml-id of model ir.ui.view: document.view_files_by_partner_form
-deleted xml-id of model ir.ui.view: document.view_files_by_partner_graph
-deleted xml-id of model ir.ui.view: document.view_files_by_partner_tree
-deleted xml-id of model ir.ui.view: document.view_process_form_inherit1
-deleted xml-id of model ir.ui.view: document.view_process_node_form_inherit1
-deleted xml-id of model ir.ui.view: document.view_user_graph
-new xml-id of model ir.actions.act_window: document.action_view_files_by_user_graph
-new xml-id of model ir.ui.view: document.view_files_by_user_graph
+---XML records in module 'document'---
+DEL document.directory: document.dir_partner_category
+DEL document.storage: document.storage_default
+NEW ir.actions.act_window: document.action_view_files_by_user_graph
+DEL ir.actions.act_window: document.action_document_storage_form
+DEL ir.actions.act_window: document.action_view_files_by_partner
+DEL ir.actions.act_window: document.action_view_user_graph
+DEL ir.actions.act_window: document.action_view_wall
+DEL ir.actions.act_window: document.open_board_document_manager
+DEL ir.actions.act_window: document.open_board_document_manager1
+DEL ir.actions.todo.category: document.category_knowledge_mgmt_config
+DEL ir.model.access: document.access_document_storage_group_document_manager
+DEL ir.model.access: document.access_document_storage_group_system
+DEL ir.model.access: document.access_document_storage_group_user
+DEL ir.model.access: document.access_report_document_wall_group_document
+DEL ir.model.access: document.access_report_document_wall_group_document_manager
+DEL ir.model.access: document.access_report_document_wall_group_system
+DEL ir.model.access: document.access_report_files_partner_group_document
+DEL ir.model.access: document.access_report_files_partner_group_document_manager
+DEL ir.ui.menu: document.menu_document_storage_media
+DEL ir.ui.menu: document.menu_reporting
+DEL ir.ui.menu: document.menu_reports_document
+DEL ir.ui.menu: document.menu_reports_document_manager
+DEL ir.ui.menu: document.menu_reports_document_manager1
+DEL ir.ui.menu: knowledge.menu_document
+NEW ir.ui.view: document.view_files_by_user_graph
+DEL ir.ui.view: document.board_document_manager_form
+DEL ir.ui.view: document.board_document_manager_form1
+DEL ir.ui.view: document.view_attachment_form_inherit
+DEL ir.ui.view: document.view_document_by_resourcetype_graph
+DEL ir.ui.view: document.view_document_storage_filter
+DEL ir.ui.view: document.view_document_storage_form
+DEL ir.ui.view: document.view_document_storage_tree
+DEL ir.ui.view: document.view_document_wall_form
+DEL ir.ui.view: document.view_document_wall_tree
+DEL ir.ui.view: document.view_files_by_partner_form
+DEL ir.ui.view: document.view_files_by_partner_graph
+DEL ir.ui.view: document.view_files_by_partner_tree
+DEL ir.ui.view: document.view_process_form_inherit1
+DEL ir.ui.view: document.view_process_node_form_inherit1
+DEL ir.ui.view: document.view_user_graph

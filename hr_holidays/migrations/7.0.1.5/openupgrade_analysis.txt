@@ -1,38 +1,39 @@
----hr_holidays---
+---Fields in module 'hr_holidays'---
 hr_holidays  / hr.employee              / last_login (datetime)         : module is now 'hr' ('hr_holidays')
 hr_holidays  / hr.holidays              / case_id (many2one)            : DEL relation: crm.meeting
 hr_holidays  / hr.holidays              / meeting_id (many2one)         : NEW relation: crm.meeting
 hr_holidays  / hr.holidays              / message_ids (one2many)        : NEW relation: mail.message
 hr_holidays  / hr.holidays.status       / categ_id (many2one)           : relation is now 'crm.meeting.type' ('crm.case.categ')
-deleted xml-id of model ir.actions.act_window: hr_holidays.action_view_holiday_status_manager_board
-deleted xml-id of model ir.actions.todo: hr_holidays.hr_holidays_leaves_assign_form_view_todo
-deleted xml-id of model ir.model.access: hr_holidays.access_resource_calendar_leaves_manager
-deleted xml-id of model ir.rule: hr_holidays.property_rule_holidays_manager
-deleted xml-id of model ir.ui.menu: hr_holidays.menu_hr_reporting_holidays
-deleted xml-id of model ir.ui.view: hr_holidays.board_hr_holidays_manager_form
-deleted xml-id of model workflow.transition: hr_holidays.t1
-deleted xml-id of model workflow.transition: hr_holidays.t11
-deleted xml-id of model workflow.transition: hr_holidays.t2
-deleted xml-id of model workflow.transition: hr_holidays.t3
-deleted xml-id of model workflow.transition: hr_holidays.t4
-deleted xml-id of model workflow.transition: hr_holidays.t8
-new xml-id of model ir.actions.act_window.view: hr_holidays.action_request_approve_allocation_form
-new xml-id of model ir.actions.act_window.view: hr_holidays.action_request_approve_allocation_tree
-new xml-id of model ir.actions.act_window: hr_holidays.act_hr_leave_request_to_meeting
-new xml-id of model ir.actions.act_window: hr_holidays.request_approve_allocation
-new xml-id of model ir.actions.todo: base.open_menu
-new xml-id of model ir.model.access: hr_holidays.access_crm_meeting_type_manager
-new xml-id of model ir.model.access: hr_holidays.access_resource_calendar_leaves_user
-new xml-id of model ir.rule: hr_holidays.property_rule_holidays_officer
-new xml-id of model ir.ui.menu: hr_holidays.menu_request_approve_allocation
-new xml-id of model mail.message.subtype: hr_holidays.mt_holidays_approved
-new xml-id of model mail.message.subtype: hr_holidays.mt_holidays_confirmed
-new xml-id of model mail.message.subtype: hr_holidays.mt_holidays_refused
-new xml-id of model mail.message: hr_holidays.module_install_notification
-new xml-id of model workflow.transition: hr_holidays.holiday_confirm2refuse
-new xml-id of model workflow.transition: hr_holidays.holiday_confirm2validate
-new xml-id of model workflow.transition: hr_holidays.holiday_confirm2validate1
-new xml-id of model workflow.transition: hr_holidays.holiday_draft2confirm
-new xml-id of model workflow.transition: hr_holidays.holiday_validate1_refuse
-new xml-id of model workflow.transition: hr_holidays.holiday_validate1_validate
-new xml-id of model workflow.transition: hr_holidays.holiday_validate2refuse
+---XML records in module 'hr_holidays'---
+NEW ir.actions.act_window: hr_holidays.act_hr_leave_request_to_meeting
+NEW ir.actions.act_window: hr_holidays.request_approve_allocation
+DEL ir.actions.act_window: hr_holidays.action_view_holiday_status_manager_board
+NEW ir.actions.act_window.view: hr_holidays.action_request_approve_allocation_form
+NEW ir.actions.act_window.view: hr_holidays.action_request_approve_allocation_tree
+NEW ir.actions.todo: base.open_menu
+DEL ir.actions.todo: hr_holidays.hr_holidays_leaves_assign_form_view_todo
+NEW ir.model.access: hr_holidays.access_crm_meeting_type_manager
+NEW ir.model.access: hr_holidays.access_resource_calendar_leaves_user
+DEL ir.model.access: hr_holidays.access_resource_calendar_leaves_manager
+NEW ir.rule: hr_holidays.property_rule_holidays_officer
+DEL ir.rule: hr_holidays.property_rule_holidays_manager
+NEW ir.ui.menu: hr_holidays.menu_request_approve_allocation
+DEL ir.ui.menu: hr_holidays.menu_hr_reporting_holidays
+DEL ir.ui.view: hr_holidays.board_hr_holidays_manager_form
+NEW mail.message: hr_holidays.module_install_notification
+NEW mail.message.subtype: hr_holidays.mt_holidays_approved
+NEW mail.message.subtype: hr_holidays.mt_holidays_confirmed
+NEW mail.message.subtype: hr_holidays.mt_holidays_refused
+NEW workflow.transition: hr_holidays.holiday_confirm2refuse
+NEW workflow.transition: hr_holidays.holiday_confirm2validate
+NEW workflow.transition: hr_holidays.holiday_confirm2validate1
+NEW workflow.transition: hr_holidays.holiday_draft2confirm
+NEW workflow.transition: hr_holidays.holiday_validate1_refuse
+NEW workflow.transition: hr_holidays.holiday_validate1_validate
+NEW workflow.transition: hr_holidays.holiday_validate2refuse
+DEL workflow.transition: hr_holidays.t1
+DEL workflow.transition: hr_holidays.t11
+DEL workflow.transition: hr_holidays.t2
+DEL workflow.transition: hr_holidays.t3
+DEL workflow.transition: hr_holidays.t4
+DEL workflow.transition: hr_holidays.t8

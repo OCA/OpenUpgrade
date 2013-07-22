@@ -1,4 +1,4 @@
----event_moodle---
+---Fields in module 'event_moodle'---
 event_moodle / event.event              / moodle_id (integer)           : NEW 
 event_moodle / event.moodle.config.wiz  / moodle_password (char)        : NEW 
 event_moodle / event.moodle.config.wiz  / moodle_token (char)           : NEW 
@@ -8,11 +8,12 @@ event_moodle / event.moodle.config.wiz  / url (char)                    : NEW
 event_moodle / event.registration       / moodle_uid (integer)          : NEW 
 event_moodle / event.registration       / moodle_user_password (char)   : NEW 
 event_moodle / event.registration       / moodle_username (char)        : NEW 
-new xml-id of model ir.actions.act_window: event_moodle.configure_moodle
-new xml-id of model ir.actions.todo: base.open_menu
-new xml-id of model ir.model.access: event_moodle.access_event_moodle
-new xml-id of model ir.model.access: event_moodle.access_event_moodle_user
-new xml-id of model ir.ui.menu: event_moodle.wizard_moodle
-new xml-id of model ir.ui.view: event_moodle.create_moodle_config_view
-new xml-id of model ir.ui.view: event_moodle.moodle_information
-new xml-id of model ir.ui.view: event_moodle.moodle_information_event
+---XML records in module 'event_moodle'---
+NEW ir.actions.act_window: event_moodle.configure_moodle
+NEW ir.actions.todo: base.open_menu
+NEW ir.model.access: event_moodle.access_event_moodle
+NEW ir.model.access: event_moodle.access_event_moodle_user
+NEW ir.ui.menu: event_moodle.wizard_moodle
+NEW ir.ui.view: event_moodle.create_moodle_config_view
+NEW ir.ui.view: event_moodle.moodle_information
+NEW ir.ui.view: event_moodle.moodle_information_event

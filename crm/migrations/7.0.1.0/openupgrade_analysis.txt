@@ -1,4 +1,4 @@
----crm---
+---Fields in module 'crm'---
 crm          / base.action.rule         / act_categ_id (many2one)       : DEL relation: crm.case.categ
 crm          / base.action.rule         / act_mail_to_partner (boolean) : DEL 
 crm          / base.action.rule         / act_section_id (many2one)     : DEL relation: crm.case.section
@@ -109,130 +109,131 @@ crm          / crm.segmentation         / som_interval_max (integer)    : DEL
 crm          / crm.segmentation.line    / expr_name (selection)         : selection_keys is now '['purchase', 'sale']' ('['purchase', 'sale', 'som']')
 crm          / res.partner              / meeting_ids (one2many)        : type is now 'many2many' ('one2many')
 crm          / res.users                / context_section_id (many2one) : DEL relation: crm.case.section
-deleted xml-id of model crm.case.categ: crm.categ_meet1
-deleted xml-id of model crm.case.categ: crm.categ_meet2
-deleted xml-id of model crm.case.categ: crm.categ_meet3
-deleted xml-id of model ir.actions.act_window.view: crm.act_my_oppor_form_view
-deleted xml-id of model ir.actions.act_window.view: crm.act_my_oppor_tree_view
-deleted xml-id of model ir.actions.act_window.view: crm.action_crm_tag_calendar_meet
-deleted xml-id of model ir.actions.act_window.view: crm.action_crm_tag_calendar_meet_partner
-deleted xml-id of model ir.actions.act_window.view: crm.action_crm_tag_form__meet
-deleted xml-id of model ir.actions.act_window.view: crm.action_crm_tag_form_meet_partner
-deleted xml-id of model ir.actions.act_window.view: crm.action_crm_tag_gantt_meet
-deleted xml-id of model ir.actions.act_window.view: crm.action_crm_tag_gantt_meet_partner
-deleted xml-id of model ir.actions.act_window.view: crm.action_crm_tag_graph_view_oppor11
-deleted xml-id of model ir.actions.act_window.view: crm.action_crm_tag_tree_meet
-deleted xml-id of model ir.actions.act_window.view: crm.action_crm_tag_tree_meet_partner
-deleted xml-id of model ir.actions.act_window: crm.act_my_oppor
-deleted xml-id of model ir.actions.act_window: crm.act_my_oppor_stage
-deleted xml-id of model ir.actions.act_window: crm.act_oppor_categ
-deleted xml-id of model ir.actions.act_window: crm.action_crm_add_note
-deleted xml-id of model ir.actions.act_window: crm.action_crm_lead2partner
-deleted xml-id of model ir.actions.act_window: crm.action_crm_phonecall2partner
-deleted xml-id of model ir.actions.act_window: crm.action_view_attendee_form
-deleted xml-id of model ir.actions.act_window: crm.action_view_crm_partner2opportunity
-deleted xml-id of model ir.actions.act_window: crm.crm_case_categ_meet
-deleted xml-id of model ir.actions.act_window: crm.crm_case_categ_meet_create_partner
-deleted xml-id of model ir.actions.act_window: crm.crm_case_categ_phone_create_partner
-deleted xml-id of model ir.actions.act_window: crm.crm_case_section_view_form_installer
-deleted xml-id of model ir.actions.act_window: crm.crm_case_stage_form_installer
-deleted xml-id of model ir.actions.act_window: crm.crm_meeting_categ_action
-deleted xml-id of model ir.actions.act_window: crm.crm_partner2opportunity
-deleted xml-id of model ir.actions.act_window: crm.open_board_crm
-deleted xml-id of model ir.actions.act_window: crm.phonecall2opportunity_act
-deleted xml-id of model ir.actions.todo: crm.crm_case_section_installer_todo
-deleted xml-id of model ir.actions.todo: crm.crm_case_stage_installer_todo
-deleted xml-id of model ir.model.access: crm.access_crm_meeting
-deleted xml-id of model ir.model.access: crm.access_crm_meeting_all
-deleted xml-id of model ir.model.access: crm.access_crm_meeting_manager
-deleted xml-id of model ir.model.access: crm.access_crm_meeting_partner_manager
-deleted xml-id of model ir.model.access: crm.access_res_partner_address
-deleted xml-id of model ir.model.access: crm.access_res_partner_address_manager
-deleted xml-id of model ir.model.access: crm.mail_gateway_mail_message_user
-deleted xml-id of model ir.model.access: crm.mail_mail_message_manager
-deleted xml-id of model ir.ui.menu: board.menu_dasboard
-deleted xml-id of model ir.ui.menu: crm.menu_attendee_invitations
-deleted xml-id of model ir.ui.menu: crm.menu_crm_case_categ0_act_leads
-deleted xml-id of model ir.ui.menu: crm.menu_crm_case_categ_meet
-deleted xml-id of model ir.ui.menu: crm.menu_crm_case_meeting-act
-deleted xml-id of model ir.ui.menu: crm.menu_crm_case_opp
-deleted xml-id of model ir.ui.menu: crm.menu_meeting_sale
-deleted xml-id of model ir.ui.view: crm.attendee_form_view_inherit
-deleted xml-id of model ir.ui.view: crm.board_crm_form
-deleted xml-id of model ir.ui.view: crm.crm_add_new_note_view
-deleted xml-id of model ir.ui.view: crm.crm_case_calendar_view_meet
-deleted xml-id of model ir.ui.view: crm.crm_case_form_view_meet
-deleted xml-id of model ir.ui.view: crm.crm_case_gantt_view_meet
-deleted xml-id of model ir.ui.view: crm.crm_case_graph_view_opportunity
-deleted xml-id of model ir.ui.view: crm.crm_case_my_open_oppor
-deleted xml-id of model ir.ui.view: crm.crm_case_tree_view_meet
-deleted xml-id of model ir.ui.view: crm.phonecall2opportunity_view
-deleted xml-id of model ir.ui.view: crm.view_base_action_rule_line_form1
-deleted xml-id of model ir.ui.view: crm.view_base_action_rule_line_form2
-deleted xml-id of model ir.ui.view: crm.view_base_action_rule_line_form3
-deleted xml-id of model ir.ui.view: crm.view_base_action_rule_line_form4
-deleted xml-id of model ir.ui.view: crm.view_crm_case_meetings_filter
-deleted xml-id of model ir.ui.view: crm.view_crm_case_scheduled_phonecalls_filter
-deleted xml-id of model ir.ui.view: crm.view_crm_lead2partner
-deleted xml-id of model ir.ui.view: crm.view_crm_opportunity_categ_graph
-deleted xml-id of model ir.ui.view: crm.view_crm_opportunity_user_graph1
-deleted xml-id of model ir.ui.view: crm.view_crm_partner2opportunity
-deleted xml-id of model ir.ui.view: crm.view_crm_partner_info_form1
-deleted xml-id of model ir.ui.view: crm.view_crm_phonecall2partner
-deleted xml-id of model ir.ui.view: crm.view_crm_phonecall2partner_create
-deleted xml-id of model ir.ui.view: crm.view_partners_form_crm3
-deleted xml-id of model ir.ui.view: crm.view_partners_tree_crm2
-deleted xml-id of model ir.ui.view: crm.view_report_crm_oppor_graph
-deleted xml-id of model ir.ui.view: crm.view_users_form_simple_modif_inherited1
-deleted xml-id of model ir.ui.view: crm.view_users_form_simple_modif_inherited2
-deleted xml-id of model ir.ui.view_sc: crm.ir_ui_view_sc_calendar0
-deleted xml-id of model res.request.link: crm.request_link_meeting
-deleted xml-id of model res.users: base.user_admin
-new xml-id of model crm.case.channel: crm.crm_case_channel_direct
-new xml-id of model crm.case.channel: crm.crm_case_channel_email
-new xml-id of model crm.case.channel: crm.crm_case_channel_phone
-new xml-id of model crm.case.channel: crm.crm_case_channel_website
-new xml-id of model crm.case.stage: crm.stage_lead7
-new xml-id of model crm.case.stage: crm.stage_lead8
-new xml-id of model crm.payment.mode: crm.payment_mode_1
-new xml-id of model crm.payment.mode: crm.payment_mode_2
-new xml-id of model crm.payment.mode: crm.payment_mode_3
-new xml-id of model crm.payment.mode: crm.payment_mode_4
-new xml-id of model email.template: crm.email_template_opportunity_mail
-new xml-id of model ir.actions.act_window.view: crm.relate_partner_opportunities_form
-new xml-id of model ir.actions.act_window.view: crm.relate_partner_opportunities_kanban
-new xml-id of model ir.actions.act_window.view: crm.relate_partner_opportunities_tree
-new xml-id of model ir.actions.act_window: crm.action_crm_payment_mode
-new xml-id of model ir.actions.act_window: crm.crm_meeting_partner
-new xml-id of model ir.actions.act_window: crm.relate_partner_opportunities
-new xml-id of model ir.actions.client: crm.action_client_crm_menu
-new xml-id of model ir.actions.todo: base.open_menu
-new xml-id of model ir.model.access: crm.access_crm_payment_mode
-new xml-id of model ir.model.access: crm.access_crm_payment_mode_user
-new xml-id of model ir.rule: crm.crm_rule_all_phones
-new xml-id of model ir.rule: crm.crm_rule_personal_phonecall
-new xml-id of model ir.ui.menu: base.menu_import_crm
-new xml-id of model ir.ui.menu: base.menu_sale_config
-new xml-id of model ir.ui.menu: crm.menu_crm_leads
-new xml-id of model ir.ui.menu: crm.menu_crm_opportunities
-new xml-id of model ir.ui.menu: crm.menu_crm_payment_mode_act
-new xml-id of model ir.ui.view: crm.crm_case_graph_view_leads
-new xml-id of model ir.ui.view: crm.crm_lead_partner_kanban_view
-new xml-id of model ir.ui.view: crm.res_partner_view_buttons
-new xml-id of model ir.ui.view: crm.view_crm_payment_mode_form
-new xml-id of model ir.ui.view: crm.view_crm_payment_mode_tree
-new xml-id of model ir.ui.view: crm.view_sale_config_settings
-new xml-id of model mail.alias: crm.default_sales_alias
-new xml-id of model mail.message.subtype: crm.mt_lead_convert_to_opportunity
-new xml-id of model mail.message.subtype: crm.mt_lead_create
-new xml-id of model mail.message.subtype: crm.mt_lead_lost
-new xml-id of model mail.message.subtype: crm.mt_lead_stage
-new xml-id of model mail.message.subtype: crm.mt_lead_won
-new xml-id of model mail.message.subtype: crm.mt_salesteam_lead
-new xml-id of model mail.message.subtype: crm.mt_salesteam_lead_lost
-new xml-id of model mail.message.subtype: crm.mt_salesteam_lead_opportunity
-new xml-id of model mail.message.subtype: crm.mt_salesteam_lead_stage
-new xml-id of model mail.message.subtype: crm.mt_salesteam_lead_won
-new xml-id of model mail.message: crm.module_install_notification
-new xml-id of model res.groups: crm.group_fund_raising
-new xml-id of model res.users: base.user_root
+---XML records in module 'crm'---
+DEL crm.case.categ: crm.categ_meet1
+DEL crm.case.categ: crm.categ_meet2
+DEL crm.case.categ: crm.categ_meet3
+NEW crm.case.channel: crm.crm_case_channel_direct
+NEW crm.case.channel: crm.crm_case_channel_email
+NEW crm.case.channel: crm.crm_case_channel_phone
+NEW crm.case.channel: crm.crm_case_channel_website
+NEW crm.case.stage: crm.stage_lead7
+NEW crm.case.stage: crm.stage_lead8
+NEW crm.payment.mode: crm.payment_mode_1
+NEW crm.payment.mode: crm.payment_mode_2
+NEW crm.payment.mode: crm.payment_mode_3
+NEW crm.payment.mode: crm.payment_mode_4
+NEW email.template: crm.email_template_opportunity_mail
+NEW ir.actions.act_window: crm.action_crm_payment_mode
+NEW ir.actions.act_window: crm.crm_meeting_partner
+NEW ir.actions.act_window: crm.relate_partner_opportunities
+DEL ir.actions.act_window: crm.act_my_oppor
+DEL ir.actions.act_window: crm.act_my_oppor_stage
+DEL ir.actions.act_window: crm.act_oppor_categ
+DEL ir.actions.act_window: crm.action_crm_add_note
+DEL ir.actions.act_window: crm.action_crm_lead2partner
+DEL ir.actions.act_window: crm.action_crm_phonecall2partner
+DEL ir.actions.act_window: crm.action_view_attendee_form
+DEL ir.actions.act_window: crm.action_view_crm_partner2opportunity
+DEL ir.actions.act_window: crm.crm_case_categ_meet
+DEL ir.actions.act_window: crm.crm_case_categ_meet_create_partner
+DEL ir.actions.act_window: crm.crm_case_categ_phone_create_partner
+DEL ir.actions.act_window: crm.crm_case_section_view_form_installer
+DEL ir.actions.act_window: crm.crm_case_stage_form_installer
+DEL ir.actions.act_window: crm.crm_meeting_categ_action
+DEL ir.actions.act_window: crm.crm_partner2opportunity
+DEL ir.actions.act_window: crm.open_board_crm
+DEL ir.actions.act_window: crm.phonecall2opportunity_act
+NEW ir.actions.act_window.view: crm.relate_partner_opportunities_form
+NEW ir.actions.act_window.view: crm.relate_partner_opportunities_kanban
+NEW ir.actions.act_window.view: crm.relate_partner_opportunities_tree
+DEL ir.actions.act_window.view: crm.act_my_oppor_form_view
+DEL ir.actions.act_window.view: crm.act_my_oppor_tree_view
+DEL ir.actions.act_window.view: crm.action_crm_tag_calendar_meet
+DEL ir.actions.act_window.view: crm.action_crm_tag_calendar_meet_partner
+DEL ir.actions.act_window.view: crm.action_crm_tag_form__meet
+DEL ir.actions.act_window.view: crm.action_crm_tag_form_meet_partner
+DEL ir.actions.act_window.view: crm.action_crm_tag_gantt_meet
+DEL ir.actions.act_window.view: crm.action_crm_tag_gantt_meet_partner
+DEL ir.actions.act_window.view: crm.action_crm_tag_graph_view_oppor11
+DEL ir.actions.act_window.view: crm.action_crm_tag_tree_meet
+DEL ir.actions.act_window.view: crm.action_crm_tag_tree_meet_partner
+NEW ir.actions.client: crm.action_client_crm_menu
+NEW ir.actions.todo: base.open_menu
+DEL ir.actions.todo: crm.crm_case_section_installer_todo
+DEL ir.actions.todo: crm.crm_case_stage_installer_todo
+NEW ir.model.access: crm.access_crm_payment_mode
+NEW ir.model.access: crm.access_crm_payment_mode_user
+DEL ir.model.access: crm.access_crm_meeting
+DEL ir.model.access: crm.access_crm_meeting_all
+DEL ir.model.access: crm.access_crm_meeting_manager
+DEL ir.model.access: crm.access_crm_meeting_partner_manager
+DEL ir.model.access: crm.access_res_partner_address
+DEL ir.model.access: crm.access_res_partner_address_manager
+DEL ir.model.access: crm.mail_gateway_mail_message_user
+DEL ir.model.access: crm.mail_mail_message_manager
+NEW ir.rule: crm.crm_rule_all_phones
+NEW ir.rule: crm.crm_rule_personal_phonecall
+NEW ir.ui.menu: base.menu_import_crm
+NEW ir.ui.menu: base.menu_sale_config
+NEW ir.ui.menu: crm.menu_crm_leads
+NEW ir.ui.menu: crm.menu_crm_opportunities
+NEW ir.ui.menu: crm.menu_crm_payment_mode_act
+DEL ir.ui.menu: board.menu_dasboard
+DEL ir.ui.menu: crm.menu_attendee_invitations
+DEL ir.ui.menu: crm.menu_crm_case_categ0_act_leads
+DEL ir.ui.menu: crm.menu_crm_case_categ_meet
+DEL ir.ui.menu: crm.menu_crm_case_meeting-act
+DEL ir.ui.menu: crm.menu_crm_case_opp
+DEL ir.ui.menu: crm.menu_meeting_sale
+NEW ir.ui.view: crm.crm_case_graph_view_leads
+NEW ir.ui.view: crm.crm_lead_partner_kanban_view
+NEW ir.ui.view: crm.res_partner_view_buttons
+NEW ir.ui.view: crm.view_crm_payment_mode_form
+NEW ir.ui.view: crm.view_crm_payment_mode_tree
+NEW ir.ui.view: crm.view_sale_config_settings
+DEL ir.ui.view: crm.attendee_form_view_inherit
+DEL ir.ui.view: crm.board_crm_form
+DEL ir.ui.view: crm.crm_add_new_note_view
+DEL ir.ui.view: crm.crm_case_calendar_view_meet
+DEL ir.ui.view: crm.crm_case_form_view_meet
+DEL ir.ui.view: crm.crm_case_gantt_view_meet
+DEL ir.ui.view: crm.crm_case_graph_view_opportunity
+DEL ir.ui.view: crm.crm_case_my_open_oppor
+DEL ir.ui.view: crm.crm_case_tree_view_meet
+DEL ir.ui.view: crm.phonecall2opportunity_view
+DEL ir.ui.view: crm.view_base_action_rule_line_form1
+DEL ir.ui.view: crm.view_base_action_rule_line_form2
+DEL ir.ui.view: crm.view_base_action_rule_line_form3
+DEL ir.ui.view: crm.view_base_action_rule_line_form4
+DEL ir.ui.view: crm.view_crm_case_meetings_filter
+DEL ir.ui.view: crm.view_crm_case_scheduled_phonecalls_filter
+DEL ir.ui.view: crm.view_crm_lead2partner
+DEL ir.ui.view: crm.view_crm_opportunity_categ_graph
+DEL ir.ui.view: crm.view_crm_opportunity_user_graph1
+DEL ir.ui.view: crm.view_crm_partner2opportunity
+DEL ir.ui.view: crm.view_crm_partner_info_form1
+DEL ir.ui.view: crm.view_crm_phonecall2partner
+DEL ir.ui.view: crm.view_crm_phonecall2partner_create
+DEL ir.ui.view: crm.view_partners_form_crm3
+DEL ir.ui.view: crm.view_partners_tree_crm2
+DEL ir.ui.view: crm.view_report_crm_oppor_graph
+DEL ir.ui.view: crm.view_users_form_simple_modif_inherited1
+DEL ir.ui.view: crm.view_users_form_simple_modif_inherited2
+DEL ir.ui.view_sc: crm.ir_ui_view_sc_calendar0
+NEW mail.alias: crm.default_sales_alias
+NEW mail.message: crm.module_install_notification
+NEW mail.message.subtype: crm.mt_lead_convert_to_opportunity
+NEW mail.message.subtype: crm.mt_lead_create
+NEW mail.message.subtype: crm.mt_lead_lost
+NEW mail.message.subtype: crm.mt_lead_stage
+NEW mail.message.subtype: crm.mt_lead_won
+NEW mail.message.subtype: crm.mt_salesteam_lead
+NEW mail.message.subtype: crm.mt_salesteam_lead_lost
+NEW mail.message.subtype: crm.mt_salesteam_lead_opportunity
+NEW mail.message.subtype: crm.mt_salesteam_lead_stage
+NEW mail.message.subtype: crm.mt_salesteam_lead_won
+NEW res.groups: crm.group_fund_raising
+DEL res.request.link: crm.request_link_meeting
+NEW res.users: base.user_root
+DEL res.users: base.user_admin

@@ -1,4 +1,4 @@
----account_test---
+---Fields in module 'account_test'---
 account_test / accounting.assert.test   / active (boolean)              : NEW 
 account_test / accounting.assert.test   / code_exec (text)              : NEW required: required, req_default: res = []
 cr.execute("select id, code from account_journal")
@@ -9,20 +9,21 @@ result = res
 account_test / accounting.assert.test   / desc (text)                   : NEW 
 account_test / accounting.assert.test   / name (char)                   : NEW required: required
 account_test / accounting.assert.test   / sequence (integer)            : NEW 
-new xml-id of model accounting.assert.test: account_test.account_test_01
-new xml-id of model accounting.assert.test: account_test.account_test_02
-new xml-id of model accounting.assert.test: account_test.account_test_03
-new xml-id of model accounting.assert.test: account_test.account_test_04
-new xml-id of model accounting.assert.test: account_test.account_test_05
-new xml-id of model accounting.assert.test: account_test.account_test_05_2
-new xml-id of model accounting.assert.test: account_test.account_test_06
-new xml-id of model accounting.assert.test: account_test.account_test_06_1
-new xml-id of model accounting.assert.test: account_test.account_test_07
-new xml-id of model accounting.assert.test: account_test.account_test_08
-new xml-id of model ir.actions.act_window: account_test.action_accounting_assert
-new xml-id of model ir.actions.report.xml: account_test.account_assert_test_report
-new xml-id of model ir.model.access: account_test.access_accounting_assert_test
-new xml-id of model ir.model.access: account_test.access_accounting_assert_test_manager
-new xml-id of model ir.ui.menu: account_test.menu_action_license
-new xml-id of model ir.ui.view: account_test.account_assert_form
-new xml-id of model ir.ui.view: account_test.account_assert_tree
+---XML records in module 'account_test'---
+NEW accounting.assert.test: account_test.account_test_01
+NEW accounting.assert.test: account_test.account_test_02
+NEW accounting.assert.test: account_test.account_test_03
+NEW accounting.assert.test: account_test.account_test_04
+NEW accounting.assert.test: account_test.account_test_05
+NEW accounting.assert.test: account_test.account_test_05_2
+NEW accounting.assert.test: account_test.account_test_06
+NEW accounting.assert.test: account_test.account_test_06_1
+NEW accounting.assert.test: account_test.account_test_07
+NEW accounting.assert.test: account_test.account_test_08
+NEW ir.actions.act_window: account_test.action_accounting_assert
+NEW ir.actions.report.xml: account_test.account_assert_test_report
+NEW ir.model.access: account_test.access_accounting_assert_test
+NEW ir.model.access: account_test.access_accounting_assert_test_manager
+NEW ir.ui.menu: account_test.menu_action_license
+NEW ir.ui.view: account_test.account_assert_form
+NEW ir.ui.view: account_test.account_assert_tree

@@ -1,15 +1,16 @@
----hr_timesheet_invoice---
+---Fields in module 'hr_timesheet_invoice'---
 hr_timesheet_invoice / account.analytic.line    / general_account_id (False)    : NEW req_default: function, mode: modify
 hr_timesheet_invoice / account.analytic.line    / journal_id (False)            : NEW req_default: function, mode: modify
-deleted xml-id of model ir.actions.act_window: hr_timesheet_invoice.act_account_analytic_account_2_report_timehsheet_account
-deleted xml-id of model ir.actions.act_window: hr_timesheet_invoice.act_my_account
-deleted xml-id of model ir.actions.act_window: hr_timesheet_invoice.action_hr_analytic_timesheet_open_tree
-deleted xml-id of model ir.actions.act_window: hr_timesheet_invoice.action_hr_timesheet_invoice_cost_ledger
-deleted xml-id of model ir.actions.act_window: hr_timesheet_invoice.action_timesheet_uninvoiced_line
-deleted xml-id of model ir.actions.report.xml: hr_timesheet_invoice.account_analytic_account_cost_ledger
-deleted xml-id of model ir.ui.menu: hr_timesheet_invoice.menu_hr_analytic_timesheet_tree
-deleted xml-id of model ir.ui.view: hr_timesheet_invoice.board_hr_timesheet_uninvoiced_form
-deleted xml-id of model ir.ui.view: hr_timesheet_invoice.view_hr_timesheet_invoice_cost_ledger
-deleted xml-id of model ir.ui.view: hr_timesheet_invoice.view_timesheet_uninvoiced_line_tree
-new xml-id of model hr_timesheet_invoice.factor: hr_timesheet_invoice.timesheet_invoice_factor4
-new xml-id of model ir.ui.view: hr_timesheet_invoice.view_hr_timesheet_line_search_to_invoice
+---XML records in module 'hr_timesheet_invoice'---
+NEW hr_timesheet_invoice.factor: hr_timesheet_invoice.timesheet_invoice_factor4
+DEL ir.actions.act_window: hr_timesheet_invoice.act_account_analytic_account_2_report_timehsheet_account
+DEL ir.actions.act_window: hr_timesheet_invoice.act_my_account
+DEL ir.actions.act_window: hr_timesheet_invoice.action_hr_analytic_timesheet_open_tree
+DEL ir.actions.act_window: hr_timesheet_invoice.action_hr_timesheet_invoice_cost_ledger
+DEL ir.actions.act_window: hr_timesheet_invoice.action_timesheet_uninvoiced_line
+DEL ir.actions.report.xml: hr_timesheet_invoice.account_analytic_account_cost_ledger
+DEL ir.ui.menu: hr_timesheet_invoice.menu_hr_analytic_timesheet_tree
+NEW ir.ui.view: hr_timesheet_invoice.view_hr_timesheet_line_search_to_invoice
+DEL ir.ui.view: hr_timesheet_invoice.board_hr_timesheet_uninvoiced_form
+DEL ir.ui.view: hr_timesheet_invoice.view_hr_timesheet_invoice_cost_ledger
+DEL ir.ui.view: hr_timesheet_invoice.view_timesheet_uninvoiced_line_tree
