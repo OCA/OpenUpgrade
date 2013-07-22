@@ -229,12 +229,22 @@ def compare_xml_sets(old_records, new_records):
         if found:
             old_records.remove(column)
             new_records.remove(found)
-    for entry in sorted(
-        old_records, key=lambda k: '%s%s' % (k['model'].ljust(128), k['name'])):
-        reprs.setdefault(module_map(entry['module']), []).append(
-            'deleted xml-id of model %s: %s' % (entry['model'], entry['name']))
-    for entry in sorted(
-        new_records, key=lambda k: '%s%s' % (k['model'].ljust(128), k['name'])):
-        reprs.setdefault(module_map(entry['module']), []).append(
-            'new xml-id of model %s: %s' % (entry['model'], entry['name']))
+
+    for record in old_records:
+        record['old'] = True
+    for record in new_records:
+        record['new'] = True
+
+    sorted_records = sorted(
+        old_records + new_records,
+        key=lambda k: '%s%s%s' % (k['model'].ljust(128), 'old' in k, k['name'])
+    )
+    for entry in sorted_records:
+        if 'old' in entry:
+            content = 'DEL %s: %s' % (entry['model'],
+                                                          entry['name'])
+        elif 'new' in entry:
+            content = 'NEW %s: %s' % (entry['model'],
+                                                      entry['name'])
+        reprs.setdefault(module_map(entry['module']), []).append(content)
     return reprs
