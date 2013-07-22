@@ -100,11 +100,13 @@ def rename_columns(cr, column_spec):
     Rename table columns. Typically called in the pre script.
 
     :param column_spec: a hash with table keys, with lists of tuples as values. \
-    Tuples consist of (old_name, new_name).
-
+    Tuples consist of (old_name, new_name). Use None for new_name to trigger a \
+    conversion of old_name using get_legacy_name()
     """
     for table in column_spec.keys():
         for (old, new) in column_spec[table]:
+            if new is None:
+                new = get_legacy_name(old)
             logger.info("table %s, column %s: renaming to %s",
                      table, old, new)
             cr.execute('ALTER TABLE "%s" RENAME "%s" TO "%s"' % (table, old, new,))
