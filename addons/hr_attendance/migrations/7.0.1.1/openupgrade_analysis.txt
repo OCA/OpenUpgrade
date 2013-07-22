@@ -1,9 +1,10 @@
----hr_attendance---
-deleted xml-id of model ir.actions.act_window: hr_attendance.action_hr_attendance_sigh_in_out
-deleted xml-id of model ir.ui.menu: hr_attendance.menu_hr_attendance_sigh_in_out
-deleted xml-id of model ir.ui.view: hr_attendance.view_hr_attendance_message
-deleted xml-id of model ir.ui.view: hr_attendance.view_hr_attendance_si_ask
-deleted xml-id of model ir.ui.view: hr_attendance.view_hr_attendance_sigh_in_out
-deleted xml-id of model ir.ui.view: hr_attendance.view_hr_attendance_so_ask
-new xml-id of model ir.ui.view: hr_attendance.hr_attendace_group
-new xml-id of model res.groups: base.group_hr_attendance
+---Fields in module 'hr_attendance'---
+---XML records in module 'hr_attendance'---
+DEL ir.actions.act_window: hr_attendance.action_hr_attendance_sigh_in_out
+DEL ir.ui.menu: hr_attendance.menu_hr_attendance_sigh_in_out
+NEW ir.ui.view: hr_attendance.hr_attendace_group
+DEL ir.ui.view: hr_attendance.view_hr_attendance_message
+DEL ir.ui.view: hr_attendance.view_hr_attendance_si_ask
+DEL ir.ui.view: hr_attendance.view_hr_attendance_sigh_in_out
+DEL ir.ui.view: hr_attendance.view_hr_attendance_so_ask
+NEW res.groups: base.group_hr_attendance

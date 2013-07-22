@@ -1,4 +1,4 @@
----l10n_fr_hr_payroll---
+---Fields in module 'l10n_fr_hr_payroll'---
 l10n_fr_hr_payroll / hr.contract              / coef (char)                   : NEW 
 l10n_fr_hr_payroll / hr.contract              / niveau (char)                 : NEW 
 l10n_fr_hr_payroll / hr.contract              / qualif (char)                 : NEW 
@@ -8,110 +8,111 @@ l10n_fr_hr_payroll / res.company              / cotisation_prevoyance (float) : 
 l10n_fr_hr_payroll / res.company              / nombre_employes (integer)     : NEW 
 l10n_fr_hr_payroll / res.company              / org_ss (char)                 : NEW 
 l10n_fr_hr_payroll / res.company              / plafond_secu (float)          : NEW 
-new xml-id of model hr.contribution.register: l10n_fr_hr_payroll.hr_cci_register
-new xml-id of model hr.contribution.register: l10n_fr_hr_payroll.hr_prevoyance_register
-new xml-id of model hr.contribution.register: l10n_fr_hr_payroll.hr_retraite_register
-new xml-id of model hr.contribution.register: l10n_fr_hr_payroll.hr_urssaf_register
-new xml-id of model hr.holidays.status: l10n_fr_hr_payroll.holiday_status_heures_sup
-new xml-id of model hr.payroll.structure: l10n_fr_hr_payroll.hr_payroll_salary_structure_base
-new xml-id of model hr.payroll.structure: l10n_fr_hr_payroll.hr_payroll_salary_structure_employe_cadre
-new xml-id of model hr.payroll.structure: l10n_fr_hr_payroll.hr_payroll_salary_structure_employe_non_cadre
-new xml-id of model hr.salary.rule.category: hr_payroll.ALW
-new xml-id of model hr.salary.rule.category: hr_payroll.BASIC
-new xml-id of model hr.salary.rule.category: hr_payroll.COMP
-new xml-id of model hr.salary.rule.category: hr_payroll.DED
-new xml-id of model hr.salary.rule.category: hr_payroll.GROSS
-new xml-id of model hr.salary.rule.category: hr_payroll.NET
-new xml-id of model hr.salary.rule.category: l10n_fr_hr_payroll.C_IMP
-new xml-id of model hr.salary.rule.category: l10n_fr_hr_payroll.PREV
-new xml-id of model hr.salary.rule.category: l10n_fr_hr_payroll.RETENUES
-new xml-id of model hr.salary.rule.category: l10n_fr_hr_payroll.SALC
-new xml-id of model hr.salary.rule.category: l10n_fr_hr_payroll.SECU
-new xml-id of model hr.salary.rule.category: l10n_fr_hr_payroll.TOTAL
-new xml-id of model hr.salary.rule.category: l10n_fr_hr_payroll.other_totals
-new xml-id of model hr.salary.rule: hr_payroll.hr_rule_basic
-new xml-id of model hr.salary.rule: hr_payroll.hr_rule_net
-new xml-id of model hr.salary.rule: hr_payroll.hr_rule_taxable
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C10_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C10_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C11_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C11_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C12_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C12_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C13_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C13_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C14_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C14_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C15_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C15_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C16_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C16_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C17_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C17_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C18_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C18_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C19_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C19_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C1_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C1_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C20_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C20_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C21_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C21_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C22_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C22_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C23_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C23_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C24_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C24_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C25_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C25_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C26_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C26_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C27_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C27_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C28_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C29_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C2_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C2_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C30_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C35_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C35_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C36_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C36_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C37_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C37_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C38_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C38_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C39_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C39_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C3_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C3_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C40_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C40_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C4_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C4_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C5_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C5_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C7_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C7_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C8_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C8_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C9_employe
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C9_employer
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_rule_cumul_imposable
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_rule_secu
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_rule_total
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_rule_total_charges_patronales
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_rule_total_charges_salariales
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_rule_total_retenues
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_rule_tranche_1
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_rule_tranche_2
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_rule_tranche_a
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_rule_tranche_b
-new xml-id of model hr.salary.rule: l10n_fr_hr_payroll.hr_rule_tranche_c
-new xml-id of model ir.actions.report.xml: l10n_fr_hr_payroll.fiche_paye
-new xml-id of model ir.ui.view: l10n_fr_hr_payroll.hr_contract_view_form_l10n_fr_payroll
-new xml-id of model ir.ui.view: l10n_fr_hr_payroll.hr_payslip_form_l10n_fr_payroll
-new xml-id of model ir.ui.view: l10n_fr_hr_payroll.res_company_form_l10n_fr_payroll
-new xml-id of model res.company: base.main_company
+---XML records in module 'l10n_fr_hr_payroll'---
+NEW hr.contribution.register: l10n_fr_hr_payroll.hr_cci_register
+NEW hr.contribution.register: l10n_fr_hr_payroll.hr_prevoyance_register
+NEW hr.contribution.register: l10n_fr_hr_payroll.hr_retraite_register
+NEW hr.contribution.register: l10n_fr_hr_payroll.hr_urssaf_register
+NEW hr.holidays.status: l10n_fr_hr_payroll.holiday_status_heures_sup
+NEW hr.payroll.structure: l10n_fr_hr_payroll.hr_payroll_salary_structure_base
+NEW hr.payroll.structure: l10n_fr_hr_payroll.hr_payroll_salary_structure_employe_cadre
+NEW hr.payroll.structure: l10n_fr_hr_payroll.hr_payroll_salary_structure_employe_non_cadre
+NEW hr.salary.rule: hr_payroll.hr_rule_basic
+NEW hr.salary.rule: hr_payroll.hr_rule_net
+NEW hr.salary.rule: hr_payroll.hr_rule_taxable
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C10_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C10_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C11_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C11_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C12_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C12_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C13_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C13_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C14_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C14_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C15_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C15_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C16_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C16_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C17_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C17_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C18_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C18_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C19_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C19_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C1_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C1_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C20_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C20_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C21_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C21_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C22_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C22_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C23_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C23_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C24_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C24_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C25_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C25_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C26_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C26_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C27_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C27_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C28_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C29_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C2_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C2_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C30_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C35_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C35_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C36_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C36_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C37_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C37_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C38_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C38_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C39_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C39_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C3_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C3_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C40_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C40_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C4_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C4_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C5_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C5_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C7_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C7_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C8_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C8_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C9_employe
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C9_employer
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_rule_cumul_imposable
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_rule_secu
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_rule_total
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_rule_total_charges_patronales
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_rule_total_charges_salariales
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_rule_total_retenues
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_rule_tranche_1
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_rule_tranche_2
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_rule_tranche_a
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_rule_tranche_b
+NEW hr.salary.rule: l10n_fr_hr_payroll.hr_rule_tranche_c
+NEW hr.salary.rule.category: hr_payroll.ALW
+NEW hr.salary.rule.category: hr_payroll.BASIC
+NEW hr.salary.rule.category: hr_payroll.COMP
+NEW hr.salary.rule.category: hr_payroll.DED
+NEW hr.salary.rule.category: hr_payroll.GROSS
+NEW hr.salary.rule.category: hr_payroll.NET
+NEW hr.salary.rule.category: l10n_fr_hr_payroll.C_IMP
+NEW hr.salary.rule.category: l10n_fr_hr_payroll.PREV
+NEW hr.salary.rule.category: l10n_fr_hr_payroll.RETENUES
+NEW hr.salary.rule.category: l10n_fr_hr_payroll.SALC
+NEW hr.salary.rule.category: l10n_fr_hr_payroll.SECU
+NEW hr.salary.rule.category: l10n_fr_hr_payroll.TOTAL
+NEW hr.salary.rule.category: l10n_fr_hr_payroll.other_totals
+NEW ir.actions.report.xml: l10n_fr_hr_payroll.fiche_paye
+NEW ir.ui.view: l10n_fr_hr_payroll.hr_contract_view_form_l10n_fr_payroll
+NEW ir.ui.view: l10n_fr_hr_payroll.hr_payslip_form_l10n_fr_payroll
+NEW ir.ui.view: l10n_fr_hr_payroll.res_company_form_l10n_fr_payroll
+NEW res.company: base.main_company

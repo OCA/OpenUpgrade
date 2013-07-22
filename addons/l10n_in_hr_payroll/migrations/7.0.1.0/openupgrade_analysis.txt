@@ -1,4 +1,4 @@
----l10n_in_hr_payroll---
+---Fields in module 'l10n_in_hr_payroll'---
 l10n_in_hr_payroll / hr.contract              / driver_salay (boolean)        : NEW 
 l10n_in_hr_payroll / hr.contract              / house_rent_allowance_metro_nonmetro (float): NEW 
 l10n_in_hr_payroll / hr.contract              / medical_insurance (float)     : NEW 
@@ -56,105 +56,106 @@ l10n_in_hr_payroll / payslip.report           / struct_id (many2one)          : 
 l10n_in_hr_payroll / payslip.report           / total (float)                 : NEW 
 l10n_in_hr_payroll / payslip.report           / year (char)                   : NEW 
 l10n_in_hr_payroll / res.company              / dearness_allowance (boolean)  : NEW 
-new xml-id of model hr.contribution.register: l10n_in_hr_payroll.hr_company_transport_register
-new xml-id of model hr.contribution.register: l10n_in_hr_payroll.hr_food_coupen_register
-new xml-id of model hr.contribution.register: l10n_in_hr_payroll.hr_group_term_insurance_register
-new xml-id of model hr.contribution.register: l10n_in_hr_payroll.hr_houserent_allowance_register
-new xml-id of model hr.contribution.register: l10n_in_hr_payroll.hr_labour_Welfare_fund_register
-new xml-id of model hr.contribution.register: l10n_in_hr_payroll.hr_leave_availed_register
-new xml-id of model hr.contribution.register: l10n_in_hr_payroll.hr_medical_insurance_register
-new xml-id of model hr.contribution.register: l10n_in_hr_payroll.hr_nps_contribution_register
-new xml-id of model hr.contribution.register: l10n_in_hr_payroll.hr_other_deduction_register
-new xml-id of model hr.contribution.register: l10n_in_hr_payroll.hr_professional_tax_deduction_register
-new xml-id of model hr.contribution.register: l10n_in_hr_payroll.hr_register_provident_fund
-new xml-id of model hr.contribution.register: l10n_in_hr_payroll.hr_tds_register
-new xml-id of model hr.contribution.register: l10n_in_hr_payroll.hr_vpf_contribution_register
-new xml-id of model hr.rule.input: l10n_in_hr_payroll.hr_rule_input_arrears
-new xml-id of model hr.rule.input: l10n_in_hr_payroll.hr_rule_input_bonus
-new xml-id of model hr.rule.input: l10n_in_hr_payroll.hr_rule_input_car
-new xml-id of model hr.rule.input: l10n_in_hr_payroll.hr_rule_input_internet
-new xml-id of model hr.rule.input: l10n_in_hr_payroll.hr_rule_input_journals
-new xml-id of model hr.rule.input: l10n_in_hr_payroll.hr_rule_input_le
-new xml-id of model hr.rule.input: l10n_in_hr_payroll.hr_rule_input_leave_avail
-new xml-id of model hr.rule.input: l10n_in_hr_payroll.hr_rule_input_medical
-new xml-id of model hr.rule.input: l10n_in_hr_payroll.hr_rule_input_performance
-new xml-id of model hr.rule.input: l10n_in_hr_payroll.hr_rule_input_telephone
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.1
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.2
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.3
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.4
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_payroll_rule_car
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_payroll_rule_child1
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_payroll_rule_child2
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_payroll_rule_city1
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_payroll_rule_metrocity
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_payroll_rule_nonmetrocity
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_payslip_line_professional_tax
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_cgti
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_cmt
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_cpt
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_dla
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_enps
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_epf
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_ernps
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_erpf
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_lwf_employee
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_lwf_employer
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_ode
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_tds
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_vpf
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_arrears
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_bonus
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_da
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_driver
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_food_coupon
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_food_coupon_ded
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_houserentallowancemetro_nonmetro
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_internet
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_journals
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_le
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_lta
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_medical
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_medical_allow
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_performance
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_prof_develope
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_special
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_telephone
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_uniform_junior
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_uniform_senior
-new xml-id of model hr.salary.rule: l10n_in_hr_payroll.hr_salary_trans_allownce
-new xml-id of model ir.actions.act_window: l10n_in_hr_payroll.act_hr_emp_payslip_list
-new xml-id of model ir.actions.act_window: l10n_in_hr_payroll.action_payment_advice_report_all
-new xml-id of model ir.actions.act_window: l10n_in_hr_payroll.action_payslip_report_all
-new xml-id of model ir.actions.act_window: l10n_in_hr_payroll.action_salary_employee_month
-new xml-id of model ir.actions.act_window: l10n_in_hr_payroll.action_view_hr_bank_advice_tree
-new xml-id of model ir.actions.act_window: l10n_in_hr_payroll.action_yearly_salary_detail
-new xml-id of model ir.actions.report.xml: l10n_in_hr_payroll.hr_salary_employee_bymonth
-new xml-id of model ir.actions.report.xml: l10n_in_hr_payroll.payroll_advice
-new xml-id of model ir.actions.report.xml: l10n_in_hr_payroll.payslip_details_report
-new xml-id of model ir.actions.report.xml: l10n_in_hr_payroll.yearly_salary
-new xml-id of model ir.model.access: l10n_in_hr_payroll.access_hr_payroll_advice_line_user
-new xml-id of model ir.model.access: l10n_in_hr_payroll.access_hr_payroll_advice_report_user
-new xml-id of model ir.model.access: l10n_in_hr_payroll.access_hr_payroll_advice_user
-new xml-id of model ir.model.access: l10n_in_hr_payroll.access_hr_payroll_payslip_report_user
-new xml-id of model ir.sequence.type: l10n_in_hr_payroll.seq_type_payment_advice
-new xml-id of model ir.sequence: l10n_in_hr_payroll.seq_payment_advice
-new xml-id of model ir.ui.menu: l10n_in_hr_payroll.hr_menu_payment_advice
-new xml-id of model ir.ui.menu: l10n_in_hr_payroll.menu_reporting_payment_advice
-new xml-id of model ir.ui.menu: l10n_in_hr_payroll.menu_reporting_payslip
-new xml-id of model ir.ui.menu: l10n_in_hr_payroll.menu_salary_employee_month
-new xml-id of model ir.ui.menu: l10n_in_hr_payroll.menu_yearly_salary_detail
-new xml-id of model ir.ui.view: l10n_in_hr_payroll.hr_contract_form_in_inherit
-new xml-id of model ir.ui.view: l10n_in_hr_payroll.hr_payslip_run_form_inherit
-new xml-id of model ir.ui.view: l10n_in_hr_payroll.hr_payslip_run_search_inherit
-new xml-id of model ir.ui.view: l10n_in_hr_payroll.view_advice_line_form
-new xml-id of model ir.ui.view: l10n_in_hr_payroll.view_hr_bank_advice_form
-new xml-id of model ir.ui.view: l10n_in_hr_payroll.view_hr_bank_advice_tree
-new xml-id of model ir.ui.view: l10n_in_hr_payroll.view_hr_payroll_advice_filter
-new xml-id of model ir.ui.view: l10n_in_hr_payroll.view_payment_advice_search
-new xml-id of model ir.ui.view: l10n_in_hr_payroll.view_payment_advice_tree
-new xml-id of model ir.ui.view: l10n_in_hr_payroll.view_payslip_search
-new xml-id of model ir.ui.view: l10n_in_hr_payroll.view_payslip_tree
-new xml-id of model ir.ui.view: l10n_in_hr_payroll.view_res_company_da
-new xml-id of model ir.ui.view: l10n_in_hr_payroll.view_salary_employee_month
-new xml-id of model ir.ui.view: l10n_in_hr_payroll.view_yearly_salary_detail
+---XML records in module 'l10n_in_hr_payroll'---
+NEW hr.contribution.register: l10n_in_hr_payroll.hr_company_transport_register
+NEW hr.contribution.register: l10n_in_hr_payroll.hr_food_coupen_register
+NEW hr.contribution.register: l10n_in_hr_payroll.hr_group_term_insurance_register
+NEW hr.contribution.register: l10n_in_hr_payroll.hr_houserent_allowance_register
+NEW hr.contribution.register: l10n_in_hr_payroll.hr_labour_Welfare_fund_register
+NEW hr.contribution.register: l10n_in_hr_payroll.hr_leave_availed_register
+NEW hr.contribution.register: l10n_in_hr_payroll.hr_medical_insurance_register
+NEW hr.contribution.register: l10n_in_hr_payroll.hr_nps_contribution_register
+NEW hr.contribution.register: l10n_in_hr_payroll.hr_other_deduction_register
+NEW hr.contribution.register: l10n_in_hr_payroll.hr_professional_tax_deduction_register
+NEW hr.contribution.register: l10n_in_hr_payroll.hr_register_provident_fund
+NEW hr.contribution.register: l10n_in_hr_payroll.hr_tds_register
+NEW hr.contribution.register: l10n_in_hr_payroll.hr_vpf_contribution_register
+NEW hr.rule.input: l10n_in_hr_payroll.hr_rule_input_arrears
+NEW hr.rule.input: l10n_in_hr_payroll.hr_rule_input_bonus
+NEW hr.rule.input: l10n_in_hr_payroll.hr_rule_input_car
+NEW hr.rule.input: l10n_in_hr_payroll.hr_rule_input_internet
+NEW hr.rule.input: l10n_in_hr_payroll.hr_rule_input_journals
+NEW hr.rule.input: l10n_in_hr_payroll.hr_rule_input_le
+NEW hr.rule.input: l10n_in_hr_payroll.hr_rule_input_leave_avail
+NEW hr.rule.input: l10n_in_hr_payroll.hr_rule_input_medical
+NEW hr.rule.input: l10n_in_hr_payroll.hr_rule_input_performance
+NEW hr.rule.input: l10n_in_hr_payroll.hr_rule_input_telephone
+NEW hr.salary.rule: l10n_in_hr_payroll.1
+NEW hr.salary.rule: l10n_in_hr_payroll.2
+NEW hr.salary.rule: l10n_in_hr_payroll.3
+NEW hr.salary.rule: l10n_in_hr_payroll.4
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payroll_rule_car
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payroll_rule_child1
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payroll_rule_child2
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payroll_rule_city1
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payroll_rule_metrocity
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payroll_rule_nonmetrocity
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_line_professional_tax
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_cgti
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_cmt
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_cpt
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_dla
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_enps
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_epf
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_ernps
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_erpf
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_lwf_employee
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_lwf_employer
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_ode
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_tds
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_vpf
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_arrears
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_bonus
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_da
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_driver
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_food_coupon
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_food_coupon_ded
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_houserentallowancemetro_nonmetro
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_internet
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_journals
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_le
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_lta
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_medical
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_medical_allow
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_performance
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_prof_develope
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_special
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_telephone
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_uniform_junior
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_uniform_senior
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_trans_allownce
+NEW ir.actions.act_window: l10n_in_hr_payroll.act_hr_emp_payslip_list
+NEW ir.actions.act_window: l10n_in_hr_payroll.action_payment_advice_report_all
+NEW ir.actions.act_window: l10n_in_hr_payroll.action_payslip_report_all
+NEW ir.actions.act_window: l10n_in_hr_payroll.action_salary_employee_month
+NEW ir.actions.act_window: l10n_in_hr_payroll.action_view_hr_bank_advice_tree
+NEW ir.actions.act_window: l10n_in_hr_payroll.action_yearly_salary_detail
+NEW ir.actions.report.xml: l10n_in_hr_payroll.hr_salary_employee_bymonth
+NEW ir.actions.report.xml: l10n_in_hr_payroll.payroll_advice
+NEW ir.actions.report.xml: l10n_in_hr_payroll.payslip_details_report
+NEW ir.actions.report.xml: l10n_in_hr_payroll.yearly_salary
+NEW ir.model.access: l10n_in_hr_payroll.access_hr_payroll_advice_line_user
+NEW ir.model.access: l10n_in_hr_payroll.access_hr_payroll_advice_report_user
+NEW ir.model.access: l10n_in_hr_payroll.access_hr_payroll_advice_user
+NEW ir.model.access: l10n_in_hr_payroll.access_hr_payroll_payslip_report_user
+NEW ir.sequence: l10n_in_hr_payroll.seq_payment_advice
+NEW ir.sequence.type: l10n_in_hr_payroll.seq_type_payment_advice
+NEW ir.ui.menu: l10n_in_hr_payroll.hr_menu_payment_advice
+NEW ir.ui.menu: l10n_in_hr_payroll.menu_reporting_payment_advice
+NEW ir.ui.menu: l10n_in_hr_payroll.menu_reporting_payslip
+NEW ir.ui.menu: l10n_in_hr_payroll.menu_salary_employee_month
+NEW ir.ui.menu: l10n_in_hr_payroll.menu_yearly_salary_detail
+NEW ir.ui.view: l10n_in_hr_payroll.hr_contract_form_in_inherit
+NEW ir.ui.view: l10n_in_hr_payroll.hr_payslip_run_form_inherit
+NEW ir.ui.view: l10n_in_hr_payroll.hr_payslip_run_search_inherit
+NEW ir.ui.view: l10n_in_hr_payroll.view_advice_line_form
+NEW ir.ui.view: l10n_in_hr_payroll.view_hr_bank_advice_form
+NEW ir.ui.view: l10n_in_hr_payroll.view_hr_bank_advice_tree
+NEW ir.ui.view: l10n_in_hr_payroll.view_hr_payroll_advice_filter
+NEW ir.ui.view: l10n_in_hr_payroll.view_payment_advice_search
+NEW ir.ui.view: l10n_in_hr_payroll.view_payment_advice_tree
+NEW ir.ui.view: l10n_in_hr_payroll.view_payslip_search
+NEW ir.ui.view: l10n_in_hr_payroll.view_payslip_tree
+NEW ir.ui.view: l10n_in_hr_payroll.view_res_company_da
+NEW ir.ui.view: l10n_in_hr_payroll.view_salary_employee_month
+NEW ir.ui.view: l10n_in_hr_payroll.view_yearly_salary_detail

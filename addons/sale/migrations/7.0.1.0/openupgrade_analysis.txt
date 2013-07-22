@@ -1,4 +1,4 @@
----sale---
+---Fields in module 'sale'---
 sale         / res.company              / security_lead (float)         : module is now 'sale_stock' ('sale')
 sale         / res.partner              / sale_order_ids (one2many)     : NEW relation: sale.order
 sale         / sale.order               / incoterm (many2one)           : module is now 'sale_stock' ('sale')
@@ -30,121 +30,122 @@ sale         / sale.report              / state (selection)             : select
 sale         / sale.shop                / warehouse_id (many2one)       : module is now 'sale_stock' ('sale')
 sale         / stock.move               / sale_line_id (many2one)       : module is now 'sale_stock' ('sale')
 sale         / stock.picking            / sale_id (many2one)            : module is now 'sale_stock' ('sale')
-deleted xml-id of model ir.actions.act_window.view: sale.action_turnover_by_month_graph_view
-deleted xml-id of model ir.actions.act_window.view: sale.action_turnover_by_month_tree_view
-deleted xml-id of model ir.actions.act_window: sale.action_config_picking_policy
-deleted xml-id of model ir.actions.act_window: sale.action_order_form
-deleted xml-id of model ir.actions.act_window: sale.action_order_tree2
-deleted xml-id of model ir.actions.act_window: sale.action_order_tree4
-deleted xml-id of model ir.actions.act_window: sale.action_order_tree5
-deleted xml-id of model ir.actions.act_window: sale.action_sales_by_partner
-deleted xml-id of model ir.actions.act_window: sale.action_sales_by_salesman
-deleted xml-id of model ir.actions.act_window: sale.action_sales_product_total_price
-deleted xml-id of model ir.actions.act_window: sale.action_view_sale_open_invoice
-deleted xml-id of model ir.actions.act_window: sale.action_view_sales_by_month
-deleted xml-id of model ir.actions.act_window: sale.open_board_sales_manager
-deleted xml-id of model ir.actions.act_window: sale.outgoing_picking_list_to_invoice
-deleted xml-id of model ir.actions.server: sale.ir_actions_server_edi_sale
-deleted xml-id of model ir.actions.todo: sale.config_wizard_step_sale_picking_policy
-deleted xml-id of model ir.model.access: sale.access_procurement_manager
-deleted xml-id of model ir.model.access: sale.access_procurement_salesman
-deleted xml-id of model ir.model.access: sale.access_product_packaging_manager
-deleted xml-id of model ir.model.access: sale.access_product_packaging_sale_manager
-deleted xml-id of model ir.model.access: sale.access_product_packaging_user
-deleted xml-id of model ir.model.access: sale.access_report_stock_move_sales
-deleted xml-id of model ir.model.access: sale.access_res_partner_address_user
-deleted xml-id of model ir.model.access: sale.access_sale_order_line_stock_worker
-deleted xml-id of model ir.model.access: sale.access_sale_order_stock_worker
-deleted xml-id of model ir.model.access: sale.access_stock_location_user
-deleted xml-id of model ir.model.access: sale.access_stock_move_manager
-deleted xml-id of model ir.model.access: sale.access_stock_move_salesman
-deleted xml-id of model ir.model.access: sale.access_stock_picking_sales
-deleted xml-id of model ir.model.access: sale.access_stock_picking_salesman
-deleted xml-id of model ir.model.access: sale.access_stock_warehouse_user
-deleted xml-id of model ir.ui.menu: base.menu_sales
-deleted xml-id of model ir.ui.menu: board.menu_dasboard
-deleted xml-id of model ir.ui.menu: sale.menu_action_picking_list_to_invoice
-deleted xml-id of model ir.ui.menu: sale.menu_action_shop_form
-deleted xml-id of model ir.ui.menu: sale.menu_board_sales_manager
-deleted xml-id of model ir.ui.menu: sale.menu_email_templates
-deleted xml-id of model ir.ui.menu: sale.menu_sales_configuration_misc
-deleted xml-id of model ir.ui.view: sale.board_sales_manager_form
-deleted xml-id of model ir.ui.view: sale.mrp_company
-deleted xml-id of model ir.ui.view: sale.stock_move_sale
-deleted xml-id of model ir.ui.view: sale.stock_picking_inherit_sale
-deleted xml-id of model ir.ui.view: sale.stock_picking_out_inherit_sale
-deleted xml-id of model ir.ui.view: sale.view_config_picking_policy
-deleted xml-id of model ir.ui.view: sale.view_order_line_graph
-deleted xml-id of model ir.ui.view: sale.view_sale_open_invoice
-deleted xml-id of model ir.ui.view: sale.view_sales_by_month_tree
-deleted xml-id of model ir.ui.view: sale.view_sales_by_partner_graph
-deleted xml-id of model ir.ui.view: sale.view_sales_by_salesman_graph
-deleted xml-id of model ir.ui.view: sale.view_sales_product_total_price_graph
-deleted xml-id of model ir.ui.view: sale.view_top_quotations_tree
-deleted xml-id of model process.condition: sale.process_condition_conditionafterdelivery0
-deleted xml-id of model process.node: sale.process_node_deliveryorder0
-deleted xml-id of model process.node: sale.process_node_invoiceafterdelivery0
-deleted xml-id of model process.node: sale.process_node_packinglist0
-deleted xml-id of model process.node: sale.process_node_saleorderprocurement0
-deleted xml-id of model process.node: sale.process_node_saleprocurement0
-deleted xml-id of model process.transition.action: sale.process_transition_action_assign0
-deleted xml-id of model process.transition.action: sale.process_transition_action_cancel1
-deleted xml-id of model process.transition.action: sale.process_transition_action_cancel2
-deleted xml-id of model process.transition.action: sale.process_transition_action_cancelassignation0
-deleted xml-id of model process.transition.action: sale.process_transition_action_forceassignation0
-deleted xml-id of model process.transition.action: sale.process_transition_action_validate0
-deleted xml-id of model process.transition: sale.process_transition_deliver0
-deleted xml-id of model process.transition: sale.process_transition_invoiceafterdelivery0
-deleted xml-id of model process.transition: sale.process_transition_packing0
-deleted xml-id of model process.transition: sale.process_transition_saleorderprocurement0
-deleted xml-id of model process.transition: sale.process_transition_saleprocurement0
-deleted xml-id of model res.users: base.user_admin
-deleted xml-id of model sale.shop: sale.shop
-deleted xml-id of model workflow.activity: sale.act_cancel3
-deleted xml-id of model workflow.activity: sale.act_ship
-deleted xml-id of model workflow.activity: sale.act_ship_cancel
-deleted xml-id of model workflow.activity: sale.act_ship_end
-deleted xml-id of model workflow.activity: sale.act_ship_except
-deleted xml-id of model workflow.activity: sale.act_wait_ship
-deleted xml-id of model workflow.transition: sale.trans_router_wait_invoice_shipping
-deleted xml-id of model workflow.transition: sale.trans_router_wait_ship
-deleted xml-id of model workflow.transition: sale.trans_ship_end_done
-deleted xml-id of model workflow.transition: sale.trans_ship_except_ship
-deleted xml-id of model workflow.transition: sale.trans_ship_except_ship_cancel
-deleted xml-id of model workflow.transition: sale.trans_ship_except_ship_end
-deleted xml-id of model workflow.transition: sale.trans_ship_ship_end
-deleted xml-id of model workflow.transition: sale.trans_ship_ship_except
-deleted xml-id of model workflow.transition: sale.trans_wait_invoice_invoice
-deleted xml-id of model workflow.transition: sale.trans_wait_ship_cancel3
-deleted xml-id of model workflow.transition: sale.trans_wait_ship_ship
-new xml-id of model ir.actions.act_window: sale.action_orders
-new xml-id of model ir.actions.act_window: sale.action_orders_exception
-new xml-id of model ir.actions.act_window: sale.action_orders_in_progress
-new xml-id of model ir.actions.act_window: sale.action_quotations
-new xml-id of model ir.actions.client: sale.action_client_sale_menu
-new xml-id of model ir.actions.todo: base.open_menu
-new xml-id of model ir.model.access: sale.access_account_move_line_salesman
-new xml-id of model ir.ui.menu: base.menu_sale_config
-new xml-id of model ir.ui.menu: sale.menu_dashboard_sales
-new xml-id of model ir.ui.menu: sale.menu_sale_quotations
-new xml-id of model ir.ui.view: sale.crm_lead_partner_kanban_view
-new xml-id of model ir.ui.view: sale.res_partner_address_type
-new xml-id of model ir.ui.view: sale.res_partner_view_buttons
-new xml-id of model ir.ui.view: sale.view_account_config
-new xml-id of model ir.ui.view: sale.view_order_form_editable_list
-new xml-id of model ir.ui.view: sale.view_quotation_tree
-new xml-id of model ir.ui.view: sale.view_sales_config
-new xml-id of model mail.message.subtype: sale.mt_order_confirmed
-new xml-id of model mail.message.subtype: sale.mt_order_sent
-new xml-id of model mail.message: sale.module_install_notification
-new xml-id of model res.groups: sale.group_analytic_accounting
-new xml-id of model res.groups: sale.group_delivery_invoice_address
-new xml-id of model res.groups: sale.group_discount_per_so_line
-new xml-id of model res.groups: sale.group_invoice_so_lines
-new xml-id of model res.groups: sale.group_mrp_properties
-new xml-id of model res.users: base.user_root
-new xml-id of model sale.shop: sale.sale_shop_1
-new xml-id of model workflow.activity: sale.act_sent
-new xml-id of model workflow.transition: sale.trans_draft_sent
-new xml-id of model workflow.transition: sale.trans_sent_cancel
-new xml-id of model workflow.transition: sale.trans_sent_router
+---XML records in module 'sale'---
+NEW ir.actions.act_window: sale.action_orders
+NEW ir.actions.act_window: sale.action_orders_exception
+NEW ir.actions.act_window: sale.action_orders_in_progress
+NEW ir.actions.act_window: sale.action_quotations
+DEL ir.actions.act_window: sale.action_config_picking_policy
+DEL ir.actions.act_window: sale.action_order_form
+DEL ir.actions.act_window: sale.action_order_tree2
+DEL ir.actions.act_window: sale.action_order_tree4
+DEL ir.actions.act_window: sale.action_order_tree5
+DEL ir.actions.act_window: sale.action_sales_by_partner
+DEL ir.actions.act_window: sale.action_sales_by_salesman
+DEL ir.actions.act_window: sale.action_sales_product_total_price
+DEL ir.actions.act_window: sale.action_view_sale_open_invoice
+DEL ir.actions.act_window: sale.action_view_sales_by_month
+DEL ir.actions.act_window: sale.open_board_sales_manager
+DEL ir.actions.act_window: sale.outgoing_picking_list_to_invoice
+DEL ir.actions.act_window.view: sale.action_turnover_by_month_graph_view
+DEL ir.actions.act_window.view: sale.action_turnover_by_month_tree_view
+NEW ir.actions.client: sale.action_client_sale_menu
+DEL ir.actions.server: sale.ir_actions_server_edi_sale
+NEW ir.actions.todo: base.open_menu
+DEL ir.actions.todo: sale.config_wizard_step_sale_picking_policy
+NEW ir.model.access: sale.access_account_move_line_salesman
+DEL ir.model.access: sale.access_procurement_manager
+DEL ir.model.access: sale.access_procurement_salesman
+DEL ir.model.access: sale.access_product_packaging_manager
+DEL ir.model.access: sale.access_product_packaging_sale_manager
+DEL ir.model.access: sale.access_product_packaging_user
+DEL ir.model.access: sale.access_report_stock_move_sales
+DEL ir.model.access: sale.access_res_partner_address_user
+DEL ir.model.access: sale.access_sale_order_line_stock_worker
+DEL ir.model.access: sale.access_sale_order_stock_worker
+DEL ir.model.access: sale.access_stock_location_user
+DEL ir.model.access: sale.access_stock_move_manager
+DEL ir.model.access: sale.access_stock_move_salesman
+DEL ir.model.access: sale.access_stock_picking_sales
+DEL ir.model.access: sale.access_stock_picking_salesman
+DEL ir.model.access: sale.access_stock_warehouse_user
+NEW ir.ui.menu: base.menu_sale_config
+NEW ir.ui.menu: sale.menu_dashboard_sales
+NEW ir.ui.menu: sale.menu_sale_quotations
+DEL ir.ui.menu: base.menu_sales
+DEL ir.ui.menu: board.menu_dasboard
+DEL ir.ui.menu: sale.menu_action_picking_list_to_invoice
+DEL ir.ui.menu: sale.menu_action_shop_form
+DEL ir.ui.menu: sale.menu_board_sales_manager
+DEL ir.ui.menu: sale.menu_email_templates
+DEL ir.ui.menu: sale.menu_sales_configuration_misc
+NEW ir.ui.view: sale.crm_lead_partner_kanban_view
+NEW ir.ui.view: sale.res_partner_address_type
+NEW ir.ui.view: sale.res_partner_view_buttons
+NEW ir.ui.view: sale.view_account_config
+NEW ir.ui.view: sale.view_order_form_editable_list
+NEW ir.ui.view: sale.view_quotation_tree
+NEW ir.ui.view: sale.view_sales_config
+DEL ir.ui.view: sale.board_sales_manager_form
+DEL ir.ui.view: sale.mrp_company
+DEL ir.ui.view: sale.stock_move_sale
+DEL ir.ui.view: sale.stock_picking_inherit_sale
+DEL ir.ui.view: sale.stock_picking_out_inherit_sale
+DEL ir.ui.view: sale.view_config_picking_policy
+DEL ir.ui.view: sale.view_order_line_graph
+DEL ir.ui.view: sale.view_sale_open_invoice
+DEL ir.ui.view: sale.view_sales_by_month_tree
+DEL ir.ui.view: sale.view_sales_by_partner_graph
+DEL ir.ui.view: sale.view_sales_by_salesman_graph
+DEL ir.ui.view: sale.view_sales_product_total_price_graph
+DEL ir.ui.view: sale.view_top_quotations_tree
+NEW mail.message: sale.module_install_notification
+NEW mail.message.subtype: sale.mt_order_confirmed
+NEW mail.message.subtype: sale.mt_order_sent
+DEL process.condition: sale.process_condition_conditionafterdelivery0
+DEL process.node: sale.process_node_deliveryorder0
+DEL process.node: sale.process_node_invoiceafterdelivery0
+DEL process.node: sale.process_node_packinglist0
+DEL process.node: sale.process_node_saleorderprocurement0
+DEL process.node: sale.process_node_saleprocurement0
+DEL process.transition: sale.process_transition_deliver0
+DEL process.transition: sale.process_transition_invoiceafterdelivery0
+DEL process.transition: sale.process_transition_packing0
+DEL process.transition: sale.process_transition_saleorderprocurement0
+DEL process.transition: sale.process_transition_saleprocurement0
+DEL process.transition.action: sale.process_transition_action_assign0
+DEL process.transition.action: sale.process_transition_action_cancel1
+DEL process.transition.action: sale.process_transition_action_cancel2
+DEL process.transition.action: sale.process_transition_action_cancelassignation0
+DEL process.transition.action: sale.process_transition_action_forceassignation0
+DEL process.transition.action: sale.process_transition_action_validate0
+NEW res.groups: sale.group_analytic_accounting
+NEW res.groups: sale.group_delivery_invoice_address
+NEW res.groups: sale.group_discount_per_so_line
+NEW res.groups: sale.group_invoice_so_lines
+NEW res.groups: sale.group_mrp_properties
+NEW res.users: base.user_root
+DEL res.users: base.user_admin
+NEW sale.shop: sale.sale_shop_1
+DEL sale.shop: sale.shop
+NEW workflow.activity: sale.act_sent
+DEL workflow.activity: sale.act_cancel3
+DEL workflow.activity: sale.act_ship
+DEL workflow.activity: sale.act_ship_cancel
+DEL workflow.activity: sale.act_ship_end
+DEL workflow.activity: sale.act_ship_except
+DEL workflow.activity: sale.act_wait_ship
+NEW workflow.transition: sale.trans_draft_sent
+NEW workflow.transition: sale.trans_sent_cancel
+NEW workflow.transition: sale.trans_sent_router
+DEL workflow.transition: sale.trans_router_wait_invoice_shipping
+DEL workflow.transition: sale.trans_router_wait_ship
+DEL workflow.transition: sale.trans_ship_end_done
+DEL workflow.transition: sale.trans_ship_except_ship
+DEL workflow.transition: sale.trans_ship_except_ship_cancel
+DEL workflow.transition: sale.trans_ship_except_ship_end
+DEL workflow.transition: sale.trans_ship_ship_end
+DEL workflow.transition: sale.trans_ship_ship_except
+DEL workflow.transition: sale.trans_wait_invoice_invoice
+DEL workflow.transition: sale.trans_wait_ship_cancel3
+DEL workflow.transition: sale.trans_wait_ship_ship

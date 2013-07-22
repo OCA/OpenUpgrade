@@ -1,4 +1,4 @@
----stock---
+---Fields in module 'stock'---
 stock        / report.stock.inventory   / month (selection)             : selection_keys is now '['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']' ('['01', '02', '03', '04', '05', '06', '07', '08', '09']')
 stock        / report.stock.inventory   / partner_id (many2one)         : relation is now 'res.partner' ('res.partner.address')
 stock        / report.stock.inventory   / scrap_location (boolean)      : NEW 
@@ -48,44 +48,45 @@ stock        / stock.picking.out        / stock_journal_id (many2one)   : NEW re
 stock        / stock.picking.out        / type (selection)              : NEW required: required, selection_keys: ['in', 'internal', 'out'], req_default: out
 stock        / stock.warehouse          / partner_address_id (many2one) : DEL relation: res.partner.address
 stock        / stock.warehouse          / partner_id (many2one)         : NEW relation: res.partner
-deleted xml-id of model ir.actions.act_window: stock.act_relate_picking
-deleted xml-id of model ir.actions.act_window: stock.action_incoming_product_board
-deleted xml-id of model ir.actions.act_window: stock.action_outgoing_product_board
-deleted xml-id of model ir.actions.todo.category: stock.category_stock_management_config
-deleted xml-id of model ir.ui.menu: stock.menu_dashboard_stock
-deleted xml-id of model ir.ui.view: product.product_kanban_view
-deleted xml-id of model ir.ui.view: stock.view_move_form_reception_picking
-deleted xml-id of model ir.ui.view: stock.view_move_search_reception_incoming_picking
-deleted xml-id of model ir.ui.view: stock.view_move_search_reception_outcoming_picking
-deleted xml-id of model ir.ui.view: stock.view_normal_property_form
-deleted xml-id of model ir.ui.view: stock.view_normal_stock_property_form
-deleted xml-id of model ir.ui.view: stock.view_stock_picking_filter
-new xml-id of model ir.actions.act_window.view: stock.action_stock_move_form_all
-new xml-id of model ir.actions.act_window.view: stock.action_stock_move_tree_all
-new xml-id of model ir.actions.act_window: stock.act_stock_return_picking_in
-new xml-id of model ir.actions.act_window: stock.act_stock_return_picking_out
-new xml-id of model ir.actions.act_window: stock.action_deliver_move
-new xml-id of model ir.actions.act_window: stock.action_receive_move
-new xml-id of model ir.actions.act_window: stock.action_stock_config_settings
-new xml-id of model ir.actions.client: stock.action_client_warehouse_menu
-new xml-id of model ir.actions.report.xml: stock.report_picking_list_in
-new xml-id of model ir.actions.report.xml: stock.report_picking_list_out
-new xml-id of model ir.actions.todo: base.open_menu
-new xml-id of model ir.model.access: stock.access_board_stock_user
-new xml-id of model ir.model.access: stock.access_stock_picking_in_manager
-new xml-id of model ir.model.access: stock.access_stock_picking_in_user
-new xml-id of model ir.model.access: stock.access_stock_picking_out_manager
-new xml-id of model ir.model.access: stock.access_stock_picking_out_user
-new xml-id of model ir.ui.menu: stock.menu_stock_config_settings
-new xml-id of model ir.ui.view: stock.product_kanban_stock_view
-new xml-id of model ir.ui.view: stock.stock_picking_in_calendar
-new xml-id of model ir.ui.view: stock.stock_picking_out_calendar
-new xml-id of model ir.ui.view: stock.view_move_picking_form
-new xml-id of model ir.ui.view: stock.view_move_picking_tree
-new xml-id of model ir.ui.view: stock.view_normal_procurement_locations_form
-new xml-id of model ir.ui.view: stock.view_stock_config_settings
-new xml-id of model mail.message: stock.module_install_notification
-new xml-id of model res.groups: stock.group_inventory_valuation
-new xml-id of model res.groups: stock.group_locations
-new xml-id of model res.groups: stock.group_production_lot
-new xml-id of model res.groups: stock.group_tracking_lot
+---XML records in module 'stock'---
+NEW ir.actions.act_window: stock.act_stock_return_picking_in
+NEW ir.actions.act_window: stock.act_stock_return_picking_out
+NEW ir.actions.act_window: stock.action_deliver_move
+NEW ir.actions.act_window: stock.action_receive_move
+NEW ir.actions.act_window: stock.action_stock_config_settings
+DEL ir.actions.act_window: stock.act_relate_picking
+DEL ir.actions.act_window: stock.action_incoming_product_board
+DEL ir.actions.act_window: stock.action_outgoing_product_board
+NEW ir.actions.act_window.view: stock.action_stock_move_form_all
+NEW ir.actions.act_window.view: stock.action_stock_move_tree_all
+NEW ir.actions.client: stock.action_client_warehouse_menu
+NEW ir.actions.report.xml: stock.report_picking_list_in
+NEW ir.actions.report.xml: stock.report_picking_list_out
+NEW ir.actions.todo: base.open_menu
+DEL ir.actions.todo.category: stock.category_stock_management_config
+NEW ir.model.access: stock.access_board_stock_user
+NEW ir.model.access: stock.access_stock_picking_in_manager
+NEW ir.model.access: stock.access_stock_picking_in_user
+NEW ir.model.access: stock.access_stock_picking_out_manager
+NEW ir.model.access: stock.access_stock_picking_out_user
+NEW ir.ui.menu: stock.menu_stock_config_settings
+DEL ir.ui.menu: stock.menu_dashboard_stock
+NEW ir.ui.view: stock.product_kanban_stock_view
+NEW ir.ui.view: stock.stock_picking_in_calendar
+NEW ir.ui.view: stock.stock_picking_out_calendar
+NEW ir.ui.view: stock.view_move_picking_form
+NEW ir.ui.view: stock.view_move_picking_tree
+NEW ir.ui.view: stock.view_normal_procurement_locations_form
+NEW ir.ui.view: stock.view_stock_config_settings
+DEL ir.ui.view: product.product_kanban_view
+DEL ir.ui.view: stock.view_move_form_reception_picking
+DEL ir.ui.view: stock.view_move_search_reception_incoming_picking
+DEL ir.ui.view: stock.view_move_search_reception_outcoming_picking
+DEL ir.ui.view: stock.view_normal_property_form
+DEL ir.ui.view: stock.view_normal_stock_property_form
+DEL ir.ui.view: stock.view_stock_picking_filter
+NEW mail.message: stock.module_install_notification
+NEW res.groups: stock.group_inventory_valuation
+NEW res.groups: stock.group_locations
+NEW res.groups: stock.group_production_lot
+NEW res.groups: stock.group_tracking_lot

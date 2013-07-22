@@ -1,4 +1,4 @@
----mail---
+---Fields in module 'mail'---
 mail         / ir.ui.menu               / mail_group_id (many2one)      : NEW relation: mail.group
 mail         / mail.alias               / alias_defaults (text)         : NEW required: required, req_default: {}
 mail         / mail.alias               / alias_force_thread_id (integer): NEW 
@@ -63,91 +63,92 @@ mail         / res.partner              / message_ids (one2many)        : NEW re
 mail         / res.partner              / notification_email_send (selection): NEW required: required, selection_keys: ['all', 'comment', 'email', 'none'], req_default: function
 mail         / res.users                / _inherits (False)             : NEW mode: modify
 mail         / res.users                / alias_id (many2one)           : NEW relation: mail.alias, required: required
-deleted xml-id of model ir.actions.act_window.view: mail.action_view_mailgate_thread_view1
-deleted xml-id of model ir.actions.act_window.view: mail.action_view_mailgate_thread_view2
-deleted xml-id of model ir.actions.act_window: mail.act_res_partner_emails
-deleted xml-id of model ir.actions.act_window: mail.action_view_mailgate_thread
-deleted xml-id of model ir.model.access: mail.access_mail_message
-deleted xml-id of model ir.model.access: mail.access_mail_thread
-deleted xml-id of model ir.ui.menu: mail.menu_email_message
-deleted xml-id of model ir.ui.view: base.view_crm_partner_info_History
-deleted xml-id of model ir.ui.view: mail.view_email_message_form
-deleted xml-id of model ir.ui.view: mail.view_email_message_search
-deleted xml-id of model ir.ui.view: mail.view_email_message_tree
-deleted xml-id of model ir.ui.view: mail.view_mailgate_thread_form
-deleted xml-id of model ir.ui.view: mail.view_mailgate_thread_tree
-new xml-id of model ir.actions.act_window: mail.action_view_followers
-new xml-id of model ir.actions.act_window: mail.action_view_groups
-new xml-id of model ir.actions.act_window: mail.action_view_mail_alias
-new xml-id of model ir.actions.act_window: mail.action_view_mail_mail
-new xml-id of model ir.actions.act_window: mail.action_view_message_subtype
-new xml-id of model ir.actions.act_window: mail.action_view_notifications
-new xml-id of model ir.actions.client: mail.action_mail_archives_feeds
-new xml-id of model ir.actions.client: mail.action_mail_group_feeds
-new xml-id of model ir.actions.client: mail.action_mail_inbox_feeds
-new xml-id of model ir.actions.client: mail.action_mail_star_feeds
-new xml-id of model ir.actions.client: mail.action_mail_to_me_feeds
-new xml-id of model ir.cron: mail.ir_cron_module_update_notification
-new xml-id of model ir.model.access: mail.access_mail_alias_all
-new xml-id of model ir.model.access: mail.access_mail_alias_system
-new xml-id of model ir.model.access: mail.access_mail_alias_user
-new xml-id of model ir.model.access: mail.access_mail_followers_all
-new xml-id of model ir.model.access: mail.access_mail_followers_system
-new xml-id of model ir.model.access: mail.access_mail_followers_user
-new xml-id of model ir.model.access: mail.access_mail_group_all
-new xml-id of model ir.model.access: mail.access_mail_group_user
-new xml-id of model ir.model.access: mail.access_mail_mail_all
-new xml-id of model ir.model.access: mail.access_mail_mail_system
-new xml-id of model ir.model.access: mail.access_mail_mail_user
-new xml-id of model ir.model.access: mail.access_mail_message_all
-new xml-id of model ir.model.access: mail.access_mail_message_subtype_all
-new xml-id of model ir.model.access: mail.access_mail_message_subtype_system
-new xml-id of model ir.model.access: mail.access_mail_message_user
-new xml-id of model ir.model.access: mail.access_mail_notification_all
-new xml-id of model ir.model.access: mail.access_mail_notification_system
-new xml-id of model ir.model.access: mail.access_mail_notification_user
-new xml-id of model ir.model.access: mail.access_mail_thread_all
-new xml-id of model ir.model.access: mail.access_publisher_warranty_contract_all
-new xml-id of model ir.rule: mail.mail_followers_read_write_own
-new xml-id of model ir.rule: mail.mail_group_public_and_joined
-new xml-id of model ir.rule: mail.mail_notification_read_write_own
-new xml-id of model ir.ui.menu: mail.mail_alias_menu
-new xml-id of model ir.ui.menu: mail.mail_allgroups
-new xml-id of model ir.ui.menu: mail.mail_archivesfeeds
-new xml-id of model ir.ui.menu: mail.mail_feeds
-new xml-id of model ir.ui.menu: mail.mail_feeds_main
-new xml-id of model ir.ui.menu: mail.mail_group_root
-new xml-id of model ir.ui.menu: mail.mail_inboxfeeds
-new xml-id of model ir.ui.menu: mail.mail_my_stuff
-new xml-id of model ir.ui.menu: mail.mail_starfeeds
-new xml-id of model ir.ui.menu: mail.mail_tomefeeds
-new xml-id of model ir.ui.menu: mail.menu_email_followers
-new xml-id of model ir.ui.menu: mail.menu_email_notifications
-new xml-id of model ir.ui.menu: mail.menu_mail_mail
-new xml-id of model ir.ui.menu: mail.menu_mail_message
-new xml-id of model ir.ui.menu: mail.menu_message_subtype
-new xml-id of model ir.ui.view: mail.mail_wizard_invite_form
-new xml-id of model ir.ui.view: mail.view_followers_tree
-new xml-id of model ir.ui.view: mail.view_general_configuration_mail_alias_domain
-new xml-id of model ir.ui.view: mail.view_group_form
-new xml-id of model ir.ui.view: mail.view_group_kanban
-new xml-id of model ir.ui.view: mail.view_group_search
-new xml-id of model ir.ui.view: mail.view_group_tree
-new xml-id of model ir.ui.view: mail.view_mail_alias_form
-new xml-id of model ir.ui.view: mail.view_mail_alias_search
-new xml-id of model ir.ui.view: mail.view_mail_alias_tree
-new xml-id of model ir.ui.view: mail.view_mail_form
-new xml-id of model ir.ui.view: mail.view_mail_message_subtype_form
-new xml-id of model ir.ui.view: mail.view_mail_search
-new xml-id of model ir.ui.view: mail.view_mail_subscription_form
-new xml-id of model ir.ui.view: mail.view_mail_tree
-new xml-id of model ir.ui.view: mail.view_message_form
-new xml-id of model ir.ui.view: mail.view_message_search
-new xml-id of model ir.ui.view: mail.view_message_subtype_tree
-new xml-id of model ir.ui.view: mail.view_message_tree
-new xml-id of model ir.ui.view: mail.view_notification_tree
-new xml-id of model ir.ui.view: mail.view_users_form_mail
-new xml-id of model ir.ui.view: mail.view_users_form_simple_modif_mail
-new xml-id of model mail.group: mail.group_all_employees
-new xml-id of model mail.message.subtype: mail.mt_comment
-new xml-id of model mail.message: mail.module_install_notification
+---XML records in module 'mail'---
+NEW ir.actions.act_window: mail.action_view_followers
+NEW ir.actions.act_window: mail.action_view_groups
+NEW ir.actions.act_window: mail.action_view_mail_alias
+NEW ir.actions.act_window: mail.action_view_mail_mail
+NEW ir.actions.act_window: mail.action_view_message_subtype
+NEW ir.actions.act_window: mail.action_view_notifications
+DEL ir.actions.act_window: mail.act_res_partner_emails
+DEL ir.actions.act_window: mail.action_view_mailgate_thread
+DEL ir.actions.act_window.view: mail.action_view_mailgate_thread_view1
+DEL ir.actions.act_window.view: mail.action_view_mailgate_thread_view2
+NEW ir.actions.client: mail.action_mail_archives_feeds
+NEW ir.actions.client: mail.action_mail_group_feeds
+NEW ir.actions.client: mail.action_mail_inbox_feeds
+NEW ir.actions.client: mail.action_mail_star_feeds
+NEW ir.actions.client: mail.action_mail_to_me_feeds
+NEW ir.cron: mail.ir_cron_module_update_notification
+NEW ir.model.access: mail.access_mail_alias_all
+NEW ir.model.access: mail.access_mail_alias_system
+NEW ir.model.access: mail.access_mail_alias_user
+NEW ir.model.access: mail.access_mail_followers_all
+NEW ir.model.access: mail.access_mail_followers_system
+NEW ir.model.access: mail.access_mail_followers_user
+NEW ir.model.access: mail.access_mail_group_all
+NEW ir.model.access: mail.access_mail_group_user
+NEW ir.model.access: mail.access_mail_mail_all
+NEW ir.model.access: mail.access_mail_mail_system
+NEW ir.model.access: mail.access_mail_mail_user
+NEW ir.model.access: mail.access_mail_message_all
+NEW ir.model.access: mail.access_mail_message_subtype_all
+NEW ir.model.access: mail.access_mail_message_subtype_system
+NEW ir.model.access: mail.access_mail_message_user
+NEW ir.model.access: mail.access_mail_notification_all
+NEW ir.model.access: mail.access_mail_notification_system
+NEW ir.model.access: mail.access_mail_notification_user
+NEW ir.model.access: mail.access_mail_thread_all
+NEW ir.model.access: mail.access_publisher_warranty_contract_all
+DEL ir.model.access: mail.access_mail_message
+DEL ir.model.access: mail.access_mail_thread
+NEW ir.rule: mail.mail_followers_read_write_own
+NEW ir.rule: mail.mail_group_public_and_joined
+NEW ir.rule: mail.mail_notification_read_write_own
+NEW ir.ui.menu: mail.mail_alias_menu
+NEW ir.ui.menu: mail.mail_allgroups
+NEW ir.ui.menu: mail.mail_archivesfeeds
+NEW ir.ui.menu: mail.mail_feeds
+NEW ir.ui.menu: mail.mail_feeds_main
+NEW ir.ui.menu: mail.mail_group_root
+NEW ir.ui.menu: mail.mail_inboxfeeds
+NEW ir.ui.menu: mail.mail_my_stuff
+NEW ir.ui.menu: mail.mail_starfeeds
+NEW ir.ui.menu: mail.mail_tomefeeds
+NEW ir.ui.menu: mail.menu_email_followers
+NEW ir.ui.menu: mail.menu_email_notifications
+NEW ir.ui.menu: mail.menu_mail_mail
+NEW ir.ui.menu: mail.menu_mail_message
+NEW ir.ui.menu: mail.menu_message_subtype
+DEL ir.ui.menu: mail.menu_email_message
+NEW ir.ui.view: mail.mail_wizard_invite_form
+NEW ir.ui.view: mail.view_followers_tree
+NEW ir.ui.view: mail.view_general_configuration_mail_alias_domain
+NEW ir.ui.view: mail.view_group_form
+NEW ir.ui.view: mail.view_group_kanban
+NEW ir.ui.view: mail.view_group_search
+NEW ir.ui.view: mail.view_group_tree
+NEW ir.ui.view: mail.view_mail_alias_form
+NEW ir.ui.view: mail.view_mail_alias_search
+NEW ir.ui.view: mail.view_mail_alias_tree
+NEW ir.ui.view: mail.view_mail_form
+NEW ir.ui.view: mail.view_mail_message_subtype_form
+NEW ir.ui.view: mail.view_mail_search
+NEW ir.ui.view: mail.view_mail_subscription_form
+NEW ir.ui.view: mail.view_mail_tree
+NEW ir.ui.view: mail.view_message_form
+NEW ir.ui.view: mail.view_message_search
+NEW ir.ui.view: mail.view_message_subtype_tree
+NEW ir.ui.view: mail.view_message_tree
+NEW ir.ui.view: mail.view_notification_tree
+NEW ir.ui.view: mail.view_users_form_mail
+NEW ir.ui.view: mail.view_users_form_simple_modif_mail
+DEL ir.ui.view: base.view_crm_partner_info_History
+DEL ir.ui.view: mail.view_email_message_form
+DEL ir.ui.view: mail.view_email_message_search
+DEL ir.ui.view: mail.view_email_message_tree
+DEL ir.ui.view: mail.view_mailgate_thread_form
+DEL ir.ui.view: mail.view_mailgate_thread_tree
+NEW mail.group: mail.group_all_employees
+NEW mail.message: mail.module_install_notification
+NEW mail.message.subtype: mail.mt_comment

@@ -1,4 +1,4 @@
----purchase---
+---Fields in module 'purchase'---
 purchase     / purchase.order           / dest_address_id (many2one)    : relation is now 'res.partner' ('res.partner.address')
 purchase     / purchase.order           / journal_id (many2one)         : NEW relation: account.journal
 purchase     / purchase.order           / message_ids (one2many)        : NEW relation: mail.message
@@ -13,57 +13,58 @@ purchase     / purchase.report          / partner_address_id (many2one) : DEL re
 purchase     / purchase.report          / state (selection)             : selection_keys is now '['approved', 'cancel', 'confirmed', 'done', 'draft', 'except_invoice', 'except_picking']' ('['approved', 'cancel', 'confirmed', 'done', 'draft', 'except_invoice', 'except_picking', 'wait']')
 purchase     / res.partner              / purchase_order_ids (one2many) : NEW relation: purchase.order
 purchase     / stock.picking.in         / purchase_id (many2one)        : NEW relation: purchase.order
-deleted xml-id of model ir.actions.act_window.view: purchase.action_picking_in_form_view
-deleted xml-id of model ir.actions.act_window.view: purchase.action_picking_in_tree_view
-deleted xml-id of model ir.actions.act_window.view: purchase.action_supplier_address_form_view1
-deleted xml-id of model ir.actions.act_window.view: purchase.action_supplier_address_form_view2
-deleted xml-id of model ir.actions.act_window.view: purchase.open_view_purchase_order_monthly_categ_graph
-deleted xml-id of model ir.actions.act_window.view: purchase.open_view_purchase_order_monthly_categ_tree
-deleted xml-id of model ir.actions.act_window: purchase.act_purchase_order_2_stock_picking
-deleted xml-id of model ir.actions.act_window: purchase.action_import_create_supplier_installer
-deleted xml-id of model ir.actions.act_window: purchase.action_purchase_config
-deleted xml-id of model ir.actions.act_window: purchase.action_supplier_address_form
-deleted xml-id of model ir.actions.act_window: purchase.purchase_waiting
-deleted xml-id of model ir.actions.server: purchase.ir_actions_server_edi_purchase
-deleted xml-id of model ir.actions.todo.category: purchase.category_purchase_config
-deleted xml-id of model ir.actions.todo: purchase.config_wizard_action_import_create_supplier_installer
-deleted xml-id of model ir.actions.todo: purchase.todo_purchase_config
-deleted xml-id of model ir.model.access: purchase.access_res_partner_address_purchase_user
-deleted xml-id of model ir.ui.menu: base.menu_procurement_management_supplier
-deleted xml-id of model ir.ui.menu: purchase.menu_configuration_misc
-deleted xml-id of model ir.ui.menu: purchase.menu_email_templates
-deleted xml-id of model ir.ui.menu: purchase.menu_product_pricelist_action_purhase
-deleted xml-id of model ir.ui.menu: purchase.menu_purchase_deshboard
-deleted xml-id of model ir.ui.view: purchase.stock_picking_inherit_purchase
-deleted xml-id of model ir.ui.view: purchase.view_picking_in_search_picking_to_invoice
-deleted xml-id of model ir.ui.view: purchase.view_purchase_config
-deleted xml-id of model workflow.transition: procurement.trans_confirm_mto_purchase
-new xml-id of model ir.actions.act_window: purchase.act_res_partner_2_supplier_invoices
-new xml-id of model ir.actions.act_window: purchase.action_purchase_configuration
-new xml-id of model ir.actions.act_window: purchase.purchase_pricelist_version_action
-new xml-id of model ir.actions.client: purchase.action_client_purchase_menu
-new xml-id of model ir.actions.todo: base.open_menu
-new xml-id of model ir.model.access: purchase.access_stock_warehouse_orderpoint_manager
-new xml-id of model ir.ui.menu: purchase.menu_product_pricelist_action2_purchase_type
-new xml-id of model ir.ui.menu: purchase.menu_purchase_config
-new xml-id of model ir.ui.menu: purchase.menu_purchase_pricelist_version_action
-new xml-id of model ir.ui.view: purchase.product_product_normal_form_procurement_help_view
-new xml-id of model ir.ui.view: purchase.product_search_form_view_purchase
-new xml-id of model ir.ui.view: purchase.purchase_order_2_stock_picking
-new xml-id of model ir.ui.view: purchase.purchase_partner_kanban_view
-new xml-id of model ir.ui.view: purchase.res_partner_view_purchase_buttons
-new xml-id of model ir.ui.view: purchase.view_account_config
-new xml-id of model ir.ui.view: purchase.view_picking_in_search_picking_inherit
-new xml-id of model ir.ui.view: purchase.view_product_account_purchase_ok_form
-new xml-id of model ir.ui.view: purchase.view_product_supplier_inherit
-new xml-id of model ir.ui.view: purchase.view_purchase_configuration
-new xml-id of model ir.ui.view: purchase.view_template_purchase_ok_form
-new xml-id of model mail.message.subtype: purchase.mt_rfq_approved
-new xml-id of model mail.message.subtype: purchase.mt_rfq_confirmed
-new xml-id of model mail.message: purchase.module_install_notification
-new xml-id of model res.groups: purchase.group_analytic_accounting
-new xml-id of model workflow.activity: purchase.act_sent
-new xml-id of model workflow.transition: purchase.trans_confirm_mto_purchase
-new xml-id of model workflow.transition: purchase.trans_draft_sent
-new xml-id of model workflow.transition: purchase.trans_sent_cancel
-new xml-id of model workflow.transition: purchase.trans_sent_confirmed
+---XML records in module 'purchase'---
+NEW ir.actions.act_window: purchase.act_res_partner_2_supplier_invoices
+NEW ir.actions.act_window: purchase.action_purchase_configuration
+NEW ir.actions.act_window: purchase.purchase_pricelist_version_action
+DEL ir.actions.act_window: purchase.act_purchase_order_2_stock_picking
+DEL ir.actions.act_window: purchase.action_import_create_supplier_installer
+DEL ir.actions.act_window: purchase.action_purchase_config
+DEL ir.actions.act_window: purchase.action_supplier_address_form
+DEL ir.actions.act_window: purchase.purchase_waiting
+DEL ir.actions.act_window.view: purchase.action_picking_in_form_view
+DEL ir.actions.act_window.view: purchase.action_picking_in_tree_view
+DEL ir.actions.act_window.view: purchase.action_supplier_address_form_view1
+DEL ir.actions.act_window.view: purchase.action_supplier_address_form_view2
+DEL ir.actions.act_window.view: purchase.open_view_purchase_order_monthly_categ_graph
+DEL ir.actions.act_window.view: purchase.open_view_purchase_order_monthly_categ_tree
+NEW ir.actions.client: purchase.action_client_purchase_menu
+DEL ir.actions.server: purchase.ir_actions_server_edi_purchase
+NEW ir.actions.todo: base.open_menu
+DEL ir.actions.todo: purchase.config_wizard_action_import_create_supplier_installer
+DEL ir.actions.todo: purchase.todo_purchase_config
+DEL ir.actions.todo.category: purchase.category_purchase_config
+NEW ir.model.access: purchase.access_stock_warehouse_orderpoint_manager
+DEL ir.model.access: purchase.access_res_partner_address_purchase_user
+NEW ir.ui.menu: purchase.menu_product_pricelist_action2_purchase_type
+NEW ir.ui.menu: purchase.menu_purchase_config
+NEW ir.ui.menu: purchase.menu_purchase_pricelist_version_action
+DEL ir.ui.menu: base.menu_procurement_management_supplier
+DEL ir.ui.menu: purchase.menu_configuration_misc
+DEL ir.ui.menu: purchase.menu_email_templates
+DEL ir.ui.menu: purchase.menu_product_pricelist_action_purhase
+DEL ir.ui.menu: purchase.menu_purchase_deshboard
+NEW ir.ui.view: purchase.product_product_normal_form_procurement_help_view
+NEW ir.ui.view: purchase.product_search_form_view_purchase
+NEW ir.ui.view: purchase.purchase_order_2_stock_picking
+NEW ir.ui.view: purchase.purchase_partner_kanban_view
+NEW ir.ui.view: purchase.res_partner_view_purchase_buttons
+NEW ir.ui.view: purchase.view_account_config
+NEW ir.ui.view: purchase.view_picking_in_search_picking_inherit
+NEW ir.ui.view: purchase.view_product_account_purchase_ok_form
+NEW ir.ui.view: purchase.view_product_supplier_inherit
+NEW ir.ui.view: purchase.view_purchase_configuration
+NEW ir.ui.view: purchase.view_template_purchase_ok_form
+DEL ir.ui.view: purchase.stock_picking_inherit_purchase
+DEL ir.ui.view: purchase.view_picking_in_search_picking_to_invoice
+DEL ir.ui.view: purchase.view_purchase_config
+NEW mail.message: purchase.module_install_notification
+NEW mail.message.subtype: purchase.mt_rfq_approved
+NEW mail.message.subtype: purchase.mt_rfq_confirmed
+NEW res.groups: purchase.group_analytic_accounting
+NEW workflow.activity: purchase.act_sent
+NEW workflow.transition: purchase.trans_confirm_mto_purchase
+NEW workflow.transition: purchase.trans_draft_sent
+NEW workflow.transition: purchase.trans_sent_cancel
+NEW workflow.transition: purchase.trans_sent_confirmed
+DEL workflow.transition: procurement.trans_confirm_mto_purchase

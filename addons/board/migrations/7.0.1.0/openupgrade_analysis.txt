@@ -1,44 +1,45 @@
----board---
-deleted xml-id of model ir.actions.act_window: board.action_board_menu_create
-deleted xml-id of model ir.actions.act_window: board.action_latest_activities_tree
-deleted xml-id of model ir.actions.act_window: board.action_user_connection_tree
-deleted xml-id of model ir.actions.act_window: board.action_view_board_list_form
-deleted xml-id of model ir.actions.act_window: board.board_monthly_res_log_report_action
-deleted xml-id of model ir.actions.act_window: board.board_weekly_res_log_report_action
-deleted xml-id of model ir.actions.act_window: board.open_board_administration_form
-deleted xml-id of model ir.actions.client: board.action_application_tiles
-deleted xml-id of model ir.actions.client: board.action_res_widgets_currency_converter
-deleted xml-id of model ir.actions.client: board.action_res_widgets_events
-deleted xml-id of model ir.actions.client: board.action_res_widgets_facebook
-deleted xml-id of model ir.actions.client: board.action_res_widgets_map
-deleted xml-id of model ir.actions.client: board.action_res_widgets_note
-deleted xml-id of model ir.actions.client: board.action_res_widgets_tweets
-deleted xml-id of model ir.actions.client: board.board_config_overview
-deleted xml-id of model ir.actions.client: board.board_homepage_action
-deleted xml-id of model ir.model.access: board.access_board_board system
-deleted xml-id of model ir.model.access: board.access_board_board_line all
-deleted xml-id of model ir.model.access: board.access_board_board_line system
-deleted xml-id of model ir.model.access: board.access_res_log_report all
-deleted xml-id of model ir.ui.menu: base.menu_administration
-deleted xml-id of model ir.ui.menu: base.menu_dashboard
-deleted xml-id of model ir.ui.menu: base.menu_dashboard_admin
-deleted xml-id of model ir.ui.menu: base.menu_reporting
-deleted xml-id of model ir.ui.menu: board.menu_view_board_form
-deleted xml-id of model ir.ui.view: board.board_administration_form
-deleted xml-id of model ir.ui.view: board.board_homepage_view
-deleted xml-id of model ir.ui.view: board.board_res_log_report_graph
-deleted xml-id of model ir.ui.view: board.board_weekly_res_log_report_graph
-deleted xml-id of model ir.ui.view: board.view_board_form
-deleted xml-id of model ir.ui.view: board.view_board_menu_create
-deleted xml-id of model ir.ui.view: board.view_board_search
-deleted xml-id of model ir.ui.view: board.view_board_tree
-deleted xml-id of model ir.ui.view: board.view_res_log_report_filter
-deleted xml-id of model ir.ui.view: board.view_res_log_report_tree
-deleted xml-id of model ir.ui.view: board.view_user_connection_tree
-deleted xml-id of model res.users: base.user_admin
-new xml-id of model ir.actions.act_window: board.action_board_create
-new xml-id of model ir.actions.act_window: board.open_board_my_dash_action
-new xml-id of model ir.ui.menu: board.menu_board_create
-new xml-id of model ir.ui.menu: board.menu_board_my_dash
-new xml-id of model ir.ui.view: board.board_my_dash_view
-new xml-id of model ir.ui.view: board.view_board_create
+---Fields in module 'board'---
+---XML records in module 'board'---
+NEW ir.actions.act_window: board.action_board_create
+NEW ir.actions.act_window: board.open_board_my_dash_action
+DEL ir.actions.act_window: board.action_board_menu_create
+DEL ir.actions.act_window: board.action_latest_activities_tree
+DEL ir.actions.act_window: board.action_user_connection_tree
+DEL ir.actions.act_window: board.action_view_board_list_form
+DEL ir.actions.act_window: board.board_monthly_res_log_report_action
+DEL ir.actions.act_window: board.board_weekly_res_log_report_action
+DEL ir.actions.act_window: board.open_board_administration_form
+DEL ir.actions.client: board.action_application_tiles
+DEL ir.actions.client: board.action_res_widgets_currency_converter
+DEL ir.actions.client: board.action_res_widgets_events
+DEL ir.actions.client: board.action_res_widgets_facebook
+DEL ir.actions.client: board.action_res_widgets_map
+DEL ir.actions.client: board.action_res_widgets_note
+DEL ir.actions.client: board.action_res_widgets_tweets
+DEL ir.actions.client: board.board_config_overview
+DEL ir.actions.client: board.board_homepage_action
+DEL ir.model.access: board.access_board_board system
+DEL ir.model.access: board.access_board_board_line all
+DEL ir.model.access: board.access_board_board_line system
+DEL ir.model.access: board.access_res_log_report all
+NEW ir.ui.menu: board.menu_board_create
+NEW ir.ui.menu: board.menu_board_my_dash
+DEL ir.ui.menu: base.menu_administration
+DEL ir.ui.menu: base.menu_dashboard
+DEL ir.ui.menu: base.menu_dashboard_admin
+DEL ir.ui.menu: base.menu_reporting
+DEL ir.ui.menu: board.menu_view_board_form
+NEW ir.ui.view: board.board_my_dash_view
+NEW ir.ui.view: board.view_board_create
+DEL ir.ui.view: board.board_administration_form
+DEL ir.ui.view: board.board_homepage_view
+DEL ir.ui.view: board.board_res_log_report_graph
+DEL ir.ui.view: board.board_weekly_res_log_report_graph
+DEL ir.ui.view: board.view_board_form
+DEL ir.ui.view: board.view_board_menu_create
+DEL ir.ui.view: board.view_board_search
+DEL ir.ui.view: board.view_board_tree
+DEL ir.ui.view: board.view_res_log_report_filter
+DEL ir.ui.view: board.view_res_log_report_tree
+DEL ir.ui.view: board.view_user_connection_tree
+DEL res.users: base.user_admin

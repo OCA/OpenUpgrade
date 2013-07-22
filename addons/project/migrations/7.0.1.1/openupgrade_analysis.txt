@@ -1,4 +1,4 @@
----project---
+---Fields in module 'project'---
 project      / account.analytic.account / use_tasks (boolean)           : NEW 
 project      / project.category         / name (char)                   : NEW required: required
 project      / project.project          / alias_id (many2one)           : NEW relation: mail.alias, required: required
@@ -21,77 +21,78 @@ project      / project.task.type        / project_default (boolean)     : DEL
 project      / project.task.type        / state (selection)             : NEW required: required, selection_keys: ['cancelled', 'done', 'draft', 'open', 'pending'], req_default: open
 project      / report.project.task.user / type_id (many2one)            : DEL relation: project.task.type
 project      / res.users                / context_project_id (many2one) : DEL relation: project.project
-deleted xml-id of model ir.actions.act_window.view: project.open_view_project_vs_remaining_hours_graph
-deleted xml-id of model ir.actions.act_window.view: project.open_view_project_vs_remaining_hours_tree
-deleted xml-id of model ir.actions.act_window: project.act_my_account
-deleted xml-id of model ir.actions.act_window: project.act_my_project
-deleted xml-id of model ir.actions.act_window: project.act_res_users_2_project_project
-deleted xml-id of model ir.actions.act_window: project.action_create_initial_projects_installer
-deleted xml-id of model ir.actions.act_window: project.action_project_vs_remaining_hours_graph
-deleted xml-id of model ir.actions.act_window: project.action_review_task_stage
-deleted xml-id of model ir.actions.act_window: project.action_task_by_days_graph
-deleted xml-id of model ir.actions.act_window: project.action_view_delegate_task_tree
-deleted xml-id of model ir.actions.act_window: project.action_view_task_history_burndown
-deleted xml-id of model ir.actions.act_window: project.action_view_task_tree_deadline
-deleted xml-id of model ir.actions.todo.category: project.category_project_config
-deleted xml-id of model ir.actions.todo: project.config_wizard_action_create_initial_projects_installer
-deleted xml-id of model ir.actions.todo: project.config_wizard_action_review_task_stage
-deleted xml-id of model ir.model.access: project.access_mail_message_project_user
-deleted xml-id of model ir.model.access: project.access_partner_address_task user
-deleted xml-id of model ir.model.access: project.access_project_vs_hours
-deleted xml-id of model ir.model.access: project.access_task_by_days
-deleted xml-id of model ir.ui.menu: project.menu_action_view_task_history_burndown
-deleted xml-id of model ir.ui.menu: project.menu_board_project
-deleted xml-id of model ir.ui.menu: project.menu_definitions
-deleted xml-id of model ir.ui.menu: project.menu_open_view_project_all
-deleted xml-id of model ir.ui.menu: project.menu_project_config_project
-deleted xml-id of model ir.ui.menu: project.next_id_86
-deleted xml-id of model ir.ui.menu: project.project_report_task
-deleted xml-id of model ir.ui.view: base.view_crm_partner_info_History
-deleted xml-id of model ir.ui.view: project.view_delegated_task_tree
-deleted xml-id of model ir.ui.view: project.view_project_users_form_simple
-deleted xml-id of model ir.ui.view: project.view_project_vs_planned_total_hours_graph
-deleted xml-id of model ir.ui.view: project.view_project_vs_planned_total_hours_tree
-deleted xml-id of model ir.ui.view: project.view_project_vs_remaining_hours_graph
-deleted xml-id of model ir.ui.view: project.view_project_vs_remaining_hours_tree
-deleted xml-id of model ir.ui.view: project.view_task_by_days_graph
-deleted xml-id of model ir.ui.view: project.view_task_by_days_tree
-deleted xml-id of model ir.ui.view: project.view_task_history_burndown_graph
-deleted xml-id of model ir.ui.view: project.view_users_form_project_modif_inherited1
-new xml-id of model ir.actions.act_window: project.action_config_settings
-new xml-id of model ir.actions.client: project.action_client_project_menu
-new xml-id of model ir.actions.todo: base.open_menu
-new xml-id of model ir.model.access: project.access_account_analytic_account_user
-new xml-id of model ir.model.access: project.access_project_category
-new xml-id of model ir.model.access: project.access_project_category_manager
-new xml-id of model ir.model.access: project.access_project_project_manager
-new xml-id of model ir.model.access: project.access_project_task_history_sale_user
-new xml-id of model ir.model.access: project.access_project_task_type_sale_user
-new xml-id of model ir.rule: project.project_public_members_rule
-new xml-id of model ir.ui.menu: base.menu_definitions
-new xml-id of model ir.ui.menu: base.menu_project_config
-new xml-id of model ir.ui.menu: base.menu_project_config_project
-new xml-id of model ir.ui.menu: project.menu_project_dashboard
-new xml-id of model ir.ui.menu: project.menu_projects
-new xml-id of model ir.ui.view: project.analytic_account_inherited_form
-new xml-id of model ir.ui.view: project.view_config_settings
-new xml-id of model ir.ui.view: project.view_project_kanban
-new xml-id of model mail.message.subtype: project.mt_project_task_blocked
-new xml-id of model mail.message.subtype: project.mt_project_task_closed
-new xml-id of model mail.message.subtype: project.mt_project_task_new
-new xml-id of model mail.message.subtype: project.mt_project_task_stage
-new xml-id of model mail.message.subtype: project.mt_project_task_started
-new xml-id of model mail.message.subtype: project.mt_task_blocked
-new xml-id of model mail.message.subtype: project.mt_task_closed
-new xml-id of model mail.message.subtype: project.mt_task_new
-new xml-id of model mail.message.subtype: project.mt_task_stage
-new xml-id of model mail.message.subtype: project.mt_task_started
-new xml-id of model mail.message: project.module_install_notification
-new xml-id of model project.task.type: project.project_tt_analysis
-new xml-id of model project.task.type: project.project_tt_cancel
-new xml-id of model project.task.type: project.project_tt_deployment
-new xml-id of model project.task.type: project.project_tt_design
-new xml-id of model res.company: base.main_company
-new xml-id of model res.groups: project.group_delegate_task
-new xml-id of model res.groups: project.group_tasks_work_on_tasks
-new xml-id of model res.groups: project.group_time_work_estimation_tasks
+---XML records in module 'project'---
+NEW ir.actions.act_window: project.action_config_settings
+DEL ir.actions.act_window: project.act_my_account
+DEL ir.actions.act_window: project.act_my_project
+DEL ir.actions.act_window: project.act_res_users_2_project_project
+DEL ir.actions.act_window: project.action_create_initial_projects_installer
+DEL ir.actions.act_window: project.action_project_vs_remaining_hours_graph
+DEL ir.actions.act_window: project.action_review_task_stage
+DEL ir.actions.act_window: project.action_task_by_days_graph
+DEL ir.actions.act_window: project.action_view_delegate_task_tree
+DEL ir.actions.act_window: project.action_view_task_history_burndown
+DEL ir.actions.act_window: project.action_view_task_tree_deadline
+DEL ir.actions.act_window.view: project.open_view_project_vs_remaining_hours_graph
+DEL ir.actions.act_window.view: project.open_view_project_vs_remaining_hours_tree
+NEW ir.actions.client: project.action_client_project_menu
+NEW ir.actions.todo: base.open_menu
+DEL ir.actions.todo: project.config_wizard_action_create_initial_projects_installer
+DEL ir.actions.todo: project.config_wizard_action_review_task_stage
+DEL ir.actions.todo.category: project.category_project_config
+NEW ir.model.access: project.access_account_analytic_account_user
+NEW ir.model.access: project.access_project_category
+NEW ir.model.access: project.access_project_category_manager
+NEW ir.model.access: project.access_project_project_manager
+NEW ir.model.access: project.access_project_task_history_sale_user
+NEW ir.model.access: project.access_project_task_type_sale_user
+DEL ir.model.access: project.access_mail_message_project_user
+DEL ir.model.access: project.access_partner_address_task user
+DEL ir.model.access: project.access_project_vs_hours
+DEL ir.model.access: project.access_task_by_days
+NEW ir.rule: project.project_public_members_rule
+NEW ir.ui.menu: base.menu_definitions
+NEW ir.ui.menu: base.menu_project_config
+NEW ir.ui.menu: base.menu_project_config_project
+NEW ir.ui.menu: project.menu_project_dashboard
+NEW ir.ui.menu: project.menu_projects
+DEL ir.ui.menu: project.menu_action_view_task_history_burndown
+DEL ir.ui.menu: project.menu_board_project
+DEL ir.ui.menu: project.menu_definitions
+DEL ir.ui.menu: project.menu_open_view_project_all
+DEL ir.ui.menu: project.menu_project_config_project
+DEL ir.ui.menu: project.next_id_86
+DEL ir.ui.menu: project.project_report_task
+NEW ir.ui.view: project.analytic_account_inherited_form
+NEW ir.ui.view: project.view_config_settings
+NEW ir.ui.view: project.view_project_kanban
+DEL ir.ui.view: base.view_crm_partner_info_History
+DEL ir.ui.view: project.view_delegated_task_tree
+DEL ir.ui.view: project.view_project_users_form_simple
+DEL ir.ui.view: project.view_project_vs_planned_total_hours_graph
+DEL ir.ui.view: project.view_project_vs_planned_total_hours_tree
+DEL ir.ui.view: project.view_project_vs_remaining_hours_graph
+DEL ir.ui.view: project.view_project_vs_remaining_hours_tree
+DEL ir.ui.view: project.view_task_by_days_graph
+DEL ir.ui.view: project.view_task_by_days_tree
+DEL ir.ui.view: project.view_task_history_burndown_graph
+DEL ir.ui.view: project.view_users_form_project_modif_inherited1
+NEW mail.message: project.module_install_notification
+NEW mail.message.subtype: project.mt_project_task_blocked
+NEW mail.message.subtype: project.mt_project_task_closed
+NEW mail.message.subtype: project.mt_project_task_new
+NEW mail.message.subtype: project.mt_project_task_stage
+NEW mail.message.subtype: project.mt_project_task_started
+NEW mail.message.subtype: project.mt_task_blocked
+NEW mail.message.subtype: project.mt_task_closed
+NEW mail.message.subtype: project.mt_task_new
+NEW mail.message.subtype: project.mt_task_stage
+NEW mail.message.subtype: project.mt_task_started
+NEW project.task.type: project.project_tt_analysis
+NEW project.task.type: project.project_tt_cancel
+NEW project.task.type: project.project_tt_deployment
+NEW project.task.type: project.project_tt_design
+NEW res.company: base.main_company
+NEW res.groups: project.group_delegate_task
+NEW res.groups: project.group_tasks_work_on_tasks
+NEW res.groups: project.group_time_work_estimation_tasks

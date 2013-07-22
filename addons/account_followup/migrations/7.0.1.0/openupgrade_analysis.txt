@@ -1,4 +1,4 @@
----account_followup---
+---Fields in module 'account_followup'---
 account_followup / account_followup.followup / description (text)            : DEL 
 account_followup / account_followup.followup / name (char)                   : now a function
 account_followup / account_followup.followup / name (char)                   : type is now 'float' ('char')
@@ -16,30 +16,31 @@ account_followup / res.partner              / payment_next_action_date (date): N
 account_followup / res.partner              / payment_note (text)           : NEW 
 account_followup / res.partner              / payment_responsible_id (many2one): NEW relation: res.users
 account_followup / res.partner              / unreconciled_aml_ids (one2many): NEW relation: account.move.line
-deleted xml-id of model ir.actions.act_window: account_followup.act_account_partner_account_move_all
-deleted xml-id of model ir.actions.act_window: account_followup.act_account_partner_account_move_payable_all
-deleted xml-id of model ir.actions.act_window: account_followup.action_account_followup_print_all
-deleted xml-id of model ir.actions.act_window: account_followup.action_view_account_followup_followup_form
-deleted xml-id of model ir.actions.todo: account_followup.config_wizard_view_account_followup_followup_form
-deleted xml-id of model ir.ui.view: account_followup.view_account_followup_print_all
-deleted xml-id of model ir.ui.view: account_followup.view_account_followup_print_all_msg
-deleted xml-id of model ir.ui.view: account_followup.view_company_inherit_followup_form
-deleted xml-id of model ir.ui.view: account_followup.view_move_line_tree
-deleted xml-id of model res.company: base.main_company
-new xml-id of model email.template: account_followup.email_template_account_followup_default
-new xml-id of model email.template: account_followup.email_template_account_followup_level0
-new xml-id of model email.template: account_followup.email_template_account_followup_level1
-new xml-id of model email.template: account_followup.email_template_account_followup_level2
-new xml-id of model ir.actions.act_window.view: account_followup.action_view_customer_followup_form
-new xml-id of model ir.actions.act_window.view: account_followup.action_view_customer_followup_tree
-new xml-id of model ir.actions.act_window: account_followup.action_customer_followup
-new xml-id of model ir.actions.act_window: account_followup.action_customer_my_followup
-new xml-id of model ir.ui.menu: account_followup.account_followup_s
-new xml-id of model ir.ui.menu: account_followup.menu_finance_followup
-new xml-id of model ir.ui.menu: account_followup.menu_manual_reconcile_followup
-new xml-id of model ir.ui.menu: account_followup.menu_sale_followup
-new xml-id of model ir.ui.menu: base.menu_sales_followup
-new xml-id of model ir.ui.view: account_followup.customer_followup_search_view
-new xml-id of model ir.ui.view: account_followup.customer_followup_tree
-new xml-id of model ir.ui.view: account_followup.view_account_followup_sending_results
-new xml-id of model ir.ui.view: account_followup.view_partner_inherit_followup_form
+---XML records in module 'account_followup'---
+NEW email.template: account_followup.email_template_account_followup_default
+NEW email.template: account_followup.email_template_account_followup_level0
+NEW email.template: account_followup.email_template_account_followup_level1
+NEW email.template: account_followup.email_template_account_followup_level2
+NEW ir.actions.act_window: account_followup.action_customer_followup
+NEW ir.actions.act_window: account_followup.action_customer_my_followup
+DEL ir.actions.act_window: account_followup.act_account_partner_account_move_all
+DEL ir.actions.act_window: account_followup.act_account_partner_account_move_payable_all
+DEL ir.actions.act_window: account_followup.action_account_followup_print_all
+DEL ir.actions.act_window: account_followup.action_view_account_followup_followup_form
+NEW ir.actions.act_window.view: account_followup.action_view_customer_followup_form
+NEW ir.actions.act_window.view: account_followup.action_view_customer_followup_tree
+DEL ir.actions.todo: account_followup.config_wizard_view_account_followup_followup_form
+NEW ir.ui.menu: account_followup.account_followup_s
+NEW ir.ui.menu: account_followup.menu_finance_followup
+NEW ir.ui.menu: account_followup.menu_manual_reconcile_followup
+NEW ir.ui.menu: account_followup.menu_sale_followup
+NEW ir.ui.menu: base.menu_sales_followup
+NEW ir.ui.view: account_followup.customer_followup_search_view
+NEW ir.ui.view: account_followup.customer_followup_tree
+NEW ir.ui.view: account_followup.view_account_followup_sending_results
+NEW ir.ui.view: account_followup.view_partner_inherit_followup_form
+DEL ir.ui.view: account_followup.view_account_followup_print_all
+DEL ir.ui.view: account_followup.view_account_followup_print_all_msg
+DEL ir.ui.view: account_followup.view_company_inherit_followup_form
+DEL ir.ui.view: account_followup.view_move_line_tree
+DEL res.company: base.main_company

@@ -1,17 +1,18 @@
----sale_crm---
+---Fields in module 'sale_crm'---
 sale_crm     / account.invoice          / section_id (many2one)         : NEW relation: crm.case.section
 sale_crm     / account.invoice.report   / section_id (many2one)         : NEW relation: crm.case.section
 sale_crm     / res.users                / default_section_id (many2one) : NEW relation: crm.case.section
 sale_crm     / sale.order               / categ_id (many2one)           : DEL relation: crm.case.categ
 sale_crm     / sale.order               / categ_ids (many2many)         : NEW relation: crm.case.categ
-deleted xml-id of model ir.ui.menu: base.menu_base_partner
-deleted xml-id of model ir.ui.view: sale_crm.board_crm_form_inherit_replace1
-deleted xml-id of model ir.ui.view: sale_crm.board_crm_form_inherit_replace3
-new xml-id of model ir.ui.view: sale_crm.account_invoice_form
-new xml-id of model ir.ui.view: sale_crm.account_invoice_groupby_inherit
-new xml-id of model ir.ui.view: sale_crm.account_invoice_report_tree
-new xml-id of model ir.ui.view: sale_crm.account_invoice_tree
-new xml-id of model ir.ui.view: sale_crm.res_user_form
-new xml-id of model ir.ui.view: sale_crm.view_users_form_preferences
-new xml-id of model mail.message.subtype: sale_crm.mt_salesteam_order_confirmed
-new xml-id of model mail.message.subtype: sale_crm.mt_salesteam_order_sent
+---XML records in module 'sale_crm'---
+DEL ir.ui.menu: base.menu_base_partner
+NEW ir.ui.view: sale_crm.account_invoice_form
+NEW ir.ui.view: sale_crm.account_invoice_groupby_inherit
+NEW ir.ui.view: sale_crm.account_invoice_report_tree
+NEW ir.ui.view: sale_crm.account_invoice_tree
+NEW ir.ui.view: sale_crm.res_user_form
+NEW ir.ui.view: sale_crm.view_users_form_preferences
+DEL ir.ui.view: sale_crm.board_crm_form_inherit_replace1
+DEL ir.ui.view: sale_crm.board_crm_form_inherit_replace3
+NEW mail.message.subtype: sale_crm.mt_salesteam_order_confirmed
+NEW mail.message.subtype: sale_crm.mt_salesteam_order_sent

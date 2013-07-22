@@ -1,4 +1,4 @@
----project_issue---
+---Fields in module 'project_issue'---
 project_issue / account.analytic.account / use_issues (boolean)          : NEW 
 project_issue / project.issue            / categ_id (many2one)           : DEL relation: crm.case.categ
 project_issue / project.issue            / categ_ids (many2many)         : NEW relation: project.category
@@ -11,32 +11,33 @@ project_issue / project.issue.report     / categ_id (many2one)           : DEL r
 project_issue / project.issue.report     / stage_id (many2one)           : NEW relation: project.task.type
 project_issue / project.issue.report     / type_id (many2one)            : DEL relation: project.task.type
 project_issue / project.project          / reply_to (char)               : DEL 
-deleted xml-id of model ir.actions.act_window: project_issue.action_project_issue_graph_stage
-deleted xml-id of model ir.actions.act_window: project_issue.action_project_issue_graph_state
-deleted xml-id of model ir.actions.act_window: project_issue.action_view_current_project_issue_tree
-deleted xml-id of model ir.actions.act_window: project_issue.action_view_my_open_project_issue_tree
-deleted xml-id of model ir.actions.act_window: project_issue.action_view_pending_project_issue_tree
-deleted xml-id of model ir.actions.act_window: project_issue.open_board_project_issue
-deleted xml-id of model ir.model.access: project_issue.access_mail_message_issue_project_user
-deleted xml-id of model ir.model.access: project_issue.access_mail_message_project_manager
-deleted xml-id of model ir.ui.menu: project_issue.menu_deshboard_project_issue
-deleted xml-id of model ir.ui.view: project_issue.board_project_issue_form
-deleted xml-id of model ir.ui.view: project_issue.view_my_open_project_issue_graph
-deleted xml-id of model ir.ui.view: project_issue.view_project_issue_graph_stage
-new xml-id of model ir.actions.todo: base.open_menu
-new xml-id of model ir.model.access: project_issue.access_project_issue_manager
-new xml-id of model ir.model.access: project_issue.access_project_issue_salesman
-new xml-id of model ir.ui.view: project_issue.analytic_account_inherited_issue_form
-new xml-id of model ir.ui.view: project_issue.view_config_settings
-new xml-id of model ir.ui.view: project_issue.view_project_kanban_inherited
-new xml-id of model mail.message.subtype: project_issue.mt_issue_blocked
-new xml-id of model mail.message.subtype: project_issue.mt_issue_closed
-new xml-id of model mail.message.subtype: project_issue.mt_issue_new
-new xml-id of model mail.message.subtype: project_issue.mt_issue_stage
-new xml-id of model mail.message.subtype: project_issue.mt_issue_started
-new xml-id of model mail.message.subtype: project_issue.mt_project_issue_blocked
-new xml-id of model mail.message.subtype: project_issue.mt_project_issue_closed
-new xml-id of model mail.message.subtype: project_issue.mt_project_issue_new
-new xml-id of model mail.message.subtype: project_issue.mt_project_issue_stage
-new xml-id of model mail.message.subtype: project_issue.mt_project_issue_started
-new xml-id of model mail.message: project_issue.module_install_notification
+---XML records in module 'project_issue'---
+DEL ir.actions.act_window: project_issue.action_project_issue_graph_stage
+DEL ir.actions.act_window: project_issue.action_project_issue_graph_state
+DEL ir.actions.act_window: project_issue.action_view_current_project_issue_tree
+DEL ir.actions.act_window: project_issue.action_view_my_open_project_issue_tree
+DEL ir.actions.act_window: project_issue.action_view_pending_project_issue_tree
+DEL ir.actions.act_window: project_issue.open_board_project_issue
+NEW ir.actions.todo: base.open_menu
+NEW ir.model.access: project_issue.access_project_issue_manager
+NEW ir.model.access: project_issue.access_project_issue_salesman
+DEL ir.model.access: project_issue.access_mail_message_issue_project_user
+DEL ir.model.access: project_issue.access_mail_message_project_manager
+DEL ir.ui.menu: project_issue.menu_deshboard_project_issue
+NEW ir.ui.view: project_issue.analytic_account_inherited_issue_form
+NEW ir.ui.view: project_issue.view_config_settings
+NEW ir.ui.view: project_issue.view_project_kanban_inherited
+DEL ir.ui.view: project_issue.board_project_issue_form
+DEL ir.ui.view: project_issue.view_my_open_project_issue_graph
+DEL ir.ui.view: project_issue.view_project_issue_graph_stage
+NEW mail.message: project_issue.module_install_notification
+NEW mail.message.subtype: project_issue.mt_issue_blocked
+NEW mail.message.subtype: project_issue.mt_issue_closed
+NEW mail.message.subtype: project_issue.mt_issue_new
+NEW mail.message.subtype: project_issue.mt_issue_stage
+NEW mail.message.subtype: project_issue.mt_issue_started
+NEW mail.message.subtype: project_issue.mt_project_issue_blocked
+NEW mail.message.subtype: project_issue.mt_project_issue_closed
+NEW mail.message.subtype: project_issue.mt_project_issue_new
+NEW mail.message.subtype: project_issue.mt_project_issue_stage
+NEW mail.message.subtype: project_issue.mt_project_issue_started
