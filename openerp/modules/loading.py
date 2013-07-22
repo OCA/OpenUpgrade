@@ -172,8 +172,11 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
         if not model._name: # new in 6.1
             return
 
-        # persistent models only
-        if isinstance(model, osv.orm.TransientModel):
+        # persistent models only. Note that transient models that
+        # inherit from persistent models cause those models to be
+        # an instance of TransientModel too (e.g. email.template)
+        # Therefore, check for a negation of Model instantion
+        if not isinstance(model, osv.orm.Model):
             return
 
         model_registry = local_registry.setdefault(
