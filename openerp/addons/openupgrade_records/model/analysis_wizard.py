@@ -125,13 +125,14 @@ class openupgrade_analysis_wizard(osv.osv_memory):
         modules = dict([(x['name'], x) for x in module_obj.read(cr, uid, module_ids)])
         general = ''
         for key in keys:
-            contents = "---%s---\n" % key
+            contents = "---Fields in module '%s'---\n" % key
             if key in res:
                 contents += '\n'.join([unicode(line) for line in sorted(res[key])])
                 if res[key]:
                     contents += '\n'
+            contents += "---XML records in module '%s'---\n" % key
             if key in res_xml:
-                contents += '\n'.join([unicode(line) for line in sorted(res_xml[key])])
+                contents += '\n'.join([unicode(line) for line in res_xml[key]])
                 if res_xml[key]:
                     contents += '\n'
             if key == 'general':
