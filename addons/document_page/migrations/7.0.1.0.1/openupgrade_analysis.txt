@@ -1,4 +1,4 @@
----document_page---
+---Fields in module 'document_page'---
 document_page / document.page            / child_ids (one2many)          : NEW relation: document.page
 document_page / document.page            / content (text)                : NEW 
 document_page / document.page            / create_date (datetime)        : NEW 
@@ -15,66 +15,67 @@ document_page / document.page.history    / create_date (datetime)        : NEW
 document_page / document.page.history    / create_uid (many2one)         : NEW relation: res.users
 document_page / document.page.history    / page_id (many2one)            : NEW relation: document.page
 document_page / document.page.history    / summary (char)                : NEW 
-deleted xml-id of model ir.actions.act_window: wiki.act_wiki_group_open
-deleted xml-id of model ir.actions.act_window: wiki.act_wiki_wiki_history
-deleted xml-id of model ir.actions.act_window: wiki.action_history
-deleted xml-id of model ir.actions.act_window: wiki.action_view_wiki_make_index
-deleted xml-id of model ir.actions.act_window: wiki.action_view_wiki_make_index_values
-deleted xml-id of model ir.actions.act_window: wiki.action_view_wiki_show_diff
-deleted xml-id of model ir.actions.act_window: wiki.action_view_wiki_show_diff_values
-deleted xml-id of model ir.actions.act_window: wiki.action_view_wiki_wiki_page_open
-deleted xml-id of model ir.actions.act_window: wiki.action_wiki
-deleted xml-id of model ir.actions.act_window: wiki.action_wiki_create_menu
-deleted xml-id of model ir.actions.act_window: wiki.action_wiki_groups
-deleted xml-id of model ir.actions.act_window: wiki.action_wiki_groups_browse
-deleted xml-id of model ir.actions.act_window: wiki.action_wiki_review
-deleted xml-id of model ir.model.access: wiki.access_wiki_wiki_sale_manager
-deleted xml-id of model ir.model.access: wiki.wiki_groups
-deleted xml-id of model ir.model.access: wiki.wiki_groups_all
-deleted xml-id of model ir.model.access: wiki.wiki_wiki
-deleted xml-id of model ir.model.access: wiki.wiki_wiki_all
-deleted xml-id of model ir.model.access: wiki.wiki_wiki_history
-deleted xml-id of model ir.model.access: wiki.wiki_wiki_user
-deleted xml-id of model ir.ui.menu: knowledge.menu_document_configuration
-deleted xml-id of model ir.ui.menu: wiki.menu_action_wiki_groups
-deleted xml-id of model ir.ui.menu: wiki.menu_action_wiki_wiki
-deleted xml-id of model ir.ui.menu: wiki.menu_wiki_configuration
-deleted xml-id of model ir.ui.view: wiki.view_wiki_create_menu
-deleted xml-id of model ir.ui.view: wiki.view_wiki_filter
-deleted xml-id of model ir.ui.view: wiki.view_wiki_form
-deleted xml-id of model ir.ui.view: wiki.view_wiki_history_tree
-deleted xml-id of model ir.ui.view: wiki.view_wiki_make_index
-deleted xml-id of model ir.ui.view: wiki.view_wiki_show_diff
-deleted xml-id of model ir.ui.view: wiki.view_wiki_tree
-deleted xml-id of model ir.ui.view: wiki.view_wiki_tree_children
-deleted xml-id of model ir.ui.view: wiki.view_wiki_wiki_page_open
-deleted xml-id of model ir.ui.view: wiki.wiki_group_form
-deleted xml-id of model ir.ui.view: wiki.wiki_group_tree
-deleted xml-id of model ir.ui.view: wiki.wiki_history_form
-deleted xml-id of model ir.values: wiki.ir_open_wiki_pages
-deleted xml-id of model wiki.groups: wiki.wiki_groups_wikiformatting0
-deleted xml-id of model wiki.wiki: wiki.wiki_wiki_main
-deleted xml-id of model wiki.wiki: wiki.wiki_wiki_quickstart0
-new xml-id of model ir.actions.act_window: document_page.action_category
-new xml-id of model ir.actions.act_window: document_page.action_history
-new xml-id of model ir.actions.act_window: document_page.action_page
-new xml-id of model ir.actions.act_window: document_page.action_related_page_create_menu
-new xml-id of model ir.actions.act_window: document_page.action_related_page_history
-new xml-id of model ir.actions.act_window: document_page.action_view_wiki_show_diff
-new xml-id of model ir.actions.act_window: document_page.action_view_wiki_show_diff_values
-new xml-id of model ir.actions.act_window: document_page.action_wiki_create_menu
-new xml-id of model ir.model.access: document_page.document_page
-new xml-id of model ir.model.access: document_page.document_page_all
-new xml-id of model ir.model.access: document_page.document_page_history
-new xml-id of model ir.ui.menu: document_page.menu_category
-new xml-id of model ir.ui.menu: document_page.menu_page
-new xml-id of model ir.ui.menu: document_page.menu_page_history
-new xml-id of model ir.ui.menu: document_page.menu_wiki
-new xml-id of model ir.ui.view: document_page.view_wiki_create_menu
-new xml-id of model ir.ui.view: document_page.view_wiki_filter
-new xml-id of model ir.ui.view: document_page.view_wiki_form
-new xml-id of model ir.ui.view: document_page.view_wiki_history_tree
-new xml-id of model ir.ui.view: document_page.view_wiki_show_diff
-new xml-id of model ir.ui.view: document_page.view_wiki_tree
-new xml-id of model ir.ui.view: document_page.view_wiki_tree_children
-new xml-id of model ir.ui.view: document_page.wiki_history_form
+---XML records in module 'document_page'---
+NEW ir.actions.act_window: document_page.action_category
+NEW ir.actions.act_window: document_page.action_history
+NEW ir.actions.act_window: document_page.action_page
+NEW ir.actions.act_window: document_page.action_related_page_create_menu
+NEW ir.actions.act_window: document_page.action_related_page_history
+NEW ir.actions.act_window: document_page.action_view_wiki_show_diff
+NEW ir.actions.act_window: document_page.action_view_wiki_show_diff_values
+NEW ir.actions.act_window: document_page.action_wiki_create_menu
+DEL ir.actions.act_window: wiki.act_wiki_group_open
+DEL ir.actions.act_window: wiki.act_wiki_wiki_history
+DEL ir.actions.act_window: wiki.action_history
+DEL ir.actions.act_window: wiki.action_view_wiki_make_index
+DEL ir.actions.act_window: wiki.action_view_wiki_make_index_values
+DEL ir.actions.act_window: wiki.action_view_wiki_show_diff
+DEL ir.actions.act_window: wiki.action_view_wiki_show_diff_values
+DEL ir.actions.act_window: wiki.action_view_wiki_wiki_page_open
+DEL ir.actions.act_window: wiki.action_wiki
+DEL ir.actions.act_window: wiki.action_wiki_create_menu
+DEL ir.actions.act_window: wiki.action_wiki_groups
+DEL ir.actions.act_window: wiki.action_wiki_groups_browse
+DEL ir.actions.act_window: wiki.action_wiki_review
+NEW ir.model.access: document_page.document_page
+NEW ir.model.access: document_page.document_page_all
+NEW ir.model.access: document_page.document_page_history
+DEL ir.model.access: wiki.access_wiki_wiki_sale_manager
+DEL ir.model.access: wiki.wiki_groups
+DEL ir.model.access: wiki.wiki_groups_all
+DEL ir.model.access: wiki.wiki_wiki
+DEL ir.model.access: wiki.wiki_wiki_all
+DEL ir.model.access: wiki.wiki_wiki_history
+DEL ir.model.access: wiki.wiki_wiki_user
+NEW ir.ui.menu: document_page.menu_category
+NEW ir.ui.menu: document_page.menu_page
+NEW ir.ui.menu: document_page.menu_page_history
+NEW ir.ui.menu: document_page.menu_wiki
+DEL ir.ui.menu: knowledge.menu_document_configuration
+DEL ir.ui.menu: wiki.menu_action_wiki_groups
+DEL ir.ui.menu: wiki.menu_action_wiki_wiki
+DEL ir.ui.menu: wiki.menu_wiki_configuration
+NEW ir.ui.view: document_page.view_wiki_create_menu
+NEW ir.ui.view: document_page.view_wiki_filter
+NEW ir.ui.view: document_page.view_wiki_form
+NEW ir.ui.view: document_page.view_wiki_history_tree
+NEW ir.ui.view: document_page.view_wiki_show_diff
+NEW ir.ui.view: document_page.view_wiki_tree
+NEW ir.ui.view: document_page.view_wiki_tree_children
+NEW ir.ui.view: document_page.wiki_history_form
+DEL ir.ui.view: wiki.view_wiki_create_menu
+DEL ir.ui.view: wiki.view_wiki_filter
+DEL ir.ui.view: wiki.view_wiki_form
+DEL ir.ui.view: wiki.view_wiki_history_tree
+DEL ir.ui.view: wiki.view_wiki_make_index
+DEL ir.ui.view: wiki.view_wiki_show_diff
+DEL ir.ui.view: wiki.view_wiki_tree
+DEL ir.ui.view: wiki.view_wiki_tree_children
+DEL ir.ui.view: wiki.view_wiki_wiki_page_open
+DEL ir.ui.view: wiki.wiki_group_form
+DEL ir.ui.view: wiki.wiki_group_tree
+DEL ir.ui.view: wiki.wiki_history_form
+DEL ir.values: wiki.ir_open_wiki_pages
+DEL wiki.groups: wiki.wiki_groups_wikiformatting0
+DEL wiki.wiki: wiki.wiki_wiki_main
+DEL wiki.wiki: wiki.wiki_wiki_quickstart0

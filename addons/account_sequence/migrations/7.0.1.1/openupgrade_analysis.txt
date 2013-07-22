@@ -1,8 +1,9 @@
----account_sequence---
-deleted xml-id of model account.journal.column: account_sequence.bank_col3
-deleted xml-id of model account.journal.column: account_sequence.bank_col3_multi
-deleted xml-id of model account.journal.column: account_sequence.journal_col1
-deleted xml-id of model account.journal.column: account_sequence.sp_journal_col3
-deleted xml-id of model account.journal.column: account_sequence.sp_refund_journal_col3
-new xml-id of model ir.sequence.type: account_sequence.sequence_journal
-new xml-id of model ir.sequence: account_sequence.sequence_journal_seq
+---Fields in module 'account_sequence'---
+---XML records in module 'account_sequence'---
+DEL account.journal.column: account_sequence.bank_col3
+DEL account.journal.column: account_sequence.bank_col3_multi
+DEL account.journal.column: account_sequence.journal_col1
+DEL account.journal.column: account_sequence.sp_journal_col3
+DEL account.journal.column: account_sequence.sp_refund_journal_col3
+NEW ir.sequence: account_sequence.sequence_journal_seq
+NEW ir.sequence.type: account_sequence.sequence_journal

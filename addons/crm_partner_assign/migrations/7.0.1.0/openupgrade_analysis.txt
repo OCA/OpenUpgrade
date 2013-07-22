@@ -1,6 +1,7 @@
----crm_partner_assign---
+---Fields in module 'crm_partner_assign'---
 crm_partner_assign / crm.lead.report.assign   / categ_id (many2one)           : DEL relation: crm.case.categ
-deleted xml-id of model ir.ui.view: crm_partner_assign.view_res_partner_filter_group_activation
-new xml-id of model ir.ui.view: crm_partner_assign.crm_lead_partner_filter
-new xml-id of model ir.ui.view: crm_partner_assign.view_crm_lead_geo_assign_form
-new xml-id of model ir.ui.view: crm_partner_assign.view_crm_lead_geo_assign_tree
+---XML records in module 'crm_partner_assign'---
+NEW ir.ui.view: crm_partner_assign.crm_lead_partner_filter
+NEW ir.ui.view: crm_partner_assign.view_crm_lead_geo_assign_form
+NEW ir.ui.view: crm_partner_assign.view_crm_lead_geo_assign_tree
+DEL ir.ui.view: crm_partner_assign.view_res_partner_filter_group_activation

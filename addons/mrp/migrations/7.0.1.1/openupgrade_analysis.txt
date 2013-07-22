@@ -1,42 +1,43 @@
----mrp---
+---Fields in module 'mrp'---
 mrp          / mrp.bom                  / message_ids (one2many)        : NEW relation: mail.message
 mrp          / mrp.bom                  / revision_ids (one2many)       : DEL relation: mrp.bom.revision
 mrp          / mrp.production           / message_ids (one2many)        : NEW relation: mail.message
 mrp          / mrp.production.workcenter.line / message_ids (one2many)        : NEW relation: mail.message
 mrp          / procurement.order        / production_id (many2one)      : NEW relation: mrp.production
-deleted xml-id of model ir.actions.act_window: mrp.act_product_product_2_mrp_bom
-deleted xml-id of model ir.actions.act_window: mrp.action_configure_workcenter
-deleted xml-id of model ir.actions.act_window: mrp.product_form_config_action
-deleted xml-id of model ir.actions.todo.category: mrp.category_mrp_config
-deleted xml-id of model ir.actions.todo: mrp.config_wizard_res_product_installer
-deleted xml-id of model ir.actions.todo: mrp.todo_action_configure_workcenter
-deleted xml-id of model ir.actions.todo: mrp.todo_action_create_bill_of_materials
-deleted xml-id of model ir.model.access: mrp.access_mrp_bom_revision
-deleted xml-id of model ir.model.access: mrp.access_mrp_bom_revision_manager
-deleted xml-id of model ir.model.access: mrp.access_procurement_stock_worker
-deleted xml-id of model ir.model.access: mrp.access_res_partner_address
-deleted xml-id of model ir.model.access: mrp.access_stock_warehouse_orderpoint_manager
-deleted xml-id of model ir.ui.menu: mrp.menus_dash_mrp
-deleted xml-id of model ir.ui.view: mrp.mrp_bom_revision_form
-deleted xml-id of model ir.ui.view: mrp.mrp_bom_revision_tree
-deleted xml-id of model ir.ui.view: mrp.mrp_production_lot_form_view
-deleted xml-id of model ir.ui.view: mrp.mrp_production_lot_tree_view
-deleted xml-id of model workflow.transition: mrp.trans_product_check_produce
-deleted xml-id of model workflow.transition: procurement.trans_confirm_confirm_wait
-deleted xml-id of model workflow.transition: procurement.trans_produce_make_done
-new xml-id of model ir.actions.act_window: mrp.action_mrp_configuration
-new xml-id of model ir.actions.act_window: mrp.product_open_bom
-new xml-id of model ir.actions.act_window: mrp.product_supply_method_produce
-new xml-id of model ir.actions.client: mrp.action_client_mrp_menu
-new xml-id of model ir.actions.todo: base.open_menu
-new xml-id of model ir.model.access: mrp.access_mrp_bom_purchase_manager
-new xml-id of model ir.model.access: mrp.access_stock_warehouse_orderpoint_user
-new xml-id of model ir.ui.menu: base.menu_mrp_config
-new xml-id of model ir.ui.menu: mrp.menu_mrp_product_form
-new xml-id of model ir.ui.view: mrp.product_form_view_bom_button
-new xml-id of model ir.ui.view: mrp.product_product_normal_form_supply_view
-new xml-id of model ir.ui.view: mrp.view_mrp_config
-new xml-id of model mail.message: mrp.module_install_notification
-new xml-id of model res.groups: mrp.group_mrp_routings
-new xml-id of model workflow.transition: mrp.trans_confirm_mto_need_production
-new xml-id of model workflow.transition: mrp.trans_produce_finished_prod
+---XML records in module 'mrp'---
+NEW ir.actions.act_window: mrp.action_mrp_configuration
+NEW ir.actions.act_window: mrp.product_open_bom
+NEW ir.actions.act_window: mrp.product_supply_method_produce
+DEL ir.actions.act_window: mrp.act_product_product_2_mrp_bom
+DEL ir.actions.act_window: mrp.action_configure_workcenter
+DEL ir.actions.act_window: mrp.product_form_config_action
+NEW ir.actions.client: mrp.action_client_mrp_menu
+NEW ir.actions.todo: base.open_menu
+DEL ir.actions.todo: mrp.config_wizard_res_product_installer
+DEL ir.actions.todo: mrp.todo_action_configure_workcenter
+DEL ir.actions.todo: mrp.todo_action_create_bill_of_materials
+DEL ir.actions.todo.category: mrp.category_mrp_config
+NEW ir.model.access: mrp.access_mrp_bom_purchase_manager
+NEW ir.model.access: mrp.access_stock_warehouse_orderpoint_user
+DEL ir.model.access: mrp.access_mrp_bom_revision
+DEL ir.model.access: mrp.access_mrp_bom_revision_manager
+DEL ir.model.access: mrp.access_procurement_stock_worker
+DEL ir.model.access: mrp.access_res_partner_address
+DEL ir.model.access: mrp.access_stock_warehouse_orderpoint_manager
+NEW ir.ui.menu: base.menu_mrp_config
+NEW ir.ui.menu: mrp.menu_mrp_product_form
+DEL ir.ui.menu: mrp.menus_dash_mrp
+NEW ir.ui.view: mrp.product_form_view_bom_button
+NEW ir.ui.view: mrp.product_product_normal_form_supply_view
+NEW ir.ui.view: mrp.view_mrp_config
+DEL ir.ui.view: mrp.mrp_bom_revision_form
+DEL ir.ui.view: mrp.mrp_bom_revision_tree
+DEL ir.ui.view: mrp.mrp_production_lot_form_view
+DEL ir.ui.view: mrp.mrp_production_lot_tree_view
+NEW mail.message: mrp.module_install_notification
+NEW res.groups: mrp.group_mrp_routings
+NEW workflow.transition: mrp.trans_confirm_mto_need_production
+NEW workflow.transition: mrp.trans_produce_finished_prod
+DEL workflow.transition: mrp.trans_product_check_produce
+DEL workflow.transition: procurement.trans_confirm_confirm_wait
+DEL workflow.transition: procurement.trans_produce_make_done
