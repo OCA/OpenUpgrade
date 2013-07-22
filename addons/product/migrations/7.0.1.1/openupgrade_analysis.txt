@@ -1,4 +1,4 @@
----product---
+---Fields in module 'product'---
 product      / product.product          / image (binary)                : NEW 
 product      / product.product          / message_ids (one2many)        : NEW relation: mail.message
 product      / product.product          / product_image (binary)        : DEL 
@@ -10,29 +10,30 @@ product      / product.template         / purchase_ok (boolean)         : module
 product      / product.template         / sale_delay (float)            : module is now 'stock' ('product')
 product      / product.template         / supply_method (selection)     : module is now 'procurement' ('product')
 product      / product.template         / type (selection)              : selection_keys is now '['consu', 'service']' ('['consu', 'product', 'service']')
-deleted xml-id of model decimal.precision: product.decimal_purchase
-deleted xml-id of model decimal.precision: product.decimal_sale
-deleted xml-id of model ir.actions.act_window: product.product_form_config_action
-deleted xml-id of model ir.actions.todo: product.config_wizard_res_product_installer
-deleted xml-id of model product.category: product.cat0
-deleted xml-id of model product.product: product.product_consultant
-deleted xml-id of model product.uom: product.uom_day
-deleted xml-id of model product.uom: product.uom_hour
-new xml-id of model decimal.precision: product.decimal_discount
-new xml-id of model decimal.precision: product.decimal_price
-new xml-id of model ir.actions.act_window.view: product.open_view_product_kanban1
-new xml-id of model ir.model.access: product.access_product_category_sale_manager
-new xml-id of model product.category: product.product_category_1
-new xml-id of model product.category: product.product_category_all
-new xml-id of model product.product: product.product_product_consultant
-new xml-id of model product.uom.categ: product.product_uom_categ_vol
-new xml-id of model product.uom: product.product_uom_day
-new xml-id of model product.uom: product.product_uom_dozen
-new xml-id of model product.uom: product.product_uom_hour
-new xml-id of model product.uom: product.product_uom_litre
-new xml-id of model res.groups: product.group_costing_method
-new xml-id of model res.groups: product.group_mrp_properties
-new xml-id of model res.groups: product.group_purchase_pricelist
-new xml-id of model res.groups: product.group_sale_pricelist
-new xml-id of model res.groups: product.group_stock_packaging
-new xml-id of model res.groups: product.group_uom
+---XML records in module 'product'---
+NEW decimal.precision: product.decimal_discount
+NEW decimal.precision: product.decimal_price
+DEL decimal.precision: product.decimal_purchase
+DEL decimal.precision: product.decimal_sale
+DEL ir.actions.act_window: product.product_form_config_action
+NEW ir.actions.act_window.view: product.open_view_product_kanban1
+DEL ir.actions.todo: product.config_wizard_res_product_installer
+NEW ir.model.access: product.access_product_category_sale_manager
+NEW product.category: product.product_category_1
+NEW product.category: product.product_category_all
+DEL product.category: product.cat0
+NEW product.product: product.product_product_consultant
+DEL product.product: product.product_consultant
+NEW product.uom: product.product_uom_day
+NEW product.uom: product.product_uom_dozen
+NEW product.uom: product.product_uom_hour
+NEW product.uom: product.product_uom_litre
+DEL product.uom: product.uom_day
+DEL product.uom: product.uom_hour
+NEW product.uom.categ: product.product_uom_categ_vol
+NEW res.groups: product.group_costing_method
+NEW res.groups: product.group_mrp_properties
+NEW res.groups: product.group_purchase_pricelist
+NEW res.groups: product.group_sale_pricelist
+NEW res.groups: product.group_stock_packaging
+NEW res.groups: product.group_uom

@@ -1,10 +1,11 @@
----survey---
+---Fields in module 'survey'---
 survey       / survey                   / color (integer)               : NEW 
-deleted xml-id of model ir.model.access: survey.access_survey_res_partner_address_user
-deleted xml-id of model ir.ui.menu: survey.menu_answer_surveys
-deleted xml-id of model ir.ui.menu: survey.menu_define_survey
-deleted xml-id of model ir.ui.menu: survey.menu_run_survey_form
-new xml-id of model ir.actions.act_window: survey.act_survey_request
-new xml-id of model ir.ui.menu: base.menu_tools
-new xml-id of model ir.ui.menu: base.next_id_10
-new xml-id of model ir.ui.view: survey.view_survey_kanban
+---XML records in module 'survey'---
+NEW ir.actions.act_window: survey.act_survey_request
+DEL ir.model.access: survey.access_survey_res_partner_address_user
+NEW ir.ui.menu: base.menu_tools
+NEW ir.ui.menu: base.next_id_10
+DEL ir.ui.menu: survey.menu_answer_surveys
+DEL ir.ui.menu: survey.menu_define_survey
+DEL ir.ui.menu: survey.menu_run_survey_form
+NEW ir.ui.view: survey.view_survey_kanban

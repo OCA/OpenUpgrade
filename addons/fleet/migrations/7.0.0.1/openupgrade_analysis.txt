@@ -1,4 +1,4 @@
----fleet---
+---Fields in module 'fleet'---
 fleet        / fleet.contract.state     / name (char)                   : NEW required: required
 fleet        / fleet.service.type       / category (selection)          : NEW required: required, selection_keys: ['both', 'contract', 'service']
 fleet        / fleet.service.type       / name (char)                   : NEW required: required
@@ -73,301 +73,302 @@ fleet        / fleet.vehicle.odometer   / vehicle_id (many2one)         : NEW re
 fleet        / fleet.vehicle.state      / name (char)                   : NEW required: required
 fleet        / fleet.vehicle.state      / sequence (integer)            : NEW 
 fleet        / fleet.vehicle.tag        / name (char)                   : NEW required: required
-new xml-id of model fleet.service.type: fleet.type_contract_leasing
-new xml-id of model fleet.service.type: fleet.type_contract_omnium
-new xml-id of model fleet.service.type: fleet.type_contract_repairing
-new xml-id of model fleet.service.type: fleet.type_service_1
-new xml-id of model fleet.service.type: fleet.type_service_10
-new xml-id of model fleet.service.type: fleet.type_service_11
-new xml-id of model fleet.service.type: fleet.type_service_12
-new xml-id of model fleet.service.type: fleet.type_service_13
-new xml-id of model fleet.service.type: fleet.type_service_14
-new xml-id of model fleet.service.type: fleet.type_service_15
-new xml-id of model fleet.service.type: fleet.type_service_16
-new xml-id of model fleet.service.type: fleet.type_service_17
-new xml-id of model fleet.service.type: fleet.type_service_18
-new xml-id of model fleet.service.type: fleet.type_service_19
-new xml-id of model fleet.service.type: fleet.type_service_2
-new xml-id of model fleet.service.type: fleet.type_service_20
-new xml-id of model fleet.service.type: fleet.type_service_21
-new xml-id of model fleet.service.type: fleet.type_service_22
-new xml-id of model fleet.service.type: fleet.type_service_23
-new xml-id of model fleet.service.type: fleet.type_service_24
-new xml-id of model fleet.service.type: fleet.type_service_25
-new xml-id of model fleet.service.type: fleet.type_service_26
-new xml-id of model fleet.service.type: fleet.type_service_27
-new xml-id of model fleet.service.type: fleet.type_service_28
-new xml-id of model fleet.service.type: fleet.type_service_29
-new xml-id of model fleet.service.type: fleet.type_service_3
-new xml-id of model fleet.service.type: fleet.type_service_30
-new xml-id of model fleet.service.type: fleet.type_service_31
-new xml-id of model fleet.service.type: fleet.type_service_32
-new xml-id of model fleet.service.type: fleet.type_service_33
-new xml-id of model fleet.service.type: fleet.type_service_34
-new xml-id of model fleet.service.type: fleet.type_service_35
-new xml-id of model fleet.service.type: fleet.type_service_36
-new xml-id of model fleet.service.type: fleet.type_service_37
-new xml-id of model fleet.service.type: fleet.type_service_38
-new xml-id of model fleet.service.type: fleet.type_service_39
-new xml-id of model fleet.service.type: fleet.type_service_4
-new xml-id of model fleet.service.type: fleet.type_service_40
-new xml-id of model fleet.service.type: fleet.type_service_41
-new xml-id of model fleet.service.type: fleet.type_service_42
-new xml-id of model fleet.service.type: fleet.type_service_43
-new xml-id of model fleet.service.type: fleet.type_service_44
-new xml-id of model fleet.service.type: fleet.type_service_45
-new xml-id of model fleet.service.type: fleet.type_service_46
-new xml-id of model fleet.service.type: fleet.type_service_47
-new xml-id of model fleet.service.type: fleet.type_service_48
-new xml-id of model fleet.service.type: fleet.type_service_49
-new xml-id of model fleet.service.type: fleet.type_service_5
-new xml-id of model fleet.service.type: fleet.type_service_50
-new xml-id of model fleet.service.type: fleet.type_service_51
-new xml-id of model fleet.service.type: fleet.type_service_52
-new xml-id of model fleet.service.type: fleet.type_service_53
-new xml-id of model fleet.service.type: fleet.type_service_6
-new xml-id of model fleet.service.type: fleet.type_service_7
-new xml-id of model fleet.service.type: fleet.type_service_8
-new xml-id of model fleet.service.type: fleet.type_service_9
-new xml-id of model fleet.service.type: fleet.type_service_refueling
-new xml-id of model fleet.service.type: fleet.type_service_service_1
-new xml-id of model fleet.service.type: fleet.type_service_service_10
-new xml-id of model fleet.service.type: fleet.type_service_service_11
-new xml-id of model fleet.service.type: fleet.type_service_service_12
-new xml-id of model fleet.service.type: fleet.type_service_service_13
-new xml-id of model fleet.service.type: fleet.type_service_service_14
-new xml-id of model fleet.service.type: fleet.type_service_service_15
-new xml-id of model fleet.service.type: fleet.type_service_service_16
-new xml-id of model fleet.service.type: fleet.type_service_service_17
-new xml-id of model fleet.service.type: fleet.type_service_service_18
-new xml-id of model fleet.service.type: fleet.type_service_service_19
-new xml-id of model fleet.service.type: fleet.type_service_service_2
-new xml-id of model fleet.service.type: fleet.type_service_service_3
-new xml-id of model fleet.service.type: fleet.type_service_service_5
-new xml-id of model fleet.service.type: fleet.type_service_service_6
-new xml-id of model fleet.service.type: fleet.type_service_service_7
-new xml-id of model fleet.service.type: fleet.type_service_service_8
-new xml-id of model fleet.service.type: fleet.type_service_service_9
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_abarth
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_acura
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_alfa
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_audi
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_austin
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_bentley
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_bmw
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_bugatti
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_buick
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_byd
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_cadillac
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_chevrolet
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_chrysler
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_citroen
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_corre la licorne
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_daewoo
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_dodge
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_ferrari
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_fiat
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_ford
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_holden
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_honda
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_hyundai
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_infiniti
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_isuzu
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_jaguar
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_jeep
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_kia
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_koenigsegg
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_lagonda
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_lamborghini
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_lancia
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_lander rover
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_lexus
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_lincoln
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_lotus
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_maserati
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_maybach
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_mazda
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_mercedes
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_mg
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_mini
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_mitsubishi
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_morgan
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_nissan
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_oldsmobile
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_opel
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_peugeot
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_pontiac
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_porsche
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_rambler
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_renault
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_rolls-royce
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_saab
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_scion
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_skoda
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_smart
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_steyr
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_subaru
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_tesla motors
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_toyota
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_trabant
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_volkswagen
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_volvo
-new xml-id of model fleet.vehicle.model.brand: fleet.brand_willys
-new xml-id of model fleet.vehicle.model: fleet.model_a1
-new xml-id of model fleet.vehicle.model: fleet.model_a3
-new xml-id of model fleet.vehicle.model: fleet.model_a4
-new xml-id of model fleet.vehicle.model: fleet.model_a5
-new xml-id of model fleet.vehicle.model: fleet.model_a6
-new xml-id of model fleet.vehicle.model: fleet.model_a7
-new xml-id of model fleet.vehicle.model: fleet.model_a8
-new xml-id of model fleet.vehicle.model: fleet.model_agila
-new xml-id of model fleet.vehicle.model: fleet.model_ampera
-new xml-id of model fleet.vehicle.model: fleet.model_antara
-new xml-id of model fleet.vehicle.model: fleet.model_astra
-new xml-id of model fleet.vehicle.model: fleet.model_astragtc
-new xml-id of model fleet.vehicle.model: fleet.model_classa
-new xml-id of model fleet.vehicle.model: fleet.model_classb
-new xml-id of model fleet.vehicle.model: fleet.model_classc
-new xml-id of model fleet.vehicle.model: fleet.model_classcl
-new xml-id of model fleet.vehicle.model: fleet.model_classcls
-new xml-id of model fleet.vehicle.model: fleet.model_classe
-new xml-id of model fleet.vehicle.model: fleet.model_classgl
-new xml-id of model fleet.vehicle.model: fleet.model_classglk
-new xml-id of model fleet.vehicle.model: fleet.model_classm
-new xml-id of model fleet.vehicle.model: fleet.model_classr
-new xml-id of model fleet.vehicle.model: fleet.model_classs
-new xml-id of model fleet.vehicle.model: fleet.model_classslk
-new xml-id of model fleet.vehicle.model: fleet.model_classsls
-new xml-id of model fleet.vehicle.model: fleet.model_combotour
-new xml-id of model fleet.vehicle.model: fleet.model_corsa
-new xml-id of model fleet.vehicle.model: fleet.model_insignia
-new xml-id of model fleet.vehicle.model: fleet.model_meriva
-new xml-id of model fleet.vehicle.model: fleet.model_mokka
-new xml-id of model fleet.vehicle.model: fleet.model_q3
-new xml-id of model fleet.vehicle.model: fleet.model_q5
-new xml-id of model fleet.vehicle.model: fleet.model_q7
-new xml-id of model fleet.vehicle.model: fleet.model_serie1
-new xml-id of model fleet.vehicle.model: fleet.model_serie3
-new xml-id of model fleet.vehicle.model: fleet.model_serie5
-new xml-id of model fleet.vehicle.model: fleet.model_serie6
-new xml-id of model fleet.vehicle.model: fleet.model_serie7
-new xml-id of model fleet.vehicle.model: fleet.model_seriehybrid
-new xml-id of model fleet.vehicle.model: fleet.model_seriem
-new xml-id of model fleet.vehicle.model: fleet.model_seriex
-new xml-id of model fleet.vehicle.model: fleet.model_seriez4
-new xml-id of model fleet.vehicle.model: fleet.model_tt
-new xml-id of model fleet.vehicle.model: fleet.model_zafira
-new xml-id of model fleet.vehicle.model: fleet.model_zafiratourer
-new xml-id of model fleet.vehicle.tag: fleet.vehicle_tag_break
-new xml-id of model fleet.vehicle.tag: fleet.vehicle_tag_compact
-new xml-id of model fleet.vehicle.tag: fleet.vehicle_tag_convertible
-new xml-id of model fleet.vehicle.tag: fleet.vehicle_tag_junior
-new xml-id of model fleet.vehicle.tag: fleet.vehicle_tag_leasing
-new xml-id of model fleet.vehicle.tag: fleet.vehicle_tag_purchased
-new xml-id of model fleet.vehicle.tag: fleet.vehicle_tag_sedan
-new xml-id of model fleet.vehicle.tag: fleet.vehicle_tag_senior
-new xml-id of model ir.actions.act_window: fleet.act_renew_contract
-new xml-id of model ir.actions.act_window: fleet.action_fleet_reporting_costs
-new xml-id of model ir.actions.act_window: fleet.action_fleet_reporting_costs_non_effective
-new xml-id of model ir.actions.act_window: fleet.action_fleet_vehicle_costs_graph
-new xml-id of model ir.actions.act_window: fleet.action_fleet_vehicle_kanban
-new xml-id of model ir.actions.act_window: fleet.action_fleet_vehicle_log_contract_graph
-new xml-id of model ir.actions.act_window: fleet.action_fleet_vehicle_log_fuel_graph
-new xml-id of model ir.actions.act_window: fleet.action_fleet_vehicle_log_services_graph
-new xml-id of model ir.actions.act_window: fleet.fleet_vehicle_act
-new xml-id of model ir.actions.act_window: fleet.fleet_vehicle_costs_act
-new xml-id of model ir.actions.act_window: fleet.fleet_vehicle_log_contract_act
-new xml-id of model ir.actions.act_window: fleet.fleet_vehicle_log_fuel_act
-new xml-id of model ir.actions.act_window: fleet.fleet_vehicle_log_services_act
-new xml-id of model ir.actions.act_window: fleet.fleet_vehicle_model_act
-new xml-id of model ir.actions.act_window: fleet.fleet_vehicle_model_brand_act
-new xml-id of model ir.actions.act_window: fleet.fleet_vehicle_odometer_act
-new xml-id of model ir.actions.act_window: fleet.fleet_vehicle_service_types_act
-new xml-id of model ir.actions.act_window: fleet.fleet_vehicle_state_act
-new xml-id of model ir.actions.act_window: fleet.open_board_fleet
-new xml-id of model ir.actions.client: fleet.action_fleet_menu
-new xml-id of model ir.actions.todo: base.open_menu
-new xml-id of model ir.cron: fleet.ir_cron_contract_costs_generator
-new xml-id of model ir.model.access: fleet.access_fleet_contract_state
-new xml-id of model ir.model.access: fleet.access_fleet_contract_state_user
-new xml-id of model ir.model.access: fleet.access_fleet_vehicle_cost
-new xml-id of model ir.model.access: fleet.access_fleet_vehicle_cost_user
-new xml-id of model ir.model.access: fleet.fleet_service_type_access_right
-new xml-id of model ir.model.access: fleet.fleet_service_type_access_right_user
-new xml-id of model ir.model.access: fleet.fleet_vehicle_access_right
-new xml-id of model ir.model.access: fleet.fleet_vehicle_access_right_user
-new xml-id of model ir.model.access: fleet.fleet_vehicle_log_contract_access_right
-new xml-id of model ir.model.access: fleet.fleet_vehicle_log_contract_access_right_user
-new xml-id of model ir.model.access: fleet.fleet_vehicle_log_fuel_access_right
-new xml-id of model ir.model.access: fleet.fleet_vehicle_log_services_access_right
-new xml-id of model ir.model.access: fleet.fleet_vehicle_log_services_access_right_user
-new xml-id of model ir.model.access: fleet.fleet_vehicle_model_access_right
-new xml-id of model ir.model.access: fleet.fleet_vehicle_model_access_right_user
-new xml-id of model ir.model.access: fleet.fleet_vehicle_model_brand_access_right
-new xml-id of model ir.model.access: fleet.fleet_vehicle_model_brand_access_right_user
-new xml-id of model ir.model.access: fleet.fleet_vehicle_odometer_access_right
-new xml-id of model ir.model.access: fleet.fleet_vehicle_state_access_right
-new xml-id of model ir.model.access: fleet.fleet_vehicle_state_access_right_user
-new xml-id of model ir.model.access: fleet.fleet_vehicle_tag_access_right
-new xml-id of model ir.model.access: fleet.fleet_vehicle_tag_access_right_user
-new xml-id of model ir.module.category: fleet.module_fleet_category
-new xml-id of model ir.rule: fleet.fleet_user_contract_visibility
-new xml-id of model ir.rule: fleet.fleet_user_contract_visibility_manager
-new xml-id of model ir.rule: fleet.fleet_user_cost_visibility
-new xml-id of model ir.rule: fleet.fleet_user_cost_visibility_manager
-new xml-id of model ir.rule: fleet.fleet_user_fuel_log_visibility
-new xml-id of model ir.rule: fleet.fleet_user_fuel_log_visibility_manager
-new xml-id of model ir.rule: fleet.fleet_user_odometer_visibility
-new xml-id of model ir.rule: fleet.fleet_user_odometer_visibility_manager
-new xml-id of model ir.rule: fleet.fleet_user_service_visibility
-new xml-id of model ir.rule: fleet.fleet_user_service_visibility_manager
-new xml-id of model ir.rule: fleet.fleet_user_vehicle_visibility
-new xml-id of model ir.rule: fleet.fleet_user_vehicle_visibility_manager
-new xml-id of model ir.ui.menu: fleet.fleet_configuration
-new xml-id of model ir.ui.menu: fleet.fleet_vehicle_costs_menu
-new xml-id of model ir.ui.menu: fleet.fleet_vehicle_log_contract_menu
-new xml-id of model ir.ui.menu: fleet.fleet_vehicle_log_fuel_menu
-new xml-id of model ir.ui.menu: fleet.fleet_vehicle_log_services_menu
-new xml-id of model ir.ui.menu: fleet.fleet_vehicle_menu
-new xml-id of model ir.ui.menu: fleet.fleet_vehicle_model_brand_menu
-new xml-id of model ir.ui.menu: fleet.fleet_vehicle_model_menu
-new xml-id of model ir.ui.menu: fleet.fleet_vehicle_odometer_menu
-new xml-id of model ir.ui.menu: fleet.fleet_vehicle_service_types_menu
-new xml-id of model ir.ui.menu: fleet.fleet_vehicle_state_menu
-new xml-id of model ir.ui.menu: fleet.fleet_vehicles
-new xml-id of model ir.ui.menu: fleet.menu_fleet_dashboard
-new xml-id of model ir.ui.menu: fleet.menu_fleet_reporting
-new xml-id of model ir.ui.menu: fleet.menu_fleet_reporting_costs
-new xml-id of model ir.ui.menu: fleet.menu_fleet_reporting_indicative_costs
-new xml-id of model ir.ui.menu: fleet.menu_root
-new xml-id of model ir.ui.view: fleet.board_fleet_form
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_costs_form
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_costs_graph
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_costs_search
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_costs_tree
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_form
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_kanban
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_log_contract_form
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_log_contract_graph
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_log_contract_tree
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_log_fuel_form
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_log_fuel_graph
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_log_fuel_tree
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_log_services_form
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_log_services_graph
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_log_services_tree
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_model_brand_form
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_model_brand_kanban
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_model_brand_tree
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_model_form
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_model_search
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_model_tree
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_odometer_form
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_odometer_graph
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_odometer_tree
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_search
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_service_types_tree
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_state_tree
-new xml-id of model ir.ui.view: fleet.fleet_vehicle_tree
-new xml-id of model res.groups: fleet.group_fleet_manager
-new xml-id of model res.groups: fleet.group_fleet_user
+---XML records in module 'fleet'---
+NEW fleet.service.type: fleet.type_contract_leasing
+NEW fleet.service.type: fleet.type_contract_omnium
+NEW fleet.service.type: fleet.type_contract_repairing
+NEW fleet.service.type: fleet.type_service_1
+NEW fleet.service.type: fleet.type_service_10
+NEW fleet.service.type: fleet.type_service_11
+NEW fleet.service.type: fleet.type_service_12
+NEW fleet.service.type: fleet.type_service_13
+NEW fleet.service.type: fleet.type_service_14
+NEW fleet.service.type: fleet.type_service_15
+NEW fleet.service.type: fleet.type_service_16
+NEW fleet.service.type: fleet.type_service_17
+NEW fleet.service.type: fleet.type_service_18
+NEW fleet.service.type: fleet.type_service_19
+NEW fleet.service.type: fleet.type_service_2
+NEW fleet.service.type: fleet.type_service_20
+NEW fleet.service.type: fleet.type_service_21
+NEW fleet.service.type: fleet.type_service_22
+NEW fleet.service.type: fleet.type_service_23
+NEW fleet.service.type: fleet.type_service_24
+NEW fleet.service.type: fleet.type_service_25
+NEW fleet.service.type: fleet.type_service_26
+NEW fleet.service.type: fleet.type_service_27
+NEW fleet.service.type: fleet.type_service_28
+NEW fleet.service.type: fleet.type_service_29
+NEW fleet.service.type: fleet.type_service_3
+NEW fleet.service.type: fleet.type_service_30
+NEW fleet.service.type: fleet.type_service_31
+NEW fleet.service.type: fleet.type_service_32
+NEW fleet.service.type: fleet.type_service_33
+NEW fleet.service.type: fleet.type_service_34
+NEW fleet.service.type: fleet.type_service_35
+NEW fleet.service.type: fleet.type_service_36
+NEW fleet.service.type: fleet.type_service_37
+NEW fleet.service.type: fleet.type_service_38
+NEW fleet.service.type: fleet.type_service_39
+NEW fleet.service.type: fleet.type_service_4
+NEW fleet.service.type: fleet.type_service_40
+NEW fleet.service.type: fleet.type_service_41
+NEW fleet.service.type: fleet.type_service_42
+NEW fleet.service.type: fleet.type_service_43
+NEW fleet.service.type: fleet.type_service_44
+NEW fleet.service.type: fleet.type_service_45
+NEW fleet.service.type: fleet.type_service_46
+NEW fleet.service.type: fleet.type_service_47
+NEW fleet.service.type: fleet.type_service_48
+NEW fleet.service.type: fleet.type_service_49
+NEW fleet.service.type: fleet.type_service_5
+NEW fleet.service.type: fleet.type_service_50
+NEW fleet.service.type: fleet.type_service_51
+NEW fleet.service.type: fleet.type_service_52
+NEW fleet.service.type: fleet.type_service_53
+NEW fleet.service.type: fleet.type_service_6
+NEW fleet.service.type: fleet.type_service_7
+NEW fleet.service.type: fleet.type_service_8
+NEW fleet.service.type: fleet.type_service_9
+NEW fleet.service.type: fleet.type_service_refueling
+NEW fleet.service.type: fleet.type_service_service_1
+NEW fleet.service.type: fleet.type_service_service_10
+NEW fleet.service.type: fleet.type_service_service_11
+NEW fleet.service.type: fleet.type_service_service_12
+NEW fleet.service.type: fleet.type_service_service_13
+NEW fleet.service.type: fleet.type_service_service_14
+NEW fleet.service.type: fleet.type_service_service_15
+NEW fleet.service.type: fleet.type_service_service_16
+NEW fleet.service.type: fleet.type_service_service_17
+NEW fleet.service.type: fleet.type_service_service_18
+NEW fleet.service.type: fleet.type_service_service_19
+NEW fleet.service.type: fleet.type_service_service_2
+NEW fleet.service.type: fleet.type_service_service_3
+NEW fleet.service.type: fleet.type_service_service_5
+NEW fleet.service.type: fleet.type_service_service_6
+NEW fleet.service.type: fleet.type_service_service_7
+NEW fleet.service.type: fleet.type_service_service_8
+NEW fleet.service.type: fleet.type_service_service_9
+NEW fleet.vehicle.model: fleet.model_a1
+NEW fleet.vehicle.model: fleet.model_a3
+NEW fleet.vehicle.model: fleet.model_a4
+NEW fleet.vehicle.model: fleet.model_a5
+NEW fleet.vehicle.model: fleet.model_a6
+NEW fleet.vehicle.model: fleet.model_a7
+NEW fleet.vehicle.model: fleet.model_a8
+NEW fleet.vehicle.model: fleet.model_agila
+NEW fleet.vehicle.model: fleet.model_ampera
+NEW fleet.vehicle.model: fleet.model_antara
+NEW fleet.vehicle.model: fleet.model_astra
+NEW fleet.vehicle.model: fleet.model_astragtc
+NEW fleet.vehicle.model: fleet.model_classa
+NEW fleet.vehicle.model: fleet.model_classb
+NEW fleet.vehicle.model: fleet.model_classc
+NEW fleet.vehicle.model: fleet.model_classcl
+NEW fleet.vehicle.model: fleet.model_classcls
+NEW fleet.vehicle.model: fleet.model_classe
+NEW fleet.vehicle.model: fleet.model_classgl
+NEW fleet.vehicle.model: fleet.model_classglk
+NEW fleet.vehicle.model: fleet.model_classm
+NEW fleet.vehicle.model: fleet.model_classr
+NEW fleet.vehicle.model: fleet.model_classs
+NEW fleet.vehicle.model: fleet.model_classslk
+NEW fleet.vehicle.model: fleet.model_classsls
+NEW fleet.vehicle.model: fleet.model_combotour
+NEW fleet.vehicle.model: fleet.model_corsa
+NEW fleet.vehicle.model: fleet.model_insignia
+NEW fleet.vehicle.model: fleet.model_meriva
+NEW fleet.vehicle.model: fleet.model_mokka
+NEW fleet.vehicle.model: fleet.model_q3
+NEW fleet.vehicle.model: fleet.model_q5
+NEW fleet.vehicle.model: fleet.model_q7
+NEW fleet.vehicle.model: fleet.model_serie1
+NEW fleet.vehicle.model: fleet.model_serie3
+NEW fleet.vehicle.model: fleet.model_serie5
+NEW fleet.vehicle.model: fleet.model_serie6
+NEW fleet.vehicle.model: fleet.model_serie7
+NEW fleet.vehicle.model: fleet.model_seriehybrid
+NEW fleet.vehicle.model: fleet.model_seriem
+NEW fleet.vehicle.model: fleet.model_seriex
+NEW fleet.vehicle.model: fleet.model_seriez4
+NEW fleet.vehicle.model: fleet.model_tt
+NEW fleet.vehicle.model: fleet.model_zafira
+NEW fleet.vehicle.model: fleet.model_zafiratourer
+NEW fleet.vehicle.model.brand: fleet.brand_abarth
+NEW fleet.vehicle.model.brand: fleet.brand_acura
+NEW fleet.vehicle.model.brand: fleet.brand_alfa
+NEW fleet.vehicle.model.brand: fleet.brand_audi
+NEW fleet.vehicle.model.brand: fleet.brand_austin
+NEW fleet.vehicle.model.brand: fleet.brand_bentley
+NEW fleet.vehicle.model.brand: fleet.brand_bmw
+NEW fleet.vehicle.model.brand: fleet.brand_bugatti
+NEW fleet.vehicle.model.brand: fleet.brand_buick
+NEW fleet.vehicle.model.brand: fleet.brand_byd
+NEW fleet.vehicle.model.brand: fleet.brand_cadillac
+NEW fleet.vehicle.model.brand: fleet.brand_chevrolet
+NEW fleet.vehicle.model.brand: fleet.brand_chrysler
+NEW fleet.vehicle.model.brand: fleet.brand_citroen
+NEW fleet.vehicle.model.brand: fleet.brand_corre la licorne
+NEW fleet.vehicle.model.brand: fleet.brand_daewoo
+NEW fleet.vehicle.model.brand: fleet.brand_dodge
+NEW fleet.vehicle.model.brand: fleet.brand_ferrari
+NEW fleet.vehicle.model.brand: fleet.brand_fiat
+NEW fleet.vehicle.model.brand: fleet.brand_ford
+NEW fleet.vehicle.model.brand: fleet.brand_holden
+NEW fleet.vehicle.model.brand: fleet.brand_honda
+NEW fleet.vehicle.model.brand: fleet.brand_hyundai
+NEW fleet.vehicle.model.brand: fleet.brand_infiniti
+NEW fleet.vehicle.model.brand: fleet.brand_isuzu
+NEW fleet.vehicle.model.brand: fleet.brand_jaguar
+NEW fleet.vehicle.model.brand: fleet.brand_jeep
+NEW fleet.vehicle.model.brand: fleet.brand_kia
+NEW fleet.vehicle.model.brand: fleet.brand_koenigsegg
+NEW fleet.vehicle.model.brand: fleet.brand_lagonda
+NEW fleet.vehicle.model.brand: fleet.brand_lamborghini
+NEW fleet.vehicle.model.brand: fleet.brand_lancia
+NEW fleet.vehicle.model.brand: fleet.brand_lander rover
+NEW fleet.vehicle.model.brand: fleet.brand_lexus
+NEW fleet.vehicle.model.brand: fleet.brand_lincoln
+NEW fleet.vehicle.model.brand: fleet.brand_lotus
+NEW fleet.vehicle.model.brand: fleet.brand_maserati
+NEW fleet.vehicle.model.brand: fleet.brand_maybach
+NEW fleet.vehicle.model.brand: fleet.brand_mazda
+NEW fleet.vehicle.model.brand: fleet.brand_mercedes
+NEW fleet.vehicle.model.brand: fleet.brand_mg
+NEW fleet.vehicle.model.brand: fleet.brand_mini
+NEW fleet.vehicle.model.brand: fleet.brand_mitsubishi
+NEW fleet.vehicle.model.brand: fleet.brand_morgan
+NEW fleet.vehicle.model.brand: fleet.brand_nissan
+NEW fleet.vehicle.model.brand: fleet.brand_oldsmobile
+NEW fleet.vehicle.model.brand: fleet.brand_opel
+NEW fleet.vehicle.model.brand: fleet.brand_peugeot
+NEW fleet.vehicle.model.brand: fleet.brand_pontiac
+NEW fleet.vehicle.model.brand: fleet.brand_porsche
+NEW fleet.vehicle.model.brand: fleet.brand_rambler
+NEW fleet.vehicle.model.brand: fleet.brand_renault
+NEW fleet.vehicle.model.brand: fleet.brand_rolls-royce
+NEW fleet.vehicle.model.brand: fleet.brand_saab
+NEW fleet.vehicle.model.brand: fleet.brand_scion
+NEW fleet.vehicle.model.brand: fleet.brand_skoda
+NEW fleet.vehicle.model.brand: fleet.brand_smart
+NEW fleet.vehicle.model.brand: fleet.brand_steyr
+NEW fleet.vehicle.model.brand: fleet.brand_subaru
+NEW fleet.vehicle.model.brand: fleet.brand_tesla motors
+NEW fleet.vehicle.model.brand: fleet.brand_toyota
+NEW fleet.vehicle.model.brand: fleet.brand_trabant
+NEW fleet.vehicle.model.brand: fleet.brand_volkswagen
+NEW fleet.vehicle.model.brand: fleet.brand_volvo
+NEW fleet.vehicle.model.brand: fleet.brand_willys
+NEW fleet.vehicle.tag: fleet.vehicle_tag_break
+NEW fleet.vehicle.tag: fleet.vehicle_tag_compact
+NEW fleet.vehicle.tag: fleet.vehicle_tag_convertible
+NEW fleet.vehicle.tag: fleet.vehicle_tag_junior
+NEW fleet.vehicle.tag: fleet.vehicle_tag_leasing
+NEW fleet.vehicle.tag: fleet.vehicle_tag_purchased
+NEW fleet.vehicle.tag: fleet.vehicle_tag_sedan
+NEW fleet.vehicle.tag: fleet.vehicle_tag_senior
+NEW ir.actions.act_window: fleet.act_renew_contract
+NEW ir.actions.act_window: fleet.action_fleet_reporting_costs
+NEW ir.actions.act_window: fleet.action_fleet_reporting_costs_non_effective
+NEW ir.actions.act_window: fleet.action_fleet_vehicle_costs_graph
+NEW ir.actions.act_window: fleet.action_fleet_vehicle_kanban
+NEW ir.actions.act_window: fleet.action_fleet_vehicle_log_contract_graph
+NEW ir.actions.act_window: fleet.action_fleet_vehicle_log_fuel_graph
+NEW ir.actions.act_window: fleet.action_fleet_vehicle_log_services_graph
+NEW ir.actions.act_window: fleet.fleet_vehicle_act
+NEW ir.actions.act_window: fleet.fleet_vehicle_costs_act
+NEW ir.actions.act_window: fleet.fleet_vehicle_log_contract_act
+NEW ir.actions.act_window: fleet.fleet_vehicle_log_fuel_act
+NEW ir.actions.act_window: fleet.fleet_vehicle_log_services_act
+NEW ir.actions.act_window: fleet.fleet_vehicle_model_act
+NEW ir.actions.act_window: fleet.fleet_vehicle_model_brand_act
+NEW ir.actions.act_window: fleet.fleet_vehicle_odometer_act
+NEW ir.actions.act_window: fleet.fleet_vehicle_service_types_act
+NEW ir.actions.act_window: fleet.fleet_vehicle_state_act
+NEW ir.actions.act_window: fleet.open_board_fleet
+NEW ir.actions.client: fleet.action_fleet_menu
+NEW ir.actions.todo: base.open_menu
+NEW ir.cron: fleet.ir_cron_contract_costs_generator
+NEW ir.model.access: fleet.access_fleet_contract_state
+NEW ir.model.access: fleet.access_fleet_contract_state_user
+NEW ir.model.access: fleet.access_fleet_vehicle_cost
+NEW ir.model.access: fleet.access_fleet_vehicle_cost_user
+NEW ir.model.access: fleet.fleet_service_type_access_right
+NEW ir.model.access: fleet.fleet_service_type_access_right_user
+NEW ir.model.access: fleet.fleet_vehicle_access_right
+NEW ir.model.access: fleet.fleet_vehicle_access_right_user
+NEW ir.model.access: fleet.fleet_vehicle_log_contract_access_right
+NEW ir.model.access: fleet.fleet_vehicle_log_contract_access_right_user
+NEW ir.model.access: fleet.fleet_vehicle_log_fuel_access_right
+NEW ir.model.access: fleet.fleet_vehicle_log_services_access_right
+NEW ir.model.access: fleet.fleet_vehicle_log_services_access_right_user
+NEW ir.model.access: fleet.fleet_vehicle_model_access_right
+NEW ir.model.access: fleet.fleet_vehicle_model_access_right_user
+NEW ir.model.access: fleet.fleet_vehicle_model_brand_access_right
+NEW ir.model.access: fleet.fleet_vehicle_model_brand_access_right_user
+NEW ir.model.access: fleet.fleet_vehicle_odometer_access_right
+NEW ir.model.access: fleet.fleet_vehicle_state_access_right
+NEW ir.model.access: fleet.fleet_vehicle_state_access_right_user
+NEW ir.model.access: fleet.fleet_vehicle_tag_access_right
+NEW ir.model.access: fleet.fleet_vehicle_tag_access_right_user
+NEW ir.module.category: fleet.module_fleet_category
+NEW ir.rule: fleet.fleet_user_contract_visibility
+NEW ir.rule: fleet.fleet_user_contract_visibility_manager
+NEW ir.rule: fleet.fleet_user_cost_visibility
+NEW ir.rule: fleet.fleet_user_cost_visibility_manager
+NEW ir.rule: fleet.fleet_user_fuel_log_visibility
+NEW ir.rule: fleet.fleet_user_fuel_log_visibility_manager
+NEW ir.rule: fleet.fleet_user_odometer_visibility
+NEW ir.rule: fleet.fleet_user_odometer_visibility_manager
+NEW ir.rule: fleet.fleet_user_service_visibility
+NEW ir.rule: fleet.fleet_user_service_visibility_manager
+NEW ir.rule: fleet.fleet_user_vehicle_visibility
+NEW ir.rule: fleet.fleet_user_vehicle_visibility_manager
+NEW ir.ui.menu: fleet.fleet_configuration
+NEW ir.ui.menu: fleet.fleet_vehicle_costs_menu
+NEW ir.ui.menu: fleet.fleet_vehicle_log_contract_menu
+NEW ir.ui.menu: fleet.fleet_vehicle_log_fuel_menu
+NEW ir.ui.menu: fleet.fleet_vehicle_log_services_menu
+NEW ir.ui.menu: fleet.fleet_vehicle_menu
+NEW ir.ui.menu: fleet.fleet_vehicle_model_brand_menu
+NEW ir.ui.menu: fleet.fleet_vehicle_model_menu
+NEW ir.ui.menu: fleet.fleet_vehicle_odometer_menu
+NEW ir.ui.menu: fleet.fleet_vehicle_service_types_menu
+NEW ir.ui.menu: fleet.fleet_vehicle_state_menu
+NEW ir.ui.menu: fleet.fleet_vehicles
+NEW ir.ui.menu: fleet.menu_fleet_dashboard
+NEW ir.ui.menu: fleet.menu_fleet_reporting
+NEW ir.ui.menu: fleet.menu_fleet_reporting_costs
+NEW ir.ui.menu: fleet.menu_fleet_reporting_indicative_costs
+NEW ir.ui.menu: fleet.menu_root
+NEW ir.ui.view: fleet.board_fleet_form
+NEW ir.ui.view: fleet.fleet_vehicle_costs_form
+NEW ir.ui.view: fleet.fleet_vehicle_costs_graph
+NEW ir.ui.view: fleet.fleet_vehicle_costs_search
+NEW ir.ui.view: fleet.fleet_vehicle_costs_tree
+NEW ir.ui.view: fleet.fleet_vehicle_form
+NEW ir.ui.view: fleet.fleet_vehicle_kanban
+NEW ir.ui.view: fleet.fleet_vehicle_log_contract_form
+NEW ir.ui.view: fleet.fleet_vehicle_log_contract_graph
+NEW ir.ui.view: fleet.fleet_vehicle_log_contract_tree
+NEW ir.ui.view: fleet.fleet_vehicle_log_fuel_form
+NEW ir.ui.view: fleet.fleet_vehicle_log_fuel_graph
+NEW ir.ui.view: fleet.fleet_vehicle_log_fuel_tree
+NEW ir.ui.view: fleet.fleet_vehicle_log_services_form
+NEW ir.ui.view: fleet.fleet_vehicle_log_services_graph
+NEW ir.ui.view: fleet.fleet_vehicle_log_services_tree
+NEW ir.ui.view: fleet.fleet_vehicle_model_brand_form
+NEW ir.ui.view: fleet.fleet_vehicle_model_brand_kanban
+NEW ir.ui.view: fleet.fleet_vehicle_model_brand_tree
+NEW ir.ui.view: fleet.fleet_vehicle_model_form
+NEW ir.ui.view: fleet.fleet_vehicle_model_search
+NEW ir.ui.view: fleet.fleet_vehicle_model_tree
+NEW ir.ui.view: fleet.fleet_vehicle_odometer_form
+NEW ir.ui.view: fleet.fleet_vehicle_odometer_graph
+NEW ir.ui.view: fleet.fleet_vehicle_odometer_tree
+NEW ir.ui.view: fleet.fleet_vehicle_search
+NEW ir.ui.view: fleet.fleet_vehicle_service_types_tree
+NEW ir.ui.view: fleet.fleet_vehicle_state_tree
+NEW ir.ui.view: fleet.fleet_vehicle_tree
+NEW res.groups: fleet.group_fleet_manager
+NEW res.groups: fleet.group_fleet_user

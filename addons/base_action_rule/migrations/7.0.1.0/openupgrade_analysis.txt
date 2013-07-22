@@ -1,4 +1,4 @@
----base_action_rule---
+---Fields in module 'base_action_rule'---
 base_action_rule / base.action.rule         / act_email_cc (char)           : DEL 
 base_action_rule / base.action.rule         / act_email_from (char)         : DEL 
 base_action_rule / base.action.rule         / act_email_to (char)           : DEL 
@@ -30,4 +30,5 @@ base_action_rule / base.action.rule.lead.test / name (char)                   : 
 base_action_rule / base.action.rule.lead.test / partner_id (many2one)         : NEW relation: res.partner
 base_action_rule / base.action.rule.lead.test / state (selection)             : NEW selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
 base_action_rule / base.action.rule.lead.test / user_id (many2one)            : NEW relation: res.users
-deleted xml-id of model ir.ui.menu: base.menu_base_action_rule
+---XML records in module 'base_action_rule'---
+DEL ir.ui.menu: base.menu_base_action_rule

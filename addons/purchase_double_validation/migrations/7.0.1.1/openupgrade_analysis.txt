@@ -1,14 +1,15 @@
----purchase_double_validation---
-deleted xml-id of model ir.actions.act_window: purchase_double_validation.action_config_purchase_limit_amount
-deleted xml-id of model ir.actions.todo: purchase_double_validation.config_wizard_step_purchase_limit_amount
-deleted xml-id of model ir.ui.view: purchase_double_validation.view_config_purchase_limit_amount
-deleted xml-id of model workflow.transition: purchase.trans_confirmed_router
-deleted xml-id of model workflow.transition: purchase_double_validation.trans_waiting_confirmed
-new xml-id of model ir.ui.view: purchase_double_validation.purchase_order_search_inherit
-new xml-id of model ir.ui.view: purchase_double_validation.view_double_purchase_configuration
-new xml-id of model workflow.activity: purchase_double_validation.act_double_check
-new xml-id of model workflow.activity: purchase_double_validation.act_double_wait
-new xml-id of model workflow.transition: purchase_double_validation.trans_confirmed_double_check
-new xml-id of model workflow.transition: purchase_double_validation.trans_confirmed_double_gt
-new xml-id of model workflow.transition: purchase_double_validation.trans_confirmed_double_lt
-new xml-id of model workflow.transition: purchase_double_validation.trans_double_app_conf
+---Fields in module 'purchase_double_validation'---
+---XML records in module 'purchase_double_validation'---
+DEL ir.actions.act_window: purchase_double_validation.action_config_purchase_limit_amount
+DEL ir.actions.todo: purchase_double_validation.config_wizard_step_purchase_limit_amount
+NEW ir.ui.view: purchase_double_validation.purchase_order_search_inherit
+NEW ir.ui.view: purchase_double_validation.view_double_purchase_configuration
+DEL ir.ui.view: purchase_double_validation.view_config_purchase_limit_amount
+NEW workflow.activity: purchase_double_validation.act_double_check
+NEW workflow.activity: purchase_double_validation.act_double_wait
+NEW workflow.transition: purchase_double_validation.trans_confirmed_double_check
+NEW workflow.transition: purchase_double_validation.trans_confirmed_double_gt
+NEW workflow.transition: purchase_double_validation.trans_confirmed_double_lt
+NEW workflow.transition: purchase_double_validation.trans_double_app_conf
+DEL workflow.transition: purchase.trans_confirmed_router
+DEL workflow.transition: purchase_double_validation.trans_waiting_confirmed
