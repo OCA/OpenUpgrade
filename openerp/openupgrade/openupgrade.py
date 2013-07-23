@@ -375,14 +375,29 @@ def get_legacy_name(original_name):
     return 'openupgrade_legacy_'+('_').join(
         map(str, release.version_info[0:2]))+'_'+original_name
 
-def message(cr, module, message, *args, **kwargs):
+def message(cr, module, table, column,
+            message, *args, **kwargs):
     """
     Log handler for non-critical notifications about the upgrade.
     To be extended with logging to a table for reporting purposes.
+
+    :param module: the module name that the message concerns
+    :param table: the model that this message concerns (may be False,
+    but preferably not if 'column' is defined)
+    :param column: the column that this message concerns (may be False)
     """
-    argslist = list(args)
+    argslist = list(args or [])
+    prefix = ': '
+    if column:
+        argslist.insert(0, column)
+        prefix = ', column %s' + prefix
+    if table:
+        argslist.insert(0, table)
+        prefix = ', table %s' + prefix
     argslist.insert(0, module)
-    logger.warn("Module %s: " + message, *argslist, **kwargs)
+    prefix = 'Module %s' + prefix
+
+    logger.warn(prefix + message, *argslist, **kwargs)
 
 def migrate():
     """
