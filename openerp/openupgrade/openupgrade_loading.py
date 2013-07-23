@@ -170,8 +170,6 @@ def sync_commercial_fields(cr, pool):
     upgrade process has finished.
     """
     partner_obj = pool.get('res.partner')
-    fields = partner_obj._commercial_fields(
-        cr, SUPERUSER_ID)
     partner_ids = partner_obj.search(
         cr, SUPERUSER_ID,
         [], False, False, {'active_test': False})
@@ -179,7 +177,7 @@ def sync_commercial_fields(cr, pool):
                 len(partner_ids))
     for partner_id in partner_ids:
         vals = partner_obj.read(
-            cr, SUPERUSER_ID, partner_id, fields, load='_classic_write')
+            cr, SUPERUSER_ID, partner_id, [], load='_classic_write')
         partner_obj._fields_sync(
             cr, SUPERUSER_ID, 
             partner_obj.browse(cr, SUPERUSER_ID, partner_id),
