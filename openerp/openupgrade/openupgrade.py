@@ -232,17 +232,18 @@ def warn_possible_dataloss(cr, pool, old_module, fields):
             if row[0] == 1: 
                 # not a problem, that field wasn't used.
                 # Just a loss of functionality
-                logger.info("'%s' in module '%s' has moved in module " \
-                    "'%s' that is not installed : " \
-                    "Users'll loose fonctionnalities" \
+                logger.info(
+                    "Field '%s' from module '%s' was moved to module "
+                    "'%s' which is not installed: "
+                    "No dataloss detected, only loss of functionality"
                     %(field['field'], old_module, field['new_module']))
             else: 
                 # there is data loss after the migration.
                 message(
                     cr, old_module,
-                    "Field '%s' has moved to module "
-                    "'%s' that is not installed: "
-                    "There was %s different values in this field.",
+                    "Field '%s' was moved to module "
+                    "'%s' which is not installed: "
+                    "There were %s distinct values in this field.",
                     field['field'], field['new_module'], row[0])
 
 def set_defaults(cr, pool, default_spec, force=False):
