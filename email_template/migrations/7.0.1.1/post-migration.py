@@ -36,6 +36,53 @@ def convert_mail_bodies(cr):
         body = plaintext2html(row[1])
         cr.execute("UPDATE mail_message SET body_html = %s WHERE id = %s", body, row[0])
 
+    # Migrate translations of text templates
+    cr.execute(
+        """
+        SELECT tr_text.res_id, tr_text.lang, tr_text.value,
+               (SELECT COUNT(*) FROM ir_translation tr_count
+                     WHERE tr_count.type = 'model'
+                        AND tr_count.name = 'email.template,body_html'
+                        AND tr_count.res_id = tr_text.res_id
+                        AND tr_count.lang = tr_text.lang) as count
+        FROM ir_translation tr_text
+        WHERE type = 'model'
+              AND name = 'email.template,body_text'
+              AND NOT EXISTS (
+                  SELECT tr_html.id
+                  FROM ir_translation tr_html
+                  WHERE tr_html.type = 'model'
+                        AND tr_html.name = 'email.template,body_html'
+                        AND tr_text.res_id = tr_html.res_id
+                        AND tr_text.lang = tr_html.lang
+                        AND (tr_html.value is not NULL OR tr_html.value != '')
+                  )
+        """)
+
+    for (res_id, lang, value, count) in cr.fetchall():
+        body = plaintext2html(value)
+        if count:
+            cr.execute(
+                """
+                UPDATE ir_translation
+                SET value = %s
+                WHERE type = 'model'
+                      AND name = 'email.template,body_html'
+                      AND res_id = %s
+                      AND lang = %s
+                """, (body, res_id, lang))
+        else:
+            cr.execute(
+                """
+                INSERT INTO ir_translation
+                (lang, name, type, res_id, value, src)
+                VALUES (
+                    %s, 'email.template,body_html', 'model', %s, %s,
+                    (SELECT body_html
+                    FROM email_template et
+                    WHERE et.id = %s))
+                """, (lang, res_id, body, res_id))
+
 @openupgrade.migrate()
 def migrate(cr, version):
     convert_mail_bodies(cr)
