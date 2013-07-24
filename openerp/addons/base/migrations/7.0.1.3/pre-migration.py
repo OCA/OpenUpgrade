@@ -156,6 +156,17 @@ def create_users_partner(cr):
                 "VALUES(%s, 'res.partner', 'base', 'partner_root', TRUE) ",
                 (partner_id,))
 
+def remove_obsolete_modules(cr):
+    obsolete_modules = (
+        'base_tools',
+        )
+    cr.execute(
+        """
+        UPDATE ir_module_module
+        SET state = 'to remove'
+        WHERE name in %s
+        """, (obsolete_modules,))
+
 @openupgrade.migrate()
 def migrate(cr, version):
     update_base_sql(cr)
@@ -168,3 +179,4 @@ def migrate(cr, version):
     openupgrade.rename_models(cr, model_renames)
     migrate_ir_attachment(cr)
     create_users_partner(cr)
+    remove_obsolete_modules(cr)
