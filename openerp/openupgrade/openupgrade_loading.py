@@ -20,9 +20,11 @@
 ##############################################################################
 
 import types
+from openerp import release
 from openerp.osv.orm import TransientModel
 from openerp.osv import fields
 from openerp.openupgrade.openupgrade import table_exists
+from openerp.tools import config, safe_eval
 
 # A collection of functions used in 
 # openerp/modules/loading.py
@@ -33,6 +35,9 @@ def add_module_dependencies(cr, module_list):
     so that we can inject them into the graph at upgrade
     time. Used in the modified OpenUpgrade Server,
     not to be used in migration scripts
+
+    Also take the custom configuration directive 'forced_deps'
+    into account.
     """
     if not module_list:
         return module_list
@@ -46,7 +51,17 @@ def add_module_dependencies(cr, module_list):
             AND ir_module_module.name in %s
         """, (tuple(module_list),))
     dependencies = [x[0] for x in cr.fetchall()]
-    return list(set(module_list + dependencies))
+
+    forced_deps = config.get_misc('openupgrade', 'force_deps', '{}')
+    forced_deps = config.get_misc(
+        'openupgrade', 'force_deps_' + release.version, forced_deps)
+    forced_deps = safe_eval.safe_eval(forced_deps)
+
+    result = []
+    for module in module_list + dependencies:
+        result.append(module)
+        result += forced_deps.get(module, [])
+    return list(set(result))
 
 def log_model(model, local_registry):
     """
