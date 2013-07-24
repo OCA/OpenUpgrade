@@ -25,36 +25,33 @@ from openerp.openupgrade import openupgrade, openupgrade_70
 def migrate_invoice_addresses(cr, pool):
     # Contact id takes precedence over old partner id
     openupgrade_70.set_partner_id_from_partner_address_id(
-        cr, pool, 'account_invoice',
+        cr, pool, 'account.invoice',
         'partner_id', openupgrade.get_legacy_name('address_contact_id'))
     # Invoice id takes precedence over contact id
     openupgrade_70.set_partner_id_from_partner_address_id(
-        cr, pool, 'account_invoice',
+        cr, pool, 'account.invoice',
         'partner_id', openupgrade.get_legacy_name('address_invoice_id'))
 
-def migrate_invoice_notes(cr, pool):
-    invoice_obj = pool.get('account.invoice')
+def migrate_invoice_names(cr, pool):
+    """
+    Join existing char values and obsolete note values into
+    new text field name on the invoice line.
+    """
+    invoice_line_obj = pool.get('account.invoice.line')
     note_column = openupgrade.get_legacy_name('note')
     cr.execute(
         """
-        SELECT id, %s
-        FROM account_invoice
+        SELECT id, %s, %s
+        FROM account_invoice_line
         WHERE %s is not NULL
-        """, (note_column, note_column))
-    for (invoice_id, note) in cr.fetchall():
-        invoice_obj.message_post(
-            cr, SUPERUSER_ID, [invoice_id],
-            body=note)
-
-def migrate_invoice_names(cr, pool):
-    """ column type changed from char to text """
-    openupgrade.logged_query(
-        cr,
-        """UPDATE account_invoice
-        SET %s = %s""", (
-            'name',
-            openupgrade.get_legacy_name('name'))
-        )
+        AND %s != ''
+        """ % (openupgrade.get_legacy_name('name'),
+               note_column, note_column, note_column))
+    for (invoice_line_id, name, note) in cr.fetchall():
+        prefix = (name + '\n') if name else ''
+        invoice_line_obj.write(
+            cr, SUPERUSER_ID, [invoice_line_id],
+            {'name': prefix + note})
 
 def lock_closing_reconciliations(cr, pool):
     """
@@ -73,7 +70,7 @@ def lock_closing_reconciliations(cr, pool):
              ('period_id.fiscalyear_id', '=', fiscalyear_id)])
         reconcile_ids = reconcile_obj.search(
             cr, SUPERUSER_ID,
-            [('line_id', '=', move_line_ids)])
+            [('line_id', 'in', move_line_ids)])
         reconcile_obj.write(
             cr, SUPERUSER_ID, reconcile_ids,
             {'opening_reconciliation': True})
@@ -82,7 +79,6 @@ def lock_closing_reconciliations(cr, pool):
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     migrate_invoice_addresses(cr, pool)
-    migrate_invoice_notes(cr, pool)
     migrate_invoice_names(cr, pool)
     lock_closing_reconciliations(cr, pool)
     openupgrade.load_xml(

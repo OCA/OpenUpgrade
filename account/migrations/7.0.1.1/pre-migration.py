@@ -27,10 +27,13 @@ column_renames = {
         [
         ('address_contact_id', None),
         ('address_invoice_id', None),
-        ('note', None),
-        ('name', None),
         ],
-    }        
+    'account_invoice_line':
+        [
+        ('name', None),
+        ('note', None),
+        ]
+}
 
 xmlid_renames = [
     ('account.account_payment_term_15days', 'account.account_payment_term'),

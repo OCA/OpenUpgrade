@@ -28,14 +28,14 @@ account      / account.chart.template   / property_reserve_and_surplus_account (
 account      / account.invoice          / address_contact_id (many2one) : DEL relation: res.partner.address
 account      / account.invoice          / address_invoice_id (many2one) : DEL relation: res.partner.address, required: required
 
-### Migrated note to chatter
-account      / account.invoice          / message_ids (one2many)        : NEW relation: mail.message
+### Migrated invoice line note to combine into name field, which is now 'text'
 account      / account.invoice.line     / note (text)                   : DEL 
 
 ### Leave 'sent' field unset on invoice, as it will be hard to determine and should be harmless
 account      / account.invoice          / sent (boolean)                : NEW 
 
 ### Ignore new fields
+account      / account.invoice          / message_ids (one2many)        : NEW relation: mail.message
 account      / account.invoice          / supplier_invoice_number (char): NEW 
 
 ### Migrated char field to text
