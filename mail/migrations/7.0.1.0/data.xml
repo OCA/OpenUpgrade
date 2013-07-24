@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        <record id="ir_cron_mail_scheduler_action">
+        <record id="ir_cron_mail_scheduler_action" model="ir.cron">
             <field eval="'mail.mail'" name="model"/>
         </record>
     </data>
 </openerp>
-

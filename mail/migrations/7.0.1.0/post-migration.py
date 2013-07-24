@@ -59,13 +59,17 @@ def create_mail_mail(cr, pool):
     """
     message_obj = pool.get('mail.message')
     mail_obj = pool.get('mail.mail')
-    message_ids = message_obj.search([])
-    messages = message_obj.read(message_obj.search([]), {}, '_classic_write')
-    
-    cr.execute("""SELECT user_id FROM mail_message""")
-    user_ids = dict(cr.fetchall)
+    message_ids = message_obj.search(
+        cr, SUPERUSER_ID, [('email_from', '!=', False)])
 
-    for message in messages:
+    cr.execute("SELECT id, %s FROM mail_message" % (
+            openupgrade.get_legacy_name('user_id')))
+    user_ids = dict(cr.fetchall())
+
+    for message_id in message_ids:
+        message = message_obj.read(
+            cr, SUPERUSER_ID, message_id, ['model', 'res_id', 'user_id'])
+    
         # Set message type to notification
         write_vals = {
             'type': 'notification',
@@ -74,7 +78,7 @@ def create_mail_mail(cr, pool):
         if user_ids[message['id']]:
             write_vals['author_id'] = openupgrade.get_partner_id_from_user_id(
                 cr, user_ids[message['id']])
-        message_obj.write(message['id'], write_vals)
+        message_obj.write(cr, SUPERUSER_ID, message['id'], write_vals)
         
         # Set stored (but not recalculated) function field record_name
         if message['model'] and message['res_id']:
@@ -87,37 +91,34 @@ def create_mail_mail(cr, pool):
                     UPDATE mail_message
                     SET record_name = %s
                     WHERE id = %s
-                    """, name, message['id'])
+                    """, (name, message['id']))
             
         mail_id = mail_obj.create(
-            {
-                'mail_message_id': message['id'],
-                })
+            cr, SUPERUSER_ID,
+            {'mail_message_id': message['id']})
 
     # Copy legacy fields from message table to mail table
     cr.execute(
         """
         UPDATE mail_mail
-        SET mail.body_html = msg.body,
-            mail.mail_server_id = msg.%(mail_server_id)s,
-            mail.email_to = msg.%(email_to)s,
-            mail.email_cc = msg.%(email_cc)s,
-            mail.email_bcc = msg.%(email_bcc)s,
-            mail.reply_to = msg.%(reply_to)s,
-            mail.references = msg.%(references)s,
-            mail.state = msg.%(state)s,
-            mail.autodelete = msg.%(autodelete)s,
+        SET body_html = msg.body,
+            mail_server_id = msg.%(mail_server_id)s,
+            email_to = msg.%(email_to)s,
+            email_cc = msg.%(email_cc)s,
+            reply_to = msg.%(reply_to)s,
+            "references" = msg.%(references)s,
+            state = msg.%(state)s,
+            auto_delete = msg.%(auto_delete)s
         FROM mail_mail mail, mail_message msg
         WHERE mail.mail_message_id = msg.id
         """ % {
             'mail_server_id': openupgrade.get_legacy_name('mail_server_id'),
             'email_to': openupgrade.get_legacy_name('email_to'),
             'email_cc': openupgrade.get_legacy_name('email_cc'),
-            'email_bcc': openupgrade.get_legacy_name('email_bcc'),
             'reply_to': openupgrade.get_legacy_name('reply_to'),
             'references': openupgrade.get_legacy_name('references'),
             'state': openupgrade.get_legacy_name('state'),
-            'autodelete': openupgrade.get_legacy_name('autodelete'),
+            'auto_delete': openupgrade.get_legacy_name('auto_delete'),
             })
 
     # Migrate m2o partner_id to m2m partner_ids

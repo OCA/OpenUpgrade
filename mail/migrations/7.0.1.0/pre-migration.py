@@ -22,11 +22,10 @@
 from openerp.openupgrade import openupgrade
 
 column_renames = {
-    'mail.message': [
+    'mail_message': [
         # Existing fields to ignore
         ('subtype', None),
         ('headers', None),
-        ('display_text', None),
         ('original', None),
         # Existing fields to transform
         ('body_text', None),
@@ -37,13 +36,23 @@ column_renames = {
         ('email_to', None),
         ('email_cc', None),
         ('email_bcc', None),
+        ('mail_server_id', None),
         ('reply_to', None),
         ('references', None),
         ('state', None),
-        ('autodelete', None),
+        ('auto_delete', None),
         ]}
+
+def precreate_author_id(cr):
+    """
+    Precreate the 'author_id' column so as to prevent an error
+    when its default function gets called during the upgrade
+    process.
+    """
+    cr.execute('ALTER TABLE "mail_message" ADD COLUMN "author_id" int4')
 
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
+    precreate_author_id(cr)
     

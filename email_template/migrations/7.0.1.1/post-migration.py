@@ -29,7 +29,7 @@ def convert_mail_bodies(cr):
     """
     cr.execute(
         "SELECT id, %(body_text)s FROM email_template "
-        "WHERE body_html IS NULL AND body_html != '' AND body_text IS NOT NULL" % {
+        "WHERE body_html IS NULL AND body_html != '' AND %(body_text)s IS NOT NULL" % {
             'body_text': openupgrade.get_legacy_name('body_text'),
             })
     for row in cr.fetchall():

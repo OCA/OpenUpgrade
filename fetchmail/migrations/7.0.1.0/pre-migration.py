@@ -22,7 +22,7 @@
 from openerp.openupgrade import openupgrade
 
 column_renames = {
-    'mail.message': [
+    'mail_message': [
         # Existing fields to ignore
         # Existing fields to transform
         ('fetchmail_server_id', None),

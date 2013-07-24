@@ -27,10 +27,10 @@ def move_fetchmail_server_id(cr):
     """
     cr.execute(
         "UPDATE mail_mail SET fetchmail_server_id = "
-        "       mail_message.%(fetchmail_server_id)s "
-        "FROM mail_mail, mail_message "
-        "WHERE mail_mail.mail_message_id = mail_message.id "
-        "      AND mail_message.%(fetchmail_server_id)s IS NOT NULL" % {
+        "       message.%(fetchmail_server_id)s "
+        "FROM mail_mail mail, mail_message message "
+        "WHERE mail.mail_message_id = message.id "
+        "      AND message.%(fetchmail_server_id)s IS NOT NULL" % {
             'fetchmail_server_id': openupgrade.get_legacy_name(
                 'fetchmail_server_id'),
             })
