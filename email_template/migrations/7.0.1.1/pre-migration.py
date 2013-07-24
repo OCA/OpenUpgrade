@@ -22,7 +22,7 @@
 from openerp.openupgrade import openupgrade
 
 column_renames = {
-    'email.template': [
+    'email_template': [
         # Existing fields to ignore
         # Existing fields to transform
         ('body_text', None),
