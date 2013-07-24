@@ -48,7 +48,7 @@ def set_partner_id_from_partner_address_id(
              res_partner_address as address
         WHERE address.id = target.%s""" % (table, address_field))
     for row in cr.fetchall():
-        model.write(cr, row[0], SUPERUSER_ID, {partner_field: row[1]})
+        model.write(cr, SUPERUSER_ID, row[0], {partner_field: row[1]})
     
 def get_partner_id_from_user_id(cr, user_id):
     """
