@@ -172,7 +172,7 @@ def sync_commercial_fields(cr, pool):
     partner_obj = pool.get('res.partner')
     partner_ids = partner_obj.search(
         cr, SUPERUSER_ID,
-        [], False, False, {'active_test': False})
+        [], 0, False, False, {'active_test': False})
     logger.info("Syncing commercial fields between %s partners",
                 len(partner_ids))
     for partner_id in partner_ids:
