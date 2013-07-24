@@ -127,7 +127,10 @@ class view(osv.osv):
             return fvg['arch']
         except:
             # OpenUpgrade: do not break on unrenderable views
-            _logger.warn("Can't render view %s for model: %s", view.xml_id, view.model)
+            _logger.warn("Can't render view %s for model: %s. If you are "
+                         "migrating between major versions of OpenERP, "
+                         "this is to be expected (otherwise, do not run "
+                         "OpenUpgrade server).", view.xml_id, view.model)
             return "<data/>"
 
     def _check_xml(self, cr, uid, ids, context=None):
