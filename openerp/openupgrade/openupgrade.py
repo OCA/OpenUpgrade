@@ -204,6 +204,50 @@ def delete_model_workflow(cr, model):
         cr,
         "DELETE FROM wkf WHERE osv = %s", (model,))
 
+def warn_possible_dataloss(cr, pool, old_module, fields):
+    """
+    Use that function in the following case : 
+    if a field of a model was moved from a 'A' module to a 'B' module. 
+    ('B' depend on 'A'), 
+    This function will test if 'B' is installed. 
+    If not, count the number of different value and possibly warn the user.
+    Use orm, so call from the post script.
+    
+    :param old_module: name of the old module
+    :param fields: list of dictionary with the following keys :
+        'table' : name of the table where the field is.
+        'field' : name of the field that are moving.
+        'new_module' : name of the new module
+    """
+    module_obj = pool.get('ir.module.module')
+    for field in fields: 
+        module_ids = module_obj.search(cr, SUPERUSER_ID, [
+                ('name', '=', field['new_module']),
+                ('state', 'in', ['installed', 'to upgrade', 'to install'])
+            ])
+        if not module_ids: 
+            cr.execute(
+                "SELECT count(*) FROM (SELECT %s from %s group by %s) "
+                "as tmp" % (
+                    field['field'], field['table'], field['field']))
+            row = cr.fetchone()
+            if row[0] == 1: 
+                # not a problem, that field wasn't used.
+                # Just a loss of functionality
+                logger.info(
+                    "Field '%s' from module '%s' was moved to module "
+                    "'%s' which is not installed: "
+                    "No dataloss detected, only loss of functionality"
+                    %(field['field'], old_module, field['new_module']))
+            else: 
+                # there is data loss after the migration.
+                message(
+                    cr, old_module,
+                    "Field '%s' was moved to module "
+                    "'%s' which is not installed: "
+                    "There were %s distinct values in this field.",
+                    field['field'], field['new_module'], row[0])
+
 def set_defaults(cr, pool, default_spec, force=False):
     """
     Set default value. Useful for fields that are newly required. Uses orm, so
@@ -332,6 +376,30 @@ def get_legacy_name(original_name):
     """
     return 'openupgrade_legacy_'+('_').join(
         map(str, release.version_info[0:2]))+'_'+original_name
+
+def message(cr, module, table, column,
+            message, *args, **kwargs):
+    """
+    Log handler for non-critical notifications about the upgrade.
+    To be extended with logging to a table for reporting purposes.
+
+    :param module: the module name that the message concerns
+    :param table: the model that this message concerns (may be False,
+    but preferably not if 'column' is defined)
+    :param column: the column that this message concerns (may be False)
+    """
+    argslist = list(args or [])
+    prefix = ': '
+    if column:
+        argslist.insert(0, column)
+        prefix = ', column %s' + prefix
+    if table:
+        argslist.insert(0, table)
+        prefix = ', table %s' + prefix
+    argslist.insert(0, module)
+    prefix = 'Module %s' + prefix
+
+    logger.warn(prefix + message, *argslist, **kwargs)
 
 def migrate():
     """
