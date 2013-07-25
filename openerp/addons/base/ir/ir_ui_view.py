@@ -126,8 +126,12 @@ class view(osv.osv):
             fvg = self.pool.get(view.model).fields_view_get(cr, uid, view_id=view.id, view_type=view.type, context=context)
             return fvg['arch']
         except Exception:
-            _logger.exception("Can't render view %s for model: %s", view.xml_id, view.model)
-            return False
+            # OpenUpgrade: do not break on unrenderable views
+            _logger.warn("Can't render view %s for model: %s. If you are "
+                         "migrating between major versions of OpenERP, "
+                         "this is to be expected (otherwise, do not run "
+                         "OpenUpgrade server).", view.xml_id, view.model)
+            return "<data/>"
 
     def _check_xml(self, cr, uid, ids, context=None):
         if context is None:
@@ -151,9 +155,19 @@ class view(osv.osv):
                 if (view_arch.get('version') < '7.0') and validator and not validator.validate(view_arch):
                     for error in validator.error_log:
                         _logger.error(tools.ustr(error))
-                    return False
+                    _logger.warn(
+                        "Can't render view %s for model: %s. If you are "
+                        "migrating between major versions of OpenERP, "
+                        "this is to be expected (otherwise, do not run "
+                        "OpenUpgrade server).", view.xml_id, view.model)
+                    return True
                 if not valid_view(view_arch):
-                    return False
+                    _logger.warn(
+                        "Can't render view %s for model: %s. If you are "
+                        "migrating between major versions of OpenERP, "
+                        "this is to be expected (otherwise, do not run "
+                        "OpenUpgrade server).", view.xml_id, view.model)
+                    return True
         return True
 
     _constraints = [
