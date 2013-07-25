@@ -440,6 +440,10 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
                 else:
                     _logger.info('removed %d unused menus', cr.rowcount)
 
+        # STEP 5 1/2 (OpenUpgrade): deferred call to sync commercial partner fields
+        if update_module:
+            openupgrade_loading.sync_commercial_fields(cr, pool)
+
         # STEP 6: Uninstall modules to remove
         if update_module:
             # Remove records referenced from ir_model_data for modules to be
