@@ -47,6 +47,12 @@ model_renames = [
     ('ir.actions.url', 'ir.actions.act_url'),
     ]
 
+def disable_demo_data(cr):
+    """ Disables the renewed loading of demo data """
+    openupgrade.logged_query(
+        cr,
+        "UPDATE ir_module_module SET demo = false")
+
 def migrate_ir_attachment(cr):
     # Data is now stored in db_datas column and datas is a function field
     # like in the document module in 6.1. If the db_datas column already
@@ -158,6 +164,7 @@ def create_users_partner(cr):
 
 @openupgrade.migrate()
 def migrate(cr, version):
+    disable_demo_data(cr)
     update_base_sql(cr)
     openupgrade.update_module_names(
         cr, module_namespec
