@@ -79,6 +79,13 @@ def migrate_partner_address(cr, pool):
     partner_found = []
     processed_ids = []
 
+    def set_address_partner(address_id, partner_id):
+        cr.execute(
+            "UPDATE res_partner_address "
+            "SET openupgrade_7_migrated_to_partner_id = %s "
+            "WHERE id = %s",
+            (partner_id, address_id))
+
     def create_partner(address_id, vals, defaults):
         """
         Create a partner from an address. Update the vals
@@ -91,11 +98,7 @@ def migrate_partner_address(cr, pool):
                 vals[key] = defaults[key]
 
         partner_id = partner_obj.create(cr, SUPERUSER_ID, vals)
-        cr.execute(
-            "UPDATE res_partner_address "
-            "SET openupgrade_7_migrated_to_partner_id = %s "
-            "WHERE id = %s",
-            (partner_id, address_id))
+        set_address_partner(address_id, partner_id)
 
     def process_address_type(cr, whereclause, args=None):
         """
@@ -128,6 +131,7 @@ def migrate_partner_address(cr, pool):
                     partner_obj.write(
                         cr, SUPERUSER_ID, address['partner_id'], partner_vals)
                     partner_found.append(address['partner_id'])
+                    set_address_partner(address['id'], address['partner_id'])
                 else:
                     # any following address for an existing partner
                     partner_vals.update({
@@ -141,6 +145,12 @@ def migrate_partner_address(cr, pool):
     process_address_type(cr, "type = 'default'")
     process_address_type(cr, "type IS NULL OR type = ''")
     process_address_type(cr, "id NOT IN %s", (tuple(processed_ids),))
+
+    # Check that all addresses have been migrated
+    cr.execute(
+        "SELECT COUNT(*) FROM res_partner_address "
+        "WHERE openupgrade_7_migrated_to_partner_id is NULL ")
+    assert(not cr.fetchone()[0])
 
 def update_users_partner(cr, pool):
     """ 
