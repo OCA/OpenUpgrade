@@ -199,3 +199,6 @@ def migrate(cr, version):
     migrate_partner_address(cr, pool)
     update_users_partner(cr, pool)
     reset_currency_companies(cr, pool)
+    openupgrade.load_xml(
+        cr, 'base',
+        'migrations/7.0.1.3/data.xml')
