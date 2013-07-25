@@ -19,13 +19,17 @@
 #
 ##############################################################################
 
+import logging
 import types
+from openerp import SUPERUSER_ID
 from openerp.osv.orm import TransientModel
 from openerp.osv import fields
 from openerp.openupgrade.openupgrade import table_exists
 
 # A collection of functions used in 
 # openerp/modules/loading.py
+
+logger = logging.getLogger("OpenUpgrade")
 
 def add_module_dependencies(cr, module_list):
     """
@@ -158,3 +162,23 @@ def compare_registries(cr, module, registry, local_registry):
                             (key, value, record_id)
                             )
                     old_field[key] = value
+
+def sync_commercial_fields(cr, pool):
+    """
+    Take care of propagating the commercial fields
+    in the new partner model. To be called after the
+    upgrade process has finished.
+    """
+    partner_obj = pool.get('res.partner')
+    partner_ids = partner_obj.search(
+        cr, SUPERUSER_ID,
+        [], 0, False, False, {'active_test': False})
+    logger.info("Syncing commercial fields between %s partners",
+                len(partner_ids))
+    for partner_id in partner_ids:
+        vals = partner_obj.read(
+            cr, SUPERUSER_ID, partner_id, [], load='_classic_write')
+        partner_obj._fields_sync(
+            cr, SUPERUSER_ID, 
+            partner_obj.browse(cr, SUPERUSER_ID, partner_id),
+            vals)                     
