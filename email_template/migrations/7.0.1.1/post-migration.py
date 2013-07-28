@@ -29,12 +29,14 @@ def convert_mail_bodies(cr):
     """
     cr.execute(
         "SELECT id, %(body_text)s FROM email_template "
-        "WHERE body_html IS NULL AND body_html != '' AND %(body_text)s IS NOT NULL" % {
+        "WHERE (body_html IS NULL OR body_html = '') "
+        "AND %(body_text)s != '' AND %(body_text)s IS NOT NULL" % {
             'body_text': openupgrade.get_legacy_name('body_text'),
             })
     for row in cr.fetchall():
         body = plaintext2html(row[1])
-        cr.execute("UPDATE mail_message SET body_html = %s WHERE id = %s", body, row[0])
+        cr.execute("UPDATE email_template SET body_html = %s WHERE id = %s",
+                   (body, row[0]))
 
     # Migrate translations of text templates
     cr.execute(
