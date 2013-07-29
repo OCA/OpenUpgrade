@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+  <data>
+    <record model="account.financial.report" id="account_financial_report_income0"><field name="sign" eval="-1"/>
+            </record>
+    <record model="account.financial.report" id="account_financial_report_profitandloss0"><field name="sign" eval="-1"/>
+            </record>
+    <record model="email.template" id="email_template_edi_invoice"><field name="body_html">
+&lt;div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "&gt;
+
+    &lt;p&gt;Hello ${object.partner_id.name},&lt;/p&gt;
+
+    &lt;p&gt;A new invoice is available for you: &lt;/p&gt;
+    
+    &lt;p style="border-left: 1px solid #8e0000; margin-left: 30px;"&gt;
+       &amp;nbsp;&amp;nbsp;&lt;strong&gt;REFERENCES&lt;/strong&gt;&lt;br /&gt;
+       &amp;nbsp;&amp;nbsp;Invoice number: &lt;strong&gt;${object.number}&lt;/strong&gt;&lt;br /&gt;
+       &amp;nbsp;&amp;nbsp;Invoice total: &lt;strong&gt;${object.amount_total} ${object.currency_id.name}&lt;/strong&gt;&lt;br /&gt;
+       &amp;nbsp;&amp;nbsp;Invoice date: ${object.date_invoice}&lt;br /&gt;
+       % if object.origin:
+       &amp;nbsp;&amp;nbsp;Order reference: ${object.origin}&lt;br /&gt;
+       % endif
+       % if object.user_id:
+       &amp;nbsp;&amp;nbsp;Your contact: &lt;a href="mailto:${object.user_id.email or ''}?subject=Invoice%20${object.number}"&gt;${object.user_id.name}&lt;/a&gt;
+       % endif
+    &lt;/p&gt;  
+    
+    % if object.paypal_url:
+    &lt;br/&gt;
+    &lt;p&gt;It is also possible to directly pay with Paypal:&lt;/p&gt;
+        &lt;a style="margin-left: 120px;" href="${object.paypal_url}"&gt;
+            &lt;img class="oe_edi_paypal_button" src="https://www.paypal.com/en_US/i/btn/btn_paynowCC_LG.gif"/&gt;
+        &lt;/a&gt;
+    % endif
+    
+    &lt;br/&gt;
+    &lt;p&gt;If you have any question, do not hesitate to contact us.&lt;/p&gt;
+    &lt;p&gt;Thank you for choosing ${object.company_id.name or 'us'}!&lt;/p&gt;
+    &lt;br/&gt;
+    &lt;br/&gt;
+    &lt;div style="width: 375px; margin: 0px; padding: 0px; background-color: #8E0000; border-top-left-radius: 5px 5px; border-top-right-radius: 5px 5px; background-repeat: repeat no-repeat;"&gt;
+        &lt;h3 style="margin: 0px; padding: 2px 14px; font-size: 12px; color: #DDD;"&gt;
+            &lt;strong style="text-transform:uppercase;"&gt;${object.company_id.name}&lt;/strong&gt;&lt;/h3&gt;
+    &lt;/div&gt;
+    &lt;div style="width: 347px; margin: 0px; padding: 5px 14px; line-height: 16px; background-color: #F2F2F2;"&gt;
+        &lt;span style="color: #222; margin-bottom: 5px; display: block; "&gt;
+        % if object.company_id.street:
+            ${object.company_id.street}&lt;br/&gt;
+        % endif
+        % if object.company_id.street2:
+            ${object.company_id.street2}&lt;br/&gt;
+        % endif
+        % if object.company_id.city or object.company_id.zip:
+            ${object.company_id.zip} ${object.company_id.city}&lt;br/&gt;
+        % endif
+        % if object.company_id.country_id:
+            ${object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''} ${object.company_id.country_id.name or ''}&lt;br/&gt;
+        % endif
+        &lt;/span&gt;
+        % if object.company_id.phone:
+            &lt;div style="margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; "&gt;
+                Phone:&amp;nbsp; ${object.company_id.phone}
+            &lt;/div&gt;
+        % endif
+        % if object.company_id.website:
+            &lt;div&gt;
+                Web :&amp;nbsp;&lt;a href="${object.company_id.website}"&gt;${object.company_id.website}&lt;/a&gt;
+            &lt;/div&gt;
+        %endif
+        &lt;p&gt;&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+            </field>
+        <field name="subject">${object.company_id.name} Invoice (Ref ${object.number or 'n/a'})</field>
+            <field name="email_from">${object.user_id.email or object.company_id.email or 'noreply@localhost'}</field>
+            <field name="email_to"/><field name="name">Invoice - Send by Email</field>
+            <field name="body_text"/><field name="report_template" ref="account_invoices"/>
+            <field name="report_name">Invoice_${(object.number or '').replace('/','_')}_${object.state == 'draft' and 'draft' or ''}</field>
+            <field name="email_recipients">${object.partner_id.id}</field>
+            </record>
+    <record model="account.financial.report" id="account_financial_report_expense0"><field name="sign" eval="-1"/>
+            </record>
+  </data>
+</openerp>
+
