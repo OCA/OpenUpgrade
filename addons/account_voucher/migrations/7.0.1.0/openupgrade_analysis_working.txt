@@ -1,0 +1,23 @@
+---Fields in module 'account_voucher'---
+### Ignore new field with sane default
+account_voucher / account.voucher          / active (boolean)              : NEW 
+
+### Ignore new message functionality
+account_voucher / account.voucher          / message_ids (one2many)        : NEW relation: mail.message
+
+---XML records in module 'account_voucher'---
+### Ignore interface records
+DEL ir.actions.act_window: account_voucher.action_view_account_statement_from_invoice
+DEL ir.actions.act_window: account_voucher.action_view_account_voucher_unreconcile
+NEW ir.actions.client: account_voucher.action_client_invoice_menu
+NEW ir.actions.todo: base.open_menu
+NEW ir.ui.view: account_voucher.view_account_settings_currency_xchange_form
+NEW ir.ui.view: account_voucher.view_vendor_receipt_dialog_form
+DEL ir.ui.view: account_voucher.view_account_statement_from_invoice
+DEL ir.ui.view: account_voucher.view_account_voucher_unreconcile
+DEL ir.ui.view: account_voucher.view_bank_statement_tree_voucher
+DEL ir.ui.view: account_voucher.view_company_inherit_currency_xchange_form
+
+### Ignore new message functionality
+NEW mail.message: account_voucher.module_install_notification
+NEW mail.message.subtype: account_voucher.mt_voucher_state_change
