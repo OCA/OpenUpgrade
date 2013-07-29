@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="ir_cron_mail_scheduler_action" model="ir.cron">
+            <field eval="'mail.mail'" name="model"/>
+        </record>
+
+        <record id="action_view_mail_message" model="ir.actions.act_window">
+            <field name="domain" />
+        </record>
+
+    </data>
+</openerp>
