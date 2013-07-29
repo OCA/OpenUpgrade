@@ -1,0 +1,34 @@
+---analytic---
+analytic     / account.analytic.account / contact_id (many2one)         : DEL relation: res.partner.address
+# In 6.1, there is Two field partner_id [res.partner] and contact_id [res.partner.adress]
+# In 7.0, there is on contact_id [res.partner] due to the merging of concept.
+# -> Merging choice : select the old 'contact_id' (more precise) to fill 'partner_id' if 'contact_id' is defined.
+
+analytic     / account.analytic.account / template_id (many2one)        : NEW relation: account.analytic.account
+# --> New concept available only in case of Account_analytic_accont.type="contract" : OK. (because 'contract' is new keys)
+
+analytic     / account.analytic.account / manager_id (many2one)         : NEW relation: res.users
+# --> New concept: OK
+
+analytic     / account.analytic.account / message_ids (one2many)        : NEW relation: mail.message
+# --> New concept: OK 
+
+analytic     / account.analytic.account / type (selection)              : selection_keys is now '['contract', 'normal', 'template', 'view']' ('['normal', 'view']')
+# New keys in selection : OK.
+
+analytic     / account.analytic.account / type (selection)              : now required, default = normal
+# Value is required with default value : OK 
+
+
+new xml-id of model mail.message.subtype: analytic.mt_account_closed    # mail.message.subtype is NEW : OK.
+new xml-id of model mail.message.subtype: analytic.mt_account_opened    # mail.message.subtype is NEW : OK.
+new xml-id of model mail.message.subtype: analytic.mt_account_pending   # mail.message.subtype is NEW : OK.
+
+new xml-id of model ir.sequence.type: analytic.seq_type_analytic_account_main
+### previously in module "account" and named "seq_type_analytic_account". Rename xml : OK
+
+new xml-id of model ir.sequence: analytic.seq_analytic_account_base
+### previously in module "account" and named "seq_analytic_account". Rename xml : OK
+
+### System XML IDs belows : (Nothing to do)
+new xml-id of model ir.ui.view: analytic.view_account_analytic_account_form
