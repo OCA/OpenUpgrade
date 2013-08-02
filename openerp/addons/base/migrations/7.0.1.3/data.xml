@@ -1,0 +1,532 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+  <data>
+    <record model="res.country" id="gw"><field name="currency_id" ref="GWP"/>
+        </record>
+    <record model="res.country" id="gu"><field name="currency_id" ref="USD"/>
+        </record>
+    <record model="res.country" id="gs"><field name="currency_id" ref="GBP"/>
+        </record>
+    <record model="res.country" id="gq"><field name="currency_id" ref="XAF"/>
+        </record>
+    <record model="res.country" id="gy"><field name="currency_id" ref="GYD"/>
+        </record>
+    <record model="res.country" id="gg"><field name="currency_id" ref="GBP"/>
+        </record>
+    <record model="res.country" id="ge"><field name="currency_id" ref="EUR"/>
+        </record>
+    <record model="res.country" id="gd"><field name="currency_id" ref="XCD"/>
+        </record>
+    <record model="res.country" id="ga"><field name="currency_id" ref="XAF"/>
+        </record>
+    <record model="res.country" id="gn"><field name="currency_id" ref="GNF"/>
+        </record>
+    <record model="res.country" id="gm"><field name="currency_id" ref="GMD"/>
+        </record>
+    <record model="res.country" id="gl"><field name="currency_id" ref="DKK"/>
+        </record>
+    <record model="res.country" id="gi"><field name="currency_id" ref="GIP"/>
+        </record>
+    <record model="res.country" id="gh"><field name="currency_id" ref="GHS"/>
+        </record>
+    <record model="res.country" id="nl"><field name="currency_id" ref="EUR"/>
+        </record>
+    <record model="res.country" id="tv"><field name="currency_id" ref="AUD"/>
+        </record>
+    <record model="res.country" id="tw"><field name="currency_id" ref="TWD"/>
+        </record>
+    <record model="res.country" id="tt"><field name="currency_id" ref="TTD"/>
+        </record>
+    <record model="res.country" id="gp"><field name="currency_id" ref="EUR"/>
+        </record>
+    <record model="res.country" id="tp"><field name="currency_id" ref="TPE"/>
+        </record>
+    <record model="res.country" id="tn"><field name="currency_id" ref="TND"/>
+        </record>
+    <record model="res.country" id="tj"><field name="currency_id" ref="TJR"/>
+        </record>
+    <record model="res.country" id="tk"><field name="currency_id" ref="NZD"/>
+        </record>
+    <record model="res.country" id="th"><field name="currency_id" ref="THB"/>
+        </record>
+    <record model="res.country" id="tf"><field name="currency_id" ref="EUR"/>
+        </record>
+    <record model="res.country" id="tg"><field name="currency_id" ref="XOF"/>
+        </record>
+    <record model="res.country" id="td"><field name="currency_id" ref="XAF"/>
+        </record>
+    <record model="res.country" id="ma"><field name="currency_id" ref="MAD"/>
+        </record>
+    <record model="res.country" id="vu"><field name="currency_id" ref="VUV"/>
+        </record>
+    <record model="res.country" id="ax"><field name="currency_id" ref="EUR"/>
+        </record>
+    <record model="res.country" id="zm"><field name="currency_id" ref="ZMK"/>
+        </record>
+    <record model="res.country" id="bf"><field name="currency_id" ref="XOF"/>
+        </record>
+    <record model="res.country" id="zw"><field name="currency_id" ref="ZWD"/>
+        </record>
+    <record model="res.country" id="zr"><field name="currency_id" ref="ZRZ"/>
+        </record>
+    <record model="res.country" id="ba"><field name="currency_id" ref="BAM"/>
+        </record>
+    <record model="res.country" id="bi"><field name="currency_id" ref="BIF"/>
+        </record>
+    <record model="res.country" id="tz"><field name="currency_id" ref="TZS"/>
+        </record>
+    <record model="res.country" id="bt"><field name="currency_id" ref="BTN"/>
+        </record>
+    <record model="res.country" id="my"><field name="currency_id" ref="MXN"/>
+        </record>
+    <record model="res.country" id="mx"><field name="currency_id" ref="MXN"/>
+        </record>
+    <record model="res.country" id="mz"><field name="currency_id" ref="MZN"/>
+        </record>
+    <record model="res.groups" id="group_partner_manager"><field name="name">Contact Creation</field>
+        </record>
+    <record model="res.country" id="va"><field name="currency_id" ref="EUR"/>
+        </record>
+    <record model="res.country" id="tr"><field name="currency_id" ref="TRL"/>
+        </record>
+    <record model="res.country" id="tm"><field name="currency_id" ref="TMM"/>
+        </record>
+    <record model="res.country" id="vi"><field name="currency_id" ref="USD"/>
+        </record>
+    <record model="res.country" id="me"><field name="currency_id" ref="LYD"/>
+        </record>
+    <record model="res.country" id="md"><field name="currency_id" ref="MDL"/>
+        </record>
+    <record model="res.country" id="mf"><field name="currency_id" ref="EUR"/>
+        </record>
+    <record model="res.country" id="mc"><field name="currency_id" ref="EUR"/>
+            </record>
+    <record model="res.country" id="mm"><field name="currency_id" ref="MMK"/>
+        </record>
+    <record model="res.country" id="ml"><field name="currency_id" ref="XOF"/>
+        </record>
+    <record model="res.country" id="mo"><field name="currency_id" ref="MOP"/>
+        </record>
+    <record model="res.country" id="mn"><field name="currency_id" ref="MNT"/>
+        </record>
+    <record model="res.country" id="mh"><field name="currency_id" ref="USD"/>
+        </record>
+    <record model="res.country" id="mk"><field name="currency_id" ref="MKD"/>
+        </record>
+    <record model="res.country" id="tc"><field name="currency_id" ref="USD"/>
+        </record>
+    <record model="res.country" id="mu"><field name="currency_id" ref="MUR"/>
+        </record>
+    <record model="res.country" id="mt"><field name="currency_id" ref="EUR"/>
+        </record>
+    <record model="res.country" id="mw"><field name="currency_id" ref="MWK"/>
+        </record>
+    <record model="res.country" id="mv"><field name="currency_id" ref="MVR"/>
+        </record>
+    <record model="res.country" id="mq"><field name="currency_id" ref="EUR"/>
+        </record>
+    <record model="res.country" id="mp"><field name="currency_id" ref="USD"/>
+        </record>
+    <record model="res.country" id="mr"><field name="currency_id" ref="MRO"/>
+        </record>
+    <record model="res.country" id="im"><field name="currency_id" ref="GBP"/>
+        </record>
+    <record model="res.country" id="il"><field name="currency_id" ref="ILS"/>
+        </record>
+    <record model="res.country" id="ss"><field name="currency_id" ref="SSP"/>
+        </record>
+    <record model="res.country" id="in"><field name="address_format" eval="'%(street)s\n%(street2)s\n%(city)s %(zip)s\n%(state_name)s\n%(country_name)s'"/>
+            <field name="currency_id" ref="INR"/>
+        </record>
+    <record model="res.country" id="ie"><field name="currency_id" ref="EUR"/>
+        </record>
+    <record model="res.country" id="fr"><field name="address_format" eval="'%(street)s\n%(street2)s\n%(zip)s %(city)s\n%(country_name)s'"/>
+            <field name="currency_id" ref="EUR"/>
+        </record>
+    <record model="res.country" id="fi"><field name="currency_id" ref="EUR"/>
+        </record>
+    <record model="res.country" id="fj"><field name="currency_id" ref="FJD"/>
+        </record>
+    <record model="res.country" id="fk"><field name="currency_id" ref="FKP"/>
+        </record>
+    <record model="res.country" id="fo"><field name="currency_id" ref="DKK"/>
+        </record>
+    <record model="res.country" id="sz"><field name="currency_id" ref="SZL"/>
+        </record>
+    <record model="res.country" id="sy"><field name="currency_id" ref="SYP"/>
+        </record>
+    <record model="res.country" id="sx"><field name="currency_id" ref="ANG"/>
+        </record>
+    <record model="res.country" id="sr"><field name="currency_id" ref="SRG"/>
+        </record>
+    <record model="res.country" id="st"><field name="currency_id" ref="STD"/>
+        </record>
+    <record model="res.country" id="sj"><field name="currency_id" ref="NOK"/>
+        </record>
+    <record model="res.country" id="si"><field name="currency_id" ref="EUR"/>
+        </record>
+    <record model="res.country" id="sh"><field name="currency_id" ref="SHP"/>
+        </record>
+    <record model="res.country" id="so"><field name="currency_id" ref="SOD"/>
+        </record>
+    <record model="res.country" id="sn"><field name="currency_id" ref="XOF"/>
+        </record>
+    <record model="res.country" id="sm"><field name="currency_id" ref="ITL"/>
+        </record>
+    <record model="res.country" id="sl"><field name="currency_id" ref="SLL"/>
+        </record>
+    <record model="res.country" id="sc"><field name="currency_id" ref="SCR"/>
+        </record>
+    <record model="res.country" id="dz"><field name="currency_id" ref="DZD"/>
+        </record>
+    <record model="res.country" id="sa"><field name="currency_id" ref="SAR"/>
+        </record>
+    <record model="res.country" id="sg"><field name="currency_id" ref="SGD"/>
+        </record>
+    <record model="res.country" id="ec"><field name="currency_id" ref="ECS"/>
+        </record>
+    <record model="res.country" id="sd"><field name="currency_id" ref="SDD"/>
+        </record>
+    <record model="res.country" id="lb"><field name="currency_id" ref="LBP"/>
+        </record>
+    <record model="res.country" id="la"><field name="currency_id" ref="LAK"/>
+        </record>
+    <record model="res.country" id="lk"><field name="currency_id" ref="LKR"/>
+        </record>
+    <record model="res.country" id="li"><field name="currency_id" ref="CHF"/>
+        </record>
+    <record model="res.country" id="lv"><field name="currency_id" ref="LVL"/>
+        </record>
+    <record model="res.country" id="lt"><field name="currency_id" ref="LTL"/>
+        </record>
+    <record model="res.country" id="lu"><field name="currency_id" ref="EUR"/>
+        </record>
+    <record model="res.country" id="ls"><field name="currency_id" ref="LSL"/>
+        </record>
+    <record model="res.country" id="ly"><field name="currency_id" ref="LYD"/>
+        </record>
+    <record model="res.country" id="ye"><field name="currency_id" ref="YER"/>
+        </record>
+    <record model="res.country" id="yu"><field name="currency_id" ref="YUM"/>
+        </record>
+    <record model="res.country" id="yt"><field name="currency_id" ref="EUR"/>
+        </record>
+    <record model="res.country" id="eh"><field name="currency_id" ref="MAD"/>
+        </record>
+    <record model="res.country" id="ee"><field name="currency_id" ref="EEK"/>
+        </record>
+    <record model="res.country" id="et"><field name="currency_id" ref="ETB"/>
+        </record>
+    <record model="res.country" id="es"><field name="address_format" eval="'%(street)s\n%(street2)s\n%(zip)s %(city)s\n%(country_name)s'"/>
+            <field name="currency_id" ref="EUR"/>
+        </record>
+    <record model="res.country" id="qa"><field name="currency_id" ref="QAR"/>
+        </record>
+    <record model="res.country" id="rw"><field name="currency_id" ref="RWF"/>
+        </record>
+    <record model="res.country" id="rs"><field name="currency_id" ref="RSD"/>
+        </record>
+    <record model="res.country" id="re"><field name="currency_id" ref="EUR"/>
+        </record>
+    <record model="res.country" id="ro"><field name="currency_id" ref="ROL"/>
+        </record>
+    <record model="res.partner.title" id="res_partner_title_miss"><field name="shortcut">Miss</field>
+        </record>
+    <record model="res.country" id="ms"><field name="currency_id" ref="XCD"/>
+        </record>
+    <record model="ir.rule" id="res_partner_bank_rule"><field name="name">Partner bank company rule</field>
+	    <field name="global" eval="True"/>
+            </record>
+    <record model="res.country" id="fm"><field name="currency_id" ref="USD"/>
+        </record>
+    <record model="res.country" id="za"><field name="currency_id" ref="ZAR"/>
+        </record>
+    <record model="res.country" id="sb"><field name="currency_id" ref="SBD"/>
+        </record>
+    <record model="res.country" id="sv"><field name="currency_id" ref="SVC"/>
+        </record>
+    <record model="res.country" id="sk"><field name="currency_id" ref="SKK"/>
+        </record>
+    <record model="res.country" id="hu"><field name="currency_id" ref="HUF"/>
+        </record>
+    <record model="res.country" id="ke"><field name="currency_id" ref="KES"/>
+        </record>
+    <record model="res.country" id="kh"><field name="currency_id" ref="KHR"/>
+        </record>
+    <record model="res.country" id="kn"><field name="currency_id" ref="XCD"/>
+        </record>
+    <record model="res.country" id="kr"><field name="currency_id" ref="KRW"/>
+        </record>
+    <record model="res.country" id="kp"><field name="currency_id" ref="KPW"/>
+        </record>
+    <record model="res.country" id="kw"><field name="currency_id" ref="KWD"/>
+        </record>
+    <record model="res.country" id="se"><field name="currency_id" ref="SEK"/>
+        </record>
+    <record model="res.country" id="kz"><field name="currency_id" ref="KZT"/>
+        </record>
+    <record model="res.country" id="ky"><field name="currency_id" ref="KYD"/>
+        </record>
+    <record model="res.country" id="do"><field name="currency_id" ref="DOP"/>
+        </record>
+    <record model="res.country" id="dm"><field name="currency_id" ref="XCD"/>
+        </record>
+    <record model="res.country" id="dj"><field name="currency_id" ref="DJF"/>
+        </record>
+    <record model="res.country" id="dk"><field name="currency_id" ref="DKK"/>
+        </record>
+    <record model="res.country" id="de"><field name="currency_id" ref="EUR"/>
+        </record>
+    <record model="res.country" id="km"><field name="currency_id" ref="KMF"/>
+        </record>
+    <record model="res.country" id="wf"><field name="currency_id" ref="XPF"/>
+        </record>
+    <record model="res.country" id="jp"><field name="currency_id" ref="JPY"/>
+        </record>
+    <record model="res.country" id="jm"><field name="currency_id" ref="JMD"/>
+        </record>
+    <record model="res.country" id="jo"><field name="currency_id" ref="JOD"/>
+        </record>
+    <record model="res.country" id="ws"><field name="currency_id" ref="WST"/>
+        </record>
+    <record model="res.country" id="je"><field name="currency_id" ref="GBP"/>
+        </record>
+    <record model="res.country" id="lc"><field name="currency_id" ref="XCD"/>
+        </record>
+    <record model="res.country" id="mg"><field name="currency_id" ref="MGA"/>
+        </record>
+    <record model="res.country" id="ck"><field name="currency_id" ref="NZD"/>
+        </record>
+    <record model="res.country" id="ci"><field name="currency_id" ref="XOF"/>
+        </record>
+    <record model="res.country" id="ch"><field name="currency_id" ref="CHF"/>
+        </record>
+    <record model="res.country" id="cn"><field name="currency_id" ref="CNY"/>
+        </record>
+    <record model="res.country" id="cm"><field name="currency_id" ref="XAF"/>
+        </record>
+    <record model="res.country" id="cl"><field name="currency_id" ref="AUD"/>
+        </record>
+    <record model="res.country" id="cc"><field name="currency_id" ref="AUD"/>
+        </record>
+    <record model="res.country" id="ca"><field name="address_format" eval="'%(street)s\n%(street2)s\n%(city)s %(state_code)s %(zip)s\n%(country_name)s'"/>
+            <field name="currency_id" ref="CAD"/>
+        </record>
+    <record model="res.country" id="cg"><field name="currency_id" ref="XAF"/>
+        </record>
+    <record model="res.country" id="cd"><field name="currency_id" ref="CDF"/>
+        </record>
+    <record model="res.country" id="cz"><field name="currency_id" ref="CZK"/>
+        </record>
+    <record model="res.country" id="cx"><field name="currency_id" ref="AUD"/>
+        </record>
+    <record model="res.country" id="cr"><field name="currency_id" ref="CRC"/>
+        </record>
+    <record model="res.country" id="cw"><field name="currency_id" ref="ANG"/>
+        </record>
+    <record model="res.country" id="cu"><field name="currency_id" ref="CUP"/>
+        </record>
+    <record model="res.country" id="pr"><field name="currency_id" ref="USD"/>
+        </record>
+    <record model="res.country" id="ps"><field name="currency_id" ref="ILS"/>
+        </record>
+    <record model="res.country" id="pt"><field name="currency_id" ref="EUR"/>
+        </record>
+    <record model="res.country" id="py"><field name="currency_id" ref="PYG"/>
+        </record>
+    <record model="res.country" id="pa"><field name="currency_id" ref="PAB"/>
+        </record>
+    <record model="res.country" id="pf"><field name="currency_id" ref="XPF"/>
+        </record>
+    <record model="res.country" id="pg"><field name="currency_id" ref="PGK"/>
+        </record>
+    <record model="res.country" id="lr"><field name="currency_id" ref="LRD"/>
+        </record>
+    <record model="res.country" id="ph"><field name="currency_id" ref="PHP"/>
+        </record>
+    <record model="res.country" id="pn"><field name="currency_id" ref="NZD"/>
+        </record>
+    <record model="res.country" id="pl"><field name="currency_id" ref="PLZ"/>
+        </record>
+    <record model="res.country" id="pm"><field name="currency_id" ref="EUR"/>
+        </record>
+    <record model="res.groups" id="group_user"><field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+    <record model="res.country" id="ar"><field name="currency_id" ref="ARS"/>
+        </record>
+    <record model="res.country" id="ve"><field name="currency_id" ref="VUB"/>
+        </record>
+    <record model="res.country" id="vg"><field name="currency_id" ref="USD"/>
+        </record>
+    <record model="res.country" id="iq"><field name="currency_id" ref="IQD"/>
+        </record>
+    <record model="res.country" id="is"><field name="currency_id" ref="ISK"/>
+        </record>
+    <record model="res.country" id="ir"><field name="currency_id" ref="IRR"/>
+        </record>
+    <record model="res.country" id="it"><field name="currency_id" ref="EUR"/>
+        </record>
+    <record model="res.country" id="vn"><field name="currency_id" ref="VND"/>
+        </record>
+    <record model="res.country" id="io"><field name="currency_id" ref="USD"/>
+        </record>
+    <record model="res.country" id="id"><field name="currency_id" ref="IDR"/>
+        </record>
+    <record model="res.partner.title" id="res_partner_title_sir"><field name="shortcut">Sir</field>
+        </record>
+    <record model="res.country" id="na"><field name="currency_id" ref="NAD"/>
+        </record>
+    <record model="res.country" id="co"><field name="currency_id" ref="COP"/>
+        </record>
+    <record model="res.country" id="gt"><field name="currency_id" ref="QTQ"/>
+        </record>
+    <record model="res.country" id="ag"><field name="currency_id" ref="XCD"/>
+        </record>
+    <record model="res.country" id="to"><field name="currency_id" ref="TOP"/>
+        </record>
+    <record model="res.country" id="vc"><field name="currency_id" ref="XCD"/>
+        </record>
+    <record model="res.country" id="cf"><field name="currency_id" ref="XAF"/>
+        </record>
+    <record model="res.country" id="gr"><field name="currency_id" ref="EUR"/>
+        </record>
+    <record model="res.country" id="cy"><field name="currency_id" ref="CYP"/>
+        </record>
+    <record model="res.country" id="nu"><field name="currency_id" ref="NZD"/>
+        </record>
+    <record model="res.country" id="pk"><field name="currency_id" ref="PKR"/>
+        </record>
+    <record model="res.country" id="cv"><field name="currency_id" ref="CVE"/>
+        </record>
+    <record model="res.country" id="bd"><field name="currency_id" ref="BDT"/>
+        </record>
+    <record model="res.country" id="be"><field name="address_format" eval="'%(street)s\n%(street2)s\n%(zip)s %(city)s\n%(country_name)s'"/>
+            <field name="currency_id" ref="EUR"/>
+        </record>
+    <record model="res.country" id="bg"><field name="currency_id" ref="BGN"/>
+        </record>
+    <record model="res.country" id="bb"><field name="currency_id" ref="BBD"/>
+        </record>
+    <record model="res.country" id="bl"><field name="currency_id" ref="EUR"/>
+        </record>
+    <record model="res.country" id="bm"><field name="currency_id" ref="BMD"/>
+        </record>
+    <record model="res.country" id="bn"><field name="currency_id" ref="BND"/>
+        </record>
+    <record model="res.country" id="bo"><field name="currency_id" ref="BOB"/>
+        </record>
+    <record model="res.country" id="bh"><field name="currency_id" ref="BHD"/>
+        </record>
+    <record model="res.country" id="bj"><field name="currency_id" ref="XOF"/>
+        </record>
+    <record model="res.country" id="bv"><field name="currency_id" ref="NOK"/>
+        </record>
+    <record model="res.country" id="bw"><field name="currency_id" ref="BWP"/>
+        </record>
+    <record model="res.country" id="bq"><field name="currency_id" ref="USD"/>
+        </record>
+    <record model="res.country" id="br"><field name="address_format" eval="'%(street)s\n%(street2)s\n%(city)s %(state_code)s\n%(zip)s\n%(country_name)s'"/>
+            <field name="currency_id" ref="BRL"/>
+        </record>
+    <record model="res.country" id="bs"><field name="currency_id" ref="BSD"/>
+        </record>
+    <record model="res.country" id="by"><field name="currency_id" ref="BYR"/>
+        </record>
+    <record model="res.country" id="bz"><field name="currency_id" ref="BZD"/>
+        </record>
+    <record model="res.country" id="pw"><field name="currency_id" ref="USD"/>
+        </record>
+    <record model="res.country" id="om"><field name="currency_id" ref="OMR"/>
+        </record>
+    <record model="res.country" id="am"><field name="currency_id" ref="AMD"/>
+        </record>
+    <record model="res.country" id="eg"><field name="currency_id" ref="EGP"/>
+        </record>
+    <record model="res.country" id="hr"><field name="currency_id" ref="HRK"/>
+        </record>
+    <record model="res.country" id="pe"><field name="currency_id" ref="PEN"/>
+        </record>
+    <record model="res.country" id="ht"><field name="currency_id" ref="HTG"/>
+        </record>
+    <record model="res.country" id="hk"><field name="currency_id" ref="HKD"/>
+        </record>
+    <record model="res.country" id="hn"><field name="currency_id" ref="HNL"/>
+        </record>
+    <record model="res.country" id="hm"><field name="currency_id" ref="AUD"/>
+        </record>
+    <record model="res.country" id="kg"><field name="currency_id" ref="KGS"/>
+        </record>
+    <record model="res.country" id="uy"><field name="currency_id" ref="UYP"/>
+        </record>
+    <record model="res.country" id="uz"><field name="currency_id" ref="UZS"/>
+        </record>
+    <record model="res.country" id="um"><field name="currency_id" ref="USD"/>
+        </record>
+    <record model="res.country" id="uk"><field name="address_format" eval="'%(street)s\n%(street2)s\n%(city)s\n%(state_name)s\n%(zip)s\n%(country_name)s'"/>
+            <field name="currency_id" ref="GBP"/>
+        </record>
+    <record model="res.country" id="ug"><field name="currency_id" ref="UGX"/>
+        </record>
+    <record model="res.country" id="ua"><field name="currency_id" ref="UAG"/>
+        </record>
+    <record model="res.country" id="ki"><field name="currency_id" ref="AUD"/>
+        </record>
+    <record model="res.country" id="ae"><field name="currency_id" ref="AED"/>
+        </record>
+    <record model="res.country" id="ad"><field name="currency_id" ref="EUR"/>
+        </record>
+    <record model="res.country" id="af"><field name="currency_id" ref="AFN"/>
+        </record>
+    <record model="res.country" id="ai"><field name="currency_id" ref="XCD"/>
+        </record>
+    <record model="res.country" id="al"><field name="currency_id" ref="ALL"/>
+        </record>
+    <record model="res.country" id="ao"><field name="currency_id" ref="AOA"/>
+        </record>
+    <record model="res.country" id="an"><field name="currency_id" ref="NOK"/>
+        </record>
+    <record model="res.country" id="aq"><field name="currency_id" ref="XCD"/>
+        </record>
+    <record model="res.country" id="au"><field name="address_format" eval="'%(street)s\n%(street2)s\n%(city)s %(state_code)s %(zip)s\n%(country_name)s'"/>
+            <field name="currency_id" ref="AUD"/>
+        </record>
+    <record model="res.country" id="at"><field name="currency_id" ref="EUR"/>
+        </record>
+    <record model="res.country" id="aw"><field name="currency_id" ref="AWG"/>
+        </record>
+    <record model="res.country" id="az"><field name="currency_id" ref="AZN"/>
+        </record>
+    <record model="res.country" id="as"><field name="currency_id" ref="USD"/>
+        </record>
+    <record model="res.country" id="ni"><field name="currency_id" ref="NIO"/>
+        </record>
+    <record model="res.country" id="us"><field name="currency_id" ref="USD"/>
+        </record>
+    <record model="res.country" id="no"><field name="currency_id" ref="NOK"/>
+        </record>
+    <record model="res.country" id="nc"><field name="currency_id" ref="XPF"/>
+        </record>
+    <record model="res.country" id="ne"><field name="currency_id" ref="XOF"/>
+        </record>
+    <record model="res.country" id="nf"><field name="currency_id" ref="AUD"/>
+        </record>
+    <record model="res.country" id="ng"><field name="currency_id" ref="NGN"/>
+        </record>
+    <record model="res.country" id="nz"><field name="currency_id" ref="NZD"/>
+        </record>
+    <record model="res.country" id="np"><field name="currency_id" ref="NPR"/>
+        </record>
+    <record model="res.country" id="nr"><field name="currency_id" ref="AUD"/>
+        </record>
+    <record model="res.country" id="er"><field name="currency_id" ref="ERN"/>
+        </record>
+    <record model="res.country" id="nt"><field name="currency_id" ref="IQD"/>
+        </record>
+    <record model="res.country" id="gf"><field name="currency_id" ref="GEL"/>
+        </record>
+    <record model="res.country" id="ru"><field name="currency_id" ref="RUB"/>
+        </record>
+    <record model="res.partner.title" id="res_partner_title_madam"><field name="shortcut">Mrs.</field>
+        </record>
+  </data>
+</openerp>
