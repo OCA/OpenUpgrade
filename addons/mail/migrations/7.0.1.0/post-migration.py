@@ -49,7 +49,7 @@ def convert_mail_bodies(cr, pool):
                 })
         for row in cr.fetchall():
             body = func(row[1])
-            cr.execute("UPDATE mail_message SET body = %s WHERE id = %s", body, row[0])
+            cr.execute("UPDATE mail_message SET body = %s WHERE id = %s", (body, row[0]))
 
 def create_mail_mail(cr, pool):
     """
