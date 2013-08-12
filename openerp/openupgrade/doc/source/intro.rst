@@ -53,3 +53,23 @@ Migrating Your Database
    against it to test how the migrated data behaves under the new version. 
    Remember that the OpenUpgrade version of the source code is only intended to 
    perform the migration, not run the OpenERP server.
+
+Configuration options
+=====================
+
+OpenUpgrade allows for the following configuration options. Add these options
+to a separate stanza in the server configuration file under a header 
+*[openupgrade]*
+
+* *autoinstall* - A dictionary with module name keys and lists of module names
+  as values. If a key module is installed on your database, the modules from
+  the value (and their dependencies) are selected for installation as well.
+
+* *forced_deps* - A dictionary with module name keys and lists of module names
+  as values. If a key module is installed on your database, the modules from
+  the value will be treated as a module dependency. With this directive, you
+  can manipulate the order in which the modules are migrated. If the modules
+  from the value are not already installed on your database, they will be
+  selected for installation (as will their dependencies). Be careful not to
+  introduce a circular dependency using this directive.
+
