@@ -21,10 +21,11 @@
 
 import logging
 import types
-from openerp import SUPERUSER_ID
+from openerp import release, SUPERUSER_ID
 from openerp.osv.orm import TransientModel
 from openerp.osv import fields
 from openerp.openupgrade.openupgrade import table_exists
+from openerp.tools import config, safe_eval
 
 # A collection of functions used in 
 # openerp/modules/loading.py
@@ -36,10 +37,31 @@ def add_module_dependencies(cr, module_list):
     Select (new) dependencies from the modules in the list
     so that we can inject them into the graph at upgrade
     time. Used in the modified OpenUpgrade Server,
-    not to be used in migration scripts
+    not to be called from migration scripts
+
+    Also take the OpenUpgrade configuration directives 'forced_deps'
+    and 'autoinstall' into account. From any additional modules
+    that these directives can add, the dependencies are added as
+    well (but these directives are not checked for the occurrence
+    of any of the dependencies).
     """
     if not module_list:
         return module_list
+
+    forced_deps = safe_eval.safe_eval(
+        config.get_misc(
+            'openupgrade', 'forced_deps_' + release.version, 
+            config.get_misc('openupgrade', 'forced_deps', '{}')))
+
+    autoinstall = safe_eval.safe_eval(
+        config.get_misc(
+            'openupgrade', 'autoinstall_' + release.version, 
+            config.get_misc('openupgrade', 'autoinstall', '{}')))
+
+    for module in list(module_list):
+        module_list += forced_deps.get(module, [])
+        module_list += autoinstall.get(module, [])
+
     cr.execute("""
         SELECT ir_module_module_dependency.name
         FROM
@@ -49,8 +71,10 @@ def add_module_dependencies(cr, module_list):
             module_id = ir_module_module.id
             AND ir_module_module.name in %s
         """, (tuple(module_list),))
-    dependencies = [x[0] for x in cr.fetchall()]
-    return list(set(module_list + dependencies))
+
+    return list(set(
+            module_list + [x[0] for x in cr.fetchall()]
+            ))
 
 def log_model(model, local_registry):
     """
