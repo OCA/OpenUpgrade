@@ -85,15 +85,15 @@ def migrate_payment_term(cr, pool):
           
     cr.execute(
         """
-        SELECT company_id, value_reference, res_id FROM
+        SELECT company_id, value_reference, res_id
         FROM ir_property
         WHERE name = 'property_payment_term'
         AND res_id like 'res.partner,%'
         """)
-    for row in cr.fetchrows():
+    for row in cr.fetchall():
         if partner_obj.read(
-                cr, SUPERUSER_ID, int(row[2][12:])
-                [('supplier')])['supplier']:
+                cr, SUPERUSER_ID, int(row[2][12:]), ['supplier']
+                )['supplier']:
             cr.execute(
                 """
                 INSERT INTO ir_property (
@@ -103,14 +103,17 @@ def migrate_payment_term(cr, pool):
                     type,
                     company_id,
                     fields_id,
-                    value_reference
+                    value_reference,
                     res_id)
                 VALUES(
                     %s,
                     CURRENT_TIMESTAMP AT TIME ZONE 'UTC',
                     'property_supplier_payment_term',
                     'many2one',
-                    %s, %s, %s)
+                    %s,
+                    %s,
+                    %s,
+                    %s)
                 """, (SUPERUSER_ID, row[0], field_id, row[1], row[2]))
         
 @openupgrade.migrate()
