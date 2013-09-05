@@ -32,6 +32,12 @@ column_renames = {
         [
         ('name', None),
         ('note', None),
+        ],
+    'account_cashbox_line':
+        [
+        ('ending_id', None),
+        ('starting_id', None),
+        ('number', None),
         ]
 }
 
