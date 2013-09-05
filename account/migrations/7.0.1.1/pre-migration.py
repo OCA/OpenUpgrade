@@ -42,3 +42,4 @@ xmlid_renames = [
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
+    openupgrade.rename_xmlids(cr, xmlid_renames)
