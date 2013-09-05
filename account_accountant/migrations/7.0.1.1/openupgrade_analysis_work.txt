@@ -1,0 +1,15 @@
+---Fields in module 'account_accountant'---
+---XML records in module 'account_accountant'---
+
+### New xml_ids. OK.
+NEW ir.actions.client: account_accountant.action_client_account_menu
+NEW mail.message: account_accountant.module_install_notification
+
+### xml_id from other module. (New). OK
+NEW ir.actions.todo: base.open_menu
+NEW ir.ui.menu: account.menu_account_config
+
+### xml_id from other module. (Existing). OK
+NEW ir.ui.menu: account.menu_finance
+
+
