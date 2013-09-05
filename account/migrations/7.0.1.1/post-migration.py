@@ -144,7 +144,7 @@ def merge_account_cashbox_line(cr, pool):
             # there is duplicated datas in the 6.1 Database
             pass
 
-    # Getting all the row from cashbox_line (type "starting") they didn't change
+    # Getting all the rows from cashbox_line (type "starting") that didn't change
     cr.execute("""
         SELECT id as id_start, %s as starting_id, %s as number
         FROM account_cashbox_line 
