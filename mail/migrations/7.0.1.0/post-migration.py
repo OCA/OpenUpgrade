@@ -24,6 +24,7 @@ import logging
 from openerp import pooler, SUPERUSER_ID
 from openerp.tools.mail import html_sanitize, plaintext2html
 from openerp.openupgrade import openupgrade
+from openerp.openupgrade import openupgrade_70
 
 logger = logging.getLogger('OpenUpgrade (mail)')
 
@@ -68,7 +69,7 @@ def create_mail_mail(cr, pool):
 
     for message_id in message_ids:
         message = message_obj.read(
-            cr, SUPERUSER_ID, message_id, ['model', 'res_id', 'user_id'])
+            cr, SUPERUSER_ID, message_id, ['model', 'res_id', 'user_id', 'email_from'])
     
         # Set message type to notification
         write_vals = {
@@ -76,7 +77,7 @@ def create_mail_mail(cr, pool):
             }
         # Convert user_id to author partner
         if user_ids[message['id']]:
-            write_vals['author_id'] = openupgrade.get_partner_id_from_user_id(
+            write_vals['author_id'] = openupgrade_70.get_partner_id_from_user_id(
                 cr, user_ids[message['id']])
         message_obj.write(cr, SUPERUSER_ID, message['id'], write_vals)
         
@@ -94,8 +95,10 @@ def create_mail_mail(cr, pool):
                     """, (name, message['id']))
             
         mail_id = mail_obj.create(
-            cr, SUPERUSER_ID,
-            {'mail_message_id': message['id']})
+            cr, SUPERUSER_ID, {
+                'mail_message_id': message['id'],
+                'email_from': message['email_from'],
+                })
 
     # Copy legacy fields from message table to mail table
     cr.execute(
@@ -123,7 +126,7 @@ def create_mail_mail(cr, pool):
 
     # Migrate m2o partner_id to m2m partner_ids
     openupgrade.m2o_to_m2m(
-        cr, 'mail.message', 'mail_message', 'partner_ids',
+        cr, pool.get('mail.message'), 'mail_message', 'partner_ids',
         openupgrade.get_legacy_name('partner_id'))
             
 
