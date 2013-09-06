@@ -30,6 +30,7 @@ logger = logging.getLogger('OpenUpgrade (mail)')
 
 subtype_mapping = {
     'plain': (openupgrade.get_legacy_name('body_text'), plaintext2html),
+    'mixed': (openupgrade.get_legacy_name('body_text'), plaintext2html),
     'html': (openupgrade.get_legacy_name('body_html'), html_sanitize),
     }
 
@@ -101,7 +102,7 @@ def create_mail_mail(cr, pool):
                 })
 
     # Copy legacy fields from message table to mail table
-    cr.execute(
+    openupgrade.logged_query(cr,
         """
         UPDATE mail_mail
         SET body_html = msg.body,
