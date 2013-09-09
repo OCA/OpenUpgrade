@@ -8,3 +8,5 @@ If you use point of sale, you will want to configure profit and loss accounts on
 This upgrade resets the contents of your invoice email template, because the old version contains non-existing fields. Because the translations, which contain the same, now invalid references are managed separately, you are encouraged to force an overwrite of the translations and redo any customization of the template.
 
 The label of invoice lines is now a multiline text field. Your existing labels and line notes are combined in this new field.
+
+Partners now have a separate payment term for purchases. Existing payment terms on suppliers will be duplicated into to this field.
