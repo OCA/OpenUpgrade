@@ -75,12 +75,54 @@ def lock_closing_reconciliations(cr, pool):
             cr, SUPERUSER_ID, reconcile_ids,
             {'opening_reconciliation': True})
 
+def migrate_payment_term(cr, pool):
+    partner_obj = pool.get('res.partner')
+    field_id = pool.get('ir.model.fields').search(
+        cr, SUPERUSER_ID, [
+            ('name', '=', 'property_supplier_payment_term'),
+            ('model', '=', 'res.partner'),
+            ])[0]
+          
+    cr.execute(
+        """
+        SELECT company_id, value_reference, res_id
+        FROM ir_property
+        WHERE name = 'property_payment_term'
+        AND res_id like 'res.partner,%'
+        """)
+    for row in cr.fetchall():
+        if partner_obj.read(
+                cr, SUPERUSER_ID, int(row[2][12:]), ['supplier']
+                )['supplier']:
+            cr.execute(
+                """
+                INSERT INTO ir_property (
+                    create_uid,
+                    create_date,
+                    name,
+                    type,
+                    company_id,
+                    fields_id,
+                    value_reference,
+                    res_id)
+                VALUES(
+                    %s,
+                    CURRENT_TIMESTAMP AT TIME ZONE 'UTC',
+                    'property_supplier_payment_term',
+                    'many2one',
+                    %s,
+                    %s,
+                    %s,
+                    %s)
+                """, (SUPERUSER_ID, row[0], field_id, row[1], row[2]))
+        
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     migrate_invoice_addresses(cr, pool)
     migrate_invoice_names(cr, pool)
     lock_closing_reconciliations(cr, pool)
+    migrate_payment_term(cr, pool)
     openupgrade.load_xml(
         cr, 'account',
         'migrations/7.0.1.1/data.xml')
