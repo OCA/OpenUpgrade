@@ -18,9 +18,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
+import logging
 from openerp import pooler, SUPERUSER_ID
 from openerp.openupgrade import openupgrade, openupgrade_70
+
+logger = logging.getLogger('OpenUpgrade')
 
 def migrate_invoice_addresses(cr, pool):
     # Contact id takes precedence over old partner id
@@ -116,6 +118,94 @@ def migrate_payment_term(cr, pool):
                     %s)
                 """, (SUPERUSER_ID, row[0], field_id, row[1], row[2]))
         
+def merge_account_cashbox_line(cr, pool):
+    # Check an unmanaged case by the migration script
+    cr.execute("""
+        select count(*) as quantity2 from (
+        SELECT count(*) as quantity1
+        FROM account_cashbox_line
+        GROUP BY %s, %s, pieces) as tmp
+        WHERE quantity1 > 1
+        """%(
+            openupgrade.get_legacy_name('starting_id'), 
+            openupgrade.get_legacy_name('ending_id'), 
+            ))
+    count = cr.fetchone()[0]
+    if count>0:
+        logger.error('Some duplicated datas in account_cashbox_line (%s). This case is not covered.' %(count))
+
+    cashboxline_obj = pool.get('account.cashbox.line')
+    # Getting all the row from cashbox_line (type "ending")
+    cr.execute("""
+        SELECT id as id_end, pieces, %s as ending_id, %s as number
+        FROM account_cashbox_line 
+        WHERE %s is not NULL AND bank_statement_id is NULL
+        """ %(
+            openupgrade.get_legacy_name('ending_id'), 
+            openupgrade.get_legacy_name('number'), 
+            openupgrade.get_legacy_name('ending_id'), 
+            ))
+    for (id_end, pieces, ending_id, number) in cr.fetchall():
+        # Check if there is some corresping cashbox_line (type "starting") 
+        cr.execute("""
+            SELECT id, %s
+            FROM account_cashbox_line
+            WHERE %s=%s AND pieces=%s
+            """ %(
+                openupgrade.get_legacy_name('number'),
+                openupgrade.get_legacy_name('starting_id'),
+                ending_id,
+                pieces,
+                ))
+
+        if cr.rowcount==0: 
+            # "ending" cashbox_line becomes normal.
+            cashboxline_obj.write(
+                cr, SUPERUSER_ID, [id_end],
+                {
+                    'number_opening': 0,
+                    'number_closing': number,
+                    'bank_statement_id': ending_id,
+                })
+
+        elif cr.rowcount==1:
+            row = cr.fetchone()
+            # "starting" cashbox_line becomes normal with data of "ending" cashbox_line
+            cashboxline_obj.write(
+                cr, SUPERUSER_ID, [row[0]],
+                {
+                    'number_opening': row[1],
+                    'number_closing': number,
+                    'bank_statement_id': ending_id,
+                })
+            # delete the "ending" cashbox_line
+            cashboxline_obj.unlink(cr, SUPERUSER_ID, [id_end])
+            
+        elif cr.rowcount>1:
+            # there is duplicated datas in the 6.1 Database
+            pass
+
+    # Getting all the rows from cashbox_line (type "starting") that didn't change
+    cr.execute("""
+        SELECT id as id_start, %s as starting_id, %s as number
+        FROM account_cashbox_line 
+        WHERE %s is not NULL AND bank_statement_id is NULL
+        """ %(
+            openupgrade.get_legacy_name('starting_id'), 
+            openupgrade.get_legacy_name('number'), 
+            openupgrade.get_legacy_name('starting_id'), 
+            ))
+
+    for (id_start, starting_id, number) in cr.fetchall():
+        cashboxline_obj.write(
+            cr, SUPERUSER_ID, [id_start],
+            {
+                'number_opening': number,
+                'number_closing': 0,
+                'bank_statement_id': starting_id,
+            })
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
@@ -123,6 +213,7 @@ def migrate(cr, version):
     migrate_invoice_names(cr, pool)
     lock_closing_reconciliations(cr, pool)
     migrate_payment_term(cr, pool)
+    merge_account_cashbox_line(cr, pool)
     openupgrade.load_xml(
         cr, 'account',
         'migrations/7.0.1.1/data.xml')
