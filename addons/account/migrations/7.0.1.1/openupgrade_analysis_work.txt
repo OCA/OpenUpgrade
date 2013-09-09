@@ -1,22 +1,37 @@
 ---Fields in module 'account'---
-### TODO: migrate cashbox opening and closing items
-account      / account.bank.statement   / closing_details_ids (one2many): NEW relation: account.cashbox.line
-account      / account.bank.statement   / details_ids (one2many)        : NEW relation: account.cashbox.line
-account      / account.bank.statement   / ending_details_ids (one2many) : DEL relation: account.cashbox.line
-account      / account.bank.statement   / opening_details_ids (one2many): NEW relation: account.cashbox.line
+# 'opening_details_ids' replacing 'starting_details_ids' : one2many field based on account_cashbox_line.banck_statement_id (many2one) Nothing to do for the object account_banck_statement
 account      / account.bank.statement   / starting_details_ids (one2many): DEL relation: account.cashbox.line
+account      / account.bank.statement   / opening_details_ids (one2many): NEW relation: account.cashbox.line
+
+# 'closing_details_ids' replacing 'ending_details_ids' : one2many field based on account_cashbox_line.banck_statement_id (many2one) Nothing to do for the object account_banck_statement
+account      / account.bank.statement   / ending_details_ids (one2many) : DEL relation: account.cashbox.line
+account      / account.bank.statement   / closing_details_ids (one2many): NEW relation: account.cashbox.line
+
+# new field one2many based on account_cashbox_line.banck_statement_id (many2one) Nothing to do for the object account_banck_statement
+account      / account.bank.statement   / details_ids (one2many)        : NEW relation: account.cashbox.line
+
+### The account_cashbox_line concept changes a lot. 
+# Use case : in the cashbox : at the opening state, there is 1 '1 euro coin' and at the closing state, 3 '1 euro coin'. 
+# in 6.1 : there is 2 lines in account_cashbox_line. One with starting_id linked to the account_bank_statement (number=1), the other with the ending_id linked to the account_bank_statement (number=3)
+# in 7.0 : there is one line with number_opening = 1 and number_closing = 3 
+# -> Migration script will delete all the "ending" and merge the data to the "starting" line. (If the starting line exists)
 account      / account.cashbox.line     / bank_statement_id (many2one)  : NEW relation: account.bank.statement
 account      / account.cashbox.line     / ending_id (many2one)          : DEL relation: account.bank.statement
+account      / account.cashbox.line     / starting_id (many2one)        : DEL relation: account.bank.statement
 account      / account.cashbox.line     / number (integer)              : DEL 
 account      / account.cashbox.line     / number_closing (integer)      : NEW 
 account      / account.cashbox.line     / number_opening (integer)      : NEW 
-account      / account.cashbox.line     / starting_id (many2one)        : DEL relation: account.bank.statement
+
+### Ignore new fields
 account      / account.journal          / cash_control (boolean)        : NEW 
-account      / account.journal          / cashbox_line_ids (one2many)   : NEW relation: account.journal.cashbox.line
 account      / account.journal          / with_last_closing_balance (boolean): NEW 
+account      / account.journal          / cashbox_line_ids (one2many)   : NEW relation: account.journal.cashbox.line
+account      / account.journal          / internal_account_id (many2one): NEW relation: account.account
+
+### Ignore new fields (new table)
 account      / account.journal.cashbox.line / journal_id (many2one)         : NEW relation: account.journal, required: required
 account      / account.journal.cashbox.line / pieces (float)                : NEW 
-account      / account.journal          / internal_account_id (many2one): NEW relation: account.account
+
 
 ### Ignore, no existing data to push as messages
 account      / account.bank.statement   / message_ids (one2many)        : NEW relation: mail.message
