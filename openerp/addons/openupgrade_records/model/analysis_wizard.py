@@ -94,6 +94,7 @@ class openupgrade_analysis_wizard(osv.osv_memory):
         # Retrieve field representations and compare
         remote_records = remote_record_obj.field_dump(context)
         local_records = local_record_obj.field_dump(cr, uid, context)
+        modules_record = set([record['module'] for record in remote_records + local_records])
         res = compare.compare_sets(remote_records, local_records)
 
         # Retrieve xml id representations and compare
@@ -112,28 +113,30 @@ class openupgrade_analysis_wizard(osv.osv_memory):
             for x in remote_record_obj.read(
                 remote_xml_record_ids, fields)
             ]
+        modules_xml_records = set([record['module'] for record in remote_xml_records + local_xml_records])
         res_xml = compare.compare_xml_sets(
             remote_xml_records, local_xml_records)
 
         # reorder and output the result
-        keys = list(set(res.keys() + res_xml.keys()))
-        keys.remove('general')
-        keys = ['general'] + keys
+        keys = ['general'] + list(modules_record & modules_xml_records)
         module_obj = self.pool.get('ir.module.module')
         module_ids = module_obj.search(
             cr, uid, [('state', '=', 'installed')])
         modules = dict([(x['name'], x) for x in module_obj.read(cr, uid, module_ids)])
         general = ''
         for key in keys:
-            contents = "---%s---\n" % key
+            contents = "---Fields in module '%s'---\n" % key
             if key in res:
                 contents += '\n'.join([unicode(line) for line in sorted(res[key])])
                 if res[key]:
                     contents += '\n'
+            contents += "---XML records in module '%s'---\n" % key
             if key in res_xml:
-                contents += '\n'.join([unicode(line) for line in sorted(res_xml[key])])
+                contents += '\n'.join([unicode(line) for line in res_xml[key]])
                 if res_xml[key]:
                     contents += '\n'
+            if key not in res and key not in res_xml:
+                contents += '-- nothing has changed in this module'
             if key == 'general':
                 general += contents
                 continue

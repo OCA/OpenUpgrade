@@ -43,6 +43,15 @@ column_renames = {
 }
 
 xmlid_renames = []
+model_renames = [
+    ('ir.actions.url', 'ir.actions.act_url'),
+    ]
+
+def disable_demo_data(cr):
+    """ Disables the renewed loading of demo data """
+    openupgrade.logged_query(
+        cr,
+        "UPDATE ir_module_module SET demo = false")
 
 def migrate_ir_attachment(cr):
     # Data is now stored in db_datas column and datas is a function field
@@ -153,8 +162,20 @@ def create_users_partner(cr):
                 "VALUES(%s, 'res.partner', 'base', 'partner_root', TRUE) ",
                 (partner_id,))
 
+def remove_obsolete_modules(cr):
+    obsolete_modules = (
+        'base_tools',
+        )
+    cr.execute(
+        """
+        UPDATE ir_module_module
+        SET state = 'to remove'
+        WHERE name in %s
+        """, (obsolete_modules,))
+
 @openupgrade.migrate()
 def migrate(cr, version):
+    disable_demo_data(cr)
     update_base_sql(cr)
     openupgrade.update_module_names(
         cr, module_namespec
@@ -162,5 +183,7 @@ def migrate(cr, version):
     openupgrade.drop_columns(cr, [('ir_actions_todo', 'action_id')])
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.rename_xmlids(cr, xmlid_renames)
+    openupgrade.rename_models(cr, model_renames)
     migrate_ir_attachment(cr)
     create_users_partner(cr)
+    remove_obsolete_modules(cr)

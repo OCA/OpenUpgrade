@@ -101,11 +101,13 @@ def rename_columns(cr, column_spec):
     Rename table columns. Typically called in the pre script.
 
     :param column_spec: a hash with table keys, with lists of tuples as values. \
-    Tuples consist of (old_name, new_name).
-
+    Tuples consist of (old_name, new_name). Use None for new_name to trigger a \
+    conversion of old_name using get_legacy_name()
     """
     for table in column_spec.keys():
         for (old, new) in column_spec[table]:
+            if new is None:
+                new = get_legacy_name(old)
             logger.info("table %s, column %s: renaming to %s",
                      table, old, new)
             cr.execute('ALTER TABLE "%s" RENAME "%s" TO "%s"' % (table, old, new,))
@@ -144,6 +146,8 @@ def rename_models(cr, model_spec):
     for (old, new) in model_spec:
         logger.info("model %s: renaming to %s",
                     old, new)
+        cr.execute('UPDATE ir_model SET model = %s '
+                   'WHERE model = %s', (new, old,))
         cr.execute('UPDATE ir_model_fields SET relation = %s '
                    'WHERE relation = %s', (new, old,))
     # TODO: signal where the model occurs in references to ir_model
@@ -200,6 +204,50 @@ def delete_model_workflow(cr, model):
     logged_query(
         cr,
         "DELETE FROM wkf WHERE osv = %s", (model,))
+
+def warn_possible_dataloss(cr, pool, old_module, fields):
+    """
+    Use that function in the following case : 
+    if a field of a model was moved from a 'A' module to a 'B' module. 
+    ('B' depend on 'A'), 
+    This function will test if 'B' is installed. 
+    If not, count the number of different value and possibly warn the user.
+    Use orm, so call from the post script.
+    
+    :param old_module: name of the old module
+    :param fields: list of dictionary with the following keys :
+        'table' : name of the table where the field is.
+        'field' : name of the field that are moving.
+        'new_module' : name of the new module
+    """
+    module_obj = pool.get('ir.module.module')
+    for field in fields: 
+        module_ids = module_obj.search(cr, SUPERUSER_ID, [
+                ('name', '=', field['new_module']),
+                ('state', 'in', ['installed', 'to upgrade', 'to install'])
+            ])
+        if not module_ids: 
+            cr.execute(
+                "SELECT count(*) FROM (SELECT %s from %s group by %s) "
+                "as tmp" % (
+                    field['field'], field['table'], field['field']))
+            row = cr.fetchone()
+            if row[0] == 1: 
+                # not a problem, that field wasn't used.
+                # Just a loss of functionality
+                logger.info(
+                    "Field '%s' from module '%s' was moved to module "
+                    "'%s' which is not installed: "
+                    "No dataloss detected, only loss of functionality"
+                    %(field['field'], old_module, field['new_module']))
+            else: 
+                # there is data loss after the migration.
+                message(
+                    cr, old_module,
+                    "Field '%s' was moved to module "
+                    "'%s' which is not installed: "
+                    "There were %s distinct values in this field.",
+                    field['field'], field['new_module'], row[0])
 
 def set_defaults(cr, pool, default_spec, force=False):
     """
@@ -345,6 +393,30 @@ def m2o_to_m2m(cr, model, table, field, source_field):
                    })
     for row in cr.fetchall():
         model.write(cr, SUPERUSER_ID, row[0], {field: [(4, row[1])]})
+
+def message(cr, module, table, column,
+            message, *args, **kwargs):
+    """
+    Log handler for non-critical notifications about the upgrade.
+    To be extended with logging to a table for reporting purposes.
+
+    :param module: the module name that the message concerns
+    :param table: the model that this message concerns (may be False,
+    but preferably not if 'column' is defined)
+    :param column: the column that this message concerns (may be False)
+    """
+    argslist = list(args or [])
+    prefix = ': '
+    if column:
+        argslist.insert(0, column)
+        prefix = ', column %s' + prefix
+    if table:
+        argslist.insert(0, table)
+        prefix = ', table %s' + prefix
+    argslist.insert(0, module)
+    prefix = 'Module %s' + prefix
+
+    logger.warn(prefix + message, *argslist, **kwargs)
 
 def migrate():
     """
