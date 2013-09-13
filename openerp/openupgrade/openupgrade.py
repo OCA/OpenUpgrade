@@ -380,7 +380,12 @@ def get_legacy_name(original_name):
 
 def m2o_to_m2m(cr, model, table, field, source_field):
     """
-    :param model: The target model
+    Recreate relations in many2many fields that were formerly
+    many2one fields. Use rename_columns in your pre-migrate
+    script to retain the column's old value, then call m2o_to_m2m
+    in your post-migrate script.
+
+    :param model: The target model pool object
     :param table: The source table
     :param field: The field name of the target model
     :param source_field: the many2one column on the source table.
