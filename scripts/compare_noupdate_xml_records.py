@@ -134,6 +134,9 @@ def main(argv=None):
     - etree's pretty_print is not *that* pretty
     - Does not take translations into account (e.g. in the case of
       email templates)
+    - Does not handle the shorthand records <menu>, <act_window> etc.,
+      although that could be done using the same expansion logic as
+      is used in their parsers in openerp/tools/convert.py 
     """
     parser = argparse.ArgumentParser()
     parser.add_argument(
