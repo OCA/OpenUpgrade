@@ -150,7 +150,7 @@ class ir_model(osv.osv):
             # OpenUpgrade: do not run the new table cleanup
             openupgrade.message(
                 cr, 'Unknown', False, False,
-                "Not dropping the table of model %s", model.model)
+                "Not dropping the table or view of model %s", model.model)
             continue
 
             model_pool = self.pool.get(model.model)
