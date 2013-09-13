@@ -142,7 +142,7 @@ def migrate_partner_address(cr, pool):
                             'parent_id': address['partner_id']})
                     propagated_values = partner_obj.read(
                         cr, SUPERUSER_ID, address['partner_id'],
-                        propagate_fields, load="_classic_read")
+                        propagate_fields, load="_classic_write")
                     propagated_values.pop('id')
                     partner_vals.update(propagated_values)
                     create_partner(
