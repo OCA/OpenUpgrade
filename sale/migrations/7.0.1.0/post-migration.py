@@ -47,18 +47,18 @@ def migrate_sale_order_line_names(cr, pool):
     new text field name on the sale order line.
     """
     sale_order_line_obj = pool.get('sale.order.line')
-    notes_column = openupgrade.get_legacy_name('notes')
-    name_column = openupgrade.get_legacy_name('name')
     cr.execute("""
-        SELECT id, %s, %s
+        SELECT id, {0}, {1}
         FROM sale_order_line
-        WHERE %s is not NULL
-        AND %s != ''
-        """ % (name_column, notes_column, notes_column, notes_column))
+        WHERE {1} is not NULL AND {1} != ''
+        """.format(
+            'name',
+            openupgrade.get_legacy_name('notes')))
     for (sale_order_line_id, name, notes) in cr.fetchall():
+        name = name + '\n' if name else ''
         sale_order_line_obj.write(
             cr, SUPERUSER_ID, [sale_order_line_id],
-            {'name': name + '\n' + notes})
+            {'name': name + notes})
 
 @openupgrade.migrate()
 def migrate(cr, version):

@@ -29,7 +29,6 @@ column_renames = {
     ],
     'sale_order_line':[
         ('address_allotment_id', None),
-        ('name', None),
         ('notes', None),
     ],
 }
