@@ -33,17 +33,18 @@ def migrate_purchase_order_line_names(cr, pool):
     new text field name on the purchase order line.
     """
     purchase_order_line_obj = pool.get('purchase.order.line')
-    notes_column = openupgrade.get_legacy_name('notes')
     cr.execute("""
-        SELECT id, %s, %s
+        SELECT id, {0}, {1}
         FROM purchase_order_line
-        WHERE %s is not NULL
-        AND %s != ''
-        """ % ('name', notes_column, notes_column, notes_column))
+        WHERE {1} is not NULL AND {1} != ''
+        """.format(
+            'name',
+            openupgrade.get_legacy_name('notes')))
     for (purchase_order_line_id, name, notes) in cr.fetchall():
+        name = name + '\n' if name else ''
         purchase_order_line_obj.write(
             cr, SUPERUSER_ID, [purchase_order_line_id],
-            {'name': name + '\n' + notes})
+            {'name': name + notes})
 
 def set_purchase_order_payment_term(cr, pool): 
     """
