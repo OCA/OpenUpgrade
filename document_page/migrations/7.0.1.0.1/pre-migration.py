@@ -28,7 +28,6 @@ column_drops = [
     ('wiki_wiki', 'review'),
     ('wiki_wiki', 'summary'),
     ('wiki_wiki', 'toc'),
-    ('wiki_wiki', 'group_id'),
     ('wiki_wiki', 'section'),
     ('wiki_wiki_history', 'minor_edit'),
 ]
@@ -36,6 +35,9 @@ column_drops = [
 column_renames = {
     'wiki_wiki': [
         ('text_area', 'content'),
+    ],
+    'wiki_groups': [
+        ('template', 'content'),
     ],
     'wiki_wiki_history': [
         ('text_area', 'content'),
@@ -46,6 +48,7 @@ column_renames = {
 table_renames = [
     ('wiki_wiki', 'document_page'),
     ('wiki_wiki_history', 'document_page_history'),
+    ('wiki_create_menu', 'document_page_create_menu'),
 ]
 
 model_renames = [
@@ -53,8 +56,33 @@ model_renames = [
 ]
 
 
+def precreate_type_content(cr):
+    """Pre-create the 'type' column with 'category' as the value"""
+    cr.execute("""\
+ALTER TABLE wiki_wiki ADD COLUMN type character varying;
+COMMENT ON COLUMN wiki_wiki.type IS 'Type';\
+""")
+    cr.execute("""UPDATE wiki_wiki SET type = 'content';""")
+
+
+def precreate_combine_wiki_groups_wiki_wiki(cr):
+    """Put wiki_wiki content into wiki_groups, then delete wiki_groups, conserve parent_id"""
+    cr.execute("""ALTER TABLE wiki_wiki ADD COLUMN old_id integer;""")
+    cr.execute("""\
+INSERT INTO wiki_wiki(create_uid, create_date, write_date, name, content, type, old_id)
+SELECT create_uid, create_date, write_date, name, content, 'category' AS type, id
+FROM wiki_groups
+ORDER BY id ASC;""")
+    cr.execute("""\
+UPDATE wiki_wiki w
+SET parent_id = (SELECT id FROM wiki_wiki WHERE old_id = w.group_id LIMIT 1)
+WHERE group_id IS NOT null;\
+""")
+    openupgrade.drop_columns(cr, [('wiki_wiki', 'group_id'), ('wiki_wiki', 'old_id')])
+
+
 def precreate_approver_gid(cr):
-    """Precreate the 'approver_gid' column"""
+    """Pre-create the 'approver_gid' column"""
     cr.execute("""\
 ALTER TABLE document_page ADD COLUMN approver_gid integer;
 COMMENT ON COLUMN document_page.approver_gid IS 'Approver group';\
@@ -68,7 +96,7 @@ ALTER TABLE document_page
 
 
 def precreate_approval_required(cr):
-    """Precreate the 'approver_gid' column"""
+    """Pre-create the 'approval_required' column"""
     cr.execute("""\
 ALTER TABLE document_page ADD COLUMN approval_required boolean;
 COMMENT ON COLUMN document_page.approval_required IS 'Require approval';\
@@ -79,7 +107,12 @@ COMMENT ON COLUMN document_page.approval_required IS 'Require approval';\
 def migrate(cr, version):
     openupgrade.drop_columns(cr, column_drops)
     openupgrade.rename_columns(cr, column_renames)
+    precreate_type_content(cr)
+    precreate_combine_wiki_groups_wiki_wiki(cr)
     openupgrade.rename_tables(cr, table_renames)
     openupgrade.rename_models(cr, model_renames)
     precreate_approver_gid(cr)
     precreate_approval_required(cr)
+    cr.execute("""DROP TABLE wiki_wiki_page_open;""")
+    cr.execute("""DROP TABLE wiki_make_index;""")
+    cr.execute("""DROP TABLE wiki_groups""")
