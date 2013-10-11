@@ -44,15 +44,18 @@ def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     migrate_wiki_to_html(cr, pool)
 
-"""
-Wiky.py - Python library to converts Wiki MarkUp language to HTML.
-          Based on Wiki.js by Tanin Na Nakorn
 
-Copyright © 2013 Sandy Carter <bwrsandman@gmail.com>
-This work is free. You can redistribute it and/or modify it under the
-terms of the Creative Commons Attribution 3.0 Unported License.
-(http://creativecommons.org/licenses/by/3.0/legalcode)
-"""
+##############################################################################
+#
+#    Wiky.py - Python library to converts Wiki MarkUp language to HTML.
+#    Based on Wiki.js by Tanin Na Nakorn
+#
+#    Copyright © 2013 Sandy Carter <bwrsandman@gmail.com>
+#    This work is free. You can redistribute it and/or modify it under the
+#    terms of the Creative Commons Attribution 3.0 Unported License.
+#    (http://creativecommons.org/licenses/by/3.0/legalcode)
+#
+##############################################################################
 
 import re
 
@@ -109,7 +112,7 @@ class Wiky:
                     i += 1
                 i -= 1
                 html += self.process_bullet_point(lines[start: i + 1])
-            else :
+            else:
                 html += self.process_normal(line)
             html += "<br/>\n"
             i += 1
@@ -260,7 +263,7 @@ class Wiky:
                 break
 
         # URL
-        for protocol in ["http","ftp","news"]:
+        for protocol in ["http", "ftp", "news"]:
             end_index = -1
             while True:
                 try:
@@ -273,8 +276,9 @@ class Wiky:
                     break
 
         # Bold, Italics, Emphasis
-        wikitext = re_b_i.sub("<b><i>\g<1></i></b>", wikitext)
-        wikitext = re_b.sub("<b>\g<1></b>", wikitext)
-        wikitext = re_i.sub("<i>\g<1></i>", wikitext)
+        wikitext = re_b_i.sub("<b><i>\1</i></b>", wikitext)
+        wikitext = re_b.sub("<b>\1</b>", wikitext)
+        wikitext = re_i.sub("<i>\1</i>", wikitext)
 
         return wikitext
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
