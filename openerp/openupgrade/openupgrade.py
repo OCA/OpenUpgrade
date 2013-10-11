@@ -318,7 +318,7 @@ def logged_query(cr, query, args=None):
     if args is None:
         args = []
     res = cr.execute(query, args)
-    logger.debug('Running %s', query)
+    logger.debug('Running %s', query % tuple(args))
     logger.debug('%s rows affected', cr.rowcount)
     return cr.rowcount
 
