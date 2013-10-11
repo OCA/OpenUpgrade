@@ -348,6 +348,9 @@ def update_module_names(cr, namespec):
         query = ("UPDATE ir_model_data SET module = %s "
                  "WHERE module = %s ")
         logged_query(cr, query, (new_name, old_name))
+        query = ("UPDATE ir_module_module_dependency SET name = %s "
+                 "WHERE name = %s")
+        logged_query(cr, query, (new_name, old_name))
 
 def add_ir_model_fields(cr, columnspec):
     """
