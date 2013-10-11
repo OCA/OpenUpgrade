@@ -22,12 +22,13 @@
 
 from openerp.openupgrade import openupgrade
 from openerp import pooler, SUPERUSER_ID
+from openerp.openupgrade.openupgrade import logged_query
 
 
 def migrate_wiki_to_html(cr, pool):
     document_page_obj = pool.get('document.page')
     wiky = Wiky()
-    cr.execute("""\
+    logged_query(cr, """\
 SELECT id, content
 FROM document_page
 WHERE content is not NULL;
