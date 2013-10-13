@@ -1,0 +1,120 @@
+---Fields in module 'stock'---
+
+### Migrated address to partner
+stock        / stock.warehouse          / partner_address_id (many2one) : DEL relation: res.partner.address
+stock        / stock.warehouse          / partner_id (many2one)         : NEW relation: res.partner
+
+### Migrated address to partner
+stock        / stock.location           / address_id (many2one)         : DEL relation: res.partner.address
+stock        / stock.location           / partner_id (many2one)         : NEW relation: res.partner
+
+### Migrated address to partner
+stock        / stock.move               / address_id (many2one)         : DEL relation: res.partner.address
+stock        / stock.move               / partner_id (many2one)         : not a function anymore
+
+### Migrated address to partner
+stock        / stock.picking            / address_id (many2one)         : DEL relation: res.partner.address
+stock        / stock.picking            / partner_id (many2one)         : not a function anymore
+
+### Ignore, no existing data to push as messages
+stock        / stock.picking            / message_ids (one2many)        : NEW relation: mail.message
+
+### Bad automatic analyse. Because of the creation of the class stock_picking_in in 7.0
+# (_inherit = "stock.picking" _table = "stock_picking")
+# This is an "empty" class. Cf the comment in stock/stock.py line 2944
+#stock        / stock.picking.in         / auto_picking (boolean)        : NEW 
+#stock        / stock.picking.in         / backorder_id (many2one)       : NEW relation: stock.picking.in
+#stock        / stock.picking.in         / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+#stock        / stock.picking.in         / date (datetime)               : NEW 
+#stock        / stock.picking.in         / date_done (datetime)          : NEW 
+#stock        / stock.picking.in         / invoice_state (selection)     : NEW required: required, selection_keys: ['2binvoiced', 'invoiced', 'none'], req_default: none
+#stock        / stock.picking.in         / location_dest_id (many2one)   : NEW relation: stock.location
+#stock        / stock.picking.in         / location_id (many2one)        : NEW relation: stock.location
+#stock        / stock.picking.in         / message_ids (one2many)        : NEW relation: mail.message
+#stock        / stock.picking.in         / move_lines (one2many)         : NEW relation: stock.move
+#stock        / stock.picking.in         / move_type (selection)         : NEW required: required, selection_keys: ['direct', 'one'], req_default: direct
+#stock        / stock.picking.in         / name (char)                   : NEW 
+#stock        / stock.picking.in         / note (text)                   : NEW 
+#stock        / stock.picking.in         / origin (char)                 : NEW 
+#stock        / stock.picking.in         / partner_id (many2one)         : NEW relation: res.partner
+#stock        / stock.picking.in         / state (selection)             : NEW selection_keys: ['assigned', 'auto', 'cancel', 'confirmed', 'done', 'draft']
+#stock        / stock.picking.in         / stock_journal_id (many2one)   : NEW relation: stock.journal
+#stock        / stock.picking.in         / type (selection)              : NEW required: required, selection_keys: ['in', 'internal', 'out'], req_default: in
+
+### Bad automatic analyse. Because of the creation of the class stock_picking_out in 7.0
+# Cf. stock_picking_in
+#stock        / stock.picking.out        / auto_picking (boolean)        : NEW 
+#stock        / stock.picking.out        / backorder_id (many2one)       : NEW relation: stock.picking.out
+#stock        / stock.picking.out        / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+#stock        / stock.picking.out        / date (datetime)               : NEW 
+#stock        / stock.picking.out        / date_done (datetime)          : NEW 
+#stock        / stock.picking.out        / invoice_state (selection)     : NEW required: required, selection_keys: ['2binvoiced', 'invoiced', 'none'], req_default: none
+#stock        / stock.picking.out        / location_dest_id (many2one)   : NEW relation: stock.location
+#stock        / stock.picking.out        / location_id (many2one)        : NEW relation: stock.location
+#stock        / stock.picking.out        / message_ids (one2many)        : NEW relation: mail.message
+#stock        / stock.picking.out        / move_lines (one2many)         : NEW relation: stock.move
+#stock        / stock.picking.out        / move_type (selection)         : NEW required: required, selection_keys: ['direct', 'one'], req_default: direct
+#stock        / stock.picking.out        / name (char)                   : NEW 
+#stock        / stock.picking.out        / note (text)                   : NEW 
+#stock        / stock.picking.out        / origin (char)                 : NEW 
+#stock        / stock.picking.out        / partner_id (many2one)         : NEW relation: res.partner
+#stock        / stock.picking.out        / state (selection)             : NEW selection_keys: ['assigned', 'auto', 'cancel', 'confirmed', 'done', 'draft']
+#stock        / stock.picking.out        / stock_journal_id (many2one)   : NEW relation: stock.journal
+#stock        / stock.picking.out        / type (selection)              : NEW required: required, selection_keys: ['in', 'internal', 'out'], req_default: out
+
+### For the following changes, there is nothing to do because there are views. (and not tables)
+# Changed address to partner. + the old name wasn't correct. (it was an 'address_id'). View : Nothing to do.
+stock        / report.stock.move        / partner_id (many2one)         : relation is now 'res.partner' ('res.partner.address')
+# Changed address to partner. + the old name wasn't correct. (it was an 'address_id'). View : Nothing to do.
+stock        / report.stock.inventory   / partner_id (many2one)         : relation is now 'res.partner' ('res.partner.address')
+# Yes, in fact there is twelve month in a year... Nothing to do. View : Nothing to do.
+stock        / report.stock.inventory   / month (selection)             : selection_keys is now '['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']' ('['01', '02', '03', '04', '05', '06', '07', '08', '09']')
+# New feature. View : Nothing to do.
+stock        / report.stock.inventory   / scrap_location (boolean)      : NEW 
+
+
+---XML records in module 'stock'---
+### Ignore interface and access records
+NEW ir.actions.act_window: stock.act_stock_return_picking_in
+NEW ir.actions.act_window: stock.act_stock_return_picking_out
+NEW ir.actions.act_window: stock.action_deliver_move
+NEW ir.actions.act_window: stock.action_receive_move
+NEW ir.actions.act_window: stock.action_stock_config_settings
+DEL ir.actions.act_window: stock.act_relate_picking
+DEL ir.actions.act_window: stock.action_incoming_product_board
+DEL ir.actions.act_window: stock.action_outgoing_product_board
+NEW ir.actions.act_window.view: stock.action_stock_move_form_all
+NEW ir.actions.act_window.view: stock.action_stock_move_tree_all
+NEW ir.actions.client: stock.action_client_warehouse_menu
+NEW ir.actions.report.xml: stock.report_picking_list_in
+NEW ir.actions.report.xml: stock.report_picking_list_out
+NEW ir.actions.todo: base.open_menu
+DEL ir.actions.todo.category: stock.category_stock_management_config
+NEW ir.model.access: stock.access_board_stock_user
+NEW ir.model.access: stock.access_stock_picking_in_manager
+NEW ir.model.access: stock.access_stock_picking_in_user
+NEW ir.model.access: stock.access_stock_picking_out_manager
+NEW ir.model.access: stock.access_stock_picking_out_user
+NEW ir.ui.menu: stock.menu_stock_config_settings
+DEL ir.ui.menu: stock.menu_dashboard_stock
+NEW ir.ui.view: stock.product_kanban_stock_view
+NEW ir.ui.view: stock.stock_picking_in_calendar
+NEW ir.ui.view: stock.stock_picking_out_calendar
+NEW ir.ui.view: stock.view_move_picking_form
+NEW ir.ui.view: stock.view_move_picking_tree
+NEW ir.ui.view: stock.view_normal_procurement_locations_form
+NEW ir.ui.view: stock.view_stock_config_settings
+DEL ir.ui.view: product.product_kanban_view
+DEL ir.ui.view: stock.view_move_form_reception_picking
+DEL ir.ui.view: stock.view_move_search_reception_incoming_picking
+DEL ir.ui.view: stock.view_move_search_reception_outcoming_picking
+DEL ir.ui.view: stock.view_normal_property_form
+DEL ir.ui.view: stock.view_normal_stock_property_form
+DEL ir.ui.view: stock.view_stock_picking_filter
+NEW res.groups: stock.group_inventory_valuation
+NEW res.groups: stock.group_locations
+NEW res.groups: stock.group_production_lot
+NEW res.groups: stock.group_tracking_lot
+
+### Ignore added chatter configuration
+NEW mail.message: stock.module_install_notification
