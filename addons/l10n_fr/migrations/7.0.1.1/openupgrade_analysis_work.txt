@@ -1,0 +1,32 @@
+---Fields in module 'l10n_fr'---
+# New fields for company. Nothing to do.
+l10n_fr      / res.company              / ape (char)                    : NEW 
+l10n_fr      / res.company              / siret (char)                  : NEW 
+
+---XML records in module 'l10n_fr'---
+# 'tva_acq_normale_inclue' renamed by 'tva_acq_normale_TTC'. OK
+DEL account.tax.template: l10n_fr.tva_acq_normale_inclue
+NEW account.tax.template: l10n_fr.tva_acq_normale_TTC
+
+# 'tva_acq_specifique_inclue' renamed by 'tva_acq_specifique_TTC'. OK
+DEL account.tax.template: l10n_fr.tva_acq_specifique_inclue
+NEW account.tax.template: l10n_fr.tva_acq_specifique_TTC
+
+# 'tva_acq_specifique_1_inclue' renamed by 'tva_acq_specifique_1_TTC'. OK
+DEL account.tax.template: l10n_fr.tva_acq_specifique_1_inclue
+NEW account.tax.template: l10n_fr.tva_acq_specifique_1_TTC
+
+# 'tva_acq_reduite_inclue' renamed by 'tva_acq_reduite_TTC'. OK
+DEL account.tax.template: l10n_fr.tva_acq_reduite_inclue
+NEW account.tax.template: l10n_fr.tva_acq_reduite_TTC
+
+# 'tva_acq_super_reduite_inclue' renamed by 'tva_acq_super_reduite_TTC'. OK
+DEL account.tax.template: l10n_fr.tva_acq_super_reduite_inclue
+NEW account.tax.template: l10n_fr.tva_acq_super_reduite_TTC
+
+# New action.todo from 'account' module replacing the old actions.todo from 'l10n_fr' module. Nothing to do.
+DEL ir.actions.todo: l10n_fr.config_call_account_template_fr
+NEW ir.actions.todo: account.action_wizard_multi_chart_todo
+
+# New herited view for adding ape and siret field. OK.
+NEW ir.ui.view: l10n_fr.res_company_form_l10n_fr
