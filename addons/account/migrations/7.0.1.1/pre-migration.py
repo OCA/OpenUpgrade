@@ -30,7 +30,6 @@ column_renames = {
         ],
     'account_invoice_line':
         [
-        ('name', None),
         ('note', None),
         ],
     'account_cashbox_line':
