@@ -40,20 +40,19 @@ def migrate_invoice_names(cr, pool):
     new text field name on the invoice line.
     """
     invoice_line_obj = pool.get('account.invoice.line')
-    note_column = openupgrade.get_legacy_name('note')
-    cr.execute(
-        """
-        SELECT id, %s, %s
+    
+    cr.execute("""
+        SELECT id, {0}, {1}
         FROM account_invoice_line
-        WHERE %s is not NULL
-        AND %s != ''
-        """ % (openupgrade.get_legacy_name('name'),
-               note_column, note_column, note_column))
+        WHERE {1} is not NULL AND {1} != ''
+        """.format(
+            'name',
+            openupgrade.get_legacy_name('note')))
     for (invoice_line_id, name, note) in cr.fetchall():
-        prefix = (name + '\n') if name else ''
+        name = name + '\n' if name else ''
         invoice_line_obj.write(
             cr, SUPERUSER_ID, [invoice_line_id],
-            {'name': prefix + note})
+            {'name': name + note})
 
 def lock_closing_reconciliations(cr, pool):
     """
