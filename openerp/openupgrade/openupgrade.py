@@ -48,6 +48,7 @@ __all__ = [
     'rename_models',
     'rename_xmlids',
     'get_legacy_name',
+    'm2o_to_m2m',
 ]    
 
 def load_data(cr, module_name, filename, idref=None, mode='init'):
@@ -376,6 +377,27 @@ def get_legacy_name(original_name):
     """
     return 'openupgrade_legacy_'+('_').join(
         map(str, release.version_info[0:2]))+'_'+original_name
+
+def m2o_to_m2m(cr, model, table, field, source_field):
+    """
+    Recreate relations in many2many fields that were formerly
+    many2one fields. Use rename_columns in your pre-migrate
+    script to retain the column's old value, then call m2o_to_m2m
+    in your post-migrate script.
+
+    :param model: The target model pool object
+    :param table: The source table
+    :param field: The field name of the target model
+    :param source_field: the many2one column on the source table.
+    """
+    cr.execute('SELECT id, %(field)s '
+               'FROM %(table)s '
+               'WHERE %(field)s is not null' % {
+                   'table': table,
+                   'field': source_field,
+                   })
+    for row in cr.fetchall():
+        model.write(cr, SUPERUSER_ID, row[0], {field: [(4, row[1])]})
 
 def message(cr, module, table, column,
             message, *args, **kwargs):
