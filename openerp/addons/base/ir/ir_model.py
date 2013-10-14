@@ -35,7 +35,7 @@ from openerp.tools import config
 from openerp.tools.translate import _
 from openerp.osv.orm import except_orm, browse_record
 
-from openerp.openupgrade import openupgrade_log
+from openerp.openupgrade import openupgrade_log, openupgrade
 
 _logger = logging.getLogger(__name__)
 
@@ -147,6 +147,12 @@ class ir_model(osv.osv):
 
     def _drop_table(self, cr, uid, ids, context=None):
         for model in self.browse(cr, uid, ids, context):
+            # OpenUpgrade: do not run the new table cleanup
+            openupgrade.message(
+                cr, 'Unknown', False, False,
+                "Not dropping the table or view of model %s", model.model)
+            continue
+
             model_pool = self.pool.get(model.model)
             cr.execute('select relkind from pg_class where relname=%s', (model_pool._table,))
             result = cr.fetchone()
@@ -302,6 +308,12 @@ class ir_model_fields(osv.osv):
 
     def _drop_column(self, cr, uid, ids, context=None):
         for field in self.browse(cr, uid, ids, context):
+            # OpenUpgrade: do not run the new column cleanup
+            openupgrade.message(
+                cr, 'Unknown', False, False,
+                "Not dropping the column of field %s of model %s", field.name, field.model)
+            continue
+
             model = self.pool.get(field.model)
             cr.execute('select relkind from pg_class where relname=%s', (model._table,))
             result = cr.fetchone()
