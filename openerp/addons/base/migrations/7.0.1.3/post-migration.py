@@ -76,6 +76,9 @@ def migrate_partner_address(cr, pool):
         'mobile', 'phone', 'state_id', 'street', 'street2', 'type', 'zip',
         'partner_id', 'name',
         ]
+    propagate_fields = [
+        'lang', 'tz',
+        ]
     partner_found = []
     processed_ids = []
 
@@ -137,6 +140,11 @@ def migrate_partner_address(cr, pool):
                     partner_vals.update({
                             'is_company': False,
                             'parent_id': address['partner_id']})
+                    propagated_values = partner_obj.read(
+                        cr, SUPERUSER_ID, address['partner_id'],
+                        propagate_fields, load="_classic_write")
+                    propagated_values.pop('id')
+                    partner_vals.update(propagated_values)
                     create_partner(
                         address['id'], partner_vals, partner_defaults)
             processed_ids.append(address['id'])
