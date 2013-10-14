@@ -53,3 +53,6 @@ def sync_commercial_fields(cr, pool):
 
 def migrate_deferred(cr, pool):
     sync_commercial_fields(cr, pool)
+    # Newly introduced _parent_store on menu items leaves gaps
+    # after upgrade of other modules for *some* reason. See lp:1226086
+    pool.get('ir.ui.menu')._parent_store_compute(cr)
