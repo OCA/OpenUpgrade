@@ -53,21 +53,29 @@ def set_purchase_order_payment_term(cr, pool):
     """
     partner_obj = pool.get('res.partner')
     purchase_order_obj = pool.get('purchase.order')
+    res_user_obj = pool.get('res.users')
     cr.execute("SELECT id, partner_id, create_uid, write_uid FROM purchase_order")
+    
     for (purchase_order_id, partner_id, create_uid, write_uid) in cr.fetchall():
         # get the property as viewed by the partner who created / modified the purchase order.
         if write_uid : 
             uid = write_uid
         else:
             uid =create_uid
+        my_user = res_user_obj.browse(cr, SUPERUSER_ID, uid)
+        partner_company_id = partner_obj.browse(cr, SUPERUSER_ID, partner_id).company_id.id
+        if my_user.company_id.id != partner_company_id: 
+            res_user_obj.write(cr, SUPERUSER_ID, uid, {'company_id' : partner_company_id})
         supplier = partner_obj.browse(cr, uid, partner_id)
+        my_property_supplier_payment_term = supplier.property_supplier_payment_term.id
         purchase_order_obj.write(
             cr, SUPERUSER_ID, [purchase_order_id],
-            {'payment_term_id': supplier.property_supplier_payment_term.id or False})
+            {'payment_term_id': my_property_supplier_payment_term})
 
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     migrate_purchase_order_addresses(cr, pool)
-    migrate_purchase_order_line_names(cr, pool)
     set_purchase_order_payment_term(cr, pool)
+    migrate_purchase_order_line_names(cr, pool)
+
