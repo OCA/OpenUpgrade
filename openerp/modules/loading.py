@@ -44,7 +44,7 @@ from openerp.tools.translate import _
 from openerp.modules.module import initialize_sys_path, \
     load_openerp_module, init_module_models, adapt_version
 
-from openerp.openupgrade import openupgrade_loading
+from openerp.openupgrade import openupgrade_loading, deferred_70
 _logger = logging.getLogger(__name__)
 
 def open_openerp_namespace():
@@ -420,6 +420,10 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
             # Cleanup orphan records
             pool.get('ir.model.data')._process_end(cr, SUPERUSER_ID, processed_modules)
 
+            # OpenUpgrade: call deferred migration steps
+            if update_module:
+                deferred_70.migrate_deferred(cr, pool)
+
         for kind in ('init', 'demo', 'update'):
             tools.config[kind] = {}
 
@@ -444,10 +448,6 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
                     break
                 else:
                     _logger.info('removed %d unused menus', cr.rowcount)
-
-        # STEP 5 1/2 (OpenUpgrade): deferred call to sync commercial partner fields
-        if update_module:
-            openupgrade_loading.sync_commercial_fields(cr, pool)
 
         # STEP 6: Uninstall modules to remove
         if update_module:

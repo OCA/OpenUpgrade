@@ -35,7 +35,7 @@ from openerp.tools import config
 from openerp.tools.translate import _
 from openerp.osv.orm import except_orm, browse_record, MAGIC_COLUMNS
 
-from openerp.openupgrade import openupgrade_log
+from openerp.openupgrade import openupgrade_log, openupgrade
 
 _logger = logging.getLogger(__name__)
 
@@ -147,6 +147,12 @@ class ir_model(osv.osv):
 
     def _drop_table(self, cr, uid, ids, context=None):
         for model in self.browse(cr, uid, ids, context):
+            # OpenUpgrade: do not run the new table cleanup
+            openupgrade.message(
+                cr, 'Unknown', False, False,
+                "Not dropping the table or view of model %s", model.model)
+            continue
+
             model_pool = self.pool.get(model.model)
             cr.execute('select relkind from pg_class where relname=%s', (model_pool._table,))
             result = cr.fetchone()
@@ -306,6 +312,11 @@ class ir_model_fields(osv.osv):
         for field in self.browse(cr, uid, ids, context):
             if field.name in MAGIC_COLUMNS:
                 continue
+            # OpenUpgrade: do not run the new column cleanup
+            openupgrade.message(
+                cr, 'Unknown', False, False,
+                "Not dropping the column of field %s of model %s", field.name, field.model)
+            continue
             model = self.pool.get(field.model)
             cr.execute('select relkind from pg_class where relname=%s', (model._table,))
             result = cr.fetchone()
@@ -521,7 +532,7 @@ class ir_model_constraint(Model):
     def _module_data_uninstall(self, cr, uid, ids, context=None):
         """
         Delete PostgreSQL foreign keys and constraints tracked by this model.
-        """ 
+        """
 
         if uid != SUPERUSER_ID and not self.pool.get('ir.model.access').check_groups(cr, uid, "base.group_system"):
             raise except_orm(_('Permission Denied'), (_('Administrator access is required to uninstall a module')))
@@ -582,7 +593,7 @@ class ir_model_relation(Model):
     def _module_data_uninstall(self, cr, uid, ids, context=None):
         """
         Delete PostgreSQL many2many relations tracked by this model.
-        """ 
+        """
 
         if uid != SUPERUSER_ID and not self.pool.get('ir.model.access').check_groups(cr, uid, "base.group_system"):
             raise except_orm(_('Permission Denied'), (_('Administrator access is required to uninstall a module')))
@@ -1041,11 +1052,11 @@ class ir_model_data(osv.osv):
         ``ids`` along with their corresponding database backed (including
         dropping tables, columns, FKs, etc, as long as there is no other
         ir.model.data entry holding a reference to them (which indicates that
-        they are still owned by another module). 
+        they are still owned by another module).
         Attempts to perform the deletion in an appropriate order to maximize
         the chance of gracefully deleting all records.
         This step is performed as part of the full uninstallation of a module.
-        """ 
+        """
 
         ids = self.search(cr, uid, [('module', 'in', modules_to_remove)])
 
