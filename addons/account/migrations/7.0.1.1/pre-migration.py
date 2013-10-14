@@ -44,7 +44,25 @@ xmlid_renames = [
     ('account.account_payment_term_15days', 'account.account_payment_term'),
     ]
 
+def fix_move_line_currency(cr):
+    """
+    In OpenERP 7.0, there is a new constraint on move lines
+    having their currency set to the company currency.
+    These would be happily created in OpenERP 6.1, specifically
+    from bank statements.
+    """
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE account_move_line l
+        SET currency_id = NULL
+        FROM res_company c
+        WHERE l.company_id = c.id
+              AND l.currency_id = c.currency_id;
+        """)
+
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.rename_xmlids(cr, xmlid_renames)
+    fix_move_line_currency(cr)
