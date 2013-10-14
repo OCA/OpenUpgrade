@@ -1,0 +1,64 @@
+---Fields in module 'hr'---
+# Migration script will use 'set_partner_id_from_partner_address_id' to change model. OK.
+hr           / hr.employee              / address_home_id (many2one)    : relation is now 'res.partner' ('res.partner.address')
+
+# Migration script will use 'set_partner_id_from_partner_address_id' to change model. OK.
+hr           / hr.employee              / address_id (many2one)         : relation is now 'res.partner' ('res.partner.address')
+
+### in 'hr.employee' model, 'photo' has been renamed in 'image'. OK.
+hr           / hr.employee              / photo (binary)                : DEL 
+hr           / hr.employee              / image (binary)                : NEW 
+
+### Ignore, no existing data to push as messages
+hr           / hr.job                   / message_ids (one2many)        : NEW relation: mail.message
+
+### Change in keys : 
+# DEL KEYS : ('old').
+# Script migration will change 'old' state in 'open' state. 
+# There is no problem, because there isn't workflow associated. OK.
+hr           / hr.job                   / state (selection)             : selection_keys is now '['open', 'recruit']' ('['old', 'open', 'recruit']')
+
+
+# In 6.1, hr.department was in res.users and hr_employee. 
+# In 7.0, there isn't relation between res.users and hr.department.
+# Migration choice : we'll put in hr_employee they don't have hr_department, the department of the associated user. (if any) OK.
+hr           / res.users                / context_department_id (many2one): DEL relation: hr.department
+
+### New one2many fields in 'res.users' model. Nothing to do.
+hr           / res.users                / employee_ids (one2many)       : NEW relation: hr.employee
+
+
+---XML records in module 'hr'---
+### Ignore interface and access records
+NEW ir.actions.act_window: hr.action_human_resources_configuration
+NEW ir.actions.act_window: hr.open_payroll_modules
+DEL ir.actions.act_window: hr.action_create_hr_employee_installer
+DEL ir.actions.act_window: hr.open_board_hr_manager
+DEL ir.actions.act_window: hr.open_view_categ_tree
+DEL ir.actions.act_window.view: hr.open_view_employee_list_my_form2
+DEL ir.actions.act_window.view: hr.open_view_employee_list_my_kanban
+DEL ir.actions.act_window.view: hr.open_view_employee_list_my_tree2
+NEW ir.actions.client: hr.action_client_hr_menu
+NEW ir.actions.todo: base.open_menu
+DEL ir.actions.todo: hr.config_wizard_action_create_hr_employee_installer
+DEL ir.actions.todo: hr.view_department_form_todo
+DEL ir.actions.todo.category: hr.category_hr_management_config
+DEL ir.model.access: hr.access_hr_res_partner_address
+NEW ir.ui.menu: hr.menu_hr_reporting_timesheet
+NEW ir.ui.menu: hr.menu_human_resources_configuration
+DEL ir.ui.menu: hr.menu_hr_dashboard_manager
+DEL ir.ui.menu: hr.menu_hr_dashboard_user
+DEL ir.ui.menu: hr.menu_hr_management
+DEL ir.ui.menu: hr.menu_view_employee_category_configuration_form
+DEL ir.ui.menu: hr.menu_view_employee_category_tree
+NEW ir.ui.view: hr.view_hr_job_employee_form
+NEW ir.ui.view: hr.view_human_resources_configuration
+DEL ir.ui.view: hr.board_hr_manager_form
+DEL ir.ui.view: hr.view_department_form_simple_modif_inherited1
+DEL ir.ui.view: hr.view_users_form_inherit
+
+### Ignore added chatter configuration
+NEW mail.message: hr.module_install_notification
+
+### Ignore new groups configuration
+NEW res.groups: base.group_user
