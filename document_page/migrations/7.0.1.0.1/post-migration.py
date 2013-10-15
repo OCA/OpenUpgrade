@@ -61,6 +61,10 @@ def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     combine_wiki_groups_document_page(cr)
     migrate_wiki_to_html(cr, pool)
+    logged_query(cr, """DROP TABLE wiki_wiki_page_open;""")
+    logged_query(cr, """DROP TABLE wiki_make_index;""")
+    logged_query(cr, """DROP TABLE wiki_create_menu""")
+    logged_query(cr, """DROP TABLE wiki_groups""")
 
 
 ##############################################################################

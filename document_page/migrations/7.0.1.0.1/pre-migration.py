@@ -22,19 +22,15 @@
 
 from openerp.openupgrade import openupgrade
 
-column_drops = [
-    ('wiki_wiki', 'tags'),
-    ('wiki_wiki', 'minor_edit'),
-    ('wiki_wiki', 'review'),
-    ('wiki_wiki', 'summary'),
-    ('wiki_wiki', 'toc'),
-    ('wiki_wiki', 'section'),
-    ('wiki_wiki_history', 'minor_edit'),
-]
-
 column_renames = {
     'wiki_wiki': [
         ('text_area', 'content'),
+        ('tags', None),
+        ('minor_edit', None),
+        ('review', None),
+        ('summary', None),
+        ('toc', None),
+        ('section', None),
     ],
     'wiki_groups': [
         ('template', 'content'),
@@ -42,6 +38,7 @@ column_renames = {
     'wiki_wiki_history': [
         ('text_area', 'content'),
         ('wiki_id', 'page_id'),
+        ('minor_edit', None),
     ],
 }
 
@@ -58,7 +55,6 @@ model_renames = [
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    openupgrade.drop_columns(cr, column_drops)
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.rename_tables(cr, table_renames)
     openupgrade.rename_models(cr, model_renames)
