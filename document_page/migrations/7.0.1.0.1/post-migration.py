@@ -25,6 +25,22 @@ from openerp import pooler, SUPERUSER_ID
 from openerp.openupgrade.openupgrade import logged_query
 
 
+def combine_wiki_groups_document_page(cr):
+    """Put wiki_groups content into wiki_wiki, then delete wiki_groups, conserve parent_id"""
+    logged_query(cr, """ALTER TABLE document_page ADD COLUMN old_id integer;""")
+    logged_query(cr, """\
+INSERT INTO document_page(create_uid, create_date, write_date, name, content, type, old_id)
+SELECT create_uid, create_date, write_date, name, content, 'category' AS type, id
+FROM wiki_groups
+ORDER BY id ASC;""")
+    logged_query(cr, """\
+UPDATE document_page w
+SET parent_id = (SELECT id FROM document_page WHERE old_id = w.group_id LIMIT 1)
+WHERE group_id IS NOT null;\
+""")
+    openupgrade.drop_columns(cr, [('document_page', 'group_id'), ('document_page', 'old_id')])
+
+
 def migrate_wiki_to_html(cr, pool):
     document_page_obj = pool.get('document.page')
     wiky = Wiky()
@@ -43,6 +59,7 @@ WHERE content is not NULL;
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
+    combine_wiki_groups_document_page(cr)
     migrate_wiki_to_html(cr, pool)
 
 
