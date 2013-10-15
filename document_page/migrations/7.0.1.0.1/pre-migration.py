@@ -49,11 +49,11 @@ column_renames = {
 table_renames = [
     ('wiki_wiki', 'document_page'),
     ('wiki_wiki_history', 'document_page_history'),
-    ('wiki_create_menu', 'document_page_create_menu'),
 ]
 
 model_renames = [
     ('wiki.wiki', 'document.page'),
+    ('wiki.wiki.history', 'document.page.history'),
 ]
 
 
@@ -67,7 +67,7 @@ COMMENT ON COLUMN wiki_wiki.type IS 'Type';\
 
 
 def precreate_combine_wiki_groups_wiki_wiki(cr):
-    """Put wiki_wiki content into wiki_groups, then delete wiki_groups, conserve parent_id"""
+    """Put wiki_groups content into wiki_wiki, then delete wiki_groups, conserve parent_id"""
     logged_query(cr, """ALTER TABLE wiki_wiki ADD COLUMN old_id integer;""")
     logged_query(cr, """\
 INSERT INTO wiki_wiki(create_uid, create_date, write_date, name, content, type, old_id)
