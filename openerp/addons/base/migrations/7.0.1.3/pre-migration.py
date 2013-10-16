@@ -38,8 +38,11 @@ column_renames = {
     # orm can map timestamp fields to date field
     'res_users': [
         ('date', 'login_date'),
-        ('user_email', openupgrade.get_legacy_name('user_email')),
-        ]
+        ('user_email', None),
+        ], 
+    'res_company': [
+        ('logo', None),
+    ]
 }
 
 xmlid_renames = []
