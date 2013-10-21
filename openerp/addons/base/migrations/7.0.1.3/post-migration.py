@@ -74,7 +74,7 @@ def migrate_partner_address(cr, pool):
     fields = [
         'id', 'birthdate', 'city', 'country_id', 'email', 'fax', 'function',
         'mobile', 'phone', 'state_id', 'street', 'street2', 'type', 'zip',
-        'partner_id', 'name',
+        'partner_id', 'name', 'company_id'
         ]
     propagate_fields = [
         'lang', 'tz',
