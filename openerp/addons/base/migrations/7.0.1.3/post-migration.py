@@ -194,6 +194,23 @@ def reset_currency_companies(cr, pool):
         cr, SUPERUSER_ID, currency_ids,
         {'company_id': False})
 
+def migrate_res_company_logo(cr, pool):
+    """
+    Transfert logo from res_company to res_partner linked to the res_company, 
+    according to the new behaviour of V7 : 
+    'res_company.logo' is now a field reladed to 'res_partner.image'
+    """
+    partner_obj = pool.get('res.partner')
+    cr.execute("""
+        SELECT partner_id, %s 
+        FROM res_company 
+        WHERE %s is not null""" %(
+        openupgrade.get_legacy_name('logo'), 
+        openupgrade.get_legacy_name('logo')))
+    for row in cr.fetchall():
+        vals = {'image': row[1]}
+        partner_obj.write(cr, SUPERUSER_ID, row[0], vals)
+
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
@@ -207,6 +224,7 @@ def migrate(cr, version):
     migrate_partner_address(cr, pool)
     update_users_partner(cr, pool)
     reset_currency_companies(cr, pool)
+    migrate_res_company_logo(cr, pool)
     openupgrade.load_xml(
         cr, 'base',
         'migrations/7.0.1.3/data.xml')
