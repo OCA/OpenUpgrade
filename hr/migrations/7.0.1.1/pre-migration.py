@@ -36,7 +36,7 @@ def clean_hr_employee_image(cr):
     """
     openupgrade.logged_query(cr, """
         UPDATE hr_employee
-        SET image = ''
+        SET image = NULL
         WHERE image like '/openerp/image%%';""")
 
 
