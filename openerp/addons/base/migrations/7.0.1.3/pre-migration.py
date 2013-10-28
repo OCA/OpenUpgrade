@@ -31,6 +31,13 @@ module_namespec = [
     ('mrp_subproduct', 'mrp_byproduct'),
     ('users_ldap', 'auth_ldap'),
     ('wiki', 'document_page'),
+    # mgmtsystem
+    ('wiki_environment_manual', 'document_page_environment_manual'),
+    ('wiki_environmental_aspect', 'document_page_environmental_aspect'),
+    ('wiki_quality_manual', 'document_page_quality_manual'),
+    ('wiki_health_safety_manual', 'document_page_health_safety_manual'),
+    ('wiki_procedure', 'document_page_procedure'),
+    ('wiki_work_instructions', 'document_page_work_instructions'),
 ]
 
 column_renames = {
