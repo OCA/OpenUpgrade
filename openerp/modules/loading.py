@@ -231,7 +231,6 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
                 migrations.migrate_module(package, 'post')
             except Exception, e:
                 _logger.error('Error executing post migration script for module %s: %s', package, e)
-                cr.close()
                 raise
 
             ver = adapt_version(package.data['version'])
