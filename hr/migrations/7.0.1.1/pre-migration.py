@@ -29,6 +29,18 @@ column_renames = {
     ]
 }
 
+
+def clean_hr_employee_image(cr):
+    """
+    Remove odd non-binary image data
+    """
+    openupgrade.logged_query(cr, """
+        UPDATE hr_employee
+        SET image = NULL
+        WHERE image like '/openerp/image%%';""")
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
+    clean_hr_employee_image(cr)
