@@ -82,6 +82,14 @@ def migrate_partner_address(cr, pool):
     partner_found = []
     processed_ids = []
 
+    # Make sure fields exist
+    cr.execute(
+        "SELECT column_name "
+        "FROM information_schema.columns "
+        "WHERE table_name = 'res_partner_address';")
+    available_fields = set(i[0] for i in cr.fetchall())
+    fields = available_fields.intersection(fields)
+
     def set_address_partner(address_id, partner_id):
         cr.execute(
             "UPDATE res_partner_address "
