@@ -56,11 +56,61 @@ def migrate_company(cr):
             SET rml_footer = rml_footer1
         """)
 
+def migrate_base_contact(cr):
+    """
+    Move entries of res_partner_contact into res_partner
+    """
+    cr.execute("SELECT * FROM information_schema.tables WHERE table_name = 'res_partner_contact';")
+    if not cr.fetchall():
+        return
+    fields = [
+        'create_date',
+        'name',
+        'website',
+        'image',
+        'active',
+        'comment',
+        'title',
+        'phone',
+        'country_id',
+        'email',
+        'birthdate',
+        'lang',
+        'parent_id',
+    ]
+    # Add lang from lang_id
+    openupgrade.logged_query(cr, "ALTER TABLE res_partner_contact ADD COLUMN lang character varying(5);")
+    openupgrade.logged_query(cr, """
+        UPDATE res_partner_contact
+        SET lang = (SELECT code
+                    FROM res_lang l
+                    WHERE lang_id = l.id
+                    LIMIT 1);""")
+    # Add parent_id
+    openupgrade.logged_query(cr, "ALTER TABLE res_partner_contact ADD COLUMN parent_id integer;")
+    openupgrade.logged_query(cr, """
+        UPDATE res_partner_contact
+        SET parent_id = (SELECT openupgrade_7_migrated_to_partner_id
+                         FROM res_partner_address a
+                         WHERE id = a.contact_id
+                         LIMIT 1);""")
+    # Make sure fields exist
+    cr.execute(
+        "SELECT column_name "
+        "FROM information_schema.columns "
+        "WHERE table_name = 'res_partner_contact';")
+    available_fields = set(i[0] for i in cr.fetchall())
+    fields = list(available_fields.intersection(fields))
+    # Move data
+    openupgrade.logged_query(cr, """
+        INSERT INTO res_partner (%s)
+        SELECT %s
+        FROM res_partner_contact;""" % (", ".join(fields + ['customer', 'is_company']),
+                                        ", ".join(fields + ['TRUE', 'FALSE'])))
+
 def migrate_partner_address(cr, pool):
     """ res.partner.address is obsolete. Move existing data to
     partner
-
-    TODO: break hard when base_contact is installed
     """
     partner_obj = pool.get('res.partner')
     cr.execute(
@@ -230,6 +280,7 @@ def migrate(cr, version):
     migrate_ir_translation(cr)
     migrate_company(cr)
     migrate_partner_address(cr, pool)
+    migrate_base_contact(cr)
     update_users_partner(cr, pool)
     reset_currency_companies(cr, pool)
     migrate_res_company_logo(cr, pool)
