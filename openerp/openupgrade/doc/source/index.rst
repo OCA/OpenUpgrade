@@ -5,6 +5,8 @@
 Welcome to OpenUpgrade's documentation!
 +++++++++++++++++++++++++++++++++++++++
 
+.. image:: images/openupgrade-square.png
+
 Contents:
 
 .. toctree::
