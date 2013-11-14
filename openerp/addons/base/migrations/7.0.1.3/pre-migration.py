@@ -194,7 +194,7 @@ def remove_obsolete_modules(cr):
         """
         UPDATE ir_module_module
         SET state = 'to remove'
-        WHERE name in %s
+        WHERE name in %s AND state <> 'uninstalled'
         """, (obsolete_modules,))
 
 @openupgrade.migrate()
