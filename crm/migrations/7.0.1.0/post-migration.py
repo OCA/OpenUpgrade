@@ -22,7 +22,15 @@
 
 from openerp import pooler, SUPERUSER_ID
 from openupgrade import openupgrade
+from openupgrade.openupgrade_70 import set_partner_id_from_partner_address_id as fix_partner
 
+def migrate_partners(cr, pool):
+    fix_partner(cr, pool, 'crm.meeting', 'partner_id',
+                openupgrade.get_legacy_name('partner_address_id'))
+    fix_partner(cr, pool, 'crm.lead', 'partner_id',
+                openupgrade.get_legacy_name('partner_address_id'))
+    fix_partner(cr, pool, 'crm.phonecall', 'partner_id',
+                openupgrade.get_legacy_name('partner_address_id'))
 
 def create_section_mail_aliases(cr, pool, uid=SUPERUSER_ID):
     """
@@ -44,7 +52,6 @@ def create_section_mail_aliases(cr, pool, uid=SUPERUSER_ID):
                                                   model_name="crm.lead")
         crm_case_section.write(cr, uid, [id], {'alias_id': alias_id})
 
-
 @openupgrade.migrate()
 def migrate(cr, version):
     """
@@ -60,5 +67,6 @@ def migrate(cr, version):
     # Migrate m2o categ_id to m2m categ_ids
     openupgrade.m2o_to_m2m(cr, pool.get('crm.lead'), 'crm_lead', 'categ_ids',
                            openupgrade.get_legacy_name('categ_id'))
+    migrate_partners(cr, pool)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
