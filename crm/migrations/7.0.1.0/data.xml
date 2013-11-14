@@ -1,6 +1,14 @@
 <?xml version = "1.0" encoding="utf-8"?>
 <openerp>
     <data>
+        <!-- Mail Alias -->
+        <record model="mail.alias" id="default_sales_alias">
+            <field name="alias_name">sales</field>
+            <field name="alias_model_id" ref="model_crm_lead"/>
+            <field name="alias_user_id" ref="base.user_root"/>
+            <field name="alias_defaults">{'type':'lead'}</field>
+        </record>
+
         <!-- Crm stages -->
         <record model="crm.case.stage" id="stage_lead6">
             <field name="name">Lost</field>
