@@ -60,7 +60,7 @@ def migrate_base_contact(cr):
     """
     Move entries of res_partner_contact into res_partner
     """
-    cr.execute("SELECT * FROM information_schema.tables WHERE table_name = 'res_partner_contact';")
+    cr.execute("SELECT * FROM ir_module_module WHERE name = 'base_contact' and state = 'to remove';")
     if not cr.fetchall():
         return
     fields = [
