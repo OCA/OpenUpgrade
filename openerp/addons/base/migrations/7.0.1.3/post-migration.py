@@ -102,7 +102,12 @@ def migrate_base_contact(cr):
     available_fields = set(i[0] for i in cr.fetchall())
     lost_fields = set(fields) - available_fields
     if lost_fields:
-        openupgrade.logger.warning("Some fields were lost from res_partner_contact: %s", ", ".join(lost_fields))
+        openupgrade.logger.warning("""\
+The following columns are not present in the table of %s: %s.
+
+This can be the case if an additional module installed on your database changes the type of a 
+regular column to a non-stored function or related field.
+""", 'res_partner_contact', ", ".join(lost_fields))
     fields = list(available_fields.intersection(fields))
     # Move data
     openupgrade.logged_query(cr, """
@@ -142,6 +147,13 @@ def migrate_partner_address(cr, pool):
         "WHERE table_name = 'res_partner_address';")
     available_fields = set(i[0] for i in cr.fetchall())
     lost_fields = set(fields) - available_fields
+    if lost_fields:
+        openupgrade.logger.warning("""\
+The following columns are not present in the table of %s: %s.
+
+This can be the case if an additional module installed on your database changes the type of a 
+regular column to a non-stored function or related field.
+""", 'res_partner_address', ", ".join(lost_fields))
     fields = available_fields.intersection(fields)
 
     def set_address_partner(address_id, partner_id):
@@ -169,9 +181,6 @@ def migrate_partner_address(cr, pool):
         """
         Migrate addresses to partners, based on sql WHERE clause
         """
-        if lost_fields:
-            openupgrade.logger.warning("Some fields were lost from res_partner_address: %s",
-                                       ", ".join(lost_fields))
         openupgrade.logged_query(cr, "\n"
             "SELECT " + ', '.join(fields) + "\n"
             "FROM res_partner_address\n"
