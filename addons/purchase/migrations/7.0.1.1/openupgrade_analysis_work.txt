@@ -1,0 +1,109 @@
+---Fields in module 'purchase'---
+
+# 'dest_address_id' was a 'res.partner.address' object and is now a 'res.partner'. using 'set_partner_id_from_partner_address_id'. OK.
+purchase     / purchase.order           / dest_address_id (many2one)    : relation is now 'res.partner' ('res.partner.address')
+
+# 'partner_address_id' disappear in V7. Possible data loss, but script migration will not use this field to change 'supplier_id', because changing 'supplier_id' of a 'purchase_order' will break a lot of things. (avoicing, etc.) Nothing to do. (The field will just be rename). OK.
+purchase     / purchase.order           / partner_address_id (many2one) : DEL relation: res.partner.address, required: required, req_default: function
+
+# 'journal_id' is a new field with default value. Nothing to do. OK.
+purchase     / purchase.order           / journal_id (many2one)         : NEW relation: account.journal
+
+# Ignore, no existing data to push as messages
+purchase     / purchase.order           / message_ids (one2many)        : NEW relation: mail.message
+
+### New field based on partner_id's property 'property_supplier_payment_term'. 
+# The migration script will set payment_term_id if the property is defined. OK.
+purchase     / purchase.order           / payment_term_id (many2one)    : NEW relation: account.payment.term
+
+# See 'stock' changes. Nothing to do.  OK.
+purchase     / purchase.order           / picking_ids (one2many)        : relation is now 'stock.picking.in' ('stock.picking')
+
+### Change in keys
+# DEL KEYS : ('wait') : Old unused state deleted. Nothing to do.
+# NEW KEYS : ('sent') : New key. Nothing to do.
+purchase     / purchase.order           / state (selection)             : selection_keys is now '['approved', 'cancel', 'confirmed', 'done', 'draft', 'except_invoice', 'except_picking', 'sent']' ('['approved', 'cancel', 'confirmed', 'done', 'draft', 'except_invoice', 'except_picking', 'wait']')
+
+# Type change. Nothing to do.
+purchase     / purchase.order.line      / name (char)                   : type is now 'text' ('char')
+
+# 'notes' field disappeared in v7. See (user notes #1). Merging 'name' and 'notes' fields. OK.
+purchase     / purchase.order.line      / notes (text)                  : DEL 
+
+### It's a view, so nothing to do.
+purchase     / purchase.report          / dest_address_id (many2one)    : DEL relation: res.partner.address
+purchase     / purchase.report          / partner_address_id (many2one) : DEL relation: res.partner.address
+purchase     / purchase.report          / state (selection)             : selection_keys is now '['approved', 'cancel', 'confirmed', 'done', 'draft', 'except_invoice', 'except_picking']' ('['approved', 'cancel', 'confirmed', 'done', 'draft', 'except_invoice', 'except_picking', 'wait']')
+
+# New one2many field. target : 'purchase_order.partner_id'. Nothing to do.
+purchase     / res.partner              / purchase_order_ids (one2many) : NEW relation: purchase.order
+
+# Not a real creation. Cf 'stock' migration. This field still exist in 6.1 in 'stock.picking' model. Nothing to do.
+purchase     / stock.picking.in         / purchase_id (many2one)        : NEW relation: purchase.order
+
+
+---XML records in module 'purchase'---
+
+### Ignore interface and access records
+NEW ir.actions.act_window: purchase.act_res_partner_2_supplier_invoices
+NEW ir.actions.act_window: purchase.action_purchase_configuration
+NEW ir.actions.act_window: purchase.purchase_pricelist_version_action
+DEL ir.actions.act_window: purchase.act_purchase_order_2_stock_picking
+DEL ir.actions.act_window: purchase.action_import_create_supplier_installer
+DEL ir.actions.act_window: purchase.action_purchase_config
+DEL ir.actions.act_window: purchase.action_supplier_address_form
+DEL ir.actions.act_window: purchase.purchase_waiting
+DEL ir.actions.act_window.view: purchase.action_picking_in_form_view
+DEL ir.actions.act_window.view: purchase.action_picking_in_tree_view
+DEL ir.actions.act_window.view: purchase.action_supplier_address_form_view1
+DEL ir.actions.act_window.view: purchase.action_supplier_address_form_view2
+DEL ir.actions.act_window.view: purchase.open_view_purchase_order_monthly_categ_graph
+DEL ir.actions.act_window.view: purchase.open_view_purchase_order_monthly_categ_tree
+NEW ir.actions.client: purchase.action_client_purchase_menu
+DEL ir.actions.server: purchase.ir_actions_server_edi_purchase
+NEW ir.actions.todo: base.open_menu
+DEL ir.actions.todo: purchase.config_wizard_action_import_create_supplier_installer
+DEL ir.actions.todo: purchase.todo_purchase_config
+DEL ir.actions.todo.category: purchase.category_purchase_config
+NEW ir.model.access: purchase.access_stock_warehouse_orderpoint_manager
+DEL ir.model.access: purchase.access_res_partner_address_purchase_user
+NEW ir.ui.menu: purchase.menu_product_pricelist_action2_purchase_type
+NEW ir.ui.menu: purchase.menu_purchase_config
+NEW ir.ui.menu: purchase.menu_purchase_pricelist_version_action
+DEL ir.ui.menu: base.menu_procurement_management_supplier
+DEL ir.ui.menu: purchase.menu_configuration_misc
+DEL ir.ui.menu: purchase.menu_email_templates
+DEL ir.ui.menu: purchase.menu_product_pricelist_action_purhase
+DEL ir.ui.menu: purchase.menu_purchase_deshboard
+NEW ir.ui.view: purchase.product_product_normal_form_procurement_help_view
+NEW ir.ui.view: purchase.product_search_form_view_purchase
+NEW ir.ui.view: purchase.purchase_order_2_stock_picking
+NEW ir.ui.view: purchase.purchase_partner_kanban_view
+NEW ir.ui.view: purchase.res_partner_view_purchase_buttons
+NEW ir.ui.view: purchase.view_account_config
+NEW ir.ui.view: purchase.view_picking_in_search_picking_inherit
+NEW ir.ui.view: purchase.view_product_account_purchase_ok_form
+NEW ir.ui.view: purchase.view_product_supplier_inherit
+NEW ir.ui.view: purchase.view_purchase_configuration
+NEW ir.ui.view: purchase.view_template_purchase_ok_form
+DEL ir.ui.view: purchase.stock_picking_inherit_purchase
+DEL ir.ui.view: purchase.view_picking_in_search_picking_to_invoice
+DEL ir.ui.view: purchase.view_purchase_config
+
+### Ignore added chatter configuration
+NEW mail.message: purchase.module_install_notification
+NEW mail.message.subtype: purchase.mt_rfq_approved
+NEW mail.message.subtype: purchase.mt_rfq_confirmed
+
+### Ignore groups configuration
+NEW res.groups: purchase.group_analytic_accounting
+
+### New activity 'act_sent' and associated transitions. Nothing to do.
+NEW workflow.activity: purchase.act_sent
+NEW workflow.transition: purchase.trans_draft_sent
+NEW workflow.transition: purchase.trans_sent_cancel
+NEW workflow.transition: purchase.trans_sent_confirmed
+
+# Xml_id rename has been done in 'procurement' module. Nothing to do.
+NEW workflow.transition: purchase.trans_confirm_mto_purchase
+DEL workflow.transition: procurement.trans_confirm_mto_purchase
