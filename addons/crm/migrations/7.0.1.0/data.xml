@@ -1,0 +1,82 @@
+<?xml version = "1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Mail Alias -->
+        <record model="mail.alias" id="default_sales_alias">
+            <field name="alias_name">sales</field>
+            <field name="alias_model_id" ref="model_crm_lead"/>
+            <field name="alias_user_id" ref="base.user_root"/>
+            <field name="alias_defaults">{'type':'lead'}</field>
+        </record>
+
+        <!-- Crm stages -->
+        <record model="crm.case.stage" id="stage_lead6">
+            <field name="name">Lost</field>
+            <field eval="1" name="case_default"/>
+            <field eval="True" name="fold"/>
+            <field eval="1" name="on_change"/>
+            <field name="state">cancel</field>
+            <field eval="0" name="probability"/>
+            <field eval="140" name="sequence"/>
+            <field name="type">opportunity</field>
+        </record>
+        <record model="crm.case.stage" id="stage_lead1">
+            <field name="name">New</field>
+            <field eval="1" name="case_default"/>
+            <field name="state">draft</field>
+            <field eval="0" name="probability"/>
+            <field eval="10" name="sequence"/>
+            <field name="type">both</field>
+        </record>
+        <record model="crm.case.stage" id="stage_lead2">
+            <field name="name">Qualification</field>
+            <field eval="1" name="case_default"/>
+            <field name="state">open</field>
+            <field eval="20" name="probability"/>
+            <field eval="100" name="sequence"/>
+            <field name="type">opportunity</field>
+        </record>
+        <record model="crm.case.stage" id="stage_lead3">
+            <field name="name">Proposition</field>
+            <field eval="1" name="case_default"/>
+            <field name="state">open</field>
+            <field eval="40" name="probability"/>
+            <field eval="110" name="sequence"/>
+            <field name="type">opportunity</field>
+        </record>
+        <record model="crm.case.stage" id="stage_lead4">
+            <field name="name">Negotiation</field>
+            <field eval="1" name="case_default"/>
+            <field name="state">open</field>
+            <field eval="60" name="probability"/>
+            <field eval="120" name="sequence"/>
+            <field name="type">opportunity</field>
+        </record>
+        <record model="crm.case.stage" id="stage_lead5">
+            <field name="name">Won</field>
+            <field eval="1" name="case_default"/>
+            <field name="state">done</field>
+            <field eval="100" name="probability"/>
+            <field eval="130" name="sequence"/>
+            <field eval="1" name="on_change"/>
+            <field name="type">opportunity</field>
+        </record>
+        <record model="crm.case.stage" id="stage_lead7">
+            <field name="name">Dead</field>
+            <field eval="1" name="case_default"/>
+            <field eval="False" name="fold"/>
+            <field name="state">cancel</field>
+            <field eval="0" name="probability"/>
+            <field eval="30" name="sequence"/>
+            <field name="type">lead</field>
+        </record>
+        <record model="crm.case.stage" id="stage_lead8">
+            <field name="name">Opportunity</field>
+            <field eval="1" name="case_default"/>
+            <field name="state">open</field>
+            <field eval="20" name="probability"/>
+            <field eval="20" name="sequence"/>
+            <field name="type">lead</field>
+        </record>
+    </data>
+</openerp>
