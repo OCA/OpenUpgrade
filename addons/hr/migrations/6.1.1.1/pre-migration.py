@@ -39,6 +39,23 @@ def purge_resource_ref(cr):
             AND name = 'employee_resource_resource'"""
             )
 
+def remove_admin_employee_shortcut(cr):
+    """
+    Remove the shortcut that the admin user may have
+    to the list of all employees. This shortcut is
+    added as XML data in this edition, and the shortcut
+    model does not allow duplicates.
+    """
+    cr.execute("""
+        DELETE FROM ir_ui_view_sc
+        WHERE user_id IN (
+           SELECT res_id FROM ir_model_data
+           WHERE module = 'base' AND name = 'user_root')
+        AND res_id IN (
+           SELECT res_id FROM ir_model_data
+           WHERE module = 'hr' AND name = 'menu_open_view_employee_list_my')
+        """)
+
 @openupgrade.migrate()
 def migrate(cr, version):
     purge_resource_ref(cr)
@@ -62,3 +79,4 @@ def migrate(cr, version):
                     ('expected_employees', openupgrade.get_legacy_name('expected_employees'))
                 ],
             })
+    remove_admin_employee_shortcut(cr)
