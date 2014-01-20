@@ -95,10 +95,10 @@ if (not options.config or not options.migrations
 config.read(options.config)
 
 conn_parms = {}
-for p in ('host', 'port', 'user', 'password'):                             
-    cfg = config.get('options', 'db_' + p)                                          
-    if cfg:                                                                
-        conn_parms[p] = cfg
+for parm in ('host', 'port', 'user', 'password'):                             
+    db_parm = 'db_' + parm
+    if config.has_option('options', db_parm):
+        conn_parms[parm] = config.get('options', db_parm)
 
 if not 'user' in conn_parms:
     print 'No user found in configuration'
