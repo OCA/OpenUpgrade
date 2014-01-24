@@ -1,0 +1,25 @@
+********************************************************************************
+1/ Somes fields moved from 'sale' (6.1) into 'sale_stock' (7.0)
+
+There is no problem because 'sale_stock' auto_install is set to True and is installed each time 'sale' is installed. 
+dependencies details : 'stock' <- 'procurement' <- 'sale'
+'sale_stock' dependencies :  'stock','procurement','sale'
+
+So there is no possibility of data loss and all moves will be ignored.
+
+********************************************************************************
+2/ In 6.1 there is two textual fields in sale_order_line. (name & notes). In 7.0, 'notes' field disapeared.
+
+To avoid loosing data, the script will merge 'name' & 'notes' field.
+
+More information and alternatives solutions (using extra-addons modules or other...) : 
+http://help.openerp.com/question/4277/how-to-put-line-notes-on-so-and-invoice/
+http://help.openerp.com/question/7624/comments-between-order-lines/
+
+********************************************************************************
+3/ 'postpaid' key was deleted for 'sale_order.order_policy' field.
+
+The script migration will update all the 'postpaid' sale_order to 'manual'.
+
+More information and animated debate : 
+https://bugs.launchpad.net/openobject-addons/+bug/1160835
