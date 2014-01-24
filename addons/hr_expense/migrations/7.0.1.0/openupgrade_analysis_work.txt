@@ -1,0 +1,60 @@
+---Fields in module 'hr_expense'---
+### hr.expense.expense is not linked with 'account.invoice' anymore. Nothing to do. 
+# However, it seems to be a bug, so script migration will backup the data.(field with legacy name)
+hr_expense   / hr.expense.expense       / invoice_id (many2one)         : DEL relation: account.invoice
+
+### Ignore, no existing data to push as messages
+hr_expense   / hr.expense.expense       / message_ids (one2many)        : NEW relation: mail.message
+
+### 'ref' field has been deleted in V7. 
+# Migration Choice : merging 'ref' with 'note' field to avoid data loss. OK.
+hr_expense   / hr.expense.expense       / ref (char)                    : DEL 
+
+### Changes in KEYS
+# DEL Keys : 'invoiced', 'paid'
+# NEW Keys : 'done'
+# 'invoiced' and 'paid' state have been merge in one unique state 'done'.
+# Script migration will replace 'invoiced' and 'paid' by 'done' state. (Cf. user_notes.txt #1)
+hr_expense   / hr.expense.expense       / state (selection)             : selection_keys is now '['accepted', 'cancelled', 'confirm', 'done', 'draft']' ('['accepted', 'cancelled', 'confirm', 'draft', 'invoiced', 'paid']')
+
+### Unable to know the voucher_id for existing hr_expense_expense object. Nothing to do. (Cf. user_notes.txt #3)
+hr_expense   / hr.expense.expense       / voucher_id (many2one)         : NEW relation: account.voucher
+
+### uom_id is now required. (That's weird because product_id is not required.)
+# script migration will get the UoM of the related product, if any. 
+# Otherwise, call the '_get_uom_id' function. OK.
+hr_expense   / hr.expense.line          / uom_id (many2one)             : now required, default = function
+
+
+### Modifications in report objects. (view). Nothing to do.
+hr_expense   / hr.expense.report        / invoice_id (many2one)         : DEL relation: account.invoice
+hr_expense   / hr.expense.report        / invoiced (integer)            : DEL 
+hr_expense   / hr.expense.report        / state (selection)             : selection_keys is now '['accepted', 'cancelled', 'confirm', 'done', 'draft']' ('['accepted', 'cancelled', 'confirm', 'draft', 'invoiced', 'paid']')
+hr_expense   / hr.expense.report        / voucher_id (many2one)         : NEW relation: account.voucher
+
+---XML records in module 'hr_expense'---
+### Ignore interface and access records
+NEW ir.actions.act_window: hr_expense.hr_expense_product
+DEL ir.actions.act_window: hr_expense.action_employee_expense
+NEW ir.actions.todo: base.open_menu
+DEL ir.actions.todo: hr_expense.product_normal_form_view_todo
+NEW ir.model.access: hr_expense.access_account_journal_employee
+DEL ir.model.access: hr.access_account_journal_column_hruser
+DEL ir.model.access: hr.access_account_journal_view_hruser
+NEW ir.ui.menu: hr_expense.menu_hr_product
+DEL ir.ui.menu: hr.menu_hr_reporting
+DEL ir.ui.view: hr_expense.board_hr_manager_expense_form
+
+### Ignore added chatter configuration
+NEW mail.message: hr_expense.module_install_notification
+NEW mail.message.subtype: hr_expense.mt_expense_approved
+NEW mail.message.subtype: hr_expense.mt_expense_confirmed
+NEW mail.message.subtype: hr_expense.mt_expense_refused
+
+### XML_id renames & change subflow -> function. (Cf. user_notes.txt #1)
+DEL workflow.activity: hr_expense.act_invoice
+NEW workflow.activity: hr_expense.act_done
+
+### Deleted state. (Cf. user_notes.txt #1)
+DEL workflow.activity: hr_expense.act_paid
+DEL workflow.transition: hr_expense.t9
