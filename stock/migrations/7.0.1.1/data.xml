@@ -3,9 +3,6 @@
   <data>
     <record model="ir.sequence" id="sequence_production_lots"><field name="name">Serial Numbers</field>
             </record>
-    <record model="account.journal" id="stock_journal">
-      <field name="view_id"/>
-    </record>
     <record model="ir.sequence.type" id="seq_type_picking_internal"><field name="code">stock.picking</field>
         </record>
     <record model="ir.sequence" id="seq_picking_internal"><field name="code">stock.picking</field>
