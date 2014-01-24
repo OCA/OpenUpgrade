@@ -1,0 +1,212 @@
+---Fields in module 'sale'---
+
+### Changes field 'sale' into 'sale_stock'. Nothing to do. (See user notes #1)
+sale         / res.company              / security_lead (float)         : module is now 'sale_stock' ('sale')
+sale         / sale.order               / incoterm (many2one)           : module is now 'sale_stock' ('sale')
+sale         / sale.order               / picked_rate (float)           : module is now 'sale_stock' ('sale')
+sale         / sale.order               / picking_ids (one2many)        : module is now 'sale_stock' ('sale')
+sale         / sale.order               / picking_policy (selection)    : module is now 'sale_stock' ('sale')
+sale         / sale.order               / shipped (boolean)             : module is now 'sale_stock' ('sale')
+sale         / sale.order.line          / delay (float)                 : module is now 'sale_stock' ('sale')
+sale         / sale.order.line          / move_ids (one2many)           : module is now 'sale_stock' ('sale')
+sale         / sale.order.line          / number_packages (integer)     : module is now 'sale_stock' ('sale')
+sale         / sale.order.line          / procurement_id (many2one)     : module is now 'sale_stock' ('sale')
+sale         / sale.order.line          / product_packaging (many2one)  : module is now 'sale_stock' ('sale')
+sale         / sale.order.line          / property_ids (many2many)      : module is now 'sale_stock' ('sale')
+sale         / sale.report              / shipped (boolean)             : module is now 'sale_stock' ('sale')
+sale         / sale.report              / shipped_qty_1 (integer)       : module is now 'sale_stock' ('sale')
+sale         / sale.shop                / warehouse_id (many2one)       : module is now 'sale_stock' ('sale')
+sale         / stock.move               / sale_line_id (many2one)       : module is now 'sale_stock' ('sale')
+sale         / stock.picking            / sale_id (many2one)            : module is now 'sale_stock' ('sale')
+
+# New one2many field. target : 'sale_order.partner_id'. Nothing to do.
+sale         / res.partner              / sale_order_ids (one2many)     : NEW relation: sale.order
+
+# In 'sale' module, DEL keys : ('procurement')
+# In 'sale_stock' : NEW keys ('procurement'). (See user notes #1)
+# RESULT : Nothing to do
+sale         / sale.order               / invoice_quantity (selection)  : selection_keys is now '['order']' ('['order', 'procurement']')
+
+# Ignore, no existing data to push as messages
+sale         / sale.order               / message_ids (one2many)        : NEW relation: mail.message
+
+# In 'sale' module, DEL keys : ('picking', 'postpaid', 'prepaid')
+# In 'sale_stock' : NEW keys : ('picking', 'prepaid'). (See user notes #1)
+# RESULT : DEL keys : ('postpaid'). (See user notes #3). changed to 'manual'.
+sale         / sale.order               / order_policy (selection)      : selection_keys is now '['manual']' ('['manual', 'picking', 'postpaid', 'prepaid']')
+
+# Migrated 'partner_invoice_id' (partner_address) to 'partner_invoice_id' (partner).
+sale         / sale.order               / partner_invoice_id (many2one) : relation is now 'res.partner' ('res.partner.address')
+
+# Migrated 'partner_order_id' (partner_address) to 'partner_id' (partner).
+sale         / sale.order               / partner_order_id (many2one)   : DEL relation: res.partner.address, required: required, req_default: function
+
+# Migrated 'partner_shipping_id' (partner_address) to 'partner_shipping_id' (partner).
+sale         / sale.order               / partner_shipping_id (many2one): relation is now 'res.partner' ('res.partner.address')
+
+# 'stock.picking' are now 'stock.picking.in' or 'stock.picking.out' object. See 'stock' migration for more information. 
+# Nothing to do. 
+sale         / sale.order               / picking_ids (one2many)        : relation is now 'stock.picking.out' ('stock.picking')
+
+# In 'sale' module, DEL keys : ('shipping_except') ; NEW KEYS : ('sent')
+# In 'sale_stock' : NEW keys : ('shipping_except')
+# RESULT : NEW keys : ('sent'). (See user notes #1). Nothing to do. 
+sale         / sale.order               / state (selection)             : selection_keys is now '['cancel', 'done', 'draft', 'invoice_except', 'manual', 'progress', 'sent', 'waiting_date']' ('['cancel', 'done', 'draft', 'invoice_except', 'manual', 'progress', 'shipping_except', 'waiting_date']')
+
+# Migrated 'address_allotment_id' (partner_address) to 'address_allotment_id' (partner).
+sale         / sale.order.line          / address_allotment_id (many2one): relation is now 'res.partner' ('res.partner.address')
+
+# 'Invoiced' is now computed. Nothing to do. 
+sale         / sale.order.line          / invoiced (boolean)            : now a function
+
+# Type change. Nothing to do.
+sale         / sale.order.line          / name (char)                   : type is now 'text' ('char')
+
+# 'notes' field disappeared in v7. See (user notes #2). Merging 'name' and 'notes' fields.
+sale         / sale.order.line          / notes (text)                  : DEL 
+
+### In 'sale' module, DEL keys : ('shipping_except') ; 
+# RESULT : DEL keys : ('shipping_except').
+# It's a view, so nothing to do.
+sale         / sale.report              / state (selection)             : selection_keys is now '['cancel', 'done', 'draft', 'invoice_except', 'manual', 'progress', 'waiting_date']' ('['cancel', 'done', 'draft', 'invoice_except', 'manual', 'progress', 'shipping_except', 'waiting_date']')
+
+---XML records in module 'sale'---
+### Ignore interface and access records
+NEW ir.actions.act_window: sale.action_orders
+NEW ir.actions.act_window: sale.action_orders_exception
+NEW ir.actions.act_window: sale.action_orders_in_progress
+NEW ir.actions.act_window: sale.action_quotations
+DEL ir.actions.act_window: sale.action_config_picking_policy
+DEL ir.actions.act_window: sale.action_order_form
+DEL ir.actions.act_window: sale.action_order_tree2
+DEL ir.actions.act_window: sale.action_order_tree4
+DEL ir.actions.act_window: sale.action_order_tree5
+DEL ir.actions.act_window: sale.action_sales_by_partner
+DEL ir.actions.act_window: sale.action_sales_by_salesman
+DEL ir.actions.act_window: sale.action_sales_product_total_price
+DEL ir.actions.act_window: sale.action_view_sale_open_invoice
+DEL ir.actions.act_window: sale.action_view_sales_by_month
+DEL ir.actions.act_window: sale.open_board_sales_manager
+DEL ir.actions.act_window: sale.outgoing_picking_list_to_invoice
+DEL ir.actions.act_window.view: sale.action_turnover_by_month_graph_view
+DEL ir.actions.act_window.view: sale.action_turnover_by_month_tree_view
+NEW ir.actions.client: sale.action_client_sale_menu
+DEL ir.actions.server: sale.ir_actions_server_edi_sale
+NEW ir.actions.todo: base.open_menu
+DEL ir.actions.todo: sale.config_wizard_step_sale_picking_policy
+NEW ir.model.access: sale.access_account_move_line_salesman
+DEL ir.model.access: sale.access_procurement_manager
+DEL ir.model.access: sale.access_procurement_salesman
+DEL ir.model.access: sale.access_product_packaging_manager
+DEL ir.model.access: sale.access_product_packaging_sale_manager
+DEL ir.model.access: sale.access_product_packaging_user
+DEL ir.model.access: sale.access_report_stock_move_sales
+DEL ir.model.access: sale.access_res_partner_address_user
+DEL ir.model.access: sale.access_sale_order_line_stock_worker
+DEL ir.model.access: sale.access_sale_order_stock_worker
+DEL ir.model.access: sale.access_stock_location_user
+DEL ir.model.access: sale.access_stock_move_manager
+DEL ir.model.access: sale.access_stock_move_salesman
+DEL ir.model.access: sale.access_stock_picking_sales
+DEL ir.model.access: sale.access_stock_picking_salesman
+DEL ir.model.access: sale.access_stock_warehouse_user
+NEW ir.ui.menu: base.menu_sale_config
+NEW ir.ui.menu: sale.menu_dashboard_sales
+NEW ir.ui.menu: sale.menu_sale_quotations
+DEL ir.ui.menu: base.menu_sales
+DEL ir.ui.menu: board.menu_dasboard
+DEL ir.ui.menu: sale.menu_action_picking_list_to_invoice
+DEL ir.ui.menu: sale.menu_action_shop_form
+DEL ir.ui.menu: sale.menu_board_sales_manager
+DEL ir.ui.menu: sale.menu_email_templates
+DEL ir.ui.menu: sale.menu_sales_configuration_misc
+NEW ir.ui.view: sale.crm_lead_partner_kanban_view
+NEW ir.ui.view: sale.res_partner_address_type
+NEW ir.ui.view: sale.res_partner_view_buttons
+NEW ir.ui.view: sale.view_account_config
+NEW ir.ui.view: sale.view_order_form_editable_list
+NEW ir.ui.view: sale.view_quotation_tree
+NEW ir.ui.view: sale.view_sales_config
+DEL ir.ui.view: sale.board_sales_manager_form
+DEL ir.ui.view: sale.mrp_company
+DEL ir.ui.view: sale.stock_move_sale
+DEL ir.ui.view: sale.stock_picking_inherit_sale
+DEL ir.ui.view: sale.stock_picking_out_inherit_sale
+DEL ir.ui.view: sale.view_config_picking_policy
+DEL ir.ui.view: sale.view_order_line_graph
+DEL ir.ui.view: sale.view_sale_open_invoice
+DEL ir.ui.view: sale.view_sales_by_month_tree
+DEL ir.ui.view: sale.view_sales_by_partner_graph
+DEL ir.ui.view: sale.view_sales_by_salesman_graph
+DEL ir.ui.view: sale.view_sales_product_total_price_graph
+DEL ir.ui.view: sale.view_top_quotations_tree
+
+### Ignore added chatter configuration
+NEW mail.message: sale.module_install_notification
+NEW mail.message.subtype: sale.mt_order_confirmed
+NEW mail.message.subtype: sale.mt_order_sent
+
+### Deleted. Nothing to do.
+DEL process.condition: sale.process_condition_conditionafterdelivery0
+
+### All the following processes and transitions have moved into 'sale_stock'. xml_id renames.
+DEL process.node: sale.process_node_deliveryorder0
+DEL process.node: sale.process_node_invoiceafterdelivery0
+DEL process.node: sale.process_node_packinglist0
+DEL process.node: sale.process_node_saleorderprocurement0
+DEL process.node: sale.process_node_saleprocurement0
+DEL process.transition: sale.process_transition_deliver0
+DEL process.transition: sale.process_transition_invoiceafterdelivery0
+DEL process.transition: sale.process_transition_packing0
+DEL process.transition: sale.process_transition_saleorderprocurement0
+DEL process.transition: sale.process_transition_saleprocurement0
+DEL process.transition.action: sale.process_transition_action_assign0
+DEL process.transition.action: sale.process_transition_action_cancel1
+DEL process.transition.action: sale.process_transition_action_cancel2
+DEL process.transition.action: sale.process_transition_action_cancelassignation0
+DEL process.transition.action: sale.process_transition_action_forceassignation0
+DEL process.transition.action: sale.process_transition_action_validate0
+
+
+### new activity act_send and associated transition. Nothing to do.
+NEW workflow.activity: sale.act_sent
+NEW workflow.transition: sale.trans_draft_sent
+NEW workflow.transition: sale.trans_sent_cancel
+NEW workflow.transition: sale.trans_sent_router
+
+### All the 'ship' activities and transition have moved into 'sale_stock'. xml_id renames.
+DEL workflow.activity: sale.act_cancel3
+DEL workflow.activity: sale.act_ship
+DEL workflow.activity: sale.act_ship_cancel
+DEL workflow.activity: sale.act_ship_end
+DEL workflow.activity: sale.act_ship_except
+DEL workflow.activity: sale.act_wait_ship 
+DEL workflow.transition: sale.trans_router_wait_ship
+DEL workflow.transition: sale.trans_ship_end_done
+DEL workflow.transition: sale.trans_ship_except_ship
+DEL workflow.transition: sale.trans_ship_except_ship_cancel
+DEL workflow.transition: sale.trans_ship_except_ship_end
+DEL workflow.transition: sale.trans_ship_ship_end
+DEL workflow.transition: sale.trans_ship_ship_except
+DEL workflow.transition: sale.trans_wait_ship_cancel3
+DEL workflow.transition: sale.trans_wait_ship_ship
+DEL workflow.transition: sale.trans_router_wait_invoice_shipping
+DEL workflow.transition: sale.trans_wait_invoice_invoice
+
+# Ignore new access right
+NEW res.groups: sale.group_analytic_accounting
+NEW res.groups: sale.group_delivery_invoice_address
+NEW res.groups: sale.group_discount_per_so_line
+NEW res.groups: sale.group_invoice_so_lines
+NEW res.groups: sale.group_mrp_properties
+
+### 'user_admin' renamed in 'user_root'. 
+# Nothing to do because, it's done in 'base' module.
+DEL res.users: base.user_admin
+NEW res.users: base.user_root
+
+# 'shop' renamed in 'sale_shop_1'
+DEL sale.shop: sale.shop
+NEW sale.shop: sale.sale_shop_1
+
+
