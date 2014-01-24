@@ -1,0 +1,41 @@
+---Fields in module 'procurement'---
+# Ignore, no existing data to push as messages
+procurement  / procurement.order        / message_ids (one2many)        : NEW relation: mail.message
+
+# Ignore, change type.
+procurement  / procurement.order        / name (char)                   : type is now 'text' ('char')
+
+### Not a new field. 'type' field was in 'product' module before with the selection keys.
+# Ref 6.1. addons/product/product.py 
+# Ref 7.0. addons/procurements/procurement.py
+procurement  / product.template         / type (False)                  : NEW selection_keys: ['consu', 'product', 'service'], mode: modify
+
+
+---XML records in module 'procurement'---
+
+# act_produce_check is not a real activity because its action is None. No possibility to have a object in this state. Nothing to do.
+DEL workflow.activity: procurement.act_produce_check
+
+# following transaction is between act_confirm_mto and act_produce_check. Deleted. Nothing to do.
+DEL workflow.transition: procurement.trans_confirm_mto_produce_check
+
+# new Transition. Nothing to do.
+NEW workflow.transition: procurement.trans_confirm_mto_make_done
+
+### moved from 'procurement' to 'project_mrp' module.
+DEL workflow.activity: procurement.act_produce_service
+DEL workflow.transition: procurement.trans_produce_service_cancel
+DEL workflow.transition: procurement.trans_produce_service_make_done
+DEL workflow.transition: procurement.trans_product_check_produce_service
+
+### moved from 'procurement' to 'purchase' module.
+DEL workflow.transition: procurement.trans_confirm_mto_purchase
+
+### Ignore interface and access records
+NEW ir.actions.act_window: procurement.product_open_orderpoint
+DEL ir.actions.act_window: procurement.act_product_product_2_stock_warehouse_orderpoint
+
+NEW ir.ui.view: procurement.product_form_view_procurement_button
+NEW ir.ui.view: procurement.product_search_form_view_procurment
+NEW ir.ui.view: procurement.product_template_form_view_procurement
+DEL ir.ui.view: procurement.product_normal_form_view
