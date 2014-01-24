@@ -56,11 +56,69 @@ def migrate_company(cr):
             SET rml_footer = rml_footer1
         """)
 
+def migrate_base_contact(cr):
+    """
+    Move entries of res_partner_contact into res_partner
+    """
+    cr.execute("SELECT * FROM ir_module_module WHERE name = 'base_contact' and state = 'to remove';")
+    if not cr.fetchall():
+        return
+    fields = [
+        'create_date',
+        'name',
+        'website',
+        'image',
+        'active',
+        'comment',
+        'title',
+        'phone',
+        'country_id',
+        'email',
+        'birthdate',
+        'lang',
+        'parent_id',
+    ]
+    # Add lang from lang_id
+    openupgrade.logged_query(cr, "ALTER TABLE res_partner_contact ADD COLUMN lang character varying(5);")
+    openupgrade.logged_query(cr, """
+        UPDATE res_partner_contact
+        SET lang = (SELECT code
+                    FROM res_lang l
+                    WHERE lang_id = l.id
+                    LIMIT 1);""")
+    # Add parent_id
+    openupgrade.logged_query(cr, "ALTER TABLE res_partner_contact ADD COLUMN parent_id integer;")
+    openupgrade.logged_query(cr, """
+        UPDATE res_partner_contact
+        SET parent_id = (SELECT openupgrade_7_migrated_to_partner_id
+                         FROM res_partner_address a
+                         WHERE id = a.contact_id
+                         LIMIT 1);""")
+    # Make sure fields exist
+    cr.execute(
+        "SELECT column_name "
+        "FROM information_schema.columns "
+        "WHERE table_name = 'res_partner_contact';")
+    available_fields = set(i[0] for i in cr.fetchall())
+    lost_fields = set(fields) - available_fields
+    if lost_fields:
+        openupgrade.logger.warning("""\
+The following columns are not present in the table of %s: %s.
+
+This can be the case if an additional module installed on your database changes the type of a 
+regular column to a non-stored function or related field.
+""", 'res_partner_contact', ", ".join(lost_fields))
+    fields = list(available_fields.intersection(fields))
+    # Move data
+    openupgrade.logged_query(cr, """
+        INSERT INTO res_partner (%s)
+        SELECT %s
+        FROM res_partner_contact;""" % (", ".join(fields + ['customer', 'is_company']),
+                                        ", ".join(fields + ['TRUE', 'FALSE'])))
+
 def migrate_partner_address(cr, pool):
     """ res.partner.address is obsolete. Move existing data to
     partner
-
-    TODO: break hard when base_contact is installed
     """
     partner_obj = pool.get('res.partner')
     cr.execute(
@@ -81,6 +139,22 @@ def migrate_partner_address(cr, pool):
         ]
     partner_found = []
     processed_ids = []
+
+    # Make sure fields exist
+    cr.execute(
+        "SELECT column_name "
+        "FROM information_schema.columns "
+        "WHERE table_name = 'res_partner_address';")
+    available_fields = set(i[0] for i in cr.fetchall())
+    lost_fields = set(fields) - available_fields
+    if lost_fields:
+        openupgrade.logger.warning("""\
+The following columns are not present in the table of %s: %s.
+
+This can be the case if an additional module installed on your database changes the type of a 
+regular column to a non-stored function or related field.
+""", 'res_partner_address', ", ".join(lost_fields))
+    fields = available_fields.intersection(fields)
 
     def set_address_partner(address_id, partner_id):
         cr.execute(
@@ -107,8 +181,9 @@ def migrate_partner_address(cr, pool):
         """
         Migrate addresses to partners, based on sql WHERE clause
         """
-        cr.execute(
-            "SELECT " + ', '.join(fields) + " FROM res_partner_address "
+        openupgrade.logged_query(cr, "\n"
+            "SELECT " + ', '.join(fields) + "\n"
+            "FROM res_partner_address\n"
             "WHERE " + whereclause, args or ())
         for row in cr.fetchall():
             row_cleaned = [val or False for val in row]
@@ -222,6 +297,7 @@ def migrate(cr, version):
     migrate_ir_translation(cr)
     migrate_company(cr)
     migrate_partner_address(cr, pool)
+    migrate_base_contact(cr)
     update_users_partner(cr, pool)
     reset_currency_companies(cr, pool)
     migrate_res_company_logo(cr, pool)
