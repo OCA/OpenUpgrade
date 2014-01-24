@@ -22,11 +22,7 @@
 from openerp.openupgrade import openupgrade
 
 xmlid_renames = [
-    ('procurement.trans_confirm_mto_purchase', 'purchase.trans_confirm_mto_purchase'),
     ('procurement.act_produce_service', 'project_mrp.act_produce_service'),
-    ('procurement.trans_produce_service_cancel', 'project_mrp.trans_produce_service_cancel'),
-    ('procurement.trans_produce_service_make_done', 'project_mrp.trans_produce_service_make_done'),
-    ('procurement.trans_product_check_produce_service', 'project_mrp.trans_product_check_produce_service'),
 ]
 
 @openupgrade.migrate()
