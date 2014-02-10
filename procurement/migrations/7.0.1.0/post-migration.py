@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    This module copyright (C) 2013 Sylvain LE GAL
+#    This migration script copyright C) 2014 Therp BV (<http://therp.nl>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,25 +19,8 @@
 #
 ##############################################################################
 
-from openerp import pooler
-from openerp.openupgrade import openupgrade, openupgrade_70
-
-def migrate_partners(cr, pool):
-    openupgrade_70.set_partner_id_from_partner_address_id(
-        cr, pool, 'stock.warehouse',
-        'partner_id', openupgrade.get_legacy_name('partner_address_id'))
-    openupgrade_70.set_partner_id_from_partner_address_id(
-        cr, pool, 'stock.location',
-        'partner_id', openupgrade.get_legacy_name('address_id'))
-    openupgrade_70.set_partner_id_from_partner_address_id(
-        cr, pool, 'stock.move',
-        'partner_id', openupgrade.get_legacy_name('address_id'))
-    openupgrade_70.set_partner_id_from_partner_address_id(
-        cr, pool, 'stock.picking',
-        'partner_id', openupgrade.get_legacy_name('address_id'))
+from openerp.openupgrade import openupgrade
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    pool = pooler.get_pool(cr.dbname)
-    migrate_partners(cr, pool)
-    openupgrade.load_data(cr, 'stock', 'migrations/7.0.1.1/data.xml')
+    openupgrade.load_data(cr, 'procurement', 'migrations/7.0.1.0/data.xml')

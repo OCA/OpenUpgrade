@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+  <data>
+    <record model="ir.sequence" id="sequence_production_lots"><field name="name">Serial Numbers</field>
+            </record>
+    <record model="ir.sequence.type" id="seq_type_picking_internal"><field name="code">stock.picking</field>
+        </record>
+    <record model="ir.sequence" id="seq_picking_internal"><field name="code">stock.picking</field>
+            </record>
+    <record model="ir.sequence.type" id="sequence_type_serial"><field name="name">Serial Numbers</field>
+            </record>
+    <record model="res.request.link" id="req_link_tracking"><field name="name">Serial Number</field>
+            </record>
+  </data>
+</openerp>
+
