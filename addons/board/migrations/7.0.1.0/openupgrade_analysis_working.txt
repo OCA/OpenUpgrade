@@ -1,0 +1,51 @@
+---Fields in module 'board'---
+---XML records in module 'board'---
+
+# actions, access rules and view elements don't need any actions
+
+NEW ir.actions.act_window: board.action_board_create
+NEW ir.actions.act_window: board.open_board_my_dash_action
+DEL ir.actions.act_window: board.action_board_menu_create
+DEL ir.actions.act_window: board.action_latest_activities_tree
+DEL ir.actions.act_window: board.action_user_connection_tree
+DEL ir.actions.act_window: board.action_view_board_list_form
+DEL ir.actions.act_window: board.board_monthly_res_log_report_action
+DEL ir.actions.act_window: board.board_weekly_res_log_report_action
+DEL ir.actions.act_window: board.open_board_administration_form
+DEL ir.actions.client: board.action_application_tiles
+DEL ir.actions.client: board.action_res_widgets_currency_converter
+DEL ir.actions.client: board.action_res_widgets_events
+DEL ir.actions.client: board.action_res_widgets_facebook
+DEL ir.actions.client: board.action_res_widgets_map
+DEL ir.actions.client: board.action_res_widgets_note
+DEL ir.actions.client: board.action_res_widgets_tweets
+DEL ir.actions.client: board.board_config_overview
+DEL ir.actions.client: board.board_homepage_action
+DEL ir.model.access: board.access_board_board system
+DEL ir.model.access: board.access_board_board_line all
+DEL ir.model.access: board.access_board_board_line system
+DEL ir.model.access: board.access_res_log_report all
+NEW ir.ui.menu: board.menu_board_create
+NEW ir.ui.menu: board.menu_board_my_dash
+DEL ir.ui.menu: base.menu_administration
+DEL ir.ui.menu: base.menu_dashboard
+DEL ir.ui.menu: base.menu_dashboard_admin
+DEL ir.ui.menu: base.menu_reporting
+DEL ir.ui.menu: board.menu_view_board_form
+NEW ir.ui.view: board.board_my_dash_view
+NEW ir.ui.view: board.view_board_create
+DEL ir.ui.view: board.board_administration_form
+DEL ir.ui.view: board.board_homepage_view
+DEL ir.ui.view: board.board_res_log_report_graph
+DEL ir.ui.view: board.board_weekly_res_log_report_graph
+DEL ir.ui.view: board.view_board_form
+DEL ir.ui.view: board.view_board_menu_create
+DEL ir.ui.view: board.view_board_search
+DEL ir.ui.view: board.view_board_tree
+DEL ir.ui.view: board.view_res_log_report_filter
+DEL ir.ui.view: board.view_res_log_report_tree
+DEL ir.ui.view: board.view_user_connection_tree
+
+# False alarm, just dropping the standard action for this user
+
+DEL res.users: base.user_admin
