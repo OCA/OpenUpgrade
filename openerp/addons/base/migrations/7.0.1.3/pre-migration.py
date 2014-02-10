@@ -88,7 +88,14 @@ def update_base_sql(cr):
     """
     Inject snippets of openerp/addons/base/base.sql, needed
     to upgrade the base module.
+
+    Also check existing inheritance of ir_act_client on ir_actions.    
+    For ir_act_client to inherit ir_actions at table level
+    is not new in 7.0, but this was not taken care of properly in
+    OpenUpgrade 6.1 for a long time, so we do it again here.
+    This will fix up databases that were migrated earlier on.
     """
+
     cr.execute("""
 CREATE TABLE ir_model_constraint (
     id serial NOT NULL,
@@ -116,6 +123,17 @@ CREATE TABLE ir_model_relation (
     name character varying(128) NOT NULL
 );  
 """)
+
+    cr.execute(
+        """
+        SELECT count(*) from pg_catalog.pg_inherits
+        WHERE inhrelid = 'public.ir_act_client'::regclass::oid
+        AND inhparent = 'public.ir_actions'::regclass::oid
+        """)
+    res = cr.fetchone()
+    if not res[0]:
+        cr.execute(
+            "ALTER TABLE ir_act_client INHERIT ir_actions")
 
 def create_users_partner(cr):
     """
