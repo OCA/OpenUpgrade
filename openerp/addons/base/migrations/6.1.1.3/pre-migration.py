@@ -29,6 +29,18 @@ module_namespec = [
     ('mail_gateway', 'mail'),
     ]
 
+def update_base_sql(cr):
+    """
+    ORM does not take care of inheritance at table level
+    """
+    cr.execute(
+        """
+        CREATE TABLE ir_act_client (
+            primary key(id)
+        )
+        INHERITS (ir_actions);
+        """)
+
 def fix_module_ids(cr):
     cr.execute(
         # courtesy of Guewen Baconnier (Camptocamp)
@@ -102,6 +114,7 @@ def migrate_timestamps(cr):
 
 @openupgrade.migrate()
 def migrate(cr, version):
+    update_base_sql(cr)
     migrate_timestamps(cr)
     add_serialization_field(cr)
     set_main_company(cr)
