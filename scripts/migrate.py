@@ -94,12 +94,24 @@ if (not options.config or not options.migrations
 
 config.read(options.config)
 
-db_user=config.get('options', 'db_user')
+conn_parms = {}
+for parm in ('host', 'port', 'user', 'password'):                             
+    db_parm = 'db_' + parm
+    if config.has_option('options', db_parm):
+        conn_parms[parm] = config.get('options', db_parm)
+
+if not 'user' in conn_parms:
+    print 'No user found in configuration'
+    sys.exit()
+db_user = conn_parms['user']
+
 db_name=options.database or config.get('options', 'db_name')
 
 if not db_name or db_name=='' or db_name.isspace() or db_name.lower()=='false':
   parser.print_help()
   sys.exit()
+
+conn_parms['database'] = db_name
 
 if options.inplace:
   db=db_name
@@ -185,18 +197,36 @@ for version in options.migrations.split(','):
 if not options.inplace:
     print('copying database %(db_name)s to %(db)s...' % {'db_name': db_name, 
                                                          'db': db})
-    conn=psycopg2.connect(database=db_name, user=db_user)
+    conn = psycopg2.connect(**conn_parms)
     conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
     cur=conn.cursor()
     cur.execute('drop database if exists "%(db)s"' % {'db': db})
     cur.execute('create database "%(db)s"' % {'db': db})
     cur.close()
-    os.system(('pg_dump --format=custom --user=%(user)s %(db_name)s | pg_restore '+
-    '--dbname=%(db)s') % {
-        'user': db_user, 
-        'db_name': db_name, 
-        'db': db,
-        })
+
+    os.environ['PGUSER'] = db_user             
+    if ('host' in conn_parms and conn_parms['host']
+    and not os.environ.get('PGHOST')):
+        os.environ['PGHOST'] = conn_parms['host']             
+
+    if ('port' in conn_parms and conn_parms['port']
+    and not os.environ.get('PGPORT')):
+        os.environ['PGPORT'] = conn_parms['port']             
+
+    password_set = False
+    if ('password' in conn_parms and conn_parms['password']
+    and not os.environ.get('PGPASSWORD')):
+        os.environ['PGPASSWORD'] = conn_parms['password']             
+        password_set = True
+
+    os.system(
+        ('pg_dump --format=custom --no-password %(db_name)s ' +
+         '| pg_restore --no-password --dbname=%(db)s') %
+        {'db_name': db_name, 'db': db}
+    )
+
+    if password_set:
+        del os.environ['PGPASSWORD'] 
 
 for version in options.migrations.split(','):
   print 'running migration for '+version
