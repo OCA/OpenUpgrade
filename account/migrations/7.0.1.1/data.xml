@@ -80,6 +80,12 @@
             </record>
     <record model="account.financial.report" id="account_financial_report_expense0"><field name="sign" eval="-1"/>
             </record>
+
+    <!-- Prevent popup action to install a new chart of account -->
+    <record id="action_wizard_multi_chart_todo" model="ir.actions.todo">
+        <field name="state">done</field>
+    </record>
+
   </data>
 </openerp>
 
