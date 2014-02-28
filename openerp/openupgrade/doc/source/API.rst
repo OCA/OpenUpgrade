@@ -1,22 +1,32 @@
 OpenUpgrade API
 +++++++++++++++
 
-You can use the following functions in your pre and post scripts.
-
-Note that the path to the OpenUpgrade support library is different
-in OpenERP 6 and OpenERP 6.1. For migration scripts that cover a
-migration to OpenERP 6, please do support both paths using the
-following stanza. Doing so enables the user to use your migration
-script for migrating databases from OpenERP 5 to OpenERP 6.1 in one
-step, provided that a migration script to 6.1 exists as well.
+In OpenUpgrade you can use the following functions in your pre and
+post scripts. Use the following import from OpenUpgrade 6.1 on.
 
 .. code-block:: python
 
-   try:
-        from openupgrade import openupgrade
-   except ImportError:
-        from openerp.openupgrade import openupgrade
+   from openerp.openupgrade import openupgrade
+
+In OpenUpgrade 5.0 and 6.0, the import is slightly different.
+
+.. code-block:: python
+
+   from openupgrade import openupgrade
+
+General methods
+---------------
 
 .. automodule:: openupgrade
+   :members:
+
+Methods for OpenUpgrade 7.0
+---------------------------
+
+The following specific methods for 7.0 are available. These have been
+developed to cover specific needs as per data model changes in that
+release.
+
+.. automodule:: openupgrade_70
    :members:
 

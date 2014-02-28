@@ -37,18 +37,20 @@ __all__ = [
     'load_data',
     'rename_columns',
     'rename_tables',
-    'drop_columns',
-    'table_exists',
-    'column_exists',
-    'logged_query',
-    'delete_model_workflow',
-    'set_defaults',
-    'update_module_names',
-    'add_ir_model_fields',
     'rename_models',
     'rename_xmlids',
+    'drop_columns',
+    'delete_model_workflow',
+    'warn_possible_dataloss',
+    'set_defaults',
+    'logged_query',
+    'column_exists',
+    'table_exists',
+    'update_module_names',
+    'add_ir_model_fields',
     'get_legacy_name',
     'm2o_to_m2m',
+    'message',
 ]    
 
 def load_data(cr, module_name, filename, idref=None, mode='init'):
@@ -219,6 +221,8 @@ def warn_possible_dataloss(cr, pool, old_module, fields):
         'table' : name of the table where the field is.
         'field' : name of the field that are moving.
         'new_module' : name of the new module
+
+    .. versionadded:: 7.0
     """
     module_obj = pool.get('ir.module.module')
     for field in fields: 
@@ -316,6 +320,9 @@ def set_defaults(cr, pool, default_spec, force=False):
                 write_value(ids, field, value)
     
 def logged_query(cr, query, args=None):
+    """
+    Logs query and affected rows at level DEBUG
+    """
     if args is None:
         args = []
     res = cr.execute(query, args)
@@ -392,6 +399,8 @@ def m2o_to_m2m(cr, model, table, field, source_field):
     :param table: The source table
     :param field: The field name of the target model
     :param source_field: the many2one column on the source table.
+
+    .. versionadded:: 7.0
     """
     cr.execute('SELECT id, %(field)s '
                'FROM %(table)s '
@@ -409,9 +418,11 @@ def message(cr, module, table, column,
     To be extended with logging to a table for reporting purposes.
 
     :param module: the module name that the message concerns
-    :param table: the model that this message concerns (may be False,
+    :param table: the model that this message concerns (may be False, \
     but preferably not if 'column' is defined)
     :param column: the column that this message concerns (may be False)
+
+    .. versionadded:: 7.0
     """
     argslist = list(args or [])
     prefix = ': '

@@ -10,7 +10,7 @@ Welcome to OpenUpgrade's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    intro.rst   
    community.rst
@@ -19,7 +19,7 @@ Contents:
    development.rst
    API.rst
 
-You should find the latest version of this documentation here: `<http://readthedocs.org/docs/openupgrade-server>`_
+You should find the latest version of this documentation here: `<https://doc.therp.nl/openupgrade>`_
 
 Indices and tables
 ==================
