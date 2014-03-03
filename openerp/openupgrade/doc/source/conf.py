@@ -37,15 +37,15 @@ master_doc = 'index'
 
 # General substitutions.
 project = 'OpenUpgrade'
-copyright = '2012, The OpenUpgrade team'
+copyright = '2012-2014, The OpenUpgrade team'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = '6.1'
+version = '7.0'
 # The full version, including alpha/beta/rc tags.
-release = '6.1'
+release = '7.0'
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
