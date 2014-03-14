@@ -201,9 +201,32 @@ if not options.inplace:
     conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
     cur=conn.cursor()
     cur.execute('drop database if exists "%(db)s"' % {'db': db})
-    cur.execute('create database "%(db)s" with template "%(db_name)s"' % {
-        'db': db, 'db_name': db_name})
+    cur.execute('create database "%(db)s"' % {'db': db})
     cur.close()
+
+    os.environ['PGUSER'] = db_user             
+    if ('host' in conn_parms and conn_parms['host']
+    and not os.environ.get('PGHOST')):
+        os.environ['PGHOST'] = conn_parms['host']             
+
+    if ('port' in conn_parms and conn_parms['port']
+    and not os.environ.get('PGPORT')):
+        os.environ['PGPORT'] = conn_parms['port']             
+
+    password_set = False
+    if ('password' in conn_parms and conn_parms['password']
+    and not os.environ.get('PGPASSWORD')):
+        os.environ['PGPASSWORD'] = conn_parms['password']             
+        password_set = True
+
+    os.system(
+        ('pg_dump --format=custom --no-password %(db_name)s ' +
+         '| pg_restore --no-password --dbname=%(db)s') %
+        {'db_name': db_name, 'db': db}
+    )
+
+    if password_set:
+        del os.environ['PGPASSWORD'] 
 
 for version in options.migrations.split(','):
   print 'running migration for '+version
