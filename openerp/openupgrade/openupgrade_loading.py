@@ -19,6 +19,7 @@
 #
 ##############################################################################
 
+import logging
 import types
 from openerp import release
 from openerp.osv.orm import TransientModel
@@ -28,6 +29,8 @@ from openerp.tools import config, safe_eval
 
 # A collection of functions used in 
 # openerp/modules/loading.py
+
+logger = logging.getLogger('OpenUpgrade')
 
 def add_module_dependencies(cr, module_list):
     """
@@ -69,9 +72,32 @@ def add_module_dependencies(cr, module_list):
             AND ir_module_module.name in %s
         """, (tuple(module_list),))
 
-    return list(set(
-            module_list + [x[0] for x in cr.fetchall()]
-            ))
+    module_list = list(set(
+        module_list + [row[0] for row in cr.fetchall()]))
+
+    # Select auto_install modules of which all dependencies
+    # are fulfilled based on the modules we know are to be
+    # installed
+    cr.execute("""
+        SELECT name from ir_module_module WHERE state IN %s
+        """, (('installed', 'to install', 'to upgrade'),))
+    modules = list(set(module_list + [row[0] for row in cr.fetchall()]))
+    cr.execute("""
+        SELECT name from ir_module_module m
+        WHERE auto_install IS TRUE
+            AND state = 'uninstalled'
+            AND NOT EXISTS(
+                SELECT id FROM ir_module_module_dependency d
+                WHERE d.module_id = m.id
+                AND name NOT IN %s)
+         """, (tuple(modules),))
+    auto_modules = [row[0] for row in cr.fetchall()]
+    if auto_modules:
+        logger.info(
+            "Selecting autoinstallable modules %s", ','.join(auto_modules))
+        module_list += auto_modules
+
+    return module_list
 
 def log_model(model, local_registry):
     """
