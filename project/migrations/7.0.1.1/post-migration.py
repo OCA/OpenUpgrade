@@ -25,11 +25,10 @@ from openerp import pooler, SUPERUSER_ID
 def copy_state_from_analytic_account(cr):
     openupgrade.logged_query(cr, """
         UPDATE project_project
-        SET state = (
-            SELECT %s
-            FROM account_analytic_account
-            WHERE account_analytic_account.id = project_project.analytic_account_id
-        )
+        SET state = account_analytic_account.%s
+        FROM project_project
+        INNER JOIN account_analytic_account
+        ON account_analytic_account.id = project_project.analytic_account_id
         WHERE analytic_account_id is not NULL
         """ %(openupgrade.get_legacy_name('state')))
 
