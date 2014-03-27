@@ -10,6 +10,8 @@ hr_holidays  / hr.holidays              / message_ids (one2many)        : NEW re
 ### -> new functionality of mail module: nothing to do.
 
 hr_holidays  / hr.holidays.status       / categ_id (many2one)           : relation is now 'crm.meeting.type' ('crm.case.categ')
+### -> TODO: No easy migration path. Put a note in users_notes.txt
+
 ---XML records in module 'hr_holidays'---
 NEW ir.actions.act_window: hr_holidays.act_hr_leave_request_to_meeting
 NEW ir.actions.act_window: hr_holidays.request_approve_allocation
@@ -27,7 +29,7 @@ NEW ir.model.access: hr_holidays.access_resource_calendar_leaves_user
 DEL ir.model.access: hr_holidays.access_resource_calendar_leaves_manager
 NEW ir.rule: hr_holidays.property_rule_holidays_officer
 DEL ir.rule: hr_holidays.property_rule_holidays_manager
-### -> TODO: New security: Change users that belongs to old group to another one
+### -> Change of rules and access. Nothing to do
 
 NEW ir.ui.menu: hr_holidays.menu_request_approve_allocation
 DEL ir.ui.menu: hr_holidays.menu_hr_reporting_holidays
