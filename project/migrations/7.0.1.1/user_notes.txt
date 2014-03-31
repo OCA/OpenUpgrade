@@ -1,0 +1,11 @@
+********************************************************************************
+1/ If you have defined custom project stages (project.task.type), related state
+will be set default to open, and related task will have this state. If you
+want to set them to another state, you will have to do it manually.
+
+2/ Project warning messages when you close tasks are lost in the migration,
+because they are not easily translated to the new system, so you will have to
+rewrite them on v7.
+
+3/ All projects are set by default to public visibility. Change manually
+on each project accordingly new possibilities and your needs.
