@@ -33,7 +33,7 @@ In a nutshell
 
 ::
 
-  wget http://bazaar.launchpad.net/~openupgrade-committers/openupgrade-server/7.0/download/head:/migrate.py-20121124220517-zch9uxorrlarkjvi-1/migrate.py
+  bzr cat lp:openupgrade-server/scripts/migrate.py > migrate.py
   python migrate.py --config=[your openerp.conf] --database=[your database] --run-migrations=[your migrations]
 
 .. _launchpad: http://bazaar.launchpad.net/~openupgrade-committers/openupgrade-server/7.0/view/head:/scripts/migrate.py
