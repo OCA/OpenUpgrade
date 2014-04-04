@@ -28,8 +28,8 @@ Problems
 
 Please report problems to https://answers.launchpad.net/openupgrade-server (very often, it's not a bug but a specific issue with your database setup). Make sure to have read your ``migration.log`` file carefully to avoid posting about obvious issues. Post relevant lines from the logfile, but don't post the whole logfile. If you can't decide what would be relevant, upload the file somewhere and link to that in your question.
 
-For the really lazy
--------------------
+In a nutshell
+-------------
 
 ::
 
