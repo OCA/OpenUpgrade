@@ -61,19 +61,22 @@ def add_module_dependencies(cr, module_list):
     for module in list(module_list):
         module_list += forced_deps.get(module, [])
         module_list += autoinstall.get(module, [])
+    module_list = list(set(module_list))
 
-    cr.execute("""
-        SELECT ir_module_module_dependency.name
-        FROM
-            ir_module_module,
-            ir_module_module_dependency
-        WHERE
-            module_id = ir_module_module.id
-            AND ir_module_module.name in %s
-        """, (tuple(module_list),))
-
-    module_list = list(set(
-        module_list + [row[0] for row in cr.fetchall()]))
+    dependencies = module_list
+    while dependencies:
+        cr.execute("""
+            SELECT DISTINCT dep.name
+            FROM
+                ir_module_module,
+                ir_module_module_dependency dep
+            WHERE
+                module_id = ir_module_module.id
+                AND ir_module_module.name in %s
+                AND dep.name not in %s
+            """, (tuple(dependencies), tuple(module_list),))
+        dependencies = [x[0] for x in cr.fetchall()]
+        module_list += dependencies
 
     # Select auto_install modules of which all dependencies
     # are fulfilled based on the modules we know are to be
