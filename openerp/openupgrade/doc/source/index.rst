@@ -20,7 +20,6 @@ Contents:
    analysis.rst
    development.rst
    API.rst
-   migrate.py.rst
 
 You should find the latest version of this documentation here: `<https://doc.therp.nl/openupgrade>`_
 
