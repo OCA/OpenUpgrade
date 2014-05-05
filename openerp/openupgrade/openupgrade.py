@@ -336,19 +336,21 @@ def add_module_dependencies(cr, module_list):
     time. Used in the modified OpenUpgrade Server,
     not to be used in migration scripts
     """
-    if not module_list:
-        return module_list
-    cr.execute("""
-        SELECT ir_module_module_dependency.name
-        FROM
-            ir_module_module,
-            ir_module_module_dependency
-        WHERE
-            module_id = ir_module_module.id
-            AND ir_module_module.name in %s
-        """, (tuple(module_list),))
-    dependencies = [x[0] for x in cr.fetchall()]
-    return list(set(module_list + dependencies))
+    dependencies = module_list
+    while dependencies:
+        cr.execute("""
+            SELECT DISTINCT dep.name
+            FROM
+                ir_module_module,
+                ir_module_module_dependency dep
+            WHERE
+                module_id = ir_module_module.id
+                AND ir_module_module.name in %s
+                AND dep.name not in %s
+            """, (tuple(dependencies), tuple(module_list),))
+        dependencies = [x[0] for x in cr.fetchall()]
+        module_list += dependencies
+    return module_list
 
 def migrate():
     """
