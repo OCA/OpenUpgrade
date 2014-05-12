@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+  <data>
+    <!-- Changes in noupdate data -->
+    <record model="ir.rule" id="project_comp_rule">
+        <field name="domain_force">['|',
+        ('company_id', '=', False),
+        ('company_id', 'child_of', [user.company_id.id]),
+        ]</field>
+        <field name="name">Project: multi-company</field>
+    </record>
+    <record model="ir.rule" id="task_visibility_rule">
+        <field name="groups" eval="[(4,ref('base.group_user'))]"/>
+        <field name="domain_force">['|',
+        ('user_id', '=', user.id),
+        '|',
+        ('project_id.privacy_visibility', 'in', ['public', 'employees']),
+        '&amp;',
+        ('project_id.privacy_visibility', '=', 'followers'),
+        ('message_follower_ids', 'in', [user.partner_id.id]),
+        ]</field>
+        <field name="name">Project/Task: employees: public or employee or following or assigned</field>
+    </record>
+    <record model="ir.rule" id="task_comp_rule">
+        <field name="domain_force">['|',
+        ('company_id', '=', False),
+        ('company_id', 'child_of', [user.company_id.id]),
+        ]</field>
+        <field name="name">Project/Task: multi-company</field>
+    </record>
+    <record model="ir.rule" id="project_manager_all_project_tasks_rule">
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="name">Project/Task: project manager: see all</field>
+    </record>
+  </data>
+</openerp>
