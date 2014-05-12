@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+  <data>
+    <record model="hr.holidays.status" id="holiday_status_cl"><field name="name">Legal Leaves</field>
+      </record>
+    <record model="hr.holidays.status" id="holiday_status_sl"><field name="name">Sick Leaves</field>
+      </record>
+    <record model="workflow.activity" id="act_refuse">
+      <field name="action"/>
+    </record>
+  </data>
+</openerp>
+
