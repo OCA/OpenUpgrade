@@ -22,9 +22,6 @@
 from openupgrade import openupgrade
 
 column_renames = {
-    'account_analytic_account':[
-        ('state', None),
-    ],
     'project_task':[
         ('type_id', 'stage_id'),
     ],
