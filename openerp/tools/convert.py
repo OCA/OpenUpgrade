@@ -66,6 +66,8 @@ from misc import unquote
 unsafe_eval = eval
 from safe_eval import safe_eval as eval
 
+from openerp.openupgrade import openupgrade_log
+
 class ParseError(Exception):
     def __init__(self, msg, text, filename, lineno):
         self.msg = msg
@@ -296,6 +298,7 @@ form: module.record_id""" % (xml_id,)
 
         if len(id) > 64:
             _logger.error('id: %s is to long (max: 64)', id)
+        openupgrade_log.log_xml_id(self.cr, self.module, xml_id)
 
     def _tag_delete(self, cr, rec, data_node=None):
         d_model = rec.get("model",'')
