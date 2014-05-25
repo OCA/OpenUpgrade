@@ -51,6 +51,8 @@ class ir_http(orm.AbstractModel):
             # in all cases, website processes them
             request.website_enabled = True
 
+        request.website_multilang = request.website_enabled and func and func.routing.get('multilang', True)
+
         if request.website_enabled:
             if func:
                 self._authenticate(func.routing['auth'])
@@ -67,6 +69,10 @@ class ir_http(orm.AbstractModel):
                 if path[1] in langs:
                     request.lang = request.context['lang'] = path.pop(1)
                     path = '/'.join(path) or '/'
+                    if request.lang == request.website.default_lang_code:
+                        # If language is in the url and it is the default language, redirect
+                        # to url without language so google doesn't see duplicate content
+                        return request.redirect(path + request.httprequest.query_string)
                     return self.reroute(path)
                 return self._handle_exception(code=404)
         return super(ir_http, self)._dispatch()
@@ -106,6 +112,8 @@ class ir_http(orm.AbstractModel):
             if generated_path != current_path:
                 if request.lang != request.website.default_lang_code:
                     path = '/' + request.lang + path
+                if request.httprequest.query_string:
+                    path += '?' + request.httprequest.query_string
                 return werkzeug.utils.redirect(path)
 
     def _serve_attachment(self):
@@ -178,8 +186,9 @@ class ir_http(orm.AbstractModel):
         return super(ir_http, self)._handle_exception(exception)
 
 class ModelConverter(ir.ir_http.ModelConverter):
-    def __init__(self, url_map, model=False):
+    def __init__(self, url_map, model=False, domain='[]'):
         super(ModelConverter, self).__init__(url_map, model)
+        self.domain = domain
         self.regex = r'(?:[A-Za-z0-9-_]+?-)?(\d+)(?=$|/)'
 
     def to_url(self, value):
@@ -191,24 +200,31 @@ class ModelConverter(ir.ir_http.ModelConverter):
         return request.registry[self.model].browse(
             request.cr, _uid, int(m.group(1)), context=request.context)
 
-    def generate(self, cr, uid, query=None, context=None):
-        return request.registry[self.model].name_search(
-            cr, uid, name=query or '', context=context)
+    def generate(self, cr, uid, query=None, args=None, context=None):
+        obj = request.registry[self.model]
+        domain = eval( self.domain, (args or {}).copy())
+        if query:
+            domain.append((obj._rec_name, 'ilike', '%'+query+'%'))
+        for record in obj.search_read(cr, uid, domain=domain, fields=['write_date',obj._rec_name], context=context):
+            if record.get(obj._rec_name, False):
+                yield {'loc': (record['id'], record[obj._rec_name])}
 
 class PageConverter(werkzeug.routing.PathConverter):
-    """ Only point of this converter is to bundle pages enumeration logic
-
-    Sads got: no way to get the view's human-readable name even if one exists
-    """
-    def generate(self, cr, uid, query=None, context=None):
+    """ Only point of this converter is to bundle pages enumeration logic """
+    def generate(self, cr, uid, query=None, args={}, context=None):
         View = request.registry['ir.ui.view']
-        views = View.search_read(
-            cr, uid, [['page', '=', True]],
-            fields=[], order='name', context=context)
-        xids = View.get_external_id(
-            cr, uid, [view['id'] for view in views], context=context)
-
+        views = View.search_read(cr, uid, [['page', '=', True]],
+            fields=['xml_id','priority','write_date'], order='name', context=context)
         for view in views:
-            xid = xids[view['id']]
-            if xid and (not query or query.lower() in xid.lower()):
-                yield xid
+            xid = view['xml_id'].startswith('website.') and view['xml_id'][8:] or view['xml_id']
+            # the 'page/homepage' url is indexed as '/', avoid aving the same page referenced twice
+            # when we will have an url mapping mechanism, replace this by a rule: page/homepage --> /
+            if xid=='homepage': continue
+            if query and query.lower() not in xid.lower():
+                continue
+            record = {'loc': xid}
+            if view['priority'] <> 16:
+                record['__priority'] = min(round(view['priority'] / 32.0,1), 1)
+            if view['write_date']:
+                record['__lastmod'] = view['write_date'][:10]
+            yield record

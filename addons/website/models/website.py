@@ -1,12 +1,19 @@
 # -*- coding: utf-8 -*-
+import cStringIO
+import contextlib
+import datetime
 import hashlib
 import inspect
 import itertools
 import logging
 import math
 import mimetypes
+import os
 import re
 import urlparse
+
+from PIL import Image
+from sys import maxint
 
 import werkzeug
 import werkzeug.exceptions
@@ -72,7 +79,7 @@ def is_multilang_url(local_url, langs=None):
         query_string = url[1] if len(url) > 1 else None
         router = request.httprequest.app.get_db_router(request.db).bind('')
         func = router.match(path, query_args=query_string)[0]
-        return func.routing.get('multilang', False)
+        return func.routing.get('website', False) and func.routing.get('multilang', True)
     except Exception:
         return False
 
@@ -283,44 +290,23 @@ class website(osv.osv):
         endpoint = rule.endpoint
         methods = rule.methods or ['GET']
         converters = rule._converters.values()
-
-        return (
-            'GET' in methods
+        if not ('GET' in methods
             and endpoint.routing['type'] == 'http'
             and endpoint.routing['auth'] in ('none', 'public')
             and endpoint.routing.get('website', False)
-            # preclude combinatorial explosion by only allowing a single converter
-            and len(converters) <= 1
-            # ensure all converters on the rule are able to generate values for
-            # themselves
             and all(hasattr(converter, 'generate') for converter in converters)
-        ) and self.endpoint_is_enumerable(rule)
-
-    def endpoint_is_enumerable(self, rule):
-        """ Verifies that it's possible to generate a valid url for the rule's
-        endpoint
-
-        :type rule: werkzeug.routing.Rule
-        :rtype: bool
-        """
-        spec = inspect.getargspec(rule.endpoint.method)
-
-        # if *args bail the fuck out, only dragons can live there
-        if spec.varargs:
+            and endpoint.routing.get('website')):
             return False
 
-        # remove all arguments with a default value from the list
-        defaults_count = len(spec.defaults or []) # spec.defaults can be None
-        # a[:-0] ~ a[:0] ~ [] -> replace defaults_count == 0 by None to get
-        # a[:None] ~ a
-        args = spec.args[:(-defaults_count or None)]
+        # dont't list routes without argument having no default value or converter
+        spec = inspect.getargspec(endpoint.method.original_func)
 
-        # params with defaults were removed, leftover allowed are:
-        # * self (technically should be first-parameter-of-instance-method but whatever)
-        # * any parameter mapping to a converter
-        return all(
-            (arg == 'self' or arg in rule._converters)
-            for arg in args)
+        # remove self and arguments having a default value
+        defaults_count = len(spec.defaults or [])
+        args = spec.args[1:(-defaults_count or None)]
+
+        # check that all args have a converter
+        return all( (arg in rule._converters) for arg in args)
 
     def enumerate_pages(self, cr, uid, ids, query_string=None, context=None):
         """ Available pages in the website/CMS. This is mostly used for links
@@ -344,27 +330,34 @@ class website(osv.osv):
             if not self.rule_is_enumerable(rule):
                 continue
 
-            converters = rule._converters
-            filtered = bool(converters)
-            if converters:
-                # allow single converter as decided by fp, checked by
-                # rule_is_enumerable
-                [(name, converter)] = converters.items()
-                converter_values = converter.generate(
-                    request.cr, uid, query=query_string, context=context)
-                generated = ({k: v} for k, v in itertools.izip(
-                    itertools.repeat(name), converter_values))
-            else:
-                # force single iteration for literal urls
-                generated = [{}]
+            converters = rule._converters or {}
+            values = [{}]
+            convitems = converters.items()
+            # converters with a domain are processed after the other ones
+            gd = lambda x: hasattr(x[1], 'domain') and (x[1].domain <> '[]')
+            convitems.sort(lambda x, y: cmp(gd(x), gd(y)))
+            for (name, converter) in convitems:
+                newval = []
+                for val in values:
+                    for v in converter.generate(request.cr, uid, query=query_string, args=val, context=context):
+                        newval.append( val.copy() )
+                        v[name] = v['loc']
+                        del v['loc']
+                        newval[-1].update(v)
+                values = newval
 
-            for values in generated:
-                domain_part, url = rule.build(values, append_unknown=False)
-                page = {'name': url, 'url': url}
+            for value in values:
+                domain_part, url = rule.build(value, append_unknown=False)
+                page = {'loc': url}
+                for key,val in value.items():
+                    if key.startswith('__'):
+                        page[key[2:]] = val
+                if url in ('/sitemap.xml',):
+                    continue
                 if url in url_list:
                     continue
                 url_list.append(url)
-                if not filtered and query_string and not self.page_matches(cr, uid, page, query_string, context=context):
+                if query_string and not self.page_matches(cr, uid, page, query_string, context=context):
                     continue
                 yield page
 
@@ -472,6 +465,95 @@ class website(osv.osv):
         for object_id in object_ids:
             html += request.website._render(template, {'object_id': object_id})
         return html
+
+    def _image_placeholder(self, response):
+        # file_open may return a StringIO. StringIO can be closed but are
+        # not context managers in Python 2 though that is fixed in 3
+        with contextlib.closing(openerp.tools.misc.file_open(
+                os.path.join('web', 'static', 'src', 'img', 'placeholder.png'),
+                mode='rb')) as f:
+            response.data = f.read()
+            return response.make_conditional(request.httprequest)
+
+    def _image(self, cr, uid, model, id, field, response, max_width=maxint, max_height=maxint, context=None):
+        """ Fetches the requested field and ensures it does not go above
+        (max_width, max_height), resizing it if necessary.
+
+        Resizing is bypassed if the object provides a $field_big, which will
+        be interpreted as a pre-resized version of the base field.
+
+        If the record is not found or does not have the requested field,
+        returns a placeholder image via :meth:`~._image_placeholder`.
+
+        Sets and checks conditional response parameters:
+        * :mailheader:`ETag` is always set (and checked)
+        * :mailheader:`Last-Modified is set iif the record has a concurrency
+          field (``__last_update``)
+
+        The requested field is assumed to be base64-encoded image data in
+        all cases.
+        """
+        Model = self.pool[model]
+        id = int(id)
+
+        ids = Model.search(cr, uid,
+                           [('id', '=', id)], context=context)
+        if not ids and 'website_published' in Model._all_columns:
+            ids = Model.search(cr, openerp.SUPERUSER_ID,
+                               [('id', '=', id), ('website_published', '=', True)], context=context)
+        if not ids:
+            return self._image_placeholder(response)
+
+        concurrency = '__last_update'
+        [record] = Model.read(cr, openerp.SUPERUSER_ID, [id],
+                              [concurrency, field],
+                              context=context)
+
+        if concurrency in record:
+            server_format = openerp.tools.misc.DEFAULT_SERVER_DATETIME_FORMAT
+            try:
+                response.last_modified = datetime.datetime.strptime(
+                    record[concurrency], server_format + '.%f')
+            except ValueError:
+                # just in case we have a timestamp without microseconds
+                response.last_modified = datetime.datetime.strptime(
+                    record[concurrency], server_format)
+
+        # Field does not exist on model or field set to False
+        if not record.get(field):
+            # FIXME: maybe a field which does not exist should be a 404?
+            return self._image_placeholder(response)
+
+        response.set_etag(hashlib.sha1(record[field]).hexdigest())
+        response.make_conditional(request.httprequest)
+
+        # conditional request match
+        if response.status_code == 304:
+            return response
+
+        data = record[field].decode('base64')
+
+        if (not max_width) and (not max_height):
+            response.data = data
+            return response
+
+        image = Image.open(cStringIO.StringIO(data))
+        response.mimetype = Image.MIME[image.format]
+
+        w, h = image.size
+        max_w, max_h = int(max_width), int(max_height)
+
+        if w < max_w and h < max_h:
+            response.data = data
+        else:
+            image.thumbnail((max_w, max_h), Image.ANTIALIAS)
+            image.save(response.stream, image.format)
+            # invalidate content-length computed by make_conditional as
+            # writing to response.stream does not do it (as of werkzeug 0.9.3)
+            del response.headers['Content-Length']
+
+        return response
+
 
 class website_menu(osv.osv):
     _name = "website.menu"
