@@ -26,15 +26,22 @@
 import os
 
 try:
+    from openerp.modules import get_module_path  # 8.0
+except ImportError:
+    try:
+        from openerp.addons import get_module_path  # 6.1, 7.0
+    except ImportError:
+        from addons import get_module_path  # 5.0
+
+
+try:
     from openerp.osv.orm import TransientModel
     from openerp.osv import fields
     from openerp.addons.openupgrade_records.lib import compare
-    from openerp.addons import get_module_path
 except ImportError:
     from osv.osv import osv_memory as TransientModel
     from osv import fields
     from openupgrade_records.lib import compare
-    from addons import get_module_path
 
 
 class openupgrade_analysis_wizard(TransientModel):
@@ -179,7 +186,7 @@ class openupgrade_analysis_wizard(TransientModel):
             'domain': [],
             'context': context,
             'type': 'ir.actions.act_window',
-            #'target': 'new',
+            # 'target': 'new',
             'res_id': ids[0],
             }
         return result

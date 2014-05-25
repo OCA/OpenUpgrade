@@ -22,7 +22,8 @@
 import os
 import inspect
 import logging
-from openerp import release, orm, tools, SUPERUSER_ID
+from openerp import release, tools, SUPERUSER_ID
+from openerp.osv import orm
 import openupgrade_tools
 
 # The server log level has not been set at this point

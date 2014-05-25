@@ -163,7 +163,7 @@ def compare_sets(old_records, new_records):
             if found:
                 if warn:
                     pass
-                    #print "Tentatively"
+                    # print "Tentatively"
                 report_generic(found, column, report_fields, reprs)
                 old_records.remove(column)
                 new_records.remove(found)
@@ -188,7 +188,7 @@ def compare_sets(old_records, new_records):
          'isfunction', 'required'])
 
     # fields with other names
-    #matched_other_name = match(
+    # matched_other_name = match(
     # ['module', 'type', 'relation'],
     # ['field', 'relation', 'type', 'selection_keys',
     #   'inherits', 'isfunction', 'required'], warn=True)

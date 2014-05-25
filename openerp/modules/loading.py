@@ -401,7 +401,7 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
 
             # OpenUpgrade: call deferred migration steps
             if update_module:
-                deferred_80.migrate_deferred(cr, pool)
+                deferred_80.migrate_deferred(cr, registry)
 
         for kind in ('init', 'demo', 'update'):
             tools.config[kind] = {}
