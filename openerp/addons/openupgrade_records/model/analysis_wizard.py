@@ -71,6 +71,9 @@ class openupgrade_analysis_wizard(TransientModel):
         perform the comparison and register the resulting
         change set
         """
+        if context is None:
+            context = {}
+
         def write_file(module, version, contents,
                        filename='openupgrade_analysis.txt'):
             module_path = get_module_path(module)
