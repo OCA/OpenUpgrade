@@ -1,0 +1,10 @@
+---Fields in module 'payment_adyen'---
+payment_adyen / payment.acquirer         / adyen_merchant_account (char) : NEW 
+payment_adyen / payment.acquirer         / adyen_skin_code (char)        : NEW 
+payment_adyen / payment.acquirer         / adyen_skin_hmac_key (char)    : NEW 
+payment_adyen / payment.transaction      / adyen_psp_reference (char)    : NEW 
+---XML records in module 'payment_adyen'---
+NEW ir.ui.view: payment_adyen.acquirer_form_adyen
+NEW ir.ui.view: payment_adyen.adyen_acquirer_button
+NEW ir.ui.view: payment_adyen.transaction_form_adyen
+NEW payment.acquirer: payment_adyen.payment_acquirer_adyen

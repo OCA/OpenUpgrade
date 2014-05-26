@@ -1,0 +1,103 @@
+---Fields in module 'website_event_track'---
+website_event_track / event.event              / allowed_track_tag_ids (many2many): NEW relation: event.track.tag
+website_event_track / event.event              / blog_id (many2one)            : NEW relation: blog.blog
+website_event_track / event.event              / show_blog (boolean)           : NEW 
+website_event_track / event.event              / show_track_proposal (boolean) : NEW 
+website_event_track / event.event              / show_tracks (boolean)         : NEW 
+website_event_track / event.event              / sponsor_ids (one2many)        : NEW relation: event.sponsor
+website_event_track / event.event              / tag_ids (many2many)           : NEW relation: event.tag
+website_event_track / event.event              / timezone_of_event (selection) : NEW selection_keys: function
+website_event_track / event.event              / track_ids (one2many)          : NEW relation: event.track
+website_event_track / event.sponsor            / event_id (many2one)           : NEW relation: event.event, required: required
+website_event_track / event.sponsor            / partner_id (many2one)         : NEW relation: res.partner, required: required
+website_event_track / event.sponsor            / sponsor_type_id (many2one)    : NEW relation: event.sponsor.type, required: required
+website_event_track / event.sponsor            / url (text)                    : NEW 
+website_event_track / event.sponsor.type       / name (char)                   : NEW required: required
+website_event_track / event.sponsor.type       / sequence (integer)            : NEW 
+website_event_track / event.tag                / name (char)                   : NEW 
+website_event_track / event.track              / color (integer)               : NEW 
+website_event_track / event.track              / date (datetime)               : NEW 
+website_event_track / event.track              / description (html)            : NEW 
+website_event_track / event.track              / duration (float)              : NEW 
+website_event_track / event.track              / event_id (many2one)           : NEW relation: event.event, required: required
+website_event_track / event.track              / location_id (many2one)        : NEW relation: event.track.location
+website_event_track / event.track              / message_ids (one2many)        : NEW relation: mail.message
+website_event_track / event.track              / message_last_post (datetime)  : NEW 
+website_event_track / event.track              / name (char)                   : NEW required: required
+website_event_track / event.track              / priority (selection)          : NEW required: required, selection_keys: ['0', '1', '2', '3'], req_default: 2
+website_event_track / event.track              / speaker_ids (many2many)       : NEW relation: res.partner
+website_event_track / event.track              / stage_id (many2one)           : NEW relation: event.track.stage
+website_event_track / event.track              / tag_ids (many2many)           : NEW relation: event.track.tag
+website_event_track / event.track              / user_id (many2one)            : NEW relation: res.users
+website_event_track / event.track              / website_message_ids (one2many): NEW relation: mail.message
+website_event_track / event.track              / website_meta_description (text): NEW 
+website_event_track / event.track              / website_meta_keywords (char)  : NEW 
+website_event_track / event.track              / website_meta_title (char)     : NEW 
+website_event_track / event.track              / website_published (boolean)   : NEW 
+website_event_track / event.track.location     / name (char)                   : NEW 
+website_event_track / event.track.stage        / name (char)                   : NEW 
+website_event_track / event.track.stage        / sequence (integer)            : NEW 
+website_event_track / event.track.tag          / name (char)                   : NEW 
+---XML records in module 'website_event_track'---
+NEW event.sponsor.type: website_event_track.event_sponsor_type1
+NEW event.sponsor.type: website_event_track.event_sponsor_type2
+NEW event.sponsor.type: website_event_track.event_sponsor_type3
+NEW event.track.stage: website_event_track.event_track_stage1
+NEW event.track.stage: website_event_track.event_track_stage2
+NEW event.track.stage: website_event_track.event_track_stage3
+NEW event.track.stage: website_event_track.event_track_stage4
+NEW event.track.stage: website_event_track.event_track_stage5
+NEW ir.actions.act_window: website_event_track.act_event_list_tracks
+NEW ir.actions.act_window: website_event_track.action_event_sponsor_type
+NEW ir.actions.act_window: website_event_track.action_event_tag
+NEW ir.actions.act_window: website_event_track.action_event_track
+NEW ir.actions.act_window: website_event_track.action_event_track_location
+NEW ir.actions.act_window: website_event_track.action_event_track_stage
+NEW ir.actions.act_window: website_event_track.action_event_track_tag
+NEW ir.model.access: website_event_track.access_event_location_manager
+NEW ir.model.access: website_event_track.access_event_tag_manager
+NEW ir.model.access: website_event_track.access_event_tag_public
+NEW ir.model.access: website_event_track.access_event_track__public
+NEW ir.model.access: website_event_track.access_event_track_location_manager
+NEW ir.model.access: website_event_track.access_event_track_location_public
+NEW ir.model.access: website_event_track.access_event_track_manager
+NEW ir.model.access: website_event_track.access_event_track_sponsor_manager
+NEW ir.model.access: website_event_track.access_event_track_sponsor_public
+NEW ir.model.access: website_event_track.access_event_track_sponsor_type_manager
+NEW ir.model.access: website_event_track.access_event_track_sponsor_type_public
+NEW ir.model.access: website_event_track.access_event_track_stage_manager
+NEW ir.model.access: website_event_track.access_event_track_stage_public
+NEW ir.model.access: website_event_track.access_event_track_tag_manager
+NEW ir.model.access: website_event_track.access_event_track_tag_public
+NEW ir.rule: website_event_track.event_track_public
+NEW ir.ui.menu: website_event_track.menu_event_sponsor_type
+NEW ir.ui.menu: website_event_track.menu_event_tag
+NEW ir.ui.menu: website_event_track.menu_event_track
+NEW ir.ui.menu: website_event_track.menu_event_track_location
+NEW ir.ui.menu: website_event_track.menu_event_track_stage
+NEW ir.ui.menu: website_event_track.menu_event_track_tag
+NEW ir.ui.view: website_event_track.agenda
+NEW ir.ui.view: website_event_track.event_sponsor
+NEW ir.ui.view: website_event_track.event_track_proposal
+NEW ir.ui.view: website_event_track.event_track_proposal_success
+NEW ir.ui.view: website_event_track.event_track_social
+NEW ir.ui.view: website_event_track.track_view
+NEW ir.ui.view: website_event_track.tracks
+NEW ir.ui.view: website_event_track.tracks_filter
+NEW ir.ui.view: website_event_track.view_event_form
+NEW ir.ui.view: website_event_track.view_event_location_form
+NEW ir.ui.view: website_event_track.view_event_location_tree
+NEW ir.ui.view: website_event_track.view_event_sponsor_type_form
+NEW ir.ui.view: website_event_track.view_event_sponsor_type_tree
+NEW ir.ui.view: website_event_track.view_event_tag_form
+NEW ir.ui.view: website_event_track.view_event_tag_tree
+NEW ir.ui.view: website_event_track.view_event_track_calendar
+NEW ir.ui.view: website_event_track.view_event_track_form
+NEW ir.ui.view: website_event_track.view_event_track_graph
+NEW ir.ui.view: website_event_track.view_event_track_kanban
+NEW ir.ui.view: website_event_track.view_event_track_search
+NEW ir.ui.view: website_event_track.view_event_track_stage_form
+NEW ir.ui.view: website_event_track.view_event_track_stage_tree
+NEW ir.ui.view: website_event_track.view_event_track_tag_form
+NEW ir.ui.view: website_event_track.view_event_track_tag_tree
+NEW ir.ui.view: website_event_track.view_event_track_tree

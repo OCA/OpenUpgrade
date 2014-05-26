@@ -1,0 +1,36 @@
+---Fields in module 'website_event'---
+website_event / event.event              / menu_id (many2one)            : NEW relation: website.menu
+website_event / event.event              / twitter_hashtag (char)        : NEW 
+website_event / event.event              / website_message_ids (one2many): NEW relation: mail.message
+website_event / event.event              / website_meta_description (text): NEW 
+website_event / event.event              / website_meta_keywords (char)  : NEW 
+website_event / event.event              / website_meta_title (char)     : NEW 
+website_event / event.event              / website_published (boolean)   : NEW 
+---XML records in module 'website_event'---
+NEW ir.actions.act_url: website_event.action_open_website
+NEW ir.actions.todo: base.open_menu
+NEW ir.model.access: website_event.access_event_event_portal
+NEW ir.model.access: website_event.access_event_event_public
+NEW ir.model.access: website_event.access_event_type_portal
+NEW ir.model.access: website_event.access_event_type_public
+NEW ir.rule: website_event.event_event_public
+NEW ir.ui.view: website_event.404
+NEW ir.ui.view: website_event.country_events
+NEW ir.ui.view: website_event.country_events_list
+NEW ir.ui.view: website_event.editor_head
+NEW ir.ui.view: website_event.event_category
+NEW ir.ui.view: website_event.event_description_full
+NEW ir.ui.view: website_event.event_details
+NEW ir.ui.view: website_event.event_left_column
+NEW ir.ui.view: website_event.event_location
+NEW ir.ui.view: website_event.event_right_country_event
+NEW ir.ui.view: website_event.event_right_photos
+NEW ir.ui.view: website_event.event_right_quotes
+NEW ir.ui.view: website_event.event_script
+NEW ir.ui.view: website_event.header_footer_custom
+NEW ir.ui.view: website_event.index
+NEW ir.ui.view: website_event.layout
+NEW ir.ui.view: website_event.template_intro
+NEW ir.ui.view: website_event.template_location
+NEW ir.ui.view: website_event.view_event_sale_form
+NEW website.menu: website_event.menu_events

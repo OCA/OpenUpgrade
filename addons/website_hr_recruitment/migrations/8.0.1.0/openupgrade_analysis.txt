@@ -1,0 +1,23 @@
+---Fields in module 'website_hr_recruitment'---
+website_hr_recruitment / hr.job                   / website_description (html)    : NEW 
+website_hr_recruitment / hr.job                   / website_meta_description (text): NEW 
+website_hr_recruitment / hr.job                   / website_meta_keywords (char)  : NEW 
+website_hr_recruitment / hr.job                   / website_meta_title (char)     : NEW 
+website_hr_recruitment / hr.job                   / website_published (boolean)   : NEW 
+---XML records in module 'website_hr_recruitment'---
+NEW ir.actions.act_url: website_hr_recruitment.action_open_website
+NEW ir.actions.todo: base.open_menu
+NEW ir.model.access: website_hr_recruitment.access_hr_department_public
+NEW ir.model.access: website_hr_recruitment.access_hr_job_public
+NEW ir.rule: website_hr_recruitment.hr_department_public
+NEW ir.rule: website_hr_recruitment.hr_job_public
+NEW ir.ui.view: website_hr_recruitment.apply
+NEW ir.ui.view: website_hr_recruitment.assets_editor
+NEW ir.ui.view: website_hr_recruitment.detail
+NEW ir.ui.view: website_hr_recruitment.index
+NEW ir.ui.view: website_hr_recruitment.job_departments
+NEW ir.ui.view: website_hr_recruitment.job_footer_custom
+NEW ir.ui.view: website_hr_recruitment.job_offices
+NEW ir.ui.view: website_hr_recruitment.thankyou
+NEW ir.ui.view: website_hr_recruitment.view_hr_job_form
+NEW website.menu: website_hr_recruitment.menu_jobs

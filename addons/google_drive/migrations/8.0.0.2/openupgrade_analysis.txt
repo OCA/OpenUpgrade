@@ -1,0 +1,19 @@
+---Fields in module 'google_drive'---
+google_drive / google.drive.config      / active (boolean)              : NEW 
+google_drive / google.drive.config      / filter_id (many2one)          : NEW relation: ir.filters
+google_drive / google.drive.config      / google_drive_template_url (char): NEW required: required
+google_drive / google.drive.config      / model_id (many2one)           : NEW relation: ir.model, required: required
+google_drive / google.drive.config      / name (char)                   : NEW required: required
+google_drive / google.drive.config      / name_template (char)          : NEW required: required, req_default: Document %(name)s
+---XML records in module 'google_drive'---
+NEW ir.actions.act_window: google_drive.action_google_drive_users_config
+NEW ir.config_parameter: google_drive.config_google_drive_client_id
+NEW ir.config_parameter: google_drive.config_google_drive_client_secret
+NEW ir.model.access: google_drive.access_google_drive
+NEW ir.model.access: google_drive.access_google_drive_all
+NEW ir.ui.menu: google_drive.menu_google_drive_config
+NEW ir.ui.menu: google_drive.menu_google_drive_model_config
+NEW ir.ui.view: google_drive.assets_backend
+NEW ir.ui.view: google_drive.inherited_google_view_general_configuration
+NEW ir.ui.view: google_drive.view_google_drive_config_form
+NEW ir.ui.view: google_drive.view_google_drive_config_tree

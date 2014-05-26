@@ -1,0 +1,43 @@
+---Fields in module 'website_forum_doc'---
+website_forum_doc / forum.documentation.stage / name (char)                   : NEW required: required
+website_forum_doc / forum.documentation.stage / sequence (integer)            : NEW 
+website_forum_doc / forum.documentation.toc  / child_ids (one2many)          : NEW relation: forum.documentation.toc
+website_forum_doc / forum.documentation.toc  / forum_id (many2one)           : NEW relation: forum.forum, required: required
+website_forum_doc / forum.documentation.toc  / introduction (html)           : NEW 
+website_forum_doc / forum.documentation.toc  / name (char)                   : NEW required: required
+website_forum_doc / forum.documentation.toc  / parent_id (many2one)          : NEW relation: forum.documentation.toc
+website_forum_doc / forum.documentation.toc  / parent_left (integer)         : NEW 
+website_forum_doc / forum.documentation.toc  / parent_right (integer)        : NEW 
+website_forum_doc / forum.documentation.toc  / post_ids (one2many)           : NEW relation: forum.post
+website_forum_doc / forum.documentation.toc  / sequence (integer)            : NEW 
+website_forum_doc / forum.documentation.toc  / website_meta_description (text): NEW 
+website_forum_doc / forum.documentation.toc  / website_meta_keywords (char)  : NEW 
+website_forum_doc / forum.documentation.toc  / website_meta_title (char)     : NEW 
+website_forum_doc / forum.post               / color (integer)               : NEW 
+website_forum_doc / forum.post               / documentation_stage_id (many2one): NEW relation: forum.documentation.stage
+website_forum_doc / forum.post               / documentation_toc_id (many2one): NEW relation: forum.documentation.toc
+---XML records in module 'website_forum_doc'---
+NEW forum.documentation.stage: website_forum_doc.stage_draft
+NEW forum.documentation.stage: website_forum_doc.stage_ideas
+NEW forum.documentation.stage: website_forum_doc.stage_publish
+NEW forum.documentation.stage: website_forum_doc.stage_review
+NEW ir.actions.act_url: website_forum_doc.action_open_documentation
+NEW ir.actions.act_window: website_forum_doc.action_documentation_toc
+NEW ir.actions.act_window: website_forum_doc.action_forum_doc_post
+NEW ir.actions.todo: base.open_menu
+NEW ir.model.access: website_forum_doc.all_documentation_toc
+NEW ir.model.access: website_forum_doc.users_documentation_stage
+NEW ir.model.access: website_forum_doc.users_documentation_toc
+NEW ir.ui.menu: website_forum_doc.menu_documentation
+NEW ir.ui.menu: website_forum_doc.menu_forum_doc_posts
+NEW ir.ui.view: website_forum_doc.breadcrumb
+NEW ir.ui.view: website_forum_doc.documentation
+NEW ir.ui.view: website_forum_doc.documentation_post
+NEW ir.ui.view: website_forum_doc.forum_question_doc
+NEW ir.ui.view: website_forum_doc.header_footer_custom
+NEW ir.ui.view: website_forum_doc.promote_question
+NEW ir.ui.view: website_forum_doc.toc
+NEW ir.ui.view: website_forum_doc.view_documentation_toc_list
+NEW ir.ui.view: website_forum_doc.view_forum_post_doc_form
+NEW ir.ui.view: website_forum_doc.view_forum_post_kanban
+NEW website.menu: website_forum_doc.menu_questions

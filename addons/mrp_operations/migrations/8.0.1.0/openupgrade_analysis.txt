@@ -1,0 +1,18 @@
+---Fields in module 'mrp_operations'---
+mrp_operations / mrp.production.workcenter.line / production_state (selection)  : selection_keys is now '['cancel', 'confirmed', 'done', 'draft', 'in_production', 'ready']' ('['cancel', 'confirmed', 'done', 'draft', 'in_production', 'picking_except', 'ready']')
+mrp_operations / mrp.workorder            / day (char)                    : DEL 
+mrp_operations / mrp.workorder            / month (selection)             : DEL selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+mrp_operations / mrp.workorder            / year (char)                   : DEL 
+---XML records in module 'mrp_operations'---
+DEL ir.actions.act_window.view: mrp_operations.action_report_mrp_workorder_tree
+DEL ir.ui.view: mrp_operations.view_report_mrp_workorder_tree
+DEL process.node: mrp_operations.process_node_canceloperation0
+DEL process.node: mrp_operations.process_node_doneoperation0
+DEL process.node: mrp_operations.process_node_productionorder0
+DEL process.node: mrp_operations.process_node_startoperation0
+DEL process.node: mrp_operations.process_node_workorder0
+DEL process.process: mrp_operations.process_process_mrpoperationprocess0
+DEL process.transition: mrp_operations.process_transition_productionstart0
+DEL process.transition: mrp_operations.process_transition_startcanceloperation0
+DEL process.transition: mrp_operations.process_transition_startdoneoperation0
+DEL process.transition: mrp_operations.process_transition_workstartoperation0

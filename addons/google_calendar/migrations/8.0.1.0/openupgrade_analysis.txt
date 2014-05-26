@@ -1,0 +1,17 @@
+---Fields in module 'google_calendar'---
+google_calendar / calendar.attendee        / google_internal_event_id (char): NEW 
+google_calendar / calendar.attendee        / oe_synchro_date (datetime)    : NEW 
+google_calendar / calendar.event           / oe_update_date (datetime)     : NEW 
+google_calendar / res.users                / google_calendar_cal_id (char) : NEW 
+google_calendar / res.users                / google_calendar_last_sync_date (datetime): NEW 
+google_calendar / res.users                / google_calendar_rtoken (char) : NEW 
+google_calendar / res.users                / google_calendar_token (char)  : NEW 
+google_calendar / res.users                / google_calendar_token_validity (datetime): NEW 
+---XML records in module 'google_calendar'---
+NEW ir.actions.act_window: google_calendar.action_config_settings_google_calendar
+NEW ir.model.access: google_calendar.access_google_calendar
+NEW ir.model.access: google_calendar.access_google_calendar_all
+NEW ir.ui.menu: google_calendar.menu_calendar_google_tech_config
+NEW ir.ui.view: google_calendar.assets_backend
+NEW ir.ui.view: google_calendar.view_calendar_config_settings
+NEW ir.ui.view: google_calendar.view_users_form

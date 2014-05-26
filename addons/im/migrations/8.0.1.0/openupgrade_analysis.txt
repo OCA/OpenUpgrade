@@ -1,0 +1,21 @@
+---Fields in module 'im'---
+im           / im.message               / date (datetime)               : NEW required: required, req_default: function
+im           / im.message               / from_id (many2one)            : NEW relation: im.user, required: required
+im           / im.message               / message (text)                : NEW required: required
+im           / im.message               / session_id (many2one)         : NEW relation: im.session, required: required
+im           / im.message               / technical (boolean)           : NEW 
+im           / im.message               / to_id (many2many)             : NEW relation: im.user
+im           / im.session               / user_ids (many2many)          : NEW relation: im.user
+im           / im.user                  / assigned_name (char)          : NEW 
+im           / im.user                  / im_last_received (integer)    : NEW 
+im           / im.user                  / im_last_status (boolean)      : NEW 
+im           / im.user                  / im_last_status_update (datetime): NEW 
+im           / im.user                  / user_id (many2one)            : NEW relation: res.users
+im           / im.user                  / uuid (char)                   : NEW 
+---XML records in module 'im'---
+NEW ir.model.access: im.access_im_message
+NEW ir.model.access: im.access_im_session
+NEW ir.model.access: im.access_im_user
+NEW ir.rule: im.message_rule_1
+NEW ir.rule: im.users_rule_1
+NEW ir.ui.view: im.assets_backend

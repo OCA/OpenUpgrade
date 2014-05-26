@@ -1,0 +1,21 @@
+---Fields in module 'website_certification'---
+website_certification / certification.certification / certification_date (date)     : NEW required: required
+website_certification / certification.certification / certification_hidden_score (boolean): NEW 
+website_certification / certification.certification / certification_score (char)    : NEW required: required
+website_certification / certification.certification / partner_id (many2one)         : NEW relation: res.partner, required: required
+website_certification / certification.certification / type_id (many2one)            : NEW relation: certification.type, required: required
+website_certification / certification.type       / name (char)                   : NEW required: required
+---XML records in module 'website_certification'---
+NEW ir.actions.act_window: website_certification.action_certifications_list
+NEW ir.model.access: website_certification.access_certifications_marketing
+NEW ir.model.access: website_certification.access_certifications_public
+NEW ir.model.access: website_certification.access_certifications_types_marketing
+NEW ir.model.access: website_certification.access_certifications_types_public
+NEW ir.model.access: website_certification.access_certifications_types_users
+NEW ir.model.access: website_certification.access_certifications_users
+NEW ir.ui.menu: website_certification.menu_certifications
+NEW ir.ui.menu: website_certification.menu_certifications_list
+NEW ir.ui.view: website_certification.certification_certification_form
+NEW ir.ui.view: website_certification.certification_certification_search
+NEW ir.ui.view: website_certification.certification_certification_tree
+NEW ir.ui.view: website_certification.certified_partners

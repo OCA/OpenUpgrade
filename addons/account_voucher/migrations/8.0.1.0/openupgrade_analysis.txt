@@ -1,0 +1,6 @@
+---Fields in module 'account_voucher'---
+account_voucher / account.voucher          / currency_id (many2one)        : now required, default = function
+account_voucher / account.voucher          / message_last_post (datetime)  : NEW 
+account_voucher / account.voucher          / website_message_ids (one2many): NEW relation: mail.message
+---XML records in module 'account_voucher'---
+DEL ir.ui.view: account_voucher.view_sale_receipt_report_tree

@@ -1,0 +1,17 @@
+---Fields in module 'payment_paypal'---
+payment_paypal / payment.acquirer         / paypal_api_access_token (char): NEW 
+payment_paypal / payment.acquirer         / paypal_api_access_token_validity (datetime): NEW 
+payment_paypal / payment.acquirer         / paypal_api_enabled (boolean)  : NEW 
+payment_paypal / payment.acquirer         / paypal_api_password (char)    : NEW 
+payment_paypal / payment.acquirer         / paypal_api_username (char)    : NEW 
+payment_paypal / payment.acquirer         / paypal_email_account (char)   : NEW 
+payment_paypal / payment.acquirer         / paypal_seller_account (char)  : NEW 
+payment_paypal / payment.acquirer         / paypal_use_ipn (boolean)      : NEW 
+payment_paypal / payment.transaction      / paypal_txn_id (char)          : NEW 
+payment_paypal / payment.transaction      / paypal_txn_type (char)        : NEW 
+---XML records in module 'payment_paypal'---
+NEW ir.ui.view: payment_paypal.acquirer_form_paypal
+NEW ir.ui.view: payment_paypal.payment_paypal_option_config
+NEW ir.ui.view: payment_paypal.paypal_acquirer_button
+NEW ir.ui.view: payment_paypal.transaction_form_paypal
+NEW payment.acquirer: payment_paypal.payment_acquirer_paypal

@@ -1,0 +1,95 @@
+---Fields in module 'mrp'---
+mrp          / mrp.bom                  / message_last_post (datetime)  : NEW 
+mrp          / mrp.bom                  / website_message_ids (one2many): NEW relation: mail.message
+mrp          / mrp.production           / message_last_post (datetime)  : NEW 
+mrp          / mrp.production           / move_lines (many2many)        : type is now 'one2many' ('many2many')
+mrp          / mrp.production           / move_lines2 (many2many)       : type is now 'one2many' ('many2many')
+mrp          / mrp.production           / picking_id (many2one)         : DEL relation: stock.picking
+mrp          / mrp.production           / state (selection)             : selection_keys is now '['cancel', 'confirmed', 'done', 'draft', 'in_production', 'ready']' ('['cancel', 'confirmed', 'done', 'draft', 'in_production', 'picking_except', 'ready']')
+mrp          / mrp.production           / website_message_ids (one2many): NEW relation: mail.message
+mrp          / mrp.production.workcenter.line / message_last_post (datetime)  : NEW 
+mrp          / mrp.production.workcenter.line / website_message_ids (one2many): NEW relation: mail.message
+mrp          / product.product          / produce_delay (float)         : NEW 
+mrp          / report.mrp.inout         / company_id (many2one)         : NEW relation: res.company, required: required
+mrp          / stock.move               / consumed_for (many2one)       : NEW relation: stock.move
+mrp          / stock.move               / raw_material_production_id (many2one): NEW relation: mrp.production
+mrp          / stock.warehouse          / manufacture_pull_id (many2one): NEW relation: procurement.rule
+mrp          / stock.warehouse          / manufacture_to_resupply (boolean): NEW 
+---XML records in module 'mrp'---
+NEW ir.actions.act_window: mrp.act_product_mrp_bom_open
+NEW ir.actions.act_window: mrp.act_product_mrp_production
+NEW ir.actions.act_window: mrp.move_consume
+DEL ir.actions.act_window: mrp.act_product_manufacturing_open
+DEL ir.actions.act_window: mrp.action_product_bom_structure
+DEL ir.actions.act_window: mrp.open_board_manufacturing
+NEW ir.actions.report.xml: mrp.action_report_bom_structure
+NEW ir.actions.report.xml: mrp.action_report_production_order
+DEL ir.actions.report.xml: mrp.report_bom_structure
+DEL ir.actions.report.xml: mrp.report_mrp_production_report
+NEW ir.model.access: mrp.access_account_analytic_line_user
+NEW ir.model.access: mrp.access_resource_calendar_attendance_mrp_user
+DEL ir.model.access: mrp.access_mrp_bom_purchase_manager
+DEL ir.model.access: mrp.access_purchase_order_line_mrp_worker
+DEL ir.model.access: mrp.access_purchase_order_mrp_worker
+DEL ir.model.access: mrp.access_purchase_order_stock_user
+DEL ir.model.access: mrp.access_stock_tracking
+DEL ir.model.access: mrp.access_stock_tracking_manager
+DEL ir.ui.menu: mrp.menu_board_manufacturing
+DEL ir.ui.menu: mrp.mrp_Sched_all
+NEW ir.ui.view: mrp.product_search_form_view_procurment
+NEW ir.ui.view: mrp.product_template_form_view_inherit
+NEW ir.ui.view: mrp.report_mrpbomstructure
+NEW ir.ui.view: mrp.report_mrporder
+NEW ir.ui.view: mrp.view_mrp_product_form_inherited
+NEW ir.ui.view: mrp.view_normal_procurement_locations_form_inherited
+NEW ir.ui.view: mrp.view_stock_move_consume_wizard
+NEW ir.ui.view: mrp.view_warehouse_inherited
+DEL ir.ui.view: mrp.board_mrp_manager_form
+DEL ir.ui.view: mrp.product_product_normal_form_supply_view
+DEL process.node: mrp.process_node_billofmaterial0
+DEL process.node: mrp.process_node_minimumstockrule0
+DEL process.node: mrp.process_node_mts0
+DEL process.node: mrp.process_node_orderrfq0
+DEL process.node: mrp.process_node_procureproducts0
+DEL process.node: mrp.process_node_production0
+DEL process.node: mrp.process_node_productionorder0
+DEL process.node: mrp.process_node_productminimumstockrule0
+DEL process.node: mrp.process_node_purchaseprocure0
+DEL process.node: mrp.process_node_rfq0
+DEL process.node: mrp.process_node_routing0
+DEL process.node: mrp.process_node_servicemts0
+DEL process.node: mrp.process_node_serviceproduct0
+DEL process.node: mrp.process_node_serviceproduct1
+DEL process.node: mrp.process_node_stock0
+DEL process.node: mrp.process_node_stockproduct0
+DEL process.node: mrp.process_node_stockproduct1
+DEL process.process: mrp.process_process_stockableproductprocess0
+DEL process.transition: mrp.process_transition_billofmaterialrouting0
+DEL process.transition: mrp.process_transition_bom0
+DEL process.transition: mrp.process_transition_minimumstockprocure0
+DEL process.transition: mrp.process_transition_procureserviceproduct0
+DEL process.transition: mrp.process_transition_procurestockableproduct0
+DEL process.transition: mrp.process_transition_productionprocureproducts0
+DEL process.transition: mrp.process_transition_producttostockrules0
+DEL process.transition: mrp.process_transition_purchaseprocure0
+DEL process.transition: mrp.process_transition_servicemto0
+DEL process.transition: mrp.process_transition_servicemts0
+DEL process.transition: mrp.process_transition_servicerfq0
+DEL process.transition: mrp.process_transition_stockmts0
+DEL process.transition: mrp.process_transition_stockproduct0
+DEL process.transition: mrp.process_transition_stockproduction0
+DEL process.transition: mrp.process_transition_stockrfq0
+NEW stock.location.route: mrp.route_warehouse0_manufacture
+NEW stock.warehouse: stock.warehouse0
+NEW workflow.activity: mrp.prod_act_confirmed
+DEL workflow.activity: mrp.act_produce
+DEL workflow.activity: mrp.prod_act_picking
+DEL workflow.activity: mrp.prod_act_picking_exception
+NEW workflow.transition: mrp.prod_trans_confirmed_cancel
+DEL workflow.transition: mrp.prod_trans_draft_ready
+DEL workflow.transition: mrp.prod_trans_picking_exception_cancel
+DEL workflow.transition: mrp.prod_trans_picking_exception_picking
+DEL workflow.transition: mrp.prod_trans_picking_picking_exception
+DEL workflow.transition: mrp.trans_confirm_mto_need_production
+DEL workflow.transition: mrp.trans_produce_cancel
+DEL workflow.transition: mrp.trans_produce_finished_prod

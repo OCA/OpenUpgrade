@@ -1,0 +1,24 @@
+---Fields in module 'sales_team'---
+sales_team   / crm.case.section         / color (integer)               : NEW 
+sales_team   / crm.case.section         / message_last_post (datetime)  : NEW 
+---XML records in module 'sales_team'---
+NEW crm.case.section: sales_team.section_sales_department
+NEW ir.actions.act_window: sales_team.crm_case_section_act
+NEW ir.actions.act_window: sales_team.crm_case_section_salesteams_act
+NEW ir.model.access: sales_team.access_crm_case_section
+NEW ir.model.access: sales_team.access_crm_case_section_manager
+NEW ir.model.access: sales_team.access_crm_case_section_user
+NEW ir.ui.menu: base.menu_base_partner
+NEW ir.ui.menu: base.menu_sale_config
+NEW ir.ui.menu: sales_team.menu_sales_team_act
+NEW ir.ui.view: sales_team.assets_backend
+NEW ir.ui.view: sales_team.crm_case_section_salesteams_search
+NEW ir.ui.view: sales_team.crm_case_section_salesteams_view_kanban
+NEW ir.ui.view: sales_team.crm_case_section_view_form
+NEW ir.ui.view: sales_team.crm_case_section_view_tree
+NEW ir.ui.view: sales_team.res_user_form
+NEW ir.ui.view: sales_team.view_sale_config_settings
+NEW ir.ui.view: sales_team.view_users_form_preferences
+NEW res.groups: base.group_mono_salesteams
+NEW res.groups: base.group_multi_salesteams
+NEW res.groups: base.group_user

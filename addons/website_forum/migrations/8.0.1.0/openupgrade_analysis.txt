@@ -1,0 +1,227 @@
+---Fields in module 'website_forum'---
+website_forum / forum.forum              / description (html)            : NEW 
+website_forum / forum.forum              / faq (html)                    : NEW 
+website_forum / forum.forum              / name (char)                   : NEW required: required
+website_forum / forum.forum              / website_meta_description (text): NEW 
+website_forum / forum.forum              / website_meta_keywords (char)  : NEW 
+website_forum / forum.forum              / website_meta_title (char)     : NEW 
+website_forum / forum.post               / active (boolean)              : NEW 
+website_forum / forum.post               / child_ids (one2many)          : NEW relation: forum.post
+website_forum / forum.post               / closed_date (datetime)        : NEW 
+website_forum / forum.post               / closed_reason_id (many2one)   : NEW relation: forum.post.reason
+website_forum / forum.post               / closed_uid (many2one)         : NEW relation: res.users
+website_forum / forum.post               / content (html)                : NEW 
+website_forum / forum.post               / create_date (datetime)        : NEW 
+website_forum / forum.post               / create_uid (many2one)         : NEW relation: res.users
+website_forum / forum.post               / favourite_ids (many2many)     : NEW relation: res.users
+website_forum / forum.post               / forum_id (many2one)           : NEW relation: forum.forum, required: required
+website_forum / forum.post               / is_correct (boolean)          : NEW 
+website_forum / forum.post               / message_ids (one2many)        : NEW relation: mail.message
+website_forum / forum.post               / message_last_post (datetime)  : NEW 
+website_forum / forum.post               / name (char)                   : NEW 
+website_forum / forum.post               / parent_id (many2one)          : NEW relation: forum.post
+website_forum / forum.post               / state (selection)             : NEW selection_keys: ['active', 'close', 'offensive']
+website_forum / forum.post               / tag_ids (many2many)           : NEW relation: forum.tag
+website_forum / forum.post               / views (integer)               : NEW 
+website_forum / forum.post               / vote_ids (one2many)           : NEW relation: forum.post.vote
+website_forum / forum.post               / website_message_ids (one2many): NEW relation: mail.message
+website_forum / forum.post               / website_meta_description (text): NEW 
+website_forum / forum.post               / website_meta_keywords (char)  : NEW 
+website_forum / forum.post               / website_meta_title (char)     : NEW 
+website_forum / forum.post               / write_date (datetime)         : NEW 
+website_forum / forum.post               / write_uid (many2one)          : NEW relation: res.users
+website_forum / forum.post.reason        / name (char)                   : NEW required: required
+website_forum / forum.post.vote          / create_date (datetime)        : NEW 
+website_forum / forum.post.vote          / post_id (many2one)            : NEW relation: forum.post, required: required
+website_forum / forum.post.vote          / user_id (many2one)            : NEW relation: res.users, required: required, req_default: function
+website_forum / forum.post.vote          / vote (selection)              : NEW required: required, selection_keys: ['-1', '0', '1'], req_default: function
+website_forum / forum.tag                / create_uid (many2one)         : NEW relation: res.users
+website_forum / forum.tag                / forum_id (many2one)           : NEW relation: forum.forum, required: required
+website_forum / forum.tag                / name (char)                   : NEW required: required
+website_forum / forum.tag                / post_ids (many2many)          : NEW relation: forum.post
+website_forum / forum.tag                / website_meta_description (text): NEW 
+website_forum / forum.tag                / website_meta_keywords (char)  : NEW 
+website_forum / forum.tag                / website_meta_title (char)     : NEW 
+website_forum / gamification.badge       / level (selection)             : NEW selection_keys: ['bronze', 'gold', 'silver']
+website_forum / res.users                / badge_ids (one2many)          : NEW relation: gamification.badge.user
+website_forum / res.users                / create_date (datetime)        : NEW 
+website_forum / res.users                / karma (integer)               : NEW 
+---XML records in module 'website_forum'---
+NEW forum.forum: website_forum.forum_help
+NEW forum.post.reason: website_forum.reason_1
+NEW forum.post.reason: website_forum.reason_2
+NEW forum.post.reason: website_forum.reason_3
+NEW forum.post.reason: website_forum.reason_4
+NEW forum.post.reason: website_forum.reason_6
+NEW forum.post.reason: website_forum.reason_7
+NEW forum.post.reason: website_forum.reason_8
+NEW forum.post.reason: website_forum.reason_9
+NEW gamification.badge: website_forum.badge_23
+NEW gamification.badge: website_forum.badge_25
+NEW gamification.badge: website_forum.badge_26
+NEW gamification.badge: website_forum.badge_31
+NEW gamification.badge: website_forum.badge_32
+NEW gamification.badge: website_forum.badge_5
+NEW gamification.badge: website_forum.badge_6
+NEW gamification.badge: website_forum.badge_7
+NEW gamification.badge: website_forum.badge_a_1
+NEW gamification.badge: website_forum.badge_a_2
+NEW gamification.badge: website_forum.badge_a_3
+NEW gamification.badge: website_forum.badge_a_4
+NEW gamification.badge: website_forum.badge_a_5
+NEW gamification.badge: website_forum.badge_a_6
+NEW gamification.badge: website_forum.badge_a_8
+NEW gamification.badge: website_forum.badge_p_1
+NEW gamification.badge: website_forum.badge_p_2
+NEW gamification.badge: website_forum.badge_p_4
+NEW gamification.badge: website_forum.badge_q_1
+NEW gamification.badge: website_forum.badge_q_10
+NEW gamification.badge: website_forum.badge_q_2
+NEW gamification.badge: website_forum.badge_q_3
+NEW gamification.badge: website_forum.badge_q_4
+NEW gamification.badge: website_forum.badge_q_5
+NEW gamification.badge: website_forum.badge_q_6
+NEW gamification.badge: website_forum.badge_q_7
+NEW gamification.badge: website_forum.badge_q_8
+NEW gamification.badge: website_forum.badge_q_9
+NEW gamification.challenge: website_forum.challenge_chief_commentator
+NEW gamification.challenge: website_forum.challenge_commentator
+NEW gamification.challenge: website_forum.challenge_configure_profile
+NEW gamification.challenge: website_forum.challenge_critic
+NEW gamification.challenge: website_forum.challenge_disciplined
+NEW gamification.challenge: website_forum.challenge_editor
+NEW gamification.challenge: website_forum.challenge_enlightened
+NEW gamification.challenge: website_forum.challenge_famous_question
+NEW gamification.challenge: website_forum.challenge_favorite_question_1
+NEW gamification.challenge: website_forum.challenge_favorite_question_5
+NEW gamification.challenge: website_forum.challenge_good_answer
+NEW gamification.challenge: website_forum.challenge_good_question
+NEW gamification.challenge: website_forum.challenge_great_answer
+NEW gamification.challenge: website_forum.challenge_great_question
+NEW gamification.challenge: website_forum.challenge_guru
+NEW gamification.challenge: website_forum.challenge_nice_answer
+NEW gamification.challenge: website_forum.challenge_nice_question
+NEW gamification.challenge: website_forum.challenge_notable_question
+NEW gamification.challenge: website_forum.challenge_peer_pressure
+NEW gamification.challenge: website_forum.challenge_popular_question
+NEW gamification.challenge: website_forum.challenge_pundit
+NEW gamification.challenge: website_forum.challenge_scholar
+NEW gamification.challenge: website_forum.challenge_self_learner
+NEW gamification.challenge: website_forum.challenge_stellar_question_25
+NEW gamification.challenge: website_forum.challenge_student
+NEW gamification.challenge: website_forum.challenge_supporter
+NEW gamification.challenge: website_forum.challenge_taxonomist
+NEW gamification.challenge: website_forum.challenge_teacher
+NEW gamification.challenge.line: website_forum.line_chief_commentator
+NEW gamification.challenge.line: website_forum.line_commentator
+NEW gamification.challenge.line: website_forum.line_configure_profile
+NEW gamification.challenge.line: website_forum.line_critic
+NEW gamification.challenge.line: website_forum.line_disciplined
+NEW gamification.challenge.line: website_forum.line_editor
+NEW gamification.challenge.line: website_forum.line_enlightened
+NEW gamification.challenge.line: website_forum.line_famous_question
+NEW gamification.challenge.line: website_forum.line_favorite_question_1
+NEW gamification.challenge.line: website_forum.line_favorite_question_5
+NEW gamification.challenge.line: website_forum.line_good_answer
+NEW gamification.challenge.line: website_forum.line_good_question
+NEW gamification.challenge.line: website_forum.line_great_answer
+NEW gamification.challenge.line: website_forum.line_great_question
+NEW gamification.challenge.line: website_forum.line_guru
+NEW gamification.challenge.line: website_forum.line_nice_answer
+NEW gamification.challenge.line: website_forum.line_nice_question
+NEW gamification.challenge.line: website_forum.line_notable_question
+NEW gamification.challenge.line: website_forum.line_peer_pressure
+NEW gamification.challenge.line: website_forum.line_popular_question
+NEW gamification.challenge.line: website_forum.line_pundit
+NEW gamification.challenge.line: website_forum.line_scholar
+NEW gamification.challenge.line: website_forum.line_self_learner
+NEW gamification.challenge.line: website_forum.line_stellar_question_25
+NEW gamification.challenge.line: website_forum.line_student
+NEW gamification.challenge.line: website_forum.line_supporter
+NEW gamification.challenge.line: website_forum.line_taxonomist
+NEW gamification.challenge.line: website_forum.line_teacher
+NEW gamification.goal.definition: website_forum.definition_commentator
+NEW gamification.goal.definition: website_forum.definition_configure_profile
+NEW gamification.goal.definition: website_forum.definition_critic
+NEW gamification.goal.definition: website_forum.definition_disciplined
+NEW gamification.goal.definition: website_forum.definition_editor
+NEW gamification.goal.definition: website_forum.definition_enlightened
+NEW gamification.goal.definition: website_forum.definition_famous_question
+NEW gamification.goal.definition: website_forum.definition_favorite_question_1
+NEW gamification.goal.definition: website_forum.definition_favorite_question_5
+NEW gamification.goal.definition: website_forum.definition_good_answer
+NEW gamification.goal.definition: website_forum.definition_good_question
+NEW gamification.goal.definition: website_forum.definition_great_answer
+NEW gamification.goal.definition: website_forum.definition_great_question
+NEW gamification.goal.definition: website_forum.definition_guru
+NEW gamification.goal.definition: website_forum.definition_nice_answer
+NEW gamification.goal.definition: website_forum.definition_nice_question
+NEW gamification.goal.definition: website_forum.definition_notable_question
+NEW gamification.goal.definition: website_forum.definition_peer_pressure
+NEW gamification.goal.definition: website_forum.definition_popular_question
+NEW gamification.goal.definition: website_forum.definition_pundit
+NEW gamification.goal.definition: website_forum.definition_scholar
+NEW gamification.goal.definition: website_forum.definition_self_learner
+NEW gamification.goal.definition: website_forum.definition_stellar_question_25
+NEW gamification.goal.definition: website_forum.definition_student
+NEW gamification.goal.definition: website_forum.definition_supporter
+NEW gamification.goal.definition: website_forum.definition_taxonomist
+NEW gamification.goal.definition: website_forum.definition_teacher
+NEW ir.actions.act_url: website_forum.action_open_forum
+NEW ir.actions.act_window: website_forum.action_forum_forum
+NEW ir.actions.act_window: website_forum.action_forum_post
+NEW ir.actions.todo: base.open_menu
+NEW ir.model.access: website_forum.access_forum_forum
+NEW ir.model.access: website_forum.access_forum_forum_manager
+NEW ir.model.access: website_forum.access_forum_post_portal
+NEW ir.model.access: website_forum.access_forum_post_public
+NEW ir.model.access: website_forum.access_forum_post_reason_portal
+NEW ir.model.access: website_forum.access_forum_post_reason_public
+NEW ir.model.access: website_forum.access_forum_post_reason_user
+NEW ir.model.access: website_forum.access_forum_post_user
+NEW ir.model.access: website_forum.access_forum_post_vote_portal
+NEW ir.model.access: website_forum.access_forum_post_vote_public
+NEW ir.model.access: website_forum.access_forum_post_vote_user
+NEW ir.model.access: website_forum.access_forum_tag_portal
+NEW ir.model.access: website_forum.access_forum_tag_public
+NEW ir.model.access: website_forum.access_forum_tag_user
+NEW ir.ui.menu: website_forum.menu_forum
+NEW ir.ui.menu: website_forum.menu_forum_posts
+NEW ir.ui.menu: website_forum.menu_website_forum
+NEW ir.ui.view: website_forum.404
+NEW ir.ui.view: website_forum.ask_question
+NEW ir.ui.view: website_forum.badge
+NEW ir.ui.view: website_forum.badge_user
+NEW ir.ui.view: website_forum.close_question
+NEW ir.ui.view: website_forum.contact
+NEW ir.ui.view: website_forum.display_post
+NEW ir.ui.view: website_forum.display_post_answer
+NEW ir.ui.view: website_forum.edit_post
+NEW ir.ui.view: website_forum.edit_profile
+NEW ir.ui.view: website_forum.editor_head
+NEW ir.ui.view: website_forum.faq
+NEW ir.ui.view: website_forum.forum_all
+NEW ir.ui.view: website_forum.forum_index
+NEW ir.ui.view: website_forum.header
+NEW ir.ui.view: website_forum.header_footer_custom
+NEW ir.ui.view: website_forum.link_button
+NEW ir.ui.view: website_forum.post_answer
+NEW ir.ui.view: website_forum.post_comment
+NEW ir.ui.view: website_forum.post_description_full
+NEW ir.ui.view: website_forum.tag
+NEW ir.ui.view: website_forum.user_badges
+NEW ir.ui.view: website_forum.user_detail_full
+NEW ir.ui.view: website_forum.user_votes
+NEW ir.ui.view: website_forum.users
+NEW ir.ui.view: website_forum.view_forum_forum_form
+NEW ir.ui.view: website_forum.view_forum_forum_list
+NEW ir.ui.view: website_forum.view_forum_post_form
+NEW ir.ui.view: website_forum.view_forum_post_list
+NEW ir.ui.view: website_forum.view_forum_post_search
+NEW ir.ui.view: website_forum.view_users_form_forum
+NEW ir.ui.view: website_forum.vote
+NEW mail.message.subtype: website_forum.mt_answer_edit
+NEW mail.message.subtype: website_forum.mt_answer_new
+NEW mail.message.subtype: website_forum.mt_question_edit
+NEW mail.message.subtype: website_forum.mt_question_new
+NEW website.menu: website_forum.menu_questions

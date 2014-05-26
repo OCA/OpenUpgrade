@@ -1,0 +1,66 @@
+---Fields in module 'sale_stock'---
+sale_stock   / sale.order               / invoice_quantity (False)      : DEL selection_keys: ['order', 'procurement'], mode: modify
+sale_stock   / sale.order               / picking_ids (one2many)        : now a function
+sale_stock   / sale.order               / picking_ids (one2many)        : relation is now 'stock.picking' ('stock.picking.out')
+sale_stock   / sale.order               / shipped (boolean)             : now a function
+sale_stock   / sale.order               / state (False)                 : DEL selection_keys: ['cancel', 'done', 'draft', 'invoice_except', 'manual', 'progress', 'sent', 'shipping_except', 'waiting_date'], mode: modify
+sale_stock   / sale.order               / warehouse_id (many2one)       : NEW relation: stock.warehouse, required: required, req_default: function
+sale_stock   / sale.order.line          / delay (float)                 : module is now 'sale' ('sale_stock')
+sale_stock   / sale.order.line          / move_ids (one2many)           : DEL relation: stock.move
+sale_stock   / sale.order.line          / procurement_id (many2one)     : DEL relation: procurement.order
+sale_stock   / sale.order.line          / property_ids (many2many)      : module is now 'sale_mrp' ('sale_stock')
+sale_stock   / sale.order.line          / route_id (many2one)           : NEW relation: stock.location.route
+sale_stock   / sale.report              / warehouse_id (many2one)       : NEW relation: stock.warehouse
+sale_stock   / stock.location.route     / sale_selectable (boolean)     : NEW 
+sale_stock   / stock.move               / sale_line_id (many2one)       : DEL relation: sale.order.line
+sale_stock   / stock.picking            / sale_id (many2one)            : now a function
+---XML records in module 'sale_stock'---
+DEL ir.model.access: sale_stock.access_report_stock_move_sales
+NEW ir.ui.menu: base.menu_invoiced
+DEL ir.ui.menu: sale_stock.menu_action_shop_form
+NEW ir.ui.view: sale_stock.stock_location_route_form_view_inherit
+NEW ir.ui.view: sale_stock.view_order_form_inherit2
+NEW ir.ui.view: sale_stock.view_order_line_tree_inherit
+NEW ir.ui.view: sale_stock.view_order_product_search_sale_stock_inherit
+NEW ir.ui.view: sale_stock.view_picking_internal_search_inherit
+DEL ir.ui.view: sale_stock.stock_move_sale
+DEL ir.ui.view: sale_stock.stock_picking_inherit_sale
+DEL ir.ui.view: sale_stock.stock_picking_out_inherit_sale
+DEL ir.ui.view: sale_stock.view_order_product_tree_inherit
+DEL ir.ui.view: sale_stock.view_sale_shop_form_inherit
+DEL ir.ui.view: sale_stock.view_shop_tree_inherit
+DEL process.node: sale_stock.process_node_deliveryorder0
+DEL process.node: sale_stock.process_node_invoiceafterdelivery0
+DEL process.node: sale_stock.process_node_packinglist0
+DEL process.node: sale_stock.process_node_saleorderprocurement0
+DEL process.node: sale_stock.process_node_saleprocurement0
+DEL process.transition: sale_stock.process_transition_deliver0
+DEL process.transition: sale_stock.process_transition_invoiceafterdelivery0
+DEL process.transition: sale_stock.process_transition_packing0
+DEL process.transition: sale_stock.process_transition_saleorderprocurement0
+DEL process.transition: sale_stock.process_transition_saleprocurement0
+DEL process.transition.action: sale_stock.process_transition_action_assign0
+DEL process.transition.action: sale_stock.process_transition_action_cancel1
+DEL process.transition.action: sale_stock.process_transition_action_cancel2
+DEL process.transition.action: sale_stock.process_transition_action_cancelassignation0
+DEL process.transition.action: sale_stock.process_transition_action_forceassignation0
+DEL process.transition.action: sale_stock.process_transition_action_validate0
+NEW res.groups: sale_stock.group_route_so_lines
+DEL sale.shop: sale.sale_shop_1
+DEL workflow.activity: sale_stock.act_cancel3
+DEL workflow.activity: sale_stock.act_ship
+DEL workflow.activity: sale_stock.act_ship_cancel
+DEL workflow.activity: sale_stock.act_ship_end
+DEL workflow.activity: sale_stock.act_ship_except
+DEL workflow.activity: sale_stock.act_wait_ship
+DEL workflow.transition: sale_stock.trans_router_wait_invoice_shipping
+DEL workflow.transition: sale_stock.trans_router_wait_ship
+DEL workflow.transition: sale_stock.trans_ship_end_done
+DEL workflow.transition: sale_stock.trans_ship_except_ship
+DEL workflow.transition: sale_stock.trans_ship_except_ship_cancel
+DEL workflow.transition: sale_stock.trans_ship_except_ship_end
+DEL workflow.transition: sale_stock.trans_ship_ship_end
+DEL workflow.transition: sale_stock.trans_ship_ship_except
+DEL workflow.transition: sale_stock.trans_wait_invoice_invoice
+DEL workflow.transition: sale_stock.trans_wait_ship_cancel3
+DEL workflow.transition: sale_stock.trans_wait_ship_ship

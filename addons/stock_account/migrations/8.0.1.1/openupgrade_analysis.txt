@@ -1,0 +1,56 @@
+---Fields in module 'stock_account'---
+stock_account / procurement.order        / invoice_state (selection)     : NEW required: required, selection_keys: ['2binvoiced', 'invoiced', 'none'], req_default: none
+stock_account / procurement.rule         / invoice_state (selection)     : NEW required: required, selection_keys: ['2binvoiced', 'invoiced', 'none'], req_default: none
+stock_account / stock.history            / company_id (many2one)         : NEW relation: res.company
+stock_account / stock.history            / date (datetime)               : NEW 
+stock_account / stock.history            / location_id (many2one)        : NEW relation: stock.location, required: required
+stock_account / stock.history            / move_id (many2one)            : NEW relation: stock.move, required: required
+stock_account / stock.history            / price_unit_on_quant (float)   : NEW 
+stock_account / stock.history            / product_categ_id (many2one)   : NEW relation: product.category, required: required
+stock_account / stock.history            / product_id (many2one)         : NEW relation: product.product, required: required
+stock_account / stock.history            / quantity (integer)            : NEW 
+stock_account / stock.history            / source (char)                 : NEW 
+stock_account / stock.inventory          / period_id (many2one)          : NEW relation: account.period
+stock_account / stock.move               / invoice_state (selection)     : NEW required: required, selection_keys: ['2binvoiced', 'invoiced', 'none'], req_default: function
+---XML records in module 'stock_account'---
+NEW account.journal: stock_account.stock_journal
+NEW ir.actions.act_window: stock_account.action_history_tree
+NEW ir.actions.act_window: stock_account.action_stock_invoice_onshipping
+NEW ir.actions.act_window: stock_account.action_view_change_standard_price
+NEW ir.actions.act_window: stock_account.action_wizard_stock_valuation_history
+NEW ir.model.access: stock_account.access_account_account_stock_manager
+NEW ir.model.access: stock_account.access_account_fiscalyear
+NEW ir.model.access: stock_account.access_account_invoice_line_user
+NEW ir.model.access: stock_account.access_account_invoice_tax_user
+NEW ir.model.access: stock_account.access_account_invoice_user
+NEW ir.model.access: stock_account.access_account_journal_user
+NEW ir.model.access: stock_account.access_stock_history_stock_manager
+NEW ir.property: stock_account.default_cost_method
+NEW ir.property: stock_account.default_valuation
+NEW ir.property: stock_account.property_stock_account_input_categ
+NEW ir.property: stock_account.property_stock_account_input_prd
+NEW ir.property: stock_account.property_stock_account_output_categ
+NEW ir.property: stock_account.property_stock_account_output_prd
+NEW ir.property: stock_account.property_stock_journal
+NEW ir.sequence: stock_account.stock_journal_sequence
+NEW ir.ui.menu: stock_account.menu_action_history_tree
+NEW ir.ui.menu: stock_account.menu_action_wizard_valuation_history
+NEW ir.ui.view: stock_account.view_category_property_form
+NEW ir.ui.view: stock_account.view_change_standard_price
+NEW ir.ui.view: stock_account.view_inventory_form_inherit
+NEW ir.ui.view: stock_account.view_location_form_inherit
+NEW ir.ui.view: stock_account.view_move_form_inherit
+NEW ir.ui.view: stock_account.view_normal_property_acc_form
+NEW ir.ui.view: stock_account.view_picking_inherit_form2
+NEW ir.ui.view: stock_account.view_procurement_rule_form_stockaccount_inherit
+NEW ir.ui.view: stock_account.view_product_standard_price_form
+NEW ir.ui.view: stock_account.view_pusht_rule_form_stockaccount_inherit
+NEW ir.ui.view: stock_account.view_stock_config_settings_inherit
+NEW ir.ui.view: stock_account.view_stock_history_report_graph
+NEW ir.ui.view: stock_account.view_stock_history_report_search
+NEW ir.ui.view: stock_account.view_stock_history_report_tree
+NEW ir.ui.view: stock_account.view_stock_invoice_onshipping
+NEW ir.ui.view: stock_account.view_template_property_form
+NEW ir.ui.view: stock_account.view_wizard_valuation_history
+NEW res.groups: stock.group_stock_manager
+NEW res.groups: stock_account.group_inventory_valuation

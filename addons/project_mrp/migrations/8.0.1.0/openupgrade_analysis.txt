@@ -1,0 +1,18 @@
+---Fields in module 'project_mrp'---
+project_mrp  / procurement.order        / sale_line_id (many2one)       : module is now 'sale' ('project_mrp')
+project_mrp  / product.product          / auto_create_task (boolean)    : NEW 
+project_mrp  / project.task.type        / closed (boolean)              : NEW 
+---XML records in module 'project_mrp'---
+NEW ir.ui.view: project_mrp.task_type_edit_mrp_inherit
+DEL ir.ui.view: project_mrp.product_product_normal_form_supply_view
+DEL process.node: project_mrp.process_node_mrptask0
+DEL process.node: project_mrp.process_node_procuretasktask0
+DEL process.node: project_mrp.process_node_saleordertask0
+DEL process.transition: project_mrp.process_transition_createtask0
+DEL process.transition: project_mrp.process_transition_ordertask0
+DEL process.transition: project_mrp.process_transition_procuretask0
+DEL workflow.activity: project_mrp.act_produce_service
+DEL workflow.transition: project_mrp.trans_make_done_done2
+DEL workflow.transition: project_mrp.trans_produce_service_cancel
+DEL workflow.transition: project_mrp.trans_produce_service_make_done
+DEL workflow.transition: project_mrp.trans_product_check_produce_service

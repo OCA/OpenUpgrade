@@ -1,0 +1,58 @@
+---Fields in module 'payment'---
+payment      / payment.acquirer         / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+payment      / payment.acquirer         / environment (selection)       : NEW selection_keys: ['prod', 'test']
+payment      / payment.acquirer         / fees_active (boolean)         : NEW 
+payment      / payment.acquirer         / fees_dom_fixed (float)        : NEW 
+payment      / payment.acquirer         / fees_dom_var (float)          : NEW 
+payment      / payment.acquirer         / fees_int_fixed (float)        : NEW 
+payment      / payment.acquirer         / fees_int_var (float)          : NEW 
+payment      / payment.acquirer         / name (char)                   : NEW required: required
+payment      / payment.acquirer         / post_msg (html)               : NEW 
+payment      / payment.acquirer         / pre_msg (html)                : NEW 
+payment      / payment.acquirer         / provider (selection)          : NEW required: required, selection_keys: function
+payment      / payment.acquirer         / validation (selection)        : NEW selection_keys: ['automatic', 'manual']
+payment      / payment.acquirer         / view_template_id (many2one)   : NEW relation: ir.ui.view, required: required
+payment      / payment.acquirer         / website_published (boolean)   : NEW 
+payment      / payment.transaction      / acquirer_id (many2one)        : NEW relation: payment.acquirer, required: required
+payment      / payment.transaction      / acquirer_reference (char)     : NEW 
+payment      / payment.transaction      / amount (float)                : NEW required: required
+payment      / payment.transaction      / currency_id (many2one)        : NEW relation: res.currency, required: required
+payment      / payment.transaction      / date_create (datetime)        : NEW required: required, req_default: function
+payment      / payment.transaction      / date_validate (datetime)      : NEW 
+payment      / payment.transaction      / fees (float)                  : NEW 
+payment      / payment.transaction      / message_ids (one2many)        : NEW relation: mail.message
+payment      / payment.transaction      / message_last_post (datetime)  : NEW 
+payment      / payment.transaction      / partner_address (char)        : NEW 
+payment      / payment.transaction      / partner_city (char)           : NEW 
+payment      / payment.transaction      / partner_country_id (many2one) : NEW relation: res.country, required: required
+payment      / payment.transaction      / partner_email (char)          : NEW 
+payment      / payment.transaction      / partner_id (many2one)         : NEW relation: res.partner
+payment      / payment.transaction      / partner_lang (char)           : NEW 
+payment      / payment.transaction      / partner_name (char)           : NEW 
+payment      / payment.transaction      / partner_phone (char)          : NEW 
+payment      / payment.transaction      / partner_reference (char)      : NEW 
+payment      / payment.transaction      / partner_zip (char)            : NEW 
+payment      / payment.transaction      / reference (char)              : NEW required: required
+payment      / payment.transaction      / state (selection)             : NEW required: required, selection_keys: ['cancel', 'done', 'draft', 'error', 'pending'], req_default: draft
+payment      / payment.transaction      / state_message (text)          : NEW 
+payment      / payment.transaction      / type (selection)              : NEW required: required, selection_keys: ['form', 'server2server'], req_default: form
+payment      / payment.transaction      / website_message_ids (one2many): NEW relation: mail.message
+---XML records in module 'payment'---
+NEW ir.actions.act_window: payment.action_payment_acquirer
+NEW ir.actions.act_window: payment.action_payment_transaction
+NEW ir.model.access: payment.payment_acquirer_all
+NEW ir.model.access: payment.payment_acquirer_system
+NEW ir.model.access: payment.payment_acquirer_user
+NEW ir.model.access: payment.payment_transaction_all
+NEW ir.model.access: payment.payment_transaction_system
+NEW ir.model.access: payment.payment_transaction_user
+NEW ir.ui.menu: payment.payment_acquirer_menu
+NEW ir.ui.menu: payment.payment_transaction_menu
+NEW ir.ui.menu: payment.root_payment_menu
+NEW ir.ui.view: payment.acquirer_form
+NEW ir.ui.view: payment.acquirer_list
+NEW ir.ui.view: payment.acquirer_search
+NEW ir.ui.view: payment.payment_acquirer_installation
+NEW ir.ui.view: payment.transaction
+NEW ir.ui.view: payment.transaction_form
+NEW ir.ui.view: payment.transaction_list

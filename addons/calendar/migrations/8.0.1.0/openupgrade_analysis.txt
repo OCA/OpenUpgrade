@@ -1,0 +1,79 @@
+---Fields in module 'calendar'---
+calendar     / calendar.alarm           / interval (selection)          : NEW required: required, selection_keys: ['days', 'hours', 'minutes'], req_default: hours
+calendar     / calendar.alarm           / type (selection)              : NEW required: required, selection_keys: ['email', 'notification'], req_default: notification
+calendar     / calendar.attendee        / access_token (char)           : NEW 
+calendar     / calendar.attendee        / event_id (many2one)           : NEW relation: calendar.event
+calendar     / calendar.contacts        / active (boolean)              : NEW 
+calendar     / calendar.contacts        / partner_id (many2one)         : NEW relation: res.partner, required: required
+calendar     / calendar.contacts        / user_id (many2one)            : NEW relation: res.users
+calendar     / calendar.event           / alarm_ids (many2many)         : NEW relation: calendar.alarm
+calendar     / calendar.event           / categ_ids (many2many)         : NEW relation: calendar.event.type
+calendar     / calendar.event           / final_date (date)             : NEW 
+calendar     / calendar.event           / message_ids (one2many)        : NEW relation: mail.message
+calendar     / calendar.event           / message_last_post (datetime)  : NEW 
+calendar     / calendar.event           / month_by (selection)          : NEW selection_keys: ['date', 'day']
+calendar     / calendar.event           / start_date (date)             : NEW 
+calendar     / calendar.event           / start_datetime (datetime)     : NEW 
+calendar     / calendar.event           / stop_date (date)              : NEW 
+calendar     / calendar.event           / stop_datetime (datetime)      : NEW 
+calendar     / calendar.event.type      / name (char)                   : NEW required: required
+calendar     / res.partner              / calendar_last_notif_ack (datetime): NEW 
+---XML records in module 'calendar'---
+NEW calendar.alarm: calendar.alarm_mail_1
+NEW calendar.alarm: calendar.alarm_mail_2
+NEW calendar.alarm: calendar.alarm_mail_3
+NEW calendar.alarm: calendar.alarm_mail_4
+NEW calendar.alarm: calendar.alarm_mail_5
+NEW calendar.alarm: calendar.alarm_notif_1
+NEW calendar.alarm: calendar.alarm_notif_2
+NEW calendar.alarm: calendar.alarm_notif_3
+NEW calendar.alarm: calendar.alarm_notif_4
+NEW calendar.alarm: calendar.alarm_notif_5
+NEW calendar.event.type: calendar.categ_meet1
+NEW calendar.event.type: calendar.categ_meet2
+NEW calendar.event.type: calendar.categ_meet3
+NEW calendar.event.type: calendar.categ_meet4
+NEW calendar.event.type: calendar.categ_meet5
+NEW email.template: calendar.calendar_template_meeting_changedate
+NEW email.template: calendar.calendar_template_meeting_invitation
+NEW email.template: calendar.calendar_template_meeting_reminder
+NEW ir.actions.act_window: calendar.action_calendar_contacts
+NEW ir.actions.act_window: calendar.action_calendar_event
+NEW ir.actions.act_window: calendar.action_calendar_event_notify
+NEW ir.actions.act_window: calendar.action_calendar_event_type
+NEW ir.actions.act_window.view: calendar.action_view_calendar_event_calendar
+NEW ir.actions.act_window.view: calendar.action_view_calendar_event_form
+NEW ir.actions.act_window.view: calendar.action_view_calendar_event_gantt
+NEW ir.actions.act_window.view: calendar.action_view_calendar_event_tree
+NEW ir.cron: calendar.ir_cron_scheduler_alarm
+NEW ir.model.access: calendar.access_calendar_alarm
+NEW ir.model.access: calendar.access_calendar_alarm_manager
+NEW ir.model.access: calendar.access_calendar_attendee_employee
+NEW ir.model.access: calendar.access_calendar_attendee_portal
+NEW ir.model.access: calendar.access_calendar_contacts
+NEW ir.model.access: calendar.access_calendar_contacts_all
+NEW ir.model.access: calendar.access_calendar_event
+NEW ir.model.access: calendar.access_calendar_event_all_employee
+NEW ir.model.access: calendar.access_calendar_event_all_user
+NEW ir.model.access: calendar.access_calendar_event_manager
+NEW ir.model.access: calendar.access_calendar_event_partner_manager
+NEW ir.model.access: calendar.access_calendar_event_type_all
+NEW ir.model.access: calendar.access_calendar_event_type_manager
+NEW ir.model.access: calendar.access_calendar_event_type_sale_manager
+NEW ir.model.access: calendar.access_calendar_event_type_sale_user
+NEW ir.rule: calendar.calendar_attendee_rule_my
+NEW ir.rule: calendar.calendar_event_rule_employee
+NEW ir.rule: calendar.calendar_event_rule_my
+NEW ir.ui.menu: calendar.mail_menu_calendar
+NEW ir.ui.menu: calendar.menu_calendar_configuration
+NEW ir.ui.menu: calendar.menu_calendar_event_type
+NEW ir.ui.view: calendar.assets_backend
+NEW ir.ui.view: calendar.view_calendar_contacts
+NEW ir.ui.view: calendar.view_calendar_event_calendar
+NEW ir.ui.view: calendar.view_calendar_event_form
+NEW ir.ui.view: calendar.view_calendar_event_form_popup
+NEW ir.ui.view: calendar.view_calendar_event_gantt
+NEW ir.ui.view: calendar.view_calendar_event_search
+NEW ir.ui.view: calendar.view_calendar_event_tree
+NEW ir.ui.view: calendar.view_calendar_event_type_tree
+NEW mail.message.subtype: calendar.subtype_invitation

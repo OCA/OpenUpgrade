@@ -1,0 +1,16 @@
+---Fields in module 'crm_claim'---
+crm_claim    / crm.claim                / message_last_post (datetime)  : NEW 
+crm_claim    / crm.claim                / priority (selection)          : selection_keys is now '['0', '1', '2']' ('['1', '2', '3', '4', '5']')
+crm_claim    / crm.claim                / website_message_ids (one2many): NEW relation: mail.message
+crm_claim    / crm.claim.report         / priority (selection)          : selection_keys is now '['0', '1', '2']' ('['1', '2', '3', '4', '5']')
+crm_claim    / crm.claim.report         / state (selection)             : DEL selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
+crm_claim    / crm.claim.stage          / case_refused (boolean)        : DEL 
+crm_claim    / crm.claim.stage          / state (selection)             : DEL required: required, selection_keys: ['cancel', 'done', 'draft', 'open', 'pending'], req_default: draft
+crm_claim    / res.partner              / claims_ids (one2many)         : DEL relation: crm.claim
+---XML records in module 'crm_claim'---
+DEL ir.actions.act_window: crm_claim.act_claim_partner
+DEL ir.actions.act_window.view: crm_claim.action_report_crm_claim_tree
+NEW ir.ui.view: crm_claim.view_claim_res_partner_info_form
+DEL ir.ui.view: crm_claim.view_claim_partner_info_form1
+DEL ir.ui.view: crm_claim.view_project_config_claim
+DEL ir.ui.view: crm_claim.view_report_crm_claim_tree

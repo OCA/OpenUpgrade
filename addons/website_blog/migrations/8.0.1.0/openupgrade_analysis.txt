@@ -1,0 +1,92 @@
+---Fields in module 'website_blog'---
+website_blog / blog.blog                / description (text)            : NEW 
+website_blog / blog.blog                / message_ids (one2many)        : NEW relation: mail.message
+website_blog / blog.blog                / message_last_post (datetime)  : NEW 
+website_blog / blog.blog                / name (char)                   : NEW required: required
+website_blog / blog.blog                / subtitle (char)               : NEW 
+website_blog / blog.blog                / website_message_ids (one2many): NEW relation: mail.message
+website_blog / blog.blog                / website_meta_description (text): NEW 
+website_blog / blog.blog                / website_meta_keywords (char)  : NEW 
+website_blog / blog.blog                / website_meta_title (char)     : NEW 
+website_blog / blog.post                / author_id (many2one)          : NEW relation: res.partner
+website_blog / blog.post                / background_image (binary)     : NEW 
+website_blog / blog.post                / blog_id (many2one)            : NEW relation: blog.blog, required: required
+website_blog / blog.post                / content (html)                : NEW 
+website_blog / blog.post                / create_date (datetime)        : NEW 
+website_blog / blog.post                / create_uid (many2one)         : NEW relation: res.users
+website_blog / blog.post                / history_ids (one2many)        : NEW relation: blog.post.history
+website_blog / blog.post                / message_ids (one2many)        : NEW relation: mail.message
+website_blog / blog.post                / message_last_post (datetime)  : NEW 
+website_blog / blog.post                / name (char)                   : NEW required: required, req_default: Blog Post Title
+website_blog / blog.post                / subtitle (char)               : NEW 
+website_blog / blog.post                / tag_ids (many2many)           : NEW relation: blog.tag
+website_blog / blog.post                / visits (integer)              : NEW 
+website_blog / blog.post                / website_message_ids (one2many): NEW relation: mail.message
+website_blog / blog.post                / website_meta_description (text): NEW 
+website_blog / blog.post                / website_meta_keywords (char)  : NEW 
+website_blog / blog.post                / website_meta_title (char)     : NEW 
+website_blog / blog.post                / website_published (boolean)   : NEW 
+website_blog / blog.post                / write_date (datetime)         : NEW 
+website_blog / blog.post                / write_uid (many2one)          : NEW relation: res.users
+website_blog / blog.post.history        / content (text)                : NEW 
+website_blog / blog.post.history        / create_date (datetime)        : NEW 
+website_blog / blog.post.history        / create_uid (many2one)         : NEW relation: res.users
+website_blog / blog.post.history        / post_id (many2one)            : NEW relation: blog.post
+website_blog / blog.post.history        / summary (char)                : NEW 
+website_blog / blog.tag                 / name (char)                   : NEW required: required
+website_blog / blog.tag                 / website_meta_description (text): NEW 
+website_blog / blog.tag                 / website_meta_keywords (char)  : NEW 
+website_blog / blog.tag                 / website_meta_title (char)     : NEW 
+website_blog / mail.message             / path (char)                   : NEW 
+---XML records in module 'website_blog'---
+NEW blog.blog: website_blog.blog_blog_1
+NEW ir.actions.act_url: website_blog.action_open_website
+NEW ir.actions.act_window: website_blog.action_blog_blog
+NEW ir.actions.act_window: website_blog.action_blog_post
+NEW ir.actions.act_window: website_blog.action_history
+NEW ir.actions.act_window: website_blog.action_related_page_history
+NEW ir.actions.act_window: website_blog.action_view_wiki_show_diff
+NEW ir.actions.act_window: website_blog.action_view_wiki_show_diff_values
+NEW ir.actions.todo: base.open_menu
+NEW ir.model.access: website_blog.blog_blog_all
+NEW ir.model.access: website_blog.blog_post
+NEW ir.model.access: website_blog.blog_post_all
+NEW ir.model.access: website_blog.blog_post_history
+NEW ir.model.access: website_blog.blog_tag
+NEW ir.model.access: website_blog.blog_tag_edition
+NEW ir.rule: website_blog.website_blog_post_public
+NEW ir.ui.menu: knowledge.menu_document
+NEW ir.ui.menu: website_blog.menu_blog
+NEW ir.ui.menu: website_blog.menu_page
+NEW ir.ui.menu: website_blog.menu_page_history
+NEW ir.ui.menu: website_blog.menu_wiki
+NEW ir.ui.view: website_blog.assets_editor
+NEW ir.ui.view: website_blog.blog_breadcrumb
+NEW ir.ui.view: website_blog.blog_post_complete
+NEW ir.ui.view: website_blog.blog_post_short
+NEW ir.ui.view: website_blog.header_footer_custom
+NEW ir.ui.view: website_blog.index
+NEW ir.ui.view: website_blog.index_right
+NEW ir.ui.view: website_blog.latest_blogs
+NEW ir.ui.view: website_blog.opt_blog_post_complete_comment
+NEW ir.ui.view: website_blog.opt_blog_post_complete_tags
+NEW ir.ui.view: website_blog.opt_blog_post_inline_discussion
+NEW ir.ui.view: website_blog.opt_blog_post_select_to_tweet
+NEW ir.ui.view: website_blog.opt_blog_post_short_tags
+NEW ir.ui.view: website_blog.opt_blog_rc_about_us
+NEW ir.ui.view: website_blog.opt_blog_rc_blogs
+NEW ir.ui.view: website_blog.opt_blog_rc_follow_us
+NEW ir.ui.view: website_blog.opt_blog_rc_history
+NEW ir.ui.view: website_blog.opt_blog_rc_tags
+NEW ir.ui.view: website_blog.view_blog_blog_form
+NEW ir.ui.view: website_blog.view_blog_blog_list
+NEW ir.ui.view: website_blog.view_blog_history_form
+NEW ir.ui.view: website_blog.view_blog_history_tree
+NEW ir.ui.view: website_blog.view_blog_post_form
+NEW ir.ui.view: website_blog.view_blog_post_list
+NEW ir.ui.view: website_blog.view_blog_post_search
+NEW ir.ui.view: website_blog.view_wiki_show_diff
+NEW mail.message.subtype: website_blog.mt_blog_blog_post_new
+NEW mail.message.subtype: website_blog.mt_blog_post_new
+NEW mail.message.subtype: website_blog.mt_blog_post_published
+NEW website.menu: website_blog.menu_news

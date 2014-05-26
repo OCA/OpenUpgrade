@@ -1,0 +1,26 @@
+---Fields in module 'event_sale'---
+event_sale   / event.event              / event_ticket_ids (one2many)   : NEW relation: event.event.ticket
+event_sale   / event.event.ticket       / deadline (date)               : NEW 
+event_sale   / event.event.ticket       / event_id (many2one)           : NEW relation: event.event, required: required
+event_sale   / event.event.ticket       / name (char)                   : NEW required: required
+event_sale   / event.event.ticket       / price (float)                 : NEW 
+event_sale   / event.event.ticket       / product_id (many2one)         : NEW relation: product.product, required: required, req_default: function
+event_sale   / event.event.ticket       / registration_ids (one2many)   : NEW relation: event.registration
+event_sale   / event.event.ticket       / seats_max (integer)           : NEW 
+event_sale   / event.registration       / event_ticket_id (many2one)    : NEW relation: event.event.ticket
+event_sale   / product.product          / event_ok (boolean)            : DEL 
+event_sale   / product.product          / event_ticket_ids (one2many)   : NEW relation: event.event.ticket
+event_sale   / product.product          / event_type_id (many2one)      : DEL relation: event.type
+event_sale   / product.template         / event_ok (boolean)            : NEW 
+event_sale   / product.template         / event_type_id (many2one)      : NEW relation: event.type
+event_sale   / sale.order.line          / event_ticket_id (many2one)    : NEW relation: event.event.ticket
+---XML records in module 'event_sale'---
+NEW event.type: event_sale.event_type
+NEW ir.ui.view: event_sale.event_sale_product_form
+NEW ir.ui.view: event_sale.event_sale_product_template_form
+NEW ir.ui.view: event_sale.view_event_form
+NEW ir.ui.view: event_sale.view_event_registration_ticket_form
+NEW ir.ui.view: event_sale.view_event_registration_ticket_search
+NEW ir.ui.view: event_sale.view_event_registration_ticket_tree
+DEL ir.ui.view: event_sale.event_sale_order
+NEW product.product: event_sale.product_product_event

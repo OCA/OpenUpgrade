@@ -1,0 +1,26 @@
+---Fields in module 'sale_layout'---
+sale_layout  / account.invoice.line     / sale_layout_cat_id (many2one) : NEW relation: sale_layout.category
+sale_layout  / sale.order.line          / sale_layout_cat_id (many2one) : NEW relation: sale_layout.category
+sale_layout  / sale_layout.category     / name (char)                   : NEW required: required
+sale_layout  / sale_layout.category     / pagebreak (boolean)           : NEW 
+sale_layout  / sale_layout.category     / separator (boolean)           : NEW 
+sale_layout  / sale_layout.category     / sequence (integer)            : NEW required: required, req_default: 10
+sale_layout  / sale_layout.category     / subtotal (boolean)            : NEW 
+---XML records in module 'sale_layout'---
+NEW ir.actions.act_window: sale_layout.report_configuration_action
+NEW ir.model.access: sale_layout.report_layout_category_1
+NEW ir.model.access: sale_layout.report_layout_category_2
+NEW ir.model.access: sale_layout.report_layout_category_3
+NEW ir.model.access: sale_layout.report_layout_category_4
+NEW ir.ui.menu: sale_layout.Report_configuration
+NEW ir.ui.view: sale_layout.category_template
+NEW ir.ui.view: sale_layout.report_configuration_form_view
+NEW ir.ui.view: sale_layout.report_configuration_search_view
+NEW ir.ui.view: sale_layout.report_configuration_tree_view
+NEW ir.ui.view: sale_layout.report_invoice_layouted
+NEW ir.ui.view: sale_layout.report_sale_layouted
+NEW ir.ui.view: sale_layout.separator_template
+NEW ir.ui.view: sale_layout.subtotal_template
+NEW ir.ui.view: sale_layout.view_invoice_form_inherit_1
+NEW ir.ui.view: sale_layout.view_invoice_line_form_inherit_2
+NEW ir.ui.view: sale_layout.view_order_form_inherit_1
