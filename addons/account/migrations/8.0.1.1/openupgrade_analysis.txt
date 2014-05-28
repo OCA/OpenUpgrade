@@ -1,0 +1,127 @@
+---Fields in module 'account'---
+account      / account.bank.statement   / message_last_post (datetime)  : NEW 
+account      / account.chart.template   / currency_id (many2one)        : NEW relation: res.currency
+account      / account.invoice          / message_last_post (datetime)  : NEW 
+account      / account.invoice.report   / country_id (many2one)         : NEW relation: res.country
+account      / account.invoice.report   / day (char)                    : DEL 
+account      / account.invoice.report   / month (selection)             : DEL selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+account      / account.invoice.report   / year (char)                   : DEL 
+account      / analytic.entries.report  / day (char)                    : DEL 
+account      / analytic.entries.report  / month (selection)             : DEL selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+account      / analytic.entries.report  / year (char)                   : DEL 
+account      / res.partner              / invoice_ids (one2many)        : relation is now 'account.invoice' ('account.invoice.line')
+---XML records in module 'account'---
+NEW account.analytic.journal: account.exp
+NEW ir.actions.act_window: account.action_account_moves_all_tree
+NEW ir.actions.act_window: account.action_open_partner_analytic_accounts
+DEL ir.actions.act_window: account.act_account_partner_account_move
+DEL ir.actions.act_window: account.act_account_partner_account_move_all
+DEL ir.actions.act_window: account.act_res_partner_2_account_invoice_opened
+DEL ir.actions.act_window: account.action_analytic_open
+DEL ir.actions.act_window: account.action_company_analysis_tree
+DEL ir.actions.act_window: account.open_board_account
+NEW ir.actions.report.xml: account.action_account_3rdparty_account_balance
+NEW ir.actions.report.xml: account.action_account_analytic_account_inverted_balance
+NEW ir.actions.report.xml: account.action_report_account_journal
+NEW ir.actions.report.xml: account.action_report_account_salepurchasejournal
+NEW ir.actions.report.xml: account.action_report_aged_partner_balance
+NEW ir.actions.report.xml: account.action_report_analytic_balance
+NEW ir.actions.report.xml: account.action_report_analytic_journal
+NEW ir.actions.report.xml: account.action_report_central_journal
+NEW ir.actions.report.xml: account.action_report_cost_ledger
+NEW ir.actions.report.xml: account.action_report_cost_ledgerquantity
+NEW ir.actions.report.xml: account.action_report_financial
+NEW ir.actions.report.xml: account.action_report_general_journal
+NEW ir.actions.report.xml: account.action_report_general_ledger
+NEW ir.actions.report.xml: account.action_report_partner_ledger
+NEW ir.actions.report.xml: account.action_report_partner_ledger_other
+NEW ir.actions.report.xml: account.action_report_print_overdue
+NEW ir.actions.report.xml: account.action_report_trial_balance
+NEW ir.actions.report.xml: account.action_report_vat
+DEL ir.actions.report.xml: account.account_3rdparty_account_balance
+DEL ir.actions.report.xml: account.account_3rdparty_ledger
+DEL ir.actions.report.xml: account.account_3rdparty_ledger_other
+DEL ir.actions.report.xml: account.account_account_balance
+DEL ir.actions.report.xml: account.account_analytic_account_balance
+DEL ir.actions.report.xml: account.account_analytic_account_cost_ledger
+DEL ir.actions.report.xml: account.account_analytic_account_inverted_balance
+DEL ir.actions.report.xml: account.account_analytic_account_quantity_cost_ledger
+DEL ir.actions.report.xml: account.account_central_journal
+DEL ir.actions.report.xml: account.account_general_journal
+DEL ir.actions.report.xml: account.account_general_ledger
+DEL ir.actions.report.xml: account.account_general_ledger_landscape
+DEL ir.actions.report.xml: account.account_journal
+DEL ir.actions.report.xml: account.account_journal_sale_purchase
+DEL ir.actions.report.xml: account.account_overdue
+DEL ir.actions.report.xml: account.account_vat_declaration
+DEL ir.actions.report.xml: account.analytic_journal_print
+DEL ir.ui.menu: account.menu_board_account
+NEW ir.ui.view: account.assets_backend
+NEW ir.ui.view: account.partner_view_buttons
+NEW ir.ui.view: account.report_agedpartnerbalance
+NEW ir.ui.view: account.report_analyticbalance
+NEW ir.ui.view: account.report_analyticcostledger
+NEW ir.ui.view: account.report_analyticcostledgerquantity
+NEW ir.ui.view: account.report_analyticjournal
+NEW ir.ui.view: account.report_centraljournal
+NEW ir.ui.view: account.report_financial
+NEW ir.ui.view: account.report_generaljournal
+NEW ir.ui.view: account.report_generalledger
+NEW ir.ui.view: account.report_invertedanalyticbalance
+NEW ir.ui.view: account.report_invoice
+NEW ir.ui.view: account.report_invoice_document
+NEW ir.ui.view: account.report_journal
+NEW ir.ui.view: account.report_overdue
+NEW ir.ui.view: account.report_overdue_document
+NEW ir.ui.view: account.report_partnerbalance
+NEW ir.ui.view: account.report_partnerledger
+NEW ir.ui.view: account.report_partnerledgerother
+NEW ir.ui.view: account.report_salepurchasejournal
+NEW ir.ui.view: account.report_trialbalance
+NEW ir.ui.view: account.report_vat
+DEL ir.ui.view: account.board_account_form
+DEL ir.ui.view: account.view_account_invoice_report_tree
+DEL ir.ui.view: account.view_analytic_entries_report_tree
+DEL process.node: account.process_node_accountingentries0
+DEL process.node: account.process_node_accountingstatemententries0
+DEL process.node: account.process_node_analytic0
+DEL process.node: account.process_node_analyticcost0
+DEL process.node: account.process_node_bankstatement0
+DEL process.node: account.process_node_draftinvoices0
+DEL process.node: account.process_node_draftstatement0
+DEL process.node: account.process_node_electronicfile0
+DEL process.node: account.process_node_importinvoice0
+DEL process.node: account.process_node_invoiceinvoice0
+DEL process.node: account.process_node_manually0
+DEL process.node: account.process_node_paidinvoice0
+DEL process.node: account.process_node_paymententries0
+DEL process.node: account.process_node_reconciliation0
+DEL process.node: account.process_node_supplieraccountingentries0
+DEL process.node: account.process_node_supplierbankstatement0
+DEL process.node: account.process_node_supplierdraftinvoices0
+DEL process.node: account.process_node_supplierinvoiceinvoice0
+DEL process.node: account.process_node_supplierpaidinvoice0
+DEL process.node: account.process_node_supplierpaymentorder0
+DEL process.node: account.process_node_supplierreconciliation0
+DEL process.process: account.process_process_invoiceprocess0
+DEL process.process: account.process_process_statementprocess0
+DEL process.process: account.process_process_supplierinvoiceprocess0
+DEL process.transition: account.process_transition_analyticinvoice0
+DEL process.transition: account.process_transition_confirmstatementfromdraft0
+DEL process.transition: account.process_transition_customerinvoice0
+DEL process.transition: account.process_transition_entriesreconcile0
+DEL process.transition: account.process_transition_filestatement0
+DEL process.transition: account.process_transition_invoiceimport0
+DEL process.transition: account.process_transition_invoicemanually0
+DEL process.transition: account.process_transition_paymentorderbank0
+DEL process.transition: account.process_transition_paymentorderreconcilation0
+DEL process.transition: account.process_transition_paymentreconcile0
+DEL process.transition: account.process_transition_reconcilepaid0
+DEL process.transition: account.process_transition_statemententries0
+DEL process.transition: account.process_transition_supplieranalyticcost0
+DEL process.transition: account.process_transition_suppliercustomerinvoice0
+DEL process.transition: account.process_transition_supplierentriesreconcile0
+DEL process.transition: account.process_transition_supplierreconcilepaid0
+DEL process.transition: account.process_transition_suppliervalidentries0
+DEL process.transition: account.process_transition_validentries0
+DEL process.transition.action: account.process_transition_action_createentries0

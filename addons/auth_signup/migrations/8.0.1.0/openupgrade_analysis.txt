@@ -1,0 +1,7 @@
+---Fields in module 'auth_signup'---
+---XML records in module 'auth_signup'---
+DEL ir.actions.act_window: base.action_res_users
+NEW ir.ui.view: auth_signup.fields
+NEW ir.ui.view: auth_signup.login
+NEW ir.ui.view: auth_signup.reset_password
+NEW ir.ui.view: auth_signup.signup

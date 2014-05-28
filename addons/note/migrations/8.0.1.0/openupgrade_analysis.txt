@@ -1,0 +1,6 @@
+---Fields in module 'note'---
+note         / note.note                / message_last_post (datetime)  : NEW 
+note         / note.note                / user_id (many2one)            : NEW relation: res.users
+---XML records in module 'note'---
+NEW ir.rule: note.note_note_create_unlink_global
+NEW ir.ui.view: note.assets_backend

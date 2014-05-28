@@ -1,0 +1,154 @@
+---Fields in module 'gamification'---
+gamification / gamification.badge       / active (boolean)              : NEW 
+gamification / gamification.badge       / challenge_ids (one2many)      : NEW relation: gamification.challenge
+gamification / gamification.badge       / description (text)            : NEW 
+gamification / gamification.badge       / goal_definition_ids (many2many): NEW relation: gamification.goal.definition
+gamification / gamification.badge       / image (binary)                : NEW 
+gamification / gamification.badge       / message_ids (one2many)        : NEW relation: mail.message
+gamification / gamification.badge       / message_last_post (datetime)  : NEW 
+gamification / gamification.badge       / name (char)                   : NEW required: required
+gamification / gamification.badge       / owner_ids (one2many)          : NEW relation: gamification.badge.user
+gamification / gamification.badge       / rule_auth (selection)         : NEW required: required, selection_keys: ['everyone', 'having', 'nobody', 'users'], req_default: everyone
+gamification / gamification.badge       / rule_auth_badge_ids (many2many): NEW relation: gamification.badge
+gamification / gamification.badge       / rule_auth_user_ids (many2many): NEW relation: res.users
+gamification / gamification.badge       / rule_max (boolean)            : NEW 
+gamification / gamification.badge       / rule_max_number (integer)     : NEW 
+gamification / gamification.badge.user  / badge_id (many2one)           : NEW relation: gamification.badge, required: required
+gamification / gamification.badge.user  / challenge_id (many2one)       : NEW relation: gamification.challenge
+gamification / gamification.badge.user  / comment (text)                : NEW 
+gamification / gamification.badge.user  / create_date (datetime)        : NEW 
+gamification / gamification.badge.user  / create_uid (many2one)         : NEW relation: res.users
+gamification / gamification.badge.user  / sender_id (many2one)          : NEW relation: res.users
+gamification / gamification.badge.user  / user_id (many2one)            : NEW relation: res.users, required: required
+gamification / gamification.challenge   / category (selection)          : NEW required: required, selection_keys: function, req_default: hr
+gamification / gamification.challenge   / description (text)            : NEW 
+gamification / gamification.challenge   / end_date (date)               : NEW 
+gamification / gamification.challenge   / invited_user_ids (many2many)  : NEW relation: res.users
+gamification / gamification.challenge   / last_report_date (date)       : NEW 
+gamification / gamification.challenge   / line_ids (one2many)           : NEW relation: gamification.challenge.line, required: required
+gamification / gamification.challenge   / manager_id (many2one)         : NEW relation: res.users
+gamification / gamification.challenge   / message_ids (one2many)        : NEW relation: mail.message
+gamification / gamification.challenge   / message_last_post (datetime)  : NEW 
+gamification / gamification.challenge   / name (char)                   : NEW required: required
+gamification / gamification.challenge   / period (selection)            : NEW required: required, selection_keys: ['daily', 'monthly', 'once', 'weekly', 'yearly'], req_default: once
+gamification / gamification.challenge   / remind_update_delay (integer) : NEW 
+gamification / gamification.challenge   / report_message_frequency (selection): NEW required: required, selection_keys: ['daily', 'monthly', 'never', 'onchange', 'weekly', 'yearly'], req_default: never
+gamification / gamification.challenge   / report_message_group_id (many2one): NEW relation: mail.group
+gamification / gamification.challenge   / report_template_id (many2one) : NEW relation: email.template, required: required, req_default: function
+gamification / gamification.challenge   / reward_failure (boolean)      : NEW 
+gamification / gamification.challenge   / reward_first_id (many2one)    : NEW relation: gamification.badge
+gamification / gamification.challenge   / reward_id (many2one)          : NEW relation: gamification.badge
+gamification / gamification.challenge   / reward_realtime (boolean)     : NEW 
+gamification / gamification.challenge   / reward_second_id (many2one)   : NEW relation: gamification.badge
+gamification / gamification.challenge   / reward_third_id (many2one)    : NEW relation: gamification.badge
+gamification / gamification.challenge   / start_date (date)             : NEW 
+gamification / gamification.challenge   / state (selection)             : NEW required: required, selection_keys: ['done', 'draft', 'inprogress'], req_default: draft
+gamification / gamification.challenge   / user_domain (char)            : NEW 
+gamification / gamification.challenge   / user_ids (many2many)          : NEW relation: res.users
+gamification / gamification.challenge   / visibility_mode (selection)   : NEW required: required, selection_keys: ['personal', 'ranking'], req_default: personal
+gamification / gamification.challenge.line / challenge_id (many2one)       : NEW relation: gamification.challenge, required: required
+gamification / gamification.challenge.line / definition_id (many2one)      : NEW relation: gamification.goal.definition, required: required
+gamification / gamification.challenge.line / sequence (integer)            : NEW 
+gamification / gamification.challenge.line / target_goal (float)           : NEW required: required
+gamification / gamification.goal        / closed (boolean)              : NEW 
+gamification / gamification.goal        / current (float)               : NEW required: required, req_default: 0
+gamification / gamification.goal        / definition_id (many2one)      : NEW relation: gamification.goal.definition, required: required
+gamification / gamification.goal        / end_date (date)               : NEW 
+gamification / gamification.goal        / last_update (date)            : NEW 
+gamification / gamification.goal        / line_id (many2one)            : NEW relation: gamification.challenge.line
+gamification / gamification.goal        / remind_update_delay (integer) : NEW 
+gamification / gamification.goal        / start_date (date)             : NEW 
+gamification / gamification.goal        / state (selection)             : NEW required: required, selection_keys: ['canceled', 'draft', 'failed', 'inprogress', 'reached'], req_default: draft
+gamification / gamification.goal        / target_goal (float)           : NEW required: required
+gamification / gamification.goal        / to_update (boolean)           : NEW 
+gamification / gamification.goal        / user_id (many2one)            : NEW relation: res.users, required: required
+gamification / gamification.goal.definition / action_id (many2one)          : NEW relation: ir.actions.act_window
+gamification / gamification.goal.definition / batch_distinctive_field (many2one): NEW relation: ir.model.fields
+gamification / gamification.goal.definition / batch_mode (boolean)          : NEW 
+gamification / gamification.goal.definition / batch_user_expression (char)  : NEW 
+gamification / gamification.goal.definition / computation_mode (selection)  : NEW required: required, selection_keys: ['count', 'manually', 'python', 'sum'], req_default: manually
+gamification / gamification.goal.definition / compute_code (text)           : NEW 
+gamification / gamification.goal.definition / condition (selection)         : NEW required: required, selection_keys: ['higher', 'lower'], req_default: higher
+gamification / gamification.goal.definition / description (text)            : NEW 
+gamification / gamification.goal.definition / display_mode (selection)      : NEW required: required, selection_keys: ['boolean', 'progress'], req_default: progress
+gamification / gamification.goal.definition / domain (char)                 : NEW required: required, req_default: []
+gamification / gamification.goal.definition / field_date_id (many2one)      : NEW relation: ir.model.fields
+gamification / gamification.goal.definition / field_id (many2one)           : NEW relation: ir.model.fields
+gamification / gamification.goal.definition / model_id (many2one)           : NEW relation: ir.model
+gamification / gamification.goal.definition / monetary (boolean)            : NEW 
+gamification / gamification.goal.definition / name (char)                   : NEW required: required
+gamification / gamification.goal.definition / res_id_field (char)           : NEW 
+gamification / gamification.goal.definition / suffix (char)                 : NEW 
+---XML records in module 'gamification'---
+NEW email.template: gamification.email_template_badge_received
+NEW email.template: gamification.email_template_goal_reminder
+NEW email.template: gamification.simple_report_template
+NEW gamification.badge: gamification.badge_good_job
+NEW gamification.badge: gamification.badge_hidden
+NEW gamification.badge: gamification.badge_idea
+NEW gamification.badge: gamification.badge_problem_solver
+NEW gamification.challenge: gamification.challenge_base_configure
+NEW gamification.challenge: gamification.challenge_base_discover
+NEW gamification.challenge.line: gamification.line_base_admin1
+NEW gamification.challenge.line: gamification.line_base_admin2
+NEW gamification.challenge.line: gamification.line_base_admin3
+NEW gamification.challenge.line: gamification.line_base_discover1
+NEW gamification.goal.definition: gamification.definition_base_company_data
+NEW gamification.goal.definition: gamification.definition_base_company_logo
+NEW gamification.goal.definition: gamification.definition_base_invite
+NEW gamification.goal.definition: gamification.definition_base_timezone
+NEW gamification.goal.definition: gamification.definition_nbr_following
+NEW ir.actions.act_window: gamification.action_grant_wizard
+NEW ir.actions.act_window: gamification.action_new_simplified_res_users
+NEW ir.actions.act_window: gamification.badge_list_action
+NEW ir.actions.act_window: gamification.challenge_list_action
+NEW ir.actions.act_window: gamification.challenge_wizard
+NEW ir.actions.act_window: gamification.goal_definition_list_action
+NEW ir.actions.act_window: gamification.goal_list_action
+NEW ir.actions.act_window: gamification.goals_from_challenge_act
+NEW ir.actions.act_window.view: gamification.challenge_list_action_view1
+NEW ir.actions.act_window.view: gamification.challenge_list_action_view2
+NEW ir.cron: gamification.ir_cron_check_challenge
+NEW ir.model.access: gamification.badge_employee
+NEW ir.model.access: gamification.badge_manager
+NEW ir.model.access: gamification.badge_user_employee
+NEW ir.model.access: gamification.badge_user_manager
+NEW ir.model.access: gamification.challenge_employee
+NEW ir.model.access: gamification.challenge_line_employee
+NEW ir.model.access: gamification.challenge_line_manager
+NEW ir.model.access: gamification.challenge_manager
+NEW ir.model.access: gamification.goal_definition_employee
+NEW ir.model.access: gamification.goal_definition_manager
+NEW ir.model.access: gamification.goal_employee
+NEW ir.model.access: gamification.goal_manager
+NEW ir.module.category: gamification.module_goal_category
+NEW ir.rule: gamification.goal_gamification_manager_visibility
+NEW ir.rule: gamification.goal_global_multicompany
+NEW ir.rule: gamification.goal_user_visibility
+NEW ir.ui.menu: gamification.gamification_badge_menu
+NEW ir.ui.menu: gamification.gamification_challenge_menu
+NEW ir.ui.menu: gamification.gamification_definition_menu
+NEW ir.ui.menu: gamification.gamification_goal_menu
+NEW ir.ui.menu: gamification.gamification_menu
+NEW ir.ui.view: gamification.assets_backend
+NEW ir.ui.view: gamification.badge_form_view
+NEW ir.ui.view: gamification.badge_kanban_view
+NEW ir.ui.view: gamification.badge_list_view
+NEW ir.ui.view: gamification.badge_user_kanban_view
+NEW ir.ui.view: gamification.challenge_form_view
+NEW ir.ui.view: gamification.challenge_line_list_view
+NEW ir.ui.view: gamification.challenge_list_view
+NEW ir.ui.view: gamification.challenge_search_view
+NEW ir.ui.view: gamification.goal_definition_form_view
+NEW ir.ui.view: gamification.goal_definition_list_view
+NEW ir.ui.view: gamification.goal_definition_search_view
+NEW ir.ui.view: gamification.goal_form_view
+NEW ir.ui.view: gamification.goal_kanban_view
+NEW ir.ui.view: gamification.goal_list_view
+NEW ir.ui.view: gamification.goal_search_view
+NEW ir.ui.view: gamification.view_badge_wizard_grant
+NEW ir.ui.view: gamification.view_challenge_kanban
+NEW ir.ui.view: gamification.view_challenge_wizard
+NEW ir.ui.view: gamification.view_goal_wizard_update_current
+NEW mail.message.subtype: gamification.mt_badge_granted
+NEW res.groups: gamification.group_goal_manager

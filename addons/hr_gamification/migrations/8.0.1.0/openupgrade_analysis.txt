@@ -1,0 +1,22 @@
+---Fields in module 'hr_gamification'---
+hr_gamification / gamification.badge.user  / employee_id (many2one)        : NEW relation: hr.employee
+---XML records in module 'hr_gamification'---
+NEW ir.actions.act_window: hr_gamification.action_reward_wizard
+NEW ir.actions.act_window: hr_gamification.challenge_list_action2
+NEW ir.actions.act_window: hr_gamification.goals_menu_groupby_action2
+NEW ir.actions.act_window.view: hr_gamification.challenge_list_action2_view1
+NEW ir.actions.act_window.view: hr_gamification.challenge_list_action2_view2
+NEW ir.model.access: hr_gamification.badge_officer
+NEW ir.model.access: hr_gamification.badge_user_officer
+NEW ir.model.access: hr_gamification.challenge_line_officer
+NEW ir.model.access: hr_gamification.challenge_officer
+NEW ir.rule: hr_gamification.goal_officer_visibility
+NEW ir.ui.menu: hr_gamification.gamification_badge_menu_hr
+NEW ir.ui.menu: hr_gamification.gamification_challenge_menu_hr
+NEW ir.ui.menu: hr_gamification.gamification_goal_menu_hr
+NEW ir.ui.menu: hr_gamification.menu_hr_gamification
+NEW ir.ui.view: hr_gamification.assets_backend
+NEW ir.ui.view: hr_gamification.hr_badge_form_view
+NEW ir.ui.view: hr_gamification.hr_hr_employee_view_form
+NEW ir.ui.view: hr_gamification.view_badge_wizard_grant_employee
+NEW ir.ui.view: hr_gamification.view_badge_wizard_reward

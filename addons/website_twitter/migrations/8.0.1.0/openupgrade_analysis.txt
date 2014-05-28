@@ -1,0 +1,17 @@
+---Fields in module 'website_twitter'---
+website_twitter / website                  / twitter_api_key (char)        : NEW 
+website_twitter / website                  / twitter_api_secret (char)     : NEW 
+website_twitter / website                  / twitter_screen_name (char)    : NEW 
+website_twitter / website.twitter.tweet    / screen_name (char)            : NEW 
+website_twitter / website.twitter.tweet    / tweet (text)                  : NEW 
+website_twitter / website.twitter.tweet    / tweet_id (float)              : NEW 
+website_twitter / website.twitter.tweet    / website_id (many2one)         : NEW relation: website
+---XML records in module 'website_twitter'---
+NEW ir.cron: website_twitter.ir_cron_twitter_actions
+NEW ir.model.access: website_twitter.access_website_twitter_tweet_manage
+NEW ir.model.access: website_twitter.access_website_twitter_tweet_public
+NEW ir.ui.view: website_twitter.twitter
+NEW ir.ui.view: website_twitter.twitter_editor
+NEW ir.ui.view: website_twitter.view_website_config_settings
+NEW ir.ui.view: website_twitter.website_twitter_options
+NEW ir.ui.view: website_twitter.website_twitter_snippet

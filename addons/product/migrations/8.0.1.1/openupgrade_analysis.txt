@@ -1,0 +1,75 @@
+---Fields in module 'product'---
+product      / product.packaging        / height (float)                : DEL 
+product      / product.packaging        / length (float)                : DEL 
+product      / product.packaging        / ul_container (many2one)       : NEW relation: product.ul
+product      / product.packaging        / weight_ul (float)             : DEL 
+product      / product.packaging        / width (float)                 : DEL 
+product      / product.price.history    / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+product      / product.price.history    / cost (float)                  : NEW 
+product      / product.price.history    / datetime (datetime)           : NEW 
+product      / product.price.history    / product_template_id (many2one): NEW relation: product.template, required: required
+product      / product.product          / image (binary)                : DEL 
+product      / product.product          / incoming_qty (float)          : module is now 'stock' ('product')
+product      / product.product          / message_last_post (datetime)  : NEW 
+product      / product.product          / outgoing_qty (float)          : module is now 'stock' ('product')
+product      / product.product          / qty_available (float)         : module is now 'stock' ('product')
+product      / product.product          / virtual_available (float)     : module is now 'stock' ('product')
+product      / product.public.category  / child_id (one2many)           : NEW relation: product.public.category
+product      / product.public.category  / image (binary)                : NEW 
+product      / product.public.category  / name (char)                   : NEW required: required
+product      / product.public.category  / parent_id (many2one)          : NEW relation: product.public.category
+product      / product.public.category  / sequence (integer)            : NEW 
+product      / product.supplierinfo     / product_id (many2one)         : DEL relation: product.template, required: required
+product      / product.supplierinfo     / product_tmpl_id (many2one)    : NEW relation: product.template, required: required
+product      / product.template         / cost_method (selection)       : module is now 'stock_account' ('product')
+product      / product.template         / cost_method (selection)       : now a function
+product      / product.template         / cost_method (selection)       : selection_keys is now '['average', 'real', 'standard']' ('['average', 'standard']')
+product      / product.template         / image (binary)                : NEW 
+product      / product.template         / message_ids (one2many)        : NEW relation: mail.message
+product      / product.template         / message_last_post (datetime)  : NEW 
+product      / product.template         / produce_delay (float)         : DEL 
+product      / product.template         / product_variant_ids (one2many): NEW relation: product.product, required: required
+product      / product.template         / public_categ_id (many2one)    : NEW relation: product.public.category
+product      / product.template         / standard_price (float)        : now a function
+product      / product.ul               / height (float)                : NEW 
+product      / product.ul               / length (float)                : NEW 
+product      / product.ul               / weight (float)                : NEW 
+product      / product.ul               / width (float)                 : NEW 
+---XML records in module 'product'---
+NEW ir.actions.act_window: product.product_public_category_action
+NEW ir.actions.act_window: product.product_template_action
+NEW ir.actions.act_window: product.product_variant_action
+DEL ir.actions.act_window: product.product_template_action_tree
+NEW ir.actions.act_window.view: product.form_view_product_variant
+NEW ir.actions.act_window.view: product.tree_view_product_variant
+NEW ir.actions.report.xml: product.action_report_pricelist
+DEL ir.actions.report.xml: product.report_product_pricelist
+NEW ir.model.access: product.access_product_category_pos_manager
+NEW ir.model.access: product.access_product_category_pos_user
+NEW ir.model.access: product.access_product_price_history_employee
+NEW ir.ui.menu: product.menu_product_public_category
+NEW ir.ui.menu: product.menu_product_template_action
+NEW ir.ui.menu: product.menu_variant_product
+NEW ir.ui.view: product.product_public_category_form_view
+NEW ir.ui.view: product.product_public_category_tree_view
+NEW ir.ui.view: product.product_template_kanban_view
+NEW ir.ui.view: product.product_template_search_view
+NEW ir.ui.view: product.product_variant_search_form_view
+NEW ir.ui.view: product.report_pricelist
+DEL ir.ui.view_sc: product.ir_ui_view_sc_product0
+DEL process.node: product.process_node_product0
+DEL process.node: product.process_node_supplier0
+DEL process.process: product.process_process_productprocess0
+DEL process.transition: product.process_transition_supplierofproduct0
+NEW product.public.category: product.categ_others
+NEW product.uom: product.product_uom_floz
+NEW product.uom: product.product_uom_foot
+NEW product.uom: product.product_uom_gal
+NEW product.uom: product.product_uom_inch
+NEW product.uom: product.product_uom_lb
+NEW product.uom: product.product_uom_mile
+NEW product.uom: product.product_uom_oz
+NEW product.uom: product.product_uom_qt
+NEW res.groups: base.group_user
+NEW res.groups: product.group_product_mono
+DEL res.groups: product.group_costing_method

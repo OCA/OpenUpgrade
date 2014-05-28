@@ -1,0 +1,129 @@
+---Fields in module 'website'---
+website      / ir.actions.server        / website_path (char)           : NEW 
+website      / ir.actions.server        / website_published (boolean)   : NEW 
+website      / ir.attachment            / mimetype (char)               : NEW 
+website      / ir.ui.view               / inherit_option_id (many2one)  : NEW relation: ir.ui.view
+website      / ir.ui.view               / inherited_option_ids (one2many): NEW relation: ir.ui.view
+website      / ir.ui.view               / page (boolean)                : NEW 
+website      / ir.ui.view               / website_meta_description (text): NEW 
+website      / ir.ui.view               / website_meta_keywords (char)  : NEW 
+website      / ir.ui.view               / website_meta_title (char)     : NEW 
+website      / website                  / company_id (many2one)         : NEW relation: res.company
+website      / website                  / default_lang_id (many2one)    : NEW relation: res.lang
+website      / website                  / google_analytics_key (char)   : NEW 
+website      / website                  / language_ids (many2many)      : NEW relation: res.lang
+website      / website                  / name (char)                   : NEW 
+website      / website                  / social_facebook (char)        : NEW 
+website      / website                  / social_github (char)          : NEW 
+website      / website                  / social_googleplus (char)      : NEW 
+website      / website                  / social_linkedin (char)        : NEW 
+website      / website                  / social_twitter (char)         : NEW 
+website      / website                  / social_youtube (char)         : NEW 
+website      / website                  / user_id (many2one)            : NEW relation: res.users
+website      / website.converter.test   / binary (binary)               : NEW 
+website      / website.converter.test   / char (char)                   : NEW 
+website      / website.converter.test   / date (date)                   : NEW 
+website      / website.converter.test   / datetime (datetime)           : NEW 
+website      / website.converter.test   / float (float)                 : NEW 
+website      / website.converter.test   / html (html)                   : NEW 
+website      / website.converter.test   / integer (integer)             : NEW 
+website      / website.converter.test   / many2one (many2one)           : NEW relation: website.converter.test.sub
+website      / website.converter.test   / numeric (float)               : NEW 
+website      / website.converter.test   / selection (selection)         : NEW selection_keys: [1, 2, 3, 4]
+website      / website.converter.test   / selection_str (selection)     : NEW selection_keys: ['A', 'B', 'C', 'D']
+website      / website.converter.test   / text (text)                   : NEW 
+website      / website.converter.test.sub / name (char)                   : NEW 
+website      / website.menu             / child_id (one2many)           : NEW relation: website.menu
+website      / website.menu             / name (char)                   : NEW required: required
+website      / website.menu             / new_window (boolean)          : NEW 
+website      / website.menu             / parent_id (many2one)          : NEW relation: website.menu
+website      / website.menu             / parent_left (integer)         : NEW 
+website      / website.menu             / parent_right (integer)        : NEW 
+website      / website.menu             / sequence (integer)            : NEW 
+website      / website.menu             / url (char)                    : NEW 
+website      / website.menu             / website_id (many2one)         : NEW relation: website
+website      / website.seo.metadata     / website_meta_description (text): NEW 
+website      / website.seo.metadata     / website_meta_keywords (char)  : NEW 
+website      / website.seo.metadata     / website_meta_title (char)     : NEW 
+---XML records in module 'website'---
+NEW ir.actions.act_url: website.action_website
+NEW ir.actions.act_url: website.action_website_homepage
+NEW ir.actions.act_url: website.action_website_tutorial
+NEW ir.actions.act_window: website.action_module_website
+NEW ir.actions.act_window: website.action_website_configuration
+NEW ir.actions.act_window: website.action_website_menu
+NEW ir.actions.todo: base.open_menu
+NEW ir.model.access: website.access_seo_designer
+NEW ir.model.access: website.access_seo_public
+NEW ir.model.access: website.access_website
+NEW ir.model.access: website.access_website_converter_test
+NEW ir.model.access: website.access_website_converter_test_sub
+NEW ir.model.access: website.access_website_ir_ui_view
+NEW ir.model.access: website.access_website_menu
+NEW ir.model.access: website.access_website_menu_designer
+NEW ir.model.access: website.access_website_public
+NEW ir.rule: website.website_designer_edit_qweb
+NEW ir.rule: website.website_designer_view
+NEW ir.ui.menu: website.menu_website
+NEW ir.ui.menu: website.menu_website_configuration
+NEW ir.ui.view: website.403
+NEW ir.ui.view: website.404
+NEW ir.ui.view: website.500
+NEW ir.ui.view: website.aboutus
+NEW ir.ui.view: website.assets_backend
+NEW ir.ui.view: website.assets_editor
+NEW ir.ui.view: website.assets_frontend
+NEW ir.ui.view: website.company_description
+NEW ir.ui.view: website.contactus
+NEW ir.ui.view: website.debugger
+NEW ir.ui.view: website.default_page
+NEW ir.ui.view: website.editor_head
+NEW ir.ui.view: website.footer_custom
+NEW ir.ui.view: website.homepage
+NEW ir.ui.view: website.http_error
+NEW ir.ui.view: website.http_error_debug
+NEW ir.ui.view: website.kanban
+NEW ir.ui.view: website.kanban_contain
+NEW ir.ui.view: website.layout
+NEW ir.ui.view: website.layout_logo_show
+NEW ir.ui.view: website.login_layout
+NEW ir.ui.view: website.menu_tree
+NEW ir.ui.view: website.page_404
+NEW ir.ui.view: website.pager
+NEW ir.ui.view: website.publish_management
+NEW ir.ui.view: website.publish_short
+NEW ir.ui.view: website.robots
+NEW ir.ui.view: website.show_sign_in
+NEW ir.ui.view: website.sitemap_index_xml
+NEW ir.ui.view: website.sitemap_locs
+NEW ir.ui.view: website.sitemap_xml
+NEW ir.ui.view: website.snippet_options
+NEW ir.ui.view: website.snippets
+NEW ir.ui.view: website.submenu
+NEW ir.ui.view: website.theme
+NEW ir.ui.view: website.theme_amelia
+NEW ir.ui.view: website.theme_cerulean
+NEW ir.ui.view: website.theme_cosmo
+NEW ir.ui.view: website.theme_cyborg
+NEW ir.ui.view: website.theme_flatly
+NEW ir.ui.view: website.theme_journal
+NEW ir.ui.view: website.theme_readable
+NEW ir.ui.view: website.theme_simplex
+NEW ir.ui.view: website.theme_slate
+NEW ir.ui.view: website.theme_spacelab
+NEW ir.ui.view: website.theme_united
+NEW ir.ui.view: website.theme_yeti
+NEW ir.ui.view: website.themes
+NEW ir.ui.view: website.view_base_language_install
+NEW ir.ui.view: website.view_server_action_form_website
+NEW ir.ui.view: website.view_server_action_search_website
+NEW ir.ui.view: website.view_server_action_tree_website
+NEW ir.ui.view: website.view_website_config_settings
+NEW ir.ui.view: website.view_website_form
+NEW ir.ui.view: website.view_website_tree
+NEW res.groups: base.group_website_designer
+NEW res.groups: base.group_website_publisher
+NEW website: website.default_website
+NEW website.menu: website.main_menu
+NEW website.menu: website.menu_contactus
+NEW website.menu: website.menu_homepage

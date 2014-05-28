@@ -1,0 +1,21 @@
+---Fields in module 'stock_picking_wave'---
+stock_picking_wave / stock.picking            / wave_id (many2one)            : NEW relation: stock.picking.wave
+stock_picking_wave / stock.picking.wave       / name (char)                   : NEW required: required, req_default: /
+stock_picking_wave / stock.picking.wave       / picking_ids (one2many)        : NEW relation: stock.picking
+stock_picking_wave / stock.picking.wave       / state (selection)             : NEW required: required, selection_keys: ['cancel', 'done', 'draft', 'in_progress'], req_default: draft
+stock_picking_wave / stock.picking.wave       / user_id (many2one)            : NEW relation: res.users
+---XML records in module 'stock_picking_wave'---
+NEW ir.actions.act_window: stock_picking_wave.action_picking_to_wave
+NEW ir.actions.act_window: stock_picking_wave.action_picking_wave
+NEW ir.actions.act_window: stock_picking_wave.picking_to_wave_act
+NEW ir.model.access: stock_picking_wave.access_stock_picking_wave
+NEW ir.sequence: stock_picking_wave.seq_picking_wave
+NEW ir.sequence.type: stock_picking_wave.seq_type_picking_wave
+NEW ir.ui.menu: stock_picking_wave.menu_action_picking_wave
+NEW ir.ui.view: stock_picking_wave.picking_to_wave_form
+NEW ir.ui.view: stock_picking_wave.view_picking_wave_filter
+NEW ir.ui.view: stock_picking_wave.view_picking_wave_form
+NEW ir.ui.view: stock_picking_wave.view_picking_wave_tree
+NEW ir.ui.view: stock_picking_wave.view_stock_picking_wave_inherit
+NEW ir.ui.view: stock_picking_wave.view_stock_picking_wave_search_inherit
+NEW ir.ui.view: stock_picking_wave.view_stock_picking_wave_tree_inherit

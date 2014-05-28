@@ -1,0 +1,19 @@
+---Fields in module 'mrp_repair'---
+mrp_repair   / mrp.repair               / deliver_bool (boolean)        : DEL 
+mrp_repair   / mrp.repair               / location_dest_id (many2one)   : now required
+mrp_repair   / mrp.repair               / location_id (many2one)        : now required, default = function
+mrp_repair   / mrp.repair               / lot_id (many2one)             : NEW relation: stock.production.lot
+mrp_repair   / mrp.repair               / message_last_post (datetime)  : NEW 
+mrp_repair   / mrp.repair               / picking_id (many2one)         : DEL relation: stock.picking
+mrp_repair   / mrp.repair               / prodlot_id (many2one)         : DEL relation: stock.production.lot
+mrp_repair   / mrp.repair               / product_qty (float)           : NEW required: required, req_default: 1.0
+mrp_repair   / mrp.repair               / product_uom (many2one)        : NEW relation: product.uom, required: required
+mrp_repair   / mrp.repair               / website_message_ids (one2many): NEW relation: mail.message
+mrp_repair   / mrp.repair.line          / lot_id (many2one)             : NEW relation: stock.production.lot
+mrp_repair   / mrp.repair.line          / prodlot_id (many2one)         : DEL relation: stock.production.lot
+---XML records in module 'mrp_repair'---
+NEW ir.actions.report.xml: mrp_repair.action_report_mrp_repair_order
+DEL ir.actions.report.xml: mrp_repair.report_mrp_repair
+DEL ir.model.access: mrp_repair.access_stock_production_lot_revision_manager
+DEL ir.model.access: mrp_repair.access_stock_production_lot_revision_user
+NEW ir.ui.view: mrp_repair.report_mrprepairorder

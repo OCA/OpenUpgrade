@@ -1,0 +1,142 @@
+---Fields in module 'hr_recruitment'---
+hr_recruitment / hr.applicant             / date (datetime)               : DEL 
+hr_recruitment / hr.applicant             / date_last_stage_update (datetime): NEW 
+hr_recruitment / hr.applicant             / last_stage_id (many2one)      : NEW relation: hr.recruitment.stage
+hr_recruitment / hr.applicant             / message_last_post (datetime)  : NEW 
+hr_recruitment / hr.applicant             / priority (selection)          : selection_keys is now '['0', '1', '2', '3', '4']' ('['', '1', '2', '3', '4', '5']')
+hr_recruitment / hr.applicant             / response (integer)            : DEL 
+hr_recruitment / hr.applicant             / response_id (many2one)        : NEW relation: survey.user_input
+hr_recruitment / hr.applicant             / survey (many2one)             : relation is now 'survey.survey' ('survey')
+hr_recruitment / hr.applicant             / website_message_ids (one2many): NEW relation: mail.message
+hr_recruitment / hr.job                   / address_id (many2one)         : NEW relation: res.partner
+hr_recruitment / hr.job                   / application_ids (one2many)    : NEW relation: hr.applicant
+hr_recruitment / hr.job                   / color (integer)               : NEW 
+hr_recruitment / hr.job                   / survey_id (many2one)          : relation is now 'survey.survey' ('survey')
+hr_recruitment / hr.job                   / user_id (many2one)            : NEW relation: res.users
+hr_recruitment / hr.recruitment.report    / date (date)                   : DEL 
+hr_recruitment / hr.recruitment.report    / date_create (datetime)        : NEW 
+hr_recruitment / hr.recruitment.report    / date_last_stage_update (datetime): NEW 
+hr_recruitment / hr.recruitment.report    / day (char)                    : DEL 
+hr_recruitment / hr.recruitment.report    / last_stage_id (many2one)      : NEW relation: hr.recruitment.stage
+hr_recruitment / hr.recruitment.report    / month (selection)             : DEL selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+hr_recruitment / hr.recruitment.report    / nbr (integer)                 : DEL 
+hr_recruitment / hr.recruitment.report    / priority (selection)          : selection_keys is now '['0', '1', '2', '3', '4']' ('['', '1', '2', '3', '4', '5']')
+hr_recruitment / hr.recruitment.report    / state (selection)             : DEL selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
+hr_recruitment / hr.recruitment.report    / year (char)                   : DEL 
+hr_recruitment / hr.recruitment.stage     / state (selection)             : DEL required: required, selection_keys: ['cancel', 'done', 'draft', 'open', 'pending'], req_default: draft
+hr_recruitment / hr.recruitment.stage     / template_id (many2one)        : NEW relation: email.template
+---XML records in module 'hr_recruitment'---
+NEW calendar.event.type: hr_recruitment.categ_meet_interview
+DEL crm.meeting.type: hr_recruitment.categ_meet_interview
+NEW email.template: hr_recruitment.applicant_interest
+NEW email.template: hr_recruitment.applicant_refuse
+NEW hr.applicant_category: hr_recruitment.tag_applicant_it
+NEW hr.applicant_category: hr_recruitment.tag_applicant_manager
+NEW hr.applicant_category: hr_recruitment.tag_applicant_reserve
+NEW hr.applicant_category: hr_recruitment.tag_applicant_sales
+NEW ir.actions.act_window: hr_recruitment.action_hr_job
+NEW ir.actions.act_window: hr_recruitment.action_hr_job_applications
+DEL ir.actions.act_window: hr_recruitment.action_applicants_status
+DEL ir.actions.act_window: hr_recruitment.action_hr_recruitment_hired_employee
+NEW ir.model.access: hr_recruitment.access_calendar_event_hruser
+NEW ir.model.access: hr_recruitment.access_calendar_event_type_hr_officer
+NEW ir.model.access: hr_recruitment.access_hr_recruitment_stage_manager
+DEL ir.model.access: hr_recruitment.access_crm_meeting_hruser
+NEW ir.ui.menu: hr.menu_hr_job_position
+DEL ir.ui.menu: hr.menu_hr_job
+NEW ir.ui.view: hr_recruitment.assets_backend
+NEW ir.ui.view: hr_recruitment.view_hr_job_kanban
+NEW ir.ui.view: hr_recruitment.view_job_filter_recruitment
+DEL ir.ui.view: hr_recruitment.board_hr_applicants_status_form
+DEL ir.ui.view: hr_recruitment.view_applicants_status_tree
+DEL ir.ui.view: hr_recruitment.view_hr_recruitment_hired_employee
+DEL ir.ui.view: hr_recruitment.view_hr_recruitment_report_tree
+NEW mail.message.subtype: hr_recruitment.mt_applicant_new
+NEW mail.message.subtype: hr_recruitment.mt_applicant_stage_changed
+NEW mail.message.subtype: hr_recruitment.mt_job_applicant_hired
+NEW mail.message.subtype: hr_recruitment.mt_job_applicant_new
+NEW mail.message.subtype: hr_recruitment.mt_job_applicant_stage_changed
+DEL mail.message.subtype: hr_recruitment.mt_applicant_refused
+DEL mail.message.subtype: hr_recruitment.mt_job_new_applicant
+DEL mail.message.subtype: hr_recruitment.mt_stage_changed
+NEW res.groups: base.group_hr_user
+DEL survey: hr_recruitment.survey_job_0
+DEL survey.answer: hr_recruitment.survey_answer_job_0
+DEL survey.answer: hr_recruitment.survey_answer_job_1
+DEL survey.answer: hr_recruitment.survey_answer_job_10
+DEL survey.answer: hr_recruitment.survey_answer_job_11
+DEL survey.answer: hr_recruitment.survey_answer_job_12
+DEL survey.answer: hr_recruitment.survey_answer_job_2
+DEL survey.answer: hr_recruitment.survey_answer_job_3
+DEL survey.answer: hr_recruitment.survey_answer_job_4
+DEL survey.answer: hr_recruitment.survey_answer_job_5
+DEL survey.answer: hr_recruitment.survey_answer_job_6
+DEL survey.answer: hr_recruitment.survey_answer_job_7
+DEL survey.answer: hr_recruitment.survey_answer_job_70
+DEL survey.answer: hr_recruitment.survey_answer_job_71
+DEL survey.answer: hr_recruitment.survey_answer_job_8
+DEL survey.answer: hr_recruitment.survey_answer_job_81
+DEL survey.answer: hr_recruitment.survey_answer_job_82
+DEL survey.answer: hr_recruitment.survey_answer_job_83
+DEL survey.answer: hr_recruitment.survey_answer_job_84
+DEL survey.answer: hr_recruitment.survey_answer_job_85
+DEL survey.answer: hr_recruitment.survey_answer_job_86
+DEL survey.answer: hr_recruitment.survey_answer_job_87
+DEL survey.answer: hr_recruitment.survey_answer_job_88
+DEL survey.answer: hr_recruitment.survey_answer_job_9
+NEW survey.label: hr_recruitment.rcol_3_1_1
+NEW survey.label: hr_recruitment.rcol_3_1_2
+NEW survey.label: hr_recruitment.rcol_3_1_3
+NEW survey.label: hr_recruitment.rcol_3_1_4
+NEW survey.label: hr_recruitment.rcol_3_1_5
+NEW survey.label: hr_recruitment.recruitment_1_2_1
+NEW survey.label: hr_recruitment.recruitment_1_2_2
+NEW survey.label: hr_recruitment.recruitment_1_3_1
+NEW survey.label: hr_recruitment.recruitment_1_3_2
+NEW survey.label: hr_recruitment.recruitment_1_3_3
+NEW survey.label: hr_recruitment.recruitment_1_3_4
+NEW survey.label: hr_recruitment.recruitment_1_3_5
+NEW survey.label: hr_recruitment.recruitment_1_3_6
+NEW survey.label: hr_recruitment.recruitment_1_3_7
+NEW survey.label: hr_recruitment.recruitment_1_3_8
+NEW survey.label: hr_recruitment.rrow_2_1_1
+NEW survey.label: hr_recruitment.rrow_2_1_10
+NEW survey.label: hr_recruitment.rrow_2_1_11
+NEW survey.label: hr_recruitment.rrow_2_1_12
+NEW survey.label: hr_recruitment.rrow_2_1_13
+NEW survey.label: hr_recruitment.rrow_2_1_2
+NEW survey.label: hr_recruitment.rrow_2_1_3
+NEW survey.label: hr_recruitment.rrow_2_1_4
+NEW survey.label: hr_recruitment.rrow_2_1_5
+NEW survey.label: hr_recruitment.rrow_2_1_6
+NEW survey.label: hr_recruitment.rrow_2_1_7
+NEW survey.label: hr_recruitment.rrow_2_1_8
+NEW survey.label: hr_recruitment.rrow_2_1_9
+NEW survey.page: hr_recruitment.recruitment_1
+NEW survey.page: hr_recruitment.recruitment_2
+NEW survey.page: hr_recruitment.recruitment_3
+DEL survey.page: hr_recruitment.survey_page_job_0
+DEL survey.page: hr_recruitment.survey_page_job_1
+DEL survey.page: hr_recruitment.survey_page_job_2
+NEW survey.question: hr_recruitment.recruitment_1_1
+NEW survey.question: hr_recruitment.recruitment_1_2
+NEW survey.question: hr_recruitment.recruitment_1_3
+NEW survey.question: hr_recruitment.recruitment_2_1
+NEW survey.question: hr_recruitment.recruitment_2_2
+NEW survey.question: hr_recruitment.recruitment_2_3
+NEW survey.question: hr_recruitment.recruitment_2_4
+NEW survey.question: hr_recruitment.recruitment_3_1
+DEL survey.question: hr_recruitment.survey_question_job_0
+DEL survey.question: hr_recruitment.survey_question_job_1
+DEL survey.question: hr_recruitment.survey_question_job_2
+DEL survey.question: hr_recruitment.survey_question_job_3
+DEL survey.question: hr_recruitment.survey_question_job_4
+DEL survey.question: hr_recruitment.survey_question_job_5
+DEL survey.question: hr_recruitment.survey_question_job_6
+DEL survey.question: hr_recruitment.survey_question_job_7
+DEL survey.question.column.heading: hr_recruitment.survey_question_column_heading_job_0
+DEL survey.question.column.heading: hr_recruitment.survey_question_column_heading_job_1
+DEL survey.question.column.heading: hr_recruitment.survey_question_column_heading_job_2
+DEL survey.question.column.heading: hr_recruitment.survey_question_column_heading_job_3
+DEL survey.question.column.heading: hr_recruitment.survey_question_column_heading_job_4
+NEW survey.survey: hr_recruitment.recruitment_form

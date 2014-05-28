@@ -1,0 +1,11 @@
+---Fields in module 'product_extended'---
+product_extended / wizard.price             / info_field (text)             : NEW 
+product_extended / wizard.price             / real_time_accounting (boolean): NEW 
+product_extended / wizard.price             / recursive (boolean)           : NEW 
+---XML records in module 'product_extended'---
+NEW ir.actions.act_window: product_extended.action_view_compute_price_wizard
+NEW ir.model.access: product_extended.access_wizard_price_all
+NEW ir.ui.view: product_extended.mrp_bom_form_view_product_extended
+NEW ir.ui.view: product_extended.mrp_bom_tree_view_product_extended
+NEW ir.ui.view: product_extended.product_product_ext_form_view2
+NEW ir.ui.view: product_extended.view_compute_price_wizard

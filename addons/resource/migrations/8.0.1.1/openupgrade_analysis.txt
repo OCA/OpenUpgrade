@@ -1,0 +1,7 @@
+---Fields in module 'resource'---
+resource     / resource.calendar        / leave_ids (one2many)          : NEW relation: resource.calendar.leaves
+---XML records in module 'resource'---
+NEW ir.model.access: resource.access_resource_calendar_leaves_user
+NEW ir.rule: resource.resource_own_leaves
+NEW ir.ui.menu: resource.menu_resource_calendar
+NEW ir.ui.menu: resource.menu_resource_resource

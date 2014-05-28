@@ -1,0 +1,65 @@
+---Fields in module 'website_quote'---
+website_quote / product.template         / website_description (html)    : NEW 
+website_quote / sale.order               / access_token (char)           : NEW required: required, req_default: function
+website_quote / sale.order               / options (one2many)            : NEW relation: sale.order.option
+website_quote / sale.order               / template_id (many2one)        : NEW relation: sale.quote.template
+website_quote / sale.order               / validity_date (date)          : NEW 
+website_quote / sale.order               / website_description (html)    : NEW 
+website_quote / sale.order.line          / option_line_id (one2many)     : NEW relation: sale.order.option
+website_quote / sale.order.line          / website_description (html)    : NEW 
+website_quote / sale.order.option        / discount (float)              : NEW 
+website_quote / sale.order.option        / line_id (many2one)            : NEW relation: sale.order.line
+website_quote / sale.order.option        / name (text)                   : NEW required: required
+website_quote / sale.order.option        / order_id (many2one)           : NEW relation: sale.order
+website_quote / sale.order.option        / price_unit (float)            : NEW required: required
+website_quote / sale.order.option        / product_id (many2one)         : NEW relation: product.product
+website_quote / sale.order.option        / quantity (float)              : NEW required: required, req_default: 1
+website_quote / sale.order.option        / uom_id (many2one)             : NEW relation: product.uom, required: required
+website_quote / sale.order.option        / website_description (html)    : NEW 
+website_quote / sale.quote.line          / discount (float)              : NEW 
+website_quote / sale.quote.line          / name (text)                   : NEW required: required
+website_quote / sale.quote.line          / price_unit (float)            : NEW required: required
+website_quote / sale.quote.line          / product_id (many2one)         : NEW relation: product.product, required: required
+website_quote / sale.quote.line          / product_uom_id (many2one)     : NEW relation: product.uom, required: required
+website_quote / sale.quote.line          / product_uom_qty (float)       : NEW required: required, req_default: 1
+website_quote / sale.quote.line          / quote_id (many2one)           : NEW relation: sale.quote.template, required: required
+website_quote / sale.quote.line          / website_description (html)    : NEW 
+website_quote / sale.quote.option        / discount (float)              : NEW 
+website_quote / sale.quote.option        / name (text)                   : NEW required: required
+website_quote / sale.quote.option        / price_unit (float)            : NEW required: required
+website_quote / sale.quote.option        / product_id (many2one)         : NEW relation: product.product, required: required
+website_quote / sale.quote.option        / quantity (float)              : NEW required: required, req_default: 1
+website_quote / sale.quote.option        / template_id (many2one)        : NEW relation: sale.quote.template, required: required
+website_quote / sale.quote.option        / uom_id (many2one)             : NEW relation: product.uom, required: required
+website_quote / sale.quote.option        / website_description (html)    : NEW 
+website_quote / sale.quote.template      / name (char)                   : NEW required: required
+website_quote / sale.quote.template      / note (text)                   : NEW 
+website_quote / sale.quote.template      / number_of_days (integer)      : NEW 
+website_quote / sale.quote.template      / options (one2many)            : NEW relation: sale.quote.option
+website_quote / sale.quote.template      / quote_line (one2many)         : NEW relation: sale.quote.line
+website_quote / sale.quote.template      / website_description (html)    : NEW 
+---XML records in module 'website_quote'---
+NEW email.template: sale.email_template_edi_sale
+NEW ir.actions.act_window: website_quote.action_sale_quotation_template
+NEW ir.model.access: website_quote.access_sale_order_option
+NEW ir.model.access: website_quote.access_sale_order_option_all
+NEW ir.model.access: website_quote.access_sale_quote_line
+NEW ir.model.access: website_quote.access_sale_quote_line_manager
+NEW ir.model.access: website_quote.access_sale_quote_option
+NEW ir.model.access: website_quote.access_sale_quote_option_manager
+NEW ir.model.access: website_quote.access_sale_quote_template
+NEW ir.model.access: website_quote.access_sale_quote_template_manager
+NEW ir.ui.menu: website_quote.menu_sale_quote_template
+NEW ir.ui.view: website_quote.change_quantity
+NEW ir.ui.view: website_quote.chatter
+NEW ir.ui.view: website_quote.navigation_menu
+NEW ir.ui.view: website_quote.opt_quotation_chatter_post_complete_comment
+NEW ir.ui.view: website_quote.opt_quotation_signature
+NEW ir.ui.view: website_quote.optional_products
+NEW ir.ui.view: website_quote.pricing
+NEW ir.ui.view: website_quote.quotation_toolbar
+NEW ir.ui.view: website_quote.sale_order_form_quote
+NEW ir.ui.view: website_quote.so_quotation
+NEW ir.ui.view: website_quote.so_template
+NEW ir.ui.view: website_quote.view_sale_quote_template_form
+NEW ir.ui.view: website_quote.view_sale_quote_template_tree

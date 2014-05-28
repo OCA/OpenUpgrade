@@ -1,0 +1,9 @@
+---Fields in module 'account_followup'---
+account_followup / account_followup.followup / name (float)                  : type is now 'char' ('float')
+---XML records in module 'account_followup'---
+NEW ir.actions.report.xml: account_followup.action_report_followup
+DEL ir.actions.report.xml: account_followup.account_followup_followup_report
+NEW ir.ui.menu: account_followup.account_followup_main_menu
+NEW ir.ui.view: account_followup.report_followup
+NEW ir.ui.view: account_followup.view_account_config_settings_inherit
+DEL ir.ui.view: account_followup.view_account_followup_stat_tree

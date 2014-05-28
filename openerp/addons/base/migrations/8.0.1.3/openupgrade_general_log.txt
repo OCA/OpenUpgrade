@@ -1,0 +1,681 @@
+---Fields in module 'general'---
+# 5009 fields matched,
+# Direct match: 4376
+# Found in other module: 114
+# Found with different name: 0
+# Found with different type: 1
+# In obsolete models: 518
+# New columns: 1525
+# Not matched: 308
+new model account.analytic.invoice.line
+new model blog.blog
+new model blog.post
+new model blog.post.history
+new model blog.tag
+new model calendar.contacts
+new model calendar.event.type
+new model certification.certification
+new model certification.type
+new model decimal.precision.test
+new model event.event.ticket
+new model event.sponsor
+new model event.sponsor.type
+new model event.tag
+new model event.track
+new model event.track.location
+new model event.track.stage
+new model event.track.tag
+new model export.boolean
+new model export.date
+new model export.datetime
+new model export.decimal
+new model export.float
+new model export.function
+new model export.integer
+new model export.many2many
+new model export.many2many.other
+new model export.many2one
+new model export.one2many
+new model export.one2many.child
+new model export.one2many.child.1
+new model export.one2many.child.2
+new model export.one2many.multiple
+new model export.one2many.multiple.child
+new model export.one2many.recursive
+new model export.selection
+new model export.selection.function
+new model export.selection.withdefault
+new model export.string
+new model export.string.bounded
+new model export.string.required
+new model export.text
+new model export.unique
+new model forum.documentation.stage
+new model forum.documentation.toc
+new model forum.forum
+new model forum.post
+new model forum.post.reason
+new model forum.post.vote
+new model forum.tag
+new model gamification.badge
+new model gamification.badge.user
+new model gamification.challenge
+new model gamification.challenge.line
+new model gamification.goal
+new model gamification.goal.definition
+new model google.drive.config
+new model im.message
+new model im.session
+new model im.user
+new model im_livechat.channel
+new model ir.logging
+new model mail.mail.statistics
+new model mail.mass_mailing
+new model mail.mass_mailing.campaign
+new model mail.mass_mailing.category
+new model mail.mass_mailing.contact
+new model mail.mass_mailing.list
+new model mail.mass_mailing.stage
+new model payment.acquirer
+new model payment.transaction
+new model procurement.group
+new model procurement.rule
+new model product.attribute
+new model product.attribute.line
+new model product.attribute.value
+new model product.price.history
+new model product.public.category
+new model product.putaway
+new model product.removal
+new model product.style
+new model report.paperformat
+new model res.font
+new model sale.order.option
+new model sale.quote.line
+new model sale.quote.option
+new model sale.quote.template
+new model sale_layout.category
+new model stock.fixed.putaway.strat
+new model stock.history
+new model stock.landed.cost
+new model stock.landed.cost.lines
+new model stock.location.route
+new model stock.move.operation.link
+new model stock.pack.operation
+new model stock.picking.type
+new model stock.picking.wave
+new model stock.quant
+new model stock.quant.package
+new model stock.valuation.adjustment.lines
+new model survey.label
+new model survey.stage
+new model survey.survey
+new model survey.user_input
+new model survey.user_input_line
+new model test.workflow.model.a
+new model test.workflow.model.b
+new model test.workflow.model.c
+new model test.workflow.model.d
+new model test.workflow.model.e
+new model test.workflow.model.f
+new model test.workflow.model.g
+new model test.workflow.model.h
+new model test.workflow.model.i
+new model test.workflow.model.j
+new model test.workflow.model.k
+new model test.workflow.model.l
+new model test.workflow.trigger
+new model test_converter.monetary
+new model test_converter.test_model
+new model test_converter.test_model.sub
+new model test_uninstall.model
+new model website
+new model website.converter.test
+new model website.converter.test.sub
+new model website.menu
+new model website.seo.metadata
+new model website.twitter.tweet
+new model wizard.price
+obsolete model audittrail.log
+obsolete model audittrail.log.line
+obsolete model audittrail.rule
+obsolete model calendar.todo
+obsolete model crm.meeting
+obsolete model crm.meeting.type
+obsolete model document.page
+obsolete model document.page.history
+obsolete model document.webdav.dir.property
+obsolete model document.webdav.file.property
+obsolete model event.moodle.config.wiz
+obsolete model google.docs.config
+obsolete model idea.category
+obsolete model idea.idea
+obsolete model ir.actions.wizard
+obsolete model ir.ui.view_sc
+obsolete model portal.payment.acquirer
+obsolete model pos.category
+obsolete model process.condition
+obsolete model process.node
+obsolete model process.process
+obsolete model process.transition
+obsolete model process.transition.action
+obsolete model product.pulled.flow
+obsolete model project.gtd.context
+obsolete model project.gtd.timebox
+obsolete model project.phase
+obsolete model project.user.allocation
+obsolete model report.sales.by.margin.pos
+obsolete model report.sales.by.margin.pos.month
+obsolete model report.stock.inventory
+obsolete model report.stock.move
+obsolete model res.alarm
+obsolete model res.request
+obsolete model res.request.history
+obsolete model sale.shop
+obsolete model stock.journal
+obsolete model stock.picking.in
+obsolete model stock.picking.out
+obsolete model stock.production.lot.revision
+obsolete model stock.report.prodlots
+obsolete model stock.report.tracklots
+obsolete model stock.tracking
+obsolete model survey
+obsolete model survey.answer
+obsolete model survey.history
+obsolete model survey.question.column.heading
+obsolete model survey.request
+obsolete model survey.response
+obsolete model survey.response.answer
+obsolete model survey.response.line
+obsolete model survey.tbl.column.heading
+obsolete model survey.type
+obsolete model web_tests_demo.model
+---XML records in module 'general'---
+ERROR: module not in list of installed modules:
+---Fields in module 'google_docs'---
+---XML records in module 'google_docs'---
+DEL ir.actions.act_window: google_docs.action_google_docs_users_config
+DEL ir.model.access: google_docs.access_google_docs
+DEL ir.ui.menu: google_docs.menu_gdocs_config
+DEL ir.ui.menu: google_docs.menu_gdocs_model_config
+DEL ir.ui.view: google_docs.view_google_docs_config_form
+DEL ir.ui.view: google_docs.view_google_docs_config_tree
+ERROR: module not in list of installed modules:
+---Fields in module 'portal_hr_employees'---
+portal_hr_employees / hr.employee              / public_info (text)            : module is now 'website_hr' ('portal_hr_employees')
+portal_hr_employees / hr.employee              / visibility (selection)        : DEL selection_keys: ['private', 'public']
+---XML records in module 'portal_hr_employees'---
+DEL ir.actions.act_window: portal_hr_employees.action_team
+DEL ir.model.access: portal_hr_employees.access_hr_employee_anonymous
+DEL ir.model.access: portal_hr_employees.access_hr_employee_portal
+DEL ir.ui.view: portal_hr_employees.crm_contact_us
+DEL ir.ui.view: portal_hr_employees.portal_hr_kanban_view_employees
+DEL ir.ui.view: portal_hr_employees.portal_view_employee_filter
+DEL ir.ui.view: portal_hr_employees.view_employee_form
+ERROR: module not in list of installed modules:
+---Fields in module 'project_long_term'---
+project_long_term / account.analytic.account / use_phases (boolean)          : DEL 
+project_long_term / project.project          / phase_ids (one2many)          : DEL relation: project.phase
+---XML records in module 'project_long_term'---
+DEL ir.actions.act_window: project_long_term.act_project_phase
+DEL ir.actions.act_window: project_long_term.act_project_phase_list
+DEL ir.actions.act_window: project_long_term.act_project_phases
+DEL ir.actions.act_window: project_long_term.act_resouce_allocation
+DEL ir.actions.act_window: project_long_term.action_project_compute_phases
+DEL ir.actions.act_window: project_long_term.action_project_compute_tasks
+DEL ir.actions.act_window: project_long_term.project_phase_task_list
+DEL ir.model.access: project_long_term.access_project_phase
+DEL ir.model.access: project_long_term.access_project_phase_manager
+DEL ir.model.access: project_long_term.access_project_resource_calendar_attendance
+DEL ir.model.access: project_long_term.access_project_user_allocation
+DEL ir.model.access: project_long_term.access_project_user_allocation_manager
+DEL ir.model.access: project_long_term.access_resource_calendar_leaves_user
+DEL ir.model.access: project_long_term.access_resource_resource_manager
+DEL ir.model.access: project_long_term.access_resource_resource_user
+DEL ir.ui.menu: base.menu_project_long_term
+DEL ir.ui.menu: project_long_term.menu_compute_phase
+DEL ir.ui.menu: project_long_term.menu_compute_tasks
+DEL ir.ui.menu: project_long_term.menu_phase_schedule
+DEL ir.ui.menu: project_long_term.menu_pm_users_project1
+DEL ir.ui.menu: project_long_term.menu_project_phase
+DEL ir.ui.menu: project_long_term.menu_project_phase_list
+DEL ir.ui.menu: project_long_term.menu_resouce_allocation
+DEL ir.ui.menu: project_long_term.menu_view_resource
+DEL ir.ui.menu: project_long_term.menu_view_resource_calendar
+DEL ir.ui.menu: project_long_term.menu_view_resource_calendar_leaves
+DEL ir.ui.view: project_long_term.analytic_account_inherited_phase_form
+DEL ir.ui.view: project_long_term.project_phase_form
+DEL ir.ui.view: project_long_term.view_phase_task_form2
+DEL ir.ui.view: project_long_term.view_phase_task_search_form
+DEL ir.ui.view: project_long_term.view_phase_task_search_form_group
+DEL ir.ui.view: project_long_term.view_phase_task_search_form_tree
+DEL ir.ui.view: project_long_term.view_project_compute_phases_select
+DEL ir.ui.view: project_long_term.view_project_compute_tasks
+DEL ir.ui.view: project_long_term.view_project_kanban_phase
+DEL ir.ui.view: project_long_term.view_project_phase_calendar
+DEL ir.ui.view: project_long_term.view_project_phase_form
+DEL ir.ui.view: project_long_term.view_project_phase_gantt
+DEL ir.ui.view: project_long_term.view_project_phase_list
+DEL ir.ui.view: project_long_term.view_project_phase_search
+DEL ir.ui.view: project_long_term.view_project_user_allocation_calendar
+DEL ir.ui.view: project_long_term.view_project_user_allocation_form
+DEL ir.ui.view: project_long_term.view_project_user_allocation_gantt
+DEL ir.ui.view: project_long_term.view_project_user_allocation_list
+DEL ir.ui.view: project_long_term.view_project_user_allocation_search
+DEL workflow: project_long_term.wkf_phase
+DEL workflow.activity: project_long_term.act_cancel_phase
+DEL workflow.activity: project_long_term.act_draft
+DEL workflow.activity: project_long_term.act_phase_done
+DEL workflow.activity: project_long_term.act_phase_pending
+DEL workflow.activity: project_long_term.act_start_phase
+DEL workflow.transition: project_long_term.t0
+DEL workflow.transition: project_long_term.t1
+DEL workflow.transition: project_long_term.t2
+DEL workflow.transition: project_long_term.t3
+DEL workflow.transition: project_long_term.t4
+DEL workflow.transition: project_long_term.t5
+DEL workflow.transition: project_long_term.t6
+DEL workflow.transition: project_long_term.t7
+DEL workflow.transition: project_long_term.t8
+DEL workflow.transition: project_long_term.t9
+ERROR: module not in list of installed modules:
+---Fields in module 'portal_event'---
+portal_event / event.event              / visibility (selection)        : DEL selection_keys: ['private', 'public']
+---XML records in module 'portal_event'---
+DEL ir.actions.act_window: portal_event.action_event_view
+DEL ir.model.access: portal_event.access_event
+DEL ir.model.access: portal_event.access_registration
+DEL ir.rule: portal_event.portal_event_rule
+DEL ir.rule: portal_event.portal_registration_rule
+DEL ir.ui.menu: portal_event.portal_company_events
+DEL ir.ui.view: portal_event.view_event_form_portal
+ERROR: module not in list of installed modules:
+---Fields in module 'idea'---
+---XML records in module 'idea'---
+DEL ir.actions.act_window: idea.action_idea_category
+DEL ir.actions.act_window: idea.action_idea_idea
+DEL ir.model.access: idea.access_idea_category_user
+DEL ir.model.access: idea.access_idea_idea_user
+DEL ir.ui.menu: base.menu_lunch_survey_root
+DEL ir.ui.menu: base.menu_tools
+DEL ir.ui.menu: idea.menu_idea_category
+DEL ir.ui.menu: idea.menu_idea_idea
+DEL ir.ui.menu: idea.menu_ideas
+DEL ir.ui.view: idea.view_idea_category_form
+DEL ir.ui.view: idea.view_idea_category_search
+DEL ir.ui.view: idea.view_idea_category_tree
+DEL ir.ui.view: idea.view_idea_idea_form
+DEL ir.ui.view: idea.view_idea_idea_search
+DEL ir.ui.view: idea.view_idea_idea_tree
+DEL res.groups: base.group_tool_user
+DEL workflow: idea.wkf_idea
+DEL workflow.activity: idea.act_cancel
+DEL workflow.activity: idea.act_close
+DEL workflow.activity: idea.act_draft
+DEL workflow.activity: idea.act_open
+DEL workflow.transition: idea.t1
+DEL workflow.transition: idea.t2
+DEL workflow.transition: idea.t4
+ERROR: module not in list of installed modules:
+---Fields in module 'document_page'---
+---XML records in module 'document_page'---
+DEL ir.actions.act_window: document_page.action_category
+DEL ir.actions.act_window: document_page.action_history
+DEL ir.actions.act_window: document_page.action_page
+DEL ir.actions.act_window: document_page.action_related_page_create_menu
+DEL ir.actions.act_window: document_page.action_related_page_history
+DEL ir.actions.act_window: document_page.action_view_wiki_show_diff
+DEL ir.actions.act_window: document_page.action_view_wiki_show_diff_values
+DEL ir.actions.act_window: document_page.action_wiki_create_menu
+DEL ir.model.access: document_page.document_page
+DEL ir.model.access: document_page.document_page_all
+DEL ir.model.access: document_page.document_page_history
+DEL ir.ui.menu: document_page.menu_category
+DEL ir.ui.menu: document_page.menu_page
+DEL ir.ui.menu: document_page.menu_page_history
+DEL ir.ui.menu: document_page.menu_wiki
+DEL ir.ui.menu: knowledge.menu_document
+DEL ir.ui.view: document_page.view_wiki_create_menu
+DEL ir.ui.view: document_page.view_wiki_filter
+DEL ir.ui.view: document_page.view_wiki_form
+DEL ir.ui.view: document_page.view_wiki_history_tree
+DEL ir.ui.view: document_page.view_wiki_show_diff
+DEL ir.ui.view: document_page.view_wiki_tree
+DEL ir.ui.view: document_page.view_wiki_tree_children
+DEL ir.ui.view: document_page.wiki_history_form
+DEL res.groups: base.group_document_user
+ERROR: module not in list of installed modules:
+---Fields in module 'document_webdav'---
+document_webdav / document.directory       / dav_prop_ids (one2many)       : DEL relation: document.webdav.dir.property
+---XML records in module 'document_webdav'---
+DEL document.directory: document_webdav.document_directory_groups0
+DEL document.directory: document_webdav.document_directory_locations0
+DEL document.directory: document_webdav.document_directory_principals0
+DEL document.directory: document_webdav.document_directory_resources0
+DEL document.directory: document_webdav.document_directory_uids1
+DEL document.directory: document_webdav.document_directory_users1
+DEL document.webdav.dir.property: document_webdav.document_webdav_dir_property_currentuserprincipal0
+DEL document.webdav.dir.property: document_webdav.document_webdav_dir_property_principalurl0
+DEL ir.actions.act_window: document_webdav.action_dir_props_form
+DEL ir.actions.act_window: document_webdav.action_file_props_form
+DEL ir.model.access: document_webdav.access_webdav_dir_property_all
+DEL ir.model.access: document_webdav.access_webdav_dir_property_group_doc_manager
+DEL ir.model.access: document_webdav.access_webdav_dir_property_group_system
+DEL ir.model.access: document_webdav.access_webdav_file_property_all
+DEL ir.ui.menu: document_webdav.menu_document_props
+DEL ir.ui.menu: document_webdav.menu_folder_props
+DEL ir.ui.menu: document_webdav.menu_properties
+DEL ir.ui.view: document_webdav.view_dir_props_filter
+DEL ir.ui.view: document_webdav.view_dir_props_form
+DEL ir.ui.view: document_webdav.view_dir_props_tree
+DEL ir.ui.view: document_webdav.view_document_directory_form1
+DEL ir.ui.view: document_webdav.view_file_props_filter
+DEL ir.ui.view: document_webdav.view_file_props_form
+DEL ir.ui.view: document_webdav.view_file_props_tree
+ERROR: module not in list of installed modules:
+---Fields in module 'audittrail'---
+---XML records in module 'audittrail'---
+DEL ir.actions.act_window: audittrail.action_audittrail_log_tree
+DEL ir.actions.act_window: audittrail.action_audittrail_rule_tree
+DEL ir.actions.act_window: audittrail.action_audittrail_view_log
+DEL ir.model.access: audittrail.access_audittrail_log_all_users
+DEL ir.model.access: audittrail.access_audittrail_log_line_all_users
+DEL ir.model.access: audittrail.access_audittrail_rule_all_access
+DEL ir.model.access: audittrail.access_audittrail_rule_all_users
+DEL ir.ui.menu: audittrail.menu_action_audittrail_rule_tree
+DEL ir.ui.menu: audittrail.menu_audit
+DEL ir.ui.menu: audittrail.menu_audit_logs
+DEL ir.ui.view: audittrail.view_audittrail_log_form
+DEL ir.ui.view: audittrail.view_audittrail_log_search
+DEL ir.ui.view: audittrail.view_audittrail_log_tree
+DEL ir.ui.view: audittrail.view_audittrail_rule_form
+DEL ir.ui.view: audittrail.view_audittrail_rule_search
+DEL ir.ui.view: audittrail.view_audittrail_rule_tree
+DEL ir.ui.view: audittrail.view_audittrail_view_log
+ERROR: module not in list of installed modules:
+---Fields in module 'google_base_account'---
+google_base_account / res.users                / gmail_password (char)         : DEL 
+google_base_account / res.users                / gmail_user (char)             : DEL 
+---XML records in module 'google_base_account'---
+DEL ir.actions.act_window: google_base_account.act_google_login_form
+DEL ir.ui.view: google_base_account.view_google_login_form
+DEL ir.ui.view: google_base_account.view_users_gogole_form
+ERROR: module not in list of installed modules:
+---Fields in module 'process'---
+---XML records in module 'process'---
+DEL ir.actions.act_window: process.action_process_form
+DEL ir.actions.act_window: process.action_process_node_form
+DEL ir.actions.act_window: process.action_process_transition_form
+DEL ir.model.access: process.access_process_condition
+DEL ir.model.access: process.access_process_node
+DEL ir.model.access: process.access_process_process
+DEL ir.model.access: process.access_process_transition
+DEL ir.model.access: process.access_process_transition_action
+DEL ir.ui.menu: process.menu_process
+DEL ir.ui.menu: process.menu_process_form
+DEL ir.ui.menu: process.menu_process_node_form
+DEL ir.ui.menu: process.menu_process_transition_form
+DEL ir.ui.view: process.view_process_filter
+DEL ir.ui.view: process.view_process_form
+DEL ir.ui.view: process.view_process_node_filter
+DEL ir.ui.view: process.view_process_node_form
+DEL ir.ui.view: process.view_process_node_tree
+DEL ir.ui.view: process.view_process_transition_filter
+DEL ir.ui.view: process.view_process_transition_form
+DEL ir.ui.view: process.view_process_transition_tree
+DEL ir.ui.view: process.view_process_tree
+ERROR: module not in list of installed modules:
+---Fields in module 'stock_no_autopicking'---
+stock_no_autopicking / product.product          / auto_pick (boolean)           : DEL 
+---XML records in module 'stock_no_autopicking'---
+DEL ir.ui.view: stock_no_autopicking.view_product_form_auto_pick
+ERROR: module not in list of installed modules:
+---Fields in module 'account_report_company'---
+account_report_company / account.invoice          / commercial_partner_id (many2one): module is now 'account' ('account_report_company')
+account_report_company / account.invoice.report   / commercial_partner_id (many2one): module is now 'account' ('account_report_company')
+account_report_company / res.partner              / display_name (char)           : module is now 'base' ('account_report_company')
+---XML records in module 'account_report_company'---
+DEL ir.ui.view: account_report_company.account_report_company_invoice_report_search_view
+DEL ir.ui.view: account_report_company.account_report_company_invoice_report_tree_view
+DEL ir.ui.view: account_report_company.account_report_company_search_view
+DEL ir.ui.view: account_report_company.account_report_company_tree_view
+DEL ir.ui.view: account_report_company.account_report_copmany_partner_kanban_view
+DEL ir.ui.view: account_report_company.account_report_copmany_partner_tree_view
+ERROR: module not in list of installed modules:
+---Fields in module 'event_moodle'---
+event_moodle / event.event              / moodle_id (integer)           : DEL 
+event_moodle / event.registration       / moodle_uid (integer)          : DEL 
+event_moodle / event.registration       / moodle_user_password (char)   : DEL 
+event_moodle / event.registration       / moodle_username (char)        : DEL 
+---XML records in module 'event_moodle'---
+DEL ir.actions.act_window: event_moodle.configure_moodle
+DEL ir.actions.todo: base.open_menu
+DEL ir.model.access: event_moodle.access_event_moodle
+DEL ir.model.access: event_moodle.access_event_moodle_user
+DEL ir.ui.menu: event_moodle.wizard_moodle
+DEL ir.ui.view: event_moodle.create_moodle_config_view
+DEL ir.ui.view: event_moodle.moodle_information
+DEL ir.ui.view: event_moodle.moodle_information_event
+ERROR: module not in list of installed modules:
+---Fields in module 'crm_todo'---
+crm_todo     / crm.lead                 / task_ids (one2many)           : DEL relation: project.task
+---XML records in module 'crm_todo'---
+DEL ir.actions.act_window: crm_todo.crm_todo_action
+DEL ir.ui.menu: crm_todo.menu_crm_todo
+DEL ir.ui.view: crm_todo.crm_todo_opportunity_add
+DEL ir.ui.view: crm_todo.project_task_crm_tree
+ERROR: module not in list of installed modules:
+---Fields in module 'project_gtd'---
+---XML records in module 'project_gtd'---
+DEL ir.actions.act_window: project_gtd.action_project_gtd_empty
+DEL ir.actions.act_window: project_gtd.action_project_gtd_fill
+DEL ir.actions.act_window: project_gtd.open_gtd_context_tree
+DEL ir.actions.act_window: project_gtd.open_gtd_task
+DEL ir.actions.act_window: project_gtd.open_gtd_timebox_tree
+DEL ir.model.access: project_gtd.access_project_gtd_context_manager
+DEL ir.model.access: project_gtd.access_project_gtd_context_user
+DEL ir.model.access: project_gtd.access_project_gtd_timebox_manager
+DEL ir.model.access: project_gtd.access_project_gtd_timebox_user
+DEL ir.ui.menu: project_gtd.menu_open_gtd_time_contexts
+DEL ir.ui.menu: project_gtd.menu_open_gtd_time_timeboxes
+DEL ir.ui.menu: project_gtd.menu_open_gtd_timebox_tree
+DEL ir.ui.view: project_gtd.project_task
+DEL ir.ui.view: project_gtd.project_task_tree
+DEL ir.ui.view: project_gtd.view_gtd_context_form
+DEL ir.ui.view: project_gtd.view_gtd_context_tree
+DEL ir.ui.view: project_gtd.view_gtd_timebox_form
+DEL ir.ui.view: project_gtd.view_gtd_timebox_tree
+DEL ir.ui.view: project_gtd.view_project_gtd_empty
+DEL ir.ui.view: project_gtd.view_project_gtd_fill
+DEL ir.ui.view: project_gtd.view_task_gtd_search
+DEL ir.values: project_gtd.project_gtd_empty_values
+DEL ir.values: project_gtd.project_gtd_fill_values
+DEL mail.message: project_gtd.module_install_notification
+DEL project.gtd.context: project_gtd.context_office
+DEL project.gtd.context: project_gtd.context_travel
+DEL project.gtd.timebox: project_gtd.timebox_daily
+DEL project.gtd.timebox: project_gtd.timebox_lt
+DEL project.gtd.timebox: project_gtd.timebox_weekly
+ERROR: module not in list of installed modules:
+---Fields in module 'base_calendar'---
+base_calendar / calendar.alarm           / action (selection)            : DEL required: required, selection_keys: ['audio', 'display', 'email', 'procedure'], req_default: email
+base_calendar / calendar.alarm           / active (boolean)              : DEL 
+base_calendar / calendar.alarm           / alarm_id (many2one)           : DEL relation: res.alarm
+base_calendar / calendar.alarm           / attach (binary)               : DEL 
+base_calendar / calendar.alarm           / attendee_ids (many2many)      : DEL relation: calendar.attendee
+base_calendar / calendar.alarm           / description (text)            : DEL 
+base_calendar / calendar.alarm           / duration (integer)            : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.alarm           / duration (integer)            : now required, default = 1
+base_calendar / calendar.alarm           / event_date (datetime)         : DEL 
+base_calendar / calendar.alarm           / event_end_date (datetime)     : DEL 
+base_calendar / calendar.alarm           / model_id (many2one)           : DEL relation: ir.model
+base_calendar / calendar.alarm           / name (char)                   : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.alarm           / name (char)                   : now required
+base_calendar / calendar.alarm           / repeat (integer)              : DEL 
+base_calendar / calendar.alarm           / res_id (integer)              : DEL 
+base_calendar / calendar.alarm           / state (selection)             : DEL selection_keys: ['done', 'draft', 'run', 'stop']
+base_calendar / calendar.alarm           / trigger_date (datetime)       : DEL 
+base_calendar / calendar.alarm           / trigger_duration (integer)    : DEL required: required, req_default: 5
+base_calendar / calendar.alarm           / trigger_interval (selection)  : DEL required: required, selection_keys: ['days', 'hours', 'minutes'], req_default: minutes
+base_calendar / calendar.alarm           / trigger_occurs (selection)    : DEL required: required, selection_keys: ['after', 'before'], req_default: before
+base_calendar / calendar.alarm           / trigger_related (selection)   : DEL required: required, selection_keys: ['end', 'start'], req_default: start
+base_calendar / calendar.alarm           / user_id (many2one)            : DEL relation: res.users
+base_calendar / calendar.attendee        / availability (selection)      : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.attendee        / child_ids (many2many)         : DEL relation: calendar.attendee
+base_calendar / calendar.attendee        / cn (char)                     : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.attendee        / cutype (selection)            : DEL selection_keys: ['group', 'individual', 'resource', 'room', 'unknown']
+base_calendar / calendar.attendee        / dir (char)                    : DEL 
+base_calendar / calendar.attendee        / email (char)                  : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.attendee        / member (char)                 : DEL 
+base_calendar / calendar.attendee        / parent_ids (many2many)        : DEL relation: calendar.attendee
+base_calendar / calendar.attendee        / partner_id (many2one)         : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.attendee        / ref (reference)               : DEL 
+base_calendar / calendar.attendee        / role (selection)              : DEL selection_keys: ['chair', 'non-participant', 'opt-participant', 'req-participant']
+base_calendar / calendar.attendee        / rsvp (boolean)                : DEL 
+base_calendar / calendar.attendee        / state (selection)             : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.attendee        / state (selection)             : selection_keys is now '['accepted', 'declined', 'needsAction', 'tentative']' ('['accepted', 'declined', 'delegated', 'needs-action', 'tentative']')
+base_calendar / calendar.attendee        / user_id (many2one)            : DEL relation: res.users
+base_calendar / calendar.event           / active (boolean)              : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / alarm_id (many2one)           : DEL relation: res.alarm
+base_calendar / calendar.event           / allday (boolean)              : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / attendee_ids (many2many)      : type is now 'one2many' ('many2many')
+base_calendar / calendar.event           / base_calendar_alarm_id (many2one): DEL relation: calendar.alarm
+base_calendar / calendar.event           / base_calendar_url (char)      : DEL 
+base_calendar / calendar.event           / byday (selection)             : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / class (selection)             : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / count (integer)               : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / create_date (datetime)        : DEL 
+base_calendar / calendar.event           / date (datetime)               : DEL required: required
+base_calendar / calendar.event           / date_deadline (datetime)      : DEL required: required
+base_calendar / calendar.event           / day (integer)                 : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / description (text)            : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / duration (float)              : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / end_date (date)               : DEL 
+base_calendar / calendar.event           / end_type (selection)          : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / exdate (text)                 : DEL 
+base_calendar / calendar.event           / exrule (char)                 : DEL 
+base_calendar / calendar.event           / fr (boolean)                  : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / id (integer)                  : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / interval (integer)            : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / location (char)               : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / mo (boolean)                  : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / month_list (selection)        : DEL selection_keys: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+base_calendar / calendar.event           / name (char)                   : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / name (char)                   : now required
+base_calendar / calendar.event           / organizer (char)              : DEL 
+base_calendar / calendar.event           / organizer_id (many2one)       : DEL relation: res.users
+base_calendar / calendar.event           / partner_ids (many2many)       : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / recurrency (boolean)          : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / recurrent_id (integer)        : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / recurrent_id_date (datetime)  : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / rrule (char)                  : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / rrule_type (selection)        : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / sa (boolean)                  : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / select1 (selection)           : DEL selection_keys: ['date', 'day']
+base_calendar / calendar.event           / sequence (integer)            : DEL 
+base_calendar / calendar.event           / show_as (selection)           : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / state (selection)             : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / state (selection)             : selection_keys is now '['draft', 'open']' ('['cancelled', 'confirmed', 'tentative']')
+base_calendar / calendar.event           / su (boolean)                  : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / th (boolean)                  : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / tu (boolean)                  : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / user_id (many2one)            : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / vtimezone (selection)         : DEL selection_keys: function
+base_calendar / calendar.event           / we (boolean)                  : module is now 'calendar' ('base_calendar')
+base_calendar / calendar.event           / week_list (selection)         : module is now 'calendar' ('base_calendar')
+---XML records in module 'base_calendar'---
+DEL crm.meeting.type: base_calendar.categ_meet1
+DEL crm.meeting.type: base_calendar.categ_meet2
+DEL crm.meeting.type: base_calendar.categ_meet3
+DEL crm.meeting.type: base_calendar.categ_meet4
+DEL crm.meeting.type: base_calendar.categ_meet5
+DEL ir.actions.act_window: base_calendar.action_crm_meeting
+DEL ir.actions.act_window: base_calendar.action_crm_meeting_type
+DEL ir.actions.act_window: base_calendar.action_res_alarm_view
+DEL ir.actions.act_window: base_calendar.action_view_event
+DEL ir.actions.act_window.view: base_calendar.action_view_crm_meeting_calendar
+DEL ir.actions.act_window.view: base_calendar.action_view_crm_meeting_form
+DEL ir.actions.act_window.view: base_calendar.action_view_crm_meeting_gantt
+DEL ir.actions.act_window.view: base_calendar.action_view_crm_meeting_tree
+DEL ir.cron: base_calendar.ir_cron_scheduler_alarm
+DEL ir.model.access: base_calendar.access_calendar_alarm
+DEL ir.model.access: base_calendar.access_calendar_attendee
+DEL ir.model.access: base_calendar.access_calendar_attendee_survey_user
+DEL ir.model.access: base_calendar.access_calendar_event
+DEL ir.model.access: base_calendar.access_calendar_todo
+DEL ir.model.access: base_calendar.access_crm_meeting
+DEL ir.model.access: base_calendar.access_crm_meeting_all
+DEL ir.model.access: base_calendar.access_crm_meeting_manager
+DEL ir.model.access: base_calendar.access_crm_meeting_partner_manager
+DEL ir.model.access: base_calendar.access_crm_meeting_type_manager
+DEL ir.model.access: base_calendar.access_crm_meeting_type_sale_manager
+DEL ir.model.access: base_calendar.access_crm_meeting_type_sale_user
+DEL ir.model.access: base_calendar.access_res_alarm
+DEL ir.ui.menu: base.menu_calendar_configuration
+DEL ir.ui.menu: base_calendar.mail_menu_calendar
+DEL ir.ui.menu: base_calendar.menu_crm_meeting_avail_alarm
+DEL ir.ui.menu: base_calendar.menu_crm_meeting_type
+DEL ir.ui.menu: base_calendar.menu_events
+DEL ir.ui.view: base_calendar.event_calendar_view
+DEL ir.ui.view: base_calendar.event_form_view
+DEL ir.ui.view: base_calendar.event_tree_view
+DEL ir.ui.view: base_calendar.res_alarm_form_view
+DEL ir.ui.view: base_calendar.res_alarm_tree_view
+DEL ir.ui.view: base_calendar.view_calendar_event_filter
+DEL ir.ui.view: base_calendar.view_crm_meeting_calendar
+DEL ir.ui.view: base_calendar.view_crm_meeting_form
+DEL ir.ui.view: base_calendar.view_crm_meeting_gantt
+DEL ir.ui.view: base_calendar.view_crm_meeting_search
+DEL ir.ui.view: base_calendar.view_crm_meeting_tree
+DEL ir.ui.view: base_calendar.view_crm_meeting_type_tree
+DEL res.alarm: base_calendar.alarm1
+DEL res.alarm: base_calendar.alarm10
+DEL res.alarm: base_calendar.alarm11
+DEL res.alarm: base_calendar.alarm12
+DEL res.alarm: base_calendar.alarm2
+DEL res.alarm: base_calendar.alarm3
+DEL res.alarm: base_calendar.alarm4
+DEL res.alarm: base_calendar.alarm5
+DEL res.alarm: base_calendar.alarm6
+DEL res.alarm: base_calendar.alarm7
+DEL res.alarm: base_calendar.alarm8
+DEL res.alarm: base_calendar.alarm9
+DEL res.groups: base.group_survey_user
+DEL res.request.link: base_calendar.request_link_event
+DEL res.request.link: base_calendar.request_link_meeting
+ERROR: module not in list of installed modules:
+---Fields in module 'stock_location'---
+stock_location / product.product          / flow_pull_ids (one2many)      : DEL relation: product.pulled.flow
+stock_location / product.product          / path_ids (one2many)           : DEL relation: stock.location.path
+stock_location / stock.location.path      / auto (selection)              : module is now 'stock' ('stock_location')
+stock_location / stock.location.path      / company_id (many2one)         : module is now 'stock' ('stock_location')
+stock_location / stock.location.path      / delay (integer)               : module is now 'stock' ('stock_location')
+stock_location / stock.location.path      / invoice_state (selection)     : module is now 'stock_account' ('stock_location')
+stock_location / stock.location.path      / journal_id (many2one)         : DEL relation: stock.journal
+stock_location / stock.location.path      / location_dest_id (many2one)   : module is now 'stock' ('stock_location')
+stock_location / stock.location.path      / location_from_id (many2one)   : module is now 'stock' ('stock_location')
+stock_location / stock.location.path      / name (char)                   : module is now 'stock' ('stock_location')
+stock_location / stock.location.path      / name (char)                   : now required
+stock_location / stock.location.path      / picking_type (selection)      : DEL required: required, selection_keys: ['in', 'internal', 'out'], req_default: internal
+stock_location / stock.location.path      / product_id (many2one)         : DEL relation: product.product
+stock_location / stock.move               / cancel_cascade (boolean)      : DEL 
+---XML records in module 'stock_location'---
+DEL ir.model.access: stock_location.access_product_pulled_flow
+DEL ir.model.access: stock_location.access_product_pulled_flow_internal
+DEL ir.model.access: stock_location.access_product_pulled_flow_manager
+DEL ir.model.access: stock_location.access_product_pulled_flow_salemanager
+DEL ir.model.access: stock_location.access_product_pulled_flow_stock_manager
+DEL ir.model.access: stock_location.access_product_pulled_flow_user
+DEL ir.model.access: stock_location.access_stock_location_path
+DEL ir.model.access: stock_location.access_stock_location_path_internal_user
+DEL ir.model.access: stock_location.access_stock_location_path_sale_manager
+DEL ir.model.access: stock_location.access_stock_location_path_stock_user
+DEL ir.model.access: stock_location.access_stock_location_path_user
+DEL ir.rule: stock_location.product_pulled_flow_comp_rule
+DEL ir.rule: stock_location.stock_location_path_comp_rule
+DEL ir.ui.view: stock_location.product_normal_form_inherit_location
+DEL ir.ui.view: stock_location.stock_location_path_form
+DEL ir.ui.view: stock_location.stock_location_path_tree
+DEL workflow.activity: stock_location.act_move
+DEL workflow.transition: stock_location.trans_confirm_mto_buy01
+DEL workflow.transition: stock_location.trans_confirm_mto_buy02

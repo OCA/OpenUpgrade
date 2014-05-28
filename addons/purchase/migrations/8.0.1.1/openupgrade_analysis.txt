@@ -1,0 +1,101 @@
+---Fields in module 'purchase'---
+purchase     / account.invoice.line     / purchase_line_id (many2one)   : NEW relation: purchase.order.line
+purchase     / procurement.order        / purchase_id (many2one)        : now a function
+purchase     / procurement.order        / purchase_line_id (many2one)   : NEW relation: purchase.order.line
+purchase     / purchase.order           / bid_date (date)               : NEW 
+purchase     / purchase.order           / bid_validity (date)           : NEW 
+purchase     / purchase.order           / currency_id (many2one)        : not a function anymore
+purchase     / purchase.order           / incoterm_id (many2one)        : NEW relation: stock.incoterms
+purchase     / purchase.order           / message_last_post (datetime)  : NEW 
+purchase     / purchase.order           / picking_ids (one2many)        : now a function
+purchase     / purchase.order           / picking_ids (one2many)        : relation is now 'stock.picking' ('stock.picking.in')
+purchase     / purchase.order           / picking_type_id (many2one)    : NEW relation: stock.picking.type, required: required, req_default: function
+purchase     / purchase.order           / state (selection)             : selection_keys is now '['approved', 'bid', 'cancel', 'confirmed', 'done', 'draft', 'except_invoice', 'except_picking', 'sent']' ('['approved', 'cancel', 'confirmed', 'done', 'draft', 'except_invoice', 'except_picking', 'sent']')
+purchase     / purchase.order           / warehouse_id (many2one)       : DEL relation: stock.warehouse
+purchase     / purchase.order           / website_message_ids (one2many): NEW relation: mail.message
+purchase     / purchase.order.line      / move_dest_id (many2one)       : DEL relation: stock.move
+purchase     / purchase.order.line      / procurement_ids (one2many)    : NEW relation: procurement.order
+purchase     / purchase.report          / day (char)                    : DEL 
+purchase     / purchase.report          / month (selection)             : DEL selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+purchase     / purchase.report          / name (char)                   : DEL 
+purchase     / purchase.report          / picking_type_id (many2one)    : NEW relation: stock.warehouse
+purchase     / purchase.report          / warehouse_id (many2one)       : DEL relation: stock.warehouse
+purchase     / res.partner              / purchase_order_ids (one2many) : DEL relation: purchase.order
+purchase     / stock.picking            / purchase_id (many2one)        : DEL relation: purchase.order
+purchase     / stock.warehouse          / buy_pull_id (many2one)        : NEW relation: procurement.rule
+purchase     / stock.warehouse          / buy_to_resupply (boolean)     : NEW 
+---XML records in module 'purchase'---
+NEW email.template: purchase.email_template_edi_purchase_done
+NEW ir.actions.act_window: purchase.action_picking_tree_picking_to_invoice
+DEL ir.actions.act_window: purchase.action_picking_tree4_picking_to_invoice
+DEL ir.actions.act_window: purchase.action_purchase_order_by_user_all
+DEL ir.actions.act_window: purchase.action_purchase_order_monthly_categ_graph
+DEL ir.actions.act_window: purchase.action_purchase_order_report_graph
+DEL ir.actions.act_window: purchase.action_stock_move_report_po
+DEL ir.actions.act_window: purchase.open_board_purchase
+DEL ir.actions.act_window: purchase.purchase_draft
+NEW ir.actions.report.xml: purchase.action_report_purchase_order
+DEL ir.actions.report.xml: purchase.report_purchase_order
+NEW ir.model.access: purchase.access_product_price_history_purchase_manager
+NEW ir.model.access: purchase.access_product_price_history_purchase_user
+DEL ir.model.access: purchase.access_report_stock_move
+DEL ir.model.access: purchase.access_report_stock_move_user
+DEL ir.model.access: purchase.access_stock_production_lot_revision
+DEL ir.model.access: purchase.access_stock_production_lot_user
+DEL ir.model.access: purchase.access_stock_tracking_purchase_user
+NEW ir.ui.menu: purchase.menu_action_picking_tree_picking_to_invoice
+DEL ir.ui.menu: purchase.menu_action_picking_tree4
+DEL ir.ui.menu: purchase.menu_action_picking_tree4_picking_to_invoice
+DEL ir.ui.menu: purchase.menu_action_stock_move_report_po
+DEL ir.ui.menu: purchase.menu_board_purchase
+NEW ir.ui.view: purchase.product_template_search_view_purchase
+NEW ir.ui.view: purchase.report_purchaseorder
+NEW ir.ui.view: purchase.report_purchasequotation
+NEW ir.ui.view: purchase.view_warehouse_inherited
+DEL ir.ui.view: purchase.board_purchase_form
+DEL ir.ui.view: purchase.product_product_normal_form_procurement_help_view
+DEL ir.ui.view: purchase.stock_picking_in_inherit_purchase
+DEL ir.ui.view: purchase.view_purchase_order_by_user_graph
+DEL ir.ui.view: purchase.view_purchase_order_monthly_categ_graph
+DEL ir.ui.view: purchase.view_purchase_order_monthly_categ_tree
+DEL ir.ui.view: purchase.view_purchase_order_qty_amount_graph
+DEL ir.ui.view: purchase.view_purchase_order_tree
+NEW mail.message.subtype: purchase.mt_rfq_done
+DEL process.condition: purchase.process_condition_conditioninvoicemanual
+DEL process.condition: purchase.process_condition_conditionorigin
+DEL process.node: purchase.process_node_approvepurchaseorder0
+DEL process.node: purchase.process_node_confirmpurchaseorder0
+DEL process.node: purchase.process_node_draftpurchaseorder0
+DEL process.node: purchase.process_node_draftpurchaseorder1
+DEL process.node: purchase.process_node_invoiceafterpacking0
+DEL process.node: purchase.process_node_invoicecontrol0
+DEL process.node: purchase.process_node_packinginvoice0
+DEL process.node: purchase.process_node_packinglist0
+DEL process.node: purchase.process_node_productrecept0
+DEL process.node: purchase.process_node_purchaseorder0
+DEL process.process: purchase.process_process_purchaseprocess0
+DEL process.transition: purchase.process_transition_approvingpurchaseorder0
+DEL process.transition: purchase.process_transition_confirmingpurchaseorder0
+DEL process.transition: purchase.process_transition_confirmingpurchaseorder1
+DEL process.transition: purchase.process_transition_createpackinglist0
+DEL process.transition: purchase.process_transition_invoicefrompackinglist0
+DEL process.transition: purchase.process_transition_invoicefrompurchase0
+DEL process.transition: purchase.process_transition_packinginvoice0
+DEL process.transition: purchase.process_transition_productrecept0
+DEL process.transition: purchase.process_transition_purchaseinvoice0
+DEL process.transition.action: purchase.process_transition_action_approvingcancelpurchaseorder0
+DEL process.transition.action: purchase.process_transition_action_approvingpurchaseorder0
+DEL process.transition.action: purchase.process_transition_action_cancelpurchaseorder0
+DEL process.transition.action: purchase.process_transition_action_confirmpurchaseorder0
+DEL process.transition.action: purchase.process_transition_action_invoicefrompurchaseorder0
+NEW res.groups: purchase.group_advance_bidding
+NEW stock.location.route: purchase.route_warehouse0_buy
+NEW workflow.activity: purchase.act_bid
+DEL workflow.activity: purchase.act_buy
+NEW workflow.transition: purchase.trans_bid_cancel
+NEW workflow.transition: purchase.trans_bid_confirmed
+NEW workflow.transition: purchase.trans_sent_bid
+DEL workflow.transition: purchase.trans_buy_cancel
+DEL workflow.transition: purchase.trans_buy_make_done
+DEL workflow.transition: purchase.trans_confirm_mto_purchase
+DEL workflow.transition: purchase.trans_sent_confirmed

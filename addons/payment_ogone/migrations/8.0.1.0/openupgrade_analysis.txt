@@ -1,0 +1,15 @@
+---Fields in module 'payment_ogone'---
+payment_ogone / payment.acquirer         / ogone_password (char)         : NEW 
+payment_ogone / payment.acquirer         / ogone_pspid (char)            : NEW 
+payment_ogone / payment.acquirer         / ogone_shakey_in (char)        : NEW 
+payment_ogone / payment.acquirer         / ogone_shakey_out (char)       : NEW 
+payment_ogone / payment.acquirer         / ogone_userid (char)           : NEW 
+payment_ogone / payment.transaction      / ogone_3ds (boolean)           : NEW 
+payment_ogone / payment.transaction      / ogone_3ds_html (html)         : NEW 
+payment_ogone / payment.transaction      / ogone_complus (char)          : NEW 
+payment_ogone / payment.transaction      / ogone_payid (char)            : NEW 
+---XML records in module 'payment_ogone'---
+NEW ir.ui.view: payment_ogone.acquirer_form_ogone
+NEW ir.ui.view: payment_ogone.ogone_acquirer_button
+NEW ir.ui.view: payment_ogone.transaction_form_ogone
+NEW payment.acquirer: payment_ogone.payment_acquirer_ogone

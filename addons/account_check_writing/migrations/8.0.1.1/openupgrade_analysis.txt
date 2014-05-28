@@ -1,0 +1,8 @@
+---Fields in module 'account_check_writing'---
+---XML records in module 'account_check_writing'---
+NEW ir.actions.report.xml: account_check_writing.action_report_check
+DEL ir.actions.report.xml: account_check_writing.account_print_check_bottom
+DEL ir.actions.report.xml: account_check_writing.account_print_check_middle
+DEL ir.actions.report.xml: account_check_writing.account_print_check_top
+NEW ir.ui.view: account_check_writing.report_check
+NEW report.paperformat: account_check_writing.paperformat_frenchcheck

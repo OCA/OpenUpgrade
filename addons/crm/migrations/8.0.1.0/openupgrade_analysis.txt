@@ -1,0 +1,121 @@
+---Fields in module 'crm'---
+crm          / calendar.event           / opportunity_id (many2one)     : NEW relation: crm.lead
+crm          / calendar.event           / phonecall_id (many2one)       : NEW relation: crm.phonecall
+crm          / crm.case.section         / active (boolean)              : module is now 'sales_team' ('crm')
+crm          / crm.case.section         / change_responsible (boolean)  : module is now 'sales_team' ('crm')
+crm          / crm.case.section         / child_ids (one2many)          : module is now 'sales_team' ('crm')
+crm          / crm.case.section         / code (char)                   : module is now 'sales_team' ('crm')
+crm          / crm.case.section         / complete_name (char)          : module is now 'sales_team' ('crm')
+crm          / crm.case.section         / member_ids (many2many)        : module is now 'sales_team' ('crm')
+crm          / crm.case.section         / message_follower_ids (many2many): module is now 'sales_team' ('crm')
+crm          / crm.case.section         / message_ids (one2many)        : module is now 'sales_team' ('crm')
+crm          / crm.case.section         / message_is_follower (boolean) : module is now 'sales_team' ('crm')
+crm          / crm.case.section         / message_summary (text)        : module is now 'sales_team' ('crm')
+crm          / crm.case.section         / message_unread (boolean)      : module is now 'sales_team' ('crm')
+crm          / crm.case.section         / name (char)                   : module is now 'sales_team' ('crm')
+crm          / crm.case.section         / note (text)                   : module is now 'sales_team' ('crm')
+crm          / crm.case.section         / parent_id (many2one)          : module is now 'sales_team' ('crm')
+crm          / crm.case.section         / reply_to (char)               : module is now 'sales_team' ('crm')
+crm          / crm.case.section         / use_leads (boolean)           : NEW 
+crm          / crm.case.section         / use_opportunities (boolean)   : NEW 
+crm          / crm.case.section         / user_id (many2one)            : module is now 'sales_team' ('crm')
+crm          / crm.case.section         / working_hours (float)         : module is now 'sales_team' ('crm')
+crm          / crm.case.stage           / state (selection)             : DEL required: required, selection_keys: ['cancel', 'done', 'draft', 'open', 'pending'], req_default: open
+crm          / crm.lead                 / date_last_stage_update (datetime): NEW 
+crm          / crm.lead                 / message_bounce (integer)      : NEW 
+crm          / crm.lead                 / message_last_post (datetime)  : NEW 
+crm          / crm.lead                 / priority (selection)          : selection_keys is now '['0', '1', '2', '3', '4']' ('['1', '2', '3', '4', '5']')
+crm          / crm.lead.report          / creation_day (char)           : DEL 
+crm          / crm.lead.report          / creation_month (selection)    : DEL selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+crm          / crm.lead.report          / creation_year (char)          : DEL 
+crm          / crm.lead.report          / date_deadline (date)          : NEW 
+crm          / crm.lead.report          / date_last_stage_update (datetime): NEW 
+crm          / crm.lead.report          / deadline_day (char)           : DEL 
+crm          / crm.lead.report          / deadline_month (selection)    : DEL selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+crm          / crm.lead.report          / deadline_year (char)          : DEL 
+crm          / crm.lead.report          / nbr (integer)                 : DEL 
+crm          / crm.lead.report          / priority (selection)          : selection_keys is now '['0', '1', '2', '3', '4']' ('['1', '2', '3', '4', '5']')
+crm          / crm.lead.report          / state (selection)             : DEL selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
+crm          / crm.phonecall            / message_last_post (datetime)  : NEW 
+crm          / crm.phonecall            / priority (selection)          : selection_keys is now '['0', '1', '2']' ('['1', '2', '3', '4', '5']')
+crm          / crm.phonecall            / state (selection)             : selection_keys is now '['cancel', 'done', 'open', 'pending']' ('['cancel', 'done', 'draft', 'open', 'pending']')
+crm          / crm.phonecall.report     / day (char)                    : DEL 
+crm          / crm.phonecall.report     / month (selection)             : DEL selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+crm          / crm.phonecall.report     / name (char)                   : DEL 
+crm          / crm.phonecall.report     / priority (selection)          : selection_keys is now '['0', '1', '2']' ('['1', '2', '3', '4', '5']')
+crm          / res.partner              / create_date (datetime)        : NEW 
+crm          / res.partner              / id (integer)                  : NEW 
+crm          / res.partner              / meeting_ids (many2many)       : relation is now 'calendar.event' ('crm.meeting')
+crm          / res.partner              / section_id (many2one)         : module is now 'sales_team' ('crm')
+---XML records in module 'crm'---
+NEW crm.case.section: sales_team.section_sales_department
+DEL crm.case.section: crm.section_sales_department
+DEL crm.case.stage: crm.stage_lead8
+NEW email.template: crm.email_template_opportunity_reminder_mail
+NEW ir.actions.act_window: crm.act_crm_opportunity_calendar_event_new
+NEW ir.actions.act_window: crm.action_lead_mass_mail
+NEW ir.actions.act_window: crm.action_partner_merge
+NEW ir.actions.act_window: crm.action_report_crm_lead_salesteam
+NEW ir.actions.act_window: crm.action_report_crm_opportunity_salesteam
+NEW ir.actions.act_window: crm.base_partner_merge_automatic_act
+NEW ir.actions.act_window: crm.calendar_event_partner
+NEW ir.actions.act_window: crm.crm_case_form_view_salesteams_lead
+NEW ir.actions.act_window: crm.crm_case_form_view_salesteams_opportunity
+DEL ir.actions.act_window: crm.act_crm_opportunity_crm_meeting_new
+DEL ir.actions.act_window: crm.act_oppor_stage_user
+DEL ir.actions.act_window: crm.act_opportunity_stage
+DEL ir.actions.act_window: crm.crm_case_section_act
+DEL ir.actions.act_window: crm.crm_meeting_partner
+DEL ir.actions.act_window: crm.open_board_statistical_dash
+DEL ir.actions.act_window: crm.opportunity2phonecall_act
+NEW ir.actions.act_window.view: crm.action_crm_tag_form_view_salesteams_oppor11
+NEW ir.actions.act_window.view: crm.action_crm_tag_kanban_view_salesteams_oppor11
+NEW ir.actions.act_window.view: crm.action_crm_tag_tree_view_salesteams_oppor11
+DEL ir.actions.act_window.view: crm.action_crm_tag_form_view_leads_all
+DEL ir.actions.act_window.view: crm.action_crm_tag_tree_view_leads_all
+DEL ir.actions.act_window.view: crm.action_report_crm_lead_tree
+DEL ir.actions.act_window.view: crm.action_report_crm_opportunity_tree
+DEL ir.actions.act_window.view: crm.action_report_crm_phonecall_tree
+NEW ir.actions.server: crm.action_mark_as_lost
+DEL ir.model.access: crm.access_calendar_attendee_crm_manager
+DEL ir.model.access: crm.access_calendar_attendee_crm_user
+DEL ir.model.access: crm.access_crm_case_section
+DEL ir.model.access: crm.access_crm_case_section_manager
+DEL ir.model.access: crm.access_crm_case_section_user
+NEW ir.rule: crm.calendar_event_global
+NEW ir.rule: crm.crm_rule_all_lead_report
+NEW ir.rule: crm.crm_rule_personal_lead_report
+DEL ir.rule: crm.crm_meeting_global
+NEW ir.ui.menu: crm.partner_merge_automatic_menu
+NEW ir.ui.menu: crm.root_menu
+DEL ir.ui.menu: crm.menu_action_resource_calendar_form
+DEL ir.ui.menu: crm.menu_board_statistics_dash
+DEL ir.ui.menu: crm.menu_crm_case_section_act
+NEW ir.ui.view: crm.base_partner_merge_automatic_wizard_form
+NEW ir.ui.view: crm.crm_case_section_salesteams_view_kanban
+NEW ir.ui.view: crm.sales_team_form_view_in_crm
+NEW ir.ui.view: crm.view_report_crm_lead_graph_two
+DEL ir.ui.view: crm.board_crm_statistical_form
+DEL ir.ui.view: crm.crm_case_section_view_form
+DEL ir.ui.view: crm.crm_case_section_view_tree
+DEL ir.ui.view: crm.opportunity2phonecall_view
+DEL ir.ui.view: crm.res_partner_view_buttons
+DEL ir.ui.view: crm.view_crm_opportunity_stage_graph
+DEL ir.ui.view: crm.view_crm_opportunity_user_stage_graph
+DEL ir.ui.view: crm.view_report_crm_lead_tree
+DEL ir.ui.view: crm.view_report_crm_opportunity_tree
+DEL ir.ui.view: crm.view_report_crm_phonecall_tree
+NEW ir.values: crm.ir_mark_as_lost
+NEW mail.alias: crm.mail_alias_lead_info
+DEL mail.alias: crm.default_sales_alias
+DEL mail.message.subtype: crm.mt_lead_convert_to_opportunity
+DEL mail.message.subtype: crm.mt_salesteam_lead_opportunity
+DEL process.node: crm.process_node_leads0
+DEL process.node: crm.process_node_meeting0
+DEL process.node: crm.process_node_opportunities0
+DEL process.node: crm.process_node_partner0
+DEL process.process: crm.process_process_contractprocess0
+DEL process.transition: crm.process_transition_leadopportunity0
+DEL process.transition: crm.process_transition_leadpartner0
+DEL process.transition: crm.process_transition_opportunitymeeting0
+NEW res.groups: crm.group_scheduled_calls
