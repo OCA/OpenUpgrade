@@ -1,8 +1,8 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2011 OpenERP SA (<http://openerp.com>).
+#    This module copyright (C) 2014 Therp BV (<http://therp.nl>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,25 +18,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    'name': 'Belgium - Payroll with Accounting',
-    'category': 'Localization',
-    'author': 'OpenERP SA',
-    'depends': ['l10n_be_hr_payroll', 'hr_payroll_account', 'l10n_be'],
-    'version': '1.0',
-    'description': """
-Accounting Data for Belgian Payroll Rules.
-==========================================
-    """,
 
-    'auto_install': True,
-    'demo': [],
-    'data':[
-        'l10n_be_wizard.yml',
-        'l10n_be_hr_payroll_account_data.xml',
-        'data/hr.salary.rule.csv',
-    ],
-    'installable': False
-}
+"""
+This module can be used to contain functions that should be called at the end
+of the migration. A migration may be run several times after corrections in
+the code or the configuration, and there is no way for OpenERP to detect a
+succesful result. Therefore, the functions in this module should be robust
+against being run multiple times on the same database.
+"""
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+
+def migrate_deferred(cr, pool):
+    pass

@@ -1,8 +1,8 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2011 OpenERP SA (<http://openerp.com>).
+#    This module copyright (C) 2012-2014 Therp BV (<http://therp.nl>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,25 +18,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    'name': 'Belgium - Payroll with Accounting',
-    'category': 'Localization',
-    'author': 'OpenERP SA',
-    'depends': ['l10n_be_hr_payroll', 'hr_payroll_account', 'l10n_be'],
-    'version': '1.0',
-    'description': """
-Accounting Data for Belgian Payroll Rules.
-==========================================
-    """,
 
-    'auto_install': True,
-    'demo': [],
-    'data':[
-        'l10n_be_wizard.yml',
-        'l10n_be_hr_payroll_account_data.xml',
-        'data/hr.salary.rule.csv',
-    ],
-    'installable': False
-}
+# A collection of functions split off from openupgrade.py
+# with no or only minimal dependencies
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+
+def table_exists(cr, table):
+    """ Check whether a certain table or view exists """
+    cr.execute(
+        'SELECT count(relname) FROM pg_class WHERE relname = %s',
+        (table,))
+    return cr.fetchone()[0] == 1

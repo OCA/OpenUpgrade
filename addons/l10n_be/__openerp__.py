@@ -81,7 +81,7 @@ Wizards provided by this module:
         'views/report_vatpartnerlisting.xml',
     ],
     'demo': [],
-    'installable': True,
+    'installable': False,
     'images': ['images/1_config_chart_l10n_be.jpeg','images/2_l10n_be_chart.jpeg'],
 }
 

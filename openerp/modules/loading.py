@@ -44,11 +44,13 @@ from openerp.modules.module import initialize_sys_path, \
     load_openerp_module, init_module_models, adapt_version
 from module import runs_post_install
 
+from openerp.openupgrade import openupgrade_loading, deferred_80
+
 _logger = logging.getLogger(__name__)
 _test_logger = logging.getLogger('openerp.tests')
 
 
-def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=None, report=None):
+def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=None, report=None, upg_registry=None):
     """Migrates+Updates or Installs all module nodes from ``graph``
        :param graph: graph of module nodes to load
        :param status: status dictionary for keeping track of progress
@@ -122,6 +124,9 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
     if status is None:
         status = {}
 
+    if skip_modules is None:
+        skip_modules = []
+
     processed_modules = []
     loaded_modules = []
     registry = openerp.registry(cr.dbname)
@@ -136,12 +141,18 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
     for field in cr.dictfetchall():
         registry.fields_by_model.setdefault(field['model'], []).append(field)
 
+    #suppress commits to have the upgrade of one module in just one transation
+    cr.commit_org = cr.commit
+    cr.commit = lambda *args: None
+    cr.rollback_org = cr.rollback
+    cr.rollback = lambda *args: None
+
     # register, instantiate and initialize models for each modules
     for index, package in enumerate(graph):
         module_name = package.name
         module_id = package.id
 
-        if skip_modules and module_name in skip_modules:
+        if module_name in skip_modules or module_name in loaded_modules:
             continue
 
         _logger.debug('module %s: loading objects', package.name)
@@ -152,6 +163,13 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
 
         loaded_modules.append(package.name)
         if hasattr(package, 'init') or hasattr(package, 'update') or package.state in ('to install', 'to upgrade'):
+            # OpenUpgrade: add this module's models to the registry
+            local_registry = {}
+            for model in models:
+                openupgrade_loading.log_model(model, local_registry)
+            openupgrade_loading.compare_registries(
+                cr, package.name, upg_registry, local_registry)
+
             init_module_models(cr, package.name, models)
         status['progress'] = float(index) / len(graph)
 
@@ -179,7 +197,13 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
                 _load_data(cr, module_name, idref, mode, kind='demo')
                 cr.execute('update ir_module_module set demo=%s where id=%s', (True, module_id))
 
-            migrations.migrate_module(package, 'post')
+            # OpenUpgrade: add 'try' block for logging exceptions
+            # as errors in post scripts seem to be dropped
+            try:
+                migrations.migrate_module(package, 'post')
+            except Exception, e:
+                _logger.error('Error executing post migration script for module %s: %s', package, e)
+                raise
 
             registry._init_modules.add(package.name)
             # validate all the views at a whole
@@ -211,12 +235,13 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
                     delattr(package, kind)
 
         registry._init_modules.add(package.name)
-        cr.commit()
+        cr.commit_org()
 
     # The query won't be valid for models created later (i.e. custom model
     # created after the registry has been loaded), so empty its result.
     registry.fields_by_model = None
-    
+
+    cr.commit = cr.commit_org
     cr.commit()
 
     return loaded_modules, processed_modules
@@ -235,16 +260,17 @@ def _check_module_names(cr, module_names):
             incorrect_names = mod_names.difference([x['name'] for x in cr.dictfetchall()])
             _logger.warning('invalid module names, ignored: %s', ", ".join(incorrect_names))
 
-def load_marked_modules(cr, graph, states, force, progressdict, report, loaded_modules, perform_checks):
+def load_marked_modules(cr, graph, states, force, progressdict, report, loaded_modules, perform_checks, upg_registry):
     """Loads modules marked with ``states``, adding them to ``graph`` and
        ``loaded_modules`` and returns a list of installed/upgraded modules."""
     processed_modules = []
     while True:
         cr.execute("SELECT name from ir_module_module WHERE state IN %s" ,(tuple(states),))
         module_list = [name for (name,) in cr.fetchall() if name not in graph]
+        module_list = openupgrade_loading.add_module_dependencies(cr, module_list)
         graph.add_modules(cr, module_list, force)
         _logger.debug('Updating graph with %d more modules', len(module_list))
-        loaded, processed = load_module_graph(cr, graph, progressdict, report=report, skip_modules=loaded_modules, perform_checks=perform_checks)
+        loaded, processed = load_module_graph(cr, graph, progressdict, report=report, skip_modules=loaded_modules, perform_checks=perform_checks, upg_registry=upg_registry)
         processed_modules.extend(processed)
         loaded_modules.extend(loaded)
         if not processed: break
@@ -260,6 +286,7 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
     if force_demo:
         force.append('demo')
 
+    upg_registry = {}
     cr = db.cursor()
     try:
         if not openerp.modules.db.is_initialized(cr):
@@ -287,7 +314,7 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
         # processed_modules: for cleanup step after install
         # loaded_modules: to avoid double loading
         report = registry._assertion_report
-        loaded_modules, processed_modules = load_module_graph(cr, graph, status, perform_checks=update_module, report=report)
+        loaded_modules, processed_modules = load_module_graph(cr, graph, status, perform_checks=update_module, report=report, upg_registry=upg_registry)
 
         if tools.config['load_language']:
             for lang in tools.config['load_language'].split(','):
@@ -336,11 +363,11 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
             previously_processed = len(processed_modules)
             processed_modules += load_marked_modules(cr, graph,
                 ['installed', 'to upgrade', 'to remove'],
-                force, status, report, loaded_modules, update_module)
+                force, status, report, loaded_modules, update_module, upg_registry)
             if update_module:
                 processed_modules += load_marked_modules(cr, graph,
                     ['to install'], force, status, report,
-                    loaded_modules, update_module)
+                    loaded_modules, update_module, upg_registry)
 
         # load custom models
         cr.execute('select model from ir_model where state=%s', ('manual',))
@@ -371,6 +398,10 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
 
             # Cleanup orphan records
             registry['ir.model.data']._process_end(cr, SUPERUSER_ID, processed_modules)
+
+            # OpenUpgrade: call deferred migration steps
+            if update_module:
+                deferred_80.migrate_deferred(cr, registry)
 
         for kind in ('init', 'demo', 'update'):
             tools.config[kind] = {}
