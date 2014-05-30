@@ -2,8 +2,6 @@
 website      / ir.actions.server        / website_path (char)           : NEW 
 website      / ir.actions.server        / website_published (boolean)   : NEW 
 website      / ir.attachment            / mimetype (char)               : NEW 
-website      / ir.ui.view               / inherit_option_id (many2one)  : NEW relation: ir.ui.view
-website      / ir.ui.view               / inherited_option_ids (one2many): NEW relation: ir.ui.view
 website      / ir.ui.view               / page (boolean)                : NEW 
 website      / ir.ui.view               / website_meta_description (text): NEW 
 website      / ir.ui.view               / website_meta_keywords (char)  : NEW 

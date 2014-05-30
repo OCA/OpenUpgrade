@@ -4,6 +4,8 @@ hr_expense   / hr.expense.expense       / state (selection)             : select
 hr_expense   / hr.expense.expense       / voucher_id (many2one)         : DEL relation: account.voucher
 hr_expense   / hr.expense.expense       / website_message_ids (one2many): NEW relation: mail.message
 hr_expense   / hr.expense.report        / voucher_id (many2one)         : DEL relation: account.voucher
+hr_expense   / product.product          / hr_expense_ok (boolean)       : DEL 
+hr_expense   / product.template         / hr_expense_ok (boolean)       : NEW 
 ---XML records in module 'hr_expense'---
 DEL ir.actions.act_window: hr_expense.action_my_expense
 NEW ir.actions.report.xml: hr_expense.action_report_hr_expense

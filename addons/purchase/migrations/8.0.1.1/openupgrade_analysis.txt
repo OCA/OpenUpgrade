@@ -27,6 +27,7 @@ purchase     / stock.warehouse          / buy_to_resupply (boolean)     : NEW
 ---XML records in module 'purchase'---
 NEW email.template: purchase.email_template_edi_purchase_done
 NEW ir.actions.act_window: purchase.action_picking_tree_picking_to_invoice
+NEW ir.actions.act_window: purchase.product_normal_action_puchased
 DEL ir.actions.act_window: purchase.action_picking_tree4_picking_to_invoice
 DEL ir.actions.act_window: purchase.action_purchase_order_by_user_all
 DEL ir.actions.act_window: purchase.action_purchase_order_monthly_categ_graph
@@ -54,12 +55,14 @@ NEW ir.ui.view: purchase.report_purchasequotation
 NEW ir.ui.view: purchase.view_warehouse_inherited
 DEL ir.ui.view: purchase.board_purchase_form
 DEL ir.ui.view: purchase.product_product_normal_form_procurement_help_view
+DEL ir.ui.view: purchase.product_search_form_view_purchase
 DEL ir.ui.view: purchase.stock_picking_in_inherit_purchase
 DEL ir.ui.view: purchase.view_purchase_order_by_user_graph
 DEL ir.ui.view: purchase.view_purchase_order_monthly_categ_graph
 DEL ir.ui.view: purchase.view_purchase_order_monthly_categ_tree
 DEL ir.ui.view: purchase.view_purchase_order_qty_amount_graph
 DEL ir.ui.view: purchase.view_purchase_order_tree
+DEL ir.ui.view: purchase.view_template_purchase_ok_form
 NEW mail.message.subtype: purchase.mt_rfq_done
 DEL process.condition: purchase.process_condition_conditioninvoicemanual
 DEL process.condition: purchase.process_condition_conditionorigin

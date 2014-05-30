@@ -16,7 +16,8 @@ event_sale   / product.template         / event_type_id (many2one)      : NEW re
 event_sale   / sale.order.line          / event_ticket_id (many2one)    : NEW relation: event.event.ticket
 ---XML records in module 'event_sale'---
 NEW event.type: event_sale.event_type
-NEW ir.ui.view: event_sale.event_sale_product_form
+NEW ir.model.access: event_sale.access_event_event_ticket_admin
+NEW ir.model.access: event_sale.access_event_event_ticket_user
 NEW ir.ui.view: event_sale.event_sale_product_template_form
 NEW ir.ui.view: event_sale.view_event_form
 NEW ir.ui.view: event_sale.view_event_registration_ticket_form

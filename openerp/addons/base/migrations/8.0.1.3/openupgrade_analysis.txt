@@ -48,8 +48,10 @@ base         / ir.model.fields          / view_load (boolean)           : DEL
 base         / ir.property              / res_id (reference)            : type is now 'char' ('reference')
 base         / ir.property              / type (selection)              : selection_keys is now '['binary', 'boolean', 'char', 'date', 'datetime', 'float', 'integer', 'many2one', 'selection', 'text']' ('['binary', 'boolean', 'char', 'date', 'datetime', 'float', 'integer', 'many2one', 'text']')
 base         / ir.property              / value_reference (reference)   : type is now 'char' ('reference')
+base         / ir.ui.view               / application (selection)       : NEW required: required, selection_keys: ['always', 'disabled', 'enabled'], req_default: always
 base         / ir.ui.view               / create_date (datetime)        : NEW 
 base         / ir.ui.view               / inherit_children_ids (one2many): NEW relation: ir.ui.view
+base         / ir.ui.view               / mode (selection)              : NEW required: required, selection_keys: ['extension', 'primary'], req_default: primary
 base         / ir.ui.view               / model_ids (one2many)          : NEW relation: ir.model.data
 base         / ir.ui.view               / type (selection)              : not a function anymore
 base         / ir.ui.view               / type (selection)              : selection_keys is now '['calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'qweb', 'search', 'tree']' ('['calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'mdx', 'search', 'tree']')
@@ -69,6 +71,7 @@ base         / workflow.instance        / uid (integer)                 : NEW
 ---XML records in module 'base'---
 NEW ir.actions.act_window: base.ir_logging_all_act
 DEL ir.actions.act_window: base.action_menu_admin
+DEL ir.actions.act_window: base.action_view_base_module_import
 DEL ir.actions.act_window: base.ir_action_wizard
 NEW ir.model.access: base.access_ir_logging
 NEW ir.model.access: base.access_ir_mail_server
@@ -104,6 +107,7 @@ DEL ir.ui.view: base.act_wizard_view
 DEL ir.ui.view: base.act_wizard_view_tree
 DEL ir.ui.view: base.shortcut_form
 DEL ir.ui.view: base.shortcut_tree
+DEL ir.ui.view: base.view_base_module_import
 DEL ir.ui.view: base.view_config_wizard_form
 DEL ir.ui.view_sc: base.ir_ui_view_sc_partner0
 DEL res.currency: base.EEK

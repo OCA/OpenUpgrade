@@ -1,6 +1,27 @@
 ---Fields in module 'mrp'---
+mrp          / mrp.bom                  / bom_id (many2one)             : DEL relation: mrp.bom
+mrp          / mrp.bom                  / bom_line_ids (one2many)       : NEW relation: mrp.bom.line
+mrp          / mrp.bom                  / bom_lines (one2many)          : DEL relation: mrp.bom
 mrp          / mrp.bom                  / message_last_post (datetime)  : NEW 
+mrp          / mrp.bom                  / product_tmpl_id (many2one)    : NEW relation: product.template, required: required
+mrp          / mrp.bom                  / product_uos (many2one)        : DEL relation: product.uom
+mrp          / mrp.bom                  / product_uos_qty (float)       : DEL 
 mrp          / mrp.bom                  / website_message_ids (one2many): NEW relation: mail.message
+mrp          / mrp.bom.line             / attribute_value_ids (many2many): NEW relation: product.attribute.value
+mrp          / mrp.bom.line             / bom_id (many2one)             : NEW relation: mrp.bom, required: required
+mrp          / mrp.bom.line             / date_start (date)             : NEW 
+mrp          / mrp.bom.line             / date_stop (date)              : NEW 
+mrp          / mrp.bom.line             / product_efficiency (float)    : NEW required: required, req_default: function
+mrp          / mrp.bom.line             / product_id (many2one)         : NEW relation: product.product, required: required
+mrp          / mrp.bom.line             / product_qty (float)           : NEW required: required, req_default: function
+mrp          / mrp.bom.line             / product_rounding (float)      : NEW 
+mrp          / mrp.bom.line             / product_uom (many2one)        : NEW relation: product.uom, required: required, req_default: function
+mrp          / mrp.bom.line             / product_uos (many2one)        : NEW relation: product.uom
+mrp          / mrp.bom.line             / product_uos_qty (float)       : NEW 
+mrp          / mrp.bom.line             / property_ids (many2many)      : NEW relation: mrp.property
+mrp          / mrp.bom.line             / routing_id (many2one)         : NEW relation: mrp.routing
+mrp          / mrp.bom.line             / sequence (integer)            : NEW 
+mrp          / mrp.bom.line             / type (selection)              : NEW required: required, selection_keys: ['normal', 'phantom'], req_default: function
 mrp          / mrp.production           / message_last_post (datetime)  : NEW 
 mrp          / mrp.production           / move_lines (many2many)        : type is now 'one2many' ('many2many')
 mrp          / mrp.production           / move_lines2 (many2many)       : type is now 'one2many' ('many2many')
@@ -9,14 +30,15 @@ mrp          / mrp.production           / state (selection)             : select
 mrp          / mrp.production           / website_message_ids (one2many): NEW relation: mail.message
 mrp          / mrp.production.workcenter.line / message_last_post (datetime)  : NEW 
 mrp          / mrp.production.workcenter.line / website_message_ids (one2many): NEW relation: mail.message
+mrp          / product.product          / bom_ids (one2many)            : DEL relation: mrp.bom
 mrp          / product.product          / produce_delay (float)         : NEW 
+mrp          / product.template         / bom_ids (one2many)            : NEW relation: mrp.bom
 mrp          / report.mrp.inout         / company_id (many2one)         : NEW relation: res.company, required: required
 mrp          / stock.move               / consumed_for (many2one)       : NEW relation: stock.move
 mrp          / stock.move               / raw_material_production_id (many2one): NEW relation: mrp.production
 mrp          / stock.warehouse          / manufacture_pull_id (many2one): NEW relation: procurement.rule
 mrp          / stock.warehouse          / manufacture_to_resupply (boolean): NEW 
 ---XML records in module 'mrp'---
-NEW ir.actions.act_window: mrp.act_product_mrp_bom_open
 NEW ir.actions.act_window: mrp.act_product_mrp_production
 NEW ir.actions.act_window: mrp.move_consume
 DEL ir.actions.act_window: mrp.act_product_manufacturing_open
@@ -27,6 +49,10 @@ NEW ir.actions.report.xml: mrp.action_report_production_order
 DEL ir.actions.report.xml: mrp.report_bom_structure
 DEL ir.actions.report.xml: mrp.report_mrp_production_report
 NEW ir.model.access: mrp.access_account_analytic_line_user
+NEW ir.model.access: mrp.access_mrp_bom_line
+NEW ir.model.access: mrp.access_mrp_bom_line_manager
+NEW ir.model.access: mrp.access_mrp_bom_line_salesman
+NEW ir.model.access: mrp.access_mrp_bom_line_stockuser
 NEW ir.model.access: mrp.access_resource_calendar_attendance_mrp_user
 DEL ir.model.access: mrp.access_mrp_bom_purchase_manager
 DEL ir.model.access: mrp.access_purchase_order_line_mrp_worker
@@ -36,15 +62,17 @@ DEL ir.model.access: mrp.access_stock_tracking
 DEL ir.model.access: mrp.access_stock_tracking_manager
 DEL ir.ui.menu: mrp.menu_board_manufacturing
 DEL ir.ui.menu: mrp.mrp_Sched_all
-NEW ir.ui.view: mrp.product_search_form_view_procurment
+NEW ir.ui.view: mrp.product_template_form_view_bom_button
 NEW ir.ui.view: mrp.product_template_form_view_inherit
+NEW ir.ui.view: mrp.product_template_search_view_procurment
 NEW ir.ui.view: mrp.report_mrpbomstructure
 NEW ir.ui.view: mrp.report_mrporder
+NEW ir.ui.view: mrp.view_mrp_bom_line_filter
 NEW ir.ui.view: mrp.view_mrp_product_form_inherited
-NEW ir.ui.view: mrp.view_normal_procurement_locations_form_inherited
 NEW ir.ui.view: mrp.view_stock_move_consume_wizard
 NEW ir.ui.view: mrp.view_warehouse_inherited
 DEL ir.ui.view: mrp.board_mrp_manager_form
+DEL ir.ui.view: mrp.product_form_view_bom_button
 DEL ir.ui.view: mrp.product_product_normal_form_supply_view
 DEL process.node: mrp.process_node_billofmaterial0
 DEL process.node: mrp.process_node_minimumstockrule0

@@ -1,12 +1,12 @@
 ---Fields in module 'general'---
-# 5009 fields matched,
-# Direct match: 4376
+# 4975 fields matched,
+# Direct match: 4347
 # Found in other module: 114
 # Found with different name: 0
 # Found with different type: 1
-# In obsolete models: 518
-# New columns: 1525
-# Not matched: 308
+# In obsolete models: 513
+# New columns: 1605
+# Not matched: 342
 new model account.analytic.invoice.line
 new model blog.blog
 new model blog.post
@@ -76,12 +76,14 @@ new model mail.mass_mailing.category
 new model mail.mass_mailing.contact
 new model mail.mass_mailing.list
 new model mail.mass_mailing.stage
+new model mrp.bom.line
 new model payment.acquirer
 new model payment.transaction
 new model procurement.group
 new model procurement.rule
 new model product.attribute
 new model product.attribute.line
+new model product.attribute.price
 new model product.attribute.value
 new model product.price.history
 new model product.public.category
@@ -153,12 +155,12 @@ obsolete model idea.idea
 obsolete model ir.actions.wizard
 obsolete model ir.ui.view_sc
 obsolete model portal.payment.acquirer
-obsolete model pos.category
 obsolete model process.condition
 obsolete model process.node
 obsolete model process.process
 obsolete model process.transition
 obsolete model process.transition.action
+obsolete model product.manufacturer.attribute
 obsolete model product.pulled.flow
 obsolete model project.gtd.context
 obsolete model project.gtd.timebox
@@ -442,6 +444,17 @@ DEL ir.ui.view: account_report_company.account_report_company_tree_view
 DEL ir.ui.view: account_report_company.account_report_copmany_partner_kanban_view
 DEL ir.ui.view: account_report_company.account_report_copmany_partner_tree_view
 ERROR: module not in list of installed modules:
+---Fields in module 'product_manufacturer'---
+product_manufacturer / product.product          / attribute_ids (one2many)      : DEL relation: product.manufacturer.attribute
+product_manufacturer / product.product          / manufacturer (many2one)       : DEL relation: res.partner
+product_manufacturer / product.product          / manufacturer_pname (char)     : DEL 
+product_manufacturer / product.product          / manufacturer_pref (char)      : DEL 
+---XML records in module 'product_manufacturer'---
+DEL ir.model.access: product_manufacturer.access_product_manufacturer_attribute
+DEL ir.ui.view: product_manufacturer.product_manufacturer_attribute_form_view
+DEL ir.ui.view: product_manufacturer.product_manufacturer_attribute_tree_view
+DEL ir.ui.view: product_manufacturer.view_product_form_expiry
+ERROR: module not in list of installed modules:
 ---Fields in module 'event_moodle'---
 event_moodle / event.event              / moodle_id (integer)           : DEL 
 event_moodle / event.registration       / moodle_uid (integer)          : DEL 
@@ -464,6 +477,16 @@ DEL ir.actions.act_window: crm_todo.crm_todo_action
 DEL ir.ui.menu: crm_todo.menu_crm_todo
 DEL ir.ui.view: crm_todo.crm_todo_opportunity_add
 DEL ir.ui.view: crm_todo.project_task_crm_tree
+ERROR: could not create migrations directory:
+---Fields in module 'payment_buckaroo'---
+payment_buckaroo / payment.acquirer         / brq_secretkey (char)          : NEW 
+payment_buckaroo / payment.acquirer         / brq_websitekey (char)         : NEW 
+payment_buckaroo / payment.transaction      / buckaroo_txnid (char)         : NEW 
+---XML records in module 'payment_buckaroo'---
+NEW ir.ui.view: payment_buckaroo.acquirer_form_buckaroo
+NEW ir.ui.view: payment_buckaroo.buckaroo_acquirer_button
+NEW ir.ui.view: payment_buckaroo.transaction_form_buckaroo
+NEW payment.acquirer: payment_buckaroo.payment_acquirer_buckaroo
 ERROR: module not in list of installed modules:
 ---Fields in module 'project_gtd'---
 ---XML records in module 'project_gtd'---

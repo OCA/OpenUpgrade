@@ -22,8 +22,8 @@ stock        / product.category         / property_stock_journal (many2one): mod
 stock        / product.category         / property_stock_valuation_account_id (many2one): module is now 'stock_account' ('stock')
 stock        / product.category         / removal_strategy_id (many2one): NEW relation: product.removal
 stock        / product.category         / route_ids (many2many)         : NEW relation: stock.location.route
-stock        / product.product          / route_ids (many2many)         : NEW relation: stock.location.route
-stock        / product.product          / track_all (boolean)           : NEW 
+stock        / product.product          / track_incoming (boolean)      : DEL 
+stock        / product.product          / track_outgoing (boolean)      : DEL 
 stock        / product.product          / track_production (boolean)    : module is now 'mrp' ('stock')
 stock        / product.product          / valuation (selection)         : module is now 'stock_account' ('stock')
 stock        / product.product          / valuation (selection)         : now a function
@@ -34,6 +34,11 @@ stock        / product.removal          / method (char)                 : NEW re
 stock        / product.removal          / name (char)                   : NEW required: required
 stock        / product.template         / property_stock_account_input (many2one): module is now 'stock_account' ('stock')
 stock        / product.template         / property_stock_account_output (many2one): module is now 'stock_account' ('stock')
+stock        / product.template         / route_ids (many2many)         : NEW relation: stock.location.route
+stock        / product.template         / track_all (boolean)           : NEW 
+stock        / product.template         / track_incoming (boolean)      : NEW 
+stock        / product.template         / track_outgoing (boolean)      : NEW 
+stock        / product.template         / valuation (selection)         : NEW required: required, selection_keys: ['manual_periodic', 'real_time'], req_default: manual_periodic
 stock        / report.stock.lines.date  / active (boolean)              : NEW 
 stock        / report.stock.lines.date  / move_date (datetime)          : NEW 
 stock        / res.company              / internal_transit_location_id (many2one): NEW relation: stock.location
@@ -398,7 +403,8 @@ NEW ir.ui.view: stock.assets_backend
 NEW ir.ui.view: stock.procurement_group_form_view_herited
 NEW ir.ui.view: stock.product_category_form_view_inherit
 NEW ir.ui.view: stock.product_form_view_procurement_button
-NEW ir.ui.view: stock.product_search_form_view_procurment
+NEW ir.ui.view: stock.product_template_kanban_stock_view
+NEW ir.ui.view: stock.product_template_search_form_view_stock
 NEW ir.ui.view: stock.quant_package_search_view
 NEW ir.ui.view: stock.quant_search_view
 NEW ir.ui.view: stock.report_inventory
@@ -421,7 +427,6 @@ NEW ir.ui.view: stock.view_procurement_form_stock_inherit
 NEW ir.ui.view: stock.view_procurement_rule_form_stock_inherit
 NEW ir.ui.view: stock.view_procurement_rule_tree_stock_inherit
 NEW ir.ui.view: stock.view_procurement_tree_stock_inherit
-NEW ir.ui.view: stock.view_product_procurement_rule_form
 NEW ir.ui.view: stock.view_putaway
 NEW ir.ui.view: stock.view_quant_package_form
 NEW ir.ui.view: stock.view_quant_package_tree
@@ -452,6 +457,7 @@ DEL ir.ui.view: stock.view_change_standard_price
 DEL ir.ui.view: stock.view_inventory_line_form
 DEL ir.ui.view: stock.view_location_graph
 DEL ir.ui.view: stock.view_location_tree
+DEL ir.ui.view: stock.view_normal_procurement_locations_form
 DEL ir.ui.view: stock.view_normal_property_acc_form
 DEL ir.ui.view: stock.view_picking_in_form
 DEL ir.ui.view: stock.view_picking_in_search

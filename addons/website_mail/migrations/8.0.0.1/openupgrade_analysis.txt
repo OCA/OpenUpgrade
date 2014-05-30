@@ -2,13 +2,11 @@
 website_mail / mail.message             / website_published (boolean)   : NEW 
 website_mail / mail.thread              / website_message_ids (one2many): NEW relation: mail.message
 ---XML records in module 'website_mail'---
-NEW ir.ui.view: website_mail.editor
 NEW ir.ui.view: website_mail.email_designer
 NEW ir.ui.view: website_mail.email_designer_snippets
 NEW ir.ui.view: website_mail.email_template_form_inherit_website_link
 NEW ir.ui.view: website_mail.follow
 NEW ir.ui.view: website_mail.head
-NEW ir.ui.view: website_mail.subscribe
 NEW mail.group: website_mail.group_all_employees
 NEW res.groups: base.group_user
 NEW res.groups: website_mail.group_comment

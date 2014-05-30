@@ -1,6 +1,6 @@
 ---Fields in module 'stock_landed_costs'---
-stock_landed_costs / product.product          / landed_cost_ok (boolean)      : NEW 
-stock_landed_costs / product.product          / split_method (selection)      : NEW selection_keys: ['by_current_cost_price', 'by_quantity', 'by_volume', 'by_weight', 'equal']
+stock_landed_costs / product.template         / landed_cost_ok (boolean)      : NEW 
+stock_landed_costs / product.template         / split_method (selection)      : NEW selection_keys: ['by_current_cost_price', 'by_quantity', 'by_volume', 'by_weight', 'equal']
 stock_landed_costs / stock.landed.cost        / account_journal_id (many2one) : NEW relation: account.journal, required: required
 stock_landed_costs / stock.landed.cost        / account_move_id (many2one)    : NEW relation: account.move
 stock_landed_costs / stock.landed.cost        / cost_lines (one2many)         : NEW relation: stock.landed.cost.lines

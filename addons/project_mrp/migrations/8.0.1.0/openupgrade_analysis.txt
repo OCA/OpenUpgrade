@@ -1,6 +1,8 @@
 ---Fields in module 'project_mrp'---
 project_mrp  / procurement.order        / sale_line_id (many2one)       : module is now 'sale' ('project_mrp')
-project_mrp  / product.product          / auto_create_task (boolean)    : NEW 
+project_mrp  / product.product          / project_id (many2one)         : DEL relation: project.project
+project_mrp  / product.template         / auto_create_task (boolean)    : NEW 
+project_mrp  / product.template         / project_id (many2one)         : NEW relation: project.project
 project_mrp  / project.task.type        / closed (boolean)              : NEW 
 ---XML records in module 'project_mrp'---
 NEW ir.ui.view: project_mrp.task_type_edit_mrp_inherit

@@ -1,18 +1,18 @@
 ---Fields in module 'website_sale'---
 website_sale / payment.transaction      / sale_order_id (many2one)      : NEW relation: sale.order
-website_sale / product.attribute        / name (char)                   : NEW required: required
-website_sale / product.attribute        / value_ids (one2many)          : NEW relation: product.attribute.value
-website_sale / product.attribute.line   / attribute_id (many2one)       : NEW relation: product.attribute, required: required
-website_sale / product.attribute.line   / product_tmpl_id (many2one)    : NEW relation: product.template, required: required
-website_sale / product.attribute.line   / value_id (many2one)           : NEW relation: product.attribute.value
-website_sale / product.attribute.value  / attribute_id (many2one)       : NEW relation: product.attribute, required: required
-website_sale / product.attribute.value  / name (char)                   : NEW required: required
+website_sale / product.attribute        / type (selection)              : NEW selection_keys: ['color', 'radio', 'select']
+website_sale / product.attribute.value  / color (char)                  : NEW 
 website_sale / product.pricelist        / code (char)                   : NEW 
+website_sale / product.public.category  / child_id (one2many)           : NEW relation: product.public.category
+website_sale / product.public.category  / image (binary)                : NEW 
+website_sale / product.public.category  / name (char)                   : NEW required: required
+website_sale / product.public.category  / parent_id (many2one)          : NEW relation: product.public.category
+website_sale / product.public.category  / sequence (integer)            : NEW 
 website_sale / product.style            / html_class (char)             : NEW 
 website_sale / product.style            / name (char)                   : NEW required: required
-website_sale / product.template         / accessory_product_ids (many2many): NEW relation: product.template
+website_sale / product.template         / accessory_product_ids (many2many): NEW relation: product.product
 website_sale / product.template         / alternative_product_ids (many2many): NEW relation: product.template
-website_sale / product.template         / attribute_lines (one2many)    : NEW relation: product.attribute.line
+website_sale / product.template         / public_categ_ids (many2many)  : NEW relation: product.public.category
 website_sale / product.template         / website_message_ids (one2many): NEW relation: mail.message
 website_sale / product.template         / website_meta_description (text): NEW 
 website_sale / product.template         / website_meta_keywords (char)  : NEW 
@@ -28,10 +28,13 @@ website_sale / sale.order               / website_order_line (one2many) : NEW re
 ---XML records in module 'website_sale'---
 NEW crm.case.section: website.salesteam_website_sales
 NEW ir.actions.act_url: website_sale.action_open_website
+NEW ir.actions.act_window: website_sale.product_public_category_action
 NEW ir.actions.todo: base.open_menu
-NEW ir.model.access: website_sale.access_product_attribute
-NEW ir.model.access: website_sale.access_product_attribute_line
-NEW ir.model.access: website_sale.access_product_attribute_value
+NEW ir.model.access: website_sale.access_product_attribute_line_public
+NEW ir.model.access: website_sale.access_product_attribute_price_public
+NEW ir.model.access: website_sale.access_product_attribute_public
+NEW ir.model.access: website_sale.access_product_attribute_value_public
+NEW ir.model.access: website_sale.access_product_category_pos_manager
 NEW ir.model.access: website_sale.access_product_category_public
 NEW ir.model.access: website_sale.access_product_pricelist_item_public
 NEW ir.model.access: website_sale.access_product_pricelist_public
@@ -44,6 +47,7 @@ NEW ir.model.access: website_sale.access_product_supplierinfo
 NEW ir.model.access: website_sale.access_product_template_public
 NEW ir.rule: website_sale.product_supplierinfo_public
 NEW ir.rule: website_sale.product_template_public
+NEW ir.ui.menu: website_sale.menu_product_public_category
 NEW ir.ui.view: website_sale.404
 NEW ir.ui.view: website_sale.assets_editor
 NEW ir.ui.view: website_sale.cart
@@ -57,9 +61,12 @@ NEW ir.ui.view: website_sale.payment
 NEW ir.ui.view: website_sale.product
 NEW ir.ui.view: website_sale.product_attributes
 NEW ir.ui.view: website_sale.product_comment
-NEW ir.ui.view: website_sale.product_normal_form_view
+NEW ir.ui.view: website_sale.product_price
 NEW ir.ui.view: website_sale.product_pricelist_view
+NEW ir.ui.view: website_sale.product_public_category_form_view
+NEW ir.ui.view: website_sale.product_public_category_tree_view
 NEW ir.ui.view: website_sale.product_template_form_view
+NEW ir.ui.view: website_sale.product_variants
 NEW ir.ui.view: website_sale.products
 NEW ir.ui.view: website_sale.products_add_to_cart
 NEW ir.ui.view: website_sale.products_attributes
@@ -73,11 +80,10 @@ NEW ir.ui.view: website_sale.search
 NEW ir.ui.view: website_sale.suggested_products_list
 NEW ir.ui.view: website_sale.total
 NEW ir.ui.view: website_sale.transaction_form_website_sale
+NEW ir.ui.view: website_sale.variants_template_tree_view
 NEW ir.ui.view: website_sale.view_order_form_acquirer
-NEW ir.ui.view: website_sale.view_product_attribute_form
-NEW ir.ui.view: website_sale.view_sales_config_website_sale
+NEW product.public.category: website_sale.categ_others
 NEW product.style: website_sale.image_full
 NEW product.style: website_sale.image_promo
 NEW res.groups: base.group_user
-NEW res.groups: product.group_product_attributes
 NEW website.menu: website_sale.menu_shop

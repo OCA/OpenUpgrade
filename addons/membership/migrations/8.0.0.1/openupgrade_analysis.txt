@@ -1,7 +1,15 @@
 ---Fields in module 'membership'---
+membership   / product.product          / membership (boolean)          : DEL 
+membership   / product.product          / membership_date_from (date)   : DEL 
+membership   / product.product          / membership_date_to (date)     : DEL 
+membership   / product.template         / membership (boolean)          : NEW 
+membership   / product.template         / membership_date_from (date)   : NEW 
+membership   / product.template         / membership_date_to (date)     : NEW 
 ---XML records in module 'membership'---
 DEL ir.actions.act_window.view: membership.action_report_membership_tree_view1
 DEL ir.actions.act_window.view: membership.action_report_membership_tree_view2
+NEW ir.ui.view: membership.product_template_form_view
+DEL ir.ui.view: membership.product_normal_form_view
 DEL ir.ui.view: membership.view_report_membership_tree1
 DEL process.node: membership.process_node_associatedmember0
 DEL process.node: membership.process_node_invoicedmember0

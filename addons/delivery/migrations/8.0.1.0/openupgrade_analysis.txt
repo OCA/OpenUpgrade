@@ -1,4 +1,8 @@
 ---Fields in module 'delivery'---
+delivery     / delivery.grid.line       / operator (selection)          : selection_keys is now '['<', '<=', '==', '>', '>=']' ('['<=', '==', '>=']')
+delivery     / delivery.grid.line       / sequence (integer)            : NEW required: required, req_default: function
+delivery     / delivery.grid.line       / type (selection)              : selection_keys is now '['price', 'quantity', 'volume', 'weight', 'wv']' ('['price', 'volume', 'weight', 'wv']')
+delivery     / delivery.grid.line       / variable_factor (selection)   : selection_keys is now '['price', 'quantity', 'volume', 'weight', 'wv']' ('['price', 'volume', 'weight', 'wv']')
 delivery     / sale.order.line          / is_delivery (boolean)         : NEW 
 ---XML records in module 'delivery'---
 NEW ir.actions.act_window: delivery.action_picking_tree

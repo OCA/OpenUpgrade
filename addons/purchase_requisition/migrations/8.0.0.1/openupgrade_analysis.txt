@@ -1,4 +1,6 @@
 ---Fields in module 'purchase_requisition'---
+purchase_requisition / product.product          / purchase_requisition (boolean): DEL 
+purchase_requisition / product.template         / purchase_requisition (boolean): NEW 
 purchase_requisition / purchase.order.line      / quantity_bid (float)          : NEW 
 purchase_requisition / purchase.requisition     / account_analytic_id (many2one): NEW relation: account.analytic.account
 purchase_requisition / purchase.requisition     / date_start (datetime)         : DEL 
@@ -18,9 +20,11 @@ NEW ir.actions.act_window: purchase_requisition.purchase_line_tree
 NEW ir.actions.report.xml: purchase_requisition.action_report_purchase_requisitions
 DEL ir.actions.report.xml: purchase_requisition.report_purchase_requisition
 NEW ir.ui.view: purchase_requisition.assets_backend
+NEW ir.ui.view: purchase_requisition.product_template_form_view_inherit
 NEW ir.ui.view: purchase_requisition.purchase_order_line_tree_tender
 NEW ir.ui.view: purchase_requisition.report_purchaserequisitions
 NEW ir.ui.view: purchase_requisition.view_bid_line_qty
+DEL ir.ui.view: purchase_requisition.product_normal_form_view_inherit
 NEW workflow: purchase_requisition.purchase_requisition_workflow
 NEW workflow.activity: purchase_requisition.act_cancel
 NEW workflow.activity: purchase_requisition.act_done

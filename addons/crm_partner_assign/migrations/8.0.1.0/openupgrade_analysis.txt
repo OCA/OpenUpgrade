@@ -24,6 +24,7 @@ NEW ir.actions.act_window.view: crm_partner_assign.action_portal_opportunities_f
 NEW ir.actions.act_window.view: crm_partner_assign.action_portal_opportunities_tree
 DEL ir.actions.act_window.view: crm_partner_assign.action_report_crm_opportunity_assign_tree
 NEW ir.actions.server: crm_partner_assign.action_assign_salesman_according_assigned_partner
+NEW ir.model.access: crm_partner_assign.access_res_partner_grade_public
 NEW ir.model.access: crm_partner_assign.lead_portal_access
 NEW ir.model.access: crm_partner_assign.partner_access_crm_lead
 NEW ir.model.access: crm_partner_assign.res_partner_grade_access

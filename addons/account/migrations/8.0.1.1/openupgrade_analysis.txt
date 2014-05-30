@@ -58,6 +58,7 @@ DEL ir.actions.report.xml: account.analytic_journal_print
 DEL ir.ui.menu: account.menu_board_account
 NEW ir.ui.view: account.assets_backend
 NEW ir.ui.view: account.partner_view_buttons
+NEW ir.ui.view: account.product_template_search_view
 NEW ir.ui.view: account.report_agedpartnerbalance
 NEW ir.ui.view: account.report_analyticbalance
 NEW ir.ui.view: account.report_analyticcostledger
@@ -80,6 +81,7 @@ NEW ir.ui.view: account.report_salepurchasejournal
 NEW ir.ui.view: account.report_trialbalance
 NEW ir.ui.view: account.report_vat
 DEL ir.ui.view: account.board_account_form
+DEL ir.ui.view: account.product_normal_form_view
 DEL ir.ui.view: account.view_account_invoice_report_tree
 DEL ir.ui.view: account.view_analytic_entries_report_tree
 DEL process.node: account.process_node_accountingentries0
