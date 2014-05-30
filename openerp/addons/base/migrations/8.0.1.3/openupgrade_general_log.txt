@@ -477,16 +477,6 @@ DEL ir.actions.act_window: crm_todo.crm_todo_action
 DEL ir.ui.menu: crm_todo.menu_crm_todo
 DEL ir.ui.view: crm_todo.crm_todo_opportunity_add
 DEL ir.ui.view: crm_todo.project_task_crm_tree
-ERROR: could not create migrations directory:
----Fields in module 'payment_buckaroo'---
-payment_buckaroo / payment.acquirer         / brq_secretkey (char)          : NEW 
-payment_buckaroo / payment.acquirer         / brq_websitekey (char)         : NEW 
-payment_buckaroo / payment.transaction      / buckaroo_txnid (char)         : NEW 
----XML records in module 'payment_buckaroo'---
-NEW ir.ui.view: payment_buckaroo.acquirer_form_buckaroo
-NEW ir.ui.view: payment_buckaroo.buckaroo_acquirer_button
-NEW ir.ui.view: payment_buckaroo.transaction_form_buckaroo
-NEW payment.acquirer: payment_buckaroo.payment_acquirer_buckaroo
 ERROR: module not in list of installed modules:
 ---Fields in module 'project_gtd'---
 ---XML records in module 'project_gtd'---

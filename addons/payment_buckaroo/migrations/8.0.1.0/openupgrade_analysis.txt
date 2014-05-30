@@ -1,0 +1,9 @@
+---Fields in module 'payment_buckaroo'---
+payment_buckaroo / payment.acquirer         / brq_secretkey (char)          : NEW 
+payment_buckaroo / payment.acquirer         / brq_websitekey (char)         : NEW 
+payment_buckaroo / payment.transaction      / buckaroo_txnid (char)         : NEW 
+---XML records in module 'payment_buckaroo'---
+NEW ir.ui.view: payment_buckaroo.acquirer_form_buckaroo
+NEW ir.ui.view: payment_buckaroo.buckaroo_acquirer_button
+NEW ir.ui.view: payment_buckaroo.transaction_form_buckaroo
+NEW payment.acquirer: payment_buckaroo.payment_acquirer_buckaroo
