@@ -210,6 +210,8 @@ class website_sale(http.Controller):
             context['pricelist'] = int(self.get_pricelist())
             product = request.registry.get('product.template').browse(request.cr, request.uid, int(product), context=context)
 
+        variants = [[p.id, map(int, p.attribute_value_ids), p.price] for p in product.product_variant_ids]
+
         values = {
             'search': search,
             'category': category,
@@ -220,6 +222,7 @@ class website_sale(http.Controller):
             'category_list': category_list,
             'main_object': product,
             'product': product,
+            'variants': variants,
         }
         return request.website.render("website_sale.product", values)
 
@@ -716,10 +719,6 @@ class website_sale(http.Controller):
 
         return request.redirect("/shop/product/%s?enable_editor=1" % slug(product.product_tmpl_id))
 
-    @http.route(['/shop/reorder'], type='json', auth="public")
-    def reorder(self, product_id, operation):
-        request.registry['product.template'].website_reorder(request.cr, request.uid, [id], operation, context=request.context)
-
     @http.route(['/shop/change_styles'], type='json', auth="public")
     def change_styles(self, id, style_id):
         product_obj = request.registry.get('product.template')
@@ -741,6 +740,18 @@ class website_sale(http.Controller):
             product.write({'website_style_ids': [(4, style.id)]})
 
         return not active
+
+    @http.route(['/shop/change_sequence'], type='json', auth="public")
+    def change_sequence(self, id, sequence):
+        product_obj = request.registry.get('product.template')
+        if sequence == "top":
+            product_obj.set_sequence_top(request.cr, request.uid, [id], context=request.context)
+        elif sequence == "bottom":
+            product_obj.set_sequence_bottom(request.cr, request.uid, [id], context=request.context)
+        elif sequence == "up":
+            product_obj.set_sequence_up(request.cr, request.uid, [id], context=request.context)
+        elif sequence == "down":
+            product_obj.set_sequence_down(request.cr, request.uid, [id], context=request.context)
 
     @http.route(['/shop/change_size'], type='json', auth="public")
     def change_size(self, id, x, y):
