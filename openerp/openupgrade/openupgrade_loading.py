@@ -105,6 +105,8 @@ def log_model(model, local_registry):
             'req_default': '',
             'inherits': '',
             }
+        if hasattr(v, 'oldname'):
+            properties['oldname'] = v.oldname
         if v._type == 'selection':
             if hasattr(v.selection, "__iter__"):
                 properties['selection_keys'] = unicode(

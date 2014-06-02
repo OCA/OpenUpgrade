@@ -31,21 +31,6 @@ try:
 except ImportError:
     from openupgrade_records.lib import apriori
 
-keys = [
-    'module',
-    'mode',
-    'model',
-    'field',
-    'type',
-    'isfunction',
-    'relation',
-    'required',
-    'selection_keys',
-    'req_default',
-    'inherits',
-    ]
-
-
 def module_map(module):
     return apriori.renamed_modules.get(
         module, module)
@@ -83,6 +68,13 @@ def search(item, item_list, fields):
         if not compare_records(item, i, fields):
             continue
         return i
+    #search for renamed fields
+    if 'field' in fields:
+        for i in item_list:
+            if not item['field'] or item['field'] != i.get('oldname'):
+                continue
+            if compare_records(dict(item, field=i['field']), i, fields):
+                return i
     return None
 
 
@@ -114,6 +106,11 @@ def report_generic(new, old, attrs, reprs):
                 else:
                     text = "not a function anymore"
                 fieldprint(old, new, None, text, reprs)
+        elif attr == 'oldname':
+            if new.get('oldname') == old['field']:
+                fieldprint(old, new, None,
+                           'was renamed to %s [nothing to to]' % new['field'],
+                           reprs)
         else:
             if old[attr] != new[attr]:
                 fieldprint(old, new, attr, None, reprs)
@@ -173,19 +170,19 @@ def compare_sets(old_records, new_records):
     matched_direct = match(
         ['module', 'mode', 'model', 'field'],
         ['relation', 'type', 'selection_keys', 'inherits',
-         'isfunction', 'required'])
+         'isfunction', 'required', 'oldname'])
 
     # other module, same type and operation
     matched_other_module = match(
         ['mode', 'model', 'field', 'type'],
         ['module', 'relation', 'selection_keys', 'inherits',
-         'isfunction', 'required'])
+         'isfunction', 'required', 'oldname'])
 
     # other module, same operation, other type
     matched_other_type = match(
         ['mode', 'model', 'field'],
         ['relation', 'type', 'selection_keys', 'inherits',
-         'isfunction', 'required'])
+         'isfunction', 'required', 'oldname'])
 
     # fields with other names
     # matched_other_name = match(
