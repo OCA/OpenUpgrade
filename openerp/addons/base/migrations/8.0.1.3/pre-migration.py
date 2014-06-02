@@ -32,5 +32,5 @@ column_renames = {
 def migrate(cr, version):
     openupgrade.check_values_selection_field(
         cr, 'ir_act_report_xml', 'report_type',
-        ['controller', 'pdf', 'qweb-html', 'qweb-pdf', 'sxw-coincoin', 'webkit'])
+        ['controller', 'pdf', 'qweb-html', 'qweb-pdf', 'sxw', 'webkit'])
     openupgrade.rename_columns(cr, column_renames)
