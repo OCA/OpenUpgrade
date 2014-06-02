@@ -54,7 +54,7 @@ product      / product.product          / color (integer)               : DEL
 product      / product.template         / cost_method (selection)       : module is now 'stock_account' ('product')
 product      / product.template         / cost_method (selection)       : now a function
 product      / product.template         / cost_method (selection)       : selection_keys is now '['average', 'real', 'standard']' ('['average', 'standard']')
-# nothing to do ?
+# moved in stock_account, now a fields.property
 
 product      / product.template         / image (binary)                : NEW 
 product      / product.product          / image (binary)                : now afunction
