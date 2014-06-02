@@ -104,6 +104,7 @@ stock        / stock.move               / origin_returned_move_id (many2one): NE
 stock        / stock.move               / partially_available (boolean) : NEW 
 stock        / stock.move               / picking_type_id (many2one)    : NEW relation: stock.picking.type
 stock        / stock.move               / price_currency_id (many2one)  : DEL relation: res.currency
+stock        / stock.move               / priority (selection)          : selection_keys is now '['0', '1', '2', '3']' ('['0', '1']')
 stock        / stock.move               / procure_method (selection)    : NEW required: required, selection_keys: ['make_to_order', 'make_to_stock'], req_default: make_to_stock
 stock        / stock.move               / procurement_id (many2one)     : NEW relation: procurement.order
 stock        / stock.move               / prodlot_id (many2one)         : DEL relation: stock.production.lot
@@ -150,7 +151,6 @@ stock        / stock.picking            / message_last_post (datetime)  : NEW
 stock        / stock.picking            / owner_id (many2one)           : NEW relation: res.partner
 stock        / stock.picking            / pack_operation_ids (one2many) : NEW relation: stock.pack.operation
 stock        / stock.picking            / picking_type_id (many2one)    : NEW relation: stock.picking.type, required: required
-stock        / stock.picking            / priority (selection)          : NEW required: required, selection_keys: ['0', '1', '2'], req_default: 1
 stock        / stock.picking            / recompute_pack_op (boolean)   : NEW 
 stock        / stock.picking            / state (selection)             : now a function
 stock        / stock.picking            / state (selection)             : selection_keys is now '['assigned', 'cancel', 'confirmed', 'done', 'draft', 'partially_available', 'waiting']' ('['assigned', 'auto', 'cancel', 'confirmed', 'done', 'draft']')
@@ -293,6 +293,8 @@ DEL ir.actions.act_window.view: stock.action_picking_tree_out_view1_waiting
 DEL ir.actions.act_window.view: stock.action_picking_tree_out_view2_waiting
 DEL ir.actions.act_window.view: stock.action_picking_tree_out_view2_waiting_cal
 NEW ir.actions.report.xml: stock.action_report_inventory
+NEW ir.actions.report.xml: stock.action_report_location_barcode
+NEW ir.actions.report.xml: stock.action_report_lot_barcode
 NEW ir.actions.report.xml: stock.action_report_picking
 NEW ir.actions.report.xml: stock.action_report_quant_package_barcode
 DEL ir.actions.report.xml: stock.report_location_overview
@@ -408,6 +410,8 @@ NEW ir.ui.view: stock.product_template_search_form_view_stock
 NEW ir.ui.view: stock.quant_package_search_view
 NEW ir.ui.view: stock.quant_search_view
 NEW ir.ui.view: stock.report_inventory
+NEW ir.ui.view: stock.report_location_barcode
+NEW ir.ui.view: stock.report_lot_barcode
 NEW ir.ui.view: stock.report_package_barcode
 NEW ir.ui.view: stock.report_picking
 NEW ir.ui.view: stock.stock_location_path_form
