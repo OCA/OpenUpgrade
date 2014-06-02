@@ -1578,7 +1578,6 @@ class BaseModel(object):
             # OpenUpgrade: do not raise for obsolete fields
             # raise except_orm('ValidateError', '\n'.join(error_msgs))
             _logger.debug('OpenUpgrade: View error has not been raised. %s', '\n'.join(error_msgs))
-            pass
 
     def default_get(self, cr, uid, fields_list, context=None):
         """
