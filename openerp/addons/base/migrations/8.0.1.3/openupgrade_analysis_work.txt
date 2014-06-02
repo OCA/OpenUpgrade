@@ -1,0 +1,125 @@
+---Fields in module 'base'---
+# 'parser' field is new. Nothing to do.
+base         / ir.actions.report.xml    / parser (char)                 : NEW
+# 'selection_keys' was a simple char and become a selection field. OpenUpgrade will test and warn if there is invalid values in this field.
+base         / ir.actions.report.xml    / report_type (char)            : selection_keys is now '['controller', 'pdf', 'qweb-html', 'qweb-pdf', 'sxw', 'webkit']' ('False')
+base         / ir.actions.report.xml    / report_type (char)            : type is now 'selection' ('char')
+
+
+base         / ir.actions.server        / copy_object (reference)       : DEL 
+base         / ir.actions.server        / copyvalue (char)              : NEW 
+base         / ir.actions.server        / crud_model_id (many2one)      : NEW relation: ir.model
+base         / ir.actions.server        / email (char)                  : DEL 
+base         / ir.actions.server        / expression (char)             : DEL 
+base         / ir.actions.server        / id_object (reference)         : NEW 
+base         / ir.actions.server        / id_value (char)               : NEW 
+base         / ir.actions.server        / link_field_id (many2one)      : NEW relation: ir.model.fields
+base         / ir.actions.server        / link_new_record (boolean)     : NEW 
+base         / ir.actions.server        / loop_action (many2one)        : DEL relation: ir.actions.server
+base         / ir.actions.server        / menu_ir_values_id (many2one)  : NEW relation: ir.values
+base         / ir.actions.server        / message (text)                : DEL 
+base         / ir.actions.server        / mobile (char)                 : DEL 
+base         / ir.actions.server        / model_object_field (many2one) : NEW relation: ir.model.fields
+base         / ir.actions.server        / record_id (many2one)          : DEL relation: ir.model.fields
+base         / ir.actions.server        / ref_object (reference)        : NEW 
+base         / ir.actions.server        / sms (char)                    : DEL 
+base         / ir.actions.server        / srcmodel_id (many2one)        : DEL relation: ir.model
+base         / ir.actions.server        / state (selection)             : selection_keys is now 'function' ('['client_action', 'code', 'dummy', 'email', 'loop', 'object_copy', 'object_create', 'object_write', 'other', 'sms', 'trigger']')
+base         / ir.actions.server        / sub_model_object_field (many2one): NEW relation: ir.model.fields
+base         / ir.actions.server        / sub_object (many2one)         : NEW relation: ir.model
+base         / ir.actions.server        / subject (char)                : module is now 'email_template' ('base')
+base         / ir.actions.server        / subject (char)                : now a function
+base         / ir.actions.server        / trigger_name (selection)      : DEL selection_keys: function
+base         / ir.actions.server        / trigger_obj_id (many2one)     : DEL relation: ir.model.fields
+base         / ir.actions.server        / use_create (selection)        : NEW required: required, selection_keys: ['copy_current', 'copy_other', 'new', 'new_other'], req_default: new
+base         / ir.actions.server        / use_relational_model (selection): NEW required: required, selection_keys: ['base', 'relational'], req_default: base
+base         / ir.actions.server        / use_write (selection)         : NEW required: required, selection_keys: ['current', 'expression', 'other'], req_default: current
+base         / ir.actions.server        / wkf_field_id (many2one)       : NEW relation: ir.model.fields
+base         / ir.actions.server        / wkf_transition_id (many2one)  : NEW relation: workflow.transition
+base         / ir.actions.server        / write_expression (char)       : NEW 
+base         / ir.actions.server        / write_id (char)               : DEL 
+base         / ir.logging               / create_date (datetime)        : NEW 
+base         / ir.logging               / create_uid (integer)          : NEW 
+base         / ir.logging               / dbname (char)                 : NEW 
+base         / ir.logging               / func (char)                   : NEW required: required
+base         / ir.logging               / level (char)                  : NEW 
+base         / ir.logging               / line (char)                   : NEW required: required
+base         / ir.logging               / message (text)                : NEW required: required
+base         / ir.logging               / name (char)                   : NEW required: required
+base         / ir.logging               / path (char)                   : NEW required: required
+base         / ir.logging               / type (selection)              : NEW required: required, selection_keys: ['client', 'server']
+base         / ir.model.fields          / view_load (boolean)           : DEL 
+base         / ir.property              / res_id (reference)            : type is now 'char' ('reference')
+base         / ir.property              / type (selection)              : selection_keys is now '['binary', 'boolean', 'char', 'date', 'datetime', 'float', 'integer', 'many2one', 'selection', 'text']' ('['binary', 'boolean', 'char', 'date', 'datetime', 'float', 'integer', 'many2one', 'text']')
+base         / ir.property              / value_reference (reference)   : type is now 'char' ('reference')
+base         / ir.ui.view               / application (selection)       : NEW required: required, selection_keys: ['always', 'disabled', 'enabled'], req_default: always
+base         / ir.ui.view               / create_date (datetime)        : NEW 
+base         / ir.ui.view               / inherit_children_ids (one2many): NEW relation: ir.ui.view
+base         / ir.ui.view               / mode (selection)              : NEW required: required, selection_keys: ['extension', 'primary'], req_default: primary
+base         / ir.ui.view               / model_ids (one2many)          : NEW relation: ir.model.data
+base         / ir.ui.view               / type (selection)              : not a function anymore
+base         / ir.ui.view               / type (selection)              : selection_keys is now '['calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'qweb', 'search', 'tree']' ('['calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'mdx', 'search', 'tree']')
+base         / ir.ui.view               / write_date (datetime)         : NEW 
+base         / res.company              / font (many2one)               : NEW relation: res.font
+base         / res.company              / paper_format (selection)      : DEL required: required, selection_keys: ['a4', 'us_letter'], req_default: a4
+base         / res.company              / rml_paper_format (selection)  : NEW required: required, selection_keys: ['a4', 'us_letter'], req_default: a4
+base         / res.country              / image (binary)                : NEW 
+base         / res.currency.rate        / name (date)                   : type is now 'datetime' ('date')
+base         / res.font                 / family (char)                 : NEW required: required
+base         / res.font                 / mode (char)                   : NEW required: required
+base         / res.font                 / name (char)                   : NEW required: required
+base         / res.font                 / path (char)                   : NEW required: required
+base         / res.users                / menu_id (many2one)            : DEL relation: ir.actions.actions
+base         / workflow.instance        / transition_ids (many2many)    : NEW relation: workflow.transition
+base         / workflow.instance        / uid (integer)                 : NEW 
+---XML records in module 'base'---
+NEW ir.actions.act_window: base.ir_logging_all_act
+DEL ir.actions.act_window: base.action_menu_admin
+DEL ir.actions.act_window: base.action_view_base_module_import
+DEL ir.actions.act_window: base.ir_action_wizard
+NEW ir.model.access: base.access_ir_logging
+NEW ir.model.access: base.access_ir_mail_server
+NEW ir.model.access: base.access_ir_model_data_user
+NEW ir.model.access: base.access_res_font_all
+NEW ir.model.access: base.access_res_font_group_user
+NEW ir.model.access: base.access_res_partner_portal
+NEW ir.model.access: base.access_res_partner_public
+DEL ir.model.access: base.access_ir_actions_wizard_all
+DEL ir.model.access: base.access_ir_actions_wizard_group_system
+DEL ir.model.access: base.access_ir_filter employee
+DEL ir.model.access: base.access_ir_filters
+DEL ir.model.access: base.access_ir_mail_server_all
+DEL ir.model.access: base.access_ir_ui_view_sc_group_user
+DEL ir.model.access: base.access_res_request_group_user
+DEL ir.model.access: base.access_res_request_group_user_all
+DEL ir.model.access: base.access_res_request_history_group_user
+DEL ir.model.access: base.access_res_request_history_group_user_all
+NEW ir.module.category: base.module_category_website
+NEW ir.rule: base.res_currency_rule
+NEW ir.rule: base.res_partner_portal_public_rule
+NEW ir.ui.menu: base.ir_logging_all_menu
+DEL ir.ui.menu: base.menu_ir_action_wizard
+DEL ir.ui.menu: base.menu_ir_actions_todo
+DEL ir.ui.menu: base.menu_ir_cron
+DEL ir.ui.menu: base.next_id_4
+NEW ir.ui.view: base.contact
+NEW ir.ui.view: base.ir_logging_form_view
+NEW ir.ui.view: base.ir_logging_search_view
+NEW ir.ui.view: base.ir_logging_tree_view
+DEL ir.ui.view: base.act_wizard_search_view
+DEL ir.ui.view: base.act_wizard_view
+DEL ir.ui.view: base.act_wizard_view_tree
+DEL ir.ui.view: base.shortcut_form
+DEL ir.ui.view: base.shortcut_tree
+DEL ir.ui.view: base.view_base_module_import
+DEL ir.ui.view: base.view_config_wizard_form
+DEL ir.ui.view_sc: base.ir_ui_view_sc_partner0
+DEL res.currency: base.EEK
+DEL res.currency.rate: base.rateEEK
+NEW res.font: base.font_courier
+NEW res.font: base.font_helvetica
+NEW res.font: base.font_times
+NEW res.groups: base.group_portal
+NEW res.groups: base.group_public
+NEW res.partner: base.public_partner
+NEW res.users: base.public_user
