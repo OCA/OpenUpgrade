@@ -1,11 +1,12 @@
 ---Fields in module 'base'---
-# 'parser' field is new. Nothing to do.
+# 'parser' field is new. --> Nothing to do.
 base         / ir.actions.report.xml    / parser (char)                 : NEW
-# 'selection_keys' was a simple char and become a selection field. OpenUpgrade will test and warn if there is invalid values in this field.
+# 'selection_keys' was a simple char and become a selection field. 
+# OpenUpgrade will test and warn if there is invalid values in this field. --> DONE.
 base         / ir.actions.report.xml    / report_type (char)            : selection_keys is now '['controller', 'pdf', 'qweb-html', 'qweb-pdf', 'sxw', 'webkit']' ('False')
 base         / ir.actions.report.xml    / report_type (char)            : type is now 'selection' ('char')
 
-
+# TODO
 base         / ir.actions.server        / copy_object (reference)       : DEL 
 base         / ir.actions.server        / copyvalue (char)              : NEW 
 base         / ir.actions.server        / crud_model_id (many2one)      : NEW relation: ir.model
@@ -38,6 +39,8 @@ base         / ir.actions.server        / wkf_field_id (many2one)       : NEW re
 base         / ir.actions.server        / wkf_transition_id (many2one)  : NEW relation: workflow.transition
 base         / ir.actions.server        / write_expression (char)       : NEW 
 base         / ir.actions.server        / write_id (char)               : DEL 
+
+# TODO
 base         / ir.logging               / create_date (datetime)        : NEW 
 base         / ir.logging               / create_uid (integer)          : NEW 
 base         / ir.logging               / dbname (char)                 : NEW 
@@ -48,30 +51,60 @@ base         / ir.logging               / message (text)                : NEW re
 base         / ir.logging               / name (char)                   : NEW required: required
 base         / ir.logging               / path (char)                   : NEW required: required
 base         / ir.logging               / type (selection)              : NEW required: required, selection_keys: ['client', 'server']
+
+# TODO
 base         / ir.model.fields          / view_load (boolean)           : DEL 
+
+# TODO
 base         / ir.property              / res_id (reference)            : type is now 'char' ('reference')
 base         / ir.property              / type (selection)              : selection_keys is now '['binary', 'boolean', 'char', 'date', 'datetime', 'float', 'integer', 'many2one', 'selection', 'text']' ('['binary', 'boolean', 'char', 'date', 'datetime', 'float', 'integer', 'many2one', 'text']')
 base         / ir.property              / value_reference (reference)   : type is now 'char' ('reference')
+
+# New feature for ir.ui.view that allow enable or disable inheritance : using default value is OK. --> Nothing to do.
 base         / ir.ui.view               / application (selection)       : NEW required: required, selection_keys: ['always', 'disabled', 'enabled'], req_default: always
+# 'create_date' was already present in V7 but not in the model. --> Nothing to do.
 base         / ir.ui.view               / create_date (datetime)        : NEW 
+# new one2many field on an existing many2one field (ir_ui_view.inherit_id). --> Nothing to do.
 base         / ir.ui.view               / inherit_children_ids (one2many): NEW relation: ir.ui.view
 base         / ir.ui.view               / mode (selection)              : NEW required: required, selection_keys: ['extension', 'primary'], req_default: primary
+# new one2many field on an existing many2one field (ir_model_data.res_id). --> Nothing to do.
 base         / ir.ui.view               / model_ids (one2many)          : NEW relation: ir.model.data
 base         / ir.ui.view               / type (selection)              : not a function anymore
 base         / ir.ui.view               / type (selection)              : selection_keys is now '['calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'qweb', 'search', 'tree']' ('['calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'mdx', 'search', 'tree']')
+# 'write_date' was already present in V7 but not in the model. --> Nothing to do.
 base         / ir.ui.view               / write_date (datetime)         : NEW 
+
+# New feature: using default value is OK. --> Nothing to do.
 base         / res.company              / font (many2one)               : NEW relation: res.font
+
+# 'paper_format' renamed into 'rml_paper_format'. --> DONE.
 base         / res.company              / paper_format (selection)      : DEL required: required, selection_keys: ['a4', 'us_letter'], req_default: a4
 base         / res.company              / rml_paper_format (selection)  : NEW required: required, selection_keys: ['a4', 'us_letter'], req_default: a4
+
+# 'image' is a new field. --> Nothing to do.
 base         / res.country              / image (binary)                : NEW 
+
+# date -> datetime changes: --> Nothing to do.
 base         / res.currency.rate        / name (date)                   : type is now 'datetime' ('date')
+
+# Complete new model 'res.font'. --> Nothing to do.
 base         / res.font                 / family (char)                 : NEW required: required
 base         / res.font                 / mode (char)                   : NEW required: required
 base         / res.font                 / name (char)                   : NEW required: required
 base         / res.font                 / path (char)                   : NEW required: required
+
+# The feature has been removed. It gaves the possibility to a user to have a different menu as the default one. --> Nothing to do.
 base         / res.users                / menu_id (many2one)            : DEL relation: ir.actions.actions
+
+# TODO
 base         / workflow.instance        / transition_ids (many2many)    : NEW relation: workflow.transition
+
+
+# 'uid' was already present in V7 but not in the model. --> Nothing to do.
 base         / workflow.instance        / uid (integer)                 : NEW 
+
+
+
 ---XML records in module 'base'---
 NEW ir.actions.act_window: base.ir_logging_all_act
 DEL ir.actions.act_window: base.action_menu_admin
