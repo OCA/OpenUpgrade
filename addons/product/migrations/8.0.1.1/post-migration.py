@@ -17,11 +17,10 @@ def move_fields(cr, pool):
     SET color=(SELECT pp1.%s 
           FROM product_product as pp1
           WHERE pp1.product_tmpl_id=pt.id ORDER BY pp1.id LIMIT 1),
-        image=(SELECT pp2.%s 
+        image=(SELECT pp2.image_variant 
           FROM product_product as pp2
           WHERE pp2.product_tmpl_id=pt.id ORDER BY pp2.id LIMIT 1)
     """ % (openupgrade.get_legacy_name('color'),
-           openupgrade.get_legacy_name('image')
            ),
                 ]
     for sql in queries:
