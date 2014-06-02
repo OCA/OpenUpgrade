@@ -1,0 +1,40 @@
+#New module that doesn't fetch tables from report_webkit
+---Fields in module 'report'---
+report       / ir.actions.report.xml    / paperformat_id (many2one)     : NEW relation: report.paperformat
+report       / report.paperformat       / default (boolean)             : NEW 
+report       / report.paperformat       / dpi (integer)                 : NEW required: required, req_default: 90
+report       / report.paperformat       / format (selection)            : NEW selection_keys: ['A0', 'A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9', 'B0', 'B1', 'B10', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9', 'C5E', 'Comm10E', 'DLE', 'Executive', 'Folio', 'Ledger', 'Legal', 'Letter', 'Tabloid', 'custom']
+report       / report.paperformat       / header_line (boolean)         : NEW 
+report       / report.paperformat       / header_spacing (integer)      : NEW 
+report       / report.paperformat       / margin_bottom (integer)       : NEW 
+report       / report.paperformat       / margin_left (integer)         : NEW 
+report       / report.paperformat       / margin_right (integer)        : NEW 
+report       / report.paperformat       / margin_top (integer)          : NEW 
+report       / report.paperformat       / name (char)                   : NEW required: required
+report       / report.paperformat       / orientation (selection)       : NEW selection_keys: ['Landscape', 'Portrait']
+report       / report.paperformat       / page_height (integer)         : NEW 
+report       / report.paperformat       / page_width (integer)          : NEW 
+report       / report.paperformat       / report_ids (one2many)         : NEW relation: ir.actions.report.xml
+report       / res.company              / paperformat_id (many2one)     : NEW relation: report.paperformat
+---XML records in module 'report'---
+NEW ir.actions.act_window: report.paper_format_action
+NEW ir.actions.act_window: report.reports_action
+NEW ir.model.access: report.access_report
+NEW ir.model.access: report.paperformat_access_employee
+NEW ir.model.access: report.paperformat_access_portal
+NEW ir.ui.menu: report.paper_format_menuitem
+NEW ir.ui.menu: report.reporting_menuitem
+NEW ir.ui.menu: report.reports_menuitem
+NEW ir.ui.view: report.act_report_xml_view_inherit
+NEW ir.ui.view: report.assets_backend
+NEW ir.ui.view: report.external_layout
+NEW ir.ui.view: report.external_layout_footer
+NEW ir.ui.view: report.external_layout_header
+NEW ir.ui.view: report.html_container
+NEW ir.ui.view: report.internal_layout
+NEW ir.ui.view: report.paperformat_view_form
+NEW ir.ui.view: report.paperformat_view_tree
+NEW ir.ui.view: report.reporting_settings_form_inherited
+NEW ir.ui.view: report.style
+NEW report.paperformat: report.paperformat_euro
+NEW report.paperformat: report.paperformat_us

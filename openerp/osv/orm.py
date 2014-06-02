@@ -1575,7 +1575,9 @@ class BaseModel(object):
                         _("The field(s) `%s` failed against a constraint: %s") % (', '.join(fields), translated_msg)
                 )
         if error_msgs:
-            raise except_orm('ValidateError', '\n'.join(error_msgs))
+            # OpenUpgrade: do not raise for obsolete fields
+            # raise except_orm('ValidateError', '\n'.join(error_msgs))
+            _logger.debug('OpenUpgrade: View error has not been raised. %s', '\n'.join(error_msgs))
 
     def default_get(self, cr, uid, fields_list, context=None):
         """
