@@ -13,7 +13,7 @@ product      / product.attribute.value  / price_ids (one2many)          : NEW re
 product      / product.attribute.value  / product_ids (many2many)       : NEW relation: product.product
 product      / product.attribute.value  / sequence (integer)            : NEW 
 
-## new model, will be handled by standard migration
+## OK new model, will be handled by standard migration
 
 
 product      / product.packaging        / ul_container (many2one)       : NEW relation: product.ul
@@ -33,18 +33,20 @@ product      / product.price.history    / company_id (many2one)         : NEW re
 product      / product.price.history    / cost (float)                  : NEW 
 product      / product.price.history    / datetime (datetime)           : NEW 
 product      / product.price.history    / product_template_id (many2one): NEW relation: product.template, required: required
-# new fields -> nothing to do
+# OK new fields -> nothing to do
 
 product      / product.template         / attribute_line_ids (one2many) : NEW relation: product.attribute.line
 product      / product.product          / attribute_value_ids (many2many): NEW relation: product.attribute.value
-# nothing to do
+# OK nothing to do
 
 
 product      / product.supplierinfo     / product_id (many2one)         : DEL relation: product.template, required: required
 product      / product.supplierinfo     / product_tmpl_id (many2one)    : NEW relation: product.template, required: required
-# seller_ids moved from product.product to product.template
-product      / product.template         / active (boolean)              : NEW 
+# OK seller_ids moved from product.product to product.template
 # need to move seller_ids from product.product to product.template
+
+product      / product.template         / active (boolean)              : NEW 
+# OK: copy 
 
 product      / product.template         / color (integer)               : NEW 
 product      / product.product          / color (integer)               : DEL 

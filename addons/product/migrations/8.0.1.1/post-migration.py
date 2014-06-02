@@ -27,9 +27,21 @@ def move_fields(cr, pool):
     for sql in queries:
         execute(cr, sql)
 
+def copy_fields(cr, pool):
+    product_tmpl= pool['product.template']
+    product_obj= pool['product.product']
+    # copy the active field from product to template
+    ctx = {'active_test': False}
+    tmpl_ids = product_tmpl.search(cr, SUPERUSER_ID, [], context=ctx)
+    for template in product_tmpl.browse(cr, SUPERUSER_ID, tmpl_ids, context=ctx):
+        template.write({'active': any(variant.active
+                                      for variant in template.product_variant_ids)
+                        })
+
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     move_fields(cr, pool)
+    copy_fields(cr, pool)
     load_data(cr)
     
