@@ -1,0 +1,18 @@
+---Fields in module 'email_template'---
+
+email_template / email.template           / body_html (text)              : type is now 'html' ('text')
+# Nothing to do : the database column type did not change
+
+email_template / email.template           / email_recipients (char)       : DEL 
+email_template / email.template           / partner_to (char)             : NEW 
+# Field renamed
+
+email_template / email.template           / use_default_to (boolean)      : NEW 
+email_template / ir.actions.server        / template_id (many2one)        : NEW relation: email.template
+# New columns : ok
+
+---XML records in module 'email_template'---
+NEW email.template: email_template.email_template_partner
+NEW ir.actions.act_window: base.action_partner_mass_mail
+NEW ir.ui.view: email_template.view_server_action_form_template
+# New : ok
