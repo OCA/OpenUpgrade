@@ -30,3 +30,13 @@ release.
 .. automodule:: openupgrade_70
    :members:
 
+Methods for OpenUpgrade 8.0
+---------------------------
+
+The following specific methods for 8.0 are available. These have been
+developed to cover specific needs as per data model changes in that
+release.
+
+.. automodule:: openupgrade_80
+   :members:
+
