@@ -37,10 +37,26 @@ def copy_fields(cr, pool):
                                       for variant in template.product_variant_ids)
                         })
 
+def migrate_packaging(cr, pool):
+    """create 1 product UL for each different product packaging dimension
+    and link it to the packagings
+    """
+    packaging_obj = pool['product.packaging']
+    ul_obj = pool['product.ul']
+    packaging_ids = packaging_obj.search(cr, SUPERUSER_ID, [])
+    for packaging in packaging_obj.browse(cr, SUPERUSER_ID, packaging_ids):
+        ul = packaging.ul
+        ul.write({'height': height,
+                  'width': width,
+                  'length': length,
+                  'weight_ul': weight,
+                  })
+        
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     move_fields(cr, pool)
     copy_fields(cr, pool)
+    migrate_packaging(cr, pool)
     load_data(cr)
     

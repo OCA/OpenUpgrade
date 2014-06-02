@@ -5,21 +5,22 @@ column_renames = {
     'product_supplierinfo': [
         ('product_id', None),
         ],
-    'product_product':
-        [
+    'product_product': [
         ('color', None),
         ('image', 'image_variant'),
         ],
-    'product_template':[
+    'product_template': [
         ('produce_delay', None), # need to handle in mrp migration
+        ],
+    'product_packaging': [
+        ('height', None),
+        ('length', None),
+        ('weight_ul', None),
+        ('width', None),
         ]
         }
 
-def migrate_packaging(cr):
-    pass # XXX 
 
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
-    migrate_packaging(cr)
-    

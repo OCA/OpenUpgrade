@@ -25,8 +25,8 @@ product      / product.packaging        / weight_ul (float)             : DEL
 product      / product.ul               / weight (float)                : NEW 
 product      / product.packaging        / width (float)                 : DEL 
 product      / product.ul               / width (float)                 : NEW 
-## new relation ul_container, and the dimensions are moved there
-## TODO later because rarely used feature
+## OK new relation ul_container handled by migration
+## OK the dimensions are weight must be moved to the related UL (through the ul field)
 
 
 product      / product.price.history    / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
