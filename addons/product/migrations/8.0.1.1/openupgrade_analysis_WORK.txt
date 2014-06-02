@@ -71,10 +71,10 @@ product      / product.product          / message_last_post (datetime)  : NEW
 
 
 product      / product.template         / packaging (one2many)          : NEW relation: product.packaging
-# TODO later once issue #291 is solved
+# OK moved from product.product
 
 product      / product.template         / produce_delay (float)         : DEL 
-# moved in mrp, defined on product.product
+# OK moved in mrp, defined on product.product
 
 product      / product.template         / product_variant_ids (one2many): NEW relation: product.product, required: required
 # nothing to do?
