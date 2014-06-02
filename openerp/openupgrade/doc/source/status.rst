@@ -27,5 +27,5 @@ For all official addons, migration scripts should be provided for migrating betw
    modules50-60
    modules60-61
    modules61-70
-
+   modules70-80
 
