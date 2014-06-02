@@ -54,7 +54,10 @@ More interesting are
     * Any general data added by the module. Typically, data is loaded one time
       only using the 'noupdate' flag in the XML. You cannot simply force-load
       such data in your upgrade script, or you will for instance reset the
-      sequences used for invoice numbering. Revise any data carefully and
+      sequences used for invoice numbering. 
+      You can use this script 
+      'OpenUpgrade/script/compare_noupdate_xml_records.py' 
+      Revise any data carefully and
       copy relevant, new data in a separate file. Load it from your post script
       using :meth:`~openupgrade.load_xml` from the module :mod:`openupgrade`
       which is included with the OpenUpgrade Server package. You may also have
