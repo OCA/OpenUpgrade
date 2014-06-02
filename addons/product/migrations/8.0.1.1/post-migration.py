@@ -1,9 +1,10 @@
 from openerp.openupgrade import openupgrade
+from openerp import pooler, SUPERUSER_ID
 
 def load_data(cr):
     openupgrade.load_data(cr, 'product', 'migrations/8.0.1.1/modified_data.xml', mode='init')
 
-def move_fields(cr):
+def move_fields(cr, pool):
     execute = openupgrade.logged_query
     queries = [ """
     UPDATE product_supplierinfo
@@ -28,6 +29,7 @@ def move_fields(cr):
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    move_fields()
-    load_data()
+    pool = pooler.get_pool(cr.dbname)
+    move_fields(cr, pool)
+    load_data(cr)
     

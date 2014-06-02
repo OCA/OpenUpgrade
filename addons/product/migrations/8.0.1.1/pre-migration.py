@@ -21,5 +21,5 @@ def migrate_packaging(cr):
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
-    migrate_packaging()
+    migrate_packaging(cr)
     
