@@ -12,46 +12,84 @@ product      / product.attribute.value  / name (char)                   : NEW re
 product      / product.attribute.value  / price_ids (one2many)          : NEW relation: product.attribute.price
 product      / product.attribute.value  / product_ids (many2many)       : NEW relation: product.product
 product      / product.attribute.value  / sequence (integer)            : NEW 
-product      / product.packaging        / height (float)                : DEL 
-product      / product.packaging        / length (float)                : DEL 
+
+## new model, will be handled by standard migration
+
+
 product      / product.packaging        / ul_container (many2one)       : NEW relation: product.ul
+product      / product.packaging        / height (float)                : DEL 
+product      / product.ul               / height (float)                : NEW 
+product      / product.packaging        / length (float)                : DEL 
+product      / product.ul               / length (float)                : NEW 
 product      / product.packaging        / weight_ul (float)             : DEL 
+product      / product.ul               / weight (float)                : NEW 
 product      / product.packaging        / width (float)                 : DEL 
+product      / product.ul               / width (float)                 : NEW 
+## new relation ul_container, and the dimensions are moved there
+## TODO later because rarely used feature
+
+
 product      / product.price.history    / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
 product      / product.price.history    / cost (float)                  : NEW 
 product      / product.price.history    / datetime (datetime)           : NEW 
 product      / product.price.history    / product_template_id (many2one): NEW relation: product.template, required: required
+# new fields -> nothing to do
+
+product      / product.template         / attribute_line_ids (one2many) : NEW relation: product.attribute.line
 product      / product.product          / attribute_value_ids (many2many): NEW relation: product.attribute.value
+# nothing to do
+
+
+product      / product.supplierinfo     / product_id (many2one)         : DEL relation: product.template, required: required
+product      / product.supplierinfo     / product_tmpl_id (many2one)    : NEW relation: product.template, required: required
+# seller_ids moved from product.product to product.template
+product      / product.template         / active (boolean)              : NEW 
+# need to move seller_ids from product.product to product.template
+
+product      / product.template         / color (integer)               : NEW 
 product      / product.product          / color (integer)               : DEL 
-product      / product.product          / image (binary)                : now a function
+## color moved up in template
+
+product      / product.template         / cost_method (selection)       : module is now 'stock_account' ('product')
+product      / product.template         / cost_method (selection)       : now a function
+product      / product.template         / cost_method (selection)       : selection_keys is now '['average', 'real', 'standard']' ('['average', 'standard']')
+# TODO 
+
+product      / product.template         / image (binary)                : NEW 
+product      / product.product          / image (binary)                : now afunction
+# need to move up to template
+
 product      / product.product          / image_variant (binary)        : NEW 
-product      / product.product          / incoming_qty (float)          : module is now 'stock' ('product')
+# nothing to do
+
+product      / product.template         / message_ids (one2many)        : NEW relation: mail.message
+product      / product.template         / message_last_post (datetime)  : NEW 
+# now product.template derives from mail template
+# TODO : move up messages 
 product      / product.product          / message_last_post (datetime)  : NEW 
+
+
+product      / product.template         / packaging (one2many)          : NEW relation: product.packaging
+# TODO later once issue #291 is solved
+
+product      / product.template         / produce_delay (float)         : DEL 
+# moved in mrp, defined on product.product
+
+product      / product.template         / product_variant_ids (one2many): NEW relation: product.product, required: required
+# nothing to do?
+
+product      / product.template         / standard_price (float)        : now a function
+# nothing to do
+
+product      / product.product          / incoming_qty (float)          : module is now 'stock' ('product')
+# function field nothing to do
+
 product      / product.product          / outgoing_qty (float)          : module is now 'stock' ('product')
 product      / product.product          / price_extra (float)           : now a function
 product      / product.product          / price_margin (float)          : DEL 
 product      / product.product          / qty_available (float)         : module is now 'stock' ('product')
 product      / product.product          / variants (char)               : DEL 
 product      / product.product          / virtual_available (float)     : module is now 'stock' ('product')
-product      / product.supplierinfo     / product_id (many2one)         : DEL relation: product.template, required: required
-product      / product.supplierinfo     / product_tmpl_id (many2one)    : NEW relation: product.template, required: required
-product      / product.template         / active (boolean)              : NEW 
-product      / product.template         / attribute_line_ids (one2many) : NEW relation: product.attribute.line
-product      / product.template         / color (integer)               : NEW 
-product      / product.template         / cost_method (selection)       : module is now 'stock_account' ('product')
-product      / product.template         / cost_method (selection)       : now a function
-product      / product.template         / cost_method (selection)       : selection_keys is now '['average', 'real', 'standard']' ('['average', 'standard']')
-product      / product.template         / image (binary)                : NEW 
-product      / product.template         / message_ids (one2many)        : NEW relation: mail.message
-product      / product.template         / message_last_post (datetime)  : NEW 
-product      / product.template         / packaging (one2many)          : NEW relation: product.packaging
-product      / product.template         / produce_delay (float)         : DEL 
-product      / product.template         / product_variant_ids (one2many): NEW relation: product.product, required: required
-product      / product.template         / standard_price (float)        : now a function
-product      / product.ul               / height (float)                : NEW 
-product      / product.ul               / length (float)                : NEW 
-product      / product.ul               / weight (float)                : NEW 
-product      / product.ul               / width (float)                 : NEW 
 
 
 
