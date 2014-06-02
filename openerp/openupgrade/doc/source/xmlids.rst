@@ -56,7 +56,7 @@ More interesting are
       such data in your upgrade script, or you will for instance reset the
       sequences used for invoice numbering. 
       You can use this script 
-      'OpenUpgrade/script/compare_noupdate_xml_records.py' 
+      'OpenUpgrade/scripts/compare_noupdate_xml_records.py' 
       Revise any data carefully and
       copy relevant, new data in a separate file. Load it from your post script
       using :meth:`~openupgrade.load_xml` from the module :mod:`openupgrade`
