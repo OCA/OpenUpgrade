@@ -102,7 +102,7 @@ survey       / survey.user_input        / token (char)                  : NEW re
 survey       / survey.user_input        / type (selection)              : NEW required: required, selection_keys: ['link', 'manually'], req_default: manually
 survey       / survey.user_input        / user_input_line_ids (one2many): NEW relation: survey.user_input_line
 survey       / survey.user_input_line   / answer_type (selection)       : NEW selection_keys: ['date', 'free_text', 'number', 'suggestion', 'text']
-survey       / survey.user_input_line   / date_create (datetime)        : NEW required: required, req_default: 2014-06-02 10:08:44
+survey       / survey.user_input_line   / date_create (datetime)        : NEW required: required, req_default: 2014-06-02 13:06:08
 survey       / survey.user_input_line   / question_id (many2one)        : NEW relation: survey.question, required: required
 survey       / survey.user_input_line   / quizz_mark (float)            : NEW 
 survey       / survey.user_input_line   / skipped (boolean)             : NEW 

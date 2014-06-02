@@ -1,11 +1,11 @@
 ---Fields in module 'general'---
 # 4968 fields matched,
-# Direct match: 4340
-# Found in other module: 114
+# Direct match: 4378
+# Found in other module: 77
 # Found with different name: 0
-# Found with different type: 1
+# Found with different type: 0
 # In obsolete models: 513
-# New columns: 1622
+# New columns: 1623
 # Not matched: 349
 new model account.analytic.invoice.line
 new model account.statement.operation.template
@@ -512,152 +512,8 @@ DEL project.gtd.timebox: project_gtd.timebox_lt
 DEL project.gtd.timebox: project_gtd.timebox_weekly
 ERROR: module not in list of installed modules:
 ---Fields in module 'base_calendar'---
-base_calendar / calendar.alarm           / action (selection)            : DEL required: required, selection_keys: ['audio', 'display', 'email', 'procedure'], req_default: email
-base_calendar / calendar.alarm           / active (boolean)              : DEL 
-base_calendar / calendar.alarm           / alarm_id (many2one)           : DEL relation: res.alarm
-base_calendar / calendar.alarm           / attach (binary)               : DEL 
-base_calendar / calendar.alarm           / attendee_ids (many2many)      : DEL relation: calendar.attendee
-base_calendar / calendar.alarm           / description (text)            : DEL 
-base_calendar / calendar.alarm           / duration (integer)            : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.alarm           / duration (integer)            : now required, default = 1
-base_calendar / calendar.alarm           / event_date (datetime)         : DEL 
-base_calendar / calendar.alarm           / event_end_date (datetime)     : DEL 
-base_calendar / calendar.alarm           / model_id (many2one)           : DEL relation: ir.model
-base_calendar / calendar.alarm           / name (char)                   : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.alarm           / name (char)                   : now required
-base_calendar / calendar.alarm           / repeat (integer)              : DEL 
-base_calendar / calendar.alarm           / res_id (integer)              : DEL 
-base_calendar / calendar.alarm           / state (selection)             : DEL selection_keys: ['done', 'draft', 'run', 'stop']
-base_calendar / calendar.alarm           / trigger_date (datetime)       : DEL 
-base_calendar / calendar.alarm           / trigger_duration (integer)    : DEL required: required, req_default: 5
-base_calendar / calendar.alarm           / trigger_interval (selection)  : DEL required: required, selection_keys: ['days', 'hours', 'minutes'], req_default: minutes
-base_calendar / calendar.alarm           / trigger_occurs (selection)    : DEL required: required, selection_keys: ['after', 'before'], req_default: before
-base_calendar / calendar.alarm           / trigger_related (selection)   : DEL required: required, selection_keys: ['end', 'start'], req_default: start
-base_calendar / calendar.alarm           / user_id (many2one)            : DEL relation: res.users
-base_calendar / calendar.attendee        / availability (selection)      : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.attendee        / child_ids (many2many)         : DEL relation: calendar.attendee
-base_calendar / calendar.attendee        / cn (char)                     : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.attendee        / cutype (selection)            : DEL selection_keys: ['group', 'individual', 'resource', 'room', 'unknown']
-base_calendar / calendar.attendee        / dir (char)                    : DEL 
-base_calendar / calendar.attendee        / email (char)                  : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.attendee        / member (char)                 : DEL 
-base_calendar / calendar.attendee        / parent_ids (many2many)        : DEL relation: calendar.attendee
-base_calendar / calendar.attendee        / partner_id (many2one)         : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.attendee        / ref (reference)               : DEL 
-base_calendar / calendar.attendee        / role (selection)              : DEL selection_keys: ['chair', 'non-participant', 'opt-participant', 'req-participant']
-base_calendar / calendar.attendee        / rsvp (boolean)                : DEL 
-base_calendar / calendar.attendee        / state (selection)             : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.attendee        / state (selection)             : selection_keys is now '['accepted', 'declined', 'needsAction', 'tentative']' ('['accepted', 'declined', 'delegated', 'needs-action', 'tentative']')
-base_calendar / calendar.attendee        / user_id (many2one)            : DEL relation: res.users
-base_calendar / calendar.event           / active (boolean)              : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / alarm_id (many2one)           : DEL relation: res.alarm
-base_calendar / calendar.event           / allday (boolean)              : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / attendee_ids (many2many)      : type is now 'one2many' ('many2many')
-base_calendar / calendar.event           / base_calendar_alarm_id (many2one): DEL relation: calendar.alarm
-base_calendar / calendar.event           / base_calendar_url (char)      : DEL 
-base_calendar / calendar.event           / byday (selection)             : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / class (selection)             : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / count (integer)               : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / create_date (datetime)        : DEL 
-base_calendar / calendar.event           / date (datetime)               : DEL required: required
-base_calendar / calendar.event           / date_deadline (datetime)      : DEL required: required
-base_calendar / calendar.event           / day (integer)                 : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / description (text)            : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / duration (float)              : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / end_date (date)               : DEL 
-base_calendar / calendar.event           / end_type (selection)          : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / exdate (text)                 : DEL 
-base_calendar / calendar.event           / exrule (char)                 : DEL 
-base_calendar / calendar.event           / fr (boolean)                  : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / id (integer)                  : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / interval (integer)            : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / location (char)               : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / mo (boolean)                  : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / month_list (selection)        : DEL selection_keys: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-base_calendar / calendar.event           / name (char)                   : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / name (char)                   : now required
-base_calendar / calendar.event           / organizer (char)              : DEL 
-base_calendar / calendar.event           / organizer_id (many2one)       : DEL relation: res.users
-base_calendar / calendar.event           / partner_ids (many2many)       : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / recurrency (boolean)          : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / recurrent_id (integer)        : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / recurrent_id_date (datetime)  : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / rrule (char)                  : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / rrule_type (selection)        : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / sa (boolean)                  : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / select1 (selection)           : DEL selection_keys: ['date', 'day']
-base_calendar / calendar.event           / sequence (integer)            : DEL 
-base_calendar / calendar.event           / show_as (selection)           : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / state (selection)             : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / state (selection)             : selection_keys is now '['draft', 'open']' ('['cancelled', 'confirmed', 'tentative']')
-base_calendar / calendar.event           / su (boolean)                  : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / th (boolean)                  : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / tu (boolean)                  : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / user_id (many2one)            : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / vtimezone (selection)         : DEL selection_keys: function
-base_calendar / calendar.event           / we (boolean)                  : module is now 'calendar' ('base_calendar')
-base_calendar / calendar.event           / week_list (selection)         : module is now 'calendar' ('base_calendar')
 ---XML records in module 'base_calendar'---
-DEL crm.meeting.type: base_calendar.categ_meet1
-DEL crm.meeting.type: base_calendar.categ_meet2
-DEL crm.meeting.type: base_calendar.categ_meet3
-DEL crm.meeting.type: base_calendar.categ_meet4
-DEL crm.meeting.type: base_calendar.categ_meet5
-DEL ir.actions.act_window: base_calendar.action_crm_meeting
-DEL ir.actions.act_window: base_calendar.action_crm_meeting_type
-DEL ir.actions.act_window: base_calendar.action_res_alarm_view
-DEL ir.actions.act_window: base_calendar.action_view_event
-DEL ir.actions.act_window.view: base_calendar.action_view_crm_meeting_calendar
-DEL ir.actions.act_window.view: base_calendar.action_view_crm_meeting_form
-DEL ir.actions.act_window.view: base_calendar.action_view_crm_meeting_gantt
-DEL ir.actions.act_window.view: base_calendar.action_view_crm_meeting_tree
-DEL ir.cron: base_calendar.ir_cron_scheduler_alarm
-DEL ir.model.access: base_calendar.access_calendar_alarm
-DEL ir.model.access: base_calendar.access_calendar_attendee
-DEL ir.model.access: base_calendar.access_calendar_attendee_survey_user
-DEL ir.model.access: base_calendar.access_calendar_event
-DEL ir.model.access: base_calendar.access_calendar_todo
-DEL ir.model.access: base_calendar.access_crm_meeting
-DEL ir.model.access: base_calendar.access_crm_meeting_all
-DEL ir.model.access: base_calendar.access_crm_meeting_manager
-DEL ir.model.access: base_calendar.access_crm_meeting_partner_manager
-DEL ir.model.access: base_calendar.access_crm_meeting_type_manager
-DEL ir.model.access: base_calendar.access_crm_meeting_type_sale_manager
-DEL ir.model.access: base_calendar.access_crm_meeting_type_sale_user
-DEL ir.model.access: base_calendar.access_res_alarm
-DEL ir.ui.menu: base.menu_calendar_configuration
-DEL ir.ui.menu: base_calendar.mail_menu_calendar
-DEL ir.ui.menu: base_calendar.menu_crm_meeting_avail_alarm
-DEL ir.ui.menu: base_calendar.menu_crm_meeting_type
-DEL ir.ui.menu: base_calendar.menu_events
-DEL ir.ui.view: base_calendar.event_calendar_view
-DEL ir.ui.view: base_calendar.event_form_view
-DEL ir.ui.view: base_calendar.event_tree_view
-DEL ir.ui.view: base_calendar.res_alarm_form_view
-DEL ir.ui.view: base_calendar.res_alarm_tree_view
-DEL ir.ui.view: base_calendar.view_calendar_event_filter
-DEL ir.ui.view: base_calendar.view_crm_meeting_calendar
-DEL ir.ui.view: base_calendar.view_crm_meeting_form
-DEL ir.ui.view: base_calendar.view_crm_meeting_gantt
-DEL ir.ui.view: base_calendar.view_crm_meeting_search
-DEL ir.ui.view: base_calendar.view_crm_meeting_tree
-DEL ir.ui.view: base_calendar.view_crm_meeting_type_tree
-DEL res.alarm: base_calendar.alarm1
-DEL res.alarm: base_calendar.alarm10
-DEL res.alarm: base_calendar.alarm11
-DEL res.alarm: base_calendar.alarm12
-DEL res.alarm: base_calendar.alarm2
-DEL res.alarm: base_calendar.alarm3
-DEL res.alarm: base_calendar.alarm4
-DEL res.alarm: base_calendar.alarm5
-DEL res.alarm: base_calendar.alarm6
-DEL res.alarm: base_calendar.alarm7
-DEL res.alarm: base_calendar.alarm8
-DEL res.alarm: base_calendar.alarm9
-DEL res.groups: base.group_survey_user
-DEL res.request.link: base_calendar.request_link_event
-DEL res.request.link: base_calendar.request_link_meeting
-ERROR: module not in list of installed modules:
+-- nothing has changed in this moduleERROR: module not in list of installed modules:
 ---Fields in module 'stock_location'---
 stock_location / product.product          / flow_pull_ids (one2many)      : DEL relation: product.pulled.flow
 stock_location / product.product          / path_ids (one2many)           : DEL relation: stock.location.path
