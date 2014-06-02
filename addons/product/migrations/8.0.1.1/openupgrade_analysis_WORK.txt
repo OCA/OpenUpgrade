@@ -45,7 +45,7 @@ product      / product.supplierinfo     / product_tmpl_id (many2one)    : NEW re
 # OK seller_ids moved from product.product to product.template
 
 product      / product.template         / active (boolean)              : NEW 
-# OK: copy 
+# OK: set to True if at least one variant is active
 
 product      / product.template         / color (integer)               : NEW 
 product      / product.product          / color (integer)               : DEL 
@@ -54,7 +54,7 @@ product      / product.product          / color (integer)               : DEL
 product      / product.template         / cost_method (selection)       : module is now 'stock_account' ('product')
 product      / product.template         / cost_method (selection)       : now a function
 product      / product.template         / cost_method (selection)       : selection_keys is now '['average', 'real', 'standard']' ('['average', 'standard']')
-# TODO 
+# nothing to do ?
 
 product      / product.template         / image (binary)                : NEW 
 product      / product.product          / image (binary)                : now afunction
@@ -66,7 +66,7 @@ product      / product.product          / image_variant (binary)        : NEW
 product      / product.template         / message_ids (one2many)        : NEW relation: mail.message
 product      / product.template         / message_last_post (datetime)  : NEW 
 # now product.template derives from mail template
-# TODO : move up messages 
+# TODO : move up messages -> they will still be on the product so why bother
 product      / product.product          / message_last_post (datetime)  : NEW 
 
 
