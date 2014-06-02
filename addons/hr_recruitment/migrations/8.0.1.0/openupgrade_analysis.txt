@@ -4,8 +4,9 @@ hr_recruitment / hr.applicant             / date_last_stage_update (datetime): N
 hr_recruitment / hr.applicant             / last_stage_id (many2one)      : NEW relation: hr.recruitment.stage
 hr_recruitment / hr.applicant             / message_last_post (datetime)  : NEW 
 hr_recruitment / hr.applicant             / priority (selection)          : selection_keys is now '['0', '1', '2', '3', '4']' ('['', '1', '2', '3', '4', '5']')
-hr_recruitment / hr.applicant             / response (integer)            : DEL 
-hr_recruitment / hr.applicant             / response_id (many2one)        : NEW relation: survey.user_input
+hr_recruitment / hr.applicant             / response (integer)            : relation is now 'survey.user_input' ('False')
+hr_recruitment / hr.applicant             / response (integer)            : type is now 'many2one' ('integer')
+hr_recruitment / hr.applicant             / response (integer)            : was renamed to response_id [nothing to to]
 hr_recruitment / hr.applicant             / survey (many2one)             : relation is now 'survey.survey' ('survey')
 hr_recruitment / hr.applicant             / website_message_ids (one2many): NEW relation: mail.message
 hr_recruitment / hr.job                   / address_id (many2one)         : NEW relation: res.partner
