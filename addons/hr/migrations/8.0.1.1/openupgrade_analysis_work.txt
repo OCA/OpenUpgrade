@@ -1,0 +1,34 @@
+---Fields in module 'hr'---
+hr           / hr.department            / jobs_ids (one2many)           : NEW relation: hr.job
+hr           / hr.employee              / message_ids (one2many)        : NEW relation: mail.message
+## OK new fields -> nothing to do
+hr           / hr.employee              / message_last_post (datetime)  : NEW 
+# Used set_message_last_post()
+hr           / hr.job                   / no_of_recruitment (float)     : type is now 'integer' ('float')
+hr           / hr.job                   / no_of_employee (float)        : type is now 'integer' ('float')
+hr           / hr.job                   / expected_employees (float)    : type is now 'integer' ('float')
+### Transform float to integer
+hr           / hr.job                   / message_last_post (datetime)  : NEW 
+hr           / hr.job                   / no_of_hired_employee (integer): NEW 
+hr           / hr.job                   / write_date (datetime)         : NEW 
+hr           / res.users                / display_employees_suggestions (boolean): NEW 
+## OK new fields -> nothing to do
+
+
+---XML records in module 'hr'---
+DEL ir.actions.act_window: hr.open_board_hr
+NEW ir.actions.client: mail.action_mail_inbox_feeds
+DEL ir.ui.menu: hr.menu_hr_dashboard
+DEL ir.ui.menu: hr.menu_hr_job
+NEW ir.ui.view: hr.assets_backend
+NEW ir.ui.view: hr.view_users_form_mail
+DEL ir.ui.view: hr.board_hr_form
+DEL ir.ui.view: hr.view_hr_job_employee_form
+DEL ir.ui.view_sc: hr.ir_ui_view_sc_employee
+DEL process.node: hr.process_node_employee0
+DEL process.node: hr.process_node_employeecontact0
+DEL process.node: hr.process_node_openerpuser0
+DEL process.process: hr.process_process_employeecontractprocess0
+DEL process.transition: hr.process_transition_contactofemployee0
+DEL process.transition: hr.process_transition_employeeuser0
+### nothing to do
