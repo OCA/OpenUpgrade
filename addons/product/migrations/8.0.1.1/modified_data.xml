@@ -17,9 +17,8 @@
     </record>
     <record id="product_comp_rule" model="ir.rule"><field name="domain_force"> ['|',('company_id','=',user.company_id.id),('company_id','=',False)]</field>
     </record>
-    <!-- demo data, don't create -->
-    <!--record id="product_product_consultant" model="product.product"><field name="sale_ok" eval="False"/>
-        </record-->
+    <record id="product_product_consultant" model="product.product"><field name="sale_ok" eval="False"/>
+        </record>
   </data>
 </openerp>
 
