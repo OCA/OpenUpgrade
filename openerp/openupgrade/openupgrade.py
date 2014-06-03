@@ -489,7 +489,9 @@ def migrate(no_version=False):
     """
     This is the decorator for the migrate() function
     in migration scripts.
-    Return when the 'version' argument is not defined,
+    Set argument 'no_version' to True if the method as to be taken into account
+    if the module is installed during a migration.
+    Return when the 'version' argument is not defined and no_version is False,
     and log execeptions.
     Retrieve debug context data from the frame above for
     logging purposes.
