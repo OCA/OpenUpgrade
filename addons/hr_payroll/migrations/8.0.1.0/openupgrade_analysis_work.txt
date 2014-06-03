@@ -1,0 +1,10 @@
+---Fields in module 'hr_payroll'---
+---XML records in module 'hr_payroll'---
+NEW ir.actions.report.xml: hr_payroll.action_contribution_register
+NEW ir.actions.report.xml: hr_payroll.action_report_payslip
+DEL ir.actions.report.xml: hr_payroll.contribution_register
+DEL ir.actions.report.xml: hr_payroll.payslip_report
+NEW ir.ui.view: hr_payroll.report_contributionregister
+NEW ir.ui.view: hr_payroll.report_payslip
+NEW ir.ui.view: hr_payroll.report_payslipdetails
+# Nothing to do

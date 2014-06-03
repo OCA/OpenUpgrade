@@ -1,0 +1,8 @@
+---Fields in module 'account_payment'---
+---XML records in module 'account_payment'---
+NEW ir.actions.report.xml: account_payment.action_report_payment_order
+DEL ir.actions.report.xml: account_payment.payment_order1
+NEW ir.ui.view: account_payment.report_paymentorder
+DEL ir.ui.view: account_payment.invoice_supplier_form
+DEL ir.ui.view: account_payment.view_move_line_form
+# Nothing to do
