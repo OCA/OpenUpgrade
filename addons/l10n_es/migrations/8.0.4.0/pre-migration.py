@@ -21,6 +21,9 @@
 #
 ##############################################################################
 
+from openerp.openupgrade import openupgrade
+
+
 # This needs to be in this order to avoid null errors on required fields
 # because "ON DELETE set null" are set on some tables
 models = [
@@ -31,25 +34,26 @@ models = [
     "account.fiscal.position.template",
     "account.account.template",
     # Not possible because it's also linked to account.account
-    #"account.account.type",
+    # "account.account.type",
     "account.tax.template",
     "account.tax.code.template",
     "account.chart.template",
 ]
 
+
 @openupgrade.migrate()
 def migrate(cr, version):
     # Delete data
     for model in models:
-        cr.execute("""DELETE FROM 
+        cr.execute("""DELETE FROM
                           %(table)s
                       WHERE
                           id
                       IN
-                          (SELECT res_id FROM ir_model_data AS imd 
+                          (SELECT res_id FROM ir_model_data AS imd
                            WHERE imd.module='l10n_es'
                            AND imd.model='%(model)s')
                    """
-                   %({'table': model.replace('.', '_'), 'model': model}))
+                   % ({'table': model.replace('.', '_'), 'model': model}))
     # Delete XML IDs
     cr.execute("DELETE FROM ir_model_data WHERE module='l10n_es'")
