@@ -76,7 +76,8 @@ def migrate_packaging(cr, pool):
         ul_obj.write(cr, SUPERUSER_ID, [ul_id],
                      {'height': height,
                       'width': width,
-                      'length': weight,
+                      'length': length,
+                      'weight': weight,
                       })
 
 @openupgrade.migrate()
