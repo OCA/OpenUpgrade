@@ -44,14 +44,19 @@ def migrate_packaging(cr, pool):
     """
     packaging_obj = pool['product.packaging']
     ul_obj = pool['product.ul']
-    packaging_ids = packaging_obj.search(cr, SUPERUSER_ID, [])
-    for packaging in packaging_obj.browse(cr, SUPERUSER_ID, packaging_ids):
-        ul = packaging.ul
-        ul.write({'height': packaging.height,
-                  'width': packaging.width,
-                  'length': packaging.length,
-                  'weight_ul': packaging.weight,
-                  })
+    execute = openupgrade.logged_query
+    legacy_columns = dict((key, openupgrade.get_legacy_name(key))
+                          for key in ('height', 'width',
+                                      'length', 'weight_ul'))
+    execute(cr,
+            'select ul, %(height)s, %(width)s, %(length)s, %(weight_ul)s '
+            'from product_packaging' % legacy_columns)
+    for ul_id, height, width, length, weight in cr.fetchall():
+        ul_obj.write(cr, SUPERUSER_ID, [ul_id],
+                     {'height': height,
+                      'width': width,
+                      'length': weight,
+                      })
 
 @openupgrade.migrate()
 def migrate(cr, version):
