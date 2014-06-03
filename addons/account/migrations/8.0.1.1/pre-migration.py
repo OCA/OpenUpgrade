@@ -22,6 +22,7 @@
 from openerp.openupgrade import openupgrade
 
 
+@openupgrade.migrate()
 def migrate(cr, version):
     if not version:
         return
