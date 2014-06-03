@@ -82,7 +82,7 @@ base         / ir.ui.view               / write_date (datetime)         : NEW
 # New feature: using default value is OK. --> Nothing to do.
 base         / res.company              / font (many2one)               : NEW relation: res.font
 
-# 'paper_format' renamed into 'rml_paper_format'. --> DONE.
+# 'paper_format' renamed into 'rml_paper_format'. oldname feature is used. --> Nothing to do.
 base         / res.company              / paper_format (selection)      : DEL required: required, selection_keys: ['a4', 'us_letter'], req_default: a4
 base         / res.company              / rml_paper_format (selection)  : NEW required: required, selection_keys: ['a4', 'us_letter'], req_default: a4
 
