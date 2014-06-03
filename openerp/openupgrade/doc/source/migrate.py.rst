@@ -6,7 +6,7 @@ Introduction
 
 For users who just want to run a migration, there is the convenience script migrate.py that takes care of downloading the necessary branches, set up a configuration for the migration and passing the correct parameters to the OpenUpgrade server.
 
-Download it from launchpad_.
+Download it from github_.
 
 It accepts a couple of parameters, the mandatory ones are
 
@@ -33,7 +33,7 @@ In a nutshell
 
 ::
 
-  bzr cat lp:openupgrade-server/scripts/migrate.py > migrate.py
+  wget https://raw.githubusercontent.com/OpenUpgrade/OpenUpgrade/8.0/scripts/migrate.py
   python migrate.py --config=[your openerp.conf] --database=[your database] --run-migrations=[your migrations]
 
-.. _launchpad: http://bazaar.launchpad.net/~openupgrade-committers/openupgrade-server/7.0/view/head:/scripts/migrate.py
+.. _github: https://github.com/OpenUpgrade/OpenUpgrade/blob/8.0/scripts/migrate.py
