@@ -20,12 +20,10 @@
 ##############################################################################
 
 # A collection of functions split off from openupgrade.py
-# with no or only minimal dependencies
+# with have no or only minimal dependencies
 
 
 def table_exists(cr, table):
     """ Check whether a certain table or view exists """
-    cr.execute(
-        'SELECT count(relname) FROM pg_class WHERE relname = %s',
-        (table,))
-    return cr.fetchone()[0] == 1
+    cr.execute('SELECT 1 FROM pg_class WHERE relname = %s', (table,))
+    return cr.fetchone()
