@@ -1,13 +1,13 @@
 ---Fields in module 'account_voucher'---
 account_voucher / account.bank.statement.line / voucher_id (many2one)         : DEL relation: account.voucher
 account_voucher / account.voucher          / active (boolean)              : DEL 
-# Just let it be removed
+# Kept as legacy columns
 
 account_voucher / account.voucher          / currency_id (many2one)        : now required, default = function
 # Nothing to do : the function is not stored
 
 account_voucher / account.voucher          / message_last_post (datetime)  : NEW 
-# Need to compute the value
+# This new value is going to be computed in the post migration script
 
 account_voucher / account.voucher          / website_message_ids (one2many): NEW relation: mail.message
 # Nothing to do

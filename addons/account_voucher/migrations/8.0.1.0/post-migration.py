@@ -23,13 +23,12 @@
 from openerp import pooler, SUPERUSER_ID
 from openerp.openupgrade import openupgrade, openupgrade_80
 
-column_renames = {
-    'account_bank_statement_line' : [
-        ('voucher_id', None)
-    ],
-    'account_voucher': [('active', None)]
-}
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    openupgrade.rename_columns(cr, column_renames)
+    pool = pooler.get_pool(cr.dbname)
+    uid = SUPERUSER_ID
+    openupgrade_80.set_message_last_post(
+        cr, uid, pool, ['account.voucher']
+    )
+
