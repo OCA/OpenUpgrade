@@ -24,6 +24,7 @@
 #   layouts from the OpenUpgrade server.
 #####################################################################
 
+import collections
 import copy
 
 try:
@@ -33,8 +34,11 @@ except ImportError:
 
 
 def module_map(module):
-    return apriori.renamed_modules.get(
-        module, module)
+    return apriori.renamed_modules.get(module, module)
+
+
+def model_map(model):
+    return apriori.renamed_models.get(model, model)
 
 
 def compare_records(dict_old, dict_new, fields):
@@ -50,12 +54,10 @@ def compare_records(dict_old, dict_new, fields):
             if (module_map(dict_old[field]) != dict_new[field]):
                 return False
         elif field == 'model':
-            if (apriori.renamed_models.get(
-                    dict_old[field], dict_old[field]) != dict_new[field]):
+            if (model_map(dict_old[field]) != dict_new[field]):
                 return False
-        else:
-            if dict_old[field] != dict_new[field]:
-                return False
+        elif dict_old[field] != dict_new[field]:
+            return False
     return True
 
 
@@ -65,31 +67,26 @@ def search(item, item_list, fields):
     with respect to the keys in the 'fields' arguments.
     Return the item if found or None.
     """
-    for i in item_list:
-        if not compare_records(item, i, fields):
+    for other in item_list:
+        if not compare_records(item, other, fields):
             continue
-        return i
+        return other
     # search for renamed fields
     if 'field' in fields:
-        for i in item_list:
-            if not item['field'] or item['field'] != i.get('oldname'):
+        for other in item_list:
+            if not item['field'] or item['field'] != other.get('oldname'):
                 continue
-            if compare_records(dict(item, field=i['field']), i, fields):
-                return i
+            if compare_records(dict(item, field=other['field']), other, fields):
+                return other
     return None
 
 
 def fieldprint(old, new, field, text, reprs):
     fieldrepr = "%s (%s)" % (old['field'], old['type'])
-    repr = '%s / %s / %s' % (
-        old['module'].ljust(12), old['model'].ljust(24), fieldrepr.ljust(30))
-    if text:
-        reprs.setdefault(module_map(old['module']), []).append(
-            "%s: %s" % (repr, text))
-    else:
-        reprs.setdefault(module_map(old['module']), []).append(
-            "%s: %s is now \'%s\' ('%s')" % (
-                repr, field, new[field], old[field]))
+    fullrepr = '%-12s / %-24s / %-30s' % (old['module'], old['model'], fieldrepr)
+    if not text:
+        text = "%s is now '%s' ('%s')" % (new[field], old[field])
+    reprs[module_map(old['module'])].append("%s: %s" % (fullrepr, text))
 
 
 def report_generic(new, old, attrs, reprs):
@@ -109,12 +106,10 @@ def report_generic(new, old, attrs, reprs):
                 fieldprint(old, new, None, text, reprs)
         elif attr == 'oldname':
             if new.get('oldname') == old['field']:
-                fieldprint(old, new, None,
-                           'was renamed to %s [nothing to to]' % new['field'],
-                           reprs)
-        else:
-            if old[attr] != new[attr]:
-                fieldprint(old, new, attr, None, reprs)
+                text = 'was renamed to %s [nothing to to]' % new['field']
+                fieldprint(old, new, None, text, reprs)
+        elif old[attr] != new[attr]:
+            fieldprint(old, new, attr, None, reprs)
 
 
 def compare_sets(old_records, new_records):
@@ -125,7 +120,7 @@ def compare_sets(old_records, new_records):
     module names as keys. Special case is the 'general' key
     which contains overall remarks and matching statistics.
     """
-    reprs = {'general': []}
+    reprs = collections.defaultdict(list)
 
     for record in old_records + new_records:
         record['matched'] = False
@@ -230,7 +225,7 @@ def compare_sets(old_records, new_records):
 
 
 def compare_xml_sets(old_records, new_records):
-    reprs = {}
+    reprs = collections.defaultdict(list)
     match_fields = ['module', 'model', 'name']
     for column in copy.copy(old_records):
         found = search(column, new_records, match_fields)
@@ -245,12 +240,12 @@ def compare_xml_sets(old_records, new_records):
 
     sorted_records = sorted(
         old_records + new_records,
-        key=lambda k: '%s%s%s' % (k['model'].ljust(128), 'old' in k, k['name'])
+        key=lambda k: '%-128s%s%s' % (k['model'], 'old' in k, k['name'])
     )
     for entry in sorted_records:
         if 'old' in entry:
-            content = 'DEL %s: %s' % (entry['model'], entry['name'])
+            content = 'DEL %(model)s: %(name)s' % entry
         elif 'new' in entry:
-            content = 'NEW %s: %s' % (entry['model'], entry['name'])
-        reprs.setdefault(module_map(entry['module']), []).append(content)
+            content = 'NEW %(model)s: %(name)s' % entry
+        reprs[module_map(entry['module'])].append(content)
     return reprs
