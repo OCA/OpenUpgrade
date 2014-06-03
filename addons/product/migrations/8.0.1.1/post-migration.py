@@ -54,7 +54,7 @@ def move_fields(cr, pool):
 
 
 def copy_fields(cr, pool):
-    product_tmpl= pool['product.template']
+    product_tmpl = pool['product.template']
     # copy the active field from product to template
     ctx = {'active_test': False}
     tmpl_ids = product_tmpl.search(cr, SUPERUSER_ID, [], context=ctx)
