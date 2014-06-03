@@ -1,6 +1,8 @@
 ---Fields in module 'fleet'---
+
 fleet        / fleet.vehicle            / message_last_post (datetime)  : NEW 
-#TODO with Sandy
+# initialized in post migration script
+
 ---XML records in module 'fleet'---
 DEL ir.actions.act_window: fleet.action_fleet_vehicle_costs_graph
 DEL ir.actions.act_window: fleet.action_fleet_vehicle_kanban
