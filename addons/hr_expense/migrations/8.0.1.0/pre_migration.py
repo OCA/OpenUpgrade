@@ -20,12 +20,11 @@
 #
 ##############################################################################
 
-from openerp import pooler, SUPERUSER_ID
-from openerp.openupgrade import openupgrade, openupgrade_80
+from openerp.openupgrade import openupgrade
 
 
 column_renames = {
-    'hr_expense_expense' : [('voucher_id', None)],
+    'hr_expense_expense': [('voucher_id', None)],
     'hr_expense_report': [('voucher_id', None)],
     'product_product': [('hr_expense_ok', None)],
 }
