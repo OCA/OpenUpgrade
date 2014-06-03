@@ -1,14 +1,19 @@
 ---Fields in module 'event'---
 event        / event.event              / date_tz (selection)           : NEW selection_keys: function
-event        / event.event              / description (html)            : NEW 
 event        / event.event              / main_speaker_id (many2one)    : DEL relation: res.partner
 event        / event.event              / message_last_post (datetime)  : NEW 
-event        / event.event              / note (text)                   : DEL 
+event        / event.event              / note (text)                   : type is now 'html' ('text')
+event        / event.event              / note (text)                   : was renamed to description [nothing to to]
 event        / event.event              / organizer_id (many2one)       : NEW relation: res.partner
-event        / event.event              / register_max (integer)        : DEL 
-event        / event.event              / register_min (integer)        : DEL 
-event        / event.event              / seats_max (integer)           : NEW 
-event        / event.event              / seats_min (integer)           : NEW 
+event        / event.event              / register_attended (float)     : type is now 'integer' ('float')
+event        / event.event              / register_attended (float)     : was renamed to seats_used [nothing to to]
+event        / event.event              / register_avail (integer)      : was renamed to seats_available [nothing to to]
+event        / event.event              / register_current (float)      : type is now 'integer' ('float')
+event        / event.event              / register_current (float)      : was renamed to seats_reserved [nothing to to]
+event        / event.event              / register_max (integer)        : was renamed to seats_max [nothing to to]
+event        / event.event              / register_min (integer)        : was renamed to seats_min [nothing to to]
+event        / event.event              / register_prospect (float)     : type is now 'integer' ('float')
+event        / event.event              / register_prospect (float)     : was renamed to seats_unconfirmed [nothing to to]
 event        / event.event              / speaker_confirmed (boolean)   : DEL 
 event        / event.registration       / message_last_post (datetime)  : NEW 
 event        / report.event.registration / event_date (char)             : type is now 'datetime' ('char')
