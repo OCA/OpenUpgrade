@@ -102,6 +102,12 @@ def create_properties(cr, pool):
             template_obj.write(cr, SUPERUSER_ID, [template_id],
                                {'standard_price': std_price},
                                context=ctx)
+    # product.price.history entries have been generated with a value for
+    # today, we want a value for the past as well, write a bogus date to
+    # be sure that we have an historic value whenever we want
+    cr.execute("UPDATE product_price_history SET "
+               # calling a field 'datetime' is not really a good idea
+               "datetime = '1970-01-01 00:00:00+00'")
 
 
 def migrate_variants(cr, pool):
