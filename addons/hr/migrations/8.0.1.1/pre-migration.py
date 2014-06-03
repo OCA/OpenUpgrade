@@ -21,20 +21,18 @@
 
 
 from openerp.openupgrade import openupgrade
-from openerp import pooler, SUPERUSER_ID
+from openerp import pooler
 
 
 column_change_type = [
-        ('hr_job', 'expected_employees'),
-        ('hr_job', 'no_of_employee'),
-        ('hr_job', 'no_of_recruitment')
-        ]
+    ('hr_job', 'expected_employees'),
+    ('hr_job', 'no_of_employee'),
+    ('hr_job', 'no_of_recruitment')
+    ]
+
 
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     for table, field in column_change_type:
         openupgrade.float_to_integer(cr, table, field)
-
-
-
