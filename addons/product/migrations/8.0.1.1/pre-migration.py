@@ -8,7 +8,6 @@ column_renames = {
     'product_product': [
         ('color', None),
         ('image', 'image_variant'),
-        ('packaging', None),
         ],
     'product_template': [
         ('produce_delay', None), # need to handle in mrp migration

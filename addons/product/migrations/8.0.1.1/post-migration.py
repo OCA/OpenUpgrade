@@ -19,11 +19,7 @@ def move_fields(cr, pool):
                "    image=(SELECT pp2.image_variant "
                "      FROM product_product as pp2 "
                "      WHERE pp2.product_tmpl_id=pt.id ORDER BY pp2.id LIMIT 1)"
-               "    packaging=(SELECT pp3.%s "
-               "      FROM product_product as pp3 "
-               "      WHERE pp3.product_tmpl_id=pt.id ORDER BY pp3.id LIMIT 1)" \
                % (openupgrade.get_legacy_name('color'),
-                  openupgrade.get_legacy_name('packaging'),
                   )
                #
 
