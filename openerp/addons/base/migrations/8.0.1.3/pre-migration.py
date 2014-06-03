@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
+#    OpenUpgrade module for Odoo
+#    @copyright 2014-Today: Odoo Community Association
+#    @author: Sylvain LE GAL <https://twitter.com/legalsylvain>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,6 +20,18 @@
 #
 ##############################################################################
 
-import account_statement_from_invoice
+from openerp.openupgrade import openupgrade
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+column_renames = {
+    'res_company': [
+        ('paper_format', 'rml_paper_format'),
+    ]
+}
+
+
+@openupgrade.migrate()
+def migrate(cr, version):
+    openupgrade.check_values_selection_field(
+        cr, 'ir_act_report_xml', 'report_type',
+        ['controller', 'pdf', 'qweb-html', 'qweb-pdf', 'sxw', 'webkit'])
+    openupgrade.rename_columns(cr, column_renames)

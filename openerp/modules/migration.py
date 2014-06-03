@@ -164,17 +164,21 @@ class MigrationManager(object):
                         fp2.seek(0)
                         try:
                             mod = imp.load_source(name, pyfile, fp2)
-                            _logger.info('module %(addon)s: Running migration %(version)s %(name)s' % mergedict({'name': mod.__name__}, strfmt))
+                            _logger.info('module %(addon)s: Running migration %(version)s %(name)s',
+                                         mergedict({'name': mod.__name__}, strfmt))
                         except ImportError:
-                            _logger.exception('module %(addon)s: Unable to load %(stage)s-migration file %(file)s' % mergedict({'file': pyfile}, strfmt))
+                            _logger.exception('module %(addon)s: Unable to load %(stage)s-migration file %(file)s',
+                                              mergedict({'file': pyfile}, strfmt))
                             raise
 
-                        _logger.info('module %(addon)s: Running migration %(version)s %(name)s' % mergedict({'name': mod.__name__}, strfmt))
+                        _logger.info('module %(addon)s: Running migration %(version)s %(name)s',
+                                     mergedict({'name': mod.__name__}, strfmt))
 
                         if hasattr(mod, 'migrate'):
                             mod.migrate(self.cr, pkg.installed_version)
                         else:
-                            _logger.error('module %(addon)s: Each %(stage)s-migration file must have a "migrate(cr, installed_version)" function' % strfmt)
+                            _logger.error('module %(addon)s: Each %(stage)s-migration file must have a "migrate(cr, installed_version)" function',
+                                          strfmt)
                     finally:
                         if fp:
                             fp.close()

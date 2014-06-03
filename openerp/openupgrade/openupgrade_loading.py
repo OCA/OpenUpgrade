@@ -105,6 +105,8 @@ def log_model(model, local_registry):
             'req_default': '',
             'inherits': '',
             }
+        if hasattr(v, 'oldname'):
+            properties['oldname'] = v.oldname
         if v._type == 'selection':
             if hasattr(v.selection, "__iter__"):
                 properties['selection_keys'] = unicode(
@@ -161,9 +163,9 @@ def compare_registries(cr, module, registry, local_registry):
     """
     if not table_exists(cr, 'openupgrade_record'):
         return
-    for model, fields in local_registry.items():
+    for model, flds in local_registry.items():
         registry.setdefault(model, {})
-        for field, attributes in fields.items():
+        for field, attributes in flds.items():
             old_field = registry[model].setdefault(field, {})
             mode = old_field and 'modify' or 'create'
             record_id = False

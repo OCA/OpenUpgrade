@@ -1,0 +1,15 @@
+language: python
+
+python:
+  - "2.7"
+
+# Need flake8 for pep8 testing
+install:
+    - pip install flake8
+
+# Test with flake for migration scripts, scripts directory and openerp/openupgrade directory
+# use a max length of 120
+script:
+    - flake8 scripts --max-line-length=120
+    - flake8 openerp/openupgrade --max-line-length=120
+    - flake8 . --max-line-length=120 --filename=pre-migration.py,post-migration.py,pre_migration.py,post_migration.py

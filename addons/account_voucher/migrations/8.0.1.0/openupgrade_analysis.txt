@@ -1,6 +1,14 @@
 ---Fields in module 'account_voucher'---
+account_voucher / account.bank.statement.line / voucher_id (many2one)         : DEL relation: account.voucher
+account_voucher / account.voucher          / active (boolean)              : DEL 
 account_voucher / account.voucher          / currency_id (many2one)        : now required, default = function
 account_voucher / account.voucher          / message_last_post (datetime)  : NEW 
 account_voucher / account.voucher          / website_message_ids (one2many): NEW relation: mail.message
 ---XML records in module 'account_voucher'---
+DEL ir.actions.act_window: account_voucher.action_view_account_statement_from_invoice_lines
+DEL ir.ui.view: account_voucher.view_account_statement_from_invoice_lines
+DEL ir.ui.view: account_voucher.view_bank_statement_form_invoice
+DEL ir.ui.view: account_voucher.view_bank_statement_form_voucher
+DEL ir.ui.view: account_voucher.view_cash_statement_form_voucher
+DEL ir.ui.view: account_voucher.view_cash_statement_tree_voucher
 DEL ir.ui.view: account_voucher.view_sale_receipt_report_tree
