@@ -511,7 +511,6 @@ def migrate(no_version=False):
                 pass
             if not version and not no_version:
                 return
-            print 'lalalal'
             logger.info(
                 "%s: %s-migration script called with version %s" %
                 (module, stage, version))
