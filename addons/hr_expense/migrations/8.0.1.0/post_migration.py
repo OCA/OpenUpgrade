@@ -35,8 +35,7 @@ def update_hr_expense_ok(cr, pool):
         cr,
         """SELECT product_templ_id
         FROM product_product
-        WHERE %s = 't';""",
-        args=(field_name,)
+        WHERE %s = 't';""" % field_name
     )
     template_ids = [row[0] for row in cr.fetchall()]
     template_obj.write(cr, SUPERUSER_ID, template_ids, {'hr_expense_ok': True})
@@ -48,8 +47,7 @@ def update_hr_expense_ok(cr, pool):
             LEFT JOIN product_product p1 ON t.id = p1.product_tmpl_id
             LEFT JOIN product_product p2 ON t.id = p2.product_tmpl_id
             WHERE p1.%s = 't'
-            AND p2.%s = 'f';""",
-            args=(field_name, field_name)
+            AND p2.%s = 'f';""" % (field_name, field_name)
         )
         for row in cr.fetchall():
             logger.warning(
