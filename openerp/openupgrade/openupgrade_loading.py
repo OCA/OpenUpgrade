@@ -20,6 +20,7 @@
 ##############################################################################
 
 import types
+import logging
 from openerp import release
 from openerp.osv.orm import TransientModel
 from openerp.osv import fields
@@ -28,6 +29,8 @@ from openerp.tools import config, safe_eval
 
 # A collection of functions used in
 # openerp/modules/loading.py
+
+logger = logging.getLogger('OpenUpgrade')
 
 
 def add_module_dependencies(cr, module_list):
@@ -60,17 +63,47 @@ def add_module_dependencies(cr, module_list):
         module_list += forced_deps.get(module, [])
         module_list += autoinstall.get(module, [])
 
-    cr.execute("""
-        SELECT ir_module_module_dependency.name
-        FROM
-            ir_module_module,
-            ir_module_module_dependency
-        WHERE
-            module_id = ir_module_module.id
-            AND ir_module_module.name in %s
-        """, (tuple(module_list),))
+    module_list = list(set(module_list))
 
-    return list(set(module_list + [x[0] for x in cr.fetchall()]))
+    dependencies = module_list
+    while dependencies:
+        cr.execute("""
+            SELECT DISTINCT dep.name
+            FROM
+                ir_module_module,
+                ir_module_module_dependency dep
+            WHERE
+                module_id = ir_module_module.id
+                AND ir_module_module.name in %s
+                AND dep.name not in %s
+            """, (tuple(dependencies), tuple(module_list),))
+
+        dependencies = [x[0] for x in cr.fetchall()]
+        module_list += dependencies
+
+    # Select auto_install modules of which all dependencies
+    # are fulfilled based on the modules we know are to be
+    # installed
+    cr.execute("""
+        SELECT name from ir_module_module WHERE state IN %s
+        """, (('installed', 'to install', 'to upgrade'),))
+    modules = list(set(module_list + [row[0] for row in cr.fetchall()]))
+    cr.execute("""
+        SELECT name from ir_module_module m
+        WHERE auto_install IS TRUE
+            AND state = 'uninstalled'
+            AND NOT EXISTS(
+                SELECT id FROM ir_module_module_dependency d
+                WHERE d.module_id = m.id
+                AND name NOT IN %s)
+         """, (tuple(modules),))
+    auto_modules = [row[0] for row in cr.fetchall()]
+    if auto_modules:
+        logger.info(
+            "Selecting autoinstallable modules %s", ','.join(auto_modules))
+        module_list += auto_modules
+
+    return module_list
 
 
 def log_model(model, local_registry):
@@ -163,9 +196,9 @@ def compare_registries(cr, module, registry, local_registry):
     """
     if not table_exists(cr, 'openupgrade_record'):
         return
-    for model, fields in local_registry.items():
+    for model, flds in local_registry.items():
         registry.setdefault(model, {})
-        for field, attributes in fields.items():
+        for field, attributes in flds.items():
             old_field = registry[model].setdefault(field, {})
             mode = old_field and 'modify' or 'create'
             record_id = False

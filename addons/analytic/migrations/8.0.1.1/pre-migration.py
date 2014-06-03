@@ -1,8 +1,9 @@
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    This module copyright (C) 2012-2014 Therp BV (<http://therp.nl>)
+#    This module copyright (C) 2014 Akretion
+#    (<http://www.akretion.com>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,11 +20,14 @@
 #
 ##############################################################################
 
-# A collection of functions split off from openupgrade.py
-# with no or only minimal dependencies
+from openerp import pooler, SUPERUSER_ID
+from openerp.openupgrade import openupgrade, openupgrade_80
 
 
-def table_exists(cr, table):
-    """ Check whether a certain table or view exists """
-    cr.execute('SELECT 1 FROM pg_class WHERE relname = %s', (table,))
-    return cr.fetchone()
+@openupgrade.migrate()
+def migrate(cr, version):
+    pool = pooler.get_pool(cr.dbname)
+    uid = SUPERUSER_ID
+    openupgrade_80.set_message_last_post(
+        cr, uid, pool, ['account.analytic.account']
+    )

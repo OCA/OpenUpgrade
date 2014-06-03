@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    This module copyright (C) 2012-2014 Therp BV (<http://therp.nl>)
+#    This migration script copyright (C) 2014 Akretion
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,11 +19,15 @@
 #
 ##############################################################################
 
-# A collection of functions split off from openupgrade.py
-# with no or only minimal dependencies
+from openupgrade import openupgrade
+
+column_renames = {
+    'email_template': [
+        ('email_recipients', 'partner_to'),
+    ]
+}
 
 
-def table_exists(cr, table):
-    """ Check whether a certain table or view exists """
-    cr.execute('SELECT 1 FROM pg_class WHERE relname = %s', (table,))
-    return cr.fetchone()
+@openupgrade.migrate()
+def migrate(cr, version):
+    openupgrade.rename_columns(cr, column_renames)

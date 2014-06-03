@@ -14,8 +14,8 @@ mail         / mail.message.subtype     / hidden (boolean)              : NEW
 mail         / mail.message.subtype     / sequence (integer)            : NEW 
 mail         / mail.thread              / message_last_post (datetime)  : NEW 
 mail         / res.partner              / message_last_post (datetime)  : NEW 
-mail         / res.partner              / notification_email_send (selection): DEL required: required, selection_keys: ['all', 'comment', 'email', 'none'], req_default: function
-mail         / res.partner              / notify_email (selection)      : NEW required: required, selection_keys: ['always', 'none'], req_default: function
+mail         / res.partner              / notification_email_send (selection): selection_keys is now '['always', 'none']' ('['all', 'comment', 'email', 'none']')
+mail         / res.partner              / notification_email_send (selection): was renamed to notify_email [nothing to to]
 mail         / res.users                / display_groups_suggestions (boolean): NEW 
 ---XML records in module 'mail'---
 NEW ir.actions.act_window: base.action_attachment
