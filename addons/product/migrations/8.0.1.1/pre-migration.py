@@ -12,6 +12,7 @@ column_renames = {
         ],
     'product_template': [
         ('produce_delay', None), # need to handle in mrp migration
+        ('cost_method', None),  # need to handle in stock_account migration
         ],
     'product_packaging': [
         ('height', None),
