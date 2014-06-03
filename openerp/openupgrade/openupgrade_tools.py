@@ -20,7 +20,7 @@
 ##############################################################################
 
 # A collection of functions split off from openupgrade.py
-# with have no or only minimal dependencies
+# with no or only minimal dependencies
 
 
 def table_exists(cr, table):
