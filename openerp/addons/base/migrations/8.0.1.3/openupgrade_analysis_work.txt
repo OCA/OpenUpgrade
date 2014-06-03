@@ -6,41 +6,63 @@ base         / ir.actions.report.xml    / parser (char)                 : NEW
 base         / ir.actions.report.xml    / report_type (char)            : selection_keys is now '['controller', 'pdf', 'qweb-html', 'qweb-pdf', 'sxw', 'webkit']' ('False')
 base         / ir.actions.report.xml    / report_type (char)            : type is now 'selection' ('char')
 
-# TODO
-base         / ir.actions.server        / copy_object (reference)       : DEL 
-base         / ir.actions.server        / copyvalue (char)              : NEW 
-base         / ir.actions.server        / crud_model_id (many2one)      : NEW relation: ir.model
-base         / ir.actions.server        / email (char)                  : DEL 
+# For the following ir.actions.server changes, OpenUpgrade won't try to manage the values because:
+# - ir.actions.server are generally created by system, (re) loading xml files;
+# - ir.actions.server has been fully refunded;
+# - when doing test, all the following fields are empty when we install modules. (in 7.0 for DEL fields and in 8.0 for NEW fields)
+base         / ir.actions.server        / loop_action (many2one)        : DEL relation: ir.actions.server
 base         / ir.actions.server        / expression (char)             : DEL 
+base         / ir.actions.server        / trigger_name (selection)      : DEL selection_keys: function
+base         / ir.actions.server        / copyvalue (char)              : NEW 
 base         / ir.actions.server        / id_object (reference)         : NEW 
 base         / ir.actions.server        / id_value (char)               : NEW 
-base         / ir.actions.server        / link_field_id (many2one)      : NEW relation: ir.model.fields
 base         / ir.actions.server        / link_new_record (boolean)     : NEW 
-base         / ir.actions.server        / loop_action (many2one)        : DEL relation: ir.actions.server
 base         / ir.actions.server        / menu_ir_values_id (many2one)  : NEW relation: ir.values
-base         / ir.actions.server        / message (text)                : DEL 
-base         / ir.actions.server        / mobile (char)                 : DEL 
 base         / ir.actions.server        / model_object_field (many2one) : NEW relation: ir.model.fields
-base         / ir.actions.server        / record_id (many2one)          : DEL relation: ir.model.fields
-base         / ir.actions.server        / ref_object (reference)        : NEW 
-base         / ir.actions.server        / sms (char)                    : DEL 
-base         / ir.actions.server        / srcmodel_id (many2one)        : DEL relation: ir.model
-base         / ir.actions.server        / state (selection)             : selection_keys is now 'function' ('['client_action', 'code', 'dummy', 'email', 'loop', 'object_copy', 'object_create', 'object_write', 'other', 'sms', 'trigger']')
 base         / ir.actions.server        / sub_model_object_field (many2one): NEW relation: ir.model.fields
 base         / ir.actions.server        / sub_object (many2one)         : NEW relation: ir.model
+
+# The feature of 'email', 'sms', 'mobile', has been removed. --> Nothing to do.
+base         / ir.actions.server        / email (char)                  : DEL 
+base         / ir.actions.server        / sms (char)                    : DEL 
+base         / ir.actions.server        / mobile (char)                 : DEL 
+base         / ir.actions.server        / message (text)                : DEL 
+
+# 'srcmodel_id' renamed into 'crud_model_id'. oldname feature is used. --> Nothing to do.
+base         / ir.actions.server        / srcmodel_id (many2one)        : DEL relation: ir.model
+base         / ir.actions.server        / crud_model_id (many2one)      : NEW relation: ir.model
+# 'trigger_obj_id' renamed into 'wkf_field_id'. oldname feature is used. --> Nothing to do.
+base         / ir.actions.server        / trigger_obj_id (many2one)     : DEL relation: ir.model.fields
+base         / ir.actions.server        / wkf_field_id (many2one)       : NEW relation: ir.model.fields
+# 'copy_object' renamed into 'ref_object'. oldname feature is used. --> Nothing to do.
+base         / ir.actions.server        / copy_object (reference)       : DEL 
+base         / ir.actions.server        / ref_object (reference)        : NEW 
+# 'record_id' renamed into 'link_field_id'. oldname feature is used. --> Nothing to do.
+base         / ir.actions.server        / record_id (many2one)          : DEL relation: ir.model.fields
+base         / ir.actions.server        / link_field_id (many2one)      : NEW relation: ir.model.fields
+# 'write_id' renamed into 'write_expression'. oldname feature is used. --> Nothing to do.
+base         / ir.actions.server        / write_id (char)               : DEL 
+base         / ir.actions.server        / write_expression (char)       : NEW 
+
+# 'state' was a selection field and become a selection field defined by a function (_get_states)
+# 'dummy', 'email', 'loop', 'object_copy', 'other', 'sms' values has been deleted;
+# 'multi' is new.
+# OpenUpgrade will test and warn if there is invalid values in this field. calling _get_states in post-migration script--> DONE.
+base         / ir.actions.server        / state (selection)             : selection_keys is now 'function' ('['client_action', 'code', 'dummy', 'email', 'loop', 'object_copy', 'object_create', 'object_write', 'other', 'sms', 'trigger']')
+
 # Field is move to a upper-level module. We assume that the field will not be used in previous version if 'email_template' is not installed. --> Nothing to do.
 base         / ir.actions.server        / subject (char)                : module is now 'email_template' ('base')
 base         / ir.actions.server        / subject (char)                : now a function
 
-base         / ir.actions.server        / trigger_name (selection)      : DEL selection_keys: function
-base         / ir.actions.server        / trigger_obj_id (many2one)     : DEL relation: ir.model.fields
+# New feature for ir.actions.server : using default value is OK. --> Nothing to do.
 base         / ir.actions.server        / use_create (selection)        : NEW required: required, selection_keys: ['copy_current', 'copy_other', 'new', 'new_other'], req_default: new
+# New feature for ir.actions.server : using default value is OK. --> Nothing to do.
 base         / ir.actions.server        / use_relational_model (selection): NEW required: required, selection_keys: ['base', 'relational'], req_default: base
+# New feature for ir.actions.server : using default value is OK. --> Nothing to do.
 base         / ir.actions.server        / use_write (selection)         : NEW required: required, selection_keys: ['current', 'expression', 'other'], req_default: current
-base         / ir.actions.server        / wkf_field_id (many2one)       : NEW relation: ir.model.fields
+
+# New feature, nothing to do.
 base         / ir.actions.server        / wkf_transition_id (many2one)  : NEW relation: workflow.transition
-base         / ir.actions.server        / write_expression (char)       : NEW 
-base         / ir.actions.server        / write_id (char)               : DEL 
 
 # New model 'ir.logging' associated to a new feature. --> Nothing to do.
 base         / ir.logging               / create_date (datetime)        : NEW 
