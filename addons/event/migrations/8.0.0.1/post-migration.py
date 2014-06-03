@@ -33,7 +33,8 @@ def convert_field_to_html(cr, table, legacy_field_name, new_field_name):
         "WHERE %(field)s IS NOT NULL OR %(field)s != '' " % {
             'field': legacy_field_name,
             'table': table,
-    })
+        }
+    )
     for row in cr.fetchall():
         html = plaintext2html(row[1])
         cr.execute(
