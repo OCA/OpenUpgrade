@@ -1,5 +1,8 @@
+from itertools import groupby
+from operator import itemgetter
 from openerp.openupgrade import openupgrade
 from openerp import pooler, SUPERUSER_ID
+
 
 def load_data(cr):
     openupgrade.load_data(cr, 'product', 'migrations/8.0.1.1/modified_data.xml', mode='init')
@@ -70,6 +73,47 @@ def create_properties(cr, pool):
                                {'standard_price': std_price},
                                context=ctx)
 
+def migrate_variants(cr, pool):
+    template_obj = pool['product.template']
+    attribute_obj = pool['product.attribute']
+    attribute_value_obj = pool['product.attribute.value']
+    attribute_line_obj = pool['product.attribute.line']
+    fields = {'variant': openupgrade.get_legacy_name('variants'),
+              'price': openupgrade.get_legacy_name('price_extra')}
+    sql = ("SELECT id, %(variant)s, %(price)s, product_tmpl_id "
+           "FROM product_product "
+           "WHERE %(variant)s IS NOT NULL "
+           "OR %(price)s IS NOT NULL AND %(price)s <> 0"
+           "ORDER BY product_tmpl_id, id" % fields)
+    cr.execute(sql)
+    rows = cr.dictfetchall()
+    for tmpl_id, variants in groupby(rows, key=itemgetter('product_tmpl_id')):
+        # create an attribute shared by all the variants
+        template = template_obj.browse(cr, SUPERUSER_ID, tmpl_id)
+        attr_id = attribute_obj.create(cr, SUPERUSER_ID,
+                                       {'name': template.name})
+        for variant in variants:
+            # create an attribute value for this variant
+            price_extra = variant[fields['price']] or 0
+            name = variant[fields['variant']]
+            # active_id needed to create the 'product.attribute.price'
+            ctx = {'active_id': tmpl_id}
+            values = {
+                'name': name or '%.2f' % price_extra,
+                'attribute_id': attr_id,
+                'product_ids': [(6, 0, [variant['id']])],
+                # a 'product.attribute.price' is created when we write
+                # a price_extra on an attribute value
+                'price_extra': price_extra,
+            }
+            value_id = attribute_value_obj.create(cr, SUPERUSER_ID, values,
+                                                  context=ctx)
+            values = {'product_tmpl_id': tmpl_id,
+                      'attribute_id': attr_id,
+                      'value_ids': [(6, 0, [value_id])]}
+            attribute_line_obj.create(cr, SUPERUSER_ID, values)
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
@@ -77,5 +121,6 @@ def migrate(cr, version):
     copy_fields(cr, pool)
     migrate_packaging(cr, pool)
     create_properties(cr, pool)
+    migrate_variants(cr, pool)
     load_data(cr)
     

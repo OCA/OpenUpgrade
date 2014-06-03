@@ -87,7 +87,7 @@ product      / product.product          / outgoing_qty (float)          : module
 # function fields nothing to do
 
 product      / product.product          / price_extra (float)           : now a function
-# moved to 'product.attribute.price', needs to create attributes
+# OK moved to 'product.attribute.price', needs to create attributes
 
 product      / product.product          / price_margin (float)          : DEL 
 # no longer exists!
@@ -96,7 +96,7 @@ product      / product.product          / qty_available (float)         : module
 # function field nothing to do
 
 product      / product.product          / variants (char)               : DEL 
-# moved to 'product.attribute.value', needs to create attributes
+# OK moved to 'product.attribute.value', needs to create attributes
 
 product      / product.product          / virtual_available (float)     : module is now 'stock' ('product')
 # function field nothing to do
