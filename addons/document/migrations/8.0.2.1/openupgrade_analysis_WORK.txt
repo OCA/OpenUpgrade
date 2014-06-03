@@ -1,0 +1,9 @@
+---Fields in module 'document'---
+ =====>  NOTHING TODO <======
+document     / ir.attachment            / file_type (char)              : module is now 'mail' ('document')
+document     / ir.attachment            / file_type (char)              : now a function
+document     / report.document.user     / user_id (integer)             : relation is now 'res.users' ('False')
+document     / report.document.user     / user_id (integer)             : type is now 'many2one' ('integer')
+---XML records in module 'document'---
+NEW ir.model.access: document.access_document_storage
+NEW ir.ui.view: document.assets_backend
