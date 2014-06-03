@@ -66,13 +66,18 @@ base         / ir.ui.view               / application (selection)       : NEW re
 base         / ir.ui.view               / create_date (datetime)        : NEW 
 # new one2many field on an existing many2one field (ir_ui_view.inherit_id). --> Nothing to do.
 base         / ir.ui.view               / inherit_children_ids (one2many): NEW relation: ir.ui.view
+# New feature for ir.ui.view : using default value is OK. --> Nothing to do.
 base         / ir.ui.view               / mode (selection)              : NEW required: required, selection_keys: ['extension', 'primary'], req_default: primary
 # new one2many field on an existing many2one field (ir_model_data.res_id). --> Nothing to do.
 base         / ir.ui.view               / model_ids (one2many)          : NEW relation: ir.model.data
+# function -> selection. Nothing to do.
 base         / ir.ui.view               / type (selection)              : not a function anymore
+# removed value : 'mdx'. unused in addons. OpenUpgrade will test if extra-addons doesnt use this value. Done.
+# new value : 'qweb'. --> Nothing to do.
 base         / ir.ui.view               / type (selection)              : selection_keys is now '['calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'qweb', 'search', 'tree']' ('['calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'mdx', 'search', 'tree']')
 # 'write_date' was already present in V7 but not in the model. --> Nothing to do.
 base         / ir.ui.view               / write_date (datetime)         : NEW 
+
 
 # New feature: using default value is OK. --> Nothing to do.
 base         / res.company              / font (many2one)               : NEW relation: res.font

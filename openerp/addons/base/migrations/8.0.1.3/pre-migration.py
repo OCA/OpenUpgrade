@@ -33,4 +33,8 @@ def migrate(cr, version):
     openupgrade.check_values_selection_field(
         cr, 'ir_act_report_xml', 'report_type',
         ['controller', 'pdf', 'qweb-html', 'qweb-pdf', 'sxw', 'webkit'])
+    openupgrade.check_values_selection_field(
+        cr, 'ir_ui_view', 'type',
+        ['calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'qweb', 'search', 'tree'])
     openupgrade.rename_columns(cr, column_renames)
+
