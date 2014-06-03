@@ -1,0 +1,72 @@
+---Fields in module 'document'---
+# IMPORTANT NOTE : due to a bug in OpenUpgrade
+# (cf https://github.com/OpenUpgrade/OpenUpgrade/issues/40)
+# one important thing is missing in this analysis file :
+# the table document_storage as been dropped !
+# If you have some storage of type "filestore", openupgrade will add
+# an entry in ir.config_parameter like this one :
+# {key: ir_attachment.location, value: file:///filestore}
+
+# Document.storage has been dropped in v7, so the M2O links to document.storage is removed => nothing to do
+document     / document.directory       / storage_id (many2one)         : DEL relation: document.storage
+
+# These fields are moved to a lower-level module (base), so there is nothing to do.
+document     / ir.attachment            / db_datas (binary)             : module is now 'base' ('document')
+document     / ir.attachment            / file_size (integer)           : module is now 'base' ('document')
+# Note : the size of this char field move upgraded from 200 to 256
+document     / ir.attachment            / store_fname (char)            : module is now 'base' ('document')
+
+# In all my 6.1 production databases, this field is always empty...
+# Looking at the code of the document module in 6.1, it seems that this field
+# was not used
+document     / process.node             / directory_id (many2one)       : DEL relation: document.directory
+
+# report.document.user is _auto = False (SQL view) => nothing to do
+document     / report.document.user     / user (char)                   : now a function
+
+---XML records in module 'document'---
+
+# This record is not provided by default any more, but I think that nobody uses this
+DEL document.directory: document.dir_partner_category
+
+# Document.storage has been dropped in v7
+DEL document.storage: document.storage_default
+
+NEW ir.actions.act_window: document.action_view_files_by_user_graph
+DEL ir.actions.act_window: document.action_document_storage_form
+DEL ir.actions.act_window: document.action_view_files_by_partner
+DEL ir.actions.act_window: document.action_view_user_graph
+DEL ir.actions.act_window: document.action_view_wall
+DEL ir.actions.act_window: document.open_board_document_manager
+DEL ir.actions.act_window: document.open_board_document_manager1
+DEL ir.actions.todo.category: document.category_knowledge_mgmt_config
+DEL ir.model.access: document.access_document_storage_group_document_manager
+DEL ir.model.access: document.access_document_storage_group_system
+DEL ir.model.access: document.access_document_storage_group_user
+DEL ir.model.access: document.access_report_document_wall_group_document
+DEL ir.model.access: document.access_report_document_wall_group_document_manager
+DEL ir.model.access: document.access_report_document_wall_group_system
+DEL ir.model.access: document.access_report_files_partner_group_document
+DEL ir.model.access: document.access_report_files_partner_group_document_manager
+DEL ir.ui.menu: document.menu_document_storage_media
+DEL ir.ui.menu: document.menu_reporting
+DEL ir.ui.menu: document.menu_reports_document
+DEL ir.ui.menu: document.menu_reports_document_manager
+DEL ir.ui.menu: document.menu_reports_document_manager1
+DEL ir.ui.menu: knowledge.menu_document
+NEW ir.ui.view: document.view_files_by_user_graph
+DEL ir.ui.view: document.board_document_manager_form
+DEL ir.ui.view: document.board_document_manager_form1
+DEL ir.ui.view: document.view_attachment_form_inherit
+DEL ir.ui.view: document.view_document_by_resourcetype_graph
+DEL ir.ui.view: document.view_document_storage_filter
+DEL ir.ui.view: document.view_document_storage_form
+DEL ir.ui.view: document.view_document_storage_tree
+DEL ir.ui.view: document.view_document_wall_form
+DEL ir.ui.view: document.view_document_wall_tree
+DEL ir.ui.view: document.view_files_by_partner_form
+DEL ir.ui.view: document.view_files_by_partner_graph
+DEL ir.ui.view: document.view_files_by_partner_tree
+DEL ir.ui.view: document.view_process_form_inherit1
+DEL ir.ui.view: document.view_process_node_form_inherit1
+DEL ir.ui.view: document.view_user_graph
