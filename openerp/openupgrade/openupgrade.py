@@ -201,7 +201,8 @@ def add_xmlid(cr, module, xmlid, model, res_id, noupdate=False):
     if already_exists:
         return False
     else:
-        cr.execute(
+        logged_query(
+            cr,
             "INSERT INTO ir_model_data (create_uid, create_date, "
             "write_uid, write_date, date_init, date_update, noupdate, "
             "name, module, model, res_id) "
