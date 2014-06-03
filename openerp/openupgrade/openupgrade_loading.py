@@ -101,7 +101,7 @@ def add_module_dependencies(cr, module_list):
         logger.info(
             "Selecting autoinstallable modules %s", ','.join(auto_modules))
         module_list += auto_modules
-    print module_list
+
     return module_list
 
 def log_model(model, local_registry):
