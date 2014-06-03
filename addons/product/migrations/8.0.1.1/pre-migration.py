@@ -25,25 +25,25 @@ column_renames = {
     # Using magic None value to trigger call to get_legacy_name()
     'product_supplierinfo': [
         ('product_id', None),
-        ],
+    ],
     'product_product': [
         ('color', None),
         ('image', 'image_variant'),
         ('variants', None),
         ('price_extra', None),
-        ],
+    ],
     'product_template': [
-        ('produce_delay', None), # need to handle in mrp migration
+        ('produce_delay', None),  # need to handle in mrp migration
         ('cost_method', None),  # need to handle in stock_account migration
         ('standard_price', None),
-        ],
+    ],
     'product_packaging': [
         ('height', None),
         ('length', None),
         ('weight_ul', None),
         ('width', None),
-        ]
-        }
+    ]
+}
 
 
 @openupgrade.migrate()
