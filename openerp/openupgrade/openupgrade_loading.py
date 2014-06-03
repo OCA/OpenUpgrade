@@ -32,6 +32,7 @@ from openerp.tools import config, safe_eval
 
 logger = logging.getLogger('OpenUpgrade')
 
+
 def add_module_dependencies(cr, module_list):
     """
     Select (new) dependencies from the modules in the list
@@ -103,6 +104,7 @@ def add_module_dependencies(cr, module_list):
         module_list += auto_modules
 
     return module_list
+
 
 def log_model(model, local_registry):
     """
