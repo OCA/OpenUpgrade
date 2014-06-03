@@ -21,7 +21,6 @@
 
 
 from openerp.openupgrade import openupgrade
-from openerp import pooler
 
 
 column_change_type = [
@@ -33,6 +32,5 @@ column_change_type = [
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    pool = pooler.get_pool(cr.dbname)
     for table, field in column_change_type:
         openupgrade.float_to_integer(cr, table, field)
