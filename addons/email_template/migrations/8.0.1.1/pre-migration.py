@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from openupgrade import openupgrade
+from openerp.openupgrade import openupgrade
 
 column_renames = {
     'email_template': [
