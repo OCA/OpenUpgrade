@@ -106,7 +106,7 @@ for parm in ('host', 'port', 'user', 'password'):
     if config.has_option('options', db_parm):
         conn_parms[parm] = config.get('options', db_parm)
 
-if not 'user' in conn_parms:
+if 'user' not in conn_parms:
     print 'No user found in configuration'
     sys.exit()
 db_user = conn_parms['user']
