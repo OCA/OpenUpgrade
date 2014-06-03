@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python2
 
 import os
 import sys
@@ -7,10 +7,31 @@ import psycopg2
 import psycopg2.extensions
 from optparse import OptionParser
 from ConfigParser import SafeConfigParser
-import bzrlib.plugin
-import bzrlib.builtins
+try:
+    import bzrlib.plugin
+    import bzrlib.builtins
+except ImportError:
+    print ('couldn\'t import bzrlib. You won\'t be able to run migrations '
+           '<= 7.0!')
 
 migrations = {
+    '8.0': {
+        'addons': {
+            'addons': {
+                'type': 'link',
+                'url': os.path.join('server', 'addons'),
+            },
+        },
+        'server': {
+            'type': 'git',
+            'url': 'git://github.com/OpenUpgrade/OpenUpgrade.git',
+            'branch': '8.0',
+            'addons_dir': os.path.join('openerp', 'addons'),
+            'root_dir': os.path.join(''),
+            'cmd': 'openerp-server --update=all --database=%(db)s '
+                   '--config=%(config)s --stop-after-init --no-xmlrpc',
+            },
+    },
     '7.0': {
         'addons': {
             'addons': 'lp:openupgrade-addons/7.0',
@@ -169,46 +190,71 @@ if not os.path.exists(options.branch_dir):
 for version in options.migrations.split(','):
     if not os.path.exists(os.path.join(options.branch_dir, version)):
         os.mkdir(os.path.join(options.branch_dir, version))
-    for (name, url) in dict(
+    for (name, addon_config) in dict(
             migrations[version]['addons'],
-            server=migrations[version]['server']['url']).iteritems():
-        link = url.get('link', False) if isinstance(url, dict) else False
-        url = url['url'] if isinstance(url, dict) else url
+            server=migrations[version]['server']).iteritems():
+        addon_config = addon_config\
+            if isinstance(addon_config, dict)\
+            else {'url': addon_config}
+        addon_config_type = addon_config.get('type', 'bzr')
         if os.path.exists(os.path.join(options.branch_dir, version, name)):
-            if link:
+            if addon_config_type == 'link':
                 continue
-            cmd_revno = bzrlib.builtins.cmd_revno()
-            cmd_revno.outf = StringIO.StringIO()
-            cmd_revno.run(location=os.path.join(options.branch_dir,
-                                                version,
-                                                name))
-            print 'updating %s rev%s' % (
-                os.path.join(version, name),
-                cmd_revno.outf.getvalue().strip())
-            cmd_update = bzrlib.builtins.cmd_update()
-            cmd_update.outf = StringIO.StringIO()
-            cmd_update.outf.encoding = 'utf8'
-            cmd_update.run(
-                dir=os.path.join(options.branch_dir, version, name))
-            if hasattr(cmd_update, '_operation'):
-                cmd_update.cleanup_now()
-            print 'now at rev' + cmd_revno.outf.getvalue().strip()
+            elif addon_config_type == 'bzr':
+                cmd_revno = bzrlib.builtins.cmd_revno()
+                cmd_revno.outf = StringIO.StringIO()
+                cmd_revno.run(location=os.path.join(options.branch_dir,
+                                                    version,
+                                                    name))
+                print 'updating %s rev%s' % (
+                    os.path.join(version, name),
+                    cmd_revno.outf.getvalue().strip())
+                cmd_update = bzrlib.builtins.cmd_update()
+                cmd_update.outf = StringIO.StringIO()
+                cmd_update.outf.encoding = 'utf8'
+                cmd_update.run(
+                    dir=os.path.join(options.branch_dir, version, name))
+                if hasattr(cmd_update, '_operation'):
+                    cmd_update.cleanup_now()
+                print 'now at rev' + cmd_revno.outf.getvalue().strip()
+            elif addon_config_type == 'git':
+                os.system('cd %(location)s; git pull origin %(branch)s' % {
+                    'branch': addon_config.get('branch', 'master'),
+                    'location': os.path.join(options.branch_dir,
+                                             version,
+                                             name),
+                })
+            else:
+                raise Exception('Unknown type %s' % addon_config_type)
         else:
-            if link:
-                print 'linking %s to %s' % (url,
+            if addon_config_type == 'link':
+                print 'linking %s to %s' % (addon_config['url'],
                                             os.path.join(options.branch_dir,
                                                          version,
                                                          name))
-                os.symlink(url,
+                os.symlink(addon_config['url'],
                            os.path.join(options.branch_dir, version, name))
-            else:
-                print 'getting ' + url
+            elif addon_config_type == 'bzr':
+                print 'getting ' + addon_config['url']
                 cmd_checkout = bzrlib.builtins.cmd_checkout()
                 cmd_checkout.outf = StringIO.StringIO()
                 cmd_checkout.run(
-                    url,
+                    addon_config['url'],
                     os.path.join(options.branch_dir, version, name),
                     lightweight=True)
+            elif addon_config_type == 'git':
+                print 'getting ' + addon_config['url']
+                os.system('git clone --branch %(branch)s --single-branch '
+                          '--depth=1 %(url)s %(target)s' %
+                          {
+                              'branch': addon_config.get('branch', 'master'),
+                              'url': addon_config['url'],
+                              'target': os.path.join(options.branch_dir,
+                                                     version,
+                                                     name),
+                          })
+            else:
+                raise Exception('Unknown type %s' % addon_config_type)
 
 if not options.inplace:
     print('copying database %(db_name)s to %(db)s...' % {'db_name': db_name,
