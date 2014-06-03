@@ -469,12 +469,14 @@ def float_to_integer(cr, table, field):
 
     .. versionadded:: 8.0
     """
-    cr.execute('ALTER TABLE %(table)s '
-               'ALTER COLUMN %(field)s '
-               'TYPE integer' % {
-                   'table': table,
-                   'field': field,
-                   })
+    logged_query(
+        cr, 
+        "ALTER TABLE %(table)s "
+        "ALTER COLUMN %(field)s "
+        "TYPE integer" % {
+            'table': table,
+            'field': field,
+            })
 
 
 def message(cr, module, table, column,

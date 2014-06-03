@@ -3,12 +3,12 @@ hr           / hr.department            / jobs_ids (one2many)           : NEW re
 hr           / hr.employee              / message_ids (one2many)        : NEW relation: mail.message
 ## OK new fields -> nothing to do
 hr           / hr.employee              / message_last_post (datetime)  : NEW 
+hr           / hr.job                   / message_last_post (datetime)  : NEW 
 # Used set_message_last_post()
 hr           / hr.job                   / no_of_recruitment (float)     : type is now 'integer' ('float')
 hr           / hr.job                   / no_of_employee (float)        : type is now 'integer' ('float')
 hr           / hr.job                   / expected_employees (float)    : type is now 'integer' ('float')
 ### Transform float to integer
-hr           / hr.job                   / message_last_post (datetime)  : NEW 
 hr           / hr.job                   / no_of_hired_employee (integer): NEW 
 hr           / hr.job                   / write_date (datetime)         : NEW 
 hr           / res.users                / display_employees_suggestions (boolean): NEW 
