@@ -51,12 +51,31 @@ def migrate_packaging(cr, pool):
                   'length': length,
                   'weight_ul': weight,
                   })
-        
+
+def create_properties(cr, pool):
+    """ Fields moved to properties (standard_price).
+
+    Write using the ORM so the prices will be written as properties.
+    """
+    template_obj = pool['product.template']
+    company_obj = pool['res.company']
+    company_ids = company_obj.search(cr, SUPERUSER_ID, [])
+    sql = ("SELECT id, %s FROM product_template" %
+           openupgrade.get_legacy_name('standard_price'))
+    cr.execute(sql)
+    for template_id, std_price in cr.fetchall():
+        for company_id in company_ids:
+            ctx = {'force_company': company_id}
+            template_obj.write(cr, SUPERUSER_ID, [template_id],
+                               {'standard_price': std_price},
+                               context=ctx)
+
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     move_fields(cr, pool)
     copy_fields(cr, pool)
     migrate_packaging(cr, pool)
+    create_properties(cr, pool)
     load_data(cr)
     

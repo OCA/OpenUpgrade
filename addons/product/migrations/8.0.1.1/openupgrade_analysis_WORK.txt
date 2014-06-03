@@ -80,7 +80,7 @@ product      / product.template         / product_variant_ids (one2many): NEW re
 # nothing to do?
 
 product      / product.template         / standard_price (float)        : now a function
-# nothing to do
+# OK. Now a fields.property, properties needs to be created
 
 product      / product.product          / incoming_qty (float)          : module is now 'stock' ('product')
 # function field nothing to do
