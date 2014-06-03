@@ -29,7 +29,6 @@ def migrate(cr, version):
     cr.execute(
         """SELECT id FROM account_analytic_journal WHERE type='purchase' """)
     res = cr.fetchone()
-    print "mig account res=", res
     if res:
         openupgrade.add_xmlid(
             cr, 'account', 'exp', 'account.analytic.journal', res[0], True)
