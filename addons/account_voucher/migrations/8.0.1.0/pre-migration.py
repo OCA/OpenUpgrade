@@ -20,15 +20,15 @@
 #
 ##############################################################################
 
-from openerp import pooler, SUPERUSER_ID
-from openerp.openupgrade import openupgrade, openupgrade_80
+from openerp.openupgrade import openupgrade
 
 column_renames = {
-    'account_bank_statement_line' : [
+    'account_bank_statement_line': [
         ('voucher_id', None)
     ],
     'account_voucher': [('active', None)]
 }
+
 
 @openupgrade.migrate()
 def migrate(cr, version):
