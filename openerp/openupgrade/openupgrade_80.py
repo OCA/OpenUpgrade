@@ -30,6 +30,7 @@ def get_last_post_for_model(cr, uid, ids, model_pool):
     Given a set of ids and a model pool, return a dict of each object ids with
     their latest message date as a value.
     To be called in post-migration scripts
+
     :param cr: database cursor
     :param uid: user id, assumed to be openerp.SUPERUSER_ID
     :param ids: ids of the model in question to retrieve ids
@@ -54,10 +55,11 @@ def set_message_last_post(cr, uid, pool, models):
     Given a list of models, set their 'message_last_post' fields to an
     estimated last post datetime.
     To be called in post-migration scripts
+
     :param cr: database cursor
     :param uid: user id, assumed to be openerp.SUPERUSER_ID
     :param pool: orm pool, assumed to be openerp.pooler.get_pool(cr.dbname)
-    :param models: a list of model names for which 'message_last_post' needs to
+    :param models: a list of model names for which 'message_last_post' needs to \
     be filled
     :return:
     """
