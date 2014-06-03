@@ -83,14 +83,23 @@ product      / product.template         / standard_price (float)        : now a 
 # OK. Now a fields.property, properties needs to be created
 
 product      / product.product          / incoming_qty (float)          : module is now 'stock' ('product')
+product      / product.product          / outgoing_qty (float)          : module is now 'stock' ('product')
+# function fields nothing to do
+
+product      / product.product          / price_extra (float)           : now a function
+# moved to 'product.attribute.price', needs to create attributes
+
+product      / product.product          / price_margin (float)          : DEL 
+# no longer exists!
+
+product      / product.product          / qty_available (float)         : module is now 'stock' ('product')
 # function field nothing to do
 
-product      / product.product          / outgoing_qty (float)          : module is now 'stock' ('product')
-product      / product.product          / price_extra (float)           : now a function
-product      / product.product          / price_margin (float)          : DEL 
-product      / product.product          / qty_available (float)         : module is now 'stock' ('product')
 product      / product.product          / variants (char)               : DEL 
+# moved to 'product.attribute.value', needs to create attributes
+
 product      / product.product          / virtual_available (float)     : module is now 'stock' ('product')
+# function field nothing to do
 
 
 
