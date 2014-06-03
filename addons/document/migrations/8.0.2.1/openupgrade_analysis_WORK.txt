@@ -1,5 +1,7 @@
 ---Fields in module 'document'---
  =====>  NOTHING TODO <======
+# Explanation : user_id diff evaluation is a false positive : 
+# changes in field user_id happens during v7 life and field user_id in fresh v7 code source is the same than in v8
 document     / ir.attachment            / file_type (char)              : module is now 'mail' ('document')
 document     / ir.attachment            / file_type (char)              : now a function
 document     / report.document.user     / user_id (integer)             : relation is now 'res.users' ('False')
