@@ -51,6 +51,7 @@ __all__ = [
     'add_ir_model_fields',
     'get_legacy_name',
     'm2o_to_m2m',
+    'float_to_integer',
     'message',
     'check_values_fields_selection',
 ]
@@ -456,6 +457,24 @@ def m2o_to_m2m(cr, model, table, field, source_field):
                    })
     for row in cr.fetchall():
         model.write(cr, SUPERUSER_ID, row[0], {field: [(4, row[1])]})
+
+
+def float_to_integer(cr, table, field):
+    """
+    Change column type from float to integer. It will just
+    truncate the float value (It won't round it)
+
+    :param table: The table
+    :param field: The field name for which we want to change the type
+
+    .. versionadded:: 8.0
+    """
+    cr.execute('ALTER TABLE %(table)s '
+               'ALTER COLUMN %(field)s '
+               'TYPE integer' % {
+                   'table': table,
+                   'field': field,
+                   })
 
 
 def message(cr, module, table, column,
