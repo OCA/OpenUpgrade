@@ -33,7 +33,7 @@ In a nutshell
 
 ::
 
-  wget https://raw.githubusercontent.com/OpenUpgrade/OpenUpgrade/8.0/scripts/migrate.py
+  wget https://raw.githubusercontent.com/OpenUpgrade/OpenUpgrade/HEAD/scripts/migrate.py
   python migrate.py --config=[your openerp.conf] --database=[your database] --run-migrations=[your migrations]
 
 .. _github: https://github.com/OpenUpgrade/OpenUpgrade/blob/8.0/scripts/migrate.py
