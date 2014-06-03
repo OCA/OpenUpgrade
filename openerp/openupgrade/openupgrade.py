@@ -52,7 +52,7 @@ __all__ = [
     'get_legacy_name',
     'm2o_to_m2m',
     'message',
-    'check_values_fields_selection',
+    'check_values_selection_field',
 ]
 
 
@@ -64,18 +64,17 @@ def check_values_selection_field(cr, table_name, field_name, allowed_values):
         If yes, return True.
     """
     res = True
-    cr.execute(
-        "SELECT %s, count(*) FROM %s GROUP BY %s;" % (
-            field_name,table_name, field_name,
-            ))
+    cr.execute("SELECT %s, count(*) FROM %s GROUP BY %s;" %
+               (field_name, table_name, field_name))
     for row in cr.fetchall():
         if row[0] not in allowed_values:
             logger.error(
                 "Invalid value '%s' in the table '%s' "
-                "for the field '%s'. (%s rows)." % (
-                    row[0], table_name, field_name, row[1]))
+                "for the field '%s'. (%s rows).",
+                row[0], table_name, field_name, row[1])
             res = False
     return res
+
 
 def load_data(cr, module_name, filename, idref=None, mode='init'):
     """

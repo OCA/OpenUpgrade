@@ -31,6 +31,7 @@ try:
 except ImportError:
     from openupgrade_records.lib import apriori
 
+
 def module_map(module):
     return apriori.renamed_modules.get(
         module, module)
@@ -68,7 +69,7 @@ def search(item, item_list, fields):
         if not compare_records(item, i, fields):
             continue
         return i
-    #search for renamed fields
+    # search for renamed fields
     if 'field' in fields:
         for i in item_list:
             if not item['field'] or item['field'] != i.get('oldname'):
