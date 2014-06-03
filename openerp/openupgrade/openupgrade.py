@@ -181,6 +181,7 @@ def rename_xmlids(cr, xmlids_spec):
                      "WHERE module = %s and name = %s")
             logged_query(cr, query, tuple(new.split('.') + old.split('.')))
 
+
 def add_xmlid(cr, module, xmlid, model, res_id, noupdate=False):
     """
     Adds an entry in ir_model_data. Typically called in the pre script.
@@ -208,10 +209,11 @@ def add_xmlid(cr, module, xmlid, model, res_id, noupdate=False):
             "name, module, model, res_id) "
             "VALUES (%s, (now() at time zone 'UTC'), %s, "
             "(now() at time zone 'UTC'), (now() at time zone 'UTC'), "
-            "(now() at time zone 'UTC'), %s, %s, %s, %s, %s)",
-            (SUPERUSER_ID, SUPERUSER_ID, noupdate,
-            xmlid, module, model, res_id))
+            "(now() at time zone 'UTC'), %s, %s, %s, %s, %s)", (
+                SUPERUSER_ID, SUPERUSER_ID, noupdate,
+                xmlid, module, model, res_id))
         return True
+
 
 def drop_columns(cr, column_spec):
     """
