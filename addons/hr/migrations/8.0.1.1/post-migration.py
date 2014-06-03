@@ -20,21 +20,12 @@
 ##############################################################################
 
 
-from openerp.openupgrade import openupgrade
+from openerp.openupgrade import openupgrade, openupgrade_80
 from openerp import pooler, SUPERUSER_ID
 
-
-column_change_type = [
-        ('hr_job', 'expected_employees'),
-        ('hr_job', 'no_of_employee'),
-        ('hr_job', 'no_of_recruitment')
-        ]
 
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
-    for table, field in column_change_type:
-        openupgrade.float_to_integer(cr, table, field)
-
-
-
+    openupgrade_80.set_message_last_post(
+        cr, SUPERUSER_ID, pool, ['hr.job', 'hr.employee'])
