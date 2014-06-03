@@ -31,4 +31,3 @@ def migrate(cr, version):
     openupgrade_80.set_message_last_post(
         cr, uid, pool, ['account.voucher']
     )
-
