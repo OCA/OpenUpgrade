@@ -28,8 +28,10 @@ base         / ir.actions.server        / srcmodel_id (many2one)        : DEL re
 base         / ir.actions.server        / state (selection)             : selection_keys is now 'function' ('['client_action', 'code', 'dummy', 'email', 'loop', 'object_copy', 'object_create', 'object_write', 'other', 'sms', 'trigger']')
 base         / ir.actions.server        / sub_model_object_field (many2one): NEW relation: ir.model.fields
 base         / ir.actions.server        / sub_object (many2one)         : NEW relation: ir.model
+# Field is move to a upper-level module. We assume that the field will not be used in previous version if 'email_template' is not installed. --> Nothing to do.
 base         / ir.actions.server        / subject (char)                : module is now 'email_template' ('base')
 base         / ir.actions.server        / subject (char)                : now a function
+
 base         / ir.actions.server        / trigger_name (selection)      : DEL selection_keys: function
 base         / ir.actions.server        / trigger_obj_id (many2one)     : DEL relation: ir.model.fields
 base         / ir.actions.server        / use_create (selection)        : NEW required: required, selection_keys: ['copy_current', 'copy_other', 'new', 'new_other'], req_default: new
@@ -40,7 +42,7 @@ base         / ir.actions.server        / wkf_transition_id (many2one)  : NEW re
 base         / ir.actions.server        / write_expression (char)       : NEW 
 base         / ir.actions.server        / write_id (char)               : DEL 
 
-# TODO
+# New model 'ir.logging' associated to a new feature. --> Nothing to do.
 base         / ir.logging               / create_date (datetime)        : NEW 
 base         / ir.logging               / create_uid (integer)          : NEW 
 base         / ir.logging               / dbname (char)                 : NEW 
@@ -52,12 +54,14 @@ base         / ir.logging               / name (char)                   : NEW re
 base         / ir.logging               / path (char)                   : NEW required: required
 base         / ir.logging               / type (selection)              : NEW required: required, selection_keys: ['client', 'server']
 
-# TODO
+# 'view_load' concept has been removed. redundant because the value was true only on properties fields. --> Nothing to do.
 base         / ir.model.fields          / view_load (boolean)           : DEL 
 
-# TODO
+# field changed from 'reference' to 'char' but the storage is identical. --> Nothing to do.
 base         / ir.property              / res_id (reference)            : type is now 'char' ('reference')
+# New option. --> Nothing to do.
 base         / ir.property              / type (selection)              : selection_keys is now '['binary', 'boolean', 'char', 'date', 'datetime', 'float', 'integer', 'many2one', 'selection', 'text']' ('['binary', 'boolean', 'char', 'date', 'datetime', 'float', 'integer', 'many2one', 'text']')
+# field changed from 'reference' to 'char' but the storage is identical. --> Nothing to do.
 base         / ir.property              / value_reference (reference)   : type is now 'char' ('reference')
 
 # New feature for ir.ui.view that allow enable or disable inheritance : using default value is OK. --> Nothing to do.
@@ -101,7 +105,7 @@ base         / res.font                 / path (char)                   : NEW re
 # The feature has been removed. It gaves the possibility to a user to have a different menu as the default one. --> Nothing to do.
 base         / res.users                / menu_id (many2one)            : DEL relation: ir.actions.actions
 
-# TODO
+# This field is new in the model but not in Database. It was created by the 7.0 script in server/openerp/addons/base/base.sql .--> Nothing to do.
 base         / workflow.instance        / transition_ids (many2many)    : NEW relation: workflow.transition
 
 
