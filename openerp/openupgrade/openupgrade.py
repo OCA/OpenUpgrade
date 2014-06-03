@@ -485,7 +485,7 @@ def message(cr, module, table, column,
     logger.warn(prefix + message, *argslist, **kwargs)
 
 
-def migrate():
+def migrate(no_version=False):
     """
     This is the decorator for the migrate() function
     in migration scripts.
@@ -509,8 +509,9 @@ def migrate():
                     "'migrate' decorator: failed to inspect "
                     "the frame above: %s" % e)
                 pass
-            if not version:
+            if not version and not no_version:
                 return
+            print 'lalalal'
             logger.info(
                 "%s: %s-migration script called with version %s" %
                 (module, stage, version))
