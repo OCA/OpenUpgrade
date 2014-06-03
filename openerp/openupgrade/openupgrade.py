@@ -470,7 +470,7 @@ def float_to_integer(cr, table, field):
     .. versionadded:: 8.0
     """
     logged_query(
-        cr, 
+        cr,
         "ALTER TABLE %(table)s "
         "ALTER COLUMN %(field)s "
         "TYPE integer" % {
