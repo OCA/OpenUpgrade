@@ -166,6 +166,8 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
             # OpenUpgrade: add this module's models to the registry
             local_registry = {}
             for model in models:
+                if not model._auto:
+                    continue
                 openupgrade_loading.log_model(model, local_registry)
             openupgrade_loading.compare_registries(
                 cr, package.name, upg_registry, local_registry)
