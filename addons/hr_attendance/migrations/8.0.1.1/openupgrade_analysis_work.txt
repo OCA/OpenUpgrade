@@ -1,0 +1,16 @@
+---Fields in module 'hr_attendance'---
+---XML records in module 'hr_attendance'---
+NEW ir.actions.act_window: hr_attendance.action_hr_attendance_graph
+DEL ir.actions.act_window: hr_attendance.action_hr_attendance_month
+DEL ir.actions.act_window: hr_attendance.action_hr_attendance_week
+NEW ir.actions.report.xml: hr_attendance.action_report_hrattendanceerror
+DEL ir.actions.report.xml: hr_attendance.attendance_error_report
+NEW ir.ui.menu: hr_attendance.menu_hr_attendance_graph
+NEW ir.ui.view: hr_attendance.assets_backend
+NEW ir.ui.view: hr_attendance.report_attendanceerrors
+NEW ir.ui.view: hr_attendance.view_hr_attendance_graph
+DEL ir.ui.view: hr_attendance.view_hr_attendance_month
+DEL ir.ui.view: hr_attendance.view_hr_attendance_week
+DEL ir.values: hr_attendance.hr_attendance_month_values
+DEL ir.values: hr_attendance.hr_attendance_week_values
+# Nothing to do
