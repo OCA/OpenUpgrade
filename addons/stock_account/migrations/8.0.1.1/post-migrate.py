@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    OpenUpgrade module for Odoo
-#    @copyright 2014-Today: Odoo Community Association
-#    @author: Sylvain LE GAL <https://twitter.com/legalsylvain>
+#    Author: Guewen Baconnier
+#    Copyright 2014 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -21,14 +20,29 @@
 ##############################################################################
 
 from openerp.openupgrade import openupgrade
+from openerp import pooler, SUPERUSER_ID
+
+
+def create_properties(cr, pool):
+    """ Fields moved to properties (cost_method).
+
+    Write using the ORM so the cost_method will be written as properties.
+    """
+    template_obj = pool['product.template']
+    company_obj = pool['res.company']
+    company_ids = company_obj.search(cr, SUPERUSER_ID, [])
+    sql = ("SELECT id, %s FROM product_template" %
+           openupgrade.get_legacy_name('cost_method'))
+    cr.execute(sql)
+    for template_id, cost_method in cr.fetchall():
+        for company_id in company_ids:
+            ctx = {'force_company': company_id}
+            template_obj.write(cr, SUPERUSER_ID, [template_id],
+                               {'cost_method': cost_method},
+                               context=ctx)
 
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    openupgrade.check_values_selection_field(
-        cr, 'ir_act_report_xml', 'report_type',
-        ['controller', 'pdf', 'qweb-html', 'qweb-pdf', 'sxw', 'webkit'])
-    openupgrade.check_values_selection_field(
-        cr, 'ir_ui_view', 'type', [
-            'calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban',
-            'qweb', 'search', 'tree'])
+    pool = pooler.get_pool(cr.dbname)
+    create_properties(cr, pool)

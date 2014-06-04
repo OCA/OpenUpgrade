@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    OpenUpgrade module for Odoo
-#    @copyright 2014-Today: Odoo Community Association
-#    @author: Sylvain LE GAL <https://twitter.com/legalsylvain>
+#    Author: Alexandre Fayolle
+#    Copyright 2014 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -22,13 +21,31 @@
 
 from openerp.openupgrade import openupgrade
 
+column_renames = {
+    # Using magic None value to trigger call to get_legacy_name()
+    'product_supplierinfo': [
+        ('product_id', None),
+    ],
+    'product_product': [
+        ('color', None),
+        ('image', 'image_variant'),
+        ('variants', None),
+        ('price_extra', None),
+    ],
+    'product_template': [
+        ('produce_delay', None),  # need to handle in mrp migration
+        ('cost_method', None),  # need to handle in stock_account migration
+        ('standard_price', None),
+    ],
+    'product_packaging': [
+        ('height', None),
+        ('length', None),
+        ('weight_ul', None),
+        ('width', None),
+    ]
+}
+
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    openupgrade.check_values_selection_field(
-        cr, 'ir_act_report_xml', 'report_type',
-        ['controller', 'pdf', 'qweb-html', 'qweb-pdf', 'sxw', 'webkit'])
-    openupgrade.check_values_selection_field(
-        cr, 'ir_ui_view', 'type', [
-            'calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban',
-            'qweb', 'search', 'tree'])
+    openupgrade.rename_columns(cr, column_renames)

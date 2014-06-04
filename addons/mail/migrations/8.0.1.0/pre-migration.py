@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenUpgrade module for Odoo
-#    @copyright 2014-Today: Odoo Community Association
-#    @author: Sylvain LE GAL <https://twitter.com/legalsylvain>
+#    OpenERP, Open Source Management Solution
+#    This module copyright (C) 2010 - 2014 Savoir-faire Linux
+#    (<http://www.savoirfairelinux.com>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -23,12 +23,30 @@
 from openerp.openupgrade import openupgrade
 
 
+column_renames = {
+    'res_partner': [
+        ('notification_email_send', 'notify_email'),
+
+    ],
+    'mail_mail': [
+        ('email_from', None),
+        # The following fields are to be moved to mail_message in post
+        ('mail_server_id', None),
+        ('reply_to', None),
+    ]
+}
+
+
+def partner_notify_migration(cr):
+    """The selection values 'all', 'comment' and 'email' got replaced by
+    'always', 'never' is still 'never'"""
+    openupgrade.logged_query(cr, """
+UPDATE res_partner
+SET notify_email = 'always'
+WHERE notify_email IN ('all', 'comment', 'email')""")
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
-    openupgrade.check_values_selection_field(
-        cr, 'ir_act_report_xml', 'report_type',
-        ['controller', 'pdf', 'qweb-html', 'qweb-pdf', 'sxw', 'webkit'])
-    openupgrade.check_values_selection_field(
-        cr, 'ir_ui_view', 'type', [
-            'calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban',
-            'qweb', 'search', 'tree'])
+    openupgrade.rename_columns(cr, column_renames)
+    partner_notify_migration(cr)

@@ -1,0 +1,163 @@
+---Fields in module 'product'---
+product      / product.attribute        / name (char)                   : NEW required: required
+product      / product.attribute        / value_ids (one2many)          : NEW relation: product.attribute.value
+product      / product.attribute.line   / attribute_id (many2one)       : NEW relation: product.attribute, required: required
+product      / product.attribute.line   / product_tmpl_id (many2one)    : NEW relation: product.template, required: required
+product      / product.attribute.line   / value_ids (many2many)         : NEW relation: product.attribute.value
+product      / product.attribute.price  / price_extra (float)           : NEW 
+product      / product.attribute.price  / product_tmpl_id (many2one)    : NEW relation: product.template, required: required
+product      / product.attribute.price  / value_id (many2one)           : NEW relation: product.attribute.value, required: required
+product      / product.attribute.value  / attribute_id (many2one)       : NEW relation: product.attribute, required: required
+product      / product.attribute.value  / name (char)                   : NEW required: required
+product      / product.attribute.value  / price_ids (one2many)          : NEW relation: product.attribute.price
+product      / product.attribute.value  / product_ids (many2many)       : NEW relation: product.product
+product      / product.attribute.value  / sequence (integer)            : NEW 
+
+## OK new model, will be handled by standard migration
+
+
+product      / product.packaging        / ul_container (many2one)       : NEW relation: product.ul
+product      / product.packaging        / height (float)                : DEL 
+product      / product.ul               / height (float)                : NEW 
+product      / product.packaging        / length (float)                : DEL 
+product      / product.ul               / length (float)                : NEW 
+product      / product.packaging        / weight_ul (float)             : DEL 
+product      / product.ul               / weight (float)                : NEW 
+product      / product.packaging        / width (float)                 : DEL 
+product      / product.ul               / width (float)                 : NEW 
+## OK new relation ul_container handled by migration
+## OK the dimensions are weight must be moved to the related UL (through the ul field)
+
+
+product      / product.price.history    / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+product      / product.price.history    / cost (float)                  : NEW 
+product      / product.price.history    / datetime (datetime)           : NEW 
+product      / product.price.history    / product_template_id (many2one): NEW relation: product.template, required: required
+# OK new fields -> nothing to do
+
+product      / product.template         / attribute_line_ids (one2many) : NEW relation: product.attribute.line
+product      / product.product          / attribute_value_ids (many2many): NEW relation: product.attribute.value
+# OK nothing to do
+
+
+product      / product.supplierinfo     / product_id (many2one)         : DEL relation: product.template, required: required
+product      / product.supplierinfo     / product_tmpl_id (many2one)    : NEW relation: product.template, required: required
+# OK seller_ids moved from product.product to product.template
+
+product      / product.template         / active (boolean)              : NEW 
+# OK: set to True if at least one variant is active
+
+product      / product.template         / color (integer)               : NEW 
+product      / product.product          / color (integer)               : DEL 
+## OK color moved up in template
+
+product      / product.template         / cost_method (selection)       : module is now 'stock_account' ('product')
+product      / product.template         / cost_method (selection)       : now a function
+product      / product.template         / cost_method (selection)       : selection_keys is now '['average', 'real', 'standard']' ('['average', 'standard']')
+# moved in stock_account, now a fields.property
+
+product      / product.template         / image (binary)                : NEW 
+product      / product.product          / image (binary)                : now afunction
+# OK need to move up to template
+
+product      / product.product          / image_variant (binary)        : NEW 
+# nothing to do
+
+product      / product.template         / message_ids (one2many)        : NEW relation: mail.message
+product      / product.template         / message_last_post (datetime)  : NEW 
+# now product.template derives from mail template
+# TODO : move up messages -> they will still be on the product so why bother
+product      / product.product          / message_last_post (datetime)  : NEW 
+
+
+product      / product.template         / packaging (one2many)          : NEW relation: product.packaging
+# OK moved from product.product
+
+product      / product.template         / produce_delay (float)         : DEL 
+# OK moved in mrp, defined on product.product
+
+product      / product.template         / product_variant_ids (one2many): NEW relation: product.product, required: required
+# nothing to do?
+
+product      / product.template         / standard_price (float)        : now a function
+# OK. Now a fields.property, properties needs to be created
+
+product      / product.product          / incoming_qty (float)          : module is now 'stock' ('product')
+product      / product.product          / outgoing_qty (float)          : module is now 'stock' ('product')
+# function fields nothing to do
+
+product      / product.product          / price_extra (float)           : now a function
+# OK moved to 'product.attribute.price', needs to create attributes
+
+product      / product.product          / price_margin (float)          : DEL 
+# no longer exists!
+
+product      / product.product          / qty_available (float)         : module is now 'stock' ('product')
+# function field nothing to do
+
+product      / product.product          / variants (char)               : DEL 
+# OK moved to 'product.attribute.value', needs to create attributes
+
+product      / product.product          / virtual_available (float)     : module is now 'stock' ('product')
+# function field nothing to do
+
+
+
+---XML records in module 'product'---
+NEW ir.actions.act_window: product.product_template_action
+NEW ir.actions.act_window: product.product_variant_action
+NEW ir.actions.act_window: product.variants_template_action
+DEL ir.actions.act_window: product.product_normal_action_puchased
+DEL ir.actions.act_window: product.product_template_action_tree
+DEL ir.actions.act_window.view: product.open_view_product_form1
+DEL ir.actions.act_window.view: product.open_view_product_kanban1
+DEL ir.actions.act_window.view: product.open_view_product_tree1
+NEW ir.actions.report.xml: product.action_report_pricelist
+DEL ir.actions.report.xml: product.report_product_pricelist
+## ir.actions: the doc says we can safely ignore these
+
+NEW ir.model.access: product.access_product_attribute
+NEW ir.model.access: product.access_product_attribute_line
+NEW ir.model.access: product.access_product_attribute_line_sale_manager
+NEW ir.model.access: product.access_product_attribute_price
+NEW ir.model.access: product.access_product_attribute_price_sale_manager
+NEW ir.model.access: product.access_product_attribute_sale_manager
+NEW ir.model.access: product.access_product_attribute_value
+NEW ir.model.access: product.access_product_attribute_value_sale_manager
+NEW ir.model.access: product.access_product_price_history_employee
+## access rules: let them be for now
+
+
+NEW ir.ui.menu: product.menu_product_template_action
+NEW ir.ui.view: product.product_template_form_view_variant_button
+NEW ir.ui.view: product.product_template_kanban_view
+NEW ir.ui.view: product.product_template_kanban_view_variant_button
+NEW ir.ui.view: product.product_template_search_view
+NEW ir.ui.view: product.report_pricelist
+NEW ir.ui.view: product.variants_template_tree_view
+DEL ir.ui.view: product.product_variant_form_view
+DEL ir.ui.view: product.product_variant_tree_view
+DEL ir.ui.view_sc: product.ir_ui_view_sc_product0
+## ir.ui.* doc says we can ignore
+
+DEL process.node: product.process_node_product0
+DEL process.node: product.process_node_supplier0
+DEL process.process: product.process_process_productprocess0
+DEL process.transition: product.process_transition_supplierofproduct0
+## process addon removed -> nothing to do
+
+NEW product.uom: product.product_uom_floz
+NEW product.uom: product.product_uom_foot
+NEW product.uom: product.product_uom_gal
+NEW product.uom: product.product_uom_inch
+NEW product.uom: product.product_uom_lb
+NEW product.uom: product.product_uom_mile
+NEW product.uom: product.product_uom_oz
+NEW product.uom: product.product_uom_qt
+## great new stuff, std upgrade should work by itself
+
+DEL res.groups: product.group_costing_method
+DEL res.groups: product.group_product_variant
+## well... probably nothing to do either... 
+
+## modified no update records listed in modified_data.xml
