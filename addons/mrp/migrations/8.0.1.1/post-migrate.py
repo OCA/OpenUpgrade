@@ -23,10 +23,10 @@ from openerp.openupgrade import openupgrade
 
 def move_fields(cr):
     openupgrade.logged_query(
-        """UPDATE product_product
-           SET produce_delay=(SELECT pt.%s
-           FROM product_template
-           WHERE product_template.id=product_product.product_tmpl_id)
+        """UPDATE product_product pp
+           SET produce_delay = pt.%s
+           FROM product_template pt
+           WHERE pt.id = pp.product_tmpl_id
     """ % openupgrade.get_legacy_name('produce_delay'))
 
 
