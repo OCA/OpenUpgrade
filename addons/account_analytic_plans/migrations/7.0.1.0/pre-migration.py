@@ -34,11 +34,11 @@ def migrate(cr, version):
         logged_query(cr, ("""
             INSERT INTO account_analytic_plan ('name')
             FROM account_analytic_plan_line
-            VALUES ('OpenUpgrade migration plan')""")
+            VALUES ('OpenUpgrade migration plan')"""))
         # Fill empty values with this new record value
         logged_query(cr, ("""
             UPDATE account_analytic_plan_line
             SET plan_id = 
                 (SELECT id FROM account_analytic_plan 
                  WHERE NAME='OpenUpgrade migration plan')
-            WHERE plan_id is NULL""")
+            WHERE plan_id is NULL"""))
