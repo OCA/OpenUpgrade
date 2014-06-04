@@ -1,0 +1,11 @@
+---Fields in module 'account_budget'---
+---XML records in module 'account_budget'---
+NEW ir.actions.report.xml: account_budget.action_report_analytic_account_budget
+NEW ir.actions.report.xml: account_budget.action_report_budget
+NEW ir.actions.report.xml: account_budget.action_report_crossovered_budget
+DEL ir.actions.report.xml: account_budget.account_budget
+DEL ir.actions.report.xml: account_budget.report_crossovered_budget
+NEW ir.ui.view: account_budget.report_analyticaccountbudget
+NEW ir.ui.view: account_budget.report_budget
+NEW ir.ui.view: account_budget.report_crossoveredbudget
+# Nothing to do
