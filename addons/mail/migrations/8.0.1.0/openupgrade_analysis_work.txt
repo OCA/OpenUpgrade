@@ -2,21 +2,32 @@
 mail         / mail.alias               / alias_contact (selection)     : NEW required: required, selection_keys: ['everyone', 'followers', 'partners'], req_default: everyone
 mail         / mail.alias               / alias_parent_model_id (many2one): NEW relation: ir.model
 mail         / mail.alias               / alias_parent_thread_id (integer): NEW 
-mail         / mail.group               / message_last_post (datetime)  : NEW 
-mail         / mail.mail                / email_from (char)             : DEL 
-mail         / mail.mail                / mail_server_id (many2one)     : DEL relation: ir.mail_server
 mail         / mail.mail                / recipient_ids (many2many)     : NEW relation: res.partner
-mail         / mail.mail                / reply_to (char)               : DEL 
-mail         / mail.message             / mail_server_id (many2one)     : NEW relation: ir.mail_server
+mail         / mail.message.subtype     / hidden (boolean)              : NEW
+mail         / mail.message.subtype     / sequence (integer)            : NEW
+mail         / res.users                / display_groups_suggestions (boolean): NEW
 mail         / mail.message             / record_name (char)            : not a function anymore
-mail         / mail.message             / reply_to (char)               : NEW 
-mail         / mail.message.subtype     / hidden (boolean)              : NEW 
-mail         / mail.message.subtype     / sequence (integer)            : NEW 
-mail         / mail.thread              / message_last_post (datetime)  : NEW 
-mail         / res.partner              / message_last_post (datetime)  : NEW 
+mail         / mail.thread              / message_last_post (datetime)  : NEW
+## Nothing to do
+
+mail         / mail.group               / message_last_post (datetime)  : NEW
+mail         / res.partner              / message_last_post (datetime)  : NEW
+## TODO something with last_post in openupgrade80
+
+
 mail         / res.partner              / notification_email_send (selection): DEL required: required, selection_keys: ['all', 'comment', 'email', 'none'], req_default: function
 mail         / res.partner              / notify_email (selection)      : NEW required: required, selection_keys: ['always', 'none'], req_default: function
-mail         / res.users                / display_groups_suggestions (boolean): NEW 
+## all, comment, email -> always, none -> none
+
+mail         / mail.mail                / email_from (char)             : DEL
+## Possibly moved to mail.message, nothing done
+
+mail         / mail.mail                / mail_server_id (many2one)     : DEL relation: ir.mail_server
+mail         / mail.message             / mail_server_id (many2one)     : NEW relation: ir.mail_server
+mail         / mail.mail                / reply_to (char)               : DEL
+mail         / mail.message             / reply_to (char)               : NEW
+## Moved from mail.mail to mail.message
+
 ---XML records in module 'mail'---
 NEW ir.actions.act_window: base.action_attachment
 NEW ir.actions.client: mail.action_client_messaging_menu
@@ -27,3 +38,4 @@ NEW ir.rule: mail.mail_followers_read_write_others
 NEW ir.ui.view: mail.assets_backend
 NEW ir.ui.view: mail.view_document_file_kanban
 NEW res.partner: base.partner_root
+## Nothing to do
