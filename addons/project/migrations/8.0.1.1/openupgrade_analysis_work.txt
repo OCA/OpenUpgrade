@@ -46,14 +46,16 @@ DEL ir.ui.view: project.view_task_history_tree
 DEL ir.ui.view: project.view_task_project_user_tree
 DEL ir.ui.view: project.view_task_tree
 
-# TODO: update subscriptions on tasks
-NEW mail.message.subtype: project.mt_project_task_assigned
-NEW mail.message.subtype: project.mt_task_assigned
-NEW mail.message.subtype: project.mt_task_ready
-DEL mail.message.subtype: project.mt_project_task_closed
+# Rename functionally similar mail subtype ids
 DEL mail.message.subtype: project.mt_project_task_started
+NEW mail.message.subtype: project.mt_project_task_assigned
 DEL mail.message.subtype: project.mt_task_closed
+NEW mail.message.subtype: project.mt_task_assigned
 DEL mail.message.subtype: project.mt_task_started
+NEW mail.message.subtype: project.mt_task_ready
+
+# No more mail subtype for a project's task end of life
+DEL mail.message.subtype: project.mt_project_task_closed
 
 # Data for abandoned process module
 DEL process.node: project.process_node_donetask0

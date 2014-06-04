@@ -191,6 +191,8 @@ def rename_xmlids(cr, xmlids_spec):
     One usage example is when an ID changes module. In OpenERP 6 for example,
     a number of res_groups IDs moved to module base from other modules (
     although they were still being defined in their respective module).
+
+    :param xmlids_spec: a list of tuples (old module.xmlid, new module.xmlid).
     """
     for (old, new) in xmlids_spec:
         if not old.split('.') or not new.split('.'):

@@ -25,7 +25,14 @@ from openerp.openupgrade import openupgrade
 column_renames = {
     'project_task': [('priority', None)]}
 
+xmlid_renames = [
+    ('project.mt_project_task_started', 'project.mt_project_task_assigned'),
+    ('project.mt_task_started', 'project.mt_task_assigned'),
+    ('project.mt_task_closed', 'project.mt_task_ready'),
+    ]
+
 
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
+    openupgrade.rename_xmlids(cr, xmlid_renames)

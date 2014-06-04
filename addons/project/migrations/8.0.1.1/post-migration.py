@@ -44,4 +44,5 @@ def migrate(cr, version):
     openupgrade_80.set_message_last_post(
         cr, uid, registry, ['project.project', 'project.task']
     )
-    openupgrade.load_data(cr, 'project', 'migrations/8.0.1.1/noupdate_changes.xml')
+    openupgrade.load_data(
+        cr, 'project', 'migrations/8.0.1.1/noupdate_changes.xml')
