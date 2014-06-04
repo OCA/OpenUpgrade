@@ -37,10 +37,26 @@ def task_priority(cr):
             (new, old))
 
 
+def update_alias_parent(cr, registry):
+    """
+    Register each project as the parent of their aliases
+    """
+    project_model_id = registry['ir.model'].search(
+        cr, uid, [('model', '=', 'project.project')])[0]
+    project_ids = registry['project.project'].search(
+        cr, uid, [], context={'active_test': False})
+    for project in registry['project.project'].browse(
+            cr, uid, project_ids):
+        project.alias_id.write({
+            'alias_parent_model_id': project_model_id,
+            'alias_parent_thread_id': project.id})
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     registry = RegistryManager.get(cr.dbname)
     task_priority(cr)
+    update_alias_parent(cr, registry)
     openupgrade_80.set_message_last_post(
         cr, uid, registry, ['project.project', 'project.task']
     )
