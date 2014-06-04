@@ -1,0 +1,41 @@
+---Fields in module 'project_issue'---
+# NTD: No recollection of the last stage update
+project_issue / project.issue            / date_last_stage_update (datetime): NEW 
+
+# Set date of last chatter message using 8.0 API
+project_issue / project.issue            / message_last_post (datetime)  : NEW 
+
+# Map issue priority
+project_issue / project.issue            / priority (selection)          : selection_keys is now '['0', '1', '2']' ('['1', '2', '3', '4', '5']')
+
+# NTD: Added to mail.thread in web_mail
+project_issue / project.issue            / website_message_ids (one2many): NEW relation: mail.message
+
+# This report is a view, not a table
+project_issue / project.issue.report     / date_last_stage_update (date) : NEW 
+project_issue / project.issue.report     / priority (selection)          : selection_keys is now '['0', '1', '2']' ('['1', '2', '3', '4', '5']')
+project_issue / project.issue.report     / state (selection)             : DEL selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
+
+# NTD: New m2m, counterpart of existing m2o
+project_issue / project.project          / issue_ids (one2many)          : NEW relation: project.issue
+
+---XML records in module 'project_issue'---
+NEW ir.actions.act_window: project_issue.action_view_issues
+DEL ir.actions.act_window: project_issue.action_view_my_project_issue_tree
+DEL ir.actions.act_window.view: project_issue.action_project_issue_report_tree
+NEW ir.ui.view: project_issue.res_partner_issues_button_view
+DEL ir.ui.view: project_issue.board_my_project_issue_form
+DEL ir.ui.view: project_issue.project_issue_board_tree_view
+DEL ir.ui.view: project_issue.view_project_feature_filter
+DEL ir.ui.view: project_issue.view_project_issue_report_tree
+
+# Map message subtypes
+DEL mail.message.subtype: project_issue.mt_issue_started
+NEW mail.message.subtype: project_issue.mt_issue_assigned
+DEL mail.message.subtype: project_issue.mt_issue_closed
+NEW mail.message.subtype: project_issue.mt_issue_ready
+DEL mail.message.subtype: project_issue.mt_project_issue_started
+NEW mail.message.subtype: project_issue.mt_project_issue_assigned
+
+# No new subtype for this one
+DEL mail.message.subtype: project_issue.mt_project_issue_closed
