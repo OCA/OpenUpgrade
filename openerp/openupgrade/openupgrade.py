@@ -40,6 +40,7 @@ __all__ = [
     'rename_tables',
     'rename_models',
     'rename_xmlids',
+    'add_xmlid',
     'drop_columns',
     'delete_model_workflow',
     'warn_possible_dataloss',
@@ -201,6 +202,39 @@ def rename_xmlids(cr, xmlids_spec):
             query = ("UPDATE ir_model_data SET module = %s, name = %s "
                      "WHERE module = %s and name = %s")
             logged_query(cr, query, tuple(new.split('.') + old.split('.')))
+
+
+def add_xmlid(cr, module, xmlid, model, res_id, noupdate=False):
+    """
+    Adds an entry in ir_model_data. Typically called in the pre script.
+    One usage example is when an entry has been add in the XML and there is
+    a high probability that the user has already created the entry manually.
+    For example, a currency was added in the XML data of the base module
+    in OpenERP 6 but the user had already created this missing currency
+    by hand in it's 5.0 database. In order to avoid having 2 identical
+    currencies (which is in fact blocked by an sql_constraint), you have to
+    add the entry in ir_model_data before the upgrade.
+    """
+    # Check if the XMLID doesn't already exists
+    cr.execute(
+        "SELECT id FROM ir_model_data WHERE module=%s AND name=%s "
+        "AND model=%s",
+        (module, xmlid, model))
+    already_exists = cr.fetchone()
+    if already_exists:
+        return False
+    else:
+        logged_query(
+            cr,
+            "INSERT INTO ir_model_data (create_uid, create_date, "
+            "write_uid, write_date, date_init, date_update, noupdate, "
+            "name, module, model, res_id) "
+            "VALUES (%s, (now() at time zone 'UTC'), %s, "
+            "(now() at time zone 'UTC'), (now() at time zone 'UTC'), "
+            "(now() at time zone 'UTC'), %s, %s, %s, %s, %s)", (
+                SUPERUSER_ID, SUPERUSER_ID, noupdate,
+                xmlid, module, model, res_id))
+        return True
 
 
 def drop_columns(cr, column_spec):
