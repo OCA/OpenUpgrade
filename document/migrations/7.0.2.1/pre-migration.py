@@ -20,9 +20,18 @@
 #
 ##############################################################################
 
+from openerp.openupgrade import openupgrade
+
+
 column_renames = {
     'document_storage': [
+        ('name', None),
         ('path', None),
         ('type', None),
     ]
     }
+
+
+@openupgrade.migrate()
+def migrate(cr, version):
+    openupgrade.rename_columns(cr, column_renames)

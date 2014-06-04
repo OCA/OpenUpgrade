@@ -29,8 +29,12 @@ logger = logging.getLogger('OpenUpgrade')
 
 def migrate_filestore(cr, pool):
     cr.execute(
-        "SELECT name, path FROM document_storage WHERE type='filestore' "
-        "ORDER BY id")
+        "SELECT %s, %s FROM document_storage WHERE %s='filestore' "
+        "ORDER BY id" % (
+            openupgrade.get_legacy_name('name'),
+            openupgrade.get_legacy_name('path'),
+            openupgrade.get_legacy_name('type'),
+            ))
     filestore = cr.fetchall()
     if len(filestore) > 1:
         logger.error(
