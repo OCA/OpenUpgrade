@@ -22,7 +22,6 @@
 
 from openerp.openupgrade import openupgrade
 
-
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.check_values_selection_field(
