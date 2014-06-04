@@ -27,5 +27,9 @@ def migrate(cr, version):
     cr.execute(
         "UPDATE base_action_rule SET kind = 'on_create_or_write', "
         "filter_pre_id = null, trg_date_id = null, trg_date_range = null, "
-        "trg_date_range_type = null"
+        "trg_date_range_type = null where trg_date_id = null"
+    )
+    cr.exceute(
+        "UPDATE base_action_rule SET kind = 'on_time', "
+        "filter_pre_id = null where trg_date_id != null"
     )
