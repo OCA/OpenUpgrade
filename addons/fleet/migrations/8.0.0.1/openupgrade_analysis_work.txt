@@ -1,0 +1,21 @@
+---Fields in module 'fleet'---
+
+fleet        / fleet.vehicle            / message_last_post (datetime)  : NEW 
+# initialized in post migration script
+
+---XML records in module 'fleet'---
+DEL ir.actions.act_window: fleet.action_fleet_vehicle_costs_graph
+DEL ir.actions.act_window: fleet.action_fleet_vehicle_kanban
+DEL ir.actions.act_window: fleet.action_fleet_vehicle_log_contract_graph
+DEL ir.actions.act_window: fleet.action_fleet_vehicle_log_fuel_graph
+DEL ir.actions.act_window: fleet.action_fleet_vehicle_log_services_graph
+DEL ir.actions.act_window: fleet.open_board_fleet
+DEL ir.ui.menu: fleet.menu_fleet_dashboard
+NEW ir.ui.view: fleet.fleet_vehicle_cost_tree
+NEW ir.ui.view: fleet.fleet_vehicle_costs_report
+NEW ir.ui.view: fleet.fleet_vehicle_log_fuel_search
+NEW ir.ui.view: fleet.fleet_vehicle_log_services_search
+NEW ir.ui.view: fleet.fleet_vehicle_odometer_search
+DEL ir.ui.view: fleet.board_fleet_form
+DEL ir.ui.view: fleet.fleet_vehicle_costs_tree
+### NOTHING TO DO
