@@ -24,12 +24,12 @@ from openerp.openupgrade import openupgrade
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    cr.execute(
+    openupgrade.logged_query(cr,
         "UPDATE base_action_rule SET kind = 'on_create_or_write', "
         "filter_pre_id = null, trg_date_id = null, trg_date_range = null, "
         "trg_date_range_type = null where trg_date_id = null"
     )
-    cr.execute(
+    openupgrade.logged_query(cr,
         "UPDATE base_action_rule SET kind = 'on_time', "
         "filter_pre_id = null where trg_date_id != null"
     )
