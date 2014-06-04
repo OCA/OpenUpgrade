@@ -20,6 +20,3 @@ release of OpenERP.
    xmlids
    format
    strategies
-
-   
-

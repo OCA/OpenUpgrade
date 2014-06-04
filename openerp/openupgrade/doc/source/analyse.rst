@@ -5,9 +5,9 @@ steps (the awkward processing of the server log file is now obsolete).
 
 * Set up two OpenUpgrade servers of subsequent OpenERP releases
 
-* On both instances, install a database without demo data and 
+* On both instances, install a database without demo data and
   install the *openupgrade_records* module, which is included in the
-  OpenUpgrade server distribution. This will add a menu 
+  OpenUpgrade server distribution. This will add a menu
   *OpenUpgrade Development* to the Administration menu.
 
 * On both instances, install the modules that you need to write migration

@@ -1,7 +1,10 @@
 Migration process details
 =========================
 
-Instead of running *migrate.py*, you can also check out the code manually and upgrade your database by calling openerp-server directly. You will want to do this when you are working on developing migration scripts for uncovered modules.
+Instead of running *migrate.py*, you can also check out the code manually
+and upgrade your database by calling openerp-server directly.  You will
+want to do this when you are working on developing migration scripts for
+uncovered modules.
 
 1. Check out the OpenUpgrade source code from Launchpad for the branches you
    need. Each branch migrates to its version from the previous version, so
@@ -25,21 +28,21 @@ Instead of running *migrate.py*, you can also check out the code manually and up
    *--update all --stop-after-init* flags.
 
 5. Run the upgrade and check for errors. You will probably learn a lot about
-   your data and have to do some manual clean up before and after the upgrade. 
+   your data and have to do some manual clean up before and after the upgrade.
    Expect to repeat the process several times as you encounter errors, clean up
    your data, and try again. If necessary, ask for help or report bugs on
    Launchpad.
 
 6. Once the data migration is successful, run the official version of OpenERP
-   against it to test how the migrated data behaves under the new version. 
-   Remember that the OpenUpgrade version of the source code is only intended to 
+   against it to test how the migrated data behaves under the new version.
+   Remember that the OpenUpgrade version of the source code is only intended to
    perform the migration, not run the OpenERP server.
 
 Configuration options
 +++++++++++++++++++++
 
 OpenUpgrade allows for the following configuration options. Add these options
-to a separate stanza in the server configuration file under a header 
+to a separate stanza in the server configuration file under a header
 *[openupgrade]*
 
 * *autoinstall* - A dictionary with module name keys and lists of module names

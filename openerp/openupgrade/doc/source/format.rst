@@ -22,7 +22,7 @@ The change description flags the following types of change:
       this field, if it is encoded in the model, or any value that you might see
       fit (see the openupgrade library
       function :meth:`~openupgrade.set_defaults`). If any empty values remain,
-      these can be reported by the openupgrade report module (TODO). 
+      these can be reported by the openupgrade report module (TODO).
       If the field is a function field after the upgrade, this changes the cause
       for action. See below.
 
@@ -82,7 +82,7 @@ The change description flags the following types of change:
       security rules xml files and load them in your script. Also copy any
       other data that may be introduced in this release of OpenERP. This may
       have consequences for other modules' migration scripts. TODO: create an
-      overview of new or renamed modules. 
+      overview of new or renamed modules.
 
 The final section of the database layout analysis contains a simple report on
 the changes that were detected.
