@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+  <data>
+    <record id="product_supplierinfo_comp_rule" model="ir.rule"><field name="domain_force">['|',('company_id','=',False),('company_id','=',user.company_id.id)]</field>
+    </record>
+    <record id="product_pricelist_comp_rule" model="ir.rule"><field name="domain_force"> ['|',('company_id','=',user.company_id.id),('company_id','=',False)]</field>
+    </record>
+    <record id="product_uom_kgm" model="product.uom"><field name="rounding" eval="0.001"/>
+        </record>
+    <record id="item0" model="product.pricelist.item"><field name="sequence">1000</field>
+            </record>
+    <record id="product_category_all" model="product.category"><field name="name">All</field>
+        </record>
+    <record id="product_pricelist_version_comp_rule" model="ir.rule"><field name="domain_force"> ['|',('company_id','=',user.company_id.id),('company_id','=',False)]</field>
+    </record>
+    <record id="product_pricelist_item_comp_rule" model="ir.rule"><field name="domain_force"> ['|',('company_id','=',user.company_id.id),('company_id','=',False)]</field>
+    </record>
+    <record id="product_comp_rule" model="ir.rule"><field name="domain_force"> ['|',('company_id','=',user.company_id.id),('company_id','=',False)]</field>
+    </record>
+    <record id="product_product_consultant" model="product.product"><field name="sale_ok" eval="False"/>
+        </record>
+  </data>
+</openerp>
+
