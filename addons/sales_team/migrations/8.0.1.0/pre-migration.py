@@ -30,4 +30,3 @@ xmlid_renames = [
 @openupgrade.migrate(no_version=True)
 def migrate(cr, version):
     openupgrade.rename_xmlids(cr, xmlid_renames)
-    assert False
