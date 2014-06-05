@@ -20,15 +20,30 @@
 #
 ##############################################################################
 
+import logging
+from openerp import pooler, SUPERUSER_ID
 from openerp.openupgrade import openupgrade
+logger = logging.getLogger('OpenUpgrade')
+
+
+def check_ir_actions_server_state(cr, pool):
+    """Test if 'state' values are correct.
+    If not, log an error to indicate that the user has to overload _get_state
+    function in his custom modules."""
+    ias_obj = pool['ir.actions.server']
+    valid_selection = ias_obj._get_states(cr, SUPERUSER_ID)
+    valid_list = [x[0] for x in valid_selection]
+    ias_ids = ias_obj.search(
+        cr, SUPERUSER_ID, [('state', 'not in', valid_list)])
+    for ias in ias_obj.browse(cr, SUPERUSER_ID, ias_ids):
+        logger.error(
+            "Invalid value '%s' in the model 'ir_actions_server' "
+            "for the field 'state'. (id %s).Please overload the new "
+            "ir_actions_server._get_state function." % (
+                ias.state, ias.id))
 
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    openupgrade.check_values_selection_field(
-        cr, 'ir_act_report_xml', 'report_type',
-        ['controller', 'pdf', 'qweb-html', 'qweb-pdf', 'sxw', 'webkit'])
-    openupgrade.check_values_selection_field(
-        cr, 'ir_ui_view', 'type', [
-            'calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban',
-            'qweb', 'search', 'tree'])
+    pool = pooler.get_pool(cr.dbname)
+    check_ir_actions_server_state(cr, pool)

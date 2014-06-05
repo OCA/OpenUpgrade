@@ -24,6 +24,7 @@ import inspect
 import logging
 from openerp import release, tools, SUPERUSER_ID
 from openerp.osv import orm
+from openerp.tools.mail import plaintext2html
 import openupgrade_tools
 
 # The server log level has not been set at this point
@@ -54,6 +55,7 @@ __all__ = [
     'm2o_to_m2m',
     'float_to_integer',
     'message',
+    'convert_field_to_html',
     'check_values_selection_field',
 ]
 
@@ -581,3 +583,22 @@ def migrate(no_version=False):
                 raise
         return wrapped_function
     return wrap
+
+
+def convert_field_to_html(cr, table, field_name, html_field_name):
+    """
+    Convert field value to HTML value.
+    """
+    cr.execute(
+        "SELECT id, %(field)s FROM %(table)s WHERE %(field)s IS NOT NULL" % {
+            'field': field_name,
+            'table': table,
+        }
+    )
+    for row in cr.fetchall():
+        logged_query(
+            cr, "UPDATE %(table)s SET %(field)s = %s WHERE id = %s" % {
+                'field': html_field_name,
+                'table': table,
+            }, (plaintext2html(row[1]), row[0])
+        )

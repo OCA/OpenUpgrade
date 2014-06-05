@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenUpgrade module for Odoo
-#    @copyright 2014-Today: Odoo Community Association
-#    @author: Sylvain LE GAL <https://twitter.com/legalsylvain>
+#    Copyright (C) 2014 HBEE (http://www.hbee.eu)
+#    @author: Paulius Sladkevičius <paulius@hbee.eu>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,15 +19,14 @@
 #
 ##############################################################################
 
-from openerp.openupgrade import openupgrade
+from openerp import pooler, SUPERUSER_ID
+from openerp.openupgrade.openupgrade import migrate, convert_field_to_html
+from openerp.openupgrade.openupgrade_80 import set_message_last_post
 
 
-@openupgrade.migrate()
+@migrate()
 def migrate(cr, version):
-    openupgrade.check_values_selection_field(
-        cr, 'ir_act_report_xml', 'report_type',
-        ['controller', 'pdf', 'qweb-html', 'qweb-pdf', 'sxw', 'webkit'])
-    openupgrade.check_values_selection_field(
-        cr, 'ir_ui_view', 'type', [
-            'calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban',
-            'qweb', 'search', 'tree'])
+    pool = pooler.get_pool(cr.dbname)
+    set_message_last_post(
+        cr, SUPERUSER_ID, pool, ['event.event', 'event.registration'])
+    convert_field_to_html(cr, 'event_event', 'note', 'description')

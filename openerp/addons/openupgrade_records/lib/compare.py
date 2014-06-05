@@ -240,7 +240,7 @@ def compare_xml_sets(old_records, new_records):
 
     sorted_records = sorted(
         old_records + new_records,
-        key=lambda k: '%-128s%s%s' % (k['model'], 'old' in k, k['name'])
+        key=lambda k: (k['model'], 'old' in k, k['name'])
     )
     for entry in sorted_records:
         if 'old' in entry:
