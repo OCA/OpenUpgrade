@@ -25,24 +25,9 @@ crm          / crm.lead                 / date_last_stage_update (datetime): NEW
 crm          / crm.lead                 / message_bounce (integer)      : NEW 
 crm          / crm.lead                 / message_last_post (datetime)  : NEW 
 crm          / crm.lead                 / priority (selection)          : selection_keys is now '['0', '1', '2', '3', '4']' ('['1', '2', '3', '4', '5']')
-crm          / crm.lead.report          / creation_day (char)           : DEL 
-crm          / crm.lead.report          / creation_month (selection)    : DEL selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
-crm          / crm.lead.report          / creation_year (char)          : DEL 
-crm          / crm.lead.report          / date_deadline (date)          : NEW 
-crm          / crm.lead.report          / date_last_stage_update (datetime): NEW 
-crm          / crm.lead.report          / deadline_day (char)           : DEL 
-crm          / crm.lead.report          / deadline_month (selection)    : DEL selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
-crm          / crm.lead.report          / deadline_year (char)          : DEL 
-crm          / crm.lead.report          / nbr (integer)                 : DEL 
-crm          / crm.lead.report          / priority (selection)          : selection_keys is now '['0', '1', '2', '3', '4']' ('['1', '2', '3', '4', '5']')
-crm          / crm.lead.report          / state (selection)             : DEL selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
 crm          / crm.phonecall            / message_last_post (datetime)  : NEW 
 crm          / crm.phonecall            / priority (selection)          : selection_keys is now '['0', '1', '2']' ('['1', '2', '3', '4', '5']')
 crm          / crm.phonecall            / state (selection)             : selection_keys is now '['cancel', 'done', 'open', 'pending']' ('['cancel', 'done', 'draft', 'open', 'pending']')
-crm          / crm.phonecall.report     / day (char)                    : DEL 
-crm          / crm.phonecall.report     / month (selection)             : DEL selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
-crm          / crm.phonecall.report     / name (char)                   : DEL 
-crm          / crm.phonecall.report     / priority (selection)          : selection_keys is now '['0', '1', '2']' ('['1', '2', '3', '4', '5']')
 crm          / res.partner              / create_date (datetime)        : NEW 
 crm          / res.partner              / id (integer)                  : NEW 
 crm          / res.partner              / meeting_ids (many2many)       : relation is now 'calendar.event' ('crm.meeting')

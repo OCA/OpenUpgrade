@@ -15,11 +15,6 @@ purchase     / purchase.order           / warehouse_id (many2one)       : DEL re
 purchase     / purchase.order           / website_message_ids (one2many): NEW relation: mail.message
 purchase     / purchase.order.line      / move_dest_id (many2one)       : DEL relation: stock.move
 purchase     / purchase.order.line      / procurement_ids (one2many)    : NEW relation: procurement.order
-purchase     / purchase.report          / day (char)                    : DEL 
-purchase     / purchase.report          / month (selection)             : DEL selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
-purchase     / purchase.report          / name (char)                   : DEL 
-purchase     / purchase.report          / picking_type_id (many2one)    : NEW relation: stock.warehouse
-purchase     / purchase.report          / warehouse_id (many2one)       : DEL relation: stock.warehouse
 purchase     / res.partner              / purchase_order_ids (one2many) : DEL relation: purchase.order
 purchase     / stock.picking            / purchase_id (many2one)        : DEL relation: purchase.order
 purchase     / stock.warehouse          / buy_pull_id (many2one)        : NEW relation: procurement.rule

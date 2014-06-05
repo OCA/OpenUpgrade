@@ -14,16 +14,6 @@ hr_recruitment / hr.job                   / application_ids (one2many)    : NEW 
 hr_recruitment / hr.job                   / color (integer)               : NEW 
 hr_recruitment / hr.job                   / survey_id (many2one)          : relation is now 'survey.survey' ('survey')
 hr_recruitment / hr.job                   / user_id (many2one)            : NEW relation: res.users
-hr_recruitment / hr.recruitment.report    / date (date)                   : DEL 
-hr_recruitment / hr.recruitment.report    / date_create (datetime)        : NEW 
-hr_recruitment / hr.recruitment.report    / date_last_stage_update (datetime): NEW 
-hr_recruitment / hr.recruitment.report    / day (char)                    : DEL 
-hr_recruitment / hr.recruitment.report    / last_stage_id (many2one)      : NEW relation: hr.recruitment.stage
-hr_recruitment / hr.recruitment.report    / month (selection)             : DEL selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
-hr_recruitment / hr.recruitment.report    / nbr (integer)                 : DEL 
-hr_recruitment / hr.recruitment.report    / priority (selection)          : selection_keys is now '['0', '1', '2', '3', '4']' ('['', '1', '2', '3', '4', '5']')
-hr_recruitment / hr.recruitment.report    / state (selection)             : DEL selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
-hr_recruitment / hr.recruitment.report    / year (char)                   : DEL 
 hr_recruitment / hr.recruitment.stage     / state (selection)             : DEL required: required, selection_keys: ['cancel', 'done', 'draft', 'open', 'pending'], req_default: draft
 hr_recruitment / hr.recruitment.stage     / template_id (many2one)        : NEW relation: email.template
 ---XML records in module 'hr_recruitment'---

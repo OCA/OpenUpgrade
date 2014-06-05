@@ -1,15 +1,6 @@
 ---Fields in module 'stock_account'---
 stock_account / procurement.order        / invoice_state (selection)     : NEW required: required, selection_keys: ['2binvoiced', 'invoiced', 'none'], req_default: none
 stock_account / procurement.rule         / invoice_state (selection)     : NEW required: required, selection_keys: ['2binvoiced', 'invoiced', 'none'], req_default: none
-stock_account / stock.history            / company_id (many2one)         : NEW relation: res.company
-stock_account / stock.history            / date (datetime)               : NEW 
-stock_account / stock.history            / location_id (many2one)        : NEW relation: stock.location, required: required
-stock_account / stock.history            / move_id (many2one)            : NEW relation: stock.move, required: required
-stock_account / stock.history            / price_unit_on_quant (float)   : NEW 
-stock_account / stock.history            / product_categ_id (many2one)   : NEW relation: product.category, required: required
-stock_account / stock.history            / product_id (many2one)         : NEW relation: product.product, required: required
-stock_account / stock.history            / quantity (integer)            : NEW 
-stock_account / stock.history            / source (char)                 : NEW 
 stock_account / stock.inventory          / period_id (many2one)          : NEW relation: account.period
 stock_account / stock.move               / invoice_state (selection)     : NEW required: required, selection_keys: ['2binvoiced', 'invoiced', 'none'], req_default: function
 ---XML records in module 'stock_account'---

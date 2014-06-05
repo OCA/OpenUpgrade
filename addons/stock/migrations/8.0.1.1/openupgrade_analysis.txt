@@ -39,8 +39,6 @@ stock        / product.template         / track_all (boolean)           : NEW
 stock        / product.template         / track_incoming (boolean)      : NEW 
 stock        / product.template         / track_outgoing (boolean)      : NEW 
 stock        / product.template         / valuation (selection)         : NEW required: required, selection_keys: ['manual_periodic', 'real_time'], req_default: manual_periodic
-stock        / report.stock.lines.date  / active (boolean)              : NEW 
-stock        / report.stock.lines.date  / move_date (datetime)          : NEW 
 stock        / res.company              / internal_transit_location_id (many2one): NEW relation: stock.location
 stock        / res.company              / propagation_minimum_delta (integer): NEW 
 stock        / stock.fixed.putaway.strat / category_id (many2one)        : NEW relation: product.category, required: required

@@ -1,9 +1,4 @@
 ---Fields in module 'crm_partner_assign'---
-crm_partner_assign / crm.lead.report.assign   / day (char)                    : DEL 
-crm_partner_assign / crm.lead.report.assign   / month (selection)             : DEL selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
-crm_partner_assign / crm.lead.report.assign   / priority (selection)          : selection_keys is now '['0', '1', '2', '3', '4']' ('['1', '2', '3', '4', '5']')
-crm_partner_assign / crm.lead.report.assign   / state (selection)             : DEL selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
-crm_partner_assign / crm.lead.report.assign   / year (char)                   : DEL 
 crm_partner_assign / res.partner              / assigned_partner_id (many2one): NEW relation: res.partner
 crm_partner_assign / res.partner              / date_localization (date)      : module is now 'base_geolocalize' ('crm_partner_assign')
 crm_partner_assign / res.partner              / implemented_partner_ids (one2many): NEW relation: res.partner
