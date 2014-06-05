@@ -20,34 +20,13 @@
 ##############################################################################
 
 from openerp import pooler, SUPERUSER_ID
-from openerp.openupgrade import openupgrade, openupgrade_80
-from openerp.tools.mail import plaintext2html
+from openerp.openupgrade.openupgrade import migrate, convert_field_to_html
+from openerp.openupgrade.openupgrade_80 import set_message_last_post
 
 
-def convert_field_to_html(cr, table, legacy_field_name, new_field_name):
-    """
-    Convert text field value to HTML value
-    """
-    cr.execute(
-        "SELECT id, %(field)s FROM %(table)s "
-        "WHERE %(field)s IS NOT NULL OR %(field)s != '' " % {
-            'field': legacy_field_name,
-            'table': table,
-        }
-    )
-    for row in cr.fetchall():
-        html = plaintext2html(row[1])
-        cr.execute(
-            "UPDATE %(table)s SET %(field)s = %s WHERE id = %s" % {
-                'field': new_field_name,
-                'table': table,
-            }, (html, row[0])
-        )
-
-
-@openupgrade.migrate()
+@migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
-    openupgrade_80.set_message_last_post(
+    set_message_last_post(
         cr, SUPERUSER_ID, pool, ['event.event', 'event.registration'])
     convert_field_to_html(cr, 'event_event', 'note', 'description')
