@@ -34,7 +34,7 @@ def update_link_to_moves(cr):
     ''')
     rows = cr.fetchall()
     for k, v in groupby(rows, key=lambda r: r[0]):
-        v = list(v)	
+        v = list(v)
         assert len(v) == 1
         openupgrade.logged_query(
             cr,
