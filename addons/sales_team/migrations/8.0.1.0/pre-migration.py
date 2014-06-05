@@ -26,6 +26,8 @@ xmlid_renames = [
     ('crm.section_sales_department', 'sales_team.section_sales_department'),
     ]
 
+
 @openupgrade.migrate(no_version=True)
 def migrate(cr, version):
     openupgrade.rename_xmlids(cr, xmlid_renames)
+    assert False
