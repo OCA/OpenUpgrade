@@ -141,7 +141,7 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
     for field in cr.dictfetchall():
         registry.fields_by_model.setdefault(field['model'], []).append(field)
 
-    #suppress commits to have the upgrade of one module in just one transation
+    # suppress commits to have the upgrade of one module in just one transaction
     cr.commit_org = cr.commit
     cr.commit = lambda *args: None
     cr.rollback_org = cr.rollback
@@ -166,6 +166,8 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
             # OpenUpgrade: add this module's models to the registry
             local_registry = {}
             for model in models:
+                if not model._auto:
+                    continue
                 openupgrade_loading.log_model(model, local_registry)
             openupgrade_loading.compare_registries(
                 cr, package.name, upg_registry, local_registry)
@@ -201,8 +203,9 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
             # as errors in post scripts seem to be dropped
             try:
                 migrations.migrate_module(package, 'post')
-            except Exception, e:
-                _logger.error('Error executing post migration script for module %s: %s', package, e)
+            except Exception as exc:
+                _logger.error('Error executing post migration script for module %s: %s',
+                              package, exc)
                 raise
 
             registry._init_modules.add(package.name)

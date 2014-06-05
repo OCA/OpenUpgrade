@@ -41,6 +41,7 @@ __all__ = [
     'rename_tables',
     'rename_models',
     'rename_xmlids',
+    'add_xmlid',
     'drop_columns',
     'delete_model_workflow',
     'warn_possible_dataloss',
@@ -52,9 +53,10 @@ __all__ = [
     'add_ir_model_fields',
     'get_legacy_name',
     'm2o_to_m2m',
+    'float_to_integer',
     'message',
-    'check_values_fields_selection',
     'convert_field_to_html',
+    'check_values_selection_field',
 ]
 
 
@@ -66,18 +68,17 @@ def check_values_selection_field(cr, table_name, field_name, allowed_values):
         If yes, return True.
     """
     res = True
-    cr.execute(
-        "SELECT %s, count(*) FROM %s GROUP BY %s;" % (
-            field_name,table_name, field_name,
-            ))
+    cr.execute("SELECT %s, count(*) FROM %s GROUP BY %s;" %
+               (field_name, table_name, field_name))
     for row in cr.fetchall():
         if row[0] not in allowed_values:
             logger.error(
                 "Invalid value '%s' in the table '%s' "
-                "for the field '%s'. (%s rows)." % (
-                    row[0], table_name, field_name, row[1]))
+                "for the field '%s'. (%s rows).",
+                row[0], table_name, field_name, row[1])
             res = False
     return res
+
 
 def load_data(cr, module_name, filename, idref=None, mode='init'):
     """
@@ -203,6 +204,39 @@ def rename_xmlids(cr, xmlids_spec):
             query = ("UPDATE ir_model_data SET module = %s, name = %s "
                      "WHERE module = %s and name = %s")
             logged_query(cr, query, tuple(new.split('.') + old.split('.')))
+
+
+def add_xmlid(cr, module, xmlid, model, res_id, noupdate=False):
+    """
+    Adds an entry in ir_model_data. Typically called in the pre script.
+    One usage example is when an entry has been add in the XML and there is
+    a high probability that the user has already created the entry manually.
+    For example, a currency was added in the XML data of the base module
+    in OpenERP 6 but the user had already created this missing currency
+    by hand in it's 5.0 database. In order to avoid having 2 identical
+    currencies (which is in fact blocked by an sql_constraint), you have to
+    add the entry in ir_model_data before the upgrade.
+    """
+    # Check if the XMLID doesn't already exists
+    cr.execute(
+        "SELECT id FROM ir_model_data WHERE module=%s AND name=%s "
+        "AND model=%s",
+        (module, xmlid, model))
+    already_exists = cr.fetchone()
+    if already_exists:
+        return False
+    else:
+        logged_query(
+            cr,
+            "INSERT INTO ir_model_data (create_uid, create_date, "
+            "write_uid, write_date, date_init, date_update, noupdate, "
+            "name, module, model, res_id) "
+            "VALUES (%s, (now() at time zone 'UTC'), %s, "
+            "(now() at time zone 'UTC'), (now() at time zone 'UTC'), "
+            "(now() at time zone 'UTC'), %s, %s, %s, %s, %s)", (
+                SUPERUSER_ID, SUPERUSER_ID, noupdate,
+                xmlid, module, model, res_id))
+        return True
 
 
 def drop_columns(cr, column_spec):
@@ -460,6 +494,26 @@ def m2o_to_m2m(cr, model, table, field, source_field):
         model.write(cr, SUPERUSER_ID, row[0], {field: [(4, row[1])]})
 
 
+def float_to_integer(cr, table, field):
+    """
+    Change column type from float to integer. It will just
+    truncate the float value (It won't round it)
+
+    :param table: The table
+    :param field: The field name for which we want to change the type
+
+    .. versionadded:: 8.0
+    """
+    logged_query(
+        cr,
+        "ALTER TABLE %(table)s "
+        "ALTER COLUMN %(field)s "
+        "TYPE integer" % {
+            'table': table,
+            'field': field,
+            })
+
+
 def message(cr, module, table, column,
             message, *args, **kwargs):
     """
@@ -487,11 +541,13 @@ def message(cr, module, table, column,
     logger.warn(prefix + message, *argslist, **kwargs)
 
 
-def migrate():
+def migrate(no_version=False):
     """
     This is the decorator for the migrate() function
     in migration scripts.
-    Return when the 'version' argument is not defined,
+    Set argument 'no_version' to True if the method as to be taken into account
+    if the module is installed during a migration.
+    Return when the 'version' argument is not defined and no_version is False,
     and log execeptions.
     Retrieve debug context data from the frame above for
     logging purposes.
@@ -511,7 +567,7 @@ def migrate():
                     "'migrate' decorator: failed to inspect "
                     "the frame above: %s" % e)
                 pass
-            if not version:
+            if not version and not no_version:
                 return
             logger.info(
                 "%s: %s-migration script called with version %s" %

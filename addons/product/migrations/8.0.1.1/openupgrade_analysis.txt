@@ -33,8 +33,7 @@ product      / product.product          / price_margin (float)          : DEL
 product      / product.product          / qty_available (float)         : module is now 'stock' ('product')
 product      / product.product          / variants (char)               : DEL 
 product      / product.product          / virtual_available (float)     : module is now 'stock' ('product')
-product      / product.supplierinfo     / product_id (many2one)         : DEL relation: product.template, required: required
-product      / product.supplierinfo     / product_tmpl_id (many2one)    : NEW relation: product.template, required: required
+product      / product.supplierinfo     / product_id (many2one)         : was renamed to product_tmpl_id [nothing to to]
 product      / product.template         / active (boolean)              : NEW 
 product      / product.template         / attribute_line_ids (one2many) : NEW relation: product.attribute.line
 product      / product.template         / color (integer)               : NEW 

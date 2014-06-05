@@ -4,11 +4,11 @@ The OpenUpgrade analysis files give a representation of the XML IDs that a
 module defines, in comparison with the previous release of the module.
 
 Note, that if you run your own analysis on databases containing
-demo data, you will get a lot of noise here. 
+demo data, you will get a lot of noise here.
 
 XML IDs which do not occur in the updated version of all installed modules
 will be removed automatically by the OpenERP server, if they do not have
-the noupdate attribute. 
+the noupdate attribute.
 
 You can ignore most entries here, most notably
 
@@ -54,9 +54,9 @@ More interesting are
     * Any general data added by the module. Typically, data is loaded one time
       only using the 'noupdate' flag in the XML. You cannot simply force-load
       such data in your upgrade script, or you will for instance reset the
-      sequences used for invoice numbering. 
-      You can use this script 
-      'OpenUpgrade/scripts/compare_noupdate_xml_records.py' 
+      sequences used for invoice numbering.
+      You can use this script
+      'OpenUpgrade/scripts/compare_noupdate_xml_records.py'
       Revise any data carefully and
       copy relevant, new data in a separate file. Load it from your post script
       using :meth:`~openupgrade.load_xml` from the module :mod:`openupgrade`

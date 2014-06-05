@@ -1,2 +1,0 @@
-import apriori
-import compare

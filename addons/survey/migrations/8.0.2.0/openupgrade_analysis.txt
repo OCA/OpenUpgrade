@@ -5,17 +5,17 @@ survey       / survey.label             / question_id_2 (many2one)      : NEW re
 survey       / survey.label             / quizz_mark (float)            : NEW 
 survey       / survey.label             / sequence (integer)            : NEW 
 survey       / survey.label             / value (char)                  : NEW required: required
-survey       / survey.page              / description (html)            : NEW 
-survey       / survey.page              / note (text)                   : DEL 
+survey       / survey.page              / note (text)                   : type is now 'html' ('text')
+survey       / survey.page              / note (text)                   : was renamed to description [nothing to to]
 survey       / survey.page              / survey_id (many2one)          : now required
 survey       / survey.page              / survey_id (many2one)          : relation is now 'survey.survey' ('survey')
-survey       / survey.question          / allow_comment (boolean)       : DEL 
-survey       / survey.question          / answer_choice_ids (one2many)  : DEL relation: survey.answer
+survey       / survey.question          / allow_comment (boolean)       : was renamed to comments_allowed [nothing to to]
+survey       / survey.question          / answer_choice_ids (one2many)  : relation is now 'survey.label' ('survey.answer')
+survey       / survey.question          / answer_choice_ids (one2many)  : was renamed to labels_ids [nothing to to]
 survey       / survey.question          / column_heading_ids (one2many) : DEL relation: survey.question.column.heading
 survey       / survey.question          / column_name (char)            : DEL 
 survey       / survey.question          / column_nb (selection)         : NEW selection_keys: ['12', '2', '3', '4', '6']
 survey       / survey.question          / comment_column (boolean)      : DEL 
-survey       / survey.question          / comment_count_as_answer (boolean): NEW 
 survey       / survey.question          / comment_field_type (selection): DEL selection_keys: ['char', 'text']
 survey       / survey.question          / comment_label (char)          : DEL 
 survey       / survey.question          / comment_maximum_date (date)   : DEL 
@@ -26,22 +26,18 @@ survey       / survey.question          / comment_minimum_float (float) : DEL
 survey       / survey.question          / comment_minimum_no (integer)  : DEL 
 survey       / survey.question          / comment_valid_err_msg (text)  : DEL 
 survey       / survey.question          / comment_valid_type (selection): DEL selection_keys: ['do_not_validate', 'must_be_date', 'must_be_decimal_number', 'must_be_email_address', 'must_be_specific_length', 'must_be_whole_number']
-survey       / survey.question          / comments_allowed (boolean)    : NEW 
 survey       / survey.question          / comments_message (char)       : NEW 
-survey       / survey.question          / constr_error_msg (char)       : NEW 
-survey       / survey.question          / constr_mandatory (boolean)    : NEW 
-survey       / survey.question          / description (html)            : NEW 
-survey       / survey.question          / descriptive_text (text)       : DEL 
+survey       / survey.question          / descriptive_text (text)       : type is now 'html' ('text')
+survey       / survey.question          / descriptive_text (text)       : was renamed to description [nothing to to]
 survey       / survey.question          / display_mode (selection)      : NEW selection_keys: ['columns', 'dropdown']
 survey       / survey.question          / in_visible_answer_type (boolean): DEL 
 survey       / survey.question          / in_visible_menu_choice (boolean): DEL 
 survey       / survey.question          / in_visible_rating_weight (boolean): DEL 
 survey       / survey.question          / is_comment_require (boolean)  : DEL 
-survey       / survey.question          / is_require_answer (boolean)   : DEL 
-survey       / survey.question          / is_validation_require (boolean): DEL 
-survey       / survey.question          / labels_ids (one2many)         : NEW relation: survey.label
+survey       / survey.question          / is_require_answer (boolean)   : was renamed to constr_mandatory [nothing to to]
+survey       / survey.question          / is_validation_require (boolean): was renamed to validation_required [nothing to to]
 survey       / survey.question          / labels_ids_2 (one2many)       : NEW relation: survey.label
-survey       / survey.question          / make_comment_field (boolean)  : DEL 
+survey       / survey.question          / make_comment_field (boolean)  : was renamed to comment_count_as_answer [nothing to to]
 survey       / survey.question          / make_comment_field_err_msg (text): DEL 
 survey       / survey.question          / matrix_subtype (selection)    : NEW selection_keys: ['multiple', 'simple']
 survey       / survey.question          / maximum_req_ans (integer)     : DEL 
@@ -51,12 +47,12 @@ survey       / survey.question          / numeric_required_sum (integer): DEL
 survey       / survey.question          / numeric_required_sum_err_msg (text): DEL 
 survey       / survey.question          / rating_allow_one_column_require (boolean): DEL 
 survey       / survey.question          / req_ans (integer)             : DEL 
-survey       / survey.question          / req_error_msg (text)          : DEL 
+survey       / survey.question          / req_error_msg (text)          : type is now 'char' ('text')
+survey       / survey.question          / req_error_msg (text)          : was renamed to constr_error_msg [nothing to to]
 survey       / survey.question          / required_type (selection)     : DEL selection_keys: ['a range', 'all', 'at least', 'at most', 'exactly']
 survey       / survey.question          / type (selection)              : selection_keys is now '['datetime', 'free_text', 'matrix', 'multiple_choice', 'numerical_box', 'simple_choice', 'textbox']' ('['comment', 'date', 'date_and_time', 'descriptive_text', 'matrix_of_choices_only_multi_ans', 'matrix_of_choices_only_one_ans', 'matrix_of_drop_down_menus', 'multiple_choice_multiple_ans', 'multiple_choice_only_one_ans', 'multiple_textboxes', 'multiple_textboxes_diff_type', 'numerical_textboxes', 'rating_scale', 'single_textbox', 'table']')
 survey       / survey.question          / user_input_line_ids (one2many): NEW relation: survey.user_input_line
 survey       / survey.question          / validation_email (boolean)    : NEW 
-survey       / survey.question          / validation_error_msg (char)   : NEW 
 survey       / survey.question          / validation_length_max (integer): NEW 
 survey       / survey.question          / validation_length_min (integer): NEW 
 survey       / survey.question          / validation_max_date (datetime): NEW 
@@ -69,9 +65,9 @@ survey       / survey.question          / validation_min_float_value (float): NE
 survey       / survey.question          / validation_minimum_date (date): DEL 
 survey       / survey.question          / validation_minimum_float (float): DEL 
 survey       / survey.question          / validation_minimum_no (integer): DEL 
-survey       / survey.question          / validation_required (boolean) : NEW 
 survey       / survey.question          / validation_type (selection)   : DEL selection_keys: ['do_not_validate', 'must_be_date', 'must_be_decimal_number', 'must_be_email_address', 'must_be_specific_length', 'must_be_whole_number']
-survey       / survey.question          / validation_valid_err_msg (text): DEL 
+survey       / survey.question          / validation_valid_err_msg (text): type is now 'char' ('text')
+survey       / survey.question          / validation_valid_err_msg (text): was renamed to validation_error_msg [nothing to to]
 survey       / survey.stage             / closed (boolean)              : NEW 
 survey       / survey.stage             / fold (boolean)                : NEW 
 survey       / survey.stage             / name (char)                   : NEW required: required
@@ -102,7 +98,7 @@ survey       / survey.user_input        / token (char)                  : NEW re
 survey       / survey.user_input        / type (selection)              : NEW required: required, selection_keys: ['link', 'manually'], req_default: manually
 survey       / survey.user_input        / user_input_line_ids (one2many): NEW relation: survey.user_input_line
 survey       / survey.user_input_line   / answer_type (selection)       : NEW selection_keys: ['date', 'free_text', 'number', 'suggestion', 'text']
-survey       / survey.user_input_line   / date_create (datetime)        : NEW required: required, req_default: 2014-06-02 13:06:08
+survey       / survey.user_input_line   / date_create (datetime)        : NEW required: required, req_default: 2014-06-02 21:55:01
 survey       / survey.user_input_line   / question_id (many2one)        : NEW relation: survey.question, required: required
 survey       / survey.user_input_line   / quizz_mark (float)            : NEW 
 survey       / survey.user_input_line   / skipped (boolean)             : NEW 

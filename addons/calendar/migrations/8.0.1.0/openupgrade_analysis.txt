@@ -43,7 +43,7 @@ base_calendar / calendar.event           / month_list (selection)        : DEL s
 base_calendar / calendar.event           / name (char)                   : now required
 base_calendar / calendar.event           / organizer (char)              : DEL 
 base_calendar / calendar.event           / organizer_id (many2one)       : DEL relation: res.users
-base_calendar / calendar.event           / select1 (selection)           : DEL selection_keys: ['date', 'day']
+base_calendar / calendar.event           / select1 (selection)           : was renamed to month_by [nothing to to]
 base_calendar / calendar.event           / sequence (integer)            : DEL 
 base_calendar / calendar.event           / state (selection)             : selection_keys is now '['draft', 'open']' ('['cancelled', 'confirmed', 'tentative']')
 base_calendar / calendar.event           / vtimezone (selection)         : DEL selection_keys: function
@@ -59,7 +59,6 @@ calendar     / calendar.event           / categ_ids (many2many)         : NEW re
 calendar     / calendar.event           / final_date (date)             : NEW 
 calendar     / calendar.event           / message_ids (one2many)        : NEW relation: mail.message
 calendar     / calendar.event           / message_last_post (datetime)  : NEW 
-calendar     / calendar.event           / month_by (selection)          : NEW selection_keys: ['date', 'day']
 calendar     / calendar.event           / start_date (date)             : NEW 
 calendar     / calendar.event           / start_datetime (datetime)     : NEW 
 calendar     / calendar.event           / stop_date (date)              : NEW 

@@ -1,7 +1,6 @@
 ---Fields in module 'email_template'---
 email_template / email.template           / body_html (text)              : type is now 'html' ('text')
-email_template / email.template           / email_recipients (char)       : DEL 
-email_template / email.template           / partner_to (char)             : NEW 
+email_template / email.template           / email_recipients (char)       : was renamed to partner_to [nothing to to]
 email_template / email.template           / use_default_to (boolean)      : NEW 
 email_template / ir.actions.server        / template_id (many2one)        : NEW relation: email.template
 ---XML records in module 'email_template'---

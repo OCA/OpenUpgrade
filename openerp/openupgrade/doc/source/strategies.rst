@@ -3,7 +3,10 @@ Analysis and development strategies
 
 Second stage database comparison
 ================================
-After an initial migration, performing the database comparison again but now comparing the results of your migration with a database created on your target release will give you more information on any data (marked as *noupdate*) that you might have missed.
+After an initial migration, performing the database comparison again but now
+comparing the results of your migration with a database created on your target
+release will give you more information on any data (marked as *noupdate*)
+that you might have missed.
 
 Testing on a database with demo data
 ====================================

@@ -2,38 +2,33 @@
 base         / ir.actions.report.xml    / parser (char)                 : NEW 
 base         / ir.actions.report.xml    / report_type (char)            : selection_keys is now '['controller', 'pdf', 'qweb-html', 'qweb-pdf', 'sxw', 'webkit']' ('False')
 base         / ir.actions.report.xml    / report_type (char)            : type is now 'selection' ('char')
-base         / ir.actions.server        / copy_object (reference)       : DEL 
+base         / ir.actions.server        / copy_object (reference)       : was renamed to ref_object [nothing to to]
 base         / ir.actions.server        / copyvalue (char)              : NEW 
-base         / ir.actions.server        / crud_model_id (many2one)      : NEW relation: ir.model
 base         / ir.actions.server        / email (char)                  : DEL 
 base         / ir.actions.server        / expression (char)             : DEL 
 base         / ir.actions.server        / id_object (reference)         : NEW 
 base         / ir.actions.server        / id_value (char)               : NEW 
-base         / ir.actions.server        / link_field_id (many2one)      : NEW relation: ir.model.fields
 base         / ir.actions.server        / link_new_record (boolean)     : NEW 
 base         / ir.actions.server        / loop_action (many2one)        : DEL relation: ir.actions.server
 base         / ir.actions.server        / menu_ir_values_id (many2one)  : NEW relation: ir.values
 base         / ir.actions.server        / message (text)                : DEL 
 base         / ir.actions.server        / mobile (char)                 : DEL 
 base         / ir.actions.server        / model_object_field (many2one) : NEW relation: ir.model.fields
-base         / ir.actions.server        / record_id (many2one)          : DEL relation: ir.model.fields
-base         / ir.actions.server        / ref_object (reference)        : NEW 
+base         / ir.actions.server        / record_id (many2one)          : was renamed to link_field_id [nothing to to]
 base         / ir.actions.server        / sms (char)                    : DEL 
-base         / ir.actions.server        / srcmodel_id (many2one)        : DEL relation: ir.model
+base         / ir.actions.server        / srcmodel_id (many2one)        : was renamed to crud_model_id [nothing to to]
 base         / ir.actions.server        / state (selection)             : selection_keys is now 'function' ('['client_action', 'code', 'dummy', 'email', 'loop', 'object_copy', 'object_create', 'object_write', 'other', 'sms', 'trigger']')
 base         / ir.actions.server        / sub_model_object_field (many2one): NEW relation: ir.model.fields
 base         / ir.actions.server        / sub_object (many2one)         : NEW relation: ir.model
 base         / ir.actions.server        / subject (char)                : module is now 'email_template' ('base')
 base         / ir.actions.server        / subject (char)                : now a function
 base         / ir.actions.server        / trigger_name (selection)      : DEL selection_keys: function
-base         / ir.actions.server        / trigger_obj_id (many2one)     : DEL relation: ir.model.fields
+base         / ir.actions.server        / trigger_obj_id (many2one)     : was renamed to wkf_field_id [nothing to to]
 base         / ir.actions.server        / use_create (selection)        : NEW required: required, selection_keys: ['copy_current', 'copy_other', 'new', 'new_other'], req_default: new
 base         / ir.actions.server        / use_relational_model (selection): NEW required: required, selection_keys: ['base', 'relational'], req_default: base
 base         / ir.actions.server        / use_write (selection)         : NEW required: required, selection_keys: ['current', 'expression', 'other'], req_default: current
-base         / ir.actions.server        / wkf_field_id (many2one)       : NEW relation: ir.model.fields
 base         / ir.actions.server        / wkf_transition_id (many2one)  : NEW relation: workflow.transition
-base         / ir.actions.server        / write_expression (char)       : NEW 
-base         / ir.actions.server        / write_id (char)               : DEL 
+base         / ir.actions.server        / write_id (char)               : was renamed to write_expression [nothing to to]
 base         / ir.logging               / create_date (datetime)        : NEW 
 base         / ir.logging               / create_uid (integer)          : NEW 
 base         / ir.logging               / dbname (char)                 : NEW 
@@ -57,8 +52,7 @@ base         / ir.ui.view               / type (selection)              : not a 
 base         / ir.ui.view               / type (selection)              : selection_keys is now '['calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'qweb', 'search', 'tree']' ('['calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'mdx', 'search', 'tree']')
 base         / ir.ui.view               / write_date (datetime)         : NEW 
 base         / res.company              / font (many2one)               : NEW relation: res.font
-base         / res.company              / paper_format (selection)      : DEL required: required, selection_keys: ['a4', 'us_letter'], req_default: a4
-base         / res.company              / rml_paper_format (selection)  : NEW required: required, selection_keys: ['a4', 'us_letter'], req_default: a4
+base         / res.company              / paper_format (selection)      : was renamed to rml_paper_format [nothing to to]
 base         / res.country              / image (binary)                : NEW 
 base         / res.currency.rate        / name (date)                   : type is now 'datetime' ('date')
 base         / res.font                 / family (char)                 : NEW required: required
