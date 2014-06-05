@@ -1,12 +1,12 @@
 ---Fields in module 'general'---
-# 4995 fields matched,
-# Direct match: 4405
-# Found in other module: 77
+# 5051 fields matched,
+# Direct match: 3730
+# Found in other module: 80
 # Found with different name: 0
 # Found with different type: 0
-# In obsolete models: 513
-# New columns: 1595
-# Not matched: 322
+# In obsolete models: 1241
+# New columns: 1568
+# Not matched: 266
 new model account.analytic.invoice.line
 new model account.statement.operation.template
 new model blog.blog
@@ -99,7 +99,6 @@ new model sale.quote.option
 new model sale.quote.template
 new model sale_layout.category
 new model stock.fixed.putaway.strat
-new model stock.history
 new model stock.landed.cost
 new model stock.landed.cost.lines
 new model stock.location.route
@@ -139,22 +138,48 @@ new model website.menu
 new model website.seo.metadata
 new model website.twitter.tweet
 new model wizard.price
+obsolete model account.entries.report
+obsolete model account.invoice.report
+obsolete model account.treasury.report
+obsolete model account_analytic_analysis.summary.month
+obsolete model account_analytic_analysis.summary.user
+obsolete model account_followup.stat
+obsolete model account_followup.stat.by.partner
+obsolete model analytic.entries.report
+obsolete model asset.asset.report
 obsolete model audittrail.log
 obsolete model audittrail.log.line
 obsolete model audittrail.rule
 obsolete model calendar.todo
+obsolete model campaign.analysis
+obsolete model crm.claim.report
+obsolete model crm.helpdesk.report
+obsolete model crm.lead.report
+obsolete model crm.lead.report.assign
 obsolete model crm.meeting
 obsolete model crm.meeting.type
+obsolete model crm.partner.report.assign
+obsolete model crm.phonecall.report
 obsolete model document.page
 obsolete model document.page.history
 obsolete model document.webdav.dir.property
 obsolete model document.webdav.file.property
 obsolete model event.moodle.config.wiz
 obsolete model google.docs.config
+obsolete model hr.evaluation.report
+obsolete model hr.expense.report
+obsolete model hr.holidays.remaining.leaves.user
+obsolete model hr.recruitment.report
+obsolete model hr.timesheet.report
+obsolete model hr_timesheet_sheet.sheet.account
+obsolete model hr_timesheet_sheet.sheet.day
 obsolete model idea.category
 obsolete model idea.idea
 obsolete model ir.actions.wizard
 obsolete model ir.ui.view_sc
+obsolete model mrp.workorder
+obsolete model payment.advice.report
+obsolete model payslip.report
 obsolete model portal.payment.acquirer
 obsolete model process.condition
 obsolete model process.node
@@ -165,15 +190,47 @@ obsolete model product.manufacturer.attribute
 obsolete model product.pulled.flow
 obsolete model project.gtd.context
 obsolete model project.gtd.timebox
+obsolete model project.issue.report
 obsolete model project.phase
+obsolete model project.task.history.cumulative
 obsolete model project.user.allocation
+obsolete model purchase.report
+obsolete model report.account.analytic.line.to.invoice
+obsolete model report.account.receivable
+obsolete model report.account.sales
+obsolete model report.account_type.sales
+obsolete model report.aged.receivable
+obsolete model report.analytic.account.close
+obsolete model report.document.file
+obsolete model report.document.user
+obsolete model report.event.registration
+obsolete model report.intrastat
+obsolete model report.invoice.created
+obsolete model report.lunch.order.line
+obsolete model report.membership
+obsolete model report.mrp.inout
+obsolete model report.pos.order
+obsolete model report.project.task.user
 obsolete model report.sales.by.margin.pos
 obsolete model report.sales.by.margin.pos.month
+obsolete model report.sales.by.user.pos
+obsolete model report.sales.by.user.pos.month
 obsolete model report.stock.inventory
+obsolete model report.stock.lines.date
 obsolete model report.stock.move
+obsolete model report.timesheet.line
+obsolete model report.timesheet.task.user
+obsolete model report.transaction.pos
+obsolete model report.workcenter.load
+obsolete model report_timesheet.account
+obsolete model report_timesheet.account.date
+obsolete model report_timesheet.invoice
+obsolete model report_timesheet.user
 obsolete model res.alarm
 obsolete model res.request
 obsolete model res.request.history
+obsolete model sale.receipt.report
+obsolete model sale.report
 obsolete model sale.shop
 obsolete model stock.journal
 obsolete model stock.picking.in
@@ -192,6 +249,7 @@ obsolete model survey.response.answer
 obsolete model survey.response.line
 obsolete model survey.tbl.column.heading
 obsolete model survey.type
+obsolete model timesheet.report
 obsolete model web_tests_demo.model
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
@@ -435,7 +493,6 @@ DEL ir.ui.view: stock_no_autopicking.view_product_form_auto_pick
 ERROR: module not in list of installed modules:
 ---Fields in module 'account_report_company'---
 account_report_company / account.invoice          / commercial_partner_id (many2one): module is now 'account' ('account_report_company')
-account_report_company / account.invoice.report   / commercial_partner_id (many2one): module is now 'account' ('account_report_company')
 account_report_company / res.partner              / display_name (char)           : module is now 'base' ('account_report_company')
 ---XML records in module 'account_report_company'---
 DEL ir.ui.view: account_report_company.account_report_company_invoice_report_search_view
