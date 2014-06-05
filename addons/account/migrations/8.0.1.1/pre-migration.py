@@ -21,6 +21,21 @@
 
 from openerp.openupgrade import openupgrade
 
+column_renames = {
+    'account_bank_statement_line': [
+        ('account_id', None),
+        ('analytic_account_id', None),
+        ('type', None),
+    ]
+}
+
+tables_renames = [
+    (
+        'account_bank_statement_line_move_rel',
+        'bak_account_bank_statement_line_move_rel'
+    ),
+]
+
 
 @openupgrade.migrate()
 def migrate(cr, version):
@@ -33,3 +48,5 @@ def migrate(cr, version):
     if res:
         openupgrade.add_xmlid(
             cr, 'account', 'exp', 'account.analytic.journal', res[0], True)
+    openupgrade.rename_columns(cr, column_renames)
+    openupgrade.rename_tables(cr, tables_renames)
