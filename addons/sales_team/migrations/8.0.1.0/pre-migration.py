@@ -20,14 +20,12 @@
 #
 ##############################################################################
 
-from openerp import pooler, SUPERUSER_ID
-from openerp.openupgrade import openupgrade, openupgrade_80
+from openerp.openupgrade import openupgrade
 
+xmlid_renames = [
+    ('crm.section_sales_department', 'sales_team.section_sales_department'),
+    ]
 
 @openupgrade.migrate(no_version=True)
 def migrate(cr, version):
-    pool = pooler.get_pool(cr.dbname)
-    uid = SUPERUSER_ID
-    openupgrade_80.set_message_last_post(
-        cr, uid, pool, ['crm.case.section']
-    )
+    openupgrade.rename_xmlids(cr, xmlid_renames)

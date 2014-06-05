@@ -1,3 +1,10 @@
+# General Note : 
+# In V7 
+# -> 'crm' defines crm.case.section
+# In V8 
+# -> 'sales_team' (new module) defines cr.case.section
+# -> 'crm' depends on 'sales_team' and overload cr.case.section
+
 ---Fields in module 'sales_team'---
 # new optional field 'color' --> NTD
 sales_team   / crm.case.section         / color (integer)               : NEW 
@@ -6,6 +13,7 @@ sales_team   / crm.case.section         / color (integer)               : NEW
 sales_team   / crm.case.section         / message_last_post (datetime)  : NEW 
 
 ---XML records in module 'sales_team'---
+# It's not a new record, but a record moved from 'crm' to 'sales_team' module. Done.
 NEW crm.case.section: sales_team.section_sales_department
 NEW ir.actions.act_window: sales_team.crm_case_section_act
 NEW ir.actions.act_window: sales_team.crm_case_section_salesteams_act
