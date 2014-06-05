@@ -13,7 +13,7 @@ hr_expense   / hr.expense.expense       / website_message_ids (one2many): NEW re
 # nothing to do
 
 hr_expense   / hr.expense.report        / voucher_id (many2one)         : DEL relation: account.voucher
-# Kept as legacy field
+# Nothing to do : hr.expense.report is a view
 
 hr_expense   / product.product          / hr_expense_ok (boolean)       : DEL 
 hr_expense   / product.template         / hr_expense_ok (boolean)       : NEW 

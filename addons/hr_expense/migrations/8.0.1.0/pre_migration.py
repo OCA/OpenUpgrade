@@ -25,7 +25,6 @@ from openerp.openupgrade import openupgrade
 
 column_renames = {
     'hr_expense_expense': [('voucher_id', None)],
-    'hr_expense_report': [('voucher_id', None)],
     'product_product': [('hr_expense_ok', None)],
 }
 
