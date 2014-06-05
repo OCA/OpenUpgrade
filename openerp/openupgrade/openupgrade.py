@@ -468,7 +468,7 @@ def get_legacy_name(original_name):
         map(str, release.version_info[0:2]))+'_'+original_name
 
 
-def m2o_to_m2m(cr, model, table, field, source_field):
+def m2o_to_x2m(cr, model, table, field, source_field):
     """
     Recreate relations in many2many fields that were formerly
     many2one fields. Use rename_columns in your pre-migrate
@@ -491,6 +491,8 @@ def m2o_to_m2m(cr, model, table, field, source_field):
     for row in cr.fetchall():
         model.write(cr, SUPERUSER_ID, row[0], {field: [(4, row[1])]})
 
+# Backwards compatibility
+m2o_to_m2m = m2o_to_x2m
 
 def float_to_integer(cr, table, field):
     """
