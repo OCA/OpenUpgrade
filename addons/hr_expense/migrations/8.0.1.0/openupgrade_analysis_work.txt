@@ -1,0 +1,49 @@
+---Fields in module 'hr_expense'---
+
+hr_expense   / hr.expense.expense       / message_last_post (datetime)  : NEW 
+# Initialized field
+
+hr_expense   / hr.expense.expense       / state (selection)             : selection_keys is now '['accepted', 'cancelled', 'confirm', 'done', 'draft', 'paid']' ('['accepted', 'cancelled', 'confirm', 'done', 'draft']')
+# Nothing to do
+
+hr_expense   / hr.expense.expense       / voucher_id (many2one)         : DEL relation: account.voucher
+# Kept as legacy field
+
+hr_expense   / hr.expense.expense       / website_message_ids (one2many): NEW relation: mail.message
+# nothing to do
+
+hr_expense   / hr.expense.report        / voucher_id (many2one)         : DEL relation: account.voucher
+# Nothing to do : hr.expense.report is a view
+
+hr_expense   / product.product          / hr_expense_ok (boolean)       : DEL 
+hr_expense   / product.template         / hr_expense_ok (boolean)       : NEW 
+# moved from product.product to product.template
+
+---XML records in module 'hr_expense'---
+DEL ir.actions.act_window: hr_expense.action_my_expense
+NEW ir.actions.report.xml: hr_expense.action_report_hr_expense
+DEL ir.actions.report.xml: hr_expense.hr_expenses
+NEW ir.ui.view: hr_expense.report_expense
+DEL ir.ui.view: hr_expense.board_hr_expense_form
+DEL ir.ui.view: hr_expense.view_hr_expense_report_tree
+# View elements : no action needed
+
+DEL process.node: hr_expense.process_node_approved0
+DEL process.node: hr_expense.process_node_confirmedexpenses0
+DEL process.node: hr_expense.process_node_draftexpenses0
+DEL process.node: hr_expense.process_node_refused0
+DEL process.node: hr_expense.process_node_reimbursement0
+DEL process.node: hr_expense.process_node_reinvoicing0
+DEL process.node: hr_expense.process_node_supplierinvoice0
+DEL process.process: hr_expense.process_process_expenseprocess0
+DEL process.transition: hr_expense.process_transition_approveexpense0
+DEL process.transition: hr_expense.process_transition_approveinvoice0
+DEL process.transition: hr_expense.process_transition_confirmexpense0
+DEL process.transition: hr_expense.process_transition_refuseexpense0
+DEL process.transition: hr_expense.process_transition_reimburseexpense0
+DEL process.transition: hr_expense.process_transition_reimbursereinvoice0
+DEL process.transition.action: hr_expense.process_transition_action_accept0
+DEL process.transition.action: hr_expense.process_transition_action_confirm0
+DEL process.transition.action: hr_expense.process_transition_action_refuse0
+DEL process.transition.action: hr_expense.process_transition_action_supplierinvoice0
+# process has been deleted : no action needed
