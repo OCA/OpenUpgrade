@@ -30,6 +30,9 @@ project      / report.project.task.user / priority (selection)          : select
 project      / report.project.task.user / stage_id (many2one)           : NEW relation: project.task.type
 project      / report.project.task.user / year (char)                   : DEL 
 
+# Additionally, take into account how project aliases are now configured
+# in the project's create() method. Adapt existing aliases.
+
 ---XML records in module 'project'---
 # Regular updated data
 DEL ir.actions.act_window: project.action_project_task_reevaluate

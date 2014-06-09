@@ -24,10 +24,10 @@ from openerp import SUPERUSER_ID as uid
 from openerp.openupgrade import openupgrade, openupgrade_80
 
 
-def task_priority(cr):
-    """
-    Mapping old priorities to the new range
-    """
+@openupgrade.migrate()
+def migrate(cr, version):
+    registry = RegistryManager.get(cr.dbname)
+
     openupgrade.map_values(
         cr,
         openupgrade.get_legacy_name('priority'),
@@ -35,29 +35,14 @@ def task_priority(cr):
         [(4, 0), (3, 0), (2, 1), (1, 2), (0, 2)],
         table='project_task', write='sql')
 
+    openupgrade_80.update_aliases(
+        cr, registry, 'project.project',
+        set_parent_thread_id=True,
+        default_id_key='project_id')
 
-def update_alias_parent(cr, registry):
-    """
-    Register each project as the parent of their aliases
-    """
-    project_model_id = registry['ir.model'].search(
-        cr, uid, [('model', '=', 'project.project')])[0]
-    project_ids = registry['project.project'].search(
-        cr, uid, [], context={'active_test': False})
-    for project in registry['project.project'].browse(
-            cr, uid, project_ids):
-        project.alias_id.write({
-            'alias_parent_model_id': project_model_id,
-            'alias_parent_thread_id': project.id})
-
-
-@openupgrade.migrate()
-def migrate(cr, version):
-    registry = RegistryManager.get(cr.dbname)
-    task_priority(cr)
-    update_alias_parent(cr, registry)
     openupgrade_80.set_message_last_post(
         cr, uid, registry, ['project.project', 'project.task']
     )
+
     openupgrade.load_data(
         cr, 'project', 'migrations/8.0.1.1/noupdate_changes.xml')
