@@ -28,13 +28,12 @@ def task_priority(cr):
     """
     Mapping old priorities to the new range
     """
-    legacy_priority = openupgrade.get_legacy_name('priority')
-    for old, new in [(4, 0), (3, 0), (2, 1), (1, 2), (0, 2)]:
-        openupgrade.logged_query(
-            cr, """
-            UPDATE project_task SET priority = %s
-            WHERE """ + legacy_priority + " = %s",
-            (new, old))
+    openupgrade.map_values(
+        cr,
+        openupgrade.get_legacy_name('priority'),
+        'priority',
+        [(4, 0), (3, 0), (2, 1), (1, 2), (0, 2)],
+        table='project_task', write='sql')
 
 
 def update_alias_parent(cr, registry):

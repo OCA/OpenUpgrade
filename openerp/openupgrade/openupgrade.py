@@ -54,6 +54,7 @@ __all__ = [
     'float_to_integer',
     'message',
     'check_values_selection_field',
+    'map_values',
 ]
 
 
@@ -63,6 +64,8 @@ def check_values_selection_field(cr, table_name, field_name, allowed_values):
         has only the values 'allowed_values'.
         If not return False and log an error.
         If yes, return True.
+
+    .. versionadded:: 8.0
     """
     res = True
     cr.execute("SELECT %s, count(*) FROM %s GROUP BY %s;" %
@@ -478,6 +481,60 @@ def float_to_integer(cr, table, field):
             'table': table,
             'field': field,
             })
+
+
+def map_values(
+        cr, source_column, target_column, mapping,
+        model=None, table=None, write='sql'):
+    """
+    Map old values to new values within the same model or table. Old values
+    presumably come from a legacy column.
+
+    :param cr: The database cursor
+    :param source_column: the database column that contains old values to be \
+    mapped
+    :param target_column: the database column, or model field (if 'write' is \
+    'orm') that the new values are written to
+    :para mapping: list of tuples [(old value, new value)]
+    :param model: used for writing if 'write' is 'orm', or to retrieve the \
+    table if 'table' is not given.
+    :param table: the database table used to query the old values, and write \
+    the new values (if 'write' is 'sql')
+    :param write: Either 'orm' or 'sql'. Note that old ids are always \
+    identified by an sql read.
+
+    .. versionadded:: 8.0
+    """
+
+    if write not in ('sql', 'orm'):
+        logger.exception(
+            "map_values is called with unknown value for write param: %s",
+            write)
+    if not table:
+        if not model:
+            logger.exception("map_values is called with no table and no model")
+        table = model._table
+    for old, new in mapping:
+        values = {
+            'table': table,
+            'source': source_column,
+            'target': target_column,
+            'old': old,
+            'new': new,
+        }
+        if write == 'sql':
+            query = """UPDATE %(table)s
+                       SET %(target)s = %%(new)s
+                       WHERE %(source)s = %%(old)s""" % values
+        else:
+            query = """SELECT id FROM %(table)s
+                       WHERE %(source)s = %%(old)s""" % values
+        logged_query(cr, query, values)
+        if write == 'orm':
+            model.write(
+                cr, SUPERUSER_ID,
+                [row[0] for row in cr.fetchall()],
+                {target_column: new})
 
 
 def message(cr, module, table, column,
