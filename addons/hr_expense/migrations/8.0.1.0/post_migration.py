@@ -27,34 +27,12 @@ from openerp.openupgrade import openupgrade, openupgrade_80
 logger = logging.getLogger('OpenUpgrade')
 
 
-def update_hr_expense_ok(cr, pool):
-    field_name = openupgrade.get_legacy_name('hr_expense_ok')
-    template_obj = pool.get('product.template')
-
-    openupgrade.logged_query(
-        cr,
-        """SELECT product_templ_id
-        FROM product_product
-        WHERE %s = 't';""" % field_name
-    )
-    template_ids = [row[0] for row in cr.fetchall()]
-    template_obj.write(cr, SUPERUSER_ID, template_ids, {'hr_expense_ok': True})
-    for template_id in template_ids:
-        openupgrade.logged_query(
-            cr,
-            """SELECT DISTINCT t.id
-            FROM product_template t
-            LEFT JOIN product_product p1 ON t.id = p1.product_tmpl_id
-            LEFT JOIN product_product p2 ON t.id = p2.product_tmpl_id
-            WHERE p1.%s = 't'
-            AND p2.%s = 'f';""" % (field_name, field_name)
-        )
-        for row in cr.fetchall():
-            logger.warning(
-                'hr_expense_ok of product.template %d has been set to True '
-                'whereas at least one of its product_product was False',
-                row[0]
-            )
+def hr_expense_ok_field_func(cr, pool, id, vals):
+    logger.warning(
+        'hr_expense_ok of product.template %d has been set to True '
+        'whereas at least one of its product_product was False',
+        id)
+    return any(vals)
 
 
 @openupgrade.migrate()
@@ -64,5 +42,9 @@ def migrate(cr, version):
     openupgrade_80.set_message_last_post(
         cr, uid, pool, ['hr.expense.expense']
     )
-
-    update_hr_expense_ok(cr, pool)
+    openupgrade.move_field_many_values_to_one(
+        cr, pool,
+        'product_product', 'product_tmpl_id',
+        openupgrade.get_legacy_name('hr_expense_ok'),
+        'product_template', 'hr_expense_ok',
+        compute_func=hr_expense_ok_field_func)
