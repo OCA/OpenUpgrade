@@ -30,8 +30,7 @@ logger = logging.getLogger('OpenUpgrade')
 def hr_expense_ok_field_func(cr, pool, id, vals):
     logger.warning(
         'hr_expense_ok of product.template %d has been set to True '
-        'whereas at least one of its product_product was False',
-        id)
+        'whereas at least one of its product_product was False', id)
     return any(vals)
 
 
@@ -44,7 +43,7 @@ def migrate(cr, version):
     )
     openupgrade.move_field_many_values_to_one(
         cr, pool,
-        'product_product', 'product_tmpl_id',
-        openupgrade.get_legacy_name('hr_expense_ok'),
-        'product_template', 'hr_expense_ok',
+        'product.product', openupgrade.get_legacy_name('hr_expense_ok'),
+        'product_tmpl_id',
+        'product.template', 'hr_expense_ok',
         compute_func=hr_expense_ok_field_func)

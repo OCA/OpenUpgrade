@@ -136,16 +136,21 @@ def active_field_template_func(cr, pool, id, vals):
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
+    get_legacy_name = openupgrade.get_legacy_name
     openupgrade.move_field_many_values_to_one(
-        cr, pool, 'product_product', 'product_tmpl_id',
-        openupgrade.get_legacy_name('color'),
-        'product_template', 'color')
+        cr, pool,
+        'product.product', get_legacy_name('color'), 'product_tmpl_id',
+        'product.template', 'color')
     openupgrade.move_field_many_values_to_one(
-        cr, pool, 'product_product', 'product_tmpl_id', 'image_variant',
-        'product_template', 'image', binary_field=True)
+        cr, pool,
+        'product.product', 'image_variant', 'product_tmpl_id',
+        'product.template', 'image',
+        quick_request=False, binary_field=True)
     openupgrade.move_field_many_values_to_one(
-        cr, pool, 'product_product', 'product_tmpl_id', 'active',
-        'product_template', 'active', compute_func=active_field_template_func)
+        cr, pool,
+        'product.product', 'active', 'product_tmpl_id',
+        'product.template', 'active',
+        compute_func=active_field_template_func)
     move_fields(cr, pool)
     migrate_packaging(cr, pool)
     create_properties(cr, pool)
