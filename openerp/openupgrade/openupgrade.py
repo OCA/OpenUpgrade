@@ -55,7 +55,7 @@ __all__ = [
     'float_to_integer',
     'message',
     'check_values_selection_field',
-    'move_field_many_values_to_one',
+    'move_field_m2o',
 ]
 
 
@@ -584,7 +584,7 @@ def migrate(no_version=False):
     return wrap
 
 
-def move_field_many_values_to_one(
+def move_field_m2o(
         cr, pool,
         registry_old_model, field_old_model, m2o_field_old_model,
         registry_new_model, field_new_model,

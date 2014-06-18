@@ -41,7 +41,7 @@ def migrate(cr, version):
     openupgrade_80.set_message_last_post(
         cr, uid, pool, ['hr.expense.expense']
     )
-    openupgrade.move_field_many_values_to_one(
+    openupgrade.move_field_m2o(
         cr, pool,
         'product.product', openupgrade.get_legacy_name('hr_expense_ok'),
         'product_tmpl_id',
