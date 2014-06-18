@@ -19,16 +19,15 @@
 #
 ##############################################################################
 
-from openerp import pooler, SUPERUSER_ID
-from openerp.openupgrade.openupgrade import (migrate, convert_field_to_html,
-                                             get_legacy_name)
-from openerp.openupgrade.openupgrade_80 import set_message_last_post
+from openerp.openupgrade import openupgrade
+
+column_renames = {
+    'event_event': [
+        ('note', None),
+    ],
+}
 
 
-@migrate()
+@openupgrade.migrate()
 def migrate(cr, version):
-    pool = pooler.get_pool(cr.dbname)
-    set_message_last_post(
-        cr, SUPERUSER_ID, pool, ['event.event', 'event.registration'])
-    convert_field_to_html(cr, 'event_event', get_legacy_name('note'),
-                          'description')
+    openupgrade.rename_columns(cr, column_renames)
