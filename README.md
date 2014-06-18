@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/OpenUpgrade/OpenUpgrade.svg?branch=8.0)](https://travis-ci.org/OpenUpgrade/OpenUpgrade)
+
 Odoo
 ----
 
