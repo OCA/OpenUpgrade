@@ -22,7 +22,75 @@
 
 from openerp.openupgrade import openupgrade
 
+def set_stock_location_id(cr, pool):
+    for pc in pc_obj.browse(cr, SUPERUSER_ID, pc_ids):
+        cr.execute(
+            "SELECT 
+            pc.write({'proxy_ip': 'http://localhost:8069'})
+
+
+
+def available_in_pos_field_func(cr, pool, id, vals):
+    logger.warning(
+        'available_in_pos of product.template %d has been set to True '
+        'whereas at least one of its product_product was False', id)
+    return any(vals)
+
+
+def expense_pdt_field_func(cr, pool, id, vals):
+    logger.warning(
+        'expense_pdt of product.template %d has been set to True '
+        'whereas at least one of its product_product was False', id)
+    return any(vals)
+
+
+def income_pdt_field_func(cr, pool, id, vals):
+    logger.warning(
+        'income_pdt of product.template %d has been set to True '
+        'whereas at least one of its product_product was False', id)
+    return any(vals)
+
+
+def to_weight_field_func(cr, pool, id, vals):
+    logger.warning(
+        'to_weight of product.template %d has been set to True '
+        'whereas at least one of its product_product was False', id)
+    return any(vals)
+
+
+def set_proxy_ip(cr, pool):
+    pc_obj = pool['pos.config']
+    pc_ids = pc_obj.search(cr, SUPERUSER_ID, [])
+    for pc in pc_obj.browse(cr, SUPERUSER_ID, pc_ids):
+        if pc.iface_cashdrawer or pc.iface_payment_terminal \
+            or pc.iface_electronic_scale or pc.iface_print_via_proxy:
+            pc.write({'proxy_ip': 'http://localhost:8069'})
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    pass
+    pool = pooler.get_pool(cr.dbname)
+    get_legacy_name = openupgrade.get_legacy_name
+    openupgrade.move_field_many_values_to_one(
+        cr, pool,
+        'product.product', openupgrade.get_legacy_name('available_in_pos'),
+        'product_tmpl_id', 'product.template', 'available_in_pos',
+        compute_func=available_in_pos_field_func)
+    openupgrade.move_field_many_values_to_one(
+        cr, pool,
+        'product.product', openupgrade.get_legacy_name('expense_pdt'),
+        'product_tmpl_id', 'product.template', 'expense_pdt',
+        compute_func=expense_pdt_field_func)
+    openupgrade.move_field_many_values_to_one(
+        cr, pool, 'product.product', openupgrade.get_legacy_name('income_pdt'),
+        'product_tmpl_id', 'product.template', 'income_pdt',
+        compute_func=income_pdt_field_func)
+    openupgrade.move_field_many_values_to_one(
+        cr, pool,
+        'product.product', openupgrade.get_legacy_name('pos_categ_id'),
+        'product_tmpl_id', 'product.template', 'pos_categ_id')
+    openupgrade.move_field_many_values_to_one(
+        cr, pool, 'product.product', openupgrade.get_legacy_name('to_weight'),
+        'product_tmpl_id', 'product.template', 'to_weight',
+        compute_func=to_weight_field_func)
+    set_proxy_ip(cr, pool)
+

@@ -8,20 +8,20 @@ point_of_sale / pos.config               / company_id (many2one)         : NEW r
 point_of_sale / pos.config               / iface_big_scrollbars (boolean): NEW 
 point_of_sale / pos.config               / iface_invoicing (boolean)     : NEW 
 point_of_sale / pos.config               / iface_scan_via_proxy (boolean): NEW 
-# TODO
+# TODO: Create a new picking_type_id for each active pos_config.
 point_of_sale / pos.config               / picking_type_id (many2one)    : NEW relation: stock.picking.type
-# TODO keep the pricelist_id of the old sale_shop.
+# TODO: keep the pricelist_id of the old sale_shop.
 point_of_sale / pos.config               / pricelist_id (many2one)       : NEW relation: product.pricelist, required: required, req_default: function
-# TODO: [MAYBE] in v7. hardcoded value with http://localhost:8069. could be the default value.
+# In v7. Value was hardcoded with http://localhost:8069. Done.
 point_of_sale / pos.config               / proxy_ip (char)               : NEW 
 # [2 lines] 'receipt_footer' and 'receipt_header'. New text field. NTD.
 point_of_sale / pos.config               / receipt_footer (text)         : NEW 
 point_of_sale / pos.config               / receipt_header (text)         : NEW 
-# TODO [MAYBE] deferred 8.0. Write a function that change reference from shop_id to stock_location_id and use it.
+# TODO: Select the stock_location_id (internal) of the stock_warehouse of the old shop_id;
 point_of_sale / pos.config               / shop_id (many2one)            : DEL relation: sale.shop, required: required, req_default: function
 point_of_sale / pos.config               / stock_location_id (many2one)  : NEW relation: stock.location, required: required, req_default: function
 
-# TODO deffered 8.0. Write a function to move field from product.product to product.template and use it.
+# [10 lines] 5 fields have move from product.product to product.template. --> Done.
 point_of_sale / product.product          / available_in_pos (boolean)    : DEL 
 point_of_sale / product.product          / expense_pdt (boolean)         : DEL 
 point_of_sale / product.product          / income_pdt (boolean)          : DEL 
