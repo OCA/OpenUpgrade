@@ -1,4 +1,12 @@
 ---Fields in module 'sale_stock'---
+# This module has not yet been migrated, except the one change below,
+# in preparation of the migration of the sale module
+
+# Now a one2many in sale. Migrated in this module.
+sale_stock   / sale.order.line          / procurement_id (many2one)     : DEL relation: procurement.order
+
+# TODO: process all other changes below
+
 sale_stock   / sale.order               / invoice_quantity (False)      : DEL selection_keys: ['order', 'procurement'], mode: modify
 sale_stock   / sale.order               / picking_ids (one2many)        : now a function
 sale_stock   / sale.order               / picking_ids (one2many)        : relation is now 'stock.picking' ('stock.picking.out')
@@ -8,8 +16,6 @@ sale_stock   / sale.order               / warehouse_id (many2one)       : NEW re
 sale_stock   / sale.order.line          / delay (float)                 : module is now 'sale' ('sale_stock')
 sale_stock   / sale.order.line          / move_ids (one2many)           : DEL relation: stock.move
 
-# Now a one2many in sale. Migrated in this module.
-sale_stock   / sale.order.line          / procurement_id (many2one)     : DEL relation: procurement.order
 
 sale_stock   / sale.order.line          / property_ids (many2many)      : module is now 'sale_mrp' ('sale_stock')
 sale_stock   / sale.order.line          / route_id (many2one)           : NEW relation: stock.location.route
