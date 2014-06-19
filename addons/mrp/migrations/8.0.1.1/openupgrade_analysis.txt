@@ -33,7 +33,6 @@ mrp          / mrp.production.workcenter.line / website_message_ids (one2many): 
 mrp          / product.product          / bom_ids (one2many)            : DEL relation: mrp.bom
 mrp          / product.product          / produce_delay (float)         : NEW 
 mrp          / product.template         / bom_ids (one2many)            : NEW relation: mrp.bom
-mrp          / report.mrp.inout         / company_id (many2one)         : NEW relation: res.company, required: required
 mrp          / stock.move               / consumed_for (many2one)       : NEW relation: stock.move
 mrp          / stock.move               / raw_material_production_id (many2one): NEW relation: mrp.production
 mrp          / stock.warehouse          / manufacture_pull_id (many2one): NEW relation: procurement.rule

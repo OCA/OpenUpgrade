@@ -20,11 +20,6 @@ point_of_sale / product.template         / expense_pdt (boolean)         : NEW
 point_of_sale / product.template         / income_pdt (boolean)          : NEW 
 point_of_sale / product.template         / pos_categ_id (many2one)       : NEW relation: pos.category
 point_of_sale / product.template         / to_weight (boolean)           : NEW 
-point_of_sale / report.pos.order         / day (char)                    : DEL 
-point_of_sale / report.pos.order         / location_id (many2one)        : NEW relation: stock.location
-point_of_sale / report.pos.order         / month (selection)             : DEL selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
-point_of_sale / report.pos.order         / shop_id (many2one)            : DEL relation: sale.shop
-point_of_sale / report.pos.order         / year (char)                   : DEL 
 ---XML records in module 'point_of_sale'---
 NEW ir.actions.act_url: point_of_sale.action_pos_pos
 NEW ir.actions.act_window: point_of_sale.product_pos_category_action

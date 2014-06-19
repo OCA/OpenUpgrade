@@ -10,7 +10,6 @@ sale_stock   / sale.order.line          / move_ids (one2many)           : DEL re
 sale_stock   / sale.order.line          / procurement_id (many2one)     : DEL relation: procurement.order
 sale_stock   / sale.order.line          / property_ids (many2many)      : module is now 'sale_mrp' ('sale_stock')
 sale_stock   / sale.order.line          / route_id (many2one)           : NEW relation: stock.location.route
-sale_stock   / sale.report              / warehouse_id (many2one)       : NEW relation: stock.warehouse
 sale_stock   / stock.location.route     / sale_selectable (boolean)     : NEW 
 sale_stock   / stock.move               / sale_line_id (many2one)       : DEL relation: sale.order.line
 sale_stock   / stock.picking            / sale_id (many2one)            : now a function

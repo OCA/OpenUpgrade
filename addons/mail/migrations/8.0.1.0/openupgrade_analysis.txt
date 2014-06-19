@@ -12,7 +12,11 @@ mail         / mail.message             / record_name (char)            : not a 
 mail         / mail.message             / reply_to (char)               : NEW 
 mail         / mail.message.subtype     / hidden (boolean)              : NEW 
 mail         / mail.message.subtype     / sequence (integer)            : NEW 
-mail         / mail.thread              / message_last_post (datetime)  : NEW 
+mail         / mail.thread              / message_follower_ids (many2many): module is now 'website_mail' ('mail')
+mail         / mail.thread              / message_ids (one2many)        : module is now 'website_mail' ('mail')
+mail         / mail.thread              / message_is_follower (boolean) : module is now 'website_mail' ('mail')
+mail         / mail.thread              / message_summary (text)        : module is now 'website_mail' ('mail')
+mail         / mail.thread              / message_unread (boolean)      : module is now 'website_mail' ('mail')
 mail         / res.partner              / message_last_post (datetime)  : NEW 
 mail         / res.partner              / notification_email_send (selection): selection_keys is now '['always', 'none']' ('['all', 'comment', 'email', 'none']')
 mail         / res.partner              / notification_email_send (selection): was renamed to notify_email [nothing to to]

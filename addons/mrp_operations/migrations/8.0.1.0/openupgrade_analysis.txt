@@ -1,8 +1,5 @@
 ---Fields in module 'mrp_operations'---
 mrp_operations / mrp.production.workcenter.line / production_state (selection)  : selection_keys is now '['cancel', 'confirmed', 'done', 'draft', 'in_production', 'ready']' ('['cancel', 'confirmed', 'done', 'draft', 'in_production', 'picking_except', 'ready']')
-mrp_operations / mrp.workorder            / day (char)                    : DEL 
-mrp_operations / mrp.workorder            / month (selection)             : DEL selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
-mrp_operations / mrp.workorder            / year (char)                   : DEL 
 ---XML records in module 'mrp_operations'---
 DEL ir.actions.act_window.view: mrp_operations.action_report_mrp_workorder_tree
 DEL ir.ui.view: mrp_operations.view_report_mrp_workorder_tree

@@ -16,12 +16,6 @@ event        / event.event              / register_prospect (float)     : type i
 event        / event.event              / register_prospect (float)     : was renamed to seats_unconfirmed [nothing to to]
 event        / event.event              / speaker_confirmed (boolean)   : DEL 
 event        / event.registration       / message_last_post (datetime)  : NEW 
-event        / report.event.registration / event_date (char)             : type is now 'datetime' ('char')
-event        / report.event.registration / month (selection)             : DEL selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
-event        / report.event.registration / register_max (integer)        : DEL 
-event        / report.event.registration / seats_max (integer)           : NEW 
-event        / report.event.registration / speaker_id (many2one)         : DEL relation: res.partner
-event        / report.event.registration / year (char)                   : DEL 
 event        / res.partner              / event_ids (one2many)          : DEL relation: event.event
 event        / res.partner              / event_registration_ids (one2many): DEL relation: event.registration
 ---XML records in module 'event'---

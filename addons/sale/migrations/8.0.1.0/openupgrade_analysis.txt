@@ -13,12 +13,6 @@ sale         / sale.order               / state (selection)             : select
 sale         / sale.order               / website_message_ids (one2many): NEW relation: mail.message
 sale         / sale.order.line          / procurement_ids (one2many)    : NEW relation: procurement.order
 sale         / sale.order.line          / type (selection)              : DEL required: required, selection_keys: ['make_to_order', 'make_to_stock'], req_default: make_to_stock
-sale         / sale.report              / date (date)                   : type is now 'datetime' ('date')
-sale         / sale.report              / day (char)                    : DEL 
-sale         / sale.report              / month (selection)             : DEL selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
-sale         / sale.report              / section_id (many2one)         : NEW relation: crm.case.section
-sale         / sale.report              / shop_id (many2one)            : DEL relation: sale.shop
-sale         / sale.report              / year (char)                   : DEL 
 ---XML records in module 'sale'---
 NEW ir.actions.act_window: sale.action_account_invoice_report_salesteam
 NEW ir.actions.act_window: sale.action_invoice_salesteams

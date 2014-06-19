@@ -3,9 +3,6 @@ project_issue / project.issue            / date_last_stage_update (datetime): NE
 project_issue / project.issue            / message_last_post (datetime)  : NEW 
 project_issue / project.issue            / priority (selection)          : selection_keys is now '['0', '1', '2']' ('['1', '2', '3', '4', '5']')
 project_issue / project.issue            / website_message_ids (one2many): NEW relation: mail.message
-project_issue / project.issue.report     / date_last_stage_update (date) : NEW 
-project_issue / project.issue.report     / priority (selection)          : selection_keys is now '['0', '1', '2']' ('['1', '2', '3', '4', '5']')
-project_issue / project.issue.report     / state (selection)             : DEL selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
 project_issue / project.project          / issue_ids (one2many)          : NEW relation: project.issue
 ---XML records in module 'project_issue'---
 NEW ir.actions.act_window: project_issue.action_view_issues

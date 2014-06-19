@@ -85,7 +85,7 @@ def fieldprint(old, new, field, text, reprs):
     fieldrepr = "%s (%s)" % (old['field'], old['type'])
     fullrepr = '%-12s / %-24s / %-30s' % (old['module'], old['model'], fieldrepr)
     if not text:
-        text = "%s is now '%s' ('%s')" % (new[field], old[field])
+        text = "%s is now '%s' ('%s')" % (field, new[field], old[field])
     reprs[module_map(old['module'])].append("%s: %s" % (fullrepr, text))
 
 

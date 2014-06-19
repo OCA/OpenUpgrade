@@ -1,5 +1,6 @@
 ---Fields in module 'website_mail'---
 website_mail / mail.message             / website_published (boolean)   : NEW 
+website_mail / mail.thread              / message_last_post (datetime)  : NEW 
 website_mail / mail.thread              / website_message_ids (one2many): NEW relation: mail.message
 ---XML records in module 'website_mail'---
 NEW ir.ui.view: website_mail.email_designer
