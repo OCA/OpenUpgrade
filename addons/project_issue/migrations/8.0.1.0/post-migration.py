@@ -23,22 +23,17 @@ from openerp import SUPERUSER_UID as uid
 from openerp.openupgrade import openupgrade, openupgrade_80
 
 
-def issue_priority(cr):
-    """
-    Mapping old priorities to the new range
-    """
-    legacy_priority = openupgrade.get_legacy_name('priority')
-    for old, new in [(5, 0), (4, 0), (3, 1), (2, 2), (1, 2)]:
-        openupgrade.logged_query(
-            cr, """
-            UPDATE project_issue SET priority = %s
-            WHERE """ + legacy_priority + " = %s",
-            (new, old))
-
-
 @openupgrade.migrate
 def migrate(cr, version):
-    issue_priority(cr)
+
+    openupgrade.map_values(
+        cr,
+        openupgrade.get_legacy_name('priority'),
+        'priority',
+        [('5', '0'), ('4', '0'), ('3', '1'), ('2', '2'), ('1', '2')],
+        table='project_issue', write='sql')
+
     openupgrade_80.set_message_last_post(cr, uid, ['project.issue'])
+
     openupgrade.load_data(
         cr, 'project_issue', 'migrations/8.0.1.0/noupdate_changes.xml')
