@@ -1,0 +1,8 @@
+---Fields in module 'base_action_rule'---
+base_action_rule / base.action.rule         / kind (selection)              : NEW selection_keys: ['on_create', 'on_create_or_write', 'on_time', 'on_write']
+# Set default value to 'on_create_or_write'
+
+base_action_rule / base.action.rule         / trg_date_calendar_id (many2one): NEW relation: resource.calendar
+---XML records in module 'base_action_rule'---
+NEW ir.model.access: base_action_rule.access_base_action_rule_lead_test
+# Nothing to do
